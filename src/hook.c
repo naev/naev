@@ -677,7 +677,7 @@ static void hooks_updateDateExecute( ntime_t change )
    hook_runningstack++; /* running hooks */
    for (j=1; j>=0; j--) {
       for (h=hook_list; h!=NULL; h=h->next) {
-         /* Find valid timer hooks. */
+         /* Find valid date hooks. */
          if (h->is_date == 0)
             continue;
 
@@ -816,6 +816,8 @@ void hook_rm( unsigned int id )
    Hook *h;
 
    h = hook_get( id );
+   if (h==NULL)
+      return;
    h->delete = 1;
 }
 
@@ -1223,7 +1225,6 @@ static int hook_parse( xmlNodePtr base )
    ntime_t res;
 
    /* Defaults. */
-   is_date = 0;
 
    node = base->xmlChildrenNode;
    do {
@@ -1232,6 +1233,7 @@ static int hook_parse( xmlNodePtr base )
          parent   = 0;
          func     = NULL;
          stack    = NULL;
+         is_date  = 0;
 
          /* Handle the type. */
          xmlr_attr(node,"type",stype);

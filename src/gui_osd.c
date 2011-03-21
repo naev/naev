@@ -31,6 +31,7 @@ typedef struct OSD_s {
    struct OSD_s *next; /**< Next OSD in the linked list. */
 
    unsigned int id; /**< OSD id. */
+   int priority; /**< Priority level. */
    char *title; /**< Title of the OSD. */
 
    char **msg; /**< Stored messages. */
@@ -76,7 +77,7 @@ static void osd_calcDimensions (void);
  *    @param items Items in the display.
  *    @return ID of newly created OSD.
  */
-unsigned int osd_create( const char *title, int nitems, const char **items )
+unsigned int osd_create( const char *title, int nitems, const char **items, int priority )
 {
    int i, j, n, m, l, s, w, t;
    OSD_t *osd, *ll;
@@ -89,6 +90,7 @@ unsigned int osd_create( const char *title, int nitems, const char **items )
 
    /* Copy text. */
    osd->title  = strdup(title);
+   osd->priority = priority;
    osd->msg    = malloc( sizeof(char*) * nitems );
    osd->items  = malloc( sizeof(OSDmsg_s) * nitems );
    osd->nitems = nitems;
@@ -158,7 +160,12 @@ unsigned int osd_create( const char *title, int nitems, const char **items )
    if (osd_list == NULL)
       osd_list = osd;
    else {
-      for (ll = osd_list; ll->next != NULL; ll = ll->next);
+      for (ll = osd_list; ll->next != NULL; ll = ll->next) {
+         if (ll->next->priority > priority) {
+            osd->next = ll->next;
+            break;
+         }
+      }
       ll->next = osd;
    }
 

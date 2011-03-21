@@ -1,21 +1,21 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <Fleets>
  <fleet name="Independent Schroedinger">
-  <ai>trader</ai>
+  <ai>independent</ai>
   <faction>Independent</faction>
   <pilots>
    <pilot name="Independent Schroedinger" ship="Schroedinger"></pilot>
   </pilots>
  </fleet>
  <fleet name="Independent Hyena">
-  <ai>trader</ai>
+  <ai>independent</ai>
   <faction>Independent</faction>
   <pilots>
    <pilot name="Independent Hyena" ship="Hyena"></pilot>
   </pilots>
  </fleet>
  <fleet name="Independent Gawain">
-  <ai>trader</ai>
+  <ai>independent</ai>
   <faction>Independent</faction>
   <pilots>
    <pilot name="Independent Gawain" ship="Gawain"></pilot>

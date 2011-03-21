@@ -1790,7 +1790,7 @@ void player_targetClear (void)
       map_clear();
    }
    else if (player.p->target == PLAYER_ID)
-      player.p->nav_planet = -1;
+      player_targetPlanetSet( -1 );
    else
       player_targetSet( PLAYER_ID );
    gui_setNav();
@@ -1952,7 +1952,7 @@ void player_hailPlanet (void)
    if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
       return;
 
-   if(player.p->nav_planet != -1)
+   if (player.p->nav_planet != -1)
       comm_openPlanet( cur_system->planets[ player.p->nav_planet ] );
    else
       player_message("\erNo target selected to hail.");

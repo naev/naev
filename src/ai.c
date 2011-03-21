@@ -2624,6 +2624,10 @@ static int aiL_nearhyptarget( lua_State *L )
    LuaVector lv;
    double a, rad;
 
+   /* No jumps. */
+   if (cur_system->njumps == 0)
+      return 0;
+
    /* Find nearest jump .*/
    mindist = INFINITY;
    jp      = NULL;
@@ -2666,6 +2670,10 @@ static int aiL_rndhyptarget( lua_State *L )
    LuaVector lv;
    int *id;
    double a, rad;
+
+   /* No jumps in the system. */
+   if (cur_system->njumps == 0)
+      return 0;
 
    /* Find usable jump points. */
    jumps = malloc( sizeof(JumpPoint*) * cur_system->njumps );
