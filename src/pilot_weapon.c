@@ -140,7 +140,7 @@ static void pilot_weapSetUpdateOutfits( Pilot* p, PilotWeaponSet *ws )
 
 
 /**
- * @brief Checks teh current weapon set mode.
+ * @brief Checks the current weapon set mode.
  *
  *    @param p Pilot to manipulate.
  *    @param id ID of the weapon set to check.
