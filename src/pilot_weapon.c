@@ -800,6 +800,10 @@ void pilot_weaponAuto( Pilot *p )
    pilot_weapSetMode( p, 3, 0 );
    pilot_weapSetMode( p, 4, 1 );
    pilot_weapSetMode( p, 5, 1 );
+   pilot_weapSetMode( p, 6, 0 );
+   pilot_weapSetMode( p, 7, 0 );
+   pilot_weapSetMode( p, 8, 0 );
+   pilot_weapSetMode( p, 9, 0 );
 
    /* Set names. */
    pilot_weapSetNameSet( p, 0, "All" );
