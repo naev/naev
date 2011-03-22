@@ -1149,12 +1149,11 @@ static void input_clickevent( SDL_Event* event )
    p   = pilot_get(pid);
    r   = MAX( 1.5 * PILOT_SIZE_APROX * p->ship->gfx_space->sw / 2, 100. ) / z;
    d   = pow2(x-p->solid->pos.x) + pow2(y-p->solid->pos.y);
-   if (d < pow2(r)) {
+   if ((d < pow2(r)) && (pid != PLAYER_ID)) {
       player_targetSet( pid );
 
       /* Apply an action if already selected. */
-      if (!pilot_isFlag(player.p, PILOT_DEAD) &&
-            (pid == opid) && (pid != PLAYER_ID)) {
+      if (!pilot_isFlag(player.p, PILOT_DEAD) && (pid == opid)) {
          if (pilot_isDisabled(p))
             player_board();
          else
