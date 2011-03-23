@@ -564,7 +564,8 @@ static int iar_focusImage( Widget* iar, double bx, double by )
 {
    int i,j;
    double y, w,h, ycurs,xcurs;
-   int xelem, xspace, yelem;
+   int xelem, yelem;
+   double xspace;
 
    /* positions */
    y = by + iar->y;
@@ -575,7 +576,7 @@ static int iar_focusImage( Widget* iar, double bx, double by )
    /* number of elements */
    xelem = iar->dat.iar.xelem;
    yelem = iar->dat.iar.yelem;
-   xspace = (((int)iar->w - 10) % (int)w) / (xelem + 1);
+   xspace = (double)(((int)iar->w - 10) % (int)w) / (double)(xelem + 1);
    if (bx < iar->w - 10.) {
 
       /* Loop through elements until finding collision. */
