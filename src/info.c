@@ -460,8 +460,8 @@ static void weapons_autoweap( unsigned int wid, char *str )
    /* Run autoweapons if needed. */
    if (state) {
       sure = dialogue_YesNoRaw( "Enable autoweapons?",
-            "Are you sure you want to enable autoweapons for the ship? This "
-            "action will rewrite your current weapon set." );
+            "Are you sure you want to enable automatic weapon groups for the "
+            "ship?\n\nThis will overwrite all manually-tweaked weapons groups." );
       if (!sure) {
          window_checkboxSet( wid, str, 0 );
          return;

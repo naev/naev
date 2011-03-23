@@ -15,7 +15,7 @@ This tutorial will show you how you can contact other ships, as well as planets 
 To proceed to the next step, target the nearby ship and contact it. You may contact the planet first if you wish, to see what options are available when you do so.]]
     message3 = [[Well done. Normally, when hailing a ship, you may ask it to sell you fuel or bribe it if it's attacking you, but that's about all you can do. However, sometimes a mission requires you to contact a ship in order to proceed. Since this is a drone, there's not much you can say to it.
     You may also try to bribe planets, as you may have noticed already. This is a good way to gain access to planets that would otherwise deny you access.]]
-    message4 = [[You now know how to comms work, so I suppose that's it for this tutorial...
+    message4 = [[You now know how to use the communications system, so I suppose that's it for this tutorial...
 
 But wait, what's this? A ship is taking off from the planet below, and it seems it's interested in talking to you!]]
     message5 = [[As you just witnessed, ships that are trying to contact you will have an animated icon next to them. You will also be notified in the message log, and a sound will alert you that someone's hailing you.
