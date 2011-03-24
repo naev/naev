@@ -1002,7 +1002,7 @@ static int pilotL_weapset( lua_State *L )
    PilotWeaponSetOutfit *po_list;
    PilotOutfitSlot *slot;
    Outfit *ammo, *o;
-   double delay;
+   double delay, firemod, enermod;
    int id, all, level, level_match;
 
    /* Parse parameters. */
@@ -1076,7 +1076,8 @@ static int pilotL_weapset( lua_State *L )
 
          /* Set cooldown. */
          lua_pushstring(L,"cooldown");
-         delay = outfit_delay(slot->outfit);
+         pilot_getRateMod( &firemod, &enermod, p, slot);
+         delay = outfit_delay(slot->outfit) * firemod;
          if (delay > 0.)
             lua_pushnumber( L, CLAMP( 0., 1., 1. - slot->timer / delay ) );
          else
