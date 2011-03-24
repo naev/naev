@@ -1147,7 +1147,7 @@ static void input_clickevent( SDL_Event* event )
    opid = player.p->target;
    pid = pilot_getNearestPos( player.p, x, y, 1 );
    p   = pilot_get(pid);
-   r   = MAX( 1.5 * PILOT_SIZE_APROX * p->ship->gfx_space->sw / 2, 100. ) / z;
+   r   = MAX( 1.5 * PILOT_SIZE_APROX * p->ship->gfx_space->sw / 2, 20. ) / z;
    d   = pow2(x-p->solid->pos.x) + pow2(y-p->solid->pos.y);
    if ((d < pow2(r)) && (pid != PLAYER_ID)) {
       player_targetSet( pid );
