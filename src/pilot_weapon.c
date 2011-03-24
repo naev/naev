@@ -600,21 +600,7 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
    is_launcher = outfit_isLauncher(w->outfit);
 
    /* Calculate rate modifier. */
-   switch (w->outfit->type) {
-      case OUTFIT_TYPE_BOLT:
-         rate_mod   = 2. - p->stats.firerate_forward; /* Invert. */
-         energy_mod = p->stats.energy_forward;
-         break;
-      case OUTFIT_TYPE_TURRET_BOLT:
-         rate_mod   = 2. - p->stats.firerate_turret; /* Invert. */
-         energy_mod = p->stats.energy_turret;
-         break;
-
-      default:
-         rate_mod   = 1.;
-         energy_mod = 1.;
-         break;
-   }
+   pilot_getRateMod( &rate_mod, &energy_mod, p, w );
 
    /* Count the outfits and current one - only affects non-beam. */
    if (!outfit_isBeam(w->outfit)) {
@@ -751,6 +737,35 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
    w->timer += rate_mod * outfit_delay( w->outfit );
 
    return 1;
+}
+
+
+/**
+ * @brief Gets applicable fire rate and energy modifications for a pilot's weapon.
+ *
+ *    @param[out] rate_mod Fire rate multiplier.
+ *    @param[out] energy_mod Energy use multiplier.
+ *    @param p Pilot who owns the outfit.
+ *    @param w Pilot's outfit.
+ */
+void pilot_getRateMod( double *rate_mod, double* energy_mod,
+      Pilot* p, PilotOutfitSlot* w )
+{
+   switch (w->outfit->type) {
+      case OUTFIT_TYPE_BOLT:
+         *rate_mod   = 2. - p->stats.firerate_forward; /* Invert. */
+         *energy_mod = p->stats.energy_forward;
+         break;
+      case OUTFIT_TYPE_TURRET_BOLT:
+         *rate_mod   = 2. - p->stats.firerate_turret; /* Invert. */
+         *energy_mod = p->stats.energy_turret;
+         break;
+
+      default:
+         *rate_mod   = 1.;
+         *energy_mod = 1.;
+         break;
+   }
 }
 
 
