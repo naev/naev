@@ -1144,7 +1144,6 @@ static void input_clickevent( SDL_Event* event )
    /* Handle screen and radar clicks differently. */
    mx = event->button.x;
    my  = gl_screen.rh - event->button.y;
-   gl_screenToGameCoords( &x, &y, (double)mx, (double)my );
    if ((mx > rx && mx <= rx + rw ) && (my > ry && my <= ry + rh )) {
       m = 1;
       gui_radarGetRes( &res );
@@ -1154,6 +1153,8 @@ static void input_clickevent( SDL_Event* event )
       y = y + player.p->solid->pos.y;
    }
    else  {
+      gl_windowToScreenPos( &mx, &my, event->button.x, event->button.y );
+      gl_screenToGameCoords( &x, &y, (double)mx, (double)my );
       res = 1. / cam_getZoom();
       m = res;
       gl_windowToScreenPos( &mx, &my, event->button.x, event->button.y );
