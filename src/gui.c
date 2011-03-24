@@ -122,6 +122,8 @@ static double gui_viewport_h = 0.; /**< GUI Viewport height. */
 typedef struct Radar_ {
    double w; /**< Width. */
    double h; /**< Height. */
+   double x; /**< X position. */
+   double y; /**< Y position. */
    RadarShape shape; /**< Shape */
    double res; /**< Resolution */
    glTexture *interference[INTERFERENCE_LAYERS]; /**< Interference texture. */
@@ -937,6 +939,8 @@ void gui_radarRender( double x, double y )
 
    /* The global radar. */
    radar = &gui_radar;
+   gui_radar.x = x;
+   gui_radar.y = y;
 
    gl_matrixPush();
    if (radar->shape==RADAR_RECT) {
@@ -992,6 +996,43 @@ void gui_radarRender( double x, double y )
    gl_matrixPop();
    if (radar->shape==RADAR_RECT)
       gl_unclipRect();
+}
+
+
+/**
+ * @brief Gets the radar's position.
+ *
+ *    @param[out] x X position.
+ *    @param[out] y Y position.
+ */
+void gui_radarGetPos( int *x, int *y )
+{
+   *x = gui_radar.x;
+   *y = gui_radar.y;
+}
+
+
+/**
+ * @brief Gets the radar's dimensions.
+ *
+ *    @param[out] w Width.
+ *    @param[out] h Height.
+ */
+void gui_radarGetDim( int *w, int *h )
+{
+   *w = gui_radar.w;
+   *h = gui_radar.h;
+}
+
+
+/**
+ * @brief Outputs the radar's resolution.
+ *
+ *    @param[out] res Current zoom ratio.
+ */
+void gui_radarGetRes( int *res )
+{
+   *res = gui_radar.res;
 }
 
 
@@ -2270,6 +2311,3 @@ void gui_mouseMoveEnable( int enable )
 {
    gui_L_mmove = enable;
 }
-
-
-

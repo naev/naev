@@ -1107,8 +1107,8 @@ static void input_clickevent( SDL_Event* event )
 {
    unsigned int pid, opid;
    Pilot *p;
-   int mx, my;
-   double x, y, z, r, d;
+   int mx, my, rx, ry, rh, rw, res;
+   double x, y, m, r, d;
    Planet *pnt;
    JumpPoint *jp;
    int pntid, opntid, jpid, ojpid;
@@ -1138,16 +1138,32 @@ static void input_clickevent( SDL_Event* event )
    if (player_isFlag(PLAYER_DESTROYED) || (player.p == NULL))
       return;
 
-   /* Translate to coordinates. */
-   gl_windowToScreenPos( &mx, &my, event->button.x, event->button.y );
+   gui_radarGetPos( &rx, &ry );
+   gui_radarGetDim( &rw, &rh );
+
+   /* Handle screen and radar clicks differently. */
+   mx = event->button.x;
+   my  = gl_screen.rh - event->button.y;
    gl_screenToGameCoords( &x, &y, (double)mx, (double)my );
-   z = cam_getZoom();
+   if ((mx > rx && mx <= rx + rw ) && (my > ry && my <= ry + rh )) {
+      m = 1;
+      gui_radarGetRes( &res );
+      x = (mx - (rx + rw / 2.)) * res;
+      y = (my - (ry + rh / 2.)) * res;
+      x = x + player.p->solid->pos.x;
+      y = y + player.p->solid->pos.y;
+   }
+   else  {
+      res = 1. / cam_getZoom();
+      m = res;
+      gl_windowToScreenPos( &mx, &my, event->button.x, event->button.y );
+   }
 
    /* Get closest pilot. */
    opid = player.p->target;
    pid = pilot_getNearestPos( player.p, x, y, 1 );
    p   = pilot_get(pid);
-   r   = MAX( 1.5 * PILOT_SIZE_APROX * p->ship->gfx_space->sw / 2, 20. ) / z;
+   r   = MAX( 1.5 * PILOT_SIZE_APROX * p->ship->gfx_space->sw / 2 * m,  10. * res);
    d   = pow2(x-p->solid->pos.x) + pow2(y-p->solid->pos.y);
    if ((d < pow2(r)) && (pid != PLAYER_ID)) {
       player_targetSet( pid );
