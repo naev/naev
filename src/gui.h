@@ -10,6 +10,7 @@
 
 #include "opengl.h"
 #include "pilot.h"
+#include "space.h"
 
 
 /*
@@ -103,6 +104,8 @@ void gui_setRadarRel( int mod );
 void gui_getOffset( double *x, double *y );
 glTexture* gui_hailIcon (void);
 char* gui_pick (void);
+int gui_onScreenPilot( double *rx, double *ry, Pilot *pilot );
+int gui_onScreenAsset( double *rx, double *ry, JumpPoint *jp, Planet *pnt );
 
 
 #endif /* GUI_H */
