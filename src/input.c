@@ -1108,10 +1108,10 @@ static void input_clickevent( SDL_Event* event )
    unsigned int pid, opid;
    Pilot *p;
    int mx, my, rx, ry, rh, rw, res;
-   double x, y, m, r, d;
+   double x, y, m, r, d, ang, mouseang, px, py;
    Planet *pnt;
    JumpPoint *jp;
-   int pntid, opntid, jpid, ojpid;
+   int pntid, opntid, jpid, ojpid, edge;
    HookParam hparam[2];
 
    /* Generato hook. */
@@ -1144,28 +1144,42 @@ static void input_clickevent( SDL_Event* event )
    /* Handle screen and radar clicks differently. */
    mx = event->button.x;
    my  = gl_screen.rh - event->button.y;
-   gl_screenToGameCoords( &x, &y, (double)mx, (double)my );
+   edge = 0;
+   px = player.p->solid->pos.x;
+   py = player.p->solid->pos.y;
    if ((mx > rx && mx <= rx + rw ) && (my > ry && my <= ry + rh )) {
       m = 1;
       gui_radarGetRes( &res );
-      x = (mx - (rx + rw / 2.)) * res;
-      y = (my - (ry + rh / 2.)) * res;
-      x = x + player.p->solid->pos.x;
-      y = y + player.p->solid->pos.y;
+      x = (mx - (rx + rw / 2.)) * res + px;
+      y = (my - (ry + rh / 2.)) * res + py;
    }
-   else  {
+   else {
+      gl_windowToScreenPos( &mx, &my, event->button.x, event->button.y );
+      gl_screenToGameCoords( &x, &y, (double)mx, (double)my );
       res = 1. / cam_getZoom();
       m = res;
-      gl_windowToScreenPos( &mx, &my, event->button.x, event->button.y );
+      if ((mx <= 15 || my <= 15 ) || (my >= gl_screen.h - 15 || mx >= gl_screen.w - 15)) {
+         x = (mx - (gl_screen.w / 2.)) + px;
+         y = (my - (gl_screen.h / 2.)) + py;
+         /* Player has clicked within the border. */
+         mouseang = atan2(py - y, px -  x);
+         pid = pilot_getNearestAng( player.p, mouseang, 1 );
+         ang = atan2( py - pilot_get(pid)->solid->pos.y,
+               px - pilot_get(pid)->solid->pos.x);
+         /* Only match similar angles. */
+         if  (ABS(angle_diff(mouseang , ang)) < M_PI / 64 )
+            edge = 1;
+      }
    }
 
    /* Get closest pilot. */
    opid = player.p->target;
-   pid = pilot_getNearestPos( player.p, x, y, 1 );
+   if (!edge)
+      pid = pilot_getNearestPos( player.p, x, y, 1 );
    p   = pilot_get(pid);
    r   = MAX( 1.5 * PILOT_SIZE_APROX * p->ship->gfx_space->sw / 2 * m,  10. * res);
    d   = pow2(x-p->solid->pos.x) + pow2(y-p->solid->pos.y);
-   if ((d < pow2(r)) && (pid != PLAYER_ID)) {
+   if ((d < pow2(r) || edge) && (pid != PLAYER_ID)) {
       player_targetSet( pid );
 
       /* Apply an action if already selected. */

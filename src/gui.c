@@ -586,8 +586,7 @@ static void gui_renderBorder( double dt )
    JumpPoint *jp;
    glTexture *tex;
    int hw, hh;
-   int cw, ch;
-   double rx,ry, crx,cry;
+   double rx,ry;
    double cx,cy;
    glColour *col;
    double int_a;
@@ -622,20 +621,8 @@ static void gui_renderBorder( double dt )
       if (!pilot_inRangePlanet(player.p, i))
          continue;
 
-      /* Get relative positions. */
-      rx = (pnt->pos.x - player.p->solid->pos.x)*z;
-      ry = (pnt->pos.y - player.p->solid->pos.y)*z;
-
-      /* Correct for offset. */
-      crx = rx - gui_xoff;
-      cry = ry - gui_yoff;
-
-      /* Compare dimensions. */
-      cw = hw + tex->sw/2;
-      ch = hh + tex->sh/2;
-
       /* Check if out of range. */
-      if ((ABS(crx) > cw) || (ABS(cry) > ch)) {
+      if (!gui_onScreenAsset( &rx, &ry, NULL, pnt )) {
 
          /* Get border intersection. */
          gui_borderIntersection( &cx, &cy, rx, ry, hw, hh );
@@ -679,20 +666,8 @@ static void gui_renderBorder( double dt )
       if (!pilot_inRangePlanet(player.p, i))
          continue;
 
-      /* Get relative positions. */
-      rx = (jp->pos.x - player.p->solid->pos.x)*z;
-      ry = (jp->pos.y - player.p->solid->pos.y)*z;
-
-      /* Correct for offset. */
-      crx = rx - gui_xoff;
-      cry = ry - gui_yoff;
-
-      /* Compare dimensions. */
-      cw = hw + tex->sw/2;
-      ch = hh + tex->sh/2;
-
       /* Check if out of range. */
-      if ((ABS(crx) > cw) || (ABS(cry) > ch)) {
+      if (!gui_onScreenAsset( &rx, &ry, jp, NULL )) {
 
          /* Get border intersection. */
          gui_borderIntersection( &cx, &cy, rx, ry, hw, hh );
@@ -731,26 +706,13 @@ static void gui_renderBorder( double dt )
    /* Draw pilots. */
    for (i=1; i<pilot_nstack; i++) { /* skip the player */
       plt = pilot_stack[i];
-      tex = plt->ship->gfx_space;
 
       /* See if in sensor range. */
       if (!pilot_inRangePilot(player.p, plt))
          continue;
 
-      /* Get relative positions. */
-      rx = (plt->solid->pos.x - player.p->solid->pos.x)*z;
-      ry = (plt->solid->pos.y - player.p->solid->pos.y)*z;
-
-      /* Correct for offset. */
-      rx -= gui_xoff;
-      ry -= gui_yoff;
-
-      /* Compare dimensions. */
-      cw = hw + tex->sw/2;
-      ch = hh + tex->sh/2;
-
       /* Check if out of range. */
-      if ((ABS(rx) > cw) || (ABS(ry) > ch)) {
+      if (!gui_onScreenPilot( &rx, &ry, plt )) {
 
          /* Get border intersection. */
          gui_borderIntersection( &cx, &cy, rx, ry, hw, hh );
@@ -785,6 +747,86 @@ static void gui_renderBorder( double dt )
 
    /* Deactivate the VBO. */
    gl_vboDeactivate();
+}
+
+
+/**
+ * @brief Takes a pilot and returns whether it's on screen, plus its relative position.
+ *
+ * @param[out] rx Relative X position (factoring in viewport offset)
+ * @param[out] ry Relative Y position (factoring in viewport offset)
+ * @param pilot Pilot to determine the visibility and position of
+ * @return Whether or not the pilot is on-screen.
+ */
+int gui_onScreenPilot( double *rx, double *ry, Pilot *pilot )
+{
+   double z;
+   int cw, ch;
+   glTexture *tex;
+
+   z = cam_getZoom();
+
+   tex = pilot->ship->gfx_space;
+
+   /* Get relative positions. */
+   *rx = (pilot->solid->pos.x - player.p->solid->pos.x)*z;
+   *ry = (pilot->solid->pos.y - player.p->solid->pos.y)*z;
+
+   /* Correct for offset. */
+   *rx -= gui_xoff;
+   *ry -= gui_yoff;
+
+   /* Compare dimensions. */
+   cw = SCREEN_W/2 + tex->sw/2;
+   ch = SCREEN_H/2 + tex->sh/2;
+
+   if ((ABS(*rx) > cw) || (ABS(*ry) > ch)) {
+      return  0;
+   }
+   return 1;
+}
+
+
+/**
+ * @brief Takes a planet or jump point and returns whether it's on screen, plus its relative position.
+ *
+ * @param[out] rx Relative X position (factoring in viewport offset)
+ * @param[out] ry Relative Y position (factoring in viewport offset)
+ * @param jp Jump point to determine the visibility and position of
+ * @param pnt Planet to determine the visibility and position of
+ * @return Whether or not the given asset is on-screen.
+ */
+int gui_onScreenAsset( double *rx, double *ry, JumpPoint *jp, Planet *pnt )
+{
+   double z;
+   int cw, ch;
+   glTexture *tex;
+
+   z = cam_getZoom();
+
+   if (jp == NULL) {
+      tex = pnt->gfx_space;
+      *rx = (pnt->pos.x - player.p->solid->pos.x)*z;
+      *ry = (pnt->pos.y - player.p->solid->pos.y)*z;
+   }
+   else {
+      tex = jumppoint_gfx;
+      *rx = (jp->pos.x - player.p->solid->pos.x)*z;
+      *ry = (jp->pos.y - player.p->solid->pos.y)*z;
+   }
+
+   /* Correct for offset. */
+   *rx -= gui_xoff;
+   *ry -= gui_yoff;
+
+   /* Compare dimensions. */
+   cw = SCREEN_W/2 + tex->sw/2;
+   ch = SCREEN_H/2 + tex->sh/2;
+
+   if ((ABS(*rx) > cw) || (ABS(*ry) > ch)) {
+      return  0;
+   }
+   return 1;
 }
 
 

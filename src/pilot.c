@@ -43,6 +43,7 @@
 #include "land_outfits.h"
 #include "land_shipyard.h"
 #include "array.h"
+#include "camera.h"
 
 
 #define PILOT_CHUNK_MIN 128 /**< Maximum chunks to increment pilot_stack by */
@@ -390,6 +391,7 @@ unsigned int pilot_getNearestPilot( const Pilot* p )
  *    @param p Pilot to get his nearest pilot.
  *    @param x X position to calculate from.
  *    @param y Y position to calculate from.
+ *    @param disabled Whether to return disabled pilots.
  *    @return The nearest pilot.
  */
 unsigned int pilot_getNearestPos( const Pilot *p, double x, double y, int disabled )
@@ -432,6 +434,67 @@ unsigned int pilot_getNearestPos( const Pilot *p, double x, double y, int disabl
       td = pow2(x-pilot_stack[i]->solid->pos.x) + pow2(y-pilot_stack[i]->solid->pos.y);
       if (((tp==PLAYER_ID) || (td < d))) {
          d = td;
+         tp = pilot_stack[i]->id;
+      }
+   }
+   return tp;
+}
+
+
+/**
+ * @brief Get the pilot closest to an angle extending from another pilot.
+ *
+ *    @param p Pilot to get the nearest pilot of.
+ *    @param ang Angle to compare against.
+ *    @param disabled Whether to return disabled pilots.
+ *    @return The nearest pilot.
+ */
+unsigned int pilot_getNearestAng( const Pilot *p, double ang, int disabled )
+{
+   unsigned int tp;
+   int i;
+   double a, ta;
+   double rx, ry;
+
+   tp = PLAYER_ID;
+   a  = 10e10;
+   for (i=0; i<pilot_nstack; i++) {
+
+      /* Must not be self. */
+      if (pilot_stack[i] == p)
+         continue;
+
+      /* Player doesn't select escorts (unless disabled is active). */
+      if (!disabled && (p->faction == FACTION_PLAYER) &&
+            (pilot_stack[i]->faction == FACTION_PLAYER))
+         continue;
+
+      /* Shouldn't be disabled. */
+      if (!disabled && pilot_isDisabled(pilot_stack[i]))
+         continue;
+
+      /* Shouldn't be invisible. */
+      if (pilot_isFlag( pilot_stack[i], PILOT_INVISIBLE ))
+         continue;
+
+      /* Shouldn't be dead. */
+      if (pilot_isFlag(pilot_stack[i], PILOT_DEAD) ||
+            pilot_isFlag(pilot_stack[i], PILOT_DELETE))
+         continue;
+
+      /* Must be in range. */
+      if (!pilot_inRangePilot( p, pilot_stack[i] ))
+         continue;
+
+      /* Only allow selection if off-screen. */
+      if (gui_onScreenPilot( &rx, &ry, pilot_stack[i] )) {
+         continue;
+      }
+
+      ta = atan2( p->solid->pos.y - pilot_stack[i]->solid->pos.y,
+            p->solid->pos.x - pilot_stack[i]->solid->pos.x );
+      if ( ABS(angle_diff(ang, ta)) < ABS(angle_diff(ang, a))) {
+         a = ta;
          tp = pilot_stack[i]->id;
       }
    }

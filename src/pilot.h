@@ -399,6 +399,7 @@ unsigned int pilot_getNearestEnemy_heuristic(const Pilot* p, double mass_factor,
 unsigned int pilot_getNearestHostile (void); /* only for the player */
 unsigned int pilot_getNearestPilot( const Pilot* p );
 unsigned int pilot_getNearestPos( const Pilot *p, double x, double y, int disabled );
+unsigned int pilot_getNearestAng( const Pilot *p, double ang, int disabled );
 int pilot_getJumps( const Pilot* p );
 
 /*non-lua wrappers*/
