@@ -84,6 +84,7 @@ static int pilotL_setVisible( lua_State *L );
 static int pilotL_setHilight( lua_State *L );
 static int pilotL_getColour( lua_State *L );
 static int pilotL_getHostile( lua_State *L );
+static int pilotL_flags( lua_State *L );
 static int pilotL_setActiveBoard( lua_State *L );
 static int pilotL_disable( lua_State *L );
 static int pilotL_setNoJump( lua_State *L );
@@ -146,6 +147,7 @@ static const luaL_reg pilotL_methods[] = {
    { "stats", pilotL_getStats },
    { "colour", pilotL_getColour },
    { "hostile", pilotL_getHostile },
+   { "flags", pilotL_flags },
    /* System. */
    { "clear", pilotL_clear },
    { "toggleSpawn", pilotL_toggleSpawn },
@@ -226,6 +228,7 @@ static const luaL_reg pilotL_cond_methods[] = {
    { "stats", pilotL_getStats },
    { "colour", pilotL_getColour },
    { "hostile", pilotL_getHostile },
+   { "flags", pilotL_flags },
    /* Ship. */
    { "ship", pilotL_ship },
    { "cargoFree", pilotL_cargoFree },
@@ -2490,6 +2493,43 @@ static int pilotL_getHostile( lua_State *L )
 
    /* Push value. */
    lua_pushboolean( L, pilot_isFlag(p, PILOT_HOSTILE) );
+   return 1;
+}
+
+
+struct pL_flag {
+   char *name;
+   int id;
+};
+static const struct pL_flag pL_flags[] = {
+   { .name = "hailing", .id = PILOT_HAILING },
+   {NULL, -1}
+};
+/**
+ * @brief Gets the pilot's flags.
+ *
+ * Valid flags are:<br/>
+ * <ul>
+ *  <li> hailing: pilot is hailing the player.<br/>
+ * </ul>
+ *    @luaparam p Pilot to get flags of.
+ *    @luareturn Table with flag names an index, boolean as value.
+ * @luafunc flags( p )
+ */
+static int pilotL_flags( lua_State *L )
+{
+   int i;
+   Pilot *p;
+
+   /* Get the pilot. */
+   p = luaL_validpilot(L,1);
+
+   /* Create flag table. */
+   lua_newtable(L);
+   for (i=0; pL_flags[i].name != NULL; i++) {
+      lua_pushboolean( L, pilot_isFlag( p, pL_flags[i].id ) );
+      lua_setfield(L, -2, pL_flags[i].name);
+   }
    return 1;
 }
 
