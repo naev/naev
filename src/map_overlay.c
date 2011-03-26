@@ -114,7 +114,7 @@ int ovr_input( SDL_Event *event )
 
       ret = 0;
       /* Pilot is closest, or new jump point/planet is the same as the old. */
-      if ((dp < d && dp < pow2(rp) && player.p->target != pid) ||
+      if ((dp < d && dp < pow2(rp) && player.p->target != pid) &&
             ((pntid >=0 && player.p->nav_planet == pntid) ||
             (jpid >=0 && player.p->nav_planet == jpid))) {
          player_targetSet( pid );
