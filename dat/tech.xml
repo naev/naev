@@ -221,13 +221,12 @@
   <item>Railgun Turret</item>
  </tech>
  <tech name="Plasma 1">
-  <item>Plasma Cannon MK1</item>
+  <item>Plasma Blaster MK1</item>
   <item>Plasma Turret MK1</item>
  </tech>
  <tech name="Plasma 2">
-  <item></item>
-  <item>Plasma Cannon MK2</item>
-  <item>Plasma Cannon MK3</item>
+  <item>Plasma Blaster MK2</item>
+  <item>Plasma Blaster MK3</item>
   <!-- TODO
   <item>Plasma Cluster Cannon MK1</item>
   <item>Plasma Cluster Cannon MK2</item>
