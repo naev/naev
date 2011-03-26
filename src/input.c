@@ -1105,13 +1105,13 @@ static void input_clickZoom( double modifier )
  */
 static void input_clickevent( SDL_Event* event )
 {
-   unsigned int pid, opid;
+   unsigned int pid;
    Pilot *p;
    int mx, my, rx, ry, rh, rw, res;
    double x, y, m, r, d, ang, mouseang, px, py;
    Planet *pnt;
    JumpPoint *jp;
-   int pntid, opntid, jpid, ojpid, edge;
+   int pntid, jpid, edge;
    HookParam hparam[2];
 
    /* Generato hook. */
@@ -1173,22 +1173,21 @@ static void input_clickevent( SDL_Event* event )
    }
 
    /* Get closest pilot. */
-   opid = player.p->target;
    if (!edge)
       pid = pilot_getNearestPos( player.p, x, y, 1 );
    p   = pilot_get(pid);
    r   = MAX( 1.5 * PILOT_SIZE_APROX * p->ship->gfx_space->sw / 2 * m,  10. * res);
    d   = pow2(x-p->solid->pos.x) + pow2(y-p->solid->pos.y);
    if ((d < pow2(r) || edge) && (pid != PLAYER_ID)) {
-      player_targetSet( pid );
-
       /* Apply an action if already selected. */
-      if (!pilot_isFlag(player.p, PILOT_DEAD) && (pid == opid)) {
+      if (!pilot_isFlag(player.p, PILOT_DEAD) && (pid == player.p->target)) {
          if (pilot_isDisabled(p))
             player_board();
          else
             player_hail();
       }
+      else
+         player_targetSet( pid );
       return;
    }
 
@@ -1196,30 +1195,28 @@ static void input_clickevent( SDL_Event* event )
    system_getClosest( cur_system, &pntid, &jpid, x, y );
    /* Planet is closest. */
    if (pntid >= 0) {
-      opntid = player.p->nav_planet;
       pnt = cur_system->planets[ pntid ];
       d  = pow2(x-pnt->pos.x) + pow2(y-pnt->pos.y);
       r  = MAX( 1.5 * pnt->radius, 100. );
       if (d < pow2(r)) {
-         player_targetPlanetSet( pntid );
-         if (pntid == opntid) {
+         if (pntid == player.p->nav_planet) {
             if (planet_hasService(pnt, PLANET_SERVICE_LAND) &&
                   (!areEnemies( player.p->faction, pnt->faction ) || pnt->bribed ))
                player_land();
             else
                player_hailPlanet();
          }
+         else
+            player_targetPlanetSet( pntid );
       }
    }
    /* Jump point is closest. */
    else if (jpid >= 0) {
-      ojpid = player.p->nav_hyperspace;
       jp = &cur_system->jumps[ jpid ];
       d  = pow2(x-jp->pos.x) + pow2(y-jp->pos.y);
       r  = MAX( 1.5 * jp->radius, 100. );
       if (d < pow2(r)) {
-         player_targetHyperspaceSet( jpid );
-         if (jpid == ojpid) {
+         if (jpid == player.p->nav_hyperspace) {
             if (space_canHyperspace(player.p)) {
                if (!paused) player_autonavAbort(NULL);
                player_jump();
@@ -1227,6 +1224,8 @@ static void input_clickevent( SDL_Event* event )
             else
                player_autonavStart();
          }
+         else
+            player_targetHyperspaceSet( jpid );
       }
    }
 }
