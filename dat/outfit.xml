@@ -284,7 +284,7 @@
    <size>light</size>
    <mass>2.2</mass>
    <price>20000</price>
-   <description>TODO</description>
+   <description>Razors fire concentrated pockets of high energy ions that are very effective at draining shields, but have only limited effect on a ship's armour. As such, Razors are best used in the initial phase of an engagement, and swapped out for other weapons once the target's shields come down.</description>
    <gfx_store>ioncannon</gfx_store>
   </general>
   <specific type="bolt">
@@ -311,7 +311,7 @@
    <size>light</size>
    <mass>4</mass>
    <price>20000</price>
-   <description>TODO</description>
+   <description>The upgraded civilian Razor model packs increased overall effectiveness compared to its predecessor, and has less difficulty in overloading capital ship grade shielding. As with the basic model, the Razor MK2 is best used to drain a target's shields, paving the way for other weapons to deliver the finishing blow.</description>
    <gfx_store>ioncannon</gfx_store>
   </general>
   <specific type="bolt">
@@ -338,7 +338,7 @@
    <size>light</size>
    <mass>6.5</mass>
    <price>20000</price>
-   <description>TODO</description>
+   <description>The heaviest version of the Razor is excellent at stripping the shields from those who would stand against House Sirius. In large engagements, Razor MK3s are often employed by support ships, whose task is to weaken a target before the heavy enforcer ships move in.</description>
    <gfx_store>ioncannon</gfx_store>
   </general>
   <specific type="bolt">
@@ -365,7 +365,7 @@
    <size>light</size>
    <mass>10</mass>
    <price>75000</price>
-   <description>TODO</description>
+   <description>Razor Turrets are popular among traders. Their high damage against shields is a great deterrent against attackers, because nothing puts a space pilot on edge like his shields rapidly coming down.</description>
    <gfx_store>ionturret</gfx_store>
   </general>
   <specific type="turret bolt">
@@ -391,7 +391,7 @@
    <size>medium</size>
    <mass>14</mass>
    <price>75000</price>
-   <description>TODO</description>
+   <description>The MK2 turreted version of the Razor sees a lot of application on medium escort ships. They are often mounted alongside laser or gauss turrets to assist in de-shielding incoming attackers before they are ripped to shreds.</description>
    <gfx_store>ionturret</gfx_store>
   </general>
   <specific type="turret bolt">
@@ -417,7 +417,7 @@
    <size>medium</size>
    <mass>19</mass>
    <price>75000</price>
-   <description>TODO</description>
+   <description>House Sirius typically equips its independent capital ships with Razor Turret MK3s. Where the standard Razor MK3 is impractical, the turreted version provides great de-shielding capabilities for the slower members of the Sirian fleet.</description>
    <gfx_store>ionturret</gfx_store>
   </general>
   <specific type="turret bolt">
@@ -532,7 +532,7 @@
    <size>light</size>
    <mass>3</mass>
    <price>25000</price>
-   <description>TODO</description>
+   <description>The Gauss Gun is one of the oldest weapon designs in the galaxy today, dating back to the times of the Federation. It fires a rapid stream of high velocity projectiles at a target, dealing damage through sheer kinetic impact. Gauss Guns are popular among small time pirates for being a cheap, reliable weapon.</description>
    <gfx_store>gatling</gfx_store>
   </general>
   <specific type="bolt">
@@ -558,7 +558,7 @@
    <size>light</size>
    <mass>7</mass>
    <price>25000</price>
-   <description>TODO</description>
+   <description>The Vulcan Gun improves over the Gauss Gun with increased range and damage, achieved by using a heavier calibre ammunition. A skilled pilot can wreak some serious havoc with a pair of Vulcan Guns installed in his ship.</description>
    <gfx_store>gatling</gfx_store>
   </general>
   <specific type="bolt">
@@ -584,7 +584,7 @@
    <size>light</size>
    <mass>15</mass>
    <price>25000</price>
-   <description>TODO</description>
+   <description>The Shredder quite lives up to the name its Dvaered manufacturers gave it. The sheer damage dealing capacity of this weapon makes Dvaered fighters dangerous to engage by ships that aren't substantially larger than they are.</description>
    <gfx_store>gatling</gfx_store>
   </general>
   <specific type="bolt">
@@ -611,7 +611,7 @@
    <mass>18</mass>
    <license>Heavy Weapon License</license>
    <price>190000</price>
-   <description>TODO</description>
+   <description>One of the more common countermeasures employed by low-budget merchant ships, the turret version of the Gauss Gun provides basic defense against lone pirates. A more determined attacker is unlikely to be deterred, however.</description>
    <gfx_store>railgunturret</gfx_store>
   </general>
   <specific type="turret bolt">
@@ -636,7 +636,7 @@
    <mass>28</mass>
    <license>Heavy Weapon License</license>
    <price>190000</price>
-   <description>TODO</description>
+   <description>Turreted Vulcan Guns pack the same caliber ammunition as their fixed mount brethren. Ships not nimble enough to evade its relentless stream of projectiles might find themselves riddled with hull punctures before long.</description>
    <gfx_store>railgunturret</gfx_store>
   </general>
   <specific type="turret bolt">
@@ -662,7 +662,7 @@
    <license>Medium Weapon License</license>
    <mass>21</mass>
    <price>25000</price>
-   <description>TODO</description>
+   <description>Mass Drivers fire massive slugs of matter at enemy ships, dealing damage through kinetic impact and knocking the target back. One of the most economical heavy weapons in the galaxy.</description>
    <gfx_store>gatling</gfx_store>
   </general>
   <specific type="bolt">
@@ -689,7 +689,7 @@
    <license>Medium Weapon License</license>
    <mass>29</mass>
    <price>25000</price>
-   <description>TODO</description>
+   <description>The MK2 version of the Mass Driver differs little from its weaker model in its working. Rather, the parts it's made of have a better performance curve, allowing the driver rounds to be fired with increased force.</description>
    <gfx_store>gatling</gfx_store>
   </general>
   <specific type="bolt">
@@ -716,7 +716,7 @@
    <license>Medium Weapon License</license>
    <mass>41</mass>
    <price>25000</price>
-   <description>TODO</description>
+   <description>If ever there was a clear example of House Dvaered's lack of subtlety, then the Mass Driver MK3 would be it. Typically mounted on medium escorts, these weapons can reduce any other ship to an inert lump of metal.</description>
    <gfx_store>gatling</gfx_store>
   </general>
   <specific type="bolt">
