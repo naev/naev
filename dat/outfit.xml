@@ -34,7 +34,7 @@
    <license>Medium Weapon License</license>
    <mass>6</mass>
    <price>15000</price>
-   <description>A new offering developed from the newly declassified Ripper MK2 specifications, the mark 2 laser cannon improves on the original in many ways. Featuring increased range and greater firepower while only moderately increasing power demands, it's become a favourite civilian armament.</description>
+   <description>The mark 2 laser cannon improves on the original in many ways. Featuring increased range and greater firepower while only moderately increasing power demands, it's become a favourite civilian armament.</description>
    <gfx_store>laser2</gfx_store>
    </general>
   <specific type="bolt">
@@ -62,7 +62,7 @@
    <license>Medium Weapon License</license>
    <mass>8</mass>
    <price>15000</price>
-   <description>A new offering developed from the newly declassified Ripper MK2 specifications, the mark 2 laser cannon improves on the original in many ways. Featuring increased range and greater firepower while only moderately increasing power demands, it's become a favourite civilian armament.</description>
+   <description>A high-powered version of the Laser Cannon, the MK3 is usually found on Imperial law enforcement ships. Its superior firepower helps keep order among the civilian populace, though it has limited applications in full blown military engagements.</description>
    <gfx_store>laser2</gfx_store>
    </general>
   <specific type="bolt">
@@ -92,7 +92,7 @@
    <license>Medium Weapon License</license>
    <mass>9</mass>
    <price>35000</price>
-   <description>By modulating the frequency of the basic laser, the Empire military increased its range, accuracy and destructive power. After reworking the power conduits, their efforts culminated in the devastating Ripper. Further revision to this design brought the Ripper MK2, though it still shares the original's heavy power demands.</description>
+   <description>The Ripper Cannon is a variant on the Laser Cannon that has stronger capacitors and twin, synchronous muzzles. The result is an increase in damage per hit, though the weapon needs longer to recharge than the standard model, so rate of fire suffers. The Ripper Cannon is mostly used by experienced pilots who don't need to rely on rapid fire to hit their marks anymore.</description>
    <gfx_store>ripper</gfx_store>
   </general>
   <specific type="bolt">
@@ -120,7 +120,7 @@
    <license>Heavy Weapon License</license>
    <mass>12</mass>
    <price>35000</price>
-   <description>By modulating the frequency of the basic laser, the Empire military increased its range, accuracy and destructive power. After reworking the power conduits, their efforts culminated in the devastating Ripper. Further revision to this design brought the Ripper MK2, though it still shares the original's heavy power demands.</description>
+   <description>By modulating the frequency of the basic Ripper Cannon, the Empire military increased its range, accuracy and destructive power. After reworking the power conduits, their efforts culminated in the devastating Heavy Ripper Cannon. The main drawback to this model is its increased bulk, which makes it unsuitable for smaller ships.</description>
    <gfx_store>ripper</gfx_store>
   </general>
   <specific type="bolt">
@@ -201,7 +201,7 @@
    <license>Medium Weapon License</license>
    <mass>31</mass>
    <price>45000</price>
-   <description>A pair of mark 2 laser cannons mounted on a rotating turret, providing excellent point-defense capabilities. This new offering has quickly won the hearts of high-value traders for its superior firepower and range, easily warding off most pirates.</description>
+   <description>The Laser Turret MK3 is often found on Imperial fast response fleets, for use against fleets of small to medium ships. This weapon is one of the mainstays in the Imperial space forces.</description>
    <gfx_store>laserturret2</gfx_store>
   </general>
   <specific type="turret bolt">
@@ -228,7 +228,7 @@
    <license>Heavy Weapon License</license>
    <mass>53</mass>
    <price>45000</price>
-   <description>A pair of mark 2 laser cannons mounted on a rotating turret, providing excellent point-defense capabilities. This new offering has quickly won the hearts of high-value traders for its superior firepower and range, easily warding off most pirates.</description>
+   <description>The Heavy Laser is more or less an upscaled version of the Laser Cannon Turret, though some fundamental mechanisms had to be redesigned to adapt to the increased energy throughput found in this weapon.</description>
    <gfx_store>laserturret2</gfx_store>
   </general>
   <specific type="turret bolt">
@@ -255,7 +255,7 @@
    <license>Heavy Weapon License</license>
    <mass>57</mass>
    <price>45000</price>
-   <description>A pair of mark 2 laser cannons mounted on a rotating turret, providing excellent point-defense capabilities. This new offering has quickly won the hearts of high-value traders for its superior firepower and range, easily warding off most pirates.</description>
+   <description>The military grade model of the Heavy Laser is one of the heaviest weapons found in the galaxy. Imperial Capital ships use it to lay down devastating barrages against enemy vessels.</description>
    <gfx_store>laserturret2</gfx_store>
   </general>
   <specific type="turret bolt">
@@ -443,7 +443,7 @@
    <size>light</size>
    <mass>9</mass>
    <price>20000</price>
-   <description>Ion pulses were designed to deactivate shields and complement radiation weaponry, which had been rendered useless in combat by shields. However, they were extremely effective against both armour and shields, supplanting radiation weaponry. With the latest generation of shields and armour materials, ion pulses are no longer as devastating.</description>
+   <description>Ion Cannons are primarily nonlethal weapons designed to short out internal ship systems and rendering it disabled without killing the crew in the process. The standard Ion Cannon is the most basic and compact design, which allows it to be mounted on small craft. This makes the Ion Cannon one of the most popular weapons for weaker pirates.</description>
    <gfx_store>ioncannon</gfx_store>
   </general>
   <specific type="bolt">
@@ -471,7 +471,7 @@
    <license>Medium Weapon License</license>
    <mass>14</mass>
    <price>20000</price>
-   <description>Ion pulses were designed to deactivate shields and complement radiation weaponry, which had been rendered useless in combat by shields. However, they were extremely effective against both armour and shields, supplanting radiation weaponry. With the latest generation of shields and armour materials, ion pulses are no longer as devastating.</description>
+   <description>The Heavy Ion Cannon does a far better job at disabling ships than the standard model, but it requires a medium mount. Most militaries employ these weapons on specialized capture teams, but the design is licensed for public use as well.</description>
    <gfx_store>ioncannon</gfx_store>
   </general>
   <specific type="bolt">
@@ -499,7 +499,7 @@
    <mass>37</mass>
    <license>Heavy Weapon License</license>
    <price>75000</price>
-   <description>The heavy ion turret uses a more powerful generator for each of its two ion cannons, giving each more punch than a lone ion cannon. The drawback is that this increases the power consumption considerably. Given their intended mounting on capital ships, their power consumption is eclipsed by the firepower they provide.</description>
+   <description>The Heavy Ion Turret is a Sirius military design, applying brute force to its target's internal systems. When coupled with Razor weaponry, it is terribly efficient at reducing enemy warships to tumbling hunks of junk.</description>
    <gfx_store>ionturret</gfx_store>
   </general>
   <specific type="turret bolt">
@@ -772,7 +772,7 @@
    <license>Heavy Weapon License</license>
    <mass>82</mass>
    <price>55000</price>
-   <description>The railgun is a cannon that uses heavy magnetic pulses to accelerate pieces of debris to extremely high velocities. The impact caused by the pieces of debris can tear apart even the strongest ship hulls.</description>
+   <description>While the Railgun was devastating in its effects, it wasn't quite devastating enough for Dvaered High Command. They had their engineers enhance the weapon into a heavier, faster firing variant that isn't so much a gun as it is a miniature meteor shower generator.</description>
    <gfx_store>railgun</gfx_store>
   </general>
   <specific type="bolt">
@@ -857,7 +857,7 @@
    <license>Medium Weapon License</license>
    <mass>5</mass>
    <price>18000</price>
-   <description>The mark 2 plasma blaster improves on its predecessor in many ways, maintaining good energy efficiency while augmenting range and firepower. Though intended primarily for military use, many have found their way to pirate hands.</description>
+   <description>The mark 2 plasma blaster improves on its predecessor in many ways, maintaining good energy efficiency while augmenting range and firepower. Pirates have taken a liking to this weapon.</description>
    <gfx_store>plasma2</gfx_store>
   </general>
   <specific type="bolt">
@@ -885,7 +885,7 @@
    <license>Medium Weapon License</license>
    <mass>8</mass>
    <price>18000</price>
-   <description>The mark 2 plasma blaster improves on its predecessor in many ways, maintaining good energy efficiency while augmenting range and firepower. Though intended primarily for military use, many have found their way to pirate hands.</description>
+   <description>The Plasma Blaster MK3 is a Soromid refinement to what was originally an Imperial design. It is one of the few Soromid military weapons that are compatible with standard ship mount points. The Soromid use it mainly for local law enforcement purposes.</description>
    <gfx_store>plasma2</gfx_store>
   </general>
   <specific type="bolt">
@@ -1569,7 +1569,7 @@
    <slot>structure</slot>
    <mass>9</mass>
    <price>60000</price>
-   <description>An enhancement for the shield power system, allowing it to resist heavier fire.</description>
+   <description>An enhancement for the shield power system, giving small ships a better chance of escaping attackers.</description>
    <gfx_store>capacitor</gfx_store>
   </general>
   <specific type="modification">
@@ -1582,7 +1582,7 @@
    <slot>structure</slot>
    <mass>18</mass>
    <price>110000</price>
-   <description>An enhancement for the shield power system, allowing it to resist heavier fire.</description>
+   <description>A more powerful shield enhancer, providing better protection during skirmishes.</description>
    <gfx_store>capacitor2</gfx_store>
   </general>
   <specific type="modification">
@@ -1595,7 +1595,7 @@
    <slot>structure</slot>
    <mass>36</mass>
    <price>220000</price>
-   <description>An enhancement for the shield power system, allowing it to resist heavier fire.</description>
+   <description>A heavy duty shield enhancer for ships that face combat on a regular basis.</description>
    <gfx_store>capacitor4</gfx_store>
   </general>
   <specific type="modification">
@@ -1608,7 +1608,7 @@
    <slot>structure</slot>
    <mass>72</mass>
    <price>400000</price>
-   <description>An enhancement for the shield power system, allowing it to resist heavier fire.</description>
+   <description>The pinnacle in shield boosting technology, reinforcing the defenses of ships fighting on the front lines.</description>
    <gfx_store>capacitor8</gfx_store>
   </general>
   <specific type="modification">
