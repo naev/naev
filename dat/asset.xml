@@ -273,6 +273,7 @@
    <bar>Ambre's spaceport bar is never quiet. At regular intervals, all other noise in the bar is drowned out by the sound of cargo pods trundling across the railway just below. This is because the bar was built relatively late in the planet's development, as the Imperial government didn't see the need for one when Ambre was still little more than a labor camp. As a result, the bar had to be squeezed into one the only remaining space available, which was right over the freight lines.</bar>
   </general>
   <tech>
+   <item>Kinetic 1</item>
    <item>Basic Outfits 1</item>
    <item>Missiles 1</item>
    <item>Low Tech Upgrades</item>
@@ -312,6 +313,7 @@
    <bar>The Ammu Spaceport Bar, known as "The Heatsink" due to its frigid temperatures, in contrast to the rest of the station. While primarily known for their temperature, that's not to say they can't whip up a mean Pan-Galactic Gargle Blaster.</bar>
   </general>
   <tech>
+   <item>Laser 1</item>
    <item>Basic Outfits 1</item>
   </tech>
  </asset>
@@ -549,6 +551,7 @@
    <bar>The spaceport bar is approximately 3 kilometres below the surface of the planet. The walls are constructed from a hardened, transparent polymer that allows you to see into the darkness of the water. Every so often you can see gelatinous creatures sliding around, barely illuminated by the bar lighting.</bar>
   </general>
   <tech>
+   <item>Kinetic 1</item>
    <item>Basic Outfits 1</item>
   </tech>
  </asset>
@@ -610,6 +613,7 @@
    <bar>The Antican bar is a rather lavish affair, quite in contrast to the stark exterior of the orbiting military station. Serving some of the Empire's finest food and drink, this Arcturian bar is often a traveller's introduction to Empire cuisine.</bar>
   </general>
   <tech>
+   <item>Laser 1</item>
    <item>Basic Outfits 1</item>
    <item>Basic Civilian Ships</item>
   </tech>
@@ -649,6 +653,8 @@
    <bar>What is beautiful is often dangerous, but sometimes it also works the other way around. The spaceport bar on Anubis has a view over a ravine in the planet's surface, and the radioactive storms that frequently rage through it are quite a sight to behold. It is only offworlders who appreciate it, though, as most locals know how unpleasant it is to have to work in conditions like that.</bar>
   </general>
   <tech>
+   <item>Kinetic 1</item>
+   <item>Kinetic 2</item>
    <item>Basic Trade Ships</item>
    <item>Light Civilian Combat Ships</item>
    <item>Basic Outfits 1</item>
@@ -758,6 +764,7 @@
    <bar>This bar is a quiet place. Though it is certainly not lacking in patronage, the people who come here don't seem about to make a fuss over anything. The effect is contagious, making newcomers follow the example of those who are already there almost instinctively.</bar>
   </general>
   <tech>
+   <item>Ion 1</item>
    <item>Basic Outfits 1</item>
    <item>Basic Civilian Ships</item>
   </tech>
@@ -832,6 +839,9 @@
    <bar>A truly utilitarian place, the Arcturus Gamma bar is metallic grey, meticulously maintained, and full of off-duty Empire soldiers.</bar>
   </general>
   <tech>
+   <item>Laser 1</item>
+   <item>Laser 2</item>
+   <item>Laser 3</item>
    <item>Basic Outfits 1</item>
    <item>Basic Outfits 2</item>
    <item>Heavy Weapons 1</item>
@@ -1323,6 +1333,7 @@
    <bar>On Brooks, everything is expensive, something that comes with most economically booming worlds. However, most traders put up with the inflated prices for refreshments and services at the spaceport bar, because Brooks is a place where profit is made.</bar>
   </general>
   <tech>
+   <item>Laser 1</item>
    <item>Basic Outfits 1</item>
    <item>Basic Outfits 2</item>
    <item>Missiles 2</item>
@@ -1361,6 +1372,7 @@
    <bar>If this spaceport bar didn't play a locally produced, incessant, droning, brain-melting music, it would be quite a comfortable place to be. But it does, so it isn't.</bar>
   </general>
   <tech>
+   <item>Kinetic 1</item>
    <item>Basic Outfits 1</item>
    <item>Low Tech Upgrades</item>
   </tech>
@@ -1401,6 +1413,7 @@
    <bar>The bar is just off the starport with a great view of the harbor. You could watch the fishermen run frantically about attending their duties for hours.</bar>
   </general>
   <tech>
+   <item>Laser 1</item>
    <item>Basic Outfits 1</item>
    <item>Basic Outfits 2</item>
    <item>Basic Civilian Ships</item>
@@ -1682,6 +1695,7 @@
    <bar>The spaceport bar is a popular place on Chriik, because even inside the habitation complexes the air is so dry it will parch you out in record time.</bar>
   </general>
   <tech>
+   <item>Ion 2</item>
    <item>Heavy Civilian Combat Ships</item>
    <item>Basic Outfits 2</item>
    <item>Missiles 1</item>
@@ -1810,6 +1824,7 @@
    <bar>Fishing is the name of the game on Crylo, and the spaceport bar is nothing if not in character. Almost everything in here is fish-themed, including the bar, which has been made out of the spine of some gargantuan aquatic creature.</bar>
   </general>
   <tech>
+   <item>Laser 2</item>
    <item>Light Civilian Combat Ships</item>
    <item>Basic Outfits 2</item>
    <item>Missiles 1</item>
@@ -2066,6 +2081,10 @@
    <bar>The Darkshed canteen is decorated with all sorts of odd artifacts that chronicle trends in spaceship outfitting in the years since the station was established. Scale models of many popular ships hang from the ceiling.</bar>
   </general>
   <tech>
+   <item>Laser 1</item>
+   <item>Ion 1</item>
+   <item>Kinetic 1</item>
+   <item>Plasma 1</item>
    <item>High Tech Upgrades 2</item>
    <item>Basic Outfits 2</item>
    <item>Basic Trade Ships</item>
@@ -2363,6 +2382,8 @@
    <bar>Donnar has something unusual to offer to offworlders. The spaceport bar is constructed like an arena, with the spectator area fulfilling the functions that most other spaceport bars do, and the central area serving as the stage for entertainment of all kinds, ranging from fights to displays of art. The concept is rather ingenious, and many a spacer is as astonished at the display as they are at the fact that the Dvaered came up with this idea.</bar>
   </general>
   <tech>
+   <item>Kinetic 1</item>
+   <item>Kinetic 2</item>
    <item>Basic Outfits 2</item>
    <item>Low Tech Upgrades</item>
    <item>High Tech Upgrades 1</item>
@@ -2456,6 +2477,7 @@
    <bar>The Dowue Spaceport Bar is better known as the Frozen Shrimp after some ancient crustaceans found during the construction of the spaceport. It is a place where most of the personnel spend their time. The dangers, even with protective goggles, of the Dowue Syndrome persuade most people to stay indoors, and the bar lies in the heart of the spaceport.</bar>
   </general>
   <tech>
+   <item>Laser 1</item>
    <item>Basic Outfits 1</item>
    <item>Low Tech Upgrades</item>
   </tech>
@@ -2560,6 +2582,7 @@
    <bar>The spaceport bar on Draconis Epsilon is circular in shape, with exits all around leading to the various spaceport platforms. The place is gigantic, providing seats for up to ten thousand customers at the same time, and more at the bar. Most spacers who have visited Epsilon Draconis agree that few spaceport bars are quite as impressive as this one.</bar>
   </general>
   <tech>
+   <item>Laser 2</item>
    <item>Basic Outfits 2</item>
    <item>High Tech Upgrades 1</item>
   </tech>
@@ -2621,6 +2644,7 @@
    <bar>Ever the optimists, the people of Draconis Omega have decorated their spaceport bar with displays of past Imperial power, portraits of former Emperors and charts that show the size of the Empire when it was at its peak. It's clear that the inhabitants truly believe that the good times will one day return.</bar>
   </general>
   <tech>
+   <item>Laser 1</item>
    <item>Bulk Trade Ships</item>
    <item>Basic Civilian Ships</item>
    <item>Basic Outfits 1</item>
@@ -2749,6 +2773,7 @@
    <bar>Durumdra doesn't have much to distinguish itself by in the galaxy, but the spaceport bar comes a long way. It has drinks from all over the galaxy, though Draygar's awkward location means that most of them are rather pricey. Nevertheless, Durumdra has earned itself a footnote in several noted galactic tourist guides.</bar>
   </general>
   <tech>
+   <item>Kinetic 1</item>
    <item>Basic Outfits 1</item>
    <item>Basic Outfits 2</item>
    <item>Missiles 1</item>
@@ -2920,6 +2945,8 @@
    <bar>Dvaer Prime sports a well appointed spaceport bar. It is not so much luxurious as it is grimy, but at least all necessary facilities are present and in working order, and the drinks are decent enough by Dvaered standards. A holopainting on the wall commemorates the inauguration ceremony for House Dvaered, but it is faded and warped in places, a testament to the fact that most Dvaered citizens have long ago forgotten that they are technically still part of the Empire.</bar>
   </general>
   <tech>
+   <item>Kinetic 1</item>
+   <item>Kinetic 2</item>
    <item>Bulk Trade Ships</item>
    <item>Light Civilian Combat Ships</item>
    <item>Low Tech Upgrades</item>
@@ -2954,6 +2981,9 @@
    <bar>(null)</bar>
   </general>
   <tech>
+   <item>Kinetic 1</item>
+   <item>Kinetic 2</item>
+   <item>Kinetic 3</item>
    <item>Dvaered Military Ships</item>
    <item>Low Tech Upgrades</item>
    <item>High Tech Upgrades 1</item>
@@ -3013,6 +3043,8 @@
    <bar>This bar is clearly not a place for relaxation. It is frequented mostly by traders who are waiting for their shipments to clear. The appointments are drab and functional, and the smell of cleaning chemicals is prevalent.</bar>
   </general>
   <tech>
+   <item>Kinetic 1</item>
+   <item>Kinetic 2</item>
    <item>Heavy Civilian Combat Ships</item>
    <item>High Tech Upgrades 1</item>
    <item>Missiles 1</item>
@@ -3214,6 +3246,7 @@
    <bar>The bar exclusively plays local music, serves local food and drink and provides mainly local news. The people here apparently seem to want to cling on to what little personality the world still has, for fear that Em 1 will really become just an extension of the Imperial economy.</bar>
   </general>
   <tech>
+   <item>Laser 1</item>
    <item>Basic Trade Ships</item>
    <item>Basic Outfits 1</item>
    <item>Missiles 1</item>
@@ -3301,6 +3334,7 @@
    <bar>The Drunken Lobster has a plaque commemorating the time the Emperor spent on Em 5. It seems unlikely he ever visited this bar, though, given its less than refined patrons and threadbare furniture.</bar>
   </general>
   <tech>
+   <item>Laser 2</item>
    <item>Basic Civilian Ships</item>
    <item>Basic Outfits 2</item>
   </tech>
@@ -3340,6 +3374,7 @@
    <bar>Ember's spaceport bar is frequented by workers from the industrial complex, most of them from the Shaira echelon. They have many tales to tell of the dangers of their job and the brutal nature of Ember's weather. None of them seem to be discontent with their lives, though.</bar>
   </general>
   <tech>
+   <item>Ion 1</item>
    <item>Basic Outfits 1</item>
    <item>Low Tech Upgrades</item>
   </tech>
@@ -3537,6 +3572,7 @@
    <bar>Perhaps uniquely in the galaxy, both the spaceport and its associated facilities are afloat without tethers. This means that the location of the spaceport itself changes over time as the platform is carried on the major currents that span the face of the planet.</bar>
   </general>
   <tech>
+   <item>Laser 2</item>
    <item>Heavy Civilian Combat Ships</item>
    <item>Basic Outfits 2</item>
    <item>Missiles 1</item>
@@ -3703,6 +3739,9 @@
    <bar>The spacedock bar is mainly frequented by Dvaered military pilots, as can be expected from a bar on a military base. The drinks served here are mostly free of mind-altering substances, a serious detractor to the ordinary visitor, but then Fernando station isn't out to make itself attractive.</bar>
   </general>
   <tech>
+   <item>Kinetic 1</item>
+   <item>Kinetic 2</item>
+   <item>Basic Outfits 1</item>
    <item>Missiles 1</item>
    <item>Missiles 2</item>
   </tech>
@@ -3850,6 +3889,9 @@
    <bar>(null)</bar>
   </general>
   <tech>
+   <item>Ion 1</item>
+   <item>Ion 2</item>
+   <item>Ion 3</item>
    <item>Sirius Military Ships</item>
    <item>High Tech Upgrades 2</item>
    <item>Heavy Weapons 1</item>
@@ -4119,6 +4161,8 @@
    <bar>The bar caters to its clientele with considerable efficiency. Since Fuzka has quite a high amount of civilian traffic, its bar needs to handle the many passengers who are waiting for their transport to depart.</bar>
   </general>
   <tech>
+   <item>Laser 1</item>
+   <item>Laser 2</item>
    <item>Basic Outfits 1</item>
    <item>Basic Outfits 2</item>
    <item>Low Tech Upgrades</item>
@@ -4371,6 +4415,7 @@
    <bar>Like many spaceport bars, this one is loud, crowded and a little smelly. In other words, it's a home away from home for those who make their living in space.</bar>
   </general>
   <tech>
+   <item>Laser 1</item>
    <item>Basic Outfits 1</item>
    <item>Basic Outfits 2</item>
    <item>Low Tech Upgrades</item>
@@ -4430,6 +4475,7 @@
    <bar>Predictably, the spaceport bar is themed on Wilibrord Gilligan, showing his likeness in several places and displaying a map of his travels through the galaxy on the wall. A popular topic in this bar is the dwarf planets in Gilligan's Memory, particularly speculations on why Gilligan chose to name them the way he did.</bar>
   </general>
   <tech>
+   <item>Ion 1</item>
    <item>Basic Outfits 1</item>
    <item>Basic Outfits 2</item>
    <item>Low Tech Upgrades</item>
@@ -4533,6 +4579,8 @@
    <bar>A lot of planetside spaceport bars have windows that give visitors a glance of the immediate environment, but the one on Ginni does not. This is because the sunlight on Ginni can get rather intense, and it was cheaper to build a wall than an automatically adjusting viewport. Besides, there's not too much to see anyway.</bar>
   </general>
   <tech>
+   <item>Kinetic 1</item>
+   <item>Kinetic 2</item>
    <item>Basic Outfits 1</item>
    <item>Basic Outfits 2</item>
    <item>Missiles 1</item>
@@ -4615,6 +4663,8 @@
    <bar>A pretty decent place as far as spaceport bars go, Godtra's bar is well equipped to facilitate traders and other offworlders. The data uplinks are decently speedy, which is rare on a Dvaered world. Clearly, the local infrastructure has been well designed.</bar>
   </general>
   <tech>
+   <item>Kinetic 1</item>
+   <item>Kinetic 2</item>
    <item>Basic Outfits 2</item>
    <item>High Tech Upgrades 1</item>
    <item>Missiles 2</item>
@@ -4676,6 +4726,7 @@
    <bar>At the center of this spaceport bar stands a pillar, on which are displayed all the names that the planet has been known by, including the name of one unfortunate Warlord named Clerke, who was in control of this world for a little under four hours.</bar>
   </general>
   <tech>
+   <item>Kinetic 2</item>
    <item>Basic Outfits 2</item>
    <item>Missiles 1</item>
   </tech>
@@ -4832,6 +4883,8 @@
    <bar>Halir's bar has everything the weary traveler could hope for, from drinks to data uplink terminals to per-table sound dampening fields and music generators. In short it is a luxurious place, which is largely due to Halir's long history of economic success. Anything you can't find in the bar you can find in the pleasure district, which is just a single tube station away.</bar>
   </general>
   <tech>
+   <item>Laser 1</item>
+   <item>Laser 2</item>
    <item>Basic Outfits 1</item>
    <item>Basic Outfits 2</item>
    <item>Low Tech Upgrades</item>
@@ -5076,6 +5129,7 @@
    <bar>The rustic feel of this bar is the product of a careful choice of appointments, music and holographic illusions. The owner clearly feels that customers will be attracted by the atmosphere of his establishments, rather than by the drinks he serves.</bar>
   </general>
   <tech>
+   <item>Ion 1</item>
    <item>Basic Trade Ships</item>
    <item>Bulk Trade Ships</item>
    <item>Basic Outfits 1</item>
@@ -5302,6 +5356,7 @@
    <bar>On Ian, it's all about being seen. The bar never goes quiet, though the level of noise also never grows to uncivilized proportions. Both the gentry and the rich upstarts come to the recreational facilities to mingle and to strut their stuff to the offworlders who come here on business.</bar>
   </general>
   <tech>
+   <item>Laser 1</item>
    <item>Basic Civilian Ships</item>
    <item>Basic Outfits 1</item>
    <item>Basic Outfits 2</item>
@@ -5434,6 +5489,8 @@
    <bar>The bar is built against an outer wall. Several large windows allow patrons to look out on the frozen wastes of Eye of Night III, the planet around which the station orbits. Not coincidentally, the windows also allow people to see the Sirius armed forces docking and taking off, emphasizing the military capacity of the station.</bar>
   </general>
   <tech>
+   <item>Ion 1</item>
+   <item>Ion 2</item>
    <item>Light Civilian Combat Ships</item>
    <item>Basic Outfits 2</item>
   </tech>
@@ -5471,6 +5528,7 @@
    <bar>Jaan has a big spaceport, and to facilitate the many pilots and crews that pass through it has multiple spaceport bars. Each spaceport bar is exactly the same as all the others, though. Not even the people who frequently visit Jaan can tell them apart. This regularly causes problems for unsuspecting people who promised to meet at the spaceport bar.</bar>
   </general>
   <tech>
+   <item>Laser 1</item>
    <item>Basic Outfits 1</item>
    <item>Missiles 1</item>
    <item>Missiles 2</item>
@@ -5968,6 +6026,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <bar>Though technically this place is the spaceport bar, its main function is a place of leisure for the local population. At all times, you can find large groups of Dvaered workers here, spending their off-time and their credits on booze and entertainment.</bar>
   </general>
   <tech>
+   <item>Kinetic 1</item>
    <item>Basic Outfits 2</item>
    <item>Missiles 1</item>
    <item>Missiles 2</item>
@@ -6247,6 +6306,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <bar>Because the Sirii didn't want to waste space on a full-fledged spaceport bar, the bar on Lorelei is a virtual one. Visitors enter a VR booth and are given the illusion of being in a large, luxurious spaceport bar, where they can interact with other visitors and the uplink avatars. It is even possible to consume beverages in the virtual bar, as the VR booth is capable of stimulating the part of the human brain that deals with food and drink.</bar>
   </general>
   <tech>
+   <item>Ion 1</item>
    <item>Basic Trade Ships</item>
    <item>Basic Outfits 2</item>
    <item>Low Tech Upgrades</item>
@@ -6326,6 +6386,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <bar>Since traders don't come to this military base, the bar is only frequented by Imperial military personnel. It's more like a canteen than a bar, really.</bar>
   </general>
   <tech>
+   <item>Laser 1</item>
+   <item>Laser 2</item>
    <item>High Tech Upgrades 1</item>
    <item>Basic Outfits 2</item>
    <item>Missiles 1</item>
@@ -6367,6 +6429,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <bar>There are two spaceport bars on Madria, one for regular visitors and one for immigrants. The one for immigrants is more or less a portal into Sirius society - a one way portal. Normal spacers stay away from it.</bar>
   </general>
   <tech>
+   <item>Ion 1</item>
    <item>Basic Trade Ships</item>
    <item>Basic Outfits 2</item>
   </tech>
@@ -6464,6 +6527,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <bar>This bar is one of many. The increase in trade has also brought an increase in tastes, so there are several places that cater to particular tastes, even some very unsavory ones. Fortunately, the most accessible bar seems to be as respectable as bars come.</bar>
   </general>
   <tech>
+   <item>Kinetic 1</item>
+   <item>Kinetic 2</item>
    <item>Basic Outfits 1</item>
    <item>Basic Outfits 2</item>
    <item>Missiles 1</item>
@@ -6478,7 +6543,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   </pos>
   <GFX>
    <space>station-shipyard.png</space>
-   <exterior>forest.png</exterior>
+   <exterior>station03.png</exterior>
   </GFX>
   <presence>
    <faction>Goddard</faction>
@@ -6504,6 +6569,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <bar>The station's bar is more businesslike than recreative. The people who come here are either traders who came to load or unload goods, or potential customers looking for a Goddard-made ship. Nobody is really interested in just passing the time, because time is money on Manuel Station.</bar>
   </general>
   <tech>
+   <item>Laser 1</item>
+   <item>Kinetic 1</item>
    <item>Heavy Civilian Combat Ships</item>
    <item>Bulk Trade Ships</item>
    <item>Goddard Ship</item>
@@ -6814,7 +6881,9 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <bar>This bar has chosen to constantly play a heavy beat music track. This is not because people like heavy beat music, but rather to mask the tremors the planet's unstable crust sometimes creates.</bar>
   </general>
   <tech>
+   <item>Ion 2</item>
    <item>Basic Outfits 2</item>
+   <item>Low Tech Upgrades</item>
   </tech>
  </asset>
  <asset name="Mouddar">
@@ -6884,6 +6953,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <bar>The spaceport bar is the primary meeting place for offworlders on Mutris. Since only Sirii may venture beyond the commercial district, all others are either conducting business or relaxing here. As far as bars go, Mutris' is a fairly accomodating one, though the various religious references make it somewhat uncomfortable to some.</bar>
   </general>
   <tech>
+   <item>Ion 2</item>
    <item>Basic Outfits 2</item>
    <item>High Tech Upgrades 1</item>
    <item>Basic Civilian Ships</item>
@@ -7183,6 +7253,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>The Slop and Grill is one of the nastiest taverns in the universe. The food and drink don't help matters. Most of it is brewed on New Haven and wouldn't pass any of the minimal health insurance tests. Some of the booze even doubles as ship fuel if needed. The clients are also deep space thugs, pirates, black marketers, mercenaries and other shady folk that insist on keeping the ground coated with blood and broken teeth. Not a great place to bring the family.</bar>
   </general>
   <tech>
+   <item>Plasma 1</item>
+   <item>Plasma 2</item>
    <item>Pirate Ships</item>
    <item>Missiles 1</item>
    <item>Missiles 2</item>
@@ -7296,6 +7368,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>On Niflheim, space is at a premium. As such there is not much room to spare for leisure, which shows in the spaceport bar. All tables are stand-up arrangements, and there is not much room to maneuver. Any visitor will have to be prepared for some necessary intimacies if he wants to frequent this establishment.</bar>
   </general>
   <tech>
+   <item>Laser 1</item>
    <item>Missiles 1</item>
    <item>Basic Outfits 1</item>
    <item>Basic Outfits 2</item>
@@ -7585,6 +7658,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>While not a grandiose affair, the spaceport bar is reasonably sized and immaculately clean. Due to the increasing number of Empire officials making their home here, it remains busy throughout the day.</bar>
   </general>
   <tech>
+   <item>Laser 1</item>
+   <item>Laser 2</item>
    <item>Light Civilian Combat Ships</item>
    <item>Basic Outfits 2</item>
   </tech>
@@ -7742,6 +7817,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>The Omega Canteen is a dark place that seems calm, although everytime a robotic drone approaches an alarm sounds sending pilots to man their ships to fight off the menace.</bar>
   </general>
   <tech>
+   <item>Laser 1</item>
+   <item>Laser 2</item>
    <item>Heavy Weapons 1</item>
    <item>Low Tech Upgrades</item>
    <item>Basic Outfits 2</item>
@@ -7779,6 +7856,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>Every visitor to Onar is required to check in at the spaceport bar immediately after landing. Nobody is allowed off the premises of the spaceport without a good reason, and even then they will be accompanied by an official Dvaered chaperone. Most visitors therefore find themselves confined to the spaceport bar.</bar>
   </general>
   <tech>
+   <item>Kinetic 2</item>
    <item>Basic Outfits 2</item>
    <item>Missiles 2</item>
    <item>Heavy Weapons 1</item>
@@ -8336,6 +8414,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>The owner of the bar has served in several Dvaered campaigns in his day, and it shows. The bar is decorated with trophies and other memorabilia from those days, and the man will tell anyone who will listen about what he calls his glory days.</bar>
   </general>
   <tech>
+   <item>Kinetic 1</item>
    <item>Basic Civilian Ships</item>
    <item>Basic Outfits 1</item>
   </tech>
@@ -8486,6 +8565,9 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>Since you aren't allowed in the fancier bars you wander into the spaceport bar. A simple, utilitarian bar patronized largely by off-duty dock workers and terraformers, it is nonetheless kept immaculately clean. You can only imagine how luxurious the Emperor's personal bar must be.</bar>
   </general>
   <tech>
+   <item>Laser 1</item>
+   <item>Laser 2</item>
+   <item>Laser 3</item>
    <item>Empire Military Ships</item>
    <item>High Tech Upgrades 2</item>
    <item>Heavy Weapons 2</item>
@@ -8526,6 +8608,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>While not nearly as pristine as many Empire bars, the Praxis bar is remarkably well-kept for a Dvaered bar.</bar>
   </general>
   <tech>
+   <item>Kinetic 1</item>
    <item>Basic Trade Ships</item>
    <item>Bulk Trade Ships</item>
    <item>Basic Outfits 1</item>
@@ -8851,6 +8934,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>This is a fairly typical spaceport bar. The clientele consists mostly of merchants, though some locals come here also, if not for the drinks then for the chance to talk to people who come from more interesting places than Qoral.</bar>
   </general>
   <tech>
+   <item>Laser 2</item>
    <item>Basic Outfits 2</item>
    <item>Low Tech Upgrades</item>
    <item>Missiles 1</item>
@@ -8890,6 +8974,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>The first thing anyone notices when they step into the bar is the ceiling, which is a holographic display of the galaxy, centered around Anarbalis. Though an impressive display as well as a marvel of technology, the bar's proprietor apparently doesn't realize that many of his customers spend all day looking at the stars, and therefore have little desire to look at them when onworld.</bar>
   </general>
   <tech>
+   <item>Ion 2</item>
    <item>Basic Outfits 2</item>
    <item>Bulk Trade Ships</item>
   </tech>
@@ -9033,6 +9118,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>The Raelid bar fits the Dvaered stereotype well. It's one of the more prominent areas as soon as you exit the docking area, and, as many Dvaered bars seem to be, it's much larger than it functionally needs to be. Far from the spotless bars of Polaris Prime, it's encrusted with dirt and you can sense the presence of other patrons by their smell alone. Truly, a Dvaered bar.</bar>
   </general>
   <tech>
+   <item>Kinetic 1</item>
    <item>Basic Outfits 1</item>
    <item>Missiles 1</item>
   </tech>
@@ -9141,6 +9227,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>In what might be a slight case of overreaction, Reidd's bar is underground, so as not to have to sacrifice any land surface. Still, the primary difference between this bar and most others in the galaxy is that pilots have to take an elevator to reach this one.</bar>
   </general>
   <tech>
+   <item>Laser 1</item>
    <item>Basic Outfits 1</item>
    <item>Basic Outfits 2</item>
   </tech>
@@ -9327,6 +9414,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>This spaceport bar is wholly unremarkable. It could be any other bar on any other planet. The only thing that reminds you that you're still on Rionna is that the patrons are all wearing warm clothes.</bar>
   </general>
   <tech>
+   <item>Ion 1</item>
    <item>Basic Outfits 1</item>
   </tech>
  </asset>
@@ -9905,6 +9993,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>Seanich has a pretty well-appointed spaceport bar. It has all the facilities a spacer could need, and many are quite up to date. Sadly, this hasn't helped to make the unfortunate colony more conspicuous in the galaxy. Most of the tables are empty.</bar>
   </general>
   <tech>
+   <item>Laser 1</item>
    <item>Basic Outfits 1</item>
    <item>Missiles 2</item>
   </tech>
@@ -10020,6 +10109,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>Semper is an immigrant world, which is reflected in its spaceport bar. The design betrays influences from all over the galaxy, such as a holograph of a Dvaered cruiser, a Sirius crest on some of the furniture and even some Soromid-oriented drinks.</bar>
   </general>
   <tech>
+   <item>Laser 2</item>
    <item>Basic Outfits 1</item>
    <item>Basic Outfits 2</item>
    <item>Basic Civilian Ships</item>
@@ -10202,6 +10292,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>The spaceport bar sells only a select number of drinks. Like most mining worlds, there is not much in the way of luxury to be found on Shiarta. There is, however, one small piece of good news: ice cubes are free of charge.</bar>
   </general>
   <tech>
+   <item>Laser 1</item>
    <item>Basic Outfits 1</item>
    <item>Basic Outfits 2</item>
    <item>Missiles 1</item>
@@ -10353,6 +10444,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>This bar is divided into three sections. One is blue, one is green and the other is purple. It seems to have some significance, but nobody seems to know exactly what it is. The locals get very upset when you're sitting in the wrong section, though.</bar>
   </general>
   <tech>
+   <item>Ion 1</item>
    <item>Basic Outfits 2</item>
    <item>Basic Civilian Ships</item>
   </tech>
@@ -10393,6 +10485,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>Sinclair's spaceport bar is run by entrepreneurs, not warriors. But being entrepreneurs, they recognize the value of catering to the locals and to those that pass through, and so it is that this bar has a large holoportrait of Godfried Sinclair hanging over the bar, and his family's weapon can be seen on various decorative fixtures.</bar>
   </general>
   <tech>
+   <item>Kinetic 1</item>
    <item>Basic Civilian Ships</item>
    <item>Light Civilian Combat Ships</item>
    <item>Basic Trade Ships</item>
@@ -10460,6 +10553,9 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>(null)</bar>
   </general>
   <tech>
+   <item>Ion 1</item>
+   <item>Ion 2</item>
+   <item>Ion 3</item>
    <item>High Tech Upgrades 2</item>
    <item>Missiles 1</item>
    <item>Missiles 2</item>
@@ -10565,6 +10661,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>Sroolu is only a small colony, but its bar is huge, even by intergalactic standards. It seems whoever built it intended for the entire workforce to fit inside at once. Suffice to say only part of the bar's floor surface is actually in use, the remaining space being screened off by mobile panels.</bar>
   </general>
   <tech>
+   <item>Basic Outfits 1</item>
    <item>Missiles 1</item>
    <item>Missiles 2</item>
   </tech>
@@ -10599,6 +10696,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>This bar is the only public facility on the station. It is here that free merchants come to do business as well as relax. The bar also doubles as a modest hotel, so at least you won't have to sleep on your ship. Of course, the only difference is that your ship isn't as noisy...</bar>
   </general>
   <tech>
+   <item>Kinetic 2</item>
    <item>Heavy Weapons 1</item>
    <item>Missiles 1</item>
    <item>Missiles 2</item>
@@ -10639,6 +10737,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>Stutee's bar is located right off the spaceport. Though the planet has been settled and proper infrastructure is now present, the world is not very appealing to any who visit. As such, the spaceport bar is arguably the most important meeting place on the face of the moon.</bar>
   </general>
   <tech>
+   <item>Kinetic 1</item>
    <item>Low Tech Upgrades</item>
    <item>Basic Outfits 1</item>
    <item>Missiles 1</item>
@@ -10678,6 +10777,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>This spaceport bar is unsavory. No other word will describe the place with the same accuracy. A good portion of the bar's clientele are wearing hoods, masks, or other garments to hide their personal features. The lighting is set to quite a dim level, allowing customers to find corners as dark as they please. Despite these obvious signs, the Dvaered officials that sometimes frequent the bar don't seem very keen to investigate.</bar>
   </general>
   <tech>
+   <item>Kinetic 2</item>
    <item>Basic Outfits 1</item>
    <item>Heavy Weapons 1</item>
    <item>Missiles 1</item>
@@ -10757,6 +10857,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>This spaceport bar not only provides food, drink and the standard facilities, it also has its own VR lounge. The lounge seems to be used mainly by youngsters who probably have no business being in a spaceport bar, though.</bar>
   </general>
   <tech>
+   <item>Ion 1</item>
    <item>Missiles 1</item>
    <item>Basic Outfits 1</item>
    <item>Basic Civilian Ships</item>
@@ -10827,6 +10928,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>Serving both as a trading hub and an outlet of consumer end products, the spacedock bar on Tankard Station is always a bustle of activity. In fact, the actual bar seems more like a section of a larger commerce center than the other way around.</bar>
   </general>
   <tech>
+   <item>Ion 1</item>
    <item>Basic Outfits 1</item>
    <item>Low Tech Upgrades</item>
    <item>Missiles 1</item>
@@ -11165,6 +11267,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>This is a typical stationside bar. It has viewports looking into space, which are of course ignored by everyone, since anyone who comes to a station like this has seen all the space they could possibly want to..</bar>
   </general>
   <tech>
+   <item>Laser 1</item>
+   <item>Laser 2</item>
    <item>Light Civilian Combat Ships</item>
    <item>Basic Civilian Ships</item>
    <item>Basic Outfits 1</item>
@@ -11350,6 +11454,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>This bar is always full of people, some crowding around the many holovid pillars to watch the fights in the tournament, others drinking their sorrows away if their contestant was unlucky. The air is buzzing with excitement, and it's hard to make oneself heard over the din. For this reason, orders are placed through terminals projected onto the table surface, and drinks are served from a small dispenser in the middle of the table. Obviously, this establishment is making a lot of money.</bar>
   </general>
   <tech>
+   <item>Kinetic 1</item>
+   <item>Kinetic 2</item>
    <item>Basic Outfits 1</item>
    <item>Basic Outfits 2</item>
    <item>Missiles 1</item>
@@ -11389,6 +11495,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>Traal's spaceport bar is heavy on Sirian propaganda. With foreign territories just a jump away, the Sirii feel the need to spread their beliefs, even if only passively. Though House Sirius has stopped expanding in recent years, the Traalians believe that Sirichana is merely taking a pause to stabilize the existing Sirian worlds. Soon, they say, Fidelis will be Sirius space.</bar>
   </general>
   <tech>
+   <item>Ion 1</item>
    <item>Basic Outfits 2</item>
    <item>Low Tech Upgrades</item>
    <item>Missiles 1</item>
@@ -11451,6 +11558,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>The spaceport bar is subject to the whims of the Warlords just like anything else on the face of the planet, so it is best to check the local rules every time you set your ship down on Trincea. Fortunately, having drinks and checking the news have never been outlawed so far.</bar>
   </general>
   <tech>
+   <item>Kinetic 1</item>
+   <item>Kinetic 2</item>
    <item>Basic Outfits 1</item>
    <item>Basic Outfits 2</item>
    <item>Basic Trade Ships</item>
@@ -11701,6 +11810,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>Every spaceport needs a spaceport bar. That is probably the only reason why Urail has one, since the population would much prefer to use the space so build housing for upper echelon Sirii. Nevertheless, the bar is comfortable enough, despite the pricey drinks.</bar>
   </general>
   <tech>
+   <item>Ion 1</item>
    <item>Basic Outfits 1</item>
    <item>Missiles 1</item>
   </tech>
@@ -11876,6 +11986,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>The spaceport bar is a relatively sizeable one. It features a large viewscreen that is constantly updated with trade related information, interlaced with advertisements for upcoming events and festivals.</bar>
   </general>
   <tech>
+   <item>Ion 2</item>
    <item>Missiles 1</item>
    <item>High Tech Upgrades 1</item>
    <item>Light Civilian Combat Ships</item>
@@ -11915,6 +12026,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>This bar is a miner's bar, alpha and omega. Virtually all its patrons are miners, and they do what miners do, which is drink, fight, and talk about miner things. Fortunately, the owner of the bar is considerate of outside visitors, so in addition to Miner's Ale, Miner's Vodka, Miner's Whiskey and Bloody Miners you can also order a light beer, which has a little wooden miner's pickaxe in it.</bar>
   </general>
   <tech>
+   <item>Kinetic 1</item>
    <item>Basic Outfits 1</item>
    <item>Missiles 2</item>
   </tech>
@@ -12115,6 +12227,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>Varia's bar is more like a bar complex than a bar. With multiple rooms, each decorated in different styles and each serving different beverages, the discerning alcoholic with money to spare could spend all week here without ever getting bored. Most of the merchants and businesspeople prefer to stick to the main room, however.</bar>
   </general>
   <tech>
+   <item>Kinetic 1</item>
    <item>Basic Outfits 1</item>
    <item>Basic Outfits 2</item>
    <item>Missiles 1</item>
@@ -12296,6 +12409,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>The bar is cold. It must be mentioned. Every effort has been made to minimize loss of heat from the building, but given the bar's close proximity to the spaceport, which is exposed to the elements, and the constant flow of customers, it has proven impossible to keep out the cold. This situation has given rise to a number of unkind jokes about the Vilati bar, which are told throughout the galaxy.</bar>
   </general>
   <tech>
+   <item>Kinetic 1</item>
    <item>Basic Outfits 1</item>
    <item>Basic Outfits 2</item>
    <item>Missiles 1</item>
@@ -12335,6 +12449,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>Vino has a spaceport bar, but only because the government couldn't close it down without running into Empire-wide spaceport regulations. So although the place is open and functional, no effort has been spared to make the place as inhospitable and unpleasant as possible. Real seasoned traders have learned to ignore it, though.</bar>
   </general>
   <tech>
+   <item>Laser 1</item>
    <item>Basic Trade Ships</item>
    <item>Basic Outfits 1</item>
    <item>Low Tech Upgrades</item>
@@ -12785,6 +12900,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>The bar walls are decorated with pictures of Empire soldiers who have fallen in the fight against Haven and piracy in general. It has become customary for the Empire to post pictures of the fallen, honouring those who gave their lives protecting the Empire's ideals. They are working on another addition to be able to fit more pictures.</bar>
   </general>
   <tech>
+   <item>Laser 2</item>
    <item>Basic Outfits 2</item>
    <item>Low Tech Upgrades</item>
    <item>Basic Civilian Ships</item>
@@ -12826,6 +12942,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>The bar is where traders wait until their cargo is loaded and unloaded. Pilots who come here expecting a glimpse of the rich lands that cover the surface of the planet will be disappointed, as there is very little to see here.</bar>
   </general>
   <tech>
+   <item>Laser 1</item>
    <item>Basic Outfits 2</item>
   </tech>
  </asset>
@@ -12861,6 +12978,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>Because of Zeo's abrupt rise in value after the Incident, the antiquated facilities at the time had to be replaced to handle the influx of Imperial colonist. As a result, most of the infrastructure here is relatively modern. You won't find anything out of order or slow to respond in this bar.</bar>
   </general>
   <tech>
+   <item>Laser 1</item>
    <item>Basic Outfits 1</item>
    <item>Missiles 1</item>
   </tech>
@@ -12988,6 +13106,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>The Goddard Bar is, unsurprisingly, an obsolete model of their eponymous ship, stripped and refitted in the form of a bar. It's surprisingly comfortable and cozy as a bar, although every so often you can hear creaking in the ancient metal frame.</bar>
   </general>
   <tech>
+   <item>Laser 1</item>
+   <item>Kinetic 1</item>
    <item>Basic Civilian Ships</item>
    <item>Goddard Ship</item>
    <item>Basic Outfits 1</item>
