@@ -18,17 +18,43 @@
  <tech name="All Outfits">
   <item>Laser Cannon MK1</item>
   <item>Laser Cannon MK2</item>
+  <item>Laser Cannon MK3</item>
   <item>Laser Turret MK1</item>
   <item>Laser Turret MK2</item>
+  <item>Laser Turret MK3</item>
+  <item>Heavy Laser</item>
+  <item>Turbolaser</item>
   <item>Plasma Blaster MK1</item>
   <item>Plasma Blaster MK2</item>
+  <item>Plasma Blaster MK3</item>
+  <item>Plasma Cluster Cannon MK1</item>
+  <item>Plasma Cluster Cannon MK2</item>
+  <item>Plasma Cluster Cannon MK3</item>
+  <item>Plasma Turret MK1</item>
+  <item>Plasma Turret MK2</item>
   <item>Neutron Disruptor</item>
+  <item>Razor MK1</item>
+  <item>Razor MK2</item>
+  <item>Razor MK3</item>
+  <item>Razor Turret MK1</item>
+  <item>Razor Turret MK2</item>
+  <item>Razor Turret MK3</item>
   <item>Ion Cannon</item>
+  <item>Heavy Ion Cannon</item>
   <item>Heavy Ion Turret</item>
+  <item>Gauss Gun</item>
+  <item>Vulcan Gun</item>
+  <item>Shredder</item>
+  <item>Turreted Gauss Gun</item>
+  <item>Turreted Vulcan Gun</item>
+  <item>Mass Driver MK1</item>
+  <item>Mass Driver MK2</item>
+  <item>Mass Driver MK3</item>
   <item>Railgun</item>
+  <item>Repeating Railgun</item>
   <item>Railgun Turret</item>
   <item>Ripper Cannon</item>
-  <item>Base Ripper MK2</item>
+  <item>Heavy Ripper Cannon</item>
   <item>Orion Beam</item>
   <item>Ragnarok Beam</item>
   <item>Seeker Launcher</item>
@@ -144,11 +170,79 @@
   <item>Medicine</item>
   <item>Luxury Goods</item>
  </tech>
- 
- <!-- Outfits -->
+
+ <!-- Weapon Trees -->
+ <tech name="Laser 1">
+  <item>Laser Cannon MK1</item>
+  <item>Laser Turret MK1</item>
+  <item>Ripper Cannon</item>
+ </tech>
+ <tech name="Laser 2">
+  <item>Laser Cannon MK2</item>
+  <item>Laser Cannon MK3</item>
+  <item>Laser Turret MK2</item>
+  <item>Laser Turret MK3</item>
+  <item>Heavy Ripper Cannon</item>
+ </tech>
+ <tech name="Laser 3">
+  <item>Heavy Laser</item>
+  <item>Turbolaser</item>
+ </tech>
+ <tech name="Ion 1">
+  <item>Ion Cannon</item>
+  <item>Razor MK1</item>
+  <item>Razor Turret MK1</item>
+ </tech>
+ <tech name="Ion 2">
+  <item>Heavy Ion Cannon</item>
+  <item>Razor MK2</item>
+  <item>Razor MK3</item>
+  <item>Razor Turret MK2</item>
+  <item>Razor Turret MK3</item>
+ </tech>
+ <tech name="Ion 3">
+  <item>Heavy Ion Turret</item>
+ </tech>
+ <tech name="Kinetic 1">
+  <item>Gauss Gun</item>
+  <item>Turreted Gauss Gun</item>
+  <item>Mass Driver MK1</item>
+ </tech>
+ <tech name="Kinetic 2">
+  <item>Vulcan Gun</item>
+  <item>Turreted Vulcan Gun</item>
+  <item>Shredder</item>
+  <item>Mass Driver MK2</item>
+  <item>Mass Driver MK3</item>
+ </tech>
+ <tech name="Kinetic 3">
+  <item>Railgun</item>
+  <item>Repeating Railgun</item>
+  <item>Railgun Turret</item>
+ </tech>
+ <tech name="Plasma 1">
+  <item>Plasma Cannon MK1</item>
+  <item>Plasma Turret MK1</item>
+ </tech>
+ <tech name="Plasma 2">
+  <item></item>
+  <item>Plasma Cannon MK2</item>
+  <item>Plasma Cannon MK3</item>
+  <!-- TODO
+  <item>Plasma Cluster Cannon MK1</item>
+  <item>Plasma Cluster Cannon MK2</item>
+  <item>Plasma Cluster Cannon MK3</item>
+  <item>BioPlasma Organ Stage 1</item>
+  <item>BioPlasma Organ Stage 2</item>
+  -->
+  <item>Plasma Turret MK2</item>
+ </tech>
+
+ <!-- Generic Outfits -->
  <tech name="Basic Outfits 1">
   <item>Laser Cannon MK1</item>
   <item>Plasma Blaster MK1</item>
+  <item>Gauss Gun</item>
   <item>Seeker Launcher</item>
   <item>Seeker Missile</item>
   <item>Battery</item>
@@ -178,6 +272,8 @@
   </tech>
  <tech name="Heavy Weapons 1">
   <item>Laser Turret MK1</item>
+  <item>Turreted Gauss Gun</item>
+  <item>Plasma Turret MK1</item>
   <item>Ion Cannon</item>
   <item>Railgun</item>
   <item>Ripper Cannon</item>
@@ -188,6 +284,7 @@
   </tech>
  <tech name="Heavy Weapons 2">
   <item>Laser Turret MK2</item>
+  <item>Mass Driver MK1</item>
   <item>Ion Cannon</item>
   <item>Heavy Ion Turret</item>
   <item>Railgun Turret</item>
