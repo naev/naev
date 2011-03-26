@@ -1203,7 +1203,8 @@ static void input_clickevent( SDL_Event* event )
       if (d < pow2(r)) {
          player_targetPlanetSet( pntid );
          if (pntid == opntid) {
-            if (!areEnemies( player.p->faction, pnt->faction ) || pnt->bribed )
+            if (planet_hasService(pnt, PLANET_SERVICE_LAND) &&
+                  (!areEnemies( player.p->faction, pnt->faction ) || pnt->bribed ))
                player_land();
             else
                player_hailPlanet();
