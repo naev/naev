@@ -1,4 +1,4 @@
-#!/usr/bin/env python2.7
+#!/usr/bin/env python2.6
 # -*- coding: utf-8 -*-
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=80:
 
@@ -28,7 +28,9 @@ def main(config):
                         element.text = cLine[element.tag]
                     if len(element.attrib) > 0:
                         for (k, v) in element.attrib.items():
-                            if k in cLine.keys():
+                            if element.tag == "damage" and k == "type":
+                                element.attrib['type'] = cLine['dtype']
+                            elif k in cLine.keys():
                                 element.attrib[k] = cLine[k]
         else:
             print('If no outfit, what to do ?')
