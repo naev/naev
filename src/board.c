@@ -313,6 +313,7 @@ static int board_trySteal( Pilot *p )
    /* Triggered self destruct. */
    if (RNGF() < 0.4) {
       /* Don't actually kill. */
+      target->shield = 0.;
       target->armour = 1.;
       /* This will make the boarding ship take the possible faction hit. */
       pilot_hit( target, NULL, p->id, DAMAGE_TYPE_KINETIC, 100., 1. );
@@ -338,7 +339,7 @@ static int board_fail( unsigned int wdw )
    if (ret == 0)
       return 0;
    else if (ret < 0) /* killed ship. */
-      player_message("\epYou have tripped the ship's self destruct mechanism!");
+      player_message("\epYou have tripped the ship's self-destruct mechanism!");
    else /* you just got locked out */
       player_message("\epThe ship's security system locks %s out.",
             (player.p->ship->crew > 0) ? "your crew" : "you" );
