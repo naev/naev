@@ -194,7 +194,7 @@ void weapon_minimap( const double res, const double w,
       if ((outfit_isSeeker(wp->outfit) && (wp->target != PLAYER_ID)) ||
             (wp->faction == FACTION_PLAYER))
          c = &cNeutral;
-      else if (wp->target == PLAYER_ID || areEnemies(FACTION_PLAYER, wp->faction))
+      else if (wp->target == PLAYER_ID || pilot_isHostile(pilot_get(wp->parent)))
          c = &cHostile;
       else
          c = &cNeutral;
