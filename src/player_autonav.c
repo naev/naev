@@ -59,6 +59,10 @@ void player_autonavStart (void)
       return;
    }
 
+   if player_isFlag(PLAYER_AUTONAV) {
+      player_autonavAbort(NULL);
+      return;
+   }
    player_autonavSetup();
    player.autonav = AUTONAV_JUMP_APPROACH;
 }
