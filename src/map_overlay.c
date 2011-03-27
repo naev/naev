@@ -95,27 +95,24 @@ int ovr_input( SDL_Event *event )
       y  = ((double)my - SCREEN_H/2.) * ovr_res;
 
       /* Get nearest pilot and jump point/planet. */
-      pid = pilot_getNearestPos( player.p, x, y, 1 );
-      system_getClosest( cur_system, &pntid, &jpid, x, y );
+      dp = pilot_getNearestPos( player.p, &pid, x, y, 1 );
+      d = system_getClosest( cur_system, &pntid, &jpid, x, y );
       p   = pilot_get(pid);
       rp = MAX( 1.5 * PILOT_SIZE_APROX * p->ship->gfx_space->sw / 2, 20.*ovr_res );
-      dp = pow2(x-p->solid->pos.x) + pow2(y-p->solid->pos.y);
 
       if (pntid >=0) { /* Planet is closer. */
          pnt = cur_system->planets[ pntid ];
-         d  = pow2(x-pnt->pos.x) + pow2(y-pnt->pos.y);
          r  = MAX( 1.5 * pnt->radius, 20. * ovr_res );
       }
       else if (jpid >= 0) {
          jp = &cur_system->jumps[ jpid ];
-         d  = pow2(x-jp->pos.x) + pow2(y-jp->pos.y);
          r  = MAX( 1.5 * jp->radius, 20. * ovr_res );
       }
 
       /* Pilot is closest, or new jump point/planet is the same as the old. */
-      if ((dp < d && dp < pow2(rp) && player.p->target != pid) &&
+      if ((dp < pow2(rp) && player.p->target != pid) && (dp < d ||
             ((pntid >=0 && player.p->nav_planet == pntid) ||
-            (jpid >=0 && player.p->nav_planet == jpid)))
+            (jpid >=0 && player.p->nav_planet == jpid))))
          player_targetSet( pid );
       else if ((pntid >= 0) && (d < pow2(r))) /* Planet is closest. */
          player_targetPlanetSet( pntid );
