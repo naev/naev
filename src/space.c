@@ -496,6 +496,52 @@ void system_getClosest( const StarSystem *sys, int *pnt, int *jp, double x, doub
 
 
 /**
+ * @brief Gets the closest feature to a position in the system.
+ *
+ *    @param sys System to get closest feature from a position.
+ *    @param[out] pnt ID of closest planet or -1 if a jump point is closer (or none is close).
+ *    @param[out] jp ID of closest jump point or -1 if a planet is closer (or none is close).
+ *    @param x X position to get closest from.
+ *    @param y Y position to get closest from.
+ */
+void system_getClosestAng( const StarSystem *sys, int *pnt, int *jp, double x, double y, double ang )
+{
+   int i;
+   double a, ta;
+   Planet *p;
+   JumpPoint *j;
+
+   /* Default output. */
+   *pnt = -1;
+   *jp  = -1;
+   a    = 10e10;
+
+   /* Planets. */
+   for (i=0; i<sys->nplanets; i++) {
+      p  = sys->planets[i];
+      if (p->real != ASSET_REAL)
+         continue;
+      ta = atan2( y - p->pos.y, x - p->pos.x);
+      if ( ABS(angle_diff(ang, ta)) < ABS(angle_diff(ang, a))) {
+         *pnt  = i;
+         a     = ta;
+      }
+   }
+
+   /* Jump points. */
+   for (i=0; i<sys->njumps; i++) {
+      j  = &sys->jumps[i];
+      ta = atan2( y - j->pos.y, x - j->pos.x);
+      if ( ABS(angle_diff(ang, ta)) < ABS(angle_diff(ang, a))) {
+         *pnt  = -1; /* We must clear planet target as jump point is closer. */
+         *jp   = i;
+         a     = ta;
+      }
+   }
+}
+
+
+/**
  * @brief Sees if a system is reachable.
  *
  *    @return 1 if target system is reachable, 0 if it isn't.
