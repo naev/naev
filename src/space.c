@@ -458,7 +458,7 @@ char* space_getRndPlanet (void)
  *    @param x X position to get closest from.
  *    @param y Y position to get closest from.
  */
-void system_getClosest( const StarSystem *sys, int *pnt, int *jp, double x, double y )
+double system_getClosest( const StarSystem *sys, int *pnt, int *jp, double x, double y )
 {
    int i;
    double d, td;
@@ -492,6 +492,7 @@ void system_getClosest( const StarSystem *sys, int *pnt, int *jp, double x, doub
          d     = td;
       }
    }
+   return d;
 }
 
 
@@ -504,7 +505,7 @@ void system_getClosest( const StarSystem *sys, int *pnt, int *jp, double x, doub
  *    @param x X position to get closest from.
  *    @param y Y position to get closest from.
  */
-void system_getClosestAng( const StarSystem *sys, int *pnt, int *jp, double x, double y, double ang )
+double system_getClosestAng( const StarSystem *sys, int *pnt, int *jp, double x, double y, double ang )
 {
    int i;
    double a, ta;
@@ -538,6 +539,7 @@ void system_getClosestAng( const StarSystem *sys, int *pnt, int *jp, double x, d
          a     = ta;
       }
    }
+   return a;
 }
 
 
