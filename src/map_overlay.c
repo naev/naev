@@ -119,8 +119,8 @@ int ovr_input( SDL_Event *event )
       else if ((jpid >= 0) && (d < pow2(r))) /* Jump point is closest. */
          player_targetHyperspaceSet( jpid );
       else
-         return 1;
-      return 0;
+         return 0;
+      return 1;
    }
    /* Autogo. */
    else if (event->button.button == SDL_BUTTON_RIGHT) {
