@@ -1138,18 +1138,18 @@ static void window_renderBorder( Window* w )
    /* Colour is shared. */
    colours[0] = c->r;
    colours[1] = c->g;
-   colours[2] = c->r;
+   colours[2] = c->b;
    colours[3] = c->a;
    for (i=0; i<7; i++) {
       colours[4 + 4*i + 0] = dc->r;
       colours[4 + 4*i + 1] = dc->g;
-      colours[4 + 4*i + 2] = dc->r;
+      colours[4 + 4*i + 2] = dc->b;
       colours[4 + 4*i + 3] = dc->a;
    }
    for (i=0; i<8; i++) {
       colours[32 + 4*i + 0] = c->r;
       colours[32 + 4*i + 1] = c->g;
-      colours[32 + 4*i + 2] = c->r;
+      colours[32 + 4*i + 2] = c->b;
       colours[32 + 4*i + 3] = c->a;
    }
    gl_vboSubData( toolkit_vbo, toolkit_vboColourOffset,
