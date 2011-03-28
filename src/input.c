@@ -182,6 +182,7 @@ static void input_keyConvDestroy (void);
 static void input_key( int keynum, double value, double kabs, int repeat );
 static void input_clickZoom( double modifier );
 static void input_clickevent( SDL_Event* event );
+static void input_mouseMove( SDL_Event* event );
 
 
 /**
@@ -1099,6 +1100,17 @@ static void input_clickZoom( double modifier )
       cam_setZoomTarget( cam_getZoomTarget() * modifier );
 }
 
+/**
+ * @brief Provides mouse X and Y coordinates for mouse flying.
+ */
+static void input_mouseMove( SDL_Event* event )
+{
+   int mx, my;
+
+   gl_windowToScreenPos( &mx, &my, event->button.x, event->button.y );
+   player.mousex = (mx - (gl_screen.w / 2.));
+   player.mousey = (my - (gl_screen.h / 2.));
+}
 
 /**
  * @brief Handles a click event.
@@ -1128,6 +1140,12 @@ static void input_clickevent( SDL_Event* event )
    }
    else if (event->button.button == SDL_BUTTON_WHEELDOWN) {
       input_clickZoom( 0.9 );
+      return;
+   }
+
+   /* Middle mouse enables mouse flying. */
+   if (event->button.button == SDL_BUTTON_MIDDLE) {
+      player_toggleMouseFly();
       return;
    }
 
@@ -1288,6 +1306,9 @@ void input_handle( SDL_Event* event )
          input_clickevent( event );
          break;
 
+      case SDL_MOUSEMOTION:
+         input_mouseMove( event );
+         break;
 
       default:
          break;

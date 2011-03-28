@@ -194,6 +194,7 @@ static void player_addOutfitToPilot( Pilot* pilot, Outfit* outfit, PilotOutfitSl
 /* Misc. */
 static int player_outfitCompare( const void *arg1, const void *arg2 );
 static int player_shipPriceRaw( Pilot *ship );
+static int player_thinkMouseFly(void);
 static int preemption = 0; /* Hyperspace target/untarget preemption. */
 /*
  * externed
@@ -1031,8 +1032,12 @@ void player_think( Pilot* pplayer, const double dt )
       facing = 1;
    }
 
+   /* Mouse-flying is enabled. */
+   if (!facing && player_isFlag(PLAYER_MFLY))
+      facing = player_thinkMouseFly();
+
    /* turning taken over by PLAYER_FACE */
-   else if (player_isFlag(PLAYER_FACE)) {
+   if (!facing && player_isFlag(PLAYER_FACE)) {
       /* Try to face pilot target. */
       if (player.p->target != PLAYER_ID) {
          target = pilot_get(player.p->target);
@@ -1062,7 +1067,7 @@ void player_think( Pilot* pplayer, const double dt )
    }
 
    /* turning taken over by PLAYER_REVERSE */
-   else if (player_isFlag(PLAYER_REVERSE)) {
+   if (!facing && player_isFlag(PLAYER_REVERSE)) {
 
       /* Check to see if already stopped. */
       /*
@@ -1993,6 +1998,57 @@ void player_autohail (void)
 
    /* Clear hails if none found. */
    player_checkHail();
+}
+
+
+/**
+ * @brief Toggles mouse flying.
+ */
+void player_toggleMouseFly(void)
+{
+   if (!player_isFlag(PLAYER_MFLY)) {
+      input_mouseShow();
+      player_message("\epMouse flying enabled.");
+      player_setFlag(PLAYER_MFLY);
+   }
+   else {
+      input_mouseHide();
+      player_rmFlag(PLAYER_MFLY);
+      player_message("\erMouse flying disabled.");
+      player_accelOver();
+   }
+}
+
+
+/**
+ * @brief Handles mouse flying based on cursor position.
+ *
+ *    @return 1 if cursor is outside the dead zone, 0 if it isn't.
+ */
+static int player_thinkMouseFly(void)
+{
+   double px, py, r, x, y, acc;
+
+   px = player.p->solid->pos.x;
+   py = player.p->solid->pos.y;
+   x = player.mousex + px;
+   y = player.mousey + py;
+   r = sqrt(pow2(x-px) + pow2(y-py));
+   if (r > 50.) { /* Ignore mouse input within a 50 px radius of the centre. */
+      pilot_face(player.p, atan2( y - py, x - px));
+      if (conf.mouse_thrust) { /* Only alter thrust if option is enabled. */
+         acc = CLAMP(0., 1., (r - 100) / 200.);
+         acc = 3 * pow2(acc) - 2 * pow(acc, 3);
+         /* Only accelerate when within 180 degrees of the intended direction. */
+         if (ABS(angle_diff(atan2( y - py, x - px), player.p->solid->dir)) < M_PI_2 )
+            player_accel(acc);
+         else
+            player_accel(0.);
+      }
+      return 1;
+   }
+   else
+      return 0;
 }
 
 

@@ -231,16 +231,19 @@ static void opt_gameplay( unsigned int wid )
    x += cw;
    window_addText( wid, x+20, y, cw, 20, 0, "txtSettings",
          NULL, &cDConsole, "Settings" );
-   y -= 30;
+   y -= 25;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkZoomManual", "Enable manual zoom control", NULL, conf.zoom_manual );
-   y -= 30;
+   y -= 25;
    window_addCheckbox( wid, x, y, cw, 20,
-         "chkAfterburn", "Enable doubletap afterburn", NULL, conf.afterburn_sens );
-   y -= 30;
+         "chkAfterburn", "Enable double-tap afterburn", NULL, conf.afterburn_sens );
+   y -= 25;
+   window_addCheckbox( wid, x, y, cw, 20,
+         "chkMouseThrust", "Enable mouse flying thrust control", NULL, conf.mouse_thrust );
+   y -= 25;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkCompress", "Enable savegame compression", NULL, conf.save_compress );
-   y -= 50;
+   y -= 40;
    s = "Visible messages";
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 1, "txtSMSG",
@@ -271,6 +274,7 @@ static void opt_gameplaySave( unsigned int wid, char *str )
       conf.afterburn_sens = (!!f)*250;
    }
    conf.zoom_manual = window_checkboxState( wid, "chkZoomManual" );
+   conf.mouse_thrust = window_checkboxState(wid, "chkMouseThrust" );
    conf.save_compress = window_checkboxState( wid, "chkCompress" );
 
    /* Input boxes. */
@@ -310,6 +314,7 @@ static void opt_gameplayUpdate( unsigned int wid, char *str )
    /* Checkboxes. */
    window_checkboxSet( wid, "chkZoomManual", conf.zoom_manual );
    window_checkboxSet( wid, "chkAfterburn", conf.afterburn_sens );
+   window_checkboxSet( wid, "chkMouseThrust", conf.mouse_thrust );
    window_checkboxSet( wid, "chkCompress", conf.save_compress );
 
    /* Input boxes. */
