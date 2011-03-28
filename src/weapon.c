@@ -164,6 +164,7 @@ void weapon_minimap( const double res, const double w,
    Weapon *wp;
    glColour *c;
    GLsizei offset;
+   Pilot *par;
 
    /* Get offset. */
    p = 0;
@@ -194,10 +195,17 @@ void weapon_minimap( const double res, const double w,
       if ((outfit_isSeeker(wp->outfit) && (wp->target != PLAYER_ID)) ||
             (wp->faction == FACTION_PLAYER))
          c = &cNeutral;
-      else if (wp->target == PLAYER_ID || pilot_isHostile(pilot_get(wp->parent)))
-         c = &cHostile;
-      else
-         c = &cNeutral;
+      else {
+         if (wp->target == PLAYER_ID)
+            c = &cHostile;
+         else {
+            par = pilot_get(wp->parent);
+            if ((par!=NULL) && pilot_isHostile(par))
+               c = &cHostile;
+            else
+               c = &cNeutral;
+         }
+      }
 
       /* Set the colour. */
       weapon_vboData[ offset + 4*p + 0 ] = c->r;
