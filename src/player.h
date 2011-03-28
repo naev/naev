@@ -32,6 +32,7 @@
 #define PLAYER_HOOK_JUMPIN (1<<26)
 #define PLAYER_HOOK_HYPER  (1<<27)
 #define PLAYER_TUTORIAL    (1<<30)  /**< Player is doing the tutorial. */
+#define PLAYER_MFLY    (1<<31)  /**< Player has enabled mouse flying. */
 /* flag functions */
 #define player_isFlag(f)   (player.flags & (f)) /**< Checks for a player flag. */
 #define player_setFlag(f)  (player.flags |= (f)) /**< Sets a player flag. */
@@ -47,7 +48,7 @@
  * The player struct.
  */
 typedef struct Player_s {
-   /* Player intrinsecs. */
+   /* Player intrinsics. */
    Pilot *p; /**< Player's pilot. */
    char *name; /**< Player's name. */
    char *gui; /**< Player's GUI. */
@@ -59,6 +60,8 @@ typedef struct Player_s {
    double crating; /**< Combat rating. */
    int autonav; /**< Current autonav state. */
    Vector2d autonav_pos; /**< Target autonav position. */
+   double mousex; /**< Mouse X position (for mouse flying). */
+   double mousey; /**< Mouse Y position (for mouse flying). */
 } Player_t;
 
 
@@ -224,6 +227,7 @@ void player_accelOver (void);
 void player_hail (void);
 void player_hailPlanet (void);
 void player_autohail (void);
+void player_toggleMouseFly(void);
 
 
 #endif /* PLAYER_H */
