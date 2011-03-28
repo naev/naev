@@ -53,7 +53,7 @@ function taunt ( target, offense )
       }
    else
       taunts = {
-            "Sirachana protect me!",
+            "Sirichana protect me!",
             "You have made a grave error!",
             "You do wrong in your provocations!"
       }

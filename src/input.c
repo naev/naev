@@ -1105,16 +1105,17 @@ static void input_clickZoom( double modifier )
  */
 static void input_clickevent( SDL_Event* event )
 {
-   unsigned int pid, opid;
+   unsigned int pid;
    Pilot *p;
-   int mx, my, rx, ry, rh, rw, res;
-   double x, y, m, r, d, ang, mouseang, px, py;
+   int mx, my, mxr, myr, pntid, jpid;
+   int rx, ry, rh, rw, res;
+   double x, y, m, r, rp, d, dp, px, py;
+   double ang, angp, mouseang;
    Planet *pnt;
    JumpPoint *jp;
-   int pntid, opntid, jpid, ojpid, edge;
    HookParam hparam[2];
 
-   /* Generato hook. */
+   /* Generate hook. */
    hparam[0].type    = HOOK_PARAM_NUMBER;
    hparam[0].u.num   = event->button.button;
    hparam[1].type    = HOOK_PARAM_SENTINAL;
@@ -1138,95 +1139,91 @@ static void input_clickevent( SDL_Event* event )
    if (player_isFlag(PLAYER_DESTROYED) || (player.p == NULL))
       return;
 
-   gui_radarGetPos( &rx, &ry );
-   gui_radarGetDim( &rw, &rh );
-
-   /* Handle screen and radar clicks differently. */
-   mx = event->button.x;
-   my  = gl_screen.rh - event->button.y;
-   edge = 0;
    px = player.p->solid->pos.x;
    py = player.p->solid->pos.y;
-   if ((mx > rx && mx <= rx + rw ) && (my > ry && my <= ry + rh )) {
-      m = 1;
-      gui_radarGetRes( &res );
-      x = (mx - (rx + rw / 2.)) * res + px;
-      y = (my - (ry + rh / 2.)) * res + py;
+   gl_windowToScreenPos( &mx, &my, event->button.x, event->button.y );
+   gl_screenToGameCoords( &x, &y, (double)mx, (double)my );
+   if ((mx <= 15 || my <= 15 ) || (my >= gl_screen.h - 15 || mx >= gl_screen.w - 15)) { /* Border */
+      x = (mx - (gl_screen.w / 2.)) + px;
+      y = (my - (gl_screen.h / 2.)) + py;
+      mouseang = atan2(py - y, px -  x);
+      angp = pilot_getNearestAng( player.p, &pid, mouseang, 1 );
+      ang  = system_getClosestAng( cur_system, &pntid, &jpid, x, y, mouseang );
+
+      if  ((ABS(angle_diff(mouseang, angp)) > M_PI / 64) ||
+            ABS(angle_diff(mouseang, ang)) < ABS(angle_diff(mouseang, angp)))
+         pid = PLAYER_ID; /* Pilot angle is too great, or planet/jump is closer. */
+      if  (ABS(angle_diff(mouseang, ang)) > M_PI / 64 )
+         jpid = pntid = -1; /* Asset angle difference is too great. */
    }
-   else {
-      gl_windowToScreenPos( &mx, &my, event->button.x, event->button.y );
-      gl_screenToGameCoords( &x, &y, (double)mx, (double)my );
-      res = 1. / cam_getZoom();
-      m = res;
-      if ((mx <= 15 || my <= 15 ) || (my >= gl_screen.h - 15 || mx >= gl_screen.w - 15)) {
-         x = (mx - (gl_screen.w / 2.)) + px;
-         y = (my - (gl_screen.h / 2.)) + py;
-         /* Player has clicked within the border. */
-         mouseang = atan2(py - y, px -  x);
-         pid = pilot_getNearestAng( player.p, mouseang, 1 );
-         ang = atan2( py - pilot_get(pid)->solid->pos.y,
-               px - pilot_get(pid)->solid->pos.x);
-         /* Only match similar angles. */
-         if  (ABS(angle_diff(mouseang , ang)) < M_PI / 64 )
-            edge = 1;
+   else { /* Radar targeting requires raw coordinates. */
+      mxr = event->button.x;
+      myr  = gl_screen.rh - event->button.y;
+      gui_radarGetPos( &rx, &ry );
+      gui_radarGetDim( &rw, &rh );
+      if ((mxr > rx && mxr <= rx + rw ) && (myr > ry && myr <= ry + rh )) { /* Radar */
+         m = 1;
+         gui_radarGetRes( &res );
+         x = (mxr - (rx + rw / 2.)) * res + px;
+         y = (myr - (ry + rh / 2.)) * res + py;
       }
+      else /* Visual (on-screen) */
+         m = res = 1. / cam_getZoom();
+      dp = pilot_getNearestPos( player.p, &pid, x, y, 1 );
+      d = system_getClosest( cur_system, &pntid, &jpid, x, y );
+      rp = MAX( 1.5 * PILOT_SIZE_APROX * pilot_get(pid)->ship->gfx_space->sw / 2 * m,  10. * res);
+
+      if (pntid >=0) { /* Planet is closer. */
+         pnt = cur_system->planets[ pntid ];
+         r  = MAX( 1.5 * pnt->radius, 100. );
+      }
+      else if (jpid >= 0) {
+         jp = &cur_system->jumps[ jpid ];
+         r  = MAX( 1.5 * jp->radius, 100. );
+      }
+      /* Reject pilot if it's too far or a valid asset is closer. */
+      if (dp > pow2(rp) || (d < pow2(r) && dp < pow2(rp) && dp >  d))
+         pid = PLAYER_ID;
+      if (d > pow2(r)) /* Planet or jump point is too far. */
+         jpid = pntid = -1;
    }
 
-   /* Get closest pilot. */
-   opid = player.p->target;
-   if (!edge)
-      pid = pilot_getNearestPos( player.p, x, y, 1 );
-   p   = pilot_get(pid);
-   r   = MAX( 1.5 * PILOT_SIZE_APROX * p->ship->gfx_space->sw / 2 * m,  10. * res);
-   d   = pow2(x-p->solid->pos.x) + pow2(y-p->solid->pos.y);
-   if ((d < pow2(r) || edge) && (pid != PLAYER_ID)) {
-      player_targetSet( pid );
-
+   if (pid != PLAYER_ID) {
       /* Apply an action if already selected. */
-      if (!pilot_isFlag(player.p, PILOT_DEAD) && (pid == opid)) {
-         if (pilot_isDisabled(p))
+      if (!pilot_isFlag(player.p, PILOT_DEAD) && (pid == player.p->target)) {
+         p = pilot_get(pid);
+         if (pilot_isDisabled(p) || pilot_isFlag(p, PILOT_BOARDABLE))
             player_board();
          else
             player_hail();
       }
-      return;
+      else
+         player_targetSet( pid );
    }
-
-   /* Get closest planet and/or jump point. */
-   system_getClosest( cur_system, &pntid, &jpid, x, y );
-   /* Planet is closest. */
-   if (pntid >= 0) {
-      opntid = player.p->nav_planet;
-      pnt = cur_system->planets[ pntid ];
-      d  = pow2(x-pnt->pos.x) + pow2(y-pnt->pos.y);
-      r  = MAX( 1.5 * pnt->radius, 100. );
-      if (d < pow2(r)) {
+   else if (pntid >= 0) { /* Planet is closest. */
+      if (pntid == player.p->nav_planet) {
+         pnt = cur_system->planets[ pntid ];
+         if (planet_hasService(pnt, PLANET_SERVICE_LAND) &&
+               (!areEnemies( player.p->faction, pnt->faction ) || pnt->bribed ))
+            player_land();
+         else
+            player_hailPlanet();
+      }
+      else
          player_targetPlanetSet( pntid );
-         if (pntid == opntid) {
-            if (!areEnemies( player.p->faction, pnt->faction ) || pnt->bribed )
-               player_land();
-            else
-               player_hailPlanet();
-         }
-      }
    }
-   /* Jump point is closest. */
-   else if (jpid >= 0) {
-      ojpid = player.p->nav_hyperspace;
+   else if (jpid >= 0) { /* Jump point is closest. */
       jp = &cur_system->jumps[ jpid ];
-      d  = pow2(x-jp->pos.x) + pow2(y-jp->pos.y);
-      r  = MAX( 1.5 * jp->radius, 100. );
-      if (d < pow2(r)) {
-         player_targetHyperspaceSet( jpid );
-         if (jpid == ojpid) {
-            if (space_canHyperspace(player.p)) {
-               if (!paused) player_autonavAbort(NULL);
-               player_jump();
-            }
-            else
-               player_autonavStart();
+      if (jpid == player.p->nav_hyperspace) {
+         if (space_canHyperspace(player.p)) {
+            if (!paused) player_autonavAbort(NULL);
+            player_jump();
          }
+         else
+            player_autonavStart();
       }
+      else
+         player_targetHyperspaceSet( jpid );
    }
 }
 

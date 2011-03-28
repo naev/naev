@@ -381,26 +381,28 @@ unsigned int pilot_getNearestEnemy_heuristic(const Pilot* p, double mass_factor,
  */
 unsigned int pilot_getNearestPilot( const Pilot* p )
 {
-   return pilot_getNearestPos( p, p->solid->pos.x, p->solid->pos.y, 0 );
+   unsigned int t;
+   pilot_getNearestPos( p, &t, p->solid->pos.x, p->solid->pos.y, 0 );
+   return t;
 }
 
 
 /**
  * @brief Get the nearest pilot to a pilot from a certain position.
  *
- *    @param p Pilot to get his nearest pilot.
+ *    @param p Pilot to get the nearest pilot of.
+ *    @param[out] tp The nearest pilot.
  *    @param x X position to calculate from.
  *    @param y Y position to calculate from.
  *    @param disabled Whether to return disabled pilots.
- *    @return The nearest pilot.
+ *    @return The distance to the nearest pilot.
  */
-unsigned int pilot_getNearestPos( const Pilot *p, double x, double y, int disabled )
+double pilot_getNearestPos( const Pilot *p, unsigned int *tp, double x, double y, int disabled )
 {
-   unsigned int tp;
    int i;
    double d, td;
 
-   tp = PLAYER_ID;
+   *tp = PLAYER_ID;
    d  = 0;
    for (i=0; i<pilot_nstack; i++) {
 
@@ -432,12 +434,12 @@ unsigned int pilot_getNearestPos( const Pilot *p, double x, double y, int disabl
 
       /* Minimum distance. */
       td = pow2(x-pilot_stack[i]->solid->pos.x) + pow2(y-pilot_stack[i]->solid->pos.y);
-      if (((tp==PLAYER_ID) || (td < d))) {
+      if (((*tp==PLAYER_ID) || (td < d))) {
          d = td;
-         tp = pilot_stack[i]->id;
+         *tp = pilot_stack[i]->id;
       }
    }
-   return tp;
+   return d;
 }
 
 
@@ -445,18 +447,18 @@ unsigned int pilot_getNearestPos( const Pilot *p, double x, double y, int disabl
  * @brief Get the pilot closest to an angle extending from another pilot.
  *
  *    @param p Pilot to get the nearest pilot of.
+ *    @param[out] tp The nearest pilot.
  *    @param ang Angle to compare against.
  *    @param disabled Whether to return disabled pilots.
- *    @return The nearest pilot.
+ *    @return Angle between the pilot and the nearest pilot.
  */
-unsigned int pilot_getNearestAng( const Pilot *p, double ang, int disabled )
+double pilot_getNearestAng( const Pilot *p, unsigned int *tp, double ang, int disabled )
 {
-   unsigned int tp;
    int i;
    double a, ta;
    double rx, ry;
 
-   tp = PLAYER_ID;
+   *tp = PLAYER_ID;
    a  = 10e10;
    for (i=0; i<pilot_nstack; i++) {
 
@@ -495,10 +497,10 @@ unsigned int pilot_getNearestAng( const Pilot *p, double ang, int disabled )
             p->solid->pos.x - pilot_stack[i]->solid->pos.x );
       if ( ABS(angle_diff(ang, ta)) < ABS(angle_diff(ang, a))) {
          a = ta;
-         tp = pilot_stack[i]->id;
+         *tp = pilot_stack[i]->id;
       }
    }
-   return tp;
+   return a;
 }
 
 
