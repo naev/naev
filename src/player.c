@@ -2038,11 +2038,13 @@ static int player_thinkMouseFly(void)
       pilot_face(player.p, atan2( y - py, x - px));
       acc = CLAMP(0., 1., (r - 100) / 200.);
       acc = 3 * pow2(acc) - 2 * pow(acc, 3);
-      /* Only accelerate when within 180 degrees of the intended direction. */
-      if (ABS(angle_diff(atan2( y - py, x - px), player.p->solid->dir)) < M_PI_2 )
-         player_accel(acc);
-      else
-         player_accel(0.);
+      if (conf.mouse_thrust) { /* Only alter thrust if option is enabled. */
+         /* Only accelerate when within 180 degrees of the intended direction. */
+         if (ABS(angle_diff(atan2( y - py, x - px), player.p->solid->dir)) < M_PI_2 )
+            player_accel(acc);
+         else
+            player_accel(0.);
+      }
       return 1;
    }
    else
