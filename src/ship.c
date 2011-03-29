@@ -480,6 +480,7 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
    snprintf( buf, sizeof(buf), "%s_gfx_store.png", temp->name );
    temp->gfx_store = gl_loadImagePad( buf, gfx_store, 0, SHIP_TARGET_W, SHIP_TARGET_H, 1, 1, 1 );
 
+#if 0 /* Disabled for now due to issues with larger sprites. */
    /* Some filtering. */
    for (j=0; j<sh; j++) {
       for (i=0; i<sw; i++) {
@@ -508,6 +509,7 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
                   ((uint32_t) (a*AMASK) & AMASK);
       }
    }
+#endif
 
    /* Load the surface. */
    snprintf( buf, sizeof(buf), "%s_gfx_target.png", temp->name );
