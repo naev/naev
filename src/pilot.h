@@ -54,6 +54,7 @@
 #define PILOT_HOOK_LAND    6 /**< Pilot is landing. */
 #define PILOT_HOOK_ATTACKED 7 /**< Pilot is in manual override and is being attacked. */
 #define PILOT_HOOK_IDLE    8 /**< Pilot is in manual override and has just become idle. */
+#define PILOT_HOOK_EXPLODED 9 /**< Pilot died and exploded (about to be removed). */
 
 
 /* damage */

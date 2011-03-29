@@ -524,6 +524,7 @@ static int hook_safe( lua_State *L )
  * You can hook to different actions.  Curently hook system only supports:<br />
  * <ul>
  *    <li> "death" : triggered when pilot dies (before marked as dead). <br />
+ *    <li> "exploded" : triggered when pilot has died and the final explosion has begun. <br />
  *    <li> "board" : triggered when pilot is boarded.<br />
  *    <li> "disable" : triggered when pilot is disabled (with disable set).<br />
  *    <li> "jump" : triggered when pilot jumps to hyperspace (before he actually jumps out).<br />
@@ -581,6 +582,7 @@ static int hook_pilot( lua_State *L )
 
    /* Check to see if hook_type is valid */
    if (strcmp(hook_type,"death")==0)         type = PILOT_HOOK_DEATH;
+   else if (strcmp(hook_type,"exploded")==0)    type = PILOT_HOOK_EXPLODED;
    else if (strcmp(hook_type,"board")==0)    type = PILOT_HOOK_BOARD;
    else if (strcmp(hook_type,"disable")==0)  type = PILOT_HOOK_DISABLE;
    else if (strcmp(hook_type,"jump")==0)     type = PILOT_HOOK_JUMP;

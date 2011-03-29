@@ -1318,6 +1318,7 @@ void pilot_update( Pilot* pilot, const double dt )
                pilot->solid->pos.x, pilot->solid->pos.y,
                pilot->solid->vel.x, pilot->solid->vel.y );
          pilot_setFlag(pilot,PILOT_EXPLODED);
+         pilot_runHook( pilot, PILOT_HOOK_EXPLODED );
 
          /* Release cargo */
          for (i=0; i<pilot->ncommodities; i++)
