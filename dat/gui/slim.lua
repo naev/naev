@@ -300,7 +300,6 @@ function update_cargo()
          cargo[k] = cargo[k] .. "*"
       end
    end
-   stats = pp:stats() -- Cargo may change max speed
 end
 
 function update_ship()
