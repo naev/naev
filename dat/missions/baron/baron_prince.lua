@@ -355,7 +355,7 @@ function hail()
     pinnacle:taskClear()
     pinnacle:brake()
     pinnacle:setActiveBoard(true)
-    boardhook = hook.pilot(pinnacle, "board")
+    boardhook = hook.pilot(pinnacle, "board", "board")
     hook.rm(idlehook)
 end
 
