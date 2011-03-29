@@ -394,10 +394,12 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
    int potw, poth, potw_store, poth_store;
    int x, y, sw, sh;
    SDL_Rect rtemp, dstrect;
+#if 0 /* Required for scanlines. */
    int i, j;
    uint32_t *pix;
    double r, g, b, a;
    double h, s, v;
+#endif
    char buf[PATH_MAX];
 #if ! SDL_VERSION_ATLEAST(1,3,0)
    Uint32 saved_flags;
