@@ -1036,7 +1036,8 @@ static void pilot_dead( Pilot* p, unsigned int killer )
       player_dead();
    }
    p->timer[0] = 0.; /* no need for AI anymore */
-   p->ptimer = 1. + sqrt(10*p->armour_max*p->shield_max) / 1500.;
+   p->ptimer = MIN( 1. + sqrt(p->armour_max * p->shield_max) / 650.,
+         3 + pow(p->armour_max * p->shield_max, 0.4) / 500);
    p->timer[1] = 0.; /* explosion timer */
 
    /* flag cleanup - fixes some issues */
