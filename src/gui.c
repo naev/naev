@@ -1994,6 +1994,25 @@ void gui_setSystem (void)
 
 
 /**
+ * @brief Calls trigger functions depending on who the pilot is.
+ *
+ *    @param The pilot to act base dupon.
+ */
+void gui_setGeneric (Pilot* pilot)
+{
+   if (gui_L == NULL)
+      return;
+
+   if (player.p->target != PLAYER_ID && pilot->id == player.p->target)
+      gui_setTarget();
+   else if (pilot_isPlayer(pilot)) {
+      gui_setCargo();
+      gui_setShip();
+   }
+}
+
+
+/**
  * @brief Determines which GUI should be used.
  */
 char* gui_pick (void)

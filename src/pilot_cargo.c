@@ -133,8 +133,7 @@ int pilot_cargoAddRaw( Pilot* pilot, Commodity* cargo,
             pilot->mass_cargo              += q;
             pilot->solid->mass             += pilot->stats.cargo_inertia * q;
             pilot_updateMass( pilot );
-            if (pilot_isPlayer(pilot))
-               gui_setCargo();
+            gui_setGeneric( pilot );
             return q;
          }
    }
@@ -159,8 +158,7 @@ int pilot_cargoAddRaw( Pilot* pilot, Commodity* cargo,
    pilot->solid->mass   += pilot->stats.cargo_inertia * q;
    pilot->ncommodities++;
    pilot_updateMass( pilot );
-   if (pilot_isPlayer(pilot))
-      gui_setCargo();
+   gui_setGeneric( pilot );
 
    return q;
 }
@@ -291,7 +289,7 @@ int pilot_rmMissionCargo( Pilot* pilot, unsigned int cargo_id, int jettison )
 
    /* Update mass. */
    pilot_updateMass( pilot );
-   gui_setCargo();
+   gui_setGeneric( pilot );
 
    return 0;
 }
@@ -345,8 +343,7 @@ int pilot_cargoRmRaw( Pilot* pilot, Commodity* cargo, int quantity, int cleanup 
          pilot->mass_cargo    -= q;
          pilot->solid->mass   -= pilot->stats.cargo_inertia * q;
          pilot_updateMass( pilot );
-         if (pilot_isPlayer(pilot))
-            gui_setCargo();
+         gui_setGeneric( pilot );
          return q;
       }
    return 0; /* pilot didn't have it */

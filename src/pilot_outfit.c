@@ -19,6 +19,7 @@
 #include "log.h"
 #include "player.h"
 #include "space.h"
+#include "gui.h"
 
 
 /**
@@ -926,6 +927,9 @@ void pilot_calcStats( Pilot* pilot )
 
    /* Modulate by mass. */
    pilot_updateMass( pilot );
+
+   /* Update GUI as necessary. */
+   gui_setGeneric( pilot );
 }
 
 
