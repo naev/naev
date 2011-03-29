@@ -1054,7 +1054,6 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
 
    /* Post processing. */
    temp->u.blt.delay   /= 1000.;
-   temp->u.blt.damage  *= temp->u.blt.delay;
    temp->u.blt.swivel  *= M_PI/180.;
    if (outfit_isTurret(temp))
       temp->u.blt.swivel = M_PI;
@@ -1185,7 +1184,6 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
 
    /* Post processing. */
    temp->u.bem.delay /= 1000.;
-   temp->u.bem.damage *= temp->u.bem.delay;
    temp->u.bem.turn   *= M_PI/180.; /* Convert to rad/s. */
 
    /* Set default outfit size if necessary. */
