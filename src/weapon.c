@@ -1199,6 +1199,7 @@ static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
    double mass, rdir;
    Pilot *pilot_target;
    double acc;
+   glTexture *gfx;
 
    /* Only difference is the direction of fire */
    if ((w->parent!=w->target) && (w->target != 0)) { /* Must have valid target */
@@ -1238,6 +1239,10 @@ static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
          w->solid->pos.y,
          w->solid->vel.x,
          w->solid->vel.y);
+
+   /* Set facing direction. */
+   gfx = outfit_gfx( w->outfit );
+   gl_getSpriteFromDir( &w->sx, &w->sy, gfx, w->solid->dir );
 }
 
 
@@ -1260,6 +1265,7 @@ static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
    double mass, rdir;
    Pilot *pilot_target;
    double ew_evasion;
+   glTexture *gfx;
 
    pilot_target = NULL;
    if (w->outfit->type == OUTFIT_TYPE_TURRET_AMMO) {
@@ -1314,6 +1320,10 @@ static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
          w->solid->pos.y,
          w->solid->vel.x,
          w->solid->vel.y);
+
+   /* Set facing direction. */
+   gfx = outfit_gfx( w->outfit );
+   gl_getSpriteFromDir( &w->sx, &w->sy, gfx, w->solid->dir );
 }
 
 
@@ -1431,7 +1441,7 @@ void weapon_add( const Outfit* outfit, const double T, const double dir,
    }
 
    layer = (parent->id==PLAYER_ID) ? WEAPON_LAYER_FG : WEAPON_LAYER_BG;
-   w = weapon_create( outfit, T, dir, pos, vel, parent, target );
+   w     = weapon_create( outfit, T, dir, pos, vel, parent, target );
 
    /* set the proper layer */
    switch (layer) {
