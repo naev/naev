@@ -916,7 +916,7 @@
    <description>The mark 2 plasma blaster improves on its predecessor in many ways, maintaining good energy efficiency while augmenting range and firepower. Though intended primarily for military use, many have found their way to pirate hands.</description>
    <gfx_store>plasma2</gfx_store>
   </general>
-  <specific type="bolt">
+  <specific type="turret bolt">
    <cpu>17</cpu>
    <gfx>plasma2</gfx>
    <sound>plasma</sound>
@@ -928,6 +928,7 @@
    <falloff>210</falloff>
    <energy>14</energy>
    <heatup>25</heatup>
+   <track>2</track>
    <damage type="energy" penetrate="12">18</damage>
   </specific>
  </outfit>
@@ -941,7 +942,7 @@
    <description>The mark 2 plasma blaster improves on its predecessor in many ways, maintaining good energy efficiency while augmenting range and firepower. Though intended primarily for military use, many have found their way to pirate hands.</description>
    <gfx_store>plasma2</gfx_store>
   </general>
-  <specific type="bolt">
+  <specific type="turret bolt">
    <cpu>24</cpu>
    <gfx>plasma</gfx>
    <sound>plasma</sound>
@@ -953,6 +954,7 @@
    <falloff>225</falloff>
    <energy>22</energy>
    <heatup>30</heatup>
+   <track>2</track>
    <damage type="energy" penetrate="27">28</damage>
   </specific>
  </outfit>
