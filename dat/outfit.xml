@@ -582,26 +582,26 @@
   <general>
    <slot>weapon</slot>
    <size>light</size>
-   <mass>15</mass>
-   <price>25000</price>
+   <mass>10</mass>
+   <price>22000</price>
    <description>The Shredder quite lives up to the name its Dvaered manufacturers gave it. The sheer damage dealing capacity of this weapon makes Dvaered fighters dangerous to engage by ships that aren't substantially larger than they are.</description>
    <gfx_store>gatling</gfx_store>
   </general>
   <specific type="bolt">
-   <cpu>9</cpu>
+   <cpu>8</cpu>
    <gfx>gatling</gfx>
    <sound>autocannon</sound>
    <sound_hit>medexp0</sound_hit>
    <spfx_shield>ExpS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>350</delay>
-   <speed>400</speed>
+   <delay>400</delay>
+   <speed>500</speed>
    <range blowup="armour">900</range>
-   <energy>19</energy>
-   <heatup>60</heatup>
+   <energy>11</energy>
+   <heatup>30</heatup>
    <track>1.5</track>
    <swivel>8</swivel>
-   <damage type="kinetic" penetrate="25">25</damage>
+   <damage type="kinetic" penetrate="25">12</damage>
   </specific>
  </outfit>
  <outfit name="Turreted Gauss Gun">
@@ -1170,28 +1170,28 @@
   <general>
    <slot>weapon</slot>
    <size>light</size>
-   <mass>7</mass>
-   <price>45000</price>
+   <mass>6</mass>
+   <price>18500</price>
    <license>Heavy Weapon License</license>
    <description>The Neutron Disruptor uses high-energy pulses that modify the base composition of molecules, causing heavy damage. This weapon was first popular with the Collective, as until recently, firing it would produce radiation lethal to humans aboard the ship.</description>
    <gfx_store>neutron</gfx_store>
   </general>
   <specific type="bolt">
-   <cpu>10</cpu>
+   <cpu>8</cpu>
    <gfx>neutron</gfx>
    <sound>neutron</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
    <delay>900</delay>
    <speed>650</speed>
-   <range>420</range>
-   <falloff>252</falloff>
+   <range>425</range>
+   <falloff>250</falloff>
    <gfx_end>neutron-end</gfx_end>
-   <energy>13.75</energy>
+   <energy>15</energy>
    <heatup>40</heatup>
    <track>3</track>
    <swivel>2.5</swivel>
-   <damage type="energy" penetrate="22">15</damage>
+   <damage type="energy" penetrate="22">20</damage>
   </specific>
  </outfit>
 
