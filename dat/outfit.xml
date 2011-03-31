@@ -97,7 +97,7 @@
   </general>
   <specific type="bolt">
    <cpu>11</cpu>
-   <gfx>ripper</gfx>
+   <gfx>ripperS</gfx>
    <sound>ripper</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
@@ -105,7 +105,7 @@
    <speed>700</speed>
    <range>900</range>
    <falloff>600</falloff>
-   <gfx_end>ripper-end</gfx_end>
+   <gfx_end>ripperS-end</gfx_end>
    <energy>17</energy>
    <heatup>30</heatup>
    <track>2</track>
@@ -125,7 +125,7 @@
   </general>
   <specific type="bolt">
    <cpu>15</cpu>
-   <gfx>ripper</gfx>
+   <gfx>ripperM</gfx>
    <sound>ripper</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
@@ -133,7 +133,7 @@
    <speed>700</speed>
    <range>1300</range>
    <falloff>850</falloff>
-   <gfx_end>ripper-end</gfx_end>
+   <gfx_end>ripperM-end</gfx_end>
    <energy>22</energy>
    <heatup>30</heatup>
    <track>2</track>
@@ -153,7 +153,7 @@
   </general>
   <specific type="turret bolt">
    <cpu>18</cpu>
-   <gfx>laser1S</gfx>
+   <gfx>laser1M</gfx>
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
@@ -289,7 +289,7 @@
   </general>
   <specific type="bolt">
    <cpu>5</cpu>
-   <gfx>ion</gfx>
+   <gfx>razorS</gfx>
    <sound>ion</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
@@ -297,7 +297,7 @@
    <speed>800</speed>
    <range>900</range>
    <falloff>700</falloff>
-   <gfx_end>ion-end</gfx_end>
+   <gfx_end>razorS-end</gfx_end>
    <energy>5.25</energy>
    <heatup>20</heatup>
    <track>2.25</track>
@@ -316,7 +316,7 @@
   </general>
   <specific type="bolt">
    <cpu>9</cpu>
-   <gfx>ion</gfx>
+   <gfx>razorS</gfx>
    <sound>ion</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
@@ -324,7 +324,7 @@
    <speed>800</speed>
    <range>950</range>
    <falloff>725</falloff>
-   <gfx_end>ion-end</gfx_end>
+   <gfx_end>razorS-end</gfx_end>
    <energy>9.5</energy>
    <heatup>25</heatup>
    <track>2.25</track>
@@ -343,7 +343,7 @@
   </general>
   <specific type="bolt">
    <cpu>11</cpu>
-   <gfx>ion</gfx>
+   <gfx>razorS</gfx>
    <sound>ion</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
@@ -351,7 +351,7 @@
    <speed>800</speed>
    <range>1000</range>
    <falloff>750</falloff>
-   <gfx_end>ion-end</gfx_end>
+   <gfx_end>razorS-end</gfx_end>
    <energy>15</energy>
    <heatup>30</heatup>
    <track>2.25</track>
@@ -370,7 +370,7 @@
   </general>
   <specific type="turret bolt">
    <cpu>18</cpu>
-   <gfx>ion</gfx>
+   <gfx>razorS</gfx>
    <sound>ion</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
@@ -378,7 +378,7 @@
    <speed>800</speed>
    <range>1000</range>
    <falloff>750</falloff>
-   <gfx_end>ion-end</gfx_end>
+   <gfx_end>razorS-end</gfx_end>
    <energy>17</energy>
    <heatup>30</heatup>
    <track>2</track>
@@ -396,7 +396,7 @@
   </general>
   <specific type="turret bolt">
    <cpu>22</cpu>
-   <gfx>ion</gfx>
+   <gfx>razorM</gfx>
    <sound>ion</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
@@ -404,7 +404,7 @@
    <speed>800</speed>
    <range>1400</range>
    <falloff>1100</falloff>
-   <gfx_end>ion-end</gfx_end>
+   <gfx_end>razorM-end</gfx_end>
    <energy>22</energy>
    <heatup>35</heatup>
    <track>1.8</track>
@@ -422,7 +422,7 @@
   </general>
   <specific type="turret bolt">
    <cpu>25</cpu>
-   <gfx>ion</gfx>
+   <gfx>razorM</gfx>
    <sound>ion</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
@@ -430,7 +430,7 @@
    <speed>800</speed>
    <range>1800</range>
    <falloff>1400</falloff>
-   <gfx_end>ion-end</gfx_end>
+   <gfx_end>razorM-end</gfx_end>
    <energy>26</energy>
    <heatup>40</heatup>
    <track>1.6</track>
@@ -448,7 +448,7 @@
   </general>
   <specific type="bolt">
    <cpu>14</cpu>
-   <gfx>ion</gfx>
+   <gfx>ionM</gfx>
    <sound>ion</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
@@ -456,7 +456,7 @@
    <speed>500</speed>
    <range>700</range>
    <falloff>500</falloff>
-   <gfx_end>ion-end</gfx_end>
+   <gfx_end>ionM-end</gfx_end>
    <energy>16</energy>
    <heatup>50</heatup>
    <track>2</track>
@@ -476,7 +476,7 @@
   </general>
   <specific type="bolt">
    <cpu>21</cpu>
-   <gfx>ion</gfx>
+   <gfx>ionL</gfx>
    <sound>ion</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
@@ -484,7 +484,7 @@
    <speed>500</speed>
    <range>1100</range>
    <falloff>800</falloff>
-   <gfx_end>ion-end</gfx_end>
+   <gfx_end>ionL-end</gfx_end>
    <energy>24</energy>
    <heatup>60</heatup>
    <track>2</track>
@@ -504,7 +504,7 @@
   </general>
   <specific type="turret bolt">
    <cpu>34</cpu>
-   <gfx>ion</gfx>
+   <gfx>ionL</gfx>
    <sound>ion</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
@@ -512,7 +512,7 @@
    <speed>500</speed>
    <range>1300</range>
    <falloff>1000</falloff>
-   <gfx_end>ion-end</gfx_end>
+   <gfx_end>ionL-end</gfx_end>
    <energy>38</energy>
    <heatup>60</heatup>
    <track>0.9</track>
@@ -750,7 +750,7 @@
   </general>
   <specific type="bolt">
    <cpu>37</cpu>
-   <gfx>mass</gfx>
+   <gfx>massL</gfx>
    <sound>mass</sound>
    <sound_hit>medexp0</sound_hit>
    <spfx_shield>ShiM</spfx_shield>
@@ -759,7 +759,7 @@
    <speed>650</speed>
    <range>2200</range>
    <falloff>1600</falloff>
-   <gfx_end>mass-end</gfx_end>
+   <gfx_end>massL-end</gfx_end>
    <energy>43</energy>
    <heatup>90</heatup>
    <track>0.8</track>
@@ -779,7 +779,7 @@
   </general>
   <specific type="bolt">
    <cpu>48</cpu>
-   <gfx>mass</gfx>
+   <gfx>massL</gfx>
    <sound>mass</sound>
    <sound_hit>medexp0</sound_hit>
    <spfx_shield>ShiM</spfx_shield>
@@ -788,7 +788,7 @@
    <speed>650</speed>
    <range>2200</range>
    <falloff>1600</falloff>
-   <gfx_end>mass-end</gfx_end>
+   <gfx_end>massL-end</gfx_end>
    <energy>57</energy>
    <heatup>100</heatup>
    <track>0.6</track>
@@ -808,7 +808,7 @@
   </general>
   <specific type="turret bolt">
    <cpu>50</cpu>
-   <gfx>mass</gfx>
+   <gfx>massL</gfx>
    <sound>mass</sound>
    <spfx_shield>ShiM</spfx_shield>
    <spfx_armour>ExpM</spfx_armour>
@@ -816,7 +816,7 @@
    <speed>625</speed>
    <range>720</range>
    <falloff>540</falloff>
-   <gfx_end>mass-end</gfx_end>
+   <gfx_end>massL-end</gfx_end>
    <energy>68</energy>
    <heatup>90</heatup>
    <track>0.25</track>
