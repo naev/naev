@@ -830,13 +830,13 @@
   <general>
    <slot>weapon</slot>
    <size>light</size>
-   <mass>4</mass>
+   <mass>5</mass>
    <price>9000</price>
    <description>Highly volatile, the plasma blaster is among the best choices for fast attacks. As a result of its volatility, it is a potent weapon against both shields and armour, though it is known for dissipating quickly after being fired.</description>
    <gfx_store>plasma</gfx_store>
   </general>
   <specific type="bolt">
-   <cpu>5</cpu>
+   <cpu>3</cpu>
    <gfx>plasma</gfx>
    <sound>plasma</sound>
    <spfx_shield>ShiS</spfx_shield>
@@ -845,11 +845,11 @@
    <speed>450</speed>
    <range>450</range>
    <falloff>210</falloff>
-   <energy>3.75</energy>
+   <energy>8</energy>
    <heatup>20</heatup>
    <track>2</track>
    <swivel>4</swivel>
-   <damage type="energy" penetrate="8">7.5</damage>
+   <damage type="energy" penetrate="8">9</damage>
   </specific>
  </outfit>
  <outfit name="Plasma Blaster MK2">
@@ -857,23 +857,23 @@
    <slot>weapon</slot>
    <size>light</size>
    <license>Medium Weapon License</license>
-   <mass>5</mass>
-   <price>18000</price>
+   <mass>7</mass>
+   <price>17000</price>
    <description>The mark 2 plasma blaster improves on its predecessor in many ways, maintaining good energy efficiency while augmenting range and firepower. Pirates have taken a liking to this weapon.</description>
    <gfx_store>plasma2</gfx_store>
   </general>
   <specific type="bolt">
-   <cpu>10</cpu>
+   <cpu>5</cpu>
    <gfx>plasma2</gfx>
    <sound>plasma</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>PlaS2</spfx_armour>
    <delay>675</delay>
    <speed>450</speed>
-   <range>650</range>
-   <falloff>225</falloff>
+   <range>625</range>
+   <falloff>260</falloff>
    <gfx_end>plasma2-end</gfx_end>
-   <energy>7.5</energy>
+   <energy>10</energy>
    <heatup>25</heatup>
    <track>2</track>
    <swivel>5</swivel>
@@ -885,27 +885,27 @@
    <slot>weapon</slot>
    <size>light</size>
    <license>Medium Weapon License</license>
-   <mass>8</mass>
-   <price>18000</price>
+   <mass>9</mass>
+   <price>26000</price>
    <description>The Plasma Blaster MK3 is a Soromid refinement to what was originally an Imperial design. It is one of the few Soromid military weapons that are compatible with standard ship mount points. The Soromid use it mainly for local law enforcement purposes.</description>
    <gfx_store>plasma2</gfx_store>
   </general>
   <specific type="bolt">
-   <cpu>14</cpu>
+   <cpu>7</cpu>
    <gfx>plasma2</gfx>
    <sound>plasma</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>PlaS2</spfx_armour>
    <delay>675</delay>
    <speed>450</speed>
-   <range>725</range>
-   <falloff>225</falloff>
+   <range>700</range>
+   <falloff>310</falloff>
    <gfx_end>plasma2-end</gfx_end>
-   <energy>15</energy>
+   <energy>12.5</energy>
    <heatup>30</heatup>
    <track>2</track>
    <swivel>6</swivel>
-   <damage type="energy" penetrate="25">19</damage>
+   <damage type="energy" penetrate="25">16</damage>
   </specific>
  </outfit>
  <outfit name="Plasma Turret MK1">
@@ -914,24 +914,24 @@
    <size>light</size>
    <license>Medium Weapon License</license>
    <mass>18</mass>
-   <price>18000</price>
+   <price>21000</price>
    <description>The mark 2 plasma blaster improves on its predecessor in many ways, maintaining good energy efficiency while augmenting range and firepower. Though intended primarily for military use, many have found their way to pirate hands.</description>
    <gfx_store>plasma2</gfx_store>
   </general>
   <specific type="turret bolt">
-   <cpu>17</cpu>
+   <cpu>10</cpu>
    <gfx>plasma2</gfx>
    <sound>plasma</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>PlaS2</spfx_armour>
-   <delay>425</delay>
+   <delay>450</delay>
    <speed>450</speed>
-   <range>950</range>
-   <falloff>210</falloff>
-   <energy>14</energy>
+   <range>700</range>
+   <falloff>310</falloff>
+   <energy>9.5</energy>
    <heatup>25</heatup>
-   <track>2</track>
-   <damage type="energy" penetrate="12">18</damage>
+   <track>1.8</track>
+   <damage type="energy" penetrate="12">9</damage>
   </specific>
  </outfit>
  <outfit name="Plasma Turret MK2">
@@ -940,24 +940,24 @@
    <size>medium</size>
    <license>Medium Weapon License</license>
    <mass>24</mass>
-   <price>18000</price>
+   <price>31000</price>
    <description>The mark 2 plasma blaster improves on its predecessor in many ways, maintaining good energy efficiency while augmenting range and firepower. Though intended primarily for military use, many have found their way to pirate hands.</description>
    <gfx_store>plasma2</gfx_store>
   </general>
   <specific type="turret bolt">
-   <cpu>24</cpu>
+   <cpu>16</cpu>
    <gfx>plasma</gfx>
    <sound>plasma</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>PlaS</spfx_armour>
-   <delay>675</delay>
+   <delay>475</delay>
    <speed>450</speed>
-   <range>1450</range>
-   <falloff>225</falloff>
-   <energy>22</energy>
+   <range>900</range>
+   <falloff>510</falloff>
+   <energy>13.5</energy>
    <heatup>30</heatup>
-   <track>2</track>
-   <damage type="energy" penetrate="27">28</damage>
+   <track>1.6</track>
+   <damage type="energy" penetrate="27">14</damage>
   </specific>
  </outfit>
  <outfit name="BioPlasma Organ Stage 1">
