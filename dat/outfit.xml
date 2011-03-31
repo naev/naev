@@ -283,7 +283,7 @@
    <slot>weapon</slot>
    <size>light</size>
    <mass>2.2</mass>
-   <price>20000</price>
+   <price>7000</price>
    <description>Razors fire concentrated pockets of high energy ions that are very effective at draining shields, but have only limited effect on a ship's armour. As such, Razors are best used in the initial phase of an engagement, and swapped out for other weapons once the target's shields come down.</description>
    <gfx_store>ioncannon</gfx_store>
   </general>
@@ -298,11 +298,11 @@
    <range>900</range>
    <falloff>700</falloff>
    <gfx_end>razorS-end</gfx_end>
-   <energy>5.25</energy>
+   <energy>6</energy>
    <heatup>20</heatup>
    <track>2.25</track>
    <swivel>5</swivel>
-   <damage type="ion" penetrate="0">4</damage>
+   <damage type="ion" penetrate="0">7</damage>
   </specific>
  </outfit>
  <outfit name="Razor MK2">
@@ -310,12 +310,12 @@
    <slot>weapon</slot>
    <size>light</size>
    <mass>4</mass>
-   <price>20000</price>
+   <price>11000</price>
    <description>The upgraded civilian Razor model packs increased overall effectiveness compared to its predecessor, and has less difficulty in overloading capital ship grade shielding. As with the basic model, the Razor MK2 is best used to drain a target's shields, paving the way for other weapons to deliver the finishing blow.</description>
    <gfx_store>ioncannon</gfx_store>
   </general>
   <specific type="bolt">
-   <cpu>9</cpu>
+   <cpu>6</cpu>
    <gfx>razorS</gfx>
    <sound>ion</sound>
    <spfx_shield>ShiS</spfx_shield>
@@ -325,11 +325,11 @@
    <range>950</range>
    <falloff>725</falloff>
    <gfx_end>razorS-end</gfx_end>
-   <energy>9.5</energy>
+   <energy>7</energy>
    <heatup>25</heatup>
    <track>2.25</track>
    <swivel>6</swivel>
-   <damage type="ion" penetrate="5">8</damage>
+   <damage type="ion" penetrate="5">9</damage>
   </specific>
  </outfit>
  <outfit name="Razor MK3">
@@ -337,12 +337,12 @@
    <slot>weapon</slot>
    <size>light</size>
    <mass>6.5</mass>
-   <price>20000</price>
+   <price>23000</price>
    <description>The heaviest version of the Razor is excellent at stripping the shields from those who would stand against House Sirius. In large engagements, Razor MK3s are often employed by support ships, whose task is to weaken a target before the heavy enforcer ships move in.</description>
    <gfx_store>ioncannon</gfx_store>
   </general>
   <specific type="bolt">
-   <cpu>11</cpu>
+   <cpu>8</cpu>
    <gfx>razorS</gfx>
    <sound>ion</sound>
    <spfx_shield>ShiS</spfx_shield>
@@ -352,116 +352,116 @@
    <range>1000</range>
    <falloff>750</falloff>
    <gfx_end>razorS-end</gfx_end>
-   <energy>15</energy>
+   <energy>8</energy>
    <heatup>30</heatup>
    <track>2.25</track>
    <swivel>7</swivel>
-   <damage type="ion" penetrate="11">14</damage>
+   <damage type="ion" penetrate="11">11.5</damage>
   </specific>
  </outfit>
  <outfit name="Razor Turret MK1">
   <general>
    <slot>weapon</slot>
    <size>light</size>
-   <mass>10</mass>
-   <price>75000</price>
+   <mass>16</mass>
+   <price>14000</price>
    <description>Razor Turrets are popular among traders. Their high damage against shields is a great deterrent against attackers, because nothing puts a space pilot on edge like his shields rapidly coming down.</description>
    <gfx_store>ionturret</gfx_store>
   </general>
   <specific type="turret bolt">
-   <cpu>18</cpu>
+   <cpu>9</cpu>
    <gfx>razorS</gfx>
    <sound>ion</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>400</delay>
+   <delay>500</delay>
    <speed>800</speed>
-   <range>1000</range>
+   <range>1100</range>
    <falloff>750</falloff>
    <gfx_end>razorS-end</gfx_end>
-   <energy>17</energy>
+   <energy>6.5</energy>
    <heatup>30</heatup>
    <track>2</track>
-   <damage type="ion" penetrate="10">12</damage>
+   <damage type="ion" penetrate="7">7.5</damage>
   </specific>
  </outfit>
  <outfit name="Razor Turret MK2">
   <general>
    <slot>weapon</slot>
    <size>medium</size>
-   <mass>14</mass>
-   <price>75000</price>
+   <mass>25</mass>
+   <price>32500</price>
    <description>The MK2 turreted version of the Razor sees a lot of application on medium escort ships. They are often mounted alongside laser or gauss turrets to assist in de-shielding incoming attackers before they are ripped to shreds.</description>
    <gfx_store>ionturret</gfx_store>
   </general>
   <specific type="turret bolt">
-   <cpu>22</cpu>
+   <cpu>15</cpu>
    <gfx>razorM</gfx>
    <sound>ion</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>400</delay>
+   <delay>500</delay>
    <speed>800</speed>
-   <range>1400</range>
+   <range>1600</range>
    <falloff>1100</falloff>
    <gfx_end>razorM-end</gfx_end>
-   <energy>22</energy>
+   <energy>13</energy>
    <heatup>35</heatup>
    <track>1.8</track>
-   <damage type="ion" penetrate="17">17</damage>
+   <damage type="ion" penetrate="17">13</damage>
   </specific>
  </outfit>
  <outfit name="Razor Turret MK3">
   <general>
    <slot>weapon</slot>
    <size>medium</size>
-   <mass>19</mass>
-   <price>75000</price>
+   <mass>28</mass>
+   <price>46500</price>
    <description>House Sirius typically equips its independent capital ships with Razor Turret MK3s. Where the standard Razor MK3 is impractical, the turreted version provides great de-shielding capabilities for the slower members of the Sirian fleet.</description>
    <gfx_store>ionturret</gfx_store>
   </general>
   <specific type="turret bolt">
-   <cpu>25</cpu>
+   <cpu>18</cpu>
    <gfx>razorM</gfx>
    <sound>ion</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>400</delay>
+   <delay>500</delay>
    <speed>800</speed>
    <range>1800</range>
    <falloff>1400</falloff>
    <gfx_end>razorM-end</gfx_end>
-   <energy>26</energy>
+   <energy>15</energy>
    <heatup>40</heatup>
    <track>1.6</track>
-   <damage type="ion" penetrate="17">23</damage>
+   <damage type="ion" penetrate="24">16</damage>
   </specific>
  </outfit>
  <outfit name="Ion Cannon">
   <general>
    <slot>weapon</slot>
    <size>light</size>
-   <mass>9</mass>
-   <price>20000</price>
+   <mass>8</mass>
+   <price>16000</price>
    <description>Ion Cannons are primarily nonlethal weapons designed to short out internal ship systems and rendering it disabled without killing the crew in the process. The standard Ion Cannon is the most basic and compact design, which allows it to be mounted on small craft. This makes the Ion Cannon one of the most popular weapons for weaker pirates.</description>
    <gfx_store>ioncannon</gfx_store>
   </general>
   <specific type="bolt">
-   <cpu>14</cpu>
+   <cpu>12</cpu>
    <gfx>ionM</gfx>
    <sound>ion</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>1440</delay>
+   <delay>1340</delay>
    <speed>500</speed>
    <range>700</range>
    <falloff>500</falloff>
    <gfx_end>ionM-end</gfx_end>
-   <energy>16</energy>
+   <energy>30</energy>
    <heatup>50</heatup>
    <track>2</track>
    <swivel>6</swivel>
-   <damage type="ion" penetrate="11">15</damage>
+   <damage type="ion" penetrate="11">28</damage>
   </specific>
  </outfit>
  <outfit name="Heavy Ion Cannon">
@@ -470,26 +470,26 @@
    <size>medium</size>
    <license>Medium Weapon License</license>
    <mass>14</mass>
-   <price>20000</price>
+   <price>32000</price>
    <description>The Heavy Ion Cannon does a far better job at disabling ships than the standard model, but it requires a medium mount. Most militaries employ these weapons on specialized capture teams, but the design is licensed for public use as well.</description>
    <gfx_store>ioncannon</gfx_store>
   </general>
   <specific type="bolt">
-   <cpu>21</cpu>
+   <cpu>16</cpu>
    <gfx>ionL</gfx>
    <sound>ion</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>1640</delay>
+   <delay>1520</delay>
    <speed>500</speed>
    <range>1100</range>
    <falloff>800</falloff>
    <gfx_end>ionL-end</gfx_end>
-   <energy>24</energy>
+   <energy>45</energy>
    <heatup>60</heatup>
    <track>2</track>
    <swivel>8</swivel>
-   <damage type="ion" penetrate="22">25</damage>
+   <damage type="ion" penetrate="22">48</damage>
   </specific>
  </outfit>
  <outfit name="Heavy Ion Turret">
@@ -498,25 +498,25 @@
    <size>medium</size>
    <mass>37</mass>
    <license>Heavy Weapon License</license>
-   <price>75000</price>
+   <price>68000</price>
    <description>The Heavy Ion Turret is a Sirius military design, applying brute force to its target's internal systems. When coupled with Razor weaponry, it is terribly efficient at reducing enemy warships to tumbling hunks of junk.</description>
    <gfx_store>ionturret</gfx_store>
   </general>
   <specific type="turret bolt">
-   <cpu>34</cpu>
+   <cpu>24</cpu>
    <gfx>ionL</gfx>
    <sound>ion</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>900</delay>
+   <delay>1300</delay>
    <speed>500</speed>
    <range>1300</range>
    <falloff>1000</falloff>
    <gfx_end>ionL-end</gfx_end>
-   <energy>38</energy>
+   <energy>54</energy>
    <heatup>60</heatup>
    <track>0.9</track>
-   <damage type="ion" penetrate="40">34</damage>
+   <damage type="ion" penetrate="40">48</damage>
   </specific>
  </outfit>
  <!-- TODO shock artillery -->
