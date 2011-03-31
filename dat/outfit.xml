@@ -11,20 +11,20 @@
    <gfx_store>laser</gfx_store>
    </general>
   <specific type="bolt">
-   <cpu>5</cpu>
+   <cpu>4</cpu>
    <gfx>laser1S</gfx>
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>550</delay>
+   <delay>500</delay>
    <speed>550</speed>
-   <range>420</range>
-   <falloff>250</falloff>
-   <energy>8</energy>
+   <range>550</range>
+   <falloff>275</falloff>
+   <energy>4.5</energy>
    <heatup>15</heatup>
    <track>3</track>
    <swivel>3</swivel>
-   <damage type="energy" penetrate="0">5.5</damage>
+   <damage type="energy" penetrate="0">6</damage>
   </specific>
  </outfit>
  <outfit name="Laser Cannon MK2">
@@ -32,27 +32,27 @@
    <slot>weapon</slot>
    <size>light</size>
    <license>Medium Weapon License</license>
-   <mass>6</mass>
-   <price>15000</price>
+   <mass>4.5</mass>
+   <price>12500</price>
    <description>The mark 2 laser cannon improves on the original in many ways. Featuring increased range and greater firepower while only moderately increasing power demands, it's become a favourite civilian armament.</description>
    <gfx_store>laser2</gfx_store>
    </general>
   <specific type="bolt">
-   <cpu>8</cpu>
+   <cpu>5</cpu>
    <gfx>laser2S</gfx>
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>600</delay>
+   <delay>550</delay>
    <speed>550</speed>
-   <range>525</range>
+   <range>575</range>
    <falloff>300</falloff>
    <gfx_end>laser1S</gfx_end>
-   <energy>12</energy>
+   <energy>6</energy>
    <heatup>20</heatup>
    <track>3</track>
    <swivel>4</swivel>
-   <damage type="energy" penetrate="14">9</damage>
+   <damage type="energy" penetrate="14">8.5</damage>
   </specific>
  </outfit>
  <outfit name="Laser Cannon MK3">
@@ -60,27 +60,27 @@
    <slot>weapon</slot>
    <size>light</size>
    <license>Medium Weapon License</license>
-   <mass>8</mass>
-   <price>15000</price>
+   <mass>5</mass>
+   <price>25000</price>
    <description>A high-powered version of the Laser Cannon, the MK3 is usually found on Imperial law enforcement ships. Its superior firepower helps keep order among the civilian populace, though it has limited applications in full blown military engagements.</description>
    <gfx_store>laser2</gfx_store>
    </general>
   <specific type="bolt">
-   <cpu>11</cpu>
+   <cpu>7</cpu>
    <gfx>laser3S</gfx>
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>650</delay>
+   <delay>600</delay>
    <speed>550</speed>
    <range>600</range>
-   <falloff>330</falloff>
+   <falloff>325</falloff>
    <gfx_end>laser2S</gfx_end>
-   <energy>15</energy>
+   <energy>8</energy>
    <heatup>25</heatup>
    <track>3</track>
    <swivel>5</swivel>
-   <damage type="energy" penetrate="22">15</damage>
+   <damage type="energy" penetrate="22">12</damage>
   </specific>
  </outfit>
  <!-- TODO laser pd mk1 -->
@@ -90,27 +90,27 @@
    <slot>weapon</slot>
    <size>light</size>
    <license>Medium Weapon License</license>
-   <mass>9</mass>
+   <mass>8</mass>
    <price>35000</price>
    <description>The Ripper Cannon is a variant on the Laser Cannon that has stronger capacitors and twin, synchronous muzzles. The result is an increase in damage per hit, though the weapon needs longer to recharge than the standard model, so rate of fire suffers. The Ripper Cannon is mostly used by experienced pilots who don't need to rely on rapid fire to hit their marks anymore.</description>
    <gfx_store>ripper</gfx_store>
   </general>
   <specific type="bolt">
-   <cpu>11</cpu>
+   <cpu>10</cpu>
    <gfx>ripperS</gfx>
    <sound>ripper</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>1460</delay>
+   <delay>1200</delay>
    <speed>700</speed>
    <range>900</range>
    <falloff>600</falloff>
    <gfx_end>ripperS-end</gfx_end>
-   <energy>17</energy>
+   <energy>27</energy>
    <heatup>30</heatup>
    <track>2</track>
    <swivel>7</swivel>
-   <damage type="energy" penetrate="30">13</damage>
+   <damage type="energy" penetrate="30">29</damage>
   </specific>
  </outfit>
  <outfit name="Heavy Ripper Cannon">
@@ -118,8 +118,8 @@
    <slot>weapon</slot>
    <size>medium</size>
    <license>Heavy Weapon License</license>
-   <mass>12</mass>
-   <price>35000</price>
+   <mass>14</mass>
+   <price>47500</price>
    <description>By modulating the frequency of the basic Ripper Cannon, the Empire military increased its range, accuracy and destructive power. After reworking the power conduits, their efforts culminated in the devastating Heavy Ripper Cannon. The main drawback to this model is its increased bulk, which makes it unsuitable for smaller ships.</description>
    <gfx_store>ripper</gfx_store>
   </general>
@@ -129,16 +129,16 @@
    <sound>ripper</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>1660</delay>
+   <delay>1250</delay>
    <speed>700</speed>
    <range>1300</range>
    <falloff>850</falloff>
    <gfx_end>ripperM-end</gfx_end>
-   <energy>22</energy>
-   <heatup>30</heatup>
+   <energy>40</energy>
+   <heatup>35</heatup>
    <track>2</track>
    <swivel>10</swivel>
-   <damage type="energy" penetrate="40">22</damage>
+   <damage type="energy" penetrate="40">42</damage>
   </specific>
  </outfit>
  <outfit name="Laser Turret MK1">
@@ -146,13 +146,13 @@
    <slot>weapon</slot>
    <size>medium</size>
    <license>Medium Weapon License</license>
-   <mass>23</mass>
-   <price>25000</price>
+   <mass>26</mass>
+   <price>17500</price>
    <description>A pair of laser cannons mounted on a rotating turret, providing excellent point-defense capabilities. With a full 360 degrees of rotation, laser turrets provide affordable, energy-efficient firepower to less manoeuvrable ships.</description>
    <gfx_store>laserturret</gfx_store>
   </general>
   <specific type="turret bolt">
-   <cpu>18</cpu>
+   <cpu>14</cpu>
    <gfx>laser1M</gfx>
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
@@ -161,10 +161,10 @@
    <speed>550</speed>
    <range>800</range>
    <falloff>500</falloff>
-   <energy>23</energy>
+   <energy>9</energy>
    <heatup>25</heatup>
    <track>2</track>
-   <damage type="energy" penetrate="20">18</damage>
+   <damage type="energy" penetrate="20">8</damage>
   </specific>
  </outfit>
  <outfit name="Laser Turret MK2">
@@ -173,25 +173,25 @@
    <size>medium</size>
    <license>Medium Weapon License</license>
    <mass>28</mass>
-   <price>45000</price>
+   <price>28000</price>
    <description>A pair of mark 2 laser cannons mounted on a rotating turret, providing excellent point-defense capabilities. This new offering has quickly won the hearts of high-value traders for its superior firepower and range, easily warding off most pirates.</description>
    <gfx_store>laserturret2</gfx_store>
   </general>
   <specific type="turret bolt">
-   <cpu>22</cpu>
+   <cpu>16</cpu>
    <gfx>laser2M</gfx>
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>400</delay>
+   <delay>375</delay>
    <speed>550</speed>
    <range>1000</range>
    <falloff>600</falloff>
    <gfx_end>laser1M</gfx_end>
-   <energy>28</energy>
+   <energy>11</energy>
    <heatup>30</heatup>
    <track>1.75</track>
-   <damage type="energy" penetrate="27">24</damage>
+   <damage type="energy" penetrate="27">10.5</damage>
   </specific>
  </outfit>
  <outfit name="Laser Turret MK3">
@@ -199,26 +199,26 @@
    <slot>weapon</slot>
    <size>medium</size>
    <license>Medium Weapon License</license>
-   <mass>31</mass>
+   <mass>30</mass>
    <price>45000</price>
    <description>The Laser Turret MK3 is often found on Imperial fast response fleets, for use against fleets of small to medium ships. This weapon is one of the mainstays in the Imperial space forces.</description>
    <gfx_store>laserturret2</gfx_store>
   </general>
   <specific type="turret bolt">
-   <cpu>25</cpu>
+   <cpu>18</cpu>
    <gfx>laser3M</gfx>
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>450</delay>
+   <delay>400</delay>
    <speed>550</speed>
    <range>1200</range>
    <falloff>700</falloff>
    <gfx_end>laser2M</gfx_end>
-   <energy>30</energy>
+   <energy>13</energy>
    <heatup>35</heatup>
    <track>1.5</track>
-   <damage type="energy" penetrate="35">32</damage>
+   <damage type="energy" penetrate="35">14</damage>
   </specific>
  </outfit>
  <outfit name="Heavy Laser">
@@ -227,25 +227,25 @@
    <size>heavy</size>
    <license>Heavy Weapon License</license>
    <mass>53</mass>
-   <price>45000</price>
+   <price>65000</price>
    <description>The Heavy Laser is more or less an upscaled version of the Laser Cannon Turret, though some fundamental mechanisms had to be redesigned to adapt to the increased energy throughput found in this weapon.</description>
    <gfx_store>laserturret2</gfx_store>
   </general>
   <specific type="turret bolt">
-   <cpu>40</cpu>
+   <cpu>30</cpu>
    <gfx>laser3L</gfx>
    <sound>laser</sound>
    <spfx_shield>ShiM</spfx_shield>
    <spfx_armour>ExpM</spfx_armour>
-   <delay>1700</delay>
+   <delay>1400</delay>
    <speed>550</speed>
    <range>2200</range>
    <falloff>1600</falloff>
    <gfx_end>laser2L</gfx_end>
-   <energy>40</energy>
+   <energy>72</energy>
    <heatup>50</heatup>
    <track>0.5</track>
-   <damage type="energy" penetrate="60">43</damage>
+   <damage type="energy" penetrate="60">64</damage>
   </specific>
  </outfit>
  <outfit name="Turbolaser">
@@ -254,25 +254,25 @@
    <size>heavy</size>
    <license>Heavy Weapon License</license>
    <mass>57</mass>
-   <price>45000</price>
+   <price>125000</price>
    <description>The military grade model of the Heavy Laser is one of the heaviest weapons found in the galaxy. Imperial Capital ships use it to lay down devastating barrages against enemy vessels.</description>
    <gfx_store>laserturret2</gfx_store>
   </general>
   <specific type="turret bolt">
-   <cpu>45</cpu>
+   <cpu>38</cpu>
    <gfx>laser4L</gfx>
    <sound>laser</sound>
    <spfx_shield>ShiM</spfx_shield>
    <spfx_armour>ExpM</spfx_armour>
-   <delay>1800</delay>
+   <delay>1450</delay>
    <speed>550</speed>
    <range>2800</range>
    <falloff>2000</falloff>
    <gfx_end>laser3L</gfx_end>
-   <energy>43</energy>
+   <energy>85</energy>
    <heatup>60</heatup>
    <track>0.3</track>
-   <damage type="energy" penetrate="75">50</damage>
+   <damage type="energy" penetrate="75">82</damage>
   </specific>
  </outfit>
 
@@ -2174,7 +2174,7 @@
   </general>
   <specific type="turret bolt">
    <cpu>12</cpu>
-   <gfx>ripper</gfx>
+   <gfx>ripperM</gfx>
    <sound>ripper</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
@@ -2182,7 +2182,7 @@
    <speed>700</speed>
    <range>1900</range>
    <falloff>1500</falloff>
-   <gfx_end>ripper-end</gfx_end>
+   <gfx_end>ripperM-end</gfx_end>
    <energy>1</energy>
    <heatup>10000</heatup>
    <track>2</track>
