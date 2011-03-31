@@ -537,7 +537,7 @@
   </general>
   <specific type="bolt">
    <cpu>2</cpu>
-   <gfx>autocannon</gfx>
+   <gfx>gatling</gfx>
    <sound>autocannon</sound>
    <sound_hit>medexp0</sound_hit>
    <spfx_shield>ExpS</spfx_shield>
@@ -563,7 +563,7 @@
   </general>
   <specific type="bolt">
    <cpu>5</cpu>
-   <gfx>autocannon</gfx>
+   <gfx>gatling</gfx>
    <sound>autocannon</sound>
    <sound_hit>medexp0</sound_hit>
    <spfx_shield>ExpS</spfx_shield>
@@ -589,7 +589,7 @@
   </general>
   <specific type="bolt">
    <cpu>9</cpu>
-   <gfx>autocannon</gfx>
+   <gfx>gatling</gfx>
    <sound>autocannon</sound>
    <sound_hit>medexp0</sound_hit>
    <spfx_shield>ExpS</spfx_shield>
@@ -616,8 +616,9 @@
   </general>
   <specific type="turret bolt">
    <cpu>11</cpu>
-   <gfx>mass</gfx>
-   <sound>mass</sound>
+   <gfx>gatling</gfx>
+   <sound>autocannon</sound>
+   <sound_hit>medexp0</sound_hit>
    <spfx_shield>ExpS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
    <delay>200</delay>
@@ -641,8 +642,9 @@
   </general>
   <specific type="turret bolt">
    <cpu>18</cpu>
-   <gfx>mass</gfx>
-   <sound>mass</sound>
+   <gfx>gatling</gfx>
+   <sound>autocannon</sound>
+   <sound_hit>medexp0</sound_hit>
    <spfx_shield>ExpS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
    <delay>225</delay>
