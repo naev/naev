@@ -65,7 +65,7 @@ function create ()
     
     -- Create the derelict.
     angle = rnd.rnd() * 2 * math.pi
-    dist  = rnd.rnd(400, 1000)
+    dist  = rnd.rnd(400, system.cur():radius() * 0.6)
     pos   = vec2.new( dist * math.cos(angle), dist * math.sin(angle) )
     p     = pilot.add(ship, "dummy", pos)[1]
     p:setFaction("Derelict")
@@ -130,7 +130,8 @@ function badevent()
     if event == 1 then
         tk.msg(btitle, btext[1])
         p:setHealth(0,0)
-        player.pilot():setHealth(30, 0)
+        player.pilot():control(true)
+        hook.pilot( p, "exploded", "derelict_exploded" )
     elseif event == 2 then
         tk.msg(btitle, btext[2])
         player.pilot():setFuel(false)
@@ -162,6 +163,11 @@ function badevent()
 --        --effects here
     end
     destroyevent()
+end
+
+function derelict_exploded()
+   player.pilot():control(false)
+   player.pilot():setHealth( 42, 0 ) -- Not pretty, but we can fix it properly post-beta.
 end
 
 function missionevent()
