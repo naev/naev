@@ -18,7 +18,6 @@
  */
 /* localised global */
 #include "SDL.h"
-#include "SDL_image.h"
 
 #include "naev.h"
 #include "log.h" /* for DEBUGGING */

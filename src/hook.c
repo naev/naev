@@ -674,6 +674,7 @@ static void hooks_updateDateExecute( ntime_t change )
    if ((player.p == NULL) || player_isFlag(PLAYER_CREATING))
       return;
 
+   /* On j=0 we increment all timers and try to run, then on j=1 we update the timers. */
    hook_runningstack++; /* running hooks */
    for (j=1; j>=0; j--) {
       for (h=hook_list; h!=NULL; h=h->next) {
@@ -691,8 +692,9 @@ static void hooks_updateDateExecute( ntime_t change )
          hook_run( h, NULL, j );
          /* Date hooks are not deleted. */
 
+         /* Time is modified at the end. */
          if (j==1)
-            h->acc -= h->res;
+            h->acc %= h->res; /* We'll skip all buggers. */
       }
    }
    hook_runningstack--; /* not running hooks anymore */

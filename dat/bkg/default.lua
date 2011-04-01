@@ -84,9 +84,9 @@ function background_stars ()
    local r = prng.num()
    if r < 0.1 then
       return
-   elseif r < 0.8 then
+   elseif r < 0.94 then
       n = 1
-   elseif r < 0.95 then
+   elseif r < 0.97 then
       n = 2
    else
       n = 3
