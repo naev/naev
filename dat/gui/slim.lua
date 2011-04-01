@@ -777,18 +777,18 @@ function render( dt )
 
    local bartext = { "Pilot: ", pname, "System: ", sys:name(), "Time: ", time.str(), "Credits: ",
          largeNumber( credits, 2 ), "Nav: ", navstring, "Fuel: ", fuelstring,
-         "Weapon Set: ", wsetstr, "Cargo: " }
+         "WSet: ", wsetstr, "Cargo: " }
    for k,v in ipairs(bartext) do
       if k % 2 == 1 then
-         gfx.print( false, v, length, 5, col_txt_top )
-         length = length + gfx.printDim( false, v )
+         gfx.print( true, v, length, 5, col_txt_top )
+         length = length + gfx.printDim( true, v )
       else
          if v == "none" or (v == wsetstr and not rdy) then
             col = col_txt_una
          else
             col = col_txt_std
          end
-         gfx.print( true, v, length, 6, col )
+         gfx.print( true, v, length, 5, col )
          length = length + gfx.printDim( true, v ) + 10
       end
    end
