@@ -139,6 +139,10 @@ function tick()
         osd_msg[1] = osd_msg1:format(destplanet:name(), destsys:name(), timelimit:str())
         osd_msg[2] = osd_msg2:format((timelimit - time.get()):str())
         misn.osdCreate(osd_title, osd_msg)
+    elseif timelimit2 <= time.get() then
+        -- Case missed second deadline
+        player.msg(timeup_2:format(destsys:name()))
+        abort()
     elseif intime then
         -- Case missed first deadline
         player.msg(timeup_1:format(destsys:name()))
@@ -146,10 +150,6 @@ function tick()
         osd_msg[2] = timeup_1:format(destsys:name())
         misn.osdCreate(osd_title, osd_msg)
         intime = false
-    elseif timelimit2 <= time.get() then
-        -- Case missed second deadline
-        player.msg(timeup_2:format(destsys:name()))
-        abort()
     end
 end
 
