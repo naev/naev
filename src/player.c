@@ -64,7 +64,7 @@
  */
 Player_t player; /**< Local player. */
 static Ship* player_ship      = NULL; /**< Temporary ship to hold when naming it */
-static unsigned long player_creds = 0; /**< Temporary hack for when creating. */
+static uint64_t player_creds = 0; /**< Temporary hack for when creating. */
 static const char *player_message_noland = NULL; /**< No landing message (when PLAYER_NOLAND is set). */
 
 /*
@@ -949,7 +949,7 @@ const char* player_rating (void)
  *    @param amount Amount of credits to check to see if the player has.
  *    @return 1 if the player has enough credits.
  */
-int player_hasCredits( int amount )
+int player_hasCredits( int64_t amount )
 {
    return pilot_hasCredits( player.p, amount );
 }
@@ -961,7 +961,7 @@ int player_hasCredits( int amount )
  *    @param amount Quantity to modify player's credits by.
  *    @return Amount of credits the player has.
  */
-unsigned long player_modCredits( int amount )
+uint64_t player_modCredits( int64_t amount )
 {
    return pilot_modCredits( player.p, amount );
 }

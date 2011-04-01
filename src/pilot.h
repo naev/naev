@@ -420,8 +420,8 @@ double pilot_face( Pilot* p, const double dir );
 
 
 /* Misc. */
-int pilot_hasCredits( Pilot *p, int amount );
-unsigned long pilot_modCredits( Pilot *p, int amount );
+int pilot_hasCredits( Pilot *p, int64_t amount );
+uint64_t pilot_modCredits( Pilot *p, int64_t amount );
 int pilot_refuelStart( Pilot *p );
 void pilot_hyperspaceAbort( Pilot* p );
 void pilot_clearTimers( Pilot *pilot );

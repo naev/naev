@@ -123,8 +123,8 @@ void player_nolandMsg( const char *str );
 void player_clear (void);
 void player_warp( const double x, const double y );
 const char* player_rating (void);
-int player_hasCredits( int amount );
-unsigned long player_modCredits( int amount );
+int player_hasCredits( int64_t amount );
+uint64_t player_modCredits( int64_t amount );
 void player_hailStart (void);
 /* Sounds. */
 void player_soundPlay( int sound, int once );
