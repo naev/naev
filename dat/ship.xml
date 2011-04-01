@@ -1305,54 +1305,6 @@
    <damage_forward>5</damage_forward>
   </stats>
  </ship>
- <ship name="Sirius Divinity">
-  <base_type>Divinity</base_type>
-  <GFX sx="10" sy="10">divinity</GFX>
-  <GUI>slim</GUI>
-  <sound>engine</sound>
-  <class>Destroyer</class>
-  <price>1300000</price>
-  <fabricator>Sirius Systems</fabricator>
-  <license>Medium Combat Vessel License</license>
-  <description>The Divinity excels at interdiction against lighter targets given its high speed relative to other light capital ships. However, this advantage is not without drawbacks; the Divinity's high mobility comes at the cost of reduced firepower relative to other destroyer-class vessels.</description>
-  <movement>
-   <thrust>175</thrust>
-   <turn>80</turn>
-   <speed>190</speed>
-  </movement>
-  <health>
-   <absorb>41</absorb>
-   <shield>580</shield>
-   <armour>460</armour>
-   <energy>1300</energy>
-   <shield_regen>260</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>3000</energy_regen>
-  </health>
-  <characteristics>
-   <cpu>75</cpu>
-   <crew>15</crew>
-   <mass>640</mass>
-   <fuel>400</fuel>
-   <cap_cargo>25</cap_cargo>
-  </characteristics>
-  <slots>
-   <weapon x="20"  y="0"   h="0" >heavy</weapon>
-   <weapon x="10"   y="0"  h="0" />
-   <weapon x="-10" y="0" h="0" />
-   <weapon x="-20" y="0"  h="0" />
-   <utility>heavy</utility>
-   <utility />
-   <utility />
-   <structure>heavy</structure>
-   <structure />
-   <structure />
-  </slots>
-  <stats>
-   <damage_turret>-5</damage_turret>
-   <ew_detect>5</ew_detect>
-  </stats>
- </ship>
  <ship name="Proteron Kahan">
   <base_type>Kahan</base_type>
   <GFX sx="10" sy="10">kahan</GFX>
@@ -1786,7 +1738,7 @@
   <price>8300000</price>
   <fabricator>Sirius Systems</fabricator>
   <license>Heavy Combat Vessel License</license>
-  <description>The backbone of the House Sirius fleet, the Dogma is a sight to behold. Trimmed in gold and silver and fielding a large array of weapons, the Dogma is surpassed only by House Goddard's eponymous flagship and Nexus Shipyards' Peacemaker.</description>
+  <description>The backbone of the House Sirius fleet, the Dogma is a sight to behold. Trimmed in gold and silver and fielding a large array of weapons, the Dogma is seldom surpassed in either prestige or military might.</description>
   <movement>
    <thrust>50</thrust>
    <turn>55</turn>
@@ -1795,7 +1747,7 @@
   <health>
    <absorb>67</absorb>
    <shield>1400</shield>
-   <armour>700</armour>
+   <armour>800</armour>
    <energy>3100</energy>
    <shield_regen>340</shield_regen>
    <armour_regen>0</armour_regen>
@@ -1827,6 +1779,58 @@
    <structure />
   </slots>
   <stats>
+   <ew_detect>10</ew_detect>
+  </stats>
+ </ship>
+ <ship name="Sirius Divinity">
+  <base_type>Divinity</base_type>
+  <GFX sx="12" sy="12">divinity</GFX>
+  <GUI>slim</GUI>
+  <sound>engine</sound>
+  <class>Carrier</class>
+  <price>7200000</price>
+  <fabricator>Sirius Systems</fabricator>
+  <license>Heavy Combat Vessel License</license>
+  <description>Whilst the Dogma is said to form the core of any Sirian fleet, few combat pilots would dismiss the significance of the Divinity. Though not exceptionally formidable in direct combat, the Divinity's ability to field a multitude of fighters gives it unparalleled flexibility in combat, serving as a key logistical vessel in any sizable fleet.</description>
+  <movement>
+   <thrust>55</thrust>
+   <turn>55</turn>
+   <speed>75</speed>
+  </movement>
+  <health>
+   <absorb>64</absorb>
+   <shield>1150</shield>
+   <armour>740</armour>
+   <energy>1800</energy>
+   <shield_regen>300</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>4000</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>120</cpu>
+   <crew>36</crew>
+   <mass>3900</mass>
+   <fuel>500</fuel>
+   <cap_cargo>85</cap_cargo>
+  </characteristics>
+  <slots>
+   <weapon x="40"  y="0"   h="0" />
+   <weapon x="20"   y="0"  h="0" />
+   <weapon x="20"   y="0"  h="0" />
+   <weapon x="-20" y="0" h="0" />
+   <weapon x="-40" y="0"  h="0" />
+   <utility />
+   <utility />
+   <utility />
+   <utility />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+  </slots>
+  <stats>
+   <launch_rate>15</launch_rate>
    <ew_detect>10</ew_detect>
   </stats>
  </ship>
