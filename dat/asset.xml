@@ -7984,7 +7984,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <commodities>
     <commodity>Industrial Goods</commodity>
    </commodities>
-   <description>Orville Shipyard is a relatively modest ship building facility, though it is invaluable to Inios Station and Brandt Station, as most of their reinforcements come from here. The station relies on Mastodon Station for the ships' energy cores and weaponry, as Rhu is too far removed from Aesir to send the ships to be outfitted at Sirius Ordinance.</description>
+   <description>Orville Shipyard is a relatively modest ship building facility, though it is invaluable to Inios Station and Brandt Station, as most of their reinforcements come from here. The station relies on Mastodon Station for the ships' energy cores and weaponry, as Rhu is too far removed from Aesir to send the ships to be outfitted at Sirius Ordnance.</description>
    <bar>Over the bar in this facility, there is a counter display that keeps track of the amount of ships that have been produced at Orville Shipyard since it was commissioned. Clearly, the people here at Rhu take pride in being able to contribute to the Sirian military effort.</bar>
   </general>
   <tech>
@@ -10522,7 +10522,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>The FLF don't have much use for leisures, so it's debatable whether this place can be called a bar. Still, it provides space to sit and talk, and it serves a liquid that seems different from industrial acid, in that it doesn't burn a hole through your stomach. The people here are mostly hard-faced men, and the topics of conversation are limited to the Dvaered and the FLF's cause.</bar>
   </general>
  </asset>
- <asset name="Sirius Ordinance">
+ <asset name="Sirius Ordnance">
   <pos>
    <x>5966.666667</x>
    <y>19366.197274</y>
