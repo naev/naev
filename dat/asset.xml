@@ -7,7 +7,7 @@
   </pos>
   <GFX>
    <space>002.png</space>
-   <exterior>forest.png</exterior>
+   <exterior>station03.png</exterior>
   </GFX>
   <presence>
    <value>0.000000</value>
@@ -1171,7 +1171,7 @@
   </pos>
   <GFX>
    <space>station-battlestation.png</space>
-   <exterior>forest.png</exterior>
+   <exterior>station05.png</exterior>
   </GFX>
   <presence>
    <faction>Sirius</faction>
@@ -1920,7 +1920,7 @@
    </services>
    <commodities/>
    <description>Even before House Dvaered gained its independence, there were unofficial news channels that fueled the discontent among the Imperial labor force. Later, after their work was done, these channels pooled their resources to establish the Dvaered News Network, or DVNN. This station serves as the main nexus for all Dvaered mass media. As such it is coveted by many a Warlord, but Dvaered High Command makes sure that the station remains firmly under its control.</description>
-   <bar>Spaceport bar, waiting lounge, interview room, this facility is everythign at once. It's the only place accessible to non-DVNN personnel, so all dealings with visitors have to take place here. In fact, one of the Dvaered reality shows is a live feed from the spaceport bar on DVNN Central, showing how the various visitors behave. The Dvaered seem to find this entertaining.</bar>
+   <bar>Spaceport bar, waiting lounge, interview room, this facility is everything at once. It's the only place accessible to non-DVNN personnel, so all dealings with visitors have to take place here. In fact, one of the Dvaered reality shows is a live feed from the spaceport bar on DVNN Central, showing how the various visitors behave. The Dvaered seem to find this entertaining.</bar>
   </general>
  </asset>
  <asset name="Daal">
@@ -2050,7 +2050,7 @@
    <y>-9372.732177</y>
   </pos>
   <GFX>
-   <space>station-cylinder.png</space>
+   <space>station-commerce2.png</space>
    <exterior>station05.png</exterior>
   </GFX>
   <presence>
@@ -2241,7 +2241,7 @@
   </pos>
   <GFX>
    <space>station-sphere.png</space>
-   <exterior>methane.png</exterior>
+   <exterior>traderoom.png</exterior>
   </GFX>
   <presence>
    <faction>Dvaered</faction>
@@ -3718,7 +3718,7 @@
   </pos>
   <GFX>
    <space>station-fleetbase.png</space>
-   <exterior>lava.png</exterior>
+   <exterior>station05.png</exterior>
   </GFX>
   <presence>
    <faction>Dvaered</faction>
@@ -5101,7 +5101,7 @@
   </pos>
   <GFX>
    <space>M07.png</space>
-   <exterior>station01.png</exterior>
+   <exterior>forest.png</exterior>
   </GFX>
   <presence>
    <faction>Sirius</faction>
@@ -5461,7 +5461,7 @@
   </pos>
   <GFX>
    <space>003.png</space>
-   <exterior>mining4.png</exterior>
+   <exterior>station04.png</exterior>
   </GFX>
   <presence>
    <faction>Sirius</faction>
@@ -6211,7 +6211,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <y>4792.802567</y>
   </pos>
   <GFX>
-   <space>002.png</space>
+   <space>A00.png</space>
    <exterior>mining4.png</exterior>
   </GFX>
   <presence>
@@ -6686,7 +6686,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   </pos>
   <GFX>
    <space>station-powerplant.png</space>
-   <exterior>desertic.png</exterior>
+   <exterior>station03.png</exterior>
   </GFX>
   <presence>
    <faction>Sirius</faction>
@@ -7185,7 +7185,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   </pos>
   <GFX>
    <space>M07.png</space>
-   <exterior>station01.png</exterior>
+   <exterior>forest2.png</exterior>
   </GFX>
   <presence>
    <faction>Frontier</faction>
@@ -7791,7 +7791,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </pos>
   <GFX>
    <space>station-battlestation.png</space>
-   <exterior>station00.png</exterior>
+   <exterior>station05.png</exterior>
   </GFX>
   <presence>
    <faction>Empire</faction>
@@ -7869,7 +7869,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </pos>
   <GFX>
    <space>station-shipyard.png</space>
-   <exterior>station01.png</exterior>
+   <exterior>station03.png</exterior>
   </GFX>
   <presence>
    <faction>Dvaered</faction>
@@ -7928,7 +7928,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </pos>
   <GFX>
    <space>000.png</space>
-   <exterior>gas.png</exterior>
+   <exterior>traderoom.png</exterior>
   </GFX>
   <presence>
    <faction>Frontier</faction>
@@ -9152,7 +9152,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </pos>
   <GFX>
    <space>station-battlestation.png</space>
-   <exterior>station00.png</exterior>
+   <exterior>station05.png</exterior>
   </GFX>
   <presence>
    <faction>Dvaered</faction>
@@ -10210,7 +10210,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </pos>
   <GFX>
    <space>station-fleetbase.png</space>
-   <exterior>station01.png</exterior>
+   <exterior>station03.png</exterior>
   </GFX>
   <presence>
    <faction>Dvaered</faction>
@@ -10529,7 +10529,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </pos>
   <GFX>
    <space>station-sphere.png</space>
-   <exterior>methane.png</exterior>
+   <exterior>station05.png</exterior>
   </GFX>
   <presence>
    <faction>Sirius</faction>
@@ -10567,7 +10567,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <y>7166.666667</y>
   </pos>
   <GFX>
-   <space>station-shipyard.png</space>
+   <space>station-shipyard2.png</space>
    <exterior>station04.png</exterior>
   </GFX>
   <presence>
@@ -10900,8 +10900,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <y>12636.184692</y>
   </pos>
   <GFX>
-   <space>station-cylinder.png</space>
-   <exterior>aquatic3.png</exterior>
+   <space>station-commerce3.png</space>
+   <exterior>traderoom.png</exterior>
   </GFX>
   <presence>
    <faction>Sirius</faction>
@@ -11144,7 +11144,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <y>9914.102486</y>
   </pos>
   <GFX>
-   <space>000.png</space>
+   <space>station-cylinder.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
   <presence>
@@ -11264,7 +11264,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
     <commodity>Industrial Goods</commodity>
    </commodities>
    <description>It's a nickname, of course. How could it not be? Trouble is, nobody remembers where the name came from, and, bizarrely, there are no records of the station's original name. It's quite a famous story, both within Hekaras and elsewhere. Meanwhile, all involved simply call it Three and a half Kings. It seems to work for them.</description>
-   <bar>This is a typical stationside bar. It has viewports looking into space, which are of course ignored by everyone, since anyone who comes to a station like this has seen all the space they could possibly want to..</bar>
+   <bar>This is a typical stationside bar. It has viewports looking into space, which are of course ignored by everyone, since anyone who comes to a station like this has seen all the space they could possibly want to.</bar>
   </general>
   <tech>
    <item>Laser 1</item>
@@ -11822,7 +11822,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </pos>
   <GFX>
    <space>station-agriculture.png</space>
-   <exterior>station01.png</exterior>
+   <exterior>forest.png</exterior>
   </GFX>
   <presence>
    <faction>Dvaered</faction>
@@ -12462,7 +12462,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </pos>
   <GFX>
    <space>station-battlestation.png</space>
-   <exterior>aquatic2.png</exterior>
+   <exterior>station05.png</exterior>
   </GFX>
   <presence>
    <faction>Sirius</faction>
@@ -12764,7 +12764,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </pos>
   <GFX>
    <space>000.png</space>
-   <exterior>forest2.png</exterior>
+   <exterior>station00.png</exterior>
   </GFX>
   <presence>
    <faction>Pirate</faction>
