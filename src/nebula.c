@@ -14,7 +14,6 @@
 
 #include <errno.h>
 
-#include "SDL_image.h"
 
 #include "log.h"
 #include "opengl.h"

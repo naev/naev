@@ -38,7 +38,6 @@
 
 #include "SDL.h"
 #include "SDL_mutex.h"
-#include "SDL_image.h"
 
 #include "log.h"
 #include "md5.h"
