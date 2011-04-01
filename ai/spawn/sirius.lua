@@ -7,12 +7,13 @@ function spawn_patrol ()
     local r = rnd.rnd()
 
     if r < 0.5 then
-       scom.addPilot( pilots, "Sirius Fidelity", 15 );
+       scom.addPilot( pilots, "Sirius Fidelity", 20 );
     elseif r < 0.8 then
-       scom.addPilot( pilots, "Sirius Fidelity", 15 );
-       scom.addPilot( pilots, "Sirius Fidelity", 15 );
+       scom.addPilot( pilots, "Sirius Fidelity", 20 );
+       scom.addPilot( pilots, "Sirius Fidelity", 20 );
     else
-       scom.addPilot( pilots, "Sirius Divinity", 45 );
+       scom.addPilot( pilots, "Sirius Fidelity", 20 );
+       scom.addPilot( pilots, "Sirius Shaman", 25 );
     end
 
     return pilots
@@ -26,15 +27,16 @@ function spawn_squad ()
 
     if r < 0.5 then
        scom.addPilot( pilots, "Sirius Fidelity", 20 );
-       scom.addPilot( pilots, "Sirius Fidelity", 20 );
-       scom.addPilot( pilots, "Sirius Preacher", 30 );
+       scom.addPilot( pilots, "Sirius Shaman", 25 );
+       scom.addPilot( pilots, "Sirius Preacher", 40 );
     elseif r < 0.8 then
        scom.addPilot( pilots, "Sirius Preacher", 40 );
        scom.addPilot( pilots, "Sirius Preacher", 40 );
     else
        scom.addPilot( pilots, "Sirius Fidelity", 20 );
        scom.addPilot( pilots, "Sirius Fidelity", 20 );
-       scom.addPilot( pilots, "Sirius Divinity", 60 );
+       scom.addPilot( pilots, "Sirius Shaman", 25 );
+       scom.addPilot( pilots, "Sirius Preacher", 40 );
     end
 
     return pilots
@@ -54,13 +56,12 @@ function spawn_capship ()
     if r < 0.5 then
        scom.addPilot( pilots, "Sirius Fidelity", 20 );
        scom.addPilot( pilots, "Sirius Fidelity", 20 );
-       scom.addPilot( pilots, "Sirius Fidelity", 20 );
+       scom.addPilot( pilots, "Sirius Shaman", 25 );
     elseif r < 0.8 then
        scom.addPilot( pilots, "Sirius Fidelity", 20 );
        scom.addPilot( pilots, "Sirius Preacher", 40 );
     else
-       scom.addPilot( pilots, "Sirius Fidelity", 20 );
-       scom.addPilot( pilots, "Sirius Divinity", 50 );
+       scom.addPilot( pilots, "Sirius Divinity", 80 );
     end
 
     return pilots
