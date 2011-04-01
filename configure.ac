@@ -333,7 +333,7 @@ AS_IF([test "$enable_debug" != "no"], [
      case "$host" in
        *-linux-gnu)
          AC_DEFINE([HAS_BFD], 1, [Define to 1 to enable bfd backtrace code])
-         NAEV_LIBS="$NAEV_LIBS -lbfd -rdynamic"
+         NAEV_LIBS="$NAEV_LIBS -lbfd -liberty -rdynamic"
          ;;
      esac
   ])
