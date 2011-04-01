@@ -78,17 +78,15 @@ function enter()
         target:rename("Credence")
         target:setHilight(true)
         target:setVisible(true)
-        hook.pilot(target, "idle", "targetIdle")
-        hook.pilot(target, "death", "targetDeath")
+        hidle = hook.pilot(target, "idle", "targetIdle")
+        hook.pilot(target, "exploded", "targetExploded")
         hook.pilot(target, "board", "targetBoard")
         targetIdle()
     end
 end
 
 function targetIdle()
-    hsat = hook.timer(5000, "targetIdle")
     if not pilot.exists(target) then -- Tear down now-useless hooks.
-        hook.rm(hsat)
         hook.rm(hidle)
         return
     end
@@ -98,6 +96,11 @@ function targetIdle()
     newlocation = vec2.new(dist * math.cos(angle), dist * math.sin(angle)) -- New location is 750px away in a random direction
     target:taskClear()
     target:goto(location + newlocation, false, false)
+    hook.timer(5000, "targetIdle")
+end
+
+function targetExploded()
+   hook.timer( 2000, "targetDeath" )
 end
 
 function targetDeath()

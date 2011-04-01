@@ -9,34 +9,37 @@
 
 #include "pilot.h"
 
-
 /* flag defines */
-#define PLAYER_TURN_LEFT   (1<<0)   /**< player is turning left */
-#define PLAYER_TURN_RIGHT  (1<<1)   /**< player is turning right */
-#define PLAYER_REVERSE     (1<<2)   /**< player is facing opposite of vel */
-#define PLAYER_AFTERBURNER (1<<3)   /**< player is afterburning */
-#define PLAYER_DESTROYED   (1<<9)   /**< player is destroyed */
-#define PLAYER_FACE        (1<<10)  /**< player is facing target */
-#define PLAYER_PRIMARY     (1<<11)  /**< player is shooting primary weapon */
-#define PLAYER_PRIMARY_L   (1<<12)  /**< player shot primary weapon last frame. */
-#define PLAYER_SECONDARY   (1<<13)  /**< player is shooting secondary weapon */
-#define PLAYER_SECONDARY_L (1<<14)  /**< player shot secondary last frame. */
-#define PLAYER_LANDACK     (1<<15)  /**< player has permission to land */
-#define PLAYER_CREATING    (1<<16)  /**< player is being created */
-#define PLAYER_AUTONAV     (1<<17)  /**< player has autonavigation on. */
-#define PLAYER_NOLAND      (1<<18)  /**< player is not allowed to land (cleared on enter). */
-#define PLAYER_DOUBLESPEED (1<<19)  /**< player is running at double speed. */
-#define PLAYER_CINEMATICS_GUI (1<<20) /**< Disable rendering the GUI when in cinematics mode. */
-#define PLAYER_CINEMATICS_2X (1<<21) /**< Disables usage of the 2x button when in cinematics mode. */
-#define PLAYER_HOOK_LAND   (1<<25)
-#define PLAYER_HOOK_JUMPIN (1<<26)
-#define PLAYER_HOOK_HYPER  (1<<27)
-#define PLAYER_TUTORIAL    (1<<30)  /**< Player is doing the tutorial. */
-#define PLAYER_MFLY    (1<<31)  /**< Player has enabled mouse flying. */
+#define PLAYER_TURN_LEFT   0   /**< player is turning left */
+#define PLAYER_TURN_RIGHT  1   /**< player is turning right */
+#define PLAYER_REVERSE     2   /**< player is facing opposite of vel */
+#define PLAYER_AFTERBURNER 3   /**< player is afterburning */
+#define PLAYER_DESTROYED   9   /**< player is destroyed */
+#define PLAYER_FACE        10  /**< player is facing target */
+#define PLAYER_PRIMARY     11  /**< player is shooting primary weapon */
+#define PLAYER_PRIMARY_L   12  /**< player shot primary weapon last frame. */
+#define PLAYER_SECONDARY   13  /**< player is shooting secondary weapon */
+#define PLAYER_SECONDARY_L 14  /**< player shot secondary last frame. */
+#define PLAYER_LANDACK     15  /**< player has permission to land */
+#define PLAYER_CREATING    16  /**< player is being created */
+#define PLAYER_AUTONAV     17  /**< player has autonavigation on. */
+#define PLAYER_NOLAND      18  /**< player is not allowed to land (cleared on enter). */
+#define PLAYER_DOUBLESPEED 19  /**< player is running at double speed. */
+#define PLAYER_CINEMATICS_GUI 20 /**< Disable rendering the GUI when in cinematics mode. */
+#define PLAYER_CINEMATICS_2X 21 /**< Disables usage of the 2x button when in cinematics mode. */
+#define PLAYER_HOOK_LAND   25
+#define PLAYER_HOOK_JUMPIN 26
+#define PLAYER_HOOK_HYPER  27
+#define PLAYER_TUTORIAL    30  /**< Player is doing the tutorial. */
+#define PLAYER_MFLY        31  /**< Player has enabled mouse flying. */
+#define PLAYER_FLAGS_MAX   PLAYER_MFLY + 1 /* Maximum number of flags. */
+typedef char PlayerFlags[ PLAYER_FLAGS_MAX ];
+
 /* flag functions */
-#define player_isFlag(f)   (player.flags & (f)) /**< Checks for a player flag. */
-#define player_setFlag(f)  (player.flags |= (f)) /**< Sets a player flag. */
-#define player_rmFlag(f)   (player.flags &= ~(f)) /**< Removes a player flag. */
+#define player_isFlag(f)   (player.flags[f])
+#define player_setFlag(f)  (player.flags[f] = 1)
+#define player_rmFlag(f)   (player.flags[f] = 0)
+
 /* comfort flags. */
 #define player_isTut()     player_isFlag(PLAYER_TUTORIAL)
 
@@ -55,7 +58,7 @@ typedef struct Player_s {
    int guiOverride; /**< GUI is overriden (not default). */
 
    /* Player data. */
-   unsigned int flags; /**< Player's flags. */
+   PlayerFlags flags; /**< Player's flags. */
    int enemies; /**< Amount of enemies the player has. */
    double crating; /**< Combat rating. */
    int autonav; /**< Current autonav state. */

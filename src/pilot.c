@@ -1036,7 +1036,8 @@ static void pilot_dead( Pilot* p, unsigned int killer )
       player_dead();
    }
    p->timer[0] = 0.; /* no need for AI anymore */
-   p->ptimer = 1. + sqrt(10*p->armour_max*p->shield_max) / 1500.;
+   p->ptimer = MIN( 1. + sqrt(p->armour_max * p->shield_max) / 650.,
+         3 + pow(p->armour_max * p->shield_max, 0.4) / 500);
    p->timer[1] = 0.; /* explosion timer */
 
    /* flag cleanup - fixes some issues */
@@ -1317,6 +1318,7 @@ void pilot_update( Pilot* pilot, const double dt )
                pilot->solid->pos.x, pilot->solid->pos.y,
                pilot->solid->vel.x, pilot->solid->vel.y );
          pilot_setFlag(pilot,PILOT_EXPLODED);
+         pilot_runHook( pilot, PILOT_HOOK_EXPLODED );
 
          /* Release cargo */
          for (i=0; i<pilot->ncommodities; i++)

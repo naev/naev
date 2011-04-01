@@ -645,7 +645,7 @@ function render( dt )
          --Dist
          gfx.print( true, "DIST", ta_pane_x + 130, ta_pane_y + 160, col_txt_top )
          if ta_dist ~= nil then
-            local str = largeNumber( ta_dist )
+            local str = largeNumber( ta_dist, 1 )
             gfx.print( false, str, ta_pane_x + ta_pane_w - 15 - gfx.printDim(false, str), ta_pane_y +142, col_txt_std, 60, false )
          end
             
@@ -734,7 +734,7 @@ function render( dt )
       end
 
       if ta_pnt_dist ~= nil then
-            gfx.print( false, largeNumber( ta_pnt_dist ), ta_pnt_pane_x + 110, ta_pnt_pane_y - 15, col_txt_std, 63, false )
+            gfx.print( false, largeNumber( ta_pnt_dist, 1 ), ta_pnt_pane_x + 110, ta_pnt_pane_y - 15, col_txt_std, 63, false )
       end
       gfx.print( true, nav_pnt:name(), ta_pnt_pane_x + 14, ta_pnt_pane_y + 149, col )
    end
@@ -776,7 +776,7 @@ function render( dt )
    end]]--
 
    local bartext = { "Pilot: ", pname, "System: ", sys:name(), "Time: ", time.str(), "Credits: ",
-         largeNumber( credits ), "Nav: ", navstring, "Fuel: ", fuelstring,
+         largeNumber( credits, 2 ), "Nav: ", navstring, "Fuel: ", fuelstring,
          "Weapon Set: ", wsetstr, "Cargo: " }
    for k,v in ipairs(bartext) do
       if k % 2 == 1 then
@@ -819,14 +819,14 @@ function render( dt )
    gfx.print( true, freecargo, length, 6, col_txt_std )
 end
 
-function largeNumber( number )
+function largeNumber( number, idp )
    local formatted
    local units = { "K", "M", "B", "T", "Q" }
    if number < 1e4 then
       formatted = math.floor(number)
    elseif number < 1e18 then
       len = math.floor(math.log10(number))
-      formatted = roundto( number / 10^math.floor(len-len%3), 1) .. units[(math.floor(len/3))]
+      formatted = roundto( number / 10^math.floor(len-len%3), idp) .. units[(math.floor(len/3))]
    else
       formatted = "Too big!"
    end
