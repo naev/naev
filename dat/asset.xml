@@ -808,7 +808,7 @@
    <y>6891.698934</y>
   </pos>
   <GFX>
-   <space>002.png</space>
+   <space>station-fleetbase2.png</space>
    <exterior>station03.png</exterior>
   </GFX>
   <presence>
@@ -6363,7 +6363,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <y>-4639.755662</y>
   </pos>
   <GFX>
-   <space>002.png</space>
+   <space>station-fleetbase3.png</space>
    <exterior>station03.png</exterior>
   </GFX>
   <presence>
@@ -10528,7 +10528,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <y>19366.197274</y>
   </pos>
   <GFX>
-   <space>station-sphere.png</space>
+   <space>station-fleetbase3.png</space>
    <exterior>station05.png</exterior>
   </GFX>
   <presence>
