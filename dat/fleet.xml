@@ -285,6 +285,13 @@
    <pilot name="Sirius Fidelity" ship="Sirius Fidelity"></pilot>
   </pilots>
  </fleet>
+ <fleet name="Sirius Shaman">
+  <ai>sirius</ai>
+  <faction>Sirius</faction>
+  <pilots>
+   <pilot name="Sirius Shaman" ship="Sirius Shaman"></pilot>
+  </pilots>
+ </fleet>
  <fleet name="Sirius Preacher">
   <ai>sirius</ai>
   <faction>Sirius</faction>
