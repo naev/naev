@@ -12,6 +12,7 @@
 #include "outfit.h"
 #include "sound.h"
 #include "nxml.h"
+#include "economy.h"
 
 
 /* target gfx dimensions */
@@ -84,7 +85,7 @@ typedef struct Ship_ {
    ShipClass class; /**< Ship class */
 
    /* store stuff */
-   unsigned int price; /**< Cost to buy */
+   credits_t price; /**< Cost to buy */
    char* license; /**< License needed to buy it. */
    char* fabricator; /**< company that makes it */
    char* description; /**< selling description */
@@ -161,7 +162,7 @@ const char *ship_existsCase( const char* name );
 Ship* ship_getAll( int *n );
 char* ship_class( Ship* s );
 ShipClass ship_classFromString( char* str );
-int ship_basePrice( Ship* s );
+credits_t ship_basePrice( Ship* s );
 glTexture* ship_loadCommGFX( Ship* s );
 
 

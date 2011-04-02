@@ -51,7 +51,7 @@ void dout_csvBolt( const char *path )
 
       l = snprintf( buf, sizeof(buf),
             "%s,%s,%s,%s,"
-            "%f,%d,"
+            "%f,%"CREDITS_PRI","
             "%f,%f,%f,%f,"
             "%f,%f,%f,%f,"
             "%f,%f,"

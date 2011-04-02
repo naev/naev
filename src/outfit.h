@@ -10,6 +10,7 @@
 
 #include "opengl.h"
 #include "sound.h"
+#include "economy.h"
 
 
 /*
@@ -17,8 +18,8 @@
  */
 #define outfit_isProp(o,p)          ((o)->properties & p) /**< Checks an outfit for property. */
 /* property flags */
-#define OUTFIT_PROP_WEAP_SECONDARY  (1<<0) /**< Is a secondary weapon? */
-#define OUTFIT_PROP_WEAP_SPIN       (1<<1) /**< Should weapon spin around? */
+#define OUTFIT_PROP_WEAP_SECONDARY     (1<<0) /**< Is a secondary weapon? */
+#define OUTFIT_PROP_WEAP_SPIN          (1<<1) /**< Should weapon spin around? */
 #define OUTFIT_PROP_WEAP_BLOWUP_ARMOUR (1<<2) /**< Weapon blows up (armour spfx)
                                                    when timer is up. */
 #define OUTFIT_PROP_WEAP_BLOWUP_SHIELD (1<<3) /**< Weapon blows up (shield spfx)
@@ -364,7 +365,7 @@ typedef struct Outfit_ {
    double mass; /**< How much weapon capacity is needed. */
 
    /* store stuff */
-   unsigned int price; /**< Base sell price. */
+   credits_t price; /**< Base sell price. */
    char *description; /**< Store description. */
    char *desc_short; /**< Short outfit description. */
 

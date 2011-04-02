@@ -309,6 +309,10 @@ static void dialogue_YesNoClose( unsigned int wid, char* str )
       result = 1;
    else if (strcmp(str,"btnNo")==0)
       result = 0;
+   else {
+      WARN("Unknown button clicked in YesNo dialogue!");
+      result = 1;
+   }
 
    /* set data. */
    loop_done = window_getData( wid );

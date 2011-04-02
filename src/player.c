@@ -64,7 +64,7 @@
  */
 Player_t player; /**< Local player. */
 static Ship* player_ship      = NULL; /**< Temporary ship to hold when naming it */
-static uint64_t player_creds = 0; /**< Temporary hack for when creating. */
+static credits_t player_creds = 0; /**< Temporary hack for when creating. */
 static const char *player_message_noland = NULL; /**< No landing message (when PLAYER_NOLAND is set). */
 
 /*
@@ -225,6 +225,9 @@ static void player_newSetup( int tutorial )
    if (!tutorial) {
       space_init( start_system() );
       start_position( &x, &y );
+   }
+   else {
+      start_tutPosition( &x, &y );
    }
    cam_setTargetPos( x, y, 0 );
    cam_setZoom( conf.zoom_far );
@@ -949,7 +952,7 @@ const char* player_rating (void)
  *    @param amount Amount of credits to check to see if the player has.
  *    @return 1 if the player has enough credits.
  */
-int player_hasCredits( int64_t amount )
+int player_hasCredits( credits_t amount )
 {
    return pilot_hasCredits( player.p, amount );
 }
@@ -961,7 +964,7 @@ int player_hasCredits( int64_t amount )
  *    @param amount Quantity to modify player's credits by.
  *    @return Amount of credits the player has.
  */
-uint64_t player_modCredits( int64_t amount )
+credits_t player_modCredits( credits_t amount )
 {
    return pilot_modCredits( player.p, amount );
 }
@@ -2673,7 +2676,7 @@ int player_save( xmlTextWriterPtr writer )
    /* Standard player details. */
    xmlw_attr(writer,"name","%s",player.name);
    xmlw_elem(writer,"rating","%f",player.crating);
-   xmlw_elem(writer,"credits","%"PRIu64,player.p->credits);
+   xmlw_elem(writer,"credits","%"CREDITS_PRI,player.p->credits);
    if (player.gui != NULL)
       xmlw_elem(writer,"gui","%s",player.gui);
    xmlw_elem(writer,"guiOverride","%d",player.guiOverride);
@@ -2969,15 +2972,18 @@ static Planet* player_parse( xmlNodePtr parent )
       /* Time. */
       if (xml_isNode(node,"time")) {
          cur = node->xmlChildrenNode;
-         scu = stp = stu = 0;
+         scu = stp = stu = -1;
+         rem = -1.;
          do {
             xmlr_int(cur,"SCU",scu);
             xmlr_int(cur,"STP",stp);
             xmlr_int(cur,"STU",stu);
             xmlr_float(cur,"Remainder",rem);
          } while (xml_nextNode(cur));
+         if ((scu < 0) || (stp < 0) || (stu < 0) || (rem<0.))
+            WARN("Malformed time in save game!");
          ntime_setR( scu, stp, stu, rem );
-         if ((scu != 0) || (stp != 0) || (stu != 0))
+         if ((scu >= 0) || (stp >= 0) || (stu >= 0))
             time_set = 1;
       }
 
@@ -3055,6 +3061,12 @@ static Planet* player_parse( xmlNodePtr parent )
          player_rmShip( old_ship->name );
          WARN("Giving player ship '%s'.", player.p->name );
       }
+   }
+
+   /* Check. */
+   if (player.p == NULL) {
+      ERR("Something went horribly wrong, player does not exist after load...");
+      return NULL;
    }
 
    /* set global thingies */

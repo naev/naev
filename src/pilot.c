@@ -1705,13 +1705,11 @@ ntime_t pilot_hyperspaceDelay( Pilot *p )
  *    @param amount Amount to check for.
  *    @return 1 if he has enough, 0 otherwise.
  */
-int pilot_hasCredits( Pilot *p, int64_t amount )
+int pilot_hasCredits( Pilot *p, credits_t amount )
 {
-   uint64_t ul;
    if (amount < 0)
       return 1;
-   ul = amount;
-   return (ul <= p->credits);
+   return (amount <= p->credits);
 }
 
 
@@ -1722,20 +1720,20 @@ int pilot_hasCredits( Pilot *p, int64_t amount )
  *    @param amount Quantity of credits to give/take.
  *    @return Amount of credits the pilot has.
  */
-uint64_t pilot_modCredits( Pilot *p, int64_t amount )
+credits_t pilot_modCredits( Pilot *p, credits_t amount )
 {
    uint64_t ul;
 
    ul = (uint64_t) ABS(amount);
 
    if (amount > 0) {
-      if (UINT64_MAX-p->credits < ul)
-         p->credits = UINT64_MAX;
+      if (CREDITS_MAX-p->credits < (credits_t)ul)
+         p->credits = CREDITS_MIN;
       else
          p->credits += ul;
    }
    else if (amount < 0) {
-      if (ul > p->credits)
+      if ((credits_t)ul > p->credits)
          p->credits = 0;
       else
          p->credits -= ul;

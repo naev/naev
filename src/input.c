@@ -1188,7 +1188,7 @@ static void input_clickevent( SDL_Event* event )
       else /* Visual (on-screen) */
          m = res = 1. / cam_getZoom();
       dp = pilot_getNearestPos( player.p, &pid, x, y, 1 );
-      d = system_getClosest( cur_system, &pntid, &jpid, x, y );
+      d  = system_getClosest( cur_system, &pntid, &jpid, x, y );
       rp = MAX( 1.5 * PILOT_SIZE_APROX * pilot_get(pid)->ship->gfx_space->sw / 2 * m,  10. * res);
 
       if (pntid >=0) { /* Planet is closer. */
@@ -1198,6 +1198,9 @@ static void input_clickevent( SDL_Event* event )
       else if (jpid >= 0) {
          jp = &cur_system->jumps[ jpid ];
          r  = MAX( 1.5 * jp->radius, 100. );
+      }
+      else {
+         r  = 0.;
       }
       /* Reject pilot if it's too far or a valid asset is closer. */
       if (dp > pow2(rp) || (d < pow2(r) && dp < pow2(rp) && dp >  d))

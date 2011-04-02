@@ -335,7 +335,7 @@ typedef struct Pilot_ {
    int autoweap; /**< Automatically update weapon sets. */
 
    /* Cargo */
-   uint64_t credits; /**< monies the pilot has */
+   credits_t credits; /**< monies the pilot has */
    PilotCommodity* commodities; /**< commodity and quantity */
    int ncommodities; /**< number of commodities. */
    int cargo_free; /**< Free commodity space. */
@@ -420,8 +420,8 @@ double pilot_face( Pilot* p, const double dir );
 
 
 /* Misc. */
-int pilot_hasCredits( Pilot *p, int64_t amount );
-uint64_t pilot_modCredits( Pilot *p, int64_t amount );
+int pilot_hasCredits( Pilot *p, credits_t amount );
+credits_t pilot_modCredits( Pilot *p, credits_t amount );
 int pilot_refuelStart( Pilot *p );
 void pilot_hyperspaceAbort( Pilot* p );
 void pilot_clearTimers( Pilot *pilot );

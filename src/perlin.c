@@ -388,7 +388,7 @@ float noise_get1( perlin_data_t* pdata, float f[1] )
 
    v[0] = lattice1(pdata,n[0],   r[0]   );
    v[1] = lattice1(pdata,n[0]+1, r[0]-1 );
-   value = LERP( v[0], v[1], w[1] );
+   value = LERP( v[0], v[1], w[0] );
 
    return CLAMP(-0.99999f, 0.99999f, value);
 }

@@ -128,6 +128,7 @@ static int load_load( nsave_t *save, const char *path )
             /* Time. */
             if (xml_isNode(node,"time")) {
                cur = node->xmlChildrenNode;
+               scu = stp = stu = 0;
                do {
                   xmlr_int(cur,"SCU",scu);
                   xmlr_int(cur,"STP",stp);

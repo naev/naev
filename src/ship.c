@@ -270,9 +270,9 @@ ShipClass ship_classFromString( char* str )
 /**
  * @brief Gets the ship's base price (no outfits).
  */
-int ship_basePrice( Ship* s )
+credits_t ship_basePrice( Ship* s )
 {
-   int price;
+   credits_t price;
 
    /* Get ship base price. */
    price = s->price;
@@ -667,7 +667,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          temp->class = ship_classFromString( xml_get(node) );
          continue;
       }
-      xmlr_int(node,"price",temp->price);
+      xmlr_long(node,"price",temp->price);
       xmlr_strd(node,"license",temp->license);
       xmlr_strd(node,"fabricator",temp->fabricator);
       xmlr_strd(node,"description",temp->description);

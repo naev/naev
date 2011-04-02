@@ -202,10 +202,10 @@ static int playerL_shipname( lua_State *L )
  */
 static int playerL_pay( lua_State *L )
 {
-   int money;
+   double money;
 
-   money = luaL_checkint(L,1);
-   player_modCredits( money );
+   money = luaL_checknumber(L,1);
+   player_modCredits( (credits_t)round(money) );
 
    return 0;
 }
@@ -570,6 +570,8 @@ static int playerL_cinematics( lua_State *L )
 
    /* Defaults. */
    abort_msg = NULL;
+   f_gui     = 0;
+   f_2x      = 0;
 
    /* Parse parameters. */
    b = lua_toboolean( L, 1 );

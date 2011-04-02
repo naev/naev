@@ -1841,7 +1841,7 @@ static int outfit_parse( Outfit* temp, const xmlNodePtr parent )
             xml_onlyNodes(cur);
             xmlr_strd(cur,"license",temp->license);
             xmlr_float(cur,"mass",temp->mass);
-            xmlr_int(cur,"price",temp->price);
+            xmlr_long(cur,"price",temp->price);
             xmlr_strd(cur,"description",temp->description);
             xmlr_strd(cur,"typename",temp->typename);
             if (xml_isNode(cur,"gfx_store")) {

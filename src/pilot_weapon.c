@@ -603,6 +603,7 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
    pilot_getRateMod( &rate_mod, &energy_mod, p, w );
 
    /* Count the outfits and current one - only affects non-beam. */
+   mint = 0.;
    if (!outfit_isBeam(w->outfit)) {
 
       /* Calculate last time weapon was fired. */

@@ -144,7 +144,7 @@ static void misn_accept( unsigned int wid, char* str );
 static void misn_genList( unsigned int wid, int first );
 static void misn_update( unsigned int wid, char* str );
 /* refuel */
-static unsigned int refuel_price (void);
+static credits_t refuel_price (void);
 static void spaceport_refuel( unsigned int wid, char *str );
 static void land_toggleRefuel( unsigned int wid, char *name );
 
@@ -255,7 +255,7 @@ static void commodity_update( unsigned int wid, char* str )
    /* modify text */
    snprintf( buf, PATH_MAX,
          "%d Tons\n"
-         "%d Credits/Ton\n"
+         "%"CREDITS_PRI" Credits/Ton\n"
          "\n"
          "%d Tons\n",
          pilot_cargoOwned( player.p, comname ),
@@ -274,7 +274,8 @@ static void commodity_buy( unsigned int wid, char* str )
    (void)str;
    char *comname;
    Commodity *com;
-   unsigned int q, price;
+   unsigned int q;
+   credits_t price;
    HookParam hparam[3];
 
    /* Get selected. */
@@ -319,7 +320,8 @@ static void commodity_sell( unsigned int wid, char* str )
    (void)str;
    char *comname;
    Commodity *com;
-   unsigned int q, price;
+   unsigned int q;
+   credits_t price;
    HookParam hparam[3];
 
    /* Get parameters. */
@@ -903,9 +905,9 @@ static void misn_update( unsigned int wid, char* str )
  * @brief Gets how much it will cost to refuel the player.
  *    @return Refuel price.
  */
-static unsigned int refuel_price (void)
+static credits_t refuel_price (void)
 {
-   return (unsigned int)((player.p->fuel_max - player.p->fuel)*3);
+   return (credits_t)((player.p->fuel_max - player.p->fuel)*3);
 }
 
 
@@ -917,7 +919,7 @@ static unsigned int refuel_price (void)
 static void spaceport_refuel( unsigned int wid, char *str )
 {
    (void)str;
-   unsigned int price;
+   credits_t price;
 
    price = refuel_price();
 

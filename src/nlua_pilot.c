@@ -450,6 +450,7 @@ static int pilotL_addFleet( lua_State *L )
    pilot_clearFlagsRaw( flags );
    vectnull(&vn); /* Need to determine angle. */
    jump = -1;
+   a    = 0.;
 
    /* Parse first argument - Fleet Name */
    fltname = luaL_checkstring(L,1);

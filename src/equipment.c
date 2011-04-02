@@ -85,7 +85,7 @@ static void equipment_transChangeShip( unsigned int wid, char* str );
 static void equipment_changeShip( unsigned int wid );
 static void equipment_transportShip( unsigned int wid );
 static void equipment_unequipShip( unsigned int wid, char* str );
-static unsigned int equipment_transportPrice( char *shipname );
+static credits_t equipment_transportPrice( char *shipname );
 static void equipment_rightClickOutfits( unsigned int wid, char* str );
 static void equipment_toggleGuiOverride( unsigned int wid, char *name );
 static void setgui_load( unsigned int wdw, char *str );
@@ -1382,7 +1382,7 @@ void equipment_updateShips( unsigned int wid, char* str )
    char *shipname;
    Pilot *ship;
    char *loc, *nt;
-   unsigned int price;
+   credits_t price;
    int onboard;
    int cargo;
 
@@ -1564,7 +1564,7 @@ static void equipment_changeShip( unsigned int wid )
  */
 static void equipment_transportShip( unsigned int wid )
 {
-   unsigned int price;
+   credits_t price;
    char *shipname, buf[ECON_CRED_STRLEN];
 
    shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
@@ -1796,7 +1796,7 @@ static void equipment_sellShip( unsigned int wid, char* str )
 {
    (void)str;
    char *shipname, buf[ECON_CRED_STRLEN], *name;
-   int price;
+   credits_t price;
 
    shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
 
@@ -1832,18 +1832,18 @@ static void equipment_sellShip( unsigned int wid, char* str )
  *    @param shipname Name of the ship to get the transport price.
  *    @return The price to transport the ship to the current planet.
  */
-static unsigned int equipment_transportPrice( char* shipname )
+static credits_t equipment_transportPrice( char* shipname )
 {
    char *loc;
    Pilot* ship;
-   unsigned int price;
+   credits_t price;
 
    ship = player_getShip(shipname);
    loc = player_getLoc(shipname);
    if (strcmp(loc,land_planet->name)==0) /* already here */
       return 0;
 
-   price = (unsigned int)(sqrt(ship->ship->mass)*5000.);
+   price = (credits_t)ceil(sqrt(ship->ship->mass)*5000.);
 
    return price;
 }

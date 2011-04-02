@@ -76,7 +76,7 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent );
 /* Economy. */
 static double econ_calcJumpR( StarSystem *A, StarSystem *B );
 static int econ_createGMatrix (void);
-unsigned int economy_getPrice( const Commodity *com,
+credits_t economy_getPrice( const Commodity *com,
       const StarSystem *sys, const Planet *p ); /* externed in land.c */
 
 
@@ -88,22 +88,22 @@ unsigned int economy_getPrice( const Commodity *com,
  *    @param credits Credits to display.
  *    @param decimals Decimals to use.
  */
-void credits2str( char *str, uint64_t credits, int decimals )
+void credits2str( char *str, credits_t credits, int decimals )
 {
    if (decimals < 0)
-      snprintf( str, ECON_CRED_STRLEN, "%"PRIu64, credits );
-   else if (credits >= 1000000000000000LLU)
+      snprintf( str, ECON_CRED_STRLEN, "%"CREDITS_PRI, credits );
+   else if (credits >= 1000000000000000LL)
       snprintf( str, ECON_CRED_STRLEN, "%.*fQ", decimals, (double)credits / 1000000000000000. );
-   else if (credits >= 1000000000000LLU)
+   else if (credits >= 1000000000000LL)
       snprintf( str, ECON_CRED_STRLEN, "%.*fT", decimals, (double)credits / 1000000000000. );
-   else if (credits >= 1000000000LU)
+   else if (credits >= 1000000000L)
       snprintf( str, ECON_CRED_STRLEN, "%.*fB", decimals, (double)credits / 1000000000. );
-   else if (credits >= 1000000U)
+   else if (credits >= 1000000)
       snprintf( str, ECON_CRED_STRLEN, "%.*fM", decimals, (double)credits / 1000000. );
-   else if (credits >= 1000U)
+   else if (credits >= 1000)
       snprintf( str, ECON_CRED_STRLEN, "%.*fK", decimals, (double)credits / 1000. );
    else
-      snprintf (str, ECON_CRED_STRLEN, "%"PRIu64, credits );
+      snprintf (str, ECON_CRED_STRLEN, "%"CREDITS_PRI, credits );
 }
 
 
@@ -351,7 +351,7 @@ void commodity_free (void)
  *    @param p Planet to get price of commodity.
  *    @return The price of the commodity.
  */
-unsigned int economy_getPrice( const Commodity *com,
+credits_t economy_getPrice( const Commodity *com,
       const StarSystem *sys, const Planet *p )
 {
    (void) p;
