@@ -278,6 +278,9 @@ static int map_findDistance( StarSystem *sys, Planet *pnt, int *jumps, double *d
    double d;
    Vector2d *vs, *ve;
 
+   /* Defaults. */
+   ve = NULL;
+
    /* Special case it's the current system. */
    if (sys == cur_system) {
       *jumps = 0;
