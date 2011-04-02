@@ -2127,6 +2127,7 @@ static int aiL_iface( lua_State *L )
 
    /* Get first parameter, aka what to face. */
    n  = -2;
+   p  = NULL;
    lv = NULL;
    if (lua_isnumber(L,1)) {
       d = (double)lua_tonumber(L,1);
@@ -2602,6 +2603,7 @@ static int aiL_nearhyptarget( lua_State *L )
    /* Find nearest jump .*/
    mindist = INFINITY;
    jp      = NULL;
+   j       = 0;
    for (i=0; i <cur_system->njumps; i++) {
       dist  = vect_dist2( &cur_pilot->solid->pos, &cur_system->jumps[i].pos );
       if (dist < mindist) {

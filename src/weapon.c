@@ -172,6 +172,8 @@ void weapon_minimap( const double res, const double w,
 
    if (shape==RADAR_CIRCLE)
       rc = (int)(w*w);
+   else
+      rc = 0;
 
    /* Draw the points for weapons on all layers. */
    for (i=0; i<nwbackLayer; i++) {
@@ -874,14 +876,15 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
    Pilot *p;
 
    /* Get the sprite direction to speed up calculations. */
-   b = outfit_isBeam(w->outfit);
+   b     = outfit_isBeam(w->outfit);
    if (!b) {
       gfx = outfit_gfx(w->outfit);
       gl_getSpriteFromDir( &w->sx, &w->sy, gfx, w->solid->dir );
    }
+   else
+      gfx = NULL;
 
    for (i=0; i<pilot_nstack; i++) {
-
       p = pilot_stack[i];
 
       psx = pilot_stack[i]->tsx;

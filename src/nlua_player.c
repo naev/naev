@@ -810,6 +810,9 @@ static Pilot* playerL_newShip( lua_State *L )
    Planet *pnt, *t;
    int noname;
 
+   /* Defaults. */
+   t = NULL;
+
    /* Handle parameters. */
    str  = luaL_checkstring(L, 1);
    if (lua_gettop(L) > 1)
@@ -855,7 +858,7 @@ static Pilot* playerL_newShip( lua_State *L )
    } while (new_ship == NULL);
 
    /* Undo the horrible hack. */
-   if (pnt != NULL)
+   if (t != NULL)
       land_planet = t;
 
    return new_ship;

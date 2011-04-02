@@ -190,6 +190,7 @@ int load_refresh (void)
 
    /* Allocate and parse. */
    ok = 0;
+   ns = NULL;
    for (i=0; i<nfiles; i++) {
       if (!ok)
          ns = &array_grow( &load_saves );
