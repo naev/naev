@@ -1518,17 +1518,15 @@ static int aiL_getflybydistance( lua_State *L )
    unsigned int n;
    int offset_distance;
 
-   NLUA_MIN_ARGS(1);
+   v = NULL;
 
    /* vector as a parameter */
    if (lua_isvector(L,1)) {
       lv = lua_tovector(L,1);
       v = &lv->vec;
    }
-
    else if (lua_islightuserdata(L,1))
       v = lua_touserdata(L,1);
-   
    /* pilot id as parameter */
    else if (lua_isnumber(L,1)) {
       n = (unsigned int) lua_tonumber(L,1);
@@ -1537,20 +1535,17 @@ static int aiL_getflybydistance( lua_State *L )
          NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
          return 0;
       }
-
       v = &pilot->solid->pos;
       
       /*vect_cset(&v, VX(pilot->solid->pos) - VX(cur_pilot->solid->pos), VY(pilot->solid->pos) - VY(cur_pilot->solid->pos) );*/
    }
-
-      /* wrong parameter */
-   else
+   else {
       NLUA_INVALID_PARAMETER(L);
+      return 0;
+   }
 
-   vect_cset(&offset_vect, VX(pilot->solid->pos) - VX(cur_pilot->solid->pos), VY(pilot->solid->pos) - VY(cur_pilot->solid->pos) );
-
+   vect_cset(&offset_vect, VX(*v) - VX(cur_pilot->solid->pos), VY(*v) - VY(cur_pilot->solid->pos) );
    vect_pset(&perp_motion_unit, 1, VANGLE(cur_pilot->solid->vel)+M_PI_2);
-
    offset_distance = vect_dot(&perp_motion_unit, &offset_vect);
 
    lua_pushnumber(L, offset_distance);
@@ -2128,7 +2123,6 @@ static int aiL_iface( lua_State *L )
    unsigned int id;
    int n, azimuthal_sign;
    double speedmap;
-   /*char announcebuffer[255] = " ", announcebuffer2[128];*/
    int degreecount;
 
    /* Get first parameter, aka what to face. */
@@ -2151,82 +2145,62 @@ static int aiL_iface( lua_State *L )
       lv = lua_tovector(L,1);
    else NLUA_INVALID_PARAMETER(L);
 
-   /*establish the current pilot velocity and position vectors */
-   vect_cset( &drift, VX(p->solid->vel) - VX(cur_pilot->solid->vel), VY(p->solid->vel) - VY(cur_pilot->solid->vel));
+   if (lv==NULL) {
+      /* Establish the current pilot velocity and position vectors */
+      vect_cset( &drift, VX(p->solid->vel) - VX(cur_pilot->solid->vel), VY(p->solid->vel) - VY(cur_pilot->solid->vel));
+      /* Establish the in-line coordinate reference */
+      vect_cset( &reference_vector, VX(p->solid->pos) - VX(cur_pilot->solid->pos), VY(p->solid->pos) - VY(cur_pilot->solid->pos));
+   }
+   else {
+      /* Establish the current pilot velocity and position vectors */
+      vect_cset( &drift, -VX(cur_pilot->solid->vel), -VY(cur_pilot->solid->vel));
+      /* Establish the in-line coordinate reference */
+      vect_cset( &reference_vector, VX(lv->vec) - VX(cur_pilot->solid->pos), VY(lv->vec) - VY(cur_pilot->solid->pos));
+   }
 
-   /*establish the in-line coordinate reference*/
-   vect_cset( &reference_vector, VX(p->solid->pos) - VX(cur_pilot->solid->pos), VY(p->solid->pos) - VY(cur_pilot->solid->pos));
-
-   /*break down the the velocity vectors of both craft into uv coordinates */
+   /* Break down the the velocity vectors of both craft into uv coordinates */
    vect_uv(&drift_radial, &drift_azimuthal, &drift, &reference_vector);
-
    heading_offset_azimuth = angle_diff(cur_pilot->solid->dir, VANGLE(reference_vector));
 
-
-   /*now figure out what to do*/
-
-   /* are we pointing anywhere inside the correct UV quadrant? */
-   /* if we're outside the correct UV quadrant, we need to get into it ASAP */
-   /* Otherwise match velocities and approach*/
-   if(fabs(heading_offset_azimuth) < M_PI_2)
-   {
-
-
-      /*This indicates we're in the correct plane*/
-
-      /*1 - 1/(|x|+1) does a pretty nice job of mapping the reals to the interval (0...1). That forms the core of this angle calculation */
-      /* there is nothing special about the scaling parameter of 200; it can be tuned to get any behavior desired. A lower
+   /* Now figure out what to do...
+    * Are we pointing anywhere inside the correct UV quadrant?
+    * if we're outside the correct UV quadrant, we need to get into it ASAP
+    * Otherwise match velocities and approach */
+   if (fabs(heading_offset_azimuth) < M_PI_2) {
+      /* This indicates we're in the correct plane*/
+      /* 1 - 1/(|x|+1) does a pretty nice job of mapping the reals to the interval (0...1). That forms the core of this angle calculation */
+      /* There is nothing special about the scaling parameter of 200; it can be tuned to get any behavior desired. A lower
          number will give a more dramatic 'lead' */
       speedmap = -1*copysign(1 - 1 / (fabs(drift_azimuthal/200) + 1), drift_azimuthal) * M_PI_2;
-
       diff = angle_diff(heading_offset_azimuth, speedmap);
-
-
-
-
       azimuthal_sign = -1;  
-      if(diff>0)
-      {
-         /*this indicates we're drifting to the right of the target*/
-         /* And we need to turn CCW */
 
+      /* This indicates we're drifting to the right of the target
+       * And we need to turn CCW */
+      if (diff > 0)
          pilot_turn = azimuthal_sign;
-      }
+      /* This indicates we're drifting to the left of the target
+       * And we need to turn CW */
       else if (diff < 0)
-      {
-         /*this indicates we're drifting to the left of the target*/
-         /* And we need to turn CW */
-
          pilot_turn = -1*azimuthal_sign;
-      }
       else
-      {
-
          pilot_turn = 0;
-      }
    }
    /* turn most efficiently to face the target. If we intercept the correct quadrant in the UV plane first, then the code above will kick in */
    /* some special case logic is added to optimize turn time. Reducing this to only the else cases would speed up the operation
       but cause the pilot to turn in the less-than-optimal direction sometimes when between 135 and 225 degrees off from the target */
-   else
-   {
+   else {
       /* signal that we're not in a productive direction for thrusting */
       diff = M_PI;
       degreecount = heading_offset_azimuth*180/M_PI;
-
       azimuthal_sign = 1;  
 
 
       if(heading_offset_azimuth >0)
-      {
          pilot_turn = azimuthal_sign;
-      }
       else
-      {
          pilot_turn = -1*azimuthal_sign;
-      }
    }
-
 
    /* Return angle in degrees away from target. */
    lua_pushnumber(L, ABS(diff*180./M_PI));
@@ -2319,6 +2293,7 @@ static int aiL_idir( lua_State *L )
 
    /* Get first parameter, aka what to face. */
    n  = -2;
+   p  = NULL;
    lv = NULL;
    if (lua_isnumber(L,1)) {
       d = (double)lua_tonumber(L,1);
@@ -2337,48 +2312,44 @@ static int aiL_idir( lua_State *L )
       lv = lua_tovector(L,1);
    else NLUA_INVALID_PARAMETER(L);
 
-   /*establish the current pilot velocity and position vectors */
-   vect_cset( &drift, VX(p->solid->vel) - VX(cur_pilot->solid->vel), VY(p->solid->vel) - VY(cur_pilot->solid->vel));
+   if (lv==NULL) {
+      /* Establish the current pilot velocity and position vectors */
+      vect_cset( &drift, VX(p->solid->vel) - VX(cur_pilot->solid->vel), VY(p->solid->vel) - VY(cur_pilot->solid->vel));
+      /* Establish the in-line coordinate reference */
+      vect_cset( &reference_vector, VX(p->solid->pos) - VX(cur_pilot->solid->pos), VY(p->solid->pos) - VY(cur_pilot->solid->pos));
+   }
+   else {
+      /* Establish the current pilot velocity and position vectors */
+      vect_cset( &drift, -VX(cur_pilot->solid->vel), -VY(cur_pilot->solid->vel));
+      /* Establish the in-line coordinate reference */
+      vect_cset( &reference_vector, VX(lv->vec) - VX(cur_pilot->solid->pos), VY(lv->vec) - VY(cur_pilot->solid->pos));
+   }
 
-   /*establish the in-line coordinate reference*/
-   vect_cset( &reference_vector, VX(p->solid->pos) - VX(cur_pilot->solid->pos), VY(p->solid->pos) - VY(cur_pilot->solid->pos));
-
-   /*break down the the velocity vectors of both craft into uv coordinates */
+   /* Break down the the velocity vectors of both craft into uv coordinates */
    vect_uv(&drift_radial, &drift_azimuthal, &drift, &reference_vector);
-
    heading_offset_azimuth = angle_diff(cur_pilot->solid->dir, VANGLE(reference_vector));
-   
-   
-   /*now figure out what to do*/
 
-    /* are we pointing anywhere inside the correct UV quadrant? */
-    /* if we're outside the correct UV quadrant, we need to get into it ASAP */
-    /* Otherwise match velocities and approach*/
-    if(fabs(heading_offset_azimuth) < M_PI_2)
-    {
+   /* now figure out what to do*/
+   /* are we pointing anywhere inside the correct UV quadrant? */
+   /* if we're outside the correct UV quadrant, we need to get into it ASAP */
+   /* Otherwise match velocities and approach*/
+   if (fabs(heading_offset_azimuth) < M_PI_2) {
+      /* This indicates we're in the correct plane
+       * 1 - 1/(|x|+1) does a pretty nice job of mapping the reals to the interval (0...1). That forms the core of this angle calculation
+       * there is nothing special about the scaling parameter of 200; it can be tuned to get any behavior desired. A lower
+       * number will give a more dramatic 'lead' */
+      speedmap = -1*copysign(1 - 1 / (fabs(drift_azimuthal/200) + 1), drift_azimuthal) * M_PI_2;
+      diff = angle_diff(heading_offset_azimuth, speedmap);
 
-
-        /*This indicates we're in the correct plane*/
-
-        /*1 - 1/(|x|+1) does a pretty nice job of mapping the reals to the interval (0...1). That forms the core of this angle calculation */
-        /* there is nothing special about the scaling parameter of 200; it can be tuned to get any behavior desired. A lower
-        number will give a more dramatic 'lead' */
-        speedmap = -1*copysign(1 - 1 / (fabs(drift_azimuthal/200) + 1), drift_azimuthal) * M_PI_2;
-
-        diff = angle_diff(heading_offset_azimuth, speedmap);
-   
-     }
-    /* turn most efficiently to face the target. If we intercept the correct quadrant in the UV plane first, then the code above will kick in */
-    /* some special case logic is added to optimize turn time. Reducing this to only the else cases would speed up the operation
-        but cause the pilot to turn in the less-than-optimal direction sometimes when between 135 and 225 degrees off from the target */
-    else
-    {
+   }
+   /* Turn most efficiently to face the target. If we intercept the correct quadrant in the UV plane first, then the code above will kick in
+      some special case logic is added to optimize turn time. Reducing this to only the else cases would speed up the operation
+      but cause the pilot to turn in the less-than-optimal direction sometimes when between 135 and 225 degrees off from the target */
+   else{
       /* signal that we're not in a productive direction for thrusting */
-      diff = M_PI;
+      diff        = M_PI;
       degreecount = heading_offset_azimuth*180/M_PI;
-      
-    }
-
+   }
 
    /* Return angle in degrees away from target. */
    lua_pushnumber(L, diff*180./M_PI);
