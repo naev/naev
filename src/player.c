@@ -226,6 +226,9 @@ static void player_newSetup( int tutorial )
       space_init( start_system() );
       start_position( &x, &y );
    }
+   else {
+      start_tutPosition( &x, &y );
+   }
    cam_setTargetPos( x, y, 0 );
    cam_setZoom( conf.zoom_far );
 }
