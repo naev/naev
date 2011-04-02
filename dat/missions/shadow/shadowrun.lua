@@ -201,13 +201,13 @@ end
 
 function enter()
     -- Deadline stuff
-    if deadline1 - time.get() > 0 then
+    if deadline1 > time.get() then
         misn.osdCreate(osd_title[1], { string.format(osd_msg[1], planetname, sysname),
                                        string.format(osd_msg[2], time.str(deadline1 - time.get())),
                                        string.format(osd_msg[3], sysname2, shipname),
                                        string.format(osd_msg[4], time.str(deadline2 - time.get()))
                                      })
-    elseif deadline2 - time.get() > 0 then
+    elseif deadline2 > time.get() then
         misn.osdCreate(osd_title[1], { string.format(osd_msg[3], sysname2, shipname),
                                        string.format(osd_msg[4], time.str(deadline2 - time.get()))
                                      })
