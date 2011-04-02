@@ -2969,15 +2969,18 @@ static Planet* player_parse( xmlNodePtr parent )
       /* Time. */
       if (xml_isNode(node,"time")) {
          cur = node->xmlChildrenNode;
-         scu = stp = stu = 0;
+         scu = stp = stu = -1;
+         rem = -1.;
          do {
             xmlr_int(cur,"SCU",scu);
             xmlr_int(cur,"STP",stp);
             xmlr_int(cur,"STU",stu);
             xmlr_float(cur,"Remainder",rem);
          } while (xml_nextNode(cur));
+         if ((scu < 0) || (stp < 0) || (stu < 0) || (rem<0.))
+            WARN("Malformed time in save game!");
          ntime_setR( scu, stp, stu, rem );
-         if ((scu != 0) || (stp != 0) || (stu != 0))
+         if ((scu >= 0) || (stp >= 0) || (stu >= 0))
             time_set = 1;
       }
 
@@ -3055,6 +3058,12 @@ static Planet* player_parse( xmlNodePtr parent )
          player_rmShip( old_ship->name );
          WARN("Giving player ship '%s'.", player.p->name );
       }
+   }
+
+   /* Check. */
+   if (player.p == NULL) {
+      ERR("Something went horribly wrong, player does not exist after load...");
+      return NULL;
    }
 
    /* set global thingies */

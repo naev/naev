@@ -205,7 +205,7 @@ static int playerL_pay( lua_State *L )
    double money;
 
    money = luaL_checknumber(L,1);
-   player_modCredits( (int64_t)round(money) );
+   player_modCredits( (credits_t)round(money) );
 
    return 0;
 }

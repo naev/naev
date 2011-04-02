@@ -381,7 +381,7 @@ static void comm_bribePilot( unsigned int wid, char *unused )
    (void) unused;
    int answer;
    double d;
-   unsigned int price;
+   credits_t price;
    const char *str;
    lua_State *L;
 
@@ -397,7 +397,7 @@ static void comm_bribePilot( unsigned int wid, char *unused )
       WARN("Pilot '%s' accepts bribes but doesn't give price!", comm_pilot->name );
       d = 0.;
    }
-   price = (unsigned int) d;
+   price = (credits_t) d;
 
    /* Check to see if already bribed. */
    if (price == 0) {
@@ -408,10 +408,10 @@ static void comm_bribePilot( unsigned int wid, char *unused )
    /* Bribe message. */
    str = comm_getString( "bribe_prompt" );
    if (str == NULL) {
-      answer = dialogue_YesNo( "Bribe Pilot", "\"I'm gonna need at least %u credits to not leave you as a hunk of floating debris.\"\n\nPay %u credits?", price, price );
+      answer = dialogue_YesNo( "Bribe Pilot", "\"I'm gonna need at least %"CREDITS_PRI" credits to not leave you as a hunk of floating debris.\"\n\nPay %"CREDITS_PRI" credits?", price, price );
    }
    else
-      answer = dialogue_YesNo( "Bribe Pilot", "%s\n\nPay %u credits?", str, price );
+      answer = dialogue_YesNo( "Bribe Pilot", "%s\n\nPay %"CREDITS_PRI" credits?", str, price );
 
    /* Said no. */
    if (answer == 0) {
@@ -464,7 +464,7 @@ static void comm_bribePlanet( unsigned int wid, char *unused )
    (void) unused;
    int i, j;
    int answer;
-   unsigned int price;
+   credits_t price;
    double d;
    double n, m;
    double o, p;
@@ -507,11 +507,11 @@ static void comm_bribePlanet( unsigned int wid, char *unused )
    d *= 0.5 * (o * (sqrt( p / o ) / 9.5)) + /* Base on presence. */
         0.5 * (n * (sqrt( m / n ) / 9.5)); /* Base on current hostiles. */
    d *= 1. + (-1. * standing) / 50.; /* Modify by standing. */
-   price = (unsigned int) d;
+   price = (credits_t) d;
 
    /* Yes/No input. */
    answer = dialogue_YesNo( "Bribe Starport",
-         "\"I'll let you land for the small sum of %u credits.\"\n\nPay %u credits?",
+         "\"I'll let you land for the small sum of %"CREDITS_PRI" credits.\"\n\nPay %"CREDITS_PRI" credits?",
          price,  price );
 
    /* Said no. */
@@ -552,7 +552,7 @@ static void comm_requestFuel( unsigned int wid, char *unused )
    double val;
    const char *msg;
    int ret;
-   unsigned int price;
+   credits_t price;
 
    /* Check to see if ship has a no refuel message. */
    msg = comm_getString( "refuel_no" );
@@ -581,7 +581,7 @@ static void comm_requestFuel( unsigned int wid, char *unused )
       dialogue_msg( "Request Fuel", "\"Sorry, I'm busy now.\"" );
       return;
    }
-   price = (int) val;
+   price = (credits_t) val;
 
    /* Check to see if is already refueling. */
    if (pilot_isFlag(comm_pilot, PILOT_REFUELING)) {
@@ -591,7 +591,7 @@ static void comm_requestFuel( unsigned int wid, char *unused )
 
    /* See if player really wants to pay. */
    if (price > 0) {
-      ret = dialogue_YesNo( "Request Fuel", "%s\n\nPay %u credits?", msg, price );
+      ret = dialogue_YesNo( "Request Fuel", "%s\n\nPay %"CREDITS_PRI" credits?", msg, price );
       if (ret == 0) {
          dialogue_msg( "Request Fuel", "You decide not to pay." );
          return;
@@ -602,7 +602,7 @@ static void comm_requestFuel( unsigned int wid, char *unused )
 
    /* Check if he has the money. */
    if (!player_hasCredits( price )) {
-      dialogue_msg( "Request Fuel", "You need %u more credits!",
+      dialogue_msg( "Request Fuel", "You need %"CREDITS_PRI" more credits!",
             price - player.p->credits);
       return;
    }
