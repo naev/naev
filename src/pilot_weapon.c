@@ -28,6 +28,7 @@
 static void pilot_weapSetUpdateOutfits( Pilot* p, PilotWeaponSet *ws );
 static PilotWeaponSet* pilot_weapSet( Pilot* p, int id );
 static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level );
+static int pilot_shootWeaponSetOutfit( Pilot* p, PilotWeaponSet *ws, Outfit *o, int level );
 static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w );
 static void pilot_weapSetUpdateRange( PilotWeaponSet *ws );
 
@@ -50,7 +51,7 @@ static PilotWeaponSet* pilot_weapSet( Pilot* p, int id )
  */
 static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
 {
-   int i, ret;
+   int i, j, ret, s;
 
    /* Case no outfits. */
    if (ws->slots == NULL)
@@ -58,9 +59,30 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
 
    /* Fire. */
    ret = 0;
-   for (i=0; i<array_size(ws->slots); i++)
-      if ((level == -1) || (ws->slots[i].level == level))
-         ret += pilot_shootWeapon( p, ws->slots[i].slot );
+   for (i=0; i<array_size(ws->slots); i++) {
+
+      /* Only "active" outfits. */
+      if ((level != -1) && (ws->slots[i].level != level))
+         continue;
+
+      /* Only run once for each weapon type in the group. */
+      s = 0;
+      for (j=0; j<i; j++) {
+         /* Only active outfits. */
+         if ((level != -1) && (ws->slots[j].level != level))
+            continue;
+         /* Found a match. */
+         if (ws->slots[j].slot->outfit == ws->slots[i].slot->outfit) {
+            s = 1;
+            break;
+         }
+      }
+      if (s!=0)
+         continue;
+
+      /* Shoot the weapon of the weaponset. */
+      ret += pilot_shootWeaponSetOutfit( p, ws, ws->slots[i].slot->outfit, level );
+   }
 
    return ret;
 }
@@ -571,6 +593,83 @@ void pilot_shootStop( Pilot* p, int level )
 
 
 /**
+ * @brief Calculates and shoots the appropriate weapons in a weapon set matching an outfit.
+ */
+static int pilot_shootWeaponSetOutfit( Pilot* p, PilotWeaponSet *ws, Outfit *o, int level )
+{
+   int i, ret;
+   int is_launcher;
+   double rate_mod, energy_mod;
+   PilotOutfitSlot *w;
+   int maxp, minh;
+   double q, maxt;
+
+   /* Store number of shots. */
+   ret = 0;
+
+   /** @TODO Make beams not fire all at once. */
+   if (outfit_isBeam(o)) {
+      for (i=0; i<array_size(ws->slots); i++)
+         if (ws->slots[i].slot->outfit == o)
+            ret += pilot_shootWeapon( p, ws->slots[i].slot );
+      return ret;
+   }
+
+   /* Stores if it is a launcher. */
+   is_launcher = outfit_isLauncher(o);
+
+   /* Calculate rate modifier. */
+   pilot_getRateMod( &rate_mod, &energy_mod, p, o );
+
+   /* Find optimal outfit, coolest that can fire. */
+   minh  = -1;
+   maxt  = 0.;
+   maxp  = -1;
+   q     = 0.;
+   for (i=0; i<array_size(ws->slots); i++) {
+      /* Only matching outfits. */
+      if (ws->slots[i].slot->outfit != o)
+         continue;
+
+      /* Only match levels. */
+      if ((level != -1) && (ws->slots[i].level != level))
+         continue;
+
+      /* Simplicity. */
+      w = ws->slots[i].slot;
+
+      /* Launcher only counts with ammo. */
+      if (is_launcher && ((w->u.ammo.outfit == NULL) || (w->u.ammo.quantity <= 0)))
+         continue;
+
+      /* Get coolest that can fire. */
+      if ((w->timer <= 0.) && ((minh < 0) || (ws->slots[minh].slot->heat_T > w->heat_T)))
+         minh = i;
+
+      /* Save some stuff. */
+      if ((maxp < 0) || (w->timer > maxt)) {
+         maxp = i;
+         maxt = w->timer;
+      }
+      q += 1.;
+   }
+
+   /* No weapon can fire. */
+   if (minh < 0)
+      return 0;
+
+   /* Only fire if the last weapon to fire fired more than (q-1)/q ago. */
+   if (maxt > rate_mod * outfit_delay(o) * ((q-1.) / q))
+      return 0;
+
+   /* Shoot the weapon. */
+   ret += pilot_shootWeapon( p, ws->slots[minh].slot );
+
+   return ret;
+}
+
+
+/**
  * @brief Actually handles the shooting, how often the player.p can shoot and such.
  *
  *    @param p Pilot that is shooting.
@@ -580,10 +679,6 @@ void pilot_shootStop( Pilot* p, int level )
 static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
 {
    Vector2d vp, vv;
-   int i;
-   PilotOutfitSlot *slot;
-   int minp;
-   double q, mint;
    int is_launcher;
    double rate_mod, energy_mod;
    double energy;
@@ -600,46 +695,7 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
    is_launcher = outfit_isLauncher(w->outfit);
 
    /* Calculate rate modifier. */
-   pilot_getRateMod( &rate_mod, &energy_mod, p, w );
-
-   /* Count the outfits and current one - only affects non-beam. */
-   mint = 0.;
-   if (!outfit_isBeam(w->outfit)) {
-
-      /* Calculate last time weapon was fired. */
-      q     = 0.;
-      minp  = -1;
-      for (i=0; i<p->outfit_nweapon; i++) {
-         slot = &p->outfit_weapon[i];
-
-         /* No outfit. */
-         if (slot->outfit == NULL)
-            continue;
-
-         /* Not what we are looking for. */
-         if (outfit_delay(slot->outfit) != outfit_delay(w->outfit))
-            continue;
-
-         /* Launcher only counts with ammo. */
-         if (is_launcher && ((w->u.ammo.outfit == NULL) || (w->u.ammo.quantity <= 0)))
-            continue;
-
-         /* Save some stuff. */
-         if ((minp < 0) || (slot->timer > mint)) {
-            minp = i;
-            mint = slot->timer;
-         }
-         q++;
-      }
-
-      /* Q must be valid. */
-      if (q == 0)
-         return 0;
-
-      /* Only fire if the last weapon to fire fired more than (q-1)/q ago. */
-      if (mint > rate_mod * outfit_delay(w->outfit) * ((q-1) / q))
-         return 0;
-   }
+   pilot_getRateMod( &rate_mod, &energy_mod, p, w->outfit );
 
    /* Get weapon mount position. */
    pilot_getMount( p, w, &vp );
@@ -750,9 +806,9 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
  *    @param w Pilot's outfit.
  */
 void pilot_getRateMod( double *rate_mod, double* energy_mod,
-      Pilot* p, PilotOutfitSlot* w )
+      Pilot* p, Outfit *o )
 {
-   switch (w->outfit->type) {
+   switch (o->type) {
       case OUTFIT_TYPE_BOLT:
          *rate_mod   = 2. - p->stats.firerate_forward; /* Invert. */
          *energy_mod = p->stats.energy_forward;
