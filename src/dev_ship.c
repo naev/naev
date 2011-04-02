@@ -47,7 +47,7 @@ void dship_csv( const char *path )
       s = &s_all[i];
 
       l = snprintf( buf, sizeof(buf),
-            "%s,%s,%d,%s,%s,"
+            "%s,%s,%"CREDITS_PRI",%s,%s,"
             "%f,%f,%f,"
             "%d,%f,%f,%d,%f,"
             "%f,%f,"

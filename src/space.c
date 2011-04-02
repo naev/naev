@@ -147,7 +147,7 @@ int space_sysLoad( xmlNodePtr parent );
 /*
  * External prototypes.
  */
-extern unsigned int economy_getPrice( const Commodity *com,
+extern credits_t economy_getPrice( const Commodity *com,
       const StarSystem *sys, const Planet *p ); /**< from economy.c */
 
 
@@ -246,7 +246,7 @@ char planet_getClass( const Planet *p )
  *    @param p Planet to get price at.
  *    @param c Commodity to get price of.
  */
-unsigned int planet_commodityPrice( const Planet *p, const Commodity *c )
+credits_t planet_commodityPrice( const Planet *p, const Commodity *c )
 {
    char *sysname;
    StarSystem *sys;

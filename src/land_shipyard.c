@@ -296,7 +296,7 @@ static void shipyard_buy( unsigned int wid, char* str )
    shipname = toolkit_getImageArray( wid, "iarShipyard" );
    ship = ship_get( shipname );
 
-   int targetprice = ship->price;
+   credits_t targetprice = ship->price;
 
    if (land_errDialogue( shipname, "buy" ))
       return;
@@ -398,7 +398,7 @@ int shipyard_canTrade( char* shipname )
       failure = 1;
    }
    if (!player_hasCredits( ship->price - player_shipPrice(player.p->name))) {
-      int creditdifference = ship->price - (player_shipPrice(player.p->name) + player.p->credits);
+      credits_t creditdifference = ship->price - (player_shipPrice(player.p->name) + player.p->credits);
       char buf[ECON_CRED_STRLEN];
       credits2str( buf, creditdifference, 2 );
       land_errDialogueBuild( "You need %s more credits.", buf);
@@ -425,8 +425,8 @@ static void shipyard_trade( unsigned int wid, char* str )
    shipname = toolkit_getImageArray( wid, "iarShipyard" );
    ship = ship_get( shipname );
 
-   int targetprice = ship->price;
-   int playerprice = player_shipPrice(player.p->name);
+   credits_t targetprice = ship->price;
+   credits_t playerprice = player_shipPrice(player.p->name);
 
    if (land_errDialogue( shipname, "trade" ))
       return;

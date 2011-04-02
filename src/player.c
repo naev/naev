@@ -64,7 +64,7 @@
  */
 Player_t player; /**< Local player. */
 static Ship* player_ship      = NULL; /**< Temporary ship to hold when naming it */
-static uint64_t player_creds = 0; /**< Temporary hack for when creating. */
+static credits_t player_creds = 0; /**< Temporary hack for when creating. */
 static const char *player_message_noland = NULL; /**< No landing message (when PLAYER_NOLAND is set). */
 
 /*
@@ -949,7 +949,7 @@ const char* player_rating (void)
  *    @param amount Amount of credits to check to see if the player has.
  *    @return 1 if the player has enough credits.
  */
-int player_hasCredits( int64_t amount )
+int player_hasCredits( credits_t amount )
 {
    return pilot_hasCredits( player.p, amount );
 }
@@ -961,7 +961,7 @@ int player_hasCredits( int64_t amount )
  *    @param amount Quantity to modify player's credits by.
  *    @return Amount of credits the player has.
  */
-uint64_t player_modCredits( int64_t amount )
+credits_t player_modCredits( credits_t amount )
 {
    return pilot_modCredits( player.p, amount );
 }
@@ -2673,7 +2673,7 @@ int player_save( xmlTextWriterPtr writer )
    /* Standard player details. */
    xmlw_attr(writer,"name","%s",player.name);
    xmlw_elem(writer,"rating","%f",player.crating);
-   xmlw_elem(writer,"credits","%"PRIu64,player.p->credits);
+   xmlw_elem(writer,"credits","%"CREDITS_PRI,player.p->credits);
    if (player.gui != NULL)
       xmlw_elem(writer,"gui","%s",player.gui);
    xmlw_elem(writer,"guiOverride","%d",player.guiOverride);

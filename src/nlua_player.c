@@ -202,10 +202,10 @@ static int playerL_shipname( lua_State *L )
  */
 static int playerL_pay( lua_State *L )
 {
-   int money;
+   double money;
 
-   money = luaL_checkint(L,1);
-   player_modCredits( money );
+   money = luaL_checknumber(L,1);
+   player_modCredits( (int64_t)round(money) );
 
    return 0;
 }
