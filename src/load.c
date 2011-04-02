@@ -392,7 +392,7 @@ static void load_menu_load( unsigned int wdw, char *str )
 
    /* Check version. */
    if (ns->version != NULL) {
-      naev_versionParse( version, ns->version, strlen(ns->version) );
+      naev_versionParse( version, ns[pos].version, strlen(ns[pos].version) );
       diff = naev_versionCompare( version );
       if (ABS(diff) >= 2) {
          if (!dialogue_YesNo( "Save game version mismatch",
@@ -400,7 +400,7 @@ static void load_menu_load( unsigned int wdw, char *str )
                   "   Save version: \er%s\e0\n"
                   "   Naev version: \eD%s\e0\n"
                   "Are you sure you want to load the game? It may have loss of data.",
-                  save, ns->version, naev_version(0) ))
+                  save, ns[pos].version, naev_version(0) ))
             return;
       }
    }
