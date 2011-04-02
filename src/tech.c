@@ -134,7 +134,8 @@ int tech_load (void)
    tech_groups = array_create( tech_group_t );
 
    /* First pass create the groups - needed to reference them later. */
-   ret = 0;
+   ret   = 0;
+   tech  = NULL;
    do {
       xml_onlyNodes(node);
       /* Must match tag. */

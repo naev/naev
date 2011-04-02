@@ -1009,6 +1009,9 @@ static int pilotL_weapset( lua_State *L )
    double delay, firemod, enermod;
    int id, all, level, level_match;
 
+   /* Defaults. */
+   po_list = NULL;
+
    /* Parse parameters. */
    all = 0;
    p   = luaL_validpilot(L,1);
