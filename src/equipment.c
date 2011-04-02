@@ -1097,6 +1097,12 @@ void equipment_regenLists( unsigned int wid, int outfits, int ships )
    double offout, offship;
    char *s, selship[PATH_MAX];
 
+   /* Default.s */
+   nout     = 0;
+   nship    = 0;
+   offout   = 0.;
+   offship  = 0.;
+
    /* Save positions. */
    if (outfits) {
       nout    = toolkit_getImageArrayPos( wid, EQUIPMENT_OUTFITS );
