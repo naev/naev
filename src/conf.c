@@ -731,7 +731,8 @@ int conf_saveConfig ( const char* file )
    SDLMod mod;
    const char *modname;
 
-   pos = 0;
+   pos         = 0;
+   oldfooter   = NULL;
 
    /* User doesn't want to save the config. */
    if (conf.nosave)
@@ -753,9 +754,6 @@ int conf_saveConfig ( const char* file )
             /* Everything after this should also be preserved */
             oldfooter = tmp + strlen("-- "GENERATED_END_COMMENT"\n");
             oldsize -= (oldfooter - old);
-         }
-         else {
-            oldfooter = NULL;
          }
       }
       else {

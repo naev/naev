@@ -1194,6 +1194,10 @@ static int planets_load ( void )
 
    buf = ndata_read( PLANET_DATA, &bufsize );
    doc = xmlParseMemory( buf, bufsize );
+   if (doc == NULL) {
+      ERR(PLANET_DATA" file is invalid xml!");
+      return -1;
+   }
 
    node = doc->xmlChildrenNode;
    if (strcmp((char*)node->name,XML_PLANET_ID)) {
