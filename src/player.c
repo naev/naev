@@ -231,6 +231,9 @@ static void player_newSetup( int tutorial )
    }
    cam_setTargetPos( x, y, 0 );
    cam_setZoom( conf.zoom_far );
+
+   /* Clear the init message for new game. */
+   gui_clearMessages();
 }
 
 
