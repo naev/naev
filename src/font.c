@@ -415,6 +415,10 @@ int gl_printTextRaw( const glFont *ft_font,
    while (y - by > -1e-5) {
       ret = gl_printWidthForText( ft_font, &text[p], width );
 
+      /* Must restore stuff. */
+      if (p!=0)
+         gl_printRestoreLast();
+
       /* Render it. */
       gl_fontRenderStart(ft_font, x, y, c);
       for (i=0; i < ret; i++)
