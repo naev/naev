@@ -382,8 +382,10 @@ static int misn_markerAdd( lua_State *L )
       type = SYSMARKER_HIGH;
    else if (strcmp(stype, "plot")==0)
       type = SYSMARKER_PLOT;
-   else
+   else {
       NLUA_ERROR(L, "Unknown marker type: %s", stype);
+      return 0;
+   }
 
    cur_mission = misn_getFromLua(L);
 

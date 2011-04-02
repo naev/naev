@@ -295,10 +295,17 @@ static int map_findDistance( StarSystem *sys, Planet *pnt, int *jumps, double *d
    /* Distance to first jump point. */
    vs = &player.p->solid->pos;
    for (j=0; j < cur_system->njumps; j++) {
-      if (cur_system->jumps[j].target == slist[0])
+      if (cur_system->jumps[j].target == slist[0]) {
          ve = &cur_system->jumps[j].pos;
+         break;
+      }
    }
-   d = vect_dist( vs, ve );
+   if (ve == NULL) {
+      WARN("Jump to first system not found!");
+      d = 0.;
+   }
+   else
+      d = vect_dist( vs, ve );
 
    /* Calculate distance. */
    for (i=0; i<(*jumps-1); i++) {

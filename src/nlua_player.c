@@ -570,6 +570,8 @@ static int playerL_cinematics( lua_State *L )
 
    /* Defaults. */
    abort_msg = NULL;
+   f_gui     = 0;
+   f_2x      = 0;
 
    /* Parse parameters. */
    b = lua_toboolean( L, 1 );

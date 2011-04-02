@@ -1116,18 +1116,6 @@ static void gui_renderMessages( double dt )
    h  = conf.mesg_visible*gl_defFont.h*1.2;
    gl_renderRect( x-2., y-2., gui_mesg_w-13., h+4., &cBlackHilight );
 
-   if (mesg_viewpoint != -1) {
-      /* Set up position. */
-      vx = x;
-      vy = y;
-
-      /* Data. */
-      hs = h*(double)conf.mesg_visible/(double)mesg_max;
-      o  = mesg_pointer - mesg_viewpoint;
-      if (o < 0)
-         o += mesg_max;
-   }
-
    /* Render text. */
    for (i=0; i<conf.mesg_visible; i++) {
       /* Reference translation. */
@@ -1167,6 +1155,16 @@ static void gui_renderMessages( double dt )
 
    /* Render position. */
    if (mesg_viewpoint != -1) {
+      /* Set up position. */
+      vx = x;
+      vy = y;
+
+      /* Data. */
+      hs = h*(double)conf.mesg_visible/(double)mesg_max;
+      o  = mesg_pointer - mesg_viewpoint;
+      if (o < 0)
+         o += mesg_max;
+
       /* Border. */
       c.a = 0.2;
       gl_renderRect( vx + gui_mesg_w-10., vy, 10, h, &c );
