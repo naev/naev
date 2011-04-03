@@ -1083,7 +1083,7 @@ static int pilotL_weapset( lua_State *L )
 
          /* Set cooldown. */
          lua_pushstring(L,"cooldown");
-         pilot_getRateMod( &firemod, &enermod, p, slot);
+         pilot_getRateMod( &firemod, &enermod, p, slot->outfit );
          delay = outfit_delay(slot->outfit) * firemod;
          if (delay > 0.)
             lua_pushnumber( L, CLAMP( 0., 1., 1. - slot->timer / delay ) );

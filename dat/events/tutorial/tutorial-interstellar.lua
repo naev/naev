@@ -29,7 +29,7 @@ Select a hyperspace target and jump to another system.]]
 But watch out! That jump just now has drained your fuel reserves, as the bottom bar will tell you. If you run out of fuel you can't jump anymore. You can get more fuel by refueling at a planet, by buying fuel off other ships, or by boarding disabled ships and stealing it fom them. Keep an eye on your fuel when traveling!
 
 For the remainder of this tutorial, you will have unlimited fuel. Continue to make hyperjumps until you reach system Navajo.]]
-    message7 = [[Excellent. You have learned how to make hyperspace jumps and explore the galaxy. You may continue jumping around if you wish. Once you're ready to move on, land on either Rin in the Navajo system, or Paul 2 in the Mohawk system. As a final tip, you can hold down \027bshift\0270 while clicking on the galaxy map to specify a manual path for the autonav.
+    message7 = [[Excellent. You have learned how to make hyperspace jumps and explore the galaxy. You may continue jumping around if you wish. Once you're ready to move on, land on either Rin in the Navajo system, or Paul 2 in the Mohawk system. As a final tip, you can hold down %s while clicking on the galaxy map to specify a manual path for the autonav.
 
 Congratulations! This concludes the interstellar flight tutorial.]]
 
@@ -85,7 +85,7 @@ function jumpin()
     if not firstjump then player.refuel() end
     if system.cur() == system.get("Navajo") then
         hook.land( "land_clean" )
-        hook.timer(2000, "jumpmsg", message7)
+        hook.timer(2000, "jumpmsg", message7:format("\027bshift\0270"))
         player.omsgChange(omsg, hyperomsg3:format(tutGetKey("land")), 0)
     elseif firstjump then
         hook.timer(2000, "jumpmsg", message6)
