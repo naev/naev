@@ -100,7 +100,7 @@ function create()
     misssys = {system.get("Qex"), system.get("Borla"), system.get("Doranthex")} -- Escort meeting point, protegee meeting point, final destination.
     misssys["__save"] = true
     
-    if not misn.claim(missys) then
+    if not misn.claim(misssys) then
         abort()
     end
     
