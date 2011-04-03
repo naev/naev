@@ -306,9 +306,8 @@ static int planetL_get( lua_State *L )
       NLUA_INVALID_PARAMETER(L); /* Bad Parameter */
 
    /* No suitable planet found */
-   if ((rndplanet == NULL) && (planets == NULL)) {
+   if ((rndplanet == NULL) && ((planets == NULL) || nplanets == 0))
       return 0;
-   }
    /* Pick random planet */
    else if (rndplanet == NULL) {
       rndplanet = planets[RNG(0,nplanets-1)];
