@@ -52,26 +52,28 @@ function create()
     omsg = player.omsgAdd(thyperomsg:format(tutGetKey"thyperspace"), 0)
 
     waitthyper = 0
-    hook.input("input")
+    hinput = hook.input("input")
     hook.jumpin("jumpin")
 
 end
 
 -- Input hook.
 function input(inputname, inputpress)
-    if inputname == "thyperspace" and inputpress and waitmap ~= true then
+    if inputname == "thyperspace" and inputpress and not waitmap then
         waitthyper = waitthyper + 1
         nav, hyp = player.pilot():nav()
         if waitthyper == 1 then
+            hook.rm(hinput)
             tkMsg(title1, message3:format(tutGetKey("jump"), tutGetKey("thyperspace")))
+            hinput = hook.input("input")
         elseif hyp == nil then
             player.omsgRm(omsg)
+            waitmap = true
             tkMsg(title1, message4:format(tutGetKey("starmap")))
             omsg = player.omsgAdd(starmapomsg:format(tutGetKey("starmap")), 0)
-            waitmap = true
         end
     elseif inputname == "starmap" and waitmap then
-        waitmap = false
+        hook.rm(hinput)
         tk.msg(title1, message5:format(tutGetKey("autonav")))
         player.omsgChange(omsg, hyperomsg:format(tutGetKey("thyperspace"), tutGetKey("autonav"), tutGetKey("jump")), 0)
         firstjump = true
