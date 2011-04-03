@@ -1543,7 +1543,7 @@ static void pilot_hyperspace( Pilot* p, double dt )
    else {
       /* Make sure still within range. */
       jp = &cur_system->jumps[ p->nav_hyperspace ];
-      if (jp->radius*jp->radius < vect_dist2( &p->solid->pos, &jp->pos ) ) {
+      if (!space_canHyperspace( p )) {
          pilot_hyperspaceAbort( p );
 
          if (p == player.p) {
