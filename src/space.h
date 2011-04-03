@@ -322,6 +322,7 @@ StarSystem* system_get( const char* sysname );
 StarSystem* system_getIndex( int id );
 int system_index( StarSystem *sys );
 int space_sysReachable( StarSystem *sys );
+int space_sysReallyReachable( char* sysname );
 char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions );
 char* space_getRndPlanet (void);
 double system_getClosest( const StarSystem *sys, int *pnt, int *jp, double x, double y );

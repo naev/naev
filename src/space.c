@@ -43,6 +43,8 @@
 #include "map_overlay.h"
 #include "menu.h"
 #include "nstring.h"
+#include "nmath.h"
+#include "map.h"
 
 
 #define XML_PLANET_ID         "Assets" /**< Planet xml document tag. */
@@ -397,7 +399,8 @@ char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions )
          planet = systems_stack[i].planets[j];
          for (k=0; k<nfactions; k++)
             if (planet->real == ASSET_REAL &&
-                planet->faction == factions[k]) {
+                planet->faction == factions[k] &&
+                space_sysReallyReachable(planet_getSystem(planet->name))) {
                ntmp++;
                if (ntmp > mtmp) { /* need more space */
                   mtmp *= 2;
@@ -432,7 +435,7 @@ char* space_getRndPlanet (void)
 
    for (i=0; i<systems_nstack; i++)
       for (j=0; j<systems_stack[i].nplanets; j++) {
-         if(systems_stack[i].planets[j]->real == ASSET_REAL) {
+         if (systems_stack[i].planets[j]->real == ASSET_REAL) {
             ntmp++;
             if (ntmp > mtmp) { /* need more space */
                mtmp *= 2;
@@ -442,7 +445,13 @@ char* space_getRndPlanet (void)
          }
       }
 
-   res = tmp[RNG(0,ntmp-1)];
+   tmp = arrayShuffle(tmp, ntmp);
+   for (i=0; i < ntmp; i++) {
+      if (space_sysReallyReachable(planet_getSystem( tmp[i] ))) {
+         res = tmp[i];
+         break;
+      }
+   }
    free(tmp);
 
    return res;
@@ -559,6 +568,22 @@ int space_sysReachable( StarSystem *sys )
       if (sys_isKnown( sys->jumps[i].target ))
          return 1;
 
+   return 0;
+}
+
+
+/**
+ * @brief Sees if a system can be reached via jumping.
+ *
+ *    @return 1 if target system is reachable, 0 if it isn't.
+ */
+int space_sysReallyReachable ( char* sysname )
+{
+   int njumps;
+
+   if (strcmp(sysname,cur_system->name)==0 || map_getJumpPath( &njumps,
+         cur_system->name, sysname, 1, NULL ) != NULL)
+      return 1;
    return 0;
 }
 
