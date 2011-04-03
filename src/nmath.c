@@ -69,3 +69,22 @@ double min3( double v1, double v2, double v3 )
    return(min);
 }
 
+/**
+ *  @brief Randomly sorts an array with the Fisher-Yates shuffle.
+ *
+ *    @param array Array to be sorted.
+ *    @param n Number of elements in the array.
+ *    @return Randomly-ordered array.
+ */
+char** arrayShuffle( char** array, int n)
+{
+   char* tmp;
+   while (n > 1) {
+      int k;
+      k = rand()%(n--);
+      tmp = array[n];
+      array[n] = array[k];
+      array[k] = tmp;
+   }
+   return array;
+}
