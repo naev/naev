@@ -57,6 +57,7 @@ int land_setWindow( int window );
 void land_checkAddRefuel (void);
 void land_buttonTakeoff( unsigned int wid, char *unused );
 unsigned int land_getWid( int window );
+void bar_regen (void);
 
 /*
  * Error dialogue generation and associated sanity checks.

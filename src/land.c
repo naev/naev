@@ -584,6 +584,15 @@ static int bar_genList( unsigned int wid )
    return 0;
 }
 /**
+ * @brief Regenerates the bar list.
+ */
+void bar_regen (void)
+{
+   if (!landed)
+      return;
+   bar_genList( land_getWid(LAND_WINDOW_BAR) );
+}
+/**
  * @brief Updates the missions in the spaceport bar.
  *    @param wid Window to update the outfits in.
  *    @param str Unused.

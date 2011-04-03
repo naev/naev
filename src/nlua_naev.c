@@ -21,6 +21,7 @@
 #include "log.h"
 #include "nstd.h"
 #include "input.h"
+#include "land.h"
 
 
 /* Naev methods. */
@@ -213,6 +214,12 @@ static int naev_eventStart( lua_State *L )
    str = luaL_checkstring(L, 1);
    ret = event_start( str, NULL );
 
+   /* Get if console. */
+   lua_getglobal(L, "__cli");
+   if (lua_toboolean(L,-1) && landed)
+      bar_regen();
+   lua_pop(L,1);
+
    lua_pushboolean( L, !ret );
    return 1;
 }
@@ -233,6 +240,12 @@ static int naev_missionStart( lua_State *L )
 
    str = luaL_checkstring(L, 1);
    ret = mission_start( str, NULL );
+
+   /* Get if console. */
+   lua_getglobal(L, "__cli");
+   if (lua_toboolean(L,-1) && landed)
+      bar_regen();
+   lua_pop(L,1);
 
    lua_pushboolean( L, !ret );
    return 1;
