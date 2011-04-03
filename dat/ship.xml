@@ -1448,7 +1448,7 @@
    <structure />
   </slots>
   <stats>
-   <jump_range>15</jump_range>
+   <jump_range>30</jump_range>
    <energy_turret>-5</energy_turret>
   </stats>
  </ship>
@@ -1498,7 +1498,7 @@
    <structure />
   </slots>
   <stats>
-   <jump_range>25</jump_range>
+   <jump_range>50</jump_range>
    <launch_range>10</launch_range>
    <energy_turret>-5</energy_turret>
   </stats>
@@ -1554,7 +1554,7 @@
   </slots>
   <stats>
    <heat_dissipation>10</heat_dissipation>
-   <jump_range>10</jump_range>
+   <jump_range>20</jump_range>
   </stats>
  </ship>
  <ship name="Pirate Kestrel">
@@ -1606,7 +1606,7 @@
   </slots>
   <stats>
    <heat_dissipation>10</heat_dissipation>
-   <jump_range>20</jump_range>
+   <jump_range>40</jump_range>
   </stats>
  </ship>
  <ship name="Proteron Archimedes">
@@ -2051,7 +2051,7 @@
   </slots>
   <stats>
    <energy_turret>-10</energy_turret>
-   <jump_range>10</jump_range>
+   <jump_range>25</jump_range>
    <firerate_turret>-5</firerate_turret>
    <ammo_capacity>25</ammo_capacity>
   </stats>
