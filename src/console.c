@@ -309,6 +309,10 @@ int cli_init (void)
    luaL_register( cli_state, "_G", cli_methods );
    lua_settop( cli_state, 0 );
 
+   /* Mark as console. */
+   lua_pushboolean( cli_state, 1 );
+   lua_setglobal( cli_state, "__cli" );
+
    /* Set the font. */
    cli_font    = malloc( sizeof(glFont) );
    gl_fontInit( cli_font, "dat/mono.ttf", CONSOLE_FONT_SIZE );
