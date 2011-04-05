@@ -22,12 +22,14 @@ nebulae = {
    "nebula31.png",
    "nebula32.png",
    "nebula33.png",
+   "nebula34.png",
 }
 
 
 stars = {
    "blue01.png",
    "blue02.png",
+   "blue04.png",
    "green01.png",
    "green02.png",
    "orange01.png",
