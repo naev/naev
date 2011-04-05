@@ -536,6 +536,7 @@ function render( dt )
          if not ta_fuzzy then
             ptarget_target = ptarget:target()
             ta_armour, ta_shield, ta_disabled = ptarget:health()
+            tflags = ptarget:flags()
             ta_energy = ptarget:energy()
             ta_speed = ptarget:vel():dist()
 
@@ -584,7 +585,7 @@ function render( dt )
             end
 
             --Warning Light
-            if ptarget_target == pp then
+            if ptarget_target == pp and not ta_disabled then
                gfx.renderTex( target_light_on, ta_warning_x - 3, ta_warning_y - 3 )
             else
                gfx.renderTex( target_light_off, ta_warning_x, ta_warning_y )
@@ -605,6 +606,9 @@ function render( dt )
             -- Status information
             if ta_disabled then
                status = "Disabled"
+               gfx.print( true, status, ta_pane_x + 14, ta_pane_y + 94, col_txt_top )
+            elseif tflags["boardable"] then
+               status = "Boardable"
                gfx.print( true, status, ta_pane_x + 14, ta_pane_y + 94, col_txt_top )
             end
 
