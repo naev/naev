@@ -2507,6 +2507,7 @@ struct pL_flag {
 };
 static const struct pL_flag pL_flags[] = {
    { .name = "hailing", .id = PILOT_HAILING },
+   { .name = "boardable", .id = PILOT_BOARDABLE },
    {NULL, -1}
 };
 /**
@@ -2515,6 +2516,7 @@ static const struct pL_flag pL_flags[] = {
  * Valid flags are:<br/>
  * <ul>
  *  <li> hailing: pilot is hailing the player.<br/>
+ *  <li> boardable: pilot is boardable while active.<br/>
  * </ul>
  *    @luaparam p Pilot to get flags of.
  *    @luareturn Table with flag names an index, boolean as value.
