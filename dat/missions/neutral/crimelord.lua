@@ -33,7 +33,7 @@ else --I guess you know this stuff...
     "Be careful out there. I doubt you'll be able to get far without being noticed."]] --dialogue 2
     text[2] = "\"Excellent work. This data will ensure an arrest and swift prosecution. You've certainly done your part towards cleaning up the region As for your compensation, I've had %s credits transferred to you.\"" --finished
     text[3] = "As you step out of your ship and seal the airlock, you spot a burly man purposefully heading towards you. You turn to flee, but there are others closing in on your position. Surrounded, and with several laser pistols trained on you, you see no option but to surrender the evidence."
-    misn_desc = "Flee from the thugs to %s, then defeat them." --OSD text
+    misn_desc = "Evade the thugs and deliver the evidence to %s." --OSD text
     reward_desc = "A generous compensation" --reward description
 end
 
@@ -73,16 +73,21 @@ function jumpin () --aforementioned triggered function
     hook.timer(4000, "spawnBaddies")
     
     if system.cur() == targetsystem then --when in target system
-    
-        defenders = pilot.add("crimelord Associate") --add a defending force to help you
+        defenders = pilot.add("crimelord Associate", nil, system.jumpPos(targetsystem,
+                last_system)) --add a defending force to help you
         for pilot_number, pilot_object in pairs(defenders) do
             pilot_object:setFriendly() --I think they like you
+            pilot_object:setPos( pilot_object:pos() +
+                    vec2.new( rnd.rnd(400, 800) * (rnd.rnd(0,1) - 0.5) * 2,
+                    rnd.rnd(400, 800) * (rnd.rnd(0,1) - 0.5) * 2))
         end
         
-        capship = pilot.add("crimelord Kestrel") --add the capship - needed for the mission
+        capship = pilot.add("crimelord Kestrel", nil, system.jumpPos(targetsystem,
+                last_system)) --add the capship - needed for the mission
         for cap_num, cap_obj in pairs(capship) do
             cap_obj:setInvincible(true) --since it's needed it may not be destroyed
             cap_obj:setFriendly()
+            cap_obj:comm("We've got your back. Engaging hostiles.", true )
         end
     end
 end
@@ -93,34 +98,40 @@ end
 
 function spawnBaddies ()
     if last_system == startsystem then
-        thugs = pilot.add( "crimelord Thugs")
+        ai = "baddie"
     else
-        thugs = pilot.add( "crimelord Thugs", "baddie_norun", last_system)
+        ai = "baddie_norun"
     end
-    thugs_alive = 0
+    thugs = pilot.add( "crimelord Thugs", "baddie_norun", last_system)
     for pilot_number, pilot_object in pairs(thugs) do
         pilot_object:setHostile() --they don't like you
         pilot_object:rmOutfit("all") --strip them down
         pilot_object:addOutfit("Laser Cannon MK2") --add everything but rockets
         pilot_object:addOutfit("Plasma Blaster MK2")
         pilot_object:addOutfit("Plasma Blaster MK2")
+        pilot_object:addOutfit("Vulcan Gun")
+        pilot_object:addOutfit("Vulcan Gun")
+        pilot_object:addOutfit("Reactor Class II")
         pilot_object:addOutfit("Reactor Class II")
         pilot_object:addOutfit("Milspec Jammer")
-        pilot_object:addOutfit("Shield Capacitor II")
-        pilot_object:addOutfit("Shield Capacitor III")
-        pilot_object:addOutfit("Plasteel Plating")
         pilot_object:addOutfit("Engine Reroute")
-        pilot_object:addOutfit("Battery II")
-        pilot_object:addOutfit("Auxiliary Processing Unit II")
+        pilot_object:addOutfit("Steering Thrusters")
+        pilot_object:addOutfit("Shield Capacitor II")
         if system.cur() ~= targetsystem then
             pilot_object:control() --switch to manual control
             pilot_object:attack( pilot.player() ) --they blindly attack you and only you
         else
-            thugs_alive = thugs_alive + 1
-            hook.pilot(pilot_object, "death", "pilotKilled") --trigger when one of them is killed
+            thugs_alive = #thugs
+            hook.pilot(pilot_object, "exploded", "pilotKilled") --trigger when one of them is killed
         end
     end
-    thugs[1]:comm("We'll get you!",true)
+    threats = {
+      "Surrender now and we'll let you live.",
+      "You're dead!",
+      "You won't make it out alive!",
+      "Get back here!"
+    }
+    thugs[1]:comm(threats[rnd.rnd(1,#threats)],true)
 end
 
 function pilotKilled () --function for second trigger
