@@ -57,7 +57,8 @@ end
 function jumpin()
     if system.cur() == destsys then
         seiryuu = pilot.add("Seiryuu", nil, vec2.new(0, -2000))[1]
-        seiryuu:disable()
+        seiryuu:control(true)
+        seiryuu:setActiveBoard(true)
         seiryuu:setInvincible(true)
         hook.pilot(seiryuu, "board", "board")
     end
@@ -65,7 +66,8 @@ end
 
 function board()
     player.unboard()
-    seiryuu:setHealth(100,100)
+    seiryuu:control(false)
+    seiryuu:setActiveBoard(false)
     naev.missionStart("Shadow Vigil")
     finish()
 end
