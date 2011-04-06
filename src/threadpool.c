@@ -360,9 +360,9 @@ static int threadpool_handler( void *data )
       } 
       /* Wait for idle thread */
       else {
-         if (SDL_SemWait(idle->semaphore) == -1) {
+         while (SDL_SemWait(idle->semaphore) == -1) {
+             /* Bad idea */
              WARN("L%d: SDL_SemWait failed! This is really bad!!", __LINE__);
-             continue;
          }
          /* Assign arguments for the thread */
          threadarg = tq_dequeue( idle );
@@ -485,9 +485,11 @@ void vpool_wait(ThreadQueue queue)
    SDL_mutexP( mutex );
    /* Initialize the vpoolThreadData */
    for (i=0; i<cnt; i++) {
-      /* This is not necessary as no one else is going to dequeue anyway */
-      if (SDL_SemWait( queue->semaphore ) == -1)
+      /* This is needed to keep the invariants of the queue */
+      while (SDL_SemWait( queue->semaphore ) == -1) {
+          /* Again, a really bad idea */
           WARN("L%d: SDL_SemWait failed! This is really bad!!", __LINE__);
+      }
       node = tq_dequeue( queue );
 
       arg[i].node = node;
