@@ -243,8 +243,11 @@ static int threadpool_worker( void *data )
    /* Work loop */
    while (1) {
       /* Wait for new signal */
-      if(SDL_SemWait( work->semaphore ) == -1)
+      while (SDL_SemWait( work->semaphore ) == -1) {
+          /* Putting this in a while-loop is probably a really bad idea, but I
+           * don't have any better ideas. */
           WARN("L%d: SDL_SemWait failed! This is really bad!!", __LINE__);
+      }
       /* Break if received signal to stop */
       if ( work->signal == THREADSIG_STOP ) {
          break;
@@ -325,8 +328,10 @@ static int threadpool_handler( void *data )
       } 
       else {
          /* Wait for a new job */
-         if (SDL_SemWait( global_queue->semaphore ) == -1)
+         if (SDL_SemWait( global_queue->semaphore ) == -1) {
              WARN("L%d: SDL_SemWait failed! This is really bad!!", __LINE__);
+             continue;
+         }
       }
       /* Get a new job from the queue */
       node = tq_dequeue( global_queue );
@@ -355,8 +360,10 @@ static int threadpool_handler( void *data )
       } 
       /* Wait for idle thread */
       else {
-         if (SDL_SemWait(idle->semaphore) == -1)
+         if (SDL_SemWait(idle->semaphore) == -1) {
              WARN("L%d: SDL_SemWait failed! This is really bad!!", __LINE__);
+             continue;
+         }
          /* Assign arguments for the thread */
          threadarg = tq_dequeue( idle );
          threadarg->function = node->function;
