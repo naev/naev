@@ -330,10 +330,10 @@ static void commodity_sell( unsigned int wid, char* str )
    comname = toolkit_getList( wid, "lstGoods" );
    com   = commodity_get( comname );
    price = planet_commodityPrice( land_planet, com );
-   price *= q;
 
    /* Remove commodity. */
    q = pilot_cargoRm( player.p, com, q );
+   price = price * (credits_t)q;
    player_modCredits( price );
    land_checkAddRefuel();
    commodity_update(wid, NULL);

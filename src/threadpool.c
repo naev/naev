@@ -243,7 +243,11 @@ static int threadpool_worker( void *data )
    /* Work loop */
    while (1) {
       /* Wait for new signal */
-      SDL_SemWait( work->semaphore );
+      while (SDL_SemWait( work->semaphore ) == -1) {
+          /* Putting this in a while-loop is probably a really bad idea, but I
+           * don't have any better ideas. */
+          WARN("L%d: SDL_SemWait failed! Error: %s", __LINE__, SDL_GetError());
+      }
       /* Break if received signal to stop */
       if ( work->signal == THREADSIG_STOP ) {
          break;
@@ -324,7 +328,10 @@ static int threadpool_handler( void *data )
       } 
       else {
          /* Wait for a new job */
-         SDL_SemWait( global_queue->semaphore );
+         if (SDL_SemWait( global_queue->semaphore ) == -1) {
+             WARN("L%d: SDL_SemWait failed! Error: %s", __LINE__, SDL_GetError());
+             continue;
+         }
       }
       /* Get a new job from the queue */
       node = tq_dequeue( global_queue );
@@ -353,7 +360,10 @@ static int threadpool_handler( void *data )
       } 
       /* Wait for idle thread */
       else {
-         SDL_SemWait(idle->semaphore);
+         while (SDL_SemWait(idle->semaphore) == -1) {
+             /* Bad idea */
+             WARN("L%d: SDL_SemWait failed! Error: %s", __LINE__, SDL_GetError());
+         }
          /* Assign arguments for the thread */
          threadarg = tq_dequeue( idle );
          threadarg->function = node->function;
@@ -475,8 +485,11 @@ void vpool_wait(ThreadQueue queue)
    SDL_mutexP( mutex );
    /* Initialize the vpoolThreadData */
    for (i=0; i<cnt; i++) {
-      /* This is not necessary as no one else is going to dequeue anyway */
-      SDL_SemWait( queue->semaphore );
+      /* This is needed to keep the invariants of the queue */
+      while (SDL_SemWait( queue->semaphore ) == -1) {
+          /* Again, a really bad idea */
+          WARN("L%d: SDL_SemWait failed! Error: %s", __LINE__, SDL_GetError());
+      }
       node = tq_dequeue( queue );
 
       arg[i].node = node;
