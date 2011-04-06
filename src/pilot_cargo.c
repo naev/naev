@@ -311,41 +311,42 @@ int pilot_cargoRmRaw( Pilot* pilot, Commodity* cargo, int quantity, int cleanup 
 
    /* check if pilot has it */
    q = quantity;
-   for (i=0; i<pilot->ncommodities; i++)
-      if (pilot->commodities[i].commodity == cargo) {
+   for (i=0; i<pilot->ncommodities; i++) {
+      if (pilot->commodities[i].commodity != cargo)
+         continue;
 
-         /* Must not be mission cargo unless cleaning up. */
-         if (!cleanup && (pilot->commodities[i].id != 0))
-            continue;
+      /* Must not be mission cargo unless cleaning up. */
+      if (!cleanup && (pilot->commodities[i].id != 0))
+         continue;
 
-         if (quantity >= pilot->commodities[i].quantity) {
-            q = pilot->commodities[i].quantity;
+      if (quantity >= pilot->commodities[i].quantity) {
+         q = pilot->commodities[i].quantity;
 
-            /* remove cargo */
-            pilot->ncommodities--;
-            if (pilot->ncommodities <= 0) {
-               if (pilot->commodities != NULL) {
-                  free( pilot->commodities );
-                  pilot->commodities   = NULL;
-               }
-               pilot->ncommodities  = 0;
+         /* remove cargo */
+         pilot->ncommodities--;
+         if (pilot->ncommodities <= 0) {
+            if (pilot->commodities != NULL) {
+               free( pilot->commodities );
+               pilot->commodities   = NULL;
             }
-            else {
-               memmove( &pilot->commodities[i], &pilot->commodities[i+1],
-                     sizeof(PilotCommodity) * (pilot->ncommodities-i) );
-               pilot->commodities = realloc( pilot->commodities,
-                     sizeof(PilotCommodity) * pilot->ncommodities );
-            }
+            pilot->ncommodities  = 0;
          }
-         else
-            pilot->commodities[i].quantity -= q;
-         pilot->cargo_free    += q;
-         pilot->mass_cargo    -= q;
-         pilot->solid->mass   -= pilot->stats.cargo_inertia * q;
-         pilot_updateMass( pilot );
-         gui_setGeneric( pilot );
-         return q;
+         else {
+            memmove( &pilot->commodities[i], &pilot->commodities[i+1],
+                  sizeof(PilotCommodity) * (pilot->ncommodities-i) );
+            pilot->commodities = realloc( pilot->commodities,
+                  sizeof(PilotCommodity) * pilot->ncommodities );
+         }
       }
+      else
+         pilot->commodities[i].quantity -= q;
+      pilot->cargo_free    += q;
+      pilot->mass_cargo    -= q;
+      pilot->solid->mass   -= pilot->stats.cargo_inertia * q;
+      pilot_updateMass( pilot );
+      gui_setGeneric( pilot );
+      return q;
+   }
    return 0; /* pilot didn't have it */
 }
 
