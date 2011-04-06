@@ -246,7 +246,7 @@ static int threadpool_worker( void *data )
       while (SDL_SemWait( work->semaphore ) == -1) {
           /* Putting this in a while-loop is probably a really bad idea, but I
            * don't have any better ideas. */
-          WARN("L%d: SDL_SemWait failed! This is really bad!!", __LINE__);
+          WARN("L%d: SDL_SemWait failed! Error: %s", __LINE__, SDL_GetError());
       }
       /* Break if received signal to stop */
       if ( work->signal == THREADSIG_STOP ) {
@@ -329,7 +329,7 @@ static int threadpool_handler( void *data )
       else {
          /* Wait for a new job */
          if (SDL_SemWait( global_queue->semaphore ) == -1) {
-             WARN("L%d: SDL_SemWait failed! This is really bad!!", __LINE__);
+             WARN("L%d: SDL_SemWait failed! Error: %s", __LINE__, SDL_GetError());
              continue;
          }
       }
@@ -362,7 +362,7 @@ static int threadpool_handler( void *data )
       else {
          while (SDL_SemWait(idle->semaphore) == -1) {
              /* Bad idea */
-             WARN("L%d: SDL_SemWait failed! This is really bad!!", __LINE__);
+             WARN("L%d: SDL_SemWait failed! Error: %s", __LINE__, SDL_GetError());
          }
          /* Assign arguments for the thread */
          threadarg = tq_dequeue( idle );
@@ -488,7 +488,7 @@ void vpool_wait(ThreadQueue queue)
       /* This is needed to keep the invariants of the queue */
       while (SDL_SemWait( queue->semaphore ) == -1) {
           /* Again, a really bad idea */
-          WARN("L%d: SDL_SemWait failed! This is really bad!!", __LINE__);
+          WARN("L%d: SDL_SemWait failed! Error: %s", __LINE__, SDL_GetError());
       }
       node = tq_dequeue( queue );
 
