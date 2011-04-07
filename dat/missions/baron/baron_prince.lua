@@ -262,7 +262,7 @@ function flintley()
         misn.osdActive(3)
         stage = 3
         
-        misn.cargoAdd("Ancient Artefact", 0)
+        artefactReal = misn.cargoAdd("Ancient Artefact", 0)
         
         misn.markerRm(markerA)
         misn.markerRm(markerB)
@@ -320,7 +320,7 @@ function enter()
         pinnacle:goto(planet.get("Ulios"):pos() + vec2.new( 500, -500), false, false)
         idlehook = hook.pilot(pinnacle, "idle", "idle")
         hhail = hook.pilot(pinnacle, "hail", "hail")
-    elseif artefactA ~= nil or artefactB ~= nil or artefactC ~= nil then
+    elseif artefactA ~= nil or artefactB ~= nil or artefactC ~= nil or artefactReal ~= nil then
         -- Spawn artefact hunters, maybe.
         local choice = rnd.rnd(1, 5)
         local fleep
