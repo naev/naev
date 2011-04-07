@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Systems>
  <ssys name="Acheron">
   <general>
@@ -544,6 +544,32 @@
   <jumps>
    <jump target="Dendria">
     <pos x="4480.601315" y="-20516.437601"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+ </ssys>
+ <ssys name="Basel">
+  <general>
+   <radius>10000.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>250.000000</interference>
+   <nebula volatility="0.000000">400.000000</nebula>
+  </general>
+  <pos>
+   <x>365.731798</x>
+   <y>138.640880</y>
+  </pos>
+  <assets>
+   <asset>Basel I</asset>
+   <asset>Sorom</asset>
+  </assets>
+  <jumps>
+   <jump target="Iris">
+    <pos x="8633.683978" y="5045.740874"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>
@@ -3005,8 +3031,8 @@
    <radius>14000.000000</radius>
    <stars>400</stars>
    <asteroids>0</asteroids>
-   <interference>0.000000</interference>
-   <nebula volatility="0.000000">0.000000</nebula>
+   <interference>350.000000</interference>
+   <nebula volatility="0.000000">400.000000</nebula>
   </general>
   <pos>
    <x>434.333333</x>
@@ -3014,6 +3040,13 @@
   </pos>
   <assets/>
   <jumps>
+   <jump target="Basel">
+    <pos x="-12087.157569" y="-7064.037224"/>
+    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
    <jump target="Oriantis">
     <pos x="10272.270147" y="-9512.122057"/>
     <radius>200.000000</radius>
@@ -4058,8 +4091,8 @@
    <radius>14000.000000</radius>
    <stars>400</stars>
    <asteroids>0</asteroids>
-   <interference>0.000000</interference>
-   <nebula volatility="0.000000">0.000000</nebula>
+   <interference>250.000000</interference>
+   <nebula volatility="0.000000">400.000000</nebula>
   </general>
   <pos>
    <x>482.333333</x>
@@ -5300,8 +5333,8 @@
    <radius>15750.000000</radius>
    <stars>400</stars>
    <asteroids>0</asteroids>
-   <interference>0.000000</interference>
-   <nebula volatility="0.000000">0.000000</nebula>
+   <interference>150.000000</interference>
+   <nebula volatility="0.000000">200.000000</nebula>
   </general>
   <pos>
    <x>402.666667</x>
