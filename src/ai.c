@@ -475,8 +475,9 @@ int ai_pinit( Pilot *p, const char *ai )
    /* Set up the profile. */
    prof = ai_getProfile(buf);
    if (prof == NULL) {
-      WARN("AI Profile '%s' not found.", buf);
-      return -1;
+      WARN("AI Profile '%s' not found, using dummy fallback.", buf);
+      snprintf(buf, sizeof(buf), "dummy" );
+      prof = ai_getProfile(buf);
    }
    p->ai = prof;
    L = p->ai->L;
