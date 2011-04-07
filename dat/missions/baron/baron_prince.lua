@@ -3,6 +3,8 @@
 --]]
 
 -- localization stuff, translators would work here
+include("scripts/fleethelper.lua")
+
 lang = naev.lang()
 if lang == "es" then
 else -- default english
@@ -309,8 +311,7 @@ end
 
 function enter()
     if system.cur() == baronsys then
-        pinnacle = pilot.add("Proteron Kahan", "trader", planet.get("Ulios"):pos() + vec2.new(-400,-400))[1]
-        pinnacle:setFaction("Civilian")
+        pinnacle = addRawShips("Proteron Kahan", "trader", planet.get("Ulios"):pos() + vec2.new(-400,-400), "Civilian" )[1]
         pinnacle:rename("Pinnacle")
         pinnacle:setInvincible(true)
         pinnacle:setFriendly()
@@ -323,20 +324,21 @@ function enter()
         -- Spawn artefact hunters, maybe.
         local choice = rnd.rnd(1, 5)
         local fleep
-        if choice == 1 then
-            fleep = pilot.add("Mercenary Wing 1", "baddie", true)
-        elseif choice == 2 then
-            fleep = pilot.add("Mercenary Wing 2", "baddie", true)
+        local count
+        local pilots = { "Hyena", "Hyena" }
+
+        if choice == 2 then -- 60% chance of artefact hunters.
+            pilots[2] = "Vendetta"
         elseif choice == 3 then
-            fleep = pilot.add("Mercenary Wing 3", "baddie", true)
-        else
-            fleep = {}
+            pilots = { "Llama" }
+            count = 3
         end
-        for i, j in ipairs(fleep) do
-            if j:exists() then
+        if choice <= 3 then
+            fleep = addRawShips( pilots, "mercenary", nil, "Mercenary", count );
+            for i, j in ipairs(fleep) do
                 j:control()
                 j:setHostile(true)
-                j:rename("Artefact hunter")
+                j:rename("Artefact Hunter")
                 j:attack(player.pilot())
             end
         end
