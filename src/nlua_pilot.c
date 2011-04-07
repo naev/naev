@@ -664,12 +664,6 @@ static int pilotL_addFleet( lua_State *L )
       }
    }
    else {
-      /* Sanity check for AI */
-      if (fltai == NULL || ai_getProfile( (char*)fltai ) == NULL) {
-         WARN("Invalid AI specified! Using fallback.");
-         fltai = "independent";
-      }
-
       /* Create the pilot. */
       p = pilot_create( ship, fltname, lf.f, fltai, a, &vp, &vv, flags, -1 );
       return p;

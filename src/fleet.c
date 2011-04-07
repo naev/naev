@@ -106,7 +106,7 @@ Fleet* fleet_grab( const int faction )
  *    @param vel Initial velocity.
  *    @param ai AI to use (NULL is default).
  *    @param flags Flags to create with.
- *    @param systemFLeeet System fleet the pilot belongs to.
+ *    @param systemFleet System fleet the pilot belongs to.
  *    @return The ID of the pilot created.
  *
  * @sa pilot_create
@@ -166,6 +166,8 @@ static int fleet_parse( Fleet *temp, const xmlNodePtr parent )
 
       /* Set AI. */
       xmlr_strd(node,"ai",temp->ai);
+      if (ai_getProfile ( temp->ai ) == NULL)
+         WARN("Fleet '%s' has invalid AI '%s'.", temp->name, temp->ai );
 
       /* Set flags. */
       if (xml_isNode(node,"flags")){
