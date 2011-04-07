@@ -154,36 +154,6 @@
    <pilot name="FLF Lancelot" ship="Lancelot"></pilot>
   </pilots>
  </fleet>
- <fleet name="FLF Vendetta Trio">
-  <ai>flf</ai>
-  <faction>FLF</faction>
-  <pilots>
-   <pilot name="FLF Vendetta" ship="Vendetta"></pilot>
-   <pilot name="FLF Vendetta" ship="Vendetta"></pilot>
-   <pilot name="FLF Vendetta" ship="Vendetta"></pilot>
-  </pilots>
- </fleet>
- <fleet name="FLF Vendetta Sextet">
-  <ai>flf</ai>
-  <faction>FLF</faction>
-  <pilots>
-   <pilot name="FLF Vendetta" ship="Vendetta"></pilot>
-   <pilot name="FLF Vendetta" ship="Vendetta"></pilot>
-   <pilot name="FLF Vendetta" ship="Vendetta"></pilot>
-   <pilot name="FLF Vendetta" ship="Vendetta"></pilot>
-   <pilot name="FLF Vendetta" ship="Vendetta"></pilot>
-   <pilot name="FLF Vendetta" ship="Vendetta"></pilot>
-  </pilots>
- </fleet>
- <fleet name="FLF Ancestor Trio">
-  <ai>flf</ai>
-  <faction>FLF</faction>
-  <pilots>
-   <pilot name="FLF Ancestor" ship="Ancestor"></pilot>
-   <pilot name="FLF Ancestor" ship="Ancestor"></pilot>
-   <pilot name="FLF Ancestor" ship="Ancestor"></pilot>
-  </pilots>
- </fleet>
  <fleet name="Pirate Hyena">
   <ai>pirate</ai>
   <faction>Pirate</faction>
