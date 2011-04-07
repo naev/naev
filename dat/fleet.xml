@@ -503,31 +503,6 @@
    <pilot name="Mercenary Vendetta" ship="Vendetta"></pilot>
   </pilots>
  </fleet>
- <fleet name="Mercenary Wing 1">
-  <ai>mercenary</ai>
-  <faction>Mercenary</faction>
-  <pilots>
-   <pilot name="Mercenary Hyena" ship="Hyena"></pilot>
-   <pilot name="Mercenary Hyena" ship="Hyena"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Mercenary Wing 2">
-  <ai>mercenary</ai>
-  <faction>Mercenary</faction>
-  <pilots>
-   <pilot name="Mercenary Hyena" ship="Hyena"></pilot>
-   <pilot name="Mercenary Vendetta" ship="Vendetta"></pilot>
-  </pilots>
- </fleet>
- <fleet name="Mercenary Wing 3">
-  <ai>mercenary</ai>
-  <faction>Mercenary</faction>
-  <pilots>
-   <pilot name="Mercenary Llama" ship="Llama"></pilot>
-   <pilot name="Mercenary Llama" ship="Llama"></pilot>
-   <pilot name="Mercenary Llama" ship="Llama"></pilot>
-  </pilots>
- </fleet>
  <fleet name="DTS Raiders">
   <ai>pirate</ai>
   <faction>Raider</faction>
