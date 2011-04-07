@@ -51,6 +51,7 @@ static Task *pilotL_newtask( lua_State *L, Pilot* p, const char *task );
 
 /* Pilot metatable methods. */
 static int pilotL_getPlayer( lua_State *L );
+static int pilotL_addFleetRaw( lua_State *L );
 static int pilotL_addFleet( lua_State *L );
 static int pilotL_remove( lua_State *L );
 static int pilotL_clear( lua_State *L );
@@ -124,6 +125,7 @@ static int pilotL_hookClear( lua_State *L );
 static const luaL_reg pilotL_methods[] = {
    /* General. */
    { "player", pilotL_getPlayer },
+   { "addRaw", pilotL_addFleetRaw },
    { "add", pilotL_addFleet },
    { "rm", pilotL_remove },
    { "get", pilotL_getPilots },
@@ -394,6 +396,40 @@ static int pilotL_getPlayer( lua_State *L )
    return 1;
 }
 
+
+/**
+ * @brief Adds a ship with an AI and faction to the system (instead of a predefined fleet).
+ *
+ * @usage p = pilot.addRaw( "Empire Shark", "empire", nil, "Empire" ) -- Creates a pilot analogous to the Empire Shark fleet.
+ *
+ *    @luaparam shipname Name of the ship to add.
+ *    @luaparam ai AI to give the pilot.
+ *    @luaparam param Position to create the pilot at. See pilot.add for further information.
+ *    @luaparam faction Faction to give the pilot.
+ *    @luareturn Table populated with the created pilot.
+ */
+static int pilotL_addFleetRaw(lua_State *L )
+{
+   int i, ret;
+   LuaPilot lp;
+
+   for (i=0; i<5; i++)
+      lua_pushnil( L );
+   ret = pilotL_addFleet( L );
+   if (ret > 0) { /* Pilot ID is valid. */
+      lua_newtable(L);
+
+      /* we push each pilot created into a table and return it */
+      lua_pushnumber(L,1); /* index, starts with 1 */
+      lp.pilot = ret;
+      lua_pushpilot(L,lp); /* value = LuaPilot */
+      lua_rawset(L,-3); /* store the value in the table */
+      return 1;
+   }
+   return 0;
+}
+
+
 /**
  * @brief Adds a fleet to the system.
  *
@@ -428,13 +464,15 @@ static int pilotL_getPlayer( lua_State *L )
 static int pilotL_addFleet( lua_State *L )
 {
    Fleet *flt;
-   const char *fltname, *fltai;
-   int i, first;
+   Ship *ship;
+   const char *fltname, *fltai, *faction;
+   int i, first, raw;
    unsigned int p;
    double a, r;
    Vector2d vv,vp, vn;
    FleetPilot *plt;
    LuaPilot lp;
+   LuaFaction lf;
    LuaVector *lv;
    LuaSystem *ls;
    StarSystem *ss;
@@ -451,15 +489,33 @@ static int pilotL_addFleet( lua_State *L )
    vectnull(&vn); /* Need to determine angle. */
    jump = -1;
    a    = 0.;
+   raw  = 0;
 
    /* Parse first argument - Fleet Name */
    fltname = luaL_checkstring(L,1);
 
    /* pull the fleet */
-   flt = fleet_get( fltname );
-   if (flt == NULL) {
-      NLUA_ERROR(L,"Fleet '%s' doesn't exist.", fltname);
-      return 0;
+   if (lua_gettop(L) >= 5) {
+      raw = 1;
+      ship = ship_get( fltname );
+      if (ship == NULL) {
+         NLUA_ERROR(L,"Ship '%s' not found!", fltname);
+         return 0;
+      }
+      faction = luaL_checkstring(L,4);
+      lf.f = faction_get(faction);
+      if (lf.f < 0) {
+         NLUA_ERROR(L,"Faction '%s' not found in stack.", faction );
+         return 0;
+      }
+   }
+   else {
+      flt = fleet_get( fltname );
+      if (flt == NULL) {
+         NLUA_ERROR(L,"Fleet '%s' doesn't exist.", fltname);
+         return 0;
+      }
+      lf.f = flt->faction;
    }
 
    /* Parse second argument - Fleet AI Override */
@@ -515,7 +571,7 @@ static int pilotL_addFleet( lua_State *L )
          ind = malloc( sizeof(int) * cur_system->nplanets );
          for (i=0; i<cur_system->nplanets; i++)
             if (planet_hasService(cur_system->planets[i],PLANET_SERVICE_INHABITED) &&
-                  !areEnemies(flt->faction,cur_system->planets[i]->faction))
+                  !areEnemies(lf.f,cur_system->planets[i]->faction))
                ind[ nind++ ] = i;
       }
 
@@ -525,7 +581,7 @@ static int pilotL_addFleet( lua_State *L )
       if (cur_system->njumps > 0) {
          jumpind = malloc( sizeof(int) * cur_system->njumps );
          for (i=0; i<cur_system->njumps; i++)
-            if (!ignore_rules && (system_getPresence( cur_system->jumps[i].target, flt->faction ) > 0))
+            if (!ignore_rules && (system_getPresence( cur_system->jumps[i].target, lf.f ) > 0))
                jumpind[ njumpind++ ] = i;
       }
 
@@ -550,9 +606,8 @@ static int pilotL_addFleet( lua_State *L )
          chance = chance / (chance + nind);
 
          /* Random jump in. */
-         if ((ind == NULL) || ((RNGF() <= chance) && (jumpind != NULL))) {
+         if ((ind == NULL) || ((RNGF() <= chance) && (jumpind != NULL)))
             jump = jumpind[ RNG_SANE(0,njumpind-1) ];
-         }
          /* Random take off. */
          else if (ind !=NULL && nind != 0) {
             planet = cur_system->planets[ ind[ RNG_SANE(0,nind-1) ] ];
@@ -585,27 +640,39 @@ static int pilotL_addFleet( lua_State *L )
    if (a < 0.)
       a += 2.*M_PI;
 
-   /* now we start adding pilots and toss ids into the table we return */
-   first = 1;
-   lua_newtable(L);
-   for (i=0; i<flt->npilots; i++) {
+   if (!raw) {
+      /* now we start adding pilots and toss ids into the table we return */
+      first = 1;
+      lua_newtable(L);
+      for (i=0; i<flt->npilots; i++) {
+         plt = &flt->pilots[i];
 
-      plt = &flt->pilots[i];
+         /* Fleet displacement - first ship is exact. */
+         if (!first)
+            vect_cadd(&vp, RNG(75,150) * (RNG(0,1) ? 1 : -1),
+                  RNG(75,150) * (RNG(0,1) ? 1 : -1));
+         first = 0;
 
-      /* Fleet displacement - first ship is exact. */
-      if (!first)
-         vect_cadd(&vp, RNG(75,150) * (RNG(0,1) ? 1 : -1),
-               RNG(75,150) * (RNG(0,1) ? 1 : -1));
-      first = 0;
+         /* Create the pilot. */
+         p = fleet_createPilot( flt, plt, a, &vp, &vv, fltai, flags, -1 );
+
+         /* we push each pilot created into a table and return it */
+         lua_pushnumber(L,i+1); /* index, starts with 1 */
+         lp.pilot = p;
+         lua_pushpilot(L,lp); /* value = LuaPilot */
+         lua_rawset(L,-3); /* store the value in the table */
+      }
+   }
+   else {
+      /* Sanity check for AI */
+      if (fltai == NULL || ai_getProfile( (char*)fltai ) == NULL) {
+         WARN("Invalid AI specified! Using fallback.");
+         fltai = "independent";
+      }
 
       /* Create the pilot. */
-      p = fleet_createPilot( flt, plt, a, &vp, &vv, fltai, flags, -1 );
-
-      /* we push each pilot created into a table and return it */
-      lua_pushnumber(L,i+1); /* index, starts with 1 */
-      lp.pilot = p;
-      lua_pushpilot(L,lp); /* value = LuaPilot */
-      lua_rawset(L,-3); /* store the value in the table */
+      p = pilot_create( ship, fltname, lf.f, fltai, a, &vp, &vv, flags, -1 );
+      return p;
    }
    return 1;
 }
