@@ -583,34 +583,6 @@
    <pilot name="Independent Vendetta" ship="Vendetta"></pilot>
   </pilots>
  </fleet>
- <fleet name="crimelord Thugs">
-  <ai>baddie</ai>
-  <faction>Thugs</faction>
-  <pilots>
-   <pilot name="Thug" ship="Admonisher"></pilot>
-   <pilot name="Thug" ship="Admonisher"></pilot>
-   <pilot name="Thug" ship="Admonisher"></pilot>
-   <pilot name="Thug" ship="Admonisher"></pilot>
-  </pilots>
- </fleet>
- <fleet name="crimelord Associate">
-  <ai>dvaered</ai>
-  <faction>Associates</faction>
-  <pilots>
-   <pilot name="Associate Pacifier" ship="Pacifier"></pilot>
-   <pilot name="Associate Lancelot" ship="Lancelot"></pilot>
-   <pilot name="Associate Lancelot" ship="Lancelot"></pilot>
-   <pilot name="Associate Admonisher" ship="Admonisher"></pilot>
-   <pilot name="Associate Hawking" ship="Hawking"></pilot>
-  </pilots>
- </fleet>
- <fleet name="crimelord Kestrel">
-  <ai>dvaered</ai>
-  <faction>Associates</faction>
-  <pilots>
-   <pilot name="Associate Kestrel" ship="Kestrel"></pilot>
-  </pilots>
- </fleet>
  <fleet name="Four Winds Vendetta">
   <ai>trader</ai>
   <faction>Four Winds</faction>
