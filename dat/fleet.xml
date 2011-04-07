@@ -483,28 +483,28 @@
   </pilots>
  </fleet>
  <fleet name="Mercenary Pacifier">
-  <ai>generic</ai>
+  <ai>mercenary</ai>
   <faction>Mercenary</faction>
   <pilots>
    <pilot name="Mercenary Pacifier" ship="Pacifier"></pilot>
   </pilots>
  </fleet>
  <fleet name="Mercenary Ancestor">
-  <ai>generic</ai>
+  <ai>mercenary</ai>
   <faction>Mercenary</faction>
   <pilots>
    <pilot name="Mercenary Ancestor" ship="Ancestor"></pilot>
   </pilots>
  </fleet>
  <fleet name="Mercenary Vendetta">
-  <ai>generic</ai>
+  <ai>mercenary</ai>
   <faction>Mercenary</faction>
   <pilots>
    <pilot name="Mercenary Vendetta" ship="Vendetta"></pilot>
   </pilots>
  </fleet>
  <fleet name="Mercenary Wing 1">
-  <ai>generic</ai>
+  <ai>mercenary</ai>
   <faction>Mercenary</faction>
   <pilots>
    <pilot name="Mercenary Hyena" ship="Hyena"></pilot>
@@ -512,7 +512,7 @@
   </pilots>
  </fleet>
  <fleet name="Mercenary Wing 2">
-  <ai>generic</ai>
+  <ai>mercenary</ai>
   <faction>Mercenary</faction>
   <pilots>
    <pilot name="Mercenary Hyena" ship="Hyena"></pilot>
@@ -520,7 +520,7 @@
   </pilots>
  </fleet>
  <fleet name="Mercenary Wing 3">
-  <ai>generic</ai>
+  <ai>mercenary</ai>
   <faction>Mercenary</faction>
   <pilots>
    <pilot name="Mercenary Llama" ship="Llama"></pilot>
