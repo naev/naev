@@ -6,7 +6,8 @@
 --      3 - The player has found the FLF base for the Dvaered, or has betrayed the FLF after rescuing the agent. Conditional for dv_antiflf03
 --]]
 
-include "scripts/proximity.lua"
+include("scripts/fleethelper.lua")
+include("scripts/proximity.lua")
 
 -- localization stuff, translators would work here
 lang = naev.lang()
@@ -223,7 +224,7 @@ function takeoff()
     end
 
     -- Add the FLF wing, no need to keep track of health since it's a takeoff situation (other than death, obviously)
-    fleetFLF = pilot.add("Vendetta Quartet", string.format("escort*%u", player.pilot():id()), player.pos())
+    fleetFLF = addRawShips( "Vendetta", string.format("escort*%u", player.pilot():id()), player.pos(), "Independent", 4 )
     for i, j in ipairs (fleetFLF) do
         if escarmor[i] > 0 then
             j:rename("FLF Wingman")
@@ -356,7 +357,7 @@ end
 -- Spawns the FLF wingmen when the player jumps into a new system.
 function spawnFLF()
     -- Add the FLF wing, keep track of their health
-    fleetFLF = pilot.add("Vendetta Quartet", string.format("escort*%u", player.pilot():id()), last_sys)
+    fleetFLF = addRawShips( "Vendetta", string.format("escort*%u", player.pilot():id()), last_sys, "Independent", 4 )
     for i, j in ipairs (fleetFLF) do
         if escarmor[i] > 0 then
             j:setHealth(escarmor[i], escshield[i])

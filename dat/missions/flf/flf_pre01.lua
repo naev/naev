@@ -7,6 +7,9 @@
 --]]
 
 -- localization stuff, translators would work here
+
+include("scripts/fleethelper.lua")
+
 lang = naev.lang()
 if lang == "es" then
 else -- default english
@@ -124,7 +127,7 @@ function enter()
         pilot.clear()
 
         -- Add FLF ships that are to guide the player to the FLF base (but only after a battle!)
-        fleetFLF = pilot.add("FLF Vendetta Trio", "flf_norun", jumppos)
+        fleetFLF = addShips( "FLF Vendetta", "flf_norun", jumppos, 3 )
         
         faction.get("FLF"):modPlayerRaw(-200)
         

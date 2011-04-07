@@ -6,7 +6,8 @@
 --      3 - The player has found the FLF base for the Dvaered, or has betrayed the FLF after rescuing the agent. Conditional for dv_antiflf03
 --]]
 
-include "scripts/proximity.lua"
+include("scripts/fleethelper.lua")
+include("scripts/proximity.lua")
 
 -- localization stuff, translators would work here
 lang = naev.lang()
@@ -316,7 +317,7 @@ function spawnFLFfighters()
     wavefirst = true
     wavestarted = true
     local targets = possibleDVtargets()
-    wingFLF = pilot.add("FLF Vendetta Trio", "flf_norun", base:pos())
+    wingFLF = addShips( "FLF Vendetta", "flf_norun", base:pos(), 3 )
     for i, j in ipairs(wingFLF) do
         fleetFLF[#fleetFLF + 1] = j
         hook.pilot(j, "death", "deathFLF")
@@ -330,7 +331,7 @@ end
 -- Spawns FLF bombers
 function spawnFLFbombers()
     local targets = possibleDVtargets()
-    wingFLF = pilot.add("FLF Ancestor Trio", "flf_norun", base:pos())
+    wingFLF = addRawShips( "Ancestor", "flf_norun", base:pos(), "FLF", 3 )
     for i, j in ipairs(wingFLF) do
         fleetFLF[#fleetFLF + 1] = j
         hook.pilot(j, "death", "deathFLF")
