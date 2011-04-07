@@ -6,6 +6,8 @@
            DESCRIPTION: Pirates chase you to Gamma Polaris.
 ]]--
 
+include "scripts/fleethelper.lua"
+
 lang = naev.lang()
 if lang == "es" then
 else --I guess you know this stuff...
@@ -27,7 +29,7 @@ else --I guess you know this stuff...
 
     Regrettably, you are not the first pilot I've contacted regarding this matter. Your predecessor was intercepted when he landed en route to %s. The crime lord has many underlings lurking in nearby spaceports, you must NOT land until you've delivered the data."
 
-    Given the risks, you're not sure whether the reward will be worth it. Do you accept?]] --dialogue 1
+    Given the dangers, you're not sure whether the reward will make this worth your while. Do you accept?]] --dialogue 1
     text[1] = [[    After quickly glancing around to make sure nobody's taken a particular interest, the detective presses the data stick into your hand.
 
     "Be careful out there. I doubt you'll be able to get far without being noticed."]] --dialogue 2
@@ -63,32 +65,31 @@ function accept ()
     startsystem = system.cur() --needed to make thugs appear random in the first system
     last_system = system.cur() --ignore this one, it's just the intitiation of the variable
     
-    hook.jumpin("jumpin") --trigger when entering a system
+    hook.enter("enter") --trigger when entering a system
     hook.jumpout("jumpout") --trigger when leaving a system
     hook.land("land") --trigger when landing
     
 end
 
-function jumpin () --aforementioned triggered function
+function enter () --aforementioned triggered function
     hook.timer(4000, "spawnBaddies")
     
     if system.cur() == targetsystem then --when in target system
-        defenders = pilot.add("crimelord Associate", nil, system.jumpPos(targetsystem,
-                last_system)) --add a defending force to help you
+        local defenderships = { "Lancelot", "Lancelot", "Admonisher", "Pacifier",
+                "Hawking", "Kestrel" }
+        defenders = addRawShips( defenderships, "dvaered", system.jumpPos(targetsystem,
+                last_system), "Associates" ) --add a defending force to help you
+        renameShips( defenders, "^", "Associate " )
         for pilot_number, pilot_object in pairs(defenders) do
             pilot_object:setFriendly() --I think they like you
             pilot_object:setPos( pilot_object:pos() +
                     vec2.new( rnd.rnd(400, 800) * (rnd.rnd(0,1) - 0.5) * 2,
                     rnd.rnd(400, 800) * (rnd.rnd(0,1) - 0.5) * 2))
         end
-        
-        capship = pilot.add("crimelord Kestrel", nil, system.jumpPos(targetsystem,
-                last_system)) --add the capship - needed for the mission
-        for cap_num, cap_obj in pairs(capship) do
-            cap_obj:setInvincible(true) --since it's needed it may not be destroyed
-            cap_obj:setFriendly()
-            cap_obj:comm("We've got your back. Engaging hostiles.", true )
-        end
+
+        capship = defenders[#defenders]
+        capship:setInvincible()
+        capship:comm("We've got your back. Engaging hostiles.", true )
     end
 end
 
@@ -102,8 +103,10 @@ function spawnBaddies ()
     else
         ai = "baddie_norun"
     end
-    thugs = pilot.add( "crimelord Thugs", "baddie_norun", last_system)
-    for pilot_number, pilot_object in pairs(thugs) do
+    thugs = addRawShips( "Admonisher", ai, last_system, "Thugs", 4 )
+    renameShips( thugs, "^.*", "Thug" )
+    for k,v in ipairs(thugs) do print(v:name()) end
+    for pilot_number, pilot_object in ipairs(thugs) do
         pilot_object:setHostile() --they don't like you
         pilot_object:rmOutfit("all") --strip them down
         pilot_object:addOutfit("Laser Cannon MK2") --add everything but rockets
@@ -137,7 +140,7 @@ end
 function pilotKilled () --function for second trigger
     thugs_alive = thugs_alive - 1 --one less thug alive
     if thugs_alive == 0 then --if none left
-        capship[1]:hailPlayer()
+        capship:hailPlayer()
         hook.pilot(capship[1], "hail", "capHailed")
     end
 end
