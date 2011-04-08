@@ -110,12 +110,9 @@ function spawnBaddies ()
         pilot_object:setHostile() --they don't like you
         pilot_object:rmOutfit("all") --strip them down
         pilot_object:addOutfit("Laser Cannon MK2") --add everything but rockets
-        pilot_object:addOutfit("Plasma Blaster MK2")
-        pilot_object:addOutfit("Plasma Blaster MK2")
-        pilot_object:addOutfit("Vulcan Gun")
-        pilot_object:addOutfit("Vulcan Gun")
-        pilot_object:addOutfit("Reactor Class II")
-        pilot_object:addOutfit("Reactor Class II")
+        pilot_object:addOutfit("Plasma Blaster MK2", 2)
+        pilot_object:addOutfit("Vulcan Gun", 2)
+        pilot_object:addOutfit("Reactor Class II", 2)
         pilot_object:addOutfit("Milspec Jammer")
         pilot_object:addOutfit("Engine Reroute")
         pilot_object:addOutfit("Steering Thrusters")
