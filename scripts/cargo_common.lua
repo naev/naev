@@ -1,4 +1,3 @@
-
 -- Find an inhabited planet 0-3 jumps away.
 function cargo_selectMissionDistance ()
     local seed = rnd.rnd()
@@ -104,4 +103,18 @@ function getNextSystem(nowsys, finalsys)
     end
 end 
 
+
+-- Construct the cargo mission description text
+function buildCargoMissionDescription(priority, amount, type, destplanet, destsys)
+    local cargoText = "Cargo"
+    if priority ~= null then
+        cargoText = priority .. " cargo"
+    end
+    cargoText = cargoText .. " to " .. destplanet:name()
+    if system.cur() ~= destsys then
+        cargoText = cargoText .. "  in the " .. destsys:name() .. " system"
+    end
+    cargoText = cargoText .. " (" .. amount .. "t of " .. type .. ")"
+    return cargoText
+end
 
