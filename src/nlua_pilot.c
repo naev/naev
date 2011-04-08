@@ -1953,6 +1953,7 @@ static int pilotL_addOutfit( lua_State *L )
  *    @luaparam p Pilot to remove outfit from.
  *    @luaparam outfit Name of the outfit to remove.
  *    @luaparam q Quantity of the outfit to remove.
+ *    @luareturn The number of outfits removed.
  * @luafunc rmOutfit( p, outfit, q )
  */
 static int pilotL_rmOutfit( lua_State *L )
