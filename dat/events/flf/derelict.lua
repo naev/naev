@@ -72,9 +72,11 @@ function broadcastFLF()
 end
 
 function boardFLF()
-    shipDV:setHilight(false)
+    if shipDV:exists() then
+        shipDV:setHilight(false)
+        shipDV:setNoboard(true)
+    end
     shipFLF:setHilight(false)
-    shipDV:setNoboard(true)
     hook.rm(timerFLF)
     hook.rm(timerDV)
     player.unboard()
@@ -85,15 +87,17 @@ end
 function deathDV()
     hook.rm(timerDV)
     destroyed = true
-    if shipFLF:exists() == false then
+    if not shipFLF:exists() then
         evt.finish(true)
     end
 end
 
 function boardDV()
+    if shipFLF:exists() then
+        shipFLF:setHilight(false)
+        shipFLF:setNoboard(true)
+    end
     shipDV:setHilight(false)
-    shipFLF:setHilight(false)
-    shipFLF:setNoboard(true)
     hook.rm(timerDV)
     hook.rm(timerFLF)
     player.unboard()
@@ -105,7 +109,7 @@ function deathFLF()
     hook.rm(timerFLF)
     destroyed = true
     var.push("flfbase_flfshipkilled", true)
-    if shipDV:exists() == false then
+    if not shipDV:exists() then
         evt.finish(true)
     end
 end
