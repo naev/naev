@@ -1961,9 +1961,10 @@ static int pilotL_rmOutfit( lua_State *L )
    Pilot *p;
    const char *outfit;
    Outfit *o;
-   int q;
+   int q, removed;
 
    /* Get parameters. */
+   removed = 0;
    p      = luaL_validpilot(L,1);
    outfit = luaL_checkstring(L,2);
    q      = 1;
@@ -1974,33 +1975,36 @@ static int pilotL_rmOutfit( lua_State *L )
    if (strcmp(outfit,"all")==0) {
       for (i=0; i<p->noutfits; i++) {
          pilot_rmOutfitRaw( p, p->outfits[i] );
+         removed++;
       }
       pilot_calcStats( p ); /* Recalculate stats. */
-      return 0;
    }
+   else {
+      /* Get the outfit. */
+      o = outfit_get( outfit );
+      if (o == NULL) {
+         NLUA_ERROR(L,"Outfit isn't found in outfit stack.");
+         return 0;
+      }
 
-   /* Get the outfit. */
-   o = outfit_get( outfit );
-   if (o == NULL) {
-      NLUA_ERROR(L,"Outfit isn't found in outfit stack.");
-      return 0;
+      /* Remove the outfit outfit. */
+      for (i=0; i<p->noutfits; i++) {
+         /* Must still need to remove. */
+         if (q <= 0)
+            break;
+
+         /* Not found. */
+         if (p->outfits[i]->outfit != o)
+            continue;
+
+         /* Remove outfit. */
+         pilot_rmOutfit( p, p->outfits[i] );
+         q--;
+         removed++;
+      }
    }
-
-   /* Remove the outfit outfit. */
-   for (i=0; i<p->noutfits; i++) {
-      /* Must still need to remove. */
-      if (q <= 0)
-         break;
-
-      /* Not found. */
-      if (p->outfits[i]->outfit != o)
-         continue;
-
-      /* Remove outfit. */
-      pilot_rmOutfit( p, p->outfits[i] );
-      q--;
-   }
-   return 0;
+   lua_pushnumber( L, removed );
+   return 1;
 }
 
 
