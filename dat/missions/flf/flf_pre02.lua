@@ -102,7 +102,6 @@ else -- default english
     DVosd[2] = "Fly to the %s system and land on %s"
         
     npc_desc = "There is a low-ranking officer of the Frontier Liberation Front sitting at one at the tables. She seems somewhat more receptive than most people in the bar."
-    
 end
 
 function create()
@@ -154,8 +153,8 @@ function accept()
 
             misn.setReward(misn_rwrd)
             
-            escarmor = {100, 100, 100, 100}
-            escshield = {100, 100, 100, 100}
+            escarmor = { 100, 100, 100, 100, 100, 100 }
+            escshield = { 100, 100, 100, 100, 100, 100 }
             escarmor["__save"] = true
             escshield["__save"] = true
 
@@ -224,17 +223,17 @@ function takeoff()
     end
 
     -- Add the FLF wing, no need to keep track of health since it's a takeoff situation (other than death, obviously)
-    fleetFLF = addRawShips( "Vendetta", string.format("escort*%u", player.pilot():id()), player.pos(), "Independent", 4 )
+    fleetFLF = addRawShips( { "Vendetta", "Lancelot" }, string.format("escort*%u", player.pilot():id()), player.pos(), "FLF", 3 )
     for i, j in ipairs (fleetFLF) do
         if escarmor[i] > 0 then
             j:rename("FLF Wingman")
-            j:setFriendly()
             j:setNodisable(true)
             j:setVisible(true)
             j:setHilight(true)
             hook.pilot(j, "death", "FLFdeath")
-            if not loyalFLF then
-                j:setFaction("FLF")
+            if loyalFLF then
+               j:setFaction("Independent")
+               j:setFriendly()
             end
         else
             j:rm()
@@ -357,7 +356,7 @@ end
 -- Spawns the FLF wingmen when the player jumps into a new system.
 function spawnFLF()
     -- Add the FLF wing, keep track of their health
-    fleetFLF = addRawShips( "Vendetta", string.format("escort*%u", player.pilot():id()), last_sys, "Independent", 4 )
+    fleetFLF = addRawShips( { "Vendetta", "Lancelot" }, string.format("escort*%u", player.pilot():id()), last_sys, "FLF", 3 )
     for i, j in ipairs (fleetFLF) do
         if escarmor[i] > 0 then
             j:setHealth(escarmor[i], escshield[i])
@@ -371,6 +370,7 @@ function spawnFLF()
                 j:control()
                 j:attack(player.pilot())
             else
+                j:setFaction("Independent")
                 j:setFriendly()
             end
         else
@@ -388,11 +388,32 @@ function commFLF(commmsg)
     end
 end
 
+function spawnPickJump( last_sys )
+    local sys
+    local systems = system.cur():adjacentSystems()
+    local n = #systems
+
+    while n > 2 do -- Shuffle the array randomly.
+        local k = rnd.rnd(1,n)
+        systems[n], systems[k] = systems[k], systems[n]
+        n = n - 1
+    end
+    for i=1,#systems do
+        if systems[i] ~= last_sys then -- We really don't want the Dvaered coming in from behind.
+            return systems[i]
+        end
+    end
+    return last_sys -- Weren't able to find any others.
+end
+
 -- Spawns a small Dvaered patrol
 function spawnSmallDV()
     player.allowLand(false, "FLF scum isn't welcome here!")
-    fleetDV = pilot.add("Dvaered Small Patrol", "dvaered_norun", system.cur():adjacentSystems()[rnd.rnd(1, #system.cur():adjacentSystems())])
+    local spawnjump = spawnPickJump( last_sys )
+    fleetDV = pilot.add("Dvaered Small Patrol", "dvaered_norun", spawnjump )
     for i, j in ipairs(fleetDV) do
+        local r = j:rmOutfit("Shredder", j:ship():slots() ) -- Shredders are scary.
+        j:addOutfit("Vulcan Gun", r )
         j:rename(string.format("Dvaered Patrol %s", j:ship():class()))
         hook.pilot(j, "death", "DVdeath")
         j:setHostile()
@@ -411,12 +432,13 @@ end
 -- Spawns a big Dvaered patrol
 function spawnBigDV()
     player.allowLand(false, "FLF scum isn't welcome here!")
-    fleetDV = pilot.add("Dvaered Big Patrol", "dvaered_norun", system.cur():adjacentSystems()[rnd.rnd(1, #system.cur():adjacentSystems())])
+    local spawnjump = spawnPickJump( last_sys )
+    fleetDV = pilot.add("Dvaered Big Patrol", "dvaered_norun", spawnjump)
     for i, j in ipairs(fleetDV) do
         if j:ship():class() == "Destroyer" then -- It's a mini-boss of sorts, but it should still be dumbed down.
             boss = j
             boss:rmOutfit("all")
-            boss:addOutfit("Plasma Blaster MK2", 2)
+            boss:addOutfit("Turreted Gauss Gun", 2)
             boss:addOutfit("Shield Booster", 1)
             boss:addOutfit("Steering Thrusters", 1)
             boss:addOutfit("Shield Capacitor III", 1)
@@ -427,6 +449,8 @@ function spawnBigDV()
         else
             j:rename(string.format("Dvaered Patrol %s", j:ship():class()))
         end
+        local r = j:rmOutfit("Shredder", j:ship():slots() ) -- Shredders are scary.
+        j:addOutfit("Vulcan Gun", r )
         j:setHostile()
         j:setVisible(true)
         j:setHilight(true)
