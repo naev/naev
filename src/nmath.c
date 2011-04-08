@@ -9,7 +9,7 @@
  */
 
 #include "nmath.h"
-
+#include "rng.h"
 #include "naev.h"
 
 #include <math.h>
@@ -79,10 +79,11 @@ double min3( double v1, double v2, double v3 )
 char** arrayShuffle( char** array, int n)
 {
    char* tmp;
+   int k;
+
    while (n > 1) {
-      int k;
-      k = rand()%(n--);
-      tmp = array[n];
+      k = RNG(0, n);
+      tmp = array[--n];
       array[n] = array[k];
       array[k] = tmp;
    }
