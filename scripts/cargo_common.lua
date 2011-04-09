@@ -105,16 +105,13 @@ end
 
 
 -- Construct the cargo mission description text
-function buildCargoMissionDescription(priority, amount, type, destplanet, destsys)
-    local cargoText = "Cargo"
-    if priority ~= null then
-        cargoText = priority .. " cargo"
+function buildCargoMissionDescription( priority, amount, ctype, destplanet, destsys )
+    str = "Shipment to %s"
+    if priority ~= nil then
+        str = priority .. " transport to %s"
     end
-    cargoText = cargoText .. " to " .. destplanet:name()
     if system.cur() ~= destsys then
-        cargoText = cargoText .. "  in the " .. destsys:name() .. " system"
+        str = string.format( "%s in %s", str, destsys:name() )
     end
-    cargoText = cargoText .. " (" .. amount .. "t of " .. type .. ")"
-    return cargoText
+    return string.format( "%s (%s tonnes)", str:format( destplanet:name()), amount )
 end
-
