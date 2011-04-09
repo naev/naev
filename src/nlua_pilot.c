@@ -69,6 +69,7 @@ static int pilotL_rename( lua_State *L );
 static int pilotL_position( lua_State *L );
 static int pilotL_velocity( lua_State *L );
 static int pilotL_dir( lua_State *L );
+static int pilotL_temp( lua_State *L );
 static int pilotL_faction( lua_State *L );
 static int pilotL_setPosition( lua_State *L );
 static int pilotL_setVelocity( lua_State *L );
@@ -142,6 +143,7 @@ static const luaL_reg pilotL_methods[] = {
    { "pos", pilotL_position },
    { "vel", pilotL_velocity },
    { "dir", pilotL_dir },
+   { "temp", pilotL_temp },
    { "faction", pilotL_faction },
    { "health", pilotL_getHealth },
    { "energy", pilotL_getEnergy },
@@ -223,6 +225,7 @@ static const luaL_reg pilotL_cond_methods[] = {
    { "pos", pilotL_position },
    { "vel", pilotL_velocity },
    { "dir", pilotL_dir },
+   { "temp", pilotL_temp },
    { "faction", pilotL_faction },
    { "health", pilotL_getHealth },
    { "energy", pilotL_getEnergy },
@@ -1289,7 +1292,7 @@ static int pilotL_velocity( lua_State *L )
 }
 
 /**
- * @brief Gets the pilot's direction;
+ * @brief Gets the pilot's direction.
  *
  * @usage d = p:dir()
  *
@@ -1306,6 +1309,26 @@ static int pilotL_dir( lua_State *L )
 
    /* Push direction. */
    lua_pushnumber( L, p->solid->dir );
+   return 1;
+}
+
+/**
+ * @brief Gets the temperature of a pilot.
+ *
+ * @usage t = p:temp()
+ *
+ *    @luaparam p Pilot to get temperature of.
+ *    @luareturn The pilot's current temperature (in kelvin).
+ */
+static int pilotL_temp( lua_State *L )
+{
+   Pilot *p;
+
+   /* Parse parameters */
+   p     = luaL_validpilot(L,1);
+
+   /* Push direction. */
+   lua_pushnumber( L, p->heat_T );
    return 1;
 }
 
