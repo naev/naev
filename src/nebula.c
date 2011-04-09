@@ -352,7 +352,7 @@ static void nebu_renderMultitexture( const double dt )
    if (!paused) {
       spfx_getShake( &sx, &sy );
       gl_matrixPush();
-         gl_matrixTranslate( sx, sy );
+         gl_matrixTranslate( -sx, -sy );
    }
 
    /* Now render! */
