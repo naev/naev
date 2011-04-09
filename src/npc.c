@@ -359,6 +359,23 @@ void npc_generate (void)
 
 
 /**
+ * @brief Patches a new mission bar npc into the bar system.
+ *
+ * @note Do not reuse the pointer once it's fed.
+ *
+ *    @param misn Mission to patch in.
+ */
+void npc_patchMission( Mission *misn )
+{
+   /* Add mission giver. */
+   npc_add_giver( misn );
+
+   /* Sort NPC. */
+   npc_sort();
+}
+
+
+/**
  * @brief Frees a single npc.
  */
 static void npc_free( NPC_t *npc )

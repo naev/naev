@@ -37,6 +37,7 @@
 #include "gui_osd.h"
 #include "npc.h"
 #include "array.h"
+#include "land.h"
 
 
 #define XML_MISSION_ID        "Missions" /**< XML document identifier */
@@ -363,7 +364,11 @@ int mission_start( const char *name, unsigned int *id )
 
    /* Try to run the mission. */
    ret = mission_init( &mission, mdat, 1, 1, id );
-   mission_cleanup( &mission ); /* Clean up in case not accepted. */
+   /* Add to mission giver if necessary. */
+   if (landed && (ret==0) && (mdat->avail.loc==MIS_AVAIL_BAR))
+      npc_patchMission( &mission );
+   else
+      mission_cleanup( &mission ); /* Clean up in case not accepted. */
 
    return ret;
 }
