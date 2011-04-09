@@ -1068,6 +1068,7 @@ static int playerL_teleport( lua_State *L )
    /* Just in case remove hyperspace flags. */
    pilot_rmFlag( player.p, PILOT_HYPERSPACE );
    pilot_rmFlag( player.p, PILOT_HYP_BEGIN );
+   pilot_rmFlag( player.p, PILOT_HYP_BRAKE );
    pilot_rmFlag( player.p, PILOT_HYP_PREP );
 
    /* Free graphics. */

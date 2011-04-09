@@ -439,6 +439,7 @@ static void comm_bribePilot( unsigned int wid, char *unused )
 
    /* Stop hyperspace if necessary. */
    pilot_rmFlag( comm_pilot, PILOT_HYP_PREP );
+   pilot_rmFlag( comm_pilot, PILOT_HYP_BRAKE );
    pilot_rmFlag( comm_pilot, PILOT_HYP_BEGIN );
 
    /* Don't allow rebribe. */
@@ -613,10 +614,11 @@ static void comm_requestFuel( unsigned int wid, char *unused )
    pilot_modCredits( comm_pilot, price );
 
    /* Start refueling. */
-   pilot_rmFlag(comm_pilot, PILOT_HYP_PREP);
-   pilot_rmFlag(comm_pilot, PILOT_HYP_BEGIN);
-   pilot_setFlag(comm_pilot, PILOT_REFUELING);
-   ai_refuel( comm_pilot, player.p->id );
+   pilot_rmFlag(  comm_pilot, PILOT_HYP_PREP);
+   pilot_rmFlag(  comm_pilot, PILOT_HYP_BRAKE );
+   pilot_rmFlag(  comm_pilot, PILOT_HYP_BEGIN);
+   pilot_setFlag( comm_pilot, PILOT_REFUELING);
+   ai_refuel(     comm_pilot, player.p->id );
 
    /* Last message. */
    if (price > 0)

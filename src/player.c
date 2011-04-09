@@ -1614,6 +1614,7 @@ void player_brokeHyperspace (void)
    /* stop hyperspace */
    pilot_rmFlag( player.p, PILOT_HYPERSPACE );
    pilot_rmFlag( player.p, PILOT_HYP_BEGIN );
+   pilot_rmFlag( player.p, PILOT_HYP_BRAKE );
    pilot_rmFlag( player.p, PILOT_HYP_PREP );
 
    /* update the map */
