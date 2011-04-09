@@ -152,11 +152,7 @@ static int SDL_IsTrans( SDL_Surface* s, int x, int y )
    }
 
    /* test whether pixels colour == colour of transparent pixels for that surface */
-#if SDL_VERSION_ATLEAST(1,3,0)
-   return ((pixelcolour & s->format->Amask) == 0);
-#else /* SDL_VERSION_ATLEAST(1,3,0) */
-   return (pixelcolour == s->format->colorkey);
-#endif /* SDL_VERSION_ATLEAST(1,3,0) */
+   return ((pixelcolour & s->format->Amask) < (Uint32)(0.1*(double)s->format->Amask));
 }
 
 
