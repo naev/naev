@@ -182,7 +182,7 @@ static int btn_key( Widget* btn, SDLKey key, SDLMod mod )
    if (btn->dat.btn.disabled)
       return 0;
 
-   if (key == SDLK_RETURN)
+   if (key == SDLK_RETURN || key == SDLK_KP_ENTER)
       if (btn->dat.btn.fptr != NULL) {
          (*btn->dat.btn.fptr)(btn->wdw, btn->name);
          return 1;

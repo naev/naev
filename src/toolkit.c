@@ -1902,6 +1902,7 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
          break;
 
       case SDLK_RETURN:
+      case SDLK_KP_ENTER:
          if (wdw->accept_fptr != NULL) {
             wdw->accept_fptr( wdw->id, wdw->name );
             return 1;

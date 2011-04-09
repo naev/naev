@@ -232,7 +232,7 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
    }
 
    /* Only catch some keys. */
-   if ((key != SDLK_BACKSPACE) && (key != SDLK_RETURN))
+   if ((key != SDLK_BACKSPACE) && (key != SDLK_RETURN) && (key != SDLK_KP_ENTER))
       return 0;
 
    if (inp->dat.inp.oneline) {
@@ -257,7 +257,7 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
       /* in limits. */
       else if ((inp->dat.inp.pos < inp->dat.inp.max-1)) {
 
-         if ((key==SDLK_RETURN) && !inp->dat.inp.oneline) {
+         if ((key==SDLK_RETURN || key==SDLK_KP_ENTER) && !inp->dat.inp.oneline) {
             inp->dat.inp.input[ inp->dat.inp.pos++ ] = '\n';
             return 1;
          }
