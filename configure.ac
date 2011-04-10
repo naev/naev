@@ -195,10 +195,10 @@ AC_ARG_WITH([sdlmixer],
 AC_MSG_RESULT([$with_sdlmixer])
 
 # --with-lua
-AC_MSG_CHECKING([whether to force usage of internal Lua])
+AC_MSG_CHECKING([whether to use the provided Lua package instead the system Lua-JIT])
 AC_ARG_WITH([lua],
   AC_HELP_STRING([--with-lua],
-     [use the provided Lua package (default: yes)]), [
+     [use the provided Lua package instead of system Lua-JIT (default: yes)]), [
     AS_IF([test "$withval" = "yes"], [
       with_lua=yes
     ], [
@@ -278,7 +278,7 @@ AS_IF([test "$with_lua" = "yes"], [
     have_luajit=yes
     have_lua=no
   ], [
-    AC_WARN([lua is disabled but luajit is missing; using internal lua])
+    AC_WARN([Lua is disabled but Lua-JIT is missing; using internal Lua])
     have_luajit=no
     have_lua=yes
     LUA_CFLAGS="-I\"\$(top_srcdir)/lib/lua\" -DHAVE_LUA"
