@@ -1041,12 +1041,10 @@ static void pilot_dead( Pilot* p, unsigned int killer )
    p->timer[1] = 0.; /* explosion timer */
 
    /* flag cleanup - fixes some issues */
-   if (pilot_isFlag(p,PILOT_HYP_PREP))
-      pilot_rmFlag(p,PILOT_HYP_PREP);
-   if (pilot_isFlag(p,PILOT_HYP_BEGIN))
-      pilot_rmFlag(p,PILOT_HYP_BEGIN);
-   if (pilot_isFlag(p,PILOT_HYPERSPACE))
-      pilot_rmFlag(p,PILOT_HYPERSPACE);
+   pilot_rmFlag(p,PILOT_HYP_PREP);
+   pilot_rmFlag(p,PILOT_HYP_BEGIN);
+   pilot_rmFlag(p,PILOT_HYP_BRAKE);
+   pilot_rmFlag(p,PILOT_HYPERSPACE);
 
    /* Pilot must die before setting death flag and probably messing with other flags. */
    if (killer > 0) {
@@ -1553,19 +1551,22 @@ static void pilot_hyperspace( Pilot* p, double dt )
       }
       else {
 
+         /* See if we can hyperspace or we abort. */
+         if (!space_canHyperspace(p))
+            pilot_hyperspaceAbort(p);
          /* brake */
-         if (VMOD(p->solid->vel) > MIN_VEL_ERR) {
+         else if (!pilot_isFlag(p, PILOT_HYP_BRAKE) && (VMOD(p->solid->vel) > MIN_VEL_ERR)) {
             diff = pilot_face( p, VANGLE(p->solid->vel) + M_PI );
 
             if (ABS(diff) < MAX_DIR_ERR)
                pilot_setThrust( p, 1. );
             else
                pilot_setThrust( p, 0. );
-
          }
          /* face target */
          else {
-
+            /* Done braking. */
+            pilot_setFlag( p, PILOT_HYP_BRAKE);
             pilot_setThrust( p, 0. );
 
             /* Face system headed to. */
@@ -1600,17 +1601,19 @@ static void pilot_hyperspace( Pilot* p, double dt )
  */
 void pilot_hyperspaceAbort( Pilot* p )
 {
-   if (!pilot_isFlag(p, PILOT_HYPERSPACE)) {
-      if (pilot_isFlag(p, PILOT_HYP_BEGIN)) {
-         /* Player plays sound. */
-         if (p->id == PLAYER_ID) {
-            player_soundStop();
-            player_soundPlay( snd_hypPowDown, 1 );
-         }
+   if (pilot_isFlag(p, PILOT_HYPERSPACE))
+      return;
+
+   if (pilot_isFlag(p, PILOT_HYP_BEGIN)) {
+      /* Player plays sound. */
+      if (p->id == PLAYER_ID) {
+         player_soundStop();
+         player_soundPlay( snd_hypPowDown, 1 );
       }
-      pilot_rmFlag(p, PILOT_HYP_BEGIN);
-      pilot_rmFlag(p, PILOT_HYP_PREP);
    }
+   pilot_rmFlag(p, PILOT_HYP_BEGIN);
+   pilot_rmFlag(p, PILOT_HYP_BRAKE);
+   pilot_rmFlag(p, PILOT_HYP_PREP);
 }
 
 
