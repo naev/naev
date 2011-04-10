@@ -278,6 +278,7 @@ AS_IF([test "$with_lua" = "yes"], [
     have_luajit=yes
     have_lua=no
   ], [
+    AC_WARN([lua is disabled but luajit is missing; using internal lua])
     have_luajit=no
     have_lua=yes
     LUA_CFLAGS="-I\"\$(top_srcdir)/lib/lua\" -DHAVE_LUA"
