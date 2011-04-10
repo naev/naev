@@ -544,9 +544,14 @@ static int pilotL_addFleet( lua_State *L )
          }
       }
       if (jump < 0) {
-         WARN("Fleet '%s' jumping in from non-adjacent system '%s' to '%s'.",
-               fltname, ss->name, cur_system->name );
-         jump = RNG_SANE(0,cur_system->njumps-1);
+         if (cur_system->njumps > 0) {
+            WARN("Fleet '%s' jumping in from non-adjacent system '%s' to '%s'.",
+                  fltname, ss->name, cur_system->name );
+            jump = RNG_SANE(0,cur_system->njumps-1);
+         }
+         else
+            WARN("Fleet '%s' attempting to jump in from '%s', but '%s' has no jump points.",
+                  fltname, ss->name, cur_system->name );
       }
    }
    else if (lua_isplanet(L,3)) {
