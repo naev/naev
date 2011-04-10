@@ -194,6 +194,21 @@ AC_ARG_WITH([sdlmixer],
   ])
 AC_MSG_RESULT([$with_sdlmixer])
 
+# --with-lua
+AC_MSG_CHECKING([whether to force usage of internal Lua])
+AC_ARG_WITH([lua],
+  AC_HELP_STRING([--with-lua],
+     [use the provided Lua package (default: yes)]), [
+    AS_IF([test "$withval" = "yes"], [
+      with_lua=yes
+    ], [
+      with_lua=no
+    ])
+  ], [
+    with_lua=yes
+  ])
+AC_MSG_RESULT([$with_lua])
+
 # --with-ndata
 ndata_path="$datadir/$PACKAGE_NAME/ndata"
 expand_variable ndata_path
@@ -253,14 +268,21 @@ PKG_CHECK_MODULES([PNG], [libpng], [], [
 ])
 
 # luajit
-PKG_CHECK_MODULES([LUA], [luajit], [
-  have_luajit=yes
-  have_lua=no
-], [
+AS_IF([test "$with_lua" = "yes"], [
   have_luajit=no
   have_lua=yes
   LUA_CFLAGS="-I\"\$(top_srcdir)/lib/lua\" -DHAVE_LUA"
   LUA_LIBS="\$(top_builddir)/lib/lua/liblua.a"
+], [
+  PKG_CHECK_MODULES([LUA], [luajit], [
+    have_luajit=yes
+    have_lua=no
+  ], [
+    have_luajit=no
+    have_lua=yes
+    LUA_CFLAGS="-I\"\$(top_srcdir)/lib/lua\" -DHAVE_LUA"
+    LUA_LIBS="\$(top_builddir)/lib/lua/liblua.a"
+  ])
 ])
 
 # OpenAL
