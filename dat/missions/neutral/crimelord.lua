@@ -105,7 +105,6 @@ function spawnBaddies ()
     end
     thugs = addRawShips( "Admonisher", ai, last_system, "Thugs", 4 )
     renameShips( thugs, "^.*", "Thug" )
-    for k,v in ipairs(thugs) do print(v:name()) end
     for pilot_number, pilot_object in ipairs(thugs) do
         pilot_object:setHostile() --they don't like you
         pilot_object:rmOutfit("all") --strip them down
