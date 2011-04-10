@@ -315,7 +315,7 @@ static int evt_claim( lua_State *L )
 
    /* Check to see if already claimed. */
    if (cur_event->claims != NULL) {
-      WARN( "Event trying to claim but already has." );
+      NLUA_ERROR(L, "Event trying to claim but already has.");
       return 0;
    }
 
