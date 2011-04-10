@@ -987,6 +987,7 @@ static void system_scheduler( double dt, int init )
 void space_update( const double dt )
 {
    int i;
+   Pilot *p;
 
    /* Needs a current system. */
    if (cur_system == NULL)
@@ -1002,8 +1003,9 @@ void space_update( const double dt )
    if (cur_system->nebu_volatility > 0.) {
       /* Damage pilots in volatile systems. */
       for (i=0; i<pilot_nstack; i++) {
-         pilot_hit( pilot_stack[i], NULL, 0, DAMAGE_TYPE_RADIATION,
-                  pow2(cur_system->nebu_volatility) / 500. * dt, 1. ); /* 100% penetration. */
+         p = pilot_stack[i];
+         pilot_hit( p, NULL, 0, DAMAGE_TYPE_RADIATION,
+                  p->stats.nebula_resistance * pow2(cur_system->nebu_volatility) / 500. * dt, 1. ); /* 100% penetration. */
       }
    }
 
