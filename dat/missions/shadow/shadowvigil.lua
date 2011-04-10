@@ -311,8 +311,8 @@ function jumpin()
         seiryuu:setInvincible(true)
         if missend then
             seiryuu:setActiveBoard(true)
-            seiryuu:control()
             seiryuu:setHilight(true)
+            seiryuu:control()
             hook.pilot(seiryuu, "board", "board")
         end
     else
@@ -536,9 +536,9 @@ end
 -- Function hooked to boarding. Only used on the Seiryuu.
 function board()
     player.unboard()
-    seiryuu:setHealth(100, 100)
     seiryuu:control()
     seiryuu:hyperspace()
+    seiryuu:setActiveBoard(false)
     diplomat:setHilight(false)
     tk.msg(title[4], string.format(text[4], player.name(), player.name()))
     player.pay(25000)
