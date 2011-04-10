@@ -197,11 +197,11 @@ function board()
 end
 
 function land()
-    if planet.cur() == artefactplanetA then
+    if planet.cur() == artefactplanetA and not artefactA then
         sellnpc = misn.npcAdd("seller", "Artefact seller", "thief1", sellerdesc, 4)
-    elseif planet.cur() == artefactplanetB then
+    elseif planet.cur() == artefactplanetB and not artefactB then
         sellnpc = misn.npcAdd("seller", "Artefact seller", "thief2", sellerdesc, 4)
-    elseif planet.cur() == artefactplanetC then
+    elseif planet.cur() == artefactplanetC and not artefactC then
         sellnpc = misn.npcAdd("seller", "Artefact seller", "thief3", sellerdesc, 4)
     elseif planet.cur() == flintplanet then
         if flintleyfirst then
