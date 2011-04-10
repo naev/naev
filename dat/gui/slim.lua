@@ -9,7 +9,7 @@ function create()
    pfact = pp:faction()
    pname = player.name()
    pship = pp:ship()
-   
+
    --Get sizes
    screen_w, screen_h = gfx.dim()
    deffont_h = gfx.fontSize()
@@ -36,7 +36,7 @@ function create()
    col_prim = colour.new(71/255,234/255, 252/255 )
    col_sec = colour.new(136/255,179/255, 255/255 )
    col_temperature = col_heat
-   
+
    --Load Images
    local base = "gfx/gui/slim/"
    player_pane_t = tex.open( base .. "frame_player_top.png" )
@@ -91,10 +91,10 @@ function create()
    question = tex.open( base .. "question.png" )
    gui.targetPlanetGFX( tex.open( base .. "radar_planet.png" ) )
    gui.targetPilotGFX(  tex.open( base .. "radar_ship.png" ) )
-   
+
    --Messages
    gui.mesgInit( screen_w - 400, 20, 28+15+5 )
-   
+
    --Get positions
    --Player pane
    pl_pane_w, pl_pane_h = player_pane_t:dim()
@@ -103,26 +103,26 @@ function create()
    -- ta_pnt_pane_y = ta_pane_y - ta_pnt_pane_h - 8
    pl_pane_x = screen_w - pl_pane_w - 16
    pl_pane_y = screen_h - pl_pane_h - 16
-   
+
    --Radar
    radar_w, radar_h = radar_gfx:dim()
    radar_x = pl_pane_x - radar_w + 24
    radar_y = pl_pane_y + 13
    gui.radarInit( false, 124, 124 )
-   
-   
+
+
    bar_w, bar_h = bg_shield:dim()
 
    --Shield Bar
    x_shield = pl_pane_x + 46
    y_shield = pl_pane_y + 137
-   
+
    bars = { "armour", "energy", "speed", "temperature" }
    for k,v in ipairs(bars) do
       _G["x_" .. v] = x_shield
       _G["y_" .. v] = y_shield - k * 28
    end
-   
+
    --Ammo, heat and ready bars bars
    bar_weapon_w, bar_weapon_h = bg_ammo:dim()
    bar_ready_w, bar_ready_h = bg_ready:dim()
@@ -134,14 +134,14 @@ function create()
      _G["y_ammo_" .. (i+2)] = y_ammo_1 - i * 28
    end
    --]]
-   
+
 
    --Target Pane
    ta_pane_w, ta_pane_h = target_pane:dim()
    ta_pane_x = screen_w - ta_pane_w - 16
    --ta_pane_y = pl_pane_y - ta_pane_h - 8
    ta_pane_y = 44
-   
+
    --Target image background
    ta_image_x = ta_pane_x + 14
    ta_image_y = ta_pane_y + 106
@@ -151,15 +151,15 @@ function create()
    ta_center_y = ta_image_y + ta_image_h / 2
    -- ? image
    ta_question_w, ta_question_h = question:dim()
-   
+
    --Targeted icon
    ta_icon_x = ta_pane_x + 82
    ta_icon_y = ta_pane_y + 110
-   
+
    --Target Faction icon
    ta_fact_x = ta_pane_x + 110
    ta_fact_y = ta_pane_y + 110
-   
+
    bar_sm_w, bar_sm_h = bg_shield_sm:dim()
    --Small Shield Bar
    x_shield_sm = ta_pane_x + 13
@@ -228,9 +228,9 @@ function update_target()
       ptargetfact = ptarget:faction()
       ptarget_target = ptarget:target()
       ta_stats = ptarget:stats()
-      
+
       ptarget_gfx_aspect = ptarget_gfx_w / ptarget_gfx_h
-      
+
       if ptarget_gfx_aspect >= 1 then
          if ptarget_gfx_w > 62 then
             ptarget_gfx_draw_w = 62
@@ -386,11 +386,11 @@ function render_ammoBar( name, x, y, value, txt, txtcol, col )
    gfx.renderTex( sheen_weapon, x + offsets[3], y + offsets[4])
    gfx.renderTex( sheen_tiny, x + offsets[3], y + offsets[5])
    gfx.print( true, txt, x + offsets[1], y + offsets[6], txtcol, bar_weapon_w, true)
-end   
-   
+end
+
 
 function render( dt )
-   
+
    --Values
    armour, shield = pp:health()
    energy = pp:energy()
@@ -400,11 +400,11 @@ function render( dt )
    autonav = player.autonav()
    wset_name, wset  = pp:weapset(true)
    credits = player.credits()
-   
+
    --Radar
    gfx.renderTex( radar_gfx, radar_x, radar_y )
    gui.radarRender( radar_x + 2, radar_y + 2 )
-   
+
    --Player pane
    gfx.renderTex( player_pane_t, pl_pane_x, pl_pane_y )
    --extend the pane according to the number of weapon bars
@@ -415,7 +415,7 @@ function render( dt )
    end
    gfx.renderTexRaw( player_pane_m, pl_pane_x + 33, pl_pane_y - filler_h, pl_pane_w_b, filler_h, 1, 1, 0, 0, 1, 1)
    gfx.renderTex( player_pane_b, pl_pane_x + 33, pl_pane_y - filler_h - pl_pane_h_b )
-   
+
    -- local col
    local small, txt
    --Shield
@@ -437,7 +437,7 @@ function render( dt )
    end
    txt = tostring( round(armour)) .. "% (" .. tostring(round(stats.armour * armour / 100)) .. ")"
    render_bar( "armour", armour, txt, col )
-   
+
    --Energy
    if energy == 0. then
       col = col_txt_enm
@@ -448,7 +448,7 @@ function render( dt )
    end
    txt = tostring( round(energy)) .. "% (" .. tostring(round(stats.energy  * energy / 100)) .. ")"
    render_bar( "energy", energy, txt, col )
-   
+
    --Speed
    local hspeed = round(speed / stats.speed_max * 100,0)
    txt = tostring( hspeed ) .. "% (" .. tostring( round(speed)) .. ")"
@@ -503,8 +503,8 @@ function render( dt )
          render_ammoBar( "heat", x_ammo, y_ammo - (num)*28, values, txt, col, 2, col_heat )
       end
       num = num + 1
-   end  
-   
+   end
+
    --Warning Light
    if lockons > 0 then
       timers[2] = timers[2] - dt
@@ -530,14 +530,14 @@ function render( dt )
    if autonav then
       gfx.renderTex( warnlight3, pl_pane_x + 162, pl_pane_y + 8 )
    end
-   
-   
+
+
    --Target Pane
    if ptarget ~= nil then
       ta_cargo = ptarget:cargoList()
       ta_detect, ta_fuzzy = pp:inrange( ptarget )
       if ta_detect then
-         
+
          --Frame
          gfx.renderTex( target_pane, ta_pane_x, ta_pane_y )
          gfx.renderTex( target_bg, ta_image_x, ta_image_y )
@@ -559,7 +559,7 @@ function render( dt )
             --Render ?
             gfx.renderTex( question, ta_center_x - ta_question_w / 2, ta_center_y - ta_question_h / 2 )
          end
-         
+
          -- Dist and dir calculated without explicit target.
          ta_pos = ptarget:pos()
          ta_dist = pp:pos():dist( ta_pos )
@@ -599,7 +599,7 @@ function render( dt )
             else
                gfx.renderTex( target_light_off, ta_warning_x, ta_warning_y )
             end
-            
+
             --Faction Logo
             if ptarget_faction_gfx ~= nil then
                gfx.renderTex( ptarget_faction_gfx, ta_fact_x, ta_fact_y )
@@ -638,7 +638,7 @@ function render( dt )
             colspe, colspe2 = nil
             spetxtcol = col_txt_bar
             htspeed = 0.
-            
+
             --Warning light
             gfx.renderTex( target_light_off, ta_warning_x, ta_warning_y )
 
@@ -654,17 +654,17 @@ function render( dt )
          render_bar( "armour", ta_armour, arm, col_txt_bar, "sm")
          render_bar( "energy", ta_energy, ene, col_txt_bar, "sm")
          render_bar( "speed", htspeed, spe, spetxtcol, "sm", colspe, colspe2 )
-         
+
          --Dist
          gfx.print( true, "DIST", ta_pane_x + 130, ta_pane_y + 160, col_txt_top )
          if ta_dist ~= nil then
             local str = largeNumber( ta_dist, 1 )
             gfx.print( false, str, ta_pane_x + ta_pane_w - 15 - gfx.printDim(false, str), ta_pane_y +142, col_txt_std, 60, false )
          end
-            
+
          --Dir
          gfx.print(true, "DIR", ta_pane_x + 86, ta_pane_y + 160, col_txt_top )
-         
+
          -- Render dir sprite.
          local x, y
          x, y = target_dir:spriteFromDir( ta_dir )
@@ -763,7 +763,7 @@ function render( dt )
          navstring = "Unknown"
       end
       if autonav_hyp ~= nil then
-         navstring = navstring ..  " (" .. tostring(autonav_hyp:jumpDist()) .. ")" 
+         navstring = navstring ..  " (" .. tostring(autonav_hyp:jumpDist()) .. ")"
       end
    else
       navstring = "none"
