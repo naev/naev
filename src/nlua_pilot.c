@@ -410,6 +410,7 @@ static int pilotL_getPlayer( lua_State *L )
  *    @luaparam param Position to create the pilot at. See pilot.add for further information.
  *    @luaparam faction Faction to give the pilot.
  *    @luareturn Table populated with the created pilot.
+ * @luafunc addRaw( shipname, ai, param, faction )
  */
 static int pilotL_addFleetRaw(lua_State *L )
 {
