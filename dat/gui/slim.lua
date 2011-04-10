@@ -105,7 +105,7 @@ function create()
    --Radar
    radar_w, radar_h = radar_gfx:dim()
    radar_x = pl_pane_x - radar_w + 24
-   radar_y = pl_pane_y + 13
+   radar_y = pl_pane_y + 31
    gui.radarInit( false, 124, 124 )
 
    bar_w, bar_h = bg_shield:dim()
@@ -505,11 +505,11 @@ function render( dt )
          end
       end
       if gfxWarn == true then
-         gfx.renderTex( warnlight1, pl_pane_x + 6, pl_pane_y + 120 )
+         gfx.renderTex( warnlight1, pl_pane_x + 6, pl_pane_y + 148 )
       end
       local length
-      length = gfx.printDim( false, "Warning - Missile Lockon detected" )
-      gfx.print( false, "Warning - Missile Lockon detected", (screen_w - length)/2, screen_h - 100, col_txt_enm )
+      length = gfx.printDim( false, "Warning - Missile Lockon Detected" )
+      gfx.print( false, "Warning - Missile Lockon Detected", (screen_w - length)/2, screen_h - 100, col_txt_enm )
    end
    if armour <= 20 then
       gfx.renderTex( warnlight2, pl_pane_x + 29, pl_pane_y + 3 )
