@@ -196,6 +196,28 @@
    <bar>(null)</bar>
   </general>
  </asset>
+ <asset name="Aluben">
+  <pos>
+   <x>1150.000000</x>
+   <y>750.000000</y>
+  </pos>
+  <GFX>
+   <space>J04.png</space>
+   <exterior>methane.png</exterior>
+  </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
  <asset name="Amaroq I">
   <pos>
    <x>-3780.000000</x>
@@ -662,6 +684,32 @@
    <item>Missiles 2</item>
   </tech>
  </asset>
+ <asset name="Anya">
+  <pos>
+   <x>3017.480541</x>
+   <y>-4906.625129</y>
+  </pos>
+  <GFX>
+   <space>C01.png</space>
+   <exterior>snow.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Thurion</faction>
+   <value>10.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>N</class>
+   <population>10000</population>
+   <services>
+    <land/>
+    <refuel/>
+   </services>
+   <commodities/>
+   <description>Anya is the twin planet to Sabe, orbiting around their shared center of gravity in tandem. Anya is shrouded in permanent cloud cover of ash and snow however as a result of geological activity. A small number of Thurions live on the surface of Anya, but no large scale colonization effort has commenced as of yet, despite the planet's proximity to Sabe, the Thurian capital world. This is due at least in part to the geological instabilities of the planet.</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
  <asset name="Apez II">
   <pos>
    <x>7491.526812</x>
@@ -880,6 +928,28 @@
   <GFX>
    <space>D02.png</space>
    <exterior>station04.png</exterior>
+  </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="Ariak">
+  <pos>
+   <x>4306.643204</x>
+   <y>3690.012035</y>
+  </pos>
+  <GFX>
+   <space>C00.png</space>
+   <exterior>station00.png</exterior>
   </GFX>
   <presence>
    <value>0.000000</value>
@@ -1798,6 +1868,55 @@
   <GFX>
    <space>000.png</space>
    <exterior>station02.png</exterior>
+  </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="Cole Station">
+  <pos>
+   <x>4713.068117</x>
+   <y>5484.348194</y>
+  </pos>
+  <GFX>
+   <space>station-commerce3.png</space>
+   <exterior>station03.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Empire</faction>
+   <value>50.000000</value>
+   <range>1</range>
+  </presence>
+  <general>
+   <class>1</class>
+   <population>2000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <missions/>
+   </services>
+   <commodities/>
+   <description>Cole station is the last civilian station on the route to Doeston, where many transport ships stop to refuel and regenerate their shields in safety from the radiation of the nebula.</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="Coran">
+  <pos>
+   <x>810.000000</x>
+   <y>-790.000000</y>
+  </pos>
+  <GFX>
+   <space>X01.png</space>
+   <exterior>traderoom.png</exterior>
   </GFX>
   <presence>
    <value>0.000000</value>
@@ -3495,6 +3614,28 @@
    <bar>(null)</bar>
   </general>
  </asset>
+ <asset name="Eryla">
+  <pos>
+   <x>1660.000000</x>
+   <y>1010.000000</y>
+  </pos>
+  <GFX>
+   <space>moon-A00.png</space>
+   <exterior>station01.png</exterior>
+  </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
  <asset name="Esker I">
   <pos>
    <x>3965.000000</x>
@@ -3664,6 +3805,32 @@
    <services/>
    <commodities/>
    <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="FD-24">
+  <pos>
+   <x>420.000000</x>
+   <y>400.000000</y>
+  </pos>
+  <GFX>
+   <space>002.png</space>
+   <exterior>station04.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Thurion</faction>
+   <value>10.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>1</class>
+   <population>100</population>
+   <services>
+    <land/>
+    <refuel/>
+   </services>
+   <commodities/>
+   <description>The Thurion placed this fuel supply depot to allow ships heading between their shipyards in the nebula and their core systems to fill up their fuel tanks for the long journy ahead.</description>
    <bar>(null)</bar>
   </general>
  </asset>
@@ -4819,6 +4986,151 @@
    <bar>(null)</bar>
   </general>
  </asset>
+ <asset name="HS-224">
+  <pos>
+   <x>-649.106412</x>
+   <y>-1400.391541</y>
+  </pos>
+  <GFX>
+   <space>000.png</space>
+   <exterior>station00.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Thurion</faction>
+   <value>50.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>1</class>
+   <population>50000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <commodity/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+   </commodities>
+   <description>This is a Thurion habitation station, which provide the living space for the biological Thurians who have yet to be uploaded. While not opulent by any extent, they are not at all an unpleasant place to live.</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="HS-232">
+  <pos>
+   <x>5847.915533</x>
+   <y>3407.918509</y>
+  </pos>
+  <GFX>
+   <space>000.png</space>
+   <exterior>station00.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Thurion</faction>
+   <value>50.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>1</class>
+   <population>50000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <commodity/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+   </commodities>
+   <description>This is a Thurion habitation station, which provide the living space for the biological Thurians who have yet to be uploaded. While not opulent by any extent, they are not at all an unpleasant place to live.</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="HS-24">
+  <pos>
+   <x>-3995.718779</x>
+   <y>5673.479151</y>
+  </pos>
+  <GFX>
+   <space>000.png</space>
+   <exterior>station00.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Thurion</faction>
+   <value>50.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>1</class>
+   <population>50000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <commodity/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+   </commodities>
+   <description>This is a Thurion habitation station, which provide the living space for the biological Thurians who have yet to be uploaded. While not opulent by any extent, they are not at all an unpleasant place to live.</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="HS-37">
+  <pos>
+   <x>-5270.511475</x>
+   <y>-4593.543249</y>
+  </pos>
+  <GFX>
+   <space>000.png</space>
+   <exterior>station00.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Thurion</faction>
+   <value>50.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>1</class>
+   <population>50000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <commodity/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+   </commodities>
+   <description>This is a Thurion habitation station, which provide the living space for the biological Thurians who have yet to be uploaded. While not opulent by any extent, they are not at all an unpleasant place to live.</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="HS-54">
+  <pos>
+   <x>1418.822279</x>
+   <y>-2927.998330</y>
+  </pos>
+  <GFX>
+   <space>000.png</space>
+   <exterior>station00.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Thurion</faction>
+   <value>50.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>1</class>
+   <population>50000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <commodity/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+   </commodities>
+   <description>This is a Thurion habitation station, which provide the living space for the biological Thurians who have yet to be uploaded. While not opulent by any extent, they are not at all an unpleasant place to live.</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
  <asset name="Haldr">
   <pos>
    <x>-30090.992878</x>
@@ -5690,6 +6002,28 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <item>Missiles 1</item>
   </tech>
  </asset>
+ <asset name="Kaira">
+  <pos>
+   <x>3384.777588</x>
+   <y>-1658.752776</y>
+  </pos>
+  <GFX>
+   <space>P04.png</space>
+   <exterior>traderoom.png</exterior>
+  </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
  <asset name="Karman I">
   <pos>
    <x>3380.000000</x>
@@ -5719,6 +6053,50 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   </pos>
   <GFX>
    <space>O01.png</space>
+   <exterior>traderoom.png</exterior>
+  </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="Kaso">
+  <pos>
+   <x>-5360.000000</x>
+   <y>-3780.000000</y>
+  </pos>
+  <GFX>
+   <space>moon-C01.png</space>
+   <exterior>station04.png</exterior>
+  </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="Katami I">
+  <pos>
+   <x>-4390.000000</x>
+   <y>-3240.000000</y>
+  </pos>
+  <GFX>
+   <space>G00.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
   <presence>
@@ -6279,6 +6657,28 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <GFX>
    <space>A03.png</space>
    <exterior>desertic.png</exterior>
+  </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="Lirith">
+  <pos>
+   <x>-1154.420302</x>
+   <y>1517.721625</y>
+  </pos>
+  <GFX>
+   <space>moon-O00.png</space>
+   <exterior>aquatic2.png</exterior>
   </GFX>
   <presence>
    <value>0.000000</value>
@@ -6869,6 +7269,28 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <bar>(null)</bar>
   </general>
  </asset>
+ <asset name="Meya">
+  <pos>
+   <x>1610.000000</x>
+   <y>-1330.000000</y>
+  </pos>
+  <GFX>
+   <space>Y00.png</space>
+   <exterior>traderoom.png</exterior>
+  </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
  <asset name="Modus">
   <pos>
    <x>-5700.000000</x>
@@ -7037,6 +7459,136 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <item>Missiles 2</item>
   </tech>
  </asset>
+ <asset name="NS-1">
+  <pos>
+   <x>3707.052833</x>
+   <y>-4290.404513</y>
+  </pos>
+  <GFX>
+   <space>001.png</space>
+   <exterior>station01.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Thurion</faction>
+   <value>500.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>1</class>
+   <population>1000</population>
+   <services>
+    <land/>
+    <refuel/>
+   </services>
+   <commodities/>
+   <description>This hulking Node Station is one of the places of habitation for the uploaded Thurion.</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="NS-144">
+  <pos>
+   <x>2339.472860</x>
+   <y>1439.472860</y>
+  </pos>
+  <GFX>
+   <space>001.png</space>
+   <exterior>station01.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Thurion</faction>
+   <value>500.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>1</class>
+   <population>1000</population>
+   <services>
+    <land/>
+    <refuel/>
+   </services>
+   <commodities/>
+   <description>This hulking Node Station is one of the places of habitation for the uploaded Thurion.</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="NS-27">
+  <pos>
+   <x>3836.312544</x>
+   <y>-1181.329853</y>
+  </pos>
+  <GFX>
+   <space>001.png</space>
+   <exterior>station01.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Thurion</faction>
+   <value>500.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>1</class>
+   <population>1000</population>
+   <services>
+    <land/>
+    <refuel/>
+   </services>
+   <commodities/>
+   <description>This hulking Node Station is one of the places of habitation for the uploaded Thurion.</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="NS-42">
+  <pos>
+   <x>-2780.000000</x>
+   <y>530.000000</y>
+  </pos>
+  <GFX>
+   <space>001.png</space>
+   <exterior>station01.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Thurion</faction>
+   <value>500.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>1</class>
+   <population>1000</population>
+   <services>
+    <land/>
+    <refuel/>
+   </services>
+   <commodities/>
+   <description>This hulking Node Station is one of the places of habitation for the uploaded Thurion.</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="NS-63">
+  <pos>
+   <x>5187.811675</x>
+   <y>-3510.051303</y>
+  </pos>
+  <GFX>
+   <space>001.png</space>
+   <exterior>station01.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Thurion</faction>
+   <value>500.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>1</class>
+   <population>1000</population>
+   <services>
+    <land/>
+    <refuel/>
+   </services>
+   <commodities/>
+   <description>This hulking Node Station is one of the places of habitation for the uploaded Thurion.</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
  <asset name="Nappi">
   <pos>
    <x>-17112.889013</x>
@@ -7178,6 +7730,50 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <bar>(null)</bar>
   </general>
  </asset>
+ <asset name="Nasano">
+  <pos>
+   <x>2139.919296</x>
+   <y>-2416.975071</y>
+  </pos>
+  <GFX>
+   <space>P03.png</space>
+   <exterior>station03.png</exterior>
+  </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="Nava I">
+  <pos>
+   <x>5090.176109</x>
+   <y>4401.505223</y>
+  </pos>
+  <GFX>
+   <space>C00.png</space>
+   <exterior>traderoom.png</exterior>
+  </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
  <asset name="New Deimos">
   <pos>
    <x>-1403.081683</x>
@@ -7285,6 +7881,28 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <item>High Tech Upgrades 1</item>
   </tech>
  </asset>
+ <asset name="New Konnor">
+  <pos>
+   <x>4709.519977</x>
+   <y>3209.336875</y>
+  </pos>
+  <GFX>
+   <space>moon-J00.png</space>
+   <exterior>station00.png</exterior>
+  </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
  <asset name="New Mars">
   <pos>
    <x>12735.693828</x>
@@ -7341,6 +7959,28 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </pos>
   <GFX>
    <space>moon-P02.png</space>
+   <exterior>station00.png</exterior>
+  </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="New Thomas">
+  <pos>
+   <x>-965.546875</x>
+   <y>804.960938</y>
+  </pos>
+  <GFX>
+   <space>K02.png</space>
    <exterior>station00.png</exterior>
   </GFX>
   <presence>
@@ -7884,6 +8524,28 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <item>Heavy Weapons 1</item>
   </tech>
  </asset>
+ <asset name="Onasan">
+  <pos>
+   <x>8260.183641</x>
+   <y>-6474.142481</y>
+  </pos>
+  <GFX>
+   <space>J04.png</space>
+   <exterior>station03.png</exterior>
+  </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
  <asset name="Onyx Shipyard">
   <pos>
    <x>-20041.450059</x>
@@ -8219,6 +8881,182 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <GFX>
    <space>H00.png</space>
    <exterior>oceanic2.png</exterior>
+  </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="PT237 III">
+  <pos>
+   <x>1820.000000</x>
+   <y>2440.000000</y>
+  </pos>
+  <GFX>
+   <space>O01.png</space>
+   <exterior>oceanic2.png</exterior>
+  </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="PT237 IV">
+  <pos>
+   <x>-2190.000000</x>
+   <y>-1640.000000</y>
+  </pos>
+  <GFX>
+   <space>001.png</space>
+   <exterior>forest.png</exterior>
+  </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="PT413 VI">
+  <pos>
+   <x>3420.000000</x>
+   <y>-2770.000000</y>
+  </pos>
+  <GFX>
+   <space>M08.png</space>
+   <exterior>forest.png</exterior>
+  </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="PT413 VIII">
+  <pos>
+   <x>-2710.000000</x>
+   <y>-1300.000000</y>
+  </pos>
+  <GFX>
+   <space>moon-A00.png</space>
+   <exterior>station04.png</exterior>
+  </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="PT612 I">
+  <pos>
+   <x>-7556.089939</x>
+   <y>-4629.239945</y>
+  </pos>
+  <GFX>
+   <space>moon-K00.png</space>
+   <exterior>aquatic2.png</exterior>
+  </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="PT612 II">
+  <pos>
+   <x>-1471.704318</x>
+   <y>-3911.089014</y>
+  </pos>
+  <GFX>
+   <space>A03.png</space>
+   <exterior>desertic.png</exterior>
+  </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="PT612 III">
+  <pos>
+   <x>-7266.600338</x>
+   <y>1331.912147</y>
+  </pos>
+  <GFX>
+   <space>M01.png</space>
+   <exterior>methane.png</exterior>
+  </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="PT612 IV">
+  <pos>
+   <x>7211.441464</x>
+   <y>-1390.769158</y>
+  </pos>
+  <GFX>
+   <space>P03.png</space>
+   <exterior>forest.png</exterior>
   </GFX>
   <presence>
    <value>0.000000</value>
@@ -9462,6 +10300,50 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>(null)</bar>
   </general>
  </asset>
+ <asset name="Rotide I">
+  <pos>
+   <x>-1100.000000</x>
+   <y>-900.000000</y>
+  </pos>
+  <GFX>
+   <space>A02.png</space>
+   <exterior>oceanic2.png</exterior>
+  </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="Rotide II">
+  <pos>
+   <x>1707.434469</x>
+   <y>1039.724136</y>
+  </pos>
+  <GFX>
+   <space>A00.png</space>
+   <exterior>forest2.png</exterior>
+  </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
  <asset name="Rudderfern">
   <pos>
    <x>-21050.000000</x>
@@ -9895,6 +10777,318 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>(null)</bar>
   </general>
  </asset>
+ <asset name="SY-1025">
+  <pos>
+   <x>2829.223324</x>
+   <y>1243.741590</y>
+  </pos>
+  <GFX>
+   <space>003.png</space>
+   <exterior>station03.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Thurion</faction>
+   <value>400.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>1</class>
+   <population>2000</population>
+   <services>
+    <land/>
+    <refuel/>
+   </services>
+   <commodities/>
+   <description>This is a standard Thurion shipyard manufactured to the exact same specifications as every other Thurion shipyard. The station hums with activity as ships are constructed at the station's maximum capacity.</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="SY-1206">
+  <pos>
+   <x>-6448.973391</x>
+   <y>-1699.647559</y>
+  </pos>
+  <GFX>
+   <space>003.png</space>
+   <exterior>station03.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Thurion</faction>
+   <value>400.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>1</class>
+   <population>2000</population>
+   <services>
+    <land/>
+    <refuel/>
+   </services>
+   <commodities/>
+   <description>This is a standard Thurion shipyard manufactured to the exact same specifications as every other Thurion shipyard. The station hums with activity as ships are constructed at the station's maximum capacity.</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="SY-159">
+  <pos>
+   <x>461.169021</x>
+   <y>-1850.136735</y>
+  </pos>
+  <GFX>
+   <space>003.png</space>
+   <exterior>station03.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Thurion</faction>
+   <value>400.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>1</class>
+   <population>2000</population>
+   <services>
+    <land/>
+    <refuel/>
+   </services>
+   <commodities/>
+   <description>This is a standard Thurion shipyard manufactured to the exact same specifications as every other Thurion shipyard. The station hums with activity as ships are constructed at the station's maximum capacity.</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="SY-19">
+  <pos>
+   <x>2869.853267</x>
+   <y>-4282.704106</y>
+  </pos>
+  <GFX>
+   <space>003.png</space>
+   <exterior>station03.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Thurion</faction>
+   <value>400.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>1</class>
+   <population>2000</population>
+   <services>
+    <land/>
+    <refuel/>
+   </services>
+   <commodities/>
+   <description>This is a standard Thurion shipyard manufactured to the exact same specifications as every other Thurion shipyard. The station hums with activity as ships are constructed at the station's maximum capacity.</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="SY-237">
+  <pos>
+   <x>-4915.903621</x>
+   <y>-3306.652064</y>
+  </pos>
+  <GFX>
+   <space>003.png</space>
+   <exterior>station03.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Thurion</faction>
+   <value>400.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>1</class>
+   <population>2000</population>
+   <services>
+    <land/>
+    <refuel/>
+   </services>
+   <commodities/>
+   <description>This is a standard Thurion shipyard manufactured to the exact same specifications as every other Thurion shipyard. The station hums with activity as ships are constructed at the station's maximum capacity.</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="SY-256">
+  <pos>
+   <x>2503.616129</x>
+   <y>-606.280554</y>
+  </pos>
+  <GFX>
+   <space>003.png</space>
+   <exterior>station03.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Thurion</faction>
+   <value>400.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>1</class>
+   <population>2000</population>
+   <services>
+    <land/>
+    <refuel/>
+   </services>
+   <commodities/>
+   <description>This is a standard Thurion shipyard manufactured to the exact same specifications as every other Thurion shipyard. The station hums with activity as ships are constructed at the station's maximum capacity.</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="SY-314">
+  <pos>
+   <x>2330.757944</x>
+   <y>-152.075794</y>
+  </pos>
+  <GFX>
+   <space>003.png</space>
+   <exterior>station03.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Thurion</faction>
+   <value>400.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>1</class>
+   <population>2000</population>
+   <services>
+    <land/>
+    <refuel/>
+   </services>
+   <commodities/>
+   <description>This is a standard Thurion shipyard manufactured to the exact same specifications as every other Thurion shipyard. The station hums with activity as ships are constructed at the station's maximum capacity.</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="SY-413">
+  <pos>
+   <x>-5205.991238</x>
+   <y>-1774.713396</y>
+  </pos>
+  <GFX>
+   <space>003.png</space>
+   <exterior>station03.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Thurion</faction>
+   <value>400.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>1</class>
+   <population>2000</population>
+   <services>
+    <land/>
+    <refuel/>
+   </services>
+   <commodities/>
+   <description>This is a standard Thurion shipyard manufactured to the exact same specifications as every other Thurion shipyard. The station hums with activity as ships are constructed at the station's maximum capacity.</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="SY-612">
+  <pos>
+   <x>-840.689323</x>
+   <y>4.570377</y>
+  </pos>
+  <GFX>
+   <space>003.png</space>
+   <exterior>station03.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Thurion</faction>
+   <value>400.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>1</class>
+   <population>2000</population>
+   <services>
+    <land/>
+    <refuel/>
+   </services>
+   <commodities/>
+   <description>This is a standard Thurion shipyard manufactured to the exact same specifications as every other Thurion shipyard. The station hums with activity as ships are constructed at the station's maximum capacity.</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="SY-894">
+  <pos>
+   <x>9406.267249</x>
+   <y>-6516.735937</y>
+  </pos>
+  <GFX>
+   <space>003.png</space>
+   <exterior>station03.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Thurion</faction>
+   <value>400.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>1</class>
+   <population>2000</population>
+   <services>
+    <land/>
+    <refuel/>
+   </services>
+   <commodities/>
+   <description>This is a standard Thurion shipyard manufactured to the exact same specifications as every other Thurion shipyard. The station hums with activity as ships are constructed at the station's maximum capacity.</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="SY-920">
+  <pos>
+   <x>3403.061632</x>
+   <y>2754.343704</y>
+  </pos>
+  <GFX>
+   <space>003.png</space>
+   <exterior>station03.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Thurion</faction>
+   <value>400.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>1</class>
+   <population>2000</population>
+   <services>
+    <land/>
+    <refuel/>
+   </services>
+   <commodities/>
+   <description>This is a standard Thurion shipyard manufactured to the exact same specifications as every other Thurion shipyard. The station hums with activity as ships are constructed at the station's maximum capacity.</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="Sabe">
+  <pos>
+   <x>4570.148000</x>
+   <y>-3603.963447</y>
+  </pos>
+  <GFX>
+   <space>M08.png</space>
+   <exterior>forest.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Thurion</faction>
+   <value>1000.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>M</class>
+   <population>10000000</population>
+   <services>
+    <land/>
+    <refuel/>
+   </services>
+   <commodities/>
+   <description>Sabe and Anya are a pair of planets tidally locked to eachother, rotating around their shared center of gravity. Sabe is the center of the Thurian goverment, housing the largest population of both uploaded and biological Thurions, acting as the de-facto capital. The majority of the planet's surface is untouched, as virtually all its inhabitants reside in the multitude of arcologies spread across its surface.</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
  <asset name="Sarcophagus I">
   <pos>
    <x>31915.000000</x>
@@ -10178,6 +11372,76 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <services/>
    <commodities/>
    <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="Serria">
+  <pos>
+   <x>-4590.000000</x>
+   <y>-2510.000000</y>
+  </pos>
+  <GFX>
+   <space>X00.png</space>
+   <exterior>desertic.png</exterior>
+  </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="Servax">
+  <pos>
+   <x>-5722.779163</x>
+   <y>-2425.841787</y>
+  </pos>
+  <GFX>
+   <space>X01.png</space>
+   <exterior>station00.png</exterior>
+  </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="Sevlow">
+  <pos>
+   <x>313.213689</x>
+   <y>-331.962182</y>
+  </pos>
+  <GFX>
+   <space>O02.png</space>
+   <exterior>oceanic2.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Thurion</faction>
+   <value>100.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>N</class>
+   <population>1000000</population>
+   <services>
+    <land/>
+    <refuel/>
+   </services>
+   <commodities/>
+   <description>Sevlow is one of the few truly inhabited Thurian worlds. Sevlow is an uneventful planet, as it serves primarily as an argicultural world producing algae, and as a living place for biological Thurions.</description>
    <bar>(null)</bar>
   </general>
  </asset>
@@ -11099,6 +12363,35 @@ New Dortmund was never very successful in any sense of the term, but it is still
    </commodities>
    <description>Tau Station was constructed with the sole purpose of exploiting the algae produced on Tau Prime. Being a completely oceanic world with a highly corrosive atmosphere, it was deemed more profitable to build an orbiting station, rather than a platform city on the surface. From the station windows you can see heavy algae collectors flying to and from the surface on their endless algae runs.</description>
    <bar>The Tau Prime algae has a powerful odour which pervades the bar. The air is wreathed in the smell, such that you can taste it. It doesn't taste nearly as good unprocessed. Most algae runners stop to grab drinks between runs to try to get the taste of the algae out of their mouth, though the liquors the bar serves happen to be made with processed algae.</bar>
+  </general>
+ </asset>
+ <asset name="Tenal-P">
+  <pos>
+   <x>530.000000</x>
+   <y>1130.000000</y>
+  </pos>
+  <GFX>
+   <space>station-commerce.png</space>
+   <exterior>traderoom.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Empire</faction>
+   <value>25.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>1</class>
+   <population>200</population>
+   <services>
+    <land/>
+    <refuel/>
+    <commodity/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+   </commodities>
+   <description>Tenal-P was once a prosperous trade station between the Empire and the Soromid, surviving the intial blast simply because of Iris' distance from Sol. Since then, many residents have left the station, though a couple hundred stubborn individuals have kept the station going.</description>
+   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Terminus">
@@ -12285,6 +13578,50 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <GFX>
    <space>moon-M00.png</space>
    <exterior>station04.png</exterior>
+  </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="Vean I">
+  <pos>
+   <x>-2671.584292</x>
+   <y>6006.726063</y>
+  </pos>
+  <GFX>
+   <space>J01.png</space>
+   <exterior>aquatic2.png</exterior>
+  </GFX>
+  <presence>
+   <value>0.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+   <commodities/>
+   <description>(null)</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="Vean II">
+  <pos>
+   <x>4039.870368</x>
+   <y>-3664.581864</y>
+  </pos>
+  <GFX>
+   <space>K02.png</space>
+   <exterior>traderoom.png</exterior>
   </GFX>
   <presence>
    <value>0.000000</value>

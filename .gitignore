@@ -41,3 +41,4 @@ stdout.txt
 *.pbxuser
 *.mode1v3
 extras/macosx/build/
+*~jedit
