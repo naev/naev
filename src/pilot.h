@@ -177,6 +177,7 @@ typedef struct PilotOutfitSlot_ {
  */
 typedef struct PilotWeaponSetOutfit_ {
    int level; /**< Level of trigger. */
+   double range2; /**< Range squared of this specific outfit. */
    PilotOutfitSlot *slot; /**< Slot assosciated with it. */
 } PilotWeaponSetOutfit;
 
@@ -191,6 +192,7 @@ typedef struct PilotWeaponSet_ {
    char *name; /**< Helpful for the player. */
    int fire; /**< Whether to fire the weapons or just enable them. */
    int active; /**< Whether or not it's currently firing. */
+   int inrange; /**< Whether or not to fire only if the target is inrange. */
    double range[PILOT_WEAPSET_MAX_LEVELS]; /**< Range of the levels in the outfit slot. */
    double speed[PILOT_WEAPSET_MAX_LEVELS]; /**< Speed of the levels in the outfit slot. */
    PilotWeaponSetOutfit *slots; /**< Slots involved with the weapon set. */
