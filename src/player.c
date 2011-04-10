@@ -2259,6 +2259,11 @@ int player_outfitOwned( const Outfit* o )
          player_hasLicense(o->name))
       return 1;
 
+   /* Special case GUI. */
+   if (outfit_isGUI(o) &&
+         player_guiCheck(o->u.gui.gui))
+      return 1;
+
    /* Try to find it. */
    for (i=0; i<player_noutfits; i++) {
       if (player_outfits[i].o == o) {
