@@ -158,6 +158,7 @@ function board()
     pinnacle:control(false)
     pinnacle:changeAI("flee")
     pinnacle:setHilight(false)
+    pinnacle:setActiveBoard(false)
     var.pop("baron_active")
     misn.finish(true)
 end
