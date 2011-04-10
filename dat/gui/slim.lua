@@ -108,7 +108,6 @@ function create()
    radar_y = pl_pane_y + 13
    gui.radarInit( false, 124, 124 )
 
-
    bar_w, bar_h = bg_shield:dim()
 
    --Shield Bar
@@ -120,18 +119,17 @@ function create()
       _G["x_" .. v] = x_shield
       _G["y_" .. v] = y_shield - k * 28
    end
+   bars[#bars] = "shield" -- Used later.
 
    --Ammo, heat and ready bars bars
    bar_weapon_w, bar_weapon_h = bg_ammo:dim()
    bar_ready_w, bar_ready_h = bg_ready:dim()
-   --local i = 0
    x_ammo = pl_pane_x + 39
    y_ammo = pl_pane_y - 27
 
    --Target Pane
    ta_pane_w, ta_pane_h = target_pane:dim()
    ta_pane_x = screen_w - ta_pane_w - 16
-   --ta_pane_y = pl_pane_y - ta_pane_h - 8
    ta_pane_y = 44
 
    --Target image background
@@ -212,7 +210,7 @@ end
 
 function update_target()
    ptarget = pp:target()
-   if ptarget ~= nil then
+   if ptarget then
       ptarget_gfx = ptarget:ship():gfxTarget()
       ptarget_gfx_w, ptarget_gfx_h = ptarget_gfx:dim()
       ptargetfact = ptarget:faction()
@@ -221,16 +219,12 @@ function update_target()
 
       ptarget_gfx_aspect = ptarget_gfx_w / ptarget_gfx_h
 
-      if ptarget_gfx_aspect >= 1 then
-         if ptarget_gfx_w > 62 then
-            ptarget_gfx_draw_w = 62
-            ptarget_gfx_draw_h = 62 / ptarget_gfx_w * ptarget_gfx_h
-         end
-      else
-         if ptarget_gfx_h > 62 then
-            ptarget_gfx_draw_h = 62
-            ptarget_gfx_draw_w = 62 / ptarget_gfx_h * ptarget_gfx_w
-         end
+      if ptarget_gfx_aspect >= 1 and ptarget_gfx_w > 62 then
+         ptarget_gfx_draw_w = 62
+         ptarget_gfx_draw_h = 62 / ptarget_gfx_w * ptarget_gfx_h
+      elseif ptarget_gfx_h > 62 then
+         ptarget_gfx_draw_h = 62
+         ptarget_gfx_draw_w = 62 / ptarget_gfx_h * ptarget_gfx_w
       end
       ptarget_faction_gfx = ptargetfact:logoTiny()
    end
@@ -239,7 +233,7 @@ end
 function update_nav()
    nav_pnt, nav_hyp = pp:nav()
    autonav_hyp = player.autonavDest()
-   if nav_pnt ~= nil then
+   if nav_pnt then
       n = 0
       local sflags = nav_pnt:services()
       if sflags.land then
@@ -258,25 +252,32 @@ function update_nav()
       ta_pntfact = nav_pnt:faction()
 
       ta_pnt_gfx_aspect = ta_pnt_gfx_w / ta_pnt_gfx_h
-      if ta_pnt_gfx_aspect >= 1 then
-         if ta_pnt_gfx_w > 140 then
-            ta_pnt_gfx_draw_w = 140
-            ta_pnt_gfx_draw_h = 140 / ta_pnt_gfx_aspect
-         end
-      else
-         if ta_pnt_gfx_h > 140 then
-            ta_pnt_gfx_draw_h = 140
-            ta_pnt_gfx_draw_w = 140 / ta_pnt_gfx_aspect
-         end
+      if ta_pnt_gfx_aspect >= 1 and ta_pnt_gfx_w > 140 then
+         ta_pnt_gfx_draw_w = 140
+         ta_pnt_gfx_draw_h = 140 / ta_pnt_gfx_aspect
+      elseif ta_pnt_gfx_h > 140 then
+         ta_pnt_gfx_draw_h = 140
+         ta_pnt_gfx_draw_w = 140 / ta_pnt_gfx_aspect
       end
-      if ta_pntfact ~= nil then
+      ta_pnt_faction_gfx = nil
+      if ta_pntfact then
          ta_pnt_faction_gfx = ta_pntfact:logoTiny()
-      else
-         ta_pnt_faction_gfx = nil
       end
    else
       gui.osdInit( 23, screen_h - 63, 150, 300 )
       gui.fpsPos( 15, screen_h - 28 - 15 - deffont_h )
+   end
+   if nav_hyp then
+      if nav_hyp:isKnown() then
+         navstring = nav_hyp:name() .. " (%s)"
+      else
+         navstring = "Unknown (%s)"
+      end
+      if autonav_hyp then
+         navstring = navstring:format( autonav_hyp:jumpDist() )
+      end
+   else
+      navstring = "none"
    end
 end
 
@@ -304,7 +305,7 @@ function update_system()
 end
 
 function render_bar(name, value, txt, txtcol, size, col, bgc )
-   if size ~= nil then
+   if size then
       offsets = { 22, 5, 9, 3 }
       l_bg_bar = bg_bar_sm
       l_sheen = sheen_sm
@@ -317,31 +318,30 @@ function render_bar(name, value, txt, txtcol, size, col, bgc )
    end
    local vars = { "icon", "bg", "x", "y", "col" }
    for k,var in ipairs(vars) do
-      if postfix ~= nil and var ~= "col" then
+      if postfix and var ~= "col" then
          _G["l_" .. var] = _G[var .. "_" .. name .. postfix]
       else
          _G["l_" .. var] = _G[var .. "_" .. name]
       end
    end
-   if col ~= nil then
+   if col then
       l_col = col
    end
-   if l_bg ~= nil then
+   if l_bg then
       l_bar_w, l_bar_h = l_bg:dim()
       gfx.renderTex( l_bg, l_x + offsets[1], l_y + 2)
    end
-   if value == nil then value = 100 end
-   if bgc ~= nil then gfx.renderRect( l_x + offsets[1], l_y + 2, l_bar_w, l_bar_h, bgc ) end
+   if not value then value = 100 end
+   if bgc then gfx.renderRect( l_x + offsets[1], l_y + 2, l_bar_w, l_bar_h, bgc ) end
    gfx.renderRect( l_x + offsets[1], l_y + 2, value/100. * l_bar_w, l_bar_h, l_col )
    gfx.renderTex( l_bg_bar, l_x, l_y )
    gfx.renderTex( l_icon, l_x + offsets[2], l_y + offsets[2] - 3)
    gfx.renderTex( l_sheen, l_x + offsets[1] + 1, l_y + offsets[3])
 
-   if txt ~= nil then
+   if txt then
+      small = false
       if gfx.printDim( false, txt ) > l_bar_w then
          small = true
-      else
-         small = false
       end
       gfx.print( small, txt, l_x + offsets[1], l_y + offsets[4], txtcol, l_bar_w, true)
    else
@@ -397,17 +397,17 @@ function render( dt )
 
    --Player pane
    gfx.renderTex( player_pane_t, pl_pane_x, pl_pane_y )
-   --extend the pane according to the number of weapon bars
-   filler_h = 0
-   for k,_ in pairs(wset) do filler_h = filler_h +  28 end
-   if filler_h > 0 then
-      filler_h = filler_h - 6
-   end
+   filler_h = #wset * 28 -- extend the pane according to the number of weapon bars
+   filler_h = math.max( filler_h - 6, 0 )
+
    gfx.renderTexRaw( player_pane_m, pl_pane_x + 33, pl_pane_y - filler_h, pl_pane_w_b, filler_h, 1, 1, 0, 0, 1, 1)
    gfx.renderTex( player_pane_b, pl_pane_x + 33, pl_pane_y - filler_h - pl_pane_h_b )
 
-   -- local col
-   local small, txt
+   local txt = {}
+   for k,v in ipairs(bars) do
+      txt[v] = string.format( "%s%% (%s)", round(_G[v]), round( stats[v] * _G[v] / 100 ) )
+   end
+
    --Shield
    if shield == 0. then
       col = col_txt_enm
@@ -416,8 +416,7 @@ function render( dt )
    else
       col = col_txt_bar
    end
-   txt = tostring( round(shield)) .. "% (" .. tostring(round(stats.shield * shield / 100)) .. ")"
-   render_bar( "shield", shield, txt, col )
+   render_bar( "shield", shield, txt["shield"], col )
 
    --Armour
    if armour <= 20. then
@@ -425,8 +424,7 @@ function render( dt )
    else
       col = col_txt_bar
    end
-   txt = tostring( round(armour)) .. "% (" .. tostring(round(stats.armour * armour / 100)) .. ")"
-   render_bar( "armour", armour, txt, col )
+   render_bar( "armour", armour, txt["armour"], col )
 
    --Energy
    if energy == 0. then
@@ -436,8 +434,7 @@ function render( dt )
    else
       col = col_txt_bar
    end
-   txt = tostring( round(energy)) .. "% (" .. tostring(round(stats.energy  * energy / 100)) .. ")"
-   render_bar( "energy", energy, txt, col )
+   render_bar( "energy", energy, txt["energy"], col )
 
    --Speed
    local hspeed = round(speed / stats.speed_max * 100,0)
@@ -461,15 +458,15 @@ function render( dt )
    end
 
    -- Temperature
-   txt = round(temperature,0) .. "K"
-   temperature = math.max( (temperature - 250)/1.75,0 )
+   txt = round(temperature) .. "K"
+   temperature = math.max( (temperature - 250)/1.75, 0 )
    render_bar( "temperature", temperature, txt, col_txt_bar )
 
    --Weapon bars
    local num = 0
    for k, weapon in ipairs(wset) do
       txt = weapon.name
-      if weapon.left ~= nil then -- Truncate names for readability.
+      if weapon.left then -- Truncate names for readability.
          if weapon.type == "Bolt Cannon" or weapon.type == "Beam Cannon" then
             txt = string.gsub(txt,"Cannon", "C.")
          elseif weapon.type == "Bolt Turret" or weapon.type == "Beam Turret" then
@@ -478,7 +475,7 @@ function render( dt )
             txt = string.gsub(txt,"Launcher", "L.")
          end
       end
-      if weapon.left ~= nil then
+      if weapon.left then
          txt = txt .. " (" .. tostring( weapon.left) .. ")"
          if weapon.left == 0 then
             col = col_txt_wrn
@@ -522,7 +519,7 @@ function render( dt )
    end
 
    --Target Pane
-   if ptarget ~= nil then
+   if ptarget then
       ta_cargo = ptarget:cargoList()
       ta_detect, ta_fuzzy = pp:inrange( ptarget )
       if ta_detect then
@@ -570,12 +567,10 @@ function render( dt )
                spetxtcol = col_txt_bar
                colspe = col_speed
                colspe2 = nil
+            elseif htspeed >= 200. then
+               htspeed = 100.
             else
-               if htspeed >= 200. then
-                  htspeed = 100.
-               else
-                  htspeed = htspeed - 100
-               end
+               htspeed = htspeed - 100
                spetxtcol = col_txt_wrn
                colspe = col_speed2
                colspe2 = col_speed
@@ -589,12 +584,12 @@ function render( dt )
             end
 
             --Faction Logo
-            if ptarget_faction_gfx ~= nil then
+            if ptarget_faction_gfx then
                gfx.renderTex( ptarget_faction_gfx, ta_fact_x, ta_fact_y )
             end
 
             -- Cargo light cargo_light_off
-            if ta_cargo ~= nil and #ta_cargo >= 1 then
+            if ta_cargo and #ta_cargo >= 1 then
                gfx.renderTex( cargo_light_on, ta_cargo_x, ta_cargo_y )
             else
                gfx.renderTex( cargo_light_off, ta_cargo_x, ta_cargo_y )
@@ -645,7 +640,7 @@ function render( dt )
 
          --Dist
          gfx.print( true, "DIST", ta_pane_x + 130, ta_pane_y + 160, col_txt_top )
-         if ta_dist ~= nil then
+         if ta_dist then
             local str = largeNumber( ta_dist, 1 )
             gfx.print( false, str, ta_pane_x + ta_pane_w - 15 - gfx.printDim(false, str), ta_pane_y +142, col_txt_std, 60, false )
          end
@@ -654,14 +649,13 @@ function render( dt )
          gfx.print(true, "DIR", ta_pane_x + 86, ta_pane_y + 160, col_txt_top )
 
          -- Render dir sprite.
-         local x, y
-         x, y = target_dir:spriteFromDir( ta_dir )
+         local x, y = target_dir:spriteFromDir( ta_dir )
          gfx.renderTex( target_dir, ta_pane_x + 86, ta_pane_y + 136, x, y, col_txt_top )
       end
    end
 
    -- Planet pane
-   if nav_pnt ~= nil then
+   if nav_pnt then
       local col = col_txt_std
       ta_pnt_pos = nav_pnt:pos()
       ta_pnt_dist = pp:pos():dist( ta_pnt_pos )
@@ -690,12 +684,12 @@ function render( dt )
       gfx.print( true, "DISTANCE:", ta_pnt_pane_x + 35, ta_pnt_pane_y - 14, col_txt_top )
       gfx.print( true, "CLASS:", ta_pnt_pane_x + 14, ta_pnt_pane_y - 34, col_txt_top )
 
-      if ta_pnt_faction_gfx ~= nil then
+      if ta_pnt_faction_gfx then
                gfx.renderTex( ta_pnt_faction_gfx, ta_pnt_fact_x, ta_pnt_fact_y )
       end
 
       -- Colour the planet name based on friendliness.
-      if ta_pntfact ~= nil then
+      if ta_pntfact then
          if pfact:areEnemies( ta_pntfact ) then
             col = col_txt_enm
          elseif pfact:areAllies( ta_pntfact ) then
@@ -710,8 +704,7 @@ function render( dt )
       ta_pnt_dir = math.atan2(y2 - y1, x2 - x1) + math.pi
 
       -- Render dir sprite.
-      local x, y
-      x, y = target_dir:spriteFromDir( ta_pnt_dir )
+      local x, y = target_dir:spriteFromDir( ta_pnt_dir )
       gfx.renderTex( target_dir, ta_pnt_pane_x + 12, ta_pnt_pane_y -24, x, y, col_txt_top )
 
       gfx.print( true, nav_pnt:class(), ta_pnt_pane_x + 130, ta_pnt_pane_y - 34, col_txt_top )
@@ -733,7 +726,7 @@ function render( dt )
          gfx.print( true, "none", ta_pnt_pane_x + 110, ta_pnt_pane_y - 46, col_txt_una )
       end
 
-      if ta_pnt_dist ~= nil then
+      if ta_pnt_dist then
             gfx.print( false, largeNumber( ta_pnt_dist, 1 ), ta_pnt_pane_x + 110, ta_pnt_pane_y - 15, col_txt_std, 63, false )
       end
       gfx.print( true, nav_pnt:name(), ta_pnt_pane_x + 14, ta_pnt_pane_y + 149, col )
@@ -742,19 +735,6 @@ function render( dt )
    --Bottom bar
    local length = 5, navstring, fuel, fuelstring, wsetstr
    gfx.renderTexRaw( bottom_bar, 0, 0, screen_w, 30, 1, 1, 0, 0, 1, 1 )
-
-   if nav_hyp ~= nil then
-      if nav_hyp:isKnown() then
-         navstring = nav_hyp:name()
-      else
-         navstring = "Unknown"
-      end
-      if autonav_hyp ~= nil then
-         navstring = navstring ..  " (" .. tostring(autonav_hyp:jumpDist()) .. ")"
-      end
-   else
-      navstring = "none"
-   end
 
    fuel = player.fuel()
    if fuel > 100 then
@@ -766,9 +746,9 @@ function render( dt )
    end
 
    if rdy then
-   col = col_txt_std
+      col = col_txt_std
    else
-   col = col_txt_una
+      col = col_txt_una
    end
    wsetstr = wset_name
 
@@ -793,9 +773,9 @@ function render( dt )
    local cargstring = nil
    local freecargo = " (" .. pp:cargoFree() .. " tonnes free)"
    local finallen = gfx.printDim( true, freecargo )
-   if cargo ~= nil and #cargo >= 1 then
+   if cargo and #cargo >= 1 then
       for k,v in ipairs(cargo) do
-         if cargstring ~= nil then
+         if cargstring then
             if screen_w - length - gfx.printDim(true, cargstring .. ", " .. v) + finallen > 10 then
                cargstring = cargstring .. ", " .. v
             else
