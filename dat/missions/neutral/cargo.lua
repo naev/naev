@@ -74,7 +74,7 @@ function create()
     distreward = 0.09
     reward = 1.5^tier * (numjumps * jumpreward + traveldist * distreward) * finished_mod * (1. + 0.05*rnd.twosigma())
     
-    misn.setTitle(buildCargoMissionDescription(null, amount, cargo, destplanet, destsys))
+    misn.setTitle(buildCargoMissionDescription( nil, amount, cargo, destplanet, destsys ))
     misn.markerAdd(destsys, "computer")
     misn.setDesc(cargosize[tier] .. title_p1[rnd.rnd(1, #title_p1)]:format(destplanet:name(), destsys:name()) .. title_p2:format(cargo, amount, numjumps, traveldist))
     misn.setReward(misn_reward:format(reward))
