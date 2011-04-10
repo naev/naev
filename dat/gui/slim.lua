@@ -35,6 +35,7 @@ function create()
    col_ready = colour.new(14/255,108/255, 114/255 )
    col_prim = colour.new(71/255,234/255, 252/255 )
    col_sec = colour.new(136/255,179/255, 255/255 )
+   col_temperature = col_heat
    
    --Load Images
    local base = "gfx/gui/slim/"
@@ -52,6 +53,7 @@ function create()
    icon_armour = tex.open( base .. "armour.png" )
    icon_energy = tex.open( base .. "energy.png" )
    icon_speed = tex.open( base .. "speed.png" )
+   icon_temperature = tex.open( base .. "speed.png" )
    icon_shield_sm = tex.open( base .. "shield_sm.png" )
    icon_armour_sm = tex.open( base .. "armour_sm.png" )
    icon_energy_sm = tex.open( base .. "energy_sm.png" )
@@ -65,6 +67,7 @@ function create()
    bg_armour = tex.open( base .. "bg_armour.png" )
    bg_energy = tex.open( base .. "bg_energy.png" )
    bg_speed = tex.open( base .. "bg_speed.png" )
+   bg_temperature = tex.open( base .. "bg_speed.png" )
    bg_ammo = tex.open( base .. "bg_ammo.png" )
    bg_heat = tex.open( base .. "bg_heat.png" )
    bg_ready = tex.open( base .. "bg_ready.png" )
@@ -112,9 +115,9 @@ function create()
 
    --Shield Bar
    x_shield = pl_pane_x + 46
-   y_shield = pl_pane_y + 109
+   y_shield = pl_pane_y + 137
    
-   bars = { "armour", "energy", "speed" }
+   bars = { "armour", "energy", "speed", "temperature" }
    for k,v in ipairs(bars) do
       _G["x_" .. v] = x_shield
       _G["y_" .. v] = y_shield - k * 28
@@ -392,6 +395,7 @@ function render( dt )
    armour, shield = pp:health()
    energy = pp:energy()
    speed = pp:vel():dist()
+   temperature = pp:temp()
    lockons = pp:lockon()
    autonav = player.autonav()
    wset_name, wset  = pp:weapset(true)
@@ -465,7 +469,12 @@ function render( dt )
       col = blinkcol
       render_bar( "speed", 100, txt, col, nil, col_speed2)
    end
-   
+
+   -- Temperature
+   txt = round(temperature,0) .. "K"
+   temperature = math.max( (temperature - 250)/1.75,0 )
+   render_bar( "temperature", temperature, txt, col_txt_bar )
+
    --Weapon bars
    local num = 0
    for k, weapon in ipairs(wset) do
