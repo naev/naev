@@ -2360,7 +2360,7 @@ static int pilotL_getStats( lua_State *L )
    PUSH_DOUBLE( L, "jam_range", p->jam_range );
    PUSH_DOUBLE( L, "jam_chance", p->jam_chance );
    /* Stats. */
-   PUSH_DOUBLE( L, "jump_delay", pilot_hyperspaceDelay(p) );
+   PUSH_DOUBLE( L, "jump_delay", pilot_hyperspaceDelay(p) / pow(10, 3) );
 
    return 1;
 }
