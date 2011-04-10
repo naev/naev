@@ -115,3 +115,13 @@ function buildCargoMissionDescription( priority, amount, ctype, destplanet, dest
     end
     return string.format( "%s (%s tonnes)", str:format( destplanet:name()), amount )
 end
+
+
+-- Calculates the minimum possible time taken for the player to reach a destination.
+function cargoGetTransit( timelimit, numjumps, traveldist )
+    local pstats   = player.pilot():stats()
+    local stuperpx = 1 / player.pilot():stats().speed_max * 30
+    local arrivalt = time.get() + time.create(0, 0, traveldist * stuperpx +
+            numjumps * pstats.jump_delay + 10180 )
+    return arrivalt
+end
