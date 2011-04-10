@@ -252,6 +252,17 @@ PKG_CHECK_MODULES([PNG], [libpng], [], [
   AC_ERROR([libpng not found])
 ])
 
+# luajit
+PKG_CHECK_MODULES([LUA], [luajit], [
+  have_luajit=yes
+  have_lua=no
+], [
+  have_luajit=no
+  have_lua=yes
+  LUA_CFLAGS="-I\"\$(top_srcdir)/lib/lua\" -DHAVE_LUA"
+  LUA_LIBS="\$(top_builddir)/lib/lua/liblua.a"
+])
+
 # OpenAL
 AS_IF([test "$with_openal" = "yes"], [
   AM_PATH_OPENAL([have_openal=yes], [have_openal=no])
@@ -319,9 +330,6 @@ WIDGET_LIBS="\$(top_builddir)/src/tk/widget/libwidget.a"
 
 CSPARSE_CFLAGS="-I\"\$(top_srcdir)/lib/csparse\""
 CSPARSE_LIBS="\$(top_builddir)/lib/csparse/libcsparse.a"
-
-LUA_CFLAGS="-I\"\$(top_srcdir)/lib/lua\""
-LUA_LIBS="\$(top_builddir)/lib/lua/liblua.a"
 
 NAEV_CFLAGS="$GLOBAL_CFLAGS"
 NAEV_LIBS="$GLOBAL_LIBS $WIDGET_LIBS"
@@ -512,6 +520,7 @@ AM_CONDITIONAL([HAVE_LUADOC], [test -n "$LUADOC"])
 AM_CONDITIONAL([HAVE_UTILS], [test "x$have_utils" = "xyes"])
 AM_CONDITIONAL([HAVE_DOCS], [test "x$have_docs" = "xyes"])
 AM_CONDITIONAL([HAVE_MKSPR], [test "x$have_mkspr" = "xyes"])
+AM_CONDITIONAL([HAVE_LUAJIT], [test "x$have_luajit" = "xyes"])
 
 #
 # Output
@@ -544,6 +553,10 @@ echo
 AC_MSG_NOTICE([sound backends:])
 AC_MSG_NOTICE([  OpenAL:    $have_openal])
 AC_MSG_NOTICE([  SDL_mixer: $have_sdlmixer])
+echo
+AC_MSG_NOTICE([lib:])
+AC_MSG_NOTICE([  csparse:   yes])
+AC_MSG_NOTICE([  lua:       $have_lua])
 echo
 AC_MSG_NOTICE([utils:       $have_utils])
 AC_MSG_NOTICE([  mkspr:     $have_mkspr])
