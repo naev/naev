@@ -52,10 +52,22 @@ static PilotWeaponSet* pilot_weapSet( Pilot* p, int id )
 static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
 {
    int i, j, ret, s;
+   Pilot *pt;
+   double dist2;
 
    /* Case no outfits. */
    if (ws->slots == NULL)
       return 0;
+
+   /* If inrange is set we only fire at targets in range. */
+   if (ws->inrange) {
+      if (p->target == p->id)
+         return 0;
+      pt = pilot_get( p->target );
+      if (pt == NULL)
+         return 0;
+      dist2 = vect_dist2( &p->solid->pos, &pt->solid->pos );
+   }
 
    /* Fire. */
    ret = 0;
@@ -78,6 +90,10 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
          }
       }
       if (s!=0)
+         continue;
+
+      /* Only "inrange" outfits. */
+      if (ws->inrange && (dist2 > ws->slots[i].range2))
          continue;
 
       /* Shoot the weapon of the weaponset. */
@@ -171,7 +187,6 @@ static void pilot_weapSetUpdateOutfits( Pilot* p, PilotWeaponSet *ws )
 int pilot_weapSetModeCheck( Pilot* p, int id )
 {
    PilotWeaponSet *ws;
-
    ws = pilot_weapSet(p,id);
    return ws->fire;
 }
@@ -187,9 +202,38 @@ int pilot_weapSetModeCheck( Pilot* p, int id )
 void pilot_weapSetMode( Pilot* p, int id, int fire )
 {
    PilotWeaponSet *ws;
-
    ws = pilot_weapSet(p,id);
    ws->fire = fire;
+}
+
+
+/**
+ * @brief Checks the current weapon set inrange property.
+ *
+ *    @param p Pilot to manipulate.
+ *    @param id ID of the weapon set to check.
+ *    @return The inrange mode of the weapon set.
+ */
+int pilot_weapSetInrangeCheck( Pilot* p, int id )
+{
+   PilotWeaponSet *ws;
+   ws = pilot_weapSet(p,id);
+   return ws->inrange;
+}
+
+
+/**
+ * @brief CHanges the weapon set inrange property.
+ *
+ *    @param p Pilot to manipulate.
+ *    @param id ID of the weapon set.
+ *    @param inrange Whether or not to only fire at stuff in range.
+ */
+void pilot_weapSetInrange( Pilot* p, int id, int inrange )
+{
+   PilotWeaponSet *ws;
+   ws = pilot_weapSet(p,id);
+   ws->inrange = inrange;
 }
 
 
@@ -272,6 +316,7 @@ void pilot_weapSetAdd( Pilot* p, int id, PilotOutfitSlot *o, int level )
    slot        = &array_grow( &ws->slots );
    slot->level = level;
    slot->slot  = o;
+   slot->range2 = pow2(outfit_range(oo));
 
    /* Update range. */
    pilot_weapSetUpdateRange( ws );
@@ -876,6 +921,10 @@ void pilot_weaponAuto( Pilot *p )
    pilot_weapSetMode( p, 7, 0 );
    pilot_weapSetMode( p, 8, 0 );
    pilot_weapSetMode( p, 9, 0 );
+
+   /* All should be inrang. */
+   for (i=0; i<PILOT_WEAPSET_MAX_LEVELS; i++)
+      pilot_weapSetInrange( p, i, 1 );
 
    /* Set names. */
    pilot_weapSetNameSet( p, 0, "All" );

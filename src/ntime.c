@@ -157,6 +157,17 @@ int ntime_getSTU( ntime_t t )
 
 
 /**
+ * @brief Converts the time to STU.
+ *    @param t Time to convert.
+ *    @return Time in STU.
+ */
+double ntime_convertSTU( ntime_t t )
+{
+   return ((double)t / (double)NT_STU_DIV);
+}
+
+
+/**
  * @brief Gets the remainder.
  */
 double ntime_getRemainder( ntime_t t )

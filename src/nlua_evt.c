@@ -298,8 +298,9 @@ static int evt_save( lua_State *L )
  *  does not work more then once.
  *
  * @usage if not evt.claim( { system.get("Gamma Polaris") } ) then evt.finish( false ) end
+ * @usage if not evt.claim( system.get("Gamma Polaris") ) then evt.finish( false ) end
  *
- *    @luaparam systems Table of systems to claim.
+ *    @luaparam systems Table of systems to claim or a single system.
  *    @luareturn true if was able to claim, false otherwise.
  * @luafunc claim( systems )
  */
@@ -309,28 +310,41 @@ static int evt_claim( lua_State *L )
    SysClaim_t *claim;
    Event_t *cur_event;
 
-   /* Check parameter. */
-   if (!lua_istable(L,1))
-      NLUA_INVALID_PARAMETER(L);
-
+   /* Get current event. */
    cur_event = event_getFromLua(L);
 
    /* Check to see if already claimed. */
    if (cur_event->claims != NULL) {
-      WARN( "Event trying to claim but already has." );
+      NLUA_ERROR(L, "Event trying to claim but already has.");
       return 0;
    }
 
    /* Create the claim. */
    claim = claim_create();
 
-   /* Iterate over table. */
-   lua_pushnil(L);
-   while (lua_next(L, -2) != 0) {
-      ls = lua_tosystem( L, -1 );
-      claim_add( claim, ls->id );
-      lua_pop(L,1);
+   /* Handle parameters. */
+   if (lua_istable(L,1)) {
+      /* Iterate over table. */
+      lua_pushnil(L);
+      while (lua_next(L, 1) != 0) {
+         if (!lua_issystem(L,-1)) {
+            claim_destroy( claim );
+            NLUA_ERROR(L,"Claim table should contain only systems!");
+            return 0;
+         }
+         else {
+            ls = lua_tosystem( L, -1 );
+            claim_add( claim, ls->id );
+         }
+         lua_pop(L,1);
+      }
    }
+   else if (lua_issystem(L, 1)) {
+      ls = lua_tosystem( L, 1 );
+      claim_add( claim, ls->id );
+   }
+   else
+      NLUA_INVALID_PARAMETER(L);
 
    /* Test claim. */
    if (claim_test( claim )) {

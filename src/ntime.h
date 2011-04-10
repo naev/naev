@@ -28,6 +28,7 @@ void ntime_getR( int *scu, int *stp, int *stu, double *rem );
 int ntime_getSCU( ntime_t t );
 int ntime_getSTP( ntime_t t );
 int ntime_getSTU( ntime_t t );
+double ntime_convertSTU( ntime_t t );
 double ntime_getRemainder( ntime_t t );
 char* ntime_pretty( ntime_t t, int d );
 void ntime_prettyBuf( char *str, int max, ntime_t t, int d );

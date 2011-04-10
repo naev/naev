@@ -9,7 +9,7 @@ include "scripts/cargo_common.lua"
 lang = naev.lang()
 if lang == "es" then
 else -- default english
-    misn_desc = "%s in the %s system needs a delivery of %d tons of %s."
+    misn_desc = "%s in the %s system needs a delivery of %d tonnes of %s."
     misn_reward = "%d credits"
     
     cargosize = {}
@@ -27,14 +27,20 @@ else -- default english
     
     -- Note: please leave the trailing space on the line below! Needed to make the newline show up.
     title_p2 = [[ 
-Cargo: %s (%d tons)
+Cargo: %s (%d tonnes)
 Jumps: %d
 Travel distance: %d
 Time limit: %s]]
 
     full = {}
     full[1] = "No room in ship"
-    full[2] = "You don't have enough cargo space to accept this mission. You need %d tons of free space (you need %d more)."
+    full[2] = "You don't have enough cargo space to accept this mission. You need %d tonnes of free space (you need %d more)."
+
+   slow = {}
+   slow[1] = "Too slow"
+   slow[2] = [[This shipment must arrive within %s, but it will take at least %s for your ship to reach %s, missing the deadline.
+
+Accept the mission anyway?]]
 
 	--=Landing=--
 	
@@ -80,12 +86,12 @@ function create()
     
     -- Calculate time limit. Depends on tier and distance.
     -- The second time limit is for the reduced reward.
-    stuperpx   = 0.15 - 0.015 * tier
-    stuperjump = 11000 - 1100 * tier
-    stupertakeoff = 10000
+    stuperpx   = 0.2 - 0.025 * tier
+    stuperjump = 10300 - 300 * tier
+    stupertakeoff = 10300
     timelimit  = time.get() + time.create(0, 0, traveldist * stuperpx + numjumps * stuperjump + stupertakeoff)
     timelimit2 = time.get() + time.create(0, 0, (traveldist * stuperpx + numjumps * stuperjump + stupertakeoff) * 1.2)
-    
+
     -- Choose amount of cargo and mission reward. This depends on the mission tier.
     -- Note: Pay is independent from amount by design! Not all deals are equally attractive!
     finished_mod = 2.0 -- Modifier that should tend towards 1.0 as naev is finished as a game
@@ -94,7 +100,7 @@ function create()
     distreward = 0.12
     reward     = 1.5^tier * (numjumps * jumpreward + traveldist * distreward) * finished_mod * (1. + 0.05*rnd.twosigma())
 
-    misn.setTitle(buildCargoMissionDescription(cargosize[tier], amount, cargo, destplanet, destsys))
+    misn.setTitle( buildCargoMissionDescription(cargosize[tier], amount, cargo, destplanet, destsys ))
     misn.markerAdd(destsys, "computer")
     misn.setDesc(cargosize[tier] .. title_p1[rnd.rnd(1, #title_p1)]:format(destplanet:name(), destsys:name()) .. title_p2:format(cargo, amount, numjumps, traveldist, (timelimit - time.get()):str()))
     misn.setReward(misn_reward:format(reward))
@@ -102,6 +108,12 @@ end
 
 -- Mission is accepted
 function accept()
+    local playerbest = cargoGetTransit( timelimit, numjumps, traveldist )
+    if timelimit < playerbest then
+        if not tk.yesno( slow[1], slow[2]:format( (timelimit - time.get()):str(), (playerbest - time.get()):str(), destplanet:name()) ) then
+            misn.finish()
+        end
+    end
     if player.pilot():cargoFree() < amount then
         tk.msg(full[1], full[2]:format(amount, amount - player.pilot():cargoFree()))
         misn.finish()

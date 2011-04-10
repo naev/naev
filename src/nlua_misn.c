@@ -950,8 +950,9 @@ static int misn_npcRm( lua_State *L )
  *  does not work more then once.
  *
  * @usage if not misn.claim( { system.get("Gamma Polaris") } ) then misn.finish( false ) end
+ * @usage if not misn.claim( system.get("Gamma Polaris") ) then misn.finish( false ) end
  *
- *    @luaparam systems Table of systems to claim.
+ *    @luaparam systems Table of systems to claim or a single system.
  *    @luareturn true if was able to claim, false otherwise.
  * @luafunc claim( systems )
  */
@@ -961,28 +962,40 @@ static int misn_claim( lua_State *L )
    SysClaim_t *claim;
    Mission *cur_mission;
 
-   /* Check parameter. */
-   if (!lua_istable(L,1))
-      NLUA_INVALID_PARAMETER(L);
-
+   /* Get mission. */
    cur_mission = misn_getFromLua(L);
 
    /* Check to see if already claimed. */
    if (cur_mission->claims != NULL) {
-      WARN( "Mission trying to claim but already has." );
+      NLUA_ERROR(L, "Mission trying to claim but already has.");
       return 0;
    }
 
    /* Create the claim. */
    claim = claim_create();
 
-   /* Iterate over table. */
-   lua_pushnil(L);
-   while (lua_next(L, -2) != 0) {
-      ls = lua_tosystem( L, -1 );
-      claim_add( claim, ls->id );
-      lua_pop(L,1);
+   if (lua_istable(L,1)) {
+      /* Iterate over table. */
+      lua_pushnil(L);
+      while (lua_next(L, 1) != 0) {
+         if (!lua_issystem(L,-1)) {
+            claim_destroy( claim );
+            NLUA_ERROR(L,"Claim table should contain only systems!");
+            return 0;
+         }
+         else {
+            ls = lua_tosystem( L, -1 );
+            claim_add( claim, ls->id );
+         }
+         lua_pop(L,1);
+      }
    }
+   else if (lua_issystem(L, 1)) {
+      ls = lua_tosystem( L, 1 );
+      claim_add( claim, ls->id );
+   }
+   else
+      NLUA_INVALID_PARAMETER(L);
 
    /* Test claim. */
    if (claim_test( claim )) {

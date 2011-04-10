@@ -410,6 +410,7 @@ static int pilotL_getPlayer( lua_State *L )
  *    @luaparam param Position to create the pilot at. See pilot.add for further information.
  *    @luaparam faction Faction to give the pilot.
  *    @luareturn Table populated with the created pilot.
+ * @luafunc addRaw( shipname, ai, param, faction )
  */
 static int pilotL_addFleetRaw(lua_State *L )
 {
@@ -544,9 +545,14 @@ static int pilotL_addFleet( lua_State *L )
          }
       }
       if (jump < 0) {
-         WARN("Fleet '%s' jumping in from non-adjacent system '%s' to '%s'.",
-               fltname, ss->name, cur_system->name );
-         jump = RNG_SANE(0,cur_system->njumps-1);
+         if (cur_system->njumps > 0) {
+            WARN("Fleet '%s' jumping in from non-adjacent system '%s' to '%s'.",
+                  fltname, ss->name, cur_system->name );
+            jump = RNG_SANE(0,cur_system->njumps-1);
+         }
+         else
+            WARN("Fleet '%s' attempting to jump in from '%s', but '%s' has no jump points.",
+                  fltname, ss->name, cur_system->name );
       }
    }
    else if (lua_isplanet(L,3)) {
@@ -2360,7 +2366,7 @@ static int pilotL_getStats( lua_State *L )
    PUSH_DOUBLE( L, "jam_range", p->jam_range );
    PUSH_DOUBLE( L, "jam_chance", p->jam_chance );
    /* Stats. */
-   PUSH_DOUBLE( L, "jump_delay", pilot_hyperspaceDelay(p) );
+   PUSH_DOUBLE( L, "jump_delay", ntime_convertSTU( pilot_hyperspaceDelay(p) ) );
 
    return 1;
 }

@@ -275,6 +275,7 @@ function board()
     seiryuu:setHealth(100, 100)
     seiryuu:changeAI("flee")
     seiryuu:setHilight(false)
+    seiryuu:setActiveBoard(false)
     seiryuu:control(false)
 
     if var.peek("shadowrun") then
