@@ -1005,7 +1005,7 @@ void space_update( const double dt )
       for (i=0; i<pilot_nstack; i++) {
          p = pilot_stack[i];
          pilot_hit( p, NULL, 0, DAMAGE_TYPE_RADIATION,
-                  p->stats.nebula_resistance * pow2(cur_system->nebu_volatility) / 500. * dt, 1. ); /* 100% penetration. */
+                  p->stats.nebula_damage * pow2(cur_system->nebu_volatility) / 500. * dt, 1. ); /* 100% penetration. */
       }
    }
 

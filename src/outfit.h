@@ -82,7 +82,7 @@ typedef struct ShipStats_ {
    double energy_turret; /**< Consumption rate of turrets. */
 
    /* Misc. */
-   double nebula_resistance; /**< Resistance of nebula. */
+   double nebula_damage; /**< Resistance of nebula. */
 } ShipStats;
 
 
