@@ -439,9 +439,9 @@
    <unique />
   </flags>
   <avail>
-   <chance>10</chance>
+   <chance>40</chance>
    <location>Bar</location>
-   <cond>system.get("Alteris") and player.getRating() &gt; 30</cond>
+   <cond>system.cur() == system.get("Alteris") and player.getRating() &gt; 30</cond>
   </avail>
  </mission>
  <mission name="Hitman 2">
@@ -450,9 +450,9 @@
    <unique />
   </flags>
   <avail>
-   <chance>30</chance>
+   <chance>40</chance>
    <location>Bar</location>
-   <cond>system.get("Alteris") and player.getRating() &gt; 40</cond>
+   <cond>system.cur() == system.get("Alteris") and player.getRating() &gt; 40</cond>
    <done>Hitman</done>
   </avail>
  </mission>
@@ -464,7 +464,7 @@
   <avail>
    <chance>40</chance>
    <location>Bar</location>
-   <cond>system.get("Alteris") and player.getRating() &gt; 50</cond>
+   <cond>system.cur() == system.get("Alteris") and player.getRating() &gt; 50</cond>
    <done>Hitman 2</done>
   </avail>
  </mission>
