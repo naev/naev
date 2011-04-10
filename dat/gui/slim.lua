@@ -99,8 +99,6 @@ function create()
    --Player pane
    pl_pane_w, pl_pane_h = player_pane_t:dim()
    pl_pane_w_b, pl_pane_h_b = player_pane_b:dim()
-   -- ta_pnt_pane_x = screen_w - ta_pnt_pane_w - 16
-   -- ta_pnt_pane_y = ta_pane_y - ta_pnt_pane_h - 8
    pl_pane_x = screen_w - pl_pane_w - 16
    pl_pane_y = screen_h - pl_pane_h - 16
 
@@ -129,12 +127,6 @@ function create()
    --local i = 0
    x_ammo = pl_pane_x + 39
    y_ammo = pl_pane_y - 27
-   --[[for i=0,6 do
-     _G["x_ammo_" .. (i+2)] = x_ammo_1
-     _G["y_ammo_" .. (i+2)] = y_ammo_1 - i * 28
-   end
-   --]]
-
 
    --Target Pane
    ta_pane_w, ta_pane_h = target_pane:dim()
@@ -182,8 +174,6 @@ function create()
    -- Planet pane
    ta_pnt_pane_w, ta_pnt_pane_h = planet_pane_t:dim()
    ta_pnt_pane_w_b, ta_pnt_pane_h_b = planet_pane_b:dim()
-   -- ta_pnt_pane_x = screen_w - ta_pnt_pane_w - 16
-   -- ta_pnt_pane_y = ta_pane_y - ta_pnt_pane_h - 8
    ta_pnt_pane_x = 16
    ta_pnt_pane_y = screen_h - ta_pnt_pane_h - 16
 
@@ -531,13 +521,11 @@ function render( dt )
       gfx.renderTex( warnlight3, pl_pane_x + 162, pl_pane_y + 8 )
    end
 
-
    --Target Pane
    if ptarget ~= nil then
       ta_cargo = ptarget:cargoList()
       ta_detect, ta_fuzzy = pp:inrange( ptarget )
       if ta_detect then
-
          --Frame
          gfx.renderTex( target_pane, ta_pane_x, ta_pane_y )
          gfx.renderTex( target_bg, ta_image_x, ta_image_y )
@@ -717,7 +705,6 @@ function render( dt )
          end
       end
 
-      -- Deiz hates math // Bobbens loves math
       x1, y1 = vec2.get(nav_pnt:pos())
       x2, y2 = vec2.get(player.pilot():pos())
       ta_pnt_dir = math.atan2(y2 - y1, x2 - x1) + math.pi
@@ -784,9 +771,6 @@ function render( dt )
    col = col_txt_una
    end
    wsetstr = wset_name
-   --[[if amm ~= nil then
-      secstr = secstr .. " (" .. tostring(amm) .. ")"
-   end]]--
 
    local bartext = { "Pilot: ", pname, "System: ", sys:name(), "Time: ", time.str(), "Credits: ",
          largeNumber( credits, 2 ), "Nav: ", navstring, "Fuel: ", fuelstring,
