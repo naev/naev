@@ -48,6 +48,7 @@ void pilot_weapSetInrange( Pilot* p, int id, int inrange );
 /* High level. */
 void pilot_weaponClear( Pilot *p );
 void pilot_weaponAuto( Pilot *p );
+void pilot_weaponSetDefault( Pilot *p );
 
 
 #endif /* PILOT_WEAPON_H */

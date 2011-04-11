@@ -992,4 +992,30 @@ void pilot_weaponAuto( Pilot *p )
 }
 
 
+/**
+ * @brief Gives the pilot a default weapon set.
+ */
+void pilot_weaponSetDefault( Pilot *p )
+{
+   int i;
+
+   /* If current set isn't a fire group no need to worry. */
+   if (!p->weapon_sets[ p->active_set ].fire)
+      return;
+
+   /* Find first fire gorup. */
+   for (i=0; i<PILOT_WEAPON_SETS; i++)
+      if (!p->weapon_sets[i].fire)
+         break;
+
+   /* Set active set to first if all fire groups or first non-fire group. */
+   if (i >= PILOT_WEAPON_SETS)
+      p->active_set = 0;
+   else
+      p->active_set = i;
+
+   /* Update active weapon set. */
+   pilot_weapSetUpdateOutfits( p, &p->weapon_sets[ p->active_set ] );
+}
+
 
