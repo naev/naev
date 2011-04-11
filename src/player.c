@@ -2882,6 +2882,7 @@ static int player_saveShip( xmlTextWriterPtr writer,
             xmlw_attr(writer,"name","%s",name);
          xmlw_attr(writer,"id","%d",i);
          xmlw_attr(writer,"fire","%d",pilot_weapSetModeCheck(ship,i));
+         xmlw_attr(writer,"inrange","%d",pilot_weapSetInrangeCheck(ship,i));
          for (j=0; j<n;j++) {
             xmlw_startElem(writer,"weapon");
             xmlw_attr(writer,"level","%d",weaps[j].level);
@@ -3341,7 +3342,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
    Commodity *com;
    PilotFlags flags;
    unsigned int pid;
-   int autoweap, fire, level, weapid;
+   int autoweap, level, weapid;
 
    xmlr_attr(parent,"name",name);
    xmlr_attr(parent,"model",model);
@@ -3546,10 +3547,18 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
             WARN("Player ship '%s' missing 'fire' tag for weapon set.",ship->name);
             continue;
          }
-         fire = atoi(id);
-         if (fire)
-            pilot_weapSetMode( ship, i, fire );
+         pilot_weapSetMode( ship, i, atoi(id) );
          free(id);
+
+         /* Set inrange mode. */
+         xmlr_attr(cur,"inrange",id);
+         if (id == NULL) {
+            pilot_weapSetInrange( ship, i, 1 );
+         }
+         else {
+            pilot_weapSetInrange( ship, i, atoi(id) );
+            free(id);
+         }
 
          /* Get name. */
          xmlr_attr(cur,"name",id);
