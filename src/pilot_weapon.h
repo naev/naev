@@ -49,6 +49,7 @@ void pilot_weapSetInrange( Pilot* p, int id, int inrange );
 void pilot_weaponClear( Pilot *p );
 void pilot_weaponAuto( Pilot *p );
 void pilot_weaponSetDefault( Pilot *p );
+void pilot_weaponSane( Pilot *p );
 
 
 #endif /* PILOT_WEAPON_H */

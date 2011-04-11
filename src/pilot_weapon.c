@@ -73,6 +73,10 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
    ret = 0;
    for (i=0; i<array_size(ws->slots); i++) {
 
+      /* Ignore NULL outfits. */
+      if (ws->slots[i].slot->outfit == NULL)
+         continue;
+
       /* Only "active" outfits. */
       if ((level != -1) && (ws->slots[i].level != level))
          continue;
@@ -345,17 +349,18 @@ void pilot_weapSetRm( Pilot* p, int id, PilotOutfitSlot *o )
 
    /* Find the slot. */
    for (i=0; i<array_size(ws->slots); i++) {
-      if (ws->slots[i].slot == o) {
-         array_erase( &ws->slots, &ws->slots[i], &ws->slots[i+1] );
+      if (ws->slots[i].slot != o)
+         continue;
 
-         /* Update range. */
-         pilot_weapSetUpdateRange( ws );
+      array_erase( &ws->slots, &ws->slots[i], &ws->slots[i+1] );
 
-         /* Update if needed. */
-         if (id == p->active_set)
-            pilot_weapSetUpdateOutfits( p, ws );
-         return;
-      }
+      /* Update range. */
+      pilot_weapSetUpdateRange( ws );
+
+      /* Update if needed. */
+      if (id == p->active_set)
+         pilot_weapSetUpdateOutfits( p, ws );
+      return;
    }
 }
 
@@ -1026,4 +1031,35 @@ void pilot_weaponSetDefault( Pilot *p )
    pilot_weapSetUpdateOutfits( p, &p->weapon_sets[ p->active_set ] );
 }
 
+
+/**
+ * @brief Sets the weapon set as sane.
+ *
+ *    @param p Pilot to set weapons as sane.
+ */
+void pilot_weaponSane( Pilot *p )
+{
+   int i, j;
+   PilotWeaponSet *ws;
+
+   for (j=0; j<PILOT_WEAPON_SETS; j++) {
+      ws = &p->weapon_sets[j];
+      if (ws->slots == NULL)
+         continue;
+
+      for (i=0; i<array_size(ws->slots); i++) {
+         if (ws->slots[i].slot->outfit != NULL)
+            continue;
+
+         array_erase( &ws->slots, &ws->slots[i], &ws->slots[i+1] );
+         i--;
+      }
+   }
+
+   /* Update range. */
+   pilot_weapSetUpdateRange( ws );
+
+   /* Update if needed. */
+   pilot_weapSetUpdateOutfits( p, ws );
+}
 
