@@ -1496,7 +1496,7 @@ static void pilot_hyperspace( Pilot* p, double dt )
 {
    StarSystem *sys;
    double a, diff;
-   JumpPoint *jp;
+   int can_hyp;
 
    /* pilot is actually in hyperspace */
    if (pilot_isFlag(p, PILOT_HYPERSPACE)) {
@@ -1529,19 +1529,31 @@ static void pilot_hyperspace( Pilot* p, double dt )
    /* engines getting ready for the jump */
    else if (pilot_isFlag(p, PILOT_HYP_BEGIN)) {
 
-      if (p->ptimer < 0.) { /* engines ready */
-         p->ptimer = HYPERSPACE_FLY_DELAY;
-         pilot_setFlag(p, PILOT_HYPERSPACE);
-         if (p->id == PLAYER_ID) {
-            p->timer[0] = -1.;
+      /* Make sure still within range. */
+      can_hyp = space_canHyperspace( p );
+      if (!can_hyp) {
+         pilot_hyperspaceAbort( p );
+
+         if (p == player.p) {
+            if (!player_isFlag(PLAYER_AUTONAV))
+               player_message( "\erStrayed too far from jump point: jump aborted." );
+         }
+      }
+      else {
+         if (p->ptimer < 0.) { /* engines ready */
+            p->ptimer = HYPERSPACE_FLY_DELAY;
+            pilot_setFlag(p, PILOT_HYPERSPACE);
+            if (p->id == PLAYER_ID) {
+               p->timer[0] = -1.;
+            }
          }
       }
    }
    /* pilot is getting ready for hyperspace */
    else {
       /* Make sure still within range. */
-      jp = &cur_system->jumps[ p->nav_hyperspace ];
-      if (!space_canHyperspace( p )) {
+      can_hyp = space_canHyperspace( p );
+      if (!can_hyp) {
          pilot_hyperspaceAbort( p );
 
          if (p == player.p) {
@@ -1551,11 +1563,8 @@ static void pilot_hyperspace( Pilot* p, double dt )
       }
       else {
 
-         /* See if we can hyperspace or we abort. */
-         if (!space_canHyperspace(p))
-            pilot_hyperspaceAbort(p);
          /* brake */
-         else if (!pilot_isFlag(p, PILOT_HYP_BRAKE) && (VMOD(p->solid->vel) > MIN_VEL_ERR)) {
+         if (!pilot_isFlag(p, PILOT_HYP_BRAKE) && (VMOD(p->solid->vel) > MIN_VEL_ERR)) {
             diff = pilot_face( p, VANGLE(p->solid->vel) + M_PI );
 
             if (ABS(diff) < MAX_DIR_ERR)
