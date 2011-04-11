@@ -379,12 +379,12 @@ static int threadpool_handler( void *data )
 
       /* Idle thread available */
       if (SDL_SemTryWait(idle->semaphore) == 0)
-         threadarg   = tq_dequeue( idle );
+         threadarg         = tq_dequeue( idle );
       /* Make a new thread */
       else if (SDL_SemTryWait(stopped->semaphore) == 0) {
-         threadarg            = tq_dequeue( stopped );
-         threadarg->signal    = THREADSIG_RUN;
-         newthread            = 1;
+         threadarg         = tq_dequeue( stopped );
+         threadarg->signal = THREADSIG_RUN;
+         newthread         = 1;
       } 
       /* Wait for idle thread */
       else {
@@ -393,7 +393,7 @@ static int threadpool_handler( void *data )
              WARN("L%d: SDL_SemWait failed! Error: %s", __LINE__, SDL_GetError());
          }
          /* Assign arguments for the thread */
-         threadarg            = tq_dequeue( idle );
+         threadarg         = tq_dequeue( idle );
       }
 
       /* Assign arguments for the thread */
