@@ -38,7 +38,7 @@ else -- default english
     Rebina takes a moment to sip from her drink. "I think you can see where this is going. You are to rendezvous with Jorek, take him aboard your ship, lose whoever's tailing him, then bring him to the %s system. There you will dock with one of our ships, the %s, which will take Jorek to his final destination. You will receive your reward from her captain once Jorek is aboard."
     "It's a simple objective, but accomplishing it might require considerable skill." She leans back and smiles. "Still, I have utmost confidence that you can do it. I seldom misjudge those I choose to trust."]]
     text[5] = [[    "You know what to do," Rebina tells you. "You will find Jorek in the spaceport bar on %s. When you see him, tell him you've come to 'see to his special needs'. Oh, and please be discrete. Don't talk about things you don't need to; the walls have ears in that place. In particular, don't mention any names."
-    "You will be on a time schedule. You must meet Jorek within %d STU, or he will assume you are not coming and go back into hiding. You must also be at the meeting point %d STU from now. If you fail to meet with Jorek within the time limit or if you are prevented from taking him offworld for any other reason, make your way to the %s and report what happened. We'll take it from there. If you fail to show up at the designated time, we will assume you have failed, and the %s will leave."
+    "You will be on a time schedule. You must meet Jorek within %d STP, or he will assume you are not coming and go back into hiding. You must also be at the meeting point %d STP from now. If you fail to meet with Jorek within the time limit or if you are prevented from taking him offworld for any other reason, make your way to the %s and report what happened. We'll take it from there. If you fail to show up at the designated time, we will assume you have failed, and the %s will leave."
     Rebina empies her glass and places it on the bar before rising to her feet. "That will be all. Good luck, and keep your wits about you."
     Then Rebina takes her leave from you and gracefully departs the spaceport bar. You order yourself another drink. You've got the feeling you're going to need it.]]
     refusal = [[    "I see. What a shame." Rebina's demeanor conveys that she's disappointed but not upset. "I can understand your decision. One should not bite off more than one can chew, after all. It seems I will have to try to find another candidate." She tilts her head slightly. Then, "Although if you change your mind before I do, you're welcome to seek me out again. I'll be around."
@@ -66,8 +66,8 @@ else -- default english
     misn_desc[1] = "Fly to planet %s in the %s system and talk to Jorek. Once Jorek has boarded your ship, proceed to system %s and board the %s."
     
     credits = 100000 -- 100K
-    timelimit1 = 20
-    timelimit2 = 45
+    timelimit1 = 30
+    timelimit2 = 65
     
     -- Aborted mission
     
