@@ -216,6 +216,7 @@ function update_target()
       ptargetfact = ptarget:faction()
       ptarget_target = ptarget:target()
       ta_stats = ptarget:stats()
+      ta_cargo = ptarget:cargoList()
 
       ptarget_gfx_aspect = ptarget_gfx_w / ptarget_gfx_h
 
@@ -234,12 +235,12 @@ function update_nav()
    nav_pnt, nav_hyp = pp:nav()
    autonav_hyp = player.autonavDest()
    if nav_pnt then
+      pntflags = nav_pnt:services()
       n = 0
-      local sflags = nav_pnt:services()
-      if sflags.land then
+      if pntflags.land then
          services = { "land", "missions", "outfits", "shipyard", "commodity" }
          for k,v in ipairs(services) do
-            if sflags[tostring(v)] then
+            if pntflags[tostring(v)] then
                n = n + 1
             end
          end
@@ -520,7 +521,6 @@ function render( dt )
 
    --Target Pane
    if ptarget then
-      ta_cargo = ptarget:cargoList()
       ta_detect, ta_fuzzy = pp:inrange( ptarget )
       if ta_detect then
          --Frame
@@ -663,8 +663,7 @@ function render( dt )
 
       -- Extend the pane depending on the services available.
       services_h = 44
-      local sflags = nav_pnt:services()
-      if sflags.land then
+      if pntflags.land then
          services_h = services_h + (14 * n)
       end
 
@@ -685,7 +684,7 @@ function render( dt )
       gfx.print( true, "CLASS:", ta_pnt_pane_x + 14, ta_pnt_pane_y - 34, col_txt_top )
 
       if ta_pnt_faction_gfx then
-               gfx.renderTex( ta_pnt_faction_gfx, ta_pnt_fact_x, ta_pnt_fact_y )
+         gfx.renderTex( ta_pnt_faction_gfx, ta_pnt_fact_x, ta_pnt_fact_y )
       end
 
       -- Colour the planet name based on friendliness.
@@ -712,12 +711,11 @@ function render( dt )
 
       -- Space out the text.
       services_h = 60
-      local sflags = nav_pnt:services()
-      if sflags.land then
+      if pntflags.land then
          services = { "land", "missions", "outfits", "shipyard", "commodity" }
          servicesp = { "Spaceport", "Missions", "Outfits", "Shipyard", "Commodity" }
          for k,v in ipairs(services) do
-            if sflags[tostring(v)] then
+            if pntflags[tostring(v)] then
                gfx.print(true, servicesp[k], ta_pnt_pane_x + 60, ta_pnt_pane_y - services_h, col_txt_top )
                services_h = services_h + 14
             end
@@ -727,7 +725,7 @@ function render( dt )
       end
 
       if ta_pnt_dist then
-            gfx.print( false, largeNumber( ta_pnt_dist, 1 ), ta_pnt_pane_x + 110, ta_pnt_pane_y - 15, col_txt_std, 63, false )
+         gfx.print( false, largeNumber( ta_pnt_dist, 1 ), ta_pnt_pane_x + 110, ta_pnt_pane_y - 15, col_txt_std, 63, false )
       end
       gfx.print( true, nav_pnt:name(), ta_pnt_pane_x + 14, ta_pnt_pane_y + 149, col )
    end
@@ -771,16 +769,17 @@ function render( dt )
    end
 
    local cargstring = nil
-   local freecargo = " (" .. pp:cargoFree() .. " tonnes free)"
+   local freecargo = " (" .. pp:cargoFree() .. "t free)"
    local finallen = gfx.printDim( true, freecargo )
+   local terminator = gfx.printDim( true, ", [...]" )
    if cargo and #cargo >= 1 then
       for k,v in ipairs(cargo) do
          if cargstring then
-            if screen_w - length - gfx.printDim(true, cargstring .. ", " .. v) + finallen > 10 then
-               cargstring = cargstring .. ", " .. v
-            else
+            if screen_w - length - gfx.printDim(true, cargstring .. ", " .. v) < finallen + terminator then
                cargstring = cargstring .. ", [...]"
                break
+            else
+               cargstring = cargstring .. ", " .. v
             end
          else
             cargstring = v
