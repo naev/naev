@@ -84,22 +84,28 @@ function background_stars ()
    -- Chose number to generate
    local n
    local r = prng.num()
-   if r < 0.1 then
-      return
-   elseif r < 0.94 then
-      n = 1
-   elseif r < 0.97 then
-      n = 2
-   else
+   if r > 0.97 then
       n = 3
+   elseif r > 0.94 then
+      n = 2
+   elseif r > 0.1 then
+      n = 1
    end
 
    -- If there is an inhabited planet we'll need at least one star
+   if not n then
+      for k,v in ipairs( cur_sys:planets() ) do
+         if v:services().land then
+            n = 1
+            break
+         end
+      end
+   end
 
    -- Generate the stars
    local i = 0
    local added = {}
-   while i < n do
+   while n and i < n do
       num = star_add( added, i )
       added[ num ] = true
       i = i + 1
