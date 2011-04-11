@@ -143,7 +143,6 @@ void pilot_weapSetUpdate( Pilot* p )
  *
  *    @param p Pilot to manipulate.
  *    @param id ID of the weapon set.
- *    @param 1 if is keydown, -1 if is keyup, 0 if should be dry.
  */
 void pilot_weapSetExec( Pilot* p, int id )
 {
@@ -922,7 +921,7 @@ void pilot_weaponAuto( Pilot *p )
    pilot_weapSetMode( p, 8, 0 );
    pilot_weapSetMode( p, 9, 0 );
 
-   /* All should be inrang. */
+   /* All should be inrange. */
    for (i=0; i<PILOT_WEAPSET_MAX_LEVELS; i++)
       pilot_weapSetInrange( p, i, 1 );
 
@@ -966,8 +965,10 @@ void pilot_weaponAuto( Pilot *p )
          level = 0;
       }
       /* Ignore rest. */
-      else
+      else {
+         slot->level = -1;
          continue;
+      }
    
       /* Add to it's base group. */
       pilot_weapSetAdd( p, id, slot, level );
@@ -985,6 +986,9 @@ void pilot_weaponAuto( Pilot *p )
          pilot_weapSetAdd( p, 0, slot, level ); /* Also get added to 'All'. */
       }
    }
+
+   /* Update active weapon set. */
+   pilot_weapSetUpdateOutfits( p, &p->weapon_sets[ p->active_set ] );
 }
 
 
