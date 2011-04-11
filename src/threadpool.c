@@ -92,13 +92,13 @@ static int vpool_worker( void *data );
  */
 static ThreadQueue tq_create (void)
 {
-   Node n;
    ThreadQueue q;
+   Node n;
 
-   q = malloc( sizeof(ThreadQueue_) );
+   q = calloc( 1, sizeof(ThreadQueue_) );
 
    /* Allocate and insert the dummy node */
-   n = malloc( sizeof(Node_) );
+   n = calloc( 1, sizeof(Node_) );
    n->next = NULL;
    q->first = n;
    q->last = n;
@@ -120,7 +120,7 @@ static void tq_enqueue( ThreadQueue q, void *data )
 {
    Node n;
 
-   n = malloc(sizeof(Node_));
+   n = calloc( 1, sizeof(Node_) );
    n->data = data;
    n->next = NULL;
 
@@ -216,7 +216,7 @@ int threadpool_newJob(int (*function)(void *), void *data)
       return -2;
    }
    
-   node = malloc( sizeof(ThreadQueue_data_) );
+   node = calloc( 1, sizeof(ThreadQueue_data_) );
    node->data = data;
    node->function = function;
 
@@ -287,7 +287,7 @@ static int threadpool_handler( void *data )
    stopped = tq_create();
 
    /* Allocate threadargs to communicate with workers */
-   threadargs = malloc( sizeof(ThreadData_)*MAXTHREADS );
+   threadargs = calloc( MAXTHREADS, sizeof(ThreadData_) );
 
    /* Initialize threadargs */
    for (i=0; i<MAXTHREADS; i++) {
@@ -431,7 +431,7 @@ void vpool_enqueue(ThreadQueue queue, int (*function)(void *), void *data)
 {
    ThreadQueue_data node;
    
-   node = malloc( sizeof(ThreadQueue_data_) );
+   node = calloc( 1, sizeof(ThreadQueue_data_) );
    node->data = data;
    node->function = function;
    
@@ -480,7 +480,7 @@ void vpool_wait(ThreadQueue queue)
    cnt = SDL_SemValue( queue->semaphore );
 
    /* Allocate all vpoolThreadData objects */
-   arg = malloc( sizeof(vpoolThreadData_) * cnt );
+   arg = calloc( cnt, sizeof(vpoolThreadData_) );
 
    SDL_mutexP( mutex );
    /* Initialize the vpoolThreadData */
