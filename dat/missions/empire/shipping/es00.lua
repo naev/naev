@@ -141,6 +141,9 @@ function enter ()
       d = rnd.rnd( 200, 300 )
       enter_vect:add( math.cos(a) * d, math.sin(a) * d )
       pilot.add( "Dvaered Med Force", nil, enter_vect )
+
+      -- Player should not be able to reland
+      player.allowLand(false,"The FLF have sabotaged the landing gears.")
    end
 end
 

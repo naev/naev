@@ -98,7 +98,13 @@ int nlua_loadBasic( lua_State* L )
    };
 
 
-   nlua_load(L,luaopen_base); /* open base. */
+   luaL_openlibs(L);
+#if 0
+   nlua_load(L, luaopen_base); /* open base. */
+   nlua_load(L, luaopen_math); /* open math. */
+   nlua_load(L, luaopen_table); /* open table. */
+   nlua_load(L, luaopen_string); /* open string. */
+#endif
 
    /* replace non-safe functions */
    for (i=0; strcmp(override[i],"END")!=0; i++) {
@@ -108,10 +114,6 @@ int nlua_loadBasic( lua_State* L )
 
    /* Override print to print in the console. */
    lua_register(L, "print", cli_print);
-
-   nlua_load(L,luaopen_math); /* open math. */
-   nlua_load(L,luaopen_table); /* open table. */
-   nlua_load(L, luaopen_string); /* open string. */
 
    /* add our own */
    lua_register(L, "include", nlua_packfileLoader);

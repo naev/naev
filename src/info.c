@@ -488,11 +488,26 @@ static void weapons_autoweap( unsigned int wid, char *str )
  */
 static void weapons_fire( unsigned int wid, char *str )
 {
-   int state;
+   int i, state;
 
    /* Set state. */
    state = window_checkboxState( wid, str );
    pilot_weapSetMode( player.p, info_eq_weaps.weapons, state );
+
+   /* Check to see if they are all fire groups. */
+   for (i=0; i<PILOT_WEAPON_SETS; i++)
+      if (!pilot_weapSetModeCheck( player.p, i ))
+         break;
+
+   /* Not able to set them all to fire groups. */
+   if (i >= PILOT_WEAPON_SETS) {
+      dialogue_alert( "You can not set all your weapon sets to fire groups!" );
+      pilot_weapSetMode( player.p, info_eq_weaps.weapons, 0 );
+      window_checkboxSet( wid, str, 0 );
+   }
+
+   /* Set default if needs updating. */
+   pilot_weaponSetDefault( player.p );
 }
 
 

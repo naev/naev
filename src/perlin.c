@@ -649,7 +649,7 @@ float* noise_genNebulaMap( const int w, const int h, const int n, float rug )
    float max;
    unsigned int s;
    thread_args *args;
-   ThreadQueue vpool;
+   ThreadQueue *vpool;
 
    /* pretty default values */
    octaves     = 3;

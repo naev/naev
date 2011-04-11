@@ -53,7 +53,7 @@ function create()
    icon_armour = tex.open( base .. "armour.png" )
    icon_energy = tex.open( base .. "energy.png" )
    icon_speed = tex.open( base .. "speed.png" )
-   icon_temperature = tex.open( base .. "speed.png" )
+   icon_temperature = tex.open( base .. "heat.png" )
    icon_shield_sm = tex.open( base .. "shield_sm.png" )
    icon_armour_sm = tex.open( base .. "armour_sm.png" )
    icon_energy_sm = tex.open( base .. "energy_sm.png" )
@@ -105,7 +105,7 @@ function create()
    --Radar
    radar_w, radar_h = radar_gfx:dim()
    radar_x = pl_pane_x - radar_w + 24
-   radar_y = pl_pane_y + 13
+   radar_y = pl_pane_y + 31
    gui.radarInit( false, 124, 124 )
 
    bar_w, bar_h = bg_shield:dim()
@@ -216,6 +216,7 @@ function update_target()
       ptargetfact = ptarget:faction()
       ptarget_target = ptarget:target()
       ta_stats = ptarget:stats()
+      ta_cargo = ptarget:cargoList()
 
       ptarget_gfx_aspect = ptarget_gfx_w / ptarget_gfx_h
 
@@ -234,12 +235,12 @@ function update_nav()
    nav_pnt, nav_hyp = pp:nav()
    autonav_hyp = player.autonavDest()
    if nav_pnt then
+      pntflags = nav_pnt:services()
       n = 0
-      local sflags = nav_pnt:services()
-      if sflags.land then
+      if pntflags.land then
          services = { "land", "missions", "outfits", "shipyard", "commodity" }
          for k,v in ipairs(services) do
-            if sflags[tostring(v)] then
+            if pntflags[tostring(v)] then
                n = n + 1
             end
          end
@@ -505,11 +506,11 @@ function render( dt )
          end
       end
       if gfxWarn == true then
-         gfx.renderTex( warnlight1, pl_pane_x + 6, pl_pane_y + 120 )
+         gfx.renderTex( warnlight1, pl_pane_x + 6, pl_pane_y + 148 )
       end
       local length
-      length = gfx.printDim( false, "Warning - Missile Lockon detected" )
-      gfx.print( false, "Warning - Missile Lockon detected", (screen_w - length)/2, screen_h - 100, col_txt_enm )
+      length = gfx.printDim( false, "Warning - Missile Lockon Detected" )
+      gfx.print( false, "Warning - Missile Lockon Detected", (screen_w - length)/2, screen_h - 100, col_txt_enm )
    end
    if armour <= 20 then
       gfx.renderTex( warnlight2, pl_pane_x + 29, pl_pane_y + 3 )
@@ -520,7 +521,6 @@ function render( dt )
 
    --Target Pane
    if ptarget then
-      ta_cargo = ptarget:cargoList()
       ta_detect, ta_fuzzy = pp:inrange( ptarget )
       if ta_detect then
          --Frame
@@ -663,8 +663,7 @@ function render( dt )
 
       -- Extend the pane depending on the services available.
       services_h = 44
-      local sflags = nav_pnt:services()
-      if sflags.land then
+      if pntflags.land then
          services_h = services_h + (14 * n)
       end
 
@@ -685,7 +684,7 @@ function render( dt )
       gfx.print( true, "CLASS:", ta_pnt_pane_x + 14, ta_pnt_pane_y - 34, col_txt_top )
 
       if ta_pnt_faction_gfx then
-               gfx.renderTex( ta_pnt_faction_gfx, ta_pnt_fact_x, ta_pnt_fact_y )
+         gfx.renderTex( ta_pnt_faction_gfx, ta_pnt_fact_x, ta_pnt_fact_y )
       end
 
       -- Colour the planet name based on friendliness.
@@ -712,12 +711,11 @@ function render( dt )
 
       -- Space out the text.
       services_h = 60
-      local sflags = nav_pnt:services()
-      if sflags.land then
+      if pntflags.land then
          services = { "land", "missions", "outfits", "shipyard", "commodity" }
          servicesp = { "Spaceport", "Missions", "Outfits", "Shipyard", "Commodity" }
          for k,v in ipairs(services) do
-            if sflags[tostring(v)] then
+            if pntflags[tostring(v)] then
                gfx.print(true, servicesp[k], ta_pnt_pane_x + 60, ta_pnt_pane_y - services_h, col_txt_top )
                services_h = services_h + 14
             end
@@ -727,7 +725,7 @@ function render( dt )
       end
 
       if ta_pnt_dist then
-            gfx.print( false, largeNumber( ta_pnt_dist, 1 ), ta_pnt_pane_x + 110, ta_pnt_pane_y - 15, col_txt_std, 63, false )
+         gfx.print( false, largeNumber( ta_pnt_dist, 1 ), ta_pnt_pane_x + 110, ta_pnt_pane_y - 15, col_txt_std, 63, false )
       end
       gfx.print( true, nav_pnt:name(), ta_pnt_pane_x + 14, ta_pnt_pane_y + 149, col )
    end
@@ -771,16 +769,17 @@ function render( dt )
    end
 
    local cargstring = nil
-   local freecargo = " (" .. pp:cargoFree() .. " tonnes free)"
+   local freecargo = " (" .. pp:cargoFree() .. "t free)"
    local finallen = gfx.printDim( true, freecargo )
+   local terminator = gfx.printDim( true, ", [...]" )
    if cargo and #cargo >= 1 then
       for k,v in ipairs(cargo) do
          if cargstring then
-            if screen_w - length - gfx.printDim(true, cargstring .. ", " .. v) + finallen > 10 then
-               cargstring = cargstring .. ", " .. v
-            else
+            if screen_w - length - gfx.printDim(true, cargstring .. ", " .. v) < finallen + terminator then
                cargstring = cargstring .. ", [...]"
                break
+            else
+               cargstring = cargstring .. ", " .. v
             end
          else
             cargstring = v

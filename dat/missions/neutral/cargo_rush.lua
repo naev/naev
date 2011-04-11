@@ -88,7 +88,7 @@ function create()
     -- The second time limit is for the reduced reward.
     stuperpx   = 0.2 - 0.025 * tier
     stuperjump = 10300 - 300 * tier
-    stupertakeoff = 10300
+    stupertakeoff = 10300 - 75 * tier
     timelimit  = time.get() + time.create(0, 0, traveldist * stuperpx + numjumps * stuperjump + stupertakeoff)
     timelimit2 = time.get() + time.create(0, 0, (traveldist * stuperpx + numjumps * stuperjump + stupertakeoff) * 1.2)
 

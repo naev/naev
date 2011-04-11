@@ -1075,6 +1075,7 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
    /* Update weapon sets if needed. */
    if (eq_wgt.selected->autoweap)
       pilot_weaponAuto( eq_wgt.selected );
+   pilot_weaponSane( eq_wgt.selected );
 
    /* Notify GUI of modification. */
    gui_setShip();
@@ -1183,6 +1184,7 @@ void equipment_addAmmo (void)
    /* Update weapon sets if needed. */
    if (p->autoweap)
       pilot_weaponAuto( p );
+   pilot_weaponSane( p );
 
    /* Notify GUI of modification. */
    gui_setShip();
@@ -1789,6 +1791,7 @@ static void equipment_unequipShip( unsigned int wid, char* str )
    /* Update weapon sets if needed. */
    if (ship->autoweap)
       pilot_weaponAuto( ship );
+   pilot_weaponSane( ship );
 
    /* Notify GUI of modification. */
    gui_setShip();
