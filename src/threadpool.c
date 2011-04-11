@@ -156,9 +156,7 @@ static void* tq_dequeue( ThreadQueue q )
    newhead = node->next;
 
    if (newhead == NULL) {
-      #ifdef LOG_H
       WARN("Tried to dequeue while the queue was empty!");
-      #endif
       /* Unlock and return NULL */
       SDL_mutexV(q->h_lock);
       return NULL;
@@ -210,9 +208,7 @@ int threadpool_newJob(int (*function)(void *), void *data)
    ThreadQueue_data node;
 
    if (global_queue == NULL) {
-      #ifdef LOG_H
       WARN("Threadpool has not been initialized yet!");
-      #endif
       return -2;
    }
    
@@ -388,9 +384,7 @@ int threadpool_init()
 {
    /* There's already a queue */
    if (global_queue != NULL) {
-      #ifdef LOG_H
       WARN("Threadpool has already been initialized!");
-      #endif
       return -1;
    }
 
