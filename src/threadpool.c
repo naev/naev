@@ -168,11 +168,11 @@ static void* tq_dequeue( ThreadQueue q )
    void *d;
    Node newhead, node;
    
-   /* Lock */
-   SDL_mutexP(q->h_lock);
+   /* Lock the head. */
+   SDL_mutexP( q->h_lock );
 
+   /* Start running. */
    node = q->first;
-   
 
    if ((newhead = node->next) == NULL) {
       WARN("Tried to dequeue while the queue was empty!");
@@ -187,13 +187,13 @@ static void* tq_dequeue( ThreadQueue q )
    }
 
    /* Remember the value and assign newhead as the new dummy element. */
-   d = newhead->data;
+   d        = newhead->data;
    q->first = newhead;
    
    /* Unlock */
-   SDL_mutexV(q->h_lock);
+   SDL_mutexV( q->h_lock );
 
-   free(node);
+   free( node );
    return d;
 }
 
@@ -273,7 +273,7 @@ static int threadpool_worker( void *data )
           WARN("L%d: SDL_SemWait failed! Error: %s", __LINE__, SDL_GetError());
       }
       /* Break if received signal to stop */
-      if ( work->signal == THREADSIG_STOP ) {
+      if (work->signal == THREADSIG_STOP) {
          break;
       }
 
@@ -306,9 +306,10 @@ static int threadpool_handler( void *data )
    /* Queues for idle workers and stopped workers */
    ThreadQueue idle, stopped;
    ThreadQueue_data node;
-   
-   idle = tq_create();
-   stopped = tq_create();
+  
+   /* Initialize the idle and stopped queues. */
+   idle     = tq_create();
+   stopped  = tq_create();
 
    /* Allocate threadargs to communicate with workers */
    threadargs = calloc( MAXTHREADS, sizeof(ThreadData_) );
@@ -328,17 +329,17 @@ static int threadpool_handler( void *data )
    /* Set the number of running threads to 0 */
    nrunning = 0;
 
-   /**
-    * The main loop.
-    * TODO: Make a nice description of what goes on.
+   /*
+    * Thread handler main loop.
     */
    while (1) {
       /* We only have to do this if there are any workers */
       if (nrunning > 0) {
+
          /* Try wait for a new job */
          if (SDL_SemWaitTimeout( global_queue->semaphore, THREADPOOL_TIMEOUT ) != 0) {
             /* There weren't any new jobs so we'll start killing threads ;) */
-            if ( SDL_SemTryWait(idle->semaphore) == 0 ) {
+            if (SDL_SemTryWait( idle->semaphore ) == 0) {
                threadarg = tq_dequeue( idle );
                /* Set signal to stop worker thread */
                threadarg->signal = THREADSIG_STOP;
@@ -351,6 +352,7 @@ static int threadpool_handler( void *data )
          }
       } 
       else {
+
          /* Wait for a new job */
          if (SDL_SemWait( global_queue->semaphore ) == -1) {
              WARN("L%d: SDL_SemWait failed! Error: %s", __LINE__, SDL_GetError());
@@ -361,21 +363,21 @@ static int threadpool_handler( void *data )
       node = tq_dequeue( global_queue );
 
       /* Idle thread available */
-      if( SDL_SemTryWait(idle->semaphore) == 0) {
+      if (SDL_SemTryWait(idle->semaphore) == 0) {
          /* Assign arguments for the thread */
-         threadarg = tq_dequeue( idle );
-         threadarg->function = node->function;
-         threadarg->data = node->data;
+         threadarg            = tq_dequeue( idle );
+         threadarg->function  = node->function;
+         threadarg->data      = node->data;
          /* Signal the thread that there's a new job */
          SDL_SemPost( threadarg->semaphore );
       } 
       /* Make a new thread */
-      else if( SDL_SemTryWait(stopped->semaphore) == 0) {
+      else if (SDL_SemTryWait(stopped->semaphore) == 0) {
          /* Assign arguments for the thread */
-         threadarg = tq_dequeue(stopped);
-         threadarg->function = node ->function;
-         threadarg->data = node->data;
-         threadarg->signal = THREADSIG_RUN;
+         threadarg            = tq_dequeue( stopped );
+         threadarg->function  = node->function;
+         threadarg->data      = node->data;
+         threadarg->signal    = THREADSIG_RUN;
          /* Signal the thread that there's a new job */
          SDL_SemPost( threadarg->semaphore );
          /* Start a new thread and increment the thread counter */
@@ -389,9 +391,9 @@ static int threadpool_handler( void *data )
              WARN("L%d: SDL_SemWait failed! Error: %s", __LINE__, SDL_GetError());
          }
          /* Assign arguments for the thread */
-         threadarg = tq_dequeue( idle );
-         threadarg->function = node->function;
-         threadarg->data = node->data;
+         threadarg            = tq_dequeue( idle );
+         threadarg->function  = node->function;
+         threadarg->data      = node->data;
          /* Signal the thread that there's a new job */
          SDL_SemPost( threadarg->semaphore );
       }
@@ -400,6 +402,7 @@ static int threadpool_handler( void *data )
       free(node);
    }
    /* TODO: cleanup and a way to stop the threadpool */
+
    return 0;
 }
 
@@ -416,10 +419,10 @@ int threadpool_init()
       return -1;
    }
 
-   /* Create the queue */
+   /* Create the global queue queue */
    global_queue = tq_create();
 
-   /* make a threadpool_handler */
+   /* Initialize the threadpool handler. */
    SDL_CreateThread( threadpool_handler, NULL );
 
    return 0;
