@@ -333,8 +333,8 @@ static int threadpool_handler( void *data )
       /* We only have to do this if there are any workers */
       if (nrunning > 0) {
          /*
-          * Here we'll wait until thread gets work to do. If it doesn't it will just stop
-          * and wait until it gets something to do.
+          * Here we'll wait until thread gets work to do. If it doesn't it will
+          * just stop a worker thread and wait until it gets something to do.
           */
          if (SDL_SemWaitTimeout( global_queue->semaphore, THREADPOOL_TIMEOUT ) != 0) {
             /* There weren't any new jobs so we'll start killing threads ;) */
@@ -373,7 +373,10 @@ static int threadpool_handler( void *data )
        * be created.
        */
 
-      /* Get a new job from the queue */
+      /* 
+       * Get a new job from the queue. This should be safe as we have received
+       * a permission from the global_queue->semaphore.
+       */
       node        = tq_dequeue( global_queue );
       newthread   = 0;
 
@@ -392,7 +395,6 @@ static int threadpool_handler( void *data )
              /* Bad idea */
              WARN("L%d: SDL_SemWait failed! Error: %s", __LINE__, SDL_GetError());
          }
-         /* Assign arguments for the thread */
          threadarg         = tq_dequeue( idle );
       }
 
