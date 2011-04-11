@@ -66,8 +66,8 @@ else -- default english
     misn_desc[1] = "Fly to planet %s in the %s system and talk to Jorek. Once Jorek has boarded your ship, proceed to system %s and board the %s."
     
     credits = 100000 -- 100K
-    timelimit1 = 40
-    timelimit2 = 90
+    timelimit1 = 20
+    timelimit2 = 45
     
     -- Aborted mission
     
