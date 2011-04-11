@@ -474,10 +474,11 @@ void vpool_wait(ThreadQueue queue)
    vpoolThreadData arg;
    ThreadQueue_data node;
 
-   cond = SDL_CreateCond();
+   /* Create temporary threading structures. */
+   cond  = SDL_CreateCond();
    mutex = SDL_CreateMutex();
    /* This might be a little ugly (and inefficient?) */
-   cnt = SDL_SemValue( queue->semaphore );
+   cnt   = SDL_SemValue( queue->semaphore );
 
    /* Allocate all vpoolThreadData objects */
    arg = calloc( cnt, sizeof(vpoolThreadData_) );
@@ -492,12 +493,14 @@ void vpool_wait(ThreadQueue queue)
       }
       node = tq_dequeue( queue );
 
-      arg[i].node = node;
-      arg[i].cond = cond;
-      arg[i].mutex = mutex;
-      arg[i].count = &cnt;
+      /* Set up arguments. */
+      arg[i].node    = node;
+      arg[i].cond    = cond;
+      arg[i].mutex   = mutex;
+      arg[i].count   = &cnt;
 
-      threadpool_newJob( vpool_worker, arg+i );
+      /* Launch new job. */
+      threadpool_newJob( vpool_worker, &arg[i] );
    }
 
    /* Wait for the threads to finish */
