@@ -157,10 +157,16 @@ static void* tq_dequeue( ThreadQueue q )
 
    if (newhead == NULL) {
       WARN("Tried to dequeue while the queue was empty!");
-      /* Unlock and return NULL */
+      /** Ugly fix :/
+       * Unlock and return NULL *
       SDL_mutexV(q->h_lock);
       return NULL;
+      */
    }
+   while(newhead == NULL) {
+       /* Wait until the cache updates :/ */
+   }
+
    /* Remember the value and assign newhead as the new dummy element. */
    d = newhead->data;
    q->first = newhead;
