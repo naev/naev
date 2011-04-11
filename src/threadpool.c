@@ -330,7 +330,11 @@ static int threadpool_handler( void *data )
     * Thread handler main loop.
     */
    while (1) {
-      /* We only have to do this if there are any workers */
+      /*
+       * We must now wait, this shall be done on each active thread. However they will
+       * be put to sleep as time passes. When we recieve a command we'll proceed to process
+       * it.
+       */
       if (nrunning > 0) {
          /*
           * Here we'll wait until thread gets work to do. If it doesn't it will just stop
@@ -354,7 +358,6 @@ static int threadpool_handler( void *data )
          /* We got work. Continue to handle work. */
       } 
       else {
-
          /*
           * Here we wait for a new job. No threads are alive at this point and the
           * threadpool is just patiently waiting for work to arrive.
