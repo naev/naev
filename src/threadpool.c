@@ -20,8 +20,8 @@
 
 
 #define THREADPOOL_TIMEOUT (5 * 100) /* The time a worker thread waits */
-#define THREADSIG_STOP (1) /* The signal to stop a worker thread */
-#define THREADSIG_RUN (0) /* The signal to indicate the worker thread is running */
+#define THREADSIG_STOP     (1) /* The signal to stop a worker thread */
+#define THREADSIG_RUN      (0) /* The signal to indicate the worker thread is running */
 
 
 #if SDL_VERSION_ATLEAST(1,3,0)
@@ -31,12 +31,18 @@ const int MAXTHREADS = 8;
 #endif
 
 
+/**
+ * @brief Node in the thread queue.
+ */
 struct Node_ {
    void *data;          /* The element in the list */
    struct Node_ *next;  /* The next node in the list */
 } Node_;
 typedef struct Node_ *Node;
 
+/**
+ * @brief Threadqueue itself.
+ */
 struct ThreadQueue_ {
    Node first;          /* The first node */
    Node last;           /* The second node */
@@ -46,12 +52,18 @@ struct ThreadQueue_ {
    SDL_mutex *h_lock;   /* Same as tail lock, except it's head lock */
 } ThreadQueue_;
 
+/**
+ * @brief Data for the threadqueue.
+ */
 typedef struct ThreadQueue_data_ {
    int (*function)(void *);     /* The function to be called */
    void *data;                  /* And its arguments */
 } ThreadQueue_data_;
 typedef ThreadQueue_data_ *ThreadQueue_data;
 
+/**
+ * @brief Thread data.
+ */
 typedef struct ThreadData_ {
    int (*function)(void *); /* The function to be called */
    void *data; /* Arguments to the above function */
@@ -62,6 +74,9 @@ typedef struct ThreadData_ {
    ThreadQueue stopped; /* The queue with stopped threads */
 } ThreadData_;
 
+/**
+ * @brief Virtual thread pool data.
+ */
 typedef struct vpoolThreadData_ {
    SDL_cond *cond; /* Condition variable for signalling all jobs in the vpool
                       are done */
@@ -95,17 +110,19 @@ static ThreadQueue tq_create (void)
    ThreadQueue q;
    Node n;
 
-   q = calloc( 1, sizeof(ThreadQueue_) );
+   /* Queue memory allocation. */
+   q        = calloc( 1, sizeof(ThreadQueue_) );
 
    /* Allocate and insert the dummy node */
-   n = calloc( 1, sizeof(Node_) );
-   n->next = NULL;
+   n        = calloc( 1, sizeof(Node_) );
+   n->next  = NULL;
    q->first = n;
-   q->last = n;
+   q->last  = n;
 
-   q->t_lock = SDL_CreateMutex();
-   q->h_lock = SDL_CreateMutex();
-   q->semaphore = SDL_CreateSemaphore( 0 );
+   /* Create locks. */
+   q->t_lock      = SDL_CreateMutex();
+   q->h_lock      = SDL_CreateMutex();
+   q->semaphore   = SDL_CreateSemaphore( 0 );
 
    return q;
 }
@@ -120,20 +137,22 @@ static void tq_enqueue( ThreadQueue q, void *data )
 {
    Node n;
 
-   n = calloc( 1, sizeof(Node_) );
-   n->data = data;
-   n->next = NULL;
+   /* Allocate new struct. */
+   n        = calloc( 1, sizeof(Node_) );
+   n->data  = data;
+   n->next  = NULL;
 
    /* Lock */
    SDL_mutexP(q->t_lock);
 
-   q->last->next = n;
-   q->last = n;
+   /* Enque. */
+   q->last->next  = n;
+   q->last        = n;
 
    /* Signal and unlock. This wil break if someone tries to enqueue 2^32+1
     * elements or something. */
-   SDL_SemPost(q->semaphore);
-   SDL_mutexV(q->t_lock);
+   SDL_SemPost( q->semaphore );
+   SDL_mutexV( q->t_lock );
 }
 
 /**
@@ -186,9 +205,10 @@ static void* tq_dequeue( ThreadQueue q )
  * This does not try to lock or anything */
 static void tq_destroy( ThreadQueue q )
 {
-   SDL_DestroySemaphore(q->semaphore);
-   SDL_DestroyMutex(q->h_lock);
-   SDL_DestroyMutex(q->t_lock);
+   /* Clean up threading structures. */
+   SDL_DestroySemaphore( q->semaphore );
+   SDL_DestroyMutex( q->h_lock );
+   SDL_DestroyMutex( q->t_lock );
 
    /* Iterate through the list and free the nodes */
    while(q->first->next != NULL) {
@@ -196,7 +216,7 @@ static void tq_destroy( ThreadQueue q )
    }
    
    free( q->first );
-   free(q);
+   free( q );
 }
 
 
@@ -217,12 +237,14 @@ int threadpool_newJob(int (*function)(void *), void *data)
       WARN("Threadpool has not been initialized yet!");
       return -2;
    }
-   
-   node = calloc( 1, sizeof(ThreadQueue_data_) );
-   node->data = data;
+  
+   /* Allocate nad sett parameters. */
+   node           = calloc( 1, sizeof(ThreadQueue_data_) );
+   node->data     = data;
    node->function = function;
 
-   tq_enqueue( global_queue, node );
+   /* Actually enque. */
+   tq_enqueue( global_queue, node )
    
    return 0;
 }
@@ -256,7 +278,7 @@ static int threadpool_worker( void *data )
       }
 
       /* Do work :-) */
-      (*work->function)( work->data );
+      work->function( work->data );
       
       /* Enqueue itself in the idle worker threads queue */
       tq_enqueue( work->idle, work );
@@ -293,14 +315,14 @@ static int threadpool_handler( void *data )
 
    /* Initialize threadargs */
    for (i=0; i<MAXTHREADS; i++) {
-      threadargs[i].function = NULL;
-      threadargs[i].data = NULL;
+      threadargs[i].function  = NULL;
+      threadargs[i].data      = NULL;
       threadargs[i].semaphore = SDL_CreateSemaphore( 0 );
-      threadargs[i].idle = idle;
-      threadargs[i].stopped = stopped;
-      threadargs[i].signal = THREADSIG_RUN;
+      threadargs[i].idle      = idle;
+      threadargs[i].stopped   = stopped;
+      threadargs[i].signal    = THREADSIG_RUN;
       /* 'Workers' that do not have a thread are considered stopped */
-      tq_enqueue(stopped, &threadargs[i]); 
+      tq_enqueue( stopped, &threadargs[i] );
    }
 
    /* Set the number of running threads to 0 */
@@ -415,7 +437,7 @@ int threadpool_init()
  *
  * @return Returns a ThreadQueue to be used.
  */
-ThreadQueue vpool_create()
+ThreadQueue vpool_create (void)
 {
    return tq_create();
 }
@@ -427,12 +449,13 @@ ThreadQueue vpool_create()
  * @warning Do NOT enqueue jobs that wait for a vpool, as this could lead to a
  * deadlock.
  */
-void vpool_enqueue(ThreadQueue queue, int (*function)(void *), void *data)
+void vpool_enqueue( ThreadQueue queue, int (*function)(void *), void *data )
 {
    ThreadQueue_data node;
-   
-   node = calloc( 1, sizeof(ThreadQueue_data_) );
-   node->data = data;
+  
+   /* Allocate and set up data. */
+   node           = calloc( 1, sizeof(ThreadQueue_data_) );
+   node->data     = data;
    node->function = function;
    
    tq_enqueue( queue, node );
@@ -521,3 +544,5 @@ void vpool_wait(ThreadQueue queue)
  * threadhandler and it should also be improved (the current strategy is
  * probably not very good).
  */
+
+
