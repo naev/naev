@@ -153,9 +153,9 @@ static void* tq_dequeue( ThreadQueue q )
    SDL_mutexP(q->h_lock);
 
    node = q->first;
-   newhead = node->next;
+   
 
-   if (newhead == NULL) {
+   if ((newhead = node->next) == NULL) {
       WARN("Tried to dequeue while the queue was empty!");
       /** Ugly fix :/
        * Unlock and return NULL *
@@ -163,7 +163,7 @@ static void* tq_dequeue( ThreadQueue q )
       return NULL;
       */
    }
-   while(newhead == NULL) {
+   while((newhead = node->next) == NULL) {
        /* Wait until the cache updates :/ */
    }
 
