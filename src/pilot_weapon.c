@@ -687,8 +687,16 @@ static int pilot_shootWeaponSetOutfit( Pilot* p, PilotWeaponSet *ws, Outfit *o, 
          continue;
 
       /* Get coolest that can fire. */
-      if ((w->timer <= 0.) && ((minh < 0) || (ws->slots[minh].slot->heat_T > w->heat_T)))
-         minh = i;
+      if (w->timer <= 0.) {
+         if (is_launcher) {
+            if ((minh < 0) || (ws->slots[minh].slot->u.ammo.quantity < w->u.ammo.quantity))
+               minh = i;
+         }
+         else {
+            if ((minh < 0) || (ws->slots[minh].slot->heat_T > w->heat_T))
+               minh = i;
+         }
+      }
 
       /* Save some stuff. */
       if ((maxp < 0) || (w->timer > maxt)) {
