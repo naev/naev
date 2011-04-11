@@ -298,7 +298,7 @@ static int threadpool_worker( void *data )
 static int threadpool_handler( void *data )
 {
    (void) data;
-   int i, nrunning;
+   int i, nrunning, newthread;
    ThreadData *threadargs, *threadarg;
    /* Queues for idle workers and stopped workers */
    ThreadQueue *idle, *stopped;
@@ -332,54 +332,59 @@ static int threadpool_handler( void *data )
    while (1) {
       /* We only have to do this if there are any workers */
       if (nrunning > 0) {
-
-         /* Try wait for a new job */
+         /*
+          * Here we'll wait until thread gets work to do. If it doesn't it will just stop
+          * and wait until it gets something to do.
+          */
          if (SDL_SemWaitTimeout( global_queue->semaphore, THREADPOOL_TIMEOUT ) != 0) {
             /* There weren't any new jobs so we'll start killing threads ;) */
             if (SDL_SemTryWait( idle->semaphore ) == 0) {
-               threadarg = tq_dequeue( idle );
+               threadarg         = tq_dequeue( idle );
                /* Set signal to stop worker thread */
                threadarg->signal = THREADSIG_STOP;
                /* Signal thread and decrement running threads counter */
                SDL_SemPost( threadarg->semaphore );
                nrunning -= 1;
             }
-            /* We want to start waiting for jobs again */
+
+            /* We just go back to waiting on a thread. */
             continue;
          }
+
+         /* We got work. Continue to handle work. */
       } 
       else {
 
-         /* Wait for a new job */
+         /*
+          * Here we wait for a new job. No threads are alive at this point and the
+          * threadpool is just patiently waiting for work to arrive.
+          */
          if (SDL_SemWait( global_queue->semaphore ) == -1) {
              WARN("L%d: SDL_SemWait failed! Error: %s", __LINE__, SDL_GetError());
              continue;
          }
+
+         /* We got work. Continue to handle work. */
       }
+
+      /*
+       * We assume there's work availible. We now have to choose who does the work.
+       * We'll try to wake up a sleeping thread, if none are left new threads will
+       * be created.
+       */
+
       /* Get a new job from the queue */
-      node = tq_dequeue( global_queue );
+      node        = tq_dequeue( global_queue );
+      newthread   = 0;
 
       /* Idle thread available */
-      if (SDL_SemTryWait(idle->semaphore) == 0) {
-         /* Assign arguments for the thread */
-         threadarg            = tq_dequeue( idle );
-         threadarg->function  = node->function;
-         threadarg->data      = node->data;
-         /* Signal the thread that there's a new job */
-         SDL_SemPost( threadarg->semaphore );
-      } 
+      if (SDL_SemTryWait(idle->semaphore) == 0)
+         threadarg   = tq_dequeue( idle );
       /* Make a new thread */
       else if (SDL_SemTryWait(stopped->semaphore) == 0) {
-         /* Assign arguments for the thread */
          threadarg            = tq_dequeue( stopped );
-         threadarg->function  = node->function;
-         threadarg->data      = node->data;
          threadarg->signal    = THREADSIG_RUN;
-         /* Signal the thread that there's a new job */
-         SDL_SemPost( threadarg->semaphore );
-         /* Start a new thread and increment the thread counter */
-         SDL_CreateThread( threadpool_worker, threadarg );
-         nrunning += 1;
+         newthread            = 1;
       } 
       /* Wait for idle thread */
       else {
@@ -389,10 +394,18 @@ static int threadpool_handler( void *data )
          }
          /* Assign arguments for the thread */
          threadarg            = tq_dequeue( idle );
-         threadarg->function  = node->function;
-         threadarg->data      = node->data;
-         /* Signal the thread that there's a new job */
-         SDL_SemPost( threadarg->semaphore );
+      }
+
+      /* Assign arguments for the thread */
+      threadarg            = tq_dequeue( idle );
+      threadarg->function  = node->function;
+      threadarg->data      = node->data;
+      /* Signal the thread that there's a new job */
+      SDL_SemPost( threadarg->semaphore );
+      /* Start a new thread and increment the thread counter */
+      if (newthread) {
+         SDL_CreateThread( threadpool_worker, threadarg );
+         nrunning += 1;
       }
 
       /* Free the now unused job from the global_queue */
