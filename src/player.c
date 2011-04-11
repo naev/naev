@@ -3610,6 +3610,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
    ship->autoweap = autoweap;
    if (autoweap)
       pilot_weaponAuto( ship );
+   pilot_weaponSane( ship );
    pilot_weaponSetDefault( ship );
 
    return 0;

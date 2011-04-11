@@ -1058,8 +1058,5 @@ void pilot_weaponSane( Pilot *p )
 
    /* Update range. */
    pilot_weapSetUpdateRange( ws );
-
-   /* Update if needed. */
-   pilot_weapSetUpdateOutfits( p, ws );
 }
 
