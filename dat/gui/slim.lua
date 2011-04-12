@@ -270,12 +270,12 @@ function update_nav()
    end
    if nav_hyp then
       if nav_hyp:isKnown() then
-         navstring = nav_hyp:name() .. " (%s)"
+         navstring = nav_hyp:name()
       else
-         navstring = "Unknown (%s)"
+         navstring = "Unknown"
       end
       if autonav_hyp then
-         navstring = navstring:format( autonav_hyp:jumpDist() )
+         navstring = (navstring .. " (%s)"):format( autonav_hyp:jumpDist() )
       end
    else
       navstring = "none"
