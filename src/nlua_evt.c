@@ -327,12 +327,7 @@ static int evt_claim( lua_State *L )
       /* Iterate over table. */
       lua_pushnil(L);
       while (lua_next(L, 1) != 0) {
-         if (!lua_issystem(L,-1)) {
-            claim_destroy( claim );
-            NLUA_ERROR(L,"Claim table should contain only systems!");
-            return 0;
-         }
-         else {
+         if (lua_issystem(L,-1)) {
             ls = lua_tosystem( L, -1 );
             claim_add( claim, ls->id );
          }
