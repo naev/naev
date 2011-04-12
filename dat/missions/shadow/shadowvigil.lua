@@ -336,6 +336,7 @@ function escortStart()
     escorts[1]:comm(commmsg[1])
     for i, j in pairs(escorts) do
         if j:exists() then
+            j:setHilight(true)
             j:hyperspace(getNextSystem(misssys[stage])) -- Hyperspace toward the next destination system.
         end
     end
@@ -345,6 +346,7 @@ end
 function escortNext()
     stage = 3 -- The actual escort begins here.
     misn.osdActive(3)
+    diplomat:setHilight(true) -- Needed for first time
     diplomat:hyperspace(getNextSystem(misssys[stage])) -- Hyperspace toward the next destination system.
     dpjump = false
 end
@@ -524,7 +526,7 @@ function escortFlee()
 
     player.pilot():setInvincible(false)
     player.pilot():control(false)
-    player.conematics(false)
+    player.cinematics(false)
 
     for i, j in ipairs(escorts) do
         if j:exists() then
@@ -545,9 +547,9 @@ function board()
     seiryuu:control()
     seiryuu:hyperspace()
     seiryuu:setActiveBoard(false)
-    diplomat:setHilight(false)
+    seiryuu:setHilight(false)
     tk.msg(title[4], string.format(text[4], player.name(), player.name()))
-    player.pay(25000)
+    player.pay(75000)
     var.pop("shadowvigil_active")
     misn.finish(true)
 end
