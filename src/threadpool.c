@@ -563,7 +563,7 @@ void vpool_wait( ThreadQueue *queue )
 
 /**
  * Notes
-*
+ *
  * The algorithm/strategy for killing idle workers should be moved into the
  * threadhandler and it should also be improved (the current strategy is
  * probably not very good).
