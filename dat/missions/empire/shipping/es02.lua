@@ -49,7 +49,16 @@ else -- default english
 end
 
 function create ()
-   -- Note: this mission does not make any system claims.
+   -- Target destination
+   destsys = system.get( "Slaccid" )
+   ret,retsys = planet.get( "Polaris Prime" )
+
+   -- Must claim system
+   if not misn.claim( destsys ) then
+      misn.finish(false)
+   end
+
+   -- Add NPC.
    misn.setNPC( "Soldner", "soldner" )
    misn.setDesc( bar_desc )
 end
@@ -65,9 +74,7 @@ function accept ()
    -- Accept the mission
    misn.accept()
 
-   -- target destination
-   destsys = system.get( "Slaccid" )
-   ret,retsys = planet.get( "Polaris Prime" )
+   -- Set marker
    misn_marker = misn.markerAdd( destsys, "low" )
 
    -- Mission details
@@ -127,14 +134,12 @@ function enter ()
 
    if misn_stage == 0 and sys == destsys then
 
-      -- Put the VIP at the far end of the player
+      -- Put the VIP a ways off of the player but near the jump.
       enter_vect = system.jumpPos(sys,prevsys)
-      x,y = enter_vect:get()
-      d = 1200
-		-- With the new big systems this would be somewhere in the middle of the system (A.)
-      enter_vect:set( d * -x / math.abs(x), d * -y / math.abs(y) )
+      m,a = enter_vect:polar()
+      enter_vect:setP( m-3000, a )
       p = pilot.add( "Trader Gawain", "dummy", enter_vect )
-      for k,v in ipairs(p) do
+      for _,v in ipairs(p) do
          v:setPos( enter_vect )
          v:setVel( vec2.new( 0, 0 ) ) -- Clear velocity
          v:disable()
@@ -145,16 +150,16 @@ function enter ()
          hook.pilot( v, "death", "death" )
       end
 
-      -- We'll toss all other ships in the middle
-      -- FLF first
-      a = rnd.rnd() * 2 * math.pi
-      d = rnd.rnd( 0, 500 )
-		-- Added the x and y coordinate of the jumppoint so the pilots will spawn in the area of the jumppoint (A.)
-      enter_vect:set( x+(math.cos(a) * d), y+( math.sin(a) * d) )
+      -- FLF Spawn around the Gawain
       p = pilot.add( "FLF Med Force", nil, enter_vect )
       for k,v in ipairs(p) do
          v:setHostile()
       end
+      -- To make it more interesting a vendetta will solely target the player.
+      p = pilot.add( "FLF Vendetta", nil, enter_vect )[1]
+      p:control()
+      p:setHostile()
+      p:attack( player.pilot() )
       
 	  -- Now Dvaered
       -- They will jump together with you in the system at the jumppoint. (A.)

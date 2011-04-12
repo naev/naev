@@ -98,6 +98,7 @@ static int threadpool_worker( void *data );
 static int threadpool_handler( void *data );
 static int vpool_worker( void *data );
 
+
 /** 
  * @brief Creates a concurrent queue.
  * @return The ThreadQueue.
@@ -225,7 +226,8 @@ static void tq_destroy( ThreadQueue *q )
  * @param function The function (job) to be called (executed).
  * @param data The arguments for the function.
  *
- * @return Returns 0 on success and -2 if there was no threadpool. */
+ * @return Returns 0 on success and -2 if there was no threadpool.
+ */
 int threadpool_newJob( int (*function)(void *), void *data )
 {
    ThreadQueueData *node;
@@ -383,6 +385,10 @@ static int threadpool_handler( void *data )
       node        = tq_dequeue( global_queue );
       newthread   = 0;
 
+      /*
+       * Choose where to get the thread. Either idle, revive stopped or block until
+       * another thread becomes idle.
+       */
       /* Idle thread available */
       if (SDL_SemTryWait(idle->semaphore) == 0)
          threadarg         = tq_dequeue( idle );
@@ -402,7 +408,6 @@ static int threadpool_handler( void *data )
       }
 
       /* Assign arguments for the thread */
-      threadarg            = tq_dequeue( idle );
       threadarg->function  = node->function;
       threadarg->data      = node->data;
       /* Signal the thread that there's a new job */
