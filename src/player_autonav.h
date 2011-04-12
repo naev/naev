@@ -21,7 +21,7 @@
 #define AUTONAV_POS_APPROACH   10 /**< Player is going to a position. */
 
 
-void player_thinkAutonav( Pilot *pplayer );
+void player_thinkAutonav( Pilot *pplayer, double dt );
 void player_updateAutonav( double dt );
 void player_autonavStart (void);
 void player_autonavEnd (void);

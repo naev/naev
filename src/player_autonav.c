@@ -28,6 +28,8 @@ static double tc_down   = 0.; /**< Rate of decrement. */
 static int tc_rampdown  = 0; /**< Ramping down time compression? */
 static double starts;
 static double starta;
+static double abort_timer = 0.;
+static double abort_mod = 1.;
 
 
 /*
@@ -84,6 +86,8 @@ static void player_autonavSetup (void)
    tc_down        = 0.;
    starts         = player.p->shield / player.p->shield_max;
    starta         = player.p->armour / player.p->armour_max;
+   if (abort_timer <= 0.)
+      abort_mod = 1.;
    player_setFlag(PLAYER_AUTONAV);
 }
 
@@ -320,21 +324,27 @@ static int player_autonavBrake (void)
  */
 int player_shouldAbortAutonav(void)
 {
-   double failpc = conf.autonav_abort;
+   double failpc = conf.autonav_abort * abort_mod;
    double shield = player.p->shield / player.p->shield_max;
    double armour = player.p->armour / player.p->armour_max;
 
-   if (conf.autonav_abort >= 1. && player.p->lockons > 0 )
+   if (failpc >= 1. && player.p->lockons > 0 )
       player_autonavAbort("Missile Lockon Detected");
-   else if (conf.autonav_abort >= 1. && (shield < 1. && shield < starts))
+   else if (failpc >= 1. && (shield < 1. && shield < starts))
       player_autonavAbort("Sustaining damage");
-   else if (conf.autonav_abort > 0. && (shield < failpc && shield < starts) )
+   else if (failpc > 0. && (shield < failpc && shield < starts) )
       player_autonavAbort("Shield below damage threshold");
    else if (armour < starta)
       player_autonavAbort("Sustaining armour damage");
 
-   if (!player_isFlag(PLAYER_AUTONAV))
+   if (!player_isFlag(PLAYER_AUTONAV)) {
+      if (abort_timer > 0.)
+         abort_mod = MAX( 0., abort_mod - .2 );
+      else
+         abort_mod = .8;
+      abort_timer = 30.;
       return 1;
+   }
    return 0;
 }
 
@@ -344,8 +354,10 @@ int player_shouldAbortAutonav(void)
  *
  *    @param pplayer Player doing the thinking.
  */
-void player_thinkAutonav( Pilot *pplayer )
+void player_thinkAutonav( Pilot *pplayer, double dt )
 {
+   if (abort_timer > 0.)
+      abort_timer -= dt;
    if (player_shouldAbortAutonav())
       return;
    if ((player.autonav == AUTONAV_JUMP_APPROACH) ||
@@ -398,6 +410,3 @@ void player_updateAutonav( double dt )
       tc_mod = tc_max;
    pause_setSpeed( tc_mod );
 }
-
-
-
