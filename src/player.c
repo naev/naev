@@ -1032,7 +1032,7 @@ void player_think( Pilot* pplayer, const double dt )
 
    /* Autonav takes over normal controls. */
    if (player_isFlag(PLAYER_AUTONAV)) {
-      player_thinkAutonav(pplayer);
+      player_thinkAutonav( pplayer, dt );
 
       /* Disable turning. */
       facing = 1;
@@ -3505,7 +3505,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
 
    /* Sets inrange by default if weapon sets are missing. */
    for (i=0; i<PILOT_WEAPON_SETS; i++) {
-      pilot_weapSetInrange( ship, i, -1 );
+      pilot_weapSetInrange( ship, i, 1 );
    }
 
    /* Second pass for weapon sets. */

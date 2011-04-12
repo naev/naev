@@ -20,7 +20,6 @@
 #include "array.h"
 #include "weapon.h"
 #include "escort.h"
-#include "player.h"
 
 
 /*
@@ -936,12 +935,7 @@ void pilot_weaponAuto( Pilot *p )
    pilot_weapSetMode( p, 9, 0 );
 
    /* All should be inrange. */
-   if (pilot_isPlayer(p))
-      for (i=0; i<PILOT_WEAPON_SETS; i++) {
-         if (pilot_weapSetInrangeCheck( p, i ) == -1)
-            pilot_weapSetInrange( p, i, 1 );
-      }
-   else
+   if (!pilot_isPlayer(p))
       for (i=0; i<PILOT_WEAPON_SETS; i++)
          pilot_weapSetInrange( p, i, 1 );
 
