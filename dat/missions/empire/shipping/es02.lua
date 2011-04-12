@@ -158,6 +158,7 @@ function enter ()
       -- To make it more interesting a vendetta will solely target the player.
       p = pilot.add( "FLF Vendetta", nil, enter_vect )[1]
       p:control()
+      p:setHostile()
       p:attack( player.pilot() )
       
 	  -- Now Dvaered
