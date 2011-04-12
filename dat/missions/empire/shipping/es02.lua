@@ -155,6 +155,10 @@ function enter ()
       for k,v in ipairs(p) do
          v:setHostile()
       end
+      -- To make it more interesting a vendetta will solely target the player.
+      p = pilot.add( "FLF Vendetta", nil, enter_vect )[1]
+      p:control()
+      p:attack( player.pilot() )
       
 	  -- Now Dvaered
       -- They will jump together with you in the system at the jumppoint. (A.)
