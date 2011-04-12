@@ -202,7 +202,9 @@ function enter()
                 hook.pilot(j, "death", "escortDeath")
             end
         end
-        proxy = hook.timer(500, "proximity", {location = vec2.new(0, 0), radius = 500, funcname = "escortStart"})
+        rend_point = vec2.new(0,0)
+        start_marker = system.mrkAdd( "Rendezvous point", rend_point )
+        proxy = hook.timer(500, "proximity", {location = rend_point, radius = 500, funcname = "escortStart"})
     end
 end
 
@@ -312,6 +314,7 @@ function jumpin()
         if missend then
             seiryuu:setActiveBoard(true)
             seiryuu:setHilight(true)
+            seiryuu:setVisplayer(true)
             seiryuu:control()
             hook.pilot(seiryuu, "board", "board")
         end
@@ -324,6 +327,9 @@ end
 
 -- The player has successfully joined up with the escort fleet. Cutscene -> departure.
 function escortStart()
+    if start_marker ~= nil then
+       system.mrkRm( start_marker )
+    end
     stage = 2 -- Fly to the diplomat rendezvous point
     misn.osdActive(2)
     misn.markerRm(marker) -- No marker. Player has to follow the NPCs.
