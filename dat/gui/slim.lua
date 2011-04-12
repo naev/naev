@@ -460,7 +460,7 @@ function render( dt )
 
    -- Temperature
    txt = round(temperature) .. "K"
-   temperature = math.max( (temperature - 250)/1.75, 0 )
+   temperature = math.max( math.min( (temperature - 250)/1.75, 100 ), 0 )
    render_bar( "temperature", temperature, txt, col_txt_bar )
 
    --Weapon bars

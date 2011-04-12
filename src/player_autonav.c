@@ -28,7 +28,6 @@ static double tc_down   = 0.; /**< Rate of decrement. */
 static int tc_rampdown  = 0; /**< Ramping down time compression? */
 static double starts;
 static double starta;
-static double abort_timer = 0.;
 static double abort_mod = 1.;
 
 
@@ -86,7 +85,7 @@ static void player_autonavSetup (void)
    tc_down        = 0.;
    starts         = player.p->shield / player.p->shield_max;
    starta         = player.p->armour / player.p->armour_max;
-   if (abort_timer <= 0.)
+   if (player.autonav_timer <= 0.)
       abort_mod = 1.;
    player_setFlag(PLAYER_AUTONAV);
 }
@@ -338,11 +337,11 @@ int player_shouldAbortAutonav(void)
       player_autonavAbort("Sustaining armour damage");
 
    if (!player_isFlag(PLAYER_AUTONAV)) {
-      if (abort_timer > 0.)
+      if (player.autonav_timer > 0.)
          abort_mod = MAX( 0., abort_mod - .2 );
       else
          abort_mod = .8;
-      abort_timer = 30.;
+      player.autonav_timer = 30.;
       return 1;
    }
    return 0;
@@ -356,8 +355,8 @@ int player_shouldAbortAutonav(void)
  */
 void player_thinkAutonav( Pilot *pplayer, double dt )
 {
-   if (abort_timer > 0.)
-      abort_timer -= dt;
+   if (player.autonav_timer > 0.)
+      player.autonav_timer -= dt;
    if (player_shouldAbortAutonav())
       return;
    if ((player.autonav == AUTONAV_JUMP_APPROACH) ||

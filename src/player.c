@@ -1027,6 +1027,9 @@ void player_think( Pilot* pplayer, const double dt )
       return;
    }
 
+   if (player.autonav_timer > 0.)
+      player.autonav_timer -= dt;
+
    /* Not facing anything yet. */
    facing = 0;
 
