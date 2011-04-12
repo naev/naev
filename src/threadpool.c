@@ -408,7 +408,6 @@ static int threadpool_handler( void *data )
       }
 
       /* Assign arguments for the thread */
-      threadarg            = tq_dequeue( idle );
       threadarg->function  = node->function;
       threadarg->data      = node->data;
       /* Signal the thread that there's a new job */
