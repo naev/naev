@@ -20,6 +20,7 @@
 #include "array.h"
 #include "weapon.h"
 #include "escort.h"
+#include "player.h"
 
 
 /*
@@ -226,7 +227,7 @@ int pilot_weapSetInrangeCheck( Pilot* p, int id )
 
 
 /**
- * @brief CHanges the weapon set inrange property.
+ * @brief Changes the weapon set inrange property.
  *
  *    @param p Pilot to manipulate.
  *    @param id ID of the weapon set.
@@ -935,8 +936,14 @@ void pilot_weaponAuto( Pilot *p )
    pilot_weapSetMode( p, 9, 0 );
 
    /* All should be inrange. */
-   for (i=0; i<PILOT_WEAPSET_MAX_LEVELS; i++)
-      pilot_weapSetInrange( p, i, 1 );
+   if (pilot_isPlayer(p))
+      for (i=0; i<PILOT_WEAPON_SETS; i++) {
+         if (pilot_weapSetInrangeCheck( p, i ) == -1)
+            pilot_weapSetInrange( p, i, 1 );
+      }
+   else
+      for (i=0; i<PILOT_WEAPON_SETS; i++)
+         pilot_weapSetInrange( p, i, 1 );
 
    /* Set names. */
    pilot_weapSetNameSet( p, 0, "All" );
