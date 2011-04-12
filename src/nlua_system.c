@@ -766,7 +766,7 @@ static int systemL_mrkAdd( lua_State *L )
  * @usage system.mrkRm( mrk_id ) -- Removes a marker by mrk_id
  *
  *    @luaparam id ID of the marker to remove.
- * @luaparam mrkRm( id )
+ * @luafunc mrkRm( id )
  */
 static int systemL_mrkRm( lua_State *L )
 {
