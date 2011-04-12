@@ -169,7 +169,6 @@ function enter ()
       end
 
       -- Add more ships on a timer to make this messy
-      enter_vect = player.pos()
       hook.timer(rnd.rnd( 3000, 5000 ) , "delay_flf")
 
       -- Pass to next stage
@@ -193,8 +192,12 @@ end
 
 function delay_flf ()
 
+   if misn_stage ~= 0 then
+      return
+   end
+
    -- More ships to pressue player from behind
-   p = pilot.add( "FLF Sml Force", nil, enter_vect )
+   p = pilot.add( "FLF Sml Force", nil, prevsys )
    for k,v in ipairs(p) do
       v:setHostile()
    end
@@ -211,6 +214,7 @@ function board ()
    misn.markerMove( misn_marker, retsys )
    misn.setDesc( string.format(misn_desc[2], ret:name(), retsys:name() ))
    misn.osdCreate(misn_title, {misn_desc[2]:format(ret:name(),retsys:name())})
+
    -- Force unboard
    player.unboard()
 end
