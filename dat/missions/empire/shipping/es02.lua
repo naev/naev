@@ -49,7 +49,16 @@ else -- default english
 end
 
 function create ()
-   -- Note: this mission does not make any system claims.
+   -- Target destination
+   destsys = system.get( "Slaccid" )
+   ret,retsys = planet.get( "Polaris Prime" )
+
+   -- Must claim system
+   if not misn.claim( destsys ) then
+      misn.finish(false)
+   end
+
+   -- Add NPC.
    misn.setNPC( "Soldner", "soldner" )
    misn.setDesc( bar_desc )
 end
@@ -65,9 +74,7 @@ function accept ()
    -- Accept the mission
    misn.accept()
 
-   -- target destination
-   destsys = system.get( "Slaccid" )
-   ret,retsys = planet.get( "Polaris Prime" )
+   -- Set marker
    misn_marker = misn.markerAdd( destsys, "low" )
 
    -- Mission details
