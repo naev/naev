@@ -30,6 +30,7 @@ static int vectorL_div( lua_State *L );
 static int vectorL_get( lua_State *L );
 static int vectorL_polar( lua_State *L );
 static int vectorL_set( lua_State *L );
+static int vectorL_setP( lua_State *L );
 static int vectorL_distance( lua_State *L );
 static int vectorL_mod( lua_State *L );
 static const luaL_reg vector_methods[] = {
@@ -44,7 +45,8 @@ static const luaL_reg vector_methods[] = {
    { "div", vectorL_div },
    { "get", vectorL_get },
    { "polar", vectorL_polar },
-   { "set", vectorL_set },
+   { "setP", vectorL_set },
+   { "setP", vectorL_setP },
    { "dist", vectorL_distance },
    { "mod", vectorL_mod },
    {0,0}
@@ -392,7 +394,6 @@ static int vectorL_polar( lua_State *L )
  */
 static int vectorL_set( lua_State *L )
 {
-   NLUA_MIN_ARGS(3);
    LuaVector *v1;
    double x, y;
 
@@ -402,6 +403,30 @@ static int vectorL_set( lua_State *L )
    y  = luaL_checknumber(L,3);
 
    vect_cset( &v1->vec, x, y );
+   return 0;
+}
+
+/**
+ * @brief Sets the vector by cartesian coordinates.
+ *
+ * @usage my_vec:set(5, 3) -- my_vec is now (5,3)
+ *
+ *    @luaparam v Vector to set coordinates of.
+ *    @luaparam m Modulus to set.
+ *    @luaparam a Angle to set.
+ * @luafunc set( v, x, y )
+ */
+static int vectorL_setP( lua_State *L )
+{
+   LuaVector *v1;
+   double m, a;
+
+   /* Get parameters. */
+   v1 = luaL_checkvector(L,1);
+   m  = luaL_checknumber(L,2);
+   a  = luaL_checknumber(L,3)/180.*M_PI;
+
+   vect_pset( &v1->vec, m, a );
    return 0;
 }
 
