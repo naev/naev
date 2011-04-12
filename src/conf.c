@@ -174,6 +174,7 @@ void conf_setGameplayDefaults (void)
    conf.compression_velocity  = TIME_COMPRESSION_DEFAULT_MAX;
    conf.save_compress         = 1;
    conf.mouse_thrust          = 1;
+   conf.autonav_abort         = 1.;
 }
 
 
@@ -365,6 +366,7 @@ int conf_loadConfig ( const char* file )
       conf_loadBool("save_compress",conf.save_compress);
       conf_loadInt("afterburn_sensitivity",conf.afterburn_sens);
       conf_loadInt("mouse_thrust",conf.mouse_thrust);
+      conf_loadFloat("autonav_abort",conf.autonav_abort);
       conf_loadBool("conf_nosave",conf.nosave);
 
       /* Debugging. */
@@ -936,6 +938,10 @@ int conf_saveConfig ( const char* file )
 
    conf_saveComment("Mouse-flying thrust control");
    conf_saveInt("mouse_thrust",conf.mouse_thrust);
+   conf_saveEmptyLine();
+
+   conf_saveComment("Condition under which the autonav aborts.");
+   conf_saveFloat("autonav_abort",conf.autonav_abort);
    conf_saveEmptyLine();
 
    conf_saveComment("Save the config everytime game exits (rewriting this bit)");

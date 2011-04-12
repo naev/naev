@@ -894,7 +894,7 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
    if ((w != NULL) && (p->id == PLAYER_ID) &&
          !pilot_isFlag(player.p, PILOT_HYP_BEGIN) &&
          !pilot_isFlag(player.p, PILOT_HYPERSPACE))
-      player_autonavAbort("Sustaining Damage");
+      player_shouldAbortAutonav();
 
    /*
     * EMP don't do damage if pilot is disabled.

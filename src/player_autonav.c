@@ -26,6 +26,8 @@ static double tc_mod    = 1.; /**< Time compression modifier. */
 static double tc_max    = 1.; /**< Maximum time compression. */
 static double tc_down   = 0.; /**< Rate of decrement. */
 static int tc_rampdown  = 0; /**< Ramping down time compression? */
+static double starts;
+static double starta;
 
 
 /*
@@ -80,6 +82,8 @@ static void player_autonavSetup (void)
    }
    tc_rampdown    = 0;
    tc_down        = 0.;
+   starts         = player.p->shield / player.p->shield_max;
+   starta         = player.p->armour / player.p->armour_max;
    player_setFlag(PLAYER_AUTONAV);
 }
 
@@ -309,6 +313,31 @@ static int player_autonavBrake (void)
    return 0;
 }
 
+/**
+ * @brief Checks whether the player should abort autonav due to damage or missile locks.
+ *
+ *    @return 1 if autonav should be aborted.
+ */
+int player_shouldAbortAutonav(void)
+{
+   double failpc = conf.autonav_abort;
+   double shield = player.p->shield / player.p->shield_max;
+   double armour = player.p->armour / player.p->armour_max;
+
+   if (conf.autonav_abort >= 1. && player.p->lockons > 0 )
+      player_autonavAbort("Missile Lockon Detected");
+   else if (conf.autonav_abort >= 1. && (shield < 1. && shield < starts))
+      player_autonavAbort("Sustaining damage");
+   else if (conf.autonav_abort > 0. && (shield < failpc && shield < starts) )
+      player_autonavAbort("Shield below damage threshold");
+   else if (armour < starta)
+      player_autonavAbort("Sustaining armour damage");
+
+   if (!player_isFlag(PLAYER_AUTONAV))
+      return 1;
+   return 0;
+}
+
 
 /**
  * @brief Handles autonav thinking.
@@ -317,10 +346,9 @@ static int player_autonavBrake (void)
  */
 void player_thinkAutonav( Pilot *pplayer )
 {
-   /* Abort if lockons detected. */
-   if (pplayer->lockons > 0)
-      player_autonavAbort("Missile Lockon Detected");
-   else if ((player.autonav == AUTONAV_JUMP_APPROACH) ||
+   if (player_shouldAbortAutonav())
+      return;
+   if ((player.autonav == AUTONAV_JUMP_APPROACH) ||
          (player.autonav == AUTONAV_JUMP_BRAKE)) {
       /* If we're already at the target. */
       if (player.p->nav_hyperspace == -1)

@@ -68,6 +68,8 @@ static void opt_close( unsigned int wid, char *name );
 static void opt_needRestart (void);
 /* Gameplay. */
 static void opt_gameplay( unsigned int wid );
+static void opt_getAutonavAbortStr( char *buf, int max );
+static void opt_setAutonavAbort( unsigned int wid, char *str );
 static void opt_gameplaySave( unsigned int wid, char *str );
 static void opt_gameplayDefaults( unsigned int wid, char *str );
 static void opt_gameplayUpdate( unsigned int wid, char *str );
@@ -179,7 +181,7 @@ static void opt_gameplay( unsigned int wid )
       snprintf( buf, sizeof(buf), "ndata: %s", path);
    window_addText( wid, x, y, cw, 20, 1, "txtNdata",
          NULL, NULL, buf );
-   y -= 50;
+   y -= 40;
    by = y;
 
 
@@ -232,6 +234,22 @@ static void opt_gameplay( unsigned int wid )
    /* Options. */
    y  = by;
    x += cw;
+
+   /* Autonav abort. */
+   x = 20 + cw + 20;
+   window_addText( wid, x+65, y, 150, 150, 0, "txtAAutonav",
+         NULL, &cDConsole, "Abort Autonav At:" );
+   y -= 20;
+
+   /* Autonav abort fader. */
+   opt_getAutonavAbortStr( buf, sizeof(buf) );
+   window_addText( wid, x, y, cw, 20, 1, "txtAutonav",
+         NULL, NULL, buf );
+   y -= 20;
+   window_addFader( wid, x, y, cw, 20, "fadAutonav", 0., 1.,
+         conf.autonav_abort, opt_setAutonavAbort );
+   y -= 40;
+
    window_addText( wid, x+20, y, cw, 20, 0, "txtSettings",
          NULL, &cDConsole, "Settings" );
    y -= 25;
@@ -323,6 +341,44 @@ static void opt_gameplayUpdate( unsigned int wid, char *str )
    /* Input boxes. */
    snprintf( buf, sizeof(buf), "%d", conf.mesg_visible );
    window_setInput( wid, "inpMSG", buf );
+}
+
+
+/**
+ * @brief Sets the autonav abort string based on the current abort_autonav value.
+ *
+ *    @param[out] buf Buffer to use.
+ *    @param max Maximum length of the buffer.
+ */
+static void opt_getAutonavAbortStr( char *buf, int max )
+{
+   /* Generate message. */
+   if (conf.autonav_abort >= 1.)
+      snprintf( buf, max, "Missile Lock" );
+   else if (conf.autonav_abort > 0.)
+      snprintf( buf, max, "%.0f%% Shield", conf.autonav_abort * 100 );
+   else
+      snprintf( buf, max, "Armour Damage" );
+}
+
+
+/**
+ * @brief Callback to set autonav abort threshold.
+ *
+ *    @param wid Window calling the callback.
+ *    @param str Name of the widget calling the callback.
+ */
+static void opt_setAutonavAbort( unsigned int wid, char *str )
+{
+   char buf[PATH_MAX];
+   double autonav_abort;
+
+   /* Set fader. */
+   autonav_abort = window_getFaderValue(wid, str);
+   conf.autonav_abort = autonav_abort;
+
+   opt_getAutonavAbortStr( buf, sizeof(buf) );
+   window_modifyText( wid, "txtAutonav", buf );
 }
 
 
