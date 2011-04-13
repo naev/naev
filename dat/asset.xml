@@ -10797,11 +10797,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <services>
     <land/>
     <refuel/>
+    <shipyard/>
    </services>
    <commodities/>
    <description>This is a standard Thurion shipyard manufactured to the exact same specifications as every other Thurion shipyard. The station hums with activity as ships are constructed at the station's maximum capacity.</description>
    <bar>(null)</bar>
   </general>
+  <tech>
+   <item>Thurion Military Ships</item>
+  </tech>
  </asset>
  <asset name="SY-1206">
   <pos>
@@ -10823,11 +10827,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <services>
     <land/>
     <refuel/>
+    <shipyard/>
    </services>
    <commodities/>
    <description>This is a standard Thurion shipyard manufactured to the exact same specifications as every other Thurion shipyard. The station hums with activity as ships are constructed at the station's maximum capacity.</description>
    <bar>(null)</bar>
   </general>
+  <tech>
+   <item>Thurion Military Ships</item>
+  </tech>
  </asset>
  <asset name="SY-159">
   <pos>
@@ -10849,11 +10857,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <services>
     <land/>
     <refuel/>
+    <shipyard/>
    </services>
    <commodities/>
    <description>This is a standard Thurion shipyard manufactured to the exact same specifications as every other Thurion shipyard. The station hums with activity as ships are constructed at the station's maximum capacity.</description>
    <bar>(null)</bar>
   </general>
+  <tech>
+   <item>Thurion Military Ships</item>
+  </tech>
  </asset>
  <asset name="SY-19">
   <pos>
@@ -10875,11 +10887,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <services>
     <land/>
     <refuel/>
+    <shipyard/>
    </services>
    <commodities/>
    <description>This is a standard Thurion shipyard manufactured to the exact same specifications as every other Thurion shipyard. The station hums with activity as ships are constructed at the station's maximum capacity.</description>
    <bar>(null)</bar>
   </general>
+  <tech>
+   <item>Thurion Military Ships</item>
+  </tech>
  </asset>
  <asset name="SY-237">
   <pos>
@@ -10901,11 +10917,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <services>
     <land/>
     <refuel/>
+    <shipyard/>
    </services>
    <commodities/>
    <description>This is a standard Thurion shipyard manufactured to the exact same specifications as every other Thurion shipyard. The station hums with activity as ships are constructed at the station's maximum capacity.</description>
    <bar>(null)</bar>
   </general>
+  <tech>
+   <item>Thurion Military Ships</item>
+  </tech>
  </asset>
  <asset name="SY-256">
   <pos>
@@ -10927,11 +10947,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <services>
     <land/>
     <refuel/>
+    <shipyard/>
    </services>
    <commodities/>
    <description>This is a standard Thurion shipyard manufactured to the exact same specifications as every other Thurion shipyard. The station hums with activity as ships are constructed at the station's maximum capacity.</description>
    <bar>(null)</bar>
   </general>
+  <tech>
+   <item>Thurion Military Ships</item>
+  </tech>
  </asset>
  <asset name="SY-314">
   <pos>
@@ -10953,11 +10977,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <services>
     <land/>
     <refuel/>
+    <shipyard/>
    </services>
    <commodities/>
    <description>This is a standard Thurion shipyard manufactured to the exact same specifications as every other Thurion shipyard. The station hums with activity as ships are constructed at the station's maximum capacity.</description>
    <bar>(null)</bar>
   </general>
+  <tech>
+   <item>Thurion Military Ships</item>
+  </tech>
  </asset>
  <asset name="SY-413">
   <pos>
@@ -10979,11 +11007,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <services>
     <land/>
     <refuel/>
+    <shipyard/>
    </services>
    <commodities/>
    <description>This is a standard Thurion shipyard manufactured to the exact same specifications as every other Thurion shipyard. The station hums with activity as ships are constructed at the station's maximum capacity.</description>
    <bar>(null)</bar>
   </general>
+  <tech>
+   <item>Thurion Military Ships</item>
+  </tech>
  </asset>
  <asset name="SY-612">
   <pos>
@@ -11005,11 +11037,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <services>
     <land/>
     <refuel/>
+    <shipyard/>
    </services>
    <commodities/>
    <description>This is a standard Thurion shipyard manufactured to the exact same specifications as every other Thurion shipyard. The station hums with activity as ships are constructed at the station's maximum capacity.</description>
    <bar>(null)</bar>
   </general>
+  <tech>
+   <item>Thurion Military Ships</item>
+  </tech>
  </asset>
  <asset name="SY-894">
   <pos>
@@ -11031,11 +11067,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <services>
     <land/>
     <refuel/>
+    <shipyard/>
    </services>
    <commodities/>
    <description>This is a standard Thurion shipyard manufactured to the exact same specifications as every other Thurion shipyard. The station hums with activity as ships are constructed at the station's maximum capacity.</description>
    <bar>(null)</bar>
   </general>
+  <tech>
+   <item>Thurion Military Ships</item>
+  </tech>
  </asset>
  <asset name="SY-920">
   <pos>
@@ -11057,11 +11097,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <services>
     <land/>
     <refuel/>
+    <shipyard/>
    </services>
    <commodities/>
    <description>This is a standard Thurion shipyard manufactured to the exact same specifications as every other Thurion shipyard. The station hums with activity as ships are constructed at the station's maximum capacity.</description>
    <bar>(null)</bar>
   </general>
+  <tech>
+   <item>Thurion Military Ships</item>
+  </tech>
  </asset>
  <asset name="Sabe">
   <pos>
@@ -11083,11 +11127,15 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <services>
     <land/>
     <refuel/>
+    <shipyard/>
    </services>
    <commodities/>
    <description>Sabe and Anya are a pair of planets tidally locked to eachother, rotating around their shared center of gravity. Sabe is the center of the Thurian goverment, housing the largest population of both uploaded and biological Thurions, acting as the de-facto capital. The majority of the planet's surface is untouched, as virtually all its inhabitants reside in the multitude of arcologies spread across its surface.</description>
    <bar>(null)</bar>
   </general>
+  <tech>
+   <item>Thurion Military Ships</item>
+  </tech>
  </asset>
  <asset name="Sarcophagus I">
   <pos>
