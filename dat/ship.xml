@@ -443,9 +443,9 @@
   <fabricator>Thurion shipyards</fabricator>
   <description>The Thurion Ingenuity is a fighter built for survival, like all Thurian ships, it puts defensive capabilities first, and offensive capabilities second. However, by no means is the Ingenuity a poor combat craft. It is capable of staying in combat and slugging it out, and when things get too hot, it can quickly retreat to recharge and regenerate. Also, like every Thurian ship, the electronics are well above average.</description>
   <movement>
-   <thrust>320</thrust>
-   <turn>140</turn>
-   <speed>360</speed>
+   <thrust>300</thrust>
+   <turn>220</turn>
+   <speed>330</speed>
   </movement>
   <health>
    <absorb>11</absorb>
@@ -464,8 +464,8 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="0" y="-5" h="-2" >medium</weapon>
-   <weapon x="0" y="5" h="-2" >medium</weapon>
+   <weapon x="8" y="-5" h="-2" >medium</weapon>
+   <weapon x="8" y="5" h="-2" >medium</weapon>
    <utility>medium</utility>
    <utility/>
    <utility/>
@@ -476,8 +476,8 @@
    <structure/>
   </slots>
   <stats>
-   <ew_hide>10</ew_hide>
-   <nebula_damage>80</nebula_damage>
+   <ew_hide>30</ew_hide>
+   <nebula_damage>-80</nebula_damage>
   </stats>
  </ship>
  <ship name="Proteron Derivative">
