@@ -150,7 +150,7 @@ end
 function spawnDV()
     misn.osdActive(3)
     missionstarted = true
-    fleetDV = pilot.add("Dvaered Strike Force", "norun", last_sys)
+    fleetDV = pilot.add("Dvaered Strike Force", "dvaered_norun", last_sys)
     -- The Dvaered ships should attack the player, so set them hostile.
     -- These are Vigilances, so we should tune them WAY down so the player doesn't insta-die.
     for i, j in ipairs(fleetDV) do
@@ -190,7 +190,7 @@ function spawnFLF()
     for i, j in ipairs(fleetDV) do
         j:setFriendly()
         j:setHilight(false)
-        j:changeAI("norun")
+        j:changeAI("dvaered_norun")
     end
     angle = rnd.rnd() * 2 * math.pi
     dist = 800
@@ -219,7 +219,7 @@ function disableFLF()
     -- Persuade the Dvaered to stop shooting at disabled FLF
     for i, j in ipairs(fleetDV) do
         if j:exists() then
-            j:changeAI("norun")
+            j:changeAI("flf_norun")
         end
     end
 end
