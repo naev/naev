@@ -549,7 +549,7 @@ function board()
     seiryuu:setActiveBoard(false)
     seiryuu:setHilight(false)
     tk.msg(title[4], string.format(text[4], player.name(), player.name()))
-    player.pay(75000)
+    player.pay(250000)
     var.pop("shadowvigil_active")
     misn.finish(true)
 end
