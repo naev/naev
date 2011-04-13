@@ -53,7 +53,7 @@ function create ()
    near_sys = get_emp_system( system.cur() )
 
    -- Get credits
-   credits  = rnd.rnd(2,4) * 10000
+   credits  = rnd.rnd(2,4) * 100000
 
    -- Spaceport bar stuff
    misn.setNPC( "Pirate Lord", pir_getLordRandomPortrait() )

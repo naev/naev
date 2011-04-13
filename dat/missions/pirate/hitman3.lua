@@ -145,6 +145,7 @@ function landed ()
    
    -- Give landing pass   
    player.addOutfit("Pirate Landing Pass")
+   player.pay( 100000 ) -- 100k
    var.push("pir_cargo", true)
 
    -- Finish mission
