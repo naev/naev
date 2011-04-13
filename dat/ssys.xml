@@ -2881,7 +2881,7 @@
    <stars>400</stars>
    <asteroids>0</asteroids>
    <interference>800.000000</interference>
-   <nebula volatility="450.000000">800.000000</nebula>
+   <nebula volatility="500.000000">800.000000</nebula>
   </general>
   <pos>
    <x>1061.000000</x>
@@ -3223,6 +3223,7 @@
   <assets>
    <asset>Aluben</asset>
    <asset>Tenal-P</asset>
+   <asset>Virtual Trader Local</asset>
   </assets>
   <jumps>
    <jump target="Midoros">
@@ -3898,6 +3899,7 @@
   </pos>
   <assets>
    <asset>Lirith</asset>
+   <asset>Virtual Empire Unpresence</asset>
   </assets>
   <jumps>
    <jump target="Iris">
@@ -4401,6 +4403,7 @@
    <asset>Oberon I</asset>
    <asset>Oberon III</asset>
    <asset>Oberon IV</asset>
+   <asset>Virtual Trader Local</asset>
   </assets>
   <jumps>
    <jump target="Defa">
@@ -4696,7 +4699,10 @@
    <x>445.333333</x>
    <y>208.733333</y>
   </pos>
-  <assets/>
+  <assets>
+   <asset>Virtual Empire Small</asset>
+   <asset>Virtual Trader Local</asset>
+  </assets>
   <jumps>
    <jump target="Iris">
     <pos x="9733.151622" y="-10063.088965"/>
@@ -4834,7 +4840,7 @@
    <stars>400</stars>
    <asteroids>0</asteroids>
    <interference>800.000000</interference>
-   <nebula volatility="450.000000">800.000000</nebula>
+   <nebula volatility="500.000000">800.000000</nebula>
   </general>
   <pos>
    <x>851.000000</x>
@@ -5728,7 +5734,7 @@
    <stars>500</stars>
    <asteroids>0</asteroids>
    <interference>950.000000</interference>
-   <nebula volatility="500.000000">900.000000</nebula>
+   <nebula volatility="600.000000">900.000000</nebula>
   </general>
   <pos>
    <x>963.000000</x>
@@ -6220,6 +6226,7 @@
   </pos>
   <assets>
    <asset>Charred</asset>
+   <asset>Virtual Trader Local</asset>
   </assets>
   <jumps>
    <jump target="Oberon">
@@ -6274,7 +6281,7 @@
    <stars>400</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
-   <nebula volatility="450.000000">800.000000</nebula>
+   <nebula volatility="500.000000">800.000000</nebula>
   </general>
   <pos>
    <x>913.000000</x>
