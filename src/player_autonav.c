@@ -321,19 +321,19 @@ static int player_autonavBrake (void)
  *
  *    @return 1 if autonav should be aborted.
  */
-int player_shouldAbortAutonav(void)
+int player_shouldAbortAutonav( int damaged )
 {
    double failpc = conf.autonav_abort * abort_mod;
    double shield = player.p->shield / player.p->shield_max;
    double armour = player.p->armour / player.p->armour_max;
 
-   if (failpc >= 1. && player.p->lockons > 0 )
+   if (failpc >= 1. && player.p->lockons > 0)
       player_autonavAbort("Missile Lockon Detected");
-   else if (failpc >= 1. && (shield < 1. && shield < starts))
+   else if (failpc >= 1. && (shield < 1. && shield < starts) && damaged)
       player_autonavAbort("Sustaining damage");
-   else if (failpc > 0. && (shield < failpc && shield < starts) )
+   else if (failpc > 0. && (shield < failpc && shield < starts) && damaged)
       player_autonavAbort("Shield below damage threshold");
-   else if (armour < starta)
+   else if (armour < starta && damaged)
       player_autonavAbort("Sustaining armour damage");
 
    if (!player_isFlag(PLAYER_AUTONAV)) {
@@ -357,7 +357,7 @@ void player_thinkAutonav( Pilot *pplayer, double dt )
 {
    if (player.autonav_timer > 0.)
       player.autonav_timer -= dt;
-   if (player_shouldAbortAutonav())
+   if (player_shouldAbortAutonav(0))
       return;
    if ((player.autonav == AUTONAV_JUMP_APPROACH) ||
          (player.autonav == AUTONAV_JUMP_BRAKE)) {
