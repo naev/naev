@@ -1922,6 +1922,10 @@ static int gui_prepFunc( const char* func )
 
 /**
  * @brief Runs a function.
+ * @note Function must be prepared beforehand.
+ *    @param func Name of the function to run.
+ *    @param nargs Arguments to the function.
+ *    @param nret Parameters to get returned from the function.
  */
 static int gui_runFunc( const char* func, int nargs, int nret )
 {
