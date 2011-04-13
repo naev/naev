@@ -3,6 +3,7 @@
 --]]
 
 include ("scripts/proximity.lua")
+include ("scripts/nextjump.lua")
 include ("scripts/chatter.lua")
 
 -- localization stuff, translators would work here
@@ -349,25 +350,6 @@ function escortNext()
     diplomat:setHilight(true) -- Needed for first time
     diplomat:hyperspace(getNextSystem(misssys[stage])) -- Hyperspace toward the next destination system.
     dpjump = false
-end
-
--- Choose the next system to jump to on the route from the current system to the argument system.
-function getNextSystem(finalsys)
-    local mysys = system.cur()
-    if mysys == finalsys then
-        return mysys
-    else
-        local neighs = mysys:adjacentSystems()
-        local nearest = -1
-        local mynextsys = finalsys
-        for _, j in pairs(neighs) do
-            if nearest == -1 or j:jumpDist(finalsys) < nearest then
-                nearest = j:jumpDist(finalsys)
-                mynextsys = j
-            end
-        end
-        return mynextsys
-    end
 end
 
 -- Handle the death of the scripted attackers. Once they're dead, recall the escorts.
