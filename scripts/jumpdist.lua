@@ -1,27 +1,26 @@
-
-
 --[[
 -- @brief Fetches an array of systems from min to max jumps away from the given
 --       system sys.
 --
--- A following example to get closest system with shipyard (to max of 10):
+-- The following example gets a random Sirius M class planet between 1 to 6 jumps away.
 --
 -- @code
--- target = system.get( "Alteris" ) -- We'll target alteris in the example
--- local i, t
--- while i < 10 do
---    t = getsysatdistance( target, i, i,
---          function(s)
---             for _,p in ipairs(s:planets()) do
---                if p:hasShipyard()
---                   return true
---                end
+-- local planets = {} 
+-- getsysatdistance( system.cur(), 1, 6,
+--     function(s)
+--         for i, v in ipairs(s:planets()) do
+--             if v:faction() == faction.get("Sirius") and v:class() == "M" then
+--                 planets[#planets + 1] = {v, s}
 --             end
---             return false
---          end )
---    i = i+1
--- end
--- local target_system = t[ rnd.rnd(1,#t) ]
+--         end 
+--         return false
+--     end )
+-- 
+-- if #planets == 0 then abort() end -- Sanity in case no suitable planets are in range.
+-- 
+-- local index = rnd.rnd(1, #planets)
+-- destplanet = planets[index][1]
+-- destsys = planets[index][2]     
 -- @endcode
 --
 --    @param sys System to calculate distance from or nil to use current system
