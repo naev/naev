@@ -253,9 +253,9 @@ function jumpin()
                     j:follow(diplomat) -- Follow the diplomat.
                 end
             end
-            hook.timer(4000, "chatter", {pilot = escorts[1], text = commmsg[6]})
-            hook.timer(7000, "chatter", {pilot = escorts[2], text = commmsg[7]})
-            hook.timer(7000, "chatter", {pilot = escorts[3], text = commmsg[8]})
+            hook.timer(5000, "chatter", {pilot = escorts[1], text = commmsg[6]})
+            hook.timer(12000, "chatter", {pilot = escorts[2], text = commmsg[7]})
+            hook.timer(14000, "chatter", {pilot = escorts[3], text = commmsg[8]})
         elseif system.cur() == misssys[3] then -- case rendezvous with dvaered diplomat
             for i, j in ipairs(escorts) do
                 if j:exists() then
@@ -284,9 +284,9 @@ function jumpin()
             end
             if not chattered then
                 hook.timer(10000, "chatter", {pilot = escorts[2], text = commmsg[2]})
-                hook.timer(15000, "chatter", {pilot = escorts[3], text = commmsg[3]})
-                hook.timer(20000, "chatter", {pilot = escorts[2], text = commmsg[4]})
-                hook.timer(25000, "chatter", {pilot = escorts[1], text = commmsg[5]})
+                hook.timer(20000, "chatter", {pilot = escorts[3], text = commmsg[3]})
+                hook.timer(30000, "chatter", {pilot = escorts[2], text = commmsg[4]})
+                hook.timer(35000, "chatter", {pilot = escorts[1], text = commmsg[5]})
                 chattered = true
             end
             if misssys[3]:jumpDist() <= 2 and misssys[3]:jumpDist() > 0 then -- Encounter
@@ -320,7 +320,7 @@ function jumpin()
         end
     else
         if proxy then
-            hook.timerStop(proxy)
+            hook.rm( proxy )
         end
     end
 end
@@ -485,10 +485,10 @@ function diplomatCutscene()
     camera.set(dvaerplomat, true, 500)
     
     hook.timer(1000, "chatter", {pilot = diplomat, text = commmsg[11]})
-    hook.timer(6000, "chatter", {pilot = dvaerplomat, text = commmsg[12]})
-    hook.timer(9000, "diplomatGo")
-    hook.timer(15000, "chatter", {pilot = escorts[1], text = commmsg[13]})
-    hook.timer(15500, "killDiplomats")
+    hook.timer(10000, "chatter", {pilot = dvaerplomat, text = commmsg[12]})
+    hook.timer(17000, "diplomatGo")
+    hook.timer(21000, "chatter", {pilot = escorts[1], text = commmsg[13]})
+    hook.timer(21500, "killDiplomats")
     
 end
 
