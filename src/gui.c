@@ -898,7 +898,8 @@ void gui_render( double dt )
    if (gui_L != NULL) {
       gui_prepFunc( "render" );
       lua_pushnumber( gui_L, dt );
-      gui_runFunc( "render", 1, 0 );
+      lua_pushnumber( gui_L, dt_mod );
+      gui_runFunc( "render", 2, 0 );
    }
 
    /* Messages. */

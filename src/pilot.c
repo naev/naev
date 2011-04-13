@@ -890,6 +890,13 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
    damage_shield *= absorb;
    damage_armour *= absorb;
 
+   /* Player breaks autonav. */
+   if ((w != NULL) && (p->id == PLAYER_ID) &&
+         !pilot_isFlag(player.p, PILOT_HYP_BEGIN) &&
+         !pilot_isFlag(player.p, PILOT_HYPERSPACE))
+      player_shouldAbortAutonav(1);
+
+
    /*
     * EMP don't do damage if pilot is disabled.
     */
