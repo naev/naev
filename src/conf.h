@@ -75,6 +75,7 @@ typedef struct PlayerConf_s {
    int save_compress; /**< Compress savegame. */
    unsigned int afterburn_sens; /**< Afterburn sensibility. */
    int mouse_thrust; /**< Whether mouse flying controls thrust. */
+   double autonav_abort; /**< Condition for aborting autonav. */
    int nosave; /**< Disables conf saving. */
    int devmode; /**< Developer mode. */
    int devcsv; /**< Output CSV data. */

@@ -782,8 +782,10 @@ static int pilotL_getPilots( lua_State *L )
       lua_pushnil(L);
       i = 0;
       while (lua_next(L, -2) != 0) {
-         f = lua_tofaction(L, -1);
-         factions[i++] = f->f;
+         if (lua_isfaction(L,-1)) {
+            f = lua_tofaction(L, -1);
+            factions[i++] = f->f;
+         }
          lua_pop(L,1);
       }
 

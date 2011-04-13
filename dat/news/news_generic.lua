@@ -57,7 +57,7 @@ function news_addGeneric( rawtable )
       --]]
       {
          title = "Fullerton Reports Quarterly Loss",
-         desc = "Engine maker Fullerton Industries has posted a c47B loss over the past 250STUs. A company spokeswoman attributed the loss to the high cost of deuterium fuel and falling sales."
+         desc = "Engine maker Fullerton Industries has posted a c47B loss over the past 250 STPs. A company spokeswoman attributed the loss to the high cost of deuterium fuel and falling sales."
       },
       {
          title = "Genetric Board Meets",
@@ -124,11 +124,11 @@ function news_addGeneric( rawtable )
       },
       {
          title = "FLF Terrorist Trial Ends",
-         desc = "FLF Terrorist Trial ended this STU with an unsurprising death sentence for all five members of the Nor spaceport bombing. Execution is scheduled in 10 STU."
+         desc = "FLF Terrorist Trial ended this SCU with an unsurprising death sentence for all five members of the Nor spaceport bombing. Execution is scheduled in 10 STP."
       },
       {
          title = "New Challenges for New Times",
-         desc = "The Dvaered council after a unanimous ruling decided to increase patrols in Dvaered space due to the recent uprising in FLF terrorism. The new measure is expected to start within the next STU."
+         desc = "The Dvaered council after a unanimous ruling decided to increase patrols in Dvaered space due to the recent uprising in FLF terrorism. The new measure is expected to start within the next SCU."
       },
       --[[
          Human interest.

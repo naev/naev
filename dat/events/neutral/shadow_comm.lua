@@ -60,6 +60,8 @@ function jumpin()
         seiryuu:control(true)
         seiryuu:setActiveBoard(true)
         seiryuu:setInvincible(true)
+        seiryuu:setHilight(true)
+        seiryuu:setVisplayer(true)
         hook.pilot(seiryuu, "board", "board")
     end
 end

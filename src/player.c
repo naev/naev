@@ -1027,12 +1027,15 @@ void player_think( Pilot* pplayer, const double dt )
       return;
    }
 
+   if (player.autonav_timer > 0.)
+      player.autonav_timer -= dt;
+
    /* Not facing anything yet. */
    facing = 0;
 
    /* Autonav takes over normal controls. */
    if (player_isFlag(PLAYER_AUTONAV)) {
-      player_thinkAutonav(pplayer);
+      player_thinkAutonav( pplayer, dt );
 
       /* Disable turning. */
       facing = 1;

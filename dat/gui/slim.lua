@@ -270,12 +270,12 @@ function update_nav()
    end
    if nav_hyp then
       if nav_hyp:isKnown() then
-         navstring = nav_hyp:name() .. " (%s)"
+         navstring = nav_hyp:name()
       else
-         navstring = "Unknown (%s)"
+         navstring = "Unknown"
       end
       if autonav_hyp then
-         navstring = navstring:format( autonav_hyp:jumpDist() )
+         navstring = (navstring .. " (%s)"):format( autonav_hyp:jumpDist() )
       end
    else
       navstring = "none"
@@ -460,7 +460,7 @@ function render( dt )
 
    -- Temperature
    txt = round(temperature) .. "K"
-   temperature = math.max( (temperature - 250)/1.75, 0 )
+   temperature = math.max( math.min( (temperature - 250)/1.75, 100 ), 0 )
    render_bar( "temperature", temperature, txt, col_txt_bar )
 
    --Weapon bars
