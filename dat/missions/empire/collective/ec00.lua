@@ -53,7 +53,7 @@ function create ()
 
     missys = {misn_target}
     if not misn.claim(missys) then
-        abort() -- TODO: This claim should be in the event that starts this mission!
+        abort()
     end  
 
    misn.setNPC( "Lt. Commander", "dimitri" )
