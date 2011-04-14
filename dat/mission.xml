@@ -509,6 +509,17 @@
    <cond>planet.cur():faction() == faction.get("Sirius") and planet.cur():class() ~= "0"</cond>
   </avail>
  </mission>
+ <mission name="An old woman">
+  <lua>neutral/oldwoman</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>30</chance>
+   <location>Bar</location>
+   <cond>planet.cur():faction() ~= faction.get("Sirius") -- Note: additional conditionals present in mission script!</cond>
+  </avail>
+ </mission>
  <mission name="Empire Patrol Bounty">
   <lua>pirate/pir_empbounty</lua>
   <avail>
