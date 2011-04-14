@@ -186,7 +186,7 @@ static int colL_eq( lua_State *L )
 static int colL_new( lua_State *L )
 {
    glColour *col;
-   LuaColour lc;
+   LuaColour lc, *lc2;
 
    if (lua_gettop(L)==0) {
       lc.col.r = lc.col.g = lc.col.b = lc.col.a = 1.;
@@ -211,6 +211,10 @@ static int colL_new( lua_State *L )
          lc.col.a = luaL_checknumber(L,2);
       else
          lc.col.a = 1.;
+   }
+   else if (lua_iscolour(L,1)) {
+      lc2 = lua_tocolour(L,1);
+      memcpy( &lc, lc2, sizeof(LuaColour) );
    }
    else
       NLUA_INVALID_PARAMETER(L);
