@@ -201,14 +201,14 @@ end
 function date()
     -- Deadline stuff
     if deadline1 > time.get() then
-        dateresolution(deadline1:tonumber() - time.get():tonumber())
+        dateresolution(deadline1)
         misn.osdCreate(osd_title[1], { string.format(osd_msg[1], planetname, sysname),
                                        string.format(osd_msg[2], time.str(deadline1 - time.get())),
                                        string.format(osd_msg[3], sysname2, shipname),
                                        string.format(osd_msg[4], time.str(deadline2 - time.get()))
                                      })
     elseif deadline2 > time.get() then
-        dateresolution(deadline2:tonumber() - time.get():tonumber())
+        dateresolution(deadline2)
         misn.osdCreate(osd_title[1], { string.format(osd_msg[3], sysname2, shipname),
                                        string.format(osd_msg[4], time.str(deadline2 - time.get()))
                                      })
@@ -218,11 +218,11 @@ function date()
     end
 end
 
-function dateresolution(timeleft)
-    if timeleft < 5000000 then 
+function dateresolution(time)
+    if time - time.get() < time.create(0, 0, 5000) then 
         if datehook ~= nil then hook.rm(datehook) end
         datehook = hook.date(time.create(0, 0, 30), "date")
-    elseif timeleft < 10000000 then
+    elseif time - time.get() < time.create(0, 1, 0) then 
         if datehook ~= nil then hook.rm(datehook) end
         datehook = hook.date(time.create(0, 0, 100), "date")
     else
