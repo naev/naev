@@ -575,6 +575,9 @@ function render( dt, dt_mod )
                colspe2 = nil
             elseif htspeed >= 200. then
                htspeed = 100.
+               spetxtcol = col_txt_wrn
+               colspe = col_speed2
+               colspe2 = col_speed
             else
                htspeed = htspeed - 100
                spetxtcol = col_txt_wrn
