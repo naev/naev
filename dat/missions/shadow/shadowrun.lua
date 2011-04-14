@@ -65,12 +65,6 @@ else -- default english
     bar_desc = "You spot a dark-haired woman sitting at the bar. Her elegant features and dress make her stand out, yet her presence here seems almost natural, as if she's in the right place at the right time, waiting for the right person. You wonder why she's all by herself."
     misn_desc[1] = "Fly to planet %s in the %s system and talk to Jorek. Once Jorek has boarded your ship, proceed to system %s and board the %s."
     
-    credits = 100000 -- 100K
-    timelimit1 = 30
-    timelimit2 = 65
-    
-    -- Aborted mission
-    
     -- NPC stuff
     jorek_npc = {}
     jorek_npc["name"] = "An unpleasant man."
@@ -125,6 +119,10 @@ function create ()
     if not misn.claim( {sys, sys2} ) then
     end
 
+    credits = 100000 -- 100K
+    timelimit1 = 20 -- In STP
+    timelimit2 = 50 -- In STP
+    
     misn.setNPC( "A dark-haired woman", "rebina" )
     misn.setDesc( bar_desc ) 
 end
@@ -154,6 +152,7 @@ function accept()
                                      })
         misn_marker = misn.markerAdd( sys, "low" )
         shadowrun = 2
+        hook.date(time.create(0, 0, 500), "date")
     else
         tk.msg(title[1], refusal)
         var.push("shadowrun", 1) -- For future appearances of this mission
@@ -199,7 +198,7 @@ function soldier2()
    tk.msg( sol2_title[1], sol2_text[1] )
 end
 
-function enter()
+function date()
     -- Deadline stuff
     if deadline1 > time.get() then
         misn.osdCreate(osd_title[1], { string.format(osd_msg[1], planetname, sysname),
@@ -212,9 +211,12 @@ function enter()
                                        string.format(osd_msg[4], time.str(deadline2 - time.get()))
                                      })
         misn.markerMove( misn_marker, sys2 )
+    else
         abort()
     end
+end
 
+function enter()
     -- Random(?) pirate attacks when get closer to your system, and heavier ones when you fly away from it after meeting SHITMAN
     if system.cur():jumpDist(sys) < 3 and system.cur():jumpDist(sys) > 0 and shadowrun == 2 then
         pilot.clear()

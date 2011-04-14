@@ -400,7 +400,7 @@ typedef struct Outfit_ {
  * misc
  */
 void outfit_calcDamage( double *dshield, double *darmour, double *knockback,
-      unsigned int id, DamageType dtype, double dmg );
+      const ShipStats *stats, DamageType dtype, double dmg );
 
 
 /*

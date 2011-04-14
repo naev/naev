@@ -886,7 +886,7 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
 
    /* Calculate the damage. */
    absorb = 1. - CLAMP( 0., 1., p->dmg_absorb - penetration );
-   outfit_calcDamage( &damage_shield, &damage_armour, &knockback, p->id, dtype, damage );
+   outfit_calcDamage( &damage_shield, &damage_armour, &knockback, &p->stats, dtype, damage );
    damage_shield *= absorb;
    damage_armour *= absorb;
 
