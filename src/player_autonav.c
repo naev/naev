@@ -26,8 +26,9 @@ static double tc_mod    = 1.; /**< Time compression modifier. */
 static double tc_max    = 1.; /**< Maximum time compression. */
 static double tc_down   = 0.; /**< Rate of decrement. */
 static int tc_rampdown  = 0; /**< Ramping down time compression? */
-static double starts;
-static double starta;
+static double lasts;
+static double lasta;
+static int slockons;
 static double abort_mod = 1.;
 
 
@@ -78,13 +79,14 @@ static void player_autonavSetup (void)
 {
    player_message("\epAutonav initialized.");
    if (!player_isFlag(PLAYER_AUTONAV)) {
-      tc_mod         = 1.;
-      tc_max         = conf.compression_velocity / solid_maxspeed(player.p->solid, player.p->speed, player.p->thrust);
+      tc_mod    = 1.;
+      tc_max    = MIN( conf.compression_velocity / solid_maxspeed(player.p->solid, player.p->speed, player.p->thrust), conf.compression_mult );
    }
-   tc_rampdown    = 0;
-   tc_down        = 0.;
-   starts         = player.p->shield / player.p->shield_max;
-   starta         = player.p->armour / player.p->armour_max;
+   tc_rampdown  = 0;
+   tc_down      = 0.;
+   lasts        = player.p->shield / player.p->shield_max;
+   lasta        = player.p->armour / player.p->armour_max;
+   slockons     = player.p->lockons;
    if (player.autonav_timer <= 0.)
       abort_mod = 1.;
    player_setFlag(PLAYER_AUTONAV);
@@ -321,20 +323,26 @@ static int player_autonavBrake (void)
  *
  *    @return 1 if autonav should be aborted.
  */
-int player_shouldAbortAutonav(void)
+int player_shouldAbortAutonav( int damaged )
 {
    double failpc = conf.autonav_abort * abort_mod;
    double shield = player.p->shield / player.p->shield_max;
    double armour = player.p->armour / player.p->armour_max;
 
-   if (failpc >= 1. && player.p->lockons > 0 )
+   if (!player_isFlag(PLAYER_AUTONAV))
+      return 0;
+
+   if (failpc >= 1. && !slockons && player.p->lockons > 0)
       player_autonavAbort("Missile Lockon Detected");
-   else if (failpc >= 1. && (shield < 1. && shield < starts))
+   else if (failpc >= 1. && (shield < 1. && shield < lasts) && damaged)
       player_autonavAbort("Sustaining damage");
-   else if (failpc > 0. && (shield < failpc && shield < starts) )
+   else if (failpc > 0. && (shield < failpc && shield < lasts) && damaged)
       player_autonavAbort("Shield below damage threshold");
-   else if (armour < starta)
+   else if (armour < lasta && damaged)
       player_autonavAbort("Sustaining armour damage");
+
+   lasts = player.p->shield / player.p->shield_max;
+   lasta = player.p->armour / player.p->armour_max;
 
    if (!player_isFlag(PLAYER_AUTONAV)) {
       if (player.autonav_timer > 0.)
@@ -357,7 +365,7 @@ void player_thinkAutonav( Pilot *pplayer, double dt )
 {
    if (player.autonav_timer > 0.)
       player.autonav_timer -= dt;
-   if (player_shouldAbortAutonav())
+   if (player_shouldAbortAutonav(0))
       return;
    if ((player.autonav == AUTONAV_JUMP_APPROACH) ||
          (player.autonav == AUTONAV_JUMP_BRAKE)) {

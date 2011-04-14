@@ -31,6 +31,7 @@
 #include "conf.h"
 #include "pilot_heat.h"
 #include "nstring.h"
+#include "pilot.h"
 
 
 #define outfit_setProp(o,p)      ((o)->properties |= p) /**< Checks outfit property. */
@@ -230,13 +231,15 @@ int outfit_compareTech( const void *outfit1, const void *outfit2 )
  *    @param[out] dshield Real shield damage.
  *    @param[out] darmour Real armour damage.
  *    @param[out] knockback Knocback modifier.
+ *    @param[in] stats Stats to calculate with.
  *    @param[in] dtype Damage type.
  *    @param[in] dmg Amoung of damage.
  */
 void outfit_calcDamage( double *dshield, double *darmour, double *knockback,
-      DamageType dtype, double dmg )
+      const ShipStats *stats, DamageType dtype, double dmg )
 {
-   double ds, da, kn;
+   double ds, da, kn, nms, nma;
+
    switch (dtype) {
       case DAMAGE_TYPE_ENERGY:
          ds = dmg*1.1;
@@ -256,6 +259,19 @@ void outfit_calcDamage( double *dshield, double *darmour, double *knockback,
       case DAMAGE_TYPE_RADIATION:
          ds = dmg*0.15; /* still take damage, just not much */
          da = dmg;
+         kn = 0.8;
+         break;
+      case DAMAGE_TYPE_NEBULA:
+         if (stats != NULL) {
+            nms = stats->nebula_dmg_shield;
+            nma = stats->nebula_dmg_armour;
+         }
+         else {
+            nms = 1.;
+            nma = 1.;
+         }
+         ds = dmg * 0.15 * nms;
+         da = dmg * nma;
          kn = 0.8;
          break;
       case DAMAGE_TYPE_EMP:

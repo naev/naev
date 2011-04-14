@@ -886,7 +886,7 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
 
    /* Calculate the damage. */
    absorb = 1. - CLAMP( 0., 1., p->dmg_absorb - penetration );
-   outfit_calcDamage( &damage_shield, &damage_armour, &knockback, dtype, damage );
+   outfit_calcDamage( &damage_shield, &damage_armour, &knockback, &p->stats, dtype, damage );
    damage_shield *= absorb;
    damage_armour *= absorb;
 
@@ -931,6 +931,12 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
    /* EMP does not kill. */
    if ((dtype == DAMAGE_TYPE_EMP) && (p->armour < PILOT_DISABLED_ARMOR*p->ship->armour*0.75))
       p->armour = MIN( armour_start, PILOT_DISABLED_ARMOR*p->ship->armour*0.75);
+
+   /* Player might break autonav. */
+   if ((w != NULL) && (p->id == PLAYER_ID) &&
+         !pilot_isFlag(player.p, PILOT_HYP_BEGIN) &&
+         !pilot_isFlag(player.p, PILOT_HYPERSPACE))
+      player_shouldAbortAutonav(1);
 
    /* Disabled always run before dead to ensure crating boost. */
    if (!pilot_isFlag(p,PILOT_DISABLED) && (p != player.p) && (!pilot_isFlag(p,PILOT_NODISABLE) || (p->armour < 0.)) &&
