@@ -152,15 +152,16 @@ function accept()
                                      })
         misn_marker = misn.markerAdd( sys, "low" )
         shadowrun = 2
-        hook.date(time.create(0, 0, 500), "date")
+
+        dateres = 500
+        datehook = hook.date(time.create(0, 0, dateres), "date")
+        hook.land("land")
+        hook.enter("enter")
     else
         tk.msg(title[1], refusal)
         var.push("shadowrun", 1) -- For future appearances of this mission
         misn.finish(false)
     end
-
-    hook.land("land")
-    hook.enter("enter")
 end
 
 function land()
@@ -201,18 +202,36 @@ end
 function date()
     -- Deadline stuff
     if deadline1 > time.get() then
+        dateresolution(deadline1)
         misn.osdCreate(osd_title[1], { string.format(osd_msg[1], planetname, sysname),
                                        string.format(osd_msg[2], time.str(deadline1 - time.get())),
                                        string.format(osd_msg[3], sysname2, shipname),
                                        string.format(osd_msg[4], time.str(deadline2 - time.get()))
                                      })
     elseif deadline2 > time.get() then
+        dateresolution(deadline2)
         misn.osdCreate(osd_title[1], { string.format(osd_msg[3], sysname2, shipname),
                                        string.format(osd_msg[4], time.str(deadline2 - time.get()))
                                      })
         misn.markerMove( misn_marker, sys2 )
     else
         abort()
+    end
+end
+
+function dateresolution(time)
+    if time - time.get() < time.create(0, 0, 5000) and dateres > 30 then 
+        dateres = 30
+        hook.rm(datehook)
+        datehook = hook.date(time.create(0, 0, dateres), "date")
+    elseif time - time.get() < time.create(0, 1, 0) and dateres > 100 then 
+        dateres = 100
+        hook.rm(datehook)
+        datehook = hook.date(time.create(0, 0, dateres), "date")
+    elseif time - time.get() >= time.create(0, 1, 0) and dateres < 500 then 
+        dateres = 500
+        hook.rm(datehook)
+        datehook = hook.date(time.create(0, 0, dateres), "date")
     end
 end
 
