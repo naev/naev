@@ -824,7 +824,8 @@ void pilot_calcStats( Pilot* pilot )
                nfirerate_turret     += q;
          }
          /* Misc. */
-         s->nebula_damage += os->nebula_damage * q;
+         s->nebula_dmg_shield += os->nebula_dmg_shield * q;
+         s->nebula_dmg_armour += os->nebula_dmg_armour * q;
       }
       else if (outfit_isAfterburner(o)) /* Afterburner */
          pilot->afterburner = pilot->outfits[i]; /* Set afterburner */
@@ -893,7 +894,8 @@ void pilot_calcStats( Pilot* pilot )
       s->firerate_turret  *= exp( -0.15 * (double)(MAX(nfirerate_turret-1,0)) );
    s->firerate_turret  += 1.;
    /* Misc. */
-   s->nebula_damage     = s->nebula_damage/100. + 1.;
+   s->nebula_dmg_shield = s->nebula_dmg_shield/100. + 1.;
+   s->nebula_dmg_armour = s->nebula_dmg_armour/100. + 1.;
 
    /*
     * Calculate jammers.

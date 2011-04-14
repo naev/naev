@@ -82,7 +82,8 @@ typedef struct ShipStats_ {
    double energy_turret; /**< Consumption rate of turrets. */
 
    /* Misc. */
-   double nebula_damage; /**< Resistance of nebula. */
+   double nebula_dmg_shield; /**< Shield nebula resistance. */
+   double nebula_dmg_armour; /**< Armour nebula resistance. */
 } ShipStats;
 
 
@@ -128,6 +129,7 @@ typedef enum DamageType_ {
    DAMAGE_TYPE_KINETIC, /**< Physic impact weapons. */
    DAMAGE_TYPE_ION, /**< Ion-based weapons. */
    DAMAGE_TYPE_RADIATION, /**< Radioactive weapons. */
+   DAMAGE_TYPE_NEBULA, /**< Nebula damage - essentially radiation. */
    DAMAGE_TYPE_EMP /**< Electromagnetic pulse weapons. */
 } DamageType;
 
@@ -398,7 +400,7 @@ typedef struct Outfit_ {
  * misc
  */
 void outfit_calcDamage( double *dshield, double *darmour, double *knockback,
-      DamageType dtype, double dmg );
+      unsigned int id, DamageType dtype, double dmg );
 
 
 /*

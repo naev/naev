@@ -172,6 +172,7 @@ void conf_setGameplayDefaults (void)
 {
    conf.afterburn_sens        = 250;
    conf.compression_velocity  = TIME_COMPRESSION_DEFAULT_MAX;
+   conf.compression_mult      = 200;
    conf.save_compress         = 1;
    conf.mouse_thrust          = 1;
    conf.autonav_abort         = 1.;
@@ -363,6 +364,7 @@ int conf_loadConfig ( const char* file )
 
       /* Misc. */
       conf_loadFloat("compression_velocity",conf.compression_velocity);
+      conf_loadFloat("compression_mult",conf.compression_mult);
       conf_loadBool("save_compress",conf.save_compress);
       conf_loadInt("afterburn_sensitivity",conf.afterburn_sens);
       conf_loadInt("mouse_thrust",conf.mouse_thrust);
@@ -926,6 +928,10 @@ int conf_saveConfig ( const char* file )
    /* Misc. */
    conf_saveComment("Sets the velocity (px/s) to compress up to when time compression is enabled.");
    conf_saveFloat("compression_velocity",conf.compression_velocity);
+   conf_saveEmptyLine();
+
+   conf_saveComment("Sets the multiplier to compress up to when time compression is enabled.");
+   conf_saveFloat("compression_mult",conf.compression_mult);
    conf_saveEmptyLine();
 
    conf_saveComment("Enables compression on savegames");
