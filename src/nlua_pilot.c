@@ -112,6 +112,7 @@ static int pilotL_ship( lua_State *L );
 static int pilotL_idle( lua_State *L );
 static int pilotL_control( lua_State *L );
 static int pilotL_memory( lua_State *L );
+static int pilotL_memoryCheck( lua_State *L );
 static int pilotL_taskclear( lua_State *L );
 static int pilotL_goto( lua_State *L );
 static int pilotL_face( lua_State *L );
@@ -195,6 +196,7 @@ static const luaL_reg pilotL_methods[] = {
    { "idle", pilotL_idle },
    { "control", pilotL_control },
    { "memory", pilotL_memory },
+   { "memoryCheck", pilotL_memoryCheck },
    { "taskClear", pilotL_taskclear },
    { "goto", pilotL_goto },
    { "face", pilotL_face },
@@ -239,6 +241,8 @@ static const luaL_reg pilotL_cond_methods[] = {
    { "cargoFree", pilotL_cargoFree },
    { "cargoHas", pilotL_cargoHas },
    { "cargoList", pilotL_cargoList },
+   /* Manual AI control. */
+   { "memoryCheck", pilotL_memoryCheck },
    {0,0}
 };
 
@@ -2733,21 +2737,26 @@ static int pilotL_control( lua_State *L )
 
 /**
  * @brief Copies a value between two states.
+ *
+ *    @param to State to copy to.
+ *    @param from State to copy from.
+ *    @param ind Index of item to copy from state.
+ * @return 0 on success.
  */
 static int lua_copyvalue( lua_State *to, lua_State *from, int ind )
 {
    switch (lua_type( from, ind )) {
       case LUA_TNIL:
-         lua_pushnil(to);
+         lua_pushnil( to);
          break;
       case LUA_TNUMBER:
-         lua_pushnumber(to, lua_tonumber(from, ind));
+         lua_pushnumber( to, lua_tonumber(from, ind) );
          break;
       case LUA_TBOOLEAN:
-         lua_pushboolean(to, lua_toboolean(from, ind));
+         lua_pushboolean( to, lua_toboolean(from, ind) );
          break;
       case LUA_TSTRING:
-         lua_pushstring(to, lua_tostring(from, ind));
+         lua_pushstring( to, lua_tostring(from, ind) );
          break;
 
       default:
@@ -2771,6 +2780,11 @@ static int pilotL_memory( lua_State *L )
    lua_State *pL;
    Pilot *p;
 
+   if (lua_gettop(L) < 3) {
+      NLUA_ERROR(L, "pilot.memory requires 3 arguments!");
+      return 0;
+   }
+
    /* Get the pilot. */
    p  = luaL_validpilot(L,1);
 
@@ -2781,23 +2795,61 @@ static int pilotL_memory( lua_State *L )
    }
    pL = p->ai->L;
 
-   /* */
-   lua_getglobal(pL, "pilotmem");
-   /* pilotmem */
-   lua_pushnumber(pL, p->id);
-   /* pilotmem, id */
-   lua_gettable(pL, -2);
-   /* pilotmem, table */
-   lua_copyvalue(pL, L, 2);
-   /* pilotmem, table, key */
-   lua_copyvalue(pL, L, 3);
-   /* pilotmem, table, key, value */
-   lua_settable(pL, -3);
-   /* pilotmem, table */
-   lua_pop(L,2);
-   /* */
+   /* Copy it over. */
+   lua_getglobal( pL, AI_MEM );        /* pilotmem */
+   lua_pushnumber( pL, p->id );        /* pilotmem, id */
+   lua_gettable( pL, -2);              /* pilotmem, table */
+   lua_copyvalue( pL, L, 2 );          /* pilotmem, table, key */
+   lua_copyvalue( pL, L, 3 );          /* pilotmem, table, key, value */
+   lua_settable( pL, -3 );             /* pilotmem, table */
+   lua_pop( pL, 2 );                   /* */
 
    return 0;
+}
+
+
+/**
+ * @brief Gets the value of the pilot's memory.
+ *
+ * Equivalent to reading the pilot's "mem.str".
+ *
+ * @usage aggr = p:memoryCheck( "aggressive" ) -- See if the pilot is aggressive
+ *
+ *    @luaparam p Pilot to get memory of.
+ *    @luaparam str Name of the memory to get.
+ *    @luareturn The value stored.
+ * @luafunc memoryCheck( p, str )
+ */
+static int pilotL_memoryCheck( lua_State *L )
+{
+   lua_State *pL;
+   Pilot *p;
+
+   if (lua_gettop(L) < 2) {
+      NLUA_ERROR(L, "pilot.memoryCheck requires 2 arguments!");
+      return 0;
+   }
+
+   /* Get the pilot. */
+   p  = luaL_validpilot(L,1);
+
+   /* Set the pilot's memory. */
+   if (p->ai == NULL) {
+      NLUA_ERROR(L,"Pilot does not have AI.");
+      return 0;
+   }
+   pL = p->ai->L;
+
+   /* Copy it over. */
+   lua_getglobal( pL, AI_MEM );        /* pilotmem */
+   lua_pushnumber( pL, p->id );        /* pilotmem, id */
+   lua_gettable( pL, -2);              /* pilotmem, table */
+   lua_copyvalue( pL, L, 2 );          /* pilotmem, table, key */
+   lua_gettable( pL, -2 );             /* pilotmem, table, value */
+   lua_copyvalue( L, pL, -1 );         /* pilotmem, table, value */
+   lua_pop( pL, 3 );                   /* */
+
+   return 1;
 }
 
 
