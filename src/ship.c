@@ -330,7 +330,8 @@ int ship_statsParseSingle( ShipStats *s, xmlNodePtr node )
    xmlr_floatR(node,"firerate_turret",s->firerate_turret);
    xmlr_floatR(node,"energy_turret",s->energy_turret);
    /* Misc. */
-   xmlr_floatR(node,"nebula_damage",s->nebula_damage);
+   xmlr_floatR(node,"nebula_dmg_shield",s->nebula_dmg_shield);
+   xmlr_floatR(node,"nebula_dmg_armour",s->nebula_dmg_armour);
    return 1;
 }
 
@@ -382,7 +383,8 @@ int ship_statsDesc( ShipStats *s, char *buf, int len, int newline, int pilot )
    DESC_ADD(s->firerate_turret,"Fire Rate (Turret)");
    DESC_ADD(s->energy_turret,"Energy Usage (Turret)");
    /* Misc. */
-   DESC_ADD(s->nebula_damage,"Nebula damage.");
+   DESC_ADD(s->nebula_dmg_shield,"Nebula Damage (Shield)");
+   DESC_ADD(s->nebula_dmg_armour,"Nebula Damage (Armour)");
 #undef DESC_ADD
 
    return i;

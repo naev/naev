@@ -879,10 +879,10 @@ void gui_render( double dt )
    /*
     * Countdown timers.
     */
-   blink_pilot    -= dt;
+   blink_pilot    -= dt / dt_mod;
    if (blink_pilot < 0.)
       blink_pilot += RADAR_BLINK_PILOT;
-   blink_planet   -= dt;
+   blink_planet   -= dt / dt_mod;
    if (blink_planet < 0.)
       blink_planet += RADAR_BLINK_PLANET;
    if (interference_alpha > 0.)
@@ -1142,7 +1142,7 @@ static void gui_renderMessages( double dt )
       if ((mesg_viewpoint != -1) || (mesg_stack[m].t >= 0.)) {
          /* Decrement timer. */
          if (mesg_viewpoint == -1) {
-            mesg_stack[m].t -= dt;
+            mesg_stack[m].t -= dt / dt_mod;
 
             /* Handle fading out. */
             if (mesg_stack[m].t - mesg_fade < 0.)
