@@ -423,7 +423,7 @@ static int time_tonumber( lua_State *L )
  *
  *    @luaparam num Number to get time from.
  *    @luareturn Time representing number.
- * @luafunc tonumber( num )
+ * @luafunc fromnumber( num )
  */
 static int time_fromnumber( lua_State *L )
 {
