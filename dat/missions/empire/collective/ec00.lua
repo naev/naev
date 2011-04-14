@@ -11,6 +11,8 @@
 
 ]]--
 
+include "scripts/proximity.lua"
+
 lang = naev.lang()
 if lang == "es" then
    -- not translated atm
@@ -26,20 +28,34 @@ else -- default english
    title[2] = "Briefing"
    title[3] = "Mission Accomplished"
    text = {}
-   text[1] = [[You approach the Lt. Commander.
-"Hello %s, we have a reconnaissance mission you might be interested in. Commander Soldner said you'd make a good candidate for the mission. You up for the challenge?"]]
-   text[2] = [["I don't think we've met. I'm Lt. Commander Dimitri. If all goes well you'll be reporting to me for the next assignments."
-"You've heard about the Collective right?  From what we know, the Collective seems to be a sort of 'hive' of robots. They're a recent menace; had the timing to arrive more or less when the Incident occured, otherwise they would have been wiped out by the Emperor's Armada without a sweat. They completely wiped out all human life in Eiroik, and the other worlds they hit. We managed to stop them here, in %s, and constructed this base. Since then it's been more or less a stalemate."]]
-   text[3] = [["This week Collective activity has increased heavily around Rockbed. We've been trying to contain them, but reports indicate that a scout broke through. It was last detected by a patrol in %s, heading southeast. We expect it to have reached %s by now. You are to locate the scout and report back to %s in the %s system. It seems like the Collective is planning something and we want to follow their game a little closer."
-"It is of vital importance that you do not engage the drone. Report back as soon as you locate it."]]
-   text[4] = [[After landing, you head to the Empire military headquarters and find Lt. Commander Dimitri there.
-"Well it seems like the drone has some strange fixation on %s. We aren't quite sure what to make of it, but intelligence is working on it. Report back to the bar in a bit and we'll see what we can do about the Collective."]]
+   text[1] = [[    You approach the Lt. Commander.
+    "Hello %s, we have a reconnaissance mission you might be interested in. Commander Soldner said you'd make a good candidate for the mission. You up for the challenge?"]]
+   text[2] = [[    "I don't think we've met. I'm Lt. Commander Dimitri. If all goes well you'll be reporting to me for the next assignments."
+    "You've heard about the Collective right?  From what we know, the Collective seems to be a sort of 'hive' of robots. They're a recent menace; had the timing to arrive more or less when the Incident occured, otherwise they would have been wiped out by the Emperor's Armada without a sweat. They completely wiped out all human life in Eiroik, and the other worlds they hit. We managed to stop them here, in %s, and constructed this base. Since then it's been more or less a stalemate."]]
+   text[3] = [[    "This week Collective activity has increased heavily. We've been trying to contain them, but a scout broke through to the jump point. It was last detected by a patrol in %s, which saw it jumping out to %s. You are to locate the scout and report back to %s in the %s system. It seems like the Collective is planning something and we want to follow their game a little closer."
+    "It is of vital importance that you do not engage the drone. Report back as soon as you locate it."]]
+   text[4] = [[    After landing, you head to the Empire military headquarters and find Lt. Commander Dimitri there.
+    "Well it seems like the drone has some strange fixation on %s. We aren't quite sure what to make of it, but intelligence is working on it. Report back to the bar in a bit and we'll see what we can do about the Collective."]]
+   msg_spotdrone = "Drone spotted!"
    msg_killdrone = "Mission Failed: You weren't supposed to kill the drone!"
+   
+   osd_msg = {}
+   osd_msg[1] = "Fly to the %s system"
+   osd_msg[2] = "Locate the Collective drone, but do not engage."
+   osd_msg[3] = "Report back to %s in the %s system"
 end
 
 
 function create ()
-   -- Note: this mission does not make any system claims.
+   misn_nearby = system.get("Acheron")
+   misn_target = system.get("Merisi")
+   misn_base,misn_base_sys = planet.get("Omega Station")
+
+    missys = {misn_target}
+    if not misn.claim(missys) then
+        abort() -- TODO: This claim should be in the event that starts this mission!
+    end  
+
    misn.setNPC( "Lt. Commander", "dimitri" )
    misn.setDesc( bar_desc )
 end
@@ -55,9 +71,6 @@ function accept ()
    misn.accept()
 
    misn_stage = 0
-   misn_nearby = system.get("Gamel")
-   misn_target = system.get("Dune")
-   misn_base,misn_base_sys = planet.get("Omega Station")
    misn_marker = misn.markerAdd( misn_target, "low" )
 
    -- Mission details
@@ -70,7 +83,9 @@ function accept ()
    tk.msg( title[2], string.format( text[3], misn_nearby:name(),
          misn_target:name(), misn_base:name(), misn_base_sys:name() ))
 
-   misn.osdCreate(misn_title, {misn_desc[1]:format(misn_nearby:name())})
+   osd_msg[1] = osd_msg[1]:format(misn_target:name())
+   osd_msg[3] = osd_msg[3]:format(misn_base:name(), misn_base_sys:name())
+   misn.osdCreate(misn_title, osd_msg)
    hook.enter("enter")
    hook.land("land")
 end
@@ -79,24 +94,31 @@ end
 function enter()
    sys = system.cur()
 
-   -- additional fleets
-   if sys:name() == "Rockbed" then -- increase action for realism
-      pilot.add("Empire Sml Defense")
-      pilot.add("Collective Sml Swarm")
-   elseif sys == misn_target then
-      p = pilot.add("Collective Drone", "scout")
-      for k,v in pairs(p) do
-         hook.pilot( v, "death", "kill")
-      end
+   if sys == misn_target and misn_stage == 0 then
+      pilot.clear()
+      pilot.toggleSpawn(false)
+      misn.osdActive(2)
+      hook.timer(500, "proximity", {location = vec2.new(8000, -20000), radius = 5000, funcname = "spotdrone"}) 
+   elseif misn_stage == 0 then
+      misn.osdActive(1)
    end
+end
+
+function spotdrone()
+   p = pilot.add("Collective Drone", "scout", vec2.new(8000, -20000))[1]
+   p:control()
+   p:setHilight(true)
+   idle()
+   
+   hook.pilot( p, "death", "kill")
+   hook.pilot( p, "idle", "idle")
 
    -- update mission
-   if misn_stage == 0 and sys == misn_target then
-      misn.setDesc( string.format(misn_desc[2],misn_base:name(),misn_base_sys:name()) )
-      misn_stage = 1
-      misn.markerMove( misn_marker, misn_base_sys )
-      misn.osdCreate(misn_title, {misn_desc[2]:format(misn_base:name(),misn_base_sys:name())})
-   end
+   misn.osdActive(3)
+   player.msg(msg_spotdrone)
+   misn.setDesc( string.format(misn_desc[2],misn_base:name(),misn_base_sys:name()) )
+   misn_stage = 1
+   misn.markerMove( misn_marker, misn_base_sys )
 end
 
 function land()
@@ -107,6 +129,18 @@ function land()
       player.modFaction("Empire",5)
       misn.finish(true)
    end
+end
+
+function idle()
+    if p:exists() then
+        local location = p:pos()
+        local dist = 750
+        local angle = rnd.rnd() * 2 * math.pi
+        local newlocation = vec2.new(dist * math.cos(angle), dist * math.sin(angle)) -- New location is 750px away in a random direction
+        p:taskClear()
+        p:goto(location + newlocation, false, false)
+        hook.timer(5000, "idle")
+    end
 end
 
 function kill()

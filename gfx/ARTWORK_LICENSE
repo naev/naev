@@ -448,9 +448,40 @@
          * P04.png
          * C01.png
 
+<<<<<<< HEAD
  * Author: Alexander Huitric <ahuitric@gmail.com>, License: CC-by-sa 3
    * gfx
      * ship
        * ingenuity.png
        * ingenuity_comm.png
        * ingenuity_engine.png
+=======
+ * Author: Josh Combs <http://freeorion.org>, License: CC-by-sa 3.0
+   * gfx
+     * bkg
+       * nebula20.png
+       * nebula21.png
+       * nebula22.png
+       * nebula23.png
+       * nebula24.png
+       * nebula25.png
+       * nebula26.png
+       * nebula27.png
+       * nebula28.png
+       * nebula29.png
+       * nebula30.png
+       * nebula31.png
+       * nebula32.png
+       * nebula33.png
+
+ * Author: NASA, License: PD
+   * gfx
+     * bkg
+       * nebula02.png
+       * nebula04.png
+       * nebula10.png
+       * nebula12.png
+       * nebula16.png
+       * nebula17.png
+       * nebula19.png
+>>>>>>> 0e0a8594be847c6e0e37ee2b60c2c59f64753589

@@ -477,7 +477,8 @@
   </slots>
   <stats>
    <ew_hide>30</ew_hide>
-   <nebula_damage>-80</nebula_damage>
+   <nebula_dmg_shield>-80</nebula_dmg_shield>
+   <nebula_dmg_armor>-97</nebula_dmg_armor>
   </stats>
  </ship>
  <ship name="Proteron Derivative">
@@ -522,6 +523,7 @@
   </slots>
   <stats>
    <damage_forward>5</damage_forward>
+   <nebula_dmg_shield>-95</nebula_dmg_shield>
   </stats>
  </ship>
  <ship name="Sirius Fidelity">
@@ -1447,6 +1449,7 @@
   <stats>
    <ew_detect>5</ew_detect>
    <energy_turret>-5</energy_turret>
+   <nebula_dmg_shield>-99</nebula_dmg_shield>
   </stats>
  </ship>
  <ship name="Pacifier">
@@ -1710,6 +1713,7 @@
   <stats>
    <ew_detect>-5</ew_detect>
    <firerate_turret>5</firerate_turret>
+   <nebula_dmg_shield>-99.9</nebula_dmg_shield>
   </stats>
  </ship>
  <ship name="Hawking">

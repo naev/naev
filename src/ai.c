@@ -120,7 +120,6 @@
 #define AI_SUFFIX       ".lua" /**< AI file suffix. */
 #define AI_INCLUDE      "include/" /**< Where to search for includes. */
 
-#define AI_MEM          "__mem" /**< Internal pilot memory. */
 #define AI_MEM_DEF      "def" /**< Default pilot memory. */
 
 
