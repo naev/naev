@@ -36,7 +36,7 @@ function create()
    col_prim = colour.new(71/255,234/255, 252/255 )
    col_sec = colour.new(136/255,179/255, 255/255 )
    col_temperature = col_heat
-   col_missile = col_txt_enm
+   col_missile = colour.new(col_txt_enm)
 
    --Load Images
    local base = "gfx/gui/slim/"
