@@ -231,20 +231,14 @@ int outfit_compareTech( const void *outfit1, const void *outfit2 )
  *    @param[out] dshield Real shield damage.
  *    @param[out] darmour Real armour damage.
  *    @param[out] knockback Knocback modifier.
+ *    @param[in] stats Stats to calculate with.
  *    @param[in] dtype Damage type.
  *    @param[in] dmg Amoung of damage.
  */
 void outfit_calcDamage( double *dshield, double *darmour, double *knockback,
-      unsigned int id, DamageType dtype, double dmg )
+      const ShipStats *stats, DamageType dtype, double dmg )
 {
    double ds, da, kn, nms, nma;
-   Pilot* p = pilot_get(id);
-
-   nms = nma = 1.;
-   if (p != NULL) {
-      nms = p->stats.nebula_dmg_shield;
-      nma = p->stats.nebula_dmg_armour;
-   }
 
    switch (dtype) {
       case DAMAGE_TYPE_ENERGY:
@@ -268,6 +262,14 @@ void outfit_calcDamage( double *dshield, double *darmour, double *knockback,
          kn = 0.8;
          break;
       case DAMAGE_TYPE_NEBULA:
+         if (stats != NULL) {
+            nms = stats->nebula_dmg_shield;
+            nma = stats->nebula_dmg_armour;
+         }
+         else {
+            nms = 1.;
+            nma = 1.;
+         }
          ds = dmg * 0.15 * nms;
          da = dmg * nma;
          kn = 0.8;
