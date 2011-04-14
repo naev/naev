@@ -131,7 +131,7 @@ function accept()
     alive = {true, true, true} -- Keep track of the escorts. Update this when they die.
     alive["__save"] = true
     stage = 1 -- Keeps track of the mission stage
-    nextsys = getNextSystem(misssys[stage]) -- This variable holds the system the player is supposed to jump to NEXT.
+    nextsys = getNextSystem(system.cur(), misssys[stage]) -- This variable holds the system the player is supposed to jump to NEXT.
     seirsys = system.cur() -- Remember where the Seiryuu is.
     oldsys = system.cur() -- This is the LAST system we were in. Needed to choose the correct jump point.
     chattered = false
@@ -168,7 +168,7 @@ function jumpout()
         abort()
     end
     oldsys = system.cur()
-    nextsys = getNextSystem(misssys[stage])
+    nextsys = getNextSystem(system.cur(), misssys[stage])
 end
 
 -- Function hooked to landing. Only used to prevent a fringe case.
@@ -186,9 +186,9 @@ end
 function takeoff()
     if stage == 3 then
         dpjump = true -- We're going to assume that if the player takes off AND the stage is 3, the diplomat will have gotten away and the mission can continue. Mainly a leniency toward refueling.
-        player.msg(string.format("Mission update: the diplomat has jumped for %s.", getNextSystem(misssys[stage]):name()))
+        player.msg(string.format("Mission update: the diplomat has jumped for %s.", getNextSystem(system.cur(), misssys[stage]):name()))
         misn.markerRm(marker)
-        marker = misn.markerAdd(getNextSystem(misssys[stage]), "low")
+        marker = misn.markerAdd(getNextSystem(system.cur(), misssys[stage]), "low")
     end
 end
 
@@ -276,9 +276,9 @@ function jumpin()
             for i, j in ipairs(escorts) do
                 if j:exists() then
                     if stage == 2 then
-                        j:hyperspace(getNextSystem(misssys[stage])) -- Hyperspace toward the next destination system.
+                        j:hyperspace(getNextSystem(system.cur(), misssys[stage])) -- Hyperspace toward the next destination system.
                     else
-                        diplomat:hyperspace(getNextSystem(misssys[stage])) -- Hyperspace toward the next destination system.
+                        diplomat:hyperspace(getNextSystem(system.cur(), misssys[stage])) -- Hyperspace toward the next destination system.
                         j:follow(diplomat) -- Follow the diplomat.
                     end
                 end
@@ -338,7 +338,7 @@ function escortStart()
     for i, j in pairs(escorts) do
         if j:exists() then
             j:setHilight(true)
-            j:hyperspace(getNextSystem(misssys[stage])) -- Hyperspace toward the next destination system.
+            j:hyperspace(getNextSystem(system.cur(), misssys[stage])) -- Hyperspace toward the next destination system.
         end
     end
 end
@@ -348,7 +348,7 @@ function escortNext()
     stage = 3 -- The actual escort begins here.
     misn.osdActive(3)
     diplomat:setHilight(true) -- Needed for first time
-    diplomat:hyperspace(getNextSystem(misssys[stage])) -- Hyperspace toward the next destination system.
+    diplomat:hyperspace(getNextSystem(system.cur(), misssys[stage])) -- Hyperspace toward the next destination system.
     dpjump = false
 end
 
@@ -365,7 +365,7 @@ function attackerDeath()
             j:control()
             j:changeAI("trader")
             j:follow(diplomat)
-            diplomat:hyperspace(getNextSystem(misssys[stage])) -- Hyperspace toward the next destination system.
+            diplomat:hyperspace(getNextSystem(system.cur(), misssys[stage])) -- Hyperspace toward the next destination system.
             controlled = true
         end
     end
@@ -410,15 +410,15 @@ end
 function diplomatJump()
     dpjump = true
     misn.markerRm(marker)
-    marker = misn.markerAdd(getNextSystem(misssys[stage]), "low")
+    marker = misn.markerAdd(getNextSystem(system.cur(), misssys[stage]), "low")
     for i, j in ipairs(escorts) do
         if j:exists() then
             j:control(true)
             j:taskClear()
-            j:hyperspace(getNextSystem(misssys[stage])) -- Hyperspace toward the next destination system.
+            j:hyperspace(getNextSystem(system.cur(), misssys[stage])) -- Hyperspace toward the next destination system.
         end
     end
-    player.msg(string.format("Mission update: the diplomat has jumped for %s.", getNextSystem(misssys[stage]):name()))
+    player.msg(string.format("Mission update: the diplomat has jumped for %s.", getNextSystem(system.cur(), misssys[stage]):name()))
 end
 
 -- Handle the diplomat getting attacked.

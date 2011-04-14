@@ -1,10 +1,9 @@
--- Choose the next system to jump to on the route from the current system to the argument system.
-function getNextSystem(finalsys)
-    local mysys = system.cur()
-    if mysys == finalsys then
-        return mysys
+-- Choose the next system to jump to on the route from system nowsys to system finalsys.
+function getNextSystem(nowsys, finalsys)
+    if nowsys == finalsys then
+        return nowsys
     else
-        local neighs = mysys:adjacentSystems()
+        local neighs = nowsys:adjacentSystems()
         local nearest = -1
         local mynextsys = finalsys
         for _, j in pairs(neighs) do
