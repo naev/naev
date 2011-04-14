@@ -36,6 +36,7 @@ function create()
    col_prim = colour.new(71/255,234/255, 252/255 )
    col_sec = colour.new(136/255,179/255, 255/255 )
    col_temperature = col_heat
+   col_missile = col_txt_enm
 
    --Load Images
    local base = "gfx/gui/slim/"
@@ -198,6 +199,7 @@ function create()
    timers = {}
    timers[1] = 0.5
    timers[2] = 0.5
+   timers[3] = 0.5
    blinkcol = col_txt_enm
    gfxWarn = true
 
@@ -380,7 +382,7 @@ function render_ammoBar( name, x, y, value, txt, txtcol, col )
 end
 
 
-function render( dt )
+function render( dt, dt_mod )
 
    --Values
    armour, shield = pp:health()
@@ -445,7 +447,7 @@ function render( dt )
    elseif hspeed <= 200. then
       render_bar( "speed", hspeed - 100, txt, col_txt_wrn, nil, col_speed2, col_speed )
    else
-      timers[1] = timers[1] - dt
+      timers[1] = timers[1] - dt / dt_mod
       if timers[1] <=0. then
          timers[1] = 0.5
          if blinkcol == col_txt_una then
@@ -495,7 +497,8 @@ function render( dt )
 
    --Warning Light
    if lockons > 0 then
-      timers[2] = timers[2] - dt
+      timers[2] = timers[2] - dt / dt_mod
+      timers[3] = timers[3] - dt / dt_mod
       if timers[2] <= 0. then
          if lockons < 20 then
             timers[2] = 0.5 - (0.025 * lockons)
@@ -505,12 +508,15 @@ function render( dt )
             gfxWarn = true
          end
       end
-      if gfxWarn == true then
+      if gfxWarn then
          gfx.renderTex( warnlight1, pl_pane_x + 6, pl_pane_y + 148 )
       end
-      local length
-      length = gfx.printDim( false, "Warning - Missile Lockon Detected" )
-      gfx.print( false, "Warning - Missile Lockon Detected", (screen_w - length)/2, screen_h - 100, col_txt_enm )
+      if timers[3] <= -0.5 then
+         timers[3] = 0.5
+      end
+      colour.setAlpha( col_missile, math.abs(timers[3]) * 1.2 + .4 )
+      local length = gfx.printDim( false, "Warning - Missile Lockon Detected" )
+      gfx.print( false, "Warning - Missile Lockon Detected", (screen_w - length)/2, screen_h - 100, col_missile )
    end
    if armour <= 20 then
       gfx.renderTex( warnlight2, pl_pane_x + 29, pl_pane_y + 3 )

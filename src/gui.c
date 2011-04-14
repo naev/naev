@@ -898,7 +898,8 @@ void gui_render( double dt )
    if (gui_L != NULL) {
       gui_prepFunc( "render" );
       lua_pushnumber( gui_L, dt );
-      gui_runFunc( "render", 1, 0 );
+      lua_pushnumber( gui_L, dt_mod );
+      gui_runFunc( "render", 2, 0 );
    }
 
    /* Messages. */
@@ -1921,6 +1922,10 @@ static int gui_prepFunc( const char* func )
 
 /**
  * @brief Runs a function.
+ * @note Function must be prepared beforehand.
+ *    @param func Name of the function to run.
+ *    @param nargs Arguments to the function.
+ *    @param nret Parameters to get returned from the function.
  */
 static int gui_runFunc( const char* func, int nargs, int nret )
 {
