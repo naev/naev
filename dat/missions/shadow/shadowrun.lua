@@ -153,7 +153,8 @@ function accept()
         misn_marker = misn.markerAdd( sys, "low" )
         shadowrun = 2
 
-        datehook = hook.date(time.create(0, 0, 500), "date")
+        dateres = 500
+        datehook = hook.date(time.create(0, 0, dateres), "date")
         hook.land("land")
         hook.enter("enter")
     else
@@ -219,15 +220,18 @@ function date()
 end
 
 function dateresolution(time)
-    if time - time.get() < time.create(0, 0, 5000) then 
-        if datehook ~= nil then hook.rm(datehook) end
-        datehook = hook.date(time.create(0, 0, 30), "date")
-    elseif time - time.get() < time.create(0, 1, 0) then 
-        if datehook ~= nil then hook.rm(datehook) end
-        datehook = hook.date(time.create(0, 0, 100), "date")
-    else
-        if datehook ~= nil then hook.rm(datehook) end
-        datehook = hook.date(time.create(0, 0, 500), "date")
+    if time - time.get() < time.create(0, 0, 5000) and dateres > 30 then 
+        dateres = 30
+        hook.rm(datehook)
+        datehook = hook.date(time.create(0, 0, dateres), "date")
+    elseif time - time.get() < time.create(0, 1, 0) and dateres > 100 then 
+        dateres = 100
+        hook.rm(datehook)
+        datehook = hook.date(time.create(0, 0, dateres), "date")
+    elseif time - time.get() >= time.create(0, 1, 0) and dateres < 500 then 
+        dateres = 500
+        hook.rm(datehook)
+        datehook = hook.date(time.create(0, 0, dateres), "date")
     end
 end
 
