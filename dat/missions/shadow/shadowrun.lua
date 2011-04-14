@@ -152,15 +152,15 @@ function accept()
                                      })
         misn_marker = misn.markerAdd( sys, "low" )
         shadowrun = 2
-        hook.date(time.create(0, 0, 500), "date")
+
+        datehook = hook.date(time.create(0, 0, 500), "date")
+        hook.land("land")
+        hook.enter("enter")
     else
         tk.msg(title[1], refusal)
         var.push("shadowrun", 1) -- For future appearances of this mission
         misn.finish(false)
     end
-
-    hook.land("land")
-    hook.enter("enter")
 end
 
 function land()
@@ -201,18 +201,33 @@ end
 function date()
     -- Deadline stuff
     if deadline1 > time.get() then
+        dateresolution(deadline1:tonumber() - time.get():tonumber())
         misn.osdCreate(osd_title[1], { string.format(osd_msg[1], planetname, sysname),
                                        string.format(osd_msg[2], time.str(deadline1 - time.get())),
                                        string.format(osd_msg[3], sysname2, shipname),
                                        string.format(osd_msg[4], time.str(deadline2 - time.get()))
                                      })
     elseif deadline2 > time.get() then
+        dateresolution(deadline2:tonumber() - time.get():tonumber())
         misn.osdCreate(osd_title[1], { string.format(osd_msg[3], sysname2, shipname),
                                        string.format(osd_msg[4], time.str(deadline2 - time.get()))
                                      })
         misn.markerMove( misn_marker, sys2 )
     else
         abort()
+    end
+end
+
+function dateresolution(timeleft)
+    if timeleft < 5000000 then 
+        if datehook ~= nil then hook.rm(datehook) end
+        datehook = hook.date(time.create(0, 0, 30), "date")
+    elseif timeleft < 10000000 then
+        if datehook ~= nil then hook.rm(datehook) end
+        datehook = hook.date(time.create(0, 0, 100), "date")
+    else
+        if datehook ~= nil then hook.rm(datehook) end
+        datehook = hook.date(time.create(0, 0, 500), "date")
     end
 end
 
