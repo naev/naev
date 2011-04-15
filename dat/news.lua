@@ -11,6 +11,7 @@ include("dat/news/news_empire.lua")
 include("dat/news/news_dvaered.lua")
 include("dat/news/news_goddard.lua")
 include("dat/news/news_pirate.lua")
+include("dat/news/news_sirius.lua")
 
 
 function news( n )
@@ -75,6 +76,13 @@ function news_genTable ()
       greet = news_greetPirate()
       news_addGeneric( rawtable )
       news_addPirate( rawtable )
+
+   -- Sirius news
+   elseif f:name() == "Sirius" then
+      greet = news_greetSirius()
+      news_addGeneric( rawtable )
+      news_addEmpire( rawtable )
+      news_addSirius( rawtable )
 
    -- Generic news
    else

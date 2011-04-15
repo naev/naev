@@ -13,6 +13,8 @@
 
 #include "physics.h"
 
+#define AI_MEM          "__mem" /**< Internal pilot memory. */
+
 
 #define MIN_DIR_ERR     5.0*M_PI/180. /**< Minimum direction error. */
 #define MAX_DIR_ERR     0.5*M_PI/180. /**< Maximum direction error. */
