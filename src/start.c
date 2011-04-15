@@ -67,7 +67,7 @@ int start_load (void)
    stp = -1;
    stu = -1;
 
-   /* Try to read teh file. */
+   /* Try to read the file. */
    buf = ndata_read( START_DATA, &bufsize );
    if (buf == NULL)
       return -1;

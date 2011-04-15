@@ -157,7 +157,7 @@ MissionData* mission_getFromName( const char* name )
  *    @param misn Data to use.
  *    @param genid 1 if should generate id, 0 otherwise.
  *    @param create 1 if should run create function, 0 otherwise.
- *    @param[out] id ID of teh newly created mission.
+ *    @param[out] id ID of the newly created mission.
  *    @return 0 on success.
  */
 static int mission_init( Mission* mission, MissionData* misn, int genid, int create, unsigned int *id )
