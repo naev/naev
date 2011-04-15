@@ -1503,7 +1503,7 @@ void player_hailStart (void)
    player_hailCounter = 5;
 
    /* Abort autonav. */
-   player_autonavAbort("Recieving hail.");
+   player_autonavAbort("Receiving hail");
 }
 
 
