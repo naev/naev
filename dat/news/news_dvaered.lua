@@ -23,7 +23,7 @@ function news_addDvaered( rawtable )
       {
          title = "New Mace Rockets",
          desc = "Dvaered Engineers are proud to present the new improved version of the Dvaered Mace rocket. \"We have proven the new rocket to be nearly twice as destructive as the previous versions.\", says Chief Dvaered Engineer."
-      }
+      },
       --[[
          Business
       --]]
@@ -33,6 +33,10 @@ function news_addDvaered( rawtable )
       --[[
          Human interest.
       --]]
+      {
+         title = "Sirius Weaker than Ever",
+         desc = "This SCU breaks the negative record of fewest pilgrims to Mutris since the formation of House Sirius. This weakness is yet another sign that House Dvaered must increase patrols on the border and into Sirius space." 
+      }
    }
 
    -- Insert into table

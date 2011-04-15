@@ -195,7 +195,7 @@ function spawnFLF()
     angle = rnd.rnd() * 2 * math.pi
     dist = 800
     vecFLF = vec2.new(math.cos(angle) * dist, math.sin(angle) * dist)
-    fleetFlf = addShips( "FLF Vendetta", "flf_norun", player.pilot():pos() + vecFLF, 6 )
+    fleetFLF = addShips( "FLF Vendetta", "flf_norun", player.pilot():pos() + vecFLF, 6 )
     fleetDV[1]:comm(comm_msg)
     
     for i, j in ipairs(fleetFLF) do
