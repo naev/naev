@@ -478,7 +478,7 @@
   <stats>
    <ew_hide>30</ew_hide>
    <nebula_dmg_shield>-80</nebula_dmg_shield>
-   <nebula_dmg_armor>-97</nebula_dmg_armor>
+   <nebula_dmg_armour>-97</nebula_dmg_armour>
   </stats>
  </ship>
  <ship name="Proteron Derivative">
