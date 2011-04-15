@@ -2095,7 +2095,7 @@ int gui_load( const char* name )
 
 
 /**
- * @brief Creates teh interference map for the current gui.
+ * @brief Creates the interference map for the current gui.
  */
 static void gui_createInterference( Radar *radar )
 {
