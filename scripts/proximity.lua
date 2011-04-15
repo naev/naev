@@ -26,7 +26,7 @@ end
 proximityJumpoutHook = hook.jumpout("proximityCancel")
 proximityLandHook = hook.land("proximityCancel")
 function proximityCancel()
-    if proximityTimerHook =~ nil then
+    if proximityTimerHook ~= nil then
         hook.rm(proximityTimerHook)
     end
 end
