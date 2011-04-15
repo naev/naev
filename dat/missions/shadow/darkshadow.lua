@@ -356,7 +356,6 @@ end
 
 -- Hook for the idle status of the leader of a squad.
 -- Makes the squads patrol their routes.
--- TODO: make this shorter
 function leaderIdle(pilot)
     for i, j in ipairs(leader) do
         if j == pilot then
@@ -413,7 +412,6 @@ end
 function continueAmbush()
     genbu:setHostile()
     genbu:attack(player.pilot())
-    -- TODO: launch interceptors
     spinter = hook.timer(5000, "spawnInterceptors")
 end
 
@@ -436,7 +434,7 @@ function land()
     if planet.cur() == jorekplanet1 and stage == 2 then
         -- Thank you player, but our SHITMAN is in another castle.
         tk.msg(NPCtitle, NPCtext)
-        barmanNPC = misn.npcAdd("barman", "Barman", "thief2", NPCdesc, 4)
+        barmanNPC = misn.npcAdd("barman", "Barman", "barman", NPCdesc, 4)
     elseif planet.cur() == jorekplanet2 and stage == 3 then
         joreknpc = misn.npcAdd("jorek", "Jorek", "jorek", Jordesc, 4)
     end
