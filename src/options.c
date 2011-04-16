@@ -271,7 +271,7 @@ static void opt_gameplay( unsigned int wid )
          NULL, &cBlack, s );
    window_addInput( wid, -50, y, 40, 20, "inpMSG", 4, 1, NULL );
    y -= 30;
-   s = "Max Time Compression";
+   s = "Max Time Compression Factor";
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, -100, y, l, 20, 1, "txtTMax",
          NULL, &cBlack, s );
@@ -311,8 +311,6 @@ static void opt_gameplaySave( unsigned int wid, char *str )
    conf.compression_mult = atoi(tmax);
    if (conf.mesg_visible == 0)
       conf.mesg_visible = 5;
-   if (conf.compression_mult == 0)
-      conf.compression_mult = 1;
 }
 
 /**
