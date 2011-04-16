@@ -264,17 +264,23 @@ static void opt_gameplay( unsigned int wid )
    y -= 25;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkCompress", "Enable savegame compression", NULL, conf.save_compress );
-   y -= 40;
-   s = "Visible messages";
+   y -= 30;
+   s = "Visible Messages";
    l = gl_printWidthRaw( NULL, s );
-   window_addText( wid, x, y, l, 20, 1, "txtSMSG",
+   window_addText( wid, -100, y, l, 20, 1, "txtSMSG",
          NULL, &cBlack, s );
-   window_addInput( wid, x+l+20, y, 40, 20, "inpMSG", 4, 1, NULL );
-   y -= 20;
+   window_addInput( wid, -50, y, 40, 20, "inpMSG", 4, 1, NULL );
+   y -= 30;
+   s = "Max Time Compression";
+   l = gl_printWidthRaw( NULL, s );
+   window_addText( wid, -100, y, l, 20, 1, "txtTMax",
+         NULL, &cBlack, s );
+   window_addInput( wid, -50, y, 40, 20, "inpTMax", 4, 1, NULL );
+   y -= 30;
 
    /* Restart text. */
-   window_addText( wid, -20, 20+BUTTON_HEIGHT+20, 3*(BUTTON_WIDTH + 20),
-         30, 1, "txtRestart", &gl_smallFont, &cBlack, NULL );
+   window_addText( wid, 20, 10, 3*(BUTTON_WIDTH + 20),
+         30, 0, "txtRestart", &gl_smallFont, &cBlack, NULL );
 
    /* Update. */
    opt_gameplayUpdate( wid, NULL );
@@ -287,7 +293,7 @@ static void opt_gameplaySave( unsigned int wid, char *str )
 {
    (void) str;
    int f;
-   char *inp;
+   char *vmsg, *tmax;
 
    /* Checkboxes. */
    f = window_checkboxState( wid, "chkAfterburn" );
@@ -299,10 +305,14 @@ static void opt_gameplaySave( unsigned int wid, char *str )
    conf.save_compress = window_checkboxState( wid, "chkCompress" );
 
    /* Input boxes. */
-   inp = window_getInput( wid, "inpMSG" );
-   conf.mesg_visible = atoi(inp);
+   vmsg = window_getInput( wid, "inpMSG" );
+   tmax = window_getInput( wid, "inpTMax" );
+   conf.mesg_visible = atoi(vmsg);
+   conf.compression_mult = atoi(tmax);
    if (conf.mesg_visible == 0)
       conf.mesg_visible = 5;
+   if (conf.compression_mult == 0)
+      conf.compression_mult = 1;
 }
 
 /**
@@ -330,7 +340,7 @@ static void opt_gameplayDefaults( unsigned int wid, char *str )
 static void opt_gameplayUpdate( unsigned int wid, char *str )
 {
    (void) str;
-   char buf[16];
+   char vmsg[16], tmax[16];
 
    /* Checkboxes. */
    window_checkboxSet( wid, "chkZoomManual", conf.zoom_manual );
@@ -339,8 +349,10 @@ static void opt_gameplayUpdate( unsigned int wid, char *str )
    window_checkboxSet( wid, "chkCompress", conf.save_compress );
 
    /* Input boxes. */
-   snprintf( buf, sizeof(buf), "%d", conf.mesg_visible );
-   window_setInput( wid, "inpMSG", buf );
+   snprintf( vmsg, sizeof(vmsg), "%d", conf.mesg_visible );
+   window_setInput( wid, "inpMSG", vmsg );
+   snprintf( tmax, sizeof(tmax), "%g", conf.compression_mult );
+   window_setInput( wid, "inpTMax", tmax );
 }
 
 
@@ -730,8 +742,8 @@ static void opt_audio( unsigned int wid )
 
 
    /* Restart text. */
-   window_addText( wid, -20, 20+BUTTON_HEIGHT+20, 3*(BUTTON_WIDTH + 20),
-         30, 1, "txtRestart", &gl_smallFont, &cBlack, NULL );
+   window_addText( wid, 20, 10, 3*(BUTTON_WIDTH + 20),
+         30, 0, "txtRestart", &gl_smallFont, &cBlack, NULL );
 }
 
 /**
@@ -1098,8 +1110,8 @@ static void opt_video( unsigned int wid )
 
 
    /* Restart text. */
-   window_addText( wid, -20, 20+BUTTON_HEIGHT+20, 3*(BUTTON_WIDTH + 20),
-         30, 1, "txtRestart", &gl_smallFont, &cBlack, NULL );
+   window_addText( wid, 20, 10, 3*(BUTTON_WIDTH + 20),
+         30, 0, "txtRestart", &gl_smallFont, &cBlack, NULL );
 }
 
 /**
@@ -1111,7 +1123,7 @@ static void opt_needRestart (void)
 
    /* Values. */
    opt_restart = 1;
-   s           = "Restart Naev for changes to take effect";
+   s           = "Restart Naev for changes to take effect.";
 
    /* Modify widgets. */
    window_modifyText( opt_windows[ OPT_WIN_GAMEPLAY ], "txtRestart", s );
