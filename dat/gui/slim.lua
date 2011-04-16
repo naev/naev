@@ -85,6 +85,7 @@ function create()
    warnlight1 = tex.open( base .. "warnlight1.png" )
    warnlight2 = tex.open( base .. "warnlight2.png" )
    warnlight3 = tex.open( base .. "warnlight3.png" )
+   tracking_light = tex.open( base .. "track.png" )
    target_light_off = tex.open( base .. "targeted_off.png" )
    target_light_on =  tex.open( base .. "targeted_on.png" )
    cargo_light_off = tex.open( base .. "cargo_off.png" )
@@ -353,7 +354,7 @@ function render_bar(name, value, txt, txtcol, size, col, bgc )
 end
 
 function render_ammoBar( name, x, y, value, txt, txtcol, col )
-   offsets = { 2, 20, 3, 13, 22, 6 } --Bar, y of refire, sheen, y of sheen, y of refire sheen, y of text
+   offsets = { 2, 20, 3, 13, 22, 6, 4, 4 } --Bar, y of refire, sheen, y of sheen, y of refire sheen, y of text, x and y of tracking icon
    l_bg = _G["bg_" .. name]
    if name == "heat" then
       value[1] = value[1] / 2.
@@ -376,9 +377,15 @@ function render_ammoBar( name, x, y, value, txt, txtcol, col )
    else
       gfx.renderTex( bg_bar_weapon, x, y )
    end
+   local textoffset=0
+   if value[4] ~= nil then
+      gfx.renderTex( tracking_light, x + offsets[7], y + offsets[8], colour.new(1-value[4], value[4], 0))
+      local w, h, sw, sh = tracking_light:dim()
+      textoffset = textoffset + w
+   end
    gfx.renderTex( sheen_weapon, x + offsets[3], y + offsets[4])
    gfx.renderTex( sheen_tiny, x + offsets[3], y + offsets[5])
-   gfx.print( true, txt, x + offsets[1], y + offsets[6], txtcol, bar_weapon_w, true)
+   gfx.print( true, txt, x + offsets[1] + textoffset, y + offsets[6], txtcol, bar_weapon_w - textoffset, true)
 end
 
 
@@ -477,19 +484,18 @@ function render( dt, dt_mod )
          elseif weapon.type == "Launcher" or weapon.type == "Turret Launcher" then
             txt = string.gsub(txt,"Launcher", "L.")
          end
-      end
-      if weapon.left then
+         
          txt = txt .. " (" .. tostring( weapon.left) .. ")"
          if weapon.left == 0 then
             col = col_txt_wrn
          else
             col = col_txt_bar
          end
-         values = {weapon.left_p, weapon.cooldown, weapon.level}
+         values = {weapon.left_p, weapon.cooldown, weapon.level, weapon.track}
          render_ammoBar( "ammo", x_ammo, y_ammo - (num)*28, values, txt, col, 2, col_ammo )
       else
          col = col_txt_bar
-         values = {weapon.temp, weapon.cooldown, weapon.level}
+         values = {weapon.temp, weapon.cooldown, weapon.level, weapon.track}
          render_ammoBar( "heat", x_ammo, y_ammo - (num)*28, values, txt, col, 2, col_heat )
       end
       num = num + 1
@@ -522,7 +528,7 @@ function render( dt, dt_mod )
       gfx.renderTex( warnlight2, pl_pane_x + 29, pl_pane_y + 3 )
    end
    if autonav then
-      gfx.renderTex( warnlight3, pl_pane_x + 162, pl_pane_y + 8 )
+      gfx.renderTex( warnlight3, pl_pane_x + 162, pl_pane_y + 12 )
    end
 
    --Target Pane
