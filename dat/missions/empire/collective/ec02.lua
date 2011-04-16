@@ -25,20 +25,32 @@ else -- default english
    title[1] = "Collective Espionage"
    title[2] = "Mission Accomplished"
    text = {}
-   text[1] = [[You head over to Lt. Commander Dimitri to see what the results are.
-"Hello there again, %s. Bad news on your latest run, you got nothing other than the usual robotic chatter. We'll have to send you out again, but this time we'll follow a different approach. Interested in giving it another shot?"]]
-   text[2] = [["On your last run, you were monitoring while out in the open. While you do get better signals, upon noticing your presence, the drones will go into combat mode, and yield only combat transmittions. This mission will consist of hiding and monitoring from a safer spot, hopefully catching them more relaxed."
-"When the Collective struck, they quickly took many systems; one of the bigger hits was %s, an important gas giant rich in methane. They destroyed the gas refineries and slaughtered the humans. There was nothing we could do. The turbulence and dense atmosphere there should be able to hide your ship."]]
-   text[3] = [["The plan is to have you infiltrate Collective space alone to not arouse too much suspicion. Once inside, you should head to %s in the %s system. Stay low and monitor all frequencies in the system. If anything is suspicious, we'll surely catch it then. Don't forget to make sure you have the four jumps of fuel to be able to get there and back in one piece."
-"Good luck, I'll be waiting for you on your return."]]
-   text[4] = [[You quickly land on %s and hide in its deep dense methane atmosphere. Your monitoring gear flickers into action, hopefully catching something of some use. With some luck there won't be too many Collective drones when you take off.]]
-   text[5] = [[As your ship touches ground, you see Lt. Commander Dimitri come out to greet you.
-"How was the weather?" he asks jokingly. "Glad to see you're still in one piece. We'll get right on analysing the data acquired. Those robots have to be up to something. Meet me in the bar later. Meanwhile give yourself a treat; you've earned it. We've made a 100k credit deposit in your bank account. Enjoy it."]]
+   text[1] = [[    You head over to Lt. Commander Dimitri to see what the results are.
+    "Hello there again, %s. Bad news on your latest run, you got nothing other than the usual robotic chatter. We'll have to send you out again, but this time we'll follow a different approach. Interested in giving it another shot?"]]
+   text[2] = [[    "On your last run, you were monitoring while out in the open. While you do get better signals, upon noticing your presence, the drones will go into combat mode, and yield only combat transmissions. This mission will consist of hiding and monitoring from a safer spot, hopefully catching them more relaxed."
+    "When the Collective struck, they quickly took many systems; one of the bigger hits was %s, an important gas giant rich in methane. They destroyed the gas refineries and slaughtered the humans. There was nothing we could do. The turbulence and dense atmosphere there should be able to hide your ship."]]
+   text[3] = [[    "The plan is to have you infiltrate Collective space alone to not arouse too much suspicion. Once inside, you should head to %s in the %s system. Stay low and monitor all frequencies in the system. If anything is suspicious, we'll surely catch it then. Don't forget to make sure you have the four jumps of fuel to be able to get there and back in one piece."
+    "Good luck, I'll be waiting for you on your return."]]
+   text[4] = [[    You quickly land on %s and hide in its deep dense methane atmosphere. Your monitoring gear flickers into action, hopefully catching something of some use. With some luck there won't be too many Collective drones when you take off.]]
+   text[5] = [[    That should be enough. Time to report your findings.]]
+   text[6] = [[    As your ship touches ground, you see Lt. Commander Dimitri come out to greet you.
+    "How was the weather?" he asks jokingly. "Glad to see you're still in one piece. We'll get right on analysing the data acquired. Those robots have to be up to something. Meet me in the bar later. Meanwhile give yourself a treat; you've earned it. We've made a 100k credit deposit in your bank account. Enjoy it."]]
+
+    osd_msg = {}
+    osd_msg[1] = "Fly to %s and land on %s"
+    osd_msg[2] = "Return to %s with your findings"
 end
 
 
 function create ()
-   -- Note: this mission does not make any system claims.
+   misn_base, misn_base_sys = planet.get("Omega Station")
+   misn_target, misn_target_sys = planet.get("Eiroik")
+
+    local missys = {misn_target}
+    if not misn.claim(missys) then
+        abort()
+    end
+
    misn.setNPC( "Dimitri", "dimitri" )
    misn.setDesc( bar_desc )
 end
@@ -54,15 +66,14 @@ function accept ()
    misn.accept()
 
    misn_stage = 0
-   systems_visited = 0 -- Number of Collective systems visited
-   misn_base, misn_base_sys = planet.get("Omega Station")
-   misn_target, misn_target_sys = planet.get("Eiroik")
    misn_marker = misn.markerAdd( misn_target_sys, "low" )
 
    -- Mission details
    misn.setTitle(misn_title)
    misn.setReward( misn_reward )
    misn.setDesc( string.format(misn_desc[1], misn_target:name(), misn_target_sys:name() ))
+   osd_msg[1] = osd_msg[1]:format(misn_target:name(), misn_target_sys:name())
+   misn.osdCreate(misn_title, osd_msg)
 
    tk.msg( title[1], string.format(text[2], misn_target:name()) )
    tk.msg( title[1], string.format(text[3], misn_target:name(), misn_target_sys:name()) )
@@ -71,23 +82,14 @@ function accept ()
 end
 
 function land()
-   pnt = planet.cur()
-
-   -- First mission part is landing on the planet
-   if misn_stage == 0 and pnt == misn_target then
-      -- Sinister music landing
-      music.load("landing_sinister")
-      music.play()
-
-      -- Some text
-      tk.msg( title[1], string.format(text[4], misn_target:name()) )
-      misn_stage = 1
-      misn.setDesc( string.format(misn_desc[2], misn_base:name(), misn_base_sys:name() ))
-      misn.markerMove( misn_marker, misn_base_sys )
-
+   -- You land on the planet, but you also immediately take off again.
+   if misn_stage == 0 and planet.cur() == misn_target then
+      -- Initiate cutscene
+      takeoffhook = hook.takeoff("takeoff")
+      player.takeoff()
    -- Return bit
-   elseif misn_stage == 1 and pnt == misn_base then
-      tk.msg( title[2], text[5] )
+   elseif misn_stage == 1 and planet.cur() == misn_base then
+      tk.msg( title[2], text[6] )
 
       -- Rewards
       player.modFaction("Empire",5)
@@ -95,4 +97,75 @@ function land()
 
       misn.finish(true)
    end
+end
+
+function takeoff()
+    -- Sinister music landing
+    music.load("landing_sinister")
+    music.play()
+
+    -- Some text
+    tk.msg( title[1], string.format(text[4], misn_target:name()) )
+    misn.setDesc( string.format(misn_desc[2], misn_base:name(), misn_base_sys:name() ))
+
+    -- Build the actual cutscene
+    player.pilot():setInvisible(true)
+    player.cinematics(true)
+    swarm1 = pilot.add("Collective Sml Swarm", nil, vec2.new(-11000, 4000))
+    moveSwarm(swarm1, vec2.new(-8000, -7500))
+    swarm2 = pilot.add("Collective Sml Swarm", nil, vec2.new(1700, 12000))
+    moveSwarm(swarm2, vec2.new(7000, -5000))
+    swarm3 = pilot.add("Collective Sml Swarm", nil, vec2.new(17000, 2500))
+    moveSwarm(swarm3, vec2.new(-9500, 13000))
+
+    local delay = 1000
+    hook.timer(delay, "cameraZoom", {targ = swarm1[1], speed = 5000})
+    delay = delay + 8000
+    hook.timer(delay, "cameraZoom", {targ = swarm2[1], speed = 5000})
+    delay = delay + 8000
+    hook.timer(delay, "cameraZoom", {targ = swarm3[1], speed = 5000})
+    delay = delay + 8000
+    hook.timer(delay, "cameraZoom", {targ = nil, speed = 5000})
+    delay = delay + 4000
+    hook.timer(delay, "endCutscene")
+
+    hook.rm(takeoffhook)
+end
+
+function cameraZoom(args)
+    local targ = args.targ
+    local speed = args.speed
+    camera.set(targ, true, speed)
+end
+
+function moveSwarm(fleet, pos)
+    local dpos = pos - fleet[1]:pos()
+    for _, j in ipairs(fleet) do
+        if j:exists() then
+            j:control()
+            j:setVisplayer(true)
+            j:goto(j:pos() + dpos, false)
+        end
+    end
+end
+
+function removeSwarm(fleet)
+    for _, j in ipairs(fleet) do
+        if j:exists() then
+            j:rm()
+        end
+    end
+end
+
+function endCutscene()
+    removeSwarm(swarm1)
+    removeSwarm(swarm2)
+    removeSwarm(swarm3)
+    tk.msg(title[1], text[5])
+    misn_stage = 1
+    misn.markerMove( misn_marker, misn_base_sys )
+    player.pilot():setInvisible(false)
+    player.cinematics(false)
+    misn.osdActive(2)
+    music.delay("ambient", 0)
 end
