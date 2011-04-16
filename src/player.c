@@ -1259,8 +1259,11 @@ void player_targetPlanetSet( int id )
 
    old = player.p->nav_planet;
    player.p->nav_planet = id;
-   if ((old != id) && (id >= 0))
-      player_soundPlay(snd_nav, 1);
+   if (old != id) {
+      player_rmFlag(PLAYER_LANDACK);
+      if (id >= 0)
+         player_soundPlay(snd_nav, 1);
+   }
    gui_forceBlink();
    gui_setNav();
 }
@@ -1276,9 +1279,6 @@ void player_targetPlanet (void)
    /* Not under manual control. */
    if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
       return;
-
-   /* Clean up some stuff. */
-   player_rmFlag(PLAYER_LANDACK);
 
    /* Find next planet target. */
    id = player.p->nav_planet+1;
@@ -1351,7 +1351,6 @@ void player_land (void)
          }
       }
       player_targetPlanetSet( tp );
-      player_rmFlag(PLAYER_LANDACK);
       player_hyperspacePreempt(0);
 
       /* no landable planet */
