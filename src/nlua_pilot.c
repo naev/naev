@@ -1217,9 +1217,12 @@ static int pilotL_weapset( lua_State *L )
          lua_rawset(L,-3);
 
          /* Track. */
-         if ((target != NULL) && (slot->outfit->type == OUTFIT_TYPE_TURRET_BOLT)) {
+         if (slot->outfit->type == OUTFIT_TYPE_TURRET_BOLT) {
             lua_pushstring(L, "track");
-            lua_pushnumber(L, pilot_ewWeaponTrack( p, target, slot->outfit->u.blt.track ));
+            if (target != NULL)
+               lua_pushnumber(L, pilot_ewWeaponTrack( p, target, slot->outfit->u.blt.track ));
+            else
+               lua_pushnumber(L, -1);
             lua_rawset(L,-3);
          }
 

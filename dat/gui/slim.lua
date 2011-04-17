@@ -126,6 +126,7 @@ function create()
    --Ammo, heat and ready bars bars
    bar_weapon_w, bar_weapon_h = bg_ammo:dim()
    bar_ready_w, bar_ready_h = bg_ready:dim()
+   track_w, track_h = tracking_light:dim()
    x_ammo = pl_pane_x + 39
    y_ammo = pl_pane_y - 27
 
@@ -377,11 +378,16 @@ function render_ammoBar( name, x, y, value, txt, txtcol, col )
    else
       gfx.renderTex( bg_bar_weapon, x, y )
    end
-   local textoffset=0
-   if value[4] ~= nil then
-      gfx.renderTex( tracking_light, x + offsets[7], y + offsets[8], colour.new(1-value[4], value[4], 0))
-      local w, h, sw, sh = tracking_light:dim()
-      textoffset = textoffset + w
+   local textoffset = 0
+   local trackcol
+   if value[4] then
+      if value[4] == -1 then
+         trackcol = col_txt_una
+      else
+         trackcol = colour.new(1-value[4], value[4], 0)
+      end
+      gfx.renderTex( tracking_light, x + offsets[7], y + offsets[8], trackcol )
+      textoffset = track_w
    end
    gfx.renderTex( sheen_weapon, x + offsets[3], y + offsets[4])
    gfx.renderTex( sheen_tiny, x + offsets[3], y + offsets[5])
@@ -484,7 +490,7 @@ function render( dt, dt_mod )
          elseif weapon.type == "Launcher" or weapon.type == "Turret Launcher" then
             txt = string.gsub(txt,"Launcher", "L.")
          end
-         
+
          txt = txt .. " (" .. tostring( weapon.left) .. ")"
          if weapon.left == 0 then
             col = col_txt_wrn
