@@ -130,6 +130,10 @@ function create()
    x_ammo = pl_pane_x + 39
    y_ammo = pl_pane_y - 27
 
+   -- Missile lock warning
+   missile_lock_text = "Warning - Missile Lockon Detected"
+   missile_lock_length = gfx.printDim( false, missile_lock_text )
+
    --Target Pane
    ta_pane_w, ta_pane_h = target_pane:dim()
    ta_pane_x = screen_w - ta_pane_w - 16
@@ -288,6 +292,9 @@ end
 
 function update_cargo()
    cargol = pilot.cargoList(pp)
+   cargofree = " (" .. pp:cargoFree() .. "t free)"
+   cargofreel = gfx.printDim( true, cargofree )
+   cargoterml = gfx.printDim( true, ", [...]" )
    cargo = {}
    for k,v in ipairs(cargol) do
       if v.q == 0 then
@@ -309,7 +316,7 @@ function update_system()
    sys = system.cur()
 end
 
-function render_bar(name, value, txt, txtcol, size, col, bgc )
+function render_bar( name, value, txt, txtcol, size, col, bgc )
    if size then
       offsets = { 22, 5, 9, 3 }
       l_bg_bar = bg_bar_sm
@@ -527,8 +534,7 @@ function render( dt, dt_mod )
          timers[3] = 0.5
       end
       colour.setAlpha( col_missile, math.abs(timers[3]) * 1.2 + .4 )
-      local length = gfx.printDim( false, "Warning - Missile Lockon Detected" )
-      gfx.print( false, "Warning - Missile Lockon Detected", (screen_w - length)/2, screen_h - 100, col_missile )
+      gfx.print( false, missile_lock_text, (screen_w - missile_lock_length)/2, screen_h - 100, col_missile )
    end
    if armour <= 20 then
       gfx.renderTex( warnlight2, pl_pane_x + 29, pl_pane_y + 3 )
@@ -585,13 +591,8 @@ function render( dt, dt_mod )
                spetxtcol = col_txt_bar
                colspe = col_speed
                colspe2 = nil
-            elseif htspeed >= 200. then
-               htspeed = 100.
-               spetxtcol = col_txt_wrn
-               colspe = col_speed2
-               colspe2 = col_speed
             else
-               htspeed = htspeed - 100
+               htspeed = math.min( htspeed - 100, 100 )
                spetxtcol = col_txt_wrn
                colspe = col_speed2
                colspe2 = col_speed
@@ -752,7 +753,7 @@ function render( dt, dt_mod )
    end
 
    --Bottom bar
-   local length = 5, navstring, fuel, fuelstring, wsetstr
+   local length = 5, navstring, fuel, fuelstring
    gfx.renderTexRaw( bottom_bar, 0, 0, screen_w, 30, 1, 1, 0, 0, 1, 1 )
 
    fuel = player.fuel()
@@ -764,22 +765,15 @@ function render( dt, dt_mod )
       fuelstring = "none"
    end
 
-   if rdy then
-      col = col_txt_std
-   else
-      col = col_txt_una
-   end
-   wsetstr = wset_name
-
    local bartext = { "Pilot: ", pname, "System: ", sys:name(), "Time: ", time.str(), "Credits: ",
          largeNumber( credits, 2 ), "Nav: ", navstring, "Fuel: ", fuelstring,
-         "WSet: ", wsetstr, "Cargo: " }
+         "WSet: ", wset_name, "Cargo: " }
    for k,v in ipairs(bartext) do
       if k % 2 == 1 then
          gfx.print( true, v, length, 5, col_txt_top )
          length = length + gfx.printDim( true, v )
       else
-         if v == "none" or (v == wsetstr and not rdy) then
+         if v == "none" then
             col = col_txt_una
          else
             col = col_txt_std
@@ -790,13 +784,10 @@ function render( dt, dt_mod )
    end
 
    local cargstring = nil
-   local freecargo = " (" .. pp:cargoFree() .. "t free)"
-   local finallen = gfx.printDim( true, freecargo )
-   local terminator = gfx.printDim( true, ", [...]" )
    if cargo and #cargo >= 1 then
       for k,v in ipairs(cargo) do
          if cargstring then
-            if screen_w - length - gfx.printDim(true, cargstring .. ", " .. v) < finallen + terminator then
+            if screen_w - length - gfx.printDim(true, cargstring .. ", " .. v) < cargofreel + cargoterml then
                cargstring = cargstring .. ", [...]"
                break
             else
@@ -813,7 +804,7 @@ function render( dt, dt_mod )
       gfx.print( true, "none", length, 6, col_txt_una )
       length = length + gfx.printDim( true, "none" ) + 6
    end
-   gfx.print( true, freecargo, length, 6, col_txt_std )
+   gfx.print( true, cargofree, length, 6, col_txt_std )
 end
 
 function largeNumber( number, idp )
