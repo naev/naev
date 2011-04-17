@@ -1,12 +1,12 @@
 --[[
 
-   This is a NAEV mission template.
-   In this document aims to provide a structure on which to build many NAEV missions.
+   This is a Naev mission template.
+   In this document aims to provide a structure on which to build many Naev missions.
    The possibilities are endless, so this will not apply to every possible mission.
-   For more information on NAEV, please visit: http://code.google.com/p/naev/ 
-   NAEV missions are written in the Lua programming language: http://www.lua.org/
-   There is documentation on NAEV's Lua API at: http://bobbens.dyndns.org/naev-lua/index.html
-   You can study the source code of missions in [path_to_NAEV_folder]/naev/dat/missions/
+   For more information on Naev, please visit: http://code.google.com/p/naev/ 
+   Naev missions are written in the Lua programming language: http://www.lua.org/
+   There is documentation on Naev's Lua API at: http://bobbens.dyndns.org/naev-lua/index.html
+   You can study the source code of missions in [path_to_Naev_folder]/naev/dat/missions/
 
    MISSION: <NAME GOES HERE>
    DESCRIPTION: <DESCRIPTION GOES HERE>
@@ -69,7 +69,7 @@ If the mission doesn't get accepted, it gets trashed.
 Also set the mission details.
 --]]
 function accept ()
-   -- Most missions will need the following to avoid crashing NAEV
+   -- Most missions will need the following to avoid crashing Naev
 
    -- This will create the typical "Yesn/No" dialogue when mission is created
    -- at bar.  It returns true if yes was selected.

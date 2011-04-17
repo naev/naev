@@ -1,12 +1,12 @@
 --[[
 
-   This is a NAEV mission template for missions from the Mission Computer.
-   In this document aims to provide a structure on which to build NAEV missions.
+   This is a Naev mission template for missions from the Mission Computer.
+   In this document aims to provide a structure on which to build Naev missions.
    The possibilities are endless, so this will not apply to every possible mission.
-   For more information on NAEV, please visit: http://code.google.com/p/naev/ 
-   NAEV missions are written in the Lua programming language: http://www.lua.org/
-   There is documentation on NAEV's Lua API at: http://bobbens.dyndns.org/naev-lua/index.html
-   You can study the source code of missions in [path_to_NAEV_folder]/naev/dat/missions/
+   For more information on Naev, please visit: http://code.google.com/p/naev/ 
+   Naev missions are written in the Lua programming language: http://www.lua.org/
+   There is documentation on Naev's Lua API at: http://bobbens.dyndns.org/naev-lua/index.html
+   You can study the source code of missions in [path_to_Naev_folder]/naev/dat/missions/
 
    MISSION: <NAME GOES HERE>
    DESCRIPTION: <DESCRIPTION GOES HERE>
@@ -55,7 +55,7 @@ These strings are what will appear in the mission computer screen.
 
 --]]
 function create ()
-   -- Most missions will need the following to avoid crashing NAEV
+   -- Most missions will need the following to avoid crashing Naev
 
    -- Mission details: these will appear in the Computer window
    -- You should always set these as soon as possible.

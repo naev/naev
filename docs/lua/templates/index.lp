@@ -2,7 +2,7 @@
    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
 <head>
-    <title>NAEV Lua API</title>
+    <title>Naev Lua API</title>
     <link rel="stylesheet" href="<%=luadoc.doclet.html.link("luadoc.css")%>" type="text/css" />
 	<!--meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/-->
 </head>
@@ -22,10 +22,10 @@
 <div id="product">
 	<div id="product_logo"></div>
 	<div id="product_name"><big><b>
-   NAEV Lua API
+   Naev Lua API
    </b></big></div>
 	<div id="product_description">
-   This is the API used in NAEV to interact with the game from Lua.
+   This is the API used in Naev to interact with the game from Lua.
    </div>
 </div> <!-- id="product" -->
 
