@@ -79,6 +79,7 @@ typedef struct Hook_ {
 
    unsigned int id; /**< unique id */
    char *stack; /**< stack it's a part of */
+   int created; /**< Hook has just been created. */
    int delete; /**< indicates it should be deleted when possible */
    int ran_once; /**< Indicates if the hook already ran, useful when iterating. */
    int once; /**< Only run the hook once. */
@@ -426,8 +427,9 @@ static int hook_run( Hook *hook, HookParam *param, int claims )
 {
    int ret;
 
-   if (hook->delete)
-      return 0; /* hook should be deleted not run */
+   /* Do not run if just created or pending deletion. */
+   if (hook->delete || hook->created)
+      return 0;
 
    /* Don't run anything when main menu is open. */
    if (menu_isOpen(MENU_MAIN))
@@ -488,21 +490,23 @@ static unsigned int hook_genID (void)
  */
 static Hook* hook_new( HookType_t type, const char *stack )
 {
-   Hook *new_hook, *h;
+   Hook *new_hook;
 
    /* Get and create new hook. */
    new_hook = calloc( 1, sizeof(Hook) );
    if (hook_list == NULL)
       hook_list = new_hook;
    else {
-      for (h=hook_list; h->next!=NULL; h=h->next);
-      h->next = new_hook;
+      /* Put at front, O(1). */
+      new_hook->next = hook_list;
+      hook_list = new_hook;
    }
 
    /* Fill out generic details. */
    new_hook->type    = type;
    new_hook->id      = hook_genID();
    new_hook->stack   = strdup(stack);
+   new_hook->created = 1;
 
    /** @TODO fix this hack. */
    if (strcmp(stack,"safe")==0)
@@ -674,6 +678,10 @@ static void hooks_updateDateExecute( ntime_t change )
    if ((player.p == NULL) || player_isFlag(PLAYER_CREATING))
       return;
 
+   /* Clear creation flags. */
+   for (h=hook_list; h!=NULL; h=h->next)
+      h->created = 0;
+
    /* On j=0 we increment all timers and try to run, then on j=1 we update the timers. */
    hook_runningstack++; /* running hooks */
    for (j=1; j>=0; j--) {
@@ -755,6 +763,10 @@ void hooks_update( double dt )
    /* Don't update without player. */
    if ((player.p == NULL) || player_isFlag(PLAYER_CREATING))
       return;
+
+   /* Clear creation flags. */
+   for (h=hook_list; h!=NULL; h=h->next)
+      h->created = 0;
 
    hook_runningstack++; /* running hooks */
    for (j=1; j>=0; j--) {
@@ -916,6 +928,10 @@ static int hooks_executeParam( const char* stack, HookParam *param )
    for (h=hook_list; h!=NULL; h=h->next)
       h->ran_once = 0;
 
+   /* Clear creation flags. */
+   for (h=hook_list; h!=NULL; h=h->next)
+      h->created = 0;
+
    run = 0;
    hook_runningstack++; /* running hooks */
    for (j=1; j>=0; j--) {
@@ -1019,6 +1035,7 @@ int hook_runIDparam( unsigned int id, HookParam *param )
       WARN("Attempting to run hook of id '%d' which is not in the stack", id);
       return -1;
    }
+   h->created = 0; /* Hack so it isn't marked as created and is run. */
    hook_run( h, param, -1 );
 
    return 0;
