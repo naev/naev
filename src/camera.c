@@ -254,7 +254,7 @@ static void cam_updatePilot( Pilot *follow, double dt )
    double x,y, dx,dy, mx,my, targ_x,targ_y, bias_x,bias_y, vx,vy;
 
    /* Get target. */
-   if (follow->target != follow->id)
+   if (!pilot_isFlag(follow, PILOT_HYPERSPACE) && (follow->target != follow->id))
       target = pilot_get( follow->target );
    else
       target = NULL;
