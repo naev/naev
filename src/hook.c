@@ -427,8 +427,8 @@ static int hook_run( Hook *hook, HookParam *param, int claims )
 {
    int ret;
 
-   /* Do not run if just created or pending deletion. */
-   if (hook->delete || hook->created)
+   /* Do not run if pending deletion. */
+   if (hook->delete)
       return 0;
 
    /* Don't run anything when main menu is open. */
@@ -689,6 +689,9 @@ static void hooks_updateDateExecute( ntime_t change )
          /* Find valid date hooks. */
          if (h->is_date == 0)
             continue;
+         /* Don't update newly created hooks. */
+         if (h->created != 0)
+            continue;
 
          /* Decrement timer and check to see if should run. */
          if (j==0)
@@ -776,6 +779,9 @@ void hooks_update( double dt )
             continue;
          /* Find valid timer hooks. */
          if (h->is_timer == 0)
+            continue;
+         /* Don't update newly created hooks. */
+         if (h->created != 0)
             continue;
 
          /* Decrement timer and check to see if should run. */
@@ -939,11 +945,17 @@ static int hooks_executeParam( const char* stack, HookParam *param )
          /* Should be deleted. */
          if (h->delete)
             continue;
+         /* Don't run again. */
          if (h->ran_once)
+            continue;
+         /* Don't update newly created hooks. */
+         if (h->created != 0)
             continue;
          /* Doesn't match stack. */
          if (strcmp(stack, h->stack) != 0)
             continue;
+
+         /* Run hook. */
          hook_run( h, param, j );
          run++;
       }
@@ -1035,7 +1047,6 @@ int hook_runIDparam( unsigned int id, HookParam *param )
       WARN("Attempting to run hook of id '%d' which is not in the stack", id);
       return -1;
    }
-   h->created = 0; /* Hack so it isn't marked as created and is run. */
    hook_run( h, param, -1 );
 
    return 0;
