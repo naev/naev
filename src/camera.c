@@ -384,11 +384,10 @@ static void cam_updatePilotZoom( Pilot *follow, Pilot *target, double dt )
    if (cur_system->nebu_density > 0.) {
       c     = MIN( SCREEN_W, SCREEN_H ) / 2;
       zfar  = CLAMP( conf.zoom_far, conf.zoom_near, c / nebu_getSightRadius() );
-      znear = MAX( znear, zfar );
    }
-   else {
+   else
       zfar = conf.zoom_far;
-   }
+   znear = MAX( znear, zfar );
 
    /*
     * Set Zoom to pilot target.
