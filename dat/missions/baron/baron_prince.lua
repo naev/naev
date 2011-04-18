@@ -205,9 +205,9 @@ function land()
         sellnpc = misn.npcAdd("seller", "Artefact seller", "thief3", sellerdesc, 4)
     elseif planet.cur() == flintplanet then
         if flintleyfirst then
-            flintnpc = misn.npcAdd("flintley", flint_npc1, "none", flint_bar1, 4) -- TODO: portrait for Flintley
+            flintnpc = misn.npcAdd("flintley", flint_npc1, "flintley", flint_bar1, 4)
         else
-            flintnpc = misn.npcAdd("flintley", flint_npc2, "none", flint_bar2, 4) -- TODO: portrait for Flintley
+            flintnpc = misn.npcAdd("flintley", flint_npc2, "flintley", flint_bar2, 4)
         end
     end
 end

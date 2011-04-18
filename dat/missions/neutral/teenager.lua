@@ -49,7 +49,7 @@ function create ()
     cursys = system.cur()
     curplanet = planet.cur()
     OSD[2] = OSD[2]:format(planet.cur():name())
-    misn.setNPC(NPCname, "male1") -- TODO: portrait
+    misn.setNPC(NPCname, "male1")
     misn.setDesc(NPCdesc)
 end
 

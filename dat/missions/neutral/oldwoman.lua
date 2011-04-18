@@ -66,7 +66,7 @@ function create ()
     destsys = planets[index][2]
 
     curplanet = planet.cur()
-    misn.setNPC(NPCname, "none") -- TODO: portrait
+    misn.setNPC(NPCname, "oldwoman")
     misn.setDesc(NPCdesc)
 end
 
