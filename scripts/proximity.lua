@@ -7,7 +7,7 @@
 -- 
 -- Example usage: hook.timer(500, "proximity", {location = vec2.new(0, 0), radius = 500, funcname = "function"})
 -- Example usage: hook.timer(500, "proximity", {anchor = mypilot, radius = 500, funcname = "function"})
-function proximity(trigger)
+function proximity( trigger )
     if trigger.location ~= nil then
         if vec2.dist(player.pos(), trigger.location) <= trigger.radius then
             _G[trigger.funcname]()
@@ -19,14 +19,19 @@ function proximity(trigger)
             return
         end
     end
-    local proximityTimerHook = hook.timer(500, "proximity", trigger)
-    hook.jumpout("proximityCancel", proximityTimerHook)
-    hook.land("proximityCancel",    proximityTimerHook)
+
+    -- First time hook is set
+    if trigger.hook_tbl == nil then
+       trigger.hook_tbl = {}
+       hook.enter("proximityCancel", hook_tbl)
+    end
+
+    -- Set new timer hook
+    local hook_id = hook.timer(500, "proximity", trigger.hook_tbl)
+    trigger.tbl[1] = hook_id
 end
 
 -- Make sure the proximity timer shuts itself off on land or jumpout.
-function proximityCancel( hook_id )
-    if hook_id ~= nil then
-       hook.rm( hook_id )
-    end
+function proximityCancel( hook_tbl )
+    hook.rm( hook_tbl[1] )
 end
