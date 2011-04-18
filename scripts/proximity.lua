@@ -23,7 +23,7 @@ function proximity( trigger )
     -- First time hook is set
     if trigger.hook_tbl == nil then
        trigger.hook_tbl = {}
-       hook.enter("proximityCancel", hook_tbl)
+       hook.enter("proximityCancel", trigger.hook_tbl)
     end
 
     -- Set new timer hook
