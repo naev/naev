@@ -19,14 +19,14 @@ function proximity(trigger)
             return
         end
     end
-    proximityTimerHook = hook.timer(500, "proximity", trigger)
+    local proximityTimerHook = hook.timer(500, "proximity", trigger)
+    hook.jumpout("proximityCancel", proximityTimerHook)
+    hook.land("proximityCancel",    proximityTimerHook)
 end
 
 -- Make sure the proximity timer shuts itself off on land or jumpout.
-proximityJumpoutHook = hook.jumpout("proximityCancel")
-proximityLandHook = hook.land("proximityCancel")
-function proximityCancel()
-    if proximityTimerHook ~= nil then
-        hook.rm(proximityTimerHook)
+function proximityCancel( hook_id )
+    if hook_id ~= nil then
+       hook.rm( hook_id )
     end
 end
