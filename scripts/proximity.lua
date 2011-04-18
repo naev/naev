@@ -27,7 +27,7 @@ function proximity( trigger )
     end
 
     -- Set new timer hook
-    local hook_id = hook.timer(500, "proximity", trigger.hook_tbl)
+    local hook_id = hook.timer(500, "proximity", trigger)
     trigger.tbl[1] = hook_id
 end
 
