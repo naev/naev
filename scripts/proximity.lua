@@ -28,7 +28,7 @@ function proximity( trigger )
 
     -- Set new timer hook
     local hook_id = hook.timer(500, "proximity", trigger)
-    trigger.tbl[1] = hook_id
+    trigger.hook_tbl[1] = hook_id
 end
 
 -- Make sure the proximity timer shuts itself off on land or jumpout.
