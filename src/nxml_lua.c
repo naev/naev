@@ -25,7 +25,7 @@
 /*
  * Prototypes.
  */
-static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer );
+static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int intable );
 static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent );
 
 /**
@@ -60,11 +60,12 @@ static int nxml_saveData( xmlTextWriterPtr writer,
  *
  *    @param L Lua state with node to persist on top of the stack.
  *    @param writer XML Writer to use.
+ *    @param Are we parsing a node in a table?  Avoids checking for extra __save.
  *    @return 0 on success.
  */
-static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer )
+static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int intable )
 {
-   int ret;
+   int ret, b;
    LuaPlanet *p;
    LuaSystem *s;
    LuaFaction *f;
@@ -109,6 +110,14 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer )
    switch (lua_type(L, -1)) {
       /* Recursive for tables. */
       case LUA_TTABLE:
+         /* Check if should save -- only if not in table.. */
+         if (!intable) {
+            lua_getfield(L, -1, "__save");
+            b = lua_toboolean(L,-1);
+            lua_pop(L,1);
+            if (!b) /* No need to save. */
+               break;
+         }
          /* Start the table. */
          xmlw_startElem(writer,"data");
          xmlw_attr(writer,"type","table");
@@ -119,7 +128,7 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer )
          /* key, value, nil */
          while (lua_next(L, -2) != 0) {
             /* key, value, key, value */
-            ret = nxml_persistDataNode( L, writer );
+            ret = nxml_persistDataNode( L, writer, 1 );
             /* key, value, key */
          }
          /* key, value */
@@ -233,7 +242,7 @@ int nxml_persistLua( lua_State *L, xmlTextWriterPtr writer )
    /* str, nil */
    while (lua_next(L, LUA_GLOBALSINDEX) != 0) {
       /* str, key, value */
-      ret |= nxml_persistDataNode( L, writer );
+      ret |= nxml_persistDataNode( L, writer, 0 );
       /* str, key */
    }
    /* str */
