@@ -369,14 +369,21 @@
        * dogma.png
        * fidelity.png
        * preacher.png
+       * shaman.png
      * planet
        * space
          * station-agriculture.png
          * station-battlestation.png
+         * station-commerce.png
+         * station-commerce2.png
+         * station-commerce3.png
          * station-cylinder.png
          * station-fleetbase.png
+         * station-fleetbase2.png
+         * station-fleetbase3.png
          * station-powerplant.png
          * station-shipyard.png
+         * station-shipyard2.png
          * station-sphere.png
 
  * Author: BTAxis, License: PD
@@ -433,7 +440,7 @@
 
  * Author: Scaatis, CC-by v3.0
    * gfx
-     * NAEV.png
+     * Naev.png
      * gui
        * slim
          * *
@@ -484,3 +491,14 @@
        * nebula16.png
        * nebula17.png
        * nebula19.png
+
+ * Author: Galileus, License: CC-by-sa 3.0
+   * gfx
+     * ship
+       * shark
+         * shark.png
+         * shark_empire.png
+         * shark_pirate.png
+       * rhino
+         * rhino.png
+         * rhino_pirate.png
