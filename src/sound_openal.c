@@ -279,9 +279,7 @@ int sound_al_init (void)
       source_stack[source_nstack] = s;
 
       /* Distance model defaults. */
-      alSourcef( s, AL_PITCH,              1. );
-      alSourcef( s, AL_GAIN,               1. );
-      alSourcef( s, AL_MAX_DISTANCE,       2500. );
+      alSourcef( s, AL_MAX_DISTANCE,       25000. ); /* Distance to clamp at, as in not get quieter. */
       alSourcef( s, AL_ROLLOFF_FACTOR,     1. );
       alSourcef( s, AL_REFERENCE_DISTANCE, 500. );
 
@@ -308,7 +306,7 @@ int sound_al_init (void)
    memcpy( source_all, source_stack, sizeof(ALuint) * source_mstack );
 
    /* Set up how sound works. */
-   alDistanceModel( AL_INVERSE_DISTANCE_CLAMPED );
+   alDistanceModel( AL_INVERSE_DISTANCE ); /* Don't want to clamp. */
    alDopplerFactor( 1. );
    sound_al_env( SOUND_ENV_NORMAL, 0. );
 
@@ -1233,7 +1231,7 @@ int sound_al_env( SoundEnv_t env, double param )
 
             if (al_info.efx_reverb == AL_TRUE) {
                /* Tweak the reverb. */
-               nalEffectf( efx_reverb, AL_REVERB_DECAY_TIME, 10. );
+               nalEffectf( efx_reverb, AL_REVERB_DECAY_TIME,    10. );
                nalEffectf( efx_reverb, AL_REVERB_DECAY_HFRATIO, 0.5 );
 
                /* Connect the effect. */
