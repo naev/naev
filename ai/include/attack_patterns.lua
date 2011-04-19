@@ -104,10 +104,10 @@ function atk_g_capital( target, dist )
    
    --capital ships tend to require heavier energy reserves and burst output for maximum effectiveness
    
-   if ai.pcurenergy() < 5 then
+   if ai.pcurenergy() <= 1 then
     --ai.comm(1, "low energy")
     mem.recharge = true
-   elseif ai.pcurenergy() > 35 then
+   elseif ai.pcurenergy() > 15 then
     --ai.comm(1, "sufficient energy")
     mem.recharge = false
    else

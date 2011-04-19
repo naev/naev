@@ -42,6 +42,10 @@ end
 function atk_g_attacked( attacker )
    local target = ai.target()
 
+   if mem.recharge then
+      mem.recharge = false
+   end
+
    -- If no target automatically choose it
    if not ai.exists(target) then
       ai.pushtask("attack", attacker)
