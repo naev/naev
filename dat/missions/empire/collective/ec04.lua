@@ -39,12 +39,12 @@ else -- default english
    You've got one, right?]]
    text[6] = [[    Lt. Commander Dimitri's face cannot hide his sadness as he sees you approach with no commando members.
     "No survivors, eh? I had that gut feeling. At least you were able to salvage something? Good, at least it'll mean they didn't die in vain. Meet me in the bar in a while. We're going to try to process this datapad. It'll hopefully have the final results."]]
-    
+
     escort_msg1 = "Okay, %s, we'll flank the Collective force around the planet and try to draw their fire. You punch right through and land on that planet!"
     escort_msg2 = "There's too many of them! Fall back! Everyone to the jump point!"
     land_msg = "You can't land now! Get to the jump point!"
     markername = "Empire flanking maneuver"
-    
+
     osd_msg = {}
     osd_msg[1] = "Fly to %s"
     osd_msg[2] = "Land on %s"
@@ -54,12 +54,12 @@ end
 
 function create ()
    misn_target, misn_target_sys = planet.get("Eiroik")
-   
+
     local missys = {misn_target}
     if not misn.claim(missys) then
         abort()
-    end 
-    
+    end
+
    -- Intro text
    if tk.yesno( title[1], string.format(text[1], misn_target:name()) )
       then
@@ -90,20 +90,20 @@ function enter()
         -- Case jumped in before landing
         pilot.clear()
         pilot.toggleSpawn(false)
-        
+
         local fleetpos1 = vec2.new(20500, 2300)
         local fleetpos2 = vec2.new(20500, 1700)
         local waypoint1 = vec2.new(7500, 9500)
         local waypoint2 = vec2.new(7500, -5500)
         local waypoint12 = vec2.new(1500, 3000)
         local waypoint22 = vec2.new(1500, -500)
-        
+
         fleetships = {"Empire Pacifier", "Empire Admonisher", "Empire Admonisher", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot"}
         fleet1 = addRawShips(fleetships, "empire_norun", fleetpos1, "Empire")
         fleet2 = addRawShips(fleetships, "empire_norun", fleetpos2, "Empire")
         empireAttack(fleet1)
         empireAttack(fleet2)
-        
+
         fleet1[1]:comm(escort_msg1:format(player.name()))
         fleet1[1]:taskClear()
         fleet1[1]:goto(waypoint1, false, false)
@@ -113,10 +113,10 @@ function enter()
         fleet2[1]:goto(waypoint22, false, false)
         hook.pilot(fleet1[1], "idle", "idle")
         hook.pilot(fleet2[1], "idle", "idle")
-        
+
         system.mrkAdd(markername, waypoint1)
         system.mrkAdd(markername, waypoint2)
-        
+
         swarm1 = pilot.add("Collective Lge Swarm", nil, misn_target:pos())
         swarm2 = pilot.add("Collective Lge Swarm", nil, misn_target:pos())
         for _, j in ipairs(swarm2) do
@@ -128,21 +128,22 @@ function enter()
                 j:setVisplayer()
             end
         end
-        
+
         hook.timer(500, "proximity", {location = misn_target:pos(), radius = 3000, funcname = "idle"})
-        
+
         misn_stage = 1
     elseif system.cur() == misn_target_sys and misn_stage == 2 then
         -- Case taken off from the planet
         pilot.clear()
         pilot.toggleSpawn(false)
-        
+
         fleet1 = addRawShips(fleetships, nil, misn_target:pos() + vec2.new(0, 500), "Empire")
         fleet2 = addRawShips(fleetships, nil, misn_target:pos() + vec2.new(0, -500), "Empire")
         empireRetreat(fleet1)
         empireRetreat(fleet2)
         fleet1[1]:comm(escort_msg2)
 
+        -- TODO: Use heavier Collective ships here
         swarm1 = pilot.add("Collective Lge Swarm", nil, misn_target:pos() + vec2.new(-3000, 0))
         swarm2 = pilot.add("Collective Lge Swarm", nil, misn_target:pos() + vec2.new(-3000, 0))
         swarm3 = pilot.add("Collective Lge Swarm", nil, misn_target:pos() + vec2.new(-3000, 0))
