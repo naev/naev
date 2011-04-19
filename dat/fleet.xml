@@ -424,6 +424,18 @@
    <pilot name="Empire Pacifier" ship="Empire Pacifier"></pilot>
   </pilots>
  </fleet>
+ <fleet name="Empire Flanking Fleet">
+  <ai>empire</ai>
+  <faction>Empire</faction>
+  <pilots>
+   <pilot name="Empire Pacifier" ship="Empire Pacifier"></pilot>
+   <pilot name="Empire Admonisher" ship="Empire Admonisher"></pilot>
+   <pilot name="Empire Admonisher" ship="Empire Admonisher"></pilot>
+   <pilot name="Empire Lancelot" ship="Empire Lancelot"></pilot>
+   <pilot name="Empire Lancelot" ship="Empire Lancelot"></pilot>
+   <pilot name="Empire Lancelot" ship="Empire Lancelot"></pilot>
+  </pilots>
+ </fleet>
  <fleet name="Empire Pacifier">
   <ai>empire</ai>
   <faction>Empire</faction>
