@@ -49,7 +49,19 @@ function _randomizePositions( ship, override )
 end
 
 
--- Wrapper for pilot.add() that can operate on tables of fleets.
+--[[
+-- @brief Wrapper for pilot.add() that can operate on tables of fleets.
+--
+-- @usage pilots = addShips( "Pirate Hyena", "pirate", nil, 2 ) -- Creates two Pirate Hyenas.
+-- @usage pilots = addShips( { "Trader Rhino", "Trader Koala" }, nil, 2 ) -- Creates a convoy of four trader ships.
+--
+--    @luaparam ship Fleet to add.
+--    @luaparam ai AI to override the default with.
+--    @luaparam location Location to jump in from, take off from, or appear at.
+--    @luaparam count Number of times to repeat the pattern.
+--    @luareturn Table of created pilots.
+-- @luafunc addShips( fleet, ai, location, count )
+--]]
 function addShips( ship, ai, location, count )
    local ais = {}
    local locations = {}
@@ -79,7 +91,20 @@ function addShips( ship, ai, location, count )
 end
 
 
--- Wrapper for pilot.addRaw() that can operate on tables of ships.
+--[[
+-- @brief Wrapper for pilot.addRaw() that can operate on tables of ships.
+--
+-- @usage pilots = addRawShips( "Hyena", "pirate", nil, "Pirate" ) -- Creates a facsimile of a Pirate Hyena.
+-- @usage pilots = addRawShips( { "Rhino", "Koala" }, nil, "Trader", 2 ) -- Creates four Trader ships.
+--
+--    @luaparam ship Ship to add.
+--    @luaparam ai AI to give the pilot.
+--    @luaparam location Location to jump in from, take off from, or appear at.
+--    @luaparam faction Faction to give the pilot.
+--    @luaparam count Number of times to repeat the pattern.
+--    @luareturn Table of created pilots.
+-- @luafunc addRawShips( ship, ai, location, faction, count )
+--]]
 function addRawShips( ship, ai, location, faction, count )
    local ais = {}
    local locations = {}
@@ -115,7 +140,17 @@ function addRawShips( ship, ai, location, faction, count )
 end
 
 
--- Renames ships with full regex support.
+--[[
+-- @brief Renames ships (or tables of ships) with full regex support.
+--
+-- @usage renameShips( pilots, "Trader", "" ) -- Removes "Trader" prefix, if present.
+--
+--    @luaparam ship Ship(s) to modify.
+--    @luaparam match Pattern to match.
+--    @luaparam replace Pattern to replace matches with.
+--    @luaparam limit Maximum number of times to replace.
+-- @luafunc renameShips( ship, match, replace, limit )
+--]]
 function renameShips( ship, match, replace, limit )
    if type(ship) ~= "table" and type(ship) ~= "userdata" then
       print("renameShips: Error, ship list is not a pilot or table of pilots!")
