@@ -72,7 +72,7 @@ function addShips( ship, ai, location, count )
          out = _mergeTables( out, pilot.add( ship[k], ais[k], locations[k] ) )
       end
    end
-   if count > 1 then
+   if #out > 1 then
       _randomizePositions( out )
    end
    return out
@@ -108,7 +108,7 @@ function addRawShips( ship, ai, location, faction, count )
          out[k+(i-1)*#ship] = pilot.addRaw( ship[k], ais[k], locations[k], factions[k] )[1]
       end
    end
-   if count > 1 then
+   if #out > 1 then
       _randomizePositions( out )
    end
    return out
