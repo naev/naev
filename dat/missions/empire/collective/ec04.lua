@@ -13,7 +13,6 @@
 ]]--
 
 include "scripts/nextjump.lua"
-include "scripts/fleethelper.lua"
 include "scripts/proximity.lua"
 
 lang = naev.lang()
@@ -98,9 +97,8 @@ function enter()
         local waypoint12 = vec2.new(1500, 3000)
         local waypoint22 = vec2.new(1500, -500)
 
-        fleetships = {"Empire Pacifier", "Empire Admonisher", "Empire Admonisher", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot"}
-        fleet1 = addRawShips(fleetships, "empire_norun", fleetpos1, "Empire")
-        fleet2 = addRawShips(fleetships, "empire_norun", fleetpos2, "Empire")
+        fleet1 = pilot.add("Empire Flanking Fleet", "empire_norun", fleetpos1)
+        fleet2 = pilot.add("Empire Flanking Fleet", "empire_norun", fleetpos2)
         empireAttack(fleet1)
         empireAttack(fleet2)
 
@@ -137,8 +135,8 @@ function enter()
         pilot.clear()
         pilot.toggleSpawn(false)
 
-        fleet1 = addRawShips(fleetships, nil, misn_target:pos() + vec2.new(0, 500), "Empire")
-        fleet2 = addRawShips(fleetships, nil, misn_target:pos() + vec2.new(0, -500), "Empire")
+        fleet1 = pilot.add("Empire Flanking Fleet", nil, misn_target:pos() + vec2.new(0, 500))
+        fleet2 = pilot.add("Empire Flanking Fleet", nil, misn_target:pos() + vec2.new(0, -500))
         empireRetreat(fleet1)
         empireRetreat(fleet2)
         fleet1[1]:comm(escort_msg2)
