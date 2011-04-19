@@ -1,6 +1,6 @@
 --[[
 
-   Collective Distraction
+   Collective Extraction
 
    Author: bobbens
       minor edits by Infiltrator
@@ -12,11 +12,15 @@
 
 ]]--
 
+include "scripts/nextjump.lua"
+include "scripts/fleethelper.lua"
+include "scripts/proximity.lua"
+
 lang = naev.lang()
 if lang == "es" then
    -- not translated atm
 else -- default english
-   misn_title = "Collective Distraction"
+   misn_title = "Collective Extraction"
    misn_reward = "None"
    misn_desc = {}
    misn_desc[1] = "Check for survivors on %s in %s."
@@ -26,30 +30,42 @@ else -- default english
    title[2] = "Eiroik"
    title[3] = "Mission Accomplished"
    text = {}
-   text[1] = [[As soon as you exit the landing pad you see Lt. Commander Dimitri waiting for you. He seems a bit more nervous then usual.
-"We haven't heard from the commando team, so we have to assume the worst. On top of that, it appears that Collective presence has increased around %s. We need you to go check for survivors. Would you be willing to embark on another dangerous mission?"]]
-   text[2] = [["We'll send extra forces to %s to try to give you a chance to break through the blockade. You'll have to fly through and land on %s and see if there are any survivors. The increased drone patrols will pose an issue. Be very careful. This is going to be no walk in the park."]]
-   text[3] = [[The atmosphere once again starts giving your shields a workout as you land. You spend a while flying low until your sensors pick up a reading of possible life forms. The silhouette of the transport ship is barely visible. As you fly closer, it becomes apparent that they were detected and massacred. You see if you can salvage the readings from their equipment, but it seems like it's completely toasted.]]
-   text[4] = [[You notice you won't have enough fuel to get back so you salvage some from the wrecked transport ship. Stealing from the dead isn't pleasant business, but if it gets you out alive, you figure it's good enough.]]
-   text[5] = [[You spend a while searching until you find a datapad on one of the corpses. Ignoring the stench of burnt flesh you grab it, just as you hear the sirens go off in your ship. You have been spotted!  Time to hit the afterburner.
+   text[1] = [[    As soon as you exit the landing pad you see Lt. Commander Dimitri waiting for you. He seems a bit more nervous then usual.
+    "The commando team has sent us an SOS. They were discovered by the Collective, and now they're under heavy fire. We need you to go and get them out of there. Would you be willing to embark on another dangerous mission?"]]
+   text[2] = [[    "We'll send extra forces to %s to try to give you a chance to break through the blockade. You'll have to land on %s and extract our team. Be very careful. This is going to be no walk in the park."]]
+   text[3] = [[    The atmosphere once again starts giving your shields a workout as you land. You spend a while flying low until your sensors pick up a reading of possible life forms. The silhouette of the transport ship is barely visible. As you fly closer, it becomes apparent that you arrived too late. Everyone is already dead. You see if you can salvage the readings from their equipment, but it seems like it's completely toasted.]]
+   text[4] = [[    You notice you won't have enough fuel to get back so you salvage some from the wrecked transport ship. Stealing from the dead isn't pleasant business, but if it gets you out alive, you figure it's good enough.]]
+   text[5] = [[    You spend a while searching until you find a datapad on one of the corpses. Ignoring the stench of burnt flesh you grab it, just as you hear the sirens go off in your ship. Enemy reinforcements! Time to hit the afterburner.
    You've got one, right?]]
-   text[6] = [[Lt. Commander Dimitri's face cannot hide his sadness as he sees you approach with no commando members.
-"No survivors, eh? I had that gut feeling. At least you were able to salvage something? Good, at least it'll make their deaths not be completely futile. Meet me in the bar in a while. We're going to try to process this datapad. It'll hopefully have the final results."]]
+   text[6] = [[    Lt. Commander Dimitri's face cannot hide his sadness as he sees you approach with no commando members.
+    "No survivors, eh? I had that gut feeling. At least you were able to salvage something? Good, at least it'll mean they didn't die in vain. Meet me in the bar in a while. We're going to try to process this datapad. It'll hopefully have the final results."]]
+    
+    escort_msg1 = "Okay, %s, we'll flank the Collective force around the planet and try to draw their fire. You punch right through and land on that planet!"
+    escort_msg2 = "There's too many of them! Fall back! Everyone to the jump point!"
+    land_msg = "You can't land now! Get to the jump point!"
+    markername = "Empire flanking maneuver"
+    
+    osd_msg = {}
+    osd_msg[1] = "Fly to %s"
+    osd_msg[2] = "Land on %s"
+    osd_msg[3] = "Return to %s"
 end
 
 
 function create ()
-   -- Note: this mission does not make any system claims.
-
    misn_target, misn_target_sys = planet.get("Eiroik")
-
+   
+    local missys = {misn_target}
+    if not misn.claim(missys) then
+        abort()
+    end 
+    
    -- Intro text
    if tk.yesno( title[1], string.format(text[1], misn_target:name()) )
       then
       misn.accept()
 
       misn_stage = 0
-      blockade_sys = system.get("Hades")
       misn_base, misn_base_sys = planet.get("Omega Station")
       misn_marker = misn.markerAdd( misn_target_sys, "low" )
 
@@ -57,64 +73,141 @@ function create ()
       misn.setTitle(misn_title)
       misn.setReward( misn_reward )
       misn.setDesc( string.format(misn_desc[1], misn_target:name(), misn_target_sys:name() ))
-      tk.msg( title[1], string.format(text[2], blockade_sys:name(), misn_target:name()) )
+      tk.msg( title[1], string.format(text[2], misn_target_sys:name(), misn_target:name()) )
+      osd_msg[1] = osd_msg[1]:format(misn_target_sys:name())
+      osd_msg[2] = osd_msg[2]:format(misn_target:name())
+      osd_msg[3] = osd_msg[3]:format(misn_base:name())
+      misn.osdCreate(misn_title, osd_msg)
 
-      hook.enter("jump")
+      hook.enter("enter")
       hook.land("land")
    end
 end
 
--- Handles jumping to target system
-function jump ()
-   local sys = system.cur()
-   local factions = sys:faction()
+-- Handles the Collective encounters.
+function enter()
+    if system.cur() == misn_target_sys and misn_stage == 0 then
+        -- Case jumped in before landing
+        pilot.clear()
+        pilot.toggleSpawn(false)
+        
+        local fleetpos1 = vec2.new(20500, 2300)
+        local fleetpos2 = vec2.new(20500, 1700)
+        local waypoint1 = vec2.new(7500, 9500)
+        local waypoint2 = vec2.new(7500, -5500)
+        local waypoint12 = vec2.new(1500, 3000)
+        local waypoint22 = vec2.new(1500, -500)
+        
+        fleetships = {"Empire Pacifier", "Empire Admonisher", "Empire Admonisher", "Empire Lancelot", "Empire Lancelot", "Empire Lancelot"}
+        fleet1 = addRawShips(fleetships, "empire_norun", fleetpos1, "Empire")
+        fleet2 = addRawShips(fleetships, "empire_norun", fleetpos2, "Empire")
+        empireAttack(fleet1)
+        empireAttack(fleet2)
+        
+        fleet1[1]:comm(escort_msg1:format(player.name()))
+        fleet1[1]:taskClear()
+        fleet1[1]:goto(waypoint1, false, false)
+        fleet1[1]:goto(waypoint12, false, false)
+        fleet2[1]:taskClear()
+        fleet2[1]:goto(waypoint2, false, false)
+        fleet2[1]:goto(waypoint22, false, false)
+        hook.pilot(fleet1[1], "idle", "idle")
+        hook.pilot(fleet2[1], "idle", "idle")
+        
+        system.mrkAdd(markername, waypoint1)
+        system.mrkAdd(markername, waypoint2)
+        
+        swarm1 = pilot.add("Collective Lge Swarm", nil, misn_target:pos())
+        swarm2 = pilot.add("Collective Lge Swarm", nil, misn_target:pos())
+        for _, j in ipairs(swarm2) do
+            swarm1[#swarm1 + 1] = j -- Combine the swarms into one swarm, for convenience.
+        end
+        for _, j in ipairs(swarm1) do
+            if j:exists() then
+                j:control()
+                j:setVisplayer()
+            end
+        end
+        
+        hook.timer(500, "proximity", {location = misn_target:pos(), radius = 3000, funcname = "idle"})
+        
+        misn_stage = 1
+    elseif system.cur() == misn_target_sys and misn_stage == 2 then
+        -- Case taken off from the planet
+        pilot.clear()
+        pilot.toggleSpawn(false)
+        
+        fleet1 = addRawShips(fleetships, nil, misn_target:pos() + vec2.new(0, 500), "Empire")
+        fleet2 = addRawShips(fleetships, nil, misn_target:pos() + vec2.new(0, -500), "Empire")
+        empireRetreat(fleet1)
+        empireRetreat(fleet2)
+        fleet1[1]:comm(escort_msg2)
 
-   -- Create some havoc
-   if misn_stage == 1 and sys == misn_target_sys then
-      d = rnd.rnd( 900, 1200 )
-      a = rnd.rnd() * 2 * math.pi
-      swarm_position = vec2.new( d*math.cos(a), d*math.sin(a) )
-      pilot.add("Collective Sml Swarm", nil, swarm_position)
-      hook.timer(3000, "reinforcements")
-      hook.timer(9000, "drone_incoming")
-   elseif factions[ "Collectvie" ] and factions[ "Collective" ] > 200 then
-      pilot.add("Collective Sml Swarm")
-      pilot.add("Collective Sml Swarm")
-   elseif sys == blockade_sys then
-      pilot.add("Collective Sml Swarm")
-      pilot.add("Collective Sml Swarm")
-      pilot.add("Collective Sml Swarm")
-      pilot.add("Empire Sml Defense")
-      pilot.add("Empire Sml Defense")
-   end
+        swarm1 = pilot.add("Collective Lge Swarm", nil, misn_target:pos() + vec2.new(-3000, 0))
+        swarm2 = pilot.add("Collective Lge Swarm", nil, misn_target:pos() + vec2.new(-3000, 0))
+        swarm3 = pilot.add("Collective Lge Swarm", nil, misn_target:pos() + vec2.new(-3000, 0))
+        for i, _ in ipairs(swarm1) do -- Let's be lazy.
+            swarm1[i]:setVisplayer()
+            swarm2[i]:setVisplayer()
+            swarm3[i]:setVisplayer()
+        end
+
+        player.allowLand(false, land_msg)
+    elseif misn_stage == 1 then
+        -- Case jumped back out without landing
+        misn_stage = 0
+    elseif misn_stage == 2 then
+        -- Case jumped out after landing
+        misn_stage = 3
+    end
 end
 
--- Creates reinforcements
-function reinforcements ()
-   player.msg("Reinforcements are here!")
-   pilot.add("Empire Med Attack")
+-- Preps the Empire ships for attack.
+function empireAttack(fleet)
+    for _, j in ipairs(fleet) do
+        if j:exists() then
+            j:control()
+            j:setVisplayer()
+            j:follow(fleet[1])
+        end
+    end
 end
 
+-- Makes the Empire ships run away.
+function empireRetreat(fleet)
+    for _, j in ipairs(fleet) do
+        if j:exists() then
+            j:control()
+            j:setVisplayer()
+            j:hyperspace(getNextSystem(system.cur(), misn_base_sys))
+        end
+    end
+end
 
--- Creates more drones
-function drone_incoming ()
-   local sys = system.cur()
-   if sys == misn_target_sys then -- Not add indefinately
-      pilot.add("Collective Sml Swarm")
-      hook.timer(9000, "drone_incoming")
-   end
+-- Triggered when either Empire fleet is in attack range.
+function idle()
+    for _, j in ipairs(swarm1) do
+        if j:exists() then
+            j:control(false)
+        end
+    end
+    for _, j in ipairs(fleet1) do
+        if j:exists() then
+            j:control(false)
+        end
+    end
+    for _, j in ipairs(fleet2) do
+        if j:exists() then
+            j:control(false)
+        end
+    end
 end
 
 -- Handles arrival back to base
 function land ()
-   local pnt = planet.cur()
-
    -- Just landing
-   if misn_stage == 0 and pnt == misn_target then
-
-      -- Sinister music landing
-      music.load("landing_sinister")
-      music.play()
+   if misn_stage == 1 and planet.cur() == misn_target then
+      player.takeoff()
 
       -- Some flavour text
       tk.msg( title[2], text[3] )
@@ -125,19 +218,17 @@ function land ()
          tk.msg( title[2], text[4] )
       end
 
-      -- Stage 1 fight!
       tk.msg( title[2], text[5] )
-      misn_stage = 1
-      misn.setDesc( string.format(misn_desc[2], misn_base:name(), misn_base_sys:name() ))
-      misn.markerMove( misn_marker, misn_base_sys )
 
       -- Add goods
       misn_cargo = misn.cargoAdd( "Datapad", 0 )
+      misn_stage = 2
 
-   elseif misn_stage == 1 and pnt == misn_base then
+   elseif misn_stage == 3 and planet.cur() == misn_base then
 
       tk.msg( title[3], text[6] )
       misn.cargoRm( misn_cargo )
+      var.pop("emp_commando")
 
       -- Rewards
       player.modFaction("Empire",5)

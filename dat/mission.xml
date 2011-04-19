@@ -142,7 +142,7 @@
    <planet>Omega Station</planet>
   </avail>
  </mission>
- <mission name="Collective Espionage 3">
+ <mission name="Collective Distraction">
   <lua>empire/collective/ec03</lua>
   <flags>
    <unique />
@@ -156,7 +156,7 @@
    <planet>Omega Station</planet>
   </avail>
  </mission>
- <mission name="Collective Distraction">
+ <mission name="Collective Extraction">
   <lua>empire/collective/ec04</lua>
   <flags>
    <unique />
@@ -164,7 +164,7 @@
   <avail>
    <priority>2</priority>
    <cond>player.getFaction("Empire") &gt; 5 and var.peek("emp_commando") ~= nil and time.get() &gt; time.fromnumber( var.peek("emp_commando") )</cond>
-   <done>Collective Espionage 3</done>
+   <done>Collective Distraction</done>
    <chance>100</chance>
    <location>Land</location>
    <planet>Omega Station</planet>
