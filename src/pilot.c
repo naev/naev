@@ -2246,7 +2246,7 @@ void pilots_update( double dt )
          continue;
 
       /* See if should think. */
-      if (!p->think)
+      if ((p->think==NULL) || (p->ai==NULL))
          continue;
       if (pilot_isDisabled(p))
          continue;
