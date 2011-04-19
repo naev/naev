@@ -76,7 +76,7 @@ function pirate_createKestrel( pirate_create )
    local nhigh, nmedium, nlow = s:slots()
 
    -- Kestrel gets some good stuff
-   primary        = { "Heavy Ion Turret", "Railgun Turret", "Laser Turret MK2" }
+   primary        = { "Heavy Ion Turret", "Razor Turret MK2", "Laser Turret MK2", "Turreted Vulcan Gun" }
    secondary      = { "Headhunter Launcher" }
    use_primary    = nhigh-2
    use_secondary  = 2
@@ -117,7 +117,7 @@ function pirate_createAdmonisher( pirate_create )
    local nhigh, nmedium, nlow = s:slots()
 
    -- Admonisher specializes in forward-firing weapons.
-   primary        = { "Railgun", "Plasma Blaster MK2", "Ion Cannon" }
+   primary        = { "Mass Driver MK2", "Plasma Blaster MK2", "Vulcan Gun" }
    secondary      = { "Headhunter Launcher", "Seeker Launcher", "Banshee Launcher" }
    use_primary    = nhigh-1
    use_secondary  = 1
@@ -158,7 +158,7 @@ function pirate_createAncestor( pirate_create )
    local nhigh, nmedium, nlow = s:slots()
 
    -- Ancestor specializes in ranged combat.
-   primary        = { "Laser Cannon MK1", "Laser Cannon MK2", "Plasma Blaster MK1", "Plasma Blaster MK2" }
+   primary        = { "Laser Cannon MK1", "Laser Cannon MK2", "Plasma Blaster MK1", "Plasma Blaster MK2", "Razor MK1", "Razor MK2" }
    secondary      = { "Seeker Launcher" }
    use_primary    = nhigh-2
    use_secondary  = 2
@@ -199,7 +199,7 @@ function pirate_createVendetta( pirate_create )
    local nhigh, nmedium, nlow = s:slots()
 
    -- Vendettas are all about close-range firepower.
-   primary        = { "Plasma Blaster MK1", "Plasma Blaster MK2", "Laser Cannon MK1" }
+   primary        = { "Plasma Blaster MK1", "Plasma Blaster MK2", "Laser Cannon MK1", "Razor MK2" }
    secondary      = { "Seeker Launcher", "Banshee Launcher" }
    use_primary    = nhigh-1
    use_secondary  = 1
