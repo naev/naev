@@ -68,7 +68,8 @@ SDL_mutex *sound_lock = NULL; /**< Global sound lock, always lock this before
  */
 static ALCcontext *al_context = NULL; /**< OpenAL context. */
 static ALCdevice *al_device   = NULL; /**< OpenAL device. */
-static ALfloat svolume        = 1.; /**< Sound global volume. */
+static ALfloat svolume        = 1.; /**< Sound global volume (logarithmic). */
+static ALfloat svolume_lin    = 1.; /**< Sound global volume (linear). */
 alInfo_t al_info; /**< OpenAL context info. */
 
 
@@ -907,8 +908,12 @@ void sound_al_free( alSound *snd )
 int sound_al_volume( double vol )
 {
    int i;
-   svolume = (ALfloat) vol;
 
+   svolume_lin = vol;
+   if (vol > 0.) /* Floor of -48 dB (0.00390625 amplitude) */
+      svolume = (ALfloat) 1 / pow(2, (1 - vol) * 8);
+   else
+      svolume     = 0.;
    soundLock();
    for (i=0; i<source_nall; i++)
       alSourcef( source_all[i], AL_GAIN, svolume );
@@ -919,9 +924,18 @@ int sound_al_volume( double vol )
 
 
 /**
- * @brief Gets the current volume level.
+ * @brief Gets the current volume level (linear).
  */
 double sound_al_getVolume (void)
+{
+   return svolume_lin;
+}
+
+
+/**
+ * @brief Gets the current volume level (logarithmic).
+ */
+double sound_al_getVolumeLog(void)
 {
    return svolume;
 }

@@ -40,6 +40,7 @@ int sound_get( char* name );
 double sound_length( int sound );
 int sound_volume( const double vol );
 double sound_getVolume (void);
+double sound_getVolumeLog (void);
 int sound_play( int sound );
 int sound_playPos( int sound, double px, double py, double vx, double vy );
 void sound_stop( int voice );

@@ -85,7 +85,9 @@ static void opt_audioSave( unsigned int wid, char *str );
 static void opt_audioDefaults( unsigned int wid, char *str );
 static void opt_audioUpdate( unsigned int wid, char *str );
 static void opt_setSFXLevel( unsigned int wid, char *str );
+static void opt_soundLevelStr( char *buf, int max, double pos );
 static void opt_setMusicLevel( unsigned int wid, char *str );
+static void opt_musicLevelStr( char *buf, int max, double pos );
 /* Keybind menu. */
 static void opt_keybinds( unsigned int wid );
 static void menuKeybinds_getDim( unsigned int wid, int *w, int *h,
@@ -611,7 +613,7 @@ static void opt_keyDefaults( unsigned int wid, char *str )
  */
 static void opt_setSFXLevel( unsigned int wid, char *str )
 {
-   char buf[32];
+   char buf[64];
 	double vol;
 
    /* Set fader. */
@@ -619,8 +621,31 @@ static void opt_setSFXLevel( unsigned int wid, char *str )
 	sound_volume(vol);
 
    /* Update message. */
-   snprintf( buf, sizeof(buf), "Sound Volume: %.2f", sound_getVolume() );
+   opt_soundLevelStr( buf, sizeof(buf), vol );
    window_modifyText( wid, "txtSound", buf );
+}
+
+
+/**
+ * @brief Sets the sound volume string based on level and sound backend.
+ *
+ *    @param[out] buf Buffer to use.
+ *    @param max Maximum length of the buffer.
+ *    @param pos Position of the fader calling the function.
+ */
+static void opt_soundLevelStr( char *buf, int max, double pos )
+{
+   double vol, magic;
+
+   vol = sound_getVolumeLog();
+   if (vol == 0.)
+      snprintf( buf, max, "Sound Volume: Muted" );
+   else if (strcmp(conf.sound_backend,"openal")==0) {
+      magic = -48. / log(0.00390625); /* -48 dB minimum divided by logarithm of volume floor. */
+      snprintf( buf, max, "Sound Volume: %.2f (%.0f dB)", pos, log(vol) * magic );
+   }
+   else if (strcmp(conf.sound_backend,"sdlmix")==0)
+      snprintf( buf, max, "Sound Volume: %.2f", pos );
 }
 
 
@@ -632,7 +657,7 @@ static void opt_setSFXLevel( unsigned int wid, char *str )
  */
 static void opt_setMusicLevel( unsigned int wid, char *str )
 {
-   char buf[32];
+   char buf[64];
    double vol;
 
    /* Update fader. */
@@ -640,8 +665,31 @@ static void opt_setMusicLevel( unsigned int wid, char *str )
 	music_volume(vol);
 
    /* Update message. */
-   snprintf( buf, sizeof(buf), "Music Volume: %.2f", music_getVolume() );
+   opt_musicLevelStr( buf, sizeof(buf), vol );
    window_modifyText( wid, "txtMusic", buf );
+}
+
+
+/**
+ * @brief Sets the music volume string based on level and sound backend.
+ *
+ *    @param[out] buf Buffer to use.
+ *    @param max Maximum length of the buffer.
+ *    @param pos Position of the fader calling the function.
+ */
+static void opt_musicLevelStr( char *buf, int max, double pos )
+{
+   double vol, magic;
+
+   vol = music_getVolumeLog();
+   if (vol == 0.)
+      snprintf( buf, max, "Music Volume: Muted" );
+   else if (strcmp(conf.sound_backend,"openal")==0) {
+      magic = -48. / log(0.00390625); /* -48 dB minimum divided by logarithm of volume floor. */
+      snprintf( buf, max, "Music Volume: %.2f (%.0f dB)", pos, log(vol) * magic );
+   }
+   else if (strcmp(conf.sound_backend,"sdlmix")==0)
+      snprintf( buf, max, "Music Volume: %.2f", pos );
 }
 
 
@@ -721,7 +769,7 @@ static void opt_audio( unsigned int wid )
    y -= 30;
 
    /* Sound fader. */
-   snprintf( buf, sizeof(buf), "Sound Volume: %.2f", sound_getVolume() );
+   opt_soundLevelStr( buf, sizeof(buf), sound_getVolume() );
    window_addText( wid, x, y, cw, 20, 1, "txtSound",
          NULL, NULL, buf );
    y -= 20;
@@ -730,7 +778,7 @@ static void opt_audio( unsigned int wid )
    y -= 40;
 
    /* Music fader. */
-   snprintf( buf, sizeof(buf), "Music Volume: %.2f", music_getVolume() );
+   opt_musicLevelStr( buf, sizeof(buf), music_getVolume() );
    window_addText( wid, x, y, cw, 20, 1, "txtMusic",
          NULL, NULL, buf );
    y -= 20;

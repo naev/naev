@@ -86,6 +86,7 @@ void (*music_sys_free) (void)    = NULL;
  /* Music control. */
 int  (*music_sys_volume)( const double vol ) = NULL;
 double (*music_sys_getVolume) (void) = NULL;
+double (*music_sys_getVolumeLog) (void) = NULL;
 void (*music_sys_play) (void)    = NULL;
 void (*music_sys_stop) (void)    = NULL;
 void (*music_sys_pause) (void)   = NULL;
@@ -188,6 +189,7 @@ int music_init (void)
       /* Music control. */
       music_sys_volume = music_mix_volume;
       music_sys_getVolume = music_mix_getVolume;
+      music_sys_getVolumeLog = music_mix_getVolume;
       music_sys_load = music_mix_load;
       music_sys_play = music_mix_play;
       music_sys_stop = music_mix_stop;
@@ -215,6 +217,7 @@ int music_init (void)
       /* Music control. */
       music_sys_volume = music_al_volume;
       music_sys_getVolume = music_al_getVolume;
+      music_sys_getVolumeLog = music_al_getVolumeLog;
       music_sys_load = music_al_load;
       music_sys_play = music_al_play;
       music_sys_stop = music_al_stop;
@@ -369,7 +372,7 @@ int music_volume( const double vol )
 
 
 /**
- * @brief Gets the current music volume.
+ * @brief Gets the current music volume (linear).
  *
  *    @return The current music volume.
  */
@@ -379,6 +382,19 @@ double music_getVolume (void)
       return 0.;
 
    return music_sys_getVolume();
+}
+
+
+/**
+ * @brief Gets the current music volume (logarithmic).
+ *
+ *    @return The current music volume.
+ */
+double music_getVolumeLog(void)
+{
+   if (music_disabled)
+      return 0.;
+   return music_sys_getVolumeLog();
 }
 
 
