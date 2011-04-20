@@ -2040,8 +2040,7 @@ static int player_thinkMouseFly(void)
 
    px = player.p->solid->pos.x;
    py = player.p->solid->pos.y;
-   x = player.mousex + px;
-   y = player.mousey + py;
+   gl_screenToGameCoords( &x, &y, player.mousex, player.mousey );
    r = sqrt(pow2(x-px) + pow2(y-py));
    if (r > 50.) { /* Ignore mouse input within a 50 px radius of the centre. */
       pilot_face(player.p, atan2( y - py, x - px));

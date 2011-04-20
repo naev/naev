@@ -1113,8 +1113,8 @@ static void input_mouseMove( SDL_Event* event )
    int mx, my;
 
    gl_windowToScreenPos( &mx, &my, event->button.x, event->button.y );
-   player.mousex = (mx - (gl_screen.w / 2.));
-   player.mousey = (my - (gl_screen.h / 2.));
+   player.mousex = mx;
+   player.mousey = my;
 }
 
 /**
