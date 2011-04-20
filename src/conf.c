@@ -439,7 +439,7 @@ int conf_loadConfig ( const char* file )
                else if (strcmp(str,"jaxisneg")==0) type = KEYBIND_JAXISNEG;
                else if (strcmp(str,"jbutton")==0)  type = KEYBIND_JBUTTON;
                else {
-                  WARN("Unkown keybinding of type %s", str);
+                  WARN("Unknown keybinding of type %s", str);
                   continue;
                }
 

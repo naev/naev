@@ -153,7 +153,7 @@ static int naev_keyGet( lua_State *L )
  *
  * @usage naev.keyEnable( "accel", false ) -- Disables the acceleration key
  *    @luaparam keyname Name of the key to disable (for example "accel").
- *    @luaparam enable Whether to enable or disable (if ommitted disables).
+ *    @luaparam enable Whether to enable or disable (if omitted disables).
  * @luafunc keyEnable( keyname, enable )
  */
 static int naev_keyEnable( lua_State *L )
