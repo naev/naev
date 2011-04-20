@@ -68,7 +68,7 @@ endif
 
 install-ndata: $(DATA_ARCHIVE)
 	ndata="$(DESTDIR)$(ndata_path)"; \
-	dir=$$(echo "$$ndata" | $(SED) 's/\(.*\)[\/\\].*/\1/'); \
+	dir=$$(echo "$$ndata" | sed 's/\(.*\)[\/\\].*/\1/'); \
 	echo " $(MKDIR_P) '$$dir'"; \
 	$(MKDIR_P) "$$dir"; \
 	echo " $(INSTALL_DATA) -c '$(DATA_ARCHIVE)' '$$ndata'"; \
