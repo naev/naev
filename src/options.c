@@ -84,10 +84,8 @@ static void opt_audio( unsigned int wid );
 static void opt_audioSave( unsigned int wid, char *str );
 static void opt_audioDefaults( unsigned int wid, char *str );
 static void opt_audioUpdate( unsigned int wid, char *str );
-static void opt_setSFXLevel( unsigned int wid, char *str );
-static void opt_soundLevelStr( char *buf, int max, double pos );
-static void opt_setMusicLevel( unsigned int wid, char *str );
-static void opt_musicLevelStr( char *buf, int max, double pos );
+static void opt_audioLevelStr( char *buf, int max, int type, double pos );
+static void opt_setAudioLevel( unsigned int wid, char *str );
 /* Keybind menu. */
 static void opt_keybinds( unsigned int wid );
 static void menuKeybinds_getDim( unsigned int wid, int *w, int *h,
@@ -262,7 +260,7 @@ static void opt_gameplay( unsigned int wid )
          "chkAfterburn", "Enable double-tap afterburn", NULL, conf.afterburn_sens );
    y -= 25;
    window_addCheckbox( wid, x, y, cw, 20,
-         "chkMouseThrust", "Enable mouse flying thrust control", NULL, conf.mouse_thrust );
+         "chkMouseThrust", "Enable mouse-flying thrust control", NULL, conf.mouse_thrust );
    y -= 25;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkCompress", "Enable savegame compression", NULL, conf.save_compress );
@@ -606,90 +604,57 @@ static void opt_keyDefaults( unsigned int wid, char *str )
 
 
 /**
- * @brief Callback to set the sound level.
+ * @brief Callback to set the sound or music level.
  *
  *    @param wid Window calling the callback.
  *    @param str Name of the widget calling the callback.
+ *    @param type 0 for sound, 1 for audio.
  */
-static void opt_setSFXLevel( unsigned int wid, char *str )
+static void opt_setAudioLevel( unsigned int wid, char *str )
 {
-   char buf[64];
-	double vol;
-
-   /* Set fader. */
-   vol = window_getFaderValue(wid, str);
-	sound_volume(vol);
-
-   /* Update message. */
-   opt_soundLevelStr( buf, sizeof(buf), vol );
-   window_modifyText( wid, "txtSound", buf );
-}
-
-
-/**
- * @brief Sets the sound volume string based on level and sound backend.
- *
- *    @param[out] buf Buffer to use.
- *    @param max Maximum length of the buffer.
- *    @param pos Position of the fader calling the function.
- */
-static void opt_soundLevelStr( char *buf, int max, double pos )
-{
-   double vol, magic;
-
-   vol = sound_getVolumeLog();
-   if (vol == 0.)
-      snprintf( buf, max, "Sound Volume: Muted" );
-   else if (strcmp(conf.sound_backend,"openal")==0) {
-      magic = -48. / log(0.00390625); /* -48 dB minimum divided by logarithm of volume floor. */
-      snprintf( buf, max, "Sound Volume: %.2f (%.0f dB)", pos, log(vol) * magic );
-   }
-   else if (strcmp(conf.sound_backend,"sdlmix")==0)
-      snprintf( buf, max, "Sound Volume: %.2f", pos );
-}
-
-
-/**
- * @brief Callback to set the music level.
- *
- *    @param wid Window calling the callback.
- *    @param str Name of the widget calling the callback.
- */
-static void opt_setMusicLevel( unsigned int wid, char *str )
-{
-   char buf[64];
+   char buf[32], *widget;
    double vol;
 
-   /* Update fader. */
    vol = window_getFaderValue(wid, str);
-	music_volume(vol);
+   if (strcmp(str,"fadSound")==0) {
+      sound_volume(vol);
+      widget = "txtSound";
+      opt_audioLevelStr( buf, sizeof(buf), 0, vol );
+   }
+   else {
+      music_volume(vol);
+      widget = "txtMusic";
+      opt_audioLevelStr( buf, sizeof(buf), 1, vol );
+   }
 
-   /* Update message. */
-   opt_musicLevelStr( buf, sizeof(buf), vol );
-   window_modifyText( wid, "txtMusic", buf );
+   window_modifyText( wid, widget, buf );
 }
 
 
 /**
- * @brief Sets the music volume string based on level and sound backend.
+ * @brief Sets the sound or music volume string based on level and sound backend.
  *
  *    @param[out] buf Buffer to use.
  *    @param max Maximum length of the buffer.
+ *    @param type 0 for sound, 1 for audio.
  *    @param pos Position of the fader calling the function.
  */
-static void opt_musicLevelStr( char *buf, int max, double pos )
+static void opt_audioLevelStr( char *buf, int max, int type, double pos )
 {
    double vol, magic;
+   char *str;
 
-   vol = music_getVolumeLog();
+   str = type ? "Music" : "Sound";
+   vol = type ? music_getVolumeLog() : sound_getVolumeLog();
+
    if (vol == 0.)
-      snprintf( buf, max, "Music Volume: Muted" );
+      snprintf( buf, max, "%s Volume: Muted", str );
    else if (strcmp(conf.sound_backend,"openal")==0) {
       magic = -48. / log(0.00390625); /* -48 dB minimum divided by logarithm of volume floor. */
-      snprintf( buf, max, "Music Volume: %.2f (%.0f dB)", pos, log(vol) * magic );
+      snprintf( buf, max, "%s Volume: %.2f (%.0f dB)", str, pos, log(vol) * magic );
    }
    else if (strcmp(conf.sound_backend,"sdlmix")==0)
-      snprintf( buf, max, "Music Volume: %.2f", pos );
+      snprintf( buf, max, "%s Volume: %.2f", str, pos );
 }
 
 
@@ -741,7 +706,7 @@ static void opt_audio( unsigned int wid )
    if (strcmp(conf.sound_backend,"openal")==0)
       j = i;
    s[i++] = strdup("openal");
-#endif /* USE_PONAL */
+#endif /* USE_OPENAL */
 #if USE_SDLMIX
    if (strcmp(conf.sound_backend,"sdlmix")==0)
       j = i;
@@ -769,23 +734,22 @@ static void opt_audio( unsigned int wid )
    y -= 30;
 
    /* Sound fader. */
-   opt_soundLevelStr( buf, sizeof(buf), sound_getVolume() );
+   opt_audioLevelStr( buf, sizeof(buf), 0, sound_getVolume() );
    window_addText( wid, x, y, cw, 20, 1, "txtSound",
          NULL, NULL, buf );
    y -= 20;
    window_addFader( wid, x, y, cw, 20, "fadSound", 0., 1.,
-         sound_getVolume(), opt_setSFXLevel );
+         sound_getVolume(), opt_setAudioLevel );
    y -= 40;
 
    /* Music fader. */
-   opt_musicLevelStr( buf, sizeof(buf), music_getVolume() );
+   opt_audioLevelStr( buf, sizeof(buf), 1, music_getVolume() );
    window_addText( wid, x, y, cw, 20, 1, "txtMusic",
          NULL, NULL, buf );
    y -= 20;
    window_addFader( wid, x, y, cw, 20, "fadMusic", 0., 1.,
-         music_getVolume(), opt_setMusicLevel );
+         music_getVolume(), opt_setAudioLevel );
    y -= 20;
-
 
    /* Restart text. */
    window_addText( wid, 20, 10, 3*(BUTTON_WIDTH + 20),
@@ -1322,5 +1286,3 @@ static void opt_videoUpdate( unsigned int wid, char *str )
    /* Just in case - lazy. */
    opt_needRestart();
 }
-
-
