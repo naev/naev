@@ -756,6 +756,7 @@ static void opt_audio( unsigned int wid )
          30, 0, "txtRestart", &gl_smallFont, &cBlack, NULL );
 }
 
+
 /**
  * @brief Saves the audio stuff.
  */
@@ -794,6 +795,7 @@ static void opt_audioSave( unsigned int wid, char *str )
    }
 }
 
+
 /**
  * @brief Sets the audio defaults.
  */
@@ -818,6 +820,7 @@ static void opt_audioDefaults( unsigned int wid, char *str )
    /* Alert user it worked. */
    dialogue_msgRaw( "Defaults Restored", "Audio settings restored to defaults.");
 }
+
 
 /**
  * @brief Updates the audio widgets.
@@ -1066,7 +1069,6 @@ static void opt_video( unsigned int wid )
    window_addList( wid, x, y, 140, 100, "lstRes", res, i, j, opt_videoRes );
    y -= 150;
 
-
    /* FPS stuff. */
    window_addText( wid, x+20, y, 100, 20, 0, "txtFPSTitle",
          NULL, &cDConsole, "FPS Control" );
@@ -1084,7 +1086,6 @@ static void opt_video( unsigned int wid )
    window_addCheckbox( wid, x, y, cw, 20,
          "chkFPS", "Show FPS", NULL, conf.fps_show );
    y -= 40;
-
 
    /* OpenGL options. */
    x = 20+cw+20;
@@ -1110,6 +1111,7 @@ static void opt_video( unsigned int wid )
    window_addText( wid, x, y, cw, 20, 1,
          "txtSCompat", NULL, &cBlack, "*Disable for compatibility." );
    y -= 40;
+
    /* Features. */
    window_addText( wid, x+20, y, 100, 20, 0, "txtSFeatures",
          NULL, &cDConsole, "Features" );
@@ -1117,7 +1119,6 @@ static void opt_video( unsigned int wid )
    window_addCheckbox( wid, x, y, cw, 20,
          "chkEngineGlow", "Engine Glow (More RAM)", NULL, conf.engineglow );
    y -= 20;
-
 
    /* Restart text. */
    window_addText( wid, 20, 10, 3*(BUTTON_WIDTH + 20),
