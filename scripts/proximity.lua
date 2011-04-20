@@ -20,10 +20,24 @@ function proximity( trigger )
         end
     end
 
+    -- Check global proxmitiy table
+    if __proximity_tbl == nil then
+       __proximity_tbl = {}
+       __proximity_tbl["__save"] = true
+       __proximity_tbl["id"] = 0
+    end
+
+    -- Assign ID if necessary
+    if trigger.__id == nil then
+       __proximity_tbl["id"] = __proximity_tbl["id"]+1
+       trigger.__id = __proximity_tbl["id"]
+       __proximity_tbl[ trigger.__id ] = trigger
+    end
+
     -- First time hook is set
     if trigger.hook_tbl == nil then
        trigger.hook_tbl = {}
-       hook.enter("proximityCancel", trigger.hook_tbl)
+       hook.enter("proximityCancel", trigger)
     end
 
     -- Set new timer hook
@@ -32,6 +46,7 @@ function proximity( trigger )
 end
 
 -- Make sure the proximity timer shuts itself off on land or jumpout.
-function proximityCancel( hook_tbl )
-    hook.rm( hook_tbl[1] )
+function proximityCancel( trigger )
+    hook.rm( trigger.hook_tbl[1] )
+    __proximity_tbl[ trigger.__id ] = nil
 end

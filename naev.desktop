@@ -1,8 +1,9 @@
 [Desktop Entry]
 Type=Application
-Version=1.0
 Name=Naev
 GenericName=Naev
+Comment=2D action/rpg space trading combat game
 Icon=naev
 Exec=naev
-Categories=Game;
+Categories=Game;AdventureGame;
+Terminal=false

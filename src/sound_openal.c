@@ -36,14 +36,14 @@
  *    voice - virtual object that wants to play sound
  *
  *
- * First we allocate all the buffers based on what we find inside the
+ * 1) First we allocate all the buffers based on what we find inside the
  * datafile.
- * Then we allocate all the possible sources (giving the music system
+ * 2) Then we allocate all the possible sources (giving the music system
  * what it needs).
- * Now we allow the user to dynamically create voices, these voices will
+ * 3) Now we allow the user to dynamically create voices, these voices will
  * always try to grab a source from the source pool.  If they can't they
  * will pretend to play the buffer.
- * Every so often we'll check to see if the important voices are being
+ * 4) Every so often we'll check to see if the important voices are being
  * played and take away the sources from the lesser ones.
  */
 
@@ -270,14 +270,17 @@ int sound_al_init (void)
    source_mstack  = 0;
    while (source_nstack < SOUND_MAX_SOURCES) {
       if (source_mstack < source_nstack+1) { /* allocate more memory */
-         source_mstack += 32;
+         if (source_mstack == 0)
+            source_mstack = 128;
+         else
+            source_mstack *= 2;
          source_stack = realloc( source_stack, sizeof(ALuint) * source_mstack );
       }
       alGenSources( 1, &s );
       source_stack[source_nstack] = s;
 
       /* Distance model defaults. */
-      alSourcef( s, AL_MAX_DISTANCE,       5000. );
+      alSourcef( s, AL_MAX_DISTANCE,       25000. ); /* Distance to clamp at, as in not get quieter. */
       alSourcef( s, AL_ROLLOFF_FACTOR,     1. );
       alSourcef( s, AL_REFERENCE_DISTANCE, 500. );
 
@@ -304,7 +307,7 @@ int sound_al_init (void)
    memcpy( source_all, source_stack, sizeof(ALuint) * source_mstack );
 
    /* Set up how sound works. */
-   alDistanceModel( AL_INVERSE_DISTANCE_CLAMPED );
+   alDistanceModel( AL_INVERSE_DISTANCE ); /* Don't want to clamp. */
    alDopplerFactor( 1. );
    sound_al_env( SOUND_ENV_NORMAL, 0. );
 
@@ -1242,7 +1245,7 @@ int sound_al_env( SoundEnv_t env, double param )
 
             if (al_info.efx_reverb == AL_TRUE) {
                /* Tweak the reverb. */
-               nalEffectf( efx_reverb, AL_REVERB_DECAY_TIME, 10. );
+               nalEffectf( efx_reverb, AL_REVERB_DECAY_TIME,    10. );
                nalEffectf( efx_reverb, AL_REVERB_DECAY_HFRATIO, 0.5 );
 
                /* Connect the effect. */

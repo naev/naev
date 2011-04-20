@@ -1018,7 +1018,7 @@ void gl_fontInit( glFont* font, const char *fname, const unsigned int h )
          WARN("FT_Set_Char_Size failed.");
    }
    else
-      WARN("Font isn't resizeable!");
+      WARN("Font isn't resizable!");
 
    /* Select the character map. */
    if (FT_Select_Charmap( face, FT_ENCODING_UNICODE ))
