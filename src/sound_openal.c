@@ -307,7 +307,7 @@ int sound_al_init (void)
    memcpy( source_all, source_stack, sizeof(ALuint) * source_mstack );
 
    /* Set up how sound works. */
-   alDistanceModel( AL_INVERSE_DISTANCE ); /* Don't want to clamp. */
+   alDistanceModel( AL_INVERSE_DISTANCE_CLAMPED ); /* Don't want to clamp. */
    alDopplerFactor( 1. );
    sound_al_env( SOUND_ENV_NORMAL, 0. );
 
