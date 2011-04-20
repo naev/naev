@@ -296,6 +296,18 @@ int sound_al_init (void)
        *                  /       distance        \ -AL_ROLLOFF_FACTOR
        *  * Exponential = | --------------------- |
        *                  \ AL_REFERENCE_DISTANCE /
+       *
+       *
+       * Some values:
+       *
+       *  model    falloff  reference   100     1000    5000   10000
+       *  linear     1        500      1.000   0.947   0.526   0.000
+       *  inverse    1        500      1.000   0.500   0.100   0.050
+       *  exponent   1        500      1.000   0.500   0.100   0.050
+       *  inverse   0.5       500      1.000   0.667   0.182   0.095
+       *  exponent  0.5       500      1.000   0.707   0.316   0.223
+       *  inverse    2        500      1.000   0.333   0.052   0.026
+       *  exponent   2        500      1.000   0.250   0.010   0.003
        */
       alSourcef( s, AL_REFERENCE_DISTANCE, 500. ); /* Close distance to clamp at (doesn't get louder). */
       alSourcef( s, AL_MAX_DISTANCE,       25000. ); /* Max distance to clamp at (doesn't get quieter). */
