@@ -349,9 +349,9 @@ int player_shouldAbortAutonav( int damaged )
 
    if (!player_isFlag(PLAYER_AUTONAV)) {
       if (player.autonav_timer > 0.)
-         abort_mod = MAX( 0., abort_mod - .2 );
+         abort_mod = MIN( MAX( 0., abort_mod - .25 ), (int)(shield * 4) * .25 );
       else
-         abort_mod = .8;
+         abort_mod = MIN( 0.75, (int)(shield * 4) * .25 );
       player.autonav_timer = 30.;
       return 1;
    }
