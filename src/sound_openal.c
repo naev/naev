@@ -279,7 +279,24 @@ int sound_al_init (void)
       alGenSources( 1, &s );
       source_stack[source_nstack] = s;
 
-      /* Distance model defaults. */
+      /* How OpenAL distance model works:
+       *
+       * Clamped:
+       *  gain = distance_function( CLAMP( AL_REFERENCE_DISTANCE, AL_MAX_DISTANCE, distance ) );
+       *
+       * Distance functions:
+       *                                       AL_REFERENCE_DISTANCE 
+       *  * Inverse = ------------------------------------------------------------------------------
+       *              AL_REFERENCE_DISTANCE + AL_ROLLOFF_FACTOR ( distance - AL_REFERENCE_DISTANCE )
+       *
+       *             1 - AL_ROLLOFF_FACTOR ( distance - AL_REFERENCE_DISTANCE )
+       *  * Linear = ----------------------------------------------------------
+       *                      AL_MAX_DISTANCE - AL_REFERENCE_DISTANCE
+       *
+       *                  /       distance        \ -AL_ROLLOFF_FACTOR
+       *  * Exponential = | --------------------- |
+       *                  \ AL_REFERENCE_DISTANCE /
+       */
       alSourcef( s, AL_REFERENCE_DISTANCE, 500. ); /* Close distance to clamp at (doesn't get louder). */
       alSourcef( s, AL_MAX_DISTANCE,       25000. ); /* Max distance to clamp at (doesn't get quieter). */
       alSourcef( s, AL_ROLLOFF_FACTOR,     1. ); /* Determines how it drops off. */
