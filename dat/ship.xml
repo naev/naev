@@ -1532,7 +1532,7 @@
    <cpu>170</cpu>
    <crew>27</crew>
    <mass>2800</mass>
-   <fuel>300</fuel>
+   <fuel>400</fuel>
    <cap_cargo>50</cap_cargo>
   </characteristics>
   <slots>
@@ -1584,7 +1584,7 @@
    <cpu>180</cpu>
    <crew>28</crew>
    <mass>2725</mass>
-   <fuel>300</fuel>
+   <fuel>400</fuel>
    <cap_cargo>55</cap_cargo>
   </characteristics>
   <slots>
