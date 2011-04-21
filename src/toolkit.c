@@ -1798,11 +1798,16 @@ static void toolkit_mouseEventWidget( Window *w, Widget *wgt,
             }
          }
 
+         /* Signal scroll done if necessary. */
+         if ((wgt->status == WIDGET_STATUS_SCROLLING) && (wgt->scrolldone != NULL))
+            wgt->scrolldone( wgt );
+
          /* Always goes normal unless is below mouse. */
          if (inbounds)
             wgt->status = WIDGET_STATUS_MOUSEOVER;
-         else
+         else {
             wgt->status = WIDGET_STATUS_NORMAL;
+         }
 
          break;
    }

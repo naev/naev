@@ -17,6 +17,7 @@ static int fad_mclick( Widget* fad, int button, int x, int y );
 static int fad_mmove( Widget* fad, int x, int y, int rx, int ry );
 static int fad_key( Widget* fad, SDLKey key, SDLMod mod );
 static void fad_setValue( Widget *fad, double value );
+static void fad_scrolldone( Widget *wgt );
 
 
 /**
@@ -59,6 +60,7 @@ void window_addFader( const unsigned int wid,
    wgt->mclickevent     = fad_mclick;
    wgt->mmoveevent      = fad_mmove;
    wgt->keyevent        = fad_key;
+   wgt->scrolldone      = fad_scrolldone;
    wgt_setFlag(wgt, WGT_FLAG_CANFOCUS);
    wgt->dat.fad.value   = min;
    wgt->dat.fad.min     = min;
@@ -327,4 +329,39 @@ void window_faderBounds( const unsigned int wid,
    fad_setValue(wgt, wgt->dat.fad.value );
 }
 
+/**
+ * @brief Internal callback.
+ */
+static void fad_scrolldone( Widget *wgt )
+{
+   if (wgt->dat.fad.scrolldone != NULL)
+      wgt->dat.fad.scrolldone( wgt->wdw, wgt->name );
+}
+
+
+/**
+ * @brief Sets the scroll done callback for a fader.
+ *
+ *    @param wid Window to which the fader belongs.
+ *    @param name Name of the fader.
+ *    @param func Function to call when scrolling is done.
+ */
+void window_faderScrollDone( const unsigned int wid,
+      char *name, void (*func)(unsigned int,char*) )
+{
+   Widget *wgt;
+
+   /* Get the widget. */
+   wgt = window_getwgt(wid,name);
+   if (wgt == NULL)
+      return;
+
+   /* Check the type. */
+   if (wgt->type != WIDGET_FADER) {
+      WARN("Not setting scroll done function callback for non-fader widget '%s'.", name);
+      return;
+   }
+
+   wgt->dat.fad.scrolldone = func;
+}
 

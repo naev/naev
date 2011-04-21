@@ -26,6 +26,7 @@
 #include "dialogue.h"
 #include "conf.h"
 #include "ndata.h"
+#include "player.h"
 
 
 #define BUTTON_WIDTH    90 /**< Button width, standard across menus. */
@@ -86,6 +87,7 @@ static void opt_audioDefaults( unsigned int wid, char *str );
 static void opt_audioUpdate( unsigned int wid, char *str );
 static void opt_audioLevelStr( char *buf, int max, int type, double pos );
 static void opt_setAudioLevel( unsigned int wid, char *str );
+static void opt_beep( unsigned int wid, char *str );
 /* Keybind menu. */
 static void opt_keybinds( unsigned int wid );
 static void menuKeybinds_getDim( unsigned int wid, int *w, int *h,
@@ -740,6 +742,7 @@ static void opt_audio( unsigned int wid )
    y -= 20;
    window_addFader( wid, x, y, cw, 20, "fadSound", 0., 1.,
          sound_getVolume(), opt_setAudioLevel );
+   window_faderScrollDone( wid, "fadSound", opt_beep );
    y -= 40;
 
    /* Music fader. */
@@ -754,6 +757,14 @@ static void opt_audio( unsigned int wid )
    /* Restart text. */
    window_addText( wid, 20, 10, 3*(BUTTON_WIDTH + 20),
          30, 0, "txtRestart", &gl_smallFont, &cBlack, NULL );
+}
+
+
+static void opt_beep( unsigned int wid, char *str )
+{
+   (void) wid;
+   (void) str;
+   player_soundPlay( snd_target, 1 );
 }
 
 

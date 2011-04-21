@@ -205,6 +205,15 @@ int landtarget; /**< Used in pilot.c, allows planet targeting while landing. */
 
 
 /**
+ * @brief Initializes player stuff.
+ */
+int player_init (void)
+{
+   player_initSound();
+   return 0;
+}
+
+/**
  * @brief Sets up a new player.
  */
 static void player_newSetup( int tutorial )
@@ -819,7 +828,8 @@ static int player_soundReserved = 0; /**< Has the player already reserved sound?
  */
 static void player_initSound (void)
 {
-   if (player_soundReserved) return;
+   if (player_soundReserved)
+      return;
 
    /* Allocate channels. */
    player_engine_group  = sound_createGroup(1); /* Channel for engine noises. */
