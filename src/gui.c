@@ -909,19 +909,6 @@ void gui_render( double dt )
    /* OSD. */
    osd_render();
 
-   /*
-    * hyperspace
-    */
-   if (pilot_isFlag(player.p, PILOT_HYPERSPACE) &&
-         (player.p->ptimer < HYPERSPACE_FADEOUT)) {
-      x = (HYPERSPACE_FADEOUT-player.p->ptimer) / HYPERSPACE_FADEOUT;
-      col.r = 1.;
-      col.g = 1.;
-      col.b = 1.;
-      col.a = x;
-      gl_renderRect( 0., 0., SCREEN_W, SCREEN_H, &col );
-   }
-
    /* Noise when getting near a jump. */
    if (player.p->nav_hyperspace >= 0) { /* hyperspace target */
 

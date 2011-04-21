@@ -205,6 +205,15 @@ int landtarget; /**< Used in pilot.c, allows planet targeting while landing. */
 
 
 /**
+ * @brief Initializes player stuff.
+ */
+int player_init (void)
+{
+   player_initSound();
+   return 0;
+}
+
+/**
  * @brief Sets up a new player.
  */
 static void player_newSetup( int tutorial )
@@ -819,7 +828,8 @@ static int player_soundReserved = 0; /**< Has the player already reserved sound?
  */
 static void player_initSound (void)
 {
-   if (player_soundReserved) return;
+   if (player_soundReserved)
+      return;
 
    /* Allocate channels. */
    player_engine_group  = sound_createGroup(1); /* Channel for engine noises. */
@@ -1206,9 +1216,12 @@ void player_updateSpecific( Pilot *pplayer, const double dt )
    player_lastEngineSound = engsound;
 
    /* Sound. */
+   /*
+    * Sound is now camera-specific and thus not player specific. A bit sad really.
    sound_updateListener( pplayer->solid->dir,
          pplayer->solid->pos.x, pplayer->solid->pos.y,
          pplayer->solid->vel.x, pplayer->solid->vel.y );
+   */
 
    /* See if must play hail sound. */
    if (player_hailCounter > 0) {
@@ -2040,8 +2053,7 @@ static int player_thinkMouseFly(void)
 
    px = player.p->solid->pos.x;
    py = player.p->solid->pos.y;
-   x = player.mousex + px;
-   y = player.mousey + py;
+   gl_screenToGameCoords( &x, &y, player.mousex, player.mousey );
    r = sqrt(pow2(x-px) + pow2(y-py));
    if (r > 50.) { /* Ignore mouse input within a 50 px radius of the centre. */
       pilot_face(player.p, atan2( y - py, x - px));

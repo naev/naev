@@ -92,6 +92,7 @@ extern int snd_hypJump; /**< Hyperspace jump sound. */
 /*
  * creation/cleanup
  */
+int player_init (void);
 void player_new (void);
 void player_newTutorial (void);
 Pilot* player_newShip( Ship* ship, const char *def_name,

@@ -76,6 +76,7 @@ void sound_al_free( alSound *snd );
  */
 int sound_al_volume( const double vol );
 double sound_al_getVolume (void);
+double sound_al_getVolumeLog(void);
 
 
 /*

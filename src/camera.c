@@ -42,10 +42,20 @@ static double camera_flyspeed = 0.; /**< Speed when flying. */
 /*
  * Prototypes.
  */
+static void cam_setSound( double px, double py, double vx, double vy );
 static void cam_updateFly( double x, double y, double dt );
 static void cam_updatePilot( Pilot *follow, double dt );
 static void cam_updatePilotZoom( Pilot *follow, Pilot *target, double dt );
 static void cam_updateManualZoom( double dt );
+
+
+/**
+ * @brief Sets the camera sound.
+ */
+static void cam_setSound( double px, double py, double vx, double vy )
+{
+   sound_updateListener( M_PI/2., px, py, vx, vy );
+}
 
 
 /**
@@ -141,6 +151,7 @@ void cam_setTargetPilot( unsigned int follow, int soft_over )
       camera_fly = 1;
       camera_flyspeed = (double) soft_over;
    }
+   cam_setSound( camera_X, camera_Y, 0., 0. );
 }
 
 
@@ -168,6 +179,7 @@ void cam_setTargetPos( double x, double y, int soft_over )
       camera_fly = 1;
       camera_flyspeed = (double) soft_over;
    }
+   cam_setSound( camera_X, camera_Y, 0., 0. );
 }
 
 
@@ -179,6 +191,11 @@ void cam_setTargetPos( double x, double y, int soft_over )
 void cam_update( double dt )
 {
    Pilot *p;
+   double dx, dy;
+
+   /* Calculate differential. */
+   dx = old_X;
+   dy = old_Y;
 
    /* Going to position. */
    if (camera_fly) {
@@ -210,6 +227,11 @@ void cam_update( double dt )
    /* Update manual zoom. */
    if (conf.zoom_manual)
       cam_updateManualZoom( dt );
+
+   /* Set the sound. */
+   dx = dt*(dx-camera_X);
+   dy = dt*(dy-camera_Y);
+   cam_setSound( camera_X, camera_Y, dx, dy );
 }
 
 
@@ -254,7 +276,7 @@ static void cam_updatePilot( Pilot *follow, double dt )
    double x,y, dx,dy, mx,my, targ_x,targ_y, bias_x,bias_y, vx,vy;
 
    /* Get target. */
-   if (follow->target != follow->id)
+   if (!pilot_isFlag(follow, PILOT_HYPERSPACE) && (follow->target != follow->id))
       target = pilot_get( follow->target );
    else
       target = NULL;
@@ -382,12 +404,12 @@ static void cam_updatePilotZoom( Pilot *follow, Pilot *target, double dt )
 
    /* Maximum is limited by nebulae. */
    if (cur_system->nebu_density > 0.) {
-      c    = MIN( SCREEN_W, SCREEN_H ) / 2;
-      zfar = CLAMP( conf.zoom_far, conf.zoom_near, c / nebu_getSightRadius() );
+      c     = MIN( SCREEN_W, SCREEN_H ) / 2;
+      zfar  = CLAMP( conf.zoom_far, conf.zoom_near, c / nebu_getSightRadius() );
    }
-   else {
+   else
       zfar = conf.zoom_far;
-   }
+   znear = MAX( znear, zfar );
 
    /*
     * Set Zoom to pilot target.

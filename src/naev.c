@@ -565,6 +565,7 @@ void load_all (void)
    loadscreen_render( 11./LOADING_STAGES, "Loading the Universe..." );
    space_load();
    background_init();
+   player_init(); /* Initialize player stuff. */
    loadscreen_render( 1., "Loading Completed!" );
    xmlCleanupParser(); /* Only needed to be run after all the loading is done. */
 }

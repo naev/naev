@@ -8,7 +8,7 @@ else
 end
 %>
 
-<h1>NAEV Lua API</h1>
+<h1>Naev Lua API</h1>
 <ul>
 	<%if not module_doc and not file_doc then%>
 	<li><strong>Main</strong></li>

@@ -116,7 +116,8 @@ ALuint music_source                    = 0; /**< Source assosciated to music. */
 /*
  * volume
  */
-static ALfloat music_vol = 1.; /**< Current volume level. */
+static ALfloat music_vol     = 1.; /**< Current volume level (logarithmic). */
+static ALfloat music_vol_lin = 1.; /**< Current volume level (linear). */
 
 
 /*
@@ -802,12 +803,16 @@ int music_al_volume( double vol )
 {
    soundLock();
 
-   music_vol = vol;
+   music_vol_lin = vol;
+   if (vol > 0.) /* Floor of -48 dB (0.00390625 amplitude) */
+      music_vol = 1 / pow(2, (1 - vol) * 8 );
+   else
+      music_vol = 0.;
 
    /* only needed if playing */
    if (music_al_isPlaying()) {
 
-      alSourcef( music_source, AL_GAIN, vol );
+      alSourcef( music_source, AL_GAIN, music_vol );
 
       /* Check for errors. */
       al_checkErr();
@@ -820,9 +825,18 @@ int music_al_volume( double vol )
 
 
 /**
- * @brief Gets the volume.
+ * @brief Gets the volume (linear).
  */
 double music_al_getVolume (void)
+{
+   return music_vol_lin;
+}
+
+
+/**
+ * @brief Gets the volume (logarithmic).
+ */
+double music_al_getVolumeLog(void)
 {
    return music_vol;
 }

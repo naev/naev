@@ -41,6 +41,7 @@ void music_al_free (void);
  */
 int music_al_volume( const double vol );
 double music_al_getVolume (void);
+double music_al_getVolumeLog(void);
 void music_al_play (void);
 void music_al_stop (void);
 void music_al_pause (void);

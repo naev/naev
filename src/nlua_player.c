@@ -577,7 +577,7 @@ static int playerL_cinematics( lua_State *L )
    b = lua_toboolean( L, 1 );
    if (lua_gettop(L) > 1) {
       if (!lua_istable(L,2)) {
-         NLUA_ERROR( L, "Second parameter to cinematics should be a table of options or ommitted!" );
+         NLUA_ERROR( L, "Second parameter to cinematics should be a table of options or omitted!" );
          return 0;
       }
 
@@ -663,8 +663,8 @@ static int playerL_takeoff( lua_State *L )
  * @usage player.allowLand( false ) -- Doesn't allow the player to land.
  * @usage player.allowLand( false, "No landing." ) -- Doesn't allow the player to land with the message "No landing."
  *
- *    @luaparam b Whether or not to allow the player to land (defaults to true if ommitted).
- *    @luaparam msg Message displayed when player tries to land (only if disallowed to land). Can be ommitted to use default.
+ *    @luaparam b Whether or not to allow the player to land (defaults to true if omitted).
+ *    @luaparam msg Message displayed when player tries to land (only if disallowed to land). Can be omitted to use default.
  * @luafunc allowLand( b, msg )
  */
 static int playerL_allowLand( lua_State *L )
@@ -873,8 +873,8 @@ static Pilot* playerL_newShip( lua_State *L )
  * @usage player.addShip( "Pirate Kestrel", "Seiryuu" ) -- Gives the player a Pirate Kestrel named Seiryuu if player cancels the naming.
  *
  *    @luaparam ship Name of the ship to add.
- *    @luaparam name Name to give the ship if player refuses to name it (defaults to shipname if ommitted).
- *    @luaparam loc Location to add to, if nil or ommitted it adds it to local planet (must be landed).
+ *    @luaparam name Name to give the ship if player refuses to name it (defaults to shipname if omitted).
+ *    @luaparam loc Location to add to, if nil or omitted it adds it to local planet (must be landed).
  *    @luaparam noname If true does not let the player name the ship (defaults to false).
  * @luafunc addShip( ship, name, loc, noname )
  */
@@ -888,8 +888,8 @@ static int playerL_addShip( lua_State *L )
 /**
  * @brief Swaps the player's current ship with a new ship given to him.
  *    @luaparam ship Name of the ship to add.
- *    @luaparam name Name to give the ship if player refuses to name it (defaults to shipname if ommitted).
- *    @luaparam loc Location to add to, if nil or ommitted it adds it to local planet (must be landed).
+ *    @luaparam name Name to give the ship if player refuses to name it (defaults to shipname if omitted).
+ *    @luaparam loc Location to add to, if nil or omitted it adds it to local planet (must be landed).
  *    @luaparam noname If true does not let the player name the ship (defaults to false).
  *    @luaparam remove If true removes the player's current ship (so it replaces and doesn't swap).
  * @luafunc swapShip( ship, name, loc, noname, remove )

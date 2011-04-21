@@ -20,6 +20,7 @@ typedef struct WidgetFaderData_{
    double min;   /**< Minimum value. */
    double max;   /**< Maximum value. */
    void (*fptr) (unsigned int,char*); /**< Modify callback - triggered on value change. */
+   void (*scrolldone) (unsigned int, char*); /**< Scroll done callback. */
 } WidgetFaderData;
 
 
@@ -37,6 +38,8 @@ void window_faderValue( const unsigned int wid,
 void window_faderBounds( const unsigned int wid,
       char* name, double min, double max );
 double window_getFaderValue( const unsigned int wid, char* name );
+void window_faderScrollDone( const unsigned int wid,
+      char *name, void (*func)(unsigned int,char*) );
 
 
 #endif /* WGT_FADER_H */

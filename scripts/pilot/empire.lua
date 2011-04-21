@@ -89,7 +89,7 @@ function empire_createPeacemaker( empire_create )
    local nhigh, nmedium, nlow = s:slots()
 
    -- Peacemaker gets some good stuff
-   primary        = { "Heavy Ion Turret", "Railgun Turret" }
+   primary        = { "Turbolaser", "Railgun Turret" }
    secondary      = { "Headhunter Launcher" }
    use_primary    = nhigh-2
    use_secondary  = 2
@@ -130,7 +130,7 @@ function empire_createHawking( empire_create )
    local nhigh, nmedium, nlow = s:slots()
 
    -- Hawking gets some good stuff
-   primary        = { "Heavy Ion Turret", "Railgun Turret" }
+   primary        = { "Turbolaser", "Heavy Laser" }
    secondary      = { "Headhunter Launcher" }
    use_primary    = nhigh-2
    use_secondary  = 2
@@ -138,7 +138,7 @@ function empire_createHawking( empire_create )
    low            = equip_lowHig()
    apu            = equip_apuHig()
 
-   -- FInally add outfits
+   -- Finally add outfits
    equip_ship( p, true, primary, secondary, medium, low, apu,
                use_primary, use_secondary, use_medium, use_low, olist )
 
@@ -171,7 +171,7 @@ function empire_createPacifier( empire_create )
    local nhigh, nmedium, nlow = s:slots()
 
    -- Pacifier isn't bad either
-   primary        = { "Railgun", "Ripper Cannon", "Heavy Ion Turret" }
+   primary        = { "Heavy Ripper Cannon", "Laser Turret MK3" }
    secondary      = { "Headhunter Launcher" }
    use_primary    = nhigh-2
    use_secondary  = 2
@@ -211,7 +211,7 @@ function empire_createShark( empire_create )
    local nhigh, nmedium, nlow = s:slots()
 
    -- Shark gets some good stuff
-   primary        = { "Ion Cannon", "Ripper Cannon" }
+   primary        = { "Laser Cannon MK3", "Ripper Cannon" }
    secondary      = { "Headhunter Launcher" }
    use_primary    = nhigh -1
    use_secondary  = 1
@@ -251,7 +251,7 @@ function empire_createLancelot( empire_create )
    local nhigh, nmedium, nlow = s:slots()
 
    -- Lancelot gets some good stuff
-   primary        = { "Ion Cannon", "Ripper Cannon" }
+   primary        = { "Laser Cannon MK3", "Ripper Cannon" }
    secondary      = { "Headhunter Launcher" }
    use_primary    = nhigh-1
    use_secondary  = 1
@@ -291,7 +291,7 @@ function empire_createAdmonisher( empire_create )
    local nhigh, nmedium, nlow = s:slots()
 
    -- Admonisher gets some good stuff
-   primary        = { "Ripper Cannon", "Ion Cannon" }
+   primary        = { "Heavy Ripper Cannon", "Ripper Cannon" }
    secondary      = { "Headhunter Launcher" }
    use_primary    = nhigh-1
    use_secondary  = 1

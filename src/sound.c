@@ -74,6 +74,7 @@ void (*sound_sys_free) ( alSound *snd ) = NULL;
  /* Sound settings. */
 int  (*sound_sys_volume) ( const double vol ) = NULL;
 double (*sound_sys_getVolume) (void)   = NULL;
+double (*sound_sys_getVolumeLog) (void)   = NULL;
  /* Sound playing. */
 int  (*sound_sys_play) ( alVoice *v, alSound *s )   = NULL;
 int  (*sound_sys_playPos) ( alVoice *v, alSound *s,
@@ -145,6 +146,7 @@ int sound_init (void)
       /* Sound settings. */
       sound_sys_volume     = sound_al_volume;
       sound_sys_getVolume  = sound_al_getVolume;
+      sound_sys_getVolumeLog = sound_al_getVolumeLog;
       /* Sound playing. */
       sound_sys_play       = sound_al_play;
       sound_sys_playPos    = sound_al_playPos;
@@ -185,6 +187,7 @@ int sound_init (void)
       /* Sound settings. */
       sound_sys_volume     = sound_mix_volume;
       sound_sys_getVolume  = sound_mix_getVolume;
+      sound_sys_getVolumeLog = sound_mix_getVolume;
       /* Sound playing. */
       sound_sys_play       = sound_mix_play;
       sound_sys_playPos    = sound_mix_playPos;
@@ -358,7 +361,7 @@ int sound_play( int sound )
    if (sound_disabled)
       return 0;
 
-   if ((sound < 0) || (sound > sound_nlist))
+   if ((sound < 0) || (sound >= sound_nlist))
       return -1;
 
    /* Gets a new voice. */
@@ -398,7 +401,7 @@ int sound_playPos( int sound, double px, double py, double vx, double vy )
    if (sound_disabled)
       return 0;
 
-   if ((sound < 0) || (sound > sound_nlist))
+   if ((sound < 0) || (sound >= sound_nlist))
       return -1;
 
    /* Gets a new voice. */
@@ -702,7 +705,7 @@ int sound_volume( const double vol )
 
 
 /**
- * @brief Gets the current sound volume.
+ * @brief Gets the current sound volume (linear).
  *
  *    @return The current sound volume level.
  */
@@ -712,6 +715,20 @@ double sound_getVolume (void)
       return 0.;
 
    return sound_sys_getVolume();
+}
+
+
+/**
+ * @brief Gets the current sound volume (logarithmic).
+ *
+ *    @return The current sound volume level.
+ */
+double sound_getVolumeLog(void)
+{
+   if (sound_disabled)
+      return 0.;
+
+   return sound_sys_getVolumeLog();
 }
 
 
@@ -780,7 +797,7 @@ int sound_playGroup( int group, int sound, int once )
    if (sound_disabled)
       return 0;
 
-   if ((sound < 0) || (sound > sound_nlist))
+   if ((sound < 0) || (sound >= sound_nlist))
       return -1;
 
    return sound_sys_playGroup( group, &sound_list[sound], once );

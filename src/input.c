@@ -104,6 +104,7 @@ const char *keybind_info[][3] = {
    { "starmap", "Star Map", "Opens the Star Map." },
    { "jump", "Initiate Jump", "Attempts to jump through a jump gate." },
    { "overlay", "Overlay Map", "Opens the System Overlay map." },
+   { "mousefly", "Mouse Flight", "Toggles mouse flying." },
    /* Communication. */
    { "log_up", "Log Scroll Up", "Scrolls the log upwards." },
    { "log_down", "Log Scroll Down", "Scrolls the log downwards." },
@@ -235,6 +236,7 @@ void input_setDefault (void)
    input_setKeybind( "starmap", KEYBIND_KEYBOARD, SDLK_m, NMOD_NONE );
    input_setKeybind( "jump", KEYBIND_KEYBOARD, SDLK_j, NMOD_NONE );
    input_setKeybind( "overlay", KEYBIND_KEYBOARD, SDLK_TAB, NMOD_ALL );
+   input_setKeybind( "mousefly", KEYBIND_KEYBOARD, SDLK_x, NMOD_CTRL );
    /* Communication. */
    input_setKeybind( "log_up", KEYBIND_KEYBOARD, SDLK_PAGEUP, NMOD_ALL );
    input_setKeybind( "log_down", KEYBIND_KEYBOARD, SDLK_PAGEDOWN, NMOD_ALL );
@@ -913,6 +915,9 @@ static void input_key( int keynum, double value, double kabs, int repeat )
       }
    } else if (KEY("overlay") && NODEAD() && INGAME() && !repeat) {
       ovr_key( value );
+   } else if (KEY("mousefly") && NODEAD() && !repeat) {
+      if (value==KEY_PRESS)
+         player_toggleMouseFly();
 
 
    /*
@@ -1108,8 +1113,8 @@ static void input_mouseMove( SDL_Event* event )
    int mx, my;
 
    gl_windowToScreenPos( &mx, &my, event->button.x, event->button.y );
-   player.mousex = (mx - (gl_screen.w / 2.));
-   player.mousey = (my - (gl_screen.h / 2.));
+   player.mousex = mx;
+   player.mousey = my;
 }
 
 /**

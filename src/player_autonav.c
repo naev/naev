@@ -80,7 +80,10 @@ static void player_autonavSetup (void)
    player_message("\epAutonav initialized.");
    if (!player_isFlag(PLAYER_AUTONAV)) {
       tc_mod    = 1.;
-      tc_max    = MIN( conf.compression_velocity / solid_maxspeed(player.p->solid, player.p->speed, player.p->thrust), conf.compression_mult );
+      if (conf.compression_mult > 1.)
+         tc_max = MIN( conf.compression_velocity / solid_maxspeed(player.p->solid, player.p->speed, player.p->thrust), conf.compression_mult );
+      else
+         tc_max = conf.compression_velocity / solid_maxspeed(player.p->solid, player.p->speed, player.p->thrust);
    }
    tc_rampdown  = 0;
    tc_down      = 0.;
@@ -346,9 +349,9 @@ int player_shouldAbortAutonav( int damaged )
 
    if (!player_isFlag(PLAYER_AUTONAV)) {
       if (player.autonav_timer > 0.)
-         abort_mod = MAX( 0., abort_mod - .2 );
+         abort_mod = MIN( MAX( 0., abort_mod - .25 ), (int)(shield * 4) * .25 );
       else
-         abort_mod = .8;
+         abort_mod = MIN( 0.75, (int)(shield * 4) * .25 );
       player.autonav_timer = 30.;
       return 1;
    }

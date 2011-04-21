@@ -920,10 +920,10 @@
   </general>
   <specific type="turret bolt">
    <cpu>10</cpu>
-   <gfx>plasma2</gfx>
+   <gfx>plasma</gfx>
    <sound>plasma</sound>
    <spfx_shield>ShiS</spfx_shield>
-   <spfx_armour>PlaS2</spfx_armour>
+   <spfx_armour>PlaS</spfx_armour>
    <delay>450</delay>
    <speed>450</speed>
    <range>700</range>
@@ -946,10 +946,10 @@
   </general>
   <specific type="turret bolt">
    <cpu>16</cpu>
-   <gfx>plasma</gfx>
+   <gfx>plasma2</gfx>
    <sound>plasma</sound>
    <spfx_shield>ShiS</spfx_shield>
-   <spfx_armour>PlaS</spfx_armour>
+   <spfx_armour>PlaS2</spfx_armour>
    <delay>475</delay>
    <speed>450</speed>
    <range>900</range>

@@ -36,14 +36,14 @@
  *    voice - virtual object that wants to play sound
  *
  *
- * First we allocate all the buffers based on what we find inside the
+ * 1) First we allocate all the buffers based on what we find inside the
  * datafile.
- * Then we allocate all the possible sources (giving the music system
+ * 2) Then we allocate all the possible sources (giving the music system
  * what it needs).
- * Now we allow the user to dynamically create voices, these voices will
+ * 3) Now we allow the user to dynamically create voices, these voices will
  * always try to grab a source from the source pool.  If they can't they
  * will pretend to play the buffer.
- * Every so often we'll check to see if the important voices are being
+ * 4) Every so often we'll check to see if the important voices are being
  * played and take away the sources from the lesser ones.
  */
 
@@ -68,7 +68,8 @@ SDL_mutex *sound_lock = NULL; /**< Global sound lock, always lock this before
  */
 static ALCcontext *al_context = NULL; /**< OpenAL context. */
 static ALCdevice *al_device   = NULL; /**< OpenAL device. */
-static ALfloat svolume        = 1.; /**< Sound global volume. */
+static ALfloat svolume        = 1.; /**< Sound global volume (logarithmic). */
+static ALfloat svolume_lin    = 1.; /**< Sound global volume (linear). */
 alInfo_t al_info; /**< OpenAL context info. */
 
 
@@ -269,16 +270,48 @@ int sound_al_init (void)
    source_mstack  = 0;
    while (source_nstack < SOUND_MAX_SOURCES) {
       if (source_mstack < source_nstack+1) { /* allocate more memory */
-         source_mstack += 32;
+         if (source_mstack == 0)
+            source_mstack = 128;
+         else
+            source_mstack *= 2;
          source_stack = realloc( source_stack, sizeof(ALuint) * source_mstack );
       }
       alGenSources( 1, &s );
       source_stack[source_nstack] = s;
 
-      /* Distance model defaults. */
-      alSourcef( s, AL_MAX_DISTANCE,       5000. );
-      alSourcef( s, AL_ROLLOFF_FACTOR,     1. );
-      alSourcef( s, AL_REFERENCE_DISTANCE, 500. );
+      /* How OpenAL distance model works:
+       *
+       * Clamped:
+       *  gain = distance_function( CLAMP( AL_REFERENCE_DISTANCE, AL_MAX_DISTANCE, distance ) );
+       *
+       * Distance functions:
+       *                                       AL_REFERENCE_DISTANCE 
+       *  * Inverse = ------------------------------------------------------------------------------
+       *              AL_REFERENCE_DISTANCE + AL_ROLLOFF_FACTOR ( distance - AL_REFERENCE_DISTANCE )
+       *
+       *             1 - AL_ROLLOFF_FACTOR ( distance - AL_REFERENCE_DISTANCE )
+       *  * Linear = ----------------------------------------------------------
+       *                      AL_MAX_DISTANCE - AL_REFERENCE_DISTANCE
+       *
+       *                  /       distance        \ -AL_ROLLOFF_FACTOR
+       *  * Exponential = | --------------------- |
+       *                  \ AL_REFERENCE_DISTANCE /
+       *
+       *
+       * Some values:
+       *
+       *  model    falloff  reference   100     1000    5000   10000
+       *  linear     1        500      1.000   0.947   0.526   0.000
+       *  inverse    1        500      1.000   0.500   0.100   0.050
+       *  exponent   1        500      1.000   0.500   0.100   0.050
+       *  inverse   0.5       500      1.000   0.667   0.182   0.095
+       *  exponent  0.5       500      1.000   0.707   0.316   0.223
+       *  inverse    2        500      1.000   0.333   0.052   0.026
+       *  exponent   2        500      1.000   0.250   0.010   0.003
+       */
+      alSourcef( s, AL_REFERENCE_DISTANCE, 500. ); /* Close distance to clamp at (doesn't get louder). */
+      alSourcef( s, AL_MAX_DISTANCE,       25000. ); /* Max distance to clamp at (doesn't get quieter). */
+      alSourcef( s, AL_ROLLOFF_FACTOR,     1. ); /* Determines how it drops off. */
 
       /* Set the filter. */
       if (al_info.efx == AL_TRUE)
@@ -303,7 +336,7 @@ int sound_al_init (void)
    memcpy( source_all, source_stack, sizeof(ALuint) * source_mstack );
 
    /* Set up how sound works. */
-   alDistanceModel( AL_INVERSE_DISTANCE_CLAMPED );
+   alDistanceModel( AL_INVERSE_DISTANCE_CLAMPED ); /* Clamping is fundamental so it doesn't sound like crap. */
    alDopplerFactor( 1. );
    sound_al_env( SOUND_ENV_NORMAL, 0. );
 
@@ -907,8 +940,12 @@ void sound_al_free( alSound *snd )
 int sound_al_volume( double vol )
 {
    int i;
-   svolume = (ALfloat) vol;
 
+   svolume_lin = vol;
+   if (vol > 0.) /* Floor of -48 dB (0.00390625 amplitude) */
+      svolume = (ALfloat) 1 / pow(2, (1 - vol) * 8);
+   else
+      svolume     = 0.;
    soundLock();
    for (i=0; i<source_nall; i++)
       alSourcef( source_all[i], AL_GAIN, svolume );
@@ -919,9 +956,18 @@ int sound_al_volume( double vol )
 
 
 /**
- * @brief Gets the current volume level.
+ * @brief Gets the current volume level (linear).
  */
 double sound_al_getVolume (void)
+{
+   return svolume_lin;
+}
+
+
+/**
+ * @brief Gets the current volume level (logarithmic).
+ */
+double sound_al_getVolumeLog(void)
 {
    return svolume;
 }
@@ -1228,7 +1274,7 @@ int sound_al_env( SoundEnv_t env, double param )
 
             if (al_info.efx_reverb == AL_TRUE) {
                /* Tweak the reverb. */
-               nalEffectf( efx_reverb, AL_REVERB_DECAY_TIME, 10. );
+               nalEffectf( efx_reverb, AL_REVERB_DECAY_TIME,    10. );
                nalEffectf( efx_reverb, AL_REVERB_DECAY_HFRATIO, 0.5 );
 
                /* Connect the effect. */
@@ -1323,49 +1369,52 @@ int sound_al_playGroup( int group, alSound *s, int once )
    ALint state;
 
    for (i=0; i<al_ngroups; i++) {
-      if (al_groups[i].id == group) {
-         g = &al_groups[i];
-         g->state = VOICE_PLAYING;
-         soundLock();
-         for (j=0; j<g->nsources; j++) {
-            alGetSourcei( g->sources[j], AL_SOURCE_STATE, &state );
 
-            /* No free ones, just smash the last one. */
-            if (j == g->nsources-1) {
-               if (state != AL_STOPPED) {
-                  alSourceStop( g->sources[j] );
-                  alSourcef( g->sources[j], AL_GAIN, svolume );
-               }
+      /* Find group. */
+      if (al_groups[i].id != group)
+         continue;
+
+      g = &al_groups[i];
+      g->state = VOICE_PLAYING;
+      soundLock();
+      for (j=0; j<g->nsources; j++) {
+         alGetSourcei( g->sources[j], AL_SOURCE_STATE, &state );
+
+         /* No free ones, just smash the last one. */
+         if (j == g->nsources-1) {
+            if (state != AL_STOPPED) {
+               alSourceStop( g->sources[j] );
+               alSourcef( g->sources[j], AL_GAIN, svolume );
             }
-            /* Ignore playing/paused. */
-            else if ((state == AL_PLAYING) || (state == AL_PAUSED))
-               continue;
-
-            /* Attach buffer. */
-            alSourcei( g->sources[j], AL_BUFFER, s->u.al.buf );
-
-            /* Do not do positional sound. */
-            alSourcei( g->sources[j], AL_SOURCE_RELATIVE, AL_TRUE );
-
-            /* See if should loop. */
-            alSourcei( g->sources[j], AL_LOOPING, (once) ? AL_FALSE : AL_TRUE );
-
-            /* Start playing. */
-            alSourcePlay( g->sources[j] );
-
-            /* Check for errors. */
-            al_checkErr();
-
-            soundUnlock();
-            return 0;
          }
+         /* Ignore playing/paused. */
+         else if ((state == AL_PLAYING) || (state == AL_PAUSED))
+            continue;
+
+         /* Attach buffer. */
+         alSourcei( g->sources[j], AL_BUFFER, s->u.al.buf );
+
+         /* Do not do positional sound. */
+         alSourcei( g->sources[j], AL_SOURCE_RELATIVE, AL_TRUE );
+
+         /* See if should loop. */
+         alSourcei( g->sources[j], AL_LOOPING, (once) ? AL_FALSE : AL_TRUE );
+
+         /* Start playing. */
+         alSourcePlay( g->sources[j] );
+
+         /* Check for errors. */
+         al_checkErr();
+
          soundUnlock();
-
-         WARN("Group '%d' has no free sounds.", group );
-
-         /* Group matched but not found. */
-         break;
+         return 0;
       }
+      soundUnlock();
+
+      WARN("Group '%d' has no free sounds.", group );
+
+      /* Group matched but not found. */
+      break;
    }
 
    if (i>=al_ngroups)
@@ -1384,11 +1433,12 @@ void sound_al_stopGroup( int group )
    alGroup_t *g;
 
    for (i=0; i<al_ngroups; i++) {
-      if (al_groups[i].id == group) {
-         g = &al_groups[i];
-         g->state      = VOICE_FADEOUT;
-         g->fade_timer = SDL_GetTicks();
-      }
+      if (al_groups[i].id != group)
+         continue;
+
+      g = &al_groups[i];
+      g->state      = VOICE_FADEOUT;
+      g->fade_timer = SDL_GetTicks();
       break;
    }
 
@@ -1406,13 +1456,14 @@ void sound_al_pauseGroup( int group )
    alGroup_t *g;
 
    for (i=0; i<al_ngroups; i++) {
-      if (al_groups[i].id == group) {
-         g = &al_groups[i];
-         soundLock();
-         al_pausev( g->nsources, g->sources );
-         soundUnlock();
-         break;
-      }
+      if (al_groups[i].id != group)
+         continue;
+
+      g = &al_groups[i];
+      soundLock();
+      al_pausev( g->nsources, g->sources );
+      soundUnlock();
+      break;
    }
 
    if (i>=al_ngroups)
@@ -1429,13 +1480,14 @@ void sound_al_resumeGroup( int group )
    alGroup_t *g;
 
    for (i=0; i<al_ngroups; i++) {
-      if (al_groups[i].id == group) {
-         g = &al_groups[i];
-         soundLock();
-         al_resumev( g->nsources, g->sources );
-         soundUnlock();
-         break;
-      }
+      if (al_groups[i].id != group)
+         continue;
+
+      g = &al_groups[i];
+      soundLock();
+      al_resumev( g->nsources, g->sources );
+      soundUnlock();
+      break;
    }
 
    if (i>=al_ngroups)
@@ -1490,34 +1542,34 @@ void sound_al_update (void)
    for (i=0; i<al_ngroups; i++) {
       g = &al_groups[i];
       /* Handle fadeout. */
-      if (g->state == VOICE_FADEOUT) {
+      if (g->state != VOICE_FADEOUT)
+         continue;
 
-         /* Calculate fadeout. */
-         f = t - g->fade_timer;
-         if (f < SOUND_FADEOUT) {
-            d = 1. - (ALfloat) f / (ALfloat) SOUND_FADEOUT;
-            soundLock();
-            for (j=0; j<g->nsources; j++)
-               alSourcef( g->sources[j], AL_GAIN, d*svolume );
-            /* Check for errors. */
-            al_checkErr();
-            soundUnlock();
+      /* Calculate fadeout. */
+      f = t - g->fade_timer;
+      if (f < SOUND_FADEOUT) {
+         d = 1. - (ALfloat) f / (ALfloat) SOUND_FADEOUT;
+         soundLock();
+         for (j=0; j<g->nsources; j++)
+            alSourcef( g->sources[j], AL_GAIN, d*svolume );
+         /* Check for errors. */
+         al_checkErr();
+         soundUnlock();
+      }
+      /* Fadeout done. */
+      else {
+         soundLock();
+         for (j=0; j<g->nsources; j++) {
+            alSourceStop( g->sources[j] );
+            alSourcei( g->sources[j], AL_BUFFER, AL_NONE );
+            alSourcef( g->sources[j], AL_GAIN, svolume );
          }
-         /* Fadeout done. */
-         else {
-            soundLock();
-            for (j=0; j<g->nsources; j++) {
-               alSourceStop( g->sources[j] );
-               alSourcei( g->sources[j], AL_BUFFER, AL_NONE );
-               alSourcef( g->sources[j], AL_GAIN, svolume );
-            }
-            /* Check for errors. */
-            al_checkErr();
-            soundUnlock();
+         /* Check for errors. */
+         al_checkErr();
+         soundUnlock();
 
-            /* Mark as done. */
-            g->state = VOICE_PLAYING;
-         }
+         /* Mark as done. */
+         g->state = VOICE_PLAYING;
       }
    }
 }

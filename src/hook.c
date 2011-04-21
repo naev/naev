@@ -79,6 +79,7 @@ typedef struct Hook_ {
 
    unsigned int id; /**< unique id */
    char *stack; /**< stack it's a part of */
+   int created; /**< Hook has just been created. */
    int delete; /**< indicates it should be deleted when possible */
    int ran_once; /**< Indicates if the hook already ran, useful when iterating. */
    int once; /**< Only run the hook once. */
@@ -426,8 +427,9 @@ static int hook_run( Hook *hook, HookParam *param, int claims )
 {
    int ret;
 
+   /* Do not run if pending deletion. */
    if (hook->delete)
-      return 0; /* hook should be deleted not run */
+      return 0;
 
    /* Don't run anything when main menu is open. */
    if (menu_isOpen(MENU_MAIN))
@@ -488,21 +490,23 @@ static unsigned int hook_genID (void)
  */
 static Hook* hook_new( HookType_t type, const char *stack )
 {
-   Hook *new_hook, *h;
+   Hook *new_hook;
 
    /* Get and create new hook. */
    new_hook = calloc( 1, sizeof(Hook) );
    if (hook_list == NULL)
       hook_list = new_hook;
    else {
-      for (h=hook_list; h->next!=NULL; h=h->next);
-      h->next = new_hook;
+      /* Put at front, O(1). */
+      new_hook->next = hook_list;
+      hook_list = new_hook;
    }
 
    /* Fill out generic details. */
    new_hook->type    = type;
    new_hook->id      = hook_genID();
    new_hook->stack   = strdup(stack);
+   new_hook->created = 1;
 
    /** @TODO fix this hack. */
    if (strcmp(stack,"safe")==0)
@@ -674,12 +678,19 @@ static void hooks_updateDateExecute( ntime_t change )
    if ((player.p == NULL) || player_isFlag(PLAYER_CREATING))
       return;
 
+   /* Clear creation flags. */
+   for (h=hook_list; h!=NULL; h=h->next)
+      h->created = 0;
+
    /* On j=0 we increment all timers and try to run, then on j=1 we update the timers. */
    hook_runningstack++; /* running hooks */
    for (j=1; j>=0; j--) {
       for (h=hook_list; h!=NULL; h=h->next) {
          /* Find valid date hooks. */
          if (h->is_date == 0)
+            continue;
+         /* Don't update newly created hooks. */
+         if (h->created != 0)
             continue;
 
          /* Decrement timer and check to see if should run. */
@@ -756,6 +767,10 @@ void hooks_update( double dt )
    if ((player.p == NULL) || player_isFlag(PLAYER_CREATING))
       return;
 
+   /* Clear creation flags. */
+   for (h=hook_list; h!=NULL; h=h->next)
+      h->created = 0;
+
    hook_runningstack++; /* running hooks */
    for (j=1; j>=0; j--) {
       for (h=hook_list; h!=NULL; h=h->next) {
@@ -764,6 +779,9 @@ void hooks_update( double dt )
             continue;
          /* Find valid timer hooks. */
          if (h->is_timer == 0)
+            continue;
+         /* Don't update newly created hooks. */
+         if (h->created != 0)
             continue;
 
          /* Decrement timer and check to see if should run. */
@@ -916,6 +934,10 @@ static int hooks_executeParam( const char* stack, HookParam *param )
    for (h=hook_list; h!=NULL; h=h->next)
       h->ran_once = 0;
 
+   /* Clear creation flags. */
+   for (h=hook_list; h!=NULL; h=h->next)
+      h->created = 0;
+
    run = 0;
    hook_runningstack++; /* running hooks */
    for (j=1; j>=0; j--) {
@@ -923,11 +945,17 @@ static int hooks_executeParam( const char* stack, HookParam *param )
          /* Should be deleted. */
          if (h->delete)
             continue;
+         /* Don't run again. */
          if (h->ran_once)
+            continue;
+         /* Don't update newly created hooks. */
+         if (h->created != 0)
             continue;
          /* Doesn't match stack. */
          if (strcmp(stack, h->stack) != 0)
             continue;
+
+         /* Run hook. */
          hook_run( h, param, j );
          run++;
       }

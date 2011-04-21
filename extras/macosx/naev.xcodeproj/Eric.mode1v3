@@ -268,6 +268,8 @@
 							<array>
 								<string>29B97314FDCFA39411CA2CEA</string>
 								<string>29B97315FDCFA39411CA2CEA</string>
+								<string>29B97323FDCFA39411CA2CEA</string>
+								<string>1058C7A0FEA54F0111CA2CBB</string>
 								<string>1C37FBAC04509CD000000102</string>
 								<string>1C37FABC05509CD000000102</string>
 							</array>
@@ -297,7 +299,7 @@
 							<real>186</real>
 						</array>
 						<key>RubberWindowFrame</key>
-						<string>442 59 788 620 0 0 1280 778 </string>
+						<string>388 158 788 620 0 0 1280 778 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -334,7 +336,7 @@
 								<key>Frame</key>
 								<string>{{0, 0}, {580, 411}}</string>
 								<key>RubberWindowFrame</key>
-								<string>442 59 788 620 0 0 1280 778 </string>
+								<string>388 158 788 620 0 0 1280 778 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -342,6 +344,8 @@
 							<string>411pt</string>
 						</dict>
 						<dict>
+							<key>BecomeActive</key>
+							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
@@ -354,7 +358,7 @@
 								<key>Frame</key>
 								<string>{{0, 416}, {580, 163}}</string>
 								<key>RubberWindowFrame</key>
-								<string>442 59 788 620 0 0 1280 778 </string>
+								<string>388 158 788 620 0 0 1280 778 </string>
 							</dict>
 							<key>Module</key>
 							<string>XCDetailModule</string>
@@ -378,9 +382,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>0785545512240F0A00BA253A</string>
+				<string>07C01CE8135CEB1700EAA9C9</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>0785545612240F0A00BA253A</string>
+				<string>07C01CE9135CEB1700EAA9C9</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -514,10 +518,11 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>/Users/Eric/Projects/naev/platforms/macosx/naev.xcodeproj</string>
+		<string>07AC49121223CDD80068F865</string>
+		<string>/Users/Eric/naev/extras/macosx/naev.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
-	<string>442 59 788 620 0 0 1280 778 </string>
+	<string>388 158 788 620 0 0 1280 778 </string>
 	<key>WindowToolsV3</key>
 	<array>
 		<dict>
@@ -538,7 +543,7 @@
 								<key>PBXProjectModuleGUID</key>
 								<string>1CD0528F0623707200166675</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>&lt;No Editor&gt;</string>
+								<string></string>
 								<key>StatusBarVisibility</key>
 								<true/>
 							</dict>
@@ -547,7 +552,7 @@
 								<key>Frame</key>
 								<string>{{0, 0}, {987, 0}}</string>
 								<key>RubberWindowFrame</key>
-								<string>35 137 987 641 0 0 1280 778 </string>
+								<string>176 137 987 641 0 0 1280 778 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
@@ -573,7 +578,7 @@
 								<key>Frame</key>
 								<string>{{0, 5}, {987, 595}}</string>
 								<key>RubberWindowFrame</key>
-								<string>35 137 987 641 0 0 1280 778 </string>
+								<string>176 137 987 641 0 0 1280 778 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXBuildResultsModule</string>
@@ -596,14 +601,14 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>07AC49121223CDD80068F865</string>
-				<string>078554441223D4FB00BA253A</string>
+				<string>07C01CEA135CEB1700EAA9C9</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
 			<key>ToolbarConfiguration</key>
 			<string>xcode.toolbar.config.buildV3</string>
 			<key>WindowString</key>
-			<string>35 137 987 641 0 0 1280 778 </string>
+			<string>176 137 987 641 0 0 1280 778 </string>
 			<key>WindowToolGUID</key>
 			<string>07AC49121223CDD80068F865</string>
 			<key>WindowToolIsVisible</key>

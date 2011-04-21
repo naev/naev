@@ -64,7 +64,7 @@ end
 
 function create ()
    -- Note: this mission does not make any mission claims. 
-   misn.setNPC( "Reynir", "none" )
+   misn.setNPC( "Reynir", "reynir" )
    misn.setDesc( bar_desc )
 
    -- Mission variables

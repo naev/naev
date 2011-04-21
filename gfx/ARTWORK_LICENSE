@@ -309,7 +309,7 @@
        * store
          * gatling.png
 
- * Author: Ingo Ruhnke <grumbel@gmx.de>, License: GPLv2+ or CC-by-sa v3.0
+ * Author: Ingo Ruhnke <grumbel@gmx.de>, License: GPLv3
    * gfx
      * portraits
        * czesc.png
@@ -330,6 +330,14 @@
        * thief2.png
        * thief3.png
        * barman.png
+       * reynir.png
+       * male1.png
+       * flintley.png
+       * miner1.png
+       * miner2.png
+       * oldwoman.png
+       * sirius_fyrra_f1.png
+       * youngbusinessman.png
    * logo
      * dvaered_small.png
      * empire_small.png
@@ -362,14 +370,21 @@
        * dogma.png
        * fidelity.png
        * preacher.png
+       * shaman.png
      * planet
        * space
          * station-agriculture.png
          * station-battlestation.png
+         * station-commerce.png
+         * station-commerce2.png
+         * station-commerce3.png
          * station-cylinder.png
          * station-fleetbase.png
+         * station-fleetbase2.png
+         * station-fleetbase3.png
          * station-powerplant.png
          * station-shipyard.png
+         * station-shipyard2.png
          * station-sphere.png
 
  * Author: BTAxis, License: PD
@@ -426,7 +441,7 @@
 
  * Author: Scaatis, CC-by v3.0
    * gfx
-     * NAEV.png
+     * Naev.png
      * gui
        * slim
          * *
@@ -485,4 +500,18 @@
        * nebula16.png
        * nebula17.png
        * nebula19.png
+<<<<<<< HEAD
 >>>>>>> 0e0a8594be847c6e0e37ee2b60c2c59f64753589
+=======
+
+ * Author: Galileus, License: CC-by-sa 3.0
+   * gfx
+     * ship
+       * shark
+         * shark.png
+         * shark_empire.png
+         * shark_pirate.png
+       * rhino
+         * rhino.png
+         * rhino_pirate.png
+>>>>>>> c1e179d250e4319c9a4b1e2a22ca1aff7fbd697c

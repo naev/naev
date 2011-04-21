@@ -1,5 +1,69 @@
 // !$*UTF8*$!
 {
+	07ABFCD11349CA74000F9F93 /* npng.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1011, 630}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{55, 625}";
+		};
+	};
+	07ABFCE51349CA74000F9F93 /* nebula.c */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1011, 11998}}";
+			sepNavSelRange = "{21893, 718}";
+			sepNavVisRange = "{21872, 739}";
+		};
+	};
+	07ABFD091349CA74000F9F93 /* board.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {519, 385}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 320}";
+		};
+	};
+	07ABFD3F1349CA74000F9F93 /* board.c */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1011, 6160}}";
+			sepNavSelRange = "{3678, 16}";
+			sepNavVisRange = "{3174, 1083}";
+			sepNavWindowFrame = "{{15, 8}, {936, 765}}";
+		};
+	};
+	07ABFD401349CA74000F9F93 /* background.c */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1011, 8386}}";
+			sepNavSelRange = "{152, 0}";
+			sepNavVisRange = "{3, 705}";
+		};
+	};
+	07ABFD8E1349CA74000F9F93 /* button.c */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {1011, 3542}}";
+			sepNavSelRange = "{1082, 16}";
+			sepNavVisRange = "{535, 1315}";
+		};
+	};
+	07ABFD921349CA74000F9F93 /* cust.c */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {926, 2926}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 139}";
+		};
+	};
+	07ABFDA81349CA74000F9F93 /* Makefile.am */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {519, 84}}";
+			sepNavSelRange = "{61, 0}";
+			sepNavVisRange = "{0, 33}";
+		};
+	};
+	07ABFE8F1349CA85000F9F93 /* Makefile.am */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {519, 854}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 192}";
+		};
+	};
 	07AC48FA1223C65D0068F865 /* naev */ = {
 		isa = PBXExecutable;
 		activeArgIndices = (
@@ -21,8 +85,12 @@
 		executableUserSymbolLevel = 0;
 		libgmallocEnabled = 0;
 		name = naev;
+		savedGlobals = {
+		};
 		sourceDirectories = (
 		);
+		variableFormatDictionary = {
+		};
 	};
 	07AC490C1223C67C0068F865 /* Source Control */ = {
 		isa = PBXSourceControlManager;
@@ -35,10 +103,27 @@
 		isa = PBXCodeSenseManager;
 		indexTemplatePath = "";
 	};
+	07B060C61044131E006FECBB /* SDLMain.h */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {519, 200}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 327}";
+		};
+	};
+	07B060C71044131E006FECBB /* SDLMain.m */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {519, 5600}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 515}";
+		};
+	};
 	29B97313FDCFA39411CA2CEA /* Project object */ = {
-		activeBuildConfigurationName = Debug;
+		activeBuildConfigurationName = Release;
 		activeExecutable = 07AC48FA1223C65D0068F865 /* naev */;
 		activeTarget = 8D1107260486CEB800E47090 /* naev */;
+		addToTargets = (
+			8D1107260486CEB800E47090 /* naev */,
+		);
 		codeSenseManager = 07AC490D1223C67C0068F865 /* Code sense */;
 		executables = (
 			07AC48FA1223C65D0068F865 /* naev */,
@@ -66,15 +151,27 @@
 					PBXFileDataSource_Target_ColumnID,
 				);
 			};
+			PBXConfiguration.PBXFileTableDataSource3.PBXFindDataSource = {
+				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
+				PBXFileTableDataSourceColumnSortingKey = PBXFindDataSource_LocationID;
+				PBXFileTableDataSourceColumnWidthsKey = (
+					200,
+					847,
+				);
+				PBXFileTableDataSourceColumnsKey = (
+					PBXFindDataSource_MessageID,
+					PBXFindDataSource_LocationID,
+				);
+			};
 			PBXConfiguration.PBXTargetDataSource.PBXTargetDataSource = {
 				PBXFileTableDataSourceColumnSortingDirectionKey = "-1";
 				PBXFileTableDataSourceColumnSortingKey = PBXFileDataSource_Filename_ColumnID;
 				PBXFileTableDataSourceColumnWidthsKey = (
 					20,
-					301,
+					793,
 					60,
 					20,
-					48.16259765625,
+					48,
 					43,
 					43,
 				);
@@ -88,11 +185,18 @@
 					PBXFileDataSource_Warnings_ColumnID,
 				);
 			};
-			PBXPerProjectTemplateStateSaveDate = 304353023;
-			PBXWorkspaceStateSaveDate = 304353023;
+			PBXPerProjectTemplateStateSaveDate = 324856586;
+			PBXWorkspaceStateSaveDate = 324856586;
 		};
 		sourceControlManager = 07AC490C1223C67C0068F865 /* Source Control */;
 		userBuildSettings = {
+		};
+	};
+	32CA4F630368D1EE00C91783 /* naev_Prefix.pch */ = {
+		uiCtxt = {
+			sepNavIntBoundsRect = "{{0, 0}, {926, 162}}";
+			sepNavSelRange = "{0, 0}";
+			sepNavVisRange = "{0, 139}";
 		};
 	};
 	8D1107260486CEB800E47090 /* naev */ = {

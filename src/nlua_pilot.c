@@ -762,7 +762,7 @@ static int pilotL_toggleSpawn( lua_State *L )
  * @usage p = pilot.get( { faction.get("Empire") }, true ) -- Only empire pilots with disabled
  *
  *    @luaparam factions If f is a table of factions, it will only get pilots matching those factions.  Otherwise it gets all the pilots.
- *    @luaparam disabled Whether or not to get disabled ships (default is off if parameter is ommitted).
+ *    @luaparam disabled Whether or not to get disabled ships (default is off if parameter is omitted).
  *    @luareturn A table containing the pilots.
  * @luafunc get( factions, disabled )
  */
@@ -1217,9 +1217,12 @@ static int pilotL_weapset( lua_State *L )
          lua_rawset(L,-3);
 
          /* Track. */
-         if ((target != NULL) && (slot->outfit->type == OUTFIT_TYPE_TURRET_BOLT)) {
+         if (slot->outfit->type == OUTFIT_TYPE_TURRET_BOLT) {
             lua_pushstring(L, "track");
-            lua_pushnumber(L, pilot_ewWeaponTrack( p, target, slot->outfit->u.blt.track ));
+            if (target != NULL)
+               lua_pushnumber(L, pilot_ewWeaponTrack( p, target, slot->outfit->u.blt.track ));
+            else
+               lua_pushnumber(L, -1);
             lua_rawset(L,-3);
          }
 
