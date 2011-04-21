@@ -891,8 +891,7 @@ alVoice* voice_new (void)
 
    /* No free voices, allocate a new one. */
    if (voice_pool == NULL) {
-      v = malloc(sizeof(alVoice));
-      memset(v, 0, sizeof(alVoice));
+      v = calloc( 1, sizeof(alVoice) );
       voice_pool = v;
       return v;
    }
