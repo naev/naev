@@ -1216,9 +1216,11 @@ void player_updateSpecific( Pilot *pplayer, const double dt )
    player_lastEngineSound = engsound;
 
    /* Sound. */
+   /*
    sound_updateListener( pplayer->solid->dir,
          pplayer->solid->pos.x, pplayer->solid->pos.y,
          pplayer->solid->vel.x, pplayer->solid->vel.y );
+   */
 
    /* See if must play hail sound. */
    if (player_hailCounter > 0) {
