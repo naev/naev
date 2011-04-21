@@ -1217,6 +1217,7 @@ void player_updateSpecific( Pilot *pplayer, const double dt )
 
    /* Sound. */
    /*
+    * Sound is now camera-specific and thus not player specific. A bit sad really.
    sound_updateListener( pplayer->solid->dir,
          pplayer->solid->pos.x, pplayer->solid->pos.y,
          pplayer->solid->vel.x, pplayer->solid->vel.y );
