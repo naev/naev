@@ -361,7 +361,7 @@ int sound_play( int sound )
    if (sound_disabled)
       return 0;
 
-   if ((sound < 0) || (sound > sound_nlist))
+   if ((sound < 0) || (sound >= sound_nlist))
       return -1;
 
    /* Gets a new voice. */
@@ -401,7 +401,7 @@ int sound_playPos( int sound, double px, double py, double vx, double vy )
    if (sound_disabled)
       return 0;
 
-   if ((sound < 0) || (sound > sound_nlist))
+   if ((sound < 0) || (sound >= sound_nlist))
       return -1;
 
    /* Gets a new voice. */
@@ -797,7 +797,7 @@ int sound_playGroup( int group, int sound, int once )
    if (sound_disabled)
       return 0;
 
-   if ((sound < 0) || (sound > sound_nlist))
+   if ((sound < 0) || (sound >= sound_nlist))
       return -1;
 
    return sound_sys_playGroup( group, &sound_list[sound], once );
