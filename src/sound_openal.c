@@ -1322,7 +1322,7 @@ int sound_al_createGroup( int size )
    g->state  = VOICE_PLAYING;
 
    /* Allocate sources. */
-   g->sources  = malloc( sizeof(ALuint) * size );
+   g->sources  = calloc( size, sizeof(ALuint) );
    g->nsources = size;
 
    /* Add some sources. */
