@@ -135,11 +135,9 @@ function star_add( added, num_added )
    local a     = 2*math.pi*prng.num()
    local x     = r*math.cos(a)
    local y     = r*math.sin(a)
-   local nmove = prng.num()*0.04
+   local nmove = math.max( .05, prng.num()*0.1 )
    local move  = 0.02 + nmove
    local scale = 1.0 - (1. - nmove/0.2)/5
    bkg.image( img, x, y, move, scale ) -- On the background
    return num
 end
-
-
