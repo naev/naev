@@ -75,8 +75,8 @@ function create()
     end
 
    -- mission generics
-    stuperpx   = 0.15 - 0.015 * tier
-    stuperjump = 11000 - 1000 * tier
+    stuperpx   = 0.3 - 0.015 * tier
+    stuperjump = 11000 - 75 * tier
     stupertakeoff = 15000
     timelimit  = time.get() + time.create(0, 0, traveldist * stuperpx + numjumps * stuperjump + stupertakeoff)
 
