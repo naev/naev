@@ -2046,7 +2046,6 @@ static int aiL_aim( lua_State *L )
    double mod;
    double speed;
    double radial_speed;
-   NLUA_MIN_ARGS(1);
 
    /* Only acceptable parameter is pilot id */
    id = luaL_checklong(L,1);
