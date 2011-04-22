@@ -10,6 +10,7 @@
 #include "lua.h"
 #include "lauxlib.h"
 #include "lualib.h"
+#include "log.h"
 
 
 /*
@@ -18,18 +19,20 @@
 #ifdef DEBUGGING
 #ifdef DEBUG_PARANOID
 #define NLUA_DEBUG(str, args...) \
-   (fprintf(stdout,"Lua: "str"\n", ## args), abort())
+   (DEBUG("Lua: "str"\n", ## args), abort())
 #else /* DEBUG_PARANOID */
 #define NLUA_DEBUG(str, args...) \
-   (fprintf(stdout,"Lua: "str"\n", ## args))
+   (DEBUG("Lua: "str"\n", ## args))
 #endif /* DEBUG_PARANOID */
 #define NLUA_INVALID_PARAMETER(L)    \
 { \
+   DEBUG( "Invalid parameter for %s.", __func__ ); \
    luaL_error( L, "Invalid parameter for %s.", __func__ ); \
    return 0; \
 }
 #define NLUA_MIN_ARGS(n)     \
    if (lua_gettop(L) < n) { \
+      DEBUG( "Too few arguments for %s.", __func__ ); \
       luaL_error( L, "Too few arguments for %s.", __func__ ); \
       return 0; \
    }
