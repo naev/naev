@@ -1029,6 +1029,9 @@ static int al_playVoice( alVoice *v, alSound *s,
    alSourcefv( v->u.al.source, AL_POSITION, v->u.al.pos );
    alSourcefv( v->u.al.source, AL_VELOCITY, v->u.al.vel );
 
+   /* Defaults just in case. */
+   alSourcei( v->u.al.source, AL_LOOPING, AL_FALSE );
+
    /* Start playing. */
    alSourcePlay( v->u.al.source );
 
@@ -1319,7 +1322,7 @@ int sound_al_createGroup( int size )
    g->state  = VOICE_PLAYING;
 
    /* Allocate sources. */
-   g->sources  = malloc( sizeof(ALuint) * size );
+   g->sources  = calloc( size, sizeof(ALuint) );
    g->nsources = size;
 
    /* Add some sources. */
