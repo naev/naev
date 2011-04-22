@@ -1243,10 +1243,10 @@ void pilot_update( Pilot* pilot, const double dt )
    pilot->stimer   -= dt;
    if (pilot->stimer <= 0.)
       pilot->sbonus   -= dt;
-   Q = 0.;
    for (i=0; i<MAX_AI_TIMERS; i++)
       if (pilot->timer[i] > 0.)
          pilot->timer[i] -= dt;
+   Q = 0.;
    for (i=0; i<pilot->noutfits; i++) {
       o = pilot->outfits[i];
       if (o->outfit == NULL)
