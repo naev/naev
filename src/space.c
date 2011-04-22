@@ -1059,7 +1059,7 @@ void space_update( const double dt )
  *
  *    @param sysname Name of the system to initialize.
  */
-void space_init ( const char* sysname )
+void space_init( const char* sysname )
 {
    char* nt;
    int i, n, s;
