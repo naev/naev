@@ -196,6 +196,7 @@ void conf_setAudioDefaults (void)
    conf.sound_backend = strdup("sdlmix");
 #endif /* USE_OPENAL */
    conf.snd_voices   = 128;
+   conf.snd_pilotrel = 1;
    conf.al_efx       = 1;
    conf.al_bufsize   = 128;
    conf.nosound      = 0;
@@ -330,8 +331,9 @@ int conf_loadConfig ( const char* file )
 
       /* Sound. */
       conf_loadString("sound_backend",conf.sound_backend);
-      conf_loadInt("snd_voices", conf.snd_voices);
+      conf_loadInt("snd_voices",conf.snd_voices);
       conf.snd_voices = MAX( 16, conf.snd_voices ); /* Must be at least 16. */
+      conf_loadBool("snd_pilotrel",conf.snd_pilotrel);
       conf_loadBool("al_efx",conf.al_efx);
       conf_loadInt("al_bufsize", conf.al_bufsize);
       conf_loadBool("nosound",conf.nosound);
@@ -865,6 +867,10 @@ int conf_saveConfig ( const char* file )
 
    conf_saveComment("Maxmimum number of simultaneous sounds to play, must be at least 16.");
    conf_saveInt("snd_voices",conf.snd_voices);
+   conf_saveEmptyLine();
+
+   conf_saveComment("Sets sound to be relative to pilot when camera is following a pilot instead of referenced to camera.");
+   conf_saveBool("snd_pilotrel",conf.snd_pilotrel);
    conf_saveEmptyLine();
 
    conf_saveComment("Enables EFX extension for OpenAL backend.");

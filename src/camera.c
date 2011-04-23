@@ -23,6 +23,9 @@
 #include "player.h"
 
 
+#define CAMERA_DIR      (M_PI/2.)
+
+
 static unsigned int camera_followpilot = 0; /**< Pilot to follow. */
 /* Current camera position. */
 static double camera_Z     = 1.; /**< Current in-game zoom. */
@@ -42,20 +45,10 @@ static double camera_flyspeed = 0.; /**< Speed when flying. */
 /*
  * Prototypes.
  */
-static void cam_setSound( double px, double py, double vx, double vy );
 static void cam_updateFly( double x, double y, double dt );
 static void cam_updatePilot( Pilot *follow, double dt );
 static void cam_updatePilotZoom( Pilot *follow, Pilot *target, double dt );
 static void cam_updateManualZoom( double dt );
-
-
-/**
- * @brief Sets the camera sound.
- */
-static void cam_setSound( double px, double py, double vx, double vy )
-{
-   sound_updateListener( M_PI/2., px, py, vx, vy );
-}
 
 
 /**
@@ -125,18 +118,20 @@ void cam_getPos( double *x, double *y )
 void cam_setTargetPilot( unsigned int follow, int soft_over )
 {
    Pilot *p;
-   double x, y;
+   double dir, x, y;
 
    /* Set the target. */
    camera_followpilot   = follow;
+   dir                  = CAMERA_DIR;
 
    /* Set camera if necessary. */
    if (!soft_over) {
       if (follow != 0) {
          p = pilot_get( follow );
          if (p != NULL) {
-            x = p->solid->pos.x;
-            y = p->solid->pos.y;
+            dir      = p->solid->dir;
+            x        = p->solid->pos.x;
+            y        = p->solid->pos.y;
             camera_X = x;
             camera_Y = y;
             old_X    = x;
@@ -151,7 +146,7 @@ void cam_setTargetPilot( unsigned int follow, int soft_over )
       camera_fly = 1;
       camera_flyspeed = (double) soft_over;
    }
-   cam_setSound( camera_X, camera_Y, 0., 0. );
+   sound_updateListener( dir, camera_X, camera_Y, 0., 0. );
 }
 
 
@@ -179,7 +174,7 @@ void cam_setTargetPos( double x, double y, int soft_over )
       camera_fly = 1;
       camera_flyspeed = (double) soft_over;
    }
-   cam_setSound( camera_X, camera_Y, 0., 0. );
+   sound_updateListener( CAMERA_DIR, camera_X, camera_Y, 0., 0. );
 }
 
 
@@ -194,10 +189,11 @@ void cam_update( double dt )
    double dx, dy;
 
    /* Calculate differential. */
-   dx = old_X;
-   dy = old_Y;
+   dx    = old_X;
+   dy    = old_Y;
 
    /* Going to position. */
+   p   = NULL;
    if (camera_fly) {
       if (camera_followpilot != 0) {
          p = pilot_get( camera_followpilot );
@@ -229,9 +225,16 @@ void cam_update( double dt )
       cam_updateManualZoom( dt );
 
    /* Set the sound. */
-   dx = dt*(dx-camera_X);
-   dy = dt*(dy-camera_Y);
-   cam_setSound( camera_X, camera_Y, dx, dy );
+   if ((p==NULL) || !conf.snd_pilotrel) {
+      dx = dt*(dx-camera_X);
+      dy = dt*(dy-camera_Y);
+      sound_updateListener( CAMERA_DIR, camera_X, camera_Y, dx, dy );
+   }
+   else {
+      sound_updateListener( p->solid->dir,
+            p->solid->pos.x, p->solid->pos.y,
+            p->solid->vel.x, p->solid->vel.y );
+   }
 }
 
 
