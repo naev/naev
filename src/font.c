@@ -296,9 +296,6 @@ int gl_printMax( const glFont *ft_font, const int max,
    /*float h = ft_font->h / .63;*/ /* slightly increase fontsize */
    char text[256]; /* holds the string */
    va_list ap;
-   int ret;
-
-   ret = 0; /* default return value */
 
    if (fmt == NULL) return -1;
    else { /* convert the symbols to text */
