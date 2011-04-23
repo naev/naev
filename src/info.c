@@ -619,12 +619,9 @@ static void cargo_genList( unsigned int wid )
 static void cargo_update( unsigned int wid, char* str )
 {
    (void)str;
-   int pos;
 
    if (player.p->ncommodities==0)
       return; /* No cargo */
-
-   pos = toolkit_getListPos( wid, "lstCargo" );
 
    /* Can jettison all but mission cargo when not landed*/
    if (landed)
@@ -924,12 +921,9 @@ static void mission_menu_update( unsigned int wid, char* str )
 static void mission_menu_abort( unsigned int wid, char* str )
 {
    (void)str;
-   char *selected_misn;
    int pos;
    Mission* misn;
    int ret;
-
-   selected_misn = toolkit_getList( wid, "lstMission" );
 
    if (dialogue_YesNo( "Abort Mission",
             "Are you sure you want to abort this mission?" )) {

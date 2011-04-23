@@ -259,7 +259,7 @@ static void map_update( unsigned int wid )
 {
    int i;
    StarSystem* sys;
-   int f, y, h, multiple_faction;
+   int f, y, h;
    double standing, nstanding;
    unsigned int services;
    int l;
@@ -330,7 +330,6 @@ static void map_update( unsigned int wid )
    standing  = 0.;
    nstanding = 0.;
    f         = -1;
-   multiple_faction = 0;
    for (i=0; i<sys->nplanets; i++) {
       if(sys->planets[i]->real == ASSET_REAL) {
          if ((f==-1) && (sys->planets[i]->faction>0)) {
@@ -341,7 +340,6 @@ static void map_update( unsigned int wid )
          else if (f != sys->planets[i]->faction && /** @todo more verbosity */
                   (sys->planets[i]->faction>0)) {
             snprintf( buf, PATH_MAX, "Multiple" );
-            multiple_faction = 1;
             break;
          }
       }

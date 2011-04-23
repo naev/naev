@@ -349,9 +349,7 @@ int shipyard_canBuy ( char *shipname )
 int can_sell( char* shipname )
 {
    int failure = 0;
-   Pilot* ship;
-   ship = player_getShip( shipname );
-   if (strcmp(shipname,player.p->name)==0) { /* Already onboard. */
+   if (strcmp( shipname, player.p->name )==0) { /* Already onboard. */
       land_errDialogueBuild( "You can't sell the ship you're piloting.", shipname );
       failure = 1;
    }

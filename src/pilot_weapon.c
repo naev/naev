@@ -736,7 +736,6 @@ static int pilot_shootWeaponSetOutfit( Pilot* p, PilotWeaponSet *ws, Outfit *o, 
 static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
 {
    Vector2d vp, vv;
-   int is_launcher;
    double rate_mod, energy_mod;
    double energy;
 
@@ -747,9 +746,6 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
    /* check to see if weapon is ready */
    if (w->timer > 0.)
       return 0;
-
-   /* See if is launcher. */
-   is_launcher = outfit_isLauncher(w->outfit);
 
    /* Calculate rate modifier. */
    pilot_getRateMod( &rate_mod, &energy_mod, p, w->outfit );
@@ -1014,8 +1010,11 @@ void pilot_weaponSetDefault( Pilot *p )
    int i;
 
    /* If current set isn't a fire group no need to worry. */
-   if (!p->weapon_sets[ p->active_set ].fire)
+   if (!p->weapon_sets[ p->active_set ].fire) {
+      /* Update active weapon set. */
+      pilot_weapSetUpdateOutfits( p, &p->weapon_sets[ p->active_set ] );
       return;
+   }
 
    /* Find first fire gorup. */
    for (i=0; i<PILOT_WEAPON_SETS; i++)

@@ -198,14 +198,17 @@ static int chk_mclick( Widget* chk, int button, int x, int y )
  */
 static void chk_render( Widget* chk, double bx, double by )
 {
-   /*glColour *c;*/
+   /*
+   glColour *c;
    glColour *dc, *lc;
+   */
    double x, y;
 
    x = bx + chk->x;
    y = by + chk->y;
 
    /* set the colours */
+#if 0
    switch (chk->status) {
       case WIDGET_STATUS_NORMAL:
          lc = &cGrey80;
@@ -225,6 +228,7 @@ static void chk_render( Widget* chk, double bx, double by )
       default:
          break;
    }
+#endif
 
    /* Draw rect. */
    toolkit_drawRect( x-1, y-1 + (chk->h-10.)/2., 12., 12., &cGrey40, NULL );
@@ -232,10 +236,12 @@ static void chk_render( Widget* chk, double bx, double by )
    if (chk->dat.chk.state)
       toolkit_drawRect( x+1., y+1. + (chk->h-10.)/2., 8., 8., &cGrey20, NULL );
 
+#if 0
    /* Inner outline */
-   /*  toolkit_drawOutline( x, y + (chk->h-10.)/2., 10, 10, 0., lc, c ); */
+   toolkit_drawOutline( x, y + (chk->h-10.)/2., 10, 10, 0., lc, c );
    /* Outter outline */
-   /*toolkit_drawOutline( x, y + (chk->h-10.)/2., 10, 10, 1., &cBlack, NULL );*/
+   toolkit_drawOutline( x, y + (chk->h-10.)/2., 10, 10, 1., &cBlack, NULL );
+#endif
 
    /* Draw the txt. */
    gl_printMaxRaw( NULL, chk->w - 20,

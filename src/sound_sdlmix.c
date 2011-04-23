@@ -30,9 +30,6 @@
 #include "conf.h"
 
 
-#define SOUND_CHANNEL_MAX  256 /**< Number of sound channels to allocate. Overkill. */
-
-
 /*
  * Global sound properties.
  */
@@ -79,7 +76,7 @@ int sound_mix_init (void)
       DEBUG();
       return -1;
    }
-   Mix_AllocateChannels(SOUND_CHANNEL_MAX);
+   Mix_AllocateChannels( conf.snd_voices );
 
    /* Reset some variables. */
    group_pos = 0;

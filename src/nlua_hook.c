@@ -536,7 +536,7 @@ static int hook_safe( lua_State *L )
  * <br />
  * If you pass nil as pilot, it will set it as a global hook that will jump for all pilots.<br />
  * <br />
- * DO NOT TRY TO DELETE PILOT HOOKS WHILE THEY ARE RUNNING!<br />
+ * DO NOT DO UNSAFE THINGS IN PILOT HOOKS. THIS MEANS STUFF LIKE player.teleport(). IF YOU HAVE DOUBTS USE A "safe" HOOK.<br />
  * <br />
  * These hooks all pass the pilot triggering the hook as a parameter, so they should have the structure of:<br />
  * <br />

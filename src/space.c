@@ -1796,16 +1796,12 @@ void systems_reconstructPlanets (void)
  */
 static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
 {
-   Planet* planet;
    char *ptrc;
    xmlNodePtr cur, node;
    uint32_t flags;
-   int size;
 
    /* Clear memory for sane defaults. */
    flags          = 0;
-   planet         = NULL;
-   size           = 0;
    sys->presence  = NULL;
    sys->npresence = 0;
    sys->systemFleets  = NULL;

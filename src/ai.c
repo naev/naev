@@ -1472,7 +1472,6 @@ static int aiL_getdistance( lua_State *L )
    Vector2d *v;
    LuaVector *lv;
    Pilot *pilot;
-   unsigned int n;
 
    /* vector as a parameter */
    if (lua_isvector(L,1)) {
@@ -1485,7 +1484,6 @@ static int aiL_getdistance( lua_State *L )
 
    /* pilot id as parameter */
    else if (lua_isnumber(L,1)) {
-      n = (unsigned int) lua_tonumber(L,1);
       pilot = pilot_get( (unsigned int) lua_tonumber(L,1) );
       if (pilot==NULL) {
          NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
@@ -1515,7 +1513,6 @@ static int aiL_getflybydistance( lua_State *L )
    Vector2d perp_motion_unit, offset_vect;
    LuaVector *lv;
    Pilot *pilot;
-   unsigned int n;
    int offset_distance;
 
    v = NULL;
@@ -1529,7 +1526,6 @@ static int aiL_getflybydistance( lua_State *L )
       v = lua_touserdata(L,1);
    /* pilot id as parameter */
    else if (lua_isnumber(L,1)) {
-      n = (unsigned int) lua_tonumber(L,1);
       pilot = pilot_get( (unsigned int) lua_tonumber(L,1) );
       if (pilot==NULL) { 
          NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
@@ -2120,19 +2116,15 @@ static int aiL_iface( lua_State *L )
    Pilot* p;
    double d, diff, heading_offset_azimuth, drift_radial, drift_azimuthal;
    unsigned int id;
-   int n, azimuthal_sign;
+   int azimuthal_sign;
    double speedmap;
-   int degreecount;
 
    /* Get first parameter, aka what to face. */
-   n  = -2;
    p  = NULL;
    lv = NULL;
    if (lua_isnumber(L,1)) {
       d = (double)lua_tonumber(L,1);
-      if (d < 0.)
-         n = -1;
-      else {
+      if (d >= 0.) {
          id = (unsigned int)d;
          p = pilot_get(id);
          if (p==NULL) { 
@@ -2192,7 +2184,6 @@ static int aiL_iface( lua_State *L )
    else {
       /* signal that we're not in a productive direction for thrusting */
       diff = M_PI;
-      degreecount = heading_offset_azimuth*180/M_PI;
       azimuthal_sign = 1;  
 
 
@@ -2229,7 +2220,7 @@ static int aiL_dir( lua_State *L )
    n  = -2;
    lv = NULL;
    if (lua_isnumber(L,1)) {
-      d = (double)lua_tonumber(L,1);
+      d = lua_tonumber(L,1);
       if (d < 0.)
          n = -1;
       else {
@@ -2286,20 +2277,15 @@ static int aiL_idir( lua_State *L )
    Pilot* p;
    double d, diff, heading_offset_azimuth, drift_radial, drift_azimuthal;
    unsigned int id;
-   int n;
    double speedmap;
    /*char announcebuffer[255] = " ", announcebuffer2[128];*/
-   int degreecount;
 
    /* Get first parameter, aka what to face. */
-   n  = -2;
    p  = NULL;
    lv = NULL;
    if (lua_isnumber(L,1)) {
-      d = (double)lua_tonumber(L,1);
-      if (d < 0.)
-         n = -1;
-      else {
+      d = lua_tonumber(L,1);
+      if (d >= 0.) {
          id = (unsigned int)d;
          p = pilot_get(id);
          if (p==NULL) { 
@@ -2348,7 +2334,6 @@ static int aiL_idir( lua_State *L )
    else{
       /* signal that we're not in a productive direction for thrusting */
       diff        = M_PI;
-      degreecount = heading_offset_azimuth*180/M_PI;
    }
 
    /* Return angle in degrees away from target. */

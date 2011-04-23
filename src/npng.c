@@ -225,14 +225,10 @@ int npng_readInto( npng_t *npng, png_bytep *row_pointers )
 {
    png_uint_32 width, height;
    int bit_depth, color_type, interface_type;
-   int rowbytes;
 
    /* Read information. */
    png_get_IHDR( npng->png_ptr, npng->info_ptr, &width, &height,
          &bit_depth, &color_type, &interface_type, NULL, NULL );
-
-   /* Get size information. */
-   rowbytes = png_get_rowbytes( npng->png_ptr, npng->info_ptr );
 
    /* Go back to position. */
    /*SDL_RWseek( npng->rw, npng->start, RW_SEEK_SET );*/

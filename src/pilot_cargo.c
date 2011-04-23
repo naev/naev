@@ -67,8 +67,6 @@ int pilot_cargoFree( Pilot* p )
  */
 int pilot_cargoMove( Pilot* dest, Pilot* src )
 {
-   int i;
-
    /* Nothing to copy, success! */
    if (src->ncommodities == 0)
       return 0;
@@ -80,7 +78,6 @@ int pilot_cargoMove( Pilot* dest, Pilot* src )
    }
 
    /* Allocate new space. */
-   i = dest->ncommodities;
    dest->ncommodities += src->ncommodities;
    dest->commodities   = realloc( dest->commodities,
          sizeof(PilotCommodity)*dest->ncommodities);
@@ -222,8 +219,6 @@ unsigned int pilot_addMissionCargo( Pilot* pilot, Commodity* cargo, int quantity
 {
    int i;
    unsigned int id, max_id;
-   int q;
-   q = quantity;
 
    /* Get ID. */
    id = ++mission_cargo_id;

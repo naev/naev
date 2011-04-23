@@ -270,7 +270,6 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
    StarSystem *ss;
    xmlNodePtr node;
    char *name, *type, *buf, *num;
-   int keynum;
 
    node = parent->xmlChildrenNode;
    do {
@@ -281,7 +280,6 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
          /* Check to see if key is a number. */
          xmlr_attr(node,"keynum",num);
          if (num != NULL) {
-            keynum = 1;
             lua_pushnumber(L, atof(name));
             free(num);
          }

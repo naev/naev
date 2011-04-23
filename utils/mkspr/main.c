@@ -53,7 +53,7 @@ static int write_png( const char *file_name, png_bytep *rows, int w, int h,
 int main(int argc, char* argv[])
 {
 	int i, ws, hs;
-	unsigned int sflags, salpha;
+	unsigned int sflags;
 	char file[8];
 	SDL_Surface *final, *temp, **load;
 	SDL_Rect r;
@@ -93,7 +93,6 @@ int main(int argc, char* argv[])
 		temp = IMG_Load( file );
 		if (temp == NULL) ERR("Problem loading file '%s': %s", file, IMG_GetError());
 		sflags = temp->flags & (SDL_SRCALPHA | SDL_SRCCOLORKEY);
-		salpha = temp->format->alpha;
 		if(sflags & SDL_SRCALPHA)
 			SDL_SetAlpha(temp, 0, SDL_ALPHA_OPAQUE);
 		if(sflags & SDL_SRCCOLORKEY)

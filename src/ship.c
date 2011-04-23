@@ -409,7 +409,6 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
    char buf[PATH_MAX];
 #if ! SDL_VERSION_ATLEAST(1,3,0)
    Uint32 saved_flags;
-   Uint8 saved_alpha;
 #endif /* ! SDL_VERSION_ATLEAST(1,3,0) */
 
    /* Get sprite size. */
@@ -441,7 +440,6 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
          surface->format->BytesPerPixel*8, RGBAMASK );
 #else /* SDL_VERSION_ATLEAST(1,3,0) */
    saved_flags = surface->flags & (SDL_SRCALPHA | SDL_RLEACCELOK);
-   saved_alpha = surface->format->alpha;
    if ((saved_flags & SDL_SRCALPHA) == SDL_SRCALPHA) {
       SDL_SetAlpha( surface, 0, SDL_ALPHA_OPAQUE );
       SDL_SetColorKey( surface, 0, surface->format->colorkey );
@@ -606,7 +604,6 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
 {
    int i;
    xmlNodePtr cur, node;
-   char str[PATH_MAX];
    int sx, sy;
    char *stmp, *buf;
    int l, m, h;
@@ -616,7 +613,6 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    memset( temp, 0, sizeof(Ship) );
 
    /* Defaults. */
-   str[0] = '\0';
    temp->thrust = -1;
    temp->speed  = -1;
 

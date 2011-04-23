@@ -3008,13 +3008,12 @@ static int pilotL_face( lua_State *L )
 static int pilotL_brake( lua_State *L )
 {
    Pilot *p;
-   Task *t;
 
    /* Get parameters. */
    p = luaL_validpilot(L,1);
 
    /* Set the task. */
-   t = pilotL_newtask( L, p, "brake" );
+   pilotL_newtask( L, p, "brake" );
 
    return 0;
 }
