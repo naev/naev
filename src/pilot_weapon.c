@@ -1014,8 +1014,11 @@ void pilot_weaponSetDefault( Pilot *p )
    int i;
 
    /* If current set isn't a fire group no need to worry. */
-   if (!p->weapon_sets[ p->active_set ].fire)
+   if (!p->weapon_sets[ p->active_set ].fire) {
+      /* Update active weapon set. */
+      pilot_weapSetUpdateOutfits( p, &p->weapon_sets[ p->active_set ] );
       return;
+   }
 
    /* Find first fire gorup. */
    for (i=0; i<PILOT_WEAPON_SETS; i++)
