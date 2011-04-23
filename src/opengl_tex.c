@@ -210,7 +210,6 @@ SDL_Surface* gl_prepareSurface( SDL_Surface* surface )
    SDL_Rect rtemp;
 #if ! SDL_VERSION_ATLEAST(1,3,0)
    Uint32 saved_flags;
-   Uint8 saved_alpha;
 #endif /* ! SDL_VERSION_ATLEAST(1,3,0) */
 
    /* Make size power of two. */
@@ -232,7 +231,6 @@ SDL_Surface* gl_prepareSurface( SDL_Surface* surface )
             surface->format->BytesPerPixel*8, RGBAMASK );
 #else /* SDL_VERSION_ATLEAST(1,3,0) */
       saved_flags = surface->flags & (SDL_SRCALPHA | SDL_RLEACCELOK);
-      saved_alpha = surface->format->alpha;
       if ((saved_flags & SDL_SRCALPHA) == SDL_SRCALPHA) {
          SDL_SetAlpha( surface, 0, SDL_ALPHA_OPAQUE );
          SDL_SetColorKey( surface, 0, surface->format->colorkey );
@@ -660,7 +658,7 @@ void gl_freeTexture( glTexture* texture )
  */
 glTexture* gl_dupTexture( glTexture *texture )
 {
-   glTexList *cur, *last;
+   glTexList *cur;
 
    /* No segfaults kthxbye. */
    if (texture == NULL)
@@ -673,7 +671,6 @@ glTexture* gl_dupTexture( glTexture *texture )
             cur->used += 1;
             return cur->tex;
          }
-         last = cur;
       }
    }
 
