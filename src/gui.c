@@ -580,21 +580,16 @@ static void gui_borderIntersection( double *cx, double *cy, double rx, double ry
 static void gui_renderBorder( double dt )
 {
    (void) dt;
-   double z;
    int i, j;
    Pilot *plt;
    Planet *pnt;
    JumpPoint *jp;
-   glTexture *tex;
    int hw, hh;
    double rx,ry;
    double cx,cy;
    glColour *col;
    double int_a;
    GLfloat vertex[5*2], colours[5*4];
-
-   /* Get zoom. */
-   z = cam_getZoom();
 
    /* Get player position. */
    hw    = SCREEN_W/2;
@@ -616,7 +611,6 @@ static void gui_renderBorder( double dt )
          continue;
 
       pnt = cur_system->planets[i];
-      tex = pnt->gfx_space;
 
       /* See if in sensor range. */
       if (!pilot_inRangePlanet(player.p, i))
@@ -661,7 +655,6 @@ static void gui_renderBorder( double dt )
    /* Draw jump routes. */
    for (i=0; i<cur_system->njumps; i++) {
       jp  = &cur_system->jumps[i];
-      tex = jumppoint_gfx;
 
       /* See if in sensor range. */
       if (!pilot_inRangePlanet(player.p, i))
@@ -858,7 +851,6 @@ void gui_render( double dt )
    int i;
    double x;
    glColour col;
-   StarSystem *sys;
 
    /* If player is dead just render the cinematic mode. */
    if (!menu_isOpen(MENU_MAIN) &&
@@ -911,8 +903,6 @@ void gui_render( double dt )
 
    /* Noise when getting near a jump. */
    if (player.p->nav_hyperspace >= 0) { /* hyperspace target */
-
-      sys = cur_system->jumps[player.p->nav_hyperspace].target;
 
       /* Determine if we have to play the "enter hyperspace range" sound. */
       i = space_canHyperspace(player.p);
@@ -1790,29 +1780,24 @@ void gui_clearViewport (void)
 static void gui_calcBorders (void)
 {
    double w,h;
-   double vx,vy, vw,vh;
 
    /* Precalculations. */
-   vx = gui_viewport_x;
-   vy = gui_viewport_y;
-   vw = SCREEN_W - (vx + gui_viewport_w);
-   vh = SCREEN_H - (vy + gui_viewport_h);
    w  = SCREEN_W/2.;
    h  = SCREEN_H/2.;
 
    /*
     * Borders.
     */
-   gui_tl = atan2( +SCREEN_H/2., -SCREEN_W/2. );
+   gui_tl = atan2( +h, -w );
    if (gui_tl < 0.)
       gui_tl += 2*M_PI;
-   gui_tr = atan2( +SCREEN_H/2., +SCREEN_W/2. );
+   gui_tr = atan2( +h, +w );
    if (gui_tr < 0.)
       gui_tr += 2*M_PI;
-   gui_bl = atan2( -SCREEN_H/2., -SCREEN_W/2. );
+   gui_bl = atan2( -h, -w );
    if (gui_bl < 0.)
       gui_bl += 2*M_PI;
-   gui_br = atan2( -SCREEN_H/2., +SCREEN_W/2. );
+   gui_br = atan2( -h, -w );
    if (gui_br < 0.)
       gui_br += 2*M_PI;
 }
