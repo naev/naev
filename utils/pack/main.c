@@ -39,7 +39,7 @@ int main( int argc, char** argv )
    uint32_t nlist;
    uint32_t nfiles;
    uint32_t i;
-   int cmd;
+   /*int cmd;*/
    int c;
 
    /* Enforce at least one parameter. */
@@ -49,7 +49,7 @@ int main( int argc, char** argv )
    }
 
    /* Handle parameters. */
-   cmd = COMMAND_NORMAL;
+   /*cmd = COMMAND_NORMAL;*/
    while ((c = getopt_long( argc, argv,
          "hd",
          long_options, &option_index)) != -1) {
