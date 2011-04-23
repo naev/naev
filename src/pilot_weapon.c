@@ -736,7 +736,6 @@ static int pilot_shootWeaponSetOutfit( Pilot* p, PilotWeaponSet *ws, Outfit *o, 
 static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
 {
    Vector2d vp, vv;
-   int is_launcher;
    double rate_mod, energy_mod;
    double energy;
 
@@ -747,9 +746,6 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
    /* check to see if weapon is ready */
    if (w->timer > 0.)
       return 0;
-
-   /* See if is launcher. */
-   is_launcher = outfit_isLauncher(w->outfit);
 
    /* Calculate rate modifier. */
    pilot_getRateMod( &rate_mod, &energy_mod, p, w->outfit );

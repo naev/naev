@@ -336,10 +336,9 @@ unsigned int pilot_getNearestEnemy_heuristic(const Pilot* p, double mass_factor,
 {
    unsigned int tp;
    int i;
-   double d, td, current_heuristic_value=10000, temp;
+   double td, current_heuristic_value=10000, temp;
 
    tp = 0;
-   d = 0.;
    for (i=0; i<pilot_nstack; i++) {
       /* Must not be bribed. */
       if ((pilot_stack[i]->faction == FACTION_PLAYER) && pilot_isFlag(p,PILOT_BRIBED))
