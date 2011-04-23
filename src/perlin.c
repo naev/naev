@@ -541,7 +541,6 @@ float* noise_genRadarInt( const int w, const int h, float rug )
 {
    int x, y;
    float f[2];
-   int octaves;
    float hurst;
    float lacunarity;
    perlin_data_t* noise;
@@ -549,7 +548,6 @@ float* noise_genRadarInt( const int w, const int h, float rug )
    float value;
 
    /* pretty default values */
-   octaves     = 3;
    hurst       = NOISE_DEFAULT_HURST;
    lacunarity  = NOISE_DEFAULT_LACUNARITY;
 
