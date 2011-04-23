@@ -3143,7 +3143,7 @@ static int pilotL_hyperspace( lua_State *L )
 
    /* Get parameters. */
    p = luaL_validpilot(L,1);
-   if (lua_gettop(L) > 1) {
+   if ((lua_gettop(L) > 1) && !lua_isnil(L,2)) {
       sys = luaL_checksystem( L, 2 );
       ss  = system_getIndex( sys->id );
    }
