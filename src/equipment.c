@@ -278,7 +278,7 @@ void equipment_open( unsigned int wid )
       "Fuel:\n"
       "\n"
       "Transportation:\n"
-      "Where:";
+      "Location:";
    x = 20 + sw + 20 + 180 + 20 + 30;
    y = -190;
    window_addText( wid, x, y,
