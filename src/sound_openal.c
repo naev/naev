@@ -48,7 +48,6 @@
  */
 
 
-#define SOUND_MAX_SOURCES     128
 #define SOUND_FADEOUT         100
 
 
@@ -268,10 +267,10 @@ int sound_al_init (void)
    /* Start allocating the sources - music has already taken his */
    source_nstack  = 0;
    source_mstack  = 0;
-   while (source_nstack < SOUND_MAX_SOURCES) {
+   while (source_nstack < conf.snd_voices) {
       if (source_mstack < source_nstack+1) { /* allocate more memory */
          if (source_mstack == 0)
-            source_mstack = 128;
+            source_mstack = conf.snd_voices;
          else
             source_mstack *= 2;
          source_stack = realloc( source_stack, sizeof(ALuint) * source_mstack );
