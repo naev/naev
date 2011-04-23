@@ -195,7 +195,6 @@ ov_callbacks sound_al_ovcall_noclose = {
 int sound_al_init (void)
 {
    int ret;
-   const ALchar* dev;
    ALuint s;
    ALint freq;
    ALint attribs[4] = { 0, 0, 0, 0 };
@@ -206,9 +205,6 @@ int sound_al_init (void)
    /* we'll need a mutex */
    sound_lock = SDL_CreateMutex();
    soundLock();
-
-   /* Get the sound device. */
-   dev = alcGetString( NULL, ALC_DEFAULT_DEVICE_SPECIFIER );
 
    /* opening the default device */
    al_device = alcOpenDevice(NULL);
