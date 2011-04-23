@@ -28,6 +28,7 @@
 #include "nlua_col.h"
 #include "nlua_bkg.h"
 #include "nlua_camera.h"
+#include "nlua_music.h"
 #include "font.h"
 #include "toolkit.h"
 #include "nfile.h"
@@ -306,6 +307,7 @@ int cli_init (void)
    nlua_loadCamera( cli_state, 0 );
    nlua_loadTk( cli_state );
    nlua_loadCLI( cli_state );
+   nlua_loadMusic( cli_state, 0 );
    luaL_register( cli_state, "_G", cli_methods );
    lua_settop( cli_state, 0 );
 
