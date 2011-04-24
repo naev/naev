@@ -834,6 +834,7 @@ static void player_initSound (void)
    /* Allocate channels. */
    player_engine_group  = sound_createGroup(1); /* Channel for engine noises. */
    player_gui_group     = sound_createGroup(4);
+   sound_speedGroup( player_gui_group, 0 ); /* Disable pitch shift. */
    player_soundReserved = 1;
 
    /* Get sounds. */
