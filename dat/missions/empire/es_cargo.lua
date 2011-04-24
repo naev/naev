@@ -78,7 +78,7 @@ function create()
     stuperpx   = 0.3 - 0.015 * tier
     stuperjump = 11000 - 75 * tier
     stupertakeoff = 15000
-    timelimit  = time.get() + time.create(0, 0, traveldist * stuperpx + numjumps * stuperjump + stupertakeoff + 240 * numjumps)
+    timelimit  = time.get() + time.create(0, 0, traveldist * stuperpx + numjumps * stuperjump + stupertakeoff + 480 * numjumps)
 
     
     -- Choose amount of cargo and mission reward. This depends on the mission tier.
