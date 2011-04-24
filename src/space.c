@@ -1806,6 +1806,7 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
    sys->npresence = 0;
    sys->systemFleets  = NULL;
    sys->nsystemFleets = 0;
+   sys->ownerpresence = 0.;
 
    sys->name = xml_nodeProp(parent,"name"); /* already mallocs */
 
@@ -1892,6 +1893,7 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
  * @brief Sets the system faction based on the planets it has.
  *
  *    @param sys System to set the faction of.
+ *    @return Faction that controls the system.
  */
 static void system_setFaction( StarSystem *sys )
 {
@@ -2089,6 +2091,7 @@ int space_load (void)
       /* Save jump indexes. */
       for (j=0; j<sys->njumps; j++)
          sys->jumps[j].targetid = sys->jumps[j].target->id;
+      sys->ownerpresence = system_getPresence( sys, sys->faction );
    }
 
    return 0;

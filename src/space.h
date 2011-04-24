@@ -234,6 +234,7 @@ struct StarSystem_ {
    int spilled; /**< If the system has been spilled to yet. */
    int nsystemFleets; /**< The number of fleets in the system. */
    SystemFleet *systemFleets; /**< Array of pointers to the fleets in the system. */
+   double ownerpresence; /**< Amount of presence the owning faction has in a system. */
 
    /* Markers. */
    int markers_computer; /**< Number of mission computer markers. */
