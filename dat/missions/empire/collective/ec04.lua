@@ -26,7 +26,7 @@ else -- default english
    misn_desc[2] = "Travel back to %s in %s."
    title = {}
    title[1] = "Collective Espionage"
-   title[2] = "Eiroik"
+   title[2] = "Planet %s"
    title[3] = "Mission Accomplished"
    text = {}
    text[1] = [[    As soon as you exit the landing pad you see Lt. Commander Dimitri waiting for you. He seems a bit more nervous then usual.
@@ -54,14 +54,13 @@ end
 function create ()
    misn_target, misn_target_sys = planet.get("Eiroik")
 
-    local missys = {misn_target}
-    if not misn.claim(missys) then
-        abort()
-    end
+   local missys = {misn_target}
+   if not misn.claim(missys) then
+      abort()
+   end
 
    -- Intro text
-   if tk.yesno( title[1], string.format(text[1], misn_target:name()) )
-      then
+   if tk.yesno( title[1], string.format(text[1], misn_target:name()) ) then
       misn.accept()
 
       misn_stage = 0
@@ -209,6 +208,7 @@ function land ()
       player.takeoff()
 
       -- Some flavour text
+      title[2] = title[2]:format(misn_target:name())
       tk.msg( title[2], text[3] )
 
       -- Add fuel if needed
