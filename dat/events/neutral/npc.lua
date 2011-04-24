@@ -171,7 +171,7 @@ else --default english
         "Do you think I look like a mule?",
         "I've been on more worlds than you can count.",
         "It's become quite dangerous out there. The Pirates are multiplying! I hear they're organized now.",
-        "I've lost many important trade contacts in the Incident. It was a tragedy.",
+        "I lost many important trade contacts in the Incident. It was a tragedy.",
         "Those damn Soromids are controlling the market in augmentations. It's criminal!",
         "You don't support those Soromids, do you?",
         "Are you sure you can be seen talking to me? I've got a history here...",
