@@ -409,12 +409,12 @@ static int vectorL_set( lua_State *L )
 /**
  * @brief Sets the vector by cartesian coordinates.
  *
- * @usage my_vec:set(5, 3) -- my_vec is now (5,3)
+ * @usage my_vec:setP( 1, math.pi ) -- my_vec is now (0,1)
  *
  *    @luaparam v Vector to set coordinates of.
  *    @luaparam m Modulus to set.
  *    @luaparam a Angle to set.
- * @luafunc set( v, x, y )
+ * @luafunc setP( v, m, a )
  */
 static int vectorL_setP( lua_State *L )
 {
