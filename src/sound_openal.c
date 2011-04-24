@@ -110,6 +110,7 @@ typedef struct alGroup_s {
 
    voice_state_t state; /**< Currenty global group state. */
    int fade_timer; /**< Fadeout timer. */
+   int speed; /**< Whether or not pitch affects. */
 } alGroup_t;
 static alGroup_t *al_groups = NULL; /**< Created groups. */
 static int al_ngroups       = 0; /**< Number of created groups. */
@@ -143,6 +144,10 @@ static int sound_al_loadOgg( alSound *snd, OggVorbis_File *vf );
  */
 static void al_pausev( ALint n, ALuint *s );
 static void al_resumev( ALint n, ALuint *s );
+/*
+ * Groups.
+ */
+static alGroup_t *sound_al_getGroup( int group );
 
 
 /*
@@ -1358,6 +1363,22 @@ group_err:
 
 
 /**
+ * @brief Gets a group by ID.
+ */
+static alGroup_t *sound_al_getGroup( int group )
+{
+   int i;
+   for (i=0; i<al_ngroups; i++) {
+      if (al_groups[i].id != group)
+         continue;
+      return &al_groups[i];
+   }
+   WARN("Group '%d' not found.", group);
+   return NULL;
+}
+
+
+/**
  * @brief Plays a sound in a group.
  */
 int sound_al_playGroup( int group, alSound *s, int once )
@@ -1427,21 +1448,13 @@ int sound_al_playGroup( int group, alSound *s, int once )
  */
 void sound_al_stopGroup( int group )
 {
-   int i;
    alGroup_t *g;
+   g = sound_al_getGroup( group );
+   if (g == NULL)
+      return;
 
-   for (i=0; i<al_ngroups; i++) {
-      if (al_groups[i].id != group)
-         continue;
-
-      g = &al_groups[i];
-      g->state      = VOICE_FADEOUT;
-      g->fade_timer = SDL_GetTicks();
-      break;
-   }
-
-   if (i>=al_ngroups)
-      WARN("Group '%d' not found.", group);
+   g->state      = VOICE_FADEOUT;
+   g->fade_timer = SDL_GetTicks();
 }
 
 
@@ -1450,22 +1463,14 @@ void sound_al_stopGroup( int group )
  */
 void sound_al_pauseGroup( int group )
 {
-   int i;
    alGroup_t *g;
+   g = sound_al_getGroup( group );
+   if (g == NULL)
+      return;
 
-   for (i=0; i<al_ngroups; i++) {
-      if (al_groups[i].id != group)
-         continue;
-
-      g = &al_groups[i];
-      soundLock();
-      al_pausev( g->nsources, g->sources );
-      soundUnlock();
-      break;
-   }
-
-   if (i>=al_ngroups)
-      WARN("Group '%d' not found.", group);
+   soundLock();
+   al_pausev( g->nsources, g->sources );
+   soundUnlock();
 }
 
 
@@ -1474,22 +1479,28 @@ void sound_al_pauseGroup( int group )
  */
 void sound_al_resumeGroup( int group )
 {
-   int i;
    alGroup_t *g;
+   g = sound_al_getGroup( group );
+   if (g == NULL)
+      return;
 
-   for (i=0; i<al_ngroups; i++) {
-      if (al_groups[i].id != group)
-         continue;
+   soundLock();
+   al_resumev( g->nsources, g->sources );
+   soundUnlock();
+}
 
-      g = &al_groups[i];
-      soundLock();
-      al_resumev( g->nsources, g->sources );
-      soundUnlock();
-      break;
-   }
 
-   if (i>=al_ngroups)
-      WARN("Group '%d' not found.", group);
+/**
+ * @brief Sets the speed of the group.
+ */
+void sound_al_speedGroup( int group, int enable )
+{
+   alGroup_t *g;
+   g = sound_al_getGroup( group );
+   if (g == NULL)
+      return;
+
+   g->speed = enable;
 }
 
 

@@ -60,6 +60,7 @@ int sound_playGroup( int group, int sound, int once );
 void sound_stopGroup( int group );
 void sound_pauseGroup( int group );
 void sound_resumeGroup( int group );
+void sound_speedGroup( int group, int enable );
 
 
 /*

@@ -549,6 +549,16 @@ void sound_mix_resumeGroup( int group )
 
 
 /**
+ * @brief Sets whether or not speed affects the group.
+ */
+void sound_mix_speedGroup( int group, int enable )
+{
+   (void) group;
+   (void) enable;
+}
+
+
+/**
  * Unsupported.
  */
 void sound_mix_setSpeed( double s )
