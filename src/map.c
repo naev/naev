@@ -713,14 +713,14 @@ void map_renderSystems( double bx, double by, double x, double y,
 
       /* draws the disk representing the faction */
       if ((editor || sys_isKnown(sys)) && (sys->faction != -1)) {
-         sw = gl_faction_disk->sw;
-         sh = gl_faction_disk->sw;
+         sw = (60 + sqrt(sys->ownerpresence) * 3) * map_zoom;
+         sh = (60 + sqrt(sys->ownerpresence) * 3) * map_zoom;
 
          col = faction_colour(sys->faction);
          c.r = col->r;
          c.g = col->g;
          c.b = col->b;
-         c.a = 0.7;
+         c.a = CLAMP( .6, .75, 20 / sqrt(sys->ownerpresence) );
 
          gl_blitTexture(
                gl_faction_disk,
@@ -1374,7 +1374,7 @@ void map_setZoom(double zoom)
    map_zoom = zoom;
    if (gl_faction_disk != NULL)
       gl_freeTexture( gl_faction_disk );
-   gl_faction_disk = gl_genFactionDisk( 50 * zoom );
+   gl_faction_disk = gl_genFactionDisk( 150 * zoom );
 }
 
 /**
