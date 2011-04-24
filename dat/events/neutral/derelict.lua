@@ -31,7 +31,7 @@ else -- default english
     --=== GOOD EVENTS ===--
     gtitle = "Lucky find!"
     gtext = {}
-    gtext[1] = [[The derelict appears deserted, its passengers long gone. However, they seem to have left behind a small amound of credit chips in their hurry to leave! You decide to help yourself to them, and leave the derelict.]]
+    gtext[1] = [[The derelict appears deserted, its passengers long gone. However, they seem to have left behind a small amount of credit chips in their hurry to leave! You decide to help yourself to them, and leave the derelict.]]
     gtext[2] = [[The derelict is empty, and seems to have been thoroughly picked over by other space bucceneers. However, the ship's computer contains an updated map of the surrounding systems! You download it into your own computer.]]
     gtext[3] = [[This ship looks like any old piece of scrap at a glance, but it is actually an antique, one of the very first of its kind ever produced! Museums all over the galaxy would love to have a ship like this. You plant a beacon on the derelict to mark it for salvaging, and contact the %s authorities. Your reputation with them has slightly improved.]]
     
@@ -70,6 +70,7 @@ function create ()
     p     = pilot.add(ship, "dummy", pos)[1]
     p:setFaction("Derelict")
     p:disable()
+    p:rename("Derelict")
     hook.pilot(p, "board", "board")
     hook.pilot(p, "death", "destroyevent")
     hook.enter("destroyevent")
