@@ -1189,11 +1189,22 @@ void sound_al_resume (void)
  */
 void sound_al_setSpeed( double s )
 {
-   int i;
+   int i, j;
+   alGroup_t *g;
+
    soundLock();
    sound_speed = s; /* Set the speed. */
-   for (i=0; i<source_nall; i++)
+   /* Do all the groupless. */
+   for (i=0; i<source_ntotal; i++)
       alSourcef( source_all[i], AL_PITCH, s );
+   /* Do specific groups. */
+   for (i=0; i<al_ngroups; i++) {
+      g = &al_groups[i];
+      if (!g->speed)
+         continue;
+      for (j=0; j<g->nsources; j++)
+         alSourcef( g->sources[j], AL_PITCH, s );
+   }
    /* Check for errors. */
    al_checkErr();
    soundUnlock();
@@ -1317,9 +1328,11 @@ int sound_al_createGroup( int size )
    /* Grow group list. */
    al_ngroups++;
    al_groups = realloc( al_groups, sizeof(alGroup_t) * al_ngroups );
-   g = &al_groups[ al_ngroups-1 ];
-   g->id     = id;
-   g->state  = VOICE_PLAYING;
+   g        = &al_groups[ al_ngroups-1 ];
+   memset( g, 0, sizeof(alGroup_t) );
+   g->id    = id;
+   g->state = VOICE_PLAYING;
+   g->speed = 1;
 
    /* Allocate sources. */
    g->sources  = calloc( size, sizeof(ALuint) );
