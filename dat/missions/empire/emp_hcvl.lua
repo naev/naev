@@ -122,8 +122,16 @@ function sys_enter ()
    -- Check to see if reaching target system
    if cur_sys == near_sys then
 
+      -- Choose position
+      local pos = player.pilot():pos()
+      local d = rnd.rnd( 500, 1500 )
+      local a = math.pi*2*rnd.rnd()
+      local offset = vec2.new()
+      offset:setP( d, a )
+      pos = pos + offset
+
       -- Create the badass enemy
-      p     = pilot.add(pir_ship)
+      p     = pilot.add( pir_ship, nil, pos )
       pir   = p[1]
       pir:rename(pir_name)
       pir:setHostile()
