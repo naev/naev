@@ -1797,7 +1797,7 @@ static void gui_calcBorders (void)
    gui_bl = atan2( -h, -w );
    if (gui_bl < 0.)
       gui_bl += 2*M_PI;
-   gui_br = atan2( -h, -w );
+   gui_br = atan2( -h, +w );
    if (gui_br < 0.)
       gui_br += 2*M_PI;
 }
