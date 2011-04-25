@@ -1414,7 +1414,7 @@ void pilot_update( Pilot* pilot, const double dt )
    if (pilot_isFlag(pilot, PILOT_REFUELBOARDING))
       pilot_refuel(pilot, dt);
 
-   /* Pilot is boarding it's target.  Hack to match speeds. */
+   /* Pilot is boarding its target.  Hack to match speeds. */
    if (pilot_isFlag(pilot, PILOT_BOARDING)) {
       target = pilot_get(pilot->target);
       if (target==NULL)
@@ -1658,7 +1658,7 @@ int pilot_refuelStart( Pilot *p )
 
 
 /**
- * @brief Has the pilot refuel it's target.
+ * @brief Has the pilot refuel its target.
  *
  *    @param p Pilot that is actively refueling.
  *    @param dt Current delta tick.

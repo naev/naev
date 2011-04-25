@@ -247,7 +247,7 @@ void col_blend( glColour *blend, glColour fg, glColour bg, double alpha )
 #define CHECK_COLOUR(colour) \
       if (STRCASECMP(name, #colour) == 0) return &c##colour /**< Checks the colour. */
 /**
- * @brief Returns a colour from it's name
+ * @brief Returns a colour from its name
  *
  *    @param name Colour's name
  *    @return the colour

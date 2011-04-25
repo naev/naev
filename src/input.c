@@ -430,7 +430,7 @@ static void input_keyConvDestroy (void)
 
 
 /**
- * @brief Gets the key id from it's name.
+ * @brief Gets the key id from its name.
  *
  *    @param name Name of the key to get id from.
  *    @return ID of the key.

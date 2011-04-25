@@ -667,7 +667,7 @@ char **system_searchFuzzyCase( const char* sysname, int *n )
 
 
 /**
- * @brief Get the system from it's name.
+ * @brief Get the system from its name.
  *
  *    @param sysname Name to match.
  *    @return System matching sysname.
@@ -686,7 +686,7 @@ StarSystem* system_get( const char* sysname )
 
 
 /**
- * @brief Get the system by it's index.
+ * @brief Get the system by its index.
  *
  *    @param id Index to match.
  *    @return System matching index.
@@ -729,7 +729,7 @@ char* planet_getSystem( const char* planetname )
 
 
 /**
- * @brief Gets a planet based on it's name.
+ * @brief Gets a planet based on its name.
  *
  *    @param planetname Name to match.
  *    @return Planet matching planetname.

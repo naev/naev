@@ -825,7 +825,7 @@ static int sound_al_loadOgg( alSound *snd, OggVorbis_File *vf )
    /* Finish opening the file. */
    ret = ov_test_open(vf);
    if (ret) {
-      WARN("Failed to finish loading OGG file: %s", vorbis_getErr(ret) );
+      WARN("Failed to finish loading Ogg file: %s", vorbis_getErr(ret) );
       return -1;
    }
 
@@ -875,7 +875,7 @@ int sound_al_load( alSound *snd, const char *filename )
    /* get the file data buffer from packfile */
    rw = ndata_rwops( filename );
 
-   /* Check to see if it's an OGG. */
+   /* Check to see if it's an Ogg. */
    if (ov_test_callbacks( rw, &vf, NULL, 0, sound_al_ovcall_noclose )==0) {
       ret = sound_al_loadOgg( snd, &vf );
    }

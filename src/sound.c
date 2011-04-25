@@ -316,7 +316,7 @@ void sound_exit (void)
 /**
  * @brief Gets the buffer to sound of name.
  *
- *    @param name Name of the sound to get it's id.
+ *    @param name Name of the sound to get the id of.
  *    @return ID of the sound matching name.
  */
 int sound_get( char* name )
@@ -338,7 +338,7 @@ int sound_get( char* name )
 /**
  * @brief Gets the length of the sound buffer.
  *
- *    @param id ID of the buffer to get it's length.
+ *    @param id ID of the buffer to get the length of..
  *    @return The length of the buffer.
  */
 double sound_length( int sound )
@@ -810,7 +810,7 @@ int sound_playGroup( int group, int sound, int once )
 /**
  * @brief Stops all the sounds in a group.
  *
- *    @param group Group to stop all it's sounds.
+ *    @param group Group to stop all its sounds.
  */
 void sound_stopGroup( int group )
 {

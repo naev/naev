@@ -980,7 +980,7 @@ void pilot_weaponAuto( Pilot *p )
          continue;
       }
    
-      /* Add to it's base group. */
+      /* Add to its base group. */
       pilot_weapSetAdd( p, id, slot, level );
    
       /* Also add another copy to another group. */
