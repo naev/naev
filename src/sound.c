@@ -61,6 +61,13 @@ static alVoice *voice_pool    = NULL; /**< Pool of free voices. */
 static SDL_mutex *voice_mutex = NULL; /**< Lock for voices. */
 
 
+/*
+ * Internally used sounds.
+ */
+static int snd_compression    = -1;
+static int snd_compressionG   = -1;
+
+
 
 /*
  * Function pointers for backends.
@@ -261,6 +268,14 @@ int sound_init (void)
 
    /* Initialized. */
    sound_initialized = 1;
+
+   /* Load compression noise. */
+   snd_compression = sound_get( "compression" );
+   if (snd_compression >= 0) {
+      snd_compressionG = sound_createGroup( 1 );
+      sound_speedGroup( snd_compressionG, 0 );
+   }
+
 
    return 0;
 }
