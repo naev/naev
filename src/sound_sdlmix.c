@@ -33,7 +33,8 @@
 /*
  * Global sound properties.
  */
-static double sound_curVolume = 0.; /**< Current sound volume. */
+static double sound_curVolume = 1.; /**< Current sound volume. */
+static double sound_speedVolume = 1.; /**< Speed volume. */
 static unsigned char sound_mixVolume = 0; /**< Actual in-game used volume. */
 static double sound_pos[3]; /**< Position of listener. */
 static double sound_speed = 1.; /**< Speed of the sound. */
@@ -63,6 +64,7 @@ static void print_MixerVersion (void);
 /* Voices. */
 static int sound_mix_updatePosVoice( alVoice *v, double x, double y );
 static void voice_mix_markStopped( int channel );
+static void sound_mix_volumeUpdate (void);
 
 
 /**
@@ -335,6 +337,31 @@ int sound_mix_updateListener( double dir, double px, double py,
 
 
 /**
+ * @brief Updates the volume.
+ */
+static void sound_mix_volumeUpdate (void)
+{
+   int i, j;
+   mixGroup_t *g;
+   double v;
+   unsigned char cv;
+
+   /* Set volume for all sources. */
+   Mix_Volume( -1, sound_mixVolume );
+   /* Set volume for groups. */
+   for (j=0; j<ngroups; j++) {
+      g = &groups[j];
+      v = sound_curVolume*g->volume;
+      if (g->speed)
+         v *= sound_speedVolume;
+      cv = (unsigned char) (MIX_MAX_VOLUME*v);
+      for (i=g->start; g->end; i++)
+         Mix_Volume( i, cv );
+   }
+}
+
+
+/**
  * @brief Sets the volume.
  *
  *    @param vol Volume to set to.
@@ -342,20 +369,11 @@ int sound_mix_updateListener( double dir, double px, double py,
  */
 int sound_mix_volume( const double vol )
 {
-   mixGroup_t *g;
-   int i, j;
-
    /* Calculate volume. */
-   sound_curVolume = MIX_MAX_VOLUME * CLAMP(0., 1., vol);
-   sound_mixVolume = (unsigned char) sound_curVolume;
-   /* Set volume for all sources. */
-   Mix_Volume( -1, sound_mixVolume );
-   /* Set volume for groups. */
-   for (j=0; j<ngroups; j++) {
-      g = &groups[j];
-      for (i=g->start; g->end; i++)
-         Mix_Volume( i, (unsigned char) MIX_MAX_VOLUME * CLAMP(0., 1., vol*g->volume) );
-   }
+   sound_curVolume = CLAMP(0., 1., vol);
+   sound_mixVolume = (unsigned char) (MIX_MAX_VOLUME * CLAMP(0., 1., sound_speedVolume*sound_curVolume));
+   /* Update volume. */
+   sound_mix_volumeUpdate();
    return 0;
 }
 
@@ -367,7 +385,7 @@ int sound_mix_volume( const double vol )
  */
 double sound_mix_getVolume (void)
 {
-   return sound_curVolume / MIX_MAX_VOLUME;
+   return sound_curVolume;
 }
 
 
@@ -500,6 +518,9 @@ static mixGroup_t* sound_mix_getGroup( int group )
 int sound_mix_playGroup( int group, alSound *s, int once )
 {
    int ret, channel;
+   double v;
+   unsigned char cv;
+   mixGroup_t *g;
 
    /* Get the channel. */
    channel = Mix_GroupAvailable(group);
@@ -518,8 +539,18 @@ int sound_mix_playGroup( int group, alSound *s, int once )
             s->name, group, Mix_GetError());
       return -1;
    }
-   else
-      Mix_Volume( channel, sound_mixVolume );
+   else {
+      g = sound_mix_getGroup( group );
+      if (g == NULL) {
+         WARN("Group '%d' does not exist!", group);
+         return 0;
+      }
+      v = sound_curVolume*g->volume;
+      if (g->speed)
+         v *= sound_speedVolume;
+      cv = (unsigned char) (MIX_MAX_VOLUME*v);
+      Mix_Volume( channel, cv );
+   }
 
    return 0;
 }
@@ -608,6 +639,16 @@ void sound_mix_volumeGroup( int group, double volume )
 void sound_mix_setSpeed( double s )
 {
    sound_speed = s;
+}
+
+
+/**
+ * @brief Sets the speed volume.
+ */
+void sound_mix_setSpeedVolume( double vol )
+{
+   sound_speedVolume = CLAMP( 0., 1., vol );
+   sound_mix_volumeUpdate();
 }
 
 

@@ -64,8 +64,9 @@ static SDL_mutex *voice_mutex = NULL; /**< Lock for voices. */
 /*
  * Internally used sounds.
  */
-static int snd_compression    = -1;
-static int snd_compressionG   = -1;
+static int snd_compression    = -1; /**< Compression sound. */
+static int snd_compressionG   = -1; /**< Compression sound group. */
+static double snd_compression_gain = 0.; /**< Current compression gain. */
 
 
 
@@ -94,7 +95,8 @@ void (*sound_sys_update) (void)        = NULL;
 void (*sound_sys_stop) ( alVoice *v )  = NULL;
 void (*sound_sys_pause) (void)         = NULL;
 void (*sound_sys_resume) (void)        = NULL;
-void (*sound_sys_setSpeed) (double s ) = NULL;
+void (*sound_sys_setSpeed) ( double s ) = NULL;
+void (*sound_sys_setSpeedVolume) ( double vol ) = NULL;
 /* Listener. */
 int (*sound_sys_updateListener) ( double dir, double px, double py,
       double vx, double vy )           = NULL;
@@ -167,6 +169,7 @@ int sound_init (void)
       sound_sys_pause      = sound_al_pause;
       sound_sys_resume     = sound_al_resume;
       sound_sys_setSpeed   = sound_al_setSpeed;
+      sound_sys_setSpeedVolume = sound_al_setSpeedVolume;
       /* Listener. */
       sound_sys_updateListener = sound_al_updateListener;
       /* Groups. */
@@ -210,6 +213,7 @@ int sound_init (void)
       sound_sys_pause      = sound_mix_pause;
       sound_sys_resume     = sound_mix_resume;
       sound_sys_setSpeed   = sound_mix_setSpeed;
+      sound_sys_setSpeedVolume = sound_mix_setSpeedVolume;
       /* Listener. */
       sound_sys_updateListener = sound_mix_updateListener;
       /* Groups. */
@@ -632,8 +636,24 @@ int sound_updateListener( double dir, double px, double py,
  */
 void sound_setSpeed( double s )
 {
+   double v;
+   int playing;
+
    if (sound_disabled)
       return;
+
+   /* We implement the brown noise here. */
+   playing = (snd_compression_gain > 0.);
+   v = CLAMP( 0., 1., (s-2.)/10. );
+   if (v > 0.) {
+      if (!playing)
+         sound_playGroup( snd_compressionG, snd_compression, 0 );
+      sound_volumeGroup( snd_compressionG, v );
+      sound_sys_setSpeedVolume( 1.-v );
+   }
+   else if (playing)
+      sound_stopGroup( snd_compressionG );
+   snd_compression_gain = v;
 
    return sound_sys_setSpeed( s );
 }

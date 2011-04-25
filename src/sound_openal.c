@@ -69,6 +69,7 @@ static ALCcontext *al_context = NULL; /**< OpenAL context. */
 static ALCdevice *al_device   = NULL; /**< OpenAL device. */
 static ALfloat svolume        = 1.; /**< Sound global volume (logarithmic). */
 static ALfloat svolume_lin    = 1.; /**< Sound global volume (linear). */
+static ALfloat svolume_speed  = 1.; /**< Sound global volume modulator for speed. */
 alInfo_t al_info; /**< OpenAL context info. */
 
 
@@ -149,6 +150,10 @@ static void al_resumev( ALint n, ALuint *s );
  * Groups.
  */
 static alGroup_t *sound_al_getGroup( int group );
+/*
+ * Misc.
+ */
+static void sound_al_volumeUpdate (void);
 
 
 /*
@@ -936,13 +941,36 @@ void sound_al_free( alSound *snd )
 
 
 /**
+ * @brief Internal volume update function.
+ */
+static void sound_al_volumeUpdate (void)
+{
+   int i, j;
+   alGroup_t *g;
+   double v;
+
+   soundLock();
+   /* Do generic ones. */
+   for (i=0; i<source_ntotal; i++)
+      alSourcef( source_total[i], AL_GAIN, svolume*svolume_speed );
+   /* Do specific groups. */
+   for (i=0; i<al_ngroups; i++) {
+      g = &al_groups[i];
+      v = svolume * g->volume;
+      if (g->speed)
+         v *= svolume_speed;
+      for (j=0; j<g->nsources; j++)
+         alSourcef( g->sources[j], AL_GAIN, v );
+   }
+   soundUnlock();
+}
+
+
+/**
  * @brief Sets all the sounds volume to vol
  */
 int sound_al_volume( double vol )
 {
-   int i, j;
-   alGroup_t *g;
-
    /* Calculate volume level. */
    svolume_lin = vol;
    if (vol > 0.) /* Floor of -48 dB (0.00390625 amplitude) */
@@ -950,17 +978,8 @@ int sound_al_volume( double vol )
    else
       svolume     = 0.;
 
-   soundLock();
-   /* Do generic ones. */
-   for (i=0; i<source_ntotal; i++)
-      alSourcef( source_total[i], AL_GAIN, svolume );
-   /* Do specific groups. */
-   for (i=0; i<al_ngroups; i++) {
-      g = &al_groups[i];
-      for (j=0; j<g->nsources; j++)
-         alSourcef( g->sources[j], AL_PITCH, svolume*g->volume );
-   }
-   soundUnlock();
+   /* Update volume. */
+   sound_al_volumeUpdate();
 
    return 0;
 }
@@ -1036,7 +1055,7 @@ static int al_playVoice( alVoice *v, alSound *s,
    v->u.al.vel[2] = 0.;
 
    /* Set up properties. */
-   alSourcef(  v->u.al.source, AL_GAIN, svolume );
+   alSourcef(  v->u.al.source, AL_GAIN, svolume*svolume_speed );
    alSourcefv( v->u.al.source, AL_POSITION, v->u.al.pos );
    alSourcefv( v->u.al.source, AL_VELOCITY, v->u.al.vel );
 
@@ -1141,7 +1160,7 @@ void sound_al_updateVoice( alVoice *v )
    }
 
    /* Set up properties. */
-   alSourcef(  v->u.al.source, AL_GAIN, svolume );
+   alSourcef(  v->u.al.source, AL_GAIN, svolume*svolume_speed );
    alSourcefv( v->u.al.source, AL_POSITION, v->u.al.pos );
    alSourcefv( v->u.al.source, AL_VELOCITY, v->u.al.vel );
 
@@ -1219,6 +1238,16 @@ void sound_al_setSpeed( double s )
    /* Check for errors. */
    al_checkErr();
    soundUnlock();
+}
+
+
+/**
+ * @brief Set the speed volume.
+ */
+void sound_al_setSpeedVolume( double vol )
+{
+   svolume_speed = vol;
+   sound_al_volumeUpdate();
 }
 
 
@@ -1428,7 +1457,7 @@ int sound_al_playGroup( int group, alSound *s, int once )
          if (j == g->nsources-1) {
             if (state != AL_STOPPED) {
                alSourceStop( g->sources[j] );
-               alSourcef( g->sources[j], AL_GAIN, svolume * g->volume );
+               alSourcef( g->sources[j], AL_GAIN, svolume_speed * svolume * g->volume );
             }
          }
          /* Ignore playing/paused. */
@@ -1582,7 +1611,7 @@ void sound_al_update (void)
 {
    int i, j;
    alGroup_t *g;
-   ALfloat d;
+   ALfloat d, v;
    unsigned int t, f;
 
    t = SDL_GetTicks();
@@ -1597,9 +1626,12 @@ void sound_al_update (void)
       f = t - g->fade_timer;
       if (f < SOUND_FADEOUT) {
          d = 1. - (ALfloat) f / (ALfloat) SOUND_FADEOUT;
+         v = d * svolume * g->volume;
+         if (g->speed)
+            v *= svolume_speed;
          soundLock();
          for (j=0; j<g->nsources; j++)
-            alSourcef( g->sources[j], AL_GAIN, d*svolume );
+            alSourcef( g->sources[j], AL_GAIN, v );
          /* Check for errors. */
          al_checkErr();
          soundUnlock();
@@ -1607,10 +1639,13 @@ void sound_al_update (void)
       /* Fadeout done. */
       else {
          soundLock();
+         v = d * svolume * g->volume;
+         if (g->speed)
+            v *= svolume_speed;
          for (j=0; j<g->nsources; j++) {
             alSourceStop( g->sources[j] );
             alSourcei( g->sources[j], AL_BUFFER, AL_NONE );
-            alSourcef( g->sources[j], AL_GAIN, svolume );
+            alSourcef( g->sources[j], AL_GAIN, v );
          }
          /* Check for errors. */
          al_checkErr();
