@@ -78,7 +78,8 @@ static int player_nlicenses   = 0; /**< Number of licenses player has. */
  * player sounds.
  */
 static int player_engine_group = -1; /**< Player engine sound group. */
-static int player_gui_group   = -1; /**< Player gui sound group. */
+static int player_hyper_group = -1; /**< Player hyperspace sound group. */
+static int player_gui_group   = -1; /**< Player GUI sound group. */
 int snd_target                = -1; /**< Sound when targetting. */
 int snd_jump                  = -1; /**< Sound when can jump. */
 int snd_nav                   = -1; /**< Sound when changing nav computer. */
@@ -834,6 +835,7 @@ static void player_initSound (void)
    /* Allocate channels. */
    player_engine_group  = sound_createGroup(1); /* Channel for engine noises. */
    player_gui_group     = sound_createGroup(4);
+   player_hyper_group   = sound_createGroup(4);
    sound_speedGroup( player_gui_group, 0 ); /* Disable pitch shift. */
    player_soundReserved = 1;
 
@@ -851,6 +853,18 @@ static void player_initSound (void)
 
 
 /**
+ * @brief Plays a GUI sound (unaffected by time accel).
+ *
+ *    @param sound ID of the sound to play.
+ *    @param once Play only once?
+ */
+void player_soundPlayGUI( int sound, int once )
+{
+   sound_playGroup( player_gui_group, sound, once );
+}
+
+
+/**
  * @brief Plays a sound at the player.
  *
  *    @param sound ID of the sound to play.
@@ -858,7 +872,7 @@ static void player_initSound (void)
  */
 void player_soundPlay( int sound, int once )
 {
-   sound_playGroup( player_gui_group, sound, once );
+   sound_playGroup( player_hyper_group, sound, once );
 }
 
 
@@ -871,6 +885,8 @@ void player_soundStop (void)
       sound_stopGroup( player_gui_group );
    if (player_engine_group >= 0)
       sound_stopGroup( player_engine_group );
+   if (player_hyper_group >= 0)
+      sound_stopGroup( player_hyper_group );
 
    /* No last engine sound. */
    player_lastEngineSound = -1;
@@ -882,9 +898,10 @@ void player_soundStop (void)
  */
 void player_soundPause (void)
 {
-   if (player_engine_group < 0)
-      return;
-   sound_pauseGroup(player_engine_group);
+   if (player_engine_group >= 0)
+      sound_pauseGroup(player_engine_group);
+   if (player_hyper_group >= 0)
+      sound_pauseGroup(player_hyper_group);
 }
 
 
@@ -893,9 +910,10 @@ void player_soundPause (void)
  */
 void player_soundResume (void)
 {
-   if (player_engine_group < 0)
-      return;
-   sound_resumeGroup(player_engine_group);
+   if (player_engine_group >= 0)
+      sound_resumeGroup(player_engine_group);
+   if (player_hyper_group >= 0)
+      sound_resumeGroup(player_hyper_group);
 }
 
 
@@ -1228,7 +1246,7 @@ void player_updateSpecific( Pilot *pplayer, const double dt )
    if (player_hailCounter > 0) {
       player_hailTimer -= dt;
       if (player_hailTimer < 0.) {
-         player_soundPlay( snd_hail, 1 );
+         player_soundPlayGUI( snd_hail, 1 );
          player_hailCounter--;
          player_hailTimer = 3.;
       }
@@ -1276,7 +1294,7 @@ void player_targetPlanetSet( int id )
    if (old != id) {
       player_rmFlag(PLAYER_LANDACK);
       if (id >= 0)
-         player_soundPlay(snd_nav, 1);
+         player_soundPlayGUI(snd_nav, 1);
    }
    gui_forceBlink();
    gui_setNav();
@@ -1393,7 +1411,7 @@ void player_land (void)
                   planet->bribed ) { /* Bribed. */
                player_message( "\e%c%s>\e0 Permission to land granted.", faction_getColourChar(planet->faction), planet->name );
                player_setFlag(PLAYER_LANDACK);
-               player_soundPlay(snd_nav,1);
+               player_soundPlayGUI(snd_nav,1);
             }
             else /* Hostile */
                player_message( "\e%c%s>\e0 Landing request denied.", faction_getColourChar(planet->faction), planet->name );
@@ -1401,7 +1419,7 @@ void player_land (void)
          else { /* No shoes, no shirt, no lifeforms, no service. */
             player_message( "\epReady to land on %s.", planet->name );
             player_setFlag(PLAYER_LANDACK);
-            player_soundPlay(snd_nav,1);
+            player_soundPlayGUI(snd_nav,1);
          }
          return;
       }
@@ -1463,7 +1481,7 @@ void player_targetHyperspaceSet( int id )
    old = player.p->nav_hyperspace;
    player.p->nav_hyperspace = id;
    if ((old != id) && (id >= 0))
-      player_soundPlay(snd_nav,1);
+      player_soundPlayGUI(snd_nav,1);
    gui_setNav();
 }
 
@@ -1553,7 +1571,7 @@ int player_jump (void)
          return 0;
 
       player.p->nav_hyperspace = j;
-      player_soundPlay(snd_nav,1);
+      player_soundPlayGUI(snd_nav,1);
       map_select( cur_system->jumps[player.p->nav_hyperspace].target, 0 );
       gui_setNav();
 
@@ -1743,7 +1761,7 @@ void player_targetSet( unsigned int id )
    player.p->target = id;
    if ((old != id) && (player.p->target != PLAYER_ID)) {
       gui_forceBlink();
-      player_soundPlay( snd_target, 1 );
+      player_soundPlayGUI( snd_target, 1 );
    }
    gui_setTarget();
 }
@@ -1869,7 +1887,7 @@ void player_targetEscort( int prev )
 
    if (player.p->target != PLAYER_ID) {
       gui_forceBlink();
-      player_soundPlay( snd_target, 1 );
+      player_soundPlayGUI( snd_target, 1 );
    }
    gui_setTarget();
 }
@@ -1888,7 +1906,7 @@ void player_targetNearest (void)
 
    if ((player.p->target != PLAYER_ID) && (t != player.p->target)) {
       gui_forceBlink();
-      player_soundPlay( snd_target, 1 );
+      player_soundPlayGUI( snd_target, 1 );
    }
    gui_setTarget();
 }

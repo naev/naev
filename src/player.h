@@ -130,6 +130,7 @@ credits_t player_modCredits( credits_t amount );
 void player_hailStart (void);
 /* Sounds. */
 void player_soundPlay( int sound, int once );
+void player_soundPlayGUI( int sound, int once );
 void player_soundStop (void);
 void player_soundPause (void);
 void player_soundResume (void);
