@@ -548,6 +548,9 @@ void sound_pause (void)
       return;
 
    sound_sys_pause();
+
+   if (snd_compression >= 0)
+      sound_sys_pauseGroup( snd_compressionG );
 }
 
 
@@ -560,6 +563,9 @@ void sound_resume (void)
       return;
 
    sound_sys_resume();
+
+   if (snd_compression >= 0)
+      sound_sys_resumeGroup( snd_compressionG );
 }
 
 
@@ -646,13 +652,18 @@ void sound_setSpeed( double s )
    playing = (snd_compression_gain > 0.);
    v = CLAMP( 0., 1., (s-2.)/10. );
    if (v > 0.) {
-      if (!playing)
-         sound_playGroup( snd_compressionG, snd_compression, 0 );
-      sound_volumeGroup( snd_compressionG, v );
+      if (snd_compression >= 0) {
+         if (!playing)
+            sound_playGroup( snd_compressionG, snd_compression, 0 ); /* Start playing only if it's not playing. */
+         sound_volumeGroup( snd_compressionG, v );
+      }
       sound_sys_setSpeedVolume( 1.-v );
    }
-   else if (playing)
-      sound_stopGroup( snd_compressionG );
+   else if (playing) {
+      if (snd_compression >= 0)
+         sound_stopGroup( snd_compressionG ); /* Stop compression sound. */
+      sound_sys_setSpeedVolume( 1. ); /* Restore volume. */
+   }
    snd_compression_gain = v;
 
    return sound_sys_setSpeed( s );
