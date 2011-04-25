@@ -61,6 +61,14 @@ static alVoice *voice_pool    = NULL; /**< Pool of free voices. */
 static SDL_mutex *voice_mutex = NULL; /**< Lock for voices. */
 
 
+/*
+ * Internally used sounds.
+ */
+static int snd_compression    = -1; /**< Compression sound. */
+static int snd_compressionG   = -1; /**< Compression sound group. */
+static double snd_compression_gain = 0.; /**< Current compression gain. */
+
+
 
 /*
  * Function pointers for backends.
@@ -87,7 +95,8 @@ void (*sound_sys_update) (void)        = NULL;
 void (*sound_sys_stop) ( alVoice *v )  = NULL;
 void (*sound_sys_pause) (void)         = NULL;
 void (*sound_sys_resume) (void)        = NULL;
-void (*sound_sys_setSpeed) (double s ) = NULL;
+void (*sound_sys_setSpeed) ( double s ) = NULL;
+void (*sound_sys_setSpeedVolume) ( double vol ) = NULL;
 /* Listener. */
 int (*sound_sys_updateListener) ( double dir, double px, double py,
       double vx, double vy )           = NULL;
@@ -98,6 +107,7 @@ void (*sound_sys_stopGroup) ( int group ) = NULL;
 void (*sound_sys_pauseGroup) ( int group ) = NULL;
 void (*sound_sys_resumeGroup) ( int group ) = NULL;
 void (*sound_sys_speedGroup) ( int group, int enable ) = NULL;
+void (*sound_sys_volumeGroup) ( int group, double volume ) = NULL;
 /* Env. */
 int  (*sound_sys_env) ( SoundEnv_t env, double param ) = NULL;
 
@@ -159,6 +169,7 @@ int sound_init (void)
       sound_sys_pause      = sound_al_pause;
       sound_sys_resume     = sound_al_resume;
       sound_sys_setSpeed   = sound_al_setSpeed;
+      sound_sys_setSpeedVolume = sound_al_setSpeedVolume;
       /* Listener. */
       sound_sys_updateListener = sound_al_updateListener;
       /* Groups. */
@@ -168,6 +179,7 @@ int sound_init (void)
       sound_sys_pauseGroup = sound_al_pauseGroup;
       sound_sys_resumeGroup = sound_al_resumeGroup;
       sound_sys_speedGroup = sound_al_speedGroup;
+      sound_sys_volumeGroup = sound_al_volumeGroup;
       /* Env. */
       sound_sys_env        = sound_al_env;
 #else /* USE_OPENAL */
@@ -201,6 +213,7 @@ int sound_init (void)
       sound_sys_pause      = sound_mix_pause;
       sound_sys_resume     = sound_mix_resume;
       sound_sys_setSpeed   = sound_mix_setSpeed;
+      sound_sys_setSpeedVolume = sound_mix_setSpeedVolume;
       /* Listener. */
       sound_sys_updateListener = sound_mix_updateListener;
       /* Groups. */
@@ -210,6 +223,7 @@ int sound_init (void)
       sound_sys_pauseGroup = sound_mix_pauseGroup;
       sound_sys_resumeGroup = sound_mix_resumeGroup;
       sound_sys_speedGroup = sound_mix_speedGroup;
+      sound_sys_volumeGroup = sound_mix_volumeGroup;
       /* Env. */
       sound_sys_env        = sound_mix_env;
 #else /* USE_SDLMIX */
@@ -258,6 +272,14 @@ int sound_init (void)
 
    /* Initialized. */
    sound_initialized = 1;
+
+   /* Load compression noise. */
+   snd_compression = sound_get( "compression" );
+   if (snd_compression >= 0) {
+      snd_compressionG = sound_createGroup( 1 );
+      sound_speedGroup( snd_compressionG, 0 );
+   }
+
 
    return 0;
 }
@@ -614,8 +636,24 @@ int sound_updateListener( double dir, double px, double py,
  */
 void sound_setSpeed( double s )
 {
+   double v;
+   int playing;
+
    if (sound_disabled)
       return;
+
+   /* We implement the brown noise here. */
+   playing = (snd_compression_gain > 0.);
+   v = CLAMP( 0., 1., (s-2.)/10. );
+   if (v > 0.) {
+      if (!playing)
+         sound_playGroup( snd_compressionG, snd_compression, 0 );
+      sound_volumeGroup( snd_compressionG, v );
+      sound_sys_setSpeedVolume( 1.-v );
+   }
+   else if (playing)
+      sound_stopGroup( snd_compressionG );
+   snd_compression_gain = v;
 
    return sound_sys_setSpeed( s );
 }
@@ -861,6 +899,21 @@ void sound_speedGroup( int group, int enable )
       return;
 
    sound_sys_speedGroup( group, enable );
+}
+
+
+/**
+ * @brief Sets the volume of a group.
+ *
+ *    @param group Group to set the volume of.
+ *    @param volume Volume to set to in the [0-1] range.
+ */
+void sound_volumeGroup( int group, double volume )
+{
+   if (sound_disabled)
+      return;
+
+   sound_sys_volumeGroup( group, volume );
 }
 
 

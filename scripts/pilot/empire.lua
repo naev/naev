@@ -24,12 +24,12 @@ function empire_create( empire_create )
    local z = rnd.rnd()
    local p, o
    local ship_name
-   if z < 0.7 then
+   if z < 0.4 then
       p,o = empire_createPeacemaker( empire_create )
       if rnd.rnd() < 0.33 then
          ship_name = empire_namePlanet()
       end
-   elseif z < 0.4 then
+   elseif z < 0.7 then
       p,o = empire_createHawking( empire_create )
       if rnd.rnd() < 0.33 then
          ship_name = empire_namePlanet()

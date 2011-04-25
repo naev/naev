@@ -33,7 +33,8 @@
 /*
  * Global sound properties.
  */
-static double sound_curVolume = 0.; /**< Current sound volume. */
+static double sound_curVolume = 1.; /**< Current sound volume. */
+static double sound_speedVolume = 1.; /**< Speed volume. */
 static unsigned char sound_mixVolume = 0; /**< Actual in-game used volume. */
 static double sound_pos[3]; /**< Position of listener. */
 static double sound_speed = 1.; /**< Speed of the sound. */
@@ -46,6 +47,8 @@ typedef struct mixGroup_s {
    int id; /**< ID of the group. */
    int start; /**< Start channel of the group. */
    int end; /**< End channel of the group. */
+   int speed; /**< Whether or not affected by pitch. */
+   double volume; /**< Volume of the group. */
 } mixGroup_t;
 static mixGroup_t *groups     = NULL; /**< Allocated Mixer groups. */
 static int ngroups            = 0; /**< Number of allocated Mixer groups. */
@@ -61,6 +64,7 @@ static void print_MixerVersion (void);
 /* Voices. */
 static int sound_mix_updatePosVoice( alVoice *v, double x, double y );
 static void voice_mix_markStopped( int channel );
+static void sound_mix_volumeUpdate (void);
 
 
 /**
@@ -333,6 +337,31 @@ int sound_mix_updateListener( double dir, double px, double py,
 
 
 /**
+ * @brief Updates the volume.
+ */
+static void sound_mix_volumeUpdate (void)
+{
+   int i, j;
+   mixGroup_t *g;
+   double v;
+   unsigned char cv;
+
+   /* Set volume for all sources. */
+   Mix_Volume( -1, sound_mixVolume );
+   /* Set volume for groups. */
+   for (j=0; j<ngroups; j++) {
+      g = &groups[j];
+      v = sound_curVolume*g->volume;
+      if (g->speed)
+         v *= sound_speedVolume;
+      cv = (unsigned char) (MIX_MAX_VOLUME*v);
+      for (i=g->start; g->end; i++)
+         Mix_Volume( i, cv );
+   }
+}
+
+
+/**
  * @brief Sets the volume.
  *
  *    @param vol Volume to set to.
@@ -340,9 +369,12 @@ int sound_mix_updateListener( double dir, double px, double py,
  */
 int sound_mix_volume( const double vol )
 {
-   sound_curVolume = MIX_MAX_VOLUME * CLAMP(0., 1., vol);
-   sound_mixVolume = (unsigned char) sound_curVolume;
-   return Mix_Volume( -1, sound_mixVolume );
+   /* Calculate volume. */
+   sound_curVolume = CLAMP(0., 1., vol);
+   sound_mixVolume = (unsigned char) (MIX_MAX_VOLUME * CLAMP(0., 1., sound_speedVolume*sound_curVolume));
+   /* Update volume. */
+   sound_mix_volumeUpdate();
+   return 0;
 }
 
 
@@ -353,7 +385,7 @@ int sound_mix_volume( const double vol )
  */
 double sound_mix_getVolume (void)
 {
-   return sound_curVolume / MIX_MAX_VOLUME;
+   return sound_curVolume;
 }
 
 
@@ -428,7 +460,9 @@ int sound_mix_createGroup( int size )
    /* Create new group. */
    ngroups++;
    groups = realloc( groups, sizeof(mixGroup_t) * ngroups );
-   g = &groups[ngroups-1];
+   g           = &groups[ngroups-1];
+   g->volume   = 1.;
+   g->speed    = 1;
 
    /* Reserve channels. */
    ret = Mix_ReserveChannels( group_pos + size );
@@ -460,6 +494,20 @@ int sound_mix_createGroup( int size )
 
 
 /**
+ * @brief Gets a group by ID.
+ */
+static mixGroup_t* sound_mix_getGroup( int group )
+{
+   int i;
+   for (i=0; i<ngroups; i++)
+      if (groups[i].id == group)
+         return &groups[i];
+   WARN("Group '%d' not found.", group);
+   return NULL;
+}
+
+
+/**
  * @brief Plays a sound in a group.
  *
  *    @param group Group to play sound in.
@@ -470,6 +518,9 @@ int sound_mix_createGroup( int size )
 int sound_mix_playGroup( int group, alSound *s, int once )
 {
    int ret, channel;
+   double v;
+   unsigned char cv;
+   mixGroup_t *g;
 
    /* Get the channel. */
    channel = Mix_GroupAvailable(group);
@@ -488,8 +539,18 @@ int sound_mix_playGroup( int group, alSound *s, int once )
             s->name, group, Mix_GetError());
       return -1;
    }
-   else
-      Mix_Volume( channel, sound_mixVolume );
+   else {
+      g = sound_mix_getGroup( group );
+      if (g == NULL) {
+         WARN("Group '%d' does not exist!", group);
+         return 0;
+      }
+      v = sound_curVolume*g->volume;
+      if (g->speed)
+         v *= sound_speedVolume;
+      cv = (unsigned char) (MIX_MAX_VOLUME*v);
+      Mix_Volume( channel, cv );
+   }
 
    return 0;
 }
@@ -511,19 +572,16 @@ void sound_mix_stopGroup( int group )
  */
 void sound_mix_pauseGroup( int group )
 {
-   int i, j;
+   int i;
+   mixGroup_t *g;
+   g = sound_mix_getGroup( group );
+   if (g==NULL)
+      return;
 
-   for (i=0; i<ngroups; i++) {
-      if (groups[i].id == group) {
-         for (j=groups[i].start; j<=groups[i].end; j++) {
-            if (Mix_Playing(j))
-               Mix_Pause(j);
-         }
-         return;
-      }
+   for (i=g->start; g->end; i++) {
+      if (Mix_Playing(i))
+         Mix_Pause(i);
    }
-
-   WARN("Group '%d' not found.", group);
 }
 
 
@@ -532,19 +590,16 @@ void sound_mix_pauseGroup( int group )
  */
 void sound_mix_resumeGroup( int group )
 {
-   int i, j;
+   int i;
+   mixGroup_t *g;
+   g = sound_mix_getGroup( group );
+   if (g==NULL)
+      return;
 
-   for (i=0; i<ngroups; i++) {
-      if (groups[i].id == group) {
-         for (j=groups[i].start; j<=groups[i].end; j++) {
-            if (Mix_Paused(j))
-               Mix_Resume(j);
-         }
-         return;
-      }
+   for (i=g->start; g->end; i++) {
+      if (Mix_Paused(i))
+         Mix_Resume(i);
    }
-
-   WARN("Group '%d' not found.", group);
 }
 
 
@@ -553,8 +608,28 @@ void sound_mix_resumeGroup( int group )
  */
 void sound_mix_speedGroup( int group, int enable )
 {
-   (void) group;
-   (void) enable;
+   mixGroup_t *g;
+   g = sound_mix_getGroup( group );
+   if (g==NULL)
+      return;
+   g->speed = enable;
+}
+
+
+/**
+ * @brief Sets the volume of a gorup.
+ */
+void sound_mix_volumeGroup( int group, double volume )
+{
+   int i;
+   mixGroup_t *g;
+   g = sound_mix_getGroup( group );
+   if (g==NULL)
+      return;
+
+   g->volume = volume;
+   for (i=g->start; g->end; i++)
+      Mix_Volume( i, (unsigned char) MIX_MAX_VOLUME * CLAMP(0., 1., volume) );
 }
 
 
@@ -564,6 +639,16 @@ void sound_mix_speedGroup( int group, int enable )
 void sound_mix_setSpeed( double s )
 {
    sound_speed = s;
+}
+
+
+/**
+ * @brief Sets the speed volume.
+ */
+void sound_mix_setSpeedVolume( double vol )
+{
+   sound_speedVolume = CLAMP( 0., 1., vol );
+   sound_mix_volumeUpdate();
 }
 
 

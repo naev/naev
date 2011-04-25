@@ -97,6 +97,7 @@ void sound_al_stop( alVoice *v );
 void sound_al_pause (void);
 void sound_al_resume (void);
 void sound_al_setSpeed( double s );
+void sound_al_setSpeedVolume( double vol );
 
 
 /*
@@ -114,6 +115,7 @@ void sound_al_stopGroup( int group );
 void sound_al_pauseGroup( int group );
 void sound_al_resumeGroup( int group );
 void sound_al_speedGroup( int group, int enable );
+void sound_al_volumeGroup( int group, double volume );
 
 
 /*
