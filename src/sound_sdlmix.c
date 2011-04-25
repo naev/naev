@@ -46,6 +46,7 @@ typedef struct mixGroup_s {
    int id; /**< ID of the group. */
    int start; /**< Start channel of the group. */
    int end; /**< End channel of the group. */
+   double volume; /**< Volume of the group. */
 } mixGroup_t;
 static mixGroup_t *groups     = NULL; /**< Allocated Mixer groups. */
 static int ngroups            = 0; /**< Number of allocated Mixer groups. */
@@ -340,9 +341,21 @@ int sound_mix_updateListener( double dir, double px, double py,
  */
 int sound_mix_volume( const double vol )
 {
+   mixGroup_t *g;
+   int i, j;
+
+   /* Calculate volume. */
    sound_curVolume = MIX_MAX_VOLUME * CLAMP(0., 1., vol);
    sound_mixVolume = (unsigned char) sound_curVolume;
-   return Mix_Volume( -1, sound_mixVolume );
+   /* Set volume for all sources. */
+   Mix_Volume( -1, sound_mixVolume );
+   /* Set volume for groups. */
+   for (j=0; j<ngroups; j++) {
+      g = &groups[j];
+      for (i=g->start; g->end; i++)
+         Mix_Volume( i, (unsigned char) MIX_MAX_VOLUME * CLAMP(0., 1., vol*g->volume) );
+   }
+   return 0;
 }
 
 
@@ -429,6 +442,7 @@ int sound_mix_createGroup( int size )
    ngroups++;
    groups = realloc( groups, sizeof(mixGroup_t) * ngroups );
    g = &groups[ngroups-1];
+   g->volume = 1.;
 
    /* Reserve channels. */
    ret = Mix_ReserveChannels( group_pos + size );
@@ -456,6 +470,20 @@ int sound_mix_createGroup( int size )
    group_pos += size;
 
    return g->id;
+}
+
+
+/**
+ * @brief Gets a group by ID.
+ */
+static mixGroup_t* sound_mix_getGroup( int group )
+{
+   int i;
+   for (i=0; i<ngroups; i++)
+      if (groups[i].id == group)
+         return &groups[i];
+   WARN("Group '%d' not found.", group);
+   return NULL;
 }
 
 
@@ -511,19 +539,16 @@ void sound_mix_stopGroup( int group )
  */
 void sound_mix_pauseGroup( int group )
 {
-   int i, j;
+   int i;
+   mixGroup_t *g;
+   g = sound_mix_getGroup( group );
+   if (g==NULL)
+      return;
 
-   for (i=0; i<ngroups; i++) {
-      if (groups[i].id == group) {
-         for (j=groups[i].start; j<=groups[i].end; j++) {
-            if (Mix_Playing(j))
-               Mix_Pause(j);
-         }
-         return;
-      }
+   for (i=g->start; g->end; i++) {
+      if (Mix_Playing(i))
+         Mix_Pause(i);
    }
-
-   WARN("Group '%d' not found.", group);
 }
 
 
@@ -532,19 +557,16 @@ void sound_mix_pauseGroup( int group )
  */
 void sound_mix_resumeGroup( int group )
 {
-   int i, j;
+   int i;
+   mixGroup_t *g;
+   g = sound_mix_getGroup( group );
+   if (g==NULL)
+      return;
 
-   for (i=0; i<ngroups; i++) {
-      if (groups[i].id == group) {
-         for (j=groups[i].start; j<=groups[i].end; j++) {
-            if (Mix_Paused(j))
-               Mix_Resume(j);
-         }
-         return;
-      }
+   for (i=g->start; g->end; i++) {
+      if (Mix_Paused(i))
+         Mix_Resume(i);
    }
-
-   WARN("Group '%d' not found.", group);
 }
 
 
@@ -555,6 +577,23 @@ void sound_mix_speedGroup( int group, int enable )
 {
    (void) group;
    (void) enable;
+}
+
+
+/**
+ * @brief Sets the volume of a gorup.
+ */
+void sound_mix_volumeGroup( int group, double volume )
+{
+   int i;
+   mixGroup_t *g;
+   g = sound_mix_getGroup( group );
+   if (g==NULL)
+      return;
+
+   g->volume = volume;
+   for (i=g->start; g->end; i++)
+      Mix_Volume( i, (unsigned char) MIX_MAX_VOLUME * CLAMP(0., 1., volume) );
 }
 
 

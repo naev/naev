@@ -98,6 +98,7 @@ void (*sound_sys_stopGroup) ( int group ) = NULL;
 void (*sound_sys_pauseGroup) ( int group ) = NULL;
 void (*sound_sys_resumeGroup) ( int group ) = NULL;
 void (*sound_sys_speedGroup) ( int group, int enable ) = NULL;
+void (*sound_sys_volumeGroup) ( int group, double volume ) = NULL;
 /* Env. */
 int  (*sound_sys_env) ( SoundEnv_t env, double param ) = NULL;
 
@@ -168,6 +169,7 @@ int sound_init (void)
       sound_sys_pauseGroup = sound_al_pauseGroup;
       sound_sys_resumeGroup = sound_al_resumeGroup;
       sound_sys_speedGroup = sound_al_speedGroup;
+      sound_sys_volumeGroup = sound_al_volumeGroup;
       /* Env. */
       sound_sys_env        = sound_al_env;
 #else /* USE_OPENAL */
@@ -210,6 +212,7 @@ int sound_init (void)
       sound_sys_pauseGroup = sound_mix_pauseGroup;
       sound_sys_resumeGroup = sound_mix_resumeGroup;
       sound_sys_speedGroup = sound_mix_speedGroup;
+      sound_sys_volumeGroup = sound_mix_volumeGroup;
       /* Env. */
       sound_sys_env        = sound_mix_env;
 #else /* USE_SDLMIX */
@@ -861,6 +864,21 @@ void sound_speedGroup( int group, int enable )
       return;
 
    sound_sys_speedGroup( group, enable );
+}
+
+
+/**
+ * @brief Sets the volume of a group.
+ *
+ *    @param group Group to set the volume of.
+ *    @param volume Volume to set to in the [0-1] range.
+ */
+void sound_volumeGroup( int group, double volume )
+{
+   if (sound_disabled)
+      return;
+
+   sound_sys_volumeGroup( group, volume );
 }
 
 

@@ -111,6 +111,7 @@ typedef struct alGroup_s {
    voice_state_t state; /**< Currenty global group state. */
    int fade_timer; /**< Fadeout timer. */
    int speed; /**< Whether or not pitch affects. */
+   double volume; /**< Volume of the group. */
 } alGroup_t;
 static alGroup_t *al_groups = NULL; /**< Created groups. */
 static int al_ngroups       = 0; /**< Number of created groups. */
@@ -939,16 +940,26 @@ void sound_al_free( alSound *snd )
  */
 int sound_al_volume( double vol )
 {
-   int i;
+   int i, j;
+   alGroup_t *g;
 
+   /* Calculate volume level. */
    svolume_lin = vol;
    if (vol > 0.) /* Floor of -48 dB (0.00390625 amplitude) */
       svolume = (ALfloat) 1 / pow(2, (1 - vol) * 8);
    else
       svolume     = 0.;
+
    soundLock();
-   for (i=0; i<source_nall; i++)
-      alSourcef( source_all[i], AL_GAIN, svolume );
+   /* Do generic ones. */
+   for (i=0; i<source_ntotal; i++)
+      alSourcef( source_total[i], AL_GAIN, svolume );
+   /* Do specific groups. */
+   for (i=0; i<al_ngroups; i++) {
+      g = &al_groups[i];
+      for (j=0; j<g->nsources; j++)
+         alSourcef( g->sources[j], AL_PITCH, svolume*g->volume );
+   }
    soundUnlock();
 
    return 0;
@@ -1196,7 +1207,7 @@ void sound_al_setSpeed( double s )
    sound_speed = s; /* Set the speed. */
    /* Do all the groupless. */
    for (i=0; i<source_ntotal; i++)
-      alSourcef( source_all[i], AL_PITCH, s );
+      alSourcef( source_total[i], AL_PITCH, s );
    /* Do specific groups. */
    for (i=0; i<al_ngroups; i++) {
       g = &al_groups[i];
@@ -1333,6 +1344,7 @@ int sound_al_createGroup( int size )
    g->id    = id;
    g->state = VOICE_PLAYING;
    g->speed = 1;
+   g->volume = 1.;
 
    /* Allocate sources. */
    g->sources  = calloc( size, sizeof(ALuint) );
@@ -1416,7 +1428,7 @@ int sound_al_playGroup( int group, alSound *s, int once )
          if (j == g->nsources-1) {
             if (state != AL_STOPPED) {
                alSourceStop( g->sources[j] );
-               alSourcef( g->sources[j], AL_GAIN, svolume );
+               alSourcef( g->sources[j], AL_GAIN, svolume * g->volume );
             }
          }
          /* Ignore playing/paused. */
@@ -1514,6 +1526,20 @@ void sound_al_speedGroup( int group, int enable )
       return;
 
    g->speed = enable;
+}
+
+
+/**
+ * @brief Sets the volume of the group.
+ */
+void sound_al_volumeGroup( int group, double volume )
+{
+   alGroup_t *g;
+   g = sound_al_getGroup( group );
+   if (g == NULL)
+      return;
+
+   g->volume = volume;
 }
 
 

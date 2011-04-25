@@ -69,6 +69,7 @@ void sound_mix_stopGroup( int group );
 void sound_mix_pauseGroup( int group );
 void sound_mix_resumeGroup( int group );
 void sound_mix_speedGroup( int group, int enable );
+void sound_mix_volumeGroup( int group, double volume );
 
 
 /*
