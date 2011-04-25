@@ -764,7 +764,7 @@ static void opt_beep( unsigned int wid, char *str )
 {
    (void) wid;
    (void) str;
-   player_soundPlay( snd_target, 1 );
+   player_soundPlayGUI( snd_target, 1 );
 }
 
 

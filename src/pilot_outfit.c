@@ -68,7 +68,7 @@ int pilot_getMount( const Pilot *p, const PilotOutfitSlot *w, Vector2d *v )
 
 
 /**
- * @brief Docks the pilot on it's target pilot.
+ * @brief Docks the pilot on its target pilot.
  *
  *    @param p Pilot that wants to dock.
  *    @param target Pilot to dock on.

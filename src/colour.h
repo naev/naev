@@ -12,7 +12,7 @@
 
 
 /**
- * @brief reperesents a colour via it's RGBA values.
+ * @brief reperesents a colour via its RGBA values.
  */
 typedef struct glColour_ {
    GLfloat r; /**< Red value of the colour (0 to 1). */

@@ -536,7 +536,7 @@ void ai_cleartasks( Pilot* p )
 /**
  * @brief Destroys the ai part of the pilot
  *
- *    @param[in] p Pilot to destroy it's AI part.
+ *    @param[in] p Pilot to destroy its AI part.
  */
 void ai_destroy( Pilot* p )
 {
@@ -2618,7 +2618,7 @@ static int aiL_nearhyptarget( lua_State *L )
 
 
 /**
- * Gets a random hyperspace target and returns it's position.
+ * Gets a random hyperspace target and returns its position.
  */
 static int aiL_rndhyptarget( lua_State *L )
 {
@@ -2707,7 +2707,7 @@ static int aiL_stop( lua_State *L )
 }
 
 /*
- * Tells the pilot's escort's to attack it's target.
+ * Tells the pilot's escort's to attack its target.
  */
 static int aiL_e_attack( lua_State *L )
 {

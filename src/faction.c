@@ -144,7 +144,7 @@ int* faction_getAll( int *n )
 
 
 /**
- * @brief Get's a factions "real" name.
+ * @brief Gets a factions "real" name.
  *
  *    @param f Faction to get the name of.
  *    @return Name of the faction.
@@ -163,7 +163,7 @@ char* faction_name( int f )
 
 
 /**
- * @brief Get's a factions short name.
+ * @brief Gets a factions short name.
  *
  *    @param f Faction to get the name of.
  *    @return Name of the faction.
@@ -467,7 +467,7 @@ char faction_getColourChar( int f )
 
 #define STANDING(m,s)  if (mod >= m) return s /**< Hack to get standings easily. */
 /**
- * @brief Get's the player's standing in human readable form.
+ * @brief Gets the player's standing in human readable form.
  *
  *    @param mod Player's standing.
  *    @return Human readable player's standing.

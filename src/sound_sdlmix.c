@@ -498,7 +498,7 @@ int sound_mix_playGroup( int group, alSound *s, int once )
 /**
  * @brief Stops all the sounds in a group.
  *
- *    @param group Group to stop all it's sounds.
+ *    @param group Group to stop all its sounds.
  */
 void sound_mix_stopGroup( int group )
 {

@@ -302,7 +302,7 @@ static void solid_update_euler (Solid *obj, const double dt)
 
 
 /**
- * @brief Runge-Kutta method of updating a solid based on it's acceleration.
+ * @brief Runge-Kutta method of updating a solid based on its acceleration.
  *
  * Runge-Kutta 4 method
  *

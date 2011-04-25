@@ -1538,7 +1538,7 @@ int map_map( const char* targ_sys, int r )
       open = A_rm( open, sys );
       closed = A_add( closed, cur );
 
-      /* check it's jumps */
+      /* check its jumps */
       for (i=0; i<sys->njumps; i++) {
          jsys = cur->sys->jumps[i].target;
 
@@ -1600,7 +1600,7 @@ int map_isMapped( const char* targ_sys, int r )
       if (dep+1 > r)
          continue;
 
-      /* check it's jumps */
+      /* check its jumps */
       for (i=0; i<sys->njumps; i++) {
          jsys = sys->jumps[i].target;
 

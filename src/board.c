@@ -292,9 +292,9 @@ static void board_stealFuel( unsigned int wdw, char* str )
 
 
 /**
- * @brief Checks to see if the pilot can steal from it's target.
+ * @brief Checks to see if the pilot can steal from its target.
  *
- *    @param p Pilot stealing from it's target.
+ *    @param p Pilot stealing from its target.
  *    @return 0 if successful, 1 if fails, -1 if fails and kills target.
  */
 static int board_trySteal( Pilot *p )
