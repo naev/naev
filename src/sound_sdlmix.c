@@ -46,6 +46,7 @@ typedef struct mixGroup_s {
    int id; /**< ID of the group. */
    int start; /**< Start channel of the group. */
    int end; /**< End channel of the group. */
+   int speed; /**< Whether or not affected by pitch. */
    double volume; /**< Volume of the group. */
 } mixGroup_t;
 static mixGroup_t *groups     = NULL; /**< Allocated Mixer groups. */
@@ -441,8 +442,9 @@ int sound_mix_createGroup( int size )
    /* Create new group. */
    ngroups++;
    groups = realloc( groups, sizeof(mixGroup_t) * ngroups );
-   g = &groups[ngroups-1];
-   g->volume = 1.;
+   g           = &groups[ngroups-1];
+   g->volume   = 1.;
+   g->speed    = 1;
 
    /* Reserve channels. */
    ret = Mix_ReserveChannels( group_pos + size );
@@ -575,8 +577,11 @@ void sound_mix_resumeGroup( int group )
  */
 void sound_mix_speedGroup( int group, int enable )
 {
-   (void) group;
-   (void) enable;
+   mixGroup_t *g;
+   g = sound_mix_getGroup( group );
+   if (g==NULL)
+      return;
+   g->speed = enable;
 }
 
 
