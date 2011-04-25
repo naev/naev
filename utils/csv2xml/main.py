@@ -47,7 +47,7 @@ __version__ = '1.0'
 
 if __name__ == '__main__':
     parser = ArgumentParser(description="""
-        Naev csc to xml tool v%s.
+        Naev csv to xml tool v%s.
     """ % __version__)
     parser.add_argument('--version', action='version',
                         version='%(prog)s '+__version__)
