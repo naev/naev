@@ -1440,6 +1440,7 @@ int sound_al_playGroup( int group, alSound *s, int once )
    int i, j;
    alGroup_t *g;
    ALint state;
+   double v;
 
    for (i=0; i<al_ngroups; i++) {
 
@@ -1457,7 +1458,6 @@ int sound_al_playGroup( int group, alSound *s, int once )
          if (j == g->nsources-1) {
             if (state != AL_STOPPED) {
                alSourceStop( g->sources[j] );
-               alSourcef( g->sources[j], AL_GAIN, svolume_speed * svolume * g->volume );
             }
          }
          /* Ignore playing/paused. */
@@ -1472,6 +1472,12 @@ int sound_al_playGroup( int group, alSound *s, int once )
 
          /* See if should loop. */
          alSourcei( g->sources[j], AL_LOOPING, (once) ? AL_FALSE : AL_TRUE );
+
+         /* Set volume. */
+         v = svolume * g->volume;
+         if (g->speed)
+            v *= svolume_speed;
+         alSourcef( g->sources[j], AL_GAIN, v );
 
          /* Start playing. */
          alSourcePlay( g->sources[j] );
