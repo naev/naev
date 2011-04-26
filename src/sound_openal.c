@@ -238,7 +238,7 @@ int sound_al_init (void)
 
    /* Create the OpenAL context */
    al_context = alcCreateContext( al_device, attribs );
-   if (sound_lock == NULL) {
+   if (al_context == NULL) {
       WARN("Unable to create OpenAL context");
       ret = -2;
       goto snderr_ctx;
