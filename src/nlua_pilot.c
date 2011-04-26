@@ -1912,7 +1912,8 @@ static int pilotL_setNoLand( lua_State *L )
  *
  *    @luaparam p Pilot to add outfit to.
  *    @luaparam outfit Name of the outfit to add.
- *    @lusparam q Amount of the outfit to add (defaults to 1).
+ *    @luaparam q Amount of the outfit to add (defaults to 1).
+ *    @luaparam bypass Whether to skip CPU and slot size checks before adding an outfit (defaults to false).
  *    @luareturn The number of outfits added.
  * @luafunc addOutfit( p, outfit, q )
  */
@@ -1923,14 +1924,18 @@ static int pilotL_addOutfit( lua_State *L )
    const char *outfit;
    Outfit *o;
    int ret;
-   int q, added;
+   int q, added, bypass;
 
    /* Get parameters. */
    p      = luaL_validpilot(L,1);
    outfit = luaL_checkstring(L,2);
    q      = 1;
-   if (lua_gettop(L) > 2)
+   if (lua_gettop(L) > 2 && !lua_isnil(L,2))
       q = luaL_checkint(L,3);
+   if (lua_gettop(L) > 3)
+      bypass = lua_toboolean(L, 4);
+   else
+      bypass = 0;
 
    /* Get the outfit. */
    o = outfit_get( outfit );
@@ -1948,14 +1953,20 @@ static int pilotL_addOutfit( lua_State *L )
       if (p->outfits[i]->outfit != NULL)
          continue;
 
-      /* Must fit slot. */
-      if (!outfit_fitsSlot( o, &p->outfits[i]->slot ))
-         continue;
+      if (!bypass) {
+         /* Must fit slot. */
+         if (!outfit_fitsSlot( o, &p->outfits[i]->slot ))
+            continue;
 
-      /* Test if can add outfit. */
-      ret = pilot_addOutfitTest( p, o, p->outfits[i], 0 );
-      if (ret)
-         break;
+         /* Test if can add outfit. */
+         ret = pilot_addOutfitTest( p, o, p->outfits[i], 0 );
+         if (ret)
+            break;
+      }
+      /* Only do a basic check. */
+      else
+         if (!outfit_fitsSlotType( o, &p->outfits[i]->slot ))
+            continue;
 
       /* Add outfit - already tested. */
       ret = pilot_addOutfitRaw( p, o, p->outfits[i] );
