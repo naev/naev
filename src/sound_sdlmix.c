@@ -351,7 +351,7 @@ static void sound_mix_volumeUpdate (void)
    /* Set volume for groups. */
    for (j=0; j<ngroups; j++) {
       g = &groups[j];
-      v = sound_curVolume*g->volume;
+      v = sound_curVolume * g->volume;
       if (g->speed)
          v *= sound_speedVolume;
       cv = (unsigned char) (MIX_MAX_VOLUME*v);
@@ -539,18 +539,17 @@ int sound_mix_playGroup( int group, alSound *s, int once )
             s->name, group, Mix_GetError());
       return -1;
    }
-   else {
-      g = sound_mix_getGroup( group );
-      if (g == NULL) {
-         WARN("Group '%d' does not exist!", group);
-         return 0;
-      }
-      v = sound_curVolume * g->volume;
-      if (g->speed)
-         v *= sound_speedVolume;
-      cv = (unsigned char) (MIX_MAX_VOLUME*v);
-      Mix_Volume( channel, cv );
+
+   g = sound_mix_getGroup( group );
+   if (g == NULL) {
+      WARN("Group '%d' does not exist!", group);
+      return 0;
    }
+   v = sound_curVolume * g->volume;
+   if (g->speed)
+      v *= sound_speedVolume;
+   cv = (unsigned char) (MIX_MAX_VOLUME*v);
+   Mix_Volume( channel, cv );
 
    return 0;
 }
