@@ -459,8 +459,8 @@ int sound_mix_createGroup( int size )
 
    /* Create new group. */
    ngroups++;
-   groups = realloc( groups, sizeof(mixGroup_t) * ngroups );
-   g           = &groups[ngroups-1];
+   groups      = realloc( groups, sizeof(mixGroup_t) * ngroups );
+   g           = &groups[ ngroups-1 ];
    g->volume   = 1.;
    g->speed    = 1;
 
@@ -545,7 +545,7 @@ int sound_mix_playGroup( int group, alSound *s, int once )
          WARN("Group '%d' does not exist!", group);
          return 0;
       }
-      v = sound_curVolume*g->volume;
+      v = sound_curVolume * g->volume;
       if (g->speed)
          v *= sound_speedVolume;
       cv = (unsigned char) (MIX_MAX_VOLUME*v);
