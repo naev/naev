@@ -585,18 +585,24 @@ function render( dt, dt_mod )
             shi = tostring( round(ta_shield) ) .. "% (" .. tostring(round(ta_stats.shield  * ta_shield / 100)) .. ")"
             arm = tostring( round(ta_armour) ) .. "% (" .. tostring(round(ta_stats.armour  * ta_armour / 100)) .. ")"
             ene = tostring( round(ta_energy) ) .. "%"
-            spe = tostring( htspeed ) .. "% (" .. tostring(round(ta_speed)) .. ")"
-
-            if htspeed <= 100. then
+            if ta_stats.speed_max < 1 then
+               spe = round(ta_speed)
+               colspe, colspe2 = nil
                spetxtcol = col_txt_bar
-               colspe = col_speed
-               colspe2 = nil
             else
-               htspeed = math.min( htspeed - 100, 100 )
-               spetxtcol = col_txt_wrn
-               colspe = col_speed2
-               colspe2 = col_speed
+               spe = tostring( htspeed ) .. "% (" .. tostring(round(ta_speed)) .. ")"
+                  if htspeed <= 100. then
+                  spetxtcol = col_txt_bar
+                  colspe = col_speed
+                  colspe2 = nil
+               else
+                  htspeed = math.min( htspeed - 100, 100 )
+                  spetxtcol = col_txt_wrn
+                  colspe = col_speed2
+                  colspe2 = col_speed
+               end
             end
+
 
             --Warning Light
             if ptarget_target == pp and not ta_disabled then
