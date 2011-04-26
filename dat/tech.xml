@@ -157,6 +157,7 @@
   <item>Schroedinger</item>
   <item>Shark</item>
   <item>Sirius Fidelity</item>
+  <item>Sirius Shaman</item>
   <item>Sirius Preacher</item>
   <item>Sirius Divinity</item>
   <item>Sirius Dogma</item>
@@ -435,6 +436,7 @@
  </tech>
  <tech name="Sirius Military Ships">
   <item>Sirius Fidelity</item>
+  <item>Sirius Shaman</item>
   <item>Sirius Preacher</item>
   <item>Sirius Divinity</item>
   <item>Sirius Dogma</item>
