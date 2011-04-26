@@ -128,12 +128,6 @@ static int al_groupidgen    = 0; /**< Used to create group IDs. */
 static const char* vorbis_getErr( int err );
 static int al_enableEFX (void);
 /*
- * Wav loading.
- */
-static int sound_al_wavReadCmp( SDL_RWops *rw, const char *cmp, int bytes );
-static int sound_al_wavGetLen32( SDL_RWops *rw, uint32_t *out );
-static int sound_al_wavGetLen16( SDL_RWops *rw, uint16_t *out );
-/*
  * General.
  */
 static ALuint sound_al_getSource (void);
@@ -538,63 +532,6 @@ void sound_al_exit (void)
 
 
 /**
- * @brief Compares some bytes in a wav type structure.
- *
- *    @brief Returns 0 on success.
- */
-static int sound_al_wavReadCmp( SDL_RWops *rw, const char *cmp, int bytes )
-{
-   int len;
-   char buf[4];
-
-   len = SDL_RWread( rw, buf, bytes, 1 );
-   if (len != 1) {
-      WARN("Did not read expected bytes.");
-      return -1;
-   }
-   return memcmp( buf, cmp, bytes );
-}
-
-
-/**
- * @brief Gets a 32 bit length in a wav type structure.
- */
-static int sound_al_wavGetLen32( SDL_RWops *rw, uint32_t *out )
-{
-   int len;
-
-   len = SDL_RWread( rw, out, 4, 1 );
-   if (len != 1) {
-      WARN("Did not read expected bytes.");
-      return -1;
-   }
-   /* Little endian by default. */
-   *out = SDL_SwapLE32(*out);
-
-   return 0;
-}
-
-
-/**
- * @brief Gets a 16 bit length in a wav type structure.
- */
-static int sound_al_wavGetLen16( SDL_RWops *rw, uint16_t *out )
-{
-   int len;
-
-   len = SDL_RWread( rw, out, 2, 1 );
-   if (len != 1) {
-      WARN("Did not read expected bytes.");
-      return -1;
-   }
-   /* Little endian by default. */
-   *out = SDL_SwapLE16(*out);
-
-   return 0;
-}
-
-
-/**
  * @brief Loads a wav file from the rw if possible.
  *
  * @note Closes the rw.
@@ -604,190 +541,46 @@ static int sound_al_wavGetLen16( SDL_RWops *rw, uint16_t *out )
  */
 static int sound_al_loadWav( alSound *snd, SDL_RWops *rw )
 {
-   int len;
-   uint32_t i;
-   char magic[4], *buf;
+   SDL_AudioSpec wav_spec;
+   Uint32 wav_length;
+   Uint8 *wav_buffer;
    ALenum format;
-   uint32_t filelen, chunklen, rate, unused32;
-   uint16_t compressed, channels, align, unused16;
 
-   /* Some initialization. */
-   compressed = 0;
-   channels   = 0;
-
-   /* Seek to start. */
    SDL_RWseek( rw, 0, SEEK_SET );
 
-   /* Check RIFF header. */
-   if (sound_al_wavReadCmp( rw, "RIFF", 4 )) {
-      WARN("RIFF header not found.");
-      goto wav_err;
-   }
-   /* Get file length. */
-   if (sound_al_wavGetLen32( rw, &filelen )) {
-      WARN("Unable to get WAVE length.");
-      goto wav_err;
-   }
-   /* Check WAVE header. */
-   if (sound_al_wavReadCmp( rw, "WAVE", 4 )) {
-      WARN("WAVE header not found.");
-      goto wav_err;
+   /* Load WAV. */
+   if (SDL_LoadWAV_RW( rw, 0, &wav_spec, &wav_buffer, &wav_length) == NULL) {
+      WARN("SDL_LoadWav_RW failed: %s", SDL_GetError());
+      return -1;
    }
 
-   /*
-    * Chunk information header.
-    */
-   /* Check chunk header. */
-   if (sound_al_wavReadCmp( rw, "fmt ", 4 )) {
-      WARN("Chunk header 'fmt ' header not found.");
-      goto wav_err;
-   }
-   /* Get chunk length. */
-   if (sound_al_wavGetLen32( rw, &chunklen )) {
-      WARN("Unable to get WAVE chunk length.");
-      goto wav_err;
-   }
-   i = 0;
-
-   /* Get compression. */
-   if (sound_al_wavGetLen16( rw, &compressed )) {
-      WARN("Unable to get WAVE chunk compression type.");
-      goto wav_err;
-   }
-   if (compressed != 0x0001) {
-      WARN("Unsupported WAVE chunk compression '0x%04x'.", compressed);
-      goto wav_err;
-   }
-   i += 2;
-
-   /* Get channels. */
-   if (sound_al_wavGetLen16( rw, &channels )) {
-      WARN("Unable to get WAVE chunk channels.");
-      goto wav_err;
-   }
-   i += 2;
-
-   /* Get sample rate. */
-   if (sound_al_wavGetLen32( rw, &rate )) {
-      WARN("Unable to get WAVE chunk sample rate.");
-      goto wav_err;
-   }
-   i += 4;
-
-   /* Get average bytes. */
-   if (sound_al_wavGetLen32( rw, &unused32 )) {
-      WARN("Unable to get WAVE chunk average byte rate.");
-      goto wav_err;
-   }
-   i += 4;
-
-   /* Get block align. */
-   if (sound_al_wavGetLen16( rw, &unused16 )) {
-      WARN("Unable to get WAVE chunk block align.");
-      goto wav_err;
-   }
-   i += 2;
-
-   /* Get significant bits. */
-   if (sound_al_wavGetLen16( rw, &align )) {
-      WARN("Unable to get WAVE chunk significant bits.");
-      goto wav_err;
-   }
-   align /= channels;
-   i += 2;
-
-   /* Seek to end. */
-   SDL_RWseek( rw, chunklen-i, SEEK_CUR );
-
-
-   /* Read new header. */
-   len = SDL_RWread( rw, magic, 4, 1 );
-   if (len != 1) {
-      WARN("Unable to read chunk header.");
-      goto wav_err;
+   /* Handle format. */
+   switch (wav_spec.format) {
+      case AUDIO_U8:
+      case AUDIO_S8:     
+         format = (wav_spec.channels==1) ? AL_FORMAT_MONO8 : AL_FORMAT_STEREO8;
+         break;
+      case AUDIO_U16LSB:
+      case AUDIO_S16LSB:
+         format = (wav_spec.channels==1) ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
+         break;
+      case AUDIO_U16MSB:
+      case AUDIO_S16MSB:
+         WARN( "Big endian WAVs unsupported!" );
+         return -1;
    }
 
-   /* Skip fact. */
-   if (memcmp( magic, "fact", 4)==0) {
-      /* Get chunk length. */
-      if (sound_al_wavGetLen32( rw, &chunklen )) {
-         WARN("Unable to get WAVE chunk data length.");
-         goto wav_err;
-      }
-
-      /* Seek to end of chunk. */
-      SDL_RWseek( rw, chunklen, SEEK_CUR );
-
-      /* Read new header. */
-      len = SDL_RWread( rw, magic, 4, 1 );
-      if (len != 1) {
-         WARN("Unable to read chunk header.");
-         goto wav_err;
-      }
-   }
-
-   /* Should be chunk header now. */
-   if (memcmp( magic, "data", 4)) {
-      WARN("Unable to find WAVE 'data' chunk header.");
-      goto wav_err;
-   }
-
-   /*
-    * Chunk data header.
-    */
-   /* Get chunk length. */
-   if (sound_al_wavGetLen32( rw, &chunklen )) {
-      WARN("Unable to get WAVE chunk data length.");
-      goto wav_err;
-   }
-
-   /* Load the chunk data. */
-   buf = malloc( chunklen );
-   i = 0;
-   while (i < chunklen) {
-      i += SDL_RWread( rw, &buf[i], 1, chunklen-i );
-   }
-
-   /* Calculate format. */
-   if (channels == 2) {
-      if (align == 16)
-         format = AL_FORMAT_STEREO16;
-      else if (align == 8)
-         format = AL_FORMAT_STEREO8;
-      else {
-         WARN("Unsupported byte alignment (%d) in WAVE file.", align);
-         goto chunk_err;
-      }
-   }
-   else if (channels == 1) {
-      if (align == 16)
-         format = AL_FORMAT_MONO16;
-      else if (align == 8)
-         format = AL_FORMAT_MONO8;
-      else {
-         WARN("Unsupported byte alignment (%d) in WAVE file.", align);
-         goto chunk_err;
-      }
-   }
-   else {
-      WARN("Unsupported number of channels (%d) in WAVE file.", channels);
-      goto chunk_err;
-   }
-
+   /* Load into openal. */
    soundLock();
    /* Create new buffer. */
    alGenBuffers( 1, &snd->u.al.buf );
    /* Put into the buffer. */
-   alBufferData( snd->u.al.buf, format, buf, chunklen, rate );
+   alBufferData( snd->u.al.buf, format, wav_buffer, wav_length, wav_spec.freq );
    soundUnlock();
 
-   free(buf);
+   /* Clean up. */
+   free( wav_buffer );
    return 0;
-
-chunk_err:
-   free(buf);
-wav_err:
-   return -1;
 }
 
 
