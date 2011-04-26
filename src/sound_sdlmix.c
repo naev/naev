@@ -355,7 +355,7 @@ static void sound_mix_volumeUpdate (void)
       if (g->speed)
          v *= sound_speedVolume;
       cv = (unsigned char) (MIX_MAX_VOLUME*v);
-      for (i=g->start; g->end; i++)
+      for (i=g->start; i<=g->end; i++)
          Mix_Volume( i, cv );
    }
 }
@@ -578,7 +578,7 @@ void sound_mix_pauseGroup( int group )
    if (g==NULL)
       return;
 
-   for (i=g->start; g->end; i++) {
+   for (i=g->start; i<=g->end; i++) {
       if (Mix_Playing(i))
          Mix_Pause(i);
    }
@@ -596,7 +596,7 @@ void sound_mix_resumeGroup( int group )
    if (g==NULL)
       return;
 
-   for (i=g->start; g->end; i++) {
+   for (i=g->start; i<=g->end; i++) {
       if (Mix_Paused(i))
          Mix_Resume(i);
    }
@@ -628,7 +628,7 @@ void sound_mix_volumeGroup( int group, double volume )
       return;
 
    g->volume = volume;
-   for (i=g->start; g->end; i++)
+   for (i=g->start; i<=g->end; i++)
       Mix_Volume( i, (unsigned char) MIX_MAX_VOLUME * CLAMP(0., 1., volume) );
 }
 
