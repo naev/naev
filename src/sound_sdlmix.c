@@ -306,7 +306,7 @@ void sound_mix_resume (void)
  */
 void sound_mix_stop( alVoice *v )
 {
-   Mix_FadeOutChannel(v->u.mix.channel, 100);
+   Mix_FadeOutChannel( v->u.mix.channel, 100 );
 }
 
 
@@ -623,13 +623,20 @@ void sound_mix_volumeGroup( int group, double volume )
 {
    int i;
    mixGroup_t *g;
+   double v;
+   unsigned char cv;
+
    g = sound_mix_getGroup( group );
    if (g==NULL)
       return;
 
-   g->volume = volume;
+   g->volume = CLAMP( 0., 1., volume );
+   v = sound_curVolume*g->volume;
+   if (g->speed)
+      v *= sound_speedVolume;
+   cv = (unsigned char) (MIX_MAX_VOLUME*v);
    for (i=g->start; i<=g->end; i++)
-      Mix_Volume( i, (unsigned char) MIX_MAX_VOLUME * CLAMP(0., 1., volume) );
+      Mix_Volume( i, cv );
 }
 
 
