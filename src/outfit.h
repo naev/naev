@@ -473,6 +473,7 @@ void outfit_free (void);
  */
 const char *outfit_damageTypeToStr( DamageType dmg );
 int outfit_fitsSlot( const Outfit* o, const OutfitSlot* s );
+int outfit_fitsSlotType( const Outfit* o, const OutfitSlot* s );
 
 
 #endif /* OUTFIT_H */
