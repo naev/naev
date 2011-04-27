@@ -22,7 +22,6 @@
 extern double player_acc; /**< Player acceleration. */
 extern int map_npath; /**< @todo remove */
 
-double tc_max           = 1.; /**< Maximum time compression. */
 static double tc_mod    = 1.; /**< Time compression modifier. */
 static double tc_down   = 0.; /**< Rate of decrement. */
 static int tc_rampdown  = 0; /**< Ramping down time compression? */
@@ -81,9 +80,9 @@ static void player_autonavSetup (void)
    if (!player_isFlag(PLAYER_AUTONAV)) {
       tc_mod    = 1.;
       if (conf.compression_mult > 1.)
-         tc_max = MIN( conf.compression_velocity / solid_maxspeed(player.p->solid, player.p->speed, player.p->thrust), conf.compression_mult );
+         player.tc_max = MIN( conf.compression_velocity / solid_maxspeed(player.p->solid, player.p->speed, player.p->thrust), conf.compression_mult );
       else
-         tc_max = conf.compression_velocity / solid_maxspeed(player.p->solid, player.p->speed, player.p->thrust);
+         player.tc_max = conf.compression_velocity / solid_maxspeed(player.p->solid, player.p->speed, player.p->thrust);
    }
    tc_rampdown  = 0;
    tc_down      = 0.;
@@ -411,12 +410,12 @@ void player_updateAutonav( double dt )
    }
 
    /* We'll update the time compression here. */
-   if (tc_mod == tc_max)
+   if (tc_mod == player.tc_max)
       return;
    else
-      tc_mod += 0.2 * dt * (tc_max-1.);
+      tc_mod += 0.2 * dt * (player.tc_max-1.);
    /* Avoid going over. */ 
-   if (tc_mod > tc_max)
-      tc_mod = tc_max;
+   if (tc_mod > player.tc_max)
+      tc_mod = player.tc_max;
    pause_setSpeed( tc_mod );
 }

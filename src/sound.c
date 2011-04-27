@@ -38,8 +38,6 @@
 #define voiceLock()        SDL_LockMutex(voice_mutex)
 #define voiceUnlock()      SDL_UnlockMutex(voice_mutex)
 
-/* Externs. */
-extern double tc_max;
 
 /*
  * Global sound properties.
@@ -653,8 +651,8 @@ void sound_setSpeed( double s )
 
    /* We implement the brown noise here. */
    playing = (snd_compression_gain > 0.);
-   if (tc_max > 2.)
-      v = CLAMP( 0, 1., MAX( (s-2)/10., (s-2) / (tc_max-2) ) );
+   if (player.tc_max > 2.)
+      v = CLAMP( 0, 1., MAX( (s-2)/10., (s-2) / (player.tc_max-2) ) );
    else
       v = CLAMP( 0, 1., (s-2)/10. );
 
