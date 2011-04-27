@@ -430,7 +430,7 @@ static int planetL_class(lua_State *L )
  *  - "outfits"<br />
  *  - "shipyard"<br />
  *
- * @usage if p:serivces()["refuel"] then -- PLanet has refuel service.
+ * @usage if p:services()["refuel"] then -- Planet has refuel service.
  * #usage if p:services()["shipyard"] then -- Planet has shipyard service.
  *    @luaparam p Planet to get the services of.
  *    @luareturn Table containing all the services.
