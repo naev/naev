@@ -62,7 +62,24 @@
 #endif
 
 
-/* I've heard talk of PRIuN being evil, so there's this sad panda here. */
+/* I've heard talk of PRIuN being evil, so there's this sad panda here.
+ *
+ *             :OOkxddkkdc
+ *           cl;.......',d0kl'
+ *          l;...........'c0NWO;
+ *        ,xo'............',lkKdx:
+ *        0x,''...........',;;::oO0,
+ *       :0:,'''.......;dl,',',;xXNNx.
+ *       00c;,,,,.....'KXXKOd:,;oXWWNNd
+ *     ,KXx:;,;:xd'....ck0XNXo;:l0NNNNN0.
+ *    oXNNOc;,,lNNk',,,...,cl::cd0NNNXXXK,
+ *    XXXNNKo;;kNNd',;;,..',;cloONNNNNNXXk
+ *  .dNNNNNNXdckNK:'',::::c;:ldkXNWWNNNNNX.
+ * cXNNWWWWNNKoloc:,,:cldOoodkKxcKWWWWWWNN;
+ * 0NWWWWWWNXl''';ooodkxOxk00o.  xNWWWWWWNd
+ * ;odkOOkxo:       .',,,,'      ;K0NKNKNNk
+ *                                 .cxxkk,.
+ */
 #ifndef PRIu64
 #   define PRIu64    "%ju" /**< Illegal, evil and probably eats babies  too. */
 #endif
