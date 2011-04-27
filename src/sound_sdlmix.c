@@ -306,7 +306,7 @@ void sound_mix_resume (void)
  */
 void sound_mix_stop( alVoice *v )
 {
-   Mix_FadeOutChannel(v->u.mix.channel, 100);
+   Mix_FadeOutChannel( v->u.mix.channel, 100 );
 }
 
 
@@ -351,7 +351,7 @@ static void sound_mix_volumeUpdate (void)
    /* Set volume for groups. */
    for (j=0; j<ngroups; j++) {
       g = &groups[j];
-      v = sound_curVolume*g->volume;
+      v = sound_curVolume * g->volume;
       if (g->speed)
          v *= sound_speedVolume;
       cv = (unsigned char) (MIX_MAX_VOLUME*v);
@@ -459,8 +459,8 @@ int sound_mix_createGroup( int size )
 
    /* Create new group. */
    ngroups++;
-   groups = realloc( groups, sizeof(mixGroup_t) * ngroups );
-   g           = &groups[ngroups-1];
+   groups      = realloc( groups, sizeof(mixGroup_t) * ngroups );
+   g           = &groups[ ngroups-1 ];
    g->volume   = 1.;
    g->speed    = 1;
 
@@ -539,18 +539,17 @@ int sound_mix_playGroup( int group, alSound *s, int once )
             s->name, group, Mix_GetError());
       return -1;
    }
-   else {
-      g = sound_mix_getGroup( group );
-      if (g == NULL) {
-         WARN("Group '%d' does not exist!", group);
-         return 0;
-      }
-      v = sound_curVolume*g->volume;
-      if (g->speed)
-         v *= sound_speedVolume;
-      cv = (unsigned char) (MIX_MAX_VOLUME*v);
-      Mix_Volume( channel, cv );
+
+   g = sound_mix_getGroup( group );
+   if (g == NULL) {
+      WARN("Group '%d' does not exist!", group);
+      return 0;
    }
+   v = sound_curVolume * g->volume;
+   if (g->speed)
+      v *= sound_speedVolume;
+   cv = (unsigned char) (MIX_MAX_VOLUME*v);
+   Mix_Volume( channel, cv );
 
    return 0;
 }
@@ -623,13 +622,20 @@ void sound_mix_volumeGroup( int group, double volume )
 {
    int i;
    mixGroup_t *g;
+   double v;
+   unsigned char cv;
+
    g = sound_mix_getGroup( group );
    if (g==NULL)
       return;
 
-   g->volume = volume;
+   g->volume = CLAMP( 0., 1., volume );
+   v = sound_curVolume*g->volume;
+   if (g->speed)
+      v *= sound_speedVolume;
+   cv = (unsigned char) (MIX_MAX_VOLUME*v);
    for (i=g->start; i<=g->end; i++)
-      Mix_Volume( i, (unsigned char) MIX_MAX_VOLUME * CLAMP(0., 1., volume) );
+      Mix_Volume( i, cv );
 }
 
 
