@@ -22,8 +22,8 @@
 extern double player_acc; /**< Player acceleration. */
 extern int map_npath; /**< @todo remove */
 
+double tc_max           = 1.; /**< Maximum time compression. */
 static double tc_mod    = 1.; /**< Time compression modifier. */
-static double tc_max    = 1.; /**< Maximum time compression. */
 static double tc_down   = 0.; /**< Rate of decrement. */
 static int tc_rampdown  = 0; /**< Ramping down time compression? */
 static double lasts;

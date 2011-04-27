@@ -27,6 +27,7 @@
 #include "music.h"
 #include "physics.h"
 #include "conf.h"
+#include "player.h"
 
 
 #define SOUND_PREFIX       "snd/sounds/" /**< Prefix of where to find sounds. */
@@ -37,6 +38,8 @@
 #define voiceLock()        SDL_LockMutex(voice_mutex)
 #define voiceUnlock()      SDL_UnlockMutex(voice_mutex)
 
+/* Externs. */
+extern double tc_max;
 
 /*
  * Global sound properties.
@@ -650,7 +653,11 @@ void sound_setSpeed( double s )
 
    /* We implement the brown noise here. */
    playing = (snd_compression_gain > 0.);
-   v = CLAMP( 0., 1., (s-2.)/10. );
+   if (tc_max > 2.)
+      v = CLAMP( 0, 1., MAX( (s-2)/10., (s-2) / (tc_max-2) ) );
+   else
+      v = CLAMP( 0, 1., (s-2)/10. );
+
    if (v > 0.) {
       if (snd_compression >= 0) {
          if (!playing)
