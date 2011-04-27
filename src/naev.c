@@ -726,7 +726,7 @@ static void fps_control (void)
 static void update_all (void)
 {
    int i, n;
-   double nf, microdt;
+   double nf, microdt, accumdt;
 
    if ((real_dt > 0.25) && (fps_skipped==0)) { /* slow timers down and rerun calculations */
       fps_skipped = 1;
@@ -740,14 +740,24 @@ static void update_all (void)
       n  = (int) nf;
 
       /* Update as much as needed, evenly. */
+      accumdt = 0.;
       for (i=0; i<n; i++) {
-         update_routine(microdt, 0);
+         update_routine( microdt, 0 );
+         /* Ok, so we need a bit of hackish logic here in case we are chopping up a
+          * very large dt and it turns out time compression changes so we're now
+          * updating in "normal time compression" zone. This amounts to many updates
+          * being run when time compression has changed and thus can cause say the
+          * player to exceed his target position or get raped by an enemy ship.
+          */
+         accumdt += microdt;
+         if (accumdt > dt_mod*real_dt)
+            break;
       }
 
       /* Note we don't touch game_dt so that fps_display works well */
    }
    else /* Standard, just update with the last dt */
-      update_routine(game_dt, 0);
+      update_routine( game_dt, 0 );
 
    fps_skipped = 0;
 }
