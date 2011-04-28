@@ -733,8 +733,8 @@ static void input_key( int keynum, double value, double kabs, int repeat )
             input_accelLast = t;
       }
    /* Afterburning. */
-   } else if (KEY("afterburn") && INGAME() && !repeat) {
-      if ((value==KEY_PRESS) && NOHYP() && NODEAD()) {
+   } else if (KEY("afterburn") && !repeat) {
+      if ((value==KEY_PRESS) && INGAME() && NOHYP() && NODEAD()) {
          player_afterburn();
          input_afterburnerButton = 1;
       }
