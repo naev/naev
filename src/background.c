@@ -587,6 +587,16 @@ void background_free (void)
       bkg_def_L = NULL;
    }
 
+   /* Destroy VBOs. */
+   if (star_vertexVBO != NULL) {
+      gl_vboDestroy( star_vertexVBO );
+      star_vertexVBO = NULL;
+   }
+   if (star_colourVBO != NULL) {
+      gl_vboDestroy( star_colourVBO );
+      star_colourVBO = NULL;
+   }
+
    /* Free the stars. */
    if (star_vertex != NULL) {
       free(star_vertex);

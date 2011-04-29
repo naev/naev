@@ -278,6 +278,9 @@ void music_exit (void)
       SDL_DestroyMutex(music_lock);
       music_lock = NULL;
    }
+
+   /* Clean up Lua. */
+   music_luaQuit();
 }
 
 
