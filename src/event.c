@@ -472,7 +472,7 @@ static int event_parse( EventData_t *temp, const xmlNodePtr parent )
    memset( temp, 0, sizeof(EventData_t) );
 
    /* get the name */
-   temp->name = xml_nodeProp(parent,"name");
+   temp->name = xml_nodeProp(parent, "name");
    if (temp->name == NULL)
       WARN("Event in "EVENT_DATA" has invalid or no name");
 
@@ -637,18 +637,12 @@ int events_load (void)
  */
 static void event_freeData( EventData_t *event )
 {
-   if (event->name) {
-      free(event->name);
-      event->name = NULL;
-   }
-   if (event->lua) {
-      free(event->lua);
-      event->lua = NULL;
-   }
-   if (event->cond) {
-      free(event->cond);
-      event->cond = NULL;
-   }
+   free( event->name );
+   free( event->lua );
+   free( event->cond );
+#if DEBUGGING
+   memset( event, 0, sizeof(EventData_t) );
+#endif /* DEBUGGING */
 }
 
 
@@ -681,10 +675,9 @@ void events_exit (void)
    events_cleanup();
 
    /* Free data. */
-   for (i=0; i<event_ndata; i++)
-      event_freeData(&event_data[i]);
    if (event_data != NULL) {
-      event_freeData(event_data);
+      for (i=0; i<event_ndata; i++)
+         event_freeData( &event_data[i] );
       free(event_data);
    }
    event_data  = NULL;
