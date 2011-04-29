@@ -1022,7 +1022,7 @@ static void opt_unsetKey( unsigned int wid, char *str )
 static void opt_video( unsigned int wid )
 {
    (void) wid;
-   int i, j;
+   int i, j, nres, res_def;
    char buf[16];
    int cw;
    int w, h, y, x, l;
@@ -1065,19 +1065,22 @@ static void opt_video( unsigned int wid )
       if ((modes[i]->w == conf.width) && (modes[i]->h == conf.height))
          j = 0;
    }
-   res = malloc( sizeof(char*) * (i+j) );
+   res   = malloc( sizeof(char*) * (i+j) );
+   nres  = 0;
    if (j) {
-      res[0] = malloc(16);
+      res[0]   = malloc(16);
       snprintf( res[0], 16, "%dx%d", conf.width, conf.height );
-      j = 0;
+      res_def  = 0;
+      nres     = 1;
    }
    for (i=0; modes[i]; i++) {
-      res[i] = malloc(16);
-      snprintf( res[i], 16, "%dx%d", modes[i]->w, modes[i]->h );
+      res[ nres ] = malloc(16);
+      snprintf( res[ nres ], 16, "%dx%d", modes[i]->w, modes[i]->h );
       if ((modes[i]->w == conf.width) && (modes[i]->h == conf.height))
-         j = i;
+         res_def = i;
+      nres++;
    }
-   window_addList( wid, x, y, 140, 100, "lstRes", res, i, j, opt_videoRes );
+   window_addList( wid, x, y, 140, 100, "lstRes", res, nres, res_def, opt_videoRes );
    y -= 150;
 
    /* FPS stuff. */
