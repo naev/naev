@@ -60,13 +60,6 @@ static int music_runLua( const char *situation );
 
 
 /*
- * what is available
- */
-static char** music_selection = NULL; /**< Available music selection. */
-static int nmusic_selection   = 0; /**< Size of available music selection. */
-
-
-/*
  * The current music.
  */
 static char *music_name       = NULL; /**< Current music name. */
@@ -311,9 +304,8 @@ static int music_find (void)
 {
    char** files;
    uint32_t nfiles,i;
-   char tmp[64];
-   int len, suflen, flen;
-   int mem;
+   int suflen, flen;
+   int nmusic;
 
    if (music_disabled)
       return 0;
@@ -322,7 +314,7 @@ static int music_find (void)
    files = ndata_list( MUSIC_PREFIX, &nfiles );
 
    /* load the profiles */
-   mem = 0;
+   nmusic = 0;
    suflen = strlen(MUSIC_SUFFIX);
    for (i=0; i<nfiles; i++) {
       flen = strlen(files[i]);
@@ -330,27 +322,14 @@ static int music_find (void)
             strncmp( &files[i][flen - suflen], MUSIC_SUFFIX, suflen)==0) {
 
          /* grow the selection size */
-         nmusic_selection++;
-         if (nmusic_selection > mem) {
-            mem += CHUNK_SIZE;
-            music_selection = realloc( music_selection, sizeof(char*)*mem);
-         }
-
-         /* remove the prefix and suffix */
-         len = flen - suflen;
-         strncpy( tmp, files[i], len );
-         tmp[MIN(len,64-1)] = '\0';
-
-         /* give it the new name */
-         music_selection[nmusic_selection-1] = strdup(tmp);
+         nmusic++;
       }
 
       /* Clean up. */
       free(files[i]);
    }
-   music_selection = realloc( music_selection, sizeof(char*)*nmusic_selection);
 
-   DEBUG("Loaded %d song%c", nmusic_selection, (nmusic_selection==1)?' ':'s');
+   DEBUG("Loaded %d song%c", nmusic, (nmusic==1)?' ':'s');
 
    /* More clean up. */
    free(files);
