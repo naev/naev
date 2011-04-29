@@ -1438,7 +1438,7 @@ void sound_al_update (void)
       /* Fadeout done. */
       else {
          soundLock();
-         v = d * svolume * g->volume;
+         v = svolume * g->volume;
          if (g->speed)
             v *= svolume_speed;
          for (j=0; j<g->nsources; j++) {
