@@ -305,6 +305,15 @@ AS_IF([test "$have_lua" = "no"], [
   used_lua=internal
 ])
 
+
+PKG_CHECK_MODULES([CSPARSE], [csparse], [
+   used_csparse=shared
+], [
+   used_csparse=internal
+   CSPARSE_CFLAGS="-I\"\$(top_srcdir)/lib/csparse\""
+   CSPARSE_LIBS="\$(top_builddir)/lib/csparse/libcsparse.a"
+])
+
 # OpenAL
 AS_IF([test "$with_openal" = "yes"], [
   AM_PATH_OPENAL([have_openal=yes], [have_openal=no])
@@ -369,9 +378,6 @@ AC_SUBST([GLOBAL_LIBS])
 
 # naev
 WIDGET_LIBS="\$(top_builddir)/src/tk/widget/libwidget.a"
-
-CSPARSE_CFLAGS="-I\"\$(top_srcdir)/lib/csparse\""
-CSPARSE_LIBS="\$(top_builddir)/lib/csparse/libcsparse.a"
 
 NAEV_CFLAGS="$GLOBAL_CFLAGS"
 NAEV_LIBS="$GLOBAL_LIBS $WIDGET_LIBS"
@@ -597,7 +603,7 @@ AC_MSG_NOTICE([  OpenAL:    $have_openal])
 AC_MSG_NOTICE([  SDL_mixer: $have_sdlmixer])
 echo
 AC_MSG_NOTICE([lib:])
-AC_MSG_NOTICE([  csparse:   internal])
+AC_MSG_NOTICE([  csparse:   $used_csparse])
 AC_MSG_NOTICE([  lua:       $used_lua])
 echo
 AC_MSG_NOTICE([utils:       $have_utils])
