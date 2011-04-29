@@ -27,6 +27,7 @@
 #include "nlua_pilot.h"
 #include "nlua_vec2.h"
 #include "nlua_diff.h"
+#include "nlua_outfit.h"
 #include "nlua_cli.h"
 
 
@@ -198,6 +199,7 @@ static int nlua_packfileLoader( lua_State* L )
  *  - diff
  *  - faction
  *  - vec2
+ *  - outfit
  *
  * Only is missing:
  *  - misn
@@ -225,6 +227,7 @@ int nlua_loadStandard( lua_State *L, int readonly )
    r |= nlua_loadDiff(L,readonly);
    r |= nlua_loadFaction(L,readonly);
    r |= nlua_loadVector(L);
+   r |= nlua_loadOutfit(L,readonly);
 
    return r;
 }
