@@ -552,4 +552,14 @@
    <location>Bar</location>
   </avail>
  </mission>
+ <mission name="Drinking Aristocrat">
+  <lua>neutral/aristodrink</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>5</chance>
+   <location>Bar</location>
+  </avail>
+ </mission>
 </Missions>

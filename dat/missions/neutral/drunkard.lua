@@ -64,127 +64,120 @@ title[9] = "No Room"
 text[9] = [[You don't have enough cargo space to accept this mission.]]
 
 function create ()
-	-- Note: this mission does not make any system claims.
-	
-	misn.setNPC( "Drunkard", "none" )  -- creates the drunkard at the bar
-	misn.setDesc( bar_desc )           -- drunkard's description
-	
-	pickup_sys = system.get(pickupSystem)
-	pickupworld = planet.get(pickupPlanet)
-	
-	del_sys = system.get(deliverySystem)
-	delworld = planet.get(deliveryPlanet)
-	
-	origplanet, origsys = planet.cur()
-	origtime = time.get()
+   -- Note: this mission does not make any system claims.
+
+   misn.setNPC( "Drunkard", "none" )  -- creates the drunkard at the bar
+   misn.setDesc( bar_desc )           -- drunkard's description
+
+   pickup_sys = system.get(pickupSystem)
+   pickupworld = planet.get(pickupPlanet)
+
+   del_sys = system.get(deliverySystem)
+   delworld = planet.get(deliveryPlanet)
+
+   origplanet, origsys = planet.cur()
+   origtime = time.get()
 end
 
 function accept ()
-	if not tk.yesno( title[1], text[1] ) then
-		misn.finish()
-		
-	elseif player.pilot():cargoFree() < 45 then
-		tk.msg( title[9], text[9] )  -- Not enough space
-		misn.finish()
-		
-	else
-		misn.accept()
-		
-		-- mission details
-		misn.setTitle( misn_title )
-		misn.setReward( misn_reward )
-		misn.setDesc(	misn_desc:format(pickupworld:name(),
-						pickup_sys:name(),
-						delworld:name(),
-						del_sys:name() ) )
-		
-		-- OSD
-		OSDdesc[1] =  OSDdesc[1]:format(pickupPlanet, pickupSystem)
-		OSDdesc[2] =  OSDdesc[2]:format(deliveryPlanet, deliverySystem)
-		
-		pickedup = false
-		droppedoff = false
-						
-		marker = misn.markerAdd( pickup_sys, "low" )  -- pickup
-		misn.osdCreate( OSDtitle, OSDdesc )  -- OSD
-		
-		tk.msg(	title[2],
-				text[2]:format(	pickupworld:name(),
-								pickup_sys:name(),
-								delworld:name(),
-								del_sys:name() ) )
-		
-		landhook = hook.land ("land")
-		flyhook = hook.takeoff ("takeoff")
-	end
+   if not tk.yesno( title[1], text[1] ) then
+      misn.finish()
+
+   elseif player.pilot():cargoFree() < 45 then
+      tk.msg( title[9], text[9] )  -- Not enough space
+      misn.finish()
+
+   else
+      misn.accept()
+
+      -- mission details
+      misn.setTitle( misn_title )
+      misn.setReward( misn_reward )
+      misn.setDesc( misn_desc:format(pickupworld:name(), pickup_sys:name(), delworld:name(), del_sys:name() ) )
+
+      -- OSD
+      OSDdesc[1] =  OSDdesc[1]:format(pickupPlanet, pickupSystem)
+      OSDdesc[2] =  OSDdesc[2]:format(deliveryPlanet, deliverySystem)
+
+      pickedup = false
+      droppedoff = false
+
+      marker = misn.markerAdd( pickup_sys, "low" )  -- pickup
+      misn.osdCreate( OSDtitle, OSDdesc )  -- OSD
+
+      tk.msg( title[2], text[2]:format( pickupworld:name(), pickup_sys:name(), delworld:name(), del_sys:name() ) )
+
+      landhook = hook.land ("land")
+      flyhook = hook.takeoff ("takeoff")
+   end
 end
 
 function land ()
-	if planet.cur() == pickupworld and not pickedup then
-		if player.pilot():cargoFree() < 45 then
-	      tk.msg( title[9], text[9] )  -- Not enough space
-	      misn.finish()
+   if planet.cur() == pickupworld and not pickedup then
+      if player.pilot():cargoFree() < 45 then
+         tk.msg( title[9], text[9] )  -- Not enough space
+         misn.finish()
 
-	    else
-			
-			tk.msg( title[3], text[3] )
-			cargoID = misn.cargoAdd(cargo, cargoamount)  -- adds cargo
-			pickedup = true
-			
-			misn.markerMove( marker, del_sys )  -- destination
-			
-			misn.osdActive(2)  --OSD
-		end
-	elseif planet.cur() == delworld and pickedup and not droppedoff then
-		tk.msg( title[4], text[4] )
-		misn.cargoRm (cargoID)
-		
-		misn.markerRm(marker)
-		misn.osdDestroy ()
-		
-		droppedoff = true
-	end
+      else
+
+         tk.msg( title[3], text[3] )
+         cargoID = misn.cargoAdd(cargo, cargoamount)  -- adds cargo
+         pickedup = true
+
+         misn.markerMove( marker, del_sys )  -- destination
+
+         misn.osdActive(2)  --OSD
+      end
+   elseif planet.cur() == delworld and pickedup and not droppedoff then
+      tk.msg( title[4], text[4] )
+      misn.cargoRm (cargoID)
+
+      misn.markerRm(marker)
+      misn.osdDestroy ()
+
+      droppedoff = true
+   end
 end
 
 function takeoff()
-	if system.cur() == del_sys and droppedoff then
-		
-	    willie = pilot.add( "Trader Mule", "trader", pilot.player():pos() + vec2.new(-500,-500))[1]
-	    willie:rename("Ol Bess")
-	    willie:setFaction("Civilian")
-	    willie:setFriendly()
-	    willie:setInvincible()
-	    willie:setVisplayer()
-	    willie:setHilight(true)
-	    willie:hailPlayer()
-	    willie:control()
-	    willie:goto(pilot.player():pos() + vec2.new( 150, 75), true)
-	    tk.msg( title[5], text[5] )
-	    hailhook = hook.pilot(willie, "hail", "hail")
-	end
+   if system.cur() == del_sys and droppedoff then
+
+      willie = pilot.add( "Trader Mule", "trader", pilot.player():pos() + vec2.new(-500,-500))[1]
+      willie:rename("Ol Bess")
+      willie:setFaction("Civilian")
+      willie:setFriendly()
+      willie:setInvincible()
+      willie:setVisplayer()
+      willie:setHilight(true)
+      willie:hailPlayer()
+      willie:control()
+      willie:goto(pilot.player():pos() + vec2.new( 150, 75), true)
+      tk.msg( title[5], text[5] )
+      hailhook = hook.pilot(willie, "hail", "hail")
+   end
 end
 
 function hail()
-	tk.msg( title[6], text[6] )
-	
---	eventually I'll implement a bonus
---	tk.msg( title[7], text[7]:format( bonus ) )
+   tk.msg( title[6], text[6] )
 
-	hook.timer("1", "closehail")
+--   eventually I'll implement a bonus
+--   tk.msg( title[7], text[7]:format( bonus ) )
+
+   hook.timer("1", "closehail")
 end
 
 function closehail()
-	bonus = 0
-	player.pay( payment )
-	tk.msg( title[8], text[8]:format( payment) )
-	willie:setVisplayer(false)
-	willie:hyperspace()
-	misn.finish(true)
+   bonus = 0
+   player.pay( payment )
+   tk.msg( title[8], text[8]:format( payment) )
+   willie:setVisplayer(false)
+   willie:hyperspace()
+   misn.finish(true)
 end
 
 function abort()
-	hook.rm(landhook)
-	hook.rm(flyhook)
-	if hailhook then hook.rm(hailhook) end
-	misn.finish()
+   hook.rm(landhook)
+   hook.rm(flyhook)
+   if hailhook then hook.rm(hailhook) end
+   misn.finish()
 end
