@@ -340,6 +340,9 @@ void commodity_free (void)
    free( commodity_stack );
    commodity_stack = NULL;
    commodity_nstack = 0;
+
+   /* More clean up. */
+   free( econ_comm );
 }
 
 
