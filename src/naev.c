@@ -355,16 +355,6 @@ int main( int argc, char** argv )
    /* Save configuration. */
    conf_saveConfig(buf);
 
-   /* cleanup some stuff */
-   player_cleanup(); /* cleans up the player stuff */
-   gui_free(); /* cleans up the player's GUI */
-   weapon_exit(); /* destroys all active weapons */
-   pilots_free(); /* frees the pilots, they were locked up :( */
-   cond_exit(); /* destroy conditional subsystem. */
-   land_exit(); /* Destroys landing vbo and friends. */
-   npc_clear(); /* In case exitting while landed. */
-   background_free(); /* Destroy backgrounds. */
-
    /* data unloading */
    unload_all();
 
@@ -379,21 +369,18 @@ int main( int argc, char** argv )
    /* Destroy conf. */
    conf_cleanup(); /* Frees some memory the configuration allocated. */
 
-   /* Clean up loading game stuff stuff. */
-   load_free();
-
    /* exit subsystems */
-   cli_exit(); /* CLean up the console. */
-   map_exit(); /* destroys the map. */
+   cli_exit(); /* Clean up the console. */
+   map_exit(); /* Destroys the map. */
    ovr_mrkFree(); /* Clear markers. */
-   toolkit_exit(); /* kills the toolkit */
-   ai_exit(); /* stops the Lua AI magic */
-   joystick_exit(); /* releases joystick */
-   input_exit(); /* cleans up keybindings */
-   nebu_exit(); /* destroys the nebula */
-   gl_exit(); /* kills video output */
-   sound_exit(); /* kills the sound */
-   news_exit(); /* destroys the news. */
+   toolkit_exit(); /* Kills the toolkit */
+   ai_exit(); /* Stops the Lua AI magic */
+   joystick_exit(); /* Releases joystick */
+   input_exit(); /* Cleans up keybindings */
+   nebu_exit(); /* Destroys the nebula */
+   gl_exit(); /* Kills video output */
+   sound_exit(); /* Kills the sound */
+   news_exit(); /* Destroys the news. */
 
    /* Free the icon. */
    if (naev_icon)
@@ -574,7 +561,16 @@ void load_all (void)
  */
 void unload_all (void)
 {
-   /* data unloading - inverse load_all is a good order */
+   /* cleanup some stuff */
+   player_cleanup(); /* cleans up the player stuff */
+   gui_free(); /* cleans up the player's GUI */
+   weapon_exit(); /* destroys all active weapons */
+   pilots_free(); /* frees the pilots, they were locked up :( */
+   cond_exit(); /* destroy conditional subsystem. */
+   land_exit(); /* Destroys landing vbo and friends. */
+   npc_clear(); /* In case exitting while landed. */
+   background_free(); /* Destroy backgrounds. */
+   load_free(); /* Clean up loading game stuff stuff. */
    economy_destroy(); /* must be called before space_exit */
    space_exit(); /* cleans up the universe itself */
    tech_free(); /* Frees tech stuff. */
@@ -583,6 +579,7 @@ void unload_all (void)
    outfit_free();
    spfx_free(); /* gets rid of the special effect */
    missions_free();
+   events_cleanup(); /* Clean up events. */
    factions_free();
    commodity_free();
    var_cleanup(); /* cleans up mission variables */
