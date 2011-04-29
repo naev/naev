@@ -278,10 +278,11 @@ static void info_openShip( unsigned int wid )
  */
 static void ship_update( unsigned int wid )
 {
-   char buf[1024];
+   char buf[1024], *hyp_delay;
    int cargo;
 
    cargo = pilot_cargoUsed( player.p ) + pilot_cargoFree( player.p );
+   hyp_delay = ntime_pretty( pilot_hyperspaceDelay( player.p ), 2 );
    snprintf( buf, sizeof(buf),
          "%s\n"
          "%s\n"
@@ -308,7 +309,7 @@ static void ship_update( unsigned int wid )
          player.p->cpu_max,
          /* Movement. */
          player.p->solid->mass,
-         ntime_pretty( pilot_hyperspaceDelay( player.p ), 2 ),
+         hyp_delay,
          player.p->thrust / player.p->solid->mass,
          player.p->speed, solid_maxspeed( player.p->solid, player.p->speed, player.p->thrust ),
          player.p->turn*180./M_PI,
@@ -319,6 +320,7 @@ static void ship_update( unsigned int wid )
          pilot_cargoUsed( player.p ), cargo,
          player.p->fuel, player.p->fuel_max, pilot_getJumps(player.p));
    window_modifyText( wid, "txtDDesc", buf );
+   free( hyp_delay );
 }
 
 
