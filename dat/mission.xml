@@ -542,4 +542,24 @@
    <faction>Pirate</faction>
   </avail>
  </mission>
+ <mission name="Drunkard">
+  <lua>neutral/drunkard</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>3</chance>
+   <location>Bar</location>
+  </avail>
+ </mission>
+ <mission name="Drinking Aristocrat">
+  <lua>neutral/aristodrink</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>5</chance>
+   <location>Bar</location>
+  </avail>
+ </mission>
 </Missions>
