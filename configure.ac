@@ -194,20 +194,26 @@ AC_ARG_WITH([sdlmixer],
   ])
 AC_MSG_RESULT([$with_sdlmixer])
 
-# --with-lua
-AC_MSG_CHECKING([whether to use the provided Lua package instead the system Lua-JIT])
-AC_ARG_WITH([lua],
-  AC_HELP_STRING([--with-lua],
-     [use the provided Lua package instead of system Lua-JIT (default: yes)]), [
-    AS_IF([test "$withval" = "yes"], [
-      with_lua=yes
-    ], [
-      with_lua=no
-    ])
+# --enable-lua
+AC_MSG_CHECKING([which lua to use])
+AC_ARG_ENABLE([lua],
+  AC_HELP_STRING([--enable-lua=@<:@internal|shared|luajit@:>@],
+     [lua to use (default: internal)]), [
+    case "$enableval" in
+      luajit)
+        used_lua=luajit
+        ;;
+      shared)
+        used_lua=shared
+        ;;
+      *)
+        used_lua=internal
+        ;;
+    esac
   ], [
-    with_lua=yes
+    used_lua=internal
   ])
-AC_MSG_RESULT([$with_lua])
+AC_MSG_RESULT([$used_lua])
 
 # --with-ndata
 ndata_path="$datadir/$PACKAGE_NAME/ndata"
@@ -267,23 +273,36 @@ PKG_CHECK_MODULES([PNG], [libpng], [], [
   AC_ERROR([libpng not found])
 ])
 
-# luajit
-AS_IF([test "$with_lua" = "yes"], [
-  have_luajit=no
-  have_lua=yes
-  LUA_CFLAGS="-I\"\$(top_srcdir)/lib/lua\" -DHAVE_LUA"
-  LUA_LIBS="\$(top_builddir)/lib/lua/liblua.a"
-], [
-  PKG_CHECK_MODULES([LUA], [luajit], [
-    have_luajit=yes
-    have_lua=no
-  ], [
-    AC_WARN([Lua is disabled but Lua-JIT is missing; using internal Lua])
-    have_luajit=no
-    have_lua=yes
-    LUA_CFLAGS="-I\"\$(top_srcdir)/lib/lua\" -DHAVE_LUA"
+# lua
+case "$used_lua" in
+  luajit)
+    PKG_CHECK_MODULES([LUA], [luajit], [
+      have_lua=yes
+      LUA_CFLAGS+="-DHAVE_LUAJIT"
+    ], [
+      AC_WARN([Lua is set to Lua-JIT but can not find library; using internal Lua])
+      have_lua=no
+    ])
+    ;;
+  shared)
+    PKG_CHECK_MODULES([LUA], [lua], [
+      have_lua=yes
+    ], [
+      AC_WARN([Lua is set to shared but can not find library; using internal Lua])
+      have_lua=no
+    ])
+    ;;
+  *)
+    LUA_CFLAGS="-I\"\$(top_srcdir)/lib/lua\""
     LUA_LIBS="\$(top_builddir)/lib/lua/liblua.a"
-  ])
+    have_lua=yes
+    ;;
+esac
+AS_IF([test "$have_lua" = "no"], [
+  LUA_CFLAGS="-I\"\$(top_srcdir)/lib/lua\""
+  LUA_LIBS="\$(top_builddir)/lib/lua/liblua.a"
+  have_lua=yes
+  used_lua=internal
 ])
 
 # OpenAL
@@ -543,7 +562,7 @@ AM_CONDITIONAL([HAVE_LUADOC], [test -n "$LUADOC"])
 AM_CONDITIONAL([HAVE_UTILS], [test "x$have_utils" = "xyes"])
 AM_CONDITIONAL([HAVE_DOCS], [test "x$have_docs" = "xyes"])
 AM_CONDITIONAL([HAVE_MKSPR], [test "x$have_mkspr" = "xyes"])
-AM_CONDITIONAL([HAVE_LUAJIT], [test "x$have_luajit" = "xyes"])
+AM_CONDITIONAL([LUA_INTERNAL], [test "x$used_lua" = "xinternal"])
 
 #
 # Output
@@ -578,8 +597,8 @@ AC_MSG_NOTICE([  OpenAL:    $have_openal])
 AC_MSG_NOTICE([  SDL_mixer: $have_sdlmixer])
 echo
 AC_MSG_NOTICE([lib:])
-AC_MSG_NOTICE([  csparse:   yes])
-AC_MSG_NOTICE([  lua:       $have_lua])
+AC_MSG_NOTICE([  csparse:   internal])
+AC_MSG_NOTICE([  lua:       $used_lua])
 echo
 AC_MSG_NOTICE([utils:       $have_utils])
 AC_MSG_NOTICE([  mkspr:     $have_mkspr])

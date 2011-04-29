@@ -1,5 +1,5 @@
-if HAVE_LUAJIT
-SUBDIRS = csparse
-else
+if LUA_INTERNAL
 SUBDIRS = csparse lua
+else
+SUBDIRS = csparse
 endif
