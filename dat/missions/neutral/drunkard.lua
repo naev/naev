@@ -21,17 +21,11 @@ OSDdesc = {}
 OSDdesc[1] = "Go pickup some goods at %s in the %s system."
 OSDdesc[2] = "Drop off the goods at %s in the %s system."
 
--- System Details
-pickupSystem = "Apez"
-pickupPlanet = "Crylo"
-deliverySystem = "Apez"
-deliveryPlanet = "Crylo"
-
 payment = 250000
 
 -- Cargo Details
 cargo = "Goods"
-cargoamount = 45
+cargoAmount = 45
 
 title = {}  --stage titles
 text = {}   --mission text
@@ -69,14 +63,12 @@ function create ()
    misn.setNPC( "Drunkard", "none" )  -- creates the drunkard at the bar
    misn.setDesc( bar_desc )           -- drunkard's description
 
-   pickup_sys = system.get(pickupSystem)
-   pickupworld = planet.get(pickupPlanet)
+   -- Planets
+   pickupWorld, pickupSys = planet.get("INSS-2")
+   delivWorld, delivSys = planet.get("Darkshed")
+   origWorld, origSys = planet.cur()
 
-   del_sys = system.get(deliverySystem)
-   delworld = planet.get(deliveryPlanet)
-
-   origplanet, origsys = planet.cur()
-   origtime = time.get()
+--   origtime = time.get()
 end
 
 function accept ()
@@ -93,19 +85,19 @@ function accept ()
       -- mission details
       misn.setTitle( misn_title )
       misn.setReward( misn_reward )
-      misn.setDesc( misn_desc:format(pickupworld:name(), pickup_sys:name(), delworld:name(), del_sys:name() ) )
+      misn.setDesc( misn_desc:format(pickupWorld:name(), pickupSys:name(), delivWorld:name(), delivSys:name() ) )
 
       -- OSD
-      OSDdesc[1] =  OSDdesc[1]:format(pickupPlanet, pickupSystem)
-      OSDdesc[2] =  OSDdesc[2]:format(deliveryPlanet, deliverySystem)
+      OSDdesc[1] =  OSDdesc[1]:format(pickupWorld:name(), pickupSys:name())
+      OSDdesc[2] =  OSDdesc[2]:format(delivWorld:name(), delivSys:name())
 
       pickedup = false
       droppedoff = false
 
-      marker = misn.markerAdd( pickup_sys, "low" )  -- pickup
+      marker = misn.markerAdd( pickupSys, "low" )  -- pickup
       misn.osdCreate( OSDtitle, OSDdesc )  -- OSD
 
-      tk.msg( title[2], text[2]:format( pickupworld:name(), pickup_sys:name(), delworld:name(), del_sys:name() ) )
+      tk.msg( title[2], text[2]:format( pickupWorld:name(), pickupSys:name(), delivWorld:name(), delivSys:name() ) )
 
       landhook = hook.land ("land")
       flyhook = hook.takeoff ("takeoff")
@@ -113,7 +105,7 @@ function accept ()
 end
 
 function land ()
-   if planet.cur() == pickupworld and not pickedup then
+   if planet.cur() == pickupWorld and not pickedup then
       if player.pilot():cargoFree() < 45 then
          tk.msg( title[9], text[9] )  -- Not enough space
          misn.finish()
@@ -121,14 +113,14 @@ function land ()
       else
 
          tk.msg( title[3], text[3] )
-         cargoID = misn.cargoAdd(cargo, cargoamount)  -- adds cargo
+         cargoID = misn.cargoAdd(cargo, cargoAmount)  -- adds cargo
          pickedup = true
 
-         misn.markerMove( marker, del_sys )  -- destination
+         misn.markerMove( marker, delivSys )  -- destination
 
          misn.osdActive(2)  --OSD
       end
-   elseif planet.cur() == delworld and pickedup and not droppedoff then
+   elseif planet.cur() == delivWorld and pickedup and not droppedoff then
       tk.msg( title[4], text[4] )
       misn.cargoRm (cargoID)
 
@@ -140,7 +132,7 @@ function land ()
 end
 
 function takeoff()
-   if system.cur() == del_sys and droppedoff then
+   if system.cur() == delivSys and droppedoff then
 
       willie = pilot.add( "Trader Mule", "trader", pilot.player():pos() + vec2.new(-500,-500))[1]
       willie:rename("Ol Bess")
