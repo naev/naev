@@ -633,13 +633,13 @@ static int pilotL_addFleet( lua_State *L )
             a = RNGF() * 2.*M_PI;
             vectnull( &vv );
          }
-
-         /* Free memory allocated. */
-         if (ind != NULL )
-            free( ind );
-         if (jumpind != NULL)
-            free( jumpind );
       }
+
+      /* Free memory allocated. */
+      if (ind != NULL )
+         free( ind );
+      if (jumpind != NULL)
+         free( jumpind );
    }
 
    /* Set up velocities and such. */
