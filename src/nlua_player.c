@@ -39,6 +39,7 @@
 #include "land_outfits.h"
 #include "gui.h"
 #include "gui_omsg.h"
+#include "pause.h"
 
 
 /* Player methods. */
@@ -593,6 +594,12 @@ static int playerL_cinematics( lua_State *L )
       lua_getfield( L, 2, "2x" );
       f_2x = lua_toboolean(L, -1);
       lua_pop( L, 1 );
+   }
+
+   /* Remove doublespeed. */
+   if (player_isFlag( PLAYER_DOUBLESPEED )) {
+      player_rmFlag( PLAYER_DOUBLESPEED );
+      pause_setSpeed(1.);
    }
 
    if (b) {
