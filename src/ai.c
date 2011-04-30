@@ -1077,7 +1077,7 @@ static Task* ai_createTask( lua_State *L, int subtask )
    func  = luaL_checkstring(L,1);
 
    /* Creates a new AI task. */
-   t = ai_newtask( cur_pilot, func, subtask, 0 );
+   t     = ai_newtask( cur_pilot, func, subtask, 0 );
 
    /* Set the data. */
    if (lua_gettop(L) > 1) {
@@ -1090,7 +1090,8 @@ static Task* ai_createTask( lua_State *L, int subtask )
          lv          = lua_tovector(L,2);
          vectcpy( &t->dat.vec, &lv->vec );
       }
-      else NLUA_INVALID_PARAMETER(L);
+      else 
+         NLUA_INVALID_PARAMETER(L);
    }
 
    return t;
@@ -1215,7 +1216,7 @@ static int aiL_gettarget( lua_State *L )
 static int aiL_pushsubtask( lua_State *L )
 {
    if (cur_pilot->task == NULL) {
-      NLUA_ERROR(L, "");
+      NLUA_ERROR(L, "No task to push subtask to.");
       return 0;
    }
 
