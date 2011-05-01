@@ -233,6 +233,9 @@ int nlua_loadStandard( lua_State *L, int readonly )
 }
 
 
+/**
+ * @brief Gets a trace from Lua.
+ */
 int nlua_errTrace( lua_State *L )
 {
    lua_getglobal(L, "debug");
