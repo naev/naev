@@ -101,7 +101,7 @@ static void print_usage( char **argv )
    LOG("   -N, --nondata         do not use ndata and try to use laid out files");
 #ifdef DEBUGGING
    LOG("   --devmode             enables dev mode perks like the editors");
-   LOG("   --devcsv              generates csv output from the ndata for developement purposes");
+   LOG("   --devcsv              generates csv output from the ndata for development purposes");
 #endif /* DEBUGGING */
    LOG("   -h, --help            display this message and exit");
    LOG("   -v, --version         print the version and exit");
