@@ -217,6 +217,10 @@ lua_State *misn_runStart( Mission *misn, const char *func )
 
    L = misn->L;
 
+#if DEBUGGING
+   lua_pushcfunction(L, nlua_errTrace);
+#endif /* DEBUGGING */
+
    /* Set environment. */
    misn_setEnv( L, misn );
 
@@ -237,7 +241,7 @@ lua_State *misn_runStart( Mission *misn, const char *func )
  */
 int misn_runFunc( Mission *misn, const char *func, int nargs )
 {
-   int i, ret;
+   int i, ret, errf;
    const char* err;
    lua_State *L;
    int misn_delete;
@@ -246,7 +250,13 @@ int misn_runFunc( Mission *misn, const char *func, int nargs )
    /* For comfort. */
    L = misn->L;
 
-   ret = lua_pcall(L, nargs, 0, 0);
+#if DEBUGGING
+   errf = -2-nargs;
+#else /* DEBUGGING */
+   errf = 0;
+#endif /* DEBUGGING */
+
+   ret = lua_pcall(L, nargs, 0, errf);
    cur_mission = misn_getFromLua(L); /* The mission can change if accepted. */
    if (ret != 0) { /* error has occured */
       err = (lua_isstring(L,-1)) ? lua_tostring(L,-1) : NULL;
@@ -259,6 +269,9 @@ int misn_runFunc( Mission *misn, const char *func, int nargs )
          ret = 1;
       lua_pop(L,1);
    }
+#if DEBUGGING
+   lua_pop(L,1);
+#endif /* DEBUGGING */
 
    /* Get delete. */
    lua_getglobal(L,"__misn_delete");
