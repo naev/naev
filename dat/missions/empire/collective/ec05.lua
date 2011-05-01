@@ -303,7 +303,6 @@ function land ()
 
          -- Rewards
          player.modFaction("Empire",-5)
-         var.push( "collective_fail", true )
       else
          -- Successfully killed
          tk.msg( title[4], string.format(text[6], player.name()) )
