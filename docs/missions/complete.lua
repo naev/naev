@@ -179,7 +179,7 @@ function accept ()
    end
 
    -- Check for cargo space and in case there isn't enough free space end the mission. It will keep showing up in the bar.
-   if player.cargoFree() <  3 then
+   if player.pilot():cargoFree() <  3 then
       tk.msg( title, not_enough_cargospace )
       misn.finish()
    end
