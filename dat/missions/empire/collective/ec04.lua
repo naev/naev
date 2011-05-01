@@ -134,16 +134,18 @@ function enter()
         pilot.clear()
         pilot.toggleSpawn(false)
 
-        fleet1 = pilot.add("Empire Flanking Fleet", nil, misn_target:pos() + vec2.new(0, 500))
-        fleet2 = pilot.add("Empire Flanking Fleet", nil, misn_target:pos() + vec2.new(0, -500))
+        local pv = pilot.player():pos()
+
+        fleet1 = pilot.add("Empire Flanking Fleet", nil, pv + vec2.new(-150, 500))
+        fleet2 = pilot.add("Empire Flanking Fleet", nil, pv + vec2.new(-150, -500))
         empireRetreat(fleet1)
         empireRetreat(fleet2)
         fleet1[1]:comm(escort_msg2)
 
         -- TODO: Use heavier Collective ships here
-        swarm1 = pilot.add("Collective Lge Swarm", nil, misn_target:pos() + vec2.new(-3000, 0))
-        swarm2 = pilot.add("Collective Lge Swarm", nil, misn_target:pos() + vec2.new(-3000, 0))
-        swarm3 = pilot.add("Collective Lge Swarm", nil, misn_target:pos() + vec2.new(-3000, 0))
+        swarm1 = pilot.add("Collective Lge Swarm", nil, pv + vec2.new(-3000, 500))
+        swarm2 = pilot.add("Collective Lge Swarm", nil, pv + vec2.new(-3000, 0))
+        swarm3 = pilot.add("Collective Lge Swarm", nil, pv + vec2.new(-3000, -500))
         for i, _ in ipairs(swarm1) do -- Let's be lazy.
             swarm1[i]:setVisplayer()
             swarm2[i]:setVisplayer()
