@@ -967,7 +967,7 @@ static void system_scheduler( double dt, int init )
       p->timer    += lua_tonumber(L,-2);
       /* Handle table if it exists. */
       if (lua_istable(L,-1)) {
-         lua_pushnil(L); /* t, k */
+         lua_pushnil(L); /* tk, k */
          while (lua_next(L,-2) != 0) { /* tk, k, v */
             /* Must be table. */
             if (!lua_istable(L,-1)) {
@@ -2848,12 +2848,16 @@ void system_rmCurrentPresence( StarSystem *sys, int faction, double amount )
    /* Run decrease function if applicable. */
    lua_getglobal( L, "decrease" ); /* f */
    if (lua_isnil(L,-1)) {
+#if DEBUGGING
+      lua_pop(L,2);
+#else /* DEBUGGING */
       lua_pop(L,1);
+#endif /* DEBUGGING */
       return;
    }
    lua_pushnumber( L, presence->curUsed ); /* f, cur */
-   lua_pushnumber( L, presence->value ); /* f, cur, max */
-   lua_pushnumber( L, presence->timer ); /* f, cur, max, timer */
+   lua_pushnumber( L, presence->value );   /* f, cur, max */
+   lua_pushnumber( L, presence->timer );   /* f, cur, max, timer */
 
    /* Actually run the function. */
    if (lua_pcall(L, 3, 1, errf)) { /* error has occured */
@@ -2871,7 +2875,11 @@ void system_rmCurrentPresence( StarSystem *sys, int faction, double amount )
    if (!lua_isnumber(L,-1)) {
       WARN("Lua spawn script for faction '%s' failed to return timer value.",
             faction_name( presence->faction ) );
+#if DEBUGGING
+      lua_pop(L,2);
+#else /* DEBUGGING */
       lua_pop(L,1);
+#endif /* DEBUGGING */
       return;
    }
    presence->timer = lua_tonumber(L,-1);
