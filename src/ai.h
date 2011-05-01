@@ -44,6 +44,7 @@ typedef enum TaskData_ {
 typedef struct Task_ {
    struct Task_* next; /**< Next task */
    char *name; /**< Task name. */
+   int done; /**< Task is done and ready for deletion. */
 
    struct Task_* subtask; /**< Subtasks of the current task. */
 

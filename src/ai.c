@@ -45,6 +45,12 @@
  * the pilot to keep some memory always accesible between runs without having
  * to rely on the storage space a task has.
  *
+ * Garbage Collector
+ *
+ *  The tasks are not deleted directly but are marked for deletion and are then
+ * cleaned up in a garbage collector. This is to avoid accessing invalid task
+ * memory.
+ *
  * @note Nothing in this file can be considered reentrant.  Plan accordingly.
  *
  * @todo Clean up most of the code, it was written as one of the first
@@ -147,6 +153,8 @@ static void ai_setMemory (void);
 static void ai_create( Pilot* pilot, char *param );
 static int ai_loadEquip (void);
 /* Task management. */
+static void ai_taskGC( Pilot* pilot );
+static Task* ai_curTask( Pilot* pilot );
 static Task* ai_createTask( lua_State *L, int subtask );
 static int ai_tasktarget( lua_State *L, Task *t );
 
@@ -380,6 +388,52 @@ static int aiL_status = AI_STATUS_NORMAL; /**< Current AI run status. */
 
 
 /**
+ * @brief Runs the garbage collector on the pilot's tasks.
+ *
+ *    @param pilot Pilot to clean up.
+ */
+static void ai_taskGC( Pilot* pilot )
+{
+   Task *t, *prev, *pointer;
+
+   prev  = NULL;
+   t     = pilot->task;
+   while (t != NULL) {
+      if (t->done) {
+         pointer = t;
+         /* Unattach pointer. */
+         t       = t->next;
+         if (prev == NULL)
+            pilot->task = t;
+         else
+            prev->next  = t;
+         /* Free pointer. */
+         pointer->next = NULL;
+         ai_freetask( pointer );
+      }
+      else {
+         prev    = t;
+         t       = t->next;
+      }
+   }
+}
+
+
+/**
+ * @brief Gets the current running task.
+ */
+static Task* ai_curTask( Pilot* pilot )
+{
+   Task *t;
+   /* Get last task. */
+   for (t=pilot->task; t!=NULL; t=t->next)
+      if (!t->done)
+         return t;
+   return NULL;
+}
+
+
+/**
  * @brief Sets the cur_pilot's ai.
  */
 static void ai_setMemory (void)
@@ -415,6 +469,7 @@ void ai_setPilot( Pilot *p )
  */
 static void ai_run( lua_State *L, const char *funcname )
 {
+   lua_pushcfunction(L, nlua_errTrace);
    lua_getglobal(L, funcname);
 
 #ifdef DEBUGGING
@@ -426,10 +481,11 @@ static void ai_run( lua_State *L, const char *funcname )
    }
 #endif /* DEBUGGING */
 
-   if (lua_pcall(L, 0, 0, 0)) { /* error has occured */
+   if (lua_pcall(L, 0, 0, -2)) { /* error has occured */
       WARN("Pilot '%s' ai -> '%s': %s", cur_pilot->name, funcname, lua_tostring(L,-1));
       lua_pop(L,1);
    }
+   lua_pop(L,1);
 }
 
 
@@ -768,6 +824,7 @@ void ai_think( Pilot* pilot, const double dt )
    (void) dt;
 
    lua_State *L;
+   Task *t;
 
    /* Must have AI. */
    if (cur_pilot->ai == NULL)
@@ -776,16 +833,19 @@ void ai_think( Pilot* pilot, const double dt )
    ai_setPilot(pilot);
    L = cur_pilot->ai->L; /* set the AI profile to the current pilot's */
 
-   /* clean up some variables */
+   /* Clean up some variables */
    pilot_acc         = 0;
    pilot_turn        = 0.;
    pilot_flags       = 0;
    pilot_firemode    = 0;
    cur_pilot->target = cur_pilot->id;
 
+   /* Get current task. */
+   t = ai_curTask( cur_pilot );
+
    /* control function if pilot is idle or tick is up */
    if (!pilot_isFlag(cur_pilot, PILOT_MANUAL_CONTROL) &&
-         ((cur_pilot->tcontrol < 0.) || (cur_pilot->task == NULL))) {
+         ((cur_pilot->tcontrol < 0.) || (t == NULL))) {
       ai_run(L, "control"); /* run control */
       lua_getglobal(L,"control_rate");
       cur_pilot->tcontrol = lua_tonumber(L,-1);
@@ -793,15 +853,15 @@ void ai_think( Pilot* pilot, const double dt )
    }
 
    /* pilot has a currently running task */
-   if (cur_pilot->task != NULL) {
+   else if (t != NULL) {
       /* Run subtask if availible, otherwise run main task. */
-      if (cur_pilot->task->subtask != NULL)
-         ai_run(L, cur_pilot->task->subtask->name);
+      if (t->subtask != NULL)
+         ai_run(L, t->subtask->name);
       else
-         ai_run(L, cur_pilot->task->name);
+         ai_run(L, t->name);
 
       /* If task is over and pilot is in manual control run the idle hook. */
-      if ((cur_pilot->task==NULL) && pilot_isFlag(cur_pilot, PILOT_MANUAL_CONTROL))
+      if (t->done && pilot_isFlag(cur_pilot, PILOT_MANUAL_CONTROL))
          pilot_runHook( cur_pilot, PILOT_HOOK_IDLE );
    }
 
@@ -822,6 +882,9 @@ void ai_think( Pilot* pilot, const double dt )
    /* other behaviours. */
    if (ai_isFlag(AI_DISTRESS))
       pilot_distress(cur_pilot, aiL_distressmsg, 0);
+
+   /* Clean up if necessary. */
+   ai_taskGC( cur_pilot );
 }
 
 
@@ -871,9 +934,7 @@ void ai_refuel( Pilot* refueler, unsigned int target )
    Task *t;
 
    /* Create the task. */
-   t           = malloc(sizeof(Task));
-   t->next     = NULL;
-   t->subtask  = NULL;
+   t           = calloc( 1, sizeof(Task) );
    t->name     = strdup("refuel");
    t->dtype    = TASKDATA_INT;
    t->dat.num  = target;
@@ -999,12 +1060,10 @@ static void ai_create( Pilot* pilot, char *param )
  */
 Task *ai_newtask( Pilot *p, const char *func, int subtask, int pos )
 {
-   Task *t, *pointer;
+   Task *t, *curtask, *pointer;
 
    /* Create the new task. */
-   t           = malloc( sizeof(Task) );
-   t->next     = NULL;
-   t->subtask  = NULL;
+   t           = calloc( 1, sizeof(Task) );
    t->name     = strdup(func);
    t->dtype    = TASKDATA_NULL;
 
@@ -1021,17 +1080,21 @@ Task *ai_newtask( Pilot *p, const char *func, int subtask, int pos )
    }
    else {
       /* Must have valid task. */
-      if (p->task == NULL)
+      curtask = ai_curTask( p );
+      if (curtask == NULL) {
+         WARN("Trying to add subtask '%s' to non-existant task.", func);
+         ai_freetask( t );
          return NULL;
+      }
 
       /* Add the subtask. */
-      if ((pos == 1) && (p->task->subtask != NULL)) { /* put at the end */
-         for (pointer = p->task->subtask; pointer->next != NULL; pointer = pointer->next);
+      if ((pos == 1) && (curtask->subtask != NULL)) { /* put at the end */
+         for (pointer = curtask->subtask; pointer->next != NULL; pointer = pointer->next);
          pointer->next = t;
       }
       else {
-         t->next           = p->task->subtask;
-         p->task->subtask  = t;
+         t->next           = curtask->subtask;
+         curtask->subtask  = t;
       }
    }
 
@@ -1157,18 +1220,15 @@ static int aiL_pushtask( lua_State *L )
  */
 static int aiL_poptask( lua_State *L )
 {
-   (void)L; /* hack to avoid -W -Wall warnings */
-   Task* t = cur_pilot->task;
+   Task* t = ai_curTask( cur_pilot );
 
    /* Tasks must exist. */
    if (t == NULL) {
-      NLUA_DEBUG("Trying to pop task when there are no tasks on the stack.");
+      NLUA_ERROR(L, "Trying to pop task when there are no tasks on the stack.");
       return 0;
    }
 
-   cur_pilot->task   = t->next;
-   t->next           = NULL;
-   ai_freetask(t);
+   t->done = 1;
    return 0;
 }
 
@@ -1181,8 +1241,9 @@ static int aiL_poptask( lua_State *L )
  */
 static int aiL_taskname( lua_State *L )
 {
-   if (cur_pilot->task)
-      lua_pushstring(L, cur_pilot->task->name);
+   Task *t = ai_curTask( cur_pilot );
+   if (t)
+      lua_pushstring(L, t->name);
    else
       lua_pushstring(L, "none");
    return 1;
@@ -1197,11 +1258,13 @@ static int aiL_taskname( lua_State *L )
  */
 static int aiL_gettarget( lua_State *L )
 {
+   Task *t = ai_curTask( cur_pilot );
+
    /* Must have a task. */
-   if (cur_pilot->task == NULL)
+   if (t == NULL)
       return 0;
 
-   return ai_tasktarget( L, cur_pilot->task );
+   return ai_tasktarget( L, t );
 }
 
 /**
@@ -1215,11 +1278,6 @@ static int aiL_gettarget( lua_State *L )
  */
 static int aiL_pushsubtask( lua_State *L )
 {
-   if (cur_pilot->task == NULL) {
-      NLUA_ERROR(L, "No task to push subtask to.");
-      return 0;
-   }
-
    ai_createTask(L, 1);
    return 0;
 }
@@ -1232,23 +1290,22 @@ static int aiL_pushsubtask( lua_State *L )
  */
 static int aiL_popsubtask( lua_State *L )
 {
-   (void) L;
    Task *t, *st;
-   t = cur_pilot->task;
+   t = ai_curTask( cur_pilot );
 
    /* Tasks must exist. */
    if (t == NULL) {
-      NLUA_DEBUG("Trying to pop task when there are no tasks on the stack.");
+      NLUA_ERROR(L, "Trying to pop task when there are no tasks on the stack.");
       return 0;
    }
    if (t->subtask == NULL) {
-      NLUA_DEBUG("Trying to pop subtask when there are no subtasks for the task '%s'.", t->name);
+      NLUA_ERROR(L, "Trying to pop subtask when there are no subtasks for the task '%s'.", t->name);
       return 0;
    }
 
    /* Exterminate, annihilate destroy. */
    st          = t->subtask;
-   t->subtask  =  st->next;
+   t->subtask  = st->next;
    st->next    = NULL;
    ai_freetask(st);
    return 0;
@@ -1263,8 +1320,9 @@ static int aiL_popsubtask( lua_State *L )
  */
 static int aiL_subtaskname( lua_State *L )
 {
-   if ((cur_pilot->task != NULL) && (cur_pilot->task->subtask != NULL))
-      lua_pushstring(L, cur_pilot->task->subtask->name);
+   Task *t = ai_curTask( cur_pilot );
+   if ((t != NULL) && (t->subtask != NULL))
+      lua_pushstring(L, t->subtask->name);
    else
       lua_pushstring(L, "none");
    return 1;
@@ -1279,11 +1337,12 @@ static int aiL_subtaskname( lua_State *L )
  */
 static int aiL_getsubtarget( lua_State *L )
 {
+   Task *t = ai_curTask( cur_pilot );
    /* Must have a subtask. */
-   if ((cur_pilot->task == NULL) || (cur_pilot->task->subtask == NULL))
+   if ((t == NULL) || (t->subtask == NULL))
       return 0;
 
-   return ai_tasktarget( L, cur_pilot->task->subtask );
+   return ai_tasktarget( L, t->subtask );
 }
 
 /**
@@ -1971,7 +2030,8 @@ static int aiL_face( lua_State *L )
       lv = lua_tovector(L,1);
       tv = &lv->vec;
    }
-   else NLUA_INVALID_PARAMETER(L);
+   else 
+      NLUA_INVALID_PARAMETER(L);
 
    /* Default gain. */
    k_diff = 10.;
