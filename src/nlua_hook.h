@@ -15,6 +15,7 @@ int nlua_loadHook( lua_State *L );
 
 /* Misc. */
 int hookL_getarg( lua_State *L, unsigned int hook );
+void hookL_unsetarg( lua_State *L, unsigned int hook );
 
 
 #endif /* NLUA_HOOK */

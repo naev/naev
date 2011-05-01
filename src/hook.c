@@ -127,6 +127,7 @@ static int hook_loadingstack  = 0; /**< Check if the hooks are being loaded. */
 static int hooks_executeParam( const char* stack, HookParam *param );
 static void hooks_updateDateExecute( ntime_t change );
 /* intern */
+static void hook_rmRaw( Hook *h );
 static void hooks_purgeList (void);
 static Hook* hook_get( unsigned int id );
 static unsigned int hook_genID (void);
@@ -142,6 +143,8 @@ static int hook_parse( xmlNodePtr base );
 /* externed */
 int hook_save( xmlTextWriterPtr writer );
 int hook_load( xmlNodePtr parent );
+/* Misc. */
+static Mission *hook_getMission( Hook *hook );
 
 
 /** 
@@ -292,7 +295,6 @@ static int hook_parseParam( lua_State *L, HookParam *param )
  */
 static int hook_runMisn( Hook *hook, HookParam *param, int claims )
 {
-   int i;
    unsigned int id;
    Mission* misn;
    lua_State *L;
@@ -309,15 +311,12 @@ static int hook_runMisn( Hook *hook, HookParam *param, int claims )
    }
 
    /* Locate the mission */
-   for (i=0; i<MISSION_MAX; i++)
-      if (player_missions[i].id == hook->u.misn.parent)
-         break;
-   if (i>=MISSION_MAX) {
+   misn = hook_getMission( hook );
+   if (misn == NULL) {
       WARN("Trying to run hook with parent not in player mission stack: deleting");
       hook->delete = 1; /* so we delete it */
       return -1;
    }
-   misn = &player_missions[i];
 
    /* Make sure it's claimed. */
    if ((claims > 0) && (claim_testSys(misn->claims, cur_system->id) != claims))
@@ -325,7 +324,7 @@ static int hook_runMisn( Hook *hook, HookParam *param, int claims )
 
    /* Delete if only supposed to run once. */
    if (hook->once)
-      hook->delete = 1;
+      hook_rmRaw( hook );
 
    /* Set up hook parameters. */
    L = misn_runStart( misn, hook->u.misn.func );
@@ -355,7 +354,6 @@ static int hook_runMisn( Hook *hook, HookParam *param, int claims )
 static int hook_runEvent( Hook *hook, HookParam *param, int claims )
 {
    int ret;
-   unsigned int id;
    lua_State *L;
    int n;
 
@@ -365,10 +363,7 @@ static int hook_runEvent( Hook *hook, HookParam *param, int claims )
 
    /* Delete if only supposed to run once. */
    if (hook->once)
-      hook->delete = 1;
-
-   /* Simplicity. */
-   id = hook->id;
+      hook_rmRaw( hook );
 
    /* Set up hook parameters. */
    L = event_runStart( hook->u.event.parent, hook->u.event.func );
@@ -381,14 +376,14 @@ static int hook_runEvent( Hook *hook, HookParam *param, int claims )
    n = hook_parseParam( L, param );
 
    /* Add hook parameters. */
-   hookL_getarg( L, id );
+   hookL_getarg( L, hook->id );
    n++;
 
    /* Run the hook. */
    ret = event_runFunc( hook->u.event.parent, hook->u.event.func, n );
    hook->ran_once = 1;
    if (ret < 0) {
-      hook_rm( id );
+      hook_rmRaw( hook );
       WARN("Hook [%s] '%d' -> '%s' failed", hook->stack,
             hook->id, hook->u.event.func);
       return -1;
@@ -792,7 +787,7 @@ void hooks_update( double dt )
 
          /* Run the timer hook. */
          hook_run( h, NULL, j );
-         h->delete = 1; /* Mark for deletion. */
+         hook_rmRaw( h );
       }
    }
    hook_runningstack--; /* not running hooks anymore */
@@ -827,6 +822,19 @@ unsigned hook_addFunc( int (*func)(void*), void* data, const char *stack )
 
 
 /**
+ * @brief Gets the mission of a hook.
+ */
+static Mission *hook_getMission( Hook *hook )
+{
+   int i;
+   for (i=0; i<MISSION_MAX; i++)
+      if (player_missions[i].id == hook->u.misn.parent)
+         return &player_missions[i];
+   return NULL;
+}
+
+
+/**
  * @brief Removes a hook.
  *
  *    @param id Identifier of the hook to remove.
@@ -838,7 +846,34 @@ void hook_rm( unsigned int id )
    h = hook_get( id );
    if (h==NULL)
       return;
+   hook_rmRaw( h );
+}
+
+
+/**
+ * @brief Removes a hook.
+ */
+static void hook_rmRaw( Hook *h )
+{
+   Mission *misn;
+   Event_t *evt;
    h->delete = 1;
+   switch (h->type) {
+      case HOOK_TYPE_MISN:
+         misn = hook_getMission( h );
+         if (misn != NULL)
+            hookL_unsetarg( misn->L, h->id );
+         break;
+
+      case HOOK_TYPE_EVENT:
+         evt = event_get( h->u.event.parent );
+         if (evt != NULL)
+            hookL_unsetarg( evt->L, h->id );
+         break;
+
+      default:
+         break;
+   }
 }
 
 
