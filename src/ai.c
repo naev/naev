@@ -469,7 +469,13 @@ void ai_setPilot( Pilot *p )
  */
 static void ai_run( lua_State *L, const char *funcname )
 {
+   int errf;
+#if DEBUGGING
    lua_pushcfunction(L, nlua_errTrace);
+   errf = -2;
+#else /* DEBUGGING */
+   errf = 0;
+#endif /* DEBUGGING */
    lua_getglobal(L, funcname);
 
 #ifdef DEBUGGING
@@ -481,11 +487,13 @@ static void ai_run( lua_State *L, const char *funcname )
    }
 #endif /* DEBUGGING */
 
-   if (lua_pcall(L, 0, 0, -2)) { /* error has occured */
+   if (lua_pcall(L, 0, 0, errf)) { /* error has occured */
       WARN("Pilot '%s' ai -> '%s': %s", cur_pilot->name, funcname, lua_tostring(L,-1));
       lua_pop(L,1);
    }
-   lua_pop(L,1);
+#if DEBUGGING
+   lua_pop(L,1); /* Pop the cfunction. */
+#endif /* DEBUGGING */
 }
 
 
@@ -896,6 +904,7 @@ void ai_think( Pilot* pilot, const double dt )
  */
 void ai_attacked( Pilot* attacked, const unsigned int attacker )
 {
+   int errf;
    lua_State *L;
    HookParam hparam;
 
@@ -914,12 +923,23 @@ void ai_attacked( Pilot* attacked, const unsigned int attacker )
 
    ai_setPilot( attacked ); /* Sets cur_pilot. */
    L = cur_pilot->ai->L;
+
+#if DEBUGGING
+   lua_pushcfunction(L, nlua_errTrace);
+   errf = -3;
+#else /* DEBUGGING */
+   errf = 0;
+#endif /* DEBUGGING */
+
    lua_getglobal(L, "attacked");
    lua_pushnumber(L, attacker);
-   if (lua_pcall(L, 1, 0, 0)) {
+   if (lua_pcall(L, 1, 0, errf)) {
       WARN("Pilot '%s' ai -> 'attacked': %s", cur_pilot->name, lua_tostring(L,-1));
       lua_pop(L,1);
    }
+#if DEBUGGING
+   lua_pop(L,1);
+#endif /* DEBUGGING */
 }
 
 
@@ -956,6 +976,7 @@ void ai_refuel( Pilot* refueler, unsigned int target )
 void ai_getDistress( Pilot* p, const Pilot* distressed )
 {
    lua_State *L;
+   int errf;
 
    /* Ignore distress signals when under manual control. */
    if (pilot_isFlag( p, PILOT_MANUAL_CONTROL ))
@@ -969,20 +990,33 @@ void ai_getDistress( Pilot* p, const Pilot* distressed )
    ai_setPilot(p);
    L = cur_pilot->ai->L;
 
+#if DEBUGGING
+   lua_pushcfunction(L, nlua_errTrace);
+   errf = -4;
+#else /* DEBUGGING */
+   errf = 0;
+#endif /* DEBUGGING */
+
    /* See if function exists. */
    lua_getglobal(L, "distress");
    if (lua_isnil(L,-1)) {
       lua_pop(L,1);
+#if DEBUGGING
+      lua_pop(L,1);
+#endif /* DEBUGGING */
       return;
    }
 
    /* Run the function. */
    lua_pushnumber(L, distressed->id);
    lua_pushnumber(L, distressed->target);
-   if (lua_pcall(L, 2, 0, 0)) {
+   if (lua_pcall(L, 2, 0, errf)) {
       WARN("Pilot '%s' ai -> 'distress': %s", cur_pilot->name, lua_tostring(L,-1));
       lua_pop(L,1);
    }
+#if DEBUGGING
+   lua_pop(L,1);
+#endif /* DEBUGGING */
 }
 
 
@@ -999,6 +1033,16 @@ static void ai_create( Pilot* pilot, char *param )
    LuaPilot lp;
    LuaFaction lf;
    lua_State *L;
+   int errf, nparam;
+
+   L = equip_L;
+
+#if DEBUGGING
+   lua_pushcfunction(L, nlua_errTrace);
+   errf = -4;
+#else /* DEBUGGING */
+   errf = 0;
+#endif /* DEBUGGING */
 
    /* Set creation mode. */
    if (!pilot_isFlag(pilot, PILOT_CREATED_AI))
@@ -1007,17 +1051,19 @@ static void ai_create( Pilot* pilot, char *param )
    /* Create equipment first - only if creating for the first time. */
    if (!pilot_isFlag(pilot,PILOT_PLAYER) && ((aiL_status==AI_STATUS_CREATE) ||
             !pilot_isFlag(pilot, PILOT_EMPTY))) {
-      L = equip_L;
       lua_getglobal(L, "equip");
       lp.pilot = pilot->id;
       lua_pushpilot(L,lp);
       lf.f = pilot->faction;
       lua_pushfaction(L,lf);
-      if (lua_pcall(L, 2, 0, 0)) { /* Error has occurred. */
+      if (lua_pcall(L, 2, 0, errf)) { /* Error has occurred. */
          WARN("Pilot '%s' equip -> '%s': %s", pilot->name, "equip", lua_tostring(L,-1));
          lua_pop(L,1);
       }
    }
+#if DEBUGGING
+   lua_pop(L,1);
+#endif /* DEBUGGING */
 
    /* Must have AI. */
    if (pilot->ai == NULL)
@@ -1026,8 +1072,16 @@ static void ai_create( Pilot* pilot, char *param )
    /* Prepare AI. */
    ai_setPilot( pilot );
 
-   /* Prepare stack. */
    L = cur_pilot->ai->L;
+   nparam = (param!=NULL) ? 1 : 0;
+#if DEBUGGING
+   lua_pushcfunction(L, nlua_errTrace);
+   errf = -2-nparam;
+#else /* DEBUGGING */
+   errf = 0;
+#endif /* DEBUGGING */
+
+   /* Prepare stack. */
    lua_getglobal(L, "create");
 
    /* Parse parameter. */
@@ -1044,10 +1098,13 @@ static void ai_create( Pilot* pilot, char *param )
    }
 
    /* Run function. */
-   if (lua_pcall(L, (param!=NULL) ? 1 : 0, 0, 0)) { /* error has occured */
+   if (lua_pcall(L, nparam, 0, errf)) { /* error has occured */
       WARN("Pilot '%s' ai -> '%s': %s", cur_pilot->name, "create", lua_tostring(L,-1));
       lua_pop(L,1);
    }
+#if DEBUGGING
+   lua_pop(L,1);
+#endif /* DEBUGGING */
 
    /* Recover normal mode. */
    if (!pilot_isFlag(pilot, PILOT_CREATED_AI))
