@@ -291,9 +291,7 @@ case "$used_lua" in
     AS_IF([test "$have_lua" = "no"], [AC_WARN([Lua is set to shared but can not find library; using internal Lua])])
     ;;
   *)
-    LUA_CFLAGS="-I\"\$(top_srcdir)/lib/lua\""
-    LUA_LIBS="\$(top_builddir)/lib/lua/liblua.a"
-    have_lua=yes
+    have_lua=no
     ;;
 esac
 AS_IF([test "$have_lua" = "no"], [
