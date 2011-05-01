@@ -141,17 +141,34 @@ void music_update( double dt )
  */
 static int music_runLua( const char *situation )
 {
+   int errf;
+   lua_State *L;
+
    if (music_disabled)
       return 0;
 
+   L = music_lua;
+
+#if DEBUGGING
+   lua_pushcfunction(L, nlua_errTrace);
+   errf = -3;
+#else /* DEBUGGING */
+   errf = 0;
+#endif /* DEBUGGING */
+
    /* Run the choose function in Lua. */
-   lua_getglobal( music_lua, "choose" );
+   lua_getglobal( L, "choose" );
    if (situation != NULL)
-      lua_pushstring( music_lua, situation );
+      lua_pushstring( L, situation );
    else
-      lua_pushnil( music_lua );
-   if (lua_pcall(music_lua, 1, 0, 0)) /* error has occured */
-      WARN("Error while choosing music: %s", lua_tostring(music_lua,-1));
+      lua_pushnil( L );
+   if (lua_pcall(L, 1, 0, errf)) { /* error has occured */
+      WARN("Error while choosing music: %s", lua_tostring(L,-1));
+      lua_pop(L,1);
+   }
+#if DEBUGGING
+   lua_pop(L,1);
+#endif /* DEBUGGING */
 
    return 0;
 }
