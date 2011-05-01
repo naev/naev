@@ -377,18 +377,18 @@ function nextStage()
     deathsFLF = 0
     hook.rm( tim_sec ) -- Stop security timer
     if stage == 1 then
-        player.msg("Starting stage 2.")
+        --player.msg("Starting stage 2.")
         hook.timer(1000, "spawnFLFbombers")
         hook.timer(5000, "spawnFLFfighters")
         tim_sec = hook.timer(90000, "nextStage")
     elseif stage == 2 then
-        player.msg("Starting stage 3.")
+        --player.msg("Starting stage 3.")
         hook.timer(1000, "spawnFLFfighters")
         hook.timer(3000, "spawnFLFbombers")
         hook.timer(5000, "spawnFLFbombers")
         tim_sec = hook.timer(90000, "nextStage")
     else
-        player.msg("Starting stage 4.")
+        --player.msg("Starting stage 4.")
         local delay = 0
         hook.timer(delay, "playerControl", true)
         hook.timer(delay, "zoomTo", obstinate)
