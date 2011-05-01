@@ -302,8 +302,13 @@ AS_IF([test "$have_lua" = "no"], [
 ])
 
 
-PKG_CHECK_MODULES([CSPARSE], [csparse], [
+AC_CHECK_LIB([csparse], [cs_spalloc], [have_csparse_lib=yes], [have_csparse_lib=no])
+AC_CHECK_LIB([cxsparse], [cs_di_spalloc], [have_cxsparse_lib=yes], [have_cxsparse_lib=no])
+AC_CHECK_HEADERS([cs.h], [have_cs_h=yes], [have_cs_h=no])
+AC_CHECK_HEADERS([suitesparse/cs.h], [have_suitesparse_cs_h=yes], [have_suitesparse_cs_h=no])
+AS_IF([test $have_csparse_lib = yes -a $have_cxsparse_lib = yes -a \( $have_cs_h = yes -o $have_suitesparse_cs_h = yes \)], [
    used_csparse=shared
+   CSPARSE_LIBS="-lcsparse -lcxsparse"
 ], [
    used_csparse=internal
    CSPARSE_CFLAGS="-I\"\$(top_srcdir)/lib/csparse\""

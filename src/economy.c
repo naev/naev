@@ -21,7 +21,11 @@
 #include <string.h>
 #include <stdint.h>
 
+#ifdef HAVE_SUITESPARSE_CS_H
+#include <suitesparse/cs.h>
+#else
 #include <cs.h>
+#endif
 
 #include "nxml.h"
 #include "ndata.h"
