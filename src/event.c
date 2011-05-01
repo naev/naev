@@ -88,7 +88,6 @@ static int event_mactive         = 0; /**< Allocated space for active events. */
  * Prototypes.
  */
 static unsigned int event_genID (void);
-static Event_t *event_get( unsigned int eventid );
 static int event_parse( EventData_t *temp, const xmlNodePtr parent );
 static void event_freeData( EventData_t *event );
 static int event_create( int dataid, unsigned int *id );
@@ -100,7 +99,7 @@ static int events_parseActive( xmlNodePtr parent );
 /**
  * @brief Gets an event.
  */
-static Event_t *event_get( unsigned int eventid )
+Event_t *event_get( unsigned int eventid )
 {
    int i;
    Event_t *ev;
@@ -139,7 +138,6 @@ int event_start( const char *name, unsigned int *id )
       *id = eid;
    return ret;
 }
-
 
 
 /**
