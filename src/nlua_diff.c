@@ -18,8 +18,8 @@
 #include <string.h>
 #include <math.h>
 
-#include "lua.h"
-#include "lauxlib.h"
+#include <lua.h>
+#include <lauxlib.h>
 
 #include "nlua.h"
 #include "nluadef.h"

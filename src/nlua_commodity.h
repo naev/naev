@@ -7,7 +7,7 @@
 #  define NLUA_COMMODITY_H
 
 
-#include "lua.h"
+#include <lua.h>
 
 #include "economy.h"
 

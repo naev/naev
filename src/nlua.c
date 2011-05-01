@@ -12,7 +12,7 @@
 
 #include "naev.h"
 
-#include "lauxlib.h"
+#include <lauxlib.h>
 
 #include "nluadef.h"
 #include "log.h"

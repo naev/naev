@@ -6,7 +6,7 @@
 #ifndef NLUA_VAR
 #  define NLUA_VAR
 
-#include "lua.h"
+#include <lua.h>
 
 
 /* checks if a flag exists on the variable stack */

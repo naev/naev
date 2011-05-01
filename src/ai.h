@@ -9,7 +9,7 @@
 
 
 /* yay lua */
-#include "lua.h"
+#include <lua.h>
 
 #include "physics.h"
 

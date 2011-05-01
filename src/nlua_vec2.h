@@ -7,7 +7,7 @@
 #  define NLUA_VEC2_H
 
 
-#include "lua.h"
+#include <lua.h>
 #include "physics.h"
 
 

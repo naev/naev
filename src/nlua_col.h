@@ -7,7 +7,7 @@
 #  define NLUA_COL_H
 
 
-#include "lua.h"
+#include <lua.h>
 
 #include "colour.h"
 

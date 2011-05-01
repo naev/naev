@@ -14,7 +14,7 @@
 
 #include "naev.h"
 
-#include "lauxlib.h"
+#include <lauxlib.h>
 
 #include "nlua.h"
 #include "nluadef.h"

@@ -7,7 +7,7 @@
 #  define NLUA_H
 
 
-#include "lua.h"
+#include <lua.h>
 
 
 /*

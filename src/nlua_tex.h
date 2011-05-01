@@ -7,7 +7,7 @@
 #  define NLUA_TEX_H
 
 
-#include "lua.h"
+#include <lua.h>
 
 #include "opengl.h"
 

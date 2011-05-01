@@ -14,7 +14,7 @@
 #include <getopt.h> /* getopt_long */
 
 #include "nlua.h"
-#include "lauxlib.h" /* luaL_dofile */
+#include <lauxlib.h> /* luaL_dofile */
 
 #include "log.h"
 #include "player.h"

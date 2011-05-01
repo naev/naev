@@ -7,7 +7,7 @@
 #  define NLUA_RND_H
 
 
-#include "lua.h"
+#include <lua.h>
 
 
 int nlua_loadRnd( lua_State *L ); /* always read only */

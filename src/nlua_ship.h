@@ -7,7 +7,7 @@
 #  define NLUA_SHIP_H
 
 
-#include "lua.h"
+#include <lua.h>
 
 #include "ship.h"
 

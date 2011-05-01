@@ -7,7 +7,7 @@
 #  define NLUA_FACTION_H
 
 
-#include "lua.h"
+#include <lua.h>
 
 
 #define FACTION_METATABLE  "faction" /**< Faction metatable identifier. */

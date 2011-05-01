@@ -8,7 +8,7 @@
 
 
 #include "event.h"
-#include "lua.h"
+#include <lua.h>
 
 
 /* Run Lua for an event. */

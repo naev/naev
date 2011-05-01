@@ -21,7 +21,7 @@
 #include "array.h"
 #include "dialogue.h"
 #include "event.h"
-#include "lua.h"
+#include <lua.h>
 
 
 /**

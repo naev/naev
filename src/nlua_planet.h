@@ -7,7 +7,7 @@
 #  define NLUA_PLANET_H
 
 
-#include "lua.h"
+#include <lua.h>
 
 #include "space.h"
 

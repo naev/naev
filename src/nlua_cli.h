@@ -7,7 +7,7 @@
 #  define NLUA_CLI_H
 
 
-#include "lua.h"
+#include <lua.h>
 
 
 int nlua_loadCLI( lua_State *L ); /* always write only */

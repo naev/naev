@@ -7,7 +7,7 @@
 #  define NLUA_SYSTEM_H
 
 
-#include "lua.h"
+#include <lua.h>
 
 #include "space.h"
 

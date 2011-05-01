@@ -7,7 +7,7 @@
 #  define NLUA_TUT_H
 
 
-#include "lua.h"
+#include <lua.h>
 
 
 int nlua_loadTut( lua_State *L ); /* always non-read only */

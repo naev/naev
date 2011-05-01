@@ -8,7 +8,7 @@
 #  define MUSIC_H
 
 
-#include "lua.h"
+#include <lua.h>
 
 
 extern int music_disabled;

@@ -72,8 +72,8 @@
 #include <ctype.h> /* isdigit */
 
 /* yay more lua */
-#include "lauxlib.h"
-#include "lualib.h"
+#include <lauxlib.h>
+#include <lualib.h>
 
 #include "log.h"
 #include "pilot.h"

@@ -7,7 +7,7 @@
 #  define NLUA_TIME_H
 
 
-#include "lua.h"
+#include <lua.h>
 
 #include "ntime.h"
 

@@ -7,7 +7,7 @@
 #  define NLUA_GFX_H
 
 
-#include "lua.h"
+#include <lua.h>
 
 
 /*

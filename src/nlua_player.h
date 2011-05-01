@@ -6,7 +6,7 @@
 #ifndef NLUA_PLAYER
 #  define NLUA_PLAYER
 
-#include "lua.h"
+#include <lua.h>
 
 
 /* individual library stuff */

@@ -8,7 +8,7 @@
 #  define NLUA_MUSIC_H
 
 
-#include "lua.h"
+#include <lua.h>
 
 
 /*
