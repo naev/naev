@@ -21,7 +21,7 @@
 #include <string.h>
 #include <stdint.h>
 
-#include "cs.h"
+#include <cs.h>
 
 #include "nxml.h"
 #include "ndata.h"
