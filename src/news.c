@@ -328,7 +328,7 @@ void news_exit (void)
  */
 const news_t *news_generate( int *ngen, int n )
 {
-   int i;
+   int i, errf;
    lua_State *L;
 
    /* Lazy allocation. */
@@ -346,12 +346,23 @@ const news_t *news_generate( int *ngen, int n )
    if (ngen != NULL)
       (*ngen)  = 0;
 
+#if DEBUGGING
+   lua_pushcfunction(L, nlua_errTrace);
+   errf = -3;
+#else /* DEBUGGING */
+   errf = 0;
+#endif /* DEBUGGING */
+
    /* Run the function. */
    lua_getglobal(L, "news"); /* f */
    lua_pushnumber(L, n); /* f, n */
-   if (lua_pcall(L, 1, 2, 0)) { /* error has occured */
+   if (lua_pcall(L, 1, 2, errf)) { /* error has occured */
       WARN("News: '%s' : %s", "news", lua_tostring(L,-1));
+#if DEBUGGING
       lua_pop(L,2);
+#else /* DEBUGGING */
+      lua_pop(L,1);
+#endif /* DEBUGGING */
       return NULL;
    }
    /* str, t */
@@ -359,7 +370,11 @@ const news_t *news_generate( int *ngen, int n )
    /* Check to see if it's valid. */
    if (!lua_isstring(L, -2) || !lua_istable(L, -1)) {
       WARN("News generated invalid output!");
+#if DEBUGGING
+      lua_pop(L,3);
+#else /* DEBUGGING */
       lua_pop(L,2);
+#endif /* DEBUGGING */
       return NULL;
    }
 
@@ -391,7 +406,11 @@ const news_t *news_generate( int *ngen, int n )
    /* str, table */
 
    /* Clean up results. */
-   lua_pop(L,2); /* */
+#if DEBUGGING
+   lua_pop(L,3);
+#else /* DEBUGGING */
+   lua_pop(L,2);
+#endif /* DEBUGGING */
 
    /* Save news found. */
    news_nbuf   = i;
