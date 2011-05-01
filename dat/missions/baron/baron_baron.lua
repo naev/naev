@@ -42,8 +42,10 @@ else -- default english
     title[5] = "No bad deed goes unrewarded"
     text[5] = [[    When you arrive at your ship's airlock, the chest containing the Dvaered holopainting is already being carted onto the Pinnacle by a pair of crewmen. "You'll be wanting your reward, eh? Come along", one of them yells at you. They both chuckle and head off down the corridor..
     You follow the crewmen as they push the cart through the main corridor of the ship. Soon you arrive at a door leading to a large, luxurious compartment. You can tell at a glance that these are Baron Sauterfeldt's personal quarters. The Baron himself is present. He is a fat man, wearing a tailored suit that manages to make him look stately rather than pompous, a monocle and several rings on each finger. In a word, the Baron has a taste for the extravagant.
-    "Ah, my holopainting," he coos as the chest is being carried into his quarters. "At last, I've been waiting forever." The Baron does not seem to be aware of your presence at all. He continues to fuss over the holopainting even as his crewman strip away the chest and lift the frame up to the wall.
-    You look around his quarters. All sorts of exotic blades and other "art" works adorn his room, along with tapestries and various other holopaintings. You notice a bowl atop a velvet rug with "Fluffles" on it. Hanging above it seems to be a precariously balanced ancient blade.
+    "Ah, my holopainting," he coos as the chest is being carried into his quarters. "At last, I've been waiting forever." The Baron does not seem to be aware of your presence at all. He continues to fuss over the holopainting even as his crewman strip away the chest and lift the frame up to the wall.]]
+
+    title[6] = "The Baron's Quarters"
+    text[6] = [[    You look around his quarters. All sorts of exotic blades and other "art" works adorn his room, along with tapestries and various other holopaintings. You notice a bowl atop a velvet rug with "Fluffles" on it. Hanging above it seems to be a precariously balanced ancient blade.
     The crewmen finally unpack the holopainting. You glance at the three dimensional depiction of a Dvaered warlord, who seems to be discussing strategy with his staff. Unfortunately you don't seem to be able to appreciate Dvaered art, and you lose interest almost right away.
     You cough to get the Baron's attention. He looks up, clearly displeased at the disturbance, then notices you for the first time. "Ah, of course," he grunts. "I suppose you must be paid for your service. Here, have some credits. Now leave me alone. I have art to admire." The Baron tosses you a couple of credit chips, and then you are once again air to him. You are left with little choice but to return to your ship, undock, and be on your way.]]
     
@@ -151,6 +153,7 @@ end
 
 function board()
     tk.msg(title[5], text[5])
+    tk.msg(title[6], text[6])
     player.pay( credits )
     player.refuel()
     player.unboard()
