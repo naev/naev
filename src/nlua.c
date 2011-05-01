@@ -238,6 +238,12 @@ int nlua_loadStandard( lua_State *L, int readonly )
  */
 int nlua_errTrace( lua_State *L )
 {
+   /* Handle special done case. */
+   const char *str = luaL_checkstring(L,1);
+   if (strcmp(str,NLUA_DONE)==0)
+      return 1;
+
+   /* Otherwise execute "debug.traceback( str, int )". */
    lua_getglobal(L, "debug");
    if (!lua_istable(L, -1)) {
       lua_pop(L, 1);
@@ -253,4 +259,6 @@ int nlua_errTrace( lua_State *L )
    lua_call(L, 2, 1);
    return 1;
 }
+
+
 
