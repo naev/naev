@@ -72,6 +72,7 @@ function __goto_precise ()
    -- Handle finished
    if ai.isstopped() and dist < 10 then
       ai.poptask() -- Finished
+      return
    end
 
    local bdist    = ai.minbrakedist()
