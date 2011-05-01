@@ -151,7 +151,7 @@ int event_runLuaFunc( Event_t *ev, const char *func, int nargs )
    ret = lua_pcall(L, nargs, 0, errf);
    if (ret != 0) { /* error has occured */
       err = (lua_isstring(L,-1)) ? lua_tostring(L,-1) : NULL;
-      if ((err==NULL) || (strcmp(err,"__done__")!=0)) {
+      if ((err==NULL) || (strcmp(err,NLUA_DONE)!=0)) {
          WARN("Event '%s' -> '%s': %s",
                event_getData(ev->id), func, (err) ? err : "unknown error");
          ret = -1;
@@ -273,7 +273,7 @@ static int evt_finish( lua_State *L )
    if (b && event_isUnique(cur_event->id))
       player_eventFinished( cur_event->data );
 
-   lua_pushstring(L, "__done__");
+   lua_pushstring(L, NLUA_DONE);
    lua_error(L); /* shouldn't return */
 
    return 0;

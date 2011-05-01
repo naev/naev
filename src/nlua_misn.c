@@ -260,7 +260,7 @@ int misn_runFunc( Mission *misn, const char *func, int nargs )
    cur_mission = misn_getFromLua(L); /* The mission can change if accepted. */
    if (ret != 0) { /* error has occured */
       err = (lua_isstring(L,-1)) ? lua_tostring(L,-1) : NULL;
-      if ((err==NULL) || (strcmp(err,"__done__")!=0)) {
+      if ((err==NULL) || (strcmp(err,NLUA_DONE)!=0)) {
          WARN("Mission '%s' -> '%s': %s",
                cur_mission->data->name, func, (err) ? err : "unknown error");
          ret = -1;
@@ -648,7 +648,7 @@ static int misn_finish( lua_State *L )
    if (lua_isboolean(L,1))
       b = lua_toboolean(L,1);
    else {
-      lua_pushstring(L, "__done__");
+      lua_pushstring(L, NLUA_DONE);
       lua_error(L); /* THERE IS NO RETURN */
       return 0;
    }
@@ -660,7 +660,7 @@ static int misn_finish( lua_State *L )
    if (b && mis_isFlag(cur_mission->data,MISSION_UNIQUE))
       player_missionFinished( mission_getID( cur_mission->data->name ) );
 
-   lua_pushstring(L, "__done__");
+   lua_pushstring(L, NLUA_DONE);
    lua_error(L); /* shouldn't return */
 
    return 0;

@@ -10,6 +10,9 @@
 #include <lua.h>
 
 
+#define NLUA_DONE       "__done__"
+
+
 /*
  * standard lua stuff wrappers
  */
