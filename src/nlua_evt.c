@@ -87,6 +87,10 @@ lua_State *event_setupLua( Event_t *ev, const char *func )
    /* Load event. */
    L = ev->L;
 
+#if DEBUGGING
+   lua_pushcfunction(L, nlua_errTrace);
+#endif /* DEBUGGING */
+
    /* Set up event pointer. */
    lua_pushlightuserdata( L, ev );
    lua_setglobal( L, "__evt" );
@@ -130,7 +134,7 @@ Event_t *event_getFromLua( lua_State *L )
  */
 int event_runLuaFunc( Event_t *ev, const char *func, int nargs )
 {
-   int ret;
+   int ret, errf;
    const char* err;
    lua_State *L;
    int evt_delete;
@@ -138,7 +142,13 @@ int event_runLuaFunc( Event_t *ev, const char *func, int nargs )
    /* Comfortability. */
    L = ev->L;
 
-   ret = lua_pcall(L, nargs, 0, 0);
+#if DEBUGGING
+   errf = -2-nargs;
+#else /* DEBUGGING */
+   errf = 0;
+#endif /* DEBUGGING */
+
+   ret = lua_pcall(L, nargs, 0, errf);
    if (ret != 0) { /* error has occured */
       err = (lua_isstring(L,-1)) ? lua_tostring(L,-1) : NULL;
       if ((err==NULL) || (strcmp(err,"__done__")!=0)) {
@@ -150,6 +160,9 @@ int event_runLuaFunc( Event_t *ev, const char *func, int nargs )
          ret = 1;
       lua_pop(L, 1);
    }
+#if DEBUGGING
+   lua_pop(L, 1);
+#endif /* DEBUGGING */
 
    /* Time to remove the event. */
    lua_getglobal( L, "__evt_delete" );
