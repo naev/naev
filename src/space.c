@@ -877,7 +877,7 @@ char **planet_searchFuzzyCase( const char* planetname, int *n )
  */
 static void system_scheduler( double dt, int init )
 {
-   int i, n;
+   int i, n, errf;
    lua_State *L;
    SystemPresence *p;
    LuaPilot *lp;
@@ -894,10 +894,16 @@ static void system_scheduler( double dt, int init )
 
       /* Run the appropriate function. */
       if (init) {
+#if DEBUGGING
+         lua_pushcfunction(L, nlua_errTrace);
+#endif /* DEBUGGING */
          lua_getglobal( L, "create" ); /* f */
          if (lua_isnil(L,-1)) {
             WARN("Lua Spawn script for faction '%s' missing obligatory entry point 'create'.",
                   faction_name( p->faction ) );
+#if DEBUGGING
+            lua_pop(L,1);
+#endif /* DEBUGGING */
             continue;
          }
          n = 0;
@@ -908,11 +914,18 @@ static void system_scheduler( double dt, int init )
          if (p->timer >= 0.)
             continue;
 
+#if DEBUGGING
+         lua_pushcfunction(L, nlua_errTrace);
+#endif /* DEBUGGING */
          lua_getglobal( L, "spawn" ); /* f */
          if (lua_isnil(L,-1)) {
             WARN("Lua Spawn script for faction '%s' missing obligatory entry point 'spawn'.",
                   faction_name( p->faction ) );
+#if DEBUGGING
+            lua_pop(L,2);
+#else /* DEBUGGING */
             lua_pop(L,1);
+#endif /* DEBUGGING */
             continue;
          }
          lua_pushnumber( L, p->curUsed ); /* f, presence */
@@ -920,11 +933,21 @@ static void system_scheduler( double dt, int init )
       }
       lua_pushnumber( L, p->value ); /* f, [arg,], max */
 
+#if DEBUGGING
+      errf = -2-(n+1);
+#else /* DEBUGGING */
+      errf = 0;
+#endif /* DEBUGGING */
+
       /* Actually run the function. */
-      if (lua_pcall(L, n+1, 2, 0)) { /* error has occured */
+      if (lua_pcall(L, n+1, 2, errf)) { /* error has occured */
          WARN("Lua Spawn script for faction '%s' : %s",
                faction_name( p->faction ), lua_tostring(L,-1));
+#if DEBUGGING
+         lua_pop(L,2);
+#else /* DEBUGGING */
          lua_pop(L,1);
+#endif /* DEBUGGING */
          continue;
       }
 
@@ -932,7 +955,11 @@ static void system_scheduler( double dt, int init )
       if (!lua_isnumber(L,-2)) {
          WARN("Lua spawn script for faction '%s' failed to return timer value.",
                faction_name( p->faction ) );
+#if DEBUGGING
+         lua_pop(L,3);
+#else /* DEBUGGING */
          lua_pop(L,2);
+#endif /* DEBUGGING */
          continue;
       }
       p->timer    += lua_tonumber(L,-2);
@@ -974,7 +1001,11 @@ static void system_scheduler( double dt, int init )
             lua_pop(L,2); /* tk, k */
          }
       }
-      lua_pop(L,2); /* Clear arguments. */
+#if DEBUGGING
+      lua_pop(L,3);
+#else /* DEBUGGING */
+      lua_pop(L,2);
+#endif /* DEBUGGING */
    }
 }
 
@@ -2790,7 +2821,7 @@ int system_hasPlanet( StarSystem *sys )
  */
 void system_rmCurrentPresence( StarSystem *sys, int faction, double amount )
 {
-   int id;
+   int id, errf;
    lua_State *L;
    SystemPresence *presence;
 
@@ -2805,6 +2836,13 @@ void system_rmCurrentPresence( StarSystem *sys, int faction, double amount )
    /* Run lower hook. */
    L = faction_getState( faction );
 
+#if DEBUGGING
+   lua_pushcfunction(L, nlua_errTrace);
+   errf = -5;
+#else /* DEBUGGING */
+   errf = 0;
+#endif /* DEBUGGING */
+
    /* Run decrease function if applicable. */
    lua_getglobal( L, "decrease" ); /* f */
    if (lua_isnil(L,-1)) {
@@ -2816,10 +2854,14 @@ void system_rmCurrentPresence( StarSystem *sys, int faction, double amount )
    lua_pushnumber( L, presence->timer ); /* f, cur, max, timer */
 
    /* Actually run the function. */
-   if (lua_pcall(L, 3, 1, 0)) { /* error has occured */
+   if (lua_pcall(L, 3, 1, errf)) { /* error has occured */
       WARN("Lua decrease script for faction '%s' : %s",
             faction_name( faction ), lua_tostring(L,-1));
+#if DEBUGGING
+      lua_pop(L,2);
+#else /* DEBUGGING */
       lua_pop(L,1);
+#endif /* DEBUGGING */
       return;
    }
 
@@ -2831,7 +2873,11 @@ void system_rmCurrentPresence( StarSystem *sys, int faction, double amount )
       return;
    }
    presence->timer = lua_tonumber(L,-1);
+#if DEBUGGING
+   lua_pop(L,2);
+#else /* DEBUGGING */
    lua_pop(L,1);
+#endif /* DEBUGGING */
 }
 
 
