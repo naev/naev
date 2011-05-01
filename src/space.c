@@ -902,6 +902,8 @@ static void system_scheduler( double dt, int init )
             WARN("Lua Spawn script for faction '%s' missing obligatory entry point 'create'.",
                   faction_name( p->faction ) );
 #if DEBUGGING
+            lua_pop(L,2);
+#else /* DEBUGGING */
             lua_pop(L,1);
 #endif /* DEBUGGING */
             continue;
