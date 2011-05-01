@@ -1878,12 +1878,13 @@ static int gui_prepFunc( const char* func )
 
    /* For comfort. */
    L = gui_L;
-
-#ifdef DEBUGGING
+#if DEBUGGING
    if (L == NULL) {
       WARN( "Trying to run GUI func '%s' but no GUI is loaded!", func );
       return -1;
    }
+
+   lua_pushcfunction(L, nlua_errTrace);
 #endif /* DEBUGGING */
 
    /* Set up function. */
@@ -1901,24 +1902,32 @@ static int gui_prepFunc( const char* func )
  */
 static int gui_runFunc( const char* func, int nargs, int nret )
 {
-   int ret;
+   int ret, errf;
    const char* err;
    lua_State *L;
 
    /* For comfort. */
    L = gui_L;
 
+#if DEBUGGING
+   errf = -2-nargs;
+#else /* DEBUGGING */
+   errf = 0;
+#endif /* DEBUGGING */
+
    /* Run the function. */
-   ret = lua_pcall( L, nargs, nret, 0 );
+   ret = lua_pcall( L, nargs, nret, errf );
    if (ret != 0) { /* error has occured */
       err = (lua_isstring(L,-1)) ? lua_tostring(L,-1) : NULL;
       WARN("GUI Lua -> '%s': %s",
             func, (err) ? err : "unknown error");
       lua_pop(L,1);
-      return -1;
    }
+#if DEBUGGING
+   lua_pop(L,1);
+#endif /* DEBUGGING */
 
-   return 0;
+   return ret;
 }
 
 
