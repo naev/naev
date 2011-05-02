@@ -1,59 +1,8 @@
-function _buildDupeTable( input, count )
-   local tmp = {}
-   if type(input) == "table" then
-      if #input ~= count then
-         print("Warning: Tables are different lengths.")
-      end
-      return input
-   else
-      for i=1,count do
-         tmp[i] = input
-      end
-      return tmp
-   end
-end
-
-
-function _mergeTables( old, new )
-   if type(old) ~= "table" or type(new) ~= "table" then
-      print("_mergeTables: Error, this function only accepts tables.")
-   end
-
-   for k,v in ipairs(new) do
-      table.insert(old, v )
-   end
-   return old
-end
-
-
--- Randomize the locations of ships in the same manner than pilot.add() does.
-function _randomizePositions( ship, override )
-   if type(ship) ~= "table" and type(ship) ~= "userdata" then
-      print("_randomizePositions: Error, ship list is not a pilot or table of pilots!")
-      return
-   elseif type(ship) == "userdata" then -- Put lone pilot into table.
-      ship = { ship }
-   end
-
-   local x = 0
-   local y = 0
-   for k,v in ipairs(ship) do
-      if k ~= 1 and not override then
-         if vec2.dist( ship[1]:pos(), v:pos() ) == 0 then
-            x = x + rnd.rnd(75,150) * (rnd.rnd(0,1) - 0.5) * 2
-            y = y + rnd.rnd(75,150) * (rnd.rnd(0,1) - 0.5) * 2
-            v:setPos( v:pos() + vec2.new( x, y ) )
-         end
-      end
-   end
-end
-
-
 --[[
 -- @brief Wrapper for pilot.add() that can operate on tables of fleets.
 --
--- @usage pilots = addShips( "Pirate Hyena", "pirate", nil, 2 ) -- Creates two Pirate Hyenas.
--- @usage pilots = addShips( { "Trader Rhino", "Trader Koala" }, nil, 2 ) -- Creates a convoy of four trader ships.
+-- @usage pilots = addShips( "Pirate Hyena", "pirate", nil, 2 ) -- Creates two Pirate Hyenas with pirate AIs.
+-- @usage pilots = addShips( { "Trader Rhino", "Trader Koala" }, nil, nil, 2 ) -- Creates a convoy of four trader ships with default AIs.
 --
 --    @luaparam ship Fleet to add.
 --    @luaparam ai AI to override the default with.
@@ -166,5 +115,55 @@ function renameShips( ship, match, replace, limit )
 
    for k,v in ipairs(ship) do
       v:rename(string.gsub( tostring(v:name()), match, replace, limit ))
+   end
+end
+
+function _buildDupeTable( input, count )
+   local tmp = {}
+   if type(input) == "table" then
+      if #input ~= count then
+         print("Warning: Tables are different lengths.")
+      end
+      return input
+   else
+      for i=1,count do
+         tmp[i] = input
+      end
+      return tmp
+   end
+end
+
+
+function _mergeTables( old, new )
+   if type(old) ~= "table" or type(new) ~= "table" then
+      print("_mergeTables: Error, this function only accepts tables.")
+   end
+
+   for k,v in ipairs(new) do
+      table.insert(old, v )
+   end
+   return old
+end
+
+
+-- Randomize the locations of ships in the same manner than pilot.add() does.
+function _randomizePositions( ship, override )
+   if type(ship) ~= "table" and type(ship) ~= "userdata" then
+      print("_randomizePositions: Error, ship list is not a pilot or table of pilots!")
+      return
+   elseif type(ship) == "userdata" then -- Put lone pilot into table.
+      ship = { ship }
+   end
+
+   local x = 0
+   local y = 0
+   for k,v in ipairs(ship) do
+      if k ~= 1 and not override then
+         if vec2.dist( ship[1]:pos(), v:pos() ) == 0 then
+            x = x + rnd.rnd(75,150) * (rnd.rnd(0,1) - 0.5) * 2
+            y = y + rnd.rnd(75,150) * (rnd.rnd(0,1) - 0.5) * 2
+            v:setPos( v:pos() + vec2.new( x, y ) )
+         end
+      end
    end
 end
