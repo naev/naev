@@ -164,12 +164,30 @@ static int hookL_setarg( lua_State *L, unsigned int hook, int ind )
       lua_newtable( L );      /* v, t */
       lua_pushvalue( L, -1 ); /* v, t, t */
       lua_setglobal( L, "__hook_arg" ); /* v, t */
+      lua_pushboolean( L, 1 ); /* v, t, s */
+      lua_setfield( L, -2, "__save" ); /* v, t */
    }
    lua_pushnumber( L, hook ); /* v, t, k */
    lua_pushvalue( L, -3 );    /* v, t, k, v */
    lua_settable( L, -3 );     /* v, t */
    lua_pop( L, 2 );           /* */
    return 0;
+}
+
+
+/**
+ * @brief Unsets a lua argument.
+ */
+void hookL_unsetarg( lua_State *L, unsigned int hook )
+{
+   lua_getglobal( L, "__hook_arg" ); /* t */
+   if (lua_isnil(L,-1)) {            /* */
+      lua_pop(L,1);
+   }
+   lua_pushnumber( L, hook );       /* t, h */
+   lua_pushnil( L );                /* t, h, n */
+   lua_settable( L, -3 );           /* t */
+   lua_pop( L, 1 );
 }
 
 

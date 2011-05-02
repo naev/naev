@@ -79,9 +79,11 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
 
    /* Default values. */
    ret   = 0;
+   
+   /* We recieve data in the format of: key, value */
 
    /* key, value */
-   /* Handle different types of keys. */
+   /* Handle different types of keys, we must not touch the stack after this operation. */
    switch (lua_type(L, -2)) {
       case LUA_TSTRING:
          /* Can just tostring directly. */
@@ -93,15 +95,14 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
          /* Can't tostring directly. */
          lua_pushvalue(L,-2);
          name     = lua_tostring(L,-1);
-         lua_pop(L,1);
+         lua_pop(L,1); /* Pop the new value. */
          /* Is a number key. */
          keynum   = 1;
          break;
 
       /* We only handle string or number keys, so ignore the rest. */
       default:
-         lua_pop(L,1);
-         /* key */
+         lua_pop(L,1); /* key. */
          return 0;
    }
    /* key, value */
@@ -112,9 +113,9 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
       case LUA_TTABLE:
          /* Check if should save -- only if not in table.. */
          if (!intable) {
-            lua_getfield(L, -1, "__save");
+            lua_getfield(L, -1, "__save"); /* key, value, field */
             b = lua_toboolean(L,-1);
-            lua_pop(L,1);
+            lua_pop(L,1); /* key, value */
             if (!b) /* No need to save. */
                break;
          }
@@ -125,10 +126,9 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
          if (keynum)
             xmlw_attr(writer,"keynum","1");
          lua_pushnil(L); /* key, value, nil */
-         /* key, value, nil */
          while (lua_next(L, -2) != 0) {
             /* key, value, key, value */
-            ret = nxml_persistDataNode( L, writer, 1 );
+            ret |= nxml_persistDataNode( L, writer, 1 ); /* pops the value. */
             /* key, value, key */
          }
          /* key, value */
@@ -209,16 +209,19 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
             snprintf( buf, sizeof(buf), "%"PRId64, lt->t );
             nxml_saveData( writer, "time",
                   name, buf, keynum );
+            /* key, value */
             break;
          }
+         /* Purpose fallthrough. */
 
       /* Rest gets ignored, like functions, etc... */
       default:
          /* key, value */
          break;
    }
-   lua_pop(L,1);
-   /* key */
+   lua_pop(L,1); /* key */
+
+   /* We must pop the value and leave only the key so it can continue iterating. */
 
    return ret;
 }
@@ -237,16 +240,13 @@ int nxml_persistLua( lua_State *L, xmlTextWriterPtr writer )
 {
    int ret = 0;
 
-   lua_pushstring(L,"_G");
-   lua_pushnil(L);
+   lua_pushnil(L);         /* nil */
    /* str, nil */
    while (lua_next(L, LUA_GLOBALSINDEX) != 0) {
-      /* str, key, value */
+      /* key, value */
       ret |= nxml_persistDataNode( L, writer, 0 );
-      /* str, key */
+      /* key */
    }
-   /* str */
-   lua_pop(L,1);
 
    return ret;
 }
