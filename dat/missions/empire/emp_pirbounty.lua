@@ -124,16 +124,28 @@ function sys_enter ()
    -- Check to see if reaching target system
    if cur_sys == near_sys then
 
+      -- Choose position
+      local pos = cur_sys:jumpPos( last_sys )
+      local x,y = pos:get()
+      local d = rnd.rnd( 1500, 2500 )
+      local a = math.atan2( y, x ) + math.pi
+      local offset = vec2.new()
+      offset:setP( d, a )
+      pos = pos + offset
+
       -- Create the badass enemy
-      p     = pilot.add(pir_ship)
+      p     = pilot.add(pir_ship, nil, pos)
       pir   = p[1]
       pir:rename(pir_name)
       pir:setHostile()
+      pir:setVisplayer(true)
+      pir:setHilight(true)
       pir:rmOutfit("all") -- Start naked
       pilot_outfitAddSet( pir, pir_outfits )
       hook.pilot( pir, "death", "pir_dead" )
       hook.pilot( pir, "jump", "pir_jump" )
    end
+   last_sys = cur_sys
 end
 
 
