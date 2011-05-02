@@ -82,6 +82,7 @@ function accept ()
 
    -- Set hooks
    hook.enter("sys_enter")
+   last_sys = system.cur()
 end
 
 -- Gets a empireish system
@@ -138,7 +139,12 @@ function sys_enter ()
    if cur_sys == near_sys then
 
       -- Choose position
-      local pos = cur_sys:jumpPos( last_sys )
+      local pos
+      if cur_sys == last_sys then
+         pos = player.pilot():pos()
+      else
+         pos = cur_sys:jumpPos( last_sys )
+      end
       local x,y = pos:get()
       local d = rnd.rnd( 1500, 2500 )
       local a = math.atan2( y, x ) + math.pi
