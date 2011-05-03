@@ -578,8 +578,6 @@ AM_CONDITIONAL([CSPARSE_INTERNAL], [test "x$used_csparse" = "xinternal"])
 SHAVE_INIT([build], [enable])
 AC_CONFIG_FILES([Makefile
       lib/Makefile
-      lib/csparse/Makefile
-      lib/lua/Makefile
       src/Makefile
       src/tk/Makefile
       src/tk/widget/Makefile
@@ -591,6 +589,12 @@ AS_IF([test "x$have_utils" = "xyes"], [
 ])
 AS_IF([test "x$have_docs" = "xyes"], [
   AC_CONFIG_FILES([docs/Makefile])
+])
+AS_IF([test "x$used_lua" = "xinternal"], [
+  AC_CONFIG_FILES([lib/lua/Makefile])
+])
+AS_IF([test "x$used_csparse" = "xinternal"], [
+  AC_CONFIG_FILES([lib/csparse/Makefile])
 ])
 
 AC_OUTPUT
