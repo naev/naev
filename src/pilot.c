@@ -223,7 +223,7 @@ unsigned int pilot_getPrevID( const unsigned int id, int mode )
 /**
  * @brief Gets the nearest enemy to the pilot.
  *
- *    @param p Pilot to get his nearest enemy.
+ *    @param p Pilot to get the nearest enemy of.
  *    @return ID of his nearest enemy.
  */
 unsigned int pilot_getNearestEnemy( const Pilot* p )
@@ -276,7 +276,7 @@ unsigned int pilot_getNearestEnemy( const Pilot* p )
 /**
  * @brief Gets the nearest enemy to the pilot closest to the pilot whose mass is between LB and UB.
  *
- *    @param p Pilot to get his nearest enemy.
+ *    @param p Pilot to get the nearest enemy of.
  *    @param target_mass_LB the lower bound for target mass
  *    @param target_mass_UB the upper bound for target mass
  *    @return ID of his nearest enemy.
@@ -325,7 +325,7 @@ unsigned int pilot_getNearestEnemy_size( const Pilot* p, int target_mass_LB, int
 /**
  * @brief Gets the nearest enemy to the pilot closest to the pilot whose mass is between LB and UB.
  *
- *    @param p Pilot to get his nearest enemy.
+ *    @param p Pilot to get the nearest enemy of.
  *    @param mass_factor parameter for target mass (0-1, 0.5 = current mass)
  *    @param health_factor parameter for target shields/armor (0-1, 0.5 = current health)
  *    @param dps_factor parameter for target dps (0-1, 0.5 = current dps)
@@ -375,7 +375,7 @@ unsigned int pilot_getNearestEnemy_heuristic(const Pilot* p, double mass_factor,
 /**
  * @brief Get the nearest pilot to a pilot.
  *
- *    @param p Pilot to get his nearest pilot.
+ *    @param p Pilot to get the nearest pilot of.
  *    @return The nearest pilot.
  */
 unsigned int pilot_getNearestPilot( const Pilot* p )
