@@ -16,6 +16,7 @@
 		078F0EFA1367E4210000064F /* SDL_mixer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 078F0EF91367E4210000064F /* SDL_mixer.framework */; };
 		078F0EFF1367E4250000064F /* SDL_mixer.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 078F0EF91367E4210000064F /* SDL_mixer.framework */; };
 		078F0F041367E4390000064F /* sound_sdlmix.c in Sources */ = {isa = PBXBuildFile; fileRef = 07ABFC8C1349CA74000F9F93 /* sound_sdlmix.c */; };
+		078F0F171367E8930000064F /* naev.icns in Resources */ = {isa = PBXBuildFile; fileRef = 078F0F161367E8930000064F /* naev.icns */; };
 		07925FF01046AF3A000A716C /* libxml.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 07B062FE104415F5006FECBB /* libxml.framework */; };
 		079260841046AF44000A716C /* SDL.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 07B066571044397F006FECBB /* SDL.framework */; };
 		079260861046AF44000A716C /* SDL_image.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 07B066501044397A006FECBB /* SDL_image.framework */; };
@@ -283,6 +284,7 @@
 		078F0EA41367DFA10000064F /* Vorbis.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Vorbis.framework; path = /Library/Frameworks/Vorbis.framework; sourceTree = "<absolute>"; };
 		078F0EBE1367E0CC0000064F /* Ogg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Ogg.framework; path = /Library/Frameworks/Ogg.framework; sourceTree = "<absolute>"; };
 		078F0EF91367E4210000064F /* SDL_mixer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL_mixer.framework; path = /Library/Frameworks/SDL_mixer.framework; sourceTree = "<absolute>"; };
+		078F0F161367E8930000064F /* naev.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = naev.icns; sourceTree = "<group>"; };
 		07ABFC5D1349CA74000F9F93 /* weapon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = weapon.h; sourceTree = "<group>"; };
 		07ABFC5E1349CA74000F9F93 /* weapon.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = weapon.c; sourceTree = "<group>"; };
 		07ABFC5F1349CA74000F9F93 /* unidiff.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unidiff.h; sourceTree = "<group>"; };
@@ -1309,6 +1311,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				078F0F161367E8930000064F /* naev.icns */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				089C165CFE840E0CC02AAC07 /* InfoPlist.strings */,
 				1DDD58140DA1D0A300B32029 /* MainMenu.xib */,
@@ -1376,6 +1379,7 @@
 				07ABFED71349CA85000F9F93 /* LICENSE in Resources */,
 				07ABFF251349CA85000F9F93 /* lesser.txt in Resources */,
 				07ABFF261349CA85000F9F93 /* License.txt in Resources */,
+				078F0F171367E8930000064F /* naev.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1711,6 +1715,7 @@
 				HEADER_SEARCH_PATHS = (
 					"${SDKROOT}/usr/X11R6/include/**",
 					"../../src/**",
+					"../../lib/**",
 					"/Library/Frameworks/Lua.framework//**",
 					"/Library/Frameworks/SDL_image.framework/**",
 					"/Library/Frameworks/SDL_mixer.framework/**",
@@ -1790,6 +1795,7 @@
 					"/Library/Frameworks/FreeType.framework//**",
 					"/Developer/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks/OpenAL.framework/**",
 					"/Developer/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks/OpenGL.framework/**",
+					"../../lib/**",
 				);
 				MACOSX = 1;
 				ONLY_ACTIVE_ARCH = NO;
