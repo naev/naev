@@ -67,6 +67,7 @@ static int font_restoreLast      = 0; /**< Restore last colour. */
  */
 static int font_limitSize( const glFont *ft_font, int *width,
       const char *text, const int max );
+static glColour* gl_fontGetColour( int ch );
 /* Render. */
 static void gl_fontRenderStart( const glFont* font, double x, double y, const glColour *c );
 static int gl_fontRenderCharacter( const glFont* font, int ch, const glColour *c, int state );
@@ -80,6 +81,68 @@ void gl_printRestoreLast (void)
 {
    if (font_lastCol != NULL)
       font_restoreLast = 1;
+}
+
+
+/**
+ * @brief Initializes a restore structure.
+ *    @param restore Structure to initialize.
+ */
+void gl_printRestoreInit( glFontRestore *restore )
+{
+   memset( restore, 0, sizeof(glFontRestore) );
+}
+
+
+/**
+ * @brief Restores last colour from a restore structure.
+ *    @param restore Structure to restore.
+ */
+void gl_printRestore( const glFontRestore *restore )
+{
+   if (restore->col != NULL) {
+      font_lastCol = restore->col;
+      font_restoreLast = 1;
+   }
+}
+
+
+/**
+ * @brief Stores the colour information from a piece of text limited to max characters.
+ *    @param restore Structure to save colour information to.
+ *    @param text Text to extract colour information from.
+ *    @param max Maximum number of characters to process.
+ */
+void gl_printStoreMax( glFontRestore *restore, const char *text, int max )
+{
+   int i;
+   glColour *col;
+
+   col = NULL;
+   for (i=0; (text[i]!='\0') && (i<=max); i++) {
+      /* Only want escape sequences. */
+      if (text[i] != '\e')
+         continue;
+
+      /* Get colour. */
+      if ((i+1<=max) && (text[i+1]!='\0')) {
+         col = gl_fontGetColour( text[i+1] );
+         i += 1;
+      }
+   }
+
+   restore->col = col;
+}
+
+
+/**
+ * @brief Stores the colour information from a piece of text.
+ *    @param restore Structure to save colour information to.
+ *    @param text Text to extract colour information from.
+ */
+void gl_printStore( glFontRestore *restore, const char *text )
+{
+   gl_printStoreMax( restore, text, INT_MAX );
 }
 
 
@@ -863,6 +926,42 @@ static void gl_fontRenderStart( const glFont* font, double x, double y, const gl
 
 
 /**
+ * @brief Gets the colour from a character.
+ */
+static glColour* gl_fontGetColour( int ch )
+{
+   glColour *col;
+   switch (ch) {
+      /* TOP SECRET COLOUR CONVENTION
+       * FOR YOUR EYES ONLY
+       *
+       * Lowercase characters represent base colours.
+       * Uppercase characters reperesent fancy game related colours.
+       * Digits represent states.
+       */
+      /* Colours. */
+      case 'r': col = &cFontRed; break;
+      case 'g': col = &cFontGreen; break;
+      case 'b': col = &cFontBlue; break;
+      case 'y': col = &cFontYellow; break;
+      case 'w': col = &cFontWhite; break;
+      case 'p': col = &cFontPurple; break;
+      case 'n': col = &cBlack; break;
+      /* Fancy states. */
+      case 'F': col = &cFriend; break;
+      case 'H': col = &cHostile; break;
+      case 'N': col = &cNeutral; break;
+      case 'I': col = &cInert; break;
+      case 'M': col = &cMapNeutral; break;
+      case 'C': col = &cConsole; break;
+      case 'D': col = &cDConsole; break;
+      case '0': col = NULL; break;
+   }
+   return col;
+}
+
+
+/**
  * @brief Renders a character.
  */
 static int gl_fontRenderCharacter( const glFont* font, int ch, const glColour *c, int state )
@@ -875,43 +974,15 @@ static int gl_fontRenderCharacter( const glFont* font, int ch, const glColour *c
    if (ch == '\e') /* Start sequence. */
       return 1;
    if (state == 1) {
-      col = NULL;
+      col = gl_fontGetColour( ch );
       a   = (c==NULL) ? 1. : c->a;
-      switch (ch) {
-         /* TOP SECRET COLOUR CONVENTION
-          * FOR YOUR EYES ONLY
-          *
-          * Lowercase characters represent base colours.
-          * Uppercase characters reperesent fancy game related colours.
-          * Digits represent states.
-          */
-         /* Colours. */
-         case 'r': col = &cFontRed; break;
-         case 'g': col = &cFontGreen; break;
-         case 'b': col = &cFontBlue; break;
-         case 'y': col = &cFontYellow; break;
-         case 'w': col = &cFontWhite; break;
-         case 'p': col = &cFontPurple; break;
-         case 'n': col = &cBlack; break;
-         /* Fancy states. */
-         case 'F': col = &cFriend; break;
-         case 'H': col = &cHostile; break;
-         case 'N': col = &cNeutral; break;
-         case 'I': col = &cInert; break;
-         case 'M': col = &cMapNeutral; break;
-         case 'C': col = &cConsole; break;
-         case 'D': col = &cDConsole; break;
-         /* Reset state. */
-         case '0':
-             if (c==NULL) {
-                glColor4d( 1., 1., 1., 1. );
-             }
-             else {
-                COLOUR(*c);
-             }
-             break;
+      if (col == NULL) {
+         if (c==NULL)
+            glColor4d( 1., 1., 1., 1. );
+         else
+            COLOUR(*c);
       }
-      if (col != NULL)
+      else
          ACOLOUR(*col,a);
       font_lastCol = col;
       return 0;

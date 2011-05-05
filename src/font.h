@@ -21,8 +21,6 @@ typedef struct glFontChar_s {
 
 
 /**
- * @struct glFont
- *
  * @brief Represents a font in memory.
  */
 typedef struct glFont_s {
@@ -34,6 +32,14 @@ typedef struct glFont_s {
 } glFont;
 extern glFont gl_defFont; /**< default font */
 extern glFont gl_smallFont; /**< small font */
+
+
+/**
+ * @brief Evil hack to allow restoring, yes it makes me cry myself to sleep.
+ */
+typedef struct glFontRestore_s {
+   glColour *col; /**< Colour to restore. */
+} glFontRestore;
 
 
 /*
@@ -93,8 +99,12 @@ int gl_printHeightRaw( const glFont *ft_font, const int width, const char *text 
 int gl_printHeight( const glFont *ft_font,
       const int width, const char *fmt, ... );
 
-/* Misc stuff. */
+/* Restore hacks. */
+void gl_printRestoreInit( glFontRestore *restore );
 void gl_printRestoreLast (void);
+void gl_printRestore( const glFontRestore *restore );
+void gl_printStoreMax( glFontRestore *restore, const char *text, int max );
+void gl_printStore( glFontRestore *restore, const char *text );
 
 
 #endif /* FONT_H */

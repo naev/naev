@@ -154,6 +154,7 @@ static double mesg_fade    = 5.; /**< Fade length. */
 typedef struct Mesg_ {
    char str[MESG_SIZE_MAX]; /**< The message. */
    double t; /**< Time to live for the message. */
+   glFontRestore restore; /**< Hack for font restoration. */
 } Mesg;
 static Mesg* mesg_stack = NULL; /**< Stack of mesages, will be of mesg_max size. */
 static int gui_mesg_w   = 0; /**< Width of messages. */
@@ -333,11 +334,14 @@ void player_messageRaw( const char *str )
          i = MESG_SIZE_MAX-1;
 
       /* Add the new one */
-      if (p == 0)
+      if (p == 0) {
          snprintf( mesg_stack[mesg_pointer].str, i+1, "%s", &str[p] );
+         gl_printRestoreInit( &mesg_stack[mesg_pointer].restore );
+      }
       else {
          mesg_stack[mesg_pointer].str[0] = '\t'; /* Hack to indent. */
          snprintf( &mesg_stack[mesg_pointer].str[1], i+1, "%s", &str[p] );
+         gl_printStoreMax( &mesg_stack[mesg_pointer].restore, str, p );
       }
       mesg_stack[mesg_pointer].t = mesg_timeout;
 
@@ -1133,7 +1137,7 @@ static void gui_renderMessages( double dt )
          /* Only handle non-NULL messages. */
          if (mesg_stack[m].str[0] != '\0') {
             if (mesg_stack[m].str[0] == '\t') {
-               gl_printRestoreLast();
+               gl_printRestore( &mesg_stack[m].restore );
                gl_printMaxRaw( NULL, gui_mesg_w - 45., x + 30, y, &c, &mesg_stack[m].str[1] );
             }
             else
