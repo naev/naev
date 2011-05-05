@@ -454,7 +454,7 @@ int toolkit_getListOffset( const unsigned int wid, const char* name )
    Widget *wgt = lst_getWgt( wid, name );
    if (wgt == NULL)
       return -1;
-   
+
    return wgt->dat.lst.pos;
 }
 
@@ -467,7 +467,7 @@ int toolkit_setListOffset( const unsigned int wid, const char* name, int off )
    Widget *wgt = lst_getWgt( wid, name );
    if (wgt == NULL)
       return -1;
-   
+
    wgt->dat.lst.pos = off;
    return 0;
 }
