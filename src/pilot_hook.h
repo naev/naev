@@ -19,7 +19,7 @@ void pilots_rmHook( unsigned int hook );
 void pilot_clearHooks( Pilot *p );
 
 
-/* 
+/*
  * Global hooks.
  */
 void pilots_addGlobalHook( int type, unsigned int hook );

@@ -46,7 +46,7 @@ struct ThreadQueue_ {
    Node *first;          /* The first node */
    Node *last;           /* The second node */
    /* A semaphore to ensure reads only happen when the queue is not empty */
-   SDL_sem *semaphore;  
+   SDL_sem *semaphore;
    SDL_mutex *t_lock;   /* Tail lock. Lock when reading/updating tail */
    SDL_mutex *h_lock;   /* Same as tail lock, except it's head lock */
 };
@@ -99,7 +99,7 @@ static int threadpool_handler( void *data );
 static int vpool_worker( void *data );
 
 
-/** 
+/**
  * @brief Creates a concurrent queue.
  * @return The ThreadQueue.
  */
@@ -165,7 +165,7 @@ static void* tq_dequeue( ThreadQueue *q )
 {
    void *d;
    Node *newhead, *node;
-   
+
    /* Lock the head. */
    SDL_mutexP( q->h_lock );
 
@@ -187,7 +187,7 @@ static void* tq_dequeue( ThreadQueue *q )
    /* Remember the value and assign newhead as the new dummy element. */
    d        = newhead->data;
    q->first = newhead;
-   
+
    /* Unlock */
    SDL_mutexV( q->h_lock );
 
@@ -195,7 +195,7 @@ static void* tq_dequeue( ThreadQueue *q )
    return d;
 }
 
-/** 
+/**
  * @brief Destroy and free a ThreadQueue.
  * Frees all elements too.
  *
@@ -212,16 +212,16 @@ static void tq_destroy( ThreadQueue *q )
    while(q->first->next != NULL) {
       free( tq_dequeue(q) );
    }
-   
+
    free( q->first );
    free( q );
 }
 
 
 /**
- * @brief Enqueues a new job for the threadpool. 
+ * @brief Enqueues a new job for the threadpool.
  * @warning Do NOT enqueue a job that has to wait for another job to be done as
- * this could lead to a deadlock. 
+ * this could lead to a deadlock.
  *
  * @param function The function (job) to be called (executed).
  * @param data The arguments for the function.
@@ -236,7 +236,7 @@ int threadpool_newJob( int (*function)(void *), void *data )
       WARN("Threadpool has not been initialized yet!");
       return -2;
    }
-  
+
    /* Allocate nad sett parameters. */
    node           = calloc( 1, sizeof(ThreadQueueData) );
    node->data     = data;
@@ -244,7 +244,7 @@ int threadpool_newJob( int (*function)(void *), void *data )
 
    /* Actually enque. */
    tq_enqueue( global_queue, node );
-   
+
    return 0;
 }
 
@@ -260,7 +260,7 @@ int threadpool_newJob( int (*function)(void *), void *data )
 static int threadpool_worker( void *data )
 {
    ThreadData *work;
-   
+
    work = (ThreadData*) data;
 
    /* Work loop */
@@ -278,7 +278,7 @@ static int threadpool_worker( void *data )
 
       /* Do work :-) */
       work->function( work->data );
-      
+
       /* Enqueue itself in the idle worker threads queue */
       tq_enqueue( work->idle, work );
    }
@@ -291,7 +291,7 @@ static int threadpool_worker( void *data )
 /**
  * @brief Handles assigning jobs to the workers and killing them if necessary.
  * Stopping the threeadpool_handler is not yet implemented.
- * 
+ *
  * @param data Not used. SDL threading requires functions to take a void
  * pointer as argument.
  *
@@ -305,7 +305,7 @@ static int threadpool_handler( void *data )
    /* Queues for idle workers and stopped workers */
    ThreadQueue *idle, *stopped;
    ThreadQueueData *node;
-  
+
    /* Initialize the idle and stopped queues. */
    idle     = tq_create();
    stopped  = tq_create();
@@ -358,7 +358,7 @@ static int threadpool_handler( void *data )
          }
 
          /* We got work. Continue to handle work. */
-      } 
+      }
       else {
          /*
           * Here we wait for a new job. No threads are alive at this point and the
@@ -378,7 +378,7 @@ static int threadpool_handler( void *data )
        * be created.
        */
 
-      /* 
+      /*
        * Get a new job from the queue. This should be safe as we have received
        * a permission from the global_queue->semaphore.
        */
@@ -397,7 +397,7 @@ static int threadpool_handler( void *data )
          threadarg         = tq_dequeue( stopped );
          threadarg->signal = THREADSIG_RUN;
          newthread         = 1;
-      } 
+      }
       /* Wait for idle thread */
       else {
          while (SDL_SemWait(idle->semaphore) == -1) {
@@ -453,7 +453,7 @@ int threadpool_init (void)
  * This is just an interface to make running a number of jobs and then wait for
  * them to finish more pleasant. You should not nest vpools as of now as there
  * are only a limit number of worker threads and we can't have them wait for a
- * thread to finish that doesn't exist. 
+ * thread to finish that doesn't exist.
  * If you really want to sort of nest vpools, you should start a new thread
  * instead of using the threadpool. I might add a vpool_waitInANewThread
  * function some day.
@@ -475,12 +475,12 @@ ThreadQueue* vpool_create (void)
 void vpool_enqueue( ThreadQueue *queue, int (*function)(void *), void *data )
 {
    ThreadQueueData *node;
-  
+
    /* Allocate and set up data. */
    node           = calloc( 1, sizeof(ThreadQueueData) );
    node->data     = data;
    node->function = function;
-   
+
    tq_enqueue( queue, node );
 }
 
@@ -492,7 +492,7 @@ void vpool_enqueue( ThreadQueue *queue, int (*function)(void *), void *data )
 static int vpool_worker( void *data )
 {
    vpoolThreadData *work;
-   
+
    work = (vpoolThreadData*) data;
 
    /* Do work */
@@ -500,7 +500,7 @@ static int vpool_worker( void *data )
 
    /* Decrement the counter and signal vpool_wait if all threads are done */
    SDL_mutexP( work->mutex );
-   *(work->count) = *(work->count) - 1; 
+   *(work->count) = *(work->count) - 1;
    if (*(work->count) == 0)             /* All jobs are done */
       SDL_CondSignal( work->cond );     /* Signal waiting thread */
    SDL_mutexV( work->mutex );

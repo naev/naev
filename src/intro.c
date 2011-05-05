@@ -291,7 +291,7 @@ static void intro_event_handler( int *stop, double *offset, double *vel )
       /* Speed up the text. */
       else if (event.key.keysym.sym == SDLK_DOWN) {
          *vel += 8.0;
-         if (*vel > 100.0) 
+         if (*vel > 100.0)
             *vel = 100.0;
       }
 

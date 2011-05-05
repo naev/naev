@@ -1210,7 +1210,7 @@ static Task* ai_createTask( lua_State *L, int subtask )
          lv          = lua_tovector(L,2);
          vectcpy( &t->dat.vec, &lv->vec );
       }
-      else 
+      else
          NLUA_INVALID_PARAMETER(L);
    }
 
@@ -1463,7 +1463,7 @@ static int aiL_getnearestpilot( lua_State *L )
        {
             dist = vect_dist(&pilot_stack[i]->solid->pos, &cur_pilot->solid->pos);
             candidate_id = i;
-       }    
+       }
    }
 
 
@@ -1476,7 +1476,7 @@ static int aiL_getnearestpilot( lua_State *L )
    /* Actually found a pilot. */
    lua_pushnumber(L, pilot_stack[candidate_id]->id );
    return 1;
-} 
+}
 
 
 /*
@@ -1644,12 +1644,12 @@ static int aiL_getflybydistance( lua_State *L )
    /* pilot id as parameter */
    else if (lua_isnumber(L,1)) {
       pilot = pilot_get( (unsigned int) lua_tonumber(L,1) );
-      if (pilot==NULL) { 
+      if (pilot==NULL) {
          NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
          return 0;
       }
       v = &pilot->solid->pos;
-      
+
       /*vect_cset(&v, VX(pilot->solid->pos) - VX(cur_pilot->solid->pos), VY(pilot->solid->pos) - VY(cur_pilot->solid->pos) );*/
    }
    else {
@@ -2087,7 +2087,7 @@ static int aiL_face( lua_State *L )
       lv = lua_tovector(L,1);
       tv = &lv->vec;
    }
-   else 
+   else
       NLUA_INVALID_PARAMETER(L);
 
    /* Default gain. */
@@ -2245,7 +2245,7 @@ static int aiL_iface( lua_State *L )
       if (d >= 0.) {
          id = (unsigned int)d;
          p = pilot_get(id);
-         if (p==NULL) { 
+         if (p==NULL) {
             NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
             return 0;
          }
@@ -2283,7 +2283,7 @@ static int aiL_iface( lua_State *L )
          number will give a more dramatic 'lead' */
       speedmap = -1*copysign(1 - 1 / (fabs(drift_azimuthal/200) + 1), drift_azimuthal) * M_PI_2;
       diff = angle_diff(heading_offset_azimuth, speedmap);
-      azimuthal_sign = -1;  
+      azimuthal_sign = -1;
 
       /* This indicates we're drifting to the right of the target
        * And we need to turn CCW */
@@ -2302,7 +2302,7 @@ static int aiL_iface( lua_State *L )
    else {
       /* signal that we're not in a productive direction for thrusting */
       diff = M_PI;
-      azimuthal_sign = 1;  
+      azimuthal_sign = 1;
 
 
       if(heading_offset_azimuth >0)
@@ -2322,7 +2322,7 @@ static int aiL_iface( lua_State *L )
  *    @luaparam p Position or id of pilot to compare facing to
  *    @luareturn The facing offset to the target (in degrees).
  * @luafunc dir( p )
- * 
+ *
  */
 static int aiL_dir( lua_State *L )
 {
@@ -2344,7 +2344,7 @@ static int aiL_dir( lua_State *L )
       else {
          id = (unsigned int)d;
          p = pilot_get(id);
-         if (p==NULL) { 
+         if (p==NULL) {
             NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
             return 0;
          }
@@ -2370,7 +2370,7 @@ static int aiL_dir( lua_State *L )
             (n==-1) ? VANGLE(sv) :
             vect_angle(&sv, &tv));
    else /* target is static */
-      diff = angle_diff( cur_pilot->solid->dir,   
+      diff = angle_diff( cur_pilot->solid->dir,
             (n==-1) ? VANGLE(cur_pilot->solid->pos) :
             vect_angle(&cur_pilot->solid->pos, &lv->vec));
 
@@ -2406,7 +2406,7 @@ static int aiL_idir( lua_State *L )
       if (d >= 0.) {
          id = (unsigned int)d;
          p = pilot_get(id);
-         if (p==NULL) { 
+         if (p==NULL) {
             NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
             return 0;
          }
@@ -3091,7 +3091,7 @@ static int aiL_getweaprange( lua_State *L )
    int id;
    int level;
 
-   id    = cur_pilot->active_set; 
+   id    = cur_pilot->active_set;
    level = -1;
    if (lua_isnumber(L,1))
       id = luaL_checkint(L,1);
@@ -3137,7 +3137,7 @@ static int aiL_canboard( lua_State *L )
 /**
  * @brief lua wrapper: Gets the relative size(shipmass) between the current pilot and the specified target
  *
- * @param pilot_ID the ID of the pilot whose mass we will compare   
+ * @param pilot_ID the ID of the pilot whose mass we will compare
  *    @luareturn A number from 0 to 1 mapping the relative masses
  * luafunc relsize()
  */
@@ -3155,7 +3155,7 @@ static int aiL_relsize( lua_State *L )
    }
 
     lua_pushnumber(L, pilot_relsize(cur_pilot, p));
-   
+
     return 1;
 }
 
@@ -3163,7 +3163,7 @@ static int aiL_relsize( lua_State *L )
 /**
  * @brief Gets the relative damage output(total DPS) between the current pilot and the specified target
  *
- * @param pilot_ID the ID of the pilot whose DPS we will compare   
+ * @param pilot_ID the ID of the pilot whose DPS we will compare
  *    @luareturn A number from 0 to 1 mapping the relative DPS's
  * luafunc reldps()
  */
@@ -3181,7 +3181,7 @@ static int aiL_reldps( lua_State *L )
    }
 
     lua_pushnumber(L, pilot_reldps(cur_pilot, p));
-   
+
     return 1;
 }
 
@@ -3189,7 +3189,7 @@ static int aiL_reldps( lua_State *L )
 /**
  * @brief Gets the relative HP(total shields and armor) between the current pilot and the specified target
  *
- * @param pilot_ID the ID of the pilot whose HP we will compare   
+ * @param pilot_ID the ID of the pilot whose HP we will compare
  *    @luareturn A number from 0 to 1 mapping the relative HPs
  * relhp()
  */
@@ -3206,7 +3206,7 @@ static int aiL_relhp( lua_State *L )
    }
 
     lua_pushnumber(L, pilot_relhp(cur_pilot, p));
-   
+
     return 1;
 }
 

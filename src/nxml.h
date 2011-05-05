@@ -41,7 +41,7 @@
 /* get data different ways */
 #define xml_raw(n)            ((char*)(n)->children->content)
 #define xml_get(n)            (((n)->children == NULL) ? NULL : (char*)(n)->children->content)
-#define xml_getInt(n)         ((xml_get(n) == NULL) ? 0  : strtol(  xml_raw(n), (char**)NULL, 10)) 
+#define xml_getInt(n)         ((xml_get(n) == NULL) ? 0  : strtol(  xml_raw(n), (char**)NULL, 10))
 #define xml_getUInt(n)        ((xml_get(n) == NULL) ? 0  : strtoul( xml_raw(n), (char**)NULL, 10))
 #define xml_getLong(n)        ((xml_get(n) == NULL) ? 0  : strtoll( xml_raw(n), (char**)NULL, 10))
 #define xml_getULong(n)       ((xml_get(n) == NULL) ? 0  : strtoull(xml_raw(n), (char**)NULL, 10))

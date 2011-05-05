@@ -71,14 +71,14 @@ const char *nstrcasestr( const char *haystack, const char *needle )
    return strcasestr( haystack, needle );
 #else /* HAS_POSIX */
    size_t hay_len, needle_len;
-  
+
    /* Get lengths. */
    hay_len     = strlen(haystack);
    needle_len  = strlen(needle);
 
    /* Slow search. */
    while (hay_len >= needle_len) {
-      if (strncasecmp(haystack, needle, needle_len) == 0) 
+      if (strncasecmp(haystack, needle, needle_len) == 0)
          return haystack;
 
       haystack++;

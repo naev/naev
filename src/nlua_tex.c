@@ -241,7 +241,7 @@ static int texL_sprites( lua_State *L )
 /**
  * @brief Gets the sprite that corresponds to a direction.
  *
- * @usage sx, sy = t:spriteFromdir( math.pi ) 
+ * @usage sx, sy = t:spriteFromdir( math.pi )
  *
  *    @luaparam t Texture to get sprite of.
  *    @luaparam a Direction to have sprite facing (in radians).

@@ -295,7 +295,7 @@ unsigned int pilot_getNearestEnemy_size( const Pilot* p, int target_mass_LB, int
          continue;
 
       if ((areEnemies(p->faction, pilot_stack[i]->faction) || /* Enemy faction. */
-            ((pilot_stack[i]->id == PLAYER_ID) && 
+            ((pilot_stack[i]->id == PLAYER_ID) &&
                pilot_isFlag(p,PILOT_HOSTILE)))) { /* Hostile to player. */
 
          /*mass is in bounds*/
@@ -345,23 +345,23 @@ unsigned int pilot_getNearestEnemy_heuristic(const Pilot* p, double mass_factor,
          continue;
 
       if ((areEnemies(p->faction, pilot_stack[i]->faction) || /* Enemy faction. */
-            ((pilot_stack[i]->id == PLAYER_ID) && 
+            ((pilot_stack[i]->id == PLAYER_ID) &&
                pilot_isFlag(p,PILOT_HOSTILE)))) { /* Hostile to player. */
 
-         
+
 
          /* Shouldn't be disabled. */
          if (pilot_isDisabled(pilot_stack[i]))
             continue;
 
-         /* Must be in range. */ 
+         /* Must be in range. */
          if (!pilot_inRangePilot( p, pilot_stack[i] ))
             continue;
 
          /* Check distance. */
          td = vect_dist2(&pilot_stack[i]->solid->pos, &p->solid->pos)* range_factor;
          temp = td+fabs( pilot_relsize(p, pilot_stack[i]) /*0.5*/-mass_factor) + fabs(pilot_relhp(p, pilot_stack[i]) /*0.5*/- health_factor) + fabs(pilot_reldps(p, pilot_stack[i]) /*0.5*/-damage_factor);
-         
+
          if ((tp == 0) || (temp< current_heuristic_value)) {
             current_heuristic_value = temp;
             tp = pilot_stack[i]->id;
@@ -1070,7 +1070,7 @@ static void pilot_dead( Pilot* p, unsigned int killer )
  *    @param parent The exploding pilot.
  */
 void pilot_explode( double x, double y, double radius,
-      DamageType dtype, double damage, 
+      DamageType dtype, double damage,
       double penetration, const Pilot *parent )
 {
    int i;
@@ -1447,7 +1447,7 @@ void pilot_update( Pilot* pilot, const double dt )
    pilot_weapSetUpdate( pilot );
 
    if (!pilot_isFlag(pilot, PILOT_HYPERSPACE)) { /* limit the speed */
-      
+
       /* pilot is afterburning */
       if (pilot_isFlag(pilot, PILOT_AFTERBURNER) && /* must have enough energy left */
                (pilot->energy > pilot->afterburner->outfit->u.afb.energy * dt)) {
@@ -2367,23 +2367,23 @@ void pilots_updateSystemFleet( const int deletedIndex ) {
 /**
  * @brief Gets the relative size(shipmass) between the current pilot and the specified target
  *
- * @param p the pilot whose mass we will compare   
+ * @param p the pilot whose mass we will compare
  *    @luareturn A number from 0 to 1 mapping the relative masses
  * relsize()
  */
 double pilot_relsize(const Pilot* cur_pilot, const Pilot* p)
 {
     /*double mass_map;
-    
+
     mass_map = 1 - 1/(1 + ( (double) cur_pilot -> solid -> mass / (double) p->solid->mass );*/
-    
+
     return (1 - 1/(1 + ( (double) cur_pilot -> solid -> mass / (double) p->solid->mass) ) );
     }
 
 /**
  * @brief Gets the relative damage output(total DPS) between the current pilot and the specified target
  *
- * @param p the pilot whose dps we will compare   
+ * @param p the pilot whose dps we will compare
  *    @return A number from 0 to 1 mapping the relative damage output
  * reldps()
  */
@@ -2407,7 +2407,7 @@ double pilot_reldps(const Pilot* cur_pilot, const Pilot* p)
 
     for(i = 0; i < cur_pilot->outfit_nweapon; i++)
     {
-      
+
         /*DPSaccum_pilot += ( outfit_damage(cur_pilot->outfit_weapon[i].outfit)/outfit_delay(cur_pilot->outfit_weapon[i].outfit) );*/
 
         if(cur_pilot->outfit_weapon[i].outfit) {
@@ -2426,13 +2426,13 @@ double pilot_reldps(const Pilot* cur_pilot, const Pilot* p)
         return 0;
 
 }
-    
+
 /**
  * @brief Gets the relative hp(combined shields and armor) between the current pilot and the specified target
  *
- * @param p the pilot whose shields/armor we will compare   
+ * @param p the pilot whose shields/armor we will compare
  *    @return A number from 0 to 1 mapping the relative HPs
- * relhp() 
+ * relhp()
  */
 double pilot_relhp(const Pilot* cur_pilot, const Pilot* p)
 {

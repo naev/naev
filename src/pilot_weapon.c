@@ -426,12 +426,12 @@ static void pilot_weapSetUpdateRange( PilotWeaponSet *ws )
    for (i=0; i<array_size(ws->slots); i++) {
       if (ws->slots[i].slot->outfit == NULL)
          continue;
-  
+
       /* Get level. */
       lev = ws->slots[i].level;
       if (lev >= PILOT_WEAPSET_MAX_LEVELS)
          continue;
- 
+
       /* Get range. */
       range = outfit_range(ws->slots[i].slot->outfit);
       if (range >= 0.) {
@@ -533,7 +533,7 @@ void pilot_weapSetCleanup( Pilot* p, int id )
    if (ws->slots != NULL)
       array_free( ws->slots );
    ws->slots = NULL;
-  
+
    if (ws->name != NULL)
       free( ws->name );
    ws->name = NULL;
@@ -631,7 +631,7 @@ void pilot_shootStop( Pilot* p, int level )
       /* Only handle beams. */
       if (!outfit_isBeam(ws->slots[i].slot->outfit))
          continue;
-      
+
       /* Stop beam. */
       if (ws->slots[i].slot->u.beamid > 0) {
          beam_end( p->id, ws->slots[i].slot->u.beamid );
@@ -979,10 +979,10 @@ void pilot_weaponAuto( Pilot *p )
          slot->level = -1;
          continue;
       }
-   
+
       /* Add to its base group. */
       pilot_weapSetAdd( p, id, slot, level );
-   
+
       /* Also add another copy to another group. */
       if (id == 1) { /* Forward. */
          pilot_weapSetAdd( p, 0, slot, level ); /* Also get added to 'All'. */

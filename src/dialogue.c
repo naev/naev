@@ -303,7 +303,7 @@ int dialogue_YesNoRaw( const char* caption, const char *msg )
 static void dialogue_YesNoClose( unsigned int wid, char* str )
 {
    int *loop_done, result;
-   
+
    /* store the result */
    if (strcmp(str,"btnYes")==0)
       result = 1;

@@ -276,7 +276,7 @@ static int commodityL_priceAt( lua_State *L )
    Planet *p;
    StarSystem *sys;
    char *sysname;
-   
+
    c = luaL_validcommodity(L,1);
    p = luaL_validplanet(L,2);
    sysname = planet_getSystem( p->name );

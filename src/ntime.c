@@ -25,7 +25,7 @@
  *
  * Acronyms:
  *    - UST : Universal Synchronized Time
- *    - STU : Smallest named time unit. Equal to the Earth second. 
+ *    - STU : Smallest named time unit. Equal to the Earth second.
  *    - STP : Most commonly used time unit. STPs are the new hours. 1 STP = 10,000 STU (about 2.8 Earth hours).
  *    - SCU : Used for long-term time periods. 1 SCU = 5000 STP (about 579 Earth days).
  */

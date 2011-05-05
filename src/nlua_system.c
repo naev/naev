@@ -704,7 +704,7 @@ static int systemL_setknown( lua_State *L )
 {
    int b;
    StarSystem *sys;
-   
+
    sys = luaL_validsystem(L, 1);
    b   = lua_toboolean(L, 2);
 
@@ -772,7 +772,7 @@ static int systemL_mrkRm( lua_State *L )
 {
    unsigned int id;
    id = luaL_checklong( L, 1 );
-   ovr_mrkRm( id );   
+   ovr_mrkRm( id );
    return 0;
 }
 

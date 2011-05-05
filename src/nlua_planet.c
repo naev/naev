@@ -304,7 +304,7 @@ static int planetL_get( lua_State *L )
       planets = space_getFactionPlanet( &nplanets, factions, nfactions );
       free(factions);
    }
-   else 
+   else
       NLUA_INVALID_PARAMETER(L); /* Bad Parameter */
 
    /* No suitable planet found */
@@ -329,7 +329,7 @@ static int planetL_get( lua_State *L )
    }
    sys = system_get( sysname );
    if (sys == NULL) {
-      NLUA_ERROR(L, "Planet '%s' can't find system '%s'", rndplanet, sysname); 
+      NLUA_ERROR(L, "Planet '%s' can't find system '%s'", rndplanet, sysname);
       return 0;
    }
    planet.id = planet_index( pnt );

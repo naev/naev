@@ -227,7 +227,7 @@ static void player_autonav (void)
             tc_down     = (tc_mod-1.) / 3.;
          }
          break;
-   
+
       case AUTONAV_POS_APPROACH:
          ret = player_autonavApproach( &player.autonav_pos, &d, 1 );
          if (ret) {
@@ -414,7 +414,7 @@ void player_updateAutonav( double dt )
       return;
    else
       tc_mod += 0.2 * dt * (player.tc_max-1.);
-   /* Avoid going over. */ 
+   /* Avoid going over. */
    if (tc_mod > player.tc_max)
       tc_mod = player.tc_max;
    pause_setSpeed( tc_mod );

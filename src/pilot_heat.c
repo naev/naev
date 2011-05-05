@@ -101,7 +101,7 @@ void pilot_heatCalcSlot( PilotOutfitSlot *o )
 void pilot_heatReset( Pilot *p )
 {
    int i;
-   
+
    p->heat_T = CONST_SPACE_STAR_TEMP;
    for (i=0; i<p->noutfits; i++)
       p->outfits[i]->heat_T = CONST_SPACE_STAR_TEMP;
@@ -138,7 +138,7 @@ void pilot_heatAddSlot( Pilot *p, PilotOutfitSlot *o )
  *
  *  q being heat flux W/m^2
  *  k being conductivity W/(m*K)
- *  dT/dx temperature gradient along one dimension K/m 
+ *  dT/dx temperature gradient along one dimension K/m
  *
  * Slots are connected only with the chassis.
  *

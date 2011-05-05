@@ -580,7 +580,7 @@ void player_swapShip( char* shipname )
    for (i=0; i<player_nstack; i++) {
       if (strcmp(shipname,player_stack[i].p->name)!=0)
          continue;
-         
+
       /* swap player and ship */
       ship = player_stack[i].p;
 
@@ -3619,7 +3619,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
 
             /* Only weapon nodes. */
             if (!xml_isNode(ccur,"weapon")) {
-               WARN("Player ship '%s' has unknown 'weaponset' child node '%s' (expected 'weapon').", 
+               WARN("Player ship '%s' has unknown 'weaponset' child node '%s' (expected 'weapon').",
                      ship->name, ccur->name );
                continue;
             }

@@ -95,7 +95,7 @@ static int camL_set( lua_State *L )
       speed = luaL_checkinteger(L,3);
    else
       speed = 2500;
-  
+
    /* Set the camera. */
    if (lp != NULL) {
       p = pilot_get( lp->pilot );

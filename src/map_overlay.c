@@ -300,7 +300,7 @@ void ovr_render( double dt )
       gl_renderCross( x, y, 5., &cRadar_hilight );
       gl_printRaw( &gl_smallFont, x+10., y-gl_smallFont.h/2., &cRadar_hilight, "GOTO" );
    }
-   
+
    /* Render the player. */
    gui_renderPlayer( res, 1 );
 

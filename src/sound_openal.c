@@ -285,7 +285,7 @@ int sound_al_init (void)
        *  gain = distance_function( CLAMP( AL_REFERENCE_DISTANCE, AL_MAX_DISTANCE, distance ) );
        *
        * Distance functions:
-       *                                       AL_REFERENCE_DISTANCE 
+       *                                       AL_REFERENCE_DISTANCE
        *  * Inverse = ------------------------------------------------------------------------------
        *              AL_REFERENCE_DISTANCE + AL_ROLLOFF_FACTOR ( distance - AL_REFERENCE_DISTANCE )
        *
@@ -557,7 +557,7 @@ static int sound_al_loadWav( alSound *snd, SDL_RWops *rw )
    /* Handle format. */
    switch (wav_spec.format) {
       case AUDIO_U8:
-      case AUDIO_S8:     
+      case AUDIO_S8:
          format = (wav_spec.channels==1) ? AL_FORMAT_MONO8 : AL_FORMAT_STEREO8;
          break;
       case AUDIO_U16LSB:

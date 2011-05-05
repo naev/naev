@@ -119,7 +119,7 @@ static int bkgL_image( lua_State *L )
       lc    = NULL;
       foreground = lua_toboolean(L,6);
    }
-   
+
    /* Create image. */
    id = background_addImage( lt->tex, x, y, move, scale, (lc!=NULL) ? &lc->col : &cWhite, foreground );
    lua_pushnumber(L,id);

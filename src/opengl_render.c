@@ -1100,7 +1100,7 @@ static glTexture *gl_genCircle( int radius )
 
    /* Return texture. */
    snprintf( name, sizeof(name), "gencircle%d", radius );
-   return gl_loadImagePad( name, sur, OPENGL_TEX_MIPMAPS, sur->w, sur->h, 1, 1, 1 ); 
+   return gl_loadImagePad( name, sur, OPENGL_TEX_MIPMAPS, sur->w, sur->h, 1, 1, 1 );
 }
 
 

@@ -717,7 +717,7 @@ void gl_viewport( int x, int y, int w, int h )
             gl_screen.nh, /* Top edge. */
             -1., /* near */
             1. ); /* far */
-   
+
    /* Take into accunt possible translation. */
    gl_screen.x = x;
    gl_screen.y = y;

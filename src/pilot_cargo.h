@@ -29,7 +29,7 @@ int pilot_cargoAddRaw( Pilot* pilot, Commodity* cargo,
       int quantity, unsigned int id );
 
 
-/* 
+/*
  * Mission cargo - not to be confused with normal cargo.
  */
 unsigned int pilot_addMissionCargo( Pilot* pilot, Commodity* cargo, int quantity );

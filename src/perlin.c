@@ -600,7 +600,7 @@ static int noise_genNebulaMap_thread( void *data )
    /* Generate the layer. */
    max = 0;
    f[2] = args->zoom * (float)args->z / (float)args->n;
- 
+
    for (y=0; y<args->h; y++) {
       f[1] = args->zoom * (float)y / (float)args->h;
 

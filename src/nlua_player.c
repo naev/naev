@@ -609,7 +609,7 @@ static int playerL_cinematics( lua_State *L )
 
       if (f_gui)
          player_setFlag( PLAYER_CINEMATICS_GUI );
-   
+
       if (f_2x)
          player_setFlag( PLAYER_CINEMATICS_2X );
    }
@@ -678,7 +678,7 @@ static int playerL_allowLand( lua_State *L )
 {
    int b;
    const char *str;
-   
+
    str = NULL;
    if (lua_gettop(L) > 0) {
       b     = lua_toboolean(L,1);

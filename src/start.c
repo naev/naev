@@ -100,7 +100,7 @@ int start_load (void)
             xmlr_uint( cur, "credits", start_data.credits );
             xmlr_strd( cur, "mission", start_data.mission );
             xmlr_strd( cur, "event",   start_data.event );
-            
+
             if (xml_isNode(cur,"system")) {
                tmp = cur->children;
                do {

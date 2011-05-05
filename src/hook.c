@@ -147,7 +147,7 @@ int hook_load( xmlNodePtr parent );
 static Mission *hook_getMission( Hook *hook );
 
 
-/** 
+/**
  * Adds a hook to the queue.
  */
 static int hq_add( HookQueue_t *hq )

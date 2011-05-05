@@ -469,7 +469,7 @@ void solid_init( Solid* dest, const double mass, const double dir,
       case SOLID_UPDATE_EULER:
          dest->update = solid_update_euler;
          break;
-   
+
       default:
          WARN("Solid initialization did not specify correct update function!");
          dest->update = solid_update_rk4;
