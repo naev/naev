@@ -33,6 +33,7 @@ Will you take up the bounty?]]
    msg      = {}
    msg[1]   = "MISSION SUCCESS! Payment received."
    msg[2]   = "Pursue %s!"
+   msg[3]   = "MISSION FAILURE! Somebody else eliminated %s."
 end
 
 
@@ -156,9 +157,16 @@ end
 
 
 -- Pirate is dead
-function pir_dead ()
-   player.msg( msg[1] )
-   give_rewards()
+function pir_dead( pilot, attacker )
+   if attacker == player.pilot() or rnd.rnd() > 0.5 then
+      -- it was the player who killed the pirate
+      player.msg( msg[1] )
+      give_rewards()
+   else
+      -- it was someone else
+      player.msg( string.format( msg[3], pir_name ) )
+      misn.finish(false)
+   end
 end
 
 
