@@ -32,6 +32,8 @@
 /* Planet metatable methods */
 static int planetL_cur( lua_State *L );
 static int planetL_get( lua_State *L );
+static int planetL_getAll( lua_State *L );
+static int planetL_system( lua_State *L );
 static int planetL_eq( lua_State *L );
 static int planetL_name( lua_State *L );
 static int planetL_faction( lua_State *L );
@@ -46,6 +48,8 @@ static int planetL_commoditiesSold( lua_State *L );
 static const luaL_reg planet_methods[] = {
    { "cur", planetL_cur },
    { "get", planetL_get },
+   { "getAll", planetL_getAll },
+   { "system", planetL_system },
    { "__eq", planetL_eq },
    { "__tostring", planetL_name },
    { "name", planetL_name },
@@ -337,6 +341,55 @@ static int planetL_get( lua_State *L )
    luasys.id = system_index( sys );
    lua_pushsystem(L,luasys);
    return 2;
+}
+
+
+/**
+ * @brief Gets all the planets.
+ *    @luareturn An ordered list of all the planets.
+ * @luafunc getAll()
+ */
+static int planetL_getAll( lua_State *L )
+{
+   LuaPlanet lp;
+   Planet *p;
+   int i, ind, n;
+
+   lua_newtable(L);
+   p = planet_getAll( &n );
+   ind = 1;
+   for (i=0; i<n; i++) {
+      /* Ignore virtual assets. */
+      if (p[i].real == ASSET_VIRTUAL)
+         continue;
+      lp.id = planet_index( &p[i] );
+      lua_pushnumber( L, ind++ );
+      lua_pushplanet( L, lp );
+      lua_settable(   L, -3 );
+   }
+   return 1;
+}
+
+
+/**
+ * @brief Gets the system corresponding to a planet.
+ *    @luaparam p Planet to get system of.
+ *    @luareturn The system to which the planet belongs or nil if it has none.
+ * @luafunc system( p )
+ */
+static int planetL_system( lua_State *L )
+{
+   LuaSystem sys;
+   Planet *p;
+   const char *sysname;
+   /* Arguments. */
+   p = luaL_validplanet(L,1);
+   sysname = planet_getSystem( p->name );
+   if (sysname == NULL)
+      return 0;
+   sys.id = system_index( system_get( sysname ) );
+   lua_pushsystem( L, sys );
+   return 1;
 }
 
 /**
