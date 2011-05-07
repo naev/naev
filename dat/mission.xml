@@ -302,6 +302,16 @@
    <faction>Goddard</faction>
   </avail>
  </mission>
+ <mission name="DIY Nerds">
+  <lua>neutral/diy-nerds</lua>
+  <flags>
+  	<unique />
+  </flags>
+  <avail>
+    <chance>17</chance>
+    <location>Bar</location>
+  </avail>
+ </mission>
  <mission name="The Space Family">
   <lua>neutral/spacefamily</lua>
   <flags>
