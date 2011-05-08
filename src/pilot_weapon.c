@@ -54,6 +54,7 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
    int i, j, ret, s;
    Pilot *pt;
    double dist2;
+   Outfit *o;
 
    /* Case no outfits. */
    if (ws->slots == NULL)
@@ -62,19 +63,23 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
    /* If inrange is set we only fire at targets in range. */
    if (ws->inrange) {
       if (p->target == p->id)
-         return 0;
-      pt = pilot_get( p->target );
-      if (pt == NULL)
-         return 0;
-      dist2 = vect_dist2( &p->solid->pos, &pt->solid->pos );
+         dist2 = INFINITY; /* With no target we just set distance to infinity. */
+      else {
+         pt = pilot_get( p->target );
+         if (pt == NULL)
+            dist2 = INFINITY;
+         else
+            dist2 = vect_dist2( &p->solid->pos, &pt->solid->pos );
+      }
    }
 
    /* Fire. */
    ret = 0;
    for (i=0; i<array_size(ws->slots); i++) {
+      o = ws->slots[i].slot->outfit;
 
       /* Ignore NULL outfits. */
-      if (ws->slots[i].slot->outfit == NULL)
+      if (o == NULL)
          continue;
 
       /* Only "active" outfits. */
@@ -88,7 +93,7 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
          if ((level != -1) && (ws->slots[j].level != level))
             continue;
          /* Found a match. */
-         if (ws->slots[j].slot->outfit == ws->slots[i].slot->outfit) {
+         if (ws->slots[j].slot->outfit == o) {
             s = 1;
             break;
          }
@@ -97,11 +102,12 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
          continue;
 
       /* Only "inrange" outfits. */
-      if (ws->inrange && (dist2 > ws->slots[i].range2))
+      if (!outfit_isFighterBay(o) &&
+            ws->inrange && (dist2 > ws->slots[i].range2))
          continue;
 
       /* Shoot the weapon of the weaponset. */
-      ret += pilot_shootWeaponSetOutfit( p, ws, ws->slots[i].slot->outfit, level );
+      ret += pilot_shootWeaponSetOutfit( p, ws, o, level );
    }
 
    return ret;

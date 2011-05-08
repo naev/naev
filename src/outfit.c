@@ -694,6 +694,8 @@ double outfit_range( const Outfit* o )
       if (amm != NULL)
          return outfit_range(amm);
    }
+   else if (outfit_isFighterBay(o))
+      return INFINITY;
    return -1.;
 }
 /**
