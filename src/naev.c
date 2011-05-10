@@ -119,7 +119,7 @@ static int fps_skipped        = 0; /**< Skipped last frame? */
 static double fps_dt    = 1.; /**< Display fps accumulator. */
 static double game_dt   = 0.; /**< Current game deltatick (uses dt_mod). */
 static double real_dt   = 0.; /**< Real deltatick. */
-const double fps_min    = 1./50.; /**< Minimum fps to run at. */
+const double fps_min    = 1./30.; /**< Minimum fps to run at. */
 static double fps_x     =  15.; /**< FPS X position. */
 static double fps_y     = -15.; /**< FPS Y position. */
 
@@ -729,7 +729,7 @@ static void update_all (void)
       fps_skipped = 1;
       return;
    }
-   else if (game_dt > fps_min) { /* we'll force a minimum of 50 FPS */
+   else if (game_dt > fps_min) { /* we'll force a minimum FPS for physics to work alright. */
 
       /* Number of frames. */
       nf = ceil( game_dt / fps_min );
