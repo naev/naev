@@ -32,6 +32,7 @@ static int vectorL_polar( lua_State *L );
 static int vectorL_set( lua_State *L );
 static int vectorL_setP( lua_State *L );
 static int vectorL_distance( lua_State *L );
+static int vectorL_distance2( lua_State *L );
 static int vectorL_mod( lua_State *L );
 static const luaL_reg vector_methods[] = {
    { "new", vectorL_new },
@@ -48,6 +49,7 @@ static const luaL_reg vector_methods[] = {
    { "setP", vectorL_set },
    { "setP", vectorL_setP },
    { "dist", vectorL_distance },
+   { "dist2", vectorL_distance2 },
    { "mod", vectorL_mod },
    {0,0}
 }; /**< Vector metatable methods. */
@@ -463,6 +465,42 @@ static int vectorL_distance( lua_State *L )
 
    /* Return the distance. */
    lua_pushnumber(L, dist);
+   return 1;
+}
+
+/**
+ * @brief Gets the squared distance from the Vec2 (saves a sqrt())
+ *
+ * @usage my_vec:dist2() -- Gets squared length of the vector (distance squared from origin).
+ * @usage my_vec:dist2( your_vec ) -- Gets squared distance from both vectors (your_vec - my_vec)^2.
+ *
+ *    @luaparam v Vector to act as origin.
+ *    @luaparam v2 Vector to get squared distance from, uses origin (0,0) if not set.
+ *    @luareturn The distance calculated.
+ * @luafunc dist2( v, v2 )
+ */
+static int vectorL_distance2( lua_State *L )
+{
+   LuaVector *v1, *v2;
+   double dist2;
+
+   /* Get self. */
+   v1 = luaL_checkvector(L,1);
+
+   /* Get rest of parameters. */
+   v2 = NULL;
+   if (lua_gettop(L) > 1) {
+      v2 = luaL_checkvector(L,2);
+   }
+
+   /* Get distance. */
+   if (v2 == NULL)
+      dist2 = vect_odist2(&v1->vec);
+   else
+      dist2 = vect_dist2(&v1->vec, &v2->vec);
+
+   /* Return the distance. */
+   lua_pushnumber(L, dist2);
    return 1;
 }
 
