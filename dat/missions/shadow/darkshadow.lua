@@ -119,6 +119,7 @@ end
 
 -- This is the initial phase of the mission, when it still only shows up in the mission list. No OSD, reward or markers yet.
 function accept()
+    misn.setReward("Unknown")
     misn.setDesc(misn_desc1:format(seirsys:name(), seirplanet:name()))
     misn.accept()
     misn.osdDestroy() -- This is here because setDesc initializes the OSD.
