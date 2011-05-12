@@ -40,6 +40,7 @@ else -- default english
     osd_msg[1] = "Fly to the %s system"
     osd_msg[2] = ""
     osd_msg[3] = "Return to %s"
+    osd_msg["__save"] = true
     osd_msg2 = "Destroy at least %d drones (%d remaining)"
 end
 
@@ -103,6 +104,7 @@ function death(pilot)
         if droneleft == 0 then
             misn_stage = 1
             misn.osdActive(3)
+            misn.markerMove(misn_marker, misn_base_sys)
         end
     end
 end
