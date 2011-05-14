@@ -1005,7 +1005,7 @@ int naev_versionCompare( int version[3] )
    if (VREV > version[2])
       return -1;
    else if (VREV < version[2])
-      return +2;
+      return +1;
 
    return 0;
 }
