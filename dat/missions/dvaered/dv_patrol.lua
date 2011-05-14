@@ -281,14 +281,16 @@ function set_osd ()
       local tgt_next = tgt_list[ visited+1 ]
       if tgt_next.sys ~= system.cur() then
          osd_table[ #osd_table+1 ] = string.format( osd_msg[6], tgt_next.sys:name() )
-      end
+         osd_table[ #osd_table+1 ] = "..."
+      else
 
-      -- List targets
-      osd_table[ #osd_table+1 ] = string.format( osd_msg[misn_stage], tgt_str( tgt_next, true ) )
-      if visited+2 <= num_patrol then
-         osd_table[ #osd_table+1 ] = string.format( osd_msg[5], tgt_str( tgt_list[visited+2], true ) )
-         if visited+3 <= num_patrol then
-            osd_table[ #osd_table+1 ] = "..."
+         -- List targets
+         osd_table[ #osd_table+1 ] = string.format( osd_msg[misn_stage], tgt_str( tgt_next, true ) )
+         if visited+2 <= num_patrol then
+            osd_table[ #osd_table+1 ] = string.format( osd_msg[5], tgt_str( tgt_list[visited+2], true ) )
+            if visited+3 <= num_patrol then
+               osd_table[ #osd_table+1 ] = "..."
+            end
          end
       end
    end
@@ -308,13 +310,16 @@ function enter ()
 
    -- We start the update goal timer when we're in the proper system
    if visited+1 < num_patrol and system.cur() == tgt_list[ visited+1 ].sys then
-      hook.timer( 1000, "updateGoal" )
+      updateGoal() -- Will set timer
       local vec = tgt_getPos( tgt_list[ visited+1 ] )
       misn_mrk = system.mrkAdd( "Patrol Point", vec )
    end
 end
 
 function updateGoal ()
+   if system.cur() ~= tgt_list[ visited+1 ].sys then
+      return
+   end
    local vec = tgt_getPos( tgt_list[ visited+1 ] )
    local dist2 = vec:dist2( player.pilot():pos() )
 
