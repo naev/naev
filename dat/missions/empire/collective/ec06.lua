@@ -48,6 +48,7 @@ else -- default english
    osd_msg[2] = "Defeat the Starfire"
    osd_msg2alt = "Defeat the Starfire and the Trinity"
    osd_msg[3] = "Report back"
+   osd_msg["__save"] = true
 end
 
 

@@ -21,6 +21,7 @@ else -- default english
    misn_desc = {}
    misn_desc[1] = "Scan the Collective systems for wireless communications."
    misn_desc[2] = "Travel back to %s in %s."
+   misn_desc["__save"] = true 
    
    title = {}
    title[1] = "Lt. Commander Dimitri"

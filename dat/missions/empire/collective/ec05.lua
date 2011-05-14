@@ -73,6 +73,7 @@ else -- default english
    osd_msg[1] = "Fly to the %s system"
    osd_msg[2] = "Apprehend or kill Zakred"
    osd_msg[3] = "Report back to %s"
+   osd_msg["__save"] = true
 end
 
 

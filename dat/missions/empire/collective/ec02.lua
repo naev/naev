@@ -39,6 +39,7 @@ else -- default english
     osd_msg = {}
     osd_msg[1] = "Fly to %s and land on %s"
     osd_msg[2] = "Return to %s with your findings"
+    osd_msg["__save"] = true 
 end
 
 

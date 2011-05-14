@@ -43,6 +43,7 @@ else -- default english
    osd_msg[1] = "Fly to the %s system"
    osd_msg[2] = "Locate the Collective drone, but do not engage."
    osd_msg[3] = "Report back to %s in the %s system"
+   osd_msg["__save"] = true 
 end
 
 
