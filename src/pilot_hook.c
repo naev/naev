@@ -137,9 +137,8 @@ void pilots_addGlobalHook( int type, unsigned int hook )
    PilotHook *phook;
 
    /* Allocate memory. */
-   if (pilot_globalHooks == NULL) {
+   if (pilot_globalHooks == NULL)
       pilot_globalHooks = array_create( PilotHook );
-   }
 
    /* Create the new hook. */
    phook       = &array_grow( &pilot_globalHooks );
@@ -177,7 +176,7 @@ void pilots_clearGlobalHooks (void)
    if (pilot_globalHooks == NULL )
       return;
 
-   array_erase( &pilot_globalHooks, pilot_globalHooks, &pilot_globalHooks[ array_size(pilot_globalHooks)-1 ] );
+   array_erase( &pilot_globalHooks, pilot_globalHooks, &pilot_globalHooks[ array_size(pilot_globalHooks) ] );
 }
 
 
