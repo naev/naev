@@ -428,7 +428,7 @@ static int time_tonumber( lua_State *L )
 static int time_fromnumber( lua_State *L )
 {
    LuaTime lt;
-   lt.t = luaL_checklong(L,1);
+   lt.t = (ntime_t) luaL_checknumber(L,1);
    lua_pushtime( L, lt );
    return 1;
 }
