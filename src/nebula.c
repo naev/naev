@@ -394,7 +394,9 @@ void nebu_genOverlay (void)
    /* Get GUI offsets. */
    gui_getOffset( &gx, &gy );
 
-   /* Calculate zoom. */
+   /* Here we calculate outter corners. It should actually be /2. because we
+    * are centered around 0,0. However, we treat this extra space as a buffer
+    * for when it's shaking. */
    z = 1./conf.zoom_far;
 
    /* See if need to generate overlay. */
@@ -438,8 +440,8 @@ void nebu_genOverlay (void)
    }
 
    /* Top Left */
-   data[(2+4)*18+0]  = -SCREEN_W/2.*z-gx;
-   data[(2+4)*18+1]  = SCREEN_H/2.*z-gy;
+   data[(2+4)*18+0]  = -SCREEN_W*z-gx;
+   data[(2+4)*18+1]  = SCREEN_H*z-gy;
    data[(2+4)*18+2]  = -nebu_view;
    data[(2+4)*18+3]  = 0.;
    data[(2+4)*18+4]  = -nebu_view*COS225;
@@ -450,12 +452,12 @@ void nebu_genOverlay (void)
    data[(2+4)*18+9]  = nebu_view*COS225;
    data[(2+4)*18+10] = 0.;
    data[(2+4)*18+11] = nebu_view;
-   data[(2+4)*18+12] = SCREEN_W/2.*z-gx;
-   data[(2+4)*18+13] = SCREEN_H/2.*z-gy;
+   data[(2+4)*18+12] = SCREEN_W*z-gx;
+   data[(2+4)*18+13] = SCREEN_H*z-gy;
 
    /* Top Right */
-   data[(2+4)*18+14] = SCREEN_W/2.*z-gx;
-   data[(2+4)*18+15] = SCREEN_H/2.*z-gy;
+   data[(2+4)*18+14] = SCREEN_W*z-gx;
+   data[(2+4)*18+15] = SCREEN_H*z-gy;
    data[(2+4)*18+16] = 0.;
    data[(2+4)*18+17] = nebu_view;
    data[(2+4)*18+18] = nebu_view*SIN225;
@@ -466,12 +468,12 @@ void nebu_genOverlay (void)
    data[(2+4)*18+23] = nebu_view*SIN225;
    data[(2+4)*18+24] = nebu_view;
    data[(2+4)*18+25] = 0.;
-   data[(2+4)*18+26] = SCREEN_W/2.*z-gx;
-   data[(2+4)*18+27] = -SCREEN_H/2.*z-gy;
+   data[(2+4)*18+26] = SCREEN_W*z-gx;
+   data[(2+4)*18+27] = -SCREEN_H*z-gy;
 
    /* Bottom Right */
-   data[(2+4)*18+28] = SCREEN_W/2.*z-gx;
-   data[(2+4)*18+29] = -SCREEN_H/2.*z-gy;
+   data[(2+4)*18+28] = SCREEN_W*z-gx;
+   data[(2+4)*18+29] = -SCREEN_H*z-gy;
    data[(2+4)*18+30] = nebu_view;
    data[(2+4)*18+31] = 0.;
    data[(2+4)*18+32] = nebu_view*COS225;
@@ -482,12 +484,12 @@ void nebu_genOverlay (void)
    data[(2+4)*18+37] = -nebu_view*COS225;
    data[(2+4)*18+38] = 0.;
    data[(2+4)*18+39] = -nebu_view;
-   data[(2+4)*18+40] = -SCREEN_W/2.*z-gx;
-   data[(2+4)*18+41] = -SCREEN_H/2.*z-gy;
+   data[(2+4)*18+40] = -SCREEN_W*z-gx;
+   data[(2+4)*18+41] = -SCREEN_H*z-gy;
 
    /* Bottom left */
-   data[(2+4)*18+42] = -SCREEN_W/2.*z-gx;
-   data[(2+4)*18+43] = -SCREEN_H/2.*z-gy;
+   data[(2+4)*18+42] = -SCREEN_W*z-gx;
+   data[(2+4)*18+43] = -SCREEN_H*z-gy;
    data[(2+4)*18+44] = 0.;
    data[(2+4)*18+45] = -nebu_view;
    data[(2+4)*18+46] = -nebu_view*SIN225;
@@ -498,8 +500,8 @@ void nebu_genOverlay (void)
    data[(2+4)*18+51] = -nebu_view*SIN225;
    data[(2+4)*18+52] = -nebu_view;
    data[(2+4)*18+53] = 0.;
-   data[(2+4)*18+54] = -SCREEN_W/2.*z-gx;
-   data[(2+4)*18+55] = SCREEN_H/2.*z-gy;
+   data[(2+4)*18+54] = -SCREEN_W*z-gx;
+   data[(2+4)*18+55] = SCREEN_H*z-gy;
 
    gl_vboUnmap( nebu_vboOverlay );
 }
@@ -534,11 +536,9 @@ void nebu_renderOverlay( const double dt )
    /* Prepare the matrix */
    ox = gx;
    oy = gy;
-   if (!paused) {
-      spfx_getShake( &sx, &sy );
-      ox += sx;
-      oy += sy;
-   }
+   spfx_getShake( &sx, &sy );
+   ox += sx;
+   oy += sy;
    gl_matrixPush();
       gl_matrixTranslate( SCREEN_W/2.+ox, SCREEN_H/2.+oy );
       gl_matrixScale( z, z );
