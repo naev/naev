@@ -39,8 +39,6 @@
 #define SPFX_GFX_PRE    "gfx/spfx/" /**< location of the graphic */
 #define SPFX_GFX_SUF    ".png" /**< Suffix of graphics. */
 
-#define CHUNK_SIZE      128 /**< Chunk size to allocate spfx bases. */
-
 #define SPFX_CHUNK_MAX  16384 /**< Maximum chunk to alloc when needed */
 #define SPFX_CHUNK_MIN  256 /**< Minimum chunk to alloc when needed */
 
@@ -253,7 +251,10 @@ int spfx_load (void)
 
          spfx_neffects++;
          if (spfx_neffects > mem) {
-            mem += CHUNK_SIZE;
+            if (mem == 0)
+               mem = SPFX_CHUNK_MIN;
+            else
+               mem *= 2;
             spfx_effects = realloc(spfx_effects, sizeof(SPFX_Base)*mem);
          }
          spfx_base_parse( &spfx_effects[spfx_neffects-1], node );
