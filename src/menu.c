@@ -136,6 +136,7 @@ static int menu_main_bkg_system (void)
    space_init( sys );
    cam_setTargetPos( cx, cy, 0 );
    cam_setZoom( conf.zoom_far );
+   pause_setSpeed( 1. );
 
    return 0;
 }
