@@ -199,7 +199,7 @@ function create()
    gui.fpsPos( 20, screen_h - 48 - deffont_h )
 
    -- Set OSD
-   gui.osdInit( 23, screen_h - 63, 150, 300 )
+   gui.osdInit( 23, screen_h - 63, 150, 500 )
 
    -- Timer stuff
    timers = {}
@@ -253,7 +253,7 @@ function update_nav()
             end
          end
       end
-      gui.osdInit( ta_pnt_pane_x + ta_pnt_pane_w + 8, screen_h - 63, 150, 300 )
+      gui.osdInit( ta_pnt_pane_x + ta_pnt_pane_w + 8, screen_h - 63, 150, 500 )
       gui.fpsPos( ta_pnt_pane_x + ta_pnt_pane_w + 3, screen_h - 28 - 15 - deffont_h )
 
       ta_pnt_gfx = nav_pnt:gfxSpace()
@@ -273,7 +273,7 @@ function update_nav()
          ta_pnt_faction_gfx = ta_pntfact:logoTiny()
       end
    else
-      gui.osdInit( 23, screen_h - 63, 150, 300 )
+      gui.osdInit( 23, screen_h - 63, 150, 500 )
       gui.fpsPos( 15, screen_h - 28 - 15 - deffont_h )
    end
    if nav_hyp then
