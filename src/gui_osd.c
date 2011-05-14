@@ -354,10 +354,10 @@ void osd_render (void)
       return;
 
    /* Background. */
-   gl_renderRect( osd_x-5., osd_y-(osd_rh+5.), osd_w+10., osd_rh+gl_smallFont.h+10, &cBlackHilight );
+   gl_renderRect( osd_x-5., osd_y-(osd_rh+5.), osd_w+10., osd_rh+10, &cBlackHilight );
 
    /* Render each thingy. */
-   p = osd_y;
+   p = osd_y-gl_smallFont.h;
    l = 0;
    for (ll = osd_list; ll != NULL; ll = ll->next) {
       x = osd_x;
@@ -366,7 +366,7 @@ void osd_render (void)
       /* Print title. */
       gl_printMaxRaw( &gl_smallFont, w, x, p, NULL, ll->title );
       p -= gl_smallFont.h + 5.;
-      if (l >= osd_lines)
+      if (l > osd_lines)
          return;
 
       /* Print items. */
