@@ -349,11 +349,9 @@ static void nebu_renderMultitexture( const double dt )
    glTexEnvi( GL_TEXTURE_ENV, GL_OPERAND2_ALPHA, GL_SRC_ALPHA );
 
    /* Compensate possible rumble */
-   if (!paused) {
-      spfx_getShake( &sx, &sy );
-      gl_matrixPush();
-         gl_matrixTranslate( -sx, -sy );
-   }
+   spfx_getShake( &sx, &sy );
+   gl_matrixPush();
+      gl_matrixTranslate( -sx, -sy );
 
    /* Now render! */
    gl_vboActivateOffset( nebu_vboBG, GL_VERTEX_ARRAY,
@@ -365,8 +363,7 @@ static void nebu_renderMultitexture( const double dt )
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
    gl_vboDeactivate();
 
-   if (!paused)
-      gl_matrixPop();
+   gl_matrixPop();
 
    /* Set values to defaults */
    glTexEnvi( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
