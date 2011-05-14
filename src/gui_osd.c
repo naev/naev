@@ -366,7 +366,8 @@ void osd_render (void)
       /* Print title. */
       gl_printMaxRaw( &gl_smallFont, w, x, p, NULL, ll->title );
       p -= gl_smallFont.h + 5.;
-      if (l > osd_lines)
+      l++;
+      if (l >= osd_lines)
          return;
 
       /* Print items. */
@@ -382,7 +383,8 @@ void osd_render (void)
                x = osd_x + osd_hyphenLen;
             }
             p -= gl_smallFont.h + 5.;
-            if (p < osd_y-osd_h)
+            l++;
+            if (l >= osd_lines)
                return;
          }
       }
