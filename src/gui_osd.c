@@ -56,6 +56,7 @@ static int osd_x = 0;
 static int osd_y = 0;
 static int osd_w = 0;
 static int osd_h = 0;
+static int osd_lines = 0;
 static int osd_rh = 0;
 static int osd_tabLen = 0;
 static int osd_hyphenLen = 0;
@@ -316,7 +317,8 @@ int osd_setup( int x, int y, int w, int h )
    osd_x = x;
    osd_y = y;
    osd_w = w;
-   osd_h = h;
+   osd_lines = h / (gl_smallFont.h+5);
+   osd_h = h - h % (gl_smallFont.h+5);
 
    /* Calculate some font things. */
    osd_tabLen = gl_printWidthRaw( &gl_smallFont, "   " );
@@ -343,7 +345,7 @@ void osd_render (void)
 {
    OSD_t *ll;
    double p;
-   int i, j;
+   int i, j, l;
    int w, x;
    glColour *c;
 
@@ -352,10 +354,11 @@ void osd_render (void)
       return;
 
    /* Background. */
-   gl_renderRect( osd_x-5., osd_y-osd_rh+5., osd_w+10., osd_rh+10, &cBlackHilight );
+   gl_renderRect( osd_x-5., osd_y-(osd_rh+5.), osd_w+10., osd_rh+10, &cBlackHilight );
 
    /* Render each thingy. */
-   p = osd_y;
+   p = osd_y-gl_smallFont.h;
+   l = 0;
    for (ll = osd_list; ll != NULL; ll = ll->next) {
       x = osd_x;
       w = osd_w;
@@ -363,7 +366,7 @@ void osd_render (void)
       /* Print title. */
       gl_printMaxRaw( &gl_smallFont, w, x, p, NULL, ll->title );
       p -= gl_smallFont.h + 5.;
-      if (p < osd_y-osd_h)
+      if (l > osd_lines)
          return;
 
       /* Print items. */
