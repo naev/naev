@@ -158,6 +158,10 @@ void pilot_weapSetExec( Pilot* p, int id )
 {
    PilotWeaponSet *ws;
 
+   /* Must not be doing hyperspace procedures. */
+   if (pilot_isFlag( p, PILOT_HYP_BEGIN))
+      return;
+
    ws = pilot_weapSet(p,id);
    if (ws->fire) {
       pilot_weapSetFire( p, ws, -1 );
