@@ -2093,7 +2093,7 @@
    <weapon x="50" y="0" h="5" />
    <weapon x="-50" y="0" h="5" />
    <weapon x="0" y="50" h="5" />
-   <weapon x="0" y="-50" h="5" />
+   <weapon x="0" y="-40" h="5" />
    <weapon x="0" y="0" h="30" />
    <weapon x="0" y="0" h="30" />
    <utility />
