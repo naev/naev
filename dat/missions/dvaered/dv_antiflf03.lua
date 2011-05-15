@@ -180,6 +180,7 @@ function operationStart()
     idle()
     hook.timer(10000, "spawnFLFfighters")
     hook.timer(15000, "spawnFLFfighters")
+    hook.timer(20000, "spawnFLFfighters")
     tim_sec = hook.timer(100000, "nextStage")
     controller = hook.timer(1000, "control")
 end
@@ -314,19 +315,26 @@ function possibleDVtargets()
     return targets
 end
 
+
+-- Helper function
+function setFLF( j )
+  hook.pilot(j, "death", "deathFLF")
+  j:setNodisable(true)
+  j:setHostile()
+  j:setVisible(true)
+  j:control()
+end
+
+
 -- Spawns FLF fighters
 function spawnFLFfighters()
     wavefirst = true
     wavestarted = true
     local targets = possibleDVtargets()
-    wingFLF = addShips( "FLF Vendetta", "flf_norun", base:pos(), 3 )
+    local wingFLF = addShips( "FLF Vendetta", "flf_norun", base:pos(), 3 )
     for i, j in ipairs(wingFLF) do
         fleetFLF[#fleetFLF + 1] = j
-        hook.pilot(j, "death", "deathFLF")
-        j:setNodisable(true)
-        j:setHostile()
-        j:setVisible(true)
-        j:control()
+        setFLF( j )
         j:attack(targets[rnd.rnd(#targets - 1) + 1])
     end
 end
@@ -334,15 +342,24 @@ end
 -- Spawns FLF bombers
 function spawnFLFbombers()
     local targets = possibleDVtargets()
-    wingFLF = addRawShips( "Ancestor", "flf_norun", base:pos(), "FLF", 3 )
+    local wingFLF = addRawShips( "Ancestor", "flf_norun", base:pos(), "FLF", 3 )
+    for i, j in ipairs(wingFLF) do
+        fleetFLF[#fleetFLF + 1] = j
+        setFLF( j )
+        hook.pilot(j, "death", "deathFLF")
+        j:rename("FLF Ancestor")
+        j:attack(targets[rnd.rnd(#targets - 1) + 1])
+    end
+end
+
+-- Spawns FLF destroyers
+function spawnFLFdestroyers()
+    local targets = possibleDVtargets()
+    local wingFLF = addShips( "FLF Pacifier", "flf_norun", base:pos(), 2 )
     for i, j in ipairs(wingFLF) do
         fleetFLF[#fleetFLF + 1] = j
         hook.pilot(j, "death", "deathFLF")
-        j:rename("FLF Ancestor")
-        j:setNodisable(true)
-        j:setHostile()
-        j:setVisible(true)
-        j:control()
+        setFLF( j )
         j:attack(targets[rnd.rnd(#targets - 1) + 1])
     end
 end
@@ -378,14 +395,16 @@ function nextStage()
     hook.rm( tim_sec ) -- Stop security timer
     if stage == 1 then
         --player.msg("Starting stage 2.")
-        hook.timer(1000, "spawnFLFbombers")
+        hook.timer(1000, "spawnFLFfighters")
+        hook.timer(3000, "spawnFLFbombers")
         hook.timer(5000, "spawnFLFfighters")
         tim_sec = hook.timer(90000, "nextStage")
     elseif stage == 2 then
         --player.msg("Starting stage 3.")
         hook.timer(1000, "spawnFLFfighters")
         hook.timer(3000, "spawnFLFbombers")
-        hook.timer(5000, "spawnFLFbombers")
+        hook.timer(5000, "spawnFLFdestroyers")
+        hook.timer(7000, "spawnFLFbombers")
         tim_sec = hook.timer(90000, "nextStage")
     else
         --player.msg("Starting stage 4.")
