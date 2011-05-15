@@ -28,6 +28,7 @@
 #include "nlua_col.h"
 #include "nlua_bkg.h"
 #include "camera.h"
+#include "nebula.h"
 
 
 /**
@@ -157,6 +158,9 @@ void background_moveStars( double x, double y )
 {
    star_x += (GLfloat) x;
    star_y += (GLfloat) y;
+
+   /* Puffs also need moving. */
+   nebu_movePuffs( x, y );
 }
 
 

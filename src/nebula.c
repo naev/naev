@@ -75,8 +75,10 @@ typedef struct NebulaPuff_ {
    double height; /**< height vs player */
    int tex; /**< Texture */
 } NebulaPuff;
-static NebulaPuff *nebu_puffs   = NULL; /**< Stack of puffs. */
-static int nebu_npuffs           = 0; /**< Number of puffs. */
+static NebulaPuff *nebu_puffs = NULL; /**< Stack of puffs. */
+static int nebu_npuffs        = 0; /**< Number of puffs. */
+static double puff_x          = 0.;
+static double puff_y          = 0.;
 
 
 /*
@@ -85,10 +87,12 @@ static int nebu_npuffs           = 0; /**< Number of puffs. */
 static int nebu_checkCompat( const char* file );
 static void nebu_loadTexture( SDL_Surface *sur, int w, int h, GLuint tex );
 static int nebu_generate (void);
-static void nebu_generatePuffs (void);
 static int saveNebula( float *map, const uint32_t w, const uint32_t h, const char* file );
 static SDL_Surface* loadNebula( const char* file );
 static SDL_Surface* nebu_surfaceFromNebulaMap( float* map, const int w, const int h );
+/* Puffs. */
+static void nebu_generatePuffs (void);
+static void nebu_renderPuffs( const double dt, int below_player );
 /* Nebula render methods. */
 static void nebu_renderMultitexture( const double dt );
 
@@ -580,6 +584,10 @@ void nebu_renderOverlay( const double dt )
    gl_vboDeactivate();
    gl_matrixPop();
 
+   /* Reset puff movement. */
+   puff_x = 0.;
+   puff_y = 0.;
+
    gl_checkErr();
 }
 
@@ -590,7 +598,7 @@ void nebu_renderOverlay( const double dt )
  *    @param dt Current delta tick.
  *    @param below_player Render the puffs below player or above player?
  */
-void nebu_renderPuffs( const double dt, int below_player )
+static void nebu_renderPuffs( const double dt, int below_player )
 {
    int i;
 
@@ -604,10 +612,8 @@ void nebu_renderPuffs( const double dt, int below_player )
             (!below_player && (nebu_puffs[i].height > 1.))) {
 
          /* calculate new position */
-         if (!paused && (player.p!=NULL)) {
-            nebu_puffs[i].x -= player.p->solid->vel.x * nebu_puffs[i].height * dt;
-            nebu_puffs[i].y -= player.p->solid->vel.y * nebu_puffs[i].height * dt;
-         }
+         nebu_puffs[i].x -= puff_x * nebu_puffs[i].height * dt;
+         nebu_puffs[i].y -= puff_y * nebu_puffs[i].height * dt;
 
          /* Check boundries */
          if (nebu_puffs[i].x > SCREEN_W + NEBULA_PUFF_BUFFER)
@@ -624,6 +630,16 @@ void nebu_renderPuffs( const double dt, int below_player )
                nebu_puffs[i].x, nebu_puffs[i].y, &cLightBlue );
       }
    }
+}
+
+
+/**
+ * @brief Moves the nebula puffs.
+ */
+void nebu_movePuffs( double x, double y )
+{
+   puff_x += x;
+   puff_y += y;
 }
 
 
