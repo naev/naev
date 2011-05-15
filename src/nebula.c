@@ -92,7 +92,7 @@ static SDL_Surface* loadNebula( const char* file );
 static SDL_Surface* nebu_surfaceFromNebulaMap( float* map, const int w, const int h );
 /* Puffs. */
 static void nebu_generatePuffs (void);
-static void nebu_renderPuffs( const double dt, int below_player );
+static void nebu_renderPuffs( int below_player );
 /* Nebula render methods. */
 static void nebu_renderMultitexture( const double dt );
 
@@ -280,7 +280,7 @@ void nebu_render( const double dt )
    }
 
    /* Now render the puffs, they are generic. */
-   nebu_renderPuffs( dt, 1 );
+   nebu_renderPuffs( 1 );
 }
 
 
@@ -521,6 +521,7 @@ void nebu_genOverlay (void)
  */
 void nebu_renderOverlay( const double dt )
 {
+   (void) dt;
    double gx, gy;
    double ox, oy;
    double z;
@@ -535,7 +536,7 @@ void nebu_renderOverlay( const double dt )
    /*
     * Renders the puffs
     */
-   nebu_renderPuffs( dt, 0 );
+   nebu_renderPuffs( 0 );
 
    /* Prepare the matrix */
    ox = gx;
@@ -598,7 +599,7 @@ void nebu_renderOverlay( const double dt )
  *    @param dt Current delta tick.
  *    @param below_player Render the puffs below player or above player?
  */
-static void nebu_renderPuffs( const double dt, int below_player )
+static void nebu_renderPuffs( int below_player )
 {
    int i;
 
@@ -612,8 +613,8 @@ static void nebu_renderPuffs( const double dt, int below_player )
             (!below_player && (nebu_puffs[i].height > 1.))) {
 
          /* calculate new position */
-         nebu_puffs[i].x -= puff_x * nebu_puffs[i].height * dt;
-         nebu_puffs[i].y -= puff_y * nebu_puffs[i].height * dt;
+         nebu_puffs[i].x += puff_x * nebu_puffs[i].height;
+         nebu_puffs[i].y += puff_y * nebu_puffs[i].height;
 
          /* Check boundries */
          if (nebu_puffs[i].x > SCREEN_W + NEBULA_PUFF_BUFFER)
