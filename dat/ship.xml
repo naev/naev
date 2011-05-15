@@ -2088,14 +2088,14 @@
    <cap_cargo>5000</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="1" y="0" h="0" />
-   <weapon x="1" y="0" h="0" />
-   <weapon x="1" y="0" h="0" />
-   <weapon x="1" y="0" h="0" />
-   <weapon x="1" y="0" h="0" />
-   <weapon x="1" y="0" h="0" />
-   <weapon x="1" y="0" h="0" />
-   <weapon x="1" y="0" h="0" />
+   <weapon x="0" y="0" h="0" />
+   <weapon x="0" y="0" h="0" />
+   <weapon x="50" y="0" h="5" />
+   <weapon x="-50" y="0" h="5" />
+   <weapon x="0" y="50" h="5" />
+   <weapon x="0" y="-50" h="5" />
+   <weapon x="0" y="0" h="30" />
+   <weapon x="0" y="0" h="30" />
    <utility />
    <utility />
    <utility />
