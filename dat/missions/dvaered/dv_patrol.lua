@@ -228,7 +228,7 @@ function create ()
    mission_marker = misn.markerAdd( tgt_sys[1], "computer" )
 
    -- Create the description.
-   desc = string.format( misn_desc[1], #tgt_sys, num_patrol ) .. tgt_sys[1]:name()
+   desc = string.format( misn_desc[1], num_patrol, #tgt_sys ) .. tgt_sys[1]:name()
    for i=2, #tgt_sys-1 do
       desc = desc .. ", " .. tgt_sys[i]:name()
    end
