@@ -267,6 +267,9 @@ function spawnDV()
     hook.pilot(obstinate, "attacked", "attackedObstinate")
     hook.pilot(obstinate, "death", "deathObstinate")
     hook.pilot(obstinate, "idle", "idle")
+
+    -- Treat player as one more
+    hook.pilot( player.pilot(), "attacked", "attacked" )
     
     local i = 1
     while i <= 4 do
@@ -364,10 +367,7 @@ function spawnFLFdestroyers()
     end
 end
 
--- An FLF ship just died
-function deathFLF()
-    deathsFLF = deathsFLF + 1
-
+function pruneFLF()
     -- Remove dead ships from array
     local t = fleetFLF
     fleetFLF = {}
@@ -376,6 +376,13 @@ function deathFLF()
             fleetFLF[ #fleetFLF+1 ] = j
         end
     end
+end
+
+-- An FLF ship just died
+function deathFLF()
+    deathsFLF = deathsFLF + 1
+
+    pruneFLF()
 
     -- Keep track of deaths
     if #fleetFLF <= 0 then
@@ -405,7 +412,7 @@ function nextStage()
         hook.timer(3000, "spawnFLFbombers")
         hook.timer(5000, "spawnFLFdestroyers")
         hook.timer(7000, "spawnFLFbombers")
-        tim_sec = hook.timer(90000, "nextStage")
+        tim_sec = hook.timer(120000, "nextStage")
     else
         --player.msg("Starting stage 4.")
         local delay = 0
@@ -486,34 +493,45 @@ end
 
 -- Controls a fleet
 function controlFleet( fleetCur, pos, off )
+    if baseattack then
+       return
+    end
+
+    if fleetFLF ~= nil then
+       pruneFLF()
+    end
+
     -- Dvaered escorts should fall back into formation if not in combat, or if too close to the base or if too far from the Obstinate.
     for i, j in ipairs( fleetCur ) do
         if j:exists() then
-            local attacking = false
+            local basedist = vec2.dist(j:pos(), base:pos())
 
-            -- Kill nearby hostiles
-            if fleetFLF ~= nil and #fleetFLF > 0 and j:idle() then
-                local distance = 1500
+            -- Get closest hostile
+            local distance = 2500
+            if fleetFLF ~= nil and #fleetFLF > 0 then
                 local nearest = nil
-                local distanceCur
+                -- Should all exist as we've pruned before
                 for k, v in ipairs(fleetFLF) do
-                    if v:exists() then
-                        distanceCur = vec2.dist(j:pos(), v:pos())
-                        if distanceCur < distance then
-                            nearest = v
-                            distance = distanceCur
-                        end
+                    local distanceCur = vec2.dist(j:pos(), v:pos())
+                    if distanceCur < distance then
+                        nearest = v
+                        distance = distanceCur
                     end
-                end
-                if nearest ~= nil then
-                    j:control()
-                    j:attack(nearest)
-                    attacking = true
                 end
             end
 
+            -- Too close to base or recalled
+            if basedist < safestandoff or time <= 0 then
+                j:control()
+                j:goto( pos[i + off] )
+
+            -- See if we should engage
+            elseif nearest ~= nil and (distance < 500 or j:idle()) then
+                j:control()
+                j:attack(nearest)
+
             -- Fly back to fleet
-            if ((not attacking or vec2.dist(j:pos(), base:pos()) < safestandoff or time <= 0 or j:idle()) and not baseattack) then
+            elseif j:idle() then
                 j:control()
                 j:goto( pos[i + off] )
             end
@@ -593,13 +611,13 @@ function attacked()
     time = 3000
     
     for i, j in ipairs(fleetDV) do
-        if j:exists() and vec2.dist(j:pos(), base:pos()) > safestandoff and vec2.dist(obstinate:pos(), obstinate:pos()) < 1000 then
+        if j:exists() and vec2.dist(j:pos(), base:pos()) > safestandoff and vec2.dist(j:pos(), obstinate:pos()) < 1000 then
             j:control(false)
         end
     end
     
     for i, j in ipairs(fightersDV) do
-        if j:exists() and vec2.dist(j:pos(), base:pos()) > safestandoff and vec2.dist(obstinate:pos(), obstinate:pos()) < 1000 then
+        if j:exists() and vec2.dist(j:pos(), base:pos()) > safestandoff and vec2.dist(j:pos(), obstinate:pos()) < 1000 then
             j:control(false)
         end
     end
