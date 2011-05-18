@@ -428,6 +428,8 @@ function nextStage()
         hook.timer(delay, "zoomTo", base)
         delay = delay + 38000
         hook.timer(delay, "engageBase")
+        delay = delay + 45000
+        hook.timer(delay, "destroyBase")
         misn.osdActive(3)
     end
 end
@@ -491,6 +493,13 @@ function engageBase()
             j:attack(base)
         end
     end
+end
+
+
+function destroyBase()
+   if base:exists() then
+      base:setHealth( -1, 0 )
+   end
 end
 
 
