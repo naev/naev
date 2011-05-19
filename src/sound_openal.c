@@ -45,6 +45,14 @@
  * will pretend to play the buffer.
  * 4) Every so often we'll check to see if the important voices are being
  * played and take away the sources from the lesser ones.
+ *
+ *
+ * EFX
+ *
+ * We use multiple effects, namely:
+ *
+ * - Air absoprtion factor
+ * - Reverb
  */
 
 
@@ -1132,6 +1140,11 @@ int sound_al_env( SoundEnv_t env, double param )
             /* Set per-source parameters. */
             for (i=0; i<source_ntotal; i++) {
                s = source_total[i];
+               /* Value is from 0. (normal) to 10..
+                * It represents the attenuation per meter. In this case it decreases by
+                * 0.05*AB_FACTOR dB/meter where AB_FACTOR is the air absoprtion factor.
+                * In our case each pixel represents 5 meters.
+                */
                alSourcef( s, AL_AIR_ABSORPTION_FACTOR, 3.*f );
             }
          }
