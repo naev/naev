@@ -83,7 +83,7 @@ function create ()
         abort()
     end
  
-   misn.setNPC( "Dimitri?", "none" ) -- No need for portrait as he's not there :)
+   misn.setNPC( "Dimitri?", "unknown" )
    misn.setDesc( bar_desc )
 end
 
