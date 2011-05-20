@@ -88,6 +88,7 @@ static int pilotL_getColour( lua_State *L );
 static int pilotL_getHostile( lua_State *L );
 static int pilotL_flags( lua_State *L );
 static int pilotL_setActiveBoard( lua_State *L );
+static int pilotL_setNoDeath( lua_State *L );
 static int pilotL_disable( lua_State *L );
 static int pilotL_setNoJump( lua_State *L );
 static int pilotL_setNoLand( lua_State *L );
@@ -174,6 +175,7 @@ static const luaL_reg pilotL_methods[] = {
    { "setVisible", pilotL_setVisible },
    { "setHilight", pilotL_setHilight },
    { "setActiveBoard", pilotL_setActiveBoard },
+   { "setNoDeath", pilotL_setNoDeath },
    { "disable", pilotL_disable },
    { "setNoJump", pilotL_setNoJump },
    { "setNoLand", pilotL_setNoLand },
@@ -1812,6 +1814,39 @@ static int pilotL_setActiveBoard( lua_State *L )
       pilot_setFlag(p, PILOT_BOARDABLE);
    else
       pilot_rmFlag(p, PILOT_BOARDABLE);
+
+   return 0;
+}
+
+
+/**
+ * @brief Makes it so the pilot never dies, stays at 1. armour.
+ *
+ * @usage p:setNoDeath( true ) -- Pilot will never die
+ *
+ *    @luaparam p Pilot to set never die state of.
+ *    @luaparam state Whether or not to set never die state.
+ * @luafunc setNoDeath( p, state )
+ */
+static int pilotL_setNoDeath( lua_State *L )
+{
+   Pilot *p;
+   int state;
+
+   /* Get the pilot. */
+   p = luaL_validpilot(L,1);
+
+   /* Get state. */
+   if (lua_gettop(L) > 1)
+      state = lua_toboolean(L, 2);
+   else
+      state = 1;
+
+   /* Set status. */
+   if (state)
+      pilot_setFlag(p, PILOT_NODEATH);
+   else
+      pilot_rmFlag(p, PILOT_NODEATH);
 
    return 0;
 }

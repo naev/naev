@@ -974,6 +974,10 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
       pilot_runHookParam( p, PILOT_HOOK_DISABLE, &hparam, 1 ); /* Already disabled. */
    }
 
+   /* Do not let pilot die. */
+   if (pilot_isFlag( p, PILOT_NODEATH ))
+      p->armour = 1.;
+
    /* Officially dead. */
    if (p->armour <= 0.) {
       p->armour = 0.;
@@ -1341,7 +1345,10 @@ void pilot_update( Pilot* pilot, const double dt )
       }
    }
    else if (pilot->armour <= 0.) { /* PWNED */
-      pilot_dead( pilot, 0 ); /* start death stuff - dunno who killed. */
+      if (pilot_isFlag( pilot, PILOT_NODEATH ))
+         pilot->armour = 1.;
+      else
+         pilot_dead( pilot, 0 ); /* start death stuff - dunno who killed. */
    }
 
    /* purpose fallthrough to get the movement like disabled */
