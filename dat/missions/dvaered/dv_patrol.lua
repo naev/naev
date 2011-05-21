@@ -309,7 +309,7 @@ function enter ()
    set_osd()
 
    -- We start the update goal timer when we're in the proper system
-   if visited+1 < num_patrol and system.cur() == tgt_list[ visited+1 ].sys then
+   if visited+1 <= num_patrol and system.cur() == tgt_list[ visited+1 ].sys then
       updateGoal() -- Will set timer
       local vec = tgt_getPos( tgt_list[ visited+1 ] )
       misn_mrk = system.mrkAdd( "Patrol Point", vec )
