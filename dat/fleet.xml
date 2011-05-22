@@ -451,8 +451,8 @@
   </pilots>
  </fleet>
  <fleet name="Trinity">
-  <ai>collective</ai>
-  <faction>Collective</faction>
+  <ai>empire</ai>
+  <faction>Empire</faction>
   <pilots>
    <pilot name="ESS Trinity" ship="Empire Hawking"></pilot>
   </pilots>
