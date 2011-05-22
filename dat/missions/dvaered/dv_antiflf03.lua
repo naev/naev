@@ -187,7 +187,7 @@ function operationStart()
 end
 
 function land()
-    if victorious and planet.cur() == planet.get("Darkstone") then
+    if victorious and planet.cur() == planet.get(DVplanet) then
         tk.msg(title[3], string.format(text[5], player.name()))
         tk.msg(title[3], text[6])
         faction.get("Dvaered"):modPlayerRaw(10)
