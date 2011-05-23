@@ -95,7 +95,7 @@ npng_t *npng_open( SDL_RWops *rw )
    }
 
    /* Set up for reading. */
-   png_set_read_fn( npng->png_ptr, (voidp) rw, npng_read );
+   png_set_read_fn( npng->png_ptr, (png_voidp) rw, npng_read );
 
    /* Set up long jump for IO. */
    if (setjmp( png_jmpbuf( npng->png_ptr )) ) {
