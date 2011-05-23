@@ -427,10 +427,10 @@ esac
 # automake to detect when the binary needs recompiling after a library has been
 # changed.
 NAEV_DEPENDENCIES="$WIDGET_LIBS"
-AS_IF([test "$used_lua" != "internal"], [
+AS_IF([test "$used_lua" == "internal"], [
    NAEV_DEPENDENCIES="$NAEV_DEPENDENCIES $LUA_LIBS"
 ])
-AS_IF([test "$used_csparse" != "internal"], [
+AS_IF([test "$used_csparse" == "internal"], [
    NAEV_DEPENDENCIES="$NAEV_DEPENDENCIES $CSPARSE_LIBS"
 ])
 
