@@ -426,7 +426,13 @@ esac
 # This is a list of in-tree static libs that naev depends on.  It is used by
 # automake to detect when the binary needs recompiling after a library has been
 # changed.
-NAEV_DEPENDENCIES="$WIDGET_LIBS $LUA_LIBS $CSPARSE_LIBS"
+NAEV_DEPENDENCIES="$WIDGET_LIBS"
+AS_IF([test "$used_lua" != "internal"], [
+   NAEV_DEPENDENCIES="$NAEV_DEPENDENCIES $LUA_LIBS"
+])
+AS_IF([test "$used_csparse" != "internal"], [
+   NAEV_DEPENDENCIES="$NAEV_DEPENDENCIES $CSPARSE_LIBS"
+])
 
 AC_SUBST([NAEV_CFLAGS])
 AC_SUBST([NAEV_LIBS])
