@@ -149,19 +149,24 @@ static glFont* dialogue_getSize( const char* title,
 {
    glFont* font;
    double w, h, d;
-   int len, titlelen;
+   int titlelen;
+#if 0
+   int len;
+   len = strlen(msg);
+#endif
 
    /* Get title length. */
    titlelen = gl_printWidthRaw( &gl_defFont, title );
    w = MAX(300, titlelen+40); /* Default width to try. */
-   len = strlen(msg);
 
    /* First we split by text length. */
+#if 0
    if (len < 50) {
       font = &gl_defFont;
       h = gl_printHeightRaw( font, w-40, msg );
    }
    else {
+#endif
       /* Now we look at proportion. */
       font = &gl_smallFont;
       /* font = &gl_defFont; */
@@ -173,7 +178,9 @@ static glFont* dialogue_getSize( const char* title,
             w = h;
          h = gl_printHeightRaw( font, w-40, msg );
       }
+#if 0
    }
+#endif
 
    /* Set values. */
    (*width) = w;
