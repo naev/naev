@@ -858,19 +858,25 @@ void ai_think( Pilot* pilot, const double dt )
       lua_getglobal(L,"control_rate");
       cur_pilot->tcontrol = lua_tonumber(L,-1);
       lua_pop(L,1);
+
+      /* Task may have changed due to control tick. */
+      t = ai_curTask( cur_pilot );
    }
 
    /* pilot has a currently running task */
-   else if (t != NULL) {
+   if (t != NULL) {
       /* Run subtask if availible, otherwise run main task. */
       if (t->subtask != NULL)
          ai_run(L, t->subtask->name);
       else
          ai_run(L, t->name);
 
-      /* If task is over and pilot is in manual control run the idle hook. */
-      if (t->done && pilot_isFlag(cur_pilot, PILOT_MANUAL_CONTROL))
-         pilot_runHook( cur_pilot, PILOT_HOOK_IDLE );
+      /* Manual control must check if IDLE hook has to be run. */
+      if (pilot_isFlag(cur_pilot, PILOT_MANUAL_CONTROL)) {
+         /* We must yet check again to see if there still is a current task running. */
+         if (ai_curTask( cur_pilot ) == NULL)
+            pilot_runHook( cur_pilot, PILOT_HOOK_IDLE );
+      }
    }
 
    /* make sure pilot_acc and pilot_turn are legal */
