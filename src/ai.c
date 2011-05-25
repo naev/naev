@@ -372,11 +372,11 @@ static const luaL_reg aiL_methods[] = {
 /*
  * current pilot "thinking" and assorted variables
  */
-static Pilot *cur_pilot = NULL; /**< Current pilot.  All functions use this. */
-static double pilot_acc = 0.; /**< Current pilot's acceleration. */
-static double pilot_turn = 0.; /**< Current pilot's turning. */
-static int pilot_flags = 0; /**< Handle stuff like weapon firing. */
-static int pilot_firemode = 0; /**< Method pilot is using to shoot. */
+static Pilot *cur_pilot    = NULL; /**< Current pilot.  All functions use this. */
+static double pilot_acc    = 0.; /**< Current pilot's acceleration. */
+static double pilot_turn   = 0.; /**< Current pilot's turning. */
+static int pilot_flags     = 0; /**< Handle stuff like weapon firing. */
+static int pilot_firemode  = 0; /**< Method pilot is using to shoot. */
 static char aiL_distressmsg[PATH_MAX]; /**< Buffer to store distress message. */
 
 /*
