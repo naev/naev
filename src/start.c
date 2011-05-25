@@ -165,7 +165,6 @@ int start_load (void)
    /* Clean up. */
    xmlFreeDoc(doc);
    free(buf);
-   xmlCleanupParser();
 
    /* Sanity checking. */
 #define MELEMENT(o,s) \

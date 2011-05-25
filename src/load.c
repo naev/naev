@@ -198,10 +198,7 @@ int load_refresh (void)
       ok = load_load( ns, buf );
    }
 
-   /* Clean up parser. */
-   xmlCleanupParser();
-
-   /* CLean up memory. */
+   /* Clean up memory. */
    for (i=0; i<nfiles; i++)
       free(files[i]);
    free(files);
@@ -514,13 +511,11 @@ int load_game( const char* file )
    gui_setCargo();
 
    xmlFreeDoc(doc);
-   xmlCleanupParser();
 
    return 0;
 
 err_doc:
    xmlFreeDoc(doc);
-   xmlCleanupParser();
 err:
    WARN("Savegame '%s' invalid!", file);
    return -1;

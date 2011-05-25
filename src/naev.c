@@ -554,7 +554,6 @@ void load_all (void)
    background_init();
    player_init(); /* Initialize player stuff. */
    loadscreen_render( 1., "Loading Completed!" );
-   xmlCleanupParser(); /* Only needed to be run after all the loading is done. */
 }
 /**
  * @brief Unloads all data, simplifies main().
