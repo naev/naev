@@ -4,16 +4,15 @@
 --]]
 
 --[[
--- Main control function for fighter behavior.
+-- Common control stuff
 --]]
-function atk_fighter ()
-    
+function _atk_com_think ()
    local target = ai.target()
 
    -- make sure pilot exists
    if not ai.exists(target) then
-           ai.poptask()
-           return
+        ai.poptask()
+        return
    end
 
    -- Check if is bribed by target
@@ -33,6 +32,14 @@ function atk_fighter ()
       ai.poptask()
       return
    end
+end
+
+
+--[[
+-- Main control function for fighter behavior.
+--]]
+function atk_fighter ()
+   local target = _atk_com_think () or return
 
    -- Targetting stuff
    ai.hostile(target) -- Mark as hostile
@@ -64,39 +71,14 @@ end
 --ships bigger than they are
 --]]
 function atk_bomber ()
-
-   local target = ai.target()
-
-   -- make sure pilot exists
-   if not ai.exists(target) then
-           ai.poptask()
-           return
-   end
-
-   -- Check if is bribed by target
-   if ai.isbribed(target) then
-      ai.poptask()
-      return
-   end
-
-   -- Check if we want to board
-   if mem.atk_board and ai.canboard(target) then
-      ai.pushtask("board", target );
-      return
-   end
-
-   -- Check to see if target is disabled
-   if not mem.atk_kill and ai.isdisabled(target) then
-      ai.poptask()
-      return
-   end
+   local target = _atk_com_think () or return
 
    -- Targetting stuff
    ai.hostile(target) -- Mark as hostile
    ai.settarget(target)
 
    -- Get stats about enemy
-        local dist  = ai.dist( target ) -- get distance
+   local dist  = ai.dist( target ) -- get distance
    local range = ai.getweaprange(3, 0)
 
    -- We first bias towards range
@@ -118,32 +100,7 @@ end
 -- Main control function for corvette behavior.
 --]]
 function atk_corvette ()
-
-   local target = ai.target()
-
-   -- make sure pilot exists
-   if not ai.exists(target) then
-           ai.poptask()
-           return
-   end
-
-   -- Check if is bribed by target
-   if ai.isbribed(target) then
-      ai.poptask()
-      return
-   end
-
-   -- Check if we want to board
-   if mem.atk_board and ai.canboard(target) then
-      ai.pushtask("board", target );
-      return
-   end
-
-   -- Check to see if target is disabled
-   if not mem.atk_kill and ai.isdisabled(target) then
-      ai.poptask()
-      return
-   end
+   local target = _atk_com_think () or return
 
    -- Targetting stuff
    ai.hostile(target) -- Mark as hostile
@@ -179,32 +136,7 @@ end
 -- Main control function for capital ship behavior.
 --]]
 function atk_capital ()
-
-   local target = ai.target()
-
-   -- make sure pilot exists
-   if not ai.exists(target) then
-           ai.poptask()
-           return
-   end
-
-   -- Check if is bribed by target
-   if ai.isbribed(target) then
-      ai.poptask()
-      return
-   end
-
-   -- Check if we want to board
-   if mem.atk_board and ai.canboard(target) then
-      ai.pushtask("board", target );
-      return
-   end
-
-   -- Check to see if target is disabled
-   if not mem.atk_kill and ai.isdisabled(target) then
-      ai.poptask()
-      return
-   end
+   local target = _atk_com_think () or return
 
    -- Targetting stuff
    ai.hostile(target) -- Mark as hostile
