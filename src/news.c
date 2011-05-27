@@ -340,7 +340,7 @@ const news_t *news_generate( int *ngen, int n )
    news_cleanBuffer();
 
    /* Allocate news. */
-   news_buf = calloc( sizeof(news_t), n );
+   news_buf = calloc( sizeof(news_t), n+1 );
    if (news_buf == NULL)
       ERR("Out of Memory.");
    if (ngen != NULL)
@@ -383,27 +383,28 @@ const news_t *news_generate( int *ngen, int n )
    news_buf[0].desc  = strdup( lua_tostring(L, -2) );
 
    /* Pull it out of the table. */
-   i = 1;
-   lua_pushnil(L); /* str, table, nil */
-   while (lua_next(L,-2) != 0) {
+   for (i=0; i<n; i++) {
+      lua_pushnumber(L,i+1);
+      lua_gettable(L,-2);
+      if (!lua_istable(L,-1)) {
+         WARN("Failed to generate news, item %d is not a table!",i+1);
+#if DEBUGGING
+         lua_pop(L,4);
+#else /* DEBUGGING */
+         lua_pop(L,3);
+#endif /* DEBUGGING */
+         return NULL;
+      }
       /* Pull out of the internal table the data. */
-      lua_getfield(L, -1, "title"); /* str, table, key, val, str */
-      news_buf[i].title = strdup( luaL_checkstring(L, -1) );
-      lua_pop(L,1); /* str, table, key, val */
-      lua_getfield(L, -1, "desc"); /* str, table, key, val, str */
-      news_buf[i].desc  = strdup( luaL_checkstring(L, -1) );
-      lua_pop(L,1); /* str, table, key, val */
+      lua_getfield(L, -1, "title"); /* str, table, val, str */
+      news_buf[i+1].title = strdup( luaL_checkstring(L, -1) );
+      lua_pop(L,1); /* str, table, val */
+      lua_getfield(L, -1, "desc"); /* str, table, val, str */
+      news_buf[i+1].desc  = strdup( luaL_checkstring(L, -1) );
+      lua_pop(L,1); /* str, table, val */
       /* Go to next element. */
-      lua_pop(L,1); /* str, table, key */
-      i++;
-      if (i>=n)
-         break;
+      lua_pop(L,1); /* str, table  */
    }
-
-   if (i>=n) { /* Need to pop two extras. */
-      lua_pop(L,1);
-   }
-   /* str, table */
 
    /* Clean up results. */
 #if DEBUGGING
