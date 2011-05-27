@@ -244,7 +244,14 @@ end
 --]]
 function runaway ()
    if __run_target() then return end
-   ai.pushsubtask( "__run_hyp", ai.nearhyptarget() )
+
+   -- See if there's a target to use when running
+   local t = ai.nearhyptarget()
+   if t == nil then
+      ai.pushsubtask( "__run_target" )
+   else
+      ai.pushsubtask( "__run_hyp", t )
+   end
 end
 function runaway_nojump ()
    if __run_target() then return end
