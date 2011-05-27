@@ -806,8 +806,9 @@ static int misn_osdCreate( lua_State *L )
 
    /* Get items. */
    i = 0;
-   lua_pushnil(L); /* table, nil */
-   while (lua_next(L,-2) != 0) { /* table, key, val */
+   for (i=0; i<nitems; i++) {
+      lua_pushnumber(L,i+1);
+      lua_gettable(L,2);
       if (!lua_isstring(L,-1)) {
          free(items);
          luaL_typerror(L, -1, "string");
@@ -815,9 +816,6 @@ static int misn_osdCreate( lua_State *L )
       }
       items[i] = strdup( lua_tostring(L, -1) );
       lua_pop(L,1);
-      i++;
-      if (i >= nitems)
-         break;
    }
 
    /* Create OSD. */
@@ -971,6 +969,7 @@ static int misn_npcRm( lua_State *L )
  */
 static int misn_claim( lua_State *L )
 {
+   int i, l;
    LuaSystem *ls;
    SysClaim_t *claim;
    Mission *cur_mission;
@@ -989,8 +988,10 @@ static int misn_claim( lua_State *L )
 
    if (lua_istable(L,1)) {
       /* Iterate over table. */
-      lua_pushnil(L);
-      while (lua_next(L, 1) != 0) {
+      l = lua_objlen(L,1);
+      for (i=0; i<l; i++) {
+         lua_pushnumber(L,i+1);
+         lua_gettable(L,1);
          if (lua_issystem(L,-1)) {
             ls = lua_tosystem( L, -1 );
             claim_add( claim, ls->id );
