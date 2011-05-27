@@ -32,6 +32,8 @@ function _atk_com_think ()
       ai.poptask()
       return
    end
+   
+   return target
 end
 
 
@@ -39,7 +41,8 @@ end
 -- Main control function for fighter behavior.
 --]]
 function atk_fighter ()
-   local target = _atk_com_think () or return
+   local target = _atk_com_think()
+   if target == nil then return end
 
    -- Targetting stuff
    ai.hostile(target) -- Mark as hostile
@@ -71,7 +74,8 @@ end
 --ships bigger than they are
 --]]
 function atk_bomber ()
-   local target = _atk_com_think () or return
+   local target = _atk_com_think()
+   if target == nil then return end
 
    -- Targetting stuff
    ai.hostile(target) -- Mark as hostile
@@ -100,7 +104,8 @@ end
 -- Main control function for corvette behavior.
 --]]
 function atk_corvette ()
-   local target = _atk_com_think () or return
+   local target = _atk_com_think()
+   if target == nil then return end
 
    -- Targetting stuff
    ai.hostile(target) -- Mark as hostile
@@ -136,7 +141,8 @@ end
 -- Main control function for capital ship behavior.
 --]]
 function atk_capital ()
-   local target = _atk_com_think () or return
+   local target = _atk_com_think()
+   if target == nil then return end
 
    -- Targetting stuff
    ai.hostile(target) -- Mark as hostile
