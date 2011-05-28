@@ -192,56 +192,25 @@ end
 -- This will tend to approach a target along a loose spiral, good for evading capship guns
 --]]
 function atk_spiral_approach( target, dist )
+   local dir  = ai.idir(target)
+   local adir = math.abs(dir)
 
-  local dir = ai.idir(target)
-  
-  --these two detect in-cone approach vectors
-  
-  if dir > 10 then
-    if dir < 30 then
-    
-        ai.accel()
-    
-    end
-  end
-  
-  
-  if dir < -10 then
-    if dir > -30 then
-    
-        ai.accel();
-    
-    end
-  end
+   --these two detect in-cone approach vectors
+   if adir > 10 and adir < 30 then
+      ai.accel()
+   end
 
---facing away from the target, turn to face
+   --facing away from the target, turn to face
+   if adir > 30 then
+      ai.iface(target)
+   end
 
-  if dir < -30 then
-    ai.iface(target)
-  end
-  
-  if dir > 30 then
-    ai.iface(target)
-  end
-
---aiming right at the target; turn away
-
-  if dir > 0 then
-    if dir < 10 then
-    
+   --aiming right at the target; turn away
+   if dir > 0 and dir < 10 then
       ai.turn(1)
-    
-    end
-  end
-
-  if dir < 0 then
-    if dir > -10 then
-    
+   elseif dir < 0 and dir > -10 then
       ai.turn(-1)
-    
-    end
-  end
-
+   end
 end -- end spiral approach
 
 --[[
