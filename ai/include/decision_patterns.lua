@@ -25,10 +25,10 @@ function atk_fighter_think ()
    local target = ai.target()
 
    -- Stop attacking if it doesn't exist
-        if not ai.exists(target) then
-                ai.poptask()
-                return
-        end
+   if not ai.exists(target) then
+      ai.poptask()
+      return
+   end
 
    local range = ai.getweaprange(3, 0)
 
@@ -92,16 +92,16 @@ function atk_topdown_think ()
    local target = ai.target()
 
    -- Stop attacking if it doesn't exist
-        if not ai.exists(target) then
-                ai.poptask()
-                return
-        end
+   if not ai.exists(target) then
+      ai.poptask()
+      return
+   end
 
-   local range = ai.getweaprange(3, 1)
+   local range  = ai.getweaprange(3, 1)
    local range2 = ai.getweaprange(3, 0)
    
    if range2 > range then
-    range = range2
+      range = range2
    end
 
    -- Get new target if it's closer

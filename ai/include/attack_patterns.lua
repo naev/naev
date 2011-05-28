@@ -23,7 +23,6 @@ function atk_g_flyby( target, dist )
    
      if dir < 10 and dir > -10 then
          keep_distance()     
-         
      else  
          dir = ai.iface(target)
      end
