@@ -213,6 +213,7 @@ function atk_spiral_approach( target, dist )
    end
 end -- end spiral approach
 
+
 --[[
 --Attempts to maintain a constant distance from nearby things
 --This modulates the distance between the current pilot and its nearest neighbor
@@ -221,23 +222,22 @@ function keep_distance()
 
    --anticipate this will be added to eliminate potentially silly behavior if it becomes a problem
    --local flight_offset = ai.drift_facing()
-   local perp_distance
 
    --find nearest thing
    local neighbor = ai.nearestpilot()
-   if ai.exists(neighbor) then
-
-      --find the distance based on the direction I'm travelling
-      perp_distance = ai.flyby_dist(neighbor)
-
-      -- adjust my direction of flight to account for this
-      -- if pilot is too close, turn away
-      if perp_distance < 0 and perp_distance > -50 then
-         ai.turn(1)
-      elseif perp_distance > 0 and perp_distance < 50 then
-         ai.turn(-1)
-      end    
+   if not ai.exists(neighbor) then
+      return
    end
+
+   --find the distance based on the direction I'm travelling
+   local perp_distance = ai.flyby_dist(neighbor)
+   -- adjust my direction of flight to account for this
+   -- if pilot is too close, turn away
+   if perp_distance < 0 and perp_distance > -50 then
+      ai.turn(1)
+   elseif perp_distance > 0 and perp_distance < 50 then
+      ai.turn(-1)
+   end    
 end -- end keep distance
 
 
@@ -262,17 +262,16 @@ function atk_fighter_think ()
    local target = ai.target()
 
    -- Stop attacking if it doesn't exist
-        if not ai.exists(target) then
-                ai.poptask()
-                return
-        end
+   if not ai.exists(target) then
+      ai.poptask()
+      return
+   end
 
    local range = ai.getweaprange(3, 0)
 
    -- Get new target if it's closer
    --prioritize targets within the size limit
    if enemy ~= target and enemy ~= nil then
-      
       -- Shouldn't switch targets if close
       if sizedist > range * mem.atk_changetarget then
          ai.pushtask("attack", enemy )
