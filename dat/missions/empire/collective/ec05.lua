@@ -75,6 +75,11 @@ else -- default english
    osd_msg[2] = "Apprehend or kill Zakred"
    osd_msg[3] = "Report back to %s"
    osd_msg["__save"] = true
+
+   taunts = {}
+   taunts[1] = "It is too late! The plan is being put into movement!"
+   taunts[2] = "You have no idea whom you're messing with!"
+   taunts[3] = "My drones will make mincemeat of you!"
 end
 
 
@@ -254,6 +259,12 @@ function trinity_check ()
    end
    tri_checked = tri_checked + 1
 
+   if tri_checked == 3 then
+      trinity:broadcast( taunts[1] )
+   elseif tri_checked == 6 then
+      trinity:broadcast( taunts[2] )
+   end
+
    local a,s = trinity:health()
    if s < 70 or tri_checked > 10 then
       trinity_flee()
@@ -268,6 +279,7 @@ function trinity_flee ()
    tri_flee = true
    trinity:control()
    trinity:hyperspace( misn_flee_sys )
+   trinity:broadcast( taunts[3] )
    player.msg( talk[7] )
    hook.timer( rnd.int( 3000, 5000 ), "call_drones_jump" )
 end
