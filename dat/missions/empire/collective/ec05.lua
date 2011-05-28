@@ -68,6 +68,7 @@ else -- default english
    talk[4] = "The Trinity has launched Collective drones!"
    talk[5] = "Mission Success: Return to base."
    talk[6] = "Mission Failure: Return to base."
+   talk[7] = "Incoming drones from hyperspace detected!"
    
    osd_msg = {}
    osd_msg[1] = "Fly to the %s system"
@@ -78,10 +79,10 @@ end
 
 
 function create ()
-    missys = {system.get("Rockbed")}
-    if not misn.claim(missys) then
-        abort()
-    end
+   missys = {system.get("Rockbed")}
+   if not misn.claim(missys) then
+      abort()
+   end
  
    misn.setNPC( "Dimitri?", "unknown" )
    misn.setDesc( bar_desc )
@@ -105,6 +106,7 @@ function accept ()
    misn_stage = 0
    misn_base, misn_base_sys = planet.get("Omega Station")
    misn_target_sys = system.get("Rockbed")
+   misn_flee_sys = system.get("Capricorn")
    misn_marker = misn.markerAdd( misn_target_sys, "high" )
 
    -- Mission details
@@ -120,7 +122,7 @@ function accept ()
    tk.msg( title[4], string.format(text[5], misn_target_sys:name(), misn_target_sys:name() ) )
 
    -- Escorts
-   esc_pacifier = true
+   esc_pacifier  = true
    esc_lancelot1 = true
    esc_lancelot2 = true
 
@@ -169,7 +171,7 @@ function enter ( from_sys )
          misn.osdActive(2)
 
          -- Position trinity on the other side of the player
-         trinity = pilot.add("Trinity", "noidle", vec2.new(0, 0))[1]
+         trinity = pilot.add("Trinity", "noidle", vec2.new(-5000, 1500))[1]
          trinity:setVisplayer()
          trinity:setHilight(true)
          trinity:setFaction("Empire") -- Starts out non-hostile
@@ -238,16 +240,78 @@ function final_talk ()
       hook.timer(rnd.int( 4000, 5000 ), "final_talk")
    elseif final_fight == 3 then
       player.msg( talk[4] )
+      tri_flee  = false
       hook.timer(rnd.int( 3000, 5000 ) , "call_drones")
+      hook.timer( 3000, "trinity_check" )
    end
 end
 
 
+function trinity_check ()
+   if tri_flee then
+      return
+   end
+
+   local a,s = trinity:health()
+   if s < 70 then
+      trinity_flee()
+   else
+      hook.timer( 3000, "trinity_check" )
+   end
+end
+
+
+-- Trinity runs away
+function trinity_flee ()
+   tri_flee = true
+   trinity:control()
+   trinity:hyperspace( misn_flee_sys )
+   player.msg( talk[7] )
+   hook.timer( rnd.int( 3000, 5000 ), "call_drones_jump" )
+end
+
 -- Calls help for the ESS Trinity.
 function call_drones ()
-   pilots = pilot.add("Collective Lge Swarm", nil, trinity:pos())
+   local pilots = pilot.add("Collective Sml Swarm", nil, trinity:pos())
+   num_drone = #pilots
    for k,v in ipairs(pilots) do
       v:setHostile()
+      v:setNodisable(true)
+      hook.pilot( v, "death", "drone_dead" )
+   end
+end
+
+-- Jump in support
+function call_drones_jump ()
+   drone_reinforcements = pilot.add("Collective Sml Swarm", nil, misn_flee_sys)
+   drone_controlled = true
+   local tp = trinity:pos()
+   for k,v in ipairs(drone_reinforcements) do
+      v:setHostile()
+      v:setNodisable(true)
+      v:control()
+      v:goto( tp )
+      hook.pilot( v, "attacked", "drone_attacked" )
+      hook.pilot( v, "idle",     "drone_attacked" )
+   end
+end
+
+-- Support drones attacked
+function drone_attacked ()
+   if drone_controlled then
+      drone_controlled = false
+      for k,v in ipairs(drone_reinforcements) do
+         if v:exists() then
+            v:control(false)
+         end
+      end
+   end
+end
+-- Drone killed
+function drone_dead ()
+   num_drone = num_drone - 1
+   if num_drone < 3 and not tri_flee then
+      trinity_flee()
    end
 end
 
