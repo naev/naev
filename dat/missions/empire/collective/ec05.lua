@@ -243,6 +243,7 @@ function final_talk ()
       tri_flee  = false
       hook.timer(rnd.int( 3000, 5000 ) , "call_drones")
       hook.timer( 3000, "trinity_check" )
+      tri_checked = 0
    end
 end
 
@@ -251,9 +252,10 @@ function trinity_check ()
    if tri_flee then
       return
    end
+   tri_checked = tri_checked + 1
 
    local a,s = trinity:health()
-   if s < 70 then
+   if s < 70 or tri_checked > 10 then
       trinity_flee()
    else
       hook.timer( 3000, "trinity_check" )
