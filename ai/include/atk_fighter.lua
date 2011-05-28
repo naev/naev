@@ -1,13 +1,93 @@
---[[ Detail melee attack profiles follow here
---These profiles are intended for use by specific ship classes
+--[[This file contains the attack profiles by ship type.
+--commonly used range and condition-based attack patterns are found in another file
+--Think functions for determining who to attack are found in another file
 --]]
+
+-- Initializes the fighter
+function atk_fighter_init ()
+   mem.atk_think  = atk_fighter_think
+   mem.atk        = atk_fighter
+end
+
+
+--[[
+-- Mainly targets small fighters.
+--]]
+function atk_fighter_think ()
+   local target = ai.target()
+
+   -- Stop attacking if it doesn't exist
+   if not ai.exists(target) then
+      ai.poptask()
+      return
+   end
+
+   local enemy    = ai.getenemy_size(0, 200)
+   local nearest_enemy = ai.getenemy()
+   local dist     = 0
+   local sizedist = 0
+
+   if enemy ~= nil then
+      sizedist = ai.dist(enemy)
+   end   
+   if nearest_enemy ~= nil then   
+      dist = ai.dist(nearest_enemy)
+   end
+
+   local range = ai.getweaprange(3, 0)
+   -- Get new target if it's closer
+   --prioritize targets within the size limit
+   if enemy ~= target and enemy ~= nil then
+      -- Shouldn't switch targets if close
+      if sizedist > range * mem.atk_changetarget then
+         ai.pushtask("attack", enemy )
+      end
+      
+   elseif nearest_enemy ~= target and nearest_enemy ~= nil then
+      -- Shouldn't switch targets if close
+      if dist > range * mem.atk_changetarget then
+         ai.pushtask("attack", nearest_enemy )
+      end
+   end
+end
+
+
+--[[
+-- Main control function for fighter behavior.
+--]]
+function atk_fighter ()
+   local target = _atk_com_think()
+   if target == nil then return end
+
+   -- Targetting stuff
+   ai.hostile(target) -- Mark as hostile
+   ai.settarget(target)
+
+   -- Get stats about enemy
+   local dist  = ai.dist( target ) -- get distance
+   local range = ai.getweaprange(3, 0)
+
+   -- We first bias towards range
+   if dist > range * mem.atk_approach then
+      _atk_g_ranged( target, dist ) -- Use generic ranged function
+
+   -- Otherwise melee
+   else
+      if ai.shipmass(target) < 200 then
+         _atk_f_space_sup( target, dist )
+      else
+         _atk_f_flyby( target, dist )
+      end
+   end
+end
+
 
 --[[
 -- Execute a sequence of close-in flyby attacks
 -- Uses a combination of facing and distance to determine what action to take
 -- This version is slightly less aggressive and cruises by the target
 --]]
-function atk_g_flyby( target, dist )
+function _atk_f_flyby( target, dist )
    local range = ai.getweaprange(3)
    local dir = 0
    ai.weapset( 3 ) -- Forward/turrets
@@ -16,7 +96,7 @@ function atk_g_flyby( target, dist )
    if dist > (3 * range) then
       dir = ai.idir(target)
       if dir < 10 and dir > -10 then
-         keep_distance()     
+         _atk_keep_distance()     
          ai.accel()
       else  
          dir = ai.iface(target)
@@ -60,80 +140,12 @@ end
 
 
 --[[
--- Simplest of all attacks: maintain an intercept course to the target, and shoot when within range
---
---This is designed for capital ships with turrets and guided munitions
---As there is no aiming involved this is a turret/capital ship only attack method
---]]
-function atk_g_capital( target, dist )
-   local range = ai.getweaprange(3)
-   local dir = 0
-   ai.weapset( 3 ) -- Forward/turrets
-
-   --capital ships tend to require heavier energy reserves and burst output for maximum effectiveness
-   if ai.pcurenergy() <= 1 then
-      mem.recharge = true
-   elseif ai.pcurenergy() > 15 then
-      mem.recharge = false
-   end
-
-   --if we're far from the target, then turn and approach 
-   if dist > range then
-      dir = ai.idir(target)
-      if dir < 10 and dir > -10 then
-         keep_distance()     
-         ai.accel()
-      else  
-         dir = ai.iface(target)
-      end
-
-   --at moderate range from the target, prepare to intercept and engage with turrets
-   elseif dist > 0.6* range then
-      --drifting away from target, so emphasize intercept 
-      --course facing and accelerate to close
-      dir = ai.iface(target)
-      if dir < 10 and dir > -10 and ai.relvel(target) > -10 then 
-         ai.accel()
-      end
-      if mem.recharge == false then
-         ai.shoot(true)
-      end
-
-   elseif dist > 0.3*range then
-      --capital ship turning is slow
-      --emphasize facing for being able to close quickly
-      dir = ai.iface(target)
-      -- Shoot if should be shooting.
-      if mem.recharge == false then
-         ai.shoot(true)
-      end
-
-   --within close range; aim and blast away with everything
-   else
-
-      dir = ai.aim(target)
-      if mem.recharge == false then        
-         -- Shoot if should be shooting.
-         if dir < 10 then
-            ai.shoot()
-         end
-         ai.shoot(true)
-      end
-
-   end
-end
-
-
---[[
 -- Attack Profile for a maneuverable ship engaging a maneuverable target
 --
 --This is designed for fighters engaging other fighters
 --
 --]]
 function atk_g_space_sup( target, dist )
-
-   -- ai.comm(1, "space superiority")
-
    local range = ai.getweaprange(3)
    local dir   = 0
    ai.weapset( 3 ) -- Forward/turrets
@@ -142,7 +154,7 @@ function atk_g_space_sup( target, dist )
    if dist > (range) then
       dir = ai.idir(target)
       if dir < 10 and dir > -10 then
-         keep_distance()     
+         _atk_keep_distance()     
          ai.accel()
       else  
          dir = ai.iface(target)
@@ -154,9 +166,6 @@ function atk_g_space_sup( target, dist )
       dir = ai.iface(target)
       if dir < 10 and dir > -10 and ai.relvel(target) > -10 then
          ai.accel()
-      end
-      if ai.hasturrets() then
-         ai.shoot(false, 1)
       end
 
    --within close range; aim and blast away with everything
@@ -184,7 +193,7 @@ function atk_g_space_sup( target, dist )
          ai.shoot()
       end
       ai.shoot(true)
-
    end
 end
+
 
