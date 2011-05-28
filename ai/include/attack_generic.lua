@@ -250,35 +250,27 @@ end -- end spiral approach
 --]]
 function keep_distance()
 
---anticipate this will be added to eliminate potentially silly behavior if it becomes a problem
---local flight_offset = ai.drift_facing()
+   --anticipate this will be added to eliminate potentially silly behavior if it becomes a problem
+   --local flight_offset = ai.drift_facing()
+   local perp_distance
 
+   --find nearest thing
+   local neighbor = ai.nearestpilot()
+   if ai.exists(neighbor) then
 
-local perp_distance
+      --find the distance based on the direction I'm travelling
+      perp_distance = ai.flyby_dist(neighbor)
 
-
-    --find nearest thing
-  local neighbor = ai.nearestpilot()
- 
-  if ai.exists(neighbor) then
- 
-    --find the distance based on the direction I'm travelling
-    perp_distance = ai.flyby_dist(neighbor)
-
-    --adjust my direction of flight to account for this
-
-    --if pilot is too close, turn away
-    
-    if perp_distance < 0 and perp_distance > -50 then
-        ai.turn(1)
-    end
-    
-    if perp_distance > 0 and perp_distance < 50 then
-        ai.turn(-1)
-    end    
-  end
-    
+      -- adjust my direction of flight to account for this
+      -- if pilot is too close, turn away
+      if perp_distance < 0 and perp_distance > -50 then
+         ai.turn(1)
+      elseif perp_distance > 0 and perp_distance < 50 then
+         ai.turn(-1)
+      end    
+   end
 end -- end keep distance
+
 
 --[[
 -- Mainly targets small fighters.

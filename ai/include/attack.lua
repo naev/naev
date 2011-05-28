@@ -9,6 +9,7 @@ include("ai/include/attack_patterns.lua")
 include("ai/include/decision_patterns.lua")
 include("ai/include/attack_profiles.lua")
 
+
 --[[
 -- Wrapper for the think functions.
 --]]
