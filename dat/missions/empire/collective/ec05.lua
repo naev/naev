@@ -287,7 +287,7 @@ end
 function trinity_flee ()
    tri_flee = true
    trinity:control()
-   trinity:hyperspace( misn_flee_sys )
+   trinity:hyperspace( misn_flee_sys, true )
    trinity:broadcast( taunts[3] )
    player.msg( talk[7] )
    hook.timer( rnd.int( 3000, 5000 ), "call_drones_jump" )
