@@ -3173,8 +3173,9 @@ static int pilotL_runaway( lua_State *L )
  *
  *    @luaparam p Pilot to tell to hyperspace.
  *    @luaparam sys Optional system argument to jump to, uses random if nil.
+ *    @luaparam shoot Optional whether or not to shoot at targets while running away with turrets.
  * @luasee control
- * @luafunc hyperspace( p, sys )
+ * @luafunc hyperspace( p, sys, shoot )
  */
 static int pilotL_hyperspace( lua_State *L )
 {
@@ -3185,6 +3186,7 @@ static int pilotL_hyperspace( lua_State *L )
    int i;
    JumpPoint *jp;
    double a, rad;
+   int shoot;
 
    /* Get parameters. */
    p = luaL_validpilot(L,1);
@@ -3194,9 +3196,13 @@ static int pilotL_hyperspace( lua_State *L )
    }
    else
       sys = NULL;
+   shoot = lua_toboolean(L,3);
 
    /* Set the task. */
-   t = pilotL_newtask( L, p, "__hyperspace" );
+   if (shoot)
+      t = pilotL_newtask( L, p, "__hyperspace_shoot" );
+   else
+      t = pilotL_newtask( L, p, "__hyperspace" );
    if (sys != NULL) {
       /* Find the jump. */
       for (i=0; i < cur_system->njumps; i++) {

@@ -177,6 +177,9 @@ end
 -- Tries to hyperspace asap.
 --]]
 function __hyperspace ()
+   hyperspace()
+end
+function __hyperspace_shoot ()
    local target = ai.target()
    if target == nil then
       target = ai.rndhyptarget()
