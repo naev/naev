@@ -127,40 +127,50 @@ int nfile_dirMakeExist( const char* path, ... )
       va_end(ap);
    }
 
-#if HAS_POSIX
-   struct stat buf;
-   int ret;
+   /* Check if it exists. */
+   if (nfile_dirExists(file))
+      return 0;
 
-   ret = stat(file,&buf);
-   /* Check to see if there was a messed up error. */
-   if (ret && (errno != ENOENT)) {
-      WARN("Unable to stat '%s': %s", file, strerror(errno));
+#if HAS_POSIX
+   if (mkdir(file, S_IRWXU | S_IRWXG | S_IRWXO) < 0) {
+      WARN("Dir '%s' does not exist and unable to create: %s", file, strerror(errno));
       return -1;
    }
-   /* Normal error/doesn't exist. */
-   else if ((ret && (errno == ENOENT)) || !S_ISDIR(buf.st_mode))
-      if (mkdir(file, S_IRWXU | S_IRWXG | S_IRWXO) < 0) {
-         WARN("Dir '%s' does not exist and unable to create: %s", file, strerror(errno));
-         return -1;
-      }
 #elif HAS_WIN32
-   DIR *d;
-
-   d = opendir(file);
-   if (d==NULL) {
-      if (!CreateDirectory(file, NULL))  {
-         WARN("Dir '%s' does not exist and unable to create: %s", file, strerror(errno));
-         return -1;
-      }
-   }
-   else {
-      closedir(d);
+   if (!CreateDirectory(file, NULL))  {
+      WARN("Dir '%s' does not exist and unable to create: %s", file, strerror(errno));
+      return -1;
    }
 #else
 #error "Feature needs implementation on this Operating System for Naev to work."
 #endif
 
    return 0;
+}
+
+
+/**
+ * @brief Checks to see if a directory exists.
+ */
+int nfile_dirExists( const char* path, ... )
+{
+   char file[PATH_MAX];
+   va_list ap;
+   DIR *d;
+
+   if (path == NULL)
+      return -1;
+   else { /* get the message */
+      va_start(ap, path);
+      vsnprintf(file, PATH_MAX, path, ap);
+      va_end(ap);
+   }
+
+   d = opendir(file);
+   if (d==NULL)
+      return 0;
+   closedir(d);
+   return 1;
 }
 
 
