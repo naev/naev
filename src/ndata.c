@@ -59,6 +59,7 @@
  * Packfile.
  */
 static char* ndata_filename         = NULL; /**< Packfile name. */
+static char* ndata_dirname          = NULL; /**< Directory name. */
 static Packcache_t *ndata_cache     = NULL; /**< Actual packfile. */
 static char* ndata_packName         = NULL; /**< Name of the ndata module. */
 static SDL_mutex *ndata_lock        = NULL; /**< Lock for ndata creation. */
@@ -107,9 +108,17 @@ int ndata_check( const char* path )
  */
 int ndata_setPath( const char* path )
 {
-   if (ndata_filename != NULL)
-      free(ndata_filename);
-   ndata_filename = (path == NULL) ? NULL : strdup(path);
+   free(ndata_filename);
+   free(ndata_dirname);
+   if (path == NULL)
+      return 0;
+   else if (nfile_dirExists(path))
+      ndata_dirname = strdup(path);
+   else if (nfile_fileExists(path)) {
+      char *tmp = strdup(path);
+      ndata_filename = strdup(path);
+      ndata_dirname  = nfile_dirname(tmp);
+   }
    return 0;
 }
 
@@ -285,10 +294,15 @@ static int ndata_openPackfile (void)
       return 0;
    }
 
+   /* Check dirname first. */
+   if ((ndata_filename == NULL) && (ndata_dirname != NULL))
+      ndata_filename = ndata_findInDir( "." );
+
    /*
     * Try to find the ndata file.
     */
    if (ndata_filename == NULL) {
+
       /* Check ndata with version appended. */
 #if VREV < 0
       if (ndata_isndata("%s-%d.%d.0-beta%d", NDATA_FILENAME,
@@ -311,8 +325,15 @@ static int ndata_openPackfile (void)
       /* Try to open any ndata in path. */
       else {
 
-         /* Try to find in various paths. */
-         ndata_filename = ndata_findInDir( "." );
+         /* Check in NDATA_DEF path. */
+         buf = strdup(NDATA_DEF);
+         snprintf( path, PATH_MAX, "%s", nfile_dirname( buf ) );
+         ndata_filename = ndata_findInDir( path );
+         free(buf);
+
+         /* Check in current directory. */
+         if (ndata_filename == NULL)
+            ndata_filename = ndata_findInDir( "." );
 
          /* Keep looking. */
          if (ndata_filename == NULL) {
@@ -405,8 +426,7 @@ int ndata_open (void)
    if (ndata_isndata(ndata_filename))
       return ndata_openPackfile();
 
-   if (ndata_filename != NULL)
-      free(ndata_filename);
+   free(ndata_filename);
    ndata_filename = NULL;
 
    return 0;
