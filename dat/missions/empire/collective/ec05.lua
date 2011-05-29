@@ -249,6 +249,15 @@ function final_talk ()
       hook.timer(rnd.int( 3000, 5000 ) , "call_drones")
       hook.timer( 3000, "trinity_check" )
       tri_checked = 0
+      if esc_pacifier then
+         paci:control(false)
+      end
+      if esc_lancelot1 then
+         lance1:control(false)
+      end
+      if esc_lancelot2 then
+         lance2:control(false)
+      end
    end
 end
 
@@ -324,7 +333,7 @@ end
 -- Drone killed
 function drone_dead ()
    num_drone = num_drone - 1
-   if num_drone < 3 and not tri_flee then
+   if num_drone < 2 and not tri_flee then
       trinity_flee()
    end
 end
@@ -344,6 +353,10 @@ function add_escorts( landed )
       paci = paci[1]
       paci:setFriendly()
       hook.pilot(paci, "death", "paci_dead")
+      if trinity ~= nil then
+         paci:control()
+         paci:goto( trinity:pos():add( 100, 0 ) )
+      end
    end
    if esc_lancelot1 then
       enter_vect:add( rnd.int(-50,50), rnd.int(-50,50) )
@@ -351,6 +364,10 @@ function add_escorts( landed )
       lance1 = lance1[1]
       lance1:setFriendly()
       hook.pilot(lance1, "death", "lance1_dead")
+      if trinity ~= nil then
+         lance1:control()
+         lance1:goto( trinity:pos():add( -100, -100 ) )
+      end
    end
    if esc_lancelot2 then
       enter_vect:add( rnd.int(-50,50), rnd.int(-50,50) )
@@ -358,6 +375,10 @@ function add_escorts( landed )
       lance2 = lance2[1]
       lance2:setFriendly()
       hook.pilot(lance2, "death", "lance2_dead")
+      if trinity ~= nil then
+         lance2:control()
+         lance2:goto( trinity:pos():add( 300, -100 ) )
+      end
    end
 end
 
