@@ -12,7 +12,6 @@
  *
  * Detection in a nutshell:
  *
- *
  * -- DONE AT INIT --
  *  1) CLI option
  *  2) conf.lua option
@@ -296,7 +295,7 @@ static int ndata_openPackfile (void)
 
    /* Check dirname first. */
    if ((ndata_filename == NULL) && (ndata_dirname != NULL))
-      ndata_filename = ndata_findInDir( "." );
+      ndata_filename = ndata_findInDir( ndata_dirname );
 
    /*
     * Try to find the ndata file.
