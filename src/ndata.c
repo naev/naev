@@ -515,7 +515,7 @@ void* ndata_read( const char* filename, uint32_t *filesize )
 
       /* We can also try default location. */
       buf = strdup(filename);
-      snprintf( path, sizeof(path), "%s/%s", dirname(buf), filename );
+      snprintf( path, sizeof(path), "%s/%s", nfile_dirname(buf), filename );
       free(buf);
       if (nfile_fileExists( path )) {
          buf = nfile_readFile( &nbuf, path );
