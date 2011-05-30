@@ -484,7 +484,7 @@ const char* ndata_name (void)
  */
 void* ndata_read( const char* filename, uint32_t *filesize )
 {
-   char *buf;
+   char *buf, path[PATH_MAX];
    int nbuf;
 
    /* See if needs to load packfile. */
@@ -497,6 +497,19 @@ void* ndata_read( const char* filename, uint32_t *filesize )
             ndata_loadedfile = 1;
             *filesize = nbuf;
             return buf;
+         }
+      }
+
+      /* We can try to use the dirname path. */
+      if ((ndata_filename == NULL) && (ndata_dirname != NULL)) {
+         snprintf( path, sizeof(path), "%s/%s", ndata_dirname, filename );
+         if (nfile_fileExists( path )) {
+            buf = nfile_readFile( &nbuf, path );
+            if (buf != NULL) {
+               ndata_loadedfile = 1;
+               *filesize = nbuf;
+               return buf;
+            }
          }
       }
 
