@@ -21,19 +21,19 @@ function create ()
     sysname = "Pas"
     destsys = system.get(sysname)
     
+    -- Create a Vendetta who hails the player after a bit
     hailed = false
-    
     vendetta = pilot.add("Four Winds Vendetta", nil, true)[1]
-    
     hailie = hook.timer(3000, "hailme")
 
-    var.push("shadowvigil_active", true) -- Make sure the event can't reappear while it's active
+    -- Make sure the event can't reappear while it's active
+    var.push("shadowvigil_active", true)
 
+    -- Clean up on events that remove the Vendetta from the game
     hook1 = hook.pilot(vendetta, "jump", "finish")
     hook2 = hook.pilot(vendetta, "death", "finish")
     hook3 = hook.land("finish")
     hook4 = hook.jumpout("finish")
-    evt.save()
 end
 
 -- Make the ship hail the player
@@ -46,12 +46,18 @@ end
 function hail(p)
     hailed = true
     tk.msg(title[1], string.format(text[1], player.name(), sysname))
-    var.push("shadowvigil_active", true)
+
+    -- The event should now remain active until Pas
+    -- Clear the hooks that would otherwise finish it
     hook.rm(hook1)
     hook.rm(hook2)
     hook.rm(hook3)
     hook.rm(hook4)
     hook.rm(hailhook)
+
+    -- Catch the player jumping into Pas
+    -- The player may save between now and then, make sure our hook is saved too
+    evt.save(true)
     hook.jumpin("jumpin")
 end
 
@@ -67,6 +73,7 @@ function jumpin()
     end
 end
 
+-- The player boards the Seiryuu
 function board()
     player.unboard()
     seiryuu:control(false)
@@ -75,6 +82,7 @@ function board()
     finish()
 end
 
+-- Clean up
 function finish()
     if not hailed then
         var.pop("shadowvigil_active")
