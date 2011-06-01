@@ -125,6 +125,7 @@
   <item>Drone</item>
   <item>Dvaered Ancestor</item>
   <item>Dvaered Goddard</item>
+  <item>Dvaered Phalanx</item>
   <item>Dvaered Vendetta</item>
   <item>Dvaered Vigilance</item>
   <item>Empire Admonisher</item>
@@ -143,9 +144,11 @@
   <item>Llama</item>
   <item>Mule</item>
   <item>Pacifier</item>
+  <item>Phalanx</item>
   <item>Pirate Admonisher</item>
   <item>Pirate Ancestor</item>
   <item>Pirate Kestrel</item>
+  <item>Pirate Phalanx</item>
   <item>Pirate Rhino</item>
   <item>Pirate Shark</item>
   <item>Pirate Vendetta</item>
@@ -397,6 +400,7 @@
   <item>Vendetta</item>
  </tech>
  <tech name="Heavy Civilian Combat Ships">
+  <item>Phalanx</item>
   <item>Admonisher</item>
   <item>Hawking</item>
   <item>Lancelot</item>
@@ -418,6 +422,7 @@
  <tech name="Dvaered Military Ships">
   <item>Dvaered Ancestor</item>
   <item>Dvaered Goddard</item>
+  <item>Dvaered Phalanx</item>
   <item>Dvaered Vendetta</item>
   <item>Dvaered Vigilance</item>
  </tech>
@@ -425,9 +430,10 @@
   <item>Pirate Admonisher</item>
   <item>Pirate Ancestor</item>
   <item>Pirate Kestrel</item>
+  <item>Pirate Phalanx</item>
   <item>Pirate Rhino</item>
-  <item>Pirate Vendetta</item>
   <item>Pirate Shark</item>
+  <item>Pirate Vendetta</item>
  </tech>
  <tech name="Proteron Military Ships">
   <item>Proteron Archimedes</item>
