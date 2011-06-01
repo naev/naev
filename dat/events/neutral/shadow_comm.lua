@@ -33,6 +33,7 @@ function create ()
     hook2 = hook.pilot(vendetta, "death", "finish")
     hook3 = hook.land("finish")
     hook4 = hook.jumpout("finish")
+    evt.save()
 end
 
 -- Make the ship hail the player
