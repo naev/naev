@@ -1059,6 +1059,153 @@
   </stats>
  </ship>
  <!-- Corvettes -->
+ <ship name="Phalanx">
+  <base_type>Phalanx</base_type>
+  <GFX sx="10" sy="10">phalanx</GFX>
+  <GUI>slim</GUI>
+  <sound>engine</sound>
+  <class>Corvette</class>
+  <price>850000</price>
+  <fabricator>House Dvaered</fabricator>
+  <license>Medium Combat Vessel License</license>
+  <description>While somewhat technologically antiquated, the Phalanx's large energy capacity and heavy armour allow it to remain an effective combat vessel.</description>
+  <movement>
+   <thrust>220</thrust>
+   <turn>100</turn>
+   <speed>180</speed>
+  </movement>
+  <health>
+   <absorb>28</absorb>
+   <shield>410</shield>
+   <armour>430</armour>
+   <energy>1125</energy>
+   <shield_regen>200</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>2300</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>54</cpu>
+   <crew>15</crew>
+   <mass>380</mass>
+   <fuel>400</fuel>
+   <cap_cargo>25</cap_cargo>
+  </characteristics>
+  <slots>
+   <weapon x="8" y="0"  h="2" />
+   <weapon x="4"  y="5"  h="-2" />
+   <weapon x="4"  y="-5" h="-2" />
+   <weapon x="0" y="10" h="-2" >light</weapon>
+   <weapon x="0" y="-10"  h="-2" >light</weapon>
+   <utility />
+   <utility />
+   <utility>light</utility>
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+  </slots>
+  <stats>
+   <damage_forward>4</damage_forward>
+  </stats>
+ </ship>
+ <ship name="Dvaered Phalanx">
+  <base_type>Phalanx</base_type>
+  <GFX sx="10" sy="10">phalanx_dvaered</GFX>
+  <GUI>slim</GUI>
+  <sound>engine</sound>
+  <class>Corvette</class>
+  <price>850000</price>
+  <fabricator>House Dvaered</fabricator>
+  <license>Medium Combat Vessel License</license>
+  <description>While somewhat technologically antiquated, the Phalanx's large energy capacity and heavy armour allow it to remain an effective combat vessel.</description>
+  <movement>
+   <thrust>220</thrust>
+   <turn>100</turn>
+   <speed>180</speed>
+  </movement>
+  <health>
+   <absorb>28</absorb>
+   <shield>410</shield>
+   <armour>430</armour>
+   <energy>1125</energy>
+   <shield_regen>200</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>2300</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>54</cpu>
+   <crew>15</crew>
+   <mass>380</mass>
+   <fuel>400</fuel>
+   <cap_cargo>25</cap_cargo>
+  </characteristics>
+  <slots>
+   <weapon x="8" y="0"  h="2" />
+   <weapon x="4"  y="5"  h="-2" />
+   <weapon x="4"  y="-5" h="-2" />
+   <weapon x="0" y="10" h="-2" >light</weapon>
+   <weapon x="0" y="-10"  h="-2" >light</weapon>
+   <utility />
+   <utility />
+   <utility>light</utility>
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+  </slots>
+  <stats>
+   <damage_forward>4</damage_forward>
+  </stats>
+ </ship>
+<ship name="Pirate Phalanx">
+  <base_type>Phalanx</base_type>
+  <GFX sx="10" sy="10">phalanx_pirate</GFX>
+  <GUI>slim</GUI>
+  <sound>engine</sound>
+  <class>Corvette</class>
+  <price>775000</price>
+  <fabricator>Skull and Bones</fabricator>
+  <description>Building upon the already-capable Phalanx chassis, the Skull and Bones engineers have substantially improved the ship's performance, while only minorly sacrificing protection.</description>
+  <movement>
+   <thrust>230</thrust>
+   <turn>115</turn>
+   <speed>200</speed>
+  </movement>
+  <health>
+   <absorb>28</absorb>
+   <shield>410</shield>
+   <armour>390</armour>
+   <energy>1175</energy>
+   <shield_regen>220</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>2500</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>56</cpu>
+   <crew>15</crew>
+   <mass>340</mass>
+   <fuel>500</fuel>
+   <cap_cargo>20</cap_cargo>
+  </characteristics>
+  <slots>
+   <weapon x="8" y="0"  h="2" />
+   <weapon x="4"  y="5"  h="-2" />
+   <weapon x="4"  y="-5" h="-2" />
+   <weapon x="0" y="10" h="-2" >light</weapon>
+   <weapon x="0" y="-10"  h="-2" >light</weapon>
+   <utility />
+   <utility />
+   <utility>light</utility>
+   <structure />
+   <structure />
+   <structure />
+   <structure />
+  </slots>
+  <stats>
+   <damage_forward>4</damage_forward>
+   <jam_counter>4</jam_counter>
+  </stats>
+ </ship>
  <ship name="Sirius Preacher">
   <base_type>Preacher</base_type>
   <GFX sx="10" sy="10">preacher</GFX>
