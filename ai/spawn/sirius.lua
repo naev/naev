@@ -28,15 +28,15 @@ function spawn_squad ()
     if r < 0.5 then
        scom.addPilot( pilots, "Sirius Fidelity", 20 );
        scom.addPilot( pilots, "Sirius Shaman", 25 );
-       scom.addPilot( pilots, "Sirius Preacher", 40 );
+       scom.addPilot( pilots, "Sirius Preacher", 45 );
     elseif r < 0.8 then
-       scom.addPilot( pilots, "Sirius Preacher", 40 );
-       scom.addPilot( pilots, "Sirius Preacher", 40 );
+       scom.addPilot( pilots, "Sirius Preacher", 45 );
+       scom.addPilot( pilots, "Sirius Preacher", 45 );
     else
        scom.addPilot( pilots, "Sirius Fidelity", 20 );
        scom.addPilot( pilots, "Sirius Fidelity", 20 );
        scom.addPilot( pilots, "Sirius Shaman", 25 );
-       scom.addPilot( pilots, "Sirius Preacher", 40 );
+       scom.addPilot( pilots, "Sirius Preacher", 45 );
     end
 
     return pilots
@@ -49,7 +49,11 @@ function spawn_capship ()
     local r = rnd.rnd()
 
     -- Generate the capship
-    scom.addPilot( pilots, "Sirius Dogma", 100 )
+    if r < 0.5 then
+        scom.addPilot( pilots, "Sirius Dogma", 140 )
+    else
+        scom.addPilot( pilots, "Sirius Divinity", 120 );
+    end
 
     -- Generate the escorts
     r = rnd.rnd()
@@ -57,11 +61,9 @@ function spawn_capship ()
        scom.addPilot( pilots, "Sirius Fidelity", 20 );
        scom.addPilot( pilots, "Sirius Fidelity", 20 );
        scom.addPilot( pilots, "Sirius Shaman", 25 );
-    elseif r < 0.8 then
-       scom.addPilot( pilots, "Sirius Fidelity", 20 );
-       scom.addPilot( pilots, "Sirius Preacher", 40 );
     else
-       scom.addPilot( pilots, "Sirius Divinity", 80 );
+       scom.addPilot( pilots, "Sirius Fidelity", 20 );
+       scom.addPilot( pilots, "Sirius Preacher", 45 );
     end
 
     return pilots

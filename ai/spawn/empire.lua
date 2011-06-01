@@ -12,7 +12,7 @@ function spawn_patrol ()
       scom.addPilot( pilots, "Empire Shark", 20 );
       scom.addPilot( pilots, "Empire Lancelot", 25 );
    else
-      scom.addPilot( pilots, "Empire Pacifier", 90 );
+      scom.addPilot( pilots, "Empire Pacifier", 75 );
    end
 
    return pilots
@@ -27,14 +27,14 @@ function spawn_squad ()
    if r < 0.5 then
       scom.addPilot( pilots, "Empire Shark", 20 );
       scom.addPilot( pilots, "Empire Lancelot", 25 );
-      scom.addPilot( pilots, "Empire Admonisher", 50 );
+      scom.addPilot( pilots, "Empire Admonisher", 45 );
    elseif r < 0.8 then
       scom.addPilot( pilots, "Empire Lancelot", 25 );
-      scom.addPilot( pilots, "Empire Admonisher", 50 );
+      scom.addPilot( pilots, "Empire Admonisher", 45 );
    else
       scom.addPilot( pilots, "Empire Shark", 20 );
       scom.addPilot( pilots, "Empire Lancelot", 25 );
-      scom.addPilot( pilots, "Empire Pacifier", 90 );
+      scom.addPilot( pilots, "Empire Pacifier", 75 );
    end
 
    return pilots
@@ -48,9 +48,9 @@ function spawn_capship ()
 
    -- Generate the capship
    if r < 0.7 then
-      scom.addPilot( pilots, "Empire Hawking", 120 )
+      scom.addPilot( pilots, "Empire Hawking", 140 )
    else
-      scom.addPilot( pilots, "Empire Peacemaker", 200 )
+      scom.addPilot( pilots, "Empire Peacemaker", 165 )
    end
 
    -- Generate the escorts
@@ -61,10 +61,10 @@ function spawn_capship ()
       scom.addPilot( pilots, "Empire Lancelot", 25 );
    elseif r < 0.8 then
       scom.addPilot( pilots, "Empire Lancelot", 25 );
-      scom.addPilot( pilots, "Empire Admonisher", 50 );
+      scom.addPilot( pilots, "Empire Admonisher", 45 );
    else
       scom.addPilot( pilots, "Empire Lancelot", 25 );
-      scom.addPilot( pilots, "Empire Pacifier", 90 );
+      scom.addPilot( pilots, "Empire Pacifier", 75 );
    end
 
    return pilots

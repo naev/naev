@@ -7,17 +7,16 @@ function spawn_patrol ()
     local r = rnd.rnd()
 
     if r < 0.5 then
-        scom.addPilot( pilots, "Dvaered Vendetta", 20 );
-        scom.addPilot( pilots, "Dvaered Vendetta", 20 );
+        scom.addPilot( pilots, "Dvaered Vendetta", 25 );
+        scom.addPilot( pilots, "Dvaered Ancestor", 20 );
     elseif r < 0.8 then
-        scom.addPilot( pilots, "Dvaered Vendetta", 20 );
-        scom.addPilot( pilots, "Dvaered Vendetta", 20 );
-        scom.addPilot( pilots, "Dvaered Vendetta", 20 );
+        scom.addPilot( pilots, "Dvaered Vendetta", 25 );
+        scom.addPilot( pilots, "Dvaered Vendetta", 25 );
+        scom.addPilot( pilots, "Dvaered Ancestor", 20 );
     else
-        scom.addPilot( pilots, "Dvaered Vendetta", 20 );
-        scom.addPilot( pilots, "Dvaered Vendetta", 20 );
-        scom.addPilot( pilots, "Dvaered Vendetta", 20 );
-        scom.addPilot( pilots, "Dvaered Vendetta", 20 );
+        scom.addPilot( pilots, "Dvaered Vendetta", 25 );
+        scom.addPilot( pilots, "Dvaered Ancestor", 20 );
+        scom.addPilot( pilots, "Dvaered Phalanx", 45 );
     end
 
     return pilots
@@ -30,19 +29,18 @@ function spawn_squad ()
     local r = rnd.rnd()
 
     if r < 0.5 then
-        scom.addPilot( pilots, "Dvaered Vendetta", 20 );
-        scom.addPilot( pilots, "Dvaered Vendetta", 20 );
-        scom.addPilot( pilots, "Dvaered Vigilance", 45 );
+        scom.addPilot( pilots, "Dvaered Vendetta", 25 );
+        scom.addPilot( pilots, "Dvaered Ancestor", 20 );
+        scom.addPilot( pilots, "Dvaered Vigilance", 70 );
     elseif r < 0.8 then
-        scom.addPilot( pilots, "Dvaered Vendetta", 20 );
-        scom.addPilot( pilots, "Dvaered Vendetta", 20 );
-        scom.addPilot( pilots, "Dvaered Vendetta", 20 );
-        scom.addPilot( pilots, "Dvaered Vigilance", 45 );
+        scom.addPilot( pilots, "Dvaered Vendetta", 25 );
+        scom.addPilot( pilots, "Dvaered Vendetta", 25 );
+        scom.addPilot( pilots, "Dvaered Ancestor", 20 );
+        scom.addPilot( pilots, "Dvaered Vigilance", 70 );
     else
-        scom.addPilot( pilots, "Dvaered Vendetta", 20 );
-        scom.addPilot( pilots, "Dvaered Vendetta", 20 );
-        scom.addPilot( pilots, "Dvaered Vigilance", 45 );
-        scom.addPilot( pilots, "Dvaered Vigilance", 45 );
+        scom.addPilot( pilots, "Dvaered Vendetta", 25 );
+        scom.addPilot( pilots, "Dvaered Phalanx", 45 );
+        scom.addPilot( pilots, "Dvaered Vigilance", 70 );
     end
 
     return pilots
@@ -59,16 +57,17 @@ function spawn_capship ()
     -- Generate the escorts
     r = rnd.rnd()
     if r < 0.5 then
-        scom.addPilot( pilots, "Dvaered Vendetta", 20 );
-        scom.addPilot( pilots, "Dvaered Vendetta", 20 );
-        scom.addPilot( pilots, "Dvaered Vendetta", 20 );
+        scom.addPilot( pilots, "Dvaered Vendetta", 25 );
+        scom.addPilot( pilots, "Dvaered Vendetta", 25 );
+        scom.addPilot( pilots, "Dvaered Ancestor", 20 );
     elseif r < 0.8 then
-        scom.addPilot( pilots, "Dvaered Vendetta", 20 );
-        scom.addPilot( pilots, "Dvaered Vigilance", 45 );
+        scom.addPilot( pilots, "Dvaered Vendetta", 25 );
+        scom.addPilot( pilots, "Dvaered Ancestor", 20 );
+        scom.addPilot( pilots, "Dvaered Phalanx", 45 );
     else
-        scom.addPilot( pilots, "Dvaered Vendetta", 20 );
-        scom.addPilot( pilots, "Dvaered Vendetta", 20 );
-        scom.addPilot( pilots, "Dvaered Vigilance", 45 );
+        scom.addPilot( pilots, "Dvaered Vendetta", 25 );
+        scom.addPilot( pilots, "Dvaered Vendetta", 25 );
+        scom.addPilot( pilots, "Dvaered Vigilance", 70 );
     end
 
     return pilots
@@ -111,5 +110,3 @@ function spawn ( presence, max )
 
     return scom.calcNextSpawn( presence, scom.presence(spawn_data), max ), pilots
 end
-
-
