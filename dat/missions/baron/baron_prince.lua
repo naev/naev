@@ -246,7 +246,7 @@ function flintley()
         if rnd.rnd(1, 3 - artefactsfound) == 1 then
             bingo = true
         else
-            tk.msg(title[9], text[14]:format(artefactplanetC:name()))
+            tk.msg(title[9], text[14]:format(artefactplanetC:name(), mangle(player.name())))
             artefactsfound = artefactsfound + 1
         end
         misn.cargoRm(artefactC)
