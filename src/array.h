@@ -55,7 +55,7 @@ typedef struct {
 #endif
    int _reserved;         /**< Number of elements reserved */
    int _size;             /**< Number of elements in the array */
-   char _array[1];        /**< Begin of the array */
+   char _array[0];        /**< Begin of the array */
 } _private_container;
 
 
