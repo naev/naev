@@ -54,6 +54,12 @@
 #endif /* NDATA_DEF */
 
 
+#define NDATA_SRC_LAIDOUT        0
+#define NDATA_SRC_DIRNAME        1
+#define NDATA_SRC_NDATADEF       2
+#define NDATA_SRC_BINARY         3
+
+
 /*
  * Packfile.
  */
@@ -63,6 +69,7 @@ static Packcache_t *ndata_cache     = NULL; /**< Actual packfile. */
 static char* ndata_packName         = NULL; /**< Name of the ndata module. */
 static SDL_mutex *ndata_lock        = NULL; /**< Lock for ndata creation. */
 static int ndata_loadedfile         = 0; /**< Already loaded a file? */
+static int ndata_source             = 0;
 
 /*
  * File list.
@@ -491,7 +498,7 @@ void* ndata_read( const char* filename, uint32_t *filesize )
    if (ndata_cache == NULL) {
 
       /* Try to read the file as locally. */
-      if (nfile_fileExists( filename )) {
+      if (nfile_fileExists( filename ) && (ndata_source <= NDATA_SRC_LAIDOUT)) {
          buf = nfile_readFile( &nbuf, filename );
          if (buf != NULL) {
             ndata_loadedfile = 1;
@@ -501,11 +508,13 @@ void* ndata_read( const char* filename, uint32_t *filesize )
       }
 
       /* We can try to use the dirname path. */
-      if ((ndata_filename == NULL) && (ndata_dirname != NULL)) {
+      if ((ndata_filename == NULL) && (ndata_dirname != NULL) &&
+            (ndata_source <= NDATA_SRC_DIRNAME)) {
          snprintf( path, sizeof(path), "%s/%s", ndata_dirname, filename );
          if (nfile_fileExists( path )) {
             buf = nfile_readFile( &nbuf, path );
             if (buf != NULL) {
+               ndata_source = NDATA_SRC_DIRNAME;
                ndata_loadedfile = 1;
                *filesize = nbuf;
                return buf;
@@ -514,15 +523,34 @@ void* ndata_read( const char* filename, uint32_t *filesize )
       }
 
       /* We can also try default location. */
-      buf = strdup(filename);
-      snprintf( path, sizeof(path), "%s/%s", nfile_dirname(buf), filename );
-      free(buf);
-      if (nfile_fileExists( path )) {
-         buf = nfile_readFile( &nbuf, path );
-         if (buf != NULL) {
-            ndata_loadedfile = 1;
-            *filesize = nbuf;
-            return buf;
+      if (ndata_source <= NDATA_SRC_NDATADEF) {
+         buf = strdup( NDATA_DEF );
+         snprintf( path, sizeof(path), "%s/%s", nfile_dirname(buf), filename );
+         free(buf);
+         if (nfile_fileExists( path )) {
+            buf = nfile_readFile( &nbuf, path );
+            if (buf != NULL) {
+               ndata_source = NDATA_SRC_NDATADEF;
+               ndata_loadedfile = 1;
+               *filesize = nbuf;
+               return buf;
+            }
+         }
+      }
+
+      /* Try binary location. */
+      if (ndata_source <= NDATA_SRC_BINARY) {
+         buf = strdup( naev_binary() );
+         snprintf( path, sizeof(path), "%s/%s", nfile_dirname(buf), filename );
+         free(buf);
+         if (nfile_fileExists( path )) {
+            buf = nfile_readFile( &nbuf, path );
+            if (buf != NULL) {
+               ndata_source = NDATA_SRC_BINARY;
+               ndata_loadedfile = 1;
+               *filesize = nbuf;
+               return buf;
+            }
          }
       }
 
@@ -553,15 +581,56 @@ void* ndata_read( const char* filename, uint32_t *filesize )
  */
 SDL_RWops *ndata_rwops( const char* filename )
 {
+   char path[PATH_MAX], *tmp;
    SDL_RWops *rw;
 
    if (ndata_cache == NULL) {
 
       /* Try to open from file. */
-      rw = SDL_RWFromFile( filename, "rb" );
-      if (rw != NULL) {
-         ndata_loadedfile = 1;
-         return rw;
+      if (ndata_source <= NDATA_SRC_LAIDOUT) {
+         rw = SDL_RWFromFile( filename, "rb" );
+         if (rw != NULL) {
+            ndata_loadedfile = 1;
+            return rw;
+         }
+      }
+
+      /* Try to open from dirname. */
+      if ((ndata_filename == NULL) && (ndata_dirname != NULL) &&
+            (ndata_source <= NDATA_SRC_DIRNAME)) {
+         snprintf( path, sizeof(path), "%s/%s", ndata_dirname, filename );
+         rw = SDL_RWFromFile( path, "rb" );
+         if (rw != NULL) {
+            ndata_source = NDATA_SRC_DIRNAME;
+            ndata_loadedfile = 1;
+            return rw;
+         }
+      }
+
+      /* Try to open from def. */
+      if (ndata_source <= NDATA_SRC_NDATADEF) {
+         tmp = strdup( NDATA_DEF );
+         snprintf( path, sizeof(path), "%s/%s", nfile_dirname(tmp), filename );
+         free(tmp);
+         rw = SDL_RWFromFile( path, "rb" );
+         if (rw != NULL) {
+            ndata_source = NDATA_SRC_NDATADEF;
+            ndata_loadedfile = 1;
+            return rw;
+         }
+      }
+
+      /* Try to open from binary. */
+      if (ndata_source <= NDATA_SRC_BINARY) {
+         tmp = strdup( naev_binary() );
+         snprintf( path, sizeof(path), "%s/%s", nfile_dirname(tmp), filename );
+         free(tmp);
+         rw = SDL_RWFromFile( path, "rb" );
+         if (rw != NULL) {
+            ndata_source = NDATA_SRC_BINARY;
+            ndata_loadedfile = 1;
+            return rw;
+         }
       }
 
       /* Load the packfile. */
@@ -636,7 +705,7 @@ static char** filterList( const char** list, int nlist,
 char** ndata_list( const char* path, uint32_t* nfiles )
 {
    (void) path;
-   char **files;
+   char **files, buf[PATH_MAX], *tmp;
    int n;
 
    /* Already loaded the list. */
@@ -645,12 +714,49 @@ char** ndata_list( const char* path, uint32_t* nfiles )
 
    /* See if can load from local directory. */
    if (ndata_cache == NULL) {
-      files = nfile_readDir( &n, path );
 
-      /* Found locally. */
-      if (files != NULL) {
-         *nfiles = n;
-         return files;
+      /* Local search. */
+      if (ndata_source <= NDATA_SRC_LAIDOUT) {
+         files = nfile_readDir( &n, path );
+         if (files != NULL) {
+            *nfiles = n;
+            return files;
+         }
+      }
+
+      /* Dirname search. */
+      if ((ndata_filename == NULL) && (ndata_dirname != NULL) &&
+            (ndata_source <= NDATA_SRC_NDATADEF)) {
+         snprintf( buf, sizeof(buf), "%s/%s", ndata_dirname, path );
+         files = nfile_readDir( &n, buf );
+         if (files != NULL) {
+            *nfiles = n;
+            return files;
+         }
+      }
+
+      /* NDATA_DEF. */
+      if (ndata_source <= NDATA_SRC_BINARY) {
+         tmp = strdup( NDATA_DEF );
+         snprintf( buf, sizeof(buf), "%s/%s", nfile_dirname(tmp), path );
+         free(tmp);
+         files = nfile_readDir( &n, buf );
+         if (files != NULL) {
+            *nfiles = n;
+            return files;
+         }
+      }
+
+      /* Binary. */
+      if (ndata_source <= NDATA_SRC_BINARY) {
+         tmp = strdup( naev_binary() );
+         snprintf( buf, sizeof(buf), "%s/%s", nfile_dirname(tmp), path );
+         free(tmp);
+         files = nfile_readDir( &n, buf );
+         if (files != NULL) {
+            *nfiles = n;
+            return files;
+         }
       }
 
       /* Open packfile. */
