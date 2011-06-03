@@ -623,17 +623,16 @@ void main_loop( int update )
 }
 
 
-#if HAS_POSIX
+#if HAS_POSIX && defined(CLOCK_MONOTONIC)
 static struct timespec global_time; /**< Global timestamp for calculating delta ticks. */
 static int use_posix_time; /**< Whether or not to use posix time. */
-#endif /* HAS_POSIX */
+#endif /* HAS_POSIX && defined(CLOCK_MONOTONIC) */
 /**
  * @brief Initializes the fps engine.
  */
 static void fps_init (void)
 {
-#if HAS_POSIX
-#ifdef CLOCK_MONOTONIC
+#if HAS_POSIX && defined(CLOCK_MONOTONIC)
    use_posix_time = 1;
    /* We must use clock_gettime here instead of gettimeofday mainly because this
     * way we are not influenced by changes to the time source like say ntp which
@@ -641,9 +640,8 @@ static void fps_init (void)
    if (clock_gettime(CLOCK_MONOTONIC, &global_time)==0)
       return;
    WARN("clock_gettime failed, disabling posix time.");
-#endif /* CLOCK_MONOTONIC */
    use_posix_time = 0;
-#endif /* HAS_POSIX */
+#endif /* HAS_POSIX && defined(CLOCK_MONOTONIC) */
    time_ms  = SDL_GetTicks();
 }
 /**
@@ -656,8 +654,7 @@ static double fps_elapsed (void)
    double dt;
    unsigned int t;
 
-#if HAS_POSIX
-#ifdef CLOCK_MONOTONIC
+#if HAS_POSIX && defined(CLOCK_MONOTONIC)
    struct timespec ts;
 
    if (use_posix_time) {
@@ -669,8 +666,7 @@ static double fps_elapsed (void)
       }
       WARN( "clock_gettime failed!" );
    }
-#endif /* CLOCK_MONOTONIC */
-#endif /* HAS_POSIX */
+#endif /* HAS_POSIX && defined(CLOCK_MONOTONIC) */
 
    t        = SDL_GetTicks();
    dt       = (double)(t - time_ms); /* Get the elapsed ms. */
