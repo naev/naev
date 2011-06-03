@@ -142,7 +142,7 @@ else
 end
 
 function create ()
-   misn.setNPC( "Young People", "none" )
+   misn.setNPC( "Young People", "mia" )
    misn.setDesc( bar_desc )
 end
 

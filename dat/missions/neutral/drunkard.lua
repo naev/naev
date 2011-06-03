@@ -62,7 +62,7 @@ text[9] = [[You don't have enough cargo space to accept this mission.]]
 function create ()
    -- Note: this mission does not make any system claims.
 
-   misn.setNPC( "Drunkard", "none" )  -- creates the drunkard at the bar
+   misn.setNPC( "Drunkard", "drunkard" )  -- creates the drunkard at the bar
    misn.setDesc( bar_desc )           -- drunkard's description
 
    -- Planets
