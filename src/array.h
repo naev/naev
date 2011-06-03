@@ -76,8 +76,7 @@ __inline__ static _private_container *_array_private_container(void *a)
 {
    assert("NULL array!" && (a != NULL));
 
-   const intptr_t delta = (intptr_t)(&((_private_container *)NULL)->_array);
-   _private_container *c = (_private_container *)((char *)a - delta);
+   _private_container *c = (_private_container *)a - 1;
 
 #ifdef DEBUGGING
    assert("Sentinel not found. Use array_create() to create the array." && (c->_sentinel == SENTINEL));
