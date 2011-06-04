@@ -202,11 +202,13 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
    /* Clear memory. */
    memset( temp, 0, sizeof(Commodity) );
 
-   temp->name = (char*)xmlGetProp(parent,(xmlChar*)"name");
-   if (temp->name == NULL) WARN("Commodity from "COMMODITY_DATA" has invalid or no name");
+   /* Get name. */
+   xmlr_attr( parent, "name", temp->name );
+   if (temp->name == NULL) 
+      WARN("Commodity from "COMMODITY_DATA" has invalid or no name");
 
+   /* Parse body. */
    node = parent->xmlChildrenNode;
-
    do {
       xml_onlyNodes(node);
       xmlr_strd(node, "description", temp->description);
