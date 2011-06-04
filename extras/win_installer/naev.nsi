@@ -115,7 +115,7 @@ SectionEnd
 Section "Naev Data (Download)" DataSection
 
     AddSize 202159 ;Size (kB) of Naev ndata
-    NSISdl::download "http://voxel.dl.sourceforge.net/project/naev/ndata-${VERSION}" "ndata"
+    NSISdl::download "http://voxel.dl.sourceforge.net/project/naev/naev-${VERSION}/ndata-${VERSION}" "ndata"
 
 SectionEnd
 
