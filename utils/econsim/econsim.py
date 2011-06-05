@@ -88,16 +88,18 @@ if __name__ == "__main__":
       ssys_added.append( ssysName )
       i += 1
 
-   graph.set_prog( 'neato' )
+   #graph.set_prog( 'neato' )
    graph.set_simplify( False )
    graph.set( 'aspect',    1 )
-   #graph.set( 'maxiter',   10 )
+   #graph.set( 'maxiter',   100000 )
+   graph.set( 'overlap',   False )
    nodes = graph.get_nodes()
    edges = graph.get_edges()
    print("   %d nodes and %d edges" % (len(nodes), len(edges)))
    print("Outputting as naev_universe")
    graph.write_raw('naev_universe.dot')
-   graph.write_png('naev_universe.png')
+   #graph.write_png('naev_universe.png', prog='neato', format='png')
+   graph.write('naev_universe.png', prog='neato', format='png')
 
 
 
