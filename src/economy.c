@@ -244,11 +244,11 @@ void commodity_Jettison( int pilot, Commodity* com, int quantity )
    int n, effect;
    double px,py, bvx, bvy, r,a, vx,vy;
 
-   p = pilot_get( pilot );
+   p   = pilot_get( pilot );
 
-   n = MAX( 1, RNG(quantity/10, quantity/5) );
-   px = p->solid->pos.x;
-   py = p->solid->pos.y;
+   n   = MAX( 1, RNG(quantity/10, quantity/5) );
+   px  = p->solid->pos.x;
+   py  = p->solid->pos.y;
    bvx = p->solid->vel.x;
    bvy = p->solid->vel.y;
    for (i=0; i<n; i++) {
@@ -384,7 +384,7 @@ credits_t economy_getPrice( const Commodity *com,
    /* Calculate price. */
    price  = (double) com->price;
    price *= sys->prices[i];
-   return (unsigned int) price;
+   return (credits_t) price;
 }
 
 
