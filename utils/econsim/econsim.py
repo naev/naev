@@ -27,6 +27,7 @@ if __name__ == "__main__":
    assetsObj = readers.assets(**config)
 
    # Create graph
+   print("Creating graph")
    graph     = pydot.Dot( 'Naev_Universe', graph_type='graph' )
 
    # Iterate over systems and planets
@@ -83,7 +84,8 @@ if __name__ == "__main__":
       #graph.add_subgraph( subg )
       ssys_added.append( ssysName )
 
-   graph.write_png('test.png')
+   print("Outputting as naev_universe.png")
+   graph.write_png('naev_universe.png')
 
 
 
