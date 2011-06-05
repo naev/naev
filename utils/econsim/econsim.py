@@ -19,6 +19,7 @@ def planet_filter( p ):
       return False
    return True
 
+
 if __name__ == "__main__":
    from datreader import readers
 
@@ -33,10 +34,8 @@ if __name__ == "__main__":
    # Iterate over systems and planets
    ssys_added = []
    jumps_added = []
+   i = 1
    for (ssysName, planets) in ssysObj.assetsList.iteritems():
-      # Create cluster
-      #subg = pydot.Subgraph( graph_name='A', rank='same', label=ssysName )
-      subg = graph
 
       # Create jumps
       jumps = ssysObj.jumpgatesForSystem( ssysName )
@@ -51,40 +50,53 @@ if __name__ == "__main__":
          # First time addition
          if name not in jumps_added:
             node = pydot.Node( name, shape='diamond' )
-            subg.add_node( node )
+            graph.add_node( node )
             jumps_added.append( name )
          # Add edges between jumps for empty systems
          for jn in jump_nodes:
             edge = pydot.Edge( name, jn )
-            subg.add_edge( edge )
+            graph.add_edge( edge )
          # Add node
          jump_nodes.append( name )
 
       # We don't want all the planets
       planets_filtered = filter( planet_filter, planets )
       planets_added = list()
-      # Iterate to create maps
-      for p in planets_filtered:
-         # Add the node
-         node     = pydot.Node( p )
-         subg.add_node( node )
-         # Add planet links
-         for t in planets_filtered:
-            if p == t or t in planets_added:
-               continue
-            edge = pydot.Edge( p, t, style='dotted' )
-            subg.add_edge( edge )
-         # Add jump edges
-         for j in jump_nodes:
-            edge = pydot.Edge( p, j )
-            subg.add_edge( edge )
-         # Visited planet
-         planets_added.append(p)
-
-      #graph.add_subgraph( subg )
+      # Create cluster
+      if len(planets_filtered) > 0:
+         subg = pydot.Cluster( "sys_%d"%i, label=ssysName )
+         # Iterate to create maps
+         for p in planets_filtered:
+            # Add the node
+            node     = pydot.Node( p )
+            subg.add_node( node )
+         graph.add_subgraph( subg )
+         for p in planets_filtered:
+            # Add planet links
+            for t in planets_filtered:
+               if p == t or t in planets_added:
+                  continue
+               edge = pydot.Edge( p, t, style='dotted' )
+               graph.add_edge( edge )
+            # Add jump edges
+            for j in jump_nodes:
+               edge = pydot.Edge( p, j )
+               graph.add_edge( edge )
+            # Visited planet
+            planets_added.append(p)
+      
       ssys_added.append( ssysName )
+      i += 1
 
-   print("Outputting as naev_universe.png")
+   graph.set_prog( 'neato' )
+   graph.set_simplify( False )
+   graph.set( 'aspect',    1 )
+   #graph.set( 'maxiter',   10 )
+   nodes = graph.get_nodes()
+   edges = graph.get_edges()
+   print("   %d nodes and %d edges" % (len(nodes), len(edges)))
+   print("Outputting as naev_universe")
+   graph.write_raw('naev_universe.dot')
    graph.write_png('naev_universe.png')
 
 
