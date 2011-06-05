@@ -64,11 +64,11 @@ class ssys(readers):
 
 
 class assets(readers):
+    # should be moved elsewhere or loaded externaly for convenience
     tagWhiteList = ('class','population')
 
     def __init__(self, datPath, verbose=False):
         readers.__init__(self, datPath, 'asset.xml', verbose)
-        # should be moved elsewhere or loaded externaly for convenience
 
         # we loads all the assets
         tmp = self.xmlData.findall('asset')
@@ -82,8 +82,12 @@ class assets(readers):
                 tag = self.tagAllowed(item.tag)
                 if not tag:
                     continue
-
-                self.assets[asset.get('name')].update({tag: item.text})
+                # if there is no text, we assume it's a list
+                if not item.text:
+                    subItems = [subitem.text for subitem in item.iterchildren()]
+                    self.assets[asset.get('name')].update({tag: subItems})
+                else:
+                    self.assets[asset.get('name')].update({tag: item.text})
 
     def tagAllowed(self, tag):
         if tag in self.tagWhiteList:
@@ -99,3 +103,19 @@ class assets(readers):
         if not self.assets.has_key(planetName):
             return None
         return self.assets[planetName]
+
+    def getPopulationGreaterThan(self, population):
+        myList = list()
+        for (planetName, details) in self.assets:
+            if population > details['population']:
+                myList.append(planetName)
+
+        return myList
+
+    def getPlanetByClass(self, planetClass):
+        myList = list()
+        for (planetName, details) in self.assets:
+            if details['class'] == planetClass:
+                myList.append(planetName)
+
+        return myList
