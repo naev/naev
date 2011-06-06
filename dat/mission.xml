@@ -572,4 +572,15 @@
    <location>Bar</location>
   </avail>
  </mission>
+ <mission name="Sirian Bounty">
+  <lua>sirius/achack/achack01</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <cond>planet.cur() == planet.get("The Wringer")</cond>
+   <chance>100</chance>
+   <location>Bar</location>
+  </avail>
+ </mission>
 </Missions>
