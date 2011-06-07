@@ -15,7 +15,7 @@ else -- default english
 
     text2 = [[    "Great! I was about to give up hope that I would find anyone with enough guts to do this for me. Okay, so, let me tell you about your target. She's a member of the Serra echelon. She can usually be found in Sirius space, I believe she'll be on %s in the %s system right now. Come back to me when she's dead, and I'll give you your reward!"
     Harja leaves the spacedock bar, satisfied that he's finally found someone to take his request. You can't help but wonder why he would try to hire a mercenary in a place like the Wringer, though. If the target is such a dangerous criminal, then wouldn't he be better off posting a bounty mission on the public board? Oh well, it's none of your business. You accepted the job, now all that's left is to complete it.]] -- TODO: Insert personal features here.
-    
+
     title2 = "A Sirian military officer"
     text3 = [[    You approach the young officer, determined to find out what you've gotten yourself involved with. You hope this was just a big mistake.
     "Good day, pilot," the officer greets you as you approach her table. She seems quite polite, and nothing indicates that she is anything less than completely respectable. "Is there something I can help you with?"
@@ -23,13 +23,13 @@ else -- default english
     "Are you sure? Unbelievable. Just unbelievable. I know the man you speak of, and I certainly don't count him as one of my friends. But I assure you, what he told you about me is a complete lie. Yes, there is bad blood between us, it's rather personal. But as you can see my record is clean, or I wouldn't have been accepted into the military.
     "I appreciate that you used your better judgment instead of recklessly trying to attack me, which would have ended badly for at least one of us. You said Harja offered you 100,000 credits for my death, yes? I will arrange for half that again to be deposited into your account. Consider it a token of gratitude. Now, it seems I may have a situation to take care of..."
     The officer excuses herself from the table and heads to the local military station. You are satisfied for now that you got paid without having to get your hands dirty. You just hope this won't come back to bite you in the butt one day.]]
-    
+
     -- Mission info stuff
     harjaname = "A Fyrra civilian"
     harjadesc = "You see a young Fyrra man with a determined expression on his face."
-    joannname = "A Serra military officer"
-    joanndesc = "This woman matches the description Harja gave you... But she's a military officer! This can't be right. You'd better talk to her and find out what's going on."
-    
+    joannename = "A Serra military officer"
+    joannedesc = "This woman matches the description Harja gave you... But she's a military officer! This can't be right. You'd better talk to her and find out what's going on."
+
     osd_msg   = {}
     osd_title = "Sirian Bounty"
     osd_msg[1] = "Fly to %s"
@@ -63,14 +63,14 @@ function accept()
     misn.setDesc(misn_desc)
     misn.setReward(misn_reward)
     misn.markerAdd(destsys, "high")
-    
+
     hook.land("land")
     hook.enter("enter")
 end
 
 function land()
     if planet.cur() == destplanet then
-        misn.npcAdd("talkJoann", joannname, "none", joanndesc, 4) -- TODO: Joann's portrait
+        misn.npcAdd("talkJoanne", joannename, "none", joannedesc, 4) -- TODO: Joanne's portrait
     end
 end
 
@@ -82,7 +82,7 @@ function enter()
     end
 end
 
-function talkJoann()
+function talkJoanne()
     tk.msg(title2, text3)
     player.pay(150000) -- 150K
     misn.finish(true)
