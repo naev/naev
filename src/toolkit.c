@@ -1719,7 +1719,7 @@ static void toolkit_mouseEvent( Window *w, SDL_Event* event )
  *
  *    @param w Window to which widget belongs.
  *    @param wgt Widget recieving event.
- *    @param event Event recieved by the window.
+ *    @param event Event received by the window.
  */
 static void toolkit_mouseEventWidget( Window *w, Widget *wgt,
       Uint32 type, Uint8 button, int x, int y, int rx, int ry )

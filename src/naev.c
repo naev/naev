@@ -1138,7 +1138,7 @@ static void debug_sigHandler( int sig, siginfo_t *info, void *unused )
    num      = backtrace(buf, 64);
    symbols  = backtrace_symbols(buf, num);
 
-   DEBUG("Naev recieved %s!",
+   DEBUG("Naev received %s!",
          debug_sigCodeToStr(info->si_signo, info->si_code) );
    for (i=0; i<num; i++) {
       if (abfd != NULL)

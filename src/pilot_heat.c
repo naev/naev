@@ -112,7 +112,7 @@ void pilot_heatReset( Pilot *p )
  * @brief Adds heat to an outfit slot.
  *
  *    @param o Outfit to heat.
- *    @param energy Energy recieved by outfit (in MJ).
+ *    @param energy Energy received by outfit (in MJ).
  */
 void pilot_heatAddSlot( Pilot *p, PilotOutfitSlot *o )
 {
