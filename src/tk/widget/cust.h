@@ -18,7 +18,7 @@ typedef struct WidgetCustData_ {
    int border; /**< 1 if widget should have border, 0 if it shouldn't. */
    void (*render) (double bx, double by, double bw, double bh, void* data); /**< Function to run when rendering. */
    void (*renderOverlay) (double bx, double by, double bw, double bh, void* data); /**< Function to run when rendering overlay. */
-   void (*mouse) (unsigned int wid, SDL_Event* event, double bx, double by, double bw, double bh, void* data); /**< Function to run when recieving mouse events. */
+   void (*mouse) (unsigned int wid, SDL_Event* event, double bx, double by, double bw, double bh, void* data); /**< Function to run when receiving mouse events. */
    int clip; /**< 1 if should clip with glScissors or the like, 0 otherwise. */
    void *userdata;
 } WidgetCustData;

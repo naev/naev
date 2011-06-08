@@ -393,7 +393,7 @@ static void iar_centerSelected( Widget *iar )
 /**
  * @brief Image array widget mouse click handler.
  *
- *    @param iar Widget recieving the event.
+ *    @param iar Widget receiving the event.
  *    @param mclick The mouse click event.
  *    @return 1 if event is used.
  */
