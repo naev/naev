@@ -143,7 +143,7 @@ static void tq_enqueue( ThreadQueue *q, void *data )
    /* Lock */
    SDL_mutexP(q->t_lock);
 
-   /* Enque. */
+   /* Enqueue. */
    q->last->next  = n;
    q->last        = n;
 
@@ -237,7 +237,7 @@ int threadpool_newJob( int (*function)(void *), void *data )
       return -2;
    }
 
-   /* Allocate nad sett parameters. */
+   /* Allocate and set parameters. */
    node           = calloc( 1, sizeof(ThreadQueueData) );
    node->data     = data;
    node->function = function;
@@ -373,7 +373,7 @@ static int threadpool_handler( void *data )
       }
 
       /*
-       * We assume there's work availible. We now have to choose who does the work.
+       * We assume there's work available. We now have to choose who does the work.
        * We'll try to wake up a sleeping thread, if none are left new threads will
        * be created.
        */

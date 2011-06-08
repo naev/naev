@@ -334,7 +334,7 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
             lua_pushtime(L,lt);
          }
          else {
-            WARN("Unknown lua data type!");
+            WARN("Unknown Lua data type!");
             lua_pop(L,1);
             return -1;
          }

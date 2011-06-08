@@ -28,7 +28,7 @@
 
 
 
-/* similar to lua vars, but with less variety */
+/* similar to Lua vars, but with less variety */
 #define MISN_VAR_NIL    0 /**< Nil type. */
 #define MISN_VAR_NUM    1 /**< Number type. */
 #define MISN_VAR_BOOL   2 /**< Boolean type. */
@@ -77,15 +77,15 @@ static const luaL_reg var_methods[] = {
    { "pop", var_pop },
    { "push", var_push },
    {0,0}
-}; /**< Mission variable lua methods. */
+}; /**< Mission variable Lua methods. */
 static const luaL_reg var_cond_methods[] = {
    { "peek", var_peek },
    {0,0}
-}; /**< Conditional mission variable lua methods. */
+}; /**< Conditional mission variable Lua methods. */
 
 
 /**
- * @brief Loads the mission variable lua library.
+ * @brief Loads the mission variable Lua library.
  *    @param L Lua state.
  *    @param readonly Whether to open in read-only form.
  *    @return 0 on success.

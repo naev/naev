@@ -45,7 +45,7 @@ double music_playingTime (void);
 
 
 /*
- * lua control
+ * Lua control
  */
 int music_choose( const char* situation );
 int music_chooseDelay( const char* situation, double delay );

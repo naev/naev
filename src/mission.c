@@ -59,8 +59,8 @@ Mission player_missions[MISSION_MAX]; /**< Player's active missions. */
 /*
  * mission stack
  */
-static MissionData *mission_stack = NULL; /**< Unmuteable after creation */
-static int mission_nstack = 0; /**< Mssions in stack. */
+static MissionData *mission_stack = NULL; /**< Unmutable after creation */
+static int mission_nstack = 0; /**< Missions in stack. */
 
 
 /*
@@ -179,10 +179,10 @@ static int mission_init( Mission* mission, MissionData* misn, int genid, int cre
       mission->desc  = strdup("No description.");
    }
 
-   /* init lua */
+   /* init Lua */
    mission->L = nlua_newState();
    if (mission->L == NULL) {
-      WARN("Unable to create a new lua state.");
+      WARN("Unable to create a new Lua state.");
       return -1;
    }
    nlua_loadBasic( mission->L ); /* pairs and such */
@@ -965,7 +965,7 @@ int missions_saveActive( xmlTextWriterPtr writer )
       if (player_missions[i].id != 0) {
          xmlw_startElem(writer,"mission");
 
-         /* data and id are attributes becaues they must be loaded first */
+         /* data and id are attributes because they must be loaded first */
          xmlw_attr(writer,"data","%s",player_missions[i].data->name);
          xmlw_attr(writer,"id","%u",player_missions[i].id);
 
@@ -1015,7 +1015,7 @@ int missions_saveActive( xmlTextWriterPtr writer )
          claim_xmlSave( writer, player_missions[i].claims );
          xmlw_endElem(writer); /* "claims" */
 
-         /* Write lua magic */
+         /* Write Lua magic */
          xmlw_startElem(writer,"lua");
          nxml_persistLua( player_missions[i].L, writer );
          xmlw_endElem(writer); /* "lua" */

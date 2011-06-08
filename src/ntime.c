@@ -57,7 +57,7 @@
  */
 typedef struct NTimeUpdate_s {
    struct NTimeUpdate_s *next; /**< Next in the linked list. */
-   ntime_t inc; /**< Time increment assosciated. */
+   ntime_t inc; /**< Time increment associated. */
 } NTimeUpdate_t;
 static NTimeUpdate_t *ntime_inclist = NULL; /**< Time increment list. */
 

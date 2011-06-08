@@ -630,7 +630,7 @@ void pilot_shootStop( Pilot* p, int level )
    /* Stop all beams. */
    for (i=0; i<array_size(ws->slots); i++) {
 
-      /* Must have assosciated outfit. */
+      /* Must have associated outfit. */
       if (ws->slots[i].slot->outfit == NULL)
          continue;
 
@@ -1026,7 +1026,7 @@ void pilot_weaponSetDefault( Pilot *p )
       return;
    }
 
-   /* Find first fire gorup. */
+   /* Find first fire group. */
    for (i=0; i<PILOT_WEAPON_SETS; i++)
       if (!p->weapon_sets[i].fire)
          break;

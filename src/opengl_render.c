@@ -1093,7 +1093,7 @@ static glTexture *gl_genCircle( int radius )
       }
    }
 
-   /* CLean up. */
+   /* Clean up. */
    free(buf);
 
    SDL_UnlockSurface( sur );

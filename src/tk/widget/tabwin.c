@@ -153,7 +153,7 @@ static int tab_mouse( Widget* tab, SDL_Event *event )
    Window *parent;
    int x, y, rx, ry;
 
-   /* Get parrent window. */
+   /* Get parent window. */
    parent = window_wget( tab->wdw );
    if (parent == NULL)
       return 0;

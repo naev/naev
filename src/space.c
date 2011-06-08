@@ -320,7 +320,7 @@ int space_hyperspace( Pilot* p )
  * @brief Calculates the jump in pos for a pilot.
  *
  *    @param in Star system entering.
- *    @param out Star system exitting.
+ *    @param out Star system exiting.
  *    @param[out] pos Position calculated.
  *    @param[out] vel Velocity calculated.
  */
@@ -911,7 +911,7 @@ static void system_scheduler( double dt, int init )
          n = 0;
       }
       else {
-         /* Decerement dt, only continue  */
+         /* Decrement dt, only continue  */
          p->timer -= dt;
          if (p->timer >= 0.)
             continue;
@@ -942,7 +942,7 @@ static void system_scheduler( double dt, int init )
 #endif /* DEBUGGING */
 
       /* Actually run the function. */
-      if (lua_pcall(L, n+1, 2, errf)) { /* error has occured */
+      if (lua_pcall(L, n+1, 2, errf)) { /* error has occurred */
          WARN("Lua Spawn script for faction '%s' : %s",
                faction_name( p->faction ), lua_tostring(L,-1));
 #if DEBUGGING
@@ -1073,7 +1073,7 @@ void space_update( const double dt )
 
          /* Head towards target. */
          if (fabs(interference_alpha - interference_target) > 1e-05) {
-            /* Assymptotic. */
+            /* Asymptotic. */
             interference_alpha += (interference_target - interference_alpha) * dt;
 
             /* Limit alpha to [0.-1.]. */
@@ -1136,7 +1136,7 @@ void space_init( const char* sysname )
          sound_env( SOUND_ENV_NEBULA, cur_system->nebu_density );
       }
       else {
-         /* Backrgound is Stary */
+         /* Background is starry */
          background_initStars( cur_system->stars );
 
          /* Set up sound. */
@@ -2696,7 +2696,7 @@ void system_addPresence( StarSystem *sys, int faction, double amount, int range 
    /* If it's empty, something's wrong. */
    if (q_isEmpty(q)) {
       /* Means system isn't connected. */
-      /*WARN("q is empty after getting adjancies of %s.", sys->name);*/
+      /*WARN("q is empty after getting adjacencies of %s.", sys->name);*/
       q_destroy(q);
       q_destroy(qn);
       presenceCleanup(sys);
@@ -2707,7 +2707,7 @@ void system_addPresence( StarSystem *sys, int faction, double amount, int range 
       /* Pull one off the current range queue. */
       cur = q_dequeue(q);
 
-      /* Enqueue all its adjancencies to the next range queue. */
+      /* Enqueue all its adjacencies to the next range queue. */
       for (i=0; i < cur->njumps; i++) {
          if (cur->jumps[i].target->spilled == 0) {
             q_enqueue( qn, cur->jumps[i].target );
@@ -2860,7 +2860,7 @@ void system_rmCurrentPresence( StarSystem *sys, int faction, double amount )
    lua_pushnumber( L, presence->timer );   /* f, cur, max, timer */
 
    /* Actually run the function. */
-   if (lua_pcall(L, 3, 1, errf)) { /* error has occured */
+   if (lua_pcall(L, 3, 1, errf)) { /* error has occurred */
       WARN("Lua decrease script for faction '%s' : %s",
             faction_name( faction ), lua_tostring(L,-1));
 #if DEBUGGING

@@ -12,7 +12,7 @@
 
 
 /*
- * lua control
+ * Lua control
  */
 int nlua_loadMusic( lua_State *L, int read_only );
 

@@ -72,7 +72,7 @@ typedef struct glInfo_ {
    int g; /**< How many green bits we have. */
    int b; /**< How many blue bits we have. */
    int a; /**< How many alpha bits we have. */
-   unsigned int flags; /**< Stores different propertiers */
+   unsigned int flags; /**< Stores different properties */
    int tex_max; /**< Maximum texture size */
    int multitex_max; /**< Maximum multitexture levels */
    int fsaa; /**< Full Scene Anti Aliasing level. */

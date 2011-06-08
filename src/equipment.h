@@ -43,7 +43,7 @@ typedef struct CstSlotWidget_ {
    Pilot *selected; /**< Selected pilot ship. */
    Outfit *outfit; /**< Selected outfit. */
    int slot; /**< Selected equipment slot. */
-   int mouseover; /**< Mouse vore slot. */
+   int mouseover; /**< Mouse over slot. */
    double altx; /**< Alt X text position. */
    double alty; /**< Alt Y text position. */
    int canmodify; /**< Whether or not it can modify stuff. */

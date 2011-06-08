@@ -616,7 +616,7 @@ static size_t quoteLuaString(char *str, size_t size, const char *text)
    if (size == 0)
       return 0;
 
-   /* Write a lua nil if we are given a NULL pointer */
+   /* Write a Lua nil if we are given a NULL pointer */
    if (text == NULL)
       return snprintf(str, size, "nil");
 

@@ -94,7 +94,7 @@ int  (*music_sys_isPlaying) (void) = NULL;
 /* music stuff */
 static int music_find (void);
 static void music_free (void);
-/* lua stuff */
+/* Lua stuff */
 static int music_luaInit (void);
 static void music_luaQuit (void);
 
@@ -162,7 +162,7 @@ static int music_runLua( const char *situation )
       lua_pushstring( L, situation );
    else
       lua_pushnil( L );
-   if (lua_pcall(L, 1, 0, errf)) { /* error has occured */
+   if (lua_pcall(L, 1, 0, errf)) { /* error has occurred */
       WARN("Error while choosing music: %s", lua_tostring(L,-1));
       lua_pop(L,1);
    }
@@ -529,7 +529,7 @@ void music_setPos( double sec )
 
 
 /*
- * music lua stuff
+ * music Lua stuff
  */
 /**
  * @brief Initialize the music Lua control system.
@@ -552,7 +552,7 @@ static int music_luaInit (void)
    nlua_loadStandard(music_lua,1);
    nlua_loadMusic(music_lua,0); /* write it */
 
-   /* load the actual lua music code */
+   /* load the actual Lua music code */
    buf = ndata_read( MUSIC_LUA_PATH, &bufsize );
    if (luaL_dobuffer(music_lua, buf, bufsize, MUSIC_LUA_PATH) != 0) {
       ERR("Error loading music file: %s\n"

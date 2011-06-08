@@ -1297,7 +1297,7 @@ void pilot_update( Pilot* pilot, const double dt )
       /* pilot death sound */
       if (!pilot_isFlag(pilot,PILOT_DEATH_SOUND) && (pilot->ptimer < 0.050)) {
 
-         /* Play random explsion sound. */
+         /* Play random explosion sound. */
          snprintf(buf, sizeof(buf), "explosion%d", RNG(0,2));
          sound_playPos( sound_get(buf), pilot->solid->pos.x, pilot->solid->pos.y,
                pilot->solid->vel.x, pilot->solid->vel.y );

@@ -47,7 +47,7 @@ typedef enum tech_item_type_e {
 typedef struct tech_item_s {
    tech_item_type_t type;  /**< Type of data. */
    union {
-      void *ptr;           /**< Pointer when needing to do indiferent voodoo. */
+      void *ptr;           /**< Pointer when needing to do indifferent voodoo. */
       Outfit *outfit;      /**< Outfit pointer. */
       Ship *ship;          /**< Ship pointer. */
       Commodity *comm;     /**< Commodity pointer. */
@@ -157,7 +157,7 @@ int tech_load (void)
       if (!xml_isNode(node, XML_TECH_TAG))
          continue;
 
-      /* Must avood warning by checking explicit NULL. */
+      /* Must avoid warning by checking explicit NULL. */
       xmlr_attr( node, "name", buf );
       if (buf == NULL)
          continue;
@@ -476,7 +476,7 @@ int tech_addItem( const char *name, const char *value )
    /* Comfort. */
    tech  = &tech_groups[id];
 
-   /* Try to add the techu. */
+   /* Try to add the tech. */
    ret = tech_addItemGroup( tech, value );
    if (ret)
       ret = tech_addItemOutfit( tech, value );
@@ -535,7 +535,7 @@ static int tech_getID( const char *name )
    int i, s;
    tech_group_t *tech;
 
-   /* NULL cas. */
+   /* NULL case. */
    if (tech_groups == NULL)
       return -1;
 
@@ -673,7 +673,7 @@ static void** tech_addGroupItem( void **items, tech_item_type_t type, tech_group
 
 
 /**
- * @brief Gets all of the outfits assosciated to a tech group.
+ * @brief Gets all of the outfits associated to a tech group.
  *
  * @note The returned list must be freed (but not the pointers).
  *
@@ -727,7 +727,7 @@ Outfit** tech_getOutfitArray( tech_group_t **tech, int num, int *n )
 
 
 /**
- * @brief Gets all of the ships assosciated to a tech group.
+ * @brief Gets all of the ships associated to a tech group.
  *
  * @note The returned array must be freed (but not the pointers).
  *
@@ -804,7 +804,7 @@ Commodity** tech_getCommodityArray( tech_group_t **tech, int num, int *n )
 
 
 /**
- * @brief Gets all of the ships assosciated to a tech group.
+ * @brief Gets all of the ships associated to a tech group.
  *
  * @note The returned array must be freed (but not the pointers).
  *

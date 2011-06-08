@@ -322,12 +322,12 @@ static void solid_update_euler (Solid *obj, const double dt)
  *
  * Main advantage comes thanks to the fact that Naev is on a 2d plane.
  *  Therefore RK chops it up in chunks and actually creates a tiny curve
- *  instead of aproximating the curve for a tiny straight line.
+ *  instead of approximating the curve for a tiny straight line.
  */
 #define RK4_MIN_H 0.01 /**< Minimal pass we want. */
 static void solid_update_rk4 (Solid *obj, const double dt)
 {
-   int i, N; /* for iteration, and pass calcualtion */
+   int i, N; /* for iteration, and pass calculation */
    double h, px,py, vx,vy; /* pass, and position/velocity values */
    double ix,iy, tx,ty, ax,ay, th; /* initial and temporary cartesian vector values */
    double vmod, vang;

@@ -81,7 +81,7 @@ void gui_renderPlayer( double res, int overlay );
 
 
 /*
- * Targetting.
+ * Targeting.
  */
 void gui_targetPlanetGFX( glTexture *gfx );
 void gui_targetPilotGFX( glTexture *gfx );

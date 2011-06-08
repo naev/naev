@@ -109,12 +109,12 @@ typedef struct Ship_ {
    double shield_regen; /**< Maximum shield regeneration in MJ/s. */
    double energy; /**< Maximum base energy in MJ. */
    double energy_regen; /**< Maximum energy regeneration in MJ/s. */
-   double dmg_absorb; /**< Damage absorption in per one [0:1] with 1 being 100% absoprtion. */
+   double dmg_absorb; /**< Damage absorption in per one [0:1] with 1 being 100% absorption. */
 
    /* graphics */
    glTexture *gfx_space; /**< Space sprite sheet. */
    glTexture *gfx_engine; /**< Space engine glow sprite sheet. */
-   glTexture *gfx_target; /**< Targetting window graphic. */
+   glTexture *gfx_target; /**< Targeting window graphic. */
    glTexture *gfx_store; /**< Store graphic. */
    char* gfx_comm; /**< Name of graphic for communication. */
 
@@ -127,7 +127,7 @@ typedef struct Ship_ {
    /* outfits */
    int outfit_nstructure; /**< Number of structure outfit slots. */
    ShipOutfitSlot *outfit_structure; /**< Outfit structure slots. */
-   int outfit_nutility; /**< Number of utility ooutfit slots. */
+   int outfit_nutility; /**< Number of utility outfit slots. */
    ShipOutfitSlot *outfit_utility; /**< Outfit utility slots. */
    int outfit_nweapon; /**< Number of weapon outfit slots. */
    ShipOutfitSlot *outfit_weapon; /**< Outfit weapons slots. */

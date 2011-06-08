@@ -49,7 +49,7 @@ static void outfits_rmouse( unsigned int wid, char* widget_name );
 static void outfits_getSize( unsigned int wid, int *w, int *h,
       int *iw, int *ih, int *bw, int *bh )
 {
-   /* Get window dimen,sions. */
+   /* Get window dimensions. */
    window_dimWindow( wid, w, h );
 
    /* Calculate image array dimensions. */

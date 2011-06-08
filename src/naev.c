@@ -567,7 +567,7 @@ void unload_all (void)
    pilots_free(); /* frees the pilots, they were locked up :( */
    cond_exit(); /* destroy conditional subsystem. */
    land_exit(); /* Destroys landing vbo and friends. */
-   npc_clear(); /* In case exitting while landed. */
+   npc_clear(); /* In case exiting while landed. */
    background_free(); /* Destroy backgrounds. */
    load_free(); /* Clean up loading game stuff stuff. */
    economy_destroy(); /* must be called before space_exit */
@@ -789,7 +789,7 @@ void update_routine( double dt, int enter_sys )
  * Blitting order (layers):
  *   - BG
  *     - stars and planets
- *     - background player stuff (planet targetting)
+ *     - background player stuff (planet targeting)
  *     - background particles
  *     - back layer weapons
  *   - N

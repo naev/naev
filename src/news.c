@@ -356,7 +356,7 @@ const news_t *news_generate( int *ngen, int n )
    /* Run the function. */
    lua_getglobal(L, "news"); /* f */
    lua_pushnumber(L, n); /* f, n */
-   if (lua_pcall(L, 1, 2, errf)) { /* error has occured */
+   if (lua_pcall(L, 1, 2, errf)) { /* error has occurred */
       WARN("News: '%s' : %s", "news", lua_tostring(L,-1));
 #if DEBUGGING
       lua_pop(L,2);

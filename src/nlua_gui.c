@@ -267,7 +267,7 @@ static int guiL_radarRender( lua_State *L )
 /**
  * @brief Sets the Lua planet target GFX.
  *
- *    @luaparam tex Texture to set for the planet targetting.
+ *    @luaparam tex Texture to set for the planet targeting.
  * @luafunc targetPlanetGFX( tex )
  */
 static int guiL_targetPlanetGFX( lua_State *L )
@@ -282,7 +282,7 @@ static int guiL_targetPlanetGFX( lua_State *L )
 /**
  * @brief Sets the Lua planet target GFX.
  *
- *    @luaparam tex Texture to set for the planet targetting.
+ *    @luaparam tex Texture to set for the planet targeting.
  * @luafunc targetPlanetGFX( tex )
  */
 static int guiL_targetPilotGFX( lua_State *L )

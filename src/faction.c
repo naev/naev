@@ -287,7 +287,7 @@ int* faction_getAllies( int f, int *n )
 
 
 /**
- * @brief Gets the state assosciated to the faction scheduler.
+ * @brief Gets the state associated to the faction scheduler.
  */
 lua_State *faction_getState( int f )
 {
@@ -448,13 +448,13 @@ glColour* faction_getColour( int f )
 
 
 /**
- * @brief Gets the faction character assosciated to it's standing with the player.
+ * @brief Gets the faction character associated to it's standing with the player.
  *
  * Use this to do something like "\e%c", faction_getColourChar( some_faction ) in the
  *  font print routines.
  *
  *    @param f Faction to get the colour of based on player's standing.
- *    @return The character assosciated to the faction.
+ *    @return The character associated to the faction.
  */
 char faction_getColourChar( int f )
 {
@@ -516,7 +516,7 @@ int areEnemies( int a, int b)
 
    if (a==b) return 0; /* luckily our factions aren't masochistic */
 
-   /* player handled seperately */
+   /* player handled separately */
    if (a==FACTION_PLAYER) {
       if (faction_isFaction(b)) {
          if (faction_stack[b].player < PLAYER_ENEMY)

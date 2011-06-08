@@ -65,7 +65,7 @@ const char *keybind_info[][3] = {
    { "right", "Turn Right", "Makes your ship turn right." },
    { "reverse", "Reverse", "Makes your ship face the direction you're moving from. Useful for braking." },
    { "afterburn", "Afterburner", "Engages the ship's afterburner, if one is installed." },
-   /* Targetting. */
+   /* Targeting. */
    { "target_next", "Target Next", "Cycles through ship targets." },
    { "target_prev", "Target Previous", "Cycles backwards through ship targets." },
    {"target_nearest", "Target Nearest", "Targets the nearest non-disabled ship." },
@@ -99,7 +99,7 @@ const char *keybind_info[][3] = {
    /* Space navigation. */
    { "autonav", "Autonavigation On", "Initializes the autonavigation system." },
    { "target_planet", "Target Planet", "Cycles through planet targets." },
-   { "land", "Land", "Attempts to land on your targetted planet or targets the nearest landable planet. Requests for landing if you don't have permission yet." },
+   { "land", "Land", "Attempts to land on your targeted planet or targets the nearest landable planet. Requests for landing if you don't have permission yet." },
    { "thyperspace", "Target Jumpgate", "Cycles through jump points." },
    { "starmap", "Star Map", "Opens the star map." },
    { "jump", "Initiate Jump", "Attempts to jump via a jump point." },
@@ -197,7 +197,7 @@ void input_setDefault (void)
    input_setKeybind( "left", KEYBIND_KEYBOARD, SDLK_LEFT, NMOD_ALL );
    input_setKeybind( "right", KEYBIND_KEYBOARD, SDLK_RIGHT, NMOD_ALL );
    input_setKeybind( "reverse", KEYBIND_KEYBOARD, SDLK_DOWN, NMOD_ALL );
-   /* Targetting. */
+   /* Targeting. */
    input_setKeybind( "target_next", KEYBIND_KEYBOARD, SDLK_t, NMOD_NONE );
    input_setKeybind( "target_prev", KEYBIND_KEYBOARD, SDLK_t, NMOD_CTRL );
    input_setKeybind( "target_nearest", KEYBIND_KEYBOARD, SDLK_n, NMOD_NONE );
@@ -505,7 +505,7 @@ void input_setKeybind( const char *keybind, KeybindType type, int key, SDLMod mo
  *    @brief keybind Name of the keybinding to get.
  *    @param[out] type Stores the type of the keybinding.
  *    @param[out] mod Stores the modifiers used with the keybinding.
- *    @return The key assosciated with the keybinding.
+ *    @return The key associated with the keybinding.
  */
 SDLKey input_getKeybind( const char *keybind, KeybindType *type, SDLMod *mod )
 {
@@ -805,7 +805,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
       }
       else if (value==KEY_RELEASE)
          player_rmFlag(PLAYER_PRIMARY);
-   /* targetting */
+   /* targeting */
    } else if (INGAME() && NODEAD() && KEY("target_next")) {
       if (value==KEY_PRESS) player_targetNext(0);
    } else if (INGAME() && NODEAD() && KEY("target_prev")) {
@@ -999,7 +999,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    hparam[0].u.str   = input_keybinds[keynum].name;
    hparam[1].type    = HOOK_PARAM_BOOL;
    hparam[1].u.b     = (value > 0.);
-   hparam[2].type    = HOOK_PARAM_SENTINAL;
+   hparam[2].type    = HOOK_PARAM_SENTINEL;
    hooks_runParam( "input", hparam );
 }
 #undef KEY
@@ -1135,7 +1135,7 @@ static void input_clickevent( SDL_Event* event )
    /* Generate hook. */
    hparam[0].type    = HOOK_PARAM_NUMBER;
    hparam[0].u.num   = event->button.button;
-   hparam[1].type    = HOOK_PARAM_SENTINAL;
+   hparam[1].type    = HOOK_PARAM_SENTINEL;
    hooks_runParam( "mouse", hparam );
 
    /* Handle zoom. */
@@ -1154,7 +1154,7 @@ static void input_clickevent( SDL_Event* event )
       return;
    }
 
-   /* Mouse targetting is left only. */
+   /* Mouse targeting is left only. */
    if (event->button.button != SDL_BUTTON_LEFT)
       return;
 
@@ -1257,7 +1257,7 @@ static void input_clickevent( SDL_Event* event )
 /**
  * @brief Handles global input.
  *
- * Basically seperates the event types
+ * Basically separates the event types
  *
  *    @param event Incoming SDL_Event.
  */
@@ -1271,7 +1271,7 @@ void input_handle( SDL_Event* event )
       SDL_ShowCursor( SDL_ENABLE );
    }
 
-   if (toolkit_isOpen()) /* toolkit handled seperately completely */
+   if (toolkit_isOpen()) /* toolkit handled completely separately */
       if (toolkit_input(event))
          return; /* we don't process it if toolkit grabs it */
 

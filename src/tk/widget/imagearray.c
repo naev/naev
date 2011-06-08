@@ -345,7 +345,7 @@ static int iar_key( Widget* iar, SDLKey key, SDLMod mod )
          return 0;
    }
 
-   /* Check boundries. */
+   /* Check boundaries. */
    iar->dat.iar.selected = CLAMP( 0, iar->dat.iar.nelements-1, iar->dat.iar.selected);
 
    /* Run function pointer if needed. */
@@ -452,7 +452,7 @@ static int iar_mmove( Widget* iar, int x, int y, int rx, int ry )
       hmax = h * (yelem - (int)(iar->h / h));
       iar->dat.iar.pos = (y - 15.) * hmax / (iar->h - 30.);
 
-      /* Does boundry checks. */
+      /* Does boundary checks. */
       iar_scroll( iar, 0 );
 
       return 1;
@@ -545,7 +545,7 @@ static void iar_scroll( Widget* iar, int direction )
    /* move */
    iar->dat.iar.pos -= direction * h;
 
-   /* Boundry check. */
+   /* Boundary check. */
    iar->dat.iar.pos = CLAMP( 0., hmax, iar->dat.iar.pos );
    if (iar->dat.iar.fptr)
       iar->dat.iar.fptr( iar->wdw, iar->name );

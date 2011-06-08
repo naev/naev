@@ -585,7 +585,7 @@ void sound_mix_pauseGroup( int group )
 
 
 /**
- * @brief Pauses all the sounds in a gorup.
+ * @brief Pauses all the sounds in a group.
  */
 void sound_mix_resumeGroup( int group )
 {
@@ -616,7 +616,7 @@ void sound_mix_speedGroup( int group, int enable )
 
 
 /**
- * @brief Sets the volume of a gorup.
+ * @brief Sets the volume of a group.
  */
 void sound_mix_volumeGroup( int group, double volume )
 {

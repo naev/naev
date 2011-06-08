@@ -80,7 +80,7 @@ static int player_nlicenses   = 0; /**< Number of licenses player has. */
 static int player_engine_group = -1; /**< Player engine sound group. */
 static int player_hyper_group = -1; /**< Player hyperspace sound group. */
 static int player_gui_group   = -1; /**< Player GUI sound group. */
-int snd_target                = -1; /**< Sound when targetting. */
+int snd_target                = -1; /**< Sound when targeting. */
 int snd_jump                  = -1; /**< Sound when can jump. */
 int snd_nav                   = -1; /**< Sound when changing nav computer. */
 int snd_hail                  = -1; /**< Sound when being hailed. */
@@ -117,7 +117,7 @@ static int player_nstack            = 0; /**< Number of ships player has. */
  * @brief Wrapper for outfits.
  */
 typedef struct PlayerOutfit_s {
-   const Outfit *o; /**< Actual assosciated outfit. */
+   const Outfit *o; /**< Actual associated outfit. */
    int q; /**< Amount of outfit owned. */
 } PlayerOutfit_t;
 static PlayerOutfit_t *player_outfits  = NULL; /**< Outfits player has. */
@@ -1587,7 +1587,7 @@ int player_jump (void)
       return 0;
    }
 
-   /* TRy to hyperspace. */
+   /* Try to hyperspace. */
    i = space_hyperspace(player.p);
    if (i == -1)
       player_message("\erYou are too far from a jump point to initiate hyperspace.");

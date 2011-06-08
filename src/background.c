@@ -44,7 +44,7 @@ typedef struct background_image_s {
    glColour col; /**< Colour to use. */
 } background_image_t;
 static background_image_t *bkg_image_arr_bk = NULL; /**< Background image array to display (behind stars). */
-static background_image_t *bkg_image_arr_ft = NULL; /**< Background image array to display (infront of stars). */
+static background_image_t *bkg_image_arr_ft = NULL; /**< Background image array to display (in front of stars). */
 
 
 static unsigned int bkg_idgen = 0; /**< ID generator for backgrounds. */
@@ -223,7 +223,7 @@ void background_renderStars( const double dt )
             star_vertex[4*i+0] = star_vertex[4*i+0] + star_x*b;
             star_vertex[4*i+1] = star_vertex[4*i+1] + star_y*b;
 
-            /* check boundries */
+            /* check boundaries */
             if (star_vertex[4*i+0] > hw)
                star_vertex[4*i+0] -= w;
             else if (star_vertex[4*i+0] < -hw)
@@ -499,7 +499,7 @@ int background_load( const char *name )
    ret = 0;
    lua_getglobal(L,"background");
    ret = lua_pcall(L, 0, 0, errf);
-   if (ret != 0) { /* error has occured */
+   if (ret != 0) { /* error has occurred */
       err = (lua_isstring(L,-1)) ? lua_tostring(L,-1) : NULL;
       WARN("Background -> 'background' : %s",
             (err) ? err : "unknown error");

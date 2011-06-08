@@ -33,7 +33,7 @@
  */
 typedef struct glTexList_ {
    struct glTexList_ *next; /**< Next in linked list */
-   glTexture *tex; /**< assosciated texture */
+   glTexture *tex; /**< associated texture */
    int used; /**< counts how many times texture is being used */
 } glTexList;
 static glTexList* texture_list = NULL; /**< Texture list. */

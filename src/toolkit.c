@@ -870,7 +870,7 @@ void toolkit_drawOutlineThick( int x, int y, int w, int h, int b,
    /* Left-up. */
    tri[0][0]     = x;         /* Inner */
    tri[0][1]     = y;
-   tri[0][2]     = x-thick;   /* Outter */
+   tri[0][2]     = x-thick;   /* Outer */
    tri[0][3]     = y-thick;
    colours[0]    = *lc;
    colours[1]    = *lc;
@@ -878,7 +878,7 @@ void toolkit_drawOutlineThick( int x, int y, int w, int h, int b,
    /* Left-down. */
    tri[1][0]     = x;         /* Inner. */
    tri[1][1]     = y + h;
-   tri[1][2]     = x-thick;   /* Outter. */
+   tri[1][2]     = x-thick;   /* Outer. */
    tri[1][3]     = y + h+thick;
    colours[2]    = *c;
    colours[3]    = *c;
@@ -886,7 +886,7 @@ void toolkit_drawOutlineThick( int x, int y, int w, int h, int b,
    /* Right-down. */
    tri[2][0]     = x + w;       /* Inner. */
    tri[2][1]     = y + h;
-   tri[2][2]     = x + w+thick; /* Outter. */
+   tri[2][2]     = x + w+thick; /* Outer. */
    tri[2][3]     = y + h+thick;
    colours[4]    = *c;
    colours[5]    = *c;
@@ -894,7 +894,7 @@ void toolkit_drawOutlineThick( int x, int y, int w, int h, int b,
    /* Right-up. */
    tri[3][0]     = x + w;       /* Inner. */
    tri[3][1]     = y;
-   tri[3][2]     = x + w+thick; /* Outter. */
+   tri[3][2]     = x + w+thick; /* Outer. */
    tri[3][3]     = y-thick;
    colours[6]    = *lc;
    colours[7]    = *lc;
@@ -902,7 +902,7 @@ void toolkit_drawOutlineThick( int x, int y, int w, int h, int b,
    /* Left-up. */
    tri[4][0]     = x;         /* Inner */
    tri[4][1]     = y;
-   tri[4][2]     = x-thick;   /* Outter */
+   tri[4][2]     = x-thick;   /* Outer */
    tri[4][3]     = y-thick;
    colours[8]    = *lc;
    colours[9]    = *lc;
@@ -1334,7 +1334,7 @@ static void window_renderBorder( Window* w )
 
 
    /*
-    * outter outline
+    * outer outline
     */
    glShadeModel(GL_FLAT);
    /* Colour. */
@@ -2275,7 +2275,7 @@ int toolkit_init (void)
    size = (sizeof(GLshort)*2 + sizeof(GLfloat)*4) * 31;
    toolkit_vbo = gl_vboCreateStream( size, NULL );
 
-   /* DIsable the cursor. */
+   /* Disable the cursor. */
    input_mouseHide();
 
    return 0;

@@ -55,7 +55,7 @@ typedef struct Player_s {
    Pilot *p; /**< Player's pilot. */
    char *name; /**< Player's name. */
    char *gui; /**< Player's GUI. */
-   int guiOverride; /**< GUI is overriden (not default). */
+   int guiOverride; /**< GUI is overridden (not default). */
 
    /* Player data. */
    PlayerFlags flags; /**< Player's flags. */
@@ -79,7 +79,7 @@ extern Player_t player; /**< Local player. */
 /*
  * Common player sounds.
  */
-extern int snd_target; /**< Sound when targetting. */
+extern int snd_target; /**< Sound when targeting. */
 extern int snd_jump; /**< Sound when can jump. */
 extern int snd_nav; /**< Sound when changing nav computer. */
 extern int snd_hail; /**< Hail sound. */
@@ -202,7 +202,7 @@ void player_brokeHyperspace (void);
 void player_hyperspacePreempt( int );
 
 /*
- * Targetting.
+ * Targeting.
  */
 /* Clearing. */
 void player_targetClear (void);

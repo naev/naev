@@ -79,7 +79,7 @@ static unsigned int hook_generic( lua_State *L, const char* stack, double ms, in
 
 
 /**
- * @brief Loads the hook lua library.
+ * @brief Loads the hook Lua library.
  *    @param L Lua state.
  *    @return 0 on success.
  */
@@ -176,7 +176,7 @@ static int hookL_setarg( lua_State *L, unsigned int hook, int ind )
 
 
 /**
- * @brief Unsets a lua argument.
+ * @brief Unsets a Lua argument.
  */
 void hookL_unsetarg( lua_State *L, unsigned int hook )
 {

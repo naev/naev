@@ -5,7 +5,7 @@
 /**
  * @file nlua_evt.c
  *
- * @brief Handles the event lua bindings.
+ * @brief Handles the event Lua bindings.
  */
 
 
@@ -60,14 +60,14 @@ static const luaL_reg evt_methods[] = {
    { "finish", evt_finish },
    { "claim", evt_claim },
    {0,0}
-}; /**< Mission lua methods. */
+}; /**< Mission Lua methods. */
 
 
 /*
  * individual library loading
  */
 /**
- * @brief Loads the event lua library.
+ * @brief Loads the event Lua library.
  *    @param L Lua state.
  */
 int nlua_loadEvt( lua_State *L )
@@ -149,7 +149,7 @@ int event_runLuaFunc( Event_t *ev, const char *func, int nargs )
 #endif /* DEBUGGING */
 
    ret = lua_pcall(L, nargs, 0, errf);
-   if (ret != 0) { /* error has occured */
+   if (ret != 0) { /* error has occurred */
       err = (lua_isstring(L,-1)) ? lua_tostring(L,-1) : NULL;
       if ((err==NULL) || (strcmp(err,NLUA_DONE)!=0)) {
          WARN("Event '%s' -> '%s': %s",
@@ -185,7 +185,7 @@ int event_runLuaFunc( Event_t *ev, const char *func, int nargs )
  *    @luaparam func Name of the function to run when approaching.
  *    @luaparam name Name of the NPC
  *    @luaparam portrait Portrait to use for the NPC (from gfx/portraits/).
- *    @luaparam desc Description assosciated to the NPC.
+ *    @luaparam desc Description associated to the NPC.
  *    @luaparam priority Optional priority argument (defaults to 5, highest is 0, lowest is 10).
  *    @luareturn The ID of the NPC to pass to npcRm.
  * @luafunc npcAdd( func, name, portrait, desc, priority )

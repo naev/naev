@@ -99,7 +99,7 @@ typedef struct alMusic_ {
    OggVorbis_File stream; /**< Vorbis file stream. */
    vorbis_info* info; /**< Information of the stream. */
    ALenum format; /**< Stream format. */
-   /* Replygain information. */
+   /* Replaygain information. */
    ALfloat rg_scale_factor; /**< Scale factor. */
    ALfloat rg_max_scale; /**< Maximum scale factor before clipping. */
 } alMusic;
@@ -110,7 +110,7 @@ typedef struct alMusic_ {
  */
 static alMusic music_vorbis; /**< Current music. */
 static ALuint music_buffer[2]; /**< Front and back buffer. */
-ALuint music_source                    = 0; /**< Source assosciated to music. */
+ALuint music_source                    = 0; /**< Source associated to music. */
 
 
 /*
@@ -568,7 +568,7 @@ static int stream_loadBuffer( ALuint buffer )
 
    ret  = 0;
    size = 0;
-   while (size < music_bufSize) { /* fille up the entire data buffer */
+   while (size < music_bufSize) { /* file up the entire data buffer */
 
 #ifdef HAVE_OV_READ_FILTER
       result = ov_read_filter(
@@ -735,7 +735,7 @@ int music_al_load( const char* name, SDL_RWops *rw )
    }
    music_vorbis.info = ov_info( &music_vorbis.stream, -1 );
 
-   /* Get replaygain information. */
+   /* Get Replaygain information. */
    vc             = ov_comment( &music_vorbis.stream, -1 );
    track_gain_db  = 0.;
    track_peak     = 1.;

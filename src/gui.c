@@ -100,7 +100,7 @@ extern int map_npath; /**< @todo remove. */
 /**
  * GUI Lua stuff.
  */
-static lua_State *gui_L; /**< Current GUI lua State. */
+static lua_State *gui_L; /**< Current GUI Lua State. */
 static int gui_L_mclick = 0; /**< Use mouse click callback. */
 static int gui_L_mmove = 0; /**< Use mouse movement callback. */
 
@@ -156,7 +156,7 @@ typedef struct Mesg_ {
    double t; /**< Time to live for the message. */
    glFontRestore restore; /**< Hack for font restoration. */
 } Mesg;
-static Mesg* mesg_stack = NULL; /**< Stack of mesages, will be of mesg_max size. */
+static Mesg* mesg_stack = NULL; /**< Stack of messages, will be of mesg_max size. */
 static int gui_mesg_w   = 0; /**< Width of messages. */
 static int gui_mesg_x   = 0; /**< X positioning of messages. */
 static int gui_mesg_y   = 0; /**< Y positioning of messages. */
@@ -167,10 +167,10 @@ static double gui_br = 0.; /**< Border bottom-right. */
 static double gui_tl = 0.; /**< Border top-left. */
 static double gui_bl = 0.; /**< Border bottom-left. */
 
-/* Intrinsec graphical stuff. */
+/* Intrinsic graphical stuff. */
 static glTexture *gui_ico_hail      = NULL; /**< Hailing icon. */
-static glTexture *gui_target_planet = NULL; /**< Planet targetting icon. */
-static glTexture *gui_target_pilot  = NULL; /**< Pilot targetting icon. */
+static glTexture *gui_target_planet = NULL; /**< Planet targeting icon. */
+static glTexture *gui_target_pilot  = NULL; /**< Pilot targeting icon. */
 
 
 /*
@@ -829,7 +829,7 @@ int gui_onScreenAsset( double *rx, double *ry, JumpPoint *jp, Planet *pnt )
 
 
 /**
- * @brief Renders the gui targetting reticles.
+ * @brief Renders the gui targeting reticles.
  *
  * @param dt Current deltatick.
  */
@@ -927,7 +927,7 @@ void gui_render( double dt )
       gl_renderRect( 0., 0., SCREEN_W, SCREEN_H, &col );
    }
 
-   /* Reset vieport. */
+   /* Reset viewport. */
    gl_defViewport();
 
    /* Render messages. */
@@ -1008,11 +1008,11 @@ void gui_radarRender( double x, double y )
       else
          gui_renderPilot( pilot_stack[i], radar->shape, radar->w, radar->h, radar->res, 0 );
    }
-   /* render the targetted pilot */
+   /* render the targeted pilot */
    if (j!=0)
       gui_renderPilot( pilot_stack[j], radar->shape, radar->w, radar->h, radar->res, 0 );
 
-   /* Intereference. */
+   /* Interference. */
    gui_renderInterference();
 
    /* Render the player cross. */
@@ -1264,7 +1264,7 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
          ((shape==RADAR_CIRCLE) &&
             ((x*x+y*y) > (int)(w*w))) ) {
 
-      /* Draw little targetted symbol. */
+      /* Draw little targeted symbol. */
       if (p->id == player.p->target && !overlay)
          gui_renderRadarOutOfRange( shape, w, h, x, y, &cRadar_tPilot );
       return;
@@ -1277,7 +1277,7 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
    else
       return;
 
-   /* Draw selection if targetted. */
+   /* Draw selection if targeted. */
    if (p->id == player.p->target) {
       if (blink_pilot < RADAR_BLINK_PILOT/2.) {
          /* Set up colours. */
@@ -1921,7 +1921,7 @@ static int gui_runFunc( const char* func, int nargs, int nret )
 
    /* Run the function. */
    ret = lua_pcall( L, nargs, nret, errf );
-   if (ret != 0) { /* error has occured */
+   if (ret != 0) { /* error has occurred */
       err = (lua_isstring(L,-1)) ? lua_tostring(L,-1) : NULL;
       WARN("GUI Lua -> '%s': %s",
             func, (err) ? err : "unknown error");

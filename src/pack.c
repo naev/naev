@@ -169,7 +169,7 @@ static int packrw_close( SDL_RWops *rw );
  * @brief Opens a Packfile as a cache.
  *
  *    @param packfile Name of the packfile to cache.
- *    @return NULL if an error occured or the Packcache.
+ *    @return NULL if an error occurred or the Packcache.
  */
 Packcache_t* pack_openCache( const char* packfile )
 {

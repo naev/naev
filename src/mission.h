@@ -118,7 +118,7 @@ typedef struct Mission_ {
    /* Claims. */
    SysClaim_t *claims; /**< System claims. */
 
-   lua_State *L; /**< The state of the running lua code. */
+   lua_State *L; /**< The state of the running Lua code. */
 } Mission;
 
 
