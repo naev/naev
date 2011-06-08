@@ -83,7 +83,7 @@ static double blink_planet    = 0.; /**< Timer on planet blinking on radar. */
 static gl_vbo *gui_vbo = NULL; /**< GUI VBO. */
 static GLsizei gui_vboColourOffset = 0; /**< Offset of colour pixels. */
 
-static int gui_getMessage     = 1; /**< Whether or not the palyer should receive messages. */
+static int gui_getMessage     = 1; /**< Whether or not the player should receive messages. */
 
 /*
  * pilot stuff for GUI
