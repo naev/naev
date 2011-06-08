@@ -43,7 +43,7 @@
 #include <stdint.h>
 
 #ifdef DEBUGGING
-#define SENTINEL ((int)0xbabecafe) /**< Badass sentinal. */
+#define SENTINEL ((int)0xbabecafe) /**< Badass sentinel. */
 #endif
 
 /**
@@ -51,7 +51,7 @@
  */
 typedef struct {
 #ifdef DEBUGGING
-   int _sentinel;         /**< Sentinal for when debugging. */
+   int _sentinel;         /**< Sentinel for when debugging. */
 #endif
    int _reserved;         /**< Number of elements reserved */
    int _size;             /**< Number of elements in the array */

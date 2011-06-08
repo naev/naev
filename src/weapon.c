@@ -93,7 +93,7 @@ static Weapon** wbackLayer = NULL; /**< behind pilots */
 static int nwbackLayer = 0; /**< number of elements */
 static int mwbacklayer = 0; /**< alloced memory size */
 /* behind player layer */
-static Weapon** wfrontLayer = NULL; /**< infront of pilots, behind player */
+static Weapon** wfrontLayer = NULL; /**< in front of pilots, behind player */
 static int nwfrontLayer = 0; /**< number of elements */
 static int mwfrontLayer = 0; /**< alloced memory size */
 
@@ -969,7 +969,7 @@ static void weapon_hitAI( Pilot *p, Pilot *shooter, double dmg )
       /* Increment damage done to by player. */
       p->player_damage += dmg / (p->shield_max + p->armour_max);
 
-      /* If damage is over threshold, inform pilot or if is targetted. */
+      /* If damage is over threshold, inform pilot or if is targeted. */
       if ((p->player_damage > PILOT_HOSTILE_THRESHOLD) ||
             (shooter->target==p->id)) {
          /* Inform attacked. */
@@ -1213,7 +1213,7 @@ static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
       rdir = dir;
    }
 
-   /* Calculate accuarcy. */
+   /* Calculate accuracy. */
    acc =  HEAT_WORST_ACCURACY * pilot_heatAccuracyMod( T );
 
    /* Stat modifiers. */
@@ -1643,7 +1643,7 @@ static void weapon_destroy( Weapon* w, WeaponLayer layer )
          return;
    }
 
-   for (i=0; (wlayer[i] != w) && (i < *nlayer); i++); /* get to the curent position */
+   for (i=0; (wlayer[i] != w) && (i < *nlayer); i++); /* get to the current position */
    if (i >= *nlayer) {
       WARN("Trying to destroy weapon not found in stack!");
       return;

@@ -76,7 +76,7 @@ static void rct_render( Widget* rct, double bx, double by )
       /* inner outline */
       toolkit_drawOutline( x, y, rct->w, rct->h, 0.,
             toolkit_colLight, toolkit_col );
-      /* outter outline */
+      /* outer outline */
       toolkit_drawOutline( x, y, rct->w, rct->h, 1.,
             toolkit_colDark, NULL );
    }

@@ -71,7 +71,7 @@
 #include <math.h>
 #include <ctype.h> /* isdigit */
 
-/* yay more lua */
+/* yay more Lua */
 #include <lauxlib.h>
 #include <lualib.h>
 
@@ -382,7 +382,7 @@ static char aiL_distressmsg[PATH_MAX]; /**< Buffer to store distress message. */
 /*
  * ai status, used so that create functions can't be used elsewhere
  */
-#define AI_STATUS_NORMAL      1 /**< Normal ai function behaviour. */
+#define AI_STATUS_NORMAL      1 /**< Normal AI function behaviour. */
 #define AI_STATUS_CREATE      2 /**< AI is running create function. */
 static int aiL_status = AI_STATUS_NORMAL; /**< Current AI run status. */
 
@@ -487,7 +487,7 @@ static void ai_run( lua_State *L, const char *funcname )
    }
 #endif /* DEBUGGING */
 
-   if (lua_pcall(L, 0, 0, errf)) { /* error has occured */
+   if (lua_pcall(L, 0, 0, errf)) { /* error has occurred */
       WARN("Pilot '%s' ai -> '%s': %s", cur_pilot->name, funcname, lua_tostring(L,-1));
       lua_pop(L,1);
    }
@@ -513,7 +513,7 @@ int ai_pinit( Pilot *p, const char *ai )
    lua_State *L;
    char buf[PATH_MAX], param[PATH_MAX];
 
-   /* Split parameter from ai itself. */
+   /* Split parameter from AI itself. */
    n = 0;
    for (i=0; ai[i] != '\0'; i++) {
       /* Overflow protection. */
@@ -735,7 +735,7 @@ static int ai_loadProfile( const char* filename )
    }
    L = prof->L;
 
-   /* open basic lua stuff */
+   /* open basic Lua stuff */
    nlua_loadBasic(L);
 
    /* constants */
@@ -865,7 +865,7 @@ void ai_think( Pilot* pilot, const double dt )
 
    /* pilot has a currently running task */
    if (t != NULL) {
-      /* Run subtask if availible, otherwise run main task. */
+      /* Run subtask if available, otherwise run main task. */
       if (t->subtask != NULL)
          ai_run(L, t->subtask->name);
       else
@@ -918,7 +918,7 @@ void ai_attacked( Pilot* attacked, const unsigned int attacker )
    hparam.type       = HOOK_PARAM_PILOT;
    hparam.u.lp.pilot = attacker;
 
-   /* Behaves differently if manually overriden. */
+   /* Behaves differently if manually overridden. */
    pilot_runHookParam( attacked, PILOT_HOOK_ATTACKED, &hparam, 1 );
    if (pilot_isFlag( attacked, PILOT_MANUAL_CONTROL ))
       return;
@@ -976,7 +976,7 @@ void ai_refuel( Pilot* refueler, unsigned int target )
 /**
  * @brief Sends a distress signal to a pilot.
  *
- *    @param p Pilot recieving the distress signal.
+ *    @param p Pilot receiving the distress signal.
  *    @param distressed Pilot sending the distress signal.
  */
 void ai_getDistress( Pilot* p, const Pilot* distressed )
@@ -1104,7 +1104,7 @@ static void ai_create( Pilot* pilot, char *param )
    }
 
    /* Run function. */
-   if (lua_pcall(L, nparam, 0, errf)) { /* error has occured */
+   if (lua_pcall(L, nparam, 0, errf)) { /* error has occurred */
       WARN("Pilot '%s' ai -> '%s': %s", cur_pilot->name, "create", lua_tostring(L,-1));
       lua_pop(L,1);
    }
@@ -1231,7 +1231,7 @@ static int ai_tasktarget( lua_State *L, Task *t )
 {
    LuaVector lv;
 
-   /* Pask task type. */
+   /* Pass task type. */
    switch (t->dtype) {
       case TASKDATA_INT:
          lua_pushnumber(L, t->dat.num);
@@ -2125,7 +2125,7 @@ static int aiL_face( lua_State *L )
    if (vel) {
       /* Calculate dot product. */
       d = (vx * dx + vy * dy) / (dx*dx + dy*dy);
-      /* Calculate tangencial velocity. */
+      /* Calculate tangential velocity. */
       vx = vx - d * dx;
       vy = vy - d * dy;
 
@@ -2201,7 +2201,7 @@ static int aiL_aim( lua_State *L )
 
 
    /* Time for shots to reach that distance */
-   /* if the target is not hittable (ie, fleeing faster than our shots can fly), just face the target */
+   /* if the target is not hittable (i.e., fleeing faster than our shots can fly), just face the target */
    if((speed+radial_speed) > 0)
       t = dist / (speed + radial_speed);
    else
@@ -2274,7 +2274,7 @@ static int aiL_iface( lua_State *L )
       vect_cset( &reference_vector, VX(lv->vec) - VX(cur_pilot->solid->pos), VY(lv->vec) - VY(cur_pilot->solid->pos));
    }
 
-   /* Break down the the velocity vectors of both craft into uv coordinates */
+   /* Break down the the velocity vectors of both craft into UV coordinates */
    vect_uv(&drift_radial, &drift_azimuthal, &drift, &reference_vector);
    heading_offset_azimuth = angle_diff(cur_pilot->solid->dir, VANGLE(reference_vector));
 
@@ -2435,7 +2435,7 @@ static int aiL_idir( lua_State *L )
       vect_cset( &reference_vector, VX(lv->vec) - VX(cur_pilot->solid->pos), VY(lv->vec) - VY(cur_pilot->solid->pos));
    }
 
-   /* Break down the the velocity vectors of both craft into uv coordinates */
+   /* Break down the the velocity vectors of both craft into UV coordinates */
    vect_uv(&drift_radial, &drift_azimuthal, &drift, &reference_vector);
    heading_offset_azimuth = angle_diff(cur_pilot->solid->dir, VANGLE(reference_vector));
 
@@ -3141,7 +3141,7 @@ static int aiL_canboard( lua_State *L )
 }
 
 /**
- * @brief lua wrapper: Gets the relative size(shipmass) between the current pilot and the specified target
+ * @brief Lua wrapper: Gets the relative size(shipmass) between the current pilot and the specified target
  *
  * @param pilot_ID the ID of the pilot whose mass we will compare
  *    @luareturn A number from 0 to 1 mapping the relative masses

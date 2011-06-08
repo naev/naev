@@ -22,7 +22,7 @@ typedef struct glColour_ {
 } __attribute__((packed)) glColour;
 
 /*
- * default colors
+ * default colours
  */
 /* greyscale */
 extern glColour cWhite;

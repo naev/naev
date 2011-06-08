@@ -86,7 +86,7 @@ typedef struct Hook_ {
 
    /* Timer information. */
    int is_timer; /**< Whether or not is actually a timer. */
-   double ms; /**< Miliseconds left. */
+   double ms; /**< Milliseconds left. */
 
    /* Date information. */
    int is_date; /**< Whether or not it is a date hook. */
@@ -257,7 +257,7 @@ static int hook_parseParam( lua_State *L, HookParam *param )
       return 0;
 
    n = 0;
-   while (param[n].type != HOOK_PARAM_SENTINAL) {
+   while (param[n].type != HOOK_PARAM_SENTINEL) {
       switch (param[n].type) {
          case HOOK_PARAM_NIL:
             lua_pushnil( L );
@@ -336,7 +336,7 @@ static int hook_runMisn( Hook *hook, HookParam *param, int claims )
 
    /* Run mission code. */
    hook->ran_once = 1;
-   if (misn_runFunc( misn, hook->u.misn.func, n ) < 0) { /* error has occured */
+   if (misn_runFunc( misn, hook->u.misn.func, n ) < 0) { /* error has occurred */
       WARN("Hook [%s] '%d' -> '%s' failed", hook->stack,
             hook->id, hook->u.misn.func);
       return -1;
@@ -1025,9 +1025,9 @@ int hooks_runParam( const char* stack, HookParam *param )
       WARN("Stack '%s' being run in hook exclusion area!", stack);
       hq = calloc( 1, sizeof(HookQueue_t) );
       hq->stack = strdup(stack);
-      for (i=0; param[i].type != HOOK_PARAM_SENTINAL; i++)
+      for (i=0; param[i].type != HOOK_PARAM_SENTINEL; i++)
          memcpy( &hq->hparam[i], &param[i], sizeof(HookParam) );
-      hq->hparam[i].type = HOOK_PARAM_SENTINAL;
+      hq->hparam[i].type = HOOK_PARAM_SENTINEL;
       hq_add( hq );
       return 0;
    }

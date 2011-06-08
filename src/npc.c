@@ -557,7 +557,7 @@ static int npc_approach_giver( NPC_t *npc )
    /* Get mission. */
    misn = &npc->u.g;
    ret  = mission_accept( misn );
-   if ((ret==0) || (ret==2) || (ret==-1)) { /* successs in accepting the mission */
+   if ((ret==0) || (ret==2) || (ret==-1)) { /* success in accepting the mission */
       if (ret==-1)
          mission_cleanup( misn );
       npc_free( npc );

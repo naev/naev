@@ -197,7 +197,7 @@ static int escort_command( Pilot *parent, int cmd, int param )
 
       n++; /* Amount of escorts left. */
 
-      /* Prepare ai. */
+      /* Prepare AI. */
       ai_setPilot( e );
 
       /* Set up stack. */

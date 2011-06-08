@@ -35,7 +35,7 @@
 #define SHIP_EXT     ".png" /**< Ship graphics extension format. */
 #define SHIP_ENGINE  "_engine" /**< Engine graphic extension. */
 #define SHIP_TARGET  "_target" /**< Target graphic extension. */
-#define SHIP_COMM    "_comm" /**< Communicatio graphic extension. */
+#define SHIP_COMM    "_comm" /**< Communication graphic extension. */
 
 #define VIEW_WIDTH   300 /**< Ship view window width. */
 #define VIEW_HEIGHT  300 /**< Ship view window height. */
@@ -367,7 +367,7 @@ int ship_statsDesc( ShipStats *s, char *buf, int len, int newline, int pilot )
    DESC_ADD(s->ew_hide,"Cloaking");
    /* Military Stuff. */
    DESC_ADD(s->heat_dissipation,"Heat Dissipation");
-   /* Bomber STuff. */
+   /* Bomber Stuff. */
    DESC_ADD(s->launch_rate,"Launch Rate");
    DESC_ADD(s->launch_range,"Launch Range");
    DESC_ADD(s->jam_counter,"Jam Countermeasures");
@@ -453,7 +453,7 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
 #endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
    if (gfx == NULL) {
-      WARN( "Unable to create ship '%s' targetting surface.", temp->name );
+      WARN( "Unable to create ship '%s' targeting surface.", temp->name );
       return -1;
    }
 

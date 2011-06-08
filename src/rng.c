@@ -312,7 +312,7 @@ double NormalInverse( double p )
       errno = ERANGE;
       return HUGE_VAL /* "infinity" */;
    }
-   /* Use different aproximations for different parts */
+   /* Use different approximations for different parts */
    else if (p < LOW) {
       /* Rational approximation for lower region */
       q = sqrt(-2*log(p));

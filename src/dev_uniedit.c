@@ -84,7 +84,7 @@ static void uniedit_btnEditRename( unsigned int wid, char *unused );
 static void uniedit_btnEditRmAsset( unsigned int wid, char *unused );
 static void uniedit_btnEditAddAsset( unsigned int wid, char *unused );
 static void uniedit_btnEditAddAssetAdd( unsigned int wid, char *unused );
-/* System reanming. */
+/* System renaming. */
 static int uniedit_checkName( char *name );
 static void uniedit_renameSys (void);
 /* New system. */
@@ -524,7 +524,7 @@ static void uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
             uniedit_xpos -= event->motion.xrel;
             uniedit_ypos += event->motion.yrel;
 
-            /* Update mousemovement. */
+            /* Update mouse movement. */
             uniedit_moved += ABS( event->motion.xrel ) + ABS( event->motion.yrel );
          }
          else if (uniedit_dragSys && (uniedit_nsys > 0)) {
@@ -535,7 +535,7 @@ static void uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
                }
             }
 
-            /* Update mousemovement. */
+            /* Update mouse movement. */
             uniedit_moved += ABS( event->motion.xrel ) + ABS( event->motion.yrel );
          }
          break;
@@ -683,7 +683,7 @@ static void uniedit_jumpAdd( StarSystem *sys, StarSystem *targ )
    jp->target  = targ;
    jp->targetid = targ->id;
    jp->radius  = 200.;
-   jp->flags   = JP_AUTOPOS; /* Will automaticalyl create position. */
+   jp->flags   = JP_AUTOPOS; /* Will automatically create position. */
 
 }
 
@@ -695,7 +695,7 @@ static void uniedit_jumpRm( StarSystem *sys, StarSystem *targ )
 {
    int i;
 
-   /* Find assosciated jump. */
+   /* Find associated jump. */
    for (i=0; i<sys->njumps; i++)
       if (sys->jumps[i].target == targ)
          break;

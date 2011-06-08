@@ -210,7 +210,7 @@ static int outfitL_get( lua_State *L )
    const char *name;
    LuaOutfit lo;
 
-   /* Handle paremeters. */
+   /* Handle parameters. */
    name = luaL_checkstring(L,1);
 
    /* Get outfit. */

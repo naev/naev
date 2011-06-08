@@ -42,7 +42,7 @@ static unsigned int omsg_idgen      = 0;     /**< Unique ID generator. */
 
 static double omsg_center_x         = 0.;    /**< X center of the overlay messages. */
 static double omsg_center_y         = 0.;    /**< Y center of the overlay messages. */
-static double omsg_center_w         = 100.;    /**< Widtho f the overlay messages. */
+static double omsg_center_w         = 100.;    /**< Width of the overlay messages. */
 
 
 /*

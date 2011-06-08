@@ -124,7 +124,7 @@ void player_board (void)
     */
    hparam[0].type       = HOOK_PARAM_PILOT;
    hparam[0].u.lp.pilot = p->id;
-   hparam[1].type       = HOOK_PARAM_SENTINAL;
+   hparam[1].type       = HOOK_PARAM_SENTINEL;
    hooks_runParam( "board", hparam );
    pilot_runHook(p, PILOT_HOOK_BOARD);
 

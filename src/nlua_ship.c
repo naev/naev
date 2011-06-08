@@ -214,7 +214,7 @@ static int shipL_get( lua_State *L )
    const char *name;
    LuaShip ls;
 
-   /* Handle paremeters. */
+   /* Handle parameters. */
    name = luaL_checkstring(L,1);
 
    /* Get ship. */

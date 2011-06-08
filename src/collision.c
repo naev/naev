@@ -245,7 +245,7 @@ int CollideLineSprite( const Vector2d* ap, double ad, double al,
     * Now we do a pixel perfect approach.
     */
    real_hits = 0;
-   /* Directonaly vector (normalized). */
+   /* Directionality vector (normalized). */
    v[0] = border[1].x - border[0].x;
    v[1] = border[1].y - border[0].y;
    /* Normalize. */

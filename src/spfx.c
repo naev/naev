@@ -431,7 +431,7 @@ void spfx_update( const double dt )
  * @brief Updates an individual spfx.
  *
  *    @param layer Layer the spfx is on.
- *    @param nlayer Pointer to the assosciated nlayer.
+ *    @param nlayer Pointer to the associated nlayer.
  *    @param dt Current delta tick.
  */
 static void spfx_update_layer( SPFX *layer, int *nlayer, const double dt )

@@ -203,7 +203,7 @@ static int fleet_parse( Fleet *temp, const xmlNodePtr parent )
                xmlr_attr(cur,"name",c);
                pilot->name = c; /* No need to free since it will have to later */
 
-               /* Check for ai override */
+               /* Check for AI override */
                xmlr_attr(cur,"ai",pilot->ai);
 
                /* Load pilot's ship */

@@ -298,7 +298,7 @@ void window_faderValue( const unsigned int wid,
 
 
 /**
- * @brief Sets a fader widget's boundries.
+ * @brief Sets a fader widget's boundaries.
  *
  *    @param wid ID of the window to get widget from.
  *    @param name Name of the widget.
@@ -321,7 +321,7 @@ void window_faderBounds( const unsigned int wid,
       return;
    }
 
-   /* Set the fader boundries. */
+   /* Set the fader boundaries. */
    wgt->dat.fad.min = min;
    wgt->dat.fad.max = max;
 

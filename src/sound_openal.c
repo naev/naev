@@ -117,7 +117,7 @@ typedef struct alGroup_s {
    ALuint *sources; /**< Sources in the group. */
    int nsources; /**< Number of sources in the group. */
 
-   voice_state_t state; /**< Currenty global group state. */
+   voice_state_t state; /**< Currently global group state. */
    int fade_timer; /**< Fadeout timer. */
    int speed; /**< Whether or not pitch affects. */
    double volume; /**< Volume of the group. */

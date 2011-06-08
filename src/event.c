@@ -791,7 +791,7 @@ int events_saveActive( xmlTextWriterPtr writer )
       claim_xmlSave( writer, ev->claims );
       xmlw_endElem(writer); /* "claims" */
 
-      /* Write lua magic */
+      /* Write Lua magic */
       xmlw_startElem(writer,"lua");
       nxml_persistLua( ev->L, writer );
       xmlw_endElem(writer); /* "lua" */

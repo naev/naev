@@ -639,7 +639,7 @@ static void dialogue_choiceClose( unsigned int wid, char* str )
  * @TODO Fix this, we need proper threading as the music Lua and dialogue running Lua
  *       may be run in parallel and this will make everyone cry. So basically we have
  *       a race condition due to the "threading" effect this creates. Solved most of
- *       it by removing globals in the lua event/mission code, but this doesn't mean
+ *       it by removing globals in the Lua event/mission code, but this doesn't mean
  *       it's solved. It just means it's extremely unlikely.
  *
  *    @return 0 on success.

@@ -306,7 +306,7 @@ static void commodity_buy( unsigned int wid, char* str )
    hparam[0].u.str   = comname;
    hparam[1].type    = HOOK_PARAM_NUMBER;
    hparam[1].u.num   = q;
-   hparam[2].type    = HOOK_PARAM_SENTINAL;
+   hparam[2].type    = HOOK_PARAM_SENTINEL;
    hooks_runParam( "comm_buy", hparam );
    if (land_takeoff)
       takeoff(1);
@@ -343,7 +343,7 @@ static void commodity_sell( unsigned int wid, char* str )
    hparam[0].u.str   = comname;
    hparam[1].type    = HOOK_PARAM_NUMBER;
    hparam[1].u.num   = q;
-   hparam[2].type    = HOOK_PARAM_SENTINAL;
+   hparam[2].type    = HOOK_PARAM_SENTINEL;
    hooks_runParam( "comm_sell", hparam );
    if (land_takeoff)
       takeoff(1);
@@ -816,14 +816,14 @@ static void misn_accept( unsigned int wid, char* str )
       pos = toolkit_getListPos( wid, "lstMission" );
       misn = &mission_computer[pos];
       ret = mission_accept( misn );
-      if ((ret==0) || (ret==2) || (ret==-1)) { /* successs in accepting the mission */
+      if ((ret==0) || (ret==2) || (ret==-1)) { /* success in accepting the mission */
          if (ret==-1)
             mission_cleanup( &mission_computer[pos] );
          memmove( &mission_computer[pos], &mission_computer[pos+1],
                sizeof(Mission) * (mission_ncomputer-pos-1) );
          mission_ncomputer--;
 
-         /* Regeneratie list. */
+         /* Regenerate list. */
          misn_genList(wid, 0);
       }
 
@@ -849,7 +849,7 @@ static void misn_genList( unsigned int wid, int first )
    window_dimWindow( wid, &w, &h );
 
    /* list */
-   j = 1; /* make sure we don't accidently free the memory twice. */
+   j = 1; /* make sure we don't accidentally free the memory twice. */
    misn_names = NULL;
    if (mission_ncomputer > 0) { /* there are missions */
       misn_names = malloc(sizeof(char*) * mission_ncomputer);
@@ -1104,7 +1104,7 @@ void land_genWindows( int load, int changetab )
    land_wid = window_create( p->name, -1, -1, w, h );
    window_onClose( land_wid, land_cleanupWindow );
 
-   /* Set window map to invald. */
+   /* Set window map to invalid. */
    for (i=0; i<LAND_NUMWINDOWS; i++)
       land_windowsMap[i] = -1;
 
@@ -1187,7 +1187,7 @@ void land_genWindows( int load, int changetab )
    /* Outfits. */
    if (planet_hasService(land_planet, PLANET_SERVICE_OUTFITS))
       outfits_open( land_getWid(LAND_WINDOW_OUTFITS) );
-   /* Shipard. */
+   /* Shipyard. */
    if (planet_hasService(land_planet, PLANET_SERVICE_SHIPYARD))
       shipyard_open( land_getWid(LAND_WINDOW_SHIPYARD) );
    /* Equipment. */
@@ -1411,7 +1411,7 @@ static void land_changeTab( unsigned int wid, char *wgt, int tab )
       }
    }
 
-   /* Check land missions - aways run hooks. */
+   /* Check land missions - always run hooks. */
    /*if ((to_visit != 0) && !has_visited(to_visit)) {*/
    {
       /* Run hooks, run after music in case hook wants to change music. */

@@ -1021,7 +1021,7 @@
   <class>Bomber</class>
   <price>550000</price>
   <fabricator>Skull and Bones</fabricator>
-  <description>Ancestors were one of the first ships to be fancied by pirates. The big intimidating wings and good top speeds would usually get ships to surrender without firing a shot. As better ships came out in the market, their use has fallen due to their archaic electronics and targetting systems.</description>
+  <description>Ancestors were one of the first ships to be fancied by pirates. The big intimidating wings and good top speeds would usually get ships to surrender without firing a shot. As better ships came out in the market, their use has fallen due to their archaic electronics and targeting systems.</description>
   <movement>
    <thrust>180</thrust>
    <turn>100</turn>

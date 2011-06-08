@@ -152,7 +152,7 @@ int comm_openPilot( unsigned int pilot )
    /* Run generic hail hooks. */
    hparam[0].type       = HOOK_PARAM_PILOT;
    hparam[0].u.lp.pilot = p->id;
-   hparam[1].type       = HOOK_PARAM_SENTINAL;
+   hparam[1].type       = HOOK_PARAM_SENTINEL;
    run = 0;
    run += hooks_runParam( "hail", hparam );
    run += pilot_runHook( comm_pilot, PILOT_HOOK_HAIL );
@@ -386,7 +386,7 @@ static void comm_bribePilot( unsigned int wid, char *unused )
    const char *str;
    lua_State *L;
 
-   /* Unbribeable. */
+   /* Unbribable. */
    str = comm_getString( "bribe_no" );
    if (str != NULL) {
       dialogue_msg("Bribe Pilot", "%s", str );

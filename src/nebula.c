@@ -50,7 +50,7 @@ static int nebu_pw   = 0; /**< BG Padded Nebula width. */
 static int nebu_ph   = 0; /**< BG Padded Nebula height. */
 
 /* Information on rendering */
-static int cur_nebu[2]           = { 0, 1 }; /**< Nebulas currently rendering. */
+static int cur_nebu[2]           = { 0, 1 }; /**< Nebulae currently rendering. */
 static double nebu_timer         = 0.; /**< Timer since last render. */
 
 /* Nebula properties */
@@ -398,7 +398,7 @@ void nebu_genOverlay (void)
    /* Get GUI offsets. */
    gui_getOffset( &gx, &gy );
 
-   /* Here we calculate outter corners. It should actually be /2. because we
+   /* Here we calculate outer corners. It should actually be /2. because we
     * are centered around 0,0. However, we treat this extra space as a buffer
     * for when it's shaking. */
    z = 1./conf.zoom_far;
@@ -608,7 +608,7 @@ static void nebu_renderPuffs( int below_player )
 
    for (i=0; i<nebu_npuffs; i++) {
 
-      /* Seperate by layers */
+      /* Separate by layers */
       if ((below_player && (nebu_puffs[i].height < 1.)) ||
             (!below_player && (nebu_puffs[i].height > 1.))) {
 
@@ -616,7 +616,7 @@ static void nebu_renderPuffs( int below_player )
          nebu_puffs[i].x += puff_x * nebu_puffs[i].height;
          nebu_puffs[i].y += puff_y * nebu_puffs[i].height;
 
-         /* Check boundries */
+         /* Check boundaries */
          if (nebu_puffs[i].x > SCREEN_W + NEBULA_PUFF_BUFFER)
             nebu_puffs[i].x -= SCREEN_W + 2*NEBULA_PUFF_BUFFER;
          else if (nebu_puffs[i].y > SCREEN_H + NEBULA_PUFF_BUFFER)
@@ -720,7 +720,7 @@ static int nebu_generate (void)
    for (i=0; i<NEBULA_Z; i++) {
       snprintf( nebu_file, PATH_MAX, NEBULA_PATH_BG, w, h, i );
       ret = saveNebula( &nebu[ i*w*h ], w, h, nebu_file );
-      if (ret != 0) break; /* An error has happenend */
+      if (ret != 0) break; /* An error has happened */
    }
 
    /* Cleanup */

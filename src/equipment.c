@@ -294,7 +294,7 @@ void equipment_open( unsigned int wid )
          130, 200, 0, "txtOutfitTitle", &gl_smallFont, &cBlack, "Available Outfits" );
    equipment_genLists( wid );
 
-   /* Seperator. */
+   /* Separator. */
    window_addRect( wid, 20 + sw + 20, -40, 2, h-60, "rctDivider", &cGrey50, 0 );
 
    /* Slot widget. */
@@ -1734,7 +1734,7 @@ static void equipment_unequipShip( unsigned int wid, char* str )
       /* Must be fighter bay. */
       if (!outfit_isFighterBay( ship->outfits[i]->outfit))
          continue;
-      /* Must not havve deployed. */
+      /* Must not have deployed. */
       if (ship->outfits[i]->u.ammo.deployed > 0) {
          dialogue_alert( "You can not unequip your ship while you have deployed fighters!" );
          return;

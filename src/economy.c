@@ -39,7 +39,7 @@
 
 #define XML_COMMODITY_ID      "Commodities" /**< XML document identifier */
 #define XML_COMMODITY_TAG     "commodity" /**< XML commodity identifier. */
-#define COMMODITY_DATA        "dat/commodity.xml" /**< Comodity XML file. */
+#define COMMODITY_DATA        "dat/commodity.xml" /**< Commodity XML file. */
 
 
 /*
@@ -290,7 +290,7 @@ int commodity_load (void)
       return -1;
    }
 
-   node = doc->xmlChildrenNode; /* Commoditys node */
+   node = doc->xmlChildrenNode; /* Commodities node */
    if (strcmp((char*)node->name,XML_COMMODITY_ID)) {
       ERR("Malformed "COMMODITY_DATA" file: missing root element '"XML_COMMODITY_ID"'");
       return -1;
@@ -450,7 +450,7 @@ static double econ_calcSysI( unsigned int dt, StarSystem *sys, int price )
           */
          /* We base off the current production. */
          prodfactor  = planet->cur_prodfactor;
-         /* Add a variability factor based on the gaussian distribution. */
+         /* Add a variability factor based on the Gaussian distribution. */
          prodfactor += ECON_PROD_VAR * RNG_2SIGMA() * ddt;
          /* Add a tendency to return to the planet's base production. */
          prodfactor -= ECON_PROD_VAR *
@@ -501,7 +501,7 @@ static int econ_createGMatrix (void)
          R     = 1./R; /* Must be inverted. */
          Rsum += R;
 
-         /* Matrix is symetrical and non-diagonal is negative. */
+         /* Matrix is symmetrical and non-diagonal is negative. */
          ret = cs_entry( M, i, sys->jumps[j].target->id, -R );
          if (ret != 1)
             WARN("Unable to enter CSparse Matrix Cell.");
@@ -511,7 +511,7 @@ static int econ_createGMatrix (void)
       }
 
       /* Set the diagonal. */
-      Rsum += 1./ECON_SELF_RES; /* We add a resistence for dampening. */
+      Rsum += 1./ECON_SELF_RES; /* We add a resistance for dampening. */
       cs_entry( M, i, i, Rsum );
    }
 
@@ -569,7 +569,7 @@ int economy_refresh (void)
    if (econ_initialized == 0)
       return 0;
 
-   /* Create the resistence matrix. */
+   /* Create the resistance matrix. */
    if (econ_createGMatrix())
       return -1;
 

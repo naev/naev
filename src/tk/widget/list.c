@@ -110,7 +110,7 @@ static void lst_render( Widget* lst, double bx, double by )
    /* inner outline */
    toolkit_drawOutline( x, y, lst->w, lst->h, 0.,
          toolkit_colLight, toolkit_col );
-   /* outter outline */
+   /* outer outline */
    toolkit_drawOutline( x, y, lst->w, lst->h, 1., toolkit_colDark, NULL );
 
    /* Draw scrollbar. */
@@ -223,9 +223,9 @@ static int lst_focus( Widget* lst, double bx, double by )
 
    if (bx < w) {
       i = lst->dat.lst.pos + (lst->h - by) / (gl_defFont.h + 2.);
-      if (i < lst->dat.lst.noptions) { /* shouldn't be out of boundries */
+      if (i < lst->dat.lst.noptions) { /* shouldn't be out of boundaries */
          lst->dat.lst.selected = i;
-         lst_scroll( lst, 0 ); /* checks boundries and triggers callback */
+         lst_scroll( lst, 0 ); /* checks boundaries and triggers callback */
       }
    }
    else {
@@ -280,7 +280,7 @@ static int lst_mmove( Widget* lst, int x, int y, int rx, int ry )
       p /= (2 + gl_defFont.h);
       lst->dat.lst.pos = CLAMP( 0, lst->dat.lst.noptions, (int)ceil(p) );
 
-      /* Does boundry checks. */
+      /* Does boundary checks. */
       lst->dat.lst.selected = CLAMP( lst->dat.lst.pos,
             lst->dat.lst.pos+h, lst->dat.lst.selected );
 
@@ -330,7 +330,7 @@ static void lst_scroll( Widget* lst, int direction )
 
    lst->dat.lst.selected -= direction;
 
-   /* boundry check. */
+   /* boundary check. */
    lst->dat.lst.selected = CLAMP( 0, lst->dat.lst.noptions-1, lst->dat.lst.selected);
 
    /* see if we have to scroll. */
@@ -404,7 +404,7 @@ char* toolkit_setList( const unsigned int wid, const char* name, char* value )
    for (i=0; i<wgt->dat.lst.noptions; i++) {
       if (strcmp(wgt->dat.lst.options[i],value)==0) {
          wgt->dat.lst.selected = i;
-         lst_scroll( wgt, 0 ); /* checks boundries and triggers callback */
+         lst_scroll( wgt, 0 ); /* checks boundaries and triggers callback */
          return value;
       }
    }
@@ -424,7 +424,7 @@ char* toolkit_setListPos( const unsigned int wid, const char* name, int pos )
 
    /* Set by pos. */
    wgt->dat.lst.selected = CLAMP( 0, wgt->dat.lst.noptions-1, pos );
-   lst_scroll( wgt, 0 ); /* checks boundries and triggers callback */
+   lst_scroll( wgt, 0 ); /* checks boundaries and triggers callback */
    return wgt->dat.lst.options[ wgt->dat.lst.selected ];
 }
 
