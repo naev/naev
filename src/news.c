@@ -128,7 +128,7 @@ static void news_render( double bx, double by, double w, double h, void *data )
 
 
 /**
- * @brief wid Window recieving the mouse events.
+ * @brief wid Window receiving the mouse events.
  *
  *    @param event Mouse event being received.
  *    @param mx X position of the mouse.

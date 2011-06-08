@@ -375,7 +375,7 @@ static int hook_enter( lua_State *L )
 /**
  * @brief Hooks the function to the player hailing any ship (not a planet).
  *
- * The hook recieves a single parameter which is the ship being hailed.
+ * The hook receives a single parameter which is the ship being hailed.
  *
  *    @luaparam funcname Name of function to run when hook is triggered.
  *    @luaparam arg Argument to pass to hook.
@@ -392,7 +392,7 @@ static int hook_hail( lua_State *L )
 /**
  * @brief Hooks the function to the player boarding any ship.
  *
- * The hook recieves a single parameter which is the ship being boarded.
+ * The hook receives a single parameter which is the ship being boarded.
  *
  *    @luaparam funcname Name of function to run when hook is triggered.
  *    @luaparam arg Argument to pass to hook.
@@ -409,7 +409,7 @@ static int hook_board( lua_State *L )
 /**
  * @brief Hooks a timer.
  *
- * The hook recieves only the optional argument.
+ * The hook receives only the optional argument.
  *
  *    @luaparam ms Milliseconds to delay.
  *    @luaparam funcname Name of function to run when hook is triggered.
@@ -429,7 +429,7 @@ static int hook_timer( lua_State *L )
 /**
  * @brief Hooks a date change with custom resolution.
  *
- * The hook recieves only the optional argument.
+ * The hook receives only the optional argument.
  *
  * @usage hook.date( time.create( 0, 0, 1000 ), "some_func", nil ) -- Hooks with a 1000 STU resolution
  *
@@ -451,7 +451,7 @@ static int hook_date( lua_State *L )
 /**
  * @brief Hooks the function to the player buying any sort of commodity.
  *
- * The hook recieves the name of the commodity and the quantity being bought.
+ * The hook receives the name of the commodity and the quantity being bought.
  *
  *    @luaparam funcname Name of function to run when hook is triggered.
  *    @luaparam arg Argument to pass to hook.
@@ -468,7 +468,7 @@ static int hook_commbuy( lua_State *L )
 /**
  * @brief Hooks the function to the player selling any sort of commodity.
  *
- * The hook recieves the name of the commodity and the quantity being bought.
+ * The hook receives the name of the commodity and the quantity being bought.
  *
  *    @luaparam funcname Name of function to run when hook is triggered.
  *    @luaparam arg Argument to pass to hook.

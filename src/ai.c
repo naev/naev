@@ -976,7 +976,7 @@ void ai_refuel( Pilot* refueler, unsigned int target )
 /**
  * @brief Sends a distress signal to a pilot.
  *
- *    @param p Pilot recieving the distress signal.
+ *    @param p Pilot receiving the distress signal.
  *    @param distressed Pilot sending the distress signal.
  */
 void ai_getDistress( Pilot* p, const Pilot* distressed )

@@ -80,7 +80,7 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
    /* Default values. */
    ret   = 0;
 
-   /* We recieve data in the format of: key, value */
+   /* We receive data in the format of: key, value */
 
    /* key, value */
    /* Handle different types of keys, we must not touch the stack after this operation. */

@@ -353,7 +353,7 @@ void cli_exit (void)
 /**
  * @brief Handles the CLI input.
  *
- *    @param wid Window recieving the input.
+ *    @param wid Window receiving the input.
  *    @param unused Unused.
  */
 static void cli_input( unsigned int wid, char *unused )

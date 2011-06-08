@@ -641,7 +641,7 @@ void window_handleKeys( const unsigned int wid,
 /**
  * @brief Sets the event handler for the window.
  *
- * This function is called every time the window recieves input.
+ * This function is called every time the window receives input.
  */
 void window_handleEvents( const unsigned int wid,
       int (*eventhandler)(unsigned int,SDL_Event*) )
@@ -1680,7 +1680,7 @@ Uint32 toolkit_inputTranslateCoords( Window *w, SDL_Event *event,
 /**
  * @brief Handles the mouse events.
  *
- *    @param wdw Window recieving the mouse event.
+ *    @param wdw Window receiving the mouse event.
  *    @param event Mouse event to handle.
  */
 static void toolkit_mouseEvent( Window *w, SDL_Event* event )
@@ -1718,7 +1718,7 @@ static void toolkit_mouseEvent( Window *w, SDL_Event* event )
  * @brief Handle widget mouse input.
  *
  *    @param w Window to which widget belongs.
- *    @param wgt Widget recieving event.
+ *    @param wgt Widget receiving event.
  *    @param event Event received by the window.
  */
 static void toolkit_mouseEventWidget( Window *w, Widget *wgt,
@@ -1851,7 +1851,7 @@ void toolkit_clearKey (void)
 /**
  * @brief Handles keyboard events.
  *
- *    @param wdw Window recieving the key event.
+ *    @param wdw Window receiving the key event.
  *    @param event Keyboard event to handle.
  *    @return 1 if the event is used, 0 if it isn't.
  */

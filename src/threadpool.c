@@ -334,7 +334,7 @@ static int threadpool_handler( void *data )
    while (1) {
       /*
        * We must now wait, this shall be done on each active thread. However they will
-       * be put to sleep as time passes. When we recieve a command we'll proceed to process
+       * be put to sleep as time passes. When we receive a command we'll proceed to process
        * it.
        */
       if (nrunning > 0) {
