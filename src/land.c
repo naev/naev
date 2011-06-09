@@ -460,14 +460,11 @@ void land_errDialogueBuild( const char *fmt, ... )
       va_end(ap);
    }
 
-   if (errorlist_ptr == NULL) { /* Initialize on first run. */
+   if (errorlist_ptr == NULL) /* Initialize on first run. */
       errorappend = snprintf( errorlist, sizeof(errorlist), "%s", errorreason );
-      errorlist_ptr = errorlist;
-   }
-   else { /* Append newest error to the existing list. */
+   else /* Append newest error to the existing list. */
       snprintf( &errorlist[errorappend],  sizeof(errorlist)-errorappend, "\n%s", errorreason );
-      errorlist_ptr = errorlist;
-   }
+   errorlist_ptr = errorlist;
 }
 
 
