@@ -43,7 +43,6 @@
 #include "gui.h"
 #include "start.h"
 #include "camera.h"
-#include "load.h"
 #include "board.h"
 
 

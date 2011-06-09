@@ -32,7 +32,6 @@
 #include "mission.h"
 #include "ntime.h"
 #include "save.h"
-#include "music.h"
 #include "map.h"
 #include "news.h"
 #include "escort.h"
