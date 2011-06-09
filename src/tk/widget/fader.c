@@ -163,9 +163,6 @@ static int fad_mclick( Widget* fad, int button, int x, int y )
       /* Out of bounds, jump the knob. */
       if ((x < kx) || (x >= kx + kw))
          fad_setValue(fad, (double)x / fad->w );
-
-      /* Always scroll. */
-      fad->status = WIDGET_STATUS_SCROLLING;
    }
    else {
       ky = fad->h * pos - 5;
@@ -174,10 +171,9 @@ static int fad_mclick( Widget* fad, int button, int x, int y )
       /* Out of bounds, jump the knob. */
       if ((y < ky) || (y >= ky + kh))
          fad_setValue(fad, (double)y / fad->h );
-
-      /* Always scroll. */
-      fad->status = WIDGET_STATUS_SCROLLING;
    }
+   /* Always scroll. */
+   fad->status = WIDGET_STATUS_SCROLLING;
 
    return 0;
 }
