@@ -31,7 +31,6 @@
 #include "land_outfits.h"
 #include "player_gui.h"
 #include "info.h"
-#include "ntime.h"
 #include "tk/toolkit_priv.h" /* Yes, I'm a bad person, abstractions be damned! */
 
 

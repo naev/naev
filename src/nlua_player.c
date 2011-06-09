@@ -35,7 +35,6 @@
 #include "map.h"
 #include "hook.h"
 #include "comm.h"
-#include "board.h"
 #include "land_outfits.h"
 #include "gui.h"
 #include "gui_omsg.h"

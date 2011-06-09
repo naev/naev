@@ -1731,10 +1731,6 @@ static int aiL_minbrakedist( lua_State *L )
       vel = MIN(cur_pilot->speed - VMOD(p->solid->vel), VMOD(vv));
       if (vel < 0.)
          vel = 0.;
-
-      /* Get distance to brake. */
-      dist = vel*(time+1.1*M_PI/cur_pilot->turn) -
-            0.5*(cur_pilot->thrust/cur_pilot->solid->mass)*time*time;
    }
 
    /* Simple calculation based on distance. */
@@ -1745,11 +1741,10 @@ static int aiL_minbrakedist( lua_State *L )
 
       /* Get velocity. */
       vel = MIN(cur_pilot->speed,VMOD(cur_pilot->solid->vel));
-
-      /* Get distance. */
-      dist = vel*(time+1.1*M_PI/cur_pilot->turn) -
-            0.5*(cur_pilot->thrust/cur_pilot->solid->mass)*time*time;
    }
+   /* Get distance to brake. */
+   dist = vel*(time+1.1*M_PI/cur_pilot->turn) -
+         0.5*(cur_pilot->thrust/cur_pilot->solid->mass)*time*time;
 
    lua_pushnumber(L, dist); /* return */
    return 1; /* returns one thing */
@@ -2107,7 +2102,7 @@ static int aiL_face( lua_State *L )
    /* Third parameter. */
    vel = lua_toboolean(L, 3);
 
-   /* Tangencial component of velocity vector
+   /* Tangential component of velocity vector
     *
     * v: velocity vector
     * d: direction vector

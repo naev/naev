@@ -1492,15 +1492,14 @@ static void gui_renderRadarOutOfRange( RadarShape sh, int w, int h, int cx, int 
          sizeof(GLfloat) * 2*4, colours );
 
    /* Draw a line like for pilots. */
+   a = ANGLE(cx,cy);
    if (sh == RADAR_CIRCLE) {
-      a         = ANGLE(cx,cy);
       vertex[0] = w*cos(a);
       vertex[1] = w*sin(a);
       vertex[2] = 0.85*vertex[0];
       vertex[3] = 0.85*vertex[1];
    }
    else {
-      a = ANGLE(cx,cy);
       int cxa, cya;
       cxa = ABS(cx);
       cya = ABS(cy);

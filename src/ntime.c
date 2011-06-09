@@ -41,7 +41,6 @@
 
 #include "hook.h"
 #include "economy.h"
-#include "hook.h"
 
 
 #define NT_STU_DIV   (1000)      /* Divider for extracting STU. */
