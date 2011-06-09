@@ -585,20 +585,9 @@ void background_free (void)
    }
 
    /* Free the Lua. */
-   if (bkg_cur_L == bkg_def_L) {
-      if (bkg_cur_L != NULL)
-         lua_close( bkg_cur_L );
-      bkg_cur_L = NULL;
-      bkg_def_L = NULL;
-   }
-   else {
-      if (bkg_cur_L != NULL)
-         lua_close( bkg_cur_L );
-      if (bkg_def_L != NULL)
-         lua_close( bkg_def_L );
-      bkg_cur_L = NULL;
-      bkg_def_L = NULL;
-   }
+   if (bkg_cur_L != NULL)
+      lua_close( bkg_cur_L );
+   bkg_cur_L = NULL;
 
    /* Destroy VBOs. */
    if (star_vertexVBO != NULL) {
