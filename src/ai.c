@@ -2102,7 +2102,7 @@ static int aiL_face( lua_State *L )
    /* Third parameter. */
    vel = lua_toboolean(L, 3);
 
-   /* Tangencial component of velocity vector
+   /* Tangential component of velocity vector
     *
     * v: velocity vector
     * d: direction vector
