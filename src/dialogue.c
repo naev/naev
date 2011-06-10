@@ -482,7 +482,7 @@ int dialogue_list( const char* title, char **items, int nitems, const char *fmt,
  *    @param title Title of the dialogue.
  *    @param items Items in the list (should be all malloced, automatically freed).
  *    @param nitems Number of items.
- *    @param fmt printf formatted string with text to display.
+ *    @param msg string with text to display.
  */
 int dialogue_listRaw( const char* title, char **items, int nitems, const char *msg )
 {
