@@ -459,8 +459,10 @@ static void dialogue_listClose( unsigned int wid, char* str )
  *    @param items Items in the list (should be all malloced, automatically freed).
  *    @param nitems Number of items.
  *    @param fmt printf formatted string with text to display.
+ *    @param call Function to call when new item is selected. 
  */
-int dialogue_list( const char* title, char **items, int nitems, const char *fmt, ... )
+int dialogue_list( const char* title, char **items, int nitems, 
+	void (*call) (unsigned int wdw, char* wgtname), const char *fmt, ... )
 {
    char msg[512];
    va_list ap;
@@ -474,7 +476,7 @@ int dialogue_list( const char* title, char **items, int nitems, const char *fmt,
       va_end(ap);
    }
 
-   return dialogue_listRaw( title, items, nitems, msg );
+   return dialogue_listRaw( title, items, nitems, msg, call );
 }
 /**
  * @brief Creates a list dialogue with OK and Cancel button.
@@ -483,8 +485,10 @@ int dialogue_list( const char* title, char **items, int nitems, const char *fmt,
  *    @param items Items in the list (should be all malloced, automatically freed).
  *    @param nitems Number of items.
  *    @param fmt printf formatted string with text to display.
+ *    @param call Function to call when a new item is selected.
  */
-int dialogue_listRaw( const char* title, char **items, int nitems, const char *msg )
+int dialogue_listRaw( const char* title, char **items, int nitems, const char *msg,
+	void (*call) (unsigned int wdw, char* wgtname) )
 {
    int i;
    int w, h;
@@ -522,7 +526,7 @@ int dialogue_listRaw( const char* title, char **items, int nitems, const char *m
    /* Create the list. */
    window_addList( wid, 20, -40-text_height-20,
          w-40, h - (40+text_height+20) - (20+30+20),
-         "lstDialogue", items, nitems, 0, NULL );
+         "lstDialogue", items, nitems, 0, call );
 
    /* Create the buttons. */
    window_addButton( wid, -20, 20, 60, 30,

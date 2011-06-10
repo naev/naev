@@ -623,7 +623,7 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
       list  = malloc( len*sizeof(char*) );
       for (i=0; i<len; i++)
          list[i] = strdup( names[i] );
-      i = dialogue_list( "Search Results", list, len,
+      i = dialogue_list( "Search Results", list, len, NULL,
             "Search results for outfits matching '%s':", name );
       if (i < 0) {
          free(names);
@@ -774,7 +774,7 @@ static int map_findSearchShips( unsigned int parent, const char *name )
       list  = malloc( len*sizeof(char*) );
       for (i=0; i<len; i++)
          list[i] = strdup( names[i] );
-      i = dialogue_list( "Search Results", list, len,
+      i = dialogue_list( "Search Results", list, len, NULL,
             "Search results for ships matching '%s':", name );
       if (i < 0) {
          free(names);
