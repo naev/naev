@@ -24,10 +24,13 @@
 #define THREADSIG_RUN      (0) /* The signal to indicate the worker thread is running */
 
 
+/**
+ * Threads to use.
+ */
 #if SDL_VERSION_ATLEAST(1,3,0)
-const int MAXTHREADS = SDL_GetCPUCount()+1;
+const int MAXTHREADS = SDL_GetCPUCount()+1; /* SDL 1.3 is pretty cool. */
 #else
-const int MAXTHREADS = 8;
+const int MAXTHREADS = 8; /* Bit overkill, but oh well. */
 #endif
 
 
@@ -43,8 +46,8 @@ typedef struct Node_ {
  * @brief Threadqueue itself.
  */
 struct ThreadQueue_ {
-   Node *first;          /* The first node */
-   Node *last;           /* The second node */
+   Node *first;         /* The first node */
+   Node *last;          /* The second node */
    /* A semaphore to ensure reads only happen when the queue is not empty */
    SDL_sem *semaphore;
    SDL_mutex *t_lock;   /* Tail lock. Lock when reading/updating tail */
@@ -55,8 +58,8 @@ struct ThreadQueue_ {
  * @brief Data for the threadqueue.
  */
 typedef struct ThreadQueueData_ {
-   int (*function)(void *);     /* The function to be called */
-   void *data;                  /* And its arguments */
+   int (*function)(void *);  /* The function to be called */
+   void *data;               /* And its arguments */
 } ThreadQueueData;
 
 /**
@@ -64,23 +67,23 @@ typedef struct ThreadQueueData_ {
  */
 typedef struct ThreadData_ {
    int (*function)(void *); /* The function to be called */
-   void *data; /* Arguments to the above function */
-   int signal; /* Signals to the thread */
-   SDL_sem *semaphore; /* The semaphore to signal new jobs or new signal in the
-                          'signal' variable */
-   ThreadQueue *idle; /* The queue with idle threads */
-   ThreadQueue *stopped; /* The queue with stopped threads */
+   void *data;             /* Arguments to the above function */
+   int signal;             /* Signals to the thread */
+   SDL_sem *semaphore;     /* The semaphore to signal new jobs or new signal in the
+                              'signal' variable */
+   ThreadQueue *idle;      /* The queue with idle threads */
+   ThreadQueue *stopped;   /* The queue with stopped threads */
 } ThreadData;
 
 /**
  * @brief Virtual thread pool data.
  */
 typedef struct vpoolThreadData_ {
-   SDL_cond *cond; /* Condition variable for signalling all jobs in the vpool
-                      are done */
-   SDL_mutex *mutex; /* The mutex to use with the above condition variable */
-   int *count; /* Variable to count number of finished jobs in the vpool */
-   ThreadQueueData *node; /* The job to be done */
+   SDL_cond *cond;         /* Condition variable for signalling all jobs in the vpool
+                              are done */
+   SDL_mutex *mutex;       /* The mutex to use with the above condition variable */
+   int *count;             /* Variable to count number of finished jobs in the vpool */
+   ThreadQueueData *node;  /* The job to be done */
 } vpoolThreadData;
 
 /* The global threadpool queue */
