@@ -84,6 +84,9 @@ void window_addList( const unsigned int wid,
 
    if (wdw->focus == -1) /* initialize the focus */
       toolkit_nextFocus( wdw );
+
+   if (defitem >= 0 && call)
+      call(wid, name);
 }
 
 
