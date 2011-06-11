@@ -207,7 +207,7 @@ static void* tq_dequeue( ThreadQueue *q )
       return NULL;
       */
       /* We prefer to wait until the cache updates :/ */
-      while(newhead == NULL) {
+      while (newhead == NULL) {
       }
    }
 
