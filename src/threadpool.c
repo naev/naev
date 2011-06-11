@@ -29,7 +29,7 @@
 #include "log.h"
 
 
-#define THREADPOOL_TIMEOUT (5 * 100) /* The time a worker thread waits */
+#define THREADPOOL_TIMEOUT (5 * 100) /* The time a worker thread waits in ms. */
 #define THREADSIG_STOP     (1) /* The signal to stop a worker thread */
 #define THREADSIG_RUN      (0) /* The signal to indicate the worker thread is running */
 
