@@ -59,6 +59,20 @@ static void dialogue_listCancel( unsigned int wid, char* str );
 /* secondary loop hack */
 static int toolkit_loop( int *loop_done );
 
+/**
+ * @brief Represents a found target.
+ */
+typedef struct InputDialogue_ {
+   unsigned int input_wid; /**< wid of input window */
+   int x; /**< x position where we can start drawing */
+   int y; /**< y position where we can start drawing. */
+   int w; /**< width of area we can draw in */
+   int h; /**< height of area we can draw in */
+   void (*item_select_cb) (unsigned int wid, char* wgtname,
+                           int x, int y, int w, int h
+        ); /**< callback when an item is selected */
+} InputDialogue;
+void select_call_wrapper(unsigned int wid, char* wgtname);
 
 /**
  * @brief Checks to see if a dialogue is open.
@@ -328,7 +342,7 @@ static void dialogue_YesNoClose( unsigned int wid, char* str )
 }
 
 
-static unsigned int input_wid = 0; /**< Stores the input window id. */
+static InputDialogue input_dialogue; /**< Stores the input window id and callback. */
 /**
  * @brief Creates a dialogue that allows the player to write a message.
  *
@@ -345,7 +359,7 @@ char* dialogue_input( const char* title, int min, int max, const char *fmt, ... 
    char msg[512];
    va_list ap;
 
-   if (input_wid) return NULL;
+   if (input_dialogue.input_wid) return NULL;
 
    if (fmt == NULL) return NULL;
    else { /* get the message */
@@ -377,18 +391,18 @@ char* dialogue_inputRaw( const char* title, int min, int max, const char *msg )
    h = gl_printHeightRaw( &gl_smallFont, 200, msg );
 
    /* create window */
-   input_wid = window_create( title, -1, -1, 240, h+140 );
-   window_setData( input_wid, &done );
-   window_setAccept( input_wid, dialogue_inputClose );
-   window_setCancel( input_wid, dialogue_cancel );
+   input_dialogue.input_wid = window_create( title, -1, -1, 240, h+140 );
+   window_setData( input_dialogue.input_wid, &done );
+   window_setAccept( input_dialogue.input_wid, dialogue_inputClose );
+   window_setCancel( input_dialogue.input_wid, dialogue_cancel );
    /* text */
-   window_addText( input_wid, 30, -30, 200, h,  0, "txtInput",
+   window_addText( input_dialogue.input_wid, 30, -30, 200, h,  0, "txtInput",
          &gl_smallFont, &cDConsole, msg );
    /* input */
-   window_addInput( input_wid, 20, -50-h, 200, 20, "inpInput", max, 1, NULL );
-   window_setInputFilter( input_wid, "inpInput", "/" ); /* Remove illegal stuff. */
+   window_addInput( input_dialogue.input_wid, 20, -50-h, 200, 20, "inpInput", max, 1, NULL );
+   window_setInputFilter( input_dialogue.input_wid, "inpInput", "/" ); /* Remove illegal stuff. */
    /* button */
-   window_addButton( input_wid, -20, 20, 80, 30,
+   window_addButton( input_dialogue.input_wid, -20, 20, 80, 30,
          "btnClose", "Done", dialogue_inputClose );
 
    /* tricky secondary loop */
@@ -412,15 +426,16 @@ char* dialogue_inputRaw( const char* title, int min, int max, const char *msg )
       if (done < 0)
          input = NULL;
       else
-         input = strdup( window_getInput( input_wid, "inpInput" ) );
+         input = strdup( window_getInput( input_dialogue.input_wid,
+	                                  "inpInput" ) );
    }
 
    /* cleanup */
    if (input != NULL) {
-      window_destroy( input_wid );
+      window_destroy( input_dialogue.input_wid );
       dialogue_open--;
    }
-   input_wid = 0;
+   input_dialogue.input_wid = 0;
 
    /* return the result */
    return input;
@@ -453,6 +468,21 @@ static void dialogue_listClose( unsigned int wid, char* str )
    dialogue_close( wid, str );
 }
 /**
+ * @brief used to pass appropriate information to the method that
+ *    handles updating the extra information area in the dialogue
+ *    listpanel.
+ *
+ *    @param wid Window id
+ *    @param wgtname name of the widget that raised the event.
+ */
+void select_call_wrapper(unsigned int wid, char* wgtname)
+{
+   if(input_dialogue.item_select_cb)
+      input_dialogue.item_select_cb(wid, wgtname,input_dialogue.x,
+                                    input_dialogue.y, input_dialogue.w,
+				    input_dialogue.h);
+}
+/**
  * @brief Creates a list dialogue with OK and Cancel button with a fixed message.
  *
  *    @param title Title of the dialogue.
@@ -465,7 +495,7 @@ int dialogue_list( const char* title, char **items, int nitems, const char *fmt,
    char msg[512];
    va_list ap;
 
-   if (input_wid) return -1;
+   if (input_dialogue.input_wid) return -1;
 
    if (fmt == NULL) return -1;
    else { /* get the message */
@@ -474,7 +504,7 @@ int dialogue_list( const char* title, char **items, int nitems, const char *fmt,
       va_end(ap);
    }
 
-   return dialogue_listRaw( title, items, nitems, msg );
+   return dialogue_listPanelRaw( title, items, nitems, 0, 0, NULL, NULL, msg );
 }
 /**
  * @brief Creates a list dialogue with OK and Cancel button.
@@ -486,13 +516,73 @@ int dialogue_list( const char* title, char **items, int nitems, const char *fmt,
  */
 int dialogue_listRaw( const char* title, char **items, int nitems, const char *msg )
 {
+   if (input_dialogue.input_wid) return -1;
+   return dialogue_listPanelRaw( title, items, nitems, 0, 0, NULL, NULL, msg );
+}
+/**
+ * @brief Creates a list dialogue with OK and Cancel buttons, with a fixed message,
+ *	as well as a small extra area for the list to react to item selected events.
+ *
+ *    @param title Title of the dialogue.
+ *    @param items Items in the list (should be all malloced, automatically freed).
+ *    @param nitems Number of items.
+ *    @param extrawidth Width of area to add for select_call callback.
+ *    @param minheight Minimum height for the window.
+ *    @param add_widgets This function is called with the new window as an argument
+ *    	allowing for initial population of the extra area.
+ *    @param select_call This function is called when a new item in the list is
+ *      selected, receiving the window's id and the selected widgets name as arguments.
+ *    @param fmt printf formatted string with text to display.
+ */
+int dialogue_listPanel( const char* title, char **items, int nitems, int extrawidth,
+        int minheight, void (*add_widgets) (unsigned int wid, int x, int y, int w, int h),
+        void (*select_call) (unsigned int wid, char* wgtname, int x, int y, int w, int h),
+	const char *fmt, ... )
+{
+   char msg[512];
+   va_list ap;
+
+   if (input_dialogue.input_wid) return -1;
+   if (fmt == NULL) return -1;
+   else { /* get the message */
+      va_start(ap, fmt);
+      vsnprintf(msg, 512, fmt, ap);
+      va_end(ap);
+   }
+
+   return dialogue_listPanelRaw( title, items, nitems, extrawidth, minheight,
+					add_widgets, select_call, msg );
+}
+/**
+ * @brief Creates a list dialogue with OK and Cancel buttons, with a fixed message,
+ *      as well as a small extra area for the list to react to item selected events.
+ *
+ *    @param title Title of the dialogue.
+ *    @param items Items in the list (should be all malloced, automatically freed).
+ *    @param nitems Number of items.
+ *    @param extrawidth Width of area to add for select_call callback.
+ *    @param minheight Minimum height for the window.
+ *    @param add_widgets This function is called with the new window as an argument
+ *      allowing for initial population of the extra area.
+ *    @param select_call (optional) This function is called when a new item in the list
+ *      is selected, receiving the window's id and the selected widgets name as
+ *      arguments.
+ *    @param msg string with text to display.
+ */
+int dialogue_listPanelRaw( const char* title, char **items, int nitems, int extrawidth,
+        int minheight, void (*add_widgets) (unsigned int wid, int x, int y, int w, int h),
+        void (*select_call) (unsigned int wid, char* wgtname, int x, int y, int w, int h),
+	const char *msg )
+{
    int i;
-   int w, h;
+   int w, h, winw, winh;
    glFont* font;
    unsigned int wid;
    int list_width, list_height;
    int text_height, text_width;
    int done;
+
+   if (input_dialogue.input_wid) return -1;
 
    font = dialogue_getSize( title, msg, &text_width, &text_height );
 
@@ -504,15 +594,21 @@ int dialogue_listRaw( const char* title, char **items, int nitems, const char *m
       list_height += gl_defFont.h + 5;
    }
    list_height += 100;
-   w = MAX( list_width + 60, 200 );
    if (list_height > 500)
       h = (list_height*8)/10;
    else
       h = MAX( 300, list_height );
+
    h = MIN( (SCREEN_H*2)/3, h );
+   w = MAX( list_width + 60, 200 );
+
+   winw = w + extrawidth;
+   winh = MAX( h, minheight );
+
+   h = winh;
 
    /* Create the window. */
-   wid = window_create( title, -1, -1, w, h );
+   wid = window_create( title, -1, -1, winw, winh );
    window_setData( wid, &done );
    window_addText( wid, 20, -40, w-40, text_height,  0, "txtMsg",
          font, &cDConsole, msg );
@@ -522,7 +618,7 @@ int dialogue_listRaw( const char* title, char **items, int nitems, const char *m
    /* Create the list. */
    window_addList( wid, 20, -40-text_height-20,
          w-40, h - (40+text_height+20) - (20+30+20),
-         "lstDialogue", items, nitems, 0, NULL );
+         "lstDialogue", items, nitems, 0, select_call_wrapper );
 
    /* Create the buttons. */
    window_addButton( wid, -20, 20, 60, 30,
@@ -530,13 +626,22 @@ int dialogue_listRaw( const char* title, char **items, int nitems, const char *m
    window_addButton( wid, -20-60-20, 20, 60, 30,
          "btnCancel", "Cancel", dialogue_listCancel );
 
+   if(add_widgets)
+      add_widgets(wid, w, 0, winw, winh);
+
+   if(select_call) {
+      input_dialogue.x = w;
+      input_dialogue.y = 0;
+      input_dialogue.w = winw;
+      input_dialogue.h = winh;
+      input_dialogue.item_select_cb = select_call;
+   }
+
    dialogue_open++;
    toolkit_loop( &done );
 
    return dialogue_listSelected;
 }
-
-
 static unsigned int choice_wid = 0; /**< Stores the choice window id. */
 static char *choice_result; /**< Pointer to the choice result. */
 static int choice_nopts; /**< Counter variable. */
