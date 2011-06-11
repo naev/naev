@@ -187,11 +187,9 @@ static void* tq_dequeue( ThreadQueue *q )
 
    if ((newhead = node->next) == NULL) {
       WARN("Tried to dequeue while the queue was empty!");
-      /** Ugly fix :/
-       * Unlock and return NULL *
+      /* Ugly fix :/ */
       SDL_mutexV(q->h_lock);
       return NULL;
-      */
    }
    while((newhead = node->next) == NULL) {
        /* Wait until the cache updates :/ */
@@ -309,6 +307,17 @@ static int threadpool_worker( void *data )
  * pointer as argument.
  *
  * @return Not really implemented yet.
+ *
+ * Process is:
+ *
+ * 1) Wait for job
+ * 2) if Timed out -> kill idle, putting on stopped, go to 1)
+ * 3) Have thread run job
+ * 3.1) Grab a job from the queue
+ * 3.2) If idle thread, grab idle thread
+ *      else if stopped threads, reactivate stopped thread
+ *      else wait for running thread
+ * 4) Go to 1)
  */
 static int threadpool_handler( void *data )
 {
@@ -378,7 +387,7 @@ static int threadpool_handler( void *data )
           * threadpool is just patiently waiting for work to arrive.
           */
          if (SDL_SemWait( global_queue->semaphore ) == -1) {
-             WARN("L%d: SDL_SemWait failed! Error: %s", __LINE__, SDL_GetError());
+             WARN("SDL_SemWait failed! Error: %s", SDL_GetError());
              continue;
          }
 
@@ -425,6 +434,7 @@ static int threadpool_handler( void *data )
       threadarg->data      = node->data;
       /* Signal the thread that there's a new job */
       SDL_SemPost( threadarg->semaphore );
+
       /* Start a new thread and increment the thread counter */
       if (newthread) {
          SDL_CreateThread( threadpool_worker, threadarg );
@@ -548,7 +558,7 @@ void vpool_wait( ThreadQueue *queue )
       /* This is needed to keep the invariants of the queue */
       while (SDL_SemWait( queue->semaphore ) == -1) {
           /* Again, a really bad idea */
-          WARN("L%d: SDL_SemWait failed! Error: %s", __LINE__, SDL_GetError());
+          WARN("SDL_SemWait failed! Error: %s", SDL_GetError());
       }
       node = tq_dequeue( queue );
 
