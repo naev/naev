@@ -93,13 +93,15 @@ function empire_createPeacemaker( empire_create )
    secondary      = { "Headhunter Launcher" }
    use_primary    = nhigh-2
    use_secondary  = 2
+   addWeapons( primary, use_primary )
+   addWeapons( secondary, use_secondary )
    medium         = equip_mediumHig()
    low            = equip_lowHig()
    apu            = equip_apuHig()
 
    -- Finally add outfits
-   equip_ship( p, true, primary, secondary, medium, low, apu,
-               use_primary, use_secondary, use_medium, use_low, olist )
+   equip_ship( p, true, weapons, medium, low, apu,
+               use_medium, use_low, olist )
 
    return p,olist
 end
@@ -134,13 +136,15 @@ function empire_createHawking( empire_create )
    secondary      = { "Headhunter Launcher" }
    use_primary    = nhigh-2
    use_secondary  = 2
+   addWeapons( primary, use_primary )
+   addWeapons( secondary, use_secondary )
    medium         = equip_mediumHig()
    low            = equip_lowHig()
    apu            = equip_apuHig()
 
    -- Finally add outfits
-   equip_ship( p, true, primary, secondary, medium, low, apu,
-               use_primary, use_secondary, use_medium, use_low, olist )
+   equip_ship( p, true, weapons, medium, low, apu,
+               use_medium, use_low, olist )
 
    return p,olist
 end
@@ -175,13 +179,15 @@ function empire_createPacifier( empire_create )
    secondary      = { "Headhunter Launcher" }
    use_primary    = nhigh-2
    use_secondary  = 2
+   addWeapons( primary, use_primary )
+   addWeapons( secondary, use_secondary )
    medium         = equip_mediumMed()
    low            = equip_lowMed()
    apu            = equip_apuHig()
 
    -- Finally add outfits
-   equip_ship( p, true, primary, secondary, medium, low, apu,
-               use_primary, use_secondary, use_medium, use_low, olist )
+   equip_ship( p, true, weapons, medium, low, apu,
+               use_medium, use_low, olist )
 
    return p,olist
 end
@@ -215,13 +221,15 @@ function empire_createShark( empire_create )
    secondary      = { "Headhunter Launcher" }
    use_primary    = nhigh -1
    use_secondary  = 1
+   addWeapons( primary, use_primary )
+   addWeapons( secondary, use_secondary )
    medium         = equip_mediumLow()
    low            = equip_lowLow()
    apu            = equip_apuLow()
 
    -- Finally add outfits
-   equip_ship( p, true, primary, secondary, medium, low, apu,
-               use_primary, use_secondary, use_medium, use_low, olist )
+   equip_ship( p, true, weapons, medium, low, apu,
+               use_medium, use_low, olist )
 
    return p,olist
 end
@@ -255,13 +263,15 @@ function empire_createLancelot( empire_create )
    secondary      = { "Headhunter Launcher" }
    use_primary    = nhigh-1
    use_secondary  = 1
+   addWeapons( primary, use_primary )
+   addWeapons( secondary, use_secondary )
    medium         = equip_mediumLow()
    low            = equip_lowLow()
    apu            = equip_apuLow()
 
    -- Finally add outfits
-   equip_ship( p, true, primary, secondary, medium, low, apu,
-               use_primary, use_secondary, use_medium, use_low, olist )
+   equip_ship( p, true, weapons, medium, low, apu,
+               use_medium, use_low, olist )
 
    return p,olist
 end
@@ -295,13 +305,15 @@ function empire_createAdmonisher( empire_create )
    secondary      = { "Headhunter Launcher" }
    use_primary    = nhigh-1
    use_secondary  = 1
+   addWeapons( primary, use_primary )
+   addWeapons( secondary, use_secondary )
    medium         = equip_mediumMed()
    low            = equip_lowMed()
    apu            = equip_apuMed()
 
    -- Finally add outfits
-   equip_ship( p, true, primary, secondary, medium, low, apu,
-               use_primary, use_secondary, use_medium, use_low, olist )
+   equip_ship( p, true, weapons, medium, low, apu,
+               use_medium, use_low, olist )
 
    return p,olist
 end
