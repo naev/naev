@@ -461,7 +461,12 @@ static int threadpool_handler( void *data )
       /* Free the now unused job from the global_queue */
       free(node);
    }
-   /* TODO: cleanup and a way to stop the threadpool */
+   /** @TODO A way to stop the threadpool. */
+
+   /* Clean up. */
+   tq_destroy( idle );
+   tq_destroy( stopped );
+   free( threadargs );
 
    return 0;
 }
