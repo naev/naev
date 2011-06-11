@@ -115,21 +115,18 @@ end
 --
 --    @param p Pilot to equip.
 --    @param scramble Use crazy assortment of primary/secondary weapons.
---    @param primary List of primary weapons to use.
---    @param secondary List of secondary weapons to use.
+--    @param weapons A table of weapon tables, with the last key of each being the number of slots for that set.
 --    @param medium List of medium outfits to use.
 --    @param low List of low outfits to use.
 --    @param apu List of APU to use.
 --    @param reactor List of reactors to use.
---    @param use_primary Amount of slots to use for primary (default nhigh-1).
---    @param use_secondary Amount of slots to use for secondary (default 1).
 --    @param use_medium Amount of slots to use for medium outfits (default nmedium).
 --    @param use_low Amount of slots to use for low outfits (default nlow).
 --    @param olist If not null, adds the outfits to olist instead of actually adding
 --           them.
 --]]
-function equip_ship( p, scramble, primary, secondary, medium, low, apu,
-   use_primary, use_secondary, use_medium, use_low, olist )
+function equip_ship( p, scramble, weapons, medium, low, apu,
+   use_medium, use_low, olist )
 
    -- Get the ship
    if olist ~= nil then
@@ -144,15 +141,13 @@ function equip_ship( p, scramble, primary, secondary, medium, low, apu,
    local nhigh, nmedium, nlow = s:slots()
    local shipcpu = s:cpu()
    local shiptype, shipsize = equip_getShipBroad( s:class() )
-   local outfits = { }
+   outfits = { }
    local i
 
 
    --[[
    --    Set up parameters that might be empty
    --]]
-   use_primary    = use_primary or nhigh-1
-   use_secondary  = use_secondary or 1
    use_medium     = use_medium or nmedium
    use_low        = use_low or nlow
 
@@ -160,26 +155,8 @@ function equip_ship( p, scramble, primary, secondary, medium, low, apu,
    --[[
    --    Set up weapons
    --]]
-   -- Check uniformity
-   local po, so
-   if not scramble then
-      po = primary[ rnd.rnd(1,#primary) ]
-      so = secondary[ rnd.rnd(1,#secondary) ]
-   end
-   -- Primary
-   i = 0
-   local o = primary[ rnd.rnd(1,#primary) ]
-   while i < use_primary do
-      outfits[ #outfits+1 ] = po or primary[ rnd.rnd(1,#primary) ]
-      i = i + 1
-   end
-   -- Secondary
-   i = 0
-   o = secondary[ rnd.rnd(1,#secondary) ]
-   while i < use_secondary do
-      outfits[ #outfits+1 ] = so or secondary[ rnd.rnd(1,#secondary) ]
-      i = i + 1
-   end
+   equip_parseWeapons(scramble)
+
    -- Check CPU if we can add APU
    if apu ~= nil and #apu > 0 then
       local cpu_usage = 0
@@ -224,6 +201,27 @@ function equip_ship( p, scramble, primary, secondary, medium, low, apu,
 end
 
 
+--[[
+-- @brief Parses a table of weapon tables with reasonable flexibility.
+--
+--    @param Whether or not to randomly select outfits.
+--]]
+function equip_parseWeapons(scramble)
+   for ak,av in ipairs(weapons) do
+      local o
+      if not scramble then
+         o = av[ rnd.rnd( 1, #av-1 )]
+      end
+      i = 0
+      while i < av[#av] do
+         outfits[ #outfits+1 ] = o or av[ rnd.rnd(1, #av-1 ) ]
+         i = i + 1
+      end
+   end
+end
+
+
+
 function icmb( t1, t2 )
    t = {}
    for _,v in ipairs(t1) do
@@ -235,3 +233,11 @@ function icmb( t1, t2 )
    return t
 end
 
+
+function addWeapons( new, limit )
+   if not weapons then
+      weapons = {}
+   end
+   table.insert(new, limit)
+   return table.insert(weapons, new)
+end

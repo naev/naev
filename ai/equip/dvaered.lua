@@ -26,7 +26,7 @@ function equip_forwardDvaHig ()
    return { "Railgun", "Repeating Railgun" }
 end
 function equip_turretDvaLow ()
-   return { "Turreted Gauss Gun", "Turreted Vulcan Gun" }
+   return { "Turreted Gauss Gun" }
 end
 function equip_turretDvaMed ()
    return { "Turreted Vulcan Gun" }
@@ -47,14 +47,14 @@ end
 -- @brief Equips a dvaered military type ship.
 --]]
 function equip_dvaeredMilitary( p, shipsize )
-   local primary, secondary, medium, low, apu
+   local medium, low, apu
    local use_primary, use_secondary, use_medium, use_low
    local nhigh, nmedium, nlow = p:ship():slots()
 
    -- Defaults
    medium      = { "Civilian Jammer" }
-   secondary   = { }
    apu         = { }
+   weapons     = {}
 
    -- Equip by size and type
    if shipsize == "small" then
@@ -62,52 +62,56 @@ function equip_dvaeredMilitary( p, shipsize )
 
       -- Scout
       if class == "Scout" then
-         primary        = equip_forwardLow ()
-         use_primary    = rnd.rnd(1,#nhigh)
+         use_forward    = rnd.rnd(1,#nhigh)
+         addWeapons( equip_forwardLow(), use_forward )
          medium         = { "Generic Afterburner", "Milspec Jammer" }
          use_medium     = 2
          low            = { "Solar Panel" }
 
       -- Fighter
       elseif class == "Fighter" then
-         primary        = equip_forwardDvaLow()
-         use_primary    = nhigh-1
-         secondary      = equip_secondaryDva()
+         use_forward    = nhigh-1
          use_secondary  = 1
+         addWeapons( equip_forwardDvaLow(), use_forward )
+         addWeapons( equip_secondaryDva(), use_secondary )
          medium         = equip_mediumLow()
          low            = equip_lowLow()
          apu            = equip_apuLow()
 
       -- Bomber
       elseif class == "Bomber" then
-         primary        = equip_forwardDvaLow()
-         secondary      = equip_rangedDva()
-         use_primary    = rnd.rnd(1,2)
-         use_secondary  = nhigh - use_primary
+         use_forward    = rnd.rnd(1,2)
+         use_secondary  = nhigh - use_forward
+         addWeapons( equip_forwardDvaLow(), use_forward )
+         addWeapons( equip_secondaryDva(), use_secondary )
          medium         = equip_mediumLow()
          low            = equip_lowLow()
          apu            = equip_apuLow()
       end
 
    elseif shipsize == "medium" then
-      primary        = icmb( equip_forwardDvaMed(), equip_turretDvaMed() )
-      secondary      = equip_secondaryDva()
       use_secondary  = rnd.rnd(1,2)
-      use_primary    = nhigh - use_secondary
-      medium         = equip_mediumLow()
+      use_turrets    = nhigh - use_secondary - rnd.rnd(1,2)
+      use_forward    = nhigh - use_turrets
+      addWeapons( equip_secondaryDva(), use_secondary )
+      addWeapons( equip_turretDvaMed(), use_turrets )
+      addWeapons( equip_forwardDvaMed(), use_forward )
+      medium         = equip_mediumMed()
       low            = equip_lowMed()
       apu            = equip_apuMed()
 
    else -- "large"
-      primary        = icmb( equip_turretDvaHig(), equip_forwardDvaHig() )
-      secondary      = equip_secondaryDva()
-      use_primary    = nhigh-2
       use_secondary  = 2
+      use_turrets    = nhigh - use_secondary - rnd.rnd(2,3)
+      use_forward    = nhigh - use_turrets
+      addWeapons( equip_secondaryDva(), use_secondary )
+      addWeapons( equip_turretDvaHig(), use_turrets )
+      addWeapons( equip_forwardDvaHig(), use_forward )
       medium         = equip_mediumHig()
       low            = equip_lowHig()
       apu            = equip_apuHig()
    end
-   equip_ship( p, false, primary, secondary, medium, low, apu,
-               use_primary, use_secondary, use_medium, use_low )
+   equip_ship( p, false, weapons, medium, low, apu,
+               use_medium, use_low )
 end
 

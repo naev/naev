@@ -376,7 +376,6 @@ static Pilot *cur_pilot    = NULL; /**< Current pilot.  All functions use this. 
 static double pilot_acc    = 0.; /**< Current pilot's acceleration. */
 static double pilot_turn   = 0.; /**< Current pilot's turning. */
 static int pilot_flags     = 0; /**< Handle stuff like weapon firing. */
-static int pilot_firemode  = 0; /**< Method pilot is using to shoot. */
 static char aiL_distressmsg[PATH_MAX]; /**< Buffer to store distress message. */
 
 /*
@@ -845,7 +844,6 @@ void ai_think( Pilot* pilot, const double dt )
    pilot_acc         = 0;
    pilot_turn        = 0.;
    pilot_flags       = 0;
-   pilot_firemode    = 0;
    cur_pilot->target = cur_pilot->id;
 
    /* Get current task. */
@@ -2951,24 +2949,14 @@ static int aiL_hasturrets( lua_State *L )
 /**
  * @brief Makes the pilot shoot
  *
- * @luafunc shoot( secondary, firemode )
+ * @luafunc shoot( secondary )
  */
 static int aiL_shoot( lua_State *L )
 {
-   int s;
-
-   s = 0;
-
-   if (lua_isboolean(L,1))
-      s = lua_toboolean(L,1);
-   if (!s && lua_isnumber(L,2))
-      pilot_firemode = (int)lua_tonumber(L,2);
-
-   if (s)
+   if (lua_toboolean(L,1))
       ai_setFlag(AI_SECONDARY);
    else
       ai_setFlag(AI_PRIMARY);
-
    return 0;
 }
 

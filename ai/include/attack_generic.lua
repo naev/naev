@@ -2,14 +2,6 @@
 --    Generic attack functions
 --]]
 
-mem.atk_changetarget  = 2 -- Distance at which target changes
-mem.atk_approach      = 1.4 -- Distance that marks approach
-mem.atk_aim           = 1.0 -- Distance that marks aim
-mem.atk_board         = false -- Whether or not to board the target
-mem.atk_kill          = true -- Whether or not to finish off the target
-mem.aggressive        = true --whether to take the more aggressive or more evasive option when given
-mem.recharge          = false --whether to hold off shooting to avoid running dry of energy
-
 --[[
 -- Mainly manages targetting nearest enemy.
 --]]
@@ -141,11 +133,9 @@ end
 -- Approaches the target
 --]]
 function atk_g_approach( target, dist )
-
    dir = ai.idir(target)
-   
    if dir < 10 and dir > -10 then
-        keep_distance()
+      _atk_keep_distance()
    else
       dir = ai.iface(target)
    end
@@ -430,62 +420,6 @@ function atk_fighter ()
       else
         atk_g_flyby_aggressive( target, dist )
       end
-   end
-end
-
-
---[[
--- Main control function for bomber behavior.
--- Bombers are expected to have heavy weapons and target
---ships bigger than they are
---]]
-function atk_bomber ()
-
-   local target = ai.target()
-
-   -- make sure pilot exists
-   if not ai.exists(target) then
-           ai.poptask()
-           return
-   end
-
-   -- Check if is bribed by target
-   if ai.isbribed(target) then
-      ai.poptask()
-      return
-   end
-
-   -- Check if we want to board
-   if mem.atk_board and ai.canboard(target) then
-      ai.pushtask("board", target );
-      return
-   end
-
-   -- Check to see if target is disabled
-   if not mem.atk_kill and ai.isdisabled(target) then
-      ai.poptask()
-      return
-   end
-
-   -- Targetting stuff
-   ai.hostile(target) -- Mark as hostile
-   ai.settarget(target)
-
-   -- Get stats about enemy
-        local dist  = ai.dist( target ) -- get distance
-   local range = ai.getweaprange(3, 0)
-
-   -- We first bias towards range
-   if dist > range * mem.atk_approach then
-      atk_g_ranged( target, dist )
-
-   -- Now we do an approach
-   --elseif dist > 10 * range * mem.atk_aim then
-   --   atk_spiral_approach( target, dist )
-
-   -- Close enough to melee
-   else
-        atk_g_flyby( target, dist )   
    end
 end
 
