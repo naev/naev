@@ -591,6 +591,93 @@ static char **map_outfitsMatch( const char *name, int *len )
    return names;
 }
 /**
+ * @brief Add widgets to the extended area on the outfit search
+ *    listpanel.
+ *
+ *    @param wid The windowid we're adding widgets to
+ */
+static void map_addOutfitDetailFields(unsigned int wid, int x, int y, int w, int h)
+{
+   int iw, ih;
+
+   iw = x;
+   ih = y;
+
+   window_addRect( wid, 19 + iw + 20, -50, 128, 129, "rctImage", &cBlack, 0 );
+   window_addImage( wid, 20 + iw + 20, -50-128, 0, 0, "imgOutfit", NULL, 1 );
+
+   window_addText( wid, 20 + iw + 20 + 128 + 20, -60,
+         320, 160, 0, "txtOutfitName", &gl_defFont, &cBlack, NULL );
+   window_addText( wid, 20 + iw + 20 + 128 + 20, -60 - gl_defFont.h - 20,
+         320, 160, 0, "txtDescShort", &gl_smallFont, &cBlack, NULL );
+   window_addText( wid, 20 + iw + 20, -60-128-10,
+         60, 160, 0, "txtSDesc", &gl_smallFont, &cDConsole,
+         "Owned:\n"
+         "\n"
+         "Slot:\n"
+         "Size:\n"
+         "Mass:\n"
+         "\n"
+         "Price:\n"
+         "Money:\n"
+         "License:\n" );
+   window_addText( wid, 20 + iw + 20 + 60, -60-128-10,
+         250, 160, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
+   window_addText( wid, 20 + iw + 20, -60-128-10-160,
+         w-(iw+80), 180, 0, "txtDescription",
+         &gl_smallFont, NULL, NULL );
+}
+/**
+ * @brief Update the listPanel outfit details to the outfit selected.
+ *
+ *    @param wid The windowid of the window we're updating.
+ *    @param wgtname The name of the list that was selected.
+ */
+static void map_showOutfitDetail(unsigned int wid, char* wgtname, int x, int y, int w, int h)
+{
+   Outfit *outfit;
+   char buf[PATH_MAX], buf2[ECON_CRED_STRLEN], buf3[ECON_CRED_STRLEN];
+   double th;
+   int iw, ih;
+
+   iw = w - 400;
+   ih = h - 60;
+
+   outfit = outfit_get( toolkit_getList(wid, wgtname) );
+   window_modifyText( wid, "txtOutfitName", outfit->name );
+   window_modifyImage( wid, "imgOutfit", outfit->gfx_store, 0, 0 );
+
+   window_modifyText( wid, "txtDescription", outfit->description );
+   credits2str( buf2, outfit->price, 2 );
+   credits2str( buf3, player.p->credits, 2 );
+   snprintf( buf, PATH_MAX,
+         "%d\n"
+         "\n"
+         "%s\n"
+         "%s\n"
+         "%.0f tons\n"
+         "\n"
+         "%s credits\n"
+         "%s credits\n"
+         "%s\n",
+         player_outfitOwned(outfit),
+         outfit_slotName(outfit),
+         outfit_slotSize(outfit),
+         outfit->mass,
+         buf2,
+         buf3,
+         (outfit->license != NULL) ? outfit->license : "None" );
+   window_modifyText( wid, "txtDDesc", buf );
+   window_modifyText( wid, "txtOutfitName", outfit->name );
+   window_modifyText( wid, "txtDescShort", outfit->desc_short );
+   th = MAX( 128, gl_printHeightRaw( &gl_smallFont, 320, outfit->desc_short ) );
+   window_moveWidget( wid, "txtSDesc", 40+iw+20, -60-th-20 );
+   window_moveWidget( wid, "txtDDesc", 40+iw+20+60, -60-th-20 );
+   th += gl_printHeightRaw( &gl_smallFont, 250, buf );
+   window_moveWidget( wid, "txtDescription", 20+iw+40, -60-th-40 );
+}
+
+/**
  * @brief Searches for a outfit.
  *
  *    @param name Name to match.
@@ -623,7 +710,8 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
       list  = malloc( len*sizeof(char*) );
       for (i=0; i<len; i++)
          list[i] = strdup( names[i] );
-      i = dialogue_list( "Search Results", list, len,
+      i = dialogue_listPanel( "Search Results", list, len, 400, 550,
+            map_addOutfitDetailFields, map_showOutfitDetail,
             "Search results for outfits matching '%s':", name );
       if (i < 0) {
          free(names);
