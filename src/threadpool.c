@@ -356,7 +356,7 @@ static int threadpool_handler( void *data )
    for (i=0; i<MAXTHREADS; i++) {
       threadargs[i].function  = NULL;
       threadargs[i].data      = NULL;
-      threadargs[i].semaphore = SDL_CreateSemaphore( 0 );
+      threadargs[i].semaphore = SDL_CreateSemaphore( 0 ); /* Used to give orders. */
       threadargs[i].idle      = idle;
       threadargs[i].stopped   = stopped;
       threadargs[i].signal    = THREADSIG_RUN;
@@ -410,12 +410,6 @@ static int threadpool_handler( void *data )
 
          /* We got work. Continue to handle work. */
       }
-
-      /*
-       * We assume there's work available. We now have to choose who does the work.
-       * We'll try to wake up a sleeping thread, if none are left new threads will
-       * be created.
-       */
 
       /*
        * Get a new job from the queue. This should be safe as we have received
