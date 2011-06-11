@@ -615,17 +615,6 @@ int dialogue_listPanelRaw( const char* title, char **items, int nitems, int extr
    window_setAccept( wid, dialogue_listClose );
    window_setCancel( wid, dialogue_listCancel );
 
-   /* Create the list. */
-   window_addList( wid, 20, -40-text_height-20,
-         w-40, h - (40+text_height+20) - (20+30+20),
-         "lstDialogue", items, nitems, 0, select_call_wrapper );
-
-   /* Create the buttons. */
-   window_addButton( wid, -20, 20, 60, 30,
-         "btnOK", "OK", dialogue_listClose );
-   window_addButton( wid, -20-60-20, 20, 60, 30,
-         "btnCancel", "Cancel", dialogue_listCancel );
-
    if(add_widgets)
       add_widgets(wid, w, 0, winw, winh);
 
@@ -636,6 +625,17 @@ int dialogue_listPanelRaw( const char* title, char **items, int nitems, int extr
       input_dialogue.h = winh;
       input_dialogue.item_select_cb = select_call;
    }
+
+   /* Create the list. */
+   window_addList( wid, 20, -40-text_height-20,
+         w-40, h - (40+text_height+20) - (20+30+20),
+         "lstDialogue", items, nitems, 0, select_call_wrapper );
+
+   /* Create the buttons. */
+   window_addButton( wid, -20, 20, 60, 30,
+         "btnOK", "OK", dialogue_listClose );
+   window_addButton( wid, -20-60-20, 20, 60, 30,
+         "btnCancel", "Cancel", dialogue_listCancel );
 
    dialogue_open++;
    toolkit_loop( &done );
