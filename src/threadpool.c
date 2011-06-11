@@ -207,8 +207,10 @@ static void* tq_dequeue( ThreadQueue *q )
       return NULL;
       */
       /* We prefer to wait until the cache updates :/ */
-      while (newhead == NULL) {
-      }
+      do {
+         node     = q->first;
+         newhead  = node->next;
+      } while (newhead == NULL);
    }
 
    /* Remember the value and assign newhead as the new dummy element. */
