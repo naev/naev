@@ -5,7 +5,17 @@
  * @brief A simple threadpool implementation using a single queue.
  *
  * The queue is inspired by this paper (look for the queue with two locks):
- * http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.109.5602&rep=rep1&type=pdf
+ *
+ * Maged M. Michael and Michael L. Scott. 1998. Nonblocking algorithms and preemption-safe locking on multiprogrammed shared memory multiprocessors. J. Parallel Distrib. Comput. 51, 1 (May 1998), 1-26. DOI=10.1006/jpdc.1998.1446 http://dx.doi.org/10.1006/jpdc.1998.1446 
+ *
+ * @ARTICLE{Michael98non-blockingalgorithms,
+ *    author = {Maged M. Michael and Michael L. Scott},
+ *    title = {Non-Blocking Algorithms and Preemption-Safe Locking on Multiprogrammed Shared Memory Multiprocessors},
+ *    journal = {Journal of Parallel and Distributed Computing},
+ *    year = {1998},
+ *    volume = {51},
+ *    pages = {1--26},
+ * }
  */
 
 
