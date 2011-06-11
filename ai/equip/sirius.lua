@@ -56,6 +56,7 @@ function equip_siriusMilitary( p, shipsize )
    medium      = { "Civilian Jammer" }
    secondary   = { }
    apu         = { }
+   weapons     = {}
    scramble    = false
 
    -- Equip by size and type
@@ -64,8 +65,8 @@ function equip_siriusMilitary( p, shipsize )
 
       -- Scout
       if class == "Scout" then
-         primary        = equip_forwardLow ()
          use_primary    = rnd.rnd(1,#nhigh)
+         addWeapons( equip_forwardLow(), use_primary )
          medium         = { "Generic Afterburner", "Milspec Jammer" }
          use_medium     = 2
          low            = { "Solar Panel" }
@@ -74,18 +75,19 @@ function equip_siriusMilitary( p, shipsize )
       elseif class == "Fighter" then
          primary        = icmb( equip_forwardSrsLow(), equip_forwardSrsMed() )
          use_primary    = nhigh-1
-         secondary      = equip_secondarySrs()
          use_secondary  = 1
+         addWeapons( primary, use_primary )
+         addWeapons( equip_secondarySrs(), use_secondary )
          medium         = equip_mediumLow()
          low            = equip_lowLow()
          apu            = equip_apuLow()
 
       -- Bomber
       elseif class == "Bomber" then
-         primary        = equip_forwardSrsLow()
-         secondary      = equip_rangedSrs()
          use_primary    = rnd.rnd(1,2)
          use_secondary  = nhigh - use_primary
+         addWeapons( equip_forwardSrsLow(), use_primary )
+         addWeapons( equip_secondarySrs(), use_secondary )
          medium         = equip_mediumLow()
          low            = equip_lowLow()
          apu            = equip_apuLow()
@@ -97,9 +99,10 @@ function equip_siriusMilitary( p, shipsize )
       -- Corvette
       if class == "Corvette" then
          primary        = icmb( equip_forwardSrsMed(), equip_turretSrsLow() )
-         secondary      = equip_secondarySrs()
          use_secondary  = rnd.rnd(1,2)
          use_primary    = nhigh - use_secondary
+         addWeapons( primary, use_primary )
+         addWeapons( equip_secondarySrs(), use_secondary )
          medium         = equip_mediumMed()
          low            = equip_lowMed()
          apu            = equip_apuMed()
@@ -109,24 +112,25 @@ function equip_siriusMilitary( p, shipsize )
       if class == "Destroyer" then
          scramble       = true
          primary        = icmb( equip_forwardSrsMed(), equip_turretSrsMed() )
-         secondary      = equip_secondarySrs()
          use_secondary  = rnd.rnd(1,2)
          use_primary    = nhigh - use_secondary
+         addWeapons( primary, use_primary )
+         addWeapons( equip_secondarySrs(), use_secondary )
          medium         = equip_mediumMed()
          low            = equip_lowMed()
          apu            = equip_apuMed()
       end
 
    else
-      primary        = equip_turretSrsHig()
-      secondary      = equip_secondarySrs()
       use_primary    = nhigh-2
       use_secondary  = 2
+      addWeapons( equip_turretSrsHig(), use_primary )
+      addWeapons( equip_secondarySrs(), use_secondary )
       medium         = equip_mediumHig()
       low            = equip_lowHig()
       apu            = equip_apuHig()
    end
 
-   equip_ship( p, scramble, primary, secondary, medium, low, apu,
-               use_primary, use_secondary, use_medium, use_low )
+   equip_ship( p, scramble, weapons, medium, low, apu,
+               use_medium, use_low )
 end
