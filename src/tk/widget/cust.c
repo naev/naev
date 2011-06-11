@@ -91,7 +91,7 @@ static void cst_render( Widget* cst, double bx, double by )
       /* inner outline */
       toolkit_drawOutline( x, y+1, cst->w+1, cst->h+1, 0.,
             toolkit_colLight, toolkit_col );
-      /* outter outline */
+      /* outer outline */
       toolkit_drawOutline( x, y, cst->w+1, cst->h+1, 1.,
             toolkit_colDark, NULL );
    }

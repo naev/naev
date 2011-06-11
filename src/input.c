@@ -63,9 +63,9 @@ const char *keybind_info[][3] = {
    { "accel", "Accelerate", "Makes your ship accelerate forward." },
    { "left", "Turn Left", "Makes your ship turn left." },
    { "right", "Turn Right", "Makes your ship turn right." },
-   { "reverse", "Reverse", "Makes your ship turn around and face the direction you're moving from. Useful for braking." },
-   { "afterburn", "Afterburner", "Makes your ship afterburn if you have an afterburner installed." },
-   /* Targetting. */
+   { "reverse", "Reverse", "Makes your ship face the direction you're moving from. Useful for braking." },
+   { "afterburn", "Afterburner", "Engages the ship's afterburner, if one is installed." },
+   /* Targeting. */
    { "target_next", "Target Next", "Cycles through ship targets." },
    { "target_prev", "Target Previous", "Cycles backwards through ship targets." },
    {"target_nearest", "Target Nearest", "Targets the nearest non-disabled ship." },
@@ -74,49 +74,49 @@ const char *keybind_info[][3] = {
    { "target_hostile", "Target Nearest Hostile", "Targets the nearest hostile ship." },
    { "target_clear", "Clear Target", "Clears the currently-targeted ship, planet or jump point." },
    /* Fighting. */
-   { "primary", "Fire Primary Weapon", "Fires your primary weapons." },
-   { "face", "Face Target", "Faces your target (ship target if you have one, otherwise your planet target)." },
-   { "board", "Board Target", "Attempts to board your target ship." },
+   { "primary", "Fire Primary Weapon", "Fires primary weapons." },
+   { "face", "Face Target", "Faces the targeted ship if one is targeted, otherwise faces targeted planet or jump point." },
+   { "board", "Board Target", "Attempts to board the targeted ship." },
    /* Secondary weapons. */
-   { "secondary", "Fire Secondary Weapon", "Fires your secondary weapon." },
-   { "weapset1", "Weapon Set 1", "Activate Weapon Set 1" },
-   { "weapset2", "Weapon Set 2", "Activate Weapon Set 2" },
-   { "weapset3", "Weapon Set 3", "Activate Weapon Set 3" },
-   { "weapset4", "Weapon Set 4", "Activate Weapon Set 4" },
-   { "weapset5", "Weapon Set 5", "Activate Weapon Set 5" },
-   { "weapset6", "Weapon Set 6", "Activate Weapon Set 6" },
-   { "weapset7", "Weapon Set 7", "Activate Weapon Set 7" },
-   { "weapset8", "Weapon Set 8", "Activate Weapon Set 8" },
-   { "weapset9", "Weapon Set 9", "Activate Weapon Set 9" },
-   { "weapset0", "Weapon Set 0", "Activate Weapon Set 0" },
+   { "secondary", "Fire Secondary Weapon", "Fires secondary weapons." },
+   { "weapset1", "Weapon Set 1", "Activates weapon set 1." },
+   { "weapset2", "Weapon Set 2", "Activates weapon set 2." },
+   { "weapset3", "Weapon Set 3", "Activates weapon set 3." },
+   { "weapset4", "Weapon Set 4", "Activates weapon set 4." },
+   { "weapset5", "Weapon Set 5", "Activates weapon set 5." },
+   { "weapset6", "Weapon Set 6", "Activates weapon set 6." },
+   { "weapset7", "Weapon Set 7", "Activates weapon set 7." },
+   { "weapset8", "Weapon Set 8", "Activates weapon set 8." },
+   { "weapset9", "Weapon Set 9", "Activates weapon set 9." },
+   { "weapset0", "Weapon Set 0", "Activates weapon set 0." },
    /* Escorts. */
    { "e_targetNext", "Target Next Escort", "Cycles through your escorts." },
    { "e_targetPrev", "Target Previous Escort", "Cycles backwards through your escorts." },
-   { "e_attack", "Escort Attack Command", "Tells your escorts to attack your target." },
-   { "e_hold", "Escort Hold Command", "Tells your escorts to hold their positions." },
-   { "e_return", "Escort Return Command", "Tells your escorts to return to your ship hangars." },
+   { "e_attack", "Escort Attack Command", "Orders escorts to attack your target." },
+   { "e_hold", "Escort Hold Command", "Orders escorts to hold their positions." },
+   { "e_return", "Escort Return Command", "Orders escorts to return to your ship hangars." },
    { "e_clear", "Escort Clear Commands", "Clears your escorts of commands." },
    /* Space navigation. */
    { "autonav", "Autonavigation On", "Initializes the autonavigation system." },
-   { "target_planet", "Target Planet", "Cycles through planet targets" },
-   { "land", "Land", "Attempts to land on your targetted planet or targets the nearest landable planet. Requests for landing if you don't have permission yet." },
-   { "thyperspace", "Target Jumpgate", "Cycles through jump gates." },
-   { "starmap", "Star Map", "Opens the Star Map." },
-   { "jump", "Initiate Jump", "Attempts to jump through a jump gate." },
-   { "overlay", "Overlay Map", "Opens the System Overlay map." },
+   { "target_planet", "Target Planet", "Cycles through planet targets." },
+   { "land", "Land", "Attempts to land on your targeted planet or targets the nearest landable planet. Requests for landing if you don't have permission yet." },
+   { "thyperspace", "Target Jumpgate", "Cycles through jump points." },
+   { "starmap", "Star Map", "Opens the star map." },
+   { "jump", "Initiate Jump", "Attempts to jump via a jump point." },
+   { "overlay", "Overlay Map", "Opens the in-system overlay map." },
    { "mousefly", "Mouse Flight", "Toggles mouse flying." },
    /* Communication. */
    { "log_up", "Log Scroll Up", "Scrolls the log upwards." },
    { "log_down", "Log Scroll Down", "Scrolls the log downwards." },
-   { "hail", "Hail Target", "Attempts to initialize communication with your targetted ship." },
-   { "autohail", "Autohail", "Automatically initialize communication with a ship that hailed you." },
+   { "hail", "Hail Target", "Attempts to initialize communication with the targeted ship." },
+   { "autohail", "Autohail", "Automatically initialize communication with a ship that is hailing you." },
    /* Misc. */
-   { "mapzoomin", "Radar Zoom In", "Zooms in on your radar." },
-   { "mapzoomout", "Radar Zoom Out", "Zooms out on your radar." },
+   { "mapzoomin", "Radar Zoom In", "Zooms in on the radar." },
+   { "mapzoomout", "Radar Zoom Out", "Zooms out on the radar." },
    { "screenshot", "Screenshot", "Takes a screenshot." },
    { "pause", "Pause", "Pauses the game." },
    { "speed", "Toggle 2x Speed", "Toggles 2x speed modifier." },
-   { "menu", "Small Menu", "Opens the small ingame menu." },
+   { "menu", "Small Menu", "Opens the small in-game menu." },
    { "info", "Information Menu", "Opens the information menu." },
    { "console", "Lua Console", "Opens the Lua console." },
    { "switchtab1", "Switch Tab 1", "Switches to tab 1." },
@@ -197,7 +197,7 @@ void input_setDefault (void)
    input_setKeybind( "left", KEYBIND_KEYBOARD, SDLK_LEFT, NMOD_ALL );
    input_setKeybind( "right", KEYBIND_KEYBOARD, SDLK_RIGHT, NMOD_ALL );
    input_setKeybind( "reverse", KEYBIND_KEYBOARD, SDLK_DOWN, NMOD_ALL );
-   /* Targetting. */
+   /* Targeting. */
    input_setKeybind( "target_next", KEYBIND_KEYBOARD, SDLK_t, NMOD_NONE );
    input_setKeybind( "target_prev", KEYBIND_KEYBOARD, SDLK_t, NMOD_CTRL );
    input_setKeybind( "target_nearest", KEYBIND_KEYBOARD, SDLK_n, NMOD_NONE );
@@ -505,7 +505,7 @@ void input_setKeybind( const char *keybind, KeybindType type, int key, SDLMod mo
  *    @brief keybind Name of the keybinding to get.
  *    @param[out] type Stores the type of the keybinding.
  *    @param[out] mod Stores the modifiers used with the keybinding.
- *    @return The key assosciated with the keybinding.
+ *    @return The key associated with the keybinding.
  */
 SDLKey input_getKeybind( const char *keybind, KeybindType *type, SDLMod *mod )
 {
@@ -805,7 +805,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
       }
       else if (value==KEY_RELEASE)
          player_rmFlag(PLAYER_PRIMARY);
-   /* targetting */
+   /* targeting */
    } else if (INGAME() && NODEAD() && KEY("target_next")) {
       if (value==KEY_PRESS) player_targetNext(0);
    } else if (INGAME() && NODEAD() && KEY("target_prev")) {
@@ -999,7 +999,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    hparam[0].u.str   = input_keybinds[keynum].name;
    hparam[1].type    = HOOK_PARAM_BOOL;
    hparam[1].u.b     = (value > 0.);
-   hparam[2].type    = HOOK_PARAM_SENTINAL;
+   hparam[2].type    = HOOK_PARAM_SENTINEL;
    hooks_runParam( "input", hparam );
 }
 #undef KEY
@@ -1135,7 +1135,7 @@ static void input_clickevent( SDL_Event* event )
    /* Generate hook. */
    hparam[0].type    = HOOK_PARAM_NUMBER;
    hparam[0].u.num   = event->button.button;
-   hparam[1].type    = HOOK_PARAM_SENTINAL;
+   hparam[1].type    = HOOK_PARAM_SENTINEL;
    hooks_runParam( "mouse", hparam );
 
    /* Handle zoom. */
@@ -1154,7 +1154,7 @@ static void input_clickevent( SDL_Event* event )
       return;
    }
 
-   /* Mouse targetting is left only. */
+   /* Mouse targeting is left only. */
    if (event->button.button != SDL_BUTTON_LEFT)
       return;
 
@@ -1257,7 +1257,7 @@ static void input_clickevent( SDL_Event* event )
 /**
  * @brief Handles global input.
  *
- * Basically seperates the event types
+ * Basically separates the event types
  *
  *    @param event Incoming SDL_Event.
  */
@@ -1271,7 +1271,7 @@ void input_handle( SDL_Event* event )
       SDL_ShowCursor( SDL_ENABLE );
    }
 
-   if (toolkit_isOpen()) /* toolkit handled seperately completely */
+   if (toolkit_isOpen()) /* toolkit handled completely separately */
       if (toolkit_input(event))
          return; /* we don't process it if toolkit grabs it */
 

@@ -339,6 +339,9 @@
        * sirius_fyrra_f1.png
        * unknown.png
        * youngbusinessman.png
+       * mia.png
+       * aristocrat.png
+       * drunkard.png
    * logo
      * dvaered_small.png
      * empire_small.png
@@ -504,3 +507,10 @@
        * rhino
          * rhino.png
          * rhino_pirate.png
+ * Author: bornloser, License: CC-by-sa 3.0
+   * gfx
+     * ship
+       * phalanx
+         * phalanx.png
+         * phalanx_dvaered.png
+         * phalanx_pirate.png

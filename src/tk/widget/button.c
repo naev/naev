@@ -246,7 +246,7 @@ static void btn_render( Widget* btn, double bx, double by )
 
    /* inner outline */
    toolkit_drawOutline( x, y, btn->w, btn->h, 0., lc, c );
-   /* outter outline */
+   /* outer outline */
    toolkit_drawOutline( x, y, btn->w, btn->h, 1., &cBlack, NULL );
 
    gl_printMidRaw( NULL, (int)btn->w,

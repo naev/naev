@@ -1916,7 +1916,7 @@ static int outfit_parse( Outfit* temp, const xmlNodePtr parent )
          continue;
       }
 
-      if (xml_isNode(node,"specific")) { /* has to be processed seperately */
+      if (xml_isNode(node,"specific")) { /* has to be processed separately */
 
          /* get the type */
          prop = xml_nodeProp(node,"type");

@@ -121,7 +121,7 @@ static void inp_render( Widget* inp, double bx, double by )
    /* inner outline */
    toolkit_drawOutline( x, y, inp->w, inp->h, 0.,
          toolkit_colLight, toolkit_col );
-   /* outter outline */
+   /* outer outline */
    toolkit_drawOutline( x, y, inp->w, inp->h, 1.,
          toolkit_colDark, NULL );
 }
@@ -152,8 +152,8 @@ static int inp_text( Widget* inp, const char *buf )
 /**
  * @brief Adds a single key to the input.
  *
- *    @param inp Input widget recieving the key.
- *    @param key Key to recieve.
+ *    @param inp Input widget receiving the key.
+ *    @param key Key to receive.
  *    @return 1 if key was used.
  */
 static int inp_addKey( Widget* inp, SDLKey key )

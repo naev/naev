@@ -39,15 +39,14 @@ function spawn_squad ()
        scom.addPilot( pilots, "Pirate Vendetta", 25 );
        scom.addPilot( pilots, "Pirate Ancestor", 20 );
     elseif r < 0.8 then
-       scom.addPilot( pilots, "Pirate Hyena", 15 );
        scom.addPilot( pilots, "Pirate Shark", 20 );
-       scom.addPilot( pilots, "Pirate Vendetta", 25 );
        scom.addPilot( pilots, "Pirate Rhino", 35 );
+       scom.addPilot( pilots, "Pirate Phalanx", 45 );
     else
        scom.addPilot( pilots, "Pirate Hyena", 15 );
        scom.addPilot( pilots, "Pirate Shark", 20 );
        scom.addPilot( pilots, "Pirate Vendetta", 25 );
-       scom.addPilot( pilots, "Pirate Admonisher", 40 );
+       scom.addPilot( pilots, "Pirate Admonisher", 45 );
     end
 
     return pilots
@@ -60,24 +59,24 @@ function spawn_capship ()
     local r = rnd.rnd()
 
     -- Generate the capship
-    scom.addPilot( pilots, "Pirate Kestrel", 150 )
+    scom.addPilot( pilots, "Pirate Kestrel", 125 )
 
     -- Generate the escorts
     if r < 0.5 then
        scom.addPilot( pilots, "Pirate Vendetta", 25 );
        scom.addPilot( pilots, "Pirate Vendetta", 25 );
-       scom.addPilot( pilots, "Pirate Admonisher", 40 );
+       scom.addPilot( pilots, "Pirate Admonisher", 45 );
     elseif r < 0.8 then
        scom.addPilot( pilots, "Pirate Shark", 20 );
        scom.addPilot( pilots, "Pirate Vendetta", 25 );
        scom.addPilot( pilots, "Pirate Ancestor", 20 );
-       scom.addPilot( pilots, "Pirate Rhino", 35 );
+       scom.addPilot( pilots, "Pirate Phalanx", 45 );
     else
        scom.addPilot( pilots, "Pirate Shark", 20 );
        scom.addPilot( pilots, "Pirate Vendetta", 25 );
        scom.addPilot( pilots, "Pirate Ancestor", 20 );
        scom.addPilot( pilots, "Pirate Rhino", 35 );
-       scom.addPilot( pilots, "Pirate Admonisher", 40 );
+       scom.addPilot( pilots, "Pirate Admonisher", 45 );
     end
 
     return pilots

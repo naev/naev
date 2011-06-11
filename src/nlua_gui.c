@@ -167,7 +167,7 @@ static int guiL_osdInit( lua_State *L )
 
 
 /**
- * @brief Sets up the message box from which the player recieves input.
+ * @brief Sets up the message box from which the player receives input.
  *
  *    @luaparam width Width of the message box.
  *    @luaparam x X position of message box.
@@ -267,7 +267,7 @@ static int guiL_radarRender( lua_State *L )
 /**
  * @brief Sets the Lua planet target GFX.
  *
- *    @luaparam tex Texture to set for the planet targetting.
+ *    @luaparam tex Texture to set for the planet targeting.
  * @luafunc targetPlanetGFX( tex )
  */
 static int guiL_targetPlanetGFX( lua_State *L )
@@ -282,7 +282,7 @@ static int guiL_targetPlanetGFX( lua_State *L )
 /**
  * @brief Sets the Lua planet target GFX.
  *
- *    @luaparam tex Texture to set for the planet targetting.
+ *    @luaparam tex Texture to set for the planet targeting.
  * @luafunc targetPlanetGFX( tex )
  */
 static int guiL_targetPilotGFX( lua_State *L )
@@ -297,7 +297,7 @@ static int guiL_targetPilotGFX( lua_State *L )
 /**
  * @brief Enables mouse clicking callback.
  *
- * It enables recieving mouse clicks with a callback function like:<br />
+ * It enables receiving mouse clicks with a callback function like:<br />
  * function mouse_click( button, x, y, state ) <br />
  * With button being the ID of the button, x/y being the position clicked and state being true if pressed, false if lifted. It should return true if it used the mouse event or false if it let it through.
  *
@@ -319,7 +319,7 @@ static int guiL_mouseClickEnable( lua_State *L )
 /**
  * @brief Enables mouse movement callback.
  *
- * It enables recieving mouse movements with a callback function like:<br />
+ * It enables receiving mouse movements with a callback function like:<br />
  * function mouse_move( x, y ) <br />
  * With x/y being the position of the mouse.
  *

@@ -179,6 +179,28 @@ end
 function __hyperspace ()
    hyperspace()
 end
+function __hyperspace_shoot ()
+   local target = ai.target()
+   if target == nil then
+      target = ai.rndhyptarget()
+      if target == nil then
+         return
+      end
+   end
+   ai.pushsubtask( "__hyp_approach_shoot", target )
+end
+function __hyp_approach_shoot ()
+   -- Shoot
+   if ai.hasturrets() then
+      enemy = ai.getenemy()
+      if enemy ~= nil then
+         ai.weapset( 3 )
+         ai.settarget( enemy )
+         ai.shoot( true )
+      end
+   end
+   __hyp_approach()
+end
 
 
 function __land ()

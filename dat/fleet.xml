@@ -196,6 +196,13 @@
    <pilot name="Pirate Rhino" ship="Pirate Rhino"></pilot>
   </pilots>
  </fleet>
+ <fleet name="Pirate Phalanx">
+  <ai>pirate</ai>
+  <faction>Pirate</faction>
+  <pilots>
+   <pilot name="Pirate Phalanx" ship="Pirate Phalanx"></pilot>
+  </pilots>
+ </fleet>
  <fleet name="Pirate Kestrel">
   <ai>pirate</ai>
   <faction>Pirate</faction>
@@ -297,6 +304,13 @@
    <pilot name="Dvaered Ancestor" ship="Dvaered Ancestor"></pilot>
   </pilots>
  </fleet>
+ <fleet name="Dvaered Phalanx">
+  <ai>dvaered</ai>
+  <faction>Dvaered</faction>
+  <pilots>
+   <pilot name="Dvaered Phalanx" ship="Dvaered Phalanx"></pilot>
+  </pilots>
+ </fleet>
   <fleet name="Dvaered Vigilance">
   <ai>dvaered</ai>
   <faction>Dvaered</faction>
@@ -328,7 +342,7 @@
    <pilot name="Dvaered Vendetta" ship="Dvaered Vendetta"></pilot>
    <pilot name="Dvaered Vendetta" ship="Dvaered Vendetta"></pilot>
    <pilot name="Dvaered Ancestor" ship="Dvaered Ancestor"></pilot>
-   <pilot name="Dvaered Ancestor" ship="Dvaered Ancestor"></pilot>
+   <pilot name="Dvaered Phalanx" ship="Dvaered Phalanx"></pilot>
    <pilot name="Dvaered Vigilance" ship="Dvaered Vigilance"></pilot>
   </pilots>
  </fleet>
@@ -674,9 +688,9 @@
   <pilots>
    <pilot name="Dvaered Vendetta" ship="Dvaered Vendetta"></pilot>
    <pilot name="Dvaered Vendetta" ship="Dvaered Vendetta"></pilot>
-   <pilot name="Dvaered Vendetta" ship="Dvaered Vendetta"></pilot>
    <pilot name="Dvaered Ancestor" ship="Dvaered Ancestor"></pilot>
    <pilot name="Dvaered Ancestor" ship="Dvaered Ancestor"></pilot>
+   <pilot name="Dvaered Phalanx" ship="Dvaered Phalanx"></pilot>
    <pilot name="Dvaered Vigilance" ship="Dvaered Vigilance"></pilot>
   </pilots>
  </fleet>

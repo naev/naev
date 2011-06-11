@@ -1,7 +1,6 @@
 
 
 #include <stdlib.h>
-#include <stdlib.h>
 
 #include <png.h>
 

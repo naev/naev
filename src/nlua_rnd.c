@@ -28,7 +28,7 @@ static int rnd_sigma( lua_State *L );
 static int rnd_twosigma( lua_State *L );
 static int rnd_threesigma( lua_State *L );
 static const luaL_reg rnd_methods[] = {
-   { "int", rnd_int }, /* obsolete, rnd.rnd is prefered. */
+   { "int", rnd_int }, /* obsolete, rnd.rnd is preferred. */
    { "rnd", rnd_int },
    { "sigma", rnd_sigma },
    { "twosigma", rnd_twosigma },
@@ -97,7 +97,7 @@ static int rnd_int( lua_State *L )
       l = luaL_checkint(L,1);
       lua_pushnumber(L, RNG(0, l));
    }
-   else if (o>=2) { /* random int paramater 1 <= x <= parameter 2 */
+   else if (o>=2) { /* random int parameter 1 <= x <= parameter 2 */
       l = luaL_checkint(L,1);
       h = luaL_checkint(L,2);
       lua_pushnumber(L, RNG(l,h));
@@ -127,7 +127,7 @@ static int rnd_sigma( lua_State *L )
  *
  * This function behaves much like the rnd.sigma function but uses the two-sigma range,
  *  meaning that numbers are in the 95% quadrant and thus are much more random.  They are
- *  biased towards 0 and aproximately 63% will be within [-1:1].  The rest will be in
+ *  biased towards 0 and approximately 63% will be within [-1:1].  The rest will be in
  *  either the [-2:-1] range or the [1:2] range.
  *
  * @usage n = 5.5 + rnd.twosigma()/4. -- Creates a number from 5 to 6 heavily biased to 5.5.

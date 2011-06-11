@@ -7,22 +7,22 @@ function spawn_capship ()
     local r = rnd.rnd()
 
     -- Generate the capship
-    scom.addPilot( pilots, "Goddard Goddard", 100 )
+    scom.addPilot( pilots, "Goddard Goddard", 145 )
 
     -- Generate the escorts
     r = rnd.rnd()
     if r < 0.5 then
-       scom.addPilot( pilots, "Goddard Lancelot", 20 );
-       scom.addPilot( pilots, "Goddard Lancelot", 20 );
+       scom.addPilot( pilots, "Goddard Lancelot", 25 );
+       scom.addPilot( pilots, "Goddard Lancelot", 25 );
     elseif r < 0.8 then
-       scom.addPilot( pilots, "Goddard Lancelot", 20 );
-       scom.addPilot( pilots, "Goddard Lancelot", 20 );
-       scom.addPilot( pilots, "Goddard Lancelot", 20 );
+       scom.addPilot( pilots, "Goddard Lancelot", 25 );
+       scom.addPilot( pilots, "Goddard Lancelot", 25 );
+       scom.addPilot( pilots, "Goddard Lancelot", 25 );
     else
-       scom.addPilot( pilots, "Goddard Lancelot", 20 );
-       scom.addPilot( pilots, "Goddard Lancelot", 20 );
-       scom.addPilot( pilots, "Goddard Lancelot", 20 );
-       scom.addPilot( pilots, "Goddard Lancelot", 20 );
+       scom.addPilot( pilots, "Goddard Lancelot", 25 );
+       scom.addPilot( pilots, "Goddard Lancelot", 25 );
+       scom.addPilot( pilots, "Goddard Lancelot", 25 );
+       scom.addPilot( pilots, "Goddard Lancelot", 25 );
     end
 
     return pilots

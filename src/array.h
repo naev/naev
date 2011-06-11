@@ -43,7 +43,7 @@
 #include <stdint.h>
 
 #ifdef DEBUGGING
-#define SENTINEL ((int)0xbabecafe) /**< Badass sentinal. */
+#define SENTINEL ((int)0xbabecafe) /**< Badass sentinel. */
 #endif
 
 /**
@@ -51,11 +51,11 @@
  */
 typedef struct {
 #ifdef DEBUGGING
-   int _sentinel;         /**< Sentinal for when debugging. */
+   int _sentinel;         /**< Sentinel for when debugging. */
 #endif
    int _reserved;         /**< Number of elements reserved */
    int _size;             /**< Number of elements in the array */
-   char _array[1];        /**< Begin of the array */
+   char _array[0];        /**< Begin of the array */
 } _private_container;
 
 
@@ -76,8 +76,7 @@ __inline__ static _private_container *_array_private_container(void *a)
 {
    assert("NULL array!" && (a != NULL));
 
-   const intptr_t delta = (intptr_t)(&((_private_container *)NULL)->_array);
-   _private_container *c = (_private_container *)((char *)a - delta);
+   _private_container *c = (_private_container *)a - 1;
 
 #ifdef DEBUGGING
    assert("Sentinel not found. Use array_create() to create the array." && (c->_sentinel == SENTINEL));

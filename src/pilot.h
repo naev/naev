@@ -42,7 +42,7 @@
 #define PILOT_SIZE_APROX         0.8   /**< approximation for pilot size */
 #define PILOT_DISABLED_ARMOR     0.3   /**< armour % that gets it disabled */
 #define PILOT_WEAPON_SETS        10    /**< Number of weapon sets the pilot has. */
-#define PILOT_WEAPSET_MAX_LEVELS 2     /**< Maxmimum amount of weapon levels. */
+#define PILOT_WEAPSET_MAX_LEVELS 2     /**< Maximum amount of weapon levels. */
 
 /* hooks */
 #define PILOT_HOOK_NONE    0 /**< No hook. */
@@ -179,7 +179,7 @@ typedef struct PilotOutfitSlot_ {
 typedef struct PilotWeaponSetOutfit_ {
    int level; /**< Level of trigger. */
    double range2; /**< Range squared of this specific outfit. */
-   PilotOutfitSlot *slot; /**< Slot assosciated with it. */
+   PilotOutfitSlot *slot; /**< Slot associated with it. */
 } PilotWeaponSetOutfit;
 
 
@@ -353,13 +353,13 @@ typedef struct Pilot_ {
    Escort_t *escorts; /**< Pilot's escorts. */
    int nescorts; /**< Number of pilot escorts. */
 
-   /* Targetting. */
+   /* Targeting. */
    unsigned int target; /**< AI pilot target. */
    int nav_planet; /**< Planet land target. */
    int nav_hyperspace; /**< Hyperspace target. */
 
    /* AI */
-   AI_Profile* ai; /**< ai personality profile */
+   AI_Profile* ai; /**< AI personality profile */
    double tcontrol; /**< timer for control tick */
    double timer[MAX_AI_TIMERS]; /**< timers for AI */
    Task* task; /**< current action */
@@ -387,7 +387,6 @@ typedef struct Pilot_ {
 #include "pilot_hook.h"
 #include "pilot_outfit.h"
 #include "pilot_weapon.h"
-#include "pilot_cargo.h"
 #include "pilot_ew.h"
 
 

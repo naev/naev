@@ -37,7 +37,7 @@
 
 static double map_zoom        = 1.; /**< Zoom of the map. */
 static double map_xpos        = 0.; /**< Map X position. */
-static double map_ypos        = 0.; /**< Map Y .osition. */
+static double map_ypos        = 0.; /**< Map Y position. */
 static int map_drag           = 0; /**< Is the user dragging the map? */
 static int map_selected       = -1; /**< What system is selected on the map. */
 static StarSystem **map_path  = NULL; /**< The path to current selected system. */
@@ -1248,7 +1248,7 @@ static SysNode* A_rm( SysNode *first, StarSystem *cur );
 static SysNode* A_in( SysNode *first, StarSystem *cur );
 static SysNode* A_lowest( SysNode *first );
 static void A_freeList( SysNode *first );
-/** @brief Creates a new node linke to star system. */
+/** @brief Creates a new node link to star system. */
 static SysNode* A_newNode( StarSystem* sys, SysNode* parent )
 {
    SysNode* n;
@@ -1266,7 +1266,7 @@ static SysNode* A_newNode( StarSystem* sys, SysNode* parent )
 
    return n;
 }
-/** @brief Heurestic model to use. */
+/** @brief Heuristic model to use. */
 static double A_h( StarSystem *n, StarSystem *g )
 {
    (void)n;
@@ -1368,7 +1368,7 @@ static void A_freeList( SysNode *first )
    free(p);
 }
 
-/** @brief Sets map_zoom to zoom and recreats the faction disk texture. */
+/** @brief Sets map_zoom to zoom and recreates the faction disk texture. */
 void map_setZoom(double zoom)
 {
    map_zoom = zoom;
@@ -1431,7 +1431,7 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
    /* start the linked lists */
    open  = closed = NULL;
    cur   = A_newNode( ssys, NULL );
-   open  = A_add( open, cur ); /* inital open node is the start system */
+   open  = A_add( open, cur ); /* initial open node is the start system */
 
    j = 0;
    while ((cur = A_lowest(open))->sys != esys) {
@@ -1604,7 +1604,7 @@ int map_isMapped( const char* targ_sys, int r )
       for (i=0; i<sys->njumps; i++) {
          jsys = sys->jumps[i].target;
 
-         /* SYstem has already been parsed. */
+         /* System has already been parsed. */
          if (A_in(closed,jsys) != NULL)
              continue;
 

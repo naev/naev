@@ -207,7 +207,7 @@ static int commodityL_get( lua_State *L )
    const char *name;
    LuaCommodity lo;
 
-   /* Handle paremeters. */
+   /* Handle parameters. */
    name = luaL_checkstring(L,1);
 
    /* Get commodity. */

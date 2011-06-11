@@ -105,6 +105,7 @@ function create()
         abort()
     end
     
+    first = var.peek("shadowvigil_first") == nil -- nil acts as true in this case.
     if first then
         var.push("shadowvigil_first", false)
         tk.msg(title[1], string.format(text[1], player.name()))
@@ -138,7 +139,6 @@ function accept()
     kills = 0 -- Counter to keep track of enemy kills.
     maxkills = 0 -- The amount of enemies in this ambush.
     
-    first = var.peek("shadowvigil_first") == nil -- nil acts as true in this case.
     accepted = false
     missend = false
 

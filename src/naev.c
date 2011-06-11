@@ -567,7 +567,7 @@ void unload_all (void)
    pilots_free(); /* frees the pilots, they were locked up :( */
    cond_exit(); /* destroy conditional subsystem. */
    land_exit(); /* Destroys landing vbo and friends. */
-   npc_clear(); /* In case exitting while landed. */
+   npc_clear(); /* In case exiting while landed. */
    background_free(); /* Destroy backgrounds. */
    load_free(); /* Clean up loading game stuff stuff. */
    economy_destroy(); /* must be called before space_exit */
@@ -623,17 +623,16 @@ void main_loop( int update )
 }
 
 
-#if HAS_POSIX
+#if HAS_POSIX && defined(CLOCK_MONOTONIC)
 static struct timespec global_time; /**< Global timestamp for calculating delta ticks. */
 static int use_posix_time; /**< Whether or not to use posix time. */
-#endif /* HAS_POSIX */
+#endif /* HAS_POSIX && defined(CLOCK_MONOTONIC) */
 /**
  * @brief Initializes the fps engine.
  */
 static void fps_init (void)
 {
-#if HAS_POSIX
-#ifdef CLOCK_MONOTONIC
+#if HAS_POSIX && defined(CLOCK_MONOTONIC)
    use_posix_time = 1;
    /* We must use clock_gettime here instead of gettimeofday mainly because this
     * way we are not influenced by changes to the time source like say ntp which
@@ -641,9 +640,8 @@ static void fps_init (void)
    if (clock_gettime(CLOCK_MONOTONIC, &global_time)==0)
       return;
    WARN("clock_gettime failed, disabling posix time.");
-#endif /* CLOCK_MONOTONIC */
    use_posix_time = 0;
-#endif /* HAS_POSIX */
+#endif /* HAS_POSIX && defined(CLOCK_MONOTONIC) */
    time_ms  = SDL_GetTicks();
 }
 /**
@@ -656,8 +654,7 @@ static double fps_elapsed (void)
    double dt;
    unsigned int t;
 
-#if HAS_POSIX
-#ifdef CLOCK_MONOTONIC
+#if HAS_POSIX && defined(CLOCK_MONOTONIC)
    struct timespec ts;
 
    if (use_posix_time) {
@@ -669,8 +666,7 @@ static double fps_elapsed (void)
       }
       WARN( "clock_gettime failed!" );
    }
-#endif /* CLOCK_MONOTONIC */
-#endif /* HAS_POSIX */
+#endif /* HAS_POSIX && defined(CLOCK_MONOTONIC) */
 
    t        = SDL_GetTicks();
    dt       = (double)(t - time_ms); /* Get the elapsed ms. */
@@ -793,7 +789,7 @@ void update_routine( double dt, int enter_sys )
  * Blitting order (layers):
  *   - BG
  *     - stars and planets
- *     - background player stuff (planet targetting)
+ *     - background player stuff (planet targeting)
  *     - background particles
  *     - back layer weapons
  *   - N
@@ -1142,7 +1138,7 @@ static void debug_sigHandler( int sig, siginfo_t *info, void *unused )
    num      = backtrace(buf, 64);
    symbols  = backtrace_symbols(buf, num);
 
-   DEBUG("Naev recieved %s!",
+   DEBUG("Naev received %s!",
          debug_sigCodeToStr(info->si_signo, info->si_code) );
    for (i=0; i<num; i++) {
       if (abfd != NULL)

@@ -306,7 +306,7 @@ static void shipyard_buy( unsigned int wid, char* str )
          "Do you really want to spend %s on a new ship?", buf )==0)
       return;
 
-   /* player just gots a new ship */
+   /* player just got a new ship */
    if (player_newShip( ship, NULL, 0, 0 ) == NULL) {
       /* Player actually aborted naming process. */
       return;
@@ -454,7 +454,7 @@ static void shipyard_trade( unsigned int wid, char* str )
          return;
    }
 
-   /* player just gots a new ship */
+   /* player just got a new ship */
    if (player_newShip( ship, NULL, 1, 0 ) == NULL)
       return; /* Player aborted the naming process. */
 

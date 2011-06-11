@@ -814,7 +814,7 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
             sysedit_xpos -= event->motion.xrel;
             sysedit_ypos += event->motion.yrel;
 
-            /* Update mousemovement. */
+            /* Update mouse movement. */
             sysedit_moved += ABS( event->motion.xrel ) + ABS( event->motion.yrel );
          }
          /* Dragging selection around. */
@@ -838,7 +838,7 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
                }
             }
 
-            /* Update mousemovement. */
+            /* Update mouse movement. */
             sysedit_moved += ABS( event->motion.xrel ) + ABS( event->motion.yrel );
          }
          break;

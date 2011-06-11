@@ -2,13 +2,6 @@ include("ai/tpl/generic.lua")
 include("ai/personality/trader.lua")
 
 
-mem.shield_run = 100
-mem.armour_run = 100
-mem.defensive  = false
-mem.enemyclose = 500
-mem.distressmsgfunc = sos
-
-
 -- Sends a distress signal which causes faction loss
 function sos ()
    msg = {
@@ -19,11 +12,18 @@ function sos ()
       "Taking hostile fire! Need assistance!",
       "We are under attack, require support!",
       "Mayday! Ship taking damage!",
-      string.format("Mayday! Merchant %s being assaulted!", ai.shipclass())
+      string.format("Mayday! Merchant %s being assaulted!", string.lower( ai.shipclass() ))
    }
    ai.settarget( ai.target() )
    ai.distress( msg[ rnd.int(1,#msg) ])
 end
+
+
+mem.shield_run = 100
+mem.armour_run = 100
+mem.defensive  = false
+mem.enemyclose = 500
+mem.distressmsgfunc = sos
 
 
 function create ()
@@ -62,4 +62,3 @@ function create ()
    -- Finish up creation
    create_post()
 end
-

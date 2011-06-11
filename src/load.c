@@ -184,7 +184,7 @@ int load_refresh (void)
       }
    }
 
-   /* Make suref files are none. */
+   /* Make sure files are none. */
    if (files == NULL)
       return 0;
 

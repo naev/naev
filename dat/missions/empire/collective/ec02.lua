@@ -74,6 +74,7 @@ function accept ()
    misn.setReward( misn_reward )
    misn.setDesc( string.format(misn_desc[1], misn_target:name(), misn_target_sys:name() ))
    osd_msg[1] = osd_msg[1]:format(misn_target:name(), misn_target_sys:name())
+   osd_msg[2] = osd_msg[2]:format(misn_base:name())
    misn.osdCreate(misn_title, osd_msg)
 
    tk.msg( title[1], string.format(text[2], misn_target:name()) )

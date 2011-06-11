@@ -49,7 +49,7 @@ lua_State *nlua_newState (void)
    /* try to create the new state */
    L = luaL_newstate();
    if (L == NULL) {
-      WARN("Failed to create new lua state.");
+      WARN("Failed to create new Lua state.");
       return NULL;
    }
 
@@ -58,7 +58,7 @@ lua_State *nlua_newState (void)
 
 
 /**
- * @brief Opens a lua library.
+ * @brief Opens a Lua library.
  *
  *    @param L Lua state to load the library into.
  *    @param f CFunction to load.

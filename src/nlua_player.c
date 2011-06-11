@@ -35,7 +35,6 @@
 #include "map.h"
 #include "hook.h"
 #include "comm.h"
-#include "board.h"
 #include "land_outfits.h"
 #include "gui.h"
 #include "gui_omsg.h"
@@ -118,7 +117,7 @@ static const luaL_reg playerL_methods[] = {
    { "evtDone", playerL_evtDone },
    { "teleport", playerL_teleport },
    {0,0}
-}; /**< Player lua methods. */
+}; /**< Player Lua methods. */
 static const luaL_reg playerL_cond_methods[] = {
    { "name", playerL_getname },
    { "ship", playerL_shipname },
@@ -135,7 +134,7 @@ static const luaL_reg playerL_cond_methods[] = {
    { "evtActive", playerL_evtActive },
    { "evtDone", playerL_evtDone },
    {0,0}
-}; /**< Conditional player lua methods. */
+}; /**< Conditional player Lua methods. */
 
 
 /*
@@ -145,7 +144,7 @@ static Pilot* playerL_newShip( lua_State *L );
 
 
 /**
- * @brief Loads the player lua library.
+ * @brief Loads the player Lua library.
  *    @param L Lua state.
  *    @param readonly Whether to open in read-only form.
  */

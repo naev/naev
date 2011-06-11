@@ -24,7 +24,7 @@ typedef enum HookParamType_e {
    HOOK_PARAM_STRING, /**< String parameter. */
    HOOK_PARAM_BOOL, /**< Boolean parameter. */
    HOOK_PARAM_PILOT, /**< Pilot hook parameter. */
-   HOOK_PARAM_SENTINAL /**< Enum sentinal. */
+   HOOK_PARAM_SENTINEL /**< Enum sentinel. */
 } HookParamType;
 
 /**

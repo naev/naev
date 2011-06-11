@@ -679,7 +679,7 @@ void pilot_calcStats( Pilot* pilot )
    double q;
    Outfit* o;
    PilotOutfitSlot *slot;
-   double ac, sc, ec, fc; /* temporary health coeficients to set */
+   double ac, sc, ec, fc; /* temporary health coefficients to set */
    double arel, srel, erel; /* relative health bonuses. */
    ShipStats *s, *os;
    int nfirerate_turret, nfirerate_forward;

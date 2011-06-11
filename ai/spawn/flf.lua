@@ -37,7 +37,7 @@ function spawn_squad ()
        scom.addPilot( pilots, "FLF Vendetta", 25 );
     else
        scom.addPilot( pilots, "FLF Lancelot", 25 );
-       scom.addPilot( pilots, "FLF Pacifier", 75 );
+       scom.addPilot( pilots, "FLF Pacifier", 70 );
     end
 
     return pilots

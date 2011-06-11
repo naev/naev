@@ -7,14 +7,14 @@ function spawn_patrol ()
     local r = rnd.rnd()
 
     if r < 0.5 then
-       scom.addPilot( pilots, "Proteron Derivative", 15 );
+       scom.addPilot( pilots, "Proteron Derivative", 20 );
     elseif r < 0.8 then
-       scom.addPilot( pilots, "Proteron Derivative", 15 );
-       scom.addPilot( pilots, "Proteron Derivative", 15 );
+       scom.addPilot( pilots, "Proteron Derivative", 20 );
+       scom.addPilot( pilots, "Proteron Derivative", 20 );
     else
-       scom.addPilot( pilots, "Proteron Derivative", 15 );
-       scom.addPilot( pilots, "Proteron Derivative", 15 );
-       scom.addPilot( pilots, "Proteron Derivative", 15 );
+       scom.addPilot( pilots, "Proteron Derivative", 20 );
+       scom.addPilot( pilots, "Proteron Derivative", 20 );
+       scom.addPilot( pilots, "Proteron Derivative", 20 );
     end
 
     return pilots
@@ -27,20 +27,20 @@ function spawn_squad ()
     local r = rnd.rnd()
 
     if r < 0.5 then
-       scom.addPilot( pilots, "Proteron Derivative", 15 );
-       scom.addPilot( pilots, "Proteron Derivative", 15 );
-       scom.addPilot( pilots, "Proteron Derivative", 15 );
-       scom.addPilot( pilots, "Proteron Derivative", 15 );
+       scom.addPilot( pilots, "Proteron Derivative", 20 );
+       scom.addPilot( pilots, "Proteron Derivative", 20 );
+       scom.addPilot( pilots, "Proteron Derivative", 20 );
+       scom.addPilot( pilots, "Proteron Derivative", 20 );
     elseif r < 0.8 then
-       scom.addPilot( pilots, "Proteron Derivative", 15 );
-       scom.addPilot( pilots, "Proteron Derivative", 15 );
-       scom.addPilot( pilots, "Proteron Derivative", 15 );
-       scom.addPilot( pilots, "Proteron Kahan", 50 );
+       scom.addPilot( pilots, "Proteron Derivative", 20 );
+       scom.addPilot( pilots, "Proteron Derivative", 20 );
+       scom.addPilot( pilots, "Proteron Derivative", 20 );
+       scom.addPilot( pilots, "Proteron Kahan", 65 );
     else
-       scom.addPilot( pilots, "Proteron Derivative", 15 );
-       scom.addPilot( pilots, "Proteron Derivative", 15 );
-       scom.addPilot( pilots, "Proteron Kahan", 50 );
-       scom.addPilot( pilots, "Proteron Kahan", 50 );
+       scom.addPilot( pilots, "Proteron Derivative", 20 );
+       scom.addPilot( pilots, "Proteron Derivative", 20 );
+       scom.addPilot( pilots, "Proteron Kahan", 65 );
+       scom.addPilot( pilots, "Proteron Kahan", 65 );
     end
 
     return pilots
@@ -53,25 +53,25 @@ function spawn_capship ()
     local r = rnd.rnd()
 
     -- Generate the capship
-    scom.addPilot( pilots, "Proteron Archimedes", 100 )
+    scom.addPilot( pilots, "Proteron Archimedes", 140 )
 
     -- Generate the escorts
     r = rnd.rnd()
     if r < 0.5 then
-       scom.addPilot( pilots, "Proteron Derivative", 15 );
-       scom.addPilot( pilots, "Proteron Derivative", 15 );
-       scom.addPilot( pilots, "Proteron Derivative", 15 );
-       scom.addPilot( pilots, "Proteron Derivative", 15 );
+       scom.addPilot( pilots, "Proteron Derivative", 20 );
+       scom.addPilot( pilots, "Proteron Derivative", 20 );
+       scom.addPilot( pilots, "Proteron Derivative", 20 );
+       scom.addPilot( pilots, "Proteron Derivative", 20 );
     elseif r < 0.8 then
-       scom.addPilot( pilots, "Proteron Derivative", 15 );
-       scom.addPilot( pilots, "Proteron Derivative", 15 );
-       scom.addPilot( pilots, "Proteron Derivative", 15 );
-       scom.addPilot( pilots, "Proteron Kahan", 50 );
+       scom.addPilot( pilots, "Proteron Derivative", 20 );
+       scom.addPilot( pilots, "Proteron Derivative", 20 );
+       scom.addPilot( pilots, "Proteron Derivative", 20 );
+       scom.addPilot( pilots, "Proteron Kahan", 65 );
     else
-       scom.addPilot( pilots, "Proteron Derivative", 15 );
-       scom.addPilot( pilots, "Proteron Derivative", 15 );
-       scom.addPilot( pilots, "Proteron Kahan", 50 );
-       scom.addPilot( pilots, "Proteron Kahan", 50 );
+       scom.addPilot( pilots, "Proteron Derivative", 20 );
+       scom.addPilot( pilots, "Proteron Derivative", 20 );
+       scom.addPilot( pilots, "Proteron Kahan", 65 );
+       scom.addPilot( pilots, "Proteron Kahan", 65 );
     end
 
     return pilots

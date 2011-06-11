@@ -952,7 +952,7 @@ static int pilotL_target( lua_State *L )
    if (p->target == 0)
       return 0;
    lp.pilot = p->target;
-   /* Must be targetted. */
+   /* Must be targeted. */
    if (p->target == p->id)
       return 0;
    /* Must be valid. */
@@ -1006,7 +1006,7 @@ static int pilotL_inrange( lua_State *L )
  * @usage planet, hyperspace = p:nav()
  *
  *    @luaparam p Pilot to get nav info of.
- *    @luareturn The planet target followed by the hyperspace target or nil if not targetted.
+ *    @luareturn The planet target followed by the hyperspace target or nil if not targeted.
  * @luafunc nav( p )
  */
 static int pilotL_nav( lua_State *L )
@@ -2952,7 +2952,7 @@ static Task *pilotL_newtask( lua_State *L, Pilot* p, const char *task )
  * @usage p:goto( v ) -- Goes to v precisely and braking
  * @usage p:goto( v, true, true ) -- Same as p:goto( v )
  * @usage p:goto( v, false ) -- Goes to v without braking compensating velocity
- * @usage p:goto( v, false, false ) -- Really rough aproximation of going to v without braking
+ * @usage p:goto( v, false, false ) -- Really rough approximation of going to v without braking
  *
  *    @luaparam p Pilot to tell to go to a position.
  *    @luaparam v Vector target for the pilot.
@@ -3173,8 +3173,9 @@ static int pilotL_runaway( lua_State *L )
  *
  *    @luaparam p Pilot to tell to hyperspace.
  *    @luaparam sys Optional system argument to jump to, uses random if nil.
+ *    @luaparam shoot Optional whether or not to shoot at targets while running away with turrets.
  * @luasee control
- * @luafunc hyperspace( p, sys )
+ * @luafunc hyperspace( p, sys, shoot )
  */
 static int pilotL_hyperspace( lua_State *L )
 {
@@ -3185,6 +3186,7 @@ static int pilotL_hyperspace( lua_State *L )
    int i;
    JumpPoint *jp;
    double a, rad;
+   int shoot;
 
    /* Get parameters. */
    p = luaL_validpilot(L,1);
@@ -3194,9 +3196,13 @@ static int pilotL_hyperspace( lua_State *L )
    }
    else
       sys = NULL;
+   shoot = lua_toboolean(L,3);
 
    /* Set the task. */
-   t = pilotL_newtask( L, p, "__hyperspace" );
+   if (shoot)
+      t = pilotL_newtask( L, p, "__hyperspace_shoot" );
+   else
+      t = pilotL_newtask( L, p, "__hyperspace" );
    if (sys != NULL) {
       /* Find the jump. */
       for (i=0; i < cur_system->njumps; i++) {

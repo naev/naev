@@ -11,7 +11,7 @@
 #include "mission.h"
 
 
-/* load the libraries for a lua state */
+/* load the libraries for a Lua state */
 Mission* misn_getFromLua( lua_State *L );
 int misn_loadLibs( lua_State *L );
 int misn_loadCondLibs( lua_State *L ); /* safe read only stuff */

@@ -8,7 +8,7 @@
 #  define AI_H
 
 
-/* yay lua */
+/* yay Lua */
 #include <lua.h>
 
 #include "physics.h"
@@ -63,7 +63,7 @@ typedef struct Task_ {
  */
 typedef struct AI_Profile_ {
    char* name; /**< Name of the profile. */
-   lua_State *L; /**< Assosciated lua State. */
+   lua_State *L; /**< Assosciated Lua State. */
 } AI_Profile;
 
 

@@ -91,7 +91,7 @@ static int intro_load( const char *text )
 
    /* Load text. */
    intro_buf = ndata_read( text, &intro_size );
-   intro_length = intro_size; /* Length aproximation. */
+   intro_length = intro_size; /* Length approximation. */
 
    /* Create intro font. */
    gl_fontInit( &intro_font, "dat/mono.ttf", INTRO_FONT_SIZE );

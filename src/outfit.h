@@ -107,7 +107,7 @@ typedef enum OutfitType_ {
    OUTFIT_TYPE_LAUNCHER, /**< Launcher. */
    OUTFIT_TYPE_AMMO, /**< Launcher ammo. */
    OUTFIT_TYPE_TURRET_LAUNCHER, /**< Turret launcher. */
-   OUTFIT_TYPE_TURRET_AMMO, /**< Turrent launcher ammo. */
+   OUTFIT_TYPE_TURRET_AMMO, /**< Turret launcher ammo. */
    OUTFIT_TYPE_MODIFCATION, /**< Modifies the ship base features. */
    OUTFIT_TYPE_AFTERBURNER, /**< Gives the ship afterburn capability. */
    OUTFIT_TYPE_JAMMER, /**< Used to nullify seeker missiles. */
@@ -309,14 +309,14 @@ typedef struct OutfitAfterburnerData_ {
    double speed; /**< % of speed to increase based on ship base. */
    double energy; /**< Energy usage while active */
    double cpu; /**< CPU usage. */
-   double mass_limit; /**< Limit at which effectivity starts to drop. */
+   double mass_limit; /**< Limit at which effectiveness starts to drop. */
 } OutfitAfterburnerData;
 
 /**
  * @brief Represents a fighter bay.
  */
 typedef struct OutfitFighterBayData_ {
-   char *ammo_name; /**< Name fo the ships to use as ammo. */
+   char *ammo_name; /**< Name of the ships to use as ammo. */
    struct Outfit_ *ammo; /**< Ships to use as ammo. */
    double delay; /**< Delay between launches. */
    double cpu; /**< CPU usage. */

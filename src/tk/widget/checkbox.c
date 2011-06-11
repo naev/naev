@@ -239,7 +239,7 @@ static void chk_render( Widget* chk, double bx, double by )
 #if 0
    /* Inner outline */
    toolkit_drawOutline( x, y + (chk->h-10.)/2., 10, 10, 0., lc, c );
-   /* Outter outline */
+   /* Outer outline */
    toolkit_drawOutline( x, y + (chk->h-10.)/2., 10, 10, 1., &cBlack, NULL );
 #endif
 

@@ -49,7 +49,7 @@ typedef struct glTexture_ {
 
    /* dimensions */
    double w; /**< Real width of the image. */
-   double h; /**< Real heiht of the image. */
+   double h; /**< Real height of the image. */
    double rw; /**< Padded POT width of the image. */
    double rh; /**< Padded POT height of the image. */
 

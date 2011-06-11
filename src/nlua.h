@@ -14,7 +14,7 @@
 
 
 /*
- * standard lua stuff wrappers
+ * standard Lua stuff wrappers
  */
 lua_State *nlua_newState (void); /* creates a new state */
 int nlua_load( lua_State* L, lua_CFunction f );

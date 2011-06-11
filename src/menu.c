@@ -43,7 +43,6 @@
 #include "gui.h"
 #include "start.h"
 #include "camera.h"
-#include "load.h"
 #include "board.h"
 
 
@@ -184,7 +183,7 @@ void menu_main (void)
       offset_wdw  = 0;
    }
    else if (freespace > 200.) {
-      /* We'll want a maximum seperation of 30 between logo and text. */
+      /* We'll want a maximum separation of 30 between logo and text. */
       freespace  -=  25;
       offset_logo = -25;
       offset_wdw  = -1.;
@@ -495,7 +494,7 @@ void menu_death (void)
    wid = window_create( "Death", -1, -1, DEATH_WIDTH, DEATH_HEIGHT );
    window_onClose( wid, menu_death_close );
 
-   /* Propose the player to continue if the samegame exist, if not, propose to restart */
+   /* Allow the player to continue if the savegame exists, if not, propose to restart */
    snprintf(path, PATH_MAX, "%ssaves/%s.ns", nfile_basePath(), player.name);
    if (!player_isTut() && nfile_fileExists(path))
       window_addButton( wid, 20, 20 + BUTTON_HEIGHT*2 + 20*2, BUTTON_WIDTH, BUTTON_HEIGHT,

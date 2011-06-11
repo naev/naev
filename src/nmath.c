@@ -23,7 +23,7 @@
  *    @param results Stores both results.
  *    @param a Quadratic parameter.
  *    @param b Linear parameter.
- *    @param c Offset coeficient.
+ *    @param c Offset coefficient.
  *    @return 0 on success, -1 on error.
  */
 int nmath_solve2Eq( double results[2], double a, double b, double c )
