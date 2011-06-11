@@ -154,7 +154,7 @@ static void tq_enqueue( ThreadQueue *q, void *data )
    n->next  = NULL;
 
    /* Lock */
-   SDL_mutexP(q->t_lock);
+   SDL_mutexP( q->t_lock );
 
    /* Enqueue. */
    q->last->next  = n;
@@ -282,7 +282,7 @@ static int threadpool_worker( void *data )
       while (SDL_SemWait( work->semaphore ) == -1) {
           /* Putting this in a while-loop is probably a really bad idea, but I
            * don't have any better ideas. */
-          WARN("L%d: SDL_SemWait failed! Error: %s", __LINE__, SDL_GetError());
+          WARN("SDL_SemWait failed! Error: %s", SDL_GetError());
       }
       /* Break if received signal to stop */
       if (work->signal == THREADSIG_STOP) {
@@ -415,7 +415,7 @@ static int threadpool_handler( void *data )
       else {
          while (SDL_SemWait(idle->semaphore) == -1) {
              /* Bad idea */
-             WARN("L%d: SDL_SemWait failed! Error: %s", __LINE__, SDL_GetError());
+             WARN("SDL_SemWait failed! Error: %s", SDL_GetError());
          }
          threadarg         = tq_dequeue( idle );
       }
