@@ -548,8 +548,7 @@ static int vpool_worker( void *data )
 
    /* Decrement the counter and signal vpool_wait if all threads are done */
    SDL_mutexP( work->mutex );
-   cnt   = *(work->count);
-   cnt  -= 1;
+   cnt   = *(work->count) - 1;
    if (cnt <= 0)                    /* All jobs done. */
       SDL_CondSignal( work->cond );  /* Signal waiting thread */
    *(work->count) = cnt;
