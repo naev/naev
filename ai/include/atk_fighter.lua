@@ -143,9 +143,8 @@ end
 -- Attack Profile for a maneuverable ship engaging a maneuverable target
 --
 --This is designed for fighters engaging other fighters
---
 --]]
-function atk_g_space_sup( target, dist )
+function _atk_f_space_sup( target, dist )
    local range = ai.getweaprange(3)
    local dir   = 0
    ai.weapset( 3 ) -- Forward/turrets

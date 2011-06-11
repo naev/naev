@@ -12,7 +12,7 @@ end
 --ships bigger than they are
 --]]
 function atk_bomber ()
-   local target = _atk_com_target()
+   local target = _atk_com_think()
    if target == nil then return end
 
    -- Targetting stuff

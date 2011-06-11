@@ -16,9 +16,9 @@ include("ai/include/atk_target.lua")
 include("ai/include/atk_generic.lua")
 include("ai/include/atk_fighter.lua")
 include("ai/include/atk_bomber.lua")
-include("ai/include/atk_corvette.lua")
-include("ai/include/atk_cruiser.lua")
-include("ai/include/atk_carrier.lua")
+--include("ai/include/atk_corvette.lua")
+--include("ai/include/atk_cruiser.lua")
+--include("ai/include/atk_carrier.lua")
 
 -- Set attack variables
 mem.atk_changetarget  = 2 -- Distance at which target changes
@@ -37,7 +37,7 @@ function attack_think ()
    if mem.atk_think ~= nil then
       mem.atk_think()
    else
-      atk_g_think()
+      atk_generic_think()
    end
 end
 
@@ -49,7 +49,7 @@ function attack ()
    if mem.atk ~= nil then
       mem.atk()
    else
-      atk_g()
+      atk_generic()
    end
 end
 
@@ -61,7 +61,7 @@ function attack_attacked( attacker )
    if mem.atk_attacked ~= nil then
       mem.atk_attacked( attacker )
    else
-      atk_g_attacked( attacker )
+      atk_generic_attacked( attacker )
    end
 end
 
@@ -86,7 +86,7 @@ function attack_choose ()
       mem.atk        = atk_corvette
 
    -- Destroye class
-   elseif class = "Destroyer" then
+   elseif class == "Destroyer" then
       mem.atk_think  = atk_heuristic_big_game_think
       mem.atk        = atk_capital
 

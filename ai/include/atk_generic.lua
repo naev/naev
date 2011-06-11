@@ -6,17 +6,17 @@
 --[[
 -- Required initialization function
 --]]
-function atk_g_init ()
-   mem.atk_think  = atk_g_think
-   mem.atk        = atk_g
+function atk_generic_init ()
+   mem.atk_think  = atk_generic_think
+   mem.atk        = atk_generic
 end
 
 
 --[[
 -- Mainly manages targetting nearest enemy.
 --]]
-function atk_g_think ()
-   local enemy = ai.getenemy()
+function atk_generic_think ()
+   local enemy  = ai.getenemy()
    local target = ai.target()
 
    -- Stop attacking if it doesn't exist
@@ -41,7 +41,7 @@ end
 --[[
 -- Attacked function.
 --]]
-function atk_g_attacked( attacker )
+function atk_generic_attacked( attacker )
    local target = ai.target()
 
    -- If no target automatically choose it
@@ -64,7 +64,7 @@ end
 --[[
 -- Generic "brute force" attack.  Doesn't really do anything interesting.
 --]]
-function atk_g ()
+function atk_generic ()
    local target = _atk_com_think()
    if target == nil then return end
 
