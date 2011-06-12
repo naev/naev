@@ -886,7 +886,7 @@ static void system_scheduler( double dt, int init )
    /* Go through all the factions and reduce the timer. */
    for (i=0; i < cur_system->npresence; i++) {
       p = &cur_system->presence[i];
-      L = faction_getState( p->faction );
+      L = faction_getScheduler( p->faction );
 
       /* Must have a valid scheduler. */
       if (L==NULL)
@@ -2836,7 +2836,7 @@ void system_rmCurrentPresence( StarSystem *sys, int faction, double amount )
    presence->curUsed = MAX( 0, sys->presence[id].curUsed );
 
    /* Run lower hook. */
-   L = faction_getState( faction );
+   L = faction_getScheduler( faction );
 
 #if DEBUGGING
    lua_pushcfunction(L, nlua_errTrace);

@@ -49,6 +49,7 @@ end
 function equip_empireMilitary( p, shipsize )
    local medium, low, apu
    local use_primary, use_secondary, use_medium, use_low
+   local use_forward, use_turrets, use_medturrets
    local nhigh, nmedium, nlow = p:ship():slots()
    local scramble
 
@@ -109,7 +110,7 @@ function equip_empireMilitary( p, shipsize )
       if class == "Destroyer" then
          use_secondary  = rnd.rnd(1,2)
          use_turrets    = nhigh - use_secondary - rnd.rnd(1,2)
-         use_forward    = nhigh - use_turrets
+         use_forward    = nhigh - use_secondary - use_turrets
          addWeapons( equip_secondaryEmp(), use_secondary )
          addWeapons( equip_turretEmpMed(), use_turrets )
          addWeapons( equip_forwardEmpMed(), use_forward )
@@ -118,10 +119,16 @@ function equip_empireMilitary( p, shipsize )
          apu            = equip_apuMed()
       end
 
-   else
-      use_primary    = nhigh-2
+   else -- "heavy"
       use_secondary  = 2
-      addWeapons( equip_turretEmpHig(), use_primary )
+      if rnd.rnd() > 0.4 then -- Anti-fighter variant.
+         use_turrets    = nhigh - use_secondary - rnd.rnd(2,3)
+         use_medturrets = nhigh - use_secondary - use_turrets
+         addWeapons( equip_turretEmpMed(), use_medturrets )
+      else -- Anti-capital variant.
+         use_turrets    = nhigh - use_secondary
+      end
+      addWeapons( equip_turretEmpHig(), use_turrets )
       addWeapons( equip_secondaryEmp(), use_secondary )
       medium         = equip_mediumHig()
       low            = equip_lowHig()

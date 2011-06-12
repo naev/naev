@@ -313,7 +313,7 @@ static int factionL_modplayer( lua_State *L )
 
    f = luaL_checkfaction(L,1);
    n = luaL_checknumber(L,2);
-   faction_modPlayer( f->f, n );
+   faction_modPlayer( f->f, n, "script" );
 
    return 0;
 }
@@ -336,7 +336,7 @@ static int factionL_modplayerraw( lua_State *L )
 
    f = luaL_checkfaction(L,1);
    n = luaL_checknumber(L,2);
-   faction_modPlayerRaw( f->f, n );
+   faction_modPlayerRaw( f->f, n, "script" );
 
    return 0;
 }
