@@ -344,7 +344,7 @@ static void faction_modPlayerLua( int f, double mod, const char *source, int sec
    else {
 #if DEBUGGING
       lua_pushcfunction(L, nlua_errTrace);
-      errf = -5;
+      errf = -6;
 #else /* DEBUGGING */
       errf = 0;
 #endif /* DEBUGGING */
