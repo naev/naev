@@ -6,8 +6,9 @@
 --      3 - The player has found the FLF base for the Dvaered, or has betrayed the FLF after rescuing the agent. Conditional for dv_antiflf03
 --]]
 
-include("scripts/fleethelper.lua")
-include("scripts/proximity.lua")
+include "scripts/fleethelper.lua" 
+include "scripts/proximity.lua"
+include "dat/missions/dvaered/common.lua"
 
 -- localization stuff, translators would work here
 lang = naev.lang()
@@ -190,6 +191,7 @@ function land()
     if victorious and planet.cur() == planet.get(DVplanet) then
         tk.msg(title[3], string.format(text[5], player.name()))
         tk.msg(title[3], text[6])
+        dv_modReputation( 5 )
         faction.get("Dvaered"):modPlayerRaw(10)
         player.pay(100000) -- 100K
         var.pop("flfbase_intro")
