@@ -76,7 +76,10 @@ typedef struct Faction_ {
    double player; /**< Standing with player - from -100 to 100 */
 
    /* Scheduler. */
-   lua_State *state; /**< Lua scheduler script. */
+   lua_State *sched_state; /**< Lua scheduler script. */
+
+   /* Behaviour. */
+   lua_State *state; /**< Faction specific state. */
 
    /* Flags. */
    unsigned int flags; /**< Flags affecting the faction. */
@@ -92,6 +95,7 @@ int faction_nstack = 0; /**< Number of factions in the faction stack. */
  */
 /* static */
 static void faction_sanitizePlayer( Faction* faction );
+static void faction_modPlayerLua( Faction *faction, double mod, const char *source, int secondary );
 static int faction_parse( Faction* temp, xmlNodePtr parent );
 static void faction_parseSocial( xmlNodePtr parent );
 /* externed */
@@ -289,13 +293,13 @@ int* faction_getAllies( int f, int *n )
 /**
  * @brief Gets the state associated to the faction scheduler.
  */
-lua_State *faction_getState( int f )
+lua_State *faction_getScheduler( int f )
 {
    if (!faction_isFaction(f)) {
       WARN("Faction id '%d' is invalid.",f);
       return NULL;
    }
-   return faction_stack[f].state;
+   return faction_stack[f].sched_state;
 }
 
 
@@ -314,16 +318,73 @@ static void faction_sanitizePlayer( Faction* faction )
 
 
 /**
+ * @brief Mods player using the power of Lua.
+ */
+static void faction_modPlayerLua( Faction *faction, double mod, const char *source, int secondary )
+{
+   lua_State *L;
+   int errf;
+
+   /* Make sure it's not static. */
+   if (faction_isFlag(faction, FACTION_STATIC))
+      return;
+
+   L = faction->state;
+
+   if (L == NULL) {
+      faction->player += mod;
+      faction_sanitizePlayer(faction);
+      return;
+   }
+
+#if DEBUGGING
+   lua_pushcfunction(L, nlua_errTrace);
+   errf = -5;
+#else /* DEBUGGING */
+   errf = 0;
+#endif /* DEBUGGING */
+
+   /* Set up the function:
+    * faction_hit( current, amount, source, secondary ) */
+   lua_getglobal(   L, "faction_hit" );
+   lua_pushnumber(  L, faction->player );
+   lua_pushnumber(  L, mod );
+   lua_pushstring(  L, source );
+   lua_pushboolean( L, secondary );
+
+   /* Call function. */
+   if (lua_pcall( L, 4, 1, errf )) { /* An error occurred. */
+      WARN("Faction '%s': %s", faction->name, lua_tostring(L,-1));
+#if DEBUGGING
+      lua_pop( L, 2 );
+#else /* DEBUGGING */
+      lua_pop( L, 1 );
+#endif /* DEBUGGING */
+      return;
+   }
+
+   /* Parse return. */
+   if (!lua_isnumber( L, -1 ))
+      WARN( "Lua script for faction '%s' did not return a number from 'faction_hit(...)'.", faction->name );
+   else
+      faction->player = lua_tonumber( L, -1 );
+#if DEBUGGING
+   lua_pop( L, 2 );
+#else /* DEBUGGING */
+   lua_pop( L, 1 );
+#endif /* DEBUGGING */
+}
+
+
+/**
  * @brief Modifies the player's standing with a faction.
  *
  * Affects enemies and allies too.
  *
  *    @param f Faction to modify player's standing.
  *    @param mod Modifier to modify by.
- *
- * @sa faction_modPlayerRaw
  */
-void faction_modPlayer( int f, double mod )
+void faction_modPlayer( int f, double mod, const char *source )
 {
    int i;
    Faction *faction;
@@ -333,12 +394,12 @@ void faction_modPlayer( int f, double mod )
       WARN("%d is an invalid faction", f);
       return;
    }
+   faction = &faction_stack[f];
 
    /* Modify faction standing with parent faction. */
-   faction_modPlayerRaw( f, mod );
+   faction_modPlayerLua( faction, mod, source, 0 );
 
    /* Now mod allies to a lesser degree */
-   faction = &faction_stack[f];
    for (i=0; i<faction->nallies; i++) {
 
       /* Enemies are made faster. */
@@ -347,7 +408,7 @@ void faction_modPlayer( int f, double mod )
          m *= 0.75;
 
       /* Modify faction standing */
-      faction_modPlayerRaw( faction->allies[i], m*mod );
+      faction_modPlayerLua( &faction_stack[ faction->allies[i] ], m*mod, source, 1 );
    }
 
    /* Now mod enemies */
@@ -359,7 +420,7 @@ void faction_modPlayer( int f, double mod )
          m *= 0.75;
 
       /* Modify faction standing. */
-      faction_modPlayerRaw( faction->enemies[i], -m*mod );
+      faction_modPlayerLua( &faction_stack[ faction->enemies[i] ], -m*mod, source, 1 );
    }
 }
 
@@ -374,23 +435,14 @@ void faction_modPlayer( int f, double mod )
  *
  * @sa faction_modPlayer
  */
-void faction_modPlayerRaw( int f, double mod )
+void faction_modPlayerRaw( int f, double mod, const char *source )
 {
-   Faction *faction;
-
    if (!faction_isFaction(f)) {
       WARN("%d is an invalid faction", f);
       return;
    }
 
-   faction = &faction_stack[f];
-
-   /* Make sure it's not static. */
-   if (faction_isFlag(faction, FACTION_STATIC))
-      return;
-
-   faction->player += mod;
-   faction_sanitizePlayer(faction);
+   faction_modPlayerLua( &faction_stack[f], mod, source, 0 );
 }
 
 
@@ -694,6 +746,23 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
 
       if (xml_isNode(node, "spawn")) {
          snprintf( buf, sizeof(buf), "ai/spawn/%s.lua", xml_raw(node) );
+         temp->sched_state = nlua_newState();
+         nlua_loadStandard( temp->sched_state, 0 );
+         dat = ndata_read( buf, &ndat );
+         if (luaL_dobuffer(temp->sched_state, dat, ndat, buf) != 0) {
+            WARN("Failed to run spawn script: %s\n"
+                  "%s\n"
+                  "Most likely Lua file has improper syntax, please check",
+                  buf, lua_tostring(temp->sched_state,-1));
+            lua_close( temp->sched_state );
+            temp->sched_state = NULL;
+         }
+         free(dat);
+         continue;
+      }
+
+      if (xml_isNode(node, "lua")) {
+         snprintf( buf, sizeof(buf), "dat/factions/%s.lua", xml_raw(node) );
          temp->state = nlua_newState();
          nlua_loadStandard( temp->state, 0 );
          dat = ndata_read( buf, &ndat );
@@ -944,6 +1013,8 @@ void factions_free (void)
          free(faction_stack[i].allies);
       if (faction_stack[i].nenemies > 0)
          free(faction_stack[i].enemies);
+      if (faction_stack[i].sched_state != NULL)
+         lua_close( faction_stack[i].sched_state );
       if (faction_stack[i].state != NULL)
          lua_close( faction_stack[i].state );
    }

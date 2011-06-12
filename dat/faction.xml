@@ -90,6 +90,7 @@
   <colour>green</colour>
   <player>1</player>
   <spawn>empire</spawn>
+  <lua>skel</lua>
   <allies>
    <ally>Dvaered</ally>
    <ally>Goddard</ally>

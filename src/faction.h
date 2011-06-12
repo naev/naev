@@ -22,7 +22,7 @@ int* faction_getAll( int *n );
 char* faction_name( int f );
 char* faction_shortname( int f );
 char* faction_longname( int f );
-lua_State *faction_getState( int f );
+lua_State *faction_getScheduler( int f );
 glTexture* faction_logoSmall( int f );
 glTexture* faction_logoTiny( int f );
 glColour* faction_colour( int f );
@@ -31,8 +31,8 @@ int* faction_getAllies( int f, int *n );
 int* faction_getGroup( int *n, int which );
 
 /* player stuff */
-void faction_modPlayer( int f, double mod );
-void faction_modPlayerRaw( int f, double mod );
+void faction_modPlayer( int f, double mod, const char *source );
+void faction_modPlayerRaw( int f, double mod, const char *source );
 double faction_getPlayer( int f );
 double faction_getPlayerDef( int f );
 char* faction_getStanding( double mod );

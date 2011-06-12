@@ -789,7 +789,7 @@ void pilot_distress( Pilot *p, const char *msg, int ignore_int )
 
       /* Modify faction, about 1 for a llama, 4.2 for a hawking */
       if ((t != NULL) && (t->faction == FACTION_PLAYER) && r)
-         faction_modPlayer( p->faction, -(pow(p->ship->mass, 0.2) - 1.) );
+         faction_modPlayer( p->faction, -(pow(p->ship->mass, 0.2) - 1.), "distress" );
 
       /* Set flag to avoid a second faction hit. */
       pilot_setFlag(p, PILOT_DISTRESSED);
@@ -995,7 +995,7 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
             mod = 2*(pow(p->ship->mass,0.4) - 1.);
 
             /* Modify faction for him and friends. */
-            faction_modPlayer( p->faction, -mod );
+            faction_modPlayer( p->faction, -mod, "kill" );
          }
       }
    }
