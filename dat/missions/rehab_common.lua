@@ -7,6 +7,8 @@
 --
 --]]
 
+include "scripts/numstring.lua"
+
 -- Localization, choosing a language if naev is translated for non-english-speaking locales.
 lang = naev.lang()
 if lang == "es" then
@@ -14,10 +16,10 @@ else -- Default to English
     misn_title = "%s Rehabilitation"
     misn_desc = [[You may pay a fine for a chance to redeem yourself in the eyes of a faction you have offended. You may interact with this faction as if your reputation were neutral, but your reputation will not rise until you've regained their trust. ANY hostile action against this faction will immediately void this agreement.
 Faction: %s
-Cost: %d credits]]
+Cost: %s credits]]
     misn_reward = "None."
     
-    lowmoney = "You don't have enough money. You need at least %d credits to buy a cease in hostilities with this faction."
+    lowmoney = "You don't have enough money. You need at least %s credits to buy a cease in hostilities with this faction."
     accepted = [[Your application has been processed. The %s security forces will no longer attack you on sight. You may conduct your business in %s space again, but remember that you still have a criminal record! If you attack any traders, civilians or %s ships, or commit any other felony against this faction, you will immediately become their enemy again.
     While this agreement is active your reputation will not change, but if you continue to behave properly and perform beneficial services, your past offenses will eventually be stricken from the record.]]
     
@@ -40,13 +42,13 @@ function create()
     setFine(rep)
     
     misn.setTitle(misn_title:format(fac:name()))
-    misn.setDesc(misn_desc:format(fac:name(), fine))
+    misn.setDesc(misn_desc:format(fac:name(), numstring(fine)))
     misn.setReward(misn_reward)
 end
 
 function accept()
     if player.credits() < fine then
-        tk.msg(lowmoneyformat(fine))
+        tk.msg(lowmoneyformat(numstring(fine)))
         misn.finish()
     end
     
