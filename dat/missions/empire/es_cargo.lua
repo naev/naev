@@ -136,7 +136,7 @@ function land()
 
         -- increase faction
         if player.getFaction("Empire") < 50 then
-            player.modFaction("Empire", rnd.rnd(5))
+            player.modFactionRaw("Empire", rnd.rnd(2, 4))
         end
         misn.finish(true)
     end

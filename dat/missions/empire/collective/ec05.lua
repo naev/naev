@@ -400,17 +400,14 @@ function land ()
          -- Failure to kill
          tk.msg( title[5], text[7] )
          var.push("trinity", true)
-
-         -- Rewards
-         player.modFaction("Empire",-5)
       else
          -- Successfully killed
          tk.msg( title[4], string.format(text[6], player.name()) )
          var.push("trinity", false)
-
-         -- Rewards
-         player.modFaction("Empire",5)
       end
+
+      -- Rewards
+      player.modFactionRaw("Empire",5)
 
       misn.finish(true)
    end

@@ -110,7 +110,7 @@ function land ()
 
          -- Rewards
          player.pay(reward)
-         player.modFaction("Empire",5);
+         player.modFactionRaw("Empire",5);
 
          -- Flavour text
          tk.msg( title[3], text[5] )

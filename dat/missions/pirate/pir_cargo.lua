@@ -122,8 +122,8 @@ function land()
 --         end
 
          -- increase faction
-         if player.getFaction("Pirate") < 50 then
-            player.modFaction("Pirate", rnd.rnd(5))
+         if player.getFactionRaw("Pirate") < 50 then
+            player.modFactionRaw("Pirate", rnd.rnd(5))
          end
 
          misn.finish(true)

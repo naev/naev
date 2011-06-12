@@ -118,7 +118,7 @@ function land()
       var.push( "emp_commando", time.tonumber(time.get() + time.create( 0, 10, 0 )) )
 
       -- Rewards
-      player.modFaction("Empire",5)
+      player.modFactionRaw("Empire",5)
 
       misn.finish(true)
    end

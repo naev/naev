@@ -447,7 +447,7 @@ function land ()
 
       -- modify the faction standing
       if player.getFaction("Dvaered") < 70 then
-         player.modFaction("Dvaered", rnd.rnd(1, num_systems/2) );
+         player.modFactionRaw("Dvaered", rnd.rnd(1, num_systems/2) );
       end
 
       misn.finish(true)
