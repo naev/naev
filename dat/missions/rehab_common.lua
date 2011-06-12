@@ -50,7 +50,7 @@ function accept()
         misn.finish()
     end
     
-    player.pay(fine)
+    player.pay(-fine)
     tk.msg(misn_title:format(fac:name()), accepted:format(fac:name(), fac:name(), fac:name()))
     
     fac:modPlayerRaw(-rep)
@@ -80,7 +80,7 @@ function standing(hookfac, delta)
                 excess = excess + delta
                 fac:modPlayerRaw(-delta + rep)
                 tk.msg(successtitle:format(fac:name()), successtext)
-                misn.finish()
+                misn.finish(true)
             end
 
             excess = excess + delta
