@@ -25,6 +25,7 @@
 #include "ndata.h"
 #include "rng.h"
 #include "colour.h"
+#include "hook.h"
 
 
 #define XML_FACTION_ID     "Factions"   /**< XML section identifier */
@@ -95,7 +96,7 @@ int faction_nstack = 0; /**< Number of factions in the faction stack. */
  */
 /* static */
 static void faction_sanitizePlayer( Faction* faction );
-static void faction_modPlayerLua( Faction *faction, double mod, const char *source, int secondary );
+static void faction_modPlayerLua( int f, double mod, const char *source, int secondary );
 static int faction_parse( Faction* temp, xmlNodePtr parent );
 static void faction_parseSocial( xmlNodePtr parent );
 /* externed */
@@ -320,62 +321,78 @@ static void faction_sanitizePlayer( Faction* faction )
 /**
  * @brief Mods player using the power of Lua.
  */
-static void faction_modPlayerLua( Faction *faction, double mod, const char *source, int secondary )
+static void faction_modPlayerLua( int f, double mod, const char *source, int secondary )
 {
+   Faction *faction;
    lua_State *L;
    int errf;
+   double old, delta;
+   HookParam hparam[3];
+
+   faction = &faction_stack[f];
 
    /* Make sure it's not static. */
    if (faction_isFlag(faction, FACTION_STATIC))
       return;
 
-   L = faction->state;
+   L     = faction->state;
+   old   = faction->player;
 
    if (L == NULL) {
       faction->player += mod;
-      faction_sanitizePlayer(faction);
-      return;
    }
-
+   else {
 #if DEBUGGING
-   lua_pushcfunction(L, nlua_errTrace);
-   errf = -5;
+      lua_pushcfunction(L, nlua_errTrace);
+      errf = -5;
 #else /* DEBUGGING */
-   errf = 0;
+      errf = 0;
 #endif /* DEBUGGING */
 
-   /* Set up the function:
-    * faction_hit( current, amount, source, secondary ) */
-   lua_getglobal(   L, "faction_hit" );
-   lua_pushnumber(  L, faction->player );
-   lua_pushnumber(  L, mod );
-   lua_pushstring(  L, source );
-   lua_pushboolean( L, secondary );
+      /* Set up the function:
+       * faction_hit( current, amount, source, secondary ) */
+      lua_getglobal(   L, "faction_hit" );
+      lua_pushnumber(  L, faction->player );
+      lua_pushnumber(  L, mod );
+      lua_pushstring(  L, source );
+      lua_pushboolean( L, secondary );
 
-   /* Call function. */
-   if (lua_pcall( L, 4, 1, errf )) { /* An error occurred. */
-      WARN("Faction '%s': %s", faction->name, lua_tostring(L,-1));
+      /* Call function. */
+      if (lua_pcall( L, 4, 1, errf )) { /* An error occurred. */
+         WARN("Faction '%s': %s", faction->name, lua_tostring(L,-1));
+#if DEBUGGING
+         lua_pop( L, 2 );
+#else /* DEBUGGING */
+         lua_pop( L, 1 );
+#endif /* DEBUGGING */
+         return;
+      }
+
+      /* Parse return. */
+      if (!lua_isnumber( L, -1 ))
+         WARN( "Lua script for faction '%s' did not return a number from 'faction_hit(...)'.", faction->name );
+      else
+         faction->player = lua_tonumber( L, -1 );
 #if DEBUGGING
       lua_pop( L, 2 );
 #else /* DEBUGGING */
       lua_pop( L, 1 );
 #endif /* DEBUGGING */
-      return;
    }
-
-   /* Parse return. */
-   if (!lua_isnumber( L, -1 ))
-      WARN( "Lua script for faction '%s' did not return a number from 'faction_hit(...)'.", faction->name );
-   else
-      faction->player = lua_tonumber( L, -1 );
-#if DEBUGGING
-   lua_pop( L, 2 );
-#else /* DEBUGGING */
-   lua_pop( L, 1 );
-#endif /* DEBUGGING */
 
    /* Sanitize just in case. */
    faction_sanitizePlayer( faction );
+
+   /* Run hook if necessary. */
+   delta = faction->player - old;
+   if (fabs(delta) > 1e-10) {
+      hparam[0].type    = HOOK_PARAM_FACTION;
+      hparam[0].u.lf.f  = f;
+      hparam[1].type    = HOOK_PARAM_NUMBER;
+      hparam[1].u.num   = delta;
+      hparam[2].type    = HOOK_PARAM_SENTINEL;
+      hooks_runParam( "standing", hparam );
+   }
 }
 
 
@@ -399,18 +416,18 @@ void faction_modPlayer( int f, double mod, const char *source )
    faction = &faction_stack[f];
 
    /* Modify faction standing with parent faction. */
-   faction_modPlayerLua( faction, mod, source, 0 );
+   faction_modPlayerLua( f, mod, source, 0 );
 
    /* Now mod allies to a lesser degree */
    for (i=0; i<faction->nallies; i++) {
       /* Modify faction standing */
-      faction_modPlayerLua( &faction_stack[ faction->allies[i] ], mod, source, 1 );
+      faction_modPlayerLua( faction->allies[i], mod, source, 1 );
    }
 
    /* Now mod enemies */
    for (i=0; i<faction->nenemies; i++) {
       /* Modify faction standing. */
-      faction_modPlayerLua( &faction_stack[ faction->enemies[i] ], -mod, source, 1 );
+      faction_modPlayerLua( faction->enemies[i], -mod, source, 1 );
    }
 }
 
@@ -432,7 +449,7 @@ void faction_modPlayerRaw( int f, double mod, const char *source )
       return;
    }
 
-   faction_modPlayerLua( &faction_stack[f], mod, source, 0 );
+   faction_modPlayerLua( f, mod, source, 0 );
 }
 
 

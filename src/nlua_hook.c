@@ -49,6 +49,7 @@ static int hook_commsell( lua_State *L );
 static int hook_input( lua_State *L );
 static int hook_mouse( lua_State *L );
 static int hook_safe( lua_State *L );
+static int hook_standing( lua_State *L );
 static int hook_pilot( lua_State *L );
 static const luaL_reg hook_methods[] = {
    { "rm", hookL_rm },
@@ -66,6 +67,7 @@ static const luaL_reg hook_methods[] = {
    { "input", hook_input },
    { "mouse", hook_mouse },
    { "safe", hook_safe },
+   { "standing", hook_standing },
    { "pilot", hook_pilot },
    {0,0}
 }; /**< Hook Lua methods. */
@@ -516,6 +518,25 @@ static int hook_mouse( lua_State *L )
 {
    unsigned int h;
    h = hook_generic( L, "mouse", 0., 1, 0 );
+   lua_pushnumber( L, h );
+   return 1;
+}
+/**
+ * @brief Hooks the function to any faction standing change.
+ *
+ * The parameters passed to the function are faction whose standing is being
+ * changed and the amount changed:<br/>
+ * function f( faction, change, args )
+ *
+ *    @luaparam funcname Name of function to run when hook is triggered.
+ *    @luaparam arg Argument to pass to hook.
+ *    @luareturn Hook identifier.
+ * @luafunc standing( funcname, arg )
+ */
+static int hook_standing( lua_State *L )
+{
+   unsigned int h;
+   h = hook_generic( L, "standing", 0., 1, 0 );
    lua_pushnumber( L, h );
    return 1;
 }
