@@ -9,6 +9,7 @@ _fcap_distress = 10 -- Distress cap
 _fcap_kill     = 20 -- Kill cap
 _fcap_misn     = 30 -- Starting mission cap, gets overwritten
 _fcap_misn_var = nil -- Mission variable to use for limits
+_fcap_mod_sec  = 0.3 -- Modulation from secondary
 
 
 --[[
@@ -78,7 +79,7 @@ function faction_hit( current, amount, source, secondary )
    end
 
    -- Modify amount
-   if secondary then mod = mod * 0.5 end
+   if secondary then mod = mod * _fcap_mod_sec end
    amount = mod * amount
 
    -- Faction gain
