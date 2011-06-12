@@ -7,13 +7,15 @@
 
 ]]--
 
+include "scripts/numstring.lua"
+
 lang = naev.lang()
 if lang == "es" then
    -- not translated atm
 else -- default english
    bar_desc = "You see an Empire Commander. He seems to have noticed you."
    misn_title = "Prisoner Exchange"
-   misn_reward = "%d credits"
+   misn_reward = "%s credits"
    misn_desc = {}
    misn_desc[1] = "Go to %s in the %s system to exchange prisoners with the FLF."
    misn_desc[2] = "Return to %s in the %s system to report what happened."
@@ -66,7 +68,7 @@ function accept ()
    misn_stage = 0
    reward = 50000
    misn.setTitle(misn_title)
-   misn.setReward( string.format(misn_reward, reward) )
+   misn.setReward( string.format(misn_reward, numstring(reward)) )
    misn.setDesc( string.format(misn_desc[1], dest:name(), destsys:name()))
 
    -- Flavour text and mini-briefing

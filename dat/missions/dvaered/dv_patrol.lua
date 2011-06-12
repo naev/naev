@@ -15,7 +15,7 @@ else -- default english
    misn_desc = {}
    misn_desc[1] = "Patrol %d points in %d systems for hostiles: "
    misn_desc[2] = "Return to %s in the %s system for payment."
-   misn_reward = "%d credits"
+   misn_reward = "%s credits"
    title = {}
    title[1] = "DV: Routine %d sector patrol"
    title[2] = "DV: Patrol %d sectors"
@@ -24,7 +24,7 @@ else -- default english
    msg_title = {}
    msg_msg = {}
    msg_title[1] = "Mission Success"
-   msg_msg[1] = "You are greeted by a Dvaered official and receive your payment of %d credits for your contribution in keeping Dvaered systems clean."
+   msg_msg[1] = "You are greeted by a Dvaered official and receive your payment of %s credits for your contribution in keeping Dvaered systems clean."
    msg_msg[2] = "DV: Arrived at point. Hold point."
    msg_msg[3] = "DV: Point insecure. Engage hostiles!"
    msg_msg[4] = "DV: Hostiles eliminated. Hold point."
@@ -42,7 +42,7 @@ end
 
 
 include("scripts/proximity.lua")
-
+include("scripts/numstring.lua")
 
 -- Mission parameters
 chk_range      = math.pow( 2000, 2 ) -- Radius within target
@@ -253,7 +253,7 @@ function create ()
    -- Set some details.
    misn.setTitle( string.format( title[rnd.int(1,3)], num_patrol ) )
    misn.setDesc( desc )
-   misn.setReward( string.format( misn_reward, reward ) )
+   misn.setReward( string.format( numstring(misn_reward), reward ) )
 end
 
 -- Mission is accepted
@@ -435,7 +435,7 @@ function land ()
    landed = planet.cur()
    if visited == num_patrol and landed == base then
       player.pay( reward )
-      tk.msg( msg_title[1], string.format( msg_msg[1], reward ))
+      tk.msg( msg_title[1], string.format( msg_msg[1], numstring(reward) ))
 
       -- increase dvaered patrol mission counter
       n = var.peek("dv_patrol")

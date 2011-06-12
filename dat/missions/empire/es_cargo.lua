@@ -5,13 +5,14 @@
 ]]--
 include "scripts/jumpdist.lua"
 include "scripts/cargo_common.lua"
+include "scripts/numstring.lua"
 
 lang = naev.lang()
 if lang == "es" then
    -- not translated atm
 else -- default english
    misn_desc = "The Empire needs to ship %d tonnes of %s to %s in the %s system by %s (%s left)."
-   misn_reward = "%d credits"
+   misn_reward = "%s credits"
 
    title_p1 = "ES: Cargo transport to %s in the %s system"
    title_p2 = [[ 
@@ -91,7 +92,7 @@ function create()
     misn.setTitle("ES: Cargo transport (" .. amount .. " tonnes of " .. cargo .. ")")
     misn.markerAdd(destsys, "computer")
     misn.setDesc(title_p1:format(destplanet:name(), destsys:name()) .. title_p2:format(cargo, amount, numjumps, traveldist, (timelimit - time.get()):str()))
-    misn.setReward(misn_reward:format(reward))
+    misn.setReward(misn_reward:format(numstring(reward)))
 
 end
 

@@ -8,6 +8,8 @@
 
 --]]
 
+include "scripts/numstring.lua"
+
 -- Localization, choosing a language if naev is translated for non-english-speaking locales.
 lang = naev.lang()
 if lang == "es" then
@@ -17,7 +19,7 @@ else -- Default to English
 
    -- Mission details
    misn_title  = "Pirate Bounty near %s"
-   misn_reward = "%d credits"
+   misn_reward = "%s credits"
    misn_desc   = "There is a bounty on the head of the pirate known as %s who was last seen near the %s system."
 
    -- Text
@@ -74,7 +76,7 @@ function accept ()
 
    -- Set mission details
    misn.setTitle( string.format( misn_title, near_sys:name()) )
-   misn.setReward( string.format( misn_reward, credits) )
+   misn.setReward( string.format( misn_reward, numstring(credits)) )
    misn.setDesc( string.format( misn_desc, pir_name, near_sys:name() ) )
    misn.markerAdd( near_sys, "low" )
 
