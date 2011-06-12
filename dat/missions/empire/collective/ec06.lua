@@ -11,6 +11,7 @@
 
 include "scripts/proximity.lua"
 include "scripts/fleethelper.lua"
+include "dat/missions/empire/common.lua"
 
 lang = naev.lang()
 if lang == "es" then
@@ -269,10 +270,10 @@ function land ()
       tk.msg( title[3], string.format(text[3], misn_base:name()) )
 
       -- Rewards
-      player.modFactionRaw("Empire",5)
       diff.apply("collective_dead")
       -- This was the last mission in the minor campaign, so bump the reputation cap.
-      var.push("_fcap_empire", var.peek("_fcap_empire") + 10)
+      emp_incReputation( 10 )
+      player.modFactionRaw("Empire",5)
       player.pay( 500000 ) -- 500k
 
       tk.msg( title[3], text[4] )

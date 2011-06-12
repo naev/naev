@@ -48,6 +48,8 @@ else -- default english
    msg[2] = "MISSION FAILED: You abandoned the VIP."
 end
 
+include "dat/missions/empire/common.lua"
+
 function create ()
    -- Target destination
    destsys = system.get( "Slaccid" )
@@ -110,6 +112,7 @@ function land ()
 
          -- Rewards
          player.pay(reward)
+         emp_incReputation( 5 ) -- Bump cap a bit
          player.modFactionRaw("Empire",5);
 
          -- Flavour text
@@ -233,7 +236,6 @@ end
 
 function abort ()
 	-- If aborted you'll also leave the VIP to fait. (A.)
-	player.msg( msg[2] )
-    misn.finish(false)
-	
+   player.msg( msg[2] )
+   misn.finish(false)
 end
