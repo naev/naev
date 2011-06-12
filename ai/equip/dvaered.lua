@@ -49,6 +49,7 @@ end
 function equip_dvaeredMilitary( p, shipsize )
    local medium, low, apu
    local use_primary, use_secondary, use_medium, use_low
+   local use_forward, use_turrets, use_medturrets
    local nhigh, nmedium, nlow = p:ship():slots()
 
    -- Defaults
@@ -70,8 +71,8 @@ function equip_dvaeredMilitary( p, shipsize )
 
       -- Fighter
       elseif class == "Fighter" then
-         use_forward    = nhigh-1
          use_secondary  = 1
+         use_forward    = nhigh - use_secondary
          addWeapons( equip_forwardDvaLow(), use_forward )
          addWeapons( equip_secondaryDva(), use_secondary )
          medium         = equip_mediumLow()
@@ -92,7 +93,7 @@ function equip_dvaeredMilitary( p, shipsize )
    elseif shipsize == "medium" then
       use_secondary  = rnd.rnd(1,2)
       use_turrets    = nhigh - use_secondary - rnd.rnd(1,2)
-      use_forward    = nhigh - use_turrets
+      use_forward    = nhigh - use_secondary - use_turrets
       addWeapons( equip_secondaryDva(), use_secondary )
       addWeapons( equip_turretDvaMed(), use_turrets )
       addWeapons( equip_forwardDvaMed(), use_forward )
@@ -102,11 +103,16 @@ function equip_dvaeredMilitary( p, shipsize )
 
    else -- "large"
       use_secondary  = 2
-      use_turrets    = nhigh - use_secondary - rnd.rnd(2,3)
-      use_forward    = nhigh - use_turrets
+      use_turrets = nhigh - use_secondary - rnd.rnd(2,3)
+      if rnd.rnd() > 0.4 then -- Anti-fighter variant.
+         use_medturrets = nhigh - use_secondary - use_turrets
+         addWeapons( equip_turretDvaMed(), use_medturrets )
+      else -- Forward variant.
+         use_forward    = nhigh - use_secondary - use_turrets
+         addWeapons( equip_forwardDvaHig(), use_forward )
+      end
       addWeapons( equip_secondaryDva(), use_secondary )
       addWeapons( equip_turretDvaHig(), use_turrets )
-      addWeapons( equip_forwardDvaHig(), use_forward )
       medium         = equip_mediumHig()
       low            = equip_lowHig()
       apu            = equip_apuHig()
@@ -114,4 +120,3 @@ function equip_dvaeredMilitary( p, shipsize )
    equip_ship( p, false, weapons, medium, low, apu,
                use_medium, use_low )
 end
-
