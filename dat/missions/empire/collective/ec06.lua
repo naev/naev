@@ -271,6 +271,8 @@ function land ()
       -- Rewards
       player.modFaction("Empire",5)
       diff.apply("collective_dead")
+      -- This was the last mission in the minor campaign, so bump the reputation cap.
+      var.push("_fcap_empire", var.peek("_fcap_empire") + 10)
       player.pay( 500000 ) -- 500k
 
       tk.msg( title[3], text[4] )
