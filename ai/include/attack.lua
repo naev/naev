@@ -11,6 +11,7 @@
 -- Utilities
 include("ai/include/atk_util.lua")
 include("ai/include/atk_target.lua")
+include("ai/include/atk_patterns.lua")
 
 -- Attack profiles
 include("ai/include/atk_generic.lua")
@@ -101,7 +102,7 @@ function attack_choose ()
       mem.atk        = atk_capital
 
     -- Generic AI
-   else 
+   else
       atk_generic_init()
    end
 end
