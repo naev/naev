@@ -373,6 +373,9 @@ static void faction_modPlayerLua( Faction *faction, double mod, const char *sour
 #else /* DEBUGGING */
    lua_pop( L, 1 );
 #endif /* DEBUGGING */
+
+   /* Sanitize just in case. */
+   faction_sanitizePlayer( faction );
 }
 
 
