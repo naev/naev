@@ -4,12 +4,14 @@
    wild.
 --]]
 
--- Faction caps and defaults
-_fcap_distress = 10 -- Distress cap
-_fcap_kill     = 20 -- Kill cap
-_fcap_misn     = 30 -- Starting mission cap, gets overwritten
-_fcap_misn_var = nil -- Mission variable to use for limits
-_fcap_mod_sec  = 0.3 -- Modulation from secondary
+-- Faction caps.
+_fcap_distress   = 10 -- Distress cap
+_fcap_kill       = 20 -- Kill cap
+_fdelta_distress = {-1, 0} -- Maximum change constraints
+_fdelta_kill     = {-5, 1} -- Maximum change constraints
+_fcap_misn       = 30 -- Starting mission cap, gets overwritten
+_fcap_misn_var   = nil -- Mission variable to use for limits
+_fcap_mod_sec    = 0.3 -- Modulation from secondary
 
 
 --[[
@@ -49,6 +51,7 @@ end
       @param current Current faction player has.
       @param amount Amount of faction being changed.
       @param source Source of the faction hit.
+      @param secondary Flag that indicates whether this is a secondary (through ally or enemy) hit.
       @return The faction amount to set to.
 --]]
 function faction_hit( current, amount, source, secondary )
@@ -60,12 +63,14 @@ function faction_hit( current, amount, source, secondary )
    local mod = 1
    if source == "distress" then
       cap   = _fcap_distress
+      delta = _fdelta_distress
       -- Ignore positive distresses
       if amount > 0 then
          return f
       end
    elseif source == "kill" then
       cap   = _fcap_kill
+      delta = _fdelta_kill
    else
       if _fcap_misn_var == nil then
          cap   = _fcap_misn
@@ -78,19 +83,36 @@ function faction_hit( current, amount, source, secondary )
       end
    end
 
-   -- Modify amount
+   -- Adjust for secondary hit
    if secondary then mod = mod * _fcap_mod_sec end
    amount = mod * amount
+   delta[1] = mod * delta[1]
+   delta[2] = mod * delta[2]
 
    -- Faction gain
    if amount > 0 then
       -- Must be under cap
       if f < cap then
-         f = math.min( cap, f + amount * clerp( f, 0, 1, cap, 0.2 ) )
+         if source == "kill" then
+            -- Positive kill, which means an enemy of this faction got killed.
+            -- We need to check if this happened in the faction's territory, otherwise it doesn't count.
+            -- NOTE: virtual assets are NOT counted when determining territory!
+            for _, planet in system.cur():planets() do
+                if planet:faction() == _fthis then
+                   -- Planet belonging to this faction found. Modify reputation.
+                   f = math.min( cap, f + math.min(delta[2], amount * clerp( f, 0, 1, cap, 0.2 )) )
+                   break
+                end
+            end
+         else
+            -- Script induced change. No diminishing returns on these.
+            f = math.min( cap, f + math.min(delta[2], amount) )
+         end
       end
-   -- Faction loss
+   -- Faction loss.
    else
-      f = math.max( -100, f + amount * clerp( f, cap, 1, -100, 0.2 ) )
+      -- No diminishing returns on loss.
+      f = math.max( -100, f + math.max(delta[1], amount) )
    end
    return f
 end
