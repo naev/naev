@@ -1,4 +1,9 @@
 <Events>
+ <event name="reputation">
+  <lua>reputation</lua>
+  <trigger>load</trigger>
+  <chance>100</chance>
+ </event>
  <event name="start_event">
   <lua>start</lua>
   <trigger>none</trigger>
