@@ -274,6 +274,9 @@ static int hook_parseParam( lua_State *L, HookParam *param )
          case HOOK_PARAM_PILOT:
             lua_pushpilot( L, param[n].u.lp );
             break;
+         case HOOK_PARAM_FACTION:
+            lua_pushfaction( L, param[n].u.lf );
+            break;
 
          default:
             WARN( "Unknown Lua parameter type." );
