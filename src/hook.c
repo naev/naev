@@ -51,7 +51,7 @@ typedef struct HookQueue_s {
    struct HookQueue_s *next; /**< Next in linked list. */
    char *stack;         /**< Stack to run. */
    unsigned int id;     /**< Run specific hook. */
-   HookParam hparam[3]; /**< Parameters. */
+   HookParam hparam[ HOOK_MAX_PARAM ]; /**< Parameters. */
 } HookQueue_t;
 static HookQueue_t *hook_queue   = NULL; /**< The hook queue. */
 static int hook_atomic           = 0; /**< Whether or not hooks should be queued. */
@@ -1025,11 +1025,14 @@ int hooks_runParam( const char* stack, HookParam *param )
 
    /* Not time to run hooks, so queue them. */
    if (hook_atomic) {
-      WARN("Stack '%s' being run in hook exclusion area!", stack);
       hq = calloc( 1, sizeof(HookQueue_t) );
       hq->stack = strdup(stack);
       for (i=0; param[i].type != HOOK_PARAM_SENTINEL; i++)
          memcpy( &hq->hparam[i], &param[i], sizeof(HookParam) );
+#ifdef DEBUGGING
+      if (i >= HOOK_MAX_PARAM)
+         WARN( "HOOK_MAX_PARAM is set too low (%d), need at least %d!", HOOK_MAX_PARAM, i );
+#endif /* DEBUGGING */
       hq->hparam[i].type = HOOK_PARAM_SENTINEL;
       hq_add( hq );
       return 0;
