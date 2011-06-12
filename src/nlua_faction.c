@@ -157,8 +157,18 @@ LuaFaction* lua_tofaction( lua_State *L, int ind )
  */
 LuaFaction* luaL_checkfaction( lua_State *L, int ind )
 {
+   LuaFaction f, *o;
+
    if (lua_isfaction(L,ind))
       return lua_tofaction(L,ind);
+   if (lua_isstring(L,ind)) {
+      f.f = faction_get( lua_tostring(L,ind) );
+      if (f.f >= 0) {
+         o = (LuaFaction*) lua_newuserdata(L, sizeof(LuaFaction));
+         *o = f;
+         return o;
+      }
+   }
    luaL_typerror(L, ind, FACTION_METATABLE);
    return NULL;
 }
