@@ -112,7 +112,7 @@ function land ()
 
          -- Rewards
          player.pay(reward)
-         emp_incReputation( 5 ) -- Bump cap a bit
+         emp_modReputation( 5 ) -- Bump cap a bit
          player.modFactionRaw("Empire",5);
 
          -- Flavour text
