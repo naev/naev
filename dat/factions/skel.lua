@@ -4,10 +4,11 @@
    wild.
 --]]
 
--- Faction caps
+-- Faction caps and defaults
 _fcap_distress = 10 -- Distress cap
 _fcap_kill     = 20 -- Kill cap
 _fcap_misn     = 30 -- Starting mission cap, gets overwritten
+_fcap_misn_var = nil -- Mission variable to use for limits
 
 
 --[[
@@ -65,14 +66,15 @@ function faction_hit( current, amount, source, secondary )
    elseif source == "kill" then
       cap   = _fcap_kill
    else
-      cap   = _fcap_misn
-      --[[
-      cap   = var.peek( "faction_misn" )
-      if cap == nil then
-         cap = _fcap_misn
-         var.push( "faction_misn", cap )
+      if _fcap_misn_var == nil then
+         cap   = _fcap_misn
+      else
+         cap   = var.peek( _fcap_misn_var )
+         if cap == nil then
+            cap = _fcap_misn
+            var.push( _fcap_misn_var, cap )
+         end
       end
-      --]]
    end
 
    -- Modify amount

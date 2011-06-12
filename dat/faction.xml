@@ -35,6 +35,7 @@
   <player>3</player>
   <colour>purple</colour>
   <spawn>proteron</spawn>
+  <lua>proteron</lua>
   <allies>
   </allies>
   <enemies>
@@ -58,6 +59,7 @@
   <longname>Space Traders Guild</longname>
   <player>3</player>
   <spawn>trader</spawn>
+  <lua>trader</lua>
   <allies>
   </allies>
   <enemies>
@@ -71,6 +73,7 @@
   <player>-20</player>
   <colour>red</colour>
   <spawn>pirate</spawn>
+  <lua>pirate</lua>
   <enemies>
    <enemy>Civilian</enemy>
    <enemy>Empire</enemy>
@@ -90,7 +93,7 @@
   <colour>green</colour>
   <player>1</player>
   <spawn>empire</spawn>
-  <lua>skel</lua>
+  <lua>empire</lua>
   <allies>
    <ally>Dvaered</ally>
    <ally>Goddard</ally>
@@ -117,6 +120,7 @@
   <player>-10</player>
   <colour>orange</colour>
   <spawn>flf</spawn>
+  <lua>flf</lua>
   <enemies>
    <enemy>Dvaered</enemy>
   </enemies>
@@ -127,6 +131,7 @@
   <longname>House Dvaered</longname>
   <player>1</player>
   <spawn>dvaered</spawn>
+  <lua>dvaered</lua>
   <allies>
    <ally>Empire</ally>
   </allies>
@@ -140,6 +145,7 @@
   <longname>House Za'lek</longname>
   <player>2</player>
   <spawn>zalek</spawn>
+  <lua>zalek</lua>
   <allies>
   </allies>
   <enemies>
@@ -152,6 +158,7 @@
   <longname>House Sirius</longname>
   <player>3</player>
   <spawn>sirius</spawn>
+  <lua>sirius</lua>
   <allies>
   </allies>
   <enemies>
