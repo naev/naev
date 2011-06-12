@@ -125,6 +125,7 @@ function land ()
 
          -- What a disgrace you are, etc...
          tk.msg( title[4], text[6] )
+         emp_modReputation( 5 ) -- Bump cap a bit
 
          misn.finish(true)
       end
