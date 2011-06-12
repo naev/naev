@@ -72,23 +72,18 @@ end
 
 -- Standing hook. Manages faction reputation, keeping it at 0 until it goes positive.
 function standing(hookfac, delta)
-    print("Lala! Trigger! Delta is " .. delta)
     if hookfac == fac then
-        if last_modified then
-            last_modified = false
-            return
-        end
-
         if delta >= 0 then
             rep = rep + delta
             if rep >= 0 then
                 -- The player has successfully erased his criminal record.
+                excess = excess + delta
                 fac:modPlayerRaw(-delta + rep)
                 tk.msg(successtitle:format(fac:name()), successtext)
                 misn.finish()
             end
 
-            last_modified = true
+            excess = excess + delta
             fac:modPlayerRaw(-delta)
             osd_msg[1] = osd_msg1:format(-rep)
             misn.osdCreate(misn_title:format(fac:name()), osd_msg)
@@ -97,9 +92,6 @@ function standing(hookfac, delta)
             if excess < 0 then
                 tk.msg(failuretitle:format(fac:name()), failuretext)
                 fac:modPlayerRaw(rep)
-            else
-                last_modified = true
-                fac:modPlayerRaw(-delta)
             end
         end
     end
