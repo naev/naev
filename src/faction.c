@@ -745,6 +745,8 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
       }
 
       if (xml_isNode(node, "spawn")) {
+         if (temp->sched_state != NULL)
+            WARN("Faction '%s' has duplicate 'spawn' tag.", temp->name);
          snprintf( buf, sizeof(buf), "ai/spawn/%s.lua", xml_raw(node) );
          temp->sched_state = nlua_newState();
          nlua_loadStandard( temp->sched_state, 0 );
@@ -762,6 +764,8 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
       }
 
       if (xml_isNode(node, "lua")) {
+         if (temp->state != NULL)
+            WARN("Faction '%s' has duplicate 'lua' tag.", temp->name);
          snprintf( buf, sizeof(buf), "dat/factions/%s.lua", xml_raw(node) );
          temp->state = nlua_newState();
          nlua_loadStandard( temp->state, 0 );
@@ -779,6 +783,8 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
       }
 
       if (xml_isNode(node,"logo")) {
+         if (temp->logo_small != NULL)
+            WARN("Faction '%s' has duplicate 'logo' tag.", temp->name);
          snprintf( buf, PATH_MAX, FACTION_LOGO_PATH"%s_small.png", xml_get(node));
          temp->logo_small = gl_newImage(buf, 0);
          snprintf( buf, PATH_MAX, FACTION_LOGO_PATH"%s_tiny.png", xml_get(node));
@@ -805,6 +811,8 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
 
    if (player==0)
       DEBUG("Faction '%s' missing player tag.", temp->name);
+   if ((temp->state!=NULL) && faction_isFlag( temp, FACTION_STATIC ))
+      DEBUG("Faction '%s' has Lua and is static!", temp->name);
 
    return 0;
 }
