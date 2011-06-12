@@ -60,7 +60,6 @@ function accept()
     misn.osdCreate(misn_title:format(fac:name()), osd_msg)
     
     hook.standing("standing")
-    hook.pilot(nil, "attacked", "attacked")
     
     last_modified = false
     excess = 5 -- The maximum amount of reputation the player can LOSE before the contract is void.
