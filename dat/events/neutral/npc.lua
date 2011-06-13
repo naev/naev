@@ -195,7 +195,7 @@ function create ()
        return
     end
 
-    reputation = player.getFaction( faction:name() ) --get players affiliation with said faction
+    reputation = faction.playerStanding( faction:name() ) --get players affiliation with said faction
     civ_msg_fac = civ_msg["general"] --the stuff that's always said
     local msg_tab = civ_msg[faction:name()]
     if msg_tab == nil then -- Must have messages available

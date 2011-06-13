@@ -407,7 +407,7 @@ function land ()
       end
 
       -- Rewards
-      player.modFactionRaw("Empire",5)
+      faction.modPlayerRaw("Empire",5)
 
       misn.finish(true)
    end

@@ -111,7 +111,7 @@ function goodevent()
         local factions = {"Empire", "Dvaered"} -- TODO: Add more factions as they appear
         rndfact = factions[rnd.rnd(1, #factions)]
         tk.msg(gtitle, string.format(gtext[3], rndfact))
-        player.modFactionRaw(rndfact, 3)
+        faction.modPlayerRaw(rndfact, 3)
 --    elseif event == 2 then
 --        tk.msg(gtitle, gtext[2])
 --        --effects here

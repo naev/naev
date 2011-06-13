@@ -137,10 +137,10 @@ function landed ()
    tk.msg(title[2], text[3])
 
    -- Give factions
-   local f = player.getFaction("Pirate")
+   local f = faction.playerStanding("Pirate")
    if f < 0 then
       f = 0 - f
-      player.modFactionRaw( "Pirate", f )
+      faction.modPlayerRaw( "Pirate", f )
    end
    
    -- Give landing pass   

@@ -127,7 +127,7 @@ function land()
 
    if misn_stage == 1 and  pnt == misn_base then
       tk.msg( title[3], string.format(text[4],misn_target:name()) )
-      player.modFactionRaw("Empire",5)
+      faction.modPlayerRaw("Empire",5)
       misn.finish(true)
    end
 end

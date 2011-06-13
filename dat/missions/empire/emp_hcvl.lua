@@ -107,7 +107,7 @@ end
 -- Player won, gives rewards.
 function give_rewards ()
    -- Give factions
-   player.modFactionRaw( "Empire", 5 )
+   faction.modPlayerRaw( "Empire", 5 )
    
    -- The goods
    diff.apply("heavy_combat_vessel_license")
