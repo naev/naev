@@ -11,6 +11,7 @@ Thank you to Bobbens, Deiz, BTAxis, and others that have helped me with learning
 ]]--
 
 include "scripts/jumpdist.lua"
+include "scripts/numstring.lua"
 
 bar_desc = "You see an aristocrat sitting at a table in the middle of the bar, drinking a swirling concoction in a martini glass with a disappointed look on his face every time he takes a sip."
 
@@ -28,7 +29,7 @@ OSDtable = {}
 prevPlanets = {}
 prevPlanets.__save = true
 
-payment = "75000"
+payment = 75000
 
 title = {}  --stage titles
 text = {}   --mission text
@@ -202,7 +203,7 @@ function land ()
          end
       end
    elseif hasDrink and planet.cur() == startplanet then
-      tk.msg( finishedtitle, finishedtxt:format( payment ) )
+      tk.msg( finishedtitle, finishedtxt:format( numstring(payment) ) )
       player.pay( payment )
 
       hook.rm(landhook)

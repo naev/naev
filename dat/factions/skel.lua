@@ -57,6 +57,7 @@ end
 function faction_hit( current, amount, source, secondary )
    -- Comfort macro
    local f = current
+   local delta = {-200, 200}
 
    -- Set cap based on source
    local cap

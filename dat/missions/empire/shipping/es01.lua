@@ -7,6 +7,8 @@
 
 ]]--
 
+include "scripts/numstring.lua"
+
 lang = naev.lang()
 if lang == "es" then
    -- not translated atm
@@ -14,7 +16,7 @@ else -- default english
    -- Mission details
    bar_desc = "You see Commander Soldner who is expecting you."
    misn_title = "Empire Shipping Delivery"
-   misn_reward = "%d credits"
+   misn_reward = "%s credits"
    misn_desc = {}
    misn_desc[1] = "Pick up a package at %s in the %s system."
    misn_desc[2] = "Deliver the package to %s in the %s system." 
@@ -68,7 +70,7 @@ function accept ()
    misn_stage = 0
    reward = 50000
    misn.setTitle(misn_title)
-   misn.setReward( string.format(misn_reward, reward) )
+   misn.setReward( string.format(misn_reward, numstring(reward)) )
    misn.setDesc( string.format(misn_desc[1], pickup:name(), pickupsys:name()))
 
    -- Flavour text and mini-briefing

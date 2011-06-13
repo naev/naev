@@ -4,12 +4,14 @@
 
 ]]--
 
+include "scripts/numstring.lua"
+
 lang = naev.lang()
 if lang == "es" then
    -- not translated atm
 else -- default english
    misn_desc = "%d tons of %s needs to be shiped to %s in the %s system by %s (%s left)."
-   misn_reward = "%d credits"
+   misn_reward = "%s credits"
    title = {}
    title[1] = "Pir: Ship to %s"
    title[2] = "Pir: Delivery to %s"
@@ -84,7 +86,7 @@ function create()
    reward = misn_dist * carg_mass * (500+rnd.rnd(250)) +
          carg_mass * (250+rnd.rnd(150)) +
          rnd.rnd(100) * i
-   misn.setReward( string.format( misn_reward, reward ) )
+   misn.setReward( string.format( misn_reward, numstring(reward) ) )
 end
 
 -- Mission is accepted

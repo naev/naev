@@ -8,6 +8,8 @@
 
 ]]--
 
+include "scripts/numstring.lua"
+
 -- localization stuff, translators would work here
 lang = naev.lang()
 if lang == "es" then
@@ -15,8 +17,7 @@ else -- default english
    bar_desc = "A bunch of scientists seems to be chattering nervously amongst themselves."
    mtitle = {}
    mtitle[1] = "Nebula Satellite"
-   mreward = {}
-   mreward[1] = "%d credits"
+   misn_reward = "%s credits"
    mdesc = {}
    mdesc[1] = "Go to the %s system to launch the probe."
    mdesc[2] = "Drop off the scientists at %s in the %s system."
@@ -70,7 +71,7 @@ function accept ()
 
    -- Set up mission information
    misn.setTitle( mtitle[1] )
-   misn.setReward( string.format( mreward[1], credits ) )
+   misn.setReward( string.format( misn_reward, numstring(credits) ) )
    misn.setDesc( string.format( mdesc[1], satellite_sys:name() ) )
    misn_marker = misn.markerAdd( satellite_sys, "low" )
 

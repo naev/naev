@@ -23,6 +23,69 @@
    <faction>Sirius</faction>
   </avail>
  </mission>
+ <mission name="Empire Rehabilitation">
+  <lua>empire/emp_rehab</lua>
+  <flags/>
+  <avail>
+   <chance>100</chance>
+   <location>Computer</location>
+   <cond>(function ()
+            local fac = faction.get("Empire")
+            for _, enemy in pairs(fac:enemies()) do
+                if enemy:playerStanding() &gt; 20 then
+                    return false
+                end
+            end
+            if fac:playerStanding() &lt; 0 then
+                return true
+            end
+            return false
+          end
+         )()</cond>
+  </avail>
+ </mission>
+ <mission name="Dvaered Rehabilitation">
+  <lua>dvaered/dv_rehab</lua>
+  <flags/>
+  <avail>
+   <chance>100</chance>
+   <location>Computer</location>
+   <cond>(function ()
+            local fac = faction.get("Dvaered")
+            for _, enemy in pairs(fac:enemies()) do
+                if enemy:playerStanding() &gt; 20 then
+                    return false
+                end
+            end
+            if fac:playerStanding() &lt; 0 then
+                return true
+            end
+            return false
+          end
+         )()</cond>
+  </avail>
+ </mission>
+ <mission name="Sirius Rehabilitation">
+  <lua>sirius/srs_rehab</lua>
+  <flags/>
+  <avail>
+   <chance>100</chance>
+   <location>Computer</location>
+   <cond>(function ()
+            local fac = faction.get("Sirius")
+            for _, enemy in pairs(fac:enemies()) do
+                if enemy:playerStanding() &gt; 20 then
+                    return false
+                end
+            end
+            if fac:playerStanding() &lt; 0 then
+                return true
+            end
+            return false
+          end
+         )()</cond>
+  </avail>
+ </mission>
  <mission name="Cargo Rush">
   <lua>neutral/cargo_rush</lua>
   <avail>

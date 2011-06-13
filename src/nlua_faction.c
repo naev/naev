@@ -177,9 +177,11 @@ int luaL_validfaction( lua_State *L, int ind )
    int id;
 
    if (lua_isfaction(L,ind))
-      id = luaL_checkfaction(L,ind)->f;
+      id = lua_tofaction(L,ind)->f;
    else if (lua_isstring(L,ind))
-      id = faction_get( lua_tostring(L, ind));
+      id = faction_get( lua_tostring(L, ind) );
+   else
+      luaL_typerror(L, ind, FACTION_METATABLE);
 
    if (id == -1)
       NLUA_ERROR(L,"Faction '%s' not found in stack.", lua_tostring(L,ind) );

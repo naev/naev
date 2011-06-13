@@ -17,6 +17,8 @@
       3) VIP died or jump out of system without VIP  --> mission failure.
 ]]--
 
+include "scripts/numstring.lua"
+
 lang = naev.lang()
 if lang == "es" then
    -- not translated atm
@@ -24,7 +26,7 @@ else -- default english
    -- Mission details
    bar_desc = "Commander Soldner is waiting for you."
    misn_title = "Empire VIP Rescue"
-   misn_reward = "%d credits"
+   misn_reward = "%s credits"
    misn_desc = {}
    misn_desc[1] = "Rescue the VIP from a transport ship in the %s system."
    misn_desc[2] = "Return to %s in the %s system with the VIP."
@@ -83,7 +85,7 @@ function accept ()
    misn_stage = 0
    reward = 75000
    misn.setTitle(misn_title)
-   misn.setReward( string.format(misn_reward, reward) )
+   misn.setReward( string.format(misn_reward, numstring(reward)) )
    misn.setDesc( string.format(misn_desc[1], destsys:name() ))
 
    -- Flavour text and mini-briefing
