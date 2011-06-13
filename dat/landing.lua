@@ -1,9 +1,12 @@
 --[[
-   The way these work is they must return two parameters, the first is a
-    boolean indicating whether or not permission has been granted. The
-    second is an optional string of the message to display. So something
-    like:
+   Prototype function:
 
+      Parameter: pnt - Planet to set landing stuff about.
+      Return: 1) Boolean whether or not can land
+              2) Land message which should be denial if can't land or acceptance if can
+              3) (optional) Bribe price, set to nil or 0 if can't bribe
+              4) (Needed with bribe price) Bribe message telling the price to pay
+              5) (Needed with bribe price) Bribe acceptance message
    function noland( pnt )
       return false, "Nobody expects the spanish inquisition!"
    end
