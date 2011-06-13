@@ -1394,26 +1394,27 @@ void planet_updateLand( Planet *p )
       p->land_msg = strdup( "Invalid land message" );
    }
    /* Parse bribing. */
-   if (p->can_land) {
-      if (lua_isnumber(L,-3))
-         p->bribe_price = lua_tonumber(L,-3);
-      else if (!lua_isnil(L,-3))
-         WARN( LANDING_DATA": %s (%s) -> return parameter 3 is not a number or nil!", str, p->name );
-      if (p->bribe_price > 0.) {
-         if (lua_isstring(L,-2))
-            p->bribe_msg = strdup( lua_tostring(L,-2) );
-         else {
-            WARN( LANDING_DATA": %s (%s) -> return parameter 4 is not a string!", str, p->name );
-            p->bribe_msg = strdup( "Invalid bribe message" );
-         }
-         if (lua_isstring(L,-1))
-            p->bribe_ack_msg = strdup( lua_tostring(L,-1) );
-         else {
-            WARN( LANDING_DATA": %s -> return parameter 5 is not a string!", str, p->name );
-            p->bribe_ack_msg = strdup( "Invalid bribe ack message" );
-         }
+   if (p->can_land && lua_isnumber(L,-3)) {
+      p->bribe_price = lua_tonumber(L,-3);
+      /* We need the bribe message. */
+      if (lua_isstring(L,-2))
+         p->bribe_msg = strdup( lua_tostring(L,-2) );
+      else {
+         WARN( LANDING_DATA": %s (%s) -> return parameter 4 is not a string!", str, p->name );
+         p->bribe_msg = strdup( "Invalid bribe message" );
+      }
+      /* We also need the bribe ACK message. */
+      if (lua_isstring(L,-1))
+         p->bribe_ack_msg = strdup( lua_tostring(L,-1) );
+      else {
+         WARN( LANDING_DATA": %s -> return parameter 5 is not a string!", str, p->name );
+         p->bribe_ack_msg = strdup( "Invalid bribe ack message" );
       }
    }
+   else if (!lua_isstring(L,-3))
+      p->bribe_msg = strdup( lua_tostring(L,-3) );
+   else if  (!lua_isnil(L,-3))
+      WARN( LANDING_DATA": %s (%s) -> return parameter 3 is not a number or string or nil!", str, p->name );
 
 #if DEBUGGING
    lua_pop(L,6);

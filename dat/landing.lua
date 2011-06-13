@@ -4,11 +4,26 @@
       Parameter: pnt - Planet to set landing stuff about.
       Return: 1) Boolean whether or not can land
               2) Land message which should be denial if can't land or acceptance if can
-              3) (optional) Bribe price, set to nil or 0 if can't bribe
+              3) (optional) Bribe price or message that can't be bribed or nil in the case of no possibility to bribe.
               4) (Needed with bribe price) Bribe message telling the price to pay
               5) (Needed with bribe price) Bribe acceptance message
+
+   Examples:
+
+   function yesland( pnt )
+      return true, "Come on in dude"
+   end
+
    function noland( pnt )
       return false, "Nobody expects the spanish inquisition!"
+   end
+
+   function noland_nobribe( pnt )
+      return false, "No can do.", "Seriously, don't even think of bribing me dude."
+   end
+
+   function noland_yesbribe( pnt )
+      return false, "You can't land buddy", 500, "But you can bribe for 500 credits", "Thanks for the money"
    end
 
 --]]
