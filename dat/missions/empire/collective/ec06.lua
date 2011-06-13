@@ -273,7 +273,7 @@ function land ()
       diff.apply("collective_dead")
       -- This was the last mission in the minor campaign, so bump the reputation cap.
       emp_modReputation( 10 )
-      faction.modPlayerRaw("Empire",5)
+      faction.modPlayerSIngle("Empire",5)
       player.pay( 500000 ) -- 500k
 
       tk.msg( title[3], text[4] )

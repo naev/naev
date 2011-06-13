@@ -129,7 +129,7 @@ function enter()
         -- Add FLF ships that are to guide the player to the FLF base (but only after a battle!)
         fleetFLF = addShips( "FLF Vendetta", "flf_norun", jumppos, 3 )
         
-        faction.get("FLF"):modPlayerRaw(-200)
+        faction.get("FLF"):modPlayerSIngle(-200)
         
         hook.timer(2000, "commFLF")
         hook.timer(25000, "wakeUpGregarYouLazyBugger")
@@ -150,7 +150,7 @@ function land()
     elseif planet.cur():faction():name() == "Dvaered" and not basefound then
         if tk.yesno(turnintitle[1], turnintext[1]) then
             tk.msg(turnintitle[2], turnintext[2])
-            faction.get("Dvaered"):modPlayerRaw(5)
+            faction.get("Dvaered"):modPlayerSIngle(5)
             var.push("flfbase_intro", 1)
             var.pop("flfbase_flfshipkilled")
             misn.cargoJet(gregar)
@@ -180,7 +180,7 @@ function wakeUpGregarYouLazyBugger()
     if not flfdead then
         tk.msg(title[2], text[2])
         tk.msg(title[2], text[3])
-        faction.get("FLF"):modPlayerRaw(100)
+        faction.get("FLF"):modPlayerSIngle(100)
         misn.osdCreate(misn_title, {osd_desc[1]:format(destsysname), osd_adddesc, osd_desc[2]})
         misn.osdActive(2)
         hook.timer(2000, "annai")

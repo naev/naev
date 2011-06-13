@@ -131,7 +131,7 @@ function enter()
         hook.timer(15000, "spawnDV")
     elseif missionstarted then -- The player has jumped away from the mission theater, which instantly ends the mission.
         tk.msg(failtitle[1], failtext[1])
-        faction.get("Dvaered"):modPlayerRaw(-10)
+        faction.get("Dvaered"):modPlayerSIngle(-10)
         abort()
     end
 end
@@ -140,7 +140,7 @@ function land()
     if logsfound and planet.cur():faction():name() == "Dvaered" then
         tk.msg(title[6], text[6])
         var.push("flfbase_intro", 3)
-        faction.get("Dvaered"):modPlayerRaw(5)
+        faction.get("Dvaered"):modPlayerSIngle(5)
         player.pay(70000) -- 70K
         misn.finish(true)
     end
@@ -210,7 +210,7 @@ end
 function disableDV()
     if DVdisablefail then -- Only true as long as the FLF aren't there yet
         tk.msg(failtitle[2], failtext[2])
-        faction.get("Dvaered"):modPlayerRaw(-10)
+        faction.get("Dvaered"):modPlayerSIngle(-10)
         abort()
     end
 end

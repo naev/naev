@@ -233,7 +233,7 @@ function land ()
       var.pop("emp_commando")
 
       -- Rewards
-      faction.modPlayerRaw("Empire",5)
+      faction.modPlayerSIngle("Empire",5)
 
       misn.finish(true)
    end

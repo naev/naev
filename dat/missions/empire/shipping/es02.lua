@@ -115,7 +115,7 @@ function land ()
          -- Rewards
          player.pay(reward)
          emp_modReputation( 5 ) -- Bump cap a bit
-         faction.modPlayerRaw("Empire",5);
+         faction.modPlayerSIngle("Empire",5);
 
          -- Flavour text
          tk.msg( title[3], text[5] )

@@ -115,8 +115,8 @@ function give_rewards ()
    player.pay(credits)
 
    -- Give factions
-   faction.modPlayerRaw( "Empire", 5 )
-   faction.modPlayerRaw( "Pirate", -5 )
+   faction.modPlayerSIngle( "Empire", 5 )
+   faction.modPlayerSIngle( "Pirate", -5 )
    
    -- Finish mission
    misn.finish(true)

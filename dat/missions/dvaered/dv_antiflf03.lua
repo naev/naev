@@ -165,7 +165,7 @@ function enter()
         hook.timer(500, "proximity", {anchor = obstinate, radius = 1500, funcname = "operationStart"})
     elseif missionstarted then -- The player has jumped away from the mission theater, which instantly ends the mission and with it, the mini-campaign.
         tk.msg(failtitle[1], failtext[1])
-        faction.get("Dvaered"):modPlayerRaw(-10)
+        faction.get("Dvaered"):modPlayerSIngle(-10)
         abort()
     end
     
@@ -192,7 +192,7 @@ function land()
         tk.msg(title[3], string.format(text[5], player.name()))
         tk.msg(title[3], text[6])
         dv_modReputation( 5 )
-        faction.get("Dvaered"):modPlayerRaw(10)
+        faction.get("Dvaered"):modPlayerSIngle(10)
         player.pay(100000) -- 100K
         var.pop("flfbase_intro")
         var.pop("flfbase_sysname")

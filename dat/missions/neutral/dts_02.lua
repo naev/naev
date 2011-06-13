@@ -165,7 +165,7 @@ function enter_system()
          hook.timer(1000, "ship_enters")
       elseif defender == true then
          player.msg( comm[8])
-         faction.modPlayerRaw( "Empire", -3)
+         faction.modPlayerSIngle( "Empire", -3)
          misn.finish( true)
       elseif this_system == system.cur() and been_here_before ~= true then
          been_here_before = true
@@ -306,7 +306,7 @@ function celebrate_victory()
       if victory == true then
          tk.msg( title[2], string.format( text[2], planet_name) )
          player.pay( reward)
-         faction.modPlayerRaw( "Empire", 3)
+         faction.modPlayerSIngle( "Empire", 3)
          tk.msg( title[3], string.format( text[3], planet_name, planet_name) )
          misn.finish( true)
       else
@@ -332,8 +332,8 @@ end
 function abort()
 
       if victory == false then
-         faction.modPlayerRaw( "Empire", -10)
-         faction.modPlayerRaw( "Trader", -10)
+         faction.modPlayerSIngle( "Empire", -10)
+         faction.modPlayerSIngle( "Trader", -10)
          player.msg( string.format( comm[9], player.name()))
       else
          player.msg( string.format( comm[10], player.name()))
