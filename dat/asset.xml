@@ -3419,7 +3419,7 @@
    <class>C</class>
    <population>127000</population>
    <services>
-    <land/>
+    <land>emp_mil_restricted</land>
     <refuel/>
     <bar/>
     <missions/>

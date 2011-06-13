@@ -103,12 +103,19 @@ typedef struct Planet_ {
    int real; /**< If the asset is tangible or not. */
 
    /* Landing details. */
+   char *land_func; /**< Landing function to execute. */
+   int can_land; /**< Whether or not the player can land. */
+   char *land_msg; /**< Message on landing. */
+   credits_t bribe_price; /**< Cost of bribing. */
+   char *bribe_msg; /**< Bribe message. */
+   int bribed; /**< If planet has been bribed. */
+
+   /* Landed details. */
    char* description; /**< planet description */
    char* bar_description; /**< spaceport bar description */
    unsigned int services; /**< what services they offer */
    Commodity **commodities; /**< what commodities they sell */
    int ncommodities; /**< the amount they have */
-   int bribed; /**< If planet has been bribed. */
    tech_group_t *tech; /**< Planet tech. */
 
    /* Graphics. */

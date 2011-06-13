@@ -37,6 +37,7 @@
 #include "conf.h"
 #include "queue.h"
 #include "nlua.h"
+#include "nluadef.h"
 #include "nlua_pilot.h"
 #include "npng.h"
 #include "background.h"
@@ -53,6 +54,7 @@
 #define XML_SYSTEM_ID         "Systems" /**< Systems xml document tag. */
 #define XML_SYSTEM_TAG        "ssys" /**< Individual systems xml tag. */
 
+#define LANDING_DATA          "dat/landing.lua" /**< Lua script containing landing data. */
 #define PLANET_DATA           "dat/asset.xml" /**< XML file containing planets. */
 #define SYSTEM_DATA           "dat/ssys.xml" /**< XML file containing systems. */
 
@@ -103,6 +105,7 @@ static int planet_mstack = 0; /**< Memory size of planet stack. */
 static int systems_loading = 1; /**< Systems are loading. */
 StarSystem *cur_system = NULL; /**< Current star system. */
 glTexture *jumppoint_gfx = NULL; /**< Jump point graphics. */
+static lua_State *landing_lua = NULL; /**< Landing lua. */
 
 
 /*
@@ -1251,7 +1254,22 @@ static int planets_load ( void )
    xmlNodePtr node;
    xmlDocPtr doc;
    Planet *p;
+   lua_State *L;
 
+   /* Load landing stuff. */
+   landing_lua = nlua_newState();
+   L           = landing_lua;
+   nlua_loadStandard(L, 1);
+   buf = ndata_read( LANDING_DATA, &bufsize );
+   if (luaL_dobuffer(landing_lua, buf, bufsize, LANDING_DATA) != 0) {
+      WARN( "Failed to load landing file: %s\n"
+            "%s\n"
+            "Most likely Lua file has improper syntax, please check",
+            LANDING_DATA, lua_tostring(L,-1));
+   }
+   free(buf);
+
+   /* Load XML stuff. */
    buf = ndata_read( PLANET_DATA, &bufsize );
    doc = xmlParseMemory( buf, bufsize );
    if (doc == NULL) {
@@ -1345,7 +1363,7 @@ void space_gfxUnload( StarSystem *sys )
 static int planet_parse( Planet *planet, const xmlNodePtr parent )
 {
    int mem;
-   char str[PATH_MAX];
+   char str[PATH_MAX], *tmp;
    xmlNodePtr node, cur, ccur;
    unsigned int flags;
    SDL_RWops *rw;
@@ -1453,8 +1471,22 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
                do {
                   xml_onlyNodes(ccur);
 
-                  if (xml_isNode(ccur, "land"))
+                  if (xml_isNode(ccur, "land")) {
                      planet->services |= PLANET_SERVICE_LAND;
+                     tmp = xml_get(ccur);
+                     if (tmp != NULL) {
+                        planet->land_func = strdup(tmp);
+#ifdef DEBUGGING
+                        if (landing_lua != NULL) {
+                           lua_getglobal( landing_lua, tmp );
+                           if (lua_isnil(landing_lua,-1))
+                              WARN("Planet '%s' has landing function '%s' which is not found in '%s'.",
+                                    planet->name, tmp, LANDING_DATA);
+                           lua_pop(landing_lua,1);
+                        }
+#endif /* DEBUGGING */
+                     }
+                  }
                   else if (xml_isNode(ccur, "refuel"))
                      planet->services |= PLANET_SERVICE_REFUEL | PLANET_SERVICE_INHABITED;
                   else if (xml_isNode(ccur, "bar"))
@@ -2303,6 +2335,7 @@ static void space_renderPlanet( Planet *p )
 void space_exit (void)
 {
    int i;
+   Planet *pnt;
 
    /* Free jump point graphic. */
    if (jumppoint_gfx != NULL)
@@ -2318,31 +2351,36 @@ void space_exit (void)
 
    /* Free the planets. */
    for (i=0; i < planet_nstack; i++) {
-      free(planet_stack[i].name);
+      pnt = &planet_stack[i];
 
-      if (planet_stack[i].description != NULL)
-         free(planet_stack[i].description);
-      if (planet_stack[i].bar_description != NULL)
-         free(planet_stack[i].bar_description);
+      free(pnt->name);
+
+      free(pnt->description);
+      free(pnt->bar_description);
 
       /* graphics */
-      if (planet_stack[i].gfx_spaceName != NULL) {
-         if (planet_stack[i].gfx_space != NULL)
-            gl_freeTexture( planet_stack[i].gfx_space );
-         free(planet_stack[i].gfx_spaceName);
-         free(planet_stack[i].gfx_spacePath);
+      if (pnt->gfx_spaceName != NULL) {
+         if (pnt->gfx_space != NULL)
+            gl_freeTexture( pnt->gfx_space );
+         free(pnt->gfx_spaceName);
+         free(pnt->gfx_spacePath);
       }
-      if (planet_stack[i].gfx_exterior != NULL) {
-         free(planet_stack[i].gfx_exterior);
-         free(planet_stack[i].gfx_exteriorPath);
+      if (pnt->gfx_exterior != NULL) {
+         free(pnt->gfx_exterior);
+         free(pnt->gfx_exteriorPath);
       }
+
+      /* Landing. */
+      free(pnt->land_func);
+      free(pnt->land_msg);
+      free(pnt->bribe_msg);
 
       /* tech */
-      if (planet_stack[i].tech != NULL)
-         tech_groupDestroy( planet_stack[i].tech );
+      if (pnt->tech != NULL)
+         tech_groupDestroy( pnt->tech );
 
       /* commodities */
-      free(planet_stack[i].commodities);
+      free(pnt->commodities);
    }
    free(planet_stack);
    planet_stack = NULL;
@@ -2371,6 +2409,11 @@ void space_exit (void)
    systems_stack = NULL;
    systems_nstack = 0;
    systems_mstack = 0;
+
+   /* Free landing lua. */
+   if (landing_lua != NULL)
+      lua_close( landing_lua );
+   landing_lua = NULL;
 }
 
 
