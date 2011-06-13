@@ -464,57 +464,20 @@ static void comm_bribePilot( unsigned int wid, char *unused )
 static void comm_bribePlanet( unsigned int wid, char *unused )
 {
    (void) unused;
-   int i, j;
    int answer;
    credits_t price;
-   double d;
-   double n, m;
-   double o, p;
-   double q, r;
-   double standing;
-   Fleet *f;
 
-   /* Price. */
-   standing = faction_getPlayer( comm_planet->faction );
-   /* Get number of hostiles and mass of hostiles. */
-   n = 0.;
-   m = 0.;
-   for (i=0; i<pilot_nstack; i++) {
-      if (areAllies(comm_planet->faction, pilot_stack[i]->faction)) {
-         n += 1.;
-         m += pilot_stack[i]->solid->mass;
-      }
+   /* Get price. */
+   price = comm_planet->bribe_price;
+
+   /* No bribing. */
+   if (comm_planet->bribe_price <= 0.) {
+      dialogue_msg( "Bribe Starport", comm_planet->bribe_msg );
+      return;
    }
-   /* Get now the presence factor - get mass of possible ships and mass */
-   /* TODO Fix this up to new presence system. */
-   o = 0.;
-   p = 0.;
-   for (i=0; i<cur_system->nfleets; i++) {
-      f = cur_system->fleets[i];
-      if (areAllies(comm_planet->faction, f->faction)) {
-         q = 0;
-         r = 0;
-         for (j=0; j<f->npilots; j++) {
-            q++;
-            r += f->pilots[j].ship->mass;
-         }
-         o += q;
-         p += r;
-      }
-   }
-   /* Calculate the price. */
-   n = MAX(0., 1.);
-   o = MAX(0., 1.);
-   d  = 2000.; /* Base price. */
-   d *= 0.5 * (o * (sqrt( p / o ) / 9.5)) + /* Base on presence. */
-        0.5 * (n * (sqrt( m / n ) / 9.5)); /* Base on current hostiles. */
-   d *= 1. + (-1. * standing) / 50.; /* Modify by standing. */
-   price = (credits_t) d;
 
    /* Yes/No input. */
-   answer = dialogue_YesNo( "Bribe Starport",
-         "\"I'll let you land for the small sum of %"CREDITS_PRI" credits.\"\n\nPay %"CREDITS_PRI" credits?",
-         price,  price );
+   answer = dialogue_YesNo( "Bribe Starport", comm_planet->bribe_msg );
 
    /* Said no. */
    if (answer == 0) {

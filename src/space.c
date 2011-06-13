@@ -39,6 +39,7 @@
 #include "nlua.h"
 #include "nluadef.h"
 #include "nlua_pilot.h"
+#include "nlua_planet.h"
 #include "npng.h"
 #include "background.h"
 #include "map_overlay.h"
@@ -1147,9 +1148,11 @@ void space_init( const char* sysname )
       }
    }
 
-   /* Iterate through planets to clear bribes. */
-   for (i=0; i<cur_system->nplanets; i++)
+   /* Set up planets. */
+   for (i=0; i<cur_system->nplanets; i++) {
       cur_system->planets[i]->bribed = 0;
+      planet_updateLand( cur_system->planets[i] );
+   }
 
    /* Clear interference if you leave system with interference. */
    if (cur_system->interference == 0.)
@@ -1310,6 +1313,96 @@ static int planets_load ( void )
    free(buf);
 
    return 0;
+}
+
+
+/**
+ * @brief Updates the land possibilities of a planet.
+ *
+ *    @param p Planet to update land possibilities of.
+ */
+void planet_updateLand( Planet *p )
+{
+   int errf;
+   char *str;
+   lua_State *L;
+   LuaPlanet lp;
+   
+   /* Must be inhabited. */
+   if (!planet_hasService( p, PLANET_SERVICE_INHABITED ))
+      return;
+
+   /* Clean up old stuff. */
+   free( p->land_msg );
+   free( p->bribe_msg );
+   free( p->bribe_ack_msg );
+   p->can_land    = 0;
+   p->land_msg    = NULL;
+   p->bribe_msg   = NULL;
+   p->bribe_ack_msg = NULL;
+   p->bribe_price = 0;
+   L = landing_lua;
+
+#if DEBUGGING
+   lua_pushcfunction(L, nlua_errTrace);
+   errf = -3;
+#else /* DEBUGGING */
+   errf = 0;
+#endif /* DEBUGGING */
+
+   /* Set up function. */
+   if (p->land_func == NULL)
+      str = "land";
+   else
+      str = p->land_func;
+   lua_getglobal( L, str );
+   lp.id = p->id;
+   lua_pushplanet( L, lp );
+   if (lua_pcall(L, 1, 5, errf)) { /* error has occurred */
+      WARN("News: '%s' : %s", str, lua_tostring(L,-1));
+#if DEBUGGING
+      lua_pop(L,2);
+#else /* DEBUGGING */
+      lua_pop(L,1);
+#endif /* DEBUGGING */
+      return;
+   }
+
+   /* Parse parameters. */
+   p->can_land = lua_toboolean(L,-5);
+   if (lua_isstring(L,-4))
+      p->land_msg = strdup( lua_tostring(L,-4) );
+   else {
+      WARN( LANDING_DATA": %s (%s) -> return parameter 2 is not a string!", str, p->name );
+      p->land_msg = strdup( "Invalid land message" );
+   }
+   /* Parse bribing. */
+   if (p->can_land) {
+      if (lua_isnumber(L,-3))
+         p->bribe_price = lua_tonumber(L,-3);
+      else if (!lua_isnil(L,-3))
+         WARN( LANDING_DATA": %s (%s) -> return parameter 3 is not a number or nil!", str, p->name );
+      if (p->bribe_price > 0.) {
+         if (lua_isstring(L,-2))
+            p->bribe_msg = strdup( lua_tostring(L,-2) );
+         else {
+            WARN( LANDING_DATA": %s (%s) -> return parameter 4 is not a string!", str, p->name );
+            p->bribe_msg = strdup( "Invalid bribe message" );
+         }
+         if (lua_isstring(L,-1))
+            p->bribe_ack_msg = strdup( lua_tostring(L,-1) );
+         else {
+            WARN( LANDING_DATA": %s -> return parameter 5 is not a string!", str, p->name );
+            p->bribe_ack_msg = strdup( "Invalid bribe ack message" );
+         }
+      }
+   }
+
+#if DEBUGGING
+   lua_pop(L,6);
+#else /* DEBUGGING */
+   lua_pop(L,5);
+#endif /* DEBUGGING */
 }
 
 

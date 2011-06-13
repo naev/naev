@@ -108,6 +108,7 @@ typedef struct Planet_ {
    char *land_msg; /**< Message on landing. */
    credits_t bribe_price; /**< Cost of bribing. */
    char *bribe_msg; /**< Bribe message. */
+   char *bribe_ack_msg; /**< Bribe ACK message. */
    int bribed; /**< If planet has been bribed. */
 
    /* Landed details. */
@@ -280,6 +281,7 @@ const char *planet_existsCase( const char* planetname );
 char **planet_searchFuzzyCase( const char* planetname, int *n );
 char planet_getClass( const Planet *p );
 credits_t planet_commodityPrice( const Planet *p, const Commodity *c );
+void planet_updateLand( Planet *p );
 
 /*
  * system adding/removing stuff.

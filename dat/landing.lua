@@ -15,7 +15,7 @@ include "scripts/numstring.lua"
 
 function land( pnt )
    local fct = pnt:faction()
-   local can_land = faction:playerStanding() > 0
+   local can_land = fct:playerStanding() > 0
 
    -- Get land message
    local land_msg
@@ -26,21 +26,22 @@ function land( pnt )
    end
 
    -- Calculate bribe price
-   local can_bribe, bribe_price, bribe_msg
+   local can_bribe, bribe_price, bribe_msg, bribe_ack_msg
    if not can_land then
       bribe_price = 10000 -- Shouldn't be random as this can be recalculated many times
       local str   = numstring( bribe_price )
       bribe_msg   = string.format(
             "\"I'll let you land for the modest price of %s credits.\"\n\nPay %s credits?",
             str, str )
+      bribe_ack_msg = "Make it quick."
    end
-   return can_land, land_msg, bribe_price, bribe_msg
+   return can_land, land_msg, bribe_price, bribe_msg, bribe_ack_msg
 end
 
 
 function emp_mil_restricted( pnt )
    local fct = pnt:faction()
-   local standing = faction:playerStanding()
+   local standing = fct:playerStanding()
    local can_land = standing > 30
 
    local land_msg
@@ -51,6 +52,8 @@ function emp_mil_restricted( pnt )
    else
       land_msg = "Landing request denied."
    end
+
+   return can_land, land_msg
 end
 
 
