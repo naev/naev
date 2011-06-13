@@ -425,7 +425,7 @@ static void gui_renderPlanetTarget( double dt )
    }
    if (player.p->nav_planet >= 0) {
       planet = cur_system->planets[player.p->nav_planet];
-      c = faction_getColour(planet->faction);
+      c = planet_getColour( planet );
 
       x = planet->pos.x - planet->radius * 1.2;
       y = planet->pos.y + planet->radius * 1.2;
@@ -1390,11 +1390,10 @@ static glColour *gui_getPlanetColour( int i )
 
    planet = cur_system->planets[i];
 
-   col = faction_getColour(planet->faction);
    if (i == player.p->nav_planet)
       col = &cRadar_tPlanet;
-   else if ((col != &cHostile) && !planet_hasService(planet,PLANET_SERVICE_INHABITED))
-      col = &cInert; /* Override non-hostile planets without service. */
+   else
+      col = planet_getColour( planet );
 
    return col;
 }

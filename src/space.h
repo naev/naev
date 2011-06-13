@@ -281,6 +281,9 @@ const char *planet_existsCase( const char* planetname );
 char **planet_searchFuzzyCase( const char* planetname, int *n );
 char planet_getClass( const Planet *p );
 credits_t planet_commodityPrice( const Planet *p, const Commodity *c );
+/* Land related stuff. */
+char planet_getColourChar( Planet *p );
+glColour* planet_getColour( Planet *p );
 void planet_updateLand( Planet *p );
 
 /*

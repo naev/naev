@@ -1334,6 +1334,46 @@ static int planets_load ( void )
 
 
 /**
+ * @brief Gets the planet colour char.
+ */
+char planet_getColourChar( Planet *p )
+{
+   if (!planet_hasService( p, PLANET_SERVICE_INHABITED ))
+      return 'I';
+
+   if (p->can_land || p->bribed) {
+      if (areAllies(FACTION_PLAYER,p->faction))
+         return 'F';
+      return 'N';
+   }
+
+   if (areEnemies(FACTION_PLAYER,p->faction))
+      return 'H';
+   return 'R';
+}
+
+
+/**
+ * @brief Gets the planet colour char.
+ */
+glColour* planet_getColour( Planet *p )
+{
+   if (!planet_hasService( p, PLANET_SERVICE_INHABITED ))
+      return &cInert;
+
+   if (p->can_land || p->bribed) {
+      if (areAllies(FACTION_PLAYER,p->faction))
+         return &cFriend;
+      return &cNeutral;
+   }
+
+   if (areEnemies(FACTION_PLAYER,p->faction))
+      return &cHostile;
+   return &cRestricted;
+}
+
+
+/**
  * @brief Updates the land possibilities of a planet.
  *
  *    @param p Planet to update land possibilities of.
@@ -1346,7 +1386,8 @@ void planet_updateLand( Planet *p )
    LuaPlanet lp;
    
    /* Must be inhabited. */
-   if (!planet_hasService( p, PLANET_SERVICE_INHABITED ))
+   if (!planet_hasService( p, PLANET_SERVICE_INHABITED ) ||
+         (player.p == NULL))
       return;
 
    /* Clean up old stuff. */
@@ -1376,7 +1417,7 @@ void planet_updateLand( Planet *p )
    lp.id = p->id;
    lua_pushplanet( L, lp );
    if (lua_pcall(L, 1, 5, errf)) { /* error has occurred */
-      WARN("News: '%s' : %s", str, lua_tostring(L,-1));
+      WARN("Landing: '%s' : %s", str, lua_tostring(L,-1));
 #if DEBUGGING
       lua_pop(L,2);
 #else /* DEBUGGING */
@@ -1411,9 +1452,9 @@ void planet_updateLand( Planet *p )
          p->bribe_ack_msg = strdup( "Invalid bribe ack message" );
       }
    }
-   else if (!lua_isstring(L,-3))
+   else if (lua_isstring(L,-3))
       p->bribe_msg = strdup( lua_tostring(L,-3) );
-   else if  (!lua_isnil(L,-3))
+   else if (!lua_isnil(L,-3))
       WARN( LANDING_DATA": %s (%s) -> return parameter 3 is not a number or string or nil!", str, p->name );
 
 #if DEBUGGING

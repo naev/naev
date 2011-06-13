@@ -1408,19 +1408,19 @@ void player_land (void)
       else if (!player_isFlag(PLAYER_LANDACK)) { /* no landing authorization */
          if (planet_hasService(planet,PLANET_SERVICE_INHABITED)) { /* Basic services */
             if (planet->can_land) {
-               player_message( "\e%c%s>\e0 %s", faction_getColourChar(planet->faction),
+               player_message( "\e%c%s>\e0 %s", planet_getColourChar(planet),
                      planet->name, planet->land_msg );
                player_setFlag(PLAYER_LANDACK);
                player_soundPlayGUI(snd_nav,1);
             }
             else if (planet->bribed) {
-               player_message( "\e%c%s>\e0 %s", faction_getColourChar(planet->faction),
+               player_message( "\e%c%s>\e0 %s", planet_getColourChar(planet),
                      planet->name, planet->bribe_ack_msg );
                player_setFlag(PLAYER_LANDACK);
                player_soundPlayGUI(snd_nav,1);
             }
             else /* Hostile */
-               player_message( "\e%c%s>\e0 %s", faction_getColourChar(planet->faction),
+               player_message( "\e%c%s>\e0 %s", planet_getColourChar(planet),
                      planet->name, planet->land_msg );
          }
          else { /* No shoes, no shirt, no lifeforms, no service. */
