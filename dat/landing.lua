@@ -129,7 +129,7 @@ function dv_mil_restricted( pnt )
 end
 
 -- Dvaered High Command.
-function dv_mil_restricted( pnt )
+function dv_mil_command( pnt )
    local fct = pnt:faction()
    local standing = fct:playerStanding()
    local can_land = standing > 70
