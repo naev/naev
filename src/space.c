@@ -1437,7 +1437,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
                flags |= FLAG_YSET;
                planet->pos.y = xml_getFloat(cur);
             }
-         } while(xml_nextNode(cur));
+         } while (xml_nextNode(cur));
          continue;
       }
       else if (xml_isNode(node, "presence")) {
@@ -1450,7 +1450,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
                planet->faction = faction_get( xml_get(cur) );
                continue;
             }
-         } while(xml_nextNode(cur));
+         } while (xml_nextNode(cur));
          continue;
       }
       else if (xml_isNode(node,"general")) {
@@ -1528,7 +1528,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
                planet->commodities = realloc(planet->commodities,
                      planet->ncommodities * sizeof(Commodity*));
             }
-         } while(xml_nextNode(cur));
+         } while (xml_nextNode(cur));
          continue;
       }
       else if (xml_isNode(node, "tech")) {
