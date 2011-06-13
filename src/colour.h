@@ -72,6 +72,7 @@ extern glColour cNeutral;
 extern glColour cMapNeutral;
 extern glColour cFriend;
 extern glColour cHostile;
+extern glColour cRestricted;
 /* radar */
 extern glColour cRadar_player;
 extern glColour cRadar_tPilot;
