@@ -857,7 +857,9 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
    if (player==0)
       DEBUG("Faction '%s' missing player tag.", temp->name);
    if ((temp->state!=NULL) && faction_isFlag( temp, FACTION_STATIC ))
-      DEBUG("Faction '%s' has Lua and is static!", temp->name);
+      WARN("Faction '%s' has Lua and is static!", temp->name);
+   if ((temp->state==NULL) && !faction_isFlag( temp, FACTION_STATIC ))
+      WARN("Faction '%s' has no Lua and isn't static!", temp->name);
 
    return 0;
 }
