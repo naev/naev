@@ -32,7 +32,8 @@ int* faction_getGroup( int *n, int which );
 
 /* player stuff */
 void faction_modPlayer( int f, double mod, const char *source );
-void faction_modPlayerRaw( int f, double mod, const char *source );
+void faction_modPlayerSingle( int f, double mod, const char *source );
+void faction_modPlayerRaw( int f, double mod );
 double faction_getPlayer( int f );
 double faction_getPlayerDef( int f );
 char* faction_getStanding( double mod );
