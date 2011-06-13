@@ -26,6 +26,7 @@
 #include "rng.h"
 #include "colour.h"
 #include "hook.h"
+#include "space.h"
 
 
 #define XML_FACTION_ID     "Factions"   /**< XML section identifier */
@@ -392,6 +393,9 @@ static void faction_modPlayerLua( int f, double mod, const char *source, int sec
       hparam[1].u.num   = delta;
       hparam[2].type    = HOOK_PARAM_SENTINEL;
       hooks_runParam( "standing", hparam );
+
+      /* Tell space the faction changed. */
+      space_factionChange();
    }
 }
 

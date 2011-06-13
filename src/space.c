@@ -107,6 +107,7 @@ static int systems_loading = 1; /**< Systems are loading. */
 StarSystem *cur_system = NULL; /**< Current star system. */
 glTexture *jumppoint_gfx = NULL; /**< Jump point graphics. */
 static lua_State *landing_lua = NULL; /**< Landing lua. */
+static int space_fchg = 0; /**< Faction change counter, to avoid unnecessary calls. */
 
 
 /*
@@ -1017,6 +1018,15 @@ static void system_scheduler( double dt, int init )
 
 
 /**
+ * @brief Mark when a faction changes.
+ */
+void space_factionChange (void)
+{
+   space_fchg = 1;
+}
+
+
+/**
  * @brief Controls fleet spawning.
  *
  *    @param dt Current delta tick.
@@ -1087,6 +1097,13 @@ void space_update( const double dt )
                interference_alpha = 0.;
          }
       }
+   }
+
+   /* Faction updates. */
+   if (space_fchg) {
+      for (i=0; i<cur_system->nplanets; i++)
+         planet_updateLand( cur_system->planets[i] );
+      space_fchg = 0;
    }
 }
 

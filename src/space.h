@@ -358,4 +358,10 @@ int space_hyperspace( Pilot* p );
 int space_calcJumpInPos( StarSystem *in, StarSystem *out, Vector2d *pos, Vector2d *vel, double *dir );
 
 
+/*
+ * Misc.
+ */
+void space_factionChange (void);
+
+
 #endif /* SPACE_H */
