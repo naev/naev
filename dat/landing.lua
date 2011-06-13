@@ -70,8 +70,10 @@ function emp_mil_restricted( pnt )
    else
       land_msg = "Landing request denied."
    end
+   
+   local nobribe = "Don't attempt to bribe an Empire official, pilot."
 
-   return can_land, land_msg
+   return can_land, land_msg, nobribe
 end
 
 -- Empire Polaris Prime.
@@ -89,7 +91,9 @@ function emp_mil_polprime( pnt )
       land_msg = "Landing request denied."
    end
 
-   return can_land, land_msg
+   local nobribe = "Don't attempt to bribe an Empire official, pilot."
+
+   return can_land, land_msg, nobribe
 end
 
 -- Sirius military assets.
@@ -107,7 +111,9 @@ function srs_mil_restricted( pnt )
       land_msg = "Landing request denied."
    end
 
-   return can_land, land_msg
+   local nobribe = "The faithful will never be swayed by money."
+
+   return can_land, land_msg, nobribe
 end
 
 -- Sirius Mutris.
@@ -125,7 +131,9 @@ function srs_mil_mutris( pnt )
       land_msg = "Landing request denied."
    end
 
-   return can_land, land_msg
+   local nobribe = "The faithful will never be swayed by money."
+
+   return can_land, land_msg, nobribe
 end
 
 -- Dvaered military assets.
@@ -143,7 +151,9 @@ function dv_mil_restricted( pnt )
       land_msg = "Landing request denied."
    end
 
-   return can_land, land_msg
+   local nobribe = "Money won't buy you access to our restricted facilities, citizen."
+
+   return can_land, land_msg, nobribe
 end
 
 -- Dvaered High Command.
@@ -161,7 +171,9 @@ function dv_mil_command( pnt )
       land_msg = "Landing request denied."
    end
 
-   return can_land, land_msg
+   local nobribe = "Money won't buy you access to our restricted facilities, citizen."
+
+   return can_land, land_msg, nobribe
 end
 
 -- Pirate clanworld.
@@ -179,7 +191,17 @@ function pir_clanworld( pnt )
       land_msg = "Get out of here!"
    end
 
-   return can_land, land_msg
+   -- Calculate bribe price
+   local can_bribe, bribe_price, bribe_msg, bribe_ack_msg
+   if not can_land then
+      bribe_price = (40 - standing) * 3000 -- Shouldn't be random as this can be recalculated many times.
+      local str   = numstring( bribe_price )
+      bribe_msg   = string.format(
+            "Well, I think you're scum, but I'm willing to look the other way for %s credits. Deal?",
+            str )
+      bribe_ack_msg = "Heh heh, thanks. Now get off the comm, I'm busy!"
+   end
+   return can_land, land_msg, bribe_price, bribe_msg, bribe_ack_msg
 end
 
 
