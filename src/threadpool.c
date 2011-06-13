@@ -198,7 +198,7 @@ static void* tq_dequeue( ThreadQueue *q )
    node     = q->first;
    newhead  = node->next;
 
-   /* Head not consistant. */
+   /* Head not consistent. */
    if (newhead == NULL) {
       WARN("Tried to dequeue while the queue was empty!");
       /* Ugly fix :/ */
