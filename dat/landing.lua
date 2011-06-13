@@ -33,7 +33,8 @@ include "scripts/numstring.lua"
 -- Default function. Any asset that has no landing script explicitly defined will use this.
 function land( pnt )
    local fct = pnt:faction()
-   local can_land = fct:playerStanding() > 0
+   local standing = fct:playerStanding()
+   local can_land = standing > 0
 
    -- Get land message
    local land_msg
@@ -56,24 +57,61 @@ function land( pnt )
    return can_land, land_msg, bribe_price, bribe_msg, bribe_ack_msg
 end
 
--- Empire military assets.
-function emp_mil_restricted( pnt )
-   local fct = pnt:faction()
-   local standing = fct:playerStanding()
-   local can_land = standing > 30
-
-   local land_msg
+function land_getMilitaryMessages( fname, can_land, standing )
+   local message, land_msg, messages = {}
+   local nobribe = {
+      Empire  = "Don't attempt to bribe an Empire official, pilot.",
+      Dvaered = "Money won't buy you access to our restricted facilities, citizen.",
+      Sirius  = "The faithful will never be swayed by money.",
+   }
    if can_land then
-      land_msg = "Permission to land granted."
+      if fname == "Pirate" then
+         land_msg = "Permission to land granted. Welcome, brother."
+      else
+         land_msg = "Permission to land granted."
+      end
    elseif standing >= 0 then
-      land_msg = "You are not authorized to land here."
-   else
-      land_msg = "Landing request denied."
+      messages = {
+         Empire  = "You are not authorized to land here.",
+         Dvaered = "Your rank is too low, citizen. Access denied.",
+         Sirius  = "Only the faithful may land here. Request denied.",
+         Pirate = "Small time pirates have no business on our clanworld!"
+      }
+   else -- Hostile.
+      if fname == "Pirate" then
+         land_msg = "Get out of here!"
+      else
+         land_msg = "Landing request denied."
+      end
    end
-   
-   local nobribe = "Don't attempt to bribe an Empire official, pilot."
+   return land_msg or messages[fname], nobribe[fname]
+end
 
-   return can_land, land_msg, nobribe
+function military( pnt )
+   local fct = pnt:faction()
+   local fname = fct:name()
+   local standing = fct:playerStanding()
+   local req = { Dvaered = 40, Pirate  = 20 }
+   local can_land
+
+   if req[fname] then
+      can_land = standing > req[fname]
+   else -- Default.
+      can_land = standing > 30
+   end
+
+   land_msg, nobribe = land_getMilitaryMessages( fname, can_land, standing )
+   local can_bribe, bribe_price, bribe_msg, bribe_ack_msg
+   if not can_land and fname == "Pirate" then
+      bribe_price = (40 - standing) * 3000 -- Shouldn't be random as this can be recalculated many times.
+      local str   = numstring( bribe_price )
+      bribe_msg   = string.format(
+            "Well, I think you're scum, but I'm willing to look the other way for %s credits. Deal?",
+            str )
+      bribe_ack_msg = "Heh heh, thanks. Now get off the comm, I'm busy!"
+   end
+
+   return can_land, land_msg, bribe_price, bribe_msg, bribe_ack_msg
 end
 
 -- Empire Polaris Prime.
@@ -92,26 +130,6 @@ function emp_mil_polprime( pnt )
    end
 
    local nobribe = "Don't attempt to bribe an Empire official, pilot."
-
-   return can_land, land_msg, nobribe
-end
-
--- Sirius military assets.
-function srs_mil_restricted( pnt )
-   local fct = pnt:faction()
-   local standing = fct:playerStanding()
-   local can_land = standing > 30
-
-   local land_msg
-   if can_land then
-      land_msg = "Permission to land granted."
-   elseif standing >= 0 then
-      land_msg = "Only the faithful may land here. Request denied."
-   else
-      land_msg = "Landing request denied."
-   end
-
-   local nobribe = "The faithful will never be swayed by money."
 
    return can_land, land_msg, nobribe
 end
@@ -136,26 +154,6 @@ function srs_mil_mutris( pnt )
    return can_land, land_msg, nobribe
 end
 
--- Dvaered military assets.
-function dv_mil_restricted( pnt )
-   local fct = pnt:faction()
-   local standing = fct:playerStanding()
-   local can_land = standing > 40
-
-   local land_msg
-   if can_land then
-      land_msg = "Permission to land granted."
-   elseif standing >= 0 then
-      land_msg = "Your rank is too low, citizen. Access denied."
-   else
-      land_msg = "Landing request denied."
-   end
-
-   local nobribe = "Money won't buy you access to our restricted facilities, citizen."
-
-   return can_land, land_msg, nobribe
-end
-
 -- Dvaered High Command.
 function dv_mil_command( pnt )
    local fct = pnt:faction()
@@ -175,38 +173,3 @@ function dv_mil_command( pnt )
 
    return can_land, land_msg, nobribe
 end
-
--- Pirate clanworld.
-function pir_clanworld( pnt )
-   local fct = pnt:faction()
-   local standing = fct:playerStanding()
-   local can_land = standing > 20
-
-   local land_msg
-   if can_land then
-      land_msg = "Permission to land granted. Welcome, brother."
-   elseif standing >= 0 then
-      land_msg = "Small time pirates have no business on our clanworld!"
-   else
-      land_msg = "Get out of here!"
-   end
-
-   -- Calculate bribe price
-   local can_bribe, bribe_price, bribe_msg, bribe_ack_msg
-   if not can_land then
-      bribe_price = (40 - standing) * 3000 -- Shouldn't be random as this can be recalculated many times.
-      local str   = numstring( bribe_price )
-      bribe_msg   = string.format(
-            "Well, I think you're scum, but I'm willing to look the other way for %s credits. Deal?",
-            str )
-      bribe_ack_msg = "Heh heh, thanks. Now get off the comm, I'm busy!"
-   end
-   return can_land, land_msg, bribe_price, bribe_msg, bribe_ack_msg
-end
-
-
-
-
-
-
-
