@@ -246,8 +246,6 @@ int news_init (void)
    L = news_state;
 
    /* Load the libraries. */
-   nlua_loadBasic(L);
-   nlua_load(L,luaopen_string);
    nlua_loadStandard(L, 1);
 
    /* Load the news file. */
@@ -257,6 +255,7 @@ int news_init (void)
            "%s\n"
            "Most likely Lua file has improper syntax, please check",
             LUA_NEWS, lua_tostring(L,-1));
+      free(buf);
       return -1;
    }
    free(buf);
