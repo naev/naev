@@ -3,7 +3,6 @@
 include "dat/factions/skel.lua"
 
 
-_fcap_distress = 30 -- Distress cap
 _fcap_kill     = 30 -- Kill cap
 _fdelta_distress = {0, 0} -- Maximum change constraints
 _fdelta_kill     = {0, 0} -- Maximum change constraints

@@ -5,7 +5,6 @@
 --]]
 
 -- Faction caps.
-_fcap_distress   = 10 -- Distress cap
 _fcap_kill       = 20 -- Kill cap
 _fdelta_distress = {-1, 0} -- Maximum change constraints
 _fdelta_kill     = {-5, 1} -- Maximum change constraints
@@ -59,11 +58,10 @@ function faction_hit( current, amount, source, secondary )
    local f = current
    local delta = {-200, 200}
 
-   -- Set cap based on source
+   -- Set caps and/or deltas based on source
    local cap
    local mod = 1
    if source == "distress" then
-      cap   = _fcap_distress
       delta = _fdelta_distress
       -- Ignore positive distresses
       if amount > 0 then
