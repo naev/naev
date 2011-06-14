@@ -140,7 +140,7 @@ function landed ()
    local f = faction.playerStanding("Pirate")
    if f < 0 then
       f = 0 - f
-      faction.modPlayerSIngle( "Pirate", f )
+      faction.modPlayerSingle( "Pirate", f )
    end
    
    -- Give landing pass   

@@ -313,10 +313,10 @@ function hail()
             tk.msg(DVtitle[2], DVtext[2]:format(player.pilot():ship():class(), player.ship(), DVplanet, DVsys))
             
             -- Set the FLF to super hostile, set Dvaered opinion to 0 if it was negative
-            faction.get("FLF"):modPlayerSIngle(-200)
+            faction.get("FLF"):modPlayerSingle(-200)
             standing = faction.get("Dvaered"):playerStanding()
             if standing < 0 then
-                faction.get("Dvaered"):modPlayerSIngle(-standing)
+                faction.get("Dvaered"):modPlayerSingle(-standing)
             end
             
             -- Switch sides, reset AIs
@@ -481,8 +481,8 @@ end
 function DVdeath()
     -- Reset standing with the Dvaered
     standing = faction.get("Dvaered"):playerStanding()
-    faction.get("Dvaered"):modPlayerSIngle(-standing)
-    faction.get("Dvaered"):modPlayerSIngle(DVstanding)
+    faction.get("Dvaered"):modPlayerSingle(-standing)
+    faction.get("Dvaered"):modPlayerSingle(DVstanding)
 
     DVdeaths = DVdeaths + 1
     if DVdeaths == #fleetDV then

@@ -447,7 +447,7 @@ function land ()
 
       -- modify the faction standing
       if faction.playerStanding("Dvaered") < 70 then
-         faction.modPlayerSIngle("Dvaered", rnd.rnd(1, num_systems/2) );
+         faction.modPlayerSingle("Dvaered", rnd.rnd(1, num_systems/2) );
       end
 
       misn.finish(true)
