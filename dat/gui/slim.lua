@@ -23,6 +23,7 @@ function create()
    col_txt_wrn = colour.new( 127/255,  31/255,  31/255 )
    col_txt_enm = colour.new( 222/255,  28/255,  28/255 )
    col_txt_all = colour.new(  19/255, 152/255,  41/255 )
+   --col_txt_res = colour.new(     1.0,     0.6,     0.0 )
    col_txt_una = colour.new(  66/255,  72/255,  84/255 )
    col_shield = colour.new( 40/255,  51/255,  88/255 )
    col_armour = colour.new( 72/255,  73/255,  60/255 )
@@ -717,13 +718,7 @@ function render( dt, dt_mod )
 
       -- Colour the planet name based on friendliness.
       if ta_pntfact then
-         if pfact:areEnemies( ta_pntfact ) then
-            col = col_txt_enm
-         elseif pfact:areAllies( ta_pntfact ) then
-            col = col_txt_all
-         else
-            col = col_txt_std
-         end
+         col = nav_pnt:colour()
       end
 
       x1, y1 = vec2.get(nav_pnt:pos())
