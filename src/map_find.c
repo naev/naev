@@ -460,8 +460,8 @@ static int map_findSearchPlanets( unsigned int parent, const char *name )
    char **names;
    int len, n, ret;
    map_find_t *found;
-   const char *sysname;
-   const char *pntname;
+   const char *sysname, *pntname;
+   char colcode;
    StarSystem *sys;
    Planet *pnt;
 
@@ -518,16 +518,24 @@ static int map_findSearchPlanets( unsigned int parent, const char *name )
       /* Set some values. */
       found[n].pnt      = pnt;
       found[n].sys      = sys;
+      planet_updateLand(pnt);
+      colcode           = planet_getColourChar(pnt);
+
+      /* Remap colour codes bit for simplicity and contrast. */
+      if (colcode == 'N' || colcode == 'F')
+         colcode = 'n';
+      else if (colcode == 'R')
+         colcode = 'S';
 
       /* Set fancy name. */
       if (ret)
          snprintf( found[n].display, sizeof(found[n].display),
-               "%s (%s, unknown route)",
-               names[i], sys->name );
+               "\e%c%s (%s, unknown route)",
+               colcode, names[i], sys->name );
       else
          snprintf( found[n].display, sizeof(found[n].display),
-               "%s (%s, %d jumps, %.0fk distance)",
-               names[i], sys->name, found[n].jumps, found[n].distance/1000. );
+               "\e%c%s (%s, %d jumps, %.0fk distance)",
+               colcode, names[i], sys->name, found[n].jumps, found[n].distance/1000. );
       n++;
    }
    free(names);
