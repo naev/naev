@@ -820,7 +820,7 @@
    <class>1</class>
    <population>52000</population>
    <services>
-    <land>military</land>
+    <land>emp_mil_restricted</land>
     <refuel/>
     <bar/>
     <missions/>
@@ -1204,7 +1204,7 @@
    <class>0</class>
    <population>1000</population>
    <services>
-    <land>military</land>
+    <land>srs_mil_restricted</land>
     <refuel/>
     <bar/>
    </services>
@@ -2993,7 +2993,7 @@
    <class>0</class>
    <population>500</population>
    <services>
-    <land>special</land>
+    <land>dv_mil_command</land>
     <refuel/>
     <outfits/>
     <shipyard/>
@@ -3054,7 +3054,7 @@
    <class>0</class>
    <population>4000</population>
    <services>
-    <land>military</land>
+    <land>dv_mil_restricted</land>
     <refuel/>
     <bar/>
     <outfits/>
@@ -3217,7 +3217,7 @@
    <class>0</class>
    <population>1500</population>
    <services>
-    <land>military</land>
+    <land>dv_mil_restricted</land>
     <refuel/>
     <commodity/>
     <shipyard/>
@@ -3419,7 +3419,7 @@
    <class>C</class>
    <population>127000</population>
    <services>
-    <land>military</land>
+    <land>emp_mil_restricted</land>
     <refuel/>
     <bar/>
     <missions/>
@@ -3751,7 +3751,7 @@
    <class>0</class>
    <population>2000</population>
    <services>
-    <land>military</land>
+    <land>dv_mil_restricted</land>
     <refuel/>
     <bar/>
     <outfits/>
@@ -3897,7 +3897,7 @@
    <class>0</class>
    <population>10000</population>
    <services>
-    <land>military</land>
+    <land>srs_mil_restricted</land>
     <refuel/>
     <outfits/>
     <shipyard/>
@@ -4210,7 +4210,7 @@
    <class>0</class>
    <population>2000</population>
    <services>
-    <land>military</land>
+    <land>srs_mil_restricted</land>
     <refuel/>
     <bar/>
    </services>
@@ -6397,7 +6397,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>0</class>
    <population>1000</population>
    <services>
-    <land>military</land>
+    <land>emp_mil_restricted</land>
     <refuel/>
     <bar/>
     <missions/>
@@ -6620,7 +6620,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>0</class>
    <population>2000</population>
    <services>
-    <land>military</land>
+    <land>emp_mil_restricted</land>
     <refuel/>
     <bar/>
    </services>
@@ -6958,7 +6958,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>L</class>
    <population>3000000000</population>
    <services>
-    <land>special</land>
+    <land>srs_mil_mutris</land>
     <refuel/>
     <bar/>
     <missions/>
@@ -7021,7 +7021,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>0</class>
    <population>500</population>
    <services>
-    <land>military</land>
+    <land>dv_mil_restricted</land>
     <refuel/>
     <commodity/>
     <outfits/>
@@ -7258,7 +7258,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>D</class>
    <population>9000</population>
    <services>
-    <land>military</land>
+    <land>pir_clanworld</land>
     <refuel/>
     <bar/>
     <missions/>
@@ -7824,7 +7824,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>0</class>
    <population>14000</population>
    <services>
-    <land>military</land>
+    <land>emp_mil_restricted</land>
     <refuel/>
     <bar/>
     <missions/>
@@ -8569,7 +8569,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>1</class>
    <population>318000</population>
    <services>
-    <land>special</land>
+    <land>emp_mil_polprime</land>
     <refuel/>
     <bar/>
     <commodity/>
@@ -9129,7 +9129,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>0</class>
    <population>3000</population>
    <services>
-    <land>military</land>
+    <land>dv_mil_restricted</land>
     <refuel/>
     <bar/>
     <missions/>
@@ -10243,7 +10243,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>0</class>
    <population>2000</population>
    <services>
-    <land>military</land>
+    <land>dv_mil_restricted</land>
     <refuel/>
    </services>
    <commodities/>
@@ -10562,7 +10562,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>0</class>
    <population>2000</population>
    <services>
-    <land>military</land>
+    <land>srs_mil_restricted</land>
     <refuel/>
     <commodity/>
     <outfits/>
@@ -10601,7 +10601,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>0</class>
    <population>4000</population>
    <services>
-    <land>military</land>
+    <land>srs_mil_restricted</land>
     <refuel/>
     <commodity/>
     <shipyard/>
@@ -10728,7 +10728,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>2</class>
    <population>12000</population>
    <services>
-    <land>military</land>
+    <land>dv_mil_restricted</land>
     <refuel/>
     <outfits/>
     <shipyard/>
@@ -11018,7 +11018,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>0</class>
    <population>3000</population>
    <services>
-    <land>military</land>
+    <land>dv_mil_restricted</land>
     <refuel/>
    </services>
    <commodities/>
@@ -12517,7 +12517,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>0</class>
    <population>2000</population>
    <services>
-    <land>military</land>
+    <land>srs_mil_restricted</land>
     <refuel/>
    </services>
    <commodities/>
@@ -12765,7 +12765,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>Y</class>
    <population>9000</population>
    <services>
-    <land>military</land>
+    <land>pir_clanworld</land>
     <refuel/>
     <bar/>
     <missions/>
