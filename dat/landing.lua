@@ -60,9 +60,9 @@ end
 function land_getMilitaryMessages( fname, can_land, standing )
    local message, land_msg, messages = {}
    local nobribe = {
-      Empire  = "Don't attempt to bribe an Empire official, pilot.",
-      Dvaered = "Money won't buy you access to our restricted facilities, citizen.",
-      Sirius  = "The faithful will never be swayed by money."
+      Empire  = "\"Don't attempt to bribe an Empire official, pilot.\"",
+      Dvaered = "\"Money won't buy you access to our restricted facilities, citizen.\"",
+      Sirius  = "\"The faithful will never be swayed by money.\""
    }
    if can_land then
       if fname == "Pirate" then
@@ -106,7 +106,7 @@ function military( pnt )
       bribe_price = (40 - standing) * 3000 -- Shouldn't be random as this can be recalculated many times.
       local str   = numstring( bribe_price )
       bribe_msg   = string.format(
-            "Well, I think you're scum, but I'm willing to look the other way for %s credits. Deal?",
+            "\"Well, I think you're scum, but I'm willing to look the other way for %s credits. Deal?\"",
             str )
       bribe_ack_msg = "Heh heh, thanks. Now get off the comm, I'm busy!"
    end
@@ -117,9 +117,9 @@ end
 function land_getSpecialMessages( pname, can_land, standing )
    local message, land_msg, messages = {}
    local nobribe = {
-      ["Polaris Prime"] = "Don't attempt to bribe an Empire official, pilot.",
-      ["Dvaered High Command"] = "Money won't buy you access to our restricted facilities, citizen.",
-      ["Mutris"] = "The faithful will never be swayed by money."
+      ["Polaris Prime"] = "\"Don't attempt to bribe an Empire official, pilot.\"",
+      ["Dvaered High Command"] = "\"Money won't buy you access to our restricted facilities, citizen.\"",
+      ["Mutris"] = "\"The faithful will never be swayed by money.\""
    }
    if can_land then
       messages = {
@@ -142,7 +142,6 @@ end
 function special( pnt )
    local fct = pnt:faction()
    local fname = fct:name()
-   local pname = pnt:name()
    local standing = fct:playerStanding()
    local req = { Sirius  = 50 }
    local can_land, land_msg, nobribe
@@ -153,6 +152,6 @@ function special( pnt )
       can_land = standing > 70
    end
 
-   land_msg, nobribe = land_getSpecialMessages( pname, can_land, standing )
+   land_msg, nobribe = land_getSpecialMessages( pnt:name(), can_land, standing )
    return can_land, land_msg, nobribe
 end
