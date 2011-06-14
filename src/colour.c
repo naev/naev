@@ -78,6 +78,7 @@ glColour cMapNeutral    =  { .r = 0.3, .g = 0.3, .b = 0.3, .a = 1.  }; /**< Neut
 glColour cFriend        =  { .r = 0.0, .g = 0.8, .b = 0.0, .a = 1.  }; /**< Friend object colour */
 glColour cHostile       =  { .r = 0.9, .g = 0.2, .b = 0.2, .a = 1.  }; /**< Hostile object colour */
 glColour cRestricted    =  { .r = 1.0, .g = 0.6, .b = 0.0, .a = 1.  }; /**< Restricted object colour. */
+glColour cDRestricted   =  { .r = 0.7, .g = 0.3, .b = 0.0, .a = 1.  }; /**< Restricted object colour. Darkened for use on white. */
 /* radar */
 glColour cRadar_player  =  { .r = 0.4, .g = 0.8, .b = 0.4, .a = 1.  }; /**< Player colour on radar. */
 glColour cRadar_tPilot  =  { .r = 0.8, .g = 0.5, .b = 0.0, .a = 1.  }; /**< Targeted object colour on radar. */
