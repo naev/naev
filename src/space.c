@@ -1354,7 +1354,7 @@ char planet_getColourChar( Planet *p )
 
 
 /**
- * @brief Gets the planet colour char.
+ * @brief Gets the planet colour.
  */
 glColour* planet_getColour( Planet *p )
 {
