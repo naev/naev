@@ -164,7 +164,7 @@ end
 
 function closehail()
    bonus = 0
-   player.pay( numstring(payment) )
+   player.pay( payment )
    tk.msg( title[8], text[8]:format( payment) )
    willie:setVisplayer(false)
    willie:hyperspace()
