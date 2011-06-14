@@ -11,6 +11,7 @@
   <player>3</player>
   <colour>blue</colour>
   <spawn>independent</spawn>
+  <lua>independent</lua>
   <allies>
   </allies>
   <enemies>
@@ -48,6 +49,7 @@
   <player>3</player>
   <colour>yellow</colour>
   <spawn>frontier</spawn>
+  <lua>independent</lua>
   <allies>
   </allies>
   <enemies>
@@ -171,6 +173,7 @@
   <longname>House Goddard</longname>
   <player>2</player>
   <spawn>goddard</spawn>
+  <lua>independent</lua>
   <allies>
    <ally>Empire</ally>
   </allies>
@@ -187,6 +190,7 @@
  </faction>
  <faction name="Raider">
   <invisible />
+  <static />
   <longname>Galactic Pirates</longname>
   <player>-100</player>
   <colour>red</colour>
