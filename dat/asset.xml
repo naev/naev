@@ -983,7 +983,7 @@
    <class>A</class>
    <population>600000</population>
    <services>
-    <land/>
+    <land>land_lowclass</land>
     <refuel/>
     <commodity/>
    </services>
@@ -1963,7 +1963,7 @@
    <class>M</class>
    <population>20000000</population>
    <services>
-    <land/>
+    <land>land_hiclass</land>
     <refuel/>
     <bar/>
     <missions/>
@@ -2176,7 +2176,7 @@
    <class>O</class>
    <population>4000000</population>
    <services>
-    <land/>
+    <land>land_hiclass</land>
     <refuel/>
     <bar/>
     <missions/>
@@ -2951,7 +2951,7 @@
    <class>A</class>
    <population>1474836480</population>
    <services>
-    <land/>
+    <land>land_hiclass</land>
     <refuel/>
     <bar/>
     <missions/>
@@ -3419,7 +3419,7 @@
    <class>C</class>
    <population>127000</population>
    <services>
-    <land>emp_mil_restricted</land>
+    <land>land_hiclass</land>
     <refuel/>
     <bar/>
     <missions/>
@@ -4369,7 +4369,7 @@
    <class>O</class>
    <population>1000000</population>
    <services>
-    <land/>
+    <land>land_hiclass</land>
     <refuel/>
     <commodity/>
    </services>
@@ -4890,7 +4890,7 @@
    <class>M</class>
    <population>3000000000</population>
    <services>
-    <land/>
+    <land>land_hiclass</land>
     <refuel/>
     <bar/>
     <missions/>
@@ -4931,7 +4931,7 @@
    <class>G</class>
    <population>35000000</population>
    <services>
-    <land/>
+    <land>land_hiclass</land>
     <refuel/>
     <bar/>
     <commodity/>
@@ -5104,7 +5104,7 @@
    <class>S</class>
    <population>10000000</population>
    <services>
-    <land/>
+    <land>land_lowclass</land>
     <refuel/>
     <missions/>
     <commodity/>
@@ -5574,7 +5574,7 @@
    <class>O</class>
    <population>30000000</population>
    <services>
-    <land/>
+    <land>land_hiclass</land>
     <refuel/>
     <bar/>
     <missions/>
@@ -5643,7 +5643,7 @@
    <class>D</class>
    <population>5000000</population>
    <services>
-    <land/>
+    <land>land_lowclass</land>
     <refuel/>
     <bar/>
     <missions/>
@@ -6033,7 +6033,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>G</class>
    <population>900000000</population>
    <services>
-    <land/>
+    <land>land_hiclass</land>
     <refuel/>
     <bar/>
     <missions/>
@@ -6434,7 +6434,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>M</class>
    <population>3000000000</population>
    <services>
-    <land/>
+    <land>land_lowclass</land>
     <refuel/>
     <bar/>
     <missions/>
@@ -10001,7 +10001,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>M</class>
    <population>90000000</population>
    <services>
-    <land/>
+    <land>land_lowclass</land>
     <refuel/>
     <bar/>
     <commodity/>
@@ -10766,7 +10766,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>M</class>
    <population>7000000</population>
    <services>
-    <land/>
+    <land>land_lowclass</land>
     <refuel/>
     <bar/>
     <missions/>
@@ -10805,7 +10805,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>M</class>
    <population>400000</population>
    <services>
-    <land/>
+    <land>land_lowclass</land>
     <refuel/>
     <bar/>
     <missions/>
@@ -11141,7 +11141,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>L</class>
    <population>2000</population>
    <services>
-    <land/>
+    <land>land_lowclass</land>
     <refuel/>
     <bar/>
     <missions/>
@@ -11413,7 +11413,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>M</class>
    <population>50000000</population>
    <services>
-    <land/>
+    <land>land_hiclass</land>
     <refuel/>
     <bar/>
     <missions/>
@@ -12054,7 +12054,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>K</class>
    <population>400000</population>
    <services>
-    <land/>
+    <land>land_lowclass</land>
     <refuel/>
     <bar/>
     <missions/>
@@ -12255,7 +12255,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>M</class>
    <population>500000000</population>
    <services>
-    <land/>
+    <land>land_hiclass</land>
     <refuel/>
     <bar/>
     <missions/>
@@ -12405,7 +12405,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>D</class>
    <population>10000</population>
    <services>
-    <land/>
+    <land>land_lowclass</land>
     <refuel/>
     <bar/>
     <missions/>
@@ -12477,7 +12477,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>M</class>
    <population>5500000000</population>
    <services>
-    <land/>
+    <land>land_hiclass</land>
     <refuel/>
     <bar/>
     <commodity/>
@@ -12810,7 +12810,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>C</class>
    <population>50000000</population>
    <services>
-    <land/>
+    <land>land_hiclass</land>
     <refuel/>
     <bar/>
     <missions/>
@@ -12886,7 +12886,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>5000</population>
    <services>
-    <land/>
+    <land>land_lowclass</land>
     <refuel/>
     <bar/>
     <missions/>
