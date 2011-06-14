@@ -33,7 +33,8 @@ include "scripts/numstring.lua"
 -- Default function. Any asset that has no landing script explicitly defined will use this.
 function land( pnt )
    local fct = pnt:faction()
-   local can_land = fct:playerStanding() >= 0
+   local standing = fct:playerStanding()
+   local can_land = standing >= 0
 
    -- Get land message
    local land_msg
