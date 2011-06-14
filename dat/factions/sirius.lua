@@ -11,3 +11,6 @@ _fcap_misn_var = "_fcap_sirius"
 _fthis         = faction.get("Sirius")
 
 
+function faction_hit( pnt )
+    return default_hit(pnt)
+end
