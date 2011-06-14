@@ -153,7 +153,7 @@ end
 function getcost(fct, land_floor, bribe_floor, rate)
     local standing = fct:playerStanding()
     if standing < bribe_floor then
-        return "I'm not dealing with dangerous criminals like you!"
+        return "\"I'm not dealing with dangerous criminals like you!\""
     else
         -- Assume standing is always lower than the land_floor.
         return (land_floor - standing) * rate * getshipmod() + 5000
