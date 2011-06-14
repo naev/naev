@@ -246,8 +246,7 @@ int comm_openPlanet( Planet *planet )
          comm_planet->faction, 0, 0, comm_planet->name );
 
    /* Add special buttons. */
-   if (areEnemies(player.p->faction, planet->faction) &&
-         !planet->bribed && (planet->bribe_msg != NULL))
+   if (!planet->can_land && !planet->bribed && (planet->bribe_msg != NULL))
       window_addButton( wid, -20, 20 + BUTTON_HEIGHT + 20,
             BUTTON_WIDTH, BUTTON_HEIGHT, "btnBribe", "Bribe", comm_bribePlanet );
 

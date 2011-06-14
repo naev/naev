@@ -23,6 +23,7 @@ function create()
    col_txt_wrn = colour.new( 127/255,  31/255,  31/255 )
    col_txt_enm = colour.new( 222/255,  28/255,  28/255 )
    col_txt_all = colour.new(  19/255, 152/255,  41/255 )
+   --col_txt_res = colour.new(     1.0,     0.6,     0.0 )
    col_txt_una = colour.new(  66/255,  72/255,  84/255 )
    col_shield = colour.new( 40/255,  51/255,  88/255 )
    col_armour = colour.new( 72/255,  73/255,  60/255 )
@@ -213,6 +214,7 @@ function create()
    update_ship()
    update_system()
    update_nav()
+   update_faction()
    update_cargo()
 end
 
@@ -240,6 +242,7 @@ function update_target()
 end
 
 function update_nav()
+   planet = {}
    nav_pnt, nav_hyp = pp:nav()
    autonav_hyp = player.autonavDest()
    if nav_pnt then
@@ -272,6 +275,12 @@ function update_nav()
       if ta_pntfact then
          ta_pnt_faction_gfx = ta_pntfact:logoTiny()
       end
+      planet = { -- Table for convenience.
+         name = nav_pnt:name(),
+         pos = nav_pnt:pos(),
+         class = nav_pnt:class(),
+         col = nav_pnt:colour()
+      }
    else
       gui.osdInit( 23, screen_h - 63, 150, 500 )
       gui.fpsPos( 15, screen_h - 28 - 15 - deffont_h )
@@ -287,6 +296,12 @@ function update_nav()
       end
    else
       navstring = "none"
+   end
+end
+
+function update_faction()
+   if nav_pnt then -- Colour the planet name based on friendliness.
+      planet.col = nav_pnt:colour()
    end
 end
 
@@ -685,9 +700,7 @@ function render( dt, dt_mod )
    -- Planet pane
    if nav_pnt then
       local col = col_txt_std
-      ta_pnt_pos = nav_pnt:pos()
-      ta_pnt_dist = pp:pos():dist( ta_pnt_pos )
-      ta_pnt_class = nav_pnt:class()
+      ta_pnt_dist = pp:pos():dist( planet.pos )
 
       -- Extend the pane depending on the services available.
       services_h = 44
@@ -715,18 +728,7 @@ function render( dt, dt_mod )
          gfx.renderTex( ta_pnt_faction_gfx, ta_pnt_fact_x, ta_pnt_fact_y )
       end
 
-      -- Colour the planet name based on friendliness.
-      if ta_pntfact then
-         if pfact:areEnemies( ta_pntfact ) then
-            col = col_txt_enm
-         elseif pfact:areAllies( ta_pntfact ) then
-            col = col_txt_all
-         else
-            col = col_txt_std
-         end
-      end
-
-      x1, y1 = vec2.get(nav_pnt:pos())
+      x1, y1 = vec2.get(planet.pos)
       x2, y2 = vec2.get(player.pilot():pos())
       ta_pnt_dir = math.atan2(y2 - y1, x2 - x1) + math.pi
 
@@ -734,7 +736,7 @@ function render( dt, dt_mod )
       local x, y = target_dir:spriteFromDir( ta_pnt_dir )
       gfx.renderTex( target_dir, ta_pnt_pane_x + 12, ta_pnt_pane_y -24, x, y, col_txt_top )
 
-      gfx.print( true, nav_pnt:class(), ta_pnt_pane_x + 130, ta_pnt_pane_y - 34, col_txt_top )
+      gfx.print( true, planet.class, ta_pnt_pane_x + 130, ta_pnt_pane_y - 34, col_txt_top )
       gfx.print( true, "SERVICES:", ta_pnt_pane_x + 14, ta_pnt_pane_y - 46, col_txt_top )
 
       -- Space out the text.
@@ -755,7 +757,7 @@ function render( dt, dt_mod )
       if ta_pnt_dist then
          gfx.print( false, largeNumber( ta_pnt_dist, 1 ), ta_pnt_pane_x + 110, ta_pnt_pane_y - 15, col_txt_std, 63, false )
       end
-      gfx.print( true, nav_pnt:name(), ta_pnt_pane_x + 14, ta_pnt_pane_y + 149, col )
+      gfx.print( true, planet.name, ta_pnt_pane_x + 14, ta_pnt_pane_y + 149, planet.col )
    end
 
    --Bottom bar

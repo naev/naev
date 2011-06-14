@@ -318,8 +318,8 @@ unsigned int pilot_getNearestEnemy_size( const Pilot* p, int target_mass_LB, int
          }
       }
    }
-   return tp;
 
+   return tp;
 }
 
 /**
@@ -850,6 +850,27 @@ void pilot_rmFriendly( Pilot* p )
 int pilot_getJumps( const Pilot* p )
 {
    return (int)(p->fuel) / HYPERSPACE_FUEL;
+}
+
+
+/**
+ * @brief Gets a pilot's colour.
+ *
+ *    @param p Pilot to get colour of.
+ *    @return The colour of the pilot.
+ */
+glColour* pilot_getColour( const Pilot* p )
+{
+   glColour *col;
+
+   if (pilot_inRangePilot(player.p, p) == -1) col = &cMapNeutral;
+   else if (pilot_isDisabled(p)) col = &cInert;
+   else if (pilot_isFlag(p,PILOT_BRIBED)) col = &cNeutral;
+   else if (pilot_isHostile(p)) col = &cHostile;
+   else if (pilot_isFriendly(p)) col = &cFriend;
+   else col = faction_getColour(p->faction);
+
+   return col;
 }
 
 
@@ -2361,7 +2382,8 @@ void pilot_clearTimers( Pilot *pilot )
  *
  * @param index Index number that was deleted.
  */
-void pilots_updateSystemFleet( const int deletedIndex ) {
+void pilots_updateSystemFleet( const int deletedIndex )
+{
    int i;
 
    for(i = 0; i < pilot_nstack; i++)
@@ -2374,75 +2396,60 @@ void pilots_updateSystemFleet( const int deletedIndex ) {
 /**
  * @brief Gets the relative size(shipmass) between the current pilot and the specified target
  *
- * @param p the pilot whose mass we will compare
- *    @luareturn A number from 0 to 1 mapping the relative masses
- * relsize()
+ *    @param p the pilot whose mass we will compare
+ *    @return A number from 0 to 1 mapping the relative masses
  */
-double pilot_relsize(const Pilot* cur_pilot, const Pilot* p)
+double pilot_relsize( const Pilot* cur_pilot, const Pilot* p )
 {
-    /*double mass_map;
-
-    mass_map = 1 - 1/(1 + ( (double) cur_pilot -> solid -> mass / (double) p->solid->mass );*/
-
-    return (1 - 1/(1 + ( (double) cur_pilot -> solid -> mass / (double) p->solid->mass) ) );
-    }
+   return (1 - 1/(1 + ((double)cur_pilot->solid->mass / (double)p->solid->mass)));
+}
 
 /**
  * @brief Gets the relative damage output(total DPS) between the current pilot and the specified target
  *
- * @param p the pilot whose dps we will compare
+ *    @param p the pilot whose dps we will compare
  *    @return A number from 0 to 1 mapping the relative damage output
- * reldps()
  */
-double pilot_reldps(const Pilot* cur_pilot, const Pilot* p)
+double pilot_reldps( const Pilot* cur_pilot, const Pilot* p )
 {
-    int i;
+   int i;
+   int DPSaccum_target = 0, DPSaccum_pilot = 0;
+   double delay_cache, damage_cache;
 
-    int DPSaccum_target = 0, DPSaccum_pilot = 0;
-    double delay_cache, damage_cache;
+   for(i = 0; i < p->outfit_nweapon; i++) {
+      if(p->outfit_weapon[i].outfit) {
+         damage_cache = outfit_damage(p->outfit_weapon[i].outfit);
+         delay_cache = outfit_delay(p->outfit_weapon[i].outfit);
+         if(damage_cache > 0 && delay_cache > 0)
+            DPSaccum_target += ( damage_cache/delay_cache );
+      }
+   }
 
-    for(i = 0; i < p->outfit_nweapon; i++)
-    {
-       /*DPSaccum_target += ( outfit_damage(p->outfit_weapon[i].outfit)/outfit_delay(p->outfit_weapon[i].outfit) );*/
-       if(p->outfit_weapon[i].outfit){
-       damage_cache = outfit_damage(p->outfit_weapon[i].outfit);
-        delay_cache = outfit_delay(p->outfit_weapon[i].outfit);
-        if(damage_cache > 0 && delay_cache > 0)
-           DPSaccum_target += ( damage_cache/delay_cache );}
+   for(i = 0; i < cur_pilot->outfit_nweapon; i++) {
+      if(cur_pilot->outfit_weapon[i].outfit) {
+         damage_cache = outfit_damage(cur_pilot->outfit_weapon[i].outfit);
+         delay_cache = outfit_delay(cur_pilot->outfit_weapon[i].outfit);
+         if(damage_cache > 0 && delay_cache > 0)
+            DPSaccum_pilot += ( damage_cache/delay_cache );
+      }
+   }
 
-    }
-
-    for(i = 0; i < cur_pilot->outfit_nweapon; i++)
-    {
-
-        /*DPSaccum_pilot += ( outfit_damage(cur_pilot->outfit_weapon[i].outfit)/outfit_delay(cur_pilot->outfit_weapon[i].outfit) );*/
-
-        if(cur_pilot->outfit_weapon[i].outfit) {
-        damage_cache = outfit_damage(cur_pilot->outfit_weapon[i].outfit);
-        delay_cache = outfit_delay(cur_pilot->outfit_weapon[i].outfit);
-        if(damage_cache > 0 && delay_cache > 0)
-           DPSaccum_pilot += ( damage_cache/delay_cache );}
-
-    }
-
-    if(DPSaccum_target > 0 && DPSaccum_pilot > 0)
-        return (1 - 1/(1 + ( (double) DPSaccum_pilot / (double) DPSaccum_target) ) );
-    else if (DPSaccum_pilot > 0)
-        return 1;
-    else
-        return 0;
-
+   if(DPSaccum_target > 0 && DPSaccum_pilot > 0)
+      return (1 - 1 / (1 + ((double)DPSaccum_pilot / (double)DPSaccum_target)) );
+   else if (DPSaccum_pilot > 0)
+      return 1;
+   else
+      return 0;
 }
 
 /**
  * @brief Gets the relative hp(combined shields and armor) between the current pilot and the specified target
  *
- * @param p the pilot whose shields/armor we will compare
+ *    @param p the pilot whose shields/armor we will compare
  *    @return A number from 0 to 1 mapping the relative HPs
- * relhp()
  */
-double pilot_relhp(const Pilot* cur_pilot, const Pilot* p)
+double pilot_relhp( const Pilot* cur_pilot, const Pilot* p )
 {
-    return (1 - 1/(1 + ( (double) (cur_pilot -> armour_max + cur_pilot -> shield_max ) / (double) (p -> armour_max + p -> shield_max) ) ) );
-
-    }
+   return (1 - 1 / (1 + ((double)(cur_pilot -> armour_max + cur_pilot -> shield_max) /
+         (double)(p -> armour_max + p -> shield_max))));
+}

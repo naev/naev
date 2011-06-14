@@ -238,6 +238,9 @@ function update_nav()
    autonav_hyp = player.autonavDest()
 end
 
+function update_faction()
+end
+
 function update_cargo()
    cargo = pp:cargoFree()
    cargolist = pp:cargoList()

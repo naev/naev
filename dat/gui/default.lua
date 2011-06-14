@@ -231,6 +231,10 @@ function render_nav ()
 end
 
 
+function update_faction()
+end
+
+
 -- Renders the health bars
 function render_health ()
    local arm, shi = pp:health()
