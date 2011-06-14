@@ -511,9 +511,6 @@ static void menuKeybinds_genList( unsigned int wid )
    }
    window_addList( wid, 20, -40, lw, lh, "lstKeybinds",
          str, i, 0, menuKeybinds_update );
-
-   /* Update the list. */
-   menuKeybinds_update( wid, NULL );
 }
 
 
@@ -1080,7 +1077,7 @@ static void opt_video( unsigned int wid )
          res_def = i;
       nres++;
    }
-   window_addList( wid, x, y, 140, 100, "lstRes", res, nres, res_def, opt_videoRes );
+   window_addList( wid, x, y, 140, 100, "lstRes", res, nres, -1, opt_videoRes );
    y -= 150;
 
    /* FPS stuff. */
@@ -1092,8 +1089,7 @@ static void opt_video( unsigned int wid )
    window_addText( wid, x, y, l, 20, 1, "txtSFPS",
          NULL, &cBlack, s );
    window_addInput( wid, x+l+20, y, 40, 20, "inpFPS", 4, 1, NULL );
-   snprintf( buf, sizeof(buf), "%d", conf.fps_max );
-   window_setInput( wid, "inpFPS", buf );
+   toolkit_setListPos( wid, "lstRes", res_def);
    window_setInputFilter( wid, "inpFPS",
          "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`" );
    y -= 30;
