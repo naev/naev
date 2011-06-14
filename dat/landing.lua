@@ -178,7 +178,7 @@ function land_civilian( pnt, land_floor, bribe_floor )
    -- Calculate bribe price. Note: Assumes bribe floor < land_floor.
    local bribe_price = getcost(fct, bribe_floor - land_floor, 1000) -- TODO: different rates for different factions.
    if not can_land and type(bribe_price) == "number" then
-       local str            = numstring( bribe_price )
+       local str      = numstring( bribe_price )
        bribe_msg      = string.format("\"I'll let you land for the modest price of %s credits.\"\n\nPay %s credits?", str, str )
        bribe_ack_msg  = "Make it quick."
    end
