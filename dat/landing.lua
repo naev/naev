@@ -148,15 +148,15 @@ function getshipmod()
 end
 
 -- Helper function for calculating bribe availability and cost.
--- Expects the faction, a floor value for standing and a going rate for bribes.
+-- Expects the faction, the minimum standing to land, the minimum standing to bribe, and a going rate for bribes.
 -- Returns whether the planet can be bribed, and the cost for doing so.
-function getcost(fct, floor, rate)
+function getcost(fct, land_floor, bribe_floor, rate)
     local standing = fct:playerStanding()
-    if standing < floor then
+    if standing < bribe_floor then
         return "I'm not dealing with dangerous criminals like you!"
     else
-        -- Assume standing is always negative.
-        return -standing * rate * getshipmod() + 5000
+        -- Assume standing is always lower than the land_floor.
+        return (land_floor - standing) * rate * getshipmod() + 5000
     end
 end
 
@@ -176,7 +176,7 @@ function land_civilian( pnt, land_floor, bribe_floor )
 
    local bribe_msg, bribe_ack_msg
    -- Calculate bribe price. Note: Assumes bribe floor < land_floor.
-   local bribe_price = getcost(fct, bribe_floor - land_floor, 1000) -- TODO: different rates for different factions.
+   local bribe_price = getcost(fct, land_floor, bribe_floor, 1000) -- TODO: different rates for different factions.
    if not can_land and type(bribe_price) == "number" then
        local str      = numstring( bribe_price )
        bribe_msg      = string.format("\"I'll let you land for the modest price of %s credits.\"\n\nPay %s credits?", str, str )
