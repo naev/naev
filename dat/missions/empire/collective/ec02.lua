@@ -94,7 +94,7 @@ function land()
       tk.msg( title[2], text[6] )
 
       -- Rewards
-      player.modFactionRaw("Empire",5)
+      faction.modPlayerSingle("Empire",5)
       player.pay( 100000 )
 
       misn.finish(true)

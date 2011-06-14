@@ -253,7 +253,7 @@ function create ()
    -- Set some details.
    misn.setTitle( string.format( title[rnd.int(1,3)], num_patrol ) )
    misn.setDesc( desc )
-   misn.setReward( string.format( numstring(misn_reward), reward ) )
+   misn.setReward( string.format( misn_reward, numstring(reward) ) )
 end
 
 -- Mission is accepted
@@ -446,8 +446,8 @@ function land ()
       end      
 
       -- modify the faction standing
-      if player.getFaction("Dvaered") < 70 then
-         player.modFactionRaw("Dvaered", rnd.rnd(1, num_systems/2) );
+      if faction.playerStanding("Dvaered") < 70 then
+         faction.modPlayerSingle("Dvaered", rnd.rnd(1, num_systems/2) );
       end
 
       misn.finish(true)

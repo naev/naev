@@ -223,9 +223,6 @@ static void commodity_exchange_open( unsigned int wid )
    window_addList( wid, 20, -40,
          w-LAND_BUTTON_WIDTH-60, h-80-LAND_BUTTON_HEIGHT,
          "lstGoods", goods, ngoods, 0, commodity_update );
-
-   /* update */
-   commodity_update(wid, NULL);
 }
 /**
  * @brief Updates the commodity window.
@@ -864,9 +861,6 @@ static void misn_genList( unsigned int wid, int first )
    window_addList( wid, 20, -40,
          w/2 - 30, h/2 - 35,
          "lstMission", misn_names, j, 0, misn_update );
-
-   /* Update the list. */
-   misn_update( wid, NULL );
 }
 /**
  * @brief Updates the mission list.

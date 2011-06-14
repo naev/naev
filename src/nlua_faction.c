@@ -32,6 +32,7 @@ static int factionL_longname( lua_State *L );
 static int factionL_areenemies( lua_State *L );
 static int factionL_areallies( lua_State *L );
 static int factionL_modplayer( lua_State *L );
+static int factionL_modplayersingle( lua_State *L );
 static int factionL_modplayerraw( lua_State *L );
 static int factionL_playerstanding( lua_State *L );
 static int factionL_enemies( lua_State *L );
@@ -48,6 +49,7 @@ static const luaL_reg faction_methods[] = {
    { "areEnemies", factionL_areenemies },
    { "areAllies", factionL_areallies },
    { "modPlayer", factionL_modplayer },
+   { "modPlayerSingle", factionL_modplayersingle },
    { "modPlayerRaw", factionL_modplayerraw },
    { "playerStanding", factionL_playerstanding },
    { "enemies", factionL_enemies },
@@ -351,6 +353,30 @@ static int factionL_modplayer( lua_State *L )
  *
  * Does not affect other faction standings.
  *
+ * @usage f:modPlayerSingle( 10 )
+ *
+ *    @luaparam f Faction to modify player's standing with.
+ *    @luaparam mod The modifier to modify faction by.
+ * @luafunc modPlayerSingle( f, mod )
+ */
+static int factionL_modplayersingle( lua_State *L )
+{
+   int f;
+   double n;
+
+   f = luaL_validfaction(L,1);
+   n = luaL_checknumber(L,2);
+   faction_modPlayerSingle( f, n, "script" );
+
+   return 0;
+}
+
+/**
+ * @brief Modifies the player's standing with the faction.
+ *
+ * Does not affect other faction standings and is not processed by the faction
+ *  Lua script, so it indicates exactly the amount to be changed.
+ *
  * @usage f:modPlayerRaw( 10 )
  *
  *    @luaparam f Faction to modify player's standing with.
@@ -364,7 +390,7 @@ static int factionL_modplayerraw( lua_State *L )
 
    f = luaL_validfaction(L,1);
    n = luaL_checknumber(L,2);
-   faction_modPlayerRaw( f, n, "script" );
+   faction_modPlayerRaw( f, n );
 
    return 0;
 }

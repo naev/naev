@@ -435,7 +435,6 @@ void faction_modPlayer( int f, double mod, const char *source )
    }
 }
 
-
 /**
  * @brief Modifies the player's standing without affecting others.
  *
@@ -446,7 +445,7 @@ void faction_modPlayer( int f, double mod, const char *source )
  *
  * @sa faction_modPlayer
  */
-void faction_modPlayerRaw( int f, double mod, const char *source )
+void faction_modPlayerSingle( int f, double mod, const char *source )
 {
    if (!faction_isFaction(f)) {
       WARN("%d is an invalid faction", f);
@@ -454,6 +453,41 @@ void faction_modPlayerRaw( int f, double mod, const char *source )
    }
 
    faction_modPlayerLua( f, mod, source, 0 );
+}
+
+
+/**
+ * @brief Modifies the player's standing without affecting others.
+ *
+ * Does not affect allies nor enemies and does not run through the Lua script.
+ *
+ *    @param f Faction whose standing to modiy.
+ *    @param mod Amount to modiy standing by.
+ *
+ * @sa faction_modPlayer
+ */
+void faction_modPlayerRaw( int f, double mod )
+{
+   Faction *faction;
+   HookParam hparam[3];
+
+   if (!faction_isFaction(f)) {
+      WARN("%d is an invalid faction", f);
+      return;
+   }
+
+   faction = &faction_stack[f];
+   faction->player += mod;
+   /* Run hook if necessary. */
+   hparam[0].type    = HOOK_PARAM_FACTION;
+   hparam[0].u.lf.f  = f;
+   hparam[1].type    = HOOK_PARAM_NUMBER;
+   hparam[1].u.num   = mod;
+   hparam[2].type    = HOOK_PARAM_SENTINEL;
+   hooks_runParam( "standing", hparam );
+
+   /* Tell space the faction changed. */
+   space_factionChange();
 }
 
 
@@ -823,7 +857,9 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
    if (player==0)
       DEBUG("Faction '%s' missing player tag.", temp->name);
    if ((temp->state!=NULL) && faction_isFlag( temp, FACTION_STATIC ))
-      DEBUG("Faction '%s' has Lua and is static!", temp->name);
+      WARN("Faction '%s' has Lua and is static!", temp->name);
+   if ((temp->state==NULL) && !faction_isFlag( temp, FACTION_STATIC ))
+      WARN("Faction '%s' has no Lua and isn't static!", temp->name);
 
    return 0;
 }

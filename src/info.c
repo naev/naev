@@ -397,9 +397,6 @@ static void weapons_genList( unsigned int wid )
          w - (20+180+20+20), 160,
          "lstWeapSets", buf, PILOT_WEAPON_SETS,
          0, weapons_update );
-
-   /* Update. */
-   weapons_update( wid, NULL );
 }
 
 
@@ -611,8 +608,6 @@ static void cargo_genList( unsigned int wid )
    window_addList( wid, 20, -40,
          w - 40, h - BUTTON_HEIGHT - 80,
          "lstCargo", buf, nbuf, 0, cargo_update );
-
-   cargo_update(wid, NULL);
 }
 /**
  * @brief Updates the player's cargo in the cargo menu.
@@ -770,8 +765,6 @@ static void info_openStandings( unsigned int wid )
    /* Display list. */
    window_addList( wid, 20, -40, lw, h-60,
          "lstStandings", str, n, 0, standings_update );
-
-   standings_update( wid , NULL );
 }
 
 
@@ -884,8 +877,6 @@ static void mission_menu_genList( unsigned int wid, int first )
    window_addList( wid, 20, -40,
          300, h-340,
          "lstMission", misn_names, j, 0, mission_menu_update );
-
-   mission_menu_update(wid ,NULL);
 }
 /**
  * @brief Updates the mission menu mission information based on what's selected.

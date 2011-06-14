@@ -42,6 +42,7 @@ static int planetL_colour( lua_State *L );
 static int planetL_class( lua_State *L );
 static int planetL_position( lua_State *L );
 static int planetL_services( lua_State *L );
+static int planetL_canland( lua_State *L );
 static int planetL_gfxSpace( lua_State *L );
 static int planetL_gfxExterior( lua_State *L );
 static int planetL_shipsSold( lua_State *L );
@@ -60,6 +61,7 @@ static const luaL_reg planet_methods[] = {
    { "class", planetL_class },
    { "pos", planetL_position },
    { "services", planetL_services },
+   { "canLand", planetL_canland },
    { "gfxSpace", planetL_gfxSpace },
    { "gfxExterior", planetL_gfxExterior },
    { "shipsSold", planetL_shipsSold },
@@ -559,6 +561,25 @@ static int planetL_services( lua_State *L )
       lua_setfield(L,-2,"shipyard"); /* key */
    }
    return 1;
+}
+
+
+/**
+ * @brief Gets whether or not the player can land on the planet (or bribe it).
+ *
+ * @usage can_land, can_bribe = p:canLand()
+ *    @luaparam p Planet to get land and bribe status of.
+ *    @luareturn The land and bribability status of the planet.
+ * @luafunc canLand( p )
+ */
+static int planetL_canland( lua_State *L )
+{
+   Planet *p;
+   p = luaL_validplanet(L,1);
+   planet_updateLand( p );
+   lua_pushboolean( L, p->can_land );
+   lua_pushboolean( L, p->bribe_price > 0 );
+   return 2;
 }
 
 

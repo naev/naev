@@ -90,7 +90,7 @@ function land()
          -- More flavour text
          tk.msg(title[3], string.format( text[3], dest:name() ))
          var.push("es_cargo", true)
-         player.modFactionRaw("Empire",3);
+         faction.modPlayerSingle("Empire",3);
          misn.finish(true)
       end
    end

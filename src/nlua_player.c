@@ -52,9 +52,6 @@ static int playerL_omsgAdd( lua_State *L );
 static int playerL_omsgChange( lua_State *L );
 static int playerL_omsgRm( lua_State *L );
 /* Faction stuff. */
-static int playerL_modFaction( lua_State *L );
-static int playerL_modFactionRaw( lua_State *L );
-static int playerL_getFaction( lua_State *L );
 static int playerL_getRating( lua_State *L );
 static int playerL_getPosition( lua_State *L );
 static int playerL_getPilot( lua_State *L );
@@ -92,9 +89,6 @@ static const luaL_reg playerL_methods[] = {
    { "omsgAdd", playerL_omsgAdd },
    { "omsgChange", playerL_omsgChange },
    { "omsgRm", playerL_omsgRm },
-   { "modFaction", playerL_modFaction },
-   { "modFactionRaw", playerL_modFactionRaw },
-   { "getFaction", playerL_getFaction },
    { "getRating", playerL_getRating },
    { "pos", playerL_getPosition },
    { "pilot", playerL_getPilot },
@@ -122,7 +116,6 @@ static const luaL_reg playerL_cond_methods[] = {
    { "name", playerL_getname },
    { "ship", playerL_shipname },
    { "credits", playerL_credits },
-   { "getFaction", playerL_getFaction },
    { "getRating", playerL_getRating },
    { "pos", playerL_getPosition },
    { "pilot", playerL_getPilot },
@@ -345,80 +338,6 @@ static int playerL_omsgRm( lua_State *L )
    id       = luaL_checklong(L,1);
    omsg_rm( id );
    return 0;
-}
-/**
- * @brief Increases the player's standing to a faction by an amount. This will
- *  affect player's standing with that faction's allies and enemies also.
- *
- *    @luaparam faction Name of the faction.
- *    @luaparam mod Amount to modify standing by.
- * @luafunc modFaction( faction, mod )
- */
-static int playerL_modFaction( lua_State *L )
-{
-   int f;
-   double mod;
-
-   if (lua_isstring(L,1))
-      f = faction_get( lua_tostring(L,1) );
-   else {
-      NLUA_INVALID_PARAMETER(L);
-      return 0;
-   }
-
-   mod = luaL_checknumber(L,2);
-   faction_modPlayer( f, mod, "script" );
-
-   return 0;
-}
-/**
- * @brief Increases the player's standing to a faction by a fixed amount without
- *  touching other faction standings.
- *
- *    @luaparam faction Name of the faction.
- *    @luaparam mod Amount to modify standing by.
- * @luafunc modFactionRaw( faction, mod )
- */
-static int playerL_modFactionRaw( lua_State *L )
-{
-   NLUA_MIN_ARGS(2);
-   int f;
-   double mod;
-
-   if (lua_isstring(L,1))
-      f = faction_get( lua_tostring(L,1) );
-   else {
-      NLUA_INVALID_PARAMETER(L);
-      return 0;
-   }
-
-   mod = luaL_checknumber(L,2);
-   faction_modPlayerRaw( f, mod, "script" );
-
-   return 0;
-}
-/**
- * @brief Gets the standing of the player with a certain faction.
- *
- *    @luaparam faction Faction to get the standing of.
- *    @luareturn The faction standing.
- * @luafunc getFaction( faction )
- */
-static int playerL_getFaction( lua_State *L )
-{
-   NLUA_MIN_ARGS(1);
-   int f;
-
-   if (lua_isstring(L,1))
-      f = faction_get( lua_tostring(L,1) );
-   else {
-      NLUA_INVALID_PARAMETER(L);
-      return 0;
-   }
-
-   lua_pushnumber(L, faction_getPlayer(f));
-
-   return 1;
 }
 /**
  * @brief Gets the player's combat rating.
