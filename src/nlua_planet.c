@@ -23,6 +23,7 @@
 #include "nlua_ship.h"
 #include "nlua_outfit.h"
 #include "nlua_commodity.h"
+#include "nlua_col.h"
 #include "log.h"
 #include "rng.h"
 #include "land.h"
@@ -37,6 +38,7 @@ static int planetL_system( lua_State *L );
 static int planetL_eq( lua_State *L );
 static int planetL_name( lua_State *L );
 static int planetL_faction( lua_State *L );
+static int planetL_colour( lua_State *L );
 static int planetL_class( lua_State *L );
 static int planetL_position( lua_State *L );
 static int planetL_services( lua_State *L );
@@ -54,6 +56,7 @@ static const luaL_reg planet_methods[] = {
    { "__tostring", planetL_name },
    { "name", planetL_name },
    { "faction", planetL_faction },
+   { "colour", planetL_colour },
    { "class", planetL_class },
    { "pos", planetL_position },
    { "services", planetL_services },
@@ -446,6 +449,32 @@ static int planetL_faction( lua_State *L )
    lua_pushfaction(L, f);
    return 1;
 }
+
+
+/**
+ * @brief Gets a planet's colour based on its friendliness or hostility to the player.
+ *
+ * @usage col = p:colour()
+ *
+ *    @luaparam p Planet to get the colour of.
+ *    @luareturn The planet's colour.
+ * @luafunc colour( p )
+ */
+static int planetL_colour( lua_State *L )
+{
+   Planet *p;
+   glColour *col;
+   LuaColour lc;
+
+   p = luaL_validplanet(L,1);
+   col = planet_getColour( p );
+
+   memcpy( &lc.col, col, sizeof(glColour) );
+   lua_pushcolour( L, lc );
+
+   return 1;
+}
+
 
 /**
  * @brief Gets the planet's class.
