@@ -70,7 +70,7 @@ function emp_mil_restricted( pnt )
    else
       land_msg = "Landing request denied."
    end
-   
+
    local nobribe = "\"Don't attempt to bribe an Empire official, pilot.\""
 
    return can_land, land_msg, nobribe
@@ -203,10 +203,3 @@ function pir_clanworld( pnt )
    end
    return can_land, land_msg, bribe_price, bribe_msg, bribe_ack_msg
 end
-
-
-
-
-
-
-
