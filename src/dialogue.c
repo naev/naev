@@ -60,7 +60,7 @@ static void dialogue_listCancel( unsigned int wid, char* str );
 static int toolkit_loop( int *loop_done );
 
 /**
- * @brief Represents a found target.
+ * @brief Used to store information for input dialogues
  */
 typedef struct InputDialogue_ {
    unsigned int input_wid; /**< wid of input window */

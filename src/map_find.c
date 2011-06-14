@@ -595,6 +595,10 @@ static char **map_outfitsMatch( const char *name, int *len )
  *    listpanel.
  *
  *    @param wid The windowid we're adding widgets to
+ *    @param x The x offset where we can start drawing
+ *    @param y the y offset where we can start drawing
+ *    @param w The width of the area where we can draw
+ *    @param h The height of the area where we can draw
  */
 static void map_addOutfitDetailFields(unsigned int wid, int x, int y, int w, int h)
 {
@@ -632,6 +636,10 @@ static void map_addOutfitDetailFields(unsigned int wid, int x, int y, int w, int
  *
  *    @param wid The windowid of the window we're updating.
  *    @param wgtname The name of the list that was selected.
+ *    @param x The x offset where we can start drawing
+ *    @param y the y offset where we can start drawing
+ *    @param w The width of the area where we can draw
+ *    @param h The height of the area where we can draw
  */
 static void map_showOutfitDetail(unsigned int wid, char* wgtname, int x, int y, int w, int h)
 {
