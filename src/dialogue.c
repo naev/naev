@@ -72,7 +72,7 @@ typedef struct InputDialogue_ {
                            int x, int y, int w, int h
         ); /**< callback when an item is selected */
 } InputDialogue;
-void select_call_wrapper(unsigned int wid, char* wgtname);
+static void select_call_wrapper(unsigned int wid, char* wgtname);
 
 /**
  * @brief Checks to see if a dialogue is open.
@@ -480,7 +480,7 @@ static void dialogue_listClose( unsigned int wid, char* str )
  *    @param wid Window id
  *    @param wgtname name of the widget that raised the event.
  */
-void select_call_wrapper(unsigned int wid, char* wgtname)
+static void select_call_wrapper(unsigned int wid, char* wgtname)
 {
    if(input_dialogue.item_select_cb)
       input_dialogue.item_select_cb(wid, wgtname,input_dialogue.x,
