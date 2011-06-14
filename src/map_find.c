@@ -602,10 +602,11 @@ static char **map_outfitsMatch( const char *name, int *len )
  */
 static void map_addOutfitDetailFields(unsigned int wid, int x, int y, int w, int h)
 {
-   int iw, ih;
+   (void) h;
+   (void) y;
+   int iw;
 
    iw = x;
-   ih = y;
 
    window_addRect( wid, 19 + iw + 20, -50, 128, 129, "rctImage", &cBlack, 0 );
    window_addImage( wid, 20 + iw + 20, -50-128, 0, 0, "imgOutfit", NULL, 1 );
@@ -643,13 +644,15 @@ static void map_addOutfitDetailFields(unsigned int wid, int x, int y, int w, int
  */
 static void map_showOutfitDetail(unsigned int wid, char* wgtname, int x, int y, int w, int h)
 {
+   (void) x;
+   (void) y;
+   (void) h;
    Outfit *outfit;
    char buf[PATH_MAX], buf2[ECON_CRED_STRLEN], buf3[ECON_CRED_STRLEN];
    double th;
-   int iw, ih;
+   int iw;
 
    iw = w - 400;
-   ih = h - 60;
 
    outfit = outfit_get( toolkit_getList(wid, wgtname) );
    window_modifyText( wid, "txtOutfitName", outfit->name );
