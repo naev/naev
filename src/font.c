@@ -953,6 +953,7 @@ static glColour* gl_fontGetColour( int ch )
       case 'N': col = &cNeutral; break;
       case 'I': col = &cInert; break;
       case 'R': col = &cRestricted; break;
+      case 'S': col = &cDRestricted; break;
       case 'M': col = &cMapNeutral; break;
       case 'C': col = &cConsole; break;
       case 'D': col = &cDConsole; break;
