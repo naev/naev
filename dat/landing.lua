@@ -33,7 +33,7 @@ include "scripts/numstring.lua"
 -- Default function. Any asset that has no landing script explicitly defined will use this.
 function land( pnt )
    local fct = pnt:faction()
-   local can_land = fct:playerStanding() > 0
+   local can_land = fct:playerStanding() >= 0
 
    -- Get land message
    local land_msg
@@ -46,7 +46,7 @@ function land( pnt )
    -- Calculate bribe price
    local can_bribe, bribe_price, bribe_msg, bribe_ack_msg
    if not can_land then
-      bribe_price = -standing * 1000 -- Shouldn't be random as this can be recalculated many times.
+      bribe_price = math.max(-standing, 5) * 1000 -- Shouldn't be random as this can be recalculated many times.
       local str   = numstring( bribe_price )
       bribe_msg   = string.format(
             "\"I'll let you land for the modest price of %s credits.\"\n\nPay %s credits?",
@@ -71,7 +71,7 @@ function emp_mil_restricted( pnt )
       land_msg = "Landing request denied."
    end
    
-   local nobribe = "Don't attempt to bribe an Empire official, pilot."
+   local nobribe = "\"Don't attempt to bribe an Empire official, pilot.\""
 
    return can_land, land_msg, nobribe
 end
@@ -91,7 +91,7 @@ function emp_mil_polprime( pnt )
       land_msg = "Landing request denied."
    end
 
-   local nobribe = "Don't attempt to bribe an Empire official, pilot."
+   local nobribe = "\"Don't attempt to bribe an Empire official, pilot.\""
 
    return can_land, land_msg, nobribe
 end
@@ -111,7 +111,7 @@ function srs_mil_restricted( pnt )
       land_msg = "Landing request denied."
    end
 
-   local nobribe = "The faithful will never be swayed by money."
+   local nobribe = "\"The faithful will never be swayed by money.\""
 
    return can_land, land_msg, nobribe
 end
@@ -131,7 +131,7 @@ function srs_mil_mutris( pnt )
       land_msg = "Landing request denied."
    end
 
-   local nobribe = "The faithful will never be swayed by money."
+   local nobribe = "\"The faithful will never be swayed by money.\""
 
    return can_land, land_msg, nobribe
 end
@@ -151,7 +151,7 @@ function dv_mil_restricted( pnt )
       land_msg = "Landing request denied."
    end
 
-   local nobribe = "Money won't buy you access to our restricted facilities, citizen."
+   local nobribe = "\"Money won't buy you access to our restricted facilities, citizen.\""
 
    return can_land, land_msg, nobribe
 end
@@ -171,7 +171,7 @@ function dv_mil_command( pnt )
       land_msg = "Landing request denied."
    end
 
-   local nobribe = "Money won't buy you access to our restricted facilities, citizen."
+   local nobribe = "\"Money won't buy you access to our restricted facilities, citizen.\""
 
    return can_land, land_msg, nobribe
 end
@@ -194,10 +194,10 @@ function pir_clanworld( pnt )
    -- Calculate bribe price
    local can_bribe, bribe_price, bribe_msg, bribe_ack_msg
    if not can_land then
-      bribe_price = (40 - standing) * 3000 -- Shouldn't be random as this can be recalculated many times.
+      bribe_price = math.max((40 - standing), 5) * 3000 -- Shouldn't be random as this can be recalculated many times.
       local str   = numstring( bribe_price )
       bribe_msg   = string.format(
-            "Well, I think you're scum, but I'm willing to look the other way for %s credits. Deal?",
+            "\"Well, I think you're scum, but I'm willing to look the other way for %s credits. Deal?\"",
             str )
       bribe_ack_msg = "Heh heh, thanks. Now get off the comm, I'm busy!"
    end
