@@ -11,3 +11,6 @@ _fcap_misn_var = "_fcap_dvaered"
 _fthis         = faction.get("Dvaered")
 
 
+function faction_hit( pnt )
+    return default_hit(pnt)
+end

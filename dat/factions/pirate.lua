@@ -11,3 +11,6 @@ _fcap_misn_var = "_fcap_pirate"
 _fthis         = faction.get("Pirate")
 
 
+function faction_hit( pnt )
+    return default_hit(pnt)
+end

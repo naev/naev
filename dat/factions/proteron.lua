@@ -11,3 +11,6 @@ _fcap_misn_var = "_fcap_proteron"
 _fthis         = faction.get("Proteron")
 
 
+function faction_hit( pnt )
+    return default_hit(pnt)
+end
