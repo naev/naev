@@ -62,7 +62,7 @@ function land_getMilitaryMessages( fname, can_land, standing )
    local nobribe = {
       Empire  = "Don't attempt to bribe an Empire official, pilot.",
       Dvaered = "Money won't buy you access to our restricted facilities, citizen.",
-      Sirius  = "The faithful will never be swayed by money.",
+      Sirius  = "The faithful will never be swayed by money."
    }
    if can_land then
       if fname == "Pirate" then
@@ -92,7 +92,7 @@ function military( pnt )
    local fname = fct:name()
    local standing = fct:playerStanding()
    local req = { Dvaered = 40, Pirate  = 20 }
-   local can_land
+   local can_land, nobribe, land_msg
 
    if req[fname] then
       can_land = standing > req[fname]
@@ -111,65 +111,48 @@ function military( pnt )
       bribe_ack_msg = "Heh heh, thanks. Now get off the comm, I'm busy!"
    end
 
-   return can_land, land_msg, bribe_price, bribe_msg, bribe_ack_msg
+   return can_land, land_msg, bribe_price or nobribe, bribe_msg, bribe_ack_msg
 end
 
--- Empire Polaris Prime.
-function emp_mil_polprime( pnt )
-   local fct = pnt:faction()
-   local standing = fct:playerStanding()
-   local can_land = standing > 70
-
-   local land_msg
+function land_getSpecialMessages( pname, can_land, standing )
+   local message, land_msg, messages = {}
+   local nobribe = {
+      ["Polaris Prime"] = "Don't attempt to bribe an Empire official, pilot.",
+      ["Dvaered High Command"] = "Money won't buy you access to our restricted facilities, citizen.",
+      ["Mutris"] = "The faithful will never be swayed by money."
+   }
    if can_land then
-      land_msg = "The Emperor permits you to land."
+      messages = {
+         ["Polaris Prime"] = "The Emperor permits you to land.",
+         ["Dvaered High Command"] = "Permission to land granted, sir.",
+         ["Mutris"]  = "Welcome to Mutris, home of Sirichana."
+      }
    elseif standing >= 0 then
-      land_msg = "You may not approach the Emperor."
-   else
+      messages = {
+         ["Polaris Prime"] = "You may not approach the Emperor.",
+         ["Dvaered High Command"] = "Only high ranking personnel allowed. Landing request denied.",
+         ["Mutris"] = "You may not approach the home of Sirichana yet."
+      }
+   else -- Hostile.
       land_msg = "Landing request denied."
    end
-
-   local nobribe = "Don't attempt to bribe an Empire official, pilot."
-
-   return can_land, land_msg, nobribe
+   return land_msg or messages[pname], nobribe[pname]
 end
 
--- Sirius Mutris.
-function srs_mil_mutris( pnt )
+function special( pnt )
    local fct = pnt:faction()
+   local fname = fct:name()
+   local pname = pnt:name()
    local standing = fct:playerStanding()
-   local can_land = standing > 50
+   local req = { Sirius  = 50 }
+   local can_land, land_msg, nobribe
 
-   local land_msg
-   if can_land then
-      land_msg = "Welcome to Mutris, home of Sirichana."
-   elseif standing >= 0 then
-      land_msg = "You may not approach the home of Sirichana yet."
-   else
-      land_msg = "Landing request denied."
+   if req[fname] then
+      can_land = standing > req[fname]
+   else -- Default.
+      can_land = standing > 70
    end
 
-   local nobribe = "The faithful will never be swayed by money."
-
-   return can_land, land_msg, nobribe
-end
-
--- Dvaered High Command.
-function dv_mil_command( pnt )
-   local fct = pnt:faction()
-   local standing = fct:playerStanding()
-   local can_land = standing > 70
-
-   local land_msg
-   if can_land then
-      land_msg = "Permission to land granted, sir."
-   elseif standing >= 0 then
-      land_msg = "Only high ranking personnel allowed. Landing request denied."
-   else
-      land_msg = "Landing request denied."
-   end
-
-   local nobribe = "Money won't buy you access to our restricted facilities, citizen."
-
+   land_msg, nobribe = land_getSpecialMessages( pname, can_land, standing )
    return can_land, land_msg, nobribe
 end

@@ -2993,7 +2993,7 @@
    <class>0</class>
    <population>500</population>
    <services>
-    <land>dv_mil_command</land>
+    <land>special</land>
     <refuel/>
     <outfits/>
     <shipyard/>
@@ -6958,7 +6958,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>L</class>
    <population>3000000000</population>
    <services>
-    <land>srs_mil_mutris</land>
+    <land>special</land>
     <refuel/>
     <bar/>
     <missions/>
@@ -8569,7 +8569,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>1</class>
    <population>318000</population>
    <services>
-    <land>emp_mil_polprime</land>
+    <land>special</land>
     <refuel/>
     <bar/>
     <commodity/>
