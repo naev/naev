@@ -47,7 +47,7 @@ function land( pnt )
    -- Calculate bribe price
    local can_bribe, bribe_price, bribe_msg, bribe_ack_msg
    if not can_land then
-      bribe_price = math.abs(standing) * 1000 -- Shouldn't be random as this can be recalculated many times.
+      bribe_price = math.max(-standing, 5) * 1000 -- Shouldn't be random as this can be recalculated many times.
       local str   = numstring( bribe_price )
       bribe_msg   = string.format(
             "\"I'll let you land for the modest price of %s credits.\"\n\nPay %s credits?",
@@ -103,7 +103,7 @@ function military( pnt )
    land_msg, nobribe = land_getMilitaryMessages( fname, can_land, standing )
    local can_bribe, bribe_price, bribe_msg, bribe_ack_msg
    if not can_land and fname == "Pirate" then
-      bribe_price = (40 + math.abs(standing)) * 3000 -- Shouldn't be random as this can be recalculated many times.
+      bribe_price = math.max((40 - standing), 5) * 3000 -- Shouldn't be random as this can be recalculated many times.
       local str   = numstring( bribe_price )
       bribe_msg   = string.format(
             "\"Well, I think you're scum, but I'm willing to look the other way for %s credits. Deal?\"",
