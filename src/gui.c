@@ -50,6 +50,7 @@
 #include "conf.h"
 #include "nebula.h"
 #include "camera.h"
+#include "pilot.h"
 #include "nlua.h"
 #include "nluadef.h"
 #include "nlua_gfx.h"
@@ -1198,22 +1199,21 @@ static void gui_renderInterference (void)
 
 
 /**
- * @brief Gets the pilot colour.
+ * @brief Gets a pilot's colour, with a special colour for targets.
  *
  *    @param p Pilot to get colour of.
  *    @return The colour of the pilot.
+ *
+ * @sa pilot_getColour
  */
 static glColour* gui_getPilotColour( const Pilot* p )
 {
    glColour *col;
 
-   if (p->id == player.p->target) col = &cRadar_tPilot;
-   else if (pilot_inRangePilot(player.p, p) == -1) col = &cMapNeutral;
-   else if (pilot_isDisabled(p)) col = &cInert;
-   else if (pilot_isFlag(p,PILOT_BRIBED)) col = &cNeutral;
-   else if (pilot_isHostile(p)) col = &cHostile;
-   else if (pilot_isFriendly(p)) col = &cFriend;
-   else col = faction_getColour(p->faction);
+   if (p->id == player.p->target)
+      col = &cRadar_tPilot;
+   else
+      col = pilot_getColour(p);
 
    return col;
 }

@@ -854,6 +854,27 @@ int pilot_getJumps( const Pilot* p )
 
 
 /**
+ * @brief Gets a pilot's colour.
+ *
+ *    @param p Pilot to get colour of.
+ *    @return The colour of the pilot.
+ */
+glColour* pilot_getColour( const Pilot* p )
+{
+   glColour *col;
+
+   if (pilot_inRangePilot(player.p, p) == -1) col = &cMapNeutral;
+   else if (pilot_isDisabled(p)) col = &cInert;
+   else if (pilot_isFlag(p,PILOT_BRIBED)) col = &cNeutral;
+   else if (pilot_isHostile(p)) col = &cHostile;
+   else if (pilot_isFriendly(p)) col = &cFriend;
+   else col = faction_getColour(p->faction);
+
+   return col;
+}
+
+
+/**
  * @brief Damages the pilot.
  *
  *    @param p Pilot that is taking damage.
