@@ -1435,7 +1435,7 @@ void planet_updateLand( Planet *p )
       p->land_msg = strdup( "Invalid land message" );
    }
    /* Parse bribing. */
-   if (p->can_land && lua_isnumber(L,-3)) {
+   if (!p->can_land && lua_isnumber(L,-3)) {
       p->bribe_price = lua_tonumber(L,-3);
       /* We need the bribe message. */
       if (lua_isstring(L,-2))
