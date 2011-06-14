@@ -1103,6 +1103,7 @@ void space_update( const double dt )
    if (space_fchg) {
       for (i=0; i<cur_system->nplanets; i++)
          planet_updateLand( cur_system->planets[i] );
+      gui_updateFaction();
       space_fchg = 0;
    }
 }

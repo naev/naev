@@ -1984,6 +1984,16 @@ void gui_setSystem (void)
 
 
 /**
+ * @brief Player's relationship with a faction was modified.
+ */
+void gui_updateFaction (void)
+{
+   if (gui_L != NULL && player.p->nav_planet != -1)
+      gui_doFunc( "update_faction" );
+}
+
+
+/**
  * @brief Calls trigger functions depending on who the pilot is.
  *
  *    @param The pilot to act base dupon.
