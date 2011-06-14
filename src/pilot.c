@@ -2382,7 +2382,8 @@ void pilot_clearTimers( Pilot *pilot )
  *
  * @param index Index number that was deleted.
  */
-void pilots_updateSystemFleet( const int deletedIndex ) {
+void pilots_updateSystemFleet( const int deletedIndex )
+{
    int i;
 
    for(i = 0; i < pilot_nstack; i++)
@@ -2398,7 +2399,7 @@ void pilots_updateSystemFleet( const int deletedIndex ) {
  *    @param p the pilot whose mass we will compare
  *    @return A number from 0 to 1 mapping the relative masses
  */
-double pilot_relsize(const Pilot* cur_pilot, const Pilot* p)
+double pilot_relsize( const Pilot* cur_pilot, const Pilot* p )
 {
    return (1 - 1/(1 + ((double)cur_pilot->solid->mass / (double)p->solid->mass)));
 }
@@ -2409,7 +2410,7 @@ double pilot_relsize(const Pilot* cur_pilot, const Pilot* p)
  *    @param p the pilot whose dps we will compare
  *    @return A number from 0 to 1 mapping the relative damage output
  */
-double pilot_reldps(const Pilot* cur_pilot, const Pilot* p)
+double pilot_reldps( const Pilot* cur_pilot, const Pilot* p )
 {
    int i;
    int DPSaccum_target = 0, DPSaccum_pilot = 0;
@@ -2447,7 +2448,7 @@ double pilot_reldps(const Pilot* cur_pilot, const Pilot* p)
  *    @param p the pilot whose shields/armor we will compare
  *    @return A number from 0 to 1 mapping the relative HPs
  */
-double pilot_relhp(const Pilot* cur_pilot, const Pilot* p)
+double pilot_relhp( const Pilot* cur_pilot, const Pilot* p )
 {
    return (1 - 1 / (1 + ((double)(cur_pilot -> armour_max + cur_pilot -> shield_max) /
          (double)(p -> armour_max + p -> shield_max))));
