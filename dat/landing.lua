@@ -34,7 +34,7 @@ include "scripts/numstring.lua"
 function land( pnt )
    local fct = pnt:faction()
    local standing = fct:playerStanding()
-   local can_land = standing > 0
+   local can_land = standing >= 0
 
    -- Get land message
    local land_msg
