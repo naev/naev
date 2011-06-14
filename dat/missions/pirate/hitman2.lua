@@ -116,7 +116,7 @@ function landed()
    if planet.cur() == misn_base then
       tk.msg(title[3], text[3])
       player.pay(100000) -- 100k
-      faction.modPlayerSIngle("Pirate",5)
+      faction.modPlayerSingle("Pirate",5)
       misn.finish(true)
    end
 end
