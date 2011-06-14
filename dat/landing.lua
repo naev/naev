@@ -32,71 +32,71 @@ include "scripts/numstring.lua"
 
 -- Default function. Any asset that has no landing script explicitly defined will use this.
 function land( pnt )
-    return land_civilian(pnt, 0, -30)
+   return land_civilian(pnt, 0, -30)
 end
 
 -- Low-class landing function. Low class planets let you land and bribe at much lower standings.
 function land_lowclass( pnt )
-    return land_civilian(pnt, -20, -80)
+   return land_civilian(pnt, -20, -80)
 end
 
 -- High class landing function. High class planets can't be bribed.
 function land_hiclass( pnt )
-    return land_civilian(pnt, 0, 0)
+   return land_civilian(pnt, 0, 0)
 end
 
 -- Empire military assets.
 function emp_mil_restricted( pnt )
    return land_military(pnt, 30,
-                        "Permission to land granted.",
-                        "You are not authorized to land here.",
-                        "Landing request denied.",
-                        "\"Don't attempt to bribe an Empire official, pilot.\"")
+         "Permission to land granted.",
+         "You are not authorized to land here.",
+         "Landing request denied.",
+         "\"Don't attempt to bribe an Empire official, pilot.\"")
 end
 
 -- Empire Polaris Prime.
 function emp_mil_polprime( pnt )
    return land_military(pnt, 75,
-                        "The Emperor permits you to land.",
-                        "You may not approach the Emperor.",
-                        "Landing request denied.",
-                        "\"Don't attempt to bribe an Empire official, pilot.\"")
+         "The Emperor permits you to land.",
+         "You may not approach the Emperor.",
+         "Landing request denied.",
+         "\"Don't attempt to bribe an Empire official, pilot.\"")
 end
 
 -- Sirius military assets.
 function srs_mil_restricted( pnt )
    return land_military(pnt, 30,
-                        "Permission to land granted.",
-                        "Only the faithful may land here. Request denied.",
-                        "Landing request denied.",
-                        "\"The faithful will never be swayed by money.\"")
+         "Permission to land granted.",
+         "Only the faithful may land here. Request denied.",
+         "Landing request denied.",
+         "\"The faithful will never be swayed by money.\"")
 end
 
 -- Sirius Mutris.
 function srs_mil_mutris( pnt )
    return land_military(pnt, 75,
-                        "Welcome to Mutris, home of Sirichana.",
-                        "You may not approach the home of Sirichana yet.",
-                        "Landing request denied.",
-                        "\"The faithful will never be swayed by money.\"")
+         "Welcome to Mutris, home of Sirichana.",
+         "You may not approach the home of Sirichana yet.",
+         "Landing request denied.",
+         "\"The faithful will never be swayed by money.\"")
 end
 
 -- Dvaered military assets.
 function dv_mil_restricted( pnt )
    return land_military(pnt, 40,
-                        "Permission to land granted.",
-                        "Your rank is too low, citizen. Access denied.",
-                        "Landing request denied.",
-                        "\"Money won't buy you access to our restricted facilities, citizen.\"")
+         "Permission to land granted.",
+         "Your rank is too low, citizen. Access denied.",
+         "Landing request denied.",
+         "\"Money won't buy you access to our restricted facilities, citizen.\"")
 end
 
 -- Dvaered High Command.
 function dv_mil_command( pnt )
    return land_military(pnt, 80,
-                        "Permission to land granted, sir.",
-                        "Only high ranking personnel allowed. Landing request denied.",
-                        "Landing request denied.",
-                        "\"Money won't buy you access to our restricted facilities, citizen.\"")
+         "Permission to land granted, sir.",
+         "Only high ranking personnel allowed. Landing request denied.",
+         "Landing request denied.",
+         "\"Money won't buy you access to our restricted facilities, citizen.\"")
 end
 
 -- Pirate clanworld.
@@ -131,33 +131,33 @@ end
 -- Returns the factor the bribe cost is multiplied by when the player tries to bribe.
 -- NOTE: This should be replaced by something better in time.
 function getshipmod()
-    local light = {"Yacht", "Luxury Yacht", "Drone", "Fighter", "Bomber", "Scout"}
-    local medium = {"Destroyer", "Corvette", "Courier", "Armoured Transport", "Freighter"}
-    local heavy = {"Cruiser", "Carrier"}
-    local ps = player.pilot():ship()
-    for _, j in ipairs(light) do
-        if ps == j then return 1 end
-    end
-    for _, j in ipairs(medium) do
-        if ps == j then return 2 end
-    end
-    for _, j in ipairs(heavy) do
-        if ps == j then return 4 end
-    end
-    return 1
+   local light = {"Yacht", "Luxury Yacht", "Drone", "Fighter", "Bomber", "Scout"}
+   local medium = {"Destroyer", "Corvette", "Courier", "Armoured Transport", "Freighter"}
+   local heavy = {"Cruiser", "Carrier"}
+   local ps = player.pilot():ship()
+   for _, j in ipairs(light) do
+      if ps == j then return 1 end
+   end
+   for _, j in ipairs(medium) do
+      if ps == j then return 2 end
+   end
+   for _, j in ipairs(heavy) do
+      if ps == j then return 4 end
+   end
+   return 1
 end
 
 -- Helper function for calculating bribe availability and cost.
 -- Expects the faction, the minimum standing to land, the minimum standing to bribe, and a going rate for bribes.
 -- Returns whether the planet can be bribed, and the cost for doing so.
 function getcost(fct, land_floor, bribe_floor, rate)
-    local standing = fct:playerStanding()
-    if standing < bribe_floor then
-        return "I'm not dealing with dangerous criminals like you!"
-    else
-        -- Assume standing is always lower than the land_floor.
-        return (land_floor - standing) * rate * getshipmod() + 5000
-    end
+   local standing = fct:playerStanding()
+   if standing < bribe_floor then
+      return "\"I'm not dealing with dangerous criminals like you!\""
+   else
+      -- Assume standing is always lower than the land_floor.
+      return (land_floor - standing) * rate * getshipmod() + 5000
+   end
 end
 
 -- Civilian planet landing logic.
@@ -204,4 +204,3 @@ function land_military( pnt, land_floor, ok_msg, notyet_msg, no_msg, nobribe )
 
    return can_land, land_msg, nobribe
 end
-
