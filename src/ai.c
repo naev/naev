@@ -1621,12 +1621,12 @@ static int aiL_getdistance( lua_State *L )
    return 1;
 }
 
-/*
+/**
  * @brief gets the distance from the pointer perpendicular to the current pilot's flight vector
  *
- *  @luaparam target
- *  @luareturn offset_distance
- *  luafunction flyby_dist(target)
+ *    @luaparam target
+ *    @luareturn offset_distance
+ * @luafunc flyby_dist( target )
  */
 static int aiL_getflybydistance( lua_State *L )
 {
@@ -3029,16 +3029,12 @@ static int aiL_getenemy_heuristic( lua_State *L )
    mass_factor = luaL_checklong(L,1);
    health_factor = luaL_checklong(L,2);
    damage_factor = luaL_checklong(L,3);
-/*   if (lua_isnumber(L,4))*/
-      range_factor = luaL_checklong(L,4);
-
+   range_factor = luaL_checklong(L,4);
 
    p = pilot_getNearestEnemy_heuristic(cur_pilot, mass_factor, health_factor, damage_factor, (double) (1/range_factor));
 
    if (p==0) /* No enemy found */
-   {
       return 0;
-   }
 
    lua_pushnumber(L,p);
    return 1;
@@ -3126,9 +3122,9 @@ static int aiL_canboard( lua_State *L )
 /**
  * @brief Lua wrapper: Gets the relative size(shipmass) between the current pilot and the specified target
  *
- * @param pilot_ID the ID of the pilot whose mass we will compare
+ *    @param pilot_ID the ID of the pilot whose mass we will compare
  *    @luareturn A number from 0 to 1 mapping the relative masses
- * luafunc relsize()
+ * @luafunc relsize( id )
  */
 static int aiL_relsize( lua_State *L )
 {
@@ -3152,9 +3148,9 @@ static int aiL_relsize( lua_State *L )
 /**
  * @brief Gets the relative damage output(total DPS) between the current pilot and the specified target
  *
- * @param pilot_ID the ID of the pilot whose DPS we will compare
+ *    @param pilot_ID the ID of the pilot whose DPS we will compare
  *    @luareturn A number from 0 to 1 mapping the relative DPS's
- * luafunc reldps()
+ * @luafunc reldps( id )
  */
 static int aiL_reldps( lua_State *L )
 {
