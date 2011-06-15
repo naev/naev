@@ -190,7 +190,7 @@ static void equipment_getDim( unsigned int wid, int *w, int *h,
 
    /* Calculate button dimensions. */
    if (bw != NULL)
-      *bw = (*w - 20 - (sw!=NULL?*sw:0) - 40 - 20 - 60) / 4;
+      *bw = (*w - 20 - (sw!=NULL?*sw:0) - 40 - 20 - 60) / 5;
    if (bh != NULL)
       *bh = BUTTON_HEIGHT;
 }
@@ -239,24 +239,18 @@ void equipment_open( unsigned int wid )
    window_addButton( wid, -20, 20,
          bw, bh, "btnCloseEquipment",
          "Takeoff", land_buttonTakeoff );
-   window_addButton( wid, -20 - (20+bw), 20,
-         bw, bh, "btnSellShip",
-         "Sell Ship", equipment_sellShip );
-   window_addButton( wid, -20 - (20+bw)*2, 20,
-         bw, bh, "btnChangeShip",
-         "Swap Ship", equipment_transChangeShip );
-   window_addButton( wid, -20 - (20+bw)*3, 20,
-         bw, bh, "btnUnequipShip",
-         "Unequip", equipment_unequipShip );
-   window_addButton( wid, -20, bh + 20*2,
+   window_addButton( wid, -20 - (15+bw), 20,
          bw, bh, "btnSetGUI",
          "Set GUI", equipment_setGui );
-
-   /* Checkboxes */
-   window_addCheckbox( wid, -20 - (20+bw), bh + 20*2,
-         bw, bh, "chkOverride", "Override GUI",
-         equipment_toggleGuiOverride, player.guiOverride );
-   equipment_toggleGuiOverride( wid, "chkOverride" );
+   window_addButton( wid, -20 - (15+bw)*2, 20,
+         bw, bh, "btnSellShip",
+         "Sell Ship", equipment_sellShip );
+   window_addButton( wid, -20 - (15+bw)*3, 20,
+         bw, bh, "btnChangeShip",
+         "Swap Ship", equipment_transChangeShip );
+   window_addButton( wid, -20 - (15+bw)*4, 20,
+         bw, bh, "btnUnequipShip",
+         "Unequip", equipment_unequipShip );
 
    /* text */
    buf = "Name:\n"
