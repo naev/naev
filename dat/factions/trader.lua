@@ -11,6 +11,6 @@ _fcap_misn_var = "_fcap_trader"
 _fthis         = faction.get("Trader")
 
 
-function faction_hit( pnt )
-    return default_hit(pnt)
+function faction_hit( current, amount, source, secondary )
+    return default_hit(current, amount, source, secondary)
 end
