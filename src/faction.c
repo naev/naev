@@ -440,8 +440,8 @@ void faction_modPlayer( int f, double mod, const char *source )
  *
  * Does not affect allies nor enemies.
  *
- *    @param f Faction whose standing to modiy.
- *    @param mod Amount to modiy standing by.
+ *    @param f Faction whose standing to modify.
+ *    @param mod Amount to modify standing by.
  *
  * @sa faction_modPlayer
  */
@@ -461,8 +461,8 @@ void faction_modPlayerSingle( int f, double mod, const char *source )
  *
  * Does not affect allies nor enemies and does not run through the Lua script.
  *
- *    @param f Faction whose standing to modiy.
- *    @param mod Amount to modiy standing by.
+ *    @param f Faction whose standing to modify.
+ *    @param mod Amount to modify standing by.
  *
  * @sa faction_modPlayer
  */
