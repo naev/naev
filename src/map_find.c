@@ -523,7 +523,7 @@ static int map_findSearchPlanets( unsigned int parent, const char *name )
 
       /* Remap colour codes bit for simplicity and contrast. */
       if (colcode == 'N' || colcode == 'F')
-         colcode = 'n';
+         colcode = 'M';
       else if (colcode == 'R')
          colcode = 'S';
 
