@@ -70,18 +70,18 @@ void shipyard_open( unsigned int wid )
    ih = h - 60;
 
    /* Calculate button dimensions. */
-   bw = (w - iw - 200) / 2;
+   bw = (w - iw - 100) / 3;
    bh = LAND_BUTTON_HEIGHT;
 
    /* buttons */
    window_addButton( wid, -20, 20,
-         bw-20, bh, "btnCloseShipyard",
+         bw, bh, "btnCloseShipyard",
          "Takeoff", land_buttonTakeoff );
-   window_addButton( wid, -20 - bw, 20,
-         bw-20, bh, "btnTradeShip",
+   window_addButton( wid, -40 - bw, 20,
+         bw, bh, "btnTradeShip",
          "Trade-In", shipyard_trade );
-   window_addButton( wid, -20 - bw*2, 20,
-         bw-20, bh, "btnBuyShip",
+   window_addButton( wid, -60 - bw*2, 20,
+         bw, bh, "btnBuyShip",
          "Buy", shipyard_buy );
 
    /* target gfx */
@@ -126,7 +126,7 @@ void shipyard_open( unsigned int wid )
          100, th, 0, "txtSDesc", &gl_smallFont, &cDConsole, buf );
    window_addText( wid, 40+iw+20+100, y,
          w-(40+iw+20+100)-20, th, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
-   y -= th + 10;
+   y -= th;
    window_addText( wid, 20+iw+40, y,
          w-(20+iw+40) - 20, 185, 0, "txtDescription",
          &gl_smallFont, NULL, NULL );

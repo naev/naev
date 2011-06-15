@@ -60,7 +60,7 @@ static void outfits_getSize( unsigned int wid, int *w, int *h,
 
    /* Calculate button dimensions. */
    if (bw != NULL)
-      *bw = (*w - (iw!=NULL?*iw:0) - 80) / 2;
+      *bw = (*w - (iw!=NULL?*iw:0) - 100) / 3;
    if (bh != NULL)
       *bh = LAND_BUTTON_HEIGHT;
 }
@@ -94,12 +94,12 @@ void outfits_open( unsigned int wid )
    window_addButton( wid, -20, 20,
          bw, bh, "btnCloseOutfits",
          "Takeoff", land_buttonTakeoff );
-   window_addButton( wid, -40-bw, 40+bh,
-         bw, bh, "btnBuyOutfit",
-         "Buy", outfits_buy );
    window_addButton( wid, -40-bw, 20,
          bw, bh, "btnSellOutfit",
          "Sell", outfits_sell );
+   window_addButton( wid, -60-bw*2, 20,
+         bw, bh, "btnBuyOutfit",
+         "Buy", outfits_buy );
 
    /* fancy 128x128 image */
    window_addRect( wid, 19 + iw + 20, -50, 128, 129, "rctImage", &cBlack, 0 );
@@ -303,7 +303,7 @@ void outfits_update( unsigned int wid, char* str )
    window_moveWidget( wid, "txtSDesc", 40+iw+20, -60-th-20 );
    window_moveWidget( wid, "txtDDesc", 40+iw+20+60, -60-th-20 );
    th += gl_printHeightRaw( &gl_smallFont, 250, buf );
-   window_moveWidget( wid, "txtDescription", 20+iw+40, -60-th-40 );
+   window_moveWidget( wid, "txtDescription", 20+iw+40, -60-th-20 );
 }
 
 
