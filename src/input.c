@@ -68,7 +68,7 @@ const char *keybind_info[][3] = {
    /* Targeting. */
    { "target_next", "Target Next", "Cycles through ship targets." },
    { "target_prev", "Target Previous", "Cycles backwards through ship targets." },
-   {"target_nearest", "Target Nearest", "Targets the nearest non-disabled ship." },
+   { "target_nearest", "Target Nearest", "Targets the nearest non-disabled ship." },
    { "target_nextHostile", "Target Next Hostile", "Cycles through hostile ship targets." },
    { "target_prevHostile", "Target Previous Hostile", "Cycles backwards through hostile ship targets." },
    { "target_hostile", "Target Nearest Hostile", "Targets the nearest hostile ship." },
@@ -99,7 +99,7 @@ const char *keybind_info[][3] = {
    /* Space navigation. */
    { "autonav", "Autonavigation On", "Initializes the autonavigation system." },
    { "target_planet", "Target Planet", "Cycles through planet targets." },
-   { "land", "Land", "Attempts to land on your targeted planet or targets the nearest landable planet. Requests for landing if you don't have permission yet." },
+   { "land", "Land", "Attempts to land on your targeted planet or targets the nearest landable planet. Requests landing permission if you aren't authorized yet." },
    { "thyperspace", "Target Jumpgate", "Cycles through jump points." },
    { "starmap", "Star Map", "Opens the star map." },
    { "jump", "Initiate Jump", "Attempts to jump via a jump point." },
@@ -193,10 +193,10 @@ void input_setDefault (void)
 {
    /* Movement. */
    input_setKeybind( "accel", KEYBIND_KEYBOARD, SDLK_UP, NMOD_ALL );
-   input_setKeybind( "afterburn", KEYBIND_KEYBOARD, SDLK_z, NMOD_ALL );
    input_setKeybind( "left", KEYBIND_KEYBOARD, SDLK_LEFT, NMOD_ALL );
    input_setKeybind( "right", KEYBIND_KEYBOARD, SDLK_RIGHT, NMOD_ALL );
    input_setKeybind( "reverse", KEYBIND_KEYBOARD, SDLK_DOWN, NMOD_ALL );
+   input_setKeybind( "afterburn", KEYBIND_KEYBOARD, SDLK_z, NMOD_ALL );
    /* Targeting. */
    input_setKeybind( "target_next", KEYBIND_KEYBOARD, SDLK_t, NMOD_NONE );
    input_setKeybind( "target_prev", KEYBIND_KEYBOARD, SDLK_t, NMOD_CTRL );
