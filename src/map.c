@@ -421,10 +421,21 @@ static void map_update( unsigned int wid )
    for (i=0; i<sys->nplanets; i++) {
       if(sys->planets[i]->real != ASSET_REAL)
          continue;
+
+      /* Colourize output. */
+      planet_updateLand(sys->planets[i]);
+      t = planet_getColourChar(sys->planets[i]);
+      if (t == 'N')
+         t = 'M';
+      else if (t == 'R')
+         t = 'S';
+
       if (!hasPlanets)
-         p += snprintf( &buf[p], PATH_MAX-p, "%s", sys->planets[i]->name );
+         p += snprintf( &buf[p], PATH_MAX-p, "\e%c%s\en",
+               t, sys->planets[i]->name );
       else
-         p += snprintf( &buf[p], PATH_MAX-p, ",\n%s", sys->planets[i]->name );
+         p += snprintf( &buf[p], PATH_MAX-p, ",\n\e%c%s\en",
+               t, sys->planets[i]->name );
       hasPlanets = 1;
    }
    if(hasPlanets == 0)
