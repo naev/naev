@@ -249,8 +249,19 @@ function create ()
    for i=2,#tgt_sys do -- Bonus for jumps
       reward = reward + 20000 + 5000 * rnd.twosigma()
    end
-   for i=1,#tgt_sys do -- Adjust for enemy presence
-      reward = reward / 10 + reward * ( tgt_sys[i]:presence( faction.get( "Pirate" )) + tgt_sys[i]:presence( faction.get( "FLF" ))) / 175
+   for i=1,#tgt_sys do -- Adjust for dvaered enemy presence
+      local enemy = faction.enemies( "Dvaered" )
+      local presence = 0
+      for _,v in ipairs(enemy) do
+         presence = presence + tgt_sys[i]:presence( v )
+      end
+      presence = presence / #tgt_sys
+      reward = reward * math.min( 1.5, presence/ 100 )
+   end
+
+   -- Must have minimum reward
+   if reward <= 10000 then
+      misn.finish(false)
    end
 
    -- Set some details.
