@@ -126,7 +126,7 @@ void map_open (void)
 {
    unsigned int wid;
    StarSystem *cur;
-   int w,h;
+   int w, h, x, y, rw;
 
    /* Not under manual control. */
    if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
@@ -185,35 +185,54 @@ void map_open (void)
     * [ Close ]
     */
 
+   x  = -70; /* Right column X offset. */
+   y  = -20;
+   rw = ABS(x) + 60; /* Right column indented width maximum. */
+
    /* System Name */
-   window_addText( wid, -20, -20, 100, 20, 1, "txtSysname",
+   window_addText( wid, -90 + 80, y, 160, 20, 1, "txtSysname",
          &gl_defFont, &cDConsole, cur->name );
+   y -= 10;
+
+   /* Faction image */
+   window_addImage( wid, -90 + 32, y - 32, 0, 0, "imgFaction", NULL, 0 );
+   y -= 64 + 10;
+
    /* Faction */
-   window_addImage( wid, -20-64, -60-64, 0, 0, "imgFaction", NULL, 0 );
-   window_addText( wid, -20, -60, 90, 20, 0, "txtSFaction",
+   window_addText( wid, x, y, 90, 20, 0, "txtSFaction",
          &gl_smallFont, &cDConsole, "Faction:" );
-   window_addText( wid, -20, -60-gl_smallFont.h-5, 80, 100, 0, "txtFaction",
+   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtFaction",
          &gl_smallFont, &cBlack, NULL );
+   y -= 2 * gl_smallFont.h + 5 + 15;
+
    /* Standing */
-   window_addText( wid, -20, -100, 90, 20, 0, "txtSStanding",
+   window_addText( wid, x, y, 90, 20, 0, "txtSStanding",
          &gl_smallFont, &cDConsole, "Standing:" );
-   window_addText( wid, -20, -100-gl_smallFont.h-5, 80, 100, 0, "txtStanding",
+   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtStanding",
          &gl_smallFont, &cBlack, NULL );
+   y -= 2 * gl_smallFont.h + 5 + 15;
+
    /* Presence. */
-   window_addText( wid, -20, -140, 90, 20, 0, "txtSPresence",
+   window_addText( wid, x, y, 90, 20, 0, "txtSPresence",
          &gl_smallFont, &cDConsole, "Presence:" );
-   window_addText( wid, -20, -140-gl_smallFont.h-5, 80, 100, 0, "txtPresence",
+   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtPresence",
          &gl_smallFont, &cBlack, NULL );
+   y -= 2 * gl_smallFont.h + 5 + 15;
+
    /* Planets */
-   window_addText( wid, -20, -180, 90, 20, 0, "txtSPlanets",
+   window_addText( wid, x, y, 90, 20, 0, "txtSPlanets",
          &gl_smallFont, &cDConsole, "Planets:" );
-   window_addText( wid, -20, -180-gl_smallFont.h-5, 80, 100, 0, "txtPlanets",
+   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 150, 0, "txtPlanets",
          &gl_smallFont, &cBlack, NULL );
+   y -= 2 * gl_smallFont.h + 5 + 15;
+
    /* Services */
-   window_addText( wid, -20, -220, 90, 20, 0, "txtSServices",
+   window_addText( wid, x, y, 90, 20, 0, "txtSServices",
          &gl_smallFont, &cDConsole, "Services:" );
-   window_addText( wid, -20, -220-gl_smallFont.h-5, 80, 100, 0, "txtServices",
+   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtServices",
          &gl_smallFont, &cBlack, NULL );
+   y -= 2 * gl_smallFont.h + 5 + 15;
+
    /* Close button */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
             "btnClose", "Close", window_close );
@@ -239,7 +258,7 @@ void map_open (void)
    /*
     * The map itself.
     */
-   map_show( wid, 20, -40, w-150, h-100, 1. ); /* Reset zoom. */
+   map_show( wid, 20, -40, w-200, h-100, 1. ); /* Reset zoom. */
 
    map_update( wid );
 
@@ -259,7 +278,7 @@ static void map_update( unsigned int wid )
 {
    int i;
    StarSystem* sys;
-   int f, y, h;
+   int f, h, x, y;
    double standing, nstanding;
    unsigned int services;
    int l;
@@ -276,7 +295,6 @@ static void map_update( unsigned int wid )
 
    /* Get selected system. */
    sys = system_getIndex( map_selected );
-   w   = 80.; /* Width of the side bar. */
 
    /* Not known and no markers. */
    if (!(sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED)) &&
@@ -288,6 +306,11 @@ static void map_update( unsigned int wid )
    /*
     * Right Text
     */
+
+   x = -70; /* Side bar X offset. */
+   w = ABS(x) + 60; /* Width of the side bar. */
+   y = -20 - 20 - 64 - gl_defFont.h; /* Initialized to position for txtSFaction. */
+
    if (!sys_isKnown(sys)) { /* System isn't known, erase all */
       /*
        * Right Text
@@ -295,26 +318,36 @@ static void map_update( unsigned int wid )
       if (sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED))
          window_modifyText( wid, "txtSysname", sys->name );
       else
-         window_modifyText( wid, "txtSysname", "Unknown" );
+         window_modifyText( wid, "txtSysname", "Unknown" );;
+
+      /* Faction */
       window_modifyImage( wid, "imgFaction", NULL, 0, 0 );
-      window_moveWidget( wid, "txtSFaction", -20, -60 );
-      window_moveWidget( wid, "txtFaction", -20, -60-gl_smallFont.h-5 );
+      window_moveWidget( wid, "txtSFaction", x, y);
+      window_moveWidget( wid, "txtFaction", x + 50, y - gl_smallFont.h - 5 );
       window_modifyText( wid, "txtFaction", "Unknown" );
+      y -= 2 * gl_smallFont.h + 5 + 15;
+
       /* Standing */
-      window_moveWidget( wid, "txtSStanding", -20, -100 );
-      window_moveWidget( wid, "txtStanding", -20, -100-gl_smallFont.h-5 );
+      window_moveWidget( wid, "txtSStanding", x, y );
+      window_moveWidget( wid, "txtStanding", x + 50, y - gl_smallFont.h - 5 );
       window_modifyText( wid, "txtStanding", "Unknown" );
+      y -= 2 * gl_smallFont.h + 5 + 15;
+
       /* Presence. */
-      window_moveWidget( wid, "txtSPresence", -20, -140 );
-      window_moveWidget( wid, "txtPresence",  -20, -140-gl_smallFont.h-5 );
+      window_moveWidget( wid, "txtSPresence", x, y );
+      window_moveWidget( wid, "txtPresence",  x + 50, y - gl_smallFont.h - 5 );
       window_modifyText( wid, "txtPresence", "Unknown" );
+      y -= 2 * gl_smallFont.h + 5 + 15;
+
       /* Planets */
-      window_moveWidget( wid, "txtSPlanets", -20, -180 );
-      window_moveWidget( wid, "txtPlanets", -20, -180-gl_smallFont.h-5 );
+      window_moveWidget( wid, "txtSPlanets", x, y );
+      window_moveWidget( wid, "txtPlanets", x + 50, y - gl_smallFont.h - 5 );
       window_modifyText( wid, "txtPlanets", "Unknown" );
+      y -= 2 * gl_smallFont.h + 5 + 15;
+
       /* Services */
-      window_moveWidget( wid, "txtSServices", -20, -220 );
-      window_moveWidget( wid, "txtServices", -20, -220-gl_smallFont.h-5 );
+      window_moveWidget( wid, "txtSServices", x, y );
+      window_moveWidget( wid, "txtServices", x + 50, y -gl_smallFont.h - 5 );
       window_modifyText( wid, "txtServices", "Unknown" );
 
       /*
@@ -346,51 +379,39 @@ static void map_update( unsigned int wid )
    }
    if (f == -1) {
       window_modifyImage( wid, "imgFaction", NULL, 0, 0 );
-      window_moveWidget( wid, "txtSFaction", -20, -60 );
-      window_moveWidget( wid, "txtFaction", -20, -60-gl_smallFont.h-5 );
-      window_modifyText( wid, "txtFaction", "NA" );
-      window_moveWidget( wid, "txtSStanding", -20, -100 );
-      window_moveWidget( wid, "txtStanding", -20, -100-gl_smallFont.h-5 );
-      window_modifyText( wid, "txtStanding", "NA" );
-      y = -100;
-
+      window_modifyText( wid, "txtFaction", "N/A" );
+      window_modifyText( wid, "txtStanding", "N/A" );
+      h = gl_smallFont.h;
    }
    else {
       if (i==sys->nplanets) /* saw them all and all the same */
          snprintf( buf, PATH_MAX, "%s", faction_longname(f) );
 
-      /* Scroll down. */
-      y = -60;
-
       /* Modify the image. */
       logo = faction_logoSmall(f);
       window_modifyImage( wid, "imgFaction", logo, 0, 0 );
-      if (logo != NULL) {
+      if (logo != NULL)
          window_moveWidget( wid, "imgFaction",
-               -(90-logo->w)/2-20, y-(64-logo->h)/2 );
-      /* Scroll down. */
-         y -= 64 + 10;
-      }
+               -90 + logo->w/2, -20 - 32 - 10 - gl_defFont.h + logo->h/2);
 
       /* Modify the text */
       window_modifyText( wid, "txtFaction", buf );
       window_modifyText( wid, "txtStanding",
             faction_getStanding( standing / nstanding ) );
 
-      /* Lower text if needed */
-      window_moveWidget( wid, "txtSFaction", -20, y );
-      window_moveWidget( wid, "txtFaction", -20, y-gl_smallFont.h-5 );
       h = gl_printHeightRaw( &gl_smallFont, w, buf );
-      window_moveWidget( wid, "txtSStanding", -20, y );
-      window_moveWidget( wid, "txtStanding", -20, y-gl_smallFont.h-5 );
-      /* Scroll down. */
-      y -= 40 + (h - gl_smallFont.h);
-      window_moveWidget( wid, "txtSStanding", -20, y );
-      window_moveWidget( wid, "txtStanding", -20, y-gl_smallFont.h-5 );
    }
 
-   /* Scroll down. */
-   y -= 40;
+   /* Faction */
+   window_moveWidget( wid, "txtSFaction", x, y);
+   window_moveWidget( wid, "txtFaction", x + 50, y - gl_smallFont.h - 5 );
+   y -= gl_smallFont.h + h + 5 + 15;
+
+   /* Standing */
+   window_moveWidget( wid, "txtSStanding", x, y );
+   window_moveWidget( wid, "txtStanding", x + 50, y - gl_smallFont.h - 5 );
+   y -= 2 * gl_smallFont.h + 5 + 15;
+
    /* Get presence. */
    hasPresence = 0;
    buf[0]      = '\0';
@@ -407,8 +428,8 @@ static void map_update( unsigned int wid )
    }
    if (hasPresence == 0)
       snprintf(buf, PATH_MAX, "N/A");
-   window_moveWidget( wid, "txtSPresence", -20, y );
-   window_moveWidget( wid, "txtPresence", -20, y-gl_smallFont.h-5 );
+   window_moveWidget( wid, "txtSPresence", x, y );
+   window_moveWidget( wid, "txtPresence", x + 50, y-gl_smallFont.h-5 );
    window_modifyText( wid, "txtPresence", buf );
    /* Scroll down. */
    h  = gl_printHeightRaw( &gl_smallFont, w, buf );
@@ -442,15 +463,15 @@ static void map_update( unsigned int wid )
       strncpy( buf, "None", PATH_MAX );
    /* Update text. */
    window_modifyText( wid, "txtPlanets", buf );
-   window_moveWidget( wid, "txtSPlanets", -20, y );
-   window_moveWidget( wid, "txtPlanets", -20, y-gl_smallFont.h-5 );
+   window_moveWidget( wid, "txtSPlanets", x, y );
+   window_moveWidget( wid, "txtPlanets", x + 50, y-gl_smallFont.h-5 );
    /* Scroll down. */
    h  = gl_printHeightRaw( &gl_smallFont, w, buf );
    y -= 40 + (h - gl_smallFont.h);
 
    /* Get the services */
-   window_moveWidget( wid, "txtSServices", -20, y );
-   window_moveWidget( wid, "txtServices", -20, y-gl_smallFont.h-5 );
+   window_moveWidget( wid, "txtSServices", x, y );
+   window_moveWidget( wid, "txtServices", x + 50, y-gl_smallFont.h-5 );
    services = 0;
    for (i=0; i<sys->nplanets; i++)
       services |= sys->planets[i]->services;
