@@ -338,7 +338,7 @@ function enter ()
 end
 
 function updateGoal ()
-   if system.cur() ~= tgt_list[ visited+1 ].sys then
+   if visited+1 <= num_patrol and system.cur() ~= tgt_list[ visited+1 ].sys then
       return
    end
    local vec = tgt_getPos( tgt_list[ visited+1 ] )
