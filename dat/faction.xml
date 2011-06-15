@@ -119,7 +119,7 @@
  <faction name="FLF">
   <logo>flf</logo>
   <longname>Frontier Liberation Front</longname>
-  <player>-10</player>
+  <player>0</player>
   <colour>orange</colour>
   <spawn>flf</spawn>
   <lua>flf</lua>
