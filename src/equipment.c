@@ -346,8 +346,8 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       c = &cDConsole;
    else
       c = &cBlack;
-   gl_printMidRaw( &gl_smallFont, w+10.,
-         x-5., y+h+10., c, txt );
+   gl_printMidRaw( &gl_smallFont, 60.,
+         x-15., y+h+10., c, txt );
 
    /* Iterate for all the slots. */
    for (i=0; i<n; i++) {
