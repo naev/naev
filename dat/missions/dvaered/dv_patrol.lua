@@ -249,6 +249,9 @@ function create ()
    for i=2,#tgt_sys do -- Bonus for jumps
       reward = reward + 20000 + 5000 * rnd.twosigma()
    end
+   for i=1,#tgt_sys do -- Adjust for enemy presence
+      reward = reward / 10 + reward * ( tgt_sys[i]:presence( faction.get( "Pirate" )) + tgt_sys[i]:presence( faction.get( "FLF" ))) / 175
+   end
 
    -- Set some details.
    misn.setTitle( string.format( title[rnd.int(1,3)], num_patrol ) )
