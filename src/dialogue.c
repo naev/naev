@@ -436,11 +436,6 @@ char* dialogue_inputRaw( const char* title, int min, int max, const char *msg )
       dialogue_open--;
    }
    input_dialogue.input_wid = 0;
-   input_dialogue.x = 0;
-   input_dialogue.y = 0;
-   input_dialogue.w = 0;
-   input_dialogue.h = 0;
-   input_dialogue.item_select_cb = NULL;
 
    /* return the result */
    return input;
@@ -644,6 +639,12 @@ int dialogue_listPanelRaw( const char* title, char **items, int nitems, int extr
 
    dialogue_open++;
    toolkit_loop( &done );
+   /* cleanup */
+   input_dialogue.x = 0;
+   input_dialogue.y = 0;
+   input_dialogue.w = 0;
+   input_dialogue.h = 0;
+   input_dialogue.item_select_cb = NULL;
 
    return dialogue_listSelected;
 }
