@@ -13,7 +13,7 @@ if lang == "es" then
    -- not translated atm
 else -- default english
    misn_desc = {}
-   misn_desc[1] = "Patrol %d points in %d systems for hostiles: "
+   misn_desc[1] = "Patrol %d points in %d system%s for hostiles: "
    misn_desc[2] = "Return to %s in the %s system for payment."
    misn_reward = "%s credits"
    title = {}
@@ -228,11 +228,18 @@ function create ()
    mission_marker = misn.markerAdd( tgt_sys[1], "computer" )
 
    -- Create the description.
-   desc = string.format( misn_desc[1], num_patrol, #tgt_sys ) .. tgt_sys[1]:name()
+   if #tgt_sys > 1 then
+      plural = "s"
+   else
+      plural = ""
+   end
+   desc = string.format( misn_desc[1], num_patrol, #tgt_sys, plural ) .. tgt_sys[1]:name()
    for i=2, #tgt_sys-1 do
       desc = desc .. ", " .. tgt_sys[i]:name()
    end
-   desc = desc .. " and " .. tgt_sys[#tgt_sys]:name() .. "."
+   if #tgt_sys > 1 then
+      desc = desc .. " and " .. tgt_sys[#tgt_sys]:name()
+   end
    for i=1,#tgt_list do
       desc = desc .. "\n   " .. tgt_str( tgt_list[i] )
    end

@@ -59,7 +59,7 @@ worktxt = [[    You walk into the bar and know instantly that you are finally he
 
 finishedtitle = "Delivery"
 finishedtxt = [[    "Ahh! I was just thinking how much I wanted one of those drinks! I'm so glad that you managed to find it. You sure seemed to take your time though." You give him his drink and tell him that it wasn't easy, and how many systems you had to go through. "Hmm. That is quite a few systems. No reason for you to be this late though." He takes a sip from his drink. "Ahh! That is good though. I suppose you'll be wanting to get paid for your troubles. You did go through a lot of trouble. Then again, you did take quite a long time. I suppose %d credits should be appropriate."
-    Considering the amount of effort that you went through, you feel almost cheated. You don't feel like argueing with the snobby aristocrat though, so you just leave him to his drink without another word. It's probably the most that anyone's ever paid a drink like that anyway.]]
+    Considering the amount of effort that you went through, you feel almost cheated. You don't feel like arguing with the snobby aristocrat though, so you just leave him to his drink without another word. It's probably the most that anyone's ever paid for a drink like that anyway.]]
 
 gender = {}
 gender[1] = "man"
