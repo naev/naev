@@ -99,7 +99,7 @@ const char *keybind_info[][3] = {
    /* Space navigation. */
    { "autonav", "Autonavigation On", "Initializes the autonavigation system." },
    { "target_planet", "Target Planet", "Cycles through planet targets." },
-   { "land", "Land", "Attempts to land on your targeted planet or targets the nearest landable planet. Requests landing permission if you aren't authorized yet." },
+   { "land", "Land", "Attempts to land on the targeted planet or targets the nearest landable planet. Requests permission if necessary." },
    { "thyperspace", "Target Jumpgate", "Cycles through jump points." },
    { "starmap", "Star Map", "Opens the star map." },
    { "jump", "Initiate Jump", "Attempts to jump via a jump point." },
