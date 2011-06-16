@@ -406,7 +406,8 @@ static int factionL_modplayerraw( lua_State *L )
  */
 static int factionL_playerstanding( lua_State *L )
 {
-   int f, n;
+   int f;
+   double n;
 
    f = luaL_validfaction(L,1);
    n = faction_getPlayer(f);
