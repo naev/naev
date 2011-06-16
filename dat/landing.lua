@@ -196,7 +196,7 @@ function land_military( pnt, land_floor, ok_msg, notyet_msg, no_msg, nobribe )
    local land_msg
    if can_land then
       land_msg = ok_msg
-   elseif standing >= landfloor then
+   elseif standing >= land_floor then
       land_msg = notyet_msg
    else
       land_msg = no_msg
