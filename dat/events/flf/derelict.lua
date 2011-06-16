@@ -18,6 +18,9 @@ else -- default english
 end 
 
 function create()
+    if not evt.claim(system.cur()) then
+       evt.finish(false)
+    end
 
     -- Create the derelicts One Dvaered, one FLF.
     pilot.toggleSpawn(false)
