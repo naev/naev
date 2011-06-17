@@ -40,6 +40,18 @@ end
 
 
 --[[
+   @brief Duplicates a table to avoid clobbering.
+--]]
+function clone(t)
+   local new = {}
+   for k, v in pairs(t) do
+      new[k] = v
+   end
+   return new
+end
+
+
+--[[
    @brief Handles a faction hit for a faction.
 
    Possible sources:
@@ -62,14 +74,14 @@ function default_hit( current, amount, source, secondary )
    local cap
    local mod = 1
    if source == "distress" then
-      delta = _fdelta_distress
+      delta = clone(_fdelta_distress)
       -- Ignore positive distresses
       if amount > 0 then
          return f
       end
    elseif source == "kill" then
       cap   = _fcap_kill
-      delta = _fdelta_kill
+      delta = clone(_fdelta_kill)
    else
       if _fcap_misn_var == nil then
          cap   = _fcap_misn
@@ -115,6 +127,3 @@ function default_hit( current, amount, source, secondary )
    end
    return f
 end
-
-
-
