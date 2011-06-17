@@ -467,7 +467,7 @@ function land ()
       end      
 
       -- modify the faction standing
-      faction.modPlayerSingle("Dvaered", rnd.rnd(1, num_systems/2) )
+      faction.modPlayerSingle("Dvaered", rnd.rnd(1, num_patrol/2) )
       faction.modPlayerSingle("FLF", -3)
 
       misn.finish(true)
