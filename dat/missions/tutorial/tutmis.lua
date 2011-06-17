@@ -19,7 +19,7 @@ else -- default english
     "Normally, this is where you get your reward, but seeing how this is the tutorial, you wouldn't have much use for it. But in your future travels, you will be able to make some serious money this way, or possibly even get ships or equipment as a reward.
     "Well, that's all there is to it. Just take off again to complete the tutorial, okay? Good job, and good luck out there!"
     With that, the man walks back into the spaceport complex, leaving you with the satisfaction that you've successfully completed a mission.]]
-    
+
     misn_desc = "You've been asked to fly to the abandoned station in the Cherokee system and come to a stop close to it."
     osd_title = "Tutorial mission"
     osd_msg = { "Fly to the Cherokee system",
