@@ -267,11 +267,13 @@ int comm_openPlanet( Planet *planet )
 static unsigned int comm_open( glTexture *gfx, int faction,
       int override, int bribed, char *name )
 {
-   int x,y, w;
+   int namex, standx, logox, y;
+   int namew, standw, logow, width;
    glTexture *logo;
    char *stand;
    unsigned int wid;
    glColour *c;
+   glFont *font;
    int gw, gh;
 
    /* Clean up. */
@@ -302,13 +304,33 @@ static unsigned int comm_open( glTexture *gfx, int faction,
       stand = faction_getStandingBroad(faction_getPlayer(faction));
       c     = faction_getColour( faction );
    }
-   w = MAX(gl_printWidth( NULL, name ), gl_printWidth( NULL, stand ));
-   y = gl_defFont.h*2 + 15;
-   if (logo != NULL) {
-      w += logo->w;
-      y  = MAX( y, logo->h );
+
+   namew  = gl_printWidthRaw( NULL, name );
+   standw = gl_printWidthRaw( NULL, stand );
+   width  = MAX(namew, standw);
+
+   logow = logo == NULL ? 0 : logo->w;
+
+   if (width + logow > GRAPHIC_WIDTH) {
+      font = &gl_smallFont;
+      namew  = MIN(gl_printWidthRaw( font, name ), GRAPHIC_WIDTH - logow);
+      standw = MIN(gl_printWidthRaw( font, stand ), GRAPHIC_WIDTH - logow);
+      width  = MAX(namew, standw);
    }
-   x = (GRAPHIC_WIDTH - w) / 2;
+   else
+      font = &gl_defFont;
+
+   namex  = GRAPHIC_WIDTH/2 -  namew/2 + logow/2;
+   standx = GRAPHIC_WIDTH/2 - standw/2 + logow/2;
+
+   if (logo != NULL) {
+      y  = MAX( font->h*2 + 15, logo->h );
+      logox = GRAPHIC_WIDTH/2 - logow/2 - width/2 - 2;
+   }
+   else {
+      logox = 0;
+      y = font->h*2 + 15;
+   }
 
    /* Create the window. */
    wid = window_create( COMM_WDWNAME, -1, -1,
@@ -327,20 +349,18 @@ static unsigned int comm_open( glTexture *gfx, int faction,
 
    /* Faction logo. */
    if (logo != NULL) {
-      window_addImage( wid, x, -30 - GRAPHIC_HEIGHT - 5,
+      window_addImage( wid, 19 + logox, -30 - GRAPHIC_HEIGHT - 4,
             0, 0, "imgFaction", logo, 0 );
-      x += logo->w + 10;
       y -= (logo->h - (gl_defFont.h*2 + 15)) / 2;
    }
 
    /* Name. */
-   window_addText( wid, x, -30 - GRAPHIC_HEIGHT - y + gl_defFont.h*2 + 10,
-         GRAPHIC_WIDTH - x, 20, 0, "txtName",
-         NULL, &cDConsole, name );
+   window_addText( wid, 19 + namex, -30 - GRAPHIC_HEIGHT - y + font->h*2 + 10,
+         GRAPHIC_WIDTH - logow, 20, 0, "txtName", font, &cDConsole, name );
 
    /* Standing. */
-   window_addText( wid, x, -30 - GRAPHIC_HEIGHT - y + gl_defFont.h + 5,
-         GRAPHIC_WIDTH - x, 20, 0, "txtStanding", NULL, c, stand );
+   window_addText( wid, 19 + standx, -30 - GRAPHIC_HEIGHT - y + font->h + 5,
+         GRAPHIC_WIDTH - logow, 20, 0, "txtStanding", font, c, stand );
 
    /* Buttons. */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,

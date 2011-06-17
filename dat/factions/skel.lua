@@ -40,6 +40,18 @@ end
 
 
 --[[
+   @brief Duplicates a table to avoid clobbering.
+--]]
+function clone(t)
+   local new = {}
+   for k, v in pairs(t) do
+      new[k] = v
+   end
+   return new
+end
+
+
+--[[
    @brief Handles a faction hit for a faction.
 
    Possible sources:
@@ -62,14 +74,14 @@ function default_hit( current, amount, source, secondary )
    local cap
    local mod = 1
    if source == "distress" then
-      delta = _fdelta_distress
+      delta = clone(_fdelta_distress)
       -- Ignore positive distresses
       if amount > 0 then
          return f
       end
    elseif source == "kill" then
       cap   = _fcap_kill
-      delta = _fdelta_kill
+      delta = clone(_fdelta_kill)
    else
       if _fcap_misn_var == nil then
          cap   = _fcap_misn
@@ -93,6 +105,7 @@ function default_hit( current, amount, source, secondary )
       -- Must be under cap
       if f < cap then
          if source == "kill" then
+            local has_planet
             -- Positive kill, which means an enemy of this faction got killed.
             -- We need to check if this happened in the faction's territory, otherwise it doesn't count.
             -- NOTE: virtual assets are NOT counted when determining territory!
@@ -100,8 +113,18 @@ function default_hit( current, amount, source, secondary )
                 if planet:faction() == _fthis then
                    -- Planet belonging to this faction found. Modify reputation.
                    f = math.min( cap, f + math.min(delta[2], amount * clerp( f, 0, 1, cap, 0.2 )) )
+                   has_planet = true
                    break
                 end
+            end
+            if not has_planet and pilot.get( { _fthis } ) then
+               for k, pilot in ipairs(pilot.get( { _fthis } )) do
+                  if player.pilot():pos():dist( pilot:pos() ) < 7500 then
+                     -- Halve impact relative to a normal secondary hit.
+                     f = math.min( cap, f + math.min(delta[2], amount * 0.5 * clerp( f, 0, 1, cap, 0.2 )) )
+                     break
+                  end
+               end
             end
          else
             -- Script induced change. No diminishing returns on these.
@@ -115,6 +138,3 @@ function default_hit( current, amount, source, secondary )
    end
    return f
 end
-
-
-
