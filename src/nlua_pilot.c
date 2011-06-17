@@ -780,19 +780,27 @@ static int pilotL_getPilots( lua_State *L )
    d = lua_toboolean(L,2);
 
    /* Check for belonging to faction. */
-   if (lua_istable(L,1)) {
-      /* Get table length and preallocate. */
-      nfactions = (int) lua_objlen(L,1);
-      factions = malloc( sizeof(int) * nfactions );
-      /* Load up the table. */
-      lua_pushnil(L);
-      i = 0;
-      while (lua_next(L, -2) != 0) {
-         if (lua_isfaction(L,-1)) {
-            f = lua_tofaction(L, -1);
-            factions[i++] = f->f;
+   if (lua_istable(L,1) || lua_isfaction(L,1)) {
+      if (lua_isfaction(L,1)) {
+         nfactions = 1;
+         factions = malloc( sizeof(int) * nfactions );
+         f = lua_tofaction(L,1);
+         factions[0] = f->f;
+      }
+      else {
+         /* Get table length and preallocate. */
+         nfactions = (int) lua_objlen(L,1);
+         factions = malloc( sizeof(int) * nfactions );
+         /* Load up the table. */
+         lua_pushnil(L);
+         i = 0;
+         while (lua_next(L, -2) != 0) {
+            if (lua_isfaction(L,-1)) {
+               f = lua_tofaction(L, -1);
+               factions[i++] = f->f;
+            }
+            lua_pop(L,1);
          }
-         lua_pop(L,1);
       }
 
       /* Now put all the matching pilots in a table. */
