@@ -12,6 +12,36 @@ except ImportError:
     print("Failed to import lxml's ElementTree")
     exit()
 
+__version__ = "1.0"
+
+def getShipStatsLabels(label):
+    """
+    Custom filter for the template enigne.
+    usage: {{ ship.stats|getStatsLabel }}
+    """
+    labels = {'jump_delay': "Jump Time",
+            'jump_range': "Jump Range",
+            'cargo_inertia': "Cargo Inertia",
+            'jam_range': "Jam Range",
+            'ew_detect': "Detection",
+            'ew_hide': "Cloaking",
+            'heat_dissipation': "Heat Dissipation",
+            'launch_rate': "Launch Rate",
+            'launch_range': "Launch Range",
+            'jam_counter': "Jam Countermeasures",
+            'ammo_capacity': "Ammo Capacity",
+            'heat_forward': "Heat (Cannon)",
+            'damage_forward': "Damage (Cannon)",
+            'firerate_forward': "Fire Rate (Cannon)",
+            'energy_forward': "Energy Usage (Cannon)",
+            'heat_turret': "Heat (Turret)",
+            'damage_turret': "Damage (Turret)",
+            'firerate_turret': "Fire Rate (Turret)",
+            'energy_turret': "Energy Usage (Turret)",
+            'nebula_dmg_shield': "Nebula Damage (Shield)",
+            'nebula_dmg_armour': "Nebula Damage (Armour)"}
+    return labels[label] if labels.has_key(label) else ""
+
 class harvester:
     __xmlData=None
     __tagsBlacklist = ['sound', 'GUI']
@@ -96,7 +126,7 @@ if __name__ == "__main__":
     from optparse import OptionParser
 
     usage="Usage: %prog OUTPUTPATH"
-    parser = OptionParser(usage=usage version="%prog "+__version__,
+    parser = OptionParser(usage=usage, version="%prog "+__version__,
                           description="Nice looking generator for naev ships")
 #    parser.add_option("-o", "--output-path", dest="output", metavar="PATH",
 #                      help="Path in whitch files goes.")
@@ -108,13 +138,14 @@ if __name__ == "__main__":
     (cfg, arguments) = parser.parse_args()
 
     if len(arguments) != 1:
-        parser.error("A wise would know where to store the generated files.")
+        parser.error("A wise man would know where to store the generated files.")
     storagePath = os.path.abspath(os.path.normpath(arguments[0]))
     tplPath = os.path.abspath(os.path.normpath('./templates'))
-    naevPath = os.path.abspath(os.path.normpath("../dat/"))
+    naevPath = os.path.abspath(os.path.normpath("../../dat/"))
 
-    myLoader = FileSystemLoader(cfg.templates if cfg.templates else: tplPath)
+    myLoader = FileSystemLoader(cfg.templates if cfg.templates else tplPath)
     env = Environment(loader=myLoader)
+    env.filters['getStatsLabel'] = getShipStatsLabels
     myTemplate = env.get_template('index.html')
     yaarh = harvester(naevPath)
     myTemplate.stream(shipList=yaarh.get_by('class')).dump(storagePath+'/index.html')
