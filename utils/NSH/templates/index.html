@@ -1,0 +1,66 @@
+{% import '_macro.html' as macros %}
+<html>
+    <head>
+        <title>Carry on my wayward, son</title>
+    </head>
+    <body>
+        {% for classes in shipList|dictsort %}
+        {%- for class, ships in classes|batch(2) -%}
+        <h2>{{ class }}</h2>
+        {%- for ship in ships -%}
+        {% if loop.index0 is even %}
+        {% if not loop.fist %}
+        </td></tr></table>
+        {% endif %}
+        <table border="1"><tr><td>
+        {% else %}
+        </td><td>
+        {% endif %}
+        <table>
+            <tr><td colspan="4"><a href="{{ship.name}}.html">{{ ship.name }}</a></td></tr>
+            <tr>
+                <td rowspan="4">{{macros.shipImage(ship.GFX, ship.name)}}</td>
+                <td>Mass: {{ship.characteristics.mass}}</td>
+                <td>Shield: {{ship.health.shield}}</td>
+                <td rowspan="4">
+                    <strong>Ship Slots</strong>
+                    <ul>
+                        {%- for slot in ship.slots|dictsort -%}
+                        <li>{{ slot[0] }} ({{slot[1]|count}}) {{ slot[1] }}</li> 
+                        {%- endfor -%}
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td>Thrust: {{ship.movement.thrust}}</td>
+                <td>Armour: {{ship.health.armour}}</td>
+            </tr>
+            <tr>
+                <td>Speed: {{ship.movement.speed}}</td>
+                <td>Energy: {{ship.health.energy}}</td>
+            </tr>
+            <tr>
+                <td>Turn: {{ship.movement.turn}}</td>
+                <td></td>
+            </tr>
+            {%- if ship.stats -%}
+            <tr>
+                <td colspan="4">
+                    <strong>Stats</strong>
+                    <ul>
+                    {%- for stat in ship.stats|dictsort -%}
+                        <li><abbr title="{{stat[0]|getStatsLabelsLabel}}">{{stat[0]|getStatsLabel}}</abbr>: {{stat[1]}}</li>
+                    {%- endfor -%}
+                    </ul>
+                </td>
+            </tr>
+            {%- endif -%}
+        </table>
+        {% if loop.last %}
+        </td></tr></table>
+        {%- endif -%}
+        {%- endfor -%}
+        {%- endfor -%}
+        {% endfor %}
+    </body>
+</html>
