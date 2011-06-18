@@ -139,11 +139,13 @@ class harvester:
     def store_by(self, item, shipDetails, shipData):
         self.shipSortBy[item][shipDetails].append(shipData)
 
-    def get_by(self, item):
+    def get_by(self, item, name=None):
+        if item == 'name':
+            return self.ships[name]
         return self.shipSortBy[item]
 
-
-
+    def iter(self):
+        return self.ships.iteritems()
 
 
 
@@ -176,3 +178,9 @@ if __name__ == "__main__":
     myTemplate = env.get_template('index.html')
     yaarh = harvester(naevPath)
     myTemplate.stream(shipList=yaarh.get_by('class')).dump(storagePath+'/index.html')
+    del(myTemplate)
+
+    for (shipName, shipData) in yaarh.iter():
+        myTemplate = env.get_template('ship.html')
+        myPath = os.path.abspath(os.path.normpath("%s/%s.html" % (storagePath,shipName)))
+        myTemplate.stream(shipName=shipName, shipData=shipData).dump(myPath)

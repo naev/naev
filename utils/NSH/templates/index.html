@@ -1,3 +1,4 @@
+{% import '_macro.html' as macros %}
 <html>
     <head>
         <title>Carry on my wayward, son</title>
@@ -16,18 +17,16 @@
         </td><td>
         {% endif %}
         <table>
-            <tr><td colspan="4">{{ ship.name }}</td></tr>
+            <tr><td colspan="4"><a href="{{ship.name}}.html">{{ ship.name }}</a></td></tr>
             <tr>
-                <td rowspan="4"><img src="media/{{ship.GFX}}_comm.png" alt="" /></td>
+                <td rowspan="4">{{macros.shipImage(ship.GFX, ship.name)}}</td>
                 <td>Mass: {{ship.characteristics.mass}}</td>
                 <td>Shield: {{ship.health.shield}}</td>
                 <td rowspan="4">
                     <strong>Ship Slots</strong>
-                    <ul>{%- set counting = 0 -%}
+                    <ul>
                         {%- for slot in ship.slots|dictsort -%}
-                        {%- set counting = counting+1 -%}
-                        <li>{{ slot[0] }} {{ slot[1] }} {{slot[1]|count}}
-                        </li>
+                        <li>{{ slot[0] }} ({{slot[1]|count}}) {{ slot[1] }}</li> 
                         {%- endfor -%}
                     </ul>
                 </td>
