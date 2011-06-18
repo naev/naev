@@ -50,7 +50,7 @@
                     <strong>Stats</strong>
                     <ul>
                     {%- for stat in ship.stats|dictsort -%}
-                        <li>{{stat[0]|getStatsLabel}}: {{stat[1]}}</li>
+                        <li><abbr title="{{stat[0]|getStatsLabelsLabel}}">{{stat[0]|getStatsLabel}}</abbr>: {{stat[1]}}</li>
                     {%- endfor -%}
                     </ul>
                 </td>
