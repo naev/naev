@@ -18,7 +18,7 @@ else -- default english
     text[1] = [[    Your viewscreen flashes to life. You're greeted by a nondescript pilot who doesn't seem to be affiliated with anyone you know.
     "Hello there! I represent a man by the name of Baron Sauterfeldt. You may have heard of him in your travels? No? Well, I suppose you can't have it all. My employer is a moderately influential man, you see, and... But no, I'll not bore you with the details. The bottom line is, Lord Sauterfeldt is looking for hired help, and you seem like the sort he needs, judging by your ship."
     You inquire what it is exactly this Mr. Sauterfeldt needs from you.
-    "Oh, nothing too terribly invasive, I assure you. His Lordship currenly needs a courier, nothing more. Erm, well, a courier who can't be traced back to him, if you understand what I mean. So what do you think? Sounds like a suitable job for you? The pay is good, I can assure you that!"
+    "Oh, nothing too terribly invasive, I assure you. His Lordship currently needs a courier, nothing more. Erm, well, a courier who can't be traced back to him, if you understand what I mean. So what do you think? Sounds like a suitable job for you? The pay is good, I can assure you that!"
     You pause for a moment before responding to this sudden offer. It's not everyday that people come to bring you work instead of making you look for it, but then again this job sounds like it could get you in trouble with the authorities. What will you do?]]
     
     title[2] = "A risky retrieval"
