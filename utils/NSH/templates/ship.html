@@ -67,13 +67,13 @@
                         {%- for slottype in shipData.slots|dictsort|reverse -%}
                         <li>{{ slottype[0]|title }} ({{slottype[1]|count}})</li>
                         {%- for slot in slottype[1] -%}
-                        <li class="{{slot}}" />
+                        <li class="{{slot|title}}" />
                         {%- endfor -%}
                         {%- endfor -%}
                     </ul>
                 </div>
         {%- if shipData.license -%}
-        <div class="license"><strong>Licenses</strong>
+        <div class="license"><strong>License:</strong>
         {{ shipData.license }}
         </div>
         {%- endif -%}
@@ -89,8 +89,8 @@
         </ul>
         </div>
         {%- endif -%}
-        <div class="desc"><strong>Description</strong></br>
-        {{ shipData.description }}</div>
+        <div class="desc"><strong>Description</strong>
+        <p>{{ shipData.description }}</p></div>
         </div>
         </div>
         </div><a href="./index.html">Back</a></div> <!-- Row and class. -->

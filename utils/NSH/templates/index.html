@@ -51,7 +51,7 @@
                 {%- for slottype in ship.slots|dictsort|reverse -%}
                 <li>{{ slottype[0]|title }} ({{slottype[1]|count}})</li>
                 {%- for slot in slottype[1] -%}
-                <li class="{{slot}}" />
+                <li class="{{slot|title}}" />
                 {%- endfor -%}
                 {%- endfor -%}
             </ul>
