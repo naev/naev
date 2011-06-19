@@ -61,23 +61,23 @@
                 <li>{{ shipData.health.energy_regen }} MW</li>
             </ul>
         </div>
-                <div class="slots">
-                    <strong>Slots</strong>
-                    <ul>
-                        {%- for slottype in shipData.slots|dictsort|reverse -%}
-                        <li>{{ slottype[0]|title }} ({{slottype[1]|count}})</li>
-                        {%- for slot in slottype[1] -%}
-                        <li class="{{slot|title}}" />
-                        {%- endfor -%}
-                        {%- endfor -%}
-                    </ul>
-                </div>
+        <div class="slots">
+            <strong>Slots</strong>
+            <ul>
+                {%- for slottype in shipData.slots|dictsort|reverse -%}
+                <li>{{ slottype[0]|title }} ({{slottype[1]|count}})</li>
+                {%- for slot in slottype[1] -%}
+                <li class="{{slot|title}}" />
+                {%- endfor -%}
+                {%- endfor -%}
+            </ul>
+        </div><!-- /Slots -->
         {%- if shipData.license -%}
         <div class="license"><strong>License:</strong>
         {{ shipData.license }}
         </div>
         {%- endif -%}
-        </div>
+        </div><!-- /Top -->
         <div class="bottom">
         {%- if shipData.stats -%}
         <div class="stats">
@@ -87,13 +87,13 @@
             <li><abbr title="{{stat[0]|getStatsLabelsLabel}}">{{stat[0]|getStatsLabel}}</abbr>: {{stat[1]}}%</li>
         {%- endfor -%}
         </ul>
-        </div>
+        </div><!-- /Stats -->
         {%- endif -%}
         <div class="desc"><strong>Description</strong>
         <p>{{ shipData.description }}</p></div>
         </div>
-        </div>
-        </div><a href="./index.html">Back</a></div> <!-- Row and class. -->
-        </div> <!-- Closes container. -->
+        </div><!-- /Cell -->
+        </div><a href="./index.html">Back to Index</a></div><!-- /Row and class -->
+        </div><!-- /Container -->
     </body>
 </html>
