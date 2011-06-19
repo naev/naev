@@ -64,22 +64,22 @@ typedef struct ShipStats_ {
    double heat_dissipation; /**< Global ship dissipation. */
 
    /* Bomber type. */
-   double launch_rate; /**< Fire rate of launchers. */ /* TODO */
-   double launch_range; /**< Range of launchers. */ /* TODO */
-   double jam_counter; /**< Ability to avoid jamming. */ /* TODO */
-   double ammo_capacity; /**< Capacity of launchers. */ /* TODO */
+   double launch_rate;     /**< Fire rate of launchers. */ /* TODO */
+   double launch_range;    /**< Range of launchers. */ /* TODO */
+   double jam_counter;     /**< Ability to avoid jamming. */ /* TODO */
+   double ammo_capacity;   /**< Capacity of launchers. */ /* TODO */
 
    /* Fighter/Corvette type. */
-   double heat_forward; /**< Heat of forward mounts. */
-   double damage_forward; /**< Damage of forward mounts. */
+   double heat_forward;    /**< Heat of forward mounts. */
+   double damage_forward;  /**< Damage of forward mounts. */
    double firerate_forward; /**< Rate of fire of forward mounts. */
-   double energy_forward; /**< Consumption rate of forward mounts. */
+   double energy_forward;  /**< Consumption rate of forward mounts. */
 
    /* Destroyer/Cruiser type. */
-   double heat_turret; /**< Heat of turrets. */
-   double damage_turret; /**< Damage of turrets. */
+   double heat_turret;     /**< Heat of turrets. */
+   double damage_turret;   /**< Damage of turrets. */
    double firerate_turret; /**< Rate of fire of turrets. */
-   double energy_turret; /**< Consumption rate of turrets. */
+   double energy_turret;   /**< Consumption rate of turrets. */
 
    /* Misc. */
    double nebula_dmg_shield; /**< Shield nebula resistance. */
