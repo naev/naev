@@ -22,7 +22,7 @@ else -- default english
     
     title[1] = "House Dvaered needs YOU"
     text[1] = [[    You join the Dvaered official at his table. He greets you in a cordial fashion, at least by Dvaered standards. You explain to him that you wish to know more about the anti-FLF operation that House Dvaered is supposedly working on.
-    "Ah! It's good to see such righteous enthusiasm amoung our citizenry. Indeed, our forces have been preparing to deal a significant blow to the FLF terrorists. I can't disclose the details, of course - this is a military operation. However, if you have a combat-capable ship and enough sense of duty to assist us, there is an opportunity to serve alongside the real Dvaered warriors. How about it? Can we count on your support?"]]
+    "Ah! It's good to see such righteous enthusiasm among our citizenry. Indeed, our forces have been preparing to deal a significant blow to the FLF terrorists. I can't disclose the details, of course - this is a military operation. However, if you have a combat-capable ship and enough sense of duty to assist us, there is an opportunity to serve alongside the real Dvaered warriors. How about it? Can we count on your support?"]]
     
     title[2] = "A clever ruse"
     text[2] = [[    "Splendid. You have the right mindset, citizen. If only all were like you! But that is neither here nor there. Come, I will take you to the local command bunker. The details of this operation will be explained to you there."
@@ -64,7 +64,7 @@ else -- default english
     failtitle[3] = "All the FLF are dead!"
     failtext[3] = "Unfortunately, all the FLF ships have been destroyed before you managed to board one of them. The operation ended in failure."
     
-    npc_desc = "This must be the Dvaered liaison you heard about. Allegedly, he may have a job to you that involves fighting the Frontier Liberation Front."
+    npc_desc = "This must be the Dvaered liaison you heard about. Allegedly, he may have a job for you that involves fighting the Frontier Liberation Front."
     
     misn_title = "Lure out the FLF"
     osd_desc[1] = "Fly to the %s system"

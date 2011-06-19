@@ -50,7 +50,7 @@ else -- default english
     "The FLF will send out wings of fighters and bombers to engage our strike force. At this time the number and composition of ships is unknown, but it seems prudent to assume they will outnumber us by a fair margin. Your task as auxiliary escorts is to protect the strike force's flanks and intercept any FLF ships attempting to target the Obstinate. Be advised that the Obstinate will have limited anti-fighter armaments available, as most of its hull is dedicated to fighter bays. The Obstinate must not be destroyed! This is your paradigm objective!"
     On the wall, the red dots are intercepted by the white dots, and blink out of existence. Then a second group of white dots appears near the Dvaered logos, and moves towards the glowing disc.
     "As soon as the FLF have exhausted their forces trying to counterattack, the HDSF Obstinate will begin launching bombers. It is our belief that the bombers alone will be able to take out the enemy base, but in the event that resistance is heavier than expected, the Obstinate herself will move in to provide fire support."
-    The glowing disc on the wal fades out, leaving the Dvaered fleet alone and victorious.
+    The glowing disc on the wall fades out, leaving the Dvaered fleet alone and victorious.
     "That will be all. You have your orders. Report to your stations as per your timetables. I will see you all in %s. Good luck."
     
     Some time later, you are back in the Dvaered spaceport bar. You've seen action before in your career, but you still feel tense about what is to come. You decide to have another drink, just for luck.]]
@@ -78,7 +78,7 @@ else -- default english
     flagattack = "This is Obstinate, we're under fire!"
     phasetwo = "This is Obstinate. Launching bombers."
     
-    npc_desc = "This must be the Dvaered liaison you heard about. Allegedly, he may have a job to you that involves fighting the Frontier Liberation Front."
+    npc_desc = "This must be the Dvaered liaison you heard about. Allegedly, he may have a job for you that involves fighting the Frontier Liberation Front."
     
     misn_title = "Destroy the FLF base!"
     osd_desc[1] = "Fly to the %s system"
