@@ -41,6 +41,9 @@
 static nsave_t *load_saves = NULL; /**< Array of save.s */
 
 
+extern int save_loaded; /**< From save.c */
+
+
 /*
  * Prototypes.
  */
@@ -509,6 +512,9 @@ int load_game( const char* file )
    gui_setCargo();
 
    xmlFreeDoc(doc);
+
+   /* Set loaded. */
+   save_loaded = 1;
 
    return 0;
 
