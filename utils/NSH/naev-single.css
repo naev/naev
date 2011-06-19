@@ -3,15 +3,10 @@
 }
 
 .shipimage {
-   display: table-cell;
    width: 30%;
-   float: left;
-   vertical-align: middle;
-   padding-bottom: 10px;
 }
 
 div.info {
-   float: left;
    width: 20%;
 }
 
@@ -43,10 +38,7 @@ ul.info2r {
 }
 
 .slots {
-   margin: auto;
    width: 20%;
-   float:right;
-   text-align: center;
 }
 
 .Light, .Medium, .Heavy {
@@ -70,12 +62,10 @@ ul.info2r {
 }
 
 .bottom {
-   overflow: hidden;
    height: 100%;
 }
 
 .license {
-   margin:auto;
    float: left;
    margin-top: 50px;
 }
