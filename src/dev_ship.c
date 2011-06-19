@@ -32,7 +32,7 @@ void dship_csv( const char *path )
 
    /* Write "header" */
    l = snprintf( buf, sizeof(buf),
-         "name,base_type,price,license,fabricator,"
+         "name,class,base_type,price,license,fabricator,"
          "thrust,turn,speed,"
          "crew,mass,cpu,fuel,cargo,"
          "armour,armour_regen,"
@@ -47,14 +47,14 @@ void dship_csv( const char *path )
       s = &s_all[i];
 
       l = snprintf( buf, sizeof(buf),
-            "%s,%s,%"CREDITS_PRI",%s,%s,"
+            "%s,%s,%s,%"CREDITS_PRI",%s,%s,"
             "%f,%f,%f,"
             "%d,%f,%f,%d,%f,"
             "%f,%f,"
             "%f,%f,"
             "%f,%f,"
             "%d,%d,%d\n",
-            s->name, s->base_type, s->price, s->license, s->fabricator,
+            s->name, ship_class(s), s->base_type, s->price, s->license, s->fabricator,
             s->thrust/s->mass, s->turn*180./M_PI, s->speed,
             s->crew, s->mass, s->cpu, s->fuel, s->cap_cargo,
             s->armour, s->armour_regen*60,
