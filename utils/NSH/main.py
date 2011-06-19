@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 # -*- encoding: utf8 -*-
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=80:
 # License: X/MIT
@@ -115,7 +115,7 @@ class harvester:
                                 compiled.update({subDetails.tag: []})
 
                             if subDetails.text:
-                                size=subDetails.text
+                                size=subDetails.text.title()
                             elif shipClass.lower() in self.__classGroup['heavy']:
                                 size='Heavy'
                             elif shipClass.lower() in self.__classGroup['medium']:

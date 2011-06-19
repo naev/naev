@@ -1,0 +1,177 @@
+* {
+   margin: 0;
+   padding: 0;
+}
+
+body {
+   background: #222;
+   font-family: Verdana, Helvetica, Arial, sans-serif;
+}
+
+#container {
+   width: 950px;
+   margin: auto;
+   margin-top: 20px;
+   margin-bottom: 20px;
+   padding: 10px;
+   background: #ccc;
+   -moz-border-radius: 10px;
+   -border-radius: 10px;
+   -webkit-border-radius: 10px;
+}
+.class {
+   clear: both;
+}
+
+.row {
+   float: none;
+   height: 100%;
+   clear: both;
+   margin-top: 10px;
+   overflow: hidden;
+}
+
+.left, .right, .full {
+   height: 100%;
+   width: 440px;
+   float: left;
+   background: #ddd;
+   padding: 15px;
+   margin-bottom: 10px;
+   -moz-border-radius: 10px;
+   -border-radius: 10px;
+   -webkit-border-radius: 10px;
+}
+
+.full {
+   width: 100%;
+}
+
+.right {
+   float: right;
+}
+
+a {
+   color: #103080;
+   text-decoration: none;
+}
+
+a:hover {
+   color: #103080;
+   text-decoration: underline;
+}
+
+abbr {
+   border-bottom: 1px dotted;
+}
+
+ul {
+   list-style-type: none;
+}
+
+table {
+   border-collapse: collapse;
+   font-size: 90%;
+}
+
+td {
+   border-bottom: 1px solid;
+   background: #fff;
+   padding: 1px 0px;
+   text-align: center;
+   border: 1px solid #bbb;
+}
+
+table th {
+   background: #f4f4f4;
+   border: 1px solid #bbb;
+   padding: 1px 4px;
+   font-weight: bold;
+}
+
+h3 {
+   margin-bottom: 10px;
+}
+
+.Light, .Medium, .Heavy {
+   display: inline;
+   background: #36c;
+   border: 1px solid #222;
+   margin: 1px;
+   padding-right: 12px;
+   font-size: 10px;
+}
+
+.Light {
+   background: #e5cc00;
+}
+
+.Medium {
+   background: #6c3;
+}
+
+.Heavy {
+   background: #36c;
+}
+
+.slots {
+   margin: auto;
+   width: 33%;
+   float:right;
+   text-align: center;
+}
+
+.top {
+   overflow: hidden;
+   height: 100%;
+}
+
+.info table {
+   margin: auto;
+}
+
+.shipimage {
+   display: table-cell;
+   width: 33%;
+   float: left;
+   vertical-align: middle;
+   padding-bottom: 10px;
+}
+
+.shipimage img {
+   background: #222;
+   -moz-border-radius: 20px;
+   -border-radius: 20px;
+   -webkit-border-radius: 20px;
+   display: block;
+   margin-left: auto;
+   margin-right: auto;
+   vertical-align: middle;
+}
+
+div.info {
+   float: left;
+   width: 34%;
+}
+
+.info ul {
+   width: 50%;
+   text-align: right;
+   float: left;
+   padding-right: 5%;
+}
+
+.info li {
+   font-weight: bold;
+   font-size: 90%;
+}
+
+ul.infor {
+   width: 45%;
+   text-align: left;
+   padding: 0;
+}
+
+.infor li {
+   font-weight: normal;
+}
