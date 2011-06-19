@@ -115,7 +115,7 @@ class harvester:
                                 compiled.update({subDetails.tag: []})
 
                             if subDetails.text:
-                                size=subDetails.text.title()
+                                size=subDetails.text
                             elif shipClass.lower() in self.__classGroup['heavy']:
                                 size='Heavy'
                             elif shipClass.lower() in self.__classGroup['medium']:
