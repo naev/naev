@@ -958,6 +958,7 @@ static glColour* gl_fontGetColour( int ch )
       case 'C': col = &cConsole; break;
       case 'D': col = &cDConsole; break;
       case '0': col = NULL; break;
+      default: col = NULL; break;
    }
    return col;
 }
