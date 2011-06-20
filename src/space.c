@@ -435,6 +435,7 @@ char* space_getRndPlanet (void)
    char *res;
 
    ntmp = 0;
+   res = NULL;
    mtmp = CHUNK_SIZE;
    tmp = malloc(sizeof(char*) * mtmp);
 
