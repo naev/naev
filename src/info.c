@@ -785,7 +785,6 @@ static void standings_update( unsigned int wid, char* str )
 
    /* Get faction. */
    p = toolkit_getListPos( wid, "lstStandings" );
-   y = 0;
 
    /* Render logo. */
    t = faction_logoSmall( info_factions[p] );

@@ -115,8 +115,6 @@ static int load_load( nsave_t *save, const char *path )
       }
 
       if (xml_isNode(parent,"player")) {
-         node = parent->xmlChildrenNode;
-
          /* Get name. */
          xmlr_attr(parent,"name",save->name);
          /* Parse rest. */

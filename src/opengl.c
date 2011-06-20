@@ -151,8 +151,6 @@ int SDL_SavePNG( SDL_Surface *surface, const char *file )
 #endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
    /* Initialize parameters. */
-   ss_rows     = NULL;
-   ss_size     = 0;
    ss_surface  = NULL;
 
    /* Set size. */
