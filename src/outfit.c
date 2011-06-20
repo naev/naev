@@ -1406,14 +1406,16 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
       }
       if (xml_isNode(node,"ai")) {
          buf = xml_get(node);
-         if (strcmp(buf,"dumb")==0)
-            temp->u.amm.ai = 0;
-         else if (strcmp(buf,"seek")==0)
-            temp->u.amm.ai = 1;
-         else if (strcmp(buf,"smart")==0)
-            temp->u.amm.ai = 2;
-         else
-            WARN("Ammo '%s' has unknown ai type '%s'.", temp->name, buf);
+         if (buf != NULL) {
+            if (strcmp(buf,"dumb")==0)
+               temp->u.amm.ai = 0;
+            else if (strcmp(buf,"seek")==0)
+               temp->u.amm.ai = 1;
+            else if (strcmp(buf,"smart")==0)
+               temp->u.amm.ai = 2;
+            else
+               WARN("Ammo '%s' has unknown ai type '%s'.", temp->name, buf);
+         }
          continue;
       }
       WARN("Outfit '%s' has unknown node '%s'",temp->name, node->name);
