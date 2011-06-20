@@ -836,7 +836,6 @@ static void map_renderPath( double x, double y )
    if (map_path != NULL) {
       lsys = cur_system;
       glShadeModel(GL_SMOOTH);
-      col = &cGreen;
       fuel = player.p->fuel;
 
       for (j=0; j<map_npath; j++) {

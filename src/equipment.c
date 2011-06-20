@@ -360,14 +360,8 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       }
 
       /* Choose colours based on size. */
-      if (i==selected) {
-         c  = &cGrey80;
-         if (dc == NULL)
-            dc = &cGrey60;
-      }
-      else {
-         c  = toolkit_col;
-      }
+      if (i==selected && dc == NULL)
+         dc = &cGrey60;
 
       /* Draw background. */
       memcpy( &bc, dc, sizeof(bc) );

@@ -791,7 +791,6 @@ static int saveNebula( float *map, const uint32_t w, const uint32_t h, const cha
    sur = nebu_surfaceFromNebulaMap( map, w, h );
 
    /* save */
-   ret = 0;
    snprintf(file_path, PATH_MAX, "%s%s", nfile_basePath(), file );
    ret = SDL_SavePNG( sur, file_path );
 
