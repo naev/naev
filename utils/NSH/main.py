@@ -5,6 +5,7 @@
 # author: Ludovic Bellière AKA. xrogaan
 
 import os
+from datetime import datetime
 from jinja2 import Environment, FileSystemLoader
 try:
     from lxml import etree
@@ -171,16 +172,18 @@ if __name__ == "__main__":
     tplPath = os.path.abspath(os.path.normpath('./templates'))
     naevPath = os.path.abspath(os.path.normpath("../../dat/"))
 
+    date = str( datetime.utcnow().strftime("%c UTC") )
+
     myLoader = FileSystemLoader(cfg.templates if cfg.templates else tplPath)
     env = Environment(loader=myLoader)
     env.filters['getStatsLabel'] = getShipStatsLabels
     env.filters['getStatsLabelsLabel'] = getStatsLabelsLabel
     myTemplate = env.get_template('index.html')
     yaarh = harvester(naevPath)
-    myTemplate.stream(shipList=yaarh.get_by('class')).dump(storagePath+'/index.html')
+    myTemplate.stream(shipList=yaarh.get_by('class'), date=date).dump(storagePath+'/index.html')
     del(myTemplate)
 
     for (shipName, shipData) in yaarh.iter():
         myTemplate = env.get_template('ship.html')
         myPath = os.path.abspath(os.path.normpath("%s/%s.html" % (storagePath,shipName)))
-        myTemplate.stream(shipName=shipName, shipData=shipData).dump(myPath)
+        myTemplate.stream(shipName=shipName, shipData=shipData, date=date).dump(myPath)

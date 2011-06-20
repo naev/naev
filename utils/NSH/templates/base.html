@@ -4,6 +4,25 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <link rel="stylesheet" href="./naev-global.css" type="text/css" />{% block head %}{% endblock %}</head>
     <body>
+        <div id="naev-header">
+            <div id="naev-top">
+                <a href="http://naev.org">
+                    <img src="http://naev.org/naevsmall.png" alt="Home" style="vertical-align:baseline" />
+                </a>
+            </div>
+            <ul class="naevlinks">
+                <li>
+                    <a href="http://blog.naev.org/">Blog</a> &middot;
+                    <a href="http://forum.naev.org/">Forum</a> &middot;
+                    <a href="http://wiki.naev.org/">Wiki</a> &middot;
+                    <a href="http://blog.naev.org/downloads/">Downloads</a> &middot;
+                    <a href="http://code.google.com/p/naev/">Google Code</a> &middot;
+                    <a href="http://db.naev.org/">Ship Database</a> &middot;
+                    <a href="http://blog.naev.org/chat/">Chat</a>
+                </li>
+            </ul>
+        </div>
         <div id="container">{% block body %}{% endblock %}</div><!-- /Container -->
+        <div id="footer">Generated on {{ date }}</div>
     </body>
 </html>
