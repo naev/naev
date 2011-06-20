@@ -308,7 +308,7 @@ void gl_print( const glFont *ft_font,
 
 
 /**
- * @brief Behavise like gl_printRaw but stops displaying text after a certain distance.
+ * @brief Behaves like gl_printRaw but stops displaying text after a certain distance.
  *
  *    @param ft_font Font to use.
  *    @param max Maximum length to reach.
@@ -342,7 +342,7 @@ int gl_printMaxRaw( const glFont *ft_font, const int max,
    return 0;
 }
 /**
- * @brief Behavise like gl_print but stops displaying text after reaching a certain length.
+ * @brief Behaves like gl_print but stops displaying text after reaching a certain length.
  *
  *    @param ft_font Font to use (NULL means use gl_defFont).
  *    @param max Maximum length to reach.
