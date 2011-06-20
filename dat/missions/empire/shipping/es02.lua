@@ -202,7 +202,7 @@ function delay_flf ()
       return
    end
 
-   -- More ships to pressue player from behind
+   -- More ships to pressure player from behind
    p = pilot.add( "FLF Sml Force", nil, prevsys )
    for k,v in ipairs(p) do
       v:setHostile()
@@ -238,7 +238,7 @@ function death ()
 end
 
 function abort ()
-	-- If aborted you'll also leave the VIP to fait. (A.)
+	-- If aborted you'll also leave the VIP to fate. (A.)
    player.msg( msg[2] )
    misn.finish(false)
 end

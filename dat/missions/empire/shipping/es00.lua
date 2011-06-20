@@ -145,7 +145,7 @@ function enter ()
       pilot.add( "Dvaered Med Force", nil, enter_vect )
 
       -- Player should not be able to reland
-      player.allowLand(false,"The docking stabilzers have been damaged by weapons fire!")
+      player.allowLand(false,"The docking stabilizers have been damaged by weapons fire!")
    end
 end
 
