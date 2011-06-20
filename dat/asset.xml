@@ -5243,11 +5243,36 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>M01.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
+  <presence>
+   <faction>Soromid</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
   <general>
-   <class>A</class>
-   <population>0</population>
-   <services/>
+   <class>M</class>
+   <population>500000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <outfits/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Medicine</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>M.K, a rather oddly named planet, holds a special place in many Soromid's hearts. It is the closest inhabited world to Sorom that survived the Incident. It has little else to set it apart, however. The local economy is operating along predictable lines, and the population is no better off than on most Soromid worlds. To most traders, M.K. is just another market to make profit in.</description>
+   <bar>Both Soromid and non-Soromid frequent this spaceport bar. As Wildwood station is more of a service utility than a real community, M.K. is often the first real Soromid port most new traders visit. It is therefore here they get their first taste of a full-fledged Soromid society. It's not uncommon to find yound pilots looking at the surroundings with a mixture of wonder and nervousness.</bar>
   </general>
+  <tech>
+   <item>Plasma 1</item>
+   <item>Basic Outfits 2</item>
+   <item>Missiles 1</item>
+   <item>Missiles 2</item>
+  </tech>
  </asset>
  <asset name="Madeleine Station">
   <pos>
@@ -8864,6 +8889,30 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <services/>
+  </general>
+ </asset>
+ <asset name="Soromid Customs Central">
+  <pos>
+   <x>102.968246</x>
+   <y>-13387.566417</y>
+  </pos>
+  <GFX>
+   <space>station-fleetbase3.png</space>
+   <exterior>station04.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Soromid</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>0</class>
+   <population>500000000</population>
+   <services>
+    <land>srm_mil_restricted</land>
+    <refuel/>
+   </services>
+   <description>The Soromid and the rest of the galaxy have enjoyed a tense kind of friendship ever since the first bioships launched from Sorom. The rest of humanity is keenly interested in the Soromid genetic treatments, and the Soromid in turn are happy to turn a profit on their expertise, but there's still some degree of caution on both sides. Soromid Customs Central is a visible sign of that caution. It houses a full division of Soromid ships, and is responsible for maintaining order as well as inspecting the traffic that passes through Oberon.</description>
   </general>
  </asset>
  <asset name="Sroolu">
