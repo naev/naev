@@ -148,8 +148,35 @@ class harvester:
     def iter(self):
         return self.ships.iteritems()
 
+class fashion:
+    __tagsBlackList = ['gfx_end','gfx','sound']
 
+    def __init__(self, xmlPath):
+        if self.__xmlData is None:
+            self.__xmlData = etree.parse(os.path.join(xmlPath, "ship.xml"))
 
+        data = self.__xmlData.findall('outfit')
+        # we have here 2 parts: general and specific
+        for outfit in data:
+            outfitName = outfit.get('name')
+            self.outfits, outfitGeneral, outfitSpecific = {}, {}, {}
+            for general in outfit.find('general').iterchildren():
+                outfitGeneral.update({general.tag: general.text})
+            for specific in outfit.find('specific').iterchildren():
+                if specific.tag in self.__tagsBlackList:
+                    continue
+                if specific.tag == 'damage':
+                    tmp={specific.tag:
+                            {   'type': specific.get('type'),
+                                'penetrate': specific.get('penetrate'),
+                                'text': specific.text}}
+                else:
+                    tmp={specific.tag: specific.children}
+                outfitSpecific.update(tmp)
+            self.outfits.update({outfitName:
+                   {'specific': outfitSpecific,
+                    'general': outfitGeneral}
+            del(tmp,outfitSpecific,outfitGeneral)
 
 if __name__ == "__main__":
     from optparse import OptionParser
