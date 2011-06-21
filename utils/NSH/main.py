@@ -174,7 +174,7 @@ class fashion:
                 outfitSpecific.update(tmp)
             self.outfits.update({outfitName:
                    {'specific': outfitSpecific,
-                    'general': outfitGeneral}
+                    'general': outfitGeneral}})
             del(tmp,outfitSpecific,outfitGeneral)
 
 if __name__ == "__main__":
