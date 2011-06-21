@@ -752,7 +752,7 @@ Ship** tech_getShip( tech_group_t *tech, int *n )
    }
 
    /* Sort. */
-   qsort( s, *n, sizeof(Ship*), outfit_compareTech );
+   qsort( s, *n, sizeof(Ship*), ship_compareTech );
    return s;
 }
 

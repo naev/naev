@@ -167,12 +167,6 @@ glTexture* ship_loadCommGFX( Ship* s );
 
 
 /*
- * toolkit
- */
-void ship_view( unsigned int unused, char* shipname );
-
-
-/*
  * misc.
  */
 int ship_compareTech( const void *arg1, const void *arg2 );

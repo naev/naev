@@ -275,7 +275,6 @@ Planet* planet_getAll( int *n );
 Planet* planet_get( const char* planetname );
 Planet* planet_getIndex( int ind );
 int planet_index( const Planet *p );
-int planet_getNum (void);
 int planet_exists( const char* planetname );
 const char *planet_existsCase( const char* planetname );
 char **planet_searchFuzzyCase( const char* planetname, int *n );
