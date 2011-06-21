@@ -114,12 +114,15 @@ int pfaction_load( xmlNodePtr parent );
 int faction_get( const char* name )
 {
    int i;
-   for (i=0; i<faction_nstack; i++)
-      if (strcmp(faction_stack[i].name, name)==0)
-         break;
+   if (name != NULL) {
+      for (i=0; i<faction_nstack; i++)
+         if (strcmp(faction_stack[i].name, name)==0)
+            break;
 
-   if (i != faction_nstack)
-      return i;
+      if (i != faction_nstack)
+         return i;
+   }
+
    WARN("Faction '%s' not found in stack.", name);
    return -1;
 }
