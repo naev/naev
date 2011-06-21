@@ -4,7 +4,7 @@
 # License: X/MIT
 # author: Ludovic Bellière AKA. xrogaan
 
-import os
+from os import path
 from jinja2 import Environment, FileSystemLoader
 try:
     from lxml import etree
@@ -83,7 +83,7 @@ class harvester:
 
     def __init__(self, xmlPath):
         if self.__xmlData is None:
-            self.__xmlData = etree.parse(os.path.join(xmlPath, "ship.xml"))
+            self.__xmlData = etree.parse(path.join(xmlPath, "ship.xml"))
 
         data = self.__xmlData.findall('ship')
         self.ships = dict()
@@ -152,7 +152,7 @@ class fashion:
 
     def __init__(self, xmlPath):
         if self.__xmlData is None:
-            self.__xmlData = etree.parse(os.path.join(xmlPath, "ship.xml"))
+            self.__xmlData = etree.parse(path.join(xmlPath, "ship.xml"))
 
         data = self.__xmlData.findall('outfit')
         # we have here 2 parts: general and specific
@@ -177,7 +177,9 @@ class fashion:
                     'general': outfitGeneral}})
             del(tmp,outfitSpecific,outfitGeneral)
 
+
 if __name__ == "__main__":
+    from os import mkdir
     from optparse import OptionParser
     from datetime import datetime
 
@@ -195,9 +197,9 @@ if __name__ == "__main__":
 
     if len(arguments) != 1:
         parser.error("A wise man would know where to store the generated files.")
-    storagePath = os.path.abspath(os.path.normpath(arguments[0]))
-    tplPath = os.path.abspath(os.path.normpath(cfg.templates))
-    naevPath = os.path.abspath(os.path.normpath("../../dat/"))
+    storagePath = path.abspath(path.normpath(arguments[0]))
+    tplPath = path.abspath(path.normpath(cfg.templates))
+    naevPath = path.abspath(path.normpath("../../dat/"))
 
     date = str( datetime.utcnow().strftime("%c UTC") )
 
@@ -205,12 +207,34 @@ if __name__ == "__main__":
     env = Environment(loader=myLoader)
     env.filters['getStatsLabel'] = getShipStatsLabels
     env.filters['getStatsLabelsLabel'] = getStatsLabelsLabel
-    myTemplate = env.get_template('index.html')
+
+    # creating ships html
+    myTpl = env.get_template('ships_index.html')
     yaarh = harvester(naevPath)
-    myTemplate.stream(shipList=yaarh.get_by('class'), date=date).dump(storagePath+'/index.html')
-    del(myTemplate)
+    shipIStore = path.normpath(storagePath + '/ships/index.html')
+    if not path.exits(shipIStore):
+        mkdir(shipIStore, 0744)
+    myTpl.stream(shipList=yaarh.get_by('class'), date=date).dump(shipIStore)
+    del(mTpl)
 
     for (shipName, shipData) in yaarh.iter():
-        myTemplate = env.get_template('ship.html')
-        myPath = os.path.abspath(os.path.normpath("%s/%s.html" % (storagePath,shipName)))
-        myTemplate.stream(shipName=shipName, shipData=shipData, date=date).dump(myPath)
+        myTpl = env.get_template('ship.html')
+        myPath = path.abspath(path.normpath("%s/ships/%s.html" % (storagePath,shipName)))
+        myTpl.stream(shipName=shipName, shipData=shipData, date=date).dump(myPath)
+
+    # fancy outfits
+    myTpl = env.get_template('outfits_index.html')
+    panty = fashion(naevPath)
+    outfitsStore = path.normpath(storagePath + '/outfits')
+    if not path.exits(outfitsStore):
+        mkdir(outfitStore, 0744)
+    tpl.stream(outfits=panty.outfits, date=date).dump(outfitStore)
+
+    for (outfitName, outfitDetails) in panty.outfits.iteritems():
+        myTpl = env.get_template('outfit.html')
+        myStorage = path.normpath("%s/outfits/%s.html" % (
+                                                            storagePath,
+                                                            outfitName
+                                                         )
+        myTpl.stream(outfitName=outfitName, outfitData=outfitData,
+                     date=date).dump(myStorage)
