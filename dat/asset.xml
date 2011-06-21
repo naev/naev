@@ -965,13 +965,13 @@
    <class>A</class>
    <population>300000</population>
    <services>
-    <land/>
+    <land>land_lowclass</land>
     <refuel/>
     <bar/>
     <missions/>
+    <commodity/>
     <outfits/>
     <shipyard/>
-    <commodity/>
    </services>
    <commodities>
     <commodity>Food</commodity>
@@ -3201,18 +3201,44 @@
  </asset>
  <asset name="Flach">
   <pos>
-   <x>28300.000000</x>
-   <y>-2650.000000</y>
+   <x>16436.574074</x>
+   <y>3715.740741</y>
   </pos>
   <GFX>
    <space>Y00.png</space>
-   <exterior>mining2.png</exterior>
+   <exterior>lava.png</exterior>
   </GFX>
+  <presence>
+   <faction>Soromid</faction>
+   <value>100.000000</value>
+   <range>0</range>
+  </presence>
   <general>
-   <class>A</class>
-   <population>0</population>
-   <services/>
+   <class>Y</class>
+   <population>1500000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <outfits/>
+    <shipyard/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Ore</commodity>
+   </commodities>
+   <description>Quite a lot of Soromid live on Flach. Where normal humans would have built a mining colony here at best, the Soromid found the planet good enough to build extensive megacities and suburban industries.</description>
+   <bar>The spaceport bar is one of the few places on the planet that is environmentally conditioned to suit normal humans. Any non-Soromid wishing to visit the actual population centers will need to wear protective clothing, or suffer the consequences.</bar>
   </general>
+  <tech>
+   <item>Missiles 1</item>
+   <item>Missiles 2</item>
+   <item>Basic Outfits 2</item>
+   <item>Basic Trade Ships</item>
+   <item>Light Civilian Combat Ships</item>
+  </tech>
  </asset>
  <asset name="Folevo">
   <pos>
@@ -4123,6 +4149,37 @@
    <description>Hankies is something of a holiday resort as well as retreat for the wealthy. It is mainly a consumer world, having neither the land for agriculture nor the resources for industry. It does, however, have a pleasant ecosystem and a wealth of beautiful geography.</description>
    <bar>Since Hankies doesn't have much to offer, the bar is almost entirely an import product. The architecture, the facilities and the drinks can all be traced offworld. The only thing that is truly authentic to this world is the view from the windows - a mountain range stretching away into the distance.</bar>
   </general>
+ </asset>
+ <asset name="Hartwell Station">
+  <pos>
+   <x>10165.228472</x>
+   <y>-10541.797739</y>
+  </pos>
+  <GFX>
+   <space>station-fleetbase2.png</space>
+   <exterior>station03.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Soromid</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>0</class>
+   <population>1300</population>
+   <services>
+    <land>srm_mil_restricted</land>
+    <refuel/>
+    <bar/>
+    <shipyard/>
+   </services>
+   <commodities/>
+   <description>Father's Pride is an important junction in Soromid space, and it needs to be well secured. Hartwell Station does just that. Besides securing local traffic, it also sends patrols into neighbouring systems, particularly Shikima, as Soromid Wards Alpha is a vital asset to the Soromid economy.</description>
+   <bar>It's typically only Soromid officers who frequent the recreational facilities on a military station. Regular Soromid sailors tend to stay with the ships, caring for them and making sure they are in good health.</bar>
+  </general>
+  <tech>
+   <item>Soromid Military Ships</item>
+  </tech>
  </asset>
  <asset name="Hassak">
   <pos>
@@ -7923,18 +7980,37 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Rudderfern">
   <pos>
-   <x>-21050.000000</x>
-   <y>-8350.000000</y>
+   <x>-22830.899336</x>
+   <y>-7419.439987</y>
   </pos>
   <GFX>
    <space>moon-L00.png</space>
    <exterior>forest2.png</exterior>
   </GFX>
+  <presence>
+   <faction>Soromid</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
   <general>
-   <class>A</class>
-   <population>0</population>
-   <services/>
+   <class>L</class>
+   <population>900000000</population>
+   <services>
+    <land>land_hiclass</land>
+    <refuel/>
+    <bar/>
+    <outfits/>
+   </services>
+   <commodities/>
+   <description>Rudderfern is a small but wealthy Soromid colony. Its primary, Father's Pride III, is far too hostile for even the Soromid to utilize, but its moon has very Earth-like properties, apart from its low gravity. Many well-to-do Soromid have settled here, enjoying the pleasant environment and the high level of security offered in Father's Pride.</description>
+   <bar>Most planets have spaceport bars. Not Rudderfern. It has a spaceport lounge. It has classy furniture, richly decorated walls and ceilings, and even actual Soromid serving personnel. Rudderfern rather takes pride in officially having the highest class spaceport bar in the known galaxy.</bar>
   </general>
+  <tech>
+   <item>Basic Outfits 1</item>
+   <item>Plasma 1</item>
+   <item>Low Tech Upgrades</item>
+   <item>Missiles 1</item>
+  </tech>
  </asset>
  <asset name="Ruid">
   <pos>
@@ -8995,6 +9071,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    </services>
    <commodities/>
    <description>As everyone knows, the Soromid are exporters of genetic treatment services. People from all over the galaxy travel to Soromid space to have their natural abilities enhanced, diseases cured or appearances improved. All of these people need to be treated somewhere, and this is one such place. Soromid Wards Alpha is a massive medical facility, the largest of all the Soromid Wards. Thousands of clients can be treated here at any one time. Most of the station's volume is taken up by personal treatment tanks, where clients spend anything from a week to months in an artificial coma while their genetic code is rewritten.</description>
+   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Sroolu">
