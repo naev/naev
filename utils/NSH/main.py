@@ -148,17 +148,19 @@ class harvester:
         return self.ships.iteritems()
 
 class fashion:
+    __xmlData = None
     __tagsBlackList = ['gfx_end','gfx','sound']
 
     def __init__(self, xmlPath):
         if self.__xmlData is None:
-            self.__xmlData = etree.parse(path.join(xmlPath, "ship.xml"))
+            self.__xmlData = etree.parse(path.join(xmlPath, "outfit.xml"))
 
         data = self.__xmlData.findall('outfit')
+        self.outfits = {}
         # we have here 2 parts: general and specific
         for outfit in data:
             outfitName = outfit.get('name')
-            self.outfits, outfitGeneral, outfitSpecific = {}, {}, {}
+            outfitGeneral, outfitSpecific = {}, {},
             for general in outfit.find('general').iterchildren():
                 outfitGeneral.update({general.tag: general.text})
             for specific in outfit.find('specific').iterchildren():
@@ -170,12 +172,13 @@ class fashion:
                                 'penetrate': specific.get('penetrate'),
                                 'text': specific.text}}
                 else:
-                    tmp={specific.tag: specific.children}
+                    tmp={specific.tag: specific.text}
                 outfitSpecific.update(tmp)
+                del(tmp)
             self.outfits.update({outfitName:
                    {'specific': outfitSpecific,
                     'general': outfitGeneral}})
-            del(tmp,outfitSpecific,outfitGeneral)
+            del(outfitSpecific,outfitGeneral)
 
 
 if __name__ == "__main__":
@@ -211,11 +214,11 @@ if __name__ == "__main__":
     # creating ships html
     myTpl = env.get_template('ships_index.html')
     yaarh = harvester(naevPath)
-    shipIStore = path.normpath(storagePath + '/ships/index.html')
-    if not path.exits(shipIStore):
-        mkdir(shipIStore, 0744)
-    myTpl.stream(shipList=yaarh.get_by('class'), date=date).dump(shipIStore)
-    del(mTpl)
+    shipIStore = path.normpath(storagePath + '/ships/')
+    if not path.exists(shipIStore):
+        mkdir(shipIStore, 0755)
+    myTpl.stream(shipList=yaarh.get_by('class'), date=date).dump(shipIStore+'/index.html')
+    del(myTpl)
 
     for (shipName, shipData) in yaarh.iter():
         myTpl = env.get_template('ship.html')
@@ -225,16 +228,16 @@ if __name__ == "__main__":
     # fancy outfits
     myTpl = env.get_template('outfits_index.html')
     panty = fashion(naevPath)
-    outfitsStore = path.normpath(storagePath + '/outfits')
-    if not path.exits(outfitsStore):
-        mkdir(outfitStore, 0744)
-    tpl.stream(outfits=panty.outfits, date=date).dump(outfitStore)
+    outfitsStore = path.normpath(storagePath + '/outfits/')
+    if not path.exists(outfitsStore):
+        mkdir(outfitsStore, 0755)
+    myTpl.stream(outfits=panty.outfits, date=date).dump(outfitsStore+'/index.html')
 
     for (outfitName, outfitDetails) in panty.outfits.iteritems():
         myTpl = env.get_template('outfit.html')
-        myStorage = path.normpath("%s/outfits/%s.html" % (
+        myStorage = path.normpath("%s/outfits/%s.html") % (
                                                             storagePath,
                                                             outfitName
                                                          )
-        myTpl.stream(outfitName=outfitName, outfitData=outfitData,
+        myTpl.stream(outfitName=outfitName, outfitData=outfitDetails,
                      date=date).dump(myStorage)
