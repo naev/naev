@@ -139,6 +139,8 @@ static int factionL_get( lua_State *L )
    lua_pushfaction(L,f);
    return 1;
 }
+
+
 /**
  * @brief Gets faction at index.
  *

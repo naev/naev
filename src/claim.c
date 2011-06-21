@@ -65,25 +65,6 @@ int claim_add( SysClaim_t *claim, int ss_id )
 
 
 /**
- * @brief Lists the systems a claim has.
- *
- *    @param claim Claim to list systems of.
- *    @param n Number of claims.
- *    @return The list of claims.
- */
-int* claim_list( SysClaim_t *claim, int *n )
-{
-   if (claim->ids == NULL) {
-      *n = 0;
-      return NULL;
-   }
-
-   *n = array_size(claim->ids);
-   return claim->ids;
-}
-
-
-/**
  * @brief Tests to see if a system claim would have collisions.
  *
  *    @param claim System to test.

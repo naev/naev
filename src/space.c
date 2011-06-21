@@ -789,17 +789,6 @@ int planet_index( const Planet *p )
 
 
 /**
- * @brief Gets the number of planets.
- *
- *    @return The number of planets.
- */
-int planet_getNum (void)
-{
-   return planet_nstack;
-}
-
-
-/**
  * @brief Gets all the planets.
  *
  *    @param n Number of planets gotten.
