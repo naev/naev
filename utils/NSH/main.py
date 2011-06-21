@@ -5,7 +5,6 @@
 # author: Ludovic Bellière AKA. xrogaan
 
 import os
-from datetime import datetime
 from jinja2 import Environment, FileSystemLoader
 try:
     from lxml import etree
@@ -180,6 +179,7 @@ class fashion:
 
 if __name__ == "__main__":
     from optparse import OptionParser
+    from datetime import datetime
 
     usage="Usage: %prog OUTPUTPATH"
     parser = OptionParser(usage=usage, version="%prog "+__version__,
@@ -196,7 +196,7 @@ if __name__ == "__main__":
     if len(arguments) != 1:
         parser.error("A wise man would know where to store the generated files.")
     storagePath = os.path.abspath(os.path.normpath(arguments[0]))
-    tplPath = os.path.abspath(os.path.normpath('./templates'))
+    tplPath = os.path.abspath(os.path.normpath(cfg.templates))
     naevPath = os.path.abspath(os.path.normpath("../../dat/"))
 
     date = str( datetime.utcnow().strftime("%c UTC") )
