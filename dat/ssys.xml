@@ -4306,7 +4306,7 @@
    <stars>300</stars>
    <asteroids>0</asteroids>
    <interference>300.000000</interference>
-   <nebula volatility="0.000000">200.000000</nebula>
+   <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
    <x>259.000000</x>
@@ -5228,7 +5228,7 @@
    <stars>600</stars>
    <asteroids>0</asteroids>
    <interference>100.000000</interference>
-   <nebula volatility="0.000000">100.000000</nebula>
+   <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
    <x>247.000000</x>
@@ -5554,7 +5554,7 @@
    <stars>400</stars>
    <asteroids>0</asteroids>
    <interference>150.000000</interference>
-   <nebula volatility="0.000000">150.000000</nebula>
+   <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
    <x>233.000000</x>
