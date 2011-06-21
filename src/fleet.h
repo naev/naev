@@ -52,7 +52,6 @@ typedef struct Fleet_ {
  * getting fleet stuff
  */
 Fleet* fleet_get( const char* name );
-Fleet* fleet_grab( const int faction );
 
 
 /*

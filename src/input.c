@@ -1239,7 +1239,6 @@ static void input_clickevent( SDL_Event* event )
          player_targetPlanetSet( pntid );
    }
    else if (jpid >= 0) { /* Jump point is closest. */
-      jp = &cur_system->jumps[ jpid ];
       if (jpid == player.p->nav_hyperspace) {
          if (space_canHyperspace(player.p)) {
             if (!paused) player_autonavAbort(NULL);

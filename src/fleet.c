@@ -62,41 +62,6 @@ Fleet* fleet_get( const char* name )
 
 
 /**
- * @brief Grabs a (for now) random fleet out of the stack for the faction.
- *
- *    @param faction Which faction to get a fleet for.
- *    @return a pointer to a fleet, or NULL if not found.
- */
-Fleet* fleet_grab( const int faction )
-{
-   Fleet* fleet;
-   int inf = 0;
-   int rnd;
-
-   /* Check for a legal faction. */
-   if(!faction_isFaction(faction)) {
-      WARN("%i is not a faction.", faction);
-      return NULL;
-   }
-
-   /* Try to find a fleet of the faction. */
-   while(1) {
-      /* Check for infinite loop. */
-      if(inf > 100 * nfleets) {
-         WARN("Could not find a fleet for faction %s.", faction_name(faction));
-         return NULL;
-      }
-      inf++;
-
-      /* Get a fleet and check its faction. */
-      rnd = RNGF() * (nfleets - 0.01);
-      fleet = &fleet_stack[rnd];
-   }
-
-   return fleet;
-}
-
-/**
  * @brief Creates a pilot belonging to afleet.
  *
  *    @param flt Fleet to which pilot belongs to.

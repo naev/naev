@@ -496,7 +496,6 @@ int background_load( const char *name )
 #endif /* DEBUGGING */
 
    /* Run Lua. */
-   ret = 0;
    lua_getglobal(L,"background");
    ret = lua_pcall(L, 0, 0, errf);
    if (ret != 0) { /* error has occurred */

@@ -285,8 +285,6 @@ int conf_loadConfig ( const char* file )
    int w,h;
    SDLMod m;
 
-   i = 0;
-
    /* Check to see if file exists. */
    if (!nfile_fileExists(file))
       return nfile_touch(file);

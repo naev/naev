@@ -364,7 +364,7 @@ int sound_al_init (void)
             al_info.efx_major, al_info.efx_minor);
    DEBUG();
 
-   return 0;
+   return ret;
 
    /*
     * error handling
@@ -575,6 +575,9 @@ static int sound_al_loadWav( alSound *snd, SDL_RWops *rw )
       case AUDIO_U16MSB:
       case AUDIO_S16MSB:
          WARN( "Big endian WAVs unsupported!" );
+         return -1;
+      default:
+         WARN( "Invalid WAV format!" );
          return -1;
    }
 

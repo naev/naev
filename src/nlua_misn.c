@@ -805,7 +805,6 @@ static int misn_osdCreate( lua_State *L )
    items = calloc( nitems, sizeof(char *) );
 
    /* Get items. */
-   i = 0;
    for (i=0; i<nitems; i++) {
       lua_pushnumber(L,i+1);
       lua_gettable(L,2);

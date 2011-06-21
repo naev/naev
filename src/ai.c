@@ -2255,6 +2255,8 @@ static int aiL_iface( lua_State *L )
    else NLUA_INVALID_PARAMETER(L);
 
    if (lv==NULL) {
+      if (p == NULL)
+         return 0; /* Return silently when attempting to face an invalid pilot. */
       /* Establish the current pilot velocity and position vectors */
       vect_cset( &drift, VX(p->solid->vel) - VX(cur_pilot->solid->vel), VY(p->solid->vel) - VY(cur_pilot->solid->vel));
       /* Establish the in-line coordinate reference */
@@ -2416,6 +2418,8 @@ static int aiL_idir( lua_State *L )
    else NLUA_INVALID_PARAMETER(L);
 
    if (lv==NULL) {
+      if (p == NULL)
+         return 0; /* Return silently when attempting to face an invalid pilot. */
       /* Establish the current pilot velocity and position vectors */
       vect_cset( &drift, VX(p->solid->vel) - VX(cur_pilot->solid->vel), VY(p->solid->vel) - VY(cur_pilot->solid->vel));
       /* Establish the in-line coordinate reference */
