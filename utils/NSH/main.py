@@ -150,7 +150,14 @@ class harvester:
 class fashion:
     __xmlData = None
     __tagsBlackList = ['gfx_end','gfx','sound']
+    __typeBlackList = ['map', 'gui', 'license']
 
+    # TODO: ammo type have specific arguments (missiles have duration)
+    # TODO: retrofit this code, we needs several ways to retrieve data and they
+    # are all different. So, I'll discard the initial parsing and do a on
+    # request walk only. groupBySlot will list only elements who's got a slot
+    # subelement. getByType(name) will return a list of the specific type. Each
+    # of them are unique. Here is a list: map, gui, license, ammo, modification.
     def __init__(self, xmlPath):
         if self.__xmlData is None:
             self.__xmlData = etree.parse(path.join(xmlPath, "outfit.xml"))
@@ -159,10 +166,16 @@ class fashion:
         self.outfits = {}
         # we have here 2 parts: general and specific
         for outfit in data:
+            specificType = outfit.find('specific').get('type')
+            if specificType in self.__typeBlackList:
+                continue
+
             outfitName = outfit.get('name')
             outfitGeneral, outfitSpecific = {}, {},
+
             for general in outfit.find('general').iterchildren():
                 outfitGeneral.update({general.tag: general.text})
+
             for specific in outfit.find('specific').iterchildren():
                 if specific.tag in self.__tagsBlackList:
                     continue
@@ -179,6 +192,20 @@ class fashion:
                    {'specific': outfitSpecific,
                     'general': outfitGeneral}})
             del(outfitSpecific,outfitGeneral)
+
+    def groupBySlots(self):
+        slot={}
+        for outfitName, outfit in self.outfits.iteritems():
+            if not slot.has_key(outfit['general']['slot']):
+                slot.update({outfit['general']['slot']: []})
+            slot[outfit['general']['slot']].append((outfitName, outfit))
+        return slot
+
+    def iterSlot(self,slotName):
+        for outfitName, outfit in self.outfits.iteritems():
+            if outfit['general']['slot'] == slotName:
+                yield (outfitName, outfit)
+
 
 
 if __name__ == "__main__":
@@ -231,7 +258,7 @@ if __name__ == "__main__":
     outfitsStore = path.normpath(storagePath + '/outfits/')
     if not path.exists(outfitsStore):
         mkdir(outfitsStore, 0755)
-    myTpl.stream(outfits=panty.outfits, date=date).dump(outfitsStore+'/index.html')
+    myTpl.stream(outfits=panty.groupBySlots(), date=date).dump(outfitsStore+'/index.html')
 
     for (outfitName, outfitDetails) in panty.outfits.iteritems():
         myTpl = env.get_template('outfit.html')
