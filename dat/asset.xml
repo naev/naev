@@ -771,6 +771,38 @@
    <bar>The Arrakeen canteen is one of the shadier bars in Empire space. Lying on the border of the Empire, few patrols come through, and many scoundrels and mercenaries can be found plying their trade. The spice must flow, they said. It may not, but at least the rum does.</bar>
   </general>
  </asset>
+ <asset name="Arrentil">
+  <pos>
+   <x>-12160.000000</x>
+   <y>6880.000000</y>
+  </pos>
+  <GFX>
+   <space>Y00.png</space>
+   <exterior>gas.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Soromid</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>Y</class>
+   <population>150000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Ore</commodity>
+   </commodities>
+   <description>As is typical for Soromid worlds, Arrentil would be considered utterly inhospitable by the rest of humanity. The atmosphere is toxic and the surface unstable, but the Soromid have managed to tame this world. Of course even they need to live in sheltered habitats, but in spite of that the population is thriving and the economy is stable. By all means, Arrentil is an example of Soromid persistence.</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
  <asset name="Atalanta">
   <pos>
    <x>25805.000000</x>
@@ -922,13 +954,36 @@
   </pos>
   <GFX>
    <space>G01.png</space>
-   <exterior>oceanic2.png</exterior>
+   <exterior>mining5.png</exterior>
   </GFX>
+  <presence>
+   <faction>Soromid</faction>
+   <value>100.000000</value>
+   <range>0</range>
+  </presence>
   <general>
    <class>A</class>
-   <population>0</population>
-   <services/>
+   <population>300000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <outfits/>
+    <shipyard/>
+    <commodity/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Ore</commodity>
+   </commodities>
+   <description>Beene is rich in all sorts of common minerals, so the Soromid are using this world the same way anyone would: as a source of raw materials. The elements mined here are processed into standard packages used by the Soromid bioships, which means Beene is quite an important strategic location for the Soromid fleet.</description>
+   <bar>Pilots are advised to wear air-sealed suits when visiting Beene's bar. The planet's atmosphere can cause serious problems for normal humans, and the Soromid haven't bothered installing decontamination filters for the local population. As such, having a drink in Beene's bar is a bit of an ordeal. It's one of the less popular places among traders.</bar>
   </general>
+  <tech>
+   <item>Basic Outfits 1</item>
+   <item>Basic Trade Ships</item>
+  </tech>
  </asset>
  <asset name="Blunderbuss II">
   <pos>
@@ -8909,10 +8964,37 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>0</class>
    <population>500000000</population>
    <services>
-    <land>srm_mil_restricted</land>
+    <land/>
     <refuel/>
    </services>
+   <commodities/>
    <description>The Soromid and the rest of the galaxy have enjoyed a tense kind of friendship ever since the first bioships launched from Sorom. The rest of humanity is keenly interested in the Soromid genetic treatments, and the Soromid in turn are happy to turn a profit on their expertise, but there's still some degree of caution on both sides. Soromid Customs Central is a visible sign of that caution. It houses a full division of Soromid ships, and is responsible for maintaining order as well as inspecting the traffic that passes through Oberon.</description>
+   <bar>(null)</bar>
+  </general>
+ </asset>
+ <asset name="Soromid Wards Alpha">
+  <pos>
+   <x>-1723.417690</x>
+   <y>-4794.935802</y>
+  </pos>
+  <GFX>
+   <space>station-commerce2.png</space>
+   <exterior>station01.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Soromid</faction>
+   <value>50.000000</value>
+   <range>1</range>
+  </presence>
+  <general>
+   <class>0</class>
+   <population>1000</population>
+   <services>
+    <land/>
+    <refuel/>
+   </services>
+   <commodities/>
+   <description>As everyone knows, the Soromid are exporters of genetic treatment services. People from all over the galaxy travel to Soromid space to have their natural abilities enhanced, diseases cured or appearances improved. All of these people need to be treated somewhere, and this is one such place. Soromid Wards Alpha is a massive medical facility, the largest of all the Soromid Wards. Thousands of clients can be treated here at any one time. Most of the station's volume is taken up by personal treatment tanks, where clients spend anything from a week to months in an artificial coma while their genetic code is rewritten.</description>
   </general>
  </asset>
  <asset name="Sroolu">

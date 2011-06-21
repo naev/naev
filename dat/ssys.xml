@@ -4980,9 +4980,10 @@
    <y>363.066667</y>
   </pos>
   <assets>
+   <asset>Arrentil</asset>
    <asset>Beene</asset>
    <asset>Shikima II</asset>
-   <asset>Shikima III</asset>
+   <asset>Soromid Wards Alpha</asset>
   </assets>
   <jumps>
    <jump target="Father's Pride">
