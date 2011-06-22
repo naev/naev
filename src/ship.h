@@ -168,7 +168,9 @@ glTexture* ship_loadCommGFX( Ship* s );
 /*
  * render
  */
-void ship_renderSlots( double bx, double by, double bw, double bh, Ship *ship );
+void ship_addWidgets( unsigned int wid, int x, int y, int w, int h, void *data );
+void ship_updateWidgets( unsigned int wid, Ship *ship, int credits );
+void ship_renderSlots( double bx, double by, double bw, double bh, void *ship );
 void ship_renderSlotsRow( double bx, double by, double bw, char *str, ShipOutfitSlot *s, int n );
 
 /*

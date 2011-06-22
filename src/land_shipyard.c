@@ -29,7 +29,7 @@
 /*
  * Vars.
  */
-static Ship* shipyard_selected = NULL; /**< Currently selected shipyard ship. */
+static Ship** shipyard_selected = NULL; /**< Currently selected shipyard ship. */
 
 
 /*
@@ -38,7 +38,6 @@ static Ship* shipyard_selected = NULL; /**< Currently selected shipyard ship. */
 static void shipyard_buy( unsigned int wid, char* str );
 static void shipyard_trade( unsigned int wid, char* str );
 static void shipyard_rmouse( unsigned int wid, char* widget_name );
-static void shipyard_renderSlots( double bx, double by, double bw, double bh, void *data );
 
 
 /**
@@ -58,8 +57,11 @@ void shipyard_open( unsigned int wid )
    int y;
    const char *buf;
 
+   if( shipyard_selected == NULL )
+      shipyard_selected = (Ship **)malloc(sizeof(Ship*));
+
    /* Init vars. */
-   shipyard_selected = NULL;
+   shipyard_selected[0] = NULL ;
 
    /* Get window dimensions. */
    window_dimWindow( wid, &w, &h );
@@ -83,52 +85,7 @@ void shipyard_open( unsigned int wid )
          bw, bh, "btnBuyShip",
          "Buy", shipyard_buy );
 
-   /* target gfx */
-   window_addRect( wid, -41, -50,
-         SHIP_TARGET_W, SHIP_TARGET_H, "rctTarget", &cBlack, 0 );
-   window_addImage( wid, -40, -50,
-         SHIP_TARGET_W, SHIP_TARGET_H, "imgTarget", NULL, 1 );
-
-   /* slot types */
-   window_addCust( wid, -20, -160, 148, 70, "cstSlots", 0.,
-         shipyard_renderSlots, NULL, NULL );
-
-   /* stat text */
-   window_addText( wid, -40, -240, 128, 200, 0, "txtStats",
-         &gl_smallFont, &cBlack, NULL );
-
-   /* text */
-   buf = "Model:\n"
-         "Class:\n"
-         "Fabricator:\n"
-         "Crew:\n"
-         "\n"
-         "CPU:\n"
-         "Mass:\n"
-         "Jump Time:\n"
-         "Thrust:\n"
-         "Speed:\n"
-         "Turn:\n"
-         "\n"
-         "Absorption:\n"
-         "Shield:\n"
-         "Armour:\n"
-         "Energy:\n"
-         "Cargo Space:\n"
-         "Fuel:\n"
-         "Price:\n"
-         "Money:\n"
-         "License:\n";
-   th = gl_printHeightRaw( &gl_smallFont, 100, buf );
-   y  = -55;
-   window_addText( wid, 40+iw+20, y,
-         100, th, 0, "txtSDesc", &gl_smallFont, &cDConsole, buf );
-   window_addText( wid, 40+iw+20+100, y,
-         w-(40+iw+20+100)-20, th, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
-   y -= th;
-   window_addText( wid, 20+iw+40, y,
-         w-(20+iw+40) - 20, 185, 0, "txtDescription",
-         &gl_smallFont, NULL, NULL );
+   ship_addWidgets( wid, 20 + iw + 40, ih, w, h, (void *)shipyard_selected );
 
    /* set up the ships to buy/sell */
    ships = tech_getShip( land_planet->tech, &nships );
@@ -171,93 +128,14 @@ void shipyard_update( unsigned int wid, char* str )
 
    /* No ships */
    if (strcmp(shipname,"None")==0) {
-      window_modifyImage( wid, "imgTarget", NULL, 0, 0 );
-      window_disableButton( wid, "btnBuyShip");
-      window_disableButton( wid, "btnTradeShip");
-      snprintf( buf, PATH_MAX,
-            "None\n"
-            "NA\n"
-            "NA\n"
-            "NA\n"
-            "\n"
-            "NA\n"
-            "NA\n"
-            "NA\n"
-            "NA\n"
-            "NA\n"
-            "NA\n"
-            "\n"
-            "NA\n"
-            "NA\n"
-            "NA\n"
-            "NA\n"
-            "NA\n"
-            "NA\n"
-            "NA\n"
-            "NA\n"
-            "NA\n" );
-      window_modifyImage( wid, "imgTarget", NULL, 0, 0 );
-      window_modifyText( wid, "txtStats", NULL );
-      window_modifyText( wid, "txtDescription", NULL );
-      window_modifyText( wid, "txtDDesc", buf );
+      ship_updateWidgets( wid, ship, 0 );
       return;
    }
 
    ship = ship_get( shipname );
-   shipyard_selected = ship;
+   shipyard_selected[0] = ship;
 
-   /* update image */
-   window_modifyImage( wid, "imgTarget", ship->gfx_store, 0, 0 );
-
-   /* update text */
-   window_modifyText( wid, "txtStats", ship->desc_stats );
-   window_modifyText( wid, "txtDescription", ship->description );
-   credits2str( buf2, ship->price, 2 );
-   credits2str( buf3, player.p->credits, 2 );
-   snprintf( buf, PATH_MAX,
-         "%s\n"
-         "%s\n"
-         "%s\n"
-         "%d\n"
-         "\n"
-         "%.0f teraflops\n"
-         "%.0f tons\n"
-         "%.1f STU average\n"
-         "%.0f kN/ton\n"
-         "%.0f m/s\n"
-         "%.0f deg/s\n"
-         "\n"
-         "%.0f%% damage\n"
-         "%.0f MJ (%.1f MW)\n"
-         "%.0f MJ (%.1f MW)\n"
-         "%.0f MJ (%.1f MW)\n"
-         "%.0f tons\n"
-         "%d units\n"
-         "%s credits\n"
-         "%s credits\n"
-         "%s\n",
-         ship->name,
-         ship_class(ship),
-         ship->fabricator,
-         ship->crew,
-         /* Weapons & Manoeuvrability */
-         ship->cpu,
-         ship->mass,
-         pow( ship->mass, 1./2.5 ) / 5. * (ship->stats.jump_delay/100.+1.), /**< @todo make this more portable. */
-         ship->thrust / ship->mass,
-         ship->speed,
-         ship->turn*180/M_PI,
-         /* Misc */
-         ship->dmg_absorb*100.,
-         ship->shield, ship->shield_regen,
-         ship->armour, ship->armour_regen,
-         ship->energy, ship->energy_regen,
-         ship->cap_cargo,
-         ship->fuel,
-         buf2,
-         buf3,
-         (ship->license != NULL) ? ship->license : "None" );
-   window_modifyText( wid,  "txtDDesc", buf );
+   ship_updateWidgets( wid, ship, player.p->credits );
 
    if (!shipyard_canBuy( shipname ))
       window_disableButton( wid, "btnBuyShip");
@@ -463,21 +341,4 @@ static void shipyard_trade( unsigned int wid, char* str )
 
    /* Update shipyard. */
    shipyard_update(wid, NULL);
-}
-
-
-/**
- * @brief Custom widget render function for the slot widget.
- */
-static void shipyard_renderSlots( double bx, double by, double bw, double bh, void *data )
-{
-   (void) data;
-   Ship *ship;
-
-   /* Make sure a valid ship is selected. */
-   ship = shipyard_selected;
-   if (ship == NULL)
-      return;
-
-   ship_renderSlots( bx, by, bw, bh, ship );
 }

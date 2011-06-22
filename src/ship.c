@@ -964,12 +964,174 @@ void ships_free (void)
 }
 
 /**
+ * @biref Add widgets to render a ships information
+ */
+void ship_addWidgets( unsigned int wid, int x, int y, int w, int h, void *data )
+{
+   (void) y;
+   (void) h;
+   const char *buf;
+   int th, ly;
+   /* target gfx */
+   window_addRect( wid, -41, -50,
+         SHIP_TARGET_W, SHIP_TARGET_H, "rctTarget", &cBlack, 0 );
+   window_addImage( wid, -40, -50,
+         SHIP_TARGET_W, SHIP_TARGET_H, "imgTarget", NULL, 1 );
+
+   /* slot types */
+   window_addCust( wid, -20, -160, 148, 70, "cstSlots", 0.,
+         ship_renderSlots, NULL, data );
+
+   /* stat text */
+   window_addText( wid, -40, -240, 128, 200, 0, "txtStats",
+         &gl_smallFont, &cBlack, NULL );
+
+   /* text */
+   buf = "Model:\n"
+         "Class:\n"
+         "Fabricator:\n"
+         "Crew:\n"
+         "\n"
+         "CPU:\n"
+         "Mass:\n"
+         "Jump Time:\n"
+         "Thrust:\n"
+         "Speed:\n"
+         "Turn:\n"
+         "\n"
+         "Absorption:\n"
+         "Shield:\n"
+         "Armour:\n"
+         "Energy:\n"
+         "Cargo Space:\n"
+         "Fuel:\n"
+         "Price:\n"
+         "Money:\n"
+         "License:\n";
+   th = gl_printHeightRaw( &gl_smallFont, 100, buf );
+   ly  = -55;
+   window_addText( wid, x, ly,
+         100, th, 0, "txtSDesc", &gl_smallFont, &cDConsole, buf );
+   window_addText( wid, x + 100, ly,
+         w - (x+100) - 20, th, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
+   ly -= th;
+   window_addText( wid, x, ly,
+         w - x - 20, 185, 0, "txtDescription",
+         &gl_smallFont, NULL, NULL );
+}
+
+/**
+ * @brief Update widgets in window for ship
+ */
+void ship_updateWidgets( unsigned int wid, Ship *ship, int credits )
+{
+   char buf[PATH_MAX], buf2[ECON_CRED_STRLEN], buf3[ECON_CRED_STRLEN];
+   if(ship == NULL)
+   {
+      window_modifyImage( wid, "imgTarget", NULL, 0, 0 );
+      window_disableButton( wid, "btnBuyShip");
+      window_disableButton( wid, "btnTradeShip");
+      snprintf( buf, PATH_MAX,
+            "None\n"
+            "NA\n"
+            "NA\n"
+            "NA\n"
+            "\n"
+            "NA\n"
+            "NA\n"
+            "NA\n"
+            "NA\n"
+            "NA\n"
+            "NA\n"
+            "\n"
+            "NA\n"
+            "NA\n"
+            "NA\n"
+            "NA\n"
+            "NA\n"
+            "NA\n"
+            "NA\n"
+            "NA\n"
+            "NA\n" );
+      window_modifyImage( wid, "imgTarget", NULL, 0, 0 );
+      window_modifyText( wid, "txtStats", NULL );
+      window_modifyText( wid, "txtDescription", NULL );
+      window_modifyText( wid, "txtDDesc", buf );
+      return;
+   }
+
+   /* update image */
+   window_modifyImage( wid, "imgTarget", ship->gfx_store, 0, 0 );
+
+   /* update text */
+   window_modifyText( wid, "txtStats", ship->desc_stats );
+   window_modifyText( wid, "txtDescription", ship->description );
+   credits2str( buf2, ship->price, 2 );
+   credits2str( buf3, credits, 2 );
+   snprintf( buf, PATH_MAX,
+         "%s\n"
+         "%s\n"
+         "%s\n"
+         "%d\n"
+         "\n"
+         "%.0f teraflops\n"
+         "%.0f tons\n"
+         "%.1f STU average\n"
+         "%.0f kN/ton\n"
+         "%.0f m/s\n"
+         "%.0f deg/s\n"
+         "\n"
+         "%.0f%% damage\n"
+         "%.0f MJ (%.1f MW)\n"
+         "%.0f MJ (%.1f MW)\n"
+         "%.0f MJ (%.1f MW)\n"
+         "%.0f tons\n"
+         "%d units\n"
+         "%s credits\n"
+         "%s credits\n"
+         "%s\n",
+         ship->name,
+         ship_class(ship),
+         ship->fabricator,
+         ship->crew,
+         /* Weapons & Manoeuvrability */
+         ship->cpu,
+         ship->mass,
+         pow( ship->mass, 1./2.5 ) / 5. * (ship->stats.jump_delay/100.+1.), /**< @todo make this more portable. */
+         ship->thrust / ship->mass,
+         ship->speed,
+         ship->turn*180/M_PI,
+         /* Misc */
+         ship->dmg_absorb*100.,
+         ship->shield, ship->shield_regen,
+         ship->armour, ship->armour_regen,
+         ship->energy, ship->energy_regen,
+         ship->cap_cargo,
+         ship->fuel,
+         buf2,
+         buf3,
+         (ship->license != NULL) ? ship->license : "None" );
+   window_modifyText( wid,  "txtDDesc", buf );
+}
+
+/**
  * @brief Custom widget render function for the slot widget.
  */
-void ship_renderSlots( double bx, double by, double bw, double bh, Ship *ship )
+void ship_renderSlots( double bx, double by, double bw, double bh, void *data )
 {
    double x, y, w;
+   Ship *ship;
+   Ship **shipPtr;
 
+   if( data == NULL )
+      return;
+
+   shipPtr = (Ship **)data;
+
+   if( shipPtr[0] == NULL )
+      return;
+
+   ship = shipPtr[0];
    /* Make sure a valid ship is selected. */
    if (ship == NULL)
       return;
