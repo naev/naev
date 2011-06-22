@@ -39,7 +39,6 @@ static void shipyard_buy( unsigned int wid, char* str );
 static void shipyard_trade( unsigned int wid, char* str );
 static void shipyard_rmouse( unsigned int wid, char* widget_name );
 static void shipyard_renderSlots( double bx, double by, double bw, double bh, void *data );
-static void shipyard_renderSlotsRow( double bx, double by, double bw, char *str, ShipOutfitSlot *s, int n );
 
 
 /**
@@ -473,7 +472,6 @@ static void shipyard_trade( unsigned int wid, char* str )
 static void shipyard_renderSlots( double bx, double by, double bw, double bh, void *data )
 {
    (void) data;
-   double x, y, w;
    Ship *ship;
 
    /* Make sure a valid ship is selected. */
@@ -481,56 +479,5 @@ static void shipyard_renderSlots( double bx, double by, double bw, double bh, vo
    if (ship == NULL)
       return;
 
-   y = by + bh;
-
-   /* Draw rotated text. */
-   y -= 10;
-   gl_print( &gl_smallFont, bx, y, &cBlack, "Slots:" );
-
-   x = bx + 10.;
-   w = bw - 10.;
-
-   /* Weapon slots. */
-   y -= 20;
-   shipyard_renderSlotsRow( x, y, w, "W", ship->outfit_weapon, ship->outfit_nweapon );
-
-   /* Utility slots. */
-   y -= 20;
-   shipyard_renderSlotsRow( x, y, w, "U", ship->outfit_utility, ship->outfit_nutility );
-
-   /* Structure slots. */
-   y -= 20;
-   shipyard_renderSlotsRow( x, y, w, "S", ship->outfit_structure, ship->outfit_nstructure );
+   ship_renderSlots( bx, by, bw, bh, ship );
 }
-
-
-/**
- * @brief Renders a row of ship slots.
- */
-static void shipyard_renderSlotsRow( double bx, double by, double bw, char *str, ShipOutfitSlot *s, int n )
-{
-   (void) bw;
-   int i;
-   double x;
-   glColour *c;
-
-   x = bx;
-
-   /* Print text. */
-   gl_print( &gl_smallFont, bx, by, &cBlack, str );
-
-   /* Draw squares. */
-   for (i=0; i<n; i++) {
-      c = outfit_slotSizeColour( &s[i].slot );
-      if (c == NULL)
-         c = &cBlack;
-
-      x += 15.;
-      toolkit_drawRect( x, by, 10, 10, c, NULL );
-   }
-}
-
-
-
-
-

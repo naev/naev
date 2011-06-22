@@ -165,6 +165,11 @@ ShipClass ship_classFromString( char* str );
 credits_t ship_basePrice( Ship* s );
 glTexture* ship_loadCommGFX( Ship* s );
 
+/*
+ * render
+ */
+void ship_renderSlots( double bx, double by, double bw, double bh, Ship *ship );
+void ship_renderSlotsRow( double bx, double by, double bw, char *str, ShipOutfitSlot *s, int n );
 
 /*
  * misc.
