@@ -802,6 +802,41 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
    return 0;
 }
 
+static Ship** selectedShip = NULL;
+
+static void map_addShipDetailWidgets(unsigned int wid, int x, int y, int w, int h)
+{
+   if( selectedShip == NULL )
+      selectedShip = (Ship **)malloc(sizeof(Ship*));
+
+   selectedShip[0] = NULL;
+
+   ship_addWidgets( wid, x, y, w, h, (void *)selectedShip );
+}
+
+/**
+ * @brief Update the listPanel outfit details to the outfit selected.
+ *
+ *    @param wid The windowid of the window we're updating.
+ *    @param wgtname The name of the list that was selected.
+ *    @param x The x offset where we can start drawing
+ *    @param y the y offset where we can start drawing
+ *    @param w The width of the area where we can draw
+ *    @param h The height of the area where we can draw
+ */
+static void map_showShipDetail(unsigned int wid, char* wgtname, int x, int y, int w, int h)
+{
+   (void) x;
+   (void) y;
+   (void) h;
+   (void) w;
+   Ship *ship;
+
+   ship = ship_get( toolkit_getList(wid, wgtname) );
+   selectedShip[0] = ship;
+
+   ship_updateWidgets( wid, ship, player.p->credits);
+}
 
 /**
  * @brief Does fuzzy name matching for ships;
@@ -881,7 +916,8 @@ static int map_findSearchShips( unsigned int parent, const char *name )
       list  = malloc( len*sizeof(char*) );
       for (i=0; i<len; i++)
          list[i] = strdup( names[i] );
-      i = dialogue_list( "Search Results", list, len,
+      i = dialogue_listPanel( "Search Results", list, len, 400, 550,
+            map_addShipDetailWidgets, map_showShipDetail,
             "Search results for ships matching '%s':", name );
       if (i < 0) {
          free(names);
