@@ -53,9 +53,6 @@ void shipyard_open( unsigned int wid )
    int w, h;
    int iw, ih;
    int bw, bh;
-   int th;
-   int y;
-   const char *buf;
 
    if( shipyard_selected == NULL )
       shipyard_selected = (Ship **)malloc(sizeof(Ship*));
@@ -122,13 +119,13 @@ void shipyard_update( unsigned int wid, char* str )
    (void)str;
    char *shipname;
    Ship* ship;
-   char buf[PATH_MAX], buf2[ECON_CRED_STRLEN], buf3[ECON_CRED_STRLEN];
 
    shipname = toolkit_getImageArray( wid, "iarShipyard" );
 
    /* No ships */
    if (strcmp(shipname,"None")==0) {
-      ship_updateWidgets( wid, ship, 0 );
+      /* Can this case even be hit?  Are there shipyards with no ships? */
+      ship_updateWidgets( wid, (Ship *) NULL, 0 );
       return;
    }
 
