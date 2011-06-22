@@ -21,6 +21,7 @@
 #include "log.h"
 #include "ndata.h"
 #include "toolkit.h"
+#include "tk/toolkit_priv.h"
 #include "array.h"
 #include "conf.h"
 #include "npng.h"
@@ -960,4 +961,64 @@ void ships_free (void)
 
    array_free(ship_stack);
    ship_stack = NULL;
+}
+
+/**
+ * @brief Custom widget render function for the slot widget.
+ */
+void ship_renderSlots( double bx, double by, double bw, double bh, Ship *ship )
+{
+   double x, y, w;
+
+   /* Make sure a valid ship is selected. */
+   if (ship == NULL)
+      return;
+
+   y = by + bh;
+
+   /* Draw rotated text. */
+   y -= 10;
+   gl_print( &gl_smallFont, bx, y, &cBlack, "Slots:" );
+
+   x = bx + 10.;
+   w = bw - 10.;
+
+   /* Weapon slots. */
+   y -= 20;
+   ship_renderSlotsRow( x, y, w, "W", ship->outfit_weapon, ship->outfit_nweapon );
+
+   /* Utility slots. */
+   y -= 20;
+   ship_renderSlotsRow( x, y, w, "U", ship->outfit_utility, ship->outfit_nutility );
+
+   /* Structure slots. */
+   y -= 20;
+   ship_renderSlotsRow( x, y, w, "S", ship->outfit_structure, ship->outfit_nstructure );
+}
+
+
+/**
+ * @brief Renders a row of ship slots.
+ */
+void ship_renderSlotsRow( double bx, double by, double bw, char *str, ShipOutfitSlot *s, int n )
+{
+   (void) bw;
+   int i;
+   double x;
+   glColour *c;
+
+   x = bx;
+
+   /* Print text. */
+   gl_print( &gl_smallFont, bx, by, &cBlack, str );
+
+   /* Draw squares. */
+   for (i=0; i<n; i++) {
+      c = outfit_slotSizeColour( &s[i].slot );
+      if (c == NULL)
+         c = &cBlack;
+
+      x += 15.;
+      toolkit_drawRect( x, by, 10, 10, c, NULL );
+   }
 }
