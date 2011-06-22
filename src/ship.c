@@ -113,8 +113,6 @@ const char *ship_existsCase( const char* name )
 }
 
 
-
-
 /**
  * @brief Gets all the ships.
  */
@@ -963,6 +961,7 @@ void ships_free (void)
    ship_stack = NULL;
 }
 
+
 /**
  * @biref Add widgets to render a ships information
  */
@@ -1019,6 +1018,7 @@ void ship_addWidgets( unsigned int wid, int x, int y, int w, int h, void *data )
          w - x - 20, 185, 0, "txtDescription",
          &gl_smallFont, NULL, NULL );
 }
+
 
 /**
  * @brief Update widgets in window for ship
@@ -1113,6 +1113,7 @@ void ship_updateWidgets( unsigned int wid, Ship *ship, int credits )
          (ship->license != NULL) ? ship->license : "None" );
    window_modifyText( wid,  "txtDDesc", buf );
 }
+
 
 /**
  * @brief Custom widget render function for the slot widget.

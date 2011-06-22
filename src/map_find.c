@@ -41,10 +41,12 @@ static int map_find_planets = 0; /**< Planets checkbox value. */
 static int map_find_outfits = 0; /**< Outfits checkbox value. */
 static int map_find_ships   = 0; /**< Ships checkbox value. */
 
+
 /* Misc ugly globals. */
 /* Current found stuff. */
 static map_find_t *map_found_cur    = NULL;  /**< Pointer to found stuff. */
 static int map_found_ncur           = 0;     /**< Number of found stuff. */
+static Ship** selectedShip          = NULL;  /**< Currently selected search ship */
 /* Tech hack. */
 static tech_group_t **map_known_techs = NULL; /**< Known techs. */
 static Planet **map_known_planets   = NULL;  /**< Known planets with techs. */
@@ -582,6 +584,8 @@ static char **map_fuzzyOutfits( Outfit **o, int n, const char *name, int *len )
    *len = l;
    return names;
 }
+
+
 /**
  * @brief Gets the possible names the outfit name matches.
  */
@@ -598,6 +602,8 @@ static char **map_outfitsMatch( const char *name, int *len )
 
    return names;
 }
+
+
 /**
  * @brief Add widgets to the extended area on the outfit search
  *    listpanel.
@@ -640,6 +646,8 @@ static void map_addOutfitDetailFields(unsigned int wid, int x, int y, int w, int
          w-(iw+80), 180, 0, "txtDescription",
          &gl_smallFont, NULL, NULL );
 }
+
+
 /**
  * @brief Update the listPanel outfit details to the outfit selected.
  *
@@ -695,6 +703,7 @@ static void map_showOutfitDetail(unsigned int wid, char* wgtname, int x, int y, 
    th += gl_printHeightRaw( &gl_smallFont, 250, buf );
    window_moveWidget( wid, "txtDescription", 20+iw+40, -60-th-40 );
 }
+
 
 /**
  * @brief Searches for a outfit.
@@ -802,8 +811,10 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
    return 0;
 }
 
-static Ship** selectedShip = NULL;
 
+/**
+ * @brief Add widgets for ship display on the search results screen
+ */
 static void map_addShipDetailWidgets(unsigned int wid, int x, int y, int w, int h)
 {
    if( selectedShip == NULL )
@@ -813,6 +824,7 @@ static void map_addShipDetailWidgets(unsigned int wid, int x, int y, int w, int 
 
    ship_addWidgets( wid, x, y, w, h, (void *)selectedShip );
 }
+
 
 /**
  * @brief Update the listPanel outfit details to the outfit selected.
@@ -837,6 +849,7 @@ static void map_showShipDetail(unsigned int wid, char* wgtname, int x, int y, in
 
    ship_updateWidgets( wid, ship, player.p->credits);
 }
+
 
 /**
  * @brief Does fuzzy name matching for ships;
@@ -867,6 +880,8 @@ static char **map_fuzzyShips( Ship **s, int n, const char *name, int *len )
    *len = l;
    return names;
 }
+
+
 /**
  * @brief Gets the possible names the ship name matches.
  */
@@ -883,6 +898,8 @@ static char **map_shipsMatch( const char *name, int *len )
 
    return names;
 }
+
+
 /**
  * @brief Searches for a ship.
  *

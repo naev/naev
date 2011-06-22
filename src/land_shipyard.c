@@ -109,6 +109,8 @@ void shipyard_open( unsigned int wid )
    /* write the shipyard stuff */
    shipyard_update(wid, NULL);
 }
+
+
 /**
  * @brief Updates the ships in the shipyard window.
  *    @param wid Window to update the ships in.
@@ -145,6 +147,7 @@ void shipyard_update( unsigned int wid, char* str )
       window_enableButton( wid, "btnTradeShip");
 }
 
+
 /**
  * @brief Player right-clicks on a ship.
  *    @param wid Window player is buying ship from.
@@ -155,6 +158,7 @@ static void shipyard_rmouse( unsigned int wid, char* widget_name )
 {
     return shipyard_buy(wid, widget_name);
 }
+
 
 /**
  * @brief Player attempts to buy a ship.
@@ -192,6 +196,7 @@ static void shipyard_buy( unsigned int wid, char* str )
    shipyard_update(wid, NULL);
 }
 
+
 /**
  * @brief Makes sure it's sane to buy a ship.
  *    @param shipname Ship being bought.
@@ -216,6 +221,7 @@ int shipyard_canBuy ( char *shipname )
    return !failure;
 }
 
+
 /**
  * @brief Makes sure it's sane to sell a ship.
  *    @param shipname Ship being sold.
@@ -230,6 +236,7 @@ int can_sell( char* shipname )
 
    return !failure;
 }
+
 
 /**
  * @brief Makes sure it's sane to change ships.
