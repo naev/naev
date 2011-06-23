@@ -139,7 +139,6 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys );
 static void system_parseJumps( const xmlNodePtr parent );
 /* misc */
 static void system_setFaction( StarSystem *sys );
-static PlanetClass planetclass_get( const char a );
 static int getPresenceIndex( StarSystem *sys, int faction );
 static void presenceCleanup( StarSystem *sys );
 static void system_scheduler( double dt, int init );
@@ -164,7 +163,7 @@ extern credits_t economy_getPrice( const Commodity *com,
  *    @param a Char to get class from.
  *    @return Identifier matching the char.
  */
-static PlanetClass planetclass_get( const char a )
+PlanetClass planetclass_get( const char a )
 {
    switch (a) {
       /* planets use letters */
@@ -244,6 +243,43 @@ char planet_getClass( const Planet *p )
          WARN("Invalid planet class.");
          return 0;
    };
+}
+
+
+char* planet_getServiceName( int service )
+{
+   switch (service) {
+      case PLANET_SERVICE_LAND:      return "Land";
+      case PLANET_SERVICE_INHABITED: return "Inhabited";
+      case PLANET_SERVICE_REFUEL:    return "Refuel";
+      case PLANET_SERVICE_BAR:       return "Bar";
+      case PLANET_SERVICE_MISSIONS:  return "Missions";
+      case PLANET_SERVICE_COMMODITY: return "Commodity";
+      case PLANET_SERVICE_OUTFITS:   return "Outfits";
+      case PLANET_SERVICE_SHIPYARD:  return "Shipyard";
+   }
+   return NULL;
+}
+
+int planet_getService( char *name )
+{
+   if (strcmp(name,"Land")==0)
+      return PLANET_SERVICE_LAND;
+   else if (strcmp(name,"Inhabited")==0)
+      return PLANET_SERVICE_INHABITED;
+   else if (strcmp(name,"Refuel")==0)
+      return PLANET_SERVICE_REFUEL;
+   else if (strcmp(name,"Bar")==0)
+      return PLANET_SERVICE_BAR;
+   else if (strcmp(name,"Missions")==0)
+      return PLANET_SERVICE_MISSIONS;
+   else if (strcmp(name,"Commodity")==0)
+      return PLANET_SERVICE_COMMODITY;
+   else if (strcmp(name,"Outfits")==0)
+      return PLANET_SERVICE_OUTFITS;
+   else if (strcmp(name,"Shipyard")==0)
+      return PLANET_SERVICE_SHIPYARD;
+   return -1;
 }
 
 
