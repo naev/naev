@@ -1295,7 +1295,7 @@ static void sysedit_btnFaction( unsigned int wid_unused, char *unused )
 
    /* Generate factions list. */
    factions = faction_getAll( &n );
-   str = malloc( sizeof(char*) * n + 2);
+   str = malloc( sizeof(char*) * (n+1));
    j   = 0;
    for (i=0; i<n; i++)
       str[j++] = strdup( faction_name( factions[i] ) );
