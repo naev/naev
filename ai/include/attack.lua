@@ -38,7 +38,6 @@ function attack_think ()
    if mem.atk_think ~= nil then
       mem.atk_think()
    else
-      print(string.format("%s has invalid attack think!", ai.shipclass()))
       atk_generic_think()
    end
 end
@@ -51,7 +50,6 @@ function attack ()
    if mem.atk ~= nil then
       mem.atk()
    else
-      print(string.format("%s has invalid attack!", ai.shipclass()))
       atk_generic()
    end
 end
