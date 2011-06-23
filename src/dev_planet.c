@@ -95,7 +95,7 @@ static int dpl_savePlanet( xmlTextWriterPtr writer, const Planet *p )
       xmlw_elem( writer, "population", "%"PRIu64, p->population );
       xmlw_startElem( writer, "services" );
       if (planet_hasService( p, PLANET_SERVICE_LAND ))
-         xmlw_elemEmpty( writer, "land" );
+         xmlw_elem( writer, "land", "%s", p->land_func );
       if (planet_hasService( p, PLANET_SERVICE_REFUEL ))
          xmlw_elemEmpty( writer, "refuel" );
       if (planet_hasService( p, PLANET_SERVICE_BAR ))
