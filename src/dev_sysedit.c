@@ -1111,9 +1111,9 @@ static void sysedit_editPnt( void )
    x += 40 + 10;
 
    /* Bottom buttons. */
-   window_addButton( wid, -20 - bw*3 - 15*3, 35 + BUTTON_HEIGHT, bw, BUTTON_HEIGHT,
-         "btnAddService", "Add Service", sysedit_btnAddService );
    window_addButton( wid, -20 - bw*2 - 15*2, 35 + BUTTON_HEIGHT, bw, BUTTON_HEIGHT,
+         "btnAddService", "Add Service", sysedit_btnAddService );
+   window_addButton( wid, -20 - bw*3 - 15*3, 35 + BUTTON_HEIGHT, bw, BUTTON_HEIGHT,
          "btnRmService", "Rm Service", sysedit_btnRmService );
    window_addButton( wid, -20 - bw*3 - 15*3, 20, bw, BUTTON_HEIGHT,
          "btnSavePnt", "Save", sysedit_savePnt );
@@ -1173,23 +1173,6 @@ static void sysedit_genServicesList( unsigned int wid )
       if (!planet_hasService(p, 1<<i) && (1<<i != PLANET_SERVICE_INHABITED))
          n++;
 
-   /* Add list of services the planet lacks. */
-   j = 0;
-   if (n) {
-      lack = malloc( sizeof(char*) * n );
-      for (i=0; i<8; i++)
-         if (!planet_hasService(p, 1<<i) && (1<<i != PLANET_SERVICE_INHABITED))
-            lack[j++] = strdup( planet_getServiceName(1<<i) );
-   }
-   else {
-      lack = malloc( sizeof(char*) );
-      lack[j++] = strdup( "None" );
-   }
-
-   /* Add list. */
-   window_addList( wid, x, y, w, h, "lstServicesLacked", lack, j, 0, NULL );
-   x += w + 15;
-
    /* Get all the services the planet has. */
    j = 0;
    if (planet_hasService(p, PLANET_SERVICE_LAND)) {
@@ -1205,6 +1188,23 @@ static void sysedit_genServicesList( unsigned int wid )
 
    /* Add list. */
    window_addList( wid, x, y, w, h, "lstServicesHave", have, j, 0, NULL );
+   x += w + 15;
+
+   /* Add list of services the planet lacks. */
+   j = 0;
+   if (n) {
+      lack = malloc( sizeof(char*) * n );
+      for (i=0; i<8; i++)
+         if (!planet_hasService(p, 1<<i) && (1<<i != PLANET_SERVICE_INHABITED))
+            lack[j++] = strdup( planet_getServiceName(1<<i) );
+   }
+   else {
+      lack = malloc( sizeof(char*) );
+      lack[j++] = strdup( "None" );
+   }
+
+   /* Add list. */
+   window_addList( wid, x, y, w, h, "lstServicesLacked", lack, j, 0, NULL );
 
    /* Restore positions. */
    if (hpos != -1 && lpos != -1) {
