@@ -152,21 +152,6 @@ LuaFaction* lua_tofaction( lua_State *L, int ind )
 {
    return (LuaFaction*) lua_touserdata(L,ind);
 }
-/**
- * @brief Gets faction at index raising error if type isn't faction.
- *
- *    @param L Lua state to get faction from.
- *    @param ind Index position to find the faction.
- *    @return Faction found at the index in the state.
- */
-LuaFaction* luaL_checkfaction( lua_State *L, int ind )
-{
-   if (lua_isfaction(L,ind))
-      return lua_tofaction(L,ind);
-
-   luaL_typerror(L, ind, FACTION_METATABLE);
-   return NULL;
-}
 
 
 /**

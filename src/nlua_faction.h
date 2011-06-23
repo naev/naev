@@ -30,7 +30,6 @@ int nlua_loadFaction( lua_State *L, int readonly );
  * Faction operations
  */
 LuaFaction* lua_tofaction( lua_State *L, int ind );
-LuaFaction* luaL_checkfaction( lua_State *L, int ind );
 LuaFaction* lua_pushfaction( lua_State *L, LuaFaction faction );
 int luaL_validfaction( lua_State *L, int ind );
 int lua_isfaction( lua_State *L, int ind );

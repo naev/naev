@@ -9,17 +9,10 @@
    <space>002.png</space>
    <exterior>station03.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Adham">
@@ -45,7 +38,6 @@
    </services>
    <commodities/>
    <description>Adham is a cold, lifeless planet. The only reason why there is a landing strip here at all is that the planet hosts the three arctic-themed arenas for Totoran's gladiatiorial games. While the landing zone and a small buffer around it is considered neutral territory, most of the planet's surface is subject to the destructive sport that is so popular among Totoran's visitors.</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Adrian">
@@ -85,17 +77,10 @@
    <space>J04.png</space>
    <exterior>lava.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Aillis">
@@ -139,17 +124,10 @@
    <space>K02.png</space>
    <exterior>aquatic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Alteris IV">
@@ -161,17 +139,10 @@
    <space>moon-A01.png</space>
    <exterior>forest.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Alteris V">
@@ -183,17 +154,10 @@
    <space>P03.png</space>
    <exterior>station03.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Amaroq I">
@@ -205,17 +169,10 @@
    <space>G01.png</space>
    <exterior>methane.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Amaroq III">
@@ -227,17 +184,10 @@
    <space>M08.png</space>
    <exterior>aquatic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Ambre">
@@ -326,17 +276,10 @@
    <space>G02.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="An'ku II">
@@ -348,17 +291,10 @@
    <space>L00.png</space>
    <exterior>desertic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="An'ku III">
@@ -370,17 +306,10 @@
    <space>C00.png</space>
    <exterior>station00.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Anarbalis II">
@@ -392,17 +321,10 @@
    <space>K04.png</space>
    <exterior>desertic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Anarbalis III">
@@ -414,17 +336,10 @@
    <space>O01.png</space>
    <exterior>station05.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Andee II">
@@ -436,17 +351,10 @@
    <space>K00.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Andee III">
@@ -458,17 +366,10 @@
    <space>X00.png</space>
    <exterior>mining5.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Andee IIIa">
@@ -480,17 +381,10 @@
    <space>moon-P00.png</space>
    <exterior>mining2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Andee IIa">
@@ -502,17 +396,10 @@
    <space>moon-H02.png</space>
    <exterior>mining2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Anecu">
@@ -564,17 +451,10 @@
    <space>G02.png</space>
    <exterior>station00.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Antica">
@@ -671,17 +551,10 @@
    <space>J04.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Apez V">
@@ -693,17 +566,10 @@
    <space>L00.png</space>
    <exterior>station01.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Arai">
@@ -715,17 +581,10 @@
    <space>J01.png</space>
    <exterior>station00.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Arch Arai">
@@ -859,17 +718,10 @@
    <space>moon-G01.png</space>
    <exterior>aquatic.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Arcturus II">
@@ -881,17 +733,10 @@
    <space>D02.png</space>
    <exterior>station04.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Arrakis">
@@ -993,7 +838,6 @@
     <commodity>Industrial Goods</commodity>
    </commodities>
    <description>Avoss was originally a mediocre, but habitable world. So, when the fourteenth colony ship, Petrovsk, arrived, its colonists considered themselved fairly fortunate to have found a place they could call home. However, some fifty years after the expedition had touched down, the world began to change. Seismic activity becan escalating off the charts everywhere, causing earthquakes and volcanic eruptions all over the world. Now, the world is devastated, a mere shadow of its former self. The colonists have managed to survive however, and remain even today.</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Babylon I">
@@ -1005,17 +849,10 @@
    <space>M08.png</space>
    <exterior>aquatic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Babylon II">
@@ -1027,17 +864,10 @@
    <space>P03.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Babylon IIa">
@@ -1049,17 +879,10 @@
    <space>moon-J00.png</space>
    <exterior>mining5.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Basel I">
@@ -1071,17 +894,10 @@
    <space>moon-A00.png</space>
    <exterior>forest.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Beeklo II">
@@ -1093,17 +909,10 @@
    <space>G00.png</space>
    <exterior>snow.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Beene">
@@ -1115,17 +924,10 @@
    <space>G01.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Blunderbuss II">
@@ -1137,17 +939,10 @@
    <space>moon-H00.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Bon Sebb">
@@ -1222,17 +1017,10 @@
    <space>I00.png</space>
    <exterior>methane.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Brimstone II">
@@ -1244,17 +1032,10 @@
    <space>J04.png</space>
    <exterior>station03.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Brimstone III">
@@ -1266,17 +1047,10 @@
    <space>A01.png</space>
    <exterior>desertic4.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Brimstone Ia">
@@ -1288,17 +1062,10 @@
    <space>moon-D01.png</space>
    <exterior>station01.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Brimstone Ib">
@@ -1310,17 +1077,10 @@
    <space>moon-J02.png</space>
    <exterior>forest2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Brooks">
@@ -1451,17 +1211,10 @@
    <space>A03.png</space>
    <exterior>desertic4.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Capricorn III">
@@ -1473,17 +1226,10 @@
    <space>O01.png</space>
    <exterior>station01.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Capricorn IIIa">
@@ -1495,17 +1241,10 @@
    <space>moon-M00.png</space>
    <exterior>forest.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Cerberus">
@@ -1545,17 +1284,10 @@
    <space>A01.png</space>
    <exterior>forest2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Cerberus II">
@@ -1567,17 +1299,10 @@
    <space>G02.png</space>
    <exterior>station00.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Cerberus IIa">
@@ -1589,17 +1314,10 @@
    <space>moon-K00.png</space>
    <exterior>aquatic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Cerberus IV">
@@ -1611,17 +1329,10 @@
    <space>D02.png</space>
    <exterior>station00.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Cetrat">
@@ -1670,17 +1381,10 @@
    <space>A02.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Chriik">
@@ -1733,17 +1437,10 @@
    <space>J02.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Churchill I">
@@ -1755,17 +1452,10 @@
    <space>G00.png</space>
    <exterior>station00.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Churchill IIa">
@@ -1777,17 +1467,10 @@
    <space>moon-M01.png</space>
    <exterior>forest2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Claudius Mehan">
@@ -1799,17 +1482,10 @@
    <space>000.png</space>
    <exterior>station02.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Crylo">
@@ -1862,17 +1538,10 @@
    <space>moon-M06.png</space>
    <exterior>aquatic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Cutha">
@@ -1884,17 +1553,10 @@
    <space>M04.png</space>
    <exterior>station03.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Cygnus IV">
@@ -1906,17 +1568,10 @@
    <space>A03.png</space>
    <exterior>desertic.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="DVNN Central">
@@ -1987,17 +1642,10 @@
    <space>J01.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Dakron V">
@@ -2009,17 +1657,10 @@
    <space>G02.png</space>
    <exterior>forest.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Daravon I">
@@ -2031,17 +1672,10 @@
    <space>moon-C00.png</space>
    <exterior>station03.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Daravon III">
@@ -2053,17 +1687,10 @@
    <space>O01.png</space>
    <exterior>aquatic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Darkshed">
@@ -2123,17 +1750,10 @@
    <space>P03.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Darkstone V">
@@ -2145,17 +1765,10 @@
    <space>moon-J00.png</space>
    <exterior>lava.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Dawn">
@@ -2199,17 +1812,10 @@
    <space>J04.png</space>
    <exterior>forest.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Delta Pavonis II">
@@ -2221,17 +1827,10 @@
    <space>C01.png</space>
    <exterior>station02.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Delta Pavonis IIa">
@@ -2243,17 +1842,10 @@
    <space>moon-I00.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Diabolos">
@@ -2279,7 +1871,6 @@
    </services>
    <commodities/>
    <description>Diabolos station was constructed especially for the sport that made Totoran famous. The station sports two separate arenas. The first one is a deadly, three dimensional labyrinth filled with dangerous traps and obstacles. It fills most of the station's bulk. The second arena is actually space itself. Gladiators fight in lifesuits on the outer hull of the station, without lifelines.</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Diadem I">
@@ -2291,17 +1882,10 @@
    <space>J00.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Diadem II">
@@ -2313,17 +1897,10 @@
    <space>K00.png</space>
    <exterior>station01.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Doeston Prime">
@@ -2335,17 +1912,10 @@
    <space>J02.png</space>
    <exterior>station03.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Dohriabi Prime">
@@ -2357,17 +1927,10 @@
    <space>S01.png</space>
    <exterior>station00.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Donnar">
@@ -2451,17 +2014,10 @@
    <space>I01.png</space>
    <exterior>station01.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Dowue">
@@ -2513,17 +2069,10 @@
    <space>K03.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Draconis Beta">
@@ -2535,17 +2084,10 @@
    <space>J00.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Draconis Delta">
@@ -2557,17 +2099,10 @@
    <space>moon-H02.png</space>
    <exterior>snow.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Draconis Epsilon">
@@ -2618,17 +2153,10 @@
    <space>D01.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Draconis Omega">
@@ -2682,17 +2210,10 @@
    <space>L00.png</space>
    <exterior>station01.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Duran Shipyard">
@@ -2810,17 +2331,10 @@
    <space>P01.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>P</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Dust">
@@ -2832,17 +2346,10 @@
    <space>D01.png</space>
    <exterior>station00.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Dvaer II">
@@ -2854,17 +2361,10 @@
    <space>D00.png</space>
    <exterior>forest.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Dvaer III">
@@ -2876,17 +2376,10 @@
    <space>O02.png</space>
    <exterior>station00.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Dvaer IIIa">
@@ -2898,17 +2391,10 @@
    <space>moon-A00.png</space>
    <exterior>aquatic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Dvaer IV">
@@ -2920,17 +2406,10 @@
    <space>J03.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Dvaer Prime">
@@ -3000,7 +2479,6 @@
    </services>
    <commodities/>
    <description>This is Dvaered High Command, the true seat of power over all Dvaered controlled territories. It is here that the Dvaered Generals come together and decide on a course of action for the Dvaered military forces. Understandably, Dvaered High Command is a military stronghold, one of the most heavily guarded places in the galaxy. One needs a certain amount of Dvaered commendations to even be allowed to set foot on the station.</description>
-   <bar>(null)</bar>
   </general>
   <tech>
    <item>Kinetic 1</item>
@@ -3023,17 +2501,10 @@
    <space>moon-M00.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Eclipse Station">
@@ -3082,17 +2553,10 @@
    <space>P04.png</space>
    <exterior>forest.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Eenerim">
@@ -3140,17 +2604,10 @@
    <space>A01.png</space>
    <exterior>aquatic.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Eiderdown III">
@@ -3162,17 +2619,10 @@
    <space>D01.png</space>
    <exterior>mining3.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Eiroik">
@@ -3184,10 +2634,6 @@
    <space>J01.png</space>
    <exterior>methane.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>J</class>
    <population>0</population>
@@ -3196,7 +2642,6 @@
    </services>
    <commodities/>
    <description>Eiroik was a former mining planet under Empire rule, known for its toxic atmosphere and difficult, rough terrain produced through millenia of volcanic activity. The few human colonies were eradicated by the Collective. The generators have failed and the former spaceport lies in ruins. All that remains is dust.</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Eist Shipyard">
@@ -3227,7 +2672,6 @@
     <commodity>Industrial Goods</commodity>
    </commodities>
    <description>Eist Shipyard is one of the primary ship construction facilities in Dvaered space. Most of the Dvaered's heavy military vessels are produced here, though production of the lighter ships is taken care of by shipyards outside of Dvaer. Eist Shipyard also supplies civilian models to individuals and organizations.</description>
-   <bar>(null)</bar>
   </general>
   <tech>
    <item>Heavy Civilian Combat Ships</item>
@@ -3284,17 +2728,10 @@
    <space>H00.png</space>
    <exterior>desertic.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Em 4">
@@ -3306,17 +2743,10 @@
    <space>moon-H01.png</space>
    <exterior>methane.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Em 5">
@@ -3438,17 +2868,10 @@
    <space>K02.png</space>
    <exterior>station00.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Eridani II">
@@ -3460,17 +2883,10 @@
    <space>D02.png</space>
    <exterior>snow.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Eridani III">
@@ -3482,17 +2898,10 @@
    <space>D00.png</space>
    <exterior>lava.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Esker I">
@@ -3504,17 +2913,10 @@
    <space>moon-O00.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Esker II">
@@ -3526,17 +2928,10 @@
    <space>K04.png</space>
    <exterior>aquatic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Esker IV">
@@ -3548,17 +2943,10 @@
    <space>P03.png</space>
    <exterior>forest.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Europea">
@@ -3610,17 +2998,10 @@
    <space>K02.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Eye of Night II">
@@ -3632,17 +3013,10 @@
    <space>A00.png</space>
    <exterior>aquatic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Eye of Night III">
@@ -3654,17 +3028,10 @@
    <space>P02.png</space>
    <exterior>station00.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Father's Pride I">
@@ -3676,17 +3043,10 @@
    <space>D00.png</space>
    <exterior>lava.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Father's Pride II">
@@ -3698,17 +3058,10 @@
    <space>H02.png</space>
    <exterior>forest2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Father's Pride III">
@@ -3720,17 +3073,10 @@
    <space>J00.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Fernando Station">
@@ -3777,17 +3123,10 @@
    <space>A01.png</space>
    <exterior>station00.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Fidelis IV">
@@ -3799,17 +3138,10 @@
    <space>moon-D00.png</space>
    <exterior>station02.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Flach">
@@ -3821,17 +3153,10 @@
    <space>Y00.png</space>
    <exterior>mining2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Folevo">
@@ -3843,17 +3168,10 @@
    <space>moon-A01.png</space>
    <exterior>snow.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Forge">
@@ -3874,9 +3192,6 @@
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Fort Sirius">
@@ -3908,7 +3223,6 @@
     <commodity>Industrial Goods</commodity>
    </commodities>
    <description>Fort Sirius is the primary military hub of the Sirius army. It serves as the gatekeeper for Aesir, making sure no threats will ever reach Mutris. The station has hundreds of hangars in all sizes, allowing a full contigent to be stationed and ready at all times.</description>
-   <bar>(null)</bar>
   </general>
   <tech>
    <item>Ion 1</item>
@@ -3928,17 +3242,10 @@
    <space>A01.png</space>
    <exterior>station03.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Fortitude II">
@@ -3950,17 +3257,10 @@
    <space>J02.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Fortitude III">
@@ -3972,17 +3272,10 @@
    <space>P04.png</space>
    <exterior>aquatic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Freshwater Station">
@@ -4025,17 +3318,10 @@
    <space>Y00.png</space>
    <exterior>station01.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Fried II">
@@ -4047,17 +3333,10 @@
    <space>S00.png</space>
    <exterior>oceanic.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Fried III">
@@ -4069,17 +3348,10 @@
    <space>I01.png</space>
    <exterior>station05.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Fried IIIa">
@@ -4091,17 +3363,10 @@
    <space>moon-H01.png</space>
    <exterior>mining3.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Fried Ia">
@@ -4113,17 +3378,10 @@
    <space>moon-P01.png</space>
    <exterior>station01.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Fury I">
@@ -4135,17 +3393,10 @@
    <space>G00.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Fuzka">
@@ -4228,17 +3479,10 @@
    <space>A03.png</space>
    <exterior>mining4.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Gammacron IV">
@@ -4250,17 +3494,10 @@
    <space>K00.png</space>
    <exterior>desertic4.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Gammacron V">
@@ -4272,17 +3509,10 @@
    <space>J00.png</space>
    <exterior>station00.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Gammacron Va">
@@ -4294,17 +3524,10 @@
    <space>moon-J02.png</space>
    <exterior>aquatic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Gammacron Vb">
@@ -4316,17 +3539,10 @@
    <space>moon-J01.png</space>
    <exterior>lava.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Gaula">
@@ -4338,17 +3554,10 @@
    <space>O00.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Gayathi">
@@ -4379,7 +3588,6 @@
     <commodity>Industrial Goods</commodity>
    </commodities>
    <description>The colony on Gayathi has been around since before Sirichana settled on Mutris. In those days it was an outpost of one of the Factions that were destroyed in the Faction Wars, forgotten and overlooked by all. With its source of funding and supplies gone, Gayathi never had a chance to fully develop its economic infrastructure. Then, when Sirius rose as a galactic power, Gayathi came to fall under its influence. Now it is home to some of the most devout believers found in Sirius space.</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Gem">
@@ -4391,17 +3599,10 @@
    <space>moon-P02.png</space>
    <exterior>aquatic.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Geron">
@@ -4454,17 +3655,10 @@
    <space>I01.png</space>
    <exterior>station00.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Gilligan's Memory">
@@ -4512,17 +3706,10 @@
    <space>A00.png</space>
    <exterior>aquatic.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Ginger II">
@@ -4534,17 +3721,10 @@
    <space>moon-A01.png</space>
    <exterior>snow.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Ginger III">
@@ -4556,17 +3736,10 @@
    <space>moon-D00.png</space>
    <exterior>forest2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Ginni">
@@ -4617,17 +3790,10 @@
    <space>D02.png</space>
    <exterior>station04.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Goddard IV">
@@ -4639,17 +3805,10 @@
    <space>P02.png</space>
    <exterior>desertic4.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Godtra">
@@ -4701,17 +3860,10 @@
    <space>moon-J01.png</space>
    <exterior>mining6.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Greis">
@@ -4762,17 +3914,10 @@
    <space>K03.png</space>
    <exterior>oceanic.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Gyrios IV">
@@ -4784,17 +3929,10 @@
    <space>A02.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Gyrios V">
@@ -4806,17 +3944,10 @@
    <space>moon-C00.png</space>
    <exterior>station03.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Haldr">
@@ -4859,17 +3990,10 @@
    <space>I00.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>I</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Halir">
@@ -4985,17 +4109,10 @@
    <space>A00.png</space>
    <exterior>aquatic.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Hatter II">
@@ -5007,17 +4124,10 @@
    <space>J00.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Haven">
@@ -5029,17 +4139,10 @@
    <space>A02.png</space>
    <exterior>desertic.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Hekaras III">
@@ -5051,17 +4154,10 @@
    <space>moon-I00.png</space>
    <exterior>station01.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Hekaras IV">
@@ -5073,17 +4169,10 @@
    <space>I01.png</space>
    <exterior>lava.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Hikatalat">
@@ -5113,7 +4202,6 @@
     <commodity>Food</commodity>
    </commodities>
    <description>Hikatalat used to be a resource world, before the rise of the Empire. But over time the colony was deemed to be unprofitable, and operations ceased. The world is still inhabited today, but its only value now lies in territorial control for Dvaered Warlords. The population is poor and lives in bad circumstances. There's nothing much to do here for offworlders.</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Huan'xi">
@@ -5166,17 +4254,10 @@
    <space>moon-K00.png</space>
    <exterior>lava.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Humdrum II">
@@ -5188,17 +4269,10 @@
    <space>H02.png</space>
    <exterior>station00.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Humdrum III">
@@ -5210,17 +4284,10 @@
    <space>moon-J02.png</space>
    <exterior>station01.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Hurada">
@@ -5407,7 +4474,6 @@
    </services>
    <commodities/>
    <description>Named after the figure from Greek mythology, Icarus is a hot world with extreme seismic activity. This makes it the perfect location for some of Totoran's volcanic-themed arenas. Gladiators fighting on Icarus have as much to fear from the environment as they have from each other, and the most spectacular kills made in the arenas here involve the unstable terrain itself.</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Imk">
@@ -5419,17 +4485,10 @@
    <space>moon-P01.png</space>
    <exterior>forest.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Inca">
@@ -5441,17 +4500,10 @@
    <space>moon-I01.png</space>
    <exterior>lava.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Ingot I">
@@ -5463,17 +4515,10 @@
    <space>C00.png</space>
    <exterior>station00.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Inios Station">
@@ -5673,17 +4718,10 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>M02.png</space>
    <exterior>aquatic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
   <tech>
    <item>Basic Outfits 1</item>
@@ -5699,17 +4737,10 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>K04.png</space>
    <exterior>desertic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Karman II">
@@ -5721,17 +4752,10 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>O01.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Khelim">
@@ -5782,17 +4806,10 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>O00.png</space>
    <exterior>forest.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Klantar III">
@@ -5804,17 +4821,10 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>J01.png</space>
    <exterior>station01.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Koralis IV">
@@ -5826,17 +4836,10 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>moon-A00.png</space>
    <exterior>aquatic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Koralis VI">
@@ -5848,17 +4851,10 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>Y00.png</space>
    <exterior>desertic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Kotori">
@@ -5870,17 +4866,10 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>moon-I00.png</space>
    <exterior>station01.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Kretogg I">
@@ -5892,17 +4881,10 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>J03.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Kretogg II">
@@ -5914,17 +4896,10 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>K03.png</space>
    <exterior>oceanic.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Kretogg III">
@@ -5936,17 +4911,10 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>S00.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Ksher I">
@@ -5958,17 +4926,10 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>J02.png</space>
    <exterior>mining5.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Ksher II">
@@ -5980,17 +4941,10 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>D02.png</space>
    <exterior>station04.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Ksher III">
@@ -6002,17 +4956,10 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>M01.png</space>
    <exterior>methane.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Laarss">
@@ -6063,17 +5010,10 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>D02.png</space>
    <exterior>station04.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Lapis II">
@@ -6085,17 +5025,10 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>moon-P00.png</space>
    <exterior>mining3.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Lapra">
@@ -6148,17 +5081,10 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>M07.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Lazuli I">
@@ -6170,17 +5096,10 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>H00.png</space>
    <exterior>aquatic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Lazuli III">
@@ -6192,17 +5111,10 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>H02.png</space>
    <exterior>desertic4.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Lazuli Ia">
@@ -6214,17 +5126,10 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>moon-H00.png</space>
    <exterior>mining3.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Leo">
@@ -6236,17 +5141,10 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>A00.png</space>
    <exterior>mining4.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Limbo I">
@@ -6258,17 +5156,10 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>K02.png</space>
    <exterior>station00.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Limbo II">
@@ -6280,17 +5171,10 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>A03.png</space>
    <exterior>desertic.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Lorelei">
@@ -6344,17 +5228,10 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>moon-A00.png</space>
    <exterior>forest.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="M.K.">
@@ -6366,17 +5243,10 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>M01.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Madeleine Station">
@@ -6465,17 +5335,10 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>moon-A01.png</space>
    <exterior>station00.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Manis">
@@ -6644,17 +5507,10 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>A02.png</space>
    <exterior>lava.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Massia IV">
@@ -6666,17 +5522,10 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>D02.png</space>
    <exterior>methane.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Massia IVa">
@@ -6688,17 +5537,10 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>moon-G01.png</space>
    <exterior>aquatic.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Mastodon Station">
@@ -6740,17 +5582,10 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>moon-C00.png</space>
    <exterior>station03.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Megan Station">
@@ -6790,17 +5625,10 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>K00.png</space>
    <exterior>mining3.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Merisi II">
@@ -6812,17 +5640,10 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>O01.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Merisi III">
@@ -6834,17 +5655,10 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>D02.png</space>
    <exterior>mining2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Merisi IV">
@@ -6856,17 +5670,10 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>moon-P02.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Modus">
@@ -6990,17 +5797,10 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>K03.png</space>
    <exterior>aquatic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Myuirr Station">
@@ -7030,7 +5830,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
     <commodity>Ore</commodity>
    </commodities>
    <description>The Dvaered war machine relies a lot on flinging chunks of matter at enemy ships, and those chunks of matter have to come from somewhere. Myuirr Station is one of the most productive ammunition production facilities in Dvaered space. It produces ordinance for a variety of ballistic and missile weaponry. The portion of its produce that isn't claimed by Dvaered High Command in tax is sold to Warlords, retailers and civilians for profit.</description>
-   <bar>(null)</bar>
   </general>
   <tech>
    <item>Missiles 1</item>
@@ -7077,17 +5876,10 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>K02.png</space>
    <exterior>station01.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Nartur II">
@@ -7099,17 +5891,10 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>M08.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Nartur III">
@@ -7121,17 +5906,10 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>I01.png</space>
    <exterior>aquatic.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Nartur IV">
@@ -7143,17 +5921,10 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>I00.png</space>
    <exterior>station00.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Nartur IVa">
@@ -7165,17 +5936,10 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>moon-J00.png</space>
    <exterior>forest.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="New Deimos">
@@ -7187,17 +5951,10 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>I00.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="New Dortmund">
@@ -7321,17 +6078,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>D01.png</space>
    <exterior>forest.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="New Pluto">
@@ -7343,17 +6093,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-P02.png</space>
    <exterior>station00.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Niflheim">
@@ -7406,17 +6149,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>P01.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Niger II">
@@ -7428,17 +6164,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>P02.png</space>
    <exterior>oceanic.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Nixa">
@@ -7588,17 +6317,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>L00.png</space>
    <exterior>desertic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Nougat I">
@@ -7610,17 +6332,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>M08.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Nougat II">
@@ -7632,17 +6347,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-P02.png</space>
    <exterior>forest.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Nova Shakar">
@@ -7695,17 +6403,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-A00.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Oberon III">
@@ -7717,17 +6418,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>G01.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Oberon IV">
@@ -7739,17 +6433,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>J01.png</space>
    <exterior>station03.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Old Man Jack">
@@ -7761,17 +6448,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>G02.png</space>
    <exterior>mining5.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Oma">
@@ -7930,17 +6610,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-G01.png</space>
    <exterior>aquatic.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Opal Station">
@@ -8022,17 +6695,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-H00.png</space>
    <exterior>oceanic.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Overture II">
@@ -8044,17 +6710,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>L00.png</space>
    <exterior>station01.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Overture III">
@@ -8066,17 +6725,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>M02.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Ozogo X">
@@ -8088,17 +6740,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>J00.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>J</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="P0125">
@@ -8110,17 +6755,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>D01.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="P2020">
@@ -8132,17 +6770,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-I01.png</space>
    <exterior>station03.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="P2021">
@@ -8154,17 +6785,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>G00.png</space>
    <exterior>station00.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="P2022">
@@ -8176,17 +6800,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-C00.png</space>
    <exterior>station03.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="P9122">
@@ -8198,17 +6815,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>P03.png</space>
    <exterior>forest.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="P9234">
@@ -8220,17 +6830,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>H00.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Paul 2">
@@ -8313,17 +6916,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-M03.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Perhelion Beta">
@@ -8335,17 +6931,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-M05.png</space>
    <exterior>station01.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Perhelion Gamma">
@@ -8357,17 +6946,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-J02.png</space>
    <exterior>oceanic.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Petaat">
@@ -8450,17 +7032,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-A01.png</space>
    <exterior>snow.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Pilatis II">
@@ -8472,17 +7047,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-M01.png</space>
    <exterior>station00.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Pilatis III">
@@ -8494,17 +7062,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-O00.png</space>
    <exterior>desertic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Point Zero 0">
@@ -8516,17 +7077,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>D00.png</space>
    <exterior>desertic4.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Point Zero Station">
@@ -8538,17 +7092,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>002.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Polaris Prime">
@@ -8689,17 +7236,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>D01.png</space>
    <exterior>station01.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Provectus Nova Ia">
@@ -8711,17 +7251,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-O01.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Pudas I">
@@ -8733,17 +7266,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>J00.png</space>
    <exterior>forest.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Pudas II">
@@ -8755,17 +7281,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>O01.png</space>
    <exterior>station05.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Pultatis I">
@@ -8777,17 +7296,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>A02.png</space>
    <exterior>snow.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Pultatis II">
@@ -8799,17 +7311,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>H01.png</space>
    <exterior>desertic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Pultatis III">
@@ -8821,17 +7326,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>I00.png</space>
    <exterior>forest.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Pund">
@@ -8843,17 +7341,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>P00.png</space>
    <exterior>lava.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Qex II">
@@ -8865,17 +7356,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>M05.png</space>
    <exterior>forest2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Qex IV">
@@ -8887,17 +7371,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>J00.png</space>
    <exterior>forest.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Qex V">
@@ -8909,17 +7386,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-G00.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Qoral">
@@ -9010,17 +7480,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-D01.png</space>
    <exterior>station04.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Radix I">
@@ -9032,17 +7495,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>D00.png</space>
    <exterior>forest.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Radix II">
@@ -9054,17 +7510,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>H02.png</space>
    <exterior>snow.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Radix III">
@@ -9076,17 +7525,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>I00.png</space>
    <exterior>lava.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Raelid II">
@@ -9098,17 +7540,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>D00.png</space>
    <exterior>desertic4.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Raelid Outpost">
@@ -9154,17 +7589,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>X01.png</space>
    <exterior>aquatic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Raglan Outpost">
@@ -9204,17 +7632,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-A00.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Reidd">
@@ -9263,17 +7684,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>M02.png</space>
    <exterior>desertic4.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Rhu II">
@@ -9285,17 +7699,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>S01.png</space>
    <exterior>station00.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Rhu III">
@@ -9307,17 +7714,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>K04.png</space>
    <exterior>desertic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Rhu IV">
@@ -9329,17 +7729,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>G00.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Ridrack">
@@ -9351,17 +7744,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-L00.png</space>
    <exterior>forest2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Rin">
@@ -9449,17 +7835,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-J00.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Rudderfern">
@@ -9471,17 +7850,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-L00.png</space>
    <exterior>forest2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Ruid">
@@ -9493,17 +7865,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-D01.png</space>
    <exterior>snow.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Ruttwi I">
@@ -9515,17 +7880,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>H00.png</space>
    <exterior>mining5.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Ruttwi II">
@@ -9537,17 +7895,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>L00.png</space>
    <exterior>oceanic.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="S00000">
@@ -9568,9 +7919,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>3</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="S00018">
@@ -9591,9 +7939,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>3</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="S00522">
@@ -9614,9 +7959,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>3</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="S00653">
@@ -9637,9 +7979,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>3</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="S13024">
@@ -9660,9 +7999,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>3</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="S23001">
@@ -9683,9 +8019,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>3</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="S23491">
@@ -9706,9 +8039,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>3</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="S38729">
@@ -9729,9 +8059,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>3</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="S49281">
@@ -9752,9 +8079,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>3</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="S49335">
@@ -9775,9 +8099,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>3</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="S49588">
@@ -9798,9 +8119,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>3</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="S58309">
@@ -9821,9 +8139,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>3</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="S72288">
@@ -9844,9 +8159,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>3</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="S72839">
@@ -9867,9 +8179,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>3</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="S91456">
@@ -9890,9 +8199,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>3</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Sarcophagus I">
@@ -9904,17 +8210,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>S01.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Sarcophagus II">
@@ -9926,17 +8225,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>G00.png</space>
    <exterior>desertic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Sarcophagus IIb">
@@ -9948,17 +8240,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-A00.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Scipio">
@@ -9970,17 +8255,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>C00.png</space>
    <exterior>desertic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Seanich">
@@ -10029,17 +8307,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-C00.png</space>
    <exterior>desertic.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Secundus Beta">
@@ -10051,17 +8322,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-H01.png</space>
    <exterior>mining4.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Selphod">
@@ -10146,17 +8410,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>K00.png</space>
    <exterior>mining2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Sergio Vix III">
@@ -10168,17 +8425,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>G00.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Shakar I">
@@ -10190,17 +8440,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>D02.png</space>
    <exterior>station04.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Shakar III">
@@ -10212,17 +8455,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-G01.png</space>
    <exterior>aquatic.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Shariff Station">
@@ -10248,7 +8484,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    </services>
    <commodities/>
    <description>For being a Dvaered military base, Shariff Station has it tough. This close to Frontier space, the station is a popular target for FLF raids, and despite the many extra security measures that have been implemented in the past years, the losses continue to pile up.</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Sheik Hall">
@@ -10329,17 +8564,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>D01.png</space>
    <exterior>station04.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Shickhaw II">
@@ -10351,17 +8579,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>J01.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Shickhaw IV">
@@ -10373,17 +8594,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>P01.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Shikima II">
@@ -10395,17 +8609,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-G01.png</space>
    <exterior>aquatic.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Shikima III">
@@ -10417,17 +8624,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>Y00.png</space>
    <exterior>station01.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Sinass">
@@ -10572,7 +8772,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
     <commodity>Industrial Goods</commodity>
    </commodities>
    <description>As with most of the Sirius fleet, the equipment installed on the ships is produced right here at Aesir. As a general rule, no finished ship leaves the system without being fully equipped first.</description>
-   <bar>(null)</bar>
   </general>
   <tech>
    <item>Ion 1</item>
@@ -10611,7 +8810,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
     <commodity>Industrial Goods</commodity>
    </commodities>
    <description>Sirius Shipyards is where most of the Sirius fleet is built, though some of the smaller support ships are actually constructed elsewhere. Though Aesir is not an ideal location for mass producing warships, the Sirii believe that building ships in proximity to Mutris will endow some small portion of Sirichana's power on the ships produced.</description>
-   <bar>(null)</bar>
   </general>
   <tech>
    <item>Sirius Military Ships</item>
@@ -10662,17 +8860,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>A02.png</space>
    <exterior>aquatic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Sroolu">
@@ -10737,7 +8928,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
     <commodity>Industrial Goods</commodity>
    </commodities>
    <description>Since well-to-do Dvaereds have laid complete claim to Varia's surface, all industrial and military enterprises have been moved offworld to Stalwart Station. While two-thirds of the station's decks are in use by major Dvaered corporations, there is enough space left for a respectable military wing. In fact, Stalwart Station features as the base of most military operations in the surrounding systems.</description>
-   <bar>This bar is the only public facility on the station. It is here that free merchants come to do business as well as relax. The bar also doubles as a modest hotel, so at least you won't have to sleep on your ship. Of course, the only difference is that your ship isn't as noisy...</bar>
   </general>
   <tech>
    <item>Kinetic 2</item>
@@ -10836,17 +9026,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>A03.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Suna II">
@@ -10858,17 +9041,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>C01.png</space>
    <exterior>mining4.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Suoer">
@@ -10898,7 +9074,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
     <commodity>Industrial Goods</commodity>
    </commodities>
    <description>Though Suoer classifies as a moon, it is technically a sister planet to Esker IV. Its superdense core gives it so much gravity that it significantly affects its primary, so both planets orbit each other. Suoer's high gravity also makes it a comfortable world to live on for humans.</description>
-   <bar>This spaceport bar not only provides food, drink and the standard facilities, it also has its own VR lounge. The lounge seems to be used mainly by youngsters who probably have no business being in a spaceport bar, though.</bar>
   </general>
   <tech>
    <item>Ion 1</item>
@@ -10987,17 +9162,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>G01.png</space>
    <exterior>station03.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Tarsus Station">
@@ -11023,7 +9191,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    </services>
    <commodities/>
    <description>Tarsus Station is a Dvaered military base. It was constructed shortly after the Incident, when piracy and the FLF began to gain in power. Tarsus Station serves as one of the key fortifications in the defense of the Dvaered core systems.</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Tau Prime">
@@ -11035,17 +9202,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>M02.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>M</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Tau Secundus">
@@ -11057,17 +9217,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>S00.png</space>
    <exterior>oceanic.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Tau Station">
@@ -11110,17 +9263,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-A01.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Thar">
@@ -11179,7 +9325,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    </services>
    <commodities/>
    <description>The Crucible is a hive of scum and villainy. All sorts of illicit activities go on here, including gambling, drug dealing and money laundering. Though the station is within Empire controlled territory, the Pirates have an interest in keeping the station online, so they make sure the local Imperial forces have more important things to worry about than shutting down the Crucible.</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="The Frontier Council">
@@ -11205,7 +9350,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    </services>
    <commodities/>
    <description>This is the seat of the Frontier Council, the over-arching political body representing the Frontier to the rest of the galaxy. While the Council does not rule the Frontier worlds as such, it does set global policies such as trade taxes and constitutional standards.</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="The Wringer">
@@ -11244,17 +9388,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-P02.png</space>
    <exterior>mining2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Theras III">
@@ -11266,17 +9403,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-P00.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Three and a half Kings">
@@ -11360,17 +9490,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-C00.png</space>
    <exterior>desertic.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Torg IV">
@@ -11382,17 +9505,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>J04.png</space>
    <exterior>station03.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Tori">
@@ -11554,17 +9670,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>C00.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Trincea">
@@ -11655,17 +9764,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-O00.png</space>
    <exterior>forest.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Uhriabi-17">
@@ -11677,17 +9779,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>J02.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>J</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Uhriabi-9">
@@ -11699,17 +9794,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>A01.png</space>
    <exterior>station00.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Ulios">
@@ -11785,17 +9873,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>J03.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Unicorn II">
@@ -11807,17 +9888,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-C00.png</space>
    <exterior>desertic.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Urail">
@@ -11899,17 +9973,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>K04.png</space>
    <exterior>aquatic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Urbanus III">
@@ -11921,17 +9988,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-H00.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Uridhrion I">
@@ -11943,17 +10003,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>D00.png</space>
    <exterior>lava.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Uridhrion II">
@@ -11965,17 +10018,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>X00.png</space>
    <exterior>station01.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Uridhrion III">
@@ -11987,17 +10033,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>A03.png</space>
    <exterior>station01.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Ururis">
@@ -12027,7 +10066,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
     <commodity>Industrial Goods</commodity>
    </commodities>
    <description>Ururis is a relatively wealthy Sirian world. It lies on several major trade routes, which brings in quite a bit of revenue. Cashing in on the amount of visitors it gets, the local government often stages entertainment events designed to make the maximum amount of profit possible.</description>
-   <bar>The spaceport bar is a relatively sizeable one. It features a large viewscreen that is constantly updated with trade related information, interlaced with advertisements for upcoming events and festivals.</bar>
   </general>
   <tech>
    <item>Ion 2</item>
@@ -12084,17 +10122,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>D00.png</space>
    <exterior>forest.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Valt">
@@ -12139,17 +10170,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>S00.png</space>
    <exterior>station04.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Vanir II">
@@ -12161,17 +10185,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>I00.png</space>
    <exterior>aquatic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Vanir Ia">
@@ -12183,17 +10200,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-K00.png</space>
    <exterior>station00.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Varaati">
@@ -12286,17 +10296,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-M00.png</space>
    <exterior>station04.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Verex I">
@@ -12308,17 +10311,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-A00.png</space>
    <exterior>forest.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Verex II">
@@ -12330,17 +10326,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>D00.png</space>
    <exterior>station01.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Verex III">
@@ -12352,17 +10341,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>H01.png</space>
    <exterior>desertic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>H</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Vert">
@@ -12374,17 +10356,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-M06.png</space>
    <exterior>methane.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Vertigo">
@@ -12522,7 +10497,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    </services>
    <commodities/>
    <description>Violin Station is one of the more important Sirian military outposts. With so much traffic coming through Churchill, extra security is called for. Violin Station also responds to disturbances in Eiderdown, when the Wringer is causing trouble again.</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Virtual Civilian Standard">
@@ -12712,17 +10686,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>H02.png</space>
    <exterior>methane.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Vlexon II">
@@ -12734,17 +10701,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-A00.png</space>
    <exterior>aquatic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Vorca">
@@ -12841,9 +10801,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>4500</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Waterhole">
@@ -12855,17 +10812,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>O00.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Waterhole's Moon">
@@ -13058,17 +11008,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>M02.png</space>
    <exterior>gas.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Zero-Eleven">
@@ -13080,17 +11023,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-A00.png</space>
    <exterior>aquatic.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Zero-Five">
@@ -13102,17 +11038,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-P01.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Zero-One">
@@ -13124,17 +11053,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-G00.png</space>
    <exterior>mining5.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Zhiru">
