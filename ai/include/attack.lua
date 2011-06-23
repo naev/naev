@@ -1,7 +1,7 @@
 --[[
    Attack wrappers for calling the correct attack functions.
 
-   Here we set up the wrappers and determine exactly how the pilat should behave.
+   Here we set up the wrappers and determine exactly how the pilot should behave.
 
    The global layout is:
     - atk_util.lua : Attack generic utilities.
@@ -11,13 +11,13 @@
 -- Utilities
 include("ai/include/atk_util.lua")
 include("ai/include/atk_target.lua")
-include("ai/include/atk_patterns.lua")
 
 -- Attack profiles
 include("ai/include/atk_generic.lua")
 include("ai/include/atk_fighter.lua")
 include("ai/include/atk_bomber.lua")
---include("ai/include/atk_corvette.lua")
+include("ai/include/atk_corvette.lua")
+include("ai/include/atk_capital.lua")
 --include("ai/include/atk_cruiser.lua")
 --include("ai/include/atk_carrier.lua")
 
@@ -38,6 +38,7 @@ function attack_think ()
    if mem.atk_think ~= nil then
       mem.atk_think()
    else
+      print(string.format("%s has invalid attack think!", ai.shipclass()))
       atk_generic_think()
    end
 end
@@ -50,6 +51,7 @@ function attack ()
    if mem.atk ~= nil then
       mem.atk()
    else
+      print(string.format("%s has invalid attack!", ai.shipclass()))
       atk_generic()
    end
 end
@@ -73,33 +75,26 @@ end
 function attack_choose ()
    local class = ai.shipclass()
 
-   -- Bomber class
+   -- Lighter ships
    if class == "Bomber" then
       atk_bomber_init()
 
-   -- Agility fighter class
    elseif class == "Fighter" or class == "Drone" then
       atk_fighter_init()
 
-   -- Heavier fighter class
+   -- Medium ships
    elseif class == "Corvette" then
-      mem.atk_think  = atk_heuristic_big_game_think
-      mem.atk        = atk_corvette
+      atk_corvette_init()
 
-   -- Destroye class
+   -- Capital ships
    elseif class == "Destroyer" then
-      mem.atk_think  = atk_heuristic_big_game_think
-      mem.atk        = atk_capital
+      atk_capital_init()
 
-   -- Capital ship class
    elseif class == "Cruiser" then
-      mem.atk_think  = atk_heuristic_big_game_think
-      mem.atk        = atk_capital
+      atk_capital_init()
 
-   -- Carrier type
    elseif class == "Carrier" then
-      mem.atk_think  = atk_heuristic_big_game_think
-      mem.atk        = atk_capital
+      atk_capital_init()
 
     -- Generic AI
    else
