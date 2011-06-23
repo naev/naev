@@ -1148,13 +1148,18 @@ static void sysedit_genServicesList( unsigned int wid )
    int i, j, n;
    Planet *p;
    char **have, **lack;
-   int x, y, w, h;
+   int x, y, w, h, hpos, lpos;
+
+   hpos = lpos = -1;
 
    /* Destroy if exists. */
-   if (widget_exists( wid, "lstServicesHave" ))
+   if (widget_exists( wid, "lstServicesHave" ) &&
+         widget_exists( wid, "lstServicesLacked" )) {
+      hpos = toolkit_getListPos( wid, "lstServicesHave" );
+      lpos = toolkit_getListPos( wid, "lstServicesLacked" );
       window_destroyWidget( wid, "lstServicesHave" );
-   if (widget_exists( wid, "lstServicesLacked" ))
       window_destroyWidget( wid, "lstServicesLacked" );
+   }
 
    p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
    x = 20;
@@ -1200,6 +1205,12 @@ static void sysedit_genServicesList( unsigned int wid )
 
    /* Add list. */
    window_addList( wid, x, y, w, h, "lstServicesHave", have, j, 0, NULL );
+
+   /* Restore positions. */
+   if (hpos != -1 && lpos != -1) {
+      toolkit_setListPos( wid, "lstServicesHave", hpos );
+      toolkit_setListPos( wid, "lstServicesLacked", lpos );
+   }
 }
 
 
