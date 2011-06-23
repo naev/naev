@@ -125,7 +125,6 @@ static void sysedit_btnEdit( unsigned int wid_unused, char *unused );
 static void sysedit_editPnt( void );
 static void sysedit_genServicesList( unsigned int wid );
 static void sysedit_btnAddService( unsigned int wid, char *unused );
-static void sysedit_btnAddServiceAdd( unsigned int wid, char *unused );
 static void sysedit_btnRmService( unsigned int wid, char *unused );
 static void sysedit_planetGFX( unsigned int wid_unused, char *unused );
 static void sysedit_btnGFXClose( unsigned int wid, char *wgt );
@@ -1045,7 +1044,7 @@ static void sysedit_editPnt( void )
    wid = window_create( EDITOR_WDWNAME, -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
    sysedit_widEdit = wid;
 
-   bw = (SYSEDIT_EDIT_WIDTH - 40 - 15 * 3) / 4;
+   bw = (SYSEDIT_EDIT_WIDTH - 40 - 15 * 3) / 4.;
 
    /* Rename button. */
    y = -40;
@@ -1146,96 +1145,75 @@ static void sysedit_editPnt( void )
  */
 static void sysedit_genServicesList( unsigned int wid )
 {
-   int i, j;
-   Planet *p;
-   char **str;
-   int y, h;
-
-   /* Destroy if exists. */
-   if (widget_exists( wid, "lstServices" ))
-      window_destroyWidget( wid, "lstServices" );
-
-   y = 20 + BUTTON_HEIGHT * 2 + 30;
-
-   p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
-   /* Generate list. */
-   j     = 0;
-   str   = malloc( sizeof(char*) * 8 );
-   if (planet_hasService(p, PLANET_SERVICE_LAND)) {
-      for (i=0; i<8; i++)
-         if (planet_hasService(p, 1<<i)  && (1<<i != PLANET_SERVICE_INHABITED))
-               str[j++] = strdup( planet_getServiceName( 1<<i ) );
-   }
-   else
-      str[j++] = strdup("None");
-
-   /* Add list. */
-   h = SYSEDIT_EDIT_HEIGHT - y - 130;
-   window_addList( wid, 20, y, (SYSEDIT_EDIT_WIDTH - 40 - 15)/2, h,
-         "lstServices", str, j, 0, NULL );
-}
-
-
-/**
- * @brief Adds a new service to an asset.
- */
-static void sysedit_btnAddService( unsigned int wid_unused, char *unused )
-{
-   (void) wid_unused;
-   (void) unused;
-   unsigned int wid;
    int i, j, n;
    Planet *p;
-   char **str;
-   int h;
+   char **have, **lack;
+   int x, y, w, h;
+
+   /* Destroy if exists. */
+   if (widget_exists( wid, "lstServicesHave" ))
+      window_destroyWidget( wid, "lstServicesHave" );
+   if (widget_exists( wid, "lstServicesLacked" ))
+      window_destroyWidget( wid, "lstServicesLacked" );
 
    p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
+   x = 20;
+   y = 20 + BUTTON_HEIGHT * 2 + 30;
+   w = (SYSEDIT_EDIT_WIDTH - 40 - 15 * 3) / 4.;
+   h = SYSEDIT_EDIT_HEIGHT - y - 130;
+
    /* Get all missing services. */
    n = 0;
    for (i=0; i<8; i++)
       if (!planet_hasService(p, 1<<i) && (1<<i != PLANET_SERVICE_INHABITED))
          n++;
 
-   if (!n) {
-      dialogue_alert( "The planet already has all possible services!" );
-      return;
+   /* Add list of services the planet lacks. */
+   j = 0;
+   if (n) {
+      lack = malloc( sizeof(char*) * n );
+      for (i=0; i<8; i++)
+         if (!planet_hasService(p, 1<<i) && (1<<i != PLANET_SERVICE_INHABITED))
+            lack[j++] = strdup( planet_getServiceName(1<<i) );
+   }
+   else {
+      lack = malloc( sizeof(char*) );
+      lack[j++] = strdup( "None" );
    }
 
-   /* Create the window. */
-   wid = window_create( "Add a Service", -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
-   window_setCancel( wid, window_close );
+   /* Add list. */
+   window_addList( wid, x, y, w, h, "lstServicesLacked", lack, j, 0, NULL );
+   x += w + 15;
 
-   /* Add services list. */
-   str = malloc( sizeof(char*) * n );
-   j   = 0;
-   for (i=0; i<8; i++)
-      if (!planet_hasService(p, 1<<i) && (1<<i != PLANET_SERVICE_INHABITED))
-         str[j++] = strdup( planet_getServiceName(1<<i) );
+   /* Get all the services the planet has. */
+   j = 0;
+   if (planet_hasService(p, PLANET_SERVICE_LAND)) {
+      have = malloc( sizeof(char*) * 8 );
+      for (i=0; i<8; i++)
+         if (planet_hasService(p, 1<<i)  && (1<<i != PLANET_SERVICE_INHABITED))
+            have[j++] = strdup( planet_getServiceName( 1<<i ) );
+   }
+   else {
+      have = malloc( sizeof(char*) );
+      have[j++] = strdup("None");
+   }
 
-   h = SYSEDIT_EDIT_HEIGHT-60-(BUTTON_HEIGHT+20);
-   window_addList( wid, 20, -40, SYSEDIT_EDIT_WIDTH-40, h,
-         "lstServices", str, j, 0, NULL );
-
-   /* Add button. */
-   window_addButton( wid, -20-(BUTTON_WIDTH+20), 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnAdd", "Add", sysedit_btnAddServiceAdd );
-
-   /* Close button. */
-   window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnClose", "Close", window_close );
+   /* Add list. */
+   window_addList( wid, x, y, w, h, "lstServicesHave", have, j, 0, NULL );
 }
 
 
 /**
- * @brief Actually adds the service.
+ * @brief Adds a service to a planet.
  */
-static void sysedit_btnAddServiceAdd( unsigned int wid, char *unused )
+static void sysedit_btnAddService( unsigned int wid, char *unused )
 {
+   (void) unused;
    char *selected;
    Planet *p;
 
-   selected = toolkit_getList( wid, "lstServices" );
-   if (selected == NULL)
+   selected = toolkit_getList( wid, "lstServicesLacked" );
+   if ((selected == NULL) || (strcmp(selected,"None")==0))
       return;
 
    /* Enable the service. All services imply landability. */
@@ -1243,14 +1221,12 @@ static void sysedit_btnAddServiceAdd( unsigned int wid, char *unused )
    p->services |= planet_getService(selected) | PLANET_SERVICE_INHABITED | PLANET_SERVICE_LAND;
 
    /* Regenerate the list. */
-   sysedit_genServicesList( sysedit_widEdit );
-
-   window_close( wid, unused );
+   sysedit_genServicesList( wid );
 }
 
 
 /**
- * @brief Removes a selected service.
+ * @brief Removes a service from a planet.
  */
 static void sysedit_btnRmService( unsigned int wid, char *unused )
 {
@@ -1259,7 +1235,7 @@ static void sysedit_btnRmService( unsigned int wid, char *unused )
    int i;
    Planet *p;
 
-   selected = toolkit_getList( wid, "lstServices" );
+   selected = toolkit_getList( wid, "lstServicesHave" );
    if ((selected==NULL) || (strcmp(selected,"None")==0))
       return;
 
