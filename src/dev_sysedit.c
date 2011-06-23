@@ -112,8 +112,7 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
       double w, double h, void *data );
 /* Button functions. */
 static void sysedit_close( unsigned int wid, char *wgt );
-static void sysedit_save( unsigned int wid, char *wgt );
-static void sysedit_savePnt( unsigned int wid_unused, char *unused );
+static void sysedit_save( unsigned int wid_unused, char *unused );
 static void sysedit_btnNew( unsigned int wid_unused, char *unused );
 static void sysedit_btnRename( unsigned int wid_unused, char *unused );
 static void sysedit_btnRemove( unsigned int wid_unused, char *unused );
@@ -123,6 +122,7 @@ static void sysedit_btnGrid( unsigned int wid_unused, char *unused );
 static void sysedit_btnEdit( unsigned int wid_unused, char *unused );
 /* Planet editing. */
 static void sysedit_editPnt( void );
+static void sysedit_editPntClose( unsigned int wid, char *unused );
 static void sysedit_genServicesList( unsigned int wid );
 static void sysedit_btnAddService( unsigned int wid, char *unused );
 static void sysedit_btnRmService( unsigned int wid, char *unused );
@@ -267,37 +267,37 @@ static void sysedit_close( unsigned int wid, char *wgt )
 /**
  * @brief Saves the systems.
  */
-static void sysedit_save( unsigned int wid, char *wgt )
+static void sysedit_save( unsigned int wid_unused, char *unused )
 {
+   (void) wid_unused;
+   (void) unused;
+
    dsys_saveAll();
-   sysedit_savePnt( wid, wgt );
+   dpl_saveAll();
 }
 
 
 /**
- * @brief Saves the planets.
+ * @brief Closes the planet editor, saving the changes made.
  */
-static void sysedit_savePnt( unsigned int wid_unused, char *unused )
+static void sysedit_editPntClose( unsigned int wid, char *unused )
 {
-   (void) wid_unused;
    (void) unused;
    Planet *p;
    char *inp;
 
-   if (window_exists( EDITOR_WDWNAME )) {
-      p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
-      p->population = (uint64_t)atoi(window_getInput( sysedit_widEdit, "inpPop" ));
-      p->class      = planetclass_get( window_getInput( sysedit_widEdit, "inpClass" )[0] );
-      inp = window_getInput( sysedit_widEdit, "inpLand" );
-      if (inp == NULL || strlen(inp) == 0)
-         free( p->land_func );
-      else
-         p->land_func = strdup( inp );
-      p->presenceAmount = (double)atoi(window_getInput( sysedit_widEdit, "inpPresence" ));
-      p->presenceRange = (int)atoi(window_getInput( sysedit_widEdit, "inpPresenceRange" ));
-   }
+   p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
+   p->population = (uint64_t)atoi(window_getInput( sysedit_widEdit, "inpPop" ));
+   p->class      = planetclass_get( window_getInput( sysedit_widEdit, "inpClass" )[0] );
+   inp = window_getInput( sysedit_widEdit, "inpLand" );
+   if (inp == NULL || strlen(inp) == 0)
+      free( p->land_func );
+   else
+      p->land_func = strdup( inp );
+   p->presenceAmount = (double)atoi(window_getInput( sysedit_widEdit, "inpPresence" ));
+   p->presenceRange = (int)atoi(window_getInput( sysedit_widEdit, "inpPresenceRange" ));
 
-   dpl_saveAll();
+   window_close( wid, unused );
 }
 
 /**
@@ -1115,14 +1115,12 @@ static void sysedit_editPnt( void )
          "btnAddService", "Add Service", sysedit_btnAddService );
    window_addButton( wid, -20 - bw*3 - 15*3, 35 + BUTTON_HEIGHT, bw, BUTTON_HEIGHT,
          "btnRmService", "Rm Service", sysedit_btnRmService );
-   window_addButton( wid, -20 - bw*3 - 15*3, 20, bw, BUTTON_HEIGHT,
-         "btnSavePnt", "Save", sysedit_savePnt );
    window_addButton( wid, -20 - bw*2 - 15*2, 20, bw, BUTTON_HEIGHT,
          "btnLandGFX", "Land GFX", sysedit_planetGFX );
    window_addButton( wid, -20 - bw - 15, 20, bw, BUTTON_HEIGHT,
          "btnSpaceGFX", "Space GFX", sysedit_planetGFX );
    window_addButton( wid, -20, 20, bw, BUTTON_HEIGHT,
-         "btnClose", "Close", window_close );
+         "btnClose", "Close", sysedit_editPntClose );
 
    /* Load current values. */
    snprintf( buf, sizeof(buf), "%"PRIu64, p->population );
