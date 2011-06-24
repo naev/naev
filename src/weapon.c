@@ -41,9 +41,8 @@
 
 /* Weapon status */
 #define WEAPON_STATUS_OK         0 /**< Weapon is fine */
-#define WEAPON_STATUS_LOCKEDON   1 /**< Weapon is locked on. */
-#define WEAPON_STATUS_JAMMED     2 /**< Got jammed */
-#define WEAPON_STATUS_UNJAMMED   3 /**< Survived jamming */
+#define WEAPON_STATUS_JAMMED     1 /**< Got jammed */
+#define WEAPON_STATUS_UNJAMMED   2 /**< Survived jamming */
 
 
 /*
@@ -69,7 +68,7 @@ typedef struct Weapon_ {
 
    double dam_mod; /**< Damage modifier. */
    int voice; /**< Weapon's voice. */
-   double lockon; /**< some weapons have a lockon delay */
+   double exp_timer; /**< Explosion timer for beams. */
    double life; /**< Total life. */
    double timer; /**< mainly used to see when the weapon was fired */
    double anim; /**< Used for beam weapon graphics and others. */
@@ -328,12 +327,8 @@ static void think_seeker( Weapon* w, const double dt )
 
    /* Handle by status. */
    switch (w->status) {
-      case WEAPON_STATUS_OK:
-         if (w->lockon < 0.)
-            w->status = WEAPON_STATUS_LOCKEDON;
-         break;
 
-      case WEAPON_STATUS_LOCKEDON: /* Check to see if can get jammed */
+      case WEAPON_STATUS_OK: /* Check to see if can get jammed */
          if ((p->jam_range != 0.) &&  /* Target has jammer and weapon is in range */
                (vect_dist(&w->solid->pos,&p->solid->pos) < p->jam_range)) {
 
@@ -518,8 +513,6 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
          /* most missiles behave the same */
          case OUTFIT_TYPE_AMMO:
          case OUTFIT_TYPE_TURRET_AMMO:
-            if (w->lockon > 0.) /* decrement lockon */
-               w->lockon -= dt;
 
             w->timer -= dt;
             if (w->timer < 0.) {
@@ -589,13 +582,13 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
                weapon_destroy(w,layer);
                break;
             }
-            /* We use the lockon to tell when we have to create explosions. */
-            w->lockon -= dt;
-            if (w->lockon < 0.) {
-               if (w->lockon < -1.)
-                  w->lockon = 0.100;
+            /* We use the explosion timer to tell when we have to create explosions. */
+            w->exp_timer -= dt;
+            if (w->exp_timer < 0.) {
+               if (w->exp_timer < -1.)
+                  w->exp_timer = 0.100;
                else
-                  w->lockon = -1.;
+                  w->exp_timer = -1.;
             }
             break;
          default:
@@ -1070,7 +1063,7 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
    damage = pilot_hit( p, w->solid, w->parent, dtype, MAX(0.,w->dam_mod*damage), penetration );
 
    /* Add sprite, layer depends on whether player shot or not. */
-   if (w->lockon == -1.) {
+   if (w->exp_timer == -1.) {
       /* Get the layer. */
       spfx_layer = (p==player.p) ? SPFX_LAYER_FRONT : SPFX_LAYER_BACK;
 
@@ -1085,7 +1078,7 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
             VX(p->solid->vel), VY(p->solid->vel), spfx_layer );
       spfx_add( spfx, pos[1].x, pos[1].y,
             VX(p->solid->vel), VY(p->solid->vel), spfx_layer );
-         w->lockon = -2;
+         w->exp_timer = -2;
    }
 
    /* Inform AI that it's been hit. */
@@ -1263,19 +1256,15 @@ static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
    Vector2d v;
    double mass, rdir;
    Pilot *pilot_target;
-   double ew_evasion;
    glTexture *gfx;
 
    pilot_target = NULL;
    if (w->outfit->type == OUTFIT_TYPE_TURRET_AMMO) {
       pilot_target = pilot_get(w->target);
       rdir = weapon_aimTurret( w, outfit, parent, pilot_target, pos, vel, dir, M_PI );
-      /* Evasion. */
-      ew_evasion    = pilot_target->ew_evasion;
    }
    else {
       rdir        = dir;
-      ew_evasion  = 1.;
    }
    /*if (outfit->u.amm.accuracy != 0.) {
       rdir += RNG_2SIGMA() * outfit->u.amm.accuracy/2. * 1./180.*M_PI;
@@ -1295,7 +1284,6 @@ static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
 
    /* Set up ammo details. */
    mass        = w->outfit->mass;
-   w->lockon   = MAX( outfit->u.amm.lockon, outfit->u.amm.lockon * ew_evasion / outfit->u.amm.ew_lockon );
    w->timer    = outfit->u.amm.duration;
    w->solid    = solid_create( mass, rdir, pos, &v, SOLID_UPDATE_RK4 );
    if (w->outfit->u.amm.thrust != 0.)
@@ -1521,6 +1509,7 @@ unsigned int beam_start( const Outfit* outfit,
    w = weapon_create( outfit, 0., dir, pos, vel, parent, target );
    w->ID = ++beam_idgen;
    w->mount = mount;
+   w->exp_timer = 0.;
 
    /* set the proper layer */
    switch (layer) {

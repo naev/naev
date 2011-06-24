@@ -1344,7 +1344,6 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
    temp->u.amm.sound       = -1;
    temp->u.amm.sound_hit   = -1;
    temp->u.amm.ai          = -1;
-   temp->u.amm.ew_lockon   = 1.;
 
    do { /* load all the data */
       xml_onlyNodes(node);
@@ -1364,8 +1363,6 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
          temp->u.amm.duration = xml_getFloat(node);
          continue;
       }
-      xmlr_float(node,"lockon",temp->u.amm.lockon);
-      xmlr_float(node,"ew_lockon",temp->u.amm.ew_lockon);
       xmlr_float(node,"resist",temp->u.amm.resist);
       /* Movement */
       xmlr_float(node,"thrust",temp->u.amm.thrust);
@@ -1433,13 +1430,13 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
          "%.0f Damage [%s]\n"
          "%.0f Energy\n"
          "%.0f Maximum Speed\n"
-         "%.1f duration [%.1f Lock-On]",
+         "%.1f duration",
          outfit_getType(temp),
          temp->u.amm.penetration*100.,
          temp->u.amm.damage, outfit_damageTypeToStr(temp->u.amm.dtype),
          temp->u.amm.energy,
          temp->u.amm.speed,
-         temp->u.amm.duration, temp->u.amm.lockon );
+         temp->u.amm.duration );
 
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define to help check for data errors. */
@@ -1452,7 +1449,6 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define
    /* Dumb missiles don't need everything */
    if (outfit_isSeeker(temp)) {
       MELEMENT(temp->u.amm.turn==0,"turn");
-      MELEMENT(temp->u.amm.lockon==0,"lockon");
    }
    MELEMENT(temp->u.amm.speed==0,"speed");
    MELEMENT(temp->u.amm.duration==0,"duration");
