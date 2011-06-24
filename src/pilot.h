@@ -138,9 +138,9 @@ typedef enum PilotOutfitState_ {
  * @brief Stores outfit ammo.
  */
 typedef struct PilotOutfitAmmo_ {
-   Outfit *outfit; /**< Type of ammo. */
-   int quantity; /**< Amount of ammo. */
-   int deployed; /**< For fighter bays. */
+   Outfit *outfit;      /**< Type of ammo. */
+   int quantity;        /**< Amount of ammo. */
+   int deployed;        /**< For fighter bays. */
 } PilotOutfitAmmo;
 
 
@@ -148,27 +148,29 @@ typedef struct PilotOutfitAmmo_ {
  * @brief Stores an outfit the pilot has.
  */
 typedef struct PilotOutfitSlot_ {
-   int id; /**< Position in the global slot list. */
+   int id;           /**< Position in the global slot list. */
 
    /* Outfit slot properties. */
-   Outfit* outfit; /**< Associated outfit. */
-   ShipMount mount; /**< Outfit mountpoint. */
-   OutfitSlot slot; /**< Outfit slot. */
-   int active; /**< Slot is an active slot. */
-   double heat_T; /**< Slot temperature. [K] */
-   double heat_C; /**< Slot heat capacity. [W/K] */
+   Outfit* outfit;   /**< Associated outfit. */
+   ShipMount mount;  /**< Outfit mountpoint. */
+   OutfitSlot slot;  /**< Outfit slot. */
+   int active;       /**< Slot is an active slot. */
+
+   /* Heat. */
+   double heat_T;    /**< Slot temperature. [K] */
+   double heat_C;    /**< Slot heat capacity. [W/K] */
    double heat_area; /**< Slot area of contact with ship hull. [m^2] */
 
    /* Current state. */
    PilotOutfitState state; /**< State of the outfit. */
-   double timer; /**< Used to store when it was last used. */
-   int quantity; /**< Quantity. */
-   int level; /**< Level in current weapon set (-1 is none). */
+   double timer;     /**< Used to store when it was last used. */
+   int quantity;     /**< Quantity. */
+   int level;        /**< Level in current weapon set (-1 is none). */
 
    /* Type-specific data. */
    union {
-      unsigned int beamid; /**< ID of the beam used in this outfit, only used for beams. */
-      PilotOutfitAmmo ammo; /**< Ammo for launchers. */
+      unsigned int beamid;    /**< ID of the beam used in this outfit, only used for beams. */
+      PilotOutfitAmmo ammo;   /**< Ammo for launchers. */
    } u; /**< Stores type specific data. */
 } PilotOutfitSlot;
 
@@ -177,9 +179,9 @@ typedef struct PilotOutfitSlot_ {
  * @brief A pilot Weapon Set Outfit.
  */
 typedef struct PilotWeaponSetOutfit_ {
-   int level; /**< Level of trigger. */
-   double range2; /**< Range squared of this specific outfit. */
-   PilotOutfitSlot *slot; /**< Slot associated with it. */
+   int level;              /**< Level of trigger. */
+   double range2;          /**< Range squared of this specific outfit. */
+   PilotOutfitSlot *slot;  /**< Slot associated with it. */
 } PilotWeaponSetOutfit;
 
 
@@ -190,10 +192,10 @@ typedef struct PilotWeaponSetOutfit_ {
  *  However they can also be used to launch weapons.
  */
 typedef struct PilotWeaponSet_ {
-   char *name; /**< Helpful for the player. */
-   int fire; /**< Whether to fire the weapons or just enable them. */
-   int active; /**< Whether or not it's currently firing. */
-   int inrange; /**< Whether or not to fire only if the target is inrange. */
+   char *name;    /**< Helpful for the player. */
+   int fire;      /**< Whether to fire the weapons or just enable them. */
+   int active;    /**< Whether or not it's currently firing. */
+   int inrange;   /**< Whether or not to fire only if the target is inrange. */
    double range[PILOT_WEAPSET_MAX_LEVELS]; /**< Range of the levels in the outfit slot. */
    double speed[PILOT_WEAPSET_MAX_LEVELS]; /**< Speed of the levels in the outfit slot. */
    PilotWeaponSetOutfit *slots; /**< Slots involved with the weapon set. */
@@ -204,9 +206,9 @@ typedef struct PilotWeaponSet_ {
  * @brief Stores a pilot commodity.
  */
 typedef struct PilotCommodity_ {
-   Commodity* commodity; /**< Associated commodity. */
-   int quantity; /**< Amount player has. */
-   unsigned int id; /**< Special mission id for cargo, 0 means none. */
+   Commodity* commodity;   /**< Associated commodity. */
+   int quantity;           /**< Amount player has. */
+   unsigned int id;        /**< Special mission id for cargo, 0 means none. */
 } PilotCommodity;
 
 
@@ -214,8 +216,8 @@ typedef struct PilotCommodity_ {
  * @brief A wrapper for pilot hooks.
  */
 typedef struct PilotHook_ {
-   int type; /**< Type of hook. */
-   unsigned int id; /**< Hook ID associated with pilot hook. */
+   int type;         /**< Type of hook. */
+   unsigned int id;  /**< Hook ID associated with pilot hook. */
 } PilotHook;
 
 
@@ -223,10 +225,10 @@ typedef struct PilotHook_ {
  * @brief Different types of escorts.
  */
 typedef enum EscortType_e {
-   ESCORT_TYPE_NULL, /**< Invalid escort type. */
-   ESCORT_TYPE_BAY, /**< Escort is from a fighter bay. */
-   ESCORT_TYPE_MERCENARY, /**< Escort is a mercenary. */
-   ESCORT_TYPE_ALLY /**< Escort is an ally. */
+   ESCORT_TYPE_NULL,       /**< Invalid escort type. */
+   ESCORT_TYPE_BAY,        /**< Escort is from a fighter bay, controllable by it's parent and can dock. */
+   ESCORT_TYPE_MERCENARY,  /**< Escort is a mercenary, controllable by it's parent. */
+   ESCORT_TYPE_ALLY        /**< Escort is an ally, uncontrollable. */
 } EscortType_t;
 
 
@@ -234,9 +236,9 @@ typedef enum EscortType_e {
  * @brief Stores an escort.
  */
 typedef struct Escort_s {
-   char *ship; /**< Type of the ship escort is flying. */
-   EscortType_t type; /**< Type of escort. */
-   unsigned int id; /**< ID of in-game pilot. */
+   char *ship;          /**< Type of the ship escort is flying. */
+   EscortType_t type;   /**< Type of escort. */
+   unsigned int id;     /**< ID of in-game pilot. */
 } Escort_t;
 
 
@@ -245,69 +247,69 @@ typedef struct Escort_s {
  */
 typedef struct Pilot_ {
 
-   unsigned int id; /**< pilot's id, used for many functions */
-   char* name; /**< pilot's name (if unique) */
-   char* title; /**< title - usually indicating special properties - @todo use */
+   unsigned int id;  /**< pilot's id, used for many functions */
+   char* name;       /**< pilot's name (if unique) */
+   char* title;      /**< title - usually indicating special properties - @todo use */
 
    /* Fleet/faction management. */
-   int faction; /**< Pilot's faction. */
-   int systemFleet; /**< The system fleet the pilot belongs to. */
-   int presence; /**< Presence being used by the pilot. */
+   int faction;      /**< Pilot's faction. */
+   int systemFleet;  /**< The system fleet the pilot belongs to. */
+   int presence;     /**< Presence being used by the pilot. */
 
    /* Object characteristics */
-   Ship* ship; /**< ship pilot is flying */
-   Solid* solid; /**< associated solid (physics) */
+   Ship* ship;       /**< ship pilot is flying */
+   Solid* solid;     /**< associated solid (physics) */
    double mass_cargo; /**< Amount of cargo mass added. */
    double mass_outfit; /**< Amount of outfit mass added. */
-   int tsx; /**< current sprite x position, calculated on update. */
-   int tsy; /**< current sprite y position, calculated on update. */
+   int tsx;          /**< current sprite x position, calculated on update. */
+   int tsy;          /**< current sprite y position, calculated on update. */
 
    /* Properties. */
-   double cpu; /**< Amount of CPU the pilot has left. */
-   double cpu_max; /**< Maximum amount of CPU the pilot has. */
-   double crew; /**< Crew amount the player has (display it as (int)floor(), but it's analogue. */
+   double cpu;       /**< Amount of CPU the pilot has left. */
+   double cpu_max;   /**< Maximum amount of CPU the pilot has. */
+   double crew;      /**< Crew amount the player has (display it as (int)floor(), but it's analogue. */
 
    /* Movement */
-   double thrust; /**< Pilot's thrust. */
-   double speed; /**< Pilot's speed. */
-   double turn; /**< Pilot's turn in rad/s. */
+   double thrust;    /**< Pilot's thrust. */
+   double speed;     /**< Pilot's speed in px/s. */
+   double turn;      /**< Pilot's turn in rad/s. */
    double turn_base; /**< Pilot's base turn in rad/s. */
 
    /* Current health */
-   double armour; /**< Current armour. */
-   double shield; /**< Current shield. */
-   double fuel; /**< Current fuel. */
+   double armour;    /**< Current armour. */
+   double shield;    /**< Current shield. */
+   double fuel;      /**< Current fuel. */
    double armour_max; /**< Maximum armour. */
    double shield_max; /**< Maximum shield. */
-   double fuel_max; /**< Maximum fuel. */
+   double fuel_max;  /**< Maximum fuel. */
    double armour_regen; /**< Armour regeneration rate (per second). */
    double shield_regen; /**< Shield regeneration rate (per second). */
    double dmg_absorb; /**< Ship damage absorption [0:1] with 1 being 100%. */
 
    /* Energy is handled a bit differently. */
-   double energy; /**< Current energy. */
+   double energy;    /**< Current energy. */
    double energy_max; /**< Maximum energy. */
    double energy_regen; /**< Energy regeneration rate (per second). */
    double energy_tau; /**< Tau regeneration rate for energy. */
 
    /* Electronic warfare. */
    double ew_base_hide; /**< Base static hide factor. */
-   double ew_mass; /**< Mass factor. */
-   double ew_heat; /**< Heat factor, affects hide. */
-   double ew_hide; /**< Static hide factor. */
+   double ew_mass;   /**< Mass factor. */
+   double ew_heat;   /**< Heat factor, affects hide. */
+   double ew_hide;   /**< Static hide factor. */
    double ew_movement; /**< Movement factor. */
    double ew_evasion; /**< Dynamic evasion factor. */
    double ew_detect; /**< Static detection factor. */
 
    /* Heat. */
-   double heat_T; /**< Ship temperature. [K] */
-   double heat_C; /**< Heat capacity of the ship. [W/K] */
+   double heat_T;    /**< Ship temperature. [K] */
+   double heat_C;    /**< Heat capacity of the ship. [W/K] */
    double heat_emis; /**< Ship epsilon parameter (emissivity). [adimensional 0:1] */
    double heat_cond; /**< Ship conductivity parameter. [W/(m*K)] */
    double heat_area; /**< Effective heatsink area of the ship. [m^2] */
 
    /* Ship statistics. */
-   ShipStats stats; /**< Pilot's copy of ship statistics. */
+   ShipStats stats;  /**< Pilot's copy of ship statistics. */
 
    /* Associated functions */
    void (*think)(struct Pilot_*, const double); /**< AI thinking for the pilot */
@@ -317,7 +319,7 @@ typedef struct Pilot_ {
 
    /* Outfit management */
    /* Global outfits. */
-   int noutfits; /**< Total amount of slots. */
+   int noutfits;     /**< Total amount of slots. */
    PilotOutfitSlot **outfits; /**< Total outfits. */
    /* Per slot types. */
    int outfit_nstructure; /**< Number of structure slots. */
@@ -335,47 +337,47 @@ typedef struct Pilot_ {
 
    /* Weapon sets. */
    PilotWeaponSet weapon_sets[PILOT_WEAPON_SETS]; /**< All the weapon sets the pilot has. */
-   int active_set; /**< Index of the currently active weapon set. */
-   int autoweap; /**< Automatically update weapon sets. */
+   int active_set;   /**< Index of the currently active weapon set. */
+   int autoweap;     /**< Automatically update weapon sets. */
 
    /* Cargo */
    credits_t credits; /**< monies the pilot has */
    PilotCommodity* commodities; /**< commodity and quantity */
    int ncommodities; /**< number of commodities. */
-   int cargo_free; /**< Free commodity space. */
+   int cargo_free;   /**< Free commodity space. */
 
    /* Hook attached to the pilot */
    PilotHook *hooks; /**< Pilot hooks. */
-   int nhooks; /**< Number of pilot hooks. */
+   int nhooks;       /**< Number of pilot hooks. */
 
    /* Escort stuff. */
    unsigned int parent; /**< Pilot's parent. */
    Escort_t *escorts; /**< Pilot's escorts. */
-   int nescorts; /**< Number of pilot escorts. */
+   int nescorts;     /**< Number of pilot escorts. */
 
    /* Targeting. */
    unsigned int target; /**< AI pilot target. */
-   int nav_planet; /**< Planet land target. */
+   int nav_planet;   /**< Planet land target. */
    int nav_hyperspace; /**< Hyperspace target. */
 
    /* AI */
-   AI_Profile* ai; /**< AI personality profile */
-   double tcontrol; /**< timer for control tick */
+   AI_Profile* ai;   /**< AI personality profile */
+   double tcontrol;  /**< timer for control tick */
    double timer[MAX_AI_TIMERS]; /**< timers for AI */
-   Task* task; /**< current action */
+   Task* task;       /**< current action */
 
    /* Misc */
    double comm_msgTimer; /**< Message timer for the comm. */
    double comm_msgWidth; /**< Width of the message. */
-   char *comm_msg; /**< Comm message to display overhead. */
+   char *comm_msg;   /**< Comm message to display overhead. */
    PilotFlags flags; /**< used for AI and others */
-   double ptimer; /**< generic timer for internal pilot use */
-   double htimer; /**< Hail animation timer. */
-   double stimer; /**< Shield regeneration timer. */
-   double sbonus; /**< Shield regeneration bonus. */
-   int hail_pos; /**< Hail animation position. */
-   int lockons; /**< Stores how many seeking weapons are targeting pilot */
-   int *mounted; /**< Number of mounted outfits on the mount. */
+   double ptimer;    /**< generic timer for internal pilot use */
+   double htimer;    /**< Hail animation timer. */
+   double stimer;    /**< Shield regeneration timer. */
+   double sbonus;    /**< Shield regeneration bonus. */
+   int hail_pos;     /**< Hail animation position. */
+   int lockons;      /**< Stores how many seeking weapons are targeting pilot */
+   int *mounted;     /**< Number of mounted outfits on the mount. */
    double player_damage; /**< Accumulates damage done by player for hostileness.
                               In per one of max shield + armour. */
    double engine_glow; /**< Amount of engine glow to display. */
