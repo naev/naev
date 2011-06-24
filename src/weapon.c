@@ -903,7 +903,7 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
       else if (weapon_isSmart(w)) {
 
          if ((pilot_stack[i]->id == w->target) &&
-               (w->status != WEAPON_STATUS_OK) && /* Must not be locking on. */
+               (w->status == WEAPON_STATUS_OK) &&
                weapon_checkCanHit(w,p) &&
                CollideSprite( gfx, w->sx, w->sy, &w->solid->pos,
                      p->ship->gfx_space, psx, psy,
