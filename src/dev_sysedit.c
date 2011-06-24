@@ -48,6 +48,10 @@
 #define PLANET_LAND_GFX_PATH     "gfx/planet/exterior" /**< Path to planet landing graphics. */
 
 
+#define PLANET_GFX_SPACE      "gfx/planet/space/" /**< Location of planet space graphics. */
+#define PLANET_GFX_EXTERIOR   "gfx/planet/exterior/" /**< Location of planet exterior graphics (when landed). */
+
+
 /*
  * Selection types.
  */
@@ -1441,7 +1445,9 @@ static void sysedit_btnGFXApply( unsigned int wid, char *wgt )
 
    if (land) {
       free( p->gfx_exteriorPath );
+      snprintf( buf, sizeof(buf), PLANET_GFX_EXTERIOR"%s", str );
       p->gfx_exteriorPath = strdup( str );
+      p->gfx_exterior = strdup( buf );
    }
    else { /* Free old texture, load new. */
       free( p->gfx_spacePath );
