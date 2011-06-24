@@ -142,10 +142,9 @@ int* faction_getAll( int *n )
 
    /* Get IDs. */
    m = 0;
-   for (i=0; i<faction_nstack; i++) {
+   for (i=0; i<faction_nstack; i++)
       if (!faction_isFlag( &faction_stack[i], FACTION_INVISIBLE ))
          f[m++] = i;
-   }
 
    *n = m;
    return f;
@@ -167,6 +166,7 @@ char* faction_name( int f )
    /* Don't want player to see his escorts as "Player" faction. */
    if (f == FACTION_PLAYER)
       return "Escort";
+
    return faction_stack[f].name;
 }
 
@@ -186,9 +186,11 @@ char* faction_shortname( int f )
    /* Don't want player to see his escorts as "Player" faction. */
    if (f == FACTION_PLAYER)
       return "Escort";
+
    /* Possibly get display name. */
    if (faction_stack[f].displayname != NULL)
       return faction_stack[f].displayname;
+
    return faction_stack[f].name;
 }
 
@@ -223,6 +225,7 @@ glTexture* faction_logoSmall( int f )
       WARN("Faction id '%d' is invalid.",f);
       return NULL;
    }
+
    return faction_stack[f].logo_small;
 }
 
@@ -239,6 +242,7 @@ glTexture* faction_logoTiny( int f )
       WARN("Faction id '%d' is invalid.",f);
       return NULL;
    }
+
    return faction_stack[f].logo_tiny;
 }
 
@@ -255,6 +259,7 @@ glColour* faction_colour( int f )
       WARN("Faction id '%d' is invalid.",f);
       return NULL;
    }
+
    return faction_stack[f].colour;
 }
 
@@ -272,6 +277,7 @@ int* faction_getEnemies( int f, int *n )
       WARN("Faction id '%d' is invalid.",f);
       return NULL;
    }
+
    *n = faction_stack[f].nenemies;
    return faction_stack[f].enemies;
 }
@@ -290,6 +296,7 @@ int* faction_getAllies( int f, int *n )
       WARN("Faction id '%d' is invalid.",f);
       return NULL;
    }
+
    *n = faction_stack[f].nallies;
    return faction_stack[f].allies;
 }
@@ -304,6 +311,7 @@ lua_State *faction_getScheduler( int f )
       WARN("Faction id '%d' is invalid.",f);
       return NULL;
    }
+
    return faction_stack[f].sched_state;
 }
 
@@ -342,9 +350,8 @@ static void faction_modPlayerLua( int f, double mod, const char *source, int sec
    L     = faction->state;
    old   = faction->player;
 
-   if (L == NULL) {
+   if (L == NULL)
       faction->player += mod;
-   }
    else {
 #if DEBUGGING
       lua_pushcfunction(L, nlua_errTrace);
@@ -426,16 +433,14 @@ void faction_modPlayer( int f, double mod, const char *source )
    faction_modPlayerLua( f, mod, source, 0 );
 
    /* Now mod allies to a lesser degree */
-   for (i=0; i<faction->nallies; i++) {
+   for (i=0; i<faction->nallies; i++)
       /* Modify faction standing */
       faction_modPlayerLua( faction->allies[i], mod, source, 1 );
-   }
 
    /* Now mod enemies */
-   for (i=0; i<faction->nenemies; i++) {
+   for (i=0; i<faction->nenemies; i++)
       /* Modify faction standing. */
       faction_modPlayerLua( faction->enemies[i], -mod, source, 1 );
-   }
 }
 
 /**
@@ -502,9 +507,8 @@ void faction_modPlayerRaw( int f, double mod )
  */
 double faction_getPlayer( int f )
 {
-   if (faction_isFaction(f)) {
+   if (faction_isFaction(f))
       return faction_stack[f].player;
-   }
    else {
       WARN("%d is an invalid faction", f);
       return -1000;
@@ -520,9 +524,8 @@ double faction_getPlayer( int f )
  */
 double faction_getPlayerDef( int f )
 {
-   if (faction_isFaction(f)) {
+   if (faction_isFaction(f))
       return faction_stack[f].player_def;
-   }
    else {
       WARN("%d is an invalid faction", f);
       return -1000;
@@ -598,7 +601,6 @@ char *faction_getStandingBroad( double mod )
    if (mod >= PLAYER_ALLY) return "Friendly";
    else if (mod >= PLAYER_ENEMY) return "Neutral";
    return "Hostile";
-
 }
 
 

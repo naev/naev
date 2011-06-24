@@ -1576,9 +1576,8 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
                planet->gfx_spaceName = strdup(str);
                planet->gfx_spacePath = xml_getStrd(cur);
                rw = ndata_rwops( planet->gfx_spaceName );
-               if (rw == NULL) {
+               if (rw == NULL)
                   WARN("Planet '%s' has inexisting graphic '%s'!", planet->name, planet->gfx_spaceName );
-               }
                else {
                   npng = npng_open( rw );
                   if (npng != NULL) {
@@ -1589,9 +1588,9 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
                         str[ nbuf ] = '\0';
                         planet->radius = atof( str );
                      }
-                     else {
+                     else
                         planet->radius = 0.8 * (double)(w+h)/4.; /* (w+h)/2 is diameter, /2 for radius */
-                     }
+
                      npng_close( npng );
                   }
                   SDL_RWclose( rw );
@@ -2025,9 +2024,8 @@ void systems_reconstructPlanets (void)
 
    for (i=0; i<systems_nstack; i++) {
       sys = &systems_stack[i];
-      for (j=0; j<sys->nplanets; j++) {
+      for (j=0; j<sys->nplanets; j++)
          sys->planets[j] = &planet_stack[ sys->planetsid[j] ];
-      }
    }
 }
 
@@ -2281,9 +2279,8 @@ static void system_parseJumps( const xmlNodePtr parent )
       if (xml_isNode(node,"jumps")) {
          cur = node->children;
          do {
-            if (xml_isNode(cur,"jump")) {
+            if (xml_isNode(cur,"jump"))
                system_parseJumpPoint( cur, sys );
-            }
          } while (xml_nextNode(cur));
       }
    } while (xml_nextNode(node));

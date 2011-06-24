@@ -234,9 +234,8 @@ static void* tq_dequeue( ThreadQueue *q )
 static void tq_destroy( ThreadQueue *q )
 {
    /* Iterate through the list and free the nodes */
-   while (q->first->next != NULL) {
+   while (q->first->next != NULL)
       free( tq_dequeue(q) ); /* Locks q->t_lock, so we must destroy mutex after. */
-   }
 
    /* Clean up threading structures. */
    SDL_DestroySemaphore( q->semaphore );
@@ -302,9 +301,8 @@ static int threadpool_worker( void *data )
           WARN("SDL_SemWait failed! Error: %s", SDL_GetError());
       }
       /* Break if received signal to stop */
-      if (work->signal == THREADSIG_STOP) {
+      if (work->signal == THREADSIG_STOP)
          break;
-      }
 
       /* Do work :-) */
       work->function( work->data );

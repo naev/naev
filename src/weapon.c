@@ -1114,9 +1114,8 @@ static double weapon_aimTurret( Weapon *w, const Outfit *outfit, const Pilot *pa
    double x, y, t, dist;
    double off;
 
-   if (pilot_target == NULL) {
+   if (pilot_target == NULL)
       rdir        = dir;
-   }
    else {
       /* Get the distance */
       dist = vect_dist( pos, &pilot_target->solid->pos );
@@ -1209,20 +1208,17 @@ static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
       pilot_target = pilot_get(w->target);
       rdir = weapon_aimTurret( w, outfit, parent, pilot_target, pos, vel, dir, outfit->u.blt.swivel );
    }
-   else { /* fire straight */
+   else /* fire straight */
       rdir = dir;
-   }
 
    /* Calculate accuracy. */
    acc =  HEAT_WORST_ACCURACY * pilot_heatAccuracyMod( T );
 
    /* Stat modifiers. */
-   if (outfit->type == OUTFIT_TYPE_TURRET_BOLT) {
-      w->dam_mod  *= parent->stats.damage_turret;
-   }
-   else {
-      w->dam_mod  *= parent->stats.damage_forward;
-   }
+   if (outfit->type == OUTFIT_TYPE_TURRET_BOLT)
+      w->dam_mod *= parent->stats.damage_turret;
+   else
+      w->dam_mod *= parent->stats.damage_forward;
 
    /* Calculate direction. */
    rdir += RNG_2SIGMA() * acc;

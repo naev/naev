@@ -163,9 +163,8 @@ void pilot_weapSetExec( Pilot* p, int id )
       return;
 
    ws = pilot_weapSet(p,id);
-   if (ws->fire) {
+   if (ws->fire)
       pilot_weapSetFire( p, ws, -1 );
-   }
    else {
       if (id != p->active_set)
          pilot_weapSetUpdateOutfits( p, ws );
@@ -848,10 +847,9 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
       w->u.ammo.deployed += 1; /* Mark as deployed. */
       pilot_updateMass( p );
    }
-
-   else {
+   else
       WARN("Shooting unknown weapon type: %s", w->outfit->name);
-   }
+
 
    /* Reset timer. */
    w->timer += rate_mod * outfit_delay( w->outfit );
@@ -1002,9 +1000,8 @@ void pilot_weaponAuto( Pilot *p )
          pilot_weapSetAdd( p, 0, slot, level ); /* Also get added to 'All'. */
          pilot_weapSetAdd( p, 3, slot, 1 );     /* Also get added to 'Fwd/Tur'. */
       }
-      else if (id == 4) { /* Seekers */
+      else if (id == 4) /* Seekers */
          pilot_weapSetAdd( p, 0, slot, level ); /* Also get added to 'All'. */
-      }
    }
 
    /* Update active weapon set. */

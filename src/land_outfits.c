@@ -166,9 +166,8 @@ void outfits_open( unsigned int wid )
             slottype[i][0] = outfit_slotName(outfits[i])[0];
             slottype[i][1] = '\0';
          }
-         else {
+         else
             slottype[i] = NULL;
-         }
       }
       free(outfits);
    }

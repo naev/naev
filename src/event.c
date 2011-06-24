@@ -387,9 +387,8 @@ int event_alreadyRunning( int data )
    /* Find events. */
    for (i=0; i<event_nactive; i++) {
       ev = &event_active[i];
-      if (ev->data == data) {
+      if (ev->data == data)
          return 1;
-      }
    }
 
    return 0;
@@ -654,9 +653,9 @@ void events_cleanup (void)
    /* Free active events. */
    for (i=0; i<event_nactive; i++)
       event_cleanup( &event_active[i] );
-   if (event_active != NULL) {
+   if (event_active != NULL)
       free(event_active);
-   }
+
    event_active = NULL;
    event_nactive = 0;
    event_mactive = 0;

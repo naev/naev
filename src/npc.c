@@ -417,9 +417,8 @@ void npc_clear (void)
       return;
 
    /* First pass to clear the data. */
-   for (i=0; i<array_size( npc_array ); i++) {
+   for (i=0; i<array_size( npc_array ); i++)
       npc_free( &npc_array[i] );
-   }
 
    /* Resize down. */
    array_resize( &npc_array, 0 );

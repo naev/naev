@@ -355,9 +355,8 @@ static void equipment_renderColumn( double x, double y, double w, double h,
          else
             dc = &cInert;
       }
-      else {
+      else
          dc = outfit_slotSizeColour( &lst[i].slot );
-      }
 
       /* Choose colours based on size. */
       if (i==selected && dc == NULL)
@@ -701,16 +700,13 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
       return;
 
    /* Get the slot. */
-   if (wgt->mouseover < p->outfit_nweapon) {
+   if (wgt->mouseover < p->outfit_nweapon)
       slot = &p->outfit_weapon[wgt->mouseover];
-   }
-   else if (wgt->mouseover < p->outfit_nweapon + p->outfit_nutility) {
+   else if (wgt->mouseover < p->outfit_nweapon + p->outfit_nutility)
       slot = &p->outfit_utility[ wgt->mouseover - p->outfit_nweapon ];
-   }
-   else {
+   else
       slot = &p->outfit_structure[ wgt->mouseover -
          p->outfit_nweapon - p->outfit_nutility ];
-   }
 
    /* For comfortability. */
    o = slot->outfit;
@@ -1330,9 +1326,8 @@ static void equipment_genLists( unsigned int wid )
                slottype[i][0] = typename[0];
                slottype[i][1] = '\0';
             }
-            else {
+            else
                slottype[i] = NULL;
-            }
          }
          toolkit_setImageArrayAlt( wid, EQUIPMENT_OUTFITS, alt );
          toolkit_setImageArrayQuantity( wid, EQUIPMENT_OUTFITS, quantity );
@@ -1711,9 +1706,12 @@ static void equipment_unequipShip( unsigned int wid, char* str )
 
    ship = eq_wgt.selected;
 
-   /* There are two conditionts when you can't unequip all, first off
-    * is when you have deployed ships, second off is when you have more cargo
-    * than you can carry "naked". */
+   /*
+    * Unequipping is disallowed under two conditions. Firstly, the ship may not
+    * be unequipped when it has fighters deployed in space. Secondly, it cannot
+    * unequip if it's carrying more cargo than the ship normally fits, i.e.
+    * by equipping cargo pods.
+    */
    for (i=0; i<ship->noutfits; i++) {
       /* Must have outfit. */
       if (ship->outfits[i]->outfit == NULL)
@@ -1721,7 +1719,7 @@ static void equipment_unequipShip( unsigned int wid, char* str )
       /* Must be fighter bay. */
       if (!outfit_isFighterBay( ship->outfits[i]->outfit))
          continue;
-      /* Must not have deployed. */
+      /* Must not have deployed fighters. */
       if (ship->outfits[i]->u.ammo.deployed > 0) {
          dialogue_alert( "You can not unequip your ship while you have deployed fighters!" );
          return;
@@ -1798,9 +1796,8 @@ static void equipment_sellShip( unsigned int wid, char* str )
 
    /* Check if player really wants to sell. */
    if (!dialogue_YesNo( "Sell Ship",
-            "Are you sure you want to sell your ship %s for %s credits?", shipname, buf)) {
+         "Are you sure you want to sell your ship %s for %s credits?", shipname, buf))
       return;
-   }
 
    /* Sold. */
    name = strdup(shipname);
@@ -1812,8 +1809,7 @@ static void equipment_sellShip( unsigned int wid, char* str )
    equipment_regenLists( wid, 0, 1 );
 
    /* Display widget. */
-   dialogue_msg( "Ship Sold", "You have sold your ship %s for %s credits.",
-         name, buf );
+   dialogue_msg( "Ship Sold", "You have sold your ship %s for %s credits.", name, buf );
    free(name);
 }
 /**
@@ -1846,6 +1842,7 @@ void equipment_cleanup (void)
    /* Destroy the VBO. */
    if (equipment_vbo != NULL)
       gl_vboDestroy( equipment_vbo );
+
    equipment_vbo = NULL;
 }
 

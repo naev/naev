@@ -200,9 +200,9 @@ int pilot_addOutfitRaw( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s )
       s->u.ammo.quantity = 0;
       s->u.ammo.deployed = 0;
    }
-   if (outfit_isTurret(outfit)) { /* used to speed up AI */
+   if (outfit_isTurret(outfit)) /* used to speed up AI */
       pilot_setFlag(pilot, PILOT_HASTURRET);
-   }
+
    if (outfit_isBeam(outfit)) { /* Used to speed up some calculations. */
       s->u.beamid = -1;
       pilot_setFlag(pilot, PILOT_HASBEAMS);
@@ -623,9 +623,8 @@ int pilot_rmAmmo( Pilot* pilot, PilotOutfitSlot *s, int quantity )
    }
 
    /* No ammo already. */
-   if (s->u.ammo.outfit == NULL) {
+   if (s->u.ammo.outfit == NULL)
       return 0;
-   }
 
    /* Remove ammo. */
    q                   = MIN( quantity, s->u.ammo.quantity );

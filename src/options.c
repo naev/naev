@@ -299,9 +299,9 @@ static void opt_gameplaySave( unsigned int wid, char *str )
 
    /* Checkboxes. */
    f = window_checkboxState( wid, "chkAfterburn" );
-   if (!!conf.afterburn_sens != f) {
+   if (!!conf.afterburn_sens != f)
       conf.afterburn_sens = (!!f)*250;
-   }
+
    conf.zoom_manual = window_checkboxState( wid, "chkZoomManual" );
    conf.mouse_thrust = window_checkboxState(wid, "chkMouseThrust" );
    conf.save_compress = window_checkboxState( wid, "chkCompress" );

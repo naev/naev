@@ -141,15 +141,12 @@ static int gl_extMipmaps (void)
       return 0;
    }
 
-   if (gl_hasVersion( 3, 0 )) {
+   if (gl_hasVersion( 3, 0 ))
       nglGenerateMipmap = SDL_GL_GetProcAddress("glGenerateMipmap");
-   }
-   else if (gl_hasExt("GL_EXT_framebuffer_object")) {
+   else if (gl_hasExt("GL_EXT_framebuffer_object"))
       nglGenerateMipmap = SDL_GL_GetProcAddress("glGenerateMipmapEXT");
-   }
-   else if (gl_hasExt("GL_SGIS_generate_mipmap")) {
+   else if (gl_hasExt("GL_SGIS_generate_mipmap"))
       nglGenerateMipmap = glGenerateMipmapNaev;
-   }
    else {
       nglGenerateMipmap = NULL;
       WARN("glGenerateMipmap not found.");
@@ -174,12 +171,10 @@ static int gl_extCompression (void)
    }
 
    /* Find the extension. */
-   if (gl_hasVersion( 1, 3 )) {
+   if (gl_hasVersion( 1, 3 ))
       nglCompressedTexImage2D = gl_extGetProc("glCompressedTexImage2D");
-   }
-   else if (gl_hasExt("GL_ARB_texture_compression")) {
+   else if (gl_hasExt("GL_ARB_texture_compression"))
       nglCompressedTexImage2D = gl_extGetProc("glCompressedTexImage2DARB");
-   }
    else {
       nglCompressedTexImage2D = NULL;
       WARN("GL_ARB_texture_compression not found.");
@@ -192,12 +187,12 @@ static int gl_extCompression (void)
    if (num > 0) {
       ext = malloc( sizeof(GLint) * num );
       glGetIntegerv(GL_COMPRESSED_TEXTURE_FORMATS, ext);
-      for (i=0; i<num; i++) {
+      for (i=0; i<num; i++)
          if (ext[i] == GL_COMPRESSED_RGBA) {
             found = 1;
             break;
          }
-      }
+
       free(ext);
    }
 
@@ -235,4 +230,3 @@ int gl_initExtensions (void)
 void gl_exitExtensions (void)
 {
 }
-

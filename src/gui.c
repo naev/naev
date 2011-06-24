@@ -779,9 +779,9 @@ int gui_onScreenPilot( double *rx, double *ry, Pilot *pilot )
    cw = SCREEN_W/2 + tex->sw/2;
    ch = SCREEN_H/2 + tex->sh/2;
 
-   if ((ABS(*rx) > cw) || (ABS(*ry) > ch)) {
+   if ((ABS(*rx) > cw) || (ABS(*ry) > ch))
       return  0;
-   }
+
    return 1;
 }
 
@@ -822,9 +822,9 @@ int gui_onScreenAsset( double *rx, double *ry, JumpPoint *jp, Planet *pnt )
    cw = SCREEN_W/2 + tex->sw/2;
    ch = SCREEN_H/2 + tex->sh/2;
 
-   if ((ABS(*rx) > cw) || (ABS(*ry) > ch)) {
+   if ((ABS(*rx) > cw) || (ABS(*ry) > ch))
       return  0;
-   }
+
    return 1;
 }
 

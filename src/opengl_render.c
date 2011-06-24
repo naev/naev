@@ -1078,11 +1078,10 @@ static glTexture *gl_genCircle( int radius )
       for (j=0; j<w; j++) {
          /* Calculate blur. */
          a = 0.;
-         for (n=0; n<k; n++) {
-            for (m=0; m<k; m++) {
+         for (n=0; n<k; n++)
+            for (m=0; m<k; m++)
                a += buf[ (i*k+n)*k*w + (j*k+m) ];
-            }
-         }
+
          a /= k*k;
 
          /* Set pixel. */

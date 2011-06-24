@@ -289,9 +289,8 @@ void background_renderStars( const double dt )
       glDrawArrays( GL_POINTS, 0, nstars ); /* This second pass is when the lines are very short that they "lose" intensity. */
       glShadeModel(GL_FLAT);
    }
-   else {
+   else
       glDrawArrays( GL_POINTS, 0, nstars );
-   }
 
    /* Clear star movement. */
    star_x = 0.;

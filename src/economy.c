@@ -639,9 +639,8 @@ int economy_update( unsigned int dt )
        */
       scale    = 1.;
       offset   = 1.;
-      for (i=0; i<systems_nstack; i++) {
+      for (i=0; i<systems_nstack; i++)
          systems_stack[i].prices[j] = X[i] * scale + offset;
-      }
    }
 
    /* Clean up. */

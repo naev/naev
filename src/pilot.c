@@ -488,9 +488,8 @@ double pilot_getNearestAng( const Pilot *p, unsigned int *tp, double ang, int di
          continue;
 
       /* Only allow selection if off-screen. */
-      if (gui_onScreenPilot( &rx, &ry, pilot_stack[i] )) {
+      if (gui_onScreenPilot( &rx, &ry, pilot_stack[i] ))
          continue;
-      }
 
       ta = atan2( p->solid->pos.y - pilot_stack[i]->solid->pos.y,
             p->solid->pos.x - pilot_stack[i]->solid->pos.x );
@@ -1540,9 +1539,8 @@ static void pilot_hyperspace( Pilot* p, double dt )
       if (p->ptimer < 0.) {
          pilot_setFlag( p, PILOT_HYP_END );
          pilot_setThrust( p, 0. );
-         if (p->id == PLAYER_ID) { /* player.p just broke hyperspace */
+         if (p->id == PLAYER_ID) /* player.p just broke hyperspace */
             player_setFlag( PLAYER_HOOK_HYPER );
-         }
          else {
             pilot_runHook( p, PILOT_HOOK_JUMP ); /* Should be run before messing with delete flag. */
             pilot_delete(p);
@@ -1570,9 +1568,8 @@ static void pilot_hyperspace( Pilot* p, double dt )
          if (p->ptimer < 0.) { /* engines ready */
             p->ptimer = HYPERSPACE_FLY_DELAY;
             pilot_setFlag(p, PILOT_HYPERSPACE);
-            if (p->id == PLAYER_ID) {
+            if (p->id == PLAYER_ID)
                p->timer[0] = -1.;
-            }
          }
       }
    }
@@ -1615,9 +1612,8 @@ static void pilot_hyperspace( Pilot* p, double dt )
                p->ptimer = HYPERSPACE_ENGINE_DELAY;
                pilot_setFlag(p, PILOT_HYP_BEGIN);
                /* Player plays sound. */
-               if (p->id == PLAYER_ID) {
+               if (p->id == PLAYER_ID)
                   player_soundPlay( snd_hypPowUp, 1 );
-               }
             }
          }
       }
@@ -2211,9 +2207,8 @@ void pilots_clean (void)
       pilot_nstack = 1;
       pilot_clearTimers( player.p ); /* Reset the player's timers. */
    }
-   else {
+   else
       pilot_nstack = 0;
-   }
 
    /* Clear global hooks. */
    pilots_clearGlobalHooks();

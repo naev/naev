@@ -427,9 +427,8 @@ static void comm_bribePilot( unsigned int wid, char *unused )
 
    /* Bribe message. */
    str = comm_getString( "bribe_prompt" );
-   if (str == NULL) {
+   if (str == NULL)
       answer = dialogue_YesNo( "Bribe Pilot", "\"I'm gonna need at least %"CREDITS_PRI" credits to not leave you as a hunk of floating debris.\"\n\nPay %"CREDITS_PRI" credits?", price, price );
-   }
    else
       answer = dialogue_YesNo( "Bribe Pilot", "%s\n\nPay %"CREDITS_PRI" credits?", str, price );
 

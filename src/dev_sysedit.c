@@ -959,12 +959,10 @@ static void sysedit_checkButtons (void)
    }
 
    /* Jump dependent. */
-   if (sel_jump) {
+   if (sel_jump)
       window_enableButton( sysedit_wid, "btnReset" );
-   }
-   else {
+   else
       window_disableButton( sysedit_wid, "btnReset" );
-   }
 
    /* Editor - just one planet. */
    if ((sel_planet==1) && (sel_jump==0))
