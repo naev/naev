@@ -934,7 +934,7 @@ void player_warp( const double x, const double y )
 void player_clear (void)
 {
    if (player.p != NULL) {
-      player.p->target = PLAYER_ID;
+      pilot_setTarget( player.p, player.p->id );
       gui_setTarget();
    }
 
@@ -1761,7 +1761,7 @@ void player_targetSet( unsigned int id )
 {
    unsigned int old;
    old = player.p->target;
-   player.p->target = id;
+   pilot_setTarget( player.p, id );
    if ((old != id) && (player.p->target != PLAYER_ID)) {
       gui_forceBlink();
       player_soundPlayGUI( snd_target, 1 );
@@ -1861,11 +1861,11 @@ void player_targetEscort( int prev )
 
          /* Cycle targets. */
          if (prev)
-            player.p->target = (i > 0) ?
-                  player.p->escorts[i-1].id : PLAYER_ID;
+            pilot_setTarget( player.p, (i > 0) ?
+                  player.p->escorts[i-1].id : player.p->id );
          else
-            player.p->target = (i < player.p->nescorts-1) ?
-                  player.p->escorts[i+1].id : PLAYER_ID;
+            pilot_setTarget( player.p, (i < player.p->nescorts-1) ?
+                  player.p->escorts[i+1].id : player.p->id );
 
          break;
       }
@@ -1879,12 +1879,12 @@ void player_targetEscort( int prev )
 
          /* Cycle forward or backwards. */
          if (prev)
-            player.p->target = player.p->escorts[player.p->nescorts-1].id;
+            pilot_setTarget( player.p, player.p->escorts[player.p->nescorts-1].id );
          else
-            player.p->target = player.p->escorts[0].id;
+            pilot_setTarget( player.p, player.p->escorts[0].id );
       }
       else
-         player.p->target = PLAYER_ID;
+         pilot_setTarget( player.p, player.p->id );
    }
 
 
@@ -1905,7 +1905,7 @@ void player_targetNearest (void)
    unsigned int t;
 
    t = player.p->target;
-   player.p->target = pilot_getNearestPilot(player.p);
+   pilot_setTarget( player.p, pilot_getNearestPilot(player.p) );
 
    if ((player.p->target != PLAYER_ID) && (t != player.p->target)) {
       gui_forceBlink();
@@ -2035,8 +2035,8 @@ void player_autohail (void)
       return;
    }
 
-   /* Try o hail. */
-   player.p->target = p->id;
+   /* Try to hail. */
+   pilot_setTarget( player.p, p->id );
    gui_setTarget();
    player_hail();
 
