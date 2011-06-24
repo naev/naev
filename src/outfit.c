@@ -1291,6 +1291,8 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"cpu",temp->u.lau.cpu);
       xmlr_strd(node,"ammo",temp->u.lau.ammo_name);
       xmlr_int(node,"amount",temp->u.lau.amount);
+      xmlr_float(node,"ew_target",temp->u.lau.ew_target);
+      xmlr_float(node,"lockon",temp->u.lau.lockon);
       WARN("Outfit '%s' has unknown node '%s'",temp->name, node->name);
    } while (xml_nextNode(node));
 
@@ -1987,6 +1989,7 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define
 int outfit_load (void)
 {
    int i;
+   Outfit *o;
    uint32_t bufsize;
    char *buf = ndata_read( OUTFIT_DATA, &bufsize );
 
@@ -2016,10 +2019,18 @@ int outfit_load (void)
 
    /* Second pass, sets up ammunition relationships. */
    for (i=0; i<array_size(outfit_stack); i++) {
-      if (outfit_isLauncher(&outfit_stack[i]))
-         outfit_stack[i].u.lau.ammo = outfit_get( outfit_stack[i].u.lau.ammo_name );
+      o = &outfit_stack[i];
+      if (outfit_isLauncher(&outfit_stack[i])) {
+         o->u.lau.ammo = outfit_get( o->u.lau.ammo_name );
+         if (outfit_isSeeker(o)) {
+            if (o->u.lau.ew_target == 0.)
+               WARN("Outfit '%s' missing/invalid 'ew_target' element", o->name);
+            if (o->u.lau.lockon == 0.)
+               WARN("Outfit '%s' missing/invalid 'lockon' element", o->name);
+         }
+      }
       else if (outfit_isFighterBay(&outfit_stack[i]))
-         outfit_stack[i].u.bay.ammo = outfit_get( outfit_stack[i].u.bay.ammo_name );
+         o->u.bay.ammo = outfit_get( o->u.bay.ammo_name );
    }
 
    xmlFreeDoc(doc);
