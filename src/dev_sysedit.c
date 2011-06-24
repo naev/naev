@@ -1362,6 +1362,7 @@ static void sysedit_planetGFX( unsigned int wid_unused, char *wgt )
    glTexture **tex, *t;
    int w, h, land;
    Planet *p;
+   glColour *bg, c;
 
    land = !strcmp(wgt,"btnLandGFX");
 
@@ -1385,6 +1386,7 @@ static void sysedit_planetGFX( unsigned int wid_unused, char *wgt )
    png_files      = malloc( sizeof(char*) * nfiles );
    tex            = malloc( sizeof(glTexture*) * nfiles );
    sysedit_tex    = malloc( sizeof(glTexture*) * nfiles );
+   bg             = malloc( sizeof(glColour) * nfiles );
    j              = 0;
    for (i=0; i<nfiles; i++) {
       snprintf( buf, sizeof(buf), "%s/%s", path, files[i] );
@@ -1393,6 +1395,8 @@ static void sysedit_planetGFX( unsigned int wid_unused, char *wgt )
          tex[j]         = t;
          sysedit_tex[j] = tex[j];
          png_files[j]   = strdup( files[i] );
+         c = strcmp(files[i], land ? p->gfx_exteriorPath : p->gfx_spacePath)==0 ? cOrange : cBlack;
+         memcpy( &bg[j], &c, sizeof(glColour) );
          j++;
       }
       free( files[i] );
@@ -1403,6 +1407,7 @@ static void sysedit_planetGFX( unsigned int wid_unused, char *wgt )
    /* Add image array. */
    window_addImageArray( wid, 20, 20, w-60-BUTTON_WIDTH, h-60, "iarGFX", 128, 128, tex, png_files, j, NULL, NULL );
    toolkit_setImageArray( wid, "iarGFX", path );
+   toolkit_setImageArrayBackground( wid, "iarGFX", bg );
 }
 
 
