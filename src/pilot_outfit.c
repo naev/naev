@@ -46,7 +46,7 @@ void pilot_lockUpdate( Pilot *p, double dt )
       o = p->outfits[i];
       if (o->outfit == NULL)
          continue;
-      if (!outfit_isLauncher(o->outfit))
+      if (!outfit_isSeeker(o->outfit))
          continue;
   
       /* Lower timer. */
@@ -71,7 +71,7 @@ void pilot_lockClear( Pilot *p )
       o = p->outfits[i];
       if (o->outfit == NULL)
          continue;
-      if (!outfit_isLauncher(o->outfit))
+      if (!outfit_isSeeker(o->outfit))
          continue;
  
       /* Clear timer. */
