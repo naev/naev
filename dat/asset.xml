@@ -1606,12 +1606,28 @@
   </pos>
   <GFX>
    <space>M04.png</space>
-   <exterior>station03.png</exterior>
+   <exterior>oceanic2.png</exterior>
   </GFX>
+  <presence>
+   <faction>Soromid</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
   <general>
-   <class>A</class>
+   <class>M</class>
    <population>0</population>
-   <services/>
+   <services>
+    <land>land_hiclass</land>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+   </commodities>
+   <description>Cutha is a marvel of planetary engineering. It started out as a fairly hostile world, its atmosphere filled with toxic substances, but the Soromid have tamed it and turned it into a pretty decent place to live. Of course, even Soromid engineering has its limits, so Cutha isn't quite as nice a world as Turawee in Sarcophagus, but the result is still impressive. Nowadays, Cutha houses most of the Soromid involved in the military operations at Heronus.</description>
+   <bar>Cutha's bar is very close to being an open-air bar. The airspace is still fully enclosed, but most of the surfaces that aren't the actual floor are transparent. The ceiling in particular is made of a material that's all but invisible to the naked eye, and with the artificial breeze that blows through the bar it's very easy to believe the illusion that one is actually outside. Only on rainy days is the effect spoiled.</bar>
   </general>
  </asset>
  <asset name="Cygnus IV">
@@ -2569,11 +2585,8 @@
     <refuel/>
     <bar/>
     <missions/>
-   <commodities>
-    <commodity>Ore</commodity>
-    <commodity>Industrial Goods</commodity>
-   </commodities>
    </services>
+   <commodities/>
    <description>A small moon orbiting Sarcophagus II, Ebenezer's atmosphere is deadly to humand and Soromid alike. However, the Soromid found out that their biological ships quite like it here, and a few weeks of continued exposure makes the outer skin tougher and more resistant to damage. Most Soromid military ships will make a visit to Ebenezer early on in their lives for this reason.</description>
    <bar>There's really not too much to to on Ebenezer. The Soromid who live here permanently are here to oversee the ships tethered to the surface, and their population isn't large enough to present much of a market. Traders don't often come to this place.</bar>
   </general>
@@ -4302,6 +4315,70 @@
    <population>0</population>
    <services/>
   </general>
+ </asset>
+ <asset name="Heronus">
+  <pos>
+   <x>-13175.246585</x>
+   <y>17327.640126</y>
+  </pos>
+  <GFX>
+   <space>moon-M04.png</space>
+   <exterior>aquatic3.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Soromid</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>O</class>
+   <population>0</population>
+   <services>
+    <land>srm_mil_restricted</land>
+    <refuel/>
+    <shipyard/>
+   </services>
+   <commodities/>
+   <description>The first Soromid bioships were grown on Sorom itself, and it was in those ships that the Soromid spread through the galaxy. But Sorom is no more. Nowadays, most Soromid ships are grown here, on Heronus. The planet's gravitic and atmospheric properties make it ideal for raising ships in all kinds of sizes and shapes. A carrier class vessel can reach maturity in as few as four SCU.</description>
+  </general>
+  <tech>
+   <item>Soromid Military Ships</item>
+  </tech>
+ </asset>
+ <asset name="Heronus Orbital">
+  <pos>
+   <x>-12991.493773</x>
+   <y>17143.680277</y>
+  </pos>
+  <GFX>
+   <space>station-battlestation.png</space>
+   <exterior>station04.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Soromid</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>0</class>
+   <population>0</population>
+   <services>
+    <land>srm_mil_restricted</land>
+    <refuel/>
+    <bar/>
+    <outfits/>
+   </services>
+   <commodities/>
+   <description>Heronus Orbital is a military base directly tied to Heronus below. Its primary duty is to protect the planet, because it is vital to the Soromid fleet. If Heronus were to cease producing new ships, the Soromid would suffer a tremendous blow to their military capabilities. Needless to say, Heronus Orbital is one of the most heavily armed stations in Soromid space.</description>
+   <bar>A large viewport gives a magnificent view of the young ships that occasionally lift off from Heronus. There's something about the sheen of a ship that has not yet undergone treatment at Ebenezer that particularly catches the eye.</bar>
+  </general>
+  <tech>
+   <item>Plasma 2</item>
+   <item>Missiles 1</item>
+   <item>Missiles 2</item>
+   <item>Basic Outfits 2</item>
+   <item>High Tech Upgrades 2</item>
+  </tech>
  </asset>
  <asset name="Hikatalat">
   <pos>
@@ -9515,12 +9592,28 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </pos>
   <GFX>
    <space>moon-A01.png</space>
-   <exterior>traderoom.png</exterior>
+   <exterior>gas.png</exterior>
   </GFX>
+  <presence>
+   <faction>Soromid</faction>
+   <value>50.000000</value>
+   <range>1</range>
+  </presence>
   <general>
    <class>A</class>
    <population>0</population>
-   <services/>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+   </commodities>
+   <description>A small, volcanic world on the edge of the Uridhrion system, Terminus provides Heronus with raw materials needed to grow new ships.</description>
+   <bar>Terminus' bar is permanently sooty because of the volcanic activity going on all around outside. The facility does have air filters, but the stuff always manages to get in anyway.</bar>
   </general>
  </asset>
  <asset name="Thar">
