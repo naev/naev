@@ -2554,12 +2554,28 @@
   </pos>
   <GFX>
    <space>moon-M00.png</space>
-   <exterior>traderoom.png</exterior>
+   <exterior>methane.png</exterior>
   </GFX>
+  <presence>
+   <faction>Soromid</faction>
+   <value>50.000000</value>
+   <range>2</range>
+  </presence>
   <general>
-   <class>A</class>
-   <population>0</population>
-   <services/>
+   <class>I</class>
+   <population>10000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+   <commodities>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   </services>
+   <description>A small moon orbiting Sarcophagus II, Ebenezer's atmosphere is deadly to humand and Soromid alike. However, the Soromid found out that their biological ships quite like it here, and a few weeks of continued exposure makes the outer skin tougher and more resistant to damage. Most Soromid military ships will make a visit to Ebenezer early on in their lives for this reason.</description>
+   <bar>There's really not too much to to on Ebenezer. The Soromid who live here permanently are here to oversee the ships tethered to the surface, and their population isn't large enough to present much of a market. Traders don't often come to this place.</bar>
   </general>
  </asset>
  <asset name="Eclipse Station">
@@ -8376,8 +8392,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Sarcophagus I">
   <pos>
-   <x>31915.000000</x>
-   <y>-11830.000000</y>
+   <x>6080.317282</x>
+   <y>-6278.745862</y>
   </pos>
   <GFX>
    <space>S01.png</space>
@@ -8412,6 +8428,21 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <GFX>
    <space>moon-A00.png</space>
    <exterior>traderoom.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+  </general>
+ </asset>
+ <asset name="Sarcophagus V">
+  <pos>
+   <x>3962.404419</x>
+   <y>14886.294802</y>
+  </pos>
+  <GFX>
+   <space>I01.png</space>
+   <exterior>lava.png</exterior>
   </GFX>
   <general>
    <class>A</class>
@@ -9674,6 +9705,45 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <item>Low Tech Upgrades</item>
   </tech>
  </asset>
+ <asset name="Thymo">
+  <pos>
+   <x>24202.720556</x>
+   <y>-18121.767832</y>
+  </pos>
+  <GFX>
+   <space>D02.png</space>
+   <exterior>desertic2.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Soromid</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>D</class>
+   <population>100000000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <outfits/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+   </commodities>
+   <description>People sometimes joke that Soromid will live anywhere, like vermin. This is not true. But a pilot looking at the colony on Thymo might well understand why people say such things. The planet is uninteresting by all means, having little in the way of natural resources and lacking an atmosphere entirely. But the Soromid still live here, mainly because they can. Thymo counts as a civilian world, albeit not a very rich one.</description>
+   <bar>Like everything on Thymo, the spaceport bar is sober, utilitarian, efficient. Some pilots like it that way though, as the modest but content clientele testifies.</bar>
+  </general>
+  <tech>
+   <item>Basic Outfits 1</item>
+   <item>Plasma 1</item>
+   <item>Low Tech Upgrades</item>
+   <item>Missiles 1</item>
+   <item>Missiles 2</item>
+  </tech>
+ </asset>
  <asset name="Torg Crops">
   <pos>
    <x>-2701.724375</x>
@@ -9976,6 +10046,50 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <tech>
    <item>Light Civilian Combat Ships</item>
    <item>Basic Civilian Ships</item>
+  </tech>
+ </asset>
+ <asset name="Turawee">
+  <pos>
+   <x>16925.367382</x>
+   <y>4758.979987</y>
+  </pos>
+  <GFX>
+   <space>M02.png</space>
+   <exterior>forest2.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Soromid</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>M</class>
+   <population>2133437257</population>
+   <services>
+    <land>land_hiclass</land>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <outfits/>
+    <shipyard/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+   </commodities>
+   <description>There is literally a world of difference between Thymo and Turawee. Unlike its barren cousin, Turawee is a lush, comfortable world that was never charted even during the Third Growth. The Soromid, having few natural M-class planets at their disposal, take good care of this world. While most other factions would struggle with the trade-off between prosperity and ecology, the Soromid have managed to strike a perfect balance. Turawee may be the only inhabited planet in the galaxy whose environment has not been significantly altered in any way by its occupants.</description>
+   <bar>The Soromid are very protective of Turawee. Offworlders are allowed to land, but they have to abide by strict local rules. No smoking is allowed in this bar, nor can any unauthorized goods or substances be brought inside.</bar>
+  </general>
+  <tech>
+   <item>Plasma 1</item>
+   <item>Plasma 2</item>
+   <item>Low Tech Upgrades</item>
+   <item>High Tech Upgrades 1</item>
+   <item>Heavy Weapons 1</item>
+   <item>Missiles 1</item>
+   <item>Missiles 2</item>
+   <item>Light Civilian Combat Ships</item>
+   <item>Heavy Civilian Combat Ships</item>
   </tech>
  </asset>
  <asset name="Tuur">

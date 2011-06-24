@@ -4848,6 +4848,9 @@
    <asset>Sarcophagus I</asset>
    <asset>Sarcophagus II</asset>
    <asset>Sarcophagus IIb</asset>
+   <asset>Sarcophagus V</asset>
+   <asset>Thymo</asset>
+   <asset>Turawee</asset>
   </assets>
   <jumps>
    <jump target="Point Zero">
