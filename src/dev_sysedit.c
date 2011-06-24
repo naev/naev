@@ -126,6 +126,7 @@ static void sysedit_btnGrid( unsigned int wid_unused, char *unused );
 static void sysedit_btnEdit( unsigned int wid_unused, char *unused );
 /* Planet editing. */
 static void sysedit_editPnt( void );
+static void sysedit_planetDesc( unsigned int wid, char *unused );
 static void sysedit_editPntClose( unsigned int wid, char *unused );
 static void sysedit_genServicesList( unsigned int wid );
 static void sysedit_btnAddService( unsigned int wid, char *unused );
@@ -1121,10 +1122,12 @@ static void sysedit_editPnt( void )
    x += 30 + 10;
 
    /* Bottom buttons. */
-   window_addButton( wid, -20 - bw*2 - 15*2, 35 + BUTTON_HEIGHT, bw, BUTTON_HEIGHT,
-         "btnAddService", "Add Service", sysedit_btnAddService );
    window_addButton( wid, -20 - bw*3 - 15*3, 35 + BUTTON_HEIGHT, bw, BUTTON_HEIGHT,
          "btnRmService", "Rm Service", sysedit_btnRmService );
+   window_addButton( wid, -20 - bw*2 - 15*2, 35 + BUTTON_HEIGHT, bw, BUTTON_HEIGHT,
+         "btnAddService", "Add Service", sysedit_btnAddService );
+   window_addButton( wid, -20 - bw*3 - 15*3, 20, bw, BUTTON_HEIGHT,
+         "btnDesc", "Description", sysedit_planetDesc );
    window_addButton( wid, -20 - bw*2 - 15*2, 20, bw, BUTTON_HEIGHT,
          "btnLandGFX", "Land GFX", sysedit_planetGFX );
    window_addButton( wid, -20 - bw - 15, 20, bw, BUTTON_HEIGHT,
@@ -1145,6 +1148,46 @@ static void sysedit_editPnt( void )
 
    /* Generate the list. */
    sysedit_genServicesList( wid );
+}
+
+
+static void sysedit_planetDesc( unsigned int wid, char *unused )
+{
+   (void) unused;
+   int x, y, h, w;
+   Planet *p;
+   char *desc, *bardesc;
+
+   p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
+
+   /* Create the window. */
+   wid = window_create( "Planet Information", -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
+   window_setCancel( wid, window_close );
+
+   x = 20;
+   y = -40;
+   w = SYSEDIT_EDIT_WIDTH - 40;
+   h = (SYSEDIT_EDIT_HEIGHT - gl_defFont.h * 2 - 30 - 60 - BUTTON_HEIGHT - 10) / 2.;
+   desc    = p->description ? p->description : "None";
+   bardesc = p->bar_description ? p->bar_description : "None";
+
+   window_addButton( wid, -20, 20, (SYSEDIT_EDIT_WIDTH - 40 - 15 * 3) / 4., BUTTON_HEIGHT,
+         "btnClose", "Close", window_close );
+
+   /* Description label and text. */
+   window_addText( wid, x, y, w, gl_defFont.h, 0, "txtDescriptionLabel", &gl_defFont, &cBlack,
+         "Landing Description" );
+   y -= gl_defFont.h + 10;
+   window_addText( wid, x, y, w, h, 0, "txtDescription", &gl_smallFont, &cBlack,
+         desc );
+   y -= h + 10;
+
+   /* Bar description label and text. */
+   window_addText( wid, x, y, w, gl_defFont.h, 0, "txtBarDescriptionLabel", &gl_defFont, &cBlack,
+         "Bar Description" );
+   y -= gl_defFont.h + 10;
+   window_addText( wid, x, y, w, h, 0, "txtBarDescription", &gl_smallFont, &cBlack,
+         bardesc );
 }
 
 
