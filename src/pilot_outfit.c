@@ -23,6 +23,64 @@
 
 
 /**
+ * @brief Updates the lockons on the pilot's launchers
+ */
+void pilot_lockUpdate( Pilot *p, double dt )
+{
+   int i;
+   PilotOutfitSlot *o;
+   Pilot *t;
+   double evade;
+
+   /* No target. */
+   if (p->target == p->id)
+      return;
+
+   /* Get target. */
+   t = pilot_get( p->target );
+   if (t == NULL)
+      return;
+   evade = t->ew_evasion;
+
+   for (i=0; i<p->noutfits; i++) {
+      o = p->outfits[i];
+      if (o->outfit == NULL)
+         continue;
+      if (!outfit_isLauncher(o->outfit))
+         continue;
+  
+      /* Lower timer. */
+      if (o->u.ammo.lockon_timer > 0.) {
+         o->u.ammo.lockon_timer -= dt / (1. + evade - o->outfit->u.lau.ew_target);
+         if (o->u.ammo.lockon_timer < 0.)
+            o->u.ammo.lockon_timer = 0.;
+      }
+   }
+}
+
+
+/**
+ * @brief Clears pilot's missile lockon timers.
+ */
+void pilot_lockClear( Pilot *p )
+{
+   int i;
+   PilotOutfitSlot *o;
+
+   for (i=0; i<p->noutfits; i++) {
+      o = p->outfits[i];
+      if (o->outfit == NULL)
+         continue;
+      if (!outfit_isLauncher(o->outfit))
+         continue;
+ 
+      /* Clear timer. */
+      o->u.ammo.lockon_timer = o->outfit->u.lau.lockon;
+   }
+}
+
+
+/**
  * @brief Gets the mount position of a pilot.
  *
  * Position is relative to the pilot.

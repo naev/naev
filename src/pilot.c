@@ -886,6 +886,7 @@ void pilot_setTarget( Pilot* p, unsigned int id )
       return;
 
    p->target = id;
+   pilot_lockClear( p );
 }
 
 
@@ -1299,6 +1300,9 @@ void pilot_update( Pilot* pilot, const double dt )
    }
    /* Global heat. */
    pilot_heatUpdateShip( pilot, Q, dt );
+
+   /* Update lockons. */
+   pilot_lockUpdate( pilot, dt );
 
    /* Update electronic warfare. */
    pilot_ewUpdateDynamic( pilot );
