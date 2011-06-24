@@ -108,6 +108,15 @@ function srm_mil_restricted( pnt )
          "\"We don't need your money, outsider.\"")
 end
 
+-- Soromid Kataka.
+function srm_mil_kataka( pnt )
+   return land_military(pnt, 75,
+         "Permission to land granted.",
+         "Only friends of the Soromid may set foot on Kataka.",
+         "Landing request denied.",
+         "\"We don't need your money, outsider.\"")
+end
+
 -- Pirate clanworld.
 function pir_clanworld( pnt )
    local fct = pnt:faction()

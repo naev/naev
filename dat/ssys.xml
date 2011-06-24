@@ -2164,7 +2164,7 @@
  </ssys>
  <ssys name="Feye">
   <general>
-   <radius>10000.000000</radius>
+   <radius>20000.000000</radius>
    <stars>400</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -2174,10 +2174,16 @@
    <x>221.000000</x>
    <y>689.000000</y>
   </pos>
-  <assets/>
+  <assets>
+   <asset>Feye I</asset>
+   <asset>Feye IV</asset>
+   <asset>Kataka</asset>
+   <asset>Memory of Sorom</asset>
+   <asset>Neurri</asset>
+  </assets>
   <jumps>
    <jump target="Cerberus">
-    <pos x="-7641.386128" y="-6450.520757"/>
+    <pos x="-15282.772256" y="-12901.041515"/>
     <radius>200.000000</radius>
     <flags>
      <autopos/>

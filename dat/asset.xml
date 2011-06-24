@@ -3225,6 +3225,36 @@
    <item>Missiles 2</item>
   </tech>
  </asset>
+ <asset name="Feye I">
+  <pos>
+   <x>5095.508914</x>
+   <y>-4732.794576</y>
+  </pos>
+  <GFX>
+   <space>I00.png</space>
+   <exterior>aquatic2.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+  </general>
+ </asset>
+ <asset name="Feye IV">
+  <pos>
+   <x>-10212.509388</x>
+   <y>-9828.761375</y>
+  </pos>
+  <GFX>
+   <space>G01.png</space>
+   <exterior>aquatic.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+  </general>
+ </asset>
  <asset name="Fidelis III">
   <pos>
    <x>-12133.885661</x>
@@ -5037,6 +5067,46 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <services/>
   </general>
  </asset>
+ <asset name="Kataka">
+  <pos>
+   <x>-5145.948201</x>
+   <y>2909.504862</y>
+  </pos>
+  <GFX>
+   <space>K03.png</space>
+   <exterior>gas.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Soromid</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>Y</class>
+   <population>0</population>
+   <services>
+    <land>srm_mil_kataka</land>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <outfits/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>With the loss of Sorom, the Soromid had to decide on a new political capital. After some debate, it was decided that Kataka would fill this position. Kataka is by no means a pleasant world, but the Soromid being the Soromid, that made no difference. Present day, Kataka is home to most if not all of the influential Soromid citizens. Authorities on all aspects of Soromid can be found here.</description>
+   <bar>It's quite unusual for a non-Soromid to be granted landing rights on Kataka. And even when this happens, offworlders are usually restricted to the spaceport facility, and if they have business with planetside officials then those officials come to them. The spaceport bar is built for such occurrences, providing private booths where people may converse in private.</bar>
+  </general>
+  <tech>
+   <item>Basic Outfits 2</item>
+   <item>Heavy Weapons 2</item>
+   <item>Plasma 2</item>
+   <item>High Tech Upgrades 1</item>
+  </tech>
+ </asset>
  <asset name="Khelim">
   <pos>
    <x>-5534.972756</x>
@@ -5920,6 +5990,39 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <bar>The spacedock bar is quite plain in its appointments. The Frontier people have learned to be practical and utilitarian, and so didn't waste any more space or effort on the bar onboard Megan than was required.</bar>
   </general>
  </asset>
+ <asset name="Memory of Sorom">
+  <pos>
+   <x>5872.457422</x>
+   <y>-5079.121206</y>
+  </pos>
+  <GFX>
+   <space>station-fleetbase.png</space>
+   <exterior>station05.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Soromid</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>0</class>
+   <population>0</population>
+   <services>
+    <land>srm_mil_restricted</land>
+    <refuel/>
+    <bar/>
+    <outfits/>
+    <shipyard/>
+   </services>
+   <commodities/>
+   <description>This is the headquarters of all spaceborne Soromid military operations. It was dedicated in memory of the Soromid's original homeworld, Sorom. Though the Incident happened many SCU ago and most Soromid are too young to remember their planet of origin, the emotional attachment is shared among young and old alike.</description>
+   <bar>The spacedock bar, if you can even call it that, is just a modest section of a larger facility that's used for all sorts of military-to-civilian business, such as recruitment procedures. The place is always busy. Memory of Sorom is not a place for anyone to relax.</bar>
+  </general>
+  <tech>
+   <item>Soromid Military Ships</item>
+   <item>Heavy Civilian Combat Ships</item>
+  </tech>
+ </asset>
  <asset name="Merisi I">
   <pos>
    <x>-16800.000000</x>
@@ -6245,6 +6348,43 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <population>0</population>
    <services/>
   </general>
+ </asset>
+ <asset name="Neurri">
+  <pos>
+   <x>18519.849257</x>
+   <y>-3592.137374</y>
+  </pos>
+  <GFX>
+   <space>O02.png</space>
+   <exterior>mining2.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Soromid</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>O</class>
+   <population>0</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <shipyard/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Ore</commodity>
+   </commodities>
+   <description>Though life on Neurri is tough, the planet has nevertheless evolved to one of the most prominent pieces of real estate in Soromid space. Kataka's presence implies that Feye gets a lot of traffic, so economically Neurri is in a good position. The world mostly subsists on rendering services to Kataka, though a modest private ship building company has settled here as well.</description>
+   <bar>For many non-Soromid, Neurri's bar is a home away from home. Quite a lot of traders come to this planet, so the spaceport bar always has a high number of "regulars" in it. Not that they really mind being around the Soromid, of course. Fine people, the Soromid. They just start giving you the creeps after a while, know what I mean?</bar>
+  </general>
+  <tech>
+   <item>Basic Trade Ships</item>
+   <item>Bulk Trade Ships</item>
+  </tech>
  </asset>
  <asset name="New Deimos">
   <pos>
