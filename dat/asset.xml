@@ -3118,6 +3118,33 @@
    <services/>
   </general>
  </asset>
+ <asset name="Facett Outpost">
+  <pos>
+   <x>-5141.467977</x>
+   <y>-9293.620418</y>
+  </pos>
+  <GFX>
+   <space>station-fleetbase2.png</space>
+   <exterior>station03.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Soromid</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>0</class>
+   <population>0</population>
+   <services>
+    <land>srm_mil_restricted</land>
+    <refuel/>
+    <bar/>
+   </services>
+   <commodities/>
+   <description>Facett Outpost is little more than a local police station. It was created as a precaution against the pirate threat coming from Khaas, but the Soromid know that no one station could withstand a coordinated attack. Facett is mostly a visible sign of Soromid presence in Hatter. It puts the local population at peace. The real security has to come from Hartwell Station in neighbor system Father's Pride.</description>
+   <bar>The bar is where the local security employees go when they're on standby. They seldom have to wait for a long time before their assistance is required.</bar>
+  </general>
+ </asset>
  <asset name="Father's Pride I">
   <pos>
    <x>-9350.000000</x>
@@ -3657,17 +3684,64 @@
  </asset>
  <asset name="Gaula">
   <pos>
-   <x>19668.000000</x>
-   <y>-12100.000000</y>
+   <x>22862.808960</x>
+   <y>-6234.902954</y>
   </pos>
   <GFX>
    <space>O00.png</space>
-   <exterior>traderoom.png</exterior>
+   <exterior>aquatic2.png</exterior>
   </GFX>
+  <presence>
+   <faction>Soromid</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
   <general>
-   <class>A</class>
+   <class>O</class>
    <population>0</population>
-   <services/>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+   </commodities>
+   <description>Soromid space is low on worlds suitable for agriculture, so the Soromid need to rely on alternative food production. Gaula, an aquatic planet, is one such alternative. Vast stretches of the ocean floor are taken up by enormous submarine farms where certain kinds of underwater flora are cultivated and harvested, to be processed into food by the factory station up above.</description>
+   <bar>The spaceport and its accompanying support facilities are floating on a platform above one of the primary farms on Gaula. The water is strictly off-limits, and anyone foolish enough to dump waste into the ocean is harshly penalized.</bar>
+  </general>
+ </asset>
+ <asset name="Gaula Foods">
+  <pos>
+   <x>22534.320057</x>
+   <y>-5891.042114</y>
+  </pos>
+  <GFX>
+   <space>station-agriculture.png</space>
+   <exterior>station05.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Soromid</faction>
+   <value>50.000000</value>
+   <range>1</range>
+  </presence>
+  <general>
+   <class>0</class>
+   <population>0</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+   </commodities>
+   <description>Gaula Foods is the food factory that processes the produce grown on Gaula into human digestible meal units. The station outputs an amazing variety of foodstuffs considering the limited diversity of the plants they are made from.</description>
+   <bar>The bar offers samples of most of the products made in the factory complex. The taste is generally not bad, although after a while it starts to get a little samey.</bar>
   </general>
  </asset>
  <asset name="Gayathi">
@@ -4243,8 +4317,8 @@
  </asset>
  <asset name="Hatter I">
   <pos>
-   <x>12980.000000</x>
-   <y>-484.000000</y>
+   <x>8211.628418</x>
+   <y>-1914.511475</y>
   </pos>
   <GFX>
    <space>A00.png</space>

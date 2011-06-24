@@ -2929,17 +2929,17 @@
    <y>528.066667</y>
   </pos>
   <assets>
+   <asset>Facett Outpost</asset>
    <asset>Gaula</asset>
+   <asset>Gaula Foods</asset>
    <asset>Hatter I</asset>
    <asset>Hatter II</asset>
   </assets>
   <jumps>
    <jump target="Father's Pride">
-    <pos x="10569.369313" y="-11200.376436"/>
+    <pos x="12476.717946" y="-12440.153048"/>
     <radius>200.000000</radius>
-    <flags>
-     <autopos/>
-    </flags>
+    <flags/>
    </jump>
    <jump target="Khaas">
     <pos x="-3462.836403" y="-15005.624414"/>
