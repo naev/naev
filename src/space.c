@@ -1411,7 +1411,7 @@ void planet_updateLand( Planet *p )
    char *str;
    lua_State *L;
    LuaPlanet lp;
-   
+
    /* Must be inhabited. */
    if (!planet_hasService( p, PLANET_SERVICE_INHABITED ) ||
          (player.p == NULL))

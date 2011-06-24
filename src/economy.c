@@ -204,7 +204,7 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
 
    /* Get name. */
    xmlr_attr( parent, "name", temp->name );
-   if (temp->name == NULL) 
+   if (temp->name == NULL)
       WARN("Commodity from "COMMODITY_DATA" has invalid or no name");
 
    /* Parse body. */
