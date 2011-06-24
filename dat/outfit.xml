@@ -1247,6 +1247,8 @@
    <ammo>Headhunter Missile</ammo>
    <delay>2000</delay>
    <amount>15</amount>
+   <lockon>5</lockon>
+   <ew_target>1</ew_target>
   </specific>
  </outfit>
  <outfit name="Headhunter Missile">
