@@ -287,15 +287,15 @@ static void sysedit_editPntClose( unsigned int wid, char *unused )
    char *inp;
 
    p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
-   p->population = (uint64_t)atoi(window_getInput( sysedit_widEdit, "inpPop" ));
+   p->population = (uint64_t)strtoull(window_getInput( sysedit_widEdit, "inpPop" ), 0, 10);
    p->class      = planetclass_get( window_getInput( sysedit_widEdit, "inpClass" )[0] );
    inp = window_getInput( sysedit_widEdit, "inpLand" );
    if (inp == NULL || strlen(inp) == 0)
       free( p->land_func );
    else
       p->land_func = strdup( inp );
-   p->presenceAmount = (double)atoi(window_getInput( sysedit_widEdit, "inpPresence" ));
-   p->presenceRange = (int)atoi(window_getInput( sysedit_widEdit, "inpPresenceRange" ));
+   p->presenceAmount = atof(window_getInput( sysedit_widEdit, "inpPresence" ));
+   p->presenceRange = atoi(window_getInput( sysedit_widEdit, "inpPresenceRange" ));
 
    window_close( wid, unused );
 }
@@ -1105,10 +1105,10 @@ static void sysedit_editPnt( void )
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 1, "txtPresenceRange",
          NULL, &cBlack, s );
-   window_addInput( wid, x += l + 5, y, 40, 20, "inpPresenceRange", 3, 1, NULL );
+   window_addInput( wid, x += l + 5, y, 30, 20, "inpPresenceRange", 1, 1, NULL );
    window_setInputFilter( wid, "inpPresenceRange",
          "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`." );
-   x += 40 + 10;
+   x += 30 + 10;
 
    /* Bottom buttons. */
    window_addButton( wid, -20 - bw*2 - 15*2, 35 + BUTTON_HEIGHT, bw, BUTTON_HEIGHT,
