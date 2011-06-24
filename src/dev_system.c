@@ -141,11 +141,14 @@ static int dsys_saveSystem( xmlTextWriterPtr writer, const StarSystem *sys )
       jp = sorted_jumps[i];
       xmlw_startElem( writer, "jump" );
       xmlw_attr( writer, "target", "%s", jp->target->name );
-      xmlw_startElem( writer, "pos" );
-      xmlw_attr( writer, "x", "%f", jp->pos.x );
-      xmlw_attr( writer, "y", "%f", jp->pos.y );
-      xmlw_endElem( writer ); /* "pos" */
-      xmlw_elem( writer, "radius", "%f", jp->radius );
+      if (!jp->flags & JP_AUTOPOS) {
+         xmlw_startElem( writer, "pos" );
+         xmlw_attr( writer, "x", "%f", jp->pos.x );
+         xmlw_attr( writer, "y", "%f", jp->pos.y );
+         xmlw_endElem( writer ); /* "pos" */
+      }
+      if (jp->radius != 200.)
+         xmlw_elem( writer, "radius", "%f", jp->radius );
       xmlw_startElem( writer, "flags" );
       if (jp->flags & JP_AUTOPOS)
          xmlw_elemEmpty( writer, "autopos" );

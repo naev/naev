@@ -2163,6 +2163,7 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
    xmlNodePtr cur, cur2;
    double x, y;
    StarSystem *target;
+   int pos;
 
    /* Get target. */
    xmlr_attr( node, "target", buf );
@@ -2199,6 +2200,8 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
    j->target = target;
    free(buf);
    j->targetid = j->target->id;
+   j->radius = 200.;
+   pos = 0;
 
    /* Parse data. */
    cur = node->xmlChildrenNode;
@@ -2207,6 +2210,7 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
 
       /* Handle position. */
       if (xml_isNode(cur,"pos")) {
+         pos = 1;
          xmlr_attr( cur, "x", buf );
          if (buf==NULL) {
             WARN("JumpPoint for system '%s' has position node missing 'x' position, using 0.", sys->name);
@@ -2239,6 +2243,9 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
          } while (xml_nextNode(cur2));
       }
    } while (xml_nextNode(cur));
+
+   if (!j->flags & JP_AUTOPOS && !pos)
+      WARN("JumpPoint in system '%s' is missing pos element but does not have autopos flag.", sys->name);
 
    /* Added jump. */
    sys->njumps++;
