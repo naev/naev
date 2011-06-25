@@ -64,15 +64,15 @@ void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, double *a, do
    }
 
    /* Lower timer. */
-   if (o->u.ammo.lockon_timer > 0.) {
+   max = -o->outfit->u.lau.lockon/2.;
+   if (o->u.ammo.lockon_timer > max) {
       /* Get evasion. */
       mod = t->ew_evasion - o->outfit->u.lau.ew_target;
       o->u.ammo.lockon_timer -= dt / (1. + mod);
 
       /* Cap at -max/2. */
-      max = o->outfit->u.lau.lockon/2.;
-      if (o->u.ammo.lockon_timer < -max)
-         o->u.ammo.lockon_timer = -max;
+      if (o->u.ammo.lockon_timer < max)
+         o->u.ammo.lockon_timer = max;
    }
 }
 
