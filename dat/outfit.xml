@@ -1254,22 +1254,42 @@
    <ai>smart</ai>
   </specific>
  </outfit>
- <outfit name="Headhunter Launcher">
+ <outfit name="Unicorp Headhunter Launcher">
   <general>
    <slot>weapon</slot>
    <license>Medium Weapon License</license>
    <mass>10</mass>
    <price>40000</price>
-   <description>The Headhunter launcher is one of the most-used missile launchers by the security companies. Far more reliable than Seeker missiles, Headhunters feature newer sensors and an advanced tracking system making them much better at hitting their targets.</description>
+   <description>This launcher fires Headhunter class interceptor missiles. Made to standard specification, this model has been optimized for minimum system strain and maximum compatibility.</description>
+   <gfx_store>headhunterlauncher</gfx_store>
+  </general>
+  <specific type="launcher" secondary="1">
+   <cpu>5</cpu>
+   <ammo>Headhunter Missile</ammo>
+   <delay>3000</delay>
+   <amount>15</amount>
+   <lockon>8</lockon>
+   <arc>6</arc>
+   <ew_target>2</ew_target>
+  </specific>
+ </outfit>
+ <outfit name="TeraCom Headhunter Launcher">
+  <general>
+   <slot>weapon</slot>
+   <license>Medium Weapon License</license>
+   <mass>10</mass>
+   <price>40000</price>
+   <description>This is TeraCom's model Headhunter launcher. Though somewhat pricey and demanding on the ship's resources, the patented tracking and missile arming technology allows pilots to fire their missiles before the competition does.</description>
    <gfx_store>headhunterlauncher</gfx_store>
   </general>
   <specific type="launcher" secondary="1">
    <cpu>8</cpu>
    <ammo>Headhunter Missile</ammo>
-   <delay>2000</delay>
+   <delay>3000</delay>
    <amount>15</amount>
    <lockon>5</lockon>
-   <ew_target>1</ew_target>
+   <arc>8</arc>
+   <ew_target>2</ew_target>
   </specific>
  </outfit>
  <outfit name="Headhunter Missile">
@@ -1277,7 +1297,7 @@
    <license>Medium Weapon License</license>
    <mass>1</mass>
    <price>800</price>
-   <description>Headhunters first gained fame in the crush of the Araknoid, a fearsome battle against a pirate stronghold where the Empire crushed the pirates thanks to the advanced guidance system on the Headhunter. Now used by mercenaries and bounty hunters throughout the galaxy.</description>
+   <description>The Headhunter class interceptor missile is a medium calibre missile that can deal devastating damage to small and medium sized targets, while remaining reasonably fast and agile. Most effective when launched at distant enemies.</description>
    <gfx_store>headhunter</gfx_store>
   </general>
   <specific type="ammo">
@@ -1287,11 +1307,10 @@
    <spfx_shield>ExpM</spfx_shield>
    <spfx_armour>ExpM</spfx_armour>
    <duration blowup="armour">7</duration>
-   <resist>5</resist>
-   <thrust>325</thrust>
-   <turn>90</turn>
-   <speed>550</speed>
-   <damage type="kinetic" penetrate="30">20</damage>
+   <thrust>550</thrust>
+   <turn>70</turn>
+   <speed>1000</speed>
+   <damage type="kinetic" penetrate="20">80</damage>
    <ai>smart</ai>
   </specific>
  </outfit>

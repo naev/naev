@@ -35,10 +35,10 @@ function equip_turretSrsHig ()
 end
 -- RANGED
 function equip_rangedSrs ()
-   return { "Headhunter Launcher" }
+   return { "Unicorp Headhunter Launcher" }
 end
 function equip_secondarySrs ()
-   return { "Headhunter Launcher" }
+   return { "Unicorp Headhunter Launcher" }
 end
 
 

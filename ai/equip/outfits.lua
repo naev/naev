@@ -69,7 +69,7 @@ function equip_rangedLow ()
    return { "Unicorp Fury Launcher" }
 end
 function equip_rangedMed ()
-   return { "Headhunter Launcher" }
+   return { "Unicorp Headhunter Launcher" }
 end
 function equip_rangedHig ()
    return { }
@@ -89,7 +89,7 @@ function equip_secondaryLow ()
    return { "Unicorp Fury Launcher", "Mace Launcher" }
 end
 function equip_secondaryMed ()
-   return { "Banshee Launcher", "Headhunter Launcher" }
+   return { "Banshee Launcher", "Unicorp Headhunter Launcher" }
 end
 function equip_secondaryHig ()
    return { }

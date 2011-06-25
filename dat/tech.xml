@@ -60,7 +60,8 @@
   <item>Unicorp Fury Launcher</item>
   <item>TeraCom Fury Launcher</item>
   <item>Fury Missile</item>
-  <item>Headhunter Launcher</item>
+  <item>Unicorp Headhunter Launcher</item>
+  <item>TeraCom Headhunter Launcher</item>
   <item>Headhunter Missile</item>
   <item>Banshee Launcher</item>
   <item>Banshee Rocket</item>
@@ -374,7 +375,7 @@
   <item>Fury Missile</item>
  </tech>
  <tech name="Missiles 2">
-  <item>Headhunter Launcher</item>
+  <item>Unicorp Headhunter Launcher</item>
   <item>Headhunter Missile</item>
   <item>Mace Launcher</item>
   <item>Mace Rocket</item>
