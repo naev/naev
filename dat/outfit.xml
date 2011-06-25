@@ -1212,7 +1212,7 @@
    <amount>20</amount>
    <lockon>6</lockon>
    <arc>6</arc>
-   <ew_target>3</ew_target>
+   <ew_target>1.5</ew_target>
   </specific>
  </outfit>
  <outfit name="TeraCom Fury Launcher">
@@ -1230,7 +1230,7 @@
    <amount>20</amount>
    <lockon>4</lockon>
    <arc>8</arc>
-   <ew_target>3</ew_target>
+   <ew_target>1.5</ew_target>
   </specific>
  </outfit>
  <outfit name="Enygma Systems Turreted Fury Launcher">
@@ -1247,7 +1247,7 @@
    <delay>2500</delay>
    <amount>30</amount>
    <lockon>5</lockon>
-   <ew_target>3</ew_target>
+   <ew_target>1.5</ew_target>
   </specific>
  </outfit>
  <outfit name="Fury Missile">
@@ -1287,7 +1287,7 @@
    <amount>15</amount>
    <lockon>8</lockon>
    <arc>6</arc>
-   <ew_target>2</ew_target>
+   <ew_target>1</ew_target>
   </specific>
  </outfit>
  <outfit name="TeraCom Headhunter Launcher">
@@ -1306,7 +1306,7 @@
    <amount>15</amount>
    <lockon>5</lockon>
    <arc>8</arc>
-   <ew_target>2</ew_target>
+   <ew_target>1</ew_target>
   </specific>
  </outfit>
  <outfit name="Enygma Systems Turreted Headhunter Launcher">
@@ -1323,7 +1323,7 @@
    <delay>3000</delay>
    <amount>20</amount>
    <lockon>6</lockon>
-   <ew_target>2</ew_target>
+   <ew_target>1</ew_target>
   </specific>
  </outfit>
  <outfit name="Headhunter Missile">
@@ -1364,7 +1364,7 @@
    <amount>10</amount>
    <lockon>11</lockon>
    <arc>6</arc>
-   <ew_target>1.5</ew_target>
+   <ew_target>0.75</ew_target>
   </specific>
  </outfit>
  <outfit name="TeraCom Vengeance Launcher">
@@ -1383,7 +1383,7 @@
    <amount>10</amount>
    <lockon>7</lockon>
    <arc>8</arc>
-   <ew_target>1.5</ew_target>
+   <ew_target>0.75</ew_target>
   </specific>
  </outfit>
  <outfit name="Enygma Systems Turreted Vengeance Launcher">
@@ -1400,7 +1400,7 @@
    <delay>3500</delay>
    <amount>15</amount>
    <lockon>8</lockon>
-   <ew_target>1.5</ew_target>
+   <ew_target>0.75</ew_target>
   </specific>
  </outfit>
  <outfit name="Vengeance Missile">
@@ -1547,7 +1547,7 @@
    <delay>7000</delay>
    <lockon>12</lockon>
    <arc>6</arc>
-   <ew_target>0.8</ew_target>
+   <ew_target>0.4</ew_target>
    <amount>6</amount>
   </specific>
  </outfit>
@@ -1589,7 +1589,7 @@
    <delay>8000</delay>
    <lockon>13</lockon>
    <arc>6</arc>
-   <ew_target>0.6</ew_target>
+   <ew_target>0.3</ew_target>
    <amount>5</amount>
   </specific>
  </outfit>

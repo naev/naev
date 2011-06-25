@@ -52,10 +52,19 @@ void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, double *a, do
 
       /* Decay if not in arc. */
       if (*a > arc) {
-         o->u.ammo.lockon_timer += dt * (t->ew_evasion/o->outfit->u.lau.ew_target);
-
-         /* Limit decay to max. */
+         /* Limit decay to the lockon time for this launcher. */
          max = o->outfit->u.lau.lockon;
+
+         /* When a lock is lost, immediately gain half the lock timer.
+          * This is meant as an incentive for the aggressor not to lose the lock,
+          * and for the target to try and break the lock. */
+         if (o->u.ammo.lockon_timer <= 0 && o->u.ammo.lockon_timer + dt * o->outfit->u.lau.lockon > 0) {
+            o->u.ammo.lockon_timer += dt + o->outfit->u.lau.lockon / 2;
+         }
+         else
+            o->u.ammo.lockon_timer += dt;
+            
+
          if (o->u.ammo.lockon_timer > max)
             o->u.ammo.lockon_timer = max;
 
@@ -63,13 +72,13 @@ void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, double *a, do
       }
    }
 
-   /* Lower timer. */
-   max = -o->outfit->u.lau.lockon/2.;
+   /* Lower timer. When the timer reaches zero, the lock is established. */
+   max = -o->outfit->u.lau.lockon/3.;
    if (o->u.ammo.lockon_timer > max) {
-      /* Get evasion. */
-      o->u.ammo.lockon_timer -= dt * (o->outfit->u.lau.ew_target/t->ew_evasion);
+      /* Compensate for enemy hide factor. */
+      o->u.ammo.lockon_timer -= dt * (o->outfit->u.lau.ew_target/t->ew_hide);
 
-      /* Cap at -max/2. */
+      /* Cap at -max/3. */
       if (o->u.ammo.lockon_timer < max)
          o->u.ammo.lockon_timer = max;
    }
