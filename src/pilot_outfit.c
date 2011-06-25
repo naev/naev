@@ -27,7 +27,7 @@
  */
 void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, double *a, double dt )
 {
-   double mod, max;
+   double max;
    double x,y, ang, arc;
 
    /* No target. */
@@ -67,8 +67,7 @@ void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, double *a, do
    max = -o->outfit->u.lau.lockon/2.;
    if (o->u.ammo.lockon_timer > max) {
       /* Get evasion. */
-      mod = t->ew_evasion - o->outfit->u.lau.ew_target;
-      o->u.ammo.lockon_timer -= dt / (1. + mod);
+      o->u.ammo.lockon_timer -= dt * (o->outfit->u.lau.ew_target/t->ew_evasion);
 
       /* Cap at -max/2. */
       if (o->u.ammo.lockon_timer < max)
