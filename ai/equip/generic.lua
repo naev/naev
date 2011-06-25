@@ -29,7 +29,7 @@ function equip_genericCivilian( p, shipsize )
    local nhigh, nmedium, nlow = p:ship():slots()
 
    -- Defaults
-   medium      = { "Civilian Jammer" }
+   medium      = { "Unicorp Scrambler" }
    apu         = { }
    weapons = {}
    use_primary = rnd.rnd(nhigh) -- Use fewer slots
@@ -40,13 +40,13 @@ function equip_genericCivilian( p, shipsize )
    -- Per ship type
    if shipsize == "small" then
       addWeapons( equip_forwardLow(), use_primary )
-      medium   = { "Civilian Jammer" }
+      medium   = { "Unicorp Scrambler" }
       if rnd.rnd() > 0.8 then
          use_medium = 1
       end
    else
       addWeapons( equip_turretLow(), use_primary )
-      medium   = { "Civilian Jammer" }
+      medium   = { "Unicorp Scrambler" }
       if rnd.rnd() > 0.5 then
          use_medium = 1
       end
@@ -69,7 +69,7 @@ function equip_genericMerchant( p, shipsize )
    local nhigh, nmedium, nlow = p:ship():slots()
 
    -- Defaults
-   medium      = { "Civilian Jammer" }
+   medium      = { "Unicorp Scrambler" }
    apu         = { }
    weapons     = {}
    use_primary = rnd.rnd(1,nhigh) -- Use fewer slots
@@ -80,7 +80,7 @@ function equip_genericMerchant( p, shipsize )
    -- Equip by size
    if shipsize == "small" then
       addWeapons( equip_forwardLow(), use_primary )
-      medium   = { "Civilian Jammer" }
+      medium   = { "Unicorp Scrambler" }
       if rnd.rnd() > 0.8 then
          use_medium = 1
       end
@@ -88,7 +88,7 @@ function equip_genericMerchant( p, shipsize )
       use_secondary = 1
       addWeapons( equip_turretLow(), use_primary )
       addWeapons( { "EMP Grenade Launcher" }, use_secondary )
-      medium   = { "Civilian Jammer" }
+      medium   = { "Unicorp Scrambler" }
       if rnd.rnd() > 0.6 then
          use_medium = 1
       end
@@ -100,7 +100,7 @@ function equip_genericMerchant( p, shipsize )
       use_secondary = 2
       addWeapons( equip_turretLow(), use_primary )
       addWeapons( { "EMP Grenade Launcher" }, use_secondary )
-      medium = { "Civilian Jammer" }
+      medium = { "Unicorp Scrambler" }
       if rnd.rnd() > 0.4 then
          use_medium = 1
       end
@@ -123,7 +123,7 @@ function equip_genericMilitary( p, shipsize )
    local nhigh, nmedium, nlow = p:ship():slots()
 
    -- Defaults
-   medium      = { "Civilian Jammer" }
+   medium      = { "Unicorp Scrambler" }
    apu         = { }
 
    -- Equip by size and type
@@ -134,7 +134,7 @@ function equip_genericMilitary( p, shipsize )
       if class == "Scout" then
          use_primary    = rnd.rnd(1,nhigh)
          addWeapons( equip_forwardLow(), use_primary )
-         medium         = { "Generic Afterburner", "Milspec Jammer" }
+         medium         = { "Generic Afterburner", "Milspec Scrambler" }
          use_medium     = 2
          low            = { "Solar Panel" }
 

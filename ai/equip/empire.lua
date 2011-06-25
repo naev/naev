@@ -54,7 +54,7 @@ function equip_empireMilitary( p, shipsize )
    local scramble
 
    -- Defaults
-   medium      = { "Civilian Jammer" }
+   medium      = { "Unicorp Scrambler" }
    apu         = { }
    weapons     = {}
    scramble    = false
@@ -67,7 +67,7 @@ function equip_empireMilitary( p, shipsize )
       if class == "Scout" then
          use_primary    = rnd.rnd(1,#nhigh)
          addWeapons( equip_forwardLow(), use_primary )
-         medium         = { "Generic Afterburner", "Milspec Jammer" }
+         medium         = { "Generic Afterburner", "Milspec Scrambler" }
          use_medium     = 2
          low            = { "Solar Panel" }
 

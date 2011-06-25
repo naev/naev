@@ -53,7 +53,7 @@ function equip_dvaeredMilitary( p, shipsize )
    local nhigh, nmedium, nlow = p:ship():slots()
 
    -- Defaults
-   medium      = { "Civilian Jammer" }
+   medium      = { "Unicorp Scrambler" }
    apu         = { }
    weapons     = {}
 
@@ -65,7 +65,7 @@ function equip_dvaeredMilitary( p, shipsize )
       if class == "Scout" then
          use_forward    = rnd.rnd(1,#nhigh)
          addWeapons( equip_forwardLow(), use_forward )
-         medium         = { "Generic Afterburner", "Milspec Jammer" }
+         medium         = { "Generic Afterburner", "Milspec Scrambler" }
          use_medium     = 2
          low            = { "Solar Panel" }
 

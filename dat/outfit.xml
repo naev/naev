@@ -1197,26 +1197,47 @@
 
 
  <!-- Missile Weapons -->
- <outfit name="Seeker Launcher">
+ <outfit name="Unicorp Fury Launcher">
   <general>
    <slot>weapon</slot>
    <mass>8</mass>
    <price>25000</price>
-   <description>A compact base for launching Seeker missiles, a Seeker launcher is an inexpensive way to augment a ship's ranged combat capabilities.</description>
+   <description>This missile launcher fires Fury class interceptor missiles. It is built out of standard parts, which make it serviceable and efficient.</description>
+   <gfx_store>seekerlauncher</gfx_store>
+  </general>
+  <specific type="launcher" secondary="1">
+   <cpu>4</cpu>
+   <ammo>Fury Missile</ammo>
+   <delay>2500</delay>
+   <amount>20</amount>
+   <lockon>6</lockon>
+   <arc>6</arc>
+   <ew_target>3</ew_target>
+  </specific>
+ </outfit>
+ <outfit name="TeraCom Fury Launcher">
+  <general>
+   <slot>weapon</slot>
+   <mass>9</mass>
+   <price>40000</price>
+   <description>The TeraCom Fury Launcher is a high-performance missile launcher equipped with patented target tracking and missile arming technology, allowing pilots to get a lock on their target faster and more easily than with launchers made by competing brands.</description>
    <gfx_store>seekerlauncher</gfx_store>
   </general>
   <specific type="launcher" secondary="1">
    <cpu>6</cpu>
-   <ammo>Seeker Missile</ammo>
-   <delay>1800</delay>
+   <ammo>Fury Missile</ammo>
+   <delay>2500</delay>
    <amount>20</amount>
+   <lockon>4</lockon>
+   <arc>8</arc>
+   <ew_target>3</ew_target>
   </specific>
  </outfit>
- <outfit name="Seeker Missile">
+ <outfit name="Fury Missile">
   <general>
    <mass>1</mass>
    <price>400</price>
-   <description>The cheapest smart missile on the market, while it lacks advanced tracking abilities, it makes up for that with affordability and firepower in spades.</description>
+   <description>The Fury class interceptor missile is a lightweight missile propelled by a powerful engine, delivering its payload to its target quickly and efficiently. Its high agility come at the cost of destructive power, however, limiting its effectiveness to light, nimble fighters.</description>
    <gfx_store>seeker</gfx_store>
   </general>
   <specific type="ammo">
@@ -1226,11 +1247,11 @@
    <spfx_shield>ExpM</spfx_shield>
    <spfx_armour>ExpM</spfx_armour>
    <duration blowup="armour">5</duration>
-   <thrust>400</thrust>
-   <turn>60</turn>
-   <speed>800</speed>
-   <damage type="kinetic" penetrate="10">20</damage>
-   <ai>seek</ai>
+   <thrust>700</thrust>
+   <turn>100</turn>
+   <speed>1200</speed>
+   <damage type="kinetic" penetrate="10">40</damage>
+   <ai>smart</ai>
   </specific>
  </outfit>
  <outfit name="Headhunter Launcher">

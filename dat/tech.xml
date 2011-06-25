@@ -57,8 +57,9 @@
   <item>Heavy Ripper Cannon</item>
   <item>Orion Beam</item>
   <item>Ragnarok Beam</item>
-  <item>Seeker Launcher</item>
-  <item>Seeker Missile</item>
+  <item>Unicorp Fury Launcher</item>
+  <item>TeraCom Fury Launcher</item>
+  <item>Fury Missile</item>
   <item>Headhunter Launcher</item>
   <item>Headhunter Missile</item>
   <item>Banshee Launcher</item>
@@ -248,8 +249,8 @@
   <item>Laser Cannon MK1</item>
   <item>Plasma Blaster MK1</item>
   <item>Gauss Gun</item>
-  <item>Seeker Launcher</item>
-  <item>Seeker Missile</item>
+  <item>Unicorp Fury Launcher</item>
+  <item>Fury Missile</item>
   <item>Battery</item>
   <item>Solar Panel</item>
   <item>Fuel Pod</item>
@@ -369,8 +370,8 @@
  <tech name="Missiles 1">
   <item>Banshee Launcher</item>
   <item>Banshee Rocket</item>
-  <item>Seeker Launcher</item>
-  <item>Seeker Missile</item>
+  <item>Unicorp Fury Launcher</item>
+  <item>Fury Missile</item>
  </tech>
  <tech name="Missiles 2">
   <item>Headhunter Launcher</item>
