@@ -1092,6 +1092,8 @@ static void opt_video( unsigned int wid )
    toolkit_setListPos( wid, "lstRes", res_def);
    window_setInputFilter( wid, "inpFPS",
          "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`" );
+   snprintf( buf, sizeof(buf), "%d", conf.fps_max );
+   window_setInput( wid, "inpFPS", buf );
    y -= 30;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkFPS", "Show FPS", NULL, conf.fps_show );
