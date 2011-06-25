@@ -42,7 +42,7 @@ void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, double *a, do
    arc = o->outfit->u.lau.arc;
    if (arc > 0.) {
 
-      /* Get angle. */
+      /* We use an external variable to set and update the angle if necessary. */
       if (*a < 0.) {
          x     = t->solid->pos.x - p->solid->pos.x;
          y     = t->solid->pos.y - p->solid->pos.y;
@@ -58,6 +58,8 @@ void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, double *a, do
          max = o->outfit->u.lau.lockon;
          if (o->u.ammo.lockon_timer > max)
             o->u.ammo.lockon_timer = max;
+
+         return;
       }
    }
 
