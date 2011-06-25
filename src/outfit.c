@@ -1293,11 +1293,14 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
       xmlr_int(node,"amount",temp->u.lau.amount);
       xmlr_float(node,"ew_target",temp->u.lau.ew_target);
       xmlr_float(node,"lockon",temp->u.lau.lockon);
+      if (!outfit_isTurret(temp))
+         xmlr_float(node,"arc",temp->u.lau.arc);
       WARN("Outfit '%s' has unknown node '%s'",temp->name, node->name);
    } while (xml_nextNode(node));
 
    /* Post processing. */
    temp->u.lau.delay /= 1000.;
+   temp->u.lau.arc *= M_PI/180.;
 
    /* Set default outfit size if necessary. */
    if (temp->slot.size == OUTFIT_SLOT_SIZE_NA)
@@ -2027,6 +2030,8 @@ int outfit_load (void)
                WARN("Outfit '%s' missing/invalid 'ew_target' element", o->name);
             if (o->u.lau.lockon == 0.)
                WARN("Outfit '%s' missing/invalid 'lockon' element", o->name);
+            if (o->u.lau.arc == 0.)
+               WARN("Outfit '%s' missing/invalid 'arc' element", o->name);
          }
       }
       else if (outfit_isFighterBay(&outfit_stack[i]))

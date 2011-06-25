@@ -250,7 +250,5 @@ function takeoff ()
 end
 
 function abort()
-   hook.rm(landhook)
-   hook.rm(takeoffhook)
    misn.finish()
 end

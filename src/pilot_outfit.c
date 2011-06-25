@@ -25,36 +25,54 @@
 /**
  * @brief Updates the lockons on the pilot's launchers
  */
-void pilot_lockUpdate( Pilot *p, double dt )
+void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, double *a, double dt )
 {
-   int i;
-   PilotOutfitSlot *o;
-   Pilot *t;
-   double evade;
+   double mod, max;
+   double x,y, ang, arc;
 
    /* No target. */
-   if (p->target == p->id)
-      return;
-
-   /* Get target. */
-   t = pilot_get( p->target );
    if (t == NULL)
       return;
-   evade = t->ew_evasion;
 
-   for (i=0; i<p->noutfits; i++) {
-      o = p->outfits[i];
-      if (o->outfit == NULL)
-         continue;
-      if (!outfit_isSeeker(o->outfit))
-         continue;
-  
-      /* Lower timer. */
-      if (o->u.ammo.lockon_timer > 0.) {
-         o->u.ammo.lockon_timer -= dt / (1. + evade - o->outfit->u.lau.ew_target);
-         if (o->u.ammo.lockon_timer < 0.)
-            o->u.ammo.lockon_timer = 0.;
+   /* Nota  seeker. */
+   if (!outfit_isSeeker(o->outfit))
+      return;
+
+   /* Check arc. */
+   arc = o->outfit->u.lau.arc;
+   if (arc > 0.) {
+
+      /* We use an external variable to set and update the angle if necessary. */
+      if (*a < 0.) {
+         x     = t->solid->pos.x - p->solid->pos.x;
+         y     = t->solid->pos.y - p->solid->pos.y;
+         ang   = ANGLE( x, y );
+         *a    = fabs( angle_diff( ang, p->solid->dir ) );
       }
+
+      /* Decay if not in arc. */
+      if (*a > arc) {
+         o->u.ammo.lockon_timer += dt * (t->ew_evasion/o->outfit->u.lau.ew_target);
+
+         /* Limit decay to max. */
+         max = o->outfit->u.lau.lockon;
+         if (o->u.ammo.lockon_timer > max)
+            o->u.ammo.lockon_timer = max;
+
+         return;
+      }
+   }
+
+   /* Lower timer. */
+   max = -o->outfit->u.lau.lockon/2.;
+   if (o->u.ammo.lockon_timer > max) {
+      /* Get evasion. */
+      mod = t->ew_evasion - o->outfit->u.lau.ew_target;
+      o->u.ammo.lockon_timer -= dt / (1. + mod);
+
+      /* Cap at -max/2. */
+      if (o->u.ammo.lockon_timer < max)
+         o->u.ammo.lockon_timer = max;
    }
 }
 
