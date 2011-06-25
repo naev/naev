@@ -1374,6 +1374,59 @@
    <ai>smart</ai>
   </specific>
  </outfit>
+ <outfit name="Unicorp Mace Launcher">
+  <general>
+   <slot>weapon</slot>
+   <license>Medium Weapon License</license>
+   <mass>10</mass>
+   <price>19000</price>
+   <description>This launcher fires unguided Mace rockets. Its low requirements and complete lack of energy consumption make it a useful assist weapon in fast paced dogfights.</description>
+   <gfx_store>macelauncher</gfx_store>
+  </general>
+  <specific type="launcher" secondary="1">
+   <cpu>3</cpu>
+   <ammo>Mace Rocket</ammo>
+   <delay>300</delay>
+   <amount>50</amount>
+  </specific>
+ </outfit>
+ <outfit name="TeraCom Mace Launcher">
+  <general>
+   <slot>weapon</slot>
+   <license>Medium Weapon License</license>
+   <mass>10</mass>
+   <price>30000</price>
+   <description>TeraCom's Mace launcher uses an advanced reload mechanism that allows the launcher to fire more rockets in less time.</description>
+   <gfx_store>macelauncher</gfx_store>
+  </general>
+  <specific type="launcher" secondary="1">
+   <cpu>5</cpu>
+   <ammo>Mace Rocket</ammo>
+   <delay>250</delay>
+   <amount>50</amount>
+  </specific>
+ </outfit>
+ <outfit name="Mace Rocket">
+  <general>
+   <license>Medium Weapon License</license>
+   <mass>2</mass>
+   <price>200</price>
+   <description>The Mace class unguided rocket is a cheap, expendable weapon used to boost peak firepower in tight situations. It is far better at dealing damage to light targets than most fighter sized energy cannons, but comes with the disadvantage of running out of ammunition after only a short time of fire.</description>
+   <gfx_store>mace</gfx_store>
+  </general>
+  <specific type="ammo">
+   <gfx>mace</gfx>
+   <sound>mace</sound>
+   <sound_hit>lrgexp0</sound_hit>
+   <spfx_shield>ExpM</spfx_shield>
+   <spfx_armour>ExpM</spfx_armour>
+   <duration blowup="armour">1.3</duration>
+   <thrust>1500</thrust>
+   <speed>1500</speed>
+   <damage type="kinetic" penetrate="0">15</damage>
+   <ai>dumb</ai>
+  </specific>
+ </outfit>
  <outfit name="Banshee Launcher">
   <general>
    <slot>weapon</slot>
@@ -1408,43 +1461,6 @@
    <thrust>0</thrust>
    <speed>600</speed>
    <damage type="emp" penetrate="15">15</damage>
-   <ai>dumb</ai>
-  </specific>
- </outfit>
- <outfit name="Mace Launcher">
-  <general>
-   <slot>weapon</slot>
-   <license>Medium Weapon License</license>
-   <mass>10</mass>
-   <price>19000</price>
-   <description>A base for launching Dvaered Mace rockets.</description>
-   <gfx_store>macelauncher</gfx_store>
-  </general>
-  <specific type="launcher" secondary="1">
-   <cpu>5</cpu>
-   <ammo>Mace Rocket</ammo>
-   <delay>2000</delay>
-   <amount>10</amount>
-  </specific>
- </outfit>
- <outfit name="Mace Rocket">
-  <general>
-   <license>Medium Weapon License</license>
-   <mass>2</mass>
-   <price>200</price>
-   <description>The Mace rocket is a very heavy, quickly-accelerating rocket designed for high speed collisions. It has little explosive payload, instead carrying a large amount of fuel to facilitate its acceleration. Most of the damage it does is derived from the impact and not the explosion.</description>
-   <gfx_store>mace</gfx_store>
-  </general>
-  <specific type="ammo">
-   <gfx>mace</gfx>
-   <sound>mace</sound>
-   <sound_hit>lrgexp0</sound_hit>
-   <spfx_shield>ExpM</spfx_shield>
-   <spfx_armour>ExpM</spfx_armour>
-   <duration blowup="armour">3</duration>
-   <thrust>300</thrust>
-   <speed>1000</speed>
-   <damage type="kinetic" penetrate="40">44</damage>
    <ai>dumb</ai>
   </specific>
  </outfit>

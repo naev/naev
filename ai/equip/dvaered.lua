@@ -35,10 +35,10 @@ function equip_turretDvaHig ()
    return { "Railgun Turret" }
 end
 function equip_rangedDva ()
-   return { "Mace Launcher" }
+   return { "Unicorp Mace Launcher" }
 end
 function equip_secondaryDva ()
-   return { "Mace Launcher" }
+   return { "Unicorp Mace Launcher" }
 end
 
 

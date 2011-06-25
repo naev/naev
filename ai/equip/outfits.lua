@@ -86,7 +86,7 @@ end
 -- Secondary weapons
 --]]
 function equip_secondaryLow ()
-   return { "Unicorp Fury Launcher", "Mace Launcher" }
+   return { "Unicorp Fury Launcher", "Unicorp Mace Launcher" }
 end
 function equip_secondaryMed ()
    return { "Banshee Launcher", "Unicorp Headhunter Launcher" }

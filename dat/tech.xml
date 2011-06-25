@@ -68,7 +68,8 @@
   <item>Vengeance Missile</item>
   <item>Banshee Launcher</item>
   <item>Banshee Rocket</item>
-  <item>Mace Launcher</item>
+  <item>Unicorp Mace Launcher</item>
+  <item>TeraCom Mace Launcher</item>
   <item>Mace Rocket</item>
   <item>Caesar IV Launcher</item>
   <item>Caesar IV Missile</item>
@@ -380,7 +381,7 @@
  <tech name="Missiles 2">
   <item>Unicorp Headhunter Launcher</item>
   <item>Headhunter Missile</item>
-  <item>Mace Launcher</item>
+  <item>Unicorp Mace Launcher</item>
   <item>Mace Rocket</item>
   <item>Caesar IV Launcher</item>
   <item>Caesar IV Missile</item>
