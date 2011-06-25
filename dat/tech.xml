@@ -105,7 +105,9 @@
   <item>Improved Power Regulator</item>
   <item>Improved Refrigeration Cycle</item>
   <item>Star Map</item>
-  <item>Civilian Jammer</item>
+  <item>Unicorp Scrambler</item>
+  <item>Milspec Scrambler</item>
+  <item>Unicorp Jammer</item>
   <item>Milspec Jammer</item>
   <item>Lancelot Fighter Bay</item>
   <item>Lancelot Fighter</item>
@@ -269,7 +271,8 @@
   <item>Cargo Pod</item>
   <item>Boarding Androids MKI</item>
   <item>Star Map</item>
-  <item>Civilian Jammer</item>
+  <item>Unicorp Scrambler</item>
+  <item>Unicorp Jammer</item>
   <item>Large Civilian Vessel License</item>
   <item>GUI - Brushed</item>
   </tech>
@@ -309,7 +312,8 @@
   <item>Boarding Androids MKI</item>
   <item>Boarding Androids MKII</item>
   <item>Star Map</item>
-  <item>Civilian Jammer</item>
+  <item>Unicorp Scrambler</item>
+  <item>Unicorp Jammer</item>
   <item>Light Combat Vessel License</item>
  </tech>
  <tech name="High Tech Upgrades 1">
@@ -336,7 +340,8 @@
   <item>Forward Shock Absorbers</item>
   <item>Power Regulation Override</item>
   <item>Star Map</item>
-  <item>Civilian Jammer</item>
+  <item>Unicorp Scrambler</item>
+  <item>Unicorp Jammer</item>
   <item>Lancelot Fighter Bay</item>
   <item>Lancelot Fighter</item>
   <item>Medium Weapon License</item>
@@ -355,6 +360,7 @@
   <item>Improved Power Regulator</item>
   <item>Improved Refrigeration Cycle</item>
   <item>Star Map</item>
+  <item>Milspec Scrambler</item>
   <item>Milspec Jammer</item>
   <item>Lancelot Fighter Bay</item>
   <item>Lancelot Fighter</item>

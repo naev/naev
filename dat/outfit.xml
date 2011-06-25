@@ -1965,18 +1965,46 @@
    <radius>999</radius>
   </specific>
  </outfit>
- <outfit name="Civilian Jammer">
+ <outfit name="Unicorp Scrambler">
   <general>
    <slot>utility</slot>
    <mass>2</mass>
    <price>40000</price>
-   <description>This jammer allows you to interfere with the targeting systems of missiles headed toward you, yielding an unpredictable change in trajectory likely to miss your ship. Though it is widely used, many have derided the civilian jammer for its unreliable nature.</description>
+   <description>Scramblers distort a ship's electromagnetic signature, making it harder for various sensors to pick it up. In effect, a scrambler reduces the distance at which the ship can be detected and scanned, and makes it harder for missiles to lock on. The effect is quite limited however, and multiple scramblers may be required for the desired effect. On the upside, scramblers put a minimal strain on the ship's resources, and are always active.</description>
+   <gfx_store>jammer0</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>1</cpu>
+   <energy>5</energy>
+   <ew_hide>7</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Milspec Scrambler">
+  <general>
+   <slot>utility</slot>
+   <mass>3</mass>
+   <price>250000</price>
+   <description>Milspec knows what's important out there. It's that you don't get shot! And the best way not to get shot is not to get targeted in the first place. The Milspec RX 500-C scrambler will put the wool over your enemies' sensors, at a minimal cost to you or your ship's reactor! Fly safe, fly Milspec.</description>
+   <gfx_store>jammer1</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>3</cpu>
+   <energy>10</energy>
+   <ew_hide>11</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp Jammer">
+  <general>
+   <slot>utility</slot>
+   <mass>2</mass>
+   <price>40000</price>
+   <description>Unlike general purpose scrambler systems, jammers are heavy-duty pieces of hardware used for serious electronic warfare in space. A jammer works by actively interfering with nearby ships' sensor systems, rather than modulating the signature of the ship it's installed in. This is much more effective, but it also uses a lot more power. For this reason, jammer systems are inactive until needed, and must be activated manually.</description>
    <gfx_store>jammer0</gfx_store>
   </general>
   <specific type="jammer">
    <cpu>4</cpu>
-   <range>400</range>
-   <chance>20</chance>
+   <range>0</range>
+   <chance>0</chance>
    <energy>15</energy>
   </specific>
  </outfit>
@@ -1985,13 +2013,13 @@
    <slot>utility</slot>
    <mass>3</mass>
    <price>250000</price>
-   <description>This jammer follows strict military specifications, allowing it to deflect a greater amount of missiles at longer range than the civilian counterpart. With increased functionality, it also consumes more power than the civilian variant.</description>
+   <description>Does your work require you to venture into dangerous territory? Are you facing opposition your shields can't handle? The Milspec U-9 "Magus" jammer is what you need! Throw the bloodhounds off your scent with a press of a button. While your enemies are still trying to make sense out of the garble they're getting on their sensors, you will already have made your escape! Fly safe, fly Milspec.</description>
    <gfx_store>jammer1</gfx_store>
   </general>
   <specific type="jammer">
    <cpu>8</cpu>
-   <range>600</range>
-   <chance>40</chance>
+   <range>0</range>
+   <chance>0</chance>
    <energy>30</energy>
   </specific>
  </outfit>
