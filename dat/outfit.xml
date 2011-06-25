@@ -1480,29 +1480,32 @@
    <ai>dumb</ai>
   </specific>
  </outfit>
- <outfit name="Caesar IV Launcher">
+ <outfit name="Unicorp Caesar IV Launcher">
   <general>
    <slot>weapon</slot>
    <size>medium</size>
    <license>Heavy Weapon License</license>
    <mass>30</mass>
    <price>120000</price>
-   <description>The launcher for the Caesar IV is quite remarkable. A new loading mechanism allows it to load and fire a missile once every 5 seconds, besting older mechanisms by a substantial margin.</description>
+   <description>the Caesar IV launcher does what it says on the box, which is launch Caesar IV torpedoes.</description>
    <gfx_store>caesarlauncher</gfx_store>
   </general>
   <specific type="launcher" secondary="1">
-   <cpu>16</cpu>
+   <cpu>13</cpu>
    <ammo>Caesar IV Missile</ammo>
-   <delay>5000</delay>
+   <delay>7000</delay>
+   <lockon>12</lockon>
+   <arc>6</arc>
+   <ew_target>0.8</ew_target>
    <amount>6</amount>
   </specific>
  </outfit>
- <outfit name="Caesar IV Missile">
+ <outfit name="Caesar IV Torpedo">
   <general>
    <license>Heavy Weapon License</license>
    <mass>3</mass>
    <price>3000</price>
-   <description>The Caesar IV holds true to its predecessors, delivering an immense explosive payload at the expense of manoeuvrability. Its electronics are somewhat antiquated, making it a poor choice for attacking smaller ships. Its mass complicates trajectory calculations, causing the tracking module to take up to 2 seconds to initialize.</description>
+   <description>Caesar IV class torpedoes are among the most common torpedo weapons available. Though much slower than missiles and useless against mobile targets, they remain manoeuvrable enough to chase down light cruisers.</description>
    <gfx_store>caesar</gfx_store>
   </general>
   <specific type="ammo">
@@ -1514,34 +1517,37 @@
    <duration blowup="armour">12</duration>
    <thrust>125</thrust>
    <turn>20</turn>
-   <speed>350</speed>
-   <damage type="kinetic" penetrate="90">140</damage>
-   <ai>seek</ai>
+   <speed>170</speed>
+   <damage type="kinetic" penetrate="50">400</damage>
+   <ai>smart</ai>
   </specific>
  </outfit>
- <outfit name="Imperator Launcher">
+ <outfit name="TeraCom Imperator Launcher">
   <general>
    <slot>weapon</slot>
    <size>medium</size>
    <license>Heavy Weapon License</license>
-   <mass>34</mass>
-   <price>160000</price>
-   <description>While the Imperator's launcher is an ugly affair (it doesn't fit any ship hull known to man), no-one will laugh at a captain fielding it, lest they be brutally removed from existence.</description>
+   <mass>40</mass>
+   <price>220000</price>
+   <description> The Imperator launcher is a very heavy torpedo launcher that is both bulky and demanding, but whose raw firepower is a must for any captain looking to blow up some capital ships.</description>
    <gfx_store>caesarlauncher</gfx_store>
   </general>
   <specific type="launcher" secondary="1">
    <cpu>20</cpu>
    <ammo>Imperator Missile</ammo>
-   <delay>7000</delay>
+   <delay>8000</delay>
+   <lockon>13</lockon>
+   <arc>6</arc>
+   <ew_target>0.6</ew_target>
    <amount>5</amount>
   </specific>
  </outfit>
- <outfit name="Imperator Missile">
+ <outfit name="Imperator Torpedo">
   <general>
    <license>Heavy Weapon License</license>
    <mass>3</mass>
    <price>9000</price>
-   <description>The Imperator employs an unconventional, semi-nuclear warhead. Its destructive power is immense, but its complicated design makes it less cost-effective than the Caesar IV.</description>
+   <description>TeraCom decided not to develop a launcher for the Caesar IV, because it fell short of the company's performance requirements. Instead, the company released a completely new torpedo specification. At present, the Imperator class heavy torpedo provides devastating destructive power, though it will take a while for it to reach its target. Faster cruisers may be able to outrun it completely.</description>
    <gfx_store>caesar</gfx_store>
   </general>
   <specific type="ammo">
@@ -1553,9 +1559,9 @@
    <duration blowup="armour">12</duration>
    <thrust>125</thrust>
    <turn>20</turn>
-   <speed>350</speed>
-   <damage type="kinetic" penetrate="90">300</damage>
-   <ai>seek</ai>
+   <speed>70</speed>
+   <damage type="kinetic" penetrate="90">800</damage>
+   <ai>smart</ai>
   </specific>
  </outfit>
  <outfit name="EMP Grenade Launcher">

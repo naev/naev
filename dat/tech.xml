@@ -72,10 +72,10 @@
   <item>Unicorp Mace Launcher</item>
   <item>TeraCom Mace Launcher</item>
   <item>Mace Rocket</item>
-  <item>Caesar IV Launcher</item>
-  <item>Caesar IV Missile</item>
-  <item>Imperator Launcher</item>
-  <item>Imperator Missile</item>
+  <item>Unicorp Caesar IV Launcher</item>
+  <item>Caesar IV Torpedo</item>
+  <item>TeraCom Imperator Launcher</item>
+  <item>Imperator Torpedo</item>
   <item>EMP Grenade Launcher</item>
   <item>EMP Grenade</item>
   <item>Battery</item>
@@ -384,8 +384,8 @@
   <item>Headhunter Missile</item>
   <item>Unicorp Mace Launcher</item>
   <item>Mace Rocket</item>
-  <item>Caesar IV Launcher</item>
-  <item>Caesar IV Missile</item>
+  <item>Unicorp Caesar IV Launcher</item>
+  <item>Caesar IV Torpedo</item>
  </tech>
 
  <!-- Ships -->
