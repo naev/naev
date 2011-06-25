@@ -1296,6 +1296,7 @@ void pilot_update( Pilot* pilot, const double dt )
       if (pilot->timer[i] > 0.)
          pilot->timer[i] -= dt;
    /* Update heat. */
+   a = -1.;
    Q = 0.;
    for (i=0; i<pilot->noutfits; i++) {
       o = pilot->outfits[i];
@@ -1314,7 +1315,7 @@ void pilot_update( Pilot* pilot, const double dt )
       Q  += pilot_heatUpdateSlot( pilot, o, dt );
 
       /* Handle lockons. */
-      pilot_lockUpdateSlot( o, target, dt );
+      pilot_lockUpdateSlot( pilot, o, target, &a, dt );
    }
 
    /* Global heat. */

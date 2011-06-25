@@ -25,9 +25,9 @@
 /**
  * @brief Updates the lockons on the pilot's launchers
  */
-void pilot_lockUpdateSlot( PilotOutfitSlot *o, Pilot *t, double dt )
+void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, double *a, double dt )
 {
-   double mod;
+   double mod, x,y, ang, arc;
 
    /* No target. */
    if (t == NULL)
@@ -36,7 +36,24 @@ void pilot_lockUpdateSlot( PilotOutfitSlot *o, Pilot *t, double dt )
    /* Nota  seeker. */
    if (!outfit_isSeeker(o->outfit))
       return;
-  
+
+   /* Check arc. */
+   arc = o->outfit->u.lau.arc;
+   if (arc > 0.) {
+
+      /* Get angle. */
+      if (*a < 0.) {
+         x     = t->solid->pos.x - p->solid->pos.x;
+         y     = t->solid->pos.y - p->solid->pos.y;
+         ang   = ANGLE( x, y );
+         *a    = fabs( angle_diff( ang, p->solid->dir ) );
+      }
+
+      /* Check if in arc. */
+      if (*a > arc)
+         return;
+   }
+
    /* Lower timer. */
    if (o->u.ammo.lockon_timer > 0.) {
       /* Get evasion. */

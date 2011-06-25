@@ -1249,6 +1249,7 @@
    <amount>15</amount>
    <lockon>5</lockon>
    <ew_target>1</ew_target>
+   <arc>30</arc>
   </specific>
  </outfit>
  <outfit name="Headhunter Missile">
