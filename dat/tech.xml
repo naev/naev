@@ -57,18 +57,28 @@
   <item>Heavy Ripper Cannon</item>
   <item>Orion Beam</item>
   <item>Ragnarok Beam</item>
-  <item>Seeker Launcher</item>
-  <item>Seeker Missile</item>
-  <item>Headhunter Launcher</item>
+  <item>Unicorp Fury Launcher</item>
+  <item>TeraCom Fury Launcher</item>
+  <item>Enygma Systems Turreted Fury Launcher</item>
+  <item>Fury Missile</item>
+  <item>Unicorp Headhunter Launcher</item>
+  <item>TeraCom Headhunter Launcher</item>
+  <item>Enygma Systems Turreted Headhunter Launcher</item>
   <item>Headhunter Missile</item>
-  <item>Banshee Launcher</item>
+  <item>Unicorp Vengeance Launcher</item>
+  <item>TeraCom Vengeance Launcher</item>
+  <item>Enygma Systems Turreted Vengeance Launcher</item>
+  <item>Vengeance Missile</item>
+  <item>Unicorp Banshee Launcher</item>
+  <item>TeraCom Banshee Launcher</item>
   <item>Banshee Rocket</item>
-  <item>Mace Launcher</item>
+  <item>Unicorp Mace Launcher</item>
+  <item>TeraCom Mace Launcher</item>
   <item>Mace Rocket</item>
-  <item>Caesar IV Launcher</item>
-  <item>Caesar IV Missile</item>
-  <item>Imperator Launcher</item>
-  <item>Imperator Missile</item>
+  <item>Unicorp Caesar IV Launcher</item>
+  <item>Caesar IV Torpedo</item>
+  <item>TeraCom Imperator Launcher</item>
+  <item>Imperator Torpedo</item>
   <item>EMP Grenade Launcher</item>
   <item>EMP Grenade</item>
   <item>Battery</item>
@@ -105,7 +115,9 @@
   <item>Improved Power Regulator</item>
   <item>Improved Refrigeration Cycle</item>
   <item>Star Map</item>
-  <item>Civilian Jammer</item>
+  <item>Unicorp Scrambler</item>
+  <item>Milspec Scrambler</item>
+  <item>Unicorp Jammer</item>
   <item>Milspec Jammer</item>
   <item>Lancelot Fighter Bay</item>
   <item>Lancelot Fighter</item>
@@ -246,8 +258,8 @@
   <item>Laser Cannon MK1</item>
   <item>Plasma Blaster MK1</item>
   <item>Gauss Gun</item>
-  <item>Seeker Launcher</item>
-  <item>Seeker Missile</item>
+  <item>Unicorp Fury Launcher</item>
+  <item>Fury Missile</item>
   <item>Battery</item>
   <item>Solar Panel</item>
   <item>Fuel Pod</item>
@@ -258,7 +270,7 @@
  <tech name="Basic Outfits 2">
   <item>Laser Cannon MK2</item>
   <item>Plasma Blaster MK2</item>
-  <item>Banshee Launcher</item>
+  <item>Unicorp Banshee Launcher</item>
   <item>Banshee Rocket</item>
   <item>Reactor Class I</item>
   <item>Shield Capacitor</item>
@@ -269,7 +281,8 @@
   <item>Cargo Pod</item>
   <item>Boarding Androids MKI</item>
   <item>Star Map</item>
-  <item>Civilian Jammer</item>
+  <item>Unicorp Scrambler</item>
+  <item>Unicorp Jammer</item>
   <item>Large Civilian Vessel License</item>
   <item>GUI - Brushed</item>
   </tech>
@@ -309,7 +322,8 @@
   <item>Boarding Androids MKI</item>
   <item>Boarding Androids MKII</item>
   <item>Star Map</item>
-  <item>Civilian Jammer</item>
+  <item>Unicorp Scrambler</item>
+  <item>Unicorp Jammer</item>
   <item>Light Combat Vessel License</item>
  </tech>
  <tech name="High Tech Upgrades 1">
@@ -336,7 +350,8 @@
   <item>Forward Shock Absorbers</item>
   <item>Power Regulation Override</item>
   <item>Star Map</item>
-  <item>Civilian Jammer</item>
+  <item>Unicorp Scrambler</item>
+  <item>Unicorp Jammer</item>
   <item>Lancelot Fighter Bay</item>
   <item>Lancelot Fighter</item>
   <item>Medium Weapon License</item>
@@ -355,24 +370,25 @@
   <item>Improved Power Regulator</item>
   <item>Improved Refrigeration Cycle</item>
   <item>Star Map</item>
+  <item>Milspec Scrambler</item>
   <item>Milspec Jammer</item>
   <item>Lancelot Fighter Bay</item>
   <item>Lancelot Fighter</item>
   <item>Medium Weapon License</item>
  </tech>
  <tech name="Missiles 1">
-  <item>Banshee Launcher</item>
+  <item>Unicorp Banshee Launcher</item>
   <item>Banshee Rocket</item>
-  <item>Seeker Launcher</item>
-  <item>Seeker Missile</item>
+  <item>Unicorp Fury Launcher</item>
+  <item>Fury Missile</item>
  </tech>
  <tech name="Missiles 2">
-  <item>Headhunter Launcher</item>
+  <item>Unicorp Headhunter Launcher</item>
   <item>Headhunter Missile</item>
-  <item>Mace Launcher</item>
+  <item>Unicorp Mace Launcher</item>
   <item>Mace Rocket</item>
-  <item>Caesar IV Launcher</item>
-  <item>Caesar IV Missile</item>
+  <item>Unicorp Caesar IV Launcher</item>
+  <item>Caesar IV Torpedo</item>
  </tech>
 
  <!-- Ships -->

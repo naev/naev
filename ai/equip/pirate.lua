@@ -45,10 +45,10 @@ function equip_turretPirHig ()
    return { "Railgun Turret", "Heavy Laser" }
 end
 function equip_secondaryPirLow ()
-   return { "Seeker Launcher" }
+   return { "Unicorp Fury Launcher" }
 end
 function equip_secondaryPirMedLow ()
-   return { "Seeker Launcher", "Banshee Launcher" }
+   return { "Unicorp Fury Launcher", "Unicorp Banshee Launcher" }
 end
 
 
@@ -61,7 +61,7 @@ function equip_pirateMilitary( p, shipsize )
    local nhigh, nmedium, nlow = p:ship():slots()
 
    -- Defaults
-   medium      = { "Civilian Jammer" }
+   medium      = { "Unicorp Scrambler" }
    apu         = { }
    weapons     = {}
 
@@ -73,7 +73,7 @@ function equip_pirateMilitary( p, shipsize )
       if class == "Scout" then
          use_primary    = rnd.rnd(1,#nhigh)
          addWeapons( equip_forwardPirLow(), use_primary )
-         medium         = { "Generic Afterburner", "Milspec Jammer" }
+         medium         = { "Generic Afterburner", "Milspec Scrambler" }
          use_medium     = 2
          low            = { "Solar Panel" }
 
