@@ -89,7 +89,7 @@ function equip_secondaryLow ()
    return { "Unicorp Fury Launcher", "Unicorp Mace Launcher" }
 end
 function equip_secondaryMed ()
-   return { "Banshee Launcher", "Unicorp Headhunter Launcher" }
+   return { "Unicorp Banshee Launcher", "Unicorp Headhunter Launcher" }
 end
 function equip_secondaryHig ()
    return { }

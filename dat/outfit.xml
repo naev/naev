@@ -1409,7 +1409,7 @@
  <outfit name="Mace Rocket">
   <general>
    <license>Medium Weapon License</license>
-   <mass>2</mass>
+   <mass>0.1</mass>
    <price>200</price>
    <description>The Mace class unguided rocket is a cheap, expendable weapon used to boost peak firepower in tight situations. It is far better at dealing damage to light targets than most fighter sized energy cannons, but comes with the disadvantage of running out of ammunition after only a short time of fire.</description>
    <gfx_store>mace</gfx_store>
@@ -1427,28 +1427,44 @@
    <ai>dumb</ai>
   </specific>
  </outfit>
- <outfit name="Banshee Launcher">
+ <outfit name="Unicorp Banshee Launcher">
   <general>
    <slot>weapon</slot>
    <license>Medium Weapon License</license>
-   <mass>10</mass>
+   <mass>17</mass>
    <price>25000</price>
    <gfx_store>bansheelauncher</gfx_store>
-   <description>The Banshee Launcher uses a quick-action firing mechanism to be able to quickly launch the Banshee rockets. The only drawback is that this mechanism can only be used with light rockets, limiting the payload the rockets can have.</description>
+   <description>This launcher fires Banshee class heavy rockets. It is small enough to be mounted on medium hardpoints, and light enough on system load to be an interesting choice for bombers.</description>
   </general>
   <specific type="launcher" secondary="1">
-   <cpu>6</cpu>
+   <cpu>5</cpu>
    <ammo>Banshee Rocket</ammo>
-   <delay>375</delay>
-   <amount>40</amount>
+   <delay>1000</delay>
+   <amount>20</amount>
+  </specific>
+ </outfit>
+ <outfit name="TeraCom Banshee Launcher">
+  <general>
+   <slot>weapon</slot>
+   <license>Medium Weapon License</license>
+   <mass>17</mass>
+   <price>45000</price>
+   <gfx_store>bansheelauncher</gfx_store>
+   <description>TeraCom has equipped its Banshee launcher model with high grade reload and tube cooling systems, giving a significant boost to rate of fire.</description>
+  </general>
+  <specific type="launcher" secondary="1">
+   <cpu>8</cpu>
+   <ammo>Banshee Rocket</ammo>
+   <delay>700</delay>
+   <amount>20</amount>
   </specific>
  </outfit>
  <outfit name="Banshee Rocket">
   <general>
    <license>Medium Weapon License</license>
-   <mass>0.1</mass>
-   <price>70</price>
-   <description>The Banshee Rocket gets its name from the wail it makes when launched. It carries an EMP payload which is very helpful when attempting to disable ships.</description>
+   <mass>2</mass>
+   <price>500</price>
+   <description>The Banshee class heavy rocket is sometimes labeled the "poor man's torpedo". It has a relatively weak engine, but packs a powerful punch that can do respectable damage even to capital ships.</description>
    <gfx_store>banshee</gfx_store>
   </general>
   <specific type="ammo">
@@ -1457,10 +1473,10 @@
    <sound_hit>bansheeexp</sound_hit>
    <spfx_shield>EmpS</spfx_shield>
    <spfx_armour>EmpS</spfx_armour>
-   <duration blowup="shield">0.8</duration>
+   <duration blowup="shield">5</duration>
    <thrust>0</thrust>
-   <speed>600</speed>
-   <damage type="emp" penetrate="15">15</damage>
+   <speed>200</speed>
+   <damage type="emp" penetrate="70">110</damage>
    <ai>dumb</ai>
   </specific>
  </outfit>

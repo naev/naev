@@ -66,7 +66,8 @@
   <item>Unicorp Vengeance Launcher</item>
   <item>TeraCom Vengeance Launcher</item>
   <item>Vengeance Missile</item>
-  <item>Banshee Launcher</item>
+  <item>Unicorp Banshee Launcher</item>
+  <item>TeraCom Banshee Launcher</item>
   <item>Banshee Rocket</item>
   <item>Unicorp Mace Launcher</item>
   <item>TeraCom Mace Launcher</item>
@@ -266,7 +267,7 @@
  <tech name="Basic Outfits 2">
   <item>Laser Cannon MK2</item>
   <item>Plasma Blaster MK2</item>
-  <item>Banshee Launcher</item>
+  <item>Unicorp Banshee Launcher</item>
   <item>Banshee Rocket</item>
   <item>Reactor Class I</item>
   <item>Shield Capacitor</item>
@@ -373,7 +374,7 @@
   <item>Medium Weapon License</item>
  </tech>
  <tech name="Missiles 1">
-  <item>Banshee Launcher</item>
+  <item>Unicorp Banshee Launcher</item>
   <item>Banshee Rocket</item>
   <item>Unicorp Fury Launcher</item>
   <item>Fury Missile</item>
