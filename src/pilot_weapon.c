@@ -101,6 +101,11 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
       if (s!=0)
          continue;
 
+      /* Only "locked on" outfits. */
+      if (outfit_isSeeker(o) && 
+            (ws->slots[i].slot->u.ammo.lockon_timer > 0.))
+         continue;
+
       /* Only "inrange" outfits. */
       if (!outfit_isFighterBay(o) &&
             ws->inrange && (dist2 > ws->slots[i].range2))

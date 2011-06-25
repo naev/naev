@@ -1053,11 +1053,12 @@ static int pilotL_nav( lua_State *L )
  *
  * The weapon sets have the following structure: <br />
  * <ul>
- *  <li> name: name of the set <br />
- *  <li> cooldown: [0:1] value indicating if ready to shoot (1 is ready) <br />
- *  <li> ammo: Name of the ammo or nil if not applicable <br />
- *  <li> left: Absolute ammo left or nil if not applicable <br />
+ *  <li> name: name of the set. <br />
+ *  <li> cooldown: [0:1] value indicating if ready to shoot (1 is ready). <br />
+ *  <li> ammo: Name of the ammo or nil if not applicable. <br />
+ *  <li> left: Absolute ammo left or nil if not applicable. <br />
  *  <li> left_p: Relative ammo left [0:1] or nil if not applicable <br />
+ *  <li> lockon: Lockon [0:1] for seeker weapons or nil if not applicable. <br />
  *  <li> level: Level of the weapon (1 is primary, 2 is secondary). <br />
  *  <li> temp: Temperature of the weapon. <br />
  *  <li> type: Type of the weapon. <br />
@@ -1092,7 +1093,7 @@ static int pilotL_weapset( lua_State *L )
    PilotWeaponSetOutfit *po_list;
    PilotOutfitSlot *slot;
    Outfit *ammo, *o;
-   double delay, firemod, enermod;
+   double delay, firemod, enermod, t;
    int id, all, level, level_match;
 
    /* Defaults. */
@@ -1200,6 +1201,17 @@ static int pilotL_weapset( lua_State *L )
                (slot->u.ammo.outfit != NULL)) {
             lua_pushstring(L,"left_p");
             lua_pushnumber( L, (double)slot->u.ammo.quantity / (double)outfit_amount(slot->outfit) );
+            lua_rawset(L,-3);
+         }
+
+         /* Launcher lockon. */
+         if (outfit_isSeeker(slot->outfit)) {
+            t = slot->u.ammo.lockon_timer;
+            lua_pushstring(L, "lockon");
+            if (t <= 0.)
+               lua_pushnumber(L, 1.);
+            else
+               lua_pushnumber(L, 1. - (t / slot->outfit->u.lau.lockon));
             lua_rawset(L,-3);
          }
 

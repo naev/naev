@@ -1291,6 +1291,8 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"cpu",temp->u.lau.cpu);
       xmlr_strd(node,"ammo",temp->u.lau.ammo_name);
       xmlr_int(node,"amount",temp->u.lau.amount);
+      xmlr_float(node,"ew_target",temp->u.lau.ew_target);
+      xmlr_float(node,"lockon",temp->u.lau.lockon);
       WARN("Outfit '%s' has unknown node '%s'",temp->name, node->name);
    } while (xml_nextNode(node));
 
@@ -1344,7 +1346,6 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
    temp->u.amm.sound       = -1;
    temp->u.amm.sound_hit   = -1;
    temp->u.amm.ai          = -1;
-   temp->u.amm.ew_lockon   = 1.;
 
    do { /* load all the data */
       xml_onlyNodes(node);
@@ -1364,8 +1365,6 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
          temp->u.amm.duration = xml_getFloat(node);
          continue;
       }
-      xmlr_float(node,"lockon",temp->u.amm.lockon);
-      xmlr_float(node,"ew_lockon",temp->u.amm.ew_lockon);
       xmlr_float(node,"resist",temp->u.amm.resist);
       /* Movement */
       xmlr_float(node,"thrust",temp->u.amm.thrust);
@@ -1433,13 +1432,13 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
          "%.0f Damage [%s]\n"
          "%.0f Energy\n"
          "%.0f Maximum Speed\n"
-         "%.1f duration [%.1f Lock-On]",
+         "%.1f duration",
          outfit_getType(temp),
          temp->u.amm.penetration*100.,
          temp->u.amm.damage, outfit_damageTypeToStr(temp->u.amm.dtype),
          temp->u.amm.energy,
          temp->u.amm.speed,
-         temp->u.amm.duration, temp->u.amm.lockon );
+         temp->u.amm.duration );
 
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define to help check for data errors. */
@@ -1452,7 +1451,6 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define
    /* Dumb missiles don't need everything */
    if (outfit_isSeeker(temp)) {
       MELEMENT(temp->u.amm.turn==0,"turn");
-      MELEMENT(temp->u.amm.lockon==0,"lockon");
    }
    MELEMENT(temp->u.amm.speed==0,"speed");
    MELEMENT(temp->u.amm.duration==0,"duration");
@@ -1991,6 +1989,7 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define
 int outfit_load (void)
 {
    int i;
+   Outfit *o;
    uint32_t bufsize;
    char *buf = ndata_read( OUTFIT_DATA, &bufsize );
 
@@ -2020,10 +2019,18 @@ int outfit_load (void)
 
    /* Second pass, sets up ammunition relationships. */
    for (i=0; i<array_size(outfit_stack); i++) {
-      if (outfit_isLauncher(&outfit_stack[i]))
-         outfit_stack[i].u.lau.ammo = outfit_get( outfit_stack[i].u.lau.ammo_name );
+      o = &outfit_stack[i];
+      if (outfit_isLauncher(&outfit_stack[i])) {
+         o->u.lau.ammo = outfit_get( o->u.lau.ammo_name );
+         if (outfit_isSeeker(o)) {
+            if (o->u.lau.ew_target == 0.)
+               WARN("Outfit '%s' missing/invalid 'ew_target' element", o->name);
+            if (o->u.lau.lockon == 0.)
+               WARN("Outfit '%s' missing/invalid 'lockon' element", o->name);
+         }
+      }
       else if (outfit_isFighterBay(&outfit_stack[i]))
-         outfit_stack[i].u.bay.ammo = outfit_get( outfit_stack[i].u.bay.ammo_name );
+         o->u.bay.ammo = outfit_get( o->u.bay.ammo_name );
    }
 
    xmlFreeDoc(doc);

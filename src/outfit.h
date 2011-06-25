@@ -235,6 +235,11 @@ typedef struct OutfitLauncherData_ {
    char *ammo_name;  /**< Name of the ammo to use. */
    struct Outfit_ *ammo; /**< Ammo to use. */
    int amount;       /**< Amount of ammo it can store. */
+
+   /* Lockon information. */
+   double lockon;    /**< Time it takes to lock on the target */
+   double ew_target; /**< Target ewarfare at which it the lockon time is based off of. */
+   double arc;       /**< Semi-angle of the arc which it will lock on in. */
 } OutfitLauncherData;
 
 /**
@@ -242,17 +247,15 @@ typedef struct OutfitLauncherData_ {
  */
 typedef struct OutfitAmmoData_ {
    double duration;  /**< How long the ammo lives. */
-   double lockon;    /**< Time it takes to lock on the target */
-   double ew_lockon; /**< Electronic warfare lockon parameter. */
-   double resist;    /**< lowers chance of jamming by this amount */
+   double resist;    /**< Lowers chance of jamming by this amount */
    int ai;           /**< Smartness of ammo. */
 
-   double speed;     /**< maximum speed */
-   double turn;      /**< turn velocity in rad/s. */
-   double thrust;    /**< acceleration */
-   double energy;    /**< energy usage */
-   DamageType dtype; /**< damage type */
-   double damage;    /**< damage */
+   double speed;     /**< Maximum speed */
+   double turn;      /**< Turn velocity in rad/s. */
+   double thrust;    /**< Acceleration */
+   double energy;    /**< Energy usage */
+   DamageType dtype; /**< Damage type */
+   double damage;    /**< Damage */
    double penetration; /**< Weapon penetration [0:1] with 1 being 100%. */
 
    glTexture* gfx_space; /**< Graphic. */

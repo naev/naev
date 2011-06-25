@@ -874,6 +874,23 @@ glColour* pilot_getColour( const Pilot* p )
 
 
 /**
+ * @brief Sets the target of the pilot.
+ *
+ *    @param p Pilot to set target of.
+ *    @param id ID of the target (set to p->id for none).
+ */
+void pilot_setTarget( Pilot* p, unsigned int id )
+{
+   /* Case no change. */
+   if (p->target == id)
+      return;
+
+   p->target = id;
+   pilot_lockClear( p );
+}
+
+
+/**
  * @brief Damages the pilot.
  *
  *    @param p Pilot that is taking damage.
@@ -1269,6 +1286,7 @@ void pilot_update( Pilot* pilot, const double dt )
    for (i=0; i<MAX_AI_TIMERS; i++)
       if (pilot->timer[i] > 0.)
          pilot->timer[i] -= dt;
+   /* Update heat. */
    Q = 0.;
    for (i=0; i<pilot->noutfits; i++) {
       o = pilot->outfits[i];
@@ -1280,9 +1298,11 @@ void pilot_update( Pilot* pilot, const double dt )
          Q  += pilot_heatUpdateSlot( pilot, o, dt );
       }
    }
-
    /* Global heat. */
    pilot_heatUpdateShip( pilot, Q, dt );
+
+   /* Update lockons. */
+   pilot_lockUpdate( pilot, dt );
 
    /* Update electronic warfare. */
    pilot_ewUpdateDynamic( pilot );
@@ -1914,7 +1934,7 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
          pilot->ship->gfx_space, pilot->solid->dir );
 
    /* Targets. */
-   pilot->target           = pilot->id; /* Self = no target. */
+   pilot_setTarget( pilot, pilot->id ); /* No target. */
    pilot->nav_planet       = -1;
    pilot->nav_hyperspace   = -1;
 
