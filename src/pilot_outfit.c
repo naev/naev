@@ -25,36 +25,27 @@
 /**
  * @brief Updates the lockons on the pilot's launchers
  */
-void pilot_lockUpdate( Pilot *p, double dt )
+void pilot_lockUpdateSlot( PilotOutfitSlot *o, Pilot *t, double dt )
 {
-   int i;
-   PilotOutfitSlot *o;
-   Pilot *t;
-   double evade;
+   double mod;
 
    /* No target. */
-   if (p->target == p->id)
-      return;
-
-   /* Get target. */
-   t = pilot_get( p->target );
    if (t == NULL)
       return;
-   evade = t->ew_evasion;
 
-   for (i=0; i<p->noutfits; i++) {
-      o = p->outfits[i];
-      if (o->outfit == NULL)
-         continue;
-      if (!outfit_isSeeker(o->outfit))
-         continue;
+   /* Nota  seeker. */
+   if (!outfit_isSeeker(o->outfit))
+      return;
   
-      /* Lower timer. */
-      if (o->u.ammo.lockon_timer > 0.) {
-         o->u.ammo.lockon_timer -= dt / (1. + evade - o->outfit->u.lau.ew_target);
-         if (o->u.ammo.lockon_timer < 0.)
-            o->u.ammo.lockon_timer = 0.;
-      }
+   /* Lower timer. */
+   if (o->u.ammo.lockon_timer > 0.) {
+      /* Get evasion. */
+      mod = t->ew_evasion - o->outfit->u.lau.ew_target;
+      o->u.ammo.lockon_timer -= dt / (1. + mod);
+
+      /* Cap at 0. */
+      if (o->u.ammo.lockon_timer < 0.)
+         o->u.ammo.lockon_timer = 0.;
    }
 }
 

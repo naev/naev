@@ -151,10 +151,6 @@ double pilot_heatUpdateSlot( Pilot *p, PilotOutfitSlot *o, double dt )
 {
    double Q;
 
-   /* Must have an outfit to be valid. */
-   if (o->outfit == NULL)
-      return 0.;
-
    /* Calculate energy leaving/entering ship chassis. */
    Q           = -p->heat_cond * (o->heat_T - p->heat_T) * o->heat_area * dt;
 

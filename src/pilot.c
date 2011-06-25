@@ -1274,6 +1274,15 @@ void pilot_update( Pilot* pilot, const double dt )
    char buf[16];
    PilotOutfitSlot *o;
    double Q;
+   
+   /* Check target sanity. */
+   if (pilot->target != pilot->id) {
+      target = pilot_get(pilot->target);
+      if (target == NULL)
+         pilot_setTarget( pilot, pilot->id );
+   }
+   else
+      target = NULL;
 
    /*
     * Update timers.
@@ -1290,19 +1299,26 @@ void pilot_update( Pilot* pilot, const double dt )
    Q = 0.;
    for (i=0; i<pilot->noutfits; i++) {
       o = pilot->outfits[i];
+
+      /* Picky about our outfits. */
       if (o->outfit == NULL)
          continue;
-      if (o->active) {
-         if (o->timer > 0.)
-            o->timer -= dt * pilot_heatFireRateMod( o->heat_T );
-         Q  += pilot_heatUpdateSlot( pilot, o, dt );
-      }
+      if (!o->active)
+         continue;
+
+      /* Handle firerate timer. */
+      if (o->timer > 0.)
+         o->timer -= dt * pilot_heatFireRateMod( o->heat_T );
+
+      /* Handle heat. */
+      Q  += pilot_heatUpdateSlot( pilot, o, dt );
+
+      /* Handle lockons. */
+      pilot_lockUpdateSlot( o, target, dt );
    }
+
    /* Global heat. */
    pilot_heatUpdateShip( pilot, Q, dt );
-
-   /* Update lockons. */
-   pilot_lockUpdate( pilot, dt );
 
    /* Update electronic warfare. */
    pilot_ewUpdateDynamic( pilot );
@@ -1463,7 +1479,6 @@ void pilot_update( Pilot* pilot, const double dt )
 
    /* Pilot is boarding its target.  Hack to match speeds. */
    if (pilot_isFlag(pilot, PILOT_BOARDING)) {
-      target = pilot_get(pilot->target);
       if (target==NULL)
          pilot_rmFlag(pilot, PILOT_BOARDING);
       else {
