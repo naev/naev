@@ -27,7 +27,8 @@
  */
 void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, double *a, double dt )
 {
-   double mod, x,y, ang, arc;
+   double mod, max;
+   double x,y, ang, arc;
 
    /* No target. */
    if (t == NULL)
@@ -49,9 +50,15 @@ void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, double *a, do
          *a    = fabs( angle_diff( ang, p->solid->dir ) );
       }
 
-      /* Check if in arc. */
-      if (*a > arc)
-         return;
+      /* Decay if not in arc. */
+      if (*a > arc) {
+         o->u.ammo.lockon_timer += dt * (t->ew_evasion/o->outfit->u.lau.ew_target);
+
+         /* Limit decay to max. */
+         max = o->outfit->u.lau.lockon;
+         if (o->u.ammo.lockon_timer > max)
+            o->u.ammo.lockon_timer = max;
+      }
    }
 
    /* Lower timer. */
@@ -60,9 +67,10 @@ void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, double *a, do
       mod = t->ew_evasion - o->outfit->u.lau.ew_target;
       o->u.ammo.lockon_timer -= dt / (1. + mod);
 
-      /* Cap at 0. */
-      if (o->u.ammo.lockon_timer < 0.)
-         o->u.ammo.lockon_timer = 0.;
+      /* Cap at -max/2. */
+      max = o->outfit->u.lau.lockon/2.;
+      if (o->u.ammo.lockon_timer < -max)
+         o->u.ammo.lockon_timer = -max;
    }
 }
 
