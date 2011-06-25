@@ -5427,14 +5427,37 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <y>680.000000</y>
   </pos>
   <GFX>
-   <space>M07.png</space>
-   <exterior>traderoom.png</exterior>
+   <space>K00.png</space>
+   <exterior>desertic3.png</exterior>
   </GFX>
+  <presence>
+   <faction>Soromid</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
   <general>
-   <class>A</class>
+   <class>K</class>
    <population>0</population>
-   <services/>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <shipyard/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>Larling is a popular world for businesses and industries to settle. Sergio Vix is located close to a number of important Soromid systems, and the price of real estate on Larling is low. In addition, the world has quite relaxed environmental legislation, which means industries can cut on emission reduction costs.</description>
+   <bar>You won't find Larling's spaceport bar in any top 100 list, but that doesn't mean it's bad. There's just nothing particularly exceptional about it.</bar>
   </general>
+  <tech>
+   <item>Light Civilian Combat Ships</item>
+   <item>Basic Trade Ships</item>
+  </tech>
  </asset>
  <asset name="Lazuli I">
   <pos>
@@ -9411,6 +9434,33 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <description>As everyone knows, the Soromid are exporters of genetic treatment services. People from all over the galaxy travel to Soromid space to have their natural abilities enhanced, diseases cured or appearances improved. All of these people need to be treated somewhere, and this is one such place. Soromid Wards Alpha is a massive medical facility, the largest of all the Soromid Wards. Thousands of clients can be treated here at any one time. Most of the station's volume is taken up by personal treatment tanks, where clients spend anything from a week to months in an artificial coma while their genetic code is rewritten.</description>
   </general>
  </asset>
+ <asset name="Soromid Wards Beta">
+  <pos>
+   <x>7808.800001</x>
+   <y>16514.977244</y>
+  </pos>
+  <GFX>
+   <space>station-commerce.png</space>
+   <exterior>traderoom.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Soromid</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>0</class>
+   <population>0</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+   </services>
+   <commodities/>
+   <description>While Soromid Wards Alpha in Shikima handles seven out of ten gene therapy clients, it is ill equipped for some of the more invasive operations. Soromid Wards Beta, on the other hand, has several facilities that make such operations possible. Of course these advanced procedrues come at a higher cost, so the clients visiting Beta tend to be from the upper classes of galactic society.</description>
+   <bar>The spacedock bar, which doubles as a waiting room for clients, provides its visitors with information on the services that are rendered on Beta, such as ocular augmentation, bone and muscle reinforcement, disease immunities and reproductive facility expansion.</bar>
+  </general>
+ </asset>
  <asset name="Sroolu">
   <pos>
    <x>4159.837315</x>
@@ -11715,13 +11765,35 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </pos>
   <GFX>
    <space>M02.png</space>
-   <exterior>gas.png</exterior>
+   <exterior>oceanic.png</exterior>
   </GFX>
+  <presence>
+   <faction>Soromid</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
   <general>
-   <class>A</class>
+   <class>M</class>
    <population>0</population>
-   <services/>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <outfits/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>Zepei has a modest native population, and a sizeable non-permanent population. The surface of the planet is covered with holiday resorts, nature parks and outdoor sports areas. Most of the vacation goers are Soromid. Non-modified humans would find the recreational activities too rough for comfort.</description>
+   <bar>The spaceport bar is not frequented much. The Soromid who come here on vacation typically go straight to the terminals, and they constitute most of the spaceport's traffic. The bar is used only by the captains of the supply and trade ships that land on Zeppei.</bar>
   </general>
+  <tech>
+   <item>Basic Outfits 1</item>
+   <item>Missiles 1</item>
+  </tech>
  </asset>
  <asset name="Zero-Eleven">
   <pos>
