@@ -126,8 +126,9 @@ static void sysedit_btnGrid( unsigned int wid_unused, char *unused );
 static void sysedit_btnEdit( unsigned int wid_unused, char *unused );
 /* Planet editing. */
 static void sysedit_editPnt( void );
-static void sysedit_planetDesc( unsigned int wid, char *unused );
 static void sysedit_editPntClose( unsigned int wid, char *unused );
+static void sysedit_planetDesc( unsigned int wid, char *unused );
+static void sysedit_planetDescClose( unsigned int wid, char *unused );
 static void sysedit_genServicesList( unsigned int wid );
 static void sysedit_btnAddService( unsigned int wid, char *unused );
 static void sysedit_btnRmService( unsigned int wid, char *unused );
@@ -1150,11 +1151,13 @@ static void sysedit_editPnt( void )
    sysedit_genServicesList( wid );
 }
 
-
+/**
+ * @brief Displays the planet landing description and bar description in a separate window.
+ */
 static void sysedit_planetDesc( unsigned int wid, char *unused )
 {
    (void) unused;
-   int x, y, h, w;
+   int x, y, h, w, bw;
    Planet *p;
    char *desc, *bardesc;
 
@@ -1170,9 +1173,13 @@ static void sysedit_planetDesc( unsigned int wid, char *unused )
    h = (SYSEDIT_EDIT_HEIGHT - gl_defFont.h * 2 - 30 - 60 - BUTTON_HEIGHT - 10) / 2.;
    desc    = p->description ? p->description : "None";
    bardesc = p->bar_description ? p->bar_description : "None";
+   bw = (SYSEDIT_EDIT_WIDTH - 40 - 15 * 3) / 4.;
 
-   window_addButton( wid, -20, 20, (SYSEDIT_EDIT_WIDTH - 40 - 15 * 3) / 4., BUTTON_HEIGHT,
-         "btnClose", "Close", window_close );
+   window_addButton( wid, -20 - bw*3 - 15*3, 20, bw, BUTTON_HEIGHT,
+         "btnProperties", "Properties", window_close );
+
+   window_addButton( wid, -20, 20, bw, BUTTON_HEIGHT,
+         "btnClose", "Close", sysedit_planetDescClose );
 
    /* Description label and text. */
    window_addText( wid, x, y, w, gl_defFont.h, 0, "txtDescriptionLabel", &gl_defFont, &cBlack,
@@ -1188,6 +1195,15 @@ static void sysedit_planetDesc( unsigned int wid, char *unused )
    y -= gl_defFont.h + 10;
    window_addText( wid, x, y, w, h, 0, "txtBarDescription", &gl_smallFont, &cBlack,
          bardesc );
+}
+
+/**
+ * @brief Closes both the planet description window and the properties window.
+ */
+static void sysedit_planetDescClose( unsigned int wid, char *unused )
+{
+   window_close( wid, unused );
+   sysedit_editPntClose( sysedit_widEdit, unused );
 }
 
 
