@@ -1278,7 +1278,7 @@
    <slot>weapon</slot>
    <license>Medium Weapon License</license>
    <mass>10</mass>
-   <price>40000</price>
+   <price>100000</price>
    <description>This is TeraCom's model Headhunter launcher. Though somewhat pricey and demanding on the ship's resources, the patented tracking and missile arming technology allows pilots to fire their missiles before the competition does.</description>
    <gfx_store>headhunterlauncher</gfx_store>
   </general>
@@ -1311,6 +1311,66 @@
    <turn>70</turn>
    <speed>1000</speed>
    <damage type="kinetic" penetrate="20">80</damage>
+   <ai>smart</ai>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp Vengeance Launcher">
+  <general>
+   <slot>weapon</slot>
+   <license>Medium Weapon License</license>
+   <mass>15</mass>
+   <price>70000</price>
+   <description>This launcher fires Vengeance class interceptor missiles. Its bulk makes it less suitable for ships that rely on mobility, but it's relatively efficient otherwise.</description>
+   <gfx_store>headhunterlauncher</gfx_store>
+  </general>
+  <specific type="launcher" secondary="1">
+   <cpu>6</cpu>
+   <ammo>Vengeance Missile</ammo>
+   <delay>3500</delay>
+   <amount>10</amount>
+   <lockon>11</lockon>
+   <arc>6</arc>
+   <ew_target>1.5</ew_target>
+  </specific>
+ </outfit>
+ <outfit name="TeraCom Vengeance Launcher">
+  <general>
+   <slot>weapon</slot>
+   <license>Medium Weapon License</license>
+   <mass>15</mass>
+   <price>150000</price>
+   <description>TeraCom's patented launcher hardware considerably reduces the time it takes to achieve a lock. Sometimes, those few seconds can make all the difference.</description>
+   <gfx_store>headhunterlauncher</gfx_store>
+  </general>
+  <specific type="launcher" secondary="1">
+   <cpu>10</cpu>
+   <ammo>Vengeance Missile</ammo>
+   <delay>3500</delay>
+   <amount>10</amount>
+   <lockon>7</lockon>
+   <arc>8</arc>
+   <ew_target>1.5</ew_target>
+  </specific>
+ </outfit>
+ <outfit name="Vengeance Missile">
+  <general>
+   <license>Medium Weapon License</license>
+   <mass>1</mass>
+   <price>800</price>
+   <description>Vengeance class interceptor missiles are the heaviest interceptor missiles currently in production. Almost half the missile hull is used for payload, which decreases its ability to catch fast targets. Best used against corvette class targets.</description>
+   <gfx_store>headhunter</gfx_store>
+  </general>
+  <specific type="ammo">
+   <gfx>headhunter</gfx>
+   <sound>missile</sound>
+   <sound_hit>medexp0</sound_hit>
+   <spfx_shield>ExpM</spfx_shield>
+   <spfx_armour>ExpM</spfx_armour>
+   <duration blowup="armour">9</duration>
+   <thrust>450</thrust>
+   <turn>45</turn>
+   <speed>700</speed>
+   <damage type="kinetic" penetrate="30">150</damage>
    <ai>smart</ai>
   </specific>
  </outfit>
