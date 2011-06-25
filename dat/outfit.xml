@@ -1247,7 +1247,6 @@
    <delay>2500</delay>
    <amount>30</amount>
    <lockon>5</lockon>
-   <arc>360</arc>
    <ew_target>3</ew_target>
   </specific>
  </outfit>
@@ -1324,7 +1323,6 @@
    <delay>3000</delay>
    <amount>20</amount>
    <lockon>6</lockon>
-   <arc>360</arc>
    <ew_target>2</ew_target>
   </specific>
  </outfit>
@@ -1402,7 +1400,6 @@
    <delay>3500</delay>
    <amount>15</amount>
    <lockon>8</lockon>
-   <arc>360</arc>
    <ew_target>1.5</ew_target>
   </specific>
  </outfit>
