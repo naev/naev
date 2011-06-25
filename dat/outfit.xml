@@ -1233,6 +1233,24 @@
    <ew_target>3</ew_target>
   </specific>
  </outfit>
+ <outfit name="Enygma Systems Turreted Fury Launcher">
+  <general>
+   <slot>weapon</slot>
+   <mass>30</mass>
+   <price>80000</price>
+   <description>Enygma Systems has developed a turret mounted Fury launcher. It comes at a steep price, but can be a powerful means of discouraging pirate fighters.</description>
+   <gfx_store>seekerlauncher</gfx_store>
+  </general>
+  <specific type="turret launcher" secondary="1">
+   <cpu>9</cpu>
+   <ammo>Fury Missile</ammo>
+   <delay>2500</delay>
+   <amount>30</amount>
+   <lockon>5</lockon>
+   <arc>360</arc>
+   <ew_target>3</ew_target>
+  </specific>
+ </outfit>
  <outfit name="Fury Missile">
   <general>
    <mass>1</mass>
@@ -1289,6 +1307,24 @@
    <amount>15</amount>
    <lockon>5</lockon>
    <arc>8</arc>
+   <ew_target>2</ew_target>
+  </specific>
+ </outfit>
+ <outfit name="Enygma Systems Turreted Headhunter Launcher">
+  <general>
+   <slot>weapon</slot>
+   <mass>45</mass>
+   <price>140000</price>
+   <description>These launchers are sometimes employed by cruiser captains whose ships aren't maneouevrable enough to effectively combat enemy fighters and bombers. The punch of the Headhunter missile combined with Enygma Systems' swivel mounted launcher can effectively compensate for any blind spots.</description>
+   <gfx_store>headhunterlauncher</gfx_store>
+  </general>
+  <specific type="turret launcher" secondary="1">
+   <cpu>14</cpu>
+   <ammo>Headhunter Missile</ammo>
+   <delay>3000</delay>
+   <amount>20</amount>
+   <lockon>6</lockon>
+   <arc>360</arc>
    <ew_target>2</ew_target>
   </specific>
  </outfit>
@@ -1349,6 +1385,24 @@
    <amount>10</amount>
    <lockon>7</lockon>
    <arc>8</arc>
+   <ew_target>1.5</ew_target>
+  </specific>
+ </outfit>
+ <outfit name="Enygma Systems Turreted Vengeance Launcher">
+  <general>
+   <slot>weapon</slot>
+   <mass>60</mass>
+   <price>200000</price>
+   <description>Turreted Vengeance launchers aren't commonly seen in interplanetary combat. Only heavy cruisers can afford to mount these weapons, and they usually have other means of taking out corvette class enemies.</description>
+   <gfx_store>headhunterlauncher</gfx_store>
+  </general>
+  <specific type="turret launcher" secondary="1">
+   <cpu>14</cpu>
+   <ammo>Headhunter Missile</ammo>
+   <delay>3500</delay>
+   <amount>15</amount>
+   <lockon>8</lockon>
+   <arc>360</arc>
    <ew_target>1.5</ew_target>
   </specific>
  </outfit>
