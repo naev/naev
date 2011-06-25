@@ -519,7 +519,7 @@ function render( dt, dt_mod )
          else
             col = col_txt_bar
          end
-         values = {weapon.left_p, weapon.cooldown, weapon.level, weapon.track}
+         values = {weapon.left_p, weapon.cooldown, weapon.level, weapon.track or weapon.lockon}
          render_ammoBar( "ammo", x_ammo, y_ammo - (num)*28, values, txt, col, 2, col_ammo )
       else
          col = col_txt_bar
