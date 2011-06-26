@@ -618,53 +618,40 @@ int areEnemies( int a, int b)
 
    if (a==b) return 0; /* luckily our factions aren't masochistic */
 
-   /* player handled separately */
-   if (a==FACTION_PLAYER) {
-      if (faction_isFaction(b)) {
-         if (faction_stack[b].player < PLAYER_ENEMY)
-            return 1;
-         else return 0;
-      }
-      else {
-         WARN("areEnemies: %d is an invalid faction", b);
-         return 0;
-      }
-   }
-   if (b==FACTION_PLAYER) {
-      if (faction_isFaction(a)) {
-         if (faction_stack[a].player < PLAYER_ENEMY)
-            return 1;
-         else return 0;
-      }
-      else {
-         WARN("areEnemies: %d is an invalid faction", a);
-         return 0;
-      }
-   }
-
    /* handle a */
-   if (faction_isFaction(a)) fa = &faction_stack[a];
-   else { /* a isn't valid */
+   if (faction_isFaction(a))
+      fa = &faction_stack[a];
+   else { /* a is invalid */
       WARN("areEnemies: %d is an invalid faction", a);
       return 0;
    }
 
    /* handle b */
-   if (faction_isFaction(b)) fb = &faction_stack[b];
+   if (faction_isFaction(b))
+      fb = &faction_stack[b];
    else { /* b is invalid */
       WARN("areEnemies: %d is an invalid faction", b);
       return 0;
    }
 
-   /* both are factions */
-   if (fa && fb) {
-      for (i=0;i<fa->nenemies;i++)
-         if (fa->enemies[i] == b)
-            return 1;
-      for (i=0;i<fb->nenemies;i++)
-         if(fb->enemies[i] == a)
-            return 1;
+   /* player handled separately */
+   if (a==FACTION_PLAYER) {
+      if (fb->player < PLAYER_ENEMY)
+         return 1;
+      return 0;
    }
+   else if (b==FACTION_PLAYER) {
+      if (fa->player < PLAYER_ENEMY)
+         return 1;
+      return 0;
+   }
+
+   for (i=0;i<fa->nenemies;i++)
+      if (fa->enemies[i] == b)
+         return 1;
+   for (i=0;i<fb->nenemies;i++)
+      if(fb->enemies[i] == a)
+         return 1;
 
    return 0;
 }
@@ -685,55 +672,41 @@ int areAllies( int a, int b )
    /* If they are the same they must be allies. */
    if (a==b) return 1;
 
-   /* we assume player becomes allies with high rating */
-   if (a==FACTION_PLAYER) {
-      if (faction_isFaction(b)) {
-         if (faction_stack[b].player > PLAYER_ALLY) return 1;
-         else return 0;
-      }
-      else {
-         WARN("%d is an invalid faction", b);
-         return 0;
-      }
-   }
-   if (b==FACTION_PLAYER) {
-      if (faction_isFaction(a)) {
-         if (faction_stack[a].player > PLAYER_ALLY) return 1;
-         else return 0;
-      }
-      else {
-         WARN("%d is an invalid faction", a);
-         return 0;
-      }
-   }
-
-
-   if ((a==FACTION_PLAYER) || (b==FACTION_PLAYER)) /* player has no allies */
-      return 0;
-
    /* handle a */
-   if (faction_isFaction(a)) fa = &faction_stack[a];
-   else { /* a isn't valid */
+   if (faction_isFaction(a))
+      fa = &faction_stack[a];
+   else { /* a is invalid */
       WARN("%d is an invalid faction", a);
       return 0;
    }
 
    /* handle b */
-   if (faction_isFaction(b)) fb = &faction_stack[b];
+   if (faction_isFaction(b))
+      fb = &faction_stack[b];
    else { /* b is invalid */
       WARN("%d is an invalid faction", b);
       return 0;
    }
 
-   /* both are factions */
-   if (fa && fb) {
-      for (i=0;i<fa->nallies;i++)
-         if (fa->allies[i] == b)
-            return 1;
-      for (i=0;i<fb->nallies;i++)
-         if(fb->allies[i] == a)
-            return 1;
+   /* we assume player becomes allies with high rating */
+   if (a==FACTION_PLAYER) {
+      if (fb->player > PLAYER_ALLY)
+         return 1;
+      return 0;
    }
+   else if (b==FACTION_PLAYER) {
+      if (fa->player > PLAYER_ALLY)
+         return 1;
+      return 0;
+   }
+
+   for (i=0;i<fa->nallies;i++)
+      if (fa->allies[i] == b)
+         return 1;
+   for (i=0;i<fb->nallies;i++)
+      if(fb->allies[i] == a)
+         return 1;
+
    return 0;
 }
 
