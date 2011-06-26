@@ -1347,8 +1347,8 @@
  </asset>
  <asset name="Cerberus II">
   <pos>
-   <x>29678.984882</x>
-   <y>5229.599407</y>
+   <x>9956.762660</x>
+   <y>-5395.400593</y>
   </pos>
   <GFX>
    <space>G02.png</space>
@@ -1362,8 +1362,8 @@
  </asset>
  <asset name="Cerberus IIa">
   <pos>
-   <x>30150.000000</x>
-   <y>4800.000000</y>
+   <x>10427.777778</x>
+   <y>-5825.000000</y>
   </pos>
   <GFX>
    <space>moon-K00.png</space>
@@ -1377,8 +1377,8 @@
  </asset>
  <asset name="Cerberus IV">
   <pos>
-   <x>-8925.000000</x>
-   <y>44925.000000</y>
+   <x>-1772.222222</x>
+   <y>30966.666667</y>
   </pos>
   <GFX>
    <space>D02.png</space>
@@ -1586,17 +1586,33 @@
  </asset>
  <asset name="Culex">
   <pos>
-   <x>18225.000000</x>
-   <y>34500.000000</y>
+   <x>-17337.694408</x>
+   <y>-16625.248069</y>
   </pos>
   <GFX>
    <space>moon-M06.png</space>
-   <exterior>aquatic2.png</exterior>
+   <exterior>oceanic.png</exterior>
   </GFX>
+  <presence>
+   <faction>Soromid</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
   <general>
-   <class>A</class>
+   <class>M</class>
    <population>0</population>
-   <services/>
+   <services>
+    <land>land_lowclass</land>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+   </commodities>
+   <description>Culex is the moon of planet Myonei. Myonei itself is a factory world, but it's too unpleasant for even the geneticlaly altered Soromid to live on. Fortunately, Culex is quite suitable for inhabitation, and so the workers who labor on the surface have their homes here. Culex is little more than a habitat, with no economy of its own. It's fairly uninteresting to most people who don't actually live there.</description>
+   <bar>As Culex sees little traffic other than the forensic kind, the spaceport bar has been repurposed as a community centre for the locals. The standard facilities are still present and operational, but in a minimal fashion. Most of the facility is filled with recreational facilities and even a dance floor.</bar>
   </general>
  </asset>
  <asset name="Cutha">
@@ -6220,18 +6236,44 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
  </asset>
  <asset name="Myonei">
   <pos>
-   <x>17608.422019</x>
-   <y>33902.001921</y>
+   <x>-17821.865227</x>
+   <y>-17114.204956</y>
   </pos>
   <GFX>
    <space>K03.png</space>
-   <exterior>aquatic2.png</exterior>
+   <exterior>gas.png</exterior>
   </GFX>
+  <presence>
+   <faction>Soromid</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
   <general>
-   <class>A</class>
+   <class>Y</class>
    <population>0</population>
-   <services/>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <outfits/>
+    <shipyard/>
+   </services>
+   <commodities>
+    <commodity>Ore</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>Myonei is an industry planet supplying many of the surrounding Soromid worlds with basic necessities. The atmosphere is so dense that it can actually be tapped for raw materials. Most of the infrastructure on the planet is dedicated to the industry, with all of the permanent workforce living up on the moon of Culex.</description>
+   <bar>As Myonei has quite a lot of goods to transport offworld at any given time, there is never a lull in the bustle of the spaceport bar. Freighter captains make up most of the clientele, as the workers tend to work continuous shifts and head straight to Culex when they get off.</bar>
   </general>
+  <tech>
+   <item>Plasma 1</item>
+   <item>Basic Outfits 2</item>
+   <item>High Tech Upgrades 1</item>
+   <item>Basic Civilian Ships</item>
+   <item>Basic Trade Ships</item>
+  </tech>
  </asset>
  <asset name="Myuirr Station">
   <pos>
@@ -9407,6 +9449,33 @@ New Dortmund was never very successful in any sense of the term, but it is still
    </services>
    <commodities/>
    <description>The Soromid and the rest of the galaxy have enjoyed a tense kind of friendship ever since the first bioships launched from Sorom. The rest of humanity is keenly interested in the Soromid genetic treatments, and the Soromid in turn are happy to turn a profit on their expertise, but there's still some degree of caution on both sides. Soromid Customs Central is a visible sign of that caution. It houses a full division of Soromid ships, and is responsible for maintaining order as well as inspecting the traffic that passes through Oberon.</description>
+  </general>
+ </asset>
+ <asset name="Soromid Databank">
+  <pos>
+   <x>10950.997946</x>
+   <y>12105.389613</y>
+  </pos>
+  <GFX>
+   <space>station-sphere.png</space>
+   <exterior>traderoom.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Soromid</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>0</class>
+   <population>0</population>
+   <services>
+    <land>srm_mil_restricted</land>
+    <refuel/>
+    <bar/>
+   </services>
+   <commodities/>
+   <description>The Soromid Databank is the primary Soromid data center. All administration about interplanetary policy as well as the records of the gene treatment industry are managed here. This is why, although the Soromid Databank is not a military base, it has been classified a restricted facility.</description>
+   <bar>Most visitors don't make it past the spacedock bar, not even ranking Soromid personnel. The data center is managed mostly by internal automated drones, requiring manual maintenance only occasionally. Information requests are taken at booths adjoining the spacedock bar, which are manned by secretive-looking Soromid who never leave the station.</bar>
   </general>
  </asset>
  <asset name="Soromid Wards Alpha">
