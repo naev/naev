@@ -1230,7 +1230,7 @@ static void input_clickevent( SDL_Event* event )
       if (pntid == player.p->nav_planet) {
          pnt = cur_system->planets[ pntid ];
          if (planet_hasService(pnt, PLANET_SERVICE_LAND) &&
-               (!areEnemies( player.p->faction, pnt->faction ) || pnt->bribed ))
+               (pnt->faction < 0 || (!areEnemies( player.p->faction, pnt->faction ) || pnt->bribed )))
             player_land();
          else
             player_hailPlanet();
