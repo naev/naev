@@ -27,7 +27,7 @@
  */
 void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, double *a, double dt )
 {
-   double max;
+   double max, old;
    double x,y, ang, arc;
 
    /* No target. */
@@ -58,13 +58,12 @@ void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, double *a, do
          /* When a lock is lost, immediately gain half the lock timer.
           * This is meant as an incentive for the aggressor not to lose the lock,
           * and for the target to try and break the lock. */
-         if (o->u.ammo.lockon_timer <= 0 && o->u.ammo.lockon_timer + dt * o->outfit->u.lau.lockon > 0) {
-            o->u.ammo.lockon_timer += dt + o->outfit->u.lau.lockon / 2;
-         }
-         else
-            o->u.ammo.lockon_timer += dt;
-            
+         old = o->u.ammo.lockon_timer;
+         o->u.ammo.lockon_timer += dt;
+         if ((old <= 0.) && (o->u.ammo.lockon_timer > 0.))
+            o->u.ammo.lockon_timer += o->outfit->u.lau.lockon / 2.;
 
+         /* Cap at max. */
          if (o->u.ammo.lockon_timer > max)
             o->u.ammo.lockon_timer = max;
 
