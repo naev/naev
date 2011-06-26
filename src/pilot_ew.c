@@ -79,7 +79,7 @@ double pilot_ewHeat( double T )
 
 
 /**
- * @brief Gets the electronic warfare mass modifier for a given velocity.
+ * @brief Gets the electronic warfare mass modifier for a given mass.
  *
  *    @param mass Mass to get the electronic warfare mass modifier of.
  *    @return The electronic warfare mass modifier.
