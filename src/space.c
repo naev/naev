@@ -1726,8 +1726,8 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
       MELEMENT(planet->gfx_spaceName==NULL,"GFX space");
       MELEMENT( planet_hasService(planet,PLANET_SERVICE_LAND) &&
             planet->gfx_exterior==NULL,"GFX exterior");
-      MELEMENT( planet_hasService(planet,PLANET_SERVICE_INHABITED) &&
-            (planet->population==0), "population");
+      /* MELEMENT( planet_hasService(planet,PLANET_SERVICE_INHABITED) &&
+            (planet->population==0), "population"); */
       MELEMENT((flags&FLAG_XSET)==0,"x");
       MELEMENT((flags&FLAG_YSET)==0,"y");
       MELEMENT(planet->class==PLANET_CLASS_NULL,"class");
