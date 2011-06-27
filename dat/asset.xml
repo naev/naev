@@ -11870,6 +11870,14 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <range>0</range>
   </presence>
  </asset>
+ <asset name="Virtual Soromid Unpresence">
+  <virtual/>
+  <presence>
+   <faction>Soromid</faction>
+   <value>-1000.000000</value>
+   <range>0</range>
+  </presence>
+ </asset>
  <asset name="Virtual Trader Area">
   <virtual/>
   <presence>
