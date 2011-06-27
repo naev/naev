@@ -4687,7 +4687,16 @@
    <x>23.000000</x>
    <y>616.000000</y>
   </pos>
-  <assets/>
+  <assets>
+   <asset>Heii</asset>
+   <asset>Juran</asset>
+   <asset>Silverstone</asset>
+   <asset>Symm II</asset>
+   <asset>Symm III</asset>
+   <asset>Symm IIIa</asset>
+   <asset>Symm IIIb</asset>
+   <asset>Wigheta</asset>
+  </assets>
   <jumps>
    <jump target="Hadosh">
     <flags>

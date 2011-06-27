@@ -4542,6 +4542,43 @@
    <services/>
   </general>
  </asset>
+ <asset name="Heii">
+  <pos>
+   <x>13432.054762</x>
+   <y>-9885.821559</y>
+  </pos>
+  <GFX>
+   <space>moon-C01.png</space>
+   <exterior>snow.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Soromid</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>C</class>
+   <population>0</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <outfits/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+   </commodities>
+   <description>Heii is the rather unattractive moon of Juran. Juran itself is a natural M-class, so first time visitors often wonder why the Soromid chose to settle here and not down below. The reason is actually quite interesting. Juran is home to many amazing life forms, including large creatures not at all unlike the dinosaurs that once roamed ancient Earth. Settling down on Juran would not only be dangerous, it would also mean a disturbance in the natural ecosystem. Thus, the Soromid chose not to inhabit Juran, but instead tap its natural animal life by selling specimens as exotic pets throughout the galaxy.</description>
+   <bar>Visitors to Heii spaceport bar can use special consoles to access video feeds from survey satellites deployed all around Juran, to observe the life forms on the surface and perhaps even pick one to take back to their own world.</bar>
+  </general>
+  <tech>
+   <item>Basic Outfits 1</item>
+   <item>Missiles 1</item>
+   <item>Missiles 2</item>
+  </tech>
+ </asset>
  <asset name="Hekaras III">
   <pos>
    <x>2189.636232</x>
@@ -5219,6 +5256,21 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <item>Basic Outfits 1</item>
    <item>Missiles 1</item>
   </tech>
+ </asset>
+ <asset name="Juran">
+  <pos>
+   <x>13828.797232</x>
+   <y>-10158.621622</y>
+  </pos>
+  <GFX>
+   <space>M02.png</space>
+   <exterior>forest2.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+  </general>
  </asset>
  <asset name="Karman I">
   <pos>
@@ -9490,6 +9542,47 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <services/>
   </general>
  </asset>
+ <asset name="Silverstone">
+  <pos>
+   <x>-8768.728278</x>
+   <y>746.353155</y>
+  </pos>
+  <GFX>
+   <space>L00.png</space>
+   <exterior>desertic4.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Soromid</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>L</class>
+   <population>0</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <outfits/>
+    <shipyard/>
+   </services>
+   <commodities>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>Silverstone is one of the Soromid's greatest producers of ships and weapons. Growing bioships is only useful if those ships can be equipped with guns, as the local governor argues.</description>
+   <bar>As Silverstone is a semi-military business world, the locals take security seriously. All visitors to the spaceport bar must relinquish any weapons on their persons, and submit to a scan upon entry.</bar>
+  </general>
+  <tech>
+   <item>Plasma 1</item>
+   <item>Basic Outfits 2</item>
+   <item>Missiles 1</item>
+   <item>Missiles 2</item>
+   <item>Basic Civilian Ships</item>
+   <item>Light Civilian Combat Ships</item>
+  </tech>
+ </asset>
  <asset name="Sinass">
   <pos>
    <x>-18252.233450</x>
@@ -10072,6 +10165,66 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <item>Basic Outfits 1</item>
    <item>Basic Civilian Ships</item>
   </tech>
+ </asset>
+ <asset name="Symm II">
+  <pos>
+   <x>-1657.246162</x>
+   <y>-10680.643750</y>
+  </pos>
+  <GFX>
+   <space>X01.png</space>
+   <exterior>aquatic2.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+  </general>
+ </asset>
+ <asset name="Symm III">
+  <pos>
+   <x>3873.906595</x>
+   <y>3967.793771</y>
+  </pos>
+  <GFX>
+   <space>J04.png</space>
+   <exterior>lava.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+  </general>
+ </asset>
+ <asset name="Symm IIIa">
+  <pos>
+   <x>3663.680133</x>
+   <y>3548.372981</y>
+  </pos>
+  <GFX>
+   <space>moon-O00.png</space>
+   <exterior>desertic2.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+  </general>
+ </asset>
+ <asset name="Symm IIIb">
+  <pos>
+   <x>3497.986866</x>
+   <y>3315.613392</y>
+  </pos>
+  <GFX>
+   <space>moon-G00.png</space>
+   <exterior>desertic4.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+  </general>
  </asset>
  <asset name="Takeru">
   <pos>
@@ -11974,6 +12127,38 @@ New Dortmund was never very successful in any sense of the term, but it is still
    </commodities>
    <description>In the days of the Old Empire, Waterhole was the farthest outpost of the Empire. To the Imperials, it was the last outpost of civilization, the last bastion of safety before venturing out into the systems beyond. It is because of this that Waterhole, the system and the planet, derive their names. Now, centuries later, Waterhole remains at the border of Empire space. It is still the last stop for traders venturing out, and the first of those coming in.</description>
    <bar>Waterhole's moon wouldn't be Waterhole's moon if its bar wasn't called The Waterhole. Though the place is open to visitors from all origins and walks of life, the majority of the clientele is Imperial in nature. It seems that nothing creates a longing for home like being away from it for prolonged periods of time.</bar>
+  </general>
+ </asset>
+ <asset name="Wigheta">
+  <pos>
+   <x>997.580582</x>
+   <y>15496.946610</y>
+  </pos>
+  <GFX>
+   <space>O00.png</space>
+   <exterior>aquatic.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Soromid</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>O</class>
+   <population>0</population>
+   <services>
+    <land>srm_mil_restricted</land>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+    <commodity>Industrial Goods</commodity>
+   </commodities>
+   <description>While the main line of Soromid military ship production is located on Heronus in Uridhrion, there is a secondary ship plant here on Wigheta. Wigheta does not grow the regular models, however. Instead, the world is acts as a research facility for bioships, where new designs and growth methods are invented and tested. It's a slow and expensive process, and Wigheta only produces a useful result once every few cycles, but without the work done here the Soromid bioship technology will never evolve.</description>
+   <bar>Wigheta's spaceport bar is located close to the actual landing docks of the spaceport. The research done on Wigheta is top-secret, so every precaution is being taken to prevent visitors from wandering into places they shouldn't.</bar>
   </general>
  </asset>
  <asset name="Wildwood Station">
