@@ -86,6 +86,27 @@
          )()</cond>
   </avail>
  </mission>
+ <mission name="Soromid Rehabilitation">
+  <lua>sirius/srs_rehab</lua>
+  <flags/>
+  <avail>
+   <chance>100</chance>
+   <location>Computer</location>
+   <cond>(function ()
+            local fac = faction.get("Soromid")
+            for _, enemy in pairs(fac:enemies()) do
+                if enemy:playerStanding() &gt; 20 then
+                    return false
+                end
+            end
+            if fac:playerStanding() &lt; 0 then
+                return true
+            end
+            return false
+          end
+         )()</cond>
+  </avail>
+ </mission>
  <mission name="Cargo Rush">
   <lua>neutral/cargo_rush</lua>
   <avail>
