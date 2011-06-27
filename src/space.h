@@ -103,6 +103,7 @@ typedef struct Planet_ {
    int real; /**< If the asset is tangible or not. */
 
    /* Landing details. */
+   int land_override; /**< Forcibly allows the player to either be able to land or not (+1 is land, -1 is not, 0 otherwise). */
    char *land_func; /**< Landing function to execute. */
    int can_land; /**< Whether or not the player can land. */
    char *land_msg; /**< Message on landing. */

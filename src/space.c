@@ -1144,6 +1144,7 @@ void space_init( const char* sysname )
 {
    char* nt;
    int i, n, s;
+   Planet *pnt;
 
    /* cleanup some stuff */
    player_clear(); /* clears targets */
@@ -1194,8 +1195,10 @@ void space_init( const char* sysname )
 
    /* Set up planets. */
    for (i=0; i<cur_system->nplanets; i++) {
-      cur_system->planets[i]->bribed = 0;
-      planet_updateLand( cur_system->planets[i] );
+      pnt = cur_system->planets[i];
+      pnt->bribed = 0;
+      pnt->land_override = 0;
+      planet_updateLand( pnt );
    }
 
    /* Clear interference if you leave system with interference. */
