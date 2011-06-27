@@ -1912,7 +1912,7 @@
  </ssys>
  <ssys name="Feye">
   <general>
-   <radius>20000.000000</radius>
+   <radius>26000.000000</radius>
    <stars>400</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -2449,7 +2449,7 @@
  </ssys>
  <ssys name="Hadosh">
   <general>
-   <radius>20000.000000</radius>
+   <radius>30000.000000</radius>
    <stars>400</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
@@ -2459,7 +2459,15 @@
    <x>-35.000000</x>
    <y>685.000000</y>
   </pos>
-  <assets/>
+  <assets>
+   <asset>Daahrax</asset>
+   <asset>Hadosh II</asset>
+   <asset>Hadosh III</asset>
+   <asset>Hadosh IV</asset>
+   <asset>Hadosh Ia</asset>
+   <asset>Scorpion Station</asset>
+   <asset>Soromid Wards Gamma</asset>
+  </assets>
   <jumps>
    <jump target="Symm">
     <flags>
@@ -3343,7 +3351,12 @@
    <x>-13.000000</x>
    <y>527.000000</y>
   </pos>
-  <assets/>
+  <assets>
+   <asset>Idio</asset>
+   <asset>Moordra I</asset>
+   <asset>Moordra II</asset>
+   <asset>Percola</asset>
+  </assets>
   <jumps>
    <jump target="Elza">
     <flags>
@@ -4664,7 +4677,7 @@
  </ssys>
  <ssys name="Symm">
   <general>
-   <radius>14000.000000</radius>
+   <radius>18200.000000</radius>
    <stars>400</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>

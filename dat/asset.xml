@@ -1687,6 +1687,37 @@
    <bar>Spaceport bar, waiting lounge, interview room, this facility is everything at once. It's the only place accessible to non-DVNN personnel, so all dealings with visitors have to take place here. In fact, one of the Dvaered reality shows is a live feed from the spaceport bar on DVNN Central, showing how the various visitors behave. The Dvaered seem to find this entertaining.</bar>
   </general>
  </asset>
+ <asset name="Daahrax">
+  <pos>
+   <x>-3276.389448</x>
+   <y>-14880.268740</y>
+  </pos>
+  <GFX>
+   <space>K02.png</space>
+   <exterior>mining4.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Soromid</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>K</class>
+   <population>0</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+   </services>
+   <commodities>
+    <commodity>Medicine</commodity>
+   </commodities>
+   <description>When the Soromid claimed the barren world of Hadosh I, they had the privilege of naming it and its moon. The planet came to be known as Daahrax. However, in an impressive display of bureaucratic indecision, the planet's moon remains unnamed. There is constant debate in the various governmental institutions, and time and again naming commissions are created whose suggestions are promptly rejected. It doesn't seem the Soromid are going to come up with a good name anytime soon.</description>
+   <bar>Hello, traveler, welcome to the Daahrax spaceport bar. A word of advice, don't ask about the moon. Trust me, don't do it. The locals are a little touchy on the subject. How about a drink instead?</bar>
+  </general>
+ </asset>
  <asset name="Daal">
   <pos>
    <x>-10536.743196</x>
@@ -3288,8 +3319,8 @@
  </asset>
  <asset name="Feye I">
   <pos>
-   <x>5095.508914</x>
-   <y>-4732.794576</y>
+   <x>6624.161588</x>
+   <y>-6152.632949</y>
   </pos>
   <GFX>
    <space>I00.png</space>
@@ -3303,8 +3334,8 @@
  </asset>
  <asset name="Feye IV">
   <pos>
-   <x>-10212.509388</x>
-   <y>-9828.761375</y>
+   <x>-13276.262204</x>
+   <y>-12777.389788</y>
   </pos>
   <GFX>
    <space>G01.png</space>
@@ -4225,6 +4256,66 @@
    <services/>
   </general>
  </asset>
+ <asset name="Hadosh II">
+  <pos>
+   <x>-11781.014820</x>
+   <y>7693.271214</y>
+  </pos>
+  <GFX>
+   <space>A03.png</space>
+   <exterior>traderoom.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+  </general>
+ </asset>
+ <asset name="Hadosh III">
+  <pos>
+   <x>1051.896104</x>
+   <y>19942.611407</y>
+  </pos>
+  <GFX>
+   <space>P00.png</space>
+   <exterior>snow.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+  </general>
+ </asset>
+ <asset name="Hadosh IV">
+  <pos>
+   <x>-28008.879241</x>
+   <y>934.522860</y>
+  </pos>
+  <GFX>
+   <space>moon-J01.png</space>
+   <exterior>mining5.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+  </general>
+ </asset>
+ <asset name="Hadosh Ia">
+  <pos>
+   <x>-3751.058574</x>
+   <y>-14935.440229</y>
+  </pos>
+  <GFX>
+   <space>moon-G00.png</space>
+   <exterior>mining5.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+  </general>
+ </asset>
  <asset name="Haldr">
   <pos>
    <x>-30090.992878</x>
@@ -4846,6 +4937,37 @@
    <description>Named after the figure from Greek mythology, Icarus is a hot world with extreme seismic activity. This makes it the perfect location for some of Totoran's volcanic-themed arenas. Gladiators fighting on Icarus have as much to fear from the environment as they have from each other, and the most spectacular kills made in the arenas here involve the unstable terrain itself.</description>
   </general>
  </asset>
+ <asset name="Idio">
+  <pos>
+   <x>-15776.174419</x>
+   <y>22151.369123</y>
+  </pos>
+  <GFX>
+   <space>G02.png</space>
+   <exterior>desertic.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Soromid</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>G</class>
+   <population>0</population>
+   <services>
+    <land>land_lowclass</land>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+   </commodities>
+   <description>Idio is a densely populated world, but not a particularly rich one. It just so happens that the planet offers a lot of buildable terrain and little in the way of natural hazards, so it's an attractive place to live.</description>
+   <bar>For some reason, whenever you order a drink here, you always get a different one. It seems to be some kind of running joke.</bar>
+  </general>
+ </asset>
  <asset name="Imk">
   <pos>
    <x>3303.666819</x>
@@ -5130,8 +5252,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
  </asset>
  <asset name="Kataka">
   <pos>
-   <x>-5145.948201</x>
-   <y>2909.504862</y>
+   <x>-5945.866695</x>
+   <y>8183.563291</y>
   </pos>
   <GFX>
    <space>K03.png</space>
@@ -5139,7 +5261,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   </GFX>
   <presence>
    <faction>Soromid</faction>
-   <value>100.000000</value>
+   <value>300.000000</value>
    <range>2</range>
   </presence>
   <general>
@@ -6076,8 +6198,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
  </asset>
  <asset name="Memory of Sorom">
   <pos>
-   <x>5872.457422</x>
-   <y>-5079.121206</y>
+   <x>7378.896977</x>
+   <y>-6488.413784</y>
   </pos>
   <GFX>
    <space>station-fleetbase.png</space>
@@ -6205,6 +6327,36 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <item>Basic Outfits 2</item>
    <item>Low Tech Upgrades</item>
   </tech>
+ </asset>
+ <asset name="Moordra I">
+  <pos>
+   <x>5339.784581</x>
+   <y>-1694.041544</y>
+  </pos>
+  <GFX>
+   <space>C01.png</space>
+   <exterior>mining4.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+  </general>
+ </asset>
+ <asset name="Moordra II">
+  <pos>
+   <x>-20650.223103</x>
+   <y>7156.309957</y>
+  </pos>
+  <GFX>
+   <space>J00.png</space>
+   <exterior>station05.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+  </general>
  </asset>
  <asset name="Mouddar">
   <pos>
@@ -6461,8 +6613,8 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
  </asset>
  <asset name="Neurri">
   <pos>
-   <x>18519.849257</x>
-   <y>-3592.137374</y>
+   <x>25997.457782</x>
+   <y>-4421.823264</y>
   </pos>
   <GFX>
    <space>O02.png</space>
@@ -7495,6 +7647,40 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <description>Paxsor is a mining planet within Empire space, supplying ore to the shipyards in the system and sending surplus ore to help with the Emperor's Fist project.</description>
    <bar>The Paxsorian bar is a rather simple one, patronized mostly by traders trafficking ore. Given the limited nature of the planet's public facilities, it's impossible to know whether the Nexus employees are hard at work or drinking at a bar of their own.</bar>
   </general>
+ </asset>
+ <asset name="Percola">
+  <pos>
+   <x>-10266.857313</x>
+   <y>-3918.579198</y>
+  </pos>
+  <GFX>
+   <space>moon-M05.png</space>
+   <exterior>forest.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Soromid</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>M</class>
+   <population>0</population>
+   <services>
+    <land/>
+    <refuel/>
+    <bar/>
+    <missions/>
+    <commodity/>
+    <outfits/>
+   </services>
+   <commodities/>
+   <description>Percola is a small world, but it is a rather major producer of food within Soromid space. The planet is rich in carbon and gets a lot of sun, so plant life thrives here. The planet sometimes manages as many as four harvests a cycle. About seventy per cent of the land surface is used for agriculture, ten per cent is used for livestock and the remaining twenty per cent is for the residents and supporting infrastructure.</description>
+   <bar>This spaceport bar has a view on one of the nearby mega-meadows that sprawl across Percola. The endless sea of uniform vegetation is impressive to behold, but it's only really a small part of what's out there.</bar>
+  </general>
+  <tech>
+   <item>Basic Outfits 1</item>
+   <item>Low Tech Upgrades</item>
+  </tech>
  </asset>
  <asset name="Perhelion Alpha">
   <pos>
@@ -8901,6 +9087,40 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <services/>
   </general>
  </asset>
+ <asset name="Scorpion Station">
+  <pos>
+   <x>-11302.327703</x>
+   <y>7269.819086</y>
+  </pos>
+  <GFX>
+   <space>station-fleetbase2.png</space>
+   <exterior>station04.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Soromid</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
+  <general>
+   <class>0</class>
+   <population>0</population>
+   <services>
+    <land>srm_mil_restricted</land>
+    <refuel/>
+    <bar/>
+    <outfits/>
+   </services>
+   <commodities/>
+   <description>Scorpion is hardly the most prestigious post for a Soromid captain to be assigned to, but the peace needs to be kept everywhere, even in Hadosh.</description>
+   <bar>The spacedock bar is a place to meet officers and make formal inquiries. It's not of much use for anything else.</bar>
+  </general>
+  <tech>
+   <item>Plasma 2</item>
+   <item>High Tech Upgrades 2</item>
+   <item>Missiles 1</item>
+   <item>Missiles 2</item>
+  </tech>
+ </asset>
  <asset name="Seanich">
   <pos>
    <x>18820.828324</x>
@@ -9612,17 +9832,29 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Soromid Wards Gamma">
   <pos>
-   <x>-7502.320740</x>
-   <y>-6364.037593</y>
+   <x>11050.675296</x>
+   <y>6217.996620</y>
   </pos>
   <GFX>
    <space>station-commerce.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
+  <presence>
+   <faction>Soromid</faction>
+   <value>100.000000</value>
+   <range>2</range>
+  </presence>
   <general>
-   <class>A</class>
+   <class>0</class>
    <population>0</population>
-   <services/>
+   <services>
+    <land>land_hiclass</land>
+    <refuel/>
+    <bar/>
+   </services>
+   <commodities/>
+   <description>Soromid Wards Gamma can be considered a private facility. While Alpha and Beta cater to the gene treatment needs of the rest of the galaxy, Gamma is for Soromid only. The operations here are geared toward a higher tolerance for modification that normal humans would likely not survive. The patients here are usually colonists or working personnel who need to adapt themselves to a particular climate.</description>
+   <bar>Unlike Alpha and Beta, the spacedock bar on Gamma does not offer much information on what goes on in the facility. The Soromid learn about their genes and the modifications in youth education. They know what they're coming for.</bar>
   </general>
  </asset>
  <asset name="Sroolu">
