@@ -63,7 +63,7 @@ function accept ()
    -- target destination
    pickup,pickupsys = planet.get( "Selphod" )
    dest,destsys = planet.get( "Cerberus" )
-   ret,retsys = planet.get( "Polaris Prime" )
+   ret,retsys = planet.get( "Halir" )
    misn_marker = misn.markerAdd( pickupsys, "low" )
 
    -- Mission details

@@ -77,7 +77,7 @@ function pirate_createKestrel( pirate_create )
 
    -- Kestrel gets some good stuff
    primary        = { "Heavy Ion Turret", "Razor Turret MK2", "Laser Turret MK2", "Turreted Vulcan Gun" }
-   secondary      = { "Headhunter Launcher" }
+   secondary      = { "Unicorp Headhunter Launcher" }
    use_primary    = nhigh-2
    use_secondary  = 2
    addWeapons( primary, use_primary )
@@ -120,7 +120,7 @@ function pirate_createAdmonisher( pirate_create )
 
    -- Admonisher specializes in forward-firing weapons.
    primary        = { "Mass Driver MK2", "Plasma Blaster MK2", "Vulcan Gun" }
-   secondary      = { "Headhunter Launcher", "Seeker Launcher", "Banshee Launcher" }
+   secondary      = { "Unicorp Headhunter Launcher", "Unicorp Fury Launcher", "Unicorp Banshee Launcher" }
    use_primary    = nhigh-1
    use_secondary  = 1
    addWeapons( primary, use_primary )
@@ -163,7 +163,7 @@ function pirate_createAncestor( pirate_create )
 
    -- Ancestor specializes in ranged combat.
    primary        = { "Laser Cannon MK1", "Laser Cannon MK2", "Plasma Blaster MK1", "Plasma Blaster MK2", "Razor MK1", "Razor MK2" }
-   secondary      = { "Seeker Launcher" }
+   secondary      = { "Unicorp Fury Launcher" }
    use_primary    = nhigh-2
    use_secondary  = 2
    addWeapons( primary, use_primary )
@@ -206,7 +206,7 @@ function pirate_createVendetta( pirate_create )
 
    -- Vendettas are all about close-range firepower.
    primary        = { "Plasma Blaster MK1", "Plasma Blaster MK2", "Laser Cannon MK1", "Razor MK2" }
-   secondary      = { "Seeker Launcher", "Banshee Launcher" }
+   secondary      = { "Unicorp Fury Launcher", "Unicorp Banshee Launcher" }
    use_primary    = nhigh-1
    use_secondary  = 1
    addWeapons( primary, use_primary )
