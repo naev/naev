@@ -916,6 +916,8 @@
    <asset>Culex</asset>
    <asset>Myonei</asset>
    <asset>Soromid Databank</asset>
+   <asset>Virtual Civilian Standard</asset>
+   <asset>Virtual Civilian Standard</asset>
   </assets>
   <jumps>
    <jump target="Feye">
@@ -1717,6 +1719,7 @@
    <asset>Elza III</asset>
    <asset>Elza Ia</asset>
    <asset>Oring</asset>
+   <asset>Virtual Civilian Standard</asset>
   </assets>
   <jumps>
    <jump target="Moordra">
@@ -1892,6 +1895,9 @@
    <asset>Flach</asset>
    <asset>Hartwell Station</asset>
    <asset>Rudderfern</asset>
+   <asset>Virtual Civilian Standard</asset>
+   <asset>Virtual Civilian Standard</asset>
+   <asset>Virtual Pirate Small</asset>
   </assets>
   <jumps>
    <jump target="Gewirn">
@@ -1928,6 +1934,10 @@
    <asset>Kataka</asset>
    <asset>Memory of Sorom</asset>
    <asset>Neurri</asset>
+   <asset>Virtual Civilian Standard</asset>
+   <asset>Virtual Civilian Standard</asset>
+   <asset>Virtual Civilian Standard</asset>
+   <asset>Virtual Civilian Standard</asset>
   </assets>
   <jumps>
    <jump target="Cerberus">
@@ -2467,6 +2477,8 @@
    <asset>Hadosh Ia</asset>
    <asset>Scorpion Station</asset>
    <asset>Soromid Wards Gamma</asset>
+   <asset>Virtual Civilian Standard</asset>
+   <asset>Virtual Civilian Standard</asset>
   </assets>
   <jumps>
    <jump target="Symm">
@@ -2610,6 +2622,7 @@
    <asset>Gaula Foods</asset>
    <asset>Hatter I</asset>
    <asset>Hatter II</asset>
+   <asset>Virtual Civilian Standard</asset>
   </assets>
   <jumps>
    <jump target="Father's Pride">
@@ -3356,6 +3369,8 @@
    <asset>Moordra I</asset>
    <asset>Moordra II</asset>
    <asset>Percola</asset>
+   <asset>Virtual Civilian Standard</asset>
+   <asset>Virtual Civilian Standard</asset>
   </assets>
   <jumps>
    <jump target="Elza">
@@ -3613,6 +3628,7 @@
    <asset>Oberon III</asset>
    <asset>Oberon IV</asset>
    <asset>Soromid Customs Central</asset>
+   <asset>Virtual Civilian Standard</asset>
   </assets>
   <jumps>
    <jump target="Defa">
@@ -3874,6 +3890,7 @@
   <assets>
    <asset>Point Zero 0</asset>
    <asset>Point Zero Station</asset>
+   <asset>Virtual Civilian Standard</asset>
    <asset>Warei</asset>
   </assets>
   <jumps>
@@ -4310,6 +4327,8 @@
    <asset>Sarcophagus V</asset>
    <asset>Thymo</asset>
    <asset>Turawee</asset>
+   <asset>Virtual Civilian Standard</asset>
+   <asset>Virtual Civilian Standard</asset>
   </assets>
   <jumps>
    <jump target="Point Zero">
@@ -4336,6 +4355,8 @@
    <asset>Sergio Vix I</asset>
    <asset>Sergio Vix III</asset>
    <asset>Soromid Wards Beta</asset>
+   <asset>Virtual Civilian Standard</asset>
+   <asset>Virtual Civilian Standard</asset>
    <asset>Zepei</asset>
   </assets>
   <jumps>
@@ -4436,6 +4457,8 @@
    <asset>Beene</asset>
    <asset>Shikima II</asset>
    <asset>Soromid Wards Alpha</asset>
+   <asset>Virtual Civilian Standard</asset>
+   <asset>Virtual Civilian Standard</asset>
   </assets>
   <jumps>
    <jump target="Father's Pride">
@@ -4695,6 +4718,7 @@
    <asset>Symm III</asset>
    <asset>Symm IIIa</asset>
    <asset>Symm IIIb</asset>
+   <asset>Virtual Civilian Standard</asset>
    <asset>Wigheta</asset>
   </assets>
   <jumps>
@@ -5261,6 +5285,8 @@
    <asset>Uridhrion I</asset>
    <asset>Uridhrion II</asset>
    <asset>Uridhrion III</asset>
+   <asset>Virtual Civilian Standard</asset>
+   <asset>Virtual Civilian Standard</asset>
   </assets>
   <jumps>
    <jump target="Point Zero">
@@ -5417,7 +5443,9 @@
    <x>-93.000000</x>
    <y>571.000000</y>
   </pos>
-  <assets/>
+  <assets>
+   <asset>Virtual Pirate Medium</asset>
+  </assets>
   <jumps>
    <jump target="Symm">
     <flags>
