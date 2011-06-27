@@ -55,7 +55,7 @@ include "dat/missions/empire/common.lua"
 function create ()
    -- Target destination
    destsys = system.get( "Slaccid" )
-   ret,retsys = planet.get( "Polaris Prime" )
+   ret,retsys = planet.get( "Halir" )
 
    -- Must claim system
    if not misn.claim( destsys ) then
