@@ -882,7 +882,7 @@ static int misn_osdActive( lua_State *L )
  *
  * @usage npc_id = misn.npcAdd( "my_func", "Mr. Test", "none", "A test." ) -- Creates an NPC.
  *
- *    @luaparam func Name of the function to run when approaching.
+ *    @luaparam func Name of the function to run when approaching, gets passed the npc_id when called.
  *    @luaparam name Name of the NPC
  *    @luaparam portrait Portrait to use for the NPC (from gfx/portraits*.png).
  *    @luaparam desc Description associated to the NPC.
