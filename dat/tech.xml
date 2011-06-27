@@ -463,6 +463,15 @@
   <item>Sirius Divinity</item>
   <item>Sirius Dogma</item>
  </tech>
+ <tech name="Soromid Military Ships">
+  <item>Soromid Brigand</item>
+  <item>Soromid Reaver</item>
+  <item>Soromid Marauder</item>
+  <item>Soromid Odium</item>
+  <item>Soromid Nyx</item>
+  <item>Soromid Ira</item>
+  <item>Soromid Arx</item>
+ </tech>
 
  <tech name="__Heavy Weapon License">
   <item>Heavy Weapon License</item>

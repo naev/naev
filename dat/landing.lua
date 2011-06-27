@@ -99,6 +99,24 @@ function dv_mil_command( pnt )
          "\"Money won't buy you access to our restricted facilities, citizen.\"")
 end
 
+-- Soromid military assets.
+function srm_mil_restricted( pnt )
+   return land_military(pnt, 35,
+         "Permission to land granted.",
+         "Permission denied. You're not truly one of us.",
+         "Landing request denied.",
+         "\"We don't need your money, outsider.\"")
+end
+
+-- Soromid Kataka.
+function srm_mil_kataka( pnt )
+   return land_military(pnt, 75,
+         "Permission to land granted.",
+         "Only friends of the Soromid may set foot on Kataka.",
+         "Landing request denied.",
+         "\"We don't need your money, outsider.\"")
+end
+
 -- Pirate clanworld.
 function pir_clanworld( pnt )
    local fct = pnt:faction()
