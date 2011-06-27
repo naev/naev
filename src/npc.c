@@ -307,7 +307,6 @@ int npc_rm_parentMission( Mission *misn )
 static int npc_compare( const void *arg1, const void *arg2 )
 {
    const NPC_t *npc1, *npc2;
-   int ret;
 
    npc1 = (NPC_t*)arg1;
    npc2 = (NPC_t*)arg2;
@@ -319,6 +318,7 @@ static int npc_compare( const void *arg1, const void *arg2 )
       return -1;
 
 #if 0
+   int ret;
    /* Compare name. */
    ret = strcmp( npc1->name, npc2->name );
    if (ret != 0)
@@ -330,9 +330,12 @@ static int npc_compare( const void *arg1, const void *arg2 )
       return ret;
 #endif
 
-   /* Compare ID. */
-   ret = npc1->id - npc2->id;
-   return ret;
+   /* Compare IDs to hopefully ensure stability. */
+   if (npc1->id > npc2->id)
+      return +1;
+   else if (npc1->id < npc2->id)
+      return -1;
+   return 0;
 }
 
 
