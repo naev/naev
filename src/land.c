@@ -1152,9 +1152,9 @@ void land_genWindows( int load, int changetab )
       landed = 1;
       music_choose("land"); /* Must be before hooks in case hooks change music. */
       if (!load) {
-         events_trigger( EVENT_TRIGGER_LAND );
          hooks_run("land");
       }
+      events_trigger( EVENT_TRIGGER_LAND );
 
       /* 3) Generate computer and bar missions. */
       if (planet_hasService(land_planet, PLANET_SERVICE_MISSIONS))
