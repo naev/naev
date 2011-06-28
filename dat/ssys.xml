@@ -9,8 +9,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>-158.995306</x>
-   <y>500.409618</y>
+   <x>-100.120242</x>
+   <y>488.117188</y>
   </pos>
   <assets/>
   <jumps>
@@ -40,8 +40,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>-32.000000</x>
-   <y>-15.000000</y>
+   <x>-40.212963</x>
+   <y>-41.574074</y>
   </pos>
   <assets/>
   <jumps>
@@ -501,8 +501,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>-94.348597</x>
-   <y>422.879107</y>
+   <x>-47.683913</x>
+   <y>411.797333</y>
   </pos>
   <assets/>
   <jumps>
@@ -527,8 +527,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>100.666667</x>
-   <y>463.066667</y>
+   <x>125.114219</x>
+   <y>456.636626</y>
   </pos>
   <assets>
    <asset>Babylon I</asset>
@@ -577,8 +577,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>111.849746</x>
-   <y>192.232398</y>
+   <x>145.830169</x>
+   <y>186.284610</y>
   </pos>
   <assets/>
   <jumps>
@@ -767,8 +767,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>-105.720663</x>
-   <y>318.441326</y>
+   <x>-66.607929</x>
+   <y>309.350520</y>
   </pos>
   <assets/>
   <jumps>
@@ -808,8 +808,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>-274.000000</x>
-   <y>107.000000</y>
+   <x>-288.467593</x>
+   <y>116.645062</y>
   </pos>
   <assets>
    <asset>P0125</asset>
@@ -839,8 +839,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>-331.000000</x>
-   <y>72.000000</y>
+   <x>-345.467593</x>
+   <y>81.645062</y>
   </pos>
   <assets>
    <asset>P9234</asset>
@@ -869,8 +869,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>-239.000000</x>
-   <y>175.000000</y>
+   <x>-253.467593</x>
+   <y>184.645062</y>
   </pos>
   <assets>
    <asset>P2020</asset>
@@ -903,8 +903,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>-262.000000</x>
-   <y>47.000000</y>
+   <x>-276.467593</x>
+   <y>56.645062</y>
   </pos>
   <assets>
    <asset>Eiroik</asset>
@@ -939,8 +939,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>-214.000000</x>
-   <y>95.000000</y>
+   <x>-228.467593</x>
+   <y>104.645062</y>
   </pos>
   <assets>
    <asset>P9122</asset>
@@ -975,8 +975,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>-54.000000</x>
-   <y>148.000000</y>
+   <x>-63.089077</x>
+   <y>163.702425</y>
   </pos>
   <assets>
    <asset>Capricorn II</asset>
@@ -1177,8 +1177,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>60.000000</x>
-   <y>-81.000000</y>
+   <x>83.000000</x>
+   <y>-92.000000</y>
   </pos>
   <assets>
    <asset>Cygnus IV</asset>
@@ -1208,8 +1208,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>-34.591532</x>
-   <y>373.582144</y>
+   <x>3.293802</x>
+   <y>371.581129</y>
   </pos>
   <assets/>
   <jumps>
@@ -1219,6 +1219,11 @@
     </flags>
    </jump>
    <jump target="Dust">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="L">
     <flags>
      <autopos/>
     </flags>
@@ -1409,8 +1414,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>119.666667</x>
-   <y>376.066667</y>
+   <x>127.369320</x>
+   <y>391.580816</y>
   </pos>
   <assets/>
   <jumps>
@@ -1695,8 +1700,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>32.666667</x>
-   <y>411.066667</y>
+   <x>63.455512</x>
+   <y>423.765998</y>
   </pos>
   <assets>
    <asset>Dust</asset>
@@ -1772,8 +1777,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>-178.369768</x>
-   <y>398.656098</y>
+   <x>-114.241829</x>
+   <y>392.704961</y>
   </pos>
   <assets/>
   <jumps>
@@ -1840,8 +1845,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>162.600919</x>
-   <y>247.430740</y>
+   <x>145.248810</x>
+   <y>251.809064</y>
   </pos>
   <assets/>
   <jumps>
@@ -2040,8 +2045,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>257.945682</x>
-   <y>279.467094</y>
+   <x>238.584571</x>
+   <y>280.786538</y>
   </pos>
   <assets/>
   <jumps>
@@ -2166,8 +2171,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>-117.000000</x>
-   <y>23.000000</y>
+   <x>-126.680556</x>
+   <y>-1.645062</y>
   </pos>
   <assets>
    <asset>Fortitude I</asset>
@@ -2230,8 +2235,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>66.579797</x>
-   <y>244.104464</y>
+   <x>94.481300</x>
+   <y>231.146136</y>
   </pos>
   <assets>
    <asset>Fury I</asset>
@@ -2253,8 +2258,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>-149.495354</x>
-   <y>243.341604</y>
+   <x>-121.708317</x>
+   <y>269.986666</y>
   </pos>
   <assets/>
   <jumps>
@@ -2637,8 +2642,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>-45.713573</x>
-   <y>252.298113</y>
+   <x>-25.039635</x>
+   <y>246.979987</y>
   </pos>
   <assets/>
   <jumps>
@@ -2663,8 +2668,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>-169.000000</x>
-   <y>55.000000</y>
+   <x>-179.609568</x>
+   <y>40.532407</y>
   </pos>
   <assets/>
   <jumps>
@@ -2883,8 +2888,8 @@
    <nebula volatility="0.000000">200.000000</nebula>
   </general>
   <pos>
-   <x>0.000000</x>
-   <y>180.000000</y>
+   <x>40.300080</x>
+   <y>211.372260</y>
   </pos>
   <assets>
    <asset>Haven</asset>
@@ -3005,8 +3010,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>-116.636172</x>
-   <y>171.416610</y>
+   <x>-114.600678</x>
+   <y>214.919696</y>
   </pos>
   <assets/>
   <jumps>
@@ -3116,8 +3121,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>133.822394</x>
-   <y>326.928346</y>
+   <x>139.446006</x>
+   <y>316.062882</y>
   </pos>
   <assets/>
   <jumps>
@@ -3173,8 +3178,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>-197.266405</x>
-   <y>544.168692</y>
+   <x>-170.958494</x>
+   <y>501.218027</y>
   </pos>
   <assets/>
   <jumps>
@@ -3374,6 +3379,27 @@
    </jump>
   </jumps>
  </ssys>
+ <ssys name="L">
+  <general>
+   <radius>10000.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>80.044889</x>
+   <y>365.039575</y>
+  </pos>
+  <assets/>
+  <jumps>
+   <jump target="D">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+ </ssys>
  <ssys name="Lapis">
   <general>
    <radius>17500.000000</radius>
@@ -3551,8 +3577,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>-73.000000</x>
-   <y>-60.000000</y>
+   <x>-92.680556</x>
+   <y>-78.822531</y>
   </pos>
   <assets>
    <asset>Merisi I</asset>
@@ -3806,8 +3832,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>26.017723</x>
-   <y>309.762908</y>
+   <x>43.485983</x>
+   <y>294.880618</y>
   </pos>
   <assets>
    <asset>Green Eye</asset>
@@ -4250,8 +4276,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>-82.000000</x>
-   <y>82.000000</y>
+   <x>-88.212963</x>
+   <y>80.070988</y>
   </pos>
   <assets/>
   <jumps>
@@ -4551,8 +4577,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>-5.000000</x>
-   <y>110.000000</y>
+   <x>-15.609568</x>
+   <y>112.893519</y>
   </pos>
   <assets>
    <asset>Virtual Pirate Small</asset>
@@ -4805,8 +4831,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>-31.000000</x>
-   <y>50.000000</y>
+   <x>-27.964506</x>
+   <y>26.319444</y>
   </pos>
   <assets>
    <asset>Virtual Pirate Small</asset>
@@ -4908,8 +4934,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>235.666667</x>
-   <y>351.066667</y>
+   <x>231.737655</x>
+   <y>354.995679</y>
   </pos>
   <assets/>
   <jumps>
