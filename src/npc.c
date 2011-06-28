@@ -318,13 +318,21 @@ static int npc_compare( const void *arg1, const void *arg2 )
    else if (npc1->priority < npc2->priority)
       return -1;
 
+#if 0
    /* Compare name. */
    ret = strcmp( npc1->name, npc2->name );
    if (ret != 0)
       return ret;
 
    /* Compare description. */
-   return strcmp( npc1->desc, npc2->desc );
+   ret = strcmp( npc1->desc, npc2->desc );
+   if (ret != 0)
+      return ret;
+#endif
+
+   /* Compare ID. */
+   ret = npc1->id - npc2->id;
+   return ret;
 }
 
 
