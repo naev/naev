@@ -11,8 +11,8 @@
  *
  * Concept: Goal (Task) Based AI with additional Optimization
  *
- *  AI uses the goal (task) based AI approach with tasks scripted in lua,
- * additionally there is a task that is hardcoded and obligatory in any AI
+ *  AI uses the goal (task) based AI approach with tasks scripted in Lua,
+ * additionally there is a task that is hard-coded and obligatory in any AI
  * script, the 'control' task, whose sole purpose is to assign tasks if there
  * is no current tasks and optimizes or changes tasks if there are.
  *
@@ -42,7 +42,7 @@
  *
  *  The AI currently has per-pilot memory which is accessible as "mem".  This
  * memory is actually stored in the table pilotmem[cur_pilot->id].  This allows
- * the pilot to keep some memory always accesible between runs without having
+ * the pilot to keep some memory always accessible between runs without having
  * to rely on the storage space a task has.
  *
  * Garbage Collector
@@ -449,7 +449,7 @@ static void ai_setMemory (void)
 
 
 /**
- * @brief Sets the pilot for furthur AI calls.
+ * @brief Sets the pilot for further AI calls.
  *
  *    @param p Pilot to set.
  */
@@ -1027,7 +1027,7 @@ void ai_getDistress( Pilot* p, const Pilot* distressed )
 /**
  * @brief Runs the create() function in the pilot.
  *
- * Should create all the gear and sucth the pilot has.
+ * Should create all the gear and such the pilot has.
  *
  *    @param pilot Pilot to "create".
  *    @param param Parameter to pass to "create" function.
@@ -1925,7 +1925,7 @@ static int aiL_isenemy( lua_State *L )
 }
 
 /*
- * checks if pillot is an ally
+ * checks if pilot is an ally
  */
 static int aiL_isally( lua_State *L )
 {
@@ -2815,7 +2815,7 @@ static int aiL_relvel( lua_State *L )
 }
 
 /*
- * completely stops the pilot if it is below minimum vel error (no instastops)
+ * completely stops the pilot if it is below minimum vel error (no insta-stops)
  */
 static int aiL_stop( lua_State *L )
 {
@@ -2828,7 +2828,7 @@ static int aiL_stop( lua_State *L )
 }
 
 /*
- * Tells the pilot's escort's to attack its target.
+ * Tells the pilot's escorts to attack its target.
  */
 static int aiL_e_attack( lua_State *L )
 {
@@ -3017,9 +3017,9 @@ static int aiL_getenemy_size( lua_State *L )
  * @brief gets the nearest enemy within specified heuristic
  *
  *  @luaparam Mass goal mass map (0-1)
- *  @luaparam DPS goal DPS map (0-1)
  *  @luaparam HP goal HP map (0-1)
- *  @luapa
+ *  @luaparam DPS goal DPS map (0-1)
+ *  @luaparam Range weighting for range (typically > 1)
  *  @luareturn the best fitting target
  *  @luafunc getenemy_heuristic( Mass, DPS, HP, range )
  */
@@ -3027,8 +3027,10 @@ static int aiL_getenemy_heuristic( lua_State *L )
 {
 
    unsigned int p;
-   double mass_factor = 0, health_factor = 0, damage_factor = 0, range_factor = 0;
+   double mass_factor, health_factor, damage_factor, range_factor;
    NLUA_MIN_ARGS(4);
+
+   mass_factor = health_factor = damage_factor = range_factor = 0;
 
    mass_factor = luaL_checklong(L,1);
    health_factor = luaL_checklong(L,2);
@@ -3124,10 +3126,10 @@ static int aiL_canboard( lua_State *L )
 }
 
 /**
- * @brief Lua wrapper: Gets the relative size(shipmass) between the current pilot and the specified target
+ * @brief Lua wrapper: Gets the relative size (ship mass) between the current pilot and the specified target.
  *
- *    @param pilot_ID the ID of the pilot whose mass we will compare
- *    @luareturn A number from 0 to 1 mapping the relative masses
+ *    @param pilot_ID the ID of the pilot whose mass we will compare.
+ *    @luareturn A number from 0 to 1 mapping the relative masses.
  * @luafunc relsize( id )
  */
 static int aiL_relsize( lua_State *L )
@@ -3150,10 +3152,10 @@ static int aiL_relsize( lua_State *L )
 
 
 /**
- * @brief Gets the relative damage output(total DPS) between the current pilot and the specified target
+ * @brief Gets the relative damage output (total DPS) between the current pilot and the specified target.
  *
- *    @param pilot_ID the ID of the pilot whose DPS we will compare
- *    @luareturn A number from 0 to 1 mapping the relative DPS's
+ *    @param pilot_ID ID of the pilot whose DPS we will compare.
+ *    @luareturn A number from 0 to 1 mapping the relative DPSes.
  * @luafunc reldps( id )
  */
 static int aiL_reldps( lua_State *L )
@@ -3176,10 +3178,10 @@ static int aiL_reldps( lua_State *L )
 
 
 /**
- * @brief Gets the relative HP(total shields and armor) between the current pilot and the specified target
+ * @brief Gets the relative health (total shields and armour) between the current pilot and the specified target
  *
- * @param pilot_ID the ID of the pilot whose HP we will compare
- *    @luareturn A number from 0 to 1 mapping the relative HPs
+ * @param pilot_ID ID of the pilot whose health we will compare.
+ *    @luareturn A number from 0 to 1 mapping the relative healths.
  * relhp()
  */
 static int aiL_relhp( lua_State *L )

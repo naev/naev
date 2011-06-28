@@ -5,7 +5,7 @@
 /**
  * @file claim.c
  *
- * @brief Handles claiming systems.
+ * @brief Handles claiming of systems.
  */
 
 #include "claim.h"
@@ -132,7 +132,7 @@ void claim_destroy( SysClaim_t *claim )
 
 
 /**
- * @brief Clears the claimings on all systems.
+ * @brief Clears the claims on all systems.
  */
 void claim_clear (void)
 {

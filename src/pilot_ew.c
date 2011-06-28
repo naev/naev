@@ -25,7 +25,7 @@ static double sensor_curRange    = 0.; /**< Current base sensor range, used to c
 
 
 /**
- * @brief Updates the pilot's sattic electronic warfare properties.
+ * @brief Updates the pilot's static electronic warfare properties.
  *
  *    @param p Pilot to update.
  */

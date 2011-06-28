@@ -160,7 +160,7 @@ static void map_find_check_update( unsigned int wid, char* str )
 
 
 /**
- * @brief Clsoses the find window.
+ * @brief Closes the find window.
  */
 static void map_findClose( unsigned int wid, char* str )
 {

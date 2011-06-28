@@ -431,7 +431,7 @@ static int player_newMake (void)
  * @brief Creates a new ship for player.
  *
  *    @param ship New ship to get.
- *    @param def_name Default name to give it if canceled.
+ *    @param def_name Default name to give it if cancelled.
  *    @param trade Whether or not to trade player's current ship with the new ship.
  *    @param noname Whether or not to let the player name it.
  *    @return Newly created pilot on success or NULL if dialogue was cancelled.
@@ -1201,7 +1201,7 @@ void player_update( Pilot *pplayer, const double dt )
 
 
 /**
- * @brief Does a pleyr specific update.
+ * @brief Does a player specific update.
  *
  *    @param pplayer Player to update.
  *    @param dt Current deltatick.
@@ -1251,12 +1251,10 @@ void player_updateSpecific( Pilot *pplayer, const double dt )
 
 
 /*
- *
  *    For use in keybindings
- *
  */
 /**
- * @brief Actiavtes a player's weapon set.
+ * @brief Activates a player's weapon set.
  */
 void player_weapSetPress( int id, int type )
 {
@@ -1456,7 +1454,7 @@ void player_land (void)
 /**
  * @brief Sets the no land message.
  *
- *    @brief str Message to set when the playre is not allowed to land temporarily.
+ *    @brief str Message to set when the player is not allowed to land temporarily.
  */
 void player_nolandMsg( const char *str )
 {
@@ -1728,7 +1726,7 @@ void player_afterburnOver (int type)
 /**
  * @brief Start accelerating.
  *
- *    @param acc How much thrust should beb applied of maximum (0 - 1).
+ *    @param acc How much thrust should be applied of maximum (0 - 1).
  */
 void player_accel( double acc )
 {

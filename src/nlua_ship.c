@@ -401,7 +401,7 @@ static int shipL_gfxTarget( lua_State *L )
 /**
  * @brief Gets the ship's graphics.
  *
- * Will not work without access to the Tex module. These are nearly always a spritesheet.
+ * Will not work without access to the Tex module. These are nearly always a sprite sheet.
  *
  * @usage gfx = s:gfx()
  *

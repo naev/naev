@@ -475,7 +475,7 @@ int sound_updatePos( int voice, double px, double py, double vx, double vy )
 
 
 /**
- * @brief Updates the sonuds removing obsolete ones and such.
+ * @brief Updates the sounds removing obsolete ones and such.
  *
  *    @return 0 on success.
  */

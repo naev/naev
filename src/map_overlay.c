@@ -21,7 +21,7 @@
 
 
 /**
- * @brief Ano verlay map marker.
+ * @brief An overlay map marker.
  */
 typedef struct ovr_marker_s {
    unsigned int id; /**< ID of the marker. */
@@ -355,7 +355,7 @@ void ovr_mrkFree (void)
 
 
 /**
- * @brief Clears the curent markers.
+ * @brief Clears the current markers.
  */
 void ovr_mrkClear (void)
 {

@@ -22,7 +22,7 @@
 /**
  * @brief Calculates the heat parameters for a pilot.
  *
- * We treat the ship as more or less ac onstant slab of steel.
+ * We treat the ship as more or less a constant slab of steel.
  *
  *    @param p Pilot to update heat properties of.
  */
@@ -145,7 +145,7 @@ void pilot_heatAddSlot( Pilot *p, PilotOutfitSlot *o )
  *    @param p Pilot to update.
  *    @param o Outfit slot to update.
  *    @param dt Delta tick.
- *    @return The energy transfered.
+ *    @return The energy transferred.
  */
 double pilot_heatUpdateSlot( Pilot *p, PilotOutfitSlot *o, double dt )
 {
@@ -174,7 +174,7 @@ double pilot_heatUpdateSlot( Pilot *p, PilotOutfitSlot *o, double dt )
  *
  *  q = p + sigma * epsilon * (T^4 - To^4)
  *
- *  sigma being the stefan-boltzmann constant [5] = 5.67×10−8 W/(m^2 K^4)
+ *  sigma being the Stefan-Boltzmann constant [5] = 5.67×10−8 W/(m^2 K^4)
  *  epsilon being a parameter between 0 and 1 (1 being black body)
  *  T being body temperature
  *  To being "space temperature"

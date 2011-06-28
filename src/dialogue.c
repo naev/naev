@@ -5,7 +5,7 @@
 /**
  * @file dialogue.c
  *
- * @brief Is a high level api around toolkit.c for easy window creation.
+ * @brief Is a high-level API around toolkit.c for easy window creation.
  *
  * Only one dialogue may be open at once or behaviour is unspecified.
  *

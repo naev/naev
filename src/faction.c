@@ -943,7 +943,7 @@ int factions_load (void)
       return -1;
    }
 
-   /* player faction is hardcoded */
+   /* player faction is hard-coded */
    faction_stack = malloc( sizeof(Faction) );
    memset(faction_stack, 0, sizeof(Faction) );
    faction_stack[0].name = strdup("Player");

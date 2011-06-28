@@ -812,7 +812,7 @@ static void* pack_readfilePack( Packfile_t *file,
 /**
  * @brief Reads an entire file into memory.
  *
- *    @param packfile Name of the packfile to read frome.
+ *    @param packfile Name of the packfile to read from.
  *    @param filename Name of the packed file to read.
  *    @param filesize Is set to the size of the file.
  *    @return A pointer to the data in the file or NULL if an error occurred.
@@ -842,7 +842,7 @@ void* pack_readfile( const char* packfile, const char* filename, uint32_t *files
  *
  * @brief Gets what files are in the packfile.
  *
- * Each name must be freed individually afterwarsd and the array of names too.
+ * Each name must be freed individually afterwards and the array of names too.
  *
  *    @param packfile Packfile to query it's internal files.
  *    @param nfiles Stores the amount of files in packfile.

@@ -265,7 +265,7 @@ int osd_destroy( unsigned int osd )
  *
  *    @param osd OSD to change active message.
  *    @param msg Message to make active in OSD.
- *    @return 0 on succcess.
+ *    @return 0 on success.
  */
 int osd_active( unsigned int osd, int msg )
 {
@@ -425,7 +425,7 @@ static void osd_calcDimensions (void)
  * @brief Gets the title of an OSD.
  *
  *    @param osd OSD to get title of.
- *    @return Title of the OSd.
+ *    @return Title of the OSD.
  */
 char *osd_getTitle( unsigned int osd )
 {
@@ -443,7 +443,7 @@ char *osd_getTitle( unsigned int osd )
  * @brief Gets the items of an OSD.
  *
  *    @param osd OSD to get items of.
- *    @param[out] nitems Numeb of OSD items.
+ *    @param[out] nitems Number of OSD items.
  */
 char **osd_getItems( unsigned int osd, int *nitems )
 {

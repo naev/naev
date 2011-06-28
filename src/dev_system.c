@@ -5,7 +5,7 @@
 /**
  * @file dev_system.c
  *
- * @brief Handles developement of star system stuff.
+ * @brief Handles development of star system stuff.
  */
 
 #include "dev_system.h"

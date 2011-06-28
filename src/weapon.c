@@ -1476,7 +1476,7 @@ void weapon_add( const Outfit* outfit, const double T, const double dir,
 
 
 /**
- * @brief Starts a beam weaapon.
+ * @brief Starts a beam weapon.
  *
  *    @param outfit Outfit which spawns the weapon.
  *    @param dir Direction of the shooter.

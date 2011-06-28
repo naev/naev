@@ -893,7 +893,7 @@ static int pilotL_name( lua_State *L )
  * @usage id = p:id()
  *
  *    @luaparam p Pilot to get the ID of.
- *    @luareturn The ID of the curent pilot.
+ *    @luareturn The ID of the current pilot.
  * @luafunc id( p )
  */
 static int pilotL_id( lua_State *L )
@@ -1774,7 +1774,7 @@ static int pilotL_setVisible( lua_State *L )
 /**
  * @brief Makes pilot stand out on radar and the likes.
  *
- * This makes the pilot stand out in the map overlay and radar to increase noticeability.
+ * This makes the pilot stand out in the map overlay and radar to increase noticability.
  *
  * @usage p:setHilight( true )
  *
@@ -2315,7 +2315,7 @@ static int pilotL_setNodisable( lua_State *L )
  * @usage armour, shield, dis = p:health()
  *
  *    @luaparam p Pilot to get health of.
- *    @luareturn The armour and shield of the pilot in % [0:100], followed by a boolean indicating if piloti s disabled.
+ *    @luareturn The armour and shield of the pilot in % [0:100], followed by a boolean indicating if pilot is disabled.
  * @luafunc health( p )
  */
 static int pilotL_getHealth( lua_State *L )
@@ -2577,7 +2577,7 @@ static int pilotL_cargoRm( lua_State *L )
  * The list has the following members:<br />
  * <ul>
  * <li><b>name:</b> name of the cargo.
- * <li><b>q:</b> quantity of the targo.
+ * <li><b>q:</b> quantity of the cargo.
  * <li><b>m:</b> true if cargo is for a mission.
  * </ul>
  *

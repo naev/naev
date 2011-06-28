@@ -139,7 +139,7 @@ __inline__ static void *_array_end_helper(void *a, size_t e_size)
  *
  *    @param ptr_array Array being manipulated.
  *    @param first First iterator to erase.
- *    @param last Last iteratior in erase section but is not erased.
+ *    @param last Last iterator in erase section but is not erased.
  */
 #define array_erase(ptr_array, first, last) \
       (_array_erase_helper((void **)(ptr_array), sizeof((ptr_array)[0][0]), (void *)(first), (void *)(last)))
@@ -177,7 +177,7 @@ __inline__ static void *_array_end_helper(void *a, size_t e_size)
  */
 #define array_reserved(array) (_array_private_container(array)->_reserved)
 /**
- * @brief Returns a pointer to the begining of the reserved memory space.
+ * @brief Returns a pointer to the beginning of the reserved memory space.
  *
  *    @param ptr_array Array being manipulated.
  *    @return Beginning of memory space.

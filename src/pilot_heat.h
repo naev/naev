@@ -31,7 +31,7 @@
 /*
  * Properties of steel.
  *
- * Yes, there are mayn different types of steels, these are sort of "average values" for carbon steel.
+ * Yes, there are many different types of steels, these are sort of "average values" for carbon steel.
  */
 #define STEEL_HEAT_CONDUCTIVITY     (54.) /**< Thermal conductivity of steel (@ 25C). [W/(m*K)] */
 #define STEEL_HEAT_CAPACITY         (0.49) /**< Thermal capacity of steel. [J/(kg*K)] */

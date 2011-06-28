@@ -392,7 +392,7 @@ double sound_mix_getVolume (void)
 /**
  * @brief Loads a sound into the sound_list.
  *
- *    @param filename Name fo the file to load.
+ *    @param filename Name of the file to load.
  *    @return The SDL_Mixer of the loaded chunk.
  *
  * @sa sound_makeList

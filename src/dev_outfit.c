@@ -5,7 +5,7 @@
 /**
  * @file dev_outfit.c
  *
- * @brief Handles the outfit developement routines.
+ * @brief Handles the outfit development routines.
  */
 
 #include "dev_outfit.h"
