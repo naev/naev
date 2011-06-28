@@ -51,7 +51,7 @@
  *
  * We use multiple effects, namely:
  *
- * - Air absoprtion factor
+ * - Air absorption factor
  * - Reverb
  */
 
@@ -71,7 +71,7 @@ SDL_mutex *sound_lock = NULL; /**< Global sound lock, always lock this before
 
 
 /*
- * Global device and contex.
+ * Global device and context.
  */
 static ALCcontext *al_context = NULL; /**< OpenAL context. */
 static ALCdevice *al_device   = NULL; /**< OpenAL device. */

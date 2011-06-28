@@ -981,7 +981,7 @@ int naev_versionParse( int version[3], char *buf, int nbuf )
 
 
 /**
- * @brief Comparse the version against the current naev version.
+ * @brief Compares the version against the current naev version.
  *
  *    @return positive if version is newer or negative if version is older.
  */
@@ -1205,7 +1205,7 @@ static void debug_sigInit (void)
 
 
 /**
- * @brief Closes the SignalHandler for linux.
+ * @brief Closes the SignalHandler for Linux.
  */
 static void debug_sigClose (void)
 {

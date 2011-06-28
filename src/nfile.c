@@ -7,7 +7,7 @@
  *
  * @brief Handles read/write abstractions to the users directory.
  *
- * @todo add support for windows and mac os.
+ * @todo Add support for Windows and Mac OS X.
  */
 
 
@@ -39,11 +39,11 @@
 
 
 
-static char naev_base[PATH_MAX] = "\0"; /**< Stores naev's base path. */
+static char naev_base[PATH_MAX] = "\0"; /**< Stores Naev's base path. */
 /**
- * @brief Gets naev's base path (for saves and such).
+ * @brief Gets Naev's base path (for saves and such).
  *
- *    @return The base path to naev.
+ *    @return The base path to Naev.
  */
 char* nfile_basePath (void)
 {
@@ -177,7 +177,7 @@ int nfile_dirExists( const char* path, ... )
 /**
  * @brief Checks to see if a file exists.
  *
- *    @param path printf formatted string pointing to the file to check for existance.
+ *    @param path printf formatted string pointing to the file to check for existence.
  *    @return 1 if file exists, 0 if it doesn't or -1 on error.
  */
 int nfile_fileExists( const char* path, ... )

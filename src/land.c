@@ -526,7 +526,7 @@ static void bar_open( unsigned int wid )
 }
 
 /**
- * @brief Generates the misison list for the bar.
+ * @brief Generates the mission list for the bar.
  *
  *    @param wid Window to create mission list for.
  */

@@ -12,7 +12,7 @@
  * print it all, print to a max width, print centered or print a
  * block of text.
  *
- * There are hardcoded size limits.  256 characters for all routines
+ * There are hard-coded size limits.  256 characters for all routines
  * except gl_printText which has a 1024 limit.
  *
  * @todo check if length is too long

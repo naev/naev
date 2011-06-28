@@ -742,7 +742,7 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
  *    @param bw Width of the widget.
  *    @param bh Height of the widget.
  *    @param x X position to render at.
- *    @param y Y positon to render at.
+ *    @param y Y position to render at.
  *    @param p Pilot to render.
  */
 static void equipment_renderShip( double bx, double by,
@@ -845,7 +845,7 @@ static int equipment_mouseInColumn( double y, double h, int n, double my )
  *    @param mx Mouse X event position.
  *    @param my Mouse Y event position.
  *    @param y Y position of the column.
- *    @param h Heighto f the column.
+ *    @param h Height of the column.
  *    @param n Number of elements in the column.
  *    @param os Pointer to elements in the column.
  *    @param p Pilot to which the elements belong.
@@ -1067,7 +1067,7 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
 /**
  * @brief Regenerates the equipment window lists.
  *
- *    @param wid Window to regenrate lists.
+ *    @param wid Window to regenerate lists.
  *    @param outfits Whether or not should regenerate outfits list.
  *    @param ships Whether or not to regenerate ships list.
  */

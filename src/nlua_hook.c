@@ -197,7 +197,7 @@ void hookL_unsetarg( lua_State *L, unsigned int hook )
  * @brief Gets a Lua argument for a hook.
  *
  *    @param L Lua state to put argument in.
- *    @param hook Hook te get argument of.
+ *    @param hook Hook to get argument of.
  *    @return 0 on success.
  */
 int hookL_getarg( lua_State *L, unsigned int hook )
@@ -560,7 +560,7 @@ static int hook_safe( lua_State *L )
 /**
  * @brief Hooks the function to a specific pilot.
  *
- * You can hook to different actions.  Curently hook system only supports:<br />
+ * You can hook to different actions.  Currently hook system only supports:<br />
  * <ul>
  *    <li> "death" : triggered when pilot dies (before marked as dead). <br />
  *    <li> "exploded" : triggered when pilot has died and the final explosion has begun. <br />

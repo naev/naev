@@ -454,7 +454,7 @@ static void weapons_rename( unsigned int wid, char *str )
 
 
 /**
- * @brief Toggles autoweap for the sihp.
+ * @brief Toggles autoweap for the ship.
  */
 static void weapons_autoweap( unsigned int wid, char *str )
 {
@@ -878,7 +878,7 @@ static void mission_menu_genList( unsigned int wid, int first )
 }
 /**
  * @brief Updates the mission menu mission information based on what's selected.
- *    @param str Unusued.
+ *    @param str Unused.
  */
 static void mission_menu_update( unsigned int wid, char* str )
 {

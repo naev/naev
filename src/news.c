@@ -69,7 +69,7 @@ static void news_mouse( unsigned int wid, SDL_Event *event, double mx, double my
  * @brief Renders a news widget.
  *
  *    @param bx Base X position to render at.
- *    @param by Base Y positoin to render at.
+ *    @param by Base Y position to render at.
  *    @param w Width of the widget.
  *    @param h Height of the widget.
  */

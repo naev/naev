@@ -16,7 +16,7 @@
  * Relative:
  *  * Everything is drawn relative to the player, if it doesn't fit on screen
  *    it is clipped.
- *  * Origin (0., 0.) wouldbe ontop of the player.
+ *  * Origin (0., 0.) would be ontop of the player.
  *
  * Absolute:
  *  * Everything is drawn in "screen coordinates".
@@ -543,7 +543,7 @@ static int gl_defState (void)
 
 
 /**
- * @brief Checks ot see if window needs to handle scaling.
+ * @brief Checks to see if window needs to handle scaling.
  *
  *    @return 0 on success.
  */

@@ -488,7 +488,7 @@ unsigned int window_getParent( unsigned int wid )
  * This function is called when the window is closed.
  *
  *    @param wid Window to set close function of.
- *    @param Function to tirgger when window is closed, parameter is window id
+ *    @param Function to trigger when window is closed, parameter is window id
  *           and name.
  */
 void window_onClose( unsigned int wid, void (*fptr)(unsigned int,char*) )

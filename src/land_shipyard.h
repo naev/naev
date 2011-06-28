@@ -16,7 +16,7 @@ void shipyard_update( unsigned int wid, char* str );
 
 
 /*
- * Helpe functions.
+ * Helper functions.
  */
 int shipyard_canBuy( char *shipname );
 int shipyard_canTrade( char *shipname );

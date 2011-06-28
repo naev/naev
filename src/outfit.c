@@ -233,7 +233,7 @@ int outfit_compareTech( const void *outfit1, const void *outfit2 )
  *    @param[out] knockback Knocback modifier.
  *    @param[in] stats Stats to calculate with.
  *    @param[in] dtype Damage type.
- *    @param[in] dmg Amoung of damage.
+ *    @param[in] dmg Amount of damage.
  */
 void outfit_calcDamage( double *dshield, double *darmour, double *knockback,
       const ShipStats *stats, DamageType dtype, double dmg )
@@ -361,7 +361,7 @@ glColour *outfit_slotSizeColour( const OutfitSlot* os )
 /**
  * @brief Gets the outfit slot size from a human readable string.
  *
- *    @param s String represinting an outfit slot size.
+ *    @param s String representing an outfit slot size.
  *    @return Outfit slot size matching string.
  */
 OutfitSlotSize outfit_toSlotSize( const char *s )
@@ -635,7 +635,7 @@ Outfit* outfit_ammo( const Outfit* o )
    return NULL;
 }
 /**
- * @brief Gets the ammount an outfit can hold.
+ * @brief Gets the amount an outfit can hold.
  *    @param o Outfit to get information from.
  */
 int outfit_amount( const Outfit* o )
@@ -947,7 +947,7 @@ static OutfitType outfit_strToOutfitType( char *buf )
  * @endcode
  *
  *    @param[out] dtype Stores the damage type here.
- *    @param[out] dmg Storse the damage here.
+ *    @param[out] dmg Stores the damage here.
  *    @param[in] node Node to parse damage from.
  *    @return 0 on success.
  */

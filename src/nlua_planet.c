@@ -590,7 +590,7 @@ static int planetL_canland( lua_State *L )
  *
  * @usage p:landOverride( true ) -- Planet can land on p now.
  *    @luaparam p Planet to forcibly allow the player to land on.
- *    @luaparam b Whether or not the player should be allowed to land, true enables, false disableds override.
+ *    @luaparam b Whether or not the player should be allowed to land, true enables, false disables override.
  * @luafunc landOverride( p, b )
  */
 static int planetL_landOverride( lua_State *L )
