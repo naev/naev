@@ -9,8 +9,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>-157.739439</x>
-   <y>494.130281</y>
+   <x>-158.995306</x>
+   <y>500.409618</y>
   </pos>
   <assets/>
   <jumps>
@@ -20,11 +20,6 @@
     </flags>
    </jump>
    <jump target="E">
-    <flags>
-     <autopos/>
-    </flags>
-   </jump>
-   <jump target="L">
     <flags>
      <autopos/>
     </flags>
@@ -507,7 +502,7 @@
   </general>
   <pos>
    <x>-94.348597</x>
-   <y>414.088035</y>
+   <y>422.879107</y>
   </pos>
   <assets/>
   <jumps>
@@ -582,8 +577,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>90.500000</x>
-   <y>196.000000</y>
+   <x>111.849746</x>
+   <y>192.232398</y>
   </pos>
   <assets/>
   <jumps>
@@ -772,8 +767,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>-112.000000</x>
-   <y>331.000000</y>
+   <x>-105.720663</x>
+   <y>318.441326</y>
   </pos>
   <assets/>
   <jumps>
@@ -787,7 +782,17 @@
      <autopos/>
     </flags>
    </jump>
+   <jump target="E">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
    <jump target="G">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="H">
     <flags>
      <autopos/>
     </flags>
@@ -1203,8 +1208,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>-19.521123</x>
-   <y>356.000000</y>
+   <x>-34.591532</x>
+   <y>373.582144</y>
   </pos>
   <assets/>
   <jumps>
@@ -1767,8 +1772,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>-216.045790</x>
-   <y>399.911965</y>
+   <x>-178.369768</x>
+   <y>398.656098</y>
   </pos>
   <assets/>
   <jumps>
@@ -1777,7 +1782,7 @@
      <autopos/>
     </flags>
    </jump>
-   <jump target="G">
+   <jump target="C">
     <flags>
      <autopos/>
     </flags>
@@ -1835,8 +1840,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>150.042245</x>
-   <y>252.454210</y>
+   <x>162.600919</x>
+   <y>247.430740</y>
   </pos>
   <assets/>
   <jumps>
@@ -2035,22 +2040,12 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>-105.000000</x>
-   <y>233.000000</y>
+   <x>257.945682</x>
+   <y>279.467094</y>
   </pos>
   <assets/>
   <jumps>
-   <jump target="G">
-    <flags>
-     <autopos/>
-    </flags>
-   </jump>
-   <jump target="H">
-    <flags>
-     <autopos/>
-    </flags>
-   </jump>
-   <jump target="K">
+   <jump target="Solene">
     <flags>
      <autopos/>
     </flags>
@@ -2235,8 +2230,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>54.021123</x>
-   <y>242.848597</y>
+   <x>66.579797</x>
+   <y>244.104464</y>
   </pos>
   <assets>
    <asset>Fury I</asset>
@@ -2258,8 +2253,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>-197.218316</x>
-   <y>307.390842</y>
+   <x>-149.495354</x>
+   <y>243.341604</y>
   </pos>
   <assets/>
   <jumps>
@@ -2268,12 +2263,7 @@
      <autopos/>
     </flags>
    </jump>
-   <jump target="E">
-    <flags>
-     <autopos/>
-    </flags>
-   </jump>
-   <jump target="F">
+   <jump target="I">
     <flags>
      <autopos/>
     </flags>
@@ -2647,12 +2637,12 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>-29.387297</x>
-   <y>239.739439</y>
+   <x>-45.713573</x>
+   <y>252.298113</y>
   </pos>
   <assets/>
   <jumps>
-   <jump target="F">
+   <jump target="C">
     <flags>
      <autopos/>
     </flags>
@@ -3015,12 +3005,12 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>-134.218316</x>
-   <y>112.390842</y>
+   <x>-116.636172</x>
+   <y>171.416610</y>
   </pos>
   <assets/>
   <jumps>
-   <jump target="K">
+   <jump target="G">
     <flags>
      <autopos/>
     </flags>
@@ -3126,8 +3116,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>125.031322</x>
-   <y>321.904876</y>
+   <x>133.822394</x>
+   <y>326.928346</y>
   </pos>
   <assets/>
   <jumps>
@@ -3183,17 +3173,12 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>-154.566913</x>
-   <y>182.478877</y>
+   <x>-197.266405</x>
+   <y>544.168692</y>
   </pos>
   <assets/>
   <jumps>
-   <jump target="F">
-    <flags>
-     <autopos/>
-    </flags>
-   </jump>
-   <jump target="I">
+   <jump target="Wahri">
     <flags>
      <autopos/>
     </flags>
@@ -3383,27 +3368,6 @@
     </flags>
    </jump>
    <jump target="Urbanus">
-    <flags>
-     <autopos/>
-    </flags>
-   </jump>
-  </jumps>
- </ssys>
- <ssys name="L">
-  <general>
-   <radius>10000.000000</radius>
-   <stars>400</stars>
-   <asteroids>0</asteroids>
-   <interference>0.000000</interference>
-   <nebula volatility="0.000000">0.000000</nebula>
-  </general>
-  <pos>
-   <x>-241.915509</x>
-   <y>521.957755</y>
-  </pos>
-  <assets/>
-  <jumps>
-   <jump target="A">
     <flags>
      <autopos/>
     </flags>
@@ -3842,8 +3806,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>37.320530</x>
-   <y>293.436632</y>
+   <x>26.017723</x>
+   <y>309.762908</y>
   </pos>
   <assets>
    <asset>Green Eye</asset>
@@ -4954,6 +4918,11 @@
      <autopos/>
     </flags>
    </jump>
+   <jump target="F">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
   </jumps>
  </ssys>
  <ssys name="Sultan">
@@ -5786,6 +5755,11 @@
   </assets>
   <jumps>
    <jump target="A">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="K">
     <flags>
      <autopos/>
     </flags>
