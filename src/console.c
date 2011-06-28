@@ -378,17 +378,20 @@ static void cli_input( unsigned int wid, char *unused )
 
    /* Set up state. */
    L = cli_state;
+
    /* Set up for concat. */
-   if (!cli_firstline) {         /* o */
+   if (!cli_firstline)           /* o */
       lua_pushliteral(L, "\n");  /* o \n */
-   }
+
    /* Load the string. */
    lua_pushstring( L, str );     /* s */
+
    /* Concat. */
-   if (!cli_firstline) {         /* o \n s */
+   if (!cli_firstline)           /* o \n s */
       lua_concat(L, 3);          /* s */
-   }
+
    status = luaL_loadbuffer( L, lua_tostring(L,-1), lua_strlen(L,-1), "=cli" );
+
    /* String isn't proper Lua yet. */
    if (status == LUA_ERRSYNTAX) {
       size_t lmsg;

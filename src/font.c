@@ -749,9 +749,8 @@ static int font_genTextureAtlas( glFont* font, FT_Face face )
             h += max_h;
 
             /* POT needs even more. */
-            if (1) { /*gl_needPOT()) { */ /** @TODO fix this stuff. */
+            if (1) /*gl_needPOT()) */ /** @TODO fix this stuff. */
                h = gl_pot(h);
-            }
          }
       }
 

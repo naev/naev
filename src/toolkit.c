@@ -712,11 +712,9 @@ void window_destroy( const unsigned int wid )
          continue;
 
       /* Mark children for death. */
-      for (w = windows; w != NULL; w = w->next) {
-         if (w->parent == wid) {
+      for (w = windows; w != NULL; w = w->next)
+         if (w->parent == wid)
             window_destroy( w->id );
-         }
-      }
 
       /* Mark for death. */
       window_setFlag( wdw, WINDOW_KILL );
@@ -805,12 +803,10 @@ void window_destroyWidget( unsigned int wid, const char* wgtname )
       return;
 
    /* Get the widget. */
-   /* get widget. */
-   for (wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next) {
-      if (strcmp(wgt->name, wgtname)==0) {
+   for (wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next)
+      if (strcmp(wgt->name, wgtname)==0)
          break;
-      }
-   }
+
    if (wgt == NULL) {
       WARN("Widget '%s' not found in window '%s'", wgtname, wdw->name );
       return;
@@ -1792,9 +1788,8 @@ static void toolkit_mouseEventWidget( Window *w, Widget *wgt,
                   DEBUG("Toolkit: Button '%s' of Window '%s' "
                         "doesn't have a function trigger",
                         wgt->name, w->name );
-               else {
+               else
                   (*wgt->dat.btn.fptr)(w->id, wgt->name);
-               }
             }
          }
 
@@ -1805,9 +1800,8 @@ static void toolkit_mouseEventWidget( Window *w, Widget *wgt,
          /* Always goes normal unless is below mouse. */
          if (inbounds)
             wgt->status = WIDGET_STATUS_MOUSEOVER;
-         else {
+         else
             wgt->status = WIDGET_STATUS_NORMAL;
-         }
 
          break;
    }
@@ -2071,9 +2065,9 @@ void toolkit_update (void)
 
       /* Handle the focused widget. */
       wgt = toolkit_getFocus( wdw );
-      if ((wgt != NULL) && (wgt->keyevent != NULL)) {
+      if ((wgt != NULL) && (wgt->keyevent != NULL))
          wgt->keyevent( wgt, input_key, 0 );
-      }
+
       if ((input_text != 0) && (wgt != NULL) && (wgt->textevent != NULL)) {
          buf[0] = input_text;
          buf[1] = '\0';
@@ -2118,9 +2112,8 @@ void toolkit_focusSanitize( Window *wdw )
             wdw->focus = -1;
             toolkit_nextFocus( wdw ); /* Get first focus. */
          }
-         else {
+         else
             wgt_setFlag( wgt, WGT_FLAG_FOCUSED );
-         }
          return;
       }
    }

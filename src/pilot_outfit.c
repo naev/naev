@@ -23,6 +23,89 @@
 
 
 /**
+ * @brief Updates the lockons on the pilot's launchers
+ */
+void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, double *a, double dt )
+{
+   double max, old;
+   double x,y, ang, arc;
+
+   /* No target. */
+   if (t == NULL)
+      return;
+
+   /* Nota  seeker. */
+   if (!outfit_isSeeker(o->outfit))
+      return;
+
+   /* Check arc. */
+   arc = o->outfit->u.lau.arc;
+   if (arc > 0.) {
+
+      /* We use an external variable to set and update the angle if necessary. */
+      if (*a < 0.) {
+         x     = t->solid->pos.x - p->solid->pos.x;
+         y     = t->solid->pos.y - p->solid->pos.y;
+         ang   = ANGLE( x, y );
+         *a    = fabs( angle_diff( ang, p->solid->dir ) );
+      }
+
+      /* Decay if not in arc. */
+      if (*a > arc) {
+         /* Limit decay to the lockon time for this launcher. */
+         max = o->outfit->u.lau.lockon;
+
+         /* When a lock is lost, immediately gain half the lock timer.
+          * This is meant as an incentive for the aggressor not to lose the lock,
+          * and for the target to try and break the lock. */
+         old = o->u.ammo.lockon_timer;
+         o->u.ammo.lockon_timer += dt;
+         if ((old <= 0.) && (o->u.ammo.lockon_timer > 0.))
+            o->u.ammo.lockon_timer += o->outfit->u.lau.lockon / 2.;
+
+         /* Cap at max. */
+         if (o->u.ammo.lockon_timer > max)
+            o->u.ammo.lockon_timer = max;
+
+         return;
+      }
+   }
+
+   /* Lower timer. When the timer reaches zero, the lock is established. */
+   max = -o->outfit->u.lau.lockon/3.;
+   if (o->u.ammo.lockon_timer > max) {
+      /* Compensate for enemy hide factor. */
+      o->u.ammo.lockon_timer -= dt * (o->outfit->u.lau.ew_target/t->ew_hide);
+
+      /* Cap at -max/3. */
+      if (o->u.ammo.lockon_timer < max)
+         o->u.ammo.lockon_timer = max;
+   }
+}
+
+
+/**
+ * @brief Clears pilot's missile lockon timers.
+ */
+void pilot_lockClear( Pilot *p )
+{
+   int i;
+   PilotOutfitSlot *o;
+
+   for (i=0; i<p->noutfits; i++) {
+      o = p->outfits[i];
+      if (o->outfit == NULL)
+         continue;
+      if (!outfit_isSeeker(o->outfit))
+         continue;
+ 
+      /* Clear timer. */
+      o->u.ammo.lockon_timer = o->outfit->u.lau.lockon;
+   }
+}
+
+
+/**
  * @brief Gets the mount position of a pilot.
  *
  * Position is relative to the pilot.
@@ -200,9 +283,9 @@ int pilot_addOutfitRaw( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s )
       s->u.ammo.quantity = 0;
       s->u.ammo.deployed = 0;
    }
-   if (outfit_isTurret(outfit)) { /* used to speed up AI */
+   if (outfit_isTurret(outfit)) /* used to speed up AI */
       pilot_setFlag(pilot, PILOT_HASTURRET);
-   }
+
    if (outfit_isBeam(outfit)) { /* Used to speed up some calculations. */
       s->u.beamid = -1;
       pilot_setFlag(pilot, PILOT_HASBEAMS);
@@ -623,9 +706,8 @@ int pilot_rmAmmo( Pilot* pilot, PilotOutfitSlot *s, int quantity )
    }
 
    /* No ammo already. */
-   if (s->u.ammo.outfit == NULL) {
+   if (s->u.ammo.outfit == NULL)
       return 0;
-   }
 
    /* Remove ammo. */
    q                   = MIN( quantity, s->u.ammo.quantity );

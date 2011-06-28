@@ -236,9 +236,9 @@ static void player_newSetup( int tutorial )
       space_init( start_system() );
       start_position( &x, &y );
    }
-   else {
+   else
       start_tutPosition( &x, &y );
-   }
+
    cam_setTargetPos( x, y, 0 );
    cam_setZoom( conf.zoom_far );
 
@@ -635,9 +635,8 @@ int player_shipPrice( char* shipname )
    int i;
    Pilot *ship = NULL;
 
-   if (strcmp(shipname,player.p->name)==0) {
+   if (strcmp(shipname,player.p->name)==0)
       ship = player.p;
-   }
    else {
       /* Find the ship. */
       for (i=0; i<player_nstack; i++) {
@@ -935,7 +934,7 @@ void player_warp( const double x, const double y )
 void player_clear (void)
 {
    if (player.p != NULL) {
-      player.p->target = PLAYER_ID;
+      pilot_setTarget( player.p, player.p->id );
       gui_setTarget();
    }
 
@@ -1013,18 +1012,16 @@ void player_render( double dt )
    if (player_isFlag(PLAYER_DESTROYED)) {
       player_timer -= dt;
       if (!toolkit_isOpen() && !player_isFlag(PLAYER_CREATING) &&
-            (player_timer < 0.)) {
+            (player_timer < 0.))
          menu_death();
-      }
    }
 
    /*
     * Render the player.
     */
    if ((player.p != NULL) && !player_isFlag(PLAYER_CREATING) &&
-         !pilot_isFlag( player.p, PILOT_INVISIBLE)) {
+         !pilot_isFlag( player.p, PILOT_INVISIBLE))
       pilot_render(player.p, dt);
-   }
 }
 
 
@@ -1166,9 +1163,8 @@ void player_think( Pilot* pplayer, const double dt )
 
       player_setFlag(PLAYER_SECONDARY_L);
    }
-   else if (player_isFlag(PLAYER_SECONDARY_L)) {
+   else if (player_isFlag(PLAYER_SECONDARY_L))
       player_rmFlag(PLAYER_SECONDARY_L);
-   }
 
 
    /*
@@ -1407,13 +1403,13 @@ void player_land (void)
       }
       else if (!player_isFlag(PLAYER_LANDACK)) { /* no landing authorization */
          if (planet_hasService(planet,PLANET_SERVICE_INHABITED)) { /* Basic services */
-            if (planet->can_land) {
+            if (planet->can_land || (planet->land_override > 0)) {
                player_message( "\e%c%s>\e0 %s", planet_getColourChar(planet),
                      planet->name, planet->land_msg );
                player_setFlag(PLAYER_LANDACK);
                player_soundPlayGUI(snd_nav,1);
             }
-            else if (planet->bribed) {
+            else if (planet->bribed && (planet->land_override >= 0)) {
                player_message( "\e%c%s>\e0 %s", planet_getColourChar(planet),
                      planet->name, planet->bribe_ack_msg );
                player_setFlag(PLAYER_LANDACK);
@@ -1510,9 +1506,9 @@ void player_targetHyperspace (void)
    if (id >= cur_system->njumps) {
       id = -1;
       player_hyperspacePreempt(0);
-   } else {
-      player_hyperspacePreempt(1);
    }
+   else
+      player_hyperspacePreempt(1);
 
    player_targetHyperspaceSet( id );
 
@@ -1765,7 +1761,7 @@ void player_targetSet( unsigned int id )
 {
    unsigned int old;
    old = player.p->target;
-   player.p->target = id;
+   pilot_setTarget( player.p, id );
    if ((old != id) && (player.p->target != PLAYER_ID)) {
       gui_forceBlink();
       player_soundPlayGUI( snd_target, 1 );
@@ -1865,11 +1861,11 @@ void player_targetEscort( int prev )
 
          /* Cycle targets. */
          if (prev)
-            player.p->target = (i > 0) ?
-                  player.p->escorts[i-1].id : PLAYER_ID;
+            pilot_setTarget( player.p, (i > 0) ?
+                  player.p->escorts[i-1].id : player.p->id );
          else
-            player.p->target = (i < player.p->nescorts-1) ?
-                  player.p->escorts[i+1].id : PLAYER_ID;
+            pilot_setTarget( player.p, (i < player.p->nescorts-1) ?
+                  player.p->escorts[i+1].id : player.p->id );
 
          break;
       }
@@ -1883,12 +1879,12 @@ void player_targetEscort( int prev )
 
          /* Cycle forward or backwards. */
          if (prev)
-            player.p->target = player.p->escorts[player.p->nescorts-1].id;
+            pilot_setTarget( player.p, player.p->escorts[player.p->nescorts-1].id );
          else
-            player.p->target = player.p->escorts[0].id;
+            pilot_setTarget( player.p, player.p->escorts[0].id );
       }
       else
-         player.p->target = PLAYER_ID;
+         pilot_setTarget( player.p, player.p->id );
    }
 
 
@@ -1909,7 +1905,7 @@ void player_targetNearest (void)
    unsigned int t;
 
    t = player.p->target;
-   player.p->target = pilot_getNearestPilot(player.p);
+   pilot_setTarget( player.p, pilot_getNearestPilot(player.p) );
 
    if ((player.p->target != PLAYER_ID) && (t != player.p->target)) {
       gui_forceBlink();
@@ -2039,8 +2035,8 @@ void player_autohail (void)
       return;
    }
 
-   /* Try o hail. */
-   player.p->target = p->id;
+   /* Try to hail. */
+   pilot_setTarget( player.p, p->id );
    gui_setTarget();
    player_hail();
 
@@ -2305,11 +2301,9 @@ int player_outfitOwned( const Outfit* o )
       return 1;
 
    /* Try to find it. */
-   for (i=0; i<player_noutfits; i++) {
-      if (player_outfits[i].o == o) {
+   for (i=0; i<player_noutfits; i++)
+      if (player_outfits[i].o == o)
          return player_outfits[i].q;
-      }
-   }
 
    return 0;
 }
@@ -2617,9 +2611,8 @@ void player_clearEscorts (void)
       if (player.p->outfits[i]->outfit == NULL)
          continue;
 
-      if (outfit_isFighterBay(player.p->outfits[i]->outfit)) {
+      if (outfit_isFighterBay(player.p->outfits[i]->outfit))
          player.p->outfits[i]->u.ammo.deployed = 0;
-      }
    }
 }
 
@@ -2678,9 +2671,8 @@ int player_addEscorts (void)
          player.p->outfits[j]->u.ammo.deployed += 1;
          break;
       }
-      if (j >= player.p->noutfits) {
+      if (j >= player.p->noutfits)
          WARN("Unable to mark escort as deployed");
-      }
    }
 
    return 0;
@@ -3149,9 +3141,9 @@ static Planet* player_parse( xmlNodePtr parent )
             WARN("Planet '%s' found, but is not suitable. Trying again.", planet);
             pnt = planet_get( space_getRndPlanet() );
          }
-         else {
+         else
             hunting = 0;
-         }
+
          i++;
       }
       if (hunting)
@@ -3544,9 +3536,8 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
    }
 
    /* Sets inrange by default if weapon sets are missing. */
-   for (i=0; i<PILOT_WEAPON_SETS; i++) {
+   for (i=0; i<PILOT_WEAPON_SETS; i++)
       pilot_weapSetInrange( ship, i, 1 );
-   }
 
    /* Second pass for weapon sets. */
    node = parent->xmlChildrenNode;
@@ -3587,9 +3578,8 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
 
          /* Set inrange mode. */
          xmlr_attr(cur,"inrange",id);
-         if (id == NULL) {
+         if (id == NULL)
             pilot_weapSetInrange( ship, i, 1 );
-         }
          else {
             pilot_weapSetInrange( ship, i, atoi(id) );
             free(id);

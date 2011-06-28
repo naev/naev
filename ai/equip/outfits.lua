@@ -66,10 +66,10 @@ end
 -- Ranged weapons
 --]]
 function equip_rangedLow ()
-   return { "Seeker Launcher" }
+   return { "Unicorp Fury Launcher" }
 end
 function equip_rangedMed ()
-   return { "Headhunter Launcher" }
+   return { "Unicorp Headhunter Launcher" }
 end
 function equip_rangedHig ()
    return { }
@@ -86,10 +86,10 @@ end
 -- Secondary weapons
 --]]
 function equip_secondaryLow ()
-   return { "Seeker Launcher", "Mace Launcher" }
+   return { "Unicorp Fury Launcher", "Unicorp Mace Launcher" }
 end
 function equip_secondaryMed ()
-   return { "Banshee Launcher", "Headhunter Launcher" }
+   return { "Unicorp Banshee Launcher", "Unicorp Headhunter Launcher" }
 end
 function equip_secondaryHig ()
    return { }
@@ -106,13 +106,13 @@ end
 -- Medium slots
 --]]
 function equip_mediumLow ()
-   return { "Reactor Class I", "Civilian Jammer" }
+   return { "Reactor Class I", "Unicorp Scrambler" }
 end
 function equip_mediumMed ()
-   return { "Reactor Class II", "Milspec Jammer" }
+   return { "Reactor Class II", "Milspec Scrambler" }
 end
 function equip_mediumHig ()
-   return { "Reactor Class III", "Milspec Jammer" }
+   return { "Reactor Class III", "Milspec Scrambler" }
 end
 
 

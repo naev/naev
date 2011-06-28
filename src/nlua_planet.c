@@ -43,6 +43,7 @@ static int planetL_class( lua_State *L );
 static int planetL_position( lua_State *L );
 static int planetL_services( lua_State *L );
 static int planetL_canland( lua_State *L );
+static int planetL_landOverride( lua_State *L );
 static int planetL_gfxSpace( lua_State *L );
 static int planetL_gfxExterior( lua_State *L );
 static int planetL_shipsSold( lua_State *L );
@@ -62,6 +63,7 @@ static const luaL_reg planet_methods[] = {
    { "pos", planetL_position },
    { "services", planetL_services },
    { "canLand", planetL_canland },
+   { "landOverride", planetL_landOverride },
    { "gfxSpace", planetL_gfxSpace },
    { "gfxExterior", planetL_gfxExterior },
    { "shipsSold", planetL_shipsSold },
@@ -580,6 +582,22 @@ static int planetL_canland( lua_State *L )
    lua_pushboolean( L, p->can_land );
    lua_pushboolean( L, p->bribe_price > 0 );
    return 2;
+}
+
+
+/**
+ * @brief Lets player land on a planet no matter what.
+ *
+ * @usage p:landOverride( true ) -- Planet can land on p now.
+ *    @luaparam p Planet to forcibly allow the player to land on.
+ *    @luaparam b Whether or not the player should be allowed to land, true enables, false disableds override.
+ * @luafunc landOverride( p, b )
+ */
+static int planetL_landOverride( lua_State *L )
+{
+   Planet *p = luaL_validplanet(L,1);
+   p->land_override = !!lua_toboolean(L,2);
+   return 0;
 }
 
 

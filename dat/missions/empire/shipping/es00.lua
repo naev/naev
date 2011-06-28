@@ -43,7 +43,7 @@ function create ()
    -- Note: this mission does not make any system claims.
    -- Target destination
    dest,destsys = planet.get( faction.get("Frontier") )
-   ret,retsys = planet.get( "Polaris Prime" )
+   ret,retsys = planet.get( "Halir" )
 
    -- Spaceport bar stuff
    misn.setNPC( "Commander", "soldner" )

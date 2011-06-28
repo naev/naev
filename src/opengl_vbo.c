@@ -171,9 +171,8 @@ void gl_vboSubData( gl_vbo *vbo, GLint offset, GLsizei size, void* data )
       nglBindBuffer( GL_ARRAY_BUFFER, vbo->id );
       nglBufferSubData( GL_ARRAY_BUFFER, offset, size, data );
    }
-   else {
+   else
       memcpy( &vbo->data[offset], data, size );
-   }
 
    /* Check for errors. */
    gl_checkErr();

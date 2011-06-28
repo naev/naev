@@ -833,6 +833,7 @@ static Mission *hook_getMission( Hook *hook )
    for (i=0; i<MISSION_MAX; i++)
       if (player_missions[i].id == hook->u.misn.parent)
          return &player_missions[i];
+
    return NULL;
 }
 
@@ -849,6 +850,7 @@ void hook_rm( unsigned int id )
    h = hook_get( id );
    if (h==NULL)
       return;
+
    hook_rmRaw( h );
 }
 
@@ -860,6 +862,7 @@ static void hook_rmRaw( Hook *h )
 {
    Mission *misn;
    Event_t *evt;
+
    h->delete = 1;
    switch (h->type) {
       case HOOK_TYPE_MISN:
@@ -888,12 +891,10 @@ static void hook_rmRaw( Hook *h )
 void hook_rmMisnParent( unsigned int parent )
 {
    Hook *h;
-   for (h=hook_list; h!=NULL; h=h->next) {
-      if ((h->type==HOOK_TYPE_MISN) &&
-            (parent == h->u.misn.parent)) {
+
+   for (h=hook_list; h!=NULL; h=h->next)
+      if ((h->type==HOOK_TYPE_MISN) && (parent == h->u.misn.parent))
          h->delete = 1;
-      }
-   }
 }
 
 
@@ -906,12 +907,9 @@ void hook_rmEventParent( unsigned int parent )
 {
    Hook *h;
 
-   for (h=hook_list; h!=NULL; h=h->next) {
-      if ((h->type==HOOK_TYPE_EVENT) &&
-            (parent == h->u.event.parent)) {
+   for (h=hook_list; h!=NULL; h=h->next)
+      if ((h->type==HOOK_TYPE_EVENT) && (parent == h->u.event.parent))
          h->delete = 1;
-      }
-   }
 }
 
 
@@ -925,13 +923,12 @@ int hook_hasMisnParent( unsigned int parent )
 {
    int num;
    Hook *h;
+
    num = 0;
-   for (h=hook_list; h!=NULL; h=h->next) {
-      if ((h->type==HOOK_TYPE_MISN) &&
-            (parent == h->u.misn.parent)) {
+   for (h=hook_list; h!=NULL; h=h->next)
+      if ((h->type==HOOK_TYPE_MISN) && (parent == h->u.misn.parent))
          num++;
-      }
-   }
+
    return num;
 }
 
@@ -946,13 +943,12 @@ int hook_hasEventParent( unsigned int parent )
 {
    int num;
    Hook *h;
+
    num = 0;
-   for (h=hook_list; h!=NULL; h=h->next) {
-      if ((h->type==HOOK_TYPE_EVENT) &&
-            (parent == h->u.event.parent)) {
+   for (h=hook_list; h!=NULL; h=h->next)
+      if ((h->type==HOOK_TYPE_EVENT) && (parent == h->u.event.parent))
          num++;
-      }
-   }
+
    return num;
 }
 
@@ -1064,6 +1060,7 @@ static Hook* hook_get( unsigned int id )
    for (h=hook_list; h!=NULL; h=h->next)
       if (h->id == id)
          return h;
+
    return NULL;
 }
 
@@ -1363,12 +1360,10 @@ static int hook_parse( xmlNodePtr base )
          }
 
          /* Create the hook. */
-         if (type == HOOK_TYPE_MISN) {
+         if (type == HOOK_TYPE_MISN)
             new_id = hook_addMisn( parent, func, stack );
-         }
-         if (type == HOOK_TYPE_EVENT) {
+         if (type == HOOK_TYPE_EVENT)
             new_id = hook_addEvent( parent, func, stack );
-         }
 
          /* Set the id. */
          if (id != 0) {
@@ -1386,5 +1381,3 @@ static int hook_parse( xmlNodePtr base )
 
    return 0;
 }
-
-

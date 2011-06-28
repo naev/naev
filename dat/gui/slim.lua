@@ -229,14 +229,11 @@ function update_target()
       ta_cargo = ptarget:cargoList()
 
       ptarget_gfx_aspect = ptarget_gfx_w / ptarget_gfx_h
-
-      if ptarget_gfx_aspect >= 1 and ptarget_gfx_w > 62 then
-         ptarget_gfx_draw_w = 62
-         ptarget_gfx_draw_h = 62 / ptarget_gfx_w * ptarget_gfx_h
-      elseif ptarget_gfx_h > 62 then
-         ptarget_gfx_draw_h = 62
-         ptarget_gfx_draw_w = 62 / ptarget_gfx_h * ptarget_gfx_w
+      if math.max( ptarget_gfx_w, ptarget_gfx_h ) > 62 then
+         ptarget_gfx_draw_w = math.min( 62, 62 * ptarget_gfx_aspect )
+         ptarget_gfx_draw_h = math.min( 62, 62 / ptarget_gfx_aspect )
       end
+
       ptarget_faction_gfx = ptargetfact:logoTiny()
    end
 end
@@ -264,13 +261,11 @@ function update_nav()
       ta_pntfact = nav_pnt:faction()
 
       ta_pnt_gfx_aspect = ta_pnt_gfx_w / ta_pnt_gfx_h
-      if ta_pnt_gfx_aspect >= 1 and ta_pnt_gfx_w > 140 then
-         ta_pnt_gfx_draw_w = 140
-         ta_pnt_gfx_draw_h = 140 / ta_pnt_gfx_aspect
-      elseif ta_pnt_gfx_h > 140 then
-         ta_pnt_gfx_draw_h = 140
-         ta_pnt_gfx_draw_w = 140 / ta_pnt_gfx_aspect
+      if math.max( ta_pnt_gfx_w, ta_pnt_gfx_h ) > 140 then
+         ta_pnt_gfx_draw_w = math.min( 140, 140 * ta_pnt_gfx_aspect )
+         ta_pnt_gfx_draw_h = math.min( 140, 140 / ta_pnt_gfx_aspect )
       end
+
       ta_pnt_faction_gfx = nil
       if ta_pntfact then
          ta_pnt_faction_gfx = ta_pntfact:logoTiny()
@@ -519,7 +514,7 @@ function render( dt, dt_mod )
          else
             col = col_txt_bar
          end
-         values = {weapon.left_p, weapon.cooldown, weapon.level, weapon.track}
+         values = {weapon.left_p, weapon.cooldown, weapon.level, weapon.track or weapon.lockon}
          render_ammoBar( "ammo", x_ammo, y_ammo - (num)*28, values, txt, col, 2, col_ammo )
       else
          col = col_txt_bar

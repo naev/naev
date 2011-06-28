@@ -488,14 +488,14 @@ static void gui_renderPilotTarget( double dt )
 
    /* Make sure pilot exists and is still alive. */
    if ((p==NULL) || pilot_isFlag(p,PILOT_DEAD)) {
-      player.p->target = PLAYER_ID;
+      pilot_setTarget( player.p, player.p->id );
       gui_setTarget();
       return;
    }
 
    /* Make sure target is still in range. */
    if (!pilot_inRangePilot( player.p, p )) {
-      player.p->target = PLAYER_ID;
+      pilot_setTarget( player.p, player.p->id );
       gui_setTarget();
       return;
    }
@@ -779,9 +779,9 @@ int gui_onScreenPilot( double *rx, double *ry, Pilot *pilot )
    cw = SCREEN_W/2 + tex->sw/2;
    ch = SCREEN_H/2 + tex->sh/2;
 
-   if ((ABS(*rx) > cw) || (ABS(*ry) > ch)) {
+   if ((ABS(*rx) > cw) || (ABS(*ry) > ch))
       return  0;
-   }
+
    return 1;
 }
 
@@ -822,9 +822,9 @@ int gui_onScreenAsset( double *rx, double *ry, JumpPoint *jp, Planet *pnt )
    cw = SCREEN_W/2 + tex->sw/2;
    ch = SCREEN_H/2 + tex->sh/2;
 
-   if ((ABS(*rx) > cw) || (ABS(*ry) > ch)) {
+   if ((ABS(*rx) > cw) || (ABS(*ry) > ch))
       return  0;
-   }
+
    return 1;
 }
 

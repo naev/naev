@@ -275,6 +275,7 @@ static unsigned int comm_open( glTexture *gfx, int faction,
    glColour *c;
    glFont *font;
    int gw, gh;
+   double aspect;
 
    /* Clean up. */
    if (comm_graphic != NULL) {
@@ -341,8 +342,20 @@ static unsigned int comm_open( glTexture *gfx, int faction,
    /* Create the image. */
    window_addRect( wid, 19, -30, GRAPHIC_WIDTH+1, GRAPHIC_HEIGHT + y + 5,
          "rctGFX", &cGrey10, 1 );
-   gw = MIN( GRAPHIC_WIDTH, (comm_graphic != NULL) ? comm_graphic->w : 0 );
-   gh = MIN( GRAPHIC_HEIGHT, (comm_graphic != NULL) ? comm_graphic->h : 0 );
+
+   if (comm_graphic != NULL) {
+      aspect = comm_graphic->w / comm_graphic->h;
+      gw = MIN( GRAPHIC_WIDTH,  comm_graphic->w );
+      gh = MIN( GRAPHIC_HEIGHT, comm_graphic->h );
+   
+      if (comm_graphic->w > GRAPHIC_WIDTH || comm_graphic->h > GRAPHIC_HEIGHT) {
+         gh = MIN( GRAPHIC_HEIGHT, GRAPHIC_HEIGHT / aspect );
+         gw = MIN( GRAPHIC_WIDTH, GRAPHIC_WIDTH * aspect );
+      }
+   }
+   else
+      gh = gw = 0;
+
    window_addImage( wid, 20 + (GRAPHIC_WIDTH-gw)/2,
          -30 - (GRAPHIC_HEIGHT-gh)/2,
          gw, gh, "imgGFX", comm_graphic, 0 );
@@ -427,9 +440,8 @@ static void comm_bribePilot( unsigned int wid, char *unused )
 
    /* Bribe message. */
    str = comm_getString( "bribe_prompt" );
-   if (str == NULL) {
+   if (str == NULL)
       answer = dialogue_YesNo( "Bribe Pilot", "\"I'm gonna need at least %"CREDITS_PRI" credits to not leave you as a hunk of floating debris.\"\n\nPay %"CREDITS_PRI" credits?", price, price );
-   }
    else
       answer = dialogue_YesNo( "Bribe Pilot", "%s\n\nPay %"CREDITS_PRI" credits?", str, price );
 

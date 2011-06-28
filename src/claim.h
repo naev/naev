@@ -21,7 +21,6 @@ typedef struct SysClaim_s SysClaim_t;
  */
 SysClaim_t *claim_create (void);
 int claim_add( SysClaim_t *claim, int ss_id );
-int* claim_list( SysClaim_t *claim, int *n );
 int claim_test( SysClaim_t *claim );
 int claim_testSys( SysClaim_t *claim, int sys );
 void claim_destroy( SysClaim_t *claim );

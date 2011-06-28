@@ -1,7 +1,32 @@
---[[ Detail melee attack profiles follow here
---These profiles are intended for use by specific ship classes
---]]
+function atk_capital_init ()
+   mem.atk_think  = atk_heuristic_big_game_think
+   mem.atk        = atk_capital
+end
 
+
+--[[
+-- Main control function for capital ship behavior.
+--]]
+function atk_capital ()
+   local target = _atk_com_think()
+   if target == nil then return end
+
+   -- Targeting stuff
+   ai.hostile(target) -- Mark as hostile
+   ai.settarget(target)
+
+   -- Get stats about enemy
+   local dist  = ai.dist( target ) -- get distance
+   local range = ai.getweaprange(3)
+
+   -- We first bias towards range
+   if dist > range * mem.atk_approach then
+      _atk_g_ranged( target, dist )
+   -- Close enough to melee
+   else   
+     _atk_g_capital(target, dist)
+   end
+end
 
 
 --[[
@@ -10,7 +35,7 @@
 --This is designed for capital ships with turrets and guided munitions
 --As there is no aiming involved this is a turret/capital ship only attack method
 --]]
-function atk_g_capital( target, dist )
+function _atk_g_capital( target, dist )
    local range = ai.getweaprange(3)
    local dir = 0
    ai.weapset( 3 ) -- Forward/turrets

@@ -488,9 +488,8 @@ double pilot_getNearestAng( const Pilot *p, unsigned int *tp, double ang, int di
          continue;
 
       /* Only allow selection if off-screen. */
-      if (gui_onScreenPilot( &rx, &ry, pilot_stack[i] )) {
+      if (gui_onScreenPilot( &rx, &ry, pilot_stack[i] ))
          continue;
-      }
 
       ta = atan2( p->solid->pos.y - pilot_stack[i]->solid->pos.y,
             p->solid->pos.x - pilot_stack[i]->solid->pos.x );
@@ -871,6 +870,23 @@ glColour* pilot_getColour( const Pilot* p )
    else col = faction_getColour(p->faction);
 
    return col;
+}
+
+
+/**
+ * @brief Sets the target of the pilot.
+ *
+ *    @param p Pilot to set target of.
+ *    @param id ID of the target (set to p->id for none).
+ */
+void pilot_setTarget( Pilot* p, unsigned int id )
+{
+   /* Case no change. */
+   if (p->target == id)
+      return;
+
+   p->target = id;
+   pilot_lockClear( p );
 }
 
 
@@ -1258,6 +1274,15 @@ void pilot_update( Pilot* pilot, const double dt )
    char buf[16];
    PilotOutfitSlot *o;
    double Q;
+   
+   /* Check target sanity. */
+   if (pilot->target != pilot->id) {
+      target = pilot_get(pilot->target);
+      if (target == NULL)
+         pilot_setTarget( pilot, pilot->id );
+   }
+   else
+      target = NULL;
 
    /*
     * Update timers.
@@ -1270,16 +1295,27 @@ void pilot_update( Pilot* pilot, const double dt )
    for (i=0; i<MAX_AI_TIMERS; i++)
       if (pilot->timer[i] > 0.)
          pilot->timer[i] -= dt;
+   /* Update heat. */
+   a = -1.;
    Q = 0.;
    for (i=0; i<pilot->noutfits; i++) {
       o = pilot->outfits[i];
+
+      /* Picky about our outfits. */
       if (o->outfit == NULL)
          continue;
-      if (o->active) {
-         if (o->timer > 0.)
-            o->timer -= dt * pilot_heatFireRateMod( o->heat_T );
-         Q  += pilot_heatUpdateSlot( pilot, o, dt );
-      }
+      if (!o->active)
+         continue;
+
+      /* Handle firerate timer. */
+      if (o->timer > 0.)
+         o->timer -= dt * pilot_heatFireRateMod( o->heat_T );
+
+      /* Handle heat. */
+      Q  += pilot_heatUpdateSlot( pilot, o, dt );
+
+      /* Handle lockons. */
+      pilot_lockUpdateSlot( pilot, o, target, &a, dt );
    }
 
    /* Global heat. */
@@ -1444,7 +1480,6 @@ void pilot_update( Pilot* pilot, const double dt )
 
    /* Pilot is boarding its target.  Hack to match speeds. */
    if (pilot_isFlag(pilot, PILOT_BOARDING)) {
-      target = pilot_get(pilot->target);
       if (target==NULL)
          pilot_rmFlag(pilot, PILOT_BOARDING);
       else {
@@ -1540,9 +1575,8 @@ static void pilot_hyperspace( Pilot* p, double dt )
       if (p->ptimer < 0.) {
          pilot_setFlag( p, PILOT_HYP_END );
          pilot_setThrust( p, 0. );
-         if (p->id == PLAYER_ID) { /* player.p just broke hyperspace */
+         if (p->id == PLAYER_ID) /* player.p just broke hyperspace */
             player_setFlag( PLAYER_HOOK_HYPER );
-         }
          else {
             pilot_runHook( p, PILOT_HOOK_JUMP ); /* Should be run before messing with delete flag. */
             pilot_delete(p);
@@ -1570,9 +1604,8 @@ static void pilot_hyperspace( Pilot* p, double dt )
          if (p->ptimer < 0.) { /* engines ready */
             p->ptimer = HYPERSPACE_FLY_DELAY;
             pilot_setFlag(p, PILOT_HYPERSPACE);
-            if (p->id == PLAYER_ID) {
+            if (p->id == PLAYER_ID)
                p->timer[0] = -1.;
-            }
          }
       }
    }
@@ -1615,9 +1648,8 @@ static void pilot_hyperspace( Pilot* p, double dt )
                p->ptimer = HYPERSPACE_ENGINE_DELAY;
                pilot_setFlag(p, PILOT_HYP_BEGIN);
                /* Player plays sound. */
-               if (p->id == PLAYER_ID) {
+               if (p->id == PLAYER_ID)
                   player_soundPlay( snd_hypPowUp, 1 );
-               }
             }
          }
       }
@@ -1918,7 +1950,7 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
          pilot->ship->gfx_space, pilot->solid->dir );
 
    /* Targets. */
-   pilot->target           = pilot->id; /* Self = no target. */
+   pilot_setTarget( pilot, pilot->id ); /* No target. */
    pilot->nav_planet       = -1;
    pilot->nav_hyperspace   = -1;
 
@@ -2211,9 +2243,8 @@ void pilots_clean (void)
       pilot_nstack = 1;
       pilot_clearTimers( player.p ); /* Reset the player's timers. */
    }
-   else {
+   else
       pilot_nstack = 0;
-   }
 
    /* Clear global hooks. */
    pilots_clearGlobalHooks();

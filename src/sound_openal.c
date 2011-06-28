@@ -488,9 +488,8 @@ void sound_al_exit (void)
 
    /* Free groups. */
    for (i=0; i<al_ngroups; i++) {
-      if (al_groups[i].sources != NULL) {
+      if (al_groups[i].sources != NULL)
          free(al_groups[i].sources);
-      }
       al_groups[i].sources  = NULL;
       al_groups[i].nsources = 0;
    }
@@ -686,9 +685,9 @@ int sound_al_load( alSound *snd, const char *filename )
    rw = ndata_rwops( filename );
 
    /* Check to see if it's an Ogg. */
-   if (ov_test_callbacks( rw, &vf, NULL, 0, sound_al_ovcall_noclose )==0) {
+   if (ov_test_callbacks( rw, &vf, NULL, 0, sound_al_ovcall_noclose )==0)
       ret = sound_al_loadOgg( snd, &vf );
-   }
+
    /* Otherwise try WAV. */
    else {
       /* Destroy the partially loaded vorbisfile. */
@@ -1265,9 +1264,8 @@ int sound_al_playGroup( int group, alSound *s, int once )
 
          /* No free ones, just smash the last one. */
          if (j == g->nsources-1) {
-            if (state != AL_STOPPED) {
+            if (state != AL_STOPPED)
                alSourceStop( g->sources[j] );
-            }
          }
          /* Ignore playing/paused. */
          else if ((state == AL_PLAYING) || (state == AL_PAUSED))

@@ -35,10 +35,10 @@ function equip_turretSrsHig ()
 end
 -- RANGED
 function equip_rangedSrs ()
-   return { "Headhunter Launcher" }
+   return { "Unicorp Headhunter Launcher" }
 end
 function equip_secondarySrs ()
-   return { "Headhunter Launcher" }
+   return { "Unicorp Headhunter Launcher" }
 end
 
 
@@ -53,7 +53,7 @@ function equip_siriusMilitary( p, shipsize )
    local scramble
 
    -- Defaults
-   medium      = { "Civilian Jammer" }
+   medium      = { "Unicorp Scrambler" }
    secondary   = { }
    apu         = { }
    weapons     = {}
@@ -67,7 +67,7 @@ function equip_siriusMilitary( p, shipsize )
       if class == "Scout" then
          use_primary    = rnd.rnd(1,#nhigh)
          addWeapons( equip_forwardLow(), use_primary )
-         medium         = { "Generic Afterburner", "Milspec Jammer" }
+         medium         = { "Generic Afterburner", "Milspec Scrambler" }
          use_medium     = 2
          low            = { "Solar Panel" }
 

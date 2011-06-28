@@ -607,9 +607,8 @@ static void bar_update( unsigned int wid, char* str )
    if (pos==0) { /* News selected. */
       if (!widget_exists(wid, "cstNews")) {
          /* Destroy portrait. */
-         if (widget_exists(wid, "imgPortrait")) {
+         if (widget_exists(wid, "imgPortrait"))
             window_destroyWidget(wid, "imgPortrait");
-         }
 
          /* Disable button. */
          window_disableButton( wid, "btnApproach" );
@@ -629,16 +628,14 @@ static void bar_update( unsigned int wid, char* str )
    pos--;
 
    /* Destroy news widget if needed. */
-   if (widget_exists(wid, "cstNews")) {
+   if (widget_exists(wid, "cstNews"))
       window_destroyWidget( wid, "cstNews" );
-   }
 
    /* Create widgets if needed. */
-   if (!widget_exists(wid, "imgPortrait")) {
+   if (!widget_exists(wid, "imgPortrait"))
       window_addImage( wid, iw + 40 + (w-iw-60-PORTRAIT_WIDTH)/2,
             -(40 + dh + 40 + gl_defFont.h + 20 + PORTRAIT_HEIGHT),
             0, 0, "imgPortrait", NULL, 1 );
-   }
 
    /* Enable button. */
    window_enableButton( wid, "btnApproach" );
@@ -1155,9 +1152,9 @@ void land_genWindows( int load, int changetab )
       landed = 1;
       music_choose("land"); /* Must be before hooks in case hooks change music. */
       if (!load) {
-         events_trigger( EVENT_TRIGGER_LAND );
          hooks_run("land");
       }
+      events_trigger( EVENT_TRIGGER_LAND );
 
       /* 3) Generate computer and bar missions. */
       if (planet_hasService(land_planet, PLANET_SERVICE_MISSIONS))
@@ -1393,9 +1390,8 @@ static void land_changeTab( unsigned int wid, char *wgt, int tab )
          }
 
          /* Clear markers if closing Mission Computer. */
-         if (i != LAND_WINDOW_MISSION) {
+         if (i != LAND_WINDOW_MISSION)
             space_clearComputerMarkers();
-         }
 
          break;
       }
@@ -1469,9 +1465,8 @@ void takeoff( int delay )
    player.p->nav_hyperspace = h;
 
    /* cleanup */
-   if (save_all() < 0) { /* must be before cleaning up planet */
-      dialogue_alert( "Failed to save game!  You should exit and check the log to see what happened and then file a bug report!" );
-   }
+   if (save_all() < 0) /* must be before cleaning up planet */
+      dialogue_alert( "Failed to save game! You should exit and check the log to see what happened and then file a bug report!" );
 
    /* time goes by, triggers hook before takeoff */
    if (delay)

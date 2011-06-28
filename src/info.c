@@ -389,9 +389,8 @@ static void weapons_genList( unsigned int wid )
          buf[i] = malloc( sizeof(char) * PATH_MAX );
          snprintf( buf[i], PATH_MAX, "Weapon Set %d", (i+1)%10 );
       }
-      else {
+      else
          buf[i] = strdup( str );
-      }
    }
    window_addList( wid, 20+180+20, -40,
          w - (20+180+20+20), 160,

@@ -299,9 +299,9 @@ static void opt_gameplaySave( unsigned int wid, char *str )
 
    /* Checkboxes. */
    f = window_checkboxState( wid, "chkAfterburn" );
-   if (!!conf.afterburn_sens != f) {
+   if (!!conf.afterburn_sens != f)
       conf.afterburn_sens = (!!f)*250;
-   }
+
    conf.zoom_manual = window_checkboxState( wid, "chkZoomManual" );
    conf.mouse_thrust = window_checkboxState(wid, "chkMouseThrust" );
    conf.save_compress = window_checkboxState( wid, "chkCompress" );
@@ -1092,6 +1092,8 @@ static void opt_video( unsigned int wid )
    toolkit_setListPos( wid, "lstRes", res_def);
    window_setInputFilter( wid, "inpFPS",
          "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`" );
+   snprintf( buf, sizeof(buf), "%d", conf.fps_max );
+   window_setInput( wid, "inpFPS", buf );
    y -= 30;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkFPS", "Show FPS", NULL, conf.fps_show );

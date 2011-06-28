@@ -844,7 +844,7 @@ void ai_think( Pilot* pilot, const double dt )
    pilot_acc         = 0;
    pilot_turn        = 0.;
    pilot_flags       = 0;
-   cur_pilot->target = cur_pilot->id;
+   /* pilot_setTarget( cur_pilot, cur_pilot->id ); */
 
    /* Get current task. */
    t = ai_curTask( cur_pilot );
@@ -2915,7 +2915,7 @@ static int aiL_combat( lua_State *L )
  */
 static int aiL_settarget( lua_State *L )
 {
-   cur_pilot->target = luaL_checklong(L,1);
+   pilot_setTarget( cur_pilot, luaL_checklong(L,1) );
    return 0;
 }
 

@@ -103,6 +103,7 @@ typedef struct Planet_ {
    int real; /**< If the asset is tangible or not. */
 
    /* Landing details. */
+   int land_override; /**< Forcibly allows the player to either be able to land or not (+1 is land, -1 is not, 0 otherwise). */
    char *land_func; /**< Landing function to execute. */
    int can_land; /**< Whether or not the player can land. */
    char *land_msg; /**< Message on landing. */
@@ -275,11 +276,13 @@ Planet* planet_getAll( int *n );
 Planet* planet_get( const char* planetname );
 Planet* planet_getIndex( int ind );
 int planet_index( const Planet *p );
-int planet_getNum (void);
 int planet_exists( const char* planetname );
 const char *planet_existsCase( const char* planetname );
 char **planet_searchFuzzyCase( const char* planetname, int *n );
 char planet_getClass( const Planet *p );
+char* planet_getServiceName( int service );
+int planet_getService( char *name );
+PlanetClass planetclass_get( const char a );
 credits_t planet_commodityPrice( const Planet *p, const Commodity *c );
 /* Land related stuff. */
 char planet_getColourChar( Planet *p );

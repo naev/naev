@@ -135,7 +135,7 @@ static int fleet_parse( Fleet *temp, const xmlNodePtr parent )
          WARN("Fleet '%s' has invalid AI '%s'.", temp->name, temp->ai );
 
       /* Set flags. */
-      if (xml_isNode(node,"flags")){
+      if (xml_isNode(node,"flags")) {
          cur = node->children;
          do {
             xml_onlyNodes(cur);

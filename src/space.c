@@ -139,7 +139,6 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys );
 static void system_parseJumps( const xmlNodePtr parent );
 /* misc */
 static void system_setFaction( StarSystem *sys );
-static PlanetClass planetclass_get( const char a );
 static int getPresenceIndex( StarSystem *sys, int faction );
 static void presenceCleanup( StarSystem *sys );
 static void system_scheduler( double dt, int init );
@@ -164,7 +163,7 @@ extern credits_t economy_getPrice( const Commodity *com,
  *    @param a Char to get class from.
  *    @return Identifier matching the char.
  */
-static PlanetClass planetclass_get( const char a )
+PlanetClass planetclass_get( const char a )
 {
    switch (a) {
       /* planets use letters */
@@ -244,6 +243,43 @@ char planet_getClass( const Planet *p )
          WARN("Invalid planet class.");
          return 0;
    };
+}
+
+
+char* planet_getServiceName( int service )
+{
+   switch (service) {
+      case PLANET_SERVICE_LAND:      return "Land";
+      case PLANET_SERVICE_INHABITED: return "Inhabited";
+      case PLANET_SERVICE_REFUEL:    return "Refuel";
+      case PLANET_SERVICE_BAR:       return "Bar";
+      case PLANET_SERVICE_MISSIONS:  return "Missions";
+      case PLANET_SERVICE_COMMODITY: return "Commodity";
+      case PLANET_SERVICE_OUTFITS:   return "Outfits";
+      case PLANET_SERVICE_SHIPYARD:  return "Shipyard";
+   }
+   return NULL;
+}
+
+int planet_getService( char *name )
+{
+   if (strcmp(name,"Land")==0)
+      return PLANET_SERVICE_LAND;
+   else if (strcmp(name,"Inhabited")==0)
+      return PLANET_SERVICE_INHABITED;
+   else if (strcmp(name,"Refuel")==0)
+      return PLANET_SERVICE_REFUEL;
+   else if (strcmp(name,"Bar")==0)
+      return PLANET_SERVICE_BAR;
+   else if (strcmp(name,"Missions")==0)
+      return PLANET_SERVICE_MISSIONS;
+   else if (strcmp(name,"Commodity")==0)
+      return PLANET_SERVICE_COMMODITY;
+   else if (strcmp(name,"Outfits")==0)
+      return PLANET_SERVICE_OUTFITS;
+   else if (strcmp(name,"Shipyard")==0)
+      return PLANET_SERVICE_SHIPYARD;
+   return -1;
 }
 
 
@@ -789,17 +825,6 @@ int planet_index( const Planet *p )
 
 
 /**
- * @brief Gets the number of planets.
- *
- *    @return The number of planets.
- */
-int planet_getNum (void)
-{
-   return planet_nstack;
-}
-
-
-/**
  * @brief Gets all the planets.
  *
  *    @param n Number of planets gotten.
@@ -1119,6 +1144,7 @@ void space_init( const char* sysname )
 {
    char* nt;
    int i, n, s;
+   Planet *pnt;
 
    /* cleanup some stuff */
    player_clear(); /* clears targets */
@@ -1169,8 +1195,10 @@ void space_init( const char* sysname )
 
    /* Set up planets. */
    for (i=0; i<cur_system->nplanets; i++) {
-      cur_system->planets[i]->bribed = 0;
-      planet_updateLand( cur_system->planets[i] );
+      pnt = cur_system->planets[i];
+      pnt->bribed = 0;
+      pnt->land_override = 0;
+      planet_updateLand( pnt );
    }
 
    /* Clear interference if you leave system with interference. */
@@ -1386,7 +1414,7 @@ void planet_updateLand( Planet *p )
    char *str;
    lua_State *L;
    LuaPlanet lp;
-   
+
    /* Must be inhabited. */
    if (!planet_hasService( p, PLANET_SERVICE_INHABITED ) ||
          (player.p == NULL))
@@ -1551,9 +1579,8 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
                planet->gfx_spaceName = strdup(str);
                planet->gfx_spacePath = xml_getStrd(cur);
                rw = ndata_rwops( planet->gfx_spaceName );
-               if (rw == NULL) {
+               if (rw == NULL)
                   WARN("Planet '%s' has inexisting graphic '%s'!", planet->name, planet->gfx_spaceName );
-               }
                else {
                   npng = npng_open( rw );
                   if (npng != NULL) {
@@ -1564,9 +1591,9 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
                         str[ nbuf ] = '\0';
                         planet->radius = atof( str );
                      }
-                     else {
+                     else
                         planet->radius = 0.8 * (double)(w+h)/4.; /* (w+h)/2 is diameter, /2 for radius */
-                     }
+
                      npng_close( npng );
                   }
                   SDL_RWclose( rw );
@@ -1702,8 +1729,8 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
       MELEMENT(planet->gfx_spaceName==NULL,"GFX space");
       MELEMENT( planet_hasService(planet,PLANET_SERVICE_LAND) &&
             planet->gfx_exterior==NULL,"GFX exterior");
-      MELEMENT( planet_hasService(planet,PLANET_SERVICE_INHABITED) &&
-            (planet->population==0), "population");
+      /* MELEMENT( planet_hasService(planet,PLANET_SERVICE_INHABITED) &&
+            (planet->population==0), "population"); */
       MELEMENT((flags&FLAG_XSET)==0,"x");
       MELEMENT((flags&FLAG_YSET)==0,"y");
       MELEMENT(planet->class==PLANET_CLASS_NULL,"class");
@@ -2000,9 +2027,8 @@ void systems_reconstructPlanets (void)
 
    for (i=0; i<systems_nstack; i++) {
       sys = &systems_stack[i];
-      for (j=0; j<sys->nplanets; j++) {
+      for (j=0; j<sys->nplanets; j++)
          sys->planets[j] = &planet_stack[ sys->planetsid[j] ];
-      }
    }
 }
 
@@ -2140,6 +2166,7 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
    xmlNodePtr cur, cur2;
    double x, y;
    StarSystem *target;
+   int pos;
 
    /* Get target. */
    xmlr_attr( node, "target", buf );
@@ -2176,6 +2203,8 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
    j->target = target;
    free(buf);
    j->targetid = j->target->id;
+   j->radius = 200.;
+   pos = 0;
 
    /* Parse data. */
    cur = node->xmlChildrenNode;
@@ -2184,6 +2213,7 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
 
       /* Handle position. */
       if (xml_isNode(cur,"pos")) {
+         pos = 1;
          xmlr_attr( cur, "x", buf );
          if (buf==NULL) {
             WARN("JumpPoint for system '%s' has position node missing 'x' position, using 0.", sys->name);
@@ -2216,6 +2246,9 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
          } while (xml_nextNode(cur2));
       }
    } while (xml_nextNode(cur));
+
+   if (!j->flags & JP_AUTOPOS && !pos)
+      WARN("JumpPoint in system '%s' is missing pos element but does not have autopos flag.", sys->name);
 
    /* Added jump. */
    sys->njumps++;
@@ -2256,9 +2289,8 @@ static void system_parseJumps( const xmlNodePtr parent )
       if (xml_isNode(node,"jumps")) {
          cur = node->children;
          do {
-            if (xml_isNode(cur,"jump")) {
+            if (xml_isNode(cur,"jump"))
                system_parseJumpPoint( cur, sys );
-            }
          } while (xml_nextNode(cur));
       }
    } while (xml_nextNode(node));

@@ -79,6 +79,7 @@
   <enemies>
    <enemy>Civilian</enemy>
    <enemy>Empire</enemy>
+   <enemy>Soromid</enemy>
    <enemy>Dvaered</enemy>
    <enemy>Za'lek</enemy>
    <enemy>Collective</enemy>
@@ -103,6 +104,17 @@
   <enemies>
    <enemy>Pirate</enemy>
    <enemy>Collective</enemy>
+  </enemies>
+ </faction>
+ <faction name="Soromid">
+  <logo>empire</logo>
+  <colour>orange</colour>
+  <player>0</player>
+  <spawn>soromid</spawn>
+  <lua>soromid</lua>
+  <allies/>
+  <enemies>
+   <enemy>Pirate</enemy>
   </enemies>
  </faction>
  <faction name="Collective">

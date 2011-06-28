@@ -169,9 +169,9 @@ static int chk_key( Widget* chk, SDLKey key, SDLMod mod )
 {
    (void) mod;
 
-   if (key == SDLK_SPACE) {
+   if (key == SDLK_SPACE)
       chk_toggleState( chk );
-   }
+
    return 0;
 }
 

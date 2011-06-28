@@ -1182,9 +1182,9 @@ void map_jump (void)
          }
       }
    }
-   else {
+   else
       player_targetHyperspaceSet( -1 );
-   }
+
    gui_setNav();
 }
 
@@ -1201,9 +1201,8 @@ void map_select( StarSystem *sys, char shifted )
 
    wid = window_get(MAP_WDWNAME);
 
-   if (sys == NULL) {
+   if (sys == NULL)
       map_selectCur();
-   }
    else {
       map_selected = sys - systems_stack;
 
@@ -1217,14 +1216,12 @@ void map_select( StarSystem *sys, char shifted )
 
       /* Try to make path if is reachable. */
       if (space_sysReachable(sys)) {
-         if (!shifted) {
-             map_path = map_getJumpPath( &map_npath,
-                   cur_system->name, sys->name, 0 , NULL );
-         }
-         else {
-             map_path = map_getJumpPath( &map_npath,
-                   cur_system->name, sys->name, 0 , map_path );
-         }
+         if (!shifted)
+            map_path = map_getJumpPath( &map_npath,
+                  cur_system->name, sys->name, 0 , NULL );
+         else
+            map_path = map_getJumpPath( &map_npath,
+                  cur_system->name, sys->name, 0 , map_path );
 
          if (map_npath==0) {
             player_hyperspacePreempt(0);
@@ -1489,14 +1486,12 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
          neighbour = A_newNode( sys, NULL );
 
          ocost = A_in(open, sys);
-         if ((ocost != NULL) && (cost < ocost->g)) {
+         if ((ocost != NULL) && (cost < ocost->g))
             open = A_rm( open, sys ); /* new path is better */
-         }
 
          ccost = A_in(closed, sys);
-         if (ccost != NULL) {
+         if (ccost != NULL)
             closed = A_rm( closed, sys ); /* shouldn't happen */
-         }
 
          if ((ocost == NULL) && (ccost == NULL)) {
             neighbour->g = cost;

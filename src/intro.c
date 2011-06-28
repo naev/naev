@@ -101,7 +101,6 @@ static int intro_load( const char *text )
    n = 0;
    mem = 0;
    while ((uint32_t)p < intro_size) {
-
       /* Copy the line. */
       if (n+1 > mem) {
          mem += 128;
@@ -126,20 +125,15 @@ static int intro_load( const char *text )
       } else if ( intro_buf[p] == '[' /* Don't do strncmp for every line! */
            && strncmp( &intro_buf[p], "[fadeout]", 9 ) == 0 ) {
          /* fade out the image next to the text. */
-
          for (i = 0; intro_buf[p + i] != '\n' && intro_buf[p + i] != '\0'; ++i);
 
          intro_lines[n] = malloc( 2 );
          intro_lines[n][0] = 'o';
          intro_lines[n][1] = '\0';   /* not strictly necessary, but safe. */
 
-      } else {
-         /* plain old text. */
-
+      } else { /* plain old text. */
          /* Get the length. */
-         i = gl_printWidthForText( &intro_font,
-                                   &intro_buf[p],
-                                   SCREEN_W - 500. );
+         i = gl_printWidthForText( &intro_font, &intro_buf[p], SCREEN_W - 500. );
 
          intro_lines[n] = malloc( i + 2 );
          intro_lines[n][0] = 't';
@@ -231,14 +225,16 @@ static void intro_fade_image_in( intro_img_t *side, intro_img_t *transition,
       side->y = (double)SCREEN_H / 2.0 - (side->tex->h / 2.0);
       side->c.a = 0.0;
       side->fade_rate = 0.1;
-   } else {
-      /* Transition or on-deck.  The difference is whether one image is
-         replacing the other (transition), or whether the first must fade out
-         completely before the second comes in (on-deck).
-
-         We can determine which is the case by seeing whether [fadeout] has been
-         called.  I.e., is side->fade_rate < 0?
-      */
+   }
+   else {
+      /*
+       * Transition or on-deck. The difference is whether one image is
+       * replacing the other (transition), or whether the first must fade out
+       * completely before the second comes in (on-deck).
+       *
+       * We can determine which is the case by seeing whether [fadeout] has been
+       * called. I.e., is side->fade_rate < 0?
+       */
       if (NULL != transition->tex) {
          /* Scrolling is happening faster than fading... */
          WARN( "Intro scrolling too fast!" );
@@ -248,10 +244,9 @@ static void intro_fade_image_in( intro_img_t *side, intro_img_t *transition,
       transition->y =
          (double)SCREEN_H / 2.0 - (transition->tex->h / 2.0);
       transition->c.a = 0.0;
-      if (side->fade_rate < 0.0) {
-         /* put an image on deck. */
-         transition->fade_rate = 0.0;
-      } else {
+      if (side->fade_rate < 0.0)
+         transition->fade_rate = 0.0; /* put an image on deck. */
+      else {
          /* transition. */
          transition->fade_rate = 0.1;
          side->fade_rate = -0.1; /* begin fading out. */
@@ -297,14 +292,12 @@ static void intro_event_handler( int *stop, double *offset, double *vel )
 
       /* Jump down. */
       else if ((event.key.keysym.sym == SDLK_SPACE) ||
-            (event.key.keysym.sym == SDLK_RETURN)) {
+            (event.key.keysym.sym == SDLK_RETURN))
          *offset += 100;
-      }
 
       /* User is clearly flailing on keyboard. */
-      else {
+      else
          *vel = 16.;
-      }
    }
 }
 
@@ -323,12 +316,10 @@ static int intro_draw_text( scroll_buf_t *sb_list, double offset,
    scroll_buf_t *list_iter;   /* iterator through sb_list. */
    register int stop = 1;
 
-   if (has_side_gfx) {
-      /* leave some space for graphics if they exist. */
-      x = 400.0;
-   } else {
+   if (has_side_gfx)
+      x = 400.0; /* leave some space for graphics if they exist. */
+   else
       x = 100.0;
-   }
 
    list_iter = sb_list;
    y = SCREEN_H + offset - line_height;
@@ -442,15 +433,15 @@ int intro_display( const char *text, const char *mus )
       if (side_image.tex != NULL && side_image.c.a < 1.0) {
          side_image.c.a += delta * vel * side_image.fade_rate;
 
-         if (transition.tex != NULL && transition.fade_rate > 0.0) {
+         if (transition.tex != NULL && transition.fade_rate > 0.0)
             transition.c.a += delta * vel * transition.fade_rate;
-         }
 
          if (side_image.c.a > 1.0) {
             /* Faded in... */
             side_image.c.a = 1.0;
             side_image.fade_rate = 0.0;
-         } else if (side_image.c.a < 0.0) {
+         }
+         else if (side_image.c.a < 0.0) {
             /* Faded out... */
             gl_freeTexture( side_image.tex );
             if (transition.tex != NULL) {
@@ -460,7 +451,8 @@ int intro_display( const char *text, const char *mus )
                side_image.fade_rate = 0.1;
                transition.tex = NULL;
                transition.c.a = 1.0;
-            } else {
+            }
+            else {
                side_image.c.a = 1.0;
                side_image.tex = NULL;
                side_image.fade_rate = 0.0;
@@ -477,17 +469,15 @@ int intro_display( const char *text, const char *mus )
       /* Draw text. */
       stop = intro_draw_text( sb_list, offset, line_height );
 
-      if (NULL != side_image.tex) {
+      if (NULL != side_image.tex)
          /* Draw the image next to the text. */
          gl_blitScale( side_image.tex, side_image.x, side_image.y,
                        side_image.tex->w, side_image.tex->h, &side_image.c );
-      }
 
-      if (NULL != transition.tex && transition.c.a > 0.0) {
+      if (NULL != transition.tex && transition.c.a > 0.0)
          /* Draw the image in transition. */
          gl_blitScale( transition.tex, transition.x, transition.y,
                        transition.tex->w, transition.tex->h, &transition.c );
-      }
 
       /* Display stuff. */
       SDL_GL_SwapBuffers();
@@ -501,12 +491,11 @@ int intro_display( const char *text, const char *mus )
 
    /* free malloc'd memory. */
    free( sb_arr );
-   if (NULL != side_image.tex) {
+   if (NULL != side_image.tex)
       gl_freeTexture( side_image.tex );
-   }
-   if (NULL != transition.tex) {
+
+   if (NULL != transition.tex)
       gl_freeTexture( transition.tex );
-   }
 
    /* Disable intro's key repeat. */
    SDL_EnableKeyRepeat( 0, 0 );
@@ -519,4 +508,3 @@ int intro_display( const char *text, const char *mus )
 
    return 0;
 }
-

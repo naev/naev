@@ -1197,26 +1197,64 @@
 
 
  <!-- Missile Weapons -->
- <outfit name="Seeker Launcher">
+ <outfit name="Unicorp Fury Launcher">
   <general>
    <slot>weapon</slot>
    <mass>8</mass>
    <price>25000</price>
-   <description>A compact base for launching Seeker missiles, a Seeker launcher is an inexpensive way to augment a ship's ranged combat capabilities.</description>
+   <description>This missile launcher fires Fury class interceptor missiles. It is built out of standard parts, which make it serviceable and efficient.</description>
+   <gfx_store>seekerlauncher</gfx_store>
+  </general>
+  <specific type="launcher" secondary="1">
+   <cpu>4</cpu>
+   <ammo>Fury Missile</ammo>
+   <delay>2500</delay>
+   <amount>20</amount>
+   <lockon>6</lockon>
+   <arc>6</arc>
+   <ew_target>1.5</ew_target>
+  </specific>
+ </outfit>
+ <outfit name="TeraCom Fury Launcher">
+  <general>
+   <slot>weapon</slot>
+   <mass>9</mass>
+   <price>40000</price>
+   <description>The TeraCom Fury Launcher is a high-performance missile launcher equipped with patented target tracking and missile arming technology, allowing pilots to get a lock on their target faster and more easily than with launchers made by competing brands.</description>
    <gfx_store>seekerlauncher</gfx_store>
   </general>
   <specific type="launcher" secondary="1">
    <cpu>6</cpu>
-   <ammo>Seeker Missile</ammo>
-   <delay>1800</delay>
+   <ammo>Fury Missile</ammo>
+   <delay>2500</delay>
    <amount>20</amount>
+   <lockon>4</lockon>
+   <arc>8</arc>
+   <ew_target>1.5</ew_target>
   </specific>
  </outfit>
- <outfit name="Seeker Missile">
+ <outfit name="Enygma Systems Turreted Fury Launcher">
+  <general>
+   <slot>weapon</slot>
+   <mass>30</mass>
+   <price>80000</price>
+   <description>Enygma Systems has developed a turret mounted Fury launcher. It comes at a steep price, but can be a powerful means of discouraging pirate fighters.</description>
+   <gfx_store>seekerlauncher</gfx_store>
+  </general>
+  <specific type="turret launcher" secondary="1">
+   <cpu>9</cpu>
+   <ammo>Fury Missile</ammo>
+   <delay>2500</delay>
+   <amount>30</amount>
+   <lockon>5</lockon>
+   <ew_target>1.5</ew_target>
+  </specific>
+ </outfit>
+ <outfit name="Fury Missile">
   <general>
    <mass>1</mass>
    <price>400</price>
-   <description>The cheapest smart missile on the market, while it lacks advanced tracking abilities, it makes up for that with affordability and firepower in spades.</description>
+   <description>The Fury class interceptor missile is a lightweight missile propelled by a powerful engine, delivering its payload to its target quickly and efficiently. Its high agility come at the cost of destructive power, however, limiting its effectiveness to light, nimble fighters.</description>
    <gfx_store>seeker</gfx_store>
   </general>
   <specific type="ammo">
@@ -1226,28 +1264,66 @@
    <spfx_shield>ExpM</spfx_shield>
    <spfx_armour>ExpM</spfx_armour>
    <duration blowup="armour">5</duration>
-   <lockon>0.5</lockon>
-   <thrust>400</thrust>
-   <turn>60</turn>
-   <speed>800</speed>
-   <damage type="kinetic" penetrate="10">20</damage>
-   <ai>seek</ai>
+   <thrust>700</thrust>
+   <turn>100</turn>
+   <speed>1200</speed>
+   <damage type="kinetic" penetrate="5">40</damage>
+   <ai>smart</ai>
   </specific>
  </outfit>
- <outfit name="Headhunter Launcher">
+ <outfit name="Unicorp Headhunter Launcher">
   <general>
    <slot>weapon</slot>
    <license>Medium Weapon License</license>
    <mass>10</mass>
    <price>40000</price>
-   <description>The Headhunter launcher is one of the most-used missile launchers by the security companies. Far more reliable than Seeker missiles, Headhunters feature newer sensors and an advanced tracking system making them much better at hitting their targets.</description>
+   <description>This launcher fires Headhunter class interceptor missiles. Made to standard specification, this model has been optimized for minimum system strain and maximum compatibility.</description>
+   <gfx_store>headhunterlauncher</gfx_store>
+  </general>
+  <specific type="launcher" secondary="1">
+   <cpu>5</cpu>
+   <ammo>Headhunter Missile</ammo>
+   <delay>3000</delay>
+   <amount>15</amount>
+   <lockon>8</lockon>
+   <arc>6</arc>
+   <ew_target>1</ew_target>
+  </specific>
+ </outfit>
+ <outfit name="TeraCom Headhunter Launcher">
+  <general>
+   <slot>weapon</slot>
+   <license>Medium Weapon License</license>
+   <mass>10</mass>
+   <price>100000</price>
+   <description>This is TeraCom's model Headhunter launcher. Though somewhat pricey and demanding on the ship's resources, the patented tracking and missile arming technology allows pilots to fire their missiles before the competition does.</description>
    <gfx_store>headhunterlauncher</gfx_store>
   </general>
   <specific type="launcher" secondary="1">
    <cpu>8</cpu>
    <ammo>Headhunter Missile</ammo>
-   <delay>2000</delay>
+   <delay>3000</delay>
    <amount>15</amount>
+   <lockon>5</lockon>
+   <arc>8</arc>
+   <ew_target>1</ew_target>
+  </specific>
+ </outfit>
+ <outfit name="Enygma Systems Turreted Headhunter Launcher">
+  <general>
+   <slot>weapon</slot>
+   <mass>45</mass>
+   <price>140000</price>
+   <description>These launchers are sometimes employed by cruiser captains whose ships aren't maneouevrable enough to effectively combat enemy fighters and bombers. The punch of the Headhunter missile combined with Enygma Systems' swivel mounted launcher can effectively compensate for any blind spots.</description>
+   <gfx_store>headhunterlauncher</gfx_store>
+  </general>
+  <specific type="turret launcher" secondary="1">
+   <cpu>14</cpu>
+   <ammo>Headhunter Missile</ammo>
+   <delay>3000</delay>
+   <amount>20</amount>
+   <lockon>6</lockon>
+   <ew_target>1</ew_target>
   </specific>
  </outfit>
  <outfit name="Headhunter Missile">
@@ -1255,7 +1331,7 @@
    <license>Medium Weapon License</license>
    <mass>1</mass>
    <price>800</price>
-   <description>Headhunters first gained fame in the crush of the Araknoid, a fearsome battle against a pirate stronghold where the Empire crushed the pirates thanks to the advanced guidance system on the Headhunter. Now used by mercenaries and bounty hunters throughout the galaxy.</description>
+   <description>The Headhunter class interceptor missile is a medium calibre missile that can deal devastating damage to small and medium sized targets, while remaining reasonably fast and agile. Most effective when launched at distant enemies.</description>
    <gfx_store>headhunter</gfx_store>
   </general>
   <specific type="ammo">
@@ -1265,74 +1341,128 @@
    <spfx_shield>ExpM</spfx_shield>
    <spfx_armour>ExpM</spfx_armour>
    <duration blowup="armour">7</duration>
-   <lockon>0.25</lockon>
-   <resist>5</resist>
-   <thrust>325</thrust>
-   <turn>90</turn>
-   <speed>550</speed>
-   <damage type="kinetic" penetrate="30">20</damage>
+   <thrust>550</thrust>
+   <turn>70</turn>
+   <speed>1000</speed>
+   <damage type="kinetic" penetrate="10">80</damage>
    <ai>smart</ai>
   </specific>
  </outfit>
- <outfit name="Banshee Launcher">
+ <outfit name="Unicorp Vengeance Launcher">
   <general>
    <slot>weapon</slot>
    <license>Medium Weapon License</license>
-   <mass>10</mass>
-   <price>25000</price>
-   <gfx_store>bansheelauncher</gfx_store>
-   <description>The Banshee Launcher uses a quick-action firing mechanism to be able to quickly launch the Banshee rockets. The only drawback is that this mechanism can only be used with light rockets, limiting the payload the rockets can have.</description>
+   <mass>15</mass>
+   <price>70000</price>
+   <description>This launcher fires Vengeance class interceptor missiles. Its bulk makes it less suitable for ships that rely on mobility, but it's relatively efficient otherwise.</description>
+   <gfx_store>headhunterlauncher</gfx_store>
   </general>
   <specific type="launcher" secondary="1">
    <cpu>6</cpu>
-   <ammo>Banshee Rocket</ammo>
-   <delay>375</delay>
-   <amount>40</amount>
+   <ammo>Vengeance Missile</ammo>
+   <delay>3500</delay>
+   <amount>10</amount>
+   <lockon>11</lockon>
+   <arc>6</arc>
+   <ew_target>0.75</ew_target>
   </specific>
  </outfit>
- <outfit name="Banshee Rocket">
+ <outfit name="TeraCom Vengeance Launcher">
+  <general>
+   <slot>weapon</slot>
+   <license>Medium Weapon License</license>
+   <mass>15</mass>
+   <price>150000</price>
+   <description>TeraCom's patented launcher hardware considerably reduces the time it takes to achieve a lock. Sometimes, those few seconds can make all the difference.</description>
+   <gfx_store>headhunterlauncher</gfx_store>
+  </general>
+  <specific type="launcher" secondary="1">
+   <cpu>10</cpu>
+   <ammo>Vengeance Missile</ammo>
+   <delay>3500</delay>
+   <amount>10</amount>
+   <lockon>7</lockon>
+   <arc>8</arc>
+   <ew_target>0.75</ew_target>
+  </specific>
+ </outfit>
+ <outfit name="Enygma Systems Turreted Vengeance Launcher">
+  <general>
+   <slot>weapon</slot>
+   <mass>60</mass>
+   <price>200000</price>
+   <description>Turreted Vengeance launchers aren't commonly seen in interplanetary combat. Only heavy cruisers can afford to mount these weapons, and they usually have other means of taking out corvette class enemies.</description>
+   <gfx_store>headhunterlauncher</gfx_store>
+  </general>
+  <specific type="turret launcher" secondary="1">
+   <cpu>14</cpu>
+   <ammo>Headhunter Missile</ammo>
+   <delay>3500</delay>
+   <amount>15</amount>
+   <lockon>8</lockon>
+   <ew_target>0.75</ew_target>
+  </specific>
+ </outfit>
+ <outfit name="Vengeance Missile">
   <general>
    <license>Medium Weapon License</license>
-   <mass>0.1</mass>
-   <price>70</price>
-   <description>The Banshee Rocket gets its name from the wail it makes when launched. It carries an EMP payload which is very helpful when attempting to disable ships.</description>
-   <gfx_store>banshee</gfx_store>
+   <mass>1</mass>
+   <price>800</price>
+   <description>Vengeance class interceptor missiles are the heaviest interceptor missiles currently in production. Almost half the missile hull is used for payload, which decreases its ability to catch fast targets. Best used against corvette class targets.</description>
+   <gfx_store>headhunter</gfx_store>
   </general>
   <specific type="ammo">
-   <gfx>banshee</gfx>
+   <gfx>headhunter</gfx>
    <sound>missile</sound>
-   <sound_hit>bansheeexp</sound_hit>
-   <spfx_shield>EmpS</spfx_shield>
-   <spfx_armour>EmpS</spfx_armour>
-   <duration blowup="shield">0.8</duration>
-   <thrust>0</thrust>
-   <speed>600</speed>
-   <damage type="emp" penetrate="15">15</damage>
-   <ai>dumb</ai>
+   <sound_hit>medexp0</sound_hit>
+   <spfx_shield>ExpM</spfx_shield>
+   <spfx_armour>ExpM</spfx_armour>
+   <duration blowup="armour">9</duration>
+   <thrust>450</thrust>
+   <turn>45</turn>
+   <speed>700</speed>
+   <damage type="kinetic" penetrate="20">150</damage>
+   <ai>smart</ai>
   </specific>
  </outfit>
- <outfit name="Mace Launcher">
+ <outfit name="Unicorp Mace Launcher">
   <general>
    <slot>weapon</slot>
    <license>Medium Weapon License</license>
    <mass>10</mass>
    <price>19000</price>
-   <description>A base for launching Dvaered Mace rockets.</description>
+   <description>This launcher fires unguided Mace rockets. Its low requirements and complete lack of energy consumption make it a useful assist weapon in fast paced dogfights.</description>
+   <gfx_store>macelauncher</gfx_store>
+  </general>
+  <specific type="launcher" secondary="1">
+   <cpu>3</cpu>
+   <ammo>Mace Rocket</ammo>
+   <delay>300</delay>
+   <amount>50</amount>
+  </specific>
+ </outfit>
+ <outfit name="TeraCom Mace Launcher">
+  <general>
+   <slot>weapon</slot>
+   <license>Medium Weapon License</license>
+   <mass>10</mass>
+   <price>30000</price>
+   <description>TeraCom's Mace launcher uses an advanced reload mechanism that allows the launcher to fire more rockets in less time.</description>
    <gfx_store>macelauncher</gfx_store>
   </general>
   <specific type="launcher" secondary="1">
    <cpu>5</cpu>
    <ammo>Mace Rocket</ammo>
-   <delay>2000</delay>
-   <amount>10</amount>
+   <delay>250</delay>
+   <amount>50</amount>
   </specific>
  </outfit>
  <outfit name="Mace Rocket">
   <general>
    <license>Medium Weapon License</license>
-   <mass>2</mass>
+   <mass>0.1</mass>
    <price>200</price>
-   <description>The Mace rocket is a very heavy, quickly-accelerating rocket designed for high speed collisions. It has little explosive payload, instead carrying a large amount of fuel to facilitate its acceleration. Most of the damage it does is derived from the impact and not the explosion.</description>
+   <description>The Mace class unguided rocket is a cheap, expendable weapon used to boost peak firepower in tight situations. It is far better at dealing damage to light targets than most fighter sized energy cannons, but comes with the disadvantage of running out of ammunition after only a short time of fire.</description>
    <gfx_store>mace</gfx_store>
   </general>
   <specific type="ammo">
@@ -1341,36 +1471,92 @@
    <sound_hit>lrgexp0</sound_hit>
    <spfx_shield>ExpM</spfx_shield>
    <spfx_armour>ExpM</spfx_armour>
-   <duration blowup="armour">3</duration>
-   <thrust>300</thrust>
-   <speed>1000</speed>
-   <damage type="kinetic" penetrate="40">44</damage>
+   <duration blowup="armour">1.3</duration>
+   <thrust>1500</thrust>
+   <speed>1500</speed>
+   <damage type="kinetic" penetrate="0">15</damage>
    <ai>dumb</ai>
   </specific>
  </outfit>
- <outfit name="Caesar IV Launcher">
+ <outfit name="Unicorp Banshee Launcher">
+  <general>
+   <slot>weapon</slot>
+   <license>Medium Weapon License</license>
+   <mass>17</mass>
+   <price>25000</price>
+   <gfx_store>bansheelauncher</gfx_store>
+   <description>This launcher fires Banshee class heavy rockets. It is small enough to be mounted on medium hardpoints, and light enough on system load to be an interesting choice for bombers.</description>
+  </general>
+  <specific type="launcher" secondary="1">
+   <cpu>5</cpu>
+   <ammo>Banshee Rocket</ammo>
+   <delay>1000</delay>
+   <amount>20</amount>
+  </specific>
+ </outfit>
+ <outfit name="TeraCom Banshee Launcher">
+  <general>
+   <slot>weapon</slot>
+   <license>Medium Weapon License</license>
+   <mass>17</mass>
+   <price>45000</price>
+   <gfx_store>bansheelauncher</gfx_store>
+   <description>TeraCom has equipped its Banshee launcher model with high grade reload and tube cooling systems, giving a significant boost to rate of fire.</description>
+  </general>
+  <specific type="launcher" secondary="1">
+   <cpu>8</cpu>
+   <ammo>Banshee Rocket</ammo>
+   <delay>700</delay>
+   <amount>20</amount>
+  </specific>
+ </outfit>
+ <outfit name="Banshee Rocket">
+  <general>
+   <license>Medium Weapon License</license>
+   <mass>2</mass>
+   <price>500</price>
+   <description>The Banshee class heavy rocket is sometimes labeled the "poor man's torpedo". It has a relatively weak engine, but packs a powerful punch that can do respectable damage even to capital ships.</description>
+   <gfx_store>banshee</gfx_store>
+  </general>
+  <specific type="ammo">
+   <gfx>banshee</gfx>
+   <sound>missile</sound>
+   <sound_hit>bansheeexp</sound_hit>
+   <spfx_shield>EmpS</spfx_shield>
+   <spfx_armour>EmpS</spfx_armour>
+   <duration blowup="shield">5</duration>
+   <thrust>0</thrust>
+   <speed>200</speed>
+   <damage type="emp" penetrate="70">110</damage>
+   <ai>dumb</ai>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp Caesar IV Launcher">
   <general>
    <slot>weapon</slot>
    <size>medium</size>
    <license>Heavy Weapon License</license>
    <mass>30</mass>
    <price>120000</price>
-   <description>The launcher for the Caesar IV is quite remarkable. A new loading mechanism allows it to load and fire a missile once every 5 seconds, besting older mechanisms by a substantial margin.</description>
+   <description>the Caesar IV launcher does what it says on the box, which is launch Caesar IV torpedoes.</description>
    <gfx_store>caesarlauncher</gfx_store>
   </general>
   <specific type="launcher" secondary="1">
-   <cpu>16</cpu>
+   <cpu>13</cpu>
    <ammo>Caesar IV Missile</ammo>
-   <delay>5000</delay>
+   <delay>7000</delay>
+   <lockon>12</lockon>
+   <arc>6</arc>
+   <ew_target>0.4</ew_target>
    <amount>6</amount>
   </specific>
  </outfit>
- <outfit name="Caesar IV Missile">
+ <outfit name="Caesar IV Torpedo">
   <general>
    <license>Heavy Weapon License</license>
    <mass>3</mass>
    <price>3000</price>
-   <description>The Caesar IV holds true to its predecessors, delivering an immense explosive payload at the expense of manoeuvrability. Its electronics are somewhat antiquated, making it a poor choice for attacking smaller ships. Its mass complicates trajectory calculations, causing the tracking module to take up to 2 seconds to initialize.</description>
+   <description>Caesar IV class torpedoes are among the most common torpedo weapons available. Though much slower than missiles and useless against mobile targets, they remain manoeuvrable enough to chase down light cruisers.</description>
    <gfx_store>caesar</gfx_store>
   </general>
   <specific type="ammo">
@@ -1380,37 +1566,39 @@
    <spfx_shield>ExpL</spfx_shield>
    <spfx_armour>ExpL</spfx_armour>
    <duration blowup="armour">12</duration>
-   <lockon>2</lockon>
    <thrust>125</thrust>
    <turn>20</turn>
-   <speed>350</speed>
-   <damage type="kinetic" penetrate="90">140</damage>
-   <ai>seek</ai>
+   <speed>170</speed>
+   <damage type="kinetic" penetrate="50">400</damage>
+   <ai>smart</ai>
   </specific>
  </outfit>
- <outfit name="Imperator Launcher">
+ <outfit name="TeraCom Imperator Launcher">
   <general>
    <slot>weapon</slot>
    <size>medium</size>
    <license>Heavy Weapon License</license>
-   <mass>34</mass>
-   <price>160000</price>
-   <description>While the Imperator's launcher is an ugly affair (it doesn't fit any ship hull known to man), no-one will laugh at a captain fielding it, lest they be brutally removed from existence.</description>
+   <mass>40</mass>
+   <price>220000</price>
+   <description> The Imperator launcher is a very heavy torpedo launcher that is both bulky and demanding, but whose raw firepower is a must for any captain looking to blow up some capital ships.</description>
    <gfx_store>caesarlauncher</gfx_store>
   </general>
   <specific type="launcher" secondary="1">
    <cpu>20</cpu>
    <ammo>Imperator Missile</ammo>
-   <delay>7000</delay>
+   <delay>8000</delay>
+   <lockon>13</lockon>
+   <arc>6</arc>
+   <ew_target>0.3</ew_target>
    <amount>5</amount>
   </specific>
  </outfit>
- <outfit name="Imperator Missile">
+ <outfit name="Imperator Torpedo">
   <general>
    <license>Heavy Weapon License</license>
    <mass>3</mass>
    <price>9000</price>
-   <description>The Imperator employs an unconventional, semi-nuclear warhead. Its destructive power is immense, but its complicated design makes it less cost-effective than the Caesar IV.</description>
+   <description>TeraCom decided not to develop a launcher for the Caesar IV, because it fell short of the company's performance requirements. Instead, the company released a completely new torpedo specification. At present, the Imperator class heavy torpedo provides devastating destructive power, though it will take a while for it to reach its target. Faster cruisers may be able to outrun it completely.</description>
    <gfx_store>caesar</gfx_store>
   </general>
   <specific type="ammo">
@@ -1420,12 +1608,11 @@
    <spfx_shield>ExpL</spfx_shield>
    <spfx_armour>ExpL</spfx_armour>
    <duration blowup="armour">12</duration>
-   <lockon>0.2</lockon>
    <thrust>125</thrust>
    <turn>20</turn>
-   <speed>350</speed>
-   <damage type="kinetic" penetrate="90">300</damage>
-   <ai>seek</ai>
+   <speed>70</speed>
+   <damage type="kinetic" penetrate="90">800</damage>
+   <ai>smart</ai>
   </specific>
  </outfit>
  <outfit name="EMP Grenade Launcher">
@@ -1967,18 +2154,46 @@
    <radius>999</radius>
   </specific>
  </outfit>
- <outfit name="Civilian Jammer">
+ <outfit name="Unicorp Scrambler">
   <general>
    <slot>utility</slot>
    <mass>2</mass>
    <price>40000</price>
-   <description>This jammer allows you to interfere with the targeting systems of missiles headed toward you, yielding an unpredictable change in trajectory likely to miss your ship. Though it is widely used, many have derided the civilian jammer for its unreliable nature.</description>
+   <description>Scramblers distort a ship's electromagnetic signature, making it harder for various sensors to pick it up. In effect, a scrambler reduces the distance at which the ship can be detected and scanned, and makes it harder for missiles to lock on. The effect is quite limited however, and multiple scramblers may be required for the desired effect. On the upside, scramblers put a minimal strain on the ship's resources, and are always active.</description>
+   <gfx_store>jammer0</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>1</cpu>
+   <energy>5</energy>
+   <ew_hide>7</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Milspec Scrambler">
+  <general>
+   <slot>utility</slot>
+   <mass>3</mass>
+   <price>250000</price>
+   <description>Milspec knows what's important out there. It's that you don't get shot! And the best way not to get shot is not to get targeted in the first place. The Milspec RX 500-C scrambler will put the wool over your enemies' sensors, at a minimal cost to you or your ship's reactor! Fly safe, fly Milspec.</description>
+   <gfx_store>jammer1</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>3</cpu>
+   <energy>10</energy>
+   <ew_hide>11</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp Jammer">
+  <general>
+   <slot>utility</slot>
+   <mass>2</mass>
+   <price>40000</price>
+   <description>Unlike general purpose scrambler systems, jammers are heavy-duty pieces of hardware used for serious electronic warfare in space. A jammer works by actively interfering with nearby ships' sensor systems, rather than modulating the signature of the ship it's installed in. This is much more effective, but it also uses a lot more power. For this reason, jammer systems are inactive until needed, and must be activated manually.</description>
    <gfx_store>jammer0</gfx_store>
   </general>
   <specific type="jammer">
    <cpu>4</cpu>
-   <range>400</range>
-   <chance>20</chance>
+   <range>0</range>
+   <chance>0</chance>
    <energy>15</energy>
   </specific>
  </outfit>
@@ -1987,13 +2202,13 @@
    <slot>utility</slot>
    <mass>3</mass>
    <price>250000</price>
-   <description>This jammer follows strict military specifications, allowing it to deflect a greater amount of missiles at longer range than the civilian counterpart. With increased functionality, it also consumes more power than the civilian variant.</description>
+   <description>Does your work require you to venture into dangerous territory? Are you facing opposition your shields can't handle? The Milspec U-9 "Magus" jammer is what you need! Throw the bloodhounds off your scent with a press of a button. While your enemies are still trying to make sense out of the garble they're getting on their sensors, you will already have made your escape! Fly safe, fly Milspec.</description>
    <gfx_store>jammer1</gfx_store>
   </general>
   <specific type="jammer">
    <cpu>8</cpu>
-   <range>600</range>
-   <chance>40</chance>
+   <range>0</range>
+   <chance>0</chance>
    <energy>30</energy>
   </specific>
  </outfit>
