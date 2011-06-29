@@ -4,19 +4,20 @@
         <title>Naev Outfits Database</title>
     {% endblock head %}
     {% block body %}
-        {%- for slot, outfitsList in outfits|dictsort -%}
+    {%- for slot, outfitsList in outfits|dictsort -%}
+        <h1>{{slot}}</h1>
             <div class="class">
-                <h2>{{ slot }}</h2>
-                {% for outfitName, outfitDetails in outfitsList %}
+                {% for outfit in outfitsList %}
+                <h2>{{ outfit.name }}</h2>
                 <p>General:</p>
                 <ul>
-                    {% for genTag, genData in outfitDetails.general|dictsort %}
+                    {% for genTag, genData in outfit.general|dictsort %}
                     <li>{{genTag}}: {{genData}}</li>
                     {% endfor %}
                 </ul>
                 <p>Specific:</p>
                 <ul>
-                    {% for specTag, specData in outfitDetails.specific|dictsort %}
+                    {% for specTag, specData in outfit.specific|dictsort %}
                     <li>{{specTag}} : {{specData}}</li>
                     {% endfor %}
                 </ul>
