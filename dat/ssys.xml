@@ -1,36 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Systems>
- <ssys name="A">
-  <general>
-   <radius>10000.000000</radius>
-   <stars>400</stars>
-   <asteroids>0</asteroids>
-   <interference>0.000000</interference>
-   <nebula volatility="0.000000">0.000000</nebula>
-  </general>
-  <pos>
-   <x>-100.120242</x>
-   <y>488.117188</y>
-  </pos>
-  <assets/>
-  <jumps>
-   <jump target="B">
-    <flags>
-     <autopos/>
-    </flags>
-   </jump>
-   <jump target="E">
-    <flags>
-     <autopos/>
-    </flags>
-   </jump>
-   <jump target="Wahri">
-    <flags>
-     <autopos/>
-    </flags>
-   </jump>
-  </jumps>
- </ssys>
  <ssys name="Acheron">
   <general>
    <radius>17500.000000</radius>
@@ -492,7 +461,7 @@
    </jump>
   </jumps>
  </ssys>
- <ssys name="B">
+ <ssys name="Ariadus">
   <general>
    <radius>10000.000000</radius>
    <stars>400</stars>
@@ -501,17 +470,12 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>-47.683913</x>
-   <y>411.797333</y>
+   <x>-179.291827</x>
+   <y>516.218027</y>
   </pos>
   <assets/>
   <jumps>
-   <jump target="A">
-    <flags>
-     <autopos/>
-    </flags>
-   </jump>
-   <jump target="C">
+   <jump target="Wahri">
     <flags>
      <autopos/>
     </flags>
@@ -752,47 +716,6 @@
     </flags>
    </jump>
    <jump target="Triap">
-    <flags>
-     <autopos/>
-    </flags>
-   </jump>
-  </jumps>
- </ssys>
- <ssys name="C">
-  <general>
-   <radius>10000.000000</radius>
-   <stars>400</stars>
-   <asteroids>0</asteroids>
-   <interference>0.000000</interference>
-   <nebula volatility="0.000000">0.000000</nebula>
-  </general>
-  <pos>
-   <x>-66.607929</x>
-   <y>309.350520</y>
-  </pos>
-  <assets/>
-  <jumps>
-   <jump target="B">
-    <flags>
-     <autopos/>
-    </flags>
-   </jump>
-   <jump target="D">
-    <flags>
-     <autopos/>
-    </flags>
-   </jump>
-   <jump target="E">
-    <flags>
-     <autopos/>
-    </flags>
-   </jump>
-   <jump target="G">
-    <flags>
-     <autopos/>
-    </flags>
-   </jump>
-   <jump target="H">
     <flags>
      <autopos/>
     </flags>
@@ -1168,6 +1091,37 @@
    </jump>
   </jumps>
  </ssys>
+ <ssys name="Corvus">
+  <general>
+   <radius>10000.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-95.297711</x>
+   <y>483.294657</y>
+  </pos>
+  <assets/>
+  <jumps>
+   <jump target="Octantis">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Regulus">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Wahri">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+ </ssys>
  <ssys name="Cygnus">
   <general>
    <radius>24500.000000</radius>
@@ -1193,37 +1147,6 @@
   </assets>
   <jumps>
    <jump target="Delta Pavonis">
-    <flags>
-     <autopos/>
-    </flags>
-   </jump>
-  </jumps>
- </ssys>
- <ssys name="D">
-  <general>
-   <radius>10000.000000</radius>
-   <stars>400</stars>
-   <asteroids>0</asteroids>
-   <interference>0.000000</interference>
-   <nebula volatility="0.000000">0.000000</nebula>
-  </general>
-  <pos>
-   <x>3.293802</x>
-   <y>371.581129</y>
-  </pos>
-  <assets/>
-  <jumps>
-   <jump target="C">
-    <flags>
-     <autopos/>
-    </flags>
-   </jump>
-   <jump target="Dust">
-    <flags>
-     <autopos/>
-    </flags>
-   </jump>
-   <jump target="L">
     <flags>
      <autopos/>
     </flags>
@@ -1259,6 +1182,32 @@
     </flags>
    </jump>
    <jump target="Theras">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+ </ssys>
+ <ssys name="Daled">
+  <general>
+   <radius>10000.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-25.039635</x>
+   <y>246.979987</y>
+  </pos>
+  <assets/>
+  <jumps>
+   <jump target="Haven">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Tandar">
     <flags>
      <autopos/>
     </flags>
@@ -1434,7 +1383,7 @@
      <autopos/>
     </flags>
    </jump>
-   <jump target="J">
+   <jump target="Titus">
     <flags>
      <autopos/>
     </flags>
@@ -1707,12 +1656,12 @@
    <asset>Dust</asset>
   </assets>
   <jumps>
-   <jump target="D">
+   <jump target="Dendria">
     <flags>
      <autopos/>
     </flags>
    </jump>
-   <jump target="Dendria">
+   <jump target="Forlat">
     <flags>
      <autopos/>
     </flags>
@@ -1762,32 +1711,6 @@
     </flags>
    </jump>
    <jump target="Urbanus">
-    <flags>
-     <autopos/>
-    </flags>
-   </jump>
-  </jumps>
- </ssys>
- <ssys name="E">
-  <general>
-   <radius>10000.000000</radius>
-   <stars>400</stars>
-   <asteroids>0</asteroids>
-   <interference>0.000000</interference>
-   <nebula volatility="0.000000">0.000000</nebula>
-  </general>
-  <pos>
-   <x>-114.241829</x>
-   <y>392.704961</y>
-  </pos>
-  <assets/>
-  <jumps>
-   <jump target="A">
-    <flags>
-     <autopos/>
-    </flags>
-   </jump>
-   <jump target="C">
     <flags>
      <autopos/>
     </flags>
@@ -1855,7 +1778,7 @@
      <autopos/>
     </flags>
    </jump>
-   <jump target="J">
+   <jump target="Titus">
     <flags>
      <autopos/>
     </flags>
@@ -2036,27 +1959,6 @@
    </jump>
   </jumps>
  </ssys>
- <ssys name="F">
-  <general>
-   <radius>10000.000000</radius>
-   <stars>400</stars>
-   <asteroids>0</asteroids>
-   <interference>0.000000</interference>
-   <nebula volatility="0.000000">0.000000</nebula>
-  </general>
-  <pos>
-   <x>238.584571</x>
-   <y>280.786538</y>
-  </pos>
-  <assets/>
-  <jumps>
-   <jump target="Solene">
-    <flags>
-     <autopos/>
-    </flags>
-   </jump>
-  </jumps>
- </ssys>
  <ssys name="Father's Pride">
   <general>
    <radius>17500.000000</radius>
@@ -2162,6 +2064,37 @@
    </jump>
   </jumps>
  </ssys>
+ <ssys name="Forlat">
+  <general>
+   <radius>10000.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>3.293802</x>
+   <y>371.581129</y>
+  </pos>
+  <assets/>
+  <jumps>
+   <jump target="Dust">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Muran">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Tandar">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+ </ssys>
  <ssys name="Fortitude">
   <general>
    <radius>22750.000000</radius>
@@ -2243,32 +2176,6 @@
   </assets>
   <jumps>
    <jump target="Bastion">
-    <flags>
-     <autopos/>
-    </flags>
-   </jump>
-  </jumps>
- </ssys>
- <ssys name="G">
-  <general>
-   <radius>10000.000000</radius>
-   <stars>400</stars>
-   <asteroids>0</asteroids>
-   <interference>0.000000</interference>
-   <nebula volatility="0.000000">0.000000</nebula>
-  </general>
-  <pos>
-   <x>-121.708317</x>
-   <y>269.986666</y>
-  </pos>
-  <assets/>
-  <jumps>
-   <jump target="C">
-    <flags>
-     <autopos/>
-    </flags>
-   </jump>
-   <jump target="I">
     <flags>
      <autopos/>
     </flags>
@@ -2633,32 +2540,6 @@
    </jump>
   </jumps>
  </ssys>
- <ssys name="H">
-  <general>
-   <radius>10000.000000</radius>
-   <stars>400</stars>
-   <asteroids>0</asteroids>
-   <interference>0.000000</interference>
-   <nebula volatility="0.000000">0.000000</nebula>
-  </general>
-  <pos>
-   <x>-25.039635</x>
-   <y>246.979987</y>
-  </pos>
-  <assets/>
-  <jumps>
-   <jump target="C">
-    <flags>
-     <autopos/>
-    </flags>
-   </jump>
-   <jump target="Haven">
-    <flags>
-     <autopos/>
-    </flags>
-   </jump>
-  </jumps>
- </ssys>
  <ssys name="Hades">
   <general>
    <radius>21000.000000</radius>
@@ -2895,12 +2776,12 @@
    <asset>Haven</asset>
   </assets>
   <jumps>
-   <jump target="Gamel">
+   <jump target="Daled">
     <flags>
      <autopos/>
     </flags>
    </jump>
-   <jump target="H">
+   <jump target="Gamel">
     <flags>
      <autopos/>
     </flags>
@@ -3001,27 +2882,6 @@
    </jump>
   </jumps>
  </ssys>
- <ssys name="I">
-  <general>
-   <radius>10000.000000</radius>
-   <stars>400</stars>
-   <asteroids>0</asteroids>
-   <interference>0.000000</interference>
-   <nebula volatility="0.000000">0.000000</nebula>
-  </general>
-  <pos>
-   <x>-114.600678</x>
-   <y>214.919696</y>
-  </pos>
-  <assets/>
-  <jumps>
-   <jump target="G">
-    <flags>
-     <autopos/>
-    </flags>
-   </jump>
-  </jumps>
- </ssys>
  <ssys name="Ingot">
   <general>
    <radius>21000.000000</radius>
@@ -3112,37 +2972,6 @@
    </jump>
   </jumps>
  </ssys>
- <ssys name="J">
-  <general>
-   <radius>10000.000000</radius>
-   <stars>400</stars>
-   <asteroids>0</asteroids>
-   <interference>0.000000</interference>
-   <nebula volatility="0.000000">0.000000</nebula>
-  </general>
-  <pos>
-   <x>139.446006</x>
-   <y>316.062882</y>
-  </pos>
-  <assets/>
-  <jumps>
-   <jump target="Dendria">
-    <flags>
-     <autopos/>
-    </flags>
-   </jump>
-   <jump target="Elixir">
-    <flags>
-     <autopos/>
-    </flags>
-   </jump>
-   <jump target="New Haven">
-    <flags>
-     <autopos/>
-    </flags>
-   </jump>
-  </jumps>
- </ssys>
  <ssys name="Jervis">
   <general>
    <radius>13000.000000</radius>
@@ -3163,27 +2992,6 @@
     </flags>
    </jump>
    <jump target="Symm">
-    <flags>
-     <autopos/>
-    </flags>
-   </jump>
-  </jumps>
- </ssys>
- <ssys name="K">
-  <general>
-   <radius>10000.000000</radius>
-   <stars>400</stars>
-   <asteroids>0</asteroids>
-   <interference>0.000000</interference>
-   <nebula volatility="0.000000">0.000000</nebula>
-  </general>
-  <pos>
-   <x>-170.958494</x>
-   <y>501.218027</y>
-  </pos>
-  <assets/>
-  <jumps>
-   <jump target="Wahri">
     <flags>
      <autopos/>
     </flags>
@@ -3221,6 +3029,32 @@
     <flags/>
    </jump>
    <jump target="Nougat">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+ </ssys>
+ <ssys name="Kelvos">
+  <general>
+   <radius>10000.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-121.708317</x>
+   <y>269.986666</y>
+  </pos>
+  <assets/>
+  <jumps>
+   <jump target="Tandar">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Valt">
     <flags>
      <autopos/>
     </flags>
@@ -3373,27 +3207,6 @@
     </flags>
    </jump>
    <jump target="Urbanus">
-    <flags>
-     <autopos/>
-    </flags>
-   </jump>
-  </jumps>
- </ssys>
- <ssys name="L">
-  <general>
-   <radius>10000.000000</radius>
-   <stars>400</stars>
-   <asteroids>0</asteroids>
-   <interference>0.000000</interference>
-   <nebula volatility="0.000000">0.000000</nebula>
-  </general>
-  <pos>
-   <x>80.044889</x>
-   <y>365.039575</y>
-  </pos>
-  <assets/>
-  <jumps>
-   <jump target="D">
     <flags>
      <autopos/>
     </flags>
@@ -3740,6 +3553,27 @@
    </jump>
   </jumps>
  </ssys>
+ <ssys name="Muran">
+  <general>
+   <radius>10000.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>80.044889</x>
+   <y>365.039575</y>
+  </pos>
+  <assets/>
+  <jumps>
+   <jump target="Forlat">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+ </ssys>
  <ssys name="Myad">
   <general>
    <radius>17500.000000</radius>
@@ -3842,7 +3676,7 @@
    <asset>Red Eye</asset>
   </assets>
   <jumps>
-   <jump target="J">
+   <jump target="Titus">
     <flags>
      <autopos/>
     </flags>
@@ -3971,6 +3805,32 @@
    <jump target="Thirty Stars">
     <pos x="19272.562144" y="8011.507651"/>
     <flags/>
+   </jump>
+  </jumps>
+ </ssys>
+ <ssys name="Octantis">
+  <general>
+   <radius>10000.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-121.957878</x>
+   <y>386.917924</y>
+  </pos>
+  <assets/>
+  <jumps>
+   <jump target="Corvus">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Tandar">
+    <flags>
+     <autopos/>
+    </flags>
    </jump>
   </jumps>
  </ssys>
@@ -4534,6 +4394,32 @@
    </jump>
   </jumps>
  </ssys>
+ <ssys name="Regulus">
+  <general>
+   <radius>10000.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-40.932370</x>
+   <y>406.974802</y>
+  </pos>
+  <assets/>
+  <jumps>
+   <jump target="Corvus">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Tandar">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+ </ssys>
  <ssys name="Rhu">
   <general>
    <radius>28000.000000</radius>
@@ -4944,7 +4830,7 @@
      <autopos/>
     </flags>
    </jump>
-   <jump target="F">
+   <jump target="Vedalus">
     <flags>
      <autopos/>
     </flags>
@@ -5121,6 +5007,47 @@
   </pos>
   <assets/>
   <jumps/>
+ </ssys>
+ <ssys name="Tandar">
+  <general>
+   <radius>10000.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-66.607929</x>
+   <y>309.350520</y>
+  </pos>
+  <assets/>
+  <jumps>
+   <jump target="Daled">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Forlat">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Kelvos">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Octantis">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Regulus">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
  </ssys>
  <ssys name="Tarmak">
   <general>
@@ -5321,6 +5248,37 @@
     </flags>
    </jump>
    <jump target="Surano">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+ </ssys>
+ <ssys name="Titus">
+  <general>
+   <radius>10000.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>139.446006</x>
+   <y>316.062882</y>
+  </pos>
+  <assets/>
+  <jumps>
+   <jump target="Dendria">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Elixir">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="New Haven">
     <flags>
      <autopos/>
     </flags>
@@ -5629,6 +5587,27 @@
    </jump>
   </jumps>
  </ssys>
+ <ssys name="Valt">
+  <general>
+   <radius>10000.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-114.600678</x>
+   <y>214.919696</y>
+  </pos>
+  <assets/>
+  <jumps>
+   <jump target="Kelvos">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+ </ssys>
  <ssys name="Vanir">
   <general>
    <radius>20720.000000</radius>
@@ -5658,6 +5637,27 @@
     </flags>
    </jump>
    <jump target="Aesir">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+ </ssys>
+ <ssys name="Vedalus">
+  <general>
+   <radius>10000.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>238.584571</x>
+   <y>280.786538</y>
+  </pos>
+  <assets/>
+  <jumps>
+   <jump target="Solene">
     <flags>
      <autopos/>
     </flags>
@@ -5780,12 +5780,12 @@
    <asset>Virtual Pirate Medium</asset>
   </assets>
   <jumps>
-   <jump target="A">
+   <jump target="Ariadus">
     <flags>
      <autopos/>
     </flags>
    </jump>
-   <jump target="K">
+   <jump target="Corvus">
     <flags>
      <autopos/>
     </flags>
