@@ -1534,7 +1534,7 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
 
 
 /**
- * @brief Marks maps around a radius of currenty system as known.
+ * @brief Marks maps around a radius of currently system as known.
  *
  *    @param targ_sys System at center of the "known" circle.
  *    @param r Radius (in jumps) to mark as known.

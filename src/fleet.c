@@ -62,7 +62,7 @@ Fleet* fleet_get( const char* name )
 
 
 /**
- * @brief Creates a pilot belonging to afleet.
+ * @brief Creates a pilot belonging to a fleet.
  *
  *    @param flt Fleet to which pilot belongs to.
  *    @param plt Pilot to create.

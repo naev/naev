@@ -50,7 +50,7 @@
 
 
 /*
- * special hardcoded special effects
+ * special hard-coded special effects
  */
 /* shake aka rumble */
 static int shake_set = 0; /**< Is shake set? */
@@ -215,7 +215,7 @@ int spfx_get( char* name )
  *
  *    @return 0 on success.
  *
- * @todo Make spfx not hardcoded.
+ * @todo Make spfx not hard-coded.
  */
 int spfx_load (void)
 {

@@ -136,7 +136,7 @@ MissionData* mission_get( int id )
 
 
 /**
- * @brief Gets mission data frm name.
+ * @brief Gets mission data from a name.
  */
 MissionData* mission_getFromName( const char* name )
 {

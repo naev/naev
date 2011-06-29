@@ -568,7 +568,7 @@ static int music_luaInit (void)
 
 
 /**
- * @brief Quits the music Lua contrtol system.
+ * @brief Quits the music Lua control system.
  */
 static void music_luaQuit (void)
 {

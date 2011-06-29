@@ -105,7 +105,7 @@ glColour cFontNeutral   =  { .r = 1.0, .g = 0.9, .b = 0.0, .a = 1.  }; /**< Neut
 
 
 /**
- * @brief Changes colourspace from HSV to RGB.
+ * @brief Changes colour space from HSV to RGB.
  *
  * All values go from 0 to 1, except H which is 0-360.
  *
@@ -146,7 +146,7 @@ void col_hsv2rgb( double *r, double *g, double *b, double h, double s, double v 
 
 
 /**
- * @brief Changes colourspace from RGB to HSV.
+ * @brief Changes colour space from RGB to HSV.
  *
  * All values go from 0 to 1, except H which is 0-360.
  *

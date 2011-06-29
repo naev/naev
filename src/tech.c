@@ -328,7 +328,7 @@ static int tech_parseNodeData( tech_group_t *tech, xmlNodePtr parent )
             continue;
          }
 
-         /* Try to find hardcoded type. */
+         /* Try to find hard-coded type. */
          buf = xml_nodeProp( node, "type" );
          if (buf == NULL) {
             ret = 1;

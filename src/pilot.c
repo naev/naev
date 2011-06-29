@@ -68,7 +68,7 @@ static double pilot_commFade     = 5.; /**< Time for text above pilot to fade ou
 
 
 /*
- * prototyes
+ * prototypes
  */
 /* update. */
 static void pilot_hyperspace( Pilot* pilot, double dt );
@@ -327,7 +327,7 @@ unsigned int pilot_getNearestEnemy_size( const Pilot* p, int target_mass_LB, int
  *
  *    @param p Pilot to get the nearest enemy of.
  *    @param mass_factor parameter for target mass (0-1, 0.5 = current mass)
- *    @param health_factor parameter for target shields/armor (0-1, 0.5 = current health)
+ *    @param health_factor parameter for target shields/armour (0-1, 0.5 = current health)
  *    @param dps_factor parameter for target dps (0-1, 0.5 = current dps)
  *    @param range_factor weighting for range (typically >> 1)
  *    @return ID of his nearest enemy.
@@ -506,7 +506,7 @@ double pilot_getNearestAng( const Pilot *p, unsigned int *tp, double ang, int di
  * @brief Pulls a pilot out of the pilot_stack based on ID.
  *
  * It's a binary search ( O(logn) ) therefore it's pretty fast and can be
- *  abused all the time.  Maximum iterations is 32 on a platfom with 32 bit
+ *  abused all the time.  Maximum iterations is 32 on a platform with 32 bit
  *  unsigned ints.
  *
  *    @param id ID of the pilot to get.
@@ -1816,7 +1816,7 @@ credits_t pilot_modCredits( Pilot *p, credits_t amount )
 /**
  * @brief Initialize pilot.
  *
- *    @param pilot Pilot to initialise.
+ *    @param pilot Pilot to initialize.
  *    @param ship Ship pilot will be flying.
  *    @param name Pilot's name, if NULL ship's name will be used.
  *    @param faction Faction of the pilot.
@@ -2474,9 +2474,9 @@ double pilot_reldps( const Pilot* cur_pilot, const Pilot* p )
 }
 
 /**
- * @brief Gets the relative hp(combined shields and armor) between the current pilot and the specified target
+ * @brief Gets the relative hp(combined shields and armour) between the current pilot and the specified target
  *
- *    @param p the pilot whose shields/armor we will compare
+ *    @param p the pilot whose shields/armour we will compare
  *    @return A number from 0 to 1 mapping the relative HPs
  */
 double pilot_relhp( const Pilot* cur_pilot, const Pilot* p )

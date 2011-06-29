@@ -92,7 +92,7 @@ void expl_explode( double x, double y, double vx, double vy,
  *    @param radius Radius of the explosion.
  *    @param dtype Damage type.
  *    @param damage Damage amount.
- *    @param penetration Damage penetratior [0:1].
+ *    @param penetration Damage penetration [0:1].
  *    @param parent Parent of the explosion, 0 is none.
  *    @param mode Defines the explosion behaviour.
  */

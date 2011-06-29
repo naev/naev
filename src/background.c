@@ -84,7 +84,7 @@ static void bkg_sort( background_image_t *arr );
 
 
 /**
- * @brief Initilaizes background stars.
+ * @brief Initializes background stars.
  *
  *    @param n Number of stars to add (stars per 800x640 screen).
  */

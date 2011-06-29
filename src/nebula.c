@@ -800,7 +800,7 @@ static int saveNebula( float *map, const uint32_t w, const uint32_t h, const cha
 
 
 /**
- * @brief Loads the nebuale from file.
+ * @brief Loads the nebulae from file.
  *
  *    @param file Path of the nebula to load.  Relative to base directory.
  *    @return A SDL surface with the nebula.

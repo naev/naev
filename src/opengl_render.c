@@ -12,7 +12,7 @@
  * Relative:
  *  * Everything is drawn relative to the player, if it doesn't fit on screen
  *    it is clipped.
- *  * Origin (0., 0.) wouldbe ontop of the player.
+ *  * Origin (0., 0.) would be ontop of the player.
  *
  * Absolute:
  *  * Everything is drawn in "screen coordinates".
@@ -338,7 +338,7 @@ void gl_blitTexture(  const glTexture* texture,
  *
  *    @param ta Texture A to blit.
  *    @param tb Texture B to blit.
- *    @param intere Amount of interpolation to do.
+ *    @param inter Amount of interpolation to do.
  *    @param x X position of the texture on the screen.
  *    @param y Y position of the texture on the screen.
  *    @param tx X position within the texture.
@@ -506,7 +506,7 @@ static void gl_blitTextureInterpolate(  const glTexture* ta,
 
 
 /**
- * @brief Convertes ingame coordinates to screen coordinates.
+ * @brief Converts ingame coordinates to screen coordinates.
  *
  *    @param[out] nx New screen X coord.
  *    @param[out] ny New screen Y coord.
@@ -866,7 +866,7 @@ static void gl_drawCircleEmpty( const double cx, const double cy,
  *    @param cy Y position of the center in screen coordinates.
  *    @param r Radius of the circle.
  *    @param c Colour to use.
- *    @param filled yWhether or not it should be filled.
+ *    @param filled Whether or not it should be filled.
  */
 void gl_drawCircle( const double cx, const double cy,
       const double r, const glColour *c, int filled )

@@ -939,7 +939,7 @@ void gui_render( double dt )
 /**
  * @brief Initializes the radar.
  *
- *    @param circle Whether or not the radar is circlular.
+ *    @param circle Whether or not the radar is circular.
  */
 int gui_radarInit( int circle, int w, int h )
 {
@@ -1996,7 +1996,7 @@ void gui_updateFaction (void)
 /**
  * @brief Calls trigger functions depending on who the pilot is.
  *
- *    @param The pilot to act base dupon.
+ *    @param The pilot to act based upon.
  */
 void gui_setGeneric (Pilot* pilot)
 {

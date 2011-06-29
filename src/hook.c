@@ -592,7 +592,7 @@ unsigned int hook_addTimerMisn( unsigned int parent, const char *func, double ms
  *
  *    @param parent Hook event parent.
  *    @param func Function to run when hook is triggered.
- *    @param ms Miliseconds to wait.
+ *    @param ms Milliseconds to wait.
  *    @return The new hook identifier.
  */
 unsigned int hook_addTimerEvt( unsigned int parent, const char *func, double ms )

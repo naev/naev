@@ -5,7 +5,7 @@
 /**
  * @file dev_ship.c
  *
- * @brief Handles the ship developement routines.
+ * @brief Handles the ship development routines.
  */
 
 #include "dev_ship.h"

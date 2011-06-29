@@ -24,7 +24,7 @@
  *
  *    @param[in] at Texture a.
  *    @param[in] asx Position of x of sprite a.
- *    @param[in] asy Position of y of sprita a.
+ *    @param[in] asy Position of y of sprite a.
  *    @param[in] ap Position in space of sprite a.
  *    @param[in] bt Texture b.
  *    @param[in] bsx Position of x of sprite b.
