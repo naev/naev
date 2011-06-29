@@ -162,49 +162,53 @@ class fashion:
         if self.__xmlData is None:
             self.__xmlData = etree.parse(path.join(xmlPath, "outfit.xml"))
 
-        data = self.__xmlData.findall('outfit')
-        self.outfits = {}
-        # we have here 2 parts: general and specific
-        for outfit in data:
-            specificType = outfit.find('specific').get('type')
-            if specificType in self.__typeBlackList:
+        self.slots={}
+
+    def _parseOutfit(self, outfitObj):
+        outfitName = outfitObj.get('name')
+        outfitGeneral, outfitSpecific = {}, {}
+
+        for general in outfitObj.find('general').iterchildren():
+            outfitGeneral.update({general.tag: general.text})
+
+        for specific in outfitObj.find('specific').iterchildren():
+            if specific.tag in self.__tagsBlackList:
                 continue
+            if len(specific.attrib) < 1:
+                tmp={specific.tag: specific.text}
+            else:
+                tmp={
+                        specific.tag: {
+                            'attribs': specific.attrib,
+                            'text': specific.text
+                            }
+                        }
+            outfitSpecific.update(tmp)
+            del(tmp)
 
-            outfitName = outfit.get('name')
-            outfitGeneral, outfitSpecific = {}, {},
-
-            for general in outfit.find('general').iterchildren():
-                outfitGeneral.update({general.tag: general.text})
-
-            for specific in outfit.find('specific').iterchildren():
-                if specific.tag in self.__tagsBlackList:
-                    continue
-                if specific.tag == 'damage':
-                    tmp={specific.tag:
-                            {   'type': specific.get('type'),
-                                'penetrate': specific.get('penetrate'),
-                                'text': specific.text}}
-                else:
-                    tmp={specific.tag: specific.text}
-                outfitSpecific.update(tmp)
-                del(tmp)
-            self.outfits.update({outfitName:
-                   {'specific': outfitSpecific,
-                    'general': outfitGeneral}})
-            del(outfitSpecific,outfitGeneral)
+        return {
+                'name': outfitName,
+                'general': outfitGeneral,
+                'specific': outfitSpecific
+                }
 
     def groupBySlots(self):
-        slot={}
-        for outfitName, outfit in self.outfits.iteritems():
-            if not slot.has_key(outfit['general']['slot']):
-                slot.update({outfit['general']['slot']: []})
-            slot[outfit['general']['slot']].append((outfitName, outfit))
-        return slot
+        uglyMess = self.__xmlData.findall('outfit/general')
+        for item in uglyMess:
+            if item.find('slot') is not None:
+                mySlot = item.findtext('slot')
+            else:
+                mySlot = 'NA'
+            if not self.slots.has_key(mySlot):
+                self.slots.update({mySlot: []})
+            self.slots[mySlot].append(self._parseOutfit(item.getparent()))
 
-    def iterSlot(self,slotName):
-        for outfitName, outfit in self.outfits.iteritems():
-            if outfit['general']['slot'] == slotName:
-                yield (outfitName, outfit)
+        return self.slots
+
+    def iterSlot(self, mySlotName):
+        for slotName, outfit in self.slots:
+            if slotName == mySlotName:
+                yield outfit['name']
 
 
 
@@ -260,11 +264,12 @@ if __name__ == "__main__":
         mkdir(outfitsStore, 0755)
     myTpl.stream(outfits=panty.groupBySlots(), date=date).dump(outfitsStore+'/index.html')
 
-    for (outfitName, outfitDetails) in panty.outfits.iteritems():
-        myTpl = env.get_template('outfit.html')
-        myStorage = path.normpath("%s/outfits/%s.html") % (
-                                                            storagePath,
-                                                            outfitName
-                                                         )
-        myTpl.stream(outfitName=outfitName, outfitData=outfitDetails,
-                     date=date).dump(myStorage)
+    for (slotName, outfitsList) in panty.slots.iteritems():
+        for outfitDetails in outfitsList:
+            myTpl = env.get_template('outfit.html')
+            myStorage = path.normpath("%s/outfits/%s.html") % (
+                    storagePath,
+                    outfitDetails['name']
+                )
+            myTpl.stream(slotName=slotName, outfitData=outfitDetails,
+                    date=date).dump(myStorage)
