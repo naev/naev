@@ -324,8 +324,11 @@ static int npc_compare( const void *arg1, const void *arg2 )
       return ret;
 
    /* Compare ID. */
-   ret = npc1->id - npc2->id;
-   return ret;
+   if (npc1->id > npc2->id)
+      return +1;
+   else if (npc1->id < npc2->id)
+      return -1;
+   return 0;
 }
 
 
