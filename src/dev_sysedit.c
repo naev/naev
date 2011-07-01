@@ -1428,6 +1428,7 @@ static void sysedit_genTechList( unsigned int wid )
             if (!tech_hasItem( p->tech, tmp[i] ))
                lack[n++] = strdup( tmp[i] );
       }
+      free(tmp);
    }
    else
       lack = tech_getAllItemNames( &n );
