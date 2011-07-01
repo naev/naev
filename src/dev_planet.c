@@ -127,7 +127,8 @@ static int dpl_savePlanet( xmlTextWriterPtr writer, const Planet *p )
    }
 
    /* Tech. */
-   tech_groupWrite( writer, p->tech );
+   if (planet_hasService( p, PLANET_SERVICE_LAND ))
+      tech_groupWrite( writer, p->tech );
 
    xmlw_endElem( writer ); /** "planet" */
 
