@@ -1705,7 +1705,7 @@
    <gfx_store>solar</gfx_store>
   </general>
   <specific type="modification">
-   <energy_regen>60</energy_regen>
+   <energy_regen>1.0</energy_regen>
   </specific>
  </outfit>
  <outfit name="Reactor Class I">
@@ -1720,7 +1720,7 @@
   <specific type="modification">
    <cpu>-5</cpu>
    <energy>20</energy>
-   <energy_regen>280</energy_regen>
+   <energy_regen>4.7</energy_regen>
   </specific>
  </outfit>
  <outfit name="Reactor Class II">
@@ -1735,7 +1735,7 @@
   <specific type="modification">
    <cpu>-10</cpu>
    <energy>60</energy>
-   <energy_regen>630</energy_regen>
+   <energy_regen>10.5</energy_regen>
   </specific>
  </outfit>
  <outfit name="Reactor Class III">
@@ -1750,7 +1750,7 @@
   <specific type="modification">
    <cpu>-20</cpu>
    <energy>180</energy>
-   <energy_regen>1420</energy_regen>
+   <energy_regen>23.7</energy_regen>
   </specific>
  </outfit>
 <!-- Shield and Armour-Related Outfits -->
@@ -1818,7 +1818,7 @@
   <specific type="modification">
    <cpu>-5</cpu>
    <shield>15</shield>
-   <shield_regen>30</shield_regen>
+   <shield_regen>0.5</shield_regen>
    <energy_regen>-50</energy_regen>
   </specific>
  </outfit>
@@ -1861,7 +1861,7 @@
   </general>
   <specific type="modification">
    <armour_rel>20</armour_rel>
-   <armour_regen>60</armour_regen>
+   <armour_regen>1.0</armour_regen>
    <mass_rel>20</mass_rel>
   </specific>
  </outfit>
@@ -1875,7 +1875,7 @@
    <description>This low maintenance droid crew will scour your ship to repair any damages caused by space hazards. They are very small and able to work both on the interior or exterior of the ship. Power is drawn from the ship to feed the robots, although the load is generally very low compared to the benefits of having a robotic repair crew.</description>
   </general>
   <specific type="modification">
-   <armour_regen>100</armour_regen>
+   <armour_regen>1.7</armour_regen>
    <energy>-5</energy>
    <energy_regen>-40</energy_regen>
   </specific>
