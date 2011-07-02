@@ -77,7 +77,7 @@ function enter()
         target:control()
         target:rename("Credence")
         target:setHilight(true)
-        target:setVisible(true)
+        target:setVisplayer(true)
         hidle = hook.pilot(target, "idle", "targetIdle")
         hook.pilot(target, "exploded", "targetExploded")
         hook.pilot(target, "board", "targetBoard")
@@ -128,5 +128,9 @@ function land()
 end
 
 function abort ()
+   if target then
+      target:setHilight(false)
+      target:setVisplayer(false)
+   end
    misn.finish(false)
 end
