@@ -1506,11 +1506,6 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
          WARN("Outfit '%s' has unknown node '%s'",temp->name, node->name);
    } while (xml_nextNode(node));
 
-   /* Process some variables. */
-   temp->u.mod.armour_regen /= 60.;
-   temp->u.mod.shield_regen /= 60.;
-   temp->u.mod.energy_regen /= 60.;
-
    /* Set default outfit size if necessary. */
    if (temp->slot.size == OUTFIT_SLOT_SIZE_NA)
       outfit_setDefaultSize( temp );

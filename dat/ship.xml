@@ -20,9 +20,9 @@
    <shield>100</shield>
    <armour>120</armour>
    <energy>320</energy>
-   <shield_regen>80</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>1000</energy_regen>
+   <shield_regen>1.3</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>16.7</energy_regen>
   </health>
   <characteristics>
    <cpu>18</cpu>
@@ -59,9 +59,9 @@
    <shield>140</shield>
    <armour>100</armour>
    <energy>440</energy>
-   <shield_regen>120</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>1100</energy_regen>
+   <shield_regen>2.0</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>18.3</energy_regen>
   </health>
   <characteristics>
    <cpu>20</cpu>
@@ -97,9 +97,9 @@
    <shield>130</shield>
    <armour>50</armour>
    <energy>360</energy>
-   <shield_regen>120</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>800</energy_regen>
+   <shield_regen>2.0</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>13.3</energy_regen>
   </health>
   <characteristics>
    <cpu>50</cpu>
@@ -140,9 +140,9 @@
    <shield>180</shield>
    <armour>100</armour>
    <energy>550</energy>
-   <shield_regen>140</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>1400</energy_regen>
+   <shield_regen>2.3</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>23.3</energy_regen>
   </health>
   <characteristics>
    <cpu>34</cpu>
@@ -180,9 +180,9 @@
    <shield>140</shield>
    <armour>80</armour>
    <energy>600</energy>
-   <shield_regen>240</shield_regen>
-   <armour_regen>420</armour_regen>
-   <energy_regen>1200</energy_regen>
+   <shield_regen>4.0</shield_regen>
+   <armour_regen>7.0</armour_regen>
+   <energy_regen>20.0</energy_regen>
   </health>
   <characteristics>
    <cpu>70</cpu>
@@ -219,9 +219,9 @@
    <shield>140</shield>
    <armour>180</armour>
    <energy>405</energy>
-   <shield_regen>90</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>1000</energy_regen>
+   <shield_regen>1.5</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>16.7</energy_regen>
   </health>
   <characteristics>
    <cpu>30</cpu>
@@ -263,9 +263,9 @@
    <shield>200</shield>
    <armour>140</armour>
    <energy>580</energy>
-   <shield_regen>120</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>1200</energy_regen>
+   <shield_regen>2.0</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>20.0</energy_regen>
   </health>
   <characteristics>
    <cpu>35</cpu>
@@ -308,9 +308,9 @@
    <shield>480</shield>
    <armour>520</armour>
    <energy>970</energy>
-   <shield_regen>250</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>2600</energy_regen>
+   <shield_regen>4.2</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>43.3</energy_regen>
   </health>
   <characteristics>
    <cpu>58</cpu>
@@ -355,9 +355,9 @@
    <shield>480</shield>
    <armour>460</armour>
    <energy>970</energy>
-   <shield_regen>250</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>2600</energy_regen>
+   <shield_regen>4.2</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>43.3</energy_regen>
   </health>
   <characteristics>
    <cpu>58</cpu>
@@ -403,9 +403,9 @@
    <shield>320</shield>
    <armour>400</armour>
    <energy>600</energy>
-   <shield_regen>100</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>1600</energy_regen>
+   <shield_regen>1.7</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>26.7</energy_regen>
   </health>
   <characteristics>
    <cpu>43</cpu>
@@ -453,9 +453,9 @@
    <shield>180</shield>
    <armour>120</armour>
    <energy>500</energy>
-   <shield_regen>130</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>1200</energy_regen>
+   <shield_regen>2.2</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>20.0</energy_regen>
   </health>
   <characteristics>
    <cpu>30</cpu>
@@ -497,9 +497,9 @@
    <shield>220</shield>
    <armour>160</armour>
    <energy>650</energy>
-   <shield_regen>140</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>1500</energy_regen>
+   <shield_regen>2.3</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>25.0</energy_regen>
   </health>
   <characteristics>
    <cpu>35</cpu>
@@ -542,9 +542,9 @@
    <shield>210</shield>
    <armour>140</armour>
    <energy>580</energy>
-   <shield_regen>130</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>1340</energy_regen>
+   <shield_regen>2.2</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>22.3</energy_regen>
   </health>
   <characteristics>
    <cpu>32</cpu>
@@ -583,9 +583,9 @@
    <shield>210</shield>
    <armour>140</armour>
    <energy>580</energy>
-   <shield_regen>130</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>1340</energy_regen>
+   <shield_regen>2.2</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>22.3</energy_regen>
   </health>
   <characteristics>
    <cpu>32</cpu>
@@ -623,9 +623,9 @@
    <shield>210</shield>
    <armour>140</armour>
    <energy>580</energy>
-   <shield_regen>130</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>1340</energy_regen>
+   <shield_regen>2.2</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>22.3</energy_regen>
   </health>
   <characteristics>
    <cpu>32</cpu>
@@ -665,9 +665,9 @@
    <shield>210</shield>
    <armour>140</armour>
    <energy>580</energy>
-   <shield_regen>130</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>1340</energy_regen>
+   <shield_regen>2.2</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>22.3</energy_regen>
   </health>
   <characteristics>
    <cpu>32</cpu>
@@ -706,9 +706,9 @@
    <shield>280</shield>
    <armour>200</armour>
    <energy>730</energy>
-   <shield_regen>150</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>1960</energy_regen>
+   <shield_regen>2.5</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>32.7</energy_regen>
   </health>
   <characteristics>
    <cpu>40</cpu>
@@ -752,9 +752,9 @@
    <shield>280</shield>
    <armour>200</armour>
    <energy>730</energy>
-   <shield_regen>150</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>1960</energy_regen>
+   <shield_regen>2.5</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>32.7</energy_regen>
   </health>
   <characteristics>
    <cpu>40</cpu>
@@ -798,9 +798,9 @@
    <shield>300</shield>
    <armour>200</armour>
    <energy>730</energy>
-   <shield_regen>160</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>1960</energy_regen>
+   <shield_regen>2.7</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>32.7</energy_regen>
   </health>
   <characteristics>
    <cpu>42</cpu>
@@ -844,9 +844,9 @@
    <shield>180</shield>
    <armour>320</armour>
    <energy>800</energy>
-   <shield_regen>90</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>1200</energy_regen>
+   <shield_regen>1.5</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>20.0</energy_regen>
   </health>
   <characteristics>
    <cpu>30</cpu>
@@ -890,9 +890,9 @@
    <shield>180</shield>
    <armour>320</armour>
    <energy>800</energy>
-   <shield_regen>85</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>1200</energy_regen>
+   <shield_regen>1.4</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>20.0</energy_regen>
   </health>
   <characteristics>
    <cpu>28</cpu>
@@ -936,9 +936,9 @@
    <shield>220</shield>
    <armour>300</armour>
    <energy>820</energy>
-   <shield_regen>95</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>1250</energy_regen>
+   <shield_regen>1.6</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>20.8</energy_regen>
   </health>
   <characteristics>
    <cpu>32</cpu>
@@ -983,9 +983,9 @@
    <shield>320</shield>
    <armour>180</armour>
    <energy>680</energy>
-   <shield_regen>160</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>1800</energy_regen>
+   <shield_regen>2.7</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>30.0</energy_regen>
   </health>
   <characteristics>
    <cpu>45</cpu>
@@ -1030,9 +1030,9 @@
    <shield>200</shield>
    <armour>380</armour>
    <energy>720</energy>
-   <shield_regen>90</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>1400</energy_regen>
+   <shield_regen>1.5</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>23.3</energy_regen>
   </health>
   <characteristics>
    <cpu>42</cpu>
@@ -1075,9 +1075,9 @@
    <shield>200</shield>
    <armour>380</armour>
    <energy>720</energy>
-   <shield_regen>90</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>1400</energy_regen>
+   <shield_regen>1.5</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>23.3</energy_regen>
   </health>
   <characteristics>
    <cpu>42</cpu>
@@ -1120,9 +1120,9 @@
    <shield>200</shield>
    <armour>380</armour>
    <energy>720</energy>
-   <shield_regen>90</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>1400</energy_regen>
+   <shield_regen>1.5</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>23.3</energy_regen>
   </health>
   <characteristics>
    <cpu>37</cpu>
@@ -1164,9 +1164,9 @@
    <shield>240</shield>
    <armour>360</armour>
    <energy>720</energy>
-   <shield_regen>100</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>1300</energy_regen>
+   <shield_regen>1.7</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>21.7</energy_regen>
   </health>
   <characteristics>
    <cpu>43</cpu>
@@ -1211,9 +1211,9 @@
    <shield>410</shield>
    <armour>430</armour>
    <energy>1125</energy>
-   <shield_regen>200</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>2300</energy_regen>
+   <shield_regen>3.3</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>38.3</energy_regen>
   </health>
   <characteristics>
    <cpu>54</cpu>
@@ -1260,9 +1260,9 @@
    <shield>410</shield>
    <armour>430</armour>
    <energy>1125</energy>
-   <shield_regen>200</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>2300</energy_regen>
+   <shield_regen>3.3</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>38.3</energy_regen>
   </health>
   <characteristics>
    <cpu>54</cpu>
@@ -1308,9 +1308,9 @@
    <shield>410</shield>
    <armour>390</armour>
    <energy>1175</energy>
-   <shield_regen>220</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>2500</energy_regen>
+   <shield_regen>3.7</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>41.7</energy_regen>
   </health>
   <characteristics>
    <cpu>56</cpu>
@@ -1358,9 +1358,9 @@
    <shield>450</shield>
    <armour>300</armour>
    <energy>960</energy>
-   <shield_regen>220</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>2450</energy_regen>
+   <shield_regen>3.7</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>40.8</energy_regen>
   </health>
   <characteristics>
    <cpu>55</cpu>
@@ -1406,9 +1406,9 @@
    <shield>480</shield>
    <armour>340</armour>
    <energy>1064</energy>
-   <shield_regen>240</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>2596</energy_regen>
+   <shield_regen>4.0</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>43.3</energy_regen>
   </health>
   <characteristics>
    <cpu>60</cpu>
@@ -1454,9 +1454,9 @@
    <shield>480</shield>
    <armour>340</armour>
    <energy>1064</energy>
-   <shield_regen>240</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>2596</energy_regen>
+   <shield_regen>4.0</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>43.3</energy_regen>
   </health>
   <characteristics>
    <cpu>60</cpu>
@@ -1501,9 +1501,9 @@
    <shield>500</shield>
    <armour>350</armour>
    <energy>1064</energy>
-   <shield_regen>260</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>2596</energy_regen>
+   <shield_regen>4.3</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>43.3</energy_regen>
   </health>
   <characteristics>
    <cpu>63</cpu>
@@ -1549,9 +1549,9 @@
    <shield>500</shield>
    <armour>350</armour>
    <energy>1064</energy>
-   <shield_regen>250</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>2596</energy_regen>
+   <shield_regen>4.2</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>43.3</energy_regen>
   </health>
   <characteristics>
    <cpu>64</cpu>
@@ -1598,9 +1598,9 @@
    <shield>520</shield>
    <armour>690</armour>
    <energy>1800</energy>
-   <shield_regen>260</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>3000</energy_regen>
+   <shield_regen>4.3</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>50.0</energy_regen>
   </health>
   <characteristics>
    <cpu>75</cpu>
@@ -1648,9 +1648,9 @@
    <shield>520</shield>
    <armour>690</armour>
    <energy>1800</energy>
-   <shield_regen>260</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>3000</energy_regen>
+   <shield_regen>4.3</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>50.0</energy_regen>
   </health>
   <characteristics>
    <cpu>75</cpu>
@@ -1699,9 +1699,9 @@
    <shield>740</shield>
    <armour>410</armour>
    <energy>1600</energy>
-   <shield_regen>300</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>3000</energy_regen>
+   <shield_regen>5.0</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>50.0</energy_regen>
   </health>
   <characteristics>
    <cpu>90</cpu>
@@ -1749,9 +1749,9 @@
    <shield>620</shield>
    <armour>460</armour>
    <energy>1410</energy>
-   <shield_regen>280</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>3312</energy_regen>
+   <shield_regen>4.7</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>55.2</energy_regen>
   </health>
   <characteristics>
    <cpu>83</cpu>
@@ -1799,9 +1799,9 @@
    <shield>620</shield>
    <armour>460</armour>
    <energy>1410</energy>
-   <shield_regen>280</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>3312</energy_regen>
+   <shield_regen>4.7</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>55.2</energy_regen>
   </health>
   <characteristics>
    <cpu>83</cpu>
@@ -1849,9 +1849,9 @@
    <shield>650</shield>
    <armour>480</armour>
    <energy>1440</energy>
-   <shield_regen>290</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>3360</energy_regen>
+   <shield_regen>4.8</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>56.0</energy_regen>
   </health>
   <characteristics>
    <cpu>84</cpu>
@@ -1901,9 +1901,9 @@
    <shield>1100</shield>
    <armour>600</armour>
    <energy>2400</energy>
-   <shield_regen>360</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>4480</energy_regen>
+   <shield_regen>6.0</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>74.7</energy_regen>
   </health>
   <characteristics>
    <cpu>170</cpu>
@@ -1953,9 +1953,9 @@
    <shield>1200</shield>
    <armour>560</armour>
    <energy>2450</energy>
-   <shield_regen>380</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>4320</energy_regen>
+   <shield_regen>6.3</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>72.0</energy_regen>
   </health>
   <characteristics>
    <cpu>180</cpu>
@@ -2006,9 +2006,9 @@
    <shield>950</shield>
    <armour>1200</armour>
    <energy>2400</energy>
-   <shield_regen>300</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>4500</energy_regen>
+   <shield_regen>5.0</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>75.0</energy_regen>
   </health>
   <characteristics>
    <cpu>130</cpu>
@@ -2062,9 +2062,9 @@
    <shield>1200</shield>
    <armour>800</armour>
    <energy>2700</energy>
-   <shield_regen>320</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>5120</energy_regen>
+   <shield_regen>5.3</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>85.3</energy_regen>
   </health>
   <characteristics>
    <cpu>150</cpu>
@@ -2117,9 +2117,9 @@
    <shield>1200</shield>
    <armour>800</armour>
    <energy>2700</energy>
-   <shield_regen>320</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>5120</energy_regen>
+   <shield_regen>5.3</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>85.3</energy_regen>
   </health>
   <characteristics>
    <cpu>150</cpu>
@@ -2172,9 +2172,9 @@
    <shield>1260</shield>
    <armour>840</armour>
    <energy>2700</energy>
-   <shield_regen>340</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>5120</energy_regen>
+   <shield_regen>5.7</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>85.3</energy_regen>
   </health>
   <characteristics>
    <cpu>157</cpu>
@@ -2228,9 +2228,9 @@
    <shield>1150</shield>
    <armour>740</armour>
    <energy>1800</energy>
-   <shield_regen>300</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>4000</energy_regen>
+   <shield_regen>5.0</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>66.7</energy_regen>
   </health>
   <characteristics>
    <cpu>120</cpu>
@@ -2280,9 +2280,9 @@
    <shield>1400</shield>
    <armour>800</armour>
    <energy>3100</energy>
-   <shield_regen>340</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>5300</energy_regen>
+   <shield_regen>5.7</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>88.3</energy_regen>
   </health>
   <characteristics>
    <cpu>160</cpu>
@@ -2333,9 +2333,9 @@
    <shield>1150</shield>
    <armour>740</armour>
    <energy>1800</energy>
-   <shield_regen>300</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>4000</energy_regen>
+   <shield_regen>5.0</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>66.7</energy_regen>
   </health>
   <characteristics>
    <cpu>120</cpu>
@@ -2385,9 +2385,9 @@
    <shield>1600</shield>
    <armour>1000</armour>
    <energy>4000</energy>
-   <shield_regen>350</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>5440</energy_regen>
+   <shield_regen>5.8</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>90.7</energy_regen>
   </health>
   <characteristics>
    <cpu>150</cpu>
@@ -2442,9 +2442,9 @@
    <shield>1600</shield>
    <armour>1000</armour>
    <energy>4000</energy>
-   <shield_regen>320</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>5440</energy_regen>
+   <shield_regen>5.3</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>90.7</energy_regen>
   </health>
   <characteristics>
    <cpu>140</cpu>
@@ -2500,9 +2500,9 @@
    <shield>2100</shield>
    <armour>1300</armour>
    <energy>4800</energy>
-   <shield_regen>450</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>7100</energy_regen>
+   <shield_regen>7.5</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>118.3</energy_regen>
   </health>
   <characteristics>
    <cpu>240</cpu>
@@ -2560,9 +2560,9 @@
    <shield>8000</shield>
    <armour>5000</armour>
    <energy>10000</energy>
-   <shield_regen>200</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>10000</energy_regen>
+   <shield_regen>3.3</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>166.7</energy_regen>
   </health>
   <characteristics>
    <cpu>500</cpu>
@@ -2614,9 +2614,9 @@
    <shield>9000</shield>
    <armour>15000</armour>
    <energy>5000</energy>
-   <shield_regen>700</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>10000</energy_regen>
+   <shield_regen>11.7</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>166.7</energy_regen>
   </health>
   <characteristics>
    <cpu>180</cpu>
@@ -2662,9 +2662,9 @@
    <shield>9000</shield>
    <armour>15000</armour>
    <energy>5000</energy>
-   <shield_regen>700</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>10000</energy_regen>
+   <shield_regen>11.7</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>166.7</energy_regen>
   </health>
   <characteristics>
    <cpu>180</cpu>
@@ -2710,9 +2710,9 @@
    <shield>9000</shield>
    <armour>15000</armour>
    <energy>5000</energy>
-   <shield_regen>700</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>10000</energy_regen>
+   <shield_regen>11.7</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>166.7</energy_regen>
   </health>
   <characteristics>
    <cpu>180</cpu>
@@ -2758,9 +2758,9 @@
    <shield>9000</shield>
    <armour>15000</armour>
    <energy>5000</energy>
-   <shield_regen>700</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>10000</energy_regen>
+   <shield_regen>11.7</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>166.7</energy_regen>
   </health>
   <characteristics>
    <cpu>180</cpu>
@@ -2806,9 +2806,9 @@
    <shield>400</shield>
    <armour>400</armour>
    <energy>730</energy>
-   <shield_regen>150</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>1960</energy_regen>
+   <shield_regen>2.5</shield_regen>
+   <armour_regen>0.0</armour_regen>
+   <energy_regen>32.7</energy_regen>
   </health>
   <characteristics>
    <cpu>40</cpu>
