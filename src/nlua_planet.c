@@ -226,12 +226,12 @@ static int planetL_cur( lua_State *L )
 /**
  * @brief Gets a planet.
  *
- * Possible values of param:
- *    - bool : Gets a random planet.
- *    - faction : Gets random planet belonging to faction matching the number.
- *    - string : Gets the planet by name.
+ * Possible values of param: <br/>
+ *    - bool : Gets a random planet. <br/>
+ *    - faction : Gets random planet belonging to faction matching the number. <br/>
+ *    - string : Gets the planet by name. <br/>
  *    - table : Gets random planet belonging to any of the factions in the
- *               table.
+ *               table. <br/>
  *
  * @usage p,s = planet.get( "Anecu" ) -- Gets planet by name
  * @usage p,s = planet.get( faction.get( "Empire" ) ) -- Gets random Empire planet

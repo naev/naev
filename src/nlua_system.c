@@ -238,9 +238,9 @@ static int systemL_cur( lua_State *L )
 /**
  * @brief Gets a system.
  *
- * Behaves differently depending on what you pass as param:
- *    - string : Gets the system by name.
- *    - planet : Gets the system by planet.
+ * Behaves differently depending on what you pass as param: <br/>
+ *    - string : Gets the system by name. <br/>
+ *    - planet : Gets the system by planet. <br/>
  *
  * @usage sys = system.get( p ) -- Gets system where planet 'p' is located.
  * @usage sys = system.get( "Gamma Polaris" ) -- Gets the system by name.
