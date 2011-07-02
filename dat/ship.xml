@@ -529,7 +529,7 @@
   <sound>engine</sound>
   <class>Fighter</class>
   <price>280000</price>
-  <fabricator>House Soromid</fabricator>
+  <fabricator>Soromid</fabricator>
   <license>Light Combat Vessel License</license>
   <description>A newer Nexus Shipyards design, the Shark is an agile light fighter designed for in-system patrolling. While it's not as capable as its larger relative, the Lancelot, it's still an effective addition to any fleet.</description>
   <movement>
@@ -693,7 +693,7 @@
   <sound>engine</sound>
   <class>Fighter</class>
   <price>500000</price>
-  <fabricator>House Soromid</fabricator>
+  <fabricator>Soromid</fabricator>
   <license>Light Combat Vessel License</license>
   <description>One of the prize heavy fighters of Nexus Shipyards. The Lancelot was originally a classified design for the Empire military, but its existence was revealed during an aborted test flight. Now a modified version is available for civilians, though it doesn't quite match the original specifications. It is used by security agencies all over the universe for its reliability and availability. Proudly enforcing your security since UST 1132.</description>
   <movement>
@@ -1017,7 +1017,7 @@
   <sound>engine</sound>
   <class>Bomber</class>
   <price>600000</price>
-  <fabricator>House Soromid</fabricator>
+  <fabricator>Soromid</fabricator>
   <license>Light Combat Vessel License</license>
   <description>Commonly referred to as the little Goddard, the Ancestor also has its roots in the primitive flying machines used by men many ages ago. Unlike the Goddard though, the electronics are done by House Dvaered, making it considerably inferior in that area.</description>
   <movement>
@@ -1393,7 +1393,7 @@
   <sound>engine</sound>
   <class>Corvette</class>
   <price>900000</price>
-  <fabricator>House Soromid</fabricator>
+  <fabricator>Soromid</fabricator>
   <license>Medium Combat Vessel License</license>
   <description>A very versatile combat ship. Nexus defines the Admonisher as a compromise between the ruggedness of the Pacifier and the agility of the Lancelot. Overall a very solid fighter.</description>
   <movement>
@@ -1736,7 +1736,7 @@
   <sound>engine</sound>
   <class>Destroyer</class>
   <price>1500000</price>
-  <fabricator>House Soromid</fabricator>
+  <fabricator>Soromid</fabricator>
   <license>Medium Combat Vessel License</license>
   <description>The Pacifier is one of the older and trustier designs of Nexus Shipyards. It was designed primarily as a border-patrol vessel, and as such it is able to withstand heavy punishment from raiding parties. The Pacifier features high fuel capacity to facilitate lengthy patrol routes.</description>
   <movement>
@@ -2049,7 +2049,7 @@
   <sound>engine</sound>
   <class>Cruiser</class>
   <price>7500000</price>
-  <fabricator>House Soromid</fabricator>
+  <fabricator>Soromid</fabricator>
   <license>Heavy Combat Vessel License</license>
   <description>The Hawking is the flagship vessel of Nexus Shipyards. A large cruiser designed for extended engagements, it is widely used by the Empire to exert control over their territories. In terms of raw firepower, the Hawking is second only to the flagship of House Goddard, though its narrower frame allows it to present a smaller target to the enemy.</description>
   <movement>
@@ -2215,7 +2215,7 @@
   <sound>engine</sound>
   <class>Carrier</class>
   <price>7200000</price>
-  <fabricator>House Soromid</fabricator>
+  <fabricator>Soromid</fabricator>
   <license>Heavy Combat Vessel License</license>
   <description>Whilst the Dogma is said to form the core of any Sirian fleet, few combat pilots would dismiss the significance of the Divinity. Though not exceptionally formidable in direct combat, the Divinity's ability to field a multitude of fighters gives it unparalleled flexibility in combat, serving as a key logistical vessel in any sizable fleet.</description>
   <movement>
