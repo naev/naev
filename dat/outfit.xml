@@ -1819,7 +1819,7 @@
    <cpu>-5</cpu>
    <shield>15</shield>
    <shield_regen>0.5</shield_regen>
-   <energy_regen>-50</energy_regen>
+   <energy_regen>-0.85</energy_regen>
   </specific>
  </outfit>
  <outfit name="Plasteel Plating">
@@ -1877,7 +1877,7 @@
   <specific type="modification">
    <armour_regen>1.7</armour_regen>
    <energy>-5</energy>
-   <energy_regen>-40</energy_regen>
+   <energy_regen>-0.65</energy_regen>
   </specific>
  </outfit>
 <!-- Movement-Related Outfits -->
@@ -1894,7 +1894,7 @@
    <cpu>0</cpu>
    <thrust>3</thrust>
    <thrust_rel>10</thrust_rel>
-   <energy_regen>-50</energy_regen>
+   <energy_regen>-0.85</energy_regen>
   </specific>
  </outfit>
  <outfit name="Improved Stabilizer">
@@ -1911,7 +1911,7 @@
    <speed>3</speed>
    <speed_rel>15</speed_rel>
    <turn_rel>3</turn_rel>
-   <energy_regen>-10</energy_regen>
+   <energy_regen>-0.15</energy_regen>
   </specific>
  </outfit>
  <outfit name="Steering Thrusters">
@@ -1927,7 +1927,7 @@
    <cpu>0</cpu>
    <turn>5</turn>
    <turn_rel>10</turn_rel>
-   <energy_regen>-10</energy_regen>
+   <energy_regen>-0.15</energy_regen>
   </specific>
  </outfit>
  <outfit name="Generic Afterburner">
@@ -1977,7 +1977,7 @@
   </general>
   <specific type="modification">
    <cpu>10</cpu>
-   <energy_regen>-200</energy_regen>
+   <energy_regen>-3.35</energy_regen>
   </specific>
  </outfit>
  <outfit name="Auxiliary Processing Unit II">
@@ -1991,7 +1991,7 @@
   </general>
   <specific type="modification">
    <cpu>20</cpu>
-   <energy_regen>-375</energy_regen>
+   <energy_regen>-6.25</energy_regen>
   </specific>
  </outfit>
   <outfit name="Auxiliary Processing Unit III">
@@ -2005,7 +2005,7 @@
   </general>
   <specific type="modification">
    <cpu>40</cpu>
-   <energy_regen>-725</energy_regen>
+   <energy_regen>-12</energy_regen>
   </specific>
  </outfit>
 <!-- Miscellaneous Outfits (Expansion outfits, countermeasures, map.) -->
