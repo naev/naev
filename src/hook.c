@@ -1170,7 +1170,7 @@ void hook_cleanup (void)
 static int hook_needSave( Hook *h )
 {
    int i;
-   char *nosave[] = {
+   const char *nosave[] = {
          "p_death", "p_board", "p_disable", "p_jump", "p_attacked", "p_idle", /* pilot hooks */
          "timer", /* timers */
          "end" };
@@ -1181,6 +1181,10 @@ static int hook_needSave( Hook *h )
 
    /* Events must need saving. */
    if ((h->type == HOOK_TYPE_EVENT) && !event_save(h->u.event.parent))
+      return 0;
+
+   /* Must not be pending deletion. */
+   if (h->delete)
       return 0;
 
    /* Make sure it's in the proper stack. */
