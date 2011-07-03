@@ -19,7 +19,8 @@ function cargo_selectPlanets(missdist, routepos)
         function(s)
             for i, v in ipairs(s:planets()) do
                 if v:services()["inhabited"] and v ~= planet.cur() and v:class() ~= 0 and
-                        not (s==system.cur() and ( vec2.dist( v:pos(), routepos ) < 2500 ) ) then
+                        not (s==system.cur() and ( vec2.dist( v:pos(), routepos ) < 2500 ) ) and
+                        v:canLand() then
                     planets[#planets + 1] = {v, s}
                 end
            end

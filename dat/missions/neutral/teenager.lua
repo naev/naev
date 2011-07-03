@@ -114,7 +114,8 @@ function targetBoard()
     player.unboard()
     tk.msg(title[4], text[4])
     target:setHilight(false)
-    -- TODO: Add teenagers mission cargo here.
+    target:setVisplayer(false)
+    cargoID = misn.cargoAdd("Teenagers",0)
     misn.osdActive(2)
     hook.land("land")
 end

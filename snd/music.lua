@@ -105,7 +105,7 @@ end
 -- @brief Chooses landing songs.
 --]]
 function choose_land ()
-   local pnt   = planet.get()
+   local pnt   = planet.cur()
    local class = pnt:class()
 
    if class == "M" then
@@ -174,7 +174,7 @@ function choose_ambient ()
    end
 
    -- Get information about the current system
-   local sys                  = system.get()
+   local sys                  = system.cur()
    local factions             = sys:faction()
    local nebu_dens, nebu_vol  = sys:nebula()
 
@@ -259,7 +259,7 @@ end
 --]]
 function choose_combat ()
    -- Get some data about the system
-   local sys                  = system.get()
+   local sys                  = system.cur()
    local nebu_dens, nebu_vol  = sys:nebula()
 
    local nebu = nebu_dens > 0

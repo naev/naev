@@ -46,7 +46,7 @@ static const luaL_reg vector_methods[] = {
    { "div", vectorL_div },
    { "get", vectorL_get },
    { "polar", vectorL_polar },
-   { "setP", vectorL_set },
+   { "set", vectorL_set },
    { "setP", vectorL_setP },
    { "dist", vectorL_distance },
    { "dist2", vectorL_distance2 },
