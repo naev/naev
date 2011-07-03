@@ -106,13 +106,19 @@ else -- default english
     sol2_text = { "They don't seem to appreciate your company. You decide to leave them to their game." }
     
     -- OSD stuff
-    osd_title = {}
-    osd_msg   = {}
-    osd_title[1] = "Shadowrun"
-    osd_msg[1] = "Fly to planet %s in the %s system and pick up Jorek."
-    osd_msg[2] = "You have %s remaining."
-    osd_msg[3] = "Fly to the %s system and dock with (board) %s"
-    osd_msg[4] = "You have %s remaining."
+    osd_msg1  = {}
+    osd_msg2  = {}
+
+    osd_title = "Shadowrun"
+
+    osd_msg1[1] = "Fly to planet %s in the %s system and pick up Jorek."
+    osd_msg1[2] = "You have %s remaining."
+    osd_msg1["__save"] = true
+
+    osd_msg2[1] = "You could not persuade Jorek to come with you. Report your result."
+    osd_msg2[2] = "Fly to the %s system and dock with (board) %s"
+    osd_msg2[3] = "You have %s remaining."
+    osd_msg2["__save"] = true
 end
 
 function create ()
@@ -145,11 +151,11 @@ function accept()
         misn.setTitle(misn_title)
         misn.setReward(misn_reward)
         misn.setDesc(string.format(misn_desc[1], planetname, sysname, sysname2, shipname))
-        misn.osdCreate(osd_title[1], { string.format(osd_msg[1], planetname, sysname),
-                                       string.format(osd_msg[2], time.str(deadline1 - time.get())),
-                                       string.format(osd_msg[3], sysname2, shipname),
-                                       string.format(osd_msg[4], time.str(deadline2 - time.get()))
-                                     })
+        misn.osdCreate(osd_title, { string.format(osd_msg1[1], planetname, sysname),
+                                    string.format(osd_msg1[2], time.str(deadline1 - time.get())),
+                                    string.format(osd_msg1[3], sysname2, shipname),
+                                    string.format(osd_msg1[4], time.str(deadline2 - time.get()))
+                                  })
         misn_marker = misn.markerAdd( sys, "low" )
         shadowrun = 2
 
@@ -184,6 +190,7 @@ function jorek()
          tk.msg( jorek_title[2], jorek_text[3] )
       end
       shadowrun = 3
+      misn.markerMove( misn_marker, sys2 )
    else
       tk.msg( jorek_title[3], jorek_text[4] )
    end
@@ -201,19 +208,17 @@ end
 
 function date()
     -- Deadline stuff
-    if deadline1 > time.get() then
+    if deadline1 >= time.get() and shadowrun == 2 then
         dateresolution(deadline1)
-        misn.osdCreate(osd_title[1], { string.format(osd_msg[1], planetname, sysname),
-                                       string.format(osd_msg[2], time.str(deadline1 - time.get())),
-                                       string.format(osd_msg[3], sysname2, shipname),
-                                       string.format(osd_msg[4], time.str(deadline2 - time.get()))
-                                     })
-    elseif deadline2 > time.get() then
+        misn.osdCreate(osd_title, { string.format(osd_msg1[1], planetname, sysname),
+                                    string.format(osd_msg1[2], time.str(deadline1 - time.get())),
+                                  })
+    elseif deadline1 >= time.get() and shadowrun == 3 then
         dateresolution(deadline2)
-        misn.osdCreate(osd_title[1], { string.format(osd_msg[3], sysname2, shipname),
-                                       string.format(osd_msg[4], time.str(deadline2 - time.get()))
-                                     })
-        misn.markerMove( misn_marker, sys2 )
+        misn.osdCreate(osd_title, { osd_msg2[1],
+                                    string.format(osd_msg2[2], sysname2, shipname),
+                                    string.format(osd_msg2[3], time.str(deadline2 - time.get()))
+                                  })
     else
         abort()
     end
