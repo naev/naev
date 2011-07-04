@@ -40,10 +40,10 @@ class ssys(readers):
             self.assetsList.update({ssysName: assets})
 
     def _processJump(self, jumpNode):
-        pos = jumpNode.find('pos')
+#        pos = jumpNode.find('pos')
         return dict({
             'target': jumpNode.get('target'),
-            'pos': dict({'x': pos.get('x'), 'y': pos.get('y')})
+#            'pos': dict({'x': pos.get('x'), 'y': pos.get('y')})
             })
 
     def planetsForSystem(self, systemName):
