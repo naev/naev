@@ -89,6 +89,7 @@
    <enemy>Independent</enemy>
    <enemy>Goddard</enemy>
    <enemy>Proteron</enemy>
+   <enemy>Thurion</enemy>
   </enemies>
  </faction>
  <faction name="Empire">
@@ -113,6 +114,14 @@
   <spawn>soromid</spawn>
   <lua>soromid</lua>
   <allies/>
+  <enemies>
+   <enemy>Pirate</enemy>
+  </enemies>
+ </faction>
+ <faction name="Thurion">
+  <logo>thurion</logo>
+  <colour>grey50</colour>
+  <player>1</player>
   <enemies>
    <enemy>Pirate</enemy>
   </enemies>

@@ -433,6 +433,54 @@
   </stats>
  </ship>
  <!-- Fighters -->
+ <ship name="Thurion Ingenuity">
+  <base_type>Ingenuity</base_type>
+  <GFX>ingenuity</GFX>
+  <GUI>slim</GUI>
+  <sound>engine</sound>
+  <class>Fighter</class>
+  <price>650000</price>
+  <fabricator>Thurion shipyards</fabricator>
+  <description>The Thurion Ingenuity is a fighter built for survival, like all Thurian ships, it puts defensive capabilities first, and offensive capabilities second. However, by no means is the Ingenuity a poor combat craft. It is capable of staying in combat and slugging it out, and when things get too hot, it can quickly retreat to recharge and regenerate. Also, like every Thurian ship, the electronics are well above average.</description>
+  <movement>
+   <thrust>300</thrust>
+   <turn>220</turn>
+   <speed>330</speed>
+  </movement>
+  <health>
+   <absorb>11</absorb>
+   <shield>350</shield>
+   <armour>250</armour>
+   <energy>600</energy>
+   <shield_regen>190</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>2000</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>70</cpu>
+   <crew>2</crew>
+   <mass>75</mass>
+   <fuel>600</fuel>
+   <cap_cargo>10</cap_cargo>
+  </characteristics>
+  <slots>
+   <weapon x="8" y="-5" h="-2" >medium</weapon>
+   <weapon x="8" y="5" h="-2" >medium</weapon>
+   <utility>medium</utility>
+   <utility/>
+   <utility/>
+   <utility/>
+   <structure>medium</structure>
+   <structure/>
+   <structure/>
+   <structure/>
+  </slots>
+  <stats>
+   <ew_hide>30</ew_hide>
+   <nebula_dmg_shield>-80</nebula_dmg_shield>
+   <nebula_dmg_armour>-97</nebula_dmg_armour>
+  </stats>
+ </ship>
  <ship name="Proteron Derivative">
   <base_type>Derivative</base_type>
   <GFX>derivative</GFX>
@@ -475,6 +523,7 @@
   </slots>
   <stats>
    <damage_forward>5</damage_forward>
+   <nebula_dmg_shield>-95</nebula_dmg_shield>
   </stats>
  </ship>
  <ship name="Sirius Fidelity">
@@ -1727,6 +1776,7 @@
   <stats>
    <ew_detect>5</ew_detect>
    <energy_turret>-5</energy_turret>
+   <nebula_dmg_shield>-99</nebula_dmg_shield>
   </stats>
  </ship>
  <ship name="Soromid Nyx">
@@ -2040,6 +2090,7 @@
   <stats>
    <ew_detect>-5</ew_detect>
    <firerate_turret>5</firerate_turret>
+   <nebula_dmg_shield>-99.9</nebula_dmg_shield>
   </stats>
  </ship>
  <ship name="Soromid Ira">

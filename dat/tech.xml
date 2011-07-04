@@ -176,6 +176,7 @@
   <item>Sirius Preacher</item>
   <item>Sirius Divinity</item>
   <item>Sirius Dogma</item>
+  <item>Thurion Ingenuity</item>
   <item>Vendetta</item>
   <item>Vigilance</item>
  </tech>
@@ -472,7 +473,9 @@
   <item>Soromid Ira</item>
   <item>Soromid Arx</item>
  </tech>
-
+ <tech name="Thurion Military Ships">
+  <item>Thurion Ingenuity</item>
+ </tech>
  <tech name="__Heavy Weapon License">
   <item>Heavy Weapon License</item>
  </tech>
