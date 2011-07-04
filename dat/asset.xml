@@ -169,17 +169,10 @@
    <space>J04.png</space>
    <exterior>methane.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Amaroq I">
@@ -587,7 +580,6 @@
    </services>
    <commodities/>
    <description>Anya is the twin planet to Sabe, orbiting around their shared center of gravity in tandem. Anya is shrouded in permanent cloud cover of ash and snow however as a result of geological activity. A small number of Thurions live on the surface of Anya, but no large scale colonization effort has commenced as of yet, despite the planet's proximity to Sabe, the Thurian capital world. This is due at least in part to the geological instabilities of the planet.</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Apez II">
@@ -796,17 +788,10 @@
    <space>C00.png</space>
    <exterior>station00.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Arrakis">
@@ -1637,7 +1622,6 @@
    </services>
    <commodities/>
    <description>Cole station is the last civilian station on the route to Doeston, where many transport ships stop to refuel and regenerate their shields in safety from the radiation of the nebula.</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Coran">
@@ -1649,17 +1633,10 @@
    <space>X01.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Crylo">
@@ -3208,17 +3185,10 @@
    <space>moon-A00.png</space>
    <exterior>station01.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Esker I">
@@ -3351,6 +3321,31 @@
    <services/>
   </general>
  </asset>
+ <asset name="FD-24">
+  <pos>
+   <x>420.000000</x>
+   <y>400.000000</y>
+  </pos>
+  <GFX>
+   <space>002.png</space>
+   <exterior>station04.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Thurion</faction>
+   <value>10.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>1</class>
+   <population>100</population>
+   <services>
+    <land/>
+    <refuel/>
+   </services>
+   <commodities/>
+   <description>The Thurion placed this fuel supply depot to allow ships heading between their shipyards in the nebula and their core systems to fill up their fuel tanks for the long journy ahead.</description>
+  </general>
+ </asset>
  <asset name="Facett Outpost">
   <pos>
    <x>-5141.467977</x>
@@ -3376,32 +3371,6 @@
    <commodities/>
    <description>Facett Outpost is little more than a local police station. It was created as a precaution against the pirate threat coming from Khaas, but the Soromid know that no one station could withstand a coordinated attack. Facett is mostly a visible sign of Soromid presence in Hatter. It puts the local population at peace. The real security has to come from Hartwell Station in neighbor system Father's Pride.</description>
    <bar>The bar is where the local security employees go when they're on standby. They seldom have to wait for a long time before their assistance is required.</bar>
-  </general>
- </asset>
- <asset name="FD-24">
-  <pos>
-   <x>420.000000</x>
-   <y>400.000000</y>
-  </pos>
-  <GFX>
-   <space>002.png</space>
-   <exterior>station04.png</exterior>
-  </GFX>
-  <presence>
-   <faction>Thurion</faction>
-   <value>10.000000</value>
-   <range>0</range>
-  </presence>
-  <general>
-   <class>1</class>
-   <population>100</population>
-   <services>
-    <land/>
-    <refuel/>
-   </services>
-   <commodities/>
-   <description>The Thurion placed this fuel supply depot to allow ships heading between their shipyards in the nebula and their core systems to fill up their fuel tanks for the long journy ahead.</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Father's Pride I">
@@ -4423,6 +4392,146 @@
    <services/>
   </general>
  </asset>
+ <asset name="HS-224">
+  <pos>
+   <x>-649.106412</x>
+   <y>-1400.391541</y>
+  </pos>
+  <GFX>
+   <space>000.png</space>
+   <exterior>station00.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Thurion</faction>
+   <value>50.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>1</class>
+   <population>50000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <commodity/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+   </commodities>
+   <description>This is a Thurion habitation station, which provide the living space for the biological Thurians who have yet to be uploaded. While not opulent by any extent, they are not at all an unpleasant place to live.</description>
+  </general>
+ </asset>
+ <asset name="HS-232">
+  <pos>
+   <x>5847.915533</x>
+   <y>3407.918509</y>
+  </pos>
+  <GFX>
+   <space>000.png</space>
+   <exterior>station00.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Thurion</faction>
+   <value>50.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>1</class>
+   <population>50000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <commodity/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+   </commodities>
+   <description>This is a Thurion habitation station, which provide the living space for the biological Thurians who have yet to be uploaded. While not opulent by any extent, they are not at all an unpleasant place to live.</description>
+  </general>
+ </asset>
+ <asset name="HS-24">
+  <pos>
+   <x>-3995.718779</x>
+   <y>5673.479151</y>
+  </pos>
+  <GFX>
+   <space>000.png</space>
+   <exterior>station00.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Thurion</faction>
+   <value>50.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>1</class>
+   <population>50000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <commodity/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+   </commodities>
+   <description>This is a Thurion habitation station, which provide the living space for the biological Thurians who have yet to be uploaded. While not opulent by any extent, they are not at all an unpleasant place to live.</description>
+  </general>
+ </asset>
+ <asset name="HS-37">
+  <pos>
+   <x>-5270.511475</x>
+   <y>-4593.543249</y>
+  </pos>
+  <GFX>
+   <space>000.png</space>
+   <exterior>station00.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Thurion</faction>
+   <value>50.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>1</class>
+   <population>50000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <commodity/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+   </commodities>
+   <description>This is a Thurion habitation station, which provide the living space for the biological Thurians who have yet to be uploaded. While not opulent by any extent, they are not at all an unpleasant place to live.</description>
+  </general>
+ </asset>
+ <asset name="HS-54">
+  <pos>
+   <x>1418.822279</x>
+   <y>-2927.998330</y>
+  </pos>
+  <GFX>
+   <space>000.png</space>
+   <exterior>station00.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Thurion</faction>
+   <value>50.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>1</class>
+   <population>50000</population>
+   <services>
+    <land/>
+    <refuel/>
+    <commodity/>
+   </services>
+   <commodities>
+    <commodity>Food</commodity>
+   </commodities>
+   <description>This is a Thurion habitation station, which provide the living space for the biological Thurians who have yet to be uploaded. While not opulent by any extent, they are not at all an unpleasant place to live.</description>
+  </general>
+ </asset>
  <asset name="Hadosh II">
   <pos>
    <x>-11781.014820</x>
@@ -4481,151 +4590,6 @@
    <class>A</class>
    <population>0</population>
    <services/>
-  </general>
- </asset>
- <asset name="HS-224">
-  <pos>
-   <x>-649.106412</x>
-   <y>-1400.391541</y>
-  </pos>
-  <GFX>
-   <space>000.png</space>
-   <exterior>station00.png</exterior>
-  </GFX>
-  <presence>
-   <faction>Thurion</faction>
-   <value>50.000000</value>
-   <range>0</range>
-  </presence>
-  <general>
-   <class>1</class>
-   <population>50000</population>
-   <services>
-    <land/>
-    <refuel/>
-    <commodity/>
-   </services>
-   <commodities>
-    <commodity>Food</commodity>
-   </commodities>
-   <description>This is a Thurion habitation station, which provide the living space for the biological Thurians who have yet to be uploaded. While not opulent by any extent, they are not at all an unpleasant place to live.</description>
-   <bar>(null)</bar>
-  </general>
- </asset>
- <asset name="HS-232">
-  <pos>
-   <x>5847.915533</x>
-   <y>3407.918509</y>
-  </pos>
-  <GFX>
-   <space>000.png</space>
-   <exterior>station00.png</exterior>
-  </GFX>
-  <presence>
-   <faction>Thurion</faction>
-   <value>50.000000</value>
-   <range>0</range>
-  </presence>
-  <general>
-   <class>1</class>
-   <population>50000</population>
-   <services>
-    <land/>
-    <refuel/>
-    <commodity/>
-   </services>
-   <commodities>
-    <commodity>Food</commodity>
-   </commodities>
-   <description>This is a Thurion habitation station, which provide the living space for the biological Thurians who have yet to be uploaded. While not opulent by any extent, they are not at all an unpleasant place to live.</description>
-   <bar>(null)</bar>
-  </general>
- </asset>
- <asset name="HS-24">
-  <pos>
-   <x>-3995.718779</x>
-   <y>5673.479151</y>
-  </pos>
-  <GFX>
-   <space>000.png</space>
-   <exterior>station00.png</exterior>
-  </GFX>
-  <presence>
-   <faction>Thurion</faction>
-   <value>50.000000</value>
-   <range>0</range>
-  </presence>
-  <general>
-   <class>1</class>
-   <population>50000</population>
-   <services>
-    <land/>
-    <refuel/>
-    <commodity/>
-   </services>
-   <commodities>
-    <commodity>Food</commodity>
-   </commodities>
-   <description>This is a Thurion habitation station, which provide the living space for the biological Thurians who have yet to be uploaded. While not opulent by any extent, they are not at all an unpleasant place to live.</description>
-   <bar>(null)</bar>
-  </general>
- </asset>
- <asset name="HS-37">
-  <pos>
-   <x>-5270.511475</x>
-   <y>-4593.543249</y>
-  </pos>
-  <GFX>
-   <space>000.png</space>
-   <exterior>station00.png</exterior>
-  </GFX>
-  <presence>
-   <faction>Thurion</faction>
-   <value>50.000000</value>
-   <range>0</range>
-  </presence>
-  <general>
-   <class>1</class>
-   <population>50000</population>
-   <services>
-    <land/>
-    <refuel/>
-    <commodity/>
-   </services>
-   <commodities>
-    <commodity>Food</commodity>
-   </commodities>
-   <description>This is a Thurion habitation station, which provide the living space for the biological Thurians who have yet to be uploaded. While not opulent by any extent, they are not at all an unpleasant place to live.</description>
-   <bar>(null)</bar>
-  </general>
- </asset>
- <asset name="HS-54">
-  <pos>
-   <x>1418.822279</x>
-   <y>-2927.998330</y>
-  </pos>
-  <GFX>
-   <space>000.png</space>
-   <exterior>station00.png</exterior>
-  </GFX>
-  <presence>
-   <faction>Thurion</faction>
-   <value>50.000000</value>
-   <range>0</range>
-  </presence>
-  <general>
-   <class>1</class>
-   <population>50000</population>
-   <services>
-    <land/>
-    <refuel/>
-    <commodity/>
-   </services>
-   <commodities>
-    <commodity>Food</commodity>
-   </commodities>
-   <description>This is a Thurion habitation station, which provide the living space for the biological Thurians who have yet to be uploaded. While not opulent by any extent, they are not at all an unpleasant place to live.</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Haldr">
@@ -5564,10 +5528,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <population>0</population>
    <services/>
   </general>
-  <tech>
-   <item>Basic Outfits 1</item>
-   <item>Missiles 1</item>
-  </tech>
  </asset>
  <asset name="Juran">
   <pos>
@@ -5584,7 +5544,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <services/>
   </general>
  </asset>
-  <asset name="Kaira">
+ <asset name="Kaira">
   <pos>
    <x>3384.777588</x>
    <y>-1658.752776</y>
@@ -5593,17 +5553,10 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>P04.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Karman I">
@@ -5645,39 +5598,10 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>moon-C01.png</space>
    <exterior>station04.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
-  </general>
- </asset>
- <asset name="Katami I">
-  <pos>
-   <x>-4390.000000</x>
-   <y>-3240.000000</y>
-  </pos>
-  <GFX>
-   <space>G00.png</space>
-   <exterior>traderoom.png</exterior>
-  </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
-  <general>
-   <class>A</class>
-   <population>0</population>
-   <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Kataka">
@@ -5719,6 +5643,21 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <item>Plasma 2</item>
    <item>High Tech Upgrades 1</item>
   </tech>
+ </asset>
+ <asset name="Katami I">
+  <pos>
+   <x>-4390.000000</x>
+   <y>-3240.000000</y>
+  </pos>
+  <GFX>
+   <space>G00.png</space>
+   <exterior>traderoom.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <services/>
+  </general>
  </asset>
  <asset name="Khelim">
   <pos>
@@ -6171,17 +6110,10 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>moon-O00.png</space>
    <exterior>aquatic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Lorelei">
@@ -6750,17 +6682,10 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>Y00.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Modus">
@@ -7002,7 +6927,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    </services>
    <commodities/>
    <description>This hulking Node Station is one of the places of habitation for the uploaded Thurion.</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="NS-144">
@@ -7028,7 +6952,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    </services>
    <commodities/>
    <description>This hulking Node Station is one of the places of habitation for the uploaded Thurion.</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="NS-27">
@@ -7054,7 +6977,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    </services>
    <commodities/>
    <description>This hulking Node Station is one of the places of habitation for the uploaded Thurion.</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="NS-42">
@@ -7080,7 +7002,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    </services>
    <commodities/>
    <description>This hulking Node Station is one of the places of habitation for the uploaded Thurion.</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="NS-63">
@@ -7106,7 +7027,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    </services>
    <commodities/>
    <description>This hulking Node Station is one of the places of habitation for the uploaded Thurion.</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Nappi">
@@ -7224,17 +7144,10 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>P03.png</space>
    <exterior>station03.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Nava I">
@@ -7246,17 +7159,10 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <space>C00.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Neurri">
@@ -7405,17 +7311,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-J00.png</space>
    <exterior>station00.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="New Mars">
@@ -7484,17 +7383,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>K02.png</space>
    <exterior>station00.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Niflheim">
@@ -7971,17 +7863,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>J04.png</space>
    <exterior>station03.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Onyx Shipyard">
@@ -8300,17 +8185,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>O01.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="PT237 IV">
@@ -8322,17 +8200,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>001.png</space>
    <exterior>forest.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="PT413 VI">
@@ -8344,17 +8215,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>M08.png</space>
    <exterior>forest.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="PT413 VIII">
@@ -8366,17 +8230,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-A00.png</space>
    <exterior>station04.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="PT612 I">
@@ -8388,17 +8245,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>moon-K00.png</space>
    <exterior>aquatic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="PT612 II">
@@ -8410,17 +8260,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>A03.png</space>
    <exterior>desertic.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="PT612 III">
@@ -8432,17 +8275,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>M01.png</space>
    <exterior>methane.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="PT612 IV">
@@ -8454,17 +8290,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>P03.png</space>
    <exterior>forest.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Paul 2">
@@ -9536,17 +9365,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>A02.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Rotide II">
@@ -9558,17 +9380,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>A00.png</space>
    <exterior>forest2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Rudderfern">
@@ -9848,9 +9663,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>3</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="S49588">
@@ -9871,9 +9683,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>3</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="S58309">
@@ -9894,9 +9703,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>3</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="S72288">
@@ -9917,9 +9723,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>3</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="S72839">
@@ -9940,12 +9743,9 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>3</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
-  <asset name="S91456">
+ <asset name="S91456">
   <pos>
    <x>10058.711979</x>
    <y>5427.025998</y>
@@ -9989,7 +9789,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    </services>
    <commodities/>
    <description>This is a standard Thurion shipyard manufactured to the exact same specifications as every other Thurion shipyard. The station hums with activity as ships are constructed at the station's maximum capacity.</description>
-   <bar>(null)</bar>
   </general>
   <tech>
    <item>Thurion Military Ships</item>
@@ -10019,7 +9818,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    </services>
    <commodities/>
    <description>This is a standard Thurion shipyard manufactured to the exact same specifications as every other Thurion shipyard. The station hums with activity as ships are constructed at the station's maximum capacity.</description>
-   <bar>(null)</bar>
   </general>
   <tech>
    <item>Thurion Military Ships</item>
@@ -10049,7 +9847,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    </services>
    <commodities/>
    <description>This is a standard Thurion shipyard manufactured to the exact same specifications as every other Thurion shipyard. The station hums with activity as ships are constructed at the station's maximum capacity.</description>
-   <bar>(null)</bar>
   </general>
   <tech>
    <item>Thurion Military Ships</item>
@@ -10079,7 +9876,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    </services>
    <commodities/>
    <description>This is a standard Thurion shipyard manufactured to the exact same specifications as every other Thurion shipyard. The station hums with activity as ships are constructed at the station's maximum capacity.</description>
-   <bar>(null)</bar>
   </general>
   <tech>
    <item>Thurion Military Ships</item>
@@ -10109,7 +9905,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    </services>
    <commodities/>
    <description>This is a standard Thurion shipyard manufactured to the exact same specifications as every other Thurion shipyard. The station hums with activity as ships are constructed at the station's maximum capacity.</description>
-   <bar>(null)</bar>
   </general>
   <tech>
    <item>Thurion Military Ships</item>
@@ -10139,7 +9934,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    </services>
    <commodities/>
    <description>This is a standard Thurion shipyard manufactured to the exact same specifications as every other Thurion shipyard. The station hums with activity as ships are constructed at the station's maximum capacity.</description>
-   <bar>(null)</bar>
   </general>
   <tech>
    <item>Thurion Military Ships</item>
@@ -10169,7 +9963,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    </services>
    <commodities/>
    <description>This is a standard Thurion shipyard manufactured to the exact same specifications as every other Thurion shipyard. The station hums with activity as ships are constructed at the station's maximum capacity.</description>
-   <bar>(null)</bar>
   </general>
   <tech>
    <item>Thurion Military Ships</item>
@@ -10199,7 +9992,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    </services>
    <commodities/>
    <description>This is a standard Thurion shipyard manufactured to the exact same specifications as every other Thurion shipyard. The station hums with activity as ships are constructed at the station's maximum capacity.</description>
-   <bar>(null)</bar>
   </general>
   <tech>
    <item>Thurion Military Ships</item>
@@ -10229,7 +10021,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    </services>
    <commodities/>
    <description>This is a standard Thurion shipyard manufactured to the exact same specifications as every other Thurion shipyard. The station hums with activity as ships are constructed at the station's maximum capacity.</description>
-   <bar>(null)</bar>
   </general>
   <tech>
    <item>Thurion Military Ships</item>
@@ -10259,7 +10050,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    </services>
    <commodities/>
    <description>This is a standard Thurion shipyard manufactured to the exact same specifications as every other Thurion shipyard. The station hums with activity as ships are constructed at the station's maximum capacity.</description>
-   <bar>(null)</bar>
   </general>
   <tech>
    <item>Thurion Military Ships</item>
@@ -10289,7 +10079,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    </services>
    <commodities/>
    <description>This is a standard Thurion shipyard manufactured to the exact same specifications as every other Thurion shipyard. The station hums with activity as ships are constructed at the station's maximum capacity.</description>
-   <bar>(null)</bar>
   </general>
   <tech>
    <item>Thurion Military Ships</item>
@@ -10319,7 +10108,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    </services>
    <commodities/>
    <description>Sabe and Anya are a pair of planets tidally locked to eachother, rotating around their shared center of gravity. Sabe is the center of the Thurian goverment, housing the largest population of both uploaded and biological Thurions, acting as the de-facto capital. The majority of the planet's surface is untouched, as virtually all its inhabitants reside in the multitude of arcologies spread across its surface.</description>
-   <bar>(null)</bar>
   </general>
   <tech>
    <item>Thurion Military Ships</item>
@@ -10613,17 +10401,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>X00.png</space>
    <exterior>desertic.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Servax">
@@ -10635,17 +10416,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>X01.png</space>
    <exterior>station00.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Sevlow">
@@ -10671,7 +10445,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    </services>
    <commodities/>
    <description>Sevlow is one of the few truly inhabited Thurian worlds. Sevlow is an uneventful planet, as it serves primarily as an argicultural world producing algae, and as a living place for biological Thurions.</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Shakar I">
@@ -11755,7 +11528,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
     <commodity>Food</commodity>
    </commodities>
    <description>Tenal-P was once a prosperous trade station between the Empire and the Soromid, surviving the intial blast simply because of Iris' distance from Sol. Since then, many residents have left the station, though a couple hundred stubborn individuals have kept the station going.</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Terminus">
@@ -12914,17 +12686,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>J01.png</space>
    <exterior>aquatic2.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Vean II">
@@ -12936,17 +12701,10 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <space>K02.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
-  <presence>
-   <value>0.000000</value>
-   <range>0</range>
-  </presence>
   <general>
    <class>A</class>
    <population>0</population>
    <services/>
-   <commodities/>
-   <description>(null)</description>
-   <bar>(null)</bar>
   </general>
  </asset>
  <asset name="Verex I">
