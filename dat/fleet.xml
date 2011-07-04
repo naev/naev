@@ -522,7 +522,7 @@
  </fleet>
  <fleet name="Starfire">
   <ai>collective</ai>
-  <faction>Collective</faction>
+  <faction>Empire</faction>
   <pilots>
    <pilot name="Starfire" ship="Goddard"></pilot>
   </pilots>

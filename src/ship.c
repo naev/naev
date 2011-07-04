@@ -811,9 +811,6 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
 
    /* Post processing. */
    temp->dmg_absorb   /= 100.;
-   temp->armour_regen /= 60.;
-   temp->shield_regen /= 60.;
-   temp->energy_regen /= 60.;
    temp->turn         *= M_PI / 180.; /* Convert to rad. */
    temp->thrust *= temp->mass;
 

@@ -77,7 +77,7 @@ function enter()
         target:control()
         target:rename("Credence")
         target:setHilight(true)
-        target:setVisible(true)
+        target:setVisplayer(true)
         hidle = hook.pilot(target, "idle", "targetIdle")
         hook.pilot(target, "exploded", "targetExploded")
         hook.pilot(target, "board", "targetBoard")
@@ -114,7 +114,8 @@ function targetBoard()
     player.unboard()
     tk.msg(title[4], text[4])
     target:setHilight(false)
-    -- TODO: Add teenagers mission cargo here.
+    target:setVisplayer(false)
+    cargoID = misn.cargoAdd("Teenagers",0)
     misn.osdActive(2)
     hook.land("land")
 end
@@ -128,5 +129,9 @@ function land()
 end
 
 function abort ()
+   if target then
+      target:setHilight(false)
+      target:setVisplayer(false)
+   end
    misn.finish(false)
 end

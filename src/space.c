@@ -1713,7 +1713,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
          continue;
       }
       else if (xml_isNode(node, "tech")) {
-         planet->tech = tech_groupCreate( node );
+         planet->tech = tech_groupCreateXML( node );
          continue;
       }
 

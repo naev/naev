@@ -226,13 +226,12 @@ static int planetL_cur( lua_State *L )
 /**
  * @brief Gets a planet.
  *
- * Possible values of param:
- *    - nil : -OBSOLETE- Gets the current landed planet or nil if there is none. Use planet.cur() instead.
- *    - bool : Gets a random planet.
- *    - faction : Gets random planet belonging to faction matching the number.
- *    - string : Gets the planet by name.
+ * Possible values of param: <br/>
+ *    - bool : Gets a random planet. <br/>
+ *    - faction : Gets random planet belonging to faction matching the number. <br/>
+ *    - string : Gets the planet by name. <br/>
  *    - table : Gets random planet belonging to any of the factions in the
- *               table.
+ *               table. <br/>
  *
  * @usage p,s = planet.get( "Anecu" ) -- Gets planet by name
  * @usage p,s = planet.get( faction.get( "Empire" ) ) -- Gets random Empire planet
@@ -261,21 +260,8 @@ static int planetL_get( lua_State *L )
    planets   = NULL;
    nplanets  = 0;
 
-   /* Get the landed planet */
-   if (lua_gettop(L) == 0) {
-      if (land_planet != NULL) {
-         planet.id = planet_index( land_planet );
-         lua_pushplanet(L,planet);
-         luasys.id = system_index( system_get( planet_getSystem(land_planet->name) ) );
-         lua_pushsystem(L,luasys);
-         return 2;
-      }
-      NLUA_ERROR(L,"Attempting to get landed planet when player not landed.");
-      return 0; /* Not landed. */
-   }
-
    /* If boolean return random. */
-   else if (lua_isboolean(L,1)) {
+   if (lua_isboolean(L,1)) {
       pnt = planet_get( space_getRndPlanet() );
       planet.id    = planet_index( pnt );
       lua_pushplanet(L,planet);

@@ -433,8 +433,7 @@ function render( dt )
    --Values
    armour, shield = pp:health()
    energy = pp:energy()
-   absfuel = player.fuel()
-   fuel = absfuel / stats.fuel * 100
+   fuel = stats.fuel / stats.fuel_max * 100
    wset_name, wset = pp:weapset( true )
    credits, credits_h = player.credits(2)
    autonav = player.autonav()

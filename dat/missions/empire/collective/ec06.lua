@@ -139,6 +139,7 @@ function jump ()
             fleetC[#fleetC + 1] = pilot.add("Starfire", nil, fleetCpos)[1]
             hook.pilot(fleetC[#fleetC], "death", "col_dead")
             fleetC[#fleetC]:setNodisable()
+            fleetC[#fleetC]:setFaction( "Collective" )
             if var.peek("trinity") then
                 fleetC[#fleetC + 1] = pilot.add("Trinity", nil, fleetCpos + vec2.new(300, 0))[1]
                 hook.pilot(fleetC[#fleetC], "death", "col_dead")

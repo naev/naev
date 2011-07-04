@@ -238,10 +238,9 @@ static int systemL_cur( lua_State *L )
 /**
  * @brief Gets a system.
  *
- * Behaves differently depending on what you pass as param:
- *    - nil : -OBSOLETE- Gets the current system. Use system.cur() instead.
- *    - string : Gets the system by name.
- *    - planet : Gets the system by planet.
+ * Behaves differently depending on what you pass as param: <br/>
+ *    - string : Gets the system by name. <br/>
+ *    - planet : Gets the system by planet. <br/>
  *
  * @usage sys = system.get( p ) -- Gets system where planet 'p' is located.
  * @usage sys = system.get( "Gamma Polaris" ) -- Gets the system by name.
@@ -259,12 +258,8 @@ static int systemL_get( lua_State *L )
    /* Invalid by default. */
    sys.id = -1;
 
-   /* Get current system with no parameters */
-   if (lua_gettop(L) == 0) {
-      sys.id = system_index( cur_system );
-   }
    /* Passing a string (systemname) */
-   else if (lua_isstring(L,1)) {
+   if (lua_isstring(L,1)) {
       ss = system_get( lua_tostring(L,1) );
       if (ss != NULL)
          sys.id = system_index( ss );
