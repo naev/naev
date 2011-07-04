@@ -34,7 +34,7 @@ void dship_csv( const char *path )
    l = snprintf( buf, sizeof(buf),
          "name,class,base_type,price,license,fabricator,"
          "thrust,turn,speed,"
-         "crew,mass,cpu,fuel,cargo,"
+         "crew,mass,cpu,fuel,cap_cargo,"
          "armour,armour_regen,"
          "shield,shield_regen,"
          "energy,energy_regen,"
