@@ -656,4 +656,11 @@
    <location>Bar</location>
   </avail>
  </mission>
+ <mission name="Kidnapped">
+  <lua>neutral/kidnapped/traffic_00</lua>
+  <avail>
+   <chance>100</chance>
+   <location>None</location>
+  </avail>
+ </mission>
 </Missions>

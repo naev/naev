@@ -4,8 +4,7 @@
 # License: X/MIT
 # author: Ludovic Bellière AKA. xrogaan
 
-import os
-from datetime import datetime
+from os import path
 from jinja2 import Environment, FileSystemLoader
 try:
     from lxml import etree
@@ -84,7 +83,7 @@ class harvester:
 
     def __init__(self, xmlPath):
         if self.__xmlData is None:
-            self.__xmlData = etree.parse(os.path.join(xmlPath, "ship.xml"))
+            self.__xmlData = etree.parse(path.join(xmlPath, "ship.xml"))
 
         data = self.__xmlData.findall('ship')
         self.ships = dict()
@@ -148,11 +147,75 @@ class harvester:
     def iter(self):
         return self.ships.iteritems()
 
+class fashion:
+    __xmlData = None
+    __tagsBlackList = ['gfx_end','gfx','sound']
+    __typeBlackList = ['map', 'gui', 'license']
+
+    # TODO: ammo type have specific arguments (missiles have duration)
+    # TODO: retrofit this code, we needs several ways to retrieve data and they
+    # are all different. So, I'll discard the initial parsing and do a on
+    # request walk only. groupBySlot will list only elements who's got a slot
+    # subelement. getByType(name) will return a list of the specific type. Each
+    # of them are unique. Here is a list: map, gui, license, ammo, modification.
+    def __init__(self, xmlPath):
+        if self.__xmlData is None:
+            self.__xmlData = etree.parse(path.join(xmlPath, "outfit.xml"))
+
+        self.slots={}
+
+    def _parseOutfit(self, outfitObj):
+        outfitName = outfitObj.get('name')
+        outfitGeneral, outfitSpecific = {}, {}
+
+        for general in outfitObj.find('general').iterchildren():
+            outfitGeneral.update({general.tag: general.text})
+
+        for specific in outfitObj.find('specific').iterchildren():
+            if specific.tag in self.__tagsBlackList:
+                continue
+            if len(specific.attrib) < 1:
+                tmp={specific.tag: specific.text}
+            else:
+                tmp={
+                        specific.tag: {
+                            'attribs': specific.attrib,
+                            'text': specific.text
+                            }
+                        }
+            outfitSpecific.update(tmp)
+            del(tmp)
+
+        return {
+                'name': outfitName,
+                'general': outfitGeneral,
+                'specific': outfitSpecific
+                }
+
+    def groupBySlots(self):
+        uglyMess = self.__xmlData.findall('outfit/general')
+        for item in uglyMess:
+            if item.find('slot') is not None:
+                mySlot = item.findtext('slot')
+            else:
+                mySlot = 'NA'
+            if not self.slots.has_key(mySlot):
+                self.slots.update({mySlot: []})
+            self.slots[mySlot].append(self._parseOutfit(item.getparent()))
+
+        return self.slots
+
+    def iterSlot(self, mySlotName):
+        for slotName, outfit in self.slots:
+            if slotName == mySlotName:
+                yield outfit['name']
 
 
 
 if __name__ == "__main__":
+    from os import mkdir
     from optparse import OptionParser
+    from datetime import datetime
 
     usage="Usage: %prog OUTPUTPATH"
     parser = OptionParser(usage=usage, version="%prog "+__version__,
@@ -168,9 +231,9 @@ if __name__ == "__main__":
 
     if len(arguments) != 1:
         parser.error("A wise man would know where to store the generated files.")
-    storagePath = os.path.abspath(os.path.normpath(arguments[0]))
-    tplPath = os.path.abspath(os.path.normpath('./templates'))
-    naevPath = os.path.abspath(os.path.normpath("../../dat/"))
+    storagePath = path.abspath(path.normpath(arguments[0]))
+    tplPath = path.abspath(path.normpath(cfg.templates))
+    naevPath = path.abspath(path.normpath("../../dat/"))
 
     date = str( datetime.utcnow().strftime("%c UTC") )
 
@@ -178,12 +241,35 @@ if __name__ == "__main__":
     env = Environment(loader=myLoader)
     env.filters['getStatsLabel'] = getShipStatsLabels
     env.filters['getStatsLabelsLabel'] = getStatsLabelsLabel
-    myTemplate = env.get_template('index.html')
+
+    # creating ships html
+    myTpl = env.get_template('ships_index.html')
     yaarh = harvester(naevPath)
-    myTemplate.stream(shipList=yaarh.get_by('class'), date=date).dump(storagePath+'/index.html')
-    del(myTemplate)
+    shipIStore = path.normpath(storagePath + '/ships/')
+    if not path.exists(shipIStore):
+        mkdir(shipIStore, 0755)
+    myTpl.stream(shipList=yaarh.get_by('class'), date=date).dump(shipIStore+'/index.html')
+    del(myTpl)
 
     for (shipName, shipData) in yaarh.iter():
-        myTemplate = env.get_template('ship.html')
-        myPath = os.path.abspath(os.path.normpath("%s/%s.html" % (storagePath,shipName)))
-        myTemplate.stream(shipName=shipName, shipData=shipData, date=date).dump(myPath)
+        myTpl = env.get_template('ship.html')
+        myPath = path.abspath(path.normpath("%s/ships/%s.html" % (storagePath,shipName)))
+        myTpl.stream(shipName=shipName, shipData=shipData, date=date).dump(myPath)
+
+    # fancy outfits
+    myTpl = env.get_template('outfits_index.html')
+    panty = fashion(naevPath)
+    outfitsStore = path.normpath(storagePath + '/outfits/')
+    if not path.exists(outfitsStore):
+        mkdir(outfitsStore, 0755)
+    myTpl.stream(outfits=panty.groupBySlots(), date=date).dump(outfitsStore+'/index.html')
+
+    for (slotName, outfitsList) in panty.slots.iteritems():
+        for outfitDetails in outfitsList:
+            myTpl = env.get_template('outfit.html')
+            myStorage = path.normpath("%s/outfits/%s.html") % (
+                    storagePath,
+                    outfitDetails['name']
+                )
+            myTpl.stream(slotName=slotName, outfitData=outfitDetails,
+                    date=date).dump(myStorage)

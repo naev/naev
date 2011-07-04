@@ -133,4 +133,10 @@
    <unique />
   </flags>
  </event>
+ <event name="Kidnapped">
+  <lua>neutral/kidnapped</lua>
+  <trigger>enter</trigger>
+  <chance>15</chance>
+  <cond>player.misnDone("Kidnapped") == false and var.peek("traffic_00_active") == nil and system.cur():name() == "Arcturus"</cond>
+ </event>
 </Events>
