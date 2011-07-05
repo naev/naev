@@ -1059,6 +1059,7 @@ static int pilotL_nav( lua_State *L )
  *  <li> left: Absolute ammo left or nil if not applicable. <br />
  *  <li> left_p: Relative ammo left [0:1] or nil if not applicable <br />
  *  <li> lockon: Lockon [0:1] for seeker weapons or nil if not applicable. <br />
+ *  <li> in_arc: Whether or not the target is in targetting arc or nil if not applicable. <br />
  *  <li> level: Level of the weapon (1 is primary, 2 is secondary). <br />
  *  <li> temp: Temperature of the weapon. <br />
  *  <li> type: Type of the weapon. <br />
@@ -1095,6 +1096,7 @@ static int pilotL_weapset( lua_State *L )
    Outfit *ammo, *o;
    double delay, firemod, enermod, t;
    int id, all, level, level_match;
+   int is_lau, is_fb;
 
    /* Defaults. */
    po_list = NULL;
@@ -1139,13 +1141,16 @@ static int pilotL_weapset( lua_State *L )
 
       /* Iterate over weapons. */
       for (i=0; i<n; i++) {
+         /* Get base look ups. */
+         is_lau   = outfit_isLauncher(o);
+         is_fb    = outfit_isFighterBay(o);
          if (all) {
             slot  = p->outfits[i];
             o     = slot->outfit;
 
             /* Must be valid weapon. */
             if ((o == NULL) || !(outfit_isBolt(o) || outfit_isBeam(o) ||
-                  outfit_isLauncher(o) || outfit_isFighterBay(o)))
+                  is_lau || is_fb))
                continue;
 
             level = slot->level;
@@ -1187,31 +1192,31 @@ static int pilotL_weapset( lua_State *L )
          }
 
          /* Ammo quantity absolute. */
-         if ((outfit_isLauncher(slot->outfit) ||
-                  outfit_isFighterBay(slot->outfit)) &&
+         if ((is_lau || is_fb) &&
                (slot->u.ammo.outfit != NULL)) {
             lua_pushstring(L,"left");
             lua_pushnumber( L, slot->u.ammo.quantity );
             lua_rawset(L,-3);
-         }
 
          /* Ammo quantity relative. */
-         if ((outfit_isLauncher(slot->outfit) ||
-                  outfit_isFighterBay(slot->outfit)) &&
-               (slot->u.ammo.outfit != NULL)) {
             lua_pushstring(L,"left_p");
             lua_pushnumber( L, (double)slot->u.ammo.quantity / (double)outfit_amount(slot->outfit) );
             lua_rawset(L,-3);
          }
 
          /* Launcher lockon. */
-         if (outfit_isSeeker(slot->outfit)) {
+         if (is_lau) {
             t = slot->u.ammo.lockon_timer;
             lua_pushstring(L, "lockon");
             if (t <= 0.)
                lua_pushnumber(L, 1.);
             else
                lua_pushnumber(L, 1. - (t / slot->outfit->u.lau.lockon));
+            lua_rawset(L,-3);
+
+         /* Is in arc. */
+            lua_pushstring(L, "in_arc");
+            lua_pushboolean(L, slot->u.ammo.in_arc);
             lua_rawset(L,-3);
          }
 
