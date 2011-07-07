@@ -1143,8 +1143,8 @@ static int pilotL_weapset( lua_State *L )
       for (i=0; i<n; i++) {
          /* Get base look ups. */
          if (all) {
-            slot  = p->outfits[i];
-            o     = slot->outfit;
+            slot     = p->outfits[i];
+            o        = slot->outfit;
             is_lau   = outfit_isLauncher(o);
             is_fb    = outfit_isFighterBay(o);
 
@@ -1153,14 +1153,14 @@ static int pilotL_weapset( lua_State *L )
                   is_lau || is_fb))
                continue;
 
-            level = slot->level;
+            level    = slot->level;
          }
          else {
-            slot  = po_list[i].slot;
-            o     = slot->outfit;
+            slot     = po_list[i].slot;
+            o        = slot->outfit;
             is_lau   = outfit_isLauncher(o);
             is_fb    = outfit_isFighterBay(o);
-            level = po_list[i].level;
+            level    = po_list[i].level;
          }
 
          /* Must match level. */
