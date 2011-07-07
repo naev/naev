@@ -1543,7 +1543,7 @@
   </general>
   <specific type="launcher" secondary="1">
    <cpu>13</cpu>
-   <ammo>Caesar IV Missile</ammo>
+   <ammo>Caesar IV Torpedo</ammo>
    <delay>7000</delay>
    <lockon>12</lockon>
    <arc>6</arc>
@@ -1585,7 +1585,7 @@
   </general>
   <specific type="launcher" secondary="1">
    <cpu>20</cpu>
-   <ammo>Imperator Missile</ammo>
+   <ammo>Imperator Torpedo</ammo>
    <delay>8000</delay>
    <lockon>13</lockon>
    <arc>6</arc>

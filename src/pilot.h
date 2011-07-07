@@ -142,6 +142,7 @@ typedef struct PilotOutfitAmmo_ {
    int quantity;        /**< Amount of ammo. */
    int deployed;        /**< For fighter bays. */
    double lockon_timer; /**< Locking on timer. */
+   int in_arc;          /**< In arc. */
 } PilotOutfitAmmo;
 
 

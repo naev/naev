@@ -2020,12 +2020,13 @@ int outfit_load (void)
       o = &outfit_stack[i];
       if (outfit_isLauncher(&outfit_stack[i])) {
          o->u.lau.ammo = outfit_get( o->u.lau.ammo_name );
-         if (outfit_isSeeker(o)) {
+         if (outfit_isSeeker(o) && /* Smart seekers. */
+               (o->u.lau.ammo->u.amm.ai)) {
             if (o->u.lau.ew_target == 0.)
                WARN("Outfit '%s' missing/invalid 'ew_target' element", o->name);
             if (o->u.lau.lockon == 0.)
                WARN("Outfit '%s' missing/invalid 'lockon' element", o->name);
-            if (o->u.lau.arc == 0.)
+            if (!outfit_isTurret(o) && (o->u.lau.arc == 0.))
                WARN("Outfit '%s' missing/invalid 'arc' element", o->name);
          }
       }

@@ -33,10 +33,7 @@ function equip_forwardPirHig ()
    return { "Heavy Ion Cannon", "Mass Driver MK2" }
 end
 function equip_turretPirLow ()
-   return { "Razor Turret MK1", "Turreted Gauss Gun" }
-end
-function equip_turretPirMed ()
-   return { "Laser Turret MK1" }
+   return { "Laser Turret MK1", "Razor Turret MK1", "Turreted Gauss Gun" }
 end
 function equip_turretPirMed ()
    return { "Laser Turret MK2", "Razor Turret MK2", "Turreted Vulcan Gun" }

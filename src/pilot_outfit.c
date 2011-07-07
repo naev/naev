@@ -67,9 +67,14 @@ void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, double *a, do
          if (o->u.ammo.lockon_timer > max)
             o->u.ammo.lockon_timer = max;
 
+         /* Out of arc. */
+         o->u.ammo.in_arc = 0;
          return;
       }
    }
+
+   /* In arc. */
+   o->u.ammo.in_arc = 1;
 
    /* Lower timer. When the timer reaches zero, the lock is established. */
    max = -o->outfit->u.lau.lockon/3.;
@@ -101,6 +106,9 @@ void pilot_lockClear( Pilot *p )
  
       /* Clear timer. */
       o->u.ammo.lockon_timer = o->outfit->u.lau.lockon;
+
+      /* Clear arc. */
+      o->u.ammo.in_arc = 0;
    }
 }
 
