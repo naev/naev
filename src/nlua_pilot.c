@@ -1145,11 +1145,13 @@ static int pilotL_weapset( lua_State *L )
          if (all) {
             slot     = p->outfits[i];
             o        = slot->outfit;
+            if (o == NULL)
+               continue;
             is_lau   = outfit_isLauncher(o);
             is_fb    = outfit_isFighterBay(o);
 
             /* Must be valid weapon. */
-            if ((o == NULL) || !(outfit_isBolt(o) || outfit_isBeam(o) ||
+            if (!(outfit_isBolt(o) || outfit_isBeam(o) ||
                   is_lau || is_fb))
                continue;
 
@@ -1158,6 +1160,8 @@ static int pilotL_weapset( lua_State *L )
          else {
             slot     = po_list[i].slot;
             o        = slot->outfit;
+            if (o == NULL)
+               continue;
             is_lau   = outfit_isLauncher(o);
             is_fb    = outfit_isFighterBay(o);
             level    = po_list[i].level;
