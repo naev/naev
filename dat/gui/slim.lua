@@ -372,7 +372,7 @@ function render_bar( name, value, txt, txtcol, size, col, bgc )
 end
 
 function render_ammoBar( name, x, y, value, txt, txtcol, col )
-   offsets = { 2, 20, 3, 13, 22, 6, 4, 4 } --Bar, y of refire, sheen, y of sheen, y of refire sheen, y of text, x and y of tracking icon
+   offsets = { 2, 20, 3, 13, 22, 6, 2, 5 } --Bar, y of refire, sheen, y of sheen, y of refire sheen, y of text, x and y of tracking icon
    l_bg = _G["bg_" .. name]
    if name == "heat" then
       value[1] = value[1] / 2.
@@ -404,7 +404,7 @@ function render_ammoBar( name, x, y, value, txt, txtcol, col )
          trackcol = colour.new(1-value[4], value[4], 0)
       end
       gfx.renderTex( tracking_light, x + offsets[7], y + offsets[8], trackcol )
-      textoffset = track_w
+      textoffset = track_w + 2
    end
    gfx.renderTex( sheen_weapon, x + offsets[3], y + offsets[4])
    gfx.renderTex( sheen_tiny, x + offsets[3], y + offsets[5])
@@ -513,6 +513,9 @@ function render( dt, dt_mod )
             col = col_txt_wrn
          else
             col = col_txt_bar
+         end
+         if not weapon.in_arc then
+            col = col_txt_una
          end
          values = {weapon.left_p, weapon.cooldown, weapon.level, weapon.track or weapon.lockon}
          render_ammoBar( "ammo", x_ammo, y_ammo - (num)*28, values, txt, col, 2, col_ammo )
