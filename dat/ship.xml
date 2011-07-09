@@ -1,4 +1,3 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
 <Ships>
  <!-- Light Craft -->
  <ship name="Llama">
@@ -11,17 +10,17 @@
   <fabricator>Melendez Corp.</fabricator>
   <description>One of the most widely used ships in the galaxy. Renowned for its stability and stubbornness. The design hasn't been modified much since its creation many many years ago. It was one of the first civilian use spacecrafts, first used by aristocracy and now used by everyone who cannot afford better.</description>
   <movement>
-   <thrust>220</thrust>
+   <thrust>180</thrust>
    <turn>150</turn>
-   <speed>260</speed>
+   <speed>200</speed>
   </movement>
   <health>
    <absorb>0</absorb>
    <shield>100</shield>
-   <armour>120</armour>
+   <armour>50</armour>
    <energy>320</energy>
-   <shield_regen>1.3</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>3</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>16.7</energy_regen>
   </health>
   <characteristics>
@@ -32,8 +31,8 @@
    <cap_cargo>20</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="7"   y="0" h="1" />
-   <weapon x="-3"  y="0" h="2" />
+   <weapon x="7" y="0" h="1"/>
+   <weapon x="-3" y="0" h="2"/>
    <utility/>
    <utility/>
    <structure/>
@@ -56,11 +55,11 @@
   </movement>
   <health>
    <absorb>3</absorb>
-   <shield>140</shield>
-   <armour>100</armour>
+   <shield>170</shield>
+   <armour>50</armour>
    <energy>440</energy>
-   <shield_regen>2.0</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>7</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>18.3</energy_regen>
   </health>
   <characteristics>
@@ -71,9 +70,9 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="15" y="0" h="-3" />
-   <weapon x="15" y="0" h="-3" />
-   <weapon x="0"  y="0" h="0" />
+   <weapon x="15" y="0" h="-3"/>
+   <weapon x="15" y="0" h="-3"/>
+   <weapon x="0" y="0" h="0"/>
    <utility/>
    <structure/>
   </slots>
@@ -97,8 +96,8 @@
    <shield>130</shield>
    <armour>50</armour>
    <energy>360</energy>
-   <shield_regen>2.0</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>6</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>13.3</energy_regen>
   </health>
   <characteristics>
@@ -109,7 +108,7 @@
    <cap_cargo>15</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="9" y="0" h="-2" />
+   <weapon x="9" y="0" h="-2"/>
    <utility>medium</utility>
    <utility/>
    <utility/>
@@ -138,10 +137,10 @@
   <health>
    <absorb>2</absorb>
    <shield>180</shield>
-   <armour>100</armour>
+   <armour>80</armour>
    <energy>550</energy>
-   <shield_regen>2.3</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>5</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>23.3</energy_regen>
   </health>
   <characteristics>
@@ -152,13 +151,13 @@
    <cap_cargo>15</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="12" y="0" h="-2" />
-   <weapon x="-5" y="0" h="1" />
-   <utility />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
+   <weapon x="12" y="0" h="-2"/>
+   <weapon x="-5" y="0" h="1"/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
   </slots>
  </ship>
  <ship name="Drone">
@@ -177,12 +176,12 @@
   </movement>
   <health>
    <absorb>15</absorb>
-   <shield>140</shield>
+   <shield>150</shield>
    <armour>80</armour>
    <energy>600</energy>
-   <shield_regen>4.0</shield_regen>
-   <armour_regen>7.0</armour_regen>
-   <energy_regen>20.0</energy_regen>
+   <shield_regen>5</shield_regen>
+   <armour_regen>7</armour_regen>
+   <energy_regen>20</energy_regen>
   </health>
   <characteristics>
    <cpu>70</cpu>
@@ -192,9 +191,9 @@
    <cap_cargo>1</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="5" y="0" h="-5" />
-   <weapon x="5" y="0" h="-5" />
-   <weapon x="5" y="0" h="-5" />
+   <weapon x="5" y="0" h="-5"/>
+   <weapon x="5" y="0" h="-5"/>
+   <weapon x="5" y="0" h="-5"/>
    <utility/>
    <structure/>
   </slots>
@@ -216,11 +215,11 @@
   </movement>
   <health>
    <absorb>13</absorb>
-   <shield>140</shield>
-   <armour>180</armour>
+   <shield>200</shield>
+   <armour>500</armour>
    <energy>405</energy>
-   <shield_regen>1.5</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>6</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>16.7</energy_regen>
   </health>
   <characteristics>
@@ -231,14 +230,14 @@
    <cap_cargo>75</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="11" y="0" h="-7" />
-   <weapon x="-5" y="0" h="3" />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
+   <weapon x="11" y="0" h="-7"/>
+   <weapon x="-5" y="0" h="3"/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <cargo_inertia>-10</cargo_inertia>
@@ -261,11 +260,11 @@
   <health>
    <absorb>18</absorb>
    <shield>200</shield>
-   <armour>140</armour>
+   <armour>70</armour>
    <energy>580</energy>
-   <shield_regen>2.0</shield_regen>
-   <armour_regen>0.0</armour_regen>
-   <energy_regen>20.0</energy_regen>
+   <shield_regen>5</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>20</energy_regen>
   </health>
   <characteristics>
    <cpu>35</cpu>
@@ -275,14 +274,14 @@
    <cap_cargo>45</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="15" y="0" h="5" />
-   <weapon x="-10" y="-3" h="0" />
-   <weapon x="-10" y="3" h="0" />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
-   <structure />
+   <weapon x="15" y="0" h="5"/>
+   <weapon x="-10" y="-3" h="0"/>
+   <weapon x="-10" y="3" h="0"/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <jump_delay>-25</jump_delay>
@@ -305,11 +304,11 @@
   </movement>
   <health>
    <absorb>38</absorb>
-   <shield>480</shield>
-   <armour>520</armour>
+   <shield>250</shield>
+   <armour>1000</armour>
    <energy>970</energy>
-   <shield_regen>4.2</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>5</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>43.3</energy_regen>
   </health>
   <characteristics>
@@ -320,17 +319,17 @@
    <cap_cargo>160</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="25"  y="-3" h="4" >heavy</weapon>
-   <weapon x="25"  y="3" h="4" >heavy</weapon>
-   <weapon x="-15" y="-3" h="4" />
-   <weapon x="-15"  y="3" h="4" />
-   <utility />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
+   <weapon x="25" y="-3" h="4">heavy</weapon>
+   <weapon x="25" y="3" h="4">heavy</weapon>
+   <weapon x="-15" y="-3" h="4"/>
+   <weapon x="-15" y="3" h="4"/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <cargo_inertia>10</cargo_inertia>
@@ -352,11 +351,11 @@
   </movement>
   <health>
    <absorb>40</absorb>
-   <shield>480</shield>
-   <armour>460</armour>
+   <shield>270</shield>
+   <armour>1200</armour>
    <energy>970</energy>
-   <shield_regen>4.2</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>5</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>43.3</energy_regen>
   </health>
   <characteristics>
@@ -367,17 +366,17 @@
    <cap_cargo>160</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="25"  y="-3" h="4" >heavy</weapon>
-   <weapon x="25"  y="3" h="4" >heavy</weapon>
-   <weapon x="-15" y="-3" h="4" />
-   <weapon x="-15"  y="3" h="4" />
-   <utility />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
+   <weapon x="25" y="-3" h="4">heavy</weapon>
+   <weapon x="25" y="3" h="4">heavy</weapon>
+   <weapon x="-15" y="-3" h="4"/>
+   <weapon x="-15" y="3" h="4"/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <cargo_inertia>10</cargo_inertia>
@@ -400,11 +399,11 @@
   </movement>
   <health>
    <absorb>50</absorb>
-   <shield>320</shield>
-   <armour>400</armour>
+   <shield>190</shield>
+   <armour>750</armour>
    <energy>600</energy>
-   <shield_regen>1.7</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>4</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>26.7</energy_regen>
   </health>
   <characteristics>
@@ -415,18 +414,18 @@
    <cap_cargo>350</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="25"  y="0" h="0" >heavy</weapon>
-   <weapon x="-15" y="0" h="4" />
-   <weapon x="15"  y="0" h="4" />
-   <utility />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
+   <weapon x="25" y="0" h="0">heavy</weapon>
+   <weapon x="-15" y="0" h="4"/>
+   <weapon x="15" y="0" h="4"/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <cargo_inertia>-20</cargo_inertia>
@@ -450,12 +449,12 @@
   </movement>
   <health>
    <absorb>9</absorb>
-   <shield>180</shield>
-   <armour>120</armour>
+   <shield>200</shield>
+   <armour>70</armour>
    <energy>500</energy>
-   <shield_regen>2.2</shield_regen>
-   <armour_regen>0.0</armour_regen>
-   <energy_regen>20.0</energy_regen>
+   <shield_regen>8</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>20</energy_regen>
   </health>
   <characteristics>
    <cpu>30</cpu>
@@ -465,9 +464,9 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="10" y="0" h="0" />
-   <weapon x="0" y="-4" h="-3" />
-   <weapon x="0" y="4" h="-3" />
+   <weapon x="10" y="0" h="0"/>
+   <weapon x="0" y="-4" h="-3"/>
+   <weapon x="0" y="4" h="-3"/>
    <utility/>
    <utility/>
    <structure/>
@@ -495,11 +494,11 @@
   <health>
    <absorb>11</absorb>
    <shield>220</shield>
-   <armour>160</armour>
+   <armour>90</armour>
    <energy>650</energy>
-   <shield_regen>2.3</shield_regen>
-   <armour_regen>0.0</armour_regen>
-   <energy_regen>25.0</energy_regen>
+   <shield_regen>7</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>25</energy_regen>
   </health>
   <characteristics>
    <cpu>35</cpu>
@@ -509,10 +508,10 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="10" y="-2" h="0" />
-   <weapon x="10" y="2" h="0" />
-   <weapon x="0" y="-4" h="-3" />
-   <weapon x="0" y="4" h="-3" />
+   <weapon x="10" y="-2" h="0"/>
+   <weapon x="10" y="2" h="0"/>
+   <weapon x="0" y="-4" h="-3"/>
+   <weapon x="0" y="4" h="-3"/>
    <utility/>
    <utility/>
    <structure/>
@@ -540,10 +539,10 @@
   <health>
    <absorb>8</absorb>
    <shield>210</shield>
-   <armour>140</armour>
+   <armour>90</armour>
    <energy>580</energy>
-   <shield_regen>2.2</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>7</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>22.3</energy_regen>
   </health>
   <characteristics>
@@ -554,13 +553,13 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="12" y="0" h="0" />
-   <weapon x="-3" y="0" h="2" />
-   <weapon x="3" y="0" h="2" />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
+   <weapon x="12" y="0" h="0"/>
+   <weapon x="-3" y="0" h="2"/>
+   <weapon x="3" y="0" h="2"/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
   </slots>
  </ship>
  <ship name="Shark">
@@ -580,11 +579,11 @@
   </movement>
   <health>
    <absorb>8</absorb>
-   <shield>210</shield>
-   <armour>140</armour>
+   <shield>200</shield>
+   <armour>60</armour>
    <energy>580</energy>
-   <shield_regen>2.2</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>7</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>22.3</energy_regen>
   </health>
   <characteristics>
@@ -595,13 +594,13 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="12" y="0" h="0" />
-   <weapon x="-3" y="0" h="2" />
-   <weapon x="3" y="0" h="2" />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
+   <weapon x="12" y="0" h="0"/>
+   <weapon x="-3" y="0" h="2"/>
+   <weapon x="3" y="0" h="2"/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
   </slots>
  </ship>
  <ship name="Pirate Shark">
@@ -620,11 +619,11 @@
   </movement>
   <health>
    <absorb>9</absorb>
-   <shield>210</shield>
-   <armour>140</armour>
+   <shield>220</shield>
+   <armour>60</armour>
    <energy>580</energy>
-   <shield_regen>2.2</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>7</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>22.3</energy_regen>
   </health>
   <characteristics>
@@ -635,14 +634,14 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="12" y="0" h="0" />
-   <weapon x="12" y="0" h="0" />
-   <weapon x="-3" y="0" h="2" />
-   <weapon x="3" y="0" h="2" />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
+   <weapon x="12" y="0" h="0"/>
+   <weapon x="12" y="0" h="0"/>
+   <weapon x="-3" y="0" h="2"/>
+   <weapon x="3" y="0" h="2"/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
   </slots>
  </ship>
  <ship name="Empire Shark">
@@ -662,11 +661,11 @@
   </movement>
   <health>
    <absorb>10</absorb>
-   <shield>210</shield>
-   <armour>140</armour>
+   <shield>230</shield>
+   <armour>80</armour>
    <energy>580</energy>
-   <shield_regen>2.2</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>7</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>22.3</energy_regen>
   </health>
   <characteristics>
@@ -677,13 +676,13 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="12" y="0" h="0" />
-   <weapon x="-3" y="0" h="2" />
-   <weapon x="3" y="0" h="2" />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
+   <weapon x="12" y="0" h="0"/>
+   <weapon x="-3" y="0" h="2"/>
+   <weapon x="3" y="0" h="2"/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
   </slots>
  </ship>
  <ship name="Soromid Reaver">
@@ -704,10 +703,10 @@
   <health>
    <absorb>12</absorb>
    <shield>280</shield>
-   <armour>200</armour>
+   <armour>110</armour>
    <energy>730</energy>
-   <shield_regen>2.5</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>8</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>32.7</energy_regen>
   </health>
   <characteristics>
@@ -718,15 +717,15 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="12" y="0" h="0" >medium</weapon>
-   <weapon x="12" y="0" h="0" />
-   <weapon x="-3" y="0" h="2" />
-   <weapon x="-3" y="0" h="2" />
-   <utility />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
+   <weapon x="12" y="0" h="0">medium</weapon>
+   <weapon x="12" y="0" h="0"/>
+   <weapon x="-3" y="0" h="2"/>
+   <weapon x="-3" y="0" h="2"/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <firerate_forward>3</firerate_forward>
@@ -750,10 +749,10 @@
   <health>
    <absorb>12</absorb>
    <shield>280</shield>
-   <armour>200</armour>
+   <armour>110</armour>
    <energy>730</energy>
-   <shield_regen>2.5</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>7</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>32.7</energy_regen>
   </health>
   <characteristics>
@@ -764,15 +763,15 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="12" y="0" h="0" >medium</weapon>
-   <weapon x="12" y="0" h="0" />
-   <weapon x="-3" y="0" h="2" />
-   <weapon x="-3" y="0" h="2" />
-   <utility />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
+   <weapon x="12" y="0" h="0">medium</weapon>
+   <weapon x="12" y="0" h="0"/>
+   <weapon x="-3" y="0" h="2"/>
+   <weapon x="-3" y="0" h="2"/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <firerate_forward>3</firerate_forward>
@@ -796,10 +795,10 @@
   <health>
    <absorb>14</absorb>
    <shield>300</shield>
-   <armour>200</armour>
+   <armour>130</armour>
    <energy>730</energy>
-   <shield_regen>2.7</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>8</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>32.7</energy_regen>
   </health>
   <characteristics>
@@ -810,15 +809,15 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="12" y="0" h="0" >medium</weapon>
-   <weapon x="12" y="0" h="0" />
-   <weapon x="-3" y="0" h="2" />
-   <weapon x="-3" y="0" h="2" />
-   <utility />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
+   <weapon x="12" y="0" h="0">medium</weapon>
+   <weapon x="12" y="0" h="0"/>
+   <weapon x="-3" y="0" h="2"/>
+   <weapon x="-3" y="0" h="2"/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <firerate_forward>4</firerate_forward>
@@ -841,12 +840,12 @@
   </movement>
   <health>
    <absorb>11</absorb>
-   <shield>180</shield>
-   <armour>320</armour>
+   <shield>200</shield>
+   <armour>200</armour>
    <energy>800</energy>
-   <shield_regen>1.5</shield_regen>
-   <armour_regen>0.0</armour_regen>
-   <energy_regen>20.0</energy_regen>
+   <shield_regen>6</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>20</energy_regen>
   </health>
   <characteristics>
    <cpu>30</cpu>
@@ -856,14 +855,14 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="16" y="-9"  h="0" />
-   <weapon x="16" y="9"   h="0" />
-   <weapon x="13" y="-13" h="0" />
-   <weapon x="13" y="13"  h="0" />
-   <weapon x="19" y="0"   h="-2" />
-   <weapon x="3"  y="0"   h="2" />
-   <utility />
-   <structure />
+   <weapon x="16" y="-9" h="0"/>
+   <weapon x="16" y="9" h="0"/>
+   <weapon x="13" y="-13" h="0"/>
+   <weapon x="13" y="13" h="0"/>
+   <weapon x="19" y="0" h="-2"/>
+   <weapon x="3" y="0" h="2"/>
+   <utility/>
+   <structure/>
   </slots>
   <stats>
    <energy_forward>-10</energy_forward>
@@ -887,12 +886,12 @@
   </movement>
   <health>
    <absorb>13</absorb>
-   <shield>180</shield>
-   <armour>320</armour>
+   <shield>230</shield>
+   <armour>220</armour>
    <energy>800</energy>
-   <shield_regen>1.4</shield_regen>
-   <armour_regen>0.0</armour_regen>
-   <energy_regen>20.0</energy_regen>
+   <shield_regen>6</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>20</energy_regen>
   </health>
   <characteristics>
    <cpu>28</cpu>
@@ -902,14 +901,14 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="16" y="-9"  h="0" />
-   <weapon x="16" y="9"   h="0" />
-   <weapon x="13" y="-13" h="0" />
-   <weapon x="13" y="13"  h="0" />
-   <weapon x="19" y="0"   h="-2" />
-   <weapon x="3"  y="0"   h="2" />
-   <utility />
-   <structure />
+   <weapon x="16" y="-9" h="0"/>
+   <weapon x="16" y="9" h="0"/>
+   <weapon x="13" y="-13" h="0"/>
+   <weapon x="13" y="13" h="0"/>
+   <weapon x="19" y="0" h="-2"/>
+   <weapon x="3" y="0" h="2"/>
+   <utility/>
+   <structure/>
   </slots>
   <stats>
    <energy_forward>-5</energy_forward>
@@ -934,10 +933,10 @@
   <health>
    <absorb>12</absorb>
    <shield>220</shield>
-   <armour>300</armour>
+   <armour>180</armour>
    <energy>820</energy>
-   <shield_regen>1.6</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>6</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>20.8</energy_regen>
   </health>
   <characteristics>
@@ -948,14 +947,14 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="16" y="-9"  h="0" />
-   <weapon x="16" y="9"   h="0" />
-   <weapon x="13" y="-13" h="0" />
-   <weapon x="13" y="13"  h="0" />
-   <weapon x="19" y="0"   h="-2" />
-   <weapon x="3"  y="0"   h="2" />
-   <utility />
-   <structure />
+   <weapon x="16" y="-9" h="0"/>
+   <weapon x="16" y="9" h="0"/>
+   <weapon x="13" y="-13" h="0"/>
+   <weapon x="13" y="13" h="0"/>
+   <weapon x="19" y="0" h="-2"/>
+   <weapon x="3" y="0" h="2"/>
+   <utility/>
+   <structure/>
   </slots>
   <stats>
    <energy_forward>-10</energy_forward>
@@ -980,12 +979,12 @@
   </movement>
   <health>
    <absorb>9</absorb>
-   <shield>320</shield>
-   <armour>180</armour>
+   <shield>300</shield>
+   <armour>150</armour>
    <energy>680</energy>
-   <shield_regen>2.7</shield_regen>
-   <armour_regen>0.0</armour_regen>
-   <energy_regen>30.0</energy_regen>
+   <shield_regen>7</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>30</energy_regen>
   </health>
   <characteristics>
    <cpu>45</cpu>
@@ -995,15 +994,15 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="4"  y="0"  h="0" />
-   <weapon x="4"  y="0"  h="0" />
-   <weapon x="-2" y="4"  h="-1" />
-   <weapon x="-2" y="-4" h="-1" />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
-   <structure />
+   <weapon x="4" y="0" h="0"/>
+   <weapon x="4" y="0" h="0"/>
+   <weapon x="-2" y="4" h="-1"/>
+   <weapon x="-2" y="-4" h="-1"/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <launch_rate>5</launch_rate>
@@ -1027,11 +1026,11 @@
   </movement>
   <health>
    <absorb>7</absorb>
-   <shield>200</shield>
-   <armour>380</armour>
+   <shield>250</shield>
+   <armour>160</armour>
    <energy>720</energy>
-   <shield_regen>1.5</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>7</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>23.3</energy_regen>
   </health>
   <characteristics>
@@ -1042,13 +1041,13 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="8"  y="0"  h="0" />
-   <weapon x="8"  y="0"  h="0" />
-   <weapon x="-2" y="9"  h="-1" />
-   <weapon x="-2" y="-9" h="-1" />
-   <utility />
-   <utility />
-   <structure />
+   <weapon x="8" y="0" h="0"/>
+   <weapon x="8" y="0" h="0"/>
+   <weapon x="-2" y="9" h="-1"/>
+   <weapon x="-2" y="-9" h="-1"/>
+   <utility/>
+   <utility/>
+   <structure/>
   </slots>
   <stats>
    <launch_rate>5</launch_rate>
@@ -1072,11 +1071,11 @@
   </movement>
   <health>
    <absorb>7</absorb>
-   <shield>200</shield>
-   <armour>380</armour>
+   <shield>240</shield>
+   <armour>140</armour>
    <energy>720</energy>
-   <shield_regen>1.5</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>7</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>23.3</energy_regen>
   </health>
   <characteristics>
@@ -1087,13 +1086,13 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="8"  y="0"  h="0" />
-   <weapon x="8"  y="0"  h="0" />
-   <weapon x="-2" y="9"  h="-1" />
-   <weapon x="-2" y="-9" h="-1" />
-   <utility />
-   <utility />
-   <structure />
+   <weapon x="8" y="0" h="0"/>
+   <weapon x="8" y="0" h="0"/>
+   <weapon x="-2" y="9" h="-1"/>
+   <weapon x="-2" y="-9" h="-1"/>
+   <utility/>
+   <utility/>
+   <structure/>
   </slots>
   <stats>
    <launch_rate>5</launch_rate>
@@ -1117,11 +1116,11 @@
   </movement>
   <health>
    <absorb>9</absorb>
-   <shield>200</shield>
-   <armour>380</armour>
+   <shield>260</shield>
+   <armour>170</armour>
    <energy>720</energy>
-   <shield_regen>1.5</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>7</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>23.3</energy_regen>
   </health>
   <characteristics>
@@ -1132,13 +1131,13 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="8"  y="0"  h="0" />
-   <weapon x="8"  y="0"  h="0" />
-   <weapon x="-2" y="9"  h="-1" />
-   <weapon x="-2" y="-9" h="-1" />
-   <utility />
-   <utility />
-   <structure />
+   <weapon x="8" y="0" h="0"/>
+   <weapon x="8" y="0" h="0"/>
+   <weapon x="-2" y="9" h="-1"/>
+   <weapon x="-2" y="-9" h="-1"/>
+   <utility/>
+   <utility/>
+   <structure/>
   </slots>
   <stats>
    <launch_rate>5</launch_rate>
@@ -1162,10 +1161,10 @@
   <health>
    <absorb>8</absorb>
    <shield>240</shield>
-   <armour>360</armour>
+   <armour>130</armour>
    <energy>720</energy>
-   <shield_regen>1.7</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>7</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>21.7</energy_regen>
   </health>
   <characteristics>
@@ -1176,13 +1175,13 @@
    <cap_cargo>15</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="8"  y="0"  h="0" />
-   <weapon x="8"  y="0"  h="0" />
-   <weapon x="-2" y="9"  h="-1" />
-   <weapon x="-2" y="-9" h="-1" />
-   <utility />
-   <utility />
-   <structure />
+   <weapon x="8" y="0" h="0"/>
+   <weapon x="8" y="0" h="0"/>
+   <weapon x="-2" y="9" h="-1"/>
+   <weapon x="-2" y="-9" h="-1"/>
+   <utility/>
+   <utility/>
+   <structure/>
   </slots>
   <stats>
    <launch_rate>5</launch_rate>
@@ -1211,8 +1210,8 @@
    <shield>410</shield>
    <armour>430</armour>
    <energy>1125</energy>
-   <shield_regen>3.3</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>9</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>38.3</energy_regen>
   </health>
   <characteristics>
@@ -1223,18 +1222,18 @@
    <cap_cargo>25</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="8" y="0"  h="2" />
-   <weapon x="4"  y="5"  h="-2" />
-   <weapon x="4"  y="-5" h="-2" />
-   <weapon x="0" y="10" h="-2" >light</weapon>
-   <weapon x="0" y="-10"  h="-2" >light</weapon>
-   <utility />
-   <utility />
+   <weapon x="8" y="0" h="2"/>
+   <weapon x="4" y="5" h="-2"/>
+   <weapon x="4" y="-5" h="-2"/>
+   <weapon x="0" y="10" h="-2">light</weapon>
+   <weapon x="0" y="-10" h="-2">light</weapon>
+   <utility/>
+   <utility/>
    <utility>light</utility>
-   <structure />
-   <structure />
-   <structure />
-   <structure />
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <damage_forward>4</damage_forward>
@@ -1260,8 +1259,8 @@
    <shield>410</shield>
    <armour>430</armour>
    <energy>1125</energy>
-   <shield_regen>3.3</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>9</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>38.3</energy_regen>
   </health>
   <characteristics>
@@ -1272,18 +1271,18 @@
    <cap_cargo>25</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="8" y="0"  h="2" />
-   <weapon x="4"  y="5"  h="-2" />
-   <weapon x="4"  y="-5" h="-2" />
-   <weapon x="0" y="10" h="-2" >light</weapon>
-   <weapon x="0" y="-10"  h="-2" >light</weapon>
-   <utility />
-   <utility />
+   <weapon x="8" y="0" h="2"/>
+   <weapon x="4" y="5" h="-2"/>
+   <weapon x="4" y="-5" h="-2"/>
+   <weapon x="0" y="10" h="-2">light</weapon>
+   <weapon x="0" y="-10" h="-2">light</weapon>
+   <utility/>
+   <utility/>
    <utility>light</utility>
-   <structure />
-   <structure />
-   <structure />
-   <structure />
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <damage_forward>4</damage_forward>
@@ -1308,8 +1307,8 @@
    <shield>410</shield>
    <armour>390</armour>
    <energy>1175</energy>
-   <shield_regen>3.7</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>9</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>41.7</energy_regen>
   </health>
   <characteristics>
@@ -1320,18 +1319,18 @@
    <cap_cargo>20</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="8" y="0"  h="2" />
-   <weapon x="4"  y="5"  h="-2" />
-   <weapon x="4"  y="-5" h="-2" />
-   <weapon x="0" y="10" h="-2" >light</weapon>
-   <weapon x="0" y="-10"  h="-2" >light</weapon>
-   <utility />
-   <utility />
+   <weapon x="8" y="0" h="2"/>
+   <weapon x="4" y="5" h="-2"/>
+   <weapon x="4" y="-5" h="-2"/>
+   <weapon x="0" y="10" h="-2">light</weapon>
+   <weapon x="0" y="-10" h="-2">light</weapon>
+   <utility/>
+   <utility/>
    <utility>light</utility>
-   <structure />
-   <structure />
-   <structure />
-   <structure />
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <damage_forward>4</damage_forward>
@@ -1356,10 +1355,10 @@
   <health>
    <absorb>29</absorb>
    <shield>450</shield>
-   <armour>300</armour>
+   <armour>500</armour>
    <energy>960</energy>
-   <shield_regen>3.7</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>10</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>40.8</energy_regen>
   </health>
   <characteristics>
@@ -1370,17 +1369,17 @@
    <cap_cargo>20</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="15" y="1"  h="2" />
-   <weapon x="15" y="-1"  h="2" />
-   <weapon x="-9" y="-10" h="2" />
-   <weapon x="-9" y="10"  h="2" />
-   <weapon x="-9"  y="-3"  h="2" >light</weapon>
-   <weapon x="-9"  y="3" h="2" >light</weapon>
-   <utility />
-   <utility />
+   <weapon x="15" y="1" h="2"/>
+   <weapon x="15" y="-1" h="2"/>
+   <weapon x="-9" y="-10" h="2"/>
+   <weapon x="-9" y="10" h="2"/>
+   <weapon x="-9" y="-3" h="2">light</weapon>
+   <weapon x="-9" y="3" h="2">light</weapon>
+   <utility/>
+   <utility/>
    <utility>light</utility>
-   <structure />
-   <structure />
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <damage_forward>5</damage_forward>
@@ -1404,10 +1403,10 @@
   <health>
    <absorb>25</absorb>
    <shield>480</shield>
-   <armour>340</armour>
+   <armour>450</armour>
    <energy>1064</energy>
-   <shield_regen>4.0</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>9</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>43.3</energy_regen>
   </health>
   <characteristics>
@@ -1418,17 +1417,17 @@
    <cap_cargo>20</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="15" y="0"  h="2" />
-   <weapon x="4"  y="2"  h="-5" />
-   <weapon x="4"  y="-2" h="-5" />
-   <weapon x="-9" y="-5" h="-9" >light</weapon>
-   <weapon x="-9" y="5"  h="-9" >light</weapon>
-   <utility />
-   <utility />
+   <weapon x="15" y="0" h="2"/>
+   <weapon x="4" y="2" h="-5"/>
+   <weapon x="4" y="-2" h="-5"/>
+   <weapon x="-9" y="-5" h="-9">light</weapon>
+   <weapon x="-9" y="5" h="-9">light</weapon>
+   <utility/>
+   <utility/>
    <utility>light</utility>
-   <structure />
-   <structure />
-   <structure />
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <energy_forward>-3</energy_forward>
@@ -1452,10 +1451,10 @@
   <health>
    <absorb>25</absorb>
    <shield>480</shield>
-   <armour>340</armour>
+   <armour>440</armour>
    <energy>1064</energy>
-   <shield_regen>4.0</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>10</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>43.3</energy_regen>
   </health>
   <characteristics>
@@ -1466,17 +1465,17 @@
    <cap_cargo>20</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="15" y="0"  h="2" />
-   <weapon x="4"  y="2"  h="-5" />
-   <weapon x="4"  y="-2" h="-5" />
-   <weapon x="-9" y="-5" h="-9" >light</weapon>
-   <weapon x="-9" y="5"  h="-9" >light</weapon>
-   <utility />
-   <utility />
+   <weapon x="15" y="0" h="2"/>
+   <weapon x="4" y="2" h="-5"/>
+   <weapon x="4" y="-2" h="-5"/>
+   <weapon x="-9" y="-5" h="-9">light</weapon>
+   <weapon x="-9" y="5" h="-9">light</weapon>
+   <utility/>
+   <utility/>
    <utility>light</utility>
-   <structure />
-   <structure />
-   <structure />
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <energy_forward>-3</energy_forward>
@@ -1499,10 +1498,10 @@
   <health>
    <absorb>27</absorb>
    <shield>500</shield>
-   <armour>350</armour>
+   <armour>400</armour>
    <energy>1064</energy>
-   <shield_regen>4.3</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>10</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>43.3</energy_regen>
   </health>
   <characteristics>
@@ -1513,17 +1512,17 @@
    <cap_cargo>15</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="15" y="0"  h="2" />
-   <weapon x="4"  y="2"  h="-5" />
-   <weapon x="4"  y="-2" h="-5" />
-   <weapon x="-9" y="-5" h="-9" >light</weapon>
-   <weapon x="-9" y="5"  h="-9" >light</weapon>
-   <utility />
-   <utility />
+   <weapon x="15" y="0" h="2"/>
+   <weapon x="4" y="2" h="-5"/>
+   <weapon x="4" y="-2" h="-5"/>
+   <weapon x="-9" y="-5" h="-9">light</weapon>
+   <weapon x="-9" y="5" h="-9">light</weapon>
+   <utility/>
+   <utility/>
    <utility>light</utility>
-   <structure />
-   <structure />
-   <structure />
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <energy_forward>-3</energy_forward>
@@ -1547,10 +1546,10 @@
   <health>
    <absorb>29</absorb>
    <shield>500</shield>
-   <armour>350</armour>
+   <armour>450</armour>
    <energy>1064</energy>
-   <shield_regen>4.2</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>11</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>43.3</energy_regen>
   </health>
   <characteristics>
@@ -1561,17 +1560,17 @@
    <cap_cargo>20</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="15" y="0"  h="2" />
-   <weapon x="4"  y="2"  h="-5" />
-   <weapon x="4"  y="-2" h="-5" />
-   <weapon x="-9" y="-5" h="-9" >light</weapon>
-   <weapon x="-9" y="5"  h="-9" >light</weapon>
-   <utility />
-   <utility />
+   <weapon x="15" y="0" h="2"/>
+   <weapon x="4" y="2" h="-5"/>
+   <weapon x="4" y="-2" h="-5"/>
+   <weapon x="-9" y="-5" h="-9">light</weapon>
+   <weapon x="-9" y="5" h="-9">light</weapon>
+   <utility/>
+   <utility/>
    <utility>light</utility>
-   <structure />
-   <structure />
-   <structure />
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <energy_forward>-3</energy_forward>
@@ -1596,11 +1595,11 @@
   <health>
    <absorb>37</absorb>
    <shield>520</shield>
-   <armour>690</armour>
+   <armour>1200</armour>
    <energy>1800</energy>
-   <shield_regen>4.3</shield_regen>
-   <armour_regen>0.0</armour_regen>
-   <energy_regen>50.0</energy_regen>
+   <shield_regen>12</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>50</energy_regen>
   </health>
   <characteristics>
    <cpu>75</cpu>
@@ -1610,19 +1609,19 @@
    <cap_cargo>25</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="28"  y="-3"   h="-0" >heavy</weapon>
-	<weapon x="28"  y="3"   h="-0" >heavy</weapon>
-   <weapon x="10"   y="-3"  h="2" />
-   <weapon x="10"   y="3"   h="2" />
-   <weapon x="-22" y="-8" h="-0" />
-   <weapon x="-22" y="8"  h="-0" />
+   <weapon x="28" y="-3" h="-0">heavy</weapon>
+	<weapon x="28" y="3" h="-0">heavy</weapon>
+   <weapon x="10" y="-3" h="2"/>
+   <weapon x="10" y="3" h="2"/>
+   <weapon x="-22" y="-8" h="-0"/>
+   <weapon x="-22" y="8" h="-0"/>
    <utility>heavy</utility>
    <utility>heavy</utility>
-   <utility />
+   <utility/>
    <structure>heavy</structure>
-   <structure />
-   <structure />
-   <structure />
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <heat_forward>-5</heat_forward>
@@ -1646,11 +1645,11 @@
   <health>
    <absorb>39</absorb>
    <shield>520</shield>
-   <armour>690</armour>
+   <armour>1300</armour>
    <energy>1800</energy>
-   <shield_regen>4.3</shield_regen>
-   <armour_regen>0.0</armour_regen>
-   <energy_regen>50.0</energy_regen>
+   <shield_regen>13</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>50</energy_regen>
   </health>
   <characteristics>
    <cpu>75</cpu>
@@ -1660,19 +1659,19 @@
    <cap_cargo>25</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="28"  y="-3"   h="-0" >heavy</weapon>
-	<weapon x="28"  y="3"   h="-0" >heavy</weapon>
-   <weapon x="10"   y="-3"  h="2" />
-   <weapon x="10"   y="3"   h="2" />
-   <weapon x="-22" y="-8" h="-0" />
-   <weapon x="-22" y="8"  h="-0" />
+   <weapon x="28" y="-3" h="-0">heavy</weapon>
+	<weapon x="28" y="3" h="-0">heavy</weapon>
+   <weapon x="10" y="-3" h="2"/>
+   <weapon x="10" y="3" h="2"/>
+   <weapon x="-22" y="-8" h="-0"/>
+   <weapon x="-22" y="8" h="-0"/>
    <utility>heavy</utility>
    <utility>heavy</utility>
-   <utility />
+   <utility/>
    <structure>heavy</structure>
-   <structure />
-   <structure />
-   <structure />
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <heat_forward>-5</heat_forward>
@@ -1696,12 +1695,12 @@
   </movement>
   <health>
    <absorb>43</absorb>
-   <shield>740</shield>
-   <armour>410</armour>
+   <shield>600</shield>
+   <armour>1000</armour>
    <energy>1600</energy>
-   <shield_regen>5.0</shield_regen>
-   <armour_regen>0.0</armour_regen>
-   <energy_regen>50.0</energy_regen>
+   <shield_regen>14</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>50</energy_regen>
   </health>
   <characteristics>
    <cpu>90</cpu>
@@ -1711,18 +1710,18 @@
    <cap_cargo>30</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="28"  y="0"   h="5" >heavy</weapon>
-	<weapon x="18"  y="0"   h="5" >heavy</weapon>
-   <weapon x="-30" y="-8" h="3" />
-   <weapon x="-30" y="8"  h="3" />
+   <weapon x="28" y="0" h="5">heavy</weapon>
+	<weapon x="18" y="0" h="5">heavy</weapon>
+   <weapon x="-30" y="-8" h="3"/>
+   <weapon x="-30" y="8" h="3"/>
    <utility>heavy</utility>
    <utility>heavy</utility>
-   <utility />
-   <utility />
-   <utility />
+   <utility/>
+   <utility/>
+   <utility/>
    <structure>heavy</structure>
-   <structure />
-   <structure />
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <ew_detect>5</ew_detect>
@@ -1746,11 +1745,11 @@
   </movement>
   <health>
    <absorb>42</absorb>
-   <shield>620</shield>
-   <armour>460</armour>
+   <shield>500</shield>
+   <armour>1100</armour>
    <energy>1410</energy>
-   <shield_regen>4.7</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>12</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>55.2</energy_regen>
   </health>
   <characteristics>
@@ -1762,17 +1761,17 @@
   </characteristics>
   <slots>
    <weapon x="-15" y="-10" h="-10">heavy</weapon>
-   <weapon x="-15" y="10"  h="-10">heavy</weapon>
-   <weapon x="20"  y="0"   h="-10" />
-   <weapon x="4"   y="-5"  h="-10" />
-   <weapon x="4"   y="5"   h="-10" />
+   <weapon x="-15" y="10" h="-10">heavy</weapon>
+   <weapon x="20" y="0" h="-10"/>
+   <weapon x="4" y="-5" h="-10"/>
+   <weapon x="4" y="5" h="-10"/>
    <utility>heavy</utility>
    <utility>heavy</utility>
-   <utility />
-   <utility />
+   <utility/>
+   <utility/>
    <structure>heavy</structure>
-   <structure />
-   <structure />
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <jump_range>30</jump_range>
@@ -1796,11 +1795,11 @@
   </movement>
   <health>
    <absorb>42</absorb>
-   <shield>620</shield>
-   <armour>460</armour>
+   <shield>500</shield>
+   <armour>950</armour>
    <energy>1410</energy>
-   <shield_regen>4.7</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>13</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>55.2</energy_regen>
   </health>
   <characteristics>
@@ -1812,17 +1811,17 @@
   </characteristics>
   <slots>
    <weapon x="-15" y="-10" h="-10">heavy</weapon>
-   <weapon x="-15" y="10"  h="-10">heavy</weapon>
-   <weapon x="20"  y="0"   h="-10" />
-   <weapon x="4"   y="-5"  h="-10" />
-   <weapon x="4"   y="5"   h="-10" />
+   <weapon x="-15" y="10" h="-10">heavy</weapon>
+   <weapon x="20" y="0" h="-10"/>
+   <weapon x="4" y="-5" h="-10"/>
+   <weapon x="4" y="5" h="-10"/>
    <utility>heavy</utility>
    <utility>heavy</utility>
-   <utility />
-   <utility />
+   <utility/>
+   <utility/>
    <structure>heavy</structure>
-   <structure />
-   <structure />
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <jump_range>30</jump_range>
@@ -1846,12 +1845,12 @@
   </movement>
   <health>
    <absorb>44</absorb>
-   <shield>650</shield>
-   <armour>480</armour>
+   <shield>530</shield>
+   <armour>1100</armour>
    <energy>1440</energy>
-   <shield_regen>4.8</shield_regen>
-   <armour_regen>0.0</armour_regen>
-   <energy_regen>56.0</energy_regen>
+   <shield_regen>14</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>56</energy_regen>
   </health>
   <characteristics>
    <cpu>84</cpu>
@@ -1862,17 +1861,17 @@
   </characteristics>
   <slots>
    <weapon x="-15" y="-10" h="-10">heavy</weapon>
-   <weapon x="-15" y="10"  h="-10">heavy</weapon>
-   <weapon x="20"  y="0"   h="-10" />
-   <weapon x="4"   y="-5"  h="-10" />
-   <weapon x="4"   y="5"   h="-10" />
+   <weapon x="-15" y="10" h="-10">heavy</weapon>
+   <weapon x="20" y="0" h="-10"/>
+   <weapon x="4" y="-5" h="-10"/>
+   <weapon x="4" y="5" h="-10"/>
    <utility>heavy</utility>
    <utility>heavy</utility>
-   <utility />
-   <utility />
+   <utility/>
+   <utility/>
    <structure>heavy</structure>
-   <structure />
-   <structure />
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <jump_range>50</jump_range>
@@ -1898,11 +1897,11 @@
   </movement>
   <health>
    <absorb>53</absorb>
-   <shield>1100</shield>
-   <armour>600</armour>
+   <shield>700</shield>
+   <armour>2500</armour>
    <energy>2400</energy>
-   <shield_regen>6.0</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>13</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>74.7</energy_regen>
   </health>
   <characteristics>
@@ -1913,20 +1912,20 @@
    <cap_cargo>50</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="-23" y="-15" h="5" />
-   <weapon x="-23" y="15"  h="5" />
-   <weapon x="44"  y="0"   h="0" />
-   <weapon x="-6"  y="0"   h="12" />
-   <weapon x="-24" y="-8"  h="8" >medium</weapon>
-   <weapon x="-24" y="8"   h="8" >medium</weapon>
-   <utility />
-   <utility />
-   <utility />
-   <utility />
+   <weapon x="-23" y="-15" h="5"/>
+   <weapon x="-23" y="15" h="5"/>
+   <weapon x="44" y="0" h="0"/>
+   <weapon x="-6" y="0" h="12"/>
+   <weapon x="-24" y="-8" h="8">medium</weapon>
+   <weapon x="-24" y="8" h="8">medium</weapon>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
    <utility>medium</utility>
-   <structure />
-   <structure />
-   <structure />
+   <structure/>
+   <structure/>
+   <structure/>
    <structure>medium</structure>
   </slots>
   <stats>
@@ -1950,12 +1949,12 @@
   </movement>
   <health>
    <absorb>55</absorb>
-   <shield>1200</shield>
-   <armour>560</armour>
+   <shield>800</shield>
+   <armour>2000</armour>
    <energy>2450</energy>
-   <shield_regen>6.3</shield_regen>
-   <armour_regen>0.0</armour_regen>
-   <energy_regen>72.0</energy_regen>
+   <shield_regen>13</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>72</energy_regen>
   </health>
   <characteristics>
    <cpu>180</cpu>
@@ -1965,20 +1964,20 @@
    <cap_cargo>55</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="-23" y="-15" h="5" />
-   <weapon x="-23" y="15"  h="5" />
-   <weapon x="44"  y="0"   h="0" />
-   <weapon x="-6"  y="0"   h="12" />
-   <weapon x="-24" y="-8"  h="8" >medium</weapon>
-   <weapon x="-24" y="8"   h="8" >medium</weapon>
-   <utility />
-   <utility />
-   <utility />
-   <utility />
+   <weapon x="-23" y="-15" h="5"/>
+   <weapon x="-23" y="15" h="5"/>
+   <weapon x="44" y="0" h="0"/>
+   <weapon x="-6" y="0" h="12"/>
+   <weapon x="-24" y="-8" h="8">medium</weapon>
+   <weapon x="-24" y="8" h="8">medium</weapon>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
    <utility>medium</utility>
-   <structure />
-   <structure />
-   <structure />
+   <structure/>
+   <structure/>
+   <structure/>
    <structure>medium</structure>
   </slots>
   <stats>
@@ -2003,12 +2002,12 @@
   </movement>
   <health>
    <absorb>63</absorb>
-   <shield>950</shield>
-   <armour>1200</armour>
+   <shield>700</shield>
+   <armour>3300</armour>
    <energy>2400</energy>
-   <shield_regen>5.0</shield_regen>
-   <armour_regen>0.0</armour_regen>
-   <energy_regen>75.0</energy_regen>
+   <shield_regen>16</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>75</energy_regen>
   </health>
   <characteristics>
    <cpu>130</cpu>
@@ -2018,24 +2017,24 @@
    <cap_cargo>80</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="40"  y="0"  h="0" />
-   <weapon x="25"  y="-4"  h="0" />
-   <weapon x="25"  y="4"  h="0" />
-   <weapon x="0"  y="-6" h="2" />
-   <weapon x="0"  y="6"  h="2" />
-   <weapon x="-25" y="-8"  h="3" />
-   <weapon x="-25" y="8"  h="3" />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
+   <weapon x="40" y="0" h="0"/>
+   <weapon x="25" y="-4" h="0"/>
+   <weapon x="25" y="4" h="0"/>
+   <weapon x="0" y="-6" h="2"/>
+   <weapon x="0" y="6" h="2"/>
+   <weapon x="-25" y="-8" h="3"/>
+   <weapon x="-25" y="8" h="3"/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <ew_detect>-5</ew_detect>
@@ -2059,11 +2058,11 @@
   </movement>
   <health>
    <absorb>59</absorb>
-   <shield>1200</shield>
-   <armour>800</armour>
+   <shield>680</shield>
+   <armour>2200</armour>
    <energy>2700</energy>
-   <shield_regen>5.3</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>13</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>85.3</energy_regen>
   </health>
   <characteristics>
@@ -2074,23 +2073,23 @@
    <cap_cargo>70</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="40"  y="0"  h="2" />
-   <weapon x="25"  y="0"  h="2" />
-   <weapon x="12"  y="-6" h="0" />
-   <weapon x="12"  y="6"  h="0" />
-   <weapon x="0"   y="0"  h="7" />
-   <weapon x="-15" y="0"  h="7" />
-   <weapon x="-33" y="0"  h="7" />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
+   <weapon x="40" y="0" h="2"/>
+   <weapon x="25" y="0" h="2"/>
+   <weapon x="12" y="-6" h="0"/>
+   <weapon x="12" y="6" h="0"/>
+   <weapon x="0" y="0" h="7"/>
+   <weapon x="-15" y="0" h="7"/>
+   <weapon x="-33" y="0" h="7"/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <heat_dissipation>15</heat_dissipation>
@@ -2114,11 +2113,11 @@
   </movement>
   <health>
    <absorb>59</absorb>
-   <shield>1200</shield>
-   <armour>800</armour>
+   <shield>700</shield>
+   <armour>2200</armour>
    <energy>2700</energy>
-   <shield_regen>5.3</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>14</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>85.3</energy_regen>
   </health>
   <characteristics>
@@ -2129,23 +2128,23 @@
    <cap_cargo>70</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="40"  y="0"  h="2" />
-   <weapon x="25"  y="0"  h="2" />
-   <weapon x="12"  y="-6" h="0" />
-   <weapon x="12"  y="6"  h="0" />
-   <weapon x="0"   y="0"  h="7" />
-   <weapon x="-15" y="0"  h="7" />
-   <weapon x="-33" y="0"  h="7" />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
+   <weapon x="40" y="0" h="2"/>
+   <weapon x="25" y="0" h="2"/>
+   <weapon x="12" y="-6" h="0"/>
+   <weapon x="12" y="6" h="0"/>
+   <weapon x="0" y="0" h="7"/>
+   <weapon x="-15" y="0" h="7"/>
+   <weapon x="-33" y="0" h="7"/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <heat_dissipation>15</heat_dissipation>
@@ -2154,7 +2153,7 @@
  </ship>
  <ship name="Empire Hawking">
   <base_type>Hawking</base_type>
-  <GFX  sx="12" sy="12">hawking_empire</GFX>
+  <GFX sx="12" sy="12">hawking_empire</GFX>
   <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Cruiser</class>
@@ -2169,11 +2168,11 @@
   </movement>
   <health>
    <absorb>63</absorb>
-   <shield>1260</shield>
-   <armour>840</armour>
+   <shield>750</shield>
+   <armour>3000</armour>
    <energy>2700</energy>
-   <shield_regen>5.7</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>15</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>85.3</energy_regen>
   </health>
   <characteristics>
@@ -2184,23 +2183,23 @@
    <cap_cargo>70</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="40"  y="0"  h="2" />
-   <weapon x="25"  y="0"  h="2" />
-   <weapon x="12"  y="-6" h="0" />
-   <weapon x="12"  y="6"  h="0" />
-   <weapon x="0"   y="0"  h="7" />
-   <weapon x="-15" y="0"  h="7" />
-   <weapon x="-33" y="0"  h="7" />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
+   <weapon x="40" y="0" h="2"/>
+   <weapon x="25" y="0" h="2"/>
+   <weapon x="12" y="-6" h="0"/>
+   <weapon x="12" y="6" h="0"/>
+   <weapon x="0" y="0" h="7"/>
+   <weapon x="-15" y="0" h="7"/>
+   <weapon x="-33" y="0" h="7"/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <heat_dissipation>15</heat_dissipation>
@@ -2225,11 +2224,11 @@
   </movement>
   <health>
    <absorb>64</absorb>
-   <shield>1150</shield>
-   <armour>740</armour>
+   <shield>900</shield>
+   <armour>3700</armour>
    <energy>1800</energy>
-   <shield_regen>5.0</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>13</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>66.7</energy_regen>
   </health>
   <characteristics>
@@ -2240,20 +2239,20 @@
    <cap_cargo>85</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="40"  y="0"   h="0" />
-   <weapon x="20"   y="0"  h="0" />
-   <weapon x="20"   y="0"  h="0" />
-   <weapon x="-20" y="0" h="0" />
-   <weapon x="-40" y="0"  h="0" />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
+   <weapon x="40" y="0" h="0"/>
+   <weapon x="20" y="0" h="0"/>
+   <weapon x="20" y="0" h="0"/>
+   <weapon x="-20" y="0" h="0"/>
+   <weapon x="-40" y="0" h="0"/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <launch_rate>15</launch_rate>
@@ -2277,11 +2276,11 @@
   </movement>
   <health>
    <absorb>67</absorb>
-   <shield>1400</shield>
-   <armour>800</armour>
+   <shield>900</shield>
+   <armour>4200</armour>
    <energy>3100</energy>
-   <shield_regen>5.7</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>14</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>88.3</energy_regen>
   </health>
   <characteristics>
@@ -2292,22 +2291,22 @@
    <cap_cargo>60</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="40"  y="0"  h="2" />
-   <weapon x="25"  y="0"  h="2" />
-   <weapon x="12"  y="0" h="3" />
-   <weapon x="0"   y="0"  h="4" />
-   <weapon x="-15" y="0"  h="6" />
-   <weapon x="-33" y="0"  h="6" />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
+   <weapon x="40" y="0" h="2"/>
+   <weapon x="25" y="0" h="2"/>
+   <weapon x="12" y="0" h="3"/>
+   <weapon x="0" y="0" h="4"/>
+   <weapon x="-15" y="0" h="6"/>
+   <weapon x="-33" y="0" h="6"/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <ew_detect>10</ew_detect>
@@ -2330,11 +2329,11 @@
   </movement>
   <health>
    <absorb>64</absorb>
-   <shield>1150</shield>
-   <armour>740</armour>
+   <shield>880</shield>
+   <armour>4400</armour>
    <energy>1800</energy>
-   <shield_regen>5.0</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>14</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>66.7</energy_regen>
   </health>
   <characteristics>
@@ -2345,20 +2344,20 @@
    <cap_cargo>85</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="40"  y="0"   h="0" />
-   <weapon x="20"   y="0"  h="0" />
-   <weapon x="20"   y="0"  h="0" />
-   <weapon x="-20" y="0" h="0" />
-   <weapon x="-40" y="0"  h="0" />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
+   <weapon x="40" y="0" h="0"/>
+   <weapon x="20" y="0" h="0"/>
+   <weapon x="20" y="0" h="0"/>
+   <weapon x="-20" y="0" h="0"/>
+   <weapon x="-40" y="0" h="0"/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <launch_rate>15</launch_rate>
@@ -2382,11 +2381,11 @@
   </movement>
   <health>
    <absorb>65</absorb>
-   <shield>1600</shield>
-   <armour>1000</armour>
+   <shield>850</shield>
+   <armour>4000</armour>
    <energy>4000</energy>
-   <shield_regen>5.8</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>12</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>90.7</energy_regen>
   </health>
   <characteristics>
@@ -2397,24 +2396,24 @@
    <cap_cargo>90</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="-10" y="-13" h="2" />
-   <weapon x="-10" y="13"  h="2" />
-   <weapon x="-15" y="-25" h="3" />
-   <weapon x="-15" y="25"  h="3" />
-   <weapon x="16"  y="0" h="3" />
-   <weapon x="0"   y="0" h="5" />
-   <weapon x="-20" y="0" h="5" />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
+   <weapon x="-10" y="-13" h="2"/>
+   <weapon x="-10" y="13" h="2"/>
+   <weapon x="-15" y="-25" h="3"/>
+   <weapon x="-15" y="25" h="3"/>
+   <weapon x="16" y="0" h="3"/>
+   <weapon x="0" y="0" h="5"/>
+   <weapon x="-20" y="0" h="5"/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <launch_rate>10</launch_rate>
@@ -2439,11 +2438,11 @@
   </movement>
   <health>
    <absorb>69</absorb>
-   <shield>1600</shield>
-   <armour>1000</armour>
+   <shield>900</shield>
+   <armour>4300</armour>
    <energy>4000</energy>
-   <shield_regen>5.3</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>13</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>90.7</energy_regen>
   </health>
   <characteristics>
@@ -2454,24 +2453,24 @@
    <cap_cargo>90</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="-10" y="-13" h="2" />
-   <weapon x="-10" y="13"  h="2" />
-   <weapon x="-15" y="-25" h="3" />
-   <weapon x="-15" y="25"  h="3" />
-   <weapon x="16"  y="0" h="3" />
-   <weapon x="0"   y="0" h="5" />
-   <weapon x="-20" y="0" h="5" />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
+   <weapon x="-10" y="-13" h="2"/>
+   <weapon x="-10" y="13" h="2"/>
+   <weapon x="-15" y="-25" h="3"/>
+   <weapon x="-15" y="25" h="3"/>
+   <weapon x="16" y="0" h="3"/>
+   <weapon x="0" y="0" h="5"/>
+   <weapon x="-20" y="0" h="5"/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <launch_rate>10</launch_rate>
@@ -2497,11 +2496,11 @@
   </movement>
   <health>
    <absorb>78</absorb>
-   <shield>2100</shield>
-   <armour>1300</armour>
+   <shield>1000</shield>
+   <armour>5000</armour>
    <energy>4800</energy>
-   <shield_regen>7.5</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>16</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>118.3</energy_regen>
   </health>
   <characteristics>
@@ -2512,26 +2511,26 @@
    <cap_cargo>130</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="40"  y="0"  h="2" />
-   <weapon x="25"  y="0"  h="2" />
-   <weapon x="12"  y="-6" h="0" />
-   <weapon x="12"  y="6"  h="0" />
-   <weapon x="0"   y="0"  h="7" />
-   <weapon x="0"   y="0"  h="7" />
-   <weapon x="-15" y="0"  h="7" />
-   <weapon x="-33" y="0"  h="7" />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
+   <weapon x="40" y="0" h="2"/>
+   <weapon x="25" y="0" h="2"/>
+   <weapon x="12" y="-6" h="0"/>
+   <weapon x="12" y="6" h="0"/>
+   <weapon x="0" y="0" h="7"/>
+   <weapon x="0" y="0" h="7"/>
+   <weapon x="-15" y="0" h="7"/>
+   <weapon x="-33" y="0" h="7"/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <energy_turret>-10</energy_turret>
@@ -2561,7 +2560,7 @@
    <armour>5000</armour>
    <energy>10000</energy>
    <shield_regen>3.3</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>166.7</energy_regen>
   </health>
   <characteristics>
@@ -2572,26 +2571,26 @@
    <cap_cargo>5000</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="0" y="0" h="0" />
-   <weapon x="0" y="0" h="0" />
-   <weapon x="50" y="0" h="5" />
-   <weapon x="-50" y="0" h="5" />
-   <weapon x="0" y="50" h="5" />
-   <weapon x="0" y="-40" h="5" />
-   <weapon x="0" y="0" h="30" />
-   <weapon x="0" y="0" h="30" />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
+   <weapon x="0" y="0" h="0"/>
+   <weapon x="0" y="0" h="0"/>
+   <weapon x="50" y="0" h="5"/>
+   <weapon x="-50" y="0" h="5"/>
+   <weapon x="0" y="50" h="5"/>
+   <weapon x="0" y="-40" h="5"/>
+   <weapon x="0" y="0" h="30"/>
+   <weapon x="0" y="0" h="30"/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
  </ship>
  <!-- Special craft, mainly used for missioning purposes. -->
@@ -2614,8 +2613,8 @@
    <shield>9000</shield>
    <armour>15000</armour>
    <energy>5000</energy>
-   <shield_regen>11.7</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>20</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>166.7</energy_regen>
   </health>
   <characteristics>
@@ -2626,21 +2625,21 @@
    <cap_cargo>55</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="-24" y="-8"  h="8" />
-   <weapon x="-24" y="8"   h="8" />
-   <weapon x="-23" y="-15" h="5" />
-   <weapon x="-23" y="15"  h="5" />
-   <weapon x="44"  y="0"   h="0" />
-   <weapon x="-6"  y="0"   h="12" />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
+   <weapon x="-24" y="-8" h="8"/>
+   <weapon x="-24" y="8" h="8"/>
+   <weapon x="-23" y="-15" h="5"/>
+   <weapon x="-23" y="15" h="5"/>
+   <weapon x="44" y="0" h="0"/>
+   <weapon x="-6" y="0" h="12"/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
  </ship>
  <ship name="Suzaku">
@@ -2662,8 +2661,8 @@
    <shield>9000</shield>
    <armour>15000</armour>
    <energy>5000</energy>
-   <shield_regen>11.7</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>20</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>166.7</energy_regen>
   </health>
   <characteristics>
@@ -2674,21 +2673,21 @@
    <cap_cargo>55</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="-24" y="-8"  h="8" />
-   <weapon x="-24" y="8"   h="8" />
-   <weapon x="-23" y="-15" h="5" />
-   <weapon x="-23" y="15"  h="5" />
-   <weapon x="44"  y="0"   h="0" />
-   <weapon x="-6"  y="0"   h="12" />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
+   <weapon x="-24" y="-8" h="8"/>
+   <weapon x="-24" y="8" h="8"/>
+   <weapon x="-23" y="-15" h="5"/>
+   <weapon x="-23" y="15" h="5"/>
+   <weapon x="44" y="0" h="0"/>
+   <weapon x="-6" y="0" h="12"/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
  </ship>
  <ship name="Byakko">
@@ -2710,8 +2709,8 @@
    <shield>9000</shield>
    <armour>15000</armour>
    <energy>5000</energy>
-   <shield_regen>11.7</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>20</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>166.7</energy_regen>
   </health>
   <characteristics>
@@ -2722,21 +2721,21 @@
    <cap_cargo>55</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="-24" y="-8"  h="8" />
-   <weapon x="-24" y="8"   h="8" />
-   <weapon x="-23" y="-15" h="5" />
-   <weapon x="-23" y="15"  h="5" />
-   <weapon x="44"  y="0"   h="0" />
-   <weapon x="-6"  y="0"   h="12" />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
+   <weapon x="-24" y="-8" h="8"/>
+   <weapon x="-24" y="8" h="8"/>
+   <weapon x="-23" y="-15" h="5"/>
+   <weapon x="-23" y="15" h="5"/>
+   <weapon x="44" y="0" h="0"/>
+   <weapon x="-6" y="0" h="12"/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
  </ship>
  <ship name="Genbu">
@@ -2758,8 +2757,8 @@
    <shield>9000</shield>
    <armour>15000</armour>
    <energy>5000</energy>
-   <shield_regen>11.7</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>20</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>166.7</energy_regen>
   </health>
   <characteristics>
@@ -2770,21 +2769,21 @@
    <cap_cargo>55</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="-24" y="-8"  h="8" />
-   <weapon x="-24" y="8"   h="8" />
-   <weapon x="-23" y="-15" h="5" />
-   <weapon x="-23" y="15"  h="5" />
-   <weapon x="44"  y="0"   h="0" />
-   <weapon x="-6"  y="0"   h="12" />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
+   <weapon x="-24" y="-8" h="8"/>
+   <weapon x="-24" y="8" h="8"/>
+   <weapon x="-23" y="-15" h="5"/>
+   <weapon x="-23" y="15" h="5"/>
+   <weapon x="44" y="0" h="0"/>
+   <weapon x="-6" y="0" h="12"/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
  </ship>
  <ship name="Diplomatic Vessel">
@@ -2807,7 +2806,7 @@
    <armour>400</armour>
    <energy>730</energy>
    <shield_regen>2.5</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>32.7</energy_regen>
   </health>
   <characteristics>
@@ -2818,7 +2817,7 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="9" y="0" h="-2" />
+   <weapon x="9" y="0" h="-2"/>
    <utility/>
    <utility/>
    <utility/>
