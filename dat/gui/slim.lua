@@ -514,7 +514,7 @@ function render( dt, dt_mod )
          else
             col = col_txt_bar
          end
-         if not weapon.in_arc then
+         if not weapon.in_arc and pilot.player():target() ~= nil then
             col = col_txt_una
          end
          values = {weapon.left_p, weapon.cooldown, weapon.level, weapon.track or weapon.lockon}
