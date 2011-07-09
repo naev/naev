@@ -35,6 +35,7 @@ void dship_csv( const char *path )
          "name,class,base_type,price,license,fabricator,"
          "thrust,turn,speed,"
          "crew,mass,cpu,fuel,cap_cargo,"
+         "absorb,"
          "armour,armour_regen,"
          "shield,shield_regen,"
          "energy,energy_regen,"
@@ -50,6 +51,7 @@ void dship_csv( const char *path )
             "%s,%s,%s,%"CREDITS_PRI",%s,%s,"
             "%f,%f,%f,"
             "%d,%f,%f,%d,%f,"
+            "%f,"
             "%f,%f,"
             "%f,%f,"
             "%f,%f,"
@@ -57,6 +59,7 @@ void dship_csv( const char *path )
             s->name, ship_class(s), s->base_type, s->price, s->license, s->fabricator,
             s->thrust/s->mass, s->turn*180./M_PI, s->speed,
             s->crew, s->mass, s->cpu, s->fuel, s->cap_cargo,
+            s->dmg_absorb,
             s->armour, s->armour_regen,
             s->shield, s->shield_regen,
             s->energy, s->energy_regen,
