@@ -10,6 +10,9 @@
 #include "pilot.h"
 
 
+#define WEAPSET_INRANGE_PLAYER_DEF  0 /**< Default weaponset inrange parameter for the player. */
+
+
 /* Freedom. */
 void pilot_weapSetFree( Pilot* p );
 

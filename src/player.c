@@ -3535,7 +3535,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
 
    /* Sets inrange by default if weapon sets are missing. */
    for (i=0; i<PILOT_WEAPON_SETS; i++)
-      pilot_weapSetInrange( ship, i, 1 );
+      pilot_weapSetInrange( ship, i, WEAPSET_INRANGE_PLAYER_DEF );
 
    /* Second pass for weapon sets. */
    node = parent->xmlChildrenNode;
@@ -3577,7 +3577,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
          /* Set inrange mode. */
          xmlr_attr(cur,"inrange",id);
          if (id == NULL)
-            pilot_weapSetInrange( ship, i, 1 );
+            pilot_weapSetInrange( ship, i, WEAPSET_INRANGE_PLAYER_DEF );
          else {
             pilot_weapSetInrange( ship, i, atoi(id) );
             free(id);
