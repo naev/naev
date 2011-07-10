@@ -961,7 +961,7 @@ static int outfit_parseDamage( Damage *dmg, xmlNodePtr node )
       }
 
       /* Get disable. */
-      xmlr_attr(node,"penetrate",buf);
+      xmlr_attr(node,"disable",buf);
       if (buf != NULL) {
          dmg->disable = atof(buf);
          free(buf);
