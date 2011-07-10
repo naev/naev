@@ -1264,7 +1264,7 @@
    <spfx_shield>ExpM</spfx_shield>
    <spfx_armour>ExpM</spfx_armour>
    <duration blowup="armour">5</duration>
-   <thrust>700</thrust>
+   <thrust>0</thrust>
    <turn>100</turn>
    <speed>1200</speed>
    <damage type="kinetic" penetrate="5">40</damage>
@@ -1341,7 +1341,7 @@
    <spfx_shield>ExpM</spfx_shield>
    <spfx_armour>ExpM</spfx_armour>
    <duration blowup="armour">7</duration>
-   <thrust>550</thrust>
+   <thrust>0</thrust>
    <turn>70</turn>
    <speed>1000</speed>
    <damage type="kinetic" penetrate="10">80</damage>
@@ -1418,7 +1418,7 @@
    <spfx_shield>ExpM</spfx_shield>
    <spfx_armour>ExpM</spfx_armour>
    <duration blowup="armour">9</duration>
-   <thrust>450</thrust>
+   <thrust>0</thrust>
    <turn>45</turn>
    <speed>700</speed>
    <damage type="kinetic" penetrate="20">150</damage>
@@ -1472,7 +1472,7 @@
    <spfx_shield>ExpM</spfx_shield>
    <spfx_armour>ExpM</spfx_armour>
    <duration blowup="armour">1.3</duration>
-   <thrust>1500</thrust>
+   <thrust>0</thrust>
    <speed>1500</speed>
    <damage type="kinetic" penetrate="0">15</damage>
    <ai>dumb</ai>
@@ -1524,7 +1524,7 @@
    <sound_hit>bansheeexp</sound_hit>
    <spfx_shield>EmpS</spfx_shield>
    <spfx_armour>EmpS</spfx_armour>
-   <duration blowup="shield">5</duration>
+   <duration blowup="shield">7</duration>
    <thrust>0</thrust>
    <speed>200</speed>
    <damage type="emp" penetrate="70">110</damage>
@@ -1565,8 +1565,8 @@
    <sound_hit>lrgexp0</sound_hit>
    <spfx_shield>ExpL</spfx_shield>
    <spfx_armour>ExpL</spfx_armour>
-   <duration blowup="armour">12</duration>
-   <thrust>125</thrust>
+   <duration blowup="armour">33</duration>
+   <thrust>0</thrust>
    <turn>20</turn>
    <speed>170</speed>
    <damage type="kinetic" penetrate="50">400</damage>
@@ -1607,8 +1607,8 @@
    <sound_hit>lrgexp0</sound_hit>
    <spfx_shield>ExpL</spfx_shield>
    <spfx_armour>ExpL</spfx_armour>
-   <duration blowup="armour">12</duration>
-   <thrust>125</thrust>
+   <duration blowup="armour">60</duration>
+   <thrust>0</thrust>
    <turn>20</turn>
    <speed>70</speed>
    <damage type="kinetic" penetrate="90">800</damage>
