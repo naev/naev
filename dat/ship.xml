@@ -1210,7 +1210,7 @@
    <shield>410</shield>
    <armour>430</armour>
    <energy>1125</energy>
-   <shield_regen>9</shield_regen>
+   <shield_regen>8</shield_regen>
    <armour_regen>0</armour_regen>
    <energy_regen>38.3</energy_regen>
   </health>
@@ -1259,7 +1259,7 @@
    <shield>410</shield>
    <armour>430</armour>
    <energy>1125</energy>
-   <shield_regen>9</shield_regen>
+   <shield_regen>8</shield_regen>
    <armour_regen>0</armour_regen>
    <energy_regen>38.3</energy_regen>
   </health>
@@ -1307,7 +1307,7 @@
    <shield>410</shield>
    <armour>390</armour>
    <energy>1175</energy>
-   <shield_regen>9</shield_regen>
+   <shield_regen>8</shield_regen>
    <armour_regen>0</armour_regen>
    <energy_regen>41.7</energy_regen>
   </health>
@@ -1357,7 +1357,7 @@
    <shield>450</shield>
    <armour>500</armour>
    <energy>960</energy>
-   <shield_regen>10</shield_regen>
+   <shield_regen>9</shield_regen>
    <armour_regen>0</armour_regen>
    <energy_regen>40.8</energy_regen>
   </health>
@@ -1405,7 +1405,7 @@
    <shield>480</shield>
    <armour>450</armour>
    <energy>1064</energy>
-   <shield_regen>9</shield_regen>
+   <shield_regen>8</shield_regen>
    <armour_regen>0</armour_regen>
    <energy_regen>43.3</energy_regen>
   </health>
@@ -1453,7 +1453,7 @@
    <shield>480</shield>
    <armour>440</armour>
    <energy>1064</energy>
-   <shield_regen>10</shield_regen>
+   <shield_regen>9</shield_regen>
    <armour_regen>0</armour_regen>
    <energy_regen>43.3</energy_regen>
   </health>
@@ -1500,7 +1500,7 @@
    <shield>500</shield>
    <armour>400</armour>
    <energy>1064</energy>
-   <shield_regen>10</shield_regen>
+   <shield_regen>9</shield_regen>
    <armour_regen>0</armour_regen>
    <energy_regen>43.3</energy_regen>
   </health>
@@ -1548,7 +1548,7 @@
    <shield>500</shield>
    <armour>450</armour>
    <energy>1064</energy>
-   <shield_regen>11</shield_regen>
+   <shield_regen>9</shield_regen>
    <armour_regen>0</armour_regen>
    <energy_regen>43.3</energy_regen>
   </health>
@@ -1597,7 +1597,7 @@
    <shield>520</shield>
    <armour>1200</armour>
    <energy>1800</energy>
-   <shield_regen>12</shield_regen>
+   <shield_regen>9</shield_regen>
    <armour_regen>0</armour_regen>
    <energy_regen>50</energy_regen>
   </health>
@@ -1647,7 +1647,7 @@
    <shield>520</shield>
    <armour>1300</armour>
    <energy>1800</energy>
-   <shield_regen>13</shield_regen>
+   <shield_regen>10</shield_regen>
    <armour_regen>0</armour_regen>
    <energy_regen>50</energy_regen>
   </health>
@@ -1698,7 +1698,7 @@
    <shield>600</shield>
    <armour>1000</armour>
    <energy>1600</energy>
-   <shield_regen>14</shield_regen>
+   <shield_regen>10</shield_regen>
    <armour_regen>0</armour_regen>
    <energy_regen>50</energy_regen>
   </health>
@@ -1748,7 +1748,7 @@
    <shield>500</shield>
    <armour>1100</armour>
    <energy>1410</energy>
-   <shield_regen>12</shield_regen>
+   <shield_regen>9</shield_regen>
    <armour_regen>0</armour_regen>
    <energy_regen>55.2</energy_regen>
   </health>
@@ -1798,7 +1798,7 @@
    <shield>500</shield>
    <armour>950</armour>
    <energy>1410</energy>
-   <shield_regen>13</shield_regen>
+   <shield_regen>10</shield_regen>
    <armour_regen>0</armour_regen>
    <energy_regen>55.2</energy_regen>
   </health>
@@ -1848,7 +1848,7 @@
    <shield>530</shield>
    <armour>1100</armour>
    <energy>1440</energy>
-   <shield_regen>14</shield_regen>
+   <shield_regen>10</shield_regen>
    <armour_regen>0</armour_regen>
    <energy_regen>56</energy_regen>
   </health>
@@ -1900,7 +1900,7 @@
    <shield>700</shield>
    <armour>2500</armour>
    <energy>2400</energy>
-   <shield_regen>13</shield_regen>
+   <shield_regen>10</shield_regen>
    <armour_regen>0</armour_regen>
    <energy_regen>74.7</energy_regen>
   </health>
@@ -1952,7 +1952,7 @@
    <shield>800</shield>
    <armour>2000</armour>
    <energy>2450</energy>
-   <shield_regen>13</shield_regen>
+   <shield_regen>9</shield_regen>
    <armour_regen>0</armour_regen>
    <energy_regen>72</energy_regen>
   </health>
@@ -2005,7 +2005,7 @@
    <shield>700</shield>
    <armour>3300</armour>
    <energy>2400</energy>
-   <shield_regen>16</shield_regen>
+   <shield_regen>12</shield_regen>
    <armour_regen>0</armour_regen>
    <energy_regen>75</energy_regen>
   </health>
@@ -2061,7 +2061,7 @@
    <shield>680</shield>
    <armour>2200</armour>
    <energy>2700</energy>
-   <shield_regen>13</shield_regen>
+   <shield_regen>10</shield_regen>
    <armour_regen>0</armour_regen>
    <energy_regen>85.3</energy_regen>
   </health>
@@ -2116,7 +2116,7 @@
    <shield>700</shield>
    <armour>2200</armour>
    <energy>2700</energy>
-   <shield_regen>14</shield_regen>
+   <shield_regen>10</shield_regen>
    <armour_regen>0</armour_regen>
    <energy_regen>85.3</energy_regen>
   </health>
@@ -2171,7 +2171,7 @@
    <shield>750</shield>
    <armour>3000</armour>
    <energy>2700</energy>
-   <shield_regen>15</shield_regen>
+   <shield_regen>11</shield_regen>
    <armour_regen>0</armour_regen>
    <energy_regen>85.3</energy_regen>
   </health>
@@ -2227,7 +2227,7 @@
    <shield>900</shield>
    <armour>3700</armour>
    <energy>1800</energy>
-   <shield_regen>13</shield_regen>
+   <shield_regen>10</shield_regen>
    <armour_regen>0</armour_regen>
    <energy_regen>66.7</energy_regen>
   </health>
@@ -2279,7 +2279,7 @@
    <shield>900</shield>
    <armour>4200</armour>
    <energy>3100</energy>
-   <shield_regen>14</shield_regen>
+   <shield_regen>11</shield_regen>
    <armour_regen>0</armour_regen>
    <energy_regen>88.3</energy_regen>
   </health>
@@ -2332,7 +2332,7 @@
    <shield>880</shield>
    <armour>4400</armour>
    <energy>1800</energy>
-   <shield_regen>14</shield_regen>
+   <shield_regen>11</shield_regen>
    <armour_regen>0</armour_regen>
    <energy_regen>66.7</energy_regen>
   </health>
@@ -2384,7 +2384,7 @@
    <shield>850</shield>
    <armour>4000</armour>
    <energy>4000</energy>
-   <shield_regen>12</shield_regen>
+   <shield_regen>10</shield_regen>
    <armour_regen>0</armour_regen>
    <energy_regen>90.7</energy_regen>
   </health>
@@ -2441,7 +2441,7 @@
    <shield>900</shield>
    <armour>4300</armour>
    <energy>4000</energy>
-   <shield_regen>13</shield_regen>
+   <shield_regen>10</shield_regen>
    <armour_regen>0</armour_regen>
    <energy_regen>90.7</energy_regen>
   </health>
@@ -2499,7 +2499,7 @@
    <shield>1000</shield>
    <armour>5000</armour>
    <energy>4800</energy>
-   <shield_regen>16</shield_regen>
+   <shield_regen>12</shield_regen>
    <armour_regen>0</armour_regen>
    <energy_regen>118.3</energy_regen>
   </health>
