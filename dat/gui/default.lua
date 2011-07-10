@@ -291,8 +291,8 @@ function render_target ()
       return
    end
 
-   local col, shi, arm, dis
-   arm, shi, dis = ptarget:health()
+   local col, shi, arm, stress, dis
+   arm, shi, stress, dis = ptarget:health()
 
    -- Get colour
    if dis or fuz then
