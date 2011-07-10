@@ -946,7 +946,7 @@ static int outfit_parseDamage( Damage *dmg, xmlNodePtr node )
       }
       else {
          dmg->type = outfit_strToDamageType(buf);
-         if (buf) free(buf);
+         free(buf);
       }
 
       /* Get penetration. */
@@ -957,7 +957,14 @@ static int outfit_parseDamage( Damage *dmg, xmlNodePtr node )
       }
       else {
          dmg->penetration = atof(buf) / 100.;
-         if (buf) free(buf);
+         free(buf);
+      }
+
+      /* Get disable. */
+      xmlr_attr(node,"penetrate",buf);
+      if (buf != NULL) {
+         dmg->disable = atof(buf);
+         free(buf);
       }
 
       /* Get damage */
