@@ -1061,6 +1061,7 @@ void space_update( const double dt )
 {
    int i;
    Pilot *p;
+   Damage dmg;
 
    /* Needs a current system. */
    if (cur_system == NULL)
@@ -1074,11 +1075,15 @@ void space_update( const double dt )
     * Volatile systems.
     */
    if (cur_system->nebu_volatility > 0.) {
+      dmg.type          = DAMAGE_TYPE_NEBULA;
+      dmg.damage        = pow2(cur_system->nebu_volatility) / 500. * dt;
+      dmg.penetration   = 1.; /* Full penetration. */
+      dmg.disable       = 0.;
+
       /* Damage pilots in volatile systems. */
       for (i=0; i<pilot_nstack; i++) {
          p = pilot_stack[i];
-         pilot_hit( p, NULL, 0, DAMAGE_TYPE_NEBULA,
-                  pow2(cur_system->nebu_volatility) / 500. * dt, 1. ); /* 100% penetration. */
+         pilot_hit( p, NULL, 0, &dmg );
       }
    }
 
