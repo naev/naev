@@ -398,7 +398,7 @@ function render_ammoBar( name, x, y, value, txt, txtcol, col )
    local textoffset = 0
    local trackcol
    if value[4] then
-      if value[4] == -1 then
+      if value[4] == -1 or pilot.player():target() == nil then
          trackcol = col_txt_una
       else
          trackcol = colour.new(1-value[4], value[4], 0)
