@@ -1197,6 +1197,7 @@ static void equipment_genLists( unsigned int wid )
    glColour *bg, *c, blend;
    char **slottype;
    const char *typename;
+   const Damage *dmg;
 
    /* Get dimensions. */
    equipment_getDim( wid, &w, &h, &sw, &sh, &ow, &oh,
@@ -1246,7 +1247,8 @@ static void equipment_genLists( unsigned int wid )
                   continue;
             }
             shots = 1. / (mod_shots * outfit_delay(o));
-            dps  += shots * mod_damage * outfit_damage(o);
+            dmg   = outfit_damage(o);
+            dps  += shots * mod_damage * dmg->damage;
             eps  += shots * mod_energy * outfit_energy(o);
          }
          l  = snprintf( alt[i], SHIP_ALT_MAX, "Ship Stats" );

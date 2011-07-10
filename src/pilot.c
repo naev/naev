@@ -896,16 +896,13 @@ void pilot_setTarget( Pilot* p, unsigned int id )
  *    @param p Pilot that is taking damage.
  *    @param w Solid that is hitting pilot.
  *    @param shooter Attacker that shot the pilot.
- *    @param dtype Type of damage.
- *    @param damage Amount of damage.
+ *    @param dmg Damage being done.
  *    @return The real damage done.
  */
-double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
-      const DamageType dtype, const double damage, const double penetration )
+double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter, const Damage *dmg )
 {
    int mod, h;
-   double damage_shield, damage_armour, knockback, dam_mod, dmg;
-   double armour_start, absorb;
+   double damage_shield, damage_armour, disable, knockback, dam_mod, ddmg, absorb;
    Pilot *pshooter;
    HookParam hparam;
 
@@ -917,28 +914,19 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
    /* Defaults. */
    pshooter = NULL;
    dam_mod  = 0.;
-   dmg      = 0.;
-   armour_start = p->armour;
+   ddmg      = 0.;
 
    /* Calculate the damage. */
-   absorb = 1. - CLAMP( 0., 1., p->dmg_absorb - penetration );
-   outfit_calcDamage( &damage_shield, &damage_armour, &knockback, &p->stats, dtype, damage );
+   absorb = 1. - CLAMP( 0., 1., p->dmg_absorb - dmg->penetration );
+   outfit_calcDamage( &damage_shield, &damage_armour, &knockback, &disable, &p->stats, dmg );
    damage_shield *= absorb;
    damage_armour *= absorb;
 
    /*
-    * EMP don't do damage if pilot is disabled.
-    */
-   if (pilot_isDisabled(p) && (dtype == DAMAGE_TYPE_EMP)) {
-      dmg        = 0.;
-      dam_mod    = 0.;
-   }
-
-   /*
     * Shields take entire blow.
     */
-   else if (p->shield-damage_shield > 0.) {
-      dmg        = damage_shield;
+   if (p->shield-damage_shield > 0.) {
+      ddmg       = damage_shield;
       p->shield -= damage_shield;
       dam_mod    = damage_shield/p->shield_max;
    }
@@ -946,7 +934,7 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
     * Shields take part of the blow.
     */
    else if (p->shield > 0.) {
-      dmg        = p->shield + (1. - p->shield/damage_shield) * damage_armour;
+      ddmg       = p->shield + (1. - p->shield/damage_shield) * damage_armour;
       p->armour -= (1. - p->shield/damage_shield) * damage_armour;
       p->shield  = 0.;
       dam_mod    = (damage_shield+damage_armour) /
@@ -958,15 +946,11 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
     * Armour takes the entire blow.
     */
    else if (p->armour > 0.) {
-      dmg        = damage_armour;
+      ddmg       = damage_armour;
       p->armour -= damage_armour;
       p->stimer  = 3.;
       p->sbonus  = 3.;
    }
-
-   /* EMP does not kill. */
-   if ((dtype == DAMAGE_TYPE_EMP) && (p->armour < PILOT_DISABLED_ARMOR*p->ship->armour*0.75))
-      p->armour = MIN( armour_start, PILOT_DISABLED_ARMOR*p->ship->armour*0.75);
 
    /* Player might break autonav. */
    if ((w != NULL) && (p->id == PLAYER_ID) &&
@@ -1053,7 +1037,7 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
             knockback * (w->vel.x * (dam_mod/9. + w->mass/p->solid->mass/6.)),
             knockback * (w->vel.y * (dam_mod/9. + w->mass/p->solid->mass/6.)) );
 
-   return dmg;
+   return ddmg;
 }
 
 
@@ -1105,22 +1089,20 @@ static void pilot_dead( Pilot* p, unsigned int killer )
  *    @param x X position of the pilot.
  *    @param y Y position of the pilot.
  *    @param radius Radius of the explosion.
- *    @param dtype Damage type of the explosion.
- *    @param damage Amount of damage by the explosion.
- *    @param penetration Damage penetration [0:1].
+ *    @param dmg Damage of the explosion.
  *    @param parent The exploding pilot.
  */
-void pilot_explode( double x, double y, double radius,
-      DamageType dtype, double damage,
-      double penetration, const Pilot *parent )
+void pilot_explode( double x, double y, double radius, const Damage *dmg, const Pilot *parent )
 {
    int i;
    double rx, ry;
    double dist, rad2;
    Pilot *p;
    Solid s; /* Only need to manipulate mass and vel. */
+   Damage ddmg;
 
    rad2 = radius*radius;
+   memcpy( &ddmg, dmg, sizeof(Damage) );
 
    for (i=0; i<pilot_nstack; i++) {
       p = pilot_stack[i];
@@ -1137,19 +1119,19 @@ void pilot_explode( double x, double y, double radius,
       if (dist < rad2) {
 
          /* Adjust damage based on distance. */
-         damage *= 1. - sqrt(dist / rad2);
+         ddmg.damage = dmg->damage * (1. - sqrt(dist / rad2));
 
          /* Impact settings. */
-         s.mass =  pow2(damage) / 30.;
+         s.mass =  pow2(dmg->damage) / 30.;
          s.vel.x = rx;
          s.vel.y = ry;
 
          /* Actual damage calculations. */
-         pilot_hit( p, &s, (parent!=NULL)?parent->id:0, dtype, damage, penetration );
+         pilot_hit( p, &s, (parent!=NULL) ? parent->id : 0, &ddmg );
 
          /* Shock wave from the explosion. */
          if (p->id == PILOT_PLAYER)
-            spfx_shake( pow2(damage) / pow2(100.) * SHAKE_MAX );
+            spfx_shake( pow2(ddmg.damage) / pow2(100.) * SHAKE_MAX );
       }
    }
 }
@@ -1274,6 +1256,7 @@ void pilot_update( Pilot* pilot, const double dt )
    char buf[16];
    PilotOutfitSlot *o;
    double Q;
+   Damage dmg;
    
    /* Check target sanity. */
    if (pilot->target != pilot->id) {
@@ -1366,12 +1349,13 @@ void pilot_update( Pilot* pilot, const double dt )
 
          /* Damage from explosion. */
          a = sqrt(pilot->solid->mass);
+         dmg.type          = DAMAGE_TYPE_KINETIC;
+         dmg.damage        = MAX(0., 2. * (a * (1. + sqrt(pilot->fuel + 1.) / 28.)));
+         dmg.penetration   = 1.; /* Full penetration. */
+         dmg.disable       = 0.;
          expl_explode( pilot->solid->pos.x, pilot->solid->pos.y,
                pilot->solid->vel.x, pilot->solid->vel.y,
-               pilot->ship->gfx_space->sw/2. + a,
-               DAMAGE_TYPE_KINETIC,
-               MAX(0., 2. * (a * (1. + sqrt(pilot->fuel + 1.) / 28.))), 1., /* 100% penetration. */
-               NULL, EXPL_MODE_SHIP );
+               pilot->ship->gfx_space->sw/2. + a, &dmg, NULL, EXPL_MODE_SHIP );
          debris_add( pilot->solid->mass, pilot->ship->gfx_space->sw/2.,
                pilot->solid->pos.x, pilot->solid->pos.y,
                pilot->solid->vel.x, pilot->solid->vel.y );
@@ -2446,26 +2430,38 @@ double pilot_reldps( const Pilot* cur_pilot, const Pilot* p )
    int i;
    int DPSaccum_target = 0, DPSaccum_pilot = 0;
    double delay_cache, damage_cache;
+   Outfit *o;
+   const Damage *dmg;
 
-   for(i = 0; i < p->outfit_nweapon; i++) {
-      if(p->outfit_weapon[i].outfit) {
-         damage_cache = outfit_damage(p->outfit_weapon[i].outfit);
-         delay_cache = outfit_delay(p->outfit_weapon[i].outfit);
-         if(damage_cache > 0 && delay_cache > 0)
-            DPSaccum_target += ( damage_cache/delay_cache );
-      }
+   for (i=0; i<p->outfit_nweapon; i++) {
+      o = p->outfit_weapon[i].outfit;
+      if (o == NULL)
+         continue;
+      dmg = outfit_damage( o );
+      if (dmg == NULL)
+         continue;
+
+      damage_cache   = dmg->damage;
+      delay_cache    = outfit_delay( o );
+      if ((damage_cache > 0) && (delay_cache > 0))
+         DPSaccum_target += ( damage_cache/delay_cache );
    }
 
-   for(i = 0; i < cur_pilot->outfit_nweapon; i++) {
-      if(cur_pilot->outfit_weapon[i].outfit) {
-         damage_cache = outfit_damage(cur_pilot->outfit_weapon[i].outfit);
-         delay_cache = outfit_delay(cur_pilot->outfit_weapon[i].outfit);
-         if(damage_cache > 0 && delay_cache > 0)
-            DPSaccum_pilot += ( damage_cache/delay_cache );
-      }
+   for (i=0; i<cur_pilot->outfit_nweapon; i++) {
+      o = cur_pilot->outfit_weapon[i].outfit;
+      if (o == NULL)
+         continue;
+      dmg = outfit_damage( o );
+      if (dmg == NULL)
+         continue;
+
+      damage_cache   = dmg->damage;
+      delay_cache    = outfit_delay( o );
+      if ((damage_cache > 0) && (delay_cache > 0))
+         DPSaccum_target += ( damage_cache/delay_cache );
    }
 
-   if(DPSaccum_target > 0 && DPSaccum_pilot > 0)
+   if ((DPSaccum_target > 0) && (DPSaccum_pilot > 0))
       return (1 - 1 / (1 + ((double)DPSaccum_pilot / (double)DPSaccum_target)) );
    else if (DPSaccum_pilot > 0)
       return 1;
