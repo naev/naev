@@ -933,53 +933,33 @@ static OutfitType outfit_strToOutfitType( char *buf )
 static int outfit_parseDamage( Damage *dmg, xmlNodePtr node )
 {
    char *buf;
-   int ret;
+   xmlNodePtr cur;
 
-   if (xml_isNode(node,"damage")) {
-      ret = 0;
-
-      /* Get type */
-      xmlr_attr(node,"type",buf);
-      if (buf == NULL) {
-         WARN("Damage node missing 'type' attribute.");
-         ret = -1;
-      }
-      else {
-         dmg->type = outfit_strToDamageType(buf);
-         free(buf);
-      }
-
-      /* Get penetration. */
-      xmlr_attr(node,"penetrate",buf);
-      if (buf == NULL) {
-         WARN("Damage node missing 'penetrate' attribute.");
-         ret = -1;
-      }
-      else {
-         dmg->penetration = atof(buf) / 100.;
-         free(buf);
-      }
-
-      /* Get disable. */
-      xmlr_attr(node,"disable",buf);
-      if (buf != NULL) {
-         dmg->disable = atof(buf);
-         free(buf);
-      }
-      else
-         dmg->disable = 0.;
-
-      /* Get damage */
-      dmg->damage = xml_getFloat(node);
-      return ret;
-   }
-
-   /* Unknown type */
+   /* Defaults. */
    dmg->type         = DAMAGE_TYPE_NULL;
    dmg->damage       = 0.;
    dmg->penetration  = 0.;
-   WARN("Trying to parse non-damage node as damage node!");
-   return -1;
+   dmg->disable      = 0.;
+
+   cur = node->xmlChildrenNode;
+   do {
+      xml_onlyNodes( cur );
+
+      /* Core properties. */
+      xmlr_float( cur, "penetrate", dmg->penetration );
+      xmlr_float( cur, "physical",  dmg->damage );
+      xmlr_float( cur, "disable",   dmg->disable );
+
+      /* Get type */
+      if (xml_isNode(cur,"type")) {
+         buf         = xml_get( cur );
+         dmg->type   = outfit_strToDamageType(buf);
+         continue;
+      }
+      WARN("Damage has unknown node '%s'", cur->name);
+   } while (xml_nextNode(cur));
+
+   return 0;
 }
 
 
