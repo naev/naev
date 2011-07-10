@@ -24,7 +24,11 @@
    <heatup>15</heatup>
    <track>3</track>
    <swivel>3</swivel>
-   <damage type="energy" penetrate="0">6</damage>
+   <damage>
+      <type>energy</type>
+      <penetrate>0</penetrate>
+      <physical>6</physical>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Laser Cannon MK2">
