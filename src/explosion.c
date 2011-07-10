@@ -39,7 +39,7 @@ static int exp_l = -1; /**< Large explosion spfx. */
  *    @param mode Defines the explosion behaviour.
  */
 void expl_explode( double x, double y, double vx, double vy,
-      double radius, DamageType dtype, double damage, double penetration,
+      double radius, const Damage *dmg,
       const Pilot *parent, int mode )
 {
    int i, n;
@@ -78,8 +78,8 @@ void expl_explode( double x, double y, double vx, double vy,
    spfx_add( exp_l, x, y, vx, vy, layer );
 
    /* Run the damage. */
-   if (damage > 0.)
-      expl_explodeDamage( x, y, radius, dtype, damage, penetration, parent, mode );
+   if (dmg != NULL)
+      expl_explodeDamage( x, y, radius, dmg, parent, mode );
 }
 
 
@@ -97,23 +97,14 @@ void expl_explode( double x, double y, double vx, double vy,
  *    @param mode Defines the explosion behaviour.
  */
 void expl_explodeDamage( double x, double y, double radius,
-      DamageType dtype, double damage, double penetration,
-      const Pilot *parent, int mode )
+      const Damage *dmg, const Pilot *parent, int mode )
 {
    /* Explosion affects ships. */
    if (mode & EXPL_MODE_SHIP)
-      pilot_explode( x, y, radius, dtype, damage, penetration, parent );
+      pilot_explode( x, y, radius, dmg, parent );
 
    /* Explosion affects missiles and bolts. */
-   if ((mode & EXPL_MODE_MISSILE) && (mode & EXPL_MODE_BOLT))
-      weapon_explode( x, y, radius, dtype, damage, parent, mode );
-
-   /* Explosion affects missiles. */
-   else if (mode & EXPL_MODE_MISSILE)
-      weapon_explode( x, y, radius, dtype, damage, parent, mode );
-
-   /* Explosion affects bolts. */
-   else if (mode & EXPL_MODE_BOLT)
-      weapon_explode( x, y, radius, dtype, damage, parent, mode );
+   if ((mode & EXPL_MODE_MISSILE) || (mode & EXPL_MODE_BOLT))
+      weapon_explode( x, y, radius, dmg->type, dmg->damage, parent, mode );
 }
 
