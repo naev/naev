@@ -902,7 +902,7 @@ void pilot_setTarget( Pilot* p, unsigned int id )
 double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter, const Damage *dmg )
 {
    int mod, h;
-   double damage_shield, damage_armour, disable, knockback, dam_mod, ddmg, absorb;
+   double damage_shield, damage_armour, disable, knockback, dam_mod, ddmg, absorb, dmod;
    Pilot *pshooter;
    HookParam hparam;
 
@@ -912,20 +912,27 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter, const Da
       return 0.;
 
    /* Defaults. */
-   pshooter = NULL;
-   dam_mod  = 0.;
-   ddmg      = 0.;
+   pshooter       = NULL;
+   dam_mod        = 0.;
+   ddmg           = 0.;
 
    /* Calculate the damage. */
-   absorb = 1. - CLAMP( 0., 1., p->dmg_absorb - dmg->penetration );
+   absorb         = 1. - CLAMP( 0., 1., p->dmg_absorb - dmg->penetration );
    outfit_calcDamage( &damage_shield, &damage_armour, &knockback, &disable, &p->stats, dmg );
    damage_shield *= absorb;
    damage_armour *= absorb;
+   /* Ships that can not be disabled take raw armour damage instead of getting disabled. */
+   if (pilot_isFlag( p, PILOT_NODISABLE )) {
+      damage_armour += disable * absorb;
+      disable        = 0.;
+   }
+   else
+      disable       *= absorb;
 
    /*
     * Shields take entire blow.
     */
-   if (p->shield-damage_shield > 0.) {
+   if (p->shield - damage_shield > 0.) {
       ddmg       = damage_shield;
       p->shield -= damage_shield;
       dam_mod    = damage_shield/p->shield_max;
@@ -934,20 +941,27 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter, const Da
     * Shields take part of the blow.
     */
    else if (p->shield > 0.) {
-      ddmg       = p->shield + (1. - p->shield/damage_shield) * damage_armour;
-      p->armour -= (1. - p->shield/damage_shield) * damage_armour;
-      p->shield  = 0.;
-      dam_mod    = (damage_shield+damage_armour) /
-                   ((p->shield_max+p->armour_max) / 2.);
-      p->stimer  = 3.;
-      p->sbonus  = 3.;
+      dmod        = (1. - p->shield/damage_shield);
+      ddmg        = p->shield + dmod * damage_armour;
+      p->shield   = 0.;
+      p->armour  -= dmod * damage_armour;
+      p->stress  += dmod * disable;
+      dam_mod     = (damage_shield + damage_armour) /
+                   ((p->shield_max + p->armour_max) / 2.);
+
+      /* Increment shield timer or time before shield regeneration kicks in. */
+      p->stimer   = 3.;
+      p->sbonus   = 3.;
    }
    /*
     * Armour takes the entire blow.
     */
    else if (p->armour > 0.) {
-      ddmg       = damage_armour;
-      p->armour -= damage_armour;
+      ddmg        = damage_armour;
+      p->armour  -= damage_armour;
+      p->stress  += disable;
+
+      /* Increment shield timer or time before shield regeneration kicks in. */
       p->stimer  = 3.;
       p->sbonus  = 3.;
    }
@@ -958,9 +972,9 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter, const Da
          !pilot_isFlag(player.p, PILOT_HYPERSPACE))
       player_shouldAbortAutonav(1);
 
-   /* Disabled always run before dead to ensure crating boost. */
+   /* Disabled always run before dead to ensure combat rating boost. */
    if (!pilot_isFlag(p,PILOT_DISABLED) && (p != player.p) && (!pilot_isFlag(p,PILOT_NODISABLE) || (p->armour < 0.)) &&
-         (p->armour < PILOT_DISABLED_ARMOR*p->ship->armour)) { /* disabled */
+         (p->armour <= p->stress)) { /* disabled */
 
       /* If hostile, must remove counter. */
       h = (pilot_isHostile(p)) ? 1 : 0;
@@ -1846,6 +1860,7 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    pilot->energy = pilot->energy_max = 1.; /* ditto energy */
    pilot->fuel   = pilot->fuel_max   = 1.; /* ditto fuel */
    pilot_calcStats(pilot);
+   pilot->stress = 0.; /* No stress. */
 
    /* Allocate outfit memory. */
    /* Slot types. */

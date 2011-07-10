@@ -946,7 +946,7 @@ static int outfit_parseDamage( Damage *dmg, xmlNodePtr node )
       }
       else {
          dmg->type = outfit_strToDamageType(buf);
-         if (buf) free(buf);
+         free(buf);
       }
 
       /* Get penetration. */
@@ -957,8 +957,17 @@ static int outfit_parseDamage( Damage *dmg, xmlNodePtr node )
       }
       else {
          dmg->penetration = atof(buf) / 100.;
-         if (buf) free(buf);
+         free(buf);
       }
+
+      /* Get disable. */
+      xmlr_attr(node,"disable",buf);
+      if (buf != NULL) {
+         dmg->disable = atof(buf);
+         free(buf);
+      }
+      else
+         dmg->disable = 0.;
 
       /* Get damage */
       dmg->damage = xml_getFloat(node);
@@ -1115,9 +1124,14 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
          temp->u.blt.range,
          temp->u.blt.heatup);
    if (!outfit_isTurret(temp)) {
-      snprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
+      l += snprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
          "\n%.1f degree swivel",
          temp->u.blt.swivel*180./M_PI );
+   }
+   if (temp->u.blt.dmg.disable > 0.) {
+      l += snprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
+         "\n%.0f Disable",
+         temp->u.blt.dmg.disable );
    }
 
 
@@ -1148,6 +1162,7 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define
  */
 static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
 {
+   int l;
    xmlNodePtr node;
 
    /* Defaults. */
@@ -1215,7 +1230,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
-   snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
+   l = snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s\n"
          "Needs %.0f CPU\n"
          "%.0f%% Penetration\n"
@@ -1232,6 +1247,11 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
          temp->u.bem.duration, temp->u.bem.delay - temp->u.bem.duration,
          temp->u.bem.range,
          temp->u.bem.heatup);
+   if (temp->u.blt.dmg.disable > 0.) {
+      l += snprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
+         "\n%.0f Disable/s",
+         temp->u.bem.dmg.disable );
+   }
 
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define to help check for data errors. */
@@ -1317,6 +1337,7 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
 {
    xmlNodePtr node;
    char *buf;
+   int l;
 
    node = parent->xmlChildrenNode;
 
@@ -1408,7 +1429,7 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
-   snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
+   l = snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s\n"
          "%.0f%% Penetration\n"
          "%.0f Damage [%s]\n"
@@ -1421,6 +1442,11 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
          temp->u.amm.energy,
          temp->u.amm.speed,
          temp->u.amm.duration );
+   if (temp->u.blt.dmg.disable > 0.) {
+      l += snprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
+         "\n%.0f Disable",
+         temp->u.amm.dmg.disable );
+   }
 
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define to help check for data errors. */

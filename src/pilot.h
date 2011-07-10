@@ -279,6 +279,7 @@ typedef struct Pilot_ {
 
    /* Current health */
    double armour;    /**< Current armour. */
+   double stress;    /**< Current disable damage level. */
    double shield;    /**< Current shield. */
    double fuel;      /**< Current fuel. */
    double armour_max; /**< Maximum armour. */
