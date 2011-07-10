@@ -2119,7 +2119,7 @@
    <commodities>
     <commodity>Food</commodity>
    </commodities>
-   <description>Doranthex Prime is a mostly-molten planet. One of the few pieces of solid land, a small island drifts around the around the northern polar region. On this island the Dvaered have established a small base, primarily for research and military prototyping, though civilians are allowed in the main facilities. Due to the intense temperatures, the base is shielded by over 50m of temperature isolation plating, which affords no view of the planet itself once a ship has landed.</description>
+   <description>Doranthex Prime is a mostly-molten planet. One of the few pieces of solid land, a small island drifts around the northern polar region. On this island the Dvaered have established a small base, primarily for research and military prototyping, though civilians are allowed in the main facilities. Due to the intense temperatures, the base is shielded by over 50m of temperature isolation plating, which affords no view of the planet itself once a ship has landed.</description>
    <bar>The drinks served in the Furnace, as the bar calls itself, are a rather curious sort. They are generally very strong and served at a warm temperature. The house specialties also contain volcanic ash which is harvested on the planet surface. A strange bar indeed.</bar>
   </general>
  </asset>
@@ -3149,12 +3149,13 @@
     <missions/>
     <commodity/>
     <outfits/>
+    <shipyard/>
    </services>
    <commodities>
     <commodity>Food</commodity>
     <commodity>Medicine</commodity>
    </commodities>
-   <description>Europea is almost completely covered in water, which was considered undesirable in the early days of the First Growth. however, it was soon discovered that Europea's biosphere contained many organisms that were useful in the production of high-grade medicine, and an exception was made. This means that Europea is one of the earliest O-class planets that were ever colonized. Today, the world still thrives on its medical exports, though advances in medicinal technology since the days of the First Growth have rendered a considerable portion of it obsolete.</description>
+   <description>Europea is almost completely covered in water, which was considered undesirable in the early days of the First Growth. However, it was soon discovered that Europea's biosphere contained many organisms that were useful in the production of high-grade medicine, and an exception was made. This means that Europea is one of the earliest O-class planets that were ever colonized. Today, the world still thrives on its medical exports, though advances in medicinal technology since the days of the First Growth have rendered a considerable portion of it obsolete.</description>
    <bar>Perhaps uniquely in the galaxy, both the spaceport and its associated facilities are afloat without tethers. This means that the location of the spaceport itself changes over time as the platform is carried on the major currents that span the face of the planet.</bar>
   </general>
   <tech>
@@ -6118,6 +6119,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
     <land>emp_mil_restricted</land>
     <refuel/>
     <bar/>
+    <shipyard/>
    </services>
    <commodities/>
    <description>Marius Station used to be a customs station of the old Empire, checking traffic bound for Sol and the core Imperial systems. Now, in the post-Incident era, the station serves as the first line of defense from hostile elements that threaten the isolated colonies at Tau Prime and beyond. But since it is perpetually under-staffed and under-equipped, Marius Station is barely capable of maintaining its own presence in Raelid, let alone protect anything else.</description>
@@ -7135,6 +7137,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
     <missions/>
     <commodity/>
     <outfits/>
+    <shipyard/>
    </services>
    <commodities>
     <commodity>Food</commodity>
