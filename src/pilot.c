@@ -944,6 +944,8 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter, const Da
       dmod        = (1. - p->shield/damage_shield);
       ddmg        = p->shield + dmod * damage_armour;
       p->shield   = 0.;
+      /* Reduce stress as armour is eaten away. */
+      p->stress  *= (p->armour - dmod * damage_armour) / p->armour;
       p->armour  -= dmod * damage_armour;
       p->stress  += dmod * disable;
       dam_mod     = (damage_shield + damage_armour) /
