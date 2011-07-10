@@ -566,7 +566,7 @@ function render( dt, dt_mod )
 
          if not ta_fuzzy then
             ptarget_target = ptarget:target()
-            ta_armour, ta_shield, ta_disabled = ptarget:health()
+            ta_armour, ta_shield, ta_stress, ta_disabled = ptarget:health()
             tflags = ptarget:flags()
             ta_energy = ptarget:energy()
             ta_speed = ptarget:vel():dist()
