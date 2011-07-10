@@ -2343,7 +2343,7 @@ static int pilotL_getHealth( lua_State *L )
    lua_pushnumber(L, MIN( 1., p->stress / p->armour * 100 ) );
    lua_pushboolean(L, pilot_isDisabled(p));
 
-   return 3;
+   return 4;
 }
 
 
