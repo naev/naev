@@ -958,6 +958,8 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter, const Da
     */
    else if (p->armour > 0.) {
       ddmg        = damage_armour;
+      /* Reduce stress as armour is eaten away. */
+      p->stress  *= (p->armour - damage_armour) / p->armour;
       p->armour  -= damage_armour;
       p->stress  += disable;
 
