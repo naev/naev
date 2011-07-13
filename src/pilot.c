@@ -970,6 +970,10 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter, const Da
       p->sbonus  = 3.;
    }
 
+   /* Ensure stress never exceeds remaining armour. */
+   if (p->stress > p->armour)
+      p->stress = p->armour;
+
    /* Player might break autonav. */
    if ((w != NULL) && (p->id == PLAYER_ID) &&
          !pilot_isFlag(player.p, PILOT_HYP_BEGIN) &&
