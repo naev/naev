@@ -1079,7 +1079,7 @@ void pilot_updateDisable( Pilot* p, const unsigned int shooter )
          hparam.type       = HOOK_PARAM_NIL;
       pilot_runHookParam( p, PILOT_HOOK_DISABLE, &hparam, 1 ); /* Already disabled. */
    }
-   else if (pilot_isFlag(p, PILOT_DISABLED) && p->armour > p->stress) { /* Pilot is disabled, but shouldn't be. */
+   else if (pilot_isFlag(p, PILOT_DISABLED) && (p->armour > p->stress)) { /* Pilot is disabled, but shouldn't be. */
       pilot_rmFlag( p, PILOT_DISABLED ); /* Undisable. */
 
       /* TODO: Make undisabled pilot use up presence again. */
