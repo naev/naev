@@ -901,10 +901,9 @@ void pilot_setTarget( Pilot* p, unsigned int id )
  */
 double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter, const Damage *dmg )
 {
-   int mod, h;
+   int mod;
    double damage_shield, damage_armour, disable, knockback, dam_mod, ddmg, absorb, dmod;
    Pilot *pshooter;
-   HookParam hparam;
 
    /* Invincible means no damage. */
    if (pilot_isFlag( p, PILOT_INVINCIBLE) ||
@@ -981,41 +980,7 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter, const Da
       player_shouldAbortAutonav(1);
 
    /* Disabled always run before dead to ensure combat rating boost. */
-   if (!pilot_isFlag(p,PILOT_DISABLED) && (p != player.p) && (!pilot_isFlag(p,PILOT_NODISABLE) || (p->armour < 0.)) &&
-         (p->armour <= p->stress)) { /* disabled */
-
-      /* If hostile, must remove counter. */
-      h = (pilot_isHostile(p)) ? 1 : 0;
-      pilot_rmHostile(p);
-      if (h == 1) /* Horrible hack to make sure player.p can hit it if it was hostile. */
-         /* Do not use pilot_setHostile here or music will change again. */
-         pilot_setFlag(p,PILOT_HOSTILE);
-
-      pshooter = pilot_get(shooter);
-      if ((pshooter != NULL) && (pshooter->faction == FACTION_PLAYER)) {
-         /* About 3 for a llama, 26 for hawking. */
-         mod = pow(p->ship->mass,0.4) - 1.;
-
-         /* Modify combat rating. */
-         player.crating += 2*mod;
-      }
-
-      /* Remove faction if necessary. */
-      if (p->presence > 0) {
-         system_rmCurrentPresence( cur_system, p->faction, p->presence );
-         p->presence = 0;
-      }
-
-      pilot_setFlag( p,PILOT_DISABLED ); /* set as disabled */
-      /* Run hook */
-      if (shooter > 0) {
-         hparam.type       = HOOK_PARAM_PILOT;
-         hparam.u.lp.pilot = shooter;
-      }
-      else
-         hparam.type       = HOOK_PARAM_NIL;
-      pilot_runHookParam( p, PILOT_HOOK_DISABLE, &hparam, 1 ); /* Already disabled. */
-   }
+   pilot_updateDisable(p, shooter);
 
    /* Do not let pilot die. */
    if (pilot_isFlag( p, PILOT_NODEATH ))
@@ -1062,6 +1027,65 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter, const Da
    return ddmg;
 }
 
+
+/**
+ * @brief Handles pilot disabling. Set or unset the disable status depending on health and stress values.
+ *
+ *    @param p The pilot in question.
+ *    @param shooter Attacker that shot the pilot.
+ */
+void pilot_updateDisable( Pilot* p, const unsigned int shooter )
+{
+   int mod, h;
+   Pilot *pshooter;
+   HookParam hparam;
+
+   /* TODO: Remove check for player.p once disable recovery is implemented. */
+   if ((!pilot_isFlag(p, PILOT_DISABLED)) && (p != player.p) &&
+       (!pilot_isFlag(p, PILOT_NODISABLE) || (p->armour <= 0.)) &&
+       (p->armour <= p->stress)) { /* Pilot should be disabled. */
+
+      /* If hostile, must remove counter. */
+      h = (pilot_isHostile(p)) ? 1 : 0;
+      pilot_rmHostile(p);
+      if (h == 1) /* Horrible hack to make sure player.p can hit it if it was hostile. */
+         /* Do not use pilot_setHostile here or music will change again. */
+         pilot_setFlag(p,PILOT_HOSTILE);
+
+      /* Modify player combat rating if applicable. */
+      /* TODO: Base off something more sensible than mass. */
+      pshooter = pilot_get(shooter);
+      if ((pshooter != NULL) && (pshooter->faction == FACTION_PLAYER)) {
+         /* About 3 for a llama, 26 for hawking. */
+         mod = pow(p->ship->mass,0.4) - 1.;
+
+         /* Modify combat rating. */
+         player.crating += 2*mod;
+      }
+
+      /* Disabled ships don't use up presence. */
+      if (p->presence > 0) {
+         system_rmCurrentPresence( cur_system, p->faction, p->presence );
+         p->presence = 0;
+      }
+
+      pilot_setFlag( p,PILOT_DISABLED ); /* set as disabled */
+      /* Run hook */
+      if (shooter > 0) {
+         hparam.type       = HOOK_PARAM_PILOT;
+         hparam.u.lp.pilot = shooter;
+      }
+      else
+         hparam.type       = HOOK_PARAM_NIL;
+      pilot_runHookParam( p, PILOT_HOOK_DISABLE, &hparam, 1 ); /* Already disabled. */
+   }
+   else if (pilot_isFlag(p, PILOT_DISABLED) && p->armour > p->stress) { /* Pilot is disabled, but shouldn't be. */
+      pilot_rmFlag( p, PILOT_DISABLED ); /* Undisable. */
+
+      /* TODO: Make undisabled pilot use up presence again. */
+      /* TODO: Undisable hook? */
+   }
+}
 
 /**
  * @brief Pilot is dead, now will slowly explode.
@@ -1279,7 +1303,7 @@ void pilot_update( Pilot* pilot, const double dt )
    PilotOutfitSlot *o;
    double Q;
    Damage dmg;
-   
+
    /* Check target sanity. */
    if (pilot->target != pilot->id) {
       target = pilot_get(pilot->target);

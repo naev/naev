@@ -422,6 +422,7 @@ double pilot_relhp( const Pilot* cur_pilot, const Pilot* p );
  */
 void pilot_setTarget( Pilot* p, unsigned int id );
 double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter, const Damage *dmg );
+void pilot_updateDisable( Pilot* p, const unsigned int shooter );
 void pilot_explode( double x, double y, double radius, const Damage *dmg, const Pilot *parent );
 double pilot_face( Pilot* p, const double dir );
 
