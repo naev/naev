@@ -1901,8 +1901,8 @@ static int pilotL_disable( lua_State *L )
 
    /* Disable the pilot. */
    p->shield = 0.;
-   p->armour = PILOT_DISABLED_ARMOR * p->ship->armour;
-   pilot_setFlag( p, PILOT_DISABLED );
+   p->stress = p->armour;
+   pilot_updateDisable(p, 0);
 
    return 0;
 }
