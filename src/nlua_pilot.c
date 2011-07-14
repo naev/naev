@@ -2196,30 +2196,40 @@ static int pilotL_changeAI( lua_State *L )
  *
  * @usage p:setHealth( 100, 100 ) -- Sets pilot to full health
  * @usage p:setHealth(  70,   0 ) -- Sets pilot to 70% armour
+ * @usage p:setHealth( 100, 100, 0 ) -- Sets pilot to 70% armour
  *
  *    @luaparam p Pilot to set health of.
  *    @luaparam armour Value to set armour to, should be double from 0-100 (in percent).
  *    @luaparam shield Value to set shield to, should be double from 0-100 (in percent).
+ *    @luaparam stress Optional value to set stress (disable damage) to, should be double from 0-100 (in percent of current armour). If missing, defaults to 0.
  * @luafunc setHealth( p, armour, shield )
  */
 static int pilotL_setHealth( lua_State *L )
 {
    Pilot *p;
-   double a, s;
+   double a, s, st;
 
    /* Handle parameters. */
    p  = luaL_validpilot(L,1);
    a  = luaL_checknumber(L, 2);
    s  = luaL_checknumber(L, 3);
-   a /= 100.;
-   s /= 100.;
+   if (lua_isnumber(L, 4)) {
+      st = luaL_checknumber(L, 4);
+   }
+   else
+      st = 0;
+
+   a  /= 100.;
+   s  /= 100.;
+   st /= 100.;
 
    /* Set health. */
    p->armour = a * p->armour_max;
    p->shield = s * p->shield_max;
+   p->stress = st * p->armour;
 
-   /* Undisable if was disabled. */
-   pilot_rmFlag( p, PILOT_DISABLED );
+   /* Update disable status. */
+   pilot_updateDisable(p, 0);
 
    return 0;
 }
