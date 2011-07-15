@@ -50,7 +50,6 @@
 #define PILOT_CHUNK_MAX 2048 /**< Minimum chunks to increment pilot_stack by */
 #define CHUNK_SIZE      32 /**< Size to allocate memory by. */
 
-
 /* ID Generators. */
 static unsigned int pilot_id = PLAYER_ID; /**< Stack of pilot ids to assure uniqueness */
 
@@ -1069,18 +1068,25 @@ void pilot_updateDisable( Pilot* p, const unsigned int shooter )
          p->presence = 0;
       }
 
+      /* Set disable timer. This is the time the pilot will remain disabled. */
+      /* TODO: Make this more spophisticated. Disable time should probably depend on other factors, such as ship size. */
+      p->dtimer = 60.;
+
       pilot_setFlag( p,PILOT_DISABLED ); /* set as disabled */
       /* Run hook */
       if (shooter > 0) {
          hparam.type       = HOOK_PARAM_PILOT;
          hparam.u.lp.pilot = shooter;
       }
-      else
+      else {
          hparam.type       = HOOK_PARAM_NIL;
+         pilot_setFlag(p, PILOT_DISABLED_PERM ); /* Set as permanently disabled, since the disable was script-induced. */
+      }
       pilot_runHookParam( p, PILOT_HOOK_DISABLE, &hparam, 1 ); /* Already disabled. */
    }
    else if (pilot_isFlag(p, PILOT_DISABLED) && (p->armour > p->stress)) { /* Pilot is disabled, but shouldn't be. */
       pilot_rmFlag( p, PILOT_DISABLED ); /* Undisable. */
+      pilot_rmFlag( p, PILOT_DISABLED_PERM ); /* Clear perma-disable flag if necessary. */
 
       /* TODO: Make undisabled pilot use up presence again. */
       /* TODO: Undisable hook? */
@@ -1303,6 +1309,7 @@ void pilot_update( Pilot* pilot, const double dt )
    PilotOutfitSlot *o;
    double Q;
    Damage dmg;
+   double stress_falloff;
 
    /* Check target sanity. */
    if (pilot->target != pilot->id) {
@@ -1352,6 +1359,20 @@ void pilot_update( Pilot* pilot, const double dt )
 
    /* Update electronic warfare. */
    pilot_ewUpdateDynamic( pilot );
+
+   /* Update stress. */
+   if (!pilot_isFlag(pilot, PILOT_DISABLED)) { /* Case pilot is not disabled. */
+      stress_falloff = 4.; /* TODO: make a function of the pilot's ship and/or its outfits. */
+      pilot->stress -= stress_falloff * dt;
+      pilot->stress = MAX(pilot->stress, 0);
+   }
+   else if (!pilot_isFlag(pilot, PILOT_DISABLED_PERM)) { /* Case pilot is disabled (but not permanently so). */
+      pilot->dtimer -= dt;
+      if (pilot->dtimer <= 0.) {
+         pilot->stress = 0.;
+         pilot_updateDisable(pilot, 0);
+      }
+   }
 
    /* Handle takeoff/landing. */
    if (pilot_isFlag(pilot,PILOT_TAKEOFF)) {
