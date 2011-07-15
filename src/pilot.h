@@ -102,6 +102,7 @@
 #define PILOT_LANDING      28 /**< Pilot is landing. */
 #define PILOT_TAKEOFF      29 /**< Pilot is taking off. */
 #define PILOT_DISABLED     30 /**< Pilot is disabled. */
+#define PILOT_DISABLED_PERM 43 /**< Pilot is permanently disabled. */
 #define PILOT_DEAD         31 /**< Pilot is in it's dying throes */
 #define PILOT_DEATH_SOUND  32 /**< Pilot just did death explosion. */
 #define PILOT_EXPLODED     33 /**< Pilot did final death explosion. */
@@ -377,6 +378,7 @@ typedef struct Pilot_ {
    double ptimer;    /**< generic timer for internal pilot use */
    double htimer;    /**< Hail animation timer. */
    double stimer;    /**< Shield regeneration timer. */
+   double dtimer;    /**< Disable timer. */
    double sbonus;    /**< Shield regeneration bonus. */
    int hail_pos;     /**< Hail animation position. */
    int lockons;      /**< Stores how many seeking weapons are targeting pilot */
