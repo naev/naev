@@ -3,7 +3,7 @@
  <ship name="Llama">
   <base_type>Llama</base_type>
   <GFX>llama</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Yacht</class>
   <price>120000</price>
@@ -42,7 +42,7 @@
  <ship name="Hyena">
   <base_type>Hyena</base_type>
   <GFX>hyena</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Fighter</class>
   <price>180000</price>
@@ -80,7 +80,7 @@
  <ship name="Schroedinger">
   <base_type>Schroedinger</base_type>
   <GFX>schroedinger</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Scout</class>
   <price>180000</price>
@@ -123,7 +123,7 @@
  <ship name="Gawain">
   <base_type>Gawain</base_type>
   <GFX>gawain</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Luxury Yacht</class>
   <price>500000</price>
@@ -163,7 +163,7 @@
  <ship name="Drone">
   <base_type>Drone</base_type>
   <GFX>drone</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Drone</class>
   <price>300000</price>
@@ -202,7 +202,7 @@
  <ship name="Koala">
   <base_type>Koala</base_type>
   <GFX>koala</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Courier</class>
   <price>260000</price>
@@ -246,7 +246,7 @@
  <ship name="Quicksilver">
   <base_type>Quicksilver</base_type>
   <GFX sx="10" sy="10">quicksilver</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Courier</class>
   <price>800000</price>
@@ -290,7 +290,7 @@
  <ship name="Rhino">
   <base_type>Rhino</base_type>
   <GFX sx="10" sy="10">rhino</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Armoured Transport</class>
   <price>1100000</price>
@@ -338,7 +338,7 @@
  <ship name="Pirate Rhino">
   <base_type>Rhino</base_type>
   <GFX sx="10" sy="10">rhino_pirate</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Armoured Transport</class>
   <price>1100000</price>
@@ -385,7 +385,7 @@
  <ship name="Mule">
   <base_type>Mule</base_type>
   <GFX sx="10" sy="10">mule</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Freighter</class>
   <price>900000</price>
@@ -435,7 +435,7 @@
  <ship name="Proteron Derivative">
   <base_type>Derivative</base_type>
   <GFX>derivative</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Fighter</class>
   <price>290000</price>
@@ -479,7 +479,7 @@
  <ship name="Sirius Fidelity">
   <base_type>Fidelity</base_type>
   <GFX>fidelity</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Fighter</class>
   <price>350000</price>
@@ -524,7 +524,7 @@
  <ship name="Soromid Brigand">
   <base_type>Brigand</base_type>
   <GFX>brigand</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Fighter</class>
   <price>280000</price>
@@ -565,7 +565,7 @@
  <ship name="Shark">
   <base_type>Shark</base_type>
   <GFX>shark</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Fighter</class>
   <price>280000</price>
@@ -606,7 +606,7 @@
  <ship name="Pirate Shark">
   <base_type>Shark</base_type>
   <GFX>shark_pirate</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Fighter</class>
   <price>280000</price>
@@ -647,7 +647,7 @@
  <ship name="Empire Shark">
   <base_type>Shark</base_type>
   <GFX>shark_empire</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Fighter</class>
   <price>280000</price>
@@ -688,7 +688,7 @@
  <ship name="Soromid Reaver">
   <base_type>Reaver</base_type>
   <GFX>reaver</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Fighter</class>
   <price>500000</price>
@@ -734,7 +734,7 @@
  <ship name="Lancelot">
   <base_type>Lancelot</base_type>
   <GFX>lancelot</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Fighter</class>
   <price>500000</price>
@@ -780,7 +780,7 @@
  <ship name="Empire Lancelot">
   <base_type>Lancelot</base_type>
   <GFX>lancelot_empire</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Fighter</class>
   <price>500000</price>
@@ -826,7 +826,7 @@
  <ship name="Vendetta">
   <base_type>Vendetta</base_type>
   <GFX>vendetta</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Fighter</class>
   <price>400000</price>
@@ -873,7 +873,7 @@
  <ship name="Dvaered Vendetta">
   <base_type>Vendetta</base_type>
   <GFX>vendetta_dvaered</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Fighter</class>
   <price>400000</price>
@@ -919,7 +919,7 @@
  <ship name="Pirate Vendetta">
   <base_type>Vendetta</base_type>
   <GFX>vendetta_pirate</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Fighter</class>
   <price>450000</price>
@@ -965,7 +965,7 @@
  <ship name="Sirius Shaman">
   <base_type>shaman</base_type>
   <GFX>shaman</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Bomber</class>
   <price>525000</price>
@@ -1012,7 +1012,7 @@
  <ship name="Soromid Marauder">
   <base_type>Marauder</base_type>
   <GFX>marauder</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Bomber</class>
   <price>600000</price>
@@ -1057,7 +1057,7 @@
  <ship name="Ancestor">
   <base_type>Ancestor</base_type>
   <GFX>ancestor</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Bomber</class>
   <price>600000</price>
@@ -1102,7 +1102,7 @@
  <ship name="Dvaered Ancestor">
   <base_type>Ancestor</base_type>
   <GFX>ancestor_dvaered</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Bomber</class>
   <price>600000</price>
@@ -1147,7 +1147,7 @@
  <ship name="Pirate Ancestor">
   <base_type>Ancestor</base_type>
   <GFX>ancestor_pirate</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Bomber</class>
   <price>550000</price>
@@ -1193,7 +1193,7 @@
  <ship name="Phalanx">
   <base_type>Phalanx</base_type>
   <GFX sx="10" sy="10">phalanx</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Corvette</class>
   <price>850000</price>
@@ -1242,7 +1242,7 @@
  <ship name="Dvaered Phalanx">
   <base_type>Phalanx</base_type>
   <GFX sx="10" sy="10">phalanx_dvaered</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Corvette</class>
   <price>850000</price>
@@ -1291,7 +1291,7 @@
 <ship name="Pirate Phalanx">
   <base_type>Phalanx</base_type>
   <GFX sx="10" sy="10">phalanx_pirate</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Corvette</class>
   <price>775000</price>
@@ -1340,7 +1340,7 @@
  <ship name="Sirius Preacher">
   <base_type>Preacher</base_type>
   <GFX sx="10" sy="10">preacher</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Corvette</class>
   <price>720000</price>
@@ -1388,7 +1388,7 @@
  <ship name="Soromid Odium">
   <base_type>Odium</base_type>
   <GFX>odium</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Corvette</class>
   <price>900000</price>
@@ -1436,7 +1436,7 @@
  <ship name="Admonisher">
   <base_type>Admonisher</base_type>
   <GFX>admonisher</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Corvette</class>
   <price>900000</price>
@@ -1484,7 +1484,7 @@
  <ship name="Pirate Admonisher">
   <base_type>Admonisher</base_type>
   <GFX>admonisher_pirate</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Corvette</class>
   <price>850000</price>
@@ -1531,7 +1531,7 @@
  <ship name="Empire Admonisher">
   <base_type>Admonisher</base_type>
   <GFX>admonisher_empire</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Corvette</class>
   <price>900000</price>
@@ -1580,7 +1580,7 @@
  <ship name="Vigilance">
   <base_type>Vigilance</base_type>
   <GFX sx="10" sy="10">vigilance</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Destroyer</class>
   <price>1200000</price>
@@ -1630,7 +1630,7 @@
  <ship name="Dvaered Vigilance">
   <base_type>Vigilance</base_type>
   <GFX sx="10" sy="10">vigilance_dvaered</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Destroyer</class>
   <price>1200000</price>
@@ -1681,7 +1681,7 @@
  <ship name="Proteron Kahan">
   <base_type>Kahan</base_type>
   <GFX sx="10" sy="10">kahan</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Destroyer</class>
   <price>2100000</price>
@@ -1731,7 +1731,7 @@
  <ship name="Soromid Nyx">
   <base_type>Nyx</base_type>
   <GFX sx="10" sy="10">nyx</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Destroyer</class>
   <price>1500000</price>
@@ -1781,7 +1781,7 @@
  <ship name="Pacifier">
   <base_type>Pacifier</base_type>
   <GFX sx="10" sy="10">pacifier</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Destroyer</class>
   <price>1500000</price>
@@ -1831,7 +1831,7 @@
  <ship name="Empire Pacifier">
   <base_type>Pacifier</base_type>
   <GFX sx="10" sy="10">pacifier_empire</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Destroyer</class>
   <price>1500000</price>
@@ -1883,7 +1883,7 @@
  <ship name="Kestrel">
   <base_type>Kestrel</base_type>
   <GFX sx="10" sy="10">kestrel</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Cruiser</class>
   <price>6000000</price>
@@ -1936,7 +1936,7 @@
  <ship name="Pirate Kestrel">
   <base_type>Kestrel</base_type>
   <GFX sx="10" sy="10">kestrel_pirate</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Cruiser</class>
   <price>5700000</price>
@@ -1988,7 +1988,7 @@
  <ship name="Proteron Archimedes">
   <base_type>Archimedes</base_type>
   <GFX sx="12" sy="12">archimedes</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Cruiser</class>
   <price>6250000</price>
@@ -2044,7 +2044,7 @@
  <ship name="Soromid Ira">
   <base_type>Ira</base_type>
   <GFX sx="12" sy="12">ira</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Cruiser</class>
   <price>7500000</price>
@@ -2099,7 +2099,7 @@
  <ship name="Hawking">
   <base_type>Hawking</base_type>
   <GFX sx="12" sy="12">hawking</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Cruiser</class>
   <price>7500000</price>
@@ -2154,7 +2154,7 @@
  <ship name="Empire Hawking">
   <base_type>Hawking</base_type>
   <GFX sx="12" sy="12">hawking_empire</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Cruiser</class>
   <price>7500000</price>
@@ -2210,7 +2210,7 @@
  <ship name="Soromid Arx">
   <base_type>Arx</base_type>
   <GFX sx="12" sy="12">arx</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Carrier</class>
   <price>7200000</price>
@@ -2262,7 +2262,7 @@
  <ship name="Sirius Dogma">
   <base_type>Dogma</base_type>
   <GFX sx="12" sy="12">dogma</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Cruiser</class>
   <price>8300000</price>
@@ -2315,7 +2315,7 @@
  <ship name="Sirius Divinity">
   <base_type>Divinity</base_type>
   <GFX sx="12" sy="12">divinity</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Carrier</class>
   <price>7200000</price>
@@ -2367,7 +2367,7 @@
  <ship name="Goddard">
   <base_type>Goddard</base_type>
   <GFX sx="12" sy="12">goddard</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Cruiser</class>
   <price>11500000</price>
@@ -2424,7 +2424,7 @@
  <ship name="Dvaered Goddard">
   <base_type>Goddard</base_type>
   <GFX sx="12" sy="12">goddard_dvaered</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Cruiser</class>
   <price>11500000</price>
@@ -2482,7 +2482,7 @@
  <ship name="Empire Peacemaker">
   <base_type>Peacemaker</base_type>
   <GFX sx="12" sy="12">peacemaker</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Cruiser</class>
   <price>18000000</price>
@@ -2543,7 +2543,7 @@
  <ship name="Base">
   <base_type>Base</base_type>
   <GFX sx="1" sy="1">base</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Cruiser</class>
   <price>1</price>
@@ -2597,7 +2597,7 @@
  <ship name="Seiryuu">
   <base_type>Kestrel</base_type>
   <GFX sx="10" sy="10">kestrel_pirate</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Cruiser</class>
   <price>5700000</price>
@@ -2789,7 +2789,7 @@
  <ship name="Diplomatic Vessel">
   <base_type>Gawain</base_type>
   <GFX>gawain</GFX>
-  <GUI>default</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Scout</class>
   <price>180000</price>
