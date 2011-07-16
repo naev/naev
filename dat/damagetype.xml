@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<dtypes>
+ <!-- Leave "normal" at the top, as this is the damage type used as a fallback. -->
+ <dtype name="normal">
+  <sdam>1</sdam>
+  <adam>1</adam>
+  <knock>0</knock>
+ </dtype>
+ <dtype name="nebula">
+  <sdam>0.15</sdam>
+  <adam>1</adam>
+  <knock>0</knock>
+ </dtype>
+ <dtype name="explosion_splash">
+  <sdam>1</sdam>
+  <adam>1</adam>
+  <knock>2</knock>
+ </dtype>
+ <dtype name="impact">
+  <sdam>1</sdam>
+  <adam>1.15</adam>
+  <knock>1</knock>
+ </dtype>
+ <dtype name="shieldbreaker">
+  <sdam>1.0</sdam>
+  <adam>0.05</adam>
+  <knock>0</knock>
+ </dtype>
+ <dtype name="armourbreaker">
+  <sdam>0.5</sdam>
+  <adam>1</adam>
+  <knock>0.5</knock>
+ </dtype>
+ <dtype name="ion">
+  <sdam>1.3</sdam>
+  <adam>1</adam>
+  <knock>0</knock>
+ </dtype>
+ <dtype name="emp">
+  <sdam>1</sdam>
+  <adam>0</adam>
+  <knock>0</knock>
+ </dtype>
+</dtypes>

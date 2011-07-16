@@ -25,7 +25,7 @@
    <track>3</track>
    <swivel>3</swivel>
    <damage>
-    <type>energy</type>
+    <type>normal</type>
     <penetrate>0</penetrate>
     <physical>6</physical>
     <disable>1</disable>
@@ -58,7 +58,7 @@
    <track>3</track>
    <swivel>4</swivel>
    <damage>
-    <type>energy</type>
+    <type>normal</type>
     <penetrate>5</penetrate>
     <physical>8.5</physical>
     <disable>1</disable>
@@ -91,7 +91,7 @@
    <track>3</track>
    <swivel>5</swivel>
    <damage>
-    <type>energy</type>
+    <type>normal</type>
     <penetrate>13</penetrate>
     <physical>12</physical>
     <disable>2</disable>
@@ -126,7 +126,7 @@
    <track>2</track>
    <swivel>7</swivel>
    <damage>
-    <type>energy</type>
+    <type>normal</type>
     <penetrate>13</penetrate>
     <physical>29</physical>
     <disable>2</disable>
@@ -159,7 +159,7 @@
    <track>2</track>
    <swivel>10</swivel>
    <damage>
-    <type>energy</type>
+    <type>normal</type>
     <penetrate>20</penetrate>
     <physical>42</physical>
     <disable>2</disable>
@@ -190,7 +190,7 @@
    <heatup>25</heatup>
    <track>2</track>
    <damage>
-    <type>energy</type>
+    <type>normal</type>
     <penetrate>20</penetrate>
     <physical>8</physical>
     <disable>1</disable>
@@ -222,7 +222,7 @@
    <heatup>30</heatup>
    <track>1.75</track>
    <damage>
-    <type>energy</type>
+    <type>normal</type>
     <penetrate>27</penetrate>
     <physical>10.5</physical>
     <disable>1</disable>
@@ -254,7 +254,7 @@
    <heatup>35</heatup>
    <track>1.5</track>
    <damage>
-    <type>energy</type>
+    <type>normal</type>
     <penetrate>35</penetrate>
     <physical>14</physical>
     <disable>2</disable>
@@ -286,7 +286,7 @@
    <heatup>50</heatup>
    <track>0.5</track>
    <damage>
-    <type>energy</type>
+    <type>normal</type>
     <penetrate>50</penetrate>
     <physical>64</physical>
     <disable>3</disable>
@@ -318,7 +318,7 @@
    <heatup>60</heatup>
    <track>0.3</track>
    <damage>
-    <type>energy</type>
+    <type>normal</type>
     <penetrate>75</penetrate>
     <physical>82</physical>
     <disable>4</disable>
@@ -356,7 +356,7 @@
    <damage>
     <type>ion</type>
     <penetrate>0</penetrate>
-    <physical>7</physical>
+    <physical>6</physical>
     <disable>2</disable>
    </damage>
   </specific>
@@ -388,7 +388,7 @@
    <damage>
     <type>ion</type>
     <penetrate>5</penetrate>
-    <physical>9</physical>
+    <physical>8</physical>
     <disable>2</disable>
    </damage>
   </specific>
@@ -420,7 +420,7 @@
    <damage>
     <type>ion</type>
     <penetrate>11</penetrate>
-    <physical>11.5</physical>
+    <physical>10</physical>
     <disable>3</disable>
    </damage>
   </specific>
@@ -448,11 +448,10 @@
    <energy>6.5</energy>
    <heatup>30</heatup>
    <track>2</track>
-   <damage type="ion" penetrate="7">7.5</damage>
    <damage>
     <type>ion</type>
     <penetrate>7</penetrate>
-    <physical>7.5</physical>
+    <physical>6.5</physical>
     <disable>2</disable>
    </damage>
   </specific>
@@ -483,7 +482,7 @@
    <damage>
     <type>ion</type>
     <penetrate>17</penetrate>
-    <physical>13</physical>
+    <physical>11</physical>
     <disable>3</disable>
    </damage>
   </specific>
@@ -514,7 +513,7 @@
    <damage>
     <type>ion</type>
     <penetrate>24</penetrate>
-    <physical>16</physical>
+    <physical>14</physical>
     <disable>4</disable>
    </damage>
   </specific>
@@ -546,7 +545,7 @@
    <damage>
     <type>ion</type>
     <penetrate>11</penetrate>
-    <physical>5</physical>
+    <physical>4</physical>
     <disable>12</disable>
    </damage>
   </specific>
@@ -579,7 +578,7 @@
    <damage>
     <type>ion</type>
     <penetrate>17</penetrate>
-    <physical>8</physical>
+    <physical>7</physical>
     <disable>20</disable>
    </damage>
   </specific>
@@ -611,7 +610,7 @@
    <damage>
     <type>ion</type>
     <penetrate>30</penetrate>
-    <physical>13</physical>
+    <physical>10</physical>
     <disable>30</disable>
    </damage>
   </specific>
@@ -647,7 +646,7 @@
    <track>2</track>
    <swivel>4</swivel>
    <damage>
-    <type>kinetic</type>
+    <type>impact</type>
     <penetrate>3</penetrate>
     <physical>6</physical>
     <disable>1</disable>
@@ -678,7 +677,7 @@
    <track>2</track>
    <swivel>6</swivel>
    <damage>
-    <type>kinetic</type>
+    <type>impact</type>
     <penetrate>12</penetrate>
     <physical>8.5</physical>
     <disable>1</disable>
@@ -709,7 +708,7 @@
    <track>1.5</track>
    <swivel>8</swivel>
    <damage>
-    <type>kinetic</type>
+    <type>impact</type>
     <penetrate>20</penetrate>
     <physical>12</physical>
     <disable>1</disable>
@@ -740,7 +739,7 @@
    <heatup>40</heatup>
    <track>2.2</track>
    <damage>
-    <type>kinetic</type>
+    <type>impact</type>
     <penetrate>11</penetrate>
     <physical>6.5</physical>
     <disable>1</disable>
@@ -771,7 +770,7 @@
    <heatup>45</heatup>
    <track>2.05</track>
    <damage>
-    <type>kinetic</type>
+    <type>impact</type>
     <penetrate>20</penetrate>
     <physical>9.5</physical>
     <disable>1</disable>
@@ -804,7 +803,7 @@
    <track>1.5</track>
    <swivel>8</swivel>
    <damage>
-    <type>kinetic</type>
+    <type>impact</type>
     <penetrate>29</penetrate>
     <physical>36</physical>
     <disable>2</disable>
@@ -836,7 +835,7 @@
    <track>1.4</track>
    <swivel>10</swivel>
    <damage>
-    <type>kinetic</type>
+    <type>impact</type>
     <penetrate>43</penetrate>
     <physical>42</physical>
     <disable>2</disable>
@@ -868,7 +867,7 @@
    <track>1.2</track>
    <swivel>13</swivel>
    <damage>
-    <type>kinetic</type>
+    <type>impact</type>
     <penetrate>50</penetrate>
     <physical>54</physical>
     <disable>2</disable>
@@ -902,7 +901,7 @@
    <track>0.8</track>
    <swivel>15</swivel>
    <damage>
-    <type>kinetic</type>
+    <type>impact</type>
     <penetrate>60</penetrate>
     <physical>70</physical>
     <disable>3</disable>
@@ -936,7 +935,7 @@
    <track>0.6</track>
    <swivel>16</swivel>
    <damage>
-    <type>kinetic</type>
+    <type>impact</type>
     <penetrate>70</penetrate>
     <physical>76</physical>
     <disable>3</disable>
@@ -968,7 +967,7 @@
    <heatup>90</heatup>
    <track>0.25</track>
    <damage>
-    <type>kinetic</type>
+    <type>impact</type>
     <penetrate>55</penetrate>
     <physical>58</physical>
     <disable>3</disable>
@@ -1002,7 +1001,7 @@
    <track>2</track>
    <swivel>4</swivel>
    <damage>
-    <type>energy</type>
+    <type>normal</type>
     <penetrate>8</penetrate>
     <physical>9</physical>
     <disable>1</disable>
@@ -1035,7 +1034,7 @@
    <track>2</track>
    <swivel>5</swivel>
    <damage>
-    <type>energy</type>
+    <type>normal</type>
     <penetrate>18</penetrate>
     <physical>12</physical>
     <disable>1</disable>
@@ -1068,7 +1067,7 @@
    <track>2</track>
    <swivel>6</swivel>
    <damage>
-    <type>energy</type>
+    <type>normal</type>
     <penetrate>23</penetrate>
     <physical>16</physical>
     <disable>1</disable>
@@ -1099,7 +1098,7 @@
    <heatup>25</heatup>
    <track>1.8</track>
    <damage>
-    <type>energy</type>
+    <type>normal</type>
     <penetrate>12</penetrate>
     <physical>9</physical>
     <disable>1</disable>
@@ -1130,7 +1129,7 @@
    <heatup>30</heatup>
    <track>1.6</track>
    <damage>
-    <type>energy</type>
+    <type>normal</type>
     <penetrate>18</penetrate>
     <physical>14</physical>
     <disable>1</disable>
@@ -1163,7 +1162,7 @@
    <track>2</track>
    <swivel>10</swivel>
    <damage>
-    <type>energy</type>
+    <type>normal</type>
     <penetrate>30</penetrate>
     <physical>25</physical>
     <disable>2</disable>
@@ -1196,7 +1195,7 @@
    <track>2</track>
    <swivel>13</swivel>
    <damage>
-    <type>energy</type>
+    <type>normal</type>
     <penetrate>35</penetrate>
     <physical>38</physical>
     <disable>2</disable>
@@ -1229,7 +1228,7 @@
    <track>1.5</track>
    <swivel>11</swivel>
    <damage>
-    <type>energy</type>
+    <type>normal</type>
     <penetrate>25</penetrate>
     <physical>50</physical>
     <disable>2</disable>
@@ -1262,7 +1261,7 @@
    <track>1.5</track>
    <swivel>14</swivel>
    <damage>
-    <type>energy</type>
+    <type>normal</type>
     <penetrate>35</penetrate>
     <physical>39</physical>
     <disable>2</disable>
@@ -1295,7 +1294,7 @@
    <track>1.2</track>
    <swivel>16</swivel>
    <damage>
-    <type>energy</type>
+    <type>normal</type>
     <penetrate>42</penetrate>
     <physical>46</physical>
     <disable>2</disable>
@@ -1327,7 +1326,7 @@
    <energy>65</energy>
    <heatup>60</heatup>
    <damage>
-    <type>energy</type>
+    <type>normal</type>
     <penetrate>50</penetrate>
     <physical>50</physical>
     <disable>1</disable>
@@ -1363,7 +1362,7 @@
    <energy>200</energy>
    <heatup>60</heatup>
    <damage>
-    <type>energy</type>
+    <type>normal</type>
     <penetrate>90</penetrate>
     <physical>150</physical>
     <disable>1</disable>
@@ -1404,7 +1403,7 @@
    <track>3</track>
    <swivel>2.5</swivel>
    <damage>
-    <type>energy</type>
+    <type>normal</type>
     <penetrate>22</penetrate>
     <physical>20</physical>
     <disable>1</disable>
@@ -1485,7 +1484,7 @@
    <turn>100</turn>
    <speed>1200</speed>
    <damage>
-    <type>kinetic</type>
+    <type>impact</type>
     <penetrate>5</penetrate>
     <physical>40</physical>
     <disable>1</disable>
@@ -1567,7 +1566,7 @@
    <turn>70</turn>
    <speed>1000</speed>
    <damage>
-    <type>kinetic</type>
+    <type>impact</type>
     <penetrate>10</penetrate>
     <physical>80</physical>
     <disable>1</disable>
@@ -1649,7 +1648,7 @@
    <turn>45</turn>
    <speed>700</speed>
    <damage>
-    <type>kinetic</type>
+    <type>impact</type>
     <penetrate>20</penetrate>
     <physical>150</physical>
     <disable>1</disable>
@@ -1707,7 +1706,7 @@
    <thrust>0</thrust>
    <speed>1500</speed>
    <damage>
-    <type>kinetic</type>
+    <type>impact</type>
     <penetrate>0</penetrate>
     <physical>15</physical>
     <disable>0</disable>
@@ -1765,7 +1764,7 @@
    <thrust>0</thrust>
    <speed>200</speed>
    <damage>
-    <type>kinetic</type>
+    <type>impact</type>
     <penetrate>70</penetrate>
     <physical>110</physical>
     <disable>3</disable>
@@ -1812,7 +1811,7 @@
    <turn>20</turn>
    <speed>170</speed>
    <damage>
-    <type>kinetic</type>
+    <type>impact</type>
     <penetrate>50</penetrate>
     <physical>100</physical>
     <disable>5</disable>
@@ -1859,7 +1858,7 @@
    <turn>20</turn>
    <speed>70</speed>
    <damage>
-    <type>kinetic</type>
+    <type>impact</type>
     <penetrate>90</penetrate>
     <physical>800</physical>
     <disable>10</disable>
@@ -2695,7 +2694,7 @@
    <track>3</track>
    <swivel>3</swivel>
    <damage>
-    <type>energy</type>
+    <type>normal</type>
     <penetrate>0</penetrate>
     <physical>0.1</physical>
     <disable>0</disable>
@@ -2726,7 +2725,7 @@
    <heatup>10000</heatup>
    <track>2</track>
    <damage>
-    <type>energy</type>
+    <type>normal</type>
     <penetrate>50</penetrate>
     <physical>22.5</physical>
     <disable>1</disable>
@@ -2749,7 +2748,7 @@
    <turn>35</turn>
    <energy>20</energy>
    <damage>
-    <type>energy</type>
+    <type>normal</type>
     <penetrate>100</penetrate>
     <physical>150</physical>
     <disable>1</disable>
@@ -2784,7 +2783,7 @@
    <energy>1</energy>
    <heatup>60</heatup>
    <damage>
-    <type>energy</type>
+    <type>normal</type>
     <penetrate>30</penetrate>
     <physical>15</physical>
     <disable>1</disable>

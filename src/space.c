@@ -47,6 +47,7 @@
 #include "nstring.h"
 #include "nmath.h"
 #include "map.h"
+#include "damagetype.h"
 
 
 #define XML_PLANET_ID         "Assets" /**< Planet xml document tag. */
@@ -1114,7 +1115,7 @@ void space_update( const double dt )
     * Volatile systems.
     */
    if (cur_system->nebu_volatility > 0.) {
-      dmg.type          = DAMAGE_TYPE_NEBULA;
+      dmg.type          = dtype_get("nebula");
       dmg.damage        = pow2(cur_system->nebu_volatility) / 500. * dt;
       dmg.penetration   = 1.; /* Full penetration. */
       dmg.disable       = 0.;

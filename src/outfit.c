@@ -32,6 +32,7 @@
 #include "pilot_heat.h"
 #include "nstring.h"
 #include "pilot.h"
+#include "damagetype.h"
 
 
 #define outfit_setProp(o,p)      ((o)->properties |= p) /**< Checks outfit property. */
@@ -60,7 +61,6 @@ static Outfit* outfit_stack = NULL; /**< Stack of outfits. */
  * Prototypes
  */
 /* misc */
-static DamageType outfit_strToDamageType( char *buf );
 static OutfitType outfit_strToOutfitType( char *buf );
 static int outfit_setDefaultSize( Outfit *o );
 /* parsing */
@@ -222,74 +222,6 @@ int outfit_compareTech( const void *outfit1, const void *outfit2 )
 
    /* It turns out they're the same. */
    return strcmp( o1->name, o2->name );
-}
-
-
-/**
- * @brief Gives the real shield damage, armour damage and knockback modifier.
- *
- *    @param[out] dshield Real shield damage.
- *    @param[out] darmour Real armour damage.
- *    @param[out] knockback Knocback modifier.
- *    @param[in] stats Stats to calculate with.
- *    @param[in] dtype Damage type.
- *    @param[in] dmg Amount of damage.
- */
-void outfit_calcDamage( double *dshield, double *darmour, double *knockback,
-      double *ddisable, const ShipStats *stats, const Damage *dmg )
-{
-   double ds, da, kn, nms, nma;
-
-   switch (dmg->type) {
-      case DAMAGE_TYPE_ENERGY:
-         ds = 1.1;
-         da = 0.7;
-         kn = 0.1;
-         break;
-      case DAMAGE_TYPE_KINETIC:
-         ds = 0.8;
-         da = 1.2;
-         kn = 1.;
-         break;
-      case DAMAGE_TYPE_ION:
-         ds = 1.0;
-         da = 1.0;
-         kn = 0.4;
-         break;
-      case DAMAGE_TYPE_RADIATION:
-         ds = 0.15; /* still take damage, just not much */
-         da = 1.0;
-         kn = 0.8;
-         break;
-      case DAMAGE_TYPE_NEBULA:
-         if (stats != NULL) {
-            nms = stats->nebula_dmg_shield;
-            nma = stats->nebula_dmg_armour;
-         }
-         else {
-            nms = 1.;
-            nma = 1.;
-         }
-         ds = 0.15 * nms;
-         da = nma;
-         kn = 0.8;
-         break;
-      case DAMAGE_TYPE_EMP:
-         ds = 0.6;
-         da = 1.3;
-         kn = 0.;
-         break;
-
-      default:
-         WARN("Unknown damage type: %d!", dmg->type);
-         da = ds = kn = 0.;
-         break;
-   }
-
-   if (dshield)   *dshield    = dmg->damage  * ds;
-   if (darmour)   *darmour    = dmg->damage  * da;
-   if (ddisable)  *ddisable   = dmg->disable * da;
-   if (knockback) *knockback  = kn;
 }
 
 
@@ -784,47 +716,6 @@ const char* outfit_getTypeBroad( const Outfit* o )
 
 
 /**
- * @brief Gets the damage type from a human readable string.
- *
- *    @param buf String to extract damage type from.
- *    @return Damage type stored in buf.
- */
-static DamageType outfit_strToDamageType( char *buf )
-{
-   if (strcasecmp(buf,"energy")==0)        return DAMAGE_TYPE_ENERGY;
-   else if (strcasecmp(buf,"kinetic")==0)  return DAMAGE_TYPE_KINETIC;
-   else if (strcasecmp(buf,"ion")==0)      return DAMAGE_TYPE_ION;
-   else if (strcasecmp(buf,"radiation")==0) return DAMAGE_TYPE_RADIATION;
-   else if (strcasecmp(buf,"emp")==0)      return DAMAGE_TYPE_EMP;
-
-   WARN("Invalid damage type: '%s'", buf);
-   return DAMAGE_TYPE_NULL;
-}
-
-
-/**
- * @brief Gets the human readable string from damage type.
- */
-const char *outfit_damageTypeToStr( DamageType dmg )
-{
-   switch (dmg) {
-      case DAMAGE_TYPE_ENERGY:
-         return "Energy";
-      case DAMAGE_TYPE_KINETIC:
-         return "Kinetic";
-      case DAMAGE_TYPE_ION:
-         return "Ion";
-      case DAMAGE_TYPE_RADIATION:
-         return "Radiation";
-      case DAMAGE_TYPE_EMP:
-         return "EMP";
-      default:
-         return "Unknown";
-   }
-}
-
-
-/**
  * @brief Checks to see if an outfit fits a slot.
  *
  *    @param o Outfit to see if fits in a slot.
@@ -936,7 +827,7 @@ static int outfit_parseDamage( Damage *dmg, xmlNodePtr node )
    xmlNodePtr cur;
 
    /* Defaults. */
-   dmg->type         = DAMAGE_TYPE_NULL;
+   dmg->type         = dtype_get("normal");
    dmg->damage       = 0.;
    dmg->penetration  = 0.;
    dmg->disable      = 0.;
@@ -953,7 +844,11 @@ static int outfit_parseDamage( Damage *dmg, xmlNodePtr node )
       /* Get type */
       if (xml_isNode(cur,"type")) {
          buf         = xml_get( cur );
-         dmg->type   = outfit_strToDamageType(buf);
+         dmg->type   = dtype_get(buf);
+         if (dmg->type < 0) { /* Case damage type in outfit.xml that isn't in damagetype.xml */
+            dmg->type = 0;
+            WARN("Unknown damage type '%s'", buf);
+         }
          continue;
       }
       WARN("Damage has unknown node '%s'", cur->name);
@@ -1095,7 +990,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
          "%.1f EPS [%.0f Energy]\n"
          "%.0f Range\n"
          "%.1f second heat up",
-         outfit_getType(temp), outfit_damageTypeToStr(temp->u.blt.dmg.type),
+         outfit_getType(temp), dtype_damageTypeToStr(temp->u.blt.dmg.type),
          temp->u.blt.cpu,
          temp->u.blt.dmg.penetration*100.,
          1./temp->u.blt.delay * temp->u.blt.dmg.damage, temp->u.blt.dmg.damage,
@@ -1222,7 +1117,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
          outfit_getType(temp),
          temp->u.bem.cpu,
          temp->u.bem.dmg.penetration*100.,
-         temp->u.bem.dmg.damage, outfit_damageTypeToStr(temp->u.bem.dmg.type),
+         temp->u.bem.dmg.damage, dtype_damageTypeToStr(temp->u.bem.dmg.type),
          temp->u.bem.energy,
          temp->u.bem.duration, temp->u.bem.delay - temp->u.bem.duration,
          temp->u.bem.range,
@@ -1418,7 +1313,7 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
          "%.1f duration",
          outfit_getType(temp),
          temp->u.amm.dmg.penetration*100.,
-         temp->u.amm.dmg.damage, outfit_damageTypeToStr(temp->u.amm.dmg.type),
+         temp->u.amm.dmg.damage, dtype_damageTypeToStr(temp->u.amm.dmg.type),
          temp->u.amm.energy,
          temp->u.amm.speed,
          temp->u.amm.duration );
