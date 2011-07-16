@@ -35,4 +35,9 @@
   <adam>1.0</adam>
   <knock>0.</knock>
  </dtype>
+ <dtype name="emp">
+  <sdam>1.0</sdam>
+  <adam>1.0</adam>
+  <knock>0.</knock>
+ </dtype>
 </dtypes>
