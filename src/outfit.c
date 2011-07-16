@@ -845,6 +845,10 @@ static int outfit_parseDamage( Damage *dmg, xmlNodePtr node )
       if (xml_isNode(cur,"type")) {
          buf         = xml_get( cur );
          dmg->type   = dtype_get(buf);
+         if (dmg->type < 0) { /* Case damage type in outfit.xml that isn't in damagetype.xml */
+            dmg->type = 0;
+            WARN("Unknown damage type '%s'", buf);
+         }
          continue;
       }
       WARN("Damage has unknown node '%s'", cur->name);
