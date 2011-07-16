@@ -218,7 +218,7 @@ function getclueplanet ( mini, maxi )
    getsysatdistance( system.cur(), mini, maxi,
       function(s)
          for i, v in ipairs(s:planets()) do
-            if not isPrevPlanet(v) and v:services()["bar"] and v:faction():playerStanding() >= 0 then
+            if not isPrevPlanet(v) and v:services()["bar"] and v:canLand() then
                planets[#planets + 1] = {v, s}
             end
          end

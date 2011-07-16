@@ -44,7 +44,10 @@ function create ()
    -- Note: this mission does not make any mission claims.
    -- Set up mission variables
    misn_stage = 0
-   homeworld, homeworld_sys = planet.get( misn.factions() )
+   homeworld, homeworld_sys = planet.getLandable( misn.factions() )
+   if homeworld == nil then
+      misn.finish(false)
+   end
    satellite_sys = system.get("Arandon") -- Not too unstable
    credits = 75000
 
