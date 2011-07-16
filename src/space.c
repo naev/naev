@@ -423,9 +423,9 @@ int space_calcJumpInPos( StarSystem *in, StarSystem *out, Vector2d *pos, Vector2
  *    @param nfactions Number of factions in factions.
  *    @return An array of faction names.  Individual names are not allocated.
  */
-char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions )
+char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions, int landable )
 {
-   int i,j,k;
+   int i,j,k, f;
    Planet* planet;
    char **tmp;
    int ntmp;
@@ -435,22 +435,45 @@ char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions )
    mtmp = CHUNK_SIZE;
    tmp = malloc(sizeof(char*) * mtmp);
 
-   for (i=0; i<systems_nstack; i++)
+   for (i=0; i<systems_nstack; i++) {
       for (j=0; j<systems_stack[i].nplanets; j++) {
          planet = systems_stack[i].planets[j];
-         for (k=0; k<nfactions; k++)
-            if (planet->real == ASSET_REAL &&
-                planet->faction == factions[k] &&
-                space_sysReallyReachable(planet_getSystem(planet->name))) {
-               ntmp++;
-               if (ntmp > mtmp) { /* need more space */
-                  mtmp *= 2;
-                  tmp = realloc(tmp, sizeof(char*) * mtmp);
-               }
-               tmp[ntmp-1] = planet->name;
-               break; /* no need to check all factions */
+
+         /* Important to ignore virtual assets. */
+         if (planet->real != ASSET_REAL)
+            continue;
+
+         /* Check if it's in factions. */
+         f = 0;
+         for (k=0; k<nfactions; k++) {
+            if (planet->faction == factions[k]) {
+               f = 1;
+               break;
             }
+         }
+         if (!f)
+            continue;
+
+         /* Check landable. */
+         if (landable) {
+            planet_updateLand( planet );
+            if (!planet->can_land)
+               continue;
+         }
+
+         /* This is expensive so we probably want to do it last. */
+         if (!space_sysReallyReachable( systems_stack[i].name ))
+            continue;
+
+         ntmp++;
+         if (ntmp > mtmp) { /* need more space */
+            mtmp *= 2;
+            tmp = realloc(tmp, sizeof(char*) * mtmp);
+         }
+         tmp[ntmp-1] = planet->name;
+         break; /* no need to check all factions */
       }
+   }
 
    (*nplanets) = ntmp;
    return tmp;
@@ -462,37 +485,52 @@ char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions )
  *
  *    @return The name of a random planet.
  */
-char* space_getRndPlanet (void)
+char* space_getRndPlanet( int landable )
 {
    int i,j;
-   char **tmp;
-   int ntmp;
-   int mtmp;
+   Planet **tmp;
    char *res;
+   int ntmp, mtmp;
+   Planet *pnt;
 
-   ntmp = 0;
-   res = NULL;
-   mtmp = CHUNK_SIZE;
-   tmp = malloc(sizeof(char*) * mtmp);
+   ntmp  = 0;
+   res   = NULL;
+   mtmp  = CHUNK_SIZE;
+   tmp   = malloc( sizeof(Planet*) * mtmp );
 
-   for (i=0; i<systems_nstack; i++)
+   for (i=0; i<systems_nstack; i++) {
       for (j=0; j<systems_stack[i].nplanets; j++) {
-         if (systems_stack[i].planets[j]->real == ASSET_REAL) {
-            ntmp++;
-            if (ntmp > mtmp) { /* need more space */
-               mtmp *= 2;
-               tmp = realloc(tmp, sizeof(char*) * mtmp);
-            }
-            tmp[ntmp-1] = systems_stack[i].planets[j]->name;
-         }
-      }
+         pnt = systems_stack[i].planets[j];
 
-   tmp = arrayShuffle(tmp, ntmp);
-   for (i=0; i < ntmp; i++) {
-      if (space_sysReallyReachable(planet_getSystem( tmp[i] ))) {
-         res = tmp[i];
-         break;
+         if (pnt->real != ASSET_REAL)
+            continue;
+
+         ntmp++;
+         if (ntmp > mtmp) { /* need more space */
+            mtmp *= 2;
+            tmp = realloc(tmp, sizeof(Planet*) * mtmp);
+         }
+         tmp[ntmp-1] = pnt;
       }
+   }
+
+   /* Second filter. */
+   tmp = (Planet**)arrayShuffle( (void**)tmp, ntmp);
+   for (i=0; i < ntmp; i++) {
+      pnt = tmp[i];
+
+      /* We put expensive calculations here to minimize executions. */
+      if (landable) {
+         planet_updateLand( pnt );
+         if (!pnt->can_land)
+            continue;
+      }
+      if (!space_sysReallyReachable( planet_getSystem(pnt->name) ))
+         continue;
+   
+      /* We want the name, not the actual planet. */
+      res = tmp[i]->name;
+      break;
    }
    free(tmp);
 
@@ -603,7 +641,8 @@ int space_sysReachable( StarSystem *sys )
 {
    int i;
 
-   if (sys_isKnown(sys)) return 1; /* it is known */
+   if (sys_isKnown(sys))
+      return 1; /* it is known */
 
    /* check to see if it is adjacent to known */
    for (i=0; i<sys->njumps; i++)
@@ -619,7 +658,7 @@ int space_sysReachable( StarSystem *sys )
  *
  *    @return 1 if target system is reachable, 0 if it isn't.
  */
-int space_sysReallyReachable ( char* sysname )
+int space_sysReallyReachable( char* sysname )
 {
    int njumps;
 

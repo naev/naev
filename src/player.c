@@ -3124,7 +3124,7 @@ static Planet* player_parse( xmlNodePtr parent )
          !planet_hasService(pnt, PLANET_SERVICE_LAND)) {
       WARN("Player starts out in non-existant or invalid planet '%s', trying to find a suitable one instead.",
             planet );
-      pnt = planet_get( space_getRndPlanet() );
+      pnt = planet_get( space_getRndPlanet(1) );
       /* In case the planet does not exist, we need to update some variables.
        * While we're at it, we'll also make sure the system exists as well. */
       hunting  = 1;
@@ -3137,7 +3137,7 @@ static Planet* player_parse( xmlNodePtr parent )
                !planet_hasService(pnt, PLANET_SERVICE_REFUEL) ||
                areEnemies(pnt->faction, FACTION_PLAYER)) {
             WARN("Planet '%s' found, but is not suitable. Trying again.", planet);
-            pnt = planet_get( space_getRndPlanet() );
+            pnt = planet_get( space_getRndPlanet( (i>100) ? 1 : 0  ) ); /* We try landable only for the first 100 tries. */
          }
          else
             hunting = 0;
