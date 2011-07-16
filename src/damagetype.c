@@ -78,16 +78,19 @@ static int DTYPE_parse( DTYPE *temp, const xmlNodePtr parent )
    node = parent->xmlChildrenNode;
    do {
       xml_onlyNodes(node);
-      xmlr_float(node, "sdam", temp->sdam);
-      xmlr_float(node, "adam", temp->adam);
-      xmlr_float(node, "knock", temp->knock);
+
+      xmlr_float(node, "shield", temp->sdam);
+      xmlr_float(node, "armour", temp->adam);
+      xmlr_float(node, "knockback", temp->knock);
+
+      WARN("Unknown node of type '%s' in damage node '%s'.", node->name, temp->name);
    } while (xml_nextNode(node));
 
 #define MELEMENT(o,s) \
    if (o) WARN("DTYPE '%s' invalid '"s"' element", temp->name) /**< Define to help check for data errors. */
-   MELEMENT(temp->sdam<0.,"sdam");
-   MELEMENT(temp->adam<0.,"adam");
-   MELEMENT(temp->adam<0.,"knock");
+   MELEMENT(temp->sdam<0.,"shield");
+   MELEMENT(temp->adam<0.,"armour");
+   MELEMENT(temp->knock<0.,"knockback");
 #undef MELEMENT
 
    return 0;
