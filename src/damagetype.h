@@ -2,6 +2,11 @@
  * See Licensing and Copyright notice in naev.h
  */
 
+
+#ifndef _DTYPE_H
+#  define _DTYPE_H
+
+
 #include "outfit.h"
 
 /*
@@ -20,3 +25,7 @@ void dtype_free (void);
  * misc
  */
 void dtype_calcDamage( double *dshield, double *darmour, double absorb, double *knockback, const Damage *dmg );
+
+
+#endif /* _DTYPE_H */
+
