@@ -317,7 +317,7 @@ static int board_trySteal( Pilot *p )
       target->shield = 0.;
       target->armour = 1.;
       /* This will make the boarding ship take the possible faction hit. */
-      dmg.type        = DAMAGE_TYPE_KINETIC;
+      dmg.type        = dtype_get("normal");
       dmg.damage      = 100.;
       dmg.penetration = 1.;
       dmg.disable     = 0.;

@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<dtypes>
+ <dtype name="normal">
+  <sdam>1.0</sdam>
+  <adam>1.0</adam>
+  <knock>0.</knock>
+ </dtype>
+ <dtype name="nebula">
+  <sdam>1.0</sdam>
+  <adam>1.0</adam>
+  <knock>0.</knock>
+ </dtype>
+ <dtype name="explosion_splash">
+  <sdam>1.0</sdam>
+  <adam>1.0</adam>
+  <knock>0.</knock>
+ </dtype>
+ <dtype name="kinetic">
+  <sdam>1.0</sdam>
+  <adam>1.0</adam>
+  <knock>0.</knock>
+ </dtype>
+ <dtype name="energy">
+  <sdam>1.0</sdam>
+  <adam>1.0</adam>
+  <knock>0.</knock>
+ </dtype>
+ <dtype name="ion">
+  <sdam>1.0</sdam>
+  <adam>1.0</adam>
+  <knock>0.</knock>
+ </dtype>
+ <dtype name="plasma">
+  <sdam>1.0</sdam>
+  <adam>1.0</adam>
+  <knock>0.</knock>
+ </dtype>
+</dtypes>

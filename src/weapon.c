@@ -1738,7 +1738,7 @@ void weapon_exit (void)
  * @brief Clears possible exploded weapons.
  */
 void weapon_explode( double x, double y, double radius,
-      DamageType dtype, double damage,
+      int dtype, double damage,
       const Pilot *parent, int mode )
 {
    (void)dtype;

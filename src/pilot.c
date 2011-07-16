@@ -44,6 +44,7 @@
 #include "land_shipyard.h"
 #include "array.h"
 #include "camera.h"
+#include "damagetype.h"
 
 
 #define PILOT_CHUNK_MIN 128 /**< Maximum chunks to increment pilot_stack by */
@@ -916,9 +917,8 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter, const Da
 
    /* Calculate the damage. */
    absorb         = 1. - CLAMP( 0., 1., p->dmg_absorb - dmg->penetration );
-   outfit_calcDamage( &damage_shield, &damage_armour, &knockback, &disable, &p->stats, dmg );
-   damage_shield *= absorb;
-   damage_armour *= absorb;
+   dtype_calcDamage( &damage_shield, &damage_armour, absorb, &knockback, dmg );
+
    /* Ships that can not be disabled take raw armour damage instead of getting disabled. */
    if (pilot_isFlag( p, PILOT_NODISABLE )) {
       damage_armour += disable * absorb;
@@ -1416,7 +1416,7 @@ void pilot_update( Pilot* pilot, const double dt )
 
          /* Damage from explosion. */
          a = sqrt(pilot->solid->mass);
-         dmg.type          = DAMAGE_TYPE_KINETIC;
+         dmg.type          = dtype_get("explosion_splash");
          dmg.damage        = MAX(0., 2. * (a * (1. + sqrt(pilot->fuel + 1.) / 28.)));
          dmg.penetration   = 1.; /* Full penetration. */
          dmg.disable       = 0.;

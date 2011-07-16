@@ -121,20 +121,6 @@ typedef enum OutfitType_ {
 
 
 /**
- * @brief Different types of damage.
- */
-typedef enum DamageType_ {
-   DAMAGE_TYPE_NULL, /**< NULL */
-   DAMAGE_TYPE_ENERGY, /**< Energy-based weapons. */
-   DAMAGE_TYPE_KINETIC, /**< Physic impact weapons. */
-   DAMAGE_TYPE_ION, /**< Ion-based weapons. */
-   DAMAGE_TYPE_RADIATION, /**< Radioactive weapons. */
-   DAMAGE_TYPE_NEBULA, /**< Nebula damage - essentially radiation. */
-   DAMAGE_TYPE_EMP /**< Electromagnetic pulse weapons. */
-} DamageType;
-
-
-/**
  * @brief Outfit slot types.
  */
 typedef enum OutfitSlotType_ {
@@ -167,7 +153,7 @@ typedef struct OutfitSlot_ {
 
 
 typedef struct Damage_ {
-   DamageType type;     /**< Type of damage. */
+   int type;            /**< Type of damage. */
    double penetration;  /**< Penetration the damage has [0:1], with 1 being 100%. */
    double damage;       /**< Amount of damage, this counts towards killing the ship. */
    double disable;      /**< Amount of disable damage, this counts towards disabling the ship. */
@@ -401,13 +387,6 @@ typedef struct Outfit_ {
 
 
 /*
- * misc
- */
-void outfit_calcDamage( double *dshield, double *darmour, double *knockback,
-      double *ddisable, const ShipStats *stats, const Damage *dmg );
-
-
-/*
  * get
  */
 Outfit* outfit_get( const char* name );
@@ -472,7 +451,6 @@ void outfit_free (void);
 /*
  * Misc.
  */
-const char *outfit_damageTypeToStr( DamageType dmg );
 int outfit_fitsSlot( const Outfit* o, const OutfitSlot* s );
 int outfit_fitsSlotType( const Outfit* o, const OutfitSlot* s );
 

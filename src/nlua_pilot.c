@@ -34,6 +34,7 @@
 #include "weapon.h"
 #include "gui.h"
 #include "camera.h"
+#include "damagetype.h"
 
 
 /*
@@ -1245,9 +1246,9 @@ static int pilotL_weapset( lua_State *L )
          /* Damage type. */
          lua_pushstring(L, "dtype");
          if (is_lau && (slot->u.ammo.outfit != NULL))
-            lua_pushstring(L, outfit_damageTypeToStr( outfit_damage(slot->u.ammo.outfit)->type ));
+            lua_pushstring(L, dtype_damageTypeToStr( outfit_damage(slot->u.ammo.outfit)->type ));
          else
-            lua_pushstring(L, outfit_damageTypeToStr( outfit_damage(slot->outfit)->type ));
+            lua_pushstring(L, dtype_damageTypeToStr( outfit_damage(slot->outfit)->type ));
          lua_rawset(L,-3);
 
          /* Track. */
