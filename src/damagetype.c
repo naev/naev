@@ -15,9 +15,6 @@
 #include <inttypes.h>
 
 #include "SDL.h"
-#if SDL_VERSION_ATLEAST(1,3,0)
-#include "SDL_haptic.h"
-#endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
 #include "log.h"
 #include "pilot.h"
@@ -27,13 +24,12 @@
 #include "nxml.h"
 
 
-#define dtype_XML_ID     "dtypes" /**< XML Document tag. */
-#define dtype_XML_TAG    "dtype" /**< DTYPE XML node tag. */
+#define DTYPE_XML_ID     "dtypes"   /**< XML Document tag. */
+#define DTYPE_XML_TAG    "dtype"    /**< DTYPE XML node tag. */
 
-#define dtype_DATA       "dat/damagetype.xml" /**< Location of the spfx datafile. */
+#define DTYPE_DATA       "dat/damagetype.xml" /**< Location of the spfx datafile. */
 
-#define dtype_CHUNK_MAX  16384 /**< Maximum chunk to alloc when needed */
-#define dtype_CHUNK_MIN  256 /**< Minimum chunk to alloc when needed */
+#define DTYPE_CHUNK_MIN  256     /**< Minimum chunk to alloc when needed */
 
 /**
  * @struct DTYPE
@@ -45,17 +41,19 @@ typedef struct DTYPE_ {
    double sdam;   /**< Shield damage multiplier */
    double adam;   /**< Armour damage multiplier */
    double knock;  /**< Knockback */
-
 } DTYPE;
 
-static DTYPE *dtype_types = NULL; /**< Total damage types. */
-static int dtype_ntypes = 0; /**< Total number of damage types. */
+static DTYPE* dtype_types  = NULL;  /**< Total damage types. */
+static int dtype_ntypes    = 0;     /**< Total number of damage types. */
+
 
 /*
  * prototypes
  */
 static int DTYPE_parse( DTYPE *temp, const xmlNodePtr parent );
 static void DTYPE_free( DTYPE *damtype );
+static DTYPE* dtype_validType( int type );
+
 
 /**
  * @brief Parses an xml node containing a DTYPE.
@@ -123,7 +121,21 @@ int dtype_get( char* name )
    for (i=0; i<dtype_ntypes; i++)
       if (strcmp(dtype_types[i].name, name)==0)
          return i;
+   WARN("Damage type '%s' not found in stack.", name);
    return -1;
+}
+
+
+/**
+ * @brief Gets the damage type.
+ */
+static DTYPE* dtype_validType( int type )
+{
+   if ((type < 0) || (type >= dtype_ntypes)) {
+      WARN("Damage type '%d' is invalid.", type);
+      return NULL;
+   }
+   return &dtype_types[ type ];
 }
 
 
@@ -132,11 +144,10 @@ int dtype_get( char* name )
  */
 char* dtype_damageTypeToStr( int type )
 {
-   if (type <= dtype_ntypes)
-      return dtype_types[type].name;
-   else
-      return "none";
-      /* TODO: And probably generate a warning. */
+   DTYPE *dmg = dtype_validType( type );
+   if (dmg == NULL)
+      return NULL;
+   return dmg->name;
 }
 
 
@@ -154,20 +165,20 @@ int dtype_load (void)
    xmlDocPtr doc;
 
    /* Load and read the data. */
-   buf = ndata_read( dtype_DATA, &bufsize );
+   buf = ndata_read( DTYPE_DATA, &bufsize );
    doc = xmlParseMemory( buf, bufsize );
 
    /* Check to see if document exists. */
    node = doc->xmlChildrenNode;
-   if (!xml_isNode(node,dtype_XML_ID)) {
-      ERR("Malformed '"dtype_DATA"' file: missing root element '"dtype_XML_ID"'");
+   if (!xml_isNode(node,DTYPE_XML_ID)) {
+      ERR("Malformed '"DTYPE_DATA"' file: missing root element '"DTYPE_XML_ID"'");
       return -1;
    }
 
    /* Check to see if is populated. */
    node = node->xmlChildrenNode; /* first system node */
    if (node == NULL) {
-      ERR("Malformed '"dtype_DATA"' file: does not contain elements");
+      ERR("Malformed '"DTYPE_DATA"' file: does not contain elements");
       return -1;
    }
 
@@ -175,20 +186,22 @@ int dtype_load (void)
    mem = 0;
    do {
       xml_onlyNodes(node);
-      if (xml_isNode(node,dtype_XML_TAG)) {
 
-         dtype_ntypes++;
-         if (dtype_ntypes > mem) {
-            if (mem == 0)
-               mem = dtype_CHUNK_MIN;
-            else
-               mem *= 2;
-            dtype_types = realloc(dtype_types, sizeof(DTYPE)*mem);
-         }
-         DTYPE_parse( &dtype_types[dtype_ntypes-1], node );
+      if (!xml_isNode(node,DTYPE_XML_TAG)) {
+         WARN("'"DTYPE_DATA"' has unknown node '%s'.", node->name);
+         continue;
       }
-      else
-         WARN("'"dtype_DATA"' has unknown node '%s'.", node->name);
+
+      dtype_ntypes++;
+      if (dtype_ntypes > mem) {
+         if (mem == 0)
+            mem = DTYPE_CHUNK_MIN;
+         else
+            mem *= 2;
+         dtype_types = realloc(dtype_types, sizeof(DTYPE)*mem);
+      }
+      DTYPE_parse( &dtype_types[dtype_ntypes-1], node );
+
    } while (xml_nextNode(node));
    /* Shrink back to minimum - shouldn't change ever. */
    dtype_types = realloc(dtype_types, sizeof(DTYPE) * dtype_ntypes);
@@ -211,9 +224,9 @@ void dtype_free (void)
    /* clear the damtypes */
    for (i=0; i<dtype_ntypes; i++)
       DTYPE_free( &dtype_types[i] );
-   free(dtype_types);
-   dtype_types = NULL;
-   dtype_ntypes = 0;
+   free( dtype_types );
+   dtype_types    = NULL;
+   dtype_ntypes   = 0;
 }
 
 
@@ -228,15 +241,20 @@ void dtype_free (void)
  */
 void dtype_calcDamage( double *dshield, double *darmour, double absorb, double *knockback, const Damage *dmg )
 {
-   double sdam, adam, knock;
+   DTYPE *dtype;
 
-   sdam           = dtype_types[dmg->type].sdam;
-   adam           = dtype_types[dmg->type].adam;
-   knock          = dtype_types[dmg->type].knock;
+   /* Must be valid. */
+   dtype = dtype_validType( dmg->type );
+   if (dtype == NULL)
+      return;
 
-   if (dshield)   *dshield    = dmg->damage  * sdam * absorb;
-   if (darmour)   *darmour    = dmg->damage  * adam * absorb;
-   if (knockback) *knockback  = knock;
+   /* Set if non-nil. */
+   if (dshield != NULL)
+      *dshield    = dtype->sdam * dmg->damage * absorb;
+   if (darmour != NULL)
+      *darmour    = dtype->adam * dmg->damage * absorb;
+   if (knockback != NULL)
+      *knockback  = dtype->knock;
 }
 
 
