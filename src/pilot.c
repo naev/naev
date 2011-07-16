@@ -917,6 +917,7 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter, const Da
 
    /* Calculate the damage. */
    absorb         = 1. - CLAMP( 0., 1., p->dmg_absorb - dmg->penetration );
+   disable        = dmg->disable;
    dtype_calcDamage( &damage_shield, &damage_armour, absorb, &knockback, dmg );
 
    /* Ships that can not be disabled take raw armour damage instead of getting disabled. */
