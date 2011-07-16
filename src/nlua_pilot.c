@@ -2006,7 +2006,7 @@ static int pilotL_addOutfit( lua_State *L )
       bypass = 0;
 
    /* Get the outfit. */
-   o = outfit_get( outfit );
+   o = outfit_getW( outfit );
    if (o == NULL)
       return 0;
 
@@ -2099,7 +2099,7 @@ static int pilotL_rmOutfit( lua_State *L )
    }
    else {
       /* Get the outfit. */
-      o = outfit_get( outfit );
+      o = outfit_getW( outfit );
       if (o == NULL) {
          NLUA_ERROR(L,"Outfit isn't found in outfit stack.");
          return 0;

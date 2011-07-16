@@ -214,7 +214,7 @@ static int outfitL_get( lua_State *L )
    name = luaL_checkstring(L,1);
 
    /* Get outfit. */
-   lo.outfit = outfit_get( name );
+   lo.outfit = outfit_getW( name );
    if (lo.outfit == NULL) {
       NLUA_ERROR(L,"Outfit '%s' not found!", name);
       return 0;

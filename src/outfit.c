@@ -86,12 +86,13 @@ static void outfit_parseSLicense( Outfit *temp, const xmlNodePtr parent );
  *    @param name Name to match.
  *    @return Outfit matching name or NULL if not found.
  */
-Outfit* outfit_get( const char* name )
+Outfit* outfit_getW( const char* name )
 {
-   int i;
-   for (i=0; i<array_size(outfit_stack); i++)
-      if (strcmp(name,outfit_stack[i].name)==0)
-         return &outfit_stack[i];
+   Outfit* outfit;
+
+   if((outfit = outfit_get(name)) != NULL){
+	return outfit; 
+   }
 
    WARN("Outfit '%s' not found in stack.", name);
    return NULL;
@@ -104,7 +105,7 @@ Outfit* outfit_get( const char* name )
  *    @param name Name to match.
  *    @return Outfit matching name or NULL if not found.
  */
-Outfit* outfit_getW( const char* name )
+Outfit* outfit_get( const char* name )
 {
    int i;
    for (i=0; i<array_size(outfit_stack); i++)
@@ -1899,7 +1900,7 @@ int outfit_load (void)
    for (i=0; i<array_size(outfit_stack); i++) {
       o = &outfit_stack[i];
       if (outfit_isLauncher(&outfit_stack[i])) {
-         o->u.lau.ammo = outfit_get( o->u.lau.ammo_name );
+         o->u.lau.ammo = outfit_getW( o->u.lau.ammo_name );
          if (outfit_isSeeker(o) && /* Smart seekers. */
                (o->u.lau.ammo->u.amm.ai)) {
             if (o->u.lau.ew_target == 0.)
@@ -1911,7 +1912,7 @@ int outfit_load (void)
          }
       }
       else if (outfit_isFighterBay(&outfit_stack[i]))
-         o->u.bay.ammo = outfit_get( o->u.bay.ammo_name );
+         o->u.bay.ammo = outfit_getW( o->u.bay.ammo_name );
    }
 
    xmlFreeDoc(doc);

@@ -661,7 +661,7 @@ static void map_showOutfitDetail(unsigned int wid, char* wgtname, int x, int y, 
 
    iw = w - 400;
 
-   outfit = outfit_get( toolkit_getList(wid, wgtname) );
+   outfit = outfit_getW( toolkit_getList(wid, wgtname) );
    window_modifyText( wid, "txtOutfitName", outfit->name );
    window_modifyImage( wid, "imgOutfit", outfit->gfx_store, 0, 0 );
 
@@ -721,7 +721,7 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
    if (len <= 0)
       return -1;
    else if ((oname != NULL) && (len == 1))
-      o = outfit_get( oname );
+      o = outfit_getW( oname );
    /* Do fuzzy match. */
    else {
       /* Ask which one player wants. */
@@ -735,7 +735,7 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
          free(names);
          return 0;
       }
-      o = outfit_get( names[i] );
+      o = outfit_getW( names[i] );
    }
    if (names != NULL)
       free(names);

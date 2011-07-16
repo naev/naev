@@ -358,7 +358,7 @@ static int shipL_outfitCPU( lua_State *L )
    outfit = luaL_checkstring(L,1);
 
    /* Get the outfit. */
-   o = outfit_get( outfit );
+   o = outfit_getW( outfit );
    if (o == NULL)
       return 0;
 

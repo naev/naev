@@ -708,7 +708,7 @@ static int playerL_addOutfit( lua_State *L  )
       q = luaL_checkint(L, 2);
 
    /* Get outfit. */
-   o = outfit_get( str );
+   o = outfit_getW( str );
    if (o==NULL) {
       NLUA_ERROR(L, "Outfit '%s' not found.", str);
       return 0;

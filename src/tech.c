@@ -412,7 +412,7 @@ static int tech_addItemOutfit( tech_group_t *grp, const char *name )
    Outfit *o;
 
    /* Get the outfit. */
-   o = outfit_getW( name );
+   o = outfit_get( name );
    if (o==NULL)
       return 1;
 

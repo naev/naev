@@ -3054,7 +3054,7 @@ static Planet* player_parse( xmlNodePtr parent )
          cur = node->xmlChildrenNode;
          do {
             if (xml_isNode(cur,"outfit")) {
-               o = outfit_get( xml_get(cur) );
+               o = outfit_getW( xml_get(cur) );
                if (o == NULL) {
                   WARN("Outfit '%s' was saved but does not exist!", xml_get(cur));
                   continue;
@@ -3315,7 +3315,7 @@ static void player_parseShipSlot( xmlNodePtr node, Pilot *ship, PilotOutfitSlot 
    int q;
 
    /* Add the outfit. */
-   o = outfit_get( xml_get(node) );
+   o = outfit_getW( xml_get(node) );
    if (o==NULL)
       return;
    player_addOutfitToPilot( ship, o, slot );
@@ -3330,7 +3330,7 @@ static void player_parseShipSlot( xmlNodePtr node, Pilot *ship, PilotOutfitSlot 
       return;
 
    /* Get the ammo. */
-   ammo = outfit_get(buf);
+   ammo = outfit_getW(buf);
    free(buf);
    if (ammo==NULL)
       return;

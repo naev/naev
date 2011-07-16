@@ -258,7 +258,7 @@ void outfits_update( unsigned int wid, char* str )
       return;
    }
 
-   outfit = outfit_get( outfitname );
+   outfit = outfit_getW( outfitname );
 
    /* new image */
    window_modifyImage( wid, "imgOutfit", outfit->gfx_store, 0, 0 );
@@ -407,7 +407,7 @@ static void outfits_buy( unsigned int wid, char* str )
    int q;
 
    outfitname = toolkit_getImageArray( wid, "iarOutfits" );
-   outfit = outfit_get( outfitname );
+   outfit = outfit_getW( outfitname );
 
    q = outfits_getMod();
 
@@ -464,7 +464,7 @@ static void outfits_sell( unsigned int wid, char* str )
    int q;
 
    outfitname  = toolkit_getImageArray( wid, "iarOutfits" );
-   outfit      = outfit_get( outfitname );
+   outfit      = outfit_getW( outfitname );
 
    q = outfits_getMod();
 
