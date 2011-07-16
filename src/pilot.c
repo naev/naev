@@ -348,8 +348,6 @@ unsigned int pilot_getNearestEnemy_heuristic(const Pilot* p, double mass_factor,
             ((pilot_stack[i]->id == PLAYER_ID) &&
                pilot_isFlag(p,PILOT_HOSTILE)))) { /* Hostile to player. */
 
-
-
          /* Shouldn't be disabled. */
          if (pilot_isDisabled(pilot_stack[i]))
             continue;
@@ -360,16 +358,18 @@ unsigned int pilot_getNearestEnemy_heuristic(const Pilot* p, double mass_factor,
 
          /* Check distance. */
          td = vect_dist2(&pilot_stack[i]->solid->pos, &p->solid->pos)* range_factor;
-         temp = td+fabs( pilot_relsize(p, pilot_stack[i]) /*0.5*/-mass_factor) + fabs(pilot_relhp(p, pilot_stack[i]) /*0.5*/- health_factor) + fabs(pilot_reldps(p, pilot_stack[i]) /*0.5*/-damage_factor);
+         temp = td + fabs( pilot_relsize( p, pilot_stack[i] ) - mass_factor)
+                   + fabs( pilot_relhp(   p, pilot_stack[i] ) - health_factor)
+                   + fabs( pilot_reldps(  p, pilot_stack[i] ) - damage_factor);
 
-         if ((tp == 0) || (temp< current_heuristic_value)) {
+         if ((tp == 0) || (temp < current_heuristic_value)) {
             current_heuristic_value = temp;
             tp = pilot_stack[i]->id;
          }
       }
    }
-   return tp;
 
+   return tp;
 }
 
 /**
