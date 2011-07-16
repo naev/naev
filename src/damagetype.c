@@ -129,7 +129,7 @@ int dtype_get( char* name )
  */
 char* dtype_damageTypeToStr( int type )
 {
-   if (dtype_types[type].name != NULL)
+   if (type <= dtype_ntypes)
       return dtype_types[type].name;
    else
       return "none";
