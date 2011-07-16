@@ -54,8 +54,11 @@ include "dat/missions/empire/common.lua"
 
 function create ()
    -- Target destination
-   destsys = system.get( "Slaccid" )
-   ret,retsys = planet.get( "Halir" )
+   destsys     = system.get( "Slaccid" )
+   ret,retsys  = planet.getLandable( "Halir" )
+   if ret== nil then
+      misn.finish(false)
+   end
 
    -- Must claim system
    if not misn.claim( destsys ) then

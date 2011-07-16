@@ -42,8 +42,11 @@ end
 function create ()
    -- Note: this mission does not make any system claims.
    -- Target destination
-   dest,destsys = planet.get( faction.get("Frontier") )
-   ret,retsys = planet.get( "Halir" )
+   dest,destsys = planet.getLandable( faction.get("Frontier") )
+   ret,retsys   = planet.getLandable( "Halir" )
+   if dest == nil or ret == nil then
+      misn.finish(false)
+   end
 
    -- Spaceport bar stuff
    misn.setNPC( "Commander", "soldner" )
