@@ -854,6 +854,9 @@ static int outfit_parseDamage( Damage *dmg, xmlNodePtr node )
       WARN("Damage has unknown node '%s'", cur->name);
    } while (xml_nextNode(cur));
 
+   /* Normalize. */
+   dmg->penetration /= 100.;
+
    return 0;
 }
 
