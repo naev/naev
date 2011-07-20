@@ -352,7 +352,6 @@
    <heatup>20</heatup>
    <track>2.25</track>
    <swivel>5</swivel>
-   <damage type="ion" penetrate="0">7</damage>
    <damage>
     <type>ion</type>
     <penetrate>0</penetrate>
