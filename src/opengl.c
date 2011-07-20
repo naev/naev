@@ -827,11 +827,13 @@ static int write_png( const char *file_name, png_bytep *rows,
 
    /* Clean up. */
    fclose(fp);
+   png_destroy_write_struct( &png_ptr, &info_ptr );
 
    return 0;
 
 ERR_FAIL:
    fclose(fp);
+   png_destroy_write_struct( &png_ptr, &info_ptr );
    return -1;
 }
 
