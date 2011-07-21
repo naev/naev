@@ -170,6 +170,8 @@ function closehail()
    player.pay( payment )
    tk.msg( title[8], text[8]:format( numstring(payment) ) )
    willie:setVisplayer(false)
+   willie:setHilight(false)
+   willie:setInvincible(false) 
    willie:hyperspace()
    misn.finish(true)
 end
