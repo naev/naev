@@ -330,7 +330,7 @@ function renderWeapBar( weapon, x, y )
          heatcol_top = col_top_heat2
       end
       
-      if weapon.dtype ~= "Unknown" then
+      if weapon.dtype ~= "Unknown" and _G[ "icon_" .. weapon.dtype ]~= nil then
          top_icon = _G[ "icon_" .. weapon.dtype ]
       else
          top_icon = icon_Kinetic
