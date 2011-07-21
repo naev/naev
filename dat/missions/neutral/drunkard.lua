@@ -68,9 +68,12 @@ function create ()
    misn.setDesc( bar_desc )           -- drunkard's description
 
    -- Planets
-   pickupWorld, pickupSys = planet.get("INSS-2")
-   delivWorld, delivSys = planet.get("Darkshed")
-   origWorld, origSys = planet.cur()
+   pickupWorld, pickupSys  = planet.getLandable("INSS-2")
+   delivWorld, delivSys    = planet.getLandable("Darkshed")
+   if pickupWorld == nil or delivWorld == nil then -- Must be landable
+      misn.finish(false)
+   end
+   origWorld, origSys      = planet.cur()
 
 --   origtime = time.get()
 end

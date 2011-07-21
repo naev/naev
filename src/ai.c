@@ -3028,14 +3028,11 @@ static int aiL_getenemy_heuristic( lua_State *L )
 
    unsigned int p;
    double mass_factor, health_factor, damage_factor, range_factor;
-   NLUA_MIN_ARGS(4);
 
-   mass_factor = health_factor = damage_factor = range_factor = 0;
-
-   mass_factor = luaL_checklong(L,1);
-   health_factor = luaL_checklong(L,2);
-   damage_factor = luaL_checklong(L,3);
-   range_factor = luaL_checklong(L,4);
+   mass_factor    = luaL_checklong(L,1);
+   health_factor  = luaL_checklong(L,2);
+   damage_factor  = luaL_checklong(L,3);
+   range_factor   = luaL_checklong(L,4);
 
    p = pilot_getNearestEnemy_heuristic(cur_pilot, mass_factor, health_factor, damage_factor, (double) (1/range_factor));
 

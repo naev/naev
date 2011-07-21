@@ -121,20 +121,6 @@ typedef enum OutfitType_ {
 
 
 /**
- * @brief Different types of damage.
- */
-typedef enum DamageType_ {
-   DAMAGE_TYPE_NULL, /**< NULL */
-   DAMAGE_TYPE_ENERGY, /**< Energy-based weapons. */
-   DAMAGE_TYPE_KINETIC, /**< Physic impact weapons. */
-   DAMAGE_TYPE_ION, /**< Ion-based weapons. */
-   DAMAGE_TYPE_RADIATION, /**< Radioactive weapons. */
-   DAMAGE_TYPE_NEBULA, /**< Nebula damage - essentially radiation. */
-   DAMAGE_TYPE_EMP /**< Electromagnetic pulse weapons. */
-} DamageType;
-
-
-/**
  * @brief Outfit slot types.
  */
 typedef enum OutfitSlotType_ {
@@ -166,6 +152,13 @@ typedef struct OutfitSlot_ {
 } OutfitSlot;
 
 
+typedef struct Damage_ {
+   int type;            /**< Type of damage. */
+   double penetration;  /**< Penetration the damage has [0:1], with 1 being 100%. */
+   double damage;       /**< Amount of damage, this counts towards killing the ship. */
+   double disable;      /**< Amount of disable damage, this counts towards disabling the ship. */
+} Damage;
+
 
 /**
  * @brief Represents the particular properties of a bolt weapon.
@@ -178,9 +171,7 @@ typedef struct OutfitBoltData_ {
    double ew_lockon; /**< Electronic warfare lockon parameter. */
    double energy;    /**< Energy usage */
    double cpu;       /**< CPU usage. */
-   DamageType dtype; /**< Damage type */
-   double damage;    /**< Damage */
-   double penetration; /**< Weapon penetration [0:1] with 1 being 100%. */
+   Damage dmg;       /**< Damage done. */
    double heatup;    /**< How long it should take for the weapon to heat up (approx). */
    double heat;      /**< Heat per shot. */
    double track;     /**< Ewarfare to track. */
@@ -210,9 +201,7 @@ typedef struct OutfitBeamData_ {
    double turn;      /**< How fast it can turn. Only for turrets, in rad/s. */
    double energy;    /**< Amount of energy it drains (per second). */
    double cpu;       /**< CPU usage. */
-   DamageType dtype; /**< Damage type. */
-   double damage;    /**< Damage amount. */
-   double penetration; /**< Weapon penetration [0:1] with 1 being 100%. */
+   Damage dmg;       /**< Damage done. */
    double heatup;    /**< How long it should take for the weapon to heat up (approx). */
 
    /* Graphics and sound. */
@@ -254,9 +243,7 @@ typedef struct OutfitAmmoData_ {
    double turn;      /**< Turn velocity in rad/s. */
    double thrust;    /**< Acceleration */
    double energy;    /**< Energy usage */
-   DamageType dtype; /**< Damage type */
-   double damage;    /**< Damage */
-   double penetration; /**< Weapon penetration [0:1] with 1 being 100%. */
+   Damage dmg;       /**< Damage done. */
 
    glTexture* gfx_space; /**< Graphic. */
    double spin;      /**< Graphic spin rate. */
@@ -400,13 +387,6 @@ typedef struct Outfit_ {
 
 
 /*
- * misc
- */
-void outfit_calcDamage( double *dshield, double *darmour, double *knockback,
-      const ShipStats *stats, DamageType dtype, double dmg );
-
-
-/*
  * get
  */
 Outfit* outfit_get( const char* name );
@@ -448,9 +428,7 @@ OutfitSlotSize outfit_toSlotSize( const char *s );
 glTexture* outfit_gfx( const Outfit* o );
 int outfit_spfxArmour( const Outfit* o );
 int outfit_spfxShield( const Outfit* o );
-double outfit_damage( const Outfit* o );
-double outfit_penetration( const Outfit* o );
-DamageType outfit_damageType( const Outfit* o );
+const Damage *outfit_damage( const Outfit* o );
 double outfit_delay( const Outfit* o );
 Outfit* outfit_ammo( const Outfit* o );
 int outfit_amount( const Outfit* o );
@@ -473,7 +451,6 @@ void outfit_free (void);
 /*
  * Misc.
  */
-const char *outfit_damageTypeToStr( DamageType dmg );
 int outfit_fitsSlot( const Outfit* o, const OutfitSlot* s );
 int outfit_fitsSlotType( const Outfit* o, const OutfitSlot* s );
 

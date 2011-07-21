@@ -20,6 +20,7 @@ CODE_SOURCE = \
 	cond.c \
 	conf.c \
 	console.c \
+	damagetype.c \
 	debris.c \
 	dev.c \
 	dev_outfit.c \
@@ -154,6 +155,7 @@ CODE_SOURCE = \
 	conf.h \
 	config.h \
 	console.h \
+	damagetype.h \
 	debris.h \
 	dev.h \
 	dev_outfit.h \

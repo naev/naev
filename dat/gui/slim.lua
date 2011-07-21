@@ -27,6 +27,7 @@ function create()
    col_txt_una = colour.new(  66/255,  72/255,  84/255 )
    col_shield = colour.new( 40/255,  51/255,  88/255 )
    col_armour = colour.new( 72/255,  73/255,  60/255 )
+   col_stress = colour.new( 42/255,  43/255,  120/255 )
    col_energy = colour.new( 41/255,  92/255,  47/255 )
    col_speed = colour.new( 77/255,  80/255,  21/255 )
    col_speed2 = colour.new(169/255,177/255,  46/255 )
@@ -371,6 +372,53 @@ function render_bar( name, value, txt, txtcol, size, col, bgc )
    end
 end
 
+function render_armourBar( name, value, stress_value, txt, txtcol, size, col, bgc )
+   if size then
+      offsets = { 22, 5, 9, 3 }
+      l_bg_bar = bg_bar_sm
+      l_sheen = sheen_sm
+      postfix = "_sm"
+   else
+      offsets = { 30, 7, 15, 6 }
+      l_bg_bar = bg_bar
+      l_sheen = sheen
+      postfix = nil
+   end
+   local vars = { "icon", "bg", "x", "y", "col" }
+   for k,var in ipairs(vars) do
+      if postfix and var ~= "col" then
+         _G["l_" .. var] = _G[var .. "_" .. name .. postfix]
+      else
+         _G["l_" .. var] = _G[var .. "_" .. name]
+      end
+   end
+   if col then
+      l_col = col
+   end
+   if l_bg then
+      l_bar_w, l_bar_h = l_bg:dim()
+      gfx.renderTex( l_bg, l_x + offsets[1], l_y + 2)
+   end
+   if not value then value = 100 end
+   if not stress_value then stress_value = 100 end
+   if bgc then gfx.renderRect( l_x + offsets[1], l_y + 2, l_bar_w, l_bar_h, bgc ) end
+   gfx.renderRect( l_x + offsets[1], l_y + 2, value/100. * l_bar_w, l_bar_h, l_col )
+   gfx.renderRect( l_x + offsets[1], l_y + 2, (stress_value/100) * (value/100) * l_bar_w, l_bar_h, col_stress )
+   gfx.renderTex( l_bg_bar, l_x, l_y )
+   gfx.renderTex( l_icon, l_x + offsets[2], l_y + offsets[2] - 3)
+   gfx.renderTex( l_sheen, l_x + offsets[1] + 1, l_y + offsets[3])
+
+   if txt then
+      small = false
+      if gfx.printDim( false, txt ) > l_bar_w then
+         small = true
+      end
+      gfx.print( small, txt, l_x + offsets[1], l_y + offsets[4], txtcol, l_bar_w, true)
+   else
+      gfx.print( true, "UNAVAILABLE", l_x + offsets[1], l_y + offsets[4], col_txt_una, l_bar_w, true )
+   end
+end
+
 function render_ammoBar( name, x, y, value, txt, txtcol, col )
    offsets = { 2, 20, 3, 13, 22, 6, 2, 5 } --Bar, y of refire, sheen, y of sheen, y of refire sheen, y of text, x and y of tracking icon
    l_bg = _G["bg_" .. name]
@@ -398,7 +446,7 @@ function render_ammoBar( name, x, y, value, txt, txtcol, col )
    local textoffset = 0
    local trackcol
    if value[4] then
-      if value[4] == -1 then
+      if value[4] == -1 or pilot.player():target() == nil then
          trackcol = col_txt_una
       else
          trackcol = colour.new(1-value[4], value[4], 0)
@@ -415,7 +463,7 @@ end
 function render( dt, dt_mod )
 
    --Values
-   armour, shield = pp:health()
+   armour, shield, stress = pp:health()
    energy = pp:energy()
    speed = pp:vel():dist()
    temperature = pp:temp()
@@ -457,7 +505,7 @@ function render( dt, dt_mod )
    else
       col = col_txt_bar
    end
-   render_bar( "armour", armour, txt["armour"], col )
+   render_armourBar( "armour", armour, stress, txt["armour"], col )
 
    --Energy
    if energy == 0. then
@@ -566,7 +614,7 @@ function render( dt, dt_mod )
 
          if not ta_fuzzy then
             ptarget_target = ptarget:target()
-            ta_armour, ta_shield, ta_disabled = ptarget:health()
+            ta_armour, ta_shield, ta_stress, ta_disabled = ptarget:health()
             tflags = ptarget:flags()
             ta_energy = ptarget:energy()
             ta_speed = ptarget:vel():dist()
@@ -675,7 +723,7 @@ function render( dt, dt_mod )
 
          -- Render bars.
          render_bar( "shield", ta_shield, shi, col_txt_bar, "sm")
-         render_bar( "armour", ta_armour, arm, col_txt_bar, "sm")
+         render_armourBar( "armour", ta_armour, ta_stress, arm, col_txt_bar, "sm")
          render_bar( "energy", ta_energy, ene, col_txt_bar, "sm")
          render_bar( "speed", htspeed, spe, spetxtcol, "sm", colspe, colspe2 )
 

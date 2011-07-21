@@ -44,12 +44,12 @@
 #include "land_shipyard.h"
 #include "array.h"
 #include "camera.h"
+#include "damagetype.h"
 
 
 #define PILOT_CHUNK_MIN 128 /**< Maximum chunks to increment pilot_stack by */
 #define PILOT_CHUNK_MAX 2048 /**< Minimum chunks to increment pilot_stack by */
 #define CHUNK_SIZE      32 /**< Size to allocate memory by. */
-
 
 /* ID Generators. */
 static unsigned int pilot_id = PLAYER_ID; /**< Stack of pilot ids to assure uniqueness */
@@ -348,8 +348,6 @@ unsigned int pilot_getNearestEnemy_heuristic(const Pilot* p, double mass_factor,
             ((pilot_stack[i]->id == PLAYER_ID) &&
                pilot_isFlag(p,PILOT_HOSTILE)))) { /* Hostile to player. */
 
-
-
          /* Shouldn't be disabled. */
          if (pilot_isDisabled(pilot_stack[i]))
             continue;
@@ -360,16 +358,18 @@ unsigned int pilot_getNearestEnemy_heuristic(const Pilot* p, double mass_factor,
 
          /* Check distance. */
          td = vect_dist2(&pilot_stack[i]->solid->pos, &p->solid->pos)* range_factor;
-         temp = td+fabs( pilot_relsize(p, pilot_stack[i]) /*0.5*/-mass_factor) + fabs(pilot_relhp(p, pilot_stack[i]) /*0.5*/- health_factor) + fabs(pilot_reldps(p, pilot_stack[i]) /*0.5*/-damage_factor);
+         temp = td + fabs( pilot_relsize( p, pilot_stack[i] ) - mass_factor)
+                   + fabs( pilot_relhp(   p, pilot_stack[i] ) - health_factor)
+                   + fabs( pilot_reldps(  p, pilot_stack[i] ) - damage_factor);
 
-         if ((tp == 0) || (temp< current_heuristic_value)) {
+         if ((tp == 0) || (temp < current_heuristic_value)) {
             current_heuristic_value = temp;
             tp = pilot_stack[i]->id;
          }
       }
    }
-   return tp;
 
+   return tp;
 }
 
 /**
@@ -896,18 +896,14 @@ void pilot_setTarget( Pilot* p, unsigned int id )
  *    @param p Pilot that is taking damage.
  *    @param w Solid that is hitting pilot.
  *    @param shooter Attacker that shot the pilot.
- *    @param dtype Type of damage.
- *    @param damage Amount of damage.
+ *    @param dmg Damage being done.
  *    @return The real damage done.
  */
-double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
-      const DamageType dtype, const double damage, const double penetration )
+double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter, const Damage *dmg )
 {
-   int mod, h;
-   double damage_shield, damage_armour, knockback, dam_mod, dmg;
-   double armour_start, absorb;
+   int mod;
+   double damage_shield, damage_armour, disable, knockback, dam_mod, ddmg, absorb, dmod;
    Pilot *pshooter;
-   HookParam hparam;
 
    /* Invincible means no damage. */
    if (pilot_isFlag( p, PILOT_INVINCIBLE) ||
@@ -915,30 +911,28 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
       return 0.;
 
    /* Defaults. */
-   pshooter = NULL;
-   dam_mod  = 0.;
-   dmg      = 0.;
-   armour_start = p->armour;
+   pshooter       = NULL;
+   dam_mod        = 0.;
+   ddmg           = 0.;
 
    /* Calculate the damage. */
-   absorb = 1. - CLAMP( 0., 1., p->dmg_absorb - penetration );
-   outfit_calcDamage( &damage_shield, &damage_armour, &knockback, &p->stats, dtype, damage );
-   damage_shield *= absorb;
-   damage_armour *= absorb;
+   absorb         = 1. - CLAMP( 0., 1., p->dmg_absorb - dmg->penetration );
+   disable        = dmg->disable;
+   dtype_calcDamage( &damage_shield, &damage_armour, absorb, &knockback, dmg );
 
-   /*
-    * EMP don't do damage if pilot is disabled.
-    */
-   if (pilot_isDisabled(p) && (dtype == DAMAGE_TYPE_EMP)) {
-      dmg        = 0.;
-      dam_mod    = 0.;
+   /* Ships that can not be disabled take raw armour damage instead of getting disabled. */
+   if (pilot_isFlag( p, PILOT_NODISABLE )) {
+      damage_armour += disable * absorb;
+      disable        = 0.;
    }
+   else
+      disable       *= absorb;
 
    /*
     * Shields take entire blow.
     */
-   else if (p->shield-damage_shield > 0.) {
-      dmg        = damage_shield;
+   if (p->shield - damage_shield > 0.) {
+      ddmg       = damage_shield;
       p->shield -= damage_shield;
       dam_mod    = damage_shield/p->shield_max;
    }
@@ -946,27 +940,38 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
     * Shields take part of the blow.
     */
    else if (p->shield > 0.) {
-      dmg        = p->shield + (1. - p->shield/damage_shield) * damage_armour;
-      p->armour -= (1. - p->shield/damage_shield) * damage_armour;
-      p->shield  = 0.;
-      dam_mod    = (damage_shield+damage_armour) /
-                   ((p->shield_max+p->armour_max) / 2.);
-      p->stimer  = 3.;
-      p->sbonus  = 3.;
+      dmod        = (1. - p->shield/damage_shield);
+      ddmg        = p->shield + dmod * damage_armour;
+      p->shield   = 0.;
+      /* Reduce stress as armour is eaten away. */
+      p->stress  *= (p->armour - dmod * damage_armour) / p->armour;
+      p->armour  -= dmod * damage_armour;
+      p->stress  += dmod * disable;
+      dam_mod     = (damage_shield + damage_armour) /
+                   ((p->shield_max + p->armour_max) / 2.);
+
+      /* Increment shield timer or time before shield regeneration kicks in. */
+      p->stimer   = 3.;
+      p->sbonus   = 3.;
    }
    /*
     * Armour takes the entire blow.
     */
    else if (p->armour > 0.) {
-      dmg        = damage_armour;
-      p->armour -= damage_armour;
+      ddmg        = damage_armour;
+      /* Reduce stress as armour is eaten away. */
+      p->stress  *= (p->armour - damage_armour) / p->armour;
+      p->armour  -= damage_armour;
+      p->stress  += disable;
+
+      /* Increment shield timer or time before shield regeneration kicks in. */
       p->stimer  = 3.;
       p->sbonus  = 3.;
    }
 
-   /* EMP does not kill. */
-   if ((dtype == DAMAGE_TYPE_EMP) && (p->armour < PILOT_DISABLED_ARMOR*p->ship->armour*0.75))
-      p->armour = MIN( armour_start, PILOT_DISABLED_ARMOR*p->ship->armour*0.75);
+   /* Ensure stress never exceeds remaining armour. */
+   if (p->stress > p->armour)
+      p->stress = p->armour;
 
    /* Player might break autonav. */
    if ((w != NULL) && (p->id == PLAYER_ID) &&
@@ -974,42 +979,8 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
          !pilot_isFlag(player.p, PILOT_HYPERSPACE))
       player_shouldAbortAutonav(1);
 
-   /* Disabled always run before dead to ensure crating boost. */
-   if (!pilot_isFlag(p,PILOT_DISABLED) && (p != player.p) && (!pilot_isFlag(p,PILOT_NODISABLE) || (p->armour < 0.)) &&
-         (p->armour < PILOT_DISABLED_ARMOR*p->ship->armour)) { /* disabled */
-
-      /* If hostile, must remove counter. */
-      h = (pilot_isHostile(p)) ? 1 : 0;
-      pilot_rmHostile(p);
-      if (h == 1) /* Horrible hack to make sure player.p can hit it if it was hostile. */
-         /* Do not use pilot_setHostile here or music will change again. */
-         pilot_setFlag(p,PILOT_HOSTILE);
-
-      pshooter = pilot_get(shooter);
-      if ((pshooter != NULL) && (pshooter->faction == FACTION_PLAYER)) {
-         /* About 3 for a llama, 26 for hawking. */
-         mod = pow(p->ship->mass,0.4) - 1.;
-
-         /* Modify combat rating. */
-         player.crating += 2*mod;
-      }
-
-      /* Remove faction if necessary. */
-      if (p->presence > 0) {
-         system_rmCurrentPresence( cur_system, p->faction, p->presence );
-         p->presence = 0;
-      }
-
-      pilot_setFlag( p,PILOT_DISABLED ); /* set as disabled */
-      /* Run hook */
-      if (shooter > 0) {
-         hparam.type       = HOOK_PARAM_PILOT;
-         hparam.u.lp.pilot = shooter;
-      }
-      else
-         hparam.type       = HOOK_PARAM_NIL;
-      pilot_runHookParam( p, PILOT_HOOK_DISABLE, &hparam, 1 ); /* Already disabled. */
-   }
+   /* Disabled always run before dead to ensure combat rating boost. */
+   pilot_updateDisable(p, shooter);
 
    /* Do not let pilot die. */
    if (pilot_isFlag( p, PILOT_NODEATH ))
@@ -1053,9 +1024,75 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
             knockback * (w->vel.x * (dam_mod/9. + w->mass/p->solid->mass/6.)),
             knockback * (w->vel.y * (dam_mod/9. + w->mass/p->solid->mass/6.)) );
 
-   return dmg;
+   return ddmg;
 }
 
+
+/**
+ * @brief Handles pilot disabling. Set or unset the disable status depending on health and stress values.
+ *
+ *    @param p The pilot in question.
+ *    @param shooter Attacker that shot the pilot.
+ */
+void pilot_updateDisable( Pilot* p, const unsigned int shooter )
+{
+   int mod, h;
+   Pilot *pshooter;
+   HookParam hparam;
+
+   /* TODO: Remove check for player.p once disable recovery is implemented. */
+   if ((!pilot_isFlag(p, PILOT_DISABLED)) && (p != player.p) &&
+       (!pilot_isFlag(p, PILOT_NODISABLE) || (p->armour <= 0.)) &&
+       (p->armour <= p->stress)) { /* Pilot should be disabled. */
+
+      /* If hostile, must remove counter. */
+      h = (pilot_isHostile(p)) ? 1 : 0;
+      pilot_rmHostile(p);
+      if (h == 1) /* Horrible hack to make sure player.p can hit it if it was hostile. */
+         /* Do not use pilot_setHostile here or music will change again. */
+         pilot_setFlag(p,PILOT_HOSTILE);
+
+      /* Modify player combat rating if applicable. */
+      /* TODO: Base off something more sensible than mass. */
+      pshooter = pilot_get(shooter);
+      if ((pshooter != NULL) && (pshooter->faction == FACTION_PLAYER)) {
+         /* About 3 for a llama, 26 for hawking. */
+         mod = pow(p->ship->mass,0.4) - 1.;
+
+         /* Modify combat rating. */
+         player.crating += 2*mod;
+      }
+
+      /* Disabled ships don't use up presence. */
+      if (p->presence > 0) {
+         system_rmCurrentPresence( cur_system, p->faction, p->presence );
+         p->presence = 0;
+      }
+
+      /* Set disable timer. This is the time the pilot will remain disabled. */
+      /* TODO: Make this more spophisticated. Disable time should probably depend on other factors, such as ship size. */
+      p->dtimer = 60.;
+
+      pilot_setFlag( p,PILOT_DISABLED ); /* set as disabled */
+      /* Run hook */
+      if (shooter > 0) {
+         hparam.type       = HOOK_PARAM_PILOT;
+         hparam.u.lp.pilot = shooter;
+      }
+      else {
+         hparam.type       = HOOK_PARAM_NIL;
+         pilot_setFlag(p, PILOT_DISABLED_PERM ); /* Set as permanently disabled, since the disable was script-induced. */
+      }
+      pilot_runHookParam( p, PILOT_HOOK_DISABLE, &hparam, 1 ); /* Already disabled. */
+   }
+   else if (pilot_isFlag(p, PILOT_DISABLED) && (p->armour > p->stress)) { /* Pilot is disabled, but shouldn't be. */
+      pilot_rmFlag( p, PILOT_DISABLED ); /* Undisable. */
+      pilot_rmFlag( p, PILOT_DISABLED_PERM ); /* Clear perma-disable flag if necessary. */
+
+      /* TODO: Make undisabled pilot use up presence again. */
+      /* TODO: Undisable hook? */
+   }
+}
 
 /**
  * @brief Pilot is dead, now will slowly explode.
@@ -1105,22 +1142,20 @@ static void pilot_dead( Pilot* p, unsigned int killer )
  *    @param x X position of the pilot.
  *    @param y Y position of the pilot.
  *    @param radius Radius of the explosion.
- *    @param dtype Damage type of the explosion.
- *    @param damage Amount of damage by the explosion.
- *    @param penetration Damage penetration [0:1].
+ *    @param dmg Damage of the explosion.
  *    @param parent The exploding pilot.
  */
-void pilot_explode( double x, double y, double radius,
-      DamageType dtype, double damage,
-      double penetration, const Pilot *parent )
+void pilot_explode( double x, double y, double radius, const Damage *dmg, const Pilot *parent )
 {
    int i;
    double rx, ry;
    double dist, rad2;
    Pilot *p;
    Solid s; /* Only need to manipulate mass and vel. */
+   Damage ddmg;
 
    rad2 = radius*radius;
+   memcpy( &ddmg, dmg, sizeof(Damage) );
 
    for (i=0; i<pilot_nstack; i++) {
       p = pilot_stack[i];
@@ -1137,19 +1172,19 @@ void pilot_explode( double x, double y, double radius,
       if (dist < rad2) {
 
          /* Adjust damage based on distance. */
-         damage *= 1. - sqrt(dist / rad2);
+         ddmg.damage = dmg->damage * (1. - sqrt(dist / rad2));
 
          /* Impact settings. */
-         s.mass =  pow2(damage) / 30.;
+         s.mass =  pow2(dmg->damage) / 30.;
          s.vel.x = rx;
          s.vel.y = ry;
 
          /* Actual damage calculations. */
-         pilot_hit( p, &s, (parent!=NULL)?parent->id:0, dtype, damage, penetration );
+         pilot_hit( p, &s, (parent!=NULL) ? parent->id : 0, &ddmg );
 
          /* Shock wave from the explosion. */
          if (p->id == PILOT_PLAYER)
-            spfx_shake( pow2(damage) / pow2(100.) * SHAKE_MAX );
+            spfx_shake( pow2(ddmg.damage) / pow2(100.) * SHAKE_MAX );
       }
    }
 }
@@ -1274,7 +1309,9 @@ void pilot_update( Pilot* pilot, const double dt )
    char buf[16];
    PilotOutfitSlot *o;
    double Q;
-   
+   Damage dmg;
+   double stress_falloff;
+
    /* Check target sanity. */
    if (pilot->target != pilot->id) {
       target = pilot_get(pilot->target);
@@ -1324,6 +1361,20 @@ void pilot_update( Pilot* pilot, const double dt )
    /* Update electronic warfare. */
    pilot_ewUpdateDynamic( pilot );
 
+   /* Update stress. */
+   if (!pilot_isFlag(pilot, PILOT_DISABLED)) { /* Case pilot is not disabled. */
+      stress_falloff = 4.; /* TODO: make a function of the pilot's ship and/or its outfits. */
+      pilot->stress -= stress_falloff * dt;
+      pilot->stress = MAX(pilot->stress, 0);
+   }
+   else if (!pilot_isFlag(pilot, PILOT_DISABLED_PERM)) { /* Case pilot is disabled (but not permanently so). */
+      pilot->dtimer -= dt;
+      if (pilot->dtimer <= 0.) {
+         pilot->stress = 0.;
+         pilot_updateDisable(pilot, 0);
+      }
+   }
+
    /* Handle takeoff/landing. */
    if (pilot_isFlag(pilot,PILOT_TAKEOFF)) {
       if (pilot->ptimer < 0.) {
@@ -1366,12 +1417,13 @@ void pilot_update( Pilot* pilot, const double dt )
 
          /* Damage from explosion. */
          a = sqrt(pilot->solid->mass);
+         dmg.type          = dtype_get("explosion_splash");
+         dmg.damage        = MAX(0., 2. * (a * (1. + sqrt(pilot->fuel + 1.) / 28.)));
+         dmg.penetration   = 1.; /* Full penetration. */
+         dmg.disable       = 0.;
          expl_explode( pilot->solid->pos.x, pilot->solid->pos.y,
                pilot->solid->vel.x, pilot->solid->vel.y,
-               pilot->ship->gfx_space->sw/2. + a,
-               DAMAGE_TYPE_KINETIC,
-               MAX(0., 2. * (a * (1. + sqrt(pilot->fuel + 1.) / 28.))), 1., /* 100% penetration. */
-               NULL, EXPL_MODE_SHIP );
+               pilot->ship->gfx_space->sw/2. + a, &dmg, NULL, EXPL_MODE_SHIP );
          debris_add( pilot->solid->mass, pilot->ship->gfx_space->sw/2.,
                pilot->solid->pos.x, pilot->solid->pos.y,
                pilot->solid->vel.x, pilot->solid->vel.y );
@@ -1862,6 +1914,7 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    pilot->energy = pilot->energy_max = 1.; /* ditto energy */
    pilot->fuel   = pilot->fuel_max   = 1.; /* ditto fuel */
    pilot_calcStats(pilot);
+   pilot->stress = 0.; /* No stress. */
 
    /* Allocate outfit memory. */
    /* Slot types. */
@@ -2446,26 +2499,38 @@ double pilot_reldps( const Pilot* cur_pilot, const Pilot* p )
    int i;
    int DPSaccum_target = 0, DPSaccum_pilot = 0;
    double delay_cache, damage_cache;
+   Outfit *o;
+   const Damage *dmg;
 
-   for(i = 0; i < p->outfit_nweapon; i++) {
-      if(p->outfit_weapon[i].outfit) {
-         damage_cache = outfit_damage(p->outfit_weapon[i].outfit);
-         delay_cache = outfit_delay(p->outfit_weapon[i].outfit);
-         if(damage_cache > 0 && delay_cache > 0)
-            DPSaccum_target += ( damage_cache/delay_cache );
-      }
+   for (i=0; i<p->outfit_nweapon; i++) {
+      o = p->outfit_weapon[i].outfit;
+      if (o == NULL)
+         continue;
+      dmg = outfit_damage( o );
+      if (dmg == NULL)
+         continue;
+
+      damage_cache   = dmg->damage;
+      delay_cache    = outfit_delay( o );
+      if ((damage_cache > 0) && (delay_cache > 0))
+         DPSaccum_target += ( damage_cache/delay_cache );
    }
 
-   for(i = 0; i < cur_pilot->outfit_nweapon; i++) {
-      if(cur_pilot->outfit_weapon[i].outfit) {
-         damage_cache = outfit_damage(cur_pilot->outfit_weapon[i].outfit);
-         delay_cache = outfit_delay(cur_pilot->outfit_weapon[i].outfit);
-         if(damage_cache > 0 && delay_cache > 0)
-            DPSaccum_pilot += ( damage_cache/delay_cache );
-      }
+   for (i=0; i<cur_pilot->outfit_nweapon; i++) {
+      o = cur_pilot->outfit_weapon[i].outfit;
+      if (o == NULL)
+         continue;
+      dmg = outfit_damage( o );
+      if (dmg == NULL)
+         continue;
+
+      damage_cache   = dmg->damage;
+      delay_cache    = outfit_delay( o );
+      if ((damage_cache > 0) && (delay_cache > 0))
+         DPSaccum_target += ( damage_cache/delay_cache );
    }
 
-   if(DPSaccum_target > 0 && DPSaccum_pilot > 0)
+   if ((DPSaccum_target > 0) && (DPSaccum_pilot > 0))
       return (1 - 1 / (1 + ((double)DPSaccum_pilot / (double)DPSaccum_target)) );
    else if (DPSaccum_pilot > 0)
       return 1;
