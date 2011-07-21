@@ -409,6 +409,7 @@ int outfit_isFighter( const Outfit* o );
 int outfit_isMap( const Outfit* o );
 int outfit_isGUI( const Outfit* o );
 int outfit_isLicense( const Outfit* o );
+int outfit_isSecondary( const Outfit* o );
 const char* outfit_getType( const Outfit* o );
 const char* outfit_getTypeBroad( const Outfit* o );
 

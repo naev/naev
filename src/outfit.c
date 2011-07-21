@@ -480,6 +480,17 @@ int outfit_isGUI( const Outfit* o )
 
 
 /**
+ * @brief Checks if outfit has the secondary flag set.
+ *    @param o Outfit to check.
+ *    @return 1 if o is a secondary weapon.
+ */
+int outfit_isSecondary( const Outfit* o )
+{
+   return (o->type==OUTFIT_PROP_WEAP_SECONDARY);
+}
+
+
+/**
  * @brief Gets the outfit's graphic effect.
  *    @param o Outfit to get information from.
  */

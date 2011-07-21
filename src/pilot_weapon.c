@@ -971,21 +971,21 @@ void pilot_weaponAuto( Pilot *p )
          continue;
       }
 
+      /* Set level based on secondary flag. */
+      level = (outfit_isSecondary(o));
+
       /* Bolts and beams. */
       if (outfit_isBolt(o) || outfit_isBeam(o) ||
             (outfit_isLauncher(o) && !outfit_isSeeker(o->u.lau.ammo))) {
          id    = outfit_isTurret(o) ? 2 : 1;
-         level = (outfit_ammo(o) != NULL) ? 1 : 0;
       }
       /* Seekers. */
       else if (outfit_isLauncher(o) && outfit_isSeeker(o->u.lau.ammo)) {
          id    = 4;
-         level = 1;
       }
       /* Fighter bays. */
       else if (outfit_isFighterBay(o)) {
          id    = 5;
-         level = 0;
       }
       /* Ignore rest. */
       else {
