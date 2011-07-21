@@ -1966,6 +1966,7 @@
    </damage>
    <ai>smart</ai>
   </specific>
+ </outfit>
  <outfit name="Enygma Systems Spearhead Launcher">
   <general>
    <slot>weapon</slot>
@@ -2011,7 +2012,6 @@
    </damage>
    <ai>smart</ai>
   </specific>
- </outfit>
  </outfit>
 
 
