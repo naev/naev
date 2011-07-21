@@ -526,26 +526,26 @@
    <description>Ion Cannons are primarily nonlethal weapons designed to short out internal ship systems and rendering it disabled without killing the crew in the process. The standard Ion Cannon is the most basic and compact design, which allows it to be mounted on small craft. This makes the Ion Cannon one of the most popular weapons for weaker pirates.</description>
    <gfx_store>ioncannon</gfx_store>
   </general>
-  <specific type="bolt">
-   <cpu>12</cpu>
+  <specific type="bolt" secondary="1">
+   <cpu>6</cpu>
    <gfx>ionM</gfx>
    <sound>ion</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>1340</delay>
+   <delay>1000</delay>
    <speed>500</speed>
    <range>700</range>
    <falloff>500</falloff>
    <gfx_end>ionM-end</gfx_end>
-   <energy>30</energy>
+   <energy>20</energy>
    <heatup>50</heatup>
    <track>2</track>
    <swivel>6</swivel>
    <damage>
     <type>ion</type>
     <penetrate>11</penetrate>
-    <physical>4</physical>
-    <disable>12</disable>
+    <physical>3.5</physical>
+    <disable>10</disable>
    </damage>
   </specific>
  </outfit>
@@ -559,26 +559,26 @@
    <description>The Heavy Ion Cannon does a far better job at disabling ships than the standard model, but it requires a medium mount. Most militaries employ these weapons on specialized capture teams, but the design is licensed for public use as well.</description>
    <gfx_store>ioncannon</gfx_store>
   </general>
-  <specific type="bolt">
-   <cpu>16</cpu>
+  <specific type="bolt" secondary="1">
+   <cpu>12</cpu>
    <gfx>ionL</gfx>
    <sound>ion</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>1520</delay>
+   <delay>1300</delay>
    <speed>500</speed>
    <range>1100</range>
    <falloff>800</falloff>
    <gfx_end>ionL-end</gfx_end>
-   <energy>45</energy>
+   <energy>35</energy>
    <heatup>60</heatup>
    <track>2</track>
    <swivel>8</swivel>
    <damage>
     <type>ion</type>
     <penetrate>17</penetrate>
-    <physical>7</physical>
-    <disable>20</disable>
+    <physical>6.5</physical>
+    <disable>18</disable>
    </damage>
   </specific>
  </outfit>
@@ -592,7 +592,7 @@
    <description>The Heavy Ion Turret is a Sirius military design, applying brute force to its target's internal systems. When coupled with Razor weaponry, it is terribly efficient at reducing enemy warships to tumbling hunks of junk.</description>
    <gfx_store>ionturret</gfx_store>
   </general>
-  <specific type="turret bolt">
+  <specific type="turret bolt" secondary="1">
    <cpu>24</cpu>
    <gfx>ionL</gfx>
    <sound>ion</sound>
