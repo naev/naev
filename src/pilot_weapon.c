@@ -102,7 +102,7 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
          continue;
 
       /* Only "locked on" outfits. */
-      if (outfit_isSeeker(o) && 
+      if (outfit_isSeeker(o) &&
             (ws->slots[i].slot->u.ammo.lockon_timer > 0.))
          continue;
 
@@ -972,7 +972,7 @@ void pilot_weaponAuto( Pilot *p )
       }
 
       /* Set level based on secondary flag. */
-      level = (outfit_isSecondary(o));
+      level = outfit_isSecondary(o);
 
       /* Bolts and beams. */
       if (outfit_isBolt(o) || outfit_isBeam(o) ||
