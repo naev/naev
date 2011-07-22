@@ -42,7 +42,7 @@ function equip_turretPirHig ()
    return { "Railgun Turret", "Heavy Laser" }
 end
 function equip_secondaryPirLow ()
-   return { "Unicorp Fury Launcher" }
+   return { "Unicorp Mace Launcher" }
 end
 function equip_secondaryPirMedLow ()
    return { "Unicorp Fury Launcher", "Unicorp Banshee Launcher" }
