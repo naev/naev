@@ -1423,9 +1423,9 @@
   <specific type="launcher" secondary="1">
    <cpu>4</cpu>
    <ammo>Fury Missile</ammo>
-   <delay>2500</delay>
+   <delay>4000</delay>
    <amount>20</amount>
-   <lockon>6</lockon>
+   <lockon>9</lockon>
    <arc>6</arc>
    <ew_target>1.5</ew_target>
   </specific>
@@ -1441,9 +1441,9 @@
   <specific type="launcher" secondary="1">
    <cpu>6</cpu>
    <ammo>Fury Missile</ammo>
-   <delay>2500</delay>
+   <delay>4000</delay>
    <amount>20</amount>
-   <lockon>4</lockon>
+   <lockon>7</lockon>
    <arc>8</arc>
    <ew_target>1.5</ew_target>
   </specific>
@@ -1459,9 +1459,9 @@
   <specific type="turret launcher" secondary="1">
    <cpu>9</cpu>
    <ammo>Fury Missile</ammo>
-   <delay>2500</delay>
+   <delay>4000</delay>
    <amount>30</amount>
-   <lockon>5</lockon>
+   <lockon>8</lockon>
    <ew_target>1.5</ew_target>
   </specific>
  </outfit>
@@ -1503,9 +1503,9 @@
   <specific type="launcher" secondary="1">
    <cpu>5</cpu>
    <ammo>Headhunter Missile</ammo>
-   <delay>3000</delay>
+   <delay>5000</delay>
    <amount>15</amount>
-   <lockon>8</lockon>
+   <lockon>12</lockon>
    <arc>6</arc>
    <ew_target>1</ew_target>
   </specific>
@@ -1522,9 +1522,9 @@
   <specific type="launcher" secondary="1">
    <cpu>8</cpu>
    <ammo>Headhunter Missile</ammo>
-   <delay>3000</delay>
+   <delay>5000</delay>
    <amount>15</amount>
-   <lockon>5</lockon>
+   <lockon>9</lockon>
    <arc>8</arc>
    <ew_target>1</ew_target>
   </specific>
@@ -1540,9 +1540,9 @@
   <specific type="turret launcher" secondary="1">
    <cpu>14</cpu>
    <ammo>Headhunter Missile</ammo>
-   <delay>3000</delay>
+   <delay>5000</delay>
    <amount>20</amount>
-   <lockon>6</lockon>
+   <lockon>10</lockon>
    <ew_target>1</ew_target>
   </specific>
  </outfit>
@@ -1585,9 +1585,9 @@
   <specific type="launcher" secondary="1">
    <cpu>6</cpu>
    <ammo>Vengeance Missile</ammo>
-   <delay>3500</delay>
+   <delay>6000</delay>
    <amount>10</amount>
-   <lockon>11</lockon>
+   <lockon>17</lockon>
    <arc>6</arc>
    <ew_target>0.75</ew_target>
   </specific>
@@ -1604,9 +1604,9 @@
   <specific type="launcher" secondary="1">
    <cpu>10</cpu>
    <ammo>Vengeance Missile</ammo>
-   <delay>3500</delay>
+   <delay>6000</delay>
    <amount>10</amount>
-   <lockon>7</lockon>
+   <lockon>12</lockon>
    <arc>8</arc>
    <ew_target>0.75</ew_target>
   </specific>
@@ -1622,9 +1622,9 @@
   <specific type="turret launcher" secondary="1">
    <cpu>14</cpu>
    <ammo>Headhunter Missile</ammo>
-   <delay>3500</delay>
+   <delay>6000</delay>
    <amount>15</amount>
-   <lockon>8</lockon>
+   <lockon>14</lockon>
    <ew_target>0.75</ew_target>
   </specific>
  </outfit>
@@ -1784,8 +1784,8 @@
   <specific type="launcher" secondary="1">
    <cpu>13</cpu>
    <ammo>Caesar IV Torpedo</ammo>
-   <delay>7000</delay>
-   <lockon>12</lockon>
+   <delay>10000</delay>
+   <lockon>20</lockon>
    <arc>6</arc>
    <ew_target>0.4</ew_target>
    <amount>6</amount>
@@ -1831,8 +1831,8 @@
   <specific type="launcher" secondary="1">
    <cpu>20</cpu>
    <ammo>Imperator Torpedo</ammo>
-   <delay>8000</delay>
-   <lockon>13</lockon>
+   <delay>11000</delay>
+   <lockon>24</lockon>
    <arc>6</arc>
    <ew_target>0.3</ew_target>
    <amount>5</amount>
