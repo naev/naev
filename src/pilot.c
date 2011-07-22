@@ -68,14 +68,17 @@ static double pilot_commFade     = 5.; /**< Time for text above pilot to fade ou
 
 
 /*
- * prototypes
+ * Prototypes
  */
-/* update. */
+/* Update. */
 static void pilot_hyperspace( Pilot* pilot, double dt );
 static void pilot_refuel( Pilot *p, double dt );
-/* clean up. */
+/* Clean up. */
 static void pilot_dead( Pilot* p, unsigned int killer );
-/* misc */
+/* Targetting. */
+static int pilot_validTarget( const Pilot* p, const Pilot* target );
+static int pilot_validEnemy( const Pilot* p, const Pilot* target );
+/* Misc. */
 static void pilot_setCommMsg( Pilot *p, const char *s );
 static int pilot_getStackPos( const unsigned int id );
 
@@ -221,6 +224,65 @@ unsigned int pilot_getPrevID( const unsigned int id, int mode )
 
 
 /**
+ * @brief Checks to see if a pilot is a valid target for another pilot.
+ *
+ *    @param p Reference pilot.
+ *    @param target Pilot to see if is a valid target of the reference.
+ *    @return 1 if it is valid, 0 otherwise.
+ */
+static int pilot_validTarget( const Pilot* p, const Pilot* target )
+{
+   /* Must not be dead. */
+   if (pilot_isFlag( target, PILOT_DELETE ) ||
+         pilot_isFlag( target, PILOT_DEAD))
+      return 0;
+
+   /* Must not be invisible. */
+   if (pilot_isFlag( target, PILOT_INVISIBLE ))
+      return 0;
+
+   /* Must be in range. */
+   if (!pilot_inRangePilot( p, target ))
+      return 0;
+
+   /* Pilot is a valid target. */
+   return 1;
+}
+
+
+/**
+ * @brief Checks to see if a pilot is a valid enemy for another pilot.
+ *
+ *    @param p Reference pilot.
+ *    @param target Pilot to see if is a valid enemy of the reference.
+ *    @return 1 if it is valid, 0 otherwise.
+ */
+static int pilot_validEnemy( const Pilot* p, const Pilot* target )
+{
+   /* Must not be bribed. */
+   if ((target->faction == FACTION_PLAYER) && pilot_isFlag(p,PILOT_BRIBED))
+      return 0;
+
+   /* Should either be hostile by faction or by player. */
+   if (!(areEnemies( p->faction, target->faction) ||
+            ((target->id == PLAYER_ID) &&
+             pilot_isFlag(p,PILOT_HOSTILE))))
+      return 0;
+
+   /* Shouldn't be disabled. */
+   if (pilot_isDisabled(target))
+      return 0;
+
+   /* Must be a valid target. */
+   if (!pilot_validTarget( p, target ))
+      return 0;
+
+   /* He's ok. */
+   return 1;
+}
+
+
+/**
  * @brief Gets the nearest enemy to the pilot.
  *
  *    @param p Pilot to get the nearest enemy of.
@@ -235,32 +297,8 @@ unsigned int pilot_getNearestEnemy( const Pilot* p )
    tp = 0;
    d  = 0.;
    for (i=0; i<pilot_nstack; i++) {
-      /* Must not be dead. */
-      if (pilot_isFlag( pilot_stack[i], PILOT_DELETE ) ||
-            pilot_isFlag( pilot_stack[i], PILOT_DEAD))
-         continue;
 
-      /* Must not be bribed. */
-      if ((pilot_stack[i]->faction == FACTION_PLAYER) && pilot_isFlag(p,PILOT_BRIBED))
-         continue;
-
-      /* Must not be invisible. */
-      if (pilot_isFlag( pilot_stack[i], PILOT_INVISIBLE ))
-         continue;
-
-      /* Should either be hostile by faction or by player. */
-      if (!(areEnemies( p->faction, pilot_stack[i]->faction) ||
-               ((pilot_stack[i]->id == PLAYER_ID) &&
-                pilot_isFlag(p,PILOT_HOSTILE))))
-         continue;
-
-
-      /* Shouldn't be disabled. */
-      if (pilot_isDisabled(pilot_stack[i]))
-         continue;
-
-      /* Must be in range. */
-      if (!pilot_inRangePilot( p, pilot_stack[i] ))
+      if (!pilot_validEnemy( p, pilot_stack[i] ))
          continue;
 
       /* Check distance. */
@@ -281,41 +319,27 @@ unsigned int pilot_getNearestEnemy( const Pilot* p )
  *    @param target_mass_UB the upper bound for target mass
  *    @return ID of his nearest enemy.
  */
-unsigned int pilot_getNearestEnemy_size( const Pilot* p, int target_mass_LB, int target_mass_UB)
+unsigned int pilot_getNearestEnemy_size( const Pilot* p, double target_mass_LB, double target_mass_UB)
 {
    unsigned int tp;
    int i;
    double d, td;
 
    tp = 0;
-   d = 0.;
+   d  = 0.;
    for (i=0; i<pilot_nstack; i++) {
-      /* Must not be bribed. */
-      if ((pilot_stack[i]->faction == FACTION_PLAYER) && pilot_isFlag(p,PILOT_BRIBED))
+
+      if (!pilot_validEnemy( p, pilot_stack[i] ))
          continue;
 
-      if ((areEnemies(p->faction, pilot_stack[i]->faction) || /* Enemy faction. */
-            ((pilot_stack[i]->id == PLAYER_ID) &&
-               pilot_isFlag(p,PILOT_HOSTILE)))) { /* Hostile to player. */
+      if (pilot_stack[i]->solid->mass >= target_mass_LB && pilot_stack[i]->solid->mass <= target_mass_UB)
+         continue;
 
-         /*mass is in bounds*/
-         if (pilot_stack[i]->solid->mass >= target_mass_LB && pilot_stack[i]->solid->mass <= target_mass_UB)
-            continue;
-
-         /* Shouldn't be disabled. */
-         if (pilot_isDisabled(pilot_stack[i]))
-            continue;
-
-         /* Must be in range. */
-         if (!pilot_inRangePilot( p, pilot_stack[i] ))
-            continue;
-
-         /* Check distance. */
-         td = vect_dist2(&pilot_stack[i]->solid->pos, &p->solid->pos);
-         if (!tp || (td < d)) {
-            d = td;
-            tp = pilot_stack[i]->id;
-         }
+      /* Check distance. */
+      td = vect_dist2(&pilot_stack[i]->solid->pos, &p->solid->pos);
+      if (!tp || (td < d)) {
+         d = td;
+         tp = pilot_stack[i]->id;
       }
    }
 
@@ -332,40 +356,34 @@ unsigned int pilot_getNearestEnemy_size( const Pilot* p, int target_mass_LB, int
  *    @param range_factor weighting for range (typically >> 1)
  *    @return ID of his nearest enemy.
  */
-unsigned int pilot_getNearestEnemy_heuristic(const Pilot* p, double mass_factor, double health_factor, double damage_factor, double range_factor)
+unsigned int pilot_getNearestEnemy_heuristic( const Pilot* p,
+      double mass_factor, double health_factor,
+      double damage_factor, double range_factor )
 {
    unsigned int tp;
    int i;
-   double td, current_heuristic_value=10000, temp;
+   double temp, current_heuristic_value;
+   Pilot *target;
+
+   current_heuristic_value = 10000.;
 
    tp = 0;
    for (i=0; i<pilot_nstack; i++) {
-      /* Must not be bribed. */
-      if ((pilot_stack[i]->faction == FACTION_PLAYER) && pilot_isFlag(p,PILOT_BRIBED))
+      target = pilot_stack[i];
+
+      if (!pilot_validEnemy( p, target ))
          continue;
 
-      if ((areEnemies(p->faction, pilot_stack[i]->faction) || /* Enemy faction. */
-            ((pilot_stack[i]->id == PLAYER_ID) &&
-               pilot_isFlag(p,PILOT_HOSTILE)))) { /* Hostile to player. */
+      /* Check distance. */
+      temp = range_factor *
+               vect_dist2( &target->solid->pos, &p->solid->pos )
+            + fabs( pilot_relsize( p, target ) - mass_factor)
+            + fabs( pilot_relhp(   p, target ) - health_factor)
+            + fabs( pilot_reldps(  p, target ) - damage_factor);
 
-         /* Shouldn't be disabled. */
-         if (pilot_isDisabled(pilot_stack[i]))
-            continue;
-
-         /* Must be in range. */
-         if (!pilot_inRangePilot( p, pilot_stack[i] ))
-            continue;
-
-         /* Check distance. */
-         td = vect_dist2(&pilot_stack[i]->solid->pos, &p->solid->pos)* range_factor;
-         temp = td + fabs( pilot_relsize( p, pilot_stack[i] ) - mass_factor)
-                   + fabs( pilot_relhp(   p, pilot_stack[i] ) - health_factor)
-                   + fabs( pilot_reldps(  p, pilot_stack[i] ) - damage_factor);
-
-         if ((tp == 0) || (temp < current_heuristic_value)) {
-            current_heuristic_value = temp;
-            tp = pilot_stack[i]->id;
-         }
+      if ((tp == 0) || (temp < current_heuristic_value)) {
+         current_heuristic_value = temp;
+         tp = target->id;
       }
    }
 
@@ -418,17 +436,8 @@ double pilot_getNearestPos( const Pilot *p, unsigned int *tp, double x, double y
       if (!disabled && pilot_isDisabled(pilot_stack[i]))
          continue;
 
-      /* Shouldn't be invisible. */
-      if (pilot_isFlag( pilot_stack[i], PILOT_INVISIBLE ))
-         continue;
-
-      /* Shouldn't be dead. */
-      if (pilot_isFlag(pilot_stack[i], PILOT_DEAD) ||
-            pilot_isFlag(pilot_stack[i], PILOT_DELETE))
-         continue;
-
-      /* Must be in range. */
-      if (!pilot_inRangePilot( p, pilot_stack[i] ))
+      /* Must be a valid target. */
+      if (!pilot_validTarget( p, pilot_stack[i] ))
          continue;
 
       /* Minimum distance. */
@@ -474,13 +483,8 @@ double pilot_getNearestAng( const Pilot *p, unsigned int *tp, double ang, int di
       if (!disabled && pilot_isDisabled(pilot_stack[i]))
          continue;
 
-      /* Shouldn't be invisible. */
-      if (pilot_isFlag( pilot_stack[i], PILOT_INVISIBLE ))
-         continue;
-
-      /* Shouldn't be dead. */
-      if (pilot_isFlag(pilot_stack[i], PILOT_DEAD) ||
-            pilot_isFlag(pilot_stack[i], PILOT_DELETE))
+      /* Must be a valid target. */
+      if (!pilot_validTarget( p, pilot_stack[i] ))
          continue;
 
       /* Must be in range. */

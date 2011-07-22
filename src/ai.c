@@ -3003,7 +3003,7 @@ static int aiL_getenemy_size( lua_State *L )
       return 0;
    }
 
-   p = pilot_getNearestEnemy_size(cur_pilot, LB, UB);
+   p = pilot_getNearestEnemy_size( cur_pilot, LB, UB );
 
    if (p==0) /* No enemy found */
       return 0;
@@ -3034,7 +3034,8 @@ static int aiL_getenemy_heuristic( lua_State *L )
    damage_factor  = luaL_checklong(L,3);
    range_factor   = luaL_checklong(L,4);
 
-   p = pilot_getNearestEnemy_heuristic(cur_pilot, mass_factor, health_factor, damage_factor, (double) (1/range_factor));
+   p = pilot_getNearestEnemy_heuristic( cur_pilot,
+         mass_factor, health_factor, damage_factor, 1./range_factor );
 
    if (p==0) /* No enemy found */
       return 0;
