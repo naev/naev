@@ -51,7 +51,7 @@ typedef struct ShipStats_ {
 #endif
 
    /* Freighter-type. */
-   double jump_delay; /**< Modulates the jump delay. */
+   double jump_delay; /**< Modulates the jump delay. */ /* TODO */
    double jump_range; /**< Distance from a jump point it can initiate jump from. */
    double cargo_inertia; /**< Lowers the effect of cargo mass. */
 

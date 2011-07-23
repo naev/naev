@@ -23,6 +23,7 @@
 #include "nlua_ship.h"
 #include "nlua_system.h"
 #include "nlua_planet.h"
+#include "nlua_outfit.h"
 #include "log.h"
 #include "rng.h"
 #include "pilot.h"
@@ -66,6 +67,7 @@ static int pilotL_target( lua_State *L );
 static int pilotL_inrange( lua_State *L );
 static int pilotL_nav( lua_State *L );
 static int pilotL_weapset( lua_State *L );
+static int pilotL_outfits( lua_State *L );
 static int pilotL_rename( lua_State *L );
 static int pilotL_position( lua_State *L );
 static int pilotL_velocity( lua_State *L );
@@ -142,6 +144,7 @@ static const luaL_reg pilotL_methods[] = {
    { "inrange", pilotL_inrange },
    { "nav", pilotL_nav },
    { "weapset", pilotL_weapset },
+   { "outfits", pilotL_outfits },
    { "rename", pilotL_rename },
    { "pos", pilotL_position },
    { "vel", pilotL_velocity },
@@ -227,6 +230,7 @@ static const luaL_reg pilotL_cond_methods[] = {
    { "inrange", pilotL_inrange },
    { "nav", pilotL_nav },
    { "weapset", pilotL_weapset },
+   { "outfits", pilotL_outfits },
    { "pos", pilotL_position },
    { "vel", pilotL_velocity },
    { "dir", pilotL_dir },
@@ -1266,6 +1270,41 @@ static int pilotL_weapset( lua_State *L )
       }
    }
    return 2;
+}
+
+
+/**
+ * @brief Gets the outfits of a pilot.
+ *
+ *    @luaparam p Pilot to get outfits of.
+ *    @luareturn The outfits of the pilot in an ordered list.
+ * @luafunc outfits( p )
+ */
+static int pilotL_outfits( lua_State *L )
+{
+   int i, j;
+   Pilot *p;
+   LuaOutfit lo;
+
+   /* Parse parameters */
+   p  = luaL_validpilot(L,1);
+
+   j  = 1;
+   lua_newtable( L );
+   for (i=0; i<p->noutfits; i++) {
+
+      /* Get outfit. */
+      if (p->outfits[i]->outfit == NULL)
+         continue;
+
+      /* Set the outfit. */
+      lo.outfit = p->outfits[i]->outfit;
+      lua_pushnumber( L, j++ );
+      lua_pushoutfit( L, lo );
+      lua_rawset( L, -3 );
+   }
+
+   return 1;
 }
 
 
