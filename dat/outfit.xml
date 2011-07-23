@@ -1480,8 +1480,8 @@
    <spfx_armour>ExpM</spfx_armour>
    <duration blowup="armour">4</duration>
    <thrust>0</thrust>
-   <turn>100</turn>
-   <speed>1200</speed>
+   <turn>45</turn>
+   <speed>700</speed>
    <damage>
     <type>impact</type>
     <penetrate>5</penetrate>
@@ -1562,8 +1562,8 @@
    <spfx_armour>ExpM</spfx_armour>
    <duration blowup="armour">5</duration>
    <thrust>0</thrust>
-   <turn>70</turn>
-   <speed>1000</speed>
+   <turn>35</turn>
+   <speed>550</speed>
    <damage>
     <type>impact</type>
     <penetrate>10</penetrate>
@@ -1644,8 +1644,8 @@
    <spfx_armour>ExpM</spfx_armour>
    <duration blowup="armour">7</duration>
    <thrust>0</thrust>
-   <turn>45</turn>
-   <speed>700</speed>
+   <turn>30</turn>
+   <speed>400</speed>
    <damage>
     <type>impact</type>
     <penetrate>20</penetrate>
@@ -1812,7 +1812,7 @@
    <damage>
     <type>impact</type>
     <penetrate>50</penetrate>
-    <physical>100</physical>
+    <physical>400</physical>
     <disable>5</disable>
    </damage>
    <ai>smart</ai>
@@ -1854,8 +1854,8 @@
    <spfx_armour>ExpL2</spfx_armour>
    <duration blowup="armour">60</duration>
    <thrust>0</thrust>
-   <turn>20</turn>
-   <speed>70</speed>
+   <turn>22</turn>
+   <speed>75</speed>
    <damage>
     <type>impact</type>
     <penetrate>90</penetrate>
