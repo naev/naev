@@ -124,7 +124,7 @@ extern Pilot** pilot_stack;
  */
 extern double interference_alpha; /* gui.c */
 static double interference_target = 0.; /**< Target alpha level. */
-static double interference_timer = 0.; /**< Interference timer. */
+static double interference_timer  = 0.; /**< Interference timer. */
 
 
 /*
