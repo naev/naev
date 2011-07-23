@@ -834,9 +834,9 @@
   <license>Light Combat Vessel License</license>
   <description>The Vendetta displays the House Dvaered philosophy very well. Give a ship many intimidating guns, layer it with heavy armour, and neglect the electronics. Due to the obsolete electronics used in the Vendetta, it is better suited to skirmishes than extended battles, as it possesses inferior shield and energy regeneration compared to other ships of its class, though it can unleash a truly fearsome barrage.</description>
   <movement>
-   <thrust>200</thrust>
+   <thrust>220</thrust>
    <turn>125</turn>
-   <speed>180</speed>
+   <speed>230</speed>
   </movement>
   <health>
    <absorb>11</absorb>
@@ -880,9 +880,9 @@
   <fabricator>House Dvaered</fabricator>
   <description>A Dvaered Vendetta.</description>
   <movement>
-   <thrust>200</thrust>
+   <thrust>220</thrust>
    <turn>125</turn>
-   <speed>180</speed>
+   <speed>230</speed>
   </movement>
   <health>
    <absorb>13</absorb>
@@ -926,9 +926,9 @@
   <fabricator>Skull and Bones</fabricator>
   <description>The Pirate Vendetta is even more intimidating than its regular counterpart. It's been heavily tweaked to be more adjusted to the pirate style of flying. Some of the armour has been removed to make more room for loot, while the reactor has been jacked up by a dubious technician. The ship ends up being substantially better than the original, but every so often the reactor goes nova destroying the ship. You hope it won't happen to you if you get in one.</description>
   <movement>
-   <thrust>210</thrust>
+   <thrust>230</thrust>
    <turn>135</turn>
-   <speed>190</speed>
+   <speed>240</speed>
   </movement>
   <health>
    <absorb>12</absorb>
@@ -975,7 +975,7 @@
   <movement>
    <thrust>200</thrust>
    <turn>115</turn>
-   <speed>250</speed>
+   <speed>210</speed>
   </movement>
   <health>
    <absorb>9</absorb>
@@ -1201,7 +1201,7 @@
   <license>Medium Combat Vessel License</license>
   <description>While somewhat technologically antiquated, the Phalanx's large energy capacity and heavy armour allow it to remain an effective combat vessel.</description>
   <movement>
-   <thrust>220</thrust>
+   <thrust>180</thrust>
    <turn>100</turn>
    <speed>180</speed>
   </movement>
@@ -1250,9 +1250,9 @@
   <license>Medium Combat Vessel License</license>
   <description>While somewhat technologically antiquated, the Phalanx's large energy capacity and heavy armour allow it to remain an effective combat vessel.</description>
   <movement>
-   <thrust>220</thrust>
+   <thrust>180</thrust>
    <turn>100</turn>
-   <speed>180</speed>
+   <speed>190</speed>
   </movement>
   <health>
    <absorb>28</absorb>
@@ -1298,7 +1298,7 @@
   <fabricator>Skull and Bones</fabricator>
   <description>Building upon the already-capable Phalanx chassis, the Skull and Bones engineers have substantially improved the ship's performance, while only minorly sacrificing protection.</description>
   <movement>
-   <thrust>230</thrust>
+   <thrust>190</thrust>
    <turn>115</turn>
    <speed>200</speed>
   </movement>
@@ -1348,9 +1348,9 @@
   <license>Medium Combat Vessel License</license>
   <description>The Preacher, as its name implies, is the primary vessel by which House Sirius projects its message and will. Fielding a large array of weaponry, the Preacher is adept at making converts out of unbelievers.</description>
   <movement>
-   <thrust>180</thrust>
+   <thrust>170</thrust>
    <turn>100</turn>
-   <speed>220</speed>
+   <speed>170</speed>
   </movement>
   <health>
    <absorb>29</absorb>
@@ -1396,9 +1396,9 @@
   <license>Medium Combat Vessel License</license>
   <description>The Odium offers a good balance between shields and armour, as well as an impressive amount of system hardpoints for a ship its size. It can often be found dominating smaller military engagements.</description>
   <movement>
-   <thrust>200</thrust>
+   <thrust>180</thrust>
    <turn>115</turn>
-   <speed>200</speed>
+   <speed>170</speed>
   </movement>
   <health>
    <absorb>25</absorb>
@@ -1444,9 +1444,9 @@
   <license>Medium Combat Vessel License</license>
   <description>A very versatile combat ship. Nexus defines the Admonisher as a compromise between the ruggedness of the Pacifier and the agility of the Lancelot. Overall a very solid fighter.</description>
   <movement>
-   <thrust>200</thrust>
+   <thrust>170</thrust>
    <turn>115</turn>
-   <speed>200</speed>
+   <speed>175</speed>
   </movement>
   <health>
    <absorb>25</absorb>
@@ -1491,9 +1491,9 @@
   <fabricator>Skull and Bones</fabricator>
   <description>The stock Admonisher is a powerful vessel, especially for its size. Through the usual Skull and Bones refit the Pirate Admonisher features improved manoeuvrability, more weapons space, and slightly improved defenses, at a cost of cargo capacity and armor regeneration rates.</description>
   <movement>
-   <thrust>205</thrust>
+   <thrust>180</thrust>
    <turn>120</turn>
-   <speed>210</speed>
+   <speed>180</speed>
   </movement>
   <health>
    <absorb>27</absorb>
@@ -1539,9 +1539,9 @@
   <license>Medium Combat Vessel License</license>
   <description>An Empire Admonisher.</description>
   <movement>
-   <thrust>200</thrust>
+   <thrust>170</thrust>
    <turn>115</turn>
-   <speed>200</speed>
+   <speed>175</speed>
   </movement>
   <health>
    <absorb>29</absorb>
@@ -1577,6 +1577,7 @@
    <damage_forward>5</damage_forward>
   </stats>
  </ship>
+ <!-- Destroyers -->
  <ship name="Vigilance">
   <base_type>Vigilance</base_type>
   <GFX sx="10" sy="10">vigilance</GFX>
@@ -1590,7 +1591,7 @@
   <movement>
    <thrust>130</thrust>
    <turn>75</turn>
-   <speed>160</speed>
+   <speed>150</speed>
   </movement>
   <health>
    <absorb>37</absorb>
@@ -1640,7 +1641,7 @@
   <movement>
    <thrust>130</thrust>
    <turn>75</turn>
-   <speed>160</speed>
+   <speed>150</speed>
   </movement>
   <health>
    <absorb>39</absorb>
@@ -1689,9 +1690,9 @@
   <license>Medium Combat Vessel License</license>
   <description>The Kahan is a cutting-edge vessel. Its design was completed shortly before the Incident, and it was on track to become the Proteron military's primary combat vessel. While possessing fewer weapon mounts than the Pacifier, it makes up for it with its ability to mount higher-tech weapons.</description>
   <movement>
-   <thrust>170</thrust>
+   <thrust>140</thrust>
    <turn>65</turn>
-   <speed>180</speed>
+   <speed>150</speed>
   </movement>
   <health>
    <absorb>43</absorb>
@@ -1741,7 +1742,7 @@
   <movement>
    <thrust>160</thrust>
    <turn>95</turn>
-   <speed>170</speed>
+   <speed>140</speed>
   </movement>
   <health>
    <absorb>42</absorb>
@@ -1789,9 +1790,9 @@
   <license>Medium Combat Vessel License</license>
   <description>The Pacifier is one of the older and trustier designs of Nexus Shipyards. It was designed primarily as a border-patrol vessel, and as such it is able to withstand heavy punishment from raiding parties. The Pacifier features high fuel capacity to facilitate lengthy patrol routes.</description>
   <movement>
-   <thrust>160</thrust>
+   <thrust>140</thrust>
    <turn>95</turn>
-   <speed>170</speed>
+   <speed>150</speed>
   </movement>
   <health>
    <absorb>42</absorb>
@@ -1839,9 +1840,9 @@
   <license>Medium Combat Vessel License</license>
   <description>An Empire Pacifier.</description>
   <movement>
-   <thrust>160</thrust>
+   <thrust>150</thrust>
    <turn>100</turn>
-   <speed>170</speed>
+   <speed>150</speed>
   </movement>
   <health>
    <absorb>44</absorb>
