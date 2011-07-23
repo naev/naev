@@ -14,6 +14,7 @@
 
 #include "SDL.h"
 
+#include "log.h"
 #include "ship.h"
 
 
@@ -29,6 +30,10 @@ void dship_csv( const char *path )
 
    /* File to output to. */
    rw = SDL_RWFromFile( path, "w" );
+   if (rw == NULL) {
+      WARN("Unable to open '%s' for writing: %s", path, SDL_GetError());
+      return;
+   }
 
    /* Write "header" */
    l = snprintf( buf, sizeof(buf),
