@@ -72,20 +72,30 @@ function attack ()
       return
    end
 
-   -- Check melee range
+   -- Set the target
+   ai.settarget( target )
+
+   -- Choose how to face
    local dist  = ai.dist( target )
    local range = ai.getweaprange( 3 ) -- Short range
+   local dir
    if dist < range then
-      -- In melee
-      local dir = ai.aim( target )
+      dir = ai.aim( target )
+   else
+      dir = ai.face( target )
+   end
+
+   -- In melee
+   if dist < range then
       ai.weapset( 3 ) -- Forward/turret
       if dir < 10 then
          ai.shoot() -- Forward
       end
       ai.shoot(true) -- Turret
-   else
-      -- Long-range
-      ai.face( target )
+   end
+
+   -- Long-range
+   if dir < 10 then
       ai.weapset( 4 ) -- Missiles, it's a fire group
    end
 end
