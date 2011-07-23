@@ -5,6 +5,8 @@
 --]]
 
 
+include("ai/include/basic.lua")
+
 
 control_rate = 2
 
@@ -20,15 +22,15 @@ function control ()
 
    if task == "stationary" then
       if enemy ~= nil then
-         ai.pushtask( "engage", enemy )
+         ai.pushtask( "attack", enemy )
       end
    else
-      engage_nearest( enemy )
+      attack_nearest( enemy )
    end
 end
 
 
-function engage_nearest( hostile )
+function attack_nearest( hostile )
    -- Must not be same
    local target       = ai.target()
    if target == hostile then
@@ -40,7 +42,7 @@ function engage_nearest( hostile )
    local dist_enemy   = ai.dist( target )
    if dist_hostile < dist_enemy*0.75 then
       ai.poptask()
-      ai.pushtask( "engage", hostile )
+      ai.pushtask( "attack", hostile )
    end
 end
 
@@ -49,9 +51,9 @@ function attacked( hostile )
    local task = ai.taskname()
 
    if task == "stationary" then
-      ai.pushtask( "engage", hostile )
+      ai.pushtask( "attack", hostile )
    else
-      engage_nearest( hostile )
+      attack_nearest( hostile )
    end
 end
 
@@ -61,7 +63,7 @@ function stationary ()
 end
 
 
-function engage ()
+function attack ()
    local target = ai.target()
 
    -- Stop attacking if it doesn't exist
