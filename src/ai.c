@@ -481,7 +481,11 @@ static void ai_run( lua_State *L, const char *funcname )
    if (lua_isnil(L, -1)) {
       WARN("Pilot '%s' ai -> '%s': attempting to run non-existant function",
             cur_pilot->name, funcname );
+#if DEBUGGING
+      lua_pop(L,2);
+#else /* DEBUGGING */
       lua_pop(L,1);
+#endif /* DEBUGGING */
       return;
    }
 #endif /* DEBUGGING */
