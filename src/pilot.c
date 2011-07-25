@@ -1659,7 +1659,7 @@ static void pilot_hyperspace( Pilot* p, double dt )
       }
       else {
          if (p->ptimer < 0.) { /* engines ready */
-            p->ptimer = HYPERSPACE_FLY_DELAY;
+            p->ptimer = HYPERSPACE_FLY_DELAY * p->stats.jump_delay;
             pilot_setFlag(p, PILOT_HYPERSPACE);
             if (p->id == PLAYER_ID)
                p->timer[0] = -1.;
@@ -1702,7 +1702,7 @@ static void pilot_hyperspace( Pilot* p, double dt )
 
             if (ABS(diff) < MAX_DIR_ERR) { /* we can now prepare the jump */
                pilot_setTurn( p, 0. );
-               p->ptimer = HYPERSPACE_ENGINE_DELAY;
+               p->ptimer = HYPERSPACE_ENGINE_DELAY * p->stats.jump_delay;
                pilot_setFlag(p, PILOT_HYP_BEGIN);
                /* Player plays sound. */
                if (p->id == PLAYER_ID)
