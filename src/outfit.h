@@ -51,14 +51,14 @@ typedef struct ShipStats_ {
 #endif
 
    /* Freighter-type. */
-   double jump_delay; /**< Modulates the jump delay. */
-   double jump_range; /**< Distance from a jump point it can initiate jump from. */
-   double cargo_inertia; /**< Lowers the effect of cargo mass. */
+   double jump_delay;      /**< Modulates the jump delay. */
+   double jump_range;      /**< Distance from a jump point it can initiate jump from. */
+   double cargo_inertia;   /**< Lowers the effect of cargo mass. */
 
    /* Scout type. */
-   double jam_range; /**< Range of jammer effect. */
-   double ew_hide;   /**< Electronic warfare hide modifier. */
-   double ew_detect; /**< Electronic warfare detection modifier. */
+   double jam_range;       /**< Range of jammer effect. */
+   double ew_hide;         /**< Electronic warfare hide modifier. */
+   double ew_detect;       /**< Electronic warfare detection modifier. */
 
    /* Military type. */
    double heat_dissipation; /**< Global ship dissipation. */
