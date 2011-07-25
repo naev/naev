@@ -25,6 +25,7 @@
 #include "conf.h"
 #include "npng.h"
 #include "colour.h"
+#include "shipstats.h"
 
 
 #define XML_ID    "Ships"  /**< XML document identifier */
@@ -309,7 +310,6 @@ int ship_statsParseSingle( ShipStats *s, xmlNodePtr node )
    xmlr_floatR(node,"jump_range",s->jump_range);
    xmlr_floatR(node,"cargo_inertia",s->cargo_inertia);
    /* Scout. */
-   xmlr_floatR(node,"jam_range",s->jam_range);
    xmlr_floatR(node,"ew_hide",s->ew_hide);
    xmlr_floatR(node,"ew_detect",s->ew_detect);
    /* Military. */
@@ -317,18 +317,17 @@ int ship_statsParseSingle( ShipStats *s, xmlNodePtr node )
    /* Bomber. */
    xmlr_floatR(node,"launch_rate",s->launch_rate);
    xmlr_floatR(node,"launch_range",s->launch_range);
-   xmlr_floatR(node,"jam_counter",s->jam_counter);
    xmlr_floatR(node,"ammo_capacity",s->ammo_capacity);
    /* Fighter. */
-   xmlr_floatR(node,"heat_forward",s->heat_forward);
-   xmlr_floatR(node,"damage_forward",s->damage_forward);
-   xmlr_floatR(node,"firerate_forward",s->firerate_forward);
-   xmlr_floatR(node,"energy_forward",s->energy_forward);
+   xmlr_floatR(node,"fwd_heat",s->fwd_heat);
+   xmlr_floatR(node,"fwd_damage",s->fwd_damage);
+   xmlr_floatR(node,"fwd_firerate",s->fwd_firerate);
+   xmlr_floatR(node,"fwd_energy",s->fwd_energy);
    /* Cruiser. */
-   xmlr_floatR(node,"heat_turret",s->heat_turret);
-   xmlr_floatR(node,"damage_turret",s->damage_turret);
-   xmlr_floatR(node,"firerate_turret",s->firerate_turret);
-   xmlr_floatR(node,"energy_turret",s->energy_turret);
+   xmlr_floatR(node,"tur_heat",s->tur_heat);
+   xmlr_floatR(node,"tur_damage",s->tur_damage);
+   xmlr_floatR(node,"tur_firerate",s->tur_firerate);
+   xmlr_floatR(node,"tur_energy",s->tur_energy);
    /* Misc. */
    xmlr_floatR(node,"nebula_dmg_shield",s->nebula_dmg_shield);
    xmlr_floatR(node,"nebula_dmg_armour",s->nebula_dmg_armour);
@@ -362,7 +361,6 @@ int ship_statsDesc( ShipStats *s, char *buf, int len, int newline, int pilot )
    DESC_ADD(s->jump_range,"Jump Range");
    DESC_ADD(s->cargo_inertia,"Cargo Inertia");
    /* Scout Stuff. */
-   DESC_ADD(s->jam_range,"Jam Range");
    DESC_ADD(s->ew_detect,"Detection");
    DESC_ADD(s->ew_hide,"Cloaking");
    /* Military Stuff. */
@@ -370,18 +368,17 @@ int ship_statsDesc( ShipStats *s, char *buf, int len, int newline, int pilot )
    /* Bomber Stuff. */
    DESC_ADD(s->launch_rate,"Launch Rate");
    DESC_ADD(s->launch_range,"Launch Range");
-   DESC_ADD(s->jam_counter,"Jam Countermeasures");
    DESC_ADD(s->ammo_capacity,"Ammo Capacity");
    /* Fighter Stuff. */
-   DESC_ADD(s->heat_forward,"Heat (Cannon)");
-   DESC_ADD(s->damage_forward,"Damage (Cannon)");
-   DESC_ADD(s->firerate_forward,"Fire Rate (Cannon)");
-   DESC_ADD(s->energy_forward,"Energy Usage (Cannon)");
+   DESC_ADD(s->fwd_heat,"Heat (Cannon)");
+   DESC_ADD(s->fwd_damage,"Damage (Cannon)");
+   DESC_ADD(s->fwd_firerate,"Fire Rate (Cannon)");
+   DESC_ADD(s->fwd_energy,"Energy Usage (Cannon)");
    /* Cruiser Stuff. */
-   DESC_ADD(s->heat_turret,"Heat (Turret)");
-   DESC_ADD(s->damage_turret,"Damage (Turret)");
-   DESC_ADD(s->firerate_turret,"Fire Rate (Turret)");
-   DESC_ADD(s->energy_turret,"Energy Usage (Turret)");
+   DESC_ADD(s->tur_heat,"Heat (Turret)");
+   DESC_ADD(s->tur_damage,"Damage (Turret)");
+   DESC_ADD(s->tur_firerate,"Fire Rate (Turret)");
+   DESC_ADD(s->tur_energy,"Energy Usage (Turret)");
    /* Misc. */
    DESC_ADD(s->nebula_dmg_shield,"Nebula Damage (Shield)");
    DESC_ADD(s->nebula_dmg_armour,"Nebula Damage (Armour)");
@@ -877,6 +874,9 @@ int ships_load (void)
 {
    uint32_t bufsize;
    char *buf = ndata_read( SHIP_DATA, &bufsize);
+
+   /* Sanity. */
+   ss_check();
 
    xmlNodePtr node;
    xmlDocPtr doc = xmlParseMemory( buf, bufsize );

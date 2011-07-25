@@ -473,7 +473,7 @@
    <structure/>
   </slots>
   <stats>
-   <damage_forward>5</damage_forward>
+   <fwd_damage>5</fwd_damage>
   </stats>
  </ship>
  <ship name="Sirius Fidelity">
@@ -728,7 +728,7 @@
    <structure/>
   </slots>
   <stats>
-   <firerate_forward>3</firerate_forward>
+   <fwd_firerate>3</fwd_firerate>
   </stats>
  </ship>
  <ship name="Lancelot">
@@ -774,7 +774,7 @@
    <structure/>
   </slots>
   <stats>
-   <firerate_forward>3</firerate_forward>
+   <fwd_firerate>3</fwd_firerate>
   </stats>
  </ship>
  <ship name="Empire Lancelot">
@@ -820,7 +820,7 @@
    <structure/>
   </slots>
   <stats>
-   <firerate_forward>4</firerate_forward>
+   <fwd_firerate>4</fwd_firerate>
   </stats>
  </ship>
  <ship name="Vendetta">
@@ -865,9 +865,9 @@
    <structure/>
   </slots>
   <stats>
-   <energy_forward>-10</energy_forward>
-   <heat_forward>-10</heat_forward>
-   <firerate_forward>-5</firerate_forward>
+   <fwd_energy>-10</fwd_energy>
+   <fwd_heat>-10</fwd_heat>
+   <fwd_firerate>-5</fwd_firerate>
   </stats>
  </ship>
  <ship name="Dvaered Vendetta">
@@ -911,9 +911,9 @@
    <structure/>
   </slots>
   <stats>
-   <energy_forward>-5</energy_forward>
-   <heat_forward>-10</heat_forward>
-   <firerate_forward>-3</firerate_forward>
+   <fwd_energy>-5</fwd_energy>
+   <fwd_heat>-10</fwd_heat>
+   <fwd_firerate>-3</fwd_firerate>
   </stats>
  </ship>
  <ship name="Pirate Vendetta">
@@ -957,9 +957,9 @@
    <structure/>
   </slots>
   <stats>
-   <energy_forward>-10</energy_forward>
-   <heat_forward>-10</heat_forward>
-   <firerate_forward>-5</firerate_forward>
+   <fwd_energy>-10</fwd_energy>
+   <fwd_heat>-10</fwd_heat>
+   <fwd_firerate>-5</fwd_firerate>
   </stats>
  </ship>
  <ship name="Sirius Shaman">
@@ -1236,7 +1236,7 @@
    <structure/>
   </slots>
   <stats>
-   <damage_forward>4</damage_forward>
+   <fwd_damage>4</fwd_damage>
   </stats>
  </ship>
  <ship name="Dvaered Phalanx">
@@ -1285,7 +1285,7 @@
    <structure/>
   </slots>
   <stats>
-   <damage_forward>4</damage_forward>
+   <fwd_damage>4</fwd_damage>
   </stats>
  </ship>
 <ship name="Pirate Phalanx">
@@ -1333,7 +1333,7 @@
    <structure/>
   </slots>
   <stats>
-   <damage_forward>4</damage_forward>
+   <fwd_damage>4</fwd_damage>
    <jam_counter>4</jam_counter>
   </stats>
  </ship>
@@ -1382,7 +1382,7 @@
    <structure/>
   </slots>
   <stats>
-   <damage_forward>5</damage_forward>
+   <fwd_damage>5</fwd_damage>
   </stats>
  </ship>
  <ship name="Soromid Odium">
@@ -1430,7 +1430,7 @@
    <structure/>
   </slots>
   <stats>
-   <energy_forward>-3</energy_forward>
+   <fwd_energy>-3</fwd_energy>
   </stats>
  </ship>
  <ship name="Admonisher">
@@ -1478,7 +1478,7 @@
    <structure/>
   </slots>
   <stats>
-   <energy_forward>-3</energy_forward>
+   <fwd_energy>-3</fwd_energy>
   </stats>
  </ship>
  <ship name="Pirate Admonisher">
@@ -1525,7 +1525,7 @@
    <structure/>
   </slots>
   <stats>
-   <energy_forward>-3</energy_forward>
+   <fwd_energy>-3</fwd_energy>
   </stats>
  </ship>
  <ship name="Empire Admonisher">
@@ -1573,8 +1573,8 @@
    <structure/>
   </slots>
   <stats>
-   <energy_forward>-3</energy_forward>
-   <damage_forward>5</damage_forward>
+   <fwd_energy>-3</fwd_energy>
+   <fwd_damage>5</fwd_damage>
   </stats>
  </ship>
  <!-- Destroyers -->
@@ -1625,7 +1625,7 @@
    <structure/>
   </slots>
   <stats>
-   <heat_forward>-5</heat_forward>
+   <fwd_heat>-5</fwd_heat>
   </stats>
  </ship>
  <ship name="Dvaered Vigilance">
@@ -1675,8 +1675,8 @@
    <structure/>
   </slots>
   <stats>
-   <heat_forward>-5</heat_forward>
-   <damage_forward>5</damage_forward>
+   <fwd_heat>-5</fwd_heat>
+   <fwd_damage>5</fwd_damage>
   </stats>
  </ship>
  <ship name="Proteron Kahan">
@@ -1726,7 +1726,7 @@
   </slots>
   <stats>
    <ew_detect>5</ew_detect>
-   <energy_turret>-5</energy_turret>
+   <tur_energy>-5</tur_energy>
   </stats>
  </ship>
  <ship name="Soromid Nyx">
@@ -1776,7 +1776,7 @@
   </slots>
   <stats>
    <jump_range>30</jump_range>
-   <energy_turret>-5</energy_turret>
+   <tur_energy>-5</tur_energy>
   </stats>
  </ship>
  <ship name="Pacifier">
@@ -1826,7 +1826,7 @@
   </slots>
   <stats>
    <jump_range>30</jump_range>
-   <energy_turret>-5</energy_turret>
+   <tur_energy>-5</tur_energy>
   </stats>
  </ship>
  <ship name="Empire Pacifier">
@@ -1877,7 +1877,7 @@
   <stats>
    <jump_range>50</jump_range>
    <launch_range>10</launch_range>
-   <energy_turret>-5</energy_turret>
+   <tur_energy>-5</tur_energy>
   </stats>
  </ship>
  <!-- Cruisers -->
@@ -2039,7 +2039,7 @@
   </slots>
   <stats>
    <ew_detect>-5</ew_detect>
-   <firerate_turret>5</firerate_turret>
+   <tur_firerate>5</tur_firerate>
   </stats>
  </ship>
  <ship name="Soromid Ira">
@@ -2094,7 +2094,7 @@
   </slots>
   <stats>
    <heat_dissipation>15</heat_dissipation>
-   <energy_turret>-5</energy_turret>
+   <tur_energy>-5</tur_energy>
   </stats>
  </ship>
  <ship name="Hawking">
@@ -2149,7 +2149,7 @@
   </slots>
   <stats>
    <heat_dissipation>15</heat_dissipation>
-   <energy_turret>-5</energy_turret>
+   <tur_energy>-5</tur_energy>
   </stats>
  </ship>
  <ship name="Empire Hawking">
@@ -2204,8 +2204,8 @@
   </slots>
   <stats>
    <heat_dissipation>15</heat_dissipation>
-   <energy_turret>-5</energy_turret>
-   <damage_turret>5</damage_turret>
+   <tur_energy>-5</tur_energy>
+   <tur_damage>5</tur_damage>
   </stats>
  </ship>
  <ship name="Soromid Arx">
@@ -2477,7 +2477,7 @@
    <launch_rate>10</launch_rate>
    <launch_range>10</launch_range>
    <heat_dissipation>-10</heat_dissipation>
-   <damage_turret>10</damage_turret>
+   <tur_damage>10</tur_damage>
   </stats>
  </ship>
  <ship name="Empire Peacemaker">
@@ -2534,9 +2534,9 @@
    <structure/>
   </slots>
   <stats>
-   <energy_turret>-10</energy_turret>
+   <tur_energy>-10</tur_energy>
    <jump_range>25</jump_range>
-   <firerate_turret>-5</firerate_turret>
+   <tur_firerate>-5</tur_firerate>
    <ammo_capacity>25</ammo_capacity>
   </stats>
  </ship>

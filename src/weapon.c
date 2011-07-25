@@ -1214,9 +1214,9 @@ static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
 
    /* Stat modifiers. */
    if (outfit->type == OUTFIT_TYPE_TURRET_BOLT)
-      w->dam_mod *= parent->stats.damage_turret;
+      w->dam_mod *= parent->stats.tur_damage;
    else
-      w->dam_mod *= parent->stats.damage_forward;
+      w->dam_mod *= parent->stats.fwd_damage;
 
    /* Calculate direction. */
    rdir += RNG_2SIGMA() * acc;

@@ -11,6 +11,7 @@
 #include "opengl.h"
 #include "sound.h"
 #include "economy.h"
+#include "shipstats.h"
 
 
 /*
@@ -24,67 +25,6 @@
                                                    when timer is up. */
 #define OUTFIT_PROP_WEAP_BLOWUP_SHIELD (1<<3) /**< Weapon blows up (shield spfx)
                                                    when timer is up. */
-
-
-/**
- * @brief Represents ship statistics, properties ship can use.
- *
- * These values for outfits/ships are in percent, so 25 would be +25%,
- *  -25 would be -25% and so on.
- *
- * However for pilots these are normalized and centered around 1 so they are
- *  in the [0:2] range, with 1. being default. This value then modulates the
- *  stat's base value.
- *
- * Example:
- *  0.7 would lower by 30% the base value.
- *  1.2 would increase by 20% the base value.
- */
-typedef struct ShipStats_ {
-#if 0
-   /* Corvette type. */
-   double afterburner_energy; /**< Energy used by afterburner. */
-
-   /* Carrier type. */
-   double fighterbay_cpu; /**< CPU usage by fighter bays. */
-   double fighterbay_rate; /**< Launch rate of fighter bay. */
-#endif
-
-   /* Freighter-type. */
-   double jump_delay;      /**< Modulates the jump delay. */
-   double jump_range;      /**< Distance from a jump point it can initiate jump from. */
-   double cargo_inertia;   /**< Lowers the effect of cargo mass. */
-
-   /* Scout type. */
-   double jam_range;       /**< Range of jammer effect. */
-   double ew_hide;         /**< Electronic warfare hide modifier. */
-   double ew_detect;       /**< Electronic warfare detection modifier. */
-
-   /* Military type. */
-   double heat_dissipation; /**< Global ship dissipation. */
-
-   /* Bomber type. */
-   double launch_rate;     /**< Fire rate of launchers. */ /* TODO */
-   double launch_range;    /**< Range of launchers. */ /* TODO */
-   double jam_counter;     /**< Ability to avoid jamming. */ /* TODO */
-   double ammo_capacity;   /**< Capacity of launchers. */ /* TODO */
-
-   /* Fighter/Corvette type. */
-   double heat_forward;    /**< Heat of forward mounts. */
-   double damage_forward;  /**< Damage of forward mounts. */
-   double firerate_forward; /**< Rate of fire of forward mounts. */
-   double energy_forward;  /**< Consumption rate of forward mounts. */
-
-   /* Destroyer/Cruiser type. */
-   double heat_turret;     /**< Heat of turrets. */
-   double damage_turret;   /**< Damage of turrets. */
-   double firerate_turret; /**< Rate of fire of turrets. */
-   double energy_turret;   /**< Consumption rate of turrets. */
-
-   /* Misc. */
-   double nebula_dmg_shield; /**< Shield nebula resistance. */
-   double nebula_dmg_armour; /**< Armour nebula resistance. */
-} ShipStats;
 
 
 /*

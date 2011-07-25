@@ -2434,8 +2434,8 @@
    <gfx_store>accuracy_turret</gfx_store>
   </general>
   <specific type="modification">
-   <heat_turret>-25</heat_turret>
-   <firerate_turret>-10</firerate_turret>
+   <tur_heat>-25</tur_heat>
+   <tur_firerate>-10</tur_firerate>
   </specific>
  </outfit>
  <outfit name="Forward Shock Absorbers">
@@ -2448,7 +2448,7 @@
    <gfx_store>accuracy_forward</gfx_store>
   </general>
   <specific type="modification">
-   <heat_forward>-15</heat_forward>
+   <fwd_heat>-15</fwd_heat>
   </specific>
  </outfit>
  <outfit name="Power Regulation Override">
@@ -2461,9 +2461,9 @@
    <gfx_store>damage_forward</gfx_store>
   </general>
   <specific type="modification">
-   <damage_forward>15</damage_forward>
-   <heat_forward>5</heat_forward>
-   <energy_forward>5</energy_forward>
+   <fwd_damage>15</fwd_damage>
+   <fwd_heat>5</fwd_heat>
+   <fwd_energy>5</fwd_energy>
   </specific>
  </outfit>
  <outfit name="Improved Power Regulator">
@@ -2476,8 +2476,8 @@
    <description>Improved power regulation allows your turrets to waste less power when firing, though feeding turrets the bare minimum wattage results in a slightly decreased rate of fire.</description>
   </general>
   <specific type="modification">
-   <firerate_turret>-5</firerate_turret>
-   <energy_turret>-10</energy_turret>
+   <tur_firerate>-5</tur_firerate>
+   <tur_energy>-10</tur_energy>
   </specific>
  </outfit>
  <outfit name="Improved Refrigeration Cycle">
@@ -2490,9 +2490,9 @@
    <gfx_store>firerate_turret</gfx_store>
   </general>
   <specific type="modification">
-   <firerate_turret>15</firerate_turret>
-   <heat_turret>5</heat_turret>
-   <damage_turret>-5</damage_turret>
+   <tur_firerate>15</tur_firerate>
+   <tur_heat>5</tur_heat>
+   <tur_damage>-5</tur_damage>
   </specific>
  </outfit>
  <outfit name="Star Map">

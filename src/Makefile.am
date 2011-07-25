@@ -129,6 +129,7 @@ CODE_SOURCE = \
 	rng.c \
 	save.c \
 	ship.c \
+	shipstats.c \
 	sound.c \
 	sound_openal.c \
 	sound_sdlmix.c \
@@ -267,6 +268,7 @@ CODE_SOURCE = \
 	rng.h \
 	save.h \
 	ship.h \
+	shipstats.h \
 	sound.h \
 	sound_openal.h \
 	sound_priv.h \

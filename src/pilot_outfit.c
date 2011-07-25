@@ -772,7 +772,7 @@ void pilot_calcStats( Pilot* pilot )
    double ac, sc, ec, fc; /* temporary health coefficients to set */
    double arel, srel, erel; /* relative health bonuses. */
    ShipStats *s, *os;
-   int nfirerate_turret, nfirerate_forward;
+   int ntur_firerate, nfwd_firerate;
    int njammers;
    int ew_ndetect, ew_nhide;
 
@@ -820,7 +820,7 @@ void pilot_calcStats( Pilot* pilot )
    /*
     * now add outfit changes
     */
-   nfirerate_forward = nfirerate_turret = 0;
+   nfwd_firerate = ntur_firerate = 0;
    pilot->mass_outfit   = 0.;
    njammers             = 0;
    ew_ndetect           = 0;
@@ -888,30 +888,29 @@ void pilot_calcStats( Pilot* pilot )
             s->ew_detect         += os->ew_detect * q;
             ew_ndetect++;
          }
-         s->jam_range         += os->jam_range * q;
          /* Military. */
          s->heat_dissipation  += os->heat_dissipation * q;
          /* Bomber. */
          s->launch_rate       += os->launch_rate * q;
          s->launch_range      += os->launch_range * q;
-         s->jam_counter       += os->jam_counter * q;
          s->ammo_capacity     += os->ammo_capacity * q;
          /* Fighter. */
-         s->heat_forward      += os->heat_forward * q;
-         s->damage_forward    += os->damage_forward * q;
-         s->energy_forward    += os->energy_forward * q;
-         if (os->firerate_forward != 0.) {
-            s->firerate_forward  += os->firerate_forward * q;
-            nfirerate_forward    += q;
+         s->fwd_heat      += os->fwd_heat * q;
+         s->fwd_damage    += os->fwd_damage * q;
+         s->fwd_energy    += os->fwd_energy * q;
+         if (os->fwd_firerate != 0.) {
+            s->fwd_firerate  += os->fwd_firerate * q;
+            if (os->fwd_firerate > 0.) /* Only modulate bonuses. */
+               nfwd_firerate    += q;
          }
          /* Cruiser. */
-         s->heat_turret       += os->heat_turret * q;
-         s->damage_turret     += os->damage_turret * q;
-         s->energy_turret     += os->energy_turret * q;
-         if (os->firerate_turret != 0.) {
-            s->firerate_turret   += os->firerate_turret * q;
-            if (os->firerate_turret > 0.) /* Only modulate bonuses. */
-               nfirerate_turret     += q;
+         s->tur_heat      += os->tur_heat * q;
+         s->tur_damage    += os->tur_damage * q;
+         s->tur_energy    += os->tur_energy * q;
+         if (os->tur_firerate != 0.) {
+            s->tur_firerate  += os->tur_firerate * q;
+            if (os->tur_firerate > 0.) /* Only modulate bonuses. */
+               ntur_firerate    += q;
          }
          /* Misc. */
          s->nebula_dmg_shield += os->nebula_dmg_shield * q;
@@ -952,18 +951,16 @@ void pilot_calcStats( Pilot* pilot )
    s->jump_delay        = s->jump_delay/100. + 1.;
    s->cargo_inertia     = s->cargo_inertia/100. + 1.;
    /* Scout. */
-   s->jam_range         = s->jam_range/100. + 1.;
    /* Military. */
    s->heat_dissipation  = s->heat_dissipation/100. + 1.;
    /* Bomber. */
    s->launch_rate       = s->launch_rate/100. + 1.;
    s->launch_range      = s->launch_range/100. + 1.;
-   s->jam_counter       = s->jam_counter/100. + 1.;
    s->ammo_capacity     = s->ammo_capacity/100. + 1.;
    /* Fighter. */
-   s->heat_forward      = s->heat_forward/100. + 1.;
-   s->damage_forward    = s->damage_forward/100. + 1.;
-   s->energy_forward    = s->energy_forward/100. + 1.;
+   s->fwd_heat      = s->fwd_heat/100. + 1.;
+   s->fwd_damage    = s->fwd_damage/100. + 1.;
+   s->fwd_energy    = s->fwd_energy/100. + 1.;
    /* Fire rate:
     *  amount = p * exp( -0.15 * (n-1) )
     *  1x 15% -> 15%
@@ -971,18 +968,18 @@ void pilot_calcStats( Pilot* pilot )
     *  3x 15% -> 33.33%
     *  6x 15% -> 42.51%
     */
-   s->firerate_forward  = s->firerate_forward/100.;
-   if (nfirerate_forward > 0)
-      s->firerate_forward *= exp( -0.15 * (double)(MAX(nfirerate_forward-1,0)) );
-   s->firerate_forward += 1.;
+   s->fwd_firerate  = s->fwd_firerate/100.;
+   if (nfwd_firerate > 0)
+      s->fwd_firerate *= exp( -0.15 * (double)(MAX(nfwd_firerate-1,0)) );
+   s->fwd_firerate += 1.;
    /* Cruiser. */
-   s->heat_turret       = s->heat_turret/100. + 1.;
-   s->damage_turret     = s->damage_turret/100. + 1.;
-   s->energy_turret     = s->energy_turret/100. + 1.;
-   s->firerate_turret   = s->firerate_turret/100.;
-   if (nfirerate_turret > 0)
-      s->firerate_turret  *= exp( -0.15 * (double)(MAX(nfirerate_turret-1,0)) );
-   s->firerate_turret  += 1.;
+   s->tur_heat      = s->tur_heat/100. + 1.;
+   s->tur_damage    = s->tur_damage/100. + 1.;
+   s->tur_energy    = s->tur_energy/100. + 1.;
+   s->tur_firerate  = s->tur_firerate/100.;
+   if (ntur_firerate > 0)
+      s->tur_firerate *= exp( -0.15 * (double)(MAX(ntur_firerate-1,0)) );
+   s->tur_firerate += 1.;
    /* Misc. */
    s->nebula_dmg_shield = s->nebula_dmg_shield/100. + 1.;
    s->nebula_dmg_armour = s->nebula_dmg_armour/100. + 1.;
@@ -999,8 +996,6 @@ void pilot_calcStats( Pilot* pilot )
     *  6x 40% -> 88%
     */
    if (njammers > 1) {
-      pilot->jam_range  /= (double)njammers;
-      pilot->jam_range  *= s->jam_range;
       pilot->jam_chance *= exp( -0.2 * (double)(MAX(njammers-1,0)) );
    }
 

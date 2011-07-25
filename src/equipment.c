@@ -1234,14 +1234,14 @@ static void equipment_genLists( unsigned int wid )
                continue;
             switch (o->type) {
                case OUTFIT_TYPE_BOLT:
-                  mod_energy = s->stats.energy_forward;
-                  mod_damage = s->stats.damage_forward;
-                  mod_shots  = 2. - s->stats.firerate_forward;
+                  mod_energy = s->stats.fwd_energy;
+                  mod_damage = s->stats.fwd_damage;
+                  mod_shots  = 2. - s->stats.fwd_firerate;
                   break;
                case OUTFIT_TYPE_TURRET_BOLT:
-                  mod_energy = s->stats.energy_turret;
-                  mod_damage = s->stats.damage_turret;
-                  mod_shots  = 2. - s->stats.firerate_turret;
+                  mod_energy = s->stats.tur_energy;
+                  mod_damage = s->stats.tur_damage;
+                  mod_shots  = 2. - s->stats.tur_firerate;
                   break;
                default:
                   continue;
