@@ -1847,14 +1847,14 @@ int system_addPlanet( StarSystem *sys, const char *planetname )
    planetname_stack[spacename_nstack-1] = planet->name;
    systemname_stack[spacename_nstack-1] = sys->name;
 
-   system_setFaction(sys);
-
    /* Regenerate the economy stuff. */
    economy_refresh();
 
    /* Add the presence. */
-   if (!systems_loading)
+   if (!systems_loading) {
       system_addPresence( sys, planet->faction, planet->presenceAmount, planet->presenceRange );
+      system_setFaction(sys);
+   }
 
    /* Reload graphics if necessary. */
    if (cur_system != NULL)
@@ -2172,8 +2172,31 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
    MELEMENT((flags&FLAG_INTERFERENCESET)==0,"inteference");
 #undef MELEMENT
 
-   /* post-processing */
-   system_setFaction( sys );
+   return 0;
+}
+
+
+/**
+ * @brief Compares two system presences.
+ */
+static int sys_cmpSysFaction( const void *a, const void *b )
+{
+   SystemPresence *spa, *spb;
+
+   spa = (SystemPresence*) a;
+   spb = (SystemPresence*) b;
+
+   /* Compare value. */
+   if (spa->value > spb->value)
+      return +1;
+   else if (spa->value < spb->value)
+      return -1;
+
+   /* Compare faction id. */
+   if (spa->faction < spb->faction)
+      return +1;
+   else if (spa->faction > spb->faction)
+      return -1;
 
    return 0;
 }
@@ -2187,13 +2210,25 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
  */
 static void system_setFaction( StarSystem *sys )
 {
-   int i;
+   int i, j;
+   Planet *pnt;
+
+   /* Sort. */
+   qsort( sys->presence, sys->npresence, sizeof(SystemPresence), sys_cmpSysFaction );
+
    sys->faction = -1;
-   for (i=0; i<sys->nplanets; i++) /** @todo Handle multiple different factions. */
-      if (sys->planets[i]->real == ASSET_REAL && sys->planets[i]->faction > 0) {
-         sys->faction = sys->planets[i]->faction;
-         break;
+   for (i=0; i<sys->npresence; i++) {
+      for (j=0; j<sys->nplanets; j++) { /** @todo Handle multiple different factions. */
+         pnt = sys->planets[j];
+         if (pnt->real != ASSET_REAL)
+            continue;
+
+         if (pnt->faction != sys->presence[i].faction)
+            continue;
+
+         sys->faction = pnt->faction;
       }
+   }
 }
 
 
@@ -2375,6 +2410,10 @@ int space_load (void)
    /* Apply all the presences. */
    for (i=0; i<systems_nstack; i++)
       system_addAllPlanetsPresence(&systems_stack[i]);
+
+   /* Determine dominant faction. */ 
+   for (i=0; i<systems_nstack; i++)
+      system_setFaction( &systems_stack[i] );
 
    /* Reconstruction. */
    systems_reconstructJumps();
@@ -2855,7 +2894,7 @@ static int getPresenceIndex( StarSystem *sys, int faction )
    /* If there is no array, create one and return 0 (the index). */
    if (sys->presence == NULL) {
       sys->npresence = 1;
-      sys->presence = malloc(sizeof(SystemPresence));
+      sys->presence  = malloc( sizeof(SystemPresence) );
 
       /* Set the defaults. */
       sys->presence[0].faction   = faction;
