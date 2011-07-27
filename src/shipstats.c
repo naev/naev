@@ -232,7 +232,16 @@ ShipStatsType ss_typeFromName( const char *name )
 }
 
 
-int ss_statsListDesc( const ShipStatList *ll, char *buf, int len, int newline, int pilot )
+/**
+ * @brief Writes the ship statistics description.
+ *
+ *    @param s Ship stats to use.
+ *    @param buf Buffer to write to.
+ *    @param len Space left in the buffer.
+ *    @param newline Add a newline at start.
+ *    @return Number of characters written.
+ */
+int ss_statsListDesc( const ShipStatList *ll, char *buf, int len, int newline )
 {
    int i;
    const ShipStatsLookup *sl;
