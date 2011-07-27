@@ -949,15 +949,17 @@ static int playerL_evtDone( lua_State *L )
 
 
 /**
- * @brief Teleports the player to a new system (only if not landed).
+ * @brief Teleports the player to a new planet or system (only if not landed).
  *
- * Does not change the position nor velocity of the player.p, which will probably be wrong in the new system.
+ * If the destination is a system, the coordinates of the player will not change.
+ * If the destination is a planet, the player will be placed over that planet.
  *
  * @usage player.teleport( system.get("Arcanis") ) -- Teleports the player to Arcanis.
  * @usage player.teleport( "Arcanis" ) -- Teleports the player to Arcanis.
+ * @usage player.teleport( "Dvaer Prime" ) -- Teleports the player to Dvaer, and relocates him to Dvaer Prime.
  *
- *    @luaparam sys System or name of a system to teleport the player to.
- * @luafunc teleport( sys )
+ *    @luaparam dest System or name of a system or planet or name of a planet to teleport the player to.
+ * @luafunc teleport( dest )
  */
 static int playerL_teleport( lua_State *L )
 {
@@ -980,6 +982,7 @@ static int playerL_teleport( lua_State *L )
       sys   = luaL_validsystem(L,1);
       name  = system_getIndex(sys->id)->name;
    }
+   /* Get a planet. */
    else if (lua_isplanet(L,1)) {
       pnt   = luaL_validplanet(L,1);
       name  = planet_getSystem( pnt->name );
@@ -988,6 +991,7 @@ static int playerL_teleport( lua_State *L )
          return 0;
       }
    }
+   /* Get destination from string. */
    else if (lua_isstring(L,1)) {
       name = lua_tostring(L,1);
       if (!system_exists( name )) {
@@ -996,6 +1000,7 @@ static int playerL_teleport( lua_State *L )
             return 0;
          }
 
+         /* No system found, assume destination string is the name of a planet. */
          pntname = name;
          name = planet_getSystem( name );
          pnt  = planet_get( pntname );
