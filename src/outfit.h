@@ -226,7 +226,7 @@ typedef struct OutfitModificationData_ {
    double fuel;      /**< Maximum fuel modifier. */
 
    /* stats */
-   ShipStats stats;  /**< Stats. */
+   ShipStatList *stats; /**< Stat list. */
 } OutfitModificationData;
 
 /**

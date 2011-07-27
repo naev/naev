@@ -1368,6 +1368,7 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
 {
    int i;
    xmlNodePtr node;
+   ShipStatList *ll;
    node = parent->children;
 
    do { /* load all the data */
@@ -1396,8 +1397,14 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"crew_rel", temp->u.mod.crew_rel);
       xmlr_float(node,"mass_rel",temp->u.mod.mass_rel);
       /* Stats. */
-      if (ship_statsParseSingle( &temp->u.mod.stats, node ))
-         WARN("Outfit '%s' has unknown node '%s'",temp->name, node->name);
+      ll = ss_listFromXML( node );
+      if (ll != NULL) {
+         ll->next          = temp->u.mod.stats;
+         temp->u.mod.stats = ll;
+         continue;
+      }
+
+      WARN("Outfit '%s' has unknown node '%s'",temp->name, node->name);
    } while (xml_nextNode(node));
 
    /* Set default outfit size if necessary. */
@@ -1439,7 +1446,7 @@ if ((x) != 0.) \
 #undef DESC_ADD1
 #undef DESC_ADD0
 #undef DESC_ADD
-   i += ship_statsDesc( &temp->u.mod.stats,
+   i += ss_statsListDesc( temp->u.mod.stats,
          &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, 1, 0 );
 
    /* More processing. */
@@ -1962,6 +1969,13 @@ void outfit_free (void)
          free(o->u.fig.ship);
       if (outfit_isGUI(o) && o->u.gui.gui)
          free(o->u.gui.gui);
+      if (o->type == OUTFIT_TYPE_MODIFCATION) {
+         while (o->u.mod.stats != NULL) {
+            ShipStatList *ll = o->u.mod.stats;
+            o->u.mod.stats = ll->next;
+            free(ll);
+         }
+      }
 
       /* strings */
       if (o->typename)

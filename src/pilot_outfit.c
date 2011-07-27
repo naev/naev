@@ -771,7 +771,7 @@ void pilot_calcStats( Pilot* pilot )
    PilotOutfitSlot *slot;
    double ac, sc, ec, fc; /* temporary health coefficients to set */
    double arel, srel, erel; /* relative health bonuses. */
-   ShipStats *s, *os;
+   ShipStats *s;
    int ntur_firerate, nfwd_firerate;
    int njammers;
    int ew_ndetect, ew_nhide;
@@ -874,7 +874,8 @@ void pilot_calcStats( Pilot* pilot )
          /*
           * Stats.
           */
-         os = &o->u.mod.stats;
+         ss_statsModFromList( s, o->u.mod.stats );
+#if 0
          /* Freighter. */
          s->jump_delay        += os->jump_delay * q;
          s->jump_range        += os->jump_range * q;
@@ -915,6 +916,7 @@ void pilot_calcStats( Pilot* pilot )
          /* Misc. */
          s->nebula_dmg_shield += os->nebula_dmg_shield * q;
          s->nebula_dmg_armour += os->nebula_dmg_armour * q;
+#endif
       }
       else if (outfit_isAfterburner(o)) /* Afterburner */
          pilot->afterburner = pilot->outfits[i]; /* Set afterburner */

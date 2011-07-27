@@ -155,6 +155,7 @@ ShipStatList* ss_listFromXML( xmlNodePtr node );
  * Manipulation
  */
 int ss_statsInit( ShipStats *stats );
+int ss_statsModSingle( ShipStats *stats, const ShipStatList* list );
 int ss_statsModFromList( ShipStats *stats, const ShipStatList* list );
 
 /*
@@ -162,6 +163,8 @@ int ss_statsModFromList( ShipStats *stats, const ShipStatList* list );
  */
 const char* ss_nameFromType( ShipStatsType type );
 ShipStatsType ss_typeFromName( const char *name );
+int ss_statsListDesc( const ShipStatList *ll, char *buf, int len, int newline, int pilot );
+int ss_statsDesc( const ShipStats *s, char *buf, int len, int newline, int pilot );
 
 
 #endif /* SHIPSTATS_H */
