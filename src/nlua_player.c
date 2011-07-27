@@ -32,6 +32,7 @@
 #include "event.h"
 #include "land.h"
 #include "nlua_system.h"
+#include "nlua_planet.h"
 #include "map.h"
 #include "hook.h"
 #include "comm.h"
@@ -960,8 +961,9 @@ static int playerL_evtDone( lua_State *L )
  */
 static int playerL_teleport( lua_State *L )
 {
-   LuaSystem *sys;
-   const char *name;
+   Planet *pnt;
+   StarSystem *sys;
+   const char *name, *pntname;
 
    /* Must not be landed. */
    if (landed)
@@ -971,13 +973,38 @@ static int playerL_teleport( lua_State *L )
    if (player_isBoarded())
       NLUA_ERROR(L,"Can not teleport the player while he is boarded!");
 
+   pnt = NULL;
+
    /* Get a system. */
    if (lua_issystem(L,1)) {
-      sys   = lua_tosystem(L,1);
+      sys   = luaL_validsystem(L,1);
       name  = system_getIndex(sys->id)->name;
    }
-   else if (lua_isstring(L,1))
+   else if (lua_isplanet(L,1)) {
+      pnt   = luaL_validplanet(L,1);
+      name  = planet_getSystem( pnt->name );
+      if (name == NULL) {
+         NLUA_ERROR( L, "Planet '%s' does not belong to a system..", pnt->name );
+         return 0;
+      }
+   }
+   else if (lua_isstring(L,1)) {
       name = lua_tostring(L,1);
+      if (!system_exists( name )) {
+         if (!planet_exists( name )) {
+            NLUA_ERROR( L, "'%s' is not a valid teleportation target.", name );
+            return 0;
+         }
+
+         pntname = name;
+         name = planet_getSystem( name );
+         pnt  = planet_get( pntname );
+         if (name == NULL) {
+            NLUA_ERROR( L, "Planet '%s' does not belong to a system..", pntname );
+            return 0;
+         }
+      }
+   }
    else
       NLUA_INVALID_PARAMETER(L);
 
@@ -1017,6 +1044,11 @@ static int playerL_teleport( lua_State *L )
    player_targetPlanetSet( -1 );
    player_targetHyperspaceSet( -1 );
    gui_setNav();
+
+   /* Move to planet. */
+   if (pnt != NULL)
+      vectcpy( &player.p->solid->pos, &pnt->pos );
+
    return 0;
 }
 
