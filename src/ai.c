@@ -481,7 +481,11 @@ static void ai_run( lua_State *L, const char *funcname )
    if (lua_isnil(L, -1)) {
       WARN("Pilot '%s' ai -> '%s': attempting to run non-existant function",
             cur_pilot->name, funcname );
+#if DEBUGGING
+      lua_pop(L,2);
+#else /* DEBUGGING */
       lua_pop(L,1);
+#endif /* DEBUGGING */
       return;
    }
 #endif /* DEBUGGING */
@@ -3003,7 +3007,7 @@ static int aiL_getenemy_size( lua_State *L )
       return 0;
    }
 
-   p = pilot_getNearestEnemy_size(cur_pilot, LB, UB);
+   p = pilot_getNearestEnemy_size( cur_pilot, LB, UB );
 
    if (p==0) /* No enemy found */
       return 0;
@@ -3028,16 +3032,14 @@ static int aiL_getenemy_heuristic( lua_State *L )
 
    unsigned int p;
    double mass_factor, health_factor, damage_factor, range_factor;
-   NLUA_MIN_ARGS(4);
 
-   mass_factor = health_factor = damage_factor = range_factor = 0;
+   mass_factor    = luaL_checklong(L,1);
+   health_factor  = luaL_checklong(L,2);
+   damage_factor  = luaL_checklong(L,3);
+   range_factor   = luaL_checklong(L,4);
 
-   mass_factor = luaL_checklong(L,1);
-   health_factor = luaL_checklong(L,2);
-   damage_factor = luaL_checklong(L,3);
-   range_factor = luaL_checklong(L,4);
-
-   p = pilot_getNearestEnemy_heuristic(cur_pilot, mass_factor, health_factor, damage_factor, (double) (1/range_factor));
+   p = pilot_getNearestEnemy_heuristic( cur_pilot,
+         mass_factor, health_factor, damage_factor, 1./range_factor );
 
    if (p==0) /* No enemy found */
       return 0;

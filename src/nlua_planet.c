@@ -28,11 +28,13 @@
 #include "rng.h"
 #include "land.h"
 #include "map.h"
+#include "nmath.h"
 
 
 /* Planet metatable methods */
 static int planetL_cur( lua_State *L );
 static int planetL_get( lua_State *L );
+static int planetL_getLandable( lua_State *L );
 static int planetL_getAll( lua_State *L );
 static int planetL_system( lua_State *L );
 static int planetL_eq( lua_State *L );
@@ -52,6 +54,7 @@ static int planetL_commoditiesSold( lua_State *L );
 static const luaL_reg planet_methods[] = {
    { "cur", planetL_cur },
    { "get", planetL_get },
+   { "getLandable", planetL_getLandable },
    { "getAll", planetL_getAll },
    { "system", planetL_system },
    { "__eq", planetL_eq },
@@ -223,25 +226,7 @@ static int planetL_cur( lua_State *L )
 }
 
 
-/**
- * @brief Gets a planet.
- *
- * Possible values of param: <br/>
- *    - bool : Gets a random planet. <br/>
- *    - faction : Gets random planet belonging to faction matching the number. <br/>
- *    - string : Gets the planet by name. <br/>
- *    - table : Gets random planet belonging to any of the factions in the
- *               table. <br/>
- *
- * @usage p,s = planet.get( "Anecu" ) -- Gets planet by name
- * @usage p,s = planet.get( faction.get( "Empire" ) ) -- Gets random Empire planet
- * @usage p,s = planet.get(true) -- Gets completely random planet
- * @usage p,s = planet.get( { faction.get("Empire"), faction.get("Dvaered") } ) -- Random planet belonging to Empire or Dvaered
- *    @luaparam param See description.
- *    @luareturn Returns the planet and the system it belongs to.
- * @luafunc get( param )
- */
-static int planetL_get( lua_State *L )
+static int planetL_getBackend( lua_State *L, int landable )
 {
    int i;
    int *factions;
@@ -262,8 +247,8 @@ static int planetL_get( lua_State *L )
 
    /* If boolean return random. */
    if (lua_isboolean(L,1)) {
-      pnt = planet_get( space_getRndPlanet() );
-      planet.id    = planet_index( pnt );
+      pnt            = planet_get( space_getRndPlanet(landable) );
+      planet.id      = planet_index( pnt );
       lua_pushplanet(L,planet);
       luasys.id      = system_index( system_get( planet_getSystem(pnt->name) ) );
       lua_pushsystem(L,luasys);
@@ -272,13 +257,26 @@ static int planetL_get( lua_State *L )
 
    /* Get a planet by faction */
    else if (lua_isfaction(L,1)) {
-      f = lua_tofaction(L,1);
-      planets = space_getFactionPlanet( &nplanets, &f->f, 1 );
+      f        = lua_tofaction(L,1);
+      planets  = space_getFactionPlanet( &nplanets, &f->f, 1, landable );
    }
 
    /* Get a planet by name */
    else if (lua_isstring(L,1)) {
       rndplanet = lua_tostring(L,1);
+
+      if (landable) {
+         pnt = planet_get( rndplanet );
+         if (pnt == NULL) {
+            NLUA_ERROR(L, "Planet '%s' not found in stack", rndplanet);
+            return 0;
+         }
+
+         /* Check if can land. */
+         planet_updateLand( pnt );
+         if (!pnt->can_land)
+            return 0;
+      }
    }
 
    /* Get a planet from faction list */
@@ -298,7 +296,7 @@ static int planetL_get( lua_State *L )
       }
 
       /* get the planets */
-      planets = space_getFactionPlanet( &nplanets, factions, nfactions );
+      planets = space_getFactionPlanet( &nplanets, factions, nfactions, landable );
       free(factions);
    }
    else
@@ -309,7 +307,23 @@ static int planetL_get( lua_State *L )
       return 0;
    /* Pick random planet */
    else if (rndplanet == NULL) {
-      rndplanet = planets[RNG(0,nplanets-1)];
+      planets = (char**) arrayShuffle( (void**)planets, nplanets );
+
+      for (i=0; i<nplanets; i++) {
+         if (landable) {
+            /* Check landing. */
+            pnt = planet_get( planets[i] );
+            if (pnt == NULL)
+               continue;
+
+            planet_updateLand( pnt );
+            if (!pnt->can_land)
+               continue;
+         }
+
+         rndplanet = planets[i];
+         break;
+      }
       free(planets);
    }
 
@@ -334,6 +348,45 @@ static int planetL_get( lua_State *L )
    luasys.id = system_index( sys );
    lua_pushsystem(L,luasys);
    return 2;
+}
+
+/**
+ * @brief Gets a planet.
+ *
+ * Possible values of param: <br/>
+ *    - bool : Gets a random planet. <br/>
+ *    - faction : Gets random planet belonging to faction matching the number. <br/>
+ *    - string : Gets the planet by name. <br/>
+ *    - table : Gets random planet belonging to any of the factions in the
+ *               table. <br/>
+ *
+ * @usage p,s = planet.get( "Anecu" ) -- Gets planet by name
+ * @usage p,s = planet.get( faction.get( "Empire" ) ) -- Gets random Empire planet
+ * @usage p,s = planet.get(true) -- Gets completely random planet
+ * @usage p,s = planet.get( { faction.get("Empire"), faction.get("Dvaered") } ) -- Random planet belonging to Empire or Dvaered
+ *    @luaparam param See description.
+ *    @luareturn Returns the planet and the system it belongs to.
+ * @luafunc get( param )
+ */
+static int planetL_get( lua_State *L )
+{
+   return planetL_getBackend( L, 0 );
+}
+
+
+/**
+ * @brief Gets a planet only if it's landable.
+ *
+ * It works exactly the same as planet.get(), but it can only return landable
+ * planets. So if the target is not landable it returns nil.
+ *
+ *    @luaparam param See planet.get() description.
+ *    @luareturn Returns the planet and sytem it belongs to or nil and nil if it is not landable.
+ * @luafunc getLandable( param )
+ */
+static int planetL_getLandable( lua_State *L )
+{
+   return planetL_getBackend( L, 1 );
 }
 
 

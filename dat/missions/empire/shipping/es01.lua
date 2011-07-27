@@ -47,6 +47,16 @@ end
 
 function create ()
    -- Note: this mission does not make any system claims.
+
+   -- Planet targets
+   pickup,pickupsys  = planet.getLandable( "Selphod" )
+   dest,destsys      = planet.getLandable( "Cerberus" )
+   ret,retsys        = planet.getLandable( "Halir" )
+   if pickup==nil or dest==nil or ret==nil then
+      misn.finish(false)
+   end
+
+   -- Bar NPC
    misn.setNPC( "Soldner", "soldner" )
    misn.setDesc( bar_desc )
 end
@@ -61,10 +71,7 @@ function accept ()
    misn.accept()
 
    -- target destination
-   pickup,pickupsys = planet.get( "Selphod" )
-   dest,destsys = planet.get( "Cerberus" )
-   ret,retsys = planet.get( "Halir" )
-   misn_marker = misn.markerAdd( pickupsys, "low" )
+   misn_marker       = misn.markerAdd( pickupsys, "low" )
 
    -- Mission details
    misn_stage = 0

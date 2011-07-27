@@ -1923,10 +1923,11 @@ static int gui_runFunc( const char* func, int nargs, int nret )
       err = (lua_isstring(L,-1)) ? lua_tostring(L,-1) : NULL;
       WARN("GUI Lua -> '%s': %s",
             func, (err) ? err : "unknown error");
-      lua_pop(L,1);
+      lua_pop(L,2);
+      return ret;
    }
 #if DEBUGGING
-   lua_pop(L,1);
+   lua_remove(L,-(nret+1));
 #endif /* DEBUGGING */
 
    return ret;

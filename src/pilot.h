@@ -102,6 +102,7 @@
 #define PILOT_LANDING      28 /**< Pilot is landing. */
 #define PILOT_TAKEOFF      29 /**< Pilot is taking off. */
 #define PILOT_DISABLED     30 /**< Pilot is disabled. */
+#define PILOT_DISABLED_PERM 43 /**< Pilot is permanently disabled. */
 #define PILOT_DEAD         31 /**< Pilot is in it's dying throes */
 #define PILOT_DEATH_SOUND  32 /**< Pilot just did death explosion. */
 #define PILOT_EXPLODED     33 /**< Pilot did final death explosion. */
@@ -279,6 +280,7 @@ typedef struct Pilot_ {
 
    /* Current health */
    double armour;    /**< Current armour. */
+   double stress;    /**< Current disable damage level. */
    double shield;    /**< Current shield. */
    double fuel;      /**< Current fuel. */
    double armour_max; /**< Maximum armour. */
@@ -376,6 +378,7 @@ typedef struct Pilot_ {
    double ptimer;    /**< generic timer for internal pilot use */
    double htimer;    /**< Hail animation timer. */
    double stimer;    /**< Shield regeneration timer. */
+   double dtimer;    /**< Disable timer. */
    double sbonus;    /**< Shield regeneration bonus. */
    int hail_pos;     /**< Hail animation position. */
    int lockons;      /**< Stores how many seeking weapons are targeting pilot */
@@ -402,7 +405,7 @@ Pilot* pilot_get( const unsigned int id );
 unsigned int pilot_getNextID( const unsigned int id, int mode );
 unsigned int pilot_getPrevID( const unsigned int id, int mode );
 unsigned int pilot_getNearestEnemy( const Pilot* p );
-unsigned int pilot_getNearestEnemy_size( const Pilot* p, int target_mass_LB, int target_mass_UB );
+unsigned int pilot_getNearestEnemy_size( const Pilot* p, double target_mass_LB, double target_mass_UB );
 unsigned int pilot_getNearestEnemy_heuristic(const Pilot* p, double mass_factor, double health_factor, double damage_factor, double range_factor);
 unsigned int pilot_getNearestHostile (void); /* only for the player */
 unsigned int pilot_getNearestPilot( const Pilot* p );
@@ -420,11 +423,9 @@ double pilot_relhp( const Pilot* cur_pilot, const Pilot* p );
  * Combat.
  */
 void pilot_setTarget( Pilot* p, unsigned int id );
-double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
-      const DamageType dtype, const double damage, const double penetration );
-void pilot_explode( double x, double y, double radius,
-      DamageType dtype, double damage,
-      double penetration, const Pilot *parent );
+double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter, const Damage *dmg );
+void pilot_updateDisable( Pilot* p, const unsigned int shooter );
+void pilot_explode( double x, double y, double radius, const Damage *dmg, const Pilot *parent );
 double pilot_face( Pilot* p, const double dir );
 
 

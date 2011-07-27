@@ -991,17 +991,19 @@ static void weapon_hitAI( Pilot *p, Pilot *shooter, double dmg )
 static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos )
 {
    Pilot *parent;
-   int spfx;
-   double damage, penetration;
-   DamageType dtype;
+   int s, spfx;
+   double damage;
    WeaponLayer spfx_layer;
-   int s;
+   Damage dmg;
+   const Damage *odmg;
 
    /* Get general details. */
-   parent = pilot_get(w->parent);
-   damage = w->strength * outfit_damage(w->outfit);
-   penetration = outfit_penetration(w->outfit);
-   dtype  = outfit_damageType(w->outfit);
+   odmg              = outfit_damage( w->outfit );
+   parent            = pilot_get( w->parent );
+   dmg.damage        = MAX( 0., w->dam_mod * w->strength * odmg->damage );
+   dmg.penetration   = odmg->penetration;
+   dmg.type          = odmg->type;
+   dmg.disable       = odmg->disable;
 
    /* Play sound if they have it. */
    s = outfit_soundHit(w->outfit);
@@ -1013,7 +1015,7 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos )
             w->solid->vel.y);
 
    /* Have pilot take damage and get real damage done. */
-   damage = pilot_hit( p, w->solid, w->parent, dtype, MAX(0.,w->dam_mod*damage), penetration );
+   damage = pilot_hit( p, w->solid, w->parent, &dmg );
 
    /* Get the layer. */
    spfx_layer = (p==player.p) ? SPFX_LAYER_FRONT : SPFX_LAYER_BACK;
@@ -1049,18 +1051,21 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
    (void) layer;
    Pilot *parent;
    int spfx;
-   double damage, penetration;
-   DamageType dtype;
+   double damage;
    WeaponLayer spfx_layer;
+   Damage dmg;
+   const Damage *odmg;
 
    /* Get general details. */
-   parent = pilot_get(w->parent);
-   damage = outfit_damage(w->outfit) * dt;
-   penetration = outfit_penetration(w->outfit);
-   dtype  = outfit_damageType(w->outfit);
+   odmg              = outfit_damage( w->outfit );
+   parent            = pilot_get( w->parent );
+   dmg.damage        = MAX( 0., w->dam_mod * w->strength * odmg->damage * dt );
+   dmg.penetration   = odmg->penetration;
+   dmg.type          = odmg->type;
+   dmg.disable       = odmg->disable;
 
    /* Have pilot take damage and get real damage done. */
-   damage = pilot_hit( p, w->solid, w->parent, dtype, MAX(0.,w->dam_mod*damage), penetration );
+   damage = pilot_hit( p, w->solid, w->parent, &dmg );
 
    /* Add sprite, layer depends on whether player shot or not. */
    if (w->exp_timer == -1.) {
@@ -1079,10 +1084,10 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
       spfx_add( spfx, pos[1].x, pos[1].y,
             VX(p->solid->vel), VY(p->solid->vel), spfx_layer );
          w->exp_timer = -2;
-   }
 
-   /* Inform AI that it's been hit. */
-   weapon_hitAI( p, parent, damage );
+      /* Inform AI that it's been hit, to not saturate ai Lua with messages. */
+      weapon_hitAI( p, parent, damage );
+   }
 }
 
 
@@ -1733,7 +1738,7 @@ void weapon_exit (void)
  * @brief Clears possible exploded weapons.
  */
 void weapon_explode( double x, double y, double radius,
-      DamageType dtype, double damage,
+      int dtype, double damage,
       const Pilot *parent, int mode )
 {
    (void)dtype;

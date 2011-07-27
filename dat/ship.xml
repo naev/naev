@@ -1,4 +1,3 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
 <Ships>
  <!-- Light Craft -->
  <ship name="Llama">
@@ -11,17 +10,17 @@
   <fabricator>Melendez Corp.</fabricator>
   <description>One of the most widely used ships in the galaxy. Renowned for its stability and stubbornness. The design hasn't been modified much since its creation many many years ago. It was one of the first civilian use spacecrafts, first used by aristocracy and now used by everyone who cannot afford better.</description>
   <movement>
-   <thrust>220</thrust>
+   <thrust>180</thrust>
    <turn>150</turn>
-   <speed>260</speed>
+   <speed>200</speed>
   </movement>
   <health>
    <absorb>0</absorb>
    <shield>100</shield>
-   <armour>120</armour>
+   <armour>50</armour>
    <energy>320</energy>
-   <shield_regen>1.3</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>3</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>16.7</energy_regen>
   </health>
   <characteristics>
@@ -32,8 +31,8 @@
    <cap_cargo>20</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="7"   y="0" h="1" />
-   <weapon x="-3"  y="0" h="2" />
+   <weapon x="7" y="0" h="1"/>
+   <weapon x="-3" y="0" h="2"/>
    <utility/>
    <utility/>
    <structure/>
@@ -56,11 +55,11 @@
   </movement>
   <health>
    <absorb>3</absorb>
-   <shield>140</shield>
-   <armour>100</armour>
+   <shield>170</shield>
+   <armour>50</armour>
    <energy>440</energy>
-   <shield_regen>2.0</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>7</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>18.3</energy_regen>
   </health>
   <characteristics>
@@ -71,9 +70,9 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="15" y="0" h="-3" />
-   <weapon x="15" y="0" h="-3" />
-   <weapon x="0"  y="0" h="0" />
+   <weapon x="15" y="0" h="-3"/>
+   <weapon x="15" y="0" h="-3"/>
+   <weapon x="0" y="0" h="0"/>
    <utility/>
    <structure/>
   </slots>
@@ -97,8 +96,8 @@
    <shield>130</shield>
    <armour>50</armour>
    <energy>360</energy>
-   <shield_regen>2.0</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>6</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>13.3</energy_regen>
   </health>
   <characteristics>
@@ -109,7 +108,7 @@
    <cap_cargo>15</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="9" y="0" h="-2" />
+   <weapon x="9" y="0" h="-2"/>
    <utility>medium</utility>
    <utility/>
    <utility/>
@@ -138,10 +137,10 @@
   <health>
    <absorb>2</absorb>
    <shield>180</shield>
-   <armour>100</armour>
+   <armour>80</armour>
    <energy>550</energy>
-   <shield_regen>2.3</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>5</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>23.3</energy_regen>
   </health>
   <characteristics>
@@ -152,13 +151,13 @@
    <cap_cargo>15</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="12" y="0" h="-2" />
-   <weapon x="-5" y="0" h="1" />
-   <utility />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
+   <weapon x="12" y="0" h="-2"/>
+   <weapon x="-5" y="0" h="1"/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
   </slots>
  </ship>
  <ship name="Drone">
@@ -177,12 +176,12 @@
   </movement>
   <health>
    <absorb>15</absorb>
-   <shield>140</shield>
+   <shield>150</shield>
    <armour>80</armour>
    <energy>600</energy>
-   <shield_regen>4.0</shield_regen>
-   <armour_regen>7.0</armour_regen>
-   <energy_regen>20.0</energy_regen>
+   <shield_regen>5</shield_regen>
+   <armour_regen>7</armour_regen>
+   <energy_regen>20</energy_regen>
   </health>
   <characteristics>
    <cpu>70</cpu>
@@ -192,9 +191,9 @@
    <cap_cargo>1</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="5" y="0" h="-5" />
-   <weapon x="5" y="0" h="-5" />
-   <weapon x="5" y="0" h="-5" />
+   <weapon x="5" y="0" h="-5"/>
+   <weapon x="5" y="0" h="-5"/>
+   <weapon x="5" y="0" h="-5"/>
    <utility/>
    <structure/>
   </slots>
@@ -216,11 +215,11 @@
   </movement>
   <health>
    <absorb>13</absorb>
-   <shield>140</shield>
-   <armour>180</armour>
+   <shield>200</shield>
+   <armour>500</armour>
    <energy>405</energy>
-   <shield_regen>1.5</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>6</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>16.7</energy_regen>
   </health>
   <characteristics>
@@ -231,14 +230,14 @@
    <cap_cargo>75</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="11" y="0" h="-7" />
-   <weapon x="-5" y="0" h="3" />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
+   <weapon x="11" y="0" h="-7"/>
+   <weapon x="-5" y="0" h="3"/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <cargo_inertia>-10</cargo_inertia>
@@ -261,11 +260,11 @@
   <health>
    <absorb>18</absorb>
    <shield>200</shield>
-   <armour>140</armour>
+   <armour>70</armour>
    <energy>580</energy>
-   <shield_regen>2.0</shield_regen>
-   <armour_regen>0.0</armour_regen>
-   <energy_regen>20.0</energy_regen>
+   <shield_regen>5</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>20</energy_regen>
   </health>
   <characteristics>
    <cpu>35</cpu>
@@ -275,14 +274,14 @@
    <cap_cargo>45</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="15" y="0" h="5" />
-   <weapon x="-10" y="-3" h="0" />
-   <weapon x="-10" y="3" h="0" />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
-   <structure />
+   <weapon x="15" y="0" h="5"/>
+   <weapon x="-10" y="-3" h="0"/>
+   <weapon x="-10" y="3" h="0"/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <jump_delay>-25</jump_delay>
@@ -305,11 +304,11 @@
   </movement>
   <health>
    <absorb>38</absorb>
-   <shield>480</shield>
-   <armour>520</armour>
+   <shield>250</shield>
+   <armour>1000</armour>
    <energy>970</energy>
-   <shield_regen>4.2</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>5</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>43.3</energy_regen>
   </health>
   <characteristics>
@@ -320,17 +319,17 @@
    <cap_cargo>160</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="25"  y="-3" h="4" >heavy</weapon>
-   <weapon x="25"  y="3" h="4" >heavy</weapon>
-   <weapon x="-15" y="-3" h="4" />
-   <weapon x="-15"  y="3" h="4" />
-   <utility />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
+   <weapon x="25" y="-3" h="4">heavy</weapon>
+   <weapon x="25" y="3" h="4">heavy</weapon>
+   <weapon x="-15" y="-3" h="4"/>
+   <weapon x="-15" y="3" h="4"/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <cargo_inertia>10</cargo_inertia>
@@ -352,11 +351,11 @@
   </movement>
   <health>
    <absorb>40</absorb>
-   <shield>480</shield>
-   <armour>460</armour>
+   <shield>270</shield>
+   <armour>1200</armour>
    <energy>970</energy>
-   <shield_regen>4.2</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>5</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>43.3</energy_regen>
   </health>
   <characteristics>
@@ -367,17 +366,17 @@
    <cap_cargo>160</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="25"  y="-3" h="4" >heavy</weapon>
-   <weapon x="25"  y="3" h="4" >heavy</weapon>
-   <weapon x="-15" y="-3" h="4" />
-   <weapon x="-15"  y="3" h="4" />
-   <utility />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
+   <weapon x="25" y="-3" h="4">heavy</weapon>
+   <weapon x="25" y="3" h="4">heavy</weapon>
+   <weapon x="-15" y="-3" h="4"/>
+   <weapon x="-15" y="3" h="4"/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <cargo_inertia>10</cargo_inertia>
@@ -400,11 +399,11 @@
   </movement>
   <health>
    <absorb>50</absorb>
-   <shield>320</shield>
-   <armour>400</armour>
+   <shield>190</shield>
+   <armour>750</armour>
    <energy>600</energy>
-   <shield_regen>1.7</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>4</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>26.7</energy_regen>
   </health>
   <characteristics>
@@ -415,18 +414,18 @@
    <cap_cargo>350</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="25"  y="0" h="0" >heavy</weapon>
-   <weapon x="-15" y="0" h="4" />
-   <weapon x="15"  y="0" h="4" />
-   <utility />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
+   <weapon x="25" y="0" h="0">heavy</weapon>
+   <weapon x="-15" y="0" h="4"/>
+   <weapon x="15" y="0" h="4"/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <cargo_inertia>-20</cargo_inertia>
@@ -450,12 +449,12 @@
   </movement>
   <health>
    <absorb>9</absorb>
-   <shield>180</shield>
-   <armour>120</armour>
+   <shield>200</shield>
+   <armour>70</armour>
    <energy>500</energy>
-   <shield_regen>2.2</shield_regen>
-   <armour_regen>0.0</armour_regen>
-   <energy_regen>20.0</energy_regen>
+   <shield_regen>8</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>20</energy_regen>
   </health>
   <characteristics>
    <cpu>30</cpu>
@@ -465,9 +464,9 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="10" y="0" h="0" />
-   <weapon x="0" y="-4" h="-3" />
-   <weapon x="0" y="4" h="-3" />
+   <weapon x="10" y="0" h="0"/>
+   <weapon x="0" y="-4" h="-3"/>
+   <weapon x="0" y="4" h="-3"/>
    <utility/>
    <utility/>
    <structure/>
@@ -495,11 +494,11 @@
   <health>
    <absorb>11</absorb>
    <shield>220</shield>
-   <armour>160</armour>
+   <armour>90</armour>
    <energy>650</energy>
-   <shield_regen>2.3</shield_regen>
-   <armour_regen>0.0</armour_regen>
-   <energy_regen>25.0</energy_regen>
+   <shield_regen>7</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>25</energy_regen>
   </health>
   <characteristics>
    <cpu>35</cpu>
@@ -509,10 +508,10 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="10" y="-2" h="0" />
-   <weapon x="10" y="2" h="0" />
-   <weapon x="0" y="-4" h="-3" />
-   <weapon x="0" y="4" h="-3" />
+   <weapon x="10" y="-2" h="0"/>
+   <weapon x="10" y="2" h="0"/>
+   <weapon x="0" y="-4" h="-3"/>
+   <weapon x="0" y="4" h="-3"/>
    <utility/>
    <utility/>
    <structure/>
@@ -531,7 +530,7 @@
   <price>280000</price>
   <fabricator>Soromid</fabricator>
   <license>Light Combat Vessel License</license>
-  <description>A newer Nexus Shipyards design, the Shark is an agile light fighter designed for in-system patrolling. While it's not as capable as its larger relative, the Lancelot, it's still an effective addition to any fleet.</description>
+  <description>The Brigand is a fast, maneuverable bioship that the Soromid use for system patrols and police duties. The ship is lighly armoured and fairly fragile, but it makes up for this by being fast to grow and therefore relatively expendable.</description>
   <movement>
    <thrust>250</thrust>
    <turn>145</turn>
@@ -540,10 +539,10 @@
   <health>
    <absorb>8</absorb>
    <shield>210</shield>
-   <armour>140</armour>
+   <armour>90</armour>
    <energy>580</energy>
-   <shield_regen>2.2</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>7</shield_regen>
+   <armour_regen>2</armour_regen>
    <energy_regen>22.3</energy_regen>
   </health>
   <characteristics>
@@ -554,13 +553,13 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="12" y="0" h="0" />
-   <weapon x="-3" y="0" h="2" />
-   <weapon x="3" y="0" h="2" />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
+   <weapon x="12" y="0" h="0"/>
+   <weapon x="-3" y="0" h="2"/>
+   <weapon x="3" y="0" h="2"/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
   </slots>
  </ship>
  <ship name="Shark">
@@ -580,11 +579,11 @@
   </movement>
   <health>
    <absorb>8</absorb>
-   <shield>210</shield>
-   <armour>140</armour>
+   <shield>200</shield>
+   <armour>60</armour>
    <energy>580</energy>
-   <shield_regen>2.2</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>7</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>22.3</energy_regen>
   </health>
   <characteristics>
@@ -595,13 +594,13 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="12" y="0" h="0" />
-   <weapon x="-3" y="0" h="2" />
-   <weapon x="3" y="0" h="2" />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
+   <weapon x="12" y="0" h="0"/>
+   <weapon x="-3" y="0" h="2"/>
+   <weapon x="3" y="0" h="2"/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
   </slots>
  </ship>
  <ship name="Pirate Shark">
@@ -620,11 +619,11 @@
   </movement>
   <health>
    <absorb>9</absorb>
-   <shield>210</shield>
-   <armour>140</armour>
+   <shield>220</shield>
+   <armour>60</armour>
    <energy>580</energy>
-   <shield_regen>2.2</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>7</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>22.3</energy_regen>
   </health>
   <characteristics>
@@ -635,14 +634,14 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="12" y="0" h="0" />
-   <weapon x="12" y="0" h="0" />
-   <weapon x="-3" y="0" h="2" />
-   <weapon x="3" y="0" h="2" />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
+   <weapon x="12" y="0" h="0"/>
+   <weapon x="12" y="0" h="0"/>
+   <weapon x="-3" y="0" h="2"/>
+   <weapon x="3" y="0" h="2"/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
   </slots>
  </ship>
  <ship name="Empire Shark">
@@ -662,11 +661,11 @@
   </movement>
   <health>
    <absorb>10</absorb>
-   <shield>210</shield>
-   <armour>140</armour>
+   <shield>230</shield>
+   <armour>80</armour>
    <energy>580</energy>
-   <shield_regen>2.2</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>7</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>22.3</energy_regen>
   </health>
   <characteristics>
@@ -677,13 +676,13 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="12" y="0" h="0" />
-   <weapon x="-3" y="0" h="2" />
-   <weapon x="3" y="0" h="2" />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
+   <weapon x="12" y="0" h="0"/>
+   <weapon x="-3" y="0" h="2"/>
+   <weapon x="3" y="0" h="2"/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
   </slots>
  </ship>
  <ship name="Soromid Reaver">
@@ -695,7 +694,7 @@
   <price>500000</price>
   <fabricator>Soromid</fabricator>
   <license>Light Combat Vessel License</license>
-  <description>One of the prize heavy fighters of Nexus Shipyards. The Lancelot was originally a classified design for the Empire military, but its existence was revealed during an aborted test flight. Now a modified version is available for civilians, though it doesn't quite match the original specifications. It is used by security agencies all over the universe for its reliability and availability. Proudly enforcing your security since UST 1132.</description>
+  <description>Reavers are often found at the forefront of Soromid military engagements. Their good speed and maneuverability are compounded by their durability, making the Reaver one of the most effective heavy fighters in the galaxy.</description>
   <movement>
    <thrust>220</thrust>
    <turn>135</turn>
@@ -704,10 +703,10 @@
   <health>
    <absorb>12</absorb>
    <shield>280</shield>
-   <armour>200</armour>
+   <armour>110</armour>
    <energy>730</energy>
-   <shield_regen>2.5</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>8</shield_regen>
+   <armour_regen>3</armour_regen>
    <energy_regen>32.7</energy_regen>
   </health>
   <characteristics>
@@ -718,15 +717,15 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="12" y="0" h="0" >medium</weapon>
-   <weapon x="12" y="0" h="0" />
-   <weapon x="-3" y="0" h="2" />
-   <weapon x="-3" y="0" h="2" />
-   <utility />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
+   <weapon x="12" y="0" h="0">medium</weapon>
+   <weapon x="12" y="0" h="0"/>
+   <weapon x="-3" y="0" h="2"/>
+   <weapon x="-3" y="0" h="2"/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <firerate_forward>3</firerate_forward>
@@ -741,7 +740,7 @@
   <price>500000</price>
   <fabricator>Nexus Shipyards</fabricator>
   <license>Light Combat Vessel License</license>
-  <description>One of the prize heavy fighters of Nexus Shipyards. The Lancelot was originally a classified design for the Empire military, but its existence was revealed during an aborted test flight. Now a modified version is available for civilians, though it doesn't quite match the original specifications. It is used by security agencies all over the universe for its reliability and availability. Proudly enforcing your security since UST 1132.</description>
+  <description>One of the prize heavy fighters of Nexus Shipyards. The Lancelot was originally a classified design for the Empire military, but its existence was revealed during an aborted test flight. Now a modified version is available for civilians, though it doesn't quite match the original specifications. It is used by security agencies all over the universe for its reliability and availability.</description>
   <movement>
    <thrust>220</thrust>
    <turn>135</turn>
@@ -750,10 +749,10 @@
   <health>
    <absorb>12</absorb>
    <shield>280</shield>
-   <armour>200</armour>
+   <armour>110</armour>
    <energy>730</energy>
-   <shield_regen>2.5</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>7</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>32.7</energy_regen>
   </health>
   <characteristics>
@@ -764,15 +763,15 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="12" y="0" h="0" >medium</weapon>
-   <weapon x="12" y="0" h="0" />
-   <weapon x="-3" y="0" h="2" />
-   <weapon x="-3" y="0" h="2" />
-   <utility />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
+   <weapon x="12" y="0" h="0">medium</weapon>
+   <weapon x="12" y="0" h="0"/>
+   <weapon x="-3" y="0" h="2"/>
+   <weapon x="-3" y="0" h="2"/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <firerate_forward>3</firerate_forward>
@@ -796,10 +795,10 @@
   <health>
    <absorb>14</absorb>
    <shield>300</shield>
-   <armour>200</armour>
+   <armour>130</armour>
    <energy>730</energy>
-   <shield_regen>2.7</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>8</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>32.7</energy_regen>
   </health>
   <characteristics>
@@ -810,15 +809,15 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="12" y="0" h="0" >medium</weapon>
-   <weapon x="12" y="0" h="0" />
-   <weapon x="-3" y="0" h="2" />
-   <weapon x="-3" y="0" h="2" />
-   <utility />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
+   <weapon x="12" y="0" h="0">medium</weapon>
+   <weapon x="12" y="0" h="0"/>
+   <weapon x="-3" y="0" h="2"/>
+   <weapon x="-3" y="0" h="2"/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <firerate_forward>4</firerate_forward>
@@ -835,18 +834,18 @@
   <license>Light Combat Vessel License</license>
   <description>The Vendetta displays the House Dvaered philosophy very well. Give a ship many intimidating guns, layer it with heavy armour, and neglect the electronics. Due to the obsolete electronics used in the Vendetta, it is better suited to skirmishes than extended battles, as it possesses inferior shield and energy regeneration compared to other ships of its class, though it can unleash a truly fearsome barrage.</description>
   <movement>
-   <thrust>200</thrust>
+   <thrust>220</thrust>
    <turn>125</turn>
-   <speed>180</speed>
+   <speed>230</speed>
   </movement>
   <health>
    <absorb>11</absorb>
-   <shield>180</shield>
-   <armour>320</armour>
+   <shield>200</shield>
+   <armour>200</armour>
    <energy>800</energy>
-   <shield_regen>1.5</shield_regen>
-   <armour_regen>0.0</armour_regen>
-   <energy_regen>20.0</energy_regen>
+   <shield_regen>6</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>20</energy_regen>
   </health>
   <characteristics>
    <cpu>30</cpu>
@@ -856,14 +855,14 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="16" y="-9"  h="0" />
-   <weapon x="16" y="9"   h="0" />
-   <weapon x="13" y="-13" h="0" />
-   <weapon x="13" y="13"  h="0" />
-   <weapon x="19" y="0"   h="-2" />
-   <weapon x="3"  y="0"   h="2" />
-   <utility />
-   <structure />
+   <weapon x="16" y="-9" h="0"/>
+   <weapon x="16" y="9" h="0"/>
+   <weapon x="13" y="-13" h="0"/>
+   <weapon x="13" y="13" h="0"/>
+   <weapon x="19" y="0" h="-2"/>
+   <weapon x="3" y="0" h="2"/>
+   <utility/>
+   <structure/>
   </slots>
   <stats>
    <energy_forward>-10</energy_forward>
@@ -881,18 +880,18 @@
   <fabricator>House Dvaered</fabricator>
   <description>A Dvaered Vendetta.</description>
   <movement>
-   <thrust>200</thrust>
+   <thrust>220</thrust>
    <turn>125</turn>
-   <speed>180</speed>
+   <speed>230</speed>
   </movement>
   <health>
    <absorb>13</absorb>
-   <shield>180</shield>
-   <armour>320</armour>
+   <shield>230</shield>
+   <armour>220</armour>
    <energy>800</energy>
-   <shield_regen>1.4</shield_regen>
-   <armour_regen>0.0</armour_regen>
-   <energy_regen>20.0</energy_regen>
+   <shield_regen>6</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>20</energy_regen>
   </health>
   <characteristics>
    <cpu>28</cpu>
@@ -902,14 +901,14 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="16" y="-9"  h="0" />
-   <weapon x="16" y="9"   h="0" />
-   <weapon x="13" y="-13" h="0" />
-   <weapon x="13" y="13"  h="0" />
-   <weapon x="19" y="0"   h="-2" />
-   <weapon x="3"  y="0"   h="2" />
-   <utility />
-   <structure />
+   <weapon x="16" y="-9" h="0"/>
+   <weapon x="16" y="9" h="0"/>
+   <weapon x="13" y="-13" h="0"/>
+   <weapon x="13" y="13" h="0"/>
+   <weapon x="19" y="0" h="-2"/>
+   <weapon x="3" y="0" h="2"/>
+   <utility/>
+   <structure/>
   </slots>
   <stats>
    <energy_forward>-5</energy_forward>
@@ -927,17 +926,17 @@
   <fabricator>Skull and Bones</fabricator>
   <description>The Pirate Vendetta is even more intimidating than its regular counterpart. It's been heavily tweaked to be more adjusted to the pirate style of flying. Some of the armour has been removed to make more room for loot, while the reactor has been jacked up by a dubious technician. The ship ends up being substantially better than the original, but every so often the reactor goes nova destroying the ship. You hope it won't happen to you if you get in one.</description>
   <movement>
-   <thrust>210</thrust>
+   <thrust>230</thrust>
    <turn>135</turn>
-   <speed>190</speed>
+   <speed>240</speed>
   </movement>
   <health>
    <absorb>12</absorb>
    <shield>220</shield>
-   <armour>300</armour>
+   <armour>180</armour>
    <energy>820</energy>
-   <shield_regen>1.6</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>6</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>20.8</energy_regen>
   </health>
   <characteristics>
@@ -948,14 +947,14 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="16" y="-9"  h="0" />
-   <weapon x="16" y="9"   h="0" />
-   <weapon x="13" y="-13" h="0" />
-   <weapon x="13" y="13"  h="0" />
-   <weapon x="19" y="0"   h="-2" />
-   <weapon x="3"  y="0"   h="2" />
-   <utility />
-   <structure />
+   <weapon x="16" y="-9" h="0"/>
+   <weapon x="16" y="9" h="0"/>
+   <weapon x="13" y="-13" h="0"/>
+   <weapon x="13" y="13" h="0"/>
+   <weapon x="19" y="0" h="-2"/>
+   <weapon x="3" y="0" h="2"/>
+   <utility/>
+   <structure/>
   </slots>
   <stats>
    <energy_forward>-10</energy_forward>
@@ -976,16 +975,16 @@
   <movement>
    <thrust>200</thrust>
    <turn>115</turn>
-   <speed>250</speed>
+   <speed>210</speed>
   </movement>
   <health>
    <absorb>9</absorb>
-   <shield>320</shield>
-   <armour>180</armour>
+   <shield>300</shield>
+   <armour>150</armour>
    <energy>680</energy>
-   <shield_regen>2.7</shield_regen>
-   <armour_regen>0.0</armour_regen>
-   <energy_regen>30.0</energy_regen>
+   <shield_regen>7</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>30</energy_regen>
   </health>
   <characteristics>
    <cpu>45</cpu>
@@ -995,15 +994,15 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="4"  y="0"  h="0" />
-   <weapon x="4"  y="0"  h="0" />
-   <weapon x="-2" y="4"  h="-1" />
-   <weapon x="-2" y="-4" h="-1" />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
-   <structure />
+   <weapon x="4" y="0" h="0"/>
+   <weapon x="4" y="0" h="0"/>
+   <weapon x="-2" y="4" h="-1"/>
+   <weapon x="-2" y="-4" h="-1"/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <launch_rate>5</launch_rate>
@@ -1019,7 +1018,7 @@
   <price>600000</price>
   <fabricator>Soromid</fabricator>
   <license>Light Combat Vessel License</license>
-  <description>Commonly referred to as the little Goddard, the Ancestor also has its roots in the primitive flying machines used by men many ages ago. Unlike the Goddard though, the electronics are done by House Dvaered, making it considerably inferior in that area.</description>
+  <description>The Marauder was developed from the same base as the Brigand, but the two ships are quite different. The Marauder was developed to fill a bomber role, which calls for increased durability and ammunition chambers. This makes it quite a bit slower than its distant cousin.</description>
   <movement>
    <thrust>180</thrust>
    <turn>105</turn>
@@ -1027,11 +1026,11 @@
   </movement>
   <health>
    <absorb>7</absorb>
-   <shield>200</shield>
-   <armour>380</armour>
+   <shield>250</shield>
+   <armour>160</armour>
    <energy>720</energy>
-   <shield_regen>1.5</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>7</shield_regen>
+   <armour_regen>3</armour_regen>
    <energy_regen>23.3</energy_regen>
   </health>
   <characteristics>
@@ -1042,13 +1041,13 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="8"  y="0"  h="0" />
-   <weapon x="8"  y="0"  h="0" />
-   <weapon x="-2" y="9"  h="-1" />
-   <weapon x="-2" y="-9" h="-1" />
-   <utility />
-   <utility />
-   <structure />
+   <weapon x="8" y="0" h="0"/>
+   <weapon x="8" y="0" h="0"/>
+   <weapon x="-2" y="9" h="-1"/>
+   <weapon x="-2" y="-9" h="-1"/>
+   <utility/>
+   <utility/>
+   <structure/>
   </slots>
   <stats>
    <launch_rate>5</launch_rate>
@@ -1072,11 +1071,11 @@
   </movement>
   <health>
    <absorb>7</absorb>
-   <shield>200</shield>
-   <armour>380</armour>
+   <shield>240</shield>
+   <armour>140</armour>
    <energy>720</energy>
-   <shield_regen>1.5</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>7</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>23.3</energy_regen>
   </health>
   <characteristics>
@@ -1087,13 +1086,13 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="8"  y="0"  h="0" />
-   <weapon x="8"  y="0"  h="0" />
-   <weapon x="-2" y="9"  h="-1" />
-   <weapon x="-2" y="-9" h="-1" />
-   <utility />
-   <utility />
-   <structure />
+   <weapon x="8" y="0" h="0"/>
+   <weapon x="8" y="0" h="0"/>
+   <weapon x="-2" y="9" h="-1"/>
+   <weapon x="-2" y="-9" h="-1"/>
+   <utility/>
+   <utility/>
+   <structure/>
   </slots>
   <stats>
    <launch_rate>5</launch_rate>
@@ -1117,11 +1116,11 @@
   </movement>
   <health>
    <absorb>9</absorb>
-   <shield>200</shield>
-   <armour>380</armour>
+   <shield>260</shield>
+   <armour>170</armour>
    <energy>720</energy>
-   <shield_regen>1.5</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>7</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>23.3</energy_regen>
   </health>
   <characteristics>
@@ -1132,13 +1131,13 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="8"  y="0"  h="0" />
-   <weapon x="8"  y="0"  h="0" />
-   <weapon x="-2" y="9"  h="-1" />
-   <weapon x="-2" y="-9" h="-1" />
-   <utility />
-   <utility />
-   <structure />
+   <weapon x="8" y="0" h="0"/>
+   <weapon x="8" y="0" h="0"/>
+   <weapon x="-2" y="9" h="-1"/>
+   <weapon x="-2" y="-9" h="-1"/>
+   <utility/>
+   <utility/>
+   <structure/>
   </slots>
   <stats>
    <launch_rate>5</launch_rate>
@@ -1162,10 +1161,10 @@
   <health>
    <absorb>8</absorb>
    <shield>240</shield>
-   <armour>360</armour>
+   <armour>130</armour>
    <energy>720</energy>
-   <shield_regen>1.7</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>7</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>21.7</energy_regen>
   </health>
   <characteristics>
@@ -1176,13 +1175,13 @@
    <cap_cargo>15</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="8"  y="0"  h="0" />
-   <weapon x="8"  y="0"  h="0" />
-   <weapon x="-2" y="9"  h="-1" />
-   <weapon x="-2" y="-9" h="-1" />
-   <utility />
-   <utility />
-   <structure />
+   <weapon x="8" y="0" h="0"/>
+   <weapon x="8" y="0" h="0"/>
+   <weapon x="-2" y="9" h="-1"/>
+   <weapon x="-2" y="-9" h="-1"/>
+   <utility/>
+   <utility/>
+   <structure/>
   </slots>
   <stats>
    <launch_rate>5</launch_rate>
@@ -1202,7 +1201,7 @@
   <license>Medium Combat Vessel License</license>
   <description>While somewhat technologically antiquated, the Phalanx's large energy capacity and heavy armour allow it to remain an effective combat vessel.</description>
   <movement>
-   <thrust>220</thrust>
+   <thrust>180</thrust>
    <turn>100</turn>
    <speed>180</speed>
   </movement>
@@ -1211,8 +1210,8 @@
    <shield>410</shield>
    <armour>430</armour>
    <energy>1125</energy>
-   <shield_regen>3.3</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>8</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>38.3</energy_regen>
   </health>
   <characteristics>
@@ -1223,18 +1222,18 @@
    <cap_cargo>25</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="8" y="0"  h="2" />
-   <weapon x="4"  y="5"  h="-2" />
-   <weapon x="4"  y="-5" h="-2" />
-   <weapon x="0" y="10" h="-2" >light</weapon>
-   <weapon x="0" y="-10"  h="-2" >light</weapon>
-   <utility />
-   <utility />
+   <weapon x="8" y="0" h="2"/>
+   <weapon x="4" y="5" h="-2"/>
+   <weapon x="4" y="-5" h="-2"/>
+   <weapon x="0" y="10" h="-2">light</weapon>
+   <weapon x="0" y="-10" h="-2">light</weapon>
+   <utility/>
+   <utility/>
    <utility>light</utility>
-   <structure />
-   <structure />
-   <structure />
-   <structure />
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <damage_forward>4</damage_forward>
@@ -1251,17 +1250,17 @@
   <license>Medium Combat Vessel License</license>
   <description>While somewhat technologically antiquated, the Phalanx's large energy capacity and heavy armour allow it to remain an effective combat vessel.</description>
   <movement>
-   <thrust>220</thrust>
+   <thrust>180</thrust>
    <turn>100</turn>
-   <speed>180</speed>
+   <speed>190</speed>
   </movement>
   <health>
    <absorb>28</absorb>
    <shield>410</shield>
    <armour>430</armour>
    <energy>1125</energy>
-   <shield_regen>3.3</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>8</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>38.3</energy_regen>
   </health>
   <characteristics>
@@ -1272,18 +1271,18 @@
    <cap_cargo>25</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="8" y="0"  h="2" />
-   <weapon x="4"  y="5"  h="-2" />
-   <weapon x="4"  y="-5" h="-2" />
-   <weapon x="0" y="10" h="-2" >light</weapon>
-   <weapon x="0" y="-10"  h="-2" >light</weapon>
-   <utility />
-   <utility />
+   <weapon x="8" y="0" h="2"/>
+   <weapon x="4" y="5" h="-2"/>
+   <weapon x="4" y="-5" h="-2"/>
+   <weapon x="0" y="10" h="-2">light</weapon>
+   <weapon x="0" y="-10" h="-2">light</weapon>
+   <utility/>
+   <utility/>
    <utility>light</utility>
-   <structure />
-   <structure />
-   <structure />
-   <structure />
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <damage_forward>4</damage_forward>
@@ -1299,7 +1298,7 @@
   <fabricator>Skull and Bones</fabricator>
   <description>Building upon the already-capable Phalanx chassis, the Skull and Bones engineers have substantially improved the ship's performance, while only minorly sacrificing protection.</description>
   <movement>
-   <thrust>230</thrust>
+   <thrust>190</thrust>
    <turn>115</turn>
    <speed>200</speed>
   </movement>
@@ -1308,8 +1307,8 @@
    <shield>410</shield>
    <armour>390</armour>
    <energy>1175</energy>
-   <shield_regen>3.7</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>8</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>41.7</energy_regen>
   </health>
   <characteristics>
@@ -1320,18 +1319,18 @@
    <cap_cargo>20</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="8" y="0"  h="2" />
-   <weapon x="4"  y="5"  h="-2" />
-   <weapon x="4"  y="-5" h="-2" />
-   <weapon x="0" y="10" h="-2" >light</weapon>
-   <weapon x="0" y="-10"  h="-2" >light</weapon>
-   <utility />
-   <utility />
+   <weapon x="8" y="0" h="2"/>
+   <weapon x="4" y="5" h="-2"/>
+   <weapon x="4" y="-5" h="-2"/>
+   <weapon x="0" y="10" h="-2">light</weapon>
+   <weapon x="0" y="-10" h="-2">light</weapon>
+   <utility/>
+   <utility/>
    <utility>light</utility>
-   <structure />
-   <structure />
-   <structure />
-   <structure />
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <damage_forward>4</damage_forward>
@@ -1349,17 +1348,17 @@
   <license>Medium Combat Vessel License</license>
   <description>The Preacher, as its name implies, is the primary vessel by which House Sirius projects its message and will. Fielding a large array of weaponry, the Preacher is adept at making converts out of unbelievers.</description>
   <movement>
-   <thrust>180</thrust>
+   <thrust>170</thrust>
    <turn>100</turn>
-   <speed>220</speed>
+   <speed>170</speed>
   </movement>
   <health>
    <absorb>29</absorb>
    <shield>450</shield>
-   <armour>300</armour>
+   <armour>500</armour>
    <energy>960</energy>
-   <shield_regen>3.7</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>9</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>40.8</energy_regen>
   </health>
   <characteristics>
@@ -1370,17 +1369,17 @@
    <cap_cargo>20</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="15" y="1"  h="2" />
-   <weapon x="15" y="-1"  h="2" />
-   <weapon x="-9" y="-10" h="2" />
-   <weapon x="-9" y="10"  h="2" />
-   <weapon x="-9"  y="-3"  h="2" >light</weapon>
-   <weapon x="-9"  y="3" h="2" >light</weapon>
-   <utility />
-   <utility />
+   <weapon x="15" y="1" h="2"/>
+   <weapon x="15" y="-1" h="2"/>
+   <weapon x="-9" y="-10" h="2"/>
+   <weapon x="-9" y="10" h="2"/>
+   <weapon x="-9" y="-3" h="2">light</weapon>
+   <weapon x="-9" y="3" h="2">light</weapon>
+   <utility/>
+   <utility/>
    <utility>light</utility>
-   <structure />
-   <structure />
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <damage_forward>5</damage_forward>
@@ -1395,19 +1394,19 @@
   <price>900000</price>
   <fabricator>Soromid</fabricator>
   <license>Medium Combat Vessel License</license>
-  <description>A very versatile combat ship. Nexus defines the Admonisher as a compromise between the ruggedness of the Pacifier and the agility of the Lancelot. Overall a very solid fighter.</description>
+  <description>The Odium offers a good balance between shields and armour, as well as an impressive amount of system hardpoints for a ship its size. It can often be found dominating smaller military engagements.</description>
   <movement>
-   <thrust>200</thrust>
+   <thrust>180</thrust>
    <turn>115</turn>
-   <speed>200</speed>
+   <speed>170</speed>
   </movement>
   <health>
    <absorb>25</absorb>
    <shield>480</shield>
-   <armour>340</armour>
+   <armour>450</armour>
    <energy>1064</energy>
-   <shield_regen>4.0</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>8</shield_regen>
+   <armour_regen>4</armour_regen>
    <energy_regen>43.3</energy_regen>
   </health>
   <characteristics>
@@ -1418,17 +1417,17 @@
    <cap_cargo>20</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="15" y="0"  h="2" />
-   <weapon x="4"  y="2"  h="-5" />
-   <weapon x="4"  y="-2" h="-5" />
-   <weapon x="-9" y="-5" h="-9" >light</weapon>
-   <weapon x="-9" y="5"  h="-9" >light</weapon>
-   <utility />
-   <utility />
+   <weapon x="15" y="0" h="2"/>
+   <weapon x="4" y="2" h="-5"/>
+   <weapon x="4" y="-2" h="-5"/>
+   <weapon x="-9" y="-5" h="-9">light</weapon>
+   <weapon x="-9" y="5" h="-9">light</weapon>
+   <utility/>
+   <utility/>
    <utility>light</utility>
-   <structure />
-   <structure />
-   <structure />
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <energy_forward>-3</energy_forward>
@@ -1445,17 +1444,17 @@
   <license>Medium Combat Vessel License</license>
   <description>A very versatile combat ship. Nexus defines the Admonisher as a compromise between the ruggedness of the Pacifier and the agility of the Lancelot. Overall a very solid fighter.</description>
   <movement>
-   <thrust>200</thrust>
+   <thrust>170</thrust>
    <turn>115</turn>
-   <speed>200</speed>
+   <speed>175</speed>
   </movement>
   <health>
    <absorb>25</absorb>
    <shield>480</shield>
-   <armour>340</armour>
+   <armour>440</armour>
    <energy>1064</energy>
-   <shield_regen>4.0</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>9</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>43.3</energy_regen>
   </health>
   <characteristics>
@@ -1466,17 +1465,17 @@
    <cap_cargo>20</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="15" y="0"  h="2" />
-   <weapon x="4"  y="2"  h="-5" />
-   <weapon x="4"  y="-2" h="-5" />
-   <weapon x="-9" y="-5" h="-9" >light</weapon>
-   <weapon x="-9" y="5"  h="-9" >light</weapon>
-   <utility />
-   <utility />
+   <weapon x="15" y="0" h="2"/>
+   <weapon x="4" y="2" h="-5"/>
+   <weapon x="4" y="-2" h="-5"/>
+   <weapon x="-9" y="-5" h="-9">light</weapon>
+   <weapon x="-9" y="5" h="-9">light</weapon>
+   <utility/>
+   <utility/>
    <utility>light</utility>
-   <structure />
-   <structure />
-   <structure />
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <energy_forward>-3</energy_forward>
@@ -1492,17 +1491,17 @@
   <fabricator>Skull and Bones</fabricator>
   <description>The stock Admonisher is a powerful vessel, especially for its size. Through the usual Skull and Bones refit the Pirate Admonisher features improved manoeuvrability, more weapons space, and slightly improved defenses, at a cost of cargo capacity and armor regeneration rates.</description>
   <movement>
-   <thrust>205</thrust>
+   <thrust>180</thrust>
    <turn>120</turn>
-   <speed>210</speed>
+   <speed>180</speed>
   </movement>
   <health>
    <absorb>27</absorb>
    <shield>500</shield>
-   <armour>350</armour>
+   <armour>400</armour>
    <energy>1064</energy>
-   <shield_regen>4.3</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>9</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>43.3</energy_regen>
   </health>
   <characteristics>
@@ -1513,17 +1512,17 @@
    <cap_cargo>15</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="15" y="0"  h="2" />
-   <weapon x="4"  y="2"  h="-5" />
-   <weapon x="4"  y="-2" h="-5" />
-   <weapon x="-9" y="-5" h="-9" >light</weapon>
-   <weapon x="-9" y="5"  h="-9" >light</weapon>
-   <utility />
-   <utility />
+   <weapon x="15" y="0" h="2"/>
+   <weapon x="4" y="2" h="-5"/>
+   <weapon x="4" y="-2" h="-5"/>
+   <weapon x="-9" y="-5" h="-9">light</weapon>
+   <weapon x="-9" y="5" h="-9">light</weapon>
+   <utility/>
+   <utility/>
    <utility>light</utility>
-   <structure />
-   <structure />
-   <structure />
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <energy_forward>-3</energy_forward>
@@ -1540,17 +1539,17 @@
   <license>Medium Combat Vessel License</license>
   <description>An Empire Admonisher.</description>
   <movement>
-   <thrust>200</thrust>
+   <thrust>170</thrust>
    <turn>115</turn>
-   <speed>200</speed>
+   <speed>175</speed>
   </movement>
   <health>
    <absorb>29</absorb>
    <shield>500</shield>
-   <armour>350</armour>
+   <armour>450</armour>
    <energy>1064</energy>
-   <shield_regen>4.2</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>9</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>43.3</energy_regen>
   </health>
   <characteristics>
@@ -1561,23 +1560,24 @@
    <cap_cargo>20</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="15" y="0"  h="2" />
-   <weapon x="4"  y="2"  h="-5" />
-   <weapon x="4"  y="-2" h="-5" />
-   <weapon x="-9" y="-5" h="-9" >light</weapon>
-   <weapon x="-9" y="5"  h="-9" >light</weapon>
-   <utility />
-   <utility />
+   <weapon x="15" y="0" h="2"/>
+   <weapon x="4" y="2" h="-5"/>
+   <weapon x="4" y="-2" h="-5"/>
+   <weapon x="-9" y="-5" h="-9">light</weapon>
+   <weapon x="-9" y="5" h="-9">light</weapon>
+   <utility/>
+   <utility/>
    <utility>light</utility>
-   <structure />
-   <structure />
-   <structure />
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <energy_forward>-3</energy_forward>
    <damage_forward>5</damage_forward>
   </stats>
  </ship>
+ <!-- Destroyers -->
  <ship name="Vigilance">
   <base_type>Vigilance</base_type>
   <GFX sx="10" sy="10">vigilance</GFX>
@@ -1591,16 +1591,16 @@
   <movement>
    <thrust>130</thrust>
    <turn>75</turn>
-   <speed>160</speed>
+   <speed>150</speed>
   </movement>
   <health>
    <absorb>37</absorb>
    <shield>520</shield>
-   <armour>690</armour>
+   <armour>1200</armour>
    <energy>1800</energy>
-   <shield_regen>4.3</shield_regen>
-   <armour_regen>0.0</armour_regen>
-   <energy_regen>50.0</energy_regen>
+   <shield_regen>9</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>50</energy_regen>
   </health>
   <characteristics>
    <cpu>75</cpu>
@@ -1610,19 +1610,19 @@
    <cap_cargo>25</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="28"  y="-3"   h="-0" >heavy</weapon>
-	<weapon x="28"  y="3"   h="-0" >heavy</weapon>
-   <weapon x="10"   y="-3"  h="2" />
-   <weapon x="10"   y="3"   h="2" />
-   <weapon x="-22" y="-8" h="-0" />
-   <weapon x="-22" y="8"  h="-0" />
+   <weapon x="28" y="-3" h="-0">heavy</weapon>
+	<weapon x="28" y="3" h="-0">heavy</weapon>
+   <weapon x="10" y="-3" h="2"/>
+   <weapon x="10" y="3" h="2"/>
+   <weapon x="-22" y="-8" h="-0"/>
+   <weapon x="-22" y="8" h="-0"/>
    <utility>heavy</utility>
    <utility>heavy</utility>
-   <utility />
+   <utility/>
    <structure>heavy</structure>
-   <structure />
-   <structure />
-   <structure />
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <heat_forward>-5</heat_forward>
@@ -1641,16 +1641,16 @@
   <movement>
    <thrust>130</thrust>
    <turn>75</turn>
-   <speed>160</speed>
+   <speed>150</speed>
   </movement>
   <health>
    <absorb>39</absorb>
    <shield>520</shield>
-   <armour>690</armour>
+   <armour>1300</armour>
    <energy>1800</energy>
-   <shield_regen>4.3</shield_regen>
-   <armour_regen>0.0</armour_regen>
-   <energy_regen>50.0</energy_regen>
+   <shield_regen>10</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>50</energy_regen>
   </health>
   <characteristics>
    <cpu>75</cpu>
@@ -1660,19 +1660,19 @@
    <cap_cargo>25</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="28"  y="-3"   h="-0" >heavy</weapon>
-	<weapon x="28"  y="3"   h="-0" >heavy</weapon>
-   <weapon x="10"   y="-3"  h="2" />
-   <weapon x="10"   y="3"   h="2" />
-   <weapon x="-22" y="-8" h="-0" />
-   <weapon x="-22" y="8"  h="-0" />
+   <weapon x="28" y="-3" h="-0">heavy</weapon>
+	<weapon x="28" y="3" h="-0">heavy</weapon>
+   <weapon x="10" y="-3" h="2"/>
+   <weapon x="10" y="3" h="2"/>
+   <weapon x="-22" y="-8" h="-0"/>
+   <weapon x="-22" y="8" h="-0"/>
    <utility>heavy</utility>
    <utility>heavy</utility>
-   <utility />
+   <utility/>
    <structure>heavy</structure>
-   <structure />
-   <structure />
-   <structure />
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <heat_forward>-5</heat_forward>
@@ -1690,18 +1690,18 @@
   <license>Medium Combat Vessel License</license>
   <description>The Kahan is a cutting-edge vessel. Its design was completed shortly before the Incident, and it was on track to become the Proteron military's primary combat vessel. While possessing fewer weapon mounts than the Pacifier, it makes up for it with its ability to mount higher-tech weapons.</description>
   <movement>
-   <thrust>170</thrust>
+   <thrust>140</thrust>
    <turn>65</turn>
-   <speed>180</speed>
+   <speed>150</speed>
   </movement>
   <health>
    <absorb>43</absorb>
-   <shield>740</shield>
-   <armour>410</armour>
+   <shield>600</shield>
+   <armour>1000</armour>
    <energy>1600</energy>
-   <shield_regen>5.0</shield_regen>
-   <armour_regen>0.0</armour_regen>
-   <energy_regen>50.0</energy_regen>
+   <shield_regen>10</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>50</energy_regen>
   </health>
   <characteristics>
    <cpu>90</cpu>
@@ -1711,18 +1711,18 @@
    <cap_cargo>30</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="28"  y="0"   h="5" >heavy</weapon>
-	<weapon x="18"  y="0"   h="5" >heavy</weapon>
-   <weapon x="-30" y="-8" h="3" />
-   <weapon x="-30" y="8"  h="3" />
+   <weapon x="28" y="0" h="5">heavy</weapon>
+	<weapon x="18" y="0" h="5">heavy</weapon>
+   <weapon x="-30" y="-8" h="3"/>
+   <weapon x="-30" y="8" h="3"/>
    <utility>heavy</utility>
    <utility>heavy</utility>
-   <utility />
-   <utility />
-   <utility />
+   <utility/>
+   <utility/>
+   <utility/>
    <structure>heavy</structure>
-   <structure />
-   <structure />
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <ew_detect>5</ew_detect>
@@ -1738,19 +1738,19 @@
   <price>1500000</price>
   <fabricator>Soromid</fabricator>
   <license>Medium Combat Vessel License</license>
-  <description>The Pacifier is one of the older and trustier designs of Nexus Shipyards. It was designed primarily as a border-patrol vessel, and as such it is able to withstand heavy punishment from raiding parties. The Pacifier features high fuel capacity to facilitate lengthy patrol routes.</description>
+  <description>The Nyx is the symbol of the Soromid's military might. Able to provide heavy firepower in heated battles and agile enough to withdraw when needed, this ship usually forms the backbone of any sizable Sirius fleet.</description>
   <movement>
    <thrust>160</thrust>
    <turn>95</turn>
-   <speed>170</speed>
+   <speed>140</speed>
   </movement>
   <health>
    <absorb>42</absorb>
-   <shield>620</shield>
-   <armour>460</armour>
+   <shield>500</shield>
+   <armour>1100</armour>
    <energy>1410</energy>
-   <shield_regen>4.7</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>9</shield_regen>
+   <armour_regen>4</armour_regen>
    <energy_regen>55.2</energy_regen>
   </health>
   <characteristics>
@@ -1762,17 +1762,17 @@
   </characteristics>
   <slots>
    <weapon x="-15" y="-10" h="-10">heavy</weapon>
-   <weapon x="-15" y="10"  h="-10">heavy</weapon>
-   <weapon x="20"  y="0"   h="-10" />
-   <weapon x="4"   y="-5"  h="-10" />
-   <weapon x="4"   y="5"   h="-10" />
+   <weapon x="-15" y="10" h="-10">heavy</weapon>
+   <weapon x="20" y="0" h="-10"/>
+   <weapon x="4" y="-5" h="-10"/>
+   <weapon x="4" y="5" h="-10"/>
    <utility>heavy</utility>
    <utility>heavy</utility>
-   <utility />
-   <utility />
+   <utility/>
+   <utility/>
    <structure>heavy</structure>
-   <structure />
-   <structure />
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <jump_range>30</jump_range>
@@ -1790,17 +1790,17 @@
   <license>Medium Combat Vessel License</license>
   <description>The Pacifier is one of the older and trustier designs of Nexus Shipyards. It was designed primarily as a border-patrol vessel, and as such it is able to withstand heavy punishment from raiding parties. The Pacifier features high fuel capacity to facilitate lengthy patrol routes.</description>
   <movement>
-   <thrust>160</thrust>
+   <thrust>140</thrust>
    <turn>95</turn>
-   <speed>170</speed>
+   <speed>150</speed>
   </movement>
   <health>
    <absorb>42</absorb>
-   <shield>620</shield>
-   <armour>460</armour>
+   <shield>500</shield>
+   <armour>950</armour>
    <energy>1410</energy>
-   <shield_regen>4.7</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>10</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>55.2</energy_regen>
   </health>
   <characteristics>
@@ -1812,17 +1812,17 @@
   </characteristics>
   <slots>
    <weapon x="-15" y="-10" h="-10">heavy</weapon>
-   <weapon x="-15" y="10"  h="-10">heavy</weapon>
-   <weapon x="20"  y="0"   h="-10" />
-   <weapon x="4"   y="-5"  h="-10" />
-   <weapon x="4"   y="5"   h="-10" />
+   <weapon x="-15" y="10" h="-10">heavy</weapon>
+   <weapon x="20" y="0" h="-10"/>
+   <weapon x="4" y="-5" h="-10"/>
+   <weapon x="4" y="5" h="-10"/>
    <utility>heavy</utility>
    <utility>heavy</utility>
-   <utility />
-   <utility />
+   <utility/>
+   <utility/>
    <structure>heavy</structure>
-   <structure />
-   <structure />
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <jump_range>30</jump_range>
@@ -1840,18 +1840,18 @@
   <license>Medium Combat Vessel License</license>
   <description>An Empire Pacifier.</description>
   <movement>
-   <thrust>160</thrust>
+   <thrust>150</thrust>
    <turn>100</turn>
-   <speed>170</speed>
+   <speed>150</speed>
   </movement>
   <health>
    <absorb>44</absorb>
-   <shield>650</shield>
-   <armour>480</armour>
+   <shield>530</shield>
+   <armour>1100</armour>
    <energy>1440</energy>
-   <shield_regen>4.8</shield_regen>
-   <armour_regen>0.0</armour_regen>
-   <energy_regen>56.0</energy_regen>
+   <shield_regen>10</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>56</energy_regen>
   </health>
   <characteristics>
    <cpu>84</cpu>
@@ -1862,17 +1862,17 @@
   </characteristics>
   <slots>
    <weapon x="-15" y="-10" h="-10">heavy</weapon>
-   <weapon x="-15" y="10"  h="-10">heavy</weapon>
-   <weapon x="20"  y="0"   h="-10" />
-   <weapon x="4"   y="-5"  h="-10" />
-   <weapon x="4"   y="5"   h="-10" />
+   <weapon x="-15" y="10" h="-10">heavy</weapon>
+   <weapon x="20" y="0" h="-10"/>
+   <weapon x="4" y="-5" h="-10"/>
+   <weapon x="4" y="5" h="-10"/>
    <utility>heavy</utility>
    <utility>heavy</utility>
-   <utility />
-   <utility />
+   <utility/>
+   <utility/>
    <structure>heavy</structure>
-   <structure />
-   <structure />
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <jump_range>50</jump_range>
@@ -1898,11 +1898,11 @@
   </movement>
   <health>
    <absorb>53</absorb>
-   <shield>1100</shield>
-   <armour>600</armour>
+   <shield>700</shield>
+   <armour>2500</armour>
    <energy>2400</energy>
-   <shield_regen>6.0</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>10</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>74.7</energy_regen>
   </health>
   <characteristics>
@@ -1913,20 +1913,20 @@
    <cap_cargo>50</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="-23" y="-15" h="5" />
-   <weapon x="-23" y="15"  h="5" />
-   <weapon x="44"  y="0"   h="0" />
-   <weapon x="-6"  y="0"   h="12" />
-   <weapon x="-24" y="-8"  h="8" >medium</weapon>
-   <weapon x="-24" y="8"   h="8" >medium</weapon>
-   <utility />
-   <utility />
-   <utility />
-   <utility />
+   <weapon x="-23" y="-15" h="5"/>
+   <weapon x="-23" y="15" h="5"/>
+   <weapon x="44" y="0" h="0"/>
+   <weapon x="-6" y="0" h="12"/>
+   <weapon x="-24" y="-8" h="8">medium</weapon>
+   <weapon x="-24" y="8" h="8">medium</weapon>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
    <utility>medium</utility>
-   <structure />
-   <structure />
-   <structure />
+   <structure/>
+   <structure/>
+   <structure/>
    <structure>medium</structure>
   </slots>
   <stats>
@@ -1950,12 +1950,12 @@
   </movement>
   <health>
    <absorb>55</absorb>
-   <shield>1200</shield>
-   <armour>560</armour>
+   <shield>800</shield>
+   <armour>2000</armour>
    <energy>2450</energy>
-   <shield_regen>6.3</shield_regen>
-   <armour_regen>0.0</armour_regen>
-   <energy_regen>72.0</energy_regen>
+   <shield_regen>9</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>72</energy_regen>
   </health>
   <characteristics>
    <cpu>180</cpu>
@@ -1965,20 +1965,20 @@
    <cap_cargo>55</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="-23" y="-15" h="5" />
-   <weapon x="-23" y="15"  h="5" />
-   <weapon x="44"  y="0"   h="0" />
-   <weapon x="-6"  y="0"   h="12" />
-   <weapon x="-24" y="-8"  h="8" >medium</weapon>
-   <weapon x="-24" y="8"   h="8" >medium</weapon>
-   <utility />
-   <utility />
-   <utility />
-   <utility />
+   <weapon x="-23" y="-15" h="5"/>
+   <weapon x="-23" y="15" h="5"/>
+   <weapon x="44" y="0" h="0"/>
+   <weapon x="-6" y="0" h="12"/>
+   <weapon x="-24" y="-8" h="8">medium</weapon>
+   <weapon x="-24" y="8" h="8">medium</weapon>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
    <utility>medium</utility>
-   <structure />
-   <structure />
-   <structure />
+   <structure/>
+   <structure/>
+   <structure/>
    <structure>medium</structure>
   </slots>
   <stats>
@@ -2003,12 +2003,12 @@
   </movement>
   <health>
    <absorb>63</absorb>
-   <shield>950</shield>
-   <armour>1200</armour>
+   <shield>700</shield>
+   <armour>3300</armour>
    <energy>2400</energy>
-   <shield_regen>5.0</shield_regen>
-   <armour_regen>0.0</armour_regen>
-   <energy_regen>75.0</energy_regen>
+   <shield_regen>12</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>75</energy_regen>
   </health>
   <characteristics>
    <cpu>130</cpu>
@@ -2018,24 +2018,24 @@
    <cap_cargo>80</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="40"  y="0"  h="0" />
-   <weapon x="25"  y="-4"  h="0" />
-   <weapon x="25"  y="4"  h="0" />
-   <weapon x="0"  y="-6" h="2" />
-   <weapon x="0"  y="6"  h="2" />
-   <weapon x="-25" y="-8"  h="3" />
-   <weapon x="-25" y="8"  h="3" />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
+   <weapon x="40" y="0" h="0"/>
+   <weapon x="25" y="-4" h="0"/>
+   <weapon x="25" y="4" h="0"/>
+   <weapon x="0" y="-6" h="2"/>
+   <weapon x="0" y="6" h="2"/>
+   <weapon x="-25" y="-8" h="3"/>
+   <weapon x="-25" y="8" h="3"/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <ew_detect>-5</ew_detect>
@@ -2051,7 +2051,7 @@
   <price>7500000</price>
   <fabricator>Soromid</fabricator>
   <license>Heavy Combat Vessel License</license>
-  <description>The Hawking is the flagship vessel of Nexus Shipyards. A large cruiser designed for extended engagements, it is widely used by the Empire to exert control over their territories. In terms of raw firepower, the Hawking is second only to the flagship of House Goddard, though its narrower frame allows it to present a smaller target to the enemy.</description>
+  <description>The Ira is the heaviest conventional combat vessel in Soromid service. Though lumbering and vulnerable when caught without escorts, it can deliver terrible punishment on enemy spaceships.</description>
   <movement>
    <thrust>60</thrust>
    <turn>50</turn>
@@ -2059,11 +2059,11 @@
   </movement>
   <health>
    <absorb>59</absorb>
-   <shield>1200</shield>
-   <armour>800</armour>
+   <shield>680</shield>
+   <armour>2200</armour>
    <energy>2700</energy>
-   <shield_regen>5.3</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>10</shield_regen>
+   <armour_regen>5</armour_regen>
    <energy_regen>85.3</energy_regen>
   </health>
   <characteristics>
@@ -2074,23 +2074,23 @@
    <cap_cargo>70</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="40"  y="0"  h="2" />
-   <weapon x="25"  y="0"  h="2" />
-   <weapon x="12"  y="-6" h="0" />
-   <weapon x="12"  y="6"  h="0" />
-   <weapon x="0"   y="0"  h="7" />
-   <weapon x="-15" y="0"  h="7" />
-   <weapon x="-33" y="0"  h="7" />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
+   <weapon x="40" y="0" h="2"/>
+   <weapon x="25" y="0" h="2"/>
+   <weapon x="12" y="-6" h="0"/>
+   <weapon x="12" y="6" h="0"/>
+   <weapon x="0" y="0" h="7"/>
+   <weapon x="-15" y="0" h="7"/>
+   <weapon x="-33" y="0" h="7"/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <heat_dissipation>15</heat_dissipation>
@@ -2114,11 +2114,11 @@
   </movement>
   <health>
    <absorb>59</absorb>
-   <shield>1200</shield>
-   <armour>800</armour>
+   <shield>700</shield>
+   <armour>2200</armour>
    <energy>2700</energy>
-   <shield_regen>5.3</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>10</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>85.3</energy_regen>
   </health>
   <characteristics>
@@ -2129,23 +2129,23 @@
    <cap_cargo>70</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="40"  y="0"  h="2" />
-   <weapon x="25"  y="0"  h="2" />
-   <weapon x="12"  y="-6" h="0" />
-   <weapon x="12"  y="6"  h="0" />
-   <weapon x="0"   y="0"  h="7" />
-   <weapon x="-15" y="0"  h="7" />
-   <weapon x="-33" y="0"  h="7" />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
+   <weapon x="40" y="0" h="2"/>
+   <weapon x="25" y="0" h="2"/>
+   <weapon x="12" y="-6" h="0"/>
+   <weapon x="12" y="6" h="0"/>
+   <weapon x="0" y="0" h="7"/>
+   <weapon x="-15" y="0" h="7"/>
+   <weapon x="-33" y="0" h="7"/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <heat_dissipation>15</heat_dissipation>
@@ -2154,7 +2154,7 @@
  </ship>
  <ship name="Empire Hawking">
   <base_type>Hawking</base_type>
-  <GFX  sx="12" sy="12">hawking_empire</GFX>
+  <GFX sx="12" sy="12">hawking_empire</GFX>
   <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Cruiser</class>
@@ -2169,11 +2169,11 @@
   </movement>
   <health>
    <absorb>63</absorb>
-   <shield>1260</shield>
-   <armour>840</armour>
+   <shield>750</shield>
+   <armour>3000</armour>
    <energy>2700</energy>
-   <shield_regen>5.7</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>11</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>85.3</energy_regen>
   </health>
   <characteristics>
@@ -2184,23 +2184,23 @@
    <cap_cargo>70</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="40"  y="0"  h="2" />
-   <weapon x="25"  y="0"  h="2" />
-   <weapon x="12"  y="-6" h="0" />
-   <weapon x="12"  y="6"  h="0" />
-   <weapon x="0"   y="0"  h="7" />
-   <weapon x="-15" y="0"  h="7" />
-   <weapon x="-33" y="0"  h="7" />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
+   <weapon x="40" y="0" h="2"/>
+   <weapon x="25" y="0" h="2"/>
+   <weapon x="12" y="-6" h="0"/>
+   <weapon x="12" y="6" h="0"/>
+   <weapon x="0" y="0" h="7"/>
+   <weapon x="-15" y="0" h="7"/>
+   <weapon x="-33" y="0" h="7"/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <heat_dissipation>15</heat_dissipation>
@@ -2217,7 +2217,7 @@
   <price>7200000</price>
   <fabricator>Soromid</fabricator>
   <license>Heavy Combat Vessel License</license>
-  <description>Whilst the Dogma is said to form the core of any Sirian fleet, few combat pilots would dismiss the significance of the Divinity. Though not exceptionally formidable in direct combat, the Divinity's ability to field a multitude of fighters gives it unparalleled flexibility in combat, serving as a key logistical vessel in any sizable fleet.</description>
+  <description>The Soromid Arx usually features in Soromid fleets as a command vessel and fighter carrier. It provides small craft with refuel and rearm services and has excellent durability. It is, however, lacking in both the speed and mobility areas.</description>
   <movement>
    <thrust>55</thrust>
    <turn>55</turn>
@@ -2225,11 +2225,11 @@
   </movement>
   <health>
    <absorb>64</absorb>
-   <shield>1150</shield>
-   <armour>740</armour>
+   <shield>900</shield>
+   <armour>3700</armour>
    <energy>1800</energy>
-   <shield_regen>5.0</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>10</shield_regen>
+   <armour_regen>6</armour_regen>
    <energy_regen>66.7</energy_regen>
   </health>
   <characteristics>
@@ -2240,20 +2240,20 @@
    <cap_cargo>85</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="40"  y="0"   h="0" />
-   <weapon x="20"   y="0"  h="0" />
-   <weapon x="20"   y="0"  h="0" />
-   <weapon x="-20" y="0" h="0" />
-   <weapon x="-40" y="0"  h="0" />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
+   <weapon x="40" y="0" h="0"/>
+   <weapon x="20" y="0" h="0"/>
+   <weapon x="20" y="0" h="0"/>
+   <weapon x="-20" y="0" h="0"/>
+   <weapon x="-40" y="0" h="0"/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <launch_rate>15</launch_rate>
@@ -2277,11 +2277,11 @@
   </movement>
   <health>
    <absorb>67</absorb>
-   <shield>1400</shield>
-   <armour>800</armour>
+   <shield>900</shield>
+   <armour>4200</armour>
    <energy>3100</energy>
-   <shield_regen>5.7</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>11</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>88.3</energy_regen>
   </health>
   <characteristics>
@@ -2292,22 +2292,22 @@
    <cap_cargo>60</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="40"  y="0"  h="2" />
-   <weapon x="25"  y="0"  h="2" />
-   <weapon x="12"  y="0" h="3" />
-   <weapon x="0"   y="0"  h="4" />
-   <weapon x="-15" y="0"  h="6" />
-   <weapon x="-33" y="0"  h="6" />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
+   <weapon x="40" y="0" h="2"/>
+   <weapon x="25" y="0" h="2"/>
+   <weapon x="12" y="0" h="3"/>
+   <weapon x="0" y="0" h="4"/>
+   <weapon x="-15" y="0" h="6"/>
+   <weapon x="-33" y="0" h="6"/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <ew_detect>10</ew_detect>
@@ -2330,11 +2330,11 @@
   </movement>
   <health>
    <absorb>64</absorb>
-   <shield>1150</shield>
-   <armour>740</armour>
+   <shield>880</shield>
+   <armour>4400</armour>
    <energy>1800</energy>
-   <shield_regen>5.0</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>11</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>66.7</energy_regen>
   </health>
   <characteristics>
@@ -2345,20 +2345,20 @@
    <cap_cargo>85</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="40"  y="0"   h="0" />
-   <weapon x="20"   y="0"  h="0" />
-   <weapon x="20"   y="0"  h="0" />
-   <weapon x="-20" y="0" h="0" />
-   <weapon x="-40" y="0"  h="0" />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
+   <weapon x="40" y="0" h="0"/>
+   <weapon x="20" y="0" h="0"/>
+   <weapon x="20" y="0" h="0"/>
+   <weapon x="-20" y="0" h="0"/>
+   <weapon x="-40" y="0" h="0"/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <launch_rate>15</launch_rate>
@@ -2382,11 +2382,11 @@
   </movement>
   <health>
    <absorb>65</absorb>
-   <shield>1600</shield>
-   <armour>1000</armour>
+   <shield>850</shield>
+   <armour>4000</armour>
    <energy>4000</energy>
-   <shield_regen>5.8</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>10</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>90.7</energy_regen>
   </health>
   <characteristics>
@@ -2397,24 +2397,24 @@
    <cap_cargo>90</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="-10" y="-13" h="2" />
-   <weapon x="-10" y="13"  h="2" />
-   <weapon x="-15" y="-25" h="3" />
-   <weapon x="-15" y="25"  h="3" />
-   <weapon x="16"  y="0" h="3" />
-   <weapon x="0"   y="0" h="5" />
-   <weapon x="-20" y="0" h="5" />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
+   <weapon x="-10" y="-13" h="2"/>
+   <weapon x="-10" y="13" h="2"/>
+   <weapon x="-15" y="-25" h="3"/>
+   <weapon x="-15" y="25" h="3"/>
+   <weapon x="16" y="0" h="3"/>
+   <weapon x="0" y="0" h="5"/>
+   <weapon x="-20" y="0" h="5"/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <launch_rate>10</launch_rate>
@@ -2439,11 +2439,11 @@
   </movement>
   <health>
    <absorb>69</absorb>
-   <shield>1600</shield>
-   <armour>1000</armour>
+   <shield>900</shield>
+   <armour>4300</armour>
    <energy>4000</energy>
-   <shield_regen>5.3</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>10</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>90.7</energy_regen>
   </health>
   <characteristics>
@@ -2454,24 +2454,24 @@
    <cap_cargo>90</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="-10" y="-13" h="2" />
-   <weapon x="-10" y="13"  h="2" />
-   <weapon x="-15" y="-25" h="3" />
-   <weapon x="-15" y="25"  h="3" />
-   <weapon x="16"  y="0" h="3" />
-   <weapon x="0"   y="0" h="5" />
-   <weapon x="-20" y="0" h="5" />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
+   <weapon x="-10" y="-13" h="2"/>
+   <weapon x="-10" y="13" h="2"/>
+   <weapon x="-15" y="-25" h="3"/>
+   <weapon x="-15" y="25" h="3"/>
+   <weapon x="16" y="0" h="3"/>
+   <weapon x="0" y="0" h="5"/>
+   <weapon x="-20" y="0" h="5"/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <launch_rate>10</launch_rate>
@@ -2485,11 +2485,11 @@
   <GFX sx="12" sy="12">peacemaker</GFX>
   <GUI>slim</GUI>
   <sound>engine</sound>
-  <class>Cruiser</class>
+  <class>Carrier</class>
   <price>18000000</price>
   <fabricator>Nexus Shipyards</fabricator>
   <license>Heavy Combat Vessel License</license>
-  <description>Built under contract for the Empire by Nexus Shipyards, the Peacemaker is one of the fiercest vessels in the galaxy, dwarfing even the mighty Goddard. So utterly devestating is this ship, that none are available to civilians.</description>
+  <description>Built under contract for the Empire by Nexus Shipyards, the Peacemaker is one of the grandest vessels in the galaxy, dwarfing even the mighty Goddard. Peacemakers typically function as flag ships in Imperial fleets, and can provide the fighter and bomber squadrons with much needed resupplies. Like most capital ships, however, it is vulnerable to attack from enemy bombers.</description>
   <movement>
    <thrust>40</thrust>
    <turn>35</turn>
@@ -2497,11 +2497,11 @@
   </movement>
   <health>
    <absorb>78</absorb>
-   <shield>2100</shield>
-   <armour>1300</armour>
+   <shield>1000</shield>
+   <armour>5000</armour>
    <energy>4800</energy>
-   <shield_regen>7.5</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>12</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>118.3</energy_regen>
   </health>
   <characteristics>
@@ -2512,26 +2512,26 @@
    <cap_cargo>130</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="40"  y="0"  h="2" />
-   <weapon x="25"  y="0"  h="2" />
-   <weapon x="12"  y="-6" h="0" />
-   <weapon x="12"  y="6"  h="0" />
-   <weapon x="0"   y="0"  h="7" />
-   <weapon x="0"   y="0"  h="7" />
-   <weapon x="-15" y="0"  h="7" />
-   <weapon x="-33" y="0"  h="7" />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
+   <weapon x="40" y="0" h="2"/>
+   <weapon x="25" y="0" h="2"/>
+   <weapon x="12" y="-6" h="0"/>
+   <weapon x="12" y="6" h="0"/>
+   <weapon x="0" y="0" h="7"/>
+   <weapon x="0" y="0" h="7"/>
+   <weapon x="-15" y="0" h="7"/>
+   <weapon x="-33" y="0" h="7"/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
   <stats>
    <energy_turret>-10</energy_turret>
@@ -2561,7 +2561,7 @@
    <armour>5000</armour>
    <energy>10000</energy>
    <shield_regen>3.3</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>166.7</energy_regen>
   </health>
   <characteristics>
@@ -2572,26 +2572,26 @@
    <cap_cargo>5000</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="0" y="0" h="0" />
-   <weapon x="0" y="0" h="0" />
-   <weapon x="50" y="0" h="5" />
-   <weapon x="-50" y="0" h="5" />
-   <weapon x="0" y="50" h="5" />
-   <weapon x="0" y="-40" h="5" />
-   <weapon x="0" y="0" h="30" />
-   <weapon x="0" y="0" h="30" />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
+   <weapon x="0" y="0" h="0"/>
+   <weapon x="0" y="0" h="0"/>
+   <weapon x="50" y="0" h="5"/>
+   <weapon x="-50" y="0" h="5"/>
+   <weapon x="0" y="50" h="5"/>
+   <weapon x="0" y="-40" h="5"/>
+   <weapon x="0" y="0" h="30"/>
+   <weapon x="0" y="0" h="30"/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
  </ship>
  <!-- Special craft, mainly used for missioning purposes. -->
@@ -2614,8 +2614,8 @@
    <shield>9000</shield>
    <armour>15000</armour>
    <energy>5000</energy>
-   <shield_regen>11.7</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>20</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>166.7</energy_regen>
   </health>
   <characteristics>
@@ -2626,21 +2626,21 @@
    <cap_cargo>55</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="-24" y="-8"  h="8" />
-   <weapon x="-24" y="8"   h="8" />
-   <weapon x="-23" y="-15" h="5" />
-   <weapon x="-23" y="15"  h="5" />
-   <weapon x="44"  y="0"   h="0" />
-   <weapon x="-6"  y="0"   h="12" />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
+   <weapon x="-24" y="-8" h="8"/>
+   <weapon x="-24" y="8" h="8"/>
+   <weapon x="-23" y="-15" h="5"/>
+   <weapon x="-23" y="15" h="5"/>
+   <weapon x="44" y="0" h="0"/>
+   <weapon x="-6" y="0" h="12"/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
  </ship>
  <ship name="Suzaku">
@@ -2662,8 +2662,8 @@
    <shield>9000</shield>
    <armour>15000</armour>
    <energy>5000</energy>
-   <shield_regen>11.7</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>20</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>166.7</energy_regen>
   </health>
   <characteristics>
@@ -2674,21 +2674,21 @@
    <cap_cargo>55</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="-24" y="-8"  h="8" />
-   <weapon x="-24" y="8"   h="8" />
-   <weapon x="-23" y="-15" h="5" />
-   <weapon x="-23" y="15"  h="5" />
-   <weapon x="44"  y="0"   h="0" />
-   <weapon x="-6"  y="0"   h="12" />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
+   <weapon x="-24" y="-8" h="8"/>
+   <weapon x="-24" y="8" h="8"/>
+   <weapon x="-23" y="-15" h="5"/>
+   <weapon x="-23" y="15" h="5"/>
+   <weapon x="44" y="0" h="0"/>
+   <weapon x="-6" y="0" h="12"/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
  </ship>
  <ship name="Byakko">
@@ -2710,8 +2710,8 @@
    <shield>9000</shield>
    <armour>15000</armour>
    <energy>5000</energy>
-   <shield_regen>11.7</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>20</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>166.7</energy_regen>
   </health>
   <characteristics>
@@ -2722,21 +2722,21 @@
    <cap_cargo>55</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="-24" y="-8"  h="8" />
-   <weapon x="-24" y="8"   h="8" />
-   <weapon x="-23" y="-15" h="5" />
-   <weapon x="-23" y="15"  h="5" />
-   <weapon x="44"  y="0"   h="0" />
-   <weapon x="-6"  y="0"   h="12" />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
+   <weapon x="-24" y="-8" h="8"/>
+   <weapon x="-24" y="8" h="8"/>
+   <weapon x="-23" y="-15" h="5"/>
+   <weapon x="-23" y="15" h="5"/>
+   <weapon x="44" y="0" h="0"/>
+   <weapon x="-6" y="0" h="12"/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
  </ship>
  <ship name="Genbu">
@@ -2758,8 +2758,8 @@
    <shield>9000</shield>
    <armour>15000</armour>
    <energy>5000</energy>
-   <shield_regen>11.7</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <shield_regen>20</shield_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>166.7</energy_regen>
   </health>
   <characteristics>
@@ -2770,21 +2770,21 @@
    <cap_cargo>55</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="-24" y="-8"  h="8" />
-   <weapon x="-24" y="8"   h="8" />
-   <weapon x="-23" y="-15" h="5" />
-   <weapon x="-23" y="15"  h="5" />
-   <weapon x="44"  y="0"   h="0" />
-   <weapon x="-6"  y="0"   h="12" />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <utility />
-   <structure />
-   <structure />
-   <structure />
-   <structure />
+   <weapon x="-24" y="-8" h="8"/>
+   <weapon x="-24" y="8" h="8"/>
+   <weapon x="-23" y="-15" h="5"/>
+   <weapon x="-23" y="15" h="5"/>
+   <weapon x="44" y="0" h="0"/>
+   <weapon x="-6" y="0" h="12"/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
   </slots>
  </ship>
  <ship name="Diplomatic Vessel">
@@ -2807,7 +2807,7 @@
    <armour>400</armour>
    <energy>730</energy>
    <shield_regen>2.5</shield_regen>
-   <armour_regen>0.0</armour_regen>
+   <armour_regen>0</armour_regen>
    <energy_regen>32.7</energy_regen>
   </health>
   <characteristics>
@@ -2818,7 +2818,7 @@
    <cap_cargo>10</cap_cargo>
   </characteristics>
   <slots>
-   <weapon x="9" y="0" h="-2" />
+   <weapon x="9" y="0" h="-2"/>
    <utility/>
    <utility/>
    <utility/>

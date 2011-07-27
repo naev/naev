@@ -33,6 +33,7 @@ function create()
    col_top_ammo   = colour.new( 233/255, 131/255,  21/255 )
    col_text = colour.new( 203/255, 203/255, 203/255 )
    col_unkn = colour.new( 130/255, 130/255, 130/255 )
+   col_lgray = colour.new( 160/255, 160/255, 160/255 )
    
    --Images
    local base = "gfx/gui/brushed/"
@@ -76,6 +77,8 @@ function create()
    icon_weapons = tex.open( base .. "iconWeaps.png" )
    icon_autonav = tex.open( base .. "A.png" )
    icon_lockon = tex.open( base .. "lockon.png" )
+   icon_refire = tex.open( base .. "refireCircle.png" )
+   icon_lockon2 = tex.open( base .. "lockonCircle.png" )
    field_bg_left = tex.open( base .. "fieldBgLeft1.png" )
    field_bg_center1 = tex.open( base .. "fieldBgCenter1.png" )
    field_bg_center2 = tex.open( base .. "fieldBgCenter2.png" )
@@ -156,6 +159,8 @@ function create()
    popup_right_y = 88
    
    weapbars = math.floor((screen_w - left_side_w - end_right_w + 10)/(bar_w + 6)) --number of weapon bars that can fit on the screen
+   
+   circle_w, circle_h = icon_refire:dim()
 
    tbar_center_x = screen_w/2
    tbar_center_w, tbar_center_h = top_bar_center:dim()
@@ -325,7 +330,7 @@ function renderWeapBar( weapon, x, y )
          heatcol_top = col_top_heat2
       end
       
-      if weapon.dtype ~= "Unknown" then
+      if weapon.dtype ~= "Unknown" and _G[ "icon_" .. weapon.dtype ]~= nil then
          top_icon = _G[ "icon_" .. weapon.dtype ]
       else
          top_icon = icon_Kinetic
@@ -345,21 +350,29 @@ function renderWeapBar( weapon, x, y )
       if weapon.temp < 2 then
       gfx.renderRect( x + offsets[1], y + offsets[2] + weapon.temp/2 * bar_h, width, 1, heatcol_top ) --top bit
       end
+      local col = nil
       if weapon.ammo ~= nil then
          gfx.renderRect( x + offsets[1] + width, y + offsets[2], width, weapon.left_p * bar_h, col_ammo ) --Ammo bar, only if applicable
          if weapon.left_p < 1 then
             gfx.renderRect( x + offsets[1] + width, y + offsets[2] + weapon.left_p * bar_h, width, 1, col_top_ammo ) --top bit
          end
-      
+         if not weapon.in_arc and pilot.player():target() ~= nil then
+            col = col_lgray
+         end
+         
+         gfx.renderTexRaw( icon_lockon2, x + offsets[1] + bar_w/2 - circle_w/2, y + offsets[2] + offsets[6] - circle_h/2, circle_w, circle_h * weapon.lockon, 1, 1, 0, 0, 1, weapon.lockon) --Lockon indicator
+         gfx.renderTexRaw( icon_refire, x + offsets[1] + bar_w/2 - circle_w/2, y + offsets[2] + offsets[7] - circle_h/2, circle_w, circle_h * weapon.cooldown, 1, 1, 0, 0, 1, weapon.cooldown) --Cooldown indicator
          --Icon
          gfx.renderTex( icon_weapon2, x + offsets[1], y + offsets[2] )
       else
          --Icon
+         gfx.renderTexRaw( icon_refire, x + offsets[1] + bar_w/2 - circle_w/2, y + offsets[2] + offsets[7] - circle_h/2, circle_w, circle_h * weapon.cooldown, 1, 1, 0, 0, 1, weapon.cooldown) --Cooldown indicator
          gfx.renderTex( icon_weapon1, x + offsets[1], y + offsets[5] )
       end
+      
       --Weapon-specific Icon
       gfx.renderTex( top_icon, x + offsets[1] + bar_w/2 - top_icon_w/2, y + offsets[2] + offsets[7] - top_icon_h/2 )
-      gfx.renderTex( bottom_icon, x + offsets[1] + bar_w/2 - bottom_icon_w/2, y + offsets[2] +  offsets[6] - bottom_icon_h/2 )
+      gfx.renderTex( bottom_icon, x + offsets[1] + bar_w/2 - bottom_icon_w/2, y + offsets[2] +  offsets[6] - bottom_icon_h/2, col )
    else
       gfx.renderTex( bar_lock, x + offsets[1], y + offsets[2] )
    end

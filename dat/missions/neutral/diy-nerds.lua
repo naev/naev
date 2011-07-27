@@ -150,7 +150,7 @@ function accept ()
 	local cp,s = planet.cur()
 	srcPlanet = cp
 	for i,p in ipairs(system.planets(system.cur())) do
-		if planet.services(p)["land"] and p ~= cp then
+		if planet.services(p)["land"] and p ~= cp and p:canLand() then
 			destPlanet=p
 			break -- atm, just take the first landable planet which is not the current one
 		end
@@ -377,7 +377,7 @@ end
 function system_hasAtLeast (amount, service)
 	local p = {}
 	for i,v in ipairs(system.planets(system.cur())) do
-		if planet.services(v)[service] then
+		if planet.services(v)[service] and v:canLand() then
 			table.insert(p,v)
 		end
 	end

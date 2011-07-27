@@ -65,6 +65,7 @@
 #include "sound.h"
 #include "music.h"
 #include "spfx.h"
+#include "damagetype.h"
 #include "economy.h"
 #include "menu.h"
 #include "mission.h"
@@ -541,6 +542,8 @@ void load_all (void)
    events_load(); /* no dep */
    loadscreen_render( 6./LOADING_STAGES, "Loading Special Effects..." );
    spfx_load(); /* no dep */
+   loadscreen_render( 6./LOADING_STAGES, "Loading Damage Types..." );
+   dtype_load(); /* no dep */
    loadscreen_render( 7./LOADING_STAGES, "Loading Outfits..." );
    outfit_load(); /* dep for ships */
    loadscreen_render( 8./LOADING_STAGES, "Loading Ships..." );
@@ -577,6 +580,7 @@ void unload_all (void)
    ships_free();
    outfit_free();
    spfx_free(); /* gets rid of the special effect */
+   dtype_free(); /* gets rid of the damage types */
    missions_free();
    events_cleanup(); /* Clean up events. */
    factions_free();
