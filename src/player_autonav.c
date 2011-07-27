@@ -83,6 +83,7 @@ static void player_autonavSetup (void)
          player.tc_max = MIN( conf.compression_velocity / solid_maxspeed(player.p->solid, player.p->speed, player.p->thrust), conf.compression_mult );
       else
          player.tc_max = conf.compression_velocity / solid_maxspeed(player.p->solid, player.p->speed, player.p->thrust);
+      player.tc_max = MAX( 1., player.tc_max );
    }
    tc_rampdown  = 0;
    tc_down      = 0.;
