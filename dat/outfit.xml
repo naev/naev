@@ -2526,8 +2526,8 @@
    <gfx_store>jammer0</gfx_store>
   </general>
   <specific type="modification">
-   <cpu>1</cpu>
-   <energy>5</energy>
+   <cpu>-1</cpu>
+   <energy>-5</energy>
    <ew_hide>7</ew_hide>
   </specific>
  </outfit>
@@ -2540,8 +2540,8 @@
    <gfx_store>jammer1</gfx_store>
   </general>
   <specific type="modification">
-   <cpu>3</cpu>
-   <energy>10</energy>
+   <cpu>-3</cpu>
+   <energy>-10</energy>
    <ew_hide>11</ew_hide>
   </specific>
  </outfit>
@@ -2554,10 +2554,10 @@
    <gfx_store>jammer0</gfx_store>
   </general>
   <specific type="jammer">
-   <cpu>4</cpu>
+   <cpu>-4</cpu>
    <range>1</range>
    <chance>1</chance>
-   <energy>15</energy>
+   <energy>-15</energy>
   </specific>
  </outfit>
  <outfit name="Milspec Jammer">
@@ -2569,10 +2569,10 @@
    <gfx_store>jammer1</gfx_store>
   </general>
   <specific type="jammer">
-   <cpu>8</cpu>
+   <cpu>-8</cpu>
    <range>1</range>
    <chance>1</chance>
-   <energy>30</energy>
+   <energy>-30</energy>
   </specific>
  </outfit>
  <outfit name="GUI - Brushed">
