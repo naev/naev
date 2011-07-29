@@ -39,6 +39,7 @@
 #include <string.h>
 #include <stdarg.h> /* va_list for gl_print */
 
+#include <zlib.h> /* Z_DEFAULT_COMPRESSION */ 
 #include <png.h>
 
 #include "SDL.h"
