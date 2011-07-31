@@ -190,8 +190,10 @@ void cli_addMessage( const char *msg )
    if (cli_state == NULL)
       return;
 
-   if (msg != NULL)
+   if (msg != NULL) {
       strncpy( cli_buffer[cli_cursor], msg, LINE_LENGTH );
+      cli_buffer[cli_cursor][LINE_LENGTH-1] = '\0';
+   }
    else
       cli_buffer[cli_cursor][0] = '\0';
 
