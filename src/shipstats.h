@@ -39,7 +39,7 @@ typedef enum ShipStatsType_ {
    SS_TYPE_D_LAUNCH_RATE,     /**< Launch rate for missiles. */  /* TODO */
    SS_TYPE_D_LAUNCH_RANGE,    /**< Launch range for missiles. */ /* TODO */
    SS_TYPE_D_AMMO_CAPACITY,   /**< Capacity of launchers. */     /* TODO */
-   SS_TYPE_D_LAUNCH_LOCKON,   /**< Lockon speed of launchers. */
+   SS_TYPE_D_LAUNCH_LOCKON,   /**< Lockon speed of launchers. */ /* TODO */
 
    /* Forward mounts. */
    SS_TYPE_D_FORWARD_HEAT,    /**< Heat generation for cannons. */
@@ -60,12 +60,13 @@ typedef enum ShipStatsType_ {
    /* Misc. */
    SS_TYPE_D_HEAT_DISSIPATION, /**< Ship heat dissipation. */
 
-   SS_TYPE_D_SENTINAL,        /**< Sentinal for double type. */
+   /*
+    * Integer type data. Should be continuous.
+    */
 
    /*
     * Boolean type data. Should be continuous.
     */
-   SS_TYPE_B_SENTINAL,        /**< Sentinal for boolean type. */
 
    SS_TYPE_SENTINAL,          /**< Sentinal for end of types. */
 } ShipStatsType;

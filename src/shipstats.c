@@ -17,6 +17,17 @@
 
 
 /**
+ * @brief The data type.
+ */
+typedef enum StatDataType_ {
+   SS_DATA_TYPE_DOUBLE,          /**< Relative [0:inf] value. */
+   SS_DATA_TYPE_DOUBLE_ABSOLUTE, /**< Absolute double value. */
+   SS_DATA_TYPE_INTEGER,         /**< Absolute integer value. */
+   SS_DATA_TYPE_BOOLEAN          /**< Boolean value, defaults 0. */
+} StatDataType;
+
+
+/**
  * @brief Internal look up table for ship stats.
  *
  * Makes it much easier to work with stats at the cost of some minor performance.
@@ -26,51 +37,47 @@ typedef struct ShipStatsLookup_ {
    const char *name;    /**< Name to look into XML for, must match name in the structure. */
    const char *display; /**< Display name for visibility by player. */
    size_t offset;       /**< Stores the byte offset in the structure. */
-   int data;            /**< Type of data for the stat. */
+   StatDataType data;   /**< Type of data for the stat. */
 } ShipStatsLookup;
 
 
-#define ELEM( t, n, dsp, d ) \
-   { .type=t, .name=#n, .display=dsp, .offset=offsetof( ShipStats, n ), .data=d }
-#define NELEM( t ) \
+#define D_ELEM( t, n, dsp ) \
+   { .type=t, .name=#n, .display=dsp, .offset=offsetof( ShipStats, n ), .data=SS_DATA_TYPE_DOUBLE }
+#define N_ELEM( t ) \
    { .type=t, .name=NULL, .display=NULL, .offset=0 }
 
 static const ShipStatsLookup ss_lookup[] = {
-   NELEM( SS_TYPE_NIL ),
+   N_ELEM( SS_TYPE_NIL ),
 
-   ELEM( SS_TYPE_D_JUMP_DELAY,      jump_delay, "Jump Time", 0 ),
-   ELEM( SS_TYPE_D_JUMP_RANGE,      jump_range, "Jump Range", 0 ),
-   ELEM( SS_TYPE_D_CARGO_INERTIA,   cargo_inertia, "Cargo Inertia", 0 ),
+   D_ELEM( SS_TYPE_D_JUMP_DELAY,      jump_delay,    "Jump Time" ),
+   D_ELEM( SS_TYPE_D_JUMP_RANGE,      jump_range,    "Jump Range" ),
+   D_ELEM( SS_TYPE_D_CARGO_INERTIA,   cargo_inertia, "Cargo Inertia" ),
 
-   ELEM( SS_TYPE_D_EW_HIDE,         ew_hide, "Detection", 0 ),
-   ELEM( SS_TYPE_D_EW_DETECT,       ew_detect, "Cloaking", 0 ),
+   D_ELEM( SS_TYPE_D_EW_HIDE,         ew_hide,       "Cloaking" ),
+   D_ELEM( SS_TYPE_D_EW_DETECT,       ew_detect,     "Detection" ),
 
-   ELEM( SS_TYPE_D_LAUNCH_RATE,     launch_rate, "Launch Rate", 0 ),
-   ELEM( SS_TYPE_D_LAUNCH_RANGE,    launch_range, "Launch Range", 0 ),
-   ELEM( SS_TYPE_D_AMMO_CAPACITY,   ammo_capacity, "Ammo Capacity", 0 ),
-   ELEM( SS_TYPE_D_LAUNCH_LOCKON,   launch_lockon, "Launch Lockon", 0 ),
+   D_ELEM( SS_TYPE_D_LAUNCH_RATE,     launch_rate,   "Launch Rate" ),
+   D_ELEM( SS_TYPE_D_LAUNCH_RANGE,    launch_range,  "Launch Range" ),
+   D_ELEM( SS_TYPE_D_AMMO_CAPACITY,   ammo_capacity, "Ammo Capacity" ),
+   D_ELEM( SS_TYPE_D_LAUNCH_LOCKON,   launch_lockon, "Launch Lockon" ),
 
-   ELEM( SS_TYPE_D_FORWARD_HEAT,    fwd_heat, "Heat (Cannon)", 0 ),
-   ELEM( SS_TYPE_D_FORWARD_DAMAGE,  fwd_damage, "Damage (Cannon)", 0 ),
-   ELEM( SS_TYPE_D_FORWARD_FIRERATE, fwd_firerate, "Fire Rate (Cannon)", 0 ),
-   ELEM( SS_TYPE_D_FORWARD_ENERGY,  fwd_energy, "Energy Usage (Cannon)", 0 ),
+   D_ELEM( SS_TYPE_D_FORWARD_HEAT,    fwd_heat,      "Heat (Cannon)" ),
+   D_ELEM( SS_TYPE_D_FORWARD_DAMAGE,  fwd_damage,    "Damage (Cannon)" ),
+   D_ELEM( SS_TYPE_D_FORWARD_FIRERATE, fwd_firerate, "Fire Rate (Cannon)" ),
+   D_ELEM( SS_TYPE_D_FORWARD_ENERGY,  fwd_energy,    "Energy Usage (Cannon)" ),
 
-   ELEM( SS_TYPE_D_TURRET_HEAT,     tur_heat, "Heat (Turret)", 0 ),
-   ELEM( SS_TYPE_D_TURRET_DAMAGE,   tur_damage, "Damage (Turret)", 0 ),
-   ELEM( SS_TYPE_D_TURRET_FIRERATE, tur_firerate, "Fire Rate (Turret)", 0 ),
-   ELEM( SS_TYPE_D_TURRET_ENERGY,   tur_energy, "Energy Usage (Turret)", 0 ),
+   D_ELEM( SS_TYPE_D_TURRET_HEAT,     tur_heat,      "Heat (Turret)" ),
+   D_ELEM( SS_TYPE_D_TURRET_DAMAGE,   tur_damage,    "Damage (Turret)" ),
+   D_ELEM( SS_TYPE_D_TURRET_FIRERATE, tur_firerate,  "Fire Rate (Turret)" ),
+   D_ELEM( SS_TYPE_D_TURRET_ENERGY,   tur_energy,    "Energy Usage (Turret)" ),
 
-   ELEM( SS_TYPE_D_NEBULA_DMG_SHIELD, nebula_dmg_shield, "Nebula Damage (Shield)", 0 ),
-   ELEM( SS_TYPE_D_NEBULA_DMG_ARMOUR, nebula_dmg_armour, "Nebula Damage (Armour)", 0 ),
+   D_ELEM( SS_TYPE_D_NEBULA_DMG_SHIELD, nebula_dmg_shield, "Nebula Damage (Shield)" ),
+   D_ELEM( SS_TYPE_D_NEBULA_DMG_ARMOUR, nebula_dmg_armour, "Nebula Damage (Armour)" ),
 
-   ELEM( SS_TYPE_D_HEAT_DISSIPATION, heat_dissipation, "Heat Dissipation", 0 ),
-
-   NELEM( SS_TYPE_D_SENTINAL ),
-
-   NELEM( SS_TYPE_B_SENTINAL ),
+   D_ELEM( SS_TYPE_D_HEAT_DISSIPATION, heat_dissipation, "Heat Dissipation" ),
 
    /* Sentinal. */
-   NELEM( SS_TYPE_SENTINAL )
+   N_ELEM( SS_TYPE_SENTINAL )
 };
 
 #undef NELEM
@@ -107,8 +114,14 @@ ShipStatList* ss_listFromXML( xmlNodePtr node )
 
    /* Set the data. */
    sl = &ss_lookup[ type ];
-   if (sl->data == 0)
-      ll->d.d     = xml_getFloat(node) / 100.;
+   switch (sl->data) {
+      case SS_DATA_TYPE_DOUBLE:
+         ll->d.d     = xml_getFloat(node) / 100.;
+         break;
+
+      default:
+         WARN("Unimplemented");
+   }
 
    return ll;
 }
@@ -156,9 +169,14 @@ int ss_statsInit( ShipStats *stats )
          continue;
 
       /* Handle doubles. */
-      if (sl->data == 0) {
-         dbl   = (double*) &ptr[ sl->offset ];
-         *dbl  = 1.0;
+      switch (sl->data) {
+         case SS_DATA_TYPE_DOUBLE:
+            dbl   = (double*) &ptr[ sl->offset ];
+            *dbl  = 1.0;
+            break;
+
+         default:
+            WARN("Unimplemented");
       }
    }
 
@@ -181,20 +199,26 @@ int ss_statsModSingle( ShipStats *stats, const ShipStatList* list, const ShipSta
    const ShipStatsLookup *sl = &ss_lookup[ list->type ];
 
    ptr = (char*) stats;
-   if (sl->data == 0) {
-      dbl   = (double*) &ptr[ sl->offset ];
-      *dbl += list->d.d;
-      if (*dbl < 0.) /* Don't let the values go negative. */
-         *dbl = 0.;
+   switch (sl->data) {
+      case SS_DATA_TYPE_DOUBLE:
+         dbl   = (double*) &ptr[ sl->offset ];
+         *dbl += list->d.d;
+         if (*dbl < 0.) /* Don't let the values go negative. */
+            *dbl = 0.;
 
-      /* We'll increment amount. */
-      if (amount != NULL) {
-         if (list->d.d > 0.) {
-            ptr      = (char*) amount;
-            dbl      = (double*) &ptr[ sl->offset ];
-            (*dbl)  += 1.0;
+         /* We'll increment amount. */
+         if (amount != NULL) {
+            if (list->d.d > 0.) {
+               ptr      = (char*) amount;
+               dbl      = (double*) &ptr[ sl->offset ];
+               (*dbl)  += 1.0;
+            }
          }
-      }
+         break;
+
+
+      default:
+         WARN("Unimplemented");
    }
 
    return 0;
@@ -303,12 +327,17 @@ int ss_statsDesc( const ShipStats *s, char *buf, int len, int newline )
          continue;
 
       /* Handle doubles. */
-      if (sl->data == 0) {
-         dbl   = (double*) &ptr[ sl->offset ];
-         if (fabs((*dbl)-1.) > 1e-10)
-            l += snprintf( &buf[l], (len-l),
-                  "%s%+.0f%% %s", (!newline && (l==0)) ? "" : "\n",
-                  ((*dbl)-1.)*100., sl->display );
+      switch (sl->data) {
+         case SS_DATA_TYPE_DOUBLE:
+            dbl   = (double*) &ptr[ sl->offset ];
+            if (fabs((*dbl)-1.) > 1e-10)
+               l += snprintf( &buf[l], (len-l),
+                     "%s%+.0f%% %s", (!newline && (l==0)) ? "" : "\n",
+                     ((*dbl)-1.)*100., sl->display );
+            break;
+
+         default:
+            WARN("Unimplemented");
       }
    }
 
