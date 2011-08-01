@@ -1186,7 +1186,7 @@
   <stats>
    <launch_rate>5</launch_rate>
    <launch_range>10</launch_range>
-   <jam_counter>3</jam_counter>
+   <launch_lockon>10</launch_lockon>
   </stats>
  </ship>
  <!-- Corvettes -->
@@ -1334,7 +1334,7 @@
   </slots>
   <stats>
    <fwd_damage>4</fwd_damage>
-   <jam_counter>4</jam_counter>
+   <launch_lockon>15</launch_lockon>
   </stats>
  </ship>
  <ship name="Sirius Preacher">

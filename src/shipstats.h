@@ -39,6 +39,7 @@ typedef enum ShipStatsType_ {
    SS_TYPE_D_LAUNCH_RATE,     /**< Launch rate for missiles. */  /* TODO */
    SS_TYPE_D_LAUNCH_RANGE,    /**< Launch range for missiles. */ /* TODO */
    SS_TYPE_D_AMMO_CAPACITY,   /**< Capacity of launchers. */     /* TODO */
+   SS_TYPE_D_LAUNCH_LOCKON,   /**< Lockon speed of launchers. */
 
    /* Forward mounts. */
    SS_TYPE_D_FORWARD_HEAT,    /**< Heat generation for cannons. */
@@ -69,7 +70,11 @@ typedef enum ShipStatsType_ {
    SS_TYPE_SENTINAL,          /**< Sentinal for end of types. */
 } ShipStatsType;
 
-
+/**
+ * @brief Represents relative ship statistics as a linked list.
+ *
+ * These values are relative so something like -0.15 would be -15%.
+ */
 typedef struct ShipStatList_ {
    struct ShipStatList_ *next; /**< Next pointer. */
 
@@ -85,12 +90,9 @@ typedef struct ShipStatList_ {
 /**
  * @brief Represents ship statistics, properties ship can use.
  *
- * These values for outfits/ships are in percent, so 25 would be +25%,
- *  -25 would be -25% and so on.
- *
- * However for pilots these are normalized and centered around 1 so they are
- *  in the [0:2] range, with 1. being default. This value then modulates the
- *  stat's base value.
+ * These are normalized and centered around 1 so they are in the [0:2]
+ * range, with 1. being default. This value then modulates the stat's base
+ * value.
  *
  * Example:
  *  0.7 would lower by 30% the base value.
@@ -122,6 +124,7 @@ typedef struct ShipStats_ {
    double launch_rate;     /**< Fire rate of launchers. */ /* TODO */
    double launch_range;    /**< Range of launchers. */ /* TODO */
    double ammo_capacity;   /**< Capacity of launchers. */ /* TODO */
+   double launch_lockon;   /**< Lock on speed of launchers. */ /* TODO */
 
    /* Fighter/Corvette type. */
    double fwd_heat;        /**< Heat of forward mounts. */

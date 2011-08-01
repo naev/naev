@@ -19,44 +19,46 @@
 typedef struct ShipStatsLookup_ {
    ShipStatsType type;
    const char *name;
+   const char *display;
    size_t offset;
    int data;
 } ShipStatsLookup;
 
 
-#define ELEM( t, n, d ) \
-   { .type=t, .name=#n, .offset=offsetof( ShipStats, n ), .data=d }
+#define ELEM( t, n, dsp, d ) \
+   { .type=t, .name=#n, .display=dsp, .offset=offsetof( ShipStats, n ), .data=d }
 #define NELEM( t ) \
-   { .type=t, .name=NULL, .offset=0 }
+   { .type=t, .name=NULL, .display=NULL, .offset=0 }
 
 static const ShipStatsLookup ss_lookup[] = {
    NELEM( SS_TYPE_NIL ),
 
-   ELEM( SS_TYPE_D_JUMP_DELAY,      jump_delay, 0 ),
-   ELEM( SS_TYPE_D_JUMP_RANGE,      jump_range, 0 ),
-   ELEM( SS_TYPE_D_CARGO_INERTIA,   cargo_inertia, 0 ),
+   ELEM( SS_TYPE_D_JUMP_DELAY,      jump_delay, "Jump Time", 0 ),
+   ELEM( SS_TYPE_D_JUMP_RANGE,      jump_range, "Jump Range", 0 ),
+   ELEM( SS_TYPE_D_CARGO_INERTIA,   cargo_inertia, "Cargo Inertia", 0 ),
 
-   ELEM( SS_TYPE_D_EW_HIDE,         ew_hide, 0 ),
-   ELEM( SS_TYPE_D_EW_DETECT,       ew_detect, 0 ),
+   ELEM( SS_TYPE_D_EW_HIDE,         ew_hide, "Detection", 0 ),
+   ELEM( SS_TYPE_D_EW_DETECT,       ew_detect, "Cloaking", 0 ),
 
-   ELEM( SS_TYPE_D_LAUNCH_RATE,     launch_rate, 0 ),
-   ELEM( SS_TYPE_D_LAUNCH_RANGE,    launch_range, 0 ),
-   ELEM( SS_TYPE_D_AMMO_CAPACITY,   ammo_capacity, 0 ),
+   ELEM( SS_TYPE_D_LAUNCH_RATE,     launch_rate, "Launch Rate", 0 ),
+   ELEM( SS_TYPE_D_LAUNCH_RANGE,    launch_range, "Launch Range", 0 ),
+   ELEM( SS_TYPE_D_AMMO_CAPACITY,   ammo_capacity, "Ammo Capacity", 0 ),
+   ELEM( SS_TYPE_D_LAUNCH_LOCKON,   launch_lockon, "Launch Lockon", 0 ),
 
-   ELEM( SS_TYPE_D_FORWARD_HEAT,    fwd_heat, 0 ),
-   ELEM( SS_TYPE_D_FORWARD_DAMAGE,  fwd_damage, 0 ),
-   ELEM( SS_TYPE_D_FORWARD_FIRERATE, fwd_firerate, 0 ),
-   ELEM( SS_TYPE_D_FORWARD_ENERGY,  fwd_energy, 0 ),
+   ELEM( SS_TYPE_D_FORWARD_HEAT,    fwd_heat, "Heat (Cannon)", 0 ),
+   ELEM( SS_TYPE_D_FORWARD_DAMAGE,  fwd_damage, "Damage (Cannon)", 0 ),
+   ELEM( SS_TYPE_D_FORWARD_FIRERATE, fwd_firerate, "Fire Rate (Cannon)", 0 ),
+   ELEM( SS_TYPE_D_FORWARD_ENERGY,  fwd_energy, "Energy Usage (Cannon)", 0 ),
 
-   ELEM( SS_TYPE_D_TURRET_HEAT,     tur_heat, 0 ),
-   ELEM( SS_TYPE_D_TURRET_DAMAGE,   tur_damage, 0 ),
-   ELEM( SS_TYPE_D_TURRET_FIRERATE, tur_firerate, 0 ),
-   ELEM( SS_TYPE_D_TURRET_ENERGY,   tur_energy, 0 ),
+   ELEM( SS_TYPE_D_TURRET_HEAT,     tur_heat, "Heat (Turret)", 0 ),
+   ELEM( SS_TYPE_D_TURRET_DAMAGE,   tur_damage, "Damage (Turret)", 0 ),
+   ELEM( SS_TYPE_D_TURRET_FIRERATE, tur_firerate, "Fire Rate (Turret)", 0 ),
+   ELEM( SS_TYPE_D_TURRET_ENERGY,   tur_energy, "Energy Usage (Turret)", 0 ),
 
-   ELEM( SS_TYPE_D_NEBULA_DMG_SHIELD, nebula_dmg_shield, 0 ),
-   ELEM( SS_TYPE_D_NEBULA_DMG_ARMOUR, nebula_dmg_armour, 0 ),
+   ELEM( SS_TYPE_D_NEBULA_DMG_SHIELD, nebula_dmg_shield, "Nebula Damage (Shield)", 0 ),
+   ELEM( SS_TYPE_D_NEBULA_DMG_ARMOUR, nebula_dmg_armour, "Nebula Damage (Armour)", 0 ),
 
-   ELEM( SS_TYPE_D_HEAT_DISSIPATION, heat_dissipation, 0 ),
+   ELEM( SS_TYPE_D_HEAT_DISSIPATION, heat_dissipation, "Heat Dissipation", 0 ),
 
    NELEM( SS_TYPE_D_SENTINAL ),
 
@@ -263,7 +265,7 @@ int ss_statsListDesc( const ShipStatList *ll, char *buf, int len, int newline )
 
       i += snprintf( &buf[i], (len-i),
             "%s%+.0f%% %s", (!newline&&(i==0)) ? "" : "\n",
-            ll->d.d*100., sl->name );
+            ll->d.d*100., sl->display );
    }
    return i;
 }
@@ -281,46 +283,31 @@ int ss_statsListDesc( const ShipStatList *ll, char *buf, int len, int newline )
  */
 int ss_statsDesc( const ShipStats *s, char *buf, int len, int newline )
 {
-   int i;
+   int i, l;
+   char *ptr;
+   double *dbl;
+   const ShipStatsLookup *sl;
 
-   /* Set stat text. */
-   i = 0;
-#define DESC_ADD(x, s) \
-   do { \
-      if ((fabs((x)-1.) > 1e-10) && (len-i > 0)) { \
-         i += snprintf( &buf[i], (len-i), \
-               "%s%+.0f%% "s, (!newline && (i==0)) ? "" : "\n", \
-               ((x)-1.)*100. ); \
-   } } while (0)
-   /* Freighter Stuff. */
-   DESC_ADD(s->jump_delay,"Jump Time");
-   DESC_ADD(s->jump_range,"Jump Range");
-   DESC_ADD(s->cargo_inertia,"Cargo Inertia");
-   /* Scout Stuff. */
-   DESC_ADD(s->ew_detect,"Detection");
-   DESC_ADD(s->ew_hide,"Cloaking");
-   /* Military Stuff. */
-   DESC_ADD(s->heat_dissipation,"Heat Dissipation");
-   /* Bomber Stuff. */
-   DESC_ADD(s->launch_rate,"Launch Rate");
-   DESC_ADD(s->launch_range,"Launch Range");
-   DESC_ADD(s->ammo_capacity,"Ammo Capacity");
-   /* Fighter Stuff. */
-   DESC_ADD(s->fwd_heat,"Heat (Cannon)");
-   DESC_ADD(s->fwd_damage,"Damage (Cannon)");
-   DESC_ADD(s->fwd_firerate,"Fire Rate (Cannon)");
-   DESC_ADD(s->fwd_energy,"Energy Usage (Cannon)");
-   /* Cruiser Stuff. */
-   DESC_ADD(s->tur_heat,"Heat (Turret)");
-   DESC_ADD(s->tur_damage,"Damage (Turret)");
-   DESC_ADD(s->tur_firerate,"Fire Rate (Turret)");
-   DESC_ADD(s->tur_energy,"Energy Usage (Turret)");
-   /* Misc. */
-   DESC_ADD(s->nebula_dmg_shield,"Nebula Damage (Shield)");
-   DESC_ADD(s->nebula_dmg_armour,"Nebula Damage (Armour)");
-#undef DESC_ADD
+   l   = 0;
+   ptr = (char*) s;
+   for (i=0; i<SS_TYPE_SENTINAL; i++) {
+      sl = &ss_lookup[ i ];
 
-   return i;
+      /* Only want valid names. */
+      if (sl->name == NULL)
+         continue;
+
+      /* Handle doubles. */
+      if (sl->data == 0) {
+         dbl   = (double*) &ptr[ sl->offset ];
+         if (fabs((*dbl)-1.) > 1e-10)
+            l += snprintf( &buf[l], (len-l),
+                  "%s%+.0f%% %s", (!newline && (l==0)) ? "" : "\n",
+                  ((*dbl)-1.)*100., sl->display );
+      }
+   }
+
+   return l;
 }
 
 
