@@ -164,9 +164,10 @@ int ss_statsInit( ShipStats *stats )
  *
  *    @param stats Stat structure to modify.
  *    @param list Single element to apply.
+ *    @param amount If non nil stores the number found in amount.
  *    @return 0 on success.
  */
-int ss_statsModSingle( ShipStats *stats, const ShipStatList* list )
+int ss_statsModSingle( ShipStats *stats, const ShipStatList* list, const ShipStats *amount )
 {
    char *ptr;
    double *dbl;
@@ -175,7 +176,18 @@ int ss_statsModSingle( ShipStats *stats, const ShipStatList* list )
    ptr = (char*) stats;
    if (sl->data == 0) {
       dbl   = (double*) &ptr[ sl->offset ];
-      *dbl *= (1. + list->d.d);
+      *dbl += list->d.d;
+      if (*dbl < 0.) /* Don't let the values go negative. */
+         *dbl = 0.;
+
+      /* We'll increment amount. */
+      if (amount != NULL) {
+         if (list->d.d > 0.) {
+            ptr      = (char*) amount;
+            dbl      = (double*) &ptr[ sl->offset ];
+            (*dbl)  += 1.0;
+         }
+      }
    }
 
    return 0;
@@ -187,15 +199,16 @@ int ss_statsModSingle( ShipStats *stats, const ShipStatList* list )
  *
  *    @param stats Stats to update.
  *    @param list List to update from.
+ *    @param amount If non nil stores the number found in amount.
  */
-int ss_statsModFromList( ShipStats *stats, const ShipStatList* list )
+int ss_statsModFromList( ShipStats *stats, const ShipStatList* list, const ShipStats *amount )
 {
    int ret;
    const ShipStatList *ll;
 
    ret = 0;
    for (ll = list; ll != NULL; ll = ll->next)
-      ret |= ss_statsModSingle( stats, ll );
+      ret |= ss_statsModSingle( stats, ll, amount );
 
    return ret;
 }

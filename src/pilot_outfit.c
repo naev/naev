@@ -771,9 +771,8 @@ void pilot_calcStats( Pilot* pilot )
    PilotOutfitSlot *slot;
    double ac, sc, ec, fc; /* temporary health coefficients to set */
    double arel, srel, erel; /* relative health bonuses. */
-   int ntur_firerate, nfwd_firerate;
    int njammers;
-   int ew_ndetect, ew_nhide;
+   ShipStats amount, *s;
 
    /*
     * set up the basic stuff
@@ -809,6 +808,7 @@ void pilot_calcStats( Pilot* pilot )
    pilot->jam_chance    = 0.;
    /* Stats. */
    memcpy( &pilot->stats, &pilot->ship->stats_array, sizeof(ShipStats) );
+   memset( &amount, 0, sizeof(ShipStats) );
 
    /* cargo has to be reset */
    pilot_cargoCalc(pilot);
@@ -816,11 +816,8 @@ void pilot_calcStats( Pilot* pilot )
    /*
     * now add outfit changes
     */
-   nfwd_firerate = ntur_firerate = 0;
    pilot->mass_outfit   = 0.;
    njammers             = 0;
-   ew_ndetect           = 0;
-   ew_nhide             = 0;
    pilot->jam_range     = 0.;
    pilot->jam_chance    = 0.;
    arel                 = 0.;
@@ -870,49 +867,7 @@ void pilot_calcStats( Pilot* pilot )
          /*
           * Stats.
           */
-         ss_statsModFromList( &pilot->stats, o->u.mod.stats );
-#if 0
-         /* Freighter. */
-         s->jump_delay        += os->jump_delay * q;
-         s->jump_range        += os->jump_range * q;
-         s->cargo_inertia     += os->cargo_inertia * q;
-         /* Scout. */
-         if (os->ew_hide != 0.) {
-            s->ew_hide           += os->ew_hide * q;
-            ew_nhide++;
-         }
-         if (os->ew_detect != 0.) {
-            s->ew_detect         += os->ew_detect * q;
-            ew_ndetect++;
-         }
-         /* Military. */
-         s->heat_dissipation  += os->heat_dissipation * q;
-         /* Bomber. */
-         s->launch_rate       += os->launch_rate * q;
-         s->launch_range      += os->launch_range * q;
-         s->ammo_capacity     += os->ammo_capacity * q;
-         /* Fighter. */
-         s->fwd_heat      += os->fwd_heat * q;
-         s->fwd_damage    += os->fwd_damage * q;
-         s->fwd_energy    += os->fwd_energy * q;
-         if (os->fwd_firerate != 0.) {
-            s->fwd_firerate  += os->fwd_firerate * q;
-            if (os->fwd_firerate > 0.) /* Only modulate bonuses. */
-               nfwd_firerate    += q;
-         }
-         /* Cruiser. */
-         s->tur_heat      += os->tur_heat * q;
-         s->tur_damage    += os->tur_damage * q;
-         s->tur_energy    += os->tur_energy * q;
-         if (os->tur_firerate != 0.) {
-            s->tur_firerate  += os->tur_firerate * q;
-            if (os->tur_firerate > 0.) /* Only modulate bonuses. */
-               ntur_firerate    += q;
-         }
-         /* Misc. */
-         s->nebula_dmg_shield += os->nebula_dmg_shield * q;
-         s->nebula_dmg_armour += os->nebula_dmg_armour * q;
-#endif
+         ss_statsModFromList( &pilot->stats, o->u.mod.stats, &amount ); /* TODO Handle q or remove it? */
       }
       else if (outfit_isAfterburner(o)) /* Afterburner */
          pilot->afterburner = pilot->outfits[i]; /* Set afterburner */
@@ -933,33 +888,15 @@ void pilot_calcStats( Pilot* pilot )
    /* Set final energy tau. */
    pilot->energy_tau = pilot->energy_max / pilot->energy_regen;
 
+   /* Slot voodoo. */
+   s        = &pilot->stats;
    /*
     * Electronic warfare setting base parameters.
     */
-#if 0
-   s->ew_hide           = 1. + s->ew_hide/100. * exp( -0.2 * (double)(MAX(ew_nhide-1,0)) );
-   s->ew_detect         = 1. + s->ew_detect/100. * exp( -0.2 * (double)(MAX(ew_ndetect-1,0)) );
+   s->ew_hide           = 1. + (s->ew_hide-1.) * exp( -0.2 * (double)(MAX(amount.ew_hide-1,0)) );
+   s->ew_detect         = 1. + (s->ew_detect-1.) * exp( -0.2 * (double)(MAX(amount.ew_detect-1,0)) );
    pilot->ew_base_hide  = s->ew_hide;
    pilot->ew_detect     = s->ew_detect;
-
-   /*
-    * Normalize stats.
-    */
-   /* Freighter. */
-   s->jump_range        = s->jump_range/100. + 1.;
-   s->jump_delay        = s->jump_delay/100. + 1.;
-   s->cargo_inertia     = s->cargo_inertia/100. + 1.;
-   /* Scout. */
-   /* Military. */
-   s->heat_dissipation  = s->heat_dissipation/100. + 1.;
-   /* Bomber. */
-   s->launch_rate       = s->launch_rate/100. + 1.;
-   s->launch_range      = s->launch_range/100. + 1.;
-   s->ammo_capacity     = s->ammo_capacity/100. + 1.;
-   /* Fighter. */
-   s->fwd_heat      = s->fwd_heat/100. + 1.;
-   s->fwd_damage    = s->fwd_damage/100. + 1.;
-   s->fwd_energy    = s->fwd_energy/100. + 1.;
    /* Fire rate:
     *  amount = p * exp( -0.15 * (n-1) )
     *  1x 15% -> 15%
@@ -967,22 +904,13 @@ void pilot_calcStats( Pilot* pilot )
     *  3x 15% -> 33.33%
     *  6x 15% -> 42.51%
     */
-   s->fwd_firerate  = s->fwd_firerate/100.;
-   if (nfwd_firerate > 0)
-      s->fwd_firerate *= exp( -0.15 * (double)(MAX(nfwd_firerate-1,0)) );
-   s->fwd_firerate += 1.;
+   if (amount.fwd_firerate > 0) {
+      s->fwd_firerate = 1. + (s->fwd_firerate-1.) * exp( -0.15 * (double)(MAX(amount.fwd_firerate-1,0)) );
+   }
    /* Cruiser. */
-   s->tur_heat      = s->tur_heat/100. + 1.;
-   s->tur_damage    = s->tur_damage/100. + 1.;
-   s->tur_energy    = s->tur_energy/100. + 1.;
-   s->tur_firerate  = s->tur_firerate/100.;
-   if (ntur_firerate > 0)
-      s->tur_firerate *= exp( -0.15 * (double)(MAX(ntur_firerate-1,0)) );
-   s->tur_firerate += 1.;
-   /* Misc. */
-   s->nebula_dmg_shield = s->nebula_dmg_shield/100. + 1.;
-   s->nebula_dmg_armour = s->nebula_dmg_armour/100. + 1.;
-#endif
+   if (amount.tur_firerate > 0) {
+      s->tur_firerate = 1. + (s->tur_firerate-1.) * exp( -0.15 * (double)(MAX(amount.tur_firerate-1,0)) );
+   }
 
    /*
     * Calculate jammers.
