@@ -31,6 +31,7 @@
 #include "land_outfits.h"
 #include "player_gui.h"
 #include "info.h"
+#include "shipstats.h"
 #include "tk/toolkit_priv.h" /* Yes, I'm a bad person, abstractions be damned! */
 
 
@@ -1260,7 +1261,7 @@ static void equipment_genLists( unsigned int wid )
             l += snprintf( &alt[i][l], SHIP_ALT_MAX-l,
                   "\n%.0f%% Jam [%.0f Range]",
                   s->jam_chance*100., s->jam_range );
-         l += ship_statsDesc( &s->stats, &alt[i][l], SHIP_ALT_MAX-l, 1, 1 );
+         l += ss_statsDesc( &s->stats, &alt[i][l], SHIP_ALT_MAX-l, 1 );
          if (p == l) {
             free( alt[i] );
             alt[i] = NULL;

@@ -812,7 +812,7 @@ void pilot_calcStats( Pilot* pilot )
    pilot->jam_range     = 0.;
    pilot->jam_chance    = 0.;
    /* Stats. */
-   memcpy( s, &pilot->ship->stats, sizeof(ShipStats) );
+   memcpy( s, &pilot->ship->stats_array, sizeof(ShipStats) );
 
    /* cargo has to be reset */
    pilot_cargoCalc(pilot);

@@ -1969,13 +1969,8 @@ void outfit_free (void)
          free(o->u.fig.ship);
       if (outfit_isGUI(o) && o->u.gui.gui)
          free(o->u.gui.gui);
-      if (o->type == OUTFIT_TYPE_MODIFCATION) {
-         while (o->u.mod.stats != NULL) {
-            ShipStatList *ll = o->u.mod.stats;
-            o->u.mod.stats = ll->next;
-            free(ll);
-         }
-      }
+      if (o->type == OUTFIT_TYPE_MODIFCATION)
+         ss_free( o->u.mod.stats );
 
       /* strings */
       if (o->typename)

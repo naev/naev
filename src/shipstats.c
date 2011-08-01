@@ -102,7 +102,6 @@ ShipStatList* ss_listFromXML( xmlNodePtr node )
    sl = &ss_lookup[ type ];
    if (sl->data == 0)
       ll->d.d     = xml_getFloat(node) / 100.;
-   DEBUG("%s : %f", sl->name, ll->d.d);
 
    return ll;
 }
@@ -267,17 +266,17 @@ int ss_statsListDesc( const ShipStatList *ll, char *buf, int len, int newline )
  *    @param pilot Stats come from a pilot.
  *    @return Number of characters written.
  */
-int ss_statsDesc( const ShipStats *s, char *buf, int len, int newline, int pilot )
+int ss_statsDesc( const ShipStats *s, char *buf, int len, int newline )
 {
    int i;
 
    /* Set stat text. */
    i = 0;
 #define DESC_ADD(x, s) \
-   if ((pilot && (x!=1.)) || (!pilot && (x!=0.))) \
+   if (fabs(x-1.) < 1e-10) \
       i += snprintf( &buf[i], len-i, \
             "%s%+.0f%% "s, (!newline&&(i==0)) ? "" : "\n", \
-            (pilot) ? (x-1.)*100. : x );
+            (x-1.)*100. );
    /* Freighter Stuff. */
    DESC_ADD(s->jump_delay,"Jump Time");
    DESC_ADD(s->jump_range,"Jump Range");
@@ -308,5 +307,21 @@ int ss_statsDesc( const ShipStats *s, char *buf, int len, int newline, int pilot
 
    return i;
 }
+
+
+/**
+ * @brief Frees a list of ship stats.
+ *
+ *    @param ll List to free.
+ */
+void ss_free( ShipStatList *ll )
+{
+   while (ll != NULL) {
+      ShipStatList *tmp = ll;
+      ll = ll->next;
+      free(tmp);
+   }
+}
+
 
 
