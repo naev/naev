@@ -36,13 +36,13 @@
 
 
 /* global/main window */
-#define BUTTON_WIDTH 200 /**< Default button width. */
-#define BUTTON_HEIGHT 40 /**< Default button height. */
+#define BUTTON_WIDTH    200 /**< Default button width. */
+#define BUTTON_HEIGHT   40 /**< Default button height. */
 
-#define SHIP_ALT_MAX 256 /**< Maximum ship alt text. */
+#define SHIP_ALT_MAX    256 /**< Maximum ship alt text. */
 
-#define SETGUI_WIDTH      400 /**< Load window width. */
-#define SETGUI_HEIGHT     300 /**< Load window height. */
+#define SETGUI_WIDTH    400 /**< Load window width. */
+#define SETGUI_HEIGHT   300 /**< Load window height. */
 
 
 /*
@@ -1226,9 +1226,9 @@ static void equipment_genLists( unsigned int wid )
       alt   = malloc( sizeof(char*) * nships );
       for (i=0; i<nships; i++) {
          s  = player_getShip( sships[i]);
-         alt[i] = malloc( SHIP_ALT_MAX );
          dps = 0.;
          eps = 0.;
+         /* Calculate damage and energy per second. */
          for (j=0; j<s->noutfits; j++) {
             o = s->outfits[j]->outfit;
             if (o==NULL)
@@ -1252,16 +1252,18 @@ static void equipment_genLists( unsigned int wid )
             dps  += shots * mod_damage * dmg->damage;
             eps  += shots * mod_energy * outfit_energy(o);
          }
-         l  = snprintf( alt[i], SHIP_ALT_MAX, "Ship Stats" );
+         /* Write to buffer. */
+         alt[i] = malloc( sizeof(char)*SHIP_ALT_MAX );
+         l  = snprintf( &alt[i][0], SHIP_ALT_MAX, "Ship Stats" );
          p  = l;
          if (dps > 0.)
-            l += snprintf( &alt[i][l], SHIP_ALT_MAX-l,
+            l += snprintf( &alt[i][l], (SHIP_ALT_MAX-l),
                   "\n%.2f DPS [%.2f EPS]", dps, eps );
          if (s->jam_chance > 0.)
-            l += snprintf( &alt[i][l], SHIP_ALT_MAX-l,
+            l += snprintf( &alt[i][l], (SHIP_ALT_MAX-l),
                   "\n%.0f%% Jam [%.0f Range]",
                   s->jam_chance*100., s->jam_range );
-         l += ss_statsDesc( &s->stats, &alt[i][l], SHIP_ALT_MAX-l, 1 );
+         l += ss_statsDesc( &s->stats, &alt[i][l], (SHIP_ALT_MAX-l), 1 );
          if (p == l) {
             free( alt[i] );
             alt[i] = NULL;

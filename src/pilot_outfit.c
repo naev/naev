@@ -771,13 +771,9 @@ void pilot_calcStats( Pilot* pilot )
    PilotOutfitSlot *slot;
    double ac, sc, ec, fc; /* temporary health coefficients to set */
    double arel, srel, erel; /* relative health bonuses. */
-   ShipStats *s;
    int ntur_firerate, nfwd_firerate;
    int njammers;
    int ew_ndetect, ew_nhide;
-
-   /* Comfortability. */
-   s = &pilot->stats;
 
    /*
     * set up the basic stuff
@@ -812,7 +808,7 @@ void pilot_calcStats( Pilot* pilot )
    pilot->jam_range     = 0.;
    pilot->jam_chance    = 0.;
    /* Stats. */
-   memcpy( s, &pilot->ship->stats_array, sizeof(ShipStats) );
+   memcpy( &pilot->stats, &pilot->ship->stats_array, sizeof(ShipStats) );
 
    /* cargo has to be reset */
    pilot_cargoCalc(pilot);
@@ -874,7 +870,7 @@ void pilot_calcStats( Pilot* pilot )
          /*
           * Stats.
           */
-         ss_statsModFromList( s, o->u.mod.stats );
+         ss_statsModFromList( &pilot->stats, o->u.mod.stats );
 #if 0
          /* Freighter. */
          s->jump_delay        += os->jump_delay * q;
@@ -940,6 +936,7 @@ void pilot_calcStats( Pilot* pilot )
    /*
     * Electronic warfare setting base parameters.
     */
+#if 0
    s->ew_hide           = 1. + s->ew_hide/100. * exp( -0.2 * (double)(MAX(ew_nhide-1,0)) );
    s->ew_detect         = 1. + s->ew_detect/100. * exp( -0.2 * (double)(MAX(ew_ndetect-1,0)) );
    pilot->ew_base_hide  = s->ew_hide;
@@ -985,6 +982,7 @@ void pilot_calcStats( Pilot* pilot )
    /* Misc. */
    s->nebula_dmg_shield = s->nebula_dmg_shield/100. + 1.;
    s->nebula_dmg_armour = s->nebula_dmg_armour/100. + 1.;
+#endif
 
    /*
     * Calculate jammers.
@@ -1013,7 +1011,7 @@ void pilot_calcStats( Pilot* pilot )
    pilot->fuel   = fc * pilot->fuel_max;
 
    /* Calculate mass. */
-   pilot->solid->mass = pilot->ship->mass + s->cargo_inertia*pilot->mass_cargo + pilot->mass_outfit;
+   pilot->solid->mass = pilot->ship->mass + pilot->stats.cargo_inertia*pilot->mass_cargo + pilot->mass_outfit;
 
    /* Calculate the heat. */
    pilot_heatCalc( pilot );

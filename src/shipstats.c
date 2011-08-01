@@ -248,8 +248,8 @@ int ss_statsListDesc( const ShipStatList *ll, char *buf, int len, int newline )
    for ( ; ll != NULL; ll=ll->next) {
       sl = &ss_lookup[ ll->type ];
 
-      i += snprintf( &buf[i], len-i, \
-            "%s%+.0f%% %s", (!newline&&(i==0)) ? "" : "\n", \
+      i += snprintf( &buf[i], (len-i),
+            "%s%+.0f%% %s", (!newline&&(i==0)) ? "" : "\n",
             ll->d.d*100., sl->name );
    }
    return i;
@@ -273,10 +273,12 @@ int ss_statsDesc( const ShipStats *s, char *buf, int len, int newline )
    /* Set stat text. */
    i = 0;
 #define DESC_ADD(x, s) \
-   if (fabs(x-1.) < 1e-10) \
-      i += snprintf( &buf[i], len-i, \
-            "%s%+.0f%% "s, (!newline&&(i==0)) ? "" : "\n", \
-            (x-1.)*100. );
+   do { \
+      if ((fabs((x)-1.) > 1e-10) && (len-i > 0)) { \
+         i += snprintf( &buf[i], (len-i), \
+               "%s%+.0f%% "s, (!newline && (i==0)) ? "" : "\n", \
+               ((x)-1.)*100. ); \
+   } } while (0)
    /* Freighter Stuff. */
    DESC_ADD(s->jump_delay,"Jump Time");
    DESC_ADD(s->jump_range,"Jump Range");

@@ -712,18 +712,20 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
             WARN("Ship '%s' has unknown stat '%s'.", temp->name, cur->name);
          } while (xml_nextNode(cur));
 
+         /* Load array. */
+         ss_statsInit( &temp->stats_array );
+         ss_statsModFromList( &temp->stats_array, temp->stats );
+
          /* Create description. */
          if (temp->stats != NULL) {
             temp->desc_stats = malloc( STATS_DESC_MAX );
-            i = ss_statsListDesc( temp->stats, temp->desc_stats, STATS_DESC_MAX, 0 );
+            //i = ss_statsListDesc( temp->stats, temp->desc_stats, STATS_DESC_MAX, 0 );
+            i = ss_statsDesc( &temp->stats_array, temp->desc_stats, STATS_DESC_MAX, 0 );
             if (i <= 0) {
                free( temp->desc_stats );
                temp->desc_stats = NULL;
             }
          }
-
-         /* Load array. */
-         ss_statsModFromList( &temp->stats_array, temp->stats );
 
          continue;
       }
