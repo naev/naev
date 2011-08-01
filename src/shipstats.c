@@ -16,12 +16,17 @@
 #include "log.h"
 
 
+/**
+ * @brief Internal look up table for ship stats.
+ *
+ * Makes it much easier to work with stats at the cost of some minor performance.
+ */
 typedef struct ShipStatsLookup_ {
-   ShipStatsType type;
-   const char *name;
-   const char *display;
-   size_t offset;
-   int data;
+   ShipStatsType type;  /**< Type of the stat. */
+   const char *name;    /**< Name to look into XML for, must match name in the structure. */
+   const char *display; /**< Display name for visibility by player. */
+   size_t offset;       /**< Stores the byte offset in the structure. */
+   int data;            /**< Type of data for the stat. */
 } ShipStatsLookup;
 
 
