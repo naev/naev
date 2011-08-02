@@ -103,9 +103,6 @@ static const ShipStatsLookup ss_lookup[] = {
    N__ELEM( SS_TYPE_SENTINAL )
 };
 
-#undef NELEM
-#undef ELEM
-
 
 /*
  * Prototypes.
