@@ -47,8 +47,10 @@ typedef struct ShipStatsLookup_ {
 } ShipStatsLookup;
 
 
+/* Flexible do everything macro. */
 #define ELEM( t, n, dsp, d , i) \
    { .type=t, .name=#n, .display=dsp, .data=d, .inverted=i, .offset=offsetof( ShipStats, n ) }
+/* Standard types. */
 #define D__ELEM( t, n, dsp ) \
    ELEM( t, n, dsp, SS_DATA_TYPE_DOUBLE, 0 )
 #define A__ELEM( t, n, dsp ) \
@@ -57,6 +59,7 @@ typedef struct ShipStatsLookup_ {
    ELEM( t, n, dsp, SS_DATA_TYPE_INTEGER, 0 )
 #define B__ELEM( t ) \
    ELEM( t, n, dsp, SS_DATA_TYPE_BOOLEAN, 0 )
+/* Inverted types. */
 #define DI_ELEM( t, n, dsp ) \
    ELEM( t, n, dsp, SS_DATA_TYPE_DOUBLE, 1 )
 #define AI_ELEM( t, n, dsp ) \
@@ -65,9 +68,13 @@ typedef struct ShipStatsLookup_ {
    ELEM( t, n, dsp, SS_DATA_TYPE_INTEGER, 1 )
 #define BI_ELEM( t ) \
    ELEM( t, n, dsp, SS_DATA_TYPE_BOOLEAN, 1 )
+/** Nil element. */
 #define N__ELEM( t ) \
    { .type=t, .name=NULL, .display=NULL, .inverted=0, .offset=0 }
 
+/**
+ * The ultimate look up table for ship stats, everything goes through this.
+ */
 static const ShipStatsLookup ss_lookup[] = {
    /* Null element. */
    N__ELEM( SS_TYPE_NIL ),
