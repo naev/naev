@@ -1679,19 +1679,20 @@ static void pilot_hyperspace( Pilot* p, double dt )
          }
       }
       else {
-
-         /* brake */
-         if (!pilot_isFlag(p, PILOT_HYP_BRAKE) && (VMOD(p->solid->vel) > MIN_VEL_ERR)) {
-            diff = pilot_face( p, VANGLE(p->solid->vel) + M_PI );
-
-            if (ABS(diff) < MAX_DIR_ERR)
-               pilot_setThrust( p, 1. );
-            else
-               pilot_setThrust( p, 0. );
+         /* If the ship needs to charge up its hyperdrive, brake. */
+         if (!p->stats.misc_instant_jump) {
+            if (!pilot_isFlag(p, PILOT_HYP_BRAKE) && (VMOD(p->solid->vel) > MIN_VEL_ERR)) {
+               diff = pilot_face( p, VANGLE(p->solid->vel) + M_PI );
+   
+               if (ABS(diff) < MAX_DIR_ERR)
+                  pilot_setThrust( p, 1. );
+               else
+                  pilot_setThrust( p, 0. );
+            }
          }
          /* face target */
          else {
-            /* Done braking. */
+            /* Done braking or no braking required. */
             pilot_setFlag( p, PILOT_HYP_BRAKE);
             pilot_setThrust( p, 0. );
 
@@ -1702,7 +1703,7 @@ static void pilot_hyperspace( Pilot* p, double dt )
 
             if (ABS(diff) < MAX_DIR_ERR) { /* we can now prepare the jump */
                pilot_setTurn( p, 0. );
-               p->ptimer = HYPERSPACE_ENGINE_DELAY * p->stats.jump_delay;
+               p->ptimer = HYPERSPACE_ENGINE_DELAY * !p->stats.misc_instant_jump;
                pilot_setFlag(p, PILOT_HYP_BEGIN);
                /* Player plays sound. */
                if (p->id == PLAYER_ID)

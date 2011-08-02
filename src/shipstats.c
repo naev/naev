@@ -57,7 +57,7 @@ typedef struct ShipStatsLookup_ {
    ELEM( t, n, dsp, SS_DATA_TYPE_DOUBLE_ABSOLUTE, 0 )
 #define I__ELEM( t, n, dsp ) \
    ELEM( t, n, dsp, SS_DATA_TYPE_INTEGER, 0 )
-#define B__ELEM( t ) \
+#define B__ELEM( t, n, dsp ) \
    ELEM( t, n, dsp, SS_DATA_TYPE_BOOLEAN, 0 )
 /* Inverted types. */
 #define DI_ELEM( t, n, dsp ) \
@@ -66,7 +66,7 @@ typedef struct ShipStatsLookup_ {
    ELEM( t, n, dsp, SS_DATA_TYPE_DOUBLE_ABSOLUTE, 1 )
 #define II_ELEM( t, n, dsp ) \
    ELEM( t, n, dsp, SS_DATA_TYPE_INTEGER, 1 )
-#define BI_ELEM( t ) \
+#define BI_ELEM( t, n, dsp ) \
    ELEM( t, n, dsp, SS_DATA_TYPE_BOOLEAN, 1 )
 /** Nil element. */
 #define N__ELEM( t ) \
@@ -80,7 +80,6 @@ static const ShipStatsLookup ss_lookup[] = {
    N__ELEM( SS_TYPE_NIL ),
 
    DI_ELEM( SS_TYPE_D_JUMP_DELAY,      jump_delay,    "Jump Time" ),
-   D__ELEM( SS_TYPE_D_JUMP_RANGE,      jump_range,    "Jump Range" ),
    DI_ELEM( SS_TYPE_D_CARGO_INERTIA,   cargo_inertia, "Cargo Inertia" ),
 
    D__ELEM( SS_TYPE_D_EW_HIDE,         ew_hide,       "Cloaking" ),
@@ -105,6 +104,8 @@ static const ShipStatsLookup ss_lookup[] = {
    DI_ELEM( SS_TYPE_D_NEBULA_DMG_ARMOUR, nebula_dmg_armour, "Nebula Damage (Armour)" ),
 
    D__ELEM( SS_TYPE_D_HEAT_DISSIPATION, heat_dissipation, "Heat Dissipation" ),
+   
+   B__ELEM( SS_TYPE_B_INSTANT_JUMP,    misc_instant_jump, "Instant Jump" ),
 
    /* Sentinal. */
    N__ELEM( SS_TYPE_SENTINAL )

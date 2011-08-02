@@ -27,8 +27,7 @@ typedef enum ShipStatsType_ {
     * D: Double type data. Should be continuous.
     */
    /* Freighter-type. */
-   SS_TYPE_D_JUMP_DELAY,      /**< Modulates the jump delay. */
-   SS_TYPE_D_JUMP_RANGE,      /**< Distance to jump from jump point. */
+   SS_TYPE_D_JUMP_DELAY,      /**< Modulates the time that passes during a hyperspace jump. */
    SS_TYPE_D_CARGO_INERTIA,   /**< Modifies the effect of cargo_mass. */
 
    /* Stealth. */
@@ -71,6 +70,7 @@ typedef enum ShipStatsType_ {
    /*
     * B: Boolean type data. Should be continuous.
     */
+   SS_TYPE_B_INSTANT_JUMP, /**< Do not require brake or chargeup to jump. */
 
    SS_TYPE_SENTINAL,          /**< Sentinal for end of types. */
 } ShipStatsType;
@@ -127,8 +127,7 @@ typedef struct ShipStats_ {
 #endif
 
    /* Freighter-type. */
-   double jump_delay;      /**< Modulates the jump delay. */
-   double jump_range;      /**< Distance from a jump point it can initiate jump from. */
+   double jump_delay;      /**< Modulates the time that passes during a hyperspace jump. */
    double cargo_inertia;   /**< Lowers the effect of cargo mass. */
 
    /* Stealth. */
@@ -159,6 +158,7 @@ typedef struct ShipStats_ {
    /* Misc. */
    double nebula_dmg_shield; /**< Shield nebula resistance. */
    double nebula_dmg_armour; /**< Armour nebula resistance. */
+   int misc_instant_jump; /**< Do not require brake or chargeup to jump. */
 } ShipStats;
 
 

@@ -213,7 +213,7 @@ static void player_autonav (void)
 
       case AUTONAV_JUMP_BRAKE:
          /* Target jump. */
-         ret   = player_autonavBrake();
+         ret   = (player.p->stats.misc_instant_jump ? 1 : player_autonavBrake());
          /* Try to jump or see if braked. */
          if (ret) {
             if (space_canHyperspace(player.p))
