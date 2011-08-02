@@ -1680,15 +1680,14 @@ static void pilot_hyperspace( Pilot* p, double dt )
       }
       else {
          /* If the ship needs to charge up its hyperdrive, brake. */
-         if (!p->stats.misc_instant_jump) {
-            if (!pilot_isFlag(p, PILOT_HYP_BRAKE) && (VMOD(p->solid->vel) > MIN_VEL_ERR)) {
-               diff = pilot_face( p, VANGLE(p->solid->vel) + M_PI );
-   
-               if (ABS(diff) < MAX_DIR_ERR)
-                  pilot_setThrust( p, 1. );
-               else
-                  pilot_setThrust( p, 0. );
-            }
+         if (!p->stats.misc_instant_jump &&
+               !pilot_isFlag(p, PILOT_HYP_BRAKE) && (VMOD(p->solid->vel) > MIN_VEL_ERR)) {
+            diff = pilot_face( p, VANGLE(p->solid->vel) + M_PI );
+
+            if (ABS(diff) < MAX_DIR_ERR)
+               pilot_setThrust( p, 1. );
+            else
+               pilot_setThrust( p, 0. );
          }
          /* face target */
          else {
