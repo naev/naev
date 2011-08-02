@@ -17,14 +17,14 @@
  * Syntax:
  *    SS_TYPE_#1_#2
  *
- * #1 is either D for double data or B for boolean data.
+ * #1 is D for double, A for absolute double, I for integer or B for boolean.
  * #2 is the name.
  */
 typedef enum ShipStatsType_ {
    SS_TYPE_NIL,               /**< Invalid type. */
 
    /*
-    * Double type data. Should be continuous.
+    * D: Double type data. Should be continuous.
     */
    /* Freighter-type. */
    SS_TYPE_D_JUMP_DELAY,      /**< Modulates the jump delay. */
@@ -61,11 +61,15 @@ typedef enum ShipStatsType_ {
    SS_TYPE_D_HEAT_DISSIPATION, /**< Ship heat dissipation. */
 
    /*
-    * Integer type data. Should be continuous.
+    * A: Absolute double type data. Should be continuous.
     */
 
    /*
-    * Boolean type data. Should be continuous.
+    * I: Integer type data. Should be continuous.
+    */
+
+   /*
+    * B: Boolean type data. Should be continuous.
     */
 
    SS_TYPE_SENTINAL,          /**< Sentinal for end of types. */
@@ -74,7 +78,14 @@ typedef enum ShipStatsType_ {
 /**
  * @brief Represents relative ship statistics as a linked list.
  *
- * These values are relative so something like -0.15 would be -15%.
+ * Doubles:
+ *  These values are relative so something like -0.15 would be -15%.
+ *
+ * Absolute and Integers:
+ *  These values are just absolute values.
+ *
+ * Booleans:
+ *  Can only be 1.
  */
 typedef struct ShipStatList_ {
    struct ShipStatList_ *next; /**< Next pointer. */
@@ -82,8 +93,8 @@ typedef struct ShipStatList_ {
    int target;          /**< Whether or not it affects the target. */
    ShipStatsType type;  /**< Type of stat. */
    union {
-      int    i;         /**< Integer data. */
       double d;         /**< Floating point data. */
+      int    i;         /**< Integer data. */
    } d; /**< Stat data. */
 } ShipStatList;
 
@@ -91,13 +102,19 @@ typedef struct ShipStatList_ {
 /**
  * @brief Represents ship statistics, properties ship can use.
  *
- * These are normalized and centered around 1 so they are in the [0:2]
- * range, with 1. being default. This value then modulates the stat's base
- * value.
+ * Doubles: 
+ *  These are normalized and centered around 1 so they are in the [0:2]
+ *  range, with 1. being default. This value then modulates the stat's base
+ *  value.
+ *  Example:
+ *   0.7 would lower by 30% the base value.
+ *   1.2 would increase by 20% the base value.
  *
- * Example:
- *  0.7 would lower by 30% the base value.
- *  1.2 would increase by 20% the base value.
+ * Absolute and Integers:
+ *  Absolute values in whatever units it's meant to use.
+ *
+ * Booleans:
+ *  1 or 0 values wher 1 indicates property is set.
  */
 typedef struct ShipStats_ {
 #if 0
@@ -122,10 +139,10 @@ typedef struct ShipStats_ {
    double heat_dissipation; /**< Global ship dissipation. */
 
    /* Launchers. */
-   double launch_rate;     /**< Fire rate of launchers. */ /* TODO */
-   double launch_range;    /**< Range of launchers. */ /* TODO */
-   double ammo_capacity;   /**< Capacity of launchers. */ /* TODO */
-   double launch_lockon;   /**< Lock on speed of launchers. */ /* TODO */
+   double launch_rate;     /**< Fire rate of launchers. */
+   double launch_range;    /**< Range of launchers. */
+   double ammo_capacity;   /**< Capacity of launchers. */
+   double launch_lockon;   /**< Lock on speed of launchers. */
 
    /* Fighter/Corvette type. */
    double fwd_heat;        /**< Heat of forward mounts. */

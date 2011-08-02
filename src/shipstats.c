@@ -33,51 +33,74 @@ typedef enum StatDataType_ {
  * Makes it much easier to work with stats at the cost of some minor performance.
  */
 typedef struct ShipStatsLookup_ {
+   /* Explicitly set. */
    ShipStatsType type;  /**< Type of the stat. */
    const char *name;    /**< Name to look into XML for, must match name in the structure. */
    const char *display; /**< Display name for visibility by player. */
-   size_t offset;       /**< Stores the byte offset in the structure. */
    StatDataType data;   /**< Type of data for the stat. */
+   int inverted;        /**< Indicates whether the good value is inverted, by
+                             default positive is good, with this set negative
+                             is good. */
+
+   /* Self calculated. */
+   size_t offset;       /**< Stores the byte offset in the structure. */
 } ShipStatsLookup;
 
 
-#define D_ELEM( t, n, dsp ) \
-   { .type=t, .name=#n, .display=dsp, .offset=offsetof( ShipStats, n ), .data=SS_DATA_TYPE_DOUBLE }
-#define N_ELEM( t ) \
-   { .type=t, .name=NULL, .display=NULL, .offset=0 }
+#define ELEM( t, n, dsp, d , i) \
+   { .type=t, .name=#n, .display=dsp, .data=d, .inverted=i, .offset=offsetof( ShipStats, n ) }
+#define D__ELEM( t, n, dsp ) \
+   ELEM( t, n, dsp, SS_DATA_TYPE_DOUBLE, 0 )
+#define A__ELEM( t, n, dsp ) \
+   ELEM( t, n, dsp, SS_DATA_TYPE_DOUBLE_ABSOLUTE, 0 )
+#define I__ELEM( t, n, dsp ) \
+   ELEM( t, n, dsp, SS_DATA_TYPE_INTEGER, 0 )
+#define B__ELEM( t ) \
+   ELEM( t, n, dsp, SS_DATA_TYPE_BOOLEAN, 0 )
+#define DI_ELEM( t, n, dsp ) \
+   ELEM( t, n, dsp, SS_DATA_TYPE_DOUBLE, 1 )
+#define AI_ELEM( t, n, dsp ) \
+   ELEM( t, n, dsp, SS_DATA_TYPE_DOUBLE_ABSOLUTE, 1 )
+#define II_ELEM( t, n, dsp ) \
+   ELEM( t, n, dsp, SS_DATA_TYPE_INTEGER, 1 )
+#define BI_ELEM( t ) \
+   ELEM( t, n, dsp, SS_DATA_TYPE_BOOLEAN, 1 )
+#define N__ELEM( t ) \
+   { .type=t, .name=NULL, .display=NULL, .inverted=0, .offset=0 }
 
 static const ShipStatsLookup ss_lookup[] = {
-   N_ELEM( SS_TYPE_NIL ),
+   /* Null element. */
+   N__ELEM( SS_TYPE_NIL ),
 
-   D_ELEM( SS_TYPE_D_JUMP_DELAY,      jump_delay,    "Jump Time" ),
-   D_ELEM( SS_TYPE_D_JUMP_RANGE,      jump_range,    "Jump Range" ),
-   D_ELEM( SS_TYPE_D_CARGO_INERTIA,   cargo_inertia, "Cargo Inertia" ),
+   DI_ELEM( SS_TYPE_D_JUMP_DELAY,      jump_delay,    "Jump Time" ),
+   D__ELEM( SS_TYPE_D_JUMP_RANGE,      jump_range,    "Jump Range" ),
+   DI_ELEM( SS_TYPE_D_CARGO_INERTIA,   cargo_inertia, "Cargo Inertia" ),
 
-   D_ELEM( SS_TYPE_D_EW_HIDE,         ew_hide,       "Cloaking" ),
-   D_ELEM( SS_TYPE_D_EW_DETECT,       ew_detect,     "Detection" ),
+   D__ELEM( SS_TYPE_D_EW_HIDE,         ew_hide,       "Cloaking" ),
+   D__ELEM( SS_TYPE_D_EW_DETECT,       ew_detect,     "Detection" ),
 
-   D_ELEM( SS_TYPE_D_LAUNCH_RATE,     launch_rate,   "Launch Rate" ),
-   D_ELEM( SS_TYPE_D_LAUNCH_RANGE,    launch_range,  "Launch Range" ),
-   D_ELEM( SS_TYPE_D_AMMO_CAPACITY,   ammo_capacity, "Ammo Capacity" ),
-   D_ELEM( SS_TYPE_D_LAUNCH_LOCKON,   launch_lockon, "Launch Lockon" ),
+   D__ELEM( SS_TYPE_D_LAUNCH_RATE,     launch_rate,   "Launch Rate" ),
+   D__ELEM( SS_TYPE_D_LAUNCH_RANGE,    launch_range,  "Launch Range" ),
+   D__ELEM( SS_TYPE_D_AMMO_CAPACITY,   ammo_capacity, "Ammo Capacity" ),
+   D__ELEM( SS_TYPE_D_LAUNCH_LOCKON,   launch_lockon, "Launch Lockon" ),
 
-   D_ELEM( SS_TYPE_D_FORWARD_HEAT,    fwd_heat,      "Heat (Cannon)" ),
-   D_ELEM( SS_TYPE_D_FORWARD_DAMAGE,  fwd_damage,    "Damage (Cannon)" ),
-   D_ELEM( SS_TYPE_D_FORWARD_FIRERATE, fwd_firerate, "Fire Rate (Cannon)" ),
-   D_ELEM( SS_TYPE_D_FORWARD_ENERGY,  fwd_energy,    "Energy Usage (Cannon)" ),
+   DI_ELEM( SS_TYPE_D_FORWARD_HEAT,    fwd_heat,      "Heat (Cannon)" ),
+   D__ELEM( SS_TYPE_D_FORWARD_DAMAGE,  fwd_damage,    "Damage (Cannon)" ),
+   D__ELEM( SS_TYPE_D_FORWARD_FIRERATE, fwd_firerate, "Fire Rate (Cannon)" ),
+   DI_ELEM( SS_TYPE_D_FORWARD_ENERGY,  fwd_energy,    "Energy Usage (Cannon)" ),
 
-   D_ELEM( SS_TYPE_D_TURRET_HEAT,     tur_heat,      "Heat (Turret)" ),
-   D_ELEM( SS_TYPE_D_TURRET_DAMAGE,   tur_damage,    "Damage (Turret)" ),
-   D_ELEM( SS_TYPE_D_TURRET_FIRERATE, tur_firerate,  "Fire Rate (Turret)" ),
-   D_ELEM( SS_TYPE_D_TURRET_ENERGY,   tur_energy,    "Energy Usage (Turret)" ),
+   DI_ELEM( SS_TYPE_D_TURRET_HEAT,     tur_heat,      "Heat (Turret)" ),
+   D__ELEM( SS_TYPE_D_TURRET_DAMAGE,   tur_damage,    "Damage (Turret)" ),
+   D__ELEM( SS_TYPE_D_TURRET_FIRERATE, tur_firerate,  "Fire Rate (Turret)" ),
+   DI_ELEM( SS_TYPE_D_TURRET_ENERGY,   tur_energy,    "Energy Usage (Turret)" ),
 
-   D_ELEM( SS_TYPE_D_NEBULA_DMG_SHIELD, nebula_dmg_shield, "Nebula Damage (Shield)" ),
-   D_ELEM( SS_TYPE_D_NEBULA_DMG_ARMOUR, nebula_dmg_armour, "Nebula Damage (Armour)" ),
+   DI_ELEM( SS_TYPE_D_NEBULA_DMG_SHIELD, nebula_dmg_shield, "Nebula Damage (Shield)" ),
+   DI_ELEM( SS_TYPE_D_NEBULA_DMG_ARMOUR, nebula_dmg_armour, "Nebula Damage (Armour)" ),
 
-   D_ELEM( SS_TYPE_D_HEAT_DISSIPATION, heat_dissipation, "Heat Dissipation" ),
+   D__ELEM( SS_TYPE_D_HEAT_DISSIPATION, heat_dissipation, "Heat Dissipation" ),
 
    /* Sentinal. */
-   N_ELEM( SS_TYPE_SENTINAL )
+   N__ELEM( SS_TYPE_SENTINAL )
 };
 
 #undef NELEM
@@ -87,6 +110,10 @@ static const ShipStatsLookup ss_lookup[] = {
 /*
  * Prototypes.
  */
+static int ss_printD( char *buf, int len, int newline, double d, const ShipStatsLookup *sl );
+static int ss_printA( char *buf, int len, int newline, double d, const ShipStatsLookup *sl );
+static int ss_printI( char *buf, int len, int newline, int i, const ShipStatsLookup *sl );
+static int ss_printB( char *buf, int len, int newline, int b, const ShipStatsLookup *sl );
 
 
 /**
@@ -119,8 +146,17 @@ ShipStatList* ss_listFromXML( xmlNodePtr node )
          ll->d.d     = xml_getFloat(node) / 100.;
          break;
 
-      default:
-         WARN("Unimplemented");
+      case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
+         ll->d.d     = xml_getFloat(node);
+         break;
+
+      case SS_DATA_TYPE_BOOLEAN:
+         ll->d.i     = !!xml_getInt(node);
+         break;
+
+      case SS_DATA_TYPE_INTEGER:
+         ll->d.i     = xml_getInt(node);
+         break;
    }
 
    return ll;
@@ -156,9 +192,8 @@ int ss_statsInit( ShipStats *stats )
    double *dbl;
    const ShipStatsLookup *sl;
 
-#if DEBUGGING
+   /* Clear the memory. */
    memset( stats, 0, sizeof(ShipStats) );
-#endif /* DEBUGGING */
 
    ptr = (char*) stats;
    for (i=0; i<SS_TYPE_SENTINAL; i++) {
@@ -175,8 +210,11 @@ int ss_statsInit( ShipStats *stats )
             *dbl  = 1.0;
             break;
 
-         default:
-            WARN("Unimplemented");
+         /* No need to set, memset does the work. */
+         case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
+         case SS_DATA_TYPE_INTEGER:
+         case SS_DATA_TYPE_BOOLEAN:
+            break;
       }
    }
 
@@ -196,19 +234,22 @@ int ss_statsModSingle( ShipStats *stats, const ShipStatList* list, const ShipSta
 {
    char *ptr;
    double *dbl;
+   int *i;
    const ShipStatsLookup *sl = &ss_lookup[ list->type ];
 
    ptr = (char*) stats;
    switch (sl->data) {
       case SS_DATA_TYPE_DOUBLE:
+      case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
          dbl   = (double*) &ptr[ sl->offset ];
          *dbl += list->d.d;
-         if (*dbl < 0.) /* Don't let the values go negative. */
+         if ((sl->data==SS_DATA_TYPE_DOUBLE) && (*dbl < 0.)) /* Don't let the values go negative. */
             *dbl = 0.;
 
          /* We'll increment amount. */
          if (amount != NULL) {
-            if (list->d.d > 0.) {
+            if ((sl->inverted && (list->d.d < 0.)) ||
+                  (!sl->inverted && (list->d.d > 0.))) {
                ptr      = (char*) amount;
                dbl      = (double*) &ptr[ sl->offset ];
                (*dbl)  += 1.0;
@@ -216,9 +257,23 @@ int ss_statsModSingle( ShipStats *stats, const ShipStatList* list, const ShipSta
          }
          break;
 
+      case SS_DATA_TYPE_INTEGER:
+         i     = (int*) &ptr[ sl->offset ];
+         *i   += list->d.i;
+         if (amount != NULL) {
+            if ((sl->inverted && (list->d.i < 0)) ||
+                  (!sl->inverted && (list->d.i > 0))) {
+               ptr      = (char*) amount;
+               i        = (int*) &ptr[ sl->offset ];
+               (*i)    += 1;
+            }
+         }
+         break;
 
-      default:
-         WARN("Unimplemented");
+      case SS_DATA_TYPE_BOOLEAN:
+         i     = (int*) &ptr[ sl->offset ];
+         *i    = 1; /* Can only set to true. */
+         break;
    }
 
    return 0;
@@ -276,6 +331,60 @@ ShipStatsType ss_typeFromName( const char *name )
 
 
 /**
+ * @brief Helper to print doubles.
+ */
+static int ss_printD( char *buf, int len, int newline, double d, const ShipStatsLookup *sl )
+{
+   if (fabs(d) < 1e-10)
+      return 0;
+   return snprintf( buf, len, "%s%+.0f%% %s",
+         (newline) ? "\n" : "",
+         d*100., sl->display );
+}
+
+
+/**
+ * @brief Helper to print absolute doubles.
+ */
+static int ss_printA( char *buf, int len, int newline, double d, const ShipStatsLookup *sl )
+{
+   if (fabs(d) < 1e-10)
+      return 0;
+   return snprintf( buf, len, "%s%+.0f %s",
+         (newline) ? "\n" : "",
+         d, sl->display );
+}
+
+
+/**
+ * @brief Helper to print integers.
+ */
+static int ss_printI( char *buf, int len, int newline, int i, const ShipStatsLookup *sl )
+{
+   if (i == 0)
+      return 0;
+   return snprintf( buf, len, "%s%+d %s",
+         (newline) ? "\n" : "",
+         i, sl->display );
+}
+
+
+/**
+ * @brief Helper to print booleans.
+ */
+static int ss_printB( char *buf, int len, int newline, int b, const ShipStatsLookup *sl )
+{
+   if (!b)
+      return 0;
+   return snprintf( buf, len, "%s%s",
+         (newline) ? "\n" : "",
+         sl->display );
+}
+
+
+
+
+/**
  * @brief Writes the ship statistics description.
  *
  *    @param s Ship stats to use.
@@ -292,9 +401,23 @@ int ss_statsListDesc( const ShipStatList *ll, char *buf, int len, int newline )
    for ( ; ll != NULL; ll=ll->next) {
       sl = &ss_lookup[ ll->type ];
 
-      i += snprintf( &buf[i], (len-i),
-            "%s%+.0f%% %s", (!newline&&(i==0)) ? "" : "\n",
-            ll->d.d*100., sl->display );
+      switch (sl->data) {
+         case SS_DATA_TYPE_DOUBLE:
+            i += ss_printD( &buf[i], (len-i), (newline||(i!=0)), ll->d.d, sl );
+            break;
+
+         case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
+            i += ss_printA( &buf[i], (len-i), (newline||(i!=0)), ll->d.d, sl );
+            break;
+
+         case SS_DATA_TYPE_INTEGER:
+            i += ss_printI( &buf[i], (len-i), (newline||(i!=0)), ll->d.i, sl );
+            break;
+
+         case SS_DATA_TYPE_BOOLEAN:
+            i += ss_printB( &buf[i], (len-i), (newline||(i!=0)), ll->d.i, sl );
+            break;
+      }
    }
    return i;
 }
@@ -315,6 +438,7 @@ int ss_statsDesc( const ShipStats *s, char *buf, int len, int newline )
    int i, l;
    char *ptr;
    double *dbl;
+   int *num;
    const ShipStatsLookup *sl;
 
    l   = 0;
@@ -326,18 +450,26 @@ int ss_statsDesc( const ShipStats *s, char *buf, int len, int newline )
       if (sl->name == NULL)
          continue;
 
-      /* Handle doubles. */
       switch (sl->data) {
          case SS_DATA_TYPE_DOUBLE:
             dbl   = (double*) &ptr[ sl->offset ];
-            if (fabs((*dbl)-1.) > 1e-10)
-               l += snprintf( &buf[l], (len-l),
-                     "%s%+.0f%% %s", (!newline && (l==0)) ? "" : "\n",
-                     ((*dbl)-1.)*100., sl->display );
+            l += ss_printD( &buf[l], (len-l), (newline||(l!=0)), ((*dbl)-1.), sl );
             break;
 
-         default:
-            WARN("Unimplemented");
+         case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
+            dbl   = (double*) &ptr[ sl->offset ];
+            l += ss_printA( &buf[l], (len-l), (newline||(l!=0)), (*dbl), sl );
+            break;
+
+         case SS_DATA_TYPE_INTEGER:
+            num   = (int*) &ptr[ sl->offset ];
+            l += ss_printI( &buf[l], (len-l), (newline||(l!=0)), (*num), sl );
+            break;
+
+         case SS_DATA_TYPE_BOOLEAN:
+            num   = (int*) &ptr[ sl->offset ];
+            l += ss_printB( &buf[l], (len-l), (newline||(l!=0)), (*num), sl );
+            break;
       }
    }
 
