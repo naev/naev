@@ -1102,6 +1102,7 @@ static int pilotL_weapset( lua_State *L )
    double delay, firemod, enermod, t;
    int id, all, level, level_match;
    int is_lau, is_fb;
+   const Damage *dmg;
 
    /* Defaults. */
    po_list = NULL;
@@ -1248,12 +1249,15 @@ static int pilotL_weapset( lua_State *L )
          lua_rawset(L,-3);
 
          /* Damage type. */
-         lua_pushstring(L, "dtype");
          if (is_lau && (slot->u.ammo.outfit != NULL))
-            lua_pushstring(L, dtype_damageTypeToStr( outfit_damage(slot->u.ammo.outfit)->type ));
+            dmg = outfit_damage( slot->u.ammo.outfit );
          else
-            lua_pushstring(L, dtype_damageTypeToStr( outfit_damage(slot->outfit)->type ));
-         lua_rawset(L,-3);
+            dmg = outfit_damage( slot->outfit );
+         if (dmg != NULL) {
+            lua_pushstring(L, "dtype");
+            lua_pushstring(L, dtype_damageTypeToStr( dmg->type ) );
+            lua_rawset(L,-3);
+         }
 
          /* Track. */
          if (slot->outfit->type == OUTFIT_TYPE_TURRET_BOLT) {
