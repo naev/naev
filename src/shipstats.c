@@ -115,6 +115,8 @@ static const ShipStatsLookup ss_lookup[] = {
 /*
  * Prototypes.
  */
+static const char* ss_printD_colour( double d, const ShipStatsLookup *sl );
+static const char* ss_printI_colour( int i, const ShipStatsLookup *sl );
 static int ss_printD( char *buf, int len, int newline, double d, const ShipStatsLookup *sl );
 static int ss_printA( char *buf, int len, int newline, double d, const ShipStatsLookup *sl );
 static int ss_printI( char *buf, int len, int newline, int i, const ShipStatsLookup *sl );
@@ -336,14 +338,47 @@ ShipStatsType ss_typeFromName( const char *name )
 
 
 /**
+ * @brief Some colour coding for ship stats doubles.
+ */
+static const char* ss_printD_colour( double d, const ShipStatsLookup *sl )
+{
+   if (sl->inverted) {
+      if (d < 0.)
+         return "D";
+      return "r";
+   }
+
+   if (d > 0.)
+      return "D";
+   return "r";
+}
+/**
+ * @brief Some colour coding for ship stats integers.
+ */
+static const char* ss_printI_colour( int i, const ShipStatsLookup *sl )
+{
+   if (sl->inverted) {
+      if (i < 0)
+         return "D";
+      return "r";
+   }
+
+   if (i > 0)
+      return "D";
+   return "r";
+}
+
+
+/**
  * @brief Helper to print doubles.
  */
 static int ss_printD( char *buf, int len, int newline, double d, const ShipStatsLookup *sl )
 {
    if (fabs(d) < 1e-10)
       return 0;
-   return snprintf( buf, len, "%s%+.0f%% %s",
+   return snprintf( buf, len, "%s\e%s%+.0f%%\e0 %s",
          (newline) ? "\n" : "",
+         ss_printD_colour( d, sl ),
          d*100., sl->display );
 }
 
@@ -355,8 +390,9 @@ static int ss_printA( char *buf, int len, int newline, double d, const ShipStats
 {
    if (fabs(d) < 1e-10)
       return 0;
-   return snprintf( buf, len, "%s%+.0f %s",
+   return snprintf( buf, len, "%s\e%s%+.0f\e0 %s",
          (newline) ? "\n" : "",
+         ss_printD_colour( d, sl ),
          d, sl->display );
 }
 
@@ -368,8 +404,9 @@ static int ss_printI( char *buf, int len, int newline, int i, const ShipStatsLoo
 {
    if (i == 0)
       return 0;
-   return snprintf( buf, len, "%s%+d %s",
+   return snprintf( buf, len, "%s\e%s%+d\e0 %s",
          (newline) ? "\n" : "",
+         ss_printI_colour( i, sl ),
          i, sl->display );
 }
 
