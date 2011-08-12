@@ -48,10 +48,14 @@ static PilotWeaponSet* pilot_weapSet( Pilot* p, int id )
 
 /**
  * @brief Fires a weapon set.
+ *
+ *    @param p Pilot firing weaponsets.
+ *    @param ws Weapon set to fire.
+ *    @param level Level of the firing weapon set.
  */
 static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
 {
-   int i, j, ret, s;
+   int i, j, ret, s, recalc;
    Pilot *pt;
    double dist2;
    Outfit *o;
@@ -74,6 +78,7 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
    }
 
    /* Fire. */
+   recalc = 0;
    ret = 0;
    for (i=0; i<array_size(ws->slots); i++) {
       o = ws->slots[i].slot->outfit;
@@ -85,6 +90,15 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
       /* Only "active" outfits. */
       if ((level != -1) && (ws->slots[i].level != level))
          continue;
+
+      /* Modifications get a special deal. */
+      if (outfit_isMod(o)) {
+         if (ws->slots[i].slot->state == PILOT_OUTFIT_OFF) {
+            ws->slots[i].slot->state = PILOT_OUTFIT_ON;
+            recalc = 1;
+         }
+         continue;
+      }
 
       /* Only run once for each weapon type in the group. */
       s = 0;
@@ -115,12 +129,20 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
       ret += pilot_shootWeaponSetOutfit( p, ws, o, level );
    }
 
+   /* Must recalculate. */
+   if (recalc)
+      pilot_calcStats( p );
+
    return ret;
 }
 
 
 /**
  * @brief Handles a weapon set press.
+ *
+ *    @param p Pilot the weapon set belongs to.
+ *    @param id ID of the weapon set.
+ *    @param type Is +1 if it's a press or -1 if it's a release.
  */
 void pilot_weapSetPress( Pilot* p, int id, int type )
 {
@@ -155,6 +177,8 @@ void pilot_weapSetUpdate( Pilot* p )
 
 /**
  * @brief Executes a weapon set.
+ *
+ * This sets the weapon set as active for active sets or fires them for fire sets.
  *
  *    @param p Pilot to manipulate.
  *    @param id ID of the weapon set.
@@ -623,8 +647,9 @@ int pilot_shoot( Pilot* p, int level )
  */
 void pilot_shootStop( Pilot* p, int level )
 {
-   int i;
+   int i, recalc;
    PilotWeaponSet *ws;
+   PilotOutfitSlot *slot;
 
    /* Get active set. */
    ws = pilot_weapSet( p, p->active_set );
@@ -634,7 +659,9 @@ void pilot_shootStop( Pilot* p, int level )
       return;
 
    /* Stop all beams. */
+   recalc = 0;
    for (i=0; i<array_size(ws->slots); i++) {
+      slot = ws->slots[i].slot;
 
       /* Must have associated outfit. */
       if (ws->slots[i].slot->outfit == NULL)
@@ -645,8 +672,14 @@ void pilot_shootStop( Pilot* p, int level )
          continue;
 
       /* Only handle beams. */
-      if (!outfit_isBeam(ws->slots[i].slot->outfit))
+      if (!outfit_isBeam(slot->outfit)) {
+         /* Turn off the state. */
+         if (outfit_isMod( slot->outfit )) {
+            slot->state = PILOT_OUTFIT_OFF;
+            recalc = 1;
+         }
          continue;
+      }
 
       /* Stop beam. */
       if (ws->slots[i].slot->u.beamid > 0) {
@@ -654,6 +687,10 @@ void pilot_shootStop( Pilot* p, int level )
          ws->slots[i].slot->u.beamid = 0;
       }
    }
+
+   /* Must recalculate. */
+   if (recalc)
+      pilot_calcStats( p );
 }
 
 
