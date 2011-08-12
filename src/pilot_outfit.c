@@ -827,6 +827,7 @@ void pilot_calcStats( Pilot* pilot )
       slot = pilot->outfits[i];
       o    = slot->outfit;
 
+      /* Outfit must exist. */
       if (o==NULL)
          continue;
 
@@ -839,6 +840,10 @@ void pilot_calcStats( Pilot* pilot )
 
       /* Add mass. */
       pilot->mass_outfit   += o->mass;
+
+      /* Active outfits must be on to affect stuff. */
+      if (slot->active && (slot->state==PILOT_OUTFIT_OFF))
+         continue;
 
       if (outfit_isMod(o)) { /* Modification */
          /* movement */
