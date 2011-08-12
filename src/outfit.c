@@ -330,6 +330,20 @@ static int outfit_setDefaultSize( Outfit *o )
    return 0;
 }
 
+/**
+ * @brief Checks if outfit is an active outfit.
+ *    @param o Outfit to check.
+ *    @return 1 if o is active.
+ */
+int outfit_isActive( const Outfit* o )
+{
+   if (outfit_isForward(o) || outfit_isTurret(o) || outfit_isLauncher(o) || outfit_isFighterBay(o))
+      return 1;
+   if (outfit_isMod(o) && o->u.mod.active)
+      return 1;
+   return 0;
+}
+
 
 /**
  * @brief Checks if outfit is a fixed mounted weapon.
@@ -1373,6 +1387,10 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
 
    do { /* load all the data */
       xml_onlyNodes(node);
+      if (xml_isNode(node,"active")) {
+         temp->u.mod.active = 1;
+         continue;
+      }
       /* movement */
       xmlr_float(node,"thrust",temp->u.mod.thrust);
       xmlr_float(node,"thrust_rel",temp->u.mod.thrust_rel);
