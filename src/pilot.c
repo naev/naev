@@ -1346,7 +1346,7 @@ void pilot_update( Pilot* pilot, const double dt )
       /* Picky about our outfits. */
       if (o->outfit == NULL)
          continue;
-      if (!o->active)
+      if (!o->active || outfit_isMod(o->outfit))
          continue;
 
       /* Handle firerate timer. */
