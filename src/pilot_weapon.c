@@ -300,6 +300,7 @@ void pilot_weapSetAdd( Pilot* p, int id, PilotOutfitSlot *o, int level )
    PilotWeaponSetOutfit *slot;
    Outfit *oo;
    int i;
+   double r;
 
    ws = pilot_weapSet(p,id);
 
@@ -309,8 +310,7 @@ void pilot_weapSetAdd( Pilot* p, int id, PilotOutfitSlot *o, int level )
       return;
 
    /* Make sure outfit type is weapon (or usable). */
-   if (!(outfit_isBeam(oo) || outfit_isBolt(oo) ||
-            outfit_isLauncher(oo) || outfit_isFighterBay(oo)))
+   if (!outfit_isActive(oo))
       return;
 
    /* Create if needed. */
@@ -333,7 +333,9 @@ void pilot_weapSetAdd( Pilot* p, int id, PilotOutfitSlot *o, int level )
    slot        = &array_grow( &ws->slots );
    slot->level = level;
    slot->slot  = o;
-   slot->range2 = pow2(outfit_range(oo));
+   r           = outfit_range(oo);
+   if (r > 0)
+      slot->range2 = pow2(r);
 
    /* Update range. */
    pilot_weapSetUpdateRange( ws );
