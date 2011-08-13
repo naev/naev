@@ -55,7 +55,7 @@ static PilotWeaponSet* pilot_weapSet( Pilot* p, int id )
  */
 static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
 {
-   int i, j, ret, s, recalc;
+   int i, j, ret, s, recalc, ooe;
    Pilot *pt;
    double dist2;
    Outfit *o;
@@ -79,7 +79,8 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
 
    /* Fire. */
    recalc = 0;
-   ret = 0;
+   ret    = 0;
+   ooe    = (p->energy <= 0.);
    for (i=0; i<array_size(ws->slots); i++) {
       o = ws->slots[i].slot->outfit;
 
@@ -95,6 +96,10 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
       if (outfit_isMod(o)) {
          if (ws->slots[i].slot->state == PILOT_OUTFIT_OFF) {
             ws->slots[i].slot->state = PILOT_OUTFIT_ON;
+            recalc = 1;
+         }
+         else if ((o->u.mod.energy_regen < 0.) && ooe) {
+            ws->slots[i].slot->state = PILOT_OUTFIT_OFF;
             recalc = 1;
          }
          continue;
