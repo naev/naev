@@ -419,3 +419,5 @@ void player_updateAutonav( double dt )
       tc_mod = player.tc_max;
    pause_setSpeed( tc_mod );
 }
+
+

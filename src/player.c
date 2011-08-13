@@ -1053,6 +1053,7 @@ void player_think( Pilot* pplayer, const double dt )
       return;
    }
 
+   /* Autonav voodoo. */
    if (player.autonav_timer > 0.)
       player.autonav_timer -= dt;
 
