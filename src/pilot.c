@@ -1074,8 +1074,10 @@ void pilot_updateDisable( Pilot* p, const unsigned int shooter )
       }
 
       /* Set disable timer. This is the time the pilot will remain disabled. */
-      /* TODO: Make this more spophisticated. Disable time should probably depend on other factors, such as ship size. */
-      p->dtimer = 60.;
+      /* 50 armour llama        => 53.18s
+       * 5000 armour peacemaker => 168.18s 
+       */
+      p->dtimer = 20. * pow( p->armour, 0.25 );
 
       pilot_setFlag( p,PILOT_DISABLED ); /* set as disabled */
       /* Run hook */
