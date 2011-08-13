@@ -1221,16 +1221,16 @@ char* equipment_shipStats( const Pilot *s, int max_len, int dpseps )
 
    /* Write to buffer. */
    ss_desc = malloc( sizeof(char)*max_len );
-   l  = snprintf( &ss_desc[0], SHIP_ALT_MAX, "Ship Stats" );
+   l  = snprintf( &ss_desc[0], max_len, "Ship Stats" );
    p  = l;
    if (dps > 0.)
-      l += snprintf( &ss_desc[l], (SHIP_ALT_MAX-l),
+      l += snprintf( &ss_desc[l], (max_len-l),
             "\n%.2f DPS [%.2f EPS]", dps, eps );
    if (s->jam_chance > 0.)
-      l += snprintf( &ss_desc[l], (SHIP_ALT_MAX-l),
+      l += snprintf( &ss_desc[l], (max_len-l),
             "\n%.0f%% Jam [%.0f Range]",
             s->jam_chance*100., s->jam_range );
-   l += ss_statsDesc( &s->stats, &ss_desc[l], (SHIP_ALT_MAX-l), 1 );
+   l += ss_statsDesc( &s->stats, &ss_desc[l], (max_len-l), 1 );
    if (p == l) {
       free( ss_desc );
       ss_desc = NULL;
