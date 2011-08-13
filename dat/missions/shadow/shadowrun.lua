@@ -152,9 +152,7 @@ function accept()
         misn.setReward(misn_reward)
         misn.setDesc(string.format(misn_desc[1], planetname, sysname, sysname2, shipname))
         misn.osdCreate(osd_title, { string.format(osd_msg1[1], planetname, sysname),
-                                    string.format(osd_msg1[2], time.str(deadline1 - time.get())),
-                                    string.format(osd_msg1[3], sysname2, shipname),
-                                    string.format(osd_msg1[4], time.str(deadline2 - time.get()))
+                                    string.format(osd_msg1[2], time.str(deadline1 - time.get()))
                                   })
         misn_marker = misn.markerAdd( sys, "low" )
         shadowrun = 2
