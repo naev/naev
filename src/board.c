@@ -444,17 +444,31 @@ void pilot_boardComplete( Pilot *p )
 {
    int ret;
    Pilot *target;
+   credits_t worth;
+   char creds[ ECON_CRED_STRLEN ];
 
    /* Make sure target is sane. */
    target = pilot_get(p->target);
    if (target == NULL)
       return;
 
-   /* Steal stuff, we only do credits for now. */
-   ret = board_trySteal(p);
-   if (ret == 0) {
-      p->credits += target->credits;
-      target->credits = 0.;
+   /* In the case of the player take fewer credits. */
+   if (pilot_isPlayer(target)) {
+      worth = MIN( 0.1*pilot_worth(target), target->credits );
+      p->credits       += worth;
+      target->credits  -= worth;
+      credits2str( creds, sizeof(creds), worth );
+      player_message( "\e%s%s\e0 has plundered %s credits from your ship!",
+            pilot_getFactionColourChar(p), p->name, creds );
+   }
+   else {
+      /* Steal stuff, we only do credits for now. */
+      ret = board_trySteal(p);
+      if (ret == 0) {
+         /* Normally just plunder it all. */
+         p->credits += target->credits;
+         target->credits = 0.;
+      }
    }
 
    /* Finish the boarding. */
