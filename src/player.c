@@ -102,12 +102,12 @@ static double player_hailTimer = 0.; /**< Timer for hailing. */
  * @brief Player ship.
  */
 typedef struct PlayerShip_s {
-   Pilot* p; /**< Pilot. */
-   char *loc; /**< Location. */
-   int autoweap; /**< Automatically update weapon sets. */
+   Pilot* p;      /**< Pilot. */
+   char *loc;     /**< Location. */
+   int autoweap;  /**< Automatically update weapon sets. */
 } PlayerShip_t;
-static PlayerShip_t* player_stack   = NULL; /**< Stack of ships player has. */
-static int player_nstack            = 0; /**< Number of ships player has. */
+static PlayerShip_t* player_stack   = NULL;  /**< Stack of ships player has. */
+static int player_nstack            = 0;     /**< Number of ships player has. */
 
 
 /*
@@ -117,13 +117,13 @@ static int player_nstack            = 0; /**< Number of ships player has. */
  * @brief Wrapper for outfits.
  */
 typedef struct PlayerOutfit_s {
-   const Outfit *o; /**< Actual associated outfit. */
-   int q; /**< Amount of outfit owned. */
+   const Outfit *o;  /**< Actual associated outfit. */
+   int q;            /**< Amount of outfit owned. */
 } PlayerOutfit_t;
-static PlayerOutfit_t *player_outfits  = NULL; /**< Outfits player has. */
-static int player_noutfits             = 0; /**< Number of outfits player has. */
-static int player_moutfits             = 0; /**< Current allocated memory. */
-#define OUTFIT_CHUNKSIZE               32 /**< Allocation chunk size. */
+static PlayerOutfit_t *player_outfits  = NULL;  /**< Outfits player has. */
+static int player_noutfits             = 0;     /**< Number of outfits player has. */
+static int player_moutfits             = 0;     /**< Current allocated memory. */
+#define OUTFIT_CHUNKSIZE               32       /**< Allocation chunk size. */
 
 
 /*
@@ -2406,7 +2406,10 @@ int player_addOutfit( const Outfit *o, int quantity )
    /* Allocate if needed. */
    player_noutfits++;
    if (player_noutfits > player_moutfits) {
-      player_moutfits += OUTFIT_CHUNKSIZE;
+      if (player_moutfits == 0)
+         player_moutfits = OUTFIT_CHUNKSIZE;
+      else
+         player_moutfits *= 2;
       player_outfits   = realloc( player_outfits,
             sizeof(PlayerOutfit_t) * player_moutfits );
    }
