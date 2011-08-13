@@ -1150,7 +1150,7 @@ void player_think( Pilot* pplayer, const double dt )
       pilot_shootStop( pplayer, 0 );
       player_rmFlag(PLAYER_PRIMARY_L);
    }
-   /* Secondary weapon. */
+   /* Secondary weapon - we use PLAYER_SECONDARY_L to track last frame. */
    if (player_isFlag(PLAYER_SECONDARY)) { /* needs target */
       /* Double tap stops beams. */
       if (!player_isFlag(PLAYER_SECONDARY_L))
@@ -1163,8 +1163,10 @@ void player_think( Pilot* pplayer, const double dt )
 
       player_setFlag(PLAYER_SECONDARY_L);
    }
-   else if (player_isFlag(PLAYER_SECONDARY_L))
+   else if (player_isFlag(PLAYER_SECONDARY_L)) {
+      pilot_shootStop( pplayer, 1 );
       player_rmFlag(PLAYER_SECONDARY_L);
+   }
 
 
    /*
