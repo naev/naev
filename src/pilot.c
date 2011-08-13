@@ -1078,6 +1078,7 @@ void pilot_updateDisable( Pilot* p, const unsigned int shooter )
        * 5000 armour peacemaker => 168.18s 
        */
       p->dtimer = 20. * pow( p->armour, 0.25 );
+      p->dtimer_accum = 0.;
 
       pilot_setFlag( p,PILOT_DISABLED ); /* set as disabled */
       /* Run hook */
@@ -1380,6 +1381,8 @@ void pilot_update( Pilot* pilot, const double dt )
          pilot->stress = 0.;
          pilot_updateDisable(pilot, 0);
       }
+      else
+         pilot->dtimer_accum += dt;
    }
 
    /* Handle takeoff/landing. */

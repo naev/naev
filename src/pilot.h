@@ -379,6 +379,7 @@ typedef struct Pilot_ {
    double htimer;    /**< Hail animation timer. */
    double stimer;    /**< Shield regeneration timer. */
    double dtimer;    /**< Disable timer. */
+   double dtimer_accum; /**< Accumulated disable timer. */
    double sbonus;    /**< Shield regeneration bonus. */
    int hail_pos;     /**< Hail animation position. */
    int lockons;      /**< Stores how many seeking weapons are targeting pilot */
