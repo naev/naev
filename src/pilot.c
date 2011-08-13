@@ -1095,7 +1095,7 @@ void pilot_updateDisable( Pilot* p, const unsigned int shooter )
       pilot_rmFlag( p, PILOT_BOARDING ); /* Can get boarded again. */
 
       /* TODO: Make undisabled pilot use up presence again. */
-      /* TODO: Undisable hook? */
+      pilot_runHook( p, PILOT_HOOK_UNDISABLE );
    }
 }
 

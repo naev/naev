@@ -566,6 +566,7 @@ static int hook_safe( lua_State *L )
  *    <li> "exploded" : triggered when pilot has died and the final explosion has begun. <br />
  *    <li> "board" : triggered when pilot is boarded.<br />
  *    <li> "disable" : triggered when pilot is disabled (with disable set).<br />
+ *    <li> "undisable" : triggered when pilot recovers from being disabled.<br />
  *    <li> "jump" : triggered when pilot jumps to hyperspace (before he actually jumps out).<br />
  *    <li> "hail" : triggered when pilot is hailed.<br />
  *    <li> "land" : triggered when pilot is landing (right when starting land descent).<br />
@@ -624,6 +625,7 @@ static int hook_pilot( lua_State *L )
    else if (strcmp(hook_type,"exploded")==0)    type = PILOT_HOOK_EXPLODED;
    else if (strcmp(hook_type,"board")==0)    type = PILOT_HOOK_BOARD;
    else if (strcmp(hook_type,"disable")==0)  type = PILOT_HOOK_DISABLE;
+   else if (strcmp(hook_type,"undisable")==0) type = PILOT_HOOK_UNDISABLE;
    else if (strcmp(hook_type,"jump")==0)     type = PILOT_HOOK_JUMP;
    else if (strcmp(hook_type,"hail")==0)     type = PILOT_HOOK_HAIL;
    else if (strcmp(hook_type,"land")==0)     type = PILOT_HOOK_LAND;
