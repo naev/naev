@@ -259,6 +259,8 @@ static void info_openShip( unsigned int wid )
          "Energy:\n"
          "Cargo Space:\n"
          "Fuel:\n"
+         "\n"
+         "Stats:\n"
          );
    window_addText( wid, 140, -60, w-300., h-60, 0, "txtDDesc", &gl_smallFont,
          &cBlack, NULL );
@@ -279,11 +281,11 @@ static void info_openShip( unsigned int wid )
 static void ship_update( unsigned int wid )
 {
    char buf[1024], *hyp_delay;
-   int cargo;
+   int cargo, len;
 
    cargo = pilot_cargoUsed( player.p ) + pilot_cargoFree( player.p );
    hyp_delay = ntime_pretty( pilot_hyperspaceDelay( player.p ), 2 );
-   snprintf( buf, sizeof(buf),
+   len = snprintf( buf, sizeof(buf),
          "%s\n"
          "%s\n"
          "%s\n"
@@ -300,7 +302,8 @@ static void ship_update( unsigned int wid )
          "%.0f / %.0f MJ (%.1f MW)\n" /* Armour */
          "%.0f / %.0f MJ (%.1f MW)\n" /* Energy */
          "%d / %d tonnes\n"
-         "%.0f / %.0f units (%d jumps)",
+         "%.0f / %.0f units (%d jumps)\n"
+         "\n",
          /* Generic */
          player.p->name,
          player.p->ship->name,
@@ -319,6 +322,7 @@ static void ship_update( unsigned int wid )
          player.p->energy, player.p->energy_max, player.p->energy_regen,
          pilot_cargoUsed( player.p ), cargo,
          player.p->fuel, player.p->fuel_max, pilot_getJumps(player.p));
+   equipment_shipStats( &buf[len], sizeof(buf)-len, player.p, 1 );
    window_modifyText( wid, "txtDDesc", buf );
    free( hyp_delay );
 }
