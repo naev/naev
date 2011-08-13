@@ -353,6 +353,8 @@ static void equipment_renderColumn( double x, double y, double w, double h,
             dc = &cFontRed;
          else if (level == 1)
             dc = &cFontYellow;
+         else if (lst[i].active)
+            dc = &cFontBlue;
          else
             dc = &cInert;
       }

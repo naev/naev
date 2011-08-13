@@ -536,6 +536,10 @@ static void weapons_renderLegend( double bx, double by, double bw, double bh, vo
    gl_print( &gl_defFont, bx, y, &cBlack, "Legend" );
 
    y -= 20.;
+   toolkit_drawRect( bx, y, 10, 10, &cFontBlue, NULL );
+   gl_print( &gl_smallFont, bx+20, y, &cBlack, "Outfit that can be activated" );
+
+   y -= 15.;
    toolkit_drawRect( bx, y, 10, 10, &cFontYellow, NULL );
    gl_print( &gl_smallFont, bx+20, y, &cBlack, "Secondary Weapon (Right click toggles)" );
 
