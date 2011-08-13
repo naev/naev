@@ -115,7 +115,7 @@ void equipment_rightClickOutfits( unsigned int wid, char* str )
    if (strcmp(clicked_outfit,"None")==0)
       return;
 
-   o = outfit_get(clicked_outfit);
+   o = outfit_getW(clicked_outfit);
    if (o == NULL)
       return;
 
@@ -1313,7 +1313,7 @@ static void equipment_genLists( unsigned int wid )
          quantity = malloc( sizeof(char*) * noutfits );
          slottype = malloc( sizeof(char*) * noutfits );
          for (i=0; i<noutfits; i++) {
-            o      = outfit_get( soutfits[i] );
+            o      = outfit_getW( soutfits[i] );
 
             /* Background colour. */
             c = outfit_slotSizeColour( &o->slot );
@@ -1519,7 +1519,7 @@ void equipment_updateOutfits( unsigned int wid, char* str )
       eq_wgt.outfit = NULL;
       return;
    }
-   eq_wgt.outfit = outfit_get(oname);
+   eq_wgt.outfit = outfit_getW(oname);
 
    /* Also update ships. */
    equipment_updateShips(wid, NULL);
