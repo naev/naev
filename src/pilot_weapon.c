@@ -55,7 +55,7 @@ static PilotWeaponSet* pilot_weapSet( Pilot* p, int id )
  */
 static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
 {
-   int i, j, ret, s, recalc, ooe;
+   int i, j, ret, s, recalc, ooe, can_use;
    Pilot *pt;
    double dist2;
    Outfit *o;
@@ -94,13 +94,16 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
 
       /* Modifications get a special deal. */
       if (outfit_isMod(o)) {
-         if (ws->slots[i].slot->state == PILOT_OUTFIT_OFF) {
+         can_use = ((o->u.mod.energy_regen >= 0.) || !ooe);
+         if ((ws->slots[i].slot->state == PILOT_OUTFIT_OFF) && can_use) {
             ws->slots[i].slot->state = PILOT_OUTFIT_ON;
             recalc = 1;
          }
-         else if ((o->u.mod.energy_regen < 0.) && ooe) {
-            ws->slots[i].slot->state = PILOT_OUTFIT_OFF;
-            recalc = 1;
+         else if (!can_use) {
+            if (ws->slots[i].slot->state != PILOT_OUTFIT_OFF) {
+               ws->slots[i].slot->state = PILOT_OUTFIT_OFF;
+               recalc = 1;
+            }
          }
          continue;
       }
