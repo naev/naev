@@ -1175,13 +1175,79 @@ void equipment_addAmmo (void)
 
 
 /**
+ * @brief Creates and allocates a string containing the ship stats.
+ *
+ *    @param s Pilot to get stats of.
+ *    @param max_len Maximum length of the string to allocate.
+ *    @param dpseps Whether or not to display dps and eps.
+ */
+char* equipment_shipStats( const Pilot *s, int max_len, int dpseps )
+{
+   int j, l, p;
+   Outfit *o;
+   double mod_energy, mod_damage, mod_shots;
+   double eps, dps, shots;
+   const Damage *dmg;
+   char *ss_desc;
+
+   dps = 0.;
+   eps = 0.;
+   /* Calculate damage and energy per second. */
+   if (dpseps) {
+      for (j=0; j<s->noutfits; j++) {
+         o = s->outfits[j]->outfit;
+         if (o==NULL)
+            continue;
+         switch (o->type) {
+            case OUTFIT_TYPE_BOLT:
+               mod_energy = s->stats.fwd_energy;
+               mod_damage = s->stats.fwd_damage;
+               mod_shots  = 2. - s->stats.fwd_firerate;
+               break;
+            case OUTFIT_TYPE_TURRET_BOLT:
+               mod_energy = s->stats.tur_energy;
+               mod_damage = s->stats.tur_damage;
+               mod_shots  = 2. - s->stats.tur_firerate;
+               break;
+            default:
+               continue;
+         }
+         shots = 1. / (mod_shots * outfit_delay(o));
+         dmg   = outfit_damage(o);
+         dps  += shots * mod_damage * dmg->damage;
+         eps  += shots * mod_energy * outfit_energy(o);
+      }
+   }
+
+   /* Write to buffer. */
+   ss_desc = malloc( sizeof(char)*max_len );
+   l  = snprintf( &ss_desc[0], SHIP_ALT_MAX, "Ship Stats" );
+   p  = l;
+   if (dps > 0.)
+      l += snprintf( &ss_desc[l], (SHIP_ALT_MAX-l),
+            "\n%.2f DPS [%.2f EPS]", dps, eps );
+   if (s->jam_chance > 0.)
+      l += snprintf( &ss_desc[l], (SHIP_ALT_MAX-l),
+            "\n%.0f%% Jam [%.0f Range]",
+            s->jam_chance*100., s->jam_range );
+   l += ss_statsDesc( &s->stats, &ss_desc[l], (SHIP_ALT_MAX-l), 1 );
+   if (p == l) {
+      free( ss_desc );
+      ss_desc = NULL;
+   }
+
+   return ss_desc;
+}
+
+
+/**
  * @brief Generates a new ship/outfit lists if needed.
  *
  *    @param wid Parent window id.
  */
 static void equipment_genLists( unsigned int wid )
 {
-   int i, j, l, p;
+   int i, l, p;
    char **sships;
    glTexture **tships;
    int nships;
@@ -1195,12 +1261,9 @@ static void equipment_genLists( unsigned int wid )
    char **quantity;
    Outfit *o;
    Pilot *s;
-   double mod_energy, mod_damage, mod_shots;
-   double eps, dps, shots;
    glColour *bg, *c, blend;
    char **slottype;
    const char *typename;
-   const Damage *dmg;
 
    /* Get dimensions. */
    equipment_getDim( wid, &w, &h, &sw, &sh, &ow, &oh,
@@ -1227,49 +1290,8 @@ static void equipment_genLists( unsigned int wid )
       /* Ship stats in alt text. */
       alt   = malloc( sizeof(char*) * nships );
       for (i=0; i<nships; i++) {
-         s  = player_getShip( sships[i]);
-         dps = 0.;
-         eps = 0.;
-         /* Calculate damage and energy per second. */
-         for (j=0; j<s->noutfits; j++) {
-            o = s->outfits[j]->outfit;
-            if (o==NULL)
-               continue;
-            switch (o->type) {
-               case OUTFIT_TYPE_BOLT:
-                  mod_energy = s->stats.fwd_energy;
-                  mod_damage = s->stats.fwd_damage;
-                  mod_shots  = 2. - s->stats.fwd_firerate;
-                  break;
-               case OUTFIT_TYPE_TURRET_BOLT:
-                  mod_energy = s->stats.tur_energy;
-                  mod_damage = s->stats.tur_damage;
-                  mod_shots  = 2. - s->stats.tur_firerate;
-                  break;
-               default:
-                  continue;
-            }
-            shots = 1. / (mod_shots * outfit_delay(o));
-            dmg   = outfit_damage(o);
-            dps  += shots * mod_damage * dmg->damage;
-            eps  += shots * mod_energy * outfit_energy(o);
-         }
-         /* Write to buffer. */
-         alt[i] = malloc( sizeof(char)*SHIP_ALT_MAX );
-         l  = snprintf( &alt[i][0], SHIP_ALT_MAX, "Ship Stats" );
-         p  = l;
-         if (dps > 0.)
-            l += snprintf( &alt[i][l], (SHIP_ALT_MAX-l),
-                  "\n%.2f DPS [%.2f EPS]", dps, eps );
-         if (s->jam_chance > 0.)
-            l += snprintf( &alt[i][l], (SHIP_ALT_MAX-l),
-                  "\n%.0f%% Jam [%.0f Range]",
-                  s->jam_chance*100., s->jam_range );
-         l += ss_statsDesc( &s->stats, &alt[i][l], (SHIP_ALT_MAX-l), 1 );
-         if (p == l) {
-            free( alt[i] );
-            alt[i] = NULL;
-         }
+         s        = player_getShip( sships[i] );
+         alt[i]   = equipment_shipStats( s, SHIP_ALT_MAX, 1 );
       }
       toolkit_setImageArrayAlt( wid, EQUIPMENT_SHIPS, alt );
    }
