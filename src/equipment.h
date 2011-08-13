@@ -34,7 +34,7 @@ void equipment_regenLists( unsigned int wid, int outfits, int ships );
 void equipment_updateShips( unsigned int wid, char* str );
 void equipment_updateOutfits( unsigned int wid, char* str );
 void equipment_setGui( unsigned int wid, char* str );
-char* equipment_shipStats( const Pilot *s, int max_len, int dpseps );
+int equipment_shipStats( char *buf, int max_len,  const Pilot *s, int dpseps );
 
 
 /**
