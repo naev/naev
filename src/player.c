@@ -194,7 +194,6 @@ static int player_parseEscorts( xmlNodePtr parent );
 static void player_addOutfitToPilot( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s );
 /* Misc. */
 static int player_outfitCompare( const void *arg1, const void *arg2 );
-static int player_shipPriceRaw( Pilot *ship );
 static int player_thinkMouseFly(void);
 static int preemption = 0; /* Hyperspace target/untarget preemption. */
 /*
@@ -630,7 +629,7 @@ void player_swapShip( char* shipname )
  *    @param shipname Name of the ship.
  *    @return The price of the ship in credits.
  */
-int player_shipPrice( char* shipname )
+credits_t player_shipPrice( char* shipname )
 {
    int i;
    Pilot *ship = NULL;
@@ -653,30 +652,7 @@ int player_shipPrice( char* shipname )
       return -1;
    }
 
-   return player_shipPriceRaw( ship );
-}
-
-
-/**
- * @brief Calculates the price of one of the player's ships.
- *
- *    @param ship Ship to calculate price of.
- *    @return The price of the ship in credits.
- */
-static int player_shipPriceRaw( Pilot *ship )
-{
-   int price;
-   int i;
-
-   /* Ship price is base price + outfit prices. */
-   price = ship_basePrice( ship->ship );
-   for (i=0; i<ship->noutfits; i++) {
-      if (ship->outfits[i]->outfit == NULL)
-         continue;
-      price += ship->outfits[i]->outfit->price;
-   }
-
-   return price;
+   return pilot_worth( ship );
 }
 
 
@@ -2130,15 +2106,15 @@ void player_destroyed (void)
 static int player_shipsCompare( const void *arg1, const void *arg2 )
 {
    PlayerShip_t *ps1, *ps2;
-   int p1, p2;
+   credits_t p1, p2;
 
    /* Get the arguments. */
    ps1 = (PlayerShip_t*) arg1;
    ps2 = (PlayerShip_t*) arg2;
 
    /* Get prices. */
-   p1 = player_shipPriceRaw( ps1->p );
-   p2 = player_shipPriceRaw( ps2->p );
+   p1 = pilot_worth( ps1->p );
+   p2 = pilot_worth( ps2->p );
 
    /* Compare price INVERSELY */
    if (p1 < p2)

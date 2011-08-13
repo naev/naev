@@ -2559,3 +2559,30 @@ double pilot_relhp( const Pilot* cur_pilot, const Pilot* p )
    return (1 - 1 / (1 + ((double)(cur_pilot -> armour_max + cur_pilot -> shield_max) /
          (double)(p -> armour_max + p -> shield_max))));
 }
+
+
+/**
+ * @brief Gets the price or worth of a pilot in credits.
+ *
+ *    @param p Pilot to get worth of.
+ *    @return Worth of the pilot.
+ */
+credits_t pilot_worth( const Pilot *p )
+{
+   credits_t price;
+   int i;
+
+   /* Ship price is base price + outfit prices. */
+   price = ship_basePrice( p->ship );
+   for (i=0; i<p->noutfits; i++) {
+      if (p->outfits[i]->outfit == NULL)
+         continue;
+      price += p->outfits[i]->outfit->price;
+   }
+
+   return price;
+}
+
+
+
+

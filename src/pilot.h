@@ -507,4 +507,10 @@ int pilot_isFriendly( const Pilot *p );
 char pilot_getFactionColourChar( const Pilot *p );
 
 
+/*
+ * Misc details.
+ */
+credits_t pilot_worth( const Pilot *p );
+
+
 #endif /* PILOT_H */
