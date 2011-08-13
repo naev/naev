@@ -1177,18 +1177,18 @@ void equipment_addAmmo (void)
 /**
  * @brief Creates and allocates a string containing the ship stats.
  *
- *    @param s Pilot to get stats of.
+ *    @param buf Buffer to write to.
  *    @param max_len Maximum length of the string to allocate.
+ *    @param s Pilot to get stats of.
  *    @param dpseps Whether or not to display dps and eps.
  */
-char* equipment_shipStats( const Pilot *s, int max_len, int dpseps )
+int equipment_shipStats( char *buf, int max_len,  const Pilot *s, int dpseps )
 {
-   int j, l, p;
+   int j, l;
    Outfit *o;
    double mod_energy, mod_damage, mod_shots;
    double eps, dps, shots;
    const Damage *dmg;
-   char *ss_desc;
 
    dps = 0.;
    eps = 0.;
@@ -1220,23 +1220,16 @@ char* equipment_shipStats( const Pilot *s, int max_len, int dpseps )
    }
 
    /* Write to buffer. */
-   ss_desc = malloc( sizeof(char)*max_len );
-   l  = snprintf( &ss_desc[0], max_len, "Ship Stats" );
-   p  = l;
+   l = 0;
    if (dps > 0.)
-      l += snprintf( &ss_desc[l], (max_len-l),
-            "\n%.2f DPS [%.2f EPS]", dps, eps );
+      l += snprintf( &buf[l], (max_len-l),
+            "%s%.2f DPS [%.2f EPS]", (l!=0)?"\n":"", dps, eps );
    if (s->jam_chance > 0.)
-      l += snprintf( &ss_desc[l], (max_len-l),
-            "\n%.0f%% Jam [%.0f Range]",
-            s->jam_chance*100., s->jam_range );
-   l += ss_statsDesc( &s->stats, &ss_desc[l], (max_len-l), 1 );
-   if (p == l) {
-      free( ss_desc );
-      ss_desc = NULL;
-   }
-
-   return ss_desc;
+      l += snprintf( &buf[l], (max_len-l),
+            "%s%.0f%% Jam [%.0f Range]",
+            (l!=0)?"\n":"", s->jam_chance*100., s->jam_range );
+   l += ss_statsDesc( &s->stats, &buf[l], (max_len-l), 1 );
+   return l;
 }
 
 
@@ -1291,7 +1284,13 @@ static void equipment_genLists( unsigned int wid )
       alt   = malloc( sizeof(char*) * nships );
       for (i=0; i<nships; i++) {
          s        = player_getShip( sships[i] );
-         alt[i]   = equipment_shipStats( s, SHIP_ALT_MAX, 1 );
+         alt[i]   = malloc( sizeof(char) * SHIP_ALT_MAX );
+         l        = snprintf( &alt[i][0], SHIP_ALT_MAX, "Ship Stats\n" );
+         l        = equipment_shipStats( &alt[i][l], SHIP_ALT_MAX-l, s, 1 );
+         if (l == 0) {
+            free( alt[i] );
+            alt[i] = NULL;
+         }
       }
       toolkit_setImageArrayAlt( wid, EQUIPMENT_SHIPS, alt );
    }
