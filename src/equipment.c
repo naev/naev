@@ -723,9 +723,13 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
       return;
    pos = snprintf( alt, sizeof(alt),
          "%s\n"
+         "%s%s%s"
          "\n"
          "%s",
          o->name,
+         (o->slot.property!=NULL) ? "\eS" : "",
+         (o->slot.property!=NULL) ? o->slot.property : "",
+         (o->slot.property!=NULL) ? "\e0\n" : "",
          o->desc_short );
    if (o->mass > 0.)
       pos += snprintf( &alt[pos], sizeof(alt)-pos,
@@ -1330,9 +1334,13 @@ static void equipment_genLists( unsigned int wid )
                alt[i] = malloc( l );
                p = snprintf( alt[i], l,
                      "%s\n"
+                     "%s%s%s"
                      "\n"
                      "%s",
                      o->name,
+                     (o->slot.property!=NULL) ? "\eS" : "",
+                     (o->slot.property!=NULL) ? o->slot.property : "",
+                     (o->slot.property!=NULL) ? "\e0\n" : "",
                      o->desc_short );
                if (o->mass > 0.)
                   p += snprintf( &alt[i][p], l-p,
