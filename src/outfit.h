@@ -88,6 +88,7 @@ typedef enum OutfitSlotSize_ {
  */
 typedef struct OutfitSlot_ {
    char *property;      /**< Property of the slot. */
+   int exclusive;       /**< Outfit must go exclusively into the slot. */
    OutfitSlotType type; /**< Type of outfit slot. */
    OutfitSlotSize size; /**< Size of the outfit. */
 } OutfitSlot;

@@ -576,7 +576,7 @@ static int ship_parseSlot( Ship *temp, ShipOutfitSlot *slot, OutfitSlotType type
       }
       else {
          slot->slot.property    = buf;
-         slot->exclusive   = 1;
+         slot->slot.exclusive   = 1;
       }
    }
 

@@ -761,6 +761,15 @@ int outfit_fitsSlot( const Outfit* o, const OutfitSlot* s )
    if (os->type != s->type)
       return 0;
 
+   /* Must match slot property. */
+   if (o->slot.property != NULL)
+      if ((s->property==NULL) || (strcmp(o->slot.property,s->property)!=0))
+         return 0;
+
+   /* Exclusive only match property. */
+   if (s->exclusive && ((o->slot.property==NULL) || (strcmp(o->slot.property,s->property)!=0)))
+      return 0;
+
    /* Must have valid slot size. */
    if (os->size == OUTFIT_SLOT_SIZE_NA)
       return 0;
@@ -1838,6 +1847,19 @@ static int outfit_parse( Outfit* temp, const xmlNodePtr parent )
                xmlr_attr( cur, "prop", prop );
                if (prop != NULL)
                   temp->slot.property = prop;
+
+               /* Exclusive. */
+               xmlr_attr( cur,"prop_exc", prop );
+               if (prop != NULL) {
+                  if (temp->slot.property != NULL) {
+                     WARN("Outfit '%s' uses slot with both 'prop' and 'prop_exc' property!", temp->name);
+                     free(prop);
+                  }
+                  else {
+                     temp->slot.property  = prop;
+                     temp->slot.exclusive = 1;
+                  }
+               }
                continue;
             }
             else if (xml_isNode(cur,"size")) {
