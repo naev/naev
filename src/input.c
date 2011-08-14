@@ -711,12 +711,14 @@ static void input_key( int keynum, double value, double kabs, int repeat )
       else { /* prevent it from getting stuck */
          if (value==KEY_PRESS) {
             if (!paused) player_autonavAbort(NULL);
+            player_setFlag(PLAYER_ACCEL);
             player_accel(1.);
             input_accelButton = 1;
          }
 
          else if (value==KEY_RELEASE) {
             player_accelOver();
+            player_rmFlag(PLAYER_ACCEL);
             input_accelButton = 0;
          }
 

@@ -10,10 +10,11 @@
 #include "pilot.h"
 
 /* flag defines */
-#define PLAYER_TURN_LEFT   0   /**< player is turning left */
-#define PLAYER_TURN_RIGHT  1   /**< player is turning right */
-#define PLAYER_REVERSE     2   /**< player is facing opposite of vel */
-#define PLAYER_AFTERBURNER 3   /**< player is afterburning */
+#define PLAYER_ACCEL       0   /**< player is turning left */
+#define PLAYER_TURN_LEFT   1   /**< player is turning left */
+#define PLAYER_TURN_RIGHT  2   /**< player is turning right */
+#define PLAYER_REVERSE     3   /**< player is facing opposite of vel */
+#define PLAYER_AFTERBURNER 4   /**< player is afterburning */
 #define PLAYER_DESTROYED   9   /**< player is destroyed */
 #define PLAYER_FACE        10  /**< player is facing target */
 #define PLAYER_PRIMARY     11  /**< player is shooting primary weapon */
