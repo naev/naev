@@ -440,6 +440,12 @@ int pilot_rmOutfit( Pilot* pilot, PilotOutfitSlot *s )
  */
 const char* pilot_checkSanity( Pilot *p )
 {
+   int i;
+   for (i=0; i<p->noutfits; i++)
+      if ((p->outfits[i]->outfit != NULL) &&
+            !outfit_fitsSlot( p->outfits[i]->outfit, &p->outfits[i]->slot ))
+         return "Doesn't fit slot";
+
    if (p->cpu < 0)
       return "Negative CPU";
 
