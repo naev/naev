@@ -1833,6 +1833,11 @@ static int outfit_parse( Outfit* temp, const xmlNodePtr parent )
                   temp->slot.type = OUTFIT_SLOT_WEAPON;
                else
                   WARN("Outfit '%s' has unknown slot type '%s'.", temp->name, cprop);
+
+               /* Property. */
+               xmlr_attr( cur, "prop", prop );
+               if (prop != NULL)
+                  temp->slot.property = prop;
                continue;
             }
             else if (xml_isNode(cur,"size")) {
@@ -1986,6 +1991,9 @@ void outfit_free (void)
       /* free graphics */
       if (outfit_gfx(&outfit_stack[i]))
          gl_freeTexture(outfit_gfx(&outfit_stack[i]));
+
+      /* Free slot. */
+      outfit_freeSlot( &outfit_stack[i].slot );
 
       /* Type specific. */
       if (outfit_isBolt(o) && o->u.blt.gfx_end)
