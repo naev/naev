@@ -255,6 +255,8 @@
 		07B066521044397A006FECBB /* SDL_image.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07B066501044397A006FECBB /* SDL_image.framework */; };
 		07B066581044397F006FECBB /* SDL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07B066571044397F006FECBB /* SDL.framework */; };
 		07C01CD7135CEAB600EAA9C9 /* libpng12.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 07C01CD6135CEAB600EAA9C9 /* libpng12.0.dylib */; };
+		70FE8B2113F8120B000CCADC /* damagetype.c in Sources */ = {isa = PBXBuildFile; fileRef = 70FE8B1F13F8120B000CCADC /* damagetype.c */; };
+		70FE8B7113F812B2000CCADC /* shipstats.c in Sources */ = {isa = PBXBuildFile; fileRef = 70FE8B7013F812B2000CCADC /* shipstats.c */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
@@ -733,6 +735,10 @@
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		1DDD58150DA1D0A300B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* naev_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = naev_Prefix.pch; sourceTree = "<group>"; };
+		70FE8B1F13F8120B000CCADC /* damagetype.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = damagetype.c; sourceTree = "<group>"; };
+		70FE8B2013F8120B000CCADC /* damagetype.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = damagetype.h; sourceTree = "<group>"; };
+		70FE8B6F13F812B2000CCADC /* shipstats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = shipstats.h; sourceTree = "<group>"; };
+		70FE8B7013F812B2000CCADC /* shipstats.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = shipstats.c; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* naev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = naev.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -762,6 +768,10 @@
 		078552B91223D4D300BA253A /* src */ = {
 			isa = PBXGroup;
 			children = (
+				70FE8B6F13F812B2000CCADC /* shipstats.h */,
+				70FE8B7013F812B2000CCADC /* shipstats.c */,
+				70FE8B1F13F8120B000CCADC /* damagetype.c */,
+				70FE8B2013F8120B000CCADC /* damagetype.h */,
 				07ABFC5D1349CA74000F9F93 /* weapon.h */,
 				07ABFC5E1349CA74000F9F93 /* weapon.c */,
 				07ABFC5F1349CA74000F9F93 /* unidiff.h */,
@@ -1631,6 +1641,8 @@
 				07ABFF241349CA85000F9F93 /* cs_utsolve.c in Sources */,
 				078F0E781367DD4A0000064F /* music_sdlmix.c in Sources */,
 				078F0F041367E4390000064F /* sound_sdlmix.c in Sources */,
+				70FE8B2113F8120B000CCADC /* damagetype.c in Sources */,
+				70FE8B7113F812B2000CCADC /* shipstats.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1676,6 +1688,7 @@
 				HEADER_SEARCH_PATHS = (
 					"${SDKROOT}/usr/X11R6/include/**",
 					"../../src/**",
+					"../../lib/**",
 					"/Library/Frameworks/Lua.framework//**",
 					"/Library/Frameworks/SDL_image.framework/**",
 					"/Library/Frameworks/SDL_mixer.framework/**",
@@ -1758,6 +1771,7 @@
 					"/Library/Frameworks/FreeType.framework//**",
 					"/Developer/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks/OpenAL.framework/**",
 					"/Developer/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks/OpenGL.framework/**",
+					"../../lib/**",
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
