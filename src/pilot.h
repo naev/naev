@@ -155,10 +155,8 @@ typedef struct PilotOutfitSlot_ {
 
    /* Outfit slot properties. */
    Outfit* outfit;   /**< Associated outfit. */
-   ShipMount mount;  /**< Outfit mountpoint. */
-   OutfitSlot slot;  /**< Outfit slot. */
    int active;       /**< Slot is an active slot. */
-   int required;     /**< Whether or not it's required. */
+   ShipOutfitSlot *sslot; /**< Ship outfit slot. */
 
    /* Heat. */
    double heat_T;    /**< Slot temperature. [K] */

@@ -145,7 +145,7 @@ void equipment_rightClickOutfits( unsigned int wid, char* str )
          continue;
 
       /* Must fit the slot. */
-      if (!outfit_fitsSlot( o, &slots[i].slot))
+      if (!outfit_fitsSlot( o, &slots[i].sslot->slot))
          continue;
 
       /* Bingo! */
@@ -337,7 +337,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
    glColour *c, *dc, bc, *rc;
 
    /* Render text. */
-   if ((o != NULL) && (lst[0].slot.type == o->slot.type))
+   if ((o != NULL) && (lst[0].sslot->slot.type == o->slot.type))
       c = &cDConsole;
    else
       c = &cBlack;
@@ -359,7 +359,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
             dc = &cInert;
       }
       else
-         dc = outfit_slotSizeColour( &lst[i].slot );
+         dc = outfit_slotSizeColour( &lst[i].sslot->slot );
 
       /* Choose colours based on size. */
       if ((i==selected) && (dc == NULL))
@@ -382,7 +382,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       }
       else {
          if ((o != NULL) &&
-               (lst[i].slot.type == o->slot.type)) {
+               (lst[i].sslot->slot.type == o->slot.type)) {
             if (pilot_canEquip( p, &lst[i], o, 1 ) != NULL)
                c = &cRed;
             else
@@ -392,13 +392,13 @@ static void equipment_renderColumn( double x, double y, double w, double h,
             c = &cBlack;
          gl_printMidRaw( &gl_smallFont, w,
                x, y + (h-gl_smallFont.h)/2., c,
-               (lst[i].slot.property != NULL) ? lst[i].slot.property : "None" );
+               (lst[i].sslot->slot.property != NULL) ? lst[i].sslot->slot.property : "None" );
       }
 
       /* Must rechoose colour based on slot properties. */
-      if (lst[i].required)
+      if (lst[i].sslot->required)
          rc = &cFontRed;
-      else if (lst[i].slot.property != NULL)
+      else if (lst[i].sslot->slot.property != NULL)
          rc = &cDRestricted;
       else
          rc = dc;
@@ -594,7 +594,7 @@ static void equipment_renderOverlayColumn( double x, double y, double w, double 
                }
             }
             else if ((wgt->outfit != NULL) &&
-                  (lst->slot.type == wgt->outfit->slot.type)) {
+                  (lst->sslot->slot.type == wgt->outfit->slot.type)) {
                top = 0;
                display = pilot_canEquip( wgt->selected, &lst[i], wgt->outfit, 1 );
                if (display != NULL)
@@ -736,7 +736,7 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
          "\n"
          "%s",
          o->name,
-         (o->slot.property!=NULL) ? "\eS" : "",
+         (o->slot.property!=NULL) ? "\eSSlot " : "",
          (o->slot.property!=NULL) ? o->slot.property : "",
          (o->slot.property!=NULL) ? "\e0\n" : "",
          o->desc_short );
@@ -1036,7 +1036,7 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
          return 0;
 
       /* Must fit slot. */
-      if (!outfit_fitsSlot( o, &slot->slot ))
+      if (!outfit_fitsSlot( o, &slot->sslot->slot ))
          return 0;
 
       /* Must be able to add. */
@@ -1347,7 +1347,7 @@ static void equipment_genLists( unsigned int wid )
                      "\n"
                      "%s",
                      o->name,
-                     (o->slot.property!=NULL) ? "\eS" : "",
+                     (o->slot.property!=NULL) ? "\eSSlot " : "",
                      (o->slot.property!=NULL) ? o->slot.property : "",
                      (o->slot.property!=NULL) ? "\e0\n" : "",
                      o->desc_short );

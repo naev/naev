@@ -3267,7 +3267,7 @@ static void player_addOutfitToPilot( Pilot* pilot, Outfit* outfit, PilotOutfitSl
 {
    int ret;
 
-   if (!outfit_fitsSlot( outfit, &s->slot )) {
+   if (!outfit_fitsSlot( outfit, &s->sslot->slot )) {
       DEBUG( "Outfit '%s' does not fit designated slot on player's pilot '%s', adding to stock.",
             outfit->name, pilot->name );
       player_addOutfit( outfit, 1 );

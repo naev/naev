@@ -45,7 +45,7 @@
 #define OUTFIT_GFX   "gfx/outfit/" /**< Path to outfit graphics. */
 
 
-#define OUTFIT_SHORTDESC_MAX  256
+#define OUTFIT_SHORTDESC_MAX  256 /**< Maxmimum length of a short description of an outfit. */
 
 
 /*

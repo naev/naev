@@ -139,7 +139,7 @@ int pilot_getMount( const Pilot *p, const PilotOutfitSlot *w, Vector2d *v )
     *
     * dir is inverted so that rotation is counter-clockwise.
     */
-   m = &w->mount;
+   m = &w->sslot->mount;
    cm = cos(-a);
    sm = sin(-a);
    x = m->x * cm + m->y * sm;
@@ -443,7 +443,7 @@ const char* pilot_checkSanity( Pilot *p )
    int i;
    for (i=0; i<p->noutfits; i++)
       if ((p->outfits[i]->outfit != NULL) &&
-            !outfit_fitsSlot( p->outfits[i]->outfit, &p->outfits[i]->slot ))
+            !outfit_fitsSlot( p->outfits[i]->outfit, &p->outfits[i]->sslot->slot ))
          return "Doesn't fit slot";
 
    if (p->cpu < 0)
@@ -492,7 +492,7 @@ const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o, int add )
       return "Nothing selected.";
 
    /* Check slot type. */
-   if ((s != NULL) && !outfit_fitsSlot( o, &s->slot ))
+   if ((s != NULL) && !outfit_fitsSlot( o, &s->sslot->slot ))
       return "Does not fit slot.";
 
    /* Adding outfit. */

@@ -2066,7 +2066,7 @@ static int pilotL_addOutfit( lua_State *L )
 
       if (!bypass) {
          /* Must fit slot. */
-         if (!outfit_fitsSlot( o, &p->outfits[i]->slot ))
+         if (!outfit_fitsSlot( o, &p->outfits[i]->sslot->slot ))
             continue;
 
          /* Test if can add outfit. */
@@ -2076,7 +2076,7 @@ static int pilotL_addOutfit( lua_State *L )
       }
       /* Only do a basic check. */
       else
-         if (!outfit_fitsSlotType( o, &p->outfits[i]->slot ))
+         if (!outfit_fitsSlotType( o, &p->outfits[i]->sslot->slot ))
             continue;
 
       /* Add outfit - already tested. */
