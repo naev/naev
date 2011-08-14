@@ -34,7 +34,7 @@ static void tab_cleanup( Widget* tab );
 
 
 /**
- * @brief Adds a button widget to a window.
+ * @brief Creates a widget that hijacks a window and creates many children window.
  *
  * Position origin is 0,0 at bottom left.  If you use negative X or Y
  *  positions.  They actually count from the opposite side in.
