@@ -800,6 +800,17 @@ int outfit_fitsSlotType( const Outfit* o, const OutfitSlot* s )
 }
 
 
+/**
+ * @brief Frees an outfit slot.
+ *
+ *    @param s Slot to free.
+ */
+void outfit_freeSlot( OutfitSlot* s )
+{
+   free( s->property );
+}
+
+
 #define O_CMP(s,t) \
 if (strcasecmp(buf,(s))==0) return t /**< Define to help with outfit_strToOutfitType. */
 /**

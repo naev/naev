@@ -567,15 +567,15 @@ static int ship_parseSlot( Ship *temp, ShipOutfitSlot *slot, OutfitSlotType type
 
    /* Parse property. */
    xmlr_attr( node, "prop", buf );
-   slot->property = buf;
+   slot->slot.property = buf;
    xmlr_attr( node, "prop_exc", buf );
    if (buf != NULL) {
-      if (slot->property != NULL) {
+      if (slot->slot.property != NULL) {
          WARN("Ship '%s' has slot with both 'prop' and 'prop_exc' defined!", temp->name);
          free(buf);
       }
       else {
-         slot->property    = buf;
+         slot->slot.property    = buf;
          slot->exclusive   = 1;
       }
    }
@@ -909,11 +909,11 @@ void ships_free (void)
 
       /* Free outfits. */
       for (j=0; j<s->outfit_nstructure; j++)
-         free( s->outfit_structure[j].property );
+         outfit_freeSlot( &s->outfit_structure[j].slot );
       for (j=0; j<s->outfit_nutility; j++)
-         free( s->outfit_utility[j].property );
+         outfit_freeSlot( &s->outfit_utility[j].slot );
       for (j=0; j<s->outfit_nweapon; j++)
-         free( s->outfit_weapon[j].property );
+         outfit_freeSlot( &s->outfit_weapon[j].slot );
       if (s->outfit_structure != NULL)
          free(s->outfit_structure);
       if (s->outfit_utility != NULL)
