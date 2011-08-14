@@ -767,8 +767,9 @@ int outfit_fitsSlot( const Outfit* o, const OutfitSlot* s )
          return 0;
 
    /* Exclusive only match property. */
-   if (s->exclusive && ((o->slot.property==NULL) || (strcmp(o->slot.property,s->property)!=0)))
-      return 0;
+   if (s->exclusive)
+      if ((o->slot.property==NULL) || (strcmp(o->slot.property,s->property)!=0))
+         return 0;
 
    /* Must have valid slot size. */
    if (os->size == OUTFIT_SLOT_SIZE_NA)
