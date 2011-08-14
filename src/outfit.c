@@ -48,9 +48,6 @@
 #define OUTFIT_SHORTDESC_MAX  256
 
 
-#define CHUNK_SIZE            64 /**< Size to reallocate by. */
-
-
 /*
  * the stack
  */
