@@ -568,7 +568,7 @@ static int bar_genList( unsigned int wid )
       npc_getNameArray( &names[1], n-1 );
    }
    window_addImageArray( wid, 20, -40,
-         iw, ih, "iarMissions", 64, 48,
+         iw, ih, "iarMissions", 100, 75,
          portraits, names, n, bar_update, NULL );
 
    /* write the outfits stuff */
