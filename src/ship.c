@@ -894,7 +894,7 @@ int ships_load (void)
 void ships_free (void)
 {
    Ship *s;
-   int i;
+   int i, j;
    for (i = 0; i < array_size(ship_stack); i++) {
       s = &ship_stack[i];
 
@@ -908,6 +908,12 @@ void ships_free (void)
       free(s->desc_stats);
 
       /* Free outfits. */
+      for (j=0; j<s->outfit_nstructure; j++)
+         free( s->outfit_structure[j].property );
+      for (j=0; j<s->outfit_nutility; j++)
+         free( s->outfit_utility[j].property );
+      for (j=0; j<s->outfit_nweapon; j++)
+         free( s->outfit_weapon[j].property );
       if (s->outfit_structure != NULL)
          free(s->outfit_structure);
       if (s->outfit_utility != NULL)
