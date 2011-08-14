@@ -724,8 +724,19 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
    o = slot->outfit;
 
    /* Slot is empty. */
-   if (o == NULL)
+   if (o == NULL) {
+      if (slot->sslot->slot.property == NULL)
+         return;
+
+      pos = snprintf( alt, sizeof(alt),
+            "\eS%s", slot->sslot->slot.property );
+      if (slot->sslot->slot.exclusive)
+         snprintf( &alt[pos], sizeof(alt)-pos,
+               " [exclusive]" );
+      /* TODO place description of the slot. */
+      toolkit_drawAltText( bx + wgt->altx, by + wgt->alty, alt );
       return;
+   }
 
    /* Get text. */
    if (o->desc_short == NULL)
