@@ -2545,6 +2545,19 @@
    <ew_hide>11</ew_hide>
   </specific>
  </outfit>
+ <outfit name="Basic Systems">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="Systems">utility</slot>
+   <mass>0</mass>
+   <price>40000</price>
+   <description>Your basic systems</description>
+   <gfx_store>jammer0</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>10</cpu>
+  </specific>
+ </outfit>
  <outfit name="Unicorp Jammer">
   <general>
    <slot>utility</slot>
