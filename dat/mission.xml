@@ -168,7 +168,7 @@
    <chance>100</chance>
    <done>Empire Shipping 1</done>
    <location>Bar</location>
-   <planet>Polaris Prime</planet>
+   <planet>Halir</planet>
   </avail>
  </mission>
  <mission name="Empire Shipping 3">
@@ -182,7 +182,7 @@
    <chance>100</chance>
    <done>Empire Shipping 2</done>
    <location>Bar</location>
-   <planet>Polaris Prime</planet>
+   <planet>Halir</planet>
   </avail>
  </mission>
  <mission name="Collective Scouting">
