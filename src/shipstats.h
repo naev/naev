@@ -72,6 +72,7 @@ typedef enum ShipStatsType_ {
     * B: Boolean type data. Should be continuous.
     */
    SS_TYPE_B_INSTANT_JUMP, /**< Do not require brake or chargeup to jump. */
+   SS_TYPE_B_REVERSE_THRUST, /**< Ship slows down rather than turning on reverse. */
 
    SS_TYPE_SENTINAL,          /**< Sentinal for end of types. */
 } ShipStatsType;
@@ -163,6 +164,7 @@ typedef struct ShipStats_ {
    double nebula_dmg_shield; /**< Shield nebula resistance. */
    double nebula_dmg_armour; /**< Armour nebula resistance. */
    int misc_instant_jump; /**< Do not require brake or chargeup to jump. */
+   int misc_reverse_thrust; /**< Do not require brake or chargeup to jump. */
 } ShipStats;
 
 

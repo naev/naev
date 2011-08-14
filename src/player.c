@@ -1094,9 +1094,12 @@ void player_think( Pilot* pplayer, const double dt )
       */
 
       /*
-       * I don't think automatic braking is good.
+       * If the player has reverse thrusters, fire those.
        */
-      pilot_face( pplayer, VANGLE(player.p->solid->vel) + M_PI );
+      if (player.p->stats.misc_reverse_thrust)
+         player_accel(-0.4);
+      else
+         pilot_face( pplayer, VANGLE(player.p->solid->vel) + M_PI );
 
       /* Disable turning. */
       facing = 1;
