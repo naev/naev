@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Slots>
+ <slot name="systems">
+  <display>Core Systems</display>
+  <description>This slot is used for dedicated core systems of the ship. Handling things like targetting and guidance systems.</description>
+  <exclusive/>
+  <required/>
+ </slot>
+</Slots>

@@ -32,6 +32,7 @@
 #include "player_gui.h"
 #include "info.h"
 #include "shipstats.h"
+#include "slots.h"
 #include "tk/toolkit_priv.h" /* Yes, I'm a bad person, abstractions be damned! */
 
 
@@ -392,13 +393,14 @@ static void equipment_renderColumn( double x, double y, double w, double h,
             c = &cBlack;
          gl_printMidRaw( &gl_smallFont, w,
                x, y + (h-gl_smallFont.h)/2., c,
-               (lst[i].sslot->slot.property != NULL) ? lst[i].sslot->slot.property : "None" );
+               (lst[i].sslot->slot.spid != 0) ?
+                     sp_display(lst[i].sslot->slot.spid) : "None" );
       }
 
       /* Must rechoose colour based on slot properties. */
       if (lst[i].sslot->required)
          rc = &cFontRed;
-      else if (lst[i].sslot->slot.property != NULL)
+      else if (lst[i].sslot->slot.spid != 0)
          rc = &cDRestricted;
       else
          rc = dc;
@@ -725,15 +727,16 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
 
    /* Slot is empty. */
    if (o == NULL) {
-      if (slot->sslot->slot.property == NULL)
+      if (slot->sslot->slot.spid == 0)
          return;
 
       pos = snprintf( alt, sizeof(alt),
-            "\eS%s", slot->sslot->slot.property );
+            "\eS%s", sp_display( slot->sslot->slot.spid ) );
       if (slot->sslot->slot.exclusive)
-         snprintf( &alt[pos], sizeof(alt)-pos,
+         pos += snprintf( &alt[pos], sizeof(alt)-pos,
                " [exclusive]" );
-      /* TODO place description of the slot. */
+      pos += snprintf( &alt[pos], sizeof(alt)-pos,
+            "\n\n%s", sp_description( slot->sslot->slot.spid ) );
       toolkit_drawAltText( bx + wgt->altx, by + wgt->alty, alt );
       return;
    }
@@ -741,16 +744,11 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
    /* Get text. */
    if (o->desc_short == NULL)
       return;
-   pos = snprintf( alt, sizeof(alt),
-         "%s\n"
-         "%s%s%s"
-         "\n"
-         "%s",
-         o->name,
-         (o->slot.property!=NULL) ? "\eSSlot " : "",
-         (o->slot.property!=NULL) ? o->slot.property : "",
-         (o->slot.property!=NULL) ? "\e0\n" : "",
-         o->desc_short );
+   pos  = snprintf( alt, sizeof(alt), "%s\n", o->name );
+   if (o->slot.spid!=0)
+      pos += snprintf( &alt[pos], sizeof(alt)-pos, "\eSSlot %s\e0\n",
+            sp_display( o->slot.spid ) );
+   pos += snprintf( &alt[pos], sizeof(alt)-pos, "\n%s", o->desc_short );
    if (o->mass > 0.)
       pos += snprintf( &alt[pos], sizeof(alt)-pos,
             "\n%.0f Tons",
@@ -1352,16 +1350,11 @@ static void equipment_genLists( unsigned int wid )
             else {
                l = strlen(o->desc_short) + 128;
                alt[i] = malloc( l );
-               p = snprintf( alt[i], l,
-                     "%s\n"
-                     "%s%s%s"
-                     "\n"
-                     "%s",
-                     o->name,
-                     (o->slot.property!=NULL) ? "\eSSlot " : "",
-                     (o->slot.property!=NULL) ? o->slot.property : "",
-                     (o->slot.property!=NULL) ? "\e0\n" : "",
-                     o->desc_short );
+               p  = snprintf( &alt[i][0], l, "%s\n", o->name );
+               if (o->slot.spid!=0)
+                  p += snprintf( &alt[i][p], l-p, "\eSSlot %s\e0\n",
+                        sp_display( o->slot.spid ) );
+               p += snprintf( &alt[i][p], l-p, "\n%s", o->desc_short );
                if (o->mass > 0.)
                   p += snprintf( &alt[i][p], l-p,
                         "\n%.0f Tons",

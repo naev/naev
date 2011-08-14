@@ -34,7 +34,7 @@
   <slots>
    <weapon x="7" y="0" h="1"/>
    <weapon x="-3" y="0" h="2"/>
-   <utility prop_exc="Systems" required="1">Basic Systems</utility>
+   <utility prop="systems">Basic Systems</utility>
    <utility/>
    <utility/>
    <structure/>

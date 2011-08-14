@@ -87,7 +87,7 @@ typedef enum OutfitSlotSize_ {
  * @brief Pilot slot that can contain outfits.
  */
 typedef struct OutfitSlot_ {
-   char *property;      /**< Property of the slot. */
+   unsigned int spid;   /**< Slot property ID. */
    int exclusive;       /**< Outfit must go exclusively into the slot. */
    OutfitSlotType type; /**< Type of outfit slot. */
    OutfitSlotSize size; /**< Size of the outfit. */

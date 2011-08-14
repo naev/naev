@@ -2549,7 +2549,7 @@
  <outfit name="Basic Systems">
   <general>
    <typename>Core Systems</typename>
-   <slot prop="Systems">utility</slot>
+   <slot prop="systems">utility</slot>
    <mass>0</mass>
    <price>40000</price>
    <description>Your basic systems</description>

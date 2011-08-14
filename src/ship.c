@@ -26,6 +26,7 @@
 #include "npng.h"
 #include "colour.h"
 #include "shipstats.h"
+#include "slots.h"
 
 
 #define XML_ID    "Ships"  /**< XML document identifier */
@@ -43,8 +44,6 @@
 
 #define BUTTON_WIDTH  80 /**< Button width in ship view window. */
 #define BUTTON_HEIGHT 30 /**< Button height in ship view window. */
-
-#define CHUNK_SIZE    32 /**< Rate at which to allocate memory. */
 
 #define STATS_DESC_MAX 128 /**< Maximum length for statistics description. */
 
@@ -567,24 +566,10 @@ static int ship_parseSlot( Ship *temp, ShipOutfitSlot *slot, OutfitSlotType type
 
    /* Parse property. */
    xmlr_attr( node, "prop", buf );
-   slot->slot.property = buf;
-   xmlr_attr( node, "prop_exc", buf );
-   if (buf != NULL) {
-      if (slot->slot.property != NULL) {
-         WARN("Ship '%s' has slot with both 'prop' and 'prop_exc' defined!", temp->name);
-         free(buf);
-      }
-      else {
-         slot->slot.property    = buf;
-         slot->slot.exclusive   = 1;
-      }
-   }
-
-   /* Parsed required attribute. */
-   xmlr_attr( node, "required", buf );
-   if (buf != NULL)
-      slot->required = 1;
-   free(buf);
+   slot->slot.spid = sp_get( buf );
+   slot->exclusive = sp_exclusive( slot->slot.spid );
+   slot->required = sp_required( slot->slot.spid );
+   free( buf );
 
    /* Parse default outfit. */
    buf = xml_get(node);
