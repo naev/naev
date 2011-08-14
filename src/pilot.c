@@ -1944,6 +1944,7 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
       pilot->outfit_structure[i].slot.size = ship->outfit_structure[i].slot.size;
       pilot->outfits[p] = &pilot->outfit_structure[i];
       memcpy( &pilot->outfits[p]->mount, &ship->outfit_structure[i].mount, sizeof(ShipMount) );
+      pilot->outfits[p]->required = ship->outfit_structure[i].required;
       p++;
    }
    for (i=0; i<pilot->outfit_nutility; i++) {
@@ -1951,6 +1952,7 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
       pilot->outfit_utility[i].slot.size = ship->outfit_utility[i].slot.size;
       pilot->outfits[p] = &pilot->outfit_utility[i];
       memcpy( &pilot->outfits[p]->mount, &ship->outfit_utility[i].mount, sizeof(ShipMount) );
+      pilot->outfits[p]->required = ship->outfit_utility[i].required;
       p++;
    }
    for (i=0; i<pilot->outfit_nweapon; i++) {
@@ -1958,6 +1960,7 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
       pilot->outfit_weapon[i].slot.size = ship->outfit_weapon[i].slot.size;
       pilot->outfits[p] = &pilot->outfit_weapon[i];
       memcpy( &pilot->outfits[p]->mount, &ship->outfit_weapon[i].mount, sizeof(ShipMount) );
+      pilot->outfits[p]->required = ship->outfit_weapon[i].required;
       p++;
    }
    /* Second pass set ID. */
