@@ -2746,9 +2746,9 @@
    <gfx_store>afterburner</gfx_store>
   </general>
   <specific type="modification">
-   <thrust>180</thrust>
-   <turn>150</turn>
-   <speed>200</speed>
+   <thrust>50</thrust>
+   <turn>50</turn>
+   <speed>100</speed>
    <fuel>300</fuel>
    <energy_regen>-6</energy_regen>
   </specific>
