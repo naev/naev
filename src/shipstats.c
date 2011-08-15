@@ -105,9 +105,7 @@ static const ShipStatsLookup ss_lookup[] = {
 
    D__ELEM( SS_TYPE_D_HEAT_DISSIPATION, heat_dissipation, "Heat Dissipation" ),
 
-   A__ELEM( SS_TYPE_A_THRUST_MAX,      thrust_max,    "Maximum Thrust Limit" ),
-   A__ELEM( SS_TYPE_A_TURN_MAX,        turn_max,      "Maximum Turn Limit" ),
-   A__ELEM( SS_TYPE_A_SPEED_MAX,       speed_max,     "Maximum Speed Limit" ),
+   A__ELEM( SS_TYPE_A_ENGINE_LIMIT,    engine_limit,  "Engine Mass Limit" ),
    
    B__ELEM( SS_TYPE_B_INSTANT_JUMP,    misc_instant_jump, "Instant Jump" ),
 

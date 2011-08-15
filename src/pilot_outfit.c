@@ -784,9 +784,9 @@ void pilot_calcStats( Pilot* pilot )
    /* mass */
    pilot->solid->mass   = pilot->ship->mass;
    /* movement */
-   pilot->thrust_base   = pilot->ship->thrust * pilot->ship->mass;
-   pilot->turn_base     = pilot->ship->turn   * pilot->ship->mass;
-   pilot->speed_base    = pilot->ship->speed  * pilot->ship->mass;
+   pilot->thrust_base   = pilot->ship->thrust;
+   pilot->turn_base     = pilot->ship->turn;
+   pilot->speed_base    = pilot->ship->speed;
    /* cpu */
    pilot->cpu_max       = pilot->ship->cpu;
    pilot->cpu           = pilot->cpu_max;
@@ -850,11 +850,11 @@ void pilot_calcStats( Pilot* pilot )
 
       if (outfit_isMod(o)) { /* Modification */
          /* Movement. */
-         pilot->thrust_base   += o->u.mod.thrust * 100.;
+         pilot->thrust_base   += o->u.mod.thrust;
          thrust_rel           += o->u.mod.thrust_rel;
-         pilot->turn_base     += o->u.mod.turn * 100.;
+         pilot->turn_base     += o->u.mod.turn;
          turn_rel             += o->u.mod.turn_rel;
-         pilot->speed_base    += o->u.mod.speed * 100.;
+         pilot->speed_base    += o->u.mod.speed;
          speed_rel            += o->u.mod.speed_rel;
          /* Health. */
          pilot->armour_max    += o->u.mod.armour;
@@ -933,14 +933,6 @@ void pilot_calcStats( Pilot* pilot )
       pilot->jam_chance *= exp( -0.2 * (double)(MAX(njammers-1,0)) );
    }
 
-   /* We must do voodoo for engine limits. */
-   if (amount.thrust_max > 0.)
-      s->thrust_max /= amount.thrust_max;
-   if (amount.turn_max > 0.)
-      s->turn_max /= amount.turn_max;
-   if (amount.speed_max > 0.)
-      s->speed_max /= amount.speed_max;
-
    /*
     * Relative increases.
     */
@@ -980,19 +972,18 @@ void pilot_calcStats( Pilot* pilot )
  */
 void pilot_updateMass( Pilot *pilot )
 {
-   double mass = pilot->solid->mass;
+   double mass, factor;
 
-   pilot->thrust  = pilot->thrust_base; /* Thrust is actually stored in absolute and not normalized. */
-   pilot->turn    = pilot->turn_base   / mass;
-   pilot->speed   = pilot->speed_base  / mass;
+   /* Set limit. */
+   mass = pilot->solid->mass;
+   if ((pilot->stats.engine_limit > 0.) && (mass > pilot->stats.engine_limit))
+      factor = mass / pilot->stats.engine_limit;
+   else
+      factor = 1.;
 
-   /* Set limits. */
-   if (pilot->stats.thrust_max > 0.)
-      pilot->thrust = MIN( pilot->thrust, pilot->stats.thrust_max*mass );
-   if (pilot->stats.turn_max > 0.)
-      pilot->turn = MIN(   pilot->turn, pilot->stats.turn_max );
-   if (pilot->stats.speed_max > 0.)
-      pilot->speed = MIN(  pilot->speed, pilot->stats.speed_max );
+   pilot->thrust  = factor * pilot->thrust_base * mass;
+   pilot->turn    = factor * pilot->turn_base;
+   pilot->speed   = factor * pilot->speed_base;
 
    /* Need to recalculate electronic warfare mass change. */
    pilot_ewUpdateStatic( pilot );
