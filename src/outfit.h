@@ -204,11 +204,11 @@ typedef struct OutfitModificationData_ {
    int active;       /**< Outfit is active. */
 
    /* movement */
-   double thrust;    /**< Maximum thrust modifier. */
+   double thrust;    /**< Maximum thrust modifier, this is absolute and is per 100 mass. */
    double thrust_rel; /**< Relative thrust modifier. */
-   double turn;      /**< Maximum turn modifier. */
+   double turn;      /**< Maximum turn modifier, this is absolute and is per 100 mass. */
    double turn_rel;  /**< Relative turn modifier. */
-   double speed;     /**< Maximum speed modifier. */
+   double speed;     /**< Maximum speed modifier, this is absolute and per 100 mass. */
    double speed_rel; /**< Relative speed modifier. */
 
    /* health */

@@ -1460,11 +1460,11 @@ if ((x) != 0.) \
          "\n%+."n"f "s, x )
 #define DESC_ADD0(x, s)    DESC_ADD( x, s, "0" )
 #define DESC_ADD1(x, s)    DESC_ADD( x, s, "1" )
-   DESC_ADD0( temp->u.mod.thrust, "Thrust" );
+   DESC_ADD0( temp->u.mod.thrust, "Thrust per 100 mass" );
    DESC_ADD0( temp->u.mod.thrust_rel, "%% Thrust" );
-   DESC_ADD0( temp->u.mod.turn, "Turn Rate" );
+   DESC_ADD0( temp->u.mod.turn, "Turn Rate per 100 mass" );
    DESC_ADD0( temp->u.mod.turn_rel, "%% Turn Rate" );
-   DESC_ADD0( temp->u.mod.speed, "Maximum Speed" );
+   DESC_ADD0( temp->u.mod.speed, "Maximum Speed per 100 mass" );
    DESC_ADD0( temp->u.mod.speed_rel, "%% Maximum Speed" );
    DESC_ADD0( temp->u.mod.armour, "Armour" );
    DESC_ADD0( temp->u.mod.armour_rel, "%% Armour" );

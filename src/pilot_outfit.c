@@ -769,11 +769,12 @@ char* pilot_getOutfits( Pilot* pilot )
 void pilot_calcStats( Pilot* pilot )
 {
    int i;
-   double q;
    Outfit* o;
    PilotOutfitSlot *slot;
    double ac, sc, ec, fc; /* temporary health coefficients to set */
-   double arel, srel, erel; /* relative health bonuses. */
+   double thrust_rel, turn_rel, speed_rel;
+   double armour_rel, shield_rel, energy_rel;
+   double crew_rel, mass_rel;
    int njammers;
    ShipStats amount, *s;
 
@@ -783,9 +784,9 @@ void pilot_calcStats( Pilot* pilot )
    /* mass */
    pilot->solid->mass   = pilot->ship->mass;
    /* movement */
-   pilot->thrust        = pilot->ship->thrust;
-   pilot->turn_base     = pilot->ship->turn;
-   pilot->speed         = pilot->ship->speed;
+   pilot->thrust_base   = pilot->ship->thrust * pilot->ship->mass;
+   pilot->turn_base     = pilot->ship->turn * pilot->ship->mass;
+   pilot->speed_base    = pilot->ship->speed * pilot->ship->mass;
    /* cpu */
    pilot->cpu_max       = pilot->ship->cpu;
    pilot->cpu           = pilot->cpu_max;
@@ -823,9 +824,10 @@ void pilot_calcStats( Pilot* pilot )
    njammers             = 0;
    pilot->jam_range     = 0.;
    pilot->jam_chance    = 0.;
-   arel                 = 0.;
-   srel                 = 0.;
-   erel                 = 0.;
+   thrust_rel = turn_rel = speed_rel = 0.;
+   armour_rel = shield_rel = energy_rel = 0.;
+   mass_rel = crew_rel = 0.;
+   /* Update stuff. */
    for (i=0; i<pilot->noutfits; i++) {
       slot = pilot->outfits[i];
       o    = slot->outfit;
@@ -834,12 +836,10 @@ void pilot_calcStats( Pilot* pilot )
       if (o==NULL)
          continue;
 
-      q = (double) slot->quantity;
-
       /* Subtract CPU. */
-      pilot->cpu           -= outfit_cpu(o) * q;
+      pilot->cpu           -= outfit_cpu(o);
       if (outfit_cpu(o) < 0.)
-         pilot->cpu_max    -= outfit_cpu(o) * q;
+         pilot->cpu_max    -= outfit_cpu(o);
 
       /* Add mass. */
       pilot->mass_outfit   += o->mass;
@@ -849,41 +849,39 @@ void pilot_calcStats( Pilot* pilot )
          continue;
 
       if (outfit_isMod(o)) { /* Modification */
-         /* movement */
-         pilot->thrust        += o->u.mod.thrust * pilot->ship->mass * q;
-         pilot->thrust        += o->u.mod.thrust_rel * pilot->ship->thrust * q;
-         pilot->turn_base     += o->u.mod.turn * q;
-         pilot->turn_base     += o->u.mod.turn_rel * pilot->ship->turn * q;
-         pilot->speed         += o->u.mod.speed * q;
-         pilot->speed         += o->u.mod.speed_rel * pilot->ship->speed * q;
-         /* health */
-         pilot->armour_max    += o->u.mod.armour * q;
-         pilot->armour_regen  += o->u.mod.armour_regen * q;
-         arel                 += o->u.mod.armour_rel * q;
-         pilot->shield_max    += o->u.mod.shield * q;
-         pilot->shield_regen  += o->u.mod.shield_regen * q;
-         srel                 += o->u.mod.shield_rel * q;
-         pilot->energy_max    += o->u.mod.energy * q;
-         pilot->energy_regen  += o->u.mod.energy_regen * q;
-         erel                 += o->u.mod.energy_rel * q;
-         /* fuel */
-         pilot->fuel_max      += o->u.mod.fuel * q;
-         /* misc */
-         pilot->cargo_free    += o->u.mod.cargo * q;
-         pilot->mass_outfit   += o->u.mod.mass_rel * pilot->ship->mass * q;
-         pilot->crew          += o->u.mod.crew_rel * pilot->ship->crew * q;
-         /*
-          * Stats.
-          */
-         ss_statsModFromList( &pilot->stats, o->u.mod.stats, &amount ); /* TODO Handle q or remove it? */
+         /* Movement. */
+         pilot->thrust_base   += o->u.mod.thrust * 100.;
+         thrust_rel           += o->u.mod.thrust_rel;
+         pilot->turn_base     += o->u.mod.turn * 100.;
+         turn_rel             += o->u.mod.turn_rel;
+         pilot->speed_base    += o->u.mod.speed * 100.;
+         speed_rel            += o->u.mod.speed_rel;
+         /* Health. */
+         pilot->armour_max    += o->u.mod.armour;
+         pilot->armour_regen  += o->u.mod.armour_regen;
+         armour_rel           += o->u.mod.armour_rel;
+         pilot->shield_max    += o->u.mod.shield;
+         pilot->shield_regen  += o->u.mod.shield_regen;
+         shield_rel           += o->u.mod.shield_rel;
+         pilot->energy_max    += o->u.mod.energy;
+         pilot->energy_regen  += o->u.mod.energy_regen;
+         energy_rel           += o->u.mod.energy_rel;
+         /* Fuel. */
+         pilot->fuel_max      += o->u.mod.fuel;
+         /* Misc. */
+         pilot->cargo_free    += o->u.mod.cargo;
+         mass_rel             += o->u.mod.mass_rel;
+         crew_rel             += o->u.mod.crew_rel;
+         /* Stats. */
+         ss_statsModFromList( &pilot->stats, o->u.mod.stats, &amount );
       }
       else if (outfit_isAfterburner(o)) /* Afterburner */
          pilot->afterburner = pilot->outfits[i]; /* Set afterburner */
       else if (outfit_isJammer(o)) { /* Jammer */
-         pilot->jam_range        += o->u.jam.range * q;
-         pilot->jam_chance       += o->u.jam.chance * q;
-         pilot->energy_regen     -= o->u.jam.energy * q;
-         njammers                += q;;
+         pilot->jam_range        += o->u.jam.range;
+         pilot->jam_chance       += o->u.jam.chance;
+         pilot->energy_regen     -= o->u.jam.energy;
+         njammers                += 1;
       }
 
       /* Add ammo mass. */
@@ -935,10 +933,19 @@ void pilot_calcStats( Pilot* pilot )
       pilot->jam_chance *= exp( -0.2 * (double)(MAX(njammers-1,0)) );
    }
 
-   /* Increase health by relative bonuses. */
-   pilot->armour_max += arel * pilot->ship->armour;
-   pilot->shield_max += srel * pilot->ship->shield;
-   pilot->energy_max += erel * pilot->ship->energy;
+   /*
+    * Relative increases.
+    */
+   /* Movement. */
+   pilot->thrust_base += thrust_rel * pilot->thrust_base;
+   pilot->turn_base  += turn_rel * pilot->turn_base;
+   pilot->speed_base += speed_rel * pilot->speed_base;
+   /* Health. */
+   pilot->armour_max += armour_rel * pilot->armour_max;
+   pilot->shield_max += shield_rel * pilot->shield_max;
+   pilot->energy_max += energy_rel * pilot->energy_max;
+   /* Misc. */
+   pilot->crew       += crew_rel * pilot->crew;
 
    /* Give the pilot his health proportion back */
    pilot->armour = ac * pilot->armour_max;
@@ -947,7 +954,7 @@ void pilot_calcStats( Pilot* pilot )
    pilot->fuel   = fc * pilot->fuel_max;
 
    /* Calculate mass. */
-   pilot->solid->mass = pilot->ship->mass + pilot->stats.cargo_inertia*pilot->mass_cargo + pilot->mass_outfit;
+   pilot->solid->mass = mass_rel*pilot->ship->mass + pilot->stats.cargo_inertia*pilot->mass_cargo + pilot->mass_outfit;
 
    /* Calculate the heat. */
    pilot_heatCalc( pilot );
@@ -965,7 +972,9 @@ void pilot_calcStats( Pilot* pilot )
  */
 void pilot_updateMass( Pilot *pilot )
 {
-   pilot->turn = pilot->turn_base * pilot->ship->mass / pilot->solid->mass;
+   pilot->thrust  = pilot->thrust_base; // pilot->solid->mass;
+   pilot->turn    = pilot->turn_base   / pilot->solid->mass;
+   pilot->speed   = pilot->speed_base  / pilot->solid->mass;
 
    /* Need to recalculate electronic warfare mass change. */
    pilot_ewUpdateStatic( pilot );
