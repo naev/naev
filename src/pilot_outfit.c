@@ -793,10 +793,10 @@ void pilot_calcStats( Pilot* pilot )
    /* crew */
    pilot->crew          = pilot->ship->crew;
    /* health */
-   ac = (pilot->armour_max > 0.) ? pilot->armour   / pilot->armour_max : 0.;
-   sc = (pilot->shield_max > 0.) ? pilot->shield   / pilot->shield_max : 0.;
-   ec = (pilot->energy_max > 0.) ? pilot->energy   / pilot->energy_max : 0.;
-   fc = (pilot->fuel_max > 0.) ? pilot->fuel   / pilot->fuel_max : 0.;
+   ac = (pilot->armour_max > 0.) ? pilot->armour / pilot->armour_max : 0.;
+   sc = (pilot->shield_max > 0.) ? pilot->shield / pilot->shield_max : 0.;
+   ec = (pilot->energy_max > 0.) ? pilot->energy / pilot->energy_max : 0.;
+   fc = (pilot->fuel_max   > 0.) ? pilot->fuel   / pilot->fuel_max   : 0.;
    pilot->armour_max    = pilot->ship->armour;
    pilot->shield_max    = pilot->ship->shield;
    pilot->fuel_max      = pilot->ship->fuel;
