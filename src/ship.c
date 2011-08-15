@@ -607,8 +607,9 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    memset( temp, 0, sizeof(Ship) );
 
    /* Defaults. */
-   temp->thrust = -1;
-   temp->speed  = -1;
+   temp->thrust = -1.;
+   temp->speed  = -1.;
+   temp->turn   = -1.;
    ss_statsInit( &temp->stats_array );
 
    /* Get name. */
@@ -797,7 +798,6 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    /* Post processing. */
    temp->dmg_absorb   /= 100.;
    temp->turn         *= M_PI / 180.; /* Convert to rad. */
-   temp->thrust *= temp->mass;
 
    /* ship validator */
 #define MELEMENT(o,s)      if (o) WARN("Ship '%s' missing '"s"' element", temp->name)
@@ -809,9 +809,9 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    MELEMENT(temp->price==0,"price");
    MELEMENT(temp->fabricator==NULL,"fabricator");
    MELEMENT(temp->description==NULL,"description");
-   MELEMENT(temp->thrust==-1,"thrust");
-   MELEMENT(temp->turn==0,"turn");
-   MELEMENT(temp->speed==-1,"speed");
+   MELEMENT(temp->thrust<0.,"thrust");
+   MELEMENT(temp->turn<0.,"turn");
+   MELEMENT(temp->speed<0.,"speed");
    MELEMENT(temp->armour==0,"armour");
    MELEMENT(temp->shield==0,"shield");
    MELEMENT(temp->shield_regen==0,"shield_regen");

@@ -245,7 +245,7 @@ void shipyard_update( unsigned int wid, char* str )
          ship->cpu,
          ship->mass,
          pow( ship->mass, 1./2.5 ) / 5. * (ship->stats_array.jump_delay/100.+1.), /**< @todo make this more portable. */
-         ship->thrust / ship->mass,
+         ship->thrust,
          ship->speed,
          ship->turn*180/M_PI,
          /* Misc */

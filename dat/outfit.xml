@@ -2751,6 +2751,9 @@
    <speed>100</speed>
    <fuel>300</fuel>
    <energy_regen>-6</energy_regen>
+   <thrust_max>200</thrust_max>
+   <turn_max>200</turn_max>
+   <speed_max>200</speed_max>
   </specific>
  </outfit>
  <outfit name="Unmodified Small Hull">

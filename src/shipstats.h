@@ -62,6 +62,9 @@ typedef enum ShipStatsType_ {
    /*
     * A: Absolute double type data. Should be continuous.
     */
+   SS_TYPE_A_THRUST_MAX,      /**< Ship's maximum thrust. */
+   SS_TYPE_A_TURN_MAX,        /**< Ship's maximum turn. */
+   SS_TYPE_A_SPEED_MAX,       /**< Ship's maximum speed. */
 
    /*
     * I: Integer type data. Should be continuous.
@@ -154,6 +157,11 @@ typedef struct ShipStats_ {
    double tur_damage;      /**< Damage of turrets. */
    double tur_firerate;    /**< Rate of fire of turrets. */
    double tur_energy;      /**< Consumption rate of turrets. */
+
+   /* Engine limits. */
+   double thrust_max;      /**< Thrust limit of the engine. */
+   double turn_max;        /**< Turn limit of the engine. */
+   double speed_max;       /**< Speed limit of the engine. */
 
    /* Misc. */
    double nebula_dmg_shield; /**< Shield nebula resistance. */
