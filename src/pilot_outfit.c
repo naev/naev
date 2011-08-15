@@ -977,7 +977,7 @@ void pilot_updateMass( Pilot *pilot )
    /* Set limit. */
    mass = pilot->solid->mass;
    if ((pilot->stats.engine_limit > 0.) && (mass > pilot->stats.engine_limit))
-      factor = mass / pilot->stats.engine_limit;
+      factor = pilot->stats.engine_limit / mass;
    else
       factor = 1.;
 
