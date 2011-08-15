@@ -2546,19 +2546,6 @@
    <ew_hide>11</ew_hide>
   </specific>
  </outfit>
- <outfit name="Basic Systems">
-  <general>
-   <typename>Core Systems</typename>
-   <slot prop="systems">utility</slot>
-   <mass>0</mass>
-   <price>40000</price>
-   <description>Your basic systems</description>
-   <gfx_store>jammer0</gfx_store>
-  </general>
-  <specific type="modification">
-   <cpu>10</cpu>
-  </specific>
- </outfit>
  <outfit name="Unicorp Jammer">
   <general>
    <slot>utility</slot>
@@ -2725,6 +2712,65 @@
    <description>This license gives you authorization to land on pirate worlds and gives access to missions in the pirate mission computer.</description>
   </general>
   <specific type="license"/>
+ </outfit>
+
+
+ <!-- Ship CORE systems. -->
+ <outfit name="Basic Small Systems">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>light</size>
+   <mass>2</mass>
+   <price>100</price>
+   <description>Bare-bones ship systems, capable of getting it off the ground and into space and back, but unfit for any sort of serious duty.</description>
+   <gfx_store>jammer0</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>18</cpu>
+   <shield>100</shield>
+   <shield_regen>3</shield_regen>
+   <energy>320</energy>
+   <energy_regen>16</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Manufacturer Small Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>light</size>
+   <mass>5</mass>
+   <price>100</price>
+   <description>The engine that comes with the ship. Cheap to produce and favored by none, there are always plenty of spares lying around in spaceports that engineers are all too willing to get rid of.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>180</thrust>
+   <turn>150</turn>
+   <speed>200</speed>
+   <fuel>300</fuel>
+   <energy_regen>-6</energy_regen>
+  </specific>
+ </outfit>
+ <outfit name="Unmodified Small Hull">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="hull">structure</slot>
+   <size>light</size>
+   <mass>30</mass>
+   <price>100</price>
+   <description>The manufacturer spec hull configuration. Certainly spaceworthy, but miserably fails to tap the hull's full potential.</description>
+   <gfx_store>nanobond</gfx_store>
+  </general>
+  <specific type="modification">
+   <cap_cargo>5</cap_cargo>
+   <absorb>0</absorb>
+   <armour>50</armour>
+   <armour_regen>0</armour_regen>
+   <ew_hide>0</ew_hide>
+   <weap_slots>-1</weap_slots>
+  </specific>
  </outfit>
 
 

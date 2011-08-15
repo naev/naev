@@ -11,32 +11,34 @@
   <fabricator>Melendez Corp.</fabricator>
   <description>One of the most widely used ships in the galaxy. Renowned for its stability and stubbornness. The design hasn't been modified much since its creation many many years ago. It was one of the first civilian use spacecrafts, first used by aristocracy and now used by everyone who cannot afford better.</description>
   <movement>
-   <thrust>180</thrust>
-   <turn>150</turn>
-   <speed>200</speed>
+   <thrust>0</thrust>
+   <turn>0</turn>
+    <speed>0</speed>
   </movement>
   <health>
    <absorb>0</absorb>
-   <shield>100</shield>
-   <armour>50</armour>
-   <energy>320</energy>
-   <shield_regen>3</shield_regen>
+   <shield>10</shield>
+   <armour>5</armour>
+   <energy>32</energy>
+   <shield_regen>0</shield_regen>
    <armour_regen>0</armour_regen>
-   <energy_regen>16.7</energy_regen>
+   <energy_regen>1</energy_regen>
   </health>
   <characteristics>
-   <cpu>18</cpu>
+   <cpu>0</cpu>
    <crew>2</crew>
-   <mass>83</mass>
-   <fuel>400</fuel>
-   <cap_cargo>20</cap_cargo>
+   <mass>40</mass>
+   <fuel>0</fuel>
+   <cap_cargo>15</cap_cargo>
   </characteristics>
   <slots>
    <weapon x="7" y="0" h="1"/>
    <weapon x="-3" y="0" h="2"/>
-   <utility prop="systems">Basic Systems</utility>
+   <utility prop="systems">Basic Small Systems</utility>
    <utility/>
    <utility/>
+   <structure prop="engines">Manufacturer Small Engine</structure>
+   <structure prop="hull">Unmodified Small Hull</structure>
    <structure/>
    <structure/>
   </slots>

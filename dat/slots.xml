@@ -2,7 +2,19 @@
 <Slots>
  <slot name="systems">
   <display>Core Systems</display>
-  <description>This slot is used for dedicated core systems of the ship. Handling things like targetting and guidance systems.</description>
+  <description>This slot is used for dedicated core systems of the ship. Other subsystems rely on this system to manage them, and the bulk of the ship's power and shield generation also happens here.</description>
+  <exclusive/>
+  <required/>
+ </slot>
+ <slot name="hull">
+  <display>Hull Modifications</display>
+  <description>This slot is used for structural modifications to the ship's hull. This slot represents the base layer of armour plating, and also greatly affects mass, cargo space and available weapon slots.</description>
+  <exclusive/>
+  <required/>
+ </slot>
+ <slot name="engines">
+  <display>Engines</display>
+  <description>This slot is used for engines. Engines propel the ship, which is kind of important. Engines require energy from the core system to function.</description>
   <exclusive/>
   <required/>
  </slot>
