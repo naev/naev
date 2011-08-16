@@ -1097,12 +1097,12 @@ void player_think( Pilot* pplayer, const double dt )
        * If the player has reverse thrusters, fire those.
        */
       if (player.p->stats.misc_reverse_thrust)
-         player_accel(-0.4);
-      else
+         player_accel( -0.4 );
+      else {
          pilot_face( pplayer, VANGLE(player.p->solid->vel) + M_PI );
-
-      /* Disable turning. */
-      facing = 1;
+         /* Disable turning. */
+         facing = 1;
+      }
    }
    else if(player.p->stats.misc_reverse_thrust && !player_isFlag(PLAYER_REVERSE) && !player_isFlag(PLAYER_ACCEL))
       player_accelOver();
@@ -1197,7 +1197,7 @@ void player_updateSpecific( Pilot *pplayer, const double dt )
    /* Calculate engine sound to use. */
    if (player_isFlag(PLAYER_AFTERBURNER))
       engsound = pplayer->afterburner->outfit->u.afb.sound;
-   else if (pplayer->solid->thrust > 0.) {
+   else if ((pplayer->solid->thrust > 1e-3) || (pplayer->solid->thrust < -1e-3)) {
       /* See if is in hyperspace. */
       if (pilot_isFlag(pplayer, PILOT_HYPERSPACE))
          engsound = snd_hypEng;
