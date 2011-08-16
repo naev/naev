@@ -450,29 +450,29 @@ const char* pilot_checkSanity( Pilot *p )
       return "Negative CPU";
 
    /* Movement. */
-   if (p->thrust < 0)
+   if (p->thrust < 0.)
       return "Negative Thrust";
-   if (p->speed < 0)
+   if (p->speed < 0.)
       return "Negative Speed";
-   if (p->turn < 0)
+   if (p->turn < 0.)
       return "Negative Turn";
 
    /* Health. */
-   if (p->armour_max < 0)
+   if (p->armour_max < 0.)
       return "Negative Armour";
-   if (p->armour_regen < 0)
+   if (p->armour_regen < 0.)
       return "Negative Armour Regeneration";
-   if (p->shield_max < 0)
+   if (p->shield_max < 0.)
       return "Negative Shield";
-   if (p->shield_regen < 0)
+   if (p->shield_regen < 0.)
       return "Negative Shield Regeneration";
-   if (p->energy_max < 0)
+   if (p->energy_max < 0.)
       return "Negative Energy";
-   if (p->energy_regen < 0)
+   if (p->energy_regen < 0.)
       return "Negative Energy Regeneration";
 
    /* Misc. */
-   if (p->fuel_max < 0)
+   if (p->fuel_max < 0.)
       return "Negative Fuel Maximum";
 
    /* All OK. */
@@ -480,6 +480,12 @@ const char* pilot_checkSanity( Pilot *p )
 }
 
 
+#define CHECK_STAT_R( oa, or, pa, s ) \
+   if (((oa)+(or)*((pa)+(oa)) < 0.) && (fabs((oa)+(or)*((oa)+(pa))) > (pa))) \
+      return (s)
+#define CHECK_STAT( oa, pa, s ) \
+   if ((( (oa) < 0.) && (fabs(oa)) > (pa))) \
+      return (s)
 /**
  * @brief Checks to see if can equip/remove an outfit from a slot.
  *
@@ -510,58 +516,27 @@ const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o, int add )
          /*
           * Movement.
           */
-         if (((o->u.mod.thrust + o->u.mod.thrust_rel * p->ship->thrust) < 0) &&
-               (fabs(o->u.mod.thrust + o->u.mod.thrust_rel * p->ship->thrust) > p->thrust))
-            return "Insufficient thrust";
-         if (((o->u.mod.speed + o->u.mod.speed_rel * p->ship->speed) < 0) &&
-               (fabs(o->u.mod.speed + o->u.mod.speed_rel * p->ship->speed) > p->speed))
-            return "Insufficient speed";
-         if (((o->u.mod.turn + o->u.mod.turn_rel * p->ship->turn * p->ship->mass/p->solid->mass) < 0) &&
-               (fabs(o->u.mod.turn + o->u.mod.turn_rel * p->ship->turn * p->ship->mass/p->solid->mass) > p->turn_base))
-            return "Insufficient turn";
+         CHECK_STAT_R( o->u.mod.thrust, o->u.mod.thrust_rel, p->ship->thrust, "Insufficient thrust" );
+         CHECK_STAT_R( o->u.mod.turn, o->u.mod.turn_rel, p->ship->turn, "Insufficient turn" );
+         CHECK_STAT_R( o->u.mod.speed, o->u.mod.speed_rel, p->ship->speed, "Insufficient speed" );
 
          /*
           * Health.
           */
          /* Max. */
-         if ((o->u.mod.armour < 0) &&
-               (fabs(o->u.mod.armour) > p->armour_max))
-            return "Insufficient armour";
-         if ((o->u.mod.armour_rel < 0.) &&
-               (fabs(o->u.mod.armour_rel * p->ship->armour) > p->armour_max))
-            return "Insufficient armour";
-         if ((o->u.mod.shield < 0) &&
-               (fabs(o->u.mod.shield) > p->shield_max))
-            return "Insufficient shield";
-         if ((o->u.mod.shield_rel < 0.) &&
-               (fabs(o->u.mod.shield_rel * p->ship->shield) > p->shield_max))
-            return "Insufficient shield";
-         if ((o->u.mod.energy < 0) &&
-               (fabs(o->u.mod.energy) > p->armour_max))
-            return "Insufficient energy";
-         if ((o->u.mod.energy_rel < 0.) &&
-               (fabs(o->u.mod.energy_rel * p->ship->energy) > p->energy_max))
-            return "Insufficient energy";
+         CHECK_STAT_R( o->u.mod.armour, o->u.mod.armour_rel, p->armour_max, "Insufficient armour" );
+         CHECK_STAT_R( o->u.mod.shield, o->u.mod.shield_rel, p->shield_max, "Insufficient shield" );
+         CHECK_STAT_R( o->u.mod.energy, o->u.mod.energy_rel, p->energy_max, "Insufficient energy" );
          /* Regen. */
-         if ((o->u.mod.armour_regen < 0) &&
-               (fabs(o->u.mod.armour_regen) > p->armour_regen))
-            return "Insufficient energy regeneration";
-         if ((o->u.mod.shield_regen < 0) &&
-               (fabs(o->u.mod.shield_regen) > p->shield_regen))
-            return "Insufficient shield regeneration";
-         if ((o->u.mod.energy_regen < 0) &&
-               (fabs(o->u.mod.energy_regen) > p->energy_regen))
-            return "Insufficient energy regeneration";
+         CHECK_STAT( o->u.mod.armour_regen, p->armour_regen, "Insufficient armour regeneration" );
+         CHECK_STAT( o->u.mod.shield_regen, p->shield_regen, "Insufficient shield regeneration" );
+         CHECK_STAT( o->u.mod.energy_regen, p->energy_regen, "Insufficient energy regeneration" );
 
          /*
           * Misc.
           */
-         if ((o->u.mod.fuel < 0) &&
-               (fabs(o->u.mod.fuel) > p->fuel_max))
-            return "Insufficient fuel";
-         if ((o->u.mod.cargo < 0) &&
-               (fabs(o->u.mod.cargo) > p->cargo_free))
-            return "Insufficient cargo space";
+         CHECK_STAT( o->u.mod.fuel, p->fuel_max, "Insufficient fuel" );
+         CHECK_STAT( o->u.mod.cargo, p->cargo_free, "Insufficient cargo space" );
       }
    }
    /* Removing outfit. */
