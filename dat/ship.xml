@@ -10,22 +10,7 @@
   <price>120000</price>
   <fabricator>Melendez Corp.</fabricator>
   <description>One of the most widely used ships in the galaxy. Renowned for its stability and stubbornness. The design hasn't been modified much since its creation many many years ago. It was one of the first civilian use spacecrafts, first used by aristocracy and now used by everyone who cannot afford better.</description>
-  <movement>
-   <thrust>0</thrust>
-   <turn>0</turn>
-    <speed>0</speed>
-  </movement>
-  <health>
-   <absorb>0</absorb>
-   <shield>10</shield>
-   <armour>5</armour>
-   <energy>32</energy>
-   <shield_regen>0</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>1</energy_regen>
-  </health>
   <characteristics>
-   <cpu>0</cpu>
    <crew>2</crew>
    <mass>40</mass>
    <fuel>0</fuel>

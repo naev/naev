@@ -2520,17 +2520,6 @@
    <radius>2</radius>
   </specific>
  </outfit>
- <outfit name="Ultra Map">
-  <general>
-   <mass>0</mass>
-   <price>1</price>
-   <description>For cheating.</description>
-   <gfx_store>map</gfx_store>
-  </general>
-  <specific type="map">
-   <radius>999</radius>
-  </specific>
- </outfit>
  <outfit name="Unicorp Scrambler">
   <general>
    <slot>utility</slot>
@@ -2737,7 +2726,7 @@
    <mass>2</mass>
    <price>100</price>
    <description>Bare-bones ship systems, capable of getting it off the ground and into space and back, but unfit for any sort of serious duty.</description>
-   <gfx_store>jammer0</gfx_store>
+   <gfx_store>reactor_i</gfx_store>
   </general>
   <specific type="modification">
    <cpu>18</cpu>
@@ -2764,7 +2753,7 @@
    <speed>200</speed>
    <fuel>300</fuel>
    <energy_regen>-6</energy_regen>
-   <engine_limit>50</engine_limit>
+   <engine_limit>80</engine_limit>
   </specific>
  </outfit>
  <outfit name="Unmodified Small Hull">
@@ -2783,7 +2772,6 @@
    <armour>50</armour>
    <armour_regen>0</armour_regen>
    <ew_hide>0</ew_hide>
-   <weap_slots>-1</weap_slots>
   </specific>
  </outfit>
 
@@ -2907,6 +2895,17 @@
     <physical>15</physical>
     <disable>1</disable>
    </damage>
+  </specific>
+ </outfit>
+ <outfit name="Ultra Map">
+  <general>
+   <mass>0</mass>
+   <price>1</price>
+   <description>For cheating.</description>
+   <gfx_store>map</gfx_store>
+  </general>
+  <specific type="map">
+   <radius>999</radius>
   </specific>
  </outfit>
 </Outfits>
