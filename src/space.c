@@ -662,10 +662,15 @@ int space_sysReachable( StarSystem *sys )
 int space_sysReallyReachable( char* sysname )
 {
    int njumps;
+   StarSystem** path;
 
-   if (strcmp(sysname,cur_system->name)==0 || map_getJumpPath( &njumps,
-         cur_system->name, sysname, 1, NULL ) != NULL)
+   if (strcmp(sysname,cur_system->name)==0)
       return 1;
+   path = map_getJumpPath( &njumps, cur_system->name, sysname, 1, NULL );
+   if (path != NULL) {
+      free(path);
+      return 1;
+   }
    return 0;
 }
 
