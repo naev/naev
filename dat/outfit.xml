@@ -2778,7 +2778,7 @@
    <gfx_store>nanobond</gfx_store>
   </general>
   <specific type="modification">
-   <cap_cargo>5</cap_cargo>
+   <cargo>5</cargo>
    <absorb>0</absorb>
    <armour>50</armour>
    <armour_regen>0</armour_regen>
