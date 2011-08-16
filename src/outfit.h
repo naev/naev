@@ -222,6 +222,7 @@ typedef struct OutfitModificationData_ {
    double energy_rel; /**< Relative to energy base modifier. */
    double energy_regen; /**< Energy regeneration modifier. */
    double cpu;       /**< CPU modifier. */
+   double absorb;    /**< Absorption factor. */
 
    /* misc */
    double cargo;     /**< Cargo space modifier. */
