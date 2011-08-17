@@ -93,7 +93,7 @@ typedef struct Ship_ {
    char* description; /**< selling description */
 
    /* movement */
-   double thrust;    /**< Ship's thrust in "pixel/sec^2" */
+   double thrust;    /**< Ship's thrust in "pixel/sec^2" (not multiplied by mass) */
    double turn;      /**< Ship's turn in rad/s */
    double speed;     /**< Ship's max speed in "pixel/sec" */
 
