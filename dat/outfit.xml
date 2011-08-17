@@ -3234,7 +3234,7 @@
    <engine_limit>170</engine_limit>
   </specific>
  </outfit>
- <outfit name="Tricon Naga Mk9 Engine">
+ <outfit name="Tricon Naga Mk12 Engine">
   <general>
    <typename>Core Systems</typename>
    <slot prop="engines">structure</slot>
