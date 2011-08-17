@@ -413,7 +413,7 @@ const news_t *news_generate( int *ngen, int n )
 #endif /* DEBUGGING */
 
    /* Save news found. */
-   news_nbuf   = i;
+   news_nbuf   = n+1;
    if (ngen != NULL)
       (*ngen)  = news_nbuf;
 
