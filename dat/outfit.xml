@@ -2371,7 +2371,7 @@
    <energy_regen>-6.25</energy_regen>
   </specific>
  </outfit>
-  <outfit name="Auxiliary Processing Unit III">
+ <outfit name="Auxiliary Processing Unit III">
   <general>
    <typename>CPU Modifier</typename>
    <slot>utility</slot>
@@ -2717,14 +2717,34 @@
  </outfit>
 
 
- <!-- Ship CORE systems. -->
+ <!-- Ship CORE outfits. -->
+ <!-- Systems. -->
+ <outfit name="Previous Generation Systems">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>light</size>
+   <mass>3</mass>
+   <price>0</price>
+   <description>A jury-rigged mess of processors and generators that most captains wouldn't be seen dead having installed on their ship.</description>
+   <gfx_store>reactor_i</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>5</cpu>
+   <shield>30</shield>
+   <shield_regen>1</shield_regen>
+   <energy>120</energy>
+   <energy_regen>4</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
  <outfit name="Basic Small Systems">
   <general>
    <typename>Core Systems</typename>
    <slot prop="systems">utility</slot>
    <size>light</size>
    <mass>2</mass>
-   <price>100</price>
+   <price>10000</price>
    <description>Bare-bones ship systems, capable of getting it off the ground and into space and back, but unfit for any sort of serious duty.</description>
    <gfx_store>reactor_i</gfx_store>
   </general>
@@ -2737,13 +2757,91 @@
    <ew_hide>0</ew_hide>
   </specific>
  </outfit>
+ <outfit name="Unicorp PT-100 Core System">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>light</size>
+   <mass>2</mass>
+   <price>25000</price>
+   <description>The PT-100 model is a modest but to-spec core system unit with reasonable, all-round performance.</description>
+   <gfx_store>reactor_i</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>20</cpu>
+   <shield>140</shield>
+   <shield_regen>4</shield_regen>
+   <energy>400</energy>
+   <energy_regen>18</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp PT-200 Core System">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>light</size>
+   <mass>2</mass>
+   <price>45000</price>
+   <description>A slightly more efficient version of the PT-100, critics claim the PT-200 uses exactly the same hardware with some artificial limits removed.</description>
+   <gfx_store>reactor_i</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>23</cpu>
+   <shield>150</shield>
+   <shield_regen>4</shield_regen>
+   <energy>430</energy>
+   <energy_regen>19</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp RX-14 Core System">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>light</size>
+   <mass>3</mass>
+   <price>50000</price>
+   <description>The RX-14 provides good subsystem control, but this comes at the price of somewhat mediocre shielding and energy generation.</description>
+   <gfx_store>reactor_i</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>30</cpu>
+   <shield>120</shield>
+   <shield_regen>3</shield_regen>
+   <energy>370</energy>
+   <energy_regen>16</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+
+ <!-- Engines. -->
+ <outfit name="Beat Up Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>light</size>
+   <mass>5</mass>
+   <price>0</price>
+   <description>Clogged, corroded and cracked in every way possible while still remaining in functional condition, this engine really belongs on the scrap heap.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>100</thrust>
+   <turn>100</turn>
+   <speed>120</speed>
+   <fuel>200</fuel>
+   <energy_regen>-6</energy_regen>
+   <engine_limit>70</engine_limit>
+  </specific>
+ </outfit>
  <outfit name="Manufacturer Small Engine">
   <general>
    <typename>Core Systems</typename>
    <slot prop="engines">structure</slot>
    <size>light</size>
    <mass>5</mass>
-   <price>100</price>
+   <price>10000</price>
    <description>The engine that comes with the ship. Cheap to produce and favored by none, there are always plenty of spares lying around in spaceports that engineers are all too willing to get rid of.</description>
    <gfx_store>afterburner</gfx_store>
   </general>
@@ -2756,13 +2854,33 @@
    <engine_limit>80</engine_limit>
   </specific>
  </outfit>
+
+ <!-- Hull mods. -->
+ <outfit name="Patchwork Plating">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="hull">structure</slot>
+   <size>light</size>
+   <mass>50</mass>
+   <price>0</price>
+   <description>On the plus side, it keeps air from venting into space. But that's about it. This kind of hull maintenance is simply unacceptable.</description>
+   <gfx_store>nanobond</gfx_store>
+  </general>
+  <specific type="modification">
+   <cargo>0</cargo>
+   <absorb>0</absorb>
+   <armour>10</armour>
+   <armour_regen>0</armour_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
  <outfit name="Unmodified Small Hull">
   <general>
    <typename>Core Systems</typename>
    <slot prop="hull">structure</slot>
    <size>light</size>
    <mass>30</mass>
-   <price>100</price>
+   <price>10000</price>
    <description>The manufacturer spec hull configuration. Certainly spaceworthy, but miserably fails to tap the hull's full potential.</description>
    <gfx_store>nanobond</gfx_store>
   </general>

@@ -16,6 +16,11 @@
    <fuel>0</fuel>
    <cargo>15</cargo>
   </characteristics>
+  <health>
+   <absorb>0</absorb>
+   <armour>20</armour>
+   <armour_regen>0</armour_regen>
+  </health>
   <slots>
    <weapon x="7" y="0" h="1"/>
    <weapon x="-3" y="0" h="2"/>
