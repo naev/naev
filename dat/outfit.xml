@@ -2992,7 +2992,7 @@
    <typename>Core Systems</typename>
    <slot prop="engines">structure</slot>
    <size>light</size>
-   <mass>5</mass>
+   <mass>6</mass>
    <price>0</price>
    <description>Clogged, corroded and cracked in every way possible while still remaining in functional condition, this engine really belongs on the scrap heap.</description>
    <gfx_store>afterburner</gfx_store>
@@ -3002,7 +3002,7 @@
    <turn>70</turn>
    <speed>120</speed>
    <fuel>200</fuel>
-   <energy_regen>-6</energy_regen>
+   <energy_regen>-2</energy_regen>
    <engine_limit>70</engine_limit>
   </specific>
  </outfit>
@@ -3013,7 +3013,7 @@
    <size>light</size>
    <mass>5</mass>
    <price>10000</price>
-   <description>The engine that comes with the ship. Cheap to produce and favored by none, there are always plenty of spares lying around in spaceports that engineers are all too willing to get rid of.</description>
+   <description>The engine that most manufacturers install in their ships at assembly. Cheap to produce and favored by none, there are always plenty of spares lying around in spaceports that engineers are all too willing to get rid of.</description>
    <gfx_store>afterburner</gfx_store>
   </general>
   <specific type="modification">
@@ -3023,6 +3023,234 @@
    <fuel>300</fuel>
    <energy_regen>-6</energy_regen>
    <engine_limit>80</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp KRD-B10 Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>light</size>
+   <mass>6</mass>
+   <price>25000</price>
+   <description>The KRD-B10 engine is a low-budget allround engine many civilians use to propel their ships. It's not particularly effective, but it has a fairly low energy use.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>170</thrust>
+   <turn>120</turn>
+   <speed>220</speed>
+   <fuel>300</fuel>
+   <energy_regen>-7</energy_regen>
+   <engine_limit>80</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp KRD-B12 Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>light</size>
+   <mass>6</mass>
+   <price>45000</price>
+   <description>The KRD-B12 is a somewhat newer revision of the KRD-B10. Performance is improved, but energy consumption is a bit higher as well.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>190</thrust>
+   <turn>130</turn>
+   <speed>240</speed>
+   <fuel>300</fuel>
+   <energy_regen>-8</energy_regen>
+   <engine_limit>90</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp EXA-49F Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>light</size>
+   <mass>6</mass>
+   <price>65000</price>
+   <description>The EXA-49F is an engine that optimizes maneuverability in favor of overall speed. Given its low price tag, it is a good choice for light fighters.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>240</thrust>
+   <turn>150</turn>
+   <speed>200</speed>
+   <fuel>300</fuel>
+   <energy_regen>-9</energy_regen>
+   <engine_limit>100</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp AUR-50A Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>light</size>
+   <mass>6</mass>
+   <price>65000</price>
+   <description>The AUR-50A is an engine built for courier ships. It has good long distance speed and fuel reserves, but this comes at the cost of maneuverability.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>190</thrust>
+   <turn>110</turn>
+   <speed>280</speed>
+   <fuel>400</fuel>
+   <energy_regen>-9</energy_regen>
+   <engine_limit>100</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp JNS-44K Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>light</size>
+   <mass>6</mass>
+   <price>65000</price>
+   <description>The JNS-44K is a strong engine, but not a very fast one. Maximum speed and maneuverability are not impressive when compared to other models, but it can haul a lot more mass at peak efficiency.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>180</thrust>
+   <turn>120</turn>
+   <speed>230</speed>
+   <fuel>300</fuel>
+   <energy_regen>-9</energy_regen>
+   <engine_limit>130</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Tricon Naga Mk3 Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>light</size>
+   <mass>8</mass>
+   <price>100000</price>
+   <description>For pilots who want to fly with speed and efficiency, Tricon's Naga is the engine of choice. With good all round performance and a high mass limit, it is one of the best low end engines on the market.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>230</thrust>
+   <turn>150</turn>
+   <speed>290</speed>
+   <fuel>400</fuel>
+   <energy_regen>-10</energy_regen>
+   <engine_limit>140</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Tricon Naga Mk5 Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>light</size>
+   <mass>9</mass>
+   <price>180000</price>
+   <description>For pilots who want to fly with speed and efficiency, Tricon's Naga is the engine of choice. With good all round performance and a high mass limit, it is one of the best low end engines on the market.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>250</thrust>
+   <turn>165</turn>
+   <speed>310</speed>
+   <fuel>400</fuel>
+   <energy_regen>-11</energy_regen>
+   <engine_limit>150</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Tricon Crane Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>light</size>
+   <mass>9</mass>
+   <price>200000</price>
+   <description>In close combat, maneuverability can mean the difference between life and death. Tricon's Crane engine delivers excellent maneuverability without sacrificing top speed, making this engine a great choice for fighter pilots.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>270</thrust>
+   <turn>180</turn>
+   <speed>290</speed>
+   <fuel>400</fuel>
+   <energy_regen>-12</energy_regen>
+   <engine_limit>130</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Tricon Spriggan Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>light</size>
+   <mass>9</mass>
+   <price>200000</price>
+   <description>Tricon's Spriggan engine is designed to minimize travel time between destinations. It offers serious speed at moderate maneuverability.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>220</thrust>
+   <turn>155</turn>
+   <speed>330</speed>
+   <fuel>400</fuel>
+   <energy_regen>-12</energy_regen>
+   <engine_limit>130</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Tricon Oxen Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>light</size>
+   <mass>9</mass>
+   <price>200000</price>
+   <description>Aptly named, Tricon's Oxen engine excels at pulling heavy loads. It won't win any high speed races, but it can shift heavy cargo quite efficiently.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>210</thrust>
+   <turn>150</turn>
+   <speed>280</speed>
+   <fuel>400</fuel>
+   <energy_regen>-12</energy_regen>
+   <engine_limit>180</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Tricon Naga Mk9 Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>light</size>
+   <mass>9</mass>
+   <price>350000</price>
+   <description>For pilots who want to fly with speed and efficiency, Tricon's Naga is the engine of choice. With good all round performance and a high mass limit, it is one of the best low end engines on the market.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>270</thrust>
+   <turn>185</turn>
+   <speed>330</speed>
+   <fuel>400</fuel>
+   <energy_regen>-14</energy_regen>
+   <engine_limit>170</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Tricon Naga Mk9 Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>light</size>
+   <mass>9</mass>
+   <price>500000</price>
+   <description>For pilots who want to fly with speed and efficiency, Tricon's Naga is the engine of choice. With good all round performance and a high mass limit, it is one of the best low end engines on the market.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>300</thrust>
+   <turn>200</turn>
+   <speed>350</speed>
+   <fuel>400</fuel>
+   <energy_regen>-15</energy_regen>
+   <engine_limit>190</engine_limit>
   </specific>
  </outfit>
 
