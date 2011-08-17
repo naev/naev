@@ -2814,6 +2814,177 @@
    <ew_hide>0</ew_hide>
   </specific>
  </outfit>
+ <outfit name="Unicorp JX-16 Core System">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>light</size>
+   <mass>2</mass>
+   <price>50000</price>
+   <description>The JX-16 provides decent shielding and energy generation for a low price, but has limited subsystem control. Good for light fighters.</description>
+   <gfx_store>reactor_i</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>20</cpu>
+   <shield>180</shield>
+   <shield_regen>5</shield_regen>
+   <energy>400</energy>
+   <energy_regen>18</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp EX-19 Core System">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>light</size>
+   <mass>2</mass>
+   <price>50000</price>
+   <description>The EX-19 is an affordable energy-oriented core module. Shielding and subsystem control suffer somewhat, but it keeps the guns blazing.</description>
+   <gfx_store>reactor_i</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>21</cpu>
+   <shield>140</shield>
+   <shield_regen>4</shield_regen>
+   <energy>500</energy>
+   <energy_regen>23</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Milspec Orion 2301 Core System">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>light</size>
+   <mass>2</mass>
+   <price>90000</price>
+   <description>Milspec develops high performance hardware for your ship, to make sure you are always optimally prepared for the dangers the universe might throw at you on your travels. The Orion 2300 core system series is affordable yet capable, recommended for the beginning captain. Fly safe, fly Milspec.</description>
+   <gfx_store>reactor_i</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>32</cpu>
+   <shield>200</shield>
+   <shield_regen>6</shield_regen>
+   <energy>550</energy>
+   <energy_regen>23</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Milspec Orion 2302 Core System">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>light</size>
+   <mass>2</mass>
+   <price>150000</price>
+   <description>Milspec develops high performance hardware for your ship, to make sure you are always optimally prepared for the dangers the universe might throw at you on your travels. The Orion 2300 core system series is affordable yet capable, recommended for the beginning captain. Fly safe, fly Milspec.</description>
+   <gfx_store>reactor_i</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>37</cpu>
+   <shield>230</shield>
+   <shield_regen>7</shield_regen>
+   <energy>600</energy>
+   <energy_regen>26</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Milspec Gemini 2501 Core System">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>light</size>
+   <mass>2</mass>
+   <price>200000</price>
+   <description>Milspec knows that a ship is merely the sum of its parts, and that means that the more parts, the better the ship. The Overseer 2501 provides serious subsystem control whilst retaining the high standard in energy and shielding that Milspec prides itself on. Fly safe, fly Milspec.</description>
+   <gfx_store>reactor_i</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>44</cpu>
+   <shield>190</shield>
+   <shield_regen>6</shield_regen>
+   <energy>500</energy>
+   <energy_regen>21</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Milspec Taurus 2520 Core System">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>light</size>
+   <mass>2</mass>
+   <price>200000</price>
+   <description>Milspec cares about your personal safety. Your protection is our concern. The Taurus 2520 grants your ship excellent shield strength while preserving a high level of subsystem control and energy capacity. Fly safe, fly Milspec.</description>
+   <gfx_store>reactor_i</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>33</cpu>
+   <shield>260</shield>
+   <shield_regen>8</shield_regen>
+   <energy>540</energy>
+   <energy_regen>26</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Milspec Vespa 2544 Core System">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>light</size>
+   <mass>2</mass>
+   <price>200000</price>
+   <description>Milspec offers solutions for pilots who believe the best defense is a good offense. The Vespa 2544 boasts a heavy duty power generator as well as considerable shielding and subsystem control.</description>
+   <gfx_store>reactor_i</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>32</cpu>
+   <shield>200</shield>
+   <shield_regen>6</shield_regen>
+   <energy>700</energy>
+   <energy_regen>30</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Milspec Orion 3701 Core System">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>light</size>
+   <mass>2</mass>
+   <price>350000</price>
+   <description>Milspec develops high performance hardware for your ship, to make sure you are always optimally prepared for the dangers the universe might throw at you on your travels. The Orion 3700 core system series is a high-end solution for small ships, providing superior performance in every field.</description>
+   <gfx_store>reactor_i</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>45</cpu>
+   <shield>270</shield>
+   <shield_regen>7</shield_regen>
+   <energy>650</energy>
+   <energy_regen>28</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Milspec Orion 3702 Core System">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>light</size>
+   <mass>2</mass>
+   <price>500000</price>
+   <description>Milspec develops high performance hardware for your ship, to make sure you are always optimally prepared for the dangers the universe might throw at you on your travels. The Orion 3700 core system series is a high-end solution for small ships, providing superior performance in every field.</description>
+   <gfx_store>reactor_i</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>49</cpu>
+   <shield>300</shield>
+   <shield_regen>8</shield_regen>
+   <energy>700</energy>
+   <energy_regen>30</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
 
  <!-- Engines. -->
  <outfit name="Beat Up Engine">
