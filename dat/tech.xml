@@ -107,9 +107,6 @@
   <item>Steering Thrusters</item>
   <item>Generic Afterburner</item>
   <item>Hellburner</item>
-  <item>Auxiliary Processing Unit I</item>
-  <item>Auxiliary Processing Unit II</item>
-  <item>Auxiliary Processing Unit III</item>
   <item>Fuel Pod</item>
   <item>Cargo Pod</item>
   <item>Boarding Androids MKI</item>
@@ -293,7 +290,6 @@
   <item>Plasteel Plating</item>
   <item>Engine Reroute</item>
   <item>Generic Afterburner</item>
-  <item>Auxiliary Processing Unit I</item>
   <item>Cargo Pod</item>
   <item>Boarding Androids MKI</item>
   <item>Star Map</item>
@@ -336,7 +332,6 @@
   <item>Shield Booster</item>
   <item>Plasteel Plating</item>
   <item>Engine Reroute</item>
-  <item>Auxiliary Processing Unit I</item>
   <item>Fuel Pod</item>
   <item>Cargo Pod</item>
   <item>Boarding Androids MKI</item>
@@ -360,8 +355,6 @@
   <item>Engine Reroute</item>
   <item>Improved Stabilizer</item>
   <item>Generic Afterburner</item>
-  <item>Auxiliary Processing Unit I</item>
-  <item>Auxiliary Processing Unit II</item>
   <item>Fuel Pod</item>
   <item>Cargo Pod</item>
   <item>Boarding Androids MKI</item>
@@ -386,7 +379,6 @@
   <item>Droid Repair Crew</item>
   <item>Steering Thrusters</item>
   <item>Hellburner</item>
-  <item>Auxiliary Processing Unit III</item>
   <item>Improved Power Regulator</item>
   <item>Improved Refrigeration Cycle</item>
   <item>Star Map</item>
