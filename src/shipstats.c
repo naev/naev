@@ -79,12 +79,12 @@ static const ShipStatsLookup ss_lookup[] = {
    /* Null element. */
    N__ELEM( SS_TYPE_NIL ),
 
-   DI_ELEM( SS_TYPE_D_JUMP_DELAY,      jump_delay,    "Jump Time" ),
-   DI_ELEM( SS_TYPE_D_CARGO_INERTIA,   cargo_inertia, "Cargo Inertia" ),
+   DI_ELEM( SS_TYPE_D_JUMP_DELAY,         jump_delay,    "Jump Time" ),
+   DI_ELEM( SS_TYPE_D_CARGO_INERTIA,      cargo_inertia, "Cargo Inertia" ),
 
    D__ELEM( SS_TYPE_D_SPEED_MOD,          speed_mod,          "Speed" ),
    D__ELEM( SS_TYPE_D_TURN_MOD,           turn_mod,           "Turn" ),
-   D__ELEM( SS_TYPE_D_THRUST_MOD,          thrust_mod,          "Thrust" ),
+   D__ELEM( SS_TYPE_D_THRUST_MOD,         thrust_mod,         "Thrust" ),
    D__ELEM( SS_TYPE_D_CARGO_MOD,          cargo_mod,          "Cargo space" ),
    D__ELEM( SS_TYPE_D_ARMOUR_MOD,         armour_mod,         "Armour strength" ),
    D__ELEM( SS_TYPE_D_ARMOUR_REGEN_MOD,   armour_regen_mod,   "Armour regeneration" ),
@@ -92,33 +92,33 @@ static const ShipStatsLookup ss_lookup[] = {
    D__ELEM( SS_TYPE_D_SHIELD_REGEN_MOD,   shield_regen_mod,   "Shield regeneration" ),
 
 
-   D__ELEM( SS_TYPE_D_EW_HIDE,         ew_hide,       "Cloaking" ),
-   D__ELEM( SS_TYPE_D_EW_DETECT,       ew_detect,     "Detection" ),
+   D__ELEM( SS_TYPE_D_EW_HIDE,            ew_hide,       "Cloaking" ),
+   D__ELEM( SS_TYPE_D_EW_DETECT,          ew_detect,     "Detection" ),
 
-   D__ELEM( SS_TYPE_D_LAUNCH_RATE,     launch_rate,   "Launch Rate" ),
-   D__ELEM( SS_TYPE_D_LAUNCH_RANGE,    launch_range,  "Launch Range" ),
-   D__ELEM( SS_TYPE_D_AMMO_CAPACITY,   ammo_capacity, "Ammo Capacity" ),
-   D__ELEM( SS_TYPE_D_LAUNCH_LOCKON,   launch_lockon, "Launch Lockon" ),
+   D__ELEM( SS_TYPE_D_LAUNCH_RATE,        launch_rate,   "Launch Rate" ),
+   D__ELEM( SS_TYPE_D_LAUNCH_RANGE,       launch_range,  "Launch Range" ),
+   D__ELEM( SS_TYPE_D_AMMO_CAPACITY,      ammo_capacity, "Ammo Capacity" ),
+   D__ELEM( SS_TYPE_D_LAUNCH_LOCKON,      launch_lockon, "Launch Lockon" ),
 
-   DI_ELEM( SS_TYPE_D_FORWARD_HEAT,    fwd_heat,      "Heat (Cannon)" ),
-   D__ELEM( SS_TYPE_D_FORWARD_DAMAGE,  fwd_damage,    "Damage (Cannon)" ),
-   D__ELEM( SS_TYPE_D_FORWARD_FIRERATE, fwd_firerate, "Fire Rate (Cannon)" ),
-   DI_ELEM( SS_TYPE_D_FORWARD_ENERGY,  fwd_energy,    "Energy Usage (Cannon)" ),
+   DI_ELEM( SS_TYPE_D_FORWARD_HEAT,       fwd_heat,      "Heat (Cannon)" ),
+   D__ELEM( SS_TYPE_D_FORWARD_DAMAGE,     fwd_damage,    "Damage (Cannon)" ),
+   D__ELEM( SS_TYPE_D_FORWARD_FIRERATE,   fwd_firerate, "Fire Rate (Cannon)" ),
+   DI_ELEM( SS_TYPE_D_FORWARD_ENERGY,     fwd_energy,    "Energy Usage (Cannon)" ),
 
-   DI_ELEM( SS_TYPE_D_TURRET_HEAT,     tur_heat,      "Heat (Turret)" ),
-   D__ELEM( SS_TYPE_D_TURRET_DAMAGE,   tur_damage,    "Damage (Turret)" ),
-   D__ELEM( SS_TYPE_D_TURRET_FIRERATE, tur_firerate,  "Fire Rate (Turret)" ),
-   DI_ELEM( SS_TYPE_D_TURRET_ENERGY,   tur_energy,    "Energy Usage (Turret)" ),
+   DI_ELEM( SS_TYPE_D_TURRET_HEAT,        tur_heat,      "Heat (Turret)" ),
+   D__ELEM( SS_TYPE_D_TURRET_DAMAGE,      tur_damage,    "Damage (Turret)" ),
+   D__ELEM( SS_TYPE_D_TURRET_FIRERATE,    tur_firerate,  "Fire Rate (Turret)" ),
+   DI_ELEM( SS_TYPE_D_TURRET_ENERGY,      tur_energy,    "Energy Usage (Turret)" ),
 
-   DI_ELEM( SS_TYPE_D_NEBULA_DMG_SHIELD, nebula_dmg_shield, "Nebula Damage (Shield)" ),
-   DI_ELEM( SS_TYPE_D_NEBULA_DMG_ARMOUR, nebula_dmg_armour, "Nebula Damage (Armour)" ),
+   DI_ELEM( SS_TYPE_D_NEBULA_DMG_SHIELD,  nebula_dmg_shield, "Nebula Damage (Shield)" ),
+   DI_ELEM( SS_TYPE_D_NEBULA_DMG_ARMOUR,  nebula_dmg_armour, "Nebula Damage (Armour)" ),
 
-   D__ELEM( SS_TYPE_D_HEAT_DISSIPATION, heat_dissipation, "Heat Dissipation" ),
+   D__ELEM( SS_TYPE_D_HEAT_DISSIPATION,   heat_dissipation, "Heat Dissipation" ),
 
-   A__ELEM( SS_TYPE_A_ENGINE_LIMIT,    engine_limit,  "Engine Mass Limit" ),
+   A__ELEM( SS_TYPE_A_ENGINE_LIMIT,       engine_limit,  "Engine Mass Limit" ),
    
-   B__ELEM( SS_TYPE_B_INSTANT_JUMP,    misc_instant_jump, "Instant Jump" ),
-   B__ELEM( SS_TYPE_B_REVERSE_THRUST,    misc_reverse_thrust, "Reverse Thrusters" ),
+   B__ELEM( SS_TYPE_B_INSTANT_JUMP,       misc_instant_jump, "Instant Jump" ),
+   B__ELEM( SS_TYPE_B_REVERSE_THRUST,     misc_reverse_thrust, "Reverse Thrusters" ),
 
    /* Sentinal. */
    N__ELEM( SS_TYPE_SENTINAL )

@@ -29,7 +29,7 @@ typedef enum ShipStatsType_ {
    /* General. */
    SS_TYPE_D_SPEED_MOD,          /**< Speed multiplier. */
    SS_TYPE_D_TURN_MOD,           /**< Turn multiplier. */
-   SS_TYPE_D_THRUST_MOD,          /**< Acceleration multiplier. */
+   SS_TYPE_D_THRUST_MOD,         /**< Acceleration multiplier. */
    SS_TYPE_D_CARGO_MOD,          /**< Cargo space multiplier. */
    SS_TYPE_D_ARMOUR_MOD,         /**< Armour multiplier. */
    SS_TYPE_D_ARMOUR_REGEN_MOD,   /**< Armour regeneration multiplier. */
