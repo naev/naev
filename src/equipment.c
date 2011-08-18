@@ -732,11 +732,12 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
 
       pos = snprintf( alt, sizeof(alt),
             "\eS%s", sp_display( slot->sslot->slot.spid ) );
-      if (slot->sslot->slot.exclusive)
+      if (slot->sslot->slot.exclusive && (pos < (int)sizeof(alt)))
          pos += snprintf( &alt[pos], sizeof(alt)-pos,
                " [exclusive]" );
-      pos += snprintf( &alt[pos], sizeof(alt)-pos,
-            "\n\n%s", sp_description( slot->sslot->slot.spid ) );
+      if (pos < (int)sizeof(alt))
+         pos += snprintf( &alt[pos], sizeof(alt)-pos,
+               "\n\n%s", sp_description( slot->sslot->slot.spid ) );
       toolkit_drawAltText( bx + wgt->altx, by + wgt->alty, alt );
       return;
    }
@@ -745,11 +746,12 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
    if (o->desc_short == NULL)
       return;
    pos  = snprintf( alt, sizeof(alt), "%s\n", o->name );
-   if (o->slot.spid!=0)
+   if ((o->slot.spid!=0) && (pos < (int)sizeof(alt)))
       pos += snprintf( &alt[pos], sizeof(alt)-pos, "\eSSlot %s\e0\n",
             sp_display( o->slot.spid ) );
-   pos += snprintf( &alt[pos], sizeof(alt)-pos, "\n%s", o->desc_short );
-   if (o->mass > 0.)
+   if (pos < (int)sizeof(alt))
+      pos += snprintf( &alt[pos], sizeof(alt)-pos, "\n%s", o->desc_short );
+   if ((o->mass > 0.) && (pos < (int)sizeof(alt)))
       pos += snprintf( &alt[pos], sizeof(alt)-pos,
             "\n%.0f Tons",
             o->mass );
@@ -1243,10 +1245,10 @@ int equipment_shipStats( char *buf, int max_len,  const Pilot *s, int dpseps )
 
    /* Write to buffer. */
    l = 0;
-   if (dps > 0.)
+   if ((dps > 0.) && (l < max_len))
       l += snprintf( &buf[l], (max_len-l),
             "%s%.2f DPS [%.2f EPS]", (l!=0)?"\n":"", dps, eps );
-   if (s->jam_chance > 0.)
+   if ((s->jam_chance > 0.) && (l < max_len))
       l += snprintf( &buf[l], (max_len-l),
             "%s%.0f%% Jam [%.0f Range]",
             (l!=0)?"\n":"", s->jam_chance*100., s->jam_range );
@@ -1351,11 +1353,12 @@ static void equipment_genLists( unsigned int wid )
                l = strlen(o->desc_short) + 128;
                alt[i] = malloc( l );
                p  = snprintf( &alt[i][0], l, "%s\n", o->name );
-               if (o->slot.spid!=0)
+               if ((o->slot.spid!=0) && (p < l))
                   p += snprintf( &alt[i][p], l-p, "\eSSlot %s\e0\n",
                         sp_display( o->slot.spid ) );
-               p += snprintf( &alt[i][p], l-p, "\n%s", o->desc_short );
-               if (o->mass > 0.)
+               if (p < l)
+                  p += snprintf( &alt[i][p], l-p, "\n%s", o->desc_short );
+               if ((o->mass > 0.) && (p < l))
                   p += snprintf( &alt[i][p], l-p,
                         "\n%.0f Tons",
                         o->mass );
