@@ -483,7 +483,7 @@ int ss_statsListDesc( const ShipStatList *ll, char *buf, int len, int newline )
             break;
       }
 
-      newline = 1;
+      newl = 1;
    }
    return i;
 }
