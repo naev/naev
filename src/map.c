@@ -425,6 +425,8 @@ static void map_update( unsigned int wid )
       l += snprintf( &buf[l], PATH_MAX-l, "%s\e0%s: \e%c%.0f",
                      (l==0)?"":"\n", faction_shortname(sys->presence[i].faction),
                      (t=='N')?'M':t, sys->presence[i].value);
+      if (l > PATH_MAX)
+         break;
    }
    if (hasPresence == 0)
       snprintf(buf, PATH_MAX, "N/A");
@@ -458,6 +460,8 @@ static void map_update( unsigned int wid )
          p += snprintf( &buf[p], PATH_MAX-p, ",\n\e%c%s\en",
                t, sys->planets[i]->name );
       hasPlanets = 1;
+      if (p > PATH_MAX)
+         break;
    }
    if(hasPlanets == 0)
       strncpy( buf, "None", PATH_MAX );

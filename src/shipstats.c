@@ -453,29 +453,35 @@ static int ss_printB( char *buf, int len, int newline, int b, const ShipStatsLoo
  */
 int ss_statsListDesc( const ShipStatList *ll, char *buf, int len, int newline )
 {
-   int i;
+   int i, left, newl;
    const ShipStatsLookup *sl;
-   i = 0;
+   i     = 0;
+   newl  = newline;
    for ( ; ll != NULL; ll=ll->next) {
-      sl = &ss_lookup[ ll->type ];
+      left  = len-i;
+      if (left < 0)
+         break;
+      sl    = &ss_lookup[ ll->type ];
 
       switch (sl->data) {
          case SS_DATA_TYPE_DOUBLE:
-            i += ss_printD( &buf[i], (len-i), (newline||(i!=0)), ll->d.d, sl );
+            i += ss_printD( &buf[i], left, newl, ll->d.d, sl );
             break;
 
          case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
-            i += ss_printA( &buf[i], (len-i), (newline||(i!=0)), ll->d.d, sl );
+            i += ss_printA( &buf[i], left, newl, ll->d.d, sl );
             break;
 
          case SS_DATA_TYPE_INTEGER:
-            i += ss_printI( &buf[i], (len-i), (newline||(i!=0)), ll->d.i, sl );
+            i += ss_printI( &buf[i], left, newl, ll->d.i, sl );
             break;
 
          case SS_DATA_TYPE_BOOLEAN:
-            i += ss_printB( &buf[i], (len-i), (newline||(i!=0)), ll->d.i, sl );
+            i += ss_printB( &buf[i], left, newl, ll->d.i, sl );
             break;
       }
+
+      newline = 1;
    }
    return i;
 }
@@ -493,7 +499,7 @@ int ss_statsListDesc( const ShipStatList *ll, char *buf, int len, int newline )
  */
 int ss_statsDesc( const ShipStats *s, char *buf, int len, int newline )
 {
-   int i, l;
+   int i, l, left;
    char *ptr;
    double *dbl;
    int *num;
@@ -508,25 +514,30 @@ int ss_statsDesc( const ShipStats *s, char *buf, int len, int newline )
       if (sl->name == NULL)
          continue;
 
+      /* Calculate offset left. */
+      left = len-l;
+      if (left < 0)
+         break;
+
       switch (sl->data) {
          case SS_DATA_TYPE_DOUBLE:
             dbl   = (double*) &ptr[ sl->offset ];
-            l += ss_printD( &buf[l], (len-l), (newline||(l!=0)), ((*dbl)-1.), sl );
+            l    += ss_printD( &buf[l], left, (newline||(l!=0)), ((*dbl)-1.), sl );
             break;
 
          case SS_DATA_TYPE_DOUBLE_ABSOLUTE:
             dbl   = (double*) &ptr[ sl->offset ];
-            l += ss_printA( &buf[l], (len-l), (newline||(l!=0)), (*dbl), sl );
+            l    += ss_printA( &buf[l], left, (newline||(l!=0)), (*dbl), sl );
             break;
 
          case SS_DATA_TYPE_INTEGER:
             num   = (int*) &ptr[ sl->offset ];
-            l += ss_printI( &buf[l], (len-l), (newline||(l!=0)), (*num), sl );
+            l    += ss_printI( &buf[l], left, (newline||(l!=0)), (*num), sl );
             break;
 
          case SS_DATA_TYPE_BOOLEAN:
             num   = (int*) &ptr[ sl->offset ];
-            l += ss_printB( &buf[l], (len-l), (newline||(l!=0)), (*num), sl );
+            l    += ss_printB( &buf[l], left, (newline||(l!=0)), (*num), sl );
             break;
       }
    }

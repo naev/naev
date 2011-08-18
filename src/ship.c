@@ -778,7 +778,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
 
          /* Create description. */
          if (temp->stats != NULL) {
-            temp->desc_stats = malloc( STATS_DESC_MAX );
+            temp->desc_stats = malloc( sizeof(char)*STATS_DESC_MAX );
             i = ss_statsListDesc( temp->stats, temp->desc_stats, STATS_DESC_MAX, 0 );
             if (i <= 0) {
                free( temp->desc_stats );
