@@ -387,12 +387,14 @@ static void board_update( unsigned int wdw )
    }
 
    /* Fuel. */
-   if (p->fuel <= 0.)
+   if (p->fuel <= 0.) {
       if (j < PATH_MAX)
          j += snprintf( &str[j], PATH_MAX-j, "none\n" );
-   else
+   }
+   else {
       if (j < PATH_MAX)
          j += snprintf( &str[j], PATH_MAX-j, "%.0f Units\n", p->fuel );
+   }
 
    window_modifyText( wdw, "txtData", str );
 }
