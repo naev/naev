@@ -375,10 +375,12 @@ static void board_update( unsigned int wdw )
    j += snprintf( &str[j], PATH_MAX-j, "%s\n", cred );
 
    /* Commodities. */
-   if (p->ncommodities==0)
+   if ((p->ncommodities==0) && (j < PATH_MAX))
       j += snprintf( &str[j], PATH_MAX-j, "none\n" );
    else {
       for (i=0; i<p->ncommodities; i++)
+         if (j > PATH_MAX)
+            break;
          j += snprintf( &str[j], PATH_MAX-j,
                "%d %s\n",
                p->commodities[i].quantity, p->commodities[i].commodity->name );
@@ -386,9 +388,11 @@ static void board_update( unsigned int wdw )
 
    /* Fuel. */
    if (p->fuel <= 0.)
-      j += snprintf( &str[j], PATH_MAX-j, "none\n" );
+      if (j < PATH_MAX)
+         j += snprintf( &str[j], PATH_MAX-j, "none\n" );
    else
-      j += snprintf( &str[j], PATH_MAX-j, "%.0f Units\n", p->fuel );
+      if (j < PATH_MAX)
+         j += snprintf( &str[j], PATH_MAX-j, "%.0f Units\n", p->fuel );
 
    window_modifyText( wdw, "txtData", str );
 }
