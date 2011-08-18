@@ -27,14 +27,14 @@ typedef enum ShipStatsType_ {
     * D: Double type data. Should be continuous.
     */
    /* General. */
-   SS_TYPE_D_SPEED_MOD,          /**< Speed multiplier. */
-   SS_TYPE_D_TURN_MOD,           /**< Turn multiplier. */
-   SS_TYPE_D_THRUST_MOD,         /**< Acceleration multiplier. */
-   SS_TYPE_D_CARGO_MOD,          /**< Cargo space multiplier. */
-   SS_TYPE_D_ARMOUR_MOD,         /**< Armour multiplier. */
-   SS_TYPE_D_ARMOUR_REGEN_MOD,   /**< Armour regeneration multiplier. */
-   SS_TYPE_D_SHIELD_MOD,         /**< Shield multiplier. */
-   SS_TYPE_D_SHIELD_REGEN_MOD,   /**< Shield regeneration multiplier. */
+   SS_TYPE_D_SPEED_MOD,       /**< Speed multiplier. */
+   SS_TYPE_D_TURN_MOD,        /**< Turn multiplier. */
+   SS_TYPE_D_THRUST_MOD,      /**< Acceleration multiplier. */
+   SS_TYPE_D_CARGO_MOD,       /**< Cargo space multiplier. */
+   SS_TYPE_D_ARMOUR_MOD,      /**< Armour multiplier. */
+   SS_TYPE_D_ARMOUR_REGEN_MOD, /**< Armour regeneration multiplier. */
+   SS_TYPE_D_SHIELD_MOD,      /**< Shield multiplier. */
+   SS_TYPE_D_SHIELD_REGEN_MOD, /**< Shield regeneration multiplier. */
    
    /* Freighter-type. */
    SS_TYPE_D_JUMP_DELAY,      /**< Modulates the time that passes during a hyperspace jump. */

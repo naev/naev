@@ -79,14 +79,14 @@ static const ShipStatsLookup ss_lookup[] = {
    /* Null element. */
    N__ELEM( SS_TYPE_NIL ),
 
-   D__ELEM( SS_TYPE_D_SPEED_MOD,          speed_mod,          "Speed" ),
-   D__ELEM( SS_TYPE_D_TURN_MOD,           turn_mod,           "Turn" ),
-   D__ELEM( SS_TYPE_D_THRUST_MOD,         thrust_mod,         "Thrust" ),
-   D__ELEM( SS_TYPE_D_CARGO_MOD,          cargo_mod,          "Cargo space" ),
-   D__ELEM( SS_TYPE_D_ARMOUR_MOD,         armour_mod,         "Armour strength" ),
-   D__ELEM( SS_TYPE_D_ARMOUR_REGEN_MOD,   armour_regen_mod,   "Armour regeneration" ),
-   D__ELEM( SS_TYPE_D_SHIELD_MOD,         shield_mod,         "Shield strength" ),
-   D__ELEM( SS_TYPE_D_SHIELD_REGEN_MOD,   shield_regen_mod,   "Shield regeneration" ),
+   D__ELEM( SS_TYPE_D_SPEED_MOD,          speed_mod,     "Speed" ),
+   D__ELEM( SS_TYPE_D_TURN_MOD,           turn_mod,      "Turn" ),
+   D__ELEM( SS_TYPE_D_THRUST_MOD,         thrust_mod,    "Thrust" ),
+   D__ELEM( SS_TYPE_D_CARGO_MOD,          cargo_mod,     "Cargo space" ),
+   D__ELEM( SS_TYPE_D_ARMOUR_MOD,         armour_mod,    "Armour strength" ),
+   D__ELEM( SS_TYPE_D_ARMOUR_REGEN_MOD,   armour_regen_mod, "Armour regeneration" ),
+   D__ELEM( SS_TYPE_D_SHIELD_MOD,         shield_mod,    "Shield strength" ),
+   D__ELEM( SS_TYPE_D_SHIELD_REGEN_MOD,   shield_regen_mod, "Shield regeneration" ),
 
    DI_ELEM( SS_TYPE_D_JUMP_DELAY,         jump_delay,    "Jump Time" ),
    DI_ELEM( SS_TYPE_D_CARGO_INERTIA,      cargo_inertia, "Cargo Inertia" ),
@@ -102,7 +102,7 @@ static const ShipStatsLookup ss_lookup[] = {
 
    DI_ELEM( SS_TYPE_D_FORWARD_HEAT,       fwd_heat,      "Heat (Cannon)" ),
    D__ELEM( SS_TYPE_D_FORWARD_DAMAGE,     fwd_damage,    "Damage (Cannon)" ),
-   D__ELEM( SS_TYPE_D_FORWARD_FIRERATE,   fwd_firerate, "Fire Rate (Cannon)" ),
+   D__ELEM( SS_TYPE_D_FORWARD_FIRERATE,   fwd_firerate,  "Fire Rate (Cannon)" ),
    DI_ELEM( SS_TYPE_D_FORWARD_ENERGY,     fwd_energy,    "Energy Usage (Cannon)" ),
 
    DI_ELEM( SS_TYPE_D_TURRET_HEAT,        tur_heat,      "Heat (Turret)" ),
