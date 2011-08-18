@@ -35,6 +35,8 @@ typedef enum ShipStatsType_ {
    SS_TYPE_D_ARMOUR_REGEN_MOD, /**< Armour regeneration multiplier. */
    SS_TYPE_D_SHIELD_MOD,      /**< Shield multiplier. */
    SS_TYPE_D_SHIELD_REGEN_MOD, /**< Shield regeneration multiplier. */
+   SS_TYPE_D_ENERGY_MOD,      /**< Energy multiplier. */
+   SS_TYPE_D_ENERGY_REGEN_MOD, /**< Energy regeneration multiplier. */
    
    /* Freighter-type. */
    SS_TYPE_D_JUMP_DELAY,      /**< Modulates the time that passes during a hyperspace jump. */
@@ -147,6 +149,8 @@ typedef struct ShipStats_ {
    double armour_regen_mod;   /**< Armour regeneration multiplier. */
    double shield_mod;         /**< Shield multiplier. */
    double shield_regen_mod;   /**< Shield regeneration multiplier. */
+   double energy_mod;         /**< Energy multiplier. */
+   double energy_regen_mod;   /**< Energy regeneration multiplier. */
 
    /* Freighter-type. */
    double jump_delay;      /**< Modulates the time that passes during a hyperspace jump. */

@@ -913,16 +913,19 @@ void pilot_calcStats( Pilot* pilot )
     * Relative increases.
     */
    /* Movement. */
-   pilot->thrust_base += thrust_rel * pilot->thrust_base;
-   pilot->turn_base  += turn_rel * pilot->turn_base;
-   pilot->speed_base += speed_rel * pilot->speed_base;
+   pilot->thrust_base  += s->thrust_mod * pilot->thrust_base;
+   pilot->turn_base    += s->turn_mod * pilot->turn_base;
+   pilot->speed_base   += s->speed_mod * pilot->speed_base;
    /* Health. */
-   pilot->armour_max += armour_rel * pilot->armour_max;
-   pilot->shield_max += shield_rel * pilot->shield_max;
-   pilot->energy_max += energy_rel * pilot->energy_max;
+   pilot->armour_max   += s->armour_mod * pilot->armour_max;
+   pilot->armour_regen += s->armour_regen_mod * pilot->armour_regen;
+   pilot->shield_max   += s->shield_mod * pilot->shield_max;
+   pilot->shield_regen += s->shield_regen_mod * pilot->shield_regen;
+   pilot->energy_max   += s->energy_mod * pilot->energy_max;
+   pilot->energy_regen += s->energy_regen_mod * pilot->energy_regen;
    /* Misc. */
-   pilot->dmg_absorb  = MAX( 0., pilot->dmg_absorb );
-   pilot->crew       += crew_rel * pilot->crew;
+   pilot->dmg_absorb    = MAX( 0., pilot->dmg_absorb );
+   pilot->crew         += crew_rel * pilot->crew;
 
    /* Give the pilot his health proportion back */
    pilot->armour = ac * pilot->armour_max;
