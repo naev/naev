@@ -718,7 +718,7 @@
   </health>
   <characteristics>
    <crew>4</crew>
-   <mass>80</mass>
+   <mass>70</mass>
    <cargo>5</cargo>
   </characteristics>
   <slots>
@@ -763,7 +763,7 @@
   </health>
   <characteristics>
    <crew>4</crew>
-   <mass>90</mass>
+   <mass>80</mass>
    <cargo>5</cargo>
   </characteristics>
   <slots>
@@ -808,7 +808,7 @@
   </health>
   <characteristics>
    <crew>4</crew>
-   <mass>90</mass>
+   <mass>80</mass>
    <cargo>5</cargo>
   </characteristics>
   <slots>
@@ -853,7 +853,7 @@
   </health>
   <characteristics>
    <crew>4</crew>
-   <mass>90</mass>
+   <mass>80</mass>
    <cargo>5</cargo>
   </characteristics>
   <slots>
@@ -899,7 +899,7 @@
   </health>
   <characteristics>
    <crew>4</crew>
-   <mass>90</mass>
+   <mass>80</mass>
    <cargo>5</cargo>
   </characteristics>
   <slots>
@@ -944,7 +944,7 @@
   </health>
   <characteristics>
    <crew>4</crew>
-   <mass>90</mass>
+   <mass>70</mass>
    <cargo>15</cargo>
   </characteristics>
   <slots>
@@ -990,7 +990,7 @@
   </health>
   <characteristics>
    <crew>4</crew>
-   <mass>100</mass>
+   <mass>90</mass>
    <cargo>5</cargo>
   </characteristics>
   <slots>

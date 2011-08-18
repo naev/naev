@@ -2961,7 +2961,7 @@
    <speed>120</speed>
    <fuel>200</fuel>
    <energy_regen>-2</energy_regen>
-   <engine_limit>70</engine_limit>
+   <engine_limit>50</engine_limit>
   </specific>
  </outfit>
  <outfit name="Manufacturer Small Engine">
@@ -2980,7 +2980,7 @@
    <speed>200</speed>
    <fuel>300</fuel>
    <energy_regen>-6</energy_regen>
-   <engine_limit>100</engine_limit>
+   <engine_limit>60</engine_limit>
   </specific>
  </outfit>
  <outfit name="Unicorp KRD-B10 Engine">
@@ -2999,7 +2999,7 @@
    <speed>220</speed>
    <fuel>300</fuel>
    <energy_regen>-7</energy_regen>
-   <engine_limit>100</engine_limit>
+   <engine_limit>70</engine_limit>
   </specific>
  </outfit>
  <outfit name="Unicorp KRD-B12 Engine">
@@ -3018,7 +3018,7 @@
    <speed>240</speed>
    <fuel>300</fuel>
    <energy_regen>-8</energy_regen>
-   <engine_limit>115</engine_limit>
+   <engine_limit>75</engine_limit>
   </specific>
  </outfit>
  <outfit name="Unicorp EXA-49F Engine">
@@ -3037,7 +3037,7 @@
    <speed>200</speed>
    <fuel>300</fuel>
    <energy_regen>-9</energy_regen>
-   <engine_limit>130</engine_limit>
+   <engine_limit>80</engine_limit>
   </specific>
  </outfit>
  <outfit name="Unicorp AUR-50A Engine">
@@ -3056,7 +3056,7 @@
    <speed>280</speed>
    <fuel>400</fuel>
    <energy_regen>-9</energy_regen>
-   <engine_limit>130</engine_limit>
+   <engine_limit>100</engine_limit>
   </specific>
  </outfit>
  <outfit name="Unicorp JNS-44K Engine">
@@ -3075,7 +3075,7 @@
    <speed>230</speed>
    <fuel>300</fuel>
    <energy_regen>-9</energy_regen>
-   <engine_limit>170</engine_limit>
+   <engine_limit>150</engine_limit>
   </specific>
  </outfit>
  <outfit name="Tricon Naga Mk3 Engine">
@@ -3094,7 +3094,7 @@
    <speed>290</speed>
    <fuel>400</fuel>
    <energy_regen>-10</energy_regen>
-   <engine_limit>180</engine_limit>
+   <engine_limit>110</engine_limit>
   </specific>
  </outfit>
  <outfit name="Tricon Naga Mk5 Engine">
@@ -3113,7 +3113,7 @@
    <speed>310</speed>
    <fuel>400</fuel>
    <energy_regen>-11</energy_regen>
-   <engine_limit>195</engine_limit>
+   <engine_limit>120</engine_limit>
   </specific>
  </outfit>
  <outfit name="Tricon Crane Engine">
@@ -3132,7 +3132,7 @@
    <speed>290</speed>
    <fuel>400</fuel>
    <energy_regen>-12</energy_regen>
-   <engine_limit>170</engine_limit>
+   <engine_limit>100</engine_limit>
   </specific>
  </outfit>
  <outfit name="Tricon Spriggan Engine">
@@ -3151,7 +3151,7 @@
    <speed>330</speed>
    <fuel>400</fuel>
    <energy_regen>-12</energy_regen>
-   <engine_limit>170</engine_limit>
+   <engine_limit>100</engine_limit>
   </specific>
  </outfit>
  <outfit name="Tricon Oxen Engine">
@@ -3170,7 +3170,7 @@
    <speed>280</speed>
    <fuel>400</fuel>
    <energy_regen>-12</energy_regen>
-   <engine_limit>230</engine_limit>
+   <engine_limit>180</engine_limit>
   </specific>
  </outfit>
  <outfit name="Tricon Naga Mk9 Engine">
@@ -3189,7 +3189,7 @@
    <speed>330</speed>
    <fuel>400</fuel>
    <energy_regen>-14</energy_regen>
-   <engine_limit>220</engine_limit>
+   <engine_limit>140</engine_limit>
   </specific>
  </outfit>
  <outfit name="Tricon Naga Mk12 Engine">
@@ -3208,7 +3208,7 @@
    <speed>350</speed>
    <fuel>400</fuel>
    <energy_regen>-15</energy_regen>
-   <engine_limit>250</engine_limit>
+   <engine_limit>150</engine_limit>
   </specific>
  </outfit>
 
