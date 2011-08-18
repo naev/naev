@@ -32,6 +32,16 @@
    <structure/>
    <structure/>
   </slots>
+  <stats>
+   <speed_mod>-20</speed_mod>
+   <turn_mod>-20</turn_mod>
+   <thrust_mod>-20</thrust_mod>
+   <armour_mod>-20</armour_mod>
+   <shield_mod>-20</shield_mod>
+   <cargo_mod>10</cargo_mod>
+   <ew_detect>0</ew_detect>
+   <ew_hide>-20</ew_hide>
+  </stats>
  </ship>
  <ship name="Hyena">
   <base_type>Hyena</base_type>
@@ -56,9 +66,22 @@
    <weapon x="15" y="0" h="-3"/>
    <weapon x="15" y="0" h="-3"/>
    <weapon x="0" y="0" h="0"/>
+   <utility prop="systems">Basic Small Systems</utility>
    <utility/>
+   <structure prop="engines">Manufacturer Small Engine</structure>
+   <structure prop="hull">Unmodified Small Hull</structure>
    <structure/>
   </slots>
+  <stats>
+   <speed_mod>0</speed_mod>
+   <turn_mod>10</turn_mod>
+   <thrust_mod>10</thrust_mod>
+   <armour_mod>-20</armour_mod>
+   <shield_mod>0</shield_mod>
+   <cargo_mod>-25</cargo_mod>
+   <ew_detect>-10</ew_detect>
+   <ew_hide>0</ew_hide>
+  </stats>
  </ship>
  <ship name="Schroedinger">
   <base_type>Schroedinger</base_type>
@@ -69,38 +92,37 @@
   <price>180000</price>
   <fabricator>Sirius Systems</fabricator>
   <description>The Schroedinger is primarily used as a reconnaissance vessel. It requires a skeleton crew due to its advanced automation subsystems, and its proprietary fuel tanks allow it to have range much greater than most ships. The downside is that the ship is extremely vulnerable to attack due to its light armour and low amount of weapons space. It is also equipped with a pair of Eraedon engines, making it highly manoeuvrable.</description>
-  <movement>
-   <thrust>260</thrust>
-   <turn>165</turn>
-   <speed>300</speed>
-  </movement>
   <health>
-   <absorb>5</absorb>
-   <shield>130</shield>
-   <armour>50</armour>
-   <energy>360</energy>
-   <shield_regen>6</shield_regen>
+   <absorb>0</absorb>
+   <armour>20</armour>
    <armour_regen>0</armour_regen>
-   <energy_regen>13.3</energy_regen>
   </health>
   <characteristics>
-   <cpu>50</cpu>
    <crew>2</crew>
-   <mass>42</mass>
-   <fuel>800</fuel>
-   <cargo>15</cargo>
+   <mass>20</mass>
+   <cargo>0</cargo>
   </characteristics>
   <slots>
    <weapon x="9" y="0" h="-2"/>
+   <utility prop="systems">Basic Small Systems</utility>
    <utility size="medium"></utility>
    <utility/>
    <utility/>
    <utility/>
+   <structure prop="engines">Manufacturer Small Engine</structure>
+   <structure prop="hull">Unmodified Small Hull</structure>
    <structure/>
   </slots>
   <stats>
+   <speed_mod>10</speed_mod>
+   <turn_mod>0</turn_mod>
+   <thrust_mod>0</thrust_mod>
+   <armour_mod>-20</armour_mod>
+   <shield_mod>0</shield_mod>
+   <cargo_mod>-25</cargo_mod>
    <ew_detect>25</ew_detect>
    <ew_hide>10</ew_hide>
+   <misc_instant_jump>1</misc_instant_jump>
   </stats>
  </ship>
  <ship name="Gawain">
@@ -112,36 +134,38 @@
   <price>500000</price>
   <fabricator>Nexus Shipyards</fabricator>
   <description>The Gawain is a very high-end ship, outpacing nearly all other production vessels. It relies heavily on technology first implemented on the Lancelot, and is widely used as a sporting vessel as it is extremely manoeuvrable, though they rarely see combat due to their meager weapons space and relative fragility.</description>
-  <movement>
-   <thrust>320</thrust>
-   <turn>170</turn>
-   <speed>340</speed>
-  </movement>
   <health>
-   <absorb>2</absorb>
-   <shield>180</shield>
-   <armour>80</armour>
-   <energy>550</energy>
-   <shield_regen>5</shield_regen>
+   <absorb>0</absorb>
+   <armour>40</armour>
    <armour_regen>0</armour_regen>
-   <energy_regen>23.3</energy_regen>
   </health>
   <characteristics>
-   <cpu>34</cpu>
    <crew>2</crew>
-   <mass>63</mass>
-   <fuel>400</fuel>
-   <cargo>15</cargo>
+   <mass>30</mass>
+   <cargo>5</cargo>
   </characteristics>
   <slots>
    <weapon x="12" y="0" h="-2"/>
    <weapon x="-5" y="0" h="1"/>
+   <utility prop="systems">Basic Small Systems</utility>
    <utility/>
    <utility/>
    <utility/>
+   <structure prop="engines">Manufacturer Small Engine</structure>
+   <structure prop="hull">Unmodified Small Hull</structure>
    <structure/>
    <structure/>
   </slots>
+  <stats>
+   <speed_mod>10</speed_mod>
+   <turn_mod>10</turn_mod>
+   <thrust_mod>0</thrust_mod>
+   <armour_mod>-10</armour_mod>
+   <shield_mod>-10</shield_mod>
+   <cargo_mod>-10</cargo_mod>
+   <ew_detect>0</ew_detect>
+   <ew_hide>-20</ew_hide>
+  </stats>
  </ship>
  <ship name="Drone">
   <base_type>Drone</base_type>
@@ -152,34 +176,36 @@
   <price>300000</price>
   <fabricator>Robosys</fabricator>
   <description>This is a modified version of the robotic drone that includes a life support system for humans.</description>
-  <movement>
-   <thrust>320</thrust>
-   <turn>200</turn>
-   <speed>360</speed>
-  </movement>
   <health>
-   <absorb>15</absorb>
-   <shield>150</shield>
-   <armour>80</armour>
-   <energy>600</energy>
-   <shield_regen>5</shield_regen>
+   <absorb>5</absorb>
+   <armour>40</armour>
    <armour_regen>7</armour_regen>
-   <energy_regen>20</energy_regen>
   </health>
   <characteristics>
-   <cpu>70</cpu>
    <crew>1</crew>
-   <mass>40</mass>
-   <fuel>200</fuel>
-   <cargo>1</cargo>
+   <mass>20</mass>
+   <cargo>0</cargo>
   </characteristics>
   <slots>
    <weapon x="5" y="0" h="-5"/>
    <weapon x="5" y="0" h="-5"/>
    <weapon x="5" y="0" h="-5"/>
+   <utility prop="systems">Basic Small Systems</utility>
    <utility/>
+   <structure prop="engines">Manufacturer Small Engine</structure>
+   <structure prop="hull">Unmodified Small Hull</structure>
    <structure/>
   </slots>
+  <stats>
+   <speed_mod>0</speed_mod>
+   <turn_mod>20</turn_mod>
+   <thrust_mod>20</thrust_mod>
+   <armour_mod>0</armour_mod>
+   <shield_mod>0</shield_mod>
+   <cargo_mod>-100</cargo_mod>
+   <ew_detect>0</ew_detect>
+   <ew_hide>0</ew_hide>
+  </stats>
  </ship>
  <!-- Cargo Haulers -->
  <ship name="Koala">
@@ -191,39 +217,38 @@
   <price>260000</price>
   <fabricator>Melendez Corp.</fabricator>
   <description>The Koala is your standard cargo vessel. It's a small ship with little weapon space but a decent amount of cargo space. Good for the entrepreneur working his way to a vast space trade empire.</description>
-  <movement>
-   <thrust>200</thrust>
-   <turn>140</turn>
-   <speed>220</speed>
-  </movement>
   <health>
-   <absorb>13</absorb>
-   <shield>200</shield>
-   <armour>500</armour>
-   <energy>405</energy>
-   <shield_regen>6</shield_regen>
+   <absorb>10</absorb>
+   <armour>100</armour>
    <armour_regen>0</armour_regen>
-   <energy_regen>16.7</energy_regen>
   </health>
   <characteristics>
-   <cpu>30</cpu>
    <crew>3</crew>
-   <mass>150</mass>
-   <fuel>500</fuel>
-   <cargo>75</cargo>
+   <mass>75</mass>
+   <cargo>30</cargo>
   </characteristics>
   <slots>
    <weapon x="11" y="0" h="-7"/>
    <weapon x="-5" y="0" h="3"/>
+   <utility prop="systems">Basic Small Systems</utility>
    <utility/>
    <utility/>
+   <structure prop="engines">Manufacturer Small Engine</structure>
+   <structure prop="hull">Unmodified Small Hull</structure>
    <structure/>
    <structure/>
    <structure/>
    <structure/>
   </slots>
   <stats>
-   <cargo_inertia>-10</cargo_inertia>
+   <speed_mod>0</speed_mod>
+   <turn_mod>-20</turn_mod>
+   <thrust_mod>-20</thrust_mod>
+   <armour_mod>40</armour_mod>
+   <shield_mod>0</shield_mod>
+   <cargo_mod>25</cargo_mod>
+   <ew_detect>0</ew_detect>
+   <ew_hide>-30</ew_hide>
   </stats>
  </ship>
  <ship name="Quicksilver">
@@ -232,41 +257,41 @@
   <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Courier</class>
-  <price>800000</price>
+  <price>400000</price>
   <fabricator>Melendez Corp.</fabricator>
   <description>While still a cargo hauler, the Quicksilver is quite different from Melendez's other offerings. Featuring a streamlined frame and oversized engines, it's the prime choice for expedient shipping.</description>
-  <movement>
-   <thrust>260</thrust>
-   <turn>120</turn>
-   <speed>280</speed>
-  </movement>
   <health>
-   <absorb>18</absorb>
-   <shield>200</shield>
-   <armour>70</armour>
-   <energy>580</energy>
-   <shield_regen>5</shield_regen>
+   <absorb>0</absorb>
+   <armour>35</armour>
    <armour_regen>0</armour_regen>
-   <energy_regen>20</energy_regen>
   </health>
   <characteristics>
-   <cpu>35</cpu>
    <crew>4</crew>
-   <mass>120</mass>
-   <fuel>500</fuel>
-   <cargo>45</cargo>
+   <mass>60</mass>
+   <cargo>20</cargo>
   </characteristics>
   <slots>
    <weapon x="15" y="0" h="5"/>
    <weapon x="-10" y="-3" h="0"/>
    <weapon x="-10" y="3" h="0"/>
+   <utility prop="systems">Basic Small Systems</utility>
    <utility/>
    <utility/>
+   <structure prop="engines">Manufacturer Small Engine</structure>
+   <structure prop="hull">Unmodified Small Hull</structure>
    <structure/>
    <structure/>
    <structure/>
   </slots>
   <stats>
+   <speed_mod>20</speed_mod>
+   <turn_mod>-10</turn_mod>
+   <thrust_mod>-10</thrust_mod>
+   <armour_mod>0</armour_mod>
+   <shield_mod>0</shield_mod>
+   <cargo_mod>10</cargo_mod>
+   <ew_detect>0</ew_detect>
+   <ew_hide>0</ew_hide>
    <jump_delay>-25</jump_delay>
   </stats>
  </ship>
@@ -425,37 +450,37 @@
   <fabricator>Krain Industries</fabricator>
   <license>Light Combat Vessel License</license>
   <description>While lesser known among the general public than the Kestrel, the Derivative is where Krain Industries does the majority of its business. True to its name, it's the latest in a long line of largely carrier-based fighters. Packing relatively little firepower, they're ill-suited to duelling, but a carrier group unleashing several squadrons has been known to turn the tide of battle on many occasions.</description>
-  <movement>
-   <thrust>280</thrust>
-   <turn>140</turn>
-   <speed>300</speed>
-  </movement>
   <health>
    <absorb>9</absorb>
-   <shield>200</shield>
-   <armour>70</armour>
-   <energy>500</energy>
-   <shield_regen>8</shield_regen>
+   <armour>40</armour>
    <armour_regen>0</armour_regen>
-   <energy_regen>20</energy_regen>
   </health>
   <characteristics>
-   <cpu>30</cpu>
    <crew>2</crew>
-   <mass>80</mass>
-   <fuel>300</fuel>
-   <cargo>10</cargo>
+   <mass>40</mass>
+   <cargo>5</cargo>
   </characteristics>
   <slots>
    <weapon x="10" y="0" h="0"/>
    <weapon x="0" y="-4" h="-3"/>
    <weapon x="0" y="4" h="-3"/>
+   <utility prop="systems">Basic Small Systems</utility>
    <utility/>
    <utility/>
+   <structure prop="engines">Manufacturer Small Engine</structure>
+   <structure prop="hull">Unmodified Small Hull</structure>
    <structure/>
    <structure/>
   </slots>
   <stats>
+   <speed_mod>0</speed_mod>
+   <turn_mod>5</turn_mod>
+   <thrust_mod>5</thrust_mod>
+   <armour_mod>0</armour_mod>
+   <shield_mod>10</shield_mod>
+   <cargo_mod>0</cargo_mod>
+   <ew_detect>10</ew_detect>
+   <ew_hide>0</ew_hide>
    <fwd_damage>5</fwd_damage>
   </stats>
  </ship>
@@ -469,39 +494,38 @@
   <license>Light Combat Vessel License</license>
   <fabricator>Sirius Systems</fabricator>
   <description>The Fidelity is the light fighter of House Sirius. While not particularly competent alone, it's often employed as a forward scout, bringing with it far deadlier allies.</description>
-  <movement>
-   <thrust>260</thrust>
-   <turn>130</turn>
-   <speed>280</speed>
-  </movement>
   <health>
-   <absorb>11</absorb>
-   <shield>220</shield>
-   <armour>90</armour>
-   <energy>650</energy>
-   <shield_regen>7</shield_regen>
+   <absorb>7</absorb>
+   <armour>45</armour>
    <armour_regen>0</armour_regen>
-   <energy_regen>25</energy_regen>
   </health>
   <characteristics>
-   <cpu>35</cpu>
    <crew>2</crew>
-   <mass>95</mass>
-   <fuel>300</fuel>
-   <cargo>10</cargo>
+   <mass>50</mass>
+   <cargo>5</cargo>
   </characteristics>
   <slots>
    <weapon x="10" y="-2" h="0"/>
    <weapon x="10" y="2" h="0"/>
    <weapon x="0" y="-4" h="-3"/>
    <weapon x="0" y="4" h="-3"/>
+   <utility prop="systems">Basic Small Systems</utility>
    <utility/>
    <utility/>
+   <structure prop="engines">Manufacturer Small Engine</structure>
+   <structure prop="hull">Unmodified Small Hull</structure>
    <structure/>
    <structure/>
   </slots>
   <stats>
+   <speed_mod>0</speed_mod>
+   <turn_mod>10</turn_mod>
+   <thrust_mod>0</thrust_mod>
+   <armour_mod>0</armour_mod>
+   <shield_mod>10</shield_mod>
+   <cargo_mod>0</cargo_mod>
    <ew_detect>10</ew_detect>
+   <ew_hide>0</ew_hide>
   </stats>
  </ship>
  <ship name="Soromid Brigand">
@@ -514,36 +538,38 @@
   <fabricator>Soromid</fabricator>
   <license>Light Combat Vessel License</license>
   <description>The Brigand is a fast, maneuverable bioship that the Soromid use for system patrols and police duties. The ship is lighly armoured and fairly fragile, but it makes up for this by being fast to grow and therefore relatively expendable.</description>
-  <movement>
-   <thrust>250</thrust>
-   <turn>145</turn>
-   <speed>290</speed>
-  </movement>
   <health>
    <absorb>8</absorb>
-   <shield>210</shield>
-   <armour>90</armour>
-   <energy>580</energy>
-   <shield_regen>7</shield_regen>
+   <armour>50</armour>
    <armour_regen>2</armour_regen>
-   <energy_regen>22.3</energy_regen>
   </health>
   <characteristics>
-   <cpu>32</cpu>
    <crew>2</crew>
-   <mass>86</mass>
-   <fuel>300</fuel>
-   <cargo>10</cargo>
+   <mass>45</mass>
+   <cargo>5</cargo>
   </characteristics>
   <slots>
    <weapon x="12" y="0" h="0"/>
    <weapon x="-3" y="0" h="2"/>
    <weapon x="3" y="0" h="2"/>
+   <utility prop="systems">Basic Small Systems</utility>
    <utility/>
    <utility/>
+   <structure prop="engines">Manufacturer Small Engine</structure>
+   <structure prop="hull">Unmodified Small Hull</structure>
    <structure/>
    <structure/>
   </slots>
+  <stats>
+   <speed_mod>5</speed_mod>
+   <turn_mod>5</turn_mod>
+   <thrust_mod>5</thrust_mod>
+   <armour_mod>5</armour_mod>
+   <shield_mod>5</shield_mod>
+   <cargo_mod>0</cargo_mod>
+   <ew_detect>10</ew_detect>
+   <ew_hide>0</ew_hide>
+  </stats>
  </ship>
  <ship name="Shark">
   <base_type>Shark</base_type>
@@ -555,36 +581,38 @@
   <fabricator>Nexus Shipyards</fabricator>
   <license>Light Combat Vessel License</license>
   <description>A newer Nexus Shipyards design, the Shark is an agile light fighter designed for in-system patrolling. While it's not as capable as its larger relative, the Lancelot, it's still an effective addition to any fleet.</description>
-  <movement>
-   <thrust>250</thrust>
-   <turn>145</turn>
-   <speed>290</speed>
-  </movement>
   <health>
    <absorb>8</absorb>
-   <shield>200</shield>
-   <armour>60</armour>
-   <energy>580</energy>
-   <shield_regen>7</shield_regen>
+   <armour>30</armour>
    <armour_regen>0</armour_regen>
-   <energy_regen>22.3</energy_regen>
   </health>
   <characteristics>
-   <cpu>32</cpu>
    <crew>2</crew>
-   <mass>86</mass>
-   <fuel>300</fuel>
-   <cargo>10</cargo>
+   <mass>45</mass>
+   <cargo>5</cargo>
   </characteristics>
   <slots>
    <weapon x="12" y="0" h="0"/>
    <weapon x="-3" y="0" h="2"/>
    <weapon x="3" y="0" h="2"/>
+   <utility prop="systems">Basic Small Systems</utility>
    <utility/>
    <utility/>
+   <structure prop="engines">Manufacturer Small Engine</structure>
+   <structure prop="hull">Unmodified Small Hull</structure>
    <structure/>
    <structure/>
   </slots>
+  <stats>
+   <speed_mod>0</speed_mod>
+   <turn_mod>0</turn_mod>
+   <thrust_mod>10</thrust_mod>
+   <armour_mod>-5</armour_mod>
+   <shield_mod>10</shield_mod>
+   <cargo_mod>0</cargo_mod>
+   <ew_detect>10</ew_detect>
+   <ew_hide>0</ew_hide>
+  </stats>
  </ship>
  <ship name="Pirate Shark">
   <base_type>Shark</base_type>
@@ -595,25 +623,14 @@
   <price>280000</price>
   <fabricator>Skull and Bones</fabricator>
   <description>The nimble Nexus Shipyards Shark has proved an excellent canvas for the Skull and Bones technicians. Fitted with an additional weapon mount, its handling suffers minimally while it's able to bring substantially more firepower to bear.</description>
-  <movement>
-   <thrust>240</thrust>
-   <turn>140</turn>
-   <speed>290</speed>
-  </movement>
   <health>
    <absorb>9</absorb>
-   <shield>220</shield>
    <armour>60</armour>
-   <energy>580</energy>
-   <shield_regen>7</shield_regen>
    <armour_regen>0</armour_regen>
-   <energy_regen>22.3</energy_regen>
   </health>
   <characteristics>
-   <cpu>32</cpu>
    <crew>2</crew>
-   <mass>90</mass>
-   <fuel>300</fuel>
+   <mass>45</mass>
    <cargo>10</cargo>
   </characteristics>
   <slots>
@@ -621,11 +638,25 @@
    <weapon x="12" y="0" h="0"/>
    <weapon x="-3" y="0" h="2"/>
    <weapon x="3" y="0" h="2"/>
+   <utility prop="systems">Previous Generation Systems</utility>
    <utility/>
    <utility/>
+   <structure prop="engines">Beat Up Engine</structure>
+   <structure prop="hull">Patchwork Plating</structure>
+   <structure/>
    <structure/>
    <structure/>
   </slots>
+  <stats>
+   <speed_mod>0</speed_mod>
+   <turn_mod>10</turn_mod>
+   <thrust_mod>5</thrust_mod>
+   <armour_mod>-10</armour_mod>
+   <shield_mod>0</shield_mod>
+   <cargo_mod>0</cargo_mod>
+   <ew_detect>0</ew_detect>
+   <ew_hide>20</ew_hide>
+  </stats>
  </ship>
  <ship name="Empire Shark">
   <base_type>Shark</base_type>
@@ -637,36 +668,38 @@
   <fabricator>Nexus Shipyards</fabricator>
   <license>Light Combat Vessel License</license>
   <description>A newer Nexus Shipyards design, the Shark is an agile light fighter designed for in-system patrolling. While it's not as capable as its larger relative, the Lancelot, it's still an effective addition to any fleet.</description>
-  <movement>
-   <thrust>250</thrust>
-   <turn>145</turn>
-   <speed>290</speed>
-  </movement>
   <health>
    <absorb>10</absorb>
-   <shield>230</shield>
-   <armour>80</armour>
-   <energy>580</energy>
-   <shield_regen>7</shield_regen>
+   <armour>40</armour>
    <armour_regen>0</armour_regen>
-   <energy_regen>22.3</energy_regen>
   </health>
   <characteristics>
-   <cpu>32</cpu>
    <crew>2</crew>
-   <mass>86</mass>
-   <fuel>300</fuel>
-   <cargo>10</cargo>
+   <mass>40</mass>
+   <cargo>5</cargo>
   </characteristics>
   <slots>
    <weapon x="12" y="0" h="0"/>
    <weapon x="-3" y="0" h="2"/>
    <weapon x="3" y="0" h="2"/>
+   <utility prop="systems">Basic Small Systems</utility>
    <utility/>
    <utility/>
+   <structure prop="engines">Manufacturer Small Engine</structure>
+   <structure prop="hull">Unmodified Small Hull</structure>
    <structure/>
    <structure/>
   </slots>
+  <stats>
+   <speed_mod>0</speed_mod>
+   <turn_mod>5</turn_mod>
+   <thrust_mod>10</thrust_mod>
+   <armour_mod>0</armour_mod>
+   <shield_mod>10</shield_mod>
+   <cargo_mod>0</cargo_mod>
+   <ew_detect>10</ew_detect>
+   <ew_hide>0</ew_hide>
+  </stats>
  </ship>
  <ship name="Soromid Reaver">
   <base_type>Reaver</base_type>
@@ -678,40 +711,39 @@
   <fabricator>Soromid</fabricator>
   <license>Light Combat Vessel License</license>
   <description>Reavers are often found at the forefront of Soromid military engagements. Their good speed and maneuverability are compounded by their durability, making the Reaver one of the most effective heavy fighters in the galaxy.</description>
-  <movement>
-   <thrust>220</thrust>
-   <turn>135</turn>
-   <speed>260</speed>
-  </movement>
   <health>
    <absorb>12</absorb>
-   <shield>280</shield>
    <armour>110</armour>
-   <energy>730</energy>
-   <shield_regen>8</shield_regen>
    <armour_regen>3</armour_regen>
-   <energy_regen>32.7</energy_regen>
   </health>
   <characteristics>
-   <cpu>40</cpu>
    <crew>4</crew>
-   <mass>180</mass>
-   <fuel>400</fuel>
-   <cargo>10</cargo>
+   <mass>80</mass>
+   <cargo>5</cargo>
   </characteristics>
   <slots>
    <weapon x="12" y="0" h="0" size="medium"></weapon>
    <weapon x="12" y="0" h="0"/>
    <weapon x="-3" y="0" h="2"/>
    <weapon x="-3" y="0" h="2"/>
+   <utility prop="systems">Basic Small Systems</utility>
    <utility/>
    <utility/>
    <utility/>
+   <structure prop="engines">Manufacturer Small Engine</structure>
+   <structure prop="hull">Unmodified Small Hull</structure>
    <structure/>
    <structure/>
   </slots>
   <stats>
-   <fwd_firerate>3</fwd_firerate>
+   <speed_mod>0</speed_mod>
+   <turn_mod>0</turn_mod>
+   <thrust_mod>5</thrust_mod>
+   <armour_mod>5</armour_mod>
+   <shield_mod>10</shield_mod>
+   <cargo_mod>0</cargo_mod>
+   <ew_detect>0</ew_detect>
+   <ew_hide>0</ew_hide>
   </stats>
  </ship>
  <ship name="Lancelot">
@@ -720,44 +752,43 @@
   <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Fighter</class>
-  <price>500000</price>
+  <price>400000</price>
   <fabricator>Nexus Shipyards</fabricator>
   <license>Light Combat Vessel License</license>
   <description>One of the prize heavy fighters of Nexus Shipyards. The Lancelot was originally a classified design for the Empire military, but its existence was revealed during an aborted test flight. Now a modified version is available for civilians, though it doesn't quite match the original specifications. It is used by security agencies all over the universe for its reliability and availability.</description>
-  <movement>
-   <thrust>220</thrust>
-   <turn>135</turn>
-   <speed>260</speed>
-  </movement>
   <health>
-   <absorb>12</absorb>
-   <shield>280</shield>
-   <armour>110</armour>
-   <energy>730</energy>
-   <shield_regen>7</shield_regen>
+   <absorb>10</absorb>
+   <armour>50</armour>
    <armour_regen>0</armour_regen>
-   <energy_regen>32.7</energy_regen>
   </health>
   <characteristics>
-   <cpu>40</cpu>
    <crew>4</crew>
-   <mass>180</mass>
-   <fuel>400</fuel>
-   <cargo>10</cargo>
+   <mass>90</mass>
+   <cargo>5</cargo>
   </characteristics>
   <slots>
    <weapon x="12" y="0" h="0" size="medium"></weapon>
    <weapon x="12" y="0" h="0"/>
    <weapon x="-3" y="0" h="2"/>
    <weapon x="-3" y="0" h="2"/>
+   <utility prop="systems">Basic Small Systems</utility>
    <utility/>
    <utility/>
    <utility/>
+   <structure prop="engines">Manufacturer Small Engine</structure>
+   <structure prop="hull">Unmodified Small Hull</structure>
    <structure/>
    <structure/>
   </slots>
   <stats>
-   <fwd_firerate>3</fwd_firerate>
+   <speed_mod>0</speed_mod>
+   <turn_mod>5</turn_mod>
+   <thrust_mod>5</thrust_mod>
+   <armour_mod>-10</armour_mod>
+   <shield_mod>10</shield_mod>
+   <cargo_mod>0</cargo_mod>
+   <ew_detect>0</ew_detect>
+   <ew_hide>0</ew_hide>
   </stats>
  </ship>
  <ship name="Empire Lancelot">
@@ -770,40 +801,39 @@
   <fabricator>Nexus Shipyards</fabricator>
   <license>Light Combat Vessel License</license>
   <description>An Empire Lancelot.</description>
-  <movement>
-   <thrust>220</thrust>
-   <turn>135</turn>
-   <speed>260</speed>
-  </movement>
   <health>
    <absorb>14</absorb>
-   <shield>300</shield>
-   <armour>130</armour>
-   <energy>730</energy>
-   <shield_regen>8</shield_regen>
+   <armour>70</armour>
    <armour_regen>0</armour_regen>
-   <energy_regen>32.7</energy_regen>
   </health>
   <characteristics>
-   <cpu>42</cpu>
    <crew>4</crew>
-   <mass>190</mass>
-   <fuel>400</fuel>
-   <cargo>10</cargo>
+   <mass>90</mass>
+   <cargo>5</cargo>
   </characteristics>
   <slots>
    <weapon x="12" y="0" h="0" size="medium"></weapon>
    <weapon x="12" y="0" h="0"/>
    <weapon x="-3" y="0" h="2"/>
    <weapon x="-3" y="0" h="2"/>
+   <utility prop="systems">Basic Small Systems</utility>
    <utility/>
    <utility/>
    <utility/>
+   <structure prop="engines">Manufacturer Small Engine</structure>
+   <structure prop="hull">Unmodified Small Hull</structure>
    <structure/>
    <structure/>
   </slots>
   <stats>
-   <fwd_firerate>4</fwd_firerate>
+   <speed_mod>5</speed_mod>
+   <turn_mod>5</turn_mod>
+   <thrust_mod>5</thrust_mod>
+   <armour_mod>-10</armour_mod>
+   <shield_mod>15</shield_mod>
+   <cargo_mod>0</cargo_mod>
+   <ew_detect>0</ew_detect>
+   <ew_hide>0</ew_hide>
   </stats>
  </ship>
  <ship name="Vendetta">
@@ -816,26 +846,15 @@
   <fabricator>House Dvaered</fabricator>
   <license>Light Combat Vessel License</license>
   <description>The Vendetta displays the House Dvaered philosophy very well. Give a ship many intimidating guns, layer it with heavy armour, and neglect the electronics. Due to the obsolete electronics used in the Vendetta, it is better suited to skirmishes than extended battles, as it possesses inferior shield and energy regeneration compared to other ships of its class, though it can unleash a truly fearsome barrage.</description>
-  <movement>
-   <thrust>220</thrust>
-   <turn>125</turn>
-   <speed>230</speed>
-  </movement>
   <health>
    <absorb>11</absorb>
-   <shield>200</shield>
-   <armour>200</armour>
-   <energy>800</energy>
-   <shield_regen>6</shield_regen>
+   <armour>100</armour>
    <armour_regen>0</armour_regen>
-   <energy_regen>20</energy_regen>
   </health>
   <characteristics>
-   <cpu>30</cpu>
    <crew>4</crew>
-   <mass>170</mass>
-   <fuel>300</fuel>
-   <cargo>10</cargo>
+   <mass>90</mass>
+   <cargo>5</cargo>
   </characteristics>
   <slots>
    <weapon x="16" y="-9" h="0"/>
@@ -844,10 +863,21 @@
    <weapon x="13" y="13" h="0"/>
    <weapon x="19" y="0" h="-2"/>
    <weapon x="3" y="0" h="2"/>
+   <utility prop="systems">Basic Small Systems</utility>
    <utility/>
+   <structure prop="engines">Manufacturer Small Engine</structure>
+   <structure prop="hull">Unmodified Small Hull</structure>
    <structure/>
   </slots>
   <stats>
+   <speed_mod>-10</speed_mod>
+   <turn_mod>-5</turn_mod>
+   <thrust_mod>0</thrust_mod>
+   <armour_mod>20</armour_mod>
+   <shield_mod>5</shield_mod>
+   <cargo_mod>0</cargo_mod>
+   <ew_detect>-10</ew_detect>
+   <ew_hide>-10</ew_hide>
    <fwd_energy>-10</fwd_energy>
    <fwd_heat>-10</fwd_heat>
    <fwd_firerate>-5</fwd_firerate>
@@ -862,26 +892,15 @@
   <price>400000</price>
   <fabricator>House Dvaered</fabricator>
   <description>A Dvaered Vendetta.</description>
-  <movement>
-   <thrust>220</thrust>
-   <turn>125</turn>
-   <speed>230</speed>
-  </movement>
   <health>
    <absorb>13</absorb>
-   <shield>230</shield>
-   <armour>220</armour>
-   <energy>800</energy>
-   <shield_regen>6</shield_regen>
+   <armour>110</armour>
    <armour_regen>0</armour_regen>
-   <energy_regen>20</energy_regen>
   </health>
   <characteristics>
-   <cpu>28</cpu>
    <crew>4</crew>
-   <mass>190</mass>
-   <fuel>300</fuel>
-   <cargo>10</cargo>
+   <mass>90</mass>
+   <cargo>5</cargo>
   </characteristics>
   <slots>
    <weapon x="16" y="-9" h="0"/>
@@ -890,13 +909,23 @@
    <weapon x="13" y="13" h="0"/>
    <weapon x="19" y="0" h="-2"/>
    <weapon x="3" y="0" h="2"/>
+   <utility prop="systems">Basic Small Systems</utility>
    <utility/>
+   <structure prop="engines">Manufacturer Small Engine</structure>
+   <structure prop="hull">Unmodified Small Hull</structure>
    <structure/>
   </slots>
   <stats>
-   <fwd_energy>-5</fwd_energy>
-   <fwd_heat>-10</fwd_heat>
-   <fwd_firerate>-3</fwd_firerate>
+   <speed_mod>-10</speed_mod>
+   <turn_mod>-5</turn_mod>
+   <thrust_mod>0</thrust_mod>
+   <armour_mod>25</armour_mod>
+   <shield_mod>10</shield_mod>
+   <cargo_mod>0</cargo_mod>
+   <ew_detect>-10</ew_detect>
+   <ew_hide>-10</ew_hide>
+   <fwd_energy>-10</fwd_energy>
+   <fwd_heat>-15</fwd_heat>
   </stats>
  </ship>
  <ship name="Pirate Vendetta">
@@ -908,26 +937,15 @@
   <price>450000</price>
   <fabricator>Skull and Bones</fabricator>
   <description>The Pirate Vendetta is even more intimidating than its regular counterpart. It's been heavily tweaked to be more adjusted to the pirate style of flying. Some of the armour has been removed to make more room for loot, while the reactor has been jacked up by a dubious technician. The ship ends up being substantially better than the original, but every so often the reactor goes nova destroying the ship. You hope it won't happen to you if you get in one.</description>
-  <movement>
-   <thrust>230</thrust>
-   <turn>135</turn>
-   <speed>240</speed>
-  </movement>
   <health>
    <absorb>12</absorb>
-   <shield>220</shield>
-   <armour>180</armour>
-   <energy>820</energy>
-   <shield_regen>6</shield_regen>
+   <armour>60</armour>
    <armour_regen>0</armour_regen>
-   <energy_regen>20.8</energy_regen>
   </health>
   <characteristics>
-   <cpu>32</cpu>
    <crew>4</crew>
-   <mass>180</mass>
-   <fuel>300</fuel>
-   <cargo>10</cargo>
+   <mass>90</mass>
+   <cargo>15</cargo>
   </characteristics>
   <slots>
    <weapon x="16" y="-9" h="0"/>
@@ -936,11 +954,21 @@
    <weapon x="13" y="13" h="0"/>
    <weapon x="19" y="0" h="-2"/>
    <weapon x="3" y="0" h="2"/>
+   <utility prop="systems">Previous Generation Systems</utility>
    <utility/>
+   <structure prop="engines">Beat Up Engine</structure>
+   <structure prop="hull">Patchwork Plating</structure>
    <structure/>
   </slots>
   <stats>
-   <fwd_energy>-10</fwd_energy>
+   <speed_mod>0</speed_mod>
+   <turn_mod>0</turn_mod>
+   <thrust_mod>0</thrust_mod>
+   <armour_mod>10</armour_mod>
+   <shield_mod>0</shield_mod>
+   <cargo_mod>0</cargo_mod>
+   <ew_detect>-20</ew_detect>
+   <ew_hide>0</ew_hide>
    <fwd_heat>-10</fwd_heat>
    <fwd_firerate>-5</fwd_firerate>
   </stats>
@@ -955,41 +983,40 @@
   <fabricator>Sirius Systems</fabricator>
   <license>Light Combat Vessel License</license>
   <description>Though its relatively sleek form may cause it to be mistaken for a light fighter from a distance, the Shaman is anything but. A purpose-built light missile platform, few enemies escape the reach of the Shaman.</description>
-  <movement>
-   <thrust>200</thrust>
-   <turn>115</turn>
-   <speed>210</speed>
-  </movement>
   <health>
    <absorb>9</absorb>
-   <shield>300</shield>
-   <armour>150</armour>
-   <energy>680</energy>
-   <shield_regen>7</shield_regen>
+   <armour>75</armour>
    <armour_regen>0</armour_regen>
-   <energy_regen>30</energy_regen>
   </health>
   <characteristics>
-   <cpu>45</cpu>
    <crew>4</crew>
-   <mass>195</mass>
-   <fuel>300</fuel>
-   <cargo>10</cargo>
+   <mass>100</mass>
+   <cargo>5</cargo>
   </characteristics>
   <slots>
    <weapon x="4" y="0" h="0"/>
    <weapon x="4" y="0" h="0"/>
    <weapon x="-2" y="4" h="-1"/>
    <weapon x="-2" y="-4" h="-1"/>
+   <utility prop="systems">Basic Small Systems</utility>
    <utility/>
    <utility/>
+   <structure prop="engines">Manufacturer Small Engine</structure>
+   <structure prop="hull">Unmodified Small Hull</structure>
    <structure/>
    <structure/>
    <structure/>
   </slots>
   <stats>
-   <launch_rate>5</launch_rate>
-   <launch_range>15</launch_range>
+   <speed_mod>-15</speed_mod>
+   <turn_mod>-15</turn_mod>
+   <thrust_mod>-15</thrust_mod>
+   <armour_mod>20</armour_mod>
+   <shield_mod>10</shield_mod>
+   <cargo_mod>0</cargo_mod>
+   <ew_detect>-10</ew_detect>
+   <ew_hide>-10</ew_hide>
+   <ammo_capacity>50</ammo_capacity>
   </stats>
  </ship>
  <ship name="Soromid Marauder">
@@ -1002,37 +1029,38 @@
   <fabricator>Soromid</fabricator>
   <license>Light Combat Vessel License</license>
   <description>The Marauder was developed from the same base as the Brigand, but the two ships are quite different. The Marauder was developed to fill a bomber role, which calls for increased durability and ammunition chambers. This makes it quite a bit slower than its distant cousin.</description>
-  <movement>
-   <thrust>180</thrust>
-   <turn>105</turn>
-   <speed>220</speed>
-  </movement>
   <health>
    <absorb>7</absorb>
-   <shield>250</shield>
-   <armour>160</armour>
-   <energy>720</energy>
-   <shield_regen>7</shield_regen>
+   <armour>80</armour>
    <armour_regen>3</armour_regen>
-   <energy_regen>23.3</energy_regen>
   </health>
   <characteristics>
-   <cpu>42</cpu>
    <crew>6</crew>
-   <mass>140</mass>
-   <fuel>300</fuel>
-   <cargo>10</cargo>
+   <mass>70</mass>
+   <cargo>5</cargo>
   </characteristics>
   <slots>
    <weapon x="8" y="0" h="0"/>
    <weapon x="8" y="0" h="0"/>
    <weapon x="-2" y="9" h="-1"/>
    <weapon x="-2" y="-9" h="-1"/>
+   <utility prop="systems">Basic Small Systems</utility>
    <utility/>
    <utility/>
+   <structure prop="engines">Manufacturer Small Engine</structure>
+   <structure prop="hull">Unmodified Small Hull</structure>
    <structure/>
   </slots>
   <stats>
+   <speed_mod>-10</speed_mod>
+   <turn_mod>-10</turn_mod>
+   <thrust_mod>-20</thrust_mod>
+   <armour_mod>15</armour_mod>
+   <shield_mod>10</shield_mod>
+   <cargo_mod>0</cargo_mod>
+   <ew_detect>-10</ew_detect>
+   <ew_hide>-10</ew_hide>
+   <ammo_capacity>50</ammo_capacity>
    <launch_rate>5</launch_rate>
    <launch_range>10</launch_range>
   </stats>
@@ -1043,41 +1071,42 @@
   <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Bomber</class>
-  <price>600000</price>
+  <price>500000</price>
   <fabricator>House Dvaered</fabricator>
   <license>Light Combat Vessel License</license>
   <description>Commonly referred to as the little Goddard, the Ancestor also has its roots in the primitive flying machines used by men many ages ago. Unlike the Goddard though, the electronics are done by House Dvaered, making it considerably inferior in that area.</description>
-  <movement>
-   <thrust>180</thrust>
-   <turn>105</turn>
-   <speed>220</speed>
-  </movement>
   <health>
    <absorb>7</absorb>
-   <shield>240</shield>
-   <armour>140</armour>
-   <energy>720</energy>
-   <shield_regen>7</shield_regen>
+   <armour>70</armour>
    <armour_regen>0</armour_regen>
-   <energy_regen>23.3</energy_regen>
   </health>
   <characteristics>
-   <cpu>42</cpu>
    <crew>6</crew>
-   <mass>140</mass>
-   <fuel>300</fuel>
-   <cargo>10</cargo>
+   <mass>70</mass>
+   <cargo>5</cargo>
   </characteristics>
   <slots>
    <weapon x="8" y="0" h="0"/>
    <weapon x="8" y="0" h="0"/>
    <weapon x="-2" y="9" h="-1"/>
    <weapon x="-2" y="-9" h="-1"/>
+   <utility prop="systems">Basic Small Systems</utility>
    <utility/>
    <utility/>
+   <structure prop="engines">Manufacturer Small Engine</structure>
+   <structure prop="hull">Unmodified Small Hull</structure>
    <structure/>
   </slots>
   <stats>
+   <speed_mod>-20</speed_mod>
+   <turn_mod>-10</turn_mod>
+   <thrust_mod>-10</thrust_mod>
+   <armour_mod>15</armour_mod>
+   <shield_mod>20</shield_mod>
+   <cargo_mod>0</cargo_mod>
+   <ew_detect>-10</ew_detect>
+   <ew_hide>-10</ew_hide>
+   <ammo_capacity>50</ammo_capacity>
    <launch_rate>5</launch_rate>
    <launch_range>10</launch_range>
   </stats>
@@ -1092,37 +1121,38 @@
   <fabricator>House Dvaered</fabricator>
   <license>Light Combat Vessel License</license>
   <description>A Dvaered Ancestor.</description>
-  <movement>
-   <thrust>180</thrust>
-   <turn>105</turn>
-   <speed>220</speed>
-  </movement>
   <health>
    <absorb>9</absorb>
-   <shield>260</shield>
-   <armour>170</armour>
-   <energy>720</energy>
-   <shield_regen>7</shield_regen>
+   <armour>85</armour>
    <armour_regen>0</armour_regen>
-   <energy_regen>23.3</energy_regen>
   </health>
   <characteristics>
-   <cpu>37</cpu>
    <crew>6</crew>
-   <mass>153</mass>
-   <fuel>300</fuel>
-   <cargo>10</cargo>
+   <mass>75</mass>
+   <cargo>5</cargo>
   </characteristics>
   <slots>
    <weapon x="8" y="0" h="0"/>
    <weapon x="8" y="0" h="0"/>
    <weapon x="-2" y="9" h="-1"/>
    <weapon x="-2" y="-9" h="-1"/>
+   <utility prop="systems">Basic Small Systems</utility>
    <utility/>
    <utility/>
+   <structure prop="engines">Manufacturer Small Engine</structure>
+   <structure prop="hull">Unmodified Small Hull</structure>
    <structure/>
   </slots>
   <stats>
+   <speed_mod>-20</speed_mod>
+   <turn_mod>-10</turn_mod>
+   <thrust_mod>-10</thrust_mod>
+   <armour_mod>20</armour_mod>
+   <shield_mod>30</shield_mod>
+   <cargo_mod>0</cargo_mod>
+   <ew_detect>-10</ew_detect>
+   <ew_hide>-10</ew_hide>
+   <ammo_capacity>50</ammo_capacity>
    <launch_rate>5</launch_rate>
    <launch_range>10</launch_range>
   </stats>
@@ -1136,25 +1166,14 @@
   <price>550000</price>
   <fabricator>Skull and Bones</fabricator>
   <description>Ancestors were one of the first ships to be fancied by pirates. The big intimidating wings and good top speeds would usually get ships to surrender without firing a shot. As better ships came out in the market, their use has fallen due to their archaic electronics and targeting systems.</description>
-  <movement>
-   <thrust>180</thrust>
-   <turn>100</turn>
-   <speed>225</speed>
-  </movement>
   <health>
    <absorb>8</absorb>
-   <shield>240</shield>
-   <armour>130</armour>
-   <energy>720</energy>
-   <shield_regen>7</shield_regen>
+   <armour>60</armour>
    <armour_regen>0</armour_regen>
-   <energy_regen>21.7</energy_regen>
   </health>
   <characteristics>
-   <cpu>43</cpu>
    <crew>6</crew>
-   <mass>147</mass>
-   <fuel>400</fuel>
+   <mass>70</mass>
    <cargo>15</cargo>
   </characteristics>
   <slots>
@@ -1162,14 +1181,25 @@
    <weapon x="8" y="0" h="0"/>
    <weapon x="-2" y="9" h="-1"/>
    <weapon x="-2" y="-9" h="-1"/>
+   <utility prop="systems">Basic Small Systems</utility>
    <utility/>
    <utility/>
+   <structure prop="engines">Manufacturer Small Engine</structure>
+   <structure prop="hull">Unmodified Small Hull</structure>
    <structure/>
   </slots>
   <stats>
+   <speed_mod>-10</speed_mod>
+   <turn_mod>0</turn_mod>
+   <thrust_mod>-10</thrust_mod>
+   <armour_mod>0</armour_mod>
+   <shield_mod>10</shield_mod>
+   <cargo_mod>0</cargo_mod>
+   <ew_detect>-10</ew_detect>
+   <ew_hide>-10</ew_hide>
+   <ammo_capacity>25</ammo_capacity>
    <launch_rate>5</launch_rate>
    <launch_range>10</launch_range>
-   <launch_lockon>10</launch_lockon>
   </stats>
  </ship>
  <!-- Corvettes -->
