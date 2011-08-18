@@ -806,10 +806,10 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    MELEMENT(temp->price==0,"price");
    MELEMENT(temp->fabricator==NULL,"fabricator");
    MELEMENT(temp->description==NULL,"description");
+   MELEMENT(temp->armour==0.,"armour");
    /*MELEMENT(temp->thrust==0.,"thrust");
    MELEMENT(temp->turn==0.,"turn");
    MELEMENT(temp->speed==0.,"speed");
-   MELEMENT(temp->armour==0.,"armour");
    MELEMENT(temp->shield==0.,"shield");
    MELEMENT(temp->shield_regen==0.,"shield_regen");
    MELEMENT(temp->energy==0.,"energy");
@@ -817,8 +817,8 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    MELEMENT(temp->fuel==0.,"fuel");*/
    MELEMENT(temp->crew==0,"crew");
    MELEMENT(temp->mass==0.,"mass");
-   /*MELEMENT(temp->cpu==0.,"cpu");
-   MELEMENT(temp->cap_cargo==0,"cargo");*/
+   MELEMENT(temp->cap_cargo==0,"cargo");
+   /*MELEMENT(temp->cpu==0.,"cpu");*/
 #undef MELEMENT
 
    return 0;
