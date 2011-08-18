@@ -915,19 +915,19 @@ void pilot_calcStats( Pilot* pilot )
     * Relative increases.
     */
    /* Movement. */
-   pilot->thrust_base  += s->thrust_mod * pilot->thrust_base;
-   pilot->turn_base    += s->turn_mod * pilot->turn_base;
-   pilot->speed_base   += s->speed_mod * pilot->speed_base;
+   pilot->thrust_base  *= s->thrust_mod;
+   pilot->turn_base    *= s->turn_mod;
+   pilot->speed_base   *= s->speed_mod;
    /* Health. */
-   pilot->armour_max   += s->armour_mod * pilot->armour_max;
-   pilot->armour_regen += s->armour_regen_mod * pilot->armour_regen;
-   pilot->shield_max   += s->shield_mod * pilot->shield_max;
-   pilot->shield_regen += s->shield_regen_mod * pilot->shield_regen;
-   pilot->energy_max   += s->energy_mod * pilot->energy_max;
-   pilot->energy_regen += s->energy_regen_mod * pilot->energy_regen;
+   pilot->armour_max   *= s->armour_mod;
+   pilot->armour_regen *= s->armour_regen_mod;
+   pilot->shield_max   *= s->shield_mod;
+   pilot->shield_regen *= s->shield_regen_mod;
+   pilot->energy_max   *= s->energy_mod;
+   pilot->energy_regen *= s->energy_regen_mod;
    /* Misc. */
    pilot->dmg_absorb    = MAX( 0., pilot->dmg_absorb );
-   pilot->crew         += crew_rel * pilot->crew;
+   pilot->crew         *= s->crew_mod;
 
    /* Give the pilot his health proportion back */
    pilot->armour = ac * pilot->armour_max;
@@ -936,7 +936,7 @@ void pilot_calcStats( Pilot* pilot )
    pilot->fuel   = fc * pilot->fuel_max;
 
    /* Calculate mass. */
-   pilot->solid->mass = (1.+mass_rel)*pilot->ship->mass + pilot->stats.cargo_inertia*pilot->mass_cargo + pilot->mass_outfit;
+   pilot->solid->mass = s->mass_mod*pilot->ship->mass + pilot->stats.cargo_inertia*pilot->mass_cargo + pilot->mass_outfit;
 
    /* Calculate the heat. */
    pilot_heatCalc( pilot );
