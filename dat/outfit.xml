@@ -3363,14 +3363,14 @@
    <ew_hide>0</ew_hide>
   </specific>
  </outfit>
- <outfit name="Schafer & Kane Light Combat Plating">
+ <outfit name="Schafer &amp; Kane Light Combat Plating">
   <general>
    <typename>Core Systems</typename>
    <slot prop="hull">structure</slot>
    <size>light</size>
    <mass>60</mass>
    <price>150000</price>
-   <description>Schafer & Kane Industries mostly develop for larger ships, but the Light Combat Plating configuration is a product made for fighters and bombers, providing optimum protection.</description>
+   <description>Schafer &amp; Kane Industries mostly develop for larger ships, but the Light Combat Plating configuration is a product made for fighters and bombers, providing optimum protection.</description>
    <gfx_store>nanobond</gfx_store>
   </general>
   <specific type="modification">
@@ -3381,14 +3381,14 @@
    <ew_hide>0</ew_hide>
   </specific>
  </outfit>
- <outfit name="Schafer & Kane Light Stealth Plating">
+ <outfit name="Schafer &amp; Kane Light Stealth Plating">
   <general>
    <typename>Core Systems</typename>
    <slot prop="hull">structure</slot>
    <size>light</size>
    <mass>70</mass>
    <price>200000</price>
-   <description>The Light Stealth Plating from Schafer & Kane Industries foregoes hull strength for increased stealth, making it harder for ships to detect and target you.</description>
+   <description>The Light Stealth Plating from Schafer &amp; Kane Industries foregoes hull strength for increased stealth, making it harder for ships to detect and target you.</description>
    <gfx_store>nanobond</gfx_store>
   </general>
   <specific type="modification">
@@ -3399,14 +3399,14 @@
    <ew_hide>20</ew_hide>
   </specific>
  </outfit>
- <outfit name="Schafer & Kane Small Cargo Hull">
+ <outfit name="Schafer &amp; Kane Small Cargo Hull">
   <general>
    <typename>Core Systems</typename>
    <slot prop="hull">structure</slot>
    <size>light</size>
    <mass>70</mass>
    <price>300000</price>
-   <description>Though a pricey investment for small couriers, this hull modification from Schafer & Kane Industries provides an impressive amount of cargo space without compromising the hull's integrity.</description>
+   <description>Though a pricey investment for small couriers, this hull modification from Schafer &amp; Kane Industries provides an impressive amount of cargo space without compromising the hull's integrity.</description>
    <gfx_store>nanobond</gfx_store>
   </general>
   <specific type="modification">
