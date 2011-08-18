@@ -47,14 +47,13 @@ end
 -- @brief Equips a dvaered military type ship.
 --]]
 function equip_dvaeredMilitary( p, shipsize )
-   local medium, low, apu
+   local medium, low
    local use_primary, use_secondary, use_medium, use_low
    local use_forward, use_turrets, use_medturrets
    local nhigh, nmedium, nlow = p:ship():slots()
 
    -- Defaults
    medium      = { "Unicorp Scrambler" }
-   apu         = { }
    weapons     = {}
 
    -- Equip by size and type
@@ -77,7 +76,6 @@ function equip_dvaeredMilitary( p, shipsize )
          addWeapons( equip_secondaryDva(), use_secondary )
          medium         = equip_mediumLow()
          low            = equip_lowLow()
-         apu            = equip_apuLow()
 
       -- Bomber
       elseif class == "Bomber" then
@@ -87,7 +85,6 @@ function equip_dvaeredMilitary( p, shipsize )
          addWeapons( equip_secondaryDva(), use_secondary )
          medium         = equip_mediumLow()
          low            = equip_lowLow()
-         apu            = equip_apuLow()
       end
 
    elseif shipsize == "medium" then
@@ -99,7 +96,6 @@ function equip_dvaeredMilitary( p, shipsize )
       addWeapons( equip_forwardDvaMed(), use_forward )
       medium         = equip_mediumMed()
       low            = equip_lowMed()
-      apu            = equip_apuMed()
 
    else -- "large"
       use_secondary  = 2
@@ -115,8 +111,7 @@ function equip_dvaeredMilitary( p, shipsize )
       addWeapons( equip_turretDvaHig(), use_turrets )
       medium         = equip_mediumHig()
       low            = equip_lowHig()
-      apu            = equip_apuHig()
    end
-   equip_ship( p, false, weapons, medium, low, apu,
+   equip_ship( p, false, weapons, medium, low, 
                use_medium, use_low )
 end

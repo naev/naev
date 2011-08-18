@@ -47,7 +47,7 @@ end
 -- @brief Equips a empire military type ship.
 --]]
 function equip_empireMilitary( p, shipsize )
-   local medium, low, apu
+   local medium, low
    local use_primary, use_secondary, use_medium, use_low
    local use_forward, use_turrets, use_medturrets
    local nhigh, nmedium, nlow = p:ship():slots()
@@ -55,7 +55,6 @@ function equip_empireMilitary( p, shipsize )
 
    -- Defaults
    medium      = { "Unicorp Scrambler" }
-   apu         = { }
    weapons     = {}
    scramble    = false
 
@@ -79,7 +78,7 @@ function equip_empireMilitary( p, shipsize )
          addWeapons( equip_secondaryEmp(), use_secondary )
          medium         = equip_mediumLow()
          low            = equip_lowLow()
-         apu            = equip_apuLow()
+
 
       -- Bomber
       elseif class == "Bomber" then
@@ -89,7 +88,7 @@ function equip_empireMilitary( p, shipsize )
          addWeapons( equip_rangedEmp(), use_secondary )
          medium         = equip_mediumLow()
          low            = equip_lowLow()
-         apu            = equip_apuLow()
+
       end
 
    elseif shipsize == "medium" then
@@ -103,7 +102,7 @@ function equip_empireMilitary( p, shipsize )
          addWeapons( equip_secondaryEmp(), use_secondary )
          medium         = equip_mediumMed()
          low            = equip_lowMed()
-         apu            = equip_apuMed()
+
       end
 
       -- Destroyer
@@ -116,7 +115,7 @@ function equip_empireMilitary( p, shipsize )
          addWeapons( equip_forwardEmpMed(), use_forward )
          medium         = equip_mediumMed()
          low            = equip_lowMed()
-         apu            = equip_apuMed()
+
       end
 
    else -- "heavy"
@@ -132,9 +131,9 @@ function equip_empireMilitary( p, shipsize )
       addWeapons( equip_secondaryEmp(), use_secondary )
       medium         = equip_mediumHig()
       low            = equip_lowHig()
-      apu            = equip_apuHig()
+
    end
 
-   equip_ship( p, scramble, weapons, medium, low, apu,
+   equip_ship( p, scramble, weapons, medium, low,
                use_medium, use_low )
 end
