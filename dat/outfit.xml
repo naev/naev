@@ -3056,7 +3056,7 @@
    <speed>280</speed>
    <fuel>400</fuel>
    <energy_regen>-9</energy_regen>
-   <engine_limit>130</engine_limit>
+   <engine_limit>100</engine_limit>
   </specific>
  </outfit>
  <outfit name="Unicorp JNS-44K Engine">
@@ -3075,7 +3075,7 @@
    <speed>230</speed>
    <fuel>300</fuel>
    <energy_regen>-9</energy_regen>
-   <engine_limit>120</engine_limit>
+   <engine_limit>150</engine_limit>
   </specific>
  </outfit>
  <outfit name="Tricon Naga Mk3 Engine">
@@ -3170,7 +3170,7 @@
    <speed>280</speed>
    <fuel>400</fuel>
    <energy_regen>-12</energy_regen>
-   <engine_limit>160</engine_limit>
+   <engine_limit>180</engine_limit>
   </specific>
  </outfit>
  <outfit name="Tricon Naga Mk9 Engine">
