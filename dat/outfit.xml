@@ -2196,7 +2196,7 @@
    <description>Plasteel was one of man's greatest improvements on materials. It's a cheap, strong armour that seems to take the best from both plastic and steel, bending easily yet keeping its incredible strength. The Second Growth was only possible with this material. Although it is no longer cutting-edge, its low price point attracts many buyers.</description>
   </general>
   <specific type="modification">
-   <armour_rel>5</armour_rel>
+   <armour_mod>5</armour_mod>
    <mass_rel>5</mass_rel>
   </specific>
  </outfit>
@@ -2210,7 +2210,7 @@
    <description>Nanobond is the successor to Plasteel. It follows the same approach but has a greatly refined manufacturing process, providing greater particle density. The result is a much more robust material, although it is substantially more expensive.</description>
   </general>
   <specific type="modification">
-   <armour_rel>25</armour_rel>
+   <armour_mod>25</armour_mod>
    <mass_rel>15</mass_rel>
   </specific>
  </outfit>
@@ -2224,7 +2224,7 @@
    <description>Biometal is an armour that regenerates itself due to genetically-engineered bacteria throughout it. Due to the compartmentalization to permit bacterial life, and the difficulty of cultivating the bacteria, Biometal has greater mass than alternatives, and is the most expensive hull plating.</description>
   </general>
   <specific type="modification">
-   <armour_rel>20</armour_rel>
+   <armour_mod>20</armour_mod>
    <armour_regen>1.0</armour_regen>
    <mass_rel>20</mass_rel>
   </specific>
@@ -2257,7 +2257,7 @@
   <specific type="modification">
    <cpu>0</cpu>
    <thrust>3</thrust>
-   <thrust_rel>10</thrust_rel>
+   <thrust_mod>10</thrust_mod>
    <energy_regen>-0.85</energy_regen>
   </specific>
  </outfit>
@@ -2273,8 +2273,8 @@
   <specific type="modification">
    <cpu>-2</cpu>
    <speed>3</speed>
-   <speed_rel>15</speed_rel>
-   <turn_rel>3</turn_rel>
+   <speed_mod>15</speed_mod>
+   <turn_mod>3</turn_mod>
    <energy_regen>-0.15</energy_regen>
   </specific>
  </outfit>
@@ -2290,7 +2290,7 @@
   <specific type="modification">
    <cpu>0</cpu>
    <turn>5</turn>
-   <turn_rel>10</turn_rel>
+   <turn_mod>10</turn_mod>
    <energy_regen>-0.15</energy_regen>
   </specific>
  </outfit>
