@@ -159,7 +159,8 @@ const char *ship_existsCase( const char* name );
 Ship* ship_getAll( int *n );
 char* ship_class( Ship* s );
 ShipClass ship_classFromString( char* str );
-credits_t ship_basePrice( Ship* s );
+credits_t ship_basePrice( const Ship* s );
+credits_t ship_buyPrice( const Ship* s );
 glTexture* ship_loadCommGFX( Ship* s );
 
 

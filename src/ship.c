@@ -270,7 +270,7 @@ ShipClass ship_classFromString( char* str )
 /**
  * @brief Gets the ship's base price (no outfits).
  */
-credits_t ship_basePrice( Ship* s )
+credits_t ship_basePrice( const Ship* s )
 {
    credits_t price;
 
@@ -280,6 +280,38 @@ credits_t ship_basePrice( Ship* s )
    if (price < 0) {
       WARN("Negative ship base price!");
       price = 0;
+   }
+
+   return price;
+}
+
+
+/**
+ * @brief The ship buy price, includes default outfits.
+ */
+credits_t ship_buyPrice( const Ship* s )
+{
+   int i;
+   credits_t price;
+   Outfit *o;
+
+   /* Get base price. */
+   price = ship_basePrice(s);
+
+   for (i=0; i<s->outfit_nstructure; i++) {
+      o = s->outfit_structure[i].data;
+      if (o != NULL)
+         price += o->price;
+   }
+   for (i=0; i<s->outfit_nutility; i++) {
+      o = s->outfit_utility[i].data;
+      if (o != NULL)
+         price += o->price;
+   }
+   for (i=0; i<s->outfit_nweapon; i++) {
+      o = s->outfit_weapon[i].data;
+      if (o != NULL)
+         price += o->price;
    }
 
    return price;
