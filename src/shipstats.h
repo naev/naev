@@ -70,6 +70,8 @@ typedef enum ShipStatsType_ {
 
    /* Misc. */
    SS_TYPE_D_HEAT_DISSIPATION, /**< Ship heat dissipation. */
+   SS_TYPE_D_CREW,            /**< Ship crew. */
+   SS_TYPE_D_MASS,            /**< Ship mass. */
 
    /*
     * A: Absolute double type data. Should be continuous.
@@ -162,6 +164,8 @@ typedef struct ShipStats_ {
 
    /* Military type. */
    double heat_dissipation; /**< Global ship dissipation. */
+   double crew_mod;        /**< Relative crew modification. */
+   double mass_mod;        /**< Relative mass modification. */
 
    /* Launchers. */
    double launch_rate;     /**< Fire rate of launchers. */

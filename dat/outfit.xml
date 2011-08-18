@@ -2197,7 +2197,7 @@
   </general>
   <specific type="modification">
    <armour_mod>5</armour_mod>
-   <mass_rel>5</mass_rel>
+   <mass_mod>5</mass_mod>
   </specific>
  </outfit>
  <outfit name="Nanobond Plating">
@@ -2211,7 +2211,7 @@
   </general>
   <specific type="modification">
    <armour_mod>25</armour_mod>
-   <mass_rel>15</mass_rel>
+   <mass_mod>15</mass_mod>
   </specific>
  </outfit>
  <outfit name="Biometal Armour">
@@ -2226,7 +2226,7 @@
   <specific type="modification">
    <armour_mod>20</armour_mod>
    <armour_regen>1.0</armour_regen>
-   <mass_rel>20</mass_rel>
+   <mass_mod>20</mass_mod>
   </specific>
  </outfit>
  <outfit name="Droid Repair Crew">
@@ -2380,7 +2380,7 @@
     <gfx_store>cargo_pod</gfx_store>
    </general>
    <specific type="modification">
-    <crew_rel>20</crew_rel>
+    <crew_mod>20</crew_mod>
    </specific>
  </outfit>
  <outfit name="Boarding Androids MKII">
@@ -2393,7 +2393,7 @@
    <gfx_store>cargo_pod</gfx_store>
   </general>
   <specific type="modification">
-   <crew_rel>35</crew_rel>
+   <crew_mod>35</crew_mod>
   </specific>
  </outfit>
  <outfit name="Targeting Array">

@@ -116,6 +116,8 @@ static const ShipStatsLookup ss_lookup[] = {
    DI_ELEM( SS_TYPE_D_NEBULA_DMG_ARMOUR,  nebula_dmg_armour, "Nebula Damage (Armour)" ),
 
    D__ELEM( SS_TYPE_D_HEAT_DISSIPATION,   heat_dissipation, "Heat Dissipation" ),
+   D__ELEM( SS_TYPE_D_CREW,               crew_mod,      "Crew" ),
+   D__ELEM( SS_TYPE_D_MASS,               mass_mod,      "Mass" ),
 
    A__ELEM( SS_TYPE_A_ENGINE_LIMIT,       engine_limit,  "Engine Mass Limit" ),
    
