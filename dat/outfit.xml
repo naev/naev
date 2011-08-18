@@ -3013,7 +3013,7 @@
    <size>light</size>
    <mass>5</mass>
    <price>10000</price>
-   <description>The engine that most manufacturers install in their ships at assembly. Cheap to produce and favored by none, there are always plenty of spares lying around in spaceports that engineers are all too willing to get rid of.</description>
+   <description>The engine that most manufacturers install in their ships at assembly. Usually the first component pilots upgrade.</description>
    <gfx_store>afterburner</gfx_store>
   </general>
   <specific type="modification">
@@ -3022,7 +3022,7 @@
    <speed>200</speed>
    <fuel>300</fuel>
    <energy_regen>-6</energy_regen>
-   <engine_limit>80</engine_limit>
+   <engine_limit>100</engine_limit>
   </specific>
  </outfit>
  <outfit name="Unicorp KRD-B10 Engine">
@@ -3041,7 +3041,7 @@
    <speed>220</speed>
    <fuel>300</fuel>
    <energy_regen>-7</energy_regen>
-   <engine_limit>80</engine_limit>
+   <engine_limit>100</engine_limit>
   </specific>
  </outfit>
  <outfit name="Unicorp KRD-B12 Engine">
@@ -3060,7 +3060,7 @@
    <speed>240</speed>
    <fuel>300</fuel>
    <energy_regen>-8</energy_regen>
-   <engine_limit>90</engine_limit>
+   <engine_limit>115</engine_limit>
   </specific>
  </outfit>
  <outfit name="Unicorp EXA-49F Engine">
@@ -3079,7 +3079,7 @@
    <speed>200</speed>
    <fuel>300</fuel>
    <energy_regen>-9</energy_regen>
-   <engine_limit>100</engine_limit>
+   <engine_limit>130</engine_limit>
   </specific>
  </outfit>
  <outfit name="Unicorp AUR-50A Engine">
@@ -3098,7 +3098,7 @@
    <speed>280</speed>
    <fuel>400</fuel>
    <energy_regen>-9</energy_regen>
-   <engine_limit>100</engine_limit>
+   <engine_limit>130</engine_limit>
   </specific>
  </outfit>
  <outfit name="Unicorp JNS-44K Engine">
@@ -3117,7 +3117,7 @@
    <speed>230</speed>
    <fuel>300</fuel>
    <energy_regen>-9</energy_regen>
-   <engine_limit>130</engine_limit>
+   <engine_limit>170</engine_limit>
   </specific>
  </outfit>
  <outfit name="Tricon Naga Mk3 Engine">
@@ -3136,7 +3136,7 @@
    <speed>290</speed>
    <fuel>400</fuel>
    <energy_regen>-10</energy_regen>
-   <engine_limit>140</engine_limit>
+   <engine_limit>180</engine_limit>
   </specific>
  </outfit>
  <outfit name="Tricon Naga Mk5 Engine">
@@ -3155,7 +3155,7 @@
    <speed>310</speed>
    <fuel>400</fuel>
    <energy_regen>-11</energy_regen>
-   <engine_limit>150</engine_limit>
+   <engine_limit>195</engine_limit>
   </specific>
  </outfit>
  <outfit name="Tricon Crane Engine">
@@ -3174,7 +3174,7 @@
    <speed>290</speed>
    <fuel>400</fuel>
    <energy_regen>-12</energy_regen>
-   <engine_limit>130</engine_limit>
+   <engine_limit>170</engine_limit>
   </specific>
  </outfit>
  <outfit name="Tricon Spriggan Engine">
@@ -3193,7 +3193,7 @@
    <speed>330</speed>
    <fuel>400</fuel>
    <energy_regen>-12</energy_regen>
-   <engine_limit>130</engine_limit>
+   <engine_limit>170</engine_limit>
   </specific>
  </outfit>
  <outfit name="Tricon Oxen Engine">
@@ -3212,7 +3212,7 @@
    <speed>280</speed>
    <fuel>400</fuel>
    <energy_regen>-12</energy_regen>
-   <engine_limit>180</engine_limit>
+   <engine_limit>230</engine_limit>
   </specific>
  </outfit>
  <outfit name="Tricon Naga Mk9 Engine">
@@ -3231,7 +3231,7 @@
    <speed>330</speed>
    <fuel>400</fuel>
    <energy_regen>-14</energy_regen>
-   <engine_limit>170</engine_limit>
+   <engine_limit>220</engine_limit>
   </specific>
  </outfit>
  <outfit name="Tricon Naga Mk12 Engine">
@@ -3250,7 +3250,7 @@
    <speed>350</speed>
    <fuel>400</fuel>
    <energy_regen>-15</energy_regen>
-   <engine_limit>190</engine_limit>
+   <engine_limit>250</engine_limit>
   </specific>
  </outfit>
 
@@ -3291,7 +3291,132 @@
    <ew_hide>0</ew_hide>
   </specific>
  </outfit>
-
+ <outfit name="Unicorp D-2 Light Plating">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="hull">structure</slot>
+   <size>light</size>
+   <mass>40</mass>
+   <price>25000</price>
+   <description>D-2 plating is commonly found on small ships, because it's an inexpensive set of upgrades to the standard hull.</description>
+   <gfx_store>nanobond</gfx_store>
+  </general>
+  <specific type="modification">
+   <cargo>10</cargo>
+   <absorb>0</absorb>
+   <armour>70</armour>
+   <armour_regen>0</armour_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp C-2 Light Plating">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="hull">structure</slot>
+   <size>light</size>
+   <mass>40</mass>
+   <price>45000</price>
+   <description>More expensive than D-2 Plating, the C-2 variant offers better protection from light weapons fire at the same weight, without sacrificing cargo space.</description>
+   <gfx_store>nanobond</gfx_store>
+  </general>
+  <specific type="modification">
+   <cargo>10</cargo>
+   <absorb>5</absorb>
+   <armour>90</armour>
+   <armour_regen>0</armour_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp B-2 Light Plating">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="hull">structure</slot>
+   <size>light</size>
+   <mass>50</mass>
+   <price>70000</price>
+   <description>B-2 Plating offers good protection and cargo capacity, but weighs more than the C-2 or D-2 variants.</description>
+   <gfx_store>nanobond</gfx_store>
+  </general>
+  <specific type="modification">
+   <cargo>10</cargo>
+   <absorb>5</absorb>
+   <armour>110</armour>
+   <armour_regen>0</armour_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp Small Cargo Hull">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="hull">structure</slot>
+   <size>light</size>
+   <mass>40</mass>
+   <price>70000</price>
+   <description>This hull modification strips some armour plating in favor of cargo space. Commonly used by couriers.</description>
+   <gfx_store>nanobond</gfx_store>
+  </general>
+  <specific type="modification">
+   <cargo>20</cargo>
+   <absorb>0</absorb>
+   <armour>50</armour>
+   <armour_regen>0</armour_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Schafer & Kane Light Combat Plating">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="hull">structure</slot>
+   <size>light</size>
+   <mass>60</mass>
+   <price>150000</price>
+   <description>Schafer & Kane Industries mostly develop for larger ships, but the Light Combat Plating configuration is a product made for fighters and bombers, providing optimum protection.</description>
+   <gfx_store>nanobond</gfx_store>
+  </general>
+  <specific type="modification">
+   <cargo>0</cargo>
+   <absorb>15</absorb>
+   <armour>110</armour>
+   <armour_regen>0</armour_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Schafer & Kane Light Stealth Plating">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="hull">structure</slot>
+   <size>light</size>
+   <mass>70</mass>
+   <price>200000</price>
+   <description>The Light Stealth Plating from Schafer & Kane Industries foregoes hull strength for increased stealth, making it harder for ships to detect and target you.</description>
+   <gfx_store>nanobond</gfx_store>
+  </general>
+  <specific type="modification">
+   <cargo>0</cargo>
+   <absorb>5</absorb>
+   <armour>70</armour>
+   <armour_regen>0</armour_regen>
+   <ew_hide>20</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Schafer & Kane Small Cargo Hull">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="hull">structure</slot>
+   <size>light</size>
+   <mass>70</mass>
+   <price>300000</price>
+   <description>Though a pricey investment for small couriers, this hull modification from Schafer & Kane Industries provides an impressive amount of cargo space without compromising the hull's integrity.</description>
+   <gfx_store>nanobond</gfx_store>
+  </general>
+  <specific type="modification">
+   <cargo>30</cargo>
+   <absorb>0</absorb>
+   <armour>60</armour>
+   <armour_regen>0</armour_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
 
  <!-- Cheats. For missions, honest! -->
  <outfit name="Laser Cannon MK0">
