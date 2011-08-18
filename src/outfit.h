@@ -205,21 +205,15 @@ typedef struct OutfitModificationData_ {
 
    /* movement */
    double thrust;    /**< Maximum thrust modifier, this is absolute and is per 100 mass. */
-   double thrust_rel; /**< Relative thrust modifier. */
    double turn;      /**< Maximum turn modifier, this is absolute and is per 100 mass. */
-   double turn_rel;  /**< Relative turn modifier. */
    double speed;     /**< Maximum speed modifier, this is absolute and per 100 mass. */
-   double speed_rel; /**< Relative speed modifier. */
 
    /* health */
    double armour;    /**< Maximum armour modifier. */
-   double armour_rel; /**< Relative to armour base modifier. */
    double armour_regen; /**< Armour regeneration modifier. */
    double shield;    /**< Maximum shield modifier. */
-   double shield_rel; /**< Relative to shield base modifier. */
    double shield_regen; /**< Shield regeneration modifier. */
    double energy;    /**< Maximum energy modifier. */
-   double energy_rel; /**< Relative to energy base modifier. */
    double energy_regen; /**< Energy regeneration modifier. */
    double cpu;       /**< CPU modifier. */
    double absorb;    /**< Absorption factor. */
