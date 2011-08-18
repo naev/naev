@@ -1181,11 +1181,11 @@
    <weapon x="8" y="0" h="0"/>
    <weapon x="-2" y="9" h="-1"/>
    <weapon x="-2" y="-9" h="-1"/>
-   <utility prop="systems">Basic Small Systems</utility>
+   <utility prop="systems">Previous Generation Systems</utility>
    <utility/>
    <utility/>
-   <structure prop="engines">Manufacturer Small Engine</structure>
-   <structure prop="hull">Unmodified Small Hull</structure>
+   <structure prop="engines">Beat Up Engine</structure>
+   <structure prop="hull">Patchwork Plating</structure>
    <structure/>
   </slots>
   <stats>
