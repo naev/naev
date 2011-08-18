@@ -759,7 +759,6 @@ void pilot_calcStats( Pilot* pilot )
    Outfit* o;
    PilotOutfitSlot *slot;
    double ac, sc, ec, fc; /* temporary health coefficients to set */
-   double crew_rel, mass_rel;
    int njammers;
    ShipStats amount, *s;
 
@@ -809,7 +808,6 @@ void pilot_calcStats( Pilot* pilot )
    njammers             = 0;
    pilot->jam_range     = 0.;
    pilot->jam_chance    = 0.;
-   mass_rel = crew_rel = 0.;
    /* Update stuff. */
    for (i=0; i<pilot->noutfits; i++) {
       slot = pilot->outfits[i];
@@ -848,8 +846,6 @@ void pilot_calcStats( Pilot* pilot )
          pilot->fuel_max      += o->u.mod.fuel;
          /* Misc. */
          pilot->cargo_free    += o->u.mod.cargo;
-         mass_rel             += o->u.mod.mass_rel;
-         crew_rel             += o->u.mod.crew_rel;
          /* Stats. */
          ss_statsModFromList( &pilot->stats, o->u.mod.stats, &amount );
       }

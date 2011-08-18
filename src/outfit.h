@@ -220,8 +220,6 @@ typedef struct OutfitModificationData_ {
 
    /* misc */
    double cargo;     /**< Cargo space modifier. */
-   double crew_rel;  /**< Relative crew modification. */
-   double mass_rel;  /**< Relative mass modification. */
    double fuel;      /**< Maximum fuel modifier. */
 
    /* stats */
