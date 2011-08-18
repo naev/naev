@@ -2343,48 +2343,6 @@
    <misc_reverse_thrust>1</misc_reverse_thrust>
   </specific>
  </outfit>
- <outfit name="Auxiliary Processing Unit I">
-  <general>
-   <typename>CPU Modifier</typename>
-   <slot>utility</slot>
-   <mass>7</mass>
-   <price>80000</price>
-   <gfx_store>cpu_i</gfx_store>
-   <description>The Advanced Nanosystems APU I is an obsolete design intended for light vessels. It is relatively light weight, though it's less power efficient than its successors.</description>
-  </general>
-  <specific type="modification">
-   <cpu>10</cpu>
-   <energy_regen>-3.35</energy_regen>
-  </specific>
- </outfit>
- <outfit name="Auxiliary Processing Unit II">
-  <general>
-   <typename>CPU Modifier</typename>
-   <slot>utility</slot>
-   <mass>28</mass>
-   <price>170000</price>
-   <gfx_store>cpu_ii</gfx_store>
-   <description>The Advanced Nanosystems APU II is a mid-range design suitable for medium-sized vessels as well as lightly-equipped capital ships. Its substantial mass and power consumption make it unsuitable for light vessels.</description>
-  </general>
-  <specific type="modification">
-   <cpu>20</cpu>
-   <energy_regen>-6.25</energy_regen>
-  </specific>
- </outfit>
- <outfit name="Auxiliary Processing Unit III">
-  <general>
-   <typename>CPU Modifier</typename>
-   <slot>utility</slot>
-   <mass>112</mass>
-   <price>360000</price>
-   <gfx_store>cpu_iii</gfx_store>
-   <description>The Advanced Nanosystems APU III is a high-end general-purpose processor suitable for capital ships. Its high power-efficiency is achieved by using cutting-edge superconducting materials.</description>
-  </general>
-  <specific type="modification">
-   <cpu>40</cpu>
-   <energy_regen>-12</energy_regen>
-  </specific>
- </outfit>
 <!-- Miscellaneous Outfits (Expansion outfits, countermeasures, map.) -->
  <outfit name="Fuel Pod">
   <general>
