@@ -19,20 +19,13 @@
   <item>Laser Cannon MK1</item>
   <item>Laser Cannon MK2</item>
   <item>Laser Cannon MK3</item>
+  <item>Ripper Cannon</item>
+  <item>Heavy Ripper Cannon</item>
   <item>Laser Turret MK1</item>
   <item>Laser Turret MK2</item>
   <item>Laser Turret MK3</item>
   <item>Heavy Laser</item>
   <item>Turbolaser</item>
-  <item>Plasma Blaster MK1</item>
-  <item>Plasma Blaster MK2</item>
-  <item>Plasma Blaster MK3</item>
-  <item>Plasma Cluster Cannon MK1</item>
-  <item>Plasma Cluster Cannon MK2</item>
-  <item>Plasma Cluster Cannon MK3</item>
-  <item>Plasma Turret MK1</item>
-  <item>Plasma Turret MK2</item>
-  <item>Neutron Disruptor</item>
   <item>Razor MK1</item>
   <item>Razor MK2</item>
   <item>Razor MK3</item>
@@ -53,10 +46,19 @@
   <item>Railgun</item>
   <item>Repeating Railgun</item>
   <item>Railgun Turret</item>
-  <item>Ripper Cannon</item>
-  <item>Heavy Ripper Cannon</item>
+  <item>Plasma Blaster MK1</item>
+  <item>Plasma Blaster MK2</item>
+  <item>Plasma Blaster MK3</item>
+  <item>Plasma Turret MK1</item>
+  <item>Plasma Turret MK2</item>
+  <item>BioPlasma Organ Stage 1</item>
+  <item>BioPlasma Organ Stage 2</item>
+  <item>Plasma Cluster Cannon MK1</item>
+  <item>Plasma Cluster Cannon MK2</item>
+  <item>Plasma Cluster Cannon MK3</item>
   <item>Orion Beam</item>
   <item>Ragnarok Beam</item>
+  <item>Neutron Disruptor</item>
   <item>Unicorp Fury Launcher</item>
   <item>TeraCom Fury Launcher</item>
   <item>Enygma Systems Turreted Fury Launcher</item>
@@ -69,12 +71,12 @@
   <item>TeraCom Vengeance Launcher</item>
   <item>Enygma Systems Turreted Vengeance Launcher</item>
   <item>Vengeance Missile</item>
-  <item>Unicorp Banshee Launcher</item>
-  <item>TeraCom Banshee Launcher</item>
-  <item>Banshee Rocket</item>
   <item>Unicorp Mace Launcher</item>
   <item>TeraCom Mace Launcher</item>
   <item>Mace Rocket</item>
+  <item>Unicorp Banshee Launcher</item>
+  <item>TeraCom Banshee Launcher</item>
+  <item>Banshee Rocket</item>
   <item>Unicorp Caesar IV Launcher</item>
   <item>Caesar IV Torpedo</item>
   <item>TeraCom Imperator Launcher</item>
@@ -107,6 +109,7 @@
   <item>Steering Thrusters</item>
   <item>Generic Afterburner</item>
   <item>Hellburner</item>
+  <item>Reverse Thrusters</item>
   <item>Fuel Pod</item>
   <item>Cargo Pod</item>
   <item>Boarding Androids MKI</item>
@@ -119,11 +122,9 @@
   <item>Star Map</item>
   <item>Unicorp Scrambler</item>
   <item>Milspec Scrambler</item>
-  <item>Basic Small Systems</item>
-  <item>Manufacturer Small Engine</item>
-  <item>Unmodified Small Hull</item>
   <item>Unicorp Jammer</item>
   <item>Milspec Jammer</item>
+  <item>GUI - Brushed</item>
   <item>Lancelot Fighter Bay</item>
   <item>Lancelot Fighter</item>
   <item>Drone Fighter Bay</item>
@@ -134,8 +135,44 @@
   <item>Light Combat Vessel License</item>
   <item>Medium Combat Vessel License</item>
   <item>Heavy Combat Vessel License</item>
-  <item>Reverse Thrusters</item>
-  <item>GUI - Brushed</item>
+  <item>Pirate Landing Pass</item>
+  <item>Previous Generation Systems</item>
+  <item>Basic Small Systems</item>
+  <item>Unicorp PT-100 Core System</item>
+  <item>Unicorp PT-200 Core System</item>
+  <item>Unicorp RX-14 Core System</item>
+  <item>Unicorp JX-16 Core System</item>
+  <item>Unicorp EX-19 Core System</item>
+  <item>Milspec Orion 2301 Core System</item>
+  <item>Milspec Orion 2302 Core System</item>
+  <item>Milspec Gemini 2501 Core System</item>
+  <item>Milspec Taurus 2520 Core System</item>
+  <item>Milspec Vespa 2544 Core System</item>
+  <item>Milspec Orion 3701 Core System</item>
+  <item>Milspec Orion 3702 Core System</item>
+  <item>Beat Up Engine</item>
+  <item>Manufacturer Small Engine</item>
+  <item>Unicorp KRD-B10 Engine</item>
+  <item>Unicorp KRD-B12 Engine</item>
+  <item>Unicorp EXA-49F Engine</item>
+  <item>Unicorp AUR-50A Engine</item>
+  <item>Unicorp JNS-44K Engine</item>
+  <item>Tricon Naga Mk3 Engine</item>
+  <item>Tricon Naga Mk5 Engine</item>
+  <item>Tricon Crane Engine</item>
+  <item>Tricon Spriggan Engine</item>
+  <item>Tricon Oxen Engine</item>
+  <item>Tricon Naga Mk9 Engine</item>
+  <item>Tricon Naga Mk12 Engine</item>
+  <item>Patchwork Plating</item>
+  <item>Unmodified Small Hull</item>
+  <item>Unicorp D-2 Light Plating</item>
+  <item>Unicorp C-2 Light Plating</item>
+  <item>Unicorp B-2 Light Plating</item>
+  <item>Unicorp Small Cargo Hull</item>
+  <item>Schafer &amp; Kane Light Combat Plating</item>
+  <item>Schafer &amp; Kane Light Stealth Plating</item>
+  <item>Schafer &amp; Kane Small Cargo Hull</item>
  </tech>
  <tech name="All Ships">
   <item>Admonisher</item>
