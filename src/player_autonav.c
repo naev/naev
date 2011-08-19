@@ -78,13 +78,25 @@ static void player_autonavSetup (void)
 {
    player_message("\epAutonav initialized.");
    if (!player_isFlag(PLAYER_AUTONAV)) {
-      tc_mod    = 1.;
-      if (conf.compression_mult > 1.)
-         player.tc_max = MIN( conf.compression_velocity / solid_maxspeed(player.p->solid, player.p->speed, player.p->thrust), conf.compression_mult );
+      /* Calculate base position. */
+      if (player_isFlag(PLAYER_DOUBLESPEED))
+         tc_mod   = 1.;
       else
-         player.tc_max = conf.compression_velocity / solid_maxspeed(player.p->solid, player.p->speed, player.p->thrust);
+         tc_mod   = 2.;
+
+      /* Calculate limits. */
+      if (conf.compression_mult > 1.)
+         player.tc_max = MIN( conf.compression_velocity /
+               solid_maxspeed(player.p->solid, player.p->speed, player.p->thrust), conf.compression_mult );
+      else
+         player.tc_max = conf.compression_velocity /
+               solid_maxspeed(player.p->solid, player.p->speed, player.p->thrust);
+
+      /* Safe cap. */
       player.tc_max = MAX( 1., player.tc_max );
    }
+
+   /* Sane values. */
    tc_rampdown  = 0;
    tc_down      = 0.;
    lasts        = player.p->shield / player.p->shield_max;
@@ -92,7 +104,10 @@ static void player_autonavSetup (void)
    slockons     = player.p->lockons;
    if (player.autonav_timer <= 0.)
       abort_mod = 1.;
+
+   /* Set flag and tc_mod just in case. */
    player_setFlag(PLAYER_AUTONAV);
+   pause_setSpeed( tc_mod );
 }
 
 
