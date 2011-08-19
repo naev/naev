@@ -1894,7 +1894,7 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define
    MELEMENT(temp->gfx_store==NULL,"gfx_store");
    /*MELEMENT(temp->mass==0,"mass"); Not really needed */
    MELEMENT(temp->type==0,"type");
-   MELEMENT(temp->price==0,"price");
+   /*MELEMENT(temp->price==0,"price");*/
    MELEMENT(temp->description==NULL,"description");
 #undef MELEMENT
 
