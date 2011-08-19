@@ -2019,12 +2019,15 @@ static int pilotL_setNoLand( lua_State *L )
 /**
  * @brief Adds an outfit to a pilot.
  *
+ * This by default tries to add them to the first empty or defaultly equipped slot.
+ *
  * @usage added = p:addOutfit( "Laser Cannon", 5 ) -- Adds 5 laser cannons to p
  *
  *    @luaparam p Pilot to add outfit to.
  *    @luaparam outfit Name of the outfit to add.
  *    @luaparam q Amount of the outfit to add (defaults to 1).
  *    @luaparam bypass Whether to skip CPU and slot size checks before adding an outfit (defaults to false).
+ *              Will not overwrite existing non-default outfits.
  *    @luareturn The number of outfits added.
  * @luafunc addOutfit( p, outfit, q )
  */
