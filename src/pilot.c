@@ -1970,6 +1970,11 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    /* set the pilot stats based on his ship and outfits */
    pilot_calcStats( pilot );
 
+   /* Heal up the ship. */
+   pilot->armour = pilot->armour_max;
+   pilot->shield = pilot->shield_max;
+   pilot->energy = pilot->energy_max;
+
    /* Sanity check. */
 #ifdef DEBUGGING
    const char *str = pilot_checkSanity( pilot );

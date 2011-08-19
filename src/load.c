@@ -509,11 +509,6 @@ int load_game( const char* file )
          gui_load( player.p->ship->gui );
    }
 
-   /* Heal up the ship. */
-   player.p->armour = player.p->armour_max;
-   player.p->shield = player.p->shield_max;
-   player.p->energy = player.p->energy_max;
-
    /* Sanitize the GUI. */
    gui_setCargo();
    gui_setShip();
