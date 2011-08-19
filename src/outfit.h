@@ -94,6 +94,9 @@ typedef struct OutfitSlot_ {
 } OutfitSlot;
 
 
+/**
+ * @brief Core damage that an outfit does.
+ */
 typedef struct Damage_ {
    int type;            /**< Type of damage. */
    double penetration;  /**< Penetration the damage has [0:1], with 1 being 100%. */

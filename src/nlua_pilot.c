@@ -2736,15 +2736,18 @@ static int pilotL_getHostile( lua_State *L )
 }
 
 
+/**
+ * @brief Small struct to handle flags.
+ */
 struct pL_flag {
-   char *name;
-   int id;
+   char *name; /**< Name of the flag. */  
+   int id;     /**< Id of the flag. */
 };
 static const struct pL_flag pL_flags[] = {
    { .name = "hailing", .id = PILOT_HAILING },
    { .name = "boardable", .id = PILOT_BOARDABLE },
    {NULL, -1}
-};
+}; /**< Flags to get. */
 /**
  * @brief Gets the pilot's flags.
  *
