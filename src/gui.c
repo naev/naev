@@ -1999,12 +1999,12 @@ void gui_updateFaction (void)
  *
  *    @param The pilot to act based upon.
  */
-void gui_setGeneric (Pilot* pilot)
+void gui_setGeneric( Pilot* pilot )
 {
    if (gui_L == NULL)
       return;
 
-   if (player.p->target != PLAYER_ID && pilot->id == player.p->target)
+   if ((player.p->target != PLAYER_ID) && (pilot->id == player.p->target))
       gui_setTarget();
    else if (pilot_isPlayer(pilot)) {
       gui_setCargo();
