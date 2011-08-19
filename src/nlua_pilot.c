@@ -2060,8 +2060,9 @@ static int pilotL_addOutfit( lua_State *L )
       if (q <= 0)
          break;
 
-      /* Must not have outfit already. */
-      if (p->outfits[i]->outfit != NULL)
+      /* Must not have outfit (excluding default) already. */
+      if ((p->outfits[i]->outfit != NULL) &&
+            (p->outfits[i]->outfit != p->outfits[i]->sslot->data))
          continue;
 
       if (!bypass) {
