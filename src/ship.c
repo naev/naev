@@ -600,7 +600,7 @@ static int ship_parseSlot( Ship *temp, ShipOutfitSlot *slot, OutfitSlotType type
    xmlr_attr( node, "prop", buf );
    slot->slot.spid = sp_get( buf );
    slot->exclusive = sp_exclusive( slot->slot.spid );
-   slot->required = sp_required( slot->slot.spid );
+   slot->required  = sp_required( slot->slot.spid );
    free( buf );
 
    /* Parse default outfit. */
@@ -615,6 +615,10 @@ static int ship_parseSlot( Ship *temp, ShipOutfitSlot *slot, OutfitSlotType type
    /* Set stuff. */
    slot->slot.size = base_size;
    slot->slot.type = type;
+
+   /* Required slots need a default outfit. */
+   if (slot->required && (slot->data == NULL))
+      WARN("Ship '%s' has required slot without a default outfit.", temp->name);
 
    return 0;
 }
