@@ -1450,7 +1450,7 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
 #define DESC_ADD(x, s, n) \
 if (((x) != 0.) && (i<OUTFIT_SHORTDESC_MAX)) \
    i += snprintf( &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, \
-         "\n%+."n"f "s, x )
+         "\n\e%s%+."n"f "s"\e0", ((x)>0.)?"D":"r", (x))
 #define DESC_ADD0(x, s)    DESC_ADD( x, s, "0" )
 #define DESC_ADD1(x, s)    DESC_ADD( x, s, "1" )
    DESC_ADD0( temp->u.mod.thrust, "Thrust" );
