@@ -2313,14 +2313,28 @@ static int player_outfitCompare( const void *arg1, const void *arg2 )
  *    @param[out] soutfits Names of outfits to .
  *    @param[out] toutfits Textures of outfits for image array.
  */
-void player_getOutfits( char** soutfits, glTexture** toutfits )
+int player_getOutfits( char** soutfits, glTexture** toutfits )
 {
-   int i;
+   return player_getOutfitsFiltered( soutfits, toutfits, NULL );
+}
+
+
+/**
+ * @brief Prepares two arrays for displaying in an image array.
+ *
+ *    @param[out] soutfits Names of outfits to .
+ *    @param[out] toutfits Textures of outfits for image array.
+ *    @param[in] filter Function to filter which outfits to get.
+ */
+int player_getOutfitsFiltered( char** soutfits, glTexture** toutfits,
+      int(*filter)( const Outfit *o ) )
+{
+   int i, j;
 
    if (player_noutfits == 0) {
       soutfits[0] = strdup( "None" );
       toutfits[0] = NULL;
-      return;
+      return 1;
    }
 
    /* We'll sort. */
@@ -2328,10 +2342,15 @@ void player_getOutfits( char** soutfits, glTexture** toutfits )
          sizeof(PlayerOutfit_t), player_outfitCompare );
 
    /* Now built name and texture structure. */
+   j = 0;
    for (i=0; i<player_noutfits; i++) {
-      soutfits[i] = strdup( player_outfits[i].o->name );
-      toutfits[i] = player_outfits[i].o->gfx_store;
+      if ((filter == NULL) || filter(player_outfits[i].o)) {
+         soutfits[j] = strdup( player_outfits[i].o->name );
+         toutfits[j] = player_outfits[i].o->gfx_store;
+         j++;
+      }
    }
+   return j;
 }
 
 
