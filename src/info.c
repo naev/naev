@@ -119,7 +119,7 @@ void menu_info( int window )
 
    /* Create tabbed window. */
    info_windows = window_addTabbedWindow( info_wid, -1, -1, -1, -1, "tabInfo",
-         INFO_WINDOWS, info_names );
+         INFO_WINDOWS, info_names, 0 );
 
    /* Open the subwindows. */
    info_openMain(       info_windows[ INFO_WIN_MAIN ] );

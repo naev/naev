@@ -118,7 +118,7 @@ void opt_menu (void)
 
    /* Create tabbed window. */
    opt_windows = window_addTabbedWindow( opt_wid, -1, -1, -1, -1, "tabOpt",
-         OPT_WINDOWS, opt_names );
+         OPT_WINDOWS, opt_names, 0 );
 
    /* Load tabs. */
    opt_gameplay(  opt_windows[ OPT_WIN_GAMEPLAY ] );

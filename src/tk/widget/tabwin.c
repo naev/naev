@@ -47,14 +47,16 @@ static void tab_cleanup( Widget* tab );
  *    @param name Name of the widget to use internally.
  *    @param ntabs Number of tabs in the widget.
  *    @param tabnames Name of the tabs in the widget.
+ *    @param tabpos Position to set up the tabs at.
  *    @return List of created windows.
  */
 unsigned int* window_addTabbedWindow( const unsigned int wid,
       const int x, const int y, /* position */
       const int w, const int h, /* size */
-      const char* name, int ntabs, const char **tabnames )
+      const char* name, int ntabs, const char **tabnames, int tabpos )
 {
    int i;
+   int wx,wy, ww,wh;
    Window *wdw, *wtmp;
    Widget *wgt;
 
@@ -74,11 +76,28 @@ unsigned int* window_addTabbedWindow( const unsigned int wid,
    wgt->renderOverlay      = tab_renderOverlay;
    wgt->cleanup            = tab_cleanup;
    wgt->dat.tab.ntabs      = ntabs;
+   wgt->dat.tab.tabpos     = tabpos;
 
    /* position/size */
-   wgt->w = (double) w;
-   wgt->h = (double) h;
-   toolkit_setPos( wdw, wgt, x, y );
+   wgt->w = (double) (w<0) ? wdw->w : w;
+   wgt->h = (double) (h<0) ? wdw->h : h;
+   wgt->x = (double) (x<0) ? 0 : x;
+   wgt->y = (double) (y<0) ? 0 : y;
+
+   /* Calculate window position and size. */
+   wx = wdw->x + wgt->x;
+   wy = wdw->y + wgt->y;
+   ww = wdw->w;
+   wh = wdw->h;
+   if (tabpos == 0) {
+      wy += TAB_HEIGHT;
+      wh -= TAB_HEIGHT;
+   }
+   else if (tabpos == 1) {
+      wh -= TAB_HEIGHT;
+   }
+   else
+      WARN( "Tab position '%d' parameter does not make sense", tabpos );
 
    /* Copy tab information. */
    wgt->dat.tab.tabnames   = malloc( sizeof(char*) * ntabs );
@@ -92,10 +111,9 @@ unsigned int* window_addTabbedWindow( const unsigned int wid,
       wgt->dat.tab.namelen[i]  = gl_printWidthRaw( &gl_defFont,
             wgt->dat.tab.tabnames[i] );
       /* Create windows. */
-      wgt->dat.tab.windows[i] = window_create( tabnames[i],
-            wdw->x + x, wdw->y + y + TAB_HEIGHT, wdw->w, wdw->h - TAB_HEIGHT );
+      wgt->dat.tab.windows[i] = window_create( tabnames[i], wx, wy, ww, wh );
       wtmp = window_wget( wgt->dat.tab.windows[i] );
-      /* Set flags. */
+      /* Set flags - parent window handles event for the children. */
       window_setFlag( wtmp, WINDOW_NOFOCUS );
       window_setFlag( wtmp, WINDOW_NORENDER );
       window_setFlag( wtmp, WINDOW_NOINPUT );
@@ -162,10 +180,14 @@ static int tab_mouse( Widget* tab, SDL_Event *event )
    toolkit_inputTranslateCoords( parent, event, &x, &y, &rx, &ry );
 
    /* Translate to widget space. */
-   x += parent->w - tab->x;
-   y += parent->h - tab->y;
+   x += tab->x;
+   y += tab->y;
 
-   /* Make sure event is in bottom 20 pixels. */
+   /* Since it's at the top we have to translate down. */
+   if (tab->dat.tab.tabpos == 1)
+      y -= (tab->h-TAB_HEIGHT);
+
+   /* Make sure event is in the TAB HEIGHT area. */
    if ((y>=TAB_HEIGHT) || (y<0))
       return 0;
 
@@ -279,7 +301,7 @@ static int tab_key( Widget* tab, SDL_Event *event )
  */
 static void tab_render( Widget* tab, double bx, double by )
 {
-   int i, x;
+   int i, x, y;
    Window *wdw;
    glColour *c, *lc;
 
@@ -294,29 +316,33 @@ static void tab_render( Widget* tab, double bx, double by )
    window_render( wdw );
 
    /* Render tabs ontop. */
-   x = 20;
+   x = bx+20;
+   if (tab->dat.tab.tabpos == 0)
+      y = by+0;
+   else if (tab->dat.tab.tabpos == 1)
+      y = by+tab->h-TAB_HEIGHT;;
    for (i=0; i<tab->dat.tab.ntabs; i++) {
       if (i!=tab->dat.tab.active) {
          lc = toolkit_col;
          c  = toolkit_colDark;
 
          /* Draw border. */
-         toolkit_drawRect( bx+x, by+0, tab->dat.tab.namelen[i] + 10,
+         toolkit_drawRect( x, y, tab->dat.tab.namelen[i] + 10,
                TAB_HEIGHT, lc, c );
-         toolkit_drawOutline( bx+x+1, by+1, tab->dat.tab.namelen[i] + 8,
+         toolkit_drawOutline( x+1, y+1, tab->dat.tab.namelen[i] + 8,
                TAB_HEIGHT-1, 1., c, &cBlack );
       }
       else {
          if (i==0)
-            toolkit_drawRect( bx+x-1, by+0,
+            toolkit_drawRect( x-1, y+0,
                   1, TAB_HEIGHT+1, toolkit_colDark, &cGrey20 );
          else if (i==tab->dat.tab.ntabs-1)
-            toolkit_drawRect( bx+x+tab->dat.tab.namelen[i]+9, by+0,
+            toolkit_drawRect( x+tab->dat.tab.namelen[i]+9, y+0,
                   1, TAB_HEIGHT+1, toolkit_colDark, &cGrey20 );
       }
       /* Draw text. */
-      gl_printRaw( &gl_defFont, bx+x + 5,
-            by + (TAB_HEIGHT-gl_defFont.h)/2, &cBlack,
+      gl_printRaw( &gl_defFont, x + 5,
+            y + (TAB_HEIGHT-gl_defFont.h)/2, &cBlack,
             tab->dat.tab.tabnames[i] );
 
       /* Go to next line. */
