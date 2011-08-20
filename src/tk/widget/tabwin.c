@@ -388,12 +388,9 @@ static void tab_cleanup( Widget *tab )
       free( tab->dat.tab.tabnames[i] );
       window_destroy( tab->dat.tab.windows[i] );
    }
-   if (tab->dat.tab.tabnames != NULL)
-      free( tab->dat.tab.tabnames );
-   if (tab->dat.tab.windows != NULL)
-      free( tab->dat.tab.windows );
-   if (tab->dat.tab.namelen != NULL)
-      free( tab->dat.tab.namelen );
+   free( tab->dat.tab.tabnames );
+   free( tab->dat.tab.windows );
+   free( tab->dat.tab.namelen );
 }
 
 
