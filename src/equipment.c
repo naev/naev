@@ -58,10 +58,13 @@ static gl_vbo *equipment_vbo     = NULL; /**< The VBO. */
 /*
  * prototypes
  */
+/* Creation. */
 static void equipment_getDim( unsigned int wid, int *w, int *h,
       int *sw, int *sh, int *ow, int *oh,
       int *ew, int *eh,
       int *cw, int *ch, int *bw, int *bh );
+static void equipment_genShipList( unsigned int wid );
+static void equipment_genOutfitLists( unsigned int wid );
 /* Widget. */
 static void equipment_genLists( unsigned int wid );
 static void equipment_renderColumn( double x, double y, double w, double h,
@@ -1264,23 +1267,33 @@ int equipment_shipStats( char *buf, int max_len,  const Pilot *s, int dpseps )
  */
 static void equipment_genLists( unsigned int wid )
 {
-   int i, l, p;
+   /* Ship list. */
+   equipment_genShipList( wid );
+
+   /* Outfit list. */
+   equipment_genOutfitLists( wid );
+
+   /* Update window. */
+   equipment_updateOutfits(wid, NULL);
+   equipment_updateShips(wid, NULL);
+}
+
+
+/**
+ * @brief Generates the ship list.
+ *    @param wid Window to generate list on.
+ */
+static void equipment_genShipList( unsigned int wid )
+{
+   int i, l;
    char **sships;
    glTexture **tships;
    int nships;
-   char **soutfits;
-   glTexture **toutfits;
-   int noutfits;
    int w, h;
    int sw, sh;
    int ow, oh;
    char **alt;
-   char **quantity;
-   Outfit *o;
    Pilot *s;
-   glColour *bg, *c, blend;
-   char **slottype;
-   const char *typename;
 
    /* Get dimensions. */
    equipment_getDim( wid, &w, &h, &sw, &sh, &ow, &oh,
@@ -1318,8 +1331,33 @@ static void equipment_genLists( unsigned int wid )
       }
       toolkit_setImageArrayAlt( wid, EQUIPMENT_SHIPS, alt );
    }
+}
 
-   /* Outfit list. */
+
+/**
+ * @brief Generates the outfit lists.
+ *    @param wid Window to generate lists on.
+ */
+static void equipment_genOutfitLists( unsigned int wid )
+{
+   int i, l, p;
+   char **soutfits;
+   glTexture **toutfits;
+   int noutfits;
+   int w, h;
+   int sw, sh;
+   int ow, oh;
+   char **alt;
+   char **quantity;
+   Outfit *o;
+   glColour *bg, *c, blend;
+   char **slottype;
+   const char *typename;
+
+   /* Get dimensions. */
+   equipment_getDim( wid, &w, &h, &sw, &sh, &ow, &oh,
+         NULL, NULL, NULL, NULL, NULL, NULL );
+
    eq_wgt.outfit = NULL;
    noutfits = MAX(1,player_numOutfits());
    soutfits = malloc(sizeof(char*)*noutfits);
@@ -1387,10 +1425,6 @@ static void equipment_genLists( unsigned int wid )
          toolkit_setImageArrayBackground( wid, EQUIPMENT_OUTFITS, bg );
       }
    }
-
-   /* Update window. */
-   equipment_updateOutfits(wid, NULL);
-   equipment_updateShips(wid, NULL);
 }
 
 
