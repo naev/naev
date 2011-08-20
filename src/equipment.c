@@ -36,6 +36,15 @@
 #include "tk/toolkit_priv.h" /* Yes, I'm a bad person, abstractions be damned! */
 
 
+/*
+ * Image array names.
+ */
+#define  EQUIPMENT_SHIPS      "iarAvailShips"
+#define  EQUIPMENT_OUTFIT_TAB "tabOutfits"
+#define  EQUIPMENT_OUTFITS    "iarAvailOutfits"
+#define  OUTFIT_TABS          5
+
+
 /* global/main window */
 #define BUTTON_WIDTH    200 /**< Default button width. */
 #define BUTTON_HEIGHT   40 /**< Default button height. */
@@ -53,6 +62,8 @@ static CstSlotWidget eq_wgt; /**< Equipment widget. */
 static double equipment_dir      = 0.; /**< Equipment dir. */
 static unsigned int equipment_lastick = 0; /**< Last tick. */
 static gl_vbo *equipment_vbo     = NULL; /**< The VBO. */
+static unsigned int equipment_wid   = 0; /**< Global wid. */
+static unsigned int *outfit_windows = NULL; /**< Outfit windows. */
 
 
 /*
@@ -66,8 +77,8 @@ static void equipment_getDim( unsigned int wid, int *w, int *h,
 static void equipment_genShipList( unsigned int wid );
 static void equipment_genOutfitLists( unsigned int wid );
 static void equipment_addOutfitListSingle( unsigned int wid,
-      int x, int y, int w, int h,
       int(*filter)( const Outfit *o ) );
+static void equipment_updateOutfitSingle( unsigned int wid, char* str );
 /* Widget. */
 static void equipment_genLists( unsigned int wid );
 static void equipment_renderColumn( double x, double y, double w, double h,
@@ -218,6 +229,9 @@ void equipment_open( unsigned int wid )
    int x, y;
    GLfloat colour[4*4];
    const char *buf;
+
+   /* Set global WID. */
+   equipment_wid = wid;
 
    /* Create the vbo if necessary. */
    if (equipment_vbo == NULL) {
@@ -1106,22 +1120,26 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
  */
 void equipment_regenLists( unsigned int wid, int outfits, int ships )
 {
-   int ret;
-   int nout, nship;
-   double offout, offship;
+   int i, ret;
+   int nout[OUTFIT_TABS], nship;
+   double offout[OUTFIT_TABS], offship;
    char *s, selship[PATH_MAX];
+   unsigned int wtmp;
 
    /* Default.s */
-   nout     = 0;
+   memset( nout, 0, sizeof(nout) );
+   memset( offout, 0, sizeof(offout) );
    nship    = 0;
-   offout   = 0.;
    offship  = 0.;
 
    /* Save positions. */
    if (outfits) {
-      nout    = toolkit_getImageArrayPos( wid, EQUIPMENT_OUTFITS );
-      offout  = toolkit_getImageArrayOffset( wid, EQUIPMENT_OUTFITS );
-      window_destroyWidget( wid, EQUIPMENT_OUTFITS );
+      for (i=0; i<OUTFIT_TABS; i++) {
+         wtmp      = outfit_windows[i];
+         nout[i]   = toolkit_getImageArrayPos( wtmp, EQUIPMENT_OUTFITS );
+         offout[i] = toolkit_getImageArrayOffset( wtmp, EQUIPMENT_OUTFITS );
+         window_destroyWidget( wtmp, EQUIPMENT_OUTFITS );
+      }
    }
    if (ships) {
       nship   = toolkit_getImageArrayPos( wid, EQUIPMENT_SHIPS );
@@ -1137,8 +1155,11 @@ void equipment_regenLists( unsigned int wid, int outfits, int ships )
 
    /* Restore positions. */
    if (outfits) {
-      toolkit_setImageArrayPos( wid, EQUIPMENT_OUTFITS, nout );
-      toolkit_setImageArrayOffset( wid, EQUIPMENT_OUTFITS, offout );
+      for (i=0; i<OUTFIT_TABS; i++) {
+         wtmp      = outfit_windows[i];
+         toolkit_setImageArrayPos( wtmp, EQUIPMENT_OUTFITS, nout[i] );
+         toolkit_setImageArrayOffset( wtmp, EQUIPMENT_OUTFITS, offout[i] );
+      }
    }
    if (ships) {
       toolkit_setImageArrayPos( wid, EQUIPMENT_SHIPS, nship );
@@ -1356,9 +1377,20 @@ static int equipment_outfitFilterCore( const Outfit *o )
  */
 static void equipment_genOutfitLists( unsigned int wid )
 {
-   int x, y, w, h;
+   int i, x, y, w, h;
    int sw, sh;
    int ow, oh;
+   int (*tabfilters[])( const Outfit *o ) = {
+      equipment_outfitFilterWeapon,
+      equipment_outfitFilterUtility,
+      equipment_outfitFilterStructure,
+      equipment_outfitFilterCore,
+      NULL
+   };
+   const char *tabnames[] = {
+      "W", "U", "S", "C", "X"
+   };
+   const int numtabs = OUTFIT_TABS;
 
    /* Get dimensions. */
    equipment_getDim( wid, &w, &h, &sw, &sh, &ow, &oh,
@@ -1371,8 +1403,13 @@ static void equipment_genOutfitLists( unsigned int wid )
    x = 20;
    y = -40-sh-40;
 
+   /* Create tabbed windows. */
+   outfit_windows = window_addTabbedWindow( wid, x, y, sw, sh,
+         EQUIPMENT_OUTFIT_TAB, numtabs, tabnames, 1 );
+
    /* Add the tabs. */
-   equipment_addOutfitListSingle( wid, x, y, sw, sh, NULL );
+   for (i=0; i<numtabs; i++)
+      equipment_addOutfitListSingle( outfit_windows[i], tabfilters[i] );
 }
 
 
@@ -1380,10 +1417,10 @@ static void equipment_genOutfitLists( unsigned int wid )
  * @brief Adds a list of player outfits widget.
  */
 static void equipment_addOutfitListSingle( unsigned int wid,
-      int x, int y, int w, int h,
       int(*filter)( const Outfit *o ) )
 {
    int i, l, p;
+   int w, h;
    char **soutfits;
    glTexture **toutfits;
    int noutfits;
@@ -1398,6 +1435,9 @@ static void equipment_addOutfitListSingle( unsigned int wid,
    if (widget_exists( wid ,EQUIPMENT_OUTFITS ))
       return;
 
+   /* Get size. */
+   window_dimWindow( wid, &w, &h );
+
    /* Allocate space. */
    noutfits = MAX(1,player_numOutfits()); /* This is the most we'll need, probably less due to filtering. */
    soutfits = malloc(sizeof(char*)*noutfits);
@@ -1407,10 +1447,10 @@ static void equipment_addOutfitListSingle( unsigned int wid,
    noutfits = player_getOutfitsFiltered( soutfits, toutfits, filter );
 
    /* Create the actual image array. */
-   window_addImageArray( wid, x, y, w, h,
+   window_addImageArray( wid, 3, 3, w-6, h-6,
          EQUIPMENT_OUTFITS, 50., 50.,
          toutfits, soutfits, noutfits,
-         equipment_updateOutfits,
+         equipment_updateOutfitSingle,
          equipment_rightClickOutfits );
 
    /* Case there are none we don't need to do more. */
@@ -1611,12 +1651,20 @@ void equipment_updateShips( unsigned int wid, char* str )
    }
 }
 #undef EQ_COMP
+void equipment_updateOutfits( unsigned int wid, char* str )
+{
+   (void) wid;
+   (void) str;
+   int i;
+   for (i=0; i<OUTFIT_TABS; i++)
+      equipment_updateOutfitSingle( outfit_windows[i], NULL );
+}
 /**
  * @brief Updates the player's ship window.
  *    @param wid Window to update.
  *    @param str Unused.
  */
-void equipment_updateOutfits( unsigned int wid, char* str )
+static void equipment_updateOutfitSingle( unsigned int wid, char* str )
 {
    (void) str;
    const char *oname;
@@ -1630,7 +1678,8 @@ void equipment_updateOutfits( unsigned int wid, char* str )
    eq_wgt.outfit = outfit_get(oname);
 
    /* Also update ships. */
-   equipment_updateShips(wid, NULL);
+   if (str != NULL)
+      equipment_updateShips(equipment_wid, NULL);
 }
 
 /**

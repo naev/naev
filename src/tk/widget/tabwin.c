@@ -87,8 +87,8 @@ unsigned int* window_addTabbedWindow( const unsigned int wid,
    /* Calculate window position and size. */
    wx = wdw->x + wgt->x;
    wy = wdw->y + wgt->y;
-   ww = wdw->w;
-   wh = wdw->h;
+   ww = wgt->w;
+   wh = wgt->h;
    if (tabpos == 0) {
       wy += TAB_HEIGHT;
       wh -= TAB_HEIGHT;
