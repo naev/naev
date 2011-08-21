@@ -1388,7 +1388,7 @@ static void equipment_genOutfitLists( unsigned int wid )
       NULL
    };
    const char *tabnames[] = {
-      "W", "U", "S", "C", "X"
+      "\eb W ", "\eg U ", "\ep S ", "\ey C ", "\en X "
    };
    const int numtabs = OUTFIT_TABS;
 

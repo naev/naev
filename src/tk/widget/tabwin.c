@@ -180,7 +180,6 @@ static int tab_mouse( Widget* tab, SDL_Event *event )
    toolkit_inputTranslateCoords( parent, event, &x, &y, &rx, &ry );
 
    /* Translate to widget space. */
-   x += tab->x;
    y += tab->y;
 
    /* Since it's at the top we have to translate down. */
@@ -195,24 +194,27 @@ static int tab_mouse( Widget* tab, SDL_Event *event )
    p = 20;
    for (i=0; i<tab->dat.tab.ntabs; i++) {
       p += 10 + tab->dat.tab.namelen[i];
+
+      /* Doesn't match. */
+      if (x >= p)
+         continue;
+
       /* Mark as active. */
-      if (x < p) {
-         change = -1;
-         if (event->button.button == SDL_BUTTON_WHEELUP)
-            change = (tab->dat.tab.active - 1) % tab->dat.tab.ntabs;
-         else if (event->button.button == SDL_BUTTON_WHEELDOWN)
-            change = (tab->dat.tab.active + 1) % tab->dat.tab.ntabs;
-         else
-            tab->dat.tab.active =i;
+      change = -1;
+      if (event->button.button == SDL_BUTTON_WHEELUP)
+         change = (tab->dat.tab.active - 1) % tab->dat.tab.ntabs;
+      else if (event->button.button == SDL_BUTTON_WHEELDOWN)
+         change = (tab->dat.tab.active + 1) % tab->dat.tab.ntabs;
+      else
+         tab->dat.tab.active =i;
 
-         if ((change != -1) && (change < tab->dat.tab.ntabs))
-            tab->dat.tab.active = change;
+      if ((change != -1) && (change < tab->dat.tab.ntabs))
+         tab->dat.tab.active = change;
 
-         /* Create event. */
-         if (tab->dat.tab.onChange != NULL)
-            tab->dat.tab.onChange( tab->wdw, tab->name, tab->dat.tab.active );
-         break;
-      }
+      /* Create event. */
+      if (tab->dat.tab.onChange != NULL)
+         tab->dat.tab.onChange( tab->wdw, tab->name, tab->dat.tab.active );
+      break;
    }
 
    return 0;
