@@ -1558,6 +1558,8 @@ int toolkit_input( SDL_Event* event )
 
    /* Get window that can be focused. */
    wdw = toolkit_getActiveWindow();
+   if (wdw == NULL)
+      return 0;
 
    /* Pass event to window. */
    return toolkit_inputWindow( wdw, event, 1 );
