@@ -493,11 +493,11 @@
    <weapon x="12" y="0" h="0"/>
    <weapon x="-3" y="0" h="2"/>
    <weapon x="3" y="0" h="2"/>
-   <utility prop="systems">Previous Generation Systems</utility>
+   <utility prop="systems">Previous Generation Small Systems</utility>
    <utility/>
    <utility/>
-   <structure prop="engines">Beat Up Engine</structure>
-   <structure prop="hull">Patchwork Plating</structure>
+   <structure prop="engines">Beat Up Small Engine</structure>
+   <structure prop="hull">Patchwork Light Plating</structure>
    <structure/>
    <structure/>
    <structure/>
@@ -809,10 +809,10 @@
    <weapon x="13" y="13" h="0"/>
    <weapon x="19" y="0" h="-2"/>
    <weapon x="3" y="0" h="2"/>
-   <utility prop="systems">Previous Generation Systems</utility>
+   <utility prop="systems">Previous Generation Small Systems</utility>
    <utility/>
-   <structure prop="engines">Beat Up Engine</structure>
-   <structure prop="hull">Patchwork Plating</structure>
+   <structure prop="engines">Beat Up Small Engine</structure>
+   <structure prop="hull">Patchwork Light Plating</structure>
    <structure/>
   </slots>
   <stats>
@@ -1036,11 +1036,11 @@
    <weapon x="8" y="0" h="0"/>
    <weapon x="-2" y="9" h="-1"/>
    <weapon x="-2" y="-9" h="-1"/>
-   <utility prop="systems">Previous Generation Systems</utility>
+   <utility prop="systems">Previous Generation Small Systems</utility>
    <utility/>
    <utility/>
-   <structure prop="engines">Beat Up Engine</structure>
-   <structure prop="hull">Patchwork Plating</structure>
+   <structure prop="engines">Beat Up Small Engine</structure>
+   <structure prop="hull">Patchwork Light Plating</structure>
    <structure/>
   </slots>
   <stats>
