@@ -304,9 +304,9 @@ void equipment_open( unsigned int wid )
 
    /* Generate lists. */
    window_addText( wid, 30, -20,
-         130, 200, 0, "txtShipTitle", &gl_smallFont, &cBlack, "Available Ships" );
+         130, 200, 0, "txtShipTitle", &gl_defFont, &cBlack, "Available Ships" );
    window_addText( wid, 30, -40-sh-20,
-         130, 200, 0, "txtOutfitTitle", &gl_smallFont, &cBlack, "Available Outfits" );
+         130, 200, 0, "txtOutfitTitle", &gl_defFont, &cBlack, "Available Outfits" );
    equipment_genLists( wid );
 
    /* Separator. */
@@ -1401,7 +1401,7 @@ static void equipment_genOutfitLists( unsigned int wid )
 
    /* Calculate position. */
    x = 20;
-   y = -40-sh-40;
+   y = 20;
 
    /* Create tabbed windows. */
    outfit_windows = window_addTabbedWindow( wid, x, y, sw, sh,
