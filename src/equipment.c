@@ -36,6 +36,15 @@
 #include "tk/toolkit_priv.h" /* Yes, I'm a bad person, abstractions be damned! */
 
 
+/*
+ * Image array names.
+ */
+#define  EQUIPMENT_SHIPS      "iarAvailShips"
+#define  EQUIPMENT_OUTFIT_TAB "tabOutfits"
+#define  EQUIPMENT_OUTFITS    "iarAvailOutfits"
+#define  OUTFIT_TABS          5
+
+
 /* global/main window */
 #define BUTTON_WIDTH    200 /**< Default button width. */
 #define BUTTON_HEIGHT   40 /**< Default button height. */
@@ -53,15 +62,23 @@ static CstSlotWidget eq_wgt; /**< Equipment widget. */
 static double equipment_dir      = 0.; /**< Equipment dir. */
 static unsigned int equipment_lastick = 0; /**< Last tick. */
 static gl_vbo *equipment_vbo     = NULL; /**< The VBO. */
+static unsigned int equipment_wid   = 0; /**< Global wid. */
+static unsigned int *outfit_windows = NULL; /**< Outfit windows. */
 
 
 /*
  * prototypes
  */
+/* Creation. */
 static void equipment_getDim( unsigned int wid, int *w, int *h,
       int *sw, int *sh, int *ow, int *oh,
       int *ew, int *eh,
       int *cw, int *ch, int *bw, int *bh );
+static void equipment_genShipList( unsigned int wid );
+static void equipment_genOutfitLists( unsigned int wid );
+static void equipment_addOutfitListSingle( unsigned int wid,
+      int(*filter)( const Outfit *o ) );
+static void equipment_updateOutfitSingle( unsigned int wid, char* str );
 /* Widget. */
 static void equipment_genLists( unsigned int wid );
 static void equipment_renderColumn( double x, double y, double w, double h,
@@ -212,6 +229,9 @@ void equipment_open( unsigned int wid )
    int x, y;
    GLfloat colour[4*4];
    const char *buf;
+
+   /* Set global WID. */
+   equipment_wid = wid;
 
    /* Create the vbo if necessary. */
    if (equipment_vbo == NULL) {
@@ -1100,22 +1120,26 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
  */
 void equipment_regenLists( unsigned int wid, int outfits, int ships )
 {
-   int ret;
-   int nout, nship;
-   double offout, offship;
+   int i, ret;
+   int nout[OUTFIT_TABS], nship;
+   double offout[OUTFIT_TABS], offship;
    char *s, selship[PATH_MAX];
+   unsigned int wtmp;
 
    /* Default.s */
-   nout     = 0;
+   memset( nout, 0, sizeof(nout) );
+   memset( offout, 0, sizeof(offout) );
    nship    = 0;
-   offout   = 0.;
    offship  = 0.;
 
    /* Save positions. */
    if (outfits) {
-      nout    = toolkit_getImageArrayPos( wid, EQUIPMENT_OUTFITS );
-      offout  = toolkit_getImageArrayOffset( wid, EQUIPMENT_OUTFITS );
-      window_destroyWidget( wid, EQUIPMENT_OUTFITS );
+      for (i=0; i<OUTFIT_TABS; i++) {
+         wtmp      = outfit_windows[i];
+         nout[i]   = toolkit_getImageArrayPos( wtmp, EQUIPMENT_OUTFITS );
+         offout[i] = toolkit_getImageArrayOffset( wtmp, EQUIPMENT_OUTFITS );
+         window_destroyWidget( wtmp, EQUIPMENT_OUTFITS );
+      }
    }
    if (ships) {
       nship   = toolkit_getImageArrayPos( wid, EQUIPMENT_SHIPS );
@@ -1131,8 +1155,11 @@ void equipment_regenLists( unsigned int wid, int outfits, int ships )
 
    /* Restore positions. */
    if (outfits) {
-      toolkit_setImageArrayPos( wid, EQUIPMENT_OUTFITS, nout );
-      toolkit_setImageArrayOffset( wid, EQUIPMENT_OUTFITS, offout );
+      for (i=0; i<OUTFIT_TABS; i++) {
+         wtmp      = outfit_windows[i];
+         toolkit_setImageArrayPos( wtmp, EQUIPMENT_OUTFITS, nout[i] );
+         toolkit_setImageArrayOffset( wtmp, EQUIPMENT_OUTFITS, offout[i] );
+      }
    }
    if (ships) {
       toolkit_setImageArrayPos( wid, EQUIPMENT_SHIPS, nship );
@@ -1264,23 +1291,33 @@ int equipment_shipStats( char *buf, int max_len,  const Pilot *s, int dpseps )
  */
 static void equipment_genLists( unsigned int wid )
 {
-   int i, l, p;
+   /* Ship list. */
+   equipment_genShipList( wid );
+
+   /* Outfit list. */
+   equipment_genOutfitLists( wid );
+
+   /* Update window. */
+   equipment_updateOutfits(wid, NULL);
+   equipment_updateShips(wid, NULL);
+}
+
+
+/**
+ * @brief Generates the ship list.
+ *    @param wid Window to generate list on.
+ */
+static void equipment_genShipList( unsigned int wid )
+{
+   int i, l;
    char **sships;
    glTexture **tships;
    int nships;
-   char **soutfits;
-   glTexture **toutfits;
-   int noutfits;
    int w, h;
    int sw, sh;
    int ow, oh;
    char **alt;
-   char **quantity;
-   Outfit *o;
    Pilot *s;
-   glColour *bg, *c, blend;
-   char **slottype;
-   const char *typename;
 
    /* Get dimensions. */
    equipment_getDim( wid, &w, &h, &sw, &sh, &ow, &oh,
@@ -1318,79 +1355,166 @@ static void equipment_genLists( unsigned int wid )
       }
       toolkit_setImageArrayAlt( wid, EQUIPMENT_SHIPS, alt );
    }
+}
 
-   /* Outfit list. */
+
+static int equipment_outfitFilterWeapon( const Outfit *o )
+{ return (o->slot.type == OUTFIT_SLOT_WEAPON); }
+
+static int equipment_outfitFilterUtility( const Outfit *o )
+{ return (o->slot.type == OUTFIT_SLOT_UTILITY); }
+
+static int equipment_outfitFilterStructure( const Outfit *o )
+{ return (o->slot.type == OUTFIT_SLOT_STRUCTURE); }
+
+static int equipment_outfitFilterCore( const Outfit *o )
+{ return sp_required( o->slot.spid ); }
+
+
+/**
+ * @brief Generates the outfit lists.
+ *    @param wid Window to generate lists on.
+ */
+static void equipment_genOutfitLists( unsigned int wid )
+{
+   int i, x, y, w, h;
+   int sw, sh;
+   int ow, oh;
+   int (*tabfilters[])( const Outfit *o ) = {
+      equipment_outfitFilterWeapon,
+      equipment_outfitFilterUtility,
+      equipment_outfitFilterStructure,
+      equipment_outfitFilterCore,
+      NULL
+   };
+   const char *tabnames[] = {
+      "\eb W ", "\eg U ", "\ep S ", "\ey C ", "\en X "
+   };
+   const int numtabs = OUTFIT_TABS;
+
+   /* Get dimensions. */
+   equipment_getDim( wid, &w, &h, &sw, &sh, &ow, &oh,
+         NULL, NULL, NULL, NULL, NULL, NULL );
+
+   /* Deselect. */
    eq_wgt.outfit = NULL;
-   noutfits = MAX(1,player_numOutfits());
+
+   /* Calculate position. */
+   x = 20;
+   y = -40-sh-40;
+
+   /* Create tabbed windows. */
+   outfit_windows = window_addTabbedWindow( wid, x, y, sw, sh,
+         EQUIPMENT_OUTFIT_TAB, numtabs, tabnames, 1 );
+
+   /* Add the tabs. */
+   for (i=0; i<numtabs; i++)
+      equipment_addOutfitListSingle( outfit_windows[i], tabfilters[i] );
+}
+
+
+/**
+ * @brief Adds a list of player outfits widget.
+ */
+static void equipment_addOutfitListSingle( unsigned int wid,
+      int(*filter)( const Outfit *o ) )
+{
+   int i, l, p;
+   int w, h;
+   char **soutfits;
+   glTexture **toutfits;
+   int noutfits;
+   char **alt;
+   char **quantity;
+   Outfit *o;
+   glColour *bg, *c, blend;
+   char **slottype;
+   const char *typename;
+
+   /* Widget must not already exist. */
+   if (widget_exists( wid ,EQUIPMENT_OUTFITS ))
+      return;
+
+   /* Get size. */
+   window_dimWindow( wid, &w, &h );
+
+   /* Allocate space. */
+   noutfits = MAX(1,player_numOutfits()); /* This is the most we'll need, probably less due to filtering. */
    soutfits = malloc(sizeof(char*)*noutfits);
    toutfits = malloc(sizeof(glTexture*)*noutfits);
-   bg       = malloc(sizeof(glColour)*noutfits);
-   player_getOutfits( soutfits, toutfits );
-   if (!widget_exists( wid ,EQUIPMENT_OUTFITS )) {
-      window_addImageArray( wid, 20, -40 - sh - 40,
-            sw, sh, EQUIPMENT_OUTFITS, 50., 50.,
-            toutfits, soutfits, noutfits, equipment_updateOutfits, equipment_rightClickOutfits );
 
-      /* Set alt text. */
-      if (strcmp(soutfits[0],"None")!=0) {
-         alt      = malloc( sizeof(char*) * noutfits );
-         quantity = malloc( sizeof(char*) * noutfits );
-         slottype = malloc( sizeof(char*) * noutfits );
-         for (i=0; i<noutfits; i++) {
-            o      = outfit_get( soutfits[i] );
+   /* Get the outfits. */
+   noutfits = player_getOutfitsFiltered( soutfits, toutfits, filter );
 
-            /* Background colour. */
-            c = outfit_slotSizeColour( &o->slot );
-            if (c == NULL)
-               c = &cBlack;
-            col_blend( &blend, *c, cGrey70, 0.4 );
-            memcpy( &bg[i], &blend, sizeof(glColour) );
+   /* Create the actual image array. */
+   window_addImageArray( wid, 3, 3, w-6, h-6,
+         EQUIPMENT_OUTFITS, 50., 50.,
+         toutfits, soutfits, noutfits,
+         equipment_updateOutfitSingle,
+         equipment_rightClickOutfits );
 
-            /* Short description. */
-            if (o->desc_short == NULL)
-               alt[i] = NULL;
-            else {
-               l = strlen(o->desc_short) + 128;
-               alt[i] = malloc( l );
-               p  = snprintf( &alt[i][0], l, "%s\n", o->name );
-               if ((o->slot.spid!=0) && (p < l))
-                  p += snprintf( &alt[i][p], l-p, "\eSSlot %s\e0\n",
-                        sp_display( o->slot.spid ) );
-               if (p < l)
-                  p += snprintf( &alt[i][p], l-p, "\n%s", o->desc_short );
-               if ((o->mass > 0.) && (p < l))
-                  p += snprintf( &alt[i][p], l-p,
-                        "\n%.0f Tons",
-                        o->mass );
-            }
+   /* Case there are none we don't need to do more. */
+   if (strcmp(soutfits[0],"None")==0)
+      return;
 
-            /* Quantity. */
-            p = player_outfitOwned(o);
-            l = p / 10 + 4;
-            quantity[i] = malloc( l );
-            snprintf( quantity[i], l, "%d", p );
+   /* Set alt text. */
+   alt      = malloc( sizeof(char*) * noutfits );
+   quantity = malloc( sizeof(char*) * noutfits );
+   slottype = malloc( sizeof(char*) * noutfits );
+   bg       = malloc( sizeof(glColour) * noutfits );
 
-            /* Slot type. */
-            if ((strcmp(outfit_slotName(o),"NA") != 0) &&
-                  (strcmp(outfit_slotName(o),"NULL") != 0)) {
-               typename       = outfit_slotName(o);
-               slottype[i]    = malloc( sizeof(char)*2 );
-               slottype[i][0] = typename[0];
-               slottype[i][1] = '\0';
-            }
-            else
-               slottype[i] = NULL;
-         }
-         toolkit_setImageArrayAlt( wid, EQUIPMENT_OUTFITS, alt );
-         toolkit_setImageArrayQuantity( wid, EQUIPMENT_OUTFITS, quantity );
-         toolkit_setImageArraySlotType( wid, EQUIPMENT_OUTFITS, slottype );
-         toolkit_setImageArrayBackground( wid, EQUIPMENT_OUTFITS, bg );
+   /* Process all the outfits. */
+   for (i=0; i<noutfits; i++) {
+      o      = outfit_get( soutfits[i] );
+
+      /* Background colour. */
+      c = outfit_slotSizeColour( &o->slot );
+      if (c == NULL)
+         c = &cBlack;
+      col_blend( &blend, *c, cGrey70, 0.4 );
+      memcpy( &bg[i], &blend, sizeof(glColour) );
+
+      /* Short description. */
+      if (o->desc_short == NULL)
+         alt[i] = NULL;
+      else {
+         l = strlen(o->desc_short) + 128;
+         alt[i] = malloc( l );
+         p  = snprintf( &alt[i][0], l, "%s\n", o->name );
+         if ((o->slot.spid!=0) && (p < l))
+            p += snprintf( &alt[i][p], l-p, "\eSSlot %s\e0\n",
+                  sp_display( o->slot.spid ) );
+         if (p < l)
+            p += snprintf( &alt[i][p], l-p, "\n%s", o->desc_short );
+         if ((o->mass > 0.) && (p < l))
+            p += snprintf( &alt[i][p], l-p,
+                  "\n%.0f Tons",
+                  o->mass );
       }
+
+      /* Quantity. */
+      p = player_outfitOwned(o);
+      l = p / 10 + 4;
+      quantity[i] = malloc( l );
+      snprintf( quantity[i], l, "%d", p );
+
+      /* Slot type. */
+      if ((strcmp(outfit_slotName(o),"NA") != 0) &&
+            (strcmp(outfit_slotName(o),"NULL") != 0)) {
+         typename       = outfit_slotName(o);
+         slottype[i]    = malloc( sizeof(char)*2 );
+         slottype[i][0] = typename[0];
+         slottype[i][1] = '\0';
+      }
+      else
+         slottype[i] = NULL;
    }
 
-   /* Update window. */
-   equipment_updateOutfits(wid, NULL);
-   equipment_updateShips(wid, NULL);
+   /* Set misc stuff. */
+   toolkit_setImageArrayAlt( wid,         EQUIPMENT_OUTFITS, alt );
+   toolkit_setImageArrayQuantity( wid,    EQUIPMENT_OUTFITS, quantity );
+   toolkit_setImageArraySlotType( wid,    EQUIPMENT_OUTFITS, slottype );
+   toolkit_setImageArrayBackground( wid,  EQUIPMENT_OUTFITS, bg );
 }
 
 
@@ -1527,12 +1651,20 @@ void equipment_updateShips( unsigned int wid, char* str )
    }
 }
 #undef EQ_COMP
+void equipment_updateOutfits( unsigned int wid, char* str )
+{
+   (void) wid;
+   (void) str;
+   int i;
+   for (i=0; i<OUTFIT_TABS; i++)
+      equipment_updateOutfitSingle( outfit_windows[i], NULL );
+}
 /**
  * @brief Updates the player's ship window.
  *    @param wid Window to update.
  *    @param str Unused.
  */
-void equipment_updateOutfits( unsigned int wid, char* str )
+static void equipment_updateOutfitSingle( unsigned int wid, char* str )
 {
    (void) str;
    const char *oname;
@@ -1546,7 +1678,8 @@ void equipment_updateOutfits( unsigned int wid, char* str )
    eq_wgt.outfit = outfit_get(oname);
 
    /* Also update ships. */
-   equipment_updateShips(wid, NULL);
+   if (str != NULL)
+      equipment_updateShips(equipment_wid, NULL);
 }
 
 /**

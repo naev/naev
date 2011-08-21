@@ -13,13 +13,6 @@
 
 
 /*
- * Image array names.
- */
-#define  EQUIPMENT_SHIPS      "iarAvailShips"
-#define  EQUIPMENT_OUTFITS    "iarAvailOutfits"
-
-
-/*
  * Main.
  */
 void equipment_open( unsigned int wid );
