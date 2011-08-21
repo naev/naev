@@ -126,7 +126,7 @@ unsigned int* window_addTabbedWindow( const unsigned int wid,
 
 
 /**
- * @brief Handles input for an button widget.
+ * @brief Handles input for an tabbed window widget.
  *
  *    @param tab Tabbed Window widget to handle event.
  *    @param key Key being handled.
