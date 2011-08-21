@@ -207,7 +207,6 @@
    <ew_hide>0</ew_hide>
   </stats>
  </ship>
- <!-- Cargo Haulers -->
  <ship name="Koala">
   <base_type>Koala</base_type>
   <GFX>koala</GFX>
@@ -293,150 +292,6 @@
    <ew_detect>0</ew_detect>
    <ew_hide>0</ew_hide>
    <jump_delay>-25</jump_delay>
-  </stats>
- </ship>
- <ship name="Rhino">
-  <base_type>Rhino</base_type>
-  <GFX sx="10" sy="10">rhino</GFX>
-  <GUI>slim</GUI>
-  <sound>engine</sound>
-  <class>Armoured Transport</class>
-  <price>1100000</price>
-  <fabricator>Melendez Corp.</fabricator>
-  <license>Large Civilian Vessel License</license>
-  <description>A particularly durable Melendez design, the Rhino is well-suited to transporting high-value, high-risk freight. While it has much lower cargo density than dedicated freighters, it protects itself extremely effectively. Its modular bays allow it to function as a personnel transport, a fact not lost on modern militaries.</description>
-  <movement>
-   <thrust>110</thrust>
-   <turn>70</turn>
-   <speed>140</speed>
-  </movement>
-  <health>
-   <absorb>38</absorb>
-   <shield>250</shield>
-   <armour>1000</armour>
-   <energy>970</energy>
-   <shield_regen>5</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>43.3</energy_regen>
-  </health>
-  <characteristics>
-   <cpu>58</cpu>
-   <crew>11</crew>
-   <mass>950</mass>
-   <fuel>500</fuel>
-   <cargo>160</cargo>
-  </characteristics>
-  <slots>
-   <weapon x="25" y="-3" h="4" size="heavy"></weapon>
-   <weapon x="25" y="3" h="4" size="heavy"></weapon>
-   <weapon x="-15" y="-3" h="4"/>
-   <weapon x="-15" y="3" h="4"/>
-   <utility/>
-   <utility/>
-   <utility/>
-   <structure/>
-   <structure/>
-   <structure/>
-   <structure/>
-  </slots>
-  <stats>
-   <cargo_inertia>10</cargo_inertia>
-  </stats>
- </ship>
- <ship name="Pirate Rhino">
-  <base_type>Rhino</base_type>
-  <GFX sx="10" sy="10">rhino_pirate</GFX>
-  <GUI>slim</GUI>
-  <sound>engine</sound>
-  <class>Armoured Transport</class>
-  <price>1100000</price>
-  <fabricator>Skull and Bones</fabricator>
-  <description>The traditional Skull and Bones refit has left the Rhino substantially more manoeuvrable, though somewhat less armoured. Exploiting its large cargo bay and durability, the Rhino has become an excellent scavenger ship.</description>
-  <movement>
-   <thrust>115</thrust>
-   <turn>75</turn>
-   <speed>150</speed>
-  </movement>
-  <health>
-   <absorb>40</absorb>
-   <shield>270</shield>
-   <armour>1200</armour>
-   <energy>970</energy>
-   <shield_regen>5</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>43.3</energy_regen>
-  </health>
-  <characteristics>
-   <cpu>58</cpu>
-   <crew>10</crew>
-   <mass>920</mass>
-   <fuel>500</fuel>
-   <cargo>160</cargo>
-  </characteristics>
-  <slots>
-   <weapon x="25" y="-3" h="4" size="heavy"></weapon>
-   <weapon x="25" y="3" h="4" size="heavy"></weapon>
-   <weapon x="-15" y="-3" h="4"/>
-   <weapon x="-15" y="3" h="4"/>
-   <utility/>
-   <utility/>
-   <utility/>
-   <structure/>
-   <structure/>
-   <structure/>
-   <structure/>
-  </slots>
-  <stats>
-   <cargo_inertia>10</cargo_inertia>
-  </stats>
- </ship>
- <ship name="Mule">
-  <base_type>Mule</base_type>
-  <GFX sx="10" sy="10">mule</GFX>
-  <GUI>slim</GUI>
-  <sound>engine</sound>
-  <class>Freighter</class>
-  <price>900000</price>
-  <fabricator>Melendez Corp.</fabricator>
-  <license>Large Civilian Vessel License</license>
-  <description>A heavy freighter specialized in transporting cargo throughout the galaxy. Also has sufficient accommodations for passengers depending on the model, allowing for enjoyable cruises. The Mule was a favorite target of pirates until they added defensive capabilities to the new models which have proved highly effective against ill-prepared pirates.</description>
-  <movement>
-   <thrust>100</thrust>
-   <turn>60</turn>
-   <speed>100</speed>
-  </movement>
-  <health>
-   <absorb>50</absorb>
-   <shield>190</shield>
-   <armour>750</armour>
-   <energy>600</energy>
-   <shield_regen>4</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>26.7</energy_regen>
-  </health>
-  <characteristics>
-   <cpu>43</cpu>
-   <crew>13</crew>
-   <mass>1250</mass>
-   <fuel>500</fuel>
-   <cargo>350</cargo>
-  </characteristics>
-  <slots>
-   <weapon x="25" y="0" h="0" size="heavy"></weapon>
-   <weapon x="-15" y="0" h="4"/>
-   <weapon x="15" y="0" h="4"/>
-   <utility/>
-   <utility/>
-   <utility/>
-   <structure/>
-   <structure/>
-   <structure/>
-   <structure/>
-   <structure/>
-   <structure/>
-  </slots>
-  <stats>
-   <cargo_inertia>-20</cargo_inertia>
   </stats>
  </ship>
  <!-- Fighters -->
@@ -1301,7 +1156,7 @@
    <fwd_damage>4</fwd_damage>
   </stats>
  </ship>
-<ship name="Pirate Phalanx">
+ <ship name="Pirate Phalanx">
   <base_type>Phalanx</base_type>
   <GFX sx="10" sy="10">phalanx_pirate</GFX>
   <GUI>slim</GUI>
@@ -1890,6 +1745,153 @@
    <tur_energy>-5</tur_energy>
   </stats>
  </ship>
+
+ <!-- Cargo haulers -->
+ <ship name="Rhino">
+  <base_type>Rhino</base_type>
+  <GFX sx="10" sy="10">rhino</GFX>
+  <GUI>slim</GUI>
+  <sound>engine</sound>
+  <class>Armoured Transport</class>
+  <price>1100000</price>
+  <fabricator>Melendez Corp.</fabricator>
+  <license>Large Civilian Vessel License</license>
+  <description>A particularly durable Melendez design, the Rhino is well-suited to transporting high-value, high-risk freight. While it has much lower cargo density than dedicated freighters, it protects itself extremely effectively. Its modular bays allow it to function as a personnel transport, a fact not lost on modern militaries.</description>
+  <movement>
+   <thrust>110</thrust>
+   <turn>70</turn>
+   <speed>140</speed>
+  </movement>
+  <health>
+   <absorb>38</absorb>
+   <shield>250</shield>
+   <armour>1000</armour>
+   <energy>970</energy>
+   <shield_regen>5</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>43.3</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>58</cpu>
+   <crew>11</crew>
+   <mass>950</mass>
+   <fuel>500</fuel>
+   <cargo>160</cargo>
+  </characteristics>
+  <slots>
+   <weapon x="25" y="-3" h="4" size="heavy"></weapon>
+   <weapon x="25" y="3" h="4" size="heavy"></weapon>
+   <weapon x="-15" y="-3" h="4"/>
+   <weapon x="-15" y="3" h="4"/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
+  </slots>
+  <stats>
+   <cargo_inertia>10</cargo_inertia>
+  </stats>
+ </ship>
+ <ship name="Pirate Rhino">
+  <base_type>Rhino</base_type>
+  <GFX sx="10" sy="10">rhino_pirate</GFX>
+  <GUI>slim</GUI>
+  <sound>engine</sound>
+  <class>Armoured Transport</class>
+  <price>1100000</price>
+  <fabricator>Skull and Bones</fabricator>
+  <description>The traditional Skull and Bones refit has left the Rhino substantially more manoeuvrable, though somewhat less armoured. Exploiting its large cargo bay and durability, the Rhino has become an excellent scavenger ship.</description>
+  <movement>
+   <thrust>115</thrust>
+   <turn>75</turn>
+   <speed>150</speed>
+  </movement>
+  <health>
+   <absorb>40</absorb>
+   <shield>270</shield>
+   <armour>1200</armour>
+   <energy>970</energy>
+   <shield_regen>5</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>43.3</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>58</cpu>
+   <crew>10</crew>
+   <mass>920</mass>
+   <fuel>500</fuel>
+   <cargo>160</cargo>
+  </characteristics>
+  <slots>
+   <weapon x="25" y="-3" h="4" size="heavy"></weapon>
+   <weapon x="25" y="3" h="4" size="heavy"></weapon>
+   <weapon x="-15" y="-3" h="4"/>
+   <weapon x="-15" y="3" h="4"/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
+  </slots>
+  <stats>
+   <cargo_inertia>10</cargo_inertia>
+  </stats>
+ </ship>
+ <ship name="Mule">
+  <base_type>Mule</base_type>
+  <GFX sx="10" sy="10">mule</GFX>
+  <GUI>slim</GUI>
+  <sound>engine</sound>
+  <class>Freighter</class>
+  <price>900000</price>
+  <fabricator>Melendez Corp.</fabricator>
+  <license>Large Civilian Vessel License</license>
+  <description>A heavy freighter specialized in transporting cargo throughout the galaxy. Also has sufficient accommodations for passengers depending on the model, allowing for enjoyable cruises. The Mule was a favorite target of pirates until they added defensive capabilities to the new models which have proved highly effective against ill-prepared pirates.</description>
+  <movement>
+   <thrust>100</thrust>
+   <turn>60</turn>
+   <speed>100</speed>
+  </movement>
+  <health>
+   <absorb>50</absorb>
+   <shield>190</shield>
+   <armour>750</armour>
+   <energy>600</energy>
+   <shield_regen>4</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>26.7</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>43</cpu>
+   <crew>13</crew>
+   <mass>1250</mass>
+   <fuel>500</fuel>
+   <cargo>350</cargo>
+  </characteristics>
+  <slots>
+   <weapon x="25" y="0" h="0" size="heavy"></weapon>
+   <weapon x="-15" y="0" h="4"/>
+   <weapon x="15" y="0" h="4"/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
+  </slots>
+  <stats>
+   <cargo_inertia>-20</cargo_inertia>
+  </stats>
+ </ship>
+
  <!-- Cruisers -->
  <ship name="Kestrel">
   <base_type>Kestrel</base_type>
