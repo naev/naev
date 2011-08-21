@@ -30,8 +30,9 @@ typedef struct glFont_s {
    gl_vbo *vbo_vert; /**< VBO associated to vertex coordinates. */
    glFontChar *chars; /**< Characters in the font. */
 } glFont;
-extern glFont gl_defFont; /**< default font */
-extern glFont gl_smallFont; /**< small font */
+extern glFont gl_defFont; /**< Default font. */
+extern glFont gl_smallFont; /**< Small font. */
+extern glFont gl_defFontMono; /**< Default mono font. */
 
 
 /**

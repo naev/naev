@@ -182,18 +182,21 @@ static void equipment_getDim( unsigned int wid, int *w, int *h,
       int *ew, int *eh,
       int *cw, int *ch, int *bw, int *bh )
 {
+   int ssw, ssh;
    /* Get window dimensions. */
    window_dimWindow( wid, w, h );
 
    /* Calculate image array dimensions. */
+   ssw = 200 + (*w-800);
+   ssh = (*h - 100);
    if (sw != NULL)
-      *sw = 200 + (*w-800);
+      *sw = ssw;
    if (sh != NULL)
-      *sh = (*h - 100)/2;
+      *sh = (1*ssh)/3;
    if (ow != NULL)
-      *ow = (sw!=NULL) ? *sw : 0;
+      *ow = ssw;
    if (oh != NULL)
-      *oh = (sh!=NULL) ? *sh : 0;
+      *oh = (2*ssh)/3;
 
    /* Calculate slot widget. */
    if (ew != NULL)
@@ -304,9 +307,9 @@ void equipment_open( unsigned int wid )
 
    /* Generate lists. */
    window_addText( wid, 30, -20,
-         130, 200, 0, "txtShipTitle", &gl_smallFont, &cBlack, "Available Ships" );
+         130, 200, 0, "txtShipTitle", &gl_defFont, &cBlack, "Available Ships" );
    window_addText( wid, 30, -40-sh-20,
-         130, 200, 0, "txtOutfitTitle", &gl_smallFont, &cBlack, "Available Outfits" );
+         130, 200, 0, "txtOutfitTitle", &gl_defFont, &cBlack, "Available Outfits" );
    equipment_genLists( wid );
 
    /* Separator. */
@@ -1315,12 +1318,11 @@ static void equipment_genShipList( unsigned int wid )
    int nships;
    int w, h;
    int sw, sh;
-   int ow, oh;
    char **alt;
    Pilot *s;
 
    /* Get dimensions. */
-   equipment_getDim( wid, &w, &h, &sw, &sh, &ow, &oh,
+   equipment_getDim( wid, &w, &h, &sw, &sh, NULL, NULL,
          NULL, NULL, NULL, NULL, NULL, NULL );
 
    /* Ship list. */
@@ -1378,7 +1380,6 @@ static int equipment_outfitFilterCore( const Outfit *o )
 static void equipment_genOutfitLists( unsigned int wid )
 {
    int i, x, y, w, h;
-   int sw, sh;
    int ow, oh;
    int (*tabfilters[])( const Outfit *o ) = {
       equipment_outfitFilterWeapon,
@@ -1393,7 +1394,7 @@ static void equipment_genOutfitLists( unsigned int wid )
    const int numtabs = OUTFIT_TABS;
 
    /* Get dimensions. */
-   equipment_getDim( wid, &w, &h, &sw, &sh, &ow, &oh,
+   equipment_getDim( wid, &w, &h, NULL, NULL, &ow, &oh,
          NULL, NULL, NULL, NULL, NULL, NULL );
 
    /* Deselect. */
@@ -1401,11 +1402,12 @@ static void equipment_genOutfitLists( unsigned int wid )
 
    /* Calculate position. */
    x = 20;
-   y = -40-sh-40;
+   y = 20;
 
    /* Create tabbed windows. */
-   outfit_windows = window_addTabbedWindow( wid, x, y, sw, sh,
+   outfit_windows = window_addTabbedWindow( wid, x, y, ow, oh,
          EQUIPMENT_OUTFIT_TAB, numtabs, tabnames, 1 );
+   window_tabSetFont( wid, EQUIPMENT_OUTFIT_TAB, &gl_defFontMono );
 
    /* Add the tabs. */
    for (i=0; i<numtabs; i++)

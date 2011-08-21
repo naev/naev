@@ -81,10 +81,10 @@ unsigned int* window_addTabbedWindow( const unsigned int wid,
    wgt->dat.tab.font       = &gl_defFont;
 
    /* position/size */
-   wgt->w = (double) (w<0) ? wdw->w : w;
-   wgt->h = (double) (h<0) ? wdw->h : h;
    wgt->x = (double) (x<0) ? 0 : x;
    wgt->y = (double) (y<0) ? 0 : y;
+   wgt->w = (double) (w<0) ? wdw->w : w;
+   wgt->h = (double) (h<0) ? wdw->h : h;
 
    /* Calculate window position and size. */
    wx = wdw->x + wgt->x;
@@ -180,7 +180,8 @@ static int tab_mouse( Widget* tab, SDL_Event *event )
    toolkit_inputTranslateCoords( parent, event, &x, &y, &rx, &ry );
 
    /* Translate to widget space. */
-   y += tab->y;
+   x -= tab->x;
+   y -= tab->y;
 
    /* Since it's at the top we have to translate down. */
    if (tab->dat.tab.tabpos == 1)
@@ -318,8 +319,8 @@ static void tab_render( Widget* tab, double bx, double by )
    window_render( wdw );
 
    /* Render tabs ontop. */
-   x = bx+20;
-   y = by;
+   x = bx+tab->x+20;
+   y = by+tab->y;
    if (tab->dat.tab.tabpos == 1)
       y += tab->h-TAB_HEIGHT;
    for (i=0; i<tab->dat.tab.ntabs; i++) {
