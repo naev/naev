@@ -1672,7 +1672,6 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
 
    /* Check if in range. */
    if (shape == RADAR_RECT) {
-      x = y = 0;
       /* Out of range. */
       if ((ABS(cx) - r > w/2.) || (ABS(cy) - r  > h/2.)) {
          if ((player.p->nav_hyperspace == ind) && !overlay)
