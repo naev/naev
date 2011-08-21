@@ -2978,7 +2978,7 @@
    <shield>300</shield>
    <shield_regen>7</shield_regen>
    <energy>900</energy>
-   <energy_regen>35</energy_regen>
+   <energy_regen>50</energy_regen>
    <ew_hide>0</ew_hide>
   </specific>
  </outfit>
@@ -2997,7 +2997,7 @@
    <shield>400</shield>
    <shield_regen>8</shield_regen>
    <energy>1000</energy>
-   <energy_regen>38</energy_regen>
+   <energy_regen>55</energy_regen>
    <ew_hide>0</ew_hide>
   </specific>
  </outfit>
@@ -3016,7 +3016,7 @@
    <shield>420</shield>
    <shield_regen>8</shield_regen>
    <energy>1000</energy>
-   <energy_regen>40</energy_regen>
+   <energy_regen>60</energy_regen>
    <ew_hide>0</ew_hide>
   </specific>
  </outfit>
@@ -3035,7 +3035,7 @@
    <shield>270</shield>
    <shield_regen>7</shield_regen>
    <energy>850</energy>
-   <energy_regen>36</energy_regen>
+   <energy_regen>57</energy_regen>
    <ew_hide>0</ew_hide>
   </specific>
  </outfit>
@@ -3054,7 +3054,7 @@
    <shield>500</shield>
    <shield_regen>9</shield_regen>
    <energy>1100</energy>
-   <energy_regen>42</energy_regen>
+   <energy_regen>63</energy_regen>
    <ew_hide>0</ew_hide>
   </specific>
  </outfit>
@@ -3073,7 +3073,7 @@
    <shield>390</shield>
    <shield_regen>7</shield_regen>
    <energy>1300</energy>
-   <energy_regen>47</energy_regen>
+   <energy_regen>70</energy_regen>
    <ew_hide>0</ew_hide>
   </specific>
  </outfit>
@@ -3092,7 +3092,7 @@
    <shield>480</shield>
    <shield_regen>9</shield_regen>
    <energy>1300</energy>
-   <energy_regen>45</energy_regen>
+   <energy_regen>68</energy_regen>
    <ew_hide>0</ew_hide>
   </specific>
  </outfit>
@@ -3111,7 +3111,7 @@
    <shield>510</shield>
    <shield_regen>9</shield_regen>
    <energy>1400</energy>
-   <energy_regen>48</energy_regen>
+   <energy_regen>72</energy_regen>
    <ew_hide>0</ew_hide>
   </specific>
  </outfit>
@@ -3130,7 +3130,7 @@
    <shield>480</shield>
    <shield_regen>8</shield_regen>
    <energy>1200</energy>
-   <energy_regen>44</energy_regen>
+   <energy_regen>66</energy_regen>
    <ew_hide>0</ew_hide>
   </specific>
  </outfit>
@@ -3149,7 +3149,7 @@
    <shield>560</shield>
    <shield_regen>10</shield_regen>
    <energy>1200</energy>
-   <energy_regen>44</energy_regen>
+   <energy_regen>66</energy_regen>
    <ew_hide>0</ew_hide>
   </specific>
  </outfit>
@@ -3168,7 +3168,7 @@
    <shield>480</shield>
    <shield_regen>9</shield_regen>
    <energy>1600</energy>
-   <energy_regen>53</energy_regen>
+   <energy_regen>80</energy_regen>
    <ew_hide>0</ew_hide>
   </specific>
  </outfit>
@@ -3187,7 +3187,7 @@
    <shield>550</shield>
    <shield_regen>10</shield_regen>
    <energy>1600</energy>
-   <energy_regen>53</energy_regen>
+   <energy_regen>80</energy_regen>
    <ew_hide>0</ew_hide>
   </specific>
  </outfit>
@@ -3206,13 +3206,13 @@
    <shield>600</shield>
    <shield_regen>10</shield_regen>
    <energy>1800</energy>
-   <energy_regen>55</energy_regen>
+   <energy_regen>83</energy_regen>
    <ew_hide>0</ew_hide>
   </specific>
  </outfit>
 
  <!-- Small slot engines. -->
- <outfit name="Beat Up Engine">
+ <outfit name="Beat Up Small Engine">
   <general>
    <typename>Core Systems</typename>
    <slot prop="engines">structure</slot>
@@ -3480,7 +3480,7 @@
  </outfit>
 
  <!-- Small slot hull mods. -->
- <outfit name="Patchwork Plating">
+ <outfit name="Patchwork Light Plating">
   <general>
    <typename>Core Systems</typename>
    <slot prop="hull">structure</slot>
