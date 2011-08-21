@@ -103,6 +103,8 @@ static void omsg_setMsg( omsg_t *omsg, const char *msg )
 
    /* Create data. */
    l  = strlen( msg );
+   if (l==0)
+      return;
    font = omsg_getFont( omsg->font );
    /* First pass size. */
    n  = 0;

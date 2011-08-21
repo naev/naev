@@ -65,6 +65,7 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
       return 0;
 
    /* If inrange is set we only fire at targets in range. */
+   dist2 = 0.;
    if (ws->inrange) {
       if (p->target == p->id)
          dist2 = INFINITY; /* With no target we just set distance to infinity. */
@@ -130,7 +131,7 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
 
       /* Only "inrange" outfits. */
       if (!outfit_isFighterBay(o) &&
-            ws->inrange && (dist2 > ws->slots[i].range2))
+            (ws->inrange && (dist2 > ws->slots[i].range2)))
          continue;
 
       /* Shoot the weapon of the weaponset. */

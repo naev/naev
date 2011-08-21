@@ -235,7 +235,6 @@ static void opt_gameplay( unsigned int wid )
 
    /* Options. */
    y  = by;
-   x += cw;
 
    /* Autonav abort. */
    x = 20 + cw + 20;
@@ -278,7 +277,6 @@ static void opt_gameplay( unsigned int wid )
    window_addText( wid, -100, y, l, 20, 1, "txtTMax",
          NULL, &cBlack, s );
    window_addInput( wid, -50, y, 40, 20, "inpTMax", 4, 1, NULL );
-   y -= 30;
 
    /* Restart text. */
    window_addText( wid, 20, 10, 3*(BUTTON_WIDTH + 20),
@@ -486,7 +484,7 @@ static void menuKeybinds_genList( unsigned int wid )
                if (mod & NMOD_ALT)
                   p += snprintf( &mod_text[p], sizeof(mod_text)-p, "alt+" );
                if (mod & NMOD_META)
-                  p += snprintf( &mod_text[p], sizeof(mod_text)-p, "meta+" );
+                  /*p +=*/ snprintf( &mod_text[p], sizeof(mod_text)-p, "meta+" );
             }
 
             /* SDL_GetKeyName returns lowercase which is ugly. */
@@ -722,7 +720,6 @@ static void opt_audio( unsigned int wid )
    y -= 30;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkEFX", "EFX (More CPU)", NULL, conf.al_efx );
-   y -= 20;
 
 
    /* Sound levels. */
@@ -749,7 +746,6 @@ static void opt_audio( unsigned int wid )
    y -= 20;
    window_addFader( wid, x, y, cw, 20, "fadMusic", 0., 1.,
          music_getVolume(), opt_setAudioLevel );
-   y -= 20;
 
    /* Restart text. */
    window_addText( wid, 20, 10, 3*(BUTTON_WIDTH + 20),
@@ -1064,10 +1060,10 @@ static void opt_video( unsigned int wid )
    }
    res   = malloc( sizeof(char*) * (i+j) );
    nres  = 0;
+   res_def  = 0;
    if (j) {
       res[0]   = malloc(16);
       snprintf( res[0], 16, "%dx%d", conf.width, conf.height );
-      res_def  = 0;
       nres     = 1;
    }
    for (i=0; modes[i]; i++) {
@@ -1097,7 +1093,6 @@ static void opt_video( unsigned int wid )
    y -= 30;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkFPS", "Show FPS", NULL, conf.fps_show );
-   y -= 40;
 
    /* OpenGL options. */
    x = 20+cw+20;
@@ -1130,7 +1125,6 @@ static void opt_video( unsigned int wid )
    y -= 30;
    window_addCheckbox( wid, x, y, cw, 20,
          "chkEngineGlow", "Engine Glow (More RAM)", NULL, conf.engineglow );
-   y -= 20;
 
    /* Restart text. */
    window_addText( wid, 20, 10, 3*(BUTTON_WIDTH + 20),

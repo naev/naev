@@ -1049,6 +1049,5 @@ void map_inputFind( unsigned int parent, char* str )
    y -= 20;
    window_addCheckbox( wid, x, y, 100, 20,
          "chkShip", "Ships", map_find_check_update, map_find_ships );
-   y -= 20;
 }
 

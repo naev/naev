@@ -756,7 +756,7 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
          pos += snprintf( &alt[pos], sizeof(alt)-pos,
                " [exclusive]" );
       if (pos < (int)sizeof(alt))
-         pos += snprintf( &alt[pos], sizeof(alt)-pos,
+         snprintf( &alt[pos], sizeof(alt)-pos,
                "\n\n%s", sp_description( slot->sslot->slot.spid ) );
       toolkit_drawAltText( bx + wgt->altx, by + wgt->alty, alt );
       return;
@@ -772,7 +772,7 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
    if (pos < (int)sizeof(alt))
       pos += snprintf( &alt[pos], sizeof(alt)-pos, "\n%s", o->desc_short );
    if ((o->mass > 0.) && (pos < (int)sizeof(alt)))
-      pos += snprintf( &alt[pos], sizeof(alt)-pos,
+      snprintf( &alt[pos], sizeof(alt)-pos,
             "\n%.0f Tons",
             o->mass );
 
@@ -1045,7 +1045,7 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
       if (ammo != NULL) {
          ammo = slot->u.ammo.outfit;
          q    = pilot_rmAmmo( eq_wgt.selected, slot, slot->u.ammo.quantity );
-         q    = player_addOutfit( ammo, q );
+         player_addOutfit( ammo, q );
       }
 
       /* Handle possible fuel changes. */
@@ -1487,7 +1487,7 @@ static void equipment_addOutfitListSingle( unsigned int wid,
          if (p < l)
             p += snprintf( &alt[i][p], l-p, "\n%s", o->desc_short );
          if ((o->mass > 0.) && (p < l))
-            p += snprintf( &alt[i][p], l-p,
+            snprintf( &alt[i][p], l-p,
                   "\n%.0f Tons",
                   o->mass );
       }

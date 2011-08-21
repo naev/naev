@@ -1051,7 +1051,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
          temp->u.blt.swivel*180./M_PI );
    }
    if ((temp->u.blt.dmg.disable > 0.) && (l<OUTFIT_SHORTDESC_MAX)) {
-      l += snprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
+      /*l +=*/ snprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
          "\n%.0f Disable",
          temp->u.blt.dmg.disable );
    }
@@ -1170,7 +1170,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
          temp->u.bem.range,
          temp->u.bem.heatup);
    if ((temp->u.blt.dmg.disable > 0.) && (l<OUTFIT_SHORTDESC_MAX)) {
-      l += snprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
+      /*l +=*/ snprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
          "\n%.0f Disable/s",
          temp->u.bem.dmg.disable );
    }
@@ -1365,7 +1365,7 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
          temp->u.amm.speed,
          temp->u.amm.duration );
    if ((temp->u.blt.dmg.disable > 0.) && (l < OUTFIT_SHORTDESC_MAX)) {
-      l += snprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
+      /*l +=*/ snprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
          "\n%.0f Disable",
          temp->u.amm.dmg.disable );
    }
@@ -1469,7 +1469,7 @@ if (((x) != 0.) && (i<OUTFIT_SHORTDESC_MAX)) \
 #undef DESC_ADD1
 #undef DESC_ADD0
 #undef DESC_ADD
-   i += ss_statsListDesc( temp->u.mod.stats,
+   /*i +=*/ ss_statsListDesc( temp->u.mod.stats,
          &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, 1 );
 
    /* More processing. */

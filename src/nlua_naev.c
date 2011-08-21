@@ -120,9 +120,9 @@ static int naev_keyGet( lua_State *L )
             p += snprintf( &buf[p], sizeof(buf)-p, "%s + ", input_modToText(mod) );
          /* Print key. */
          if (nstd_isalpha(key))
-            p += snprintf( &buf[p], sizeof(buf)-p, "%c", nstd_toupper(key) );
+            snprintf( &buf[p], sizeof(buf)-p, "%c", nstd_toupper(key) );
          else
-            p += snprintf( &buf[p], sizeof(buf)-p, "%s", SDL_GetKeyName(key) );
+            snprintf( &buf[p], sizeof(buf)-p, "%s", SDL_GetKeyName(key) );
          lua_pushstring( L, buf );
          break;
 

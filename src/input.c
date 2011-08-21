@@ -317,7 +317,7 @@ void input_init (void)
    /* Get the number of keybindings. */
    for (i=0; strcmp(keybind_info[i][0],"end"); i++);
    input_numbinds = i;
-   input_keybinds = malloc(input_numbinds*sizeof(Keybind));
+   input_keybinds = malloc( input_numbinds * sizeof(Keybind) );
 
    /* Create sane null keybinding for each. */
    for (i=0; i<input_numbinds; i++) {
