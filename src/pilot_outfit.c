@@ -742,7 +742,7 @@ char* pilot_getOutfits( Pilot* pilot )
    }
 
    if (p==0)
-      p += snprintf( &buf[p], len-p, "None" );
+      /*p +=*/ snprintf( &buf[p], len-p, "None" );
 
    return buf;
 }
