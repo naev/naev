@@ -31,6 +31,7 @@ static int tab_raw( Widget* tab, SDL_Event *event );
 static void tab_render( Widget* tab, double bx, double by );
 static void tab_renderOverlay( Widget* tab, double bx, double by );
 static void tab_cleanup( Widget* tab );
+static Widget *tab_getWgt( unsigned int wid, const char *tab );
 
 
 /**
@@ -77,6 +78,7 @@ unsigned int* window_addTabbedWindow( const unsigned int wid,
    wgt->cleanup            = tab_cleanup;
    wgt->dat.tab.ntabs      = ntabs;
    wgt->dat.tab.tabpos     = tabpos;
+   wgt->dat.tab.font       = &gl_defFont;
 
    /* position/size */
    wgt->w = (double) (w<0) ? wdw->w : w;
@@ -104,15 +106,13 @@ unsigned int* window_addTabbedWindow( const unsigned int wid,
    wgt->dat.tab.windows    = malloc( sizeof(unsigned int) * ntabs );
    wgt->dat.tab.namelen    = malloc( sizeof(int) * ntabs );
    for (i=0; i<ntabs; i++) {
-      /* Hack to get around possible reallocs. */
-      wdw = window_wget(wid);
       /* Get name and length. */
       wgt->dat.tab.tabnames[i] = strdup( tabnames[i] );
-      wgt->dat.tab.namelen[i]  = gl_printWidthRaw( &gl_defFont,
+      wgt->dat.tab.namelen[i]  = gl_printWidthRaw( wgt->dat.tab.font,
             wgt->dat.tab.tabnames[i] );
       /* Create windows. */
       wgt->dat.tab.windows[i] = window_create( tabnames[i], wx, wy, ww, wh );
-      wtmp = window_wget( wgt->dat.tab.windows[i] );
+      wtmp = window_wget( wgt->dat.tab.windows[i] ); /* Can not store this, in case something reallocs. */
       /* Set flags - parent window handles event for the children. */
       window_setFlag( wtmp, WINDOW_NOFOCUS );
       window_setFlag( wtmp, WINDOW_NORENDER );
@@ -319,10 +319,9 @@ static void tab_render( Widget* tab, double bx, double by )
 
    /* Render tabs ontop. */
    x = bx+20;
-   if (tab->dat.tab.tabpos == 0)
-      y = by+0;
-   else if (tab->dat.tab.tabpos == 1)
-      y = by+tab->h-TAB_HEIGHT;;
+   y = by;
+   if (tab->dat.tab.tabpos == 1)
+      y += tab->h-TAB_HEIGHT;
    for (i=0; i<tab->dat.tab.ntabs; i++) {
       if (i!=tab->dat.tab.active) {
          lc = toolkit_col;
@@ -397,6 +396,29 @@ static void tab_cleanup( Widget *tab )
 
 
 /**
+ * @brief Gets the widget.
+ */
+static Widget *tab_getWgt( unsigned int wid, const char *tab )
+{
+   Widget *wgt = window_getwgt( wid, tab );
+
+   /* Must be found in stack. */
+   if (wgt == NULL) {
+      WARN("Widget '%s' not found", tab);
+      return NULL;;
+   }
+
+   /* Must be an image array. */
+   if (wgt->type != WIDGET_TABBEDWINDOW) {
+      WARN("Widget '%s' is not an image array.", tab);
+      return NULL;
+   }
+
+   return wgt;
+}
+
+
+/**
  * @brief Sets the active tab.
  *
  *    @param wid Window to which tabbed window belongs.
@@ -405,19 +427,9 @@ static void tab_cleanup( Widget *tab )
  */
 int window_tabWinSetActive( const unsigned int wid, const char *tab, int active )
 {
-   Widget *wgt = window_getwgt( wid, tab );
-
-   /* Must be found in stack. */
-   if (wgt == NULL) {
-      WARN("Widget '%s' not found", tab);
+   Widget *wgt = tab_getWgt( wid, tab );
+   if (wgt == NULL)
       return -1;
-   }
-
-   /* Must be an image array. */
-   if (wgt->type != WIDGET_TABBEDWINDOW) {
-      WARN("Widget '%s' is not an image array.", tab);
-      return -1;
-   }
 
    /* Set active window. */
    wgt->dat.tab.active = active;
@@ -440,23 +452,34 @@ int window_tabWinSetActive( const unsigned int wid, const char *tab, int active 
 int window_tabWinOnChange( const unsigned int wid, const char *tab,
       void(*onChange)(unsigned int,char*,int) )
 {
-   Widget *wgt = window_getwgt( wid, tab );
-
-   /* Must be found in stack. */
-   if (wgt == NULL) {
-      WARN("Widget '%s' not found", tab);
+   Widget *wgt = tab_getWgt( wid, tab );
+   if (wgt == NULL)
       return -1;
-   }
-
-   /* Must be an image array. */
-   if (wgt->type != WIDGET_TABBEDWINDOW) {
-      WARN("Widget '%s' is not an image array.", tab);
-      return -1;
-   }
 
    /* Set on change function. */
    wgt->dat.tab.onChange = onChange;
 
    return 0;
 }
+
+
+/**
+ * @brief Changes the font used by a tabbed window widget.
+ */
+int window_tabSetFont( const unsigned int wid, const char *tab, const glFont *font )
+{
+   int i;
+   Widget *wgt = tab_getWgt( wid, tab );
+   if (wgt == NULL)
+      return -1;
+
+   wgt->dat.tab.font = font;
+   for (i=0; i<wgt->dat.tab.ntabs; i++)
+      wgt->dat.tab.namelen[i]  = gl_printWidthRaw( wgt->dat.tab.font,
+            wgt->dat.tab.tabnames[i] );
+
+   return 0;
+}
+
+
 

@@ -8,6 +8,9 @@
 #  define WGT_TABWIN_H
 
 
+#include "font.h"
+
+
 /**
  * @brief The button widget.
  */
@@ -18,6 +21,7 @@ typedef struct WidgetTabbedWindowData_ {
    int active; /**< Currently active window. */
    int tabpos; /**< Where are the tabs placed?
                     0=bottom, 1=top */
+   const glFont *font; /**< Font to use. */
 
    /* Internal usage. */
    int *namelen;
@@ -35,6 +39,7 @@ unsigned int* window_addTabbedWindow( const unsigned int wid,
 int window_tabWinSetActive( const unsigned int wid, const char *tab, int active );
 int window_tabWinOnChange( const unsigned int wid, const char *tab,
       void(*onChange)(unsigned int,char*,int) );
+int window_tabSetFont( const unsigned int wid, const char *tab, const glFont *font );
 
 
 #endif /* WGT_TABWIN_H */
