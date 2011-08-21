@@ -2335,7 +2335,7 @@ static int aiL_dir( lua_State *L )
    LuaVector *lv;
    Vector2d sv, tv; /* get the position to face */
    Pilot* p;
-   double d, mod, diff;
+   double d, diff;
    unsigned int id;
    int n;
 
@@ -2359,14 +2359,6 @@ static int aiL_dir( lua_State *L )
    else if (lua_isvector(L,1))
       lv = lua_tovector(L,1);
    else NLUA_INVALID_PARAMETER(L);
-
-   mod = 10;
-
-   /* Check if must invert. */
-   if (lua_gettop(L) > 1) {
-      if (lua_isboolean(L,2) && lua_toboolean(L,2))
-         mod *= -1;
-   }
 
    vect_cset( &sv, VX(cur_pilot->solid->pos), VY(cur_pilot->solid->pos) );
 
