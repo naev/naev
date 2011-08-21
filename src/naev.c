@@ -261,6 +261,7 @@ int main( int argc, char** argv )
    window_caption();
    gl_fontInit( NULL, NULL, FONT_SIZE ); /* initializes default font to size */
    gl_fontInit( &gl_smallFont, NULL, FONT_SIZE_SMALL ); /* small font */
+   gl_fontInit( &gl_defFontMono, "dat/mono.ttf", FONT_SIZE );
 
    /* Display the load screen. */
    loadscreen_load();
@@ -363,6 +364,7 @@ int main( int argc, char** argv )
    /* cleanup opengl fonts */
    gl_freeFont(NULL);
    gl_freeFont(&gl_smallFont);
+   gl_freeFont(&gl_defFontMono);
 
    /* Close data. */
    ndata_close();

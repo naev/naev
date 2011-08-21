@@ -35,9 +35,6 @@
 #include "menu.h"
 
 
-#define CONSOLE_FONT_SIZE  10 /**< Size of the console font. */
-
-
 #define BUTTON_WIDTH    50 /**< Button width. */
 #define BUTTON_HEIGHT   20 /**< Button height. */
 
@@ -318,8 +315,7 @@ int cli_init (void)
    lua_setglobal( cli_state, "__cli" );
 
    /* Set the font. */
-   cli_font    = malloc( sizeof(glFont) );
-   gl_fontInit( cli_font, "dat/mono.ttf", CONSOLE_FONT_SIZE );
+   cli_font    = &gl_defFontMono;
 
    /* Clear the buffer. */
    memset( cli_buffer, 0, sizeof(cli_buffer) );
@@ -341,13 +337,6 @@ void cli_exit (void)
    if (cli_state != NULL) {
       lua_close( cli_state );
       cli_state = NULL;
-   }
-
-   /* Free the font. */
-   if (cli_font != NULL) {
-      gl_freeFont( cli_font );
-      free( cli_font );
-      cli_font = NULL;
    }
 }
 

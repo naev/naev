@@ -55,6 +55,7 @@ typedef struct font_char_s {
 /* default font */
 glFont gl_defFont; /**< Default font. */
 glFont gl_smallFont; /**< Small font. */
+glFont gl_defFontMono; /**< Default mono font. */
 
 
 /* Last used colour. */

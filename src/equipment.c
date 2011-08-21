@@ -1407,6 +1407,7 @@ static void equipment_genOutfitLists( unsigned int wid )
    /* Create tabbed windows. */
    outfit_windows = window_addTabbedWindow( wid, x, y, ow, oh,
          EQUIPMENT_OUTFIT_TAB, numtabs, tabnames, 1 );
+   window_tabSetFont( wid, EQUIPMENT_OUTFIT_TAB, &gl_defFontMono );
 
    /* Add the tabs. */
    for (i=0; i<numtabs; i++)
