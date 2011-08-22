@@ -398,7 +398,7 @@ static int playerL_fuel( lua_State *L )
 {
    lua_pushnumber(L,player.p->fuel);
    lua_pushnumber(L,player.p->fuel_consumption);
-   return 1;
+   return 2;
 }
 
 
