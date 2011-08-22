@@ -852,7 +852,7 @@ void pilot_rmFriendly( Pilot* p )
  */
 int pilot_getJumps( const Pilot* p )
 {
-   return (int)(p->fuel) / HYPERSPACE_FUEL;
+   return (int)floor(p->fuel / p->fuel_consumption);
 }
 
 

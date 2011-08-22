@@ -548,12 +548,6 @@ int ai_pinit( Pilot *p, const char *ai )
    p->ai = prof;
    L = p->ai->L;
 
-   /* Set fuel.  Hack until we do it through AI itself. */
-   if (!pilot_isPlayer(p)) {
-      p->fuel  = (RNG_2SIGMA()/4. + 0.5) * (p->fuel_max - HYPERSPACE_FUEL);
-      p->fuel += HYPERSPACE_FUEL;
-   }
-
    /* Adds a new pilot memory in the memory table. */
    lua_getglobal(L, AI_MEM);     /* pm */
    lua_newtable(L);              /* pm, nt */
@@ -581,6 +575,12 @@ int ai_pinit( Pilot *p, const char *ai )
    /* Create the pilot. */
    ai_create( p, (n!=0) ? param : NULL );
    pilot_setFlag(p, PILOT_CREATED_AI);
+
+   /* Set fuel.  Hack until we do it through AI itself. */
+   if (!pilot_isPlayer(p)) {
+      p->fuel  = (RNG_2SIGMA()/4. + 0.5) * (p->fuel_max - p->fuel_consumption);
+      p->fuel += p->fuel_consumption;
+   }
 
    return 0;
 }

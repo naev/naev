@@ -318,7 +318,7 @@ int space_canHyperspace( Pilot* p )
       return 0;
 
    /* Must have fuel. */
-   if (p->fuel < HYPERSPACE_FUEL)
+   if (p->fuel < p->fuel_consumption)
       return 0;
 
    /* Must have hyperspace target. */
@@ -347,7 +347,7 @@ int space_hyperspace( Pilot* p )
 {
    if (pilot_isFlag(p, PILOT_NOJUMP))
       return -2;
-   if (p->fuel < HYPERSPACE_FUEL)
+   if (p->fuel < p->fuel_consumption)
       return -3;
    if (!space_canHyperspace(p))
       return -1;

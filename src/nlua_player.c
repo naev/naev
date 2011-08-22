@@ -389,14 +389,15 @@ static int playerL_getPilot( lua_State *L )
 /**
  * @brief Gets the amount of fuel a player has.
  *
- * @usage fuel = player.fuel()
+ * @usage fuel, consumption = player.fuel()
  *
- *    @luareturn The player's fuel.
+ *    @luareturn The player's fuel and the amount needed per jump.
  * @luafunc fuel()
  */
 static int playerL_fuel( lua_State *L )
 {
    lua_pushnumber(L,player.p->fuel);
+   lua_pushnumber(L,player.p->fuel_consumption);
    return 1;
 }
 

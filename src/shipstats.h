@@ -77,6 +77,7 @@ typedef enum ShipStatsType_ {
     * A: Absolute double type data. Should be continuous.
     */
    SS_TYPE_A_ENGINE_LIMIT,    /**< Engine's mass limit. */
+   SS_TYPE_A_FUEL_CONSUMPTION, /**< Fuel consumption of the engine. */
 
    /*
     * I: Integer type data. Should be continuous.
@@ -187,6 +188,7 @@ typedef struct ShipStats_ {
 
    /* Engine limits. */
    double engine_limit;    /**< Engine limit. */
+   double fuel_consumption; /**< Fuel consumption by engine. */
 
    /* Misc. */
    double nebula_dmg_shield; /**< Shield nebula resistance. */

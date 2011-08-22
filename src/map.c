@@ -264,7 +264,7 @@ void map_open (void)
    /*
     * Disable Autonav button if player lacks fuel.
     */
-   if ((player.p->fuel < HYPERSPACE_FUEL) || pilot_isFlag( player.p, PILOT_NOJUMP))
+   if ((player.p->fuel < player.p->fuel_consumption) || pilot_isFlag( player.p, PILOT_NOJUMP))
       window_disableButton( wid, "btnAutonav" );
 }
 
