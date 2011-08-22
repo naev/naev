@@ -41,6 +41,7 @@
    <cargo_mod>10</cargo_mod>
    <ew_detect>0</ew_detect>
    <ew_hide>-20</ew_hide>
+   <fuel_consumption>100</fuel_consumption>
   </stats>
  </ship>
  <ship name="Hyena">
