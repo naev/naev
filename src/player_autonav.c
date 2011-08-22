@@ -52,7 +52,7 @@ void player_autonavStart (void)
    if (player.p->nav_hyperspace == -1)
       return;
 
-   if (player.p->fuel < HYPERSPACE_FUEL) {
+   if (player.p->fuel < player.p->fuel_consumption) {
       player_message("\erNot enough fuel to jump for autonav.");
       return;
    }
@@ -391,7 +391,7 @@ void player_thinkAutonav( Pilot *pplayer, double dt )
          player_autonavAbort("Target changed to current system");
 
       /* Need fuel. */
-      else if (pplayer->fuel < HYPERSPACE_FUEL)
+      else if (pplayer->fuel < pplayer->fuel_consumption)
          player_autonavAbort("Not enough fuel for autonav to continue");
 
       else

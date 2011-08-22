@@ -1628,7 +1628,7 @@ void player_brokeHyperspace (void)
    cam_setTargetPilot( player.p->id, 0 );
 
    /* reduce fuel */
-   player.p->fuel -= HYPERSPACE_FUEL;
+   player.p->fuel -= player.p->fuel_consumption;
 
    /* stop hyperspace */
    pilot_rmFlag( player.p, PILOT_HYPERSPACE );

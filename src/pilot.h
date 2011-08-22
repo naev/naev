@@ -26,7 +26,6 @@
 #define HYPERSPACE_STARS_BLUR    3. /**< How long the stars blur at max (pixels). */
 #define HYPERSPACE_STARS_LENGTH  250 /**< Length the stars blur to at max (pixels). */
 #define HYPERSPACE_FADEOUT       1. /**< How long the fade is (seconds). */
-#define HYPERSPACE_FUEL          100.  /**< how much fuel it takes */
 #define HYPERSPACE_THRUST        2000./**< How much thrust you use in hyperspace. */
 #define HYPERSPACE_VEL           2 * HYPERSPACE_THRUST*HYPERSPACE_FLY_DELAY /**< Velocity at hyperspace. */
 #define HYPERSPACE_ENTER_MIN     HYPERSPACE_VEL*0.3 /**< Minimum entering distance. */
@@ -37,7 +36,7 @@
 #define PILOT_TAKEOFF_DELAY      2. /**< Delay for takeoff animation. */
 /* Refueling. */
 #define PILOT_REFUEL_TIME        3. /**< Time to complete refueling. */
-#define PILOT_REFUEL_RATE        HYPERSPACE_FUEL/PILOT_REFUEL_TIME /**< Fuel per second. */
+#define PILOT_REFUEL_RATE        100./PILOT_REFUEL_TIME /**< Fuel per second. */
 /* Misc. */
 #define PILOT_SIZE_APROX         0.8   /**< approximation for pilot size */
 #define PILOT_WEAPON_SETS        10    /**< Number of weapon sets the pilot has. */
@@ -284,6 +283,7 @@ typedef struct Pilot_ {
    double stress;    /**< Current disable damage level. */
    double shield;    /**< Current shield. */
    double fuel;      /**< Current fuel. */
+   double fuel_consumption; /**< Fuel consumed per jump. */
    double armour_max; /**< Maximum armour. */
    double shield_max; /**< Maximum shield. */
    double fuel_max;  /**< Maximum fuel. */

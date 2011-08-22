@@ -870,6 +870,11 @@ void pilot_calcStats( Pilot* pilot )
 
    /* Slot voodoo. */
    s        = &pilot->stats;
+   /* Fuel. */
+   if (s->fuel_consumption == 0.)
+      pilot->fuel_consumption = 100.;
+   else
+      pilot->fuel_consumption = s->fuel_consumption;
    /*
     * Electronic warfare setting base parameters.
     */
