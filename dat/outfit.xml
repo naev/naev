@@ -3295,7 +3295,7 @@
    <size>light</size>
    <mass>6</mass>
    <price>65000</price>
-   <description>The EXA-49F is an engine that optimizes maneuverability in favor of overall speed. Given its low price tag, it is a good choice for light fighters.</description>
+   <description>The EXA-49F is an engine that optimizes maneuverability at the expense of overall speed. Given its low price tag, it is a good choice for light fighters.</description>
    <gfx_store>afterburner</gfx_store>
   </general>
   <specific type="modification">
@@ -3402,7 +3402,7 @@
    <engine_limit>100</engine_limit>
   </specific>
  </outfit>
- <outfit name="Tricon Spriggan Engine">
+ <outfit name="Tricon Albatross Engine">
   <general>
    <typename>Core Systems</typename>
    <slot prop="engines">structure</slot>
@@ -3435,7 +3435,7 @@
    <thrust>210</thrust>
    <turn>150</turn>
    <speed>280</speed>
-   <fuel>400</fuel>
+   <fuel>500</fuel>
    <energy_regen>-12</energy_regen>
    <engine_limit>180</engine_limit>
   </specific>
@@ -3476,6 +3476,292 @@
    <fuel>400</fuel>
    <energy_regen>-15</energy_regen>
    <engine_limit>150</engine_limit>
+  </specific>
+ </outfit>
+ <!-- Medium slot engines. -->
+ <outfit name="Beat Up Medium Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>medium</size>
+   <mass>20</mass>
+   <price>0</price>
+   <description>Clogged, corroded and cracked in every way possible while still remaining in functional condition, this engine really belongs on the scrap heap.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>60</thrust>
+   <turn>30</turn>
+   <speed>50</speed>
+   <fuel>400</fuel>
+   <energy_regen>-20</energy_regen>
+   <engine_limit>250</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Manufacturer Medium Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>medium</size>
+   <mass>10</mass>
+   <price>200000</price>
+   <description>The engine that most manufacturers install in their ships at assembly. Usually the first component pilots upgrade.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>80</thrust>
+   <turn>60</turn>
+   <speed>140</speed>
+   <fuel>600</fuel>
+   <energy_regen>-16</energy_regen>
+   <engine_limit>420</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp KRD-G10 Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>medium</size>
+   <mass>10</mass>
+   <price>400000</price>
+   <description>The KRD-G10 engine is a low-budget allround engine many merchants use to propel their ships. It's not particularly effective, but it has a fairly low energy use.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>100</thrust>
+   <turn>70</turn>
+   <speed>150</speed>
+   <fuel>600</fuel>
+   <energy_regen>-17</energy_regen>
+   <engine_limit>420</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp KRD-G15 Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>medium</size>
+   <mass>10</mass>
+   <price>600000</price>
+   <description>The KRD-G15 is a somewhat newer revision of the KRD-G10. Performance is improved, but energy consumption is a bit higher as well.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>120</thrust>
+   <turn>75</turn>
+   <speed>155</speed>
+   <fuel>600</fuel>
+   <energy_regen>-19</energy_regen>
+   <engine_limit>480</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp EXA-66F Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>medium</size>
+   <mass>10</mass>
+   <price>700000</price>
+   <description>The EXA-66F has a lower speed than other engines in its price bracket, but it gives a ship good turn and thrust.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>140</thrust>
+   <turn>85</turn>
+   <speed>140</speed>
+   <fuel>600</fuel>
+   <energy_regen>-19</energy_regen>
+   <engine_limit>480</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp AUR-70A Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>medium</size>
+   <mass>10</mass>
+   <price>700000</price>
+   <description>The AUR-50A is often found on medium sized cargo ships. It has a respectable top speed, resulting in lower trip times. Maneuverability falls behind, but for cargo ships this is rarely a concern.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>100</thrust>
+   <turn>65</turn>
+   <speed>170</speed>
+   <fuel>600</fuel>
+   <energy_regen>-19</energy_regen>
+   <engine_limit>480</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp JNS-54K Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>medium</size>
+   <mass>10</mass>
+   <price>700000</price>
+   <description>The JNS-54K, while neither fast nor maneuverable, is quite powerful. Its hauling power can make it an attractive choice for ships whose mass causes problems for weaker engines.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>110</thrust>
+   <turn>65</turn>
+   <speed>140</speed>
+   <fuel>800</fuel>
+   <energy_regen>-19</energy_regen>
+   <engine_limit>630</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Tricon Centaur Mk2 Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>medium</size>
+   <mass>10</mass>
+   <price>1200000</price>
+   <description>Tricon's Centaur Mk2 is a respectable engine for a respectable price, giving the serious captain the means to pilot his ship to effect.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>145</thrust>
+   <turn>90</turn>
+   <speed>170</speed>
+   <fuel>600</fuel>
+   <energy_regen>-22</energy_regen>
+   <engine_limit>600</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Tricon Centaur Mk3 Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>medium</size>
+   <mass>10</mass>
+   <price>1700000</price>
+   <description>Tricon's Centaur Mk3 gives that extra push some captains need to complete their maneuvers. It features excellent performance allround.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>155</thrust>
+   <turn>100</turn>
+   <speed>180</speed>
+   <fuel>800</fuel>
+   <energy_regen>-23</energy_regen>
+   <engine_limit>670</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Tricon Kolibri Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>medium</size>
+   <mass>10</mass>
+   <price>2000000</price>
+   <description>Ships that rely on cannons rather than turrets have to turn to bring those cannons to bear. Tricon's Kolibri engine helps in this area, at a minor reduction in maximum speed.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>170</thrust>
+   <turn>120</turn>
+   <speed>160</speed>
+   <fuel>800</fuel>
+   <energy_regen>-23</energy_regen>
+   <engine_limit>670</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Tricon Antelope Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>medium</size>
+   <mass>10</mass>
+   <price>2000000</price>
+   <description>A very popular engine among cargo ship captains, Tricon's Antelope boosts ships up to a high maximum speed, minimizing travel time.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>140</thrust>
+   <turn>80</turn>
+   <speed>210</speed>
+   <fuel>800</fuel>
+   <energy_regen>-23</energy_regen>
+   <engine_limit>670</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Tricon Buffalo Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>medium</size>
+   <mass>10</mass>
+   <price>2000000</price>
+   <description>Tricon's Buffalo can pull loads few other engines in its size class can pull. Captains packing heavy weaponry or cargo can benefit from this.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>145</thrust>
+   <turn>90</turn>
+   <speed>170</speed>
+   <fuel>1000</fuel>
+   <energy_regen>-23</energy_regen>
+   <engine_limit>800</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Tricon Centaur Mk7 Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>medium</size>
+   <mass>10</mass>
+   <price>2500000</price>
+   <description>Tricon's Centaur Mk7 is a top grade medium engine. Its high price tag reflects a superb allround performance envied by all those captains who are unable to afford it.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>180</thrust>
+   <turn>110</turn>
+   <speed>190</speed>
+   <fuel>800</fuel>
+   <energy_regen>-25</energy_regen>
+   <engine_limit>970</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Tricon Centaur Mk8 Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>medium</size>
+   <mass>10</mass>
+   <price>3000000</price>
+   <description>Tricon's Centaur Mk8 is the state of the art in ship propulsion technology. It bests even the mighty Centaur Mk7.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>190</thrust>
+   <turn>120</turn>
+   <speed>200</speed>
+   <fuel>800</fuel>
+   <energy_regen>-27</energy_regen>
+   <engine_limit>1000</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Tricon Centaur Mk7-Ra Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>medium</size>
+   <mass>10</mass>
+   <price>3500000</price>
+   <description>Developed specifically for heavy destroyers, Tricon's Centaur Mk7-Ra features an alternative exhaust configuration that optimizes for mass limit at a slight cost of overall performance.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>165</thrust>
+   <turn>95</turn>
+   <speed>170</speed>
+   <fuel>800</fuel>
+   <energy_regen>-27</energy_regen>
+   <engine_limit>1200</engine_limit>
   </specific>
  </outfit>
 
