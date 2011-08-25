@@ -19,7 +19,7 @@ mem.atk_kill       = false
 function create ()
 
    -- Some pirates do kill
-   if rnd.rnd() < 0.7 then
+   if rnd.rnd() < 0.1 then
       mem.atk_kill = true
    end
 
