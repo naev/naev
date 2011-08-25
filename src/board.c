@@ -463,8 +463,8 @@ void pilot_boardComplete( Pilot *p )
       worth = MIN( 0.1*pilot_worth(target), target->credits );
       p->credits       += worth;
       target->credits  -= worth;
-      credits2str( creds, sizeof(creds), worth );
-      player_message( "\e%s%s\e0 has plundered %s credits from your ship!",
+      credits2str( creds, worth, 2 );
+      player_message( "\e%c%s\e0 has plundered %s credits from your ship!",
             pilot_getFactionColourChar(p), p->name, creds );
    }
    else {
