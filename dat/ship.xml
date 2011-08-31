@@ -41,7 +41,6 @@
    <cargo_mod>10</cargo_mod>
    <ew_detect>0</ew_detect>
    <ew_hide>-20</ew_hide>
-   <fuel_consumption>100</fuel_consumption>
   </stats>
  </ship>
  <ship name="Hyena">
@@ -1065,30 +1064,19 @@
   <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Corvette</class>
-  <price>850000</price>
+  <price>450000</price>
   <fabricator>House Dvaered</fabricator>
   <license>Medium Combat Vessel License</license>
   <description>While somewhat technologically antiquated, the Phalanx's large energy capacity and heavy armour allow it to remain an effective combat vessel.</description>
-  <movement>
-   <thrust>180</thrust>
-   <turn>100</turn>
-   <speed>180</speed>
-  </movement>
   <health>
-   <absorb>28</absorb>
-   <shield>410</shield>
-   <armour>430</armour>
-   <energy>1125</energy>
-   <shield_regen>8</shield_regen>
+   <absorb>14</absorb>
+   <armour>140</armour>
    <armour_regen>0</armour_regen>
-   <energy_regen>38.3</energy_regen>
   </health>
   <characteristics>
-   <cpu>54</cpu>
    <crew>15</crew>
-   <mass>380</mass>
-   <fuel>400</fuel>
-   <cargo>25</cargo>
+   <mass>190</mass>
+   <cargo>15</cargo>
   </characteristics>
   <slots>
    <weapon x="8" y="0" h="2"/>
@@ -1096,16 +1084,29 @@
    <weapon x="4" y="-5" h="-2"/>
    <weapon x="0" y="10" h="-2" size="light"></weapon>
    <weapon x="0" y="-10" h="-2" size="light"></weapon>
+   <utility prop="systems" size="medium">Basic Medium Systems</utility>
    <utility/>
    <utility/>
    <utility size="light"></utility>
+   <structure prop="engines" size="medium">Manufacturer Medium Engine</structure>
+   <structure prop="hull" size="medium">Unmodified Medium Hull</structure>
    <structure/>
    <structure/>
    <structure/>
    <structure/>
   </slots>
   <stats>
-   <fwd_damage>4</fwd_damage>
+   <fuel_consumption>200</fuel_consumption>
+   <speed_mod>0</speed_mod>
+   <turn_mod>0</turn_mod>
+   <thrust_mod>0</thrust_mod>
+   <armour_mod>0</armour_mod>
+   <shield_mod>0</shield_mod>
+   <energy_mod>15</energy_mod>
+   <energy_regen_mod>15</energy_regen_mod>
+   <cargo_mod>0</cargo_mod>
+   <ew_detect>0</ew_detect>
+   <ew_hide>0</ew_hide>
   </stats>
  </ship>
  <ship name="Dvaered Phalanx">
@@ -1114,30 +1115,19 @@
   <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Corvette</class>
-  <price>850000</price>
+  <price>650000</price>
   <fabricator>House Dvaered</fabricator>
   <license>Medium Combat Vessel License</license>
   <description>While somewhat technologically antiquated, the Phalanx's large energy capacity and heavy armour allow it to remain an effective combat vessel.</description>
-  <movement>
-   <thrust>180</thrust>
-   <turn>100</turn>
-   <speed>190</speed>
-  </movement>
   <health>
-   <absorb>28</absorb>
-   <shield>410</shield>
-   <armour>430</armour>
-   <energy>1125</energy>
-   <shield_regen>8</shield_regen>
+   <absorb>19</absorb>
+   <armour>180</armour>
    <armour_regen>0</armour_regen>
-   <energy_regen>38.3</energy_regen>
   </health>
   <characteristics>
-   <cpu>54</cpu>
    <crew>15</crew>
-   <mass>380</mass>
-   <fuel>400</fuel>
-   <cargo>25</cargo>
+   <mass>190</mass>
+   <cargo>15</cargo>
   </characteristics>
   <slots>
    <weapon x="8" y="0" h="2"/>
@@ -1145,16 +1135,29 @@
    <weapon x="4" y="-5" h="-2"/>
    <weapon x="0" y="10" h="-2" size="light"></weapon>
    <weapon x="0" y="-10" h="-2" size="light"></weapon>
+   <utility prop="systems" size="medium">Basic Medium Systems</utility>
    <utility/>
    <utility/>
    <utility size="light"></utility>
+   <structure prop="engines" size="medium">Manufacturer Medium Engine</structure>
+   <structure prop="hull" size="medium">Unmodified Medium Hull</structure>
    <structure/>
    <structure/>
    <structure/>
    <structure/>
   </slots>
   <stats>
-   <fwd_damage>4</fwd_damage>
+   <fuel_consumption>200</fuel_consumption>
+   <speed_mod>0</speed_mod>
+   <turn_mod>0</turn_mod>
+   <thrust_mod>0</thrust_mod>
+   <armour_mod>10</armour_mod>
+   <energy_mod>20</energy_mod>
+   <energy_regen_mod>15</energy_regen_mod>
+   <shield_mod>0</shield_mod>
+   <cargo_mod>0</cargo_mod>
+   <ew_detect>0</ew_detect>
+   <ew_hide>0</ew_hide>
   </stats>
  </ship>
  <ship name="Pirate Phalanx">
@@ -1163,29 +1166,18 @@
   <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Corvette</class>
-  <price>775000</price>
+  <price>650000</price>
   <fabricator>Skull and Bones</fabricator>
   <description>Building upon the already-capable Phalanx chassis, the Skull and Bones engineers have substantially improved the ship's performance, while only minorly sacrificing protection.</description>
-  <movement>
-   <thrust>190</thrust>
-   <turn>115</turn>
-   <speed>200</speed>
-  </movement>
   <health>
-   <absorb>28</absorb>
-   <shield>410</shield>
-   <armour>390</armour>
-   <energy>1175</energy>
-   <shield_regen>8</shield_regen>
+   <absorb>19</absorb>
+   <armour>150</armour>
    <armour_regen>0</armour_regen>
-   <energy_regen>41.7</energy_regen>
   </health>
   <characteristics>
-   <cpu>56</cpu>
    <crew>15</crew>
-   <mass>340</mass>
-   <fuel>500</fuel>
-   <cargo>20</cargo>
+   <mass>170</mass>
+   <cargo>25</cargo>
   </characteristics>
   <slots>
    <weapon x="8" y="0" h="2"/>
@@ -1193,17 +1185,29 @@
    <weapon x="4" y="-5" h="-2"/>
    <weapon x="0" y="10" h="-2" size="light"></weapon>
    <weapon x="0" y="-10" h="-2" size="light"></weapon>
+   <utility prop="systems" size="medium">Previous Generation Medium Systems</utility>
    <utility/>
    <utility/>
    <utility size="light"></utility>
+   <structure prop="engines" size="medium">Beat Up Medium Engine</structure>
+   <structure prop="hull" size="medium">Patchwork Medium Plating</structure>
    <structure/>
    <structure/>
    <structure/>
    <structure/>
   </slots>
   <stats>
-   <fwd_damage>4</fwd_damage>
-   <launch_lockon>15</launch_lockon>
+   <fuel_consumption>200</fuel_consumption>
+   <speed_mod>0</speed_mod>
+   <turn_mod>15</turn_mod>
+   <thrust_mod>10</thrust_mod>
+   <armour_mod>-10</armour_mod>
+   <energy_mod>10</energy_mod>
+   <energy_regen_mod>10</energy_regen_mod>
+   <shield_mod>-10</shield_mod>
+   <cargo_mod>25</cargo_mod>
+   <ew_detect>0</ew_detect>
+   <ew_hide>10</ew_hide>
   </stats>
  </ship>
  <ship name="Sirius Preacher">
@@ -1212,29 +1216,18 @@
   <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Corvette</class>
-  <price>720000</price>
+  <price>550000</price>
   <fabricator>Sirius Systems</fabricator>
   <license>Medium Combat Vessel License</license>
   <description>The Preacher, as its name implies, is the primary vessel by which House Sirius projects its message and will. Fielding a large array of weaponry, the Preacher is adept at making converts out of unbelievers.</description>
-  <movement>
-   <thrust>170</thrust>
-   <turn>100</turn>
-   <speed>170</speed>
-  </movement>
   <health>
-   <absorb>29</absorb>
-   <shield>450</shield>
-   <armour>500</armour>
-   <energy>960</energy>
-   <shield_regen>9</shield_regen>
+   <absorb>15</absorb>
+   <armour>150</armour>
    <armour_regen>0</armour_regen>
-   <energy_regen>40.8</energy_regen>
   </health>
   <characteristics>
-   <cpu>55</cpu>
    <crew>11</crew>
-   <mass>280</mass>
-   <fuel>400</fuel>
+   <mass>140</mass>
    <cargo>20</cargo>
   </characteristics>
   <slots>
@@ -1244,14 +1237,27 @@
    <weapon x="-9" y="10" h="2"/>
    <weapon x="-9" y="-3" h="2" size="light"></weapon>
    <weapon x="-9" y="3" h="2" size="light"></weapon>
+   <utility prop="systems" size="medium">Basic Medium Systems</utility>
    <utility/>
    <utility/>
    <utility size="light"></utility>
+   <structure prop="engines" size="medium">Manufacturer Medium Engine</structure>
+   <structure prop="hull" size="medium">Unmodified Medium Hull</structure>
    <structure/>
    <structure/>
   </slots>
   <stats>
-   <fwd_damage>5</fwd_damage>
+   <fuel_consumption>200</fuel_consumption>
+   <speed_mod>0</speed_mod>
+   <turn_mod>0</turn_mod>
+   <thrust_mod>0</thrust_mod>
+   <armour_mod>0</armour_mod>
+   <shield_mod>10</shield_mod>
+   <energy_mod>0</energy_mod>
+   <energy_regen_mod>0</energy_regen_mod>
+   <cargo_mod>0</cargo_mod>
+   <ew_detect>0</ew_detect>
+   <ew_hide>0</ew_hide>
   </stats>
  </ship>
  <ship name="Soromid Odium">
@@ -1260,124 +1266,18 @@
   <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Corvette</class>
-  <price>900000</price>
+  <price>600000</price>
   <fabricator>Soromid</fabricator>
   <license>Medium Combat Vessel License</license>
   <description>The Odium offers a good balance between shields and armour, as well as an impressive amount of system hardpoints for a ship its size. It can often be found dominating smaller military engagements.</description>
-  <movement>
-   <thrust>180</thrust>
-   <turn>115</turn>
-   <speed>170</speed>
-  </movement>
   <health>
-   <absorb>25</absorb>
-   <shield>480</shield>
-   <armour>450</armour>
-   <energy>1064</energy>
-   <shield_regen>8</shield_regen>
+   <absorb>12</absorb>
+   <armour>200</armour>
    <armour_regen>4</armour_regen>
-   <energy_regen>43.3</energy_regen>
   </health>
   <characteristics>
-   <cpu>60</cpu>
    <crew>13</crew>
-   <mass>320</mass>
-   <fuel>400</fuel>
-   <cargo>20</cargo>
-  </characteristics>
-  <slots>
-   <weapon x="15" y="0" h="2"/>
-   <weapon x="4" y="2" h="-5"/>
-   <weapon x="4" y="-2" h="-5"/>
-   <weapon x="-9" y="-5" h="-9" size="light"></weapon>
-   <weapon x="-9" y="5" h="-9" size="light"></weapon>
-   <utility/>
-   <utility/>
-   <utility size="light"></utility>
-   <structure/>
-   <structure/>
-   <structure/>
-  </slots>
-  <stats>
-   <fwd_energy>-3</fwd_energy>
-  </stats>
- </ship>
- <ship name="Admonisher">
-  <base_type>Admonisher</base_type>
-  <GFX>admonisher</GFX>
-  <GUI>slim</GUI>
-  <sound>engine</sound>
-  <class>Corvette</class>
-  <price>900000</price>
-  <fabricator>Nexus Shipyards</fabricator>
-  <license>Medium Combat Vessel License</license>
-  <description>A very versatile combat ship. Nexus defines the Admonisher as a compromise between the ruggedness of the Pacifier and the agility of the Lancelot. Overall a very solid fighter.</description>
-  <movement>
-   <thrust>170</thrust>
-   <turn>115</turn>
-   <speed>175</speed>
-  </movement>
-  <health>
-   <absorb>25</absorb>
-   <shield>480</shield>
-   <armour>440</armour>
-   <energy>1064</energy>
-   <shield_regen>9</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>43.3</energy_regen>
-  </health>
-  <characteristics>
-   <cpu>60</cpu>
-   <crew>13</crew>
-   <mass>320</mass>
-   <fuel>400</fuel>
-   <cargo>20</cargo>
-  </characteristics>
-  <slots>
-   <weapon x="15" y="0" h="2"/>
-   <weapon x="4" y="2" h="-5"/>
-   <weapon x="4" y="-2" h="-5"/>
-   <weapon x="-9" y="-5" h="-9" size="light"></weapon>
-   <weapon x="-9" y="5" h="-9" size="light"></weapon>
-   <utility/>
-   <utility/>
-   <utility size="light"></utility>
-   <structure/>
-   <structure/>
-   <structure/>
-  </slots>
-  <stats>
-   <fwd_energy>-3</fwd_energy>
-  </stats>
- </ship>
- <ship name="Pirate Admonisher">
-  <base_type>Admonisher</base_type>
-  <GFX>admonisher_pirate</GFX>
-  <GUI>slim</GUI>
-  <sound>engine</sound>
-  <class>Corvette</class>
-  <price>850000</price>
-  <fabricator>Skull and Bones</fabricator>
-  <description>The stock Admonisher is a powerful vessel, especially for its size. Through the usual Skull and Bones refit the Pirate Admonisher features improved manoeuvrability, more weapons space, and slightly improved defenses, at a cost of cargo capacity and armor regeneration rates.</description>
-  <movement>
-   <thrust>180</thrust>
-   <turn>120</turn>
-   <speed>180</speed>
-  </movement>
-  <health>
-   <absorb>27</absorb>
-   <shield>500</shield>
-   <armour>400</armour>
-   <energy>1064</energy>
-   <shield_regen>9</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>43.3</energy_regen>
-  </health>
-  <characteristics>
-   <cpu>63</cpu>
-   <crew>13</crew>
-   <mass>327</mass>
-   <fuel>400</fuel>
+   <mass>160</mass>
    <cargo>15</cargo>
   </characteristics>
   <slots>
@@ -1386,46 +1286,97 @@
    <weapon x="4" y="-2" h="-5"/>
    <weapon x="-9" y="-5" h="-9" size="light"></weapon>
    <weapon x="-9" y="5" h="-9" size="light"></weapon>
+   <utility prop="systems" size="medium">Basic Medium Systems</utility>
    <utility/>
    <utility/>
    <utility size="light"></utility>
+   <structure prop="engines" size="medium">Manufacturer Medium Engine</structure>
+   <structure prop="hull" size="medium">Unmodified Medium Hull</structure>
    <structure/>
    <structure/>
    <structure/>
   </slots>
   <stats>
-   <fwd_energy>-3</fwd_energy>
+   <fuel_consumption>200</fuel_consumption>
+   <speed_mod>0</speed_mod>
+   <turn_mod>0</turn_mod>
+   <thrust_mod>0</thrust_mod>
+   <armour_mod>15</armour_mod>
+   <shield_mod>-10</shield_mod>
+   <energy_mod>0</energy_mod>
+   <energy_regen_mod>0</energy_regen_mod>
+   <cargo_mod>0</cargo_mod>
+   <ew_detect>0</ew_detect>
+   <ew_hide>0</ew_hide>
   </stats>
  </ship>
- <ship name="Empire Admonisher">
+ <ship name="Admonisher">
   <base_type>Admonisher</base_type>
-  <GFX>admonisher_empire</GFX>
+  <GFX>admonisher</GFX>
   <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Corvette</class>
-  <price>900000</price>
+  <price>600000</price>
   <fabricator>Nexus Shipyards</fabricator>
   <license>Medium Combat Vessel License</license>
-  <description>An Empire Admonisher.</description>
-  <movement>
-   <thrust>170</thrust>
-   <turn>115</turn>
-   <speed>175</speed>
-  </movement>
+  <description>A very versatile combat ship. Nexus defines the Admonisher as a compromise between the ruggedness of the Pacifier and the agility of the Lancelot. Overall a very solid fighter.</description>
   <health>
-   <absorb>29</absorb>
-   <shield>500</shield>
-   <armour>450</armour>
-   <energy>1064</energy>
-   <shield_regen>9</shield_regen>
+   <absorb>12</absorb>
+   <armour>220</armour>
    <armour_regen>0</armour_regen>
-   <energy_regen>43.3</energy_regen>
   </health>
   <characteristics>
-   <cpu>64</cpu>
    <crew>13</crew>
-   <mass>323</mass>
-   <fuel>400</fuel>
+   <mass>160</mass>
+   <cargo>15</cargo>
+  </characteristics>
+  <slots>
+   <weapon x="15" y="0" h="2"/>
+   <weapon x="4" y="2" h="-5"/>
+   <weapon x="4" y="-2" h="-5"/>
+   <weapon x="-9" y="-5" h="-9" size="light"></weapon>
+   <weapon x="-9" y="5" h="-9" size="light"></weapon>
+   <utility prop="systems" size="medium">Basic Medium Systems</utility>
+   <utility/>
+   <utility/>
+   <utility size="light"></utility>
+   <structure prop="engines" size="medium">Manufacturer Medium Engine</structure>
+   <structure prop="hull" size="medium">Unmodified Medium Hull</structure>
+   <structure/>
+   <structure/>
+   <structure/>
+  </slots>
+  <stats>
+   <fuel_consumption>200</fuel_consumption>
+   <speed_mod>0</speed_mod>
+   <turn_mod>5</turn_mod>
+   <thrust_mod>10</thrust_mod>
+   <armour_mod>-10</armour_mod>
+   <shield_mod>0</shield_mod>
+   <energy_mod>5</energy_mod>
+   <energy_regen_mod>5</energy_regen_mod>
+   <cargo_mod>0</cargo_mod>
+   <ew_detect>10</ew_detect>
+   <ew_hide>0</ew_hide>
+  </stats>
+ </ship>
+ <ship name="Pirate Admonisher">
+  <base_type>Admonisher</base_type>
+  <GFX>admonisher_pirate</GFX>
+  <GUI>slim</GUI>
+  <sound>engine</sound>
+  <class>Corvette</class>
+  <price>700000</price>
+  <fabricator>Skull and Bones</fabricator>
+  <description>The stock Admonisher is a powerful vessel, especially for its size. Through the usual Skull and Bones refit the Pirate Admonisher features improved manoeuvrability, more weapons space, and slightly improved defenses, at a cost of cargo capacity and armor regeneration rates.</description>
+  <health>
+   <absorb>10</absorb>
+   <armour>200</armour>
+   <armour_regen>0</armour_regen>
+  </health>
+  <characteristics>
+   <crew>13</crew>
+   <mass>150</mass>
    <cargo>20</cargo>
   </characteristics>
   <slots>
@@ -1434,16 +1385,78 @@
    <weapon x="4" y="-2" h="-5"/>
    <weapon x="-9" y="-5" h="-9" size="light"></weapon>
    <weapon x="-9" y="5" h="-9" size="light"></weapon>
+   <utility prop="systems" size="medium">Previous Generation Medium Systems</utility>
    <utility/>
    <utility/>
    <utility size="light"></utility>
+   <structure prop="engines" size="medium">Beat Up Medium Engine</structure>
+   <structure prop="hull" size="medium">Patchwork Medium Plating</structure>
    <structure/>
    <structure/>
    <structure/>
   </slots>
   <stats>
-   <fwd_energy>-3</fwd_energy>
-   <fwd_damage>5</fwd_damage>
+   <fuel_consumption>200</fuel_consumption>
+   <speed_mod>0</speed_mod>
+   <turn_mod>10</turn_mod>
+   <thrust_mod>10</thrust_mod>
+   <armour_mod>-10</armour_mod>
+   <energy_mod>0</energy_mod>
+   <energy_regen_mod>10</energy_regen_mod>
+   <shield_mod>0</shield_mod>
+   <cargo_mod>15</cargo_mod>
+   <ew_detect>0</ew_detect>
+   <ew_hide>15</ew_hide>
+  </stats>
+ </ship>
+ <ship name="Empire Admonisher">
+  <base_type>Admonisher</base_type>
+  <GFX>admonisher_empire</GFX>
+  <GUI>slim</GUI>
+  <sound>engine</sound>
+  <class>Corvette</class>
+  <price>700000</price>
+  <fabricator>Nexus Shipyards</fabricator>
+  <license>Medium Combat Vessel License</license>
+  <description>An Empire Admonisher.</description>
+  <health>
+   <absorb>15</absorb>
+   <armour>240</armour>
+   <armour_regen>0</armour_regen>
+  </health>
+  <characteristics>
+   <crew>13</crew>
+   <mass>160</mass>
+   <cargo>15</cargo>
+  </characteristics>
+  <slots>
+   <weapon x="15" y="0" h="2"/>
+   <weapon x="4" y="2" h="-5"/>
+   <weapon x="4" y="-2" h="-5"/>
+   <weapon x="-9" y="-5" h="-9" size="light"></weapon>
+   <weapon x="-9" y="5" h="-9" size="light"></weapon>
+   <utility prop="systems" size="medium">Basic Medium Systems</utility>
+   <utility/>
+   <utility/>
+   <utility size="light"></utility>
+   <structure prop="engines" size="medium">Manufacturer Medium Engine</structure>
+   <structure prop="hull" size="medium">Unmodified Medium Hull</structure>
+   <structure/>
+   <structure/>
+   <structure/>
+  </slots>
+  <stats>
+   <fuel_consumption>200</fuel_consumption>
+   <speed_mod>0</speed_mod>
+   <turn_mod>5</turn_mod>
+   <thrust_mod>10</thrust_mod>
+   <armour_mod>0</armour_mod>
+   <shield_mod>0</shield_mod>
+   <energy_mod>10</energy_mod>
+   <energy_regen_mod>10</energy_regen_mod>
+   <cargo_mod>0</cargo_mod>
+   <ew_detect>15</ew_detect>
+   <ew_hide>0</ew_hide>
   </stats>
  </ship>
  <!-- Destroyers -->
@@ -1453,30 +1466,19 @@
   <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Destroyer</class>
-  <price>1200000</price>
+  <price>900000</price>
   <fabricator>House Dvaered</fabricator>
   <license>Medium Combat Vessel License</license>
   <description>The Vigilance is the embodiment of Dvaered philosophy. Featuring immense energy reserves and six weapon hardpoints, it's designed to hit as hard as possible. Given its Dvaered origins, it possesses inferior technology relative to its counterparts.</description>
-  <movement>
-   <thrust>130</thrust>
-   <turn>75</turn>
-   <speed>150</speed>
-  </movement>
   <health>
-   <absorb>37</absorb>
-   <shield>520</shield>
-   <armour>1200</armour>
-   <energy>1800</energy>
-   <shield_regen>9</shield_regen>
+   <absorb>18</absorb>
+   <armour>320</armour>
    <armour_regen>0</armour_regen>
-   <energy_regen>50</energy_regen>
   </health>
   <characteristics>
-   <cpu>75</cpu>
    <crew>15</crew>
-   <mass>830</mass>
-   <fuel>400</fuel>
-   <cargo>25</cargo>
+   <mass>410</mass>
+   <cargo>20</cargo>
   </characteristics>
   <slots>
    <weapon x="28" y="-3" h="-0" size="heavy"></weapon>
@@ -1485,16 +1487,29 @@
    <weapon x="10" y="3" h="2"/>
    <weapon x="-22" y="-8" h="-0"/>
    <weapon x="-22" y="8" h="-0"/>
+   <utility prop="systems" size="medium">Basic Medium Systems</utility>
    <utility size="heavy"></utility>
    <utility size="heavy"></utility>
    <utility/>
+   <structure prop="engines" size="medium">Manufacturer Medium Engine</structure>
+   <structure prop="hull" size="medium">Unmodified Medium Hull</structure>
    <structure size="heavy"></structure>
    <structure/>
    <structure/>
    <structure/>
   </slots>
   <stats>
-   <fwd_heat>-5</fwd_heat>
+   <fuel_consumption>200</fuel_consumption>
+   <speed_mod>0</speed_mod>
+   <turn_mod>0</turn_mod>
+   <thrust_mod>0</thrust_mod>
+   <armour_mod>10</armour_mod>
+   <shield_mod>0</shield_mod>
+   <energy_mod>20</energy_mod>
+   <energy_regen_mod>0</energy_regen_mod>
+   <cargo_mod>-50</cargo_mod>
+   <ew_detect>0</ew_detect>
+   <ew_hide>0</ew_hide>
   </stats>
  </ship>
  <ship name="Dvaered Vigilance">
@@ -1503,30 +1518,19 @@
   <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Destroyer</class>
-  <price>1200000</price>
+  <price>900000</price>
   <fabricator>House Dvaered</fabricator>
   <license>Medium Combat Vessel License</license>
   <description>The Vigilance is the embodiment of Dvaered philosophy. Featuring immense energy reserves and six weapon hardpoints, it's designed to hit as hard as possible. Given its Dvaered origins, it possesses inferior technology relative to its counterparts.</description>
-  <movement>
-   <thrust>130</thrust>
-   <turn>75</turn>
-   <speed>150</speed>
-  </movement>
   <health>
-   <absorb>39</absorb>
-   <shield>520</shield>
-   <armour>1300</armour>
-   <energy>1800</energy>
-   <shield_regen>10</shield_regen>
+   <absorb>19</absorb>
+   <armour>350</armour>
    <armour_regen>0</armour_regen>
-   <energy_regen>50</energy_regen>
   </health>
   <characteristics>
-   <cpu>75</cpu>
    <crew>15</crew>
-   <mass>830</mass>
-   <fuel>400</fuel>
-   <cargo>25</cargo>
+   <mass>410</mass>
+   <cargo>20</cargo>
   </characteristics>
   <slots>
    <weapon x="28" y="-3" h="-0" size="heavy"></weapon>
@@ -1535,17 +1539,29 @@
    <weapon x="10" y="3" h="2"/>
    <weapon x="-22" y="-8" h="-0"/>
    <weapon x="-22" y="8" h="-0"/>
+   <utility prop="systems" size="medium">Basic Medium Systems</utility>
    <utility size="heavy"></utility>
    <utility size="heavy"></utility>
    <utility/>
+   <structure prop="engines" size="medium">Manufacturer Medium Engine</structure>
+   <structure prop="hull" size="medium">Unmodified Medium Hull</structure>
    <structure size="heavy"></structure>
    <structure/>
    <structure/>
    <structure/>
   </slots>
   <stats>
-   <fwd_heat>-5</fwd_heat>
-   <fwd_damage>5</fwd_damage>
+   <fuel_consumption>200</fuel_consumption>
+   <speed_mod>0</speed_mod>
+   <turn_mod>0</turn_mod>
+   <thrust_mod>0</thrust_mod>
+   <armour_mod>15</armour_mod>
+   <shield_mod>0</shield_mod>
+   <energy_mod>20</energy_mod>
+   <energy_regen_mod>0</energy_regen_mod>
+   <cargo_mod>-50</cargo_mod>
+   <ew_detect>10</ew_detect>
+   <ew_hide>0</ew_hide>
   </stats>
  </ship>
  <ship name="Proteron Kahan">
@@ -1554,48 +1570,49 @@
   <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Destroyer</class>
-  <price>2100000</price>
+  <price>1400000</price>
   <fabricator>House Proteron</fabricator>
   <license>Medium Combat Vessel License</license>
   <description>The Kahan is a cutting-edge vessel. Its design was completed shortly before the Incident, and it was on track to become the Proteron military's primary combat vessel. While possessing fewer weapon mounts than the Pacifier, it makes up for it with its ability to mount higher-tech weapons.</description>
-  <movement>
-   <thrust>140</thrust>
-   <turn>65</turn>
-   <speed>150</speed>
-  </movement>
   <health>
-   <absorb>43</absorb>
-   <shield>600</shield>
-   <armour>1000</armour>
-   <energy>1600</energy>
-   <shield_regen>10</shield_regen>
+   <absorb>20</absorb>
+   <armour>370</armour>
    <armour_regen>0</armour_regen>
-   <energy_regen>50</energy_regen>
   </health>
   <characteristics>
-   <cpu>90</cpu>
    <crew>20</crew>
-   <mass>650</mass>
-   <fuel>400</fuel>
-   <cargo>30</cargo>
+   <mass>330</mass>
+   <cargo>15</cargo>
   </characteristics>
   <slots>
    <weapon x="28" y="0" h="5" size="heavy"></weapon>
 	<weapon x="18" y="0" h="5" size="heavy"></weapon>
    <weapon x="-30" y="-8" h="3"/>
    <weapon x="-30" y="8" h="3"/>
+   <utility prop="systems" size="medium">Basic Medium Systems</utility>
    <utility size="heavy"></utility>
    <utility size="heavy"></utility>
    <utility/>
    <utility/>
    <utility/>
+   <structure prop="engines" size="medium">Manufacturer Medium Engine</structure>
+   <structure prop="hull" size="medium">Unmodified Medium Hull</structure>
    <structure size="heavy"></structure>
    <structure/>
    <structure/>
   </slots>
   <stats>
-   <ew_detect>5</ew_detect>
-   <tur_energy>-5</tur_energy>
+   <fuel_consumption>200</fuel_consumption>
+   <speed_mod>0</speed_mod>
+   <turn_mod>0</turn_mod>
+   <thrust_mod>0</thrust_mod>
+   <armour_mod>0</armour_mod>
+   <shield_mod>15</shield_mod>
+   <energy_mod>0</energy_mod>
+   <energy_regen_mod>0</energy_regen_mod>
+   <cargo_mod>-50</cargo_mod>
+   <ew_detect>0</ew_detect>
+   <ew_hide>0</ew_hide>
   </stats>
  </ship>
  <ship name="Soromid Nyx">
@@ -1604,30 +1621,19 @@
   <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Destroyer</class>
-  <price>1500000</price>
+  <price>1000000</price>
   <fabricator>Soromid</fabricator>
   <license>Medium Combat Vessel License</license>
   <description>The Nyx is the symbol of the Soromid's military might. Able to provide heavy firepower in heated battles and agile enough to withdraw when needed, this ship usually forms the backbone of any sizable Sirius fleet.</description>
-  <movement>
-   <thrust>160</thrust>
-   <turn>95</turn>
-   <speed>140</speed>
-  </movement>
   <health>
-   <absorb>42</absorb>
-   <shield>500</shield>
-   <armour>1100</armour>
-   <energy>1410</energy>
-   <shield_regen>9</shield_regen>
+   <absorb>22</absorb>
+   <armour>400</armour>
    <armour_regen>4</armour_regen>
-   <energy_regen>55.2</energy_regen>
   </health>
   <characteristics>
-   <cpu>83</cpu>
    <crew>17</crew>
-   <mass>730</mass>
-   <fuel>500</fuel>
-   <cargo>30</cargo>
+   <mass>360</mass>
+   <cargo>15</cargo>
   </characteristics>
   <slots>
    <weapon x="-15" y="-10" h="-10" size="heavy"></weapon>
@@ -1635,16 +1641,29 @@
    <weapon x="20" y="0" h="-10"/>
    <weapon x="4" y="-5" h="-10"/>
    <weapon x="4" y="5" h="-10"/>
+   <utility prop="systems" size="medium">Basic Medium Systems</utility>
    <utility size="heavy"></utility>
    <utility size="heavy"></utility>
    <utility/>
    <utility/>
+   <structure prop="engines" size="medium">Manufacturer Medium Engine</structure>
+   <structure prop="hull" size="medium">Unmodified Medium Hull</structure>
    <structure size="heavy"></structure>
    <structure/>
    <structure/>
   </slots>
   <stats>
-   <tur_energy>-5</tur_energy>
+   <fuel_consumption>200</fuel_consumption>
+   <speed_mod>0</speed_mod>
+   <turn_mod>0</turn_mod>
+   <thrust_mod>0</thrust_mod>
+   <armour_mod>15</armour_mod>
+   <shield_mod>-5</shield_mod>
+   <energy_mod>0</energy_mod>
+   <energy_regen_mod>5</energy_regen_mod>
+   <cargo_mod>-50</cargo_mod>
+   <ew_detect>10</ew_detect>
+   <ew_hide>0</ew_hide>
   </stats>
  </ship>
  <ship name="Pacifier">
@@ -1653,30 +1672,19 @@
   <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Destroyer</class>
-  <price>1500000</price>
+  <price>1000000</price>
   <fabricator>Nexus Shipyards</fabricator>
   <license>Medium Combat Vessel License</license>
   <description>The Pacifier is one of the older and trustier designs of Nexus Shipyards. It was designed primarily as a border-patrol vessel, and as such it is able to withstand heavy punishment from raiding parties. The Pacifier features high fuel capacity to facilitate lengthy patrol routes.</description>
-  <movement>
-   <thrust>140</thrust>
-   <turn>95</turn>
-   <speed>150</speed>
-  </movement>
   <health>
-   <absorb>42</absorb>
-   <shield>500</shield>
-   <armour>950</armour>
-   <energy>1410</energy>
-   <shield_regen>10</shield_regen>
+   <absorb>22</absorb>
+   <armour>380</armour>
    <armour_regen>0</armour_regen>
-   <energy_regen>55.2</energy_regen>
   </health>
   <characteristics>
-   <cpu>83</cpu>
    <crew>17</crew>
-   <mass>730</mass>
-   <fuel>500</fuel>
-   <cargo>30</cargo>
+   <mass>360</mass>
+   <cargo>15</cargo>
   </characteristics>
   <slots>
    <weapon x="-15" y="-10" h="-10" size="heavy"></weapon>
@@ -1684,16 +1692,29 @@
    <weapon x="20" y="0" h="-10"/>
    <weapon x="4" y="-5" h="-10"/>
    <weapon x="4" y="5" h="-10"/>
+   <utility prop="systems" size="medium">Basic Medium Systems</utility>
    <utility size="heavy"></utility>
    <utility size="heavy"></utility>
    <utility/>
    <utility/>
+   <structure prop="engines" size="medium">Manufacturer Medium Engine</structure>
+   <structure prop="hull" size="medium">Unmodified Medium Hull</structure>
    <structure size="heavy"></structure>
    <structure/>
    <structure/>
   </slots>
   <stats>
-   <tur_energy>-5</tur_energy>
+   <fuel_consumption>200</fuel_consumption>
+   <speed_mod>0</speed_mod>
+   <turn_mod>0</turn_mod>
+   <thrust_mod>0</thrust_mod>
+   <armour_mod>0</armour_mod>
+   <shield_mod>0</shield_mod>
+   <energy_mod>0</energy_mod>
+   <energy_regen_mod>0</energy_regen_mod>
+   <cargo_mod>-50</cargo_mod>
+   <ew_detect>10</ew_detect>
+   <ew_hide>0</ew_hide>
   </stats>
  </ship>
  <ship name="Empire Pacifier">
@@ -1702,30 +1723,19 @@
   <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Destroyer</class>
-  <price>1500000</price>
+  <price>1100000</price>
   <fabricator>Nexus Shipyards</fabricator>
   <license>Medium Combat Vessel License</license>
   <description>An Empire Pacifier.</description>
-  <movement>
-   <thrust>150</thrust>
-   <turn>100</turn>
-   <speed>150</speed>
-  </movement>
   <health>
-   <absorb>44</absorb>
-   <shield>530</shield>
-   <armour>1100</armour>
-   <energy>1440</energy>
-   <shield_regen>10</shield_regen>
+   <absorb>23</absorb>
+   <armour>400</armour>
    <armour_regen>0</armour_regen>
-   <energy_regen>56</energy_regen>
   </health>
   <characteristics>
-   <cpu>84</cpu>
    <crew>17</crew>
-   <mass>730</mass>
-   <fuel>500</fuel>
-   <cargo>30</cargo>
+   <mass>360</mass>
+   <cargo>15</cargo>
   </characteristics>
   <slots>
    <weapon x="-15" y="-10" h="-10" size="heavy"></weapon>
@@ -1733,17 +1743,29 @@
    <weapon x="20" y="0" h="-10"/>
    <weapon x="4" y="-5" h="-10"/>
    <weapon x="4" y="5" h="-10"/>
+   <utility prop="systems" size="medium">Basic Medium Systems</utility>
    <utility size="heavy"></utility>
    <utility size="heavy"></utility>
    <utility/>
    <utility/>
+   <structure prop="engines" size="medium">Manufacturer Medium Engine</structure>
+   <structure prop="hull" size="medium">Unmodified Medium Hull</structure>
    <structure size="heavy"></structure>
    <structure/>
    <structure/>
   </slots>
   <stats>
-   <launch_range>10</launch_range>
-   <tur_energy>-5</tur_energy>
+   <fuel_consumption>200</fuel_consumption>
+   <speed_mod>0</speed_mod>
+   <turn_mod>0</turn_mod>
+   <thrust_mod>0</thrust_mod>
+   <armour_mod>0</armour_mod>
+   <shield_mod>10</shield_mod>
+   <energy_mod>10</energy_mod>
+   <energy_regen_mod>0</energy_regen_mod>
+   <cargo_mod>-50</cargo_mod>
+   <ew_detect>10</ew_detect>
+   <ew_hide>0</ew_hide>
   </stats>
  </ship>
 
@@ -1756,44 +1778,46 @@
   <class>Armoured Transport</class>
   <price>1100000</price>
   <fabricator>Melendez Corp.</fabricator>
-  <license>Large Civilian Vessel License</license>
+  <license>Medium Civilian Vessel License</license>
   <description>A particularly durable Melendez design, the Rhino is well-suited to transporting high-value, high-risk freight. While it has much lower cargo density than dedicated freighters, it protects itself extremely effectively. Its modular bays allow it to function as a personnel transport, a fact not lost on modern militaries.</description>
-  <movement>
-   <thrust>110</thrust>
-   <turn>70</turn>
-   <speed>140</speed>
-  </movement>
   <health>
-   <absorb>38</absorb>
-   <shield>250</shield>
-   <armour>1000</armour>
-   <energy>970</energy>
-   <shield_regen>5</shield_regen>
+   <absorb>18</absorb>
+   <armour>300</armour>
    <armour_regen>0</armour_regen>
-   <energy_regen>43.3</energy_regen>
   </health>
   <characteristics>
-   <cpu>58</cpu>
    <crew>11</crew>
-   <mass>950</mass>
-   <fuel>500</fuel>
-   <cargo>160</cargo>
+   <mass>500</mass>
+   <cargo>80</cargo>
   </characteristics>
   <slots>
    <weapon x="25" y="-3" h="4" size="heavy"></weapon>
    <weapon x="25" y="3" h="4" size="heavy"></weapon>
    <weapon x="-15" y="-3" h="4"/>
    <weapon x="-15" y="3" h="4"/>
+   <utility prop="systems" size="medium">Basic Medium Systems</utility>
    <utility/>
    <utility/>
    <utility/>
+   <structure prop="engines" size="medium">Manufacturer Medium Engine</structure>
+   <structure prop="hull" size="medium">Unmodified Medium Hull</structure>
    <structure/>
    <structure/>
    <structure/>
    <structure/>
   </slots>
   <stats>
-   <cargo_inertia>10</cargo_inertia>
+   <fuel_consumption>200</fuel_consumption>
+   <speed_mod>-10</speed_mod>
+   <turn_mod>-10</turn_mod>
+   <thrust_mod>0</thrust_mod>
+   <armour_mod>15</armour_mod>
+   <shield_mod>0</shield_mod>
+   <energy_mod>0</energy_mod>
+   <energy_regen_mod>10</energy_regen_mod>
+   <cargo_mod>20</cargo_mod>
+   <ew_detect>0</ew_detect>
+   <ew_hide>0</ew_hide>
   </stats>
  </ship>
  <ship name="Pirate Rhino">
@@ -1802,45 +1826,47 @@
   <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Armoured Transport</class>
-  <price>1100000</price>
+  <price>1500000</price>
   <fabricator>Skull and Bones</fabricator>
   <description>The traditional Skull and Bones refit has left the Rhino substantially more manoeuvrable, though somewhat less armoured. Exploiting its large cargo bay and durability, the Rhino has become an excellent scavenger ship.</description>
-  <movement>
-   <thrust>115</thrust>
-   <turn>75</turn>
-   <speed>150</speed>
-  </movement>
   <health>
-   <absorb>40</absorb>
-   <shield>270</shield>
-   <armour>1200</armour>
-   <energy>970</energy>
-   <shield_regen>5</shield_regen>
+   <absorb>20</absorb>
+   <armour>350</armour>
    <armour_regen>0</armour_regen>
-   <energy_regen>43.3</energy_regen>
   </health>
   <characteristics>
-   <cpu>58</cpu>
    <crew>10</crew>
-   <mass>920</mass>
-   <fuel>500</fuel>
-   <cargo>160</cargo>
+   <mass>500</mass>
+   <cargo>90</cargo>
   </characteristics>
   <slots>
    <weapon x="25" y="-3" h="4" size="heavy"></weapon>
    <weapon x="25" y="3" h="4" size="heavy"></weapon>
    <weapon x="-15" y="-3" h="4"/>
    <weapon x="-15" y="3" h="4"/>
+   <utility prop="systems" size="medium">Previous Generation Medium Systems</utility>
    <utility/>
    <utility/>
    <utility/>
+   <structure prop="engines" size="medium">Beat Up Medium Engine</structure>
+   <structure prop="hull" size="medium">Patchwork Medium Plating</structure>
    <structure/>
    <structure/>
    <structure/>
    <structure/>
   </slots>
   <stats>
-   <cargo_inertia>10</cargo_inertia>
+   <fuel_consumption>200</fuel_consumption>
+   <speed_mod>10</speed_mod>
+   <turn_mod>0</turn_mod>
+   <thrust_mod>0</thrust_mod>
+   <armour_mod>0</armour_mod>
+   <shield_mod>10</shield_mod>
+   <energy_mod>0</energy_mod>
+   <energy_regen_mod>10</energy_regen_mod>
+   <cargo_mod>25</cargo_mod>
+   <ew_detect>0</ew_detect>
+   <ew_hide>10</ew_hide>
   </stats>
  </ship>
  <ship name="Mule">
@@ -1851,36 +1877,28 @@
   <class>Freighter</class>
   <price>900000</price>
   <fabricator>Melendez Corp.</fabricator>
-  <license>Large Civilian Vessel License</license>
+  <license>Medium Civilian Vessel License</license>
   <description>A heavy freighter specialized in transporting cargo throughout the galaxy. Also has sufficient accommodations for passengers depending on the model, allowing for enjoyable cruises. The Mule was a favorite target of pirates until they added defensive capabilities to the new models which have proved highly effective against ill-prepared pirates.</description>
-  <movement>
-   <thrust>100</thrust>
-   <turn>60</turn>
-   <speed>100</speed>
-  </movement>
   <health>
-   <absorb>50</absorb>
-   <shield>190</shield>
-   <armour>750</armour>
-   <energy>600</energy>
-   <shield_regen>4</shield_regen>
+   <absorb>10</absorb>
+   <armour>300</armour>
    <armour_regen>0</armour_regen>
-   <energy_regen>26.7</energy_regen>
   </health>
   <characteristics>
-   <cpu>43</cpu>
    <crew>13</crew>
-   <mass>1250</mass>
-   <fuel>500</fuel>
-   <cargo>350</cargo>
+   <mass>600</mass>
+   <cargo>100</cargo>
   </characteristics>
   <slots>
    <weapon x="25" y="0" h="0" size="heavy"></weapon>
    <weapon x="-15" y="0" h="4"/>
    <weapon x="15" y="0" h="4"/>
+   <utility prop="systems" size="medium">Basic Medium Systems</utility>
    <utility/>
    <utility/>
    <utility/>
+   <structure prop="engines" size="medium">Manufacturer Medium Engine</structure>
+   <structure prop="hull" size="medium">Unmodified Medium Hull</structure>
    <structure/>
    <structure/>
    <structure/>
@@ -1889,7 +1907,17 @@
    <structure/>
   </slots>
   <stats>
-   <cargo_inertia>-20</cargo_inertia>
+   <fuel_consumption>200</fuel_consumption>
+   <speed_mod>10</speed_mod>
+   <turn_mod>-20</turn_mod>
+   <thrust_mod>-20</thrust_mod>
+   <armour_mod>0</armour_mod>
+   <shield_mod>0</shield_mod>
+   <energy_mod>0</energy_mod>
+   <energy_regen_mod>0</energy_regen_mod>
+   <cargo_mod>50</cargo_mod>
+   <ew_detect>0</ew_detect>
+   <ew_hide>-30</ew_hide>
   </stats>
  </ship>
 
