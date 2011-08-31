@@ -136,7 +136,7 @@
   <item>Medium Combat Vessel License</item>
   <item>Heavy Combat Vessel License</item>
   <item>Pirate Landing Pass</item>
-  <item>Previous Generation Systems</item>
+  <item>Previous Generation Small Systems</item>
   <item>Basic Small Systems</item>
   <item>Unicorp PT-100 Core System</item>
   <item>Unicorp PT-200 Core System</item>
@@ -150,7 +150,21 @@
   <item>Milspec Vespa 2544 Core System</item>
   <item>Milspec Orion 3701 Core System</item>
   <item>Milspec Orion 3702 Core System</item>
-  <item>Beat Up Engine</item>
+  <item>Previous Generation Medium Systems</item>
+  <item>Basic Medium Systems</item>
+  <item>Unicorp PT-500 Core System</item>
+  <item>Unicorp PT-600 Core System</item>
+  <item>Unicorp RX-26 Core System</item>
+  <item>Unicorp JX-30 Core System</item>
+  <item>Unicorp EX-24 Core System</item>
+  <item>Milspec Orion 4801 Core System</item>
+  <item>Milspec Orion 4802 Core System</item>
+  <item>Milspec Gemini 3308 Core System</item>
+  <item>Milspec Taurus 3323 Core System</item>
+  <item>Milspec Vespa 3380 Core System</item>
+  <item>Milspec Orion 5501 Core System</item>
+  <item>Milspec Orion 5502 Core System</item>
+  <item>Beat Up Small Engine</item>
   <item>Manufacturer Small Engine</item>
   <item>Unicorp KRD-B10 Engine</item>
   <item>Unicorp KRD-B12 Engine</item>
@@ -160,11 +174,26 @@
   <item>Tricon Naga Mk3 Engine</item>
   <item>Tricon Naga Mk5 Engine</item>
   <item>Tricon Crane Engine</item>
-  <item>Tricon Spriggan Engine</item>
+  <item>Tricon Albatross Engine</item>
   <item>Tricon Oxen Engine</item>
   <item>Tricon Naga Mk9 Engine</item>
   <item>Tricon Naga Mk12 Engine</item>
-  <item>Patchwork Plating</item>
+  <item>Beat Up Medium Engine</item>
+  <item>Manufacturer Medium Engine</item>
+  <item>Unicorp KRD-G10 Engine</item>
+  <item>Unicorp KRD-G15 Engine</item>
+  <item>Unicorp EXA-66F Engine</item>
+  <item>Unicorp AUR-70A Engine</item>
+  <item>Unicorp JNS-54K Engine</item>
+  <item>Tricon Centaur Mk2 Engine</item>
+  <item>Tricon Centaur Mk3 Engine</item>
+  <item>Tricon Kolibri Engine</item>
+  <item>Tricon Antelope Engine</item>
+  <item>Tricon Buffalo Engine</item>
+  <item>Tricon Centaur Mk7 Engine</item>
+  <item>Tricon Centaur Mk8 Engine</item>
+  <item>Tricon Centaur Mk7-Ra Engine</item>
+  <item>Patchwork Light Plating</item>
   <item>Unmodified Small Hull</item>
   <item>Unicorp D-2 Light Plating</item>
   <item>Unicorp C-2 Light Plating</item>
@@ -173,6 +202,22 @@
   <item>Schafer &amp; Kane Light Combat Plating</item>
   <item>Schafer &amp; Kane Light Stealth Plating</item>
   <item>Schafer &amp; Kane Small Cargo Hull</item>
+  <item>Patchwork Medium Plating</item>
+  <item>Unmodified Medium Hull</item>
+  <item>Unicorp D-8 Medium Plating</item>
+  <item>Unicorp C-8 Medium Plating</item>
+  <item>Unicorp Medium Cargo Hull</item>
+  <item>Schafer &amp; Kane Medium Combat Plating Alpha</item>
+  <item>Schafer &amp; Kane Medium Combat Plating Beta</item>
+  <item>Schafer &amp; Kane Medium Cargo Hull</item>
+  <item>Schafer &amp; Kane Medium Stealth Plating</item>
+  <item>Schafer &amp; Kane Medium Combat Plating Gamma</item>
+  <item>Schafer &amp; Kane Medium Solar Plating</item>
+  <item>Laser Cannon MK0</item>
+  <item>Base Ripper MK2</item>
+  <item>Cheater's Ragnarok Beam</item>
+  <item>Cheater's Laser Cannon</item>
+  <item>Ultra Map</item> 
  </tech>
  <tech name="All Ships">
   <item>Admonisher</item>
