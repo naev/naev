@@ -3226,7 +3226,7 @@
    <shield>350</shield>
    <shield_regen>6</shield_regen>
    <energy>900</energy>
-   <energy_regen>40</energy_regen>
+   <energy_regen>60</energy_regen>
    <ew_hide>0</ew_hide>
   </specific>
  </outfit>
@@ -3245,7 +3245,7 @@
    <shield>700</shield>
    <shield_regen>9</shield_regen>
    <energy>1800</energy>
-   <energy_regen>66</energy_regen>
+   <energy_regen>99</energy_regen>
    <ew_hide>0</ew_hide>
   </specific>
  </outfit>
@@ -3264,7 +3264,7 @@
    <shield>730</shield>
    <shield_regen>9</shield_regen>
    <energy>2000</energy>
-   <energy_regen>72</energy_regen>
+   <energy_regen>108</energy_regen>
    <ew_hide>0</ew_hide>
   </specific>
  </outfit>
@@ -3283,7 +3283,7 @@
    <shield>750</shield>
    <shield_regen>9</shield_regen>
    <energy>2100</energy>
-   <energy_regen>75</energy_regen>
+   <energy_regen>112</energy_regen>
    <ew_hide>0</ew_hide>
   </specific>
  </outfit>
@@ -3302,7 +3302,7 @@
    <shield>700</shield>
    <shield_regen>8</shield_regen>
    <energy>1900</energy>
-   <energy_regen>69</energy_regen>
+   <energy_regen>103</energy_regen>
    <ew_hide>0</ew_hide>
   </specific>
  </outfit>
@@ -3321,7 +3321,7 @@
    <shield>830</shield>
    <shield_regen>10</shield_regen>
    <energy>1900</energy>
-   <energy_regen>70</energy_regen>
+   <energy_regen>105</energy_regen>
    <ew_hide>0</ew_hide>
   </specific>
  </outfit>
@@ -3340,7 +3340,7 @@
    <shield>700</shield>
    <shield_regen>8</shield_regen>
    <energy>3000</energy>
-   <energy_regen>90</energy_regen>
+   <energy_regen>135</energy_regen>
    <ew_hide>0</ew_hide>
   </specific>
  </outfit>
@@ -3359,7 +3359,7 @@
    <shield>800</shield>
    <shield_regen>10</shield_regen>
    <energy>2700</energy>
-   <energy_regen>80</energy_regen>
+   <energy_regen>120</energy_regen>
    <ew_hide>0</ew_hide>
   </specific>
  </outfit>
@@ -3378,7 +3378,7 @@
    <shield>840</shield>
    <shield_regen>10</shield_regen>
    <energy>3300</energy>
-   <energy_regen>90</energy_regen>
+   <energy_regen>135</energy_regen>
    <ew_hide>0</ew_hide>
   </specific>
  </outfit>
@@ -3397,7 +3397,7 @@
    <shield>800</shield>
    <shield_regen>9</shield_regen>
    <energy>3000</energy>
-   <energy_regen>80</energy_regen>
+   <energy_regen>120</energy_regen>
    <ew_hide>0</ew_hide>
   </specific>
  </outfit>
@@ -3416,7 +3416,7 @@
    <shield>900</shield>
    <shield_regen>11</shield_regen>
    <energy>3000</energy>
-   <energy_regen>80</energy_regen>
+   <energy_regen>120</energy_regen>
    <ew_hide>0</ew_hide>
   </specific>
  </outfit>
@@ -3435,7 +3435,7 @@
    <shield>800</shield>
    <shield_regen>9</shield_regen>
    <energy>4000</energy>
-   <energy_regen>100</energy_regen>
+   <energy_regen>150</energy_regen>
    <ew_hide>0</ew_hide>
   </specific>
  </outfit>
@@ -3454,7 +3454,7 @@
    <shield>900</shield>
    <shield_regen>11</shield_regen>
    <energy>4000</energy>
-   <energy_regen>100</energy_regen>
+   <energy_regen>150</energy_regen>
    <ew_hide>0</ew_hide>
   </specific>
  </outfit>
@@ -3473,7 +3473,7 @@
    <shield>950</shield>
    <shield_regen>11</shield_regen>
    <energy>4000</energy>
-   <energy_regen>110</energy_regen>
+   <energy_regen>165</energy_regen>
    <ew_hide>0</ew_hide>
   </specific>
  </outfit>
@@ -3492,7 +3492,7 @@
    <shield>100</shield>
    <shield_regen>12</shield_regen>
    <energy>4800</energy>
-   <energy_regen>120</energy_regen>
+   <energy_regen>180</energy_regen>
    <ew_hide>0</ew_hide>
   </specific>
  </outfit>
@@ -3780,7 +3780,7 @@
    <turn>30</turn>
    <speed>50</speed>
    <fuel>400</fuel>
-   <energy_regen>-20</energy_regen>
+   <energy_regen>-10</energy_regen>
    <engine_limit>250</engine_limit>
   </specific>
  </outfit>
