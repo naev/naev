@@ -135,6 +135,7 @@
   <item>Light Combat Vessel License</item>
   <item>Medium Combat Vessel License</item>
   <item>Heavy Combat Vessel License</item>
+  <item>Tricon Experimental Engine License</item>
   <item>Pirate Landing Pass</item>
   <item>Previous Generation Small Systems</item>
   <item>Basic Small Systems</item>
@@ -164,6 +165,21 @@
   <item>Milspec Vespa 3380 Core System</item>
   <item>Milspec Orion 5501 Core System</item>
   <item>Milspec Orion 5502 Core System</item>
+  <item>Previous Generation Large Systems</item>
+  <item>Basic Large Systems</item>
+  <item>Unicorp PT-1000 Core System</item>
+  <item>Unicorp PT-1200 Core System</item>
+  <item>Unicorp RX-71 Core System</item>
+  <item>Unicorp JX-66 Core System</item>
+  <item>Unicorp EX-80 Core System</item>
+  <item>Milspec Orion 8801 Core System</item>
+  <item>Milspec Orion 8802 Core System</item>
+  <item>Milspec Gemini 5050 Core System</item>
+  <item>Milspec Taurus 4909 Core System</item>
+  <item>Milspec Vespa 6114 Core System</item>
+  <item>Milspec Orion 9901 Core System</item>
+  <item>Milspec Orion 9902 Core System</item>
+  <item>Milspec Orion 9903 Core System</item>
   <item>Beat Up Small Engine</item>
   <item>Manufacturer Small Engine</item>
   <item>Unicorp KRD-B10 Engine</item>
@@ -193,6 +209,21 @@
   <item>Tricon Centaur Mk7 Engine</item>
   <item>Tricon Centaur Mk8 Engine</item>
   <item>Tricon Centaur Mk7-Ra Engine</item>
+  <item>Beat Up Large Engine</item>
+  <item>Manufacturer Large Engine</item>
+  <item>Unicorp KRD-T10 Engine</item>
+  <item>Unicorp KRD-T20 Engine</item>
+  <item>Unicorp EXA-71F Engine</item>
+  <item>Unicorp AUR-79A Engine</item>
+  <item>Unicorp JNS-99K Engine</item>
+  <item>Tricon Harpy Mk1 Engine</item>
+  <item>Tricon Harpy Mk6 Engine</item>
+  <item>Tricon Raven Engine</item>
+  <item>Tricon Kraken Engine</item>
+  <item>Tricon Mammoth Engine</item>
+  <item>Tricon Harpy Mk11 Engine</item>
+  <item>Tricon Harpy Mk15 Engine</item>
+  <item>Tricon Model X Large Engine</item>
   <item>Patchwork Light Plating</item>
   <item>Unmodified Small Hull</item>
   <item>Unicorp D-2 Light Plating</item>
@@ -213,11 +244,18 @@
   <item>Schafer &amp; Kane Medium Stealth Plating</item>
   <item>Schafer &amp; Kane Medium Combat Plating Gamma</item>
   <item>Schafer &amp; Kane Medium Solar Plating</item>
-  <item>Laser Cannon MK0</item>
-  <item>Base Ripper MK2</item>
-  <item>Cheater's Ragnarok Beam</item>
-  <item>Cheater's Laser Cannon</item>
-  <item>Ultra Map</item> 
+  <item>Patchwork Heavy Plating</item>
+  <item>Unmodified Large Hull</item>
+  <item>Unicorp D-16 Heavy Plating</item>
+  <item>Unicorp C-16 Heavy Plating</item>
+  <item>Unicorp B-16 Heavy Plating</item>
+  <item>Unicorp Large Cargo Hull</item>
+  <item>Schafer &amp; Kane Heavy Combat Plating Alpha</item>
+  <item>Schafer &amp; Kane Heavy Combat Plating Beta</item>
+  <item>Schafer &amp; Kane Large Cargo Hull</item>
+  <item>Schafer &amp; Kane Heavy Combat Plating Gamma</item>
+  <item>Schafer &amp; Kane Heavy Solar Plating</item>
+  <item>Schafer &amp; Kane Superheavy Combat Plating</item>
  </tech>
  <tech name="All Ships">
   <item>Llama</item>
