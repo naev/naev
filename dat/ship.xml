@@ -2247,58 +2247,6 @@
    <tur_damage>5</tur_damage>
   </stats>
  </ship>
- <ship name="Soromid Arx">
-  <base_type>Arx</base_type>
-  <GFX sx="12" sy="12">arx</GFX>
-  <GUI>slim</GUI>
-  <sound>engine</sound>
-  <class>Carrier</class>
-  <price>7200000</price>
-  <fabricator>Soromid</fabricator>
-  <license>Heavy Combat Vessel License</license>
-  <description>The Soromid Arx usually features in Soromid fleets as a command vessel and fighter carrier. It provides small craft with refuel and rearm services and has excellent durability. It is, however, lacking in both the speed and mobility areas.</description>
-  <movement>
-   <thrust>55</thrust>
-   <turn>55</turn>
-   <speed>75</speed>
-  </movement>
-  <health>
-   <absorb>64</absorb>
-   <shield>900</shield>
-   <armour>3700</armour>
-   <energy>1800</energy>
-   <shield_regen>10</shield_regen>
-   <armour_regen>6</armour_regen>
-   <energy_regen>66.7</energy_regen>
-  </health>
-  <characteristics>
-   <cpu>120</cpu>
-   <crew>36</crew>
-   <mass>3900</mass>
-   <fuel>500</fuel>
-   <cargo>85</cargo>
-  </characteristics>
-  <slots>
-   <weapon x="40" y="0" h="0"/>
-   <weapon x="20" y="0" h="0"/>
-   <weapon x="20" y="0" h="0"/>
-   <weapon x="-20" y="0" h="0"/>
-   <weapon x="-40" y="0" h="0"/>
-   <utility/>
-   <utility/>
-   <utility/>
-   <utility/>
-   <structure/>
-   <structure/>
-   <structure/>
-   <structure/>
-   <structure/>
-  </slots>
-  <stats>
-   <launch_rate>15</launch_rate>
-   <ew_detect>10</ew_detect>
-  </stats>
- </ship>
  <ship name="Sirius Dogma">
   <base_type>Dogma</base_type>
   <GFX sx="12" sy="12">dogma</GFX>
@@ -2349,58 +2297,6 @@
    <structure/>
   </slots>
   <stats>
-   <ew_detect>10</ew_detect>
-  </stats>
- </ship>
- <ship name="Sirius Divinity">
-  <base_type>Divinity</base_type>
-  <GFX sx="12" sy="12">divinity</GFX>
-  <GUI>slim</GUI>
-  <sound>engine</sound>
-  <class>Carrier</class>
-  <price>7200000</price>
-  <fabricator>Sirius Systems</fabricator>
-  <license>Heavy Combat Vessel License</license>
-  <description>Whilst the Dogma is said to form the core of any Sirian fleet, few combat pilots would dismiss the significance of the Divinity. Though not exceptionally formidable in direct combat, the Divinity's ability to field a multitude of fighters gives it unparalleled flexibility in combat, serving as a key logistical vessel in any sizable fleet.</description>
-  <movement>
-   <thrust>55</thrust>
-   <turn>55</turn>
-   <speed>75</speed>
-  </movement>
-  <health>
-   <absorb>64</absorb>
-   <shield>880</shield>
-   <armour>4400</armour>
-   <energy>1800</energy>
-   <shield_regen>11</shield_regen>
-   <armour_regen>0</armour_regen>
-   <energy_regen>66.7</energy_regen>
-  </health>
-  <characteristics>
-   <cpu>120</cpu>
-   <crew>36</crew>
-   <mass>3900</mass>
-   <fuel>500</fuel>
-   <cargo>85</cargo>
-  </characteristics>
-  <slots>
-   <weapon x="40" y="0" h="0"/>
-   <weapon x="20" y="0" h="0"/>
-   <weapon x="20" y="0" h="0"/>
-   <weapon x="-20" y="0" h="0"/>
-   <weapon x="-40" y="0" h="0"/>
-   <utility/>
-   <utility/>
-   <utility/>
-   <utility/>
-   <structure/>
-   <structure/>
-   <structure/>
-   <structure/>
-   <structure/>
-  </slots>
-  <stats>
-   <launch_rate>15</launch_rate>
    <ew_detect>10</ew_detect>
   </stats>
  </ship>
@@ -2519,6 +2415,172 @@
    <tur_damage>10</tur_damage>
   </stats>
  </ship>
+
+ <!-- Carriers -->
+ <ship name="Sirius Divinity">
+  <base_type>Divinity</base_type>
+  <GFX sx="12" sy="12">divinity</GFX>
+  <GUI>slim</GUI>
+  <sound>engine</sound>
+  <class>Carrier</class>
+  <price>7200000</price>
+  <fabricator>Sirius Systems</fabricator>
+  <license>Heavy Combat Vessel License</license>
+  <description>Whilst the Dogma is said to form the core of any Sirian fleet, few combat pilots would dismiss the significance of the Divinity. Though not exceptionally formidable in direct combat, the Divinity's ability to field a multitude of fighters gives it unparalleled flexibility in combat, serving as a key logistical vessel in any sizable fleet.</description>
+  <movement>
+   <thrust>55</thrust>
+   <turn>55</turn>
+   <speed>75</speed>
+  </movement>
+  <health>
+   <absorb>64</absorb>
+   <shield>880</shield>
+   <armour>4400</armour>
+   <energy>1800</energy>
+   <shield_regen>11</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>66.7</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>120</cpu>
+   <crew>36</crew>
+   <mass>3900</mass>
+   <fuel>500</fuel>
+   <cargo>85</cargo>
+  </characteristics>
+  <slots>
+   <weapon x="40" y="0" h="0"/>
+   <weapon x="20" y="0" h="0"/>
+   <weapon x="20" y="0" h="0"/>
+   <weapon x="-20" y="0" h="0"/>
+   <weapon x="-40" y="0" h="0"/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
+  </slots>
+  <stats>
+   <launch_rate>15</launch_rate>
+   <ew_detect>10</ew_detect>
+  </stats>
+ </ship>
+ <ship name="Soromid Arx">
+  <base_type>Arx</base_type>
+  <GFX sx="12" sy="12">arx</GFX>
+  <GUI>slim</GUI>
+  <sound>engine</sound>
+  <class>Carrier</class>
+  <price>7200000</price>
+  <fabricator>Soromid</fabricator>
+  <license>Heavy Combat Vessel License</license>
+  <description>The Soromid Arx usually features in Soromid fleets as a command vessel and fighter carrier. It provides small craft with refuel and rearm services and has excellent durability. It is, however, lacking in both the speed and mobility areas.</description>
+  <movement>
+   <thrust>55</thrust>
+   <turn>55</turn>
+   <speed>75</speed>
+  </movement>
+  <health>
+   <absorb>64</absorb>
+   <shield>900</shield>
+   <armour>3700</armour>
+   <energy>1800</energy>
+   <shield_regen>10</shield_regen>
+   <armour_regen>6</armour_regen>
+   <energy_regen>66.7</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>120</cpu>
+   <crew>36</crew>
+   <mass>3900</mass>
+   <fuel>500</fuel>
+   <cargo>85</cargo>
+  </characteristics>
+  <slots>
+   <weapon x="40" y="0" h="0"/>
+   <weapon x="20" y="0" h="0"/>
+   <weapon x="20" y="0" h="0"/>
+   <weapon x="-20" y="0" h="0"/>
+   <weapon x="-40" y="0" h="0"/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
+  </slots>
+  <stats>
+   <launch_rate>15</launch_rate>
+   <ew_detect>10</ew_detect>
+  </stats>
+ </ship>
+ <ship name="Proteron Watson">
+  <base_type>Watson</base_type>
+  <GFX sx="12" sy="12">watson</GFX>
+  <GUI>slim</GUI>
+  <sound>engine</sound>
+  <class>Carrier</class>
+  <price>18000000</price>
+  <fabricator>Nexus Shipyards</fabricator>
+  <license>Heavy Combat Vessel License</license>
+  <description>TODO</description>
+  <movement>
+   <thrust>40</thrust>
+   <turn>35</turn>
+   <speed>45</speed>
+  </movement>
+  <health>
+   <absorb>78</absorb>
+   <shield>1000</shield>
+   <armour>5000</armour>
+   <energy>4800</energy>
+   <shield_regen>12</shield_regen>
+   <armour_regen>0</armour_regen>
+   <energy_regen>118.3</energy_regen>
+  </health>
+  <characteristics>
+   <cpu>240</cpu>
+   <crew>65</crew>
+   <mass>6200</mass>
+   <fuel>500</fuel>
+   <cargo>130</cargo>
+  </characteristics>
+  <slots>
+   <weapon x="40" y="0" h="2"/>
+   <weapon x="25" y="0" h="2"/>
+   <weapon x="12" y="-6" h="0"/>
+   <weapon x="12" y="6" h="0"/>
+   <weapon x="0" y="0" h="7"/>
+   <weapon x="0" y="0" h="7"/>
+   <weapon x="-15" y="0" h="7"/>
+   <weapon x="-33" y="0" h="7"/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <utility/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
+   <structure/>
+  </slots>
+  <stats>
+   <tur_energy>-10</tur_energy>
+   <tur_firerate>-5</tur_firerate>
+   <ammo_capacity>25</ammo_capacity>
+   <misc_instant_jump>1</misc_instant_jump>
+  </stats>
+ </ship>
  <ship name="Empire Peacemaker">
   <base_type>Peacemaker</base_type>
   <GFX sx="12" sy="12">peacemaker</GFX>
@@ -2579,7 +2641,8 @@
    <misc_instant_jump>1</misc_instant_jump>
   </stats>
  </ship>
- <!-- Note: the base is NOT a normal ship. Do not add to techs or fleets! -->
+
+ <!-- Special craft, mainly used for missioning purposes. -->
  <ship name="Base">
   <base_type>Base</base_type>
   <GFX sx="1" sy="1">base</GFX>
@@ -2633,7 +2696,6 @@
    <structure/>
   </slots>
  </ship>
- <!-- Special craft, mainly used for missioning purposes. -->
  <ship name="Seiryuu">
   <base_type>Kestrel</base_type>
   <GFX sx="10" sy="10">kestrel_pirate</GFX>
