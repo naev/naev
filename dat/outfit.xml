@@ -4313,7 +4313,7 @@
    <slot prop="engines">structure</slot>
    <size>heavy</size>
    <mass>50</mass>
-   <price>11000000</price>
+   <price>12000000</price>
    <description>Development of the Harpy Mk15 engine was something of a prestige project for Tricon. It performs somewhat better than the more commercially oriented Mk11, but its price tags make it a viable choice only for the wealthy enthusiast.</description>
    <gfx_store>afterburner</gfx_store>
   </general>
@@ -4708,6 +4708,225 @@
    <armour_regen>0</armour_regen>
    <ew_hide>0</ew_hide>
    <energy_regen>30</energy_regen>
+  </specific>
+ </outfit>
+ <!-- Large slot hull mods. -->
+ <outfit name="Patchwork Heavy Plating">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="hull">structure</slot>
+   <size>heavy</size>
+   <mass>1400</mass>
+   <price>0</price>
+   <description>On the plus side, it keeps air from venting into space. But that's about it. This kind of hull maintenance is simply unacceptable.</description>
+   <gfx_store>nanobond</gfx_store>
+  </general>
+  <specific type="modification">
+   <cargo>10</cargo>
+   <absorb>25</absorb>
+   <armour>500</armour>
+   <armour_regen>0</armour_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Unmodified Large Hull">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="hull">structure</slot>
+   <size>heavy</size>
+   <mass>800</mass>
+   <price>1000000</price>
+   <description>The manufacturer spec hull configuration. Certainly spaceworthy, but miserably fails to tap the hull's full potential.</description>
+   <gfx_store>nanobond</gfx_store>
+  </general>
+  <specific type="modification">
+   <cargo>50</cargo>
+   <absorb>50</absorb>
+   <armour>800</armour>
+   <armour_regen>0</armour_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp D-16 Heavy Plating">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="hull">structure</slot>
+   <size>heavy</size>
+   <mass>800</mass>
+   <price>2500000</price>
+   <description>D-16 plating is a cost-effective armour configuration for capital ships. It is comparatively weak, but the low weight can be a plus to some.</description>
+   <gfx_store>nanobond</gfx_store>
+  </general>
+  <specific type="modification">
+   <cargo>50</cargo>
+   <absorb>55</absorb>
+   <armour>1300</armour>
+   <armour_regen>0</armour_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp C-16 Heavy Plating">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="hull">structure</slot>
+   <size>heavy</size>
+   <mass>1100</mass>
+   <price>4500000</price>
+   <description>C-16 plating is a reinforced upgrade of the D-16 configuration. Its additional superstructure is added on top of the original design, so it does not infringe on internal cargo space.</description>
+   <gfx_store>nanobond</gfx_store>
+  </general>
+  <specific type="modification">
+   <cargo>50</cargo>
+   <absorb>60</absorb>
+   <armour>1900</armour>
+   <armour_regen>0</armour_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp B-16 Heavy Plating">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="hull">structure</slot>
+   <size>heavy</size>
+   <mass>3000</mass>
+   <price>7000000</price>
+   <description>B-16 plating is a low-end heavy punishment hull modification. It is designed to absorb lots of damage, but its armour-to-weight ratio is worse than the C or D variants.</description>
+   <gfx_store>nanobond</gfx_store>
+  </general>
+  <specific type="modification">
+   <cargo>50</cargo>
+   <absorb>65</absorb>
+   <armour>2500</armour>
+   <armour_regen>0</armour_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp Large Cargo Hull">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="hull">structure</slot>
+   <size>heavy</size>
+   <mass>1300</mass>
+   <price>7000000</price>
+   <description>This hull provides space for multiple large shipments while retaining capital ship class protection.</description>
+   <gfx_store>nanobond</gfx_store>
+  </general>
+  <specific type="modification">
+   <cargo>200</cargo>
+   <absorb>50</absorb>
+   <armour>1400</armour>
+   <armour_regen>0</armour_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Schafer &amp; Kane Heavy Combat Plating Alpha">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="hull">structure</slot>
+   <size>heavy</size>
+   <mass>2000</mass>
+   <price>9000000</price>
+   <description>This heavy plating developed by Schafer &amp; Kane Industries can endure prolonged battle. Quite a few captains and their crews owe their lives to this armour configuration.</description>
+   <gfx_store>nanobond</gfx_store>
+  </general>
+  <specific type="modification">
+   <cargo>50</cargo>
+   <absorb>65</absorb>
+   <armour>2200</armour>
+   <armour_regen>0</armour_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Schafer &amp; Kane Heavy Combat Plating Beta">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="hull">structure</slot>
+   <size>heavy</size>
+   <mass>2300</mass>
+   <price>11000000</price>
+   <description>This heavy plating developed by Schafer &amp; Kane Industries is among the toughest on the market. The price tag is well worth the fire it stops.</description>
+   <gfx_store>nanobond</gfx_store>
+  </general>
+  <specific type="modification">
+   <cargo>50</cargo>
+   <absorb>70</absorb>
+   <armour>2800</armour>
+   <armour_regen>0</armour_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Schafer &amp; Kane Large Cargo Hull">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="hull">structure</slot>
+   <size>heavy</size>
+   <mass>2300</mass>
+   <price>12000000</price>
+   <description>This cargo hull from Schafer &amp; Kane Industries makes use of state-of-the-art defensive alloys, which allows it to free up even more space for cargo without sacrificing too much durability.</description>
+   <gfx_store>nanobond</gfx_store>
+  </general>
+  <specific type="modification">
+   <cargo>300</cargo>
+   <absorb>60</absorb>
+   <armour>2000</armour>
+   <armour_regen>0</armour_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Schafer &amp; Kane Heavy Combat Plating Gamma">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="hull">structure</slot>
+   <size>heavy</size>
+   <mass>2800</mass>
+   <price>14000000</price>
+   <description>Considered the best standard plating configuration on the market, this hull modification from Schafer &amp; Kane Industries is generally found only on important capital ships.</description>
+   <gfx_store>nanobond</gfx_store>
+  </general>
+  <specific type="modification">
+   <cargo>50</cargo>
+   <absorb>75</absorb>
+   <armour>3400</armour>
+   <armour_regen>0</armour_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Schafer &amp; Kane Heavy Solar Plating">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="hull">structure</slot>
+   <size>heavy</size>
+   <mass>2000</mass>
+   <price>15000000</price>
+   <description>This armour plating configuration from Schafer &amp; Kane Industries mounts layers of solar energy converters on the outer hull where the outer shock plating would normally be. This results in much reduced armour capacity, but boosts the energy generation of the ship.</description>
+   <gfx_store>nanobond</gfx_store>
+  </general>
+  <specific type="modification">
+   <cargo>50</cargo>
+   <absorb>55</absorb>
+   <armour>1800</armour>
+   <armour_regen>0</armour_regen>
+   <ew_hide>0</ew_hide>
+   <energy_regen>100</energy_regen>
+  </specific>
+ </outfit>
+ <outfit name="Schafer &amp; Kane Superheavy Combat Plating">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="hull">structure</slot>
+   <size>heavy</size>
+   <mass>5000</mass>
+   <price>18000000</price>
+   <description>Schafer &amp; Kane Industries have developed this super-heavy armour configuration for ships whose task in battle is to endure the brunt of the enemy's fire. It is very durable indeed, but weighs disporportionally much and renders the ship completely unfit to handle cargo.</description>
+   <gfx_store>nanobond</gfx_store>
+  </general>
+  <specific type="modification">
+   <cargo>0</cargo>
+   <cargo_mod>-100</cargo_mod>
+   <absorb>80</absorb>
+   <armour>4500</armour>
+   <armour_regen>0</armour_regen>
+   <ew_hide>0</ew_hide>
   </specific>
  </outfit>
 
