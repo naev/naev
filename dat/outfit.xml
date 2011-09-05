@@ -2662,6 +2662,15 @@
   </general>
   <specific type="license"/>
  </outfit>
+ <outfit name="Tricon Experimental Engine License">
+  <general>
+   <mass>0</mass>
+   <price>0</price>
+   <gfx_store>license</gfx_store>
+   <description>This license is issued by Tricon directly. Pilots carrying this license are eligible to purchase and equip off-market Tricon engine prototypes.</description>
+  </general>
+  <specific type="license"/>
+ </outfit>
  <outfit name="Pirate Landing Pass">
   <!-- this outfit should be considered contraband once it is implimented -->
   <general>
@@ -4048,6 +4057,293 @@
    <fuel>800</fuel>
    <energy_regen>-27</energy_regen>
    <engine_limit>1200</engine_limit>
+  </specific>
+ </outfit>
+ <!-- Large slot engines. -->
+ <outfit name="Beat Up Large Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>heavy</size>
+   <mass>100</mass>
+   <price>0</price>
+   <description>Clogged, corroded and cracked in every way possible while still remaining in functional condition, this engine really belongs on the scrap heap.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>20</thrust>
+   <turn>17</turn>
+   <speed>23</speed>
+   <fuel>800</fuel>
+   <energy_regen>-20</energy_regen>
+   <engine_limit>3750</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Manufacturer Large Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>heavy</size>
+   <mass>50</mass>
+   <price>1000000</price>
+   <description>The engine that most manufacturers install in their ships at assembly. Usually the first component pilots upgrade.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>40</thrust>
+   <turn>35</turn>
+   <speed>45</speed>
+   <fuel>1200</fuel>
+   <energy_regen>-38</energy_regen>
+   <engine_limit>4500</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp KRD-T10 Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>heavy</size>
+   <mass>50</mass>
+   <price>2000000</price>
+   <description>The KRD-T10 is a fairly inexpensive engine, by capital ship standards. Many captains find its output lacking, but not all captains can afford better.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>50</thrust>
+   <turn>40</turn>
+   <speed>50</speed>
+   <fuel>1200</fuel>
+   <energy_regen>-40</energy_regen>
+   <engine_limit>4900</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp KRD-T20 Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>heavy</size>
+   <mass>50</mass>
+   <price>2500000</price>
+   <description>The KRD-T20 is a modest improvement over the KRD-T10. It's a popular product among independent captains, despite its limited performance.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>60</thrust>
+   <turn>45</turn>
+   <speed>60</speed>
+   <fuel>1200</fuel>
+   <energy_regen>-42</energy_regen>
+   <engine_limit>5200</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp EXA-71F Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>heavy</size>
+   <mass>50</mass>
+   <price>2900000</price>
+   <description>Although capital ships are too big to rely on maneuverability, sometimes a ship needs to bring heavy forward fire to bear. The EXA-71F optimizes for turn rate, sacrificing speed.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>60</thrust>
+   <turn>65</turn>
+   <speed>40</speed>
+   <fuel>1200</fuel>
+   <energy_regen>-42</energy_regen>
+   <engine_limit>5200</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp AUR-79A Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>heavy</size>
+   <mass>50</mass>
+   <price>2900000</price>
+   <description>Often, profit involves getting as much cargo from A to B in as little time as possible. The AUR-97A tries to achieve the latter by prioritizing top speed over maneuverability.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>50</thrust>
+   <turn>35</turn>
+   <speed>80</speed>
+   <fuel>1200</fuel>
+   <energy_regen>-42</energy_regen>
+   <engine_limit>5200</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp JNS-99K Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>heavy</size>
+   <mass>50</mass>
+   <price>2900000</price>
+   <description>The JNS-99K offers a lot of horse powers for its price. It can shift very heavy cargo loads without losing efficiency.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>55</thrust>
+   <turn>40</turn>
+   <speed>50</speed>
+   <fuel>1600</fuel>
+   <energy_regen>-42</energy_regen>
+   <engine_limit>7500</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Tricon Harpy Mk1 Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>heavy</size>
+   <mass>50</mass>
+   <price>4500000</price>
+   <description>Tricon's Harpy engine is a heavy-duty, high power engine for captains whose ships require serious propulsion capabilities.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>70</thrust>
+   <turn>55</turn>
+   <speed>70</speed>
+   <fuel>1200</fuel>
+   <energy_regen>-45</energy_regen>
+   <engine_limit>6000</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Tricon Harpy Mk6 Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>heavy</size>
+   <mass>50</mass>
+   <price>6000000</price>
+   <description>Tricon's Harpy Mk6 provides superior allround propulsion. The Mk6 is often seen as the standard to which all other engines aspire.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>80</thrust>
+   <turn>65</turn>
+   <speed>80</speed>
+   <fuel>1600</fuel>
+   <energy_regen>-47</energy_regen>
+   <engine_limit>7500</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Tricon Raven Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>heavy</size>
+   <mass>50</mass>
+   <price>7000000</price>
+   <description>Tricon's Raven is a somewhat underappreciated engine, as most capital ships employ turrets in battle and therefore have little use for fast turn rates. However, for those ships that do rely on fixed cannon mounts, this engine is one of the best choices on the market.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>70</thrust>
+   <turn>85</turn>
+   <speed>60</speed>
+   <fuel>1600</fuel>
+   <energy_regen>-47</energy_regen>
+   <engine_limit>7500</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Tricon Kraken Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>heavy</size>
+   <mass>50</mass>
+   <price>7000000</price>
+   <description>Capital ships are often the slowest ships in any fleet, so speeding them up speeds up the whole fleet. Tricon's Kraken engine provides a serious boost to top speed, which later comes at the price of maneuverability in battle.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>70</thrust>
+   <turn>50</turn>
+   <speed>110</speed>
+   <fuel>1600</fuel>
+   <energy_regen>-47</energy_regen>
+   <engine_limit>7500</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Tricon Mammoth Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>heavy</size>
+   <mass>50</mass>
+   <price>7000000</price>
+   <description>Tricon's Mammoth can pull incridible amounts of mass. It requires specialized grav tethers to keep it attached to the ship's hull. This results in severely reduced top speed and maneuverability, but the increased mass limit more than makes up for that.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>70</thrust>
+   <turn>55</turn>
+   <speed>70</speed>
+   <fuel>2000</fuel>
+   <energy_regen>-47</energy_regen>
+   <engine_limit>9700</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Tricon Harpy Mk11 Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>heavy</size>
+   <mass>50</mass>
+   <price>9000000</price>
+   <description>Though the steep price is prohibitive to most, Tricon's Harpy Mk11 outperforms most other engines in just about every field.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>90</thrust>
+   <turn>70</turn>
+   <speed>90</speed>
+   <fuel>1600</fuel>
+   <energy_regen>-50</energy_regen>
+   <engine_limit>8200</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Tricon Harpy Mk15 Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>heavy</size>
+   <mass>50</mass>
+   <price>11000000</price>
+   <description>Development of the Harpy Mk15 engine was something of a prestige project for Tricon. It performs somewhat better than the more commercially oriented Mk11, but its price tags make it a viable choice only for the wealthy enthusiast.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>100</thrust>
+   <turn>80</turn>
+   <speed>100</speed>
+   <fuel>2000</fuel>
+   <energy_regen>-54</energy_regen>
+   <engine_limit>9000</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Tricon Model X Large Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <license>Tricon Experimental Engine License</license>
+   <size>heavy</size>
+   <mass>50</mass>
+   <price>18000000</price>
+   <description>This engine is a Tricon prototype. It hasn't received an official designation and is not available on the general market. Once rolled out, this engine is to become the norm on all military fast response fleet capital ships.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>110</thrust>
+   <turn>85</turn>
+   <speed>110</speed>
+   <fuel>2000</fuel>
+   <energy_regen>-58</energy_regen>
+   <engine_limit>10000</engine_limit>
   </specific>
  </outfit>
 
