@@ -294,6 +294,7 @@
    <jump_delay>-25</jump_delay>
   </stats>
  </ship>
+
  <!-- Fighters -->
  <ship name="Proteron Derivative">
   <base_type>Derivative</base_type>
@@ -1057,6 +1058,7 @@
    <launch_range>10</launch_range>
   </stats>
  </ship>
+
  <!-- Corvettes -->
  <ship name="Phalanx">
   <base_type>Phalanx</base_type>
@@ -1459,6 +1461,7 @@
    <ew_hide>0</ew_hide>
   </stats>
  </ship>
+
  <!-- Destroyers -->
  <ship name="Vigilance">
   <base_type>Vigilance</base_type>
