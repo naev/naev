@@ -220,59 +220,60 @@
   <item>Ultra Map</item> 
  </tech>
  <tech name="All Ships">
-  <item>Admonisher</item>
-  <item>Ancestor</item>
-  <item>Drone</item>
-  <item>Dvaered Ancestor</item>
-  <item>Dvaered Goddard</item>
-  <item>Dvaered Phalanx</item>
-  <item>Dvaered Vendetta</item>
-  <item>Dvaered Vigilance</item>
-  <item>Empire Admonisher</item>
-  <item>Empire Hawking</item>
-  <item>Empire Lancelot</item>
-  <item>Empire Pacifier</item>
-  <item>Empire Peacemaker</item>
-  <item>Empire Shark</item>
-  <item>Gawain</item>
-  <item>Goddard</item>
-  <item>Hawking</item>
-  <item>Hyena</item>
-  <item>Kestrel</item>
-  <item>Koala</item>
-  <item>Lancelot</item>
   <item>Llama</item>
-  <item>Mule</item>
-  <item>Pacifier</item>
-  <item>Phalanx</item>
-  <item>Pirate Admonisher</item>
-  <item>Pirate Ancestor</item>
-  <item>Pirate Kestrel</item>
-  <item>Pirate Phalanx</item>
-  <item>Pirate Rhino</item>
-  <item>Pirate Shark</item>
-  <item>Pirate Vendetta</item>
-  <item>Proteron Archimedes</item>
-  <item>Proteron Derivative</item>
-  <item>Proteron Kahan</item>
-  <item>Quicksilver</item>
-  <item>Rhino</item>
+  <item>Hyena</item>
   <item>Schroedinger</item>
-  <item>Shark</item>
+  <item>Gawain</item>
+  <item>Drone</item>
+  <item>Koala</item>
+  <item>Quicksilver</item>
+  <item>Proteron Derivative</item>
   <item>Sirius Fidelity</item>
-  <item>Sirius Shaman</item>
-  <item>Sirius Preacher</item>
-  <item>Sirius Divinity</item>
-  <item>Sirius Dogma</item>
   <item>Soromid Brigand</item>
+  <item>Shark</item>
+  <item>Pirate Shark</item>
+  <item>Empire Shark</item>
   <item>Soromid Reaver</item>
-  <item>Soromid Marauder</item>
-  <item>Soromid Odium</item>
-  <item>Soromid Nyx</item>
-  <item>Soromid Ira</item>
-  <item>Soromid Arx</item>
+  <item>Lancelot</item>
+  <item>Empire Lancelot</item>
   <item>Vendetta</item>
+  <item>Dvaered Vendetta</item>
+  <item>Pirate Vendetta</item>
+  <item>Sirius Shaman</item>
+  <item>Soromid Marauder</item>
+  <item>Ancestor</item>
+  <item>Dvaered Ancestor</item>
+  <item>Pirate Ancestor</item>
+  <item>Phalanx</item>
+  <item>Dvaered Phalanx</item>
+  <item>Pirate Phalanx</item>
+  <item>Sirius Preacher</item>
+  <item>Soromid Odium</item>
+  <item>Admonisher</item>
+  <item>Pirate Admonisher</item>
+  <item>Empire Admonisher</item>
   <item>Vigilance</item>
+  <item>Dvaered Vigilance</item>
+  <item>Proteron Kahan</item>
+  <item>Soromid Nyx</item>
+  <item>Pacifier</item>
+  <item>Empire Pacifier</item>
+  <item>Rhino</item>
+  <item>Pirate Rhino</item>
+  <item>Mule</item>
+  <item>Kestrel</item>
+  <item>Pirate Kestrel</item>
+  <item>Proteron Archimedes</item>
+  <item>Soromid Ira</item>
+  <item>Hawking</item>
+  <item>Empire Hawking</item>
+  <item>Sirius Dogma</item>
+  <item>Goddard</item>
+  <item>Dvaered Goddard</item>
+  <item>Sirius Divinity</item>
+  <item>Soromid Arx</item>
+  <item>Proteron Watson</item>
+  <item>Empire Peacemaker</item>
  </tech>
  <tech name="All Commodities">
   <item>Food</item>
