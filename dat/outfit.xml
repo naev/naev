@@ -4523,7 +4523,7 @@
   </general>
   <specific type="modification">
    <cargo>0</cargo>
-   <absorb>10</absorb>
+   <absorb>5</absorb>
    <armour>100</armour>
    <armour_regen>0</armour_regen>
    <ew_hide>0</ew_hide>
@@ -4541,7 +4541,7 @@
   </general>
   <specific type="modification">
    <cargo>10</cargo>
-   <absorb>20</absorb>
+   <absorb>12</absorb>
    <armour>300</armour>
    <armour_regen>0</armour_regen>
    <ew_hide>0</ew_hide>
@@ -4559,7 +4559,7 @@
   </general>
   <specific type="modification">
    <cargo>15</cargo>
-   <absorb>25</absorb>
+   <absorb>15</absorb>
    <armour>400</armour>
    <armour_regen>0</armour_regen>
    <ew_hide>0</ew_hide>
@@ -4577,7 +4577,7 @@
   </general>
   <specific type="modification">
    <cargo>15</cargo>
-   <absorb>30</absorb>
+   <absorb>17</absorb>
    <armour>500</armour>
    <armour_regen>0</armour_regen>
    <ew_hide>0</ew_hide>
@@ -4595,7 +4595,7 @@
   </general>
   <specific type="modification">
    <cargo>60</cargo>
-   <absorb>15</absorb>
+   <absorb>8</absorb>
    <armour>350</armour>
    <armour_regen>0</armour_regen>
    <ew_hide>0</ew_hide>
@@ -4613,7 +4613,7 @@
   </general>
   <specific type="modification">
    <cargo>15</cargo>
-   <absorb>35</absorb>
+   <absorb>18</absorb>
    <armour>600</armour>
    <armour_regen>0</armour_regen>
    <ew_hide>0</ew_hide>
@@ -4631,7 +4631,7 @@
   </general>
   <specific type="modification">
    <cargo>15</cargo>
-   <absorb>40</absorb>
+   <absorb>20</absorb>
    <armour>700</armour>
    <armour_regen>0</armour_regen>
    <ew_hide>0</ew_hide>
@@ -4649,7 +4649,7 @@
   </general>
   <specific type="modification">
    <cargo>150</cargo>
-   <absorb>20</absorb>
+   <absorb>10</absorb>
    <armour>550</armour>
    <armour_regen>0</armour_regen>
    <ew_hide>0</ew_hide>
@@ -4667,7 +4667,7 @@
   </general>
   <specific type="modification">
    <cargo>15</cargo>
-   <absorb>25</absorb>
+   <absorb>15</absorb>
    <armour>500</armour>
    <armour_regen>0</armour_regen>
    <ew_hide>40</ew_hide>
@@ -4685,7 +4685,7 @@
   </general>
   <specific type="modification">
    <cargo>15</cargo>
-   <absorb>45</absorb>
+   <absorb>22</absorb>
    <armour>900</armour>
    <armour_regen>0</armour_regen>
    <ew_hide>0</ew_hide>
@@ -4703,7 +4703,7 @@
   </general>
   <specific type="modification">
    <cargo>15</cargo>
-   <absorb>25</absorb>
+   <absorb>13</absorb>
    <armour>400</armour>
    <armour_regen>0</armour_regen>
    <ew_hide>0</ew_hide>
@@ -4723,7 +4723,7 @@
   </general>
   <specific type="modification">
    <cargo>10</cargo>
-   <absorb>25</absorb>
+   <absorb>12</absorb>
    <armour>500</armour>
    <armour_regen>0</armour_regen>
    <ew_hide>0</ew_hide>
@@ -4741,7 +4741,7 @@
   </general>
   <specific type="modification">
    <cargo>50</cargo>
-   <absorb>50</absorb>
+   <absorb>25</absorb>
    <armour>800</armour>
    <armour_regen>0</armour_regen>
    <ew_hide>0</ew_hide>
@@ -4759,7 +4759,7 @@
   </general>
   <specific type="modification">
    <cargo>50</cargo>
-   <absorb>55</absorb>
+   <absorb>27</absorb>
    <armour>1300</armour>
    <armour_regen>0</armour_regen>
    <ew_hide>0</ew_hide>
@@ -4777,7 +4777,7 @@
   </general>
   <specific type="modification">
    <cargo>50</cargo>
-   <absorb>60</absorb>
+   <absorb>28</absorb>
    <armour>1900</armour>
    <armour_regen>0</armour_regen>
    <ew_hide>0</ew_hide>
@@ -4795,7 +4795,7 @@
   </general>
   <specific type="modification">
    <cargo>50</cargo>
-   <absorb>65</absorb>
+   <absorb>30</absorb>
    <armour>2500</armour>
    <armour_regen>0</armour_regen>
    <ew_hide>0</ew_hide>
@@ -4813,7 +4813,7 @@
   </general>
   <specific type="modification">
    <cargo>200</cargo>
-   <absorb>50</absorb>
+   <absorb>25</absorb>
    <armour>1400</armour>
    <armour_regen>0</armour_regen>
    <ew_hide>0</ew_hide>
@@ -4831,7 +4831,7 @@
   </general>
   <specific type="modification">
    <cargo>50</cargo>
-   <absorb>65</absorb>
+   <absorb>33</absorb>
    <armour>2200</armour>
    <armour_regen>0</armour_regen>
    <ew_hide>0</ew_hide>
@@ -4849,7 +4849,7 @@
   </general>
   <specific type="modification">
    <cargo>50</cargo>
-   <absorb>70</absorb>
+   <absorb>36</absorb>
    <armour>2800</armour>
    <armour_regen>0</armour_regen>
    <ew_hide>0</ew_hide>
@@ -4867,7 +4867,7 @@
   </general>
   <specific type="modification">
    <cargo>300</cargo>
-   <absorb>60</absorb>
+   <absorb>30</absorb>
    <armour>2000</armour>
    <armour_regen>0</armour_regen>
    <ew_hide>0</ew_hide>
@@ -4885,7 +4885,7 @@
   </general>
   <specific type="modification">
    <cargo>50</cargo>
-   <absorb>75</absorb>
+   <absorb>39</absorb>
    <armour>3400</armour>
    <armour_regen>0</armour_regen>
    <ew_hide>0</ew_hide>
@@ -4903,7 +4903,7 @@
   </general>
   <specific type="modification">
    <cargo>50</cargo>
-   <absorb>55</absorb>
+   <absorb>30</absorb>
    <armour>1800</armour>
    <armour_regen>0</armour_regen>
    <ew_hide>0</ew_hide>
@@ -4922,7 +4922,7 @@
   </general>
   <specific type="modification">
    <cargo>50</cargo>
-   <absorb>65</absorb>
+   <absorb>30</absorb>
    <armour>2700</armour>
    <armour_regen>0</armour_regen>
    <ew_hide>-30</ew_hide>
@@ -4942,7 +4942,7 @@
   <specific type="modification">
    <cargo>0</cargo>
    <cargo_mod>-100</cargo_mod>
-   <absorb>80</absorb>
+   <absorb>43</absorb>
    <armour>4500</armour>
    <armour_regen>0</armour_regen>
    <ew_hide>0</ew_hide>
