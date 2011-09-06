@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Ships>
- <!-- Light Craft -->
+ <!-- Misc Light Craft -->
  <ship name="Llama">
   <base_type>Llama</base_type>
   <GFX>llama</GFX>
@@ -829,6 +829,8 @@
    <fwd_firerate>-5</fwd_firerate>
   </stats>
  </ship>
+
+ <!-- Bombers -->
  <ship name="Sirius Shaman">
   <base_type>shaman</base_type>
   <GFX>shaman</GFX>
