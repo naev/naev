@@ -61,6 +61,7 @@ typedef enum ShipStatsType_ {
    /* Turrets. */
    SS_TYPE_D_TURRET_HEAT,     /**< Heat generation for turrets. */
    SS_TYPE_D_TURRET_DAMAGE,   /**< Damage done by turrets. */
+   SS_TYPE_D_TURRET_TRACKING, /**< Tracking of turrets. */
    SS_TYPE_D_TURRET_FIRERATE, /**< Firerate of turrets. */
    SS_TYPE_D_TURRET_ENERGY,   /**< Energy usage of turrets. */
 
@@ -183,6 +184,7 @@ typedef struct ShipStats_ {
    /* Destroyer/Cruiser type. */
    double tur_heat;        /**< Heat of turrets. */
    double tur_damage;      /**< Damage of turrets. */
+   double tur_tracking;    /**< Tracking of turrets. */
    double tur_firerate;    /**< Rate of fire of turrets. */
    double tur_energy;      /**< Consumption rate of turrets. */
 

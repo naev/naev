@@ -109,6 +109,7 @@ static const ShipStatsLookup ss_lookup[] = {
 
    DI_ELEM( SS_TYPE_D_TURRET_HEAT,        tur_heat,      "Heat (Turret)" ),
    D__ELEM( SS_TYPE_D_TURRET_DAMAGE,      tur_damage,    "Damage (Turret)" ),
+   D__ELEM( SS_TYPE_D_TURRET_TRACKING,    tur_tracking,  "Tracking (Turret)" ),
    D__ELEM( SS_TYPE_D_TURRET_FIRERATE,    tur_firerate,  "Fire Rate (Turret)" ),
    DI_ELEM( SS_TYPE_D_TURRET_ENERGY,      tur_energy,    "Energy Usage (Turret)" ),
 

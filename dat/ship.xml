@@ -303,7 +303,7 @@
   <sound>engine</sound>
   <class>Fighter</class>
   <price>290000</price>
-  <fabricator>Krain Industries</fabricator>
+  <fabricator>Proteron</fabricator>
   <license>Light Combat Vessel License</license>
   <description>While lesser known among the general public than the Kestrel, the Derivative is where Krain Industries does the majority of its business. True to its name, it's the latest in a long line of largely carrier-based fighters. Packing relatively little firepower, they're ill-suited to duelling, but a carrier group unleashing several squadrons has been known to turn the tide of battle on many occasions.</description>
   <health>
@@ -1574,7 +1574,7 @@
   <sound>engine</sound>
   <class>Destroyer</class>
   <price>1400000</price>
-  <fabricator>House Proteron</fabricator>
+  <fabricator>Proteron</fabricator>
   <license>Medium Combat Vessel License</license>
   <description>The Kahan is a cutting-edge vessel. Its design was completed shortly before the Incident, and it was on track to become the Proteron military's primary combat vessel. While possessing fewer weapon mounts than the Pacifier, it makes up for it with its ability to mount higher-tech weapons.</description>
   <health>
@@ -1931,30 +1931,19 @@
   <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Cruiser</class>
-  <price>6000000</price>
+  <price>3000000</price>
   <fabricator>Krain Industries</fabricator>
   <license>Heavy Combat Vessel License</license>
   <description>The ship that single-handedly put Krain Industries on the map, the Kestrel was designed to be a sleek heavy assault cruiser. Generally more fragile than other cruisers, it manages to combine excellent manoeuvrability and firepower with state-of-the-art electronics, making for a truly fearsome ship in the hands of an able captain.</description>
-  <movement>
-   <thrust>100</thrust>
-   <turn>80</turn>
-   <speed>110</speed>
-  </movement>
   <health>
-   <absorb>53</absorb>
-   <shield>700</shield>
-   <armour>2500</armour>
-   <energy>2400</energy>
-   <shield_regen>10</shield_regen>
+   <absorb>25</absorb>
+   <armour>500</armour>
    <armour_regen>0</armour_regen>
-   <energy_regen>74.7</energy_regen>
   </health>
   <characteristics>
-   <cpu>170</cpu>
    <crew>27</crew>
-   <mass>2800</mass>
-   <fuel>400</fuel>
-   <cargo>50</cargo>
+   <mass>1400</mass>
+   <cargo>25</cargo>
   </characteristics>
   <slots>
    <weapon x="-23" y="-15" h="5"/>
@@ -1963,18 +1952,31 @@
    <weapon x="-6" y="0" h="12"/>
    <weapon x="-24" y="-8" h="8" size="medium"></weapon>
    <weapon x="-24" y="8" h="8" size="medium"></weapon>
+   <utility prop="systems" size="heavy">Basic Large Systems</utility>
    <utility/>
    <utility/>
    <utility/>
    <utility/>
    <utility size="medium"></utility>
+   <structure prop="engines" size="heavy">Manufacturer Large Engine</structure>
+   <structure prop="hull" size="heavy">Unmodified Large Hull</structure>
    <structure/>
    <structure/>
    <structure/>
    <structure size="medium"></structure>
   </slots>
   <stats>
-   <heat_dissipation>10</heat_dissipation>
+   <fuel_consumption>400</fuel_consumption>
+   <speed_mod>10</speed_mod>
+   <turn_mod>10</turn_mod>
+   <thrust_mod>0</thrust_mod>
+   <armour_mod>0</armour_mod>
+   <shield_mod>0</shield_mod>
+   <energy_mod>0</energy_mod>
+   <energy_regen_mod>10</energy_regen_mod>
+   <cargo_mod>-20</cargo_mod>
+   <ew_detect>0</ew_detect>
+   <ew_hide>0</ew_hide>
   </stats>
  </ship>
  <ship name="Pirate Kestrel">
@@ -1983,29 +1985,18 @@
   <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Cruiser</class>
-  <price>5700000</price>
+  <price>2700000</price>
   <fabricator>Skull and Bones</fabricator>
   <description>The Kestrel is the best ship offered by the Skull and Bones. It is extremely agile for a cruiser yet doesn't lack the firepower necessary to question the authority of the Empire. A very strong ship for those pirates who can afford it.</description>
-  <movement>
-   <thrust>110</thrust>
-   <turn>85</turn>
-   <speed>110</speed>
-  </movement>
   <health>
-   <absorb>55</absorb>
-   <shield>800</shield>
-   <armour>2000</armour>
-   <energy>2450</energy>
-   <shield_regen>9</shield_regen>
+   <absorb>30</absorb>
+   <armour>400</armour>
    <armour_regen>0</armour_regen>
-   <energy_regen>72</energy_regen>
   </health>
   <characteristics>
-   <cpu>180</cpu>
    <crew>28</crew>
-   <mass>2725</mass>
-   <fuel>400</fuel>
-   <cargo>55</cargo>
+   <mass>1300</mass>
+   <cargo>40</cargo>
   </characteristics>
   <slots>
    <weapon x="-23" y="-15" h="5"/>
@@ -2014,18 +2005,31 @@
    <weapon x="-6" y="0" h="12"/>
    <weapon x="-24" y="-8" h="8" size="medium"></weapon>
    <weapon x="-24" y="8" h="8" size="medium"></weapon>
+   <utility prop="systems" size="heavy">Previous Generation Large Systems</utility>
    <utility/>
    <utility/>
    <utility/>
    <utility/>
    <utility size="medium"></utility>
+   <structure prop="engines" size="heavy">Beat Up Large Engine</structure>
+   <structure prop="hull" size="heavy">Patchwork Heavy Plating</structure>
    <structure/>
    <structure/>
    <structure/>
    <structure size="medium"></structure>
   </slots>
   <stats>
-   <heat_dissipation>10</heat_dissipation>
+   <fuel_consumption>400</fuel_consumption>
+   <speed_mod>15</speed_mod>
+   <turn_mod>15</turn_mod>
+   <thrust_mod>0</thrust_mod>
+   <armour_mod>-10</armour_mod>
+   <shield_mod>-20</shield_mod>
+   <energy_mod>0</energy_mod>
+   <energy_regen_mod>10</energy_regen_mod>
+   <cargo_mod>0</cargo_mod>
+   <ew_detect>0</ew_detect>
+   <ew_hide>20</ew_hide>
   </stats>
  </ship>
  <ship name="Proteron Archimedes">
@@ -2034,30 +2038,19 @@
   <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Cruiser</class>
-  <price>6250000</price>
-  <fabricator>House Proteron</fabricator>
+  <price>3250000</price>
+  <fabricator>Proteron</fabricator>
   <license>Heavy Combat Vessel License</license>
-  <description>The Archimedes is a last-generation heavy cruiser. While many were being retired at the time of the Incident, the remnants of House Proteron have retrofitted them and offered some for sale to the public.</description>
-  <movement>
-   <thrust>70</thrust>
-   <turn>45</turn>
-   <speed>90</speed>
-  </movement>
+  <description>The Archimedes is the backbone of the Proteron fleet. Offering heavy firepower and high durability, it can always be found in the heat of battle.</description>
   <health>
-   <absorb>63</absorb>
-   <shield>700</shield>
-   <armour>3300</armour>
-   <energy>2400</energy>
-   <shield_regen>12</shield_regen>
+   <absorb>30</absorb>
+   <armour>800</armour>
    <armour_regen>0</armour_regen>
-   <energy_regen>75</energy_regen>
   </health>
   <characteristics>
-   <cpu>130</cpu>
    <crew>40</crew>
-   <mass>4200</mass>
-   <fuel>400</fuel>
-   <cargo>80</cargo>
+   <mass>2100</mass>
+   <cargo>25</cargo>
   </characteristics>
   <slots>
    <weapon x="40" y="0" h="0"/>
@@ -2067,11 +2060,14 @@
    <weapon x="0" y="6" h="2"/>
    <weapon x="-25" y="-8" h="3"/>
    <weapon x="-25" y="8" h="3"/>
+   <utility prop="systems" size="heavy">Basic Large Systems</utility>
    <utility/>
    <utility/>
    <utility/>
    <utility/>
    <utility/>
+   <structure prop="engines" size="heavy">Manufacturer Large Engine</structure>
+   <structure prop="hull" size="heavy">Unmodified Large Hull</structure>
    <structure/>
    <structure/>
    <structure/>
@@ -2080,8 +2076,17 @@
    <structure/>
   </slots>
   <stats>
-   <ew_detect>-5</ew_detect>
-   <tur_firerate>5</tur_firerate>
+   <fuel_consumption>400</fuel_consumption>
+   <speed_mod>0</speed_mod>
+   <turn_mod>0</turn_mod>
+   <thrust_mod>20</thrust_mod>
+   <armour_mod>0</armour_mod>
+   <shield_mod>0</shield_mod>
+   <energy_mod>20</energy_mod>
+   <energy_regen_mod>0</energy_regen_mod>
+   <cargo_mod>0</cargo_mod>
+   <ew_detect>20</ew_detect>
+   <ew_hide>0</ew_hide>
   </stats>
  </ship>
  <ship name="Soromid Ira">
@@ -2090,30 +2095,19 @@
   <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Cruiser</class>
-  <price>7500000</price>
+  <price>4500000</price>
   <fabricator>Soromid</fabricator>
   <license>Heavy Combat Vessel License</license>
   <description>The Ira is the heaviest conventional combat vessel in Soromid service. Though lumbering and vulnerable when caught without escorts, it can deliver terrible punishment on enemy spaceships.</description>
-  <movement>
-   <thrust>60</thrust>
-   <turn>50</turn>
-   <speed>70</speed>
-  </movement>
   <health>
-   <absorb>59</absorb>
-   <shield>680</shield>
-   <armour>2200</armour>
-   <energy>2700</energy>
-   <shield_regen>10</shield_regen>
+   <absorb>30</absorb>
+   <armour>1000</armour>
    <armour_regen>5</armour_regen>
-   <energy_regen>85.3</energy_regen>
   </health>
   <characteristics>
-   <cpu>150</cpu>
    <crew>35</crew>
-   <mass>3750</mass>
-   <fuel>300</fuel>
-   <cargo>70</cargo>
+   <mass>1900</mass>
+   <cargo>30</cargo>
   </characteristics>
   <slots>
    <weapon x="40" y="0" h="2"/>
@@ -2123,11 +2117,14 @@
    <weapon x="0" y="0" h="7"/>
    <weapon x="-15" y="0" h="7"/>
    <weapon x="-33" y="0" h="7"/>
+   <utility prop="systems" size="heavy">Basic Large Systems</utility>
    <utility/>
    <utility/>
    <utility/>
    <utility/>
    <utility/>
+   <structure prop="engines" size="heavy">Manufacturer Large Engine</structure>
+   <structure prop="hull" size="heavy">Unmodified Large Hull</structure>
    <structure/>
    <structure/>
    <structure/>
@@ -2135,8 +2132,17 @@
    <structure/>
   </slots>
   <stats>
-   <heat_dissipation>15</heat_dissipation>
-   <tur_energy>-5</tur_energy>
+   <fuel_consumption>400</fuel_consumption>
+   <speed_mod>0</speed_mod>
+   <turn_mod>0</turn_mod>
+   <thrust_mod>0</thrust_mod>
+   <armour_mod>10</armour_mod>
+   <shield_mod>-15</shield_mod>
+   <energy_mod>0</energy_mod>
+   <energy_regen_mod>0</energy_regen_mod>
+   <cargo_mod>0</cargo_mod>
+   <ew_detect>0</ew_detect>
+   <ew_hide>0</ew_hide>
   </stats>
  </ship>
  <ship name="Hawking">
@@ -2145,30 +2151,19 @@
   <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Cruiser</class>
-  <price>7500000</price>
+  <price>4500000</price>
   <fabricator>Nexus Shipyards</fabricator>
   <license>Heavy Combat Vessel License</license>
   <description>The Hawking is the flagship vessel of Nexus Shipyards. A large cruiser designed for extended engagements, it is widely used by the Empire to exert control over their territories. In terms of raw firepower, the Hawking is second only to the flagship of House Goddard, though its narrower frame allows it to present a smaller target to the enemy.</description>
-  <movement>
-   <thrust>60</thrust>
-   <turn>50</turn>
-   <speed>70</speed>
-  </movement>
   <health>
-   <absorb>59</absorb>
-   <shield>700</shield>
-   <armour>2200</armour>
-   <energy>2700</energy>
-   <shield_regen>10</shield_regen>
+   <absorb>30</absorb>
+   <armour>600</armour>
    <armour_regen>0</armour_regen>
-   <energy_regen>85.3</energy_regen>
   </health>
   <characteristics>
-   <cpu>150</cpu>
    <crew>35</crew>
-   <mass>3750</mass>
-   <fuel>300</fuel>
-   <cargo>70</cargo>
+   <mass>1800</mass>
+   <cargo>30</cargo>
   </characteristics>
   <slots>
    <weapon x="40" y="0" h="2"/>
@@ -2178,11 +2173,14 @@
    <weapon x="0" y="0" h="7"/>
    <weapon x="-15" y="0" h="7"/>
    <weapon x="-33" y="0" h="7"/>
+   <utility prop="systems" size="heavy">Basic Large Systems</utility>
    <utility/>
    <utility/>
    <utility/>
    <utility/>
    <utility/>
+   <structure prop="engines" size="heavy">Manufacturer Large Engine</structure>
+   <structure prop="hull" size="heavy">Unmodified Large Hull</structure>
    <structure/>
    <structure/>
    <structure/>
@@ -2190,8 +2188,17 @@
    <structure/>
   </slots>
   <stats>
-   <heat_dissipation>15</heat_dissipation>
-   <tur_energy>-5</tur_energy>
+   <fuel_consumption>400</fuel_consumption>
+   <speed_mod>0</speed_mod>
+   <turn_mod>0</turn_mod>
+   <thrust_mod>0</thrust_mod>
+   <armour_mod>5</armour_mod>
+   <shield_mod>0</shield_mod>
+   <energy_mod>10</energy_mod>
+   <energy_regen_mod>0</energy_regen_mod>
+   <cargo_mod>0</cargo_mod>
+   <ew_detect>0</ew_detect>
+   <ew_hide>0</ew_hide>
   </stats>
  </ship>
  <ship name="Empire Hawking">
@@ -2200,30 +2207,19 @@
   <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Cruiser</class>
-  <price>7500000</price>
+  <price>5500000</price>
   <fabricator>Nexus Shipyards</fabricator>
   <license>Heavy Combat Vessel License</license>
   <description>An Empire Hawking.</description>
-  <movement>
-   <thrust>62</thrust>
-   <turn>53</turn>
-   <speed>75</speed>
-  </movement>
   <health>
-   <absorb>63</absorb>
-   <shield>750</shield>
-   <armour>3000</armour>
-   <energy>2700</energy>
-   <shield_regen>11</shield_regen>
+   <absorb>31</absorb>
+   <armour>800</armour>
    <armour_regen>0</armour_regen>
-   <energy_regen>85.3</energy_regen>
   </health>
   <characteristics>
-   <cpu>157</cpu>
    <crew>35</crew>
-   <mass>3750</mass>
-   <fuel>300</fuel>
-   <cargo>70</cargo>
+   <mass>1800</mass>
+   <cargo>30</cargo>
   </characteristics>
   <slots>
    <weapon x="40" y="0" h="2"/>
@@ -2233,11 +2229,14 @@
    <weapon x="0" y="0" h="7"/>
    <weapon x="-15" y="0" h="7"/>
    <weapon x="-33" y="0" h="7"/>
+   <utility prop="systems" size="heavy">Basic Large Systems</utility>
    <utility/>
    <utility/>
    <utility/>
    <utility/>
    <utility/>
+   <structure prop="engines" size="heavy">Manufacturer Large Engine</structure>
+   <structure prop="hull" size="heavy">Unmodified Large Hull</structure>
    <structure/>
    <structure/>
    <structure/>
@@ -2245,9 +2244,17 @@
    <structure/>
   </slots>
   <stats>
-   <heat_dissipation>15</heat_dissipation>
-   <tur_energy>-5</tur_energy>
-   <tur_damage>5</tur_damage>
+   <fuel_consumption>400</fuel_consumption>
+   <speed_mod>0</speed_mod>
+   <turn_mod>0</turn_mod>
+   <thrust_mod>0</thrust_mod>
+   <armour_mod>10</armour_mod>
+   <shield_mod>0</shield_mod>
+   <energy_mod>10</energy_mod>
+   <energy_regen_mod>0</energy_regen_mod>
+   <cargo_mod>0</cargo_mod>
+   <ew_detect>0</ew_detect>
+   <ew_hide>0</ew_hide>
   </stats>
  </ship>
  <ship name="Sirius Dogma">
@@ -2256,30 +2263,19 @@
   <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Cruiser</class>
-  <price>8300000</price>
+  <price>5300000</price>
   <fabricator>Sirius Systems</fabricator>
   <license>Heavy Combat Vessel License</license>
   <description>The backbone of the House Sirius fleet, the Dogma is a sight to behold. Trimmed in gold and silver and fielding a large array of weapons, the Dogma is seldom surpassed in either prestige or military might.</description>
-  <movement>
-   <thrust>50</thrust>
-   <turn>55</turn>
-   <speed>65</speed>
-  </movement>
   <health>
-   <absorb>67</absorb>
-   <shield>900</shield>
-   <armour>4200</armour>
-   <energy>3100</energy>
-   <shield_regen>11</shield_regen>
+   <absorb>33</absorb>
+   <armour>900</armour>
    <armour_regen>0</armour_regen>
-   <energy_regen>88.3</energy_regen>
   </health>
   <characteristics>
-   <cpu>160</cpu>
    <crew>43</crew>
-   <mass>4200</mass>
-   <fuel>400</fuel>
-   <cargo>60</cargo>
+   <mass>2100</mass>
+   <cargo>30</cargo>
   </characteristics>
   <slots>
    <weapon x="40" y="0" h="2"/>
@@ -2288,11 +2284,14 @@
    <weapon x="0" y="0" h="4"/>
    <weapon x="-15" y="0" h="6"/>
    <weapon x="-33" y="0" h="6"/>
+   <utility prop="systems" size="heavy">Basic Large Systems</utility>
    <utility/>
    <utility/>
    <utility/>
    <utility/>
    <utility/>
+   <structure prop="engines" size="heavy">Manufacturer Large Engine</structure>
+   <structure prop="hull" size="heavy">Unmodified Large Hull</structure>
    <structure/>
    <structure/>
    <structure/>
@@ -2300,7 +2299,17 @@
    <structure/>
   </slots>
   <stats>
-   <ew_detect>10</ew_detect>
+   <fuel_consumption>400</fuel_consumption>
+   <speed_mod>0</speed_mod>
+   <turn_mod>15</turn_mod>
+   <thrust_mod>0</thrust_mod>
+   <armour_mod>0</armour_mod>
+   <shield_mod>10</shield_mod>
+   <energy_mod>0</energy_mod>
+   <energy_regen_mod>0</energy_regen_mod>
+   <cargo_mod>0</cargo_mod>
+   <ew_detect>20</ew_detect>
+   <ew_hide>0</ew_hide>
   </stats>
  </ship>
  <ship name="Goddard">
@@ -2309,30 +2318,19 @@
   <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Cruiser</class>
-  <price>11500000</price>
+  <price>6000000</price>
   <fabricator>House Goddard</fabricator>
   <license>Heavy Combat Vessel License</license>
-  <description>The archaic design of the Goddard is deceiving. Although it takes the shape of traditional flying intra-planet vessels, it's very suited for space travel. Production is entirely done on Zhiru in the Goddard system by House Goddard. Over time, specialization and improvements on the original design have kept it very competitive in the market. It's a classic of space.</description>
-  <movement>
-   <thrust>60</thrust>
-   <turn>45</turn>
-   <speed>60</speed>
-  </movement>
+  <description>Designed by eccentric genius Eduard Manuel Goddard, the Goddard Battlecruiser is what skyrocketed House Goddard to fame and fortune. Production is entirely done on Zhiru in the Goddard system by House Goddard. Over time, specialization and improvements on the original design have kept it very competitive in the market. It's a classic of space.</description>
   <health>
-   <absorb>65</absorb>
-   <shield>850</shield>
-   <armour>4000</armour>
-   <energy>4000</energy>
-   <shield_regen>10</shield_regen>
+   <absorb>35</absorb>
+   <armour>1000</armour>
    <armour_regen>0</armour_regen>
-   <energy_regen>90.7</energy_regen>
   </health>
   <characteristics>
-   <cpu>150</cpu>
    <crew>52</crew>
-   <mass>4750</mass>
-   <fuel>500</fuel>
-   <cargo>90</cargo>
+   <mass>2300</mass>
+   <cargo>20</cargo>
   </characteristics>
   <slots>
    <weapon x="-10" y="-13" h="2"/>
@@ -2342,11 +2340,14 @@
    <weapon x="16" y="0" h="3"/>
    <weapon x="0" y="0" h="5"/>
    <weapon x="-20" y="0" h="5"/>
+   <utility prop="systems" size="heavy">Basic Large Systems</utility>
    <utility/>
    <utility/>
    <utility/>
    <utility/>
    <utility/>
+   <structure prop="engines" size="heavy">Manufacturer Large Engine</structure>
+   <structure prop="hull" size="heavy">Unmodified Large Hull</structure>
    <structure/>
    <structure/>
    <structure/>
@@ -2355,9 +2356,18 @@
    <structure/>
   </slots>
   <stats>
-   <launch_rate>10</launch_rate>
-   <launch_range>10</launch_range>
-   <heat_dissipation>-10</heat_dissipation>
+   <fuel_consumption>400</fuel_consumption>
+   <speed_mod>-10</speed_mod>
+   <turn_mod>-10</turn_mod>
+   <thrust_mod>0</thrust_mod>
+   <armour_mod>0</armour_mod>
+   <shield_mod>0</shield_mod>
+   <energy_mod>0</energy_mod>
+   <energy_regen_mod>0</energy_regen_mod>
+   <tur_tracking>20</tur_tracking>
+   <cargo_mod>-30</cargo_mod>
+   <ew_detect>0</ew_detect>
+   <ew_hide>0</ew_hide>
   </stats>
  </ship>
  <ship name="Dvaered Goddard">
@@ -2366,30 +2376,19 @@
   <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Cruiser</class>
-  <price>11500000</price>
+  <price>700000</price>
   <fabricator>House Goddard</fabricator>
   <license>Heavy Combat Vessel License</license>
-  <description>A Dvaered Goddard.</description>
-  <movement>
-   <thrust>60</thrust>
-   <turn>45</turn>
-   <speed>60</speed>
-  </movement>
+  <description>Once, the Goddard Battlecruiser was commissioned by the Empire for military service. However, during the Dvaered Revolts most Goddard captains sided with the insurgents, and after the establishment of House Dvaered the Empire ceded the license for the aging vessel to them. Today, House Dvaered is House Goddard's biggest client.</description>
   <health>
-   <absorb>69</absorb>
-   <shield>900</shield>
-   <armour>4300</armour>
-   <energy>4000</energy>
-   <shield_regen>10</shield_regen>
+   <absorb>35</absorb>
+   <armour>1000</armour>
    <armour_regen>0</armour_regen>
-   <energy_regen>90.7</energy_regen>
   </health>
   <characteristics>
-   <cpu>140</cpu>
    <crew>52</crew>
-   <mass>4950</mass>
-   <fuel>500</fuel>
-   <cargo>90</cargo>
+   <mass>2500</mass>
+   <cargo>30</cargo>
   </characteristics>
   <slots>
    <weapon x="-10" y="-13" h="2"/>
@@ -2399,11 +2398,14 @@
    <weapon x="16" y="0" h="3"/>
    <weapon x="0" y="0" h="5"/>
    <weapon x="-20" y="0" h="5"/>
+   <utility prop="systems" size="heavy">Basic Large Systems</utility>
    <utility/>
    <utility/>
    <utility/>
    <utility/>
    <utility/>
+   <structure prop="engines" size="heavy">Manufacturer Large Engine</structure>
+   <structure prop="hull" size="heavy">Unmodified Large Hull</structure>
    <structure/>
    <structure/>
    <structure/>
@@ -2412,10 +2414,18 @@
    <structure/>
   </slots>
   <stats>
-   <launch_rate>10</launch_rate>
-   <launch_range>10</launch_range>
-   <heat_dissipation>-10</heat_dissipation>
-   <tur_damage>10</tur_damage>
+   <fuel_consumption>400</fuel_consumption>
+   <speed_mod>-10</speed_mod>
+   <turn_mod>-10</turn_mod>
+   <thrust_mod>0</thrust_mod>
+   <armour_mod>10</armour_mod>
+   <shield_mod>0</shield_mod>
+   <energy_mod>0</energy_mod>
+   <energy_regen_mod>0</energy_regen_mod>
+   <tur_tracking>20</tur_tracking>
+   <cargo_mod>-30</cargo_mod>
+   <ew_detect>0</ew_detect>
+   <ew_hide>0</ew_hide>
   </stats>
  </ship>
 
@@ -2430,26 +2440,15 @@
   <fabricator>Sirius Systems</fabricator>
   <license>Heavy Combat Vessel License</license>
   <description>Whilst the Dogma is said to form the core of any Sirian fleet, few combat pilots would dismiss the significance of the Divinity. Though not exceptionally formidable in direct combat, the Divinity's ability to field a multitude of fighters gives it unparalleled flexibility in combat, serving as a key logistical vessel in any sizable fleet.</description>
-  <movement>
-   <thrust>55</thrust>
-   <turn>55</turn>
-   <speed>75</speed>
-  </movement>
   <health>
-   <absorb>64</absorb>
-   <shield>880</shield>
-   <armour>4400</armour>
-   <energy>1800</energy>
-   <shield_regen>11</shield_regen>
+   <absorb>30</absorb>
+   <armour>500</armour>
    <armour_regen>0</armour_regen>
-   <energy_regen>66.7</energy_regen>
   </health>
   <characteristics>
-   <cpu>120</cpu>
    <crew>36</crew>
-   <mass>3900</mass>
-   <fuel>500</fuel>
-   <cargo>85</cargo>
+   <mass>1900</mass>
+   <cargo>35</cargo>
   </characteristics>
   <slots>
    <weapon x="40" y="0" h="0"/>
@@ -2457,10 +2456,13 @@
    <weapon x="20" y="0" h="0"/>
    <weapon x="-20" y="0" h="0"/>
    <weapon x="-40" y="0" h="0"/>
+   <utility prop="systems" size="heavy">Basic Large Systems</utility>
    <utility/>
    <utility/>
    <utility/>
    <utility/>
+   <structure prop="engines" size="heavy">Manufacturer Large Engine</structure>
+   <structure prop="hull" size="heavy">Unmodified Large Hull</structure>
    <structure/>
    <structure/>
    <structure/>
@@ -2468,8 +2470,20 @@
    <structure/>
   </slots>
   <stats>
-   <launch_rate>15</launch_rate>
-   <ew_detect>10</ew_detect>
+   <fuel_consumption>400</fuel_consumption>
+   <speed_mod>-10</speed_mod>
+   <turn_mod>-10</turn_mod>
+   <thrust_mod>0</thrust_mod>
+   <armour_mod>-10</armour_mod>
+   <shield_mod>-20</shield_mod>
+   <energy_mod>20</energy_mod>
+   <energy_regen_mod>20</energy_regen_mod>
+   <tur_tracking>-40</tur_tracking>
+   <tur_firerate>-30</tur_firerate>
+   <fwd_firerate>-30</fwd_firerate>
+   <cargo_mod>0</cargo_mod>
+   <ew_detect>0</ew_detect>
+   <ew_hide>0</ew_hide>
   </stats>
  </ship>
  <ship name="Soromid Arx">
@@ -2482,26 +2496,15 @@
   <fabricator>Soromid</fabricator>
   <license>Heavy Combat Vessel License</license>
   <description>The Soromid Arx usually features in Soromid fleets as a command vessel and fighter carrier. It provides small craft with refuel and rearm services and has excellent durability. It is, however, lacking in both the speed and mobility areas.</description>
-  <movement>
-   <thrust>55</thrust>
-   <turn>55</turn>
-   <speed>75</speed>
-  </movement>
   <health>
-   <absorb>64</absorb>
-   <shield>900</shield>
-   <armour>3700</armour>
-   <energy>1800</energy>
-   <shield_regen>10</shield_regen>
-   <armour_regen>6</armour_regen>
-   <energy_regen>66.7</energy_regen>
+   <absorb>30</absorb>
+   <armour>700</armour>
+   <armour_regen>4</armour_regen>
   </health>
   <characteristics>
-   <cpu>120</cpu>
    <crew>36</crew>
-   <mass>3900</mass>
-   <fuel>500</fuel>
-   <cargo>85</cargo>
+   <mass>1900</mass>
+   <cargo>35</cargo>
   </characteristics>
   <slots>
    <weapon x="40" y="0" h="0"/>
@@ -2509,10 +2512,13 @@
    <weapon x="20" y="0" h="0"/>
    <weapon x="-20" y="0" h="0"/>
    <weapon x="-40" y="0" h="0"/>
+   <utility prop="systems" size="heavy">Basic Large Systems</utility>
    <utility/>
    <utility/>
    <utility/>
    <utility/>
+   <structure prop="engines" size="heavy">Manufacturer Large Engine</structure>
+   <structure prop="hull" size="heavy">Unmodified Large Hull</structure>
    <structure/>
    <structure/>
    <structure/>
@@ -2520,8 +2526,20 @@
    <structure/>
   </slots>
   <stats>
-   <launch_rate>15</launch_rate>
-   <ew_detect>10</ew_detect>
+   <fuel_consumption>400</fuel_consumption>
+   <speed_mod>0</speed_mod>
+   <turn_mod>-10</turn_mod>
+   <thrust_mod>-10</thrust_mod>
+   <armour_mod>10</armour_mod>
+   <shield_mod>-20</shield_mod>
+   <energy_mod>0</energy_mod>
+   <energy_regen_mod>0</energy_regen_mod>
+   <tur_tracking>-40</tur_tracking>
+   <tur_firerate>-30</tur_firerate>
+   <fwd_firerate>-30</fwd_firerate>
+   <cargo_mod>0</cargo_mod>
+   <ew_detect>0</ew_detect>
+   <ew_hide>0</ew_hide>
   </stats>
  </ship>
  <ship name="Proteron Watson">
@@ -2530,30 +2548,19 @@
   <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Carrier</class>
-  <price>18000000</price>
-  <fabricator>Nexus Shipyards</fabricator>
+  <price>9000000</price>
+  <fabricator>Proteron</fabricator>
   <license>Heavy Combat Vessel License</license>
-  <description>TODO</description>
-  <movement>
-   <thrust>40</thrust>
-   <turn>35</turn>
-   <speed>45</speed>
-  </movement>
+  <description>The heart of the Proteron battle fleet is formed by the Watsons. Acting as a mobile launch base as well as a command and control unit, this vessel coordinates the others in the fight for dominance over the galaxy.</description>
   <health>
-   <absorb>78</absorb>
-   <shield>1000</shield>
-   <armour>5000</armour>
-   <energy>4800</energy>
-   <shield_regen>12</shield_regen>
+   <absorb>40</absorb>
+   <armour>1000</armour>
    <armour_regen>0</armour_regen>
-   <energy_regen>118.3</energy_regen>
   </health>
   <characteristics>
-   <cpu>240</cpu>
    <crew>65</crew>
-   <mass>6200</mass>
-   <fuel>500</fuel>
-   <cargo>130</cargo>
+   <mass>3000</mass>
+   <cargo>40</cargo>
   </characteristics>
   <slots>
    <weapon x="40" y="0" h="2"/>
@@ -2564,12 +2571,15 @@
    <weapon x="0" y="0" h="7"/>
    <weapon x="-15" y="0" h="7"/>
    <weapon x="-33" y="0" h="7"/>
+   <utility prop="systems" size="heavy">Basic Large Systems</utility>
    <utility/>
    <utility/>
    <utility/>
    <utility/>
    <utility/>
    <utility/>
+   <structure prop="engines" size="heavy">Manufacturer Large Engine</structure>
+   <structure prop="hull" size="heavy">Unmodified Large Hull</structure>
    <structure/>
    <structure/>
    <structure/>
@@ -2578,9 +2588,20 @@
    <structure/>
   </slots>
   <stats>
-   <tur_energy>-10</tur_energy>
-   <tur_firerate>-5</tur_firerate>
-   <ammo_capacity>25</ammo_capacity>
+   <fuel_consumption>400</fuel_consumption>
+   <speed_mod>0</speed_mod>
+   <turn_mod>0</turn_mod>
+   <thrust_mod>0</thrust_mod>
+   <armour_mod>15</armour_mod>
+   <shield_mod>-15</shield_mod>
+   <energy_mod>0</energy_mod>
+   <energy_regen_mod>10</energy_regen_mod>
+   <tur_tracking>-40</tur_tracking>
+   <tur_firerate>-30</tur_firerate>
+   <fwd_firerate>-30</fwd_firerate>
+   <cargo_mod>0</cargo_mod>
+   <ew_detect>0</ew_detect>
+   <ew_hide>0</ew_hide>
    <misc_instant_jump>1</misc_instant_jump>
   </stats>
  </ship>
@@ -2590,29 +2611,18 @@
   <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Carrier</class>
-  <price>18000000</price>
+  <price>8000000</price>
   <fabricator>Nexus Shipyards</fabricator>
   <license>Heavy Combat Vessel License</license>
   <description>Built under contract for the Empire by Nexus Shipyards, the Peacemaker is one of the grandest vessels in the galaxy, dwarfing even the mighty Goddard. Peacemakers typically function as flag ships in Imperial fleets, and can provide the fighter and bomber squadrons with much needed resupplies. Like most capital ships, however, it is vulnerable to attack from enemy bombers.</description>
-  <movement>
-   <thrust>40</thrust>
-   <turn>35</turn>
-   <speed>45</speed>
-  </movement>
   <health>
    <absorb>78</absorb>
-   <shield>1000</shield>
    <armour>5000</armour>
-   <energy>4800</energy>
-   <shield_regen>12</shield_regen>
    <armour_regen>0</armour_regen>
-   <energy_regen>118.3</energy_regen>
   </health>
   <characteristics>
-   <cpu>240</cpu>
    <crew>65</crew>
    <mass>6200</mass>
-   <fuel>500</fuel>
    <cargo>130</cargo>
   </characteristics>
   <slots>
@@ -2624,12 +2634,15 @@
    <weapon x="0" y="0" h="7"/>
    <weapon x="-15" y="0" h="7"/>
    <weapon x="-33" y="0" h="7"/>
+   <utility prop="systems" size="heavy">Basic Large Systems</utility>
    <utility/>
    <utility/>
    <utility/>
    <utility/>
    <utility/>
    <utility/>
+   <structure prop="engines" size="heavy">Manufacturer Large Engine</structure>
+   <structure prop="hull" size="heavy">Unmodified Large Hull</structure>
    <structure/>
    <structure/>
    <structure/>
@@ -2638,9 +2651,20 @@
    <structure/>
   </slots>
   <stats>
-   <tur_energy>-10</tur_energy>
-   <tur_firerate>-5</tur_firerate>
-   <ammo_capacity>25</ammo_capacity>
+   <fuel_consumption>400</fuel_consumption>
+   <speed_mod>-15</speed_mod>
+   <turn_mod>-15</turn_mod>
+   <thrust_mod>0</thrust_mod>
+   <armour_mod>-10</armour_mod>
+   <shield_mod>-10</shield_mod>
+   <energy_mod>0</energy_mod>
+   <energy_regen_mod>10</energy_regen_mod>
+   <tur_tracking>-40</tur_tracking>
+   <tur_firerate>-30</tur_firerate>
+   <fwd_firerate>-30</fwd_firerate>
+   <cargo_mod>0</cargo_mod>
+   <ew_detect>0</ew_detect>
+   <ew_hide>0</ew_hide>
    <misc_instant_jump>1</misc_instant_jump>
   </stats>
  </ship>

@@ -208,7 +208,7 @@ double pilot_ewWeaponTrack( const Pilot *p, const Pilot *t, double track )
 {
    double limit, lead;
 
-   limit = track * p->ew_detect;
+   limit = track * p->ew_detect * p->stats.tur_tracking;
    if (t->ew_evasion < limit)
       lead = 1.;
    else
