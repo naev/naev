@@ -1,53 +1,35 @@
 #!/usr/bin/env bash
 
-DATA="../../dat/outfit.xml"
+cd "$(dirname $0)"
+
+export LC_ALL=C
+data="../../dat/outfit.xml"
+
+# XML elements which use the directories.
+store="gfx_store"
+space="gfx"
 
 echo "Checking for unused graphics..."
-echo
-
-# Check unused space gfx
-echo "   Unused outfit store gfx"
-cd store
-for SPACE in *.png; do
-   if [ -z "`grep ">${SPACE%.png}<" ../$DATA | grep "<gfx_store>"`" ]; then
-      echo "      $SPACE"
-   fi
+for dir in store space; do
+   cd "$dir"
+   echo -e "\n   Unused outfit $dir gfx"
+   for img in *.png; do
+      if ! grep -q "<${!dir}.*>${img%.png}<" "../$data"; then
+         echo "      $img"
+      fi
+   done
+   cd ..
 done
-cd ..
 
-# Check unused exterior gfx
-echo "   Unused outfit gfx"
-cd space
-for SPACE in *.png; do
-   if [ -z "`grep ">${SPACE%.png}<" ../$DATA | grep "<gfx>"`" ]; then
-      echo "      $SPACE"
-   fi
+echo -e "\nChecking for overused graphics..."
+for dir in store space; do
+   cd "$dir"
+   echo -e "\n   Overused outfit $dir gfx"
+   for img in *.png; do
+      count=$(grep -c "<${!dir}.*>${img%.png}<" "../$data")
+      if [[ $count > 1 ]]; then
+         echo "      $img => $count times"
+      fi
+   done
+   cd ..
 done
-cd ..
-
-echo
-echo
-echo "Checking for overused graphics..."
-echo
-
-# Check overused
-echo "   Overused outfit store gfx"
-cd store
-for SPACE in *.png; do
-   COUNT=`grep ${SPACE%.png} ../$DATA | grep -c "<gfx_store>"`
-   if [ $COUNT -gt 1 ]; then
-      echo "      $SPACE => $COUNT times"
-   fi
-done
-cd ..
-
-# Check unused exterior gfx
-echo "   Overused outfit gfx"
-cd space
-for SPACE in *.png; do
-   COUNT=`grep ${SPACE%.png} ../$DATA | grep -c "<gfx>"`
-   if [ $COUNT -gt 1 ]; then
-      echo "      $SPACE => $COUNT times"
-   fi
-done
-cd ..

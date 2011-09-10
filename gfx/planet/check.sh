@@ -1,55 +1,31 @@
 #!/usr/bin/env bash
 
-cd $(dirname $0)
+cd "$(dirname $0)"
 
-DATA="../../dat/asset.xml"
+export LC_ALL=C
+data="../../dat/asset.xml"
 
 echo "Checking for unused graphics..."
-echo
-
-# Check unused space gfx
-echo "   Unused planet space gfx"
-cd space
-for SPACE in *.png; do
-   if [ -z "`grep $SPACE ../$DATA`" ]; then
-      echo "      $SPACE"
-   fi
+for dir in space exterior; do
+   cd "$dir"
+   echo -e "\n   Unused planet $dir gfx"
+   for img in *.png; do
+      if ! grep -qF "<$dir>$img" "../$data"; then
+         echo "      $img"
+      fi
+   done
+   cd ..
 done
-cd ..
 
-# Check unused exterior gfx
-echo "   Unused planet exterior gfx"
-cd exterior
-for SPACE in *.png; do
-   if [ -z "`grep $SPACE ../$DATA`" ]; then
-      echo "      $SPACE"
-   fi
+echo -e "\nChecking for overused graphics..."
+for dir in space exterior; do
+   cd "$dir"
+   echo -e "\n   Overused planet $dir gfx"
+   for img in *.png; do
+      count=$(grep -cF "<$dir>$img" "../$data")
+      if [[ $count > 1 ]]; then
+         echo "      $img => $count times"
+      fi
+   done
+   cd ..
 done
-cd ..
-
-echo
-echo
-echo "Checking for overused graphics..."
-echo
-
-# Check overused
-echo "   Overused planet space gfx"
-cd space
-for SPACE in *.png; do
-   COUNT=`grep -c $SPACE ../$DATA`
-   if [ $COUNT -gt 1 ]; then
-      echo "      $SPACE => $COUNT times"
-   fi
-done
-cd ..
-
-# Check unused exterior gfx
-echo "   Overused planet exterior gfx"
-cd exterior
-for SPACE in *.png; do
-   COUNT=`grep -c $SPACE ../$DATA`
-   if [ $COUNT -gt 1 ]; then
-      echo "      $SPACE => $COUNT times"
-   fi
-done
-cd ..
