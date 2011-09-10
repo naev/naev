@@ -14,7 +14,8 @@ for dir in store space; do
    cd "$dir"
    echo -e "\n   Unused outfit $dir gfx"
    for img in *.png; do
-      if ! grep -q "<${!dir}.*>${img%.png}<" "../$data"; then
+      [[ $img =~ -end.png ]] && continue
+      if ! grep -q "<${!dir}[^_]*>${img%.png}<" "../$data"; then
          echo "      $img"
       fi
    done
@@ -26,7 +27,8 @@ for dir in store space; do
    cd "$dir"
    echo -e "\n   Overused outfit $dir gfx"
    for img in *.png; do
-      count=$(grep -c "<${!dir}.*>${img%.png}<" "../$data")
+      [[ $img =~ -end.png ]] && continue
+      count=$(grep -c "<${!dir}[^_]*>${img%.png}<" "../$data")
       if [[ $count > 1 ]]; then
          echo "      $img => $count times"
       fi
