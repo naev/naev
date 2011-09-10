@@ -34,7 +34,7 @@ echo
 echo "   Overused outfit store gfx"
 cd store
 for SPACE in *.png; do
-   COUNT=`grep ${SPACE%.png} ../$DATA | grep -c "<gfx_store>"`
+   COUNT=`grep ">${SPACE%.png}<" ../$DATA | grep -c "<gfx_store>"`
    if [ $COUNT -gt 1 ]; then
       echo "      $SPACE => $COUNT times"
    fi
@@ -45,7 +45,7 @@ cd ..
 echo "   Overused outfit gfx"
 cd space
 for SPACE in *.png; do
-   COUNT=`grep ${SPACE%.png} ../$DATA | grep -c "<gfx>"`
+   COUNT=`grep ">${SPACE%.png}<" ../$DATA | grep -c "<gfx>"`
    if [ $COUNT -gt 1 ]; then
       echo "      $SPACE => $COUNT times"
    fi
