@@ -26,6 +26,16 @@ typedef enum ShipStatsType_ {
    /*
     * D: Double type data. Should be continuous.
     */
+   /* General. */
+   SS_TYPE_D_SPEED_MOD,          /**< Speed multiplier. */
+   SS_TYPE_D_TURN_MOD,           /**< Turn multiplier. */
+   SS_TYPE_D_THRUST_MOD,          /**< Acceleration multiplier. */
+   SS_TYPE_D_CARGO_MOD,          /**< Cargo space multiplier. */
+   SS_TYPE_D_ARMOUR_MOD,         /**< Armour multiplier. */
+   SS_TYPE_D_ARMOUR_REGEN_MOD,   /**< Armour regeneration multiplier. */
+   SS_TYPE_D_SHIELD_MOD,         /**< Shield multiplier. */
+   SS_TYPE_D_SHIELD_REGEN_MOD,   /**< Shield regeneration multiplier. */
+   
    /* Freighter-type. */
    SS_TYPE_D_JUMP_DELAY,      /**< Modulates the time that passes during a hyperspace jump. */
    SS_TYPE_D_CARGO_INERTIA,   /**< Modifies the effect of cargo_mass. */
@@ -125,6 +135,16 @@ typedef struct ShipStats_ {
    double fighterbay_cpu; /**< CPU usage by fighter bays. */
    double fighterbay_rate; /**< Launch rate of fighter bay. */
 #endif
+
+   /* General */
+   double speed_mod;          /**< Speed multiplier. */
+   double turn_mod;           /**< Turn multiplier. */
+   double thrust_mod;         /**< Thrust multiplier. */
+   double cargo_mod;          /**< Cargo space multiplier. */
+   double armour_mod;         /**< Armour multiplier. */
+   double armour_regen_mod;   /**< Armour regeneration multiplier. */
+   double shield_mod;         /**< Shield multiplier. */
+   double shield_regen_mod;   /**< Shield regeneration multiplier. */
 
    /* Freighter-type. */
    double jump_delay;      /**< Modulates the time that passes during a hyperspace jump. */
