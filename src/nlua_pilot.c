@@ -2395,8 +2395,8 @@ static int pilotL_getHealth( lua_State *L )
    p  = luaL_validpilot(L,1);
 
    /* Return parameters. */
-   lua_pushnumber(L, p->armour / p->armour_max * 100. );
-   lua_pushnumber(L, p->shield / p->shield_max * 100. );
+   lua_pushnumber(L,(p->armour_max > 0.) ? p->armour / p->armour_max * 100. : 0. );
+   lua_pushnumber(L,(p->shield_max > 0.) ? p->shield / p->shield_max * 100. : 0. );
    lua_pushnumber(L, MIN( 1., p->stress / p->armour ) * 100. );
    lua_pushboolean(L, pilot_isDisabled(p));
 
@@ -2421,7 +2421,7 @@ static int pilotL_getEnergy( lua_State *L )
    p  = luaL_validpilot(L,1);
 
    /* Return parameter. */
-   lua_pushnumber(L, p->energy / p->energy_max * 100. );
+   lua_pushnumber(L, (p->energy_max > 0.) ? p->energy / p->energy_max * 100. : 0. );
 
    return 1;
 }
