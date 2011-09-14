@@ -575,6 +575,7 @@ void player_swapShip( char* shipname )
    int i, j;
    Pilot* ship;
    Vector2d v;
+   double dir;
 
    for (i=0; i<player_nstack; i++) {
       if (strcmp(shipname,player_stack[i].p->name)!=0)
@@ -591,6 +592,7 @@ void player_swapShip( char* shipname )
 
       /* Store position. */
       vectcpy( &v, &player.p->solid->pos );
+      dir = player.p->solid->dir;
 
       /* extra pass to calculate stats */
       pilot_calcStats( ship );
@@ -607,6 +609,7 @@ void player_swapShip( char* shipname )
 
       /* Copy position back. */
       vectcpy( &player.p->solid->pos, &v );
+      player.p->solid->dir = dir;
 
       /* Fill the tank. */
       if (landed)
