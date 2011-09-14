@@ -931,8 +931,11 @@ void pilot_calcStats( Pilot* pilot )
 
    /* Increase health by relative bonuses. */
    pilot->armour_max += arel * pilot->ship->armour;
+   pilot->armour_max *= pilot->stats.armour_mod;
    pilot->shield_max += srel * pilot->ship->shield;
+   pilot->shield_max *= pilot->stats.shield_mod;
    pilot->energy_max += erel * pilot->ship->energy;
+   pilot->energy_max *= pilot->stats.energy_mod;
 
    /* Give the pilot his health proportion back */
    pilot->armour = ac * pilot->armour_max;

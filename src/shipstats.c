@@ -79,9 +79,6 @@ static const ShipStatsLookup ss_lookup[] = {
    /* Null element. */
    N__ELEM( SS_TYPE_NIL ),
 
-   DI_ELEM( SS_TYPE_D_JUMP_DELAY,      jump_delay,    "Jump Time" ),
-   DI_ELEM( SS_TYPE_D_CARGO_INERTIA,   cargo_inertia, "Cargo Inertia" ),
-
    D__ELEM( SS_TYPE_D_SPEED_MOD,          speed_mod,          "Speed" ),
    D__ELEM( SS_TYPE_D_TURN_MOD,           turn_mod,           "Turn" ),
    D__ELEM( SS_TYPE_D_THRUST_MOD,          thrust_mod,          "Thrust" ),
@@ -91,6 +88,8 @@ static const ShipStatsLookup ss_lookup[] = {
    D__ELEM( SS_TYPE_D_SHIELD_MOD,         shield_mod,         "Shield strength" ),
    D__ELEM( SS_TYPE_D_SHIELD_REGEN_MOD,   shield_regen_mod,   "Shield regeneration" ),
 
+   DI_ELEM( SS_TYPE_D_JUMP_DELAY,      jump_delay,    "Jump Time" ),
+   DI_ELEM( SS_TYPE_D_CARGO_INERTIA,   cargo_inertia, "Cargo Inertia" ),
 
    D__ELEM( SS_TYPE_D_EW_HIDE,         ew_hide,       "Cloaking" ),
    D__ELEM( SS_TYPE_D_EW_DETECT,       ew_detect,     "Detection" ),
