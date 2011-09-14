@@ -11,7 +11,8 @@ else -- default english
     menubasic = "Tutorial: Basic Operation"
     menuinterstellar = "Tutorial: Interstellar Flight"
     menubasiccombat = "Tutorial: Basic Combat"
-    menuadvcombat = "Tutorial: Advanced Combat"
+    menumisscombat = "Tutorial: Missile Combat"
+    menudisable = "Tutorial: Disabling"
     menuplanet = "Tutorial: The Planetary Screen"
     menutrade = "Tutorial: Trade"
     menumissions = "Tutorial: Missions and Events"
@@ -35,7 +36,7 @@ function create()
     player.pilot():setNoJump(false)
 
     -- Create menu.
-    _, selection = tk.choice(menutitle, menutext, menubasic, menuinterstellar, menucomms, menubasiccombat, menuadvcombat, menuplanet, menutrade, menumissions, menux)
+    _, selection = tk.choice(menutitle, menutext, menubasic, menuinterstellar, menucomms, menubasiccombat, menumisscombat, menudisable, menuplanet, menutrade, menumissions, menux)
     
     if selection == menubasic then
         startModule(menubasic)
@@ -45,8 +46,10 @@ function create()
         startModule(menucomms)
     elseif selection == menubasiccombat then
         startModule(menubasiccombat)
-    elseif selection == menuadvcombat then
-        placeholder()
+    elseif selection == menumisscombat then
+        startModule(menumisscombat)
+    elseif selection == menudisable then
+        startModule(menudisable)
     elseif selection == menuplanet then
         startModule(menuplanet)
     elseif selection == menutrade then
