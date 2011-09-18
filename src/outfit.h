@@ -276,10 +276,11 @@ typedef struct OutfitMapData_ {
  * @brief Represents a jammer.
  */
 typedef struct OutfitJammerData_ {
-   double range;     /**< Range it starts to do effect */
-   double chance;    /**< Chance of it nullifying the missile */
-   double energy;    /**< Energy it uses to run */
    double cpu;       /**< CPU usage. */
+   double energy;    /**< Energy it uses to run */
+   double range;     /**< Range it starts to do effect */
+   double range2;    /**< Range squared. */
+   double power;     /**< Strength of the effect. */
 } OutfitJammerData;
 
 /**

@@ -1224,10 +1224,6 @@ int equipment_shipStats( char *buf, int max_len,  const Pilot *s, int dpseps )
    if (dps > 0.)
       l += snprintf( &buf[l], (max_len-l),
             "%s%.2f DPS [%.2f EPS]", (l!=0)?"\n":"", dps, eps );
-   if (s->jam_chance > 0.)
-      l += snprintf( &buf[l], (max_len-l),
-            "%s%.0f%% Jam [%.0f Range]",
-            (l!=0)?"\n":"", s->jam_chance*100., s->jam_range );
    l += ss_statsDesc( &s->stats, &buf[l], (max_len-l), 1 );
    return l;
 }

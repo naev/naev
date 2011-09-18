@@ -768,7 +768,6 @@ void pilot_calcStats( Pilot* pilot )
    PilotOutfitSlot *slot;
    double ac, sc, ec, fc; /* temporary health coefficients to set */
    double arel, srel, erel; /* relative health bonuses. */
-   int njammers;
    ShipStats amount, *s;
 
    /*
@@ -800,9 +799,6 @@ void pilot_calcStats( Pilot* pilot )
    /* Energy. */
    pilot->energy_max    = pilot->ship->energy;
    pilot->energy_regen  = pilot->ship->energy_regen;
-   /* Jamming */
-   pilot->jam_range     = 0.;
-   pilot->jam_chance    = 0.;
    /* Stats. */
    memcpy( &pilot->stats, &pilot->ship->stats_array, sizeof(ShipStats) );
    memset( &amount, 0, sizeof(ShipStats) );
@@ -814,9 +810,7 @@ void pilot_calcStats( Pilot* pilot )
     * now add outfit changes
     */
    pilot->mass_outfit   = 0.;
-   njammers             = 0;
-   pilot->jam_range     = 0.;
-   pilot->jam_chance    = 0.;
+   pilot->jamming       = 0;
    arel                 = 0.;
    srel                 = 0.;
    erel                 = 0.;
@@ -874,10 +868,8 @@ void pilot_calcStats( Pilot* pilot )
       else if (outfit_isAfterburner(o)) /* Afterburner */
          pilot->afterburner = pilot->outfits[i]; /* Set afterburner */
       else if (outfit_isJammer(o)) { /* Jammer */
-         pilot->jam_range        += o->u.jam.range * q;
-         pilot->jam_chance       += o->u.jam.chance * q;
+         pilot->jamming           = 1;
          pilot->energy_regen     -= o->u.jam.energy * q;
-         njammers                += q;;
       }
 
       /* Add ammo mass. */
@@ -912,21 +904,6 @@ void pilot_calcStats( Pilot* pilot )
    /* Cruiser. */
    if (amount.tur_firerate > 0) {
       s->tur_firerate = 1. + (s->tur_firerate-1.) * exp( -0.15 * (double)(MAX(amount.tur_firerate-1,0)) );
-   }
-
-   /*
-    * Calculate jammers.
-    *
-    * Range is averaged.
-    * Diminishing return on chance.
-    *  chance = p * exp( -0.2 * (n-1) )
-    *  1x 20% -> 20%
-    *  2x 20% -> 32%
-    *  2x 40% -> 65%
-    *  6x 40% -> 88%
-    */
-   if (njammers > 1) {
-      pilot->jam_chance *= exp( -0.2 * (double)(MAX(njammers-1,0)) );
    }
 
    /* Increase health by relative bonuses. */

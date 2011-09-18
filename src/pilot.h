@@ -336,8 +336,8 @@ typedef struct Pilot_ {
    PilotOutfitSlot *afterburner; /**< the afterburner */
 
    /* Jamming */
-   double jam_range; /**< Range at which pilot starts jamming. */
-   double jam_chance; /**< Jam chance. */
+   int jamming;      /**< Pilot is current jamming with at least a single jammer (used to
+                          speed up later checks in the code). */
 
    /* Weapon sets. */
    PilotWeaponSet weapon_sets[PILOT_WEAPON_SETS]; /**< All the weapon sets the pilot has. */
