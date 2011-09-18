@@ -66,6 +66,7 @@ typedef struct Weapon_ {
    unsigned int target; /**< target to hit, only used by seeking things */
    const Outfit* outfit; /**< related outfit that fired it or whatnot */
 
+   double jam_power; /**< Power being jammed by. */
    double dam_mod; /**< Damage modifier. */
    int voice; /**< Weapon's voice. */
    double exp_timer; /**< Explosion timer for beams. */
@@ -311,9 +312,8 @@ static void think_seeker( Weapon* w, const double dt )
    double diff;
    double vel;
    Pilot *p;
-   int effect;
    Vector2d v;
-   double t;
+   double t, turn_max;
 
    if (w->target == w->parent)
       return; /* no self shooting */
@@ -329,31 +329,6 @@ static void think_seeker( Weapon* w, const double dt )
    switch (w->status) {
 
       case WEAPON_STATUS_OK: /* Check to see if can get jammed */
-         if ((p->jam_range != 0.) &&  /* Target has jammer and weapon is in range */
-               (vect_dist(&w->solid->pos,&p->solid->pos) < p->jam_range)) {
-
-            /* Check to see if weapon gets jammed */
-            if (RNGF() < p->jam_chance - w->outfit->u.amm.resist) {
-               w->status = WEAPON_STATUS_JAMMED;
-               /* Give it a nice random effect */
-               effect = RNG(0,3);
-               switch (effect) {
-                  case 0: /* Stuck in left loop */
-                     weapon_setTurn( w, w->outfit->u.amm.turn );
-                     break;
-                  case 1: /* Stuck in right loop */
-                     weapon_setTurn( w, -w->outfit->u.amm.turn );
-                     break;
-
-                  default: /* Blow up. */
-                     w->timer = -1.;
-                     break;
-               }
-            }
-            else /* Can't get jammed anymore */
-               w->status = WEAPON_STATUS_UNJAMMED;
-         }
-
       /* Purpose fallthrough */
       case WEAPON_STATUS_UNJAMMED: /* Work as expected */
 
@@ -379,7 +354,8 @@ static void think_seeker( Weapon* w, const double dt )
          }
 
          /* Set turn. */
-         weapon_setTurn( w, CLAMP( -w->outfit->u.amm.turn, w->outfit->u.amm.turn,
+         turn_max = w->outfit->u.amm.turn * (1. - w->jam_power);
+         weapon_setTurn( w, CLAMP( -turn_max, turn_max,
                   10 * diff * w->outfit->u.amm.turn ));
          break;
 
@@ -393,7 +369,8 @@ static void think_seeker( Weapon* w, const double dt )
    }
 
    /* Limit speed here */
-   vel = MIN(w->outfit->u.amm.speed, VMOD(w->solid->vel) + w->outfit->u.amm.thrust*dt);
+   vel  = MIN(w->outfit->u.amm.speed, VMOD(w->solid->vel) + w->outfit->u.amm.thrust*dt);
+   vel *= (1. - w->jam_power);
    vect_pset( &w->solid->vel, vel, w->solid->dir );
    /*limit_speed( &w->solid->vel, w->outfit->u.amm.speed, dt );*/
 }
@@ -484,9 +461,11 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
    Weapon **wlayer;
    int *nlayer;
    Weapon *w;
-   int i;
+   int i, j, k;
    int spfx;
    int s;
+   Pilot *p;
+   Outfit *o;
 
    /* Choose layer. */
    switch (layer) {
@@ -502,6 +481,43 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
       default:
          WARN("Unknown weapon layer!");
          return;
+   }
+
+   /** @TODO optimize me plz. */
+   /* Reset jam power. */
+   for (k=0; k < *nlayer; k++) {
+      w = wlayer[k];
+      if (!outfit_isSeeker( w->outfit ))
+         continue;
+      w->jam_power = 0.;
+   }
+   for (i=0; i<pilot_nstack; i++) {
+      p = pilot_stack[i];
+
+      /* Must be jamming. */
+      if (!p->jamming)
+         continue;
+
+      /* Iterate over outfits to find jammers. */
+      for (j=0; j<p->noutfits; j++) {
+         o    = p->outfits[i]->outfit;
+         if (!outfit_isJammer(o))
+            continue;
+     
+         /* Find jammers. */
+         for (k=0; k < *nlayer; k++) {
+            w = wlayer[k];
+            if (!outfit_isSeeker( w->outfit ))
+               continue;
+
+            /* Must be in range. */
+            if (o->u.jam.range2 < vect_dist2( &w->solid->pos, &p->solid->pos ))
+               continue;
+
+            /* We only consider the strongest jammer. */
+            w->jam_power = MAX( w->jam_power, o->u.jam.power );
+         }
+      }
    }
 
    i = 0;
@@ -1340,8 +1356,7 @@ static Weapon* weapon_create( const Outfit* outfit, double T,
    Weapon* w;
 
    /* Create basic features */
-   w           = malloc( sizeof(Weapon) );
-   memset( w, 0, sizeof(Weapon) );
+   w           = calloc( 1, sizeof(Weapon) );
    w->dam_mod  = 1.; /* Default of 100% damage. */
    w->faction  = parent->faction; /* non-changeable */
    w->parent   = parent->id; /* non-changeable */

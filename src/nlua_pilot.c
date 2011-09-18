@@ -2505,9 +2505,6 @@ static int pilotL_getStats( lua_State *L )
    PUSH_DOUBLE( L, "armour_regen", p->armour_regen );
    PUSH_DOUBLE( L, "shield_regen", p->shield_regen );
    PUSH_DOUBLE( L, "energy_regen", p->energy_regen );
-   /* Jam. */
-   PUSH_DOUBLE( L, "jam_range", p->jam_range );
-   PUSH_DOUBLE( L, "jam_chance", p->jam_chance );
    /* Stats. */
    PUSH_DOUBLE( L, "jump_delay", ntime_convertSTU( pilot_hyperspaceDelay(p) ) );
 

@@ -341,6 +341,8 @@ int outfit_isActive( const Outfit* o )
       return 1;
    if (outfit_isMod(o) && o->u.mod.active)
       return 1;
+   if (outfit_isJammer(o))
+      return 1;
    return 0;
 }
 
@@ -1732,15 +1734,12 @@ static void outfit_parseSJammer( Outfit *temp, const xmlNodePtr parent )
 
    do {
       xml_onlyNodes(node);
-      xmlr_float(node,"range",temp->u.jam.range);
-      xmlr_float(node,"chance",temp->u.jam.chance);
-      xmlr_float(node,"energy",temp->u.jam.energy);
       xmlr_float(node,"cpu",temp->u.jam.cpu);
+      xmlr_float(node,"energy",temp->u.jam.energy);
+      xmlr_float(node,"range",temp->u.jam.range);
+      xmlr_float(node,"power",temp->u.jam.power);
       WARN("Outfit '%s' has unknown node '%s'",temp->name, node->name);
    } while (xml_nextNode(node));
-
-   temp->u.jam.chance /= 100.; /* Put in per one, instead of percent */
-   temp->u.jam.energy /= 60.; /* It's per minute */
 
    /* Set default outfit size if necessary. */
    if (temp->slot.size == OUTFIT_SLOT_SIZE_NA)
@@ -1752,18 +1751,21 @@ static void outfit_parseSJammer( Outfit *temp, const xmlNodePtr parent )
          "%s\n"
          "Needs %.0f CPU\n"
          "%.0f Range\n"
-         "%.0f%% Chance\n"
+         "%.0f%% Power\n"
          "%.1f EPS",
          outfit_getType(temp),
          temp->u.jam.cpu,
          temp->u.jam.range,
-         temp->u.jam.chance*100.,
+         temp->u.jam.power,
          temp->u.jam.energy );
+
+   temp->u.jam.power  /= 100.; /* Put in per one, instead of percent */
+   temp->u.jam.range2  = pow2( temp->u.jam.range ); /**< We square it already. */
 
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define to help check for data errors. */
    MELEMENT(temp->u.jam.range==0.,"range");
-   MELEMENT(temp->u.jam.chance==0.,"chance");
+   MELEMENT(temp->u.jam.power==0.,"power");
    MELEMENT(temp->u.jam.cpu==0.,"cpu");
 #undef MELEMENT
 }

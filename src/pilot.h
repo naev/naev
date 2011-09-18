@@ -167,7 +167,6 @@ typedef struct PilotOutfitSlot_ {
    /* Current state. */
    PilotOutfitState state; /**< State of the outfit. */
    double timer;     /**< Used to store when it was last used. */
-   int quantity;     /**< Quantity. */
    int level;        /**< Level in current weapon set (-1 is none). */
 
    /* Type-specific data. */
@@ -336,8 +335,8 @@ typedef struct Pilot_ {
    PilotOutfitSlot *afterburner; /**< the afterburner */
 
    /* Jamming */
-   double jam_range; /**< Range at which pilot starts jamming. */
-   double jam_chance; /**< Jam chance. */
+   int jamming;      /**< Pilot is current jamming with at least a single jammer (used to
+                          speed up later checks in the code). */
 
    /* Weapon sets. */
    PilotWeaponSet weapon_sets[PILOT_WEAPON_SETS]; /**< All the weapon sets the pilot has. */
