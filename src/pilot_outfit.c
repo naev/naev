@@ -29,6 +29,7 @@ void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, double *a, do
 {
    double max, old;
    double x,y, ang, arc;
+   int locked;
 
    /* No target. */
    if (t == NULL)
@@ -75,6 +76,7 @@ void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, double *a, do
 
    /* In arc. */
    o->u.ammo.in_arc = 1;
+   locked = (o->u.ammo.lockon_timer < 0.);
 
    /* Lower timer. When the timer reaches zero, the lock is established. */
    max = -o->outfit->u.lau.lockon/3.;
@@ -85,6 +87,10 @@ void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, double *a, do
       /* Cap at -max/3. */
       if (o->u.ammo.lockon_timer < max)
          o->u.ammo.lockon_timer = max;
+  
+      /* Trigger lockon hook. */
+      if (!locked && (o->u.ammo.lockon_timer < 0.))
+         pilot_runHook( p, PILOT_HOOK_LOCKON );
    }
 }
 
