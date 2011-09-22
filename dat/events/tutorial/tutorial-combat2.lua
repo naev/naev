@@ -120,7 +120,7 @@ function create()
 
     tk.msg(title1, message1)
     tk.msg(title1, message2:format(tutGetKey("face")))
-    captainpractice() -- dummypractice()
+    dummypractice()
 end
 
 -- Hooked function, initiates drone target practice.
@@ -131,14 +131,17 @@ function dummypractice()
     drone:setNodisable(true)
     drone:setVisplayer(true)
     drone:control()
+    drone:rmOutfit("all")
+    drone:addOutfit("Shield Nullifier")
     hook.pilot(drone, "death", "dronedeath")
     hook.pilot(drone, "attacked", "dronedamage")
-    -- Hook lockon here.
+    lockhook = hook.pilot(pp, "lockon", "lockon")
 end
 
 -- Lockon hook.
 function lockon()
    tk.msg(title1, message3:format(tutGetKey("secondary")))
+   hook.rm(lockhook)
 end
 
 -- Drone death hook.
