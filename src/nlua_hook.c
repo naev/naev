@@ -572,6 +572,7 @@ static int hook_safe( lua_State *L )
  *    <li> "land" : triggered when pilot is landing (right when starting land descent).<br />
  *    <li> "attacked" : triggered when the pilot is attacked. <br />
  *    <li> "idle" : triggered when the pilot becomes idle in manual control.<br />
+ *    <li> "lockon" : triggered when the pilot locked on a missile on it's target.<br />
  * </ul>
  * <br />
  * If you pass nil as pilot, it will set it as a global hook that will jump for all pilots.<br />
@@ -622,7 +623,7 @@ static int hook_pilot( lua_State *L )
 
    /* Check to see if hook_type is valid */
    if (strcmp(hook_type,"death")==0)         type = PILOT_HOOK_DEATH;
-   else if (strcmp(hook_type,"exploded")==0)    type = PILOT_HOOK_EXPLODED;
+   else if (strcmp(hook_type,"exploded")==0) type = PILOT_HOOK_EXPLODED;
    else if (strcmp(hook_type,"board")==0)    type = PILOT_HOOK_BOARD;
    else if (strcmp(hook_type,"disable")==0)  type = PILOT_HOOK_DISABLE;
    else if (strcmp(hook_type,"undisable")==0) type = PILOT_HOOK_UNDISABLE;
@@ -631,6 +632,7 @@ static int hook_pilot( lua_State *L )
    else if (strcmp(hook_type,"land")==0)     type = PILOT_HOOK_LAND;
    else if (strcmp(hook_type,"attacked")==0) type = PILOT_HOOK_ATTACKED;
    else if (strcmp(hook_type,"idle")==0)     type = PILOT_HOOK_IDLE;
+   else if (strcmp(hook_type,"lockon")==0)   type = PILOT_HOOK_LOCKON;
    else { /* hook_type not valid */
       NLUA_ERROR(L, "Invalid pilot hook type: '%s'", hook_type);
       return 0;

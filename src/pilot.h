@@ -55,6 +55,7 @@
 #define PILOT_HOOK_ATTACKED 8 /**< Pilot is in manual override and is being attacked. */
 #define PILOT_HOOK_IDLE    9 /**< Pilot is in manual override and has just become idle. */
 #define PILOT_HOOK_EXPLODED 10 /**< Pilot died and exploded (about to be removed). */
+#define PILOT_HOOK_LOCKON  11 /**< Pilot had a launcher lockon. */
 
 
 /* damage */
