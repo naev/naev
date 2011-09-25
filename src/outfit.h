@@ -87,11 +87,16 @@ typedef enum OutfitSlotSize_ {
  * @brief Pilot slot that can contain outfits.
  */
 typedef struct OutfitSlot_ {
+   unsigned int spid;   /**< Slot property ID. */
+   int exclusive;       /**< Outfit must go exclusively into the slot. */
    OutfitSlotType type; /**< Type of outfit slot. */
    OutfitSlotSize size; /**< Size of the outfit. */
 } OutfitSlot;
 
 
+/**
+ * @brief Core damage that an outfit does.
+ */
 typedef struct Damage_ {
    int type;            /**< Type of damage. */
    double penetration;  /**< Penetration the damage has [0:1], with 1 being 100%. */
@@ -202,29 +207,22 @@ typedef struct OutfitModificationData_ {
    int active;       /**< Outfit is active. */
 
    /* movement */
-   double thrust;    /**< Maximum thrust modifier. */
-   double thrust_rel; /**< Relative thrust modifier. */
-   double turn;      /**< Maximum turn modifier. */
-   double turn_rel;  /**< Relative turn modifier. */
-   double speed;     /**< Maximum speed modifier. */
-   double speed_rel; /**< Relative speed modifier. */
+   double thrust;    /**< Maximum thrust modifier, this is absolute and is per 100 mass. */
+   double turn;      /**< Maximum turn modifier, this is absolute and is per 100 mass. */
+   double speed;     /**< Maximum speed modifier, this is absolute and per 100 mass. */
 
    /* health */
    double armour;    /**< Maximum armour modifier. */
-   double armour_rel; /**< Relative to armour base modifier. */
    double armour_regen; /**< Armour regeneration modifier. */
    double shield;    /**< Maximum shield modifier. */
-   double shield_rel; /**< Relative to shield base modifier. */
    double shield_regen; /**< Shield regeneration modifier. */
    double energy;    /**< Maximum energy modifier. */
-   double energy_rel; /**< Relative to energy base modifier. */
    double energy_regen; /**< Energy regeneration modifier. */
    double cpu;       /**< CPU modifier. */
+   double absorb;    /**< Absorption factor. */
 
    /* misc */
    double cargo;     /**< Cargo space modifier. */
-   double crew_rel;  /**< Relative crew modification. */
-   double mass_rel;  /**< Relative mass modification. */
    double fuel;      /**< Maximum fuel modifier. */
 
    /* stats */
@@ -398,6 +396,7 @@ void outfit_free (void);
  */
 int outfit_fitsSlot( const Outfit* o, const OutfitSlot* s );
 int outfit_fitsSlotType( const Outfit* o, const OutfitSlot* s );
+void outfit_freeSlot( OutfitSlot* s );
 
 
 #endif /* OUTFIT_H */

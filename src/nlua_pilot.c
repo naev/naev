@@ -2019,12 +2019,15 @@ static int pilotL_setNoLand( lua_State *L )
 /**
  * @brief Adds an outfit to a pilot.
  *
+ * This by default tries to add them to the first empty or defaultly equipped slot.
+ *
  * @usage added = p:addOutfit( "Laser Cannon", 5 ) -- Adds 5 laser cannons to p
  *
  *    @luaparam p Pilot to add outfit to.
  *    @luaparam outfit Name of the outfit to add.
  *    @luaparam q Amount of the outfit to add (defaults to 1).
  *    @luaparam bypass Whether to skip CPU and slot size checks before adding an outfit (defaults to false).
+ *              Will not overwrite existing non-default outfits.
  *    @luareturn The number of outfits added.
  * @luafunc addOutfit( p, outfit, q )
  */
@@ -2060,13 +2063,14 @@ static int pilotL_addOutfit( lua_State *L )
       if (q <= 0)
          break;
 
-      /* Must not have outfit already. */
-      if (p->outfits[i]->outfit != NULL)
+      /* Must not have outfit (excluding default) already. */
+      if ((p->outfits[i]->outfit != NULL) &&
+            (p->outfits[i]->outfit != p->outfits[i]->sslot->data))
          continue;
 
       if (!bypass) {
          /* Must fit slot. */
-         if (!outfit_fitsSlot( o, &p->outfits[i]->slot ))
+         if (!outfit_fitsSlot( o, &p->outfits[i]->sslot->slot ))
             continue;
 
          /* Test if can add outfit. */
@@ -2076,7 +2080,7 @@ static int pilotL_addOutfit( lua_State *L )
       }
       /* Only do a basic check. */
       else
-         if (!outfit_fitsSlotType( o, &p->outfits[i]->slot ))
+         if (!outfit_fitsSlotType( o, &p->outfits[i]->sslot->slot ))
             continue;
 
       /* Add outfit - already tested. */
@@ -2729,15 +2733,18 @@ static int pilotL_getHostile( lua_State *L )
 }
 
 
+/**
+ * @brief Small struct to handle flags.
+ */
 struct pL_flag {
-   char *name;
-   int id;
+   char *name; /**< Name of the flag. */  
+   int id;     /**< Id of the flag. */
 };
 static const struct pL_flag pL_flags[] = {
    { .name = "hailing", .id = PILOT_HAILING },
    { .name = "boardable", .id = PILOT_BOARDABLE },
    {NULL, -1}
-};
+}; /**< Flags to get. */
 /**
  * @brief Gets the pilot's flags.
  *

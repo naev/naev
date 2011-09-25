@@ -31,10 +31,11 @@ static int tab_raw( Widget* tab, SDL_Event *event );
 static void tab_render( Widget* tab, double bx, double by );
 static void tab_renderOverlay( Widget* tab, double bx, double by );
 static void tab_cleanup( Widget* tab );
+static Widget *tab_getWgt( unsigned int wid, const char *tab );
 
 
 /**
- * @brief Adds a button widget to a window.
+ * @brief Creates a widget that hijacks a window and creates many children window.
  *
  * Position origin is 0,0 at bottom left.  If you use negative X or Y
  *  positions.  They actually count from the opposite side in.
@@ -47,14 +48,16 @@ static void tab_cleanup( Widget* tab );
  *    @param name Name of the widget to use internally.
  *    @param ntabs Number of tabs in the widget.
  *    @param tabnames Name of the tabs in the widget.
+ *    @param tabpos Position to set up the tabs at.
  *    @return List of created windows.
  */
 unsigned int* window_addTabbedWindow( const unsigned int wid,
       const int x, const int y, /* position */
       const int w, const int h, /* size */
-      const char* name, int ntabs, const char **tabnames )
+      const char* name, int ntabs, const char **tabnames, int tabpos )
 {
    int i;
+   int wx,wy, ww,wh;
    Window *wdw, *wtmp;
    Widget *wgt;
 
@@ -74,28 +77,43 @@ unsigned int* window_addTabbedWindow( const unsigned int wid,
    wgt->renderOverlay      = tab_renderOverlay;
    wgt->cleanup            = tab_cleanup;
    wgt->dat.tab.ntabs      = ntabs;
+   wgt->dat.tab.tabpos     = tabpos;
+   wgt->dat.tab.font       = &gl_defFont;
 
    /* position/size */
-   wgt->w = (double) w;
-   wgt->h = (double) h;
-   toolkit_setPos( wdw, wgt, x, y );
+   wgt->x = (double) (x<0) ? 0 : x;
+   wgt->y = (double) (y<0) ? 0 : y;
+   wgt->w = (double) (w<0) ? wdw->w : w;
+   wgt->h = (double) (h<0) ? wdw->h : h;
+
+   /* Calculate window position and size. */
+   wx = wdw->x + wgt->x;
+   wy = wdw->y + wgt->y;
+   ww = wgt->w;
+   wh = wgt->h;
+   if (tabpos == 0) {
+      wy += TAB_HEIGHT;
+      wh -= TAB_HEIGHT;
+   }
+   else if (tabpos == 1) {
+      wh -= TAB_HEIGHT;
+   }
+   else
+      WARN( "Tab position '%d' parameter does not make sense", tabpos );
 
    /* Copy tab information. */
    wgt->dat.tab.tabnames   = malloc( sizeof(char*) * ntabs );
    wgt->dat.tab.windows    = malloc( sizeof(unsigned int) * ntabs );
    wgt->dat.tab.namelen    = malloc( sizeof(int) * ntabs );
    for (i=0; i<ntabs; i++) {
-      /* Hack to get around possible reallocs. */
-      wdw = window_wget(wid);
       /* Get name and length. */
       wgt->dat.tab.tabnames[i] = strdup( tabnames[i] );
-      wgt->dat.tab.namelen[i]  = gl_printWidthRaw( &gl_defFont,
+      wgt->dat.tab.namelen[i]  = gl_printWidthRaw( wgt->dat.tab.font,
             wgt->dat.tab.tabnames[i] );
       /* Create windows. */
-      wgt->dat.tab.windows[i] = window_create( tabnames[i],
-            wdw->x + x, wdw->y + y + TAB_HEIGHT, wdw->w, wdw->h - TAB_HEIGHT );
-      wtmp = window_wget( wgt->dat.tab.windows[i] );
-      /* Set flags. */
+      wgt->dat.tab.windows[i] = window_create( tabnames[i], wx, wy, ww, wh );
+      wtmp = window_wget( wgt->dat.tab.windows[i] ); /* Can not store this, in case something reallocs. */
+      /* Set flags - parent window handles event for the children. */
       window_setFlag( wtmp, WINDOW_NOFOCUS );
       window_setFlag( wtmp, WINDOW_NORENDER );
       window_setFlag( wtmp, WINDOW_NOINPUT );
@@ -108,7 +126,7 @@ unsigned int* window_addTabbedWindow( const unsigned int wid,
 
 
 /**
- * @brief Handles input for an button widget.
+ * @brief Handles input for an tabbed window widget.
  *
  *    @param tab Tabbed Window widget to handle event.
  *    @param key Key being handled.
@@ -162,10 +180,14 @@ static int tab_mouse( Widget* tab, SDL_Event *event )
    toolkit_inputTranslateCoords( parent, event, &x, &y, &rx, &ry );
 
    /* Translate to widget space. */
-   x += parent->w - tab->x;
-   y += parent->h - tab->y;
+   x -= tab->x;
+   y -= tab->y;
 
-   /* Make sure event is in bottom 20 pixels. */
+   /* Since it's at the top we have to translate down. */
+   if (tab->dat.tab.tabpos == 1)
+      y -= (tab->h-TAB_HEIGHT);
+
+   /* Make sure event is in the TAB HEIGHT area. */
    if ((y>=TAB_HEIGHT) || (y<0))
       return 0;
 
@@ -173,24 +195,27 @@ static int tab_mouse( Widget* tab, SDL_Event *event )
    p = 20;
    for (i=0; i<tab->dat.tab.ntabs; i++) {
       p += 10 + tab->dat.tab.namelen[i];
+
+      /* Doesn't match. */
+      if (x >= p)
+         continue;
+
       /* Mark as active. */
-      if (x < p) {
-         change = -1;
-         if (event->button.button == SDL_BUTTON_WHEELUP)
-            change = (tab->dat.tab.active - 1) % tab->dat.tab.ntabs;
-         else if (event->button.button == SDL_BUTTON_WHEELDOWN)
-            change = (tab->dat.tab.active + 1) % tab->dat.tab.ntabs;
-         else
-            tab->dat.tab.active =i;
+      change = -1;
+      if (event->button.button == SDL_BUTTON_WHEELUP)
+         change = (tab->dat.tab.active - 1) % tab->dat.tab.ntabs;
+      else if (event->button.button == SDL_BUTTON_WHEELDOWN)
+         change = (tab->dat.tab.active + 1) % tab->dat.tab.ntabs;
+      else
+         tab->dat.tab.active =i;
 
-         if ((change != -1) && (change < tab->dat.tab.ntabs))
-            tab->dat.tab.active = change;
+      if ((change != -1) && (change < tab->dat.tab.ntabs))
+         tab->dat.tab.active = change;
 
-         /* Create event. */
-         if (tab->dat.tab.onChange != NULL)
-            tab->dat.tab.onChange( tab->wdw, tab->name, tab->dat.tab.active );
-         break;
-      }
+      /* Create event. */
+      if (tab->dat.tab.onChange != NULL)
+         tab->dat.tab.onChange( tab->wdw, tab->name, tab->dat.tab.active );
+      break;
    }
 
    return 0;
@@ -279,7 +304,7 @@ static int tab_key( Widget* tab, SDL_Event *event )
  */
 static void tab_render( Widget* tab, double bx, double by )
 {
-   int i, x;
+   int i, x, y;
    Window *wdw;
    glColour *c, *lc;
 
@@ -294,29 +319,32 @@ static void tab_render( Widget* tab, double bx, double by )
    window_render( wdw );
 
    /* Render tabs ontop. */
-   x = 20;
+   x = bx+tab->x+20;
+   y = by+tab->y;
+   if (tab->dat.tab.tabpos == 1)
+      y += tab->h-TAB_HEIGHT;
    for (i=0; i<tab->dat.tab.ntabs; i++) {
       if (i!=tab->dat.tab.active) {
          lc = toolkit_col;
          c  = toolkit_colDark;
 
          /* Draw border. */
-         toolkit_drawRect( bx+x, by+0, tab->dat.tab.namelen[i] + 10,
+         toolkit_drawRect( x, y, tab->dat.tab.namelen[i] + 10,
                TAB_HEIGHT, lc, c );
-         toolkit_drawOutline( bx+x+1, by+1, tab->dat.tab.namelen[i] + 8,
+         toolkit_drawOutline( x+1, y+1, tab->dat.tab.namelen[i] + 8,
                TAB_HEIGHT-1, 1., c, &cBlack );
       }
       else {
          if (i==0)
-            toolkit_drawRect( bx+x-1, by+0,
+            toolkit_drawRect( x-1, y+0,
                   1, TAB_HEIGHT+1, toolkit_colDark, &cGrey20 );
          else if (i==tab->dat.tab.ntabs-1)
-            toolkit_drawRect( bx+x+tab->dat.tab.namelen[i]+9, by+0,
+            toolkit_drawRect( x+tab->dat.tab.namelen[i]+9, y+0,
                   1, TAB_HEIGHT+1, toolkit_colDark, &cGrey20 );
       }
       /* Draw text. */
-      gl_printRaw( &gl_defFont, bx+x + 5,
-            by + (TAB_HEIGHT-gl_defFont.h)/2, &cBlack,
+      gl_printRaw( &gl_defFont, x + 5,
+            y + (TAB_HEIGHT-gl_defFont.h)/2, &cBlack,
             tab->dat.tab.tabnames[i] );
 
       /* Go to next line. */
@@ -362,12 +390,32 @@ static void tab_cleanup( Widget *tab )
       free( tab->dat.tab.tabnames[i] );
       window_destroy( tab->dat.tab.windows[i] );
    }
-   if (tab->dat.tab.tabnames != NULL)
-      free( tab->dat.tab.tabnames );
-   if (tab->dat.tab.windows != NULL)
-      free( tab->dat.tab.windows );
-   if (tab->dat.tab.namelen != NULL)
-      free( tab->dat.tab.namelen );
+   free( tab->dat.tab.tabnames );
+   free( tab->dat.tab.windows );
+   free( tab->dat.tab.namelen );
+}
+
+
+/**
+ * @brief Gets the widget.
+ */
+static Widget *tab_getWgt( unsigned int wid, const char *tab )
+{
+   Widget *wgt = window_getwgt( wid, tab );
+
+   /* Must be found in stack. */
+   if (wgt == NULL) {
+      WARN("Widget '%s' not found", tab);
+      return NULL;;
+   }
+
+   /* Must be an image array. */
+   if (wgt->type != WIDGET_TABBEDWINDOW) {
+      WARN("Widget '%s' is not an image array.", tab);
+      return NULL;
+   }
+
+   return wgt;
 }
 
 
@@ -380,19 +428,9 @@ static void tab_cleanup( Widget *tab )
  */
 int window_tabWinSetActive( const unsigned int wid, const char *tab, int active )
 {
-   Widget *wgt = window_getwgt( wid, tab );
-
-   /* Must be found in stack. */
-   if (wgt == NULL) {
-      WARN("Widget '%s' not found", tab);
+   Widget *wgt = tab_getWgt( wid, tab );
+   if (wgt == NULL)
       return -1;
-   }
-
-   /* Must be an image array. */
-   if (wgt->type != WIDGET_TABBEDWINDOW) {
-      WARN("Widget '%s' is not an image array.", tab);
-      return -1;
-   }
 
    /* Set active window. */
    wgt->dat.tab.active = active;
@@ -415,23 +453,34 @@ int window_tabWinSetActive( const unsigned int wid, const char *tab, int active 
 int window_tabWinOnChange( const unsigned int wid, const char *tab,
       void(*onChange)(unsigned int,char*,int) )
 {
-   Widget *wgt = window_getwgt( wid, tab );
-
-   /* Must be found in stack. */
-   if (wgt == NULL) {
-      WARN("Widget '%s' not found", tab);
+   Widget *wgt = tab_getWgt( wid, tab );
+   if (wgt == NULL)
       return -1;
-   }
-
-   /* Must be an image array. */
-   if (wgt->type != WIDGET_TABBEDWINDOW) {
-      WARN("Widget '%s' is not an image array.", tab);
-      return -1;
-   }
 
    /* Set on change function. */
    wgt->dat.tab.onChange = onChange;
 
    return 0;
 }
+
+
+/**
+ * @brief Changes the font used by a tabbed window widget.
+ */
+int window_tabSetFont( const unsigned int wid, const char *tab, const glFont *font )
+{
+   int i;
+   Widget *wgt = tab_getWgt( wid, tab );
+   if (wgt == NULL)
+      return -1;
+
+   wgt->dat.tab.font = font;
+   for (i=0; i<wgt->dat.tab.ntabs; i++)
+      wgt->dat.tab.namelen[i]  = gl_printWidthRaw( wgt->dat.tab.font,
+            wgt->dat.tab.tabnames[i] );
+
+   return 0;
+}
+
+
 

@@ -33,6 +33,7 @@
 #include "nstring.h"
 #include "pilot.h"
 #include "damagetype.h"
+#include "slots.h"
 
 
 #define outfit_setProp(o,p)      ((o)->properties |= p) /**< Checks outfit property. */
@@ -45,10 +46,7 @@
 #define OUTFIT_GFX   "gfx/outfit/" /**< Path to outfit graphics. */
 
 
-#define OUTFIT_SHORTDESC_MAX  256
-
-
-#define CHUNK_SIZE            64 /**< Size to reallocate by. */
+#define OUTFIT_SHORTDESC_MAX  256 /**< Maxmimum length of a short description of an outfit. */
 
 
 /*
@@ -763,6 +761,16 @@ int outfit_fitsSlot( const Outfit* o, const OutfitSlot* s )
    if (os->type != s->type)
       return 0;
 
+   /* Must match slot property. */
+   if (o->slot.spid != 0)
+      if (s->spid != o->slot.spid)
+         return 0;
+
+   /* Exclusive only match property. */
+   if (s->exclusive)
+      if (s->spid != o->slot.spid)
+         return 0;
+
    /* Must have valid slot size. */
    if (os->size == OUTFIT_SLOT_SIZE_NA)
       return 0;
@@ -799,6 +807,17 @@ int outfit_fitsSlotType( const Outfit* o, const OutfitSlot* s )
 
    /* It meets all criteria. */
    return 1;
+}
+
+
+/**
+ * @brief Frees an outfit slot.
+ *
+ *    @param s Slot to free.
+ */
+void outfit_freeSlot( OutfitSlot* s )
+{
+   (void) s;
 }
 
 
@@ -1028,13 +1047,13 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
          1./temp->u.blt.delay * temp->u.blt.energy, temp->u.blt.energy,
          temp->u.blt.range,
          temp->u.blt.heatup);
-   if (!outfit_isTurret(temp)) {
+   if (!outfit_isTurret(temp) && (l<OUTFIT_SHORTDESC_MAX)) {
       l += snprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
          "\n%.1f degree swivel",
          temp->u.blt.swivel*180./M_PI );
    }
-   if (temp->u.blt.dmg.disable > 0.) {
-      l += snprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
+   if ((temp->u.blt.dmg.disable > 0.) && (l<OUTFIT_SHORTDESC_MAX)) {
+      /*l +=*/ snprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
          "\n%.0f Disable",
          temp->u.blt.dmg.disable );
    }
@@ -1152,8 +1171,8 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
          temp->u.bem.duration, temp->u.bem.delay - temp->u.bem.duration,
          temp->u.bem.range,
          temp->u.bem.heatup);
-   if (temp->u.blt.dmg.disable > 0.) {
-      l += snprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
+   if ((temp->u.blt.dmg.disable > 0.) && (l<OUTFIT_SHORTDESC_MAX)) {
+      /*l +=*/ snprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
          "\n%.0f Disable/s",
          temp->u.bem.dmg.disable );
    }
@@ -1347,8 +1366,8 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
          temp->u.amm.energy,
          temp->u.amm.speed,
          temp->u.amm.duration );
-   if (temp->u.blt.dmg.disable > 0.) {
-      l += snprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
+   if ((temp->u.blt.dmg.disable > 0.) && (l < OUTFIT_SHORTDESC_MAX)) {
+      /*l +=*/ snprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
          "\n%.0f Disable",
          temp->u.amm.dmg.disable );
    }
@@ -1395,27 +1414,20 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
       }
       /* movement */
       xmlr_float(node,"thrust",temp->u.mod.thrust);
-      xmlr_float(node,"thrust_rel",temp->u.mod.thrust_rel);
       xmlr_float(node,"turn",temp->u.mod.turn);
-      xmlr_float(node,"turn_rel",temp->u.mod.turn_rel);
       xmlr_float(node,"speed",temp->u.mod.speed);
-      xmlr_float(node,"speed_rel",temp->u.mod.speed_rel);
       /* health */
       xmlr_float(node,"armour",temp->u.mod.armour);
-      xmlr_float(node,"armour_rel",temp->u.mod.armour_rel);
       xmlr_float(node,"shield",temp->u.mod.shield);
-      xmlr_float(node,"shield_rel",temp->u.mod.shield_rel);
       xmlr_float(node,"energy",temp->u.mod.energy);
-      xmlr_float(node,"energy_rel",temp->u.mod.energy_rel);
       xmlr_float(node,"fuel",temp->u.mod.fuel);
       xmlr_float(node,"armour_regen", temp->u.mod.armour_regen );
       xmlr_float(node,"shield_regen", temp->u.mod.shield_regen );
       xmlr_float(node,"energy_regen", temp->u.mod.energy_regen );
+      xmlr_float(node,"absorb", temp->u.mod.absorb );
       /* misc */
       xmlr_float(node,"cpu",temp->u.mod.cpu);
       xmlr_float(node,"cargo",temp->u.mod.cargo);
-      xmlr_float(node,"crew_rel", temp->u.mod.crew_rel);
-      xmlr_float(node,"mass_rel",temp->u.mod.mass_rel);
       /* Stats. */
       ll = ss_listFromXML( node );
       if (ll != NULL) {
@@ -1438,47 +1450,33 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
          outfit_getType(temp) );
 
 #define DESC_ADD(x, s, n) \
-if ((x) != 0.) \
+if (((x) != 0.) && (i<OUTFIT_SHORTDESC_MAX)) \
    i += snprintf( &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, \
-         "\n%+."n"f "s, x )
+         "\n\e%s%+."n"f "s"\e0", ((x)>0.)?"D":"r", (x))
 #define DESC_ADD0(x, s)    DESC_ADD( x, s, "0" )
 #define DESC_ADD1(x, s)    DESC_ADD( x, s, "1" )
    DESC_ADD0( temp->u.mod.thrust, "Thrust" );
-   DESC_ADD0( temp->u.mod.thrust_rel, "%% Thrust" );
    DESC_ADD0( temp->u.mod.turn, "Turn Rate" );
-   DESC_ADD0( temp->u.mod.turn_rel, "%% Turn Rate" );
    DESC_ADD0( temp->u.mod.speed, "Maximum Speed" );
-   DESC_ADD0( temp->u.mod.speed_rel, "%% Maximum Speed" );
    DESC_ADD0( temp->u.mod.armour, "Armour" );
-   DESC_ADD0( temp->u.mod.armour_rel, "%% Armour" );
    DESC_ADD0( temp->u.mod.shield, "Shield" );
-   DESC_ADD0( temp->u.mod.shield_rel, "%% Shield" );
    DESC_ADD0( temp->u.mod.energy, "Energy" );
-   DESC_ADD0( temp->u.mod.energy_rel, "%% Energy" );
    DESC_ADD0( temp->u.mod.fuel, "Fuel" );
    DESC_ADD1( temp->u.mod.armour_regen, "Armour Per Second" );
    DESC_ADD1( temp->u.mod.shield_regen, "Shield Per Second" );
    DESC_ADD1( temp->u.mod.energy_regen, "Energy Per Second" );
+   DESC_ADD0( temp->u.mod.absorb, "Absorption" );
    DESC_ADD0( temp->u.mod.cpu, "CPU" );
    DESC_ADD0( temp->u.mod.cargo, "Cargo" );
-   DESC_ADD0( temp->u.mod.crew_rel, "%% Crew" );
-   DESC_ADD0( temp->u.mod.mass_rel, "%% Mass" );
 #undef DESC_ADD1
 #undef DESC_ADD0
 #undef DESC_ADD
-   i += ss_statsListDesc( temp->u.mod.stats,
+   /*i +=*/ ss_statsListDesc( temp->u.mod.stats,
          &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, 1 );
 
    /* More processing. */
-   temp->u.mod.thrust_rel /= 100.;
    temp->u.mod.turn       *= M_PI / 180.;
-   temp->u.mod.turn_rel   /= 100.;
-   temp->u.mod.speed_rel  /= 100.;
-   temp->u.mod.armour_rel /= 100.;
-   temp->u.mod.shield_rel /= 100.;
-   temp->u.mod.energy_rel /= 100.;
-   temp->u.mod.mass_rel   /= 100.;
-   temp->u.mod.crew_rel   /= 100.;
+   temp->u.mod.absorb     /= 100.;
    temp->u.mod.cpu         = -temp->u.mod.cpu; /* Invert sign so it works with outfit_cpu. */
 }
 
@@ -1824,6 +1822,12 @@ static int outfit_parse( Outfit* temp, const xmlNodePtr parent )
                   temp->slot.type = OUTFIT_SLOT_WEAPON;
                else
                   WARN("Outfit '%s' has unknown slot type '%s'.", temp->name, cprop);
+
+               /* Property. */
+               xmlr_attr( cur, "prop", prop );
+               if (prop != NULL)
+                  temp->slot.spid = sp_get( prop );
+               free( prop );
                continue;
             }
             else if (xml_isNode(cur,"size")) {
@@ -1892,7 +1896,7 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define
    MELEMENT(temp->gfx_store==NULL,"gfx_store");
    /*MELEMENT(temp->mass==0,"mass"); Not really needed */
    MELEMENT(temp->type==0,"type");
-   MELEMENT(temp->price==0,"price");
+   /*MELEMENT(temp->price==0,"price");*/
    MELEMENT(temp->description==NULL,"description");
 #undef MELEMENT
 
@@ -1977,6 +1981,9 @@ void outfit_free (void)
       /* free graphics */
       if (outfit_gfx(&outfit_stack[i]))
          gl_freeTexture(outfit_gfx(&outfit_stack[i]));
+
+      /* Free slot. */
+      outfit_freeSlot( &outfit_stack[i].slot );
 
       /* Type specific. */
       if (outfit_isBolt(o) && o->u.blt.gfx_end)

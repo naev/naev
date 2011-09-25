@@ -184,7 +184,7 @@ void menu_main (void)
    }
    else if (freespace > 200.) {
       /* We'll want a maximum separation of 30 between logo and text. */
-      freespace  -=  25;
+      /*freespace  -=  25;*/
       offset_logo = -25;
       offset_wdw  = -1.;
    }

@@ -24,13 +24,13 @@ end
 -- @brief Equips a generic civilian type ship.
 --]]
 function equip_genericCivilian( p, shipsize )
-   local medium, low, apu
+   local medium, low
    local use_primary, use_secondary, use_medium, use_low
    local nhigh, nmedium, nlow = p:ship():slots()
 
    -- Defaults
    medium      = { "Unicorp Scrambler" }
-   apu         = { }
+
    weapons = {}
    use_primary = rnd.rnd(nhigh) -- Use fewer slots
    use_secondary = 0
@@ -55,7 +55,7 @@ function equip_genericCivilian( p, shipsize )
          use_low = 1
       end
    end
-   equip_ship( p, true, weapons, medium, low, apu,
+   equip_ship( p, true, weapons, medium, low,
                use_medium, use_low )
 end
 
@@ -64,13 +64,13 @@ end
 -- @brief Equips a generic merchant type ship.
 --]]
 function equip_genericMerchant( p, shipsize )
-   local medium, low, apu
+   local medium, low
    local use_primary, use_secondary, use_medium, use_low
    local nhigh, nmedium, nlow = p:ship():slots()
 
    -- Defaults
    medium      = { "Unicorp Scrambler" }
-   apu         = { }
+
    weapons     = {}
    use_primary = rnd.rnd(1,nhigh) -- Use fewer slots
    use_secondary = 0
@@ -109,7 +109,7 @@ function equip_genericMerchant( p, shipsize )
          use_low = 1
       end
    end
-   equip_ship( p, true, weapons, medium, low, apu,
+   equip_ship( p, true, weapons, medium, low,
                use_medium, use_low )
 end
 
@@ -118,13 +118,13 @@ end
 -- @brief Equips a generic military type ship.
 --]]
 function equip_genericMilitary( p, shipsize )
-   local medium, low, apu
+   local medium, low
    local use_primary, use_secondary, use_medium, use_low
    local nhigh, nmedium, nlow = p:ship():slots()
 
    -- Defaults
    medium      = { "Unicorp Scrambler" }
-   apu         = { }
+
 
    -- Equip by size and type
    if shipsize == "small" then
@@ -146,7 +146,7 @@ function equip_genericMilitary( p, shipsize )
          addWeapons( equip_secondaryLow(), use_secondary )
          medium         = equip_mediumLow()
          low            = equip_lowLow()
-         apu            = equip_apuLow()
+
 
       -- Bomber
       elseif class == "Bomber" then
@@ -156,7 +156,7 @@ function equip_genericMilitary( p, shipsize )
          addWeapons( equip_rangedLow(), use_secondary )
          medium         = equip_mediumLow()
          low            = equip_lowLow()
-         apu            = equip_apuLow()
+
       end
 
    elseif shipsize == "medium" then
@@ -170,7 +170,7 @@ function equip_genericMilitary( p, shipsize )
       addWeapons( equip_secondaryMedLow(), use_secondary )
       medium         = equip_mediumMed()
       low            = equip_lowMed()
-      apu            = equip_apuMed()
+
 
    else
       use_primary    = nhigh-2
@@ -179,9 +179,9 @@ function equip_genericMilitary( p, shipsize )
       addWeapons( equip_secondaryMedLow(), use_secondary )
       medium         = equip_mediumHig()
       low            = equip_lowHig()
-      apu            = equip_apuHig()
+
    end
-   equip_ship( p, false, weapons, medium, low, apu,
+   equip_ship( p, false, weapons, medium, low,
                use_medium, use_low )
 end
 

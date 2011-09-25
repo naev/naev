@@ -145,7 +145,7 @@ int pilot_getMount( const Pilot *p, const PilotOutfitSlot *w, Vector2d *v )
     *
     * dir is inverted so that rotation is counter-clockwise.
     */
-   m = &w->mount;
+   m = &w->sslot->mount;
    cm = cos(-a);
    sm = sin(-a);
    x = m->x * cm + m->y * sm;
@@ -445,33 +445,39 @@ int pilot_rmOutfit( Pilot* pilot, PilotOutfitSlot *s )
  */
 const char* pilot_checkSanity( Pilot *p )
 {
+   int i;
+   for (i=0; i<p->noutfits; i++)
+      if ((p->outfits[i]->outfit != NULL) &&
+            !outfit_fitsSlot( p->outfits[i]->outfit, &p->outfits[i]->sslot->slot ))
+         return "Doesn't fit slot";
+
    if (p->cpu < 0)
       return "Negative CPU";
 
    /* Movement. */
-   if (p->thrust < 0)
+   if (p->thrust < 0.)
       return "Negative Thrust";
-   if (p->speed < 0)
+   if (p->speed < 0.)
       return "Negative Speed";
-   if (p->turn < 0)
+   if (p->turn < 0.)
       return "Negative Turn";
 
    /* Health. */
-   if (p->armour_max < 0)
+   if (p->armour_max < 0.)
       return "Negative Armour";
-   if (p->armour_regen < 0)
+   if (p->armour_regen < 0.)
       return "Negative Armour Regeneration";
-   if (p->shield_max < 0)
+   if (p->shield_max < 0.)
       return "Negative Shield";
-   if (p->shield_regen < 0)
+   if (p->shield_regen < 0.)
       return "Negative Shield Regeneration";
-   if (p->energy_max < 0)
+   if (p->energy_max < 0.)
       return "Negative Energy";
-   if (p->energy_regen < 0)
+   if (p->energy_regen < 0.)
       return "Negative Energy Regeneration";
 
    /* Misc. */
-   if (p->fuel_max < 0)
+   if (p->fuel_max < 0.)
       return "Negative Fuel Maximum";
 
    /* All OK. */
@@ -479,6 +485,12 @@ const char* pilot_checkSanity( Pilot *p )
 }
 
 
+#define CHECK_STAT_R( oa, or, pa, s ) \
+   if (((oa)+(or)*((pa)+(oa)) < 0.) && (fabs((oa)+(or)*((oa)+(pa))) > (pa))) \
+      return (s)
+#define CHECK_STAT( oa, pa, s ) \
+   if ((( (oa) < 0.) && (fabs(oa)) > (pa))) \
+      return (s)
 /**
  * @brief Checks to see if can equip/remove an outfit from a slot.
  *
@@ -491,7 +503,7 @@ const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o, int add )
       return "Nothing selected.";
 
    /* Check slot type. */
-   if ((s != NULL) && !outfit_fitsSlot( o, &s->slot ))
+   if ((s != NULL) && !outfit_fitsSlot( o, &s->sslot->slot ))
       return "Does not fit slot.";
 
    /* Adding outfit. */
@@ -509,58 +521,33 @@ const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o, int add )
          /*
           * Movement.
           */
-         if (((o->u.mod.thrust + o->u.mod.thrust_rel * p->ship->thrust) < 0) &&
-               (fabs(o->u.mod.thrust + o->u.mod.thrust_rel * p->ship->thrust) > p->thrust))
-            return "Insufficient thrust";
-         if (((o->u.mod.speed + o->u.mod.speed_rel * p->ship->speed) < 0) &&
-               (fabs(o->u.mod.speed + o->u.mod.speed_rel * p->ship->speed) > p->speed))
-            return "Insufficient speed";
-         if (((o->u.mod.turn + o->u.mod.turn_rel * p->ship->turn * p->ship->mass/p->solid->mass) < 0) &&
-               (fabs(o->u.mod.turn + o->u.mod.turn_rel * p->ship->turn * p->ship->mass/p->solid->mass) > p->turn_base))
-            return "Insufficient turn";
+         /* TODO fix this to work with ship stats.
+         CHECK_STAT_R( o->u.mod.thrust, o->u.mod.thrust_rel, p->ship->thrust, "Insufficient thrust" );
+         CHECK_STAT_R( o->u.mod.turn, o->u.mod.turn_rel, p->ship->turn, "Insufficient turn" );
+         CHECK_STAT_R( o->u.mod.speed, o->u.mod.speed_rel, p->ship->speed, "Insufficient speed" );
+         */
 
          /*
           * Health.
           */
          /* Max. */
-         if ((o->u.mod.armour < 0) &&
-               (fabs(o->u.mod.armour) > p->armour_max))
-            return "Insufficient armour";
-         if ((o->u.mod.armour_rel < 0.) &&
-               (fabs(o->u.mod.armour_rel * p->ship->armour) > p->armour_max))
-            return "Insufficient armour";
-         if ((o->u.mod.shield < 0) &&
-               (fabs(o->u.mod.shield) > p->shield_max))
-            return "Insufficient shield";
-         if ((o->u.mod.shield_rel < 0.) &&
-               (fabs(o->u.mod.shield_rel * p->ship->shield) > p->shield_max))
-            return "Insufficient shield";
-         if ((o->u.mod.energy < 0) &&
-               (fabs(o->u.mod.energy) > p->armour_max))
-            return "Insufficient energy";
-         if ((o->u.mod.energy_rel < 0.) &&
-               (fabs(o->u.mod.energy_rel * p->ship->energy) > p->energy_max))
-            return "Insufficient energy";
+         /* TODO fix this to work with ship stats.
+         CHECK_STAT_R( o->u.mod.armour, o->u.mod.armour_rel, p->armour_max, "Insufficient armour" );
+         CHECK_STAT_R( o->u.mod.shield, o->u.mod.shield_rel, p->shield_max, "Insufficient shield" );
+         CHECK_STAT_R( o->u.mod.energy, o->u.mod.energy_rel, p->energy_max, "Insufficient energy" );
+         */
          /* Regen. */
-         if ((o->u.mod.armour_regen < 0) &&
-               (fabs(o->u.mod.armour_regen) > p->armour_regen))
-            return "Insufficient energy regeneration";
-         if ((o->u.mod.shield_regen < 0) &&
-               (fabs(o->u.mod.shield_regen) > p->shield_regen))
-            return "Insufficient shield regeneration";
-         if ((o->u.mod.energy_regen < 0) &&
-               (fabs(o->u.mod.energy_regen) > p->energy_regen))
-            return "Insufficient energy regeneration";
+         /* TODO fix this to work with ship stats.
+         CHECK_STAT( o->u.mod.armour_regen, p->armour_regen, "Insufficient armour regeneration" );
+         CHECK_STAT( o->u.mod.shield_regen, p->shield_regen, "Insufficient shield regeneration" );
+         CHECK_STAT( o->u.mod.energy_regen, p->energy_regen, "Insufficient energy regeneration" );
+         */
 
          /*
           * Misc.
           */
-         if ((o->u.mod.fuel < 0) &&
-               (fabs(o->u.mod.fuel) > p->fuel_max))
-            return "Insufficient fuel";
-         if ((o->u.mod.cargo < 0) &&
-               (fabs(o->u.mod.cargo) > p->cargo_free))
-            return "Insufficient cargo space";
+         CHECK_STAT( o->u.mod.fuel, p->fuel_max, "Insufficient fuel" );
+         CHECK_STAT( o->u.mod.cargo, p->cargo_free, "Insufficient cargo space" );
       }
    }
    /* Removing outfit. */
@@ -573,6 +560,7 @@ const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o, int add )
          /*
           * Movement.
           */
+         /* TODO fix this to work with ship stats.
          if (((o->u.mod.thrust + o->u.mod.thrust_rel * p->ship->thrust) > 0) &&
                (o->u.mod.thrust + o->u.mod.thrust_rel * p->ship->thrust > p->thrust))
             return "Increase thrust first";
@@ -582,11 +570,13 @@ const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o, int add )
          if (((o->u.mod.turn + o->u.mod.turn_rel * p->ship->turn * p->ship->mass/p->solid->mass) > 0) &&
                (fabs(o->u.mod.turn + o->u.mod.turn_rel * p->ship->turn * p->ship->mass/p->solid->mass) > p->turn_base))
             return "Increase turn first";
+         */
 
          /*
           * Health.
           */
          /* Max. */
+         /* TODO fix this to work with ship stats.
          if ((o->u.mod.armour > 0) &&
                (o->u.mod.armour > p->armour_max))
             return "Increase armour first";
@@ -596,7 +586,9 @@ const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o, int add )
          if ((o->u.mod.energy > 0) &&
                (o->u.mod.energy > p->energy_max))
             return "Increase energy first";
+         */
          /* Regen. */
+         /* TODO fix this to work with ship stats.
          if ((o->u.mod.armour_regen > 0) &&
                (o->u.mod.armour_regen > p->armour_regen))
             return "Lower energy usage first";
@@ -606,6 +598,7 @@ const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o, int add )
          if ((o->u.mod.energy_regen > 0) &&
                (o->u.mod.energy_regen > p->energy_regen))
             return "Lower energy usage first";
+         */
 
          /*
           * Misc.
@@ -754,7 +747,7 @@ char* pilot_getOutfits( Pilot* pilot )
    }
 
    if (p==0)
-      p += snprintf( &buf[p], len-p, "None" );
+      /*p +=*/ snprintf( &buf[p], len-p, "None" );
 
    return buf;
 }
@@ -771,7 +764,6 @@ void pilot_calcStats( Pilot* pilot )
    Outfit* o;
    PilotOutfitSlot *slot;
    double ac, sc, ec, fc; /* temporary health coefficients to set */
-   double arel, srel, erel; /* relative health bonuses. */
    ShipStats amount, *s;
 
    /*
@@ -780,19 +772,19 @@ void pilot_calcStats( Pilot* pilot )
    /* mass */
    pilot->solid->mass   = pilot->ship->mass;
    /* movement */
-   pilot->thrust        = pilot->ship->thrust;
+   pilot->thrust_base   = pilot->ship->thrust;
    pilot->turn_base     = pilot->ship->turn;
-   pilot->speed         = pilot->ship->speed;
+   pilot->speed_base    = pilot->ship->speed;
    /* cpu */
    pilot->cpu_max       = pilot->ship->cpu;
    pilot->cpu           = pilot->cpu_max;
    /* crew */
    pilot->crew          = pilot->ship->crew;
    /* health */
-   ac = pilot->armour / pilot->armour_max;
-   sc = pilot->shield / pilot->shield_max;
-   ec = pilot->energy / pilot->energy_max;
-   fc = pilot->fuel   / pilot->fuel_max;
+   ac = (pilot->armour_max > 0.) ? pilot->armour / pilot->armour_max : 0.;
+   sc = (pilot->shield_max > 0.) ? pilot->shield / pilot->shield_max : 0.;
+   ec = (pilot->energy_max > 0.) ? pilot->energy / pilot->energy_max : 0.;
+   fc = (pilot->fuel_max   > 0.) ? pilot->fuel   / pilot->fuel_max   : 0.;
    pilot->armour_max    = pilot->ship->armour;
    pilot->shield_max    = pilot->ship->shield;
    pilot->fuel_max      = pilot->ship->fuel;
@@ -815,9 +807,6 @@ void pilot_calcStats( Pilot* pilot )
     */
    pilot->mass_outfit   = 0.;
    pilot->jamming       = 0;
-   arel                 = 0.;
-   srel                 = 0.;
-   erel                 = 0.;
    for (i=0; i<pilot->noutfits; i++) {
       slot = pilot->outfits[i];
       o    = slot->outfit;
@@ -839,33 +828,23 @@ void pilot_calcStats( Pilot* pilot )
          continue;
 
       if (outfit_isMod(o)) { /* Modification */
-         /* movement */
-         pilot->thrust        += o->u.mod.thrust * pilot->ship->mass;
-         pilot->thrust        += o->u.mod.thrust_rel * pilot->ship->thrust;
+         /* Movement. */
+         pilot->thrust_base   += o->u.mod.thrust;
          pilot->turn_base     += o->u.mod.turn;
-         pilot->turn_base     += o->u.mod.turn_rel * pilot->ship->turn;
-         pilot->speed         += o->u.mod.speed;
-         pilot->speed         += o->u.mod.speed_rel * pilot->ship->speed;
-         /* health */
+         pilot->speed_base    += o->u.mod.speed;
+         /* Health. */
          pilot->armour_max    += o->u.mod.armour;
          pilot->armour_regen  += o->u.mod.armour_regen;
-         arel                 += o->u.mod.armour_rel;
          pilot->shield_max    += o->u.mod.shield;
          pilot->shield_regen  += o->u.mod.shield_regen;
-         srel                 += o->u.mod.shield_rel;
          pilot->energy_max    += o->u.mod.energy;
          pilot->energy_regen  += o->u.mod.energy_regen;
-         erel                 += o->u.mod.energy_rel;
-         /* fuel */
+         /* Fuel. */
          pilot->fuel_max      += o->u.mod.fuel;
-         /* misc */
+         /* Misc. */
          pilot->cargo_free    += o->u.mod.cargo;
-         pilot->mass_outfit   += o->u.mod.mass_rel * pilot->ship->mass;
-         pilot->crew          += o->u.mod.crew_rel * pilot->ship->crew;
-         /*
-          * Stats.
-          */
-         ss_statsModFromList( &pilot->stats, o->u.mod.stats, &amount ); /* TODO Handle q or remove it? */
+         /* Stats. */
+         ss_statsModFromList( &pilot->stats, o->u.mod.stats, &amount );
       }
       else if (outfit_isAfterburner(o)) /* Afterburner */
          pilot->afterburner = pilot->outfits[i]; /* Set afterburner */
@@ -886,6 +865,11 @@ void pilot_calcStats( Pilot* pilot )
 
    /* Slot voodoo. */
    s        = &pilot->stats;
+   /* Fuel. */
+   if (s->fuel_consumption == 0.)
+      pilot->fuel_consumption = 100.;
+   else
+      pilot->fuel_consumption = s->fuel_consumption;
    /*
     * Electronic warfare setting base parameters.
     */
@@ -908,13 +892,23 @@ void pilot_calcStats( Pilot* pilot )
       s->tur_firerate = 1. + (s->tur_firerate-1.) * exp( -0.15 * (double)(MAX(amount.tur_firerate-1,0)) );
    }
 
-   /* Increase health by relative bonuses. */
-   pilot->armour_max += arel * pilot->ship->armour;
-   pilot->armour_max *= pilot->stats.armour_mod;
-   pilot->shield_max += srel * pilot->ship->shield;
-   pilot->shield_max *= pilot->stats.shield_mod;
-   pilot->energy_max += erel * pilot->ship->energy;
-   /* pilot->energy_max *= pilot->stats.energy_mod; */
+   /*
+    * Relative increases.
+    */
+   /* Movement. */
+   pilot->thrust_base  *= s->thrust_mod;
+   pilot->turn_base    *= s->turn_mod;
+   pilot->speed_base   *= s->speed_mod;
+   /* Health. */
+   pilot->armour_max   *= s->armour_mod;
+   pilot->armour_regen *= s->armour_regen_mod;
+   pilot->shield_max   *= s->shield_mod;
+   pilot->shield_regen *= s->shield_regen_mod;
+   pilot->energy_max   *= s->energy_mod;
+   pilot->energy_regen *= s->energy_regen_mod;
+   /* Misc. */
+   pilot->dmg_absorb    = MAX( 0., pilot->dmg_absorb );
+   pilot->crew         *= s->crew_mod;
 
    /* Give the pilot his health proportion back */
    pilot->armour = ac * pilot->armour_max;
@@ -923,7 +917,7 @@ void pilot_calcStats( Pilot* pilot )
    pilot->fuel   = fc * pilot->fuel_max;
 
    /* Calculate mass. */
-   pilot->solid->mass = pilot->ship->mass + pilot->stats.cargo_inertia*pilot->mass_cargo + pilot->mass_outfit;
+   pilot->solid->mass = s->mass_mod*pilot->ship->mass + pilot->stats.cargo_inertia*pilot->mass_cargo + pilot->mass_outfit;
 
    /* Calculate the heat. */
    pilot_heatCalc( pilot );
@@ -941,7 +935,18 @@ void pilot_calcStats( Pilot* pilot )
  */
 void pilot_updateMass( Pilot *pilot )
 {
-   pilot->turn = pilot->turn_base * pilot->ship->mass / pilot->solid->mass;
+   double mass, factor;
+
+   /* Set limit. */
+   mass = pilot->solid->mass;
+   if ((pilot->stats.engine_limit > 0.) && (mass > pilot->stats.engine_limit))
+      factor = pilot->stats.engine_limit / mass;
+   else
+      factor = 1.;
+
+   pilot->thrust  = factor * pilot->thrust_base * mass;
+   pilot->turn    = factor * pilot->turn_base;
+   pilot->speed   = factor * pilot->speed_base;
 
    /* Need to recalculate electronic warfare mass change. */
    pilot_ewUpdateStatic( pilot );

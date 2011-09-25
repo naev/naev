@@ -231,7 +231,6 @@ void map_open (void)
          &gl_smallFont, &cDConsole, "Services:" );
    window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtServices",
          &gl_smallFont, &cBlack, NULL );
-   y -= 2 * gl_smallFont.h + 5 + 15;
 
    /* Close button */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
@@ -265,7 +264,7 @@ void map_open (void)
    /*
     * Disable Autonav button if player lacks fuel.
     */
-   if ((player.p->fuel < HYPERSPACE_FUEL) || pilot_isFlag( player.p, PILOT_NOJUMP))
+   if ((player.p->fuel < player.p->fuel_consumption) || pilot_isFlag( player.p, PILOT_NOJUMP))
       window_disableButton( wid, "btnAutonav" );
 }
 
@@ -425,6 +424,8 @@ static void map_update( unsigned int wid )
       l += snprintf( &buf[l], PATH_MAX-l, "%s\e0%s: \e%c%.0f",
                      (l==0)?"":"\n", faction_shortname(sys->presence[i].faction),
                      (t=='N')?'M':t, sys->presence[i].value);
+      if (l > PATH_MAX)
+         break;
    }
    if (hasPresence == 0)
       snprintf(buf, PATH_MAX, "N/A");
@@ -458,6 +459,8 @@ static void map_update( unsigned int wid )
          p += snprintf( &buf[p], PATH_MAX-p, ",\n\e%c%s\en",
                t, sys->planets[i]->name );
       hasPlanets = 1;
+      if (p > PATH_MAX)
+         break;
    }
    if(hasPlanets == 0)
       strncpy( buf, "None", PATH_MAX );
@@ -485,7 +488,7 @@ static void map_update( unsigned int wid )
    if (services & PLANET_SERVICE_SHIPYARD)
       p += snprintf( &buf[p], PATH_MAX-p, "Shipyard\n");
    if (buf[0] == '\0')
-      p += snprintf( &buf[p], PATH_MAX-p, "None");
+      snprintf( &buf[p], PATH_MAX-p, "None");
    window_modifyText( wid, "txtServices", buf );
 
 
@@ -524,7 +527,7 @@ static void map_update( unsigned int wid )
       else if (sys->interference < 300.)
          p += snprintf(&buf[p], PATH_MAX-p, " Light");
 
-      p += snprintf(&buf[p], PATH_MAX-p, " Interference");
+      snprintf(&buf[p], PATH_MAX-p, " Interference");
    }
    window_modifyText( wid, "txtSystemStatus", buf );
 }
@@ -1547,10 +1550,12 @@ int map_map( const char* targ_sys, int r )
    SysNode *closed, *open, *cur, *neighbour;
 
    A_gc = NULL;
-   open = closed = NULL;
+   closed = NULL;
 
-   if (targ_sys == NULL) sys = cur_system;
-   else sys = system_get( targ_sys );
+   if (targ_sys == NULL)
+      sys = cur_system;
+   else
+      sys = system_get( targ_sys );
    sys_setFlag(sys,SYSTEM_KNOWN);
    open = A_newNode( sys, NULL );
    open->r = 0;
@@ -1598,7 +1603,7 @@ int map_isMapped( const char* targ_sys, int r )
    SysNode *closed, *open, *cur, *neighbour;
 
    A_gc = NULL;
-   open = closed = NULL;
+   closed = NULL;
 
    if (targ_sys == NULL)
       sys = cur_system;

@@ -511,6 +511,7 @@ int load_game( const char* file )
 
    /* Sanitize the GUI. */
    gui_setCargo();
+   gui_setShip();
 
    xmlFreeDoc(doc);
 

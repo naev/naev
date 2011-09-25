@@ -47,7 +47,7 @@ end
 -- @brief Equips a sirius military type ship.
 --]]
 function equip_siriusMilitary( p, shipsize )
-   local primary, secondary, medium, low, apu
+   local primary, secondary, medium, low
    local use_primary, use_secondary, use_medium, use_low
    local nhigh, nmedium, nlow = p:ship():slots()
    local scramble
@@ -55,7 +55,7 @@ function equip_siriusMilitary( p, shipsize )
    -- Defaults
    medium      = { "Unicorp Scrambler" }
    secondary   = { }
-   apu         = { }
+
    weapons     = {}
    scramble    = false
 
@@ -80,7 +80,7 @@ function equip_siriusMilitary( p, shipsize )
          addWeapons( equip_secondarySrs(), use_secondary )
          medium         = equip_mediumLow()
          low            = equip_lowLow()
-         apu            = equip_apuLow()
+
 
       -- Bomber
       elseif class == "Bomber" then
@@ -90,7 +90,7 @@ function equip_siriusMilitary( p, shipsize )
          addWeapons( equip_secondarySrs(), use_secondary )
          medium         = equip_mediumLow()
          low            = equip_lowLow()
-         apu            = equip_apuLow()
+
       end
 
    elseif shipsize == "medium" then
@@ -105,7 +105,7 @@ function equip_siriusMilitary( p, shipsize )
          addWeapons( equip_secondarySrs(), use_secondary )
          medium         = equip_mediumMed()
          low            = equip_lowMed()
-         apu            = equip_apuMed()
+
       end
 
       -- Destroyer
@@ -118,7 +118,7 @@ function equip_siriusMilitary( p, shipsize )
          addWeapons( equip_secondarySrs(), use_secondary )
          medium         = equip_mediumMed()
          low            = equip_lowMed()
-         apu            = equip_apuMed()
+
       end
 
    else
@@ -128,9 +128,9 @@ function equip_siriusMilitary( p, shipsize )
       addWeapons( equip_secondarySrs(), use_secondary )
       medium         = equip_mediumHig()
       low            = equip_lowHig()
-      apu            = equip_apuHig()
+
    end
 
-   equip_ship( p, scramble, weapons, medium, low, apu,
+   equip_ship( p, scramble, weapons, medium, low,
                use_medium, use_low )
 end

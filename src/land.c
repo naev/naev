@@ -1133,7 +1133,7 @@ void land_genWindows( int load, int changetab )
    }
 
    /* Create tabbed window. */
-   land_windows = window_addTabbedWindow( land_wid, -1, -1, -1, -1, "tabLand", j, names );
+   land_windows = window_addTabbedWindow( land_wid, -1, -1, -1, -1, "tabLand", j, names, 0 );
 
    /*
     * Order here is very important:

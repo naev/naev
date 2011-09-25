@@ -53,13 +53,13 @@ end
 -- @brief Equips a pirate military type ship.
 --]]
 function equip_pirateMilitary( p, shipsize )
-   local primary, secondary, medium, low, apu
+   local primary, secondary, medium, low
    local use_primary, use_secondary, use_medium, use_low
    local nhigh, nmedium, nlow = p:ship():slots()
 
    -- Defaults
    medium      = { "Unicorp Scrambler" }
-   apu         = { }
+
    weapons     = {}
 
    -- Equip by size and type
@@ -86,7 +86,7 @@ function equip_pirateMilitary( p, shipsize )
          addWeapons( equip_forwardPirLow(), use_primary )
          medium         = equip_mediumLow()
          low            = equip_lowLow()
-         apu            = equip_apuLow()
+
 
       -- Bomber
       elseif class == "Bomber" then
@@ -96,7 +96,7 @@ function equip_pirateMilitary( p, shipsize )
          addWeapons( equip_secondaryPirLow(), use_secondary )
          medium         = equip_mediumLow()
          low            = equip_lowLow()
-         apu            = equip_apuLow()
+
       end
 
    elseif shipsize == "medium" then
@@ -114,7 +114,7 @@ function equip_pirateMilitary( p, shipsize )
       addWeapons( equip_forwardPirMed(), use_primary )
       medium         = equip_mediumMed()
       low            = equip_lowMed()
-      apu            = equip_apuMed()
+
 
    else
       primary        = icmb( equip_turretPirHig(), equip_turretPirMed() )
@@ -124,9 +124,9 @@ function equip_pirateMilitary( p, shipsize )
       addWeapons( equip_secondaryPirMedLow(), use_secondary )
       medium         = equip_mediumHig()
       low            = equip_lowHig()
-      apu            = equip_apuHig()
+
    end
-   equip_ship( p, true, weapons, medium, low, apu,
+   equip_ship( p, true, weapons, medium, low,
                use_medium, use_low )
 end
 

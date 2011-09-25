@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <Outfits>
 
  <!-- LASER TREE -->
@@ -2030,7 +2031,7 @@
    <energy>200</energy>
   </specific>
  </outfit>
-  <outfit name="Battery II">
+ <outfit name="Battery II">
   <general>
    <typename>Power Modifier</typename>
    <slot>structure</slot>
@@ -2044,7 +2045,7 @@
    <energy>400</energy>
   </specific>
  </outfit>
-  <outfit name="Battery III">
+ <outfit name="Battery III">
   <general>
    <typename>Power Modifier</typename>
    <slot>structure</slot>
@@ -2130,7 +2131,7 @@
    <shield>40</shield>
   </specific>
  </outfit>
-  <outfit name="Shield Capacitor II">
+ <outfit name="Shield Capacitor II">
   <general>
    <typename>Shield Power Modifier</typename>
    <slot>structure</slot>
@@ -2195,8 +2196,8 @@
    <description>Plasteel was one of man's greatest improvements on materials. It's a cheap, strong armour that seems to take the best from both plastic and steel, bending easily yet keeping its incredible strength. The Second Growth was only possible with this material. Although it is no longer cutting-edge, its low price point attracts many buyers.</description>
   </general>
   <specific type="modification">
-   <armour_rel>5</armour_rel>
-   <mass_rel>5</mass_rel>
+   <armour_mod>5</armour_mod>
+   <mass_mod>5</mass_mod>
   </specific>
  </outfit>
  <outfit name="Nanobond Plating">
@@ -2209,8 +2210,8 @@
    <description>Nanobond is the successor to Plasteel. It follows the same approach but has a greatly refined manufacturing process, providing greater particle density. The result is a much more robust material, although it is substantially more expensive.</description>
   </general>
   <specific type="modification">
-   <armour_rel>25</armour_rel>
-   <mass_rel>15</mass_rel>
+   <armour_mod>25</armour_mod>
+   <mass_mod>15</mass_mod>
   </specific>
  </outfit>
  <outfit name="Biometal Armour">
@@ -2223,9 +2224,9 @@
    <description>Biometal is an armour that regenerates itself due to genetically-engineered bacteria throughout it. Due to the compartmentalization to permit bacterial life, and the difficulty of cultivating the bacteria, Biometal has greater mass than alternatives, and is the most expensive hull plating.</description>
   </general>
   <specific type="modification">
-   <armour_rel>20</armour_rel>
+   <armour_mod>20</armour_mod>
    <armour_regen>1.0</armour_regen>
-   <mass_rel>20</mass_rel>
+   <mass_mod>20</mass_mod>
   </specific>
  </outfit>
  <outfit name="Droid Repair Crew">
@@ -2256,7 +2257,7 @@
   <specific type="modification">
    <cpu>0</cpu>
    <thrust>3</thrust>
-   <thrust_rel>10</thrust_rel>
+   <thrust_mod>10</thrust_mod>
    <energy_regen>-0.85</energy_regen>
   </specific>
  </outfit>
@@ -2272,8 +2273,8 @@
   <specific type="modification">
    <cpu>-2</cpu>
    <speed>3</speed>
-   <speed_rel>15</speed_rel>
-   <turn_rel>3</turn_rel>
+   <speed_mod>15</speed_mod>
+   <turn_mod>3</turn_mod>
    <energy_regen>-0.15</energy_regen>
   </specific>
  </outfit>
@@ -2289,7 +2290,7 @@
   <specific type="modification">
    <cpu>0</cpu>
    <turn>5</turn>
-   <turn_rel>10</turn_rel>
+   <turn_mod>10</turn_mod>
    <energy_regen>-0.15</energy_regen>
   </specific>
  </outfit>
@@ -2329,46 +2330,17 @@
    <mass_limit>400</mass_limit>
   </specific>
  </outfit>
-  <outfit name="Auxiliary Processing Unit I">
+ <outfit name="Reverse Thrusters">
   <general>
-   <typename>CPU Modifier</typename>
    <slot>utility</slot>
-   <mass>7</mass>
-   <price>80000</price>
-   <gfx_store>cpu_i</gfx_store>
-   <description>The Advanced Nanosystems APU I is an obsolete design intended for light vessels. It is relatively light weight, though it's less power efficient than its successors.</description>
+   <mass>13</mass>
+   <price>20000</price>
+   <description>Most ships can only thrust in one direction, because mounting engines on all sides of the ship tends to be impractical. However, it can be helpful to be able to thrust backwards to some, and for those people there is a solution: hull-mounted reverse thrusters. These thrusters can't propel the ship quite as well as real engines, due to their limited output.</description>
+   <gfx_store>afterburner</gfx_store>
   </general>
   <specific type="modification">
-   <cpu>10</cpu>
-   <energy_regen>-3.35</energy_regen>
-  </specific>
- </outfit>
- <outfit name="Auxiliary Processing Unit II">
-  <general>
-   <typename>CPU Modifier</typename>
-   <slot>utility</slot>
-   <mass>28</mass>
-   <price>170000</price>
-   <gfx_store>cpu_ii</gfx_store>
-   <description>The Advanced Nanosystems APU II is a mid-range design suitable for medium-sized vessels as well as lightly-equipped capital ships. Its substantial mass and power consumption make it unsuitable for light vessels.</description>
-  </general>
-  <specific type="modification">
-   <cpu>20</cpu>
-   <energy_regen>-6.25</energy_regen>
-  </specific>
- </outfit>
-  <outfit name="Auxiliary Processing Unit III">
-  <general>
-   <typename>CPU Modifier</typename>
-   <slot>utility</slot>
-   <mass>112</mass>
-   <price>360000</price>
-   <gfx_store>cpu_iii</gfx_store>
-   <description>The Advanced Nanosystems APU III is a high-end general-purpose processor suitable for capital ships. Its high power-efficiency is achieved by using cutting-edge superconducting materials.</description>
-  </general>
-  <specific type="modification">
-   <cpu>40</cpu>
-   <energy_regen>-12</energy_regen>
+   <cpu>-2</cpu>
+   <misc_reverse_thrust>1</misc_reverse_thrust>
   </specific>
  </outfit>
 <!-- Miscellaneous Outfits (Expansion outfits, countermeasures, map.) -->
@@ -2408,7 +2380,7 @@
     <gfx_store>cargo_pod</gfx_store>
    </general>
    <specific type="modification">
-    <crew_rel>20</crew_rel>
+    <crew_mod>20</crew_mod>
    </specific>
  </outfit>
  <outfit name="Boarding Androids MKII">
@@ -2421,7 +2393,7 @@
    <gfx_store>cargo_pod</gfx_store>
   </general>
   <specific type="modification">
-   <crew_rel>35</crew_rel>
+   <crew_mod>35</crew_mod>
   </specific>
  </outfit>
  <outfit name="Targeting Array">
@@ -2504,17 +2476,6 @@
   </general>
   <specific type="map">
    <radius>2</radius>
-  </specific>
- </outfit>
- <outfit name="Ultra Map">
-  <general>
-   <mass>0</mass>
-   <price>1</price>
-   <description>For cheating.</description>
-   <gfx_store>map</gfx_store>
-  </general>
-  <specific type="map">
-   <radius>999</radius>
   </specific>
  </outfit>
  <outfit name="Unicorp Scrambler">
@@ -2701,6 +2662,15 @@
   </general>
   <specific type="license"/>
  </outfit>
+ <outfit name="Tricon Experimental Engine License">
+  <general>
+   <mass>0</mass>
+   <price>0</price>
+   <gfx_store>license</gfx_store>
+   <description>This license is issued by Tricon directly. Pilots carrying this license are eligible to purchase and equip off-market Tricon engine prototypes.</description>
+  </general>
+  <specific type="license"/>
+ </outfit>
  <outfit name="Pirate Landing Pass">
   <!-- this outfit should be considered contraband once it is implimented -->
   <general>
@@ -2713,6 +2683,2271 @@
   <specific type="license"/>
  </outfit>
 
+
+ <!-- Ship CORE outfits. -->
+ <!-- Small slot systems. -->
+ <outfit name="Previous Generation Small Systems">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>light</size>
+   <mass>3</mass>
+   <price>0</price>
+   <description>A jury-rigged mess of processors and generators that most captains wouldn't be seen dead having installed on their ship.</description>
+   <gfx_store>reactor_i</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>5</cpu>
+   <shield>30</shield>
+   <shield_regen>1</shield_regen>
+   <energy>120</energy>
+   <energy_regen>6</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Basic Small Systems">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>light</size>
+   <mass>2</mass>
+   <price>10000</price>
+   <description>Bare-bones ship systems, capable of getting it off the ground and into space and back, but unfit for any sort of serious duty.</description>
+   <gfx_store>reactor_i</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>18</cpu>
+   <shield>100</shield>
+   <shield_regen>3</shield_regen>
+   <energy>320</energy>
+   <energy_regen>24</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp PT-100 Core System">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>light</size>
+   <mass>2</mass>
+   <price>25000</price>
+   <description>The PT-100 model is a modest but to-spec core system unit with reasonable, all-round performance.</description>
+   <gfx_store>reactor_i</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>20</cpu>
+   <shield>140</shield>
+   <shield_regen>4</shield_regen>
+   <energy>400</energy>
+   <energy_regen>27</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp PT-200 Core System">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>light</size>
+   <mass>2</mass>
+   <price>45000</price>
+   <description>A slightly more efficient version of the PT-100, critics claim the PT-200 uses exactly the same hardware with some artificial limits removed.</description>
+   <gfx_store>reactor_i</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>23</cpu>
+   <shield>150</shield>
+   <shield_regen>4</shield_regen>
+   <energy>430</energy>
+   <energy_regen>30</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp RX-14 Core System">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>light</size>
+   <mass>3</mass>
+   <price>50000</price>
+   <description>The RX-14 provides good subsystem control, but this comes at the price of somewhat mediocre shielding and energy generation.</description>
+   <gfx_store>reactor_i</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>30</cpu>
+   <shield>120</shield>
+   <shield_regen>3</shield_regen>
+   <energy>370</energy>
+   <energy_regen>24</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp JX-16 Core System">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>light</size>
+   <mass>2</mass>
+   <price>50000</price>
+   <description>The JX-16 provides decent shielding and energy generation for a low price, but has limited subsystem control. Good for light fighters.</description>
+   <gfx_store>reactor_i</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>20</cpu>
+   <shield>180</shield>
+   <shield_regen>5</shield_regen>
+   <energy>400</energy>
+   <energy_regen>27</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp EX-19 Core System">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>light</size>
+   <mass>2</mass>
+   <price>50000</price>
+   <description>The EX-19 is an affordable energy-oriented core module. Shielding and subsystem control suffer somewhat, but it keeps the guns blazing.</description>
+   <gfx_store>reactor_i</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>21</cpu>
+   <shield>140</shield>
+   <shield_regen>4</shield_regen>
+   <energy>500</energy>
+   <energy_regen>35</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Milspec Orion 2301 Core System">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>light</size>
+   <mass>2</mass>
+   <price>90000</price>
+   <description>Milspec develops high performance hardware for your ship, to make sure you are always optimally prepared for the dangers the universe might throw at you on your travels. The Orion 2300 core system series is affordable yet capable, recommended for the beginning captain. Fly safe, fly Milspec.</description>
+   <gfx_store>reactor_i</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>32</cpu>
+   <shield>200</shield>
+   <shield_regen>6</shield_regen>
+   <energy>550</energy>
+   <energy_regen>35</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Milspec Orion 2302 Core System">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>light</size>
+   <mass>2</mass>
+   <price>150000</price>
+   <description>Milspec develops high performance hardware for your ship, to make sure you are always optimally prepared for the dangers the universe might throw at you on your travels. The Orion 2300 core system series is affordable yet capable, recommended for the beginning captain. Fly safe, fly Milspec.</description>
+   <gfx_store>reactor_i</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>37</cpu>
+   <shield>230</shield>
+   <shield_regen>7</shield_regen>
+   <energy>600</energy>
+   <energy_regen>39</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Milspec Gemini 2501 Core System">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>light</size>
+   <mass>2</mass>
+   <price>200000</price>
+   <description>Milspec knows that a ship is merely the sum of its parts, and that means that the more parts, the better the ship. The Gemini 2501 provides serious subsystem control whilst retaining the high standard in energy and shielding that Milspec prides itself on. Fly safe, fly Milspec.</description>
+   <gfx_store>reactor_i</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>44</cpu>
+   <shield>190</shield>
+   <shield_regen>6</shield_regen>
+   <energy>500</energy>
+   <energy_regen>32</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Milspec Taurus 2520 Core System">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>light</size>
+   <mass>2</mass>
+   <price>200000</price>
+   <description>Milspec cares about your personal safety. Your protection is our concern. The Taurus 2520 grants your ship excellent shield strength while preserving a high level of subsystem control and energy capacity. Fly safe, fly Milspec.</description>
+   <gfx_store>reactor_i</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>33</cpu>
+   <shield>260</shield>
+   <shield_regen>8</shield_regen>
+   <energy>540</energy>
+   <energy_regen>39</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Milspec Vespa 2544 Core System">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>light</size>
+   <mass>2</mass>
+   <price>200000</price>
+   <description>Milspec offers solutions for pilots who believe the best defense is a good offense. The Vespa 2544 boasts a heavy duty power generator as well as considerable shielding and subsystem control.</description>
+   <gfx_store>reactor_i</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>32</cpu>
+   <shield>200</shield>
+   <shield_regen>6</shield_regen>
+   <energy>700</energy>
+   <energy_regen>45</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Milspec Orion 3701 Core System">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>light</size>
+   <mass>2</mass>
+   <price>350000</price>
+   <description>Milspec develops high performance hardware for your ship, to make sure you are always optimally prepared for the dangers the universe might throw at you on your travels. The Orion 3700 core system series is a high-end solution for small ships, providing superior performance in every field. Fly safe, fly Milspec.</description>
+   <gfx_store>reactor_i</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>45</cpu>
+   <shield>270</shield>
+   <shield_regen>7</shield_regen>
+   <energy>650</energy>
+   <energy_regen>42</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Milspec Orion 3702 Core System">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>light</size>
+   <mass>2</mass>
+   <price>500000</price>
+   <description>Milspec develops high performance hardware for your ship, to make sure you are always optimally prepared for the dangers the universe might throw at you on your travels. The Orion 3700 core system series is a high-end solution for small ships, providing superior performance in every field. Fly safe, fly Milspec.</description>
+   <gfx_store>reactor_i</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>49</cpu>
+   <shield>300</shield>
+   <shield_regen>8</shield_regen>
+   <energy>700</energy>
+   <energy_regen>45</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <!-- Medium slot systems. -->
+ <outfit name="Previous Generation Medium Systems">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>medium</size>
+   <mass>20</mass>
+   <price>0</price>
+   <description>A jury-rigged mess of processors and generators that most captains wouldn't be seen dead having installed on their ship.</description>
+   <gfx_store>reactor_ii</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>25</cpu>
+   <shield>150</shield>
+   <shield_regen>4</shield_regen>
+   <energy>400</energy>
+   <energy_regen>25</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Basic Medium Systems">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>medium</size>
+   <mass>10</mass>
+   <price>200000</price>
+   <description>Bare-bones ship systems, capable of getting it off the ground and into space and back, but unfit for any sort of serious duty.</description>
+   <gfx_store>reactor_ii</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>55</cpu>
+   <shield>300</shield>
+   <shield_regen>7</shield_regen>
+   <energy>900</energy>
+   <energy_regen>50</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp PT-500 Core System">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>medium</size>
+   <mass>10</mass>
+   <price>350000</price>
+   <description>Continuing the PT line in the medium ship category, the PT-500 gives acceptable performance for an acceptable price.</description>
+   <gfx_store>reactor_ii</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>55</cpu>
+   <shield>400</shield>
+   <shield_regen>8</shield_regen>
+   <energy>1000</energy>
+   <energy_regen>55</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp PT-600 Core System">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>medium</size>
+   <mass>10</mass>
+   <price>500000</price>
+   <description>Continuing the PT line in the medium ship category, the PT-600 gives acceptable performance for an acceptable price.</description>
+   <gfx_store>reactor_ii</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>60</cpu>
+   <shield>420</shield>
+   <shield_regen>8</shield_regen>
+   <energy>1000</energy>
+   <energy_regen>60</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp RX-26 Core System">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>medium</size>
+   <mass>10</mass>
+   <price>600000</price>
+   <description>The RX-26 is a low budget system for captains who need a lot of subsystem control, and are willing to sacrifice shielding and energy for it.</description>
+   <gfx_store>reactor_ii</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>70</cpu>
+   <shield>270</shield>
+   <shield_regen>7</shield_regen>
+   <energy>850</energy>
+   <energy_regen>57</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp JX-30 Core System">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>medium</size>
+   <mass>10</mass>
+   <price>600000</price>
+   <description>The JX-30 maximizes shielding and has good energy generation, for optimal combat performance. Subsystem control suffers as a result.</description>
+   <gfx_store>reactor_ii</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>50</cpu>
+   <shield>500</shield>
+   <shield_regen>9</shield_regen>
+   <energy>1100</energy>
+   <energy_regen>63</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp EX-24 Core System">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>medium</size>
+   <mass>10</mass>
+   <price>600000</price>
+   <description>The EX-24 sports a heavy power generator for captains who need a lot of output. Subsystem control and shielding fall somewhat behind as a result.</description>
+   <gfx_store>reactor_ii</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>55</cpu>
+   <shield>390</shield>
+   <shield_regen>7</shield_regen>
+   <energy>1300</energy>
+   <energy_regen>70</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Milspec Orion 4801 Core System">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>medium</size>
+   <mass>10</mass>
+   <price>1000000</price>
+   <description>Milspec develops high performance hardware for your ship, to make sure you are always optimally prepared for the dangers the universe might throw at you on your travels. The Orion 4800 core system series is affordable yet capable, recommended for the discerning captain. Fly safe, fly Milspec.</description>
+   <gfx_store>reactor_ii</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>70</cpu>
+   <shield>480</shield>
+   <shield_regen>9</shield_regen>
+   <energy>1300</energy>
+   <energy_regen>68</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Milspec Orion 4802 Core System">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>medium</size>
+   <mass>10</mass>
+   <price>1500000</price>
+   <description>Milspec develops high performance hardware for your ship, to make sure you are always optimally prepared for the dangers the universe might throw at you on your travels. The Orion 4800 core system series is affordable yet capable, recommended for the discerning captain. Fly safe, fly Milspec.</description>
+   <gfx_store>reactor_ii</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>75</cpu>
+   <shield>510</shield>
+   <shield_regen>9</shield_regen>
+   <energy>1400</energy>
+   <energy_regen>72</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Milspec Gemini 3308 Core System">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>medium</size>
+   <mass>10</mass>
+   <price>1700000</price>
+   <description>Milspec knows that a ship is merely the sum of its parts, and that means that the more parts, the better the ship. The Gemini 3308 provides serious subsystem control whilst retaining the high standard in energy and shielding that Milspec prides itself on. Fly safe, fly Milspec.</description>
+   <gfx_store>reactor_ii</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>85</cpu>
+   <shield>480</shield>
+   <shield_regen>8</shield_regen>
+   <energy>1200</energy>
+   <energy_regen>66</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Milspec Taurus 3323 Core System">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>medium</size>
+   <mass>10</mass>
+   <price>1700000</price>
+   <description>Milspec cares about your personal safety. Your protection is our concern. The Taurus 3323 grants your ship excellent shield strength while preserving a high level of subsystem control and energy capacity. Fly safe, fly Milspec.</description>
+   <gfx_store>reactor_ii</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>70</cpu>
+   <shield>560</shield>
+   <shield_regen>10</shield_regen>
+   <energy>1200</energy>
+   <energy_regen>66</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Milspec Vespa 3380 Core System">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>medium</size>
+   <mass>10</mass>
+   <price>1700000</price>
+   <description>Milspec offers solutions for pilots who believe the best defense is a good offense. The Vespa 2544 boasts a heavy duty power generator as well as considerable shielding and subsystem control. Fly safe, fly Milspec.</description>
+   <gfx_store>reactor_ii</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>70</cpu>
+   <shield>480</shield>
+   <shield_regen>9</shield_regen>
+   <energy>1600</energy>
+   <energy_regen>80</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Milspec Orion 5501 Core System">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>medium</size>
+   <mass>10</mass>
+   <price>2300000</price>
+   <description>Milspec develops high performance hardware for your ship, to make sure you are always optimally prepared for the dangers the universe might throw at you on your travels. The Orion 5500 core system series is a high-end solution for medium ships, providing superior performance in every field. Fly safe, fly Milspec.</description>
+   <gfx_store>reactor_ii</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>85</cpu>
+   <shield>550</shield>
+   <shield_regen>10</shield_regen>
+   <energy>1600</energy>
+   <energy_regen>80</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Milspec Orion 5502 Core System">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>medium</size>
+   <mass>10</mass>
+   <price>3000000</price>
+   <description>Milspec develops high performance hardware for your ship, to make sure you are always optimally prepared for the dangers the universe might throw at you on your travels. The Orion 5500 core system series is a high-end solution for medium ships, providing superior performance in every field. Fly safe, fly Milspec.</description>
+   <gfx_store>reactor_ii</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>90</cpu>
+   <shield>600</shield>
+   <shield_regen>10</shield_regen>
+   <energy>1800</energy>
+   <energy_regen>83</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <!-- Large slot systems. -->
+ <outfit name="Previous Generation Large Systems">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>heavy</size>
+   <mass>150</mass>
+   <price>0</price>
+   <description>A jury-rigged mess of processors and generators that most captains wouldn't be seen dead having installed on their ship.</description>
+   <gfx_store>reactor_iii</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>60</cpu>
+   <shield>350</shield>
+   <shield_regen>6</shield_regen>
+   <energy>900</energy>
+   <energy_regen>60</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Basic Large Systems">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>heavy</size>
+   <mass>75</mass>
+   <price>1000000</price>
+   <description>Bare-bones ship systems, capable of getting it off the ground and into space and back, but unfit for any sort of serious duty.</description>
+   <gfx_store>reactor_iii</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>120</cpu>
+   <shield>700</shield>
+   <shield_regen>9</shield_regen>
+   <energy>1800</energy>
+   <energy_regen>99</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp PT-1000 Core System">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>heavy</size>
+   <mass>75</mass>
+   <price>2000000</price>
+   <description>The PT-1000 is an upscaled model of the basic PT design, providing reasonable core system functionality for capital ships.</description>
+   <gfx_store>reactor_iii</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>130</cpu>
+   <shield>730</shield>
+   <shield_regen>9</shield_regen>
+   <energy>2000</energy>
+   <energy_regen>108</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp PT-1200 Core System">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>heavy</size>
+   <mass>75</mass>
+   <price>3000000</price>
+   <description>The PT-1200 follows the basic PT design, but has some upgraded components to eliminate minor bottlenecks and weak links.</description>
+   <gfx_store>reactor_iii</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>140</cpu>
+   <shield>750</shield>
+   <shield_regen>9</shield_regen>
+   <energy>2100</energy>
+   <energy_regen>112</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp RX-71 Core System">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>heavy</size>
+   <mass>75</mass>
+   <price>3500000</price>
+   <description>The RX-71 is a modification on the PT design that shrinks down the shield and energy generators somewhat and uses a more expansive controller unit.</description>
+   <gfx_store>reactor_iii</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>170</cpu>
+   <shield>700</shield>
+   <shield_regen>8</shield_regen>
+   <energy>1900</energy>
+   <energy_regen>103</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp JX-66 Core System">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>heavy</size>
+   <mass>75</mass>
+   <price>3500000</price>
+   <description>The JX-66 attempts to protect capital ships by boosting their shielding. This comes at a considerable price, as subsystem control and energy generation are sub-par.</description>
+   <gfx_store>reactor_iii</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>120</cpu>
+   <shield>830</shield>
+   <shield_regen>10</shield_regen>
+   <energy>1900</energy>
+   <energy_regen>105</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp EX-80 Core System">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>heavy</size>
+   <mass>75</mass>
+   <price>3500000</price>
+   <description>The EX-80 is a core system designed for optimal energy generation and transportation. Capital ships will be able to fight longer and harder as a result, but the shielding and subsystem control areas are less impressive.</description>
+   <gfx_store>reactor_iii</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>120</cpu>
+   <shield>700</shield>
+   <shield_regen>8</shield_regen>
+   <energy>3000</energy>
+   <energy_regen>135</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Milspec Orion 8801 Core System">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>heavy</size>
+   <mass>75</mass>
+   <price>5500000</price>
+   <description>Milspec develops high performance hardware for your ship, to make sure you are always optimally prepared for the dangers the universe might throw at you on your travels. The Orion 8800 core system series is affordable yet capable, recommended for the discerning captain. Fly safe, fly Milspec.</description>
+   <gfx_store>reactor_iii</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>160</cpu>
+   <shield>800</shield>
+   <shield_regen>10</shield_regen>
+   <energy>2700</energy>
+   <energy_regen>120</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Milspec Orion 8802 Core System">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>heavy</size>
+   <mass>75</mass>
+   <price>8000000</price>
+   <description>Milspec develops high performance hardware for your ship, to make sure you are always optimally prepared for the dangers the universe might throw at you on your travels. The Orion 8800 core system series is affordable yet capable, recommended for the discerning captain. Fly safe, fly Milspec.</description>
+   <gfx_store>reactor_iii</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>170</cpu>
+   <shield>840</shield>
+   <shield_regen>10</shield_regen>
+   <energy>3300</energy>
+   <energy_regen>135</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Milspec Gemini 5050 Core System">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>heavy</size>
+   <mass>75</mass>
+   <price>9000000</price>
+   <description>Milspec knows that a ship is merely the sum of its parts, and that means that the more parts, the better the ship. The Gemini 5050 provides serious subsystem control whilst retaining the high standard in energy and shielding that Milspec prides itself on. Fly safe, fly Milspec.</description>
+   <gfx_store>reactor_iii</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>200</cpu>
+   <shield>800</shield>
+   <shield_regen>9</shield_regen>
+   <energy>3000</energy>
+   <energy_regen>120</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Milspec Taurus 4909 Core System">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>heavy</size>
+   <mass>75</mass>
+   <price>9000000</price>
+   <description>Milspec cares about your personal safety. Your protection is our concern. The Taurus 4909 grants your ship excellent shield strength while preserving a high level of subsystem control and energy capacity. Fly safe, fly Milspec.</description>
+   <gfx_store>reactor_iii</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>160</cpu>
+   <shield>900</shield>
+   <shield_regen>11</shield_regen>
+   <energy>3000</energy>
+   <energy_regen>120</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Milspec Vespa 6114 Core System">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>heavy</size>
+   <mass>75</mass>
+   <price>9000000</price>
+   <description>Milspec offers solutions for pilots who believe the best defense is a good offense. The Vespa 6114 boasts a heavy duty power generator as well as considerable shielding and subsystem control.</description>
+   <gfx_store>reactor_iii</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>160</cpu>
+   <shield>800</shield>
+   <shield_regen>9</shield_regen>
+   <energy>4000</energy>
+   <energy_regen>150</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Milspec Orion 9901 Core System">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>heavy</size>
+   <mass>75</mass>
+   <price>10000000</price>
+   <description>Milspec develops high performance hardware for your ship, to make sure you are always optimally prepared for the dangers the universe might throw at you on your travels. The Orion 9900 core system series is a high-end solution for capital ships, providing superior performance in every field. Fly safe, fly Milspec.</description>
+   <gfx_store>reactor_iii</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>190</cpu>
+   <shield>900</shield>
+   <shield_regen>11</shield_regen>
+   <energy>4000</energy>
+   <energy_regen>150</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Milspec Orion 9902 Core System">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>heavy</size>
+   <mass>75</mass>
+   <price>13000000</price>
+   <description>Milspec develops high performance hardware for your ship, to make sure you are always optimally prepared for the dangers the universe might throw at you on your travels. The Orion 9900 core system series is a high-end solution for capital ships, providing superior performance in every field. Fly safe, fly Milspec.</description>
+   <gfx_store>reactor_iii</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>220</cpu>
+   <shield>950</shield>
+   <shield_regen>11</shield_regen>
+   <energy>4000</energy>
+   <energy_regen>165</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Milspec Orion 9903 Core System">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="systems">utility</slot>
+   <size>heavy</size>
+   <mass>75</mass>
+   <price>19999000</price>
+   <description>Milspec develops high performance hardware for your ship, to make sure you are always optimally prepared for the dangers the universe might throw at you on your travels. The Orion 9900 core system series is a high-end solution for capital ships, providing superior performance in every field. Fly safe, fly Milspec.</description>
+   <gfx_store>reactor_iii</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>240</cpu>
+   <shield>100</shield>
+   <shield_regen>12</shield_regen>
+   <energy>4800</energy>
+   <energy_regen>180</energy_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+
+ <!-- Small slot engines. -->
+ <outfit name="Beat Up Small Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>light</size>
+   <mass>6</mass>
+   <price>0</price>
+   <description>Clogged, corroded and cracked in every way possible while still remaining in functional condition, this engine really belongs on the scrap heap.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>100</thrust>
+   <turn>70</turn>
+   <speed>120</speed>
+   <fuel>200</fuel>
+   <energy_regen>-2</energy_regen>
+   <engine_limit>50</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Manufacturer Small Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>light</size>
+   <mass>5</mass>
+   <price>10000</price>
+   <description>The engine that most manufacturers install in their ships at assembly. Usually the first component pilots upgrade.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>150</thrust>
+   <turn>100</turn>
+   <speed>200</speed>
+   <fuel>300</fuel>
+   <energy_regen>-6</energy_regen>
+   <engine_limit>60</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp KRD-B10 Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>light</size>
+   <mass>6</mass>
+   <price>25000</price>
+   <description>The KRD-B10 engine is a low-budget allround engine many civilians use to propel their ships. It's not particularly effective, but it has a fairly low energy use.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>170</thrust>
+   <turn>120</turn>
+   <speed>220</speed>
+   <fuel>300</fuel>
+   <energy_regen>-7</energy_regen>
+   <engine_limit>70</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp KRD-B12 Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>light</size>
+   <mass>6</mass>
+   <price>45000</price>
+   <description>The KRD-B12 is a somewhat newer revision of the KRD-B10. Performance is improved, but energy consumption is a bit higher as well.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>190</thrust>
+   <turn>130</turn>
+   <speed>240</speed>
+   <fuel>300</fuel>
+   <energy_regen>-8</energy_regen>
+   <engine_limit>75</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp EXA-49F Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>light</size>
+   <mass>6</mass>
+   <price>65000</price>
+   <description>The EXA-49F is an engine that optimizes maneuverability at the expense of overall speed. Given its low price tag, it is a good choice for light fighters.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>240</thrust>
+   <turn>150</turn>
+   <speed>200</speed>
+   <fuel>300</fuel>
+   <energy_regen>-9</energy_regen>
+   <engine_limit>80</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp AUR-50A Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>light</size>
+   <mass>6</mass>
+   <price>65000</price>
+   <description>The AUR-50A is an engine built for courier ships. It has good long distance speed and fuel reserves, but this comes at the cost of maneuverability.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>190</thrust>
+   <turn>110</turn>
+   <speed>280</speed>
+   <fuel>400</fuel>
+   <energy_regen>-9</energy_regen>
+   <engine_limit>100</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp JNS-44K Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>light</size>
+   <mass>6</mass>
+   <price>65000</price>
+   <description>The JNS-44K is a strong engine, but not a very fast one. Maximum speed and maneuverability are not impressive when compared to other models, but it can haul a lot more mass at peak efficiency.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>180</thrust>
+   <turn>120</turn>
+   <speed>230</speed>
+   <fuel>300</fuel>
+   <energy_regen>-9</energy_regen>
+   <engine_limit>150</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Tricon Naga Mk3 Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>light</size>
+   <mass>8</mass>
+   <price>100000</price>
+   <description>For pilots who want to fly with speed and efficiency, Tricon's Naga is the engine of choice. With good all round performance and a high mass limit, it is one of the best low end engines on the market.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>230</thrust>
+   <turn>150</turn>
+   <speed>290</speed>
+   <fuel>400</fuel>
+   <energy_regen>-10</energy_regen>
+   <engine_limit>110</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Tricon Naga Mk5 Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>light</size>
+   <mass>9</mass>
+   <price>180000</price>
+   <description>For pilots who want to fly with speed and efficiency, Tricon's Naga is the engine of choice. With good all round performance and a high mass limit, it is one of the best low end engines on the market.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>250</thrust>
+   <turn>165</turn>
+   <speed>310</speed>
+   <fuel>400</fuel>
+   <energy_regen>-11</energy_regen>
+   <engine_limit>120</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Tricon Crane Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>light</size>
+   <mass>9</mass>
+   <price>200000</price>
+   <description>In close combat, maneuverability can mean the difference between life and death. Tricon's Crane engine delivers excellent maneuverability without sacrificing top speed, making this engine a great choice for fighter pilots.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>270</thrust>
+   <turn>180</turn>
+   <speed>290</speed>
+   <fuel>400</fuel>
+   <energy_regen>-12</energy_regen>
+   <engine_limit>100</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Tricon Albatross Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>light</size>
+   <mass>9</mass>
+   <price>200000</price>
+   <description>Tricon's Spriggan engine is designed to minimize travel time between destinations. It offers serious speed at moderate maneuverability.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>220</thrust>
+   <turn>155</turn>
+   <speed>330</speed>
+   <fuel>400</fuel>
+   <energy_regen>-12</energy_regen>
+   <engine_limit>100</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Tricon Oxen Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>light</size>
+   <mass>9</mass>
+   <price>200000</price>
+   <description>Aptly named, Tricon's Oxen engine excels at pulling heavy loads. It won't win any high speed races, but it can shift heavy cargo quite efficiently.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>210</thrust>
+   <turn>150</turn>
+   <speed>280</speed>
+   <fuel>500</fuel>
+   <energy_regen>-12</energy_regen>
+   <engine_limit>180</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Tricon Naga Mk9 Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>light</size>
+   <mass>9</mass>
+   <price>350000</price>
+   <description>For pilots who want to fly with speed and efficiency, Tricon's Naga is the engine of choice. With good all round performance and a high mass limit, it is one of the best low end engines on the market.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>270</thrust>
+   <turn>185</turn>
+   <speed>330</speed>
+   <fuel>400</fuel>
+   <energy_regen>-14</energy_regen>
+   <engine_limit>140</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Tricon Naga Mk12 Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>light</size>
+   <mass>9</mass>
+   <price>500000</price>
+   <description>For pilots who want to fly with speed and efficiency, Tricon's Naga is the engine of choice. With good all round performance and a high mass limit, it is one of the best low end engines on the market.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>300</thrust>
+   <turn>200</turn>
+   <speed>350</speed>
+   <fuel>400</fuel>
+   <energy_regen>-15</energy_regen>
+   <engine_limit>150</engine_limit>
+  </specific>
+ </outfit>
+ <!-- Medium slot engines. -->
+ <outfit name="Beat Up Medium Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>medium</size>
+   <mass>20</mass>
+   <price>0</price>
+   <description>Clogged, corroded and cracked in every way possible while still remaining in functional condition, this engine really belongs on the scrap heap.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>60</thrust>
+   <turn>30</turn>
+   <speed>50</speed>
+   <fuel>400</fuel>
+   <energy_regen>-10</energy_regen>
+   <engine_limit>250</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Manufacturer Medium Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>medium</size>
+   <mass>10</mass>
+   <price>200000</price>
+   <description>The engine that most manufacturers install in their ships at assembly. Usually the first component pilots upgrade.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>80</thrust>
+   <turn>60</turn>
+   <speed>140</speed>
+   <fuel>600</fuel>
+   <energy_regen>-16</energy_regen>
+   <engine_limit>420</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp KRD-G10 Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>medium</size>
+   <mass>10</mass>
+   <price>400000</price>
+   <description>The KRD-G10 engine is a low-budget allround engine many merchants use to propel their ships. It's not particularly effective, but it has a fairly low energy use.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>100</thrust>
+   <turn>70</turn>
+   <speed>150</speed>
+   <fuel>600</fuel>
+   <energy_regen>-17</energy_regen>
+   <engine_limit>420</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp KRD-G15 Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>medium</size>
+   <mass>10</mass>
+   <price>600000</price>
+   <description>The KRD-G15 is a somewhat newer revision of the KRD-G10. Performance is improved, but energy consumption is a bit higher as well.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>120</thrust>
+   <turn>75</turn>
+   <speed>155</speed>
+   <fuel>600</fuel>
+   <energy_regen>-19</energy_regen>
+   <engine_limit>480</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp EXA-66F Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>medium</size>
+   <mass>10</mass>
+   <price>700000</price>
+   <description>The EXA-66F has a lower speed than other engines in its price bracket, but it gives a ship good turn and thrust.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>140</thrust>
+   <turn>85</turn>
+   <speed>140</speed>
+   <fuel>600</fuel>
+   <energy_regen>-19</energy_regen>
+   <engine_limit>480</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp AUR-70A Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>medium</size>
+   <mass>10</mass>
+   <price>700000</price>
+   <description>The AUR-50A is often found on medium sized cargo ships. It has a respectable top speed, resulting in lower trip times. Maneuverability falls behind, but for cargo ships this is rarely a concern.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>100</thrust>
+   <turn>65</turn>
+   <speed>170</speed>
+   <fuel>600</fuel>
+   <energy_regen>-19</energy_regen>
+   <engine_limit>480</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp JNS-54K Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>medium</size>
+   <mass>10</mass>
+   <price>700000</price>
+   <description>The JNS-54K, while neither fast nor maneuverable, is quite powerful. Its hauling power can make it an attractive choice for ships whose mass causes problems for weaker engines.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>110</thrust>
+   <turn>65</turn>
+   <speed>140</speed>
+   <fuel>800</fuel>
+   <energy_regen>-19</energy_regen>
+   <engine_limit>630</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Tricon Centaur Mk2 Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>medium</size>
+   <mass>10</mass>
+   <price>1200000</price>
+   <description>Tricon's Centaur Mk2 is a respectable engine for a respectable price, giving the serious captain the means to pilot his ship to effect.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>145</thrust>
+   <turn>90</turn>
+   <speed>170</speed>
+   <fuel>600</fuel>
+   <energy_regen>-22</energy_regen>
+   <engine_limit>600</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Tricon Centaur Mk3 Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>medium</size>
+   <mass>10</mass>
+   <price>1700000</price>
+   <description>Tricon's Centaur Mk3 gives that extra push some captains need to complete their maneuvers. It features excellent performance allround.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>155</thrust>
+   <turn>100</turn>
+   <speed>180</speed>
+   <fuel>800</fuel>
+   <energy_regen>-23</energy_regen>
+   <engine_limit>670</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Tricon Kolibri Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>medium</size>
+   <mass>10</mass>
+   <price>2000000</price>
+   <description>Ships that rely on cannons rather than turrets have to turn to bring those cannons to bear. Tricon's Kolibri engine helps in this area, at a minor reduction in maximum speed.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>170</thrust>
+   <turn>120</turn>
+   <speed>160</speed>
+   <fuel>800</fuel>
+   <energy_regen>-23</energy_regen>
+   <engine_limit>670</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Tricon Antelope Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>medium</size>
+   <mass>10</mass>
+   <price>2000000</price>
+   <description>A very popular engine among cargo ship captains, Tricon's Antelope boosts ships up to a high maximum speed, minimizing travel time.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>140</thrust>
+   <turn>80</turn>
+   <speed>210</speed>
+   <fuel>800</fuel>
+   <energy_regen>-23</energy_regen>
+   <engine_limit>670</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Tricon Buffalo Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>medium</size>
+   <mass>10</mass>
+   <price>2000000</price>
+   <description>Tricon's Buffalo can pull loads few other engines in its size class can pull. Captains packing heavy weaponry or cargo can benefit from this.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>145</thrust>
+   <turn>90</turn>
+   <speed>170</speed>
+   <fuel>1000</fuel>
+   <energy_regen>-23</energy_regen>
+   <engine_limit>800</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Tricon Centaur Mk7 Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>medium</size>
+   <mass>10</mass>
+   <price>2500000</price>
+   <description>Tricon's Centaur Mk7 is a top grade medium engine. Its high price tag reflects a superb allround performance envied by all those captains who are unable to afford it.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>180</thrust>
+   <turn>110</turn>
+   <speed>190</speed>
+   <fuel>800</fuel>
+   <energy_regen>-25</energy_regen>
+   <engine_limit>970</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Tricon Centaur Mk8 Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>medium</size>
+   <mass>10</mass>
+   <price>3000000</price>
+   <description>Tricon's Centaur Mk8 is the state of the art in ship propulsion technology. It bests even the mighty Centaur Mk7.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>190</thrust>
+   <turn>120</turn>
+   <speed>200</speed>
+   <fuel>800</fuel>
+   <energy_regen>-27</energy_regen>
+   <engine_limit>1000</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Tricon Centaur Mk7-Ra Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>medium</size>
+   <mass>10</mass>
+   <price>3500000</price>
+   <description>Developed specifically for heavy destroyers, Tricon's Centaur Mk7-Ra features an alternative exhaust configuration that optimizes for mass limit at a slight cost of overall performance.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>165</thrust>
+   <turn>95</turn>
+   <speed>170</speed>
+   <fuel>800</fuel>
+   <energy_regen>-27</energy_regen>
+   <engine_limit>1200</engine_limit>
+  </specific>
+ </outfit>
+ <!-- Large slot engines. -->
+ <outfit name="Beat Up Large Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>heavy</size>
+   <mass>100</mass>
+   <price>0</price>
+   <description>Clogged, corroded and cracked in every way possible while still remaining in functional condition, this engine really belongs on the scrap heap.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>20</thrust>
+   <turn>17</turn>
+   <speed>23</speed>
+   <fuel>800</fuel>
+   <energy_regen>-20</energy_regen>
+   <engine_limit>3750</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Manufacturer Large Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>heavy</size>
+   <mass>50</mass>
+   <price>1000000</price>
+   <description>The engine that most manufacturers install in their ships at assembly. Usually the first component pilots upgrade.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>40</thrust>
+   <turn>35</turn>
+   <speed>45</speed>
+   <fuel>1200</fuel>
+   <energy_regen>-38</energy_regen>
+   <engine_limit>4500</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp KRD-T10 Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>heavy</size>
+   <mass>50</mass>
+   <price>2000000</price>
+   <description>The KRD-T10 is a fairly inexpensive engine, by capital ship standards. Many captains find its output lacking, but not all captains can afford better.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>50</thrust>
+   <turn>40</turn>
+   <speed>50</speed>
+   <fuel>1200</fuel>
+   <energy_regen>-40</energy_regen>
+   <engine_limit>4900</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp KRD-T20 Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>heavy</size>
+   <mass>50</mass>
+   <price>2500000</price>
+   <description>The KRD-T20 is a modest improvement over the KRD-T10. It's a popular product among independent captains, despite its limited performance.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>60</thrust>
+   <turn>45</turn>
+   <speed>60</speed>
+   <fuel>1200</fuel>
+   <energy_regen>-42</energy_regen>
+   <engine_limit>5200</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp EXA-71F Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>heavy</size>
+   <mass>50</mass>
+   <price>2900000</price>
+   <description>Although capital ships are too big to rely on maneuverability, sometimes a ship needs to bring heavy forward fire to bear. The EXA-71F optimizes for turn rate, sacrificing speed.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>60</thrust>
+   <turn>65</turn>
+   <speed>40</speed>
+   <fuel>1200</fuel>
+   <energy_regen>-42</energy_regen>
+   <engine_limit>5200</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp AUR-79A Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>heavy</size>
+   <mass>50</mass>
+   <price>2900000</price>
+   <description>Often, profit involves getting as much cargo from A to B in as little time as possible. The AUR-97A tries to achieve the latter by prioritizing top speed over maneuverability.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>50</thrust>
+   <turn>35</turn>
+   <speed>80</speed>
+   <fuel>1200</fuel>
+   <energy_regen>-42</energy_regen>
+   <engine_limit>5200</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp JNS-99K Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>heavy</size>
+   <mass>50</mass>
+   <price>2900000</price>
+   <description>The JNS-99K offers a lot of horse powers for its price. It can shift very heavy cargo loads without losing efficiency.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>55</thrust>
+   <turn>40</turn>
+   <speed>50</speed>
+   <fuel>1600</fuel>
+   <energy_regen>-42</energy_regen>
+   <engine_limit>7500</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Tricon Harpy Mk1 Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>heavy</size>
+   <mass>50</mass>
+   <price>4500000</price>
+   <description>Tricon's Harpy engine is a heavy-duty, high power engine for captains whose ships require serious propulsion capabilities.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>70</thrust>
+   <turn>55</turn>
+   <speed>70</speed>
+   <fuel>1200</fuel>
+   <energy_regen>-45</energy_regen>
+   <engine_limit>6000</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Tricon Harpy Mk6 Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>heavy</size>
+   <mass>50</mass>
+   <price>6000000</price>
+   <description>Tricon's Harpy Mk6 provides superior allround propulsion. The Mk6 is often seen as the standard to which all other engines aspire.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>80</thrust>
+   <turn>65</turn>
+   <speed>80</speed>
+   <fuel>1600</fuel>
+   <energy_regen>-47</energy_regen>
+   <engine_limit>7500</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Tricon Raven Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>heavy</size>
+   <mass>50</mass>
+   <price>7000000</price>
+   <description>Tricon's Raven is a somewhat underappreciated engine, as most capital ships employ turrets in battle and therefore have little use for fast turn rates. However, for those ships that do rely on fixed cannon mounts, this engine is one of the best choices on the market.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>70</thrust>
+   <turn>85</turn>
+   <speed>60</speed>
+   <fuel>1600</fuel>
+   <energy_regen>-47</energy_regen>
+   <engine_limit>7500</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Tricon Kraken Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>heavy</size>
+   <mass>50</mass>
+   <price>7000000</price>
+   <description>Capital ships are often the slowest ships in any fleet, so speeding them up speeds up the whole fleet. Tricon's Kraken engine provides a serious boost to top speed, which later comes at the price of maneuverability in battle.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>70</thrust>
+   <turn>50</turn>
+   <speed>110</speed>
+   <fuel>1600</fuel>
+   <energy_regen>-47</energy_regen>
+   <engine_limit>7500</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Tricon Mammoth Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>heavy</size>
+   <mass>50</mass>
+   <price>7000000</price>
+   <description>Tricon's Mammoth can pull incridible amounts of mass. It requires specialized grav tethers to keep it attached to the ship's hull. This results in severely reduced top speed and maneuverability, but the increased mass limit more than makes up for that.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>70</thrust>
+   <turn>55</turn>
+   <speed>70</speed>
+   <fuel>2000</fuel>
+   <energy_regen>-47</energy_regen>
+   <engine_limit>9700</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Tricon Harpy Mk11 Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>heavy</size>
+   <mass>50</mass>
+   <price>9000000</price>
+   <description>Though the steep price is prohibitive to most, Tricon's Harpy Mk11 outperforms most other engines in just about every field.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>90</thrust>
+   <turn>70</turn>
+   <speed>90</speed>
+   <fuel>1600</fuel>
+   <energy_regen>-50</energy_regen>
+   <engine_limit>8200</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Tricon Harpy Mk15 Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <size>heavy</size>
+   <mass>50</mass>
+   <price>12000000</price>
+   <description>Development of the Harpy Mk15 engine was something of a prestige project for Tricon. It performs somewhat better than the more commercially oriented Mk11, but its price tags make it a viable choice only for the wealthy enthusiast.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>100</thrust>
+   <turn>80</turn>
+   <speed>100</speed>
+   <fuel>2000</fuel>
+   <energy_regen>-54</energy_regen>
+   <engine_limit>9000</engine_limit>
+  </specific>
+ </outfit>
+ <outfit name="Tricon Model X Large Engine">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="engines">structure</slot>
+   <license>Tricon Experimental Engine License</license>
+   <size>heavy</size>
+   <mass>50</mass>
+   <price>18000000</price>
+   <description>This engine is a Tricon prototype. It hasn't received an official designation and is not available on the general market. Once rolled out, this engine is to become the norm on all military fast response fleet capital ships.</description>
+   <gfx_store>afterburner</gfx_store>
+  </general>
+  <specific type="modification">
+   <thrust>110</thrust>
+   <turn>85</turn>
+   <speed>110</speed>
+   <fuel>2000</fuel>
+   <energy_regen>-58</energy_regen>
+   <engine_limit>10000</engine_limit>
+  </specific>
+ </outfit>
+
+ <!-- Small slot hull mods. -->
+ <outfit name="Patchwork Light Plating">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="hull">structure</slot>
+   <size>light</size>
+   <mass>50</mass>
+   <price>0</price>
+   <description>On the plus side, it keeps air from venting into space. But that's about it. This kind of hull maintenance is simply unacceptable.</description>
+   <gfx_store>nanobond</gfx_store>
+  </general>
+  <specific type="modification">
+   <cargo>0</cargo>
+   <absorb>0</absorb>
+   <armour>10</armour>
+   <armour_regen>0</armour_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Unmodified Small Hull">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="hull">structure</slot>
+   <size>light</size>
+   <mass>30</mass>
+   <price>10000</price>
+   <description>The manufacturer spec hull configuration. Certainly spaceworthy, but miserably fails to tap the hull's full potential.</description>
+   <gfx_store>nanobond</gfx_store>
+  </general>
+  <specific type="modification">
+   <cargo>5</cargo>
+   <absorb>0</absorb>
+   <armour>50</armour>
+   <armour_regen>0</armour_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp D-2 Light Plating">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="hull">structure</slot>
+   <size>light</size>
+   <mass>40</mass>
+   <price>25000</price>
+   <description>D-2 plating is commonly found on small ships, because it's an inexpensive set of upgrades to the standard hull.</description>
+   <gfx_store>nanobond</gfx_store>
+  </general>
+  <specific type="modification">
+   <cargo>10</cargo>
+   <absorb>0</absorb>
+   <armour>70</armour>
+   <armour_regen>0</armour_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp C-2 Light Plating">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="hull">structure</slot>
+   <size>light</size>
+   <mass>40</mass>
+   <price>45000</price>
+   <description>More expensive than D-2 Plating, the C-2 variant offers better protection from light weapons fire at the same weight, without sacrificing cargo space.</description>
+   <gfx_store>nanobond</gfx_store>
+  </general>
+  <specific type="modification">
+   <cargo>10</cargo>
+   <absorb>5</absorb>
+   <armour>90</armour>
+   <armour_regen>0</armour_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp B-2 Light Plating">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="hull">structure</slot>
+   <size>light</size>
+   <mass>50</mass>
+   <price>70000</price>
+   <description>B-2 Plating offers good protection and cargo capacity, but weighs more than the C-2 or D-2 variants.</description>
+   <gfx_store>nanobond</gfx_store>
+  </general>
+  <specific type="modification">
+   <cargo>10</cargo>
+   <absorb>5</absorb>
+   <armour>110</armour>
+   <armour_regen>0</armour_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp Small Cargo Hull">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="hull">structure</slot>
+   <size>light</size>
+   <mass>40</mass>
+   <price>70000</price>
+   <description>This hull modification strips some armour plating in favor of cargo space. Commonly used by couriers.</description>
+   <gfx_store>nanobond</gfx_store>
+  </general>
+  <specific type="modification">
+   <cargo>20</cargo>
+   <absorb>0</absorb>
+   <armour>50</armour>
+   <armour_regen>0</armour_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Schafer &amp; Kane Light Combat Plating">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="hull">structure</slot>
+   <size>light</size>
+   <mass>60</mass>
+   <price>150000</price>
+   <description>Schafer &amp; Kane Industries mostly develop for larger ships, but the Light Combat Plating configuration is a product made for fighters and bombers, providing optimum protection.</description>
+   <gfx_store>nanobond</gfx_store>
+  </general>
+  <specific type="modification">
+   <cargo>0</cargo>
+   <absorb>15</absorb>
+   <armour>110</armour>
+   <armour_regen>0</armour_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Schafer &amp; Kane Light Stealth Plating">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="hull">structure</slot>
+   <size>light</size>
+   <mass>70</mass>
+   <price>200000</price>
+   <description>The Light Stealth Plating from Schafer &amp; Kane Industries foregoes hull strength for increased stealth, making it harder for ships to detect and target you.</description>
+   <gfx_store>nanobond</gfx_store>
+  </general>
+  <specific type="modification">
+   <cargo>0</cargo>
+   <absorb>5</absorb>
+   <armour>70</armour>
+   <armour_regen>0</armour_regen>
+   <ew_hide>20</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Schafer &amp; Kane Small Cargo Hull">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="hull">structure</slot>
+   <size>light</size>
+   <mass>70</mass>
+   <price>300000</price>
+   <description>Though a pricey investment for small couriers, this hull modification from Schafer &amp; Kane Industries provides an impressive amount of cargo space without compromising the hull's integrity.</description>
+   <gfx_store>nanobond</gfx_store>
+  </general>
+  <specific type="modification">
+   <cargo>30</cargo>
+   <absorb>0</absorb>
+   <armour>60</armour>
+   <armour_regen>0</armour_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <!-- Medium slot hull mods. -->
+ <outfit name="Patchwork Medium Plating">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="hull">structure</slot>
+   <size>medium</size>
+   <mass>200</mass>
+   <price>0</price>
+   <description>On the plus side, it keeps air from venting into space. But that's about it. This kind of hull maintenance is simply unacceptable.</description>
+   <gfx_store>nanobond</gfx_store>
+  </general>
+  <specific type="modification">
+   <cargo>0</cargo>
+   <absorb>5</absorb>
+   <armour>100</armour>
+   <armour_regen>0</armour_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Unmodified Medium Hull">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="hull">structure</slot>
+   <size>medium</size>
+   <mass>140</mass>
+   <price>200000</price>
+   <description>The manufacturer spec hull configuration. Certainly spaceworthy, but miserably fails to tap the hull's full potential.</description>
+   <gfx_store>nanobond</gfx_store>
+  </general>
+  <specific type="modification">
+   <cargo>10</cargo>
+   <absorb>12</absorb>
+   <armour>300</armour>
+   <armour_regen>0</armour_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp D-8 Medium Plating">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="hull">structure</slot>
+   <size>medium</size>
+   <mass>180</mass>
+   <price>300000</price>
+   <description>D-8 Plating provides a serviceable layer of armour to medium ships, and doesn't weigh too much.</description>
+   <gfx_store>nanobond</gfx_store>
+  </general>
+  <specific type="modification">
+   <cargo>15</cargo>
+   <absorb>15</absorb>
+   <armour>400</armour>
+   <armour_regen>0</armour_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp C-8 Medium Plating">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="hull">structure</slot>
+   <size>medium</size>
+   <mass>200</mass>
+   <price>600000</price>
+   <description>C-8 Plating is similar to D-8 Plating, but the armour plates are furnished with an additional protective layer, increasing both mass and armour.</description>
+   <gfx_store>nanobond</gfx_store>
+  </general>
+  <specific type="modification">
+   <cargo>15</cargo>
+   <absorb>17</absorb>
+   <armour>500</armour>
+   <armour_regen>0</armour_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp Medium Cargo Hull">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="hull">structure</slot>
+   <size>medium</size>
+   <mass>240</mass>
+   <price>800000</price>
+   <description>This hull modification creates additional cargo bays for the ship to store any kind of cargo. This space comes at the cost of armour plating.</description>
+   <gfx_store>nanobond</gfx_store>
+  </general>
+  <specific type="modification">
+   <cargo>60</cargo>
+   <absorb>8</absorb>
+   <armour>350</armour>
+   <armour_regen>0</armour_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Schafer &amp; Kane Medium Combat Plating Alpha">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="hull">structure</slot>
+   <size>medium</size>
+   <mass>240</mass>
+   <price>1200000</price>
+   <description>This coat of armour plating developed by Schafer &amp; Kane Industries can endure a significant pounding from enemy weapons fire.</description>
+   <gfx_store>nanobond</gfx_store>
+  </general>
+  <specific type="modification">
+   <cargo>15</cargo>
+   <absorb>18</absorb>
+   <armour>600</armour>
+   <armour_regen>0</armour_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Schafer &amp; Kane Medium Combat Plating Beta">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="hull">structure</slot>
+   <size>medium</size>
+   <mass>280</mass>
+   <price>1600000</price>
+   <description>The Beta plating is mostly the same in construction as the Alpha version, but the materials used are much more durable, making it even harder for enemies to pierce it.</description>
+   <gfx_store>nanobond</gfx_store>
+  </general>
+  <specific type="modification">
+   <cargo>15</cargo>
+   <absorb>20</absorb>
+   <armour>700</armour>
+   <armour_regen>0</armour_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Schafer &amp; Kane Medium Cargo Hull">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="hull">structure</slot>
+   <size>medium</size>
+   <mass>340</mass>
+   <price>2000000</price>
+   <description>Schafer &amp; Kane Industries have developed a hull modification that provides both ample cargo space and protection.</description>
+   <gfx_store>nanobond</gfx_store>
+  </general>
+  <specific type="modification">
+   <cargo>150</cargo>
+   <absorb>10</absorb>
+   <armour>550</armour>
+   <armour_regen>0</armour_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Schafer &amp; Kane Medium Stealth Plating">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="hull">structure</slot>
+   <size>medium</size>
+   <mass>300</mass>
+   <price>2400000</price>
+   <description>Medium sized ships are usually not in the business of remaining undetected, but Schafer &amp; Kane Industries have nevertheless developed a hull modification that helps in this area.</description>
+   <gfx_store>nanobond</gfx_store>
+  </general>
+  <specific type="modification">
+   <cargo>15</cargo>
+   <absorb>15</absorb>
+   <armour>500</armour>
+   <armour_regen>0</armour_regen>
+   <ew_hide>40</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Schafer &amp; Kane Medium Combat Plating Gamma">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="hull">structure</slot>
+   <size>medium</size>
+   <mass>400</mass>
+   <price>2600000</price>
+   <description>The Gamma plating by Schafer &amp; Kane Industries is among the best in defensive technologies available for medium ships.</description>
+   <gfx_store>nanobond</gfx_store>
+  </general>
+  <specific type="modification">
+   <cargo>15</cargo>
+   <absorb>22</absorb>
+   <armour>900</armour>
+   <armour_regen>0</armour_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Schafer &amp; Kane Medium Solar Plating">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="hull">structure</slot>
+   <size>medium</size>
+   <mass>250</mass>
+   <price>3000000</price>
+   <description>The Solar Plating hull modification from Schafer &amp; Kane Industries replaces the outer layer of armour plating with solar energy converters, boosting the ship's energy generation by a substantial amount.</description>
+   <gfx_store>nanobond</gfx_store>
+  </general>
+  <specific type="modification">
+   <cargo>15</cargo>
+   <absorb>13</absorb>
+   <armour>400</armour>
+   <armour_regen>0</armour_regen>
+   <ew_hide>0</ew_hide>
+   <energy_regen>30</energy_regen>
+  </specific>
+ </outfit>
+ <!-- Large slot hull mods. -->
+ <outfit name="Patchwork Heavy Plating">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="hull">structure</slot>
+   <size>heavy</size>
+   <mass>1400</mass>
+   <price>0</price>
+   <description>On the plus side, it keeps air from venting into space. But that's about it. This kind of hull maintenance is simply unacceptable.</description>
+   <gfx_store>nanobond</gfx_store>
+  </general>
+  <specific type="modification">
+   <cargo>10</cargo>
+   <absorb>12</absorb>
+   <armour>500</armour>
+   <armour_regen>0</armour_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Unmodified Large Hull">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="hull">structure</slot>
+   <size>heavy</size>
+   <mass>800</mass>
+   <price>1000000</price>
+   <description>The manufacturer spec hull configuration. Certainly spaceworthy, but miserably fails to tap the hull's full potential.</description>
+   <gfx_store>nanobond</gfx_store>
+  </general>
+  <specific type="modification">
+   <cargo>50</cargo>
+   <absorb>25</absorb>
+   <armour>800</armour>
+   <armour_regen>0</armour_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp D-16 Heavy Plating">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="hull">structure</slot>
+   <size>heavy</size>
+   <mass>800</mass>
+   <price>2500000</price>
+   <description>D-16 plating is a cost-effective armour configuration for capital ships. It is comparatively weak, but the low weight can be a plus to some.</description>
+   <gfx_store>nanobond</gfx_store>
+  </general>
+  <specific type="modification">
+   <cargo>50</cargo>
+   <absorb>27</absorb>
+   <armour>1300</armour>
+   <armour_regen>0</armour_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp C-16 Heavy Plating">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="hull">structure</slot>
+   <size>heavy</size>
+   <mass>1100</mass>
+   <price>4500000</price>
+   <description>C-16 plating is a reinforced upgrade of the D-16 configuration. Its additional superstructure is added on top of the original design, so it does not infringe on internal cargo space.</description>
+   <gfx_store>nanobond</gfx_store>
+  </general>
+  <specific type="modification">
+   <cargo>50</cargo>
+   <absorb>28</absorb>
+   <armour>1900</armour>
+   <armour_regen>0</armour_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp B-16 Heavy Plating">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="hull">structure</slot>
+   <size>heavy</size>
+   <mass>3000</mass>
+   <price>7000000</price>
+   <description>B-16 plating is a low-end heavy punishment hull modification. It is designed to absorb lots of damage, but its armour-to-weight ratio is worse than the C or D variants.</description>
+   <gfx_store>nanobond</gfx_store>
+  </general>
+  <specific type="modification">
+   <cargo>50</cargo>
+   <absorb>30</absorb>
+   <armour>2500</armour>
+   <armour_regen>0</armour_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp Large Cargo Hull">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="hull">structure</slot>
+   <size>heavy</size>
+   <mass>1300</mass>
+   <price>7000000</price>
+   <description>This hull provides space for multiple large shipments while retaining capital ship class protection.</description>
+   <gfx_store>nanobond</gfx_store>
+  </general>
+  <specific type="modification">
+   <cargo>200</cargo>
+   <absorb>25</absorb>
+   <armour>1400</armour>
+   <armour_regen>0</armour_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Schafer &amp; Kane Heavy Combat Plating Alpha">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="hull">structure</slot>
+   <size>heavy</size>
+   <mass>2000</mass>
+   <price>9000000</price>
+   <description>This heavy plating developed by Schafer &amp; Kane Industries can endure prolonged battle. Quite a few captains and their crews owe their lives to this armour configuration.</description>
+   <gfx_store>nanobond</gfx_store>
+  </general>
+  <specific type="modification">
+   <cargo>50</cargo>
+   <absorb>33</absorb>
+   <armour>2200</armour>
+   <armour_regen>0</armour_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Schafer &amp; Kane Heavy Combat Plating Beta">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="hull">structure</slot>
+   <size>heavy</size>
+   <mass>2300</mass>
+   <price>11000000</price>
+   <description>This heavy plating developed by Schafer &amp; Kane Industries is among the toughest on the market. The price tag is well worth the fire it stops.</description>
+   <gfx_store>nanobond</gfx_store>
+  </general>
+  <specific type="modification">
+   <cargo>50</cargo>
+   <absorb>36</absorb>
+   <armour>2800</armour>
+   <armour_regen>0</armour_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Schafer &amp; Kane Large Cargo Hull">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="hull">structure</slot>
+   <size>heavy</size>
+   <mass>2300</mass>
+   <price>12000000</price>
+   <description>This cargo hull from Schafer &amp; Kane Industries makes use of state-of-the-art defensive alloys, which allows it to free up even more space for cargo without sacrificing too much durability.</description>
+   <gfx_store>nanobond</gfx_store>
+  </general>
+  <specific type="modification">
+   <cargo>300</cargo>
+   <absorb>30</absorb>
+   <armour>2000</armour>
+   <armour_regen>0</armour_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Schafer &amp; Kane Heavy Combat Plating Gamma">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="hull">structure</slot>
+   <size>heavy</size>
+   <mass>2800</mass>
+   <price>14000000</price>
+   <description>Considered the best standard plating configuration on the market, this hull modification from Schafer &amp; Kane Industries is generally found only on important capital ships.</description>
+   <gfx_store>nanobond</gfx_store>
+  </general>
+  <specific type="modification">
+   <cargo>50</cargo>
+   <absorb>39</absorb>
+   <armour>3400</armour>
+   <armour_regen>0</armour_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Schafer &amp; Kane Heavy Solar Plating">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="hull">structure</slot>
+   <size>heavy</size>
+   <mass>2000</mass>
+   <price>15000000</price>
+   <description>This armour plating configuration from Schafer &amp; Kane Industries mounts layers of solar energy converters on the outer hull where the outer shock plating would normally be. This results in much reduced armour capacity, but boosts the energy generation of the ship.</description>
+   <gfx_store>nanobond</gfx_store>
+  </general>
+  <specific type="modification">
+   <cargo>50</cargo>
+   <absorb>30</absorb>
+   <armour>1800</armour>
+   <armour_regen>0</armour_regen>
+   <ew_hide>0</ew_hide>
+   <energy_regen>100</energy_regen>
+  </specific>
+ </outfit>
+ <outfit name="Schafer &amp; Kane Heavy Dissipation Plating">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="hull">structure</slot>
+   <size>heavy</size>
+   <mass>2300</mass>
+   <price>15000000</price>
+   <description>This armour plating by Schafer &amp; Kane Industries is an adaptation to the Heavy Combat Plating configuration that focuses on radiating excess heat off into space. This greatly benefits ships that rely on sustained fire, but also makes the ship light up like a christmas tree on enemy sensors.</description>
+   <gfx_store>nanobond</gfx_store>
+  </general>
+  <specific type="modification">
+   <cargo>50</cargo>
+   <absorb>30</absorb>
+   <armour>2700</armour>
+   <armour_regen>0</armour_regen>
+   <ew_hide>-30</ew_hide>
+   <heat_dissipation>30</heat_dissipation>
+  </specific>
+ </outfit>
+ <outfit name="Schafer &amp; Kane Superheavy Combat Plating">
+  <general>
+   <typename>Core Systems</typename>
+   <slot prop="hull">structure</slot>
+   <size>heavy</size>
+   <mass>5000</mass>
+   <price>18000000</price>
+   <description>Schafer &amp; Kane Industries have developed this super-heavy armour configuration for ships whose task in battle is to endure the brunt of the enemy's fire. It is very durable indeed, but weighs disporportionally much and renders the ship completely unfit to handle cargo.</description>
+   <gfx_store>nanobond</gfx_store>
+  </general>
+  <specific type="modification">
+   <cargo>0</cargo>
+   <cargo_mod>-100</cargo_mod>
+   <absorb>43</absorb>
+   <armour>4500</armour>
+   <armour_regen>0</armour_regen>
+   <ew_hide>0</ew_hide>
+  </specific>
+ </outfit>
 
  <!-- Cheats. For missions, honest! -->
  <outfit name="Laser Cannon MK0">
@@ -2833,6 +5068,17 @@
     <physical>15</physical>
     <disable>1</disable>
    </damage>
+  </specific>
+ </outfit>
+ <outfit name="Ultra Map">
+  <general>
+   <mass>0</mass>
+   <price>1</price>
+   <description>For cheating.</description>
+   <gfx_store>map</gfx_store>
+  </general>
+  <specific type="map">
+   <radius>999</radius>
   </specific>
  </outfit>
  <outfit name="Shield Nullifier">

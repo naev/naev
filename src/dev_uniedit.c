@@ -895,7 +895,6 @@ static void uniedit_editSys (void)
    snprintf( buf, sizeof(buf), "Name: \en%s", (uniedit_nsys > 1) ? "\ervarious" : uniedit_sys[0]->name );
    window_addText( wid, 20, y, 180, 15, 0, "txtName", &gl_smallFont, &cDConsole, buf );
    window_addButton( wid, 200, y+3, BUTTON_WIDTH, 21, "btnRename", "Rename", uniedit_btnEditRename );
-   y -= 30;
 
    /* Generate the list. */
    uniedit_editGenList( wid );

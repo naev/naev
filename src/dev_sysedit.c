@@ -1124,7 +1124,6 @@ static void sysedit_editPnt( void )
    window_addInput( wid, x += l + 5, y, 30, 20, "inpPresenceRange", 1, 1, NULL );
    window_setInputFilter( wid, "inpPresenceRange",
          "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`." );
-   x += 30 + 10;
 
    /* Bottom buttons. */
    window_addButton( wid, -20 - bw*3 - 15*3, 35 + BUTTON_HEIGHT, bw, BUTTON_HEIGHT,

@@ -94,6 +94,7 @@
 #include "threadpool.h"
 #include "load.h"
 #include "dialogue.h"
+#include "slots.h"
 
 
 #define CONF_FILE       "conf.lua" /**< Configuration file by default. */
@@ -260,6 +261,7 @@ int main( int argc, char** argv )
    window_caption();
    gl_fontInit( NULL, NULL, FONT_SIZE ); /* initializes default font to size */
    gl_fontInit( &gl_smallFont, NULL, FONT_SIZE_SMALL ); /* small font */
+   gl_fontInit( &gl_defFontMono, "dat/mono.ttf", FONT_SIZE );
 
    /* Display the load screen. */
    loadscreen_load();
@@ -362,6 +364,7 @@ int main( int argc, char** argv )
    /* cleanup opengl fonts */
    gl_freeFont(NULL);
    gl_freeFont(&gl_smallFont);
+   gl_freeFont(&gl_defFontMono);
 
    /* Close data. */
    ndata_close();
@@ -529,6 +532,9 @@ static void loadscreen_unload (void)
 #define LOADING_STAGES     12. /**< Amount of loading stages. */
 void load_all (void)
 {
+   /* We can do fast stuff here. */
+   sp_load();
+
    /* order is very important as they're interdependent */
    loadscreen_render( 1./LOADING_STAGES, "Loading Commodities..." );
    commodity_load(); /* dep for space */
@@ -586,6 +592,7 @@ void unload_all (void)
    factions_free();
    commodity_free();
    var_cleanup(); /* cleans up mission variables */
+   sp_cleanup();
 }
 
 

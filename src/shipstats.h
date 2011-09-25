@@ -27,14 +27,16 @@ typedef enum ShipStatsType_ {
     * D: Double type data. Should be continuous.
     */
    /* General. */
-   SS_TYPE_D_SPEED_MOD,          /**< Speed multiplier. */
-   SS_TYPE_D_TURN_MOD,           /**< Turn multiplier. */
-   SS_TYPE_D_THRUST_MOD,          /**< Acceleration multiplier. */
-   SS_TYPE_D_CARGO_MOD,          /**< Cargo space multiplier. */
-   SS_TYPE_D_ARMOUR_MOD,         /**< Armour multiplier. */
-   SS_TYPE_D_ARMOUR_REGEN_MOD,   /**< Armour regeneration multiplier. */
-   SS_TYPE_D_SHIELD_MOD,         /**< Shield multiplier. */
-   SS_TYPE_D_SHIELD_REGEN_MOD,   /**< Shield regeneration multiplier. */
+   SS_TYPE_D_SPEED_MOD,       /**< Speed multiplier. */
+   SS_TYPE_D_TURN_MOD,        /**< Turn multiplier. */
+   SS_TYPE_D_THRUST_MOD,      /**< Acceleration multiplier. */
+   SS_TYPE_D_CARGO_MOD,       /**< Cargo space multiplier. */
+   SS_TYPE_D_ARMOUR_MOD,      /**< Armour multiplier. */
+   SS_TYPE_D_ARMOUR_REGEN_MOD, /**< Armour regeneration multiplier. */
+   SS_TYPE_D_SHIELD_MOD,      /**< Shield multiplier. */
+   SS_TYPE_D_SHIELD_REGEN_MOD, /**< Shield regeneration multiplier. */
+   SS_TYPE_D_ENERGY_MOD,      /**< Energy multiplier. */
+   SS_TYPE_D_ENERGY_REGEN_MOD, /**< Energy regeneration multiplier. */
    
    /* Freighter-type. */
    SS_TYPE_D_JUMP_DELAY,      /**< Modulates the time that passes during a hyperspace jump. */
@@ -59,6 +61,7 @@ typedef enum ShipStatsType_ {
    /* Turrets. */
    SS_TYPE_D_TURRET_HEAT,     /**< Heat generation for turrets. */
    SS_TYPE_D_TURRET_DAMAGE,   /**< Damage done by turrets. */
+   SS_TYPE_D_TURRET_TRACKING, /**< Tracking of turrets. */
    SS_TYPE_D_TURRET_FIRERATE, /**< Firerate of turrets. */
    SS_TYPE_D_TURRET_ENERGY,   /**< Energy usage of turrets. */
 
@@ -68,10 +71,14 @@ typedef enum ShipStatsType_ {
 
    /* Misc. */
    SS_TYPE_D_HEAT_DISSIPATION, /**< Ship heat dissipation. */
+   SS_TYPE_D_CREW,            /**< Ship crew. */
+   SS_TYPE_D_MASS,            /**< Ship mass. */
 
    /*
     * A: Absolute double type data. Should be continuous.
     */
+   SS_TYPE_A_ENGINE_LIMIT,    /**< Engine's mass limit. */
+   SS_TYPE_A_FUEL_CONSUMPTION, /**< Fuel consumption of the engine. */
 
    /*
     * I: Integer type data. Should be continuous.
@@ -81,6 +88,7 @@ typedef enum ShipStatsType_ {
     * B: Boolean type data. Should be continuous.
     */
    SS_TYPE_B_INSTANT_JUMP, /**< Do not require brake or chargeup to jump. */
+   SS_TYPE_B_REVERSE_THRUST, /**< Ship slows down rather than turning on reverse. */
 
    SS_TYPE_SENTINAL,          /**< Sentinal for end of types. */
 } ShipStatsType;
@@ -145,6 +153,8 @@ typedef struct ShipStats_ {
    double armour_regen_mod;   /**< Armour regeneration multiplier. */
    double shield_mod;         /**< Shield multiplier. */
    double shield_regen_mod;   /**< Shield regeneration multiplier. */
+   double energy_mod;         /**< Energy multiplier. */
+   double energy_regen_mod;   /**< Energy regeneration multiplier. */
 
    /* Freighter-type. */
    double jump_delay;      /**< Modulates the time that passes during a hyperspace jump. */
@@ -156,6 +166,8 @@ typedef struct ShipStats_ {
 
    /* Military type. */
    double heat_dissipation; /**< Global ship dissipation. */
+   double crew_mod;        /**< Relative crew modification. */
+   double mass_mod;        /**< Relative mass modification. */
 
    /* Launchers. */
    double launch_rate;     /**< Fire rate of launchers. */
@@ -172,13 +184,19 @@ typedef struct ShipStats_ {
    /* Destroyer/Cruiser type. */
    double tur_heat;        /**< Heat of turrets. */
    double tur_damage;      /**< Damage of turrets. */
+   double tur_tracking;    /**< Tracking of turrets. */
    double tur_firerate;    /**< Rate of fire of turrets. */
    double tur_energy;      /**< Consumption rate of turrets. */
+
+   /* Engine limits. */
+   double engine_limit;    /**< Engine limit. */
+   double fuel_consumption; /**< Fuel consumption by engine. */
 
    /* Misc. */
    double nebula_dmg_shield; /**< Shield nebula resistance. */
    double nebula_dmg_armour; /**< Armour nebula resistance. */
    int misc_instant_jump; /**< Do not require brake or chargeup to jump. */
+   int misc_reverse_thrust; /**< Do not require brake or chargeup to jump. */
 } ShipStats;
 
 

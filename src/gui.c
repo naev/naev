@@ -1672,7 +1672,6 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
 
    /* Check if in range. */
    if (shape == RADAR_RECT) {
-      x = y = 0;
       /* Out of range. */
       if ((ABS(cx) - r > w/2.) || (ABS(cy) - r  > h/2.)) {
          if ((player.p->nav_hyperspace == ind) && !overlay)
@@ -1999,12 +1998,12 @@ void gui_updateFaction (void)
  *
  *    @param The pilot to act based upon.
  */
-void gui_setGeneric (Pilot* pilot)
+void gui_setGeneric( Pilot* pilot )
 {
    if (gui_L == NULL)
       return;
 
-   if (player.p->target != PLAYER_ID && pilot->id == player.p->target)
+   if ((player.p->target != PLAYER_ID) && (pilot->id == player.p->target))
       gui_setTarget();
    else if (pilot_isPlayer(pilot)) {
       gui_setCargo();

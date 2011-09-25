@@ -1554,31 +1554,12 @@ void toolkit_render (void)
  */
 int toolkit_input( SDL_Event* event )
 {
-   int ret;
-   Window *wdw, *wlast;
-   Widget *wgt;
+   Window *wdw;
 
    /* Get window that can be focused. */
-   wlast = NULL;
-   for (wdw = windows; wdw!=NULL; wdw = wdw->next) {
-      if (!window_isFlag( wdw, WINDOW_NOINPUT ) &&
-            !window_isFlag( wdw, WINDOW_KILL ))
-         wlast = wdw;
-   }
-   if (wlast == NULL)
+   wdw = toolkit_getActiveWindow();
+   if (wdw == NULL)
       return 0;
-   wdw = wlast;
-
-   /* See if widget needs event. */
-   for (wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next) {
-      if (wgt_isFlag( wgt, WGT_FLAG_RAWINPUT )) {
-         if (wgt->rawevent != NULL) {
-            ret = wgt->rawevent( wgt, event );
-            if (ret != 0)
-               return ret;
-         }
-      }
-   }
 
    /* Pass event to window. */
    return toolkit_inputWindow( wdw, event, 1 );
@@ -1591,7 +1572,19 @@ int toolkit_input( SDL_Event* event )
 int toolkit_inputWindow( Window *wdw, SDL_Event *event, int purge )
 {
    int ret;
+   Widget *wgt;
    ret = 0;
+
+   /* See if widget needs event. */
+   for (wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next) {
+      if (wgt_isFlag( wgt, WGT_FLAG_RAWINPUT )) {
+         if (wgt->rawevent != NULL) {
+            ret = wgt->rawevent( wgt, event );
+            if (ret != 0)
+               return ret;
+         }
+      }
+   }
 
    /* Event handler. */
    if (wdw->eventevent != NULL)
@@ -2040,39 +2033,35 @@ void toolkit_update (void)
    /* Increment counter. */
    input_keyCounter++;
 
-   /* Check to see what it affects. */
-   if (windows != NULL) {
-      /* Get the window. */
-      wdw = toolkit_getActiveWindow();
-      if (wdw == NULL)
-         return;
+   /* Get the window. */
+   wdw = toolkit_getActiveWindow();
+   if (wdw == NULL)
+      return;
 
-
-      /* See if widget needs event. */
-      for (wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next) {
-         if (wgt_isFlag( wgt, WGT_FLAG_RAWINPUT )) {
-            if (wgt->rawevent != NULL) {
-               event.type           = SDL_KEYDOWN;
-               event.key.state      = SDL_PRESSED;
-               event.key.keysym.sym = input_key;
-               event.key.keysym.mod = 0;
-               ret = wgt->rawevent( wgt, &event );
-               if (ret != 0)
-                  return;
-            }
+   /* See if widget needs event. */
+   for (wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next) {
+      if (wgt_isFlag( wgt, WGT_FLAG_RAWINPUT )) {
+         if (wgt->rawevent != NULL) {
+            event.type           = SDL_KEYDOWN;
+            event.key.state      = SDL_PRESSED;
+            event.key.keysym.sym = input_key;
+            event.key.keysym.mod = 0;
+            ret = wgt->rawevent( wgt, &event );
+            if (ret != 0)
+               return;
          }
       }
+   }
 
-      /* Handle the focused widget. */
-      wgt = toolkit_getFocus( wdw );
-      if ((wgt != NULL) && (wgt->keyevent != NULL))
-         wgt->keyevent( wgt, input_key, 0 );
+   /* Handle the focused widget. */
+   wgt = toolkit_getFocus( wdw );
+   if ((wgt != NULL) && (wgt->keyevent != NULL))
+      wgt->keyevent( wgt, input_key, 0 );
 
-      if ((input_text != 0) && (wgt != NULL) && (wgt->textevent != NULL)) {
-         buf[0] = input_text;
-         buf[1] = '\0';
-         wgt->textevent( wgt, buf );
-      }
+   if ((input_text != 0) && (wgt != NULL) && (wgt->textevent != NULL)) {
+      buf[0] = input_text;
+      buf[1] = '\0';
+      wgt->textevent( wgt, buf );
    }
 }
 

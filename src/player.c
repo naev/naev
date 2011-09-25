@@ -575,6 +575,7 @@ void player_swapShip( char* shipname )
    int i, j;
    Pilot* ship;
    Vector2d v;
+   double dir;
 
    for (i=0; i<player_nstack; i++) {
       if (strcmp(shipname,player_stack[i].p->name)!=0)
@@ -591,6 +592,7 @@ void player_swapShip( char* shipname )
 
       /* Store position. */
       vectcpy( &v, &player.p->solid->pos );
+      dir = player.p->solid->dir;
 
       /* extra pass to calculate stats */
       pilot_calcStats( ship );
@@ -607,6 +609,7 @@ void player_swapShip( char* shipname )
 
       /* Copy position back. */
       vectcpy( &player.p->solid->pos, &v );
+      player.p->solid->dir = dir;
 
       /* Fill the tank. */
       if (landed)
@@ -1094,13 +1097,18 @@ void player_think( Pilot* pplayer, const double dt )
       */
 
       /*
-       * I don't think automatic braking is good.
+       * If the player has reverse thrusters, fire those.
        */
-      pilot_face( pplayer, VANGLE(player.p->solid->vel) + M_PI );
-
-      /* Disable turning. */
-      facing = 1;
+      if (player.p->stats.misc_reverse_thrust)
+         player_accel( -0.4 );
+      else {
+         pilot_face( pplayer, VANGLE(player.p->solid->vel) + M_PI );
+         /* Disable turning. */
+         facing = 1;
+      }
    }
+   else if(player.p->stats.misc_reverse_thrust && !player_isFlag(PLAYER_REVERSE) && !player_isFlag(PLAYER_ACCEL))
+      player_accelOver();
 
    /* normal turning scheme */
    if (!facing) {
@@ -1192,7 +1200,7 @@ void player_updateSpecific( Pilot *pplayer, const double dt )
    /* Calculate engine sound to use. */
    if (player_isFlag(PLAYER_AFTERBURNER))
       engsound = pplayer->afterburner->outfit->u.afb.sound;
-   else if (pplayer->solid->thrust > 0.) {
+   else if ((pplayer->solid->thrust > 1e-3) || (pplayer->solid->thrust < -1e-3)) {
       /* See if is in hyperspace. */
       if (pilot_isFlag(pplayer, PILOT_HYPERSPACE))
          engsound = snd_hypEng;
@@ -1623,7 +1631,7 @@ void player_brokeHyperspace (void)
    cam_setTargetPilot( player.p->id, 0 );
 
    /* reduce fuel */
-   player.p->fuel -= HYPERSPACE_FUEL;
+   player.p->fuel -= player.p->fuel_consumption;
 
    /* stop hyperspace */
    pilot_rmFlag( player.p, PILOT_HYPERSPACE );
@@ -2308,14 +2316,28 @@ static int player_outfitCompare( const void *arg1, const void *arg2 )
  *    @param[out] soutfits Names of outfits to .
  *    @param[out] toutfits Textures of outfits for image array.
  */
-void player_getOutfits( char** soutfits, glTexture** toutfits )
+int player_getOutfits( char** soutfits, glTexture** toutfits )
 {
-   int i;
+   return player_getOutfitsFiltered( soutfits, toutfits, NULL );
+}
+
+
+/**
+ * @brief Prepares two arrays for displaying in an image array.
+ *
+ *    @param[out] soutfits Names of outfits to .
+ *    @param[out] toutfits Textures of outfits for image array.
+ *    @param[in] filter Function to filter which outfits to get.
+ */
+int player_getOutfitsFiltered( char** soutfits, glTexture** toutfits,
+      int(*filter)( const Outfit *o ) )
+{
+   int i, j;
 
    if (player_noutfits == 0) {
       soutfits[0] = strdup( "None" );
       toutfits[0] = NULL;
-      return;
+      return 1;
    }
 
    /* We'll sort. */
@@ -2323,10 +2345,15 @@ void player_getOutfits( char** soutfits, glTexture** toutfits )
          sizeof(PlayerOutfit_t), player_outfitCompare );
 
    /* Now built name and texture structure. */
+   j = 0;
    for (i=0; i<player_noutfits; i++) {
-      soutfits[i] = strdup( player_outfits[i].o->name );
-      toutfits[i] = player_outfits[i].o->gfx_store;
+      if ((filter == NULL) || filter(player_outfits[i].o)) {
+         soutfits[j] = strdup( player_outfits[i].o->name );
+         toutfits[j] = player_outfits[i].o->gfx_store;
+         j++;
+      }
    }
+   return j;
 }
 
 
@@ -3267,7 +3294,7 @@ static void player_addOutfitToPilot( Pilot* pilot, Outfit* outfit, PilotOutfitSl
 {
    int ret;
 
-   if (!outfit_fitsSlot( outfit, &s->slot )) {
+   if (!outfit_fitsSlot( outfit, &s->sslot->slot )) {
       DEBUG( "Outfit '%s' does not fit designated slot on player's pilot '%s', adding to stock.",
             outfit->name, pilot->name );
       player_addOutfit( outfit, 1 );
