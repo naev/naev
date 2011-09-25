@@ -1328,7 +1328,7 @@
     <type>normal</type>
     <penetrate>50</penetrate>
     <physical>50</physical>
-    <disable>1</disable>
+    <disable>0</disable>
    </damage>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
@@ -1364,7 +1364,7 @@
     <type>normal</type>
     <penetrate>90</penetrate>
     <physical>150</physical>
-    <disable>1</disable>
+    <disable>0</disable>
    </damage>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
