@@ -5,7 +5,7 @@
  <outfit name="Laser Cannon MK1">
   <general>
    <slot>weapon</slot>
-   <size>light</size>
+   <size>small</size>
    <mass>4</mass>
    <price>5000</price>
    <description>The laser cannon is a standard weapon on many vessels. It fires charged energy beams that do a decent amount of damage to both shield and armour, while remaining efficient enough to mount several even on small ships.</description>
@@ -36,7 +36,7 @@
  <outfit name="Laser Cannon MK2">
   <general>
    <slot>weapon</slot>
-   <size>light</size>
+   <size>small</size>
    <license>Medium Weapon License</license>
    <mass>4.5</mass>
    <price>12500</price>
@@ -69,7 +69,7 @@
  <outfit name="Laser Cannon MK3">
   <general>
    <slot>weapon</slot>
-   <size>light</size>
+   <size>small</size>
    <license>Medium Weapon License</license>
    <mass>5</mass>
    <price>25000</price>
@@ -104,7 +104,7 @@
  <outfit name="Ripper Cannon">
   <general>
    <slot>weapon</slot>
-   <size>light</size>
+   <size>small</size>
    <license>Medium Weapon License</license>
    <mass>8</mass>
    <price>35000</price>
@@ -265,7 +265,7 @@
  <outfit name="Heavy Laser">
   <general>
    <slot>weapon</slot>
-   <size>heavy</size>
+   <size>large</size>
    <license>Heavy Weapon License</license>
    <mass>53</mass>
    <price>65000</price>
@@ -297,7 +297,7 @@
  <outfit name="Turbolaser">
   <general>
    <slot>weapon</slot>
-   <size>heavy</size>
+   <size>large</size>
    <license>Heavy Weapon License</license>
    <mass>57</mass>
    <price>125000</price>
@@ -332,7 +332,7 @@
  <outfit name="Razor MK1">
   <general>
    <slot>weapon</slot>
-   <size>light</size>
+   <size>small</size>
    <mass>2.2</mass>
    <price>7000</price>
    <description>Razors fire concentrated pockets of high energy ions that are very effective at draining shields, but have only limited effect on a ship's armour. As such, Razors are best used in the initial phase of an engagement, and swapped out for other weapons once the target's shields come down.</description>
@@ -364,7 +364,7 @@
  <outfit name="Razor MK2">
   <general>
    <slot>weapon</slot>
-   <size>light</size>
+   <size>small</size>
    <mass>4</mass>
    <price>11000</price>
    <description>The upgraded civilian Razor model packs increased overall effectiveness compared to its predecessor, and has less difficulty in overloading capital ship grade shielding. As with the basic model, the Razor MK2 is best used to drain a target's shields, paving the way for other weapons to deliver the finishing blow.</description>
@@ -396,7 +396,7 @@
  <outfit name="Razor MK3">
   <general>
    <slot>weapon</slot>
-   <size>light</size>
+   <size>small</size>
    <mass>6.5</mass>
    <price>23000</price>
    <description>The heaviest version of the Razor is excellent at stripping the shields from those who would stand against House Sirius. In large engagements, Razor MK3s are often employed by support ships, whose task is to weaken a target before the heavy enforcer ships move in.</description>
@@ -428,7 +428,7 @@
  <outfit name="Razor Turret MK1">
   <general>
    <slot>weapon</slot>
-   <size>light</size>
+   <size>small</size>
    <mass>16</mass>
    <price>14000</price>
    <description>Razor Turrets are popular among traders. Their high damage against shields is a great deterrent against attackers, because nothing puts a space pilot on edge like his shields rapidly coming down.</description>
@@ -521,7 +521,7 @@
  <outfit name="Ion Cannon">
   <general>
    <slot>weapon</slot>
-   <size>light</size>
+   <size>small</size>
    <mass>8</mass>
    <price>16000</price>
    <description>Ion Cannons are primarily nonlethal weapons designed to short out internal ship systems and rendering it disabled without killing the crew in the process. The standard Ion Cannon is the most basic and compact design, which allows it to be mounted on small craft. This makes the Ion Cannon one of the most popular weapons for weaker pirates.</description>
@@ -625,7 +625,7 @@
  <outfit name="Gauss Gun">
   <general>
    <slot>weapon</slot>
-   <size>light</size>
+   <size>small</size>
    <mass>4</mass>
    <price>6000</price>
    <description>The Gauss Gun is one of the oldest weapon designs in the galaxy today, dating back to the times of the Federation. It fires a rapid stream of high velocity projectiles at a target, dealing damage through sheer kinetic impact. Gauss Guns are popular among small time pirates for being a cheap, reliable weapon.</description>
@@ -656,7 +656,7 @@
  <outfit name="Vulcan Gun">
   <general>
    <slot>weapon</slot>
-   <size>light</size>
+   <size>small</size>
    <mass>6</mass>
    <price>13000</price>
    <description>The Vulcan Gun improves over the Gauss Gun with increased range and damage, achieved by using a heavier calibre ammunition. A skilled pilot can wreak some serious havoc with a pair of Vulcan Guns installed in his ship.</description>
@@ -687,7 +687,7 @@
  <outfit name="Shredder">
   <general>
    <slot>weapon</slot>
-   <size>light</size>
+   <size>small</size>
    <mass>10</mass>
    <price>22000</price>
    <description>The Shredder quite lives up to the name its Dvaered manufacturers gave it. The sheer damage dealing capacity of this weapon makes Dvaered fighters dangerous to engage by ships that aren't substantially larger than they are.</description>
@@ -718,7 +718,7 @@
  <outfit name="Turreted Gauss Gun">
   <general>
    <slot>weapon</slot>
-   <size>light</size>
+   <size>small</size>
    <mass>18</mass>
    <license>Heavy Weapon License</license>
    <price>16000</price>
@@ -877,7 +877,7 @@
  <outfit name="Railgun">
   <general>
    <slot>weapon</slot>
-   <size>heavy</size>
+   <size>large</size>
    <license>Heavy Weapon License</license>
    <mass>37</mass>
    <price>72000</price>
@@ -911,7 +911,7 @@
  <outfit name="Repeating Railgun">
   <general>
    <slot>weapon</slot>
-   <size>heavy</size>
+   <size>large</size>
    <license>Heavy Weapon License</license>
    <mass>43</mass>
    <price>86000</price>
@@ -945,7 +945,7 @@
  <outfit name="Railgun Turret">
   <general>
    <slot>weapon</slot>
-   <size>heavy</size>
+   <size>large</size>
    <mass>64</mass>
    <license>Heavy Weapon License</license>
    <price>105000</price>
@@ -980,7 +980,7 @@
  <outfit name="Plasma Blaster MK1">
   <general>
    <slot>weapon</slot>
-   <size>light</size>
+   <size>small</size>
    <mass>5</mass>
    <price>9000</price>
    <description>Highly volatile, the plasma blaster is among the best choices for fast attacks. As a result of its volatility, it is a potent weapon against both shields and armour, though it is known for dissipating quickly after being fired.</description>
@@ -1011,7 +1011,7 @@
  <outfit name="Plasma Blaster MK2">
   <general>
    <slot>weapon</slot>
-   <size>light</size>
+   <size>small</size>
    <license>Medium Weapon License</license>
    <mass>7</mass>
    <price>17000</price>
@@ -1044,7 +1044,7 @@
  <outfit name="Plasma Blaster MK3">
   <general>
    <slot>weapon</slot>
-   <size>light</size>
+   <size>small</size>
    <license>Medium Weapon License</license>
    <mass>9</mass>
    <price>26000</price>
@@ -1077,7 +1077,7 @@
  <outfit name="Plasma Turret MK1">
   <general>
    <slot>weapon</slot>
-   <size>light</size>
+   <size>small</size>
    <license>Medium Weapon License</license>
    <mass>18</mass>
    <price>21000</price>
@@ -1139,7 +1139,7 @@
  <outfit name="BioPlasma Organ Stage 1">
   <general>
    <slot>weapon</slot>
-   <size>light</size>
+   <size>small</size>
    <license>Medium Weapon License</license>
    <mass>0</mass>
    <price>18000</price>
@@ -1346,7 +1346,7 @@
  <outfit name="Ragnarok Beam">
   <general>
    <slot>weapon</slot>
-   <size>heavy</size>
+   <size>large</size>
    <license>Heavy Weapon License</license>
    <mass>140</mass>
    <price>745000</price>
@@ -1380,7 +1380,7 @@
  <outfit name="Neutron Disruptor">
   <general>
    <slot>weapon</slot>
-   <size>light</size>
+   <size>small</size>
    <mass>6</mass>
    <price>18500</price>
    <license>Heavy Weapon License</license>
@@ -1416,6 +1416,7 @@
  <outfit name="Unicorp Fury Launcher">
   <general>
    <slot>weapon</slot>
+   <size>small</size>
    <mass>8</mass>
    <price>25000</price>
    <description>This missile launcher fires Fury class interceptor missiles. It is built out of standard parts, which make it serviceable and efficient.</description>
@@ -1434,6 +1435,7 @@
  <outfit name="TeraCom Fury Launcher">
   <general>
    <slot>weapon</slot>
+   <size>small</size>
    <mass>9</mass>
    <price>40000</price>
    <description>The TeraCom Fury Launcher is a high-performance missile launcher equipped with patented target tracking and missile arming technology, allowing pilots to get a lock on their target faster and more easily than with launchers made by competing brands.</description>
@@ -1452,6 +1454,7 @@
  <outfit name="Enygma Systems Turreted Fury Launcher">
   <general>
    <slot>weapon</slot>
+   <size>small</size>
    <mass>30</mass>
    <price>80000</price>
    <description>Enygma Systems has developed a turret mounted Fury launcher. It comes at a steep price, but can be a powerful means of discouraging pirate fighters.</description>
@@ -1495,6 +1498,7 @@
  <outfit name="Unicorp Headhunter Launcher">
   <general>
    <slot>weapon</slot>
+   <size>small</size>
    <license>Medium Weapon License</license>
    <mass>10</mass>
    <price>40000</price>
@@ -1514,6 +1518,7 @@
  <outfit name="TeraCom Headhunter Launcher">
   <general>
    <slot>weapon</slot>
+   <size>small</size>
    <license>Medium Weapon License</license>
    <mass>10</mass>
    <price>100000</price>
@@ -1533,6 +1538,7 @@
  <outfit name="Enygma Systems Turreted Headhunter Launcher">
   <general>
    <slot>weapon</slot>
+   <size>medium</size>
    <mass>45</mass>
    <price>140000</price>
    <description>These launchers are sometimes employed by cruiser captains whose ships aren't maneouevrable enough to effectively combat enemy fighters and bombers. The punch of the Headhunter missile combined with Enygma Systems' swivel mounted launcher can effectively compensate for any blind spots.</description>
@@ -1577,6 +1583,7 @@
  <outfit name="Unicorp Vengeance Launcher">
   <general>
    <slot>weapon</slot>
+   <size>medium</size>
    <license>Medium Weapon License</license>
    <mass>15</mass>
    <price>70000</price>
@@ -1596,6 +1603,7 @@
  <outfit name="TeraCom Vengeance Launcher">
   <general>
    <slot>weapon</slot>
+   <size>medium</size>
    <license>Medium Weapon License</license>
    <mass>15</mass>
    <price>150000</price>
@@ -1615,6 +1623,7 @@
  <outfit name="Enygma Systems Turreted Vengeance Launcher">
   <general>
    <slot>weapon</slot>
+   <size>medium</size>
    <mass>60</mass>
    <price>200000</price>
    <description>Turreted Vengeance launchers aren't commonly seen in interplanetary combat. Only heavy cruisers can afford to mount these weapons, and they usually have other means of taking out corvette class enemies.</description>
@@ -1659,6 +1668,7 @@
  <outfit name="Unicorp Mace Launcher">
   <general>
    <slot>weapon</slot>
+   <size>small</size>
    <license>Medium Weapon License</license>
    <mass>10</mass>
    <price>19000</price>
@@ -1675,6 +1685,7 @@
  <outfit name="TeraCom Mace Launcher">
   <general>
    <slot>weapon</slot>
+   <size>small</size>
    <license>Medium Weapon License</license>
    <mass>10</mass>
    <price>30000</price>
@@ -1717,6 +1728,7 @@
  <outfit name="Unicorp Banshee Launcher">
   <general>
    <slot>weapon</slot>
+   <size>medium</size>
    <license>Medium Weapon License</license>
    <mass>17</mass>
    <price>25000</price>
@@ -1733,6 +1745,7 @@
  <outfit name="TeraCom Banshee Launcher">
   <general>
    <slot>weapon</slot>
+   <size>medium</size>
    <license>Medium Weapon License</license>
    <mass>17</mass>
    <price>45000</price>
@@ -1822,7 +1835,7 @@
  <outfit name="TeraCom Imperator Launcher">
   <general>
    <slot>weapon</slot>
-   <size>medium</size>
+   <size>large</size>
    <license>Heavy Weapon License</license>
    <mass>40</mass>
    <price>220000</price>
@@ -1869,6 +1882,7 @@
  <outfit name="EMP Grenade Launcher">
   <general>
    <slot>weapon</slot>
+   <size>medium</size>
    <mass>17</mass>
    <price>31000</price>
    <gfx_store>empgrenadelauncher</gfx_store>
@@ -1909,6 +1923,7 @@
  <outfit name="Unicorp Medusa Launcher">
   <general>
    <slot>weapon</slot>
+   <size>small</size>
    <mass>8</mass>
    <price>25000</price>
    <description>This launcher fires Medusa class EMP cruise missiles. The magazine size is quite limited, but often a couple of well placed Medusas are enough to disable the target.</description>
@@ -1927,6 +1942,7 @@
  <outfit name="TeraCom Medusa Launcher">
   <general>
    <slot>weapon</slot>
+   <size>small</size>
    <mass>9</mass>
    <price>40000</price>
    <description>TeraCom have built a highly efficient Medusa launcher, capable of locking on and firing faster than the standard specification, and holding a greater amount in the magazine as well.</description>
@@ -1971,6 +1987,7 @@
  <outfit name="Enygma Systems Spearhead Launcher">
   <general>
    <slot>weapon</slot>
+   <size>medium</size>
    <license>Medium Weapon License</license>
    <mass>15</mass>
    <price>70000</price>
@@ -2021,6 +2038,7 @@
   <general>
    <typename>Power Modifier</typename>
    <slot>structure</slot>
+   <size>small</size>
    <mass>6</mass>
    <price>40000</price>
    <description>A large battery unit designed to hold 200 MJ of energy. Small enough to mount on many light vessels.</description>
@@ -2035,6 +2053,7 @@
   <general>
    <typename>Power Modifier</typename>
    <slot>structure</slot>
+   <size>medium</size>
    <mass>30</mass>
    <price>120000</price>
    <description>A large battery unit designed to hold 400 MJ of energy. Ideally mounted on medium-to-large vessels.</description>
@@ -2049,6 +2068,7 @@
   <general>
    <typename>Power Modifier</typename>
    <slot>structure</slot>
+   <size>large</size>
    <mass>150</mass>
    <price>360000</price>
    <description>A massive battery unit designed to hold 800 MJ of energy. Given the mass of this battery, it's advisable to only mount it on capital ships.</description>
@@ -2063,6 +2083,7 @@
   <general>
    <typename>Energy Modifier</typename>
    <slot>structure</slot>
+   <size>small</size>
    <mass>3</mass>
    <price>25000</price>
    <description>A large panel that generates energy by collecting light and converting it into electricity. This will allow your ship to regenerate its energy supplies more quickly.</description>
@@ -2076,6 +2097,7 @@
   <general>
    <typename>Energy Modifier</typename>
    <slot>utility</slot>
+   <size>small</size>
    <mass>10</mass>
    <price>170000</price>
    <gfx_store>reactor_i</gfx_store>
@@ -2091,6 +2113,7 @@
   <general>
    <typename>Energy Modifier</typename>
    <slot>utility</slot>
+   <size>medium</size>
    <mass>30</mass>
    <price>530000</price>
    <gfx_store>reactor_ii</gfx_store>
@@ -2106,6 +2129,7 @@
   <general>
    <typename>Energy Modifier</typename>
    <slot>utility</slot>
+   <size>large</size>
    <mass>90</mass>
    <price>970000</price>
    <gfx_store>reactor_iii</gfx_store>
@@ -2122,6 +2146,7 @@
   <general>
    <typename>Shield Power Modifier</typename>
    <slot>structure</slot>
+   <size>small</size>
    <mass>9</mass>
    <price>60000</price>
    <description>An enhancement for the shield power system, giving small ships a better chance of escaping attackers.</description>
@@ -2135,6 +2160,7 @@
   <general>
    <typename>Shield Power Modifier</typename>
    <slot>structure</slot>
+   <size>medium</size>
    <mass>18</mass>
    <price>110000</price>
    <description>A more powerful shield enhancer, providing better protection during skirmishes.</description>
@@ -2148,6 +2174,7 @@
   <general>
    <typename>Shield Power Modifier</typename>
    <slot>structure</slot>
+   <size>large</size>
    <mass>36</mass>
    <price>220000</price>
    <description>A heavy duty shield enhancer for ships that face combat on a regular basis.</description>
@@ -2161,6 +2188,7 @@
   <general>
    <typename>Shield Power Modifier</typename>
    <slot>structure</slot>
+   <size>large</size>
    <mass>72</mass>
    <price>400000</price>
    <description>The pinnacle in shield boosting technology, reinforcing the defenses of ships fighting on the front lines.</description>
@@ -2174,6 +2202,7 @@
   <general>
    <typename>Shield Energy Modifier</typename>
    <slot>utility</slot>
+   <size>medium</size>
    <mass>5</mass>
    <price>145000</price>
    <description>A shield generator that feeds off the ship's main energy line. It will allow you to regenerate your shield faster and give you a small shield capacity boost, at the expense of draining some of the ship's energy.</description>
@@ -2190,6 +2219,7 @@
   <general>
    <typename>Armour Modifier</typename>
    <slot>structure</slot>
+   <size>medium</size>
    <mass/>
    <price>65000</price>
    <gfx_store>plasteel</gfx_store>
@@ -2204,6 +2234,7 @@
   <general>
    <typename>Armour Modifier</typename>
    <slot>structure</slot>
+   <size>large</size>
    <mass/>
    <price>365000</price>
    <gfx_store>nanobond</gfx_store>
@@ -2218,6 +2249,7 @@
   <general>
    <typename>Armour Modifier</typename>
    <slot>structure</slot>
+   <size>large</size>
    <mass/>
    <price>1120000</price>
    <gfx_store>biometal</gfx_store>
@@ -2233,6 +2265,7 @@
   <general>
    <typename>Armour Repair Modifier</typename>
    <slot>utility</slot>
+   <size>medium</size>
    <mass>3</mass>
    <price>430000</price>
    <gfx_store>droid</gfx_store>
@@ -2249,6 +2282,7 @@
   <general>
    <typename>Manoevrability Modifier</typename>
    <slot>structure</slot>
+   <size>small</size>
    <mass>0</mass>
    <price>125000</price>
    <description>This enhancement routes energy from the ship's energy supplies to the engine, giving the ship an increased thrust. It does not increase the ship's max speed nor turning abilities.</description>
@@ -2265,6 +2299,7 @@
   <general>
    <typename>Manoevrability Modifier</typename>
    <slot>structure</slot>
+   <size>small</size>
    <mass>0</mass>
    <price>135000</price>
    <description>By improving your ship's stabilization systems drastically, this modification will allow you to reach higher speeds while still keeping the ship stable.</description>
@@ -2282,6 +2317,7 @@
   <general>
    <typename>Manoevrability Modifier</typename>
    <slot>structure</slot>
+   <size>small</size>
    <mass>0</mass>
    <price>130000</price>
    <description>With the addition of several additional steering thrusters, you can increase your ship's turning rate. A favourite among fighter pilots.</description>
@@ -2297,6 +2333,7 @@
  <outfit name="Generic Afterburner">
   <general>
    <slot>utility</slot>
+   <size>small</size>
    <mass>6</mass>
    <price>20000</price>
    <description>Being able to run from your enemies has saved many a pilot, and a generic afterburner will allow you that luxury. Though it may not be as powerful as higher-end alternatives, it makes up for that difference by entering at a much lower price point.</description>
@@ -2315,6 +2352,7 @@
  <outfit name="Hellburner">
   <general>
    <slot>utility</slot>
+   <size>medium</size>
    <mass>10</mass>
    <price>95000</price>
    <description>The Hellburner is one of the best afterburners on the market. Through proprietary pressurization ducts, the Hellburner is able to generate far more thrust than generic alternatives, despite using only slightly more energy. A great asset to any pilot who seeks manoeuvrability and speed.</description>
@@ -2333,6 +2371,7 @@
  <outfit name="Reverse Thrusters">
   <general>
    <slot>utility</slot>
+   <size>small</size>
    <mass>13</mass>
    <price>20000</price>
    <description>Most ships can only thrust in one direction, because mounting engines on all sides of the ship tends to be impractical. However, it can be helpful to be able to thrust backwards to some, and for those people there is a solution: hull-mounted reverse thrusters. These thrusters can't propel the ship quite as well as real engines, due to their limited output.</description>
@@ -2348,6 +2387,7 @@
   <general>
    <typename>Fuel Expansion</typename>
    <slot>structure</slot>
+   <size>small</size>
    <mass>5</mass>
    <price>15000</price>
    <description>The fuel pod allows a ship to store more fuel for hyperspace jumps. Each pod effectively increases a ship's range by two jumps. Without these, long-range interstellar trade would slow to a crawl.</description>
@@ -2361,6 +2401,7 @@
   <general>
    <typename>Cargo Expansion</typename>
    <slot>structure</slot>
+   <size>small</size>
    <mass>3</mass>
    <price>35000</price>
    <description>Cargo pods are large containers you can attach to dedicated weapon space allowing you to transport more cargo. The drawback is that you lose a substantial amount of weapon space and won't be able to defend your cargo as well.</description>
@@ -2371,22 +2412,24 @@
   </specific>
  </outfit>
  <outfit name="Boarding Androids MKI">
-   <general>
-    <typename>Crew enhancement</typename>
-    <slot>utility</slot>
-    <mass>1</mass>
-    <price>20000</price>
-    <description>The Asimov Destructicorp Boarding Android is the latest in robotic hostile takeover technology. Equipped with a multifunction plasma blaster/cutting torch/can opener/spatula, the Boarding Android is ready for any situation, be it tactical or culinary.</description>
-    <gfx_store>cargo_pod</gfx_store>
-   </general>
-   <specific type="modification">
-    <crew_mod>20</crew_mod>
-   </specific>
+  <general>
+   <typename>Crew enhancement</typename>
+   <slot>utility</slot>
+   <size>medium</size>
+   <mass>1</mass>
+   <price>20000</price>
+   <description>The Asimov Destructicorp Boarding Android is the latest in robotic hostile takeover technology. Equipped with a multifunction plasma blaster/cutting torch/can opener/spatula, the Boarding Android is ready for any situation, be it tactical or culinary.</description>
+   <gfx_store>cargo_pod</gfx_store>
+  </general>
+  <specific type="modification">
+   <crew_mod>20</crew_mod>
+  </specific>
  </outfit>
  <outfit name="Boarding Androids MKII">
   <general>
    <typename>Crew enhancement</typename>
    <slot>utility</slot>
+   <size>large</size>
    <mass>3</mass>
    <price>50000</price>
    <description>The Boarding Android Mark II improves upon the wide variety of implements sported by its predecessor, additionally including scissor-hands and a rape whistle. </description>
@@ -2400,6 +2443,7 @@
   <general>
    <typename>Weapon Modifier (Turret)</typename>
    <slot>structure</slot>
+   <size>medium</size>
    <mass>15</mass>
    <price>125000</price>
    <description>An improved targeting array allows your turrets to more quickly acquire targets, and minimizes accuracy losses at range. It requires a short period to compute an ideal vector, slightly slowing firing rates.</description>
@@ -2414,6 +2458,7 @@
   <general>
    <typename>Weapon Modifier (Forward)</typename>
    <slot>structure</slot>
+   <size>small</size>
    <mass>1</mass>
    <price>35000</price>
    <description>These shock absorbers are attached to the forward mounts, isolating them from the hull and providing increased accuracy.</description>
@@ -2427,6 +2472,7 @@
   <general>
    <typename>Weapon Modifier (Forward)</typename>
    <slot>structure</slot>
+   <size>small</size>
    <mass>0</mass>
    <price>55000</price>
    <description>This outfit allows your forward mounts to dump more power into the weapons, providing greatly enhanced destructive potential. Unfortunately, exceeding design specifications results in increased heat production.</description>
@@ -2442,6 +2488,7 @@
   <general>
    <typename>Weapon Modfier (Turret)</typename>
    <slot>structure</slot>
+   <size>medium</size>
    <mass>3</mass>
    <price>130000</price>
    <gfx_store>efficiency_turret</gfx_store>
@@ -2456,6 +2503,7 @@
   <general>
    <typename>Weapon Modfier (Turret)</typename>
    <slot>structure</slot>
+   <size>small</size>
    <mass>5</mass>
    <price>90000</price>
    <description>By adding an auxiliary coolant reservoir, the ship can keep is able to dissipate heat more quickly, allowing it to exceed standard firing rates. The side effect of having everything cool faster is minor instabilities that end up affecting both accuracy and damage. Only the turrets are affected by this modification.</description>
@@ -2481,6 +2529,7 @@
  <outfit name="Unicorp Scrambler">
   <general>
    <slot>utility</slot>
+   <size>small</size>
    <mass>2</mass>
    <price>40000</price>
    <description>Scramblers distort a ship's electromagnetic signature, making it harder for various sensors to pick it up. In effect, a scrambler reduces the distance at which the ship can be detected and scanned, and makes it harder for missiles to lock on. The effect is quite limited however, and multiple scramblers may be required for the desired effect. On the upside, scramblers put a minimal strain on the ship's resources, and are always active.</description>
@@ -2495,6 +2544,7 @@
  <outfit name="Milspec Scrambler">
   <general>
    <slot>utility</slot>
+   <size>small</size>
    <mass>3</mass>
    <price>250000</price>
    <description>Milspec knows what's important out there. It's that you don't get shot! And the best way not to get shot is not to get targeted in the first place. The Milspec RX 500-C scrambler will put the wool over your enemies' sensors, at a minimal cost to you or your ship's reactor! Fly safe, fly Milspec.</description>
@@ -2509,6 +2559,7 @@
  <outfit name="Unicorp Jammer">
   <general>
    <slot>utility</slot>
+   <size>small</size>
    <mass>2</mass>
    <price>40000</price>
    <description>Unlike general purpose scrambler systems, jammers are heavy-duty pieces of hardware used for serious electronic warfare in space. A jammer works by actively interfering with nearby ships' sensor systems, rather than modulating the signature of the ship it's installed in. This is much more effective, but it also uses a lot more power. For this reason, jammer systems are inactive until needed, and must be activated manually.</description>
@@ -2524,6 +2575,7 @@
  <outfit name="Milspec Jammer">
   <general>
    <slot>utility</slot>
+   <size>small</size>
    <mass>3</mass>
    <price>250000</price>
    <description>Does your work require you to venture into dangerous territory? Are you facing opposition your shields can't handle? The Milspec U-9 "Magus" jammer is what you need! Throw the bloodhounds off your scent with a press of a button. While your enemies are still trying to make sense out of the garble they're getting on their sensors, you will already have made your escape! Fly safe, fly Milspec.</description>
@@ -2551,6 +2603,7 @@
  <outfit name="Lancelot Fighter Bay">
   <general>
    <slot>weapon</slot>
+   <size>large</size>
    <license>Light Combat Vessel License</license>
    <mass>900</mass>
    <price>830000</price>
@@ -2579,6 +2632,7 @@
  <outfit name="Drone Fighter Bay">
   <general>
    <slot>weapon</slot>
+   <size>large</size>
    <license>Light Combat Vessel License</license>
    <mass>600</mass>
    <price>1200000</price>
@@ -2690,7 +2744,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="systems">utility</slot>
-   <size>light</size>
+   <size>small</size>
    <mass>3</mass>
    <price>0</price>
    <description>A jury-rigged mess of processors and generators that most captains wouldn't be seen dead having installed on their ship.</description>
@@ -2709,7 +2763,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="systems">utility</slot>
-   <size>light</size>
+   <size>small</size>
    <mass>2</mass>
    <price>10000</price>
    <description>Bare-bones ship systems, capable of getting it off the ground and into space and back, but unfit for any sort of serious duty.</description>
@@ -2728,7 +2782,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="systems">utility</slot>
-   <size>light</size>
+   <size>small</size>
    <mass>2</mass>
    <price>25000</price>
    <description>The PT-100 model is a modest but to-spec core system unit with reasonable, all-round performance.</description>
@@ -2747,7 +2801,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="systems">utility</slot>
-   <size>light</size>
+   <size>small</size>
    <mass>2</mass>
    <price>45000</price>
    <description>A slightly more efficient version of the PT-100, critics claim the PT-200 uses exactly the same hardware with some artificial limits removed.</description>
@@ -2766,7 +2820,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="systems">utility</slot>
-   <size>light</size>
+   <size>small</size>
    <mass>3</mass>
    <price>50000</price>
    <description>The RX-14 provides good subsystem control, but this comes at the price of somewhat mediocre shielding and energy generation.</description>
@@ -2785,7 +2839,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="systems">utility</slot>
-   <size>light</size>
+   <size>small</size>
    <mass>2</mass>
    <price>50000</price>
    <description>The JX-16 provides decent shielding and energy generation for a low price, but has limited subsystem control. Good for light fighters.</description>
@@ -2804,7 +2858,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="systems">utility</slot>
-   <size>light</size>
+   <size>small</size>
    <mass>2</mass>
    <price>50000</price>
    <description>The EX-19 is an affordable energy-oriented core module. Shielding and subsystem control suffer somewhat, but it keeps the guns blazing.</description>
@@ -2823,7 +2877,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="systems">utility</slot>
-   <size>light</size>
+   <size>small</size>
    <mass>2</mass>
    <price>90000</price>
    <description>Milspec develops high performance hardware for your ship, to make sure you are always optimally prepared for the dangers the universe might throw at you on your travels. The Orion 2300 core system series is affordable yet capable, recommended for the beginning captain. Fly safe, fly Milspec.</description>
@@ -2842,7 +2896,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="systems">utility</slot>
-   <size>light</size>
+   <size>small</size>
    <mass>2</mass>
    <price>150000</price>
    <description>Milspec develops high performance hardware for your ship, to make sure you are always optimally prepared for the dangers the universe might throw at you on your travels. The Orion 2300 core system series is affordable yet capable, recommended for the beginning captain. Fly safe, fly Milspec.</description>
@@ -2861,7 +2915,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="systems">utility</slot>
-   <size>light</size>
+   <size>small</size>
    <mass>2</mass>
    <price>200000</price>
    <description>Milspec knows that a ship is merely the sum of its parts, and that means that the more parts, the better the ship. The Gemini 2501 provides serious subsystem control whilst retaining the high standard in energy and shielding that Milspec prides itself on. Fly safe, fly Milspec.</description>
@@ -2880,7 +2934,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="systems">utility</slot>
-   <size>light</size>
+   <size>small</size>
    <mass>2</mass>
    <price>200000</price>
    <description>Milspec cares about your personal safety. Your protection is our concern. The Taurus 2520 grants your ship excellent shield strength while preserving a high level of subsystem control and energy capacity. Fly safe, fly Milspec.</description>
@@ -2899,7 +2953,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="systems">utility</slot>
-   <size>light</size>
+   <size>small</size>
    <mass>2</mass>
    <price>200000</price>
    <description>Milspec offers solutions for pilots who believe the best defense is a good offense. The Vespa 2544 boasts a heavy duty power generator as well as considerable shielding and subsystem control.</description>
@@ -2918,7 +2972,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="systems">utility</slot>
-   <size>light</size>
+   <size>small</size>
    <mass>2</mass>
    <price>350000</price>
    <description>Milspec develops high performance hardware for your ship, to make sure you are always optimally prepared for the dangers the universe might throw at you on your travels. The Orion 3700 core system series is a high-end solution for small ships, providing superior performance in every field. Fly safe, fly Milspec.</description>
@@ -2937,7 +2991,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="systems">utility</slot>
-   <size>light</size>
+   <size>small</size>
    <mass>2</mass>
    <price>500000</price>
    <description>Milspec develops high performance hardware for your ship, to make sure you are always optimally prepared for the dangers the universe might throw at you on your travels. The Orion 3700 core system series is a high-end solution for small ships, providing superior performance in every field. Fly safe, fly Milspec.</description>
@@ -3224,7 +3278,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="systems">utility</slot>
-   <size>heavy</size>
+   <size>large</size>
    <mass>150</mass>
    <price>0</price>
    <description>A jury-rigged mess of processors and generators that most captains wouldn't be seen dead having installed on their ship.</description>
@@ -3243,7 +3297,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="systems">utility</slot>
-   <size>heavy</size>
+   <size>large</size>
    <mass>75</mass>
    <price>1000000</price>
    <description>Bare-bones ship systems, capable of getting it off the ground and into space and back, but unfit for any sort of serious duty.</description>
@@ -3262,7 +3316,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="systems">utility</slot>
-   <size>heavy</size>
+   <size>large</size>
    <mass>75</mass>
    <price>2000000</price>
    <description>The PT-1000 is an upscaled model of the basic PT design, providing reasonable core system functionality for capital ships.</description>
@@ -3281,7 +3335,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="systems">utility</slot>
-   <size>heavy</size>
+   <size>large</size>
    <mass>75</mass>
    <price>3000000</price>
    <description>The PT-1200 follows the basic PT design, but has some upgraded components to eliminate minor bottlenecks and weak links.</description>
@@ -3300,7 +3354,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="systems">utility</slot>
-   <size>heavy</size>
+   <size>large</size>
    <mass>75</mass>
    <price>3500000</price>
    <description>The RX-71 is a modification on the PT design that shrinks down the shield and energy generators somewhat and uses a more expansive controller unit.</description>
@@ -3319,7 +3373,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="systems">utility</slot>
-   <size>heavy</size>
+   <size>large</size>
    <mass>75</mass>
    <price>3500000</price>
    <description>The JX-66 attempts to protect capital ships by boosting their shielding. This comes at a considerable price, as subsystem control and energy generation are sub-par.</description>
@@ -3338,7 +3392,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="systems">utility</slot>
-   <size>heavy</size>
+   <size>large</size>
    <mass>75</mass>
    <price>3500000</price>
    <description>The EX-80 is a core system designed for optimal energy generation and transportation. Capital ships will be able to fight longer and harder as a result, but the shielding and subsystem control areas are less impressive.</description>
@@ -3357,7 +3411,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="systems">utility</slot>
-   <size>heavy</size>
+   <size>large</size>
    <mass>75</mass>
    <price>5500000</price>
    <description>Milspec develops high performance hardware for your ship, to make sure you are always optimally prepared for the dangers the universe might throw at you on your travels. The Orion 8800 core system series is affordable yet capable, recommended for the discerning captain. Fly safe, fly Milspec.</description>
@@ -3376,7 +3430,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="systems">utility</slot>
-   <size>heavy</size>
+   <size>large</size>
    <mass>75</mass>
    <price>8000000</price>
    <description>Milspec develops high performance hardware for your ship, to make sure you are always optimally prepared for the dangers the universe might throw at you on your travels. The Orion 8800 core system series is affordable yet capable, recommended for the discerning captain. Fly safe, fly Milspec.</description>
@@ -3395,7 +3449,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="systems">utility</slot>
-   <size>heavy</size>
+   <size>large</size>
    <mass>75</mass>
    <price>9000000</price>
    <description>Milspec knows that a ship is merely the sum of its parts, and that means that the more parts, the better the ship. The Gemini 5050 provides serious subsystem control whilst retaining the high standard in energy and shielding that Milspec prides itself on. Fly safe, fly Milspec.</description>
@@ -3414,7 +3468,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="systems">utility</slot>
-   <size>heavy</size>
+   <size>large</size>
    <mass>75</mass>
    <price>9000000</price>
    <description>Milspec cares about your personal safety. Your protection is our concern. The Taurus 4909 grants your ship excellent shield strength while preserving a high level of subsystem control and energy capacity. Fly safe, fly Milspec.</description>
@@ -3433,7 +3487,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="systems">utility</slot>
-   <size>heavy</size>
+   <size>large</size>
    <mass>75</mass>
    <price>9000000</price>
    <description>Milspec offers solutions for pilots who believe the best defense is a good offense. The Vespa 6114 boasts a heavy duty power generator as well as considerable shielding and subsystem control.</description>
@@ -3452,7 +3506,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="systems">utility</slot>
-   <size>heavy</size>
+   <size>large</size>
    <mass>75</mass>
    <price>10000000</price>
    <description>Milspec develops high performance hardware for your ship, to make sure you are always optimally prepared for the dangers the universe might throw at you on your travels. The Orion 9900 core system series is a high-end solution for capital ships, providing superior performance in every field. Fly safe, fly Milspec.</description>
@@ -3471,7 +3525,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="systems">utility</slot>
-   <size>heavy</size>
+   <size>large</size>
    <mass>75</mass>
    <price>13000000</price>
    <description>Milspec develops high performance hardware for your ship, to make sure you are always optimally prepared for the dangers the universe might throw at you on your travels. The Orion 9900 core system series is a high-end solution for capital ships, providing superior performance in every field. Fly safe, fly Milspec.</description>
@@ -3490,7 +3544,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="systems">utility</slot>
-   <size>heavy</size>
+   <size>large</size>
    <mass>75</mass>
    <price>19999000</price>
    <description>Milspec develops high performance hardware for your ship, to make sure you are always optimally prepared for the dangers the universe might throw at you on your travels. The Orion 9900 core system series is a high-end solution for capital ships, providing superior performance in every field. Fly safe, fly Milspec.</description>
@@ -3511,7 +3565,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="engines">structure</slot>
-   <size>light</size>
+   <size>small</size>
    <mass>6</mass>
    <price>0</price>
    <description>Clogged, corroded and cracked in every way possible while still remaining in functional condition, this engine really belongs on the scrap heap.</description>
@@ -3530,7 +3584,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="engines">structure</slot>
-   <size>light</size>
+   <size>small</size>
    <mass>5</mass>
    <price>10000</price>
    <description>The engine that most manufacturers install in their ships at assembly. Usually the first component pilots upgrade.</description>
@@ -3549,7 +3603,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="engines">structure</slot>
-   <size>light</size>
+   <size>small</size>
    <mass>6</mass>
    <price>25000</price>
    <description>The KRD-B10 engine is a low-budget allround engine many civilians use to propel their ships. It's not particularly effective, but it has a fairly low energy use.</description>
@@ -3568,7 +3622,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="engines">structure</slot>
-   <size>light</size>
+   <size>small</size>
    <mass>6</mass>
    <price>45000</price>
    <description>The KRD-B12 is a somewhat newer revision of the KRD-B10. Performance is improved, but energy consumption is a bit higher as well.</description>
@@ -3587,7 +3641,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="engines">structure</slot>
-   <size>light</size>
+   <size>small</size>
    <mass>6</mass>
    <price>65000</price>
    <description>The EXA-49F is an engine that optimizes maneuverability at the expense of overall speed. Given its low price tag, it is a good choice for light fighters.</description>
@@ -3606,7 +3660,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="engines">structure</slot>
-   <size>light</size>
+   <size>small</size>
    <mass>6</mass>
    <price>65000</price>
    <description>The AUR-50A is an engine built for courier ships. It has good long distance speed and fuel reserves, but this comes at the cost of maneuverability.</description>
@@ -3625,7 +3679,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="engines">structure</slot>
-   <size>light</size>
+   <size>small</size>
    <mass>6</mass>
    <price>65000</price>
    <description>The JNS-44K is a strong engine, but not a very fast one. Maximum speed and maneuverability are not impressive when compared to other models, but it can haul a lot more mass at peak efficiency.</description>
@@ -3644,7 +3698,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="engines">structure</slot>
-   <size>light</size>
+   <size>small</size>
    <mass>8</mass>
    <price>100000</price>
    <description>For pilots who want to fly with speed and efficiency, Tricon's Naga is the engine of choice. With good all round performance and a high mass limit, it is one of the best low end engines on the market.</description>
@@ -3663,7 +3717,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="engines">structure</slot>
-   <size>light</size>
+   <size>small</size>
    <mass>9</mass>
    <price>180000</price>
    <description>For pilots who want to fly with speed and efficiency, Tricon's Naga is the engine of choice. With good all round performance and a high mass limit, it is one of the best low end engines on the market.</description>
@@ -3682,7 +3736,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="engines">structure</slot>
-   <size>light</size>
+   <size>small</size>
    <mass>9</mass>
    <price>200000</price>
    <description>In close combat, maneuverability can mean the difference between life and death. Tricon's Crane engine delivers excellent maneuverability without sacrificing top speed, making this engine a great choice for fighter pilots.</description>
@@ -3701,7 +3755,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="engines">structure</slot>
-   <size>light</size>
+   <size>small</size>
    <mass>9</mass>
    <price>200000</price>
    <description>Tricon's Spriggan engine is designed to minimize travel time between destinations. It offers serious speed at moderate maneuverability.</description>
@@ -3720,7 +3774,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="engines">structure</slot>
-   <size>light</size>
+   <size>small</size>
    <mass>9</mass>
    <price>200000</price>
    <description>Aptly named, Tricon's Oxen engine excels at pulling heavy loads. It won't win any high speed races, but it can shift heavy cargo quite efficiently.</description>
@@ -3739,7 +3793,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="engines">structure</slot>
-   <size>light</size>
+   <size>small</size>
    <mass>9</mass>
    <price>350000</price>
    <description>For pilots who want to fly with speed and efficiency, Tricon's Naga is the engine of choice. With good all round performance and a high mass limit, it is one of the best low end engines on the market.</description>
@@ -3758,7 +3812,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="engines">structure</slot>
-   <size>light</size>
+   <size>small</size>
    <mass>9</mass>
    <price>500000</price>
    <description>For pilots who want to fly with speed and efficiency, Tricon's Naga is the engine of choice. With good all round performance and a high mass limit, it is one of the best low end engines on the market.</description>
@@ -4064,7 +4118,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="engines">structure</slot>
-   <size>heavy</size>
+   <size>large</size>
    <mass>100</mass>
    <price>0</price>
    <description>Clogged, corroded and cracked in every way possible while still remaining in functional condition, this engine really belongs on the scrap heap.</description>
@@ -4083,7 +4137,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="engines">structure</slot>
-   <size>heavy</size>
+   <size>large</size>
    <mass>50</mass>
    <price>1000000</price>
    <description>The engine that most manufacturers install in their ships at assembly. Usually the first component pilots upgrade.</description>
@@ -4102,7 +4156,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="engines">structure</slot>
-   <size>heavy</size>
+   <size>large</size>
    <mass>50</mass>
    <price>2000000</price>
    <description>The KRD-T10 is a fairly inexpensive engine, by capital ship standards. Many captains find its output lacking, but not all captains can afford better.</description>
@@ -4121,7 +4175,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="engines">structure</slot>
-   <size>heavy</size>
+   <size>large</size>
    <mass>50</mass>
    <price>2500000</price>
    <description>The KRD-T20 is a modest improvement over the KRD-T10. It's a popular product among independent captains, despite its limited performance.</description>
@@ -4140,7 +4194,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="engines">structure</slot>
-   <size>heavy</size>
+   <size>large</size>
    <mass>50</mass>
    <price>2900000</price>
    <description>Although capital ships are too big to rely on maneuverability, sometimes a ship needs to bring heavy forward fire to bear. The EXA-71F optimizes for turn rate, sacrificing speed.</description>
@@ -4159,7 +4213,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="engines">structure</slot>
-   <size>heavy</size>
+   <size>large</size>
    <mass>50</mass>
    <price>2900000</price>
    <description>Often, profit involves getting as much cargo from A to B in as little time as possible. The AUR-97A tries to achieve the latter by prioritizing top speed over maneuverability.</description>
@@ -4178,7 +4232,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="engines">structure</slot>
-   <size>heavy</size>
+   <size>large</size>
    <mass>50</mass>
    <price>2900000</price>
    <description>The JNS-99K offers a lot of horse powers for its price. It can shift very heavy cargo loads without losing efficiency.</description>
@@ -4197,7 +4251,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="engines">structure</slot>
-   <size>heavy</size>
+   <size>large</size>
    <mass>50</mass>
    <price>4500000</price>
    <description>Tricon's Harpy engine is a heavy-duty, high power engine for captains whose ships require serious propulsion capabilities.</description>
@@ -4216,7 +4270,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="engines">structure</slot>
-   <size>heavy</size>
+   <size>large</size>
    <mass>50</mass>
    <price>6000000</price>
    <description>Tricon's Harpy Mk6 provides superior allround propulsion. The Mk6 is often seen as the standard to which all other engines aspire.</description>
@@ -4235,7 +4289,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="engines">structure</slot>
-   <size>heavy</size>
+   <size>large</size>
    <mass>50</mass>
    <price>7000000</price>
    <description>Tricon's Raven is a somewhat underappreciated engine, as most capital ships employ turrets in battle and therefore have little use for fast turn rates. However, for those ships that do rely on fixed cannon mounts, this engine is one of the best choices on the market.</description>
@@ -4254,7 +4308,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="engines">structure</slot>
-   <size>heavy</size>
+   <size>large</size>
    <mass>50</mass>
    <price>7000000</price>
    <description>Capital ships are often the slowest ships in any fleet, so speeding them up speeds up the whole fleet. Tricon's Kraken engine provides a serious boost to top speed, which later comes at the price of maneuverability in battle.</description>
@@ -4273,7 +4327,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="engines">structure</slot>
-   <size>heavy</size>
+   <size>large</size>
    <mass>50</mass>
    <price>7000000</price>
    <description>Tricon's Mammoth can pull incridible amounts of mass. It requires specialized grav tethers to keep it attached to the ship's hull. This results in severely reduced top speed and maneuverability, but the increased mass limit more than makes up for that.</description>
@@ -4292,7 +4346,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="engines">structure</slot>
-   <size>heavy</size>
+   <size>large</size>
    <mass>50</mass>
    <price>9000000</price>
    <description>Though the steep price is prohibitive to most, Tricon's Harpy Mk11 outperforms most other engines in just about every field.</description>
@@ -4311,7 +4365,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="engines">structure</slot>
-   <size>heavy</size>
+   <size>large</size>
    <mass>50</mass>
    <price>12000000</price>
    <description>Development of the Harpy Mk15 engine was something of a prestige project for Tricon. It performs somewhat better than the more commercially oriented Mk11, but its price tags make it a viable choice only for the wealthy enthusiast.</description>
@@ -4331,7 +4385,7 @@
    <typename>Core Systems</typename>
    <slot prop="engines">structure</slot>
    <license>Tricon Experimental Engine License</license>
-   <size>heavy</size>
+   <size>large</size>
    <mass>50</mass>
    <price>18000000</price>
    <description>This engine is a Tricon prototype. It hasn't received an official designation and is not available on the general market. Once rolled out, this engine is to become the norm on all military fast response fleet capital ships.</description>
@@ -4352,7 +4406,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="hull">structure</slot>
-   <size>light</size>
+   <size>small</size>
    <mass>50</mass>
    <price>0</price>
    <description>On the plus side, it keeps air from venting into space. But that's about it. This kind of hull maintenance is simply unacceptable.</description>
@@ -4370,7 +4424,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="hull">structure</slot>
-   <size>light</size>
+   <size>small</size>
    <mass>30</mass>
    <price>10000</price>
    <description>The manufacturer spec hull configuration. Certainly spaceworthy, but miserably fails to tap the hull's full potential.</description>
@@ -4388,7 +4442,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="hull">structure</slot>
-   <size>light</size>
+   <size>small</size>
    <mass>40</mass>
    <price>25000</price>
    <description>D-2 plating is commonly found on small ships, because it's an inexpensive set of upgrades to the standard hull.</description>
@@ -4406,7 +4460,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="hull">structure</slot>
-   <size>light</size>
+   <size>small</size>
    <mass>40</mass>
    <price>45000</price>
    <description>More expensive than D-2 Plating, the C-2 variant offers better protection from light weapons fire at the same weight, without sacrificing cargo space.</description>
@@ -4424,7 +4478,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="hull">structure</slot>
-   <size>light</size>
+   <size>small</size>
    <mass>50</mass>
    <price>70000</price>
    <description>B-2 Plating offers good protection and cargo capacity, but weighs more than the C-2 or D-2 variants.</description>
@@ -4442,7 +4496,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="hull">structure</slot>
-   <size>light</size>
+   <size>small</size>
    <mass>40</mass>
    <price>70000</price>
    <description>This hull modification strips some armour plating in favor of cargo space. Commonly used by couriers.</description>
@@ -4460,7 +4514,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="hull">structure</slot>
-   <size>light</size>
+   <size>small</size>
    <mass>60</mass>
    <price>150000</price>
    <description>Schafer &amp; Kane Industries mostly develop for larger ships, but the Light Combat Plating configuration is a product made for fighters and bombers, providing optimum protection.</description>
@@ -4478,7 +4532,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="hull">structure</slot>
-   <size>light</size>
+   <size>small</size>
    <mass>70</mass>
    <price>200000</price>
    <description>The Light Stealth Plating from Schafer &amp; Kane Industries foregoes hull strength for increased stealth, making it harder for ships to detect and target you.</description>
@@ -4496,7 +4550,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="hull">structure</slot>
-   <size>light</size>
+   <size>small</size>
    <mass>70</mass>
    <price>300000</price>
    <description>Though a pricey investment for small couriers, this hull modification from Schafer &amp; Kane Industries provides an impressive amount of cargo space without compromising the hull's integrity.</description>
@@ -4715,7 +4769,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="hull">structure</slot>
-   <size>heavy</size>
+   <size>large</size>
    <mass>1400</mass>
    <price>0</price>
    <description>On the plus side, it keeps air from venting into space. But that's about it. This kind of hull maintenance is simply unacceptable.</description>
@@ -4733,7 +4787,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="hull">structure</slot>
-   <size>heavy</size>
+   <size>large</size>
    <mass>800</mass>
    <price>1000000</price>
    <description>The manufacturer spec hull configuration. Certainly spaceworthy, but miserably fails to tap the hull's full potential.</description>
@@ -4751,7 +4805,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="hull">structure</slot>
-   <size>heavy</size>
+   <size>large</size>
    <mass>800</mass>
    <price>2500000</price>
    <description>D-16 plating is a cost-effective armour configuration for capital ships. It is comparatively weak, but the low weight can be a plus to some.</description>
@@ -4769,7 +4823,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="hull">structure</slot>
-   <size>heavy</size>
+   <size>large</size>
    <mass>1100</mass>
    <price>4500000</price>
    <description>C-16 plating is a reinforced upgrade of the D-16 configuration. Its additional superstructure is added on top of the original design, so it does not infringe on internal cargo space.</description>
@@ -4787,7 +4841,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="hull">structure</slot>
-   <size>heavy</size>
+   <size>large</size>
    <mass>3000</mass>
    <price>7000000</price>
    <description>B-16 plating is a low-end heavy punishment hull modification. It is designed to absorb lots of damage, but its armour-to-weight ratio is worse than the C or D variants.</description>
@@ -4805,7 +4859,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="hull">structure</slot>
-   <size>heavy</size>
+   <size>large</size>
    <mass>1300</mass>
    <price>7000000</price>
    <description>This hull provides space for multiple large shipments while retaining capital ship class protection.</description>
@@ -4823,7 +4877,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="hull">structure</slot>
-   <size>heavy</size>
+   <size>large</size>
    <mass>2000</mass>
    <price>9000000</price>
    <description>This heavy plating developed by Schafer &amp; Kane Industries can endure prolonged battle. Quite a few captains and their crews owe their lives to this armour configuration.</description>
@@ -4841,7 +4895,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="hull">structure</slot>
-   <size>heavy</size>
+   <size>large</size>
    <mass>2300</mass>
    <price>11000000</price>
    <description>This heavy plating developed by Schafer &amp; Kane Industries is among the toughest on the market. The price tag is well worth the fire it stops.</description>
@@ -4859,7 +4913,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="hull">structure</slot>
-   <size>heavy</size>
+   <size>large</size>
    <mass>2300</mass>
    <price>12000000</price>
    <description>This cargo hull from Schafer &amp; Kane Industries makes use of state-of-the-art defensive alloys, which allows it to free up even more space for cargo without sacrificing too much durability.</description>
@@ -4877,7 +4931,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="hull">structure</slot>
-   <size>heavy</size>
+   <size>large</size>
    <mass>2800</mass>
    <price>14000000</price>
    <description>Considered the best standard plating configuration on the market, this hull modification from Schafer &amp; Kane Industries is generally found only on important capital ships.</description>
@@ -4895,7 +4949,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="hull">structure</slot>
-   <size>heavy</size>
+   <size>large</size>
    <mass>2000</mass>
    <price>15000000</price>
    <description>This armour plating configuration from Schafer &amp; Kane Industries mounts layers of solar energy converters on the outer hull where the outer shock plating would normally be. This results in much reduced armour capacity, but boosts the energy generation of the ship.</description>
@@ -4914,7 +4968,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="hull">structure</slot>
-   <size>heavy</size>
+   <size>large</size>
    <mass>2300</mass>
    <price>15000000</price>
    <description>This armour plating by Schafer &amp; Kane Industries is an adaptation to the Heavy Combat Plating configuration that focuses on radiating excess heat off into space. This greatly benefits ships that rely on sustained fire, but also makes the ship light up like a christmas tree on enemy sensors.</description>
@@ -4933,7 +4987,7 @@
   <general>
    <typename>Core Systems</typename>
    <slot prop="hull">structure</slot>
-   <size>heavy</size>
+   <size>large</size>
    <mass>5000</mass>
    <price>18000000</price>
    <description>Schafer &amp; Kane Industries have developed this super-heavy armour configuration for ships whose task in battle is to endure the brunt of the enemy's fire. It is very durable indeed, but weighs disporportionally much and renders the ship completely unfit to handle cargo.</description>
@@ -4953,7 +5007,7 @@
  <outfit name="Laser Cannon MK0">
   <general>
    <slot>weapon</slot>
-   <size>light</size>
+   <size>small</size>
    <mass>4</mass>
    <price>5000</price>
    <description>A home-made laser cannon for personal use by Captain T. Practice.</description>
@@ -4984,6 +5038,7 @@
  <outfit name="Base Ripper MK2">
   <general>
    <slot>weapon</slot>
+   <size>small</size>
    <license>Medium Weapon License</license>
    <mass>12</mass>
    <price>1</price>
@@ -5015,6 +5070,7 @@
  <outfit name="Cheater's Ragnarok Beam">
   <general>
    <slot>weapon</slot>
+   <size>small</size>
    <mass>1</mass>
    <price>745000</price>
    <description>This weapon is a cheat. It is not meant to be used by players.</description>
@@ -5044,6 +5100,7 @@
  <outfit name="Cheater's Laser Cannon">
   <general>
    <slot>weapon</slot>
+   <size>small</size>
    <mass>1</mass>
    <price>15000</price>
    <description>This weapon is a cheat. It is not meant to be used by players.</description>
@@ -5085,6 +5142,7 @@
   <general>
    <typename>Shield Power Modifier</typename>
    <slot>structure</slot>
+   <size>small</size>
    <mass>1</mass>
    <price>0</price>
    <description>This outfit removes all shields from the ship. For tutorial purposes.</description>

@@ -22,15 +22,15 @@
    <armour_regen>0</armour_regen>
   </health>
   <slots>
-   <weapon x="7" y="0" h="1"/>
-   <weapon x="-3" y="0" h="2"/>
-   <utility prop="systems">Basic Small Systems</utility>
-   <utility/>
-   <utility/>
-   <structure prop="engines">Manufacturer Small Engine</structure>
-   <structure prop="hull">Unmodified Small Hull</structure>
-   <structure/>
-   <structure/>
+   <weapon size="small" x="7" y="0" h="1"/>
+   <weapon size="small" x="-3" y="0" h="2"/>
+   <utility size="small" prop="systems">Basic Small Systems</utility>
+   <utility size="small"/>
+   <utility size="small"/>
+   <structure size="small" prop="engines">Manufacturer Small Engine</structure>
+   <structure size="small" prop="hull">Unmodified Small Hull</structure>
+   <structure size="small"/>
+   <structure size="small"/>
   </slots>
   <stats>
    <speed_mod>-20</speed_mod>
@@ -63,14 +63,14 @@
    <cargo>0</cargo>
   </characteristics>
   <slots>
-   <weapon x="15" y="0" h="-3"/>
-   <weapon x="15" y="0" h="-3"/>
-   <weapon x="0" y="0" h="0"/>
-   <utility prop="systems">Basic Small Systems</utility>
-   <utility/>
-   <structure prop="engines">Manufacturer Small Engine</structure>
-   <structure prop="hull">Unmodified Small Hull</structure>
-   <structure/>
+   <weapon size="small" x="15" y="0" h="-3"/>
+   <weapon size="small" x="15" y="0" h="-3"/>
+   <weapon size="small" x="0" y="0" h="0"/>
+   <utility size="small" prop="systems">Basic Small Systems</utility>
+   <utility size="small"/>
+   <structure size="small" prop="engines">Manufacturer Small Engine</structure>
+   <structure size="small" prop="hull">Unmodified Small Hull</structure>
+   <structure size="small"/>
   </slots>
   <stats>
    <speed_mod>0</speed_mod>
@@ -103,15 +103,15 @@
    <cargo>0</cargo>
   </characteristics>
   <slots>
-   <weapon x="9" y="0" h="-2"/>
-   <utility prop="systems">Basic Small Systems</utility>
-   <utility size="medium"></utility>
-   <utility/>
-   <utility/>
-   <utility/>
-   <structure prop="engines">Manufacturer Small Engine</structure>
-   <structure prop="hull">Unmodified Small Hull</structure>
-   <structure/>
+   <weapon size="small" x="9" y="0" h="-2"/>
+   <utility size="small" prop="systems">Basic Small Systems</utility>
+   <utility size="medium"/>
+   <utility size="small"/>
+   <utility size="small"/>
+   <utility size="small"/>
+   <structure size="small" prop="engines">Manufacturer Small Engine</structure>
+   <structure size="small" prop="hull">Unmodified Small Hull</structure>
+   <structure size="small"/>
   </slots>
   <stats>
    <speed_mod>10</speed_mod>
@@ -145,16 +145,16 @@
    <cargo>5</cargo>
   </characteristics>
   <slots>
-   <weapon x="12" y="0" h="-2"/>
-   <weapon x="-5" y="0" h="1"/>
-   <utility prop="systems">Basic Small Systems</utility>
-   <utility/>
-   <utility/>
-   <utility/>
-   <structure prop="engines">Manufacturer Small Engine</structure>
-   <structure prop="hull">Unmodified Small Hull</structure>
-   <structure/>
-   <structure/>
+   <weapon size="small" x="12" y="0" h="-2"/>
+   <weapon size="small" x="-5" y="0" h="1"/>
+   <utility size="small" prop="systems">Basic Small Systems</utility>
+   <utility size="small"/>
+   <utility size="small"/>
+   <utility size="small"/>
+   <structure size="small" prop="engines">Manufacturer Small Engine</structure>
+   <structure size="small" prop="hull">Unmodified Small Hull</structure>
+   <structure size="small"/>
+   <structure size="small"/>
   </slots>
   <stats>
    <speed_mod>10</speed_mod>
@@ -187,14 +187,14 @@
    <cargo>0</cargo>
   </characteristics>
   <slots>
-   <weapon x="5" y="0" h="-5"/>
-   <weapon x="5" y="0" h="-5"/>
-   <weapon x="5" y="0" h="-5"/>
-   <utility prop="systems">Basic Small Systems</utility>
-   <utility/>
-   <structure prop="engines">Manufacturer Small Engine</structure>
-   <structure prop="hull">Unmodified Small Hull</structure>
-   <structure/>
+   <weapon size="small" x="5" y="0" h="-5"/>
+   <weapon size="small" x="5" y="0" h="-5"/>
+   <weapon size="small" x="5" y="0" h="-5"/>
+   <utility size="small" prop="systems">Basic Small Systems</utility>
+   <utility size="small"/>
+   <structure size="small" prop="engines">Manufacturer Small Engine</structure>
+   <structure size="small" prop="hull">Unmodified Small Hull</structure>
+   <structure size="small"/>
   </slots>
   <stats>
    <speed_mod>0</speed_mod>
@@ -227,17 +227,17 @@
    <cargo>30</cargo>
   </characteristics>
   <slots>
-   <weapon x="11" y="0" h="-7"/>
-   <weapon x="-5" y="0" h="3"/>
-   <utility prop="systems">Basic Small Systems</utility>
-   <utility/>
-   <utility/>
-   <structure prop="engines">Manufacturer Small Engine</structure>
-   <structure prop="hull">Unmodified Small Hull</structure>
-   <structure/>
-   <structure/>
-   <structure/>
-   <structure/>
+   <weapon size="small" x="11" y="0" h="-7"/>
+   <weapon size="small" x="-5" y="0" h="3"/>
+   <utility size="small" prop="systems">Basic Small Systems</utility>
+   <utility size="small"/>
+   <utility size="small"/>
+   <structure size="small" prop="engines">Manufacturer Small Engine</structure>
+   <structure size="small" prop="hull">Unmodified Small Hull</structure>
+   <structure size="small"/>
+   <structure size="small"/>
+   <structure size="small"/>
+   <structure size="small"/>
   </slots>
   <stats>
    <speed_mod>0</speed_mod>
@@ -270,17 +270,17 @@
    <cargo>20</cargo>
   </characteristics>
   <slots>
-   <weapon x="15" y="0" h="5"/>
-   <weapon x="-10" y="-3" h="0"/>
-   <weapon x="-10" y="3" h="0"/>
-   <utility prop="systems">Basic Small Systems</utility>
-   <utility/>
-   <utility/>
-   <structure prop="engines">Manufacturer Small Engine</structure>
-   <structure prop="hull">Unmodified Small Hull</structure>
-   <structure/>
-   <structure/>
-   <structure/>
+   <weapon size="small" x="15" y="0" h="5"/>
+   <weapon size="small" x="-10" y="-3" h="0"/>
+   <weapon size="small" x="-10" y="3" h="0"/>
+   <utility size="small" prop="systems">Basic Small Systems</utility>
+   <utility size="small"/>
+   <utility size="small"/>
+   <structure size="small" prop="engines">Manufacturer Small Engine</structure>
+   <structure size="small" prop="hull">Unmodified Small Hull</structure>
+   <structure size="small"/>
+   <structure size="small"/>
+   <structure size="small"/>
   </slots>
   <stats>
    <speed_mod>20</speed_mod>
@@ -317,16 +317,16 @@
    <cargo>5</cargo>
   </characteristics>
   <slots>
-   <weapon x="10" y="0" h="0"/>
-   <weapon x="0" y="-4" h="-3"/>
-   <weapon x="0" y="4" h="-3"/>
-   <utility prop="systems">Basic Small Systems</utility>
-   <utility/>
-   <utility/>
-   <structure prop="engines">Manufacturer Small Engine</structure>
-   <structure prop="hull">Unmodified Small Hull</structure>
-   <structure/>
-   <structure/>
+   <weapon size="small" x="10" y="0" h="0"/>
+   <weapon size="small" x="0" y="-4" h="-3"/>
+   <weapon size="small" x="0" y="4" h="-3"/>
+   <utility size="small" prop="systems">Basic Small Systems</utility>
+   <utility size="small"/>
+   <utility size="small"/>
+   <structure size="small" prop="engines">Manufacturer Small Engine</structure>
+   <structure size="small" prop="hull">Unmodified Small Hull</structure>
+   <structure size="small"/>
+   <structure size="small"/>
   </slots>
   <stats>
    <speed_mod>0</speed_mod>
@@ -361,17 +361,17 @@
    <cargo>5</cargo>
   </characteristics>
   <slots>
-   <weapon x="10" y="-2" h="0"/>
-   <weapon x="10" y="2" h="0"/>
-   <weapon x="0" y="-4" h="-3"/>
-   <weapon x="0" y="4" h="-3"/>
-   <utility prop="systems">Basic Small Systems</utility>
-   <utility/>
-   <utility/>
-   <structure prop="engines">Manufacturer Small Engine</structure>
-   <structure prop="hull">Unmodified Small Hull</structure>
-   <structure/>
-   <structure/>
+   <weapon size="small" x="10" y="-2" h="0"/>
+   <weapon size="small" x="10" y="2" h="0"/>
+   <weapon size="small" x="0" y="-4" h="-3"/>
+   <weapon size="small" x="0" y="4" h="-3"/>
+   <utility size="small" prop="systems">Basic Small Systems</utility>
+   <utility size="small"/>
+   <utility size="small"/>
+   <structure size="small" prop="engines">Manufacturer Small Engine</structure>
+   <structure size="small" prop="hull">Unmodified Small Hull</structure>
+   <structure size="small"/>
+   <structure size="small"/>
   </slots>
   <stats>
    <speed_mod>0</speed_mod>
@@ -405,16 +405,16 @@
    <cargo>5</cargo>
   </characteristics>
   <slots>
-   <weapon x="12" y="0" h="0"/>
-   <weapon x="-3" y="0" h="2"/>
-   <weapon x="3" y="0" h="2"/>
-   <utility prop="systems">Basic Small Systems</utility>
-   <utility/>
-   <utility/>
-   <structure prop="engines">Manufacturer Small Engine</structure>
-   <structure prop="hull">Unmodified Small Hull</structure>
-   <structure/>
-   <structure/>
+   <weapon size="small" x="12" y="0" h="0"/>
+   <weapon size="small" x="-3" y="0" h="2"/>
+   <weapon size="small" x="3" y="0" h="2"/>
+   <utility size="small" prop="systems">Basic Small Systems</utility>
+   <utility size="small"/>
+   <utility size="small"/>
+   <structure size="small" prop="engines">Manufacturer Small Engine</structure>
+   <structure size="small" prop="hull">Unmodified Small Hull</structure>
+   <structure size="small"/>
+   <structure size="small"/>
   </slots>
   <stats>
    <speed_mod>5</speed_mod>
@@ -448,16 +448,16 @@
    <cargo>5</cargo>
   </characteristics>
   <slots>
-   <weapon x="12" y="0" h="0"/>
-   <weapon x="-3" y="0" h="2"/>
-   <weapon x="3" y="0" h="2"/>
-   <utility prop="systems">Basic Small Systems</utility>
-   <utility/>
-   <utility/>
-   <structure prop="engines">Manufacturer Small Engine</structure>
-   <structure prop="hull">Unmodified Small Hull</structure>
-   <structure/>
-   <structure/>
+   <weapon size="small" x="12" y="0" h="0"/>
+   <weapon size="small" x="-3" y="0" h="2"/>
+   <weapon size="small" x="3" y="0" h="2"/>
+   <utility size="small" prop="systems">Basic Small Systems</utility>
+   <utility size="small"/>
+   <utility size="small"/>
+   <structure size="small" prop="engines">Manufacturer Small Engine</structure>
+   <structure size="small" prop="hull">Unmodified Small Hull</structure>
+   <structure size="small"/>
+   <structure size="small"/>
   </slots>
   <stats>
    <speed_mod>0</speed_mod>
@@ -490,18 +490,18 @@
    <cargo>10</cargo>
   </characteristics>
   <slots>
-   <weapon x="12" y="0" h="0"/>
-   <weapon x="12" y="0" h="0"/>
-   <weapon x="-3" y="0" h="2"/>
-   <weapon x="3" y="0" h="2"/>
-   <utility prop="systems">Previous Generation Small Systems</utility>
-   <utility/>
-   <utility/>
-   <structure prop="engines">Beat Up Small Engine</structure>
-   <structure prop="hull">Patchwork Light Plating</structure>
-   <structure/>
-   <structure/>
-   <structure/>
+   <weapon size="small" x="12" y="0" h="0"/>
+   <weapon size="small" x="12" y="0" h="0"/>
+   <weapon size="small" x="-3" y="0" h="2"/>
+   <weapon size="small" x="3" y="0" h="2"/>
+   <utility size="small" prop="systems">Previous Generation Small Systems</utility>
+   <utility size="small"/>
+   <utility size="small"/>
+   <structure size="small" prop="engines">Beat Up Small Engine</structure>
+   <structure size="small" prop="hull">Patchwork Light Plating</structure>
+   <structure size="small"/>
+   <structure size="small"/>
+   <structure size="small"/>
   </slots>
   <stats>
    <speed_mod>0</speed_mod>
@@ -535,16 +535,16 @@
    <cargo>5</cargo>
   </characteristics>
   <slots>
-   <weapon x="12" y="0" h="0"/>
-   <weapon x="-3" y="0" h="2"/>
-   <weapon x="3" y="0" h="2"/>
-   <utility prop="systems">Basic Small Systems</utility>
-   <utility/>
-   <utility/>
-   <structure prop="engines">Manufacturer Small Engine</structure>
-   <structure prop="hull">Unmodified Small Hull</structure>
-   <structure/>
-   <structure/>
+   <weapon size="small" x="12" y="0" h="0"/>
+   <weapon size="small" x="-3" y="0" h="2"/>
+   <weapon size="small" x="3" y="0" h="2"/>
+   <utility size="small" prop="systems">Basic Small Systems</utility>
+   <utility size="small"/>
+   <utility size="small"/>
+   <structure size="small" prop="engines">Manufacturer Small Engine</structure>
+   <structure size="small" prop="hull">Unmodified Small Hull</structure>
+   <structure size="small"/>
+   <structure size="small"/>
   </slots>
   <stats>
    <speed_mod>0</speed_mod>
@@ -578,18 +578,18 @@
    <cargo>5</cargo>
   </characteristics>
   <slots>
-   <weapon x="12" y="0" h="0" size="medium"></weapon>
-   <weapon x="12" y="0" h="0"/>
-   <weapon x="-3" y="0" h="2"/>
-   <weapon x="-3" y="0" h="2"/>
-   <utility prop="systems">Basic Small Systems</utility>
-   <utility/>
-   <utility/>
-   <utility/>
-   <structure prop="engines">Manufacturer Small Engine</structure>
-   <structure prop="hull">Unmodified Small Hull</structure>
-   <structure/>
-   <structure/>
+   <weapon size="medium" x="12" y="0" h="0"/>
+   <weapon size="small" x="12" y="0" h="0"/>
+   <weapon size="small" x="-3" y="0" h="2"/>
+   <weapon size="small" x="-3" y="0" h="2"/>
+   <utility size="small" prop="systems">Basic Small Systems</utility>
+   <utility size="small"/>
+   <utility size="small"/>
+   <utility size="small"/>
+   <structure size="small" prop="engines">Manufacturer Small Engine</structure>
+   <structure size="small" prop="hull">Unmodified Small Hull</structure>
+   <structure size="small"/>
+   <structure size="small"/>
   </slots>
   <stats>
    <speed_mod>0</speed_mod>
@@ -623,18 +623,18 @@
    <cargo>5</cargo>
   </characteristics>
   <slots>
-   <weapon x="12" y="0" h="0" size="medium"></weapon>
-   <weapon x="12" y="0" h="0"/>
-   <weapon x="-3" y="0" h="2"/>
-   <weapon x="-3" y="0" h="2"/>
-   <utility prop="systems">Basic Small Systems</utility>
-   <utility/>
-   <utility/>
-   <utility/>
-   <structure prop="engines">Manufacturer Small Engine</structure>
-   <structure prop="hull">Unmodified Small Hull</structure>
-   <structure/>
-   <structure/>
+   <weapon size="medium" x="12" y="0" h="0"/>
+   <weapon size="small" x="12" y="0" h="0"/>
+   <weapon size="small" x="-3" y="0" h="2"/>
+   <weapon size="small" x="-3" y="0" h="2"/>
+   <utility size="small" prop="systems">Basic Small Systems</utility>
+   <utility size="small"/>
+   <utility size="small"/>
+   <utility size="small"/>
+   <structure size="small" prop="engines">Manufacturer Small Engine</structure>
+   <structure size="small" prop="hull">Unmodified Small Hull</structure>
+   <structure size="small"/>
+   <structure size="small"/>
   </slots>
   <stats>
    <speed_mod>0</speed_mod>
@@ -668,18 +668,18 @@
    <cargo>5</cargo>
   </characteristics>
   <slots>
-   <weapon x="12" y="0" h="0" size="medium"></weapon>
-   <weapon x="12" y="0" h="0"/>
-   <weapon x="-3" y="0" h="2"/>
-   <weapon x="-3" y="0" h="2"/>
-   <utility prop="systems">Basic Small Systems</utility>
-   <utility/>
-   <utility/>
-   <utility/>
-   <structure prop="engines">Manufacturer Small Engine</structure>
-   <structure prop="hull">Unmodified Small Hull</structure>
-   <structure/>
-   <structure/>
+   <weapon size="medium" x="12" y="0" h="0"/>
+   <weapon size="small" x="12" y="0" h="0"/>
+   <weapon size="small" x="-3" y="0" h="2"/>
+   <weapon size="small" x="-3" y="0" h="2"/>
+   <utility size="small" prop="systems">Basic Small Systems</utility>
+   <utility size="small"/>
+   <utility size="small"/>
+   <utility size="small"/>
+   <structure size="small" prop="engines">Manufacturer Small Engine</structure>
+   <structure size="small" prop="hull">Unmodified Small Hull</structure>
+   <structure size="small"/>
+   <structure size="small"/>
   </slots>
   <stats>
    <speed_mod>5</speed_mod>
@@ -713,17 +713,17 @@
    <cargo>5</cargo>
   </characteristics>
   <slots>
-   <weapon x="16" y="-9" h="0"/>
-   <weapon x="16" y="9" h="0"/>
-   <weapon x="13" y="-13" h="0"/>
-   <weapon x="13" y="13" h="0"/>
-   <weapon x="19" y="0" h="-2"/>
-   <weapon x="3" y="0" h="2"/>
-   <utility prop="systems">Basic Small Systems</utility>
-   <utility/>
-   <structure prop="engines">Manufacturer Small Engine</structure>
-   <structure prop="hull">Unmodified Small Hull</structure>
-   <structure/>
+   <weapon size="small" x="16" y="-9" h="0"/>
+   <weapon size="small" x="16" y="9" h="0"/>
+   <weapon size="small" x="13" y="-13" h="0"/>
+   <weapon size="small" x="13" y="13" h="0"/>
+   <weapon size="small" x="19" y="0" h="-2"/>
+   <weapon size="small" x="3" y="0" h="2"/>
+   <utility size="small" prop="systems">Basic Small Systems</utility>
+   <utility size="small"/>
+   <structure size="small" prop="engines">Manufacturer Small Engine</structure>
+   <structure size="small" prop="hull">Unmodified Small Hull</structure>
+   <structure size="small"/>
   </slots>
   <stats>
    <speed_mod>-10</speed_mod>
@@ -759,17 +759,17 @@
    <cargo>5</cargo>
   </characteristics>
   <slots>
-   <weapon x="16" y="-9" h="0"/>
-   <weapon x="16" y="9" h="0"/>
-   <weapon x="13" y="-13" h="0"/>
-   <weapon x="13" y="13" h="0"/>
-   <weapon x="19" y="0" h="-2"/>
-   <weapon x="3" y="0" h="2"/>
-   <utility prop="systems">Basic Small Systems</utility>
-   <utility/>
-   <structure prop="engines">Manufacturer Small Engine</structure>
-   <structure prop="hull">Unmodified Small Hull</structure>
-   <structure/>
+   <weapon size="small" x="16" y="-9" h="0"/>
+   <weapon size="small" x="16" y="9" h="0"/>
+   <weapon size="small" x="13" y="-13" h="0"/>
+   <weapon size="small" x="13" y="13" h="0"/>
+   <weapon size="small" x="19" y="0" h="-2"/>
+   <weapon size="small" x="3" y="0" h="2"/>
+   <utility size="small" prop="systems">Basic Small Systems</utility>
+   <utility size="small"/>
+   <structure size="small" prop="engines">Manufacturer Small Engine</structure>
+   <structure size="small" prop="hull">Unmodified Small Hull</structure>
+   <structure size="small"/>
   </slots>
   <stats>
    <speed_mod>-10</speed_mod>
@@ -804,17 +804,17 @@
    <cargo>15</cargo>
   </characteristics>
   <slots>
-   <weapon x="16" y="-9" h="0"/>
-   <weapon x="16" y="9" h="0"/>
-   <weapon x="13" y="-13" h="0"/>
-   <weapon x="13" y="13" h="0"/>
-   <weapon x="19" y="0" h="-2"/>
-   <weapon x="3" y="0" h="2"/>
-   <utility prop="systems">Previous Generation Small Systems</utility>
-   <utility/>
-   <structure prop="engines">Beat Up Small Engine</structure>
-   <structure prop="hull">Patchwork Light Plating</structure>
-   <structure/>
+   <weapon size="small" x="16" y="-9" h="0"/>
+   <weapon size="small" x="16" y="9" h="0"/>
+   <weapon size="small" x="13" y="-13" h="0"/>
+   <weapon size="small" x="13" y="13" h="0"/>
+   <weapon size="small" x="19" y="0" h="-2"/>
+   <weapon size="small" x="3" y="0" h="2"/>
+   <utility size="small" prop="systems">Previous Generation Small Systems</utility>
+   <utility size="small"/>
+   <structure size="small" prop="engines">Beat Up Small Engine</structure>
+   <structure size="small" prop="hull">Patchwork Light Plating</structure>
+   <structure size="small"/>
   </slots>
   <stats>
    <speed_mod>0</speed_mod>
@@ -852,18 +852,18 @@
    <cargo>5</cargo>
   </characteristics>
   <slots>
-   <weapon x="4" y="0" h="0"/>
-   <weapon x="4" y="0" h="0"/>
-   <weapon x="-2" y="4" h="-1"/>
-   <weapon x="-2" y="-4" h="-1"/>
-   <utility prop="systems">Basic Small Systems</utility>
-   <utility/>
-   <utility/>
-   <structure prop="engines">Manufacturer Small Engine</structure>
-   <structure prop="hull">Unmodified Small Hull</structure>
-   <structure/>
-   <structure/>
-   <structure/>
+   <weapon size="medium" x="4" y="0" h="0"/>
+   <weapon size="small" x="4" y="0" h="0"/>
+   <weapon size="small" x="-2" y="4" h="-1"/>
+   <weapon size="small" x="-2" y="-4" h="-1"/>
+   <utility size="small" prop="systems">Basic Small Systems</utility>
+   <utility size="small"/>
+   <utility size="small"/>
+   <structure size="small" prop="engines">Manufacturer Small Engine</structure>
+   <structure size="small" prop="hull">Unmodified Small Hull</structure>
+   <structure size="small"/>
+   <structure size="small"/>
+   <structure size="small"/>
   </slots>
   <stats>
    <speed_mod>-15</speed_mod>
@@ -898,16 +898,16 @@
    <cargo>5</cargo>
   </characteristics>
   <slots>
-   <weapon x="8" y="0" h="0"/>
-   <weapon x="8" y="0" h="0"/>
-   <weapon x="-2" y="9" h="-1"/>
-   <weapon x="-2" y="-9" h="-1"/>
-   <utility prop="systems">Basic Small Systems</utility>
-   <utility/>
-   <utility/>
-   <structure prop="engines">Manufacturer Small Engine</structure>
-   <structure prop="hull">Unmodified Small Hull</structure>
-   <structure/>
+   <weapon size="medium" x="8" y="0" h="0"/>
+   <weapon size="medium" x="8" y="0" h="0"/>
+   <weapon size="small" x="-2" y="9" h="-1"/>
+   <weapon size="small" x="-2" y="-9" h="-1"/>
+   <utility size="small" prop="systems">Basic Small Systems</utility>
+   <utility size="small"/>
+   <utility size="small"/>
+   <structure size="small" prop="engines">Manufacturer Small Engine</structure>
+   <structure size="small" prop="hull">Unmodified Small Hull</structure>
+   <structure size="small"/>
   </slots>
   <stats>
    <speed_mod>-10</speed_mod>
@@ -944,16 +944,16 @@
    <cargo>5</cargo>
   </characteristics>
   <slots>
-   <weapon x="8" y="0" h="0"/>
-   <weapon x="8" y="0" h="0"/>
-   <weapon x="-2" y="9" h="-1"/>
-   <weapon x="-2" y="-9" h="-1"/>
-   <utility prop="systems">Basic Small Systems</utility>
-   <utility/>
-   <utility/>
-   <structure prop="engines">Manufacturer Small Engine</structure>
-   <structure prop="hull">Unmodified Small Hull</structure>
-   <structure/>
+   <weapon size="medium" x="8" y="0" h="0"/>
+   <weapon size="medium" x="8" y="0" h="0"/>
+   <weapon size="small" x="-2" y="9" h="-1"/>
+   <weapon size="small" x="-2" y="-9" h="-1"/>
+   <utility size="small" prop="systems">Basic Small Systems</utility>
+   <utility size="small"/>
+   <utility size="small"/>
+   <structure size="small" prop="engines">Manufacturer Small Engine</structure>
+   <structure size="small" prop="hull">Unmodified Small Hull</structure>
+   <structure size="small"/>
   </slots>
   <stats>
    <speed_mod>-20</speed_mod>
@@ -990,16 +990,16 @@
    <cargo>5</cargo>
   </characteristics>
   <slots>
-   <weapon x="8" y="0" h="0"/>
-   <weapon x="8" y="0" h="0"/>
-   <weapon x="-2" y="9" h="-1"/>
-   <weapon x="-2" y="-9" h="-1"/>
-   <utility prop="systems">Basic Small Systems</utility>
-   <utility/>
-   <utility/>
-   <structure prop="engines">Manufacturer Small Engine</structure>
-   <structure prop="hull">Unmodified Small Hull</structure>
-   <structure/>
+   <weapon size="medium" x="8" y="0" h="0"/>
+   <weapon size="medium" x="8" y="0" h="0"/>
+   <weapon size="small" x="-2" y="9" h="-1"/>
+   <weapon size="small" x="-2" y="-9" h="-1"/>
+   <utility size="small" prop="systems">Basic Small Systems</utility>
+   <utility size="small"/>
+   <utility size="small"/>
+   <structure size="small" prop="engines">Manufacturer Small Engine</structure>
+   <structure size="small" prop="hull">Unmodified Small Hull</structure>
+   <structure size="small"/>
   </slots>
   <stats>
    <speed_mod>-20</speed_mod>
@@ -1035,16 +1035,16 @@
    <cargo>15</cargo>
   </characteristics>
   <slots>
-   <weapon x="8" y="0" h="0"/>
-   <weapon x="8" y="0" h="0"/>
-   <weapon x="-2" y="9" h="-1"/>
-   <weapon x="-2" y="-9" h="-1"/>
-   <utility prop="systems">Previous Generation Small Systems</utility>
-   <utility/>
-   <utility/>
-   <structure prop="engines">Beat Up Small Engine</structure>
-   <structure prop="hull">Patchwork Light Plating</structure>
-   <structure/>
+   <weapon size="medium" x="8" y="0" h="0"/>
+   <weapon size="medium" x="8" y="0" h="0"/>
+   <weapon size="small" x="-2" y="9" h="-1"/>
+   <weapon size="small" x="-2" y="-9" h="-1"/>
+   <utility size="small" prop="systems">Previous Generation Small Systems</utility>
+   <utility size="small"/>
+   <utility size="small"/>
+   <structure size="small" prop="engines">Beat Up Small Engine</structure>
+   <structure size="small" prop="hull">Patchwork Light Plating</structure>
+   <structure size="small"/>
   </slots>
   <stats>
    <speed_mod>-10</speed_mod>
@@ -1083,21 +1083,21 @@
    <cargo>15</cargo>
   </characteristics>
   <slots>
-   <weapon x="8" y="0" h="2"/>
-   <weapon x="4" y="5" h="-2"/>
-   <weapon x="4" y="-5" h="-2"/>
-   <weapon x="0" y="10" h="-2" size="light"></weapon>
-   <weapon x="0" y="-10" h="-2" size="light"></weapon>
-   <utility prop="systems" size="medium">Basic Medium Systems</utility>
-   <utility/>
-   <utility/>
-   <utility size="light"></utility>
-   <structure prop="engines" size="medium">Manufacturer Medium Engine</structure>
-   <structure prop="hull" size="medium">Unmodified Medium Hull</structure>
-   <structure/>
-   <structure/>
-   <structure/>
-   <structure/>
+   <weapon size="medium" x="8" y="0" h="2"/>
+   <weapon size="medium" x="4" y="5" h="-2"/>
+   <weapon size="medium" x="4" y="-5" h="-2"/>
+   <weapon size="small" x="0" y="10" h="-2"/>
+   <weapon size="small" x="0" y="-10" h="-2"/>
+   <utility size="medium" prop="systems">Basic Medium Systems</utility>
+   <utility size="medium"/>
+   <utility size="medium"/>
+   <utility size="small"/>
+   <structure size="medium" prop="engines">Manufacturer Medium Engine</structure>
+   <structure size="medium" prop="hull">Unmodified Medium Hull</structure>
+   <structure size="medium"/>
+   <structure size="medium"/>
+   <structure size="medium"/>
+   <structure size="medium"/>
   </slots>
   <stats>
    <fuel_consumption>200</fuel_consumption>
@@ -1134,21 +1134,21 @@
    <cargo>15</cargo>
   </characteristics>
   <slots>
-   <weapon x="8" y="0" h="2"/>
-   <weapon x="4" y="5" h="-2"/>
-   <weapon x="4" y="-5" h="-2"/>
-   <weapon x="0" y="10" h="-2" size="light"></weapon>
-   <weapon x="0" y="-10" h="-2" size="light"></weapon>
-   <utility prop="systems" size="medium">Basic Medium Systems</utility>
-   <utility/>
-   <utility/>
-   <utility size="light"></utility>
-   <structure prop="engines" size="medium">Manufacturer Medium Engine</structure>
-   <structure prop="hull" size="medium">Unmodified Medium Hull</structure>
-   <structure/>
-   <structure/>
-   <structure/>
-   <structure/>
+   <weapon size="medium" x="8" y="0" h="2"/>
+   <weapon size="medium" x="4" y="5" h="-2"/>
+   <weapon size="medium" x="4" y="-5" h="-2"/>
+   <weapon size="small" x="0" y="10" h="-2"/>
+   <weapon size="small" x="0" y="-10" h="-2"/>
+   <utility size="medium" prop="systems">Basic Medium Systems</utility>
+   <utility size="medium"/>
+   <utility size="medium"/>
+   <utility size="small"/>
+   <structure size="medium" prop="engines">Manufacturer Medium Engine</structure>
+   <structure size="medium" prop="hull">Unmodified Medium Hull</structure>
+   <structure size="medium"/>
+   <structure size="medium"/>
+   <structure size="medium"/>
+   <structure size="medium"/>
   </slots>
   <stats>
    <fuel_consumption>200</fuel_consumption>
@@ -1184,21 +1184,21 @@
    <cargo>25</cargo>
   </characteristics>
   <slots>
-   <weapon x="8" y="0" h="2"/>
-   <weapon x="4" y="5" h="-2"/>
-   <weapon x="4" y="-5" h="-2"/>
-   <weapon x="0" y="10" h="-2" size="light"></weapon>
-   <weapon x="0" y="-10" h="-2" size="light"></weapon>
-   <utility prop="systems" size="medium">Previous Generation Medium Systems</utility>
-   <utility/>
-   <utility/>
-   <utility size="light"></utility>
-   <structure prop="engines" size="medium">Beat Up Medium Engine</structure>
-   <structure prop="hull" size="medium">Patchwork Medium Plating</structure>
-   <structure/>
-   <structure/>
-   <structure/>
-   <structure/>
+   <weapon size="medium" x="8" y="0" h="2"/>
+   <weapon size="medium" x="4" y="5" h="-2"/>
+   <weapon size="medium" x="4" y="-5" h="-2"/>
+   <weapon size="small" x="0" y="10" h="-2"/>
+   <weapon size="small" x="0" y="-10" h="-2"/>
+   <utility size="medium" prop="systems">Previous Generation Medium Systems</utility>
+   <utility size="medium"/>
+   <utility size="medium"/>
+   <utility size="small"/>
+   <structure size="medium" prop="engines">Beat Up Medium Engine</structure>
+   <structure size="medium" prop="hull">Patchwork Medium Plating</structure>
+   <structure size="medium"/>
+   <structure size="medium"/>
+   <structure size="medium"/>
+   <structure size="medium"/>
   </slots>
   <stats>
    <fuel_consumption>200</fuel_consumption>
@@ -1235,20 +1235,20 @@
    <cargo>20</cargo>
   </characteristics>
   <slots>
-   <weapon x="15" y="1" h="2"/>
-   <weapon x="15" y="-1" h="2"/>
-   <weapon x="-9" y="-10" h="2"/>
-   <weapon x="-9" y="10" h="2"/>
-   <weapon x="-9" y="-3" h="2" size="light"></weapon>
-   <weapon x="-9" y="3" h="2" size="light"></weapon>
-   <utility prop="systems" size="medium">Basic Medium Systems</utility>
-   <utility/>
-   <utility/>
-   <utility size="light"></utility>
-   <structure prop="engines" size="medium">Manufacturer Medium Engine</structure>
-   <structure prop="hull" size="medium">Unmodified Medium Hull</structure>
-   <structure/>
-   <structure/>
+   <weapon size="medium" x="15" y="1" h="2"/>
+   <weapon size="medium" x="15" y="-1" h="2"/>
+   <weapon size="medium" x="-9" y="-10" h="2"/>
+   <weapon size="medium" x="-9" y="10" h="2"/>
+   <weapon size="medium" x="-9" y="-3" h="2"/>
+   <weapon size="medium" x="-9" y="3" h="2"/>
+   <utility size="medium" prop="systems">Basic Medium Systems</utility>
+   <utility size="medium"/>
+   <utility size="medium"/>
+   <utility size="small"/>
+   <structure size="medium" prop="engines">Manufacturer Medium Engine</structure>
+   <structure size="medium" prop="hull">Unmodified Medium Hull</structure>
+   <structure size="medium"/>
+   <structure size="medium"/>
   </slots>
   <stats>
    <fuel_consumption>200</fuel_consumption>
@@ -1285,20 +1285,20 @@
    <cargo>15</cargo>
   </characteristics>
   <slots>
-   <weapon x="15" y="0" h="2"/>
-   <weapon x="4" y="2" h="-5"/>
-   <weapon x="4" y="-2" h="-5"/>
-   <weapon x="-9" y="-5" h="-9" size="light"></weapon>
-   <weapon x="-9" y="5" h="-9" size="light"></weapon>
-   <utility prop="systems" size="medium">Basic Medium Systems</utility>
-   <utility/>
-   <utility/>
-   <utility size="light"></utility>
-   <structure prop="engines" size="medium">Manufacturer Medium Engine</structure>
-   <structure prop="hull" size="medium">Unmodified Medium Hull</structure>
-   <structure/>
-   <structure/>
-   <structure/>
+   <weapon size="medium" x="15" y="0" h="2"/>
+   <weapon size="medium" x="4" y="2" h="-5"/>
+   <weapon size="medium" x="4" y="-2" h="-5"/>
+   <weapon size="small" x="-9" y="-5" h="-9"/>
+   <weapon size="small" x="-9" y="5" h="-9"/>
+   <utility size="medium" prop="systems">Basic Medium Systems</utility>
+   <utility size="medium"/>
+   <utility size="medium"/>
+   <utility size="small"/>
+   <structure size="medium" prop="engines">Manufacturer Medium Engine</structure>
+   <structure size="medium" prop="hull">Unmodified Medium Hull</structure>
+   <structure size="medium"/>
+   <structure size="medium"/>
+   <structure size="medium"/>
   </slots>
   <stats>
    <fuel_consumption>200</fuel_consumption>
@@ -1335,20 +1335,20 @@
    <cargo>15</cargo>
   </characteristics>
   <slots>
-   <weapon x="15" y="0" h="2"/>
-   <weapon x="4" y="2" h="-5"/>
-   <weapon x="4" y="-2" h="-5"/>
-   <weapon x="-9" y="-5" h="-9" size="light"></weapon>
-   <weapon x="-9" y="5" h="-9" size="light"></weapon>
-   <utility prop="systems" size="medium">Basic Medium Systems</utility>
-   <utility/>
-   <utility/>
-   <utility size="light"></utility>
-   <structure prop="engines" size="medium">Manufacturer Medium Engine</structure>
-   <structure prop="hull" size="medium">Unmodified Medium Hull</structure>
-   <structure/>
-   <structure/>
-   <structure/>
+   <weapon size="medium" x="15" y="0" h="2"/>
+   <weapon size="medium" x="4" y="2" h="-5"/>
+   <weapon size="medium" x="4" y="-2" h="-5"/>
+   <weapon size="medium" x="-9" y="-5" h="-9"/>
+   <weapon size="medium" x="-9" y="5" h="-9"/>
+   <utility size="medium" prop="systems">Basic Medium Systems</utility>
+   <utility size="medium"/>
+   <utility size="medium"/>
+   <utility size="small"/>
+   <structure size="medium" prop="engines">Manufacturer Medium Engine</structure>
+   <structure size="medium" prop="hull">Unmodified Medium Hull</structure>
+   <structure size="medium"/>
+   <structure size="medium"/>
+   <structure size="medium"/>
   </slots>
   <stats>
    <fuel_consumption>200</fuel_consumption>
@@ -1384,20 +1384,20 @@
    <cargo>20</cargo>
   </characteristics>
   <slots>
-   <weapon x="15" y="0" h="2"/>
-   <weapon x="4" y="2" h="-5"/>
-   <weapon x="4" y="-2" h="-5"/>
-   <weapon x="-9" y="-5" h="-9" size="light"></weapon>
-   <weapon x="-9" y="5" h="-9" size="light"></weapon>
-   <utility prop="systems" size="medium">Previous Generation Medium Systems</utility>
-   <utility/>
-   <utility/>
-   <utility size="light"></utility>
-   <structure prop="engines" size="medium">Beat Up Medium Engine</structure>
-   <structure prop="hull" size="medium">Patchwork Medium Plating</structure>
-   <structure/>
-   <structure/>
-   <structure/>
+   <weapon size="medium" x="15" y="0" h="2"/>
+   <weapon size="medium" x="4" y="2" h="-5"/>
+   <weapon size="medium" x="4" y="-2" h="-5"/>
+   <weapon size="small" x="-9" y="-5" h="-9"/>
+   <weapon size="small" x="-9" y="5" h="-9"/>
+   <utility size="medium" prop="systems">Previous Generation Medium Systems</utility>
+   <utility size="medium"/>
+   <utility size="medium"/>
+   <utility size="small"/>
+   <structure size="medium" prop="engines">Beat Up Medium Engine</structure>
+   <structure size="medium" prop="hull">Patchwork Medium Plating</structure>
+   <structure size="medium"/>
+   <structure size="medium"/>
+   <structure size="medium"/>
   </slots>
   <stats>
    <fuel_consumption>200</fuel_consumption>
@@ -1434,20 +1434,20 @@
    <cargo>15</cargo>
   </characteristics>
   <slots>
-   <weapon x="15" y="0" h="2"/>
-   <weapon x="4" y="2" h="-5"/>
-   <weapon x="4" y="-2" h="-5"/>
-   <weapon x="-9" y="-5" h="-9" size="light"></weapon>
-   <weapon x="-9" y="5" h="-9" size="light"></weapon>
-   <utility prop="systems" size="medium">Basic Medium Systems</utility>
-   <utility/>
-   <utility/>
-   <utility size="light"></utility>
-   <structure prop="engines" size="medium">Manufacturer Medium Engine</structure>
-   <structure prop="hull" size="medium">Unmodified Medium Hull</structure>
-   <structure/>
-   <structure/>
-   <structure/>
+   <weapon size="medium" x="15" y="0" h="2"/>
+   <weapon size="medium" x="4" y="2" h="-5"/>
+   <weapon size="medium" x="4" y="-2" h="-5"/>
+   <weapon size="small" x="-9" y="-5" h="-9"/>
+   <weapon size="small" x="-9" y="5" h="-9"/>
+   <utility size="medium" prop="systems">Basic Medium Systems</utility>
+   <utility size="medium"/>
+   <utility size="medium"/>
+   <utility size="small"/>
+   <structure size="medium" prop="engines">Manufacturer Medium Engine</structure>
+   <structure size="medium" prop="hull">Unmodified Medium Hull</structure>
+   <structure size="medium"/>
+   <structure size="medium"/>
+   <structure size="medium"/>
   </slots>
   <stats>
    <fuel_consumption>200</fuel_consumption>
@@ -1486,22 +1486,22 @@
    <cargo>20</cargo>
   </characteristics>
   <slots>
-   <weapon x="28" y="-3" h="-0" size="heavy"></weapon>
-	<weapon x="28" y="3" h="-0" size="heavy"></weapon>
-   <weapon x="10" y="-3" h="2"/>
-   <weapon x="10" y="3" h="2"/>
-   <weapon x="-22" y="-8" h="-0"/>
-   <weapon x="-22" y="8" h="-0"/>
-   <utility prop="systems" size="medium">Basic Medium Systems</utility>
-   <utility size="heavy"></utility>
-   <utility size="heavy"></utility>
-   <utility/>
-   <structure prop="engines" size="medium">Manufacturer Medium Engine</structure>
-   <structure prop="hull" size="medium">Unmodified Medium Hull</structure>
-   <structure size="heavy"></structure>
-   <structure/>
-   <structure/>
-   <structure/>
+   <weapon size="large" x="28" y="-3" h="-0"/>
+   <weapon size="large" x="28" y="3" h="-0"/>
+   <weapon size="medium" x="10" y="-3" h="2"/>
+   <weapon size="medium" x="10" y="3" h="2"/>
+   <weapon size="medium" x="-22" y="-8" h="-0"/>
+   <weapon size="medium" x="-22" y="8" h="-0"/>
+   <utility size="medium" prop="systems">Basic Medium Systems</utility>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="medium"/>
+   <structure size="medium" prop="engines">Manufacturer Medium Engine</structure>
+   <structure size="medium" prop="hull">Unmodified Medium Hull</structure>
+   <structure size="large"/>
+   <structure size="medium"/>
+   <structure size="medium"/>
+   <structure size="medium"/>
   </slots>
   <stats>
    <fuel_consumption>200</fuel_consumption>
@@ -1538,22 +1538,22 @@
    <cargo>20</cargo>
   </characteristics>
   <slots>
-   <weapon x="28" y="-3" h="-0" size="heavy"></weapon>
-	<weapon x="28" y="3" h="-0" size="heavy"></weapon>
-   <weapon x="10" y="-3" h="2"/>
-   <weapon x="10" y="3" h="2"/>
-   <weapon x="-22" y="-8" h="-0"/>
-   <weapon x="-22" y="8" h="-0"/>
-   <utility prop="systems" size="medium">Basic Medium Systems</utility>
-   <utility size="heavy"></utility>
-   <utility size="heavy"></utility>
-   <utility/>
-   <structure prop="engines" size="medium">Manufacturer Medium Engine</structure>
-   <structure prop="hull" size="medium">Unmodified Medium Hull</structure>
-   <structure size="heavy"></structure>
-   <structure/>
-   <structure/>
-   <structure/>
+   <weapon size="large" x="28" y="-3" h="-0"/>
+   <weapon size="large" x="28" y="3" h="-0"/>
+   <weapon size="medium" x="10" y="-3" h="2"/>
+   <weapon size="medium" x="10" y="3" h="2"/>
+   <weapon size="medium" x="-22" y="-8" h="-0"/>
+   <weapon size="medium" x="-22" y="8" h="-0"/>
+   <utility size="medium" prop="systems">Basic Medium Systems</utility>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="medium"/>
+   <structure size="medium" prop="engines">Manufacturer Medium Engine</structure>
+   <structure size="medium" prop="hull">Unmodified Medium Hull</structure>
+   <structure size="large"/>
+   <structure size="medium"/>
+   <structure size="medium"/>
+   <structure size="medium"/>
   </slots>
   <stats>
    <fuel_consumption>200</fuel_consumption>
@@ -1590,21 +1590,21 @@
    <cargo>15</cargo>
   </characteristics>
   <slots>
-   <weapon x="28" y="0" h="5" size="heavy"></weapon>
-	<weapon x="18" y="0" h="5" size="heavy"></weapon>
-   <weapon x="-30" y="-8" h="3"/>
-   <weapon x="-30" y="8" h="3"/>
-   <utility prop="systems" size="medium">Basic Medium Systems</utility>
-   <utility size="heavy"></utility>
-   <utility size="heavy"></utility>
-   <utility/>
-   <utility/>
-   <utility/>
-   <structure prop="engines" size="medium">Manufacturer Medium Engine</structure>
-   <structure prop="hull" size="medium">Unmodified Medium Hull</structure>
-   <structure size="heavy"></structure>
-   <structure/>
-   <structure/>
+   <weapon size="medium" x="28" y="0" h="5"/>
+   <weapon size="medium" x="18" y="0" h="5"/>
+   <weapon size="medium" x="-30" y="-8" h="3"/>
+   <weapon size="medium" x="-30" y="8" h="3"/>
+   <utility size="medium" prop="systems">Basic Medium Systems</utility>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="medium"/>
+   <utility size="medium"/>
+   <utility size="medium"/>
+   <structure size="medium" prop="engines">Manufacturer Medium Engine</structure>
+   <structure size="medium" prop="hull">Unmodified Medium Hull</structure>
+   <structure size="large"/>
+   <structure size="medium"/>
+   <structure size="medium"/>
   </slots>
   <stats>
    <fuel_consumption>200</fuel_consumption>
@@ -1641,21 +1641,21 @@
    <cargo>15</cargo>
   </characteristics>
   <slots>
-   <weapon x="-15" y="-10" h="-10" size="heavy"></weapon>
-   <weapon x="-15" y="10" h="-10" size="heavy"></weapon>
-   <weapon x="20" y="0" h="-10"/>
-   <weapon x="4" y="-5" h="-10"/>
-   <weapon x="4" y="5" h="-10"/>
-   <utility prop="systems" size="medium">Basic Medium Systems</utility>
-   <utility size="heavy"></utility>
-   <utility size="heavy"></utility>
-   <utility/>
-   <utility/>
-   <structure prop="engines" size="medium">Manufacturer Medium Engine</structure>
-   <structure prop="hull" size="medium">Unmodified Medium Hull</structure>
-   <structure size="heavy"></structure>
-   <structure/>
-   <structure/>
+   <weapon size="large" x="-15" y="-10" h="-10"/>
+   <weapon size="large" x="-15" y="10" h="-10"/>
+   <weapon size="medium" x="20" y="0" h="-10"/>
+   <weapon size="medium" x="4" y="-5" h="-10"/>
+   <weapon size="medium" x="4" y="5" h="-10"/>
+   <utility size="medium" prop="systems">Basic Medium Systems</utility>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="medium"/>
+   <utility size="medium"/>
+   <structure size="medium" prop="engines">Manufacturer Medium Engine</structure>
+   <structure size="medium" prop="hull">Unmodified Medium Hull</structure>
+   <structure size="large"/>
+   <structure size="medium"/>
+   <structure size="medium"/>
   </slots>
   <stats>
    <fuel_consumption>200</fuel_consumption>
@@ -1692,21 +1692,21 @@
    <cargo>15</cargo>
   </characteristics>
   <slots>
-   <weapon x="-15" y="-10" h="-10" size="heavy"></weapon>
-   <weapon x="-15" y="10" h="-10" size="heavy"></weapon>
-   <weapon x="20" y="0" h="-10"/>
-   <weapon x="4" y="-5" h="-10"/>
-   <weapon x="4" y="5" h="-10"/>
-   <utility prop="systems" size="medium">Basic Medium Systems</utility>
-   <utility size="heavy"></utility>
-   <utility size="heavy"></utility>
-   <utility/>
-   <utility/>
-   <structure prop="engines" size="medium">Manufacturer Medium Engine</structure>
-   <structure prop="hull" size="medium">Unmodified Medium Hull</structure>
-   <structure size="heavy"></structure>
-   <structure/>
-   <structure/>
+   <weapon size="large" x="-15" y="-10" h="-10"/>
+   <weapon size="large" x="-15" y="10" h="-10"/>
+   <weapon size="medium" x="20" y="0" h="-10"/>
+   <weapon size="medium" x="4" y="-5" h="-10"/>
+   <weapon size="medium" x="4" y="5" h="-10"/>
+   <utility size="medium" prop="systems">Basic Medium Systems</utility>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="medium"/>
+   <utility size="medium"/>
+   <structure size="medium" prop="engines">Manufacturer Medium Engine</structure>
+   <structure size="medium" prop="hull">Unmodified Medium Hull</structure>
+   <structure size="large"/>
+   <structure size="medium"/>
+   <structure size="medium"/>
   </slots>
   <stats>
    <fuel_consumption>200</fuel_consumption>
@@ -1743,21 +1743,21 @@
    <cargo>15</cargo>
   </characteristics>
   <slots>
-   <weapon x="-15" y="-10" h="-10" size="heavy"></weapon>
-   <weapon x="-15" y="10" h="-10" size="heavy"></weapon>
-   <weapon x="20" y="0" h="-10"/>
-   <weapon x="4" y="-5" h="-10"/>
-   <weapon x="4" y="5" h="-10"/>
-   <utility prop="systems" size="medium">Basic Medium Systems</utility>
-   <utility size="heavy"></utility>
-   <utility size="heavy"></utility>
-   <utility/>
-   <utility/>
-   <structure prop="engines" size="medium">Manufacturer Medium Engine</structure>
-   <structure prop="hull" size="medium">Unmodified Medium Hull</structure>
-   <structure size="heavy"></structure>
-   <structure/>
-   <structure/>
+   <weapon size="large" x="-15" y="-10" h="-10"/>
+   <weapon size="large" x="-15" y="10" h="-10"/>
+   <weapon size="medium" x="20" y="0" h="-10"/>
+   <weapon size="medium" x="4" y="-5" h="-10"/>
+   <weapon size="medium" x="4" y="5" h="-10"/>
+   <utility size="medium" prop="systems">Basic Medium Systems</utility>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="medium"/>
+   <utility size="medium"/>
+   <structure size="medium" prop="engines">Manufacturer Medium Engine</structure>
+   <structure size="medium" prop="hull">Unmodified Medium Hull</structure>
+   <structure size="large"/>
+   <structure size="medium"/>
+   <structure size="medium"/>
   </slots>
   <stats>
    <fuel_consumption>200</fuel_consumption>
@@ -1796,20 +1796,20 @@
    <cargo>80</cargo>
   </characteristics>
   <slots>
-   <weapon x="25" y="-3" h="4" size="heavy"></weapon>
-   <weapon x="25" y="3" h="4" size="heavy"></weapon>
-   <weapon x="-15" y="-3" h="4"/>
-   <weapon x="-15" y="3" h="4"/>
-   <utility prop="systems" size="medium">Basic Medium Systems</utility>
-   <utility/>
-   <utility/>
-   <utility/>
-   <structure prop="engines" size="medium">Manufacturer Medium Engine</structure>
-   <structure prop="hull" size="medium">Unmodified Medium Hull</structure>
-   <structure/>
-   <structure/>
-   <structure/>
-   <structure/>
+   <weapon size="large" x="25" y="-3" h="4"/>
+   <weapon size="large" x="25" y="3" h="4"/>
+   <weapon size="medium" x="-15" y="-3" h="4"/>
+   <weapon size="medium" x="-15" y="3" h="4"/>
+   <utility size="medium" prop="systems">Basic Medium Systems</utility>
+   <utility size="medium"/>
+   <utility size="medium"/>
+   <utility size="medium"/>
+   <structure size="medium" prop="engines">Manufacturer Medium Engine</structure>
+   <structure size="medium" prop="hull">Unmodified Medium Hull</structure>
+   <structure size="medium"/>
+   <structure size="medium"/>
+   <structure size="medium"/>
+   <structure size="medium"/>
   </slots>
   <stats>
    <fuel_consumption>200</fuel_consumption>
@@ -1845,20 +1845,20 @@
    <cargo>90</cargo>
   </characteristics>
   <slots>
-   <weapon x="25" y="-3" h="4" size="heavy"></weapon>
-   <weapon x="25" y="3" h="4" size="heavy"></weapon>
-   <weapon x="-15" y="-3" h="4"/>
-   <weapon x="-15" y="3" h="4"/>
-   <utility prop="systems" size="medium">Previous Generation Medium Systems</utility>
-   <utility/>
-   <utility/>
-   <utility/>
-   <structure prop="engines" size="medium">Beat Up Medium Engine</structure>
-   <structure prop="hull" size="medium">Patchwork Medium Plating</structure>
-   <structure/>
-   <structure/>
-   <structure/>
-   <structure/>
+   <weapon size="large" x="25" y="-3" h="4"/>
+   <weapon size="large" x="25" y="3" h="4"/>
+   <weapon size="medium" x="-15" y="-3" h="4"/>
+   <weapon size="medium" x="-15" y="3" h="4"/>
+   <utility size="medium" prop="systems">Previous Generation Medium Systems</utility>
+   <utility size="medium"/>
+   <utility size="medium"/>
+   <utility size="medium"/>
+   <structure size="medium" prop="engines">Beat Up Medium Engine</structure>
+   <structure size="medium" prop="hull">Patchwork Medium Plating</structure>
+   <structure size="medium"/>
+   <structure size="medium"/>
+   <structure size="medium"/>
+   <structure size="medium"/>
   </slots>
   <stats>
    <fuel_consumption>200</fuel_consumption>
@@ -1895,21 +1895,21 @@
    <cargo>100</cargo>
   </characteristics>
   <slots>
-   <weapon x="25" y="0" h="0" size="heavy"></weapon>
-   <weapon x="-15" y="0" h="4"/>
-   <weapon x="15" y="0" h="4"/>
-   <utility prop="systems" size="medium">Basic Medium Systems</utility>
-   <utility/>
-   <utility/>
-   <utility/>
-   <structure prop="engines" size="medium">Manufacturer Medium Engine</structure>
-   <structure prop="hull" size="medium">Unmodified Medium Hull</structure>
-   <structure/>
-   <structure/>
-   <structure/>
-   <structure/>
-   <structure/>
-   <structure/>
+   <weapon size="large" x="25" y="0" h="0"/>
+   <weapon size="medium" x="-15" y="0" h="4"/>
+   <weapon size="medium" x="15" y="0" h="4"/>
+   <utility size="medium" prop="systems">Basic Medium Systems</utility>
+   <utility size="medium"/>
+   <utility size="medium"/>
+   <utility size="medium"/>
+   <structure size="medium" prop="engines">Manufacturer Medium Engine</structure>
+   <structure size="medium" prop="hull">Unmodified Medium Hull</structure>
+   <structure size="medium"/>
+   <structure size="medium"/>
+   <structure size="medium"/>
+   <structure size="medium"/>
+   <structure size="medium"/>
+   <structure size="medium"/>
   </slots>
   <stats>
    <fuel_consumption>200</fuel_consumption>
@@ -1948,24 +1948,24 @@
    <cargo>25</cargo>
   </characteristics>
   <slots>
-   <weapon x="-23" y="-15" h="5"/>
-   <weapon x="-23" y="15" h="5"/>
-   <weapon x="44" y="0" h="0"/>
-   <weapon x="-6" y="0" h="12"/>
-   <weapon x="-24" y="-8" h="8" size="medium"></weapon>
-   <weapon x="-24" y="8" h="8" size="medium"></weapon>
-   <utility prop="systems" size="heavy">Basic Large Systems</utility>
-   <utility/>
-   <utility/>
-   <utility/>
-   <utility/>
-   <utility size="medium"></utility>
-   <structure prop="engines" size="heavy">Manufacturer Large Engine</structure>
-   <structure prop="hull" size="heavy">Unmodified Large Hull</structure>
-   <structure/>
-   <structure/>
-   <structure/>
-   <structure size="medium"></structure>
+   <weapon size="large" x="-23" y="-15" h="5"/>
+   <weapon size="large" x="-23" y="15" h="5"/>
+   <weapon size="large" x="44" y="0" h="0"/>
+   <weapon size="large" x="-6" y="0" h="12"/>
+   <weapon size="medium" x="-24" y="-8" h="8"/>
+   <weapon size="medium" x="-24" y="8" h="8"/>
+   <utility size="large" prop="systems">Basic Large Systems</utility>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="medium"/>
+   <structure size="large" prop="engines">Manufacturer Large Engine</structure>
+   <structure size="large" prop="hull">Unmodified Large Hull</structure>
+   <structure size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
+   <structure size="medium"/>
   </slots>
   <stats>
    <fuel_consumption>400</fuel_consumption>
@@ -2001,24 +2001,24 @@
    <cargo>40</cargo>
   </characteristics>
   <slots>
-   <weapon x="-23" y="-15" h="5"/>
-   <weapon x="-23" y="15" h="5"/>
-   <weapon x="44" y="0" h="0"/>
-   <weapon x="-6" y="0" h="12"/>
-   <weapon x="-24" y="-8" h="8" size="medium"></weapon>
-   <weapon x="-24" y="8" h="8" size="medium"></weapon>
-   <utility prop="systems" size="heavy">Previous Generation Large Systems</utility>
-   <utility/>
-   <utility/>
-   <utility/>
-   <utility/>
-   <utility size="medium"></utility>
-   <structure prop="engines" size="heavy">Beat Up Large Engine</structure>
-   <structure prop="hull" size="heavy">Patchwork Heavy Plating</structure>
-   <structure/>
-   <structure/>
-   <structure/>
-   <structure size="medium"></structure>
+   <weapon size="large" x="-23" y="-15" h="5"/>
+   <weapon size="large" x="-23" y="15" h="5"/>
+   <weapon size="large" x="44" y="0" h="0"/>
+   <weapon size="large" x="-6" y="0" h="12"/>
+   <weapon size="medium" x="-24" y="-8" h="8"/>
+   <weapon size="medium" x="-24" y="8" h="8"/>
+   <utility size="large" prop="systems">Previous Generation Large Systems</utility>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="medium"/>
+   <structure size="large" prop="engines">Beat Up Large Engine</structure>
+   <structure size="large" prop="hull">Patchwork Heavy Plating</structure>
+   <structure size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
+   <structure size="medium"/>
   </slots>
   <stats>
    <fuel_consumption>400</fuel_consumption>
@@ -2055,27 +2055,27 @@
    <cargo>25</cargo>
   </characteristics>
   <slots>
-   <weapon x="40" y="0" h="0"/>
-   <weapon x="25" y="-4" h="0"/>
-   <weapon x="25" y="4" h="0"/>
-   <weapon x="0" y="-6" h="2"/>
-   <weapon x="0" y="6" h="2"/>
-   <weapon x="-25" y="-8" h="3"/>
-   <weapon x="-25" y="8" h="3"/>
-   <utility prop="systems" size="heavy">Basic Large Systems</utility>
-   <utility/>
-   <utility/>
-   <utility/>
-   <utility/>
-   <utility/>
-   <structure prop="engines" size="heavy">Manufacturer Large Engine</structure>
-   <structure prop="hull" size="heavy">Unmodified Large Hull</structure>
-   <structure/>
-   <structure/>
-   <structure/>
-   <structure/>
-   <structure/>
-   <structure/>
+   <weapon size="large" x="40" y="0" h="0"/>
+   <weapon size="large" x="25" y="-4" h="0"/>
+   <weapon size="large" x="25" y="4" h="0"/>
+   <weapon size="large" x="0" y="-6" h="2"/>
+   <weapon size="large" x="0" y="6" h="2"/>
+   <weapon size="large" x="-25" y="-8" h="3"/>
+   <weapon size="large" x="-25" y="8" h="3"/>
+   <utility size="large" prop="systems">Basic Large Systems</utility>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <structure size="large" prop="engines">Manufacturer Large Engine</structure>
+   <structure size="large" prop="hull">Unmodified Large Hull</structure>
+   <structure size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
   </slots>
   <stats>
    <fuel_consumption>400</fuel_consumption>
@@ -2112,26 +2112,26 @@
    <cargo>30</cargo>
   </characteristics>
   <slots>
-   <weapon x="40" y="0" h="2"/>
-   <weapon x="25" y="0" h="2"/>
-   <weapon x="12" y="-6" h="0"/>
-   <weapon x="12" y="6" h="0"/>
-   <weapon x="0" y="0" h="7"/>
-   <weapon x="-15" y="0" h="7"/>
-   <weapon x="-33" y="0" h="7"/>
-   <utility prop="systems" size="heavy">Basic Large Systems</utility>
-   <utility/>
-   <utility/>
-   <utility/>
-   <utility/>
-   <utility/>
-   <structure prop="engines" size="heavy">Manufacturer Large Engine</structure>
-   <structure prop="hull" size="heavy">Unmodified Large Hull</structure>
-   <structure/>
-   <structure/>
-   <structure/>
-   <structure/>
-   <structure/>
+   <weapon size="large" x="40" y="0" h="2"/>
+   <weapon size="large" x="25" y="0" h="2"/>
+   <weapon size="large" x="12" y="-6" h="0"/>
+   <weapon size="large" x="12" y="6" h="0"/>
+   <weapon size="large" x="0" y="0" h="7"/>
+   <weapon size="large" x="-15" y="0" h="7"/>
+   <weapon size="large" x="-33" y="0" h="7"/>
+   <utility size="large" prop="systems">Basic Large Systems</utility>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <structure size="large" prop="engines">Manufacturer Large Engine</structure>
+   <structure size="large" prop="hull">Unmodified Large Hull</structure>
+   <structure size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
   </slots>
   <stats>
    <fuel_consumption>400</fuel_consumption>
@@ -2168,26 +2168,26 @@
    <cargo>30</cargo>
   </characteristics>
   <slots>
-   <weapon x="40" y="0" h="2"/>
-   <weapon x="25" y="0" h="2"/>
-   <weapon x="12" y="-6" h="0"/>
-   <weapon x="12" y="6" h="0"/>
-   <weapon x="0" y="0" h="7"/>
-   <weapon x="-15" y="0" h="7"/>
-   <weapon x="-33" y="0" h="7"/>
-   <utility prop="systems" size="heavy">Basic Large Systems</utility>
-   <utility/>
-   <utility/>
-   <utility/>
-   <utility/>
-   <utility/>
-   <structure prop="engines" size="heavy">Manufacturer Large Engine</structure>
-   <structure prop="hull" size="heavy">Unmodified Large Hull</structure>
-   <structure/>
-   <structure/>
-   <structure/>
-   <structure/>
-   <structure/>
+   <weapon size="large" x="40" y="0" h="2"/>
+   <weapon size="large" x="25" y="0" h="2"/>
+   <weapon size="large" x="12" y="-6" h="0"/>
+   <weapon size="large" x="12" y="6" h="0"/>
+   <weapon size="large" x="0" y="0" h="7"/>
+   <weapon size="large" x="-15" y="0" h="7"/>
+   <weapon size="large" x="-33" y="0" h="7"/>
+   <utility size="large" prop="systems">Basic Large Systems</utility>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <structure size="large" prop="engines">Manufacturer Large Engine</structure>
+   <structure size="large" prop="hull">Unmodified Large Hull</structure>
+   <structure size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
   </slots>
   <stats>
    <fuel_consumption>400</fuel_consumption>
@@ -2224,26 +2224,26 @@
    <cargo>30</cargo>
   </characteristics>
   <slots>
-   <weapon x="40" y="0" h="2"/>
-   <weapon x="25" y="0" h="2"/>
-   <weapon x="12" y="-6" h="0"/>
-   <weapon x="12" y="6" h="0"/>
-   <weapon x="0" y="0" h="7"/>
-   <weapon x="-15" y="0" h="7"/>
-   <weapon x="-33" y="0" h="7"/>
-   <utility prop="systems" size="heavy">Basic Large Systems</utility>
-   <utility/>
-   <utility/>
-   <utility/>
-   <utility/>
-   <utility/>
-   <structure prop="engines" size="heavy">Manufacturer Large Engine</structure>
-   <structure prop="hull" size="heavy">Unmodified Large Hull</structure>
-   <structure/>
-   <structure/>
-   <structure/>
-   <structure/>
-   <structure/>
+   <weapon size="large" x="40" y="0" h="2"/>
+   <weapon size="large" x="25" y="0" h="2"/>
+   <weapon size="large" x="12" y="-6" h="0"/>
+   <weapon size="large" x="12" y="6" h="0"/>
+   <weapon size="large" x="0" y="0" h="7"/>
+   <weapon size="large" x="-15" y="0" h="7"/>
+   <weapon size="large" x="-33" y="0" h="7"/>
+   <utility size="large" prop="systems">Basic Large Systems</utility>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <structure size="large" prop="engines">Manufacturer Large Engine</structure>
+   <structure size="large" prop="hull">Unmodified Large Hull</structure>
+   <structure size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
   </slots>
   <stats>
    <fuel_consumption>400</fuel_consumption>
@@ -2280,25 +2280,25 @@
    <cargo>30</cargo>
   </characteristics>
   <slots>
-   <weapon x="40" y="0" h="2"/>
-   <weapon x="25" y="0" h="2"/>
-   <weapon x="12" y="0" h="3"/>
-   <weapon x="0" y="0" h="4"/>
-   <weapon x="-15" y="0" h="6"/>
-   <weapon x="-33" y="0" h="6"/>
-   <utility prop="systems" size="heavy">Basic Large Systems</utility>
-   <utility/>
-   <utility/>
-   <utility/>
-   <utility/>
-   <utility/>
-   <structure prop="engines" size="heavy">Manufacturer Large Engine</structure>
-   <structure prop="hull" size="heavy">Unmodified Large Hull</structure>
-   <structure/>
-   <structure/>
-   <structure/>
-   <structure/>
-   <structure/>
+   <weapon size="large" x="40" y="0" h="2"/>
+   <weapon size="large" x="25" y="0" h="2"/>
+   <weapon size="large" x="12" y="0" h="3"/>
+   <weapon size="large" x="0" y="0" h="4"/>
+   <weapon size="large" x="-15" y="0" h="6"/>
+   <weapon size="large" x="-33" y="0" h="6"/>
+   <utility size="large" prop="systems">Basic Large Systems</utility>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <structure size="large" prop="engines">Manufacturer Large Engine</structure>
+   <structure size="large" prop="hull">Unmodified Large Hull</structure>
+   <structure size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
   </slots>
   <stats>
    <fuel_consumption>400</fuel_consumption>
@@ -2335,27 +2335,27 @@
    <cargo>20</cargo>
   </characteristics>
   <slots>
-   <weapon x="-10" y="-13" h="2"/>
-   <weapon x="-10" y="13" h="2"/>
-   <weapon x="-15" y="-25" h="3"/>
-   <weapon x="-15" y="25" h="3"/>
-   <weapon x="16" y="0" h="3"/>
-   <weapon x="0" y="0" h="5"/>
-   <weapon x="-20" y="0" h="5"/>
-   <utility prop="systems" size="heavy">Basic Large Systems</utility>
-   <utility/>
-   <utility/>
-   <utility/>
-   <utility/>
-   <utility/>
-   <structure prop="engines" size="heavy">Manufacturer Large Engine</structure>
-   <structure prop="hull" size="heavy">Unmodified Large Hull</structure>
-   <structure/>
-   <structure/>
-   <structure/>
-   <structure/>
-   <structure/>
-   <structure/>
+   <weapon size="large" x="-10" y="-13" h="2"/>
+   <weapon size="large" x="-10" y="13" h="2"/>
+   <weapon size="large" x="-15" y="-25" h="3"/>
+   <weapon size="large" x="-15" y="25" h="3"/>
+   <weapon size="large" x="16" y="0" h="3"/>
+   <weapon size="large" x="0" y="0" h="5"/>
+   <weapon size="large" x="-20" y="0" h="5"/>
+   <utility size="large" prop="systems">Basic Large Systems</utility>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <structure size="large" prop="engines">Manufacturer Large Engine</structure>
+   <structure size="large" prop="hull">Unmodified Large Hull</structure>
+   <structure size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
   </slots>
   <stats>
    <fuel_consumption>400</fuel_consumption>
@@ -2393,27 +2393,27 @@
    <cargo>30</cargo>
   </characteristics>
   <slots>
-   <weapon x="-10" y="-13" h="2"/>
-   <weapon x="-10" y="13" h="2"/>
-   <weapon x="-15" y="-25" h="3"/>
-   <weapon x="-15" y="25" h="3"/>
-   <weapon x="16" y="0" h="3"/>
-   <weapon x="0" y="0" h="5"/>
-   <weapon x="-20" y="0" h="5"/>
-   <utility prop="systems" size="heavy">Basic Large Systems</utility>
-   <utility/>
-   <utility/>
-   <utility/>
-   <utility/>
-   <utility/>
-   <structure prop="engines" size="heavy">Manufacturer Large Engine</structure>
-   <structure prop="hull" size="heavy">Unmodified Large Hull</structure>
-   <structure/>
-   <structure/>
-   <structure/>
-   <structure/>
-   <structure/>
-   <structure/>
+   <weapon size="large" x="-10" y="-13" h="2"/>
+   <weapon size="large" x="-10" y="13" h="2"/>
+   <weapon size="large" x="-15" y="-25" h="3"/>
+   <weapon size="large" x="-15" y="25" h="3"/>
+   <weapon size="large" x="16" y="0" h="3"/>
+   <weapon size="large" x="0" y="0" h="5"/>
+   <weapon size="large" x="-20" y="0" h="5"/>
+   <utility size="large" prop="systems">Basic Large Systems</utility>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <structure size="large" prop="engines">Manufacturer Large Engine</structure>
+   <structure size="large" prop="hull">Unmodified Large Hull</structure>
+   <structure size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
   </slots>
   <stats>
    <fuel_consumption>400</fuel_consumption>
@@ -2453,23 +2453,23 @@
    <cargo>35</cargo>
   </characteristics>
   <slots>
-   <weapon x="40" y="0" h="0"/>
-   <weapon x="20" y="0" h="0"/>
-   <weapon x="20" y="0" h="0"/>
-   <weapon x="-20" y="0" h="0"/>
-   <weapon x="-40" y="0" h="0"/>
-   <utility prop="systems" size="heavy">Basic Large Systems</utility>
-   <utility/>
-   <utility/>
-   <utility/>
-   <utility/>
-   <structure prop="engines" size="heavy">Manufacturer Large Engine</structure>
-   <structure prop="hull" size="heavy">Unmodified Large Hull</structure>
-   <structure/>
-   <structure/>
-   <structure/>
-   <structure/>
-   <structure/>
+   <weapon size="large" x="40" y="0" h="0"/>
+   <weapon size="large" x="20" y="0" h="0"/>
+   <weapon size="large" x="20" y="0" h="0"/>
+   <weapon size="large" x="-20" y="0" h="0"/>
+   <weapon size="large" x="-40" y="0" h="0"/>
+   <utility size="large" prop="systems">Basic Large Systems</utility>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <structure size="large" prop="engines">Manufacturer Large Engine</structure>
+   <structure size="large" prop="hull">Unmodified Large Hull</structure>
+   <structure size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
   </slots>
   <stats>
    <fuel_consumption>400</fuel_consumption>
@@ -2509,23 +2509,23 @@
    <cargo>35</cargo>
   </characteristics>
   <slots>
-   <weapon x="40" y="0" h="0"/>
-   <weapon x="20" y="0" h="0"/>
-   <weapon x="20" y="0" h="0"/>
-   <weapon x="-20" y="0" h="0"/>
-   <weapon x="-40" y="0" h="0"/>
-   <utility prop="systems" size="heavy">Basic Large Systems</utility>
-   <utility/>
-   <utility/>
-   <utility/>
-   <utility/>
-   <structure prop="engines" size="heavy">Manufacturer Large Engine</structure>
-   <structure prop="hull" size="heavy">Unmodified Large Hull</structure>
-   <structure/>
-   <structure/>
-   <structure/>
-   <structure/>
-   <structure/>
+   <weapon size="large" x="40" y="0" h="0"/>
+   <weapon size="large" x="20" y="0" h="0"/>
+   <weapon size="large" x="20" y="0" h="0"/>
+   <weapon size="large" x="-20" y="0" h="0"/>
+   <weapon size="large" x="-40" y="0" h="0"/>
+   <utility size="large" prop="systems">Basic Large Systems</utility>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <structure size="large" prop="engines">Manufacturer Large Engine</structure>
+   <structure size="large" prop="hull">Unmodified Large Hull</structure>
+   <structure size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
   </slots>
   <stats>
    <fuel_consumption>400</fuel_consumption>
@@ -2565,29 +2565,29 @@
    <cargo>40</cargo>
   </characteristics>
   <slots>
-   <weapon x="40" y="0" h="2"/>
-   <weapon x="25" y="0" h="2"/>
-   <weapon x="12" y="-6" h="0"/>
-   <weapon x="12" y="6" h="0"/>
-   <weapon x="0" y="0" h="7"/>
-   <weapon x="0" y="0" h="7"/>
-   <weapon x="-15" y="0" h="7"/>
-   <weapon x="-33" y="0" h="7"/>
-   <utility prop="systems" size="heavy">Basic Large Systems</utility>
-   <utility/>
-   <utility/>
-   <utility/>
-   <utility/>
-   <utility/>
-   <utility/>
-   <structure prop="engines" size="heavy">Manufacturer Large Engine</structure>
-   <structure prop="hull" size="heavy">Unmodified Large Hull</structure>
-   <structure/>
-   <structure/>
-   <structure/>
-   <structure/>
-   <structure/>
-   <structure/>
+   <weapon size="large" x="40" y="0" h="2"/>
+   <weapon size="large" x="25" y="0" h="2"/>
+   <weapon size="large" x="12" y="-6" h="0"/>
+   <weapon size="large" x="12" y="6" h="0"/>
+   <weapon size="large" x="0" y="0" h="7"/>
+   <weapon size="large" x="0" y="0" h="7"/>
+   <weapon size="large" x="-15" y="0" h="7"/>
+   <weapon size="large" x="-33" y="0" h="7"/>
+   <utility size="large" prop="systems">Basic Large Systems</utility>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <structure size="large" prop="engines">Manufacturer Large Engine</structure>
+   <structure size="large" prop="hull">Unmodified Large Hull</structure>
+   <structure size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
   </slots>
   <stats>
    <fuel_consumption>400</fuel_consumption>
@@ -2628,29 +2628,29 @@
    <cargo>130</cargo>
   </characteristics>
   <slots>
-   <weapon x="40" y="0" h="2"/>
-   <weapon x="25" y="0" h="2"/>
-   <weapon x="12" y="-6" h="0"/>
-   <weapon x="12" y="6" h="0"/>
-   <weapon x="0" y="0" h="7"/>
-   <weapon x="0" y="0" h="7"/>
-   <weapon x="-15" y="0" h="7"/>
-   <weapon x="-33" y="0" h="7"/>
-   <utility prop="systems" size="heavy">Basic Large Systems</utility>
-   <utility/>
-   <utility/>
-   <utility/>
-   <utility/>
-   <utility/>
-   <utility/>
-   <structure prop="engines" size="heavy">Manufacturer Large Engine</structure>
-   <structure prop="hull" size="heavy">Unmodified Large Hull</structure>
-   <structure/>
-   <structure/>
-   <structure/>
-   <structure/>
-   <structure/>
-   <structure/>
+   <weapon size="large" x="40" y="0" h="2"/>
+   <weapon size="large" x="25" y="0" h="2"/>
+   <weapon size="large" x="12" y="-6" h="0"/>
+   <weapon size="large" x="12" y="6" h="0"/>
+   <weapon size="large" x="0" y="0" h="7"/>
+   <weapon size="large" x="0" y="0" h="7"/>
+   <weapon size="large" x="-15" y="0" h="7"/>
+   <weapon size="large" x="-33" y="0" h="7"/>
+   <utility size="large" prop="systems">Basic Large Systems</utility>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <structure size="large" prop="engines">Manufacturer Large Engine</structure>
+   <structure size="large" prop="hull">Unmodified Large Hull</structure>
+   <structure size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
   </slots>
   <stats>
    <fuel_consumption>400</fuel_consumption>
@@ -2703,26 +2703,26 @@
    <cargo>5000</cargo>
   </characteristics>
   <slots>
-   <weapon x="0" y="0" h="0"/>
-   <weapon x="0" y="0" h="0"/>
-   <weapon x="50" y="0" h="5"/>
-   <weapon x="-50" y="0" h="5"/>
-   <weapon x="0" y="50" h="5"/>
-   <weapon x="0" y="-40" h="5"/>
-   <weapon x="0" y="0" h="30"/>
-   <weapon x="0" y="0" h="30"/>
-   <utility/>
-   <utility/>
-   <utility/>
-   <utility/>
-   <utility/>
-   <utility/>
-   <structure/>
-   <structure/>
-   <structure/>
-   <structure/>
-   <structure/>
-   <structure/>
+   <weapon size="large" x="0" y="0" h="0"/>
+   <weapon size="large" x="0" y="0" h="0"/>
+   <weapon size="large" x="50" y="0" h="5"/>
+   <weapon size="large" x="-50" y="0" h="5"/>
+   <weapon size="large" x="0" y="50" h="5"/>
+   <weapon size="large" x="0" y="-40" h="5"/>
+   <weapon size="large" x="0" y="0" h="30"/>
+   <weapon size="large" x="0" y="0" h="30"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
   </slots>
  </ship>
  <ship name="Seiryuu">
@@ -2756,21 +2756,21 @@
    <cargo>55</cargo>
   </characteristics>
   <slots>
-   <weapon x="-24" y="-8" h="8"/>
-   <weapon x="-24" y="8" h="8"/>
-   <weapon x="-23" y="-15" h="5"/>
-   <weapon x="-23" y="15" h="5"/>
-   <weapon x="44" y="0" h="0"/>
-   <weapon x="-6" y="0" h="12"/>
-   <utility/>
-   <utility/>
-   <utility/>
-   <utility/>
-   <utility/>
-   <structure/>
-   <structure/>
-   <structure/>
-   <structure/>
+   <weapon size="large" x="-24" y="-8" h="8"/>
+   <weapon size="large" x="-24" y="8" h="8"/>
+   <weapon size="large" x="-23" y="-15" h="5"/>
+   <weapon size="large" x="-23" y="15" h="5"/>
+   <weapon size="large" x="44" y="0" h="0"/>
+   <weapon size="large" x="-6" y="0" h="12"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
   </slots>
  </ship>
  <ship name="Suzaku">
@@ -2804,21 +2804,21 @@
    <cargo>55</cargo>
   </characteristics>
   <slots>
-   <weapon x="-24" y="-8" h="8"/>
-   <weapon x="-24" y="8" h="8"/>
-   <weapon x="-23" y="-15" h="5"/>
-   <weapon x="-23" y="15" h="5"/>
-   <weapon x="44" y="0" h="0"/>
-   <weapon x="-6" y="0" h="12"/>
-   <utility/>
-   <utility/>
-   <utility/>
-   <utility/>
-   <utility/>
-   <structure/>
-   <structure/>
-   <structure/>
-   <structure/>
+   <weapon size="large" x="-24" y="-8" h="8"/>
+   <weapon size="large" x="-24" y="8" h="8"/>
+   <weapon size="large" x="-23" y="-15" h="5"/>
+   <weapon size="large" x="-23" y="15" h="5"/>
+   <weapon size="large" x="44" y="0" h="0"/>
+   <weapon size="large" x="-6" y="0" h="12"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
   </slots>
  </ship>
  <ship name="Byakko">
@@ -2852,21 +2852,21 @@
    <cargo>55</cargo>
   </characteristics>
   <slots>
-   <weapon x="-24" y="-8" h="8"/>
-   <weapon x="-24" y="8" h="8"/>
-   <weapon x="-23" y="-15" h="5"/>
-   <weapon x="-23" y="15" h="5"/>
-   <weapon x="44" y="0" h="0"/>
-   <weapon x="-6" y="0" h="12"/>
-   <utility/>
-   <utility/>
-   <utility/>
-   <utility/>
-   <utility/>
-   <structure/>
-   <structure/>
-   <structure/>
-   <structure/>
+   <weapon size="large" x="-24" y="-8" h="8"/>
+   <weapon size="large" x="-24" y="8" h="8"/>
+   <weapon size="large" x="-23" y="-15" h="5"/>
+   <weapon size="large" x="-23" y="15" h="5"/>
+   <weapon size="large" x="44" y="0" h="0"/>
+   <weapon size="large" x="-6" y="0" h="12"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
   </slots>
  </ship>
  <ship name="Genbu">
@@ -2900,21 +2900,21 @@
    <cargo>55</cargo>
   </characteristics>
   <slots>
-   <weapon x="-24" y="-8" h="8"/>
-   <weapon x="-24" y="8" h="8"/>
-   <weapon x="-23" y="-15" h="5"/>
-   <weapon x="-23" y="15" h="5"/>
-   <weapon x="44" y="0" h="0"/>
-   <weapon x="-6" y="0" h="12"/>
-   <utility/>
-   <utility/>
-   <utility/>
-   <utility/>
-   <utility/>
-   <structure/>
-   <structure/>
-   <structure/>
-   <structure/>
+   <weapon size="large" x="-24" y="-8" h="8"/>
+   <weapon size="large" x="-24" y="8" h="8"/>
+   <weapon size="large" x="-23" y="-15" h="5"/>
+   <weapon size="large" x="-23" y="15" h="5"/>
+   <weapon size="large" x="44" y="0" h="0"/>
+   <weapon size="large" x="-6" y="0" h="12"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <utility size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
+   <structure size="large"/>
   </slots>
  </ship>
  <ship name="Diplomatic Vessel">
@@ -2948,12 +2948,12 @@
    <cargo>10</cargo>
   </characteristics>
   <slots>
-   <weapon x="9" y="0" h="-2"/>
-   <utility/>
-   <utility/>
-   <utility/>
-   <utility/>
-   <structure/>
+   <weapon size="small" x="9" y="0" h="-2"/>
+   <utility size="small"/>
+   <utility size="small"/>
+   <utility size="small"/>
+   <utility size="small"/>
+   <structure size="small"/>
   </slots>
  </ship>
 </Ships>

@@ -260,11 +260,11 @@ const char *outfit_slotSize( const Outfit* o )
       case OUTFIT_SLOT_SIZE_NA:
          return "NA";
       case OUTFIT_SLOT_SIZE_LIGHT:
-         return "Light";
+         return "Small";
       case OUTFIT_SLOT_SIZE_MEDIUM:
          return "Medium";
       case OUTFIT_SLOT_SIZE_HEAVY:
-         return "Heavy";
+         return "Large";
       default:
          return "Unknown";
    }
@@ -302,11 +302,11 @@ OutfitSlotSize outfit_toSlotSize( const char *s )
       return OUTFIT_SLOT_SIZE_NA;
    }
 
-   if (strcasecmp(s,"Heavy")==0)
+   if (strcasecmp(s,"Large")==0)
       return OUTFIT_SLOT_SIZE_HEAVY;
    else if (strcasecmp(s,"Medium")==0)
       return OUTFIT_SLOT_SIZE_MEDIUM;
-   else if (strcasecmp(s,"Light")==0)
+   else if (strcasecmp(s,"Small")==0)
       return OUTFIT_SLOT_SIZE_LIGHT;
 
    WARN("'%s' does not match any outfit slot sizes.", s);

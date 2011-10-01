@@ -555,7 +555,7 @@ static int ship_parseSlot( Ship *temp, ShipOutfitSlot *slot, OutfitSlotType type
             (temp->class == SHIP_CLASS_CRUISER) ||
             (temp->class == SHIP_CLASS_CARRIER) ||
             (temp->class == SHIP_CLASS_MOTHERSHIP)) {
-         typ       = "Heavy";
+         typ       = "Large";
          base_size = OUTFIT_SLOT_SIZE_HEAVY;
       }
       else if ((temp->class == SHIP_CLASS_CRUISE_SHIP) ||
@@ -568,7 +568,7 @@ static int ship_parseSlot( Ship *temp, ShipOutfitSlot *slot, OutfitSlotType type
          base_size = OUTFIT_SLOT_SIZE_MEDIUM;
       }
       else {
-         typ       = "Light";
+         typ       = "Small";
          base_size = OUTFIT_SLOT_SIZE_LIGHT;
       }
       WARN("Ship '%s' has implicit slot size, setting to '%s'",temp->name, typ);
