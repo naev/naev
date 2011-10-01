@@ -543,7 +543,7 @@ static int ship_loadGFX( Ship *temp, char *buf, int sx, int sy )
 static int ship_parseSlot( Ship *temp, ShipOutfitSlot *slot, OutfitSlotType type, xmlNodePtr node )
 {
    OutfitSlotSize base_size;
-   char *buf;
+   char *buf, *typ;
    Outfit *o;
 
    /* Parse size. */
@@ -554,17 +554,24 @@ static int ship_parseSlot( Ship *temp, ShipOutfitSlot *slot, OutfitSlotType type
       if ((temp->class == SHIP_CLASS_BULK_CARRIER) ||
             (temp->class == SHIP_CLASS_CRUISER) ||
             (temp->class == SHIP_CLASS_CARRIER) ||
-            (temp->class == SHIP_CLASS_MOTHERSHIP))
+            (temp->class == SHIP_CLASS_MOTHERSHIP)) {
+         typ       = "Heavy";
          base_size = OUTFIT_SLOT_SIZE_HEAVY;
+      }
       else if ((temp->class == SHIP_CLASS_CRUISE_SHIP) ||
             (temp->class == SHIP_CLASS_FREIGHTER) ||
             (temp->class == SHIP_CLASS_DESTROYER) ||
             (temp->class == SHIP_CLASS_CORVETTE) ||
             (temp->class == SHIP_CLASS_HEAVY_DRONE) ||
-            (temp->class == SHIP_CLASS_ARMOURED_TRANSPORT))
+            (temp->class == SHIP_CLASS_ARMOURED_TRANSPORT)) {
+         typ       = "Medium";
          base_size = OUTFIT_SLOT_SIZE_MEDIUM;
-      else
+      }
+      else {
+         typ       = "Light";
          base_size = OUTFIT_SLOT_SIZE_LIGHT;
+      }
+      WARN("Ship '%s' has implicit slot size, setting to '%s'",temp->name, typ);
    }
    free(buf);
 
