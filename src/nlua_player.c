@@ -745,10 +745,13 @@ static Pilot* playerL_newShip( lua_State *L )
       name = luaL_checkstring(L,2);
    else
       name = str;
-   if (lua_gettop(L) > 2)
+   if (lua_isstring(L,3))
       pntname = luaL_checkstring (L,3);
-   else
+   else {
+      if (!landed)
+         NLUA_ERROR(L,"Must be landed to add a new ship to the player without specifying planet to add to!");
       pntname = NULL;
+   }
    noname = lua_toboolean(L,4);
 
    /* Get planet. */
@@ -827,8 +830,8 @@ static int playerL_swapShip( lua_State *L )
    int remship;
 
    remship = lua_toboolean(L,5);
-   p = playerL_newShip( L );
-   cur = player.p->name;
+   p       = playerL_newShip( L );
+   cur     = player.p->name;
    player_swapShip( p->name );
    if (remship)
       player_rmShip( cur );
