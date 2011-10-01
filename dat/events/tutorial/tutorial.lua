@@ -25,7 +25,7 @@ function create()
     local pp = player.pilot()
     player.teleport("Mohawk")
     player.msgClear()
-    player.swapShip("Llama", "Tutorial Llama", nil, true, true)
+    player.swapShip("Llama", "Tutorial Llama", "Paul 2", true, true)
 
     pp:setPos(vec2.new(0, 0))
     pp:setVel(vec2.new(0, 0))
