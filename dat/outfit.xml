@@ -5144,7 +5144,7 @@
    <slot>structure</slot>
    <size>small</size>
    <mass>1</mass>
-   <price>0</price>
+   <price>1</price>
    <description>This outfit removes all shields from the ship. For tutorial purposes.</description>
    <gfx_store>capacitor8</gfx_store>
   </general>

@@ -22,23 +22,27 @@ end
 
 function create()
     -- Set defaults just in case.
+    local pp = player.pilot()
     player.teleport("Mohawk")
-    player.pilot():setPos(vec2.new(0, 0))
-    player.pilot():setVel(vec2.new(0, 0))
     player.msgClear()
+    player.swapShip("Llama", "Tutorial Llama", "Paul 2", true, true)
+
+    pp:setPos(vec2.new(0, 0))
+    pp:setVel(vec2.new(0, 0))
+    pp:setHealth(100, 100)
+    pp:control(false)
+    pp:setNoLand(false)
+    pp:setNoJump(false)
     
     system.get("Mohawk"):setKnown(false)
     system.get("Cherokee"):setKnown(false)
     system.get("Iroquois"):setKnown(false)
     system.get("Navajo"):setKnown(false)
 
-    player.pilot():setNoLand(false)
-    player.pilot():setNoJump(false)
-
     -- Create menu.
     _, selection = tk.choice(menutitle, menutext, menubasic, menuinterstellar, menucomms, menubasiccombat, menumisscombat, menudisable, menuplanet, menumissions, menux)
     
-    startModule(_G["selection"])
+    startModule(selection)
 end
 
 -- Helper function for starting the tutorial modules
