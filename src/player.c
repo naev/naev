@@ -2353,6 +2353,14 @@ int player_getOutfitsFiltered( char** soutfits, glTexture** toutfits,
          j++;
       }
    }
+
+   /* None found. */
+   if (j == 0) {
+      soutfits[0] = strdup( "None" );
+      toutfits[0] = NULL;
+      return 1;
+   }
+
    return j;
 }
 

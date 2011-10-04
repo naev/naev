@@ -1160,12 +1160,12 @@ void equipment_regenLists( unsigned int wid, int outfits, int ships )
    if (outfits) {
       for (i=0; i<OUTFIT_TABS; i++) {
          wtmp      = outfit_windows[i];
-         toolkit_setImageArrayPos( wtmp, EQUIPMENT_OUTFITS, nout[i] );
+         toolkit_setImageArrayPos(    wtmp, EQUIPMENT_OUTFITS, nout[i] );
          toolkit_setImageArrayOffset( wtmp, EQUIPMENT_OUTFITS, offout[i] );
       }
    }
    if (ships) {
-      toolkit_setImageArrayPos( wid, EQUIPMENT_SHIPS, nship );
+      toolkit_setImageArrayPos(    wid, EQUIPMENT_SHIPS, nship );
       toolkit_setImageArrayOffset( wid, EQUIPMENT_SHIPS, offship );
       /* Try to maintain same ship selected. */
       s = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
@@ -1401,9 +1401,13 @@ static void equipment_genOutfitLists( unsigned int wid )
    y = 20;
 
    /* Create tabbed windows. */
-   outfit_windows = window_addTabbedWindow( wid, x, y, ow, oh,
-         EQUIPMENT_OUTFIT_TAB, numtabs, tabnames, 1 );
-   window_tabSetFont( wid, EQUIPMENT_OUTFIT_TAB, &gl_defFontMono );
+   if (!widget_exists( wid, EQUIPMENT_OUTFIT_TAB )) {
+      outfit_windows = window_addTabbedWindow( wid, x, y, ow, oh,
+            EQUIPMENT_OUTFIT_TAB, numtabs, tabnames, 1 );
+      window_tabSetFont( wid, EQUIPMENT_OUTFIT_TAB, &gl_defFontMono );
+   }
+   else
+      outfit_windows = window_tabWinGet( wid, EQUIPMENT_OUTFIT_TAB );
 
    /* Add the tabs. */
    for (i=0; i<numtabs; i++)
@@ -1437,9 +1441,9 @@ static void equipment_addOutfitListSingle( unsigned int wid,
    window_dimWindow( wid, &w, &h );
 
    /* Allocate space. */
-   noutfits = MAX(1,player_numOutfits()); /* This is the most we'll need, probably less due to filtering. */
-   soutfits = malloc(sizeof(char*)*noutfits);
-   toutfits = malloc(sizeof(glTexture*)*noutfits);
+   noutfits = MAX( 1, player_numOutfits() ); /* This is the most we'll need, probably less due to filtering. */
+   soutfits = calloc( noutfits, sizeof(char*) );
+   toutfits = calloc( noutfits, sizeof(glTexture*) );
 
    /* Get the outfits. */
    noutfits = player_getOutfitsFiltered( soutfits, toutfits, filter );
@@ -1452,7 +1456,7 @@ static void equipment_addOutfitListSingle( unsigned int wid,
          equipment_rightClickOutfits );
 
    /* Case there are none we don't need to do more. */
-   if (strcmp(soutfits[0],"None")==0)
+   if (strcmp( soutfits[0], "None" )==0)
       return;
 
    /* Set alt text. */
@@ -1673,7 +1677,7 @@ static void equipment_updateOutfitSingle( unsigned int wid, char* str )
       eq_wgt.outfit = NULL;
       return;
    }
-   eq_wgt.outfit = outfit_get(oname);
+   eq_wgt.outfit = outfit_get( oname );
 
    /* Also update ships. */
    if (str != NULL)

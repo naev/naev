@@ -466,6 +466,11 @@ int window_tabWinOnChange( const unsigned int wid, const char *tab,
 
 /**
  * @brief Changes the font used by a tabbed window widget.
+ *
+ *    @param wid Window to which tabbed window belongs.
+ *    @param tab Name of the tabbed window.
+ *    @param font Font to set to.
+ *    @return 0 on success.
  */
 int window_tabSetFont( const unsigned int wid, const char *tab, const glFont *font )
 {
@@ -483,4 +488,18 @@ int window_tabSetFont( const unsigned int wid, const char *tab, const glFont *fo
 }
 
 
+/**
+ * @brief Gets the tab windows children windows.
+ *
+ *    @param wid Window to which tabbed window belongs.
+ *    @param tab Name of the tabbed window.
+ *    @return The children windows.
+ */
+unsigned int* window_tabWinGet( const unsigned int wid, const char *tab )
+{
+   Widget *wgt = tab_getWgt( wid, tab );
+   if (wgt == NULL)
+      return NULL;
+   return wgt->dat.tab.windows;
+}
 
