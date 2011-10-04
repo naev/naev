@@ -169,7 +169,7 @@ void equipment_rightClickOutfits( unsigned int wid, char* str )
       /* Bingo! */
       eq_wgt.outfit  = o;
       p              = eq_wgt.selected;
-      equipment_swapSlot( wid, p, &slots[i] );
+      equipment_swapSlot( equipment_wid, p, &slots[i] );
       return;
    }
 }
@@ -1130,7 +1130,7 @@ void equipment_regenLists( unsigned int wid, int outfits, int ships )
    unsigned int wtmp;
 
    /* Default.s */
-   memset( nout, 0, sizeof(nout) );
+   memset( nout,   0, sizeof(nout) );
    memset( offout, 0, sizeof(offout) );
    nship    = 0;
    offship  = 0.;
@@ -1139,15 +1139,15 @@ void equipment_regenLists( unsigned int wid, int outfits, int ships )
    if (outfits) {
       for (i=0; i<OUTFIT_TABS; i++) {
          wtmp      = outfit_windows[i];
-         nout[i]   = toolkit_getImageArrayPos( wtmp, EQUIPMENT_OUTFITS );
+         nout[i]   = toolkit_getImageArrayPos(    wtmp, EQUIPMENT_OUTFITS );
          offout[i] = toolkit_getImageArrayOffset( wtmp, EQUIPMENT_OUTFITS );
          window_destroyWidget( wtmp, EQUIPMENT_OUTFITS );
       }
    }
    if (ships) {
-      nship   = toolkit_getImageArrayPos( wid, EQUIPMENT_SHIPS );
+      nship   = toolkit_getImageArrayPos(    wid, EQUIPMENT_SHIPS );
       offship = toolkit_getImageArrayOffset( wid, EQUIPMENT_SHIPS );
-      s       = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
+      s       = toolkit_getImageArray(       wid, EQUIPMENT_SHIPS );
       strncpy( selship, s, sizeof(selship) );
       selship[PATH_MAX-1] = '\0'; /* Just in case. */
       window_destroyWidget( wid, EQUIPMENT_SHIPS );
@@ -1724,7 +1724,7 @@ static void equipment_changeShip( unsigned int wid )
    /* Regenerate ship widget. */
    equipment_regenLists( wid, 0, 1 );
    /* Focus new ship. */
-   toolkit_setImageArrayPos( wid, EQUIPMENT_SHIPS, 0 );
+   toolkit_setImageArrayPos(    wid, EQUIPMENT_SHIPS, 0 );
    toolkit_setImageArrayOffset( wid, EQUIPMENT_SHIPS, 0. );
 }
 /**
