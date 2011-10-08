@@ -7,6 +7,24 @@
  * @file pilot_weapon.c
  *
  * @brief Handles pilot weapon sets.
+ *
+ * Cheat sheet: how this works (it's complicated).
+ *
+ * KEYPRESS
+ * 1) weapSetPress
+ * 2) weapSetFire
+ * 2.1) Modifications get turned on/off
+ * 2.2) Weapons go to shootWeaponSetOutfit
+ *
+ * UPDATE
+ * 1) weapSetUpdate
+ * 2) weapSetExec
+ * 2.1) fire set => weapSetFire
+ * 2.1.1) Modifications get turned on/off
+ * 2.1.2) Weapons go to shootWeaponSetOutfit
+ * 2.2) weapsetUpdateOutfits
+ *
+ * So to actually modify stuff, chances are you want to go to pilot_weapSetFire.
  */
 
 
