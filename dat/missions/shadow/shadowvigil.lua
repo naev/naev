@@ -198,6 +198,7 @@ function enter()
         -- case enter system where escorts wait
         escorts = pilot.add("Shadowvigil Escorts", nil, vec2.new(0, 0))
         for i, j in ipairs(escorts) do
+            if not alive[i] then j:rm() end -- Dead escorts stay dead.
             if j:exists() then
                 j:control()
                 hook.pilot(j, "death", "escortDeath")
@@ -388,7 +389,6 @@ function escortDeath()
     if alive[3] then alive[3] = false
     elseif alive[2] then alive[2] = false
     else -- all escorts dead
-        -- TODO: abort message
         tk.msg(escortdeathtitle, escortdeathtext)
         abort()
     end
