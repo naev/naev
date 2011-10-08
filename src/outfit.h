@@ -199,9 +199,12 @@ typedef struct OutfitAmmoData_ {
  * These modify the ship's basic properties when equipped on a pilot.
  */
 typedef struct OutfitModificationData_ {
+   /* Active information (if applicable). */
    int active;       /**< Outfit is active. */
+   double duration;  /**< Time the active outfit stays on (in seconds). */
+   double cooldown;  /**< Time the active outfit stays off after it's duration (in seconds). */
 
-   /* movement */
+   /* Movement. */
    double thrust;    /**< Maximum thrust modifier. */
    double thrust_rel; /**< Relative thrust modifier. */
    double turn;      /**< Maximum turn modifier. */
@@ -209,7 +212,7 @@ typedef struct OutfitModificationData_ {
    double speed;     /**< Maximum speed modifier. */
    double speed_rel; /**< Relative speed modifier. */
 
-   /* health */
+   /* Health. */
    double armour;    /**< Maximum armour modifier. */
    double armour_rel; /**< Relative to armour base modifier. */
    double armour_regen; /**< Armour regeneration modifier. */
@@ -221,13 +224,13 @@ typedef struct OutfitModificationData_ {
    double energy_regen; /**< Energy regeneration modifier. */
    double cpu;       /**< CPU modifier. */
 
-   /* misc */
+   /* Misc. */
    double cargo;     /**< Cargo space modifier. */
    double crew_rel;  /**< Relative crew modification. */
    double mass_rel;  /**< Relative mass modification. */
    double fuel;      /**< Maximum fuel modifier. */
 
-   /* stats */
+   /* Stats. */
    ShipStatList *stats; /**< Stat list. */
 } OutfitModificationData;
 

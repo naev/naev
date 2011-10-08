@@ -1385,12 +1385,19 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
    int i;
    xmlNodePtr node;
    ShipStatList *ll;
+   char *buf;
    node = parent->children;
 
    do { /* load all the data */
       xml_onlyNodes(node);
       if (xml_isNode(node,"active")) {
-         temp->u.mod.active = 1;
+         xmlr_attr(node, "cooldown", buf);
+         if (buf != NULL) {
+            temp->u.mod.cooldown = atof( buf );
+            free(buf);
+         }
+         temp->u.mod.duration = xml_getFloat(node);
+         temp->u.mod.active   = 1;
          continue;
       }
       /* movement */
