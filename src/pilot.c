@@ -1356,6 +1356,10 @@ void pilot_update( Pilot* pilot, const double dt )
       if (o->timer > 0.)
          o->timer -= dt * pilot_heatFireRateMod( o->heat_T );
 
+      /* Handle state timer. */
+      if (o->stimer > 0.)
+         o->stimer -= dt;
+
       /* Handle heat. */
       Q  += pilot_heatUpdateSlot( pilot, o, dt );
 

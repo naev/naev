@@ -12,6 +12,10 @@
 
 #define WEAPSET_INRANGE_PLAYER_DEF  0 /**< Default weaponset inrange parameter for the player. */
 
+#define WEAPSET_TYPE_CHANGE   0  /**< Changes weaponsets. */
+#define WEAPSET_TYPE_WEAPON   1  /**< Activates weapons (while held down). */
+#define WEAPSET_TYPE_ACTIVE   2  /**< Toggles outfits (if on it deactivates). */
+
 
 /* Freedom. */
 void pilot_weapSetFree( Pilot* p );
@@ -24,14 +28,13 @@ void pilot_getRateMod( double *rate_mod, double* energy_mod,
 
 
 /* Updating. */
+void pilot_weapSetAIClear( Pilot* p );
 void pilot_weapSetPress( Pilot* p, int id, int type );
 void pilot_weapSetUpdate( Pilot* p );
 
 
 /* Weapon Set. */
-void pilot_weapSetExec( Pilot* p, int id );
 const char *pilot_weapSetName( Pilot* p, int id );
-void pilot_weapSetNameSet( Pilot* p, int id, const char *name );
 void pilot_weapSetAdd( Pilot* p, int id, PilotOutfitSlot *o, int level );
 void pilot_weapSetRm( Pilot* p, int id, PilotOutfitSlot *o );
 int pilot_weapSetCheck( Pilot* p, int id, PilotOutfitSlot *o );
@@ -42,8 +45,8 @@ PilotWeaponSetOutfit* pilot_weapSetList( Pilot* p, int id, int *n );
 
 
 /* Properties. */
-int pilot_weapSetModeCheck( Pilot* p, int id );
-void pilot_weapSetMode( Pilot* p, int id, int fire );
+int pilot_weapSetTypeCheck( Pilot* p, int id );
+void pilot_weapSetType( Pilot* p, int id, int type );
 int pilot_weapSetInrangeCheck( Pilot* p, int id );
 void pilot_weapSetInrange( Pilot* p, int id, int inrange );
 

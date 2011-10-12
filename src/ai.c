@@ -849,6 +849,7 @@ void ai_think( Pilot* pilot, const double dt )
    pilot_turn        = 0.;
    pilot_flags       = 0;
    /* pilot_setTarget( cur_pilot, cur_pilot->id ); */
+   pilot_weapSetAIClear( cur_pilot ); /* Hack so shit works. TODO fix. */
 
    /* Get current task. */
    t = ai_curTask( cur_pilot );
@@ -2927,8 +2928,6 @@ static int aiL_settarget( lua_State *L )
 /**
  * @brief Sets the active weapon set (or fires another weapon set).
  *
- *
- *
  *    @luaparam id ID of the weapon set to switch to or fire.
  * @luafunc weapset( id )
  */
@@ -2936,7 +2935,7 @@ static int aiL_weapSet( lua_State *L )
 {
    int id;
    id = luaL_checkint(L,1);
-   pilot_weapSetExec( cur_pilot, id );
+   pilot_weapSetPress( cur_pilot, id, 1 );
    return 0;
 }
 

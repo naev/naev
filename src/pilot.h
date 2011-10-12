@@ -130,9 +130,10 @@ typedef char PilotFlags[ PILOT_FLAGS_MAX ];
  * Currently only applicable to beam weapons.
  */
 typedef enum PilotOutfitState_ {
-   PILOT_OUTFIT_OFF, /**< Normal state. */
+   PILOT_OUTFIT_OFF,    /**< Normal state. */
    PILOT_OUTFIT_WARMUP, /**< Outfit is starting to warm up. */
-   PILOT_OUTFIT_ON /**< Outfit is activated and running. */
+   PILOT_OUTFIT_ON,     /**< Outfit is activated and running. */
+   PILOT_OUTFIT_COOLDOWN, /**< Outfit is cooling down. */
 } PilotOutfitState;
 
 
@@ -167,6 +168,7 @@ typedef struct PilotOutfitSlot_ {
 
    /* Current state. */
    PilotOutfitState state; /**< State of the outfit. */
+   double stimer;    /**< State timer, tracking current state. */
    double timer;     /**< Used to store when it was last used. */
    int level;        /**< Level in current weapon set (-1 is none). */
 
@@ -195,13 +197,13 @@ typedef struct PilotWeaponSetOutfit_ {
  *  However they can also be used to launch weapons.
  */
 typedef struct PilotWeaponSet_ {
-   char *name;    /**< Helpful for the player. */
-   int fire;      /**< Whether to fire the weapons or just enable them. */
+   int type;      /**< Type of the weaponset. */
    int active;    /**< Whether or not it's currently firing. */
+   PilotWeaponSetOutfit *slots; /**< Slots involved with the weapon set. */
+   /* Only applicable to weapon type. */
    int inrange;   /**< Whether or not to fire only if the target is inrange. */
    double range[PILOT_WEAPSET_MAX_LEVELS]; /**< Range of the levels in the outfit slot. */
    double speed[PILOT_WEAPSET_MAX_LEVELS]; /**< Speed of the levels in the outfit slot. */
-   PilotWeaponSetOutfit *slots; /**< Slots involved with the weapon set. */
 } PilotWeaponSet;
 
 

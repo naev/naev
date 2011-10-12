@@ -77,7 +77,6 @@ static void standings_close( unsigned int wid, char *str );
 static void ship_update( unsigned int wid );
 static void weapons_genList( unsigned int wid );
 static void weapons_update( unsigned int wid, char *str );
-static void weapons_rename( unsigned int wid, char *str );
 static void weapons_autoweap( unsigned int wid, char *str );
 static void weapons_fire( unsigned int wid, char *str );
 static void weapons_inrange( unsigned int wid, char *str );
@@ -341,15 +340,13 @@ static void info_openWeapons( unsigned int wid )
    /* Buttons */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "closeCargo", "Close", info_close );
-   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20), BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnRename", "Rename", weapons_rename );
 
    /* Checkboxes. */
    window_addCheckbox( wid, 220, 20+2*(BUTTON_HEIGHT+20)-40, 250, BUTTON_HEIGHT,
          "chkAutoweap", "Automatically handle weapons", weapons_autoweap, player.p->autoweap );
    window_addCheckbox( wid, 220, 20+2*(BUTTON_HEIGHT+20)-10, 300, BUTTON_HEIGHT,
          "chkFire", "Enable fire mode (fires when activated)", weapons_fire,
-         pilot_weapSetModeCheck( player.p, info_eq_weaps.weapons ) );
+         pilot_weapSetTypeCheck( player.p, info_eq_weaps.weapons ) );
    window_addCheckbox( wid, 220, 20+2*(BUTTON_HEIGHT+20)+20, 300, BUTTON_HEIGHT,
          "chkInrange", "Only shoot weapons that are in range", weapons_inrange,
          pilot_weapSetInrangeCheck( player.p, info_eq_weaps.weapons ) );
@@ -417,7 +414,7 @@ static void weapons_update( unsigned int wid, char *str )
 
    /* Update fire mode. */
    window_checkboxSet( wid, "chkFire",
-         pilot_weapSetModeCheck( player.p, pos ) );
+         pilot_weapSetTypeCheck( player.p, pos ) );
 
    /* Update inrange. */
    window_checkboxSet( wid, "chkInrange",
@@ -425,35 +422,6 @@ static void weapons_update( unsigned int wid, char *str )
 
    /* Update autoweap. */
    window_checkboxSet( wid, "chkAutoweap", player.p->autoweap );
-}
-
-
-/**
- * @brief Renames a weapon set.
- */
-static void weapons_rename( unsigned int wid, char *str )
-{
-   (void) str;
-   char *name;
-
-   /* Prompt for new name. */
-   name = dialogue_input( "Rename Weapon Set", 3, 30,
-         "What do you want to rename the weapon set '%s'?",
-         pilot_weapSetName( player.p, info_eq_weaps.weapons ) );
-
-   /* Cancelled. */
-   if (name == NULL)
-      return;
-
-   /* Change name. */
-   pilot_weapSetNameSet( player.p, info_eq_weaps.weapons, name );
-   free(name);
-
-   /* Disable autoweap. */
-   player.p->autoweap = 0;
-
-   /* Regenerate list. */
-   weapons_genList( wid );
 }
 
 
@@ -494,17 +462,17 @@ static void weapons_fire( unsigned int wid, char *str )
 
    /* Set state. */
    state = window_checkboxState( wid, str );
-   pilot_weapSetMode( player.p, info_eq_weaps.weapons, state );
+   pilot_weapSetType( player.p, info_eq_weaps.weapons, state );
 
    /* Check to see if they are all fire groups. */
    for (i=0; i<PILOT_WEAPON_SETS; i++)
-      if (!pilot_weapSetModeCheck( player.p, i ))
+      if (!pilot_weapSetTypeCheck( player.p, i ))
          break;
 
    /* Not able to set them all to fire groups. */
    if (i >= PILOT_WEAPON_SETS) {
       dialogue_alert( "You can not set all your weapon sets to fire groups!" );
-      pilot_weapSetMode( player.p, info_eq_weaps.weapons, 0 );
+      pilot_weapSetType( player.p, info_eq_weaps.weapons, 0 );
       window_checkboxSet( wid, str, 0 );
    }
 

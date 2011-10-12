@@ -2895,7 +2895,7 @@ static int player_saveShip( xmlTextWriterPtr writer,
          name = pilot_weapSetName(ship,i);
          if (name != NULL)
             xmlw_attr(writer,"name","%s",name);
-         xmlw_attr(writer,"fire","%d",pilot_weapSetModeCheck(ship,i));
+         xmlw_attr(writer,"type","%d",pilot_weapSetTypeCheck(ship,i));
          for (j=0; j<n;j++) {
             xmlw_startElem(writer,"weapon");
             xmlw_attr(writer,"level","%d",weaps[j].level);
@@ -3342,7 +3342,6 @@ static void player_parseShipSlot( xmlNodePtr node, Pilot *ship, PilotOutfitSlot 
 static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
 {
    char *name, *model, *loc, *q, *id;
-   char buf[PATH_MAX];
    int i, n;
    double fuel;
    Ship *ship_parsed;
@@ -3568,25 +3567,14 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
          if (autoweap) /* Autoweap handles everything except inrange. */
             continue;
 
-         /* Set fire mode. */
-         xmlr_attr(cur,"fire",id);
+         /* Set type mode. */
+         xmlr_attr(cur,"type",id);
          if (id == NULL) {
-            WARN("Player ship '%s' missing 'fire' tag for weapon set.",ship->name);
+            WARN("Player ship '%s' missing 'type' tag for weapon set.",ship->name);
             continue;
          }
-         pilot_weapSetMode( ship, i, atoi(id) );
+         pilot_weapSetType( ship, i, atoi(id) );
          free(id);
-
-         /* Get name. */
-         xmlr_attr(cur,"name",id);
-         if (id != NULL) {
-            pilot_weapSetNameSet( ship, i, id );
-            free(id);
-         }
-         else {
-            snprintf( buf, sizeof(buf), "Weaponset %d", (i+1)%10 );
-            pilot_weapSetNameSet( ship, i, buf );
-         }
 
          /* Parse individual weapons. */
          ccur = cur->xmlChildrenNode;
