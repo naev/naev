@@ -326,6 +326,34 @@ const char *pilot_weapSetName( Pilot* p, int id )
 
 
 /**
+ * @brief Removes slots by type from the weapon set.
+ */
+void pilot_weapSetRmSlot( Pilot *p, int id, OutfitSlotType type )
+{
+   int i, n, l;
+   PilotWeaponSet *ws;
+
+   /* We must clean up the slots. */
+   n  = 0; /* Number to remove. */
+   ws = pilot_weapSet(p,id);
+   if (ws->slots == NULL)
+      return;
+   l  = array_size(ws->slots);
+   for (i=0; i<l; i++) {
+      if (ws->slots->slot->slot.type != type)
+         continue;
+
+      /* Move down. */
+      memmove( &ws->slots[i], &ws->slots[i+1], sizeof(PilotWeaponSetOutfit) * (l-i-1) );
+      n++;
+   }
+
+   /* Remove surplus. */
+   array_erase( &ws->slots, &ws->slots[l-n], &ws->slots[l] );
+}
+
+
+/**
  * @brief Adds an outfit to a weapon set.
  *
  *    @param p Pilot to manipulate.

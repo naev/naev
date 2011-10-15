@@ -888,8 +888,21 @@ static int equipment_mouseColumn( unsigned int wid, SDL_Event* event,
          /* See if we should add it or remove it. */
          if (exists==level)
             pilot_weapSetRm( p, wgt->weapons, &os[ret] );
-         else
-            pilot_weapSetAdd( p, wgt->weapons, &os[ret], level );
+         else {
+            /* This is a bloody awful place to do this. I hate it. HATE!. */
+            /* Case active outfit, convert the weapon group to active outfit. */
+            if ((os->slot.type == OUTFIT_SLOT_STRUCTURE) ||
+               (os->slot.type == OUTFIT_SLOT_UTILITY)) {
+               pilot_weapSetRmSlot( p, wgt->weapons, OUTFIT_SLOT_WEAPON );
+               pilot_weapSetAdd( p, wgt->weapons, &os[ret], level );
+            }
+            /* Case change weapon groups or active weapon. */
+            else {
+               pilot_weapSetRmSlot( p, wgt->weapons, OUTFIT_SLOT_STRUCTURE );
+               pilot_weapSetRmSlot( p, wgt->weapons, OUTFIT_SLOT_UTILITY );
+               pilot_weapSetAdd( p, wgt->weapons, &os[ret], level );
+            }
+         }
          p->autoweap = 0; /* Disable autoweap. */
          info_update(); /* Need to update weapons. */
       }

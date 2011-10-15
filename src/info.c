@@ -345,7 +345,7 @@ static void info_openWeapons( unsigned int wid )
    window_addCheckbox( wid, 220, 20+2*(BUTTON_HEIGHT+20)-40, 250, BUTTON_HEIGHT,
          "chkAutoweap", "Automatically handle weapons", weapons_autoweap, player.p->autoweap );
    window_addCheckbox( wid, 220, 20+2*(BUTTON_HEIGHT+20)-10, 300, BUTTON_HEIGHT,
-         "chkFire", "Enable fire mode (fires when activated)", weapons_fire,
+         "chkFire", "Enable instant mode (only for weapons)", weapons_fire,
          pilot_weapSetTypeCheck( player.p, info_eq_weaps.weapons ) );
    window_addCheckbox( wid, 220, 20+2*(BUTTON_HEIGHT+20)+20, 300, BUTTON_HEIGHT,
          "chkInrange", "Only shoot weapons that are in range", weapons_inrange,
@@ -386,10 +386,8 @@ static void weapons_genList( unsigned int wid )
    buf = malloc( sizeof(char*) * PILOT_WEAPON_SETS );
    for (i=0; i<PILOT_WEAPON_SETS; i++) {
       str = pilot_weapSetName( info_eq_weaps.selected, i );
-      if (str == NULL) {
-         buf[i] = malloc( sizeof(char) * PATH_MAX );
-         snprintf( buf[i], PATH_MAX, "Weapon Set %d", (i+1)%10 );
-      }
+      if (str == NULL)
+         buf[i] = strdup( "??" );
       else
          buf[i] = strdup( str );
    }
