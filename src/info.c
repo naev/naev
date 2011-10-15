@@ -346,7 +346,7 @@ static void info_openWeapons( unsigned int wid )
          "chkAutoweap", "Automatically handle weapons", weapons_autoweap, player.p->autoweap );
    window_addCheckbox( wid, 220, 20+2*(BUTTON_HEIGHT+20)-10, 300, BUTTON_HEIGHT,
          "chkFire", "Enable instant mode (only for weapons)", weapons_fire,
-         pilot_weapSetTypeCheck( player.p, info_eq_weaps.weapons ) );
+         (pilot_weapSetTypeCheck( player.p, info_eq_weaps.weapons )==WEAPSET_TYPE_WEAPON) );
    window_addCheckbox( wid, 220, 20+2*(BUTTON_HEIGHT+20)+20, 300, BUTTON_HEIGHT,
          "chkInrange", "Only shoot weapons that are in range", weapons_inrange,
          pilot_weapSetInrangeCheck( player.p, info_eq_weaps.weapons ) );
@@ -420,7 +420,7 @@ static void weapons_update( unsigned int wid, char *str )
 
    /* Update fire mode. */
    window_checkboxSet( wid, "chkFire",
-         pilot_weapSetTypeCheck( player.p, pos ) );
+         (pilot_weapSetTypeCheck( player.p, pos ) == WEAPSET_TYPE_WEAPON) );
 
    /* Update inrange. */
    window_checkboxSet( wid, "chkInrange",
@@ -464,11 +464,21 @@ static void weapons_autoweap( unsigned int wid, char *str )
  */
 static void weapons_fire( unsigned int wid, char *str )
 {
-   int i, state;
+   int i, state, t, c;
 
    /* Set state. */
    state = window_checkboxState( wid, str );
-   pilot_weapSetType( player.p, info_eq_weaps.weapons, state );
+
+   /* See how to handle. */
+   t = pilot_weapSetTypeCheck( player.p, info_eq_weaps.weapons );
+   if (t == WEAPSET_TYPE_ACTIVE)
+      return;
+
+   if (state)
+      c = WEAPSET_TYPE_WEAPON;
+   else
+      c = WEAPSET_TYPE_CHANGE;
+   pilot_weapSetType( player.p, info_eq_weaps.weapons, c );
 
    /* Check to see if they are all fire groups. */
    for (i=0; i<PILOT_WEAPON_SETS; i++)
@@ -478,12 +488,15 @@ static void weapons_fire( unsigned int wid, char *str )
    /* Not able to set them all to fire groups. */
    if (i >= PILOT_WEAPON_SETS) {
       dialogue_alert( "You can not set all your weapon sets to fire groups!" );
-      pilot_weapSetType( player.p, info_eq_weaps.weapons, 0 );
+      pilot_weapSetType( player.p, info_eq_weaps.weapons, WEAPSET_TYPE_CHANGE );
       window_checkboxSet( wid, str, 0 );
    }
 
    /* Set default if needs updating. */
    pilot_weaponSetDefault( player.p );
+
+   /* Must regen. */
+   weapons_genList( wid );
 }
 
 
