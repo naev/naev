@@ -153,7 +153,7 @@ static void info_close( unsigned int wid, char* str )
  */
 void info_update (void)
 {
-   weapons_update( info_windows[ INFO_WIN_WEAP ], NULL );
+   weapons_genList( info_windows[ INFO_WIN_WEAP ] );
 }
 
 
@@ -372,15 +372,19 @@ static void weapons_genList( unsigned int wid )
 {
    const char *str;
    char **buf;
-   int i;
+   int i, n;
    int w, h;
 
    /* Get the dimensions. */
    window_dimWindow( wid, &w, &h );
 
    /* Destroy widget if needed. */
-   if (widget_exists( wid, "lstWeapSets" ))
+   if (widget_exists( wid, "lstWeapSets" )) {
       window_destroyWidget( wid, "lstWeapSets" );
+      n = toolkit_getListPos( wid, "lstWeapSets" );
+   }
+   else
+      n = -1;
 
    /* List */
    buf = malloc( sizeof(char*) * PILOT_WEAPON_SETS );
@@ -395,6 +399,10 @@ static void weapons_genList( unsigned int wid )
          w - (20+180+20+20), 160,
          "lstWeapSets", buf, PILOT_WEAPON_SETS,
          0, weapons_update );
+
+   /* Restore position. */
+   if (n >= 0)
+      toolkit_setListPos( wid, "lstWeapSets", n );
 }
 
 
