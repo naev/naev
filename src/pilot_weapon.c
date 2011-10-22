@@ -273,9 +273,21 @@ int pilot_weapSetTypeCheck( Pilot* p, int id )
  */
 void pilot_weapSetType( Pilot* p, int id, int type )
 {
+   int i;
    PilotWeaponSet *ws;
+
    ws = pilot_weapSet(p,id);
    ws->type = type;
+
+   /* Set levels just in case. */
+   if (ws->slots == NULL)
+      return;
+
+   /* See if we must overwrite levels. */
+   if ((ws->type == WEAPSET_TYPE_WEAPON) ||
+         (ws->type == WEAPSET_TYPE_ACTIVE))
+      for (i=0; i<array_size(ws->slots); i++)
+         ws->slots[i].level = 0;
 }
 
 
