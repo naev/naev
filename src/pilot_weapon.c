@@ -162,6 +162,9 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
 }
 
 
+/**
+ * @brief Useful function for AI, clears activeness of all weapon sets.
+ */
 void pilot_weapSetAIClear( Pilot* p )
 {
    int i;
