@@ -388,6 +388,9 @@ double outfit_speed( const Outfit* o );
 double outfit_spin( const Outfit* o );
 int outfit_sound( const Outfit* o );
 int outfit_soundHit( const Outfit* o );
+/* Active outfits. */
+double outfit_duration( const Outfit* o );
+double outfit_cooldown( const Outfit* o );
 
 /*
  * loading/freeing outfit stack

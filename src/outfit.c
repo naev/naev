@@ -680,6 +680,26 @@ int outfit_soundHit( const Outfit* o )
    else if (outfit_isAmmo(o)) return o->u.amm.sound_hit;
    return -1.;
 }
+/**
+ * @brief Gets the outfit's duration.
+ *    @param o Outfit to get the duration of.
+ *    @return Outfit's duration.
+ */
+double outfit_duration( const Outfit* o )
+{
+   if (outfit_isMod(o) && o->u.mod.active) return o->u.mod.duration;
+   return -1.;
+}
+/**
+ * @brief Gets the outfit's cooldown.
+ *    @param o Outfit to get the cooldown of.
+ *    @return Outfit's cooldown.
+ */
+double outfit_cooldown( const Outfit* o )
+{
+   if (outfit_isMod(o) && o->u.mod.active) return o->u.mod.cooldown;
+   return -1.;
+}
 
 
 /**
