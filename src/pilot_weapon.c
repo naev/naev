@@ -113,7 +113,8 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
       if (outfit_isMod(o)) {
          can_use = ((o->u.mod.energy_regen >= 0.) || !ooe);
          if ((ws->slots[i].slot->state == PILOT_OUTFIT_OFF) && can_use) {
-            ws->slots[i].slot->state = PILOT_OUTFIT_ON;
+            ws->slots[i].slot->state  = PILOT_OUTFIT_ON;
+            ws->slots[i].slot->stimer = outfit_duration( ws->slots[i].slot->outfit );
             recalc = 1;
          }
          else if (!can_use) {
@@ -222,7 +223,8 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
 void pilot_weapSetUpdate( Pilot* p )
 {
    PilotWeaponSet *ws;
-   int i;
+   int i, j;
+   int l;
 
    /* Must not be doing hyperspace procedures. */
    if (pilot_isFlag( p, PILOT_HYP_BEGIN))
@@ -230,8 +232,39 @@ void pilot_weapSetUpdate( Pilot* p )
 
    for (i=0; i<PILOT_WEAPON_SETS; i++) {
       ws = &p->weapon_sets[i];
-      if (ws->active)
-         pilot_weapSetFire( p, ws, -1 );
+      if (ws->slots == NULL)
+         continue;
+
+      /* Weapons must get "fired" every turn. */
+      if (ws->type == WEAPSET_TYPE_WEAPON) {
+         if (ws->active)
+            pilot_weapSetFire( p, ws, -1 );
+      }
+      /* Active outfits just get checked if it's time to turn off. */
+      else if (ws->type == WEAPSET_TYPE_ACTIVE) {
+         l = array_size(ws->slots);
+         for (j=0; j<l; j++) {
+            /* Handle on outfit.s */
+            if (ws->slots[j].slot->state == PILOT_OUTFIT_ON) {
+               if (ws->slots[j].slot->stimer < 0.) {
+                  ws->slots[j].slot->stimer = outfit_cooldown( ws->slots[j].slot->outfit );
+                  ws->slots[j].slot->state  = PILOT_OUTFIT_COOLDOWN;
+               }
+            }
+            /* Go back to off state. */
+            else if (ws->slots[j].slot->state == PILOT_OUTFIT_COOLDOWN) {
+               if (ws->slots[j].slot->stimer < 0.) {
+                  /* Goes back on. */
+                  if (ws->active) {
+                     ws->slots[j].slot->state  = PILOT_OUTFIT_ON;
+                     ws->slots[j].slot->stimer = outfit_duration( ws->slots[j].slot->outfit );
+                  }
+                  else
+                     ws->slots[j].slot->state  = PILOT_OUTFIT_OFF;
+               }
+            }
+         }
+      }
    }
 }
 
