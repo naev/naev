@@ -1141,6 +1141,12 @@ void pilot_weaponSane( Pilot *p )
       /* Remove surplus. */
       if (n > 0)
          array_erase( &ws->slots, &ws->slots[l-n], &ws->slots[l] );
+
+      /* See if we must overwrite levels. */
+      if ((ws->type == WEAPSET_TYPE_WEAPON) ||
+            (ws->type == WEAPSET_TYPE_ACTIVE))
+         for (i=0; i<array_size(ws->slots); i++)
+            ws->slots[i].level = 0;
    }
 
    /* Update range. */
