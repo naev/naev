@@ -1120,6 +1120,7 @@ void pilot_weaponSetDefault( Pilot *p )
 void pilot_weaponSane( Pilot *p )
 {
    int i, j;
+   int n, l;
    PilotWeaponSet *ws;
 
    for (j=0; j<PILOT_WEAPON_SETS; j++) {
@@ -1127,13 +1128,19 @@ void pilot_weaponSane( Pilot *p )
       if (ws->slots == NULL)
          continue;
 
-      for (i=0; i<array_size(ws->slots); i++) {
+      l = array_size(ws->slots);
+      n = 0;
+      for (i=0; i<l; i++) {
          if (ws->slots[i].slot->outfit != NULL)
             continue;
 
-         array_erase( &ws->slots, &ws->slots[i], &ws->slots[i+1] );
-         i--;
+         /* Move down. */
+         memmove( &ws->slots[i], &ws->slots[i+1], sizeof(PilotWeaponSetOutfit) * (l-i-1) );
+         n++;
       }
+      /* Remove surplus. */
+      if (n > 0)
+         array_erase( &ws->slots, &ws->slots[l-n], &ws->slots[l] );
    }
 
    /* Update range. */
