@@ -687,7 +687,8 @@ int outfit_soundHit( const Outfit* o )
  */
 double outfit_duration( const Outfit* o )
 {
-   if (outfit_isMod(o) && o->u.mod.active) return o->u.mod.duration;
+   if (outfit_isMod(o)) { if (o->u.mod.active) return o->u.mod.duration; }
+   else if (outfit_isJammer(o)) return INFINITY;
    return -1.;
 }
 /**
@@ -697,7 +698,8 @@ double outfit_duration( const Outfit* o )
  */
 double outfit_cooldown( const Outfit* o )
 {
-   if (outfit_isMod(o) && o->u.mod.active) return o->u.mod.cooldown;
+   if (outfit_isMod(o)) { if (o->u.mod.active) return o->u.mod.cooldown; }
+   else if (outfit_isJammer(o)) return 0.;
    return -1.;
 }
 
@@ -1771,6 +1773,7 @@ static void outfit_parseSJammer( Outfit *temp, const xmlNodePtr parent )
    /* Set default outfit size if necessary. */
    if (temp->slot.size == OUTFIT_SLOT_SIZE_NA)
       outfit_setDefaultSize( temp );
+   temp->u.jam.energy = -temp->u.jam.energy;
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );

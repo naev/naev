@@ -186,6 +186,7 @@ void pilot_weapSetAIClear( Pilot* p )
  */
 void pilot_weapSetPress( Pilot* p, int id, int type )
 {
+   int i, l, on, n;
    PilotWeaponSet *ws;
 
    ws = pilot_weapSet(p,id);
@@ -193,6 +194,7 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
    /* Handle fire groups. */
    switch (ws->type) {
       case WEAPSET_TYPE_CHANGE:
+         /* On press just change active weapon set to whatever is available. */
          if (type > 0) {
             if (id != p->active_set)
                pilot_weapSetUpdateOutfits( p, ws );
@@ -201,6 +203,8 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
          break;
 
       case WEAPSET_TYPE_WEAPON:
+         /* Activation philosophy here is to turn on while pressed and off
+          * when it's not held anymore. */
          if (type > 0)
             ws->active = 1;
          else if (type < 0)
@@ -208,8 +212,49 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
          break;
 
       case WEAPSET_TYPE_ACTIVE:
-         if (type > 0)
+         /* The behaviour here is more complex. WHat we do is consider a group
+          * to be entirely off if not all outfits are either on or cooling down.
+          * In the case it's deemed to be off, all outfits that are off get turned
+          * on, otherwise all outfits that are on are turrned to cooling down. */
+         /* Only care about presses. */
+         if (type < 0)
             break;
+
+         /* Decide what to do. */
+         on = 1;
+         l  = array_size(ws->slots);
+         for (i=0; i<l; i++) {
+            if (ws->slots[i].slot->state == PILOT_OUTFIT_OFF) {
+               on = 0;
+               break;
+            }
+         }
+
+         /* Turn them off. */
+         n = 0;
+         if (on) {
+            for (i=0; i<l; i++) {
+               if (ws->slots[i].slot->state != PILOT_OUTFIT_ON)
+                  continue;
+               ws->slots[i].slot->state  = PILOT_OUTFIT_COOLDOWN;
+               ws->slots[i].slot->stimer = outfit_cooldown( ws->slots[i].slot->outfit );
+               n++;
+            }
+         }
+         /* Turn them on. */
+         else {
+            for (i=0; i<l; i++) {
+               if (ws->slots[i].slot->state != PILOT_OUTFIT_OFF)
+                  continue;
+               ws->slots[i].slot->state  = PILOT_OUTFIT_ON;
+               ws->slots[i].slot->stimer = outfit_duration( ws->slots[i].slot->outfit );
+               n++;
+            }
+         }
+         /* Must recalculate stats. */
+         if (n > 0)
+            pilot_calcStats( p );
+
          break;
    }
 }
@@ -223,8 +268,7 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
 void pilot_weapSetUpdate( Pilot* p )
 {
    PilotWeaponSet *ws;
-   int i, j;
-   int l;
+   int i;
 
    /* Must not be doing hyperspace procedures. */
    if (pilot_isFlag( p, PILOT_HYP_BEGIN))
@@ -239,31 +283,6 @@ void pilot_weapSetUpdate( Pilot* p )
       if (ws->type == WEAPSET_TYPE_WEAPON) {
          if (ws->active)
             pilot_weapSetFire( p, ws, -1 );
-      }
-      /* Active outfits just get checked if it's time to turn off. */
-      else if (ws->type == WEAPSET_TYPE_ACTIVE) {
-         l = array_size(ws->slots);
-         for (j=0; j<l; j++) {
-            /* Handle on outfit.s */
-            if (ws->slots[j].slot->state == PILOT_OUTFIT_ON) {
-               if (ws->slots[j].slot->stimer < 0.) {
-                  ws->slots[j].slot->stimer = outfit_cooldown( ws->slots[j].slot->outfit );
-                  ws->slots[j].slot->state  = PILOT_OUTFIT_COOLDOWN;
-               }
-            }
-            /* Go back to off state. */
-            else if (ws->slots[j].slot->state == PILOT_OUTFIT_COOLDOWN) {
-               if (ws->slots[j].slot->stimer < 0.) {
-                  /* Goes back on. */
-                  if (ws->active) {
-                     ws->slots[j].slot->state  = PILOT_OUTFIT_ON;
-                     ws->slots[j].slot->stimer = outfit_duration( ws->slots[j].slot->outfit );
-                  }
-                  else
-                     ws->slots[j].slot->state  = PILOT_OUTFIT_OFF;
-               }
-            }
-         }
       }
    }
 }

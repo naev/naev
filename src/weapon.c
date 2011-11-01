@@ -501,6 +501,9 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
       /* Iterate over outfits to find jammers. */
       for (j=0; j<p->noutfits; j++) {
          o    = p->outfits[i]->outfit;
+         if (o==NULL)
+            continue;
+
          if (!outfit_isJammer(o))
             continue;
      

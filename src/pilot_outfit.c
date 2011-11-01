@@ -884,8 +884,8 @@ void pilot_calcStats( Pilot* pilot )
       else if (outfit_isAfterburner(o)) /* Afterburner */
          pilot->afterburner = pilot->outfits[i]; /* Set afterburner */
       else if (outfit_isJammer(o)) { /* Jammer */
-         pilot->jamming           = 1;
-         pilot->energy_regen     -= o->u.jam.energy;
+         pilot->jamming        = 1;
+         pilot->energy_regen  -= o->u.jam.energy;
       }
 
       /* Add ammo mass. */

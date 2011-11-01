@@ -1310,7 +1310,7 @@ void pilot_renderOverlay( Pilot* p, const double dt )
  */
 void pilot_update( Pilot* pilot, const double dt )
 {
-   int i;
+   int i, n;
    unsigned int l;
    Pilot *target;
    double a, px,py, vx,vy;
@@ -1340,6 +1340,7 @@ void pilot_update( Pilot* pilot, const double dt )
    for (i=0; i<MAX_AI_TIMERS; i++)
       if (pilot->timer[i] > 0.)
          pilot->timer[i] -= dt;
+   n = 0;
    /* Update heat. */
    a = -1.;
    Q = 0.;
@@ -1349,7 +1350,7 @@ void pilot_update( Pilot* pilot, const double dt )
       /* Picky about our outfits. */
       if (o->outfit == NULL)
          continue;
-      if (!o->active || outfit_isMod(o->outfit))
+      if (!o->active)
          continue;
 
       /* Handle firerate timer. */
@@ -1357,8 +1358,20 @@ void pilot_update( Pilot* pilot, const double dt )
          o->timer -= dt * pilot_heatFireRateMod( o->heat_T );
 
       /* Handle state timer. */
-      if (o->stimer > 0.)
+      if (o->stimer >= 0.) {
          o->stimer -= dt;
+         if (o->stimer < 0.) {
+            if (o->state == PILOT_OUTFIT_ON) {
+               o->stimer = outfit_cooldown( o->outfit );
+               o->state  = PILOT_OUTFIT_COOLDOWN;
+               n++;
+            }
+            else if (o->state == PILOT_OUTFIT_COOLDOWN) {
+               o->state  = PILOT_OUTFIT_OFF;
+               n++;
+            }
+         }
+      }
 
       /* Handle heat. */
       Q  += pilot_heatUpdateSlot( pilot, o, dt );
@@ -1366,6 +1379,10 @@ void pilot_update( Pilot* pilot, const double dt )
       /* Handle lockons. */
       pilot_lockUpdateSlot( pilot, o, target, &a, dt );
    }
+
+   /* Must recalculate stats because something changed state. */
+   if (n > 0)
+      pilot_calcStats( pilot );
 
    /* Global heat. */
    pilot_heatUpdateShip( pilot, Q, dt );
