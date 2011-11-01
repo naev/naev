@@ -849,7 +849,7 @@ void pilot_calcStats( Pilot* pilot )
       pilot->mass_outfit   += o->mass;
 
       /* Active outfits must be on to affect stuff. */
-      if (slot->active && (slot->state==PILOT_OUTFIT_OFF))
+      if (slot->active && !(slot->state==PILOT_OUTFIT_ON))
          continue;
 
       if (outfit_isMod(o)) { /* Modification */
