@@ -323,7 +323,7 @@ static int hook_land( lua_State *L )
  *    @luaparam funcname Name of function to run when hook is triggered.
  *    @luaparam arg Argument to pass to hook.
  *    @luareturn Hook identifier.
- * @luafunc land( funcname, arg )
+ * @luafunc load( funcname, arg )
  */
 static int hook_load( lua_State *L )
 {
