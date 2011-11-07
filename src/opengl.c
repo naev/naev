@@ -16,7 +16,7 @@
  * Relative:
  *  * Everything is drawn relative to the player, if it doesn't fit on screen
  *    it is clipped.
- *  * Origin (0., 0.) wouldbe ontop of the player.
+ *  * Origin (0., 0.) would be ontop of the player.
  *
  * Absolute:
  *  * Everything is drawn in "screen coordinates".
@@ -39,6 +39,7 @@
 #include <string.h>
 #include <stdarg.h> /* va_list for gl_print */
 
+#include <zlib.h> /* Z_DEFAULT_COMPRESSION */ 
 #include <png.h>
 
 #include "SDL.h"
@@ -151,8 +152,6 @@ int SDL_SavePNG( SDL_Surface *surface, const char *file )
 #endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
    /* Initialize parameters. */
-   ss_rows     = NULL;
-   ss_size     = 0;
    ss_surface  = NULL;
 
    /* Set size. */
@@ -545,7 +544,7 @@ static int gl_defState (void)
 
 
 /**
- * @brief Checks ot see if window needs to handle scaling.
+ * @brief Checks to see if window needs to handle scaling.
  *
  *    @return 0 on success.
  */
@@ -829,11 +828,13 @@ static int write_png( const char *file_name, png_bytep *rows,
 
    /* Clean up. */
    fclose(fp);
+   png_destroy_write_struct( &png_ptr, &info_ptr );
 
    return 0;
 
 ERR_FAIL:
    fclose(fp);
+   png_destroy_write_struct( &png_ptr, &info_ptr );
    return -1;
 }
 

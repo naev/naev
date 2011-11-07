@@ -24,7 +24,7 @@
  *
  *    @param[in] at Texture a.
  *    @param[in] asx Position of x of sprite a.
- *    @param[in] asy Position of y of sprita a.
+ *    @param[in] asy Position of y of sprite a.
  *    @param[in] ap Position in space of sprite a.
  *    @param[in] bt Texture b.
  *    @param[in] bsx Position of x of sprite b.
@@ -44,6 +44,7 @@ int CollideSprite( const glTexture* at, const int asx, const int asy, const Vect
    int rasy, rbsy;
    int abx,aby, bbx, bby;
 
+#if DEBUGGING
    /* Make sure the surfaces have transparency maps. */
    if (at->trans == NULL) {
       WARN("Texture '%s' has no transparency map.", at->name);
@@ -53,6 +54,7 @@ int CollideSprite( const glTexture* at, const int asx, const int asy, const Vect
       WARN("Texture '%s' has no transparency map.", bt->name);
       return 0;
    }
+#endif /* DEBUGGING */
 
    /* a - cube coordinates */
    ax1 = (int)VX(*ap) - (int)(at->sw)/2;

@@ -11,6 +11,7 @@ Thank you to Bobbens, Deiz, BTAxis, and others that have helped me with learning
 ]]--
 
 include "scripts/jumpdist.lua"
+include "scripts/numstring.lua"
 
 bar_desc = "You see an aristocrat sitting at a table in the middle of the bar, drinking a swirling concoction in a martini glass with a disappointed look on his face every time he takes a sip."
 
@@ -28,7 +29,7 @@ OSDtable = {}
 prevPlanets = {}
 prevPlanets.__save = true
 
-payment = "75000"
+payment = 75000
 
 title = {}  --stage titles
 text = {}   --mission text
@@ -54,11 +55,11 @@ exworktxt = [[    You walk into the bar fully confident that this is the bar. Yo
 
 worktitle = "This is it!"
 worktxt = [[    You walk into the bar and know instantly that you are finally here! This is the place! You walk up to the bartender, a %s %s with %s hair, wearing %s, and smile. This has to be %s. You start to describe the drink to %s and %s interrupts. "A Swamp Bombing. Of course, that's my specialty." You ask if %s can make it to go, and %s laughs and says "Sure, I guess."
-    Just as %s is about to start making it though, you stop %s and ask %s to make one for here as well. As long as you came all this way, you might as well try it. You're amazed at how quickly and gracefully %s trained hands move, flipping bottles and shaking various containers. Before you know it, %s is setting a drink before you, and closing another container for you to take with you. You taste it expecting something incredible. It's alright, but you doubt it was worth all this trouble.]]
+    Just as %s is about to start making it though, you stop %s and tell %s you'll have it right here after all. As long as you came all this way, you might as well try it. You're amazed at how quickly and gracefully %s trained hands move, flipping bottles and shaking various containers. Before you know it, %s is setting a drink before you, and closing another container for you to take with you. You taste it expecting something incredible. It's alright, but you doubt it was worth all this trouble.]]
 
 finishedtitle = "Delivery"
-finishedtxt = [[    "Ahh! I was just thinking how much I wanted one of those drinks! I'm so glad that you managed to find it. You sure seemed to take your time though." You give him his drink and tell him that it wasn't easy, and how many systems you had to go through. "Hmm. That is quite a few systems. No reason for you to be this late though." He takes a sip from his drink. "Ahh! That is good though. I suppose you'll be wanting to get paid for your troubles. You did go through a lot of trouble. Then again, you did take quite a long time. I suppose %d credits should be appropriate."
-    Considering the amount of effort that you went through, you feel almost cheated. You don't feel like argueing with the snobby aristocrat though, so you just leave him to his drink without another word. It's probably the most that anyone's ever paid a drink like that anyway.]]
+finishedtxt = [[    "Ahh! I was just thinking how much I wanted one of those drinks! I'm so glad that you managed to find it. You sure seemed to take your time though." You give him his drink and tell him that it wasn't easy, and how many systems you had to go through. "Hmm. That is quite a few systems. No reason for you to be this late though." He takes a sip from his drink. "Ahh! That is good though. I suppose you'll be wanting to get paid for your troubles. You did go through a lot of trouble. Then again, you did take quite a long time. I suppose %s credits should be appropriate."
+    Considering the amount of effort that you went through, you feel almost cheated. You don't feel like arguing with the snobby aristocrat though, so you just leave him to his drink without another word. It's probably the most that anyone's ever paid for a drink like that anyway.]]
 
 gender = {}
 gender[1] = "man"
@@ -202,7 +203,7 @@ function land ()
          end
       end
    elseif hasDrink and planet.cur() == startplanet then
-      tk.msg( finishedtitle, finishedtxt:format( payment ) )
+      tk.msg( finishedtitle, finishedtxt:format( numstring(payment) ) )
       player.pay( payment )
 
       hook.rm(landhook)
@@ -217,7 +218,7 @@ function getclueplanet ( mini, maxi )
    getsysatdistance( system.cur(), mini, maxi,
       function(s)
          for i, v in ipairs(s:planets()) do
-            if not isPrevPlanet(v) and v:services()["bar"] and v:faction():playerStanding() >= 0 then
+            if not isPrevPlanet(v) and v:services()["bar"] and v:canLand() then
                planets[#planets + 1] = {v, s}
             end
          end
@@ -249,7 +250,5 @@ function takeoff ()
 end
 
 function abort()
-   hook.rm(landhook)
-   hook.rm(takeoffhook)
    misn.finish()
 end

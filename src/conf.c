@@ -238,7 +238,7 @@ void conf_setVideoDefaults (void)
    conf.mipmaps      = 0; /* Also cause for issues. */
    conf.compress     = 0;
    conf.interpolate  = 1;
-   conf.npot         = 1;
+   conf.npot         = 0;
 
    /* Window. */
    conf.fullscreen   = f;
@@ -284,8 +284,6 @@ int conf_loadConfig ( const char* file )
    int type;
    int w,h;
    SDLMod m;
-
-   i = 0;
 
    /* Check to see if file exists. */
    if (!nfile_fileExists(file))
@@ -476,9 +474,8 @@ int conf_loadConfig ( const char* file )
                /* set the keybind */
                input_setKeybind( keybind_info[i][0], type, key, m );
             }
-            else {
+            else
                WARN("Malformed keybind for '%s' in '%s'.", keybind_info[i][0], file);
-            }
          }
          /* clean up after table stuff */
          lua_pop(L,1);
@@ -593,9 +590,8 @@ void conf_parseCLI( int argc, char** argv )
    }
 
    /** @todo handle multiple ndata. */
-   if (optind < argc) {
+   if (optind < argc)
       conf.ndata = strdup( argv[ optind ] );
-   }
 }
 
 

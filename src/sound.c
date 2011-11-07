@@ -250,9 +250,8 @@ int sound_init (void)
 
    /* Create voice lock. */
    voice_mutex = SDL_CreateMutex();
-   if (voice_mutex == NULL) {
+   if (voice_mutex == NULL)
       WARN("Unable to create voice mutex.");
-   }
 
    /* Load available sounds. */
    ret = sound_makeList();
@@ -350,9 +349,9 @@ int sound_get( char* name )
       return 0;
 
    for (i=0; i<sound_nlist; i++)
-      if (strcmp(name, sound_list[i].name)==0) {
+      if (strcmp(name, sound_list[i].name)==0)
          return i;
-      }
+
    WARN("Sound '%s' not found in sound list", name);
    return -1;
 }
@@ -476,7 +475,7 @@ int sound_updatePos( int voice, double px, double py, double vx, double vy )
 
 
 /**
- * @brief Updates the sonuds removing obsolete ones and such.
+ * @brief Updates the sounds removing obsolete ones and such.
  *
  *    @return 0 on success.
  */
@@ -727,9 +726,8 @@ static int sound_makeList (void)
       /* Load the sound. */
       sound_list[sound_nlist-1].name = strdup(tmp);
       snprintf( path, PATH_MAX, SOUND_PREFIX"%s", files[i] );
-      if (sound_load( &sound_list[sound_nlist-1], path )) {
+      if (sound_load( &sound_list[sound_nlist-1], path ))
          sound_nlist--; /* Song not actually added. */
-      }
 
       /* Clean up. */
       free(files[i]);

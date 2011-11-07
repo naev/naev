@@ -79,7 +79,7 @@ function board()
     seiryuu:control(false)
     seiryuu:setActiveBoard(false)
     naev.missionStart("Shadow Vigil")
-    finish()
+    evt.finish()
 end
 
 -- Clean up

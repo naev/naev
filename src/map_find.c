@@ -160,7 +160,7 @@ static void map_find_check_update( unsigned int wid, char* str )
 
 
 /**
- * @brief Clsoses the find window.
+ * @brief Closes the find window.
  */
 static void map_findClose( unsigned int wid, char* str )
 {
@@ -352,11 +352,10 @@ static int map_findDistance( StarSystem *sys, Planet *pnt, int *jumps, double *d
    /* Account final travel to planet for planet targets. */
    if (pnt != NULL) {
       ss = slist[ i ];
-      for (j=0; j < ss->njumps; j++) {
-         if (ss->jumps[j].target == slist[i-1]) {
+      for (j=0; j < ss->njumps; j++)
+         if (ss->jumps[j].target == slist[i-1])
             vs = &ss->jumps[j].pos;
-         }
-      }
+
       ve = &pnt->pos;
       d += vect_dist( vs, ve );
    }
@@ -460,8 +459,8 @@ static int map_findSearchPlanets( unsigned int parent, const char *name )
    char **names;
    int len, n, ret;
    map_find_t *found;
-   const char *sysname;
-   const char *pntname;
+   const char *sysname, *pntname;
+   char colcode;
    StarSystem *sys;
    Planet *pnt;
 
@@ -518,16 +517,24 @@ static int map_findSearchPlanets( unsigned int parent, const char *name )
       /* Set some values. */
       found[n].pnt      = pnt;
       found[n].sys      = sys;
+      planet_updateLand(pnt);
+      colcode           = planet_getColourChar(pnt);
+
+      /* Remap colour codes bit for simplicity and contrast. */
+      if (colcode == 'N' || colcode == 'F')
+         colcode = 'M';
+      else if (colcode == 'R')
+         colcode = 'S';
 
       /* Set fancy name. */
       if (ret)
          snprintf( found[n].display, sizeof(found[n].display),
-               "%s (%s, unknown route)",
-               names[i], sys->name );
+               "\e%c%s (%s, unknown route)",
+               colcode, names[i], sys->name );
       else
          snprintf( found[n].display, sizeof(found[n].display),
-               "%s (%s, %d jumps, %.0fk distance)",
-               names[i], sys->name, found[n].jumps, found[n].distance/1000. );
+               "\e%c%s (%s, %d jumps, %.0fk distance)",
+               colcode, names[i], sys->name, found[n].jumps, found[n].distance/1000. );
       n++;
    }
    free(names);
@@ -591,6 +598,104 @@ static char **map_outfitsMatch( const char *name, int *len )
    return names;
 }
 /**
+ * @brief Add widgets to the extended area on the outfit search
+ *    listpanel.
+ *
+ *    @param wid The windowid we're adding widgets to
+ *    @param x The x offset where we can start drawing
+ *    @param y the y offset where we can start drawing
+ *    @param w The width of the area where we can draw
+ *    @param h The height of the area where we can draw
+ */
+static void map_addOutfitDetailFields(unsigned int wid, int x, int y, int w, int h)
+{
+   (void) h;
+   (void) y;
+   int iw;
+
+   iw = x;
+
+   window_addRect( wid, 19 + iw + 20, -50, 128, 129, "rctImage", &cBlack, 0 );
+   window_addImage( wid, 20 + iw + 20, -50-128, 0, 0, "imgOutfit", NULL, 1 );
+
+   window_addText( wid, 20 + iw + 20 + 128 + 20, -60,
+         320, 160, 0, "txtOutfitName", &gl_defFont, &cBlack, NULL );
+   window_addText( wid, 20 + iw + 20 + 128 + 20, -60 - gl_defFont.h - 20,
+         320, 160, 0, "txtDescShort", &gl_smallFont, &cBlack, NULL );
+   window_addText( wid, 20 + iw + 20, -60-128-10,
+         60, 160, 0, "txtSDesc", &gl_smallFont, &cDConsole,
+         "Owned:\n"
+         "\n"
+         "Slot:\n"
+         "Size:\n"
+         "Mass:\n"
+         "\n"
+         "Price:\n"
+         "Money:\n"
+         "License:\n" );
+   window_addText( wid, 20 + iw + 20 + 60, -60-128-10,
+         250, 160, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
+   window_addText( wid, 20 + iw + 20, -60-128-10-160,
+         w-(iw+80), 180, 0, "txtDescription",
+         &gl_smallFont, NULL, NULL );
+}
+/**
+ * @brief Update the listPanel outfit details to the outfit selected.
+ *
+ *    @param wid The windowid of the window we're updating.
+ *    @param wgtname The name of the list that was selected.
+ *    @param x The x offset where we can start drawing
+ *    @param y the y offset where we can start drawing
+ *    @param w The width of the area where we can draw
+ *    @param h The height of the area where we can draw
+ */
+static void map_showOutfitDetail(unsigned int wid, char* wgtname, int x, int y, int w, int h)
+{
+   (void) x;
+   (void) y;
+   (void) h;
+   Outfit *outfit;
+   char buf[PATH_MAX], buf2[ECON_CRED_STRLEN], buf3[ECON_CRED_STRLEN];
+   double th;
+   int iw;
+
+   iw = w - 400;
+
+   outfit = outfit_get( toolkit_getList(wid, wgtname) );
+   window_modifyText( wid, "txtOutfitName", outfit->name );
+   window_modifyImage( wid, "imgOutfit", outfit->gfx_store, 0, 0 );
+
+   window_modifyText( wid, "txtDescription", outfit->description );
+   credits2str( buf2, outfit->price, 2 );
+   credits2str( buf3, player.p->credits, 2 );
+   snprintf( buf, PATH_MAX,
+         "%d\n"
+         "\n"
+         "%s\n"
+         "%s\n"
+         "%.0f tons\n"
+         "\n"
+         "%s credits\n"
+         "%s credits\n"
+         "%s\n",
+         player_outfitOwned(outfit),
+         outfit_slotName(outfit),
+         outfit_slotSize(outfit),
+         outfit->mass,
+         buf2,
+         buf3,
+         (outfit->license != NULL) ? outfit->license : "None" );
+   window_modifyText( wid, "txtDDesc", buf );
+   window_modifyText( wid, "txtOutfitName", outfit->name );
+   window_modifyText( wid, "txtDescShort", outfit->desc_short );
+   th = MAX( 128, gl_printHeightRaw( &gl_smallFont, 320, outfit->desc_short ) );
+   window_moveWidget( wid, "txtSDesc", 40+iw+20, -60-th-20 );
+   window_moveWidget( wid, "txtDDesc", 40+iw+20+60, -60-th-20 );
+   th += gl_printHeightRaw( &gl_smallFont, 250, buf );
+   window_moveWidget( wid, "txtDescription", 20+iw+40, -60-th-40 );
+}
+
+/**
  * @brief Searches for a outfit.
  *
  *    @param name Name to match.
@@ -623,7 +728,8 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
       list  = malloc( len*sizeof(char*) );
       for (i=0; i<len; i++)
          list[i] = strdup( names[i] );
-      i = dialogue_list( "Search Results", list, len,
+      i = dialogue_listPanel( "Search Results", list, len, 400, 550,
+            map_addOutfitDetailFields, map_showOutfitDetail,
             "Search results for outfits matching '%s':", name );
       if (i < 0) {
          free(names);
@@ -883,9 +989,8 @@ static void map_findSearch( unsigned int wid, char* str )
       ret = map_findSearchShips( wid, name );
       searchname = "Ship";
    }
-   else {
+   else
       ret = 1;
-   }
 
    if (ret < 0)
       dialogue_alert( "%s matching '%s' not found!", searchname, name );

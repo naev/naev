@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Systems>
  <ssys name="Acheron">
   <general>
@@ -9,28 +9,22 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>-32.000000</x>
-   <y>-15.000000</y>
+   <x>-40.212963</x>
+   <y>-41.574074</y>
   </pos>
   <assets/>
   <jumps>
    <jump target="Fortitude">
-    <pos x="-15976.162634" y="7142.284472"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Merisi">
-    <pos x="-11786.074933" y="-12935.935902"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Sikh">
-    <pos x="269.198913" y="17497.929362"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -54,15 +48,11 @@
   </assets>
   <jumps>
    <jump target="Gilligan's Tomb">
-    <pos x="-13682.084521" y="-10911.029428"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Vanir">
-    <pos x="-3179.863706" y="17208.674174"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -97,8 +87,6 @@
   </assets>
   <jumps>
    <jump target="Vanir">
-    <pos x="-17127.543923" y="-19428.258778"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -130,29 +118,21 @@
   </assets>
   <jumps>
    <jump target="Coriolis">
-    <pos x="-429.914026" y="21495.701290"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Delta Pavonis">
-    <pos x="-2464.418322" y="-21358.292121"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Eridani">
-    <pos x="21072.780620" y="4264.729411"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Sikh">
-    <pos x="-20317.200579" y="7032.877123"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -178,15 +158,11 @@
   </assets>
   <jumps>
    <jump target="Marat">
-    <pos x="-15094.574516" y="4496.256239"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Sultan">
-    <pos x="5753.282420" y="14661.590684"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -217,15 +193,11 @@
   </assets>
   <jumps>
    <jump target="Humdrum">
-    <pos x="-10251.067430" y="22252.317105"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Tarmak">
-    <pos x="14780.039980" y="19539.713872"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -256,15 +228,11 @@
   </assets>
   <jumps>
    <jump target="Humdrum">
-    <pos x="16554.054054" y="5675.675676"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Lapis">
-    <pos x="-13617.054522" y="-10992.080156"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -295,8 +263,6 @@
   </assets>
   <jumps>
    <jump target="Brimstone">
-    <pos x="-4257.740681" y="24127.197191"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -321,8 +287,6 @@
   </assets>
   <jumps>
    <jump target="Brimstone">
-    <pos x="164.118894" y="-2494.607181"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -344,8 +308,6 @@
   <assets/>
   <jumps>
    <jump target="Herakin">
-    <pos x="-15807.356326" y="-7508.494255"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -376,22 +338,16 @@
   </assets>
   <jumps>
    <jump target="Arcturus">
-    <pos x="10094.590781" y="16902.570610"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Gamma Polaris">
-    <pos x="-19269.940435" y="4033.243347"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Hekaras">
-    <pos x="13801.676334" y="-14039.636271"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -415,29 +371,21 @@
   </assets>
   <jumps>
    <jump target="Doeston">
-    <pos x="-7345.094721" y="-11918.455585"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Oriantis">
-    <pos x="-13593.504564" y="3349.124313"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Polaris">
-    <pos x="3804.206983" y="13473.233065"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Zerantix">
-    <pos x="13561.294125" y="3477.254904"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -459,15 +407,11 @@
   <assets/>
   <jumps>
    <jump target="Raelid">
-    <pos x="-8745.730666" y="-10932.163332"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Zylex">
-    <pos x="13675.750003" y="2995.640477"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -501,22 +445,37 @@
   </assets>
   <jumps>
    <jump target="Apez">
-    <pos x="-8972.969583" y="-15024.507209"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Borla">
-    <pos x="-12704.171968" y="12035.531338"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Goddard">
-    <pos x="14205.136017" y="10220.768598"/>
-    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+ </ssys>
+ <ssys name="Ariadus">
+  <general>
+   <radius>10000.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-179.291827</x>
+   <y>516.218027</y>
+  </pos>
+  <assets/>
+  <jumps>
+   <jump target="Wahri">
     <flags>
      <autopos/>
     </flags>
@@ -532,8 +491,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>100.666667</x>
-   <y>463.066667</y>
+   <x>125.114219</x>
+   <y>456.636626</y>
   </pos>
   <assets>
    <asset>Babylon I</asset>
@@ -543,8 +502,6 @@
   </assets>
   <jumps>
    <jump target="Dendria">
-    <pos x="4480.601315" y="-20516.437601"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -569,8 +526,6 @@
   </assets>
   <jumps>
    <jump target="Iris">
-    <pos x="8633.683978" y="5045.740874"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -586,28 +541,22 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>90.500000</x>
-   <y>196.000000</y>
+   <x>145.830169</x>
+   <y>186.284610</y>
   </pos>
   <assets/>
   <jumps>
    <jump target="Elixir">
-    <pos x="13784.216971" y="10781.714265"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Fury">
-    <pos x="-10771.221488" y="13792.417759"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Gamel">
-    <pos x="-2650.517508" y="-17298.114260"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -638,15 +587,11 @@
   </assets>
   <jumps>
    <jump target="Darkstone">
-    <pos x="-19515.320645" y="12359.703075"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Dvaer">
-    <pos x="-20447.294520" y="-10747.936863"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -668,15 +613,11 @@
   <assets/>
   <jumps>
    <jump target="Doeston">
-    <pos x="13072.445642" y="-5011.104163"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Sigur">
-    <pos x="-3977.236616" y="13423.173578"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -706,8 +647,6 @@
   </assets>
   <jumps>
    <jump target="Verex">
-    <pos x="30943.322910" y="16355.756395"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -729,15 +668,11 @@
   <assets/>
   <jumps>
    <jump target="Arcturus">
-    <pos x="7622.503181" y="-7221.318803"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Shakar">
-    <pos x="-10447.890497" y="-1044.789050"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -768,26 +703,19 @@
   <jumps>
    <jump target="Andee">
     <pos x="7451.987055" y="-21525.246705"/>
-    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Aneel Azi">
-    <pos x="-1148.832255" y="17462.250269"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Shickhaw">
-    <pos x="16644.684033" y="5404.118193"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Triap">
-    <pos x="-13496.402938" y="-11139.888139"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -803,8 +731,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>-274.000000</x>
-   <y>107.000000</y>
+   <x>-288.467593</x>
+   <y>116.645062</y>
   </pos>
   <assets>
    <asset>P0125</asset>
@@ -814,15 +742,11 @@
   </assets>
   <jumps>
    <jump target="C-14">
-    <pos x="-23860.794320" y="-14651.364933"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="C-28">
-    <pos x="12814.016091" y="24895.802691"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -838,8 +762,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>-331.000000</x>
-   <y>72.000000</y>
+   <x>-345.467593</x>
+   <y>81.645062</y>
   </pos>
   <assets>
    <asset>P9234</asset>
@@ -848,15 +772,11 @@
   </assets>
   <jumps>
    <jump target="C-00">
-    <pos x="16404.296095" y="10072.813392"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="C-43">
-    <pos x="18098.669525" y="-6557.488958"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -872,8 +792,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>-239.000000</x>
-   <y>175.000000</y>
+   <x>-253.467593</x>
+   <y>184.645062</y>
   </pos>
   <assets>
    <asset>P2020</asset>
@@ -886,15 +806,11 @@
   </assets>
   <jumps>
    <jump target="C-00">
-    <pos x="-11212.264080" y="-21783.827355"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="C-59">
-    <pos x="7307.737332" y="-23384.759462"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -910,8 +826,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>-262.000000</x>
-   <y>47.000000</y>
+   <x>-276.467593</x>
+   <y>56.645062</y>
   </pos>
   <assets>
    <asset>Eiroik</asset>
@@ -921,22 +837,16 @@
   </assets>
   <jumps>
    <jump target="C-14">
-    <pos x="-19744.003118" y="7153.624318"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="C-59">
-    <pos x="14849.242405" y="14849.242405"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Hades">
-    <pos x="20922.731715" y="1799.804879"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -952,8 +862,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>-214.000000</x>
-   <y>95.000000</y>
+   <x>-228.467593</x>
+   <y>104.645062</y>
   </pos>
   <assets>
    <asset>P9122</asset>
@@ -963,22 +873,16 @@
   </assets>
   <jumps>
    <jump target="C-28">
-    <pos x="-5219.812380" y="16703.399616"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="C-43">
-    <pos x="-12374.368671" y="-12374.368671"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Hades">
-    <pos x="13079.663077" y="-11626.367180"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -994,8 +898,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>-54.000000</x>
-   <y>148.000000</y>
+   <x>-63.089077</x>
+   <y>163.702425</y>
   </pos>
   <assets>
    <asset>Capricorn II</asset>
@@ -1007,8 +911,6 @@
   </assets>
   <jumps>
    <jump target="Rockbed">
-    <pos x="22126.154433" y="-17159.058540"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -1024,8 +926,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>302.000000</x>
-   <y>642.000000</y>
+   <x>144.000000</x>
+   <y>624.000000</y>
   </pos>
   <assets>
    <asset>Cerberus I</asset>
@@ -1034,11 +936,22 @@
    <asset>Cerberus IV</asset>
    <asset>Culex</asset>
    <asset>Myonei</asset>
+   <asset>Soromid Databank</asset>
+   <asset>Virtual Civilian Standard</asset>
+   <asset>Virtual Civilian Standard</asset>
   </assets>
   <jumps>
+   <jump target="Feye">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Jervis">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
    <jump target="Sergio Vix">
-    <pos x="12202.336981" y="-23241.460199"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -1062,15 +975,11 @@
   </assets>
   <jumps>
    <jump target="Iroquois">
-    <pos x="-4546.188152" y="2081.387347"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Mohawk">
-    <pos x="-4160.251472" y="-2773.500981"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -1095,22 +1004,16 @@
   </assets>
   <jumps>
    <jump target="Karman">
-    <pos x="13444.847175" y="-3903.342728"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Nougat">
-    <pos x="5793.241220" y="-12745.130684"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Triap">
-    <pos x="-7589.776178" y="11764.153075"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -1144,15 +1047,11 @@
   </assets>
   <jumps>
    <jump target="Eiderdown">
-    <pos x="-335.584953" y="24497.701581"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Muirat">
-    <pos x="13197.211691" y="-20641.792645"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -1176,22 +1075,47 @@
   </assets>
   <jumps>
    <jump target="Alteris">
-    <pos x="279.944017" y="-13997.200840"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Gamel">
-    <pos x="6967.372403" y="12143.134760"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Rockbed">
-    <pos x="-11331.905871" y="8221.186613"/>
-    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+ </ssys>
+ <ssys name="Corvus">
+  <general>
+   <radius>10000.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-95.297711</x>
+   <y>483.294657</y>
+  </pos>
+  <assets/>
+  <jumps>
+   <jump target="Octantis">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Regulus">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Wahri">
     <flags>
      <autopos/>
     </flags>
@@ -1207,8 +1131,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>60.000000</x>
-   <y>-81.000000</y>
+   <x>83.000000</x>
+   <y>-92.000000</y>
   </pos>
   <assets>
    <asset>Cygnus IV</asset>
@@ -1223,8 +1147,6 @@
   </assets>
   <jumps>
    <jump target="Delta Pavonis">
-    <pos x="-15825.584916" y="18702.963992"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -1255,15 +1177,37 @@
   </assets>
   <jumps>
    <jump target="Doranthex">
-    <pos x="-17284.682427" y="2736.741384"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Theras">
-    <pos x="17266.402937" y="-2849.794660"/>
-    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+ </ssys>
+ <ssys name="Daled">
+  <general>
+   <radius>10000.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-25.039635</x>
+   <y>246.979987</y>
+  </pos>
+  <assets/>
+  <jumps>
+   <jump target="Haven">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Tandar">
     <flags>
      <autopos/>
     </flags>
@@ -1293,22 +1237,17 @@
   </assets>
   <jumps>
    <jump target="Gremlin">
-    <pos x="16358.712660" y="6216.310811"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Perhelion">
-    <pos x="15502.051867" y="-8120.122407"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Pudas">
     <pos x="-8387.765035" y="-20971.033465"/>
-    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -1336,15 +1275,11 @@
   </assets>
   <jumps>
    <jump target="Beeklo">
-    <pos x="20698.067351" y="-13108.775989"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Verex">
-    <pos x="7665.402586" y="23269.972136"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -1366,15 +1301,11 @@
   <assets/>
   <jumps>
    <jump target="Oberon">
-    <pos x="7048.727928" y="10018.878909"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Pilatis">
-    <pos x="-4335.178193" y="-11457.256654"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -1408,22 +1339,17 @@
   </assets>
   <jumps>
    <jump target="Alteris">
-    <pos x="2206.514079" y="19123.122016"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Cygnus">
-    <pos x="12434.388148" y="-14695.185993"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Goddard">
     <pos x="-15689.613962" y="-21174.412562"/>
-    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -1437,35 +1363,27 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>119.666667</x>
-   <y>376.066667</y>
+   <x>127.369320</x>
+   <y>391.580816</y>
   </pos>
   <assets/>
   <jumps>
    <jump target="Babylon">
-    <pos x="-3733.834429" y="17097.031335"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Diadem">
-    <pos x="14112.087427" y="10348.864113"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Dust">
-    <pos x="-12297.272034" y="12450.987934"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
-   <jump target="New Haven">
-    <pos x="8147.481623" y="-15487.690054"/>
-    <radius>200.000000</radius>
+   <jump target="Titus">
     <flags>
      <autopos/>
     </flags>
@@ -1492,22 +1410,16 @@
   </assets>
   <jumps>
    <jump target="Dendria">
-    <pos x="-10442.944696" y="-7658.159444"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Khaas">
-    <pos x="12807.803571" y="1913.809729"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Solene">
-    <pos x="6327.413628" y="11298.952907"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -1532,36 +1444,26 @@
   </assets>
   <jumps>
    <jump target="Arandon">
-    <pos x="6426.957881" y="10428.648637"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Behar">
-    <pos x="-11438.389937" y="4384.716142"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Myad">
-    <pos x="6226.106411" y="-10549.791418"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Toros">
-    <pos x="11700.677246" y="3627.209946"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Zylex">
-    <pos x="-10469.046926" y="-6360.939904"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -1588,8 +1490,6 @@
   </assets>
   <jumps>
    <jump target="Overture">
-    <pos x="2059.219419" y="-10296.097095"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -1619,34 +1519,26 @@
   </assets>
   <jumps>
    <jump target="Dakron">
-    <pos x="26272.717289" y="-4159.846904"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Ogat">
     <pos x="-26146.261342" y="30826.874429"/>
-    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Tarsus">
-    <pos x="13626.602812" y="-22844.598832"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Torg">
-    <pos x="-23163.926622" y="-13076.410190"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Tuoladis">
     <pos x="11836.302770" y="31893.263337"/>
-    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -1676,8 +1568,6 @@
   </assets>
   <jumps>
    <jump target="Tau Prime">
-    <pos x="4049.451902" y="-31238.628960"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -1708,8 +1598,6 @@
   </assets>
   <jumps>
    <jump target="Tau Prime">
-    <pos x="-1994.917400" y="27928.843595"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -1737,22 +1625,17 @@
   </assets>
   <jumps>
    <jump target="Eridani">
-    <pos x="518.163247" y="-13990.407673"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Gamel">
-    <pos x="-10755.097914" y="8962.581595"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Halo">
     <pos x="3965.097264" y="15285.574336"/>
-    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -1766,16 +1649,19 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>39.666667</x>
-   <y>457.066667</y>
+   <x>63.455512</x>
+   <y>423.765998</y>
   </pos>
   <assets>
    <asset>Dust</asset>
   </assets>
   <jumps>
    <jump target="Dendria">
-    <pos x="17216.180847" y="-17431.383108"/>
-    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Forlat">
     <flags>
      <autopos/>
     </flags>
@@ -1810,29 +1696,21 @@
   </assets>
   <jumps>
    <jump target="Beeklo">
-    <pos x="30980.749273" y="16284.752823"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Gremlin">
-    <pos x="-33506.469878" y="-10115.160718"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Radix">
-    <pos x="26136.782164" y="-23278.071615"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Urbanus">
-    <pos x="-17941.347114" y="-30051.756417"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -1863,26 +1741,20 @@
   <jumps>
    <jump target="Churchill">
     <pos x="-12712.101440" y="-29431.191500"/>
-    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Esker">
-    <pos x="-15869.606571" y="7376.014322"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Gilligan's Tomb">
-    <pos x="17102.443918" y="3708.963741"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Herakin">
     <pos x="25532.127636" y="-19674.201177"/>
-    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -1896,21 +1768,49 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>141.000000</x>
-   <y>235.500000</y>
+   <x>145.248810</x>
+   <y>251.809064</y>
   </pos>
   <assets/>
   <jumps>
    <jump target="Bastion">
-    <pos x="-12405.795274" y="-9703.542838"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
-   <jump target="New Haven">
-    <pos x="3233.799163" y="15414.442675"/>
-    <radius>200.000000</radius>
+   <jump target="Titus">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+ </ssys>
+ <ssys name="Elza">
+  <general>
+   <radius>15000.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>85.000000</x>
+   <y>548.000000</y>
+  </pos>
+  <assets>
+   <asset>Elza I</asset>
+   <asset>Elza III</asset>
+   <asset>Elza Ia</asset>
+   <asset>Oring</asset>
+   <asset>Virtual Civilian Standard</asset>
+  </assets>
+  <jumps>
+   <jump target="Moordra">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Sergio Vix">
     <flags>
      <autopos/>
     </flags>
@@ -1939,12 +1839,10 @@
   <jumps>
    <jump target="Hakoi">
     <pos x="-4704.459146" y="-14095.943141"/>
-    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Qex">
     <pos x="-8255.553797" y="11609.116198"/>
-    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -1971,15 +1869,11 @@
   </assets>
   <jumps>
    <jump target="Alteris">
-    <pos x="-17152.263295" y="-3471.291381"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Dune">
-    <pos x="-647.704059" y="17488.009591"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -2012,19 +1906,14 @@
   <jumps>
    <jump target="Eiderdown">
     <pos x="23295.488541" y="-26098.818616"/>
-    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Modus Manis">
-    <pos x="-16845.358395" y="-15290.402236"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Nougat">
-    <pos x="-19961.943887" y="10912.529325"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -2054,22 +1943,16 @@
   </assets>
   <jumps>
    <jump target="Fidelis">
-    <pos x="-24057.088185" y="-4637.510975"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Lapis">
-    <pos x="19271.987924" y="-15127.474392"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Ruttwi">
-    <pos x="15574.827695" y="18912.290773"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -2085,35 +1968,65 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>334.666667</x>
-   <y>432.066667</y>
+   <x>305.666667</x>
+   <y>457.066667</y>
   </pos>
   <assets>
    <asset>Father's Pride I</asset>
    <asset>Father's Pride II</asset>
    <asset>Father's Pride III</asset>
    <asset>Flach</asset>
+   <asset>Hartwell Station</asset>
    <asset>Rudderfern</asset>
+   <asset>Virtual Civilian Standard</asset>
+   <asset>Virtual Civilian Standard</asset>
+   <asset>Virtual Pirate Small</asset>
   </assets>
   <jumps>
    <jump target="Gewirn">
-    <pos x="14705.191344" y="9487.220222"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Hatter">
-    <pos x="-1741.315083" y="17413.150829"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Shikima">
     <pos x="-20143.133265" y="-21795.269630"/>
-    <radius>200.000000</radius>
     <flags/>
+   </jump>
+  </jumps>
+ </ssys>
+ <ssys name="Feye">
+  <general>
+   <radius>26000.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>221.000000</x>
+   <y>689.000000</y>
+  </pos>
+  <assets>
+   <asset>Feye I</asset>
+   <asset>Feye IV</asset>
+   <asset>Kataka</asset>
+   <asset>Memory of Sorom</asset>
+   <asset>Neurri</asset>
+   <asset>Virtual Civilian Standard</asset>
+   <asset>Virtual Civilian Standard</asset>
+   <asset>Virtual Civilian Standard</asset>
+   <asset>Virtual Civilian Standard</asset>
+  </assets>
+  <jumps>
+   <jump target="Cerberus">
+    <flags>
+     <autopos/>
+    </flags>
    </jump>
   </jumps>
  </ssys>
@@ -2140,15 +2053,42 @@
   </assets>
   <jumps>
    <jump target="Eye of Night">
-    <pos x="20620.361302" y="3975.009408"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Radix">
-    <pos x="-6718.251097" y="19896.359019"/>
-    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+ </ssys>
+ <ssys name="Forlat">
+  <general>
+   <radius>10000.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>3.293802</x>
+   <y>371.581129</y>
+  </pos>
+  <assets/>
+  <jumps>
+   <jump target="Dust">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Muran">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Tandar">
     <flags>
      <autopos/>
     </flags>
@@ -2164,8 +2104,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>-117.000000</x>
-   <y>23.000000</y>
+   <x>-126.680556</x>
+   <y>-1.645062</y>
   </pos>
   <assets>
    <asset>Fortitude I</asset>
@@ -2175,22 +2115,16 @@
   </assets>
   <jumps>
    <jump target="Acheron">
-    <pos x="20769.011425" y="-9284.969813"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Hades">
-    <pos x="-19375.226705" y="11923.216434"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Pontus">
-    <pos x="11607.093528" y="19566.243376"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -2219,8 +2153,6 @@
   </assets>
   <jumps>
    <jump target="Limbo">
-    <pos x="3820.072167" y="17077.969687"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -2236,16 +2168,14 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>49.500000</x>
-   <y>248.500000</y>
+   <x>94.481300</x>
+   <y>231.146136</y>
   </pos>
   <assets>
    <asset>Fury I</asset>
   </assets>
   <jumps>
    <jump target="Bastion">
-    <pos x="10771.221488" y="-13792.417759"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -2267,29 +2197,21 @@
   <assets/>
   <jumps>
    <jump target="Bastion">
-    <pos x="2120.414006" y="13838.491408"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Coriolis">
-    <pos x="-6967.372403" y="-12143.134760"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Dune">
-    <pos x="10755.097914" y="-8962.581595"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Haven">
-    <pos x="-12173.858677" y="6913.549372"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -2323,36 +2245,26 @@
   </assets>
   <jumps>
    <jump target="Apez">
-    <pos x="29363.718758" y="-6145.894624"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Koralis">
-    <pos x="-24807.795062" y="-16869.300642"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Qex">
-    <pos x="-4433.536052" y="-29670.587424"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Shakar">
-    <pos x="593.942969" y="29994.119953"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Sirou">
-    <pos x="-27493.599873" y="12004.247832"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -2380,15 +2292,12 @@
   </assets>
   <jumps>
    <jump target="Limbo">
-    <pos x="-16743.153057" y="-1380.878603"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Volus">
     <pos x="30408.276058" y="-15860.552323"/>
-    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -2402,21 +2311,17 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>396.666667</x>
-   <y>472.066667</y>
+   <x>349.666667</x>
+   <y>505.066667</y>
   </pos>
   <assets/>
   <jumps>
    <jump target="Father's Pride">
-    <pos x="-11764.153075" y="-7589.776178"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Point Zero">
-    <pos x="5978.088276" y="12659.481054"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -2446,8 +2351,6 @@
   </assets>
   <jumps>
    <jump target="Theras">
-    <pos x="-20601.175467" y="-13260.526738"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -2476,8 +2379,6 @@
   </assets>
   <jumps>
    <jump target="Tarmak">
-    <pos x="-20275.108706" y="19311.135828"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -2501,15 +2402,11 @@
   </assets>
   <jumps>
    <jump target="Adraia">
-    <pos x="13682.084521" y="10911.029428"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Eiderdown">
-    <pos x="-17102.443918" y="-3708.963741"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -2538,8 +2435,6 @@
   </assets>
   <jumps>
    <jump target="Verex">
-    <pos x="-12052.974469" y="22130.653096"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -2571,20 +2466,15 @@
   </assets>
   <jumps>
    <jump target="Arcturus">
-    <pos x="-17046.163221" y="-12264.922317"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Delta Pavonis">
     <pos x="-17204.057496" y="16139.359158"/>
-    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Ogat">
-    <pos x="17978.705429" y="-10852.011385"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -2608,15 +2498,11 @@
   </assets>
   <jumps>
    <jump target="Daravon">
-    <pos x="-13086.970128" y="-4973.048649"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Dvaer">
-    <pos x="13402.587951" y="4046.064287"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -2648,8 +2534,6 @@
   </assets>
   <jumps>
    <jump target="Karman">
-    <pos x="-12969.685517" y="-16832.996097"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -2665,28 +2549,53 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>-169.000000</x>
-   <y>55.000000</y>
+   <x>-179.609568</x>
+   <y>40.532407</y>
   </pos>
   <assets/>
   <jumps>
    <jump target="C-43">
-    <pos x="-20922.731715" y="-1799.804879"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="C-59">
-    <pos x="-15695.595692" y="13951.640615"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Fortitude">
-    <pos x="17884.824651" y="-11006.045939"/>
-    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+ </ssys>
+ <ssys name="Hadosh">
+  <general>
+   <radius>30000.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-35.000000</x>
+   <y>685.000000</y>
+  </pos>
+  <assets>
+   <asset>Daahrax</asset>
+   <asset>Hadosh II</asset>
+   <asset>Hadosh III</asset>
+   <asset>Hadosh IV</asset>
+   <asset>Hadosh Ia</asset>
+   <asset>Scorpion Station</asset>
+   <asset>Soromid Wards Gamma</asset>
+   <asset>Virtual Civilian Standard</asset>
+   <asset>Virtual Civilian Standard</asset>
+  </assets>
+  <jumps>
+   <jump target="Symm">
     <flags>
      <autopos/>
     </flags>
@@ -2708,15 +2617,11 @@
   <assets/>
   <jumps>
    <jump target="Protera">
-    <pos x="15425.238912" y="14249.982614"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Sol">
-    <pos x="-14849.242405" y="-14849.242405"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -2744,8 +2649,6 @@
   </assets>
   <jumps>
    <jump target="Eneguoz">
-    <pos x="19501.310561" y="20092.259366"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -2773,22 +2676,16 @@
   </assets>
   <jumps>
    <jump target="Slaccid">
-    <pos x="9551.411609" y="-19484.879683"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Theras">
-    <pos x="-21340.934192" y="3931.224720"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Triap">
-    <pos x="21653.712156" y="1416.597992"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -2810,15 +2707,11 @@
   <assets/>
   <jumps>
    <jump target="Dune">
-    <pos x="-12395.251197" y="-12353.450845"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Pilatis">
-    <pos x="17166.707672" y="-3399.139261"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -2834,32 +2727,33 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>326.666667</x>
-   <y>512.066667</y>
+   <x>238.666667</x>
+   <y>528.066667</y>
   </pos>
   <assets>
+   <asset>Facett Outpost</asset>
    <asset>Gaula</asset>
+   <asset>Gaula Foods</asset>
    <asset>Hatter I</asset>
    <asset>Hatter II</asset>
+   <asset>Virtual Civilian Standard</asset>
   </assets>
   <jumps>
    <jump target="Father's Pride">
-    <pos x="1532.357273" y="-15323.572729"/>
-    <radius>200.000000</radius>
+    <pos x="12476.717946" y="-12440.153048"/>
+    <flags/>
+   </jump>
+   <jump target="Khaas">
     <flags>
      <autopos/>
     </flags>
    </jump>
-   <jump target="Khaas">
-    <pos x="-9314.345757" y="-12263.888580"/>
-    <radius>200.000000</radius>
+   <jump target="Mizar">
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Sergio Vix">
-    <pos x="2690.244859" y="15163.198297"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -2875,16 +2769,19 @@
    <nebula volatility="0.000000">200.000000</nebula>
   </general>
   <pos>
-   <x>0.000000</x>
-   <y>180.000000</y>
+   <x>40.300080</x>
+   <y>211.372260</y>
   </pos>
   <assets>
    <asset>Haven</asset>
   </assets>
   <jumps>
+   <jump target="Daled">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
    <jump target="Gamel">
-    <pos x="12173.858677" y="-6913.549372"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -2915,7 +2812,6 @@
   <jumps>
    <jump target="Apez">
     <pos x="-26069.057388" y="26604.261598"/>
-    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -2935,22 +2831,16 @@
   <assets/>
   <jumps>
    <jump target="Anrique">
-    <pos x="18065.550087" y="8581.136291"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Eiderdown">
-    <pos x="-256.389187" y="-19998.356547"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Suna">
-    <pos x="7165.029985" y="18672.502385"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -2976,22 +2866,16 @@
   </assets>
   <jumps>
    <jump target="An'ku">
-    <pos x="8786.629226" y="-19073.414661"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Anarbalis">
-    <pos x="-19864.864865" y="-6810.810811"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Modus Manis">
-    <pos x="14671.426105" y="15024.954444"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -3018,8 +2902,6 @@
   </assets>
   <jumps>
    <jump target="Toaxis">
-    <pos x="-5601.399288" y="20239.177998"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -3041,22 +2923,16 @@
   <assets/>
   <jumps>
    <jump target="Basel">
-    <pos x="-12087.157569" y="-7064.037224"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Oriantis">
-    <pos x="10272.270147" y="-9512.122057"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Percival">
-    <pos x="8570.424702" y="11070.131907"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -3080,22 +2956,42 @@
   </assets>
   <jumps>
    <jump target="Cherokee">
-    <pos x="5455.425782" y="-2497.664816"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Mohawk">
-    <pos x="986.393924" y="-5918.363543"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Navajo">
-    <pos x="4419.179331" y="4058.429997"/>
-    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+ </ssys>
+ <ssys name="Jervis">
+  <general>
+   <radius>13000.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>80.000000</x>
+   <y>676.000000</y>
+  </pos>
+  <assets/>
+  <jumps>
+   <jump target="Cerberus">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Symm">
     <flags>
      <autopos/>
     </flags>
@@ -3124,20 +3020,41 @@
   </assets>
   <jumps>
    <jump target="Chraan">
-    <pos x="-21847.876659" y="6342.931933"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Gyrios">
     <pos x="20450.192730" y="22311.207588"/>
-    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Nougat">
-    <pos x="-19343.532087" y="-11974.567483"/>
-    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+ </ssys>
+ <ssys name="Kelvos">
+  <general>
+   <radius>10000.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-121.708317</x>
+   <y>269.986666</y>
+  </pos>
+  <assets/>
+  <jumps>
+   <jump target="Tandar">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Valt">
     <flags>
      <autopos/>
     </flags>
@@ -3153,21 +3070,17 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>266.666667</x>
-   <y>433.066667</y>
+   <x>223.666667</x>
+   <y>463.066667</y>
   </pos>
   <assets/>
   <jumps>
    <jump target="Diadem">
-    <pos x="-10384.705598" y="-1551.737618"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Hatter">
-    <pos x="6350.690289" y="8361.742214"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -3198,15 +3111,11 @@
   </assets>
   <jumps>
    <jump target="Massia">
-    <pos x="5192.229317" y="-18172.802610"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Tarsus">
-    <pos x="-18274.416773" y="4822.415537"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -3237,15 +3146,12 @@
   </assets>
   <jumps>
    <jump target="Gamma Polaris">
-    <pos x="11576.971029" y="7872.340300"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Qex">
     <pos x="-8810.152489" y="-15443.708459"/>
-    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -3271,8 +3177,6 @@
   </assets>
   <jumps>
    <jump target="Unicorn">
-    <pos x="-6353.027673" y="16306.104360"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -3298,15 +3202,11 @@
   </assets>
   <jumps>
    <jump target="Sultan">
-    <pos x="-0.000000" y="-15400.000000"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Urbanus">
-    <pos x="-5644.477583" y="14328.289249"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -3332,29 +3232,21 @@
   </assets>
   <jumps>
    <jump target="Anarbalis">
-    <pos x="13617.054522" y="10992.080156"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Eye of Night">
-    <pos x="-13765.705660" y="10805.338851"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Lazuli">
-    <pos x="8379.912287" y="-15363.172526"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Niger">
-    <pos x="-9380.142392" y="-14773.724267"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -3383,8 +3275,6 @@
   </assets>
   <jumps>
    <jump target="Lapis">
-    <pos x="-10055.894744" y="18435.807031"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -3414,26 +3304,20 @@
   <jumps>
    <jump target="Fried">
     <pos x="-5870.072165" y="-25177.969685"/>
-    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Gammacron">
-    <pos x="17440.784434" y="1438.415211"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Provectus Nova">
-    <pos x="2245.976831" y="17355.275511"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Pultatis">
     <pos x="-25688.151135" y="-8098.916515"/>
-    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -3453,15 +3337,11 @@
   <assets/>
   <jumps>
    <jump target="Amaroq">
-    <pos x="13417.399570" y="-3996.672212"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Unicorn">
-    <pos x="-13311.175761" y="4337.349405"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -3495,8 +3375,6 @@
   </assets>
   <jumps>
    <jump target="Klantar">
-    <pos x="-6538.362844" y="22884.269954"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -3512,8 +3390,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>-73.000000</x>
-   <y>-60.000000</y>
+   <x>-92.680556</x>
+   <y>-78.822531</y>
   </pos>
   <assets>
    <asset>Merisi I</asset>
@@ -3523,8 +3401,6 @@
   </assets>
   <jumps>
    <jump target="Acheron">
-    <pos x="16500.504907" y="18110.310263"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -3540,23 +3416,14 @@
    <nebula volatility="0.000000">100.000000</nebula>
   </general>
   <pos>
-   <x>203.000000</x>
-   <y>28.000000</y>
+   <x>249.000000</x>
+   <y>602.000000</y>
   </pos>
   <assets>
    <asset>Virtual Pirate Small</asset>
   </assets>
   <jumps>
-   <jump target="Surano">
-    <pos x="5970.097814" y="-8637.588326"/>
-    <radius>200.000000</radius>
-    <flags>
-     <autopos/>
-    </flags>
-   </jump>
-   <jump target="Thorndyke">
-    <pos x="3588.302162" y="9867.830947"/>
-    <radius>200.000000</radius>
+   <jump target="Hatter">
     <flags>
      <autopos/>
     </flags>
@@ -3585,22 +3452,16 @@
   </assets>
   <jumps>
    <jump target="Esker">
-    <pos x="15549.561596" y="14114.217448"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Humdrum">
-    <pos x="-14671.426105" y="-15024.954444"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Tarmak">
-    <pos x="3661.779218" y="-20678.282641"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -3625,15 +3486,44 @@
   </assets>
   <jumps>
    <jump target="Cherokee">
-    <pos x="4160.251472" y="2773.500981"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Iroquois">
-    <pos x="-821.994937" y="4931.969619"/>
-    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+ </ssys>
+ <ssys name="Moordra">
+  <general>
+   <radius>18000.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-13.000000</x>
+   <y>527.000000</y>
+  </pos>
+  <assets>
+   <asset>Idio</asset>
+   <asset>Moordra I</asset>
+   <asset>Moordra II</asset>
+   <asset>Percola</asset>
+   <asset>Virtual Civilian Standard</asset>
+   <asset>Virtual Civilian Standard</asset>
+  </assets>
+  <jumps>
+   <jump target="Elza">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Symm">
     <flags>
      <autopos/>
     </flags>
@@ -3657,8 +3547,27 @@
   </assets>
   <jumps>
    <jump target="Churchill">
-    <pos x="-13197.211691" y="20641.792645"/>
-    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+ </ssys>
+ <ssys name="Muran">
+  <general>
+   <radius>10000.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>80.044889</x>
+   <y>365.039575</y>
+  </pos>
+  <assets/>
+  <jumps>
+   <jump target="Forlat">
     <flags>
      <autopos/>
     </flags>
@@ -3680,15 +3589,11 @@
   <assets/>
   <jumps>
    <jump target="Doeston">
-    <pos x="-8894.437729" y="15071.130597"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Tormulex">
-    <pos x="16377.828632" y="6165.770779"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -3722,8 +3627,6 @@
   </assets>
   <jumps>
    <jump target="Overture">
-    <pos x="20048.730611" y="-14081.846501"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -3748,8 +3651,6 @@
   </assets>
   <jumps>
    <jump target="Iroquois">
-    <pos x="-7365.298884" y="-6764.049996"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -3765,8 +3666,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>156.000000</x>
-   <y>307.000000</y>
+   <x>43.485983</x>
+   <y>294.880618</y>
   </pos>
   <assets>
    <asset>Green Eye</asset>
@@ -3775,14 +3676,7 @@
    <asset>Red Eye</asset>
   </assets>
   <jumps>
-   <jump target="Dendria">
-    <pos x="-14235.970600" y="40780.304088"/>
-    <radius>200.000000</radius>
-    <flags/>
-   </jump>
-   <jump target="Elixir">
-    <pos x="-5748.976289" y="-27403.453644"/>
-    <radius>200.000000</radius>
+   <jump target="Titus">
     <flags>
      <autopos/>
     </flags>
@@ -3811,8 +3705,6 @@
   </assets>
   <jumps>
    <jump target="Lapis">
-    <pos x="11256.170870" y="17728.469120"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -3841,8 +3733,6 @@
   </assets>
   <jumps>
    <jump target="Slaccid">
-    <pos x="15531.605494" y="23297.408241"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -3868,19 +3758,14 @@
   <jumps>
    <jump target="Chraan">
     <pos x="-20569.861830" y="5797.696026"/>
-    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Esker">
-    <pos x="18426.409742" y="-10073.103992"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Karman">
-    <pos x="17855.568080" y="11053.446907"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -3904,24 +3789,48 @@
    <asset>Oberon I</asset>
    <asset>Oberon III</asset>
    <asset>Oberon IV</asset>
+   <asset>Soromid Customs Central</asset>
+   <asset>Virtual Civilian Standard</asset>
   </assets>
   <jumps>
    <jump target="Defa">
     <pos x="-15366.904607" y="-17565.639958"/>
-    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Shikima">
-    <pos x="1007.225766" y="13261.805920"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Thirty Stars">
     <pos x="19272.562144" y="8011.507651"/>
-    <radius>200.000000</radius>
     <flags/>
+   </jump>
+  </jumps>
+ </ssys>
+ <ssys name="Octantis">
+  <general>
+   <radius>10000.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-121.957878</x>
+   <y>386.917924</y>
+  </pos>
+  <assets/>
+  <jumps>
+   <jump target="Corvus">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Tandar">
+    <flags>
+     <autopos/>
+    </flags>
    </jump>
   </jumps>
  </ssys>
@@ -3946,29 +3855,21 @@
   </assets>
   <jumps>
    <jump target="Doranthex">
-    <pos x="13442.082816" y="-20483.173816"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Goddard">
-    <pos x="-20975.156334" y="12660.679949"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Vlexon">
-    <pos x="-19600.000000" y="-14700.000000"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Zacron">
-    <pos x="23517.038364" y="6870.146039"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -3992,15 +3893,11 @@
   </assets>
   <jumps>
    <jump target="Arandon">
-    <pos x="10195.128423" y="-2511.843235"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Iris">
-    <pos x="-7704.202610" y="7134.091543"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -4027,36 +3924,26 @@
   </assets>
   <jumps>
    <jump target="Dohriabi">
-    <pos x="-4118.438838" y="20592.194190"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Nartur">
-    <pos x="-17184.626238" y="12070.154144"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Pas">
-    <pos x="-20744.577327" y="-3265.350135"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Uhriabi">
-    <pos x="10198.501555" y="18357.302799"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Waterhole">
-    <pos x="272.704276" y="-20998.229268"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -4078,8 +3965,6 @@
   <assets/>
   <jumps>
    <jump target="Overture">
-    <pos x="10372.288664" y="1632.675067"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -4101,15 +3986,11 @@
   <assets/>
   <jumps>
    <jump target="Iris">
-    <pos x="-8570.424702" y="-11070.131907"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Thirty Stars">
-    <pos x="-11228.124623" y="8362.369130"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -4136,15 +4017,12 @@
   </assets>
   <jumps>
    <jump target="Daravon">
-    <pos x="-14571.928755" y="7632.915062"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Urbanus">
     <pos x="21791.360195" y="4943.063790"/>
-    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -4155,7 +4033,7 @@
    <stars>300</stars>
    <asteroids>0</asteroids>
    <interference>300.000000</interference>
-   <nebula volatility="0.000000">200.000000</nebula>
+   <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
    <x>259.000000</x>
@@ -4165,25 +4043,20 @@
    <asset>Pilatis I</asset>
    <asset>Pilatis II</asset>
    <asset>Pilatis III</asset>
+   <asset>Wildwood Station</asset>
   </assets>
   <jumps>
    <jump target="Defa">
-    <pos x="5449.938300" y="14403.408365"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Halo">
-    <pos x="-15106.702751" y="2991.242550"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Thorndyke">
-    <pos x="-9240.000000" y="-12320.000000"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -4199,31 +4072,27 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>430.666667</x>
-   <y>544.066667</y>
+   <x>376.666667</x>
+   <y>574.066667</y>
   </pos>
   <assets>
    <asset>Point Zero 0</asset>
    <asset>Point Zero Station</asset>
+   <asset>Virtual Civilian Standard</asset>
+   <asset>Warei</asset>
   </assets>
   <jumps>
    <jump target="Gewirn">
-    <pos x="-4483.566207" y="-9494.610791"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Sarcophagus">
-    <pos x="-588.958946" y="10483.469243"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Uridhrion">
-    <pos x="8919.133136" y="-5540.673615"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -4247,15 +4116,11 @@
   </assets>
   <jumps>
    <jump target="Arandon">
-    <pos x="-2853.155237" y="-10104.924799"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Sol">
-    <pos x="5760.892636" y="8778.503064"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -4271,21 +4136,17 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>-82.000000</x>
-   <y>82.000000</y>
+   <x>-88.212963</x>
+   <y>80.070988</y>
   </pos>
   <assets/>
   <jumps>
    <jump target="Fortitude">
-    <pos x="-8035.680135" y="-13545.860799"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Rockbed">
-    <pos x="14801.746420" y="5382.453244"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -4313,8 +4174,6 @@
   </assets>
   <jumps>
    <jump target="Haered">
-    <pos x="-2570.873152" y="-2374.997102"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -4339,15 +4198,11 @@
   </assets>
   <jumps>
    <jump target="Limbo">
-    <pos x="-1796.781465" y="-13884.220409"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Waterhole">
-    <pos x="-6637.397522" y="12326.595399"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -4376,15 +4231,11 @@
   </assets>
   <jumps>
    <jump target="Daravon">
-    <pos x="-2489.787971" y="13776.826770"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Volus">
-    <pos x="-13832.772822" y="-2157.404936"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -4410,8 +4261,6 @@
   </assets>
   <jumps>
    <jump target="Limbo">
-    <pos x="16288.151135" y="6398.916517"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -4443,26 +4292,19 @@
   <jumps>
    <jump target="Eneguoz">
     <pos x="6884.083705" y="-12741.656927"/>
-    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Gamma Polaris">
-    <pos x="2586.229364" y="17307.842664"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Koralis">
-    <pos x="-10017.412437" y="14349.266464"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Uhriabi">
-    <pos x="-15652.475842" y="-7826.237921"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -4493,15 +4335,12 @@
   </assets>
   <jumps>
    <jump target="Dvaer">
-    <pos x="-18295.747515" y="16294.650130"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Fidelis">
     <pos x="-12252.040388" y="-32102.418852"/>
-    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -4529,36 +4368,52 @@
   </assets>
   <jumps>
    <jump target="Arcanis">
-    <pos x="10932.163332" y="13665.204165"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Surano">
-    <pos x="-3363.909999" y="17173.645784"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Tau Prime">
-    <pos x="-16385.760607" y="6144.660228"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Toaxis">
-    <pos x="17277.725556" y="-2780.323653"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Zacron">
-    <pos x="-5704.836958" y="-16544.027178"/>
-    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+ </ssys>
+ <ssys name="Regulus">
+  <general>
+   <radius>10000.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-40.932370</x>
+   <y>406.974802</y>
+  </pos>
+  <assets/>
+  <jumps>
+   <jump target="Corvus">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Tandar">
     <flags>
      <autopos/>
     </flags>
@@ -4593,8 +4448,6 @@
   </assets>
   <jumps>
    <jump target="Ruttwi">
-    <pos x="-27666.675044" y="-4307.562189"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -4610,8 +4463,8 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>-5.000000</x>
-   <y>110.000000</y>
+   <x>-15.609568</x>
+   <y>112.893519</y>
   </pos>
   <assets>
    <asset>Virtual Pirate Small</asset>
@@ -4619,22 +4472,16 @@
   </assets>
   <jumps>
    <jump target="Capricorn">
-    <pos x="-8297.307913" y="6434.646953"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Coriolis">
-    <pos x="8498.929404" y="-6165.889959"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Pontus">
-    <pos x="-9867.830947" y="-3588.302162"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -4665,12 +4512,9 @@
   <jumps>
    <jump target="Eye of Night">
     <pos x="-26874.876925" y="2041.220875"/>
-    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Rhu">
-    <pos x="17291.671902" y="2692.226368"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -4686,19 +4530,22 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>425.666667</x>
-   <y>633.066667</y>
+   <x>392.666667</x>
+   <y>653.066667</y>
   </pos>
   <assets>
    <asset>Ebenezer</asset>
    <asset>Sarcophagus I</asset>
    <asset>Sarcophagus II</asset>
    <asset>Sarcophagus IIb</asset>
+   <asset>Sarcophagus V</asset>
+   <asset>Thymo</asset>
+   <asset>Turawee</asset>
+   <asset>Virtual Civilian Standard</asset>
+   <asset>Virtual Civilian Standard</asset>
   </assets>
   <jumps>
    <jump target="Point Zero">
-    <pos x="1276.077717" y="-22714.183359"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -4714,26 +4561,31 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>337.666667</x>
-   <y>574.066667</y>
+   <x>171.666667</x>
+   <y>561.066667</y>
   </pos>
   <assets>
    <asset>Larling</asset>
    <asset>Sergio Vix I</asset>
    <asset>Sergio Vix III</asset>
+   <asset>Soromid Wards Beta</asset>
+   <asset>Virtual Civilian Standard</asset>
+   <asset>Virtual Civilian Standard</asset>
    <asset>Zepei</asset>
   </assets>
   <jumps>
    <jump target="Cerberus">
-    <pos x="-6507.913057" y="12395.445440"/>
-    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Elza">
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Hatter">
     <pos x="19754.322856" y="-13904.725724"/>
-    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -4760,15 +4612,11 @@
   </assets>
   <jumps>
    <jump target="Borla">
-    <pos x="13930.520663" y="1393.052066"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Gamma Polaris">
-    <pos x="-277.173386" y="-13997.255978"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -4800,8 +4648,6 @@
   </assets>
   <jumps>
    <jump target="Brimstone">
-    <pos x="-29960.431260" y="-9727.412747"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -4817,23 +4663,24 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>336.666667</x>
-   <y>346.066667</y>
+   <x>319.666667</x>
+   <y>363.066667</y>
   </pos>
   <assets>
+   <asset>Arrentil</asset>
    <asset>Beene</asset>
    <asset>Shikima II</asset>
-   <asset>Shikima III</asset>
+   <asset>Soromid Wards Alpha</asset>
+   <asset>Virtual Civilian Standard</asset>
+   <asset>Virtual Civilian Standard</asset>
   </assets>
   <jumps>
    <jump target="Father's Pride">
     <pos x="20114.506612" y="-123.784296"/>
-    <radius>200.000000</radius>
     <flags/>
    </jump>
    <jump target="Oberon">
     <pos x="-19820.237648" y="200.204296"/>
-    <radius>200.000000</radius>
     <flags/>
    </jump>
   </jumps>
@@ -4855,8 +4702,6 @@
   </assets>
   <jumps>
    <jump target="Behar">
-    <pos x="7954.473231" y="-26846.347156"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -4872,23 +4717,19 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>-31.000000</x>
-   <y>50.000000</y>
+   <x>-27.964506</x>
+   <y>26.319444</y>
   </pos>
   <assets>
    <asset>Virtual Pirate Small</asset>
   </assets>
   <jumps>
    <jump target="Acheron">
-    <pos x="-242.279022" y="-15748.136425"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Alteris">
-    <pos x="14883.530657" y="-5151.991381"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -4910,8 +4751,6 @@
   <assets/>
   <jumps>
    <jump target="Gamma Polaris">
-    <pos x="9622.759956" y="-4201.486741"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -4935,15 +4774,11 @@
   </assets>
   <jumps>
    <jump target="Haleb">
-    <pos x="-8473.026428" y="17284.973912"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Norpin">
-    <pos x="-10677.978777" y="-16016.968166"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -4965,15 +4800,11 @@
   <assets/>
   <jumps>
    <jump target="Haered">
-    <pos x="24748.737342" y="24748.737342"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Polaris">
-    <pos x="-19202.975452" y="-29261.676879"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -4989,14 +4820,17 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>221.666667</x>
-   <y>495.066667</y>
+   <x>231.737655</x>
+   <y>354.995679</y>
   </pos>
   <assets/>
   <jumps>
    <jump target="Diadem">
-    <pos x="-11970.782539" y="-21376.397391"/>
-    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Vedalus">
     <flags>
      <autopos/>
     </flags>
@@ -5020,15 +4854,11 @@
   </assets>
   <jumps>
    <jump target="Amaroq">
-    <pos x="-5114.028818" y="-13032.525053"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Ksher">
-    <pos x="0.000000" y="14000.000000"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -5055,8 +4885,6 @@
   </assets>
   <jumps>
    <jump target="Herakin">
-    <pos x="-3582.514992" y="-9336.251192"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -5069,24 +4897,66 @@
    <stars>600</stars>
    <asteroids>0</asteroids>
    <interference>100.000000</interference>
-   <nebula volatility="0.000000">100.000000</nebula>
+   <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>250.000000</x>
-   <y>-40.000000</y>
+   <x>247.000000</x>
+   <y>-30.000000</y>
   </pos>
   <assets/>
   <jumps>
-   <jump target="Mizar">
-    <pos x="-10945.179325" y="15835.578598"/>
-    <radius>200.000000</radius>
+   <jump target="Raelid">
     <flags>
      <autopos/>
     </flags>
    </jump>
-   <jump target="Raelid">
-    <pos x="3700.300999" y="-18891.010363"/>
-    <radius>200.000000</radius>
+   <jump target="Thorndyke">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+ </ssys>
+ <ssys name="Symm">
+  <general>
+   <radius>18200.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>23.000000</x>
+   <y>616.000000</y>
+  </pos>
+  <assets>
+   <asset>Heii</asset>
+   <asset>Juran</asset>
+   <asset>Silverstone</asset>
+   <asset>Symm II</asset>
+   <asset>Symm III</asset>
+   <asset>Symm IIIa</asset>
+   <asset>Symm IIIb</asset>
+   <asset>Virtual Civilian Standard</asset>
+   <asset>Wigheta</asset>
+  </assets>
+  <jumps>
+   <jump target="Hadosh">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Jervis">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Moordra">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Wahri">
     <flags>
      <autopos/>
     </flags>
@@ -5138,20 +5008,46 @@
   <assets/>
   <jumps/>
  </ssys>
- <ssys name="TODO? Soromid here">
+ <ssys name="Tandar">
   <general>
-   <radius>2500.000000</radius>
+   <radius>10000.000000</radius>
    <stars>400</stars>
    <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>346.000000</x>
-   <y>684.000000</y>
+   <x>-66.607929</x>
+   <y>309.350520</y>
   </pos>
   <assets/>
-  <jumps/>
+  <jumps>
+   <jump target="Daled">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Forlat">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Kelvos">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Octantis">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Regulus">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
  </ssys>
  <ssys name="Tarmak">
   <general>
@@ -5170,22 +5066,16 @@
   </assets>
   <jumps>
    <jump target="An'ku">
-    <pos x="-8445.737131" y="-11165.550784"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Gilligan's Memory">
-    <pos x="10137.554353" y="-9655.567914"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Modus Manis">
-    <pos x="-2441.186145" y="13785.521760"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -5215,22 +5105,16 @@
   </assets>
   <jumps>
    <jump target="Doranthex">
-    <pos x="-10757.844325" y="18035.209604"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Klantar">
-    <pos x="20304.907525" y="-5358.239486"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Verex">
-    <pos x="-13410.021862" y="-16160.795577"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -5261,22 +5145,16 @@
   </assets>
   <jumps>
    <jump target="Draconis">
-    <pos x="-3149.573702" y="24296.711413"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Draygar">
-    <pos x="1745.552725" y="-24437.738146"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Raelid">
-    <pos x="22940.064850" y="-8602.524319"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -5306,22 +5184,16 @@
   </assets>
   <jumps>
    <jump target="Dakron">
-    <pos x="-17266.402937" y="2849.794660"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Gilligan's Light">
-    <pos x="14715.125334" y="9471.804813"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Haleb">
-    <pos x="17210.430800" y="-3170.342516"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -5345,15 +5217,11 @@
   </assets>
   <jumps>
    <jump target="Oberon">
-    <pos x="-14317.770961" y="-6562.311690"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Percival">
-    <pos x="12631.640200" y="-9407.665271"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -5366,24 +5234,51 @@
    <stars>400</stars>
    <asteroids>0</asteroids>
    <interference>150.000000</interference>
-   <nebula volatility="0.000000">150.000000</nebula>
+   <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>223.000000</x>
-   <y>83.000000</y>
+   <x>233.000000</x>
+   <y>59.000000</y>
   </pos>
   <assets/>
   <jumps>
-   <jump target="Mizar">
-    <pos x="-4425.572667" y="-12170.324834"/>
-    <radius>200.000000</radius>
+   <jump target="Pilatis">
     <flags>
      <autopos/>
     </flags>
    </jump>
-   <jump target="Pilatis">
-    <pos x="7770.000000" y="10360.000000"/>
-    <radius>200.000000</radius>
+   <jump target="Surano">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+ </ssys>
+ <ssys name="Titus">
+  <general>
+   <radius>10000.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>139.446006</x>
+   <y>316.062882</y>
+  </pos>
+  <assets/>
+  <jumps>
+   <jump target="Dendria">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Elixir">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="New Haven">
     <flags>
      <autopos/>
     </flags>
@@ -5407,15 +5302,11 @@
   </assets>
   <jumps>
    <jump target="Ingot">
-    <pos x="4667.832740" y="-16865.981665"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Raelid">
-    <pos x="-17277.725556" y="2780.323653"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -5446,8 +5337,6 @@
   </assets>
   <jumps>
    <jump target="Doranthex">
-    <pos x="18287.310491" y="10323.481729"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -5469,8 +5358,6 @@
   <assets/>
   <jumps>
    <jump target="Myad">
-    <pos x="-26204.525811" y="-9865.233247"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -5494,8 +5381,6 @@
   </assets>
   <jumps>
    <jump target="Doeston">
-    <pos x="-20058.303850" y="-6218.074193"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -5524,22 +5409,16 @@
   </assets>
   <jumps>
    <jump target="Brimstone">
-    <pos x="18894.964113" y="15595.843394"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Chraan">
-    <pos x="13282.108311" y="-20587.267881"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Haleb">
-    <pos x="-24447.739531" y="-1599.384829"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -5563,15 +5442,11 @@
   </assets>
   <jumps>
    <jump target="Doranthex">
-    <pos x="-4694.545317" y="-13189.436844"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Zacron">
-    <pos x="1107.628214" y="13956.115496"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -5597,15 +5472,11 @@
   </assets>
   <jumps>
    <jump target="Overture">
-    <pos x="-6799.001037" y="-12238.201866"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Qex">
-    <pos x="12521.980674" y="6260.990337"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -5630,22 +5501,16 @@
   </assets>
   <jumps>
    <jump target="Kretogg">
-    <pos x="6353.027673" y="-16306.104360"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Marat">
-    <pos x="16638.969701" y="-5421.686757"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Volus">
-    <pos x="-14467.475399" y="9845.920758"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -5675,22 +5540,16 @@
   </assets>
   <jumps>
    <jump target="Dvaer">
-    <pos x="10764.808269" y="18031.053850"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Ksher">
-    <pos x="7697.014886" y="-19538.576249"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Perhelion">
-    <pos x="-15218.757694" y="-14470.294201"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -5706,20 +5565,43 @@
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
   <pos>
-   <x>496.666667</x>
-   <y>503.066667</y>
+   <x>306.666667</x>
+   <y>632.066667</y>
   </pos>
   <assets>
    <asset>Cutha</asset>
+   <asset>Heronus</asset>
+   <asset>Heronus Orbital</asset>
    <asset>Terminus</asset>
    <asset>Uridhrion I</asset>
    <asset>Uridhrion II</asset>
    <asset>Uridhrion III</asset>
+   <asset>Virtual Civilian Standard</asset>
+   <asset>Virtual Civilian Standard</asset>
   </assets>
   <jumps>
    <jump target="Point Zero">
-    <pos x="-20811.310650" y="12928.238434"/>
-    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+ </ssys>
+ <ssys name="Valt">
+  <general>
+   <radius>10000.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-114.600678</x>
+   <y>214.919696</y>
+  </pos>
+  <assets/>
+  <jumps>
+   <jump target="Kelvos">
     <flags>
      <autopos/>
     </flags>
@@ -5750,15 +5632,32 @@
   </assets>
   <jumps>
    <jump target="Adraia">
-    <pos x="3764.958628" y="-20375.070221"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Aesir">
-    <pos x="13702.035138" y="15542.607023"/>
-    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+ </ssys>
+ <ssys name="Vedalus">
+  <general>
+   <radius>10000.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>238.584571</x>
+   <y>280.786538</y>
+  </pos>
+  <assets/>
+  <jumps>
+   <jump target="Solene">
     <flags>
      <autopos/>
     </flags>
@@ -5784,29 +5683,21 @@
   </assets>
   <jumps>
    <jump target="Blunderbuss">
-    <pos x="-23207.492183" y="-12266.817297"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Darkstone">
-    <pos x="-8212.931342" y="-24932.113003"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Ginger">
-    <pos x="12555.181739" y="-23052.763642"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Tarsus">
-    <pos x="16762.527327" y="20200.994471"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -5836,8 +5727,6 @@
   </assets>
   <jumps>
    <jump target="Ogat">
-    <pos x="22400.000000" y="16800.000000"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -5859,22 +5748,49 @@
   <assets/>
   <jumps>
    <jump target="Gammacron">
-    <pos x="-5913.310566" y="17951.121362"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Pudas">
-    <pos x="18674.243310" y="2912.496663"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Unicorn">
-    <pos x="15624.873431" y="-10633.594418"/>
-    <radius>200.000000</radius>
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+  </jumps>
+ </ssys>
+ <ssys name="Wahri">
+  <general>
+   <radius>19000.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>0.000000</interference>
+   <nebula volatility="0.000000">0.000000</nebula>
+  </general>
+  <pos>
+   <x>-93.000000</x>
+   <y>571.000000</y>
+  </pos>
+  <assets>
+   <asset>Virtual Pirate Medium</asset>
+  </assets>
+  <jumps>
+   <jump target="Ariadus">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Corvus">
+    <flags>
+     <autopos/>
+    </flags>
+   </jump>
+   <jump target="Symm">
     <flags>
      <autopos/>
     </flags>
@@ -5902,15 +5818,11 @@
   </assets>
   <jumps>
    <jump target="Overture">
-    <pos x="-249.978920" y="19248.376829"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Provectus Nova">
-    <pos x="9126.421593" y="-16949.068674"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -5934,22 +5846,16 @@
   </assets>
   <jumps>
    <jump target="Ogat">
-    <pos x="-16797.884546" y="-4907.247171"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Raelid">
-    <pos x="5704.836958" y="16544.027178"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Tuoladis">
-    <pos x="-1384.535267" y="-17445.144370"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -5973,8 +5879,6 @@
   </assets>
   <jumps>
    <jump target="Arandon">
-    <pos x="-16951.617656" y="-4346.568630"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
@@ -6014,15 +5918,11 @@
   <assets/>
   <jumps>
    <jump target="Arcanis">
-    <pos x="-13675.750003" y="-2995.640477"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>
    </jump>
    <jump target="Doeston">
-    <pos x="11964.625058" y="7269.645605"/>
-    <radius>200.000000</radius>
     <flags>
      <autopos/>
     </flags>

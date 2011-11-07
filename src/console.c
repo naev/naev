@@ -52,7 +52,7 @@ static glFont *cli_font     = NULL; /**< CLI font to use. */
  * Buffers.
  */
 #define BUF_LINES          128 /**< Number of lines in the buffer. */
-#define LINE_LENGTH        80 /**< Length of lines in the buffer. */
+#define LINE_LENGTH        256 /**< Length of lines in the buffer. */
 static int cli_cursor      = 0; /**< Current cursor position. */
 static char cli_buffer[BUF_LINES][LINE_LENGTH]; /**< CLI buffer. */
 static int cli_viewport    = 0; /**< Current viewport. */
@@ -190,8 +190,10 @@ void cli_addMessage( const char *msg )
    if (cli_state == NULL)
       return;
 
-   if (msg != NULL)
+   if (msg != NULL) {
       strncpy( cli_buffer[cli_cursor], msg, LINE_LENGTH );
+      cli_buffer[cli_cursor][LINE_LENGTH-1] = '\0';
+   }
    else
       cli_buffer[cli_cursor][0] = '\0';
 
@@ -378,17 +380,20 @@ static void cli_input( unsigned int wid, char *unused )
 
    /* Set up state. */
    L = cli_state;
+
    /* Set up for concat. */
-   if (!cli_firstline) {         /* o */
+   if (!cli_firstline)           /* o */
       lua_pushliteral(L, "\n");  /* o \n */
-   }
+
    /* Load the string. */
    lua_pushstring( L, str );     /* s */
+
    /* Concat. */
-   if (!cli_firstline) {         /* o \n s */
+   if (!cli_firstline)           /* o \n s */
       lua_concat(L, 3);          /* s */
-   }
+
    status = luaL_loadbuffer( L, lua_tostring(L,-1), lua_strlen(L,-1), "=cli" );
+
    /* String isn't proper Lua yet. */
    if (status == LUA_ERRSYNTAX) {
       size_t lmsg;

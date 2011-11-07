@@ -801,9 +801,8 @@ static void uniedit_selectText (void)
       l += snprintf( &buf[l], sizeof(buf)-l, "%s%s", uniedit_sys[i]->name,
             (i == uniedit_nsys-1) ? "" : ", " );
    }
-   if (l == 0) {
+   if (l == 0)
       uniedit_deselect();
-   }
    else {
       window_modifyText( uniedit_wid, "txtSelected", buf );
 
@@ -831,9 +830,8 @@ static void uniedit_selectText (void)
 
          window_modifyText( uniedit_wid, "txtPresence", buf );
       }
-      else {
+      else
          window_modifyText( uniedit_wid, "txtPresence", "Multiple selected" );
-      }
    }
 }
 
@@ -940,14 +938,12 @@ static void uniedit_editGenList( unsigned int wid )
       /* Virtual asset button. */
       for (i=0; i<n; i++) {
          p     = sys->planets[i];
-         if (p->real == ASSET_VIRTUAL) {
+         if (p->real == ASSET_VIRTUAL)
             str[j++] = strdup( p->name );
-         }
       }
    }
-   else {
+   else
       str[j++] = strdup("None");
-   }
 
    /* Add list. */
    h = UNIEDIT_EDIT_HEIGHT+y-20 - 2*(BUTTON_HEIGHT+20);

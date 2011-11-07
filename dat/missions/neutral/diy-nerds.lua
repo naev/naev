@@ -13,7 +13,7 @@ lang = naev.lang()
 if lang == "es" then
 else 
 	-- Bar information, describes how the NPC appears in the bar
-   bar_desc = "You see a bunch of guys and gals, exitedly whispering over some papers, which seem to contain column over column of raw numbers. Two of them don't participate in the babbling, but look at you expectantly."
+   bar_desc = "You see a bunch of guys and gals, excitedly whispering over some papers, which seem to contain column over column of raw numbers. Two of them don't participate in the babbling, but look at you expectantly."
   
 	-- Mission details.
    misn_title = "DIY Nerds" 
@@ -61,7 +61,7 @@ else
 
 	-- you pick up the nerds in time, they won
 	title[8] = "Happy nerds"
-	text[8] = [[As soon as you get of you ship, you are surrounded by the group of nerds, who are enthusiastic. "We won!", one of the dudes shouts at you. Surprisingly, the group seems to not completely be dependent on Mia when it comes to communicating with outsiders. Maybe the booze the group is obviously intoxicated with did help a little. "Take us back to %s," one of them says, "we'll continue to celebrate on the way."]]
+	text[8] = [[As soon as you get of your ship, you are surrounded by the group of nerds, who are enthusiastic. "We won!", one of the dudes shouts at you. Surprisingly, the group seems to not completely be dependent on Mia when it comes to communicating with outsiders. Maybe the booze the group is obviously intoxicated with did help a little. "Take us back to %s," one of them says, "we'll continue to celebrate on the way."]]
 
 	-- you pick up the nerds in time, they didn't win
 	title[9] = "Sad nerds"
@@ -150,7 +150,7 @@ function accept ()
 	local cp,s = planet.cur()
 	srcPlanet = cp
 	for i,p in ipairs(system.planets(system.cur())) do
-		if planet.services(p)["land"] and p ~= cp then
+		if planet.services(p)["land"] and p ~= cp and p:canLand() then
 			destPlanet=p
 			break -- atm, just take the first landable planet which is not the current one
 		end
@@ -331,7 +331,7 @@ function nerds_jump()
 	misn.finish(true)
 end
 
--- hooked to inappropiately taking off in stage 2
+-- hooked to inappropriately taking off in stage 2
 function nerds_takeoff()
 	hook.rm(jhook)
 	hook.rm(lhook)
@@ -377,7 +377,7 @@ end
 function system_hasAtLeast (amount, service)
 	local p = {}
 	for i,v in ipairs(system.planets(system.cur())) do
-		if planet.services(v)[service] then
+		if planet.services(v)[service] and v:canLand() then
 			table.insert(p,v)
 		end
 	end

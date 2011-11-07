@@ -23,6 +23,90 @@
    <faction>Sirius</faction>
   </avail>
  </mission>
+ <mission name="Empire Rehabilitation">
+  <lua>empire/emp_rehab</lua>
+  <flags/>
+  <avail>
+   <chance>100</chance>
+   <location>Computer</location>
+   <cond>(function ()
+            local fac = faction.get("Empire")
+            for _, enemy in pairs(fac:enemies()) do
+                if enemy:playerStanding() &gt; 20 then
+                    return false
+                end
+            end
+            if fac:playerStanding() &lt; 0 then
+                return true
+            end
+            return false
+          end
+         )()</cond>
+  </avail>
+ </mission>
+ <mission name="Dvaered Rehabilitation">
+  <lua>dvaered/dv_rehab</lua>
+  <flags/>
+  <avail>
+   <chance>100</chance>
+   <location>Computer</location>
+   <cond>(function ()
+            local fac = faction.get("Dvaered")
+            for _, enemy in pairs(fac:enemies()) do
+                if enemy:playerStanding() &gt; 20 then
+                    return false
+                end
+            end
+            if fac:playerStanding() &lt; 0 then
+                return true
+            end
+            return false
+          end
+         )()</cond>
+  </avail>
+ </mission>
+ <mission name="Sirius Rehabilitation">
+  <lua>sirius/srs_rehab</lua>
+  <flags/>
+  <avail>
+   <chance>100</chance>
+   <location>Computer</location>
+   <cond>(function ()
+            local fac = faction.get("Sirius")
+            for _, enemy in pairs(fac:enemies()) do
+                if enemy:playerStanding() &gt; 20 then
+                    return false
+                end
+            end
+            if fac:playerStanding() &lt; 0 then
+                return true
+            end
+            return false
+          end
+         )()</cond>
+  </avail>
+ </mission>
+ <mission name="Soromid Rehabilitation">
+  <lua>sirius/srs_rehab</lua>
+  <flags/>
+  <avail>
+   <chance>100</chance>
+   <location>Computer</location>
+   <cond>(function ()
+            local fac = faction.get("Soromid")
+            for _, enemy in pairs(fac:enemies()) do
+                if enemy:playerStanding() &gt; 20 then
+                    return false
+                end
+            end
+            if fac:playerStanding() &lt; 0 then
+                return true
+            end
+            return false
+          end
+         )()</cond>
+  </avail>
+ </mission>
  <mission name="Cargo Rush">
   <lua>neutral/cargo_rush</lua>
   <avail>
@@ -53,8 +137,9 @@
   <lua>empire/es_cargo</lua>
   <avail>
    <priority>3</priority>
-   <cond>player.getFaction("Empire") &gt;= 0 and var.peek("es_cargo") == true</cond>
+   <cond>faction.playerStanding("Empire") &gt;= 0 and var.peek("es_cargo") == true</cond>
    <chance>350</chance>
+   <done>Empire Recruitment</done>
    <location>Computer</location>
    <faction>Empire</faction>
   </avail>
@@ -66,7 +151,7 @@
   </flags>
   <avail>
    <priority>2</priority>
-   <cond>player.getFaction("Empire") &gt;= 0 and var.peek("es_misn") ~= nil and var.peek("es_misn") &gt;= 3</cond>
+   <cond>faction.playerStanding("Empire") &gt;= 0 and var.peek("es_misn") ~= nil and var.peek("es_misn") &gt;= 3</cond>
    <chance>70</chance>
    <location>Bar</location>
    <faction>Empire</faction>
@@ -79,11 +164,11 @@
   </flags>
   <avail>
    <priority>2</priority>
-   <cond>player.getFaction("Empire") &gt;= 0</cond>
+   <cond>faction.playerStanding("Empire") &gt;= 0</cond>
    <chance>100</chance>
    <done>Empire Shipping 1</done>
    <location>Bar</location>
-   <planet>Polaris Prime</planet>
+   <planet>Halir</planet>
   </avail>
  </mission>
  <mission name="Empire Shipping 3">
@@ -93,11 +178,11 @@
   </flags>
   <avail>
    <priority>2</priority>
-   <cond>player.getFaction("Empire") &gt;= 0</cond>
+   <cond>faction.playerStanding("Empire") &gt;= 0</cond>
    <chance>100</chance>
    <done>Empire Shipping 2</done>
    <location>Bar</location>
-   <planet>Polaris Prime</planet>
+   <planet>Halir</planet>
   </avail>
  </mission>
  <mission name="Collective Scouting">
@@ -107,7 +192,7 @@
   </flags>
   <avail>
    <priority>3</priority>
-   <cond>var.peek("es_cargo") == true and planet.get("Omega Station") == planet.cur() and player.getFaction("Empire") &gt; 5 and player.getRating() &gt; 5 and var.peek("collective_fail") ~= true</cond>
+   <cond>var.peek("es_cargo") == true and planet.get("Omega Station") == planet.cur() and faction.playerStanding("Empire") &gt; 5 and player.getRating() &gt; 5 and var.peek("collective_fail") ~= true</cond>
    <chance>80</chance>
    <location>Bar</location>
    <done>Empire Shipping 3</done>
@@ -121,7 +206,7 @@
   </flags>
   <avail>
    <priority>2</priority>
-   <cond>player.getFaction("Empire") &gt; 5 and var.peek("collective_fail") ~= true</cond>
+   <cond>faction.playerStanding("Empire") &gt; 5 and var.peek("collective_fail") ~= true</cond>
    <done>Collective Scouting</done>
    <chance>100</chance>
    <location>Bar</location>
@@ -135,7 +220,7 @@
   </flags>
   <avail>
    <priority>2</priority>
-   <cond>player.getFaction("Empire") &gt; 5 and var.peek("collective_fail") ~= true</cond>
+   <cond>faction.playerStanding("Empire") &gt; 5 and var.peek("collective_fail") ~= true</cond>
    <done>Collective Espionage 1</done>
    <chance>100</chance>
    <location>Bar</location>
@@ -149,7 +234,7 @@
   </flags>
   <avail>
    <priority>2</priority>
-   <cond>player.getFaction("Empire") &gt; 5 and var.peek("collective_fail") ~= true</cond>
+   <cond>faction.playerStanding("Empire") &gt; 5 and var.peek("collective_fail") ~= true</cond>
    <done>Collective Espionage 2</done>
    <chance>100</chance>
    <location>Bar</location>
@@ -163,7 +248,7 @@
   </flags>
   <avail>
    <priority>2</priority>
-   <cond>player.getFaction("Empire") &gt; 5 and var.peek("emp_commando") ~= nil and time.get() &gt; time.fromnumber( var.peek("emp_commando") )</cond>
+   <cond>faction.playerStanding("Empire") &gt; 5 and var.peek("emp_commando") ~= nil and time.get() &gt; time.fromnumber( var.peek("emp_commando") )</cond>
    <done>Collective Distraction</done>
    <chance>100</chance>
    <location>Land</location>
@@ -177,7 +262,7 @@
   </flags>
   <avail>
    <priority>2</priority>
-   <cond>player.getFaction("Empire") &gt; 5 and var.peek("collective_fail") ~= true</cond>
+   <cond>faction.playerStanding("Empire") &gt; 5 and var.peek("collective_fail") ~= true</cond>
    <done>Collective Extraction</done>
    <chance>100</chance>
    <location>Bar</location>
@@ -191,7 +276,7 @@
   </flags>
   <avail>
    <priority>2</priority>
-   <cond>player.getFaction("Empire") &gt; 5 and var.peek("collective_fail") ~= true</cond>
+   <cond>faction.playerStanding("Empire") &gt; 5 and var.peek("collective_fail") ~= true</cond>
    <done>Operation Black Trinity</done>
    <chance>100</chance>
    <location>Bar</location>
@@ -217,7 +302,7 @@
   <lua>dvaered/dv_patrol</lua>
   <avail>
    <chance>366</chance>
-   <cond>player.getFaction("Dvaered") &gt; 5 and player.getRating() &gt; 100</cond>
+   <cond>faction.playerStanding("Dvaered") &gt; 5 and player.getRating() &gt; 100</cond>
    <location>Computer</location>
    <done>Empire Shipping 3</done>
    <faction>Dvaered</faction>
@@ -546,7 +631,7 @@
   <lua>pirate/pir_cargo</lua>
   <avail>
    <priority>3</priority>
-   <cond>player.getFaction("Pirate") &gt;= 0 and var.peek("pir_cargo") == true</cond>
+   <cond>faction.playerStanding("Pirate") &gt;= 0 and var.peek("pir_cargo") == true</cond>
    <chance>960</chance>
    <location>Computer</location>
    <faction>Pirate</faction>
@@ -581,6 +666,11 @@
    <cond>planet.cur() == planet.get("The Wringer")</cond>
    <chance>100</chance>
    <location>Bar</location>
+ <mission name="Kidnapped">
+  <lua>neutral/kidnapped/traffic_00</lua>
+  <avail>
+   <chance>100</chance>
+   <location>None</location>
   </avail>
  </mission>
 </Missions>

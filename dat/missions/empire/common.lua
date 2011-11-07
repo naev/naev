@@ -21,3 +21,14 @@ function emp_getOfficialRandomPortrait ()
 
    return portraits[ rnd.rnd( 1, #portraits ) ]
 end
+
+
+--[[
+   @brief Increases the reputation limit of the player.
+--]]
+function emp_modReputation( increment )
+   local cur = var.peek("_fcap_empire") or 30
+   var.push("_fcap_empire", math.min(cur+increment, 100) )
+end
+
+

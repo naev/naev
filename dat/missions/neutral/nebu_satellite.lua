@@ -8,6 +8,8 @@
 
 ]]--
 
+include "scripts/numstring.lua"
+
 -- localization stuff, translators would work here
 lang = naev.lang()
 if lang == "es" then
@@ -15,8 +17,7 @@ else -- default english
    bar_desc = "A bunch of scientists seems to be chattering nervously amongst themselves."
    mtitle = {}
    mtitle[1] = "Nebula Satellite"
-   mreward = {}
-   mreward[1] = "%d credits"
+   misn_reward = "%s credits"
    mdesc = {}
    mdesc[1] = "Go to the %s system to launch the probe."
    mdesc[2] = "Drop off the scientists at %s in the %s system."
@@ -28,7 +29,7 @@ else -- default english
    text[1] = [[You approach the scientists. They seem a bit nervous and one mutters something about whether it's a good idea or not. Eventually one of them comes up to you.
 "Hello Captain, we're looking for a ship to take us into the Sol Nebula. Would you be willing to take us there?"]]
    text[2] = [["We had a trip scheduled with some Space Trader ship, but they backed out at the last minute. So we were stuck here until you came. We've got probe satellite that we have to release in the %s system to monitor the nebula's growth rate. The probe launch procedure is pretty straightforward and shouldn't have any complications."
-He takes a deep breath, "We hope to be able to find out more secrets of the Sol Nebula so man can once again regain it's lost patrimony. So far the radiation and volatility of the deeper areas haven't been very kind to our instruments. That's why we designed this Satellite we're going to launch."]]
+He takes a deep breath, "We hope to be able to find out more secrets of the Sol Nebula so man can once again regain its lost patrimony. So far the radiation and volatility of the deeper areas haven't been very kind to our instruments. That's why we designed this Satellite we're going to launch."]]
    text[3] = [["The plan is for you to take us to %s so we can launch the probe, and then return us to our home at %s in the %s system. The probe will automatically send us the data we need if all goes well. You'll be paid %d credits when we arrive."]]
    text[4] = [[The scientists thank you for your help before going back to their home to continue their nebula research.]]
    text[9] = [["You do not have enough free cargo space to accept this mission!"]]
@@ -43,7 +44,10 @@ function create ()
    -- Note: this mission does not make any mission claims.
    -- Set up mission variables
    misn_stage = 0
-   homeworld, homeworld_sys = planet.get( misn.factions() )
+   homeworld, homeworld_sys = planet.getLandable( misn.factions() )
+   if homeworld == nil then
+      misn.finish(false)
+   end
    satellite_sys = system.get("Arandon") -- Not too unstable
    credits = 75000
 
@@ -70,7 +74,7 @@ function accept ()
 
    -- Set up mission information
    misn.setTitle( mtitle[1] )
-   misn.setReward( string.format( mreward[1], credits ) )
+   misn.setReward( string.format( misn_reward, numstring(credits) ) )
    misn.setDesc( string.format( mdesc[1], satellite_sys:name() ) )
    misn_marker = misn.markerAdd( satellite_sys, "low" )
 

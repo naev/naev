@@ -50,6 +50,7 @@
 #include "conf.h"
 #include "nebula.h"
 #include "camera.h"
+#include "pilot.h"
 #include "nlua.h"
 #include "nluadef.h"
 #include "nlua_gfx.h"
@@ -425,7 +426,7 @@ static void gui_renderPlanetTarget( double dt )
    }
    if (player.p->nav_planet >= 0) {
       planet = cur_system->planets[player.p->nav_planet];
-      c = faction_getColour(planet->faction);
+      c = planet_getColour( planet );
 
       x = planet->pos.x - planet->radius * 1.2;
       y = planet->pos.y + planet->radius * 1.2;
@@ -487,14 +488,14 @@ static void gui_renderPilotTarget( double dt )
 
    /* Make sure pilot exists and is still alive. */
    if ((p==NULL) || pilot_isFlag(p,PILOT_DEAD)) {
-      player.p->target = PLAYER_ID;
+      pilot_setTarget( player.p, player.p->id );
       gui_setTarget();
       return;
    }
 
    /* Make sure target is still in range. */
    if (!pilot_inRangePilot( player.p, p )) {
-      player.p->target = PLAYER_ID;
+      pilot_setTarget( player.p, player.p->id );
       gui_setTarget();
       return;
    }
@@ -778,9 +779,9 @@ int gui_onScreenPilot( double *rx, double *ry, Pilot *pilot )
    cw = SCREEN_W/2 + tex->sw/2;
    ch = SCREEN_H/2 + tex->sh/2;
 
-   if ((ABS(*rx) > cw) || (ABS(*ry) > ch)) {
+   if ((ABS(*rx) > cw) || (ABS(*ry) > ch))
       return  0;
-   }
+
    return 1;
 }
 
@@ -821,9 +822,9 @@ int gui_onScreenAsset( double *rx, double *ry, JumpPoint *jp, Planet *pnt )
    cw = SCREEN_W/2 + tex->sw/2;
    ch = SCREEN_H/2 + tex->sh/2;
 
-   if ((ABS(*rx) > cw) || (ABS(*ry) > ch)) {
+   if ((ABS(*rx) > cw) || (ABS(*ry) > ch))
       return  0;
-   }
+
    return 1;
 }
 
@@ -938,7 +939,7 @@ void gui_render( double dt )
 /**
  * @brief Initializes the radar.
  *
- *    @param circle Whether or not the radar is circlular.
+ *    @param circle Whether or not the radar is circular.
  */
 int gui_radarInit( int circle, int w, int h )
 {
@@ -1198,22 +1199,21 @@ static void gui_renderInterference (void)
 
 
 /**
- * @brief Gets the pilot colour.
+ * @brief Gets a pilot's colour, with a special colour for targets.
  *
  *    @param p Pilot to get colour of.
  *    @return The colour of the pilot.
+ *
+ * @sa pilot_getColour
  */
 static glColour* gui_getPilotColour( const Pilot* p )
 {
    glColour *col;
 
-   if (p->id == player.p->target) col = &cRadar_tPilot;
-   else if (pilot_inRangePilot(player.p, p) == -1) col = &cMapNeutral;
-   else if (pilot_isDisabled(p)) col = &cInert;
-   else if (pilot_isFlag(p,PILOT_BRIBED)) col = &cNeutral;
-   else if (pilot_isHostile(p)) col = &cHostile;
-   else if (pilot_isFriendly(p)) col = &cFriend;
-   else col = faction_getColour(p->faction);
+   if (p->id == player.p->target)
+      col = &cRadar_tPilot;
+   else
+      col = pilot_getColour(p);
 
    return col;
 }
@@ -1390,11 +1390,10 @@ static glColour *gui_getPlanetColour( int i )
 
    planet = cur_system->planets[i];
 
-   col = faction_getColour(planet->faction);
    if (i == player.p->nav_planet)
       col = &cRadar_tPlanet;
-   else if ((col != &cHostile) && !planet_hasService(planet,PLANET_SERVICE_INHABITED))
-      col = &cInert; /* Override non-hostile planets without service. */
+   else
+      col = planet_getColour( planet );
 
    return col;
 }
@@ -1924,10 +1923,11 @@ static int gui_runFunc( const char* func, int nargs, int nret )
       err = (lua_isstring(L,-1)) ? lua_tostring(L,-1) : NULL;
       WARN("GUI Lua -> '%s': %s",
             func, (err) ? err : "unknown error");
-      lua_pop(L,1);
+      lua_pop(L,2);
+      return ret;
    }
 #if DEBUGGING
-   lua_pop(L,1);
+   lua_remove(L,-(nret+1));
 #endif /* DEBUGGING */
 
    return ret;
@@ -1985,9 +1985,19 @@ void gui_setSystem (void)
 
 
 /**
+ * @brief Player's relationship with a faction was modified.
+ */
+void gui_updateFaction (void)
+{
+   if (gui_L != NULL && player.p->nav_planet != -1)
+      gui_doFunc( "update_faction" );
+}
+
+
+/**
  * @brief Calls trigger functions depending on who the pilot is.
  *
- *    @param The pilot to act base dupon.
+ *    @param The pilot to act based upon.
  */
 void gui_setGeneric (Pilot* pilot)
 {

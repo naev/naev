@@ -69,7 +69,7 @@ static void news_mouse( unsigned int wid, SDL_Event *event, double mx, double my
  * @brief Renders a news widget.
  *
  *    @param bx Base X position to render at.
- *    @param by Base Y positoin to render at.
+ *    @param by Base Y position to render at.
  *    @param w Width of the widget.
  *    @param h Height of the widget.
  */
@@ -246,8 +246,6 @@ int news_init (void)
    L = news_state;
 
    /* Load the libraries. */
-   nlua_loadBasic(L);
-   nlua_load(L,luaopen_string);
    nlua_loadStandard(L, 1);
 
    /* Load the news file. */
@@ -257,6 +255,7 @@ int news_init (void)
            "%s\n"
            "Most likely Lua file has improper syntax, please check",
             LUA_NEWS, lua_tostring(L,-1));
+      free(buf);
       return -1;
    }
    free(buf);
@@ -414,7 +413,7 @@ const news_t *news_generate( int *ngen, int n )
 #endif /* DEBUGGING */
 
    /* Save news found. */
-   news_nbuf   = i;
+   news_nbuf   = n+1;
    if (ngen != NULL)
       (*ngen)  = news_nbuf;
 

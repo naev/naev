@@ -6,8 +6,9 @@
 --      3 - The player has found the FLF base for the Dvaered, or has betrayed the FLF after rescuing the agent. Conditional for dv_antiflf03
 --]]
 
-include("scripts/fleethelper.lua")
-include("scripts/proximity.lua")
+include "scripts/fleethelper.lua" 
+include "scripts/proximity.lua"
+include "dat/missions/dvaered/common.lua"
 
 -- localization stuff, translators would work here
 lang = naev.lang()
@@ -49,7 +50,7 @@ else -- default english
     "The FLF will send out wings of fighters and bombers to engage our strike force. At this time the number and composition of ships is unknown, but it seems prudent to assume they will outnumber us by a fair margin. Your task as auxiliary escorts is to protect the strike force's flanks and intercept any FLF ships attempting to target the Obstinate. Be advised that the Obstinate will have limited anti-fighter armaments available, as most of its hull is dedicated to fighter bays. The Obstinate must not be destroyed! This is your paradigm objective!"
     On the wall, the red dots are intercepted by the white dots, and blink out of existence. Then a second group of white dots appears near the Dvaered logos, and moves towards the glowing disc.
     "As soon as the FLF have exhausted their forces trying to counterattack, the HDSF Obstinate will begin launching bombers. It is our belief that the bombers alone will be able to take out the enemy base, but in the event that resistance is heavier than expected, the Obstinate herself will move in to provide fire support."
-    The glowing disc on the wal fades out, leaving the Dvaered fleet alone and victorious.
+    The glowing disc on the wall fades out, leaving the Dvaered fleet alone and victorious.
     "That will be all. You have your orders. Report to your stations as per your timetables. I will see you all in %s. Good luck."
     
     Some time later, you are back in the Dvaered spaceport bar. You've seen action before in your career, but you still feel tense about what is to come. You decide to have another drink, just for luck.]]
@@ -77,7 +78,7 @@ else -- default english
     flagattack = "This is Obstinate, we're under fire!"
     phasetwo = "This is Obstinate. Launching bombers."
     
-    npc_desc = "This must be the Dvaered liaison you heard about. Allegedly, he may have a job to you that involves fighting the Frontier Liberation Front."
+    npc_desc = "This must be the Dvaered liaison you heard about. Allegedly, he may have a job for you that involves fighting the Frontier Liberation Front."
     
     misn_title = "Destroy the FLF base!"
     osd_desc[1] = "Fly to the %s system"
@@ -164,7 +165,7 @@ function enter()
         hook.timer(500, "proximity", {anchor = obstinate, radius = 1500, funcname = "operationStart"})
     elseif missionstarted then -- The player has jumped away from the mission theater, which instantly ends the mission and with it, the mini-campaign.
         tk.msg(failtitle[1], failtext[1])
-        faction.get("Dvaered"):modPlayerRaw(-10)
+        faction.get("Dvaered"):modPlayerSingle(-10)
         abort()
     end
     
@@ -190,7 +191,8 @@ function land()
     if victorious and planet.cur() == planet.get(DVplanet) then
         tk.msg(title[3], string.format(text[5], player.name()))
         tk.msg(title[3], text[6])
-        faction.get("Dvaered"):modPlayerRaw(10)
+        dv_modReputation( 5 )
+        faction.get("Dvaered"):modPlayerSingle(10)
         player.pay(100000) -- 100K
         var.pop("flfbase_intro")
         var.pop("flfbase_sysname")

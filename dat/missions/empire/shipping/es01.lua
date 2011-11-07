@@ -7,6 +7,8 @@
 
 ]]--
 
+include "scripts/numstring.lua"
+
 lang = naev.lang()
 if lang == "es" then
    -- not translated atm
@@ -14,7 +16,7 @@ else -- default english
    -- Mission details
    bar_desc = "You see Commander Soldner who is expecting you."
    misn_title = "Empire Shipping Delivery"
-   misn_reward = "%d credits"
+   misn_reward = "%s credits"
    misn_desc = {}
    misn_desc[1] = "Pick up a package at %s in the %s system."
    misn_desc[2] = "Deliver the package to %s in the %s system." 
@@ -45,6 +47,16 @@ end
 
 function create ()
    -- Note: this mission does not make any system claims.
+
+   -- Planet targets
+   pickup,pickupsys  = planet.getLandable( "Selphod" )
+   dest,destsys      = planet.getLandable( "Cerberus" )
+   ret,retsys        = planet.getLandable( "Halir" )
+   if pickup==nil or dest==nil or ret==nil then
+      misn.finish(false)
+   end
+
+   -- Bar NPC
    misn.setNPC( "Soldner", "soldner" )
    misn.setDesc( bar_desc )
 end
@@ -59,16 +71,13 @@ function accept ()
    misn.accept()
 
    -- target destination
-   pickup,pickupsys = planet.get( "Selphod" )
-   dest,destsys = planet.get( "Cerberus" )
-   ret,retsys = planet.get( "Polaris Prime" )
-   misn_marker = misn.markerAdd( pickupsys, "low" )
+   misn_marker       = misn.markerAdd( pickupsys, "low" )
 
    -- Mission details
    misn_stage = 0
    reward = 50000
    misn.setTitle(misn_title)
-   misn.setReward( string.format(misn_reward, reward) )
+   misn.setReward( string.format(misn_reward, numstring(reward)) )
    misn.setDesc( string.format(misn_desc[1], pickup:name(), pickupsys:name()))
 
    -- Flavour text and mini-briefing
@@ -124,7 +133,7 @@ function land ()
 
       -- Rewards
       player.pay(reward)
-      player.modFaction("Empire",5);
+      faction.modPlayerSingle("Empire",5);
 
       -- Flavour text
       tk.msg(title[4], string.format(text[6], ret:name()) )

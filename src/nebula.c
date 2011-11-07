@@ -112,9 +112,8 @@ int nebu_init (void)
    GLfloat tw, th;
 
    /* Special code to regenerate the nebula */
-   if ((nebu_w == -9) && (nebu_h == -9)) {
+   if ((nebu_w == -9) && (nebu_h == -9))
       nebu_generate();
-   }
 
    /* Set expected sizes */
    nebu_w  = SCREEN_W;
@@ -275,9 +274,8 @@ void nebu_exit (void)
  */
 void nebu_render( const double dt )
 {
-   if (nglActiveTexture != NULL) {
+   if (nglActiveTexture != NULL)
       nebu_renderMultitexture(dt);
-   }
 
    /* Now render the puffs, they are generic. */
    nebu_renderPuffs( 1 );
@@ -791,7 +789,6 @@ static int saveNebula( float *map, const uint32_t w, const uint32_t h, const cha
    sur = nebu_surfaceFromNebulaMap( map, w, h );
 
    /* save */
-   ret = 0;
    snprintf(file_path, PATH_MAX, "%s%s", nfile_basePath(), file );
    ret = SDL_SavePNG( sur, file_path );
 
@@ -803,7 +800,7 @@ static int saveNebula( float *map, const uint32_t w, const uint32_t h, const cha
 
 
 /**
- * @brief Loads the nebuale from file.
+ * @brief Loads the nebulae from file.
  *
  *    @param file Path of the nebula to load.  Relative to base directory.
  *    @return A SDL surface with the nebula.

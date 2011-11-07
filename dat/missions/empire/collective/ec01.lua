@@ -116,7 +116,7 @@ end
 function land()
    if planet.cur() == misn_base and sysdone1 and sysdone2 then
       tk.msg( title[3], text[3] )
-      player.modFaction("Empire",5)
+      faction.modPlayerSingle("Empire",5)
       misn.finish(true)
    end
 end

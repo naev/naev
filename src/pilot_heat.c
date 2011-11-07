@@ -22,7 +22,7 @@
 /**
  * @brief Calculates the heat parameters for a pilot.
  *
- * We treat the ship as more or less ac onstant slab of steel.
+ * We treat the ship as more or less a constant slab of steel.
  *
  *    @param p Pilot to update heat properties of.
  */
@@ -120,9 +120,9 @@ void pilot_heatAddSlot( Pilot *p, PilotOutfitSlot *o )
    /* We consider that only 1% of the energy is lost in the form of heat,
     * this keeps numbers sane. */
    if (o->outfit->type == OUTFIT_TYPE_BOLT)
-      hmod = p->stats.heat_forward;
+      hmod = p->stats.fwd_heat;
    else if (o->outfit->type == OUTFIT_TYPE_TURRET_BOLT)
-      hmod = p->stats.heat_turret;
+      hmod = p->stats.fwd_heat;
    else
       hmod = 1.;
    o->heat_T += hmod * outfit_heat(o->outfit) / o->heat_C;
@@ -145,15 +145,11 @@ void pilot_heatAddSlot( Pilot *p, PilotOutfitSlot *o )
  *    @param p Pilot to update.
  *    @param o Outfit slot to update.
  *    @param dt Delta tick.
- *    @return The energy transfered.
+ *    @return The energy transferred.
  */
 double pilot_heatUpdateSlot( Pilot *p, PilotOutfitSlot *o, double dt )
 {
    double Q;
-
-   /* Must have an outfit to be valid. */
-   if (o->outfit == NULL)
-      return 0.;
 
    /* Calculate energy leaving/entering ship chassis. */
    Q           = -p->heat_cond * (o->heat_T - p->heat_T) * o->heat_area * dt;
@@ -178,7 +174,7 @@ double pilot_heatUpdateSlot( Pilot *p, PilotOutfitSlot *o, double dt )
  *
  *  q = p + sigma * epsilon * (T^4 - To^4)
  *
- *  sigma being the stefan-boltzmann constant [5] = 5.67×10−8 W/(m^2 K^4)
+ *  sigma being the Stefan-Boltzmann constant [5] = 5.67×10−8 W/(m^2 K^4)
  *  epsilon being a parameter between 0 and 1 (1 being black body)
  *  T being body temperature
  *  To being "space temperature"

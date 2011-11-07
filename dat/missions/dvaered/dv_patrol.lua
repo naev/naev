@@ -13,9 +13,9 @@ if lang == "es" then
    -- not translated atm
 else -- default english
    misn_desc = {}
-   misn_desc[1] = "Patrol %d points in %d systems for hostiles: "
+   misn_desc[1] = "Patrol %d points in %d system%s for hostiles: "
    misn_desc[2] = "Return to %s in the %s system for payment."
-   misn_reward = "%d credits"
+   misn_reward = "%s credits"
    title = {}
    title[1] = "DV: Routine %d sector patrol"
    title[2] = "DV: Patrol %d sectors"
@@ -24,7 +24,7 @@ else -- default english
    msg_title = {}
    msg_msg = {}
    msg_title[1] = "Mission Success"
-   msg_msg[1] = "You are greeted by a Dvaered official and receive your payment of %d credits for your contribution in keeping Dvaered systems clean."
+   msg_msg[1] = "You are greeted by a Dvaered official and receive your payment of %s credits for your contribution in keeping Dvaered systems clean."
    msg_msg[2] = "DV: Arrived at point. Hold point."
    msg_msg[3] = "DV: Point insecure. Engage hostiles!"
    msg_msg[4] = "DV: Hostiles eliminated. Hold point."
@@ -42,7 +42,7 @@ end
 
 
 include("scripts/proximity.lua")
-
+include("scripts/numstring.lua")
 
 -- Mission parameters
 chk_range      = math.pow( 2000, 2 ) -- Radius within target
@@ -228,11 +228,18 @@ function create ()
    mission_marker = misn.markerAdd( tgt_sys[1], "computer" )
 
    -- Create the description.
-   desc = string.format( misn_desc[1], num_patrol, #tgt_sys ) .. tgt_sys[1]:name()
+   if #tgt_sys > 1 then
+      plural = "s"
+   else
+      plural = ""
+   end
+   desc = string.format( misn_desc[1], num_patrol, #tgt_sys, plural ) .. tgt_sys[1]:name()
    for i=2, #tgt_sys-1 do
       desc = desc .. ", " .. tgt_sys[i]:name()
    end
-   desc = desc .. " and " .. tgt_sys[#tgt_sys]:name() .. "."
+   if #tgt_sys > 1 then
+      desc = desc .. " and " .. tgt_sys[#tgt_sys]:name()
+   end
    for i=1,#tgt_list do
       desc = desc .. "\n   " .. tgt_str( tgt_list[i] )
    end
@@ -249,11 +256,25 @@ function create ()
    for i=2,#tgt_sys do -- Bonus for jumps
       reward = reward + 20000 + 5000 * rnd.twosigma()
    end
+   for i=1,#tgt_sys do -- Adjust for dvaered enemy presence
+      local enemy = faction.enemies( "Dvaered" )
+      local presence = 0
+      for _,v in ipairs(enemy) do
+         presence = presence + tgt_sys[i]:presence( v )
+      end
+      presence = presence / #tgt_sys
+      reward = reward * math.min( 1.5, presence/ 100 )
+   end
+
+   -- Must have minimum reward
+   if reward <= 10000 then
+      misn.finish(false)
+   end
 
    -- Set some details.
    misn.setTitle( string.format( title[rnd.int(1,3)], num_patrol ) )
    misn.setDesc( desc )
-   misn.setReward( string.format( misn_reward, reward ) )
+   misn.setReward( string.format( misn_reward, numstring(reward) ) )
 end
 
 -- Mission is accepted
@@ -435,7 +456,7 @@ function land ()
    landed = planet.cur()
    if visited == num_patrol and landed == base then
       player.pay( reward )
-      tk.msg( msg_title[1], string.format( msg_msg[1], reward ))
+      tk.msg( msg_title[1], string.format( msg_msg[1], numstring(reward) ))
 
       -- increase dvaered patrol mission counter
       n = var.peek("dv_patrol")
@@ -446,9 +467,8 @@ function land ()
       end      
 
       -- modify the faction standing
-      if player.getFaction("Dvaered") < 70 then
-         player.modFaction("Dvaered", rnd.rnd(1, num_systems/2) );
-      end
+      faction.modPlayerSingle("Dvaered", rnd.rnd(1, num_patrol/2) )
+      faction.modPlayerSingle("FLF", -3)
 
       misn.finish(true)
    end

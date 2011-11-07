@@ -5,7 +5,7 @@
 /**
  * @file claim.c
  *
- * @brief Handles claiming systems.
+ * @brief Handles claiming of systems.
  */
 
 #include "claim.h"
@@ -61,25 +61,6 @@ int claim_add( SysClaim_t *claim, int ss_id )
    id  = &array_grow( &claim->ids );
    *id = ss_id;
    return 0;
-}
-
-
-/**
- * @brief Lists the systems a claim has.
- *
- *    @param claim Claim to list systems of.
- *    @param n Number of claims.
- *    @return The list of claims.
- */
-int* claim_list( SysClaim_t *claim, int *n )
-{
-   if (claim->ids == NULL) {
-      *n = 0;
-      return NULL;
-   }
-
-   *n = array_size(claim->ids);
-   return claim->ids;
 }
 
 
@@ -151,7 +132,7 @@ void claim_destroy( SysClaim_t *claim )
 
 
 /**
- * @brief Clears the claimings on all systems.
+ * @brief Clears the claims on all systems.
  */
 void claim_clear (void)
 {

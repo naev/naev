@@ -1,4 +1,4 @@
-#!/usr/bin/env python2.7
+#!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=80:
 
@@ -32,9 +32,35 @@ def main(config):
                                 element.attrib['type'] = cLine['dtype']
                             elif k in cLine.keys():
                                 element.attrib[k] = cLine[k]
+        elif config.ship:
+            expr = 'ship[@name="%s"]'
+            ship = xmlReader.find(expr % cLine['name'])
+            if type(ship) is NoneType:
+                print('No ship named ' + cLine['name'])
+                continue
+            else:
+                for (cKey, cValue) in cLine.iteritems():
+                    if cKey == 'name':
+                        continue
+                    if cKey == 'license' and cValue == '(null)':
+                        continue
+                    elem = ship.find(cKey)
+                    if type(elem) is NoneType:
+                        # we need to go deeper (ò_ô)
+                        collapse=True
+                        for dream in ship.iterchildren():
+                            information = dream.find(cKey)
+                            if information is not None:
+                                information.text = cValue
+                                collapse=False
+                                break
+                        if collapse:
+                            print("No tag `%s' for ship %s") % (cKey, cLine['name'])
+                        continue
+                    elem.text = cValue
         else:
             print('If no outfit, what to do ?')
-    if config.outfit:
+    if config.outfit or config.ship:
         newxmlname = os.path.join(os.path.dirname(config.xmlfile),
                                 'test_' + os.path.basename(config.xmlfile))
         if not os.path.exists(newxmlname):
@@ -43,7 +69,7 @@ def main(config):
         xmlReader.write( newxmlname )
 
 
-__version__ = '1.0'
+__version__ = '1.1'
 
 if __name__ == '__main__':
     parser = ArgumentParser(description="""
@@ -55,6 +81,8 @@ if __name__ == '__main__':
                         help='Going verbose to see hidden secrets')
     parser.add_argument('--outfit', '-o', action='store_true',
                         help='Use this to operate on outfits')
+    parser.add_argument('--ship', '-s', action='store_true',
+                        help='Use this to operate on ships')
     parser.add_argument('csvfile',
                         help='Path to csv files directory')
     parser.add_argument('xmlfile',

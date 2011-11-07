@@ -250,7 +250,7 @@ void vect_uv_decomp( Vector2d* u, Vector2d* v, Vector2d* reference_vector )
  * S O L I D
  */
 /**
- * @brief Updates the solid's position using an euler integration.
+ * @brief Updates the solid's position using an Euler integration.
  *
  * Simple method
  *
@@ -260,7 +260,7 @@ void vect_uv_decomp( Vector2d* u, Vector2d* v, Vector2d* reference_vector )
  *   d x(t) / d t = a*t + v, v = constant (initial velocity)
  *   x(t) = a/2*t + v*t + p, p = constant (initial position)
  *
- *   since d t isn't actually diferential this gives us ERROR!
+ *   since dt isn't actually differential this gives us ERROR!
  *   so watch out with big values for dt
  *
  */

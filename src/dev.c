@@ -5,7 +5,7 @@
 /**
  * @file dev.c
  *
- * @brief Generic developement routines.
+ * @brief Generic development routines.
  */
 
 #include "dev.h"

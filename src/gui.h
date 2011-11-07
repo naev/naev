@@ -39,8 +39,8 @@ void gui_setNav (void);
 void gui_setTarget (void);
 void gui_setShip (void);
 void gui_setSystem (void);
-void gui_setGeneric (Pilot* pilot);
-
+void gui_updateFaction (void);
+void gui_setGeneric ( Pilot* pilot );
 
 /*
  * render
@@ -57,8 +57,6 @@ void gui_messageInit( int width, int x, int y );
 void gui_clearMessages (void);
 void gui_messageScrollUp( int lines );
 void gui_messageScrollDown( int lines );
-void gui_messageSetVisible( int lines );
-int gui_messageGetVisible (void);
 
 
 /*

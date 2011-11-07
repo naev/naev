@@ -182,7 +182,7 @@ int event_runLuaFunc( Event_t *ev, const char *func, int nargs )
  *
  * @usage npc_id = evt.npcAdd( "my_func", "Mr. Test", "none", "A test." ) -- Creates an NPC.
  *
- *    @luaparam func Name of the function to run when approaching.
+ *    @luaparam func Name of the function to run when approaching, gets passed the npc_id when called.
  *    @luaparam name Name of the NPC
  *    @luaparam portrait Portrait to use for the NPC (from gfx/portraits/).
  *    @luaparam desc Description associated to the NPC.

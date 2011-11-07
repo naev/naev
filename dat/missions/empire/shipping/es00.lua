@@ -7,13 +7,15 @@
 
 ]]--
 
+include "scripts/numstring.lua"
+
 lang = naev.lang()
 if lang == "es" then
    -- not translated atm
 else -- default english
    bar_desc = "You see an Empire Commander. He seems to have noticed you."
    misn_title = "Prisoner Exchange"
-   misn_reward = "%d credits"
+   misn_reward = "%s credits"
    misn_desc = {}
    misn_desc[1] = "Go to %s in the %s system to exchange prisoners with the FLF."
    misn_desc[2] = "Return to %s in the %s system to report what happened."
@@ -40,8 +42,11 @@ end
 function create ()
    -- Note: this mission does not make any system claims.
    -- Target destination
-   dest,destsys = planet.get( faction.get("Frontier") )
-   ret,retsys = planet.get( "Polaris Prime" )
+   dest,destsys = planet.getLandable( faction.get("Frontier") )
+   ret,retsys   = planet.getLandable( "Halir" )
+   if dest == nil or ret == nil then
+      misn.finish(false)
+   end
 
    -- Spaceport bar stuff
    misn.setNPC( "Commander", "soldner" )
@@ -66,7 +71,7 @@ function accept ()
    misn_stage = 0
    reward = 50000
    misn.setTitle(misn_title)
-   misn.setReward( string.format(misn_reward, reward) )
+   misn.setReward( string.format(misn_reward, numstring(reward)) )
    misn.setDesc( string.format(misn_desc[1], dest:name(), destsys:name()))
 
    -- Flavour text and mini-briefing
@@ -103,7 +108,7 @@ function land ()
 
       -- Rewards
       player.pay(reward)
-      player.modFaction("Empire",5);
+      faction.modPlayerSingle("Empire",5);
 
       -- Flavour text
       tk.msg(title[3], text[6] )
@@ -143,7 +148,7 @@ function enter ()
       pilot.add( "Dvaered Med Force", nil, enter_vect )
 
       -- Player should not be able to reland
-      player.allowLand(false,"The docking stabilzers have been damaged by weapons fire!")
+      player.allowLand(false,"The docking stabilizers have been damaged by weapons fire!")
    end
 end
 

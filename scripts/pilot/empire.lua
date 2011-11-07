@@ -90,7 +90,7 @@ function empire_createPeacemaker( empire_create )
 
    -- Peacemaker gets some good stuff
    primary        = { "Turbolaser", "Railgun Turret" }
-   secondary      = { "Headhunter Launcher" }
+   secondary      = { "Unicorp Headhunter Launcher" }
    use_primary    = nhigh-2
    use_secondary  = 2
    addWeapons( primary, use_primary )
@@ -133,7 +133,7 @@ function empire_createHawking( empire_create )
 
    -- Hawking gets some good stuff
    primary        = { "Turbolaser", "Heavy Laser" }
-   secondary      = { "Headhunter Launcher" }
+   secondary      = { "Unicorp Headhunter Launcher" }
    use_primary    = nhigh-2
    use_secondary  = 2
    addWeapons( primary, use_primary )
@@ -176,7 +176,7 @@ function empire_createPacifier( empire_create )
 
    -- Pacifier isn't bad either
    primary        = { "Heavy Ripper Cannon", "Laser Turret MK3" }
-   secondary      = { "Headhunter Launcher" }
+   secondary      = { "Unicorp Headhunter Launcher" }
    use_primary    = nhigh-2
    use_secondary  = 2
    addWeapons( primary, use_primary )
@@ -218,7 +218,7 @@ function empire_createShark( empire_create )
 
    -- Shark gets some good stuff
    primary        = { "Laser Cannon MK3", "Ripper Cannon" }
-   secondary      = { "Headhunter Launcher" }
+   secondary      = { "Unicorp Headhunter Launcher" }
    use_primary    = nhigh -1
    use_secondary  = 1
    addWeapons( primary, use_primary )
@@ -260,7 +260,7 @@ function empire_createLancelot( empire_create )
 
    -- Lancelot gets some good stuff
    primary        = { "Laser Cannon MK3", "Ripper Cannon" }
-   secondary      = { "Headhunter Launcher" }
+   secondary      = { "Unicorp Headhunter Launcher" }
    use_primary    = nhigh-1
    use_secondary  = 1
    addWeapons( primary, use_primary )
@@ -302,7 +302,7 @@ function empire_createAdmonisher( empire_create )
 
    -- Admonisher gets some good stuff
    primary        = { "Heavy Ripper Cannon", "Ripper Cannon" }
-   secondary      = { "Headhunter Launcher" }
+   secondary      = { "Unicorp Headhunter Launcher" }
    use_primary    = nhigh-1
    use_secondary  = 1
    addWeapons( primary, use_primary )

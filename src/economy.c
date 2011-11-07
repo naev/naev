@@ -8,7 +8,7 @@
  * @brief Handles economy stuff.
  *
  * Economy is handled with Nodal Analysis.  Systems are modelled as nodes,
- *  jump routes are resistances and production is modeled as node intensity.
+ *  jump routes are resistances and production is modelled as node intensity.
  *  This is then solved with linear algebra after each time increment.
  */
 
@@ -112,7 +112,7 @@ void credits2str( char *str, credits_t credits, int decimals )
 
 
 /**
- * @brief Gets a commoditiy by name.
+ * @brief Gets a commodity by name.
  *
  *    @param name Name to match.
  *    @return Commodity matching name.
@@ -130,7 +130,7 @@ Commodity* commodity_get( const char* name )
 
 
 /**
- * @brief Gets a commoditiy by name without warning.
+ * @brief Gets a commodity by name without warning.
  *
  *    @param name Name to match.
  *    @return Commodity matching name.
@@ -204,7 +204,7 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
 
    /* Get name. */
    xmlr_attr( parent, "name", temp->name );
-   if (temp->name == NULL) 
+   if (temp->name == NULL)
       WARN("Commodity from "COMMODITY_DATA" has invalid or no name");
 
    /* Parse body. */
@@ -639,9 +639,8 @@ int economy_update( unsigned int dt )
        */
       scale    = 1.;
       offset   = 1.;
-      for (i=0; i<systems_nstack; i++) {
+      for (i=0; i<systems_nstack; i++)
          systems_stack[i].prices[j] = X[i] * scale + offset;
-      }
    }
 
    /* Clean up. */

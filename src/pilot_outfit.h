@@ -26,10 +26,13 @@ int pilot_rmAmmo( Pilot* pilot, PilotOutfitSlot *s, int quantity );
 /* Checks. */
 const char* pilot_checkSanity( Pilot *p );
 const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o, int add );
-int pilot_oquantity( Pilot* p, PilotOutfitSlot* w );
+
+/* Lockons. */
+void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, double *a, double dt );
+void pilot_lockClear( Pilot *p );
 
 /* Other. */
-char* pilot_getOutfits( Pilot* pilot );
+char* pilot_getOutfits( const Pilot* pilot );
 void pilot_calcStats( Pilot* pilot );
 void pilot_updateMass( Pilot *pilot );
 

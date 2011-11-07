@@ -582,9 +582,9 @@ static int iar_focusImage( Widget* iar, double bx, double by )
 
             /* Check for collision. */
             if ((bx > xcurs) && (bx < xcurs+w-4.) &&
-                  (by > ycurs) && (by < ycurs+h-4.)) {
+                  (by > ycurs) && (by < ycurs+h-4.))
                return j*xelem + i;
-            }
+
             xcurs += xspace + w;
          }
          ycurs -= h;

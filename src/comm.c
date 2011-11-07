@@ -246,8 +246,7 @@ int comm_openPlanet( Planet *planet )
          comm_planet->faction, 0, 0, comm_planet->name );
 
    /* Add special buttons. */
-   if (areEnemies(player.p->faction, planet->faction) &&
-         !planet->bribed)
+   if (!planet->can_land && !planet->bribed && (planet->bribe_msg != NULL))
       window_addButton( wid, -20, 20 + BUTTON_HEIGHT + 20,
             BUTTON_WIDTH, BUTTON_HEIGHT, "btnBribe", "Bribe", comm_bribePlanet );
 
@@ -268,12 +267,15 @@ int comm_openPlanet( Planet *planet )
 static unsigned int comm_open( glTexture *gfx, int faction,
       int override, int bribed, char *name )
 {
-   int x,y, w;
+   int namex, standx, logox, y;
+   int namew, standw, logow, width;
    glTexture *logo;
    char *stand;
    unsigned int wid;
    glColour *c;
+   glFont *font;
    int gw, gh;
+   double aspect;
 
    /* Clean up. */
    if (comm_graphic != NULL) {
@@ -303,13 +305,33 @@ static unsigned int comm_open( glTexture *gfx, int faction,
       stand = faction_getStandingBroad(faction_getPlayer(faction));
       c     = faction_getColour( faction );
    }
-   w = MAX(gl_printWidth( NULL, name ), gl_printWidth( NULL, stand ));
-   y = gl_defFont.h*2 + 15;
-   if (logo != NULL) {
-      w += logo->w;
-      y  = MAX( y, logo->h );
+
+   namew  = gl_printWidthRaw( NULL, name );
+   standw = gl_printWidthRaw( NULL, stand );
+   width  = MAX(namew, standw);
+
+   logow = logo == NULL ? 0 : logo->w;
+
+   if (width + logow > GRAPHIC_WIDTH) {
+      font = &gl_smallFont;
+      namew  = MIN(gl_printWidthRaw( font, name ), GRAPHIC_WIDTH - logow);
+      standw = MIN(gl_printWidthRaw( font, stand ), GRAPHIC_WIDTH - logow);
+      width  = MAX(namew, standw);
    }
-   x = (GRAPHIC_WIDTH - w) / 2;
+   else
+      font = &gl_defFont;
+
+   namex  = GRAPHIC_WIDTH/2 -  namew/2 + logow/2;
+   standx = GRAPHIC_WIDTH/2 - standw/2 + logow/2;
+
+   if (logo != NULL) {
+      y  = MAX( font->h*2 + 15, logo->h );
+      logox = GRAPHIC_WIDTH/2 - logow/2 - width/2 - 2;
+   }
+   else {
+      logox = 0;
+      y = font->h*2 + 15;
+   }
 
    /* Create the window. */
    wid = window_create( COMM_WDWNAME, -1, -1,
@@ -320,28 +342,38 @@ static unsigned int comm_open( glTexture *gfx, int faction,
    /* Create the image. */
    window_addRect( wid, 19, -30, GRAPHIC_WIDTH+1, GRAPHIC_HEIGHT + y + 5,
          "rctGFX", &cGrey10, 1 );
-   gw = MIN( GRAPHIC_WIDTH, (comm_graphic != NULL) ? comm_graphic->w : 0 );
-   gh = MIN( GRAPHIC_HEIGHT, (comm_graphic != NULL) ? comm_graphic->h : 0 );
+
+   if (comm_graphic != NULL) {
+      aspect = comm_graphic->w / comm_graphic->h;
+      gw = MIN( GRAPHIC_WIDTH,  comm_graphic->w );
+      gh = MIN( GRAPHIC_HEIGHT, comm_graphic->h );
+   
+      if (comm_graphic->w > GRAPHIC_WIDTH || comm_graphic->h > GRAPHIC_HEIGHT) {
+         gh = MIN( GRAPHIC_HEIGHT, GRAPHIC_HEIGHT / aspect );
+         gw = MIN( GRAPHIC_WIDTH, GRAPHIC_WIDTH * aspect );
+      }
+   }
+   else
+      gh = gw = 0;
+
    window_addImage( wid, 20 + (GRAPHIC_WIDTH-gw)/2,
          -30 - (GRAPHIC_HEIGHT-gh)/2,
          gw, gh, "imgGFX", comm_graphic, 0 );
 
    /* Faction logo. */
    if (logo != NULL) {
-      window_addImage( wid, x, -30 - GRAPHIC_HEIGHT - 5,
+      window_addImage( wid, 19 + logox, -30 - GRAPHIC_HEIGHT - 4,
             0, 0, "imgFaction", logo, 0 );
-      x += logo->w + 10;
       y -= (logo->h - (gl_defFont.h*2 + 15)) / 2;
    }
 
    /* Name. */
-   window_addText( wid, x, -30 - GRAPHIC_HEIGHT - y + gl_defFont.h*2 + 10,
-         GRAPHIC_WIDTH - x, 20, 0, "txtName",
-         NULL, &cDConsole, name );
+   window_addText( wid, 19 + namex, -30 - GRAPHIC_HEIGHT - y + font->h*2 + 10,
+         GRAPHIC_WIDTH - logow, 20, 0, "txtName", font, &cDConsole, name );
 
    /* Standing. */
-   window_addText( wid, x, -30 - GRAPHIC_HEIGHT - y + gl_defFont.h + 5,
-         GRAPHIC_WIDTH - x, 20, 0, "txtStanding", NULL, c, stand );
+   window_addText( wid, 19 + standx, -30 - GRAPHIC_HEIGHT - y + font->h + 5,
+         GRAPHIC_WIDTH - logow, 20, 0, "txtStanding", font, c, stand );
 
    /* Buttons. */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
@@ -408,9 +440,8 @@ static void comm_bribePilot( unsigned int wid, char *unused )
 
    /* Bribe message. */
    str = comm_getString( "bribe_prompt" );
-   if (str == NULL) {
+   if (str == NULL)
       answer = dialogue_YesNo( "Bribe Pilot", "\"I'm gonna need at least %"CREDITS_PRI" credits to not leave you as a hunk of floating debris.\"\n\nPay %"CREDITS_PRI" credits?", price, price );
-   }
    else
       answer = dialogue_YesNo( "Bribe Pilot", "%s\n\nPay %"CREDITS_PRI" credits?", str, price );
 
@@ -464,57 +495,20 @@ static void comm_bribePilot( unsigned int wid, char *unused )
 static void comm_bribePlanet( unsigned int wid, char *unused )
 {
    (void) unused;
-   int i, j;
    int answer;
    credits_t price;
-   double d;
-   double n, m;
-   double o, p;
-   double q, r;
-   double standing;
-   Fleet *f;
 
-   /* Price. */
-   standing = faction_getPlayer( comm_planet->faction );
-   /* Get number of hostiles and mass of hostiles. */
-   n = 0.;
-   m = 0.;
-   for (i=0; i<pilot_nstack; i++) {
-      if (areAllies(comm_planet->faction, pilot_stack[i]->faction)) {
-         n += 1.;
-         m += pilot_stack[i]->solid->mass;
-      }
+   /* Get price. */
+   price = comm_planet->bribe_price;
+
+   /* No bribing. */
+   if (comm_planet->bribe_price <= 0.) {
+      dialogue_msg( "Bribe Starport", comm_planet->bribe_msg );
+      return;
    }
-   /* Get now the presence factor - get mass of possible ships and mass */
-   /* TODO Fix this up to new presence system. */
-   o = 0.;
-   p = 0.;
-   for (i=0; i<cur_system->nfleets; i++) {
-      f = cur_system->fleets[i];
-      if (areAllies(comm_planet->faction, f->faction)) {
-         q = 0;
-         r = 0;
-         for (j=0; j<f->npilots; j++) {
-            q++;
-            r += f->pilots[j].ship->mass;
-         }
-         o += q;
-         p += r;
-      }
-   }
-   /* Calculate the price. */
-   n = MAX(0., 1.);
-   o = MAX(0., 1.);
-   d  = 2000.; /* Base price. */
-   d *= 0.5 * (o * (sqrt( p / o ) / 9.5)) + /* Base on presence. */
-        0.5 * (n * (sqrt( m / n ) / 9.5)); /* Base on current hostiles. */
-   d *= 1. + (-1. * standing) / 50.; /* Modify by standing. */
-   price = (credits_t) d;
 
    /* Yes/No input. */
-   answer = dialogue_YesNo( "Bribe Starport",
-         "\"I'll let you land for the small sum of %"CREDITS_PRI" credits.\"\n\nPay %"CREDITS_PRI" credits?",
-         price,  price );
+   answer = dialogue_YesNo( "Bribe Starport", comm_planet->bribe_msg );
 
    /* Said no. */
    if (answer == 0) {

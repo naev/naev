@@ -84,6 +84,9 @@ void window_addList( const unsigned int wid,
 
    if (wdw->focus == -1) /* initialize the focus */
       toolkit_nextFocus( wdw );
+
+   if (defitem >= 0 && call)
+      call(wid, name);
 }
 
 
@@ -340,9 +343,8 @@ static void lst_scroll( Widget* lst, int direction )
       if (lst->dat.lst.pos < 0)
          lst->dat.lst.pos = 0;
    }
-   else if (2 + (pos+1) * (gl_defFont.h + 2) > lst->h) {
+   else if (2 + (pos+1) * (gl_defFont.h + 2) > lst->h)
       lst->dat.lst.pos += (2 + (pos+1) * (gl_defFont.h + 2) - lst->h) / (gl_defFont.h + 2);
-   }
 
    if (lst->dat.lst.fptr)
       lst->dat.lst.fptr( lst->wdw, lst->name );

@@ -31,6 +31,9 @@
 #include "load.h"
 
 
+int save_loaded   = 0; /**< Just loaded the savegame. */
+
+
 /*
  * prototypes
  */
@@ -130,10 +133,13 @@ int save_all (void)
    snprintf(file, PATH_MAX, "%ssaves/%s.ns", nfile_basePath(), player.name);
 
    /* Back up old savegame. */
-   if (nfile_backupIfExists(file) < 0) {
-      WARN("Aborting save...");
-      goto err_writer;
+   if (!save_loaded) {
+      if (nfile_backupIfExists(file) < 0) {
+         WARN("Aborting save...");
+         goto err_writer;
+      }
    }
+   save_loaded = 0;
 
    /* Critical section, if crashes here player's game gets corrupted.
     * Luckily we have a copy just in case... */

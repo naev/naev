@@ -12,7 +12,7 @@
  * print it all, print to a max width, print centered or print a
  * block of text.
  *
- * There are hardcoded size limits.  256 characters for all routines
+ * There are hard-coded size limits.  256 characters for all routines
  * except gl_printText which has a 1024 limit.
  *
  * @todo check if length is too long
@@ -308,7 +308,7 @@ void gl_print( const glFont *ft_font,
 
 
 /**
- * @brief Behavise like gl_printRaw but stops displaying text after a certain distance.
+ * @brief Behaves like gl_printRaw but stops displaying text after a certain distance.
  *
  *    @param ft_font Font to use.
  *    @param max Maximum length to reach.
@@ -342,7 +342,7 @@ int gl_printMaxRaw( const glFont *ft_font, const int max,
    return 0;
 }
 /**
- * @brief Behavise like gl_print but stops displaying text after reaching a certain length.
+ * @brief Behaves like gl_print but stops displaying text after reaching a certain length.
  *
  *    @param ft_font Font to use (NULL means use gl_defFont).
  *    @param max Maximum length to reach.
@@ -749,9 +749,8 @@ static int font_genTextureAtlas( glFont* font, FT_Face face )
             h += max_h;
 
             /* POT needs even more. */
-            if (1) { /*gl_needPOT()) { */ /** @TODO fix this stuff. */
+            if (1) /*gl_needPOT()) */ /** @TODO fix this stuff. */
                h = gl_pot(h);
-            }
          }
       }
 
@@ -952,10 +951,13 @@ static glColour* gl_fontGetColour( int ch )
       case 'H': col = &cHostile; break;
       case 'N': col = &cNeutral; break;
       case 'I': col = &cInert; break;
+      case 'R': col = &cRestricted; break;
+      case 'S': col = &cDRestricted; break;
       case 'M': col = &cMapNeutral; break;
       case 'C': col = &cConsole; break;
       case 'D': col = &cDConsole; break;
       case '0': col = NULL; break;
+      default: col = NULL; break;
    }
    return col;
 }

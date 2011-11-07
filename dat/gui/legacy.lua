@@ -231,6 +231,10 @@ function render_nav ()
 end
 
 
+function update_faction()
+end
+
+
 -- Renders the health bars
 function render_health ()
    local arm, shi = pp:health()
@@ -287,8 +291,8 @@ function render_target ()
       return
    end
 
-   local col, shi, arm, dis
-   arm, shi, dis = ptarget:health()
+   local col, shi, arm, stress, dis
+   arm, shi, stress, dis = ptarget:health()
 
    -- Get colour
    if dis or fuz then

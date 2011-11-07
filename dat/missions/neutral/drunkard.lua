@@ -7,6 +7,8 @@
 
 ]]--
 
+include "scripts/numstring.lua"
+
 -- Bar Description
 bar_desc = "You see a drunkard at the bar mumbling about how he was so close to getting his break."
 
@@ -54,7 +56,7 @@ title[7] = "Bonus"
 text[7] = [["Oh, and she put in a nice bonus for you of %d credits for such a speedy delivery."]]
 
 title[8] = "Check Account"
-text[8] = [[    You check your account balance as he closes the comm channel to find yourself %d credits richer. Just being alive felt good, but this feels better. You can't help but think that she might have given him more than just the 25 percent he was asking for, judging by his sunny disposition. At least you have your life though.]]
+text[8] = [[    You check your account balance as he closes the comm channel to find yourself %s credits richer. Just being alive felt good, but this feels better. You can't help but think that she might have given him more than just the 25 percent he was asking for, judging by his sunny disposition. At least you have your life though.]]
 
 title[9] = "No Room"
 text[9] = [[You don't have enough cargo space to accept this mission.]]
@@ -66,9 +68,12 @@ function create ()
    misn.setDesc( bar_desc )           -- drunkard's description
 
    -- Planets
-   pickupWorld, pickupSys = planet.get("INSS-2")
-   delivWorld, delivSys = planet.get("Darkshed")
-   origWorld, origSys = planet.cur()
+   pickupWorld, pickupSys  = planet.getLandable("INSS-2")
+   delivWorld, delivSys    = planet.getLandable("Darkshed")
+   if pickupWorld == nil or delivWorld == nil then -- Must be landable
+      misn.finish(false)
+   end
+   origWorld, origSys      = planet.cur()
 
 --   origtime = time.get()
 end
@@ -163,8 +168,10 @@ end
 function closehail()
    bonus = 0
    player.pay( payment )
-   tk.msg( title[8], text[8]:format( payment) )
+   tk.msg( title[8], text[8]:format( numstring(payment) ) )
    willie:setVisplayer(false)
+   willie:setHilight(false)
+   willie:setInvincible(false) 
    willie:hyperspace()
    misn.finish(true)
 end

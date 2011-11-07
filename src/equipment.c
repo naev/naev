@@ -31,17 +31,18 @@
 #include "land_outfits.h"
 #include "player_gui.h"
 #include "info.h"
+#include "shipstats.h"
 #include "tk/toolkit_priv.h" /* Yes, I'm a bad person, abstractions be damned! */
 
 
 /* global/main window */
-#define BUTTON_WIDTH 200 /**< Default button width. */
-#define BUTTON_HEIGHT 40 /**< Default button height. */
+#define BUTTON_WIDTH    200 /**< Default button width. */
+#define BUTTON_HEIGHT   40 /**< Default button height. */
 
-#define SHIP_ALT_MAX 256 /**< Maximum ship alt text. */
+#define SHIP_ALT_MAX    256 /**< Maximum ship alt text. */
 
-#define SETGUI_WIDTH      400 /**< Load window width. */
-#define SETGUI_HEIGHT     300 /**< Load window height. */
+#define SETGUI_WIDTH    400 /**< Load window width. */
+#define SETGUI_HEIGHT   300 /**< Load window height. */
 
 
 /*
@@ -190,7 +191,7 @@ static void equipment_getDim( unsigned int wid, int *w, int *h,
 
    /* Calculate button dimensions. */
    if (bw != NULL)
-      *bw = (*w - 20 - (sw!=NULL?*sw:0) - 40 - 20 - 60) / 4;
+      *bw = (*w - 20 - (sw!=NULL?*sw:0) - 40 - 20 - 60) / 5;
    if (bh != NULL)
       *bh = BUTTON_HEIGHT;
 }
@@ -239,24 +240,18 @@ void equipment_open( unsigned int wid )
    window_addButton( wid, -20, 20,
          bw, bh, "btnCloseEquipment",
          "Takeoff", land_buttonTakeoff );
-   window_addButton( wid, -20 - (20+bw), 20,
-         bw, bh, "btnSellShip",
-         "Sell Ship", equipment_sellShip );
-   window_addButton( wid, -20 - (20+bw)*2, 20,
-         bw, bh, "btnChangeShip",
-         "Swap Ship", equipment_transChangeShip );
-   window_addButton( wid, -20 - (20+bw)*3, 20,
-         bw, bh, "btnUnequipShip",
-         "Unequip", equipment_unequipShip );
-   window_addButton( wid, -20, bh + 20*2,
+   window_addButton( wid, -20 - (15+bw), 20,
          bw, bh, "btnSetGUI",
          "Set GUI", equipment_setGui );
-
-   /* Checkboxes */
-   window_addCheckbox( wid, -20 - (20+bw), bh + 20*2,
-         bw, bh, "chkOverride", "Override GUI",
-         equipment_toggleGuiOverride, player.guiOverride );
-   equipment_toggleGuiOverride( wid, "chkOverride" );
+   window_addButton( wid, -20 - (15+bw)*2, 20,
+         bw, bh, "btnSellShip",
+         "Sell Ship", equipment_sellShip );
+   window_addButton( wid, -20 - (15+bw)*3, 20,
+         bw, bh, "btnChangeShip",
+         "Swap Ship", equipment_transChangeShip );
+   window_addButton( wid, -20 - (15+bw)*4, 20,
+         bw, bh, "btnUnequipShip",
+         "Unequip", equipment_unequipShip );
 
    /* text */
    buf = "Name:\n"
@@ -346,8 +341,8 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       c = &cDConsole;
    else
       c = &cBlack;
-   gl_printMidRaw( &gl_smallFont, w+10.,
-         x-5., y+h+10., c, txt );
+   gl_printMidRaw( &gl_smallFont, 60.,
+         x-15., y+h+10., c, txt );
 
    /* Iterate for all the slots. */
    for (i=0; i<n; i++) {
@@ -358,22 +353,17 @@ static void equipment_renderColumn( double x, double y, double w, double h,
             dc = &cFontRed;
          else if (level == 1)
             dc = &cFontYellow;
+         else if (lst[i].active)
+            dc = &cFontBlue;
          else
             dc = &cInert;
       }
-      else {
+      else
          dc = outfit_slotSizeColour( &lst[i].slot );
-      }
 
       /* Choose colours based on size. */
-      if (i==selected) {
-         c  = &cGrey80;
-         if (dc == NULL)
-            dc = &cGrey60;
-      }
-      else {
-         c  = toolkit_col;
-      }
+      if (i==selected && dc == NULL)
+         dc = &cGrey60;
 
       /* Draw background. */
       memcpy( &bc, dc, sizeof(bc) );
@@ -713,16 +703,13 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
       return;
 
    /* Get the slot. */
-   if (wgt->mouseover < p->outfit_nweapon) {
+   if (wgt->mouseover < p->outfit_nweapon)
       slot = &p->outfit_weapon[wgt->mouseover];
-   }
-   else if (wgt->mouseover < p->outfit_nweapon + p->outfit_nutility) {
+   else if (wgt->mouseover < p->outfit_nweapon + p->outfit_nutility)
       slot = &p->outfit_utility[ wgt->mouseover - p->outfit_nweapon ];
-   }
-   else {
+   else
       slot = &p->outfit_structure[ wgt->mouseover -
          p->outfit_nweapon - p->outfit_nutility ];
-   }
 
    /* For comfortability. */
    o = slot->outfit;
@@ -758,7 +745,7 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
  *    @param bw Width of the widget.
  *    @param bh Height of the widget.
  *    @param x X position to render at.
- *    @param y Y positon to render at.
+ *    @param y Y position to render at.
  *    @param p Pilot to render.
  */
 static void equipment_renderShip( double bx, double by,
@@ -861,7 +848,7 @@ static int equipment_mouseInColumn( double y, double h, int n, double my )
  *    @param mx Mouse X event position.
  *    @param my Mouse Y event position.
  *    @param y Y position of the column.
- *    @param h Heighto f the column.
+ *    @param h Height of the column.
  *    @param n Number of elements in the column.
  *    @param os Pointer to elements in the column.
  *    @param p Pilot to which the elements belong.
@@ -901,8 +888,28 @@ static int equipment_mouseColumn( unsigned int wid, SDL_Event* event,
          /* See if we should add it or remove it. */
          if (exists==level)
             pilot_weapSetRm( p, wgt->weapons, &os[ret] );
-         else
-            pilot_weapSetAdd( p, wgt->weapons, &os[ret], level );
+         else {
+            /* This is a bloody awful place to do this. I hate it. HATE!. */
+            /* Case active outfit, convert the weapon group to active outfit. */
+            if ((os->slot.type == OUTFIT_SLOT_STRUCTURE) ||
+               (os->slot.type == OUTFIT_SLOT_UTILITY)) {
+               pilot_weapSetRmSlot( p, wgt->weapons, OUTFIT_SLOT_WEAPON );
+               pilot_weapSetAdd( p, wgt->weapons, &os[ret], 0 );
+               pilot_weapSetType( p, wgt->weapons, WEAPSET_TYPE_ACTIVE );
+            }
+            /* Case change weapon groups or active weapon. */
+            else {
+               pilot_weapSetRmSlot( p, wgt->weapons, OUTFIT_SLOT_STRUCTURE );
+               pilot_weapSetRmSlot( p, wgt->weapons, OUTFIT_SLOT_UTILITY );
+               if (pilot_weapSetTypeCheck( p, wgt->weapons) == WEAPSET_TYPE_CHANGE)
+                  pilot_weapSetType( p, wgt->weapons, WEAPSET_TYPE_CHANGE );
+               else {
+                  pilot_weapSetType( p, wgt->weapons, WEAPSET_TYPE_WEAPON );
+                  level = 0;
+               }
+               pilot_weapSetAdd( p, wgt->weapons, &os[ret], level );
+            }
+         }
          p->autoweap = 0; /* Disable autoweap. */
          info_update(); /* Need to update weapons. */
       }
@@ -1083,7 +1090,7 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
 /**
  * @brief Regenerates the equipment window lists.
  *
- *    @param wid Window to regenrate lists.
+ *    @param wid Window to regenerate lists.
  *    @param outfits Whether or not should regenerate outfits list.
  *    @param ships Whether or not to regenerate ships list.
  */
@@ -1188,13 +1195,68 @@ void equipment_addAmmo (void)
 
 
 /**
+ * @brief Creates and allocates a string containing the ship stats.
+ *
+ *    @param buf Buffer to write to.
+ *    @param max_len Maximum length of the string to allocate.
+ *    @param s Pilot to get stats of.
+ *    @param dpseps Whether or not to display dps and eps.
+ */
+int equipment_shipStats( char *buf, int max_len,  const Pilot *s, int dpseps )
+{
+   int j, l;
+   Outfit *o;
+   double mod_energy, mod_damage, mod_shots;
+   double eps, dps, shots;
+   const Damage *dmg;
+
+   dps = 0.;
+   eps = 0.;
+   /* Calculate damage and energy per second. */
+   if (dpseps) {
+      for (j=0; j<s->noutfits; j++) {
+         o = s->outfits[j]->outfit;
+         if (o==NULL)
+            continue;
+         switch (o->type) {
+            case OUTFIT_TYPE_BOLT:
+               mod_energy = s->stats.fwd_energy;
+               mod_damage = s->stats.fwd_damage;
+               mod_shots  = 2. - s->stats.fwd_firerate;
+               break;
+            case OUTFIT_TYPE_TURRET_BOLT:
+               mod_energy = s->stats.tur_energy;
+               mod_damage = s->stats.tur_damage;
+               mod_shots  = 2. - s->stats.tur_firerate;
+               break;
+            default:
+               continue;
+         }
+         shots = 1. / (mod_shots * outfit_delay(o));
+         dmg   = outfit_damage(o);
+         dps  += shots * mod_damage * dmg->damage;
+         eps  += shots * mod_energy * outfit_energy(o);
+      }
+   }
+
+   /* Write to buffer. */
+   l = 0;
+   if (dps > 0.)
+      l += snprintf( &buf[l], (max_len-l),
+            "%s%.2f DPS [%.2f EPS]", (l!=0)?"\n":"", dps, eps );
+   l += ss_statsDesc( &s->stats, &buf[l], (max_len-l), 1 );
+   return l;
+}
+
+
+/**
  * @brief Generates a new ship/outfit lists if needed.
  *
  *    @param wid Parent window id.
  */
 static void equipment_genLists( unsigned int wid )
 {
-   int i, j, l, p;
+   int i, l, p;
    char **sships;
    glTexture **tships;
    int nships;
@@ -1208,8 +1270,6 @@ static void equipment_genLists( unsigned int wid )
    char **quantity;
    Outfit *o;
    Pilot *s;
-   double mod_energy, mod_damage, mod_shots;
-   double eps, dps, shots;
    glColour *bg, *c, blend;
    char **slottype;
    const char *typename;
@@ -1239,43 +1299,11 @@ static void equipment_genLists( unsigned int wid )
       /* Ship stats in alt text. */
       alt   = malloc( sizeof(char*) * nships );
       for (i=0; i<nships; i++) {
-         s  = player_getShip( sships[i]);
-         alt[i] = malloc( SHIP_ALT_MAX );
-         dps = 0.;
-         eps = 0.;
-         for (j=0; j<s->noutfits; j++) {
-            o = s->outfits[j]->outfit;
-            if (o==NULL)
-               continue;
-            switch (o->type) {
-               case OUTFIT_TYPE_BOLT:
-                  mod_energy = s->stats.energy_forward;
-                  mod_damage = s->stats.damage_forward;
-                  mod_shots  = 2. - s->stats.firerate_forward;
-                  break;
-               case OUTFIT_TYPE_TURRET_BOLT:
-                  mod_energy = s->stats.energy_turret;
-                  mod_damage = s->stats.damage_turret;
-                  mod_shots  = 2. - s->stats.firerate_turret;
-                  break;
-               default:
-                  continue;
-            }
-            shots = 1. / (mod_shots * outfit_delay(o));
-            dps  += shots * mod_damage * outfit_damage(o);
-            eps  += shots * mod_energy * outfit_energy(o);
-         }
-         l  = snprintf( alt[i], SHIP_ALT_MAX, "Ship Stats" );
-         p  = l;
-         if (dps > 0.)
-            l += snprintf( &alt[i][l], SHIP_ALT_MAX-l,
-                  "\n%.2f DPS [%.2f EPS]", dps, eps );
-         if (s->jam_chance > 0.)
-            l += snprintf( &alt[i][l], SHIP_ALT_MAX-l,
-                  "\n%.0f%% Jam [%.0f Range]",
-                  s->jam_chance*100., s->jam_range );
-         l += ship_statsDesc( &s->stats, &alt[i][l], SHIP_ALT_MAX-l, 1, 1 );
-         if (p == l) {
+         s        = player_getShip( sships[i] );
+         alt[i]   = malloc( sizeof(char) * SHIP_ALT_MAX );
+         l        = snprintf( &alt[i][0], SHIP_ALT_MAX, "Ship Stats\n" );
+         l        = equipment_shipStats( &alt[i][l], SHIP_ALT_MAX-l, s, 1 );
+         if (l == 0) {
             free( alt[i] );
             alt[i] = NULL;
          }
@@ -1342,9 +1370,8 @@ static void equipment_genLists( unsigned int wid )
                slottype[i][0] = typename[0];
                slottype[i][1] = '\0';
             }
-            else {
+            else
                slottype[i] = NULL;
-            }
          }
          toolkit_setImageArrayAlt( wid, EQUIPMENT_OUTFITS, alt );
          toolkit_setImageArrayQuantity( wid, EQUIPMENT_OUTFITS, quantity );
@@ -1723,9 +1750,12 @@ static void equipment_unequipShip( unsigned int wid, char* str )
 
    ship = eq_wgt.selected;
 
-   /* There are two conditionts when you can't unequip all, first off
-    * is when you have deployed ships, second off is when you have more cargo
-    * than you can carry "naked". */
+   /*
+    * Unequipping is disallowed under two conditions. Firstly, the ship may not
+    * be unequipped when it has fighters deployed in space. Secondly, it cannot
+    * unequip if it's carrying more cargo than the ship normally fits, i.e.
+    * by equipping cargo pods.
+    */
    for (i=0; i<ship->noutfits; i++) {
       /* Must have outfit. */
       if (ship->outfits[i]->outfit == NULL)
@@ -1733,7 +1763,7 @@ static void equipment_unequipShip( unsigned int wid, char* str )
       /* Must be fighter bay. */
       if (!outfit_isFighterBay( ship->outfits[i]->outfit))
          continue;
-      /* Must not have deployed. */
+      /* Must not have deployed fighters. */
       if (ship->outfits[i]->u.ammo.deployed > 0) {
          dialogue_alert( "You can not unequip your ship while you have deployed fighters!" );
          return;
@@ -1810,9 +1840,8 @@ static void equipment_sellShip( unsigned int wid, char* str )
 
    /* Check if player really wants to sell. */
    if (!dialogue_YesNo( "Sell Ship",
-            "Are you sure you want to sell your ship %s for %s credits?", shipname, buf)) {
+         "Are you sure you want to sell your ship %s for %s credits?", shipname, buf))
       return;
-   }
 
    /* Sold. */
    name = strdup(shipname);
@@ -1824,8 +1853,7 @@ static void equipment_sellShip( unsigned int wid, char* str )
    equipment_regenLists( wid, 0, 1 );
 
    /* Display widget. */
-   dialogue_msg( "Ship Sold", "You have sold your ship %s for %s credits.",
-         name, buf );
+   dialogue_msg( "Ship Sold", "You have sold your ship %s for %s credits.", name, buf );
    free(name);
 }
 /**
@@ -1858,6 +1886,7 @@ void equipment_cleanup (void)
    /* Destroy the VBO. */
    if (equipment_vbo != NULL)
       gl_vboDestroy( equipment_vbo );
+
    equipment_vbo = NULL;
 }
 

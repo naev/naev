@@ -17,6 +17,8 @@
       3) VIP died or jump out of system without VIP  --> mission failure.
 ]]--
 
+include "scripts/numstring.lua"
+
 lang = naev.lang()
 if lang == "es" then
    -- not translated atm
@@ -24,7 +26,7 @@ else -- default english
    -- Mission details
    bar_desc = "Commander Soldner is waiting for you."
    misn_title = "Empire VIP Rescue"
-   misn_reward = "%d credits"
+   misn_reward = "%s credits"
    misn_desc = {}
    misn_desc[1] = "Rescue the VIP from a transport ship in the %s system."
    misn_desc[2] = "Return to %s in the %s system with the VIP."
@@ -48,10 +50,15 @@ else -- default english
    msg[2] = "MISSION FAILED: You abandoned the VIP."
 end
 
+include "dat/missions/empire/common.lua"
+
 function create ()
    -- Target destination
-   destsys = system.get( "Slaccid" )
-   ret,retsys = planet.get( "Polaris Prime" )
+   destsys     = system.get( "Slaccid" )
+   ret,retsys  = planet.getLandable( "Halir" )
+   if ret== nil then
+      misn.finish(false)
+   end
 
    -- Must claim system
    if not misn.claim( destsys ) then
@@ -81,7 +88,7 @@ function accept ()
    misn_stage = 0
    reward = 75000
    misn.setTitle(misn_title)
-   misn.setReward( string.format(misn_reward, reward) )
+   misn.setReward( string.format(misn_reward, numstring(reward)) )
    misn.setDesc( string.format(misn_desc[1], destsys:name() ))
 
    -- Flavour text and mini-briefing
@@ -110,7 +117,8 @@ function land ()
 
          -- Rewards
          player.pay(reward)
-         player.modFaction("Empire",5);
+         emp_modReputation( 5 ) -- Bump cap a bit
+         faction.modPlayerSingle("Empire",5);
 
          -- Flavour text
          tk.msg( title[3], text[5] )
@@ -122,6 +130,7 @@ function land ()
 
          -- What a disgrace you are, etc...
          tk.msg( title[4], text[6] )
+         emp_modReputation( 5 ) -- Bump cap a bit
 
          misn.finish(true)
       end
@@ -196,7 +205,7 @@ function delay_flf ()
       return
    end
 
-   -- More ships to pressue player from behind
+   -- More ships to pressure player from behind
    p = pilot.add( "FLF Sml Force", nil, prevsys )
    for k,v in ipairs(p) do
       v:setHostile()
@@ -232,8 +241,7 @@ function death ()
 end
 
 function abort ()
-	-- If aborted you'll also leave the VIP to fait. (A.)
-	player.msg( msg[2] )
-    misn.finish(false)
-	
+	-- If aborted you'll also leave the VIP to fate. (A.)
+   player.msg( msg[2] )
+   misn.finish(false)
 end

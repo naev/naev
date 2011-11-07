@@ -25,7 +25,7 @@ static double sensor_curRange    = 0.; /**< Current base sensor range, used to c
 
 
 /**
- * @brief Updates the pilot's sattic electronic warfare properties.
+ * @brief Updates the pilot's static electronic warfare properties.
  *
  *    @param p Pilot to update.
  */
@@ -79,7 +79,7 @@ double pilot_ewHeat( double T )
 
 
 /**
- * @brief Gets the electronic warfare mass modifier for a given velocity.
+ * @brief Gets the electronic warfare mass modifier for a given mass.
  *
  *    @param mass Mass to get the electronic warfare mass modifier of.
  *    @return The electronic warfare mass modifier.

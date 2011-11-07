@@ -51,7 +51,7 @@
  *
  * We use multiple effects, namely:
  *
- * - Air absoprtion factor
+ * - Air absorption factor
  * - Reverb
  */
 
@@ -71,7 +71,7 @@ SDL_mutex *sound_lock = NULL; /**< Global sound lock, always lock this before
 
 
 /*
- * Global device and contex.
+ * Global device and context.
  */
 static ALCcontext *al_context = NULL; /**< OpenAL context. */
 static ALCdevice *al_device   = NULL; /**< OpenAL device. */
@@ -364,7 +364,7 @@ int sound_al_init (void)
             al_info.efx_major, al_info.efx_minor);
    DEBUG();
 
-   return 0;
+   return ret;
 
    /*
     * error handling
@@ -488,9 +488,8 @@ void sound_al_exit (void)
 
    /* Free groups. */
    for (i=0; i<al_ngroups; i++) {
-      if (al_groups[i].sources != NULL) {
+      if (al_groups[i].sources != NULL)
          free(al_groups[i].sources);
-      }
       al_groups[i].sources  = NULL;
       al_groups[i].nsources = 0;
    }
@@ -575,6 +574,9 @@ static int sound_al_loadWav( alSound *snd, SDL_RWops *rw )
       case AUDIO_U16MSB:
       case AUDIO_S16MSB:
          WARN( "Big endian WAVs unsupported!" );
+         return -1;
+      default:
+         WARN( "Invalid WAV format!" );
          return -1;
    }
 
@@ -683,9 +685,9 @@ int sound_al_load( alSound *snd, const char *filename )
    rw = ndata_rwops( filename );
 
    /* Check to see if it's an Ogg. */
-   if (ov_test_callbacks( rw, &vf, NULL, 0, sound_al_ovcall_noclose )==0) {
+   if (ov_test_callbacks( rw, &vf, NULL, 0, sound_al_ovcall_noclose )==0)
       ret = sound_al_loadOgg( snd, &vf );
-   }
+
    /* Otherwise try WAV. */
    else {
       /* Destroy the partially loaded vorbisfile. */
@@ -1262,9 +1264,8 @@ int sound_al_playGroup( int group, alSound *s, int once )
 
          /* No free ones, just smash the last one. */
          if (j == g->nsources-1) {
-            if (state != AL_STOPPED) {
+            if (state != AL_STOPPED)
                alSourceStop( g->sources[j] );
-            }
          }
          /* Ignore playing/paused. */
          else if ((state == AL_PLAYING) || (state == AL_PAUSED))

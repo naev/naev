@@ -103,12 +103,21 @@ typedef struct Planet_ {
    int real; /**< If the asset is tangible or not. */
 
    /* Landing details. */
+   int land_override; /**< Forcibly allows the player to either be able to land or not (+1 is land, -1 is not, 0 otherwise). */
+   char *land_func; /**< Landing function to execute. */
+   int can_land; /**< Whether or not the player can land. */
+   char *land_msg; /**< Message on landing. */
+   credits_t bribe_price; /**< Cost of bribing. */
+   char *bribe_msg; /**< Bribe message. */
+   char *bribe_ack_msg; /**< Bribe ACK message. */
+   int bribed; /**< If planet has been bribed. */
+
+   /* Landed details. */
    char* description; /**< planet description */
    char* bar_description; /**< spaceport bar description */
    unsigned int services; /**< what services they offer */
    Commodity **commodities; /**< what commodities they sell */
    int ncommodities; /**< the amount they have */
-   int bribed; /**< If planet has been bribed. */
    tech_group_t *tech; /**< Planet tech. */
 
    /* Graphics. */
@@ -267,12 +276,18 @@ Planet* planet_getAll( int *n );
 Planet* planet_get( const char* planetname );
 Planet* planet_getIndex( int ind );
 int planet_index( const Planet *p );
-int planet_getNum (void);
 int planet_exists( const char* planetname );
 const char *planet_existsCase( const char* planetname );
 char **planet_searchFuzzyCase( const char* planetname, int *n );
 char planet_getClass( const Planet *p );
+char* planet_getServiceName( int service );
+int planet_getService( char *name );
+PlanetClass planetclass_get( const char a );
 credits_t planet_commodityPrice( const Planet *p, const Commodity *c );
+/* Land related stuff. */
+char planet_getColourChar( Planet *p );
+glColour* planet_getColour( Planet *p );
+void planet_updateLand( Planet *p );
 
 /*
  * system adding/removing stuff.
@@ -324,8 +339,8 @@ StarSystem* system_getIndex( int id );
 int system_index( StarSystem *sys );
 int space_sysReachable( StarSystem *sys );
 int space_sysReallyReachable( char* sysname );
-char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions );
-char* space_getRndPlanet (void);
+char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions, int landable );
+char* space_getRndPlanet( int landable );
 double system_getClosest( const StarSystem *sys, int *pnt, int *jp, double x, double y );
 double system_getClosestAng( const StarSystem *sys, int *pnt, int *jp, double x, double y, double ang );
 
@@ -347,6 +362,12 @@ int system_hasPlanet( StarSystem *sys );
 int space_canHyperspace( Pilot* p);
 int space_hyperspace( Pilot* p );
 int space_calcJumpInPos( StarSystem *in, StarSystem *out, Vector2d *pos, Vector2d *vel, double *dir );
+
+
+/*
+ * Misc.
+ */
+void space_factionChange (void);
 
 
 #endif /* SPACE_H */

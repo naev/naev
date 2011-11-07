@@ -36,7 +36,7 @@ typedef enum EventTrigger_s {
 
 
 /*
- * Loading/exitting.
+ * Loading/exiting.
  */
 int events_load (void);
 void events_exit (void);

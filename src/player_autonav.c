@@ -83,6 +83,7 @@ static void player_autonavSetup (void)
          player.tc_max = MIN( conf.compression_velocity / solid_maxspeed(player.p->solid, player.p->speed, player.p->thrust), conf.compression_mult );
       else
          player.tc_max = conf.compression_velocity / solid_maxspeed(player.p->solid, player.p->speed, player.p->thrust);
+      player.tc_max = MAX( 1., player.tc_max );
    }
    tc_rampdown  = 0;
    tc_down      = 0.;
@@ -212,8 +213,7 @@ static void player_autonav (void)
 
       case AUTONAV_JUMP_BRAKE:
          /* Target jump. */
-         jp    = &cur_system->jumps[ player.p->nav_hyperspace ];
-         ret   = player_autonavBrake();
+         ret   = (player.p->stats.misc_instant_jump ? 1 : player_autonavBrake());
          /* Try to jump or see if braked. */
          if (ret) {
             if (space_canHyperspace(player.p))
@@ -396,8 +396,44 @@ void player_thinkAutonav( Pilot *pplayer, double dt )
  */
 void player_updateAutonav( double dt )
 {
+   const double dis_dead = 5.0;
+   const double dis_ramp = 6.0;
+   const double dis_mod = 0.5;
+   const double dis_max = 4.0;
+
+   if (paused || (player.p==NULL))
+      return;
+
+   /* We handle disabling here. */
+   if (pilot_isFlag(player.p, PILOT_DISABLED)) {
+      /* It is somewhat like:
+       *        /------------\        4x
+       *       /              \
+       * -----/                \----- 1x
+       *
+       * <---><-><----------><-><--->
+       *   5   6     X        6   5    Real time
+       *   5   15    X        15  5    Game time
+       *
+       * For triangles we have to add the rectangle and triangle areas.
+       */
+      /* 5 second deadtime. */
+      if (player.p->dtimer_accum < dis_dead)
+         tc_mod = 1.;
+      else {
+         /* Normal. */
+         if (player.p->dtimer > (dis_max-1.)*dis_ramp/2.+dis_ramp+dis_dead)
+            tc_mod = MIN( dis_max, tc_mod + dis_mod*dt );
+         /* Ramp down. */
+         else
+            tc_mod = MAX( 1., tc_mod - dis_mod*dt );
+      }
+      pause_setSpeed( tc_mod );
+      return;
+   }
+
    /* Must be autonaving. */
-   if (!player_isFlag(PLAYER_AUTONAV) || (paused))
+   if (!player_isFlag(PLAYER_AUTONAV))
       return;
 
    /* Ramping down. */
@@ -419,3 +455,5 @@ void player_updateAutonav( double dt )
       tc_mod = player.tc_max;
    pause_setSpeed( tc_mod );
 }
+
+

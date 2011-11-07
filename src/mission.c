@@ -136,7 +136,7 @@ MissionData* mission_get( int id )
 
 
 /**
- * @brief Gets mission data frm name.
+ * @brief Gets mission data from a name.
  */
 MissionData* mission_getFromName( const char* name )
 {
@@ -724,9 +724,9 @@ Mission* missions_genList( int *n, int faction,
       qsort( tmp, m, sizeof(Mission), mission_compare );
       (*n) = m;
    }
-   else {
+   else
       (*n) = 0;
-   }
+
    return tmp;
 }
 
@@ -1004,9 +1004,9 @@ int missions_saveActive( xmlTextWriterPtr writer )
             xmlw_attr(writer,"active","%d",osd_getActive(player_missions[i].osd));
 
             /* Save messages. */
-            for (j=0; j<nitems; j++) {
+            for (j=0; j<nitems; j++)
                xmlw_elem(writer,"msg","%s",items[j]);
-            }
+
             xmlw_endElem(writer); /* "osd" */
          }
 

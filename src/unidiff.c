@@ -585,9 +585,8 @@ void diff_remove( const char *name )
  */
 void diff_clear (void)
 {
-   while (diff_nstack > 0) {
+   while (diff_nstack > 0)
       diff_removeDiff(&diff_stack[diff_nstack-1]);
-   }
 }
 
 

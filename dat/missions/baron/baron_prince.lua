@@ -4,6 +4,7 @@
 
 -- localization stuff, translators would work here
 include("scripts/fleethelper.lua")
+include("scripts/numstring.lua")
 
 lang = naev.lang()
 if lang == "es" then
@@ -29,7 +30,7 @@ else -- default english
     
     title[4] = "An audience with the Baron"
     text[4] = [[    You find yourself once again aboard the Pinnacle, Baron Sauterfeldt's flag ship. After a short time, an attendant ushers you into the Baron's personal quarters, which are as extravagant as you remember them. You notice the holopainting is now firmly fixed on one of the walls.
-    Baron Dovai Sauterfeldt greets you with a pompous wave of his hand. "Ahh yes, there you are at last. %s, was it? Do have a seat." He then offers you a drink, but you decline on the basis that you still have to drive. "Now then, %s, I assume you're wondering why I've called you here. As you've no doubt heard, I have an interest in the unique, the exquisite." The Baron gestures around the room. "I have built up quite an impressive collection, as you can see, but it is still lacking something. Fortunately, news has reached me about a priceless artefact from Earth itself, dating back to before the Faction Wars. I must have it. It belongs in the hands of a connoiseur like myself."]]
+    Baron Dovai Sauterfeldt greets you with a pompous wave of his hand. "Ahh yes, there you are at last. %s, was it? Do have a seat." He then offers you a drink, but you decline on the basis that you still have to drive. "Now then, %s, I assume you're wondering why I've called you here. As you've no doubt heard, I have an interest in the unique, the exquisite." The Baron gestures around the room. "I have built up quite an impressive collection, as you can see, but it is still lacking something. Fortunately, news has reached me about a priceless artefact from Earth itself, dating back to before the Faction Wars. I must have it. It belongs in the hands of a connoisseur like myself."]]
     
     text[5] = [[    "Unfortunately, news of this artefact has reached more ears than just mine. All over the galaxy there are people who will try to sell you 'ancient artefacts', which always turn out to be imitations at best and worthless scrap they picked up from the streets at worst." The Baron snorts derisively. "Even the contacts who usually fenc- ah, I mean, supply me with new items for my collection are in on the frenzy.
     "I've narrowed down my search to three of these people. I'm confident that one of them is selling the genuine article, while the other two are shams. And this is where you come in, %s. I want you to visit these vendors, buy their wares off them and bring me the authentic artefact. You will have the help of a man named Flintley, who is a history buff or some such rot. You will find him on %s in the %s system. Simply tell him you're working for me and show him any artefacts in your possession. He will tell you which are authentic and which are fake.
@@ -53,7 +54,7 @@ else -- default english
     
     text[9] = [[    "Hello there," the guy says to you when you approach. "Can I interest you in this bona fide relic from an ancient past? Unlike all those scammers out there, I offer you the real deal, no fakes here!"]]
 
-    text[10] = [[    The man grins at you. "Ah, I can tell you have the eye of a connoiseur! I deal only in the finest, counterfeit-free antiques. If you're smart, and I can see that you are, you won't trust all those opportunists who will try to sell you fakes! How about it?"]]
+    text[10] = [[    The man grins at you. "Ah, I can tell you have the eye of a connoisseur! I deal only in the finest, counterfeit-free antiques. If you're smart, and I can see that you are, you won't trust all those opportunists who will try to sell you fakes! How about it?"]]
 
     text[11] = [[    The woman beckons you over to the bar. "Listen, friend. I have here a unique, extremely rare remnant of prehistoric times. This is the genuine article, trust me on that. One hundred per cent legit! And you wouldn't want to spend good credits on a fake, right?"]]
 
@@ -62,10 +63,10 @@ else -- default english
     text[12] = [[    "Let's see what we have here," Flintly says as you hand him the artefact you bought on %s. "Ah, I know what this is without even looking anything up. It's a piece of an old-fashioned airlock mechanism, as used on most ships during the Faction Wars. That makes it rather old, but that also makes it worthless, I'm afraid. This is just old scrap." He gives you an apologetic look. "Don't let it get you down. Not many people would know this on first sight. Those scammers can be pretty clever."
     You feel disappointed and frustrated, but you have no choice but to deposit the "artefact" into the nearest disintegrator inlet.]]
 
-    text[13] = [[    You hand Flintley the artefact you procured on %s. He examines it for a few moment, then enters a few queries in the info terminal in his table. Once he has found what he was looking for, he heaves a sigh. "I'm sorry, %s. It seems you've been had. What you've got here is little more than a trinket. It's a piece of 'art' created by a third-rank sculptress named Biena Gharibri who lives on Lapra. She's not very talented, I'm afraid. Her creations have been called 'worse than Dvaered opera' by a leading art critic. I really don't think you want to present his lordship with this."
+    text[13] = [[    You hand Flintley the artefact you procured on %s. He examines it for a few moments, then enters a few queries in the info terminal in his table. Once he has found what he was looking for, he heaves a sigh. "I'm sorry, %s. It seems you've been had. What you've got here is little more than a trinket. It's a piece of 'art' created by a third-rank sculptress named Biena Gharibri who lives on Lapra. She's not very talented, I'm afraid. Her creations have been called 'worse than Dvaered opera' by a leading art critic. I really don't think you want to present his lordship with this."
     You promptly decide to dispose of the thing, unwilling to carry it around with you a moment longer than necessary.]]
 
-    text[14] = [[    Flintly studies the object on the table for a while, checking the online database a number of times in the process. Then, finally, he turns to you. "I hate to say this, but it seems you've bought a counterfeit. It's a good one, though! That seller on %s must have known his stuff. You see, this is very similar to a number plate used by hovercars on Mars at the time of the Second Growth. However, it's missing a number of vital charactersitics, and some details betray its recent manufacture. Close, %s, close. But no cigar."
+    text[14] = [[    Flintly studies the object on the table for a while, checking the online database a number of times in the process. Then, finally, he turns to you. "I hate to say this, but it seems you've bought a counterfeit. It's a good one, though! That seller on %s must have known his stuff. You see, this is very similar to a number plate used by hovercars on Mars at the time of the Second Growth. However, it's missing a number of vital characteristics, and some details betray its recent manufacture. Close, %s, close. But no cigar."
     You dispose of the counterfeit artefact. Hopefully the next one will be what Sauterfeldt is looking for...]]
     
     flintdeftitle = "Just passing through"
@@ -104,11 +105,11 @@ else -- default english
     
     sellerdesc = "You spot a dodgy individual who matches one of the portraits in your ship's database. This must be one of the artefact sellers."
 
-    buy = "Buy the artefact (%d credits)"
+    buy = "Buy the artefact (%s credits)"
     nobuy = "Don't buy the artefact"
 
     nomoneytitle = "Not enough money!"
-    nomoneytext = "You can't currently afford to buy this artefact. You need %d credits."
+    nomoneytext = "You can't currently afford to buy this artefact. You need %s credits."
     
     -- OSD stuff
     osd_msg[1] = "Fly to the %s system and dock with (board) Kahan Pinnacle"
@@ -274,29 +275,29 @@ end
 
 function seller()
     if planet.cur() == artefactplanetA then
-        if tk.choice(title[8], text[9], buy:format(reward * 0.15), nobuy) == 1 then
+        if tk.choice(title[8], text[9], buy:format(numstring(reward * 0.15)), nobuy) == 1 then
             if player.credits() >= reward * 0.15 then
                 misn.npcRm(sellnpc)
                 player.pay(-15000)
                 artefactA = misn.cargoAdd("Artefact? A", 0)
                 misn.markerRm(markerA)
             else
-                tk.msg(nomoneytitle, nomoneytext:format(reward * 0.15))
+                tk.msg(nomoneytitle, nomoneytext:format(numstring(reward * 0.15)))
             end
         end
     elseif planet.cur() == artefactplanetB then
-        if tk.choice(title[8], text[10], buy:format(reward * 0.15), nobuy) == 1 then
+        if tk.choice(title[8], text[10], buy:format(numstring(reward * 0.15)), nobuy) == 1 then
             if player.credits() >= reward * 0.15 then
                 misn.npcRm(sellnpc)
                 player.pay(-15000)
                 artefactB = misn.cargoAdd("Artefact? B", 0)
                 misn.markerRm(markerB)
             else
-                tk.msg(nomoneytitle, nomoneytext:format(reward * 0.15))
+                tk.msg(nomoneytitle, nomoneytext:format(numstring(reward * 0.15)))
             end
         end
     elseif planet.cur() == artefactplanetC then
-        if tk.choice(title[8], text[11], buy:format(reward * 0.15), nobuy) == 1 then
+        if tk.choice(title[8], text[11], buy:format(numstring(reward * 0.15)), nobuy) == 1 then
             if player.credits() >= reward * 0.15 then
                 misn.npcRm(sellnpc)
                 player.pay(-15000)

@@ -11,6 +11,7 @@
   <player>3</player>
   <colour>blue</colour>
   <spawn>independent</spawn>
+  <lua>independent</lua>
   <allies>
   </allies>
   <enemies>
@@ -48,6 +49,7 @@
   <player>3</player>
   <colour>yellow</colour>
   <spawn>frontier</spawn>
+  <lua>independent</lua>
   <allies>
   </allies>
   <enemies>
@@ -77,6 +79,7 @@
   <enemies>
    <enemy>Civilian</enemy>
    <enemy>Empire</enemy>
+   <enemy>Soromid</enemy>
    <enemy>Dvaered</enemy>
    <enemy>Za'lek</enemy>
    <enemy>Collective</enemy>
@@ -103,6 +106,17 @@
    <enemy>Collective</enemy>
   </enemies>
  </faction>
+ <faction name="Soromid">
+  <logo>empire</logo>
+  <colour>orange</colour>
+  <player>0</player>
+  <spawn>soromid</spawn>
+  <lua>soromid</lua>
+  <allies/>
+  <enemies>
+   <enemy>Pirate</enemy>
+  </enemies>
+ </faction>
  <faction name="Collective">
   <static />
   <logo>collective</logo>
@@ -117,7 +131,7 @@
  <faction name="FLF">
   <logo>flf</logo>
   <longname>Frontier Liberation Front</longname>
-  <player>-10</player>
+  <player>0</player>
   <colour>orange</colour>
   <spawn>flf</spawn>
   <lua>flf</lua>
@@ -171,6 +185,7 @@
   <longname>House Goddard</longname>
   <player>2</player>
   <spawn>goddard</spawn>
+  <lua>independent</lua>
   <allies>
    <ally>Empire</ally>
   </allies>
@@ -187,6 +202,7 @@
  </faction>
  <faction name="Raider">
   <invisible />
+  <static />
   <longname>Galactic Pirates</longname>
   <player>-100</player>
   <colour>red</colour>

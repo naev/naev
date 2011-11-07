@@ -76,16 +76,17 @@ double min3( double v1, double v2, double v3 )
  *    @param n Number of elements in the array.
  *    @return Randomly-ordered array.
  */
-char** arrayShuffle( char** array, int n)
+void** arrayShuffle( void** array, int n)
 {
-   char* tmp;
+   void* tmp;
    int k;
 
    while (n > 1) {
-      k = RNG(0, n);
-      tmp = array[--n];
+      k        = RNG(0, n);
+      tmp      = array[--n];
       array[n] = array[k];
       array[k] = tmp;
    }
+
    return array;
 }

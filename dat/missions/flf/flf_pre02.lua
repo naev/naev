@@ -23,7 +23,7 @@ else -- default english
     refuelmsg = {}
     
     introfirst = [[    The FLF officer doesn't seem at all surprised that you approached her. On the contrary, she looks like she expected you to do so all along.
-    "Greetings," she says, nodding at you in curt greeting. "I am Corporal Benito. And you are %s, the guy who got Lt. Fletcher back here in one piece. Oh yes, I know all about that. It's not a secret, after all. Besides, you can't keep anything a secret for long on a station like this in the first place." Benito's expression becomes a little more severe. "I'm not here to exhange pleasantries, however. You probably noticed, but people here are a little uneasy about your presence. They don't know what to make of you, see. You helped us once, it is true, but that doesn't tell us much. We don't know you."
+    "Greetings," she says, nodding at you in curt greeting. "I am Corporal Benito. And you are %s, the guy who got Lt. Fletcher back here in one piece. Oh yes, I know all about that. It's not a secret, after all. Besides, you can't keep anything a secret for long on a station like this in the first place." Benito's expression becomes a little more severe. "I'm not here to exchange pleasantries, however. You probably noticed, but people here are a little uneasy about your presence. They don't know what to make of you, see. You helped us once, it is true, but that doesn't tell us much. We don't know you."
     ]]
     
     introrepeat = [[    "Hello again, %s" Corporal Benito says to you. "I see you've come back, though I can't imagine you're here to meet up with any friends."
@@ -52,7 +52,7 @@ else -- default english
     Benito takes you to the station's bar, and buys you what for lack of a better word must be called a drink.
     "We will of course reward you for your service," she says once you are seated. "Though you must understand the FLF don't have that big a budget. Financial support is tricky, and the Frontier don't have that much to spare themselves to begin with. Nevertheless, we are willing to pay for good work, and your work is nothing but. What's more, you've ingratiated yourself with many of us, as you've undoubtedly noticed. Our top brass are among those you've impressed, you from today on, you can call yourself one of us! How about that, huh?"]]
     
-    text[6] = [[    "Of course, our work is only just beginning. You got those patrols off our backs, but they'll eventually return. No rest for the weary, we must continue the fight against the oppressors. I'm sure the road is still long, but I'm encouraged by the fact that we gained another valuable ally today. I'm sure you'll play an imporant role in our eventual victory over the Dvaered!"
+    text[6] = [[    "Of course, our work is only just beginning. You got those patrols off our backs, but they'll eventually return. No rest for the weary, we must continue the fight against the oppressors. I'm sure the road is still long, but I'm encouraged by the fact that we gained another valuable ally today. I'm sure you'll play an important role in our eventual victory over the Dvaered!"
     That last part earns a cheer from the assembled FLF soldiers. You decide to raise your glass with them, making a toast to the fortune of battle in the upcoming campaign - and the sweet victory that lies beyond.]]
     
     refusetitle = "Some other time perhaps"
@@ -76,7 +76,7 @@ else -- default english
     Urnus breaks the connection, and you go back to winning this battle - albeit for the other side this time.]]
     
     DVtitle[3] = "End of negotiations"
-    DVtext[3] = [[    Colonel Urnus is visibly annoyed by your repsonse. "Very well then," he bites at you. "In that case you will be destroyed along with the rest of that terrorist scum. Helm, full speed ahead! All batteries, fire at will!"]]
+    DVtext[3] = [[    Colonel Urnus is visibly annoyed by your response. "Very well then," he bites at you. "In that case you will be destroyed along with the rest of that terrorist scum. Helm, full speed ahead! All batteries, fire at will!"]]
     
     DVtitle[4] = "A reward for a job well botched"
     DVtext[4] = [[    Soon after docking, you are picked up by a couple of soldiers, who escort you to Colonel Urnus' office. Urnus greets you warmly, and offers you a seat and a cigar. You take the former, not the latter.
@@ -98,7 +98,7 @@ else -- default english
     flfcomm[2] = "%s has sold us out! Break and attack!"
     
     misn_title = "Disrupt the Dvaered Patrols"
-    misn_desc = "To prove yourself to the FLF, you must lead a wing of fighters into Dvaered space and take out their security patrols. Note that you must do this mission in a Fighter, Scout or Yacht class ship."
+    misn_desc = "To prove yourself to the FLF, you must lead a wing of fighters into Dvaered space and take out their security patrols. Note that you must do this mission in a Fighter, Scout, Bomber or Yacht class ship."
     misn_rwrd = "A chance to make friends out of the FLF."
     osd_desc[1] = "Fly to the designated system"
     osd_desc[2] = "Wait for the Dvaered patrol to arrive and engage"
@@ -106,7 +106,7 @@ else -- default english
     DVosd[1] = "Destroy your wingmen!"
     DVosd[2] = "Fly to the %s system and land on %s"
         
-    npc_desc = "There is a low-ranking officer of the Frontier Liberation Front sitting at one at the tables. She seems somewhat more receptive than most people in the bar."
+    npc_desc = "There is a low-ranking officer of the Frontier Liberation Front sitting at one of the tables. She seems somewhat more receptive than most people in the bar."
 end
 
 function create()
@@ -313,10 +313,10 @@ function hail()
             tk.msg(DVtitle[2], DVtext[2]:format(player.pilot():ship():class(), player.ship(), DVplanet, DVsys))
             
             -- Set the FLF to super hostile, set Dvaered opinion to 0 if it was negative
-            faction.get("FLF"):modPlayerRaw(-200)
+            faction.get("FLF"):modPlayerSingle(-200)
             standing = faction.get("Dvaered"):playerStanding()
             if standing < 0 then
-                faction.get("Dvaered"):modPlayerRaw(-standing)
+                faction.get("Dvaered"):modPlayerSingle(-standing)
             end
             
             -- Switch sides, reset AIs
@@ -481,8 +481,8 @@ end
 function DVdeath()
     -- Reset standing with the Dvaered
     standing = faction.get("Dvaered"):playerStanding()
-    faction.get("Dvaered"):modPlayerRaw(-standing)
-    faction.get("Dvaered"):modPlayerRaw(DVstanding)
+    faction.get("Dvaered"):modPlayerSingle(-standing)
+    faction.get("Dvaered"):modPlayerSingle(DVstanding)
 
     DVdeaths = DVdeaths + 1
     if DVdeaths == #fleetDV then

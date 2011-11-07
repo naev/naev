@@ -24,7 +24,12 @@
    <heatup>15</heatup>
    <track>3</track>
    <swivel>3</swivel>
-   <damage type="energy" penetrate="0">6</damage>
+   <damage>
+    <type>normal</type>
+    <penetrate>0</penetrate>
+    <physical>6</physical>
+    <disable>1</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Laser Cannon MK2">
@@ -52,7 +57,12 @@
    <heatup>20</heatup>
    <track>3</track>
    <swivel>4</swivel>
-   <damage type="energy" penetrate="14">8.5</damage>
+   <damage>
+    <type>normal</type>
+    <penetrate>5</penetrate>
+    <physical>8.5</physical>
+    <disable>1</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Laser Cannon MK3">
@@ -80,7 +90,12 @@
    <heatup>25</heatup>
    <track>3</track>
    <swivel>5</swivel>
-   <damage type="energy" penetrate="22">12</damage>
+   <damage>
+    <type>normal</type>
+    <penetrate>13</penetrate>
+    <physical>12</physical>
+    <disable>2</disable>
+   </damage>
   </specific>
  </outfit>
  <!-- TODO laser pd mk1 -->
@@ -110,7 +125,12 @@
    <heatup>30</heatup>
    <track>2</track>
    <swivel>7</swivel>
-   <damage type="energy" penetrate="30">29</damage>
+   <damage>
+    <type>normal</type>
+    <penetrate>13</penetrate>
+    <physical>29</physical>
+    <disable>2</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Heavy Ripper Cannon">
@@ -138,7 +158,12 @@
    <heatup>35</heatup>
    <track>2</track>
    <swivel>10</swivel>
-   <damage type="energy" penetrate="40">42</damage>
+   <damage>
+    <type>normal</type>
+    <penetrate>20</penetrate>
+    <physical>42</physical>
+    <disable>2</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Laser Turret MK1">
@@ -164,7 +189,12 @@
    <energy>9</energy>
    <heatup>25</heatup>
    <track>2</track>
-   <damage type="energy" penetrate="20">8</damage>
+   <damage>
+    <type>normal</type>
+    <penetrate>20</penetrate>
+    <physical>8</physical>
+    <disable>1</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Laser Turret MK2">
@@ -191,7 +221,12 @@
    <energy>11</energy>
    <heatup>30</heatup>
    <track>1.75</track>
-   <damage type="energy" penetrate="27">10.5</damage>
+   <damage>
+    <type>normal</type>
+    <penetrate>27</penetrate>
+    <physical>10.5</physical>
+    <disable>1</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Laser Turret MK3">
@@ -218,7 +253,12 @@
    <energy>13</energy>
    <heatup>35</heatup>
    <track>1.5</track>
-   <damage type="energy" penetrate="35">14</damage>
+   <damage>
+    <type>normal</type>
+    <penetrate>35</penetrate>
+    <physical>14</physical>
+    <disable>2</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Heavy Laser">
@@ -245,7 +285,12 @@
    <energy>72</energy>
    <heatup>50</heatup>
    <track>0.5</track>
-   <damage type="energy" penetrate="60">64</damage>
+   <damage>
+    <type>normal</type>
+    <penetrate>50</penetrate>
+    <physical>64</physical>
+    <disable>3</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Turbolaser">
@@ -272,7 +317,12 @@
    <energy>85</energy>
    <heatup>60</heatup>
    <track>0.3</track>
-   <damage type="energy" penetrate="75">82</damage>
+   <damage>
+    <type>normal</type>
+    <penetrate>75</penetrate>
+    <physical>82</physical>
+    <disable>4</disable>
+   </damage>
   </specific>
  </outfit>
 
@@ -302,7 +352,12 @@
    <heatup>20</heatup>
    <track>2.25</track>
    <swivel>5</swivel>
-   <damage type="ion" penetrate="0">7</damage>
+   <damage>
+    <type>ion</type>
+    <penetrate>0</penetrate>
+    <physical>6</physical>
+    <disable>2</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Razor MK2">
@@ -329,7 +384,12 @@
    <heatup>25</heatup>
    <track>2.25</track>
    <swivel>6</swivel>
-   <damage type="ion" penetrate="5">9</damage>
+   <damage>
+    <type>ion</type>
+    <penetrate>5</penetrate>
+    <physical>8</physical>
+    <disable>2</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Razor MK3">
@@ -356,7 +416,12 @@
    <heatup>30</heatup>
    <track>2.25</track>
    <swivel>7</swivel>
-   <damage type="ion" penetrate="11">11.5</damage>
+   <damage>
+    <type>ion</type>
+    <penetrate>11</penetrate>
+    <physical>10</physical>
+    <disable>3</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Razor Turret MK1">
@@ -382,7 +447,12 @@
    <energy>6.5</energy>
    <heatup>30</heatup>
    <track>2</track>
-   <damage type="ion" penetrate="7">7.5</damage>
+   <damage>
+    <type>ion</type>
+    <penetrate>7</penetrate>
+    <physical>6.5</physical>
+    <disable>2</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Razor Turret MK2">
@@ -408,7 +478,12 @@
    <energy>13</energy>
    <heatup>35</heatup>
    <track>1.8</track>
-   <damage type="ion" penetrate="17">13</damage>
+   <damage>
+    <type>ion</type>
+    <penetrate>17</penetrate>
+    <physical>11</physical>
+    <disable>3</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Razor Turret MK3">
@@ -434,7 +509,12 @@
    <energy>15</energy>
    <heatup>40</heatup>
    <track>1.6</track>
-   <damage type="ion" penetrate="24">16</damage>
+   <damage>
+    <type>ion</type>
+    <penetrate>24</penetrate>
+    <physical>14</physical>
+    <disable>4</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Ion Cannon">
@@ -446,22 +526,27 @@
    <description>Ion Cannons are primarily nonlethal weapons designed to short out internal ship systems and rendering it disabled without killing the crew in the process. The standard Ion Cannon is the most basic and compact design, which allows it to be mounted on small craft. This makes the Ion Cannon one of the most popular weapons for weaker pirates.</description>
    <gfx_store>ioncannon</gfx_store>
   </general>
-  <specific type="bolt">
-   <cpu>12</cpu>
+  <specific type="bolt" secondary="1">
+   <cpu>6</cpu>
    <gfx>ionM</gfx>
    <sound>ion</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>1340</delay>
+   <delay>1000</delay>
    <speed>500</speed>
    <range>700</range>
    <falloff>500</falloff>
    <gfx_end>ionM-end</gfx_end>
-   <energy>30</energy>
+   <energy>20</energy>
    <heatup>50</heatup>
    <track>2</track>
    <swivel>6</swivel>
-   <damage type="ion" penetrate="11">28</damage>
+   <damage>
+    <type>ion</type>
+    <penetrate>11</penetrate>
+    <physical>3.5</physical>
+    <disable>10</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Heavy Ion Cannon">
@@ -474,22 +559,27 @@
    <description>The Heavy Ion Cannon does a far better job at disabling ships than the standard model, but it requires a medium mount. Most militaries employ these weapons on specialized capture teams, but the design is licensed for public use as well.</description>
    <gfx_store>ioncannon</gfx_store>
   </general>
-  <specific type="bolt">
-   <cpu>16</cpu>
+  <specific type="bolt" secondary="1">
+   <cpu>12</cpu>
    <gfx>ionL</gfx>
    <sound>ion</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>1520</delay>
+   <delay>1300</delay>
    <speed>500</speed>
    <range>1100</range>
    <falloff>800</falloff>
    <gfx_end>ionL-end</gfx_end>
-   <energy>45</energy>
+   <energy>35</energy>
    <heatup>60</heatup>
    <track>2</track>
    <swivel>8</swivel>
-   <damage type="ion" penetrate="22">48</damage>
+   <damage>
+    <type>ion</type>
+    <penetrate>17</penetrate>
+    <physical>6.5</physical>
+    <disable>18</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Heavy Ion Turret">
@@ -502,7 +592,7 @@
    <description>The Heavy Ion Turret is a Sirius military design, applying brute force to its target's internal systems. When coupled with Razor weaponry, it is terribly efficient at reducing enemy warships to tumbling hunks of junk.</description>
    <gfx_store>ionturret</gfx_store>
   </general>
-  <specific type="turret bolt">
+  <specific type="turret bolt" secondary="1">
    <cpu>24</cpu>
    <gfx>ionL</gfx>
    <sound>ion</sound>
@@ -516,7 +606,12 @@
    <energy>54</energy>
    <heatup>60</heatup>
    <track>0.9</track>
-   <damage type="ion" penetrate="40">48</damage>
+   <damage>
+    <type>ion</type>
+    <penetrate>30</penetrate>
+    <physical>10</physical>
+    <disable>30</disable>
+   </damage>
   </specific>
  </outfit>
  <!-- TODO shock artillery -->
@@ -549,7 +644,12 @@
    <heatup>20</heatup>
    <track>2</track>
    <swivel>4</swivel>
-   <damage type="kinetic" penetrate="3">6</damage>
+   <damage>
+    <type>impact</type>
+    <penetrate>3</penetrate>
+    <physical>6</physical>
+    <disable>1</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Vulcan Gun">
@@ -575,7 +675,12 @@
    <heatup>25</heatup>
    <track>2</track>
    <swivel>6</swivel>
-   <damage type="kinetic" penetrate="12">8.5</damage>
+   <damage>
+    <type>impact</type>
+    <penetrate>12</penetrate>
+    <physical>8.5</physical>
+    <disable>1</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Shredder">
@@ -601,7 +706,12 @@
    <heatup>30</heatup>
    <track>1.5</track>
    <swivel>8</swivel>
-   <damage type="kinetic" penetrate="25">12</damage>
+   <damage>
+    <type>impact</type>
+    <penetrate>20</penetrate>
+    <physical>12</physical>
+    <disable>1</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Turreted Gauss Gun">
@@ -627,7 +737,12 @@
    <energy>7</energy>
    <heatup>40</heatup>
    <track>2.2</track>
-   <damage type="kinetic" penetrate="11">6.5</damage>
+   <damage>
+    <type>impact</type>
+    <penetrate>11</penetrate>
+    <physical>6.5</physical>
+    <disable>1</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Turreted Vulcan Gun">
@@ -653,7 +768,12 @@
    <energy>10.5</energy>
    <heatup>45</heatup>
    <track>2.05</track>
-   <damage type="kinetic" penetrate="24">9.5</damage>
+   <damage>
+    <type>impact</type>
+    <penetrate>20</penetrate>
+    <physical>9.5</physical>
+    <disable>1</disable>
+   </damage>
   </specific>
  </outfit>
  <!-- TODO flak -->
@@ -681,7 +801,12 @@
    <heatup>50</heatup>
    <track>1.5</track>
    <swivel>8</swivel>
-   <damage type="kinetic" penetrate="29">36</damage>
+   <damage>
+    <type>impact</type>
+    <penetrate>29</penetrate>
+    <physical>36</physical>
+    <disable>2</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Mass Driver MK2">
@@ -708,7 +833,12 @@
    <heatup>60</heatup>
    <track>1.4</track>
    <swivel>10</swivel>
-   <damage type="kinetic" penetrate="43">42</damage>
+   <damage>
+    <type>impact</type>
+    <penetrate>43</penetrate>
+    <physical>42</physical>
+    <disable>2</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Mass Driver MK3">
@@ -735,7 +865,12 @@
    <heatup>70</heatup>
    <track>1.2</track>
    <swivel>13</swivel>
-   <damage type="kinetic" penetrate="50">54</damage>
+   <damage>
+    <type>impact</type>
+    <penetrate>50</penetrate>
+    <physical>54</physical>
+    <disable>2</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Railgun">
@@ -764,7 +899,12 @@
    <heatup>90</heatup>
    <track>0.8</track>
    <swivel>15</swivel>
-   <damage type="kinetic" penetrate="60">70</damage>
+   <damage>
+    <type>impact</type>
+    <penetrate>60</penetrate>
+    <physical>70</physical>
+    <disable>3</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Repeating Railgun">
@@ -793,7 +933,12 @@
    <heatup>100</heatup>
    <track>0.6</track>
    <swivel>16</swivel>
-   <damage type="kinetic" penetrate="80">76</damage>
+   <damage>
+    <type>impact</type>
+    <penetrate>70</penetrate>
+    <physical>76</physical>
+    <disable>3</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Railgun Turret">
@@ -820,7 +965,12 @@
    <energy>66</energy>
    <heatup>90</heatup>
    <track>0.25</track>
-   <damage type="kinetic" penetrate="55">58</damage>
+   <damage>
+    <type>impact</type>
+    <penetrate>55</penetrate>
+    <physical>58</physical>
+    <disable>3</disable>
+   </damage>
   </specific>
  </outfit>
 
@@ -849,7 +999,12 @@
    <heatup>20</heatup>
    <track>2</track>
    <swivel>4</swivel>
-   <damage type="energy" penetrate="8">9</damage>
+   <damage>
+    <type>normal</type>
+    <penetrate>8</penetrate>
+    <physical>9</physical>
+    <disable>1</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Plasma Blaster MK2">
@@ -877,7 +1032,12 @@
    <heatup>25</heatup>
    <track>2</track>
    <swivel>5</swivel>
-   <damage type="energy" penetrate="18">12</damage>
+   <damage>
+    <type>normal</type>
+    <penetrate>18</penetrate>
+    <physical>12</physical>
+    <disable>1</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Plasma Blaster MK3">
@@ -905,7 +1065,12 @@
    <heatup>30</heatup>
    <track>2</track>
    <swivel>6</swivel>
-   <damage type="energy" penetrate="25">16</damage>
+   <damage>
+    <type>normal</type>
+    <penetrate>23</penetrate>
+    <physical>16</physical>
+    <disable>1</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Plasma Turret MK1">
@@ -931,7 +1096,12 @@
    <energy>9.5</energy>
    <heatup>25</heatup>
    <track>1.8</track>
-   <damage type="energy" penetrate="12">9</damage>
+   <damage>
+    <type>normal</type>
+    <penetrate>12</penetrate>
+    <physical>9</physical>
+    <disable>1</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Plasma Turret MK2">
@@ -957,7 +1127,12 @@
    <energy>13.5</energy>
    <heatup>30</heatup>
    <track>1.6</track>
-   <damage type="energy" penetrate="27">14</damage>
+   <damage>
+    <type>normal</type>
+    <penetrate>18</penetrate>
+    <physical>14</physical>
+    <disable>1</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="BioPlasma Organ Stage 1">
@@ -985,7 +1160,12 @@
    <heatup>40</heatup>
    <track>2</track>
    <swivel>10</swivel>
-   <damage type="energy" penetrate="30">25</damage>
+   <damage>
+    <type>normal</type>
+    <penetrate>30</penetrate>
+    <physical>25</physical>
+    <disable>2</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="BioPlasma Organ Stage 2">
@@ -1013,7 +1193,12 @@
    <heatup>50</heatup>
    <track>2</track>
    <swivel>13</swivel>
-   <damage type="energy" penetrate="40">38</damage>
+   <damage>
+    <type>normal</type>
+    <penetrate>35</penetrate>
+    <physical>38</physical>
+    <disable>2</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Plasma Cluster Cannon MK1">
@@ -1041,7 +1226,12 @@
    <heatup>40</heatup>
    <track>1.5</track>
    <swivel>11</swivel>
-   <damage type="energy" penetrate="25">30</damage>
+   <damage>
+    <type>normal</type>
+    <penetrate>25</penetrate>
+    <physical>50</physical>
+    <disable>2</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Plasma Cluster Cannon MK2">
@@ -1069,7 +1259,12 @@
    <heatup>45</heatup>
    <track>1.5</track>
    <swivel>14</swivel>
-   <damage type="energy" penetrate="35">39</damage>
+   <damage>
+    <type>normal</type>
+    <penetrate>35</penetrate>
+    <physical>39</physical>
+    <disable>2</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Plasma Cluster Cannon MK3">
@@ -1097,7 +1292,12 @@
    <energy>45</energy>
    <track>1.2</track>
    <swivel>16</swivel>
-   <damage type="energy" penetrate="42">46</damage>
+   <damage>
+    <type>normal</type>
+    <penetrate>42</penetrate>
+    <physical>46</physical>
+    <disable>2</disable>
+   </damage>
   </specific>
  </outfit>
  <!-- TODO plasma lance -->
@@ -1124,7 +1324,12 @@
    <range>300</range>
    <energy>65</energy>
    <heatup>60</heatup>
-   <damage type="energy" penetrate="50">50</damage>
+   <damage>
+    <type>normal</type>
+    <penetrate>50</penetrate>
+    <physical>50</physical>
+    <disable>0</disable>
+   </damage>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
    <gfx>beam_orion</gfx>
@@ -1155,7 +1360,12 @@
    <turn>35</turn>
    <energy>200</energy>
    <heatup>60</heatup>
-   <damage type="energy" penetrate="90">150</damage>
+   <damage>
+    <type>normal</type>
+    <penetrate>90</penetrate>
+    <physical>150</physical>
+    <disable>0</disable>
+   </damage>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
    <gfx>beam_ragnarok</gfx>
@@ -1191,32 +1401,75 @@
    <heatup>40</heatup>
    <track>3</track>
    <swivel>2.5</swivel>
-   <damage type="energy" penetrate="22">20</damage>
+   <damage>
+    <type>normal</type>
+    <penetrate>22</penetrate>
+    <physical>20</physical>
+    <disable>1</disable>
+   </damage>
   </specific>
  </outfit>
 
 
  <!-- Missile Weapons -->
- <outfit name="Seeker Launcher">
+ <outfit name="Unicorp Fury Launcher">
   <general>
    <slot>weapon</slot>
    <mass>8</mass>
    <price>25000</price>
-   <description>A compact base for launching Seeker missiles, a Seeker launcher is an inexpensive way to augment a ship's ranged combat capabilities.</description>
+   <description>This missile launcher fires Fury class interceptor missiles. It is built out of standard parts, which make it serviceable and efficient.</description>
+   <gfx_store>seekerlauncher</gfx_store>
+  </general>
+  <specific type="launcher" secondary="1">
+   <cpu>4</cpu>
+   <ammo>Fury Missile</ammo>
+   <delay>4000</delay>
+   <amount>20</amount>
+   <lockon>9</lockon>
+   <arc>6</arc>
+   <ew_target>1.5</ew_target>
+  </specific>
+ </outfit>
+ <outfit name="TeraCom Fury Launcher">
+  <general>
+   <slot>weapon</slot>
+   <mass>9</mass>
+   <price>40000</price>
+   <description>The TeraCom Fury Launcher is a high-performance missile launcher equipped with patented target tracking and missile arming technology, allowing pilots to get a lock on their target faster and more easily than with launchers made by competing brands.</description>
    <gfx_store>seekerlauncher</gfx_store>
   </general>
   <specific type="launcher" secondary="1">
    <cpu>6</cpu>
-   <ammo>Seeker Missile</ammo>
-   <delay>1800</delay>
+   <ammo>Fury Missile</ammo>
+   <delay>4000</delay>
    <amount>20</amount>
+   <lockon>7</lockon>
+   <arc>8</arc>
+   <ew_target>1.5</ew_target>
   </specific>
  </outfit>
- <outfit name="Seeker Missile">
+ <outfit name="Enygma Systems Turreted Fury Launcher">
+  <general>
+   <slot>weapon</slot>
+   <mass>30</mass>
+   <price>80000</price>
+   <description>Enygma Systems has developed a turret mounted Fury launcher. It comes at a steep price, but can be a powerful means of discouraging pirate fighters.</description>
+   <gfx_store>seekerlauncher</gfx_store>
+  </general>
+  <specific type="turret launcher" secondary="1">
+   <cpu>9</cpu>
+   <ammo>Fury Missile</ammo>
+   <delay>4000</delay>
+   <amount>30</amount>
+   <lockon>8</lockon>
+   <ew_target>1.5</ew_target>
+  </specific>
+ </outfit>
+ <outfit name="Fury Missile">
   <general>
    <mass>1</mass>
    <price>400</price>
-   <description>The cheapest smart missile on the market, while it lacks advanced tracking abilities, it makes up for that with affordability and firepower in spades.</description>
+   <description>The Fury class interceptor missile is a lightweight missile propelled by a powerful engine, delivering its payload to its target quickly and efficiently. Its high agility come at the cost of destructive power, however, limiting its effectiveness to light, nimble fighters.</description>
    <gfx_store>seeker</gfx_store>
   </general>
   <specific type="ammo">
@@ -1225,29 +1478,72 @@
    <sound_hit>medexp1</sound_hit>
    <spfx_shield>ExpM</spfx_shield>
    <spfx_armour>ExpM</spfx_armour>
-   <duration blowup="armour">5</duration>
-   <lockon>0.5</lockon>
-   <thrust>400</thrust>
-   <turn>60</turn>
-   <speed>800</speed>
-   <damage type="kinetic" penetrate="10">20</damage>
-   <ai>seek</ai>
+   <duration blowup="armour">4</duration>
+   <thrust>0</thrust>
+   <turn>45</turn>
+   <speed>700</speed>
+   <damage>
+    <type>impact</type>
+    <penetrate>5</penetrate>
+    <physical>40</physical>
+    <disable>1</disable>
+   </damage>
+   <ai>smart</ai>
   </specific>
  </outfit>
- <outfit name="Headhunter Launcher">
+ <outfit name="Unicorp Headhunter Launcher">
   <general>
    <slot>weapon</slot>
    <license>Medium Weapon License</license>
    <mass>10</mass>
    <price>40000</price>
-   <description>The Headhunter launcher is one of the most-used missile launchers by the security companies. Far more reliable than Seeker missiles, Headhunters feature newer sensors and an advanced tracking system making them much better at hitting their targets.</description>
+   <description>This launcher fires Headhunter class interceptor missiles. Made to standard specification, this model has been optimized for minimum system strain and maximum compatibility.</description>
+   <gfx_store>headhunterlauncher</gfx_store>
+  </general>
+  <specific type="launcher" secondary="1">
+   <cpu>5</cpu>
+   <ammo>Headhunter Missile</ammo>
+   <delay>5000</delay>
+   <amount>15</amount>
+   <lockon>12</lockon>
+   <arc>6</arc>
+   <ew_target>1</ew_target>
+  </specific>
+ </outfit>
+ <outfit name="TeraCom Headhunter Launcher">
+  <general>
+   <slot>weapon</slot>
+   <license>Medium Weapon License</license>
+   <mass>10</mass>
+   <price>100000</price>
+   <description>This is TeraCom's model Headhunter launcher. Though somewhat pricey and demanding on the ship's resources, the patented tracking and missile arming technology allows pilots to fire their missiles before the competition does.</description>
    <gfx_store>headhunterlauncher</gfx_store>
   </general>
   <specific type="launcher" secondary="1">
    <cpu>8</cpu>
    <ammo>Headhunter Missile</ammo>
-   <delay>2000</delay>
+   <delay>5000</delay>
    <amount>15</amount>
+   <lockon>9</lockon>
+   <arc>8</arc>
+   <ew_target>1</ew_target>
+  </specific>
+ </outfit>
+ <outfit name="Enygma Systems Turreted Headhunter Launcher">
+  <general>
+   <slot>weapon</slot>
+   <mass>45</mass>
+   <price>140000</price>
+   <description>These launchers are sometimes employed by cruiser captains whose ships aren't maneouevrable enough to effectively combat enemy fighters and bombers. The punch of the Headhunter missile combined with Enygma Systems' swivel mounted launcher can effectively compensate for any blind spots.</description>
+   <gfx_store>headhunterlauncher</gfx_store>
+  </general>
+  <specific type="turret launcher" secondary="1">
+   <cpu>14</cpu>
+   <ammo>Headhunter Missile</ammo>
+   <delay>5000</delay>
+   <amount>20</amount>
+   <lockon>10</lockon>
+   <ew_target>1</ew_target>
   </specific>
  </outfit>
  <outfit name="Headhunter Missile">
@@ -1255,7 +1551,89 @@
    <license>Medium Weapon License</license>
    <mass>1</mass>
    <price>800</price>
-   <description>Headhunters first gained fame in the crush of the Araknoid, a fearsome battle against a pirate stronghold where the Empire crushed the pirates thanks to the advanced guidance system on the Headhunter. Now used by mercenaries and bounty hunters throughout the galaxy.</description>
+   <description>The Headhunter class interceptor missile is a medium calibre missile that can deal devastating damage to small and medium sized targets, while remaining reasonably fast and agile. Most effective when launched at distant enemies.</description>
+   <gfx_store>headhunter</gfx_store>
+  </general>
+  <specific type="ammo">
+   <gfx>headhunter</gfx>
+   <sound>missile</sound>
+   <sound_hit>medexp0</sound_hit>
+   <spfx_shield>ExpM</spfx_shield>
+   <spfx_armour>ExpM</spfx_armour>
+   <duration blowup="armour">5</duration>
+   <thrust>0</thrust>
+   <turn>35</turn>
+   <speed>550</speed>
+   <damage>
+    <type>impact</type>
+    <penetrate>10</penetrate>
+    <physical>80</physical>
+    <disable>1</disable>
+   </damage>
+   <ai>smart</ai>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp Vengeance Launcher">
+  <general>
+   <slot>weapon</slot>
+   <license>Medium Weapon License</license>
+   <mass>15</mass>
+   <price>70000</price>
+   <description>This launcher fires Vengeance class interceptor missiles. Its bulk makes it less suitable for ships that rely on mobility, but it's relatively efficient otherwise.</description>
+   <gfx_store>headhunterlauncher</gfx_store>
+  </general>
+  <specific type="launcher" secondary="1">
+   <cpu>6</cpu>
+   <ammo>Vengeance Missile</ammo>
+   <delay>6000</delay>
+   <amount>10</amount>
+   <lockon>17</lockon>
+   <arc>6</arc>
+   <ew_target>0.75</ew_target>
+  </specific>
+ </outfit>
+ <outfit name="TeraCom Vengeance Launcher">
+  <general>
+   <slot>weapon</slot>
+   <license>Medium Weapon License</license>
+   <mass>15</mass>
+   <price>150000</price>
+   <description>TeraCom's patented launcher hardware considerably reduces the time it takes to achieve a lock. Sometimes, those few seconds can make all the difference.</description>
+   <gfx_store>headhunterlauncher</gfx_store>
+  </general>
+  <specific type="launcher" secondary="1">
+   <cpu>10</cpu>
+   <ammo>Vengeance Missile</ammo>
+   <delay>6000</delay>
+   <amount>10</amount>
+   <lockon>12</lockon>
+   <arc>8</arc>
+   <ew_target>0.75</ew_target>
+  </specific>
+ </outfit>
+ <outfit name="Enygma Systems Turreted Vengeance Launcher">
+  <general>
+   <slot>weapon</slot>
+   <mass>60</mass>
+   <price>200000</price>
+   <description>Turreted Vengeance launchers aren't commonly seen in interplanetary combat. Only heavy cruisers can afford to mount these weapons, and they usually have other means of taking out corvette class enemies.</description>
+   <gfx_store>headhunterlauncher</gfx_store>
+  </general>
+  <specific type="turret launcher" secondary="1">
+   <cpu>14</cpu>
+   <ammo>Headhunter Missile</ammo>
+   <delay>6000</delay>
+   <amount>15</amount>
+   <lockon>14</lockon>
+   <ew_target>0.75</ew_target>
+  </specific>
+ </outfit>
+ <outfit name="Vengeance Missile">
+  <general>
+   <license>Medium Weapon License</license>
+   <mass>1</mass>
+   <price>1500</price>
+   <description>Vengeance class interceptor missiles are the heaviest interceptor missiles currently in production. Almost half the missile hull is used for payload, which decreases its ability to catch fast targets. Best used against corvette class targets.</description>
    <gfx_store>headhunter</gfx_store>
   </general>
   <specific type="ammo">
@@ -1265,74 +1643,56 @@
    <spfx_shield>ExpM</spfx_shield>
    <spfx_armour>ExpM</spfx_armour>
    <duration blowup="armour">7</duration>
-   <lockon>0.25</lockon>
-   <resist>5</resist>
-   <thrust>325</thrust>
-   <turn>90</turn>
-   <speed>550</speed>
-   <damage type="kinetic" penetrate="30">20</damage>
+   <thrust>0</thrust>
+   <turn>30</turn>
+   <speed>400</speed>
+   <damage>
+    <type>impact</type>
+    <penetrate>20</penetrate>
+    <physical>150</physical>
+    <disable>1</disable>
+   </damage>
    <ai>smart</ai>
   </specific>
  </outfit>
- <outfit name="Banshee Launcher">
-  <general>
-   <slot>weapon</slot>
-   <license>Medium Weapon License</license>
-   <mass>10</mass>
-   <price>25000</price>
-   <gfx_store>bansheelauncher</gfx_store>
-   <description>The Banshee Launcher uses a quick-action firing mechanism to be able to quickly launch the Banshee rockets. The only drawback is that this mechanism can only be used with light rockets, limiting the payload the rockets can have.</description>
-  </general>
-  <specific type="launcher" secondary="1">
-   <cpu>6</cpu>
-   <ammo>Banshee Rocket</ammo>
-   <delay>375</delay>
-   <amount>40</amount>
-  </specific>
- </outfit>
- <outfit name="Banshee Rocket">
-  <general>
-   <license>Medium Weapon License</license>
-   <mass>0.1</mass>
-   <price>70</price>
-   <description>The Banshee Rocket gets its name from the wail it makes when launched. It carries an EMP payload which is very helpful when attempting to disable ships.</description>
-   <gfx_store>banshee</gfx_store>
-  </general>
-  <specific type="ammo">
-   <gfx>banshee</gfx>
-   <sound>missile</sound>
-   <sound_hit>bansheeexp</sound_hit>
-   <spfx_shield>EmpS</spfx_shield>
-   <spfx_armour>EmpS</spfx_armour>
-   <duration blowup="shield">0.8</duration>
-   <thrust>0</thrust>
-   <speed>600</speed>
-   <damage type="emp" penetrate="15">15</damage>
-   <ai>dumb</ai>
-  </specific>
- </outfit>
- <outfit name="Mace Launcher">
+ <outfit name="Unicorp Mace Launcher">
   <general>
    <slot>weapon</slot>
    <license>Medium Weapon License</license>
    <mass>10</mass>
    <price>19000</price>
-   <description>A base for launching Dvaered Mace rockets.</description>
+   <description>This launcher fires unguided Mace rockets. Its low requirements and complete lack of energy consumption make it a useful assist weapon in fast paced dogfights.</description>
+   <gfx_store>macelauncher</gfx_store>
+  </general>
+  <specific type="launcher" secondary="1">
+   <cpu>3</cpu>
+   <ammo>Mace Rocket</ammo>
+   <delay>300</delay>
+   <amount>50</amount>
+  </specific>
+ </outfit>
+ <outfit name="TeraCom Mace Launcher">
+  <general>
+   <slot>weapon</slot>
+   <license>Medium Weapon License</license>
+   <mass>10</mass>
+   <price>30000</price>
+   <description>TeraCom's Mace launcher uses an advanced reload mechanism that allows the launcher to fire more rockets in less time.</description>
    <gfx_store>macelauncher</gfx_store>
   </general>
   <specific type="launcher" secondary="1">
    <cpu>5</cpu>
    <ammo>Mace Rocket</ammo>
-   <delay>2000</delay>
-   <amount>10</amount>
+   <delay>250</delay>
+   <amount>50</amount>
   </specific>
  </outfit>
  <outfit name="Mace Rocket">
   <general>
    <license>Medium Weapon License</license>
-   <mass>2</mass>
+   <mass>0.1</mass>
    <price>200</price>
-   <description>The Mace rocket is a very heavy, quickly-accelerating rocket designed for high speed collisions. It has little explosive payload, instead carrying a large amount of fuel to facilitate its acceleration. Most of the damage it does is derived from the impact and not the explosion.</description>
+   <description>The Mace class unguided rocket is a cheap, expendable weapon used to boost peak firepower in tight situations. It is far better at dealing damage to light targets than most fighter sized energy cannons, but comes with the disadvantage of running out of ammunition after only a short time of fire.</description>
    <gfx_store>mace</gfx_store>
   </general>
   <specific type="ammo">
@@ -1341,91 +1701,168 @@
    <sound_hit>lrgexp0</sound_hit>
    <spfx_shield>ExpM</spfx_shield>
    <spfx_armour>ExpM</spfx_armour>
-   <duration blowup="armour">3</duration>
-   <thrust>300</thrust>
-   <speed>1000</speed>
-   <damage type="kinetic" penetrate="40">44</damage>
+   <duration blowup="armour">1.3</duration>
+   <thrust>0</thrust>
+   <speed>1500</speed>
+   <damage>
+    <type>impact</type>
+    <penetrate>0</penetrate>
+    <physical>15</physical>
+    <disable>0</disable>
+   </damage>
    <ai>dumb</ai>
   </specific>
  </outfit>
- <outfit name="Caesar IV Launcher">
+ <outfit name="Unicorp Banshee Launcher">
+  <general>
+   <slot>weapon</slot>
+   <license>Medium Weapon License</license>
+   <mass>17</mass>
+   <price>25000</price>
+   <gfx_store>bansheelauncher</gfx_store>
+   <description>This launcher fires Banshee class heavy rockets. It is small enough to be mounted on medium hardpoints, and light enough on system load to be an interesting choice for bombers.</description>
+  </general>
+  <specific type="launcher" secondary="1">
+   <cpu>5</cpu>
+   <ammo>Banshee Rocket</ammo>
+   <delay>1000</delay>
+   <amount>20</amount>
+  </specific>
+ </outfit>
+ <outfit name="TeraCom Banshee Launcher">
+  <general>
+   <slot>weapon</slot>
+   <license>Medium Weapon License</license>
+   <mass>17</mass>
+   <price>45000</price>
+   <gfx_store>bansheelauncher</gfx_store>
+   <description>TeraCom has equipped its Banshee launcher model with high grade reload and tube cooling systems, giving a significant boost to rate of fire.</description>
+  </general>
+  <specific type="launcher" secondary="1">
+   <cpu>8</cpu>
+   <ammo>Banshee Rocket</ammo>
+   <delay>700</delay>
+   <amount>20</amount>
+  </specific>
+ </outfit>
+ <outfit name="Banshee Rocket">
+  <general>
+   <license>Medium Weapon License</license>
+   <mass>2</mass>
+   <price>500</price>
+   <description>The Banshee class heavy rocket is sometimes labeled the "poor man's torpedo". It has a relatively weak engine, but packs a powerful punch that can do respectable damage even to capital ships.</description>
+   <gfx_store>banshee</gfx_store>
+  </general>
+  <specific type="ammo">
+   <gfx>banshee</gfx>
+   <sound>missile</sound>
+   <sound_hit>bansheeexp</sound_hit>
+   <spfx_shield>EmpS</spfx_shield>
+   <spfx_armour>EmpS</spfx_armour>
+   <duration blowup="shield">7</duration>
+   <thrust>0</thrust>
+   <speed>200</speed>
+   <damage>
+    <type>impact</type>
+    <penetrate>70</penetrate>
+    <physical>110</physical>
+    <disable>3</disable>
+   </damage>
+   <ai>dumb</ai>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp Caesar IV Launcher">
   <general>
    <slot>weapon</slot>
    <size>medium</size>
    <license>Heavy Weapon License</license>
    <mass>30</mass>
    <price>120000</price>
-   <description>The launcher for the Caesar IV is quite remarkable. A new loading mechanism allows it to load and fire a missile once every 5 seconds, besting older mechanisms by a substantial margin.</description>
+   <description>the Caesar IV launcher does what it says on the box, which is launch Caesar IV torpedoes.</description>
    <gfx_store>caesarlauncher</gfx_store>
   </general>
   <specific type="launcher" secondary="1">
-   <cpu>16</cpu>
-   <ammo>Caesar IV Missile</ammo>
-   <delay>5000</delay>
+   <cpu>13</cpu>
+   <ammo>Caesar IV Torpedo</ammo>
+   <delay>10000</delay>
+   <lockon>20</lockon>
+   <arc>6</arc>
+   <ew_target>0.4</ew_target>
    <amount>6</amount>
   </specific>
  </outfit>
- <outfit name="Caesar IV Missile">
+ <outfit name="Caesar IV Torpedo">
   <general>
    <license>Heavy Weapon License</license>
    <mass>3</mass>
    <price>3000</price>
-   <description>The Caesar IV holds true to its predecessors, delivering an immense explosive payload at the expense of manoeuvrability. Its electronics are somewhat antiquated, making it a poor choice for attacking smaller ships. Its mass complicates trajectory calculations, causing the tracking module to take up to 2 seconds to initialize.</description>
+   <description>Caesar IV class torpedoes are among the most common torpedo weapons available. Though much slower than missiles and useless against mobile targets, they remain manoeuvrable enough to chase down light cruisers.</description>
    <gfx_store>caesar</gfx_store>
   </general>
   <specific type="ammo">
    <gfx>caesar</gfx>
    <sound>mace</sound>
    <sound_hit>lrgexp0</sound_hit>
-   <spfx_shield>ExpL</spfx_shield>
-   <spfx_armour>ExpL</spfx_armour>
-   <duration blowup="armour">12</duration>
-   <lockon>2</lockon>
-   <thrust>125</thrust>
+   <spfx_shield>ExpM2</spfx_shield>
+   <spfx_armour>ExpM2</spfx_armour>
+   <duration blowup="armour">33</duration>
+   <thrust>0</thrust>
    <turn>20</turn>
-   <speed>350</speed>
-   <damage type="kinetic" penetrate="90">140</damage>
-   <ai>seek</ai>
+   <speed>170</speed>
+   <damage>
+    <type>impact</type>
+    <penetrate>50</penetrate>
+    <physical>400</physical>
+    <disable>5</disable>
+   </damage>
+   <ai>smart</ai>
   </specific>
  </outfit>
- <outfit name="Imperator Launcher">
+ <outfit name="TeraCom Imperator Launcher">
   <general>
    <slot>weapon</slot>
    <size>medium</size>
    <license>Heavy Weapon License</license>
-   <mass>34</mass>
-   <price>160000</price>
-   <description>While the Imperator's launcher is an ugly affair (it doesn't fit any ship hull known to man), no-one will laugh at a captain fielding it, lest they be brutally removed from existence.</description>
+   <mass>40</mass>
+   <price>220000</price>
+   <description> The Imperator launcher is a very heavy torpedo launcher that is both bulky and demanding, but whose raw firepower is a must for any captain looking to blow up some capital ships.</description>
    <gfx_store>caesarlauncher</gfx_store>
   </general>
   <specific type="launcher" secondary="1">
    <cpu>20</cpu>
-   <ammo>Imperator Missile</ammo>
-   <delay>7000</delay>
+   <ammo>Imperator Torpedo</ammo>
+   <delay>11000</delay>
+   <lockon>24</lockon>
+   <arc>6</arc>
+   <ew_target>0.3</ew_target>
    <amount>5</amount>
   </specific>
  </outfit>
- <outfit name="Imperator Missile">
+ <outfit name="Imperator Torpedo">
   <general>
    <license>Heavy Weapon License</license>
    <mass>3</mass>
    <price>9000</price>
-   <description>The Imperator employs an unconventional, semi-nuclear warhead. Its destructive power is immense, but its complicated design makes it less cost-effective than the Caesar IV.</description>
+   <description>TeraCom decided not to develop a launcher for the Caesar IV, because it fell short of the company's performance requirements. Instead, the company released a completely new torpedo specification. At present, the Imperator class heavy torpedo provides devastating destructive power, though it will take a while for it to reach its target. Faster cruisers may be able to outrun it completely.</description>
    <gfx_store>caesar</gfx_store>
   </general>
   <specific type="ammo">
    <gfx>caesar</gfx>
    <sound>mace</sound>
    <sound_hit>lrgexp0</sound_hit>
-   <spfx_shield>ExpL</spfx_shield>
-   <spfx_armour>ExpL</spfx_armour>
-   <duration blowup="armour">12</duration>
-   <lockon>0.2</lockon>
-   <thrust>125</thrust>
-   <turn>20</turn>
-   <speed>350</speed>
-   <damage type="kinetic" penetrate="90">300</damage>
-   <ai>seek</ai>
+   <spfx_shield>ExpL2</spfx_shield>
+   <spfx_armour>ExpL2</spfx_armour>
+   <duration blowup="armour">60</duration>
+   <thrust>0</thrust>
+   <turn>22</turn>
+   <speed>75</speed>
+   <damage>
+    <type>impact</type>
+    <penetrate>90</penetrate>
+    <physical>800</physical>
+    <disable>10</disable>
+   </damage>
+   <ai>smart</ai>
   </specific>
  </outfit>
  <outfit name="EMP Grenade Launcher">
@@ -1459,8 +1896,121 @@
    <duration blowup="shield">1.3</duration>
    <thrust>0</thrust>
    <speed>400</speed>
-   <damage type="emp" penetrate="50">50</damage>
+   <damage>
+    <type>emp</type>
+    <penetrate>50</penetrate>
+    <physical>50</physical>
+    <disable>1</disable>
+   </damage>
    <ai>dumb</ai>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp Medusa Launcher">
+  <general>
+   <slot>weapon</slot>
+   <mass>8</mass>
+   <price>25000</price>
+   <description>This launcher fires Medusa class EMP cruise missiles. The magazine size is quite limited, but often a couple of well placed Medusas are enough to disable the target.</description>
+   <gfx_store>seekerlauncher</gfx_store>
+  </general>
+  <specific type="launcher" secondary="1">
+   <cpu>4</cpu>
+   <ammo>Medusa Missile</ammo>
+   <delay>4000</delay>
+   <amount>6</amount>
+   <lockon>9</lockon>
+   <arc>6</arc>
+   <ew_target>0.75</ew_target>
+  </specific>
+ </outfit>
+ <outfit name="TeraCom Medusa Launcher">
+  <general>
+   <slot>weapon</slot>
+   <mass>9</mass>
+   <price>40000</price>
+   <description>TeraCom have built a highly efficient Medusa launcher, capable of locking on and firing faster than the standard specification, and holding a greater amount in the magazine as well.</description>
+   <gfx_store>seekerlauncher</gfx_store>
+  </general>
+  <specific type="launcher" secondary="1">
+   <cpu>6</cpu>
+   <ammo>Medusa Missile</ammo>
+   <delay>3500</delay>
+   <amount>8</amount>
+   <lockon>7</lockon>
+   <arc>8</arc>
+   <ew_target>0.75</ew_target>
+  </specific>
+ </outfit>
+ <outfit name="Medusa Missile">
+  <general>
+   <mass>1</mass>
+   <price>1000</price>
+   <description>The Medusa class EMP cruise missile is a nonlethal weapon designed to knock out a ship's internal systems, rendering it harmless and ready for boarding. The warhead does only limited damage, so even lightly armoured targets can effectively be disabled with this weapon. However, the Medusa is not the most agile missile on the market.</description>
+   <gfx_store>seeker</gfx_store>
+  </general>
+  <specific type="ammo">
+   <gfx>seeker</gfx>
+   <sound>seeker</sound>
+   <sound_hit>medexp1</sound_hit>
+   <spfx_shield>EmpM</spfx_shield>
+   <spfx_armour>EmpM</spfx_armour>
+   <duration blowup="armour">5</duration>
+   <thrust>0</thrust>
+   <turn>50</turn>
+   <speed>500</speed>
+   <damage>
+    <type>emp</type>
+    <penetrate>15</penetrate>
+    <physical>20</physical>
+    <disable>100</disable>
+   </damage>
+   <ai>smart</ai>
+  </specific>
+ </outfit>
+ <outfit name="Enygma Systems Spearhead Launcher">
+  <general>
+   <slot>weapon</slot>
+   <license>Medium Weapon License</license>
+   <mass>15</mass>
+   <price>70000</price>
+   <description>This launcher fires Spearhead class shieldbreaker missiles. Its basic design is largely similar to that of most conventional missile launchers, save for the unique mechanism that charges and primes the missile warheads.</description>
+   <gfx_store>headhunterlauncher</gfx_store>
+  </general>
+  <specific type="launcher" secondary="1">
+   <cpu>7</cpu>
+   <ammo>Spearhead Missile</ammo>
+   <delay>4000</delay>
+   <amount>8</amount>
+   <lockon>12</lockon>
+   <arc>6</arc>
+   <ew_target>0.70</ew_target>
+  </specific>
+ </outfit>
+ <outfit name="Spearhead Missile">
+  <general>
+   <license>Medium Weapon License</license>
+   <mass>1</mass>
+   <price>1500</price>
+   <description>The Spearhead class shieldbreaker missile is one of Enygma Systems' more specialised pieces of hardware. Its sole function is to do massive damage to shielding. It uses a special energy discharge warhead that is quite effective at disrupting shields, but has little effect on physical objects. The Spearhead's limited agility make it primarily suited to fighting corvette class ships or heavier.</description>
+   <gfx_store>headhunter</gfx_store>
+  </general>
+  <specific type="ammo">
+   <gfx>headhunter</gfx>
+   <sound>missile</sound>
+   <sound_hit>medexp0</sound_hit>
+   <spfx_shield>ExpM</spfx_shield>
+   <spfx_armour>ExpM</spfx_armour>
+   <duration blowup="armour">7</duration>
+   <thrust>0</thrust>
+   <turn>35</turn>
+   <speed>600</speed>
+   <damage>
+    <type>shieldbreaker</type>
+    <penetrate>20</penetrate>
+    <physical>300</physical>
+    <disable>10</disable>
+   </damage>
+   <ai>smart</ai>
   </specific>
  </outfit>
 
@@ -1518,7 +2068,7 @@
    <gfx_store>solar</gfx_store>
   </general>
   <specific type="modification">
-   <energy_regen>60</energy_regen>
+   <energy_regen>1.0</energy_regen>
   </specific>
  </outfit>
  <outfit name="Reactor Class I">
@@ -1533,7 +2083,7 @@
   <specific type="modification">
    <cpu>-5</cpu>
    <energy>20</energy>
-   <energy_regen>280</energy_regen>
+   <energy_regen>4.7</energy_regen>
   </specific>
  </outfit>
  <outfit name="Reactor Class II">
@@ -1548,7 +2098,7 @@
   <specific type="modification">
    <cpu>-10</cpu>
    <energy>60</energy>
-   <energy_regen>630</energy_regen>
+   <energy_regen>10.5</energy_regen>
   </specific>
  </outfit>
  <outfit name="Reactor Class III">
@@ -1563,7 +2113,7 @@
   <specific type="modification">
    <cpu>-20</cpu>
    <energy>180</energy>
-   <energy_regen>1420</energy_regen>
+   <energy_regen>23.7</energy_regen>
   </specific>
  </outfit>
 <!-- Shield and Armour-Related Outfits -->
@@ -1631,8 +2181,8 @@
   <specific type="modification">
    <cpu>-5</cpu>
    <shield>15</shield>
-   <shield_regen>30</shield_regen>
-   <energy_regen>-50</energy_regen>
+   <shield_regen>0.5</shield_regen>
+   <energy_regen>-0.85</energy_regen>
   </specific>
  </outfit>
  <outfit name="Plasteel Plating">
@@ -1674,7 +2224,7 @@
   </general>
   <specific type="modification">
    <armour_rel>20</armour_rel>
-   <armour_regen>60</armour_regen>
+   <armour_regen>1.0</armour_regen>
    <mass_rel>20</mass_rel>
   </specific>
  </outfit>
@@ -1688,9 +2238,9 @@
    <description>This low maintenance droid crew will scour your ship to repair any damages caused by space hazards. They are very small and able to work both on the interior or exterior of the ship. Power is drawn from the ship to feed the robots, although the load is generally very low compared to the benefits of having a robotic repair crew.</description>
   </general>
   <specific type="modification">
-   <armour_regen>100</armour_regen>
+   <armour_regen>1.7</armour_regen>
    <energy>-5</energy>
-   <energy_regen>-40</energy_regen>
+   <energy_regen>-0.65</energy_regen>
   </specific>
  </outfit>
 <!-- Movement-Related Outfits -->
@@ -1707,7 +2257,7 @@
    <cpu>0</cpu>
    <thrust>3</thrust>
    <thrust_rel>10</thrust_rel>
-   <energy_regen>-50</energy_regen>
+   <energy_regen>-0.85</energy_regen>
   </specific>
  </outfit>
  <outfit name="Improved Stabilizer">
@@ -1724,7 +2274,7 @@
    <speed>3</speed>
    <speed_rel>15</speed_rel>
    <turn_rel>3</turn_rel>
-   <energy_regen>-10</energy_regen>
+   <energy_regen>-0.15</energy_regen>
   </specific>
  </outfit>
  <outfit name="Steering Thrusters">
@@ -1740,7 +2290,7 @@
    <cpu>0</cpu>
    <turn>5</turn>
    <turn_rel>10</turn_rel>
-   <energy_regen>-10</energy_regen>
+   <energy_regen>-0.15</energy_regen>
   </specific>
  </outfit>
  <outfit name="Generic Afterburner">
@@ -1790,7 +2340,7 @@
   </general>
   <specific type="modification">
    <cpu>10</cpu>
-   <energy_regen>-200</energy_regen>
+   <energy_regen>-3.35</energy_regen>
   </specific>
  </outfit>
  <outfit name="Auxiliary Processing Unit II">
@@ -1804,7 +2354,7 @@
   </general>
   <specific type="modification">
    <cpu>20</cpu>
-   <energy_regen>-375</energy_regen>
+   <energy_regen>-6.25</energy_regen>
   </specific>
  </outfit>
   <outfit name="Auxiliary Processing Unit III">
@@ -1818,7 +2368,7 @@
   </general>
   <specific type="modification">
    <cpu>40</cpu>
-   <energy_regen>-725</energy_regen>
+   <energy_regen>-12</energy_regen>
   </specific>
  </outfit>
 <!-- Miscellaneous Outfits (Expansion outfits, countermeasures, map.) -->
@@ -1884,8 +2434,8 @@
    <gfx_store>accuracy_turret</gfx_store>
   </general>
   <specific type="modification">
-   <heat_turret>-25</heat_turret>
-   <firerate_turret>-10</firerate_turret>
+   <tur_heat>-25</tur_heat>
+   <tur_firerate>-10</tur_firerate>
   </specific>
  </outfit>
  <outfit name="Forward Shock Absorbers">
@@ -1898,7 +2448,7 @@
    <gfx_store>accuracy_forward</gfx_store>
   </general>
   <specific type="modification">
-   <heat_forward>-15</heat_forward>
+   <fwd_heat>-15</fwd_heat>
   </specific>
  </outfit>
  <outfit name="Power Regulation Override">
@@ -1911,9 +2461,9 @@
    <gfx_store>damage_forward</gfx_store>
   </general>
   <specific type="modification">
-   <damage_forward>15</damage_forward>
-   <heat_forward>5</heat_forward>
-   <energy_forward>5</energy_forward>
+   <fwd_damage>15</fwd_damage>
+   <fwd_heat>5</fwd_heat>
+   <fwd_energy>5</fwd_energy>
   </specific>
  </outfit>
  <outfit name="Improved Power Regulator">
@@ -1926,8 +2476,8 @@
    <description>Improved power regulation allows your turrets to waste less power when firing, though feeding turrets the bare minimum wattage results in a slightly decreased rate of fire.</description>
   </general>
   <specific type="modification">
-   <firerate_turret>-5</firerate_turret>
-   <energy_turret>-10</energy_turret>
+   <tur_firerate>-5</tur_firerate>
+   <tur_energy>-10</tur_energy>
   </specific>
  </outfit>
  <outfit name="Improved Refrigeration Cycle">
@@ -1940,9 +2490,9 @@
    <gfx_store>firerate_turret</gfx_store>
   </general>
   <specific type="modification">
-   <firerate_turret>15</firerate_turret>
-   <heat_turret>5</heat_turret>
-   <damage_turret>-5</damage_turret>
+   <tur_firerate>15</tur_firerate>
+   <tur_heat>5</tur_heat>
+   <tur_damage>-5</tur_damage>
   </specific>
  </outfit>
  <outfit name="Star Map">
@@ -1967,19 +2517,47 @@
    <radius>999</radius>
   </specific>
  </outfit>
- <outfit name="Civilian Jammer">
+ <outfit name="Unicorp Scrambler">
   <general>
    <slot>utility</slot>
    <mass>2</mass>
    <price>40000</price>
-   <description>This jammer allows you to interfere with the targeting systems of missiles headed toward you, yielding an unpredictable change in trajectory likely to miss your ship. Though it is widely used, many have derided the civilian jammer for its unreliable nature.</description>
+   <description>Scramblers distort a ship's electromagnetic signature, making it harder for various sensors to pick it up. In effect, a scrambler reduces the distance at which the ship can be detected and scanned, and makes it harder for missiles to lock on. The effect is quite limited however, and multiple scramblers may be required for the desired effect. On the upside, scramblers put a minimal strain on the ship's resources, and are always active.</description>
+   <gfx_store>jammer0</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>-1</cpu>
+   <energy>-5</energy>
+   <ew_hide>7</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Milspec Scrambler">
+  <general>
+   <slot>utility</slot>
+   <mass>3</mass>
+   <price>250000</price>
+   <description>Milspec knows what's important out there. It's that you don't get shot! And the best way not to get shot is not to get targeted in the first place. The Milspec RX 500-C scrambler will put the wool over your enemies' sensors, at a minimal cost to you or your ship's reactor! Fly safe, fly Milspec.</description>
+   <gfx_store>jammer1</gfx_store>
+  </general>
+  <specific type="modification">
+   <cpu>-3</cpu>
+   <energy>-10</energy>
+   <ew_hide>11</ew_hide>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp Jammer">
+  <general>
+   <slot>utility</slot>
+   <mass>2</mass>
+   <price>40000</price>
+   <description>Unlike general purpose scrambler systems, jammers are heavy-duty pieces of hardware used for serious electronic warfare in space. A jammer works by actively interfering with nearby ships' sensor systems, rather than modulating the signature of the ship it's installed in. This is much more effective, but it also uses a lot more power. For this reason, jammer systems are inactive until needed, and must be activated manually.</description>
    <gfx_store>jammer0</gfx_store>
   </general>
   <specific type="jammer">
-   <cpu>4</cpu>
-   <range>400</range>
-   <chance>20</chance>
-   <energy>15</energy>
+   <cpu>-4</cpu>
+   <range>1</range>
+   <power>1</power>
+   <energy>-15</energy>
   </specific>
  </outfit>
  <outfit name="Milspec Jammer">
@@ -1987,14 +2565,14 @@
    <slot>utility</slot>
    <mass>3</mass>
    <price>250000</price>
-   <description>This jammer follows strict military specifications, allowing it to deflect a greater amount of missiles at longer range than the civilian counterpart. With increased functionality, it also consumes more power than the civilian variant.</description>
+   <description>Does your work require you to venture into dangerous territory? Are you facing opposition your shields can't handle? The Milspec U-9 "Magus" jammer is what you need! Throw the bloodhounds off your scent with a press of a button. While your enemies are still trying to make sense out of the garble they're getting on their sensors, you will already have made your escape! Fly safe, fly Milspec.</description>
    <gfx_store>jammer1</gfx_store>
   </general>
   <specific type="jammer">
-   <cpu>8</cpu>
-   <range>600</range>
-   <chance>40</chance>
-   <energy>30</energy>
+   <cpu>-8</cpu>
+   <range>1</range>
+   <power>1</power>
+   <energy>-30</energy>
   </specific>
  </outfit>
  <outfit name="GUI - Brushed">
@@ -2160,7 +2738,12 @@
    <heatup>1500</heatup>
    <track>3</track>
    <swivel>3</swivel>
-   <damage type="energy" penetrate="0">0.1</damage>
+   <damage>
+    <type>normal</type>
+    <penetrate>0</penetrate>
+    <physical>0.1</physical>
+    <disable>0</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Base Ripper MK2">
@@ -2186,7 +2769,12 @@
    <energy>1</energy>
    <heatup>10000</heatup>
    <track>2</track>
-   <damage type="energy" penetrate="50">22.5</damage>
+   <damage>
+    <type>normal</type>
+    <penetrate>50</penetrate>
+    <physical>22.5</physical>
+    <disable>1</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Cheater's Ragnarok Beam">
@@ -2204,7 +2792,12 @@
    <range>400</range>
    <turn>35</turn>
    <energy>20</energy>
-   <damage type="energy" penetrate="100">150</damage>
+   <damage>
+    <type>normal</type>
+    <penetrate>100</penetrate>
+    <physical>150</physical>
+    <disable>1</disable>
+   </damage>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
    <gfx>beam_ragnarok</gfx>
@@ -2234,7 +2827,25 @@
    <gfx_end>laser1S</gfx_end>
    <energy>1</energy>
    <heatup>60</heatup>
-   <damage type="energy" penetrate="30">15</damage>
+   <damage>
+    <type>normal</type>
+    <penetrate>30</penetrate>
+    <physical>15</physical>
+    <disable>1</disable>
+   </damage>
+  </specific>
+ </outfit>
+ <outfit name="Shield Nullifier">
+  <general>
+   <typename>Shield Power Modifier</typename>
+   <slot>structure</slot>
+   <mass>1</mass>
+   <price>1</price>
+   <description>This outfit removes all shields from the ship. For tutorial purposes.</description>
+   <gfx_store>capacitor8</gfx_store>
+  </general>
+  <specific type="modification">
+   <shield_mod>-200</shield_mod>
   </specific>
  </outfit>
 </Outfits>

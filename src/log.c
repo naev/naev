@@ -5,7 +5,7 @@
 /**
  * @file log.c
  *
- * @brief Home of loprintf.
+ * @brief Home of logprintf.
  */
 
 #include "log.h"

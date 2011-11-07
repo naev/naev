@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% import '_macro.html' as macros %}
+    {% block head %}
+        <title>Naev Ship Database</title>
+    {% endblock head %}
+    {% block body %}
+        {% for classes in shipList|dictsort %}
+        {%- for class, ships in classes|batch(2) -%}
+        <div class="class">
+        <h2>{{ class }}</h2>
+        {%- for ship in ships -%}
+        {% if loop.index0 is even %}
+        <div class="row">
+        <div class="left">
+        {% else %}
+        <div class="right">
+        {% endif %}
+        <h3><a href="{{ship.name}}.html">{{ ship.name }}</a></h3>
+        <div class="top">
+        <div class="shipimage">
+        {{macros.shipImage(ship.GFX, ship.name)}}
+        </div>
+        <div class="info">
+            <ul>
+                <li>Price:</li>
+                <li>Speed:</li>
+                <li>Thrust:</li>
+                <li>Turn:</li>
+                <li>Mass:</li>
+                <li>Shield:</li>
+                <li>Armour:</li>
+                <li>Energy:</li>
+            </ul>
+            <ul class="infor">
+                <li>{{ ship.price }}</li>
+                <li>{{ ship.movement.speed }} m/s</li>
+                <li>{{ ship.movement.thrust }} kN/t</li>
+                <li>{{ ship.movement.turn }} <sup style="font-size: 0.6em">o</sup>/s</li>
+                <li>{{ship.characteristics.mass}} t</li>
+                <li>{{ ship.health.shield }} MJ</li>
+                <li>{{ ship.health.armour }} MJ</li>
+                <li>{{ ship.health.energy }} MJ</li>
+            </ul>
+        </div>
+        <div class="slots">
+            <strong>Slots</strong>
+            <ul>
+                {%- for slottype in ship.slots|dictsort|reverse -%}
+                <li>{{ slottype[0]|title }} ({{slottype[1]|count}})</li>
+                {%- for slot in slottype[1] -%}
+                <li class="{{slot|title}}" />
+                {%- endfor -%}
+                {%- endfor -%}
+            </ul>
+        </div><!-- /Slots -->
+        </div><!-- /Top -->
+        {%- if ship.stats -%}
+        <div class="stats">
+        <strong>Stats</strong>
+        <ul>
+        {%- for stat in ship.stats|dictsort -%}
+            <li><abbr title="{{stat[0]|getStatsLabelsLabel}}">{{stat[0]|getStatsLabel}}</abbr>: {{stat[1]}}%</li>
+        {%- endfor -%}
+        </ul>
+        </div><!-- /Stats -->
+        {%- endif -%}
+        </div><!-- /Cell -->
+        {% if loop.last %}
+        </div></div><!-- /Row and class -->
+        {% elif loop.index0 is odd%}
+        </div><!-- /Row -->
+        {% endif %}
+        {%- endfor -%}
+        {%- endfor -%}
+        {% endfor %}
+    {% endblock body %}

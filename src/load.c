@@ -41,6 +41,9 @@
 static nsave_t *load_saves = NULL; /**< Array of save.s */
 
 
+extern int save_loaded; /**< From save.c */
+
+
 /*
  * Prototypes.
  */
@@ -112,8 +115,6 @@ static int load_load( nsave_t *save, const char *path )
       }
 
       if (xml_isNode(parent,"player")) {
-         node = parent->xmlChildrenNode;
-
          /* Get name. */
          xmlr_attr(parent,"name",save->name);
          /* Parse rest. */
@@ -288,13 +289,14 @@ void load_loadGameMenu (void)
       names[0] = strdup("None");
       n     = 1;
    }
-   window_addList( wid, 20, -50,
-         LOAD_WIDTH-200-60, LOAD_HEIGHT-110,
-         "lstSaves", names, n, 0, load_menu_update );
 
    /* Player text. */
    window_addText( wid, -20, -40, 200, LOAD_HEIGHT-40-20-2*(BUTTON_HEIGHT+20),
          0, "txtPilot", NULL, &cBlack, NULL );
+
+   window_addList( wid, 20, -50,
+         LOAD_WIDTH-200-60, LOAD_HEIGHT-110,
+         "lstSaves", names, n, 0, load_menu_update );
 
    /* Buttons */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
@@ -303,9 +305,6 @@ void load_loadGameMenu (void)
          "btnLoad", "Load", load_menu_load );
    window_addButton( wid, 20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnDelete", "Del", load_menu_delete );
-
-   /* Update. */
-   load_menu_update( wid, NULL );
 }
 /**
  * @brief Closes the load game menu.
@@ -505,12 +504,18 @@ int load_game( const char* file )
    land( pnt, 1 );
 
    /* Load the GUI. */
-   gui_load( gui_pick() );
+   if (gui_load( gui_pick() )) {
+      if (player.p->ship->gui != NULL)
+         gui_load( player.p->ship->gui );
+   }
 
    /* Sanitize the GUI. */
    gui_setCargo();
 
    xmlFreeDoc(doc);
+
+   /* Set loaded. */
+   save_loaded = 1;
 
    return 0;
 

@@ -12,7 +12,7 @@
 
 
 /**
- * @brief reperesents a colour via its RGBA values.
+ * @brief represents a colour via its RGBA values.
  */
 typedef struct glColour_ {
    GLfloat r; /**< Red value of the colour (0 to 1). */
@@ -72,6 +72,8 @@ extern glColour cNeutral;
 extern glColour cMapNeutral;
 extern glColour cFriend;
 extern glColour cHostile;
+extern glColour cRestricted;
+extern glColour cDRestricted;
 /* radar */
 extern glColour cRadar_player;
 extern glColour cRadar_tPilot;
@@ -98,7 +100,7 @@ glColour* col_fromName( const char* name );
 
 
 /*
- * Colourspace conversion routines.
+ * Colour space conversion routines.
  */
 void col_hsv2rgb( double *r, double *g, double *b, double h, double s, double v );
 void col_rgb2hsv( double *h, double *s, double *v, double r, double g, double b );

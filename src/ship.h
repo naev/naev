@@ -137,7 +137,8 @@ typedef struct Ship_ {
 
    /* Statistics. */
    char *desc_stats; /**< Ship statistics information. */
-   ShipStats stats; /**< Ship statistics properties. */
+   ShipStatList *stats; /**< Ship statistics properties. */
+   ShipStats stats_array; /**< Laid out stats for referencing purposes. */
 } Ship;
 
 
@@ -146,12 +147,6 @@ typedef struct Ship_ {
  */
 int ships_load (void);
 void ships_free (void);
-
-/*
- * stats
- */
-int ship_statsParseSingle( ShipStats *s, xmlNodePtr node );
-int ship_statsDesc( ShipStats *s, char *buf, int len, int newline, int pilot );
 
 /*
  * get
@@ -164,12 +159,6 @@ char* ship_class( Ship* s );
 ShipClass ship_classFromString( char* str );
 credits_t ship_basePrice( Ship* s );
 glTexture* ship_loadCommGFX( Ship* s );
-
-
-/*
- * toolkit
- */
-void ship_view( unsigned int unused, char* shipname );
 
 
 /*

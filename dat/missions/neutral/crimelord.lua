@@ -1,9 +1,8 @@
 --[[      Test for a chase mission
            In this mission, you will be chased by a pirate fleet across several systems.
-           It is a testmission and has no text.
            
            MISSION: Chase Test
-           DESCRIPTION: Pirates chase you to Gamma Polaris.
+           DESCRIPTION: Pirates chase you to Ogat.
 ]]--
 
 include "scripts/fleethelper.lua"

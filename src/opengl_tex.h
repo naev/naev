@@ -40,7 +40,7 @@
 #define OPENGL_TEX_MIPMAPS    (1<<1) /**< Creates mipmaps. */
 
 /**
- * @brief Abstraction for rendering spriteshets.
+ * @brief Abstraction for rendering sprite sheets.
  *
  * The basic unit all the graphic rendering works with.
  */

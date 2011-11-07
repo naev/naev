@@ -1,4 +1,9 @@
 <Events>
+ <event name="reputation">
+  <lua>reputation</lua>
+  <trigger>load</trigger>
+  <chance>100</chance>
+ </event>
  <event name="start_event">
   <lua>start</lua>
   <trigger>none</trigger>
@@ -17,6 +22,14 @@
  </event>
  <event name="Tutorial: Basic Combat">
   <lua>tutorial/tutorial-combat1</lua>
+  <trigger>none</trigger>
+ </event>
+ <event name="Tutorial: Missile Combat">
+  <lua>tutorial/tutorial-combat2</lua>
+  <trigger>none</trigger>
+ </event>
+ <event name="Tutorial: Disabling">
+  <lua>tutorial/tutorial-disabling</lua>
   <trigger>none</trigger>
  </event>
  <event name="Tutorial: The Planetary Screen">
@@ -92,7 +105,7 @@
   <lua>flf/derelict</lua>
   <trigger>enter</trigger>
   <chance>40</chance>
-  <cond>player.getFaction("Dvaered") &gt; 10 and player.getRating() &gt; 100 and system.cur() == system.get("Surano")</cond>
+  <cond>faction.get("Dvaered"):playerStanding() &gt; 10 and player.getRating() &gt; 100 and system.cur() == system.get("Surano")</cond>
   <flags>
    <unique />
   </flags>
@@ -127,5 +140,11 @@
   <flags>
    <unique />
   </flags>
+ </event>
+ <event name="Kidnapped">
+  <lua>neutral/kidnapped</lua>
+  <trigger>enter</trigger>
+  <chance>15</chance>
+  <cond>player.misnDone("Kidnapped") == false and var.peek("traffic_00_active") == nil and system.cur():name() == "Arcturus"</cond>
  </event>
 </Events>

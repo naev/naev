@@ -8,6 +8,8 @@
 
 --]]
 
+include "scripts/numstring.lua"
+
 -- Localization, choosing a language if naev is translated for non-english-speaking locales.
 lang = naev.lang()
 if lang == "es" then
@@ -17,14 +19,14 @@ else -- Default to English
 
    -- Mission details
    misn_title  = "Pirate Bounty near %s"
-   misn_reward = "%d credits"
+   misn_reward = "%s credits"
    misn_desc   = "There is a bounty on the head of the pirate known as %s who was last seen near the %s system."
 
    -- Text
    title    = {}
    text     = {}
    title[1] = "Spaceport Bar"
-   text[1]  = [[It seems like the bounty is on the head of a pirate terrorizing the area known as %s for %d credits. It seems like he was last seen in the %s system. Quite a few other mercenaries seem interested and it looks like you'll have to outrace them.
+   text[1]  = [[It seems like the bounty is on the head of a pirate terrorizing the area known as %s for %s credits. It seems like he was last seen in the %s system. Quite a few other mercenaries seem interested and it looks like you'll have to outrace them.
    
 Will you take up the bounty?]]
    text[2] = [[You roll up your sleeve and grab one of the pamphlets given out by the Empire official.]]
@@ -67,14 +69,14 @@ Mission entry point.
 function accept ()
    -- Mission details:
    if not tk.yesno( title[1], string.format( text[1],
-         pir_name, credits, near_sys:name() ) ) then
+         pir_name, numstring(credits), near_sys:name() ) ) then
       misn.finish()
    end
    misn.accept()
 
    -- Set mission details
    misn.setTitle( string.format( misn_title, near_sys:name()) )
-   misn.setReward( string.format( misn_reward, credits) )
+   misn.setReward( string.format( misn_reward, numstring(credits)) )
    misn.setDesc( string.format( misn_desc, pir_name, near_sys:name() ) )
    misn.markerAdd( near_sys, "low" )
 
@@ -113,7 +115,8 @@ function give_rewards ()
    player.pay(credits)
 
    -- Give factions
-   player.modFaction( "Empire", 5 )
+   faction.modPlayerSingle( "Empire", 5 )
+   faction.modPlayerSingle( "Pirate", -5 )
    
    -- Finish mission
    misn.finish(true)

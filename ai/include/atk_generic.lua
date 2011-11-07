@@ -44,6 +44,10 @@ end
 function atk_generic_attacked( attacker )
    local target = ai.target()
 
+   if mem.recharge then
+      mem.recharge = false
+   end
+
    -- If no target automatically choose it
    if not ai.exists(target) then
       ai.pushtask("attack", attacker)
@@ -147,5 +151,3 @@ function _atk_g_melee( target, dist )
    end
    ai.shoot(true)
 end
-
-

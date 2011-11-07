@@ -5,7 +5,7 @@
 --
 -- outfits = {
 --    "Laser Cannon",
---    { "Seeker Launcher", { "Seeker Missile", 10 } }
+--    { "Unicorp Fury Launcher", { "Fury Missile", 10 } }
 -- }
 -- 
 --    @param p Pilot to add outfits to.

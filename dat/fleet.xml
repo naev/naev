@@ -290,6 +290,55 @@
    <pilot name="Sirius Dogma" ship="Sirius Dogma"></pilot>
   </pilots>
  </fleet>
+  <fleet name="Soromid Brigand">
+  <ai>soromid</ai>
+  <faction>Soromid</faction>
+  <pilots>
+   <pilot name="Soromid Brigand" ship="Soromid Brigand"></pilot>
+  </pilots>
+ </fleet>
+  <fleet name="Soromid Reaver">
+  <ai>soromid</ai>
+  <faction>Soromid</faction>
+  <pilots>
+   <pilot name="Soromid Reaver" ship="Soromid Reaver"></pilot>
+  </pilots>
+ </fleet>
+  <fleet name="Soromid Marauder">
+  <ai>soromid</ai>
+  <faction>Soromid</faction>
+  <pilots>
+   <pilot name="Soromid Marauder" ship="Soromid Marauder"></pilot>
+  </pilots>
+ </fleet>
+  <fleet name="Soromid Odium">
+  <ai>soromid</ai>
+  <faction>Soromid</faction>
+  <pilots>
+   <pilot name="Soromid Odium" ship="Soromid Odium"></pilot>
+  </pilots>
+ </fleet>
+  <fleet name="Soromid Nyx">
+  <ai>soromid</ai>
+  <faction>Soromid</faction>
+  <pilots>
+   <pilot name="Soromid Nyx" ship="Soromid Nyx"></pilot>
+  </pilots>
+ </fleet>
+  <fleet name="Soromid Ira">
+  <ai>soromid</ai>
+  <faction>Soromid</faction>
+  <pilots>
+   <pilot name="Soromid Ira" ship="Soromid Ira"></pilot>
+  </pilots>
+ </fleet>
+  <fleet name="Soromid Arx">
+  <ai>soromid</ai>
+  <faction>Soromid</faction>
+  <pilots>
+   <pilot name="Soromid Arx" ship="Soromid Arx"></pilot>
+  </pilots>
+ </fleet>
  <fleet name="Dvaered Vendetta">
   <ai>dvaered</ai>
   <faction>Dvaered</faction>
@@ -473,7 +522,7 @@
  </fleet>
  <fleet name="Starfire">
   <ai>collective</ai>
-  <faction>Collective</faction>
+  <faction>Empire</faction>
   <pilots>
    <pilot name="Starfire" ship="Goddard"></pilot>
   </pilots>

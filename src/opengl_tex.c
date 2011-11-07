@@ -477,9 +477,9 @@ static int gl_texAdd( glTexture *tex )
    if (texture_list == NULL) /* special condition - creating new list */
       texture_list = new;
    else {
-      for (cur=texture_list; cur!=NULL; cur=cur->next) {
+      for (cur=texture_list; cur!=NULL; cur=cur->next)
          last = cur;
-      }
+
       last->next = new;
    }
 

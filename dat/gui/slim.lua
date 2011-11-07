@@ -23,9 +23,11 @@ function create()
    col_txt_wrn = colour.new( 127/255,  31/255,  31/255 )
    col_txt_enm = colour.new( 222/255,  28/255,  28/255 )
    col_txt_all = colour.new(  19/255, 152/255,  41/255 )
+   --col_txt_res = colour.new(     1.0,     0.6,     0.0 )
    col_txt_una = colour.new(  66/255,  72/255,  84/255 )
    col_shield = colour.new( 40/255,  51/255,  88/255 )
    col_armour = colour.new( 72/255,  73/255,  60/255 )
+   col_stress = colour.new( 42/255,  43/255,  120/255 )
    col_energy = colour.new( 41/255,  92/255,  47/255 )
    col_speed = colour.new( 77/255,  80/255,  21/255 )
    col_speed2 = colour.new(169/255,177/255,  46/255 )
@@ -213,6 +215,7 @@ function create()
    update_ship()
    update_system()
    update_nav()
+   update_faction()
    update_cargo()
 end
 
@@ -227,19 +230,17 @@ function update_target()
       ta_cargo = ptarget:cargoList()
 
       ptarget_gfx_aspect = ptarget_gfx_w / ptarget_gfx_h
-
-      if ptarget_gfx_aspect >= 1 and ptarget_gfx_w > 62 then
-         ptarget_gfx_draw_w = 62
-         ptarget_gfx_draw_h = 62 / ptarget_gfx_w * ptarget_gfx_h
-      elseif ptarget_gfx_h > 62 then
-         ptarget_gfx_draw_h = 62
-         ptarget_gfx_draw_w = 62 / ptarget_gfx_h * ptarget_gfx_w
+      if math.max( ptarget_gfx_w, ptarget_gfx_h ) > 62 then
+         ptarget_gfx_draw_w = math.min( 62, 62 * ptarget_gfx_aspect )
+         ptarget_gfx_draw_h = math.min( 62, 62 / ptarget_gfx_aspect )
       end
+
       ptarget_faction_gfx = ptargetfact:logoTiny()
    end
 end
 
 function update_nav()
+   planet = {}
    nav_pnt, nav_hyp = pp:nav()
    autonav_hyp = player.autonavDest()
    if nav_pnt then
@@ -261,17 +262,21 @@ function update_nav()
       ta_pntfact = nav_pnt:faction()
 
       ta_pnt_gfx_aspect = ta_pnt_gfx_w / ta_pnt_gfx_h
-      if ta_pnt_gfx_aspect >= 1 and ta_pnt_gfx_w > 140 then
-         ta_pnt_gfx_draw_w = 140
-         ta_pnt_gfx_draw_h = 140 / ta_pnt_gfx_aspect
-      elseif ta_pnt_gfx_h > 140 then
-         ta_pnt_gfx_draw_h = 140
-         ta_pnt_gfx_draw_w = 140 / ta_pnt_gfx_aspect
+      if math.max( ta_pnt_gfx_w, ta_pnt_gfx_h ) > 140 then
+         ta_pnt_gfx_draw_w = math.min( 140, 140 * ta_pnt_gfx_aspect )
+         ta_pnt_gfx_draw_h = math.min( 140, 140 / ta_pnt_gfx_aspect )
       end
+
       ta_pnt_faction_gfx = nil
       if ta_pntfact then
          ta_pnt_faction_gfx = ta_pntfact:logoTiny()
       end
+      planet = { -- Table for convenience.
+         name = nav_pnt:name(),
+         pos = nav_pnt:pos(),
+         class = nav_pnt:class(),
+         col = nav_pnt:colour()
+      }
    else
       gui.osdInit( 23, screen_h - 63, 150, 500 )
       gui.fpsPos( 15, screen_h - 28 - 15 - deffont_h )
@@ -287,6 +292,12 @@ function update_nav()
       end
    else
       navstring = "none"
+   end
+end
+
+function update_faction()
+   if nav_pnt then -- Colour the planet name based on friendliness.
+      planet.col = nav_pnt:colour()
    end
 end
 
@@ -361,8 +372,55 @@ function render_bar( name, value, txt, txtcol, size, col, bgc )
    end
 end
 
+function render_armourBar( name, value, stress_value, txt, txtcol, size, col, bgc )
+   if size then
+      offsets = { 22, 5, 9, 3 }
+      l_bg_bar = bg_bar_sm
+      l_sheen = sheen_sm
+      postfix = "_sm"
+   else
+      offsets = { 30, 7, 15, 6 }
+      l_bg_bar = bg_bar
+      l_sheen = sheen
+      postfix = nil
+   end
+   local vars = { "icon", "bg", "x", "y", "col" }
+   for k,var in ipairs(vars) do
+      if postfix and var ~= "col" then
+         _G["l_" .. var] = _G[var .. "_" .. name .. postfix]
+      else
+         _G["l_" .. var] = _G[var .. "_" .. name]
+      end
+   end
+   if col then
+      l_col = col
+   end
+   if l_bg then
+      l_bar_w, l_bar_h = l_bg:dim()
+      gfx.renderTex( l_bg, l_x + offsets[1], l_y + 2)
+   end
+   if not value then value = 100 end
+   if not stress_value then stress_value = 100 end
+   if bgc then gfx.renderRect( l_x + offsets[1], l_y + 2, l_bar_w, l_bar_h, bgc ) end
+   gfx.renderRect( l_x + offsets[1], l_y + 2, value/100. * l_bar_w, l_bar_h, l_col )
+   gfx.renderRect( l_x + offsets[1], l_y + 2, (stress_value/100) * (value/100) * l_bar_w, l_bar_h, col_stress )
+   gfx.renderTex( l_bg_bar, l_x, l_y )
+   gfx.renderTex( l_icon, l_x + offsets[2], l_y + offsets[2] - 3)
+   gfx.renderTex( l_sheen, l_x + offsets[1] + 1, l_y + offsets[3])
+
+   if txt then
+      small = false
+      if gfx.printDim( false, txt ) > l_bar_w then
+         small = true
+      end
+      gfx.print( small, txt, l_x + offsets[1], l_y + offsets[4], txtcol, l_bar_w, true)
+   else
+      gfx.print( true, "UNAVAILABLE", l_x + offsets[1], l_y + offsets[4], col_txt_una, l_bar_w, true )
+   end
+end
+
 function render_ammoBar( name, x, y, value, txt, txtcol, col )
-   offsets = { 2, 20, 3, 13, 22, 6, 4, 4 } --Bar, y of refire, sheen, y of sheen, y of refire sheen, y of text, x and y of tracking icon
+   offsets = { 2, 20, 3, 13, 22, 6, 2, 5 } --Bar, y of refire, sheen, y of sheen, y of refire sheen, y of text, x and y of tracking icon
    l_bg = _G["bg_" .. name]
    if name == "heat" then
       value[1] = value[1] / 2.
@@ -388,13 +446,13 @@ function render_ammoBar( name, x, y, value, txt, txtcol, col )
    local textoffset = 0
    local trackcol
    if value[4] then
-      if value[4] == -1 then
+      if value[4] == -1 or pilot.player():target() == nil then
          trackcol = col_txt_una
       else
          trackcol = colour.new(1-value[4], value[4], 0)
       end
       gfx.renderTex( tracking_light, x + offsets[7], y + offsets[8], trackcol )
-      textoffset = track_w
+      textoffset = track_w + 2
    end
    gfx.renderTex( sheen_weapon, x + offsets[3], y + offsets[4])
    gfx.renderTex( sheen_tiny, x + offsets[3], y + offsets[5])
@@ -405,7 +463,7 @@ end
 function render( dt, dt_mod )
 
    --Values
-   armour, shield = pp:health()
+   armour, shield, stress = pp:health()
    energy = pp:energy()
    speed = pp:vel():dist()
    temperature = pp:temp()
@@ -447,7 +505,7 @@ function render( dt, dt_mod )
    else
       col = col_txt_bar
    end
-   render_bar( "armour", armour, txt["armour"], col )
+   render_armourBar( "armour", armour, stress, txt["armour"], col )
 
    --Energy
    if energy == 0. then
@@ -504,7 +562,10 @@ function render( dt, dt_mod )
          else
             col = col_txt_bar
          end
-         values = {weapon.left_p, weapon.cooldown, weapon.level, weapon.track}
+         if not weapon.in_arc and pilot.player():target() ~= nil then
+            col = col_txt_una
+         end
+         values = {weapon.left_p, weapon.cooldown, weapon.level, weapon.track or weapon.lockon}
          render_ammoBar( "ammo", x_ammo, y_ammo - (num)*28, values, txt, col, 2, col_ammo )
       else
          col = col_txt_bar
@@ -553,7 +614,7 @@ function render( dt, dt_mod )
 
          if not ta_fuzzy then
             ptarget_target = ptarget:target()
-            ta_armour, ta_shield, ta_disabled = ptarget:health()
+            ta_armour, ta_shield, ta_stress, ta_disabled = ptarget:health()
             tflags = ptarget:flags()
             ta_energy = ptarget:energy()
             ta_speed = ptarget:vel():dist()
@@ -662,7 +723,7 @@ function render( dt, dt_mod )
 
          -- Render bars.
          render_bar( "shield", ta_shield, shi, col_txt_bar, "sm")
-         render_bar( "armour", ta_armour, arm, col_txt_bar, "sm")
+         render_armourBar( "armour", ta_armour, ta_stress, arm, col_txt_bar, "sm")
          render_bar( "energy", ta_energy, ene, col_txt_bar, "sm")
          render_bar( "speed", htspeed, spe, spetxtcol, "sm", colspe, colspe2 )
 
@@ -685,9 +746,7 @@ function render( dt, dt_mod )
    -- Planet pane
    if nav_pnt then
       local col = col_txt_std
-      ta_pnt_pos = nav_pnt:pos()
-      ta_pnt_dist = pp:pos():dist( ta_pnt_pos )
-      ta_pnt_class = nav_pnt:class()
+      ta_pnt_dist = pp:pos():dist( planet.pos )
 
       -- Extend the pane depending on the services available.
       services_h = 44
@@ -715,18 +774,7 @@ function render( dt, dt_mod )
          gfx.renderTex( ta_pnt_faction_gfx, ta_pnt_fact_x, ta_pnt_fact_y )
       end
 
-      -- Colour the planet name based on friendliness.
-      if ta_pntfact then
-         if pfact:areEnemies( ta_pntfact ) then
-            col = col_txt_enm
-         elseif pfact:areAllies( ta_pntfact ) then
-            col = col_txt_all
-         else
-            col = col_txt_std
-         end
-      end
-
-      x1, y1 = vec2.get(nav_pnt:pos())
+      x1, y1 = vec2.get(planet.pos)
       x2, y2 = vec2.get(player.pilot():pos())
       ta_pnt_dir = math.atan2(y2 - y1, x2 - x1) + math.pi
 
@@ -734,7 +782,7 @@ function render( dt, dt_mod )
       local x, y = target_dir:spriteFromDir( ta_pnt_dir )
       gfx.renderTex( target_dir, ta_pnt_pane_x + 12, ta_pnt_pane_y -24, x, y, col_txt_top )
 
-      gfx.print( true, nav_pnt:class(), ta_pnt_pane_x + 130, ta_pnt_pane_y - 34, col_txt_top )
+      gfx.print( true, planet.class, ta_pnt_pane_x + 130, ta_pnt_pane_y - 34, col_txt_top )
       gfx.print( true, "SERVICES:", ta_pnt_pane_x + 14, ta_pnt_pane_y - 46, col_txt_top )
 
       -- Space out the text.
@@ -755,7 +803,7 @@ function render( dt, dt_mod )
       if ta_pnt_dist then
          gfx.print( false, largeNumber( ta_pnt_dist, 1 ), ta_pnt_pane_x + 110, ta_pnt_pane_y - 15, col_txt_std, 63, false )
       end
-      gfx.print( true, nav_pnt:name(), ta_pnt_pane_x + 14, ta_pnt_pane_y + 149, col )
+      gfx.print( true, planet.name, ta_pnt_pane_x + 14, ta_pnt_pane_y + 149, planet.col )
    end
 
    --Bottom bar
@@ -815,7 +863,7 @@ end
 
 function largeNumber( number, idp )
    local formatted
-   local units = { "K", "M", "B", "T", "Q" }
+   local units = { "k", "M", "G", "T", "P" }
    if number < 1e4 then
       formatted = math.floor(number)
    elseif number < 1e18 then

@@ -49,6 +49,7 @@ static int hook_commsell( lua_State *L );
 static int hook_input( lua_State *L );
 static int hook_mouse( lua_State *L );
 static int hook_safe( lua_State *L );
+static int hook_standing( lua_State *L );
 static int hook_pilot( lua_State *L );
 static const luaL_reg hook_methods[] = {
    { "rm", hookL_rm },
@@ -66,6 +67,7 @@ static const luaL_reg hook_methods[] = {
    { "input", hook_input },
    { "mouse", hook_mouse },
    { "safe", hook_safe },
+   { "standing", hook_standing },
    { "pilot", hook_pilot },
    {0,0}
 }; /**< Hook Lua methods. */
@@ -195,7 +197,7 @@ void hookL_unsetarg( lua_State *L, unsigned int hook )
  * @brief Gets a Lua argument for a hook.
  *
  *    @param L Lua state to put argument in.
- *    @param hook Hook te get argument of.
+ *    @param hook Hook to get argument of.
  *    @return 0 on success.
  */
 int hookL_getarg( lua_State *L, unsigned int hook )
@@ -520,6 +522,25 @@ static int hook_mouse( lua_State *L )
    return 1;
 }
 /**
+ * @brief Hooks the function to any faction standing change.
+ *
+ * The parameters passed to the function are faction whose standing is being
+ * changed and the amount changed:<br/>
+ * function f( faction, change, args )
+ *
+ *    @luaparam funcname Name of function to run when hook is triggered.
+ *    @luaparam arg Argument to pass to hook.
+ *    @luareturn Hook identifier.
+ * @luafunc standing( funcname, arg )
+ */
+static int hook_standing( lua_State *L )
+{
+   unsigned int h;
+   h = hook_generic( L, "standing", 0., 1, 0 );
+   lua_pushnumber( L, h );
+   return 1;
+}
+/**
  * @brief Hook run at the end of each frame.
  *
  * This hook is a good way to do possibly breaking stuff like for example player.teleport().
@@ -539,17 +560,19 @@ static int hook_safe( lua_State *L )
 /**
  * @brief Hooks the function to a specific pilot.
  *
- * You can hook to different actions.  Curently hook system only supports:<br />
+ * You can hook to different actions.  Currently hook system only supports:<br />
  * <ul>
  *    <li> "death" : triggered when pilot dies (before marked as dead). <br />
  *    <li> "exploded" : triggered when pilot has died and the final explosion has begun. <br />
  *    <li> "board" : triggered when pilot is boarded.<br />
  *    <li> "disable" : triggered when pilot is disabled (with disable set).<br />
+ *    <li> "undisable" : triggered when pilot recovers from being disabled.<br />
  *    <li> "jump" : triggered when pilot jumps to hyperspace (before he actually jumps out).<br />
  *    <li> "hail" : triggered when pilot is hailed.<br />
  *    <li> "land" : triggered when pilot is landing (right when starting land descent).<br />
  *    <li> "attacked" : triggered when the pilot is attacked. <br />
  *    <li> "idle" : triggered when the pilot becomes idle in manual control.<br />
+ *    <li> "lockon" : triggered when the pilot locked on a missile on it's target.<br />
  * </ul>
  * <br />
  * If you pass nil as pilot, it will set it as a global hook that will jump for all pilots.<br />
@@ -600,14 +623,16 @@ static int hook_pilot( lua_State *L )
 
    /* Check to see if hook_type is valid */
    if (strcmp(hook_type,"death")==0)         type = PILOT_HOOK_DEATH;
-   else if (strcmp(hook_type,"exploded")==0)    type = PILOT_HOOK_EXPLODED;
+   else if (strcmp(hook_type,"exploded")==0) type = PILOT_HOOK_EXPLODED;
    else if (strcmp(hook_type,"board")==0)    type = PILOT_HOOK_BOARD;
    else if (strcmp(hook_type,"disable")==0)  type = PILOT_HOOK_DISABLE;
+   else if (strcmp(hook_type,"undisable")==0) type = PILOT_HOOK_UNDISABLE;
    else if (strcmp(hook_type,"jump")==0)     type = PILOT_HOOK_JUMP;
    else if (strcmp(hook_type,"hail")==0)     type = PILOT_HOOK_HAIL;
    else if (strcmp(hook_type,"land")==0)     type = PILOT_HOOK_LAND;
    else if (strcmp(hook_type,"attacked")==0) type = PILOT_HOOK_ATTACKED;
    else if (strcmp(hook_type,"idle")==0)     type = PILOT_HOOK_IDLE;
+   else if (strcmp(hook_type,"lockon")==0)   type = PILOT_HOOK_LOCKON;
    else { /* hook_type not valid */
       NLUA_ERROR(L, "Invalid pilot hook type: '%s'", hook_type);
       return 0;

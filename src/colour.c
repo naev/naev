@@ -77,6 +77,8 @@ glColour cNeutral       =  { .r = 0.9, .g = 1.0, .b = 0.3, .a = 1.  }; /**< Neut
 glColour cMapNeutral    =  { .r = 0.3, .g = 0.3, .b = 0.3, .a = 1.  }; /**< Neutral object map screen text colour */
 glColour cFriend        =  { .r = 0.0, .g = 0.8, .b = 0.0, .a = 1.  }; /**< Friend object colour */
 glColour cHostile       =  { .r = 0.9, .g = 0.2, .b = 0.2, .a = 1.  }; /**< Hostile object colour */
+glColour cRestricted    =  { .r = 1.0, .g = 0.6, .b = 0.0, .a = 1.  }; /**< Restricted object colour. */
+glColour cDRestricted   =  { .r = 0.7, .g = 0.3, .b = 0.0, .a = 1.  }; /**< Restricted object colour. Darkened for use on white. */
 /* radar */
 glColour cRadar_player  =  { .r = 0.4, .g = 0.8, .b = 0.4, .a = 1.  }; /**< Player colour on radar. */
 glColour cRadar_tPilot  =  { .r = 0.8, .g = 0.5, .b = 0.0, .a = 1.  }; /**< Targeted object colour on radar. */
@@ -103,7 +105,7 @@ glColour cFontNeutral   =  { .r = 1.0, .g = 0.9, .b = 0.0, .a = 1.  }; /**< Neut
 
 
 /**
- * @brief Changes colourspace from HSV to RGB.
+ * @brief Changes colour space from HSV to RGB.
  *
  * All values go from 0 to 1, except H which is 0-360.
  *
@@ -144,7 +146,7 @@ void col_hsv2rgb( double *r, double *g, double *b, double h, double s, double v 
 
 
 /**
- * @brief Changes colourspace from RGB to HSV.
+ * @brief Changes colour space from RGB to HSV.
  *
  * All values go from 0 to 1, except H which is 0-360.
  *

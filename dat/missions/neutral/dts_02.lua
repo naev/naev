@@ -22,6 +22,8 @@ Because of bad planning, this mission is badly organized.
 Anyone looking for a model of good mission-making should look elsewhere! -- the author
 ]]--
 
+include "scripts/numstring.lua"
+
 -- localization stuff, translators would work here
 lang = naev.lang()
 if lang == "es" then
@@ -31,7 +33,7 @@ else -- default english
 
 -- Mission details
    misn_title = "Defend the System"
-   misn_reward = "%d credits and the pleasure of serving the Empire."
+   misn_reward = "%s credits and the pleasure of serving the Empire."
    misn_desc = "Defend the system against a pirate fleet."
 
 -- Stage one: in the bar you hear a fleet of Pirates have invaded the system.
@@ -125,7 +127,7 @@ function create()
          misn.accept()
          tk.msg( title[11], text[11])
          reward = 40000
-         misn.setReward( string.format( misn_reward, reward) )
+         misn.setReward( string.format( misn_reward, numstring(reward)) )
          misn.setDesc( misn_desc)
          misn.setTitle( misn_title)
          misn.markerAdd( this_system, "low" )
@@ -163,7 +165,7 @@ function enter_system()
          hook.timer(1000, "ship_enters")
       elseif defender == true then
          player.msg( comm[8])
-         player.modFaction( "Empire", -3)
+         faction.modPlayerSingle( "Empire", -3)
          misn.finish( true)
       elseif this_system == system.cur() and been_here_before ~= true then
          been_here_before = true
@@ -304,7 +306,7 @@ function celebrate_victory()
       if victory == true then
          tk.msg( title[2], string.format( text[2], planet_name) )
          player.pay( reward)
-         player.modFaction( "Empire", 3)
+         faction.modPlayerSingle( "Empire", 3)
          tk.msg( title[3], string.format( text[3], planet_name, planet_name) )
          misn.finish( true)
       else
@@ -330,8 +332,8 @@ end
 function abort()
 
       if victory == false then
-         player.modFaction( "Empire", -10)
-         player.modFaction( "Trader", -10)
+         faction.modPlayerSingle( "Empire", -10)
+         faction.modPlayerSingle( "Trader", -10)
          player.msg( string.format( comm[9], player.name()))
       else
          player.msg( string.format( comm[10], player.name()))

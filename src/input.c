@@ -59,25 +59,25 @@ static int input_numbinds; /**< Number of keybindings. */
 
 /* name of each keybinding */
 const char *keybind_info[][3] = {
-   /* Movement. */
+   /* Movement */
    { "accel", "Accelerate", "Makes your ship accelerate forward." },
    { "left", "Turn Left", "Makes your ship turn left." },
    { "right", "Turn Right", "Makes your ship turn right." },
    { "reverse", "Reverse", "Makes your ship face the direction you're moving from. Useful for braking." },
    { "afterburn", "Afterburner", "Engages the ship's afterburner, if one is installed." },
-   /* Targeting. */
+   /* Targeting */
    { "target_next", "Target Next", "Cycles through ship targets." },
    { "target_prev", "Target Previous", "Cycles backwards through ship targets." },
-   {"target_nearest", "Target Nearest", "Targets the nearest non-disabled ship." },
+   { "target_nearest", "Target Nearest", "Targets the nearest non-disabled ship." },
    { "target_nextHostile", "Target Next Hostile", "Cycles through hostile ship targets." },
    { "target_prevHostile", "Target Previous Hostile", "Cycles backwards through hostile ship targets." },
    { "target_hostile", "Target Nearest Hostile", "Targets the nearest hostile ship." },
    { "target_clear", "Clear Target", "Clears the currently-targeted ship, planet or jump point." },
-   /* Fighting. */
+   /* Fighting */
    { "primary", "Fire Primary Weapon", "Fires primary weapons." },
    { "face", "Face Target", "Faces the targeted ship if one is targeted, otherwise faces targeted planet or jump point." },
    { "board", "Board Target", "Attempts to board the targeted ship." },
-   /* Secondary weapons. */
+   /* Secondary Weapons */
    { "secondary", "Fire Secondary Weapon", "Fires secondary weapons." },
    { "weapset1", "Weapon Set 1", "Activates weapon set 1." },
    { "weapset2", "Weapon Set 2", "Activates weapon set 2." },
@@ -89,23 +89,23 @@ const char *keybind_info[][3] = {
    { "weapset8", "Weapon Set 8", "Activates weapon set 8." },
    { "weapset9", "Weapon Set 9", "Activates weapon set 9." },
    { "weapset0", "Weapon Set 0", "Activates weapon set 0." },
-   /* Escorts. */
+   /* Escorts */
    { "e_targetNext", "Target Next Escort", "Cycles through your escorts." },
    { "e_targetPrev", "Target Previous Escort", "Cycles backwards through your escorts." },
    { "e_attack", "Escort Attack Command", "Orders escorts to attack your target." },
    { "e_hold", "Escort Hold Command", "Orders escorts to hold their positions." },
    { "e_return", "Escort Return Command", "Orders escorts to return to your ship hangars." },
    { "e_clear", "Escort Clear Commands", "Clears your escorts of commands." },
-   /* Space navigation. */
+   /* Space Navigation */
    { "autonav", "Autonavigation On", "Initializes the autonavigation system." },
    { "target_planet", "Target Planet", "Cycles through planet targets." },
-   { "land", "Land", "Attempts to land on your targeted planet or targets the nearest landable planet. Requests for landing if you don't have permission yet." },
+   { "land", "Land", "Attempts to land on the targeted planet or targets the nearest landable planet. Requests permission if necessary." },
    { "thyperspace", "Target Jumpgate", "Cycles through jump points." },
    { "starmap", "Star Map", "Opens the star map." },
    { "jump", "Initiate Jump", "Attempts to jump via a jump point." },
    { "overlay", "Overlay Map", "Opens the in-system overlay map." },
    { "mousefly", "Mouse Flight", "Toggles mouse flying." },
-   /* Communication. */
+   /* CommunicationBLARGH */
    { "log_up", "Log Scroll Up", "Scrolls the log upwards." },
    { "log_down", "Log Scroll Down", "Scrolls the log downwards." },
    { "hail", "Hail Target", "Attempts to initialize communication with the targeted ship." },
@@ -191,13 +191,13 @@ static void input_mouseMove( SDL_Event* event );
  */
 void input_setDefault (void)
 {
-   /* Movement. */
+   /* Movement */
    input_setKeybind( "accel", KEYBIND_KEYBOARD, SDLK_UP, NMOD_ALL );
-   input_setKeybind( "afterburn", KEYBIND_KEYBOARD, SDLK_z, NMOD_ALL );
    input_setKeybind( "left", KEYBIND_KEYBOARD, SDLK_LEFT, NMOD_ALL );
    input_setKeybind( "right", KEYBIND_KEYBOARD, SDLK_RIGHT, NMOD_ALL );
    input_setKeybind( "reverse", KEYBIND_KEYBOARD, SDLK_DOWN, NMOD_ALL );
-   /* Targeting. */
+   input_setKeybind( "afterburn", KEYBIND_KEYBOARD, SDLK_z, NMOD_ALL );
+   /* Targeting */
    input_setKeybind( "target_next", KEYBIND_KEYBOARD, SDLK_t, NMOD_NONE );
    input_setKeybind( "target_prev", KEYBIND_KEYBOARD, SDLK_t, NMOD_CTRL );
    input_setKeybind( "target_nearest", KEYBIND_KEYBOARD, SDLK_n, NMOD_NONE );
@@ -205,11 +205,11 @@ void input_setDefault (void)
    input_setKeybind( "target_prevHostile", KEYBIND_NULL, SDLK_UNKNOWN, NMOD_NONE );
    input_setKeybind( "target_hostile", KEYBIND_KEYBOARD, SDLK_r, NMOD_NONE );
    input_setKeybind( "target_clear", KEYBIND_KEYBOARD, SDLK_BACKSPACE, NMOD_ALL );
-   /* Combat. */
+   /* Combat */
    input_setKeybind( "primary", KEYBIND_KEYBOARD, SDLK_SPACE, NMOD_ALL );
    input_setKeybind( "face", KEYBIND_KEYBOARD, SDLK_a, NMOD_ALL );
    input_setKeybind( "board", KEYBIND_KEYBOARD, SDLK_b, NMOD_NONE );
-   /* Secondary weapons. */
+   /* Secondary Weapons */
    input_setKeybind( "secondary", KEYBIND_KEYBOARD, SDLK_LSHIFT, NMOD_ALL );
    input_setKeybind( "weapset1", KEYBIND_KEYBOARD, SDLK_1, NMOD_ALL );
    input_setKeybind( "weapset2", KEYBIND_KEYBOARD, SDLK_2, NMOD_ALL );
@@ -221,14 +221,14 @@ void input_setDefault (void)
    input_setKeybind( "weapset8", KEYBIND_KEYBOARD, SDLK_8, NMOD_ALL );
    input_setKeybind( "weapset9", KEYBIND_KEYBOARD, SDLK_9, NMOD_ALL );
    input_setKeybind( "weapset0", KEYBIND_KEYBOARD, SDLK_0, NMOD_ALL );
-   /* Escorts. */
+   /* Escorts */
    input_setKeybind( "e_targetNext", KEYBIND_KEYBOARD, SDLK_e, NMOD_NONE );
    input_setKeybind( "e_targetPrev", KEYBIND_KEYBOARD, SDLK_e, NMOD_CTRL );
    input_setKeybind( "e_attack", KEYBIND_KEYBOARD, SDLK_f, NMOD_ALL );
    input_setKeybind( "e_hold", KEYBIND_KEYBOARD, SDLK_g, NMOD_ALL );
    input_setKeybind( "e_return", KEYBIND_KEYBOARD, SDLK_c, NMOD_CTRL );
    input_setKeybind( "e_clear", KEYBIND_KEYBOARD, SDLK_c, NMOD_NONE );
-   /* Space. */
+   /* Space Navigation */
    input_setKeybind( "autonav", KEYBIND_KEYBOARD, SDLK_j, NMOD_CTRL );
    input_setKeybind( "target_planet", KEYBIND_KEYBOARD, SDLK_p, NMOD_NONE );
    input_setKeybind( "land", KEYBIND_KEYBOARD, SDLK_l, NMOD_NONE );
@@ -237,7 +237,7 @@ void input_setDefault (void)
    input_setKeybind( "jump", KEYBIND_KEYBOARD, SDLK_j, NMOD_NONE );
    input_setKeybind( "overlay", KEYBIND_KEYBOARD, SDLK_TAB, NMOD_ALL );
    input_setKeybind( "mousefly", KEYBIND_KEYBOARD, SDLK_x, NMOD_CTRL );
-   /* Communication. */
+   /* Communication */
    input_setKeybind( "log_up", KEYBIND_KEYBOARD, SDLK_PAGEUP, NMOD_ALL );
    input_setKeybind( "log_down", KEYBIND_KEYBOARD, SDLK_PAGEDOWN, NMOD_ALL );
    input_setKeybind( "hail", KEYBIND_KEYBOARD, SDLK_y, NMOD_NONE );
@@ -1230,7 +1230,7 @@ static void input_clickevent( SDL_Event* event )
       if (pntid == player.p->nav_planet) {
          pnt = cur_system->planets[ pntid ];
          if (planet_hasService(pnt, PLANET_SERVICE_LAND) &&
-               (!areEnemies( player.p->faction, pnt->faction ) || pnt->bribed ))
+               (pnt->faction < 0 || (!areEnemies( player.p->faction, pnt->faction ) || pnt->bribed )))
             player_land();
          else
             player_hailPlanet();
@@ -1239,7 +1239,6 @@ static void input_clickevent( SDL_Event* event )
          player_targetPlanetSet( pntid );
    }
    else if (jpid >= 0) { /* Jump point is closest. */
-      jp = &cur_system->jumps[ jpid ];
       if (jpid == player.p->nav_hyperspace) {
          if (space_canHyperspace(player.p)) {
             if (!paused) player_autonavAbort(NULL);

@@ -5,12 +5,13 @@
 
 include "scripts/jumpdist.lua"
 include "scripts/cargo_common.lua"
+include "scripts/numstring.lua"
 
 lang = naev.lang()
 if lang == "es" then
 else -- default english
     misn_desc = "%s in the %s system needs a delivery of %d tonnes of %s."
-    misn_reward = "%d credits"
+    misn_reward = "%s credits"
     
     cargosize = {}
     cargosize[0] = "Courier" -- Note: indexed from 0, to match mission tiers.
@@ -103,7 +104,7 @@ function create()
     misn.setTitle( buildCargoMissionDescription(cargosize[tier], amount, cargo, destplanet, destsys ))
     misn.markerAdd(destsys, "computer")
     misn.setDesc(cargosize[tier] .. title_p1[rnd.rnd(1, #title_p1)]:format(destplanet:name(), destsys:name()) .. title_p2:format(cargo, amount, numjumps, traveldist, (timelimit - time.get()):str()))
-    misn.setReward(misn_reward:format(reward))
+    misn.setReward(misn_reward:format(numstring(reward)))
 end
 
 -- Mission is accepted

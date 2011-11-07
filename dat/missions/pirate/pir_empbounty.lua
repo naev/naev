@@ -8,6 +8,8 @@
 
 --]]
 
+include "scripts/numstring.lua"
+
 -- Localization, choosing a language if naev is translated for non-english-speaking locales.
 lang = naev.lang()
 if lang == "es" then
@@ -17,7 +19,7 @@ else -- Default to English
 
    -- Mission details
    misn_title  = "Empire Patrol bounty"
-   misn_reward = "%d credits"
+   misn_reward = "%s credits"
    misn_desc   = "There is a bounty on the head of the Empire Patrol known as %s who was last seen near the %s system."
 
    -- Text
@@ -73,7 +75,7 @@ function accept ()
 
    -- Set mission details
    misn.setTitle( string.format( misn_title, near_sys:name()) )
-   misn.setReward( string.format( misn_reward, credits) )
+   misn.setReward( string.format( misn_reward, numstring(credits)) )
    misn.setDesc( string.format( misn_desc, emp_name, near_sys:name() ) )
    misn.markerAdd( near_sys, "low" )
    misn.osdCreate(misn_title, {misn_desc:format(emp_name, near_sys:name())})
@@ -125,7 +127,7 @@ function give_rewards ()
    player.pay(credits)
 
    -- Give factions
-   player.modFaction( "Pirate", 5 )
+   faction.modPlayerSingle( "Pirate", 5 )
    
    -- Finish mission
    misn.finish(true)

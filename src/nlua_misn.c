@@ -805,7 +805,6 @@ static int misn_osdCreate( lua_State *L )
    items = calloc( nitems, sizeof(char *) );
 
    /* Get items. */
-   i = 0;
    for (i=0; i<nitems; i++) {
       lua_pushnumber(L,i+1);
       lua_gettable(L,2);
@@ -883,7 +882,7 @@ static int misn_osdActive( lua_State *L )
  *
  * @usage npc_id = misn.npcAdd( "my_func", "Mr. Test", "none", "A test." ) -- Creates an NPC.
  *
- *    @luaparam func Name of the function to run when approaching.
+ *    @luaparam func Name of the function to run when approaching, gets passed the npc_id when called.
  *    @luaparam name Name of the NPC
  *    @luaparam portrait Portrait to use for the NPC (from gfx/portraits*.png).
  *    @luaparam desc Description associated to the NPC.

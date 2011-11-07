@@ -25,6 +25,7 @@
 #include "conf.h"
 #include "npng.h"
 #include "colour.h"
+#include "shipstats.h"
 
 
 #define XML_ID    "Ships"  /**< XML document identifier */
@@ -137,15 +138,15 @@ int ship_compareTech( const void *arg1, const void *arg2 )
 
    /* Compare class. */
    if (s1->class < s2->class)
-      return -1;
-   else if (s1->class > s2->class)
       return +1;
+   else if (s1->class > s2->class)
+      return -1;
 
    /* Compare price. */
    if (s1->price < s2->price)
-      return -1;
-   else if (s1->price > s2->price)
       return +1;
+   else if (s1->price > s2->price)
+      return -1;
 
    /* Same. */
    return strcmp( s1->name, s2->name );
@@ -294,100 +295,6 @@ credits_t ship_basePrice( Ship* s )
 glTexture* ship_loadCommGFX( Ship* s )
 {
    return gl_newImage( s->gfx_comm, 0 );
-}
-
-
-/**
- * @brief Parses a single ship stat from a parent node if it is one.
- *
- *    @return 0 on success, 1 if not a node.
- */
-int ship_statsParseSingle( ShipStats *s, xmlNodePtr node )
-{
-   /* Freighter. */
-   xmlr_floatR(node,"jump_delay",s->jump_delay);
-   xmlr_floatR(node,"jump_range",s->jump_range);
-   xmlr_floatR(node,"cargo_inertia",s->cargo_inertia);
-   /* Scout. */
-   xmlr_floatR(node,"jam_range",s->jam_range);
-   xmlr_floatR(node,"ew_hide",s->ew_hide);
-   xmlr_floatR(node,"ew_detect",s->ew_detect);
-   /* Military. */
-   xmlr_floatR(node,"heat_dissipation",s->heat_dissipation);
-   /* Bomber. */
-   xmlr_floatR(node,"launch_rate",s->launch_rate);
-   xmlr_floatR(node,"launch_range",s->launch_range);
-   xmlr_floatR(node,"jam_counter",s->jam_counter);
-   xmlr_floatR(node,"ammo_capacity",s->ammo_capacity);
-   /* Fighter. */
-   xmlr_floatR(node,"heat_forward",s->heat_forward);
-   xmlr_floatR(node,"damage_forward",s->damage_forward);
-   xmlr_floatR(node,"firerate_forward",s->firerate_forward);
-   xmlr_floatR(node,"energy_forward",s->energy_forward);
-   /* Cruiser. */
-   xmlr_floatR(node,"heat_turret",s->heat_turret);
-   xmlr_floatR(node,"damage_turret",s->damage_turret);
-   xmlr_floatR(node,"firerate_turret",s->firerate_turret);
-   xmlr_floatR(node,"energy_turret",s->energy_turret);
-   /* Misc. */
-   xmlr_floatR(node,"nebula_dmg_shield",s->nebula_dmg_shield);
-   xmlr_floatR(node,"nebula_dmg_armour",s->nebula_dmg_armour);
-   return 1;
-}
-
-
-/**
- * @brief Writes the ship statistics description.
- *
- *    @param s Ship stats to use.
- *    @param buf Buffer to write to.
- *    @param len Space left in the buffer.
- *    @param newline Add a newline at start.
- *    @param pilot Stats come from a pilot.
- *    @return Number of characters written.
- */
-int ship_statsDesc( ShipStats *s, char *buf, int len, int newline, int pilot )
-{
-   int i;
-
-   /* Set stat text. */
-   i = 0;
-#define DESC_ADD(x, s) \
-   if ((pilot && (x!=1.)) || (!pilot && (x!=0.))) \
-      i += snprintf( &buf[i], len-i, \
-            "%s%+.0f%% "s, (!newline&&(i==0)) ? "" : "\n", \
-            (pilot) ? (x-1.)*100. : x );
-   /* Freighter Stuff. */
-   DESC_ADD(s->jump_delay,"Jump Time");
-   DESC_ADD(s->jump_range,"Jump Range");
-   DESC_ADD(s->cargo_inertia,"Cargo Inertia");
-   /* Scout Stuff. */
-   DESC_ADD(s->jam_range,"Jam Range");
-   DESC_ADD(s->ew_detect,"Detection");
-   DESC_ADD(s->ew_hide,"Cloaking");
-   /* Military Stuff. */
-   DESC_ADD(s->heat_dissipation,"Heat Dissipation");
-   /* Bomber Stuff. */
-   DESC_ADD(s->launch_rate,"Launch Rate");
-   DESC_ADD(s->launch_range,"Launch Range");
-   DESC_ADD(s->jam_counter,"Jam Countermeasures");
-   DESC_ADD(s->ammo_capacity,"Ammo Capacity");
-   /* Fighter Stuff. */
-   DESC_ADD(s->heat_forward,"Heat (Cannon)");
-   DESC_ADD(s->damage_forward,"Damage (Cannon)");
-   DESC_ADD(s->firerate_forward,"Fire Rate (Cannon)");
-   DESC_ADD(s->energy_forward,"Energy Usage (Cannon)");
-   /* Cruiser Stuff. */
-   DESC_ADD(s->heat_turret,"Heat (Turret)");
-   DESC_ADD(s->damage_turret,"Damage (Turret)");
-   DESC_ADD(s->firerate_turret,"Fire Rate (Turret)");
-   DESC_ADD(s->energy_turret,"Energy Usage (Turret)");
-   /* Misc. */
-   DESC_ADD(s->nebula_dmg_shield,"Nebula Damage (Shield)");
-   DESC_ADD(s->nebula_dmg_armour,"Nebula Damage (Armour)");
-#undef DESC_ADD
-
-   return i;
 }
 
 
@@ -608,6 +515,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    char *stmp, *buf;
    int l, m, h;
    OutfitSlotSize base_size;
+   ShipStatList *ll;
 
    /* Clear memory. */
    memset( temp, 0, sizeof(Ship) );
@@ -615,6 +523,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    /* Defaults. */
    temp->thrust = -1;
    temp->speed  = -1;
+   ss_statsInit( &temp->stats_array );
 
    /* Get name. */
    xmlr_attr(parent,"name",temp->name);
@@ -794,15 +703,29 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          cur = node->children;
          do {
             xml_onlyNodes(cur);
-            if (ship_statsParseSingle( &temp->stats, cur ))
-               WARN("Ship '%s' has unknown stat '%s'.", temp->name, cur->name);
+            ll = ss_listFromXML( cur );
+            if (ll != NULL) {
+               ll->next    = temp->stats;
+               temp->stats = ll;
+               continue;
+            }
+            WARN("Ship '%s' has unknown stat '%s'.", temp->name, cur->name);
          } while (xml_nextNode(cur));
-         temp->desc_stats = malloc( STATS_DESC_MAX );
-         i = ship_statsDesc( &temp->stats, temp->desc_stats, STATS_DESC_MAX, 0, 0 );
-         if (i <= 0) {
-            free( temp->desc_stats );
-            temp->desc_stats = NULL;
+
+         /* Load array. */
+         ss_statsInit( &temp->stats_array );
+         ss_statsModFromList( &temp->stats_array, temp->stats, NULL );
+
+         /* Create description. */
+         if (temp->stats != NULL) {
+            temp->desc_stats = malloc( STATS_DESC_MAX );
+            i = ss_statsListDesc( temp->stats, temp->desc_stats, STATS_DESC_MAX, 0 );
+            if (i <= 0) {
+               free( temp->desc_stats );
+               temp->desc_stats = NULL;
+            }
          }
+
          continue;
       }
 
@@ -811,9 +734,6 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
 
    /* Post processing. */
    temp->dmg_absorb   /= 100.;
-   temp->armour_regen /= 60.;
-   temp->shield_regen /= 60.;
-   temp->energy_regen /= 60.;
    temp->turn         *= M_PI / 180.; /* Convert to rad. */
    temp->thrust *= temp->mass;
 
@@ -865,6 +785,18 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    MELEMENT(temp->mass==0.,"mass");
    MELEMENT(temp->cpu==0.,"cpu");
    MELEMENT(temp->cap_cargo==0,"cap_cargo");
+   MELEMENT(temp->armour==0.,"armour");
+   /*MELEMENT(temp->thrust==0.,"thrust");
+   MELEMENT(temp->turn==0.,"turn");
+   MELEMENT(temp->speed==0.,"speed");
+   MELEMENT(temp->shield==0.,"shield");
+   MELEMENT(temp->shield_regen==0.,"shield_regen");
+   MELEMENT(temp->energy==0.,"energy");
+   MELEMENT(temp->energy_regen==0.,"energy_regen");
+   MELEMENT(temp->fuel==0.,"fuel");*/
+   MELEMENT(temp->crew==0,"crew");
+   MELEMENT(temp->mass==0.,"mass");
+   MELEMENT(temp->cap_cargo==0,"cargo");
 #undef MELEMENT
 
    return 0;
@@ -880,6 +812,9 @@ int ships_load (void)
 {
    uint32_t bufsize;
    char *buf = ndata_read( SHIP_DATA, &bufsize);
+
+   /* Sanity. */
+   ss_check();
 
    xmlNodePtr node;
    xmlDocPtr doc = xmlParseMemory( buf, bufsize );
@@ -924,20 +859,13 @@ void ships_free (void)
       s = &ship_stack[i];
 
       /* Free stored strings. */
-      if (s->name != NULL)
-         free(s->name);
-      if (s->description != NULL)
-         free(s->description);
-      if (s->gui != NULL)
-         free(s->gui);
-      if (s->base_type != NULL)
-         free(s->base_type);
-      if (s->fabricator != NULL)
-         free(s->fabricator);
-      if (s->license != NULL)
-         free(s->license);
-      if (s->desc_stats != NULL)
-         free(s->desc_stats);
+      free(s->name);
+      free(s->description);
+      free(s->gui);
+      free(s->base_type);
+      free(s->fabricator);
+      free(s->license);
+      free(s->desc_stats);
 
       /* Free outfits. */
       if (s->outfit_structure != NULL)
@@ -946,6 +874,10 @@ void ships_free (void)
          free(s->outfit_utility);
       if (s->outfit_weapon != NULL)
          free(s->outfit_weapon);
+
+      /* Free stats. */
+      if (s->stats != NULL)
+         ss_free( s->stats );
 
       /* Free graphics. */
       gl_freeTexture(s->gfx_space);
@@ -961,90 +893,3 @@ void ships_free (void)
    array_free(ship_stack);
    ship_stack = NULL;
 }
-
-
-/**
- * @brief Used to visualize the ships stats.
- *
- * @todo Take into account outfits or something like that.
- *
- *    @param unused Unused.
- *    @param shipname Ship ot view the stats of.
- */
-void ship_view( unsigned int unused, char* shipname )
-{
-   (void) unused;
-   Ship *s;
-   char buf[1024];
-   unsigned int wid;
-   int h;
-   s = ship_get( shipname );
-   snprintf(buf, 1024,
-         "Name:\n"
-         "Class:\n"
-         "Fabricator:\n"
-         "\n"
-         "Crew:\n"
-         "CPU:\n"
-         "Mass:\n"
-         "\n"
-         "Weapon slots:\n"
-         "Utility slots:\n"
-         "Structure slots:\n"
-         "\n"
-         "Thrust:\n"
-         "Max Speed:\n"
-         "Turn:\n"
-         "\n"
-         "Shield:\n"
-         "Armour:\n"
-         "Energy:\n"
-         "\n"
-         "Cargo Space:\n"
-         "Fuel:\n"
-         );
-   h = gl_printHeightRaw( &gl_smallFont, VIEW_WIDTH, buf );
-
-   wid = window_create( shipname, -1, -1, VIEW_WIDTH, h+60+BUTTON_HEIGHT );
-   window_addText( wid, 20, -40, VIEW_WIDTH, h,
-         0, "txtLabel", &gl_smallFont, &cDConsole, buf );
-   snprintf( buf, 1024,
-         "%s\n" /* Name */
-         "%s\n" /* Class */
-         "%s\n" /* Fabricator */
-         "\n"
-         "%d\n" /* Crew */
-         "%.0f TFlops\n" /* CPU */
-         "%.0f Tons\n" /* Mass */
-         "\n"
-         "%d\n" /* Weapon slots */
-         "%d\n" /* Utility slots */
-         "%d\n" /* Structure slots */
-         "\n"
-         "%.0f MN/ton\n" /* Thrust */
-         "%.0f M/s\n" /* Speed */
-         "%.0f Grad/s\n" /* Turn */
-         "\n"
-         "%.0f MJ (%.1f MJ/s)\n" /* Shield */
-         "%.0f MJ (%.1f MJ/s)\n" /* Armour */
-         "%.0f MJ (%.1f MJ/s)\n" /* Energy */
-         "\n"
-         "%.0f Tons\n" /* Cargo */
-         "%d Units\n" /* Fuel */
-         , s->name, ship_class(s), s->fabricator,
-         s->crew, s->cpu, s->mass,
-         s->outfit_nweapon, s->outfit_nutility, s->outfit_nstructure,
-         s->thrust/s->mass, s->speed, s->turn,
-         s->shield, s->shield_regen, s->armour, s->armour_regen,
-         s->energy, s->energy_regen,
-         s->cap_cargo, s->fuel );
-   window_addText( wid, 120, -40, VIEW_WIDTH-140, h,
-         0, "txtProperties", &gl_smallFont, &cBlack, buf );
-
-   /* close button */
-   snprintf( buf, 37, "close%s", shipname );
-   window_addButton( wid, -20, 20,
-         BUTTON_WIDTH, BUTTON_HEIGHT,
-         buf, "Close", window_close );
-}
-
