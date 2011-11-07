@@ -666,6 +666,8 @@
    <cond>planet.cur() == planet.get("The Wringer")</cond>
    <chance>100</chance>
    <location>Bar</location>
+  </avail>
+ </mission>
  <mission name="Kidnapped">
   <lua>neutral/kidnapped/traffic_00</lua>
   <avail>

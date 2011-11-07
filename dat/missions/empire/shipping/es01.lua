@@ -57,7 +57,7 @@ function create ()
    end
 
    -- Bar NPC
-   misn.setNPC( "Soldner", "soldner" )
+   misn.setNPC( "Soldner", "empire/unique/soldner" )
    misn.setDesc( bar_desc )
 end
 

@@ -47,7 +47,7 @@ end
 
 function create ()
    -- Note: this mission does not make any system claims.
-   misn.setNPC( "Dimitri", "dimitri" )
+   misn.setNPC( "Dimitri", "empire/unique/dimitri" )
    misn.setDesc( bar_desc )
 end
 

@@ -53,7 +53,7 @@ function create ()
    near_sys = get_emp_system( system.cur() )
 
    -- Spaceport bar stuff
-   misn.setNPC( "Young Businessman", "youngbusinessman")
+   misn.setNPC( "Young Businessman", "neutral/unique/youngbusinessman")
    misn.setDesc( bar_desc )
 
    --some other stuff

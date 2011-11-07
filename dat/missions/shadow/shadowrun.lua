@@ -68,7 +68,7 @@ else -- default english
     -- NPC stuff
     jorek_npc = {}
     jorek_npc["name"] = "An unpleasant man."
-    jorek_npc["portrait"] = "jorek"
+    jorek_npc["portrait"] = "neutral/unique/jorek"
     jorek_npc["desc"] = "A middle-aged, cranky looking man is sitting at a table by himself. You are fairly certain that this is the fellow you're looking for."
     jorek_title = {}
     jorek_title[1] = "An unpleasant man"
@@ -88,19 +88,19 @@ else -- default english
     jorek_text[4] = [[    Jorek pointedly ignores you. It doesn't seem like he's willing to give you the time of day any longer. You decide not to push your luck.]]
     off_npc = {}
     off_npc["name"] = "Officer at the bar"
-    off_npc["portrait"] = "empire1"
+    off_npc["portrait"] = "empire/empire1"
     off_npc["desc"] = "You see a military officer with a drink at the bar. He doesn't seem to be very interested in it, though..."
     off_title = { "You were ignored" }
     off_text = { "You try to strike a conversation with the officer, but he doesn't seem interested what you have to say, so you give up." }
     sol1_npc = {}
     sol1_npc["name"] = "Soldier at the news kiosk"
-    sol1_npc["portrait"] = "empire2"
+    sol1_npc["portrait"] = "empire/empire2"
     sol1_npc["desc"] = "You see a soldier at a news kiosk. For some reason, he keeps reading the same articles over and over again."
     sol1_title = { "You were shooed away" }
     sol1_text = { "Leave me alone. Can't you see I'm busy?" }
     sol2_npc = {}
     sol2_npc["name"] = "Card-playing soldier"
-    sol2_npc["portrait"] = "empire2"
+    sol2_npc["portrait"] = "empire/empire2"
     sol2_npc["desc"] = "Two soldiers are sharing a table near the exit, playing cards. Neither of them seems very into the game."
     sol2_title = { "They didn't need a third man" }
     sol2_text = { "They don't seem to appreciate your company. You decide to leave them to their game." }
@@ -129,7 +129,7 @@ function create ()
     timelimit1 = 20 -- In STP
     timelimit2 = 50 -- In STP
     
-    misn.setNPC( "A dark-haired woman", "rebina" )
+    misn.setNPC( "A dark-haired woman", "neutral/unique/rebina" )
     misn.setDesc( bar_desc ) 
 end
 

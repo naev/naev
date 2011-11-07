@@ -41,7 +41,7 @@ function create ()
    targetsystem = system.get("Delta Pavonis") -- Find target system
 
    -- Spaceport bar stuff
-   misn.setNPC( "Shifty Trader",  "shifty_merchant")
+   misn.setNPC( "Shifty Trader",  "neutral/unique/shifty_merchant")
    misn.setDesc( bar_desc )
 end
 
