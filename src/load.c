@@ -29,6 +29,7 @@
 #include "unidiff.h"
 #include "nlua_var.h"
 #include "land.h"
+#include "hook.h"
 
 
 #define LOAD_WIDTH      600 /**< Load window width. */
@@ -516,6 +517,9 @@ int load_game( const char* file )
 
    /* Set loaded. */
    save_loaded = 1;
+
+   /* Run hooks. */
+   hooks_run( "load" );
 
    return 0;
 
