@@ -83,6 +83,7 @@ static int pilotL_setFaction( lua_State *L );
 static int pilotL_setHostile( lua_State *L );
 static int pilotL_setFriendly( lua_State *L );
 static int pilotL_setInvincible( lua_State *L );
+static int pilotL_setInvincPlayer( lua_State *L );
 static int pilotL_setInvisible( lua_State *L );
 static int pilotL_setVisplayer( lua_State *L );
 static int pilotL_setVisible( lua_State *L );
@@ -174,6 +175,7 @@ static const luaL_reg pilotL_methods[] = {
    { "setHostile", pilotL_setHostile },
    { "setFriendly", pilotL_setFriendly },
    { "setInvincible", pilotL_setInvincible },
+   { "setInvincPlayer", pilotL_setInvincPlayer },
    { "setInvisible", pilotL_setInvisible },
    { "setVisplayer", pilotL_setVisplayer },
    { "setVisible", pilotL_setVisible },
@@ -1714,6 +1716,41 @@ static int pilotL_setInvincible( lua_State *L )
       pilot_setFlag(p, PILOT_INVINCIBLE);
    else
       pilot_rmFlag(p, PILOT_INVINCIBLE);
+
+   return 0;
+}
+
+
+/**
+ * @brief Sets the pilot's invincibility status towards the player.
+ *
+ * @usage p:setInvincPlayer() -- p can not be hit by the player anymore
+ * @usage p:setInvincPlayer(true) -- p can not be hit by the player anymore
+ * @usage p:setInvincPlayer(false) -- p can be hit by the player again
+ *
+ *    @luaparam p Pilot to set invincibility status of (only affects player).
+ *    @luaparam state State to set invincibility, if omitted defaults to true.
+ * @luafunc setInvincPlayer( p, state )
+ */
+static int pilotL_setInvincPlayer( lua_State *L )
+{
+   Pilot *p;
+   int state;
+
+   /* Get the pilot. */
+   p = luaL_validpilot(L,1);
+
+   /* Get state. */
+   if (lua_gettop(L) > 1)
+      state = lua_toboolean(L, 2);
+   else
+      state = 1;
+
+   /* Set status. */
+   if (state)
+      pilot_setFlag(p, PILOT_INVINC_PLAYER);
+   else
+      pilot_rmFlag(p, PILOT_INVINC_PLAYER);
 
    return 0;
 }
