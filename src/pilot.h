@@ -116,7 +116,8 @@
 #define PILOT_NOJUMP       40 /**< Pilot cannot engage hyperspace engines. */
 #define PILOT_NOLAND       41 /**< Pilot cannot land on stations or planets. */
 #define PILOT_NODEATH      42 /**< Pilot can not die, will stay at 1 armour. */
-#define PILOT_FLAGS_MAX    PILOT_NODEATH+1 /* Maximum number of flags. */
+#define PILOT_INVINC_PLAYER 43 /**< Pilot can not be hurt by the player. */
+#define PILOT_FLAGS_MAX    PILOT_INVINC_PLAYER+1 /* Maximum number of flags. */
 typedef char PilotFlags[ PILOT_FLAGS_MAX ];
 
 /* makes life easier */
