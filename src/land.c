@@ -1253,6 +1253,10 @@ void land( Planet* p, int load )
    /* Create all the windows. */
    land_genWindows( load, 0 );
 
+   /* Hack so that load can run player.takeoff(). */
+   if (load)
+      hooks_run( "load" );
+
    /* Mission forced take off. */
    if (land_takeoff)
       takeoff(0);
