@@ -518,9 +518,6 @@ int load_game( const char* file )
    /* Set loaded. */
    save_loaded = 1;
 
-   /* Run hooks. */
-   hooks_run( "load" );
-
    return 0;
 
 err_doc:
