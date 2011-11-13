@@ -211,7 +211,7 @@ function date()
         misn.osdCreate(osd_title, { string.format(osd_msg1[1], planetname, sysname),
                                     string.format(osd_msg1[2], time.str(deadline1 - time.get())),
                                   })
-    elseif deadline1 >= time.get() and shadowrun == 3 then
+    elseif deadline2 >= time.get() and shadowrun == 3 then
         dateresolution(deadline2)
         misn.osdCreate(osd_title, { osd_msg2[1],
                                     string.format(osd_msg2[2], sysname2, shipname),
