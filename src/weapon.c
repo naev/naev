@@ -833,6 +833,11 @@ static int weapon_checkCanHit( Weapon* w, Pilot *p )
    if (pilot_isFlag(p, PILOT_DEAD))
       return 0;
 
+   /* Player can not hit special pilots. */
+   if ((w->faction == FACTION_PLAYER) &&
+         pilot_isFlag(p, PILOT_INVINC_PLAYER))
+      return 0;
+
    /* Always hit target. */
    if (w->target == p->id)
       return 1;
