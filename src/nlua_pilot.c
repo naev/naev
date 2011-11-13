@@ -742,19 +742,43 @@ static int pilotL_clear( lua_State *L )
 /**
  * @brief Disables or enables pilot spawning in the current system.
  *
- * If player jumps the spawn is enabled again automatically.
+ * If player jumps the spawn is enabled again automatically. Global spawning takes priority over faction spawning.
  *
- * @usage pilot.togglespawn( false )
+ * @usage pilot.togglespawn() -- Defaults to flipping the global spawning (true->false and false->true)
+ * @usage pilot.togglespawn( false ) -- Disables global spawning
+ * @usage pliot.togglespawn( "Pirates" ) -- Defaults to disabling pirate spawning
+ * @usage pilot.togglespawn( "Pirates", true ) -- Turns on pirate spawning
  *
+ *    @luaparam fid Faction to enable or disable spawning off. If ommited it works on global spawning.
  *    @luaparam enable true enables spawn, false disables it.
  *    @luareturn The current spawn state.
- * @luafunc toggleSpawn( enable )
+ * @luafunc toggleSpawn( fid, enable )
  */
 static int pilotL_toggleSpawn( lua_State *L )
 {
+   int i, f, b;
+
    /* Setting it directly. */
-   if ((lua_gettop(L) > 0) && lua_isboolean(L,1))
-      space_spawn = lua_toboolean(L,1);
+   if (lua_gettop(L) > 0) {
+      if (lua_isfaction(L,1) || lua_isstring(L,1)) {
+
+         f = luaL_validfaction(L,1);
+         b = !lua_toboolean(L,2);
+
+         /* Find the faction and set. */
+         for (i=0; i<cur_system->npresence; i++) {
+            if (cur_system->presence[i].faction != f)
+               continue;
+            cur_system->presence[i].disabled = b;
+            break;
+         }
+
+      }
+      else if (lua_isboolean(L,1))
+         space_spawn = lua_toboolean(L,1);
+      else
+         NLUA_INVALID_PARAMETER(L);
+   }
    /* Toggling. */
    else
       space_spawn = !space_spawn;
