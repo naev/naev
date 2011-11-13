@@ -169,6 +169,7 @@ typedef struct SystemPresence_ {
    double value; /**< Amount of presence. */
    double curUsed; /**< Presence currently used. */
    double timer; /**< Current faction timer. */
+   int disabled; /**< Whether or not spawning is disabled for this presence. */
 } SystemPresence;
 
 

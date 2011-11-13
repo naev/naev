@@ -968,6 +968,10 @@ static void system_scheduler( double dt, int init )
       if (L==NULL)
          continue;
 
+      /* Spawning is disabled for this faction. */
+      if (p->disabled)
+         continue;
+
       /* Run the appropriate function. */
       if (init) {
 #if DEBUGGING
@@ -1272,6 +1276,7 @@ void space_init( const char* sysname )
    for (i=0; i < cur_system->npresence; i++) {
       cur_system->presence[i].curUsed  = 0;
       cur_system->presence[i].timer    = 0.;
+      cur_system->presence[i].disabled = 0;
    }
 
    /* Load graphics. */
