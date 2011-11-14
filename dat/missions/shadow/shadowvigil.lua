@@ -292,7 +292,7 @@ function jumpin()
                 chattered = true
             end
             if misssys[3]:jumpDist() <= 2 and misssys[3]:jumpDist() > 0 then -- Encounter
-                ambush = pilot.add(string.format("Shadowvigil Ambush %i", 3 - misssys[3]:jumpDist()), nil, vec2.new(0, 0))
+                ambush = pilot.add(string.format("Shadowvigil Ambush %i", 3 - misssys[3]:jumpDist()), "baddie_norun", vec2.new(0, 0))
                 kills = 0
                 maxkills = #ambush
                 for i, j in ipairs(ambush) do
