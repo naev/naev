@@ -41,7 +41,7 @@ end
 
 
 function create ()
-   -- Note: this mission does not make any mission claims.
+   -- Note: this mission does not make any system claims.
    -- Set up mission variables
    misn_stage = 0
    homeworld, homeworld_sys = planet.getLandable( misn.factions() )
