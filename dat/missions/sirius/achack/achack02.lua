@@ -141,6 +141,7 @@ function land()
       origin = planet.cur()
       destplanet, destsys = planet.get(route[stage])
       joannejumped = true -- She "jumped" into the current system by taking off.
+      misn.osdCreate(osd_title, osd_final)
       player.takeoff()
    elseif stage < 4 then
       tk.msg(destfailtitle, planetfailtext)
