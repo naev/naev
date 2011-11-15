@@ -1006,7 +1006,7 @@ static int pilotL_target( lua_State *L )
 /**
  * @brief Checks to see if pilot is in range of pilot.
  *
- * @usage detected, fuzzy = p:inrange( target )
+ * @usage detected, scanned = p:inrange( target )
  *
  *    @luaparam p Pilot to see if another pilot is in range.
  *    @luareturn Checks to see if the target is detected and if it's scanned.
@@ -1025,15 +1025,15 @@ static int pilotL_inrange( lua_State *L )
    ret = pilot_inRangePilot( p, t );
    if (ret == 1) {
       lua_pushboolean(L,1);
-      lua_pushboolean(L,0);
+      lua_pushboolean(L,1);
    }
    else if (ret == 0) {
       lua_pushboolean(L,0);
-      lua_pushboolean(L,0);
+      lua_pushboolean(L,1);
    }
    else {
       lua_pushboolean(L,1);
-      lua_pushboolean(L,1);
+      lua_pushboolean(L,0);
    }
    return 2;
 }
