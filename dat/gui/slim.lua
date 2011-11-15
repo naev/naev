@@ -606,13 +606,13 @@ function render( dt, dt_mod )
 
    --Target Pane
    if ptarget then
-      ta_detect, ta_fuzzy = pp:inrange( ptarget )
+      ta_detect, ta_scanned = pp:inrange( ptarget )
       if ta_detect then
          --Frame
          gfx.renderTex( target_pane, ta_pane_x, ta_pane_y )
          gfx.renderTex( target_bg, ta_image_x, ta_image_y )
 
-         if not ta_fuzzy then
+         if ta_scanned then
             ptarget_target = ptarget:target()
             ta_armour, ta_shield, ta_stress, ta_disabled = ptarget:health()
             tflags = ptarget:flags()
@@ -641,7 +641,7 @@ function render( dt, dt_mod )
 
          --Text, warning light & other texts
          local htspeed = round(ta_speed / ta_stats.speed_max * 100,0)
-         if not ta_fuzzy then
+         if ta_scanned then
             --Bar Texts
             shi = tostring( round(ta_shield) ) .. "% (" .. tostring(round(ta_stats.shield  * ta_shield / 100)) .. ")"
             arm = tostring( round(ta_armour) ) .. "% (" .. tostring(round(ta_stats.armour  * ta_armour / 100)) .. ")"
