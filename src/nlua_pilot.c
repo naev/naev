@@ -1023,15 +1023,15 @@ static int pilotL_inrange( lua_State *L )
 
    /* Check if in range. */
    ret = pilot_inRangePilot( p, t );
-   if (ret == 1) {
+   if (ret == 1) { /* In range. */
       lua_pushboolean(L,1);
       lua_pushboolean(L,1);
    }
-   else if (ret == 0) {
+   else if (ret == 0) { /* Not in range. */
       lua_pushboolean(L,0);
-      lua_pushboolean(L,1);
+      lua_pushboolean(L,0);
    }
-   else {
+   else { /* Detected fuzzy. */
       lua_pushboolean(L,1);
       lua_pushboolean(L,0);
    }
