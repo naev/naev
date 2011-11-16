@@ -629,7 +629,7 @@ static int playerL_allowLand( lua_State *L )
  *  - equipment<br/>
  *  - commodity<br/>
  *
- * @usage player.landWindow( "outfits" )
+ * @usage player.landwindow( "outfits" )
  *    @luaparam winname Name of the window.
  *    @luareturn True on success.
  * @luafunc landwindow( winname )
