@@ -632,6 +632,18 @@
    <faction>Sirius</faction>
   </avail>
  </mission>
+ <mission name="Joanne's Doubt">
+  <lua>sirius/achack/achack03</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <cond></cond>
+   <chance>10</chance>
+   <location>Bar</location>
+   <faction>Sirius</faction>
+  </avail>
+ </mission>
  <mission name="Kidnapped">
   <lua>neutral/kidnapped/traffic_00</lua>
   <avail>
