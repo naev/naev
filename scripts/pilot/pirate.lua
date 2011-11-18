@@ -71,7 +71,7 @@ function pirate_createKestrel( pirate_create )
    end
 
    -- Equipment vars
-   local primary, secondary, medium, low, apu
+   local primary, secondary, medium, low
    local use_primary, use_secondary, use_medium, use_low
    local nhigh, nmedium, nlow = s:slots()
 
@@ -84,10 +84,9 @@ function pirate_createKestrel( pirate_create )
    addWeapons( secondary, use_secondary )
    medium         = equip_mediumHig()
    low            = equip_lowHig()
-   apu            = equip_apuHig()
 
    -- FInally add outfits
-   equip_ship( p, true, weapons, medium, low, apu,
+   equip_ship( p, true, weapons, medium, low,
                use_medium, use_low, olist )
 
    return p,olist
@@ -114,7 +113,7 @@ function pirate_createAdmonisher( pirate_create )
    end
 
    -- Equipment vars
-   local primary, secondary, medium, low, apu
+   local primary, secondary, medium, low
    local use_primary, use_secondary, use_medium, use_low
    local nhigh, nmedium, nlow = s:slots()
 
@@ -127,10 +126,9 @@ function pirate_createAdmonisher( pirate_create )
    addWeapons( secondary, use_secondary )
    medium         = equip_mediumMed()
    low            = equip_lowMed()
-   apu            = equip_apuMed()
 
    -- Finally add outfits
-      equip_ship( p, true, weapons, medium, low, apu,
+      equip_ship( p, true, weapons, medium, low,
                use_medium, use_low, olist )
 
    return p,olist
@@ -157,7 +155,7 @@ function pirate_createAncestor( pirate_create )
    end
 
    -- Equipment vars
-   local primary, secondary, medium, low, apu
+   local primary, secondary, medium, low
    local use_primary, use_secondary, use_medium, use_low
    local nhigh, nmedium, nlow = s:slots()
 
@@ -170,10 +168,9 @@ function pirate_createAncestor( pirate_create )
    addWeapons( secondary, use_secondary )
    medium         = equip_mediumMed()
    low            = equip_lowMed()
-   apu            = equip_apuLow()
 
    -- Finally add outfits
-   equip_ship( p, true, weapons, medium, low, apu,
+   equip_ship( p, true, weapons, medium, low,
                use_medium, use_low, olist )
 
    return p,olist
@@ -200,7 +197,7 @@ function pirate_createVendetta( pirate_create )
    end
 
    -- Equipment vars
-   local primary, secondary, medium, low, apu
+   local primary, secondary, medium, low
    local use_primary, use_secondary, use_medium, use_low
    local nhigh, nmedium, nlow = s:slots()
 
@@ -213,10 +210,9 @@ function pirate_createVendetta( pirate_create )
    addWeapons( secondary, use_secondary )
    medium         = equip_mediumLow()
    low            = equip_lowLow()
-   apu            = equip_apuMed()
 
    -- Finally add outfits
-   equip_ship( p, true, weapons, medium, low, apu,
+   equip_ship( p, true, weapons, medium, low,
                use_medium, use_low, olist )
 
    return p,olist

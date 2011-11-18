@@ -138,7 +138,7 @@ else
 	misn_cargoamount2 = "4"
 
 	-- the outfit name as in outfit.xml
-	outfit = "Auxiliary Processing Unit I"
+	outfit = "Previous Generation Small Systems"
 end
 
 function create ()

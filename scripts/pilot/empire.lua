@@ -84,7 +84,7 @@ function empire_createPeacemaker( empire_create )
    end
 
    -- Equipment vars
-   local primary, secondary, medium, low, apu
+   local primary, secondary, medium, low
    local use_primary, use_secondary, use_medium, use_low
    local nhigh, nmedium, nlow = s:slots()
 
@@ -97,10 +97,9 @@ function empire_createPeacemaker( empire_create )
    addWeapons( secondary, use_secondary )
    medium         = equip_mediumHig()
    low            = equip_lowHig()
-   apu            = equip_apuHig()
 
    -- Finally add outfits
-   equip_ship( p, true, weapons, medium, low, apu,
+   equip_ship( p, true, weapons, medium, low,
                use_medium, use_low, olist )
 
    return p,olist
@@ -127,7 +126,7 @@ function empire_createHawking( empire_create )
    end
 
    -- Equipment vars
-   local primary, secondary, medium, low, apu
+   local primary, secondary, medium, low
    local use_primary, use_secondary, use_medium, use_low
    local nhigh, nmedium, nlow = s:slots()
 
@@ -140,10 +139,9 @@ function empire_createHawking( empire_create )
    addWeapons( secondary, use_secondary )
    medium         = equip_mediumHig()
    low            = equip_lowHig()
-   apu            = equip_apuHig()
 
    -- Finally add outfits
-   equip_ship( p, true, weapons, medium, low, apu,
+   equip_ship( p, true, weapons, medium, low,
                use_medium, use_low, olist )
 
    return p,olist
@@ -170,7 +168,7 @@ function empire_createPacifier( empire_create )
    end
 
    -- Equipment vars
-   local primary, secondary, medium, low, apu
+   local primary, secondary, medium, low
    local use_primary, use_secondary, use_medium, use_low
    local nhigh, nmedium, nlow = s:slots()
 
@@ -183,10 +181,9 @@ function empire_createPacifier( empire_create )
    addWeapons( secondary, use_secondary )
    medium         = equip_mediumMed()
    low            = equip_lowMed()
-   apu            = equip_apuHig()
 
    -- Finally add outfits
-   equip_ship( p, true, weapons, medium, low, apu,
+   equip_ship( p, true, weapons, medium, low,
                use_medium, use_low, olist )
 
    return p,olist
@@ -212,7 +209,7 @@ function empire_createShark( empire_create )
    end
 
    -- Equipment vars
-   local primary, secondary, medium, low, apu
+   local primary, secondary, medium, low
    local use_primary, use_secondary, use_medium, use_low
    local nhigh, nmedium, nlow = s:slots()
 
@@ -225,10 +222,9 @@ function empire_createShark( empire_create )
    addWeapons( secondary, use_secondary )
    medium         = equip_mediumLow()
    low            = equip_lowLow()
-   apu            = equip_apuLow()
 
    -- Finally add outfits
-   equip_ship( p, true, weapons, medium, low, apu,
+   equip_ship( p, true, weapons, medium, low,
                use_medium, use_low, olist )
 
    return p,olist
@@ -254,7 +250,7 @@ function empire_createLancelot( empire_create )
    end
 
    -- Equipment vars
-   local primary, secondary, medium, low, apu
+   local primary, secondary, medium, low
    local use_primary, use_secondary, use_medium, use_low
    local nhigh, nmedium, nlow = s:slots()
 
@@ -267,10 +263,9 @@ function empire_createLancelot( empire_create )
    addWeapons( secondary, use_secondary )
    medium         = equip_mediumLow()
    low            = equip_lowLow()
-   apu            = equip_apuLow()
 
    -- Finally add outfits
-   equip_ship( p, true, weapons, medium, low, apu,
+   equip_ship( p, true, weapons, medium, low,
                use_medium, use_low, olist )
 
    return p,olist
@@ -296,7 +291,7 @@ function empire_createAdmonisher( empire_create )
    end
 
    -- Equipment vars
-   local primary, secondary, medium, low, apu
+   local primary, secondary, medium, low
    local use_primary, use_secondary, use_medium, use_low
    local nhigh, nmedium, nlow = s:slots()
 
@@ -309,10 +304,9 @@ function empire_createAdmonisher( empire_create )
    addWeapons( secondary, use_secondary )
    medium         = equip_mediumMed()
    low            = equip_lowMed()
-   apu            = equip_apuMed()
 
    -- Finally add outfits
-   equip_ship( p, true, weapons, medium, low, apu,
+   equip_ship( p, true, weapons, medium, low,
                use_medium, use_low, olist )
 
    return p,olist
