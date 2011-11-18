@@ -97,7 +97,6 @@ function empire_createPeacemaker( empire_create )
    addWeapons( secondary, use_secondary )
    medium         = equip_mediumHig()
    low            = equip_lowHig()
-   apu            = equip_apuHig()
 
    -- Finally add outfits
    equip_ship( p, true, weapons, medium, low, apu,
