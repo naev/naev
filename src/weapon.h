@@ -70,9 +70,10 @@ void weapon_exit (void);
 // returns -PI to +PI or 1000. on fail
 double LinearTrajectoryAngle ( double x_,double y_, double vx_,double vy_, double speed_ );
 //AngularTrajectoryAngle
-//uses the velocity diffrence in the targets solid to calc a circular path and return a collision angle for it at speed
-//Probably should be static but may be wanted by the AI for aimming
-double AngularTrajectoryAngle ( Solid* source_, Solid* target_, double speed_ );
+//uses the velocity difference in the targets solid to calc a circular path and return a collision angle for it at the given speed
+//Probably should be static but may be wanted by the AI for aiming
+//could still be improved a lot
+double AngularTrajectoryAngle ( const Vector2d* pos_, const Vector2d* vel_, const Solid* target_, double speed_ );
 
 #endif /* WEAPON_H */
 

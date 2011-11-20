@@ -1148,6 +1148,7 @@ static double weapon_aimTurret( Weapon *w, const Outfit *outfit, const Pilot *pa
    double rdir, lead_angle;
    double weapon_speed;
    double off;
+   int has_targeting_upgrade = 0;
    
    weapon_speed = w->outfit->u.blt.speed;
    if ( (w->outfit->type==OUTFIT_TYPE_AMMO) ||
@@ -1156,14 +1157,38 @@ static double weapon_aimTurret( Weapon *w, const Outfit *outfit, const Pilot *pa
       weapon_speed=w->outfit->u.amm.speed;
    }
 
+   //scan outfits for targeting upgrade
+   {
+      int a;
+      for (a=0; a<parent->outfit_nutility; a++)
+      {
+         if ( outfit_compareTech(parent->outfit_utility[a].outfit, outfit_get("Targeting Array")) )
+         {
+            has_targeting_upgrade=1;
+         }
+      }
+   }
+
    if (pilot_target == NULL)
       return parent->solid->dir;
-   else {
-      rdir = LinearTrajectoryAngle(
-                                    VX(*pos)-VX(pilot_target->solid->pos), VY(*pos)-VY(pilot_target->solid->pos),
-                                    VX(pilot_target->solid->vel) - VX(*vel), VY(pilot_target->solid->vel) - VY(*vel),
-                                    weapon_speed
-                                  );
+   else
+   {
+      if (has_targeting_upgrade)
+      {
+         rdir = AngularTrajectoryAngle(
+                                         pos, vel,
+                                         pilot_target->solid,
+                                         weapon_speed
+                                      );
+      }
+      else
+      {
+         rdir = LinearTrajectoryAngle(
+                                       VX(*pos)-VX(pilot_target->solid->pos), VY(*pos)-VY(pilot_target->solid->pos),
+                                       VX(pilot_target->solid->vel) - VX(*vel), VY(pilot_target->solid->vel) - VY(*vel),
+                                       weapon_speed
+                                     );
+      }
 
       if ( (w->outfit->type!=OUTFIT_TYPE_AMMO) &&
            (w->outfit->type!=OUTFIT_TYPE_TURRET_AMMO) )
@@ -1887,7 +1912,7 @@ double LinearTrajectoryAngle ( double x_,double y_, double vx_,double vy_, doubl
 // Reverts to LinearTrajectoryAngle in cases of straight lines
 //
 // returns 1000.0 on fail
-double AngularTrajectoryAngle ( Solid* source_, Solid* target_, double speed_ )
+double AngularTrajectoryAngle ( const Vector2d* pos_, const Vector2d* vel_, const Solid* target_, double speed_ )
 {
    Vector2d velocity_normal,circle_normal,circle_center,t_circle_normal;
    
@@ -1902,8 +1927,8 @@ double AngularTrajectoryAngle ( Solid* source_, Solid* target_, double speed_ )
    //division by 0 prevention. an angle of 0 results in a straight line
    {
       return LinearTrajectoryAngle(
-               VX(source_->pos)-VX(target_->pos), VY(source_->pos)-VY(target_->pos),
-               VX(target_->vel)-VX(source_->vel), VY(target_->vel)-VY(source_->vel),
+               VX(*pos_)-VX(target_->pos), VY(*pos_)-VY(target_->pos),
+               VX(target_->vel)-VX(*vel_), VY(target_->vel)-VY(*vel_),
                speed_
                                     );
    }
@@ -1948,8 +1973,8 @@ double AngularTrajectoryAngle ( Solid* source_, Solid* target_, double speed_ )
          vect_pset(&t_circle_normal,1,ang_3);
          
          //find the relative position at a given time
-         x = (circle_center.x+(t_circle_normal.x*circle_radius)) - (source_->pos.x+(source_->vel.x*time));
-         y = (circle_center.y+(t_circle_normal.y*circle_radius)) - (source_->pos.y+(source_->vel.y*time));
+         x = (circle_center.x+(t_circle_normal.x*circle_radius)) - (pos_->x+(vel_->x*time));
+         y = (circle_center.y+(t_circle_normal.y*circle_radius)) - (pos_->y+(vel_->y*time));
          
          //The distance of the relative position - (projectile_speed*time) will give
          // the smallest posable distance to target
