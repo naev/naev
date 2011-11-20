@@ -61,11 +61,18 @@ void weapon_clear (void);
 void weapon_exit (void);
 
 // Targeting
+
+// LinearTrajectoryAngle finds the angle to hit a target using a relative position, velocity and projectile speed_
+//
 // x,y = relative position (source-target)
 // vx,vy = relative velocity (target-source)
 // speed_ to find angle for
-// valid returns -PI to +PI 1000.
+// returns -PI to +PI or 1000. on fail
 double LinearTrajectoryAngle ( double x_,double y_, double vx_,double vy_, double speed_ );
+//AngularTrajectoryAngle
+//uses the velocity diffrence in the targets solid to calc a circular path and return a collision angle for it at speed
+//Probably should be static but may be wanted by the AI for aimming
+double AngularTrajectoryAngle ( Solid* source_, Solid* target_, double speed_ );
 
 #endif /* WEAPON_H */
 

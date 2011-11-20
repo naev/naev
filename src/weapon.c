@@ -1148,6 +1148,7 @@ static double weapon_aimTurret( Weapon *w, const Outfit *outfit, const Pilot *pa
    double rdir, lead_angle;
    double weapon_speed;
    double off;
+   
    weapon_speed = w->outfit->u.blt.speed;
    if ( (w->outfit->type==OUTFIT_TYPE_AMMO) ||
         (w->outfit->type==OUTFIT_TYPE_TURRET_AMMO) )
@@ -1156,7 +1157,7 @@ static double weapon_aimTurret( Weapon *w, const Outfit *outfit, const Pilot *pa
    }
 
    if (pilot_target == NULL)
-      parent->solid->dir;
+      return parent->solid->dir;
    else {
       rdir = LinearTrajectoryAngle(
                                     VX(*pos)-VX(pilot_target->solid->pos), VY(*pos)-VY(pilot_target->solid->pos),
@@ -1834,6 +1835,7 @@ static void RotateToNormal ( double* x_, double* y_, double nx_,double ny_ )
   *x_ = x;
 	*y_ = y;
 }
+
 //LinearTrajectoryAngle
 //
 // x_,y_ is the position relative to the source (source - target)
@@ -1874,6 +1876,92 @@ double LinearTrajectoryAngle ( double x_,double y_, double vx_,double vy_, doubl
   RotateToNormal( &new_radial,&vy_, -nx,-ny );
   
   //Return the angle of the velocity
-  return ANGLE(new_radial, -vy_);//not sure whats up with the negative y value :~ :O maybe its all the wrongway around
+  return ANGLE(new_radial, -vy_);//not sure whats up with the negative y value
 }
 
+//AngularTrajectoryAngle
+//
+// calculates the angle that a projectile of speed fired from source at target must take
+// Uses angular tracking to attempt orbital path prediction
+//
+// Reverts to LinearTrajectoryAngle in cases of straight lines
+//
+// returns 1000.0 on fail
+double AngularTrajectoryAngle ( Solid* source_, Solid* target_, double speed_ )
+{
+   Vector2d velocity_normal,circle_normal,circle_center,t_circle_normal;
+   
+   
+   //velocity_normal is the normal of the difference between the targets 2 velocity so can describe a circle
+   vect_pset(
+               &velocity_normal, 1.,
+               angle_diff(target_->avg_vel.angle,target_->vel.angle) / AVERAGE_VELOCITY_TIME
+            );
+   
+   if (fabs(velocity_normal.angle)<=0.0174532925199433)//0.0174532925199433=1 degrees  0.0872664625997165=5 and 0.1745329251994329=10
+   //division by 0 prevention. an angle of 0 results in a straight line
+   {
+      return LinearTrajectoryAngle(
+               VX(source_->pos)-VX(target_->pos), VY(source_->pos)-VY(target_->pos),
+               VX(target_->vel)-VX(source_->vel), VY(target_->vel)-VY(source_->vel),
+               speed_
+                                    );
+   }
+   else
+   {
+      const int loops = 15;
+      int l;
+      double ang_1,ang_2,ang_3;//angles
+      double revolution_time,circle_radius;
+      double time,distence;
+      double x,y;
+      
+      revolution_time = fabs((M_PI*2.0)/velocity_normal.angle);
+      //targets speed * time_to_compleat_circle = circle_length then convert to radius
+      circle_radius = (target_->vel.mod*revolution_time) / (M_PI*2.0d);
+      
+      //Calc the normal from the circle center to the targets pos
+      //The circle_normal.angle is the angle at time=0 (start_angle)
+      //NOTE: + angles are anticlockwise ! Why ??? My poor poor brain
+      if (velocity_normal.angle>0.0)//turn the opposit way to velocity_normal to point out from center
+         circle_normal.angle = (target_->vel.angle-(M_PI*0.5));
+      else
+         circle_normal.angle = (target_->vel.angle+(M_PI*0.5));
+      vect_pset(&circle_normal,1.0,circle_normal.angle);
+      
+      //calc the circles center
+      vect_cset (
+                  &circle_center,//circle_normal is from circle_center so must be - from position
+                  target_->pos.x - (circle_normal.x*circle_radius),
+                  target_->pos.y - (circle_normal.y*circle_radius)
+                );
+      
+      ang_1=circle_normal.angle;//start angle is at a time 0 and thus a certain undershoot
+      ang_2=ang_1-(M_PI*1.);// a guess at an overshoot. if its not 1/2 a circle would probably be a miss anyway
+      if (velocity_normal.angle>0.0d) ang_2 = ang_1+(M_PI*1.);
+      
+      for ( l=0; l<loops; l++)
+      {
+         //find the half way position
+         ang_3 =(ang_1+ang_2)/2.0;
+         time = fabs((ang_3-circle_normal.angle)/velocity_normal.angle);
+         vect_pset(&t_circle_normal,1,ang_3);
+         
+         //find the relative position at a given time
+         x = (circle_center.x+(t_circle_normal.x*circle_radius)) - (source_->pos.x+(source_->vel.x*time));
+         y = (circle_center.y+(t_circle_normal.y*circle_radius)) - (source_->pos.y+(source_->vel.y*time));
+         
+         //The distance of the relative position - (projectile_speed*time) will give
+         // the smallest posable distance to target
+         // values < 0 indicate overshoot > 0 undershoot and 0 == a dead hit. hugh dead, get it ?
+         distence = sqrt((x*x)+(y*y)) - (speed_*time);
+         if (distence>0.0) ang_1=ang_3; else ang_2=ang_3;
+         if (distence==0.0) l=loops;
+      }
+      //do accuracy check as a can we hit guide
+      //25 seams like a long way out :? whats the size of the biggest ship ?
+      if (fabs(distence)>25.0) return 1000.;
+      
+      return ANGLE(x,y);
+   }
+}
