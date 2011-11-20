@@ -298,6 +298,17 @@ static void solid_update_euler (Solid *obj, const double dt)
    /* Update position and velocity. */
    vect_cset( &obj->vel, vx, vy );
    vect_cset( &obj->pos, px, py );
+   
+   /*Calc average velocity*/
+   double avg_mod = AVERAGE_VELOCITY_MOD*dt;//the avg_mod must never be greater than 1.0
+   //this clamping will cause an inacuracy if the frame rate spikes above AVERAGE_VELOCITY_TIME
+   //this will only cause lag of AVERAGE_VELOCITY_TIME as where not clamping could cause huge problems
+   if (avg_mod>1.0) avg_mod=1.0;
+   obj->avg_vel.x *= (1.0-avg_mod);
+   obj->avg_vel.x += (obj->vel.x*avg_mod);
+   obj->avg_vel.y *= (1.0-avg_mod);
+   obj->avg_vel.y += (obj->vel.y*avg_mod);
+   vect_cset(&obj->avg_vel,obj->avg_vel.x,obj->avg_vel.y);
 }
 
 
@@ -406,6 +417,17 @@ static void solid_update_rk4 (Solid *obj, const double dt)
       obj->dir -= 2.*M_PI;
    else if (obj->dir < 0.)
       obj->dir += 2.*M_PI;
+   
+   /*Calc average velocity*/
+   double avg_mod = AVERAGE_VELOCITY_MOD*dt;//the avg_mod must never be greater than 1.0
+   //this clamping will cause an inacuracy if the frame rate spikes above AVERAGE_VELOCITY_TIME
+   //this will only cause lag of AVERAGE_VELOCITY_TIME as where not clamping could cause huge problems
+   if (avg_mod>1.0) avg_mod=1.0;
+   obj->avg_vel.x *= (1.0-avg_mod);
+   obj->avg_vel.x += (obj->vel.x*avg_mod);
+   obj->avg_vel.y *= (1.0-avg_mod);
+   obj->avg_vel.y += (obj->vel.y*avg_mod);
+   vect_cset(&obj->avg_vel,obj->avg_vel.x,obj->avg_vel.y);
 }
 
 
@@ -447,9 +469,15 @@ void solid_init( Solid* dest, const double mass, const double dir,
 
    /* Set velocity. */
    if (vel == NULL)
+   {
       vectnull( &dest->vel );
+      vectnull( &dest->avg_vel );
+   }
    else
+   {
       vectcpy( &dest->vel, vel );
+      vectcpy( &dest->avg_vel, vel );
+   }
 
    /* Set position. */
    if (pos == NULL)
