@@ -60,6 +60,12 @@ void weapons_render( const WeaponLayer layer, const double dt );
 void weapon_clear (void);
 void weapon_exit (void);
 
+// Targeting
+// x,y = relative position (source-target)
+// vx,vy = relative velocity (target-source)
+// speed_ to find angle for
+// valid returns -PI to +PI 1000.
+double LinearTrajectoryAngle ( double x_,double y_, double vx_,double vy_, double speed_ );
 
 #endif /* WEAPON_H */
 

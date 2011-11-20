@@ -146,6 +146,9 @@ void weapon_minimap( const double res, const double w,
 static void weapon_setThrust( Weapon *w, double thrust );
 static void weapon_setTurn( Weapon *w, double turn );
 
+// math
+static void RotateToNormal ( double* x_, double* y_, double nx_,double ny_ );
+
 
 /**
  * @brief Draws the minimap weapons (used in player.c).
@@ -1818,4 +1821,56 @@ static void weapon_explodeLayer( WeaponLayer layer,
    }
 }
 
+//this is just a hacked up matrix
+//there should be at least some 3X3 matrix utility in physics which is where this should be
+//if normal has a distence > 1 then scaling will take effect
+static void RotateToNormal ( double* x_, double* y_, double nx_,double ny_ )
+{
+	double x = (  nx_ * *x_) + (ny_* *y_);
+	double y = ((-ny_)* *x_) + (nx_* *y_);
+  *x_ = x;
+	*y_ = y;
+}
+//LinearTrajectoryAngle
+//
+// x_,y_ is the position relative to the source (source - target)
+// vx_,vy_ is the velocity relative to the target (target - source)
+// speed_ is the speed of the projectile you want the angle for
+//
+//returns 1000.0 on fail (pos has no distance, speed_<=0 or target outruns projectile).
+//as good as any other. good results should range from -PI to +PI
+double LinearTrajectoryAngle ( double x_,double y_, double vx_,double vy_, double speed_ )
+{
+  if (speed_<=0.0) return 1000.0;
+  
+  // vars needed for targeting calculation
+  double dis = sqrt((x_*x_) + (y_*y_));
+  if (dis<=0.0) return 1000.0;//ships in same position. cant miss. avoid throw from division by 0
+  
+  //Calc Normal
+  double nx = x_/dis;
+  double ny = y_/dis;
+  
+  //Rotate the velocity into relative_space making x=radial_speed and y=perpendicular_speed
+  RotateToNormal( &vx_,&vy_, nx,ny );
+  
+  //compute new value for vx to find projectiles velocity vector.
+  //We dont care about knowing collision time or position all we need is a vector to that point
+  //squaring numbers will force positive values and calculate + radial_speed thus finding the
+  //nearest collision point. A negative value for vx could result in a 2nd point at a later time (:~ i think).
+  double new_radial = sqrt( (speed_*speed_) - (vy_*vy_) );
+  
+  //if the perpendicular_speed is greater then the projectile speed a collision is not posable
+  if (fabs(vy_)>speed_) return 1000.0;
+  //if they are = then it depends on the relative radial to do all the work.
+  //The relative radial should be checked against new_radial.
+  //If the relative is negative after adding the new_radial then they still wont collide
+  if ((vx_+new_radial)<=0.0) return 1000.0;
+  
+  //Rotate new velocity back to game_space using the reverse normal
+  RotateToNormal( &new_radial,&vy_, -nx,-ny );
+  
+  //Return the angle of the velocity
+  return ANGLE(new_radial, -vy_);//not sure whats up with the negative y value :~ :O maybe its all the wrongway around
+}
 
