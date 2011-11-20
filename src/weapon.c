@@ -1160,9 +1160,9 @@ static double weapon_aimTurret( Weapon *w, const Outfit *outfit, const Pilot *pa
    //scan outfits for targeting upgrade
    {
       int a;
-      for (a=0; a<parent->outfit_nutility; a++)
+      for (a=0; a<parent->outfit_nstructure; a++)
       {
-         if ( outfit_compareTech(parent->outfit_utility[a].outfit, outfit_get("Targeting Array")) )
+         if ( outfit_compareTech(parent->outfit_structure[a].outfit, outfit_get("Targeting Array")) )
          {
             has_targeting_upgrade=1;
          }
