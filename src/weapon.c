@@ -1122,7 +1122,7 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
  * @brief Gets the aim position of a turret weapon.
  *
  *    @param w Weapon aiming.
- *    @param outfit Weapon outfit.
+ *    @param outfit that spawned the Weapon.
  *    @param parent Parent of the weapon.
  *    @param pilot_target Target of the weapon.
  *    @param pos Position of the turret.
@@ -1133,64 +1133,48 @@ static double weapon_aimTurret( Weapon *w, const Outfit *outfit, const Pilot *pa
       const Pilot *pilot_target, const Vector2d *pos, const Vector2d *vel, double dir,
       double swivel )
 {
-   Vector2d approach_vector, relative_location;
+   Vector2d relative_location;
    double rdir, lead_angle;
-   double speed, radial_speed;
-   double x, y, t, dist;
+   double weapon_speed;
    double off;
+   weapon_speed = w->outfit->u.blt.speed;
+   if ( (w->outfit->type==OUTFIT_TYPE_AMMO) ||
+        (w->outfit->type==OUTFIT_TYPE_TURRET_AMMO) )
+   {
+      weapon_speed=w->outfit->u.amm.speed;
+   }
 
    if (pilot_target == NULL)
-      rdir        = dir;
+      parent->solid->dir;
    else {
-      /* Get the distance */
-      dist = vect_dist( pos, &pilot_target->solid->pos );
-      vect_cset( &relative_location, VX(pilot_target->solid->pos) - VX(parent->solid->pos),
-            VY(pilot_target->solid->pos) - VY(parent->solid->pos) );
+      rdir = LinearTrajectoryAngle(
+                                    VX(*pos)-VX(pilot_target->solid->pos), VY(*pos)-VY(pilot_target->solid->pos),
+                                    VX(pilot_target->solid->vel) - VX(*vel), VY(pilot_target->solid->vel) - VY(*vel),
+                                    weapon_speed
+                                  );
 
-      /* Aim. */
-      if (dist > outfit->u.blt.range*1.2) {
-         x = pilot_target->solid->pos.x - pos->x;
-         y = pilot_target->solid->pos.y - pos->y;
-      }
-      else {
-         /* Try to predict where the enemy will be. */
-         /* determine the radial, or approach speed */
-         vect_cset( &approach_vector, VX(parent->solid->vel) - VX(pilot_target->solid->vel),
-               VY(parent->solid->vel) - VY(pilot_target->solid->vel) );
-
-         radial_speed = vect_dot( &approach_vector, &relative_location );
-         radial_speed = radial_speed / VMOD(relative_location);
-
-         speed = w->outfit->u.blt.speed;
-
-         /* Time for shots to reach that distance */
-         /* if the target is not hittable (ie, fleeing faster than our shots can fly), just face the target */
-         if((speed+radial_speed) > 0)
-            t = dist / (speed + radial_speed);
-         else
-            t = 0;
-
-         /* Position is calculated on where it should be */
-         x = (pilot_target->solid->pos.x + pilot_target->solid->vel.x*t)
-            - (pos->x + vel->x*t);
-         y = (pilot_target->solid->pos.y + pilot_target->solid->vel.y*t)
-            - (pos->y + vel->y*t);
-      }
-
-      /* Set angle to face. */
-      rdir = ANGLE(x, y);
-
-      /* Lead angle is determined from ewarfare. */
-      lead_angle = M_PI*pilot_ewWeaponTrack( parent, pilot_target, outfit->u.blt.track );
-
-      /*only do this if the lead angle is implemented; save compute cycled on fixed weapons*/
-      if (fabs( angle_diff(ANGLE(x, y), VANGLE(relative_location)) ) > lead_angle) {
-
-         /* the target is moving too fast for the turret to keep up */
-         if (ANGLE(x, y) < VANGLE(relative_location))
-            rdir = angle_diff(lead_angle, VANGLE(relative_location));
-         else
-            rdir = angle_diff(-1*lead_angle, VANGLE(relative_location));
+      if ( (w->outfit->type!=OUTFIT_TYPE_AMMO) &&
+           (w->outfit->type!=OUTFIT_TYPE_TURRET_AMMO) )
+      //there is no tracking speed for lunchers and if there was it would be stored differently (w->outfit->u.blt.track)
+      {
+         /* Lead angle is determined from ewarfare. */
+         lead_angle = M_PI*pilot_ewWeaponTrack( parent, pilot_target, w->outfit->u.blt.track );
+   
+         vect_cset(
+                     &relative_location,
+                     VX(pilot_target->solid->pos) - VX(parent->solid->pos),
+                     VY(pilot_target->solid->pos) - VY(parent->solid->pos)
+                  );
+         
+         /*only do this if the lead angle is implemented; save compute cycled on fixed weapons*/
+         if (fabs( angle_diff(rdir, VANGLE(relative_location)) ) > lead_angle) {
+   
+            /* the target is moving too fast for the turret to keep up */
+            if (rdir < VANGLE(relative_location))
+               rdir = angle_diff(lead_angle, VANGLE(relative_location));
+            else
+               rdir = angle_diff(-lead_angle, VANGLE(relative_location));
+         }
       }
 
       /* Calculate bounds. */
