@@ -1290,8 +1290,15 @@ static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
       pilot_target = pilot_get(w->target);
       rdir = weapon_aimTurret( w, outfit, parent, pilot_target, pos, vel, dir, M_PI );
    }
-   else {
-      rdir        = dir;
+   else
+   {
+      if (outfit->u.lau.arc>0.0)
+      {
+        pilot_target = pilot_get(w->target);
+        rdir = weapon_aimTurret( w, outfit, parent, pilot_target, pos, vel, dir, outfit->u.lau.arc );
+      }
+      else
+         rdir        = dir;
    }
    /*if (outfit->u.amm.accuracy != 0.) {
       rdir += RNG_2SIGMA() * outfit->u.amm.accuracy/2. * 1./180.*M_PI;
@@ -1305,13 +1312,13 @@ static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
 
    /* If thrust is 0. we assume it starts out at speed. */
    vectcpy( &v, vel );
-   if (outfit->u.amm.thrust == 0.)
+   if (w->outfit->u.amm.thrust == 0.)
       vect_cadd( &v, cos(rdir) * w->outfit->u.amm.speed,
             sin(rdir) * w->outfit->u.amm.speed );
 
    /* Set up ammo details. */
    mass        = w->outfit->mass;
-   w->timer    = outfit->u.amm.duration;
+   w->timer    = w->outfit->u.amm.duration;
    w->solid    = solid_create( mass, rdir, pos, &v, SOLID_UPDATE_RK4 );
    if (w->outfit->u.amm.thrust != 0.)
       weapon_setThrust( w, w->outfit->u.amm.thrust * mass );
@@ -1368,11 +1375,12 @@ static Weapon* weapon_create( const Outfit* outfit, double T,
    w->parent   = parent->id; /* non-changeable */
    w->target   = target; /* non-changeable */
    w->outfit   = outfit; /* non-changeable */
+   if (outfit_isLauncher(outfit)) w->outfit = outfit->u.lau.ammo;//well almost not changeable !
    w->update   = weapon_update;
    w->status   = WEAPON_STATUS_OK;
    w->strength = 1.;
 
-   switch (outfit->type) {
+   switch ( w->outfit->type) {
 
       /* Bolts treated together */
       case OUTFIT_TYPE_BOLT:
@@ -1448,7 +1456,7 @@ void weapon_add( const Outfit* outfit, const double T, const double dir,
    GLsizei size;
 
    if (!outfit_isBolt(outfit) &&
-         !outfit_isAmmo(outfit)) {
+         !outfit_isLauncher(outfit)) {
       ERR("Trying to create a Weapon from a non-Weapon type Outfit");
       return;
    }
