@@ -621,12 +621,13 @@ double outfit_cpu( const Outfit* o )
  * @brief Gets the outfit's range.
  *    @param o Outfit to get information from.
  */
+//dose not take into account radial speed so is very inaccurate
 double outfit_range( const Outfit* o )
 {
    Outfit *amm;
    if (outfit_isBolt(o)) return o->u.blt.falloff + (o->u.blt.range - o->u.blt.falloff)/2.;
    else if (outfit_isBeam(o)) return o->u.bem.range;
-   else if (outfit_isAmmo(o)) return 0.8*o->u.amm.speed*o->u.amm.duration;
+   else if (outfit_isAmmo(o)) return /*0.8**/o->u.amm.speed*o->u.amm.duration;
    else if (outfit_isLauncher(o)) {
       amm = outfit_ammo(o);
       if (amm != NULL)
@@ -644,6 +645,7 @@ double outfit_range( const Outfit* o )
 double outfit_speed( const Outfit* o )
 {
    if (outfit_isBolt(o)) return o->u.blt.speed;
+   else if (outfit_isLauncher(o) && (o->u.lau.ammo!=0)) return o->u.lau.ammo->u.amm.speed;
    else if (outfit_isAmmo(o)) return o->u.amm.speed;
    return -1.;
 }
