@@ -312,11 +312,9 @@ static void weapon_setTurn( Weapon *w, double turn )
  */
 static void think_seeker( Weapon* w, const double dt )
 {
-   double diff;
-   double vel;
+   double diff,vel;
    Pilot *p;
-   Vector2d v;
-   double t, turn_max;
+   double a, turn_max;
 
    if (w->target == w->parent)
       return; /* no self shooting */
@@ -336,24 +334,37 @@ static void think_seeker( Weapon* w, const double dt )
       case WEAPON_STATUS_UNJAMMED: /* Work as expected */
 
          /* Smart seekers take into account ship velocity. */
-         if (w->outfit->u.amm.ai == 2) {
-
-            /* Calculate time to reach target. */
-            vect_cset( &v, p->solid->pos.x - w->solid->pos.x,
-                  p->solid->pos.y - w->solid->pos.y );
-            t = vect_odist( &v ) / w->outfit->u.amm.speed;
-
-            /* Calculate target's movement. */
-            vect_cset( &v, v.x + t*(p->solid->vel.x - w->solid->vel.x),
-                  v.y + t*(p->solid->vel.y - w->solid->vel.y) );
-
-            /* Get the angle now. */
-            diff = angle_diff(w->solid->dir, VANGLE(v) );
+         if (w->outfit->u.amm.ai == 2)
+         {
+            //this gives the the desired direction of travel but not the angle to achieve it
+            a=LinearTrajectoryAngle(
+                                       w->solid->pos.x-p->solid->pos.x, w->solid->pos.y-p->solid->pos.y,
+                                       p->solid->vel.x/*-w->solid->vel.x*/, p->solid->vel.y/*-w->solid->vel.y*/,//dont remove weapons current velocity as thats what were trying to calc
+                                       w->outfit->u.amm.speed
+                                    );
+            if (a==1000.0)
+            {
+               //fallback on stupid tracking if LinearTrajectoryAngle Fails
+               //even if the targets out running us we should still
+               //track it as it may change direction
+               diff = angle_diff(w->solid->dir, /* Get angle to target pos */
+                                 vect_angle(&w->solid->pos, &p->solid->pos));
+            }
+            else
+            {
+               diff = angle_diff(w->solid->dir, a );
+            }
+            diff*=2.0;
+            //If we double the diff we should cancel out our current velocity faster.
+            //The quickest way to do this would be to aim 90 degrease from our velocity's angle
+            //but that would lead to over turning (zig zagging) so this is probably better
+            //This should make even the worst version of smart better than stupid seekers
          }
          /* Other seekers are stupid. */
-         else {
+         else
+         {
             diff = angle_diff(w->solid->dir, /* Get angle to target pos */
-                  vect_angle(&w->solid->pos, &p->solid->pos));
+                              vect_angle(&w->solid->pos, &p->solid->pos));
          }
 
          /* Set turn. */
