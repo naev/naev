@@ -1774,7 +1774,7 @@
  <outfit name="Unicorp Caesar IV Launcher">
   <general>
    <slot>weapon</slot>
-   <size>medium</size>
+   <size>heavy</size>
    <license>Heavy Weapon License</license>
    <mass>30</mass>
    <price>120000</price>
@@ -1821,7 +1821,7 @@
  <outfit name="TeraCom Imperator Launcher">
   <general>
    <slot>weapon</slot>
-   <size>medium</size>
+   <size>heavy</size>
    <license>Heavy Weapon License</license>
    <mass>40</mass>
    <price>220000</price>
