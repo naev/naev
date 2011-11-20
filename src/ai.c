@@ -2181,7 +2181,7 @@ static int aiL_aim( lua_State *L )
 
    /* Calculate what we need to turn */
    mod = 10.;
-   diff = angle_diff(cur_pilot->solid->dir, VANGLE(tv));
+   diff = angle_diff(cur_pilot->solid->dir, angle);
    pilot_turn = mod * diff;
 
    /* Return distance to target (in grad) */
