@@ -1162,9 +1162,12 @@ static double weapon_aimTurret( Weapon *w, const Outfit *outfit, const Pilot *pa
       int a;
       for (a=0; a<parent->outfit_nstructure; a++)
       {
-         if ( outfit_compareTech(parent->outfit_structure[a].outfit, outfit_get("Targeting Array")) )
+         if (parent->outfit_structure[a].outfit!=0)
          {
-            has_targeting_upgrade=1;
+            if ( strcmp (parent->outfit_structure[a].outfit->name,"Targeting Array" ) == 0 )
+            {
+               has_targeting_upgrade=1;
+            }
          }
       }
    }
@@ -1943,16 +1946,16 @@ double AngularTrajectoryAngle ( const Vector2d* pos_, const Vector2d* vel_, cons
       
       revolution_time = fabs((M_PI*2.0)/velocity_normal.angle);
       //targets speed * time_to_compleat_circle = circle_length then convert to radius
-      circle_radius = (target_->vel.mod*revolution_time) / (M_PI*2.0d);
+      circle_radius = (target_->vel.mod*revolution_time) / (M_PI*2.);
       
       //Calc the normal from the circle center to the targets pos
       //The circle_normal.angle is the angle at time=0 (start_angle)
       //NOTE: + angles are anticlockwise ! Why ??? My poor poor brain
-      if (velocity_normal.angle>0.0)//turn the opposit way to velocity_normal to point out from center
+      if (velocity_normal.angle>0.)//turn the opposit way to velocity_normal to point out from center
          circle_normal.angle = (target_->vel.angle-(M_PI*0.5));
       else
          circle_normal.angle = (target_->vel.angle+(M_PI*0.5));
-      vect_pset(&circle_normal,1.0,circle_normal.angle);
+      vect_pset(&circle_normal,1.,circle_normal.angle);
       
       //calc the circles center
       vect_cset (
@@ -1963,12 +1966,12 @@ double AngularTrajectoryAngle ( const Vector2d* pos_, const Vector2d* vel_, cons
       
       ang_1=circle_normal.angle;//start angle is at a time 0 and thus a certain undershoot
       ang_2=ang_1-(M_PI*1.);// a guess at an overshoot. if its not 1/2 a circle would probably be a miss anyway
-      if (velocity_normal.angle>0.0d) ang_2 = ang_1+(M_PI*1.);
+      if (velocity_normal.angle>0.) ang_2 = ang_1+(M_PI*1.);
       
       for ( l=0; l<loops; l++)
       {
          //find the half way position
-         ang_3 =(ang_1+ang_2)/2.0;
+         ang_3 =(ang_1+ang_2)/2.;
          time = fabs((ang_3-circle_normal.angle)/velocity_normal.angle);
          vect_pset(&t_circle_normal,1,ang_3);
          
