@@ -123,6 +123,7 @@
   <colour>grey50</colour>
   <player>1</player>
   <lua>thurion</lua>
+  <spawn>thurion</spawn>
   <enemies>
    <enemy>Pirate</enemy>
   </enemies>
