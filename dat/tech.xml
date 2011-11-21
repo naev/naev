@@ -81,6 +81,11 @@
   <item>Imperator Torpedo</item>
   <item>EMP Grenade Launcher</item>
   <item>EMP Grenade</item>
+  <item>Unicorp Medusa Launcher</item>
+  <item>TeraCom Medusa Launcher</item>
+  <item>Medusa Missile</item>
+  <item>Enygma Systems Spearhead Launcher</item>
+  <item>Spearhead Missile</item>
   <item>Battery</item>
   <item>Battery II</item>
   <item>Battery III</item>
@@ -177,6 +182,13 @@
   <item>Sirius Divinity</item>
   <item>Sirius Dogma</item>
   <item>Thurion Ingenuity</item>
+  <item>Soromid Brigand</item>
+  <item>Soromid Reaver</item>
+  <item>Soromid Marauder</item>
+  <item>Soromid Odium</item>
+  <item>Soromid Nyx</item>
+  <item>Soromid Ira</item>
+  <item>Soromid Arx</item>
   <item>Vendetta</item>
   <item>Vigilance</item>
  </tech>
@@ -286,6 +298,8 @@
   <item>Unicorp Jammer</item>
   <item>Large Civilian Vessel License</item>
   <item>GUI - Brushed</item>
+  <item>Unicorp Medusa Launcher</item>
+  <item>Medusa Missile</item>
   </tech>
  <tech name="Heavy Weapons 1">
   <item>Laser Turret MK1</item>
@@ -296,6 +310,8 @@
   <item>Ripper Cannon</item>
   <item>EMP Grenade Launcher</item>
   <item>EMP Grenade</item>
+  <item>Enygma Systems Spearhead Launcher</item>
+  <item>Spearhead Missile</item>
   <item>Medium Weapon License</item>
   <item>Medium Combat Vessel License</item>
   </tech>
@@ -382,6 +398,8 @@
   <item>Banshee Rocket</item>
   <item>Unicorp Fury Launcher</item>
   <item>Fury Missile</item>
+  <item>Unicorp Medusa Launcher</item>
+  <item>Medusa Missile</item>
  </tech>
  <tech name="Missiles 2">
   <item>Unicorp Headhunter Launcher</item>
@@ -390,6 +408,10 @@
   <item>Mace Rocket</item>
   <item>Unicorp Caesar IV Launcher</item>
   <item>Caesar IV Torpedo</item>
+  <item>Enygma Systems Spearhead Launcher</item>
+  <item>Spearhead Missile</item>
+  <item>TeraCom Medusa Launcher</item>
+  <item>Medusa Missile</item>
  </tech>
 
  <!-- Ships -->

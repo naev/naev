@@ -59,7 +59,7 @@ function create ()
         abort()
     end
 
-   misn.setNPC( "Keer", "keer" )
+   misn.setNPC( "Keer", "empire/unique/keer" )
    misn.setDesc( bar_desc )
 end
 
@@ -144,6 +144,7 @@ function jump ()
                 fleetC[#fleetC + 1] = pilot.add("Trinity", nil, fleetCpos + vec2.new(300, 0))[1]
                 hook.pilot(fleetC[#fleetC], "death", "col_dead")
                 fleetC[#fleetC]:setNodisable()
+                fleetC[#fleetC]:setFaction( "Collective" )
             end
             droneC = addShips("Collective Drone", nil, fleetCpos, 60)
             

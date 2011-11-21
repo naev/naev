@@ -180,7 +180,7 @@ function wakeUpGregarYouLazyBugger()
     if not flfdead then
         tk.msg(title[2], text[2])
         tk.msg(title[2], text[3])
-        faction.get("FLF"):modPlayerSingle(100)
+        faction.get("FLF"):modPlayerSingle(105) -- Small buffer to ensure it doesn't go negative again right away.
         misn.osdCreate(misn_title, {osd_desc[1]:format(destsysname), osd_adddesc, osd_desc[2]})
         misn.osdActive(2)
         hook.timer(2000, "annai")
@@ -215,6 +215,11 @@ function spawnbase()
     end
     if mindist < 1000 then
         diff.apply("FLF_base")
+        
+        -- Safety measure to ensure the player can land.
+        base = planet.get("Sindbad")
+        base:landOverride()
+        
         basefound = true
         hook.rm(OORT)
     else

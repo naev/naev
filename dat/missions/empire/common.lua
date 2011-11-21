@@ -13,10 +13,10 @@
 --]]
 function emp_getOfficialRandomPortrait ()
    local portraits = {
-      "empire1",
-      "empire2",
-      "empire3",
-      "empire4"
+      "empire/empire1",
+      "empire/empire2",
+      "empire/empire3",
+      "empire/empire4"
    }
 
    return portraits[ rnd.rnd( 1, #portraits ) ]

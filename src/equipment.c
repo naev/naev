@@ -31,17 +31,18 @@
 #include "land_outfits.h"
 #include "player_gui.h"
 #include "info.h"
+#include "shipstats.h"
 #include "tk/toolkit_priv.h" /* Yes, I'm a bad person, abstractions be damned! */
 
 
 /* global/main window */
-#define BUTTON_WIDTH 200 /**< Default button width. */
-#define BUTTON_HEIGHT 40 /**< Default button height. */
+#define BUTTON_WIDTH    200 /**< Default button width. */
+#define BUTTON_HEIGHT   40 /**< Default button height. */
 
-#define SHIP_ALT_MAX 256 /**< Maximum ship alt text. */
+#define SHIP_ALT_MAX    256 /**< Maximum ship alt text. */
 
-#define SETGUI_WIDTH      400 /**< Load window width. */
-#define SETGUI_HEIGHT     300 /**< Load window height. */
+#define SETGUI_WIDTH    400 /**< Load window width. */
+#define SETGUI_HEIGHT   300 /**< Load window height. */
 
 
 /*
@@ -352,6 +353,8 @@ static void equipment_renderColumn( double x, double y, double w, double h,
             dc = &cFontRed;
          else if (level == 1)
             dc = &cFontYellow;
+         else if (lst[i].active)
+            dc = &cFontBlue;
          else
             dc = &cInert;
       }
@@ -885,8 +888,28 @@ static int equipment_mouseColumn( unsigned int wid, SDL_Event* event,
          /* See if we should add it or remove it. */
          if (exists==level)
             pilot_weapSetRm( p, wgt->weapons, &os[ret] );
-         else
-            pilot_weapSetAdd( p, wgt->weapons, &os[ret], level );
+         else {
+            /* This is a bloody awful place to do this. I hate it. HATE!. */
+            /* Case active outfit, convert the weapon group to active outfit. */
+            if ((os->slot.type == OUTFIT_SLOT_STRUCTURE) ||
+               (os->slot.type == OUTFIT_SLOT_UTILITY)) {
+               pilot_weapSetRmSlot( p, wgt->weapons, OUTFIT_SLOT_WEAPON );
+               pilot_weapSetAdd( p, wgt->weapons, &os[ret], 0 );
+               pilot_weapSetType( p, wgt->weapons, WEAPSET_TYPE_ACTIVE );
+            }
+            /* Case change weapon groups or active weapon. */
+            else {
+               pilot_weapSetRmSlot( p, wgt->weapons, OUTFIT_SLOT_STRUCTURE );
+               pilot_weapSetRmSlot( p, wgt->weapons, OUTFIT_SLOT_UTILITY );
+               if (pilot_weapSetTypeCheck( p, wgt->weapons) == WEAPSET_TYPE_CHANGE)
+                  pilot_weapSetType( p, wgt->weapons, WEAPSET_TYPE_CHANGE );
+               else {
+                  pilot_weapSetType( p, wgt->weapons, WEAPSET_TYPE_WEAPON );
+                  level = 0;
+               }
+               pilot_weapSetAdd( p, wgt->weapons, &os[ret], level );
+            }
+         }
          p->autoweap = 0; /* Disable autoweap. */
          info_update(); /* Need to update weapons. */
       }
@@ -1172,13 +1195,68 @@ void equipment_addAmmo (void)
 
 
 /**
+ * @brief Creates and allocates a string containing the ship stats.
+ *
+ *    @param buf Buffer to write to.
+ *    @param max_len Maximum length of the string to allocate.
+ *    @param s Pilot to get stats of.
+ *    @param dpseps Whether or not to display dps and eps.
+ */
+int equipment_shipStats( char *buf, int max_len,  const Pilot *s, int dpseps )
+{
+   int j, l;
+   Outfit *o;
+   double mod_energy, mod_damage, mod_shots;
+   double eps, dps, shots;
+   const Damage *dmg;
+
+   dps = 0.;
+   eps = 0.;
+   /* Calculate damage and energy per second. */
+   if (dpseps) {
+      for (j=0; j<s->noutfits; j++) {
+         o = s->outfits[j]->outfit;
+         if (o==NULL)
+            continue;
+         switch (o->type) {
+            case OUTFIT_TYPE_BOLT:
+               mod_energy = s->stats.fwd_energy;
+               mod_damage = s->stats.fwd_damage;
+               mod_shots  = 2. - s->stats.fwd_firerate;
+               break;
+            case OUTFIT_TYPE_TURRET_BOLT:
+               mod_energy = s->stats.tur_energy;
+               mod_damage = s->stats.tur_damage;
+               mod_shots  = 2. - s->stats.tur_firerate;
+               break;
+            default:
+               continue;
+         }
+         shots = 1. / (mod_shots * outfit_delay(o));
+         dmg   = outfit_damage(o);
+         dps  += shots * mod_damage * dmg->damage;
+         eps  += shots * mod_energy * outfit_energy(o);
+      }
+   }
+
+   /* Write to buffer. */
+   l = 0;
+   if (dps > 0.)
+      l += snprintf( &buf[l], (max_len-l),
+            "%s%.2f DPS [%.2f EPS]", (l!=0)?"\n":"", dps, eps );
+   l += ss_statsDesc( &s->stats, &buf[l], (max_len-l), 1 );
+   return l;
+}
+
+
+/**
  * @brief Generates a new ship/outfit lists if needed.
  *
  *    @param wid Parent window id.
  */
 static void equipment_genLists( unsigned int wid )
 {
-   int i, j, l, p;
+   int i, l, p;
    char **sships;
    glTexture **tships;
    int nships;
@@ -1192,8 +1270,6 @@ static void equipment_genLists( unsigned int wid )
    char **quantity;
    Outfit *o;
    Pilot *s;
-   double mod_energy, mod_damage, mod_shots;
-   double eps, dps, shots;
    glColour *bg, *c, blend;
    char **slottype;
    const char *typename;
@@ -1223,43 +1299,11 @@ static void equipment_genLists( unsigned int wid )
       /* Ship stats in alt text. */
       alt   = malloc( sizeof(char*) * nships );
       for (i=0; i<nships; i++) {
-         s  = player_getShip( sships[i]);
-         alt[i] = malloc( SHIP_ALT_MAX );
-         dps = 0.;
-         eps = 0.;
-         for (j=0; j<s->noutfits; j++) {
-            o = s->outfits[j]->outfit;
-            if (o==NULL)
-               continue;
-            switch (o->type) {
-               case OUTFIT_TYPE_BOLT:
-                  mod_energy = s->stats.energy_forward;
-                  mod_damage = s->stats.damage_forward;
-                  mod_shots  = 2. - s->stats.firerate_forward;
-                  break;
-               case OUTFIT_TYPE_TURRET_BOLT:
-                  mod_energy = s->stats.energy_turret;
-                  mod_damage = s->stats.damage_turret;
-                  mod_shots  = 2. - s->stats.firerate_turret;
-                  break;
-               default:
-                  continue;
-            }
-            shots = 1. / (mod_shots * outfit_delay(o));
-            dps  += shots * mod_damage * outfit_damage(o);
-            eps  += shots * mod_energy * outfit_energy(o);
-         }
-         l  = snprintf( alt[i], SHIP_ALT_MAX, "Ship Stats" );
-         p  = l;
-         if (dps > 0.)
-            l += snprintf( &alt[i][l], SHIP_ALT_MAX-l,
-                  "\n%.2f DPS [%.2f EPS]", dps, eps );
-         if (s->jam_chance > 0.)
-            l += snprintf( &alt[i][l], SHIP_ALT_MAX-l,
-                  "\n%.0f%% Jam [%.0f Range]",
-                  s->jam_chance*100., s->jam_range );
-         l += ship_statsDesc( &s->stats, &alt[i][l], SHIP_ALT_MAX-l, 1, 1 );
-         if (p == l) {
+         s        = player_getShip( sships[i] );
+         alt[i]   = malloc( sizeof(char) * SHIP_ALT_MAX );
+         l        = snprintf( &alt[i][0], SHIP_ALT_MAX, "Ship Stats\n" );
+         l        = equipment_shipStats( &alt[i][l], SHIP_ALT_MAX-l, s, 1 );
+         if (l == 0) {
             free( alt[i] );
             alt[i] = NULL;
          }

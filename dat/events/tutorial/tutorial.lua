@@ -11,7 +11,8 @@ else -- default english
     menubasic = "Tutorial: Basic Operation"
     menuinterstellar = "Tutorial: Interstellar Flight"
     menubasiccombat = "Tutorial: Basic Combat"
-    menuadvcombat = "Tutorial: Advanced Combat"
+    menumisscombat = "Tutorial: Missile Combat"
+    menudisable = "Tutorial: Disabling"
     menuplanet = "Tutorial: The Planetary Screen"
     menutrade = "Tutorial: Trade"
     menumissions = "Tutorial: Missions and Events"
@@ -21,55 +22,34 @@ end
 
 function create()
     -- Set defaults just in case.
+    local pp = player.pilot()
     player.teleport("Mohawk")
-    player.pilot():setPos(vec2.new(0, 0))
-    player.pilot():setVel(vec2.new(0, 0))
     player.msgClear()
+    player.swapShip("Llama", "Tutorial Llama", "Paul 2", true, true)
+
+    pp:setPos(vec2.new(0, 0))
+    pp:setVel(vec2.new(0, 0))
+    pp:setHealth(100, 100)
+    pp:control(false)
+    pp:setNoLand(false)
+    pp:setNoJump(false)
     
     system.get("Mohawk"):setKnown(false)
     system.get("Cherokee"):setKnown(false)
     system.get("Iroquois"):setKnown(false)
     system.get("Navajo"):setKnown(false)
 
-    player.pilot():setNoLand(false)
-    player.pilot():setNoJump(false)
-
     -- Create menu.
-    _, selection = tk.choice(menutitle, menutext, menubasic, menuinterstellar, menucomms, menubasiccombat, menuadvcombat, menuplanet, menutrade, menumissions, menux)
+    _, selection = tk.choice(menutitle, menutext, menubasic, menuinterstellar, menucomms, menubasiccombat, menumisscombat, menudisable, menuplanet, menumissions, menux)
     
-    if selection == menubasic then
-        startModule(menubasic)
-    elseif selection == menuinterstellar then
-        startModule(menuinterstellar)
-    elseif selection == menucomms then
-        startModule(menucomms)
-    elseif selection == menubasiccombat then
-        startModule(menubasiccombat)
-    elseif selection == menuadvcombat then
-        placeholder()
-    elseif selection == menuplanet then
-        startModule(menuplanet)
-    elseif selection == menutrade then
-        placeholder()
-    elseif selection == menumissions then
-        startModule(menumissions)
-    elseif selection == menux then -- Quit to main menu
-        tut.main_menu();
-    else
-        -- This point should never be reached!
-        tk.msg("Error", "You've apparently selected an invalid menu option. This shouldn't happen. Please report.")
-        tut.main_menu();
-    end
-end
-
--- Placeholder not-implemented function
-function placeholder()
-    tk.msg("Not Implemented", "This tutorial has not been implemented yet because the subject matter is still in development.")
-    create()
+    startModule(selection)
 end
 
 -- Helper function for starting the tutorial modules
 function startModule(module)
+    if selection == menux then -- Quit to main menu
+        tut.main_menu()
+    end
     naev.eventStart(module)
     evt.finish(true) -- While the module is running, the event should not.
 end

@@ -52,7 +52,7 @@ static glFont *cli_font     = NULL; /**< CLI font to use. */
  * Buffers.
  */
 #define BUF_LINES          128 /**< Number of lines in the buffer. */
-#define LINE_LENGTH        80 /**< Length of lines in the buffer. */
+#define LINE_LENGTH        256 /**< Length of lines in the buffer. */
 static int cli_cursor      = 0; /**< Current cursor position. */
 static char cli_buffer[BUF_LINES][LINE_LENGTH]; /**< CLI buffer. */
 static int cli_viewport    = 0; /**< Current viewport. */
@@ -190,8 +190,10 @@ void cli_addMessage( const char *msg )
    if (cli_state == NULL)
       return;
 
-   if (msg != NULL)
+   if (msg != NULL) {
       strncpy( cli_buffer[cli_cursor], msg, LINE_LENGTH );
+      cli_buffer[cli_cursor][LINE_LENGTH-1] = '\0';
+   }
    else
       cli_buffer[cli_cursor][0] = '\0';
 

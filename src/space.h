@@ -169,6 +169,7 @@ typedef struct SystemPresence_ {
    double value; /**< Amount of presence. */
    double curUsed; /**< Presence currently used. */
    double timer; /**< Current faction timer. */
+   int disabled; /**< Whether or not spawning is disabled for this presence. */
 } SystemPresence;
 
 
@@ -339,8 +340,8 @@ StarSystem* system_getIndex( int id );
 int system_index( StarSystem *sys );
 int space_sysReachable( StarSystem *sys );
 int space_sysReallyReachable( char* sysname );
-char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions );
-char* space_getRndPlanet (void);
+char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions, int landable );
+char* space_getRndPlanet( int landable );
 double system_getClosest( const StarSystem *sys, int *pnt, int *jp, double x, double y );
 double system_getClosestAng( const StarSystem *sys, int *pnt, int *jp, double x, double y, double ang );
 

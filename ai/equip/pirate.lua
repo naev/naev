@@ -33,10 +33,7 @@ function equip_forwardPirHig ()
    return { "Heavy Ion Cannon", "Mass Driver MK2" }
 end
 function equip_turretPirLow ()
-   return { "Razor Turret MK1", "Turreted Gauss Gun" }
-end
-function equip_turretPirMed ()
-   return { "Laser Turret MK1" }
+   return { "Laser Turret MK1", "Razor Turret MK1", "Turreted Gauss Gun" }
 end
 function equip_turretPirMed ()
    return { "Laser Turret MK2", "Razor Turret MK2", "Turreted Vulcan Gun" }
@@ -45,7 +42,7 @@ function equip_turretPirHig ()
    return { "Railgun Turret", "Heavy Laser" }
 end
 function equip_secondaryPirLow ()
-   return { "Unicorp Fury Launcher" }
+   return { "Unicorp Mace Launcher" }
 end
 function equip_secondaryPirMedLow ()
    return { "Unicorp Fury Launcher", "Unicorp Banshee Launcher" }

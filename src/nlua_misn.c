@@ -51,7 +51,7 @@
  *
  * An example would be:
  * @code
- * misn.setNPC( "Keer", "keer" )
+ * misn.setNPC( "Keer", "empire/unique/keer" )
  * misn.setDesc( "You see here Commodore Keer." )
  * @endcode
  *

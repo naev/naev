@@ -122,6 +122,8 @@
   <logo>thurion</logo>
   <colour>grey50</colour>
   <player>1</player>
+  <lua>thurion</lua>
+  <spawn>thurion</spawn>
   <enemies>
    <enemy>Pirate</enemy>
   </enemies>
@@ -284,6 +286,26 @@
   <player>0</player>
   <enemies>
    <enemy>Associates</enemy>
+  </enemies>
+ </faction>
+ <faction name="Achack_sirius">
+  <display>Sirius</display>
+  <invisible />
+  <static />
+  <allies />
+  <player>0</player>
+  <enemies>
+   <enemy>Achack_thugs</enemy>
+  </enemies>
+ </faction>
+ <faction name="Achack_thugs">
+  <display>Thugs</display>
+  <invisible />
+  <static />
+  <allies />
+  <player>0</player>
+  <enemies>
+   <enemy>Achack_sirius</enemy>
   </enemies>
  </faction>
 </Factions>

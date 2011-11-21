@@ -24,6 +24,14 @@
   <lua>tutorial/tutorial-combat1</lua>
   <trigger>none</trigger>
  </event>
+ <event name="Tutorial: Missile Combat">
+  <lua>tutorial/tutorial-combat2</lua>
+  <trigger>none</trigger>
+ </event>
+ <event name="Tutorial: Disabling">
+  <lua>tutorial/tutorial-disabling</lua>
+  <trigger>none</trigger>
+ </event>
  <event name="Tutorial: The Planetary Screen">
   <lua>tutorial/tutorial-planet</lua>
   <trigger>none</trigger>

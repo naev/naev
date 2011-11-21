@@ -76,6 +76,7 @@ int pilot_runHookParam( Pilot* p, int hook_type, HookParam *param, int nparam );
  *    - "board" - When any pilot is boarded
  *    - "input" - When an input command is pressed
  *    - "standing" - Whenever faction changes.
+ *    - "load" - run on load.
  *  - Landing
  *    - "land" - When landed
  *    - "outfits" - When visited outfitter
