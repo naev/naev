@@ -122,6 +122,7 @@
   <logo>thurion</logo>
   <colour>grey50</colour>
   <player>1</player>
+  <lua>thurion</lua>
   <enemies>
    <enemy>Pirate</enemy>
   </enemies>
