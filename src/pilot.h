@@ -40,7 +40,6 @@
 #define PILOT_REFUEL_RATE        HYPERSPACE_FUEL/PILOT_REFUEL_TIME /**< Fuel per second. */
 /* Misc. */
 #define PILOT_SIZE_APROX         0.8   /**< approximation for pilot size */
-#define PILOT_DISABLED_ARMOR     0.3   /**< armour % that gets it disabled */
 #define PILOT_WEAPON_SETS        10    /**< Number of weapon sets the pilot has. */
 #define PILOT_WEAPSET_MAX_LEVELS 2     /**< Maximum amount of weapon levels. */
 
@@ -49,12 +48,14 @@
 #define PILOT_HOOK_DEATH   1 /**< Pilot died. */
 #define PILOT_HOOK_BOARD   2 /**< Pilot got boarded. */
 #define PILOT_HOOK_DISABLE 3 /**< Pilot got disabled. */
-#define PILOT_HOOK_JUMP    4 /**< Pilot jumped. */
-#define PILOT_HOOK_HAIL    5 /**< Pilot is hailed. */
-#define PILOT_HOOK_LAND    6 /**< Pilot is landing. */
-#define PILOT_HOOK_ATTACKED 7 /**< Pilot is in manual override and is being attacked. */
-#define PILOT_HOOK_IDLE    8 /**< Pilot is in manual override and has just become idle. */
-#define PILOT_HOOK_EXPLODED 9 /**< Pilot died and exploded (about to be removed). */
+#define PILOT_HOOK_UNDISABLE 4 /**< Pilot recovered from  beingdisabled. */
+#define PILOT_HOOK_JUMP    5 /**< Pilot jumped. */
+#define PILOT_HOOK_HAIL    6 /**< Pilot is hailed. */
+#define PILOT_HOOK_LAND    7 /**< Pilot is landing. */
+#define PILOT_HOOK_ATTACKED 8 /**< Pilot is in manual override and is being attacked. */
+#define PILOT_HOOK_IDLE    9 /**< Pilot is in manual override and has just become idle. */
+#define PILOT_HOOK_EXPLODED 10 /**< Pilot died and exploded (about to be removed). */
+#define PILOT_HOOK_LOCKON  11 /**< Pilot had a launcher lockon. */
 
 
 /* damage */
@@ -102,6 +103,7 @@
 #define PILOT_LANDING      28 /**< Pilot is landing. */
 #define PILOT_TAKEOFF      29 /**< Pilot is taking off. */
 #define PILOT_DISABLED     30 /**< Pilot is disabled. */
+#define PILOT_DISABLED_PERM 43 /**< Pilot is permanently disabled. */
 #define PILOT_DEAD         31 /**< Pilot is in it's dying throes */
 #define PILOT_DEATH_SOUND  32 /**< Pilot just did death explosion. */
 #define PILOT_EXPLODED     33 /**< Pilot did final death explosion. */
@@ -114,7 +116,8 @@
 #define PILOT_NOJUMP       40 /**< Pilot cannot engage hyperspace engines. */
 #define PILOT_NOLAND       41 /**< Pilot cannot land on stations or planets. */
 #define PILOT_NODEATH      42 /**< Pilot can not die, will stay at 1 armour. */
-#define PILOT_FLAGS_MAX    PILOT_NODEATH+1 /* Maximum number of flags. */
+#define PILOT_INVINC_PLAYER 43 /**< Pilot can not be hurt by the player. */
+#define PILOT_FLAGS_MAX    PILOT_INVINC_PLAYER+1 /* Maximum number of flags. */
 typedef char PilotFlags[ PILOT_FLAGS_MAX ];
 
 /* makes life easier */
@@ -128,9 +131,10 @@ typedef char PilotFlags[ PILOT_FLAGS_MAX ];
  * Currently only applicable to beam weapons.
  */
 typedef enum PilotOutfitState_ {
-   PILOT_OUTFIT_OFF, /**< Normal state. */
+   PILOT_OUTFIT_OFF,    /**< Normal state. */
    PILOT_OUTFIT_WARMUP, /**< Outfit is starting to warm up. */
-   PILOT_OUTFIT_ON /**< Outfit is activated and running. */
+   PILOT_OUTFIT_ON,     /**< Outfit is activated and running. */
+   PILOT_OUTFIT_COOLDOWN, /**< Outfit is cooling down. */
 } PilotOutfitState;
 
 
@@ -142,6 +146,7 @@ typedef struct PilotOutfitAmmo_ {
    int quantity;        /**< Amount of ammo. */
    int deployed;        /**< For fighter bays. */
    double lockon_timer; /**< Locking on timer. */
+   int in_arc;          /**< In arc. */
 } PilotOutfitAmmo;
 
 
@@ -164,8 +169,8 @@ typedef struct PilotOutfitSlot_ {
 
    /* Current state. */
    PilotOutfitState state; /**< State of the outfit. */
+   double stimer;    /**< State timer, tracking current state. */
    double timer;     /**< Used to store when it was last used. */
-   int quantity;     /**< Quantity. */
    int level;        /**< Level in current weapon set (-1 is none). */
 
    /* Type-specific data. */
@@ -193,13 +198,13 @@ typedef struct PilotWeaponSetOutfit_ {
  *  However they can also be used to launch weapons.
  */
 typedef struct PilotWeaponSet_ {
-   char *name;    /**< Helpful for the player. */
-   int fire;      /**< Whether to fire the weapons or just enable them. */
+   int type;      /**< Type of the weaponset. */
    int active;    /**< Whether or not it's currently firing. */
+   PilotWeaponSetOutfit *slots; /**< Slots involved with the weapon set. */
+   /* Only applicable to weapon type. */
    int inrange;   /**< Whether or not to fire only if the target is inrange. */
    double range[PILOT_WEAPSET_MAX_LEVELS]; /**< Range of the levels in the outfit slot. */
    double speed[PILOT_WEAPSET_MAX_LEVELS]; /**< Speed of the levels in the outfit slot. */
-   PilotWeaponSetOutfit *slots; /**< Slots involved with the weapon set. */
 } PilotWeaponSet;
 
 
@@ -278,6 +283,7 @@ typedef struct Pilot_ {
 
    /* Current health */
    double armour;    /**< Current armour. */
+   double stress;    /**< Current disable damage level. */
    double shield;    /**< Current shield. */
    double fuel;      /**< Current fuel. */
    double armour_max; /**< Maximum armour. */
@@ -333,8 +339,8 @@ typedef struct Pilot_ {
    PilotOutfitSlot *afterburner; /**< the afterburner */
 
    /* Jamming */
-   double jam_range; /**< Range at which pilot starts jamming. */
-   double jam_chance; /**< Jam chance. */
+   int jamming;      /**< Pilot is current jamming with at least a single jammer (used to
+                          speed up later checks in the code). */
 
    /* Weapon sets. */
    PilotWeaponSet weapon_sets[PILOT_WEAPON_SETS]; /**< All the weapon sets the pilot has. */
@@ -375,6 +381,8 @@ typedef struct Pilot_ {
    double ptimer;    /**< generic timer for internal pilot use */
    double htimer;    /**< Hail animation timer. */
    double stimer;    /**< Shield regeneration timer. */
+   double dtimer;    /**< Disable timer. */
+   double dtimer_accum; /**< Accumulated disable timer. */
    double sbonus;    /**< Shield regeneration bonus. */
    int hail_pos;     /**< Hail animation position. */
    int lockons;      /**< Stores how many seeking weapons are targeting pilot */
@@ -401,7 +409,7 @@ Pilot* pilot_get( const unsigned int id );
 unsigned int pilot_getNextID( const unsigned int id, int mode );
 unsigned int pilot_getPrevID( const unsigned int id, int mode );
 unsigned int pilot_getNearestEnemy( const Pilot* p );
-unsigned int pilot_getNearestEnemy_size( const Pilot* p, int target_mass_LB, int target_mass_UB );
+unsigned int pilot_getNearestEnemy_size( const Pilot* p, double target_mass_LB, double target_mass_UB );
 unsigned int pilot_getNearestEnemy_heuristic(const Pilot* p, double mass_factor, double health_factor, double damage_factor, double range_factor);
 unsigned int pilot_getNearestHostile (void); /* only for the player */
 unsigned int pilot_getNearestPilot( const Pilot* p );
@@ -419,11 +427,9 @@ double pilot_relhp( const Pilot* cur_pilot, const Pilot* p );
  * Combat.
  */
 void pilot_setTarget( Pilot* p, unsigned int id );
-double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
-      const DamageType dtype, const double damage, const double penetration );
-void pilot_explode( double x, double y, double radius,
-      DamageType dtype, double damage,
-      double penetration, const Pilot *parent );
+double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter, const Damage *dmg );
+void pilot_updateDisable( Pilot* p, const unsigned int shooter );
+void pilot_explode( double x, double y, double radius, const Damage *dmg, const Pilot *parent );
 double pilot_face( Pilot* p, const double dir );
 
 
@@ -502,6 +508,12 @@ int pilot_isHostile( const Pilot *p );
 int pilot_isNeutral( const Pilot *p );
 int pilot_isFriendly( const Pilot *p );
 char pilot_getFactionColourChar( const Pilot *p );
+
+
+/*
+ * Misc details.
+ */
+credits_t pilot_worth( const Pilot *p );
 
 
 #endif /* PILOT_H */

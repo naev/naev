@@ -13,7 +13,7 @@ else -- default english
 end
 
 function create ()
-    evt.npcAdd("flintley", "Flintley", "flintley", desc, 5)
+    evt.npcAdd("neutral/unique/flintley", "Flintley", "flintley", desc, 5)
 end
 
 function flintley()

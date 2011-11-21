@@ -120,9 +120,9 @@ void pilot_heatAddSlot( Pilot *p, PilotOutfitSlot *o )
    /* We consider that only 1% of the energy is lost in the form of heat,
     * this keeps numbers sane. */
    if (o->outfit->type == OUTFIT_TYPE_BOLT)
-      hmod = p->stats.heat_forward;
+      hmod = p->stats.fwd_heat;
    else if (o->outfit->type == OUTFIT_TYPE_TURRET_BOLT)
-      hmod = p->stats.heat_turret;
+      hmod = p->stats.fwd_heat;
    else
       hmod = 1.;
    o->heat_T += hmod * outfit_heat(o->outfit) / o->heat_C;

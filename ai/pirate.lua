@@ -19,12 +19,12 @@ mem.atk_kill       = false
 function create ()
 
    -- Some pirates do kill
-   if rnd.rnd() < 0.7 then
+   if rnd.rnd() < 0.1 then
       mem.atk_kill = true
    end
 
    -- Not too much money
-   ai.setcredits(ai.shipprice()/80 , ai.shipprice()/30 )
+   ai.setcredits( rnd.int(ai.shipprice()/80 , ai.shipprice()/30) )
 
    -- Deal with bribeability
    if rnd.rnd() < 0.05 then

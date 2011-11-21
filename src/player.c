@@ -102,12 +102,12 @@ static double player_hailTimer = 0.; /**< Timer for hailing. */
  * @brief Player ship.
  */
 typedef struct PlayerShip_s {
-   Pilot* p; /**< Pilot. */
-   char *loc; /**< Location. */
-   int autoweap; /**< Automatically update weapon sets. */
+   Pilot* p;      /**< Pilot. */
+   char *loc;     /**< Location. */
+   int autoweap;  /**< Automatically update weapon sets. */
 } PlayerShip_t;
-static PlayerShip_t* player_stack   = NULL; /**< Stack of ships player has. */
-static int player_nstack            = 0; /**< Number of ships player has. */
+static PlayerShip_t* player_stack   = NULL;  /**< Stack of ships player has. */
+static int player_nstack            = 0;     /**< Number of ships player has. */
 
 
 /*
@@ -117,13 +117,13 @@ static int player_nstack            = 0; /**< Number of ships player has. */
  * @brief Wrapper for outfits.
  */
 typedef struct PlayerOutfit_s {
-   const Outfit *o; /**< Actual associated outfit. */
-   int q; /**< Amount of outfit owned. */
+   const Outfit *o;  /**< Actual associated outfit. */
+   int q;            /**< Amount of outfit owned. */
 } PlayerOutfit_t;
-static PlayerOutfit_t *player_outfits  = NULL; /**< Outfits player has. */
-static int player_noutfits             = 0; /**< Number of outfits player has. */
-static int player_moutfits             = 0; /**< Current allocated memory. */
-#define OUTFIT_CHUNKSIZE               32 /**< Allocation chunk size. */
+static PlayerOutfit_t *player_outfits  = NULL;  /**< Outfits player has. */
+static int player_noutfits             = 0;     /**< Number of outfits player has. */
+static int player_moutfits             = 0;     /**< Current allocated memory. */
+#define OUTFIT_CHUNKSIZE               32       /**< Allocation chunk size. */
 
 
 /*
@@ -194,7 +194,6 @@ static int player_parseEscorts( xmlNodePtr parent );
 static void player_addOutfitToPilot( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s );
 /* Misc. */
 static int player_outfitCompare( const void *arg1, const void *arg2 );
-static int player_shipPriceRaw( Pilot *ship );
 static int player_thinkMouseFly(void);
 static int preemption = 0; /* Hyperspace target/untarget preemption. */
 /*
@@ -630,7 +629,7 @@ void player_swapShip( char* shipname )
  *    @param shipname Name of the ship.
  *    @return The price of the ship in credits.
  */
-int player_shipPrice( char* shipname )
+credits_t player_shipPrice( char* shipname )
 {
    int i;
    Pilot *ship = NULL;
@@ -653,30 +652,7 @@ int player_shipPrice( char* shipname )
       return -1;
    }
 
-   return player_shipPriceRaw( ship );
-}
-
-
-/**
- * @brief Calculates the price of one of the player's ships.
- *
- *    @param ship Ship to calculate price of.
- *    @return The price of the ship in credits.
- */
-static int player_shipPriceRaw( Pilot *ship )
-{
-   int price;
-   int i;
-
-   /* Ship price is base price + outfit prices. */
-   price = ship_basePrice( ship->ship );
-   for (i=0; i<ship->noutfits; i++) {
-      if (ship->outfits[i]->outfit == NULL)
-         continue;
-      price += ship->outfits[i]->outfit->price;
-   }
-
-   return price;
+   return pilot_worth( ship );
 }
 
 
@@ -1053,6 +1029,7 @@ void player_think( Pilot* pplayer, const double dt )
       return;
    }
 
+   /* Autonav voodoo. */
    if (player.autonav_timer > 0.)
       player.autonav_timer -= dt;
 
@@ -1150,7 +1127,7 @@ void player_think( Pilot* pplayer, const double dt )
       pilot_shootStop( pplayer, 0 );
       player_rmFlag(PLAYER_PRIMARY_L);
    }
-   /* Secondary weapon. */
+   /* Secondary weapon - we use PLAYER_SECONDARY_L to track last frame. */
    if (player_isFlag(PLAYER_SECONDARY)) { /* needs target */
       /* Double tap stops beams. */
       if (!player_isFlag(PLAYER_SECONDARY_L))
@@ -1163,8 +1140,10 @@ void player_think( Pilot* pplayer, const double dt )
 
       player_setFlag(PLAYER_SECONDARY_L);
    }
-   else if (player_isFlag(PLAYER_SECONDARY_L))
+   else if (player_isFlag(PLAYER_SECONDARY_L)) {
+      pilot_shootStop( pplayer, 1 );
       player_rmFlag(PLAYER_SECONDARY_L);
+   }
 
 
    /*
@@ -2127,15 +2106,15 @@ void player_destroyed (void)
 static int player_shipsCompare( const void *arg1, const void *arg2 )
 {
    PlayerShip_t *ps1, *ps2;
-   int p1, p2;
+   credits_t p1, p2;
 
    /* Get the arguments. */
    ps1 = (PlayerShip_t*) arg1;
    ps2 = (PlayerShip_t*) arg2;
 
    /* Get prices. */
-   p1 = player_shipPriceRaw( ps1->p );
-   p2 = player_shipPriceRaw( ps2->p );
+   p1 = pilot_worth( ps1->p );
+   p2 = pilot_worth( ps2->p );
 
    /* Compare price INVERSELY */
    if (p1 < p2)
@@ -2404,7 +2383,10 @@ int player_addOutfit( const Outfit *o, int quantity )
    /* Allocate if needed. */
    player_noutfits++;
    if (player_noutfits > player_moutfits) {
-      player_moutfits += OUTFIT_CHUNKSIZE;
+      if (player_moutfits == 0)
+         player_moutfits = OUTFIT_CHUNKSIZE;
+      else
+         player_moutfits *= 2;
       player_outfits   = realloc( player_outfits,
             sizeof(PlayerOutfit_t) * player_moutfits );
    }
@@ -2913,7 +2895,7 @@ static int player_saveShip( xmlTextWriterPtr writer,
          name = pilot_weapSetName(ship,i);
          if (name != NULL)
             xmlw_attr(writer,"name","%s",name);
-         xmlw_attr(writer,"fire","%d",pilot_weapSetModeCheck(ship,i));
+         xmlw_attr(writer,"type","%d",pilot_weapSetTypeCheck(ship,i));
          for (j=0; j<n;j++) {
             xmlw_startElem(writer,"weapon");
             xmlw_attr(writer,"level","%d",weaps[j].level);
@@ -3124,7 +3106,7 @@ static Planet* player_parse( xmlNodePtr parent )
          !planet_hasService(pnt, PLANET_SERVICE_LAND)) {
       WARN("Player starts out in non-existant or invalid planet '%s', trying to find a suitable one instead.",
             planet );
-      pnt = planet_get( space_getRndPlanet() );
+      pnt = planet_get( space_getRndPlanet(1) );
       /* In case the planet does not exist, we need to update some variables.
        * While we're at it, we'll also make sure the system exists as well. */
       hunting  = 1;
@@ -3137,7 +3119,7 @@ static Planet* player_parse( xmlNodePtr parent )
                !planet_hasService(pnt, PLANET_SERVICE_REFUEL) ||
                areEnemies(pnt->faction, FACTION_PLAYER)) {
             WARN("Planet '%s' found, but is not suitable. Trying again.", planet);
-            pnt = planet_get( space_getRndPlanet() );
+            pnt = planet_get( space_getRndPlanet( (i>100) ? 1 : 0  ) ); /* We try landable only for the first 100 tries. */
          }
          else
             hunting = 0;
@@ -3360,7 +3342,6 @@ static void player_parseShipSlot( xmlNodePtr node, Pilot *ship, PilotOutfitSlot 
 static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
 {
    char *name, *model, *loc, *q, *id;
-   char buf[PATH_MAX];
    int i, n;
    double fuel;
    Ship *ship_parsed;
@@ -3535,7 +3516,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
 
    /* Sets inrange by default if weapon sets are missing. */
    for (i=0; i<PILOT_WEAPON_SETS; i++)
-      pilot_weapSetInrange( ship, i, 1 );
+      pilot_weapSetInrange( ship, i, WEAPSET_INRANGE_PLAYER_DEF );
 
    /* Second pass for weapon sets. */
    node = parent->xmlChildrenNode;
@@ -3577,7 +3558,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
          /* Set inrange mode. */
          xmlr_attr(cur,"inrange",id);
          if (id == NULL)
-            pilot_weapSetInrange( ship, i, 1 );
+            pilot_weapSetInrange( ship, i, WEAPSET_INRANGE_PLAYER_DEF );
          else {
             pilot_weapSetInrange( ship, i, atoi(id) );
             free(id);
@@ -3586,25 +3567,14 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
          if (autoweap) /* Autoweap handles everything except inrange. */
             continue;
 
-         /* Set fire mode. */
-         xmlr_attr(cur,"fire",id);
+         /* Set type mode. */
+         xmlr_attr(cur,"type",id);
          if (id == NULL) {
-            WARN("Player ship '%s' missing 'fire' tag for weapon set.",ship->name);
+            WARN("Player ship '%s' missing 'type' tag for weapon set.",ship->name);
             continue;
          }
-         pilot_weapSetMode( ship, i, atoi(id) );
+         pilot_weapSetType( ship, i, atoi(id) );
          free(id);
-
-         /* Get name. */
-         xmlr_attr(cur,"name",id);
-         if (id != NULL) {
-            pilot_weapSetNameSet( ship, i, id );
-            free(id);
-         }
-         else {
-            snprintf( buf, sizeof(buf), "Weaponset %d", (i+1)%10 );
-            pilot_weapSetNameSet( ship, i, buf );
-         }
 
          /* Parse individual weapons. */
          ccur = cur->xmlChildrenNode;

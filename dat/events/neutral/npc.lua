@@ -14,12 +14,14 @@ else --default english
    -- Does your faction not have a table? Then just add it. The script will find and use it if it exists. 
    -- Make sure you spell the faction name exactly the same as in faction.xml though!
    civ_port = {}
-   civ_port["general"] =   {"male1",
-                            "thief1",
-                            "thief2",
-                            "thief3"
+   civ_port["general"] =   {"neutral/male1",
+                            "neutral/thief1",
+                            "neutral/thief2",
+                            "neutral/thief3"
                            }
-   civ_port["Sirius"] =    {"sirius_fyrra_f1"
+   civ_port["Sirius"] =    {"sirius/sirius_fyrra_f1",
+                            "sirius/sirius_fyrra_f2",
+                            "sirius/sirius_fyrra_m1"
                            }
    civ_name = "Civilian"
 

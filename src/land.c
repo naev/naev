@@ -568,7 +568,7 @@ static int bar_genList( unsigned int wid )
       npc_getNameArray( &names[1], n-1 );
    }
    window_addImageArray( wid, 20, -40,
-         iw, ih, "iarMissions", 64, 48,
+         iw, ih, "iarMissions", 100, 75,
          portraits, names, n, bar_update, NULL );
 
    /* write the outfits stuff */
@@ -1252,6 +1252,10 @@ void land( Planet* p, int load )
 
    /* Create all the windows. */
    land_genWindows( load, 0 );
+
+   /* Hack so that load can run player.takeoff(). */
+   if (load)
+      hooks_run( "load" );
 
    /* Mission forced take off. */
    if (land_takeoff)

@@ -115,7 +115,7 @@ function create()
         abort()
     end
     
-    misn.setNPC("FLF petty officer", "flf_officer1")
+    misn.setNPC("FLF petty officer", "flf/unique/benito")
     misn.setDesc(npc_desc)
 end
 

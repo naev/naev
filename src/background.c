@@ -167,6 +167,10 @@ void background_moveStars( double x, double y )
 /**
  * @brief Renders the starry background.
  *
+ * This could really benefit from OpenCL directly. It would probably give a great
+ *  speed up, although we'll consider it when we get a runtime linking OpenCL
+ *  framework someday.
+ *
  *    @param dt Current delta tick.
  */
 void background_renderStars( const double dt )
@@ -204,6 +208,7 @@ void background_renderStars( const double dt )
       hw = w/2.;
       hh = h/2.;
 
+      /* Calculate multiple updates in the case the ship is moving really ridiculously fast. */
       if ((star_x > SCREEN_W) || (star_y > SCREEN_H)) {
          sx = ceil( star_x / SCREEN_W );
          sy = ceil( star_y / SCREEN_H );
@@ -218,7 +223,7 @@ void background_renderStars( const double dt )
       for (j=0; j < n; j++) {
          for (i=0; i < nstars; i++) {
 
-            /* calculate new position */
+            /* Calculate new position */
             b = 1./(9. - 10.*star_colour[8*i+3]);
             star_vertex[4*i+0] = star_vertex[4*i+0] + star_x*b;
             star_vertex[4*i+1] = star_vertex[4*i+1] + star_y*b;

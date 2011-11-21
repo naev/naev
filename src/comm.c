@@ -573,7 +573,7 @@ static void comm_requestFuel( unsigned int wid, char *unused )
    /* See if player can get refueled. */
    ret = comm_getNumber( &val, "refuel" );
    msg = comm_getString( "refuel_msg" );
-   if ((ret != 0) || (msg == NULL)) {
+   if ((ret != 0) || (msg == NULL) || pilot_isFlag(comm_pilot, PILOT_MANUAL_CONTROL)) {
       dialogue_msg( "Request Fuel", "\"Sorry, I'm busy now.\"" );
       return;
    }

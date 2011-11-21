@@ -41,7 +41,7 @@ end
 function create ()
     targetsystem = system.get("Ogat") --find target system
     
-    misn.setNPC( NPC_name, "thief2") --spawn NPC
+    misn.setNPC( NPC_name, "neutral/thief2") --spawn NPC
     misn.setDesc( bar_desc )
 end
 

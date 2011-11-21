@@ -32,6 +32,7 @@
 #include "event.h"
 #include "land.h"
 #include "nlua_system.h"
+#include "nlua_planet.h"
 #include "map.h"
 #include "hook.h"
 #include "comm.h"
@@ -628,7 +629,7 @@ static int playerL_allowLand( lua_State *L )
  *  - equipment<br/>
  *  - commodity<br/>
  *
- * @usage player.landWindow( "outfits" )
+ * @usage player.landwindow( "outfits" )
  *    @luaparam winname Name of the window.
  *    @luareturn True on success.
  * @luafunc landwindow( winname )
@@ -744,10 +745,13 @@ static Pilot* playerL_newShip( lua_State *L )
       name = luaL_checkstring(L,2);
    else
       name = str;
-   if (lua_gettop(L) > 2)
+   if (lua_isstring(L,3))
       pntname = luaL_checkstring (L,3);
-   else
+   else {
+      if (!landed)
+         NLUA_ERROR(L,"Must be landed to add a new ship to the player without specifying planet to add to!");
       pntname = NULL;
+   }
    noname = lua_toboolean(L,4);
 
    /* Get planet. */
@@ -826,8 +830,8 @@ static int playerL_swapShip( lua_State *L )
    int remship;
 
    remship = lua_toboolean(L,5);
-   p = playerL_newShip( L );
-   cur = player.p->name;
+   p       = playerL_newShip( L );
+   cur     = player.p->name;
    player_swapShip( p->name );
    if (remship)
       player_rmShip( cur );
@@ -948,20 +952,23 @@ static int playerL_evtDone( lua_State *L )
 
 
 /**
- * @brief Teleports the player to a new system (only if not landed).
+ * @brief Teleports the player to a new planet or system (only if not landed).
  *
- * Does not change the position nor velocity of the player.p, which will probably be wrong in the new system.
+ * If the destination is a system, the coordinates of the player will not change.
+ * If the destination is a planet, the player will be placed over that planet.
  *
  * @usage player.teleport( system.get("Arcanis") ) -- Teleports the player to Arcanis.
  * @usage player.teleport( "Arcanis" ) -- Teleports the player to Arcanis.
+ * @usage player.teleport( "Dvaer Prime" ) -- Teleports the player to Dvaer, and relocates him to Dvaer Prime.
  *
- *    @luaparam sys System or name of a system to teleport the player to.
- * @luafunc teleport( sys )
+ *    @luaparam dest System or name of a system or planet or name of a planet to teleport the player to.
+ * @luafunc teleport( dest )
  */
 static int playerL_teleport( lua_State *L )
 {
-   LuaSystem *sys;
-   const char *name;
+   Planet *pnt;
+   StarSystem *sys;
+   const char *name, *pntname;
 
    /* Must not be landed. */
    if (landed)
@@ -971,13 +978,41 @@ static int playerL_teleport( lua_State *L )
    if (player_isBoarded())
       NLUA_ERROR(L,"Can not teleport the player while he is boarded!");
 
+   pnt = NULL;
+
    /* Get a system. */
    if (lua_issystem(L,1)) {
-      sys   = lua_tosystem(L,1);
+      sys   = luaL_validsystem(L,1);
       name  = system_getIndex(sys->id)->name;
    }
-   else if (lua_isstring(L,1))
+   /* Get a planet. */
+   else if (lua_isplanet(L,1)) {
+      pnt   = luaL_validplanet(L,1);
+      name  = planet_getSystem( pnt->name );
+      if (name == NULL) {
+         NLUA_ERROR( L, "Planet '%s' does not belong to a system..", pnt->name );
+         return 0;
+      }
+   }
+   /* Get destination from string. */
+   else if (lua_isstring(L,1)) {
       name = lua_tostring(L,1);
+      if (!system_exists( name )) {
+         if (!planet_exists( name )) {
+            NLUA_ERROR( L, "'%s' is not a valid teleportation target.", name );
+            return 0;
+         }
+
+         /* No system found, assume destination string is the name of a planet. */
+         pntname = name;
+         name = planet_getSystem( name );
+         pnt  = planet_get( pntname );
+         if (name == NULL) {
+            NLUA_ERROR( L, "Planet '%s' does not belong to a system..", pntname );
+            return 0;
+         }
+      }
+   }
    else
       NLUA_INVALID_PARAMETER(L);
 
@@ -1017,6 +1052,11 @@ static int playerL_teleport( lua_State *L )
    player_targetPlanetSet( -1 );
    player_targetHyperspaceSet( -1 );
    gui_setNav();
+
+   /* Move to planet. */
+   if (pnt != NULL)
+      vectcpy( &player.p->solid->pos, &pnt->pos );
+
    return 0;
 }
 

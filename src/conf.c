@@ -238,7 +238,7 @@ void conf_setVideoDefaults (void)
    conf.mipmaps      = 0; /* Also cause for issues. */
    conf.compress     = 0;
    conf.interpolate  = 1;
-   conf.npot         = 1;
+   conf.npot         = 0;
 
    /* Window. */
    conf.fullscreen   = f;

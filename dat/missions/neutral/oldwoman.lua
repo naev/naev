@@ -52,7 +52,7 @@ function create ()
     getsysatdistance( cursys, 1, 6,
         function(s)
             for i, v in ipairs(s:planets()) do
-                if v:faction() == faction.get("Sirius") and v:class() == "M" then
+                if v:faction() == faction.get("Sirius") and v:class() == "M" and v:canLand() then
                     planets[#planets + 1] = {v, s}
                 end
             end
@@ -66,7 +66,7 @@ function create ()
     destsys = planets[index][2]
 
     curplanet = planet.cur()
-    misn.setNPC(NPCname, "oldwoman")
+    misn.setNPC(NPCname, "neutral/unique/oldwoman")
     misn.setDesc(NPCdesc)
 end
 

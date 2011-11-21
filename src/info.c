@@ -77,7 +77,6 @@ static void standings_close( unsigned int wid, char *str );
 static void ship_update( unsigned int wid );
 static void weapons_genList( unsigned int wid );
 static void weapons_update( unsigned int wid, char *str );
-static void weapons_rename( unsigned int wid, char *str );
 static void weapons_autoweap( unsigned int wid, char *str );
 static void weapons_fire( unsigned int wid, char *str );
 static void weapons_inrange( unsigned int wid, char *str );
@@ -154,7 +153,7 @@ static void info_close( unsigned int wid, char* str )
  */
 void info_update (void)
 {
-   weapons_update( info_windows[ INFO_WIN_WEAP ], NULL );
+   weapons_genList( info_windows[ INFO_WIN_WEAP ] );
 }
 
 
@@ -259,6 +258,8 @@ static void info_openShip( unsigned int wid )
          "Energy:\n"
          "Cargo Space:\n"
          "Fuel:\n"
+         "\n"
+         "Stats:\n"
          );
    window_addText( wid, 140, -60, w-300., h-60, 0, "txtDDesc", &gl_smallFont,
          &cBlack, NULL );
@@ -279,11 +280,11 @@ static void info_openShip( unsigned int wid )
 static void ship_update( unsigned int wid )
 {
    char buf[1024], *hyp_delay;
-   int cargo;
+   int cargo, len;
 
    cargo = pilot_cargoUsed( player.p ) + pilot_cargoFree( player.p );
    hyp_delay = ntime_pretty( pilot_hyperspaceDelay( player.p ), 2 );
-   snprintf( buf, sizeof(buf),
+   len = snprintf( buf, sizeof(buf),
          "%s\n"
          "%s\n"
          "%s\n"
@@ -300,7 +301,8 @@ static void ship_update( unsigned int wid )
          "%.0f / %.0f MJ (%.1f MW)\n" /* Armour */
          "%.0f / %.0f MJ (%.1f MW)\n" /* Energy */
          "%d / %d tonnes\n"
-         "%.0f / %.0f units (%d jumps)",
+         "%.0f / %.0f units (%d jumps)\n"
+         "\n",
          /* Generic */
          player.p->name,
          player.p->ship->name,
@@ -319,6 +321,7 @@ static void ship_update( unsigned int wid )
          player.p->energy, player.p->energy_max, player.p->energy_regen,
          pilot_cargoUsed( player.p ), cargo,
          player.p->fuel, player.p->fuel_max, pilot_getJumps(player.p));
+   equipment_shipStats( &buf[len], sizeof(buf)-len, player.p, 1 );
    window_modifyText( wid, "txtDDesc", buf );
    free( hyp_delay );
 }
@@ -337,15 +340,13 @@ static void info_openWeapons( unsigned int wid )
    /* Buttons */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "closeCargo", "Close", info_close );
-   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20), BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnRename", "Rename", weapons_rename );
 
    /* Checkboxes. */
    window_addCheckbox( wid, 220, 20+2*(BUTTON_HEIGHT+20)-40, 250, BUTTON_HEIGHT,
          "chkAutoweap", "Automatically handle weapons", weapons_autoweap, player.p->autoweap );
    window_addCheckbox( wid, 220, 20+2*(BUTTON_HEIGHT+20)-10, 300, BUTTON_HEIGHT,
-         "chkFire", "Enable fire mode (fires when activated)", weapons_fire,
-         pilot_weapSetModeCheck( player.p, info_eq_weaps.weapons ) );
+         "chkFire", "Enable instant mode (only for weapons)", weapons_fire,
+         (pilot_weapSetTypeCheck( player.p, info_eq_weaps.weapons )==WEAPSET_TYPE_WEAPON) );
    window_addCheckbox( wid, 220, 20+2*(BUTTON_HEIGHT+20)+20, 300, BUTTON_HEIGHT,
          "chkInrange", "Only shoot weapons that are in range", weapons_inrange,
          pilot_weapSetInrangeCheck( player.p, info_eq_weaps.weapons ) );
@@ -371,24 +372,26 @@ static void weapons_genList( unsigned int wid )
 {
    const char *str;
    char **buf;
-   int i;
+   int i, n;
    int w, h;
 
    /* Get the dimensions. */
    window_dimWindow( wid, &w, &h );
 
    /* Destroy widget if needed. */
-   if (widget_exists( wid, "lstWeapSets" ))
+   if (widget_exists( wid, "lstWeapSets" )) {
       window_destroyWidget( wid, "lstWeapSets" );
+      n = toolkit_getListPos( wid, "lstWeapSets" );
+   }
+   else
+      n = -1;
 
    /* List */
    buf = malloc( sizeof(char*) * PILOT_WEAPON_SETS );
    for (i=0; i<PILOT_WEAPON_SETS; i++) {
       str = pilot_weapSetName( info_eq_weaps.selected, i );
-      if (str == NULL) {
-         buf[i] = malloc( sizeof(char) * PATH_MAX );
-         snprintf( buf[i], PATH_MAX, "Weapon Set %d", (i+1)%10 );
-      }
+      if (str == NULL)
+         buf[i] = strdup( "??" );
       else
          buf[i] = strdup( str );
    }
@@ -396,6 +399,10 @@ static void weapons_genList( unsigned int wid )
          w - (20+180+20+20), 160,
          "lstWeapSets", buf, PILOT_WEAPON_SETS,
          0, weapons_update );
+
+   /* Restore position. */
+   if (n >= 0)
+      toolkit_setListPos( wid, "lstWeapSets", n );
 }
 
 
@@ -413,7 +420,7 @@ static void weapons_update( unsigned int wid, char *str )
 
    /* Update fire mode. */
    window_checkboxSet( wid, "chkFire",
-         pilot_weapSetModeCheck( player.p, pos ) );
+         (pilot_weapSetTypeCheck( player.p, pos ) == WEAPSET_TYPE_WEAPON) );
 
    /* Update inrange. */
    window_checkboxSet( wid, "chkInrange",
@@ -421,35 +428,6 @@ static void weapons_update( unsigned int wid, char *str )
 
    /* Update autoweap. */
    window_checkboxSet( wid, "chkAutoweap", player.p->autoweap );
-}
-
-
-/**
- * @brief Renames a weapon set.
- */
-static void weapons_rename( unsigned int wid, char *str )
-{
-   (void) str;
-   char *name;
-
-   /* Prompt for new name. */
-   name = dialogue_input( "Rename Weapon Set", 3, 30,
-         "What do you want to rename the weapon set '%s'?",
-         pilot_weapSetName( player.p, info_eq_weaps.weapons ) );
-
-   /* Cancelled. */
-   if (name == NULL)
-      return;
-
-   /* Change name. */
-   pilot_weapSetNameSet( player.p, info_eq_weaps.weapons, name );
-   free(name);
-
-   /* Disable autoweap. */
-   player.p->autoweap = 0;
-
-   /* Regenerate list. */
-   weapons_genList( wid );
 }
 
 
@@ -486,26 +464,39 @@ static void weapons_autoweap( unsigned int wid, char *str )
  */
 static void weapons_fire( unsigned int wid, char *str )
 {
-   int i, state;
+   int i, state, t, c;
 
    /* Set state. */
    state = window_checkboxState( wid, str );
-   pilot_weapSetMode( player.p, info_eq_weaps.weapons, state );
+
+   /* See how to handle. */
+   t = pilot_weapSetTypeCheck( player.p, info_eq_weaps.weapons );
+   if (t == WEAPSET_TYPE_ACTIVE)
+      return;
+
+   if (state)
+      c = WEAPSET_TYPE_WEAPON;
+   else
+      c = WEAPSET_TYPE_CHANGE;
+   pilot_weapSetType( player.p, info_eq_weaps.weapons, c );
 
    /* Check to see if they are all fire groups. */
    for (i=0; i<PILOT_WEAPON_SETS; i++)
-      if (!pilot_weapSetModeCheck( player.p, i ))
+      if (!pilot_weapSetTypeCheck( player.p, i ))
          break;
 
    /* Not able to set them all to fire groups. */
    if (i >= PILOT_WEAPON_SETS) {
       dialogue_alert( "You can not set all your weapon sets to fire groups!" );
-      pilot_weapSetMode( player.p, info_eq_weaps.weapons, 0 );
+      pilot_weapSetType( player.p, info_eq_weaps.weapons, WEAPSET_TYPE_CHANGE );
       window_checkboxSet( wid, str, 0 );
    }
 
    /* Set default if needs updating. */
    pilot_weaponSetDefault( player.p );
+
+   /* Must regen. */
+   weapons_genList( wid );
 }
 
 
@@ -536,6 +527,10 @@ static void weapons_renderLegend( double bx, double by, double bw, double bh, vo
    gl_print( &gl_defFont, bx, y, &cBlack, "Legend" );
 
    y -= 20.;
+   toolkit_drawRect( bx, y, 10, 10, &cFontBlue, NULL );
+   gl_print( &gl_smallFont, bx+20, y, &cBlack, "Outfit that can be activated" );
+
+   y -= 15.;
    toolkit_drawRect( bx, y, 10, 10, &cFontYellow, NULL );
    gl_print( &gl_smallFont, bx+20, y, &cBlack, "Secondary Weapon (Right click toggles)" );
 

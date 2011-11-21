@@ -147,7 +147,7 @@ Pilot* player_getShip( char* shipname );
 char* player_getLoc( char* shipname );
 void player_setLoc( char* shipname, char* loc );
 void player_swapShip( char* shipname );
-int player_shipPrice( char* shipname );
+credits_t player_shipPrice( char* shipname );
 void player_rmShip( char* shipname );
 
 

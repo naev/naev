@@ -35,6 +35,7 @@
 
 /* Hook methods. */
 static int hookL_rm( lua_State *L );
+static int hook_load( lua_State *L );
 static int hook_land( lua_State *L );
 static int hook_takeoff( lua_State *L );
 static int hook_jumpout( lua_State *L );
@@ -53,6 +54,7 @@ static int hook_standing( lua_State *L );
 static int hook_pilot( lua_State *L );
 static const luaL_reg hook_methods[] = {
    { "rm", hookL_rm },
+   { "load", hook_load },
    { "land", hook_land },
    { "takeoff", hook_takeoff },
    { "jumpout", hook_jumpout },
@@ -314,6 +316,23 @@ static int hook_land( lua_State *L )
    return 1;
 }
 /**
+ * @brief Hooks the function to the player loading the game (starts landed).
+ *
+ * @usage hook.load( "my_function" ) -- Load calls my_function
+ *
+ *    @luaparam funcname Name of function to run when hook is triggered.
+ *    @luaparam arg Argument to pass to hook.
+ *    @luareturn Hook identifier.
+ * @luafunc load( funcname, arg )
+ */
+static int hook_load( lua_State *L )
+{
+   unsigned int h;
+   h = hook_generic( L, "load", 0., 1, 0 );
+   lua_pushnumber( L, h );
+   return 1;
+}
+/**
  * @brief Hooks the function to the player taking off.
  *
  *    @luaparam funcname Name of function to run when hook is triggered.
@@ -566,11 +585,13 @@ static int hook_safe( lua_State *L )
  *    <li> "exploded" : triggered when pilot has died and the final explosion has begun. <br />
  *    <li> "board" : triggered when pilot is boarded.<br />
  *    <li> "disable" : triggered when pilot is disabled (with disable set).<br />
+ *    <li> "undisable" : triggered when pilot recovers from being disabled.<br />
  *    <li> "jump" : triggered when pilot jumps to hyperspace (before he actually jumps out).<br />
  *    <li> "hail" : triggered when pilot is hailed.<br />
  *    <li> "land" : triggered when pilot is landing (right when starting land descent).<br />
  *    <li> "attacked" : triggered when the pilot is attacked. <br />
  *    <li> "idle" : triggered when the pilot becomes idle in manual control.<br />
+ *    <li> "lockon" : triggered when the pilot locked on a missile on it's target.<br />
  * </ul>
  * <br />
  * If you pass nil as pilot, it will set it as a global hook that will jump for all pilots.<br />
@@ -621,14 +642,16 @@ static int hook_pilot( lua_State *L )
 
    /* Check to see if hook_type is valid */
    if (strcmp(hook_type,"death")==0)         type = PILOT_HOOK_DEATH;
-   else if (strcmp(hook_type,"exploded")==0)    type = PILOT_HOOK_EXPLODED;
+   else if (strcmp(hook_type,"exploded")==0) type = PILOT_HOOK_EXPLODED;
    else if (strcmp(hook_type,"board")==0)    type = PILOT_HOOK_BOARD;
    else if (strcmp(hook_type,"disable")==0)  type = PILOT_HOOK_DISABLE;
+   else if (strcmp(hook_type,"undisable")==0) type = PILOT_HOOK_UNDISABLE;
    else if (strcmp(hook_type,"jump")==0)     type = PILOT_HOOK_JUMP;
    else if (strcmp(hook_type,"hail")==0)     type = PILOT_HOOK_HAIL;
    else if (strcmp(hook_type,"land")==0)     type = PILOT_HOOK_LAND;
    else if (strcmp(hook_type,"attacked")==0) type = PILOT_HOOK_ATTACKED;
    else if (strcmp(hook_type,"idle")==0)     type = PILOT_HOOK_IDLE;
+   else if (strcmp(hook_type,"lockon")==0)   type = PILOT_HOOK_LOCKON;
    else { /* hook_type not valid */
       NLUA_ERROR(L, "Invalid pilot hook type: '%s'", hook_type);
       return 0;
