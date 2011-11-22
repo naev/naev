@@ -153,7 +153,7 @@ function flyUpdate()
             tk.msg(title1, message3:format(tutGetKey("secondary")))
 
             pp:rmOutfit("all")
-            pp:addOutfit("Mace Launcher", 1)
+            pp:addOutfit("Unicorp Mace Launcher", 1)
 
             flytime = 10
             omsg = player.omsgAdd(wepomsg:format(tutGetKey("secondary"), flytime), 0)
