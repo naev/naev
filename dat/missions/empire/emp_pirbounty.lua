@@ -36,6 +36,11 @@ Will you take up the bounty?]]
    msg[1]   = "MISSION SUCCESS! Payment received."
    msg[2]   = "Pursue %s!"
    msg[3]   = "MISSION FAILURE! Somebody else eliminated %s."
+
+   osd_msg = {}
+   osd_msg[1] = "Fly to the %s system"
+   osd_msg[2] = "Kill %s"
+   osd_msg["__save"] = true
 end
 
 
@@ -82,6 +87,11 @@ function accept ()
 
    -- Some flavour text
    tk.msg( title[1], text[2] )
+
+   -- Format and set osd message
+   osd_msg[1] = osd_msg[1]:format(near_sys:name())
+   osd_msg[2] = osd_msg[2]:format(pir_name)
+   misn.osdCreate(misn_title, osd_msg)
 
    -- Set hooks
    hook.enter("sys_enter")
@@ -154,6 +164,9 @@ function sys_enter ()
       pilot_outfitAddSet( pir, pir_outfits )
       hook.pilot( pir, "death", "pir_dead" )
       hook.pilot( pir, "jump", "pir_jump" )
+      misn.osdActive(2)
+   else
+      misn.osdActive(1)
    end
    last_sys = cur_sys
 end
