@@ -1364,6 +1364,11 @@ void player_land (void)
 
       player_land(); /* rerun land protocol */
    }
+   /*check if planet is in range*/
+   else if (pilot_inRangePlanet( player.p, player.p->nav_planet ) <= 0 ) {
+      player_message( "\er%s is out of comm range, unable to contact.", cur_system->planets[player.p->nav_planet]->name );
+      return;
+   }
    else if (player_isFlag(PLAYER_NOLAND)) {
       player_message( "\er%s", player_message_noland );
       return;
