@@ -169,18 +169,24 @@ int pilot_inRangePilot( const Pilot *p, const Pilot *target )
  */
 int pilot_inRangePlanet( const Pilot *p, int target )
 {
+#if 0
    (void)p;
    (void)target;
 
    /* Always consider planets in range. */
    return 1;
+#endif
 
-#if 0
    double d;
    Planet *pnt;
+   double sensorMod;
 
-   if (cur_system->interference == 0.)
-      return 1;
+   /*planets have extra visibility due to their size and ability to house large sensor arrays*/
+   sensorMod = 25;
+   
+   /*adjust visibilty due to interference*/
+   if ( cur_system->interference != 0. )
+      sensorMod = sensorMod - ( cur_system->interference / 50 );
 
    /* Get the planet. */
    pnt = cur_system->planets[target];
@@ -188,11 +194,10 @@ int pilot_inRangePlanet( const Pilot *p, int target )
    /* Get distance. */
    d = vect_dist2( &p->solid->pos, &pnt->pos );
 
-   if (d < sensor_curRange)
+   if (d < ( sensor_curRange * sensorMod ))
       return 1;
 
    return 0;
-#endif
 }
 
 
