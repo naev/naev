@@ -67,6 +67,7 @@ static int pilotL_target( lua_State *L );
 static int pilotL_inrange( lua_State *L );
 static int pilotL_nav( lua_State *L );
 static int pilotL_weapset( lua_State *L );
+static int pilotL_actives( lua_State *L );
 static int pilotL_outfits( lua_State *L );
 static int pilotL_rename( lua_State *L );
 static int pilotL_position( lua_State *L );
@@ -145,6 +146,7 @@ static const luaL_reg pilotL_methods[] = {
    { "inrange", pilotL_inrange },
    { "nav", pilotL_nav },
    { "weapset", pilotL_weapset },
+   { "actives", pilotL_actives },
    { "outfits", pilotL_outfits },
    { "rename", pilotL_rename },
    { "pos", pilotL_position },
@@ -232,6 +234,7 @@ static const luaL_reg pilotL_cond_methods[] = {
    { "inrange", pilotL_inrange },
    { "nav", pilotL_nav },
    { "weapset", pilotL_weapset },
+   { "actives", pilotL_actives },
    { "outfits", pilotL_outfits },
    { "pos", pilotL_position },
    { "vel", pilotL_velocity },
@@ -1300,6 +1303,112 @@ static int pilotL_weapset( lua_State *L )
       }
    }
    return 2;
+}
+
+
+/**
+ * @brief Gets the active outfits and their states of the pilot.
+ *
+ * The active outfits have the following structure: <br />
+ * <ul>
+ *  <li> name: Name of the set. <br />
+ *  <li> type: Type of the outfit. <br />
+ *  <li> state: State of the outfit, which can be one of { "off", "warmup", "on", "cooldown" }. <br />
+ *  <li> duration: Set only if state is "on". Indicates duration value (0 = just finished, 1 = just on). <br />
+ *  <li> cooldown: Set only if state is "cooldown". Indicates cooldown value (0 = just ending, 1 = just started cooling down). <br />
+ * </ul>
+ *
+ * An example would be:
+ * <pre><code>
+ * act_outfits = p:actives()
+ * print( "Weapnset Name: " .. ws_name )
+ * for _,o in ipairs(act_outfits) do
+ *    print( "Name: " .. o.name )
+ *    print( "State: " .. o.state )
+ * end
+ * </code></pre>
+ *
+ * @usage act_outfits = p:actives() -- Gets the table of active outfits
+ *
+ *    @luaparam p Pilot to get active outfits of.
+ *    @luareturn The table with each active outfit's information.
+ * @luafunc actives( p )
+ */
+static int pilotL_actives( lua_State *L )
+{
+   Pilot *p;
+   int i, k;
+   double d;
+   PilotOutfitSlot *o;
+   const char *str;
+
+   /* Parse parameters. */
+   p   = luaL_validpilot(L,1);
+
+   k = 0;
+   lua_newtable(L);
+   for (i=0; i<p->noutfits; i++) {
+
+      /* Get active outfits. */
+      o = p->outfits[i];
+      if (o->outfit == NULL)
+         continue;
+      if (!o->active)
+         continue;
+
+      /* Set up for creation. */
+      lua_pushnumber(L,++k);
+      lua_newtable(L);
+
+      /* Name. */
+      lua_pushstring(L,"name");
+      lua_pushstring(L,o->outfit->name);
+      lua_rawset(L,-3);
+
+      /* Type. */
+      lua_pushstring(L, "type");
+      lua_pushstring(L, outfit_getType(o->outfit));
+      lua_rawset(L,-3);
+
+      /* State and timer. */
+      switch (o->state) {
+         case PILOT_OUTFIT_OFF:
+            str = "off";
+            break;
+         case PILOT_OUTFIT_WARMUP:
+            str = "warmup";
+            break;
+         case PILOT_OUTFIT_ON:
+            str = "on";
+            d = outfit_duration(o->outfit);
+            if (d==0.)
+               d = 1.;
+            else
+               d = o->stimer / d;
+            lua_pushstring(L,"duration");
+            lua_pushnumber(L, d );
+            lua_rawset(L,-3);
+            break;
+         case PILOT_OUTFIT_COOLDOWN:
+            str = "cooldown";
+            d = outfit_cooldown(o->outfit);
+            if (d==0.)
+               d = 0.;
+            else
+               d = o->stimer / d;
+            lua_pushstring(L,"cooldown");
+            lua_pushnumber(L, d );
+            lua_rawset(L,-3);
+            break;
+      }
+      lua_pushstring(L,"state");
+      lua_pushstring(L,str);
+      lua_rawset(L,-3);
+
+      /* Set table in table. */
+      lua_rawset(L,-3);
+   }
+   return 1;
 }
 
 

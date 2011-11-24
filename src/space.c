@@ -1210,8 +1210,9 @@ void space_init( const char* sysname )
    space_spawn = 1; /* spawn is enabled by default. */
    interference_timer = 0.; /* Restart timer. */
    if (player.p != NULL) {
-      pilot_clearTimers(player.p); /* Clear timers. */
-      pilot_heatReset(player.p); /* Resets the player's heat. */
+      pilot_lockClear( player.p );
+      pilot_clearTimers( player.p ); /* Clear timers. */
+      pilot_heatReset( player.p ); /* Resets the player's heat. */
       player_clearEscorts(); /* Must clear escorts to keep deployment sane. */
    }
 

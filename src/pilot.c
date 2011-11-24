@@ -2480,14 +2480,17 @@ void pilot_clearTimers( Pilot *pilot )
    int i;
    PilotOutfitSlot *o;
 
-   pilot->ptimer = 0.;
-   pilot->tcontrol = 0.;
+   pilot->ptimer     = 0.; /* Pilot timer. */
+   pilot->tcontrol   = 0.; /* AI control timer. */
+   pilot->stimer     = 0.; /* Shield timer. */
+   pilot->dtimer     = 0.; /* Disable timer. */
    for (i=0; i<MAX_AI_TIMERS; i++)
-      pilot->timer[i] = 0.;
+      pilot->timer[i] = 0.; /* Specific AI timers. */
    for (i=0; i<pilot->noutfits; i++) {
       o = pilot->outfits[i];
-      if (o->timer > 0.)
-         o->timer = 0.;
+      o->timer    = 0.; /* Last used timer. */
+      o->stimer   = 0.; /* State timer. */
+      o->state    = PILOT_OUTFIT_OFF; /* Set off. */
    }
 }
 
