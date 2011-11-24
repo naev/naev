@@ -2178,6 +2178,8 @@ static int aiL_aim( lua_State *L )
                                       p->solid->vel.x-cur_pilot->solid->vel.x, p->solid->vel.y-cur_pilot->solid->vel.y,
                                       speed
                                  );
+   /* On fail maintain current direction */
+   if (angle==1000.) angle=cur_pilot->solid->dir;
 
    /* Calculate what we need to turn */
    mod = 10.;

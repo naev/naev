@@ -60,19 +60,11 @@ void weapons_render( const WeaponLayer layer, const double dt );
 void weapon_clear (void);
 void weapon_exit (void);
 
-// Targeting
-
-// LinearTrajectoryAngle finds the angle to hit a target using a relative position, velocity and projectile speed_
-//
-// x,y = relative position (source-target)
-// vx,vy = relative velocity (target-source)
-// speed_ to find angle for
-// returns -PI to +PI or 1000. on fail
+/*
+ * Targeting
+ */
+void RotateToNormal ( double* x_, double* y_, double nx_,double ny_ );
 double LinearTrajectoryAngle ( double x_,double y_, double vx_,double vy_, double speed_ );
-//AngularTrajectoryAngle
-//uses the velocity difference in the targets solid to calc a circular path and return a collision angle for it at the given speed
-//Probably should be static but may be wanted by the AI for aiming
-//could still be improved a lot
 double AngularTrajectoryAngle ( const Vector2d* pos_, const Vector2d* vel_, const Solid* target_, double speed_ );
 
 #endif /* WEAPON_H */

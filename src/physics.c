@@ -301,8 +301,10 @@ static void solid_update_euler (Solid *obj, const double dt)
    
    /*Calc average velocity*/
    double avg_mod = AVERAGE_VELOCITY_MOD*dt;//the avg_mod must never be greater than 1.0
-   //this clamping will cause an inacuracy if the frame rate spikes above AVERAGE_VELOCITY_TIME
-   //this will only cause lag of AVERAGE_VELOCITY_TIME as where not clamping could cause huge problems
+   /*
+     This clamping will cause an inaccuracy if the frame length spikes above AVERAGE_VELOCITY_TIME.
+     This will only cause lag of AVERAGE_VELOCITY_TIME as where not clamping could cause huge problems.
+   */
    if (avg_mod>1.0) avg_mod=1.0;
    obj->avg_vel.x *= (1.0-avg_mod);
    obj->avg_vel.x += (obj->vel.x*avg_mod);
@@ -420,8 +422,10 @@ static void solid_update_rk4 (Solid *obj, const double dt)
    
    /*Calc average velocity*/
    double avg_mod = AVERAGE_VELOCITY_MOD*dt;//the avg_mod must never be greater than 1.0
-   //this clamping will cause an inacuracy if the frame rate spikes above AVERAGE_VELOCITY_TIME
-   //this will only cause lag of AVERAGE_VELOCITY_TIME as where not clamping could cause huge problems
+   /*
+     This clamping will cause an inaccuracy if the frame length spikes above AVERAGE_VELOCITY_TIME.
+     This will only cause lag of AVERAGE_VELOCITY_TIME as where not clamping could cause huge problems.
+   */
    if (avg_mod>1.0) avg_mod=1.0;
    obj->avg_vel.x *= (1.0-avg_mod);
    obj->avg_vel.x += (obj->vel.x*avg_mod);
