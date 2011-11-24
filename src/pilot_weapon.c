@@ -76,23 +76,13 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
    Pilot *pt;
    double dist2;
    Outfit *o;
+   Vector2d vect;
+   double time_a;
+   double time_b;
 
    /* Case no outfits. */
    if (ws->slots == NULL)
       return 0;
-
-   /* If inrange is set we only fire at targets in range. */
-   if (ws->inrange) {
-      if (p->target == p->id)
-         dist2 = INFINITY; /* With no target we just set distance to infinity. */
-      else {
-         pt = pilot_get( p->target );
-         if (pt == NULL)
-            dist2 = INFINITY;
-         else
-            dist2 = vect_dist2( &p->solid->pos, &pt->solid->pos );
-      }
-   }
 
    /* Fire. */
    recalc = 0;
@@ -146,10 +136,53 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
             (ws->slots[i].slot->u.ammo.lockon_timer > 0.))
          continue;
 
-      /* Only "inrange" outfits. */
-      if (!outfit_isFighterBay(o) &&
-            ws->inrange && (dist2 > ws->slots[i].range2))
-         continue;
+      /*
+         Only "inrange" outfits.
+         dist2 needs to be calculated per outfit to apply velocity's at max range
+      */
+      /* If inrange is set we only fire at targets in range. */
+      if (ws->inrange) {
+         dist2 = INFINITY;
+         if (p->target != p->id) {
+            pt = pilot_get( p->target );
+            if (pt != NULL) {
+               /* time_b is our check for weapon type if it !=0 then generate dist2 */
+               time_b=0.;
+               if (outfit_isBolt(o)) {
+                  if (o->u.blt.speed>0.)
+                     time_a=o->u.blt.range/o->u.blt.speed;
+                  else
+                     time_a=0.;
+                  time_b=time_a;
+               }
+               else if (outfit_isLauncher(o)) {
+                  /*Lunchers have drag so dont use source velocity*/
+                  time_a=0.;
+                  if (o->u.lau.ammo==0)
+                     time_b=0.;
+                  else
+                     time_b=o->u.lau.ammo->u.amm.duration;
+               }
+               else if (outfit_isAmmo(o)) {
+                  /*Dont no if ammo will turnup instead of luncher but the 2 are almost the same*/
+                  time_a=0.;
+                  time_b=o->u.amm.duration;
+               }
+               else {
+                  /* unknown weapon type cant workout range */
+                  cli_addMessage("pilot_weapSetFire() Unknown weapon type");
+               }
+               
+               if (time_b!=0.) {
+                  /* dont use vect_set or we will trigger angle and mod calcs */
+                  vect.x = (p->solid->pos.x+(p->solid->vel.x*time_a)) - (pt->solid->pos.x+(pt->solid->vel.x*time_b));
+                  vect.y = (p->solid->pos.y+(p->solid->vel.y*time_a)) - (pt->solid->pos.y+(pt->solid->vel.y*time_b));
+                  dist2 = vect_odist2(&vect);
+               }
+            }
+         }
+         if (!outfit_isFighterBay(o) && (dist2 > ws->slots[i].range2)) continue;
+      }
 
       /* Shoot the weapon of the weaponset. */
       ret += pilot_shootWeaponSetOutfit( p, ws, o, level );

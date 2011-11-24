@@ -1318,16 +1318,23 @@ static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
    double mass, rdir;
    Pilot *pilot_target;
    glTexture *gfx;
+   /* Dont use shooter velocity to aim lunchers as drag will limit ammo speed */
+   Vector2d aim_vel;
+   aim_vel.x=0.;
+   aim_vel.y=0.;
+   aim_vel.mod=0.;
+   aim_vel.angle=0.;
+   
 
    pilot_target = NULL;
-   if (w->outfit->type == OUTFIT_TYPE_TURRET_AMMO) {
+   if (outfit_isTurret(outfit)) {
       pilot_target = pilot_get(w->target);
-      rdir = weapon_aimTurret( w, outfit, parent, pilot_target, pos, vel, dir, M_PI );
+      rdir = weapon_aimTurret( w, outfit, parent, pilot_target, pos, &aim_vel, dir, M_PI );
    }
    else {
       if (outfit->u.lau.arc>0.0) {
         pilot_target = pilot_get(w->target);
-        rdir = weapon_aimTurret( w, outfit, parent, pilot_target, pos, vel, dir, outfit->u.lau.arc );
+        rdir = weapon_aimTurret( w, outfit, parent, pilot_target, pos, &aim_vel, dir, outfit->u.lau.arc );
       }
       else
          rdir        = dir;
