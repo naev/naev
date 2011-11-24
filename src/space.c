@@ -1186,6 +1186,10 @@ void space_update( const double dt )
       gui_updateFaction();
       space_fchg = 0;
    }
+   
+   for (i=0; i<cur_system->nplanets; i++)
+      if ( !planet_isKnown(i) ) && ( pilot_inRangePlanet( player.p, i ))
+         planet_setFlag( i, PLANET_KNOWN )
 }
 
 
