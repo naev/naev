@@ -238,6 +238,13 @@ int comm_openPlanet( Planet *planet )
       player_message("%s does not respond.", planet->name);
       return 0;
    }
+   
+   /* Make sure planet in range. */
+   if ( pilot_inRangePlanet( player.p, planet->id ) <= 0 ) {
+      player_message("\erTarget is out of communications range.");
+      comm_planet = NULL;
+      return 0;
+   }
 
    comm_planet = planet;
 
