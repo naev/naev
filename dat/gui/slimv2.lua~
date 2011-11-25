@@ -437,7 +437,7 @@ function render( dt, dt_mod )
                
       else
          if i == 1 then
-            gfx.renderTex( slotAe, slot_x + slot_w - slotAe_w, 0, -1, 1 )
+            gfx.renderTex( slotAe, slot_x + slot_w - slotAe_w, 0, 1, 1 )
          elseif i <= 3 then
             gfx.renderTex( slotBe, slot_x + slot_w - slotBe_w, slote_y, -1, 1 )
          else
