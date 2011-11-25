@@ -82,9 +82,9 @@ typedef enum PlanetClass_ {
 #define PLANET_MARKED      (1<<1) /**< Planet is marked by a regular mission. */
 #define PLANET_CMARKED     (1<<2) /**< Planet is marked by a computer mission. */
 #define PLANET_CLAIMED     (1<<3) /**< Planet is claimed by a mission. */
-#define planet_isFlag(p,f)    ((s)->flags & (f)) /**< Checks planet flag. */
-#define planet_setFlag(p,f)   ((s)->flags |= (f)) /**< Sets a planet flag. */
-#define planet_rmFlag(p,f)    ((s)->flags &= ~(f)) /**< Removes a planet flag. */
+#define planet_isFlag(p,f)    ((p)->flags & (f)) /**< Checks planet flag. */
+#define planet_setFlag(p,f)   ((p)->flags |= (f)) /**< Sets a planet flag. */
+#define planet_rmFlag(p,f)    ((p)->flags &= ~(f)) /**< Removes a planet flag. */
 #define planet_isKnown(p)     planet_isFlag(p,PLANET_KNOWN) /**< Checks if planet is known. */
 #define planet_isMarked(p)    planet_isFlag(p,PLANET_MARKED) /**< Checks if planet is marked. */
 
@@ -134,6 +134,9 @@ typedef struct Planet_ {
    char *gfx_spacePath; /**< Name of the gfx_space for saving purposes. */
    char *gfx_exterior; /**< Don't actually load the texture */
    char *gfx_exteriorPath; /**< Name of the gfx_exterior for saving purposes. */
+   
+   /* Misc. */
+   unsigned int flags; /**< flags for planet properties */
 } Planet;
 
 

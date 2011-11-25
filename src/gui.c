@@ -1549,8 +1549,8 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
    Planet *planet;
    GLfloat vertex[5*2], colours[5*4];
 
-   /* Make sure is in range. */
-   if (!pilot_inRangePlanet( player.p, ind ))
+   /* Make sure is known. */
+   if ( !planet_isKnown( cur_system->planets[ind] ))
       return;
 
    /* Default values. */

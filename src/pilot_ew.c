@@ -18,7 +18,7 @@
 
 #include "log.h"
 #include "space.h"
-
+#include "player.h"
 
 static double sensor_curRange    = 0.; /**< Current base sensor range, used to calculate
                                          what is in range and what isn't. */
@@ -192,7 +192,10 @@ int pilot_inRangePlanet( const Pilot *p, int target )
    pnt = cur_system->planets[target];
 
    /* Get distance. */
-   d = vect_dist2( &p->solid->pos, &pnt->pos );
+   if ( player.p != NULL )
+      d = vect_dist2( &p->solid->pos, &pnt->pos );
+   else
+      return 0;
 
    if (d < ( sensor_curRange * sensorMod ))
       return 1;
