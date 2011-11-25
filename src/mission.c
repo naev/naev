@@ -323,19 +323,19 @@ void missions_run( int loc, int faction, const char* planet, const char* sysname
 
    for (i=0; i<mission_nstack; i++) {
       misn = &mission_stack[i];
-      if (misn->avail.loc==loc) {
+      if (misn->avail.loc != loc)
+         continue;
 
-         if (!mission_meetReq(i, faction, planet, sysname))
-            continue;
+      if (!mission_meetReq(i, faction, planet, sysname))
+         continue;
 
-         chance = (double)(misn->avail.chance % 100)/100.;
-         if (chance == 0.) /* We want to consider 100 -> 100% not 0% */
-            chance = 1.;
+      chance = (double)(misn->avail.chance % 100)/100.;
+      if (chance == 0.) /* We want to consider 100 -> 100% not 0% */
+         chance = 1.;
 
-         if (RNGF() < chance) {
-            mission_init( &mission, misn, 1, 1, NULL );
-            mission_cleanup(&mission); /* it better clean up for itself or we do it */
-         }
+      if (RNGF() < chance) {
+         mission_init( &mission, misn, 1, 1, NULL );
+         mission_cleanup(&mission); /* it better clean up for itself or we do it */
       }
    }
 }
