@@ -1490,7 +1490,7 @@ void takeoff( int delay )
    if (menu_isOpen(MENU_MAIN))
       return;
    events_trigger( EVENT_TRIGGER_ENTER );
-   missions_trigger( MIS_AVAIL_SPACE );
+   missions_run( MIS_AVAIL_SPACE, -1, NULL, NULL );
    if (menu_isOpen(MENU_MAIN))
       return;
    player.p->ptimer = PILOT_TAKEOFF_DELAY;

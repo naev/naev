@@ -142,7 +142,6 @@ int mission_start( const char *name, unsigned int *id );
 /*
  * misc
  */
-void missions_trigger( int location );
 int mission_alreadyRunning( MissionData* misn );
 int mission_getID( const char* name );
 MissionData* mission_get( int id );

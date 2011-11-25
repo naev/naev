@@ -277,7 +277,7 @@ static int mission_meetReq( int mission, int faction,
       return 0;
 
    /* Match faction. */
-   if (!mission_matchFaction(misn,faction))
+   if ((faction >= 0) && !mission_matchFaction(misn,faction))
       return 0;
 
    /* Must not be already done or running if unique. */
@@ -371,30 +371,6 @@ int mission_start( const char *name, unsigned int *id )
       mission_cleanup( &mission ); /* Clean up in case not accepted. */
 
    return ret;
-}
-
-
-/**
- * @brief Triggers one or more missions.
- *
- *    @param location Location of the mission.
- */
-void missions_trigger( int location )
-{
-   MissionData *mdat;
-   int i;
-   double chance;
-
-   for (i = 0; i < mission_nstack; i++) {
-      mdat = &mission_stack[i];
-      chance = (double)(mdat->avail.chance % 100)/100.;
-      if (chance == 0.) /* We want to consider 100 -> 100% not 0% */
-         chance = 1.;
-
-      if (mdat->avail.loc == location && RNGF() < chance) {
-         mission_start(mdat->name, NULL); /* What the hell is the point of the second argument if it's always NULL anyway? */
-      }
-   }
 }
 
 
