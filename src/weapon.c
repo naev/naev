@@ -1153,7 +1153,9 @@ static double weapon_aimTurret( Weapon *w, const Outfit *outfit, const Pilot *pa
    double rdir, lead_angle;
    double weapon_speed;
    double off;
-   int has_targeting_upgrade = 0;
+/*
+   Commented out targeting upgrade until improvments are finnished
+   int has_targeting_upgrade = 0;*/
    
    weapon_speed = w->outfit->u.blt.speed;
    if ( (w->outfit->type==OUTFIT_TYPE_AMMO) ||
@@ -1163,7 +1165,7 @@ static double weapon_aimTurret( Weapon *w, const Outfit *outfit, const Pilot *pa
    }
 
    //scan outfits for targeting upgrade
-   {
+/*   {
       int a;
       for (a=0; a<parent->outfit_nstructure; a++)
       {
@@ -1175,28 +1177,23 @@ static double weapon_aimTurret( Weapon *w, const Outfit *outfit, const Pilot *pa
             }
          }
       }
-   }
+   }*/
 
    if (pilot_target == NULL)
       return parent->solid->dir;
    else
    {
-      if (has_targeting_upgrade)
+/*      if (has_targeting_upgrade)
       {
-         rdir = AngularTrajectoryAngle(
-                                         pos, vel,
-                                         pilot_target->solid,
-                                         weapon_speed
-                                      );
       }
       else
-      {
+      {*/
          rdir = LinearTrajectoryAngle(
                                        VX(*pos)-VX(pilot_target->solid->pos), VY(*pos)-VY(pilot_target->solid->pos),
                                        VX(pilot_target->solid->vel) - VX(*vel), VY(pilot_target->solid->vel) - VY(*vel),
                                        weapon_speed
                                      );
-      }
+/*      }*/
 
       if ( (w->outfit->type!=OUTFIT_TYPE_AMMO) &&
            (w->outfit->type!=OUTFIT_TYPE_TURRET_AMMO) )
@@ -1318,7 +1315,11 @@ static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
    double mass, rdir;
    Pilot *pilot_target;
    glTexture *gfx;
-   /* Dont use shooter velocity to aim lunchers as drag will limit ammo speed */
+   /*
+      Dont use shooter velocity to aim lunchers as drag will limit ammo speed.
+      Ok this is a bit more complicated than i thought. If the ammo is fast
+      then the source speed is very relevant.
+   */
    Vector2d aim_vel;
    aim_vel.x=0.;
    aim_vel.y=0.;
@@ -1334,7 +1335,7 @@ static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
    else {
       if (outfit->u.lau.arc>0.0) {
         pilot_target = pilot_get(w->target);
-        rdir = weapon_aimTurret( w, outfit, parent, pilot_target, pos, &aim_vel, dir, outfit->u.lau.arc );
+        rdir = weapon_aimTurret( w, outfit, parent, pilot_target, pos, vel, dir, outfit->u.lau.arc );
       }
       else
          rdir        = dir;
@@ -1931,110 +1932,4 @@ double LinearTrajectoryAngle ( double x_,double y_, double vx_,double vy_, doubl
    
    /* Return the angle of the velocity */
    return ANGLE(new_radial, -vy_);/* not sure whats up with the negative y value */
-}
-
-/**
- *
- * @brief Calculates the angle that a projectile should take using angular trajectory
- *
- *   @param position of the source
- *   @param velocity of the source
- *   @param the target solid (uses pos,vel,avg_vel)
- *   
- *   @return valid range from -PI to +PI or 1000. on fail
- *   Will revert to LinearTrajectoryAngle on very small angles
- *   Can also fail if the target turns more than a half circle in the time it takes for the projectile to reach it
- */
-double AngularTrajectoryAngle ( const Vector2d* pos_, const Vector2d* vel_, const Solid* target_, double speed_ )
-{
-   Vector2d velocity_normal,circle_normal,circle_center,t_circle_normal;
-   
-   /* velocity_normal is the normal of the difference between the targets 2 velocity's so can describe a circle */
-   vect_pset(
-               &velocity_normal, 1.,
-               angle_diff(target_->avg_vel.angle,target_->vel.angle) / AVERAGE_VELOCITY_TIME
-            );
-   
-   /*
-      Division by 0 prevention. an angle of 0 results in a straight line.
-      Should use a cutoff angle
-      0.0174532925199433=1 degrees  0.0872664625997165=5 and 0.1745329251994329=10
-   */
-   if (fabs(velocity_normal.angle)<=0.0174532925199433) {
-      return LinearTrajectoryAngle(
-               VX(*pos_)-VX(target_->pos), VY(*pos_)-VY(target_->pos),
-               VX(target_->vel)-VX(*vel_), VY(target_->vel)-VY(*vel_),
-               speed_
-                                    );
-   }
-   else {
-      const int loops = 15;
-      int l;
-      double ang_1,ang_2,ang_3;//angles
-      double revolution_time,circle_radius;
-      double time,distance;
-      double x,y;
-      
-      revolution_time = fabs((M_PI*2.0)/velocity_normal.angle);
-      /* targets speed * time_to_compleat_circle = circle_length then convert to radius */
-      circle_radius = (target_->vel.mod*revolution_time) / (M_PI*2.);
-      
-      /*
-         Calc the normal from the circle center to the targets position
-         The circle_normal.angle is the angle at time=0 (start_angle)
-         NOTE: + angles are anticlockwise ! Why ??? My poor poor brain
-      */
-      if (velocity_normal.angle>0.) /* turn the opposit way to velocity_normal to point out from center */
-         circle_normal.angle = (target_->vel.angle-(M_PI*0.5));
-      else
-         circle_normal.angle = (target_->vel.angle+(M_PI*0.5));
-      vect_pset(&circle_normal,1.,circle_normal.angle);
-      
-      /* Calculate the circles center.
-         Do we need a vect_set hear ? or is it just a waste of an atan2 and sqrt*/
-      vect_cset (
-                  &circle_center,/* circle_normal is from circle_center so must be removed from the target */
-                  target_->pos.x - (circle_normal.x*circle_radius),
-                  target_->pos.y - (circle_normal.y*circle_radius)
-                );
-      
-      /* The start angle is at a time 0 and thus a certain undershoot */
-      ang_1=circle_normal.angle;
-      /*
-         A guess at an overshoot.
-         If its not 1/2 a circle would probably be a miss anyway
-         Should do a check to see if its an overshoot and return an error before the loop.
-      */
-      ang_2=ang_1-(M_PI*1.);
-      if (velocity_normal.angle>0.) ang_2 = ang_1+(M_PI*1.);
-      
-      for ( l=0; l<loops; l++) {
-         /* Find the half way position */
-         ang_3 =(ang_1+ang_2)/2.;
-         time = fabs((ang_3-circle_normal.angle)/velocity_normal.angle);
-         vect_pset(&t_circle_normal,1,ang_3);
-         
-         /* Find the relative position at the given time */
-         x = (circle_center.x+(t_circle_normal.x*circle_radius)) - (pos_->x+(vel_->x*time));
-         y = (circle_center.y+(t_circle_normal.y*circle_radius)) - (pos_->y+(vel_->y*time));
-         
-         /*
-            The distance of the relative position - (projectile_speed*time) will
-            give the smallest posable distance to target.
-            Negative values indicate an overshoot. Positive an undershoot and
-            0 == a dead hit. hugh dead, get it ?
-         */
-         distance = sqrt((x*x)+(y*y)) - (speed_*time);
-         if (distance>0.0) ang_1=ang_3; else ang_2=ang_3;
-         if (distance==0.0) l=loops;
-      }
-      /*
-         do accuracy check as a can we hit guide
-         25 seams like a long way out :? whats the size of the biggest ship ?
-         This should be replaced with an overshoot check of ang_2 pre loop
-      */
-      if (fabs(distance)>25.0) return 1000.;
-      
-      return ANGLE(x,y);
-   }
 }

@@ -65,7 +65,6 @@ void weapon_exit (void);
  */
 void RotateToNormal ( double* x_, double* y_, double nx_,double ny_ );
 double LinearTrajectoryAngle ( double x_,double y_, double vx_,double vy_, double speed_ );
-double AngularTrajectoryAngle ( const Vector2d* pos_, const Vector2d* vel_, const Solid* target_, double speed_ );
 
 #endif /* WEAPON_H */
 

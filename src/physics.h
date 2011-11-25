@@ -68,15 +68,11 @@ void vect_uv_decomp(Vector2d* u, Vector2d* v, Vector2d* reference);
 /**
  * @brief Represents a solid in the game.
  */
-/* /I would prefer these to be static members of Solid and set in .c but im moor c++ than c and arnt sure if/how you would do it */
-#define AVERAGE_VELOCITY_MOD 8.0
-#define AVERAGE_VELOCITY_TIME 0.12
 typedef struct Solid_ {
    double mass; /**< Solid's mass. */
    double dir; /**< Direction solid is facing in rad. */
    double dir_vel; /**< Velocity at which solid is rotating in rad/s. */
    Vector2d vel; /**< Velocity of the solid. */
-   Vector2d avg_vel;/**< Uses AVERAGE_VELOCITY_MOD to compute an the average velocity at AVERAGE_VELOCITY_TIME seconds ago. Computed in update function*/
    Vector2d pos; /**< Position of the solid. */
    double thrust; /**< Relative X force, basically simplified for our thrust model. */
    double speed_max; /**< Maximum speed. */
