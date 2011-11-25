@@ -375,6 +375,30 @@ int mission_start( const char *name, unsigned int *id )
 
 
 /**
+ * @brief Triggers one or more missions.
+ *
+ *    @param location Location of the mission.
+ */
+void missions_trigger( int location )
+{
+   MissionData *mdat;
+   int i;
+   double chance;
+
+   for (i = 0; i < mission_nstack; i++) {
+      mdat = &mission_stack[i];
+      chance = (double)(mdat->avail.chance % 100)/100.;
+      if (chance == 0.) /* We want to consider 100 -> 100% not 0% */
+         chance = 1.;
+
+      if (mdat->avail.loc == location && RNGF() < chance) {
+         mission_start(mdat->name, NULL); /* What the hell is the point of the second argument if it's always NULL anyway? */
+      }
+   }
+}
+
+
+/**
  * @brief Adds a system marker to a mission.
  */
 int mission_addMarker( Mission *misn, int id, int sys, SysMarker type )
@@ -746,6 +770,7 @@ static int mission_location( const char* loc )
    else if (strcmp(loc,"Shipyard")==0) return MIS_AVAIL_SHIPYARD;
    else if (strcmp(loc,"Land")==0) return MIS_AVAIL_LAND;
    else if (strcmp(loc,"Commodity")==0) return MIS_AVAIL_COMMODITY;
+   else if (strcmp(loc,"Space")==0) return MIS_AVAIL_SPACE;
    return -1;
 }
 

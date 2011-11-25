@@ -20,6 +20,7 @@
 #define  MIS_AVAIL_SHIPYARD   4 /**< Mission is available at shipyard. */
 #define  MIS_AVAIL_LAND       5 /**< Mission is available on landing. */
 #define  MIS_AVAIL_COMMODITY  6 /**< Mission is available at commodity exchange. */
+#define  MIS_AVAIL_SPACE      7 /**< Mission is available in space. */
 
 
 /* flag functions */
@@ -141,6 +142,7 @@ int mission_start( const char *name, unsigned int *id );
 /*
  * misc
  */
+void missions_trigger( int location );
 int mission_alreadyRunning( MissionData* misn );
 int mission_getID( const char* name );
 MissionData* mission_get( int id );

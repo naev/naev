@@ -1047,6 +1047,7 @@ static int playerL_teleport( lua_State *L )
    hooks_run( "jumpin" );
    hooks_run( "enter" );
    events_trigger( EVENT_TRIGGER_ENTER );
+   missions_trigger( MIS_AVAIL_SPACE );
 
    /* Reset targets when teleporting */
    player_targetPlanetSet( -1 );
