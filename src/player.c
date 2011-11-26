@@ -1658,6 +1658,7 @@ void player_brokeHyperspace (void)
    hooks_run( "jumpin" );
    hooks_run( "enter" );
    events_trigger( EVENT_TRIGGER_ENTER );
+   missions_run( MIS_AVAIL_SPACE, -1, NULL, NULL );
 
    /* Player sound. */
    player_soundPlay( snd_hypJump, 1 );
@@ -2576,6 +2577,7 @@ void player_runHooks (void)
       hooks_run( "jumpin" );
       hooks_run( "enter" );
       events_trigger( EVENT_TRIGGER_ENTER );
+      missions_run( MIS_AVAIL_SPACE, -1, NULL, NULL );
       player_rmFlag( PLAYER_HOOK_JUMPIN );
    }
    if (player_isFlag( PLAYER_HOOK_LAND )) {

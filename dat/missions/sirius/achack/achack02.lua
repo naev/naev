@@ -151,6 +151,7 @@ function land()
       tk.msg(title5, text6)
       tk.msg(title5, text7:format(player.name()))
       player.pay(150000) -- 150K
+      var.pop("achack02repeat")
       misn.finish(true)
    end
 end
