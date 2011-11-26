@@ -1187,7 +1187,7 @@ void space_update( const double dt )
       gui_updateFaction();
       space_fchg = 0;
    }
-   
+
    /*planet updates*/
    for (i=0; i<cur_system->nplanets; i++)
       if (( !planet_isKnown( cur_system->planets[i] )) && ( pilot_inRangePlanet( player.p, i )))
@@ -2844,7 +2844,7 @@ int space_sysSave( xmlTextWriterPtr writer )
    int i;
    int j;
    StarSystem *sys;
-   
+
    xmlw_startElem(writer,"space");
 
    for (i=0; i<systems_nstack; i++) {
@@ -2854,14 +2854,14 @@ int space_sysSave( xmlTextWriterPtr writer )
       xmlw_startElem(writer,"known")
 
       xmlw_attr(writer,"sys","%s",systems_stack[i].name);
-      
+
       sys = &systems_stack[i];
-      
+
       for (j=0; j<sys->nplanets; j++) {
          if (!planet_isKnown(sys->planets[j])) continue; /* not known */
          xmlw_elem(writer,"planet","%s",(sys->planets[j])->name);
       }
-      
+
       xmlw_endElem(writer);
    }
 
@@ -2897,7 +2897,7 @@ int space_sysLoad( xmlNodePtr parent )
                if (sys != NULL) /* Must exist */
                   sys_setFlag(sys,SYSTEM_KNOWN);
             }
-            
+
             space_parsePlanets(cur);
          } while (xml_nextNode(cur));
       }
@@ -2926,7 +2926,7 @@ static int space_parsePlanets( xmlNodePtr parent )
             planet_setFlag(planet,PLANET_KNOWN);
       }
    } while (xml_nextNode(node));
-   
+
    return 0;
 }
 

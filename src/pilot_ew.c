@@ -171,14 +171,14 @@ int pilot_inRangePlanet( const Pilot *p, int target )
 {
    if ( p == NULL )
       return 0;
-   
+
    double d;
    Planet *pnt;
    double sensorMod;
 
    /*planets have extra visibility due to their size and ability to house large sensor arrays*/
    sensorMod = 20;
-   
+
    /*adjust visibilty due to interference*/
    sensorMod = sensorMod - ( cur_system->interference / 50 );
 
