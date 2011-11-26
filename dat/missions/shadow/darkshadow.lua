@@ -413,6 +413,8 @@ end
 function continueAmbush()
     genbu:setHostile()
     genbu:attack(player.pilot())
+    waves = 0
+    maxwaves = 5
     spinter = hook.timer(5000, "spawnInterceptors")
 end
 
@@ -427,7 +429,10 @@ function spawnInterceptors()
         j:control()
         j:attack(player.pilot())
     end
-    spinter = hook.timer(30000, "spawnInterceptors")
+    if waves < maxwaves then 
+       waves = waves + 1
+       spinter = hook.timer(25000, "spawnInterceptors")
+    end
 end
 
 -- Land hook
