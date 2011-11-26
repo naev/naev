@@ -169,24 +169,11 @@ int pilot_inRangePilot( const Pilot *p, const Pilot *target )
  */
 int pilot_inRangePlanet( const Pilot *p, int target )
 {
-#if 0
-   (void)p;
-   (void)target;
-
-   /* Always consider planets in range. */
-   return 1;
-#endif
-
    double d;
    Planet *pnt;
-   double sensorMod;
+   double sense;
 
-   /*planets have extra visibility due to their size and ability to house large sensor arrays*/
-   sensorMod = 25;
-   
-   /*adjust visibilty due to interference*/
-   if ( cur_system->interference != 0. )
-      sensorMod = sensorMod - ( cur_system->interference / 50 );
+   sense = sensor_curRange * p->ew_detect;
 
    /* Get the planet. */
    pnt = cur_system->planets[target];
@@ -197,7 +184,7 @@ int pilot_inRangePlanet( const Pilot *p, int target )
    else
       return 0;
 
-   if (d < ( sensor_curRange * sensorMod ))
+   if ( d * 0.05 < sense ) //0.05 should be replaced with the planets ew_hide factor
       return 1;
 
    return 0;
