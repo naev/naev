@@ -134,7 +134,7 @@ typedef struct Planet_ {
    char *gfx_spacePath; /**< Name of the gfx_space for saving purposes. */
    char *gfx_exterior; /**< Don't actually load the texture */
    char *gfx_exteriorPath; /**< Name of the gfx_exterior for saving purposes. */
-   
+
    /* Misc. */
    unsigned int flags; /**< flags for planet properties */
 } Planet;

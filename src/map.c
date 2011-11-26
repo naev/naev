@@ -440,7 +440,7 @@ static void map_update( unsigned int wid )
    p = 0;
    buf[0] = '\0';
    for (i=0; i<sys->nplanets; i++) {
-      if(sys->planets[i]->real != ASSET_REAL)
+      if(sys->planets[i]->real != ASSET_REAL || !planet_isKnown(sys->planets[i]))
          continue;
 
       /* Colourize output. */
