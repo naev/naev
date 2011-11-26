@@ -132,6 +132,7 @@ static double interference_timer  = 0.; /**< Interference timer. */
  */
 /* planet load */
 static int planet_parse( Planet* planet, const xmlNodePtr parent );
+static int space_parsePlanets( xmlNodePtr parent );
 /* system load */
 static void system_init( StarSystem *sys );
 static int systems_load (void);
@@ -2841,14 +2842,27 @@ int space_rmMarker( int sys, SysMarker type )
 int space_sysSave( xmlTextWriterPtr writer )
 {
    int i;
-
+   int j;
+   StarSystem *sys;
+   
    xmlw_startElem(writer,"space");
 
    for (i=0; i<systems_nstack; i++) {
 
       if (!sys_isKnown(&systems_stack[i])) continue; /* not known */
 
-      xmlw_elem(writer,"known","%s",systems_stack[i].name);
+      xmlw_startElem(writer,"known")
+
+      xmlw_attr(writer,"sys","%s",systems_stack[i].name);
+      
+      sys = &systems_stack[i];
+      
+      for (j=0; j<sys->nplanets; j++) {
+         if (!planet_isKnown(sys->planets[j])) continue; /* not known */
+         xmlw_elem(writer,"planet","%s",(sys->planets[j])->name);
+      }
+      
+      xmlw_endElem(writer);
    }
 
    xmlw_endElem(writer); /* "space" */
@@ -2867,6 +2881,7 @@ int space_sysLoad( xmlNodePtr parent )
 {
    xmlNodePtr node, cur;
    StarSystem *sys;
+   char *str;
 
    space_clearKnown();
 
@@ -2877,10 +2892,13 @@ int space_sysLoad( xmlNodePtr parent )
 
          do {
             if (xml_isNode(cur,"known")) {
-               sys = system_get(xml_get(cur));
+               xmlr_attr(cur,"sys",str);
+               sys = system_get(str);
                if (sys != NULL) /* Must exist */
                   sys_setFlag(sys,SYSTEM_KNOWN);
             }
+            
+            space_parsePlanets(cur);
          } while (xml_nextNode(cur));
       }
    } while (xml_nextNode(node));
@@ -2888,6 +2906,29 @@ int space_sysLoad( xmlNodePtr parent )
    return 0;
 }
 
+/**
+ * @brief Parses planets in a system.
+ *
+ *    @param parent Node of the system.
+ *    @return 0 on success.
+ */
+static int space_parsePlanets( xmlNodePtr parent )
+{
+   xmlNodePtr node;
+   Planet *planet;
+
+   node = parent->xmlChildrenNode;
+
+   do {
+      if (xml_isNode(node,"planet")) {
+         planet = planet_get(xml_get(node));
+         if (planet != NULL) /* Must exist */
+            planet_setFlag(planet,PLANET_KNOWN);
+      }
+   } while (xml_nextNode(node));
+   
+   return 0;
+}
 
 /**
  * @brief Gets the index of the presence element for a faction.
