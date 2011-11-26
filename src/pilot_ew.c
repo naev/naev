@@ -172,6 +172,10 @@ int pilot_inRangePlanet( const Pilot *p, int target )
    double d;
    Planet *pnt;
    double sense;
+   
+   /* pilot must exist */
+   if ( p == NULL )
+      return 0;
 
    sense = sensor_curRange * p->ew_detect;
 
@@ -179,10 +183,7 @@ int pilot_inRangePlanet( const Pilot *p, int target )
    pnt = cur_system->planets[target];
 
    /* Get distance. */
-   if ( player.p != NULL )
-      d = vect_dist2( &p->solid->pos, &pnt->pos );
-   else
-      return 0;
+   d = vect_dist2( &p->solid->pos, &pnt->pos );
 
    if ( d * 0.05 < sense ) //0.05 should be replaced with the planets ew_hide factor
       return 1;
