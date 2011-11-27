@@ -1136,7 +1136,7 @@ static void sysedit_editPnt( void )
    window_setInputFilter( wid, "inpHide",
          "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`" );
    x += 50 + 10;
-   
+
    s = "onMap";
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 1, "txtOnMap",

@@ -172,7 +172,7 @@ int pilot_inRangePlanet( const Pilot *p, int target )
    double d;
    Planet *pnt;
    double sense;
-   
+
    /* pilot must exist */
    if ( p == NULL )
       return 0;
@@ -204,7 +204,7 @@ int pilot_inRangeJump( const Pilot *p, int target )
    JumpPoint *jp;
    double sense;
    double hide;
-   
+
    /* pilot must exist */
    if ( p == NULL )
       return 0;
