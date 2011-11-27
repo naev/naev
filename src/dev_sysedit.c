@@ -306,6 +306,8 @@ static void sysedit_editPntClose( unsigned int wid, char *unused )
       p->land_func = strdup( inp );
    p->presenceAmount = atof(window_getInput( sysedit_widEdit, "inpPresence" ));
    p->presenceRange = atoi(window_getInput( sysedit_widEdit, "inpPresenceRange" ));
+   p->hide = atof(window_getInput( sysedit_widEdit, "inpHide" ));
+   p->onMap = atoi(window_getInput( sysedit_widEdit, "inpOnMap" ));
 
    window_close( wid, unused );
 }
@@ -1126,6 +1128,24 @@ static void sysedit_editPnt( void )
          "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`." );
    x += 30 + 10;
 
+   s = "hide";
+   l = gl_printWidthRaw( NULL, s );
+   window_addText( wid, x, y, l, 20, 1, "txtHide",
+         NULL, &cBlack, s );
+   window_addInput( wid, x += l + 5, y, 50, 20, "inpHide", 4, 1, NULL );
+   window_setInputFilter( wid, "inpHide",
+         "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`" );
+   x += 50 + 10;
+   
+   s = "onMap";
+   l = gl_printWidthRaw( NULL, s );
+   window_addText( wid, x, y, l, 20, 1, "txtOnMap",
+         NULL, &cBlack, s );
+   window_addInput( wid, x += l + 5, y, 30, 20, "inpOnMap", 1, 1, NULL );
+   window_setInputFilter( wid, "inpOnMap",
+         "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`.23456789" );
+   x += 30 + 10;
+
    /* Bottom buttons. */
    window_addButton( wid, -20 - bw*3 - 15*3, 35 + BUTTON_HEIGHT, bw, BUTTON_HEIGHT,
          "btnRmService", "Rm Service", sysedit_btnRmService );
@@ -1152,6 +1172,10 @@ static void sysedit_editPnt( void )
    window_setInput( wid, "inpPresence", buf );
    snprintf( buf, sizeof(buf), "%d", p->presenceRange );
    window_setInput( wid, "inpPresenceRange", buf );
+   snprintf( buf, sizeof(buf), "%g", p->hide );
+   window_setInput( wid, "inpHide", buf );
+   snprintf( buf, sizeof(buf), "%d", p->onMap );
+   window_setInput( wid, "inpOnMap", buf );
 
    /* Generate the list. */
    sysedit_genServicesList( wid );
