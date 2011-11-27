@@ -2365,6 +2365,7 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
    j->targetid = j->target->id;
    j->radius = 200.;
    pos = 0;
+   j->onMap = 1;
 
    /* Parse data. */
    cur = node->xmlChildrenNode;
