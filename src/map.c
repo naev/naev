@@ -1571,6 +1571,10 @@ int map_map( const char* targ_sys, int r )
 
       /* check its jumps */
       for (i=0; i<sys->njumps; i++) {
+
+         /* if jump not on map */
+         if ( !cur->sys->jumps[i].onMap )
+            continue;
          jsys = cur->sys->jumps[i].target;
 
          /* System has already been parsed or is too deep */
