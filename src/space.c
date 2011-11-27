@@ -1620,6 +1620,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
    flags          = 0;
    planet->real   = ASSET_REAL;
    planet->hide   = 0.01;
+   planet->onMap  = 1;
 
    /* Get the name. */
    xmlr_attr( parent, "name", planet->name );
@@ -1705,6 +1706,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
             xmlr_strd(cur, "description", planet->description );
             xmlr_ulong(cur, "population", planet->population );
             xmlr_float(cur, "hide", planet->hide );
+            xmlr_int(cur, "onMap", planet->onMap );
 
             if (xml_isNode(cur,"class"))
                planet->class =

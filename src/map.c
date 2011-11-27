@@ -1546,6 +1546,7 @@ int map_map( const char* targ_sys, int r )
    int i, dep;
    StarSystem *sys, *jsys;
    SysNode *closed, *open, *cur, *neighbour;
+   Planet *p;
 
    A_gc = NULL;
    open = closed = NULL;
@@ -1577,6 +1578,13 @@ int map_map( const char* targ_sys, int r )
          neighbour = A_newNode( jsys, NULL );
          neighbour->r = dep+1;
          open = A_add( open, neighbour );
+      }
+
+      /* check the planets */
+      for ( i=0; i<sys->nplanets; i++ ) {
+         p = sys->planets[i];
+         if ( !planet_isKnown(p) && p->onMap >= 1 )
+            planet_setFlag(p,PLANET_KNOWN);
       }
    }
 
