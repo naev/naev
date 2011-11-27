@@ -648,7 +648,7 @@ int space_sysReachable( StarSystem *sys )
 
    /* check to see if it is adjacent to known */
    for (i=0; i<sys->njumps; i++)
-      if (sys_isKnown( sys->jumps[i].target ))
+      if ( jp_isKnown( jump_get( sys->name, sys->jumps[i].target )))
          return 1;
 
    return 0;
@@ -675,6 +675,23 @@ int space_sysReallyReachable( char* sysname )
    return 0;
 }
 
+/**
+ * @brief Sees if a system is reachable from another system.
+ *
+ *    @return 1 if target system is reachable, 0 if it isn't.
+ */
+int space_sysReachableFromSys( StarSystem *target, StarSystem *sys )
+{
+   JumpPoint *jp;
+
+   /* check to see if sys contains a known jump point to target */
+   jp = jump_get( target->name, sys );
+   if ( jp == NULL )
+      return 0;
+   else if ( jp_isKnown( jp ))
+      return 1;
+   return 0;
+}
 
 /**
  * @brief Gets all the star systems.

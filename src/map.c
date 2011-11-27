@@ -792,6 +792,9 @@ void map_renderSystems( double bx, double by, double x, double y,
 
          jsys = sys->jumps[j].target;
 
+         if (!space_sysReachableFromSys(jsys,sys))
+            continue;
+
          /* Draw the lines. */
          vertex[0]  = x + sys->pos.x * map_zoom;
          vertex[1]  = y + sys->pos.y * map_zoom;
