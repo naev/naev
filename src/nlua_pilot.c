@@ -1207,8 +1207,8 @@ static int pilotL_weapset( lua_State *L )
             continue;
 
          /* Must be weapon. */
-         if (outfit_isJammer(o->outfit) ||
-               outfit_isMod(o->outfit))
+         if (outfit_isJammer(o) ||
+               outfit_isMod(o))
             continue;
 
          /* Set up for creation. */
