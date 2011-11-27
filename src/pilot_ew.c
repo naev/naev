@@ -185,7 +185,7 @@ int pilot_inRangePlanet( const Pilot *p, int target )
    /* Get distance. */
    d = vect_dist2( &p->solid->pos, &pnt->pos );
 
-   if ( d * 0.05 < sense ) //0.05 should be replaced with the planets ew_hide factor
+   if ( d * pnt->hide * ( 1 + cur_system->interference / 200 ) < sense )
       return 1;
 
    return 0;

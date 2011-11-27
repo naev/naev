@@ -109,6 +109,7 @@ typedef struct Planet_ {
    double presenceAmount; /**< The amount of presence this asset exerts. */
    int presenceRange; /**< The range of presence exertion of this asset. */
    int real; /**< If the asset is tangible or not. */
+   double hide; /**< The ewarfare hide value for an asset. */
 
    /* Landing details. */
    int land_override; /**< Forcibly allows the player to either be able to land or not (+1 is land, -1 is not, 0 otherwise). */
