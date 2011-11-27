@@ -190,8 +190,10 @@ typedef struct SystemPresence_ {
  * Jump point flags.
  */
 #define JP_AUTOPOS      (1<<0) /**< Automatically position jump point based on system radius. */
-#define JP_DISABLED     (1<<1) /**< Jump point is disabled. */
-#define JP_HIDDEN       (1<<2) /**< Jump point is hidden by default. */
+#define JP_KNOWN        (1<<1) /**< Jump point is known. */
+#define jp_isKnown(j)     jp_isFlag(j,JP_KNOWN) /**< Checks if jump is known. */
+#define jp_isFlag(j,f)    ((j)->flags & (f)) /**< Checks jump flag. */
+#define jp_setFlag(j,f)   ((j)->flags |= (f)) /**< Sets a jump flag. */
 
 
 
@@ -204,7 +206,8 @@ typedef struct JumpPoint_ {
    Vector2d pos; /**< Position in the system. */
    double radius; /**< Radius of jump range. */
    unsigned int flags; /**< Flags related to the jump point's status. */
-   int known; /**< Is the jump point known? */
+   int type; /**< Type of Jump Point */
+   int onMap; /**< Whether the jump point is on maps */
    double angle; /**< Direction the jump is facing. */
    double cosa; /**< Cosinus of the angle. */
    double sina; /**< Sinus of the angle. */
@@ -302,6 +305,11 @@ credits_t planet_commodityPrice( const Planet *p, const Commodity *c );
 char planet_getColourChar( Planet *p );
 glColour* planet_getColour( Planet *p );
 void planet_updateLand( Planet *p );
+
+/*
+ * jump stuff
+ */
+JumpPoint* jump_get( const char* jumpname, StarSystem* sys );
 
 /*
  * system adding/removing stuff.

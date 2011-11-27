@@ -1670,6 +1670,10 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
    else
       rc = 0;
 
+   /* Check if known */
+   if (!jp_isKnown(jp))
+      return;
+
    /* Check if in range. */
    if (shape == RADAR_RECT) {
       x = y = 0;

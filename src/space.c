@@ -132,7 +132,7 @@ static double interference_timer  = 0.; /**< Interference timer. */
  */
 /* planet load */
 static int planet_parse( Planet* planet, const xmlNodePtr parent );
-static int space_parsePlanets( xmlNodePtr parent );
+static int space_parseAssets( xmlNodePtr parent, StarSystem* sys );
 /* system load */
 static void system_init( StarSystem *sys );
 static int systems_load (void);
@@ -945,6 +945,32 @@ char **planet_searchFuzzyCase( const char* planetname, int *n )
    return names;
 }
 
+/**
+ * @brief Gets a jump point based on its target and system.
+ *
+ *    @param planetname Name to match.
+ *    @return Planet matching planetname.
+ */
+JumpPoint* jump_get( const char* jumpname, StarSystem* sys )
+{
+   int i;
+   JumpPoint *jp;
+
+   if (jumpname==NULL) {
+      WARN("Trying to find NULL jump point...");
+      return NULL;
+   }
+
+   for (i=0; i<sys->njumps; i++) {
+      jp = &sys->jumps[i];
+      if (strcmp(jp->target->name,jumpname)==0)
+         return jp;
+   }
+
+   WARN("Jump point '%s' not found in %s", jumpname, sys->name);
+   return NULL;
+}
+
 
 /**
  * @brief Controls fleet spawning.
@@ -1188,10 +1214,15 @@ void space_update( const double dt )
       space_fchg = 0;
    }
 
-   /*planet updates*/
+   /* Planet updates */
    for (i=0; i<cur_system->nplanets; i++)
       if (( !planet_isKnown( cur_system->planets[i] )) && ( pilot_inRangePlanet( player.p, i )))
          planet_setFlag( cur_system->planets[i], PLANET_KNOWN );
+
+   /* Jump point updates */
+   for (i=0; i<cur_system->njumps; i++)
+      if (( !jp_isKnown( &cur_system->jumps[i] )) && ( pilot_inRangeJump( player.p, i )))
+         jp_setFlag( &cur_system->jumps[i], JP_KNOWN );
 }
 
 
@@ -2110,6 +2141,8 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
    char *ptrc;
    xmlNodePtr cur, node;
    uint32_t flags;
+   JumpPoint *jp;
+   char* str;
 
    /* Clear memory for sane defaults. */
    flags          = 0;
@@ -2176,9 +2209,18 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
          continue;
       }
 
-      /* Avoid warning. */
-      if (xml_isNode(node,"jumps"))
-         continue;
+      /* Load jumps. */
+      if (xml_isNode(node,"jumps")) {
+         cur = node->children;
+         do {
+            if (xml_isNode(cur,"jump")) {
+               str = xml_nodeProp(cur,"target");
+               jp = jump_get(str,sys);
+               xmlr_int( cur, "type", jp->type );
+               xmlr_int( cur, "onMap", jp->onMap );
+            }
+         } while (xml_nextNode(cur));
+      }
 
       DEBUG("Unknown node '%s' in star system '%s'",node->name,sys->name);
    } while (xml_nextNode(node));
@@ -2866,6 +2908,11 @@ int space_sysSave( xmlTextWriterPtr writer )
          xmlw_elem(writer,"planet","%s",(sys->planets[j])->name);
       }
 
+      for (j=0; j<sys->njumps; j++) {
+         if (!jp_isKnown(&sys->jumps[j])) continue; /* not known */
+         xmlw_elem(writer,"jump","%s",(&sys->jumps[j])->target->name);
+      }
+
       xmlw_endElem(writer);
    }
 
@@ -2898,11 +2945,11 @@ int space_sysLoad( xmlNodePtr parent )
             if (xml_isNode(cur,"known")) {
                xmlr_attr(cur,"sys",str);
                sys = system_get(str);
-               if (sys != NULL) /* Must exist */
+               if (sys != NULL) { /* Must exist */
                   sys_setFlag(sys,SYSTEM_KNOWN);
+                  space_parseAssets(cur, sys);
+               }
             }
-
-            space_parsePlanets(cur);
          } while (xml_nextNode(cur));
       }
    } while (xml_nextNode(node));
@@ -2911,15 +2958,16 @@ int space_sysLoad( xmlNodePtr parent )
 }
 
 /**
- * @brief Parses planets in a system.
+ * @brief Parses assets in a system.
  *
  *    @param parent Node of the system.
  *    @return 0 on success.
  */
-static int space_parsePlanets( xmlNodePtr parent )
+static int space_parseAssets( xmlNodePtr parent, StarSystem* sys )
 {
    xmlNodePtr node;
    Planet *planet;
+   JumpPoint *jp;
 
    node = parent->xmlChildrenNode;
 
@@ -2928,6 +2976,11 @@ static int space_parsePlanets( xmlNodePtr parent )
          planet = planet_get(xml_get(node));
          if (planet != NULL) /* Must exist */
             planet_setFlag(planet,PLANET_KNOWN);
+      }
+      else if (xml_isNode(node,"jump")) {
+         jp = jump_get(xml_get(node), sys);
+         if (jp != NULL) /* Must exist */
+            jp_setFlag(jp,JP_KNOWN);
       }
    } while (xml_nextNode(node));
 

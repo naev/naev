@@ -191,6 +191,39 @@ int pilot_inRangePlanet( const Pilot *p, int target )
    return 0;
 }
 
+/**
+ * @brief Check to see if a jump point is in sensor range of the pilot.
+ *
+ *    @param p Pilot who is trying to check to see if the jump point is in sensor range.
+ *    @param target Jump point to see if is in sensor range.
+ *    @return 1 if they are in range, 0 if they aren't.
+ */
+int pilot_inRangeJump( const Pilot *p, int target )
+{
+   double d;
+   JumpPoint *jp;
+   double sense;
+   double hide;
+   
+   /* pilot must exist */
+   if ( p == NULL )
+      return 0;
+
+   sense = sensor_curRange * p->ew_detect;
+
+   /* Get the jump point. */
+   jp = &cur_system->jumps[target];
+
+   hide = 0.05;
+
+   /* Get distance. */
+   d = vect_dist2( &p->solid->pos, &jp->pos );
+
+   if ( d * hide * ( 1 + cur_system->interference / 200 ) < sense )
+      return 1;
+
+   return 0;
+}
 
 /**
  * @brief Calculates the weapon lead (1. is 100%, 0. is 0%)..
