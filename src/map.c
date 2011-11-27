@@ -792,7 +792,7 @@ void map_renderSystems( double bx, double by, double x, double y,
 
          jsys = sys->jumps[j].target;
 
-         if (!space_sysReachableFromSys(jsys,sys))
+         if (!editor && !space_sysReachableFromSys(jsys,sys))
             continue;
 
          /* Draw the lines. */

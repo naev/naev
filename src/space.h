@@ -207,6 +207,7 @@ typedef struct JumpPoint_ {
    double radius; /**< Radius of jump range. */
    unsigned int flags; /**< Flags related to the jump point's status. */
    int type; /**< Type of Jump Point */
+   double hide; /**< ewarfare hide value for the jump point */ 
    int onMap; /**< Whether the jump point is on maps */
    double angle; /**< Direction the jump is facing. */
    double cosa; /**< Cosinus of the angle. */

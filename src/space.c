@@ -2402,12 +2402,12 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
          cur2 = cur->xmlChildrenNode;
          do {
             if (xml_isNode(cur2,"autopos"))
-               j->flags |= JP_AUTOPOS;
+               jp_setFlag(j,JP_AUTOPOS);
          } while (xml_nextNode(cur2));
       }
    } while (xml_nextNode(cur));
 
-   if (!j->flags & JP_AUTOPOS && !pos)
+   if (!jp_isFlag(j,JP_AUTOPOS) && !pos)
       WARN("JumpPoint in system '%s' is missing pos element but does not have autopos flag.", sys->name);
 
    /* Added jump. */

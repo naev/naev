@@ -209,12 +209,18 @@ int pilot_inRangeJump( const Pilot *p, int target )
    if ( p == NULL )
       return 0;
 
-   sense = sensor_curRange * p->ew_detect;
-
    /* Get the jump point. */
    jp = &cur_system->jumps[target];
 
-   hide = 0.05;
+   /* jump point is not exit only */
+   if (jp->type == 1) /* highway */
+      return 1;
+   else if (jp->type == 2) /* regular */
+      sense = sensor_curRange * p->ew_jumpDetect;
+   else if (jp->type == 3) /* exit only */
+      return 0;
+
+   hide = jp->hide;
 
    /* Get distance. */
    d = vect_dist2( &p->solid->pos, &jp->pos );
