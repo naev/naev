@@ -2323,7 +2323,7 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
 {
    JumpPoint *j;
    char *buf;
-   xmlNodePtr cur, cur2;
+   xmlNodePtr cur;
    double x, y;
    StarSystem *target;
    int pos;
@@ -2396,15 +2396,13 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
          /* Set position. */
          vect_cset( &j->pos, x, y );
       }
-
-      /* Handle flags. */
-      if (xml_isNode(cur,"flags")) {
-         cur2 = cur->xmlChildrenNode;
-         do {
-            if (xml_isNode(cur2,"autopos"))
-               jp_setFlag(j,JP_AUTOPOS);
-         } while (xml_nextNode(cur2));
+      else if (xml_isNode(cur,"autopos"))
+         jp_setFlag(j,JP_AUTOPOS);
+      else if (xml_isNode(cur,"type")) {
+         xmlr_int( cur, "type", j->type );
       }
+      else if (xml_isNode(cur,"hide"))
+         xmlr_float( cur,"hide", j->hide );
    } while (xml_nextNode(cur));
 
    if (!jp_isFlag(j,JP_AUTOPOS) && !pos)

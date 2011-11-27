@@ -213,11 +213,11 @@ int pilot_inRangeJump( const Pilot *p, int target )
    jp = &cur_system->jumps[target];
 
    /* jump point is not exit only */
-   if (jp->type == 1) /* highway */
+   if (jp->type == 0) /* highway */
       return 1;
-   else if (jp->type == 2) /* regular */
+   else if (jp->type == 1) /* regular */
       sense = sensor_curRange * p->ew_jumpDetect;
-   else if (jp->type == 3) /* exit only */
+   else if (jp->type == 2) /* exit only */
       return 0;
 
    hide = jp->hide;

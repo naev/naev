@@ -94,6 +94,8 @@ static int dpl_savePlanet( xmlTextWriterPtr writer, const Planet *p )
       xmlw_startElem( writer, "general" );
       xmlw_elem( writer, "class", "%c", planet_getClass( p ) );
       xmlw_elem( writer, "population", "%"PRIu64, p->population );
+      xmlw_elem( writer, "hide", "%f", p->hide );
+      xmlw_elem( writer, "onMap", "%d", p->onMap );
       xmlw_startElem( writer, "services" );
       if (planet_hasService( p, PLANET_SERVICE_LAND )) {
          if (p->land_func == NULL)
