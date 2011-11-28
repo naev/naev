@@ -5711,6 +5711,10 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <onMap>1</onMap>
    <services/>
   </general>
+  <tech>
+   <item>Basic Outfits 1</item>
+   <item>Missiles 1</item>
+  </tech>
  </asset>
  <asset name="Juran">
   <pos>
