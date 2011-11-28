@@ -220,8 +220,8 @@ static int gfxL_renderTexRaw( lua_State *L )
 
    /* Translate as needed. */
    t  = lt->tex;
-   tx = (tx*t->sw + t->sw*(double)(sx))/t->rw;
-   ty = (ty*t->sh + t->sh*(t->sy-(double)sy-1))/t->rh;
+   tx = (tx*t->sw + t->sw*(double)(sx)) / t->rw;
+   ty = (ty*t->sh + t->sh*(t->sy-(double)sy-1)) / t->rh;
    tw = tw*t->srw;
    th = th*t->srh;
 
