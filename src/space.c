@@ -2391,8 +2391,11 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
       else if (xml_isNode(cur,"type")) {
          xmlr_int( cur, "type", j->type );
       }
-      else if (xml_isNode(cur,"hide"))
+      else if (xml_isNode(cur,"hide")) {
          xmlr_float( cur,"hide", j->hide );
+      }
+      else if (xml_isNode(cur,"onMap"))
+         xmlr_int( cur,"onMap", j->onMap );
    } while (xml_nextNode(cur));
 
    if (!jp_isFlag(j,JP_AUTOPOS) && !pos)

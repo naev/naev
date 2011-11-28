@@ -737,7 +737,7 @@ void map_renderSystems( double bx, double by, double x, double y,
       sys = system_getIndex( i );
 
       /* if system is not known, reachable, or marked. and we are not in the editor */
-      if ((!sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED)
+      if ((!sys_isKnown(sys) && !sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED)
            && !space_sysReachable(sys)) && !editor)
          continue;
 
@@ -1422,7 +1422,7 @@ void map_setZoom(double zoom)
 StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
     const char* sysend, int ignore_known, StarSystem** old_data )
 {
-   int i, j, cost, ojumps;
+   int i, j, cost, ojumps, hasKnown;
 
    StarSystem *sys, *ssys, *esys, **res;
 
@@ -1443,8 +1443,16 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
       ojumps = *njumps;
    }
 
+   /* Find known jump in system */
+   for (i=0; i<ssys->njumps; i++) {
+      if (jp_isKnown(&ssys->jumps[i])) {
+         hasKnown = 1;
+         break;
+      }
+   }
+
    /* Check self. */
-   if (ssys == esys || ssys->njumps == 0) {
+   if (ssys == esys || hasKnown != 1) {
       (*njumps) = 0;
       if (old_data != NULL)
          free( old_data );
@@ -1483,8 +1491,9 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
 
          /* Make sure it's reachable */
          if (!ignore_known &&
-               ((!sys_isKnown(sys) &&
-                  (!sys_isKnown(cur->sys) || !space_sysReachable(esys)))))
+               (!jp_isKnown(&cur->sys->jumps[i]) &&
+                  ((!sys_isKnown(sys) &&
+                     (!sys_isKnown(cur->sys) || !space_sysReachable(esys))))))
             continue;
 
          neighbour = A_newNode( sys, NULL );
@@ -1550,6 +1559,7 @@ int map_map( const char* targ_sys, int r )
    StarSystem *sys, *jsys;
    SysNode *closed, *open, *cur, *neighbour;
    Planet *p;
+   JumpPoint *jp;
 
    A_gc = NULL;
    open = closed = NULL;
@@ -1569,13 +1579,26 @@ int map_map( const char* targ_sys, int r )
       open = A_rm( open, sys );
       closed = A_add( closed, cur );
 
+      /* check the planets */
+      for ( i=0; i<sys->nplanets; i++ ) {
+         p = sys->planets[i];
+         if ( !planet_isKnown(p) && p->onMap >= 1 )
+            planet_setFlag(p,PLANET_KNOWN);
+      }
+
       /* check its jumps */
       for (i=0; i<sys->njumps; i++) {
 
+         jp = &sys->jumps[i];
+
          /* if jump not on map */
-         if ( !cur->sys->jumps[i].onMap )
+         if (!jp->onMap)
             continue;
-         jsys = cur->sys->jumps[i].target;
+
+         if (!jp_isKnown(jp))
+             jp_setFlag(jp,JP_KNOWN);
+
+         jsys = jp->target;
 
          /* System has already been parsed or is too deep */
          if ((A_in(closed,jsys) != NULL) || (dep+1 > r))
@@ -1585,13 +1608,6 @@ int map_map( const char* targ_sys, int r )
          neighbour = A_newNode( jsys, NULL );
          neighbour->r = dep+1;
          open = A_add( open, neighbour );
-      }
-
-      /* check the planets */
-      for ( i=0; i<sys->nplanets; i++ ) {
-         p = sys->planets[i];
-         if ( !planet_isKnown(p) && p->onMap >= 1 )
-            planet_setFlag(p,PLANET_KNOWN);
       }
    }
 
