@@ -736,9 +736,9 @@ void map_renderSystems( double bx, double by, double x, double y,
    for (i=0; i<systems_nstack; i++) {
       sys = system_getIndex( i );
 
-      /* check to make sure system is known or adjacent to known (or marked) */
-      if (!editor && (!sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED)
-            && !space_sysReachable(sys)))
+      /* if system is not known, reachable, or marked. and we are not in the editor */
+      if ((!sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED)
+           && !space_sysReachable(sys)) && !editor)
          continue;
 
       tx = x + sys->pos.x*map_zoom;
@@ -781,7 +781,7 @@ void map_renderSystems( double bx, double by, double x, double y,
          gl_drawCircleInRect( tx, ty, 0.5*r, bx, by, w, h, col, 1 );
       }
 
-      if (!editor && !sys_isKnown(sys))
+      if (!sys_isKnown(sys) && !editor)
          continue; /* we don't draw hyperspace lines */
 
       /* draw the hyperspace paths */
@@ -792,7 +792,7 @@ void map_renderSystems( double bx, double by, double x, double y,
 
          jsys = sys->jumps[j].target;
 
-         if (!editor && !space_sysReachableFromSys(jsys,sys))
+         if (!space_sysReachableFromSys(jsys,sys) && !editor)
             continue;
 
          /* Draw the lines. */
