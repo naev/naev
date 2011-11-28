@@ -2158,8 +2158,6 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
    char *ptrc;
    xmlNodePtr cur, node;
    uint32_t flags;
-   JumpPoint *jp;
-   char* str;
 
    /* Clear memory for sane defaults. */
    flags          = 0;
@@ -2226,18 +2224,9 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
          continue;
       }
 
-      /* Load jumps. */
-      if (xml_isNode(node,"jumps")) {
-         cur = node->children;
-         do {
-            if (xml_isNode(cur,"jump")) {
-               str = xml_nodeProp(cur,"target");
-               jp = jump_get(str,sys);
-               xmlr_int( cur, "type", jp->type );
-               xmlr_int( cur, "onMap", jp->onMap );
-            }
-         } while (xml_nextNode(cur));
-      }
+      /* Avoid warning. */
+      if (xml_isNode(node,"jumps"))
+         continue;
 
       DEBUG("Unknown node '%s' in star system '%s'",node->name,sys->name);
    } while (xml_nextNode(node));
