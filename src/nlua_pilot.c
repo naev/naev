@@ -3494,7 +3494,7 @@ static int pilotL_hyperspace( lua_State *L )
  *
  * Pilot must be under manual control for this to work.
  *
- *    @luaparam p Pilot to tell to hyperspace.
+ *    @luaparam p Pilot to tell to land.
  *    @luaparam planet Optional planet to land on, uses random if nil.
  * @luasee control
  * @luafunc land( p, planet )
