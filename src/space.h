@@ -320,6 +320,8 @@ void systems_reconstructPlanets (void);
 StarSystem *system_new (void);
 int system_addPlanet( StarSystem *sys, const char *planetname );
 int system_rmPlanet( StarSystem *sys, const char *planetname );
+int system_addJump( StarSystem *sys, xmlNodePtr node );
+int system_rmJump( StarSystem *sys, const char *jumpname );
 int system_addFleet( StarSystem *sys, Fleet *fleet );
 int system_rmFleet( StarSystem *sys, Fleet *fleet );
 

@@ -1591,8 +1591,8 @@ int map_map( const char* targ_sys, int r )
 
          jp = &sys->jumps[i];
 
-         /* if jump not on map */
-         if (jp->onMap <= 0)
+         /* if jump not on map or is exit only*/
+         if (jp->onMap <= 0 || jp->type == 3)
             continue;
 
          if (!jp_isKnown(jp))

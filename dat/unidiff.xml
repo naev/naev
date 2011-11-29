@@ -57,4 +57,17 @@
    <asset name="Sindbad">add</asset>
   </system>
  </unidiff>
+ <unidiff name="test">
+  <system name="Hakoi">
+   <jump target="Gamma Polaris" type="add">
+    <autopos/>
+   </jump>
+  </system>
+  <system name="Gamma Polaris">
+   <jump target="Hakoi" type="add">
+    <autopos/>
+    <type>3</type>
+   </jump>
+  </system>
+ </unidiff>
 </unidiffs>

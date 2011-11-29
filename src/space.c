@@ -1994,6 +1994,65 @@ int system_rmPlanet( StarSystem *sys, const char *planetname )
    return 0;
 }
 
+/**
+ * @brief Adds a jump point to a star system.
+ *
+ *    @param sys Star System to add jump point to.
+ *    @param jumpname Name of the jump point to add.
+ *    @return 0 on success.
+ */
+int system_addJump( StarSystem *sys, xmlNodePtr node )
+{
+   if (system_parseJumpPoint(node, sys) <= -1)
+      return 0;
+   systems_reconstructJumps();
+   economy_refresh();
+   
+   return 1;
+}
+
+
+/**
+ * @brief Removes a jump point from a star system.
+ *
+ *    @param sys Star System to remove jump point from.
+ *    @param jumpname Name of the jump point to remove.
+ *    @return 0 on success.
+ */
+int system_rmJump( StarSystem *sys, const char *jumpname )
+{
+   int i;
+   JumpPoint *jump;
+
+   if (sys == NULL) {
+      WARN("Unable to remove jump point '%s' from NULL system.", jumpname);
+      return -1;
+   }
+
+   /* Try to find planet. */
+   jump = jump_get( jumpname, sys );
+   for (i=0; i<sys->njumps; i++)
+      if (&sys->jumps[i] == jump)
+         break;
+
+   /* Planet not found. */
+   if (i>=sys->njumps) {
+      WARN("Jump point '%s' not found in system '%s' for removal.", jumpname, sys->name);
+      return -1;
+   }
+
+   /* Remove jump from system. */
+   sys->njumps--;
+
+   /* Refresh presence */
+   system_setFaction(sys);
+
+   /* Regenerate the economy stuff. */
+   economy_refresh();
+
+   return 0;
+}
+
 
 /**
  * @brief Adds a fleet to a star system.
