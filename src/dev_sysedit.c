@@ -1254,7 +1254,7 @@ static void sysedit_editJump( void )
          NULL, &cBlack, s );
    window_addInput( wid, x += l + 5, y, 30, 20, "inpOnMap", 1, 1, NULL );
    window_setInputFilter( wid, "inpOnMap",
-         "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`.23456789" );
+         "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`.3456789" );
    x += 30 + 10;
 
    /* Bottom buttons. */

@@ -1592,7 +1592,7 @@ int map_map( const char* targ_sys, int r )
          jp = &sys->jumps[i];
 
          /* if jump not on map */
-         if (!jp->onMap)
+         if (jp->onMap <= 0)
             continue;
 
          if (!jp_isKnown(jp))
@@ -1600,8 +1600,8 @@ int map_map( const char* targ_sys, int r )
 
          jsys = jp->target;
 
-         /* System has already been parsed or is too deep */
-         if ((A_in(closed,jsys) != NULL) || (dep+1 > r))
+         /* System has already been parsed or is too deep or cannot be seen from that jump */
+         if ((A_in(closed,jsys) != NULL) || (dep+1 > r) || (jp->onMap == 1))
              continue;
 
          /* create new node and such */
