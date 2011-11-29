@@ -2710,6 +2710,9 @@ static void space_renderJumpPoint( JumpPoint *jp, int i )
 {
    glColour *c;
 
+   if (jp->type==3)
+      return;
+
    if ((player.p != NULL) && (i==player.p->nav_hyperspace) &&
          (pilot_isFlag(player.p, PILOT_HYPERSPACE) || space_canHyperspace(player.p)))
       c = &cGreen;
