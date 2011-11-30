@@ -662,7 +662,7 @@ static void gui_renderBorder( double dt )
       jp  = &cur_system->jumps[i];
 
       /* See if in sensor range. */
-      if (!pilot_inRangePlanet(player.p, i))
+      if (!pilot_inRangeJump(player.p, i))
          continue;
 
       /* Check if out of range. */
