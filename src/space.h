@@ -78,7 +78,15 @@ typedef enum PlanetClass_ {
 /*
  * Planet flags.
  */
-#define planet_isKnown(p)           (1) /**< Is a planet known (always true for now). */
+#define PLANET_KNOWN       (1<<0) /**< Planet is known. */
+#define PLANET_MARKED      (1<<1) /**< Planet is marked by a regular mission. */
+#define PLANET_CMARKED     (1<<2) /**< Planet is marked by a computer mission. */
+#define PLANET_CLAIMED     (1<<3) /**< Planet is claimed by a mission. */
+#define planet_isFlag(p,f)    ((p)->flags & (f)) /**< Checks planet flag. */
+#define planet_setFlag(p,f)   ((p)->flags |= (f)) /**< Sets a planet flag. */
+#define planet_rmFlag(p,f)    ((p)->flags &= ~(f)) /**< Removes a planet flag. */
+#define planet_isKnown(p)     planet_isFlag(p,PLANET_KNOWN) /**< Checks if planet is known. */
+#define planet_isMarked(p)    planet_isFlag(p,PLANET_MARKED) /**< Checks if planet is marked. */
 
 
 /**
@@ -101,6 +109,8 @@ typedef struct Planet_ {
    double presenceAmount; /**< The amount of presence this asset exerts. */
    int presenceRange; /**< The range of presence exertion of this asset. */
    int real; /**< If the asset is tangible or not. */
+   double hide; /**< The ewarfare hide value for an asset. */
+   int onMap; /**< If the asset is on maps or not. */
 
    /* Landing details. */
    int land_override; /**< Forcibly allows the player to either be able to land or not (+1 is land, -1 is not, 0 otherwise). */
@@ -126,6 +136,9 @@ typedef struct Planet_ {
    char *gfx_spacePath; /**< Name of the gfx_space for saving purposes. */
    char *gfx_exterior; /**< Don't actually load the texture */
    char *gfx_exteriorPath; /**< Name of the gfx_exterior for saving purposes. */
+
+   /* Misc. */
+   unsigned int flags; /**< flags for planet properties */
 } Planet;
 
 
@@ -177,8 +190,10 @@ typedef struct SystemPresence_ {
  * Jump point flags.
  */
 #define JP_AUTOPOS      (1<<0) /**< Automatically position jump point based on system radius. */
-#define JP_DISABLED     (1<<1) /**< Jump point is disabled. */
-#define JP_HIDDEN       (1<<2) /**< Jump point is hidden by default. */
+#define JP_KNOWN        (1<<1) /**< Jump point is known. */
+#define jp_isKnown(j)     jp_isFlag(j,JP_KNOWN) /**< Checks if jump is known. */
+#define jp_isFlag(j,f)    ((j)->flags & (f)) /**< Checks jump flag. */
+#define jp_setFlag(j,f)   ((j)->flags |= (f)) /**< Sets a jump flag. */
 
 
 
@@ -191,7 +206,9 @@ typedef struct JumpPoint_ {
    Vector2d pos; /**< Position in the system. */
    double radius; /**< Radius of jump range. */
    unsigned int flags; /**< Flags related to the jump point's status. */
-   int known; /**< Is the jump point known? */
+   int type; /**< Type of Jump Point */
+   double hide; /**< ewarfare hide value for the jump point */
+   int onMap; /**< Whether the jump point is on maps */
    double angle; /**< Direction the jump is facing. */
    double cosa; /**< Cosinus of the angle. */
    double sina; /**< Sinus of the angle. */
@@ -291,6 +308,11 @@ glColour* planet_getColour( Planet *p );
 void planet_updateLand( Planet *p );
 
 /*
+ * jump stuff
+ */
+JumpPoint* jump_get( const char* jumpname, StarSystem* sys );
+
+/*
  * system adding/removing stuff.
  */
 void systems_reconstructJumps (void);
@@ -298,6 +320,8 @@ void systems_reconstructPlanets (void);
 StarSystem *system_new (void);
 int system_addPlanet( StarSystem *sys, const char *planetname );
 int system_rmPlanet( StarSystem *sys, const char *planetname );
+int system_addJump( StarSystem *sys, xmlNodePtr node );
+int system_rmJump( StarSystem *sys, const char *jumpname );
 int system_addFleet( StarSystem *sys, Fleet *fleet );
 int system_rmFleet( StarSystem *sys, Fleet *fleet );
 
@@ -340,6 +364,7 @@ StarSystem* system_getIndex( int id );
 int system_index( StarSystem *sys );
 int space_sysReachable( StarSystem *sys );
 int space_sysReallyReachable( char* sysname );
+int space_sysReachableFromSys( StarSystem *target, StarSystem *sys );
 char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions, int landable );
 char* space_getRndPlanet( int landable );
 double system_getClosest( const StarSystem *sys, int *pnt, int *jp, double x, double y );

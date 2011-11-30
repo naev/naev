@@ -1549,8 +1549,8 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
    Planet *planet;
    GLfloat vertex[5*2], colours[5*4];
 
-   /* Make sure is in range. */
-   if (!pilot_inRangePlanet( player.p, ind ))
+   /* Make sure is known. */
+   if ( !planet_isKnown( cur_system->planets[ind] ))
       return;
 
    /* Default values. */
@@ -1669,6 +1669,10 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
       rc = (int)(w*w);
    else
       rc = 0;
+
+   /* Check if known */
+   if (!jp_isKnown(jp))
+      return;
 
    /* Check if in range. */
    if (shape == RADAR_RECT) {
