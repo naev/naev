@@ -1422,7 +1422,7 @@ void map_setZoom(double zoom)
 StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
     const char* sysend, int ignore_known, StarSystem** old_data )
 {
-   int i, j, cost, ojumps, hasKnown;
+   int i, j, cost, ojumps;
 
    StarSystem *sys, *ssys, *esys, **res;
 
@@ -1443,16 +1443,8 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
       ojumps = *njumps;
    }
 
-   /* Find known jump in system */
-   for (i=0; i<ssys->njumps; i++) {
-      if (jp_isKnown(&ssys->jumps[i])) {
-         hasKnown = 1;
-         break;
-      }
-   }
-
    /* Check self. */
-   if (ssys == esys || hasKnown != 1) {
+   if (ssys == esys || ssys->njumps==0) {
       (*njumps) = 0;
       if (old_data != NULL)
          free( old_data );
