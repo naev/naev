@@ -1784,7 +1784,7 @@ static void outfit_parseSJammer( Outfit *temp, const xmlNodePtr parent )
          "%.0f%% Power\n"
          "%.1f EPS",
          outfit_getType(temp),
-         temp->u.jam.cpu,
+         -temp->u.jam.cpu,
          temp->u.jam.range,
          temp->u.jam.power,
          temp->u.jam.energy );

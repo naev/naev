@@ -1206,6 +1206,11 @@ static int pilotL_weapset( lua_State *L )
          if (level != level_match)
             continue;
 
+         /* Must be weapon. */
+         if (outfit_isJammer(o) ||
+               outfit_isMod(o))
+            continue;
+
          /* Set up for creation. */
          lua_pushnumber(L,++k);
          lua_newtable(L);
@@ -1354,6 +1359,9 @@ static int pilotL_actives( lua_State *L )
       if (o->outfit == NULL)
          continue;
       if (!o->active)
+         continue;
+      if (!outfit_isJammer(o->outfit) &&
+            !outfit_isMod(o->outfit))
          continue;
 
       /* Set up for creation. */
@@ -3486,7 +3494,7 @@ static int pilotL_hyperspace( lua_State *L )
  *
  * Pilot must be under manual control for this to work.
  *
- *    @luaparam p Pilot to tell to hyperspace.
+ *    @luaparam p Pilot to tell to land.
  *    @luaparam planet Optional planet to land on, uses random if nil.
  * @luasee control
  * @luafunc land( p, planet )

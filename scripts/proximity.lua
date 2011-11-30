@@ -38,7 +38,7 @@ function _proximity( trigger )
             return
         end
     elseif trigger.anchor ~= nil then
-        if trigger.anchor:exists() and trigger.focus.exists() and vec2.dist(trigger.focus:pos(), trigger.anchor:pos()) <= trigger.radius then
+        if trigger.anchor:exists() and trigger.focus:exists() and vec2.dist(trigger.focus:pos(), trigger.anchor:pos()) <= trigger.radius then
             _G[trigger.funcname]()
             return
         end

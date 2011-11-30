@@ -51,7 +51,7 @@
   </avail>
  </mission>
  <mission name="Soromid Rehabilitation">
-  <lua>sirius/srs_rehab</lua>
+  <lua>soromid/srm_rehab</lua>
   <flags/>
   <avail>
    <chance>100</chance>

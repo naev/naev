@@ -155,7 +155,9 @@ end
 -- Triggers when Harja leaves the system.
 function leave()
    player.msg(leavetext)
-   misn.osdActive(1)
+   if not harjatalked then
+      misn.osdActive(1)
+   end
 end
 
 -- Harja's hail hook.
@@ -203,7 +205,7 @@ end
 function land()
    origin = planet.cur()
    if planet.cur() == destplanet and harjatalked then
-      player.landwindow("bar")
+      player.landWindow("bar")
       tk.msg(title5, text7:format(player.name()))
       player.pay(150000) -- 150K
       var.push("achack03repeat", true)

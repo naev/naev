@@ -2525,10 +2525,11 @@
    <description>Scramblers distort a ship's electromagnetic signature, making it harder for various sensors to pick it up. In effect, a scrambler reduces the distance at which the ship can be detected and scanned, and makes it harder for missiles to lock on. The effect is quite limited however, and multiple scramblers may be required for the desired effect. On the upside, scramblers put a minimal strain on the ship's resources, and are always active.</description>
    <gfx_store>jammer0</gfx_store>
   </general>
-  <specific type="modification">
+  <specific type="jammer">
    <cpu>-1</cpu>
-   <energy>-5</energy>
-   <ew_hide>7</ew_hide>
+   <range>1</range>
+   <power>1</power>
+   <energy>-15</energy>
   </specific>
  </outfit>
  <outfit name="Milspec Scrambler">
@@ -2539,10 +2540,11 @@
    <description>Milspec knows what's important out there. It's that you don't get shot! And the best way not to get shot is not to get targeted in the first place. The Milspec RX 500-C scrambler will put the wool over your enemies' sensors, at a minimal cost to you or your ship's reactor! Fly safe, fly Milspec.</description>
    <gfx_store>jammer1</gfx_store>
   </general>
-  <specific type="modification">
+  <specific type="jammer">
    <cpu>-3</cpu>
-   <energy>-10</energy>
-   <ew_hide>11</ew_hide>
+   <range>1</range>
+   <power>1</power>
+   <energy>-15</energy>
   </specific>
  </outfit>
  <outfit name="Unicorp Jammer">
