@@ -1425,6 +1425,7 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
    int i, j, cost, ojumps;
 
    StarSystem *sys, *ssys, *esys, **res;
+   JumpPoint *jp;
 
    SysNode *cur, *neighbour;
    SysNode *open, *closed;
@@ -1480,12 +1481,13 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
 
       for (i=0; i<cur->sys->njumps; i++) {
          sys = cur->sys->jumps[i].target;
+         jp = &cur->sys->jumps[i];
 
          /* Make sure it's reachable */
-         if (!ignore_known &&
-               (!jp_isKnown(&cur->sys->jumps[i]) &&
-                  ((!sys_isKnown(sys) &&
-                     (!sys_isKnown(cur->sys) || !space_sysReachable(esys))))))
+         if ((!ignore_known &&
+               (!jp_isKnown(jp) &&
+                     ((!sys_isKnown(sys) &&
+                        (!sys_isKnown(cur->sys) || !space_sysReachable(esys)))))) || (jp->type == 3))
             continue;
 
          neighbour = A_newNode( sys, NULL );
