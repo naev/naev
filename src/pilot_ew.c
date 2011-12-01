@@ -198,7 +198,7 @@ int pilot_inRangePlanet( const Pilot *p, int target )
  *    @param target Jump point to see if is in sensor range.
  *    @return 1 if they are in range, 0 if they aren't.
  */
-int pilot_inRangeJump( const Pilot *p, int target )
+int pilot_inRangeJump( const Pilot *p, int i )
 {
    double d;
    JumpPoint *jp;
@@ -210,7 +210,7 @@ int pilot_inRangeJump( const Pilot *p, int target )
       return 0;
 
    /* Get the jump point. */
-   jp = &cur_system->jumps[target];
+   jp = &cur_system->jumps[i];
 
    /* jump point is not exit only */
    if (jp->type == 0) /* highway */
@@ -219,6 +219,8 @@ int pilot_inRangeJump( const Pilot *p, int target )
       sense = sensor_curRange * p->ew_jumpDetect;
    else if (jp->type == 2) /* exit only */
       return 0;
+   else
+      WARN("Jump point %s in %s has unknown type %d.",jp->target->name,cur_system->name,jp->type);
 
    hide = jp->hide;
 
