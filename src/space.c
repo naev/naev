@@ -3021,9 +3021,9 @@ int space_sysLoad( xmlNodePtr parent )
          do {
             if (xml_isNode(cur,"known")) {
                xmlr_attr(cur,"sys",str);
-               if (str != NULL)
+               if (str != NULL) /* check for 5.0 saves */
                   sys = system_get(str);
-               else
+               else /* load from 5.0 saves */
                   sys = system_get(xml_get(cur));
                if (sys != NULL) { /* Must exist */
                   sys_setFlag(sys,SYSTEM_KNOWN);
