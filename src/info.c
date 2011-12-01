@@ -674,6 +674,9 @@ static void cargo_jettison( unsigned int wid, char* str )
       /* Reset markers. */
       mission_sysMark();
 
+      /* Reset claims. */
+      claim_activateAll();
+
       /* Regenerate list. */
       mission_menu_genList( info_windows[ INFO_WIN_MISN ] ,0);
    }
@@ -931,6 +934,9 @@ static void mission_menu_abort( unsigned int wid, char* str )
 
       /* Reset markers. */
       mission_sysMark();
+
+      /* Reset claims. */
+      claim_activateAll();
 
       /* Regenerate list. */
       mission_menu_genList(wid ,0);
