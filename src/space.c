@@ -3021,7 +3021,10 @@ int space_sysLoad( xmlNodePtr parent )
          do {
             if (xml_isNode(cur,"known")) {
                xmlr_attr(cur,"sys",str);
-               sys = system_get(str);
+               if (str != NULL)
+                  sys = system_get(str);
+               else
+                  sys = system_get(xml_get(cur));
                if (sys != NULL) { /* Must exist */
                   sys_setFlag(sys,SYSTEM_KNOWN);
                   space_parseAssets(cur, sys);
