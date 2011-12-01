@@ -2825,9 +2825,16 @@ void space_exit (void)
  */
 void space_clearKnown (void)
 {
-   int i;
-   for (i=0; i<systems_nstack; i++)
-      sys_rmFlag(&systems_stack[i],SYSTEM_KNOWN);
+   int i, j;
+   StarSystem *sys;
+   for (i=0; i<systems_nstack; i++) {
+      sys = &systems_stack[i];
+      sys_rmFlag(sys,SYSTEM_KNOWN);
+      for (j=0; j<sys->njumps; j++)
+         jp_rmFlag(&sys->jumps[j],JP_KNOWN);
+   }
+   for (j=0; j<planet_nstack; j++)
+      planet_rmFlag(&planet_stack[i],PLANET_KNOWN);
 }
 
 
