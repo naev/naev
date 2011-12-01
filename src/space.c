@@ -2710,7 +2710,7 @@ static void space_renderJumpPoint( JumpPoint *jp, int i )
 {
    glColour *c;
 
-   if (jp->type==3)
+   if (jp->type==1)
       return;
 
    if ((player.p != NULL) && (i==player.p->nav_hyperspace) &&

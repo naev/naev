@@ -213,11 +213,9 @@ int pilot_inRangeJump( const Pilot *p, int i )
    jp = &cur_system->jumps[i];
 
    /* jump point is not exit only */
-   if (jp->type == 0) /* highway */
-      return 1;
-   else if (jp->type == 1) /* regular */
+   if (jp->type == 0) /* regular */
       sense = sensor_curRange * p->ew_jumpDetect;
-   else if (jp->type == 2) /* exit only */
+   else if (jp->type == 1) /* exit only */
       return 0;
    else
       WARN("Jump point %s in %s has unknown type %d.",jp->target->name,cur_system->name,jp->type);

@@ -1236,7 +1236,7 @@ static void sysedit_editJump( void )
          NULL, &cBlack, s );
    window_addInput( wid, x += l + 5, y, 20, 20, "inpType", 1, 1, NULL );
    window_setInputFilter( wid, "inpType",
-         "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`3456789" );
+         "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`23456789" );
    x += 20 + 10;
 
    s = "hide"; //TODO: if inpType == 0 disable hide box

@@ -744,12 +744,12 @@
   <jumps>
    <jump target="C-14">
     <autopos/>
-    <type>1</type>
+    <type>0</type>
     <onMap>0</onMap>
    </jump>
    <jump target="C-28">
     <autopos/>
-    <type>1</type>
+    <type>0</type>
     <onMap>0</onMap>
    </jump>
   </jumps>
@@ -774,12 +774,12 @@
   <jumps>
    <jump target="C-00">
     <autopos/>
-    <type>1</type>
+    <type>0</type>
     <onMap>0</onMap>
    </jump>
    <jump target="C-43">
     <autopos/>
-    <type>1</type>
+    <type>0</type>
     <onMap>0</onMap>
    </jump>
   </jumps>
@@ -808,12 +808,12 @@
   <jumps>
    <jump target="C-00">
     <autopos/>
-    <type>1</type>
+    <type>0</type>
     <onMap>0</onMap>
    </jump>
    <jump target="C-59">
     <autopos/>
-    <type>1</type>
+    <type>0</type>
     <onMap>0</onMap>
    </jump>
   </jumps>
@@ -839,17 +839,17 @@
   <jumps>
    <jump target="C-14">
     <autopos/>
-    <type>1</type>
+    <type>0</type>
     <onMap>0</onMap>
    </jump>
    <jump target="C-59">
     <autopos/>
-    <type>1</type>
+    <type>0</type>
     <onMap>0</onMap>
    </jump>
    <jump target="Hades">
     <autopos/>
-    <type>1</type>
+    <type>0</type>
     <onMap>0</onMap>
    </jump>
   </jumps>
@@ -875,17 +875,17 @@
   <jumps>
    <jump target="C-28">
     <autopos/>
-    <type>1</type>
+    <type>0</type>
     <onMap>0</onMap>
    </jump>
    <jump target="C-43">
     <autopos/>
-    <type>1</type>
+    <type>0</type>
     <onMap>0</onMap>
    </jump>
    <jump target="Hades">
     <autopos/>
-    <type>1</type>
+    <type>0</type>
     <onMap>0</onMap>
    </jump>
   </jumps>
@@ -2128,12 +2128,13 @@
   <jumps>
    <jump target="Acheron">
     <autopos/>
-    <type>1</type>
+    <type>0</type>
     <onMap>2</onMap>
    </jump>
    <jump target="Hades">
     <autopos/>
-    <type>1</type>
+    <type>0</type>
+    <hide>0.1</hide>
     <onMap>0</onMap>
    </jump>
    <jump target="Pontus">
@@ -2570,12 +2571,12 @@
   <jumps>
    <jump target="C-43">
     <autopos/>
-    <type>1</type>
+    <type>0</type>
     <onMap>0</onMap>
    </jump>
    <jump target="C-59">
     <autopos/>
-    <type>1</type>
+    <type>0</type>
     <onMap>0</onMap>
    </jump>
    <jump target="Fortitude">
