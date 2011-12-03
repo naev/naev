@@ -2007,7 +2007,7 @@ int system_addJump( StarSystem *sys, xmlNodePtr node )
       return 0;
    systems_reconstructJumps();
    economy_refresh();
-   
+
    return 1;
 }
 

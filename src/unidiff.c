@@ -301,7 +301,7 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
             WARN("Unidiff '%s': Null hunk type.", diff->name);
             continue;
          }
-         
+
          if (strcmp(buf,"add")==0)
             hunk.type = HUNK_TYPE_JUMP_ADD;
          else if (strcmp(buf,"remove")==0)
