@@ -2,6 +2,8 @@
 -- Comm Event for the Shadow missions
 --]]
 
+include "scripts/proximity.lua"
+
 -- localization stuff, translators would work here
 lang = naev.lang()
 if lang == "es" then
@@ -20,11 +22,13 @@ end
 function create ()
     sysname = "Pas"
     destsys = system.get(sysname)
-    
+
     -- Create a Vendetta who hails the player after a bit
     hailed = false
     vendetta = pilot.add("Four Winds Vendetta", nil, true)[1]
-    hailie = hook.timer(3000, "hailme")
+    vendetta:control()
+    vendetta:follow(player.pilot())
+    hook.timer(500, "proximityScan", {focus = vendetta, funcname = "hailme"})
 
     -- Make sure the event can't reappear while it's active
     var.push("shadowvigil_active", true)
@@ -54,6 +58,9 @@ function hail(p)
     hook.rm(hook3)
     hook.rm(hook4)
     hook.rm(hailhook)
+
+    vendetta:control()
+    vendetta:hyperspace()
 
     -- Catch the player jumping into Pas
     -- The player may save between now and then, make sure our hook is saved too

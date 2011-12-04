@@ -266,7 +266,7 @@ static int evt_finish( lua_State *L )
    Event_t *cur_event;
 
    b = lua_toboolean(L,1);
-   lua_pushboolean( L, b );
+   lua_pushboolean( L, 1 );
    lua_setglobal( L, "__evt_delete" );
 
    cur_event = event_getFromLua(L);

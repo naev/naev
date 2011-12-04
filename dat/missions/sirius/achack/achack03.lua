@@ -208,7 +208,7 @@ function land()
       player.landWindow("bar")
       tk.msg(title5, text7:format(player.name()))
       player.pay(150000) -- 150K
-      var.push("achack03repeat", true)
+      var.pop("achack03repeat")
       misn.finish(true)
    end
 end
