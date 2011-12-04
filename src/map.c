@@ -364,17 +364,20 @@ static void map_update( unsigned int wid )
    nstanding = 0.;
    f         = -1;
    for (i=0; i<sys->nplanets; i++) {
-      if(sys->planets[i]->real == ASSET_REAL) {
-         if ((f==-1) && (sys->planets[i]->faction>0)) {
-            f = sys->planets[i]->faction;
-            standing += faction_getPlayer( f );
-            nstanding++;
-         }
-         else if (f != sys->planets[i]->faction && /** @todo more verbosity */
-                  (sys->planets[i]->faction>0)) {
-            snprintf( buf, PATH_MAX, "Multiple" );
-            break;
-         }
+      if (sys->planets[i]->real != ASSET_REAL)
+         continue;
+      if (!planet_isKnown(sys->planets[i]))
+         continue;
+
+      if ((f==-1) && (sys->planets[i]->faction>0)) {
+         f = sys->planets[i]->faction;
+         standing += faction_getPlayer( f );
+         nstanding++;
+      }
+      else if (f != sys->planets[i]->faction && /** @todo more verbosity */
+               (sys->planets[i]->faction>0)) {
+         snprintf( buf, PATH_MAX, "Multiple" );
+         break;
       }
    }
    if (f == -1) {
@@ -440,7 +443,9 @@ static void map_update( unsigned int wid )
    p = 0;
    buf[0] = '\0';
    for (i=0; i<sys->nplanets; i++) {
-      if(sys->planets[i]->real != ASSET_REAL || !planet_isKnown(sys->planets[i]))
+      if (sys->planets[i]->real != ASSET_REAL)
+         continue;
+      if (!planet_isKnown(sys->planets[i]))
          continue;
 
       /* Colourize output. */

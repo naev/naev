@@ -476,13 +476,18 @@ static int map_findSearchPlanets( unsigned int parent, const char *name )
       /* Check exact match. */
       sysname = planet_getSystem( pntname );
       if (sysname != NULL) {
-         /* Select and show. */
-         sys = system_get(sysname);
-         if (sys_isKnown(sys)) {
-            map_select( sys, 0 );
-            map_center( sysname );
-            free(names);
-            return 1;
+         /* Make sure it's known. */
+         pnt = planet_get( pntname );
+         if ((pnt != NULL) && planet_isKnown(pnt)) {
+
+            /* Select and show. */
+            sys = system_get(sysname);
+            if (sys_isKnown(sys)) {
+               map_select( sys, 0 );
+               map_center( sysname );
+               free(names);
+               return 1;
+            }
          }
       }
    }
@@ -497,6 +502,8 @@ static int map_findSearchPlanets( unsigned int parent, const char *name )
       if (pnt == NULL)
          continue;
       if (pnt->real != ASSET_REAL)
+         continue;
+      if (!planet_isKnown(pnt))
          continue;
 
       /* System must be known. */
