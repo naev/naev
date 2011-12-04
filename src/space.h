@@ -79,14 +79,10 @@ typedef enum PlanetClass_ {
  * Planet flags.
  */
 #define PLANET_KNOWN       (1<<0) /**< Planet is known. */
-#define PLANET_MARKED      (1<<1) /**< Planet is marked by a regular mission. */
-#define PLANET_CMARKED     (1<<2) /**< Planet is marked by a computer mission. */
-#define PLANET_CLAIMED     (1<<3) /**< Planet is claimed by a mission. */
 #define planet_isFlag(p,f)    ((p)->flags & (f)) /**< Checks planet flag. */
 #define planet_setFlag(p,f)   ((p)->flags |= (f)) /**< Sets a planet flag. */
 #define planet_rmFlag(p,f)    ((p)->flags &= ~(f)) /**< Removes a planet flag. */
 #define planet_isKnown(p)     planet_isFlag(p,PLANET_KNOWN) /**< Checks if planet is known. */
-#define planet_isMarked(p)    planet_isFlag(p,PLANET_MARKED) /**< Checks if planet is marked. */
 
 
 /**
