@@ -761,9 +761,9 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
                            /* Detect double click to open planet editor. */
                            if ((SDL_GetTicks() - sysedit_dragTime < SYSEDIT_DRAG_THRESHOLD*2)
                                  && (sysedit_moved < SYSEDIT_MOVE_THRESHOLD)) {
-                                 sysedit_editPnt();
-                                 sysedit_dragSel = 0;
-                                 return;
+                              sysedit_editPnt();
+                              sysedit_dragSel = 0;
+                              return;
                            }
                            sysedit_tadd      = -1;
                         }
@@ -818,8 +818,16 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
                         /* Check modifier. */
                         if (mod & (KMOD_LCTRL | KMOD_RCTRL))
                            sysedit_tadd      = 0;
-                        else
+                        else {
+                           /* Detect double click to open planet editor. */
+                           if ((SDL_GetTicks() - sysedit_dragTime < SYSEDIT_DRAG_THRESHOLD*2)
+                                 && (sysedit_moved < SYSEDIT_MOVE_THRESHOLD)) {
+                              sysedit_editJump();
+                              sysedit_dragSel = 0;
+                              return;
+                           }
                            sysedit_tadd      = -1;
+                        }
                         sysedit_dragTime  = SDL_GetTicks();
                         sysedit_moved     = 0;
                         return;
