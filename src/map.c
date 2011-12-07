@@ -1450,7 +1450,7 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
    }
 
    /* Check self. */
-   if (ssys == esys || ssys->njumps==0) {
+   if ((ssys == esys) || (ssys->njumps==0)) {
       (*njumps) = 0;
       if (old_data != NULL)
          free( old_data );
@@ -1480,19 +1480,22 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
          break;
 
       /* get best from open and toss to closed */
-      open = A_rm( open, cur->sys );
+      open   = A_rm( open, cur->sys );
       closed = A_add( closed, cur );
-      cost = A_g(cur) + 1;
+      cost   = A_g(cur) + 1;
 
       for (i=0; i<cur->sys->njumps; i++) {
-         sys = cur->sys->jumps[i].target;
-         jp = &cur->sys->jumps[i];
+         jp  = &cur->sys->jumps[i];
+         sys = jp->target;
 
          /* Make sure it's reachable */
-         if ((!ignore_known &&
-               (!jp_isKnown(jp) &&
-                     ((!sys_isKnown(sys) &&
-                        (!sys_isKnown(cur->sys) || !space_sysReachable(esys)))))) || (jp->type == 1))
+         if (!ignore_known) {
+            if (!jp_isKnown(jp))
+               continue;
+            if (!sys_isKnown(sys))
+               continue;
+         }
+         if (jp->type == 1)
             continue;
 
          neighbour = A_newNode( sys, NULL );
@@ -1506,10 +1509,10 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
             closed = A_rm( closed, sys ); /* shouldn't happen */
 
          if ((ocost == NULL) && (ccost == NULL)) {
-            neighbour->g = cost;
-            neighbour->r = A_g(neighbour) + A_h(cur->sys,sys);
+            neighbour->g      = cost;
+            neighbour->r      = A_g(neighbour) + A_h(cur->sys,sys);
             neighbour->parent = cur;
-            open = A_add( open, neighbour );
+            open              = A_add( open, neighbour );
          }
       }
 
@@ -1518,18 +1521,19 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
          break;
    }
 
-   /* build path backwards if not broken from loop. */
-   if (j <= MAP_LOOP_PROT) {
+   /* Build path backwards if not broken from loop. */
+   if (esys == cur->sys) {
       (*njumps) = A_g(cur);
       if (old_data == NULL)
-         res = malloc( sizeof(StarSystem*) * (*njumps) );
+         res      = malloc( sizeof(StarSystem*) * (*njumps) );
       else {
-         *njumps = *njumps + ojumps;
-         res = realloc( old_data, sizeof(StarSystem*) * (*njumps) );
+         *njumps  = *njumps + ojumps;
+         res      = realloc( old_data, sizeof(StarSystem*) * (*njumps) );
       }
+      /* Build path. */
       for (i=0; i<((*njumps)-ojumps); i++) {
          res[(*njumps)-i-1] = cur->sys;
-         cur = cur->parent;
+         cur                = cur->parent;
       }
    }
    else {
