@@ -1579,9 +1579,9 @@ int map_map( const char* targ_sys, int r )
       closed = A_add( closed, cur );
 
       /* check the planets */
-      for ( i=0; i<sys->nplanets; i++ ) {
+      for (i=0; i<sys->nplanets; i++) {
          p = sys->planets[i];
-         if ( !planet_isKnown(p) && p->onMap >= 1 )
+         if (!planet_isKnown(p) && (p->onMap >= 1))
             planet_setFlag(p,PLANET_KNOWN);
       }
 
@@ -1590,8 +1590,8 @@ int map_map( const char* targ_sys, int r )
 
          jp = &sys->jumps[i];
 
-         /* if jump not on map or is exit only*/
-         if (jp->onMap <= 0 || jp->type == 1)
+         /* if jump not on map or is exit only. */
+         if ((jp->onMap <= 0) || (jp->type == 1))
             continue;
 
          if (!jp_isKnown(jp))
