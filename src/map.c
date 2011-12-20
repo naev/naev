@@ -1492,7 +1492,7 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
          if (!ignore_known) {
             if (!jp_isKnown(jp))
                continue;
-            if (!sys_isKnown(sys))
+            if (!sys_isKnown(sys) && !space_sysReachable(sys))
                continue;
          }
          if (jp->type == 1)
