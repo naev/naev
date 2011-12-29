@@ -1676,6 +1676,8 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
    temp->slot.type         = OUTFIT_SLOT_NA;
    temp->slot.size         = OUTFIT_SLOT_SIZE_NA;
 
+   temp->u.map = malloc( sizeof(OutfitMapData_t) );
+
    temp->u.map->systems = array_create(StarSystem*);
    temp->u.map->assets = array_create(Planet*);
    temp->u.map->jumps = array_create(JumpPoint*);
@@ -2044,6 +2046,8 @@ void outfit_free (void)
          free(o->u.gui.gui);
       if (o->type == OUTFIT_TYPE_MODIFCATION)
          ss_free( o->u.mod.stats );
+      if (outfit_isMap(o))
+         free(o->u.map);
 
       /* strings */
       if (o->typename)
