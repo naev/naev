@@ -23,6 +23,8 @@
 #include "dialogue.h"
 #include "gui.h"
 #include "map_find.h"
+#include "array.h"
+#include "mapData.h"
 
 
 #define MAP_WDWNAME     "Star Map" /**< Map window name. */
@@ -1556,128 +1558,49 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
  *    @param r Radius (in jumps) to mark as known.
  *    @return 0 on success.
  */
-int map_map( const char* targ_sys, int r )
+int map_map( Outfit *map )
 {
-   int i, dep;
-   StarSystem *sys, *jsys;
-   SysNode *closed, *open, *cur, *neighbour;
-   Planet *p;
-   JumpPoint *jp;
+   int i;
 
-   A_gc = NULL;
-   open = closed = NULL;
+   for (i=0; i<array_size(map->u.map->systems);i++)
+      if (!sys_isKnown(map->u.map->systems[i]))
+         sys_setFlag(map->u.map->systems[i], SYSTEM_KNOWN);
 
-   if (targ_sys == NULL) sys = cur_system;
-   else sys = system_get( targ_sys );
-   sys_setFlag(sys,SYSTEM_KNOWN);
-   open = A_newNode( sys, NULL );
-   open->r = 0;
+   for (i=0; i<array_size(map->u.map->assets);i++)
+      if (!planet_isKnown(map->u.map->assets[i]))
+         planet_setFlag(map->u.map->assets[i], PLANET_KNOWN);
 
-   while ((cur = A_lowest(open)) != NULL) {
+   /*for (i=0; i<array_size(map->u.map->jumps);i++)
+      if (!jp_isKnown(map->u.map->jumps[i]))
+         return 0;*/
 
-      /* mark system as known and go to next */
-      sys = cur->sys;
-      dep = cur->r;
-      sys_setFlag(sys,SYSTEM_KNOWN);
-      open = A_rm( open, sys );
-      closed = A_add( closed, cur );
-
-      /* check the planets */
-      for (i=0; i<sys->nplanets; i++) {
-         p = sys->planets[i];
-         if (!planet_isKnown(p) && (p->onMap >= 1))
-            planet_setFlag(p,PLANET_KNOWN);
-      }
-
-      /* check its jumps */
-      for (i=0; i<sys->njumps; i++) {
-
-         jp = &sys->jumps[i];
-
-         /* if jump not on map or is exit only. */
-         if ((jp->onMap <= 0) || (jp->type == 1))
-            continue;
-
-         if (!jp_isKnown(jp))
-             jp_setFlag(jp,JP_KNOWN);
-
-         jsys = jp->target;
-
-         /* System has already been parsed or is too deep or cannot be seen from that jump */
-         if ((A_in(closed,jsys) != NULL) || (dep+1 > r) || (jp->onMap == 1))
-             continue;
-
-         /* create new node and such */
-         neighbour = A_newNode( jsys, NULL );
-         neighbour->r = dep+1;
-         open = A_add( open, neighbour );
-      }
-   }
-
-   A_freeList(A_gc);
-   return 0;
+   return 1;
 }
 
 
 /**
- * @brief Check to see if radius is mapped (known).
+ * @brief Check to see if map data is already mapped (known).
  *
- *    @param targ_sys Name of the system in the center of the "known" circle.
- *    @param r Radius to check (in jumps) if is mapped.
- *    @return 1 if circle was already mapped, 0 if it wasn't.
+ *    @param map Map outfit to check.
+ *    @return 1 if already mapped, 0 if it wasn't.
  */
-int map_isMapped( const char* targ_sys, int r )
+int map_isMapped( Outfit* map )
 {
-   int i, dep, ret;
-   StarSystem *sys, *jsys;
-   SysNode *closed, *open, *cur, *neighbour;
+   int i;
 
-   A_gc = NULL;
-   open = closed = NULL;
+   for (i=0; i<array_size(map->u.map->systems);i++)
+      if (!sys_isKnown(map->u.map->systems[i]))
+         return 0;
 
-   if (targ_sys == NULL)
-      sys = cur_system;
-   else
-      sys = system_get( targ_sys );
-   open     = A_newNode( sys, NULL );
-   open->r  = 0;
-   ret      = 1;
+   for (i=0; i<array_size(map->u.map->assets);i++)
+      if (!planet_isKnown(map->u.map->assets[i]))
+         return 0;
 
-   while ((cur = A_lowest(open)) != NULL) {
+/*   for (i=0; i<array_size(map->u.map->jumps);i++)
+      if (!jp_isKnown(map->u.map->jumps[i]))
+         return 0;*/
 
-      /* Check if system is known. */
-      sys      = cur->sys;
-      dep      = cur->r;
-      if (!sys_isFlag(sys,SYSTEM_KNOWN)) {
-         ret = 0;
-         break;
-      }
-
-      /* We close the current system. */
-      open     = A_rm( open, sys );
-      closed   = A_add( closed, cur );
-
-      /* System is past the limit. */
-      if (dep+1 > r)
-         continue;
-
-      /* check its jumps */
-      for (i=0; i<sys->njumps; i++) {
-         jsys = sys->jumps[i].target;
-
-         /* System has already been parsed. */
-         if (A_in(closed,jsys) != NULL)
-             continue;
-
-         /* create new node and such */
-         neighbour      = A_newNode( jsys, NULL );
-         neighbour->r   = dep+1;
-         open           = A_add( open, neighbour );
-      }
-   }
-
-   A_freeList(A_gc);
-   return ret;
+   return 1;
 }
 
 
