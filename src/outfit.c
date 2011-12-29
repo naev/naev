@@ -33,6 +33,7 @@
 #include "nstring.h"
 #include "pilot.h"
 #include "damagetype.h"
+#include "mapData.h"
 
 
 #define outfit_setProp(o,p)      ((o)->properties |= p) /**< Checks outfit property. */
@@ -1668,27 +1669,49 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
 static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
 {
    xmlNodePtr node;
+   void *buf;
+
    node = parent->children;
 
    temp->slot.type         = OUTFIT_SLOT_NA;
    temp->slot.size         = OUTFIT_SLOT_SIZE_NA;
 
+   temp->u.map->systems = array_create(StarSystem*);
+   temp->u.map->assets = array_create(Planet*);
+   temp->u.map->jumps = array_create(JumpPoint*);
+
    do {
-      xml_onlyNodes(node);
-      xmlr_int(node,"radius",temp->u.map.radius);
+      if (xml_isNode(node,"sys")) {
+         buf = system_get( xml_get(node) );
+         if (buf != NULL)
+            array_grow( &temp->u.map->systems ) = buf;
+         else
+            WARN("map %s has invalid system %s.", temp->name, buf);
+      }
+      else if (xml_isNode(node,"asset")) {
+         buf = planet_get( xml_get(node) );
+         if (buf != NULL)
+            array_grow( &temp->u.map->assets ) = buf;
+         else
+            WARN("map %s has invalid system %s.", temp->name, buf);
+      }
+      /*else if (xml_isNode(node,"jump")) {
+         buf = system_get( xml_get(node) );
+         if (sys != NULL)
+            array_grow( &temp->u.map->jumps ) = buf;
+         else
+            WARN("map %s has invalid system %s.", temp->name, sys);
+      }*/
       WARN("Outfit '%s' has unknown node '%s'",temp->name, node->name);
    } while (xml_nextNode(node));
 
    /* Set short description. */
-   temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
+   /*temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
    snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s\n"
          "%.0f jumps",
          outfit_getType(temp),
-         temp->u.map.radius );
-
-   if (temp->u.map.radius==0)
-      WARN("Outfit '%s' missing/invalid 'radius' element", temp->name);
+         temp->u.map.radius );*/
 }
 
 
