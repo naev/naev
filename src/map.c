@@ -1570,9 +1570,9 @@ int map_map( const Outfit *map )
       if (!planet_isKnown(map->u.map->assets[i]))
          planet_setFlag(map->u.map->assets[i], PLANET_KNOWN);
 
-   /*for (i=0; i<array_size(map->u.map->jumps);i++)
+   for (i=0; i<array_size(map->u.map->jumps);i++)
       if (!jp_isKnown(map->u.map->jumps[i]))
-         return 0;*/
+         jp_setFlag(map->u.map->jumps[i], JP_KNOWN);
 
    return 1;
 }
@@ -1596,9 +1596,9 @@ int map_isMapped( const Outfit* map )
       if (!planet_isKnown(map->u.map->assets[i]))
          return 0;
 
-/*   for (i=0; i<array_size(map->u.map->jumps);i++)
+   for (i=0; i<array_size(map->u.map->jumps);i++)
       if (!jp_isKnown(map->u.map->jumps[i]))
-         return 0;*/
+         return 0;
 
    return 1;
 }

@@ -1669,8 +1669,13 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
  */
 static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
 {
-   xmlNodePtr node;
+   int i, j;
+   xmlNodePtr node, cur;
    void *buf;
+   StarSystem *sys, *system_stack;
+   Planet *asset;
+   JumpPoint *jump;
+   int nsys;
 
    node = parent->children;
 
@@ -1683,33 +1688,56 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
 
    do {
       if (xml_isNode(node,"sys")) {
-         buf = system_get( xml_get(node) );
-         if (buf != NULL)
-            array_grow( &temp->u.map->systems ) = buf;
+         buf = xml_nodeProp(node,"name");
+         if (buf != NULL) {
+            sys = system_get(buf);
+            array_grow( &temp->u.map->systems ) = sys;
+
+            cur = node->children;
+
+            do {
+               if (xml_isNode(cur,"asset")) {
+                  buf = xml_get(cur);
+                  if (buf != NULL) {
+                     asset = planet_get(buf);
+                     array_grow( &temp->u.map->assets ) = asset;
+                  }
+                  else
+                     WARN("map %s has invalid asset %s.", temp->name, buf);
+               }
+               else if (xml_isNode(cur,"jump")) {
+                  buf = xml_get(cur);
+                  if (buf != NULL) {
+                     jump = jump_get(xml_get(cur), temp->u.map->systems[array_size(temp->u.map->systems)-1] );
+                     array_grow( &temp->u.map->jumps ) = jump;
+                  }
+                  else
+                     WARN("map %s has invalid jump point %s.", temp->name, buf);
+               }
+               else
+                  WARN("Outfit '%s' has unknown node '%s'",temp->name, cur->name);
+            } while (xml_nextNode(cur));
+         }
          else
             WARN("map %s has invalid system %s.", temp->name, buf);
       }
-      else if (xml_isNode(node,"asset")) {
-         buf = planet_get( xml_get(node) );
-         if (buf != NULL)
-            array_grow( &temp->u.map->assets ) = buf;
-         else
-            WARN("map %s has invalid system %s.", temp->name, buf);
+      else if (xml_isNode(node,"all")) { /* Add everything to the map */
+         system_stack = system_getAll(&nsys);
+         for (i=0;i<nsys;i++) {
+            array_grow( &temp->u.map->systems ) = &system_stack[i];
+            for (j=0;j<system_stack[i].nplanets;j++)
+               array_grow( &temp->u.map->assets ) = system_stack[i].planets[j];
+            for (j=0;j<system_stack[i].njumps;j++)
+               array_grow( &temp->u.map->jumps ) = &system_stack[i].jumps[j];
+         }
       }
-      /*else if (xml_isNode(node,"jump")) {
-         buf = system_get( xml_get(node) );
-         if (sys != NULL)
-            array_grow( &temp->u.map->jumps ) = buf;
-         else
-            WARN("map %s has invalid system %s.", temp->name, sys);
-      }*/
       else
          WARN("Outfit '%s' has unknown node '%s'",temp->name, node->name);
    } while (xml_nextNode(node));
 
    array_shrink(&temp->u.map->systems);
    array_shrink(&temp->u.map->assets);
-//   array_shrink(&temp->u.map->jumps);
+   array_shrink(&temp->u.map->jumps);
 
    /* Set short description. */
    /*temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
@@ -1931,8 +1959,11 @@ static int outfit_parse( Outfit* temp, const xmlNodePtr parent )
             outfit_parseSFighterBay( temp, node );
          else if (outfit_isFighter(temp))
             outfit_parseSFighter( temp, node );
-         else if (outfit_isMap(temp))
+         else if (outfit_isMap(temp)) {
             temp->u.map = malloc( sizeof(OutfitMapData_t) ); /**< deal with maps after the universe is loaded */
+            temp->slot.type         = OUTFIT_SLOT_NA;
+            temp->slot.size         = OUTFIT_SLOT_SIZE_NA;
+         }
          else if (outfit_isGUI(temp))
             outfit_parseSGUI( temp, node );
          else if (outfit_isLicense(temp))
@@ -2052,7 +2083,8 @@ int outfit_mapParse()
       if (xml_isNode(node,XML_OUTFIT_TAG)) {
 
          o = outfit_get(xml_nodeProp(node,"name"));
-         if (!outfit_isMap(o))
+
+         if (!outfit_isMap(o)) /* If its not a map, we don't care. */
             continue;
 
          cur = node->xmlChildrenNode;

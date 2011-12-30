@@ -2503,9 +2503,13 @@
    <gfx_store>map</gfx_store>
   </general>
   <specific type="map">
-   <sys>Goddard</sys>
-   <sys>Arcturus</sys>
-   <asset>Manuel Station</asset>
+   <sys name="Goddard">
+    <asset>Manuel Station</asset>
+    <jump>Arcturus</jump>
+   </sys>
+   <sys name="Arcturus">
+    <jump>Goddard</jump>
+   </sys>
   </specific>
  </outfit>
  <outfit name="Ultra Map">
@@ -2516,7 +2520,7 @@
    <gfx_store>map</gfx_store>
   </general>
   <specific type="map">
-   <radius>999</radius>
+   <all/>
   </specific>
  </outfit>
  <outfit name="Unicorp Scrambler">
