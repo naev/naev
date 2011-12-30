@@ -1558,7 +1558,7 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
  *    @param r Radius (in jumps) to mark as known.
  *    @return 0 on success.
  */
-int map_map( Outfit *map )
+int map_map( const Outfit *map )
 {
    int i;
 
@@ -1584,7 +1584,7 @@ int map_map( Outfit *map )
  *    @param map Map outfit to check.
  *    @return 1 if already mapped, 0 if it wasn't.
  */
-int map_isMapped( Outfit* map )
+int map_isMapped( const Outfit* map )
 {
    int i;
 

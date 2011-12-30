@@ -90,6 +90,7 @@ static void outfit_parseSLicense( Outfit *temp, const xmlNodePtr parent );
 Outfit* outfit_get( const char* name )
 {
    int i;
+
    for (i=0; i<array_size(outfit_stack); i++)
       if (strcmp(name,outfit_stack[i].name)==0)
          return &outfit_stack[i];
@@ -1676,8 +1677,6 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
    temp->slot.type         = OUTFIT_SLOT_NA;
    temp->slot.size         = OUTFIT_SLOT_SIZE_NA;
 
-   temp->u.map = malloc( sizeof(OutfitMapData_t) );
-
    temp->u.map->systems = array_create(StarSystem*);
    temp->u.map->assets = array_create(Planet*);
    temp->u.map->jumps = array_create(JumpPoint*);
@@ -1704,8 +1703,13 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
          else
             WARN("map %s has invalid system %s.", temp->name, sys);
       }*/
-      WARN("Outfit '%s' has unknown node '%s'",temp->name, node->name);
+      else
+         WARN("Outfit '%s' has unknown node '%s'",temp->name, node->name);
    } while (xml_nextNode(node));
+
+   array_shrink(&temp->u.map->systems);
+   array_shrink(&temp->u.map->assets);
+//   array_shrink(&temp->u.map->jumps);
 
    /* Set short description. */
    /*temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
@@ -1928,7 +1932,7 @@ static int outfit_parse( Outfit* temp, const xmlNodePtr parent )
          else if (outfit_isFighter(temp))
             outfit_parseSFighter( temp, node );
          else if (outfit_isMap(temp))
-            outfit_parseSMap( temp, node );
+            temp->u.map = malloc( sizeof(OutfitMapData_t) ); /**< deal with maps after the universe is loaded */
          else if (outfit_isGUI(temp))
             outfit_parseSGUI( temp, node );
          else if (outfit_isLicense(temp))
@@ -2018,6 +2022,58 @@ int outfit_load (void)
    return 0;
 }
 
+/**
+ * @brief Parses all the maps.
+ *
+ */
+
+int outfit_mapParse()
+{
+   Outfit *o;
+   uint32_t bufsize;
+   char *buf = ndata_read( OUTFIT_DATA, &bufsize );
+
+   xmlNodePtr node, cur;
+   xmlDocPtr doc = xmlParseMemory( buf, bufsize );
+
+   node = doc->xmlChildrenNode;
+   if (!xml_isNode(node,XML_OUTFIT_ID)) {
+      ERR("Malformed '"OUTFIT_DATA"' file: missing root element '"XML_OUTFIT_ID"'");
+      return -1;
+   }
+
+   node = node->xmlChildrenNode; /* first system node */
+   if (node == NULL) {
+      ERR("Malformed '"OUTFIT_DATA"' file: does not contain elements");
+      return -1;
+   }
+
+   do {
+      if (xml_isNode(node,XML_OUTFIT_TAG)) {
+
+         o = outfit_get(xml_nodeProp(node,"name"));
+         if (!outfit_isMap(o))
+            continue;
+
+         cur = node->xmlChildrenNode;
+
+         do { /* load all the data */
+
+            /* Only handle nodes. */
+            xml_onlyNodes(cur);
+
+            if (xml_isNode(cur,"specific"))
+               outfit_parseSMap(o, cur);
+
+         } while (xml_nextNode(cur));
+      }
+   } while (xml_nextNode(node));
+
+   xmlFreeDoc(doc);
+   free(buf);
+
+   return 0;
+}
 
 /**
  * @brief Frees the outfit stack.

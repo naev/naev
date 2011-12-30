@@ -31,8 +31,8 @@ void map_jump (void);
 /* manipulate universe stuff */
 StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
      const char* sysend, int ignore_known, StarSystem** old_data );
-int map_map( Outfit *map );
-int map_isMapped( Outfit* map );
+int map_map( const Outfit *map );
+int map_isMapped( const Outfit* map );
 
 /* shows a map at x, y (relative to wid) with size w,h  */
 void map_show( int wid, int x, int y, int w, int h, double zoom );

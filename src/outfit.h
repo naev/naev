@@ -390,6 +390,7 @@ double outfit_cooldown( const Outfit* o );
  * loading/freeing outfit stack
  */
 int outfit_load (void);
+int outfit_mapParse(void);
 void outfit_free (void);
 
 
