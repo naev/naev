@@ -1687,6 +1687,8 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
    temp->u.map->jumps = array_create(JumpPoint*);
 
    do {
+      xml_onlyNodes(node);
+
       if (xml_isNode(node,"sys")) {
          buf = xml_nodeProp(node,"name");
          if (buf != NULL) {
@@ -1696,6 +1698,8 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
             cur = node->children;
 
             do {
+               xml_onlyNodes(cur);
+
                if (xml_isNode(cur,"asset")) {
                   buf = xml_get(cur);
                   if (buf != NULL) {
