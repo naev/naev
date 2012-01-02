@@ -13,7 +13,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -35,7 +34,6 @@
    <class>P</class>
    <population>100</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -62,7 +60,6 @@
    <class>P</class>
    <population>4000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -87,7 +84,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -109,7 +105,6 @@
    <class>M</class>
    <population>1000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -138,7 +133,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -155,7 +149,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -172,7 +165,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -189,7 +181,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -206,7 +197,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -228,7 +218,6 @@
    <class>M</class>
    <population>6000000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -269,7 +258,6 @@
    <class>A</class>
    <population>60000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -304,7 +292,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -321,7 +308,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -338,7 +324,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -355,7 +340,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -372,7 +356,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -389,7 +372,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -406,7 +388,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -423,7 +404,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -440,7 +420,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -462,7 +441,6 @@
    <class>O</class>
    <population>70000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -499,7 +477,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -521,7 +498,6 @@
    <class>O</class>
    <population>450000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -564,7 +540,6 @@
    <class>Y</class>
    <population>1000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -605,7 +580,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -622,7 +596,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -639,7 +612,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -661,7 +633,6 @@
    <class>P</class>
    <population>5000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -704,7 +675,6 @@
    <class>M</class>
    <population>9000000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -739,7 +709,6 @@
    <class>1</class>
    <population>52000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>emp_mil_restricted</land>
     <refuel/>
@@ -784,7 +753,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -801,7 +769,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -823,7 +790,6 @@
    <class>H</class>
    <population>32000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -857,7 +823,6 @@
    <class>Y</class>
    <population>150000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -891,7 +856,6 @@
    <class>P</class>
    <population>2000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -932,7 +896,6 @@
    <class>A</class>
    <population>600000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>land_lowclass</land>
     <refuel/>
@@ -959,7 +922,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -976,7 +938,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -993,7 +954,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -1010,7 +970,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -1027,7 +986,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -1049,7 +1007,6 @@
    <class>A</class>
    <population>300000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>land_lowclass</land>
     <refuel/>
@@ -1084,7 +1041,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -1106,7 +1062,6 @@
    <class>M</class>
    <population>40000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -1144,7 +1099,6 @@
    <class>0</class>
    <population>1000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>srs_mil_restricted</land>
     <refuel/>
@@ -1168,7 +1122,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -1185,7 +1138,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -1202,7 +1154,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -1219,7 +1170,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -1236,7 +1186,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -1258,7 +1207,6 @@
    <class>M</class>
    <population>7000000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -1298,7 +1246,6 @@
    <class>M</class>
    <population>5000000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -1338,7 +1285,6 @@
    <class>M</class>
    <population>17000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -1378,7 +1324,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -1395,7 +1340,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -1412,7 +1356,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -1434,7 +1377,6 @@
    <class>0</class>
    <population>700</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -1459,7 +1401,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -1476,7 +1417,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -1493,7 +1433,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -1510,7 +1449,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -1532,7 +1470,6 @@
    <class>O</class>
    <population>930000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -1566,7 +1503,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -1588,7 +1524,6 @@
    <class>H</class>
    <population>20000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -1626,7 +1561,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -1643,7 +1577,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -1660,7 +1593,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -1677,7 +1609,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -1699,7 +1630,6 @@
    <class>O</class>
    <population>200000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -1742,7 +1672,6 @@
    <class>M</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>land_lowclass</land>
     <refuel/>
@@ -1775,7 +1704,6 @@
    <class>M</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>land_hiclass</land>
     <refuel/>
@@ -1803,7 +1731,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -1825,7 +1752,6 @@
    <class>0</class>
    <population>1000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <bar/>
@@ -1853,7 +1779,6 @@
    <class>K</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -1886,7 +1811,6 @@
    <class>M</class>
    <population>20000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>land_hiclass</land>
     <refuel/>
@@ -1916,7 +1840,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -1933,7 +1856,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -1950,7 +1872,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -1967,7 +1888,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -1989,7 +1909,6 @@
    <class>0</class>
    <population>14000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -2034,7 +1953,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -2051,7 +1969,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -2073,7 +1990,6 @@
    <class>O</class>
    <population>4000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>land_hiclass</land>
     <refuel/>
@@ -2102,7 +2018,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -2119,7 +2034,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -2136,7 +2050,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -2158,7 +2071,6 @@
    <class>0</class>
    <population>2000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -2180,7 +2092,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -2197,7 +2108,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -2214,7 +2124,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -2231,7 +2140,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -2253,7 +2161,6 @@
    <class>G</class>
    <population>2000000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -2296,7 +2203,6 @@
    <class>A</class>
    <population>40000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -2324,7 +2230,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -2346,7 +2251,6 @@
    <class>P</class>
    <population>125000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -2383,7 +2287,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -2400,7 +2303,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -2417,7 +2319,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -2439,7 +2340,6 @@
    <class>M</class>
    <population>7000000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -2475,7 +2375,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -2497,7 +2396,6 @@
    <class>M</class>
    <population>8000000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -2536,7 +2434,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -2558,7 +2455,6 @@
    <class>0</class>
    <population>1500</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -2596,7 +2492,6 @@
    <class>M</class>
    <population>2000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -2629,7 +2524,6 @@
    <class>P</class>
    <population>1000000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -2665,7 +2559,6 @@
    <class>P</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -2682,7 +2575,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -2699,7 +2591,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -2716,7 +2607,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -2733,7 +2623,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -2750,7 +2639,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -2772,7 +2660,6 @@
    <class>A</class>
    <population>1474836480</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>land_hiclass</land>
     <refuel/>
@@ -2816,7 +2703,6 @@
    <class>0</class>
    <population>500</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>dv_mil_command</land>
     <refuel/>
@@ -2856,7 +2742,6 @@
    <class>I</class>
    <population>10000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -2886,7 +2771,6 @@
    <class>0</class>
    <population>4000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>dv_mil_restricted</land>
     <refuel/>
@@ -2920,7 +2804,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -2942,7 +2825,6 @@
    <class>O</class>
    <population>1500000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -2975,7 +2857,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -2992,7 +2873,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -3009,7 +2889,6 @@
    <class>J</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
    </services>
@@ -3035,7 +2914,6 @@
    <class>0</class>
    <population>1500</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>dv_mil_restricted</land>
     <refuel/>
@@ -3065,7 +2943,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -3082,7 +2959,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -3099,7 +2975,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -3121,7 +2996,6 @@
    <class>M</class>
    <population>4000000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -3160,7 +3034,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -3177,7 +3050,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -3199,7 +3071,6 @@
    <class>M</class>
    <population>150000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -3243,7 +3114,6 @@
    <class>A</class>
    <population>2000000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -3285,7 +3155,6 @@
    <class>C</class>
    <population>127000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>land_hiclass</land>
     <refuel/>
@@ -3310,7 +3179,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -3327,7 +3195,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -3344,7 +3211,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -3361,7 +3227,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -3378,7 +3243,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -3395,7 +3259,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -3417,7 +3280,6 @@
    <class>O</class>
    <population>5000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -3455,7 +3317,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -3472,7 +3333,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -3489,7 +3349,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -3511,7 +3370,6 @@
    <class>0</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>srm_mil_restricted</land>
     <refuel/>
@@ -3535,7 +3393,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -3552,7 +3409,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -3569,7 +3425,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -3591,7 +3446,6 @@
    <class>0</class>
    <population>2000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>dv_mil_restricted</land>
     <refuel/>
@@ -3623,7 +3477,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -3640,7 +3493,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -3657,7 +3509,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -3674,7 +3525,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -3696,7 +3546,6 @@
    <class>Y</class>
    <population>1500000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -3734,7 +3583,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -3756,7 +3604,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -3778,7 +3625,6 @@
    <class>0</class>
    <population>10000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>srs_mil_restricted</land>
     <refuel/>
@@ -3814,7 +3660,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -3831,7 +3676,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -3848,7 +3692,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -3870,7 +3713,6 @@
    <class>0</class>
    <population>200</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -3898,7 +3740,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -3915,7 +3756,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -3932,7 +3772,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -3949,7 +3788,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -3966,7 +3804,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -3983,7 +3820,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -4005,7 +3841,6 @@
    <class>M</class>
    <population>400000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -4051,7 +3886,6 @@
    <class>0</class>
    <population>2000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>srs_mil_restricted</land>
     <refuel/>
@@ -4075,7 +3909,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -4092,7 +3925,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -4109,7 +3941,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -4126,7 +3957,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -4143,7 +3973,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -4165,7 +3994,6 @@
    <class>O</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -4198,7 +4026,6 @@
    <class>0</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -4231,7 +4058,6 @@
    <class>O</class>
    <population>1000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>land_hiclass</land>
     <refuel/>
@@ -4258,7 +4084,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -4280,7 +4105,6 @@
    <class>M</class>
    <population>6000000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -4318,7 +4142,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -4340,7 +4163,6 @@
    <class>H</class>
    <population>3000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -4373,7 +4195,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -4390,7 +4211,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -4407,7 +4227,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -4429,7 +4248,6 @@
    <class>M</class>
    <population>1000000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -4465,7 +4283,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -4482,7 +4299,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -4504,7 +4320,6 @@
    <class>M</class>
    <population>7000000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -4541,7 +4356,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -4563,7 +4377,6 @@
    <class>G</class>
    <population>1000000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -4599,7 +4412,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -4616,7 +4428,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -4633,7 +4444,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -4650,7 +4460,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -4667,7 +4476,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -4684,7 +4492,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -4701,7 +4508,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -4723,7 +4529,6 @@
    <class>X</class>
    <population>1000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -4751,7 +4556,6 @@
    <class>I</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -4773,7 +4577,6 @@
    <class>M</class>
    <population>3000000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>land_lowclass</land>
     <refuel/>
@@ -4816,7 +4619,6 @@
    <class>G</class>
    <population>35000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>land_hiclass</land>
     <refuel/>
@@ -4850,7 +4652,6 @@
    <class>0</class>
    <population>1300</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>srm_mil_restricted</land>
     <refuel/>
@@ -4883,7 +4684,6 @@
    <class>C</class>
    <population>60000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -4911,7 +4711,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -4928,7 +4727,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -4945,7 +4743,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -4967,7 +4764,6 @@
    <class>C</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -5001,7 +4797,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -5018,7 +4813,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -5040,7 +4834,6 @@
    <class>O</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>srm_mil_restricted</land>
     <refuel/>
@@ -5071,7 +4864,6 @@
    <class>0</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>srm_mil_restricted</land>
     <refuel/>
@@ -5108,7 +4900,6 @@
    <class>S</class>
    <population>10000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>land_lowclass</land>
     <refuel/>
@@ -5139,7 +4930,6 @@
    <class>M</class>
    <population>4000000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -5177,7 +4967,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -5194,7 +4983,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -5211,7 +4999,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -5233,7 +5020,6 @@
    <class>H</class>
    <population>12000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -5266,7 +5052,6 @@
    <class>0</class>
    <population>800</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -5298,7 +5083,6 @@
    <class>0</class>
    <population>800</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -5330,7 +5114,6 @@
    <class>0</class>
    <population>1000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -5362,7 +5145,6 @@
    <class>M</class>
    <population>100000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -5404,7 +5186,6 @@
    <class>A</class>
    <population>1000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -5431,7 +5212,6 @@
    <class>G</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>land_lowclass</land>
     <refuel/>
@@ -5459,7 +5239,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -5476,7 +5255,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -5493,7 +5271,6 @@
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -5515,7 +5292,6 @@
    <class>0</class>
    <population>5000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -5558,7 +5334,6 @@
    <class>M</class>
    <population>9000000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -5599,7 +5374,6 @@
    <class>O</class>
    <population>30000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>land_hiclass</land>
     <refuel/>
@@ -5638,7 +5412,6 @@
    <class>G</class>
    <population>170000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -5672,7 +5445,6 @@
    <class>D</class>
    <population>5000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>land_lowclass</land>
     <refuel/>
@@ -5708,7 +5480,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
   <tech>
@@ -5729,7 +5500,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -5746,7 +5516,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -5763,7 +5532,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -5785,7 +5553,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>Y</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>srm_mil_kataka</land>
     <refuel/>
@@ -5827,7 +5594,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>Y</class>
    <population>5000000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -5863,7 +5629,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -5880,7 +5645,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -5897,7 +5661,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -5914,7 +5677,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -5931,7 +5693,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -5948,7 +5709,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -5965,7 +5725,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -5982,7 +5741,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -5999,7 +5757,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -6016,7 +5773,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -6033,7 +5789,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -6055,7 +5810,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>G</class>
    <population>900000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>land_hiclass</land>
     <refuel/>
@@ -6091,7 +5845,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -6108,7 +5861,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -6130,7 +5882,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>K</class>
    <population>350000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -6173,7 +5924,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>K</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -6208,7 +5958,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -6225,7 +5974,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -6242,7 +5990,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -6259,7 +6006,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -6276,7 +6022,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -6293,7 +6038,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -6315,7 +6059,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>M</class>
    <population>6000000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -6354,7 +6097,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -6376,7 +6118,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>M</class>
    <population>500000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -6418,7 +6159,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>0</class>
    <population>1000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>emp_mil_restricted</land>
     <refuel/>
@@ -6457,7 +6197,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>M</class>
    <population>3000000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>land_hiclass</land>
     <refuel/>
@@ -6494,7 +6233,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -6516,7 +6254,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>M</class>
    <population>4000000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -6555,7 +6292,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>M</class>
    <population>600000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -6600,7 +6336,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>0</class>
    <population>2000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -6646,7 +6381,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>0</class>
    <population>2000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>emp_mil_restricted</land>
     <refuel/>
@@ -6677,7 +6411,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -6694,7 +6427,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -6711,7 +6443,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -6733,7 +6464,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>0</class>
    <population>200</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -6760,7 +6490,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -6782,7 +6511,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>0</class>
    <population>300</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -6812,7 +6540,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>0</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>srm_mil_restricted</land>
     <refuel/>
@@ -6842,7 +6569,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -6859,7 +6585,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -6876,7 +6601,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -6893,7 +6617,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -6915,7 +6638,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>A</class>
    <population>1000000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -6951,7 +6673,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -6968,7 +6689,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -6990,7 +6710,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>O</class>
    <population>400000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -7024,7 +6743,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>L</class>
    <population>3000000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>srs_mil_mutris</land>
     <refuel/>
@@ -7067,7 +6785,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>Y</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -7110,7 +6827,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>0</class>
    <population>500</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>dv_mil_restricted</land>
     <refuel/>
@@ -7145,7 +6861,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>H</class>
    <population>200000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -7173,7 +6888,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -7190,7 +6904,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -7207,7 +6920,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -7224,7 +6936,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -7241,7 +6952,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -7263,7 +6973,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>O</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -7297,7 +7006,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -7319,7 +7027,6 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <class>A</class>
    <population>1000000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -7361,7 +7068,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>D</class>
    <population>9000</population>
    <hide>0.010000</hide>
-   <onMap>0</onMap>
    <services>
     <land>pir_clanworld</land>
     <refuel/>
@@ -7408,7 +7114,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>K</class>
    <population>100000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -7432,7 +7137,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -7449,7 +7153,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -7471,7 +7174,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>0</class>
    <population>3000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -7509,7 +7211,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -7526,7 +7227,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -7548,7 +7248,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>M</class>
    <population>10000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -7580,7 +7279,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>900000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -7615,7 +7313,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>I</class>
    <population>130000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -7651,7 +7348,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>H</class>
    <population>260000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -7689,7 +7385,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -7706,7 +7401,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -7723,7 +7417,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -7745,7 +7438,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>M</class>
    <population>812000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -7784,7 +7476,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -7801,7 +7492,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -7818,7 +7508,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -7835,7 +7524,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -7857,7 +7545,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>H</class>
    <population>20000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -7891,7 +7578,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>0</class>
    <population>14000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>emp_mil_restricted</land>
     <refuel/>
@@ -7933,7 +7619,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>O</class>
    <population>700000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -7973,7 +7658,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>0</class>
    <population>2000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -8007,7 +7691,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -8029,7 +7712,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>0</class>
    <population>1500</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -8067,7 +7749,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>X</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -8104,7 +7785,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>0</class>
    <population>2000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -8135,7 +7815,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -8152,7 +7831,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -8169,7 +7847,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -8186,7 +7863,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>J</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -8203,7 +7879,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -8220,7 +7895,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -8237,7 +7911,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -8254,7 +7927,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -8271,7 +7943,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -8288,7 +7959,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -8310,7 +7980,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>M</class>
    <population>100000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -8350,7 +8019,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>G</class>
    <population>65000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -8385,7 +8053,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>M</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -8420,7 +8087,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -8437,7 +8103,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -8454,7 +8119,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -8476,7 +8140,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>S</class>
    <population>50000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -8511,7 +8174,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>K</class>
    <population>500000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -8546,7 +8208,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -8563,7 +8224,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -8580,7 +8240,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -8597,7 +8256,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -8619,7 +8277,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>0</class>
    <population>140</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -8653,7 +8310,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>1</class>
    <population>318000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>emp_mil_polprime</land>
     <refuel/>
@@ -8699,7 +8355,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>M</class>
    <population>400000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -8743,7 +8398,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>M</class>
    <population>1200000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -8783,7 +8437,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -8800,7 +8453,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -8817,7 +8469,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -8834,7 +8485,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -8851,7 +8501,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -8868,7 +8517,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -8885,7 +8533,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -8902,7 +8549,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -8919,7 +8565,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -8936,7 +8581,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -8953,7 +8597,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -8975,7 +8618,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>S</class>
    <population>500000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -9017,7 +8659,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>O</class>
    <population>5000000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -9053,7 +8694,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -9070,7 +8710,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -9087,7 +8726,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -9104,7 +8742,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -9121,7 +8758,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -9143,7 +8779,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>0</class>
    <population>3000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -9174,7 +8809,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -9196,7 +8830,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>1</class>
    <population>7000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -9221,7 +8854,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -9243,7 +8875,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>M</class>
    <population>10000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -9277,7 +8908,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -9294,7 +8924,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -9311,7 +8940,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -9328,7 +8956,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -9345,7 +8972,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -9367,7 +8993,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>M</class>
    <population>100000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -9407,7 +9032,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>H</class>
    <population>50000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -9442,7 +9066,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -9464,7 +9087,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>L</class>
    <population>900000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>land_hiclass</land>
     <refuel/>
@@ -9495,7 +9117,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -9512,7 +9133,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -9529,7 +9149,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -9551,7 +9170,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>3</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -9573,7 +9191,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>3</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -9595,7 +9212,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>3</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -9617,7 +9233,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>3</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -9639,7 +9254,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>3</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -9661,7 +9275,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>3</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -9683,7 +9296,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>3</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -9705,7 +9317,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>3</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -9727,7 +9338,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>3</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -9749,7 +9359,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>3</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -9771,7 +9380,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>3</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -9793,7 +9401,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>3</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -9815,7 +9422,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>3</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -9837,7 +9443,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>3</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -9859,7 +9464,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>3</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -9876,7 +9480,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -9893,7 +9496,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -9910,7 +9512,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -9927,7 +9528,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -9944,7 +9544,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -9966,7 +9565,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>0</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>srm_mil_restricted</land>
     <refuel/>
@@ -10002,7 +9600,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>M</class>
    <population>90000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>land_lowclass</land>
     <refuel/>
@@ -10036,7 +9633,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -10053,7 +9649,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -10075,7 +9670,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>P</class>
    <population>27000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -10110,7 +9704,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>M</class>
    <population>7500000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -10147,7 +9740,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -10164,7 +9756,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -10181,7 +9772,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -10198,7 +9788,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -10220,7 +9809,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>0</class>
    <population>2000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>srs_mil_restricted</land>
     <refuel/>
@@ -10247,7 +9835,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>Y</class>
    <population>400000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -10279,7 +9866,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>P</class>
    <population>150000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -10315,7 +9901,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -10332,7 +9917,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -10349,7 +9933,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -10366,7 +9949,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -10383,7 +9965,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -10405,7 +9986,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>L</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -10448,7 +10028,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>M</class>
    <population>2000000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -10491,7 +10070,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>M</class>
    <population>130000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -10537,7 +10115,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>0</class>
    <population>1000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -10568,7 +10145,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>0</class>
    <population>2000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>srs_mil_restricted</land>
     <refuel/>
@@ -10608,7 +10184,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>0</class>
    <population>4000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>srs_mil_restricted</land>
     <refuel/>
@@ -10643,7 +10218,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>M</class>
    <population>40000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -10676,7 +10250,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -10698,7 +10271,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>0</class>
    <population>500000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -10725,7 +10297,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>0</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>srm_mil_restricted</land>
     <refuel/>
@@ -10754,7 +10325,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>0</class>
    <population>1000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -10781,7 +10351,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>0</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -10810,7 +10379,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>0</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>land_hiclass</land>
     <refuel/>
@@ -10839,7 +10407,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>H</class>
    <population>1200000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -10876,7 +10443,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>2</class>
    <population>12000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>dv_mil_restricted</land>
     <refuel/>
@@ -10915,7 +10481,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>M</class>
    <population>7000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>land_lowclass</land>
     <refuel/>
@@ -10956,7 +10521,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>M</class>
    <population>400000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>land_lowclass</land>
     <refuel/>
@@ -10993,7 +10557,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -11010,7 +10573,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -11032,7 +10594,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>M</class>
    <population>100000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -11064,7 +10625,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -11081,7 +10641,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -11098,7 +10657,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -11115,7 +10673,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -11137,7 +10694,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>M</class>
    <population>1000000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -11170,7 +10726,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>0</class>
    <population>3000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>dv_mil_restricted</land>
     <refuel/>
@@ -11207,7 +10762,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -11229,7 +10783,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>0</class>
    <population>3000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>dv_mil_restricted</land>
     <refuel/>
@@ -11251,7 +10804,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>M</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -11268,7 +10820,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -11290,7 +10841,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>0</class>
    <population>12000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -11323,7 +10873,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -11356,7 +10905,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>L</class>
    <population>2000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>land_lowclass</land>
     <refuel/>
@@ -11391,7 +10939,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>0</class>
    <population>5000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -11418,7 +10965,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>0</class>
    <population>500</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -11445,7 +10991,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>0</class>
    <population>3000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -11469,7 +11014,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -11486,7 +11030,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -11508,7 +11051,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>0</class>
    <population>500</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -11552,7 +11094,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>D</class>
    <population>100000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -11593,7 +11134,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>0</class>
    <population>1000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -11620,7 +11160,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -11637,7 +11176,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -11659,7 +11197,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>M</class>
    <population>50000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>land_hiclass</land>
     <refuel/>
@@ -11702,7 +11239,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>G</class>
    <population>350000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -11737,7 +11273,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>P</class>
    <population>2000000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -11775,7 +11310,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>M</class>
    <population>4000000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -11812,7 +11346,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -11834,7 +11367,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>M</class>
    <population>8500000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -11879,7 +11411,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>0</class>
    <population>1500</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -11917,7 +11448,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>M</class>
    <population>2133437257</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>land_hiclass</land>
     <refuel/>
@@ -11958,7 +11488,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -11975,7 +11504,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>J</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -11992,7 +11520,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -12014,7 +11541,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>M</class>
    <population>1000000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -12049,7 +11575,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>Y</class>
    <population>10000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -12077,7 +11602,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -12094,7 +11618,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -12116,7 +11639,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>M</class>
    <population>1500000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -12157,7 +11679,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>0</class>
    <population>500</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -12185,7 +11706,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -12202,7 +11722,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -12219,7 +11738,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -12236,7 +11754,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -12253,7 +11770,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -12275,7 +11791,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>M</class>
    <population>3100000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -12312,7 +11827,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>K</class>
    <population>400000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>land_lowclass</land>
     <refuel/>
@@ -12348,7 +11862,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -12370,7 +11883,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>K</class>
    <population>15000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -12400,7 +11912,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -12417,7 +11928,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -12434,7 +11944,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -12456,7 +11965,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>M</class>
    <population>500000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -12499,7 +12007,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>M</class>
    <population>500000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>land_hiclass</land>
     <refuel/>
@@ -12536,7 +12043,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -12553,7 +12059,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -12570,7 +12075,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -12587,7 +12091,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>H</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -12604,7 +12107,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -12626,7 +12128,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>D</class>
    <population>10000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>land_lowclass</land>
     <refuel/>
@@ -12660,7 +12161,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>P</class>
    <population>40000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -12702,7 +12202,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>M</class>
    <population>5500000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>land_hiclass</land>
     <refuel/>
@@ -12744,7 +12243,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>0</class>
    <population>2000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>dv_mil_restricted</land>
     <refuel/>
@@ -12923,7 +12421,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>P</class>
    <population>4500</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -12954,7 +12451,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -12971,7 +12467,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -12993,7 +12488,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>Y</class>
    <population>9000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>pir_clanworld</land>
     <refuel/>
@@ -13040,7 +12534,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>C</class>
    <population>50000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>land_hiclass</land>
     <refuel/>
@@ -13073,7 +12566,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>4500</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -13095,7 +12587,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>P</class>
    <population>5000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -13129,7 +12620,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -13151,7 +12641,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>5000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>land_lowclass</land>
     <refuel/>
@@ -13184,7 +12673,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>O</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land>srm_mil_restricted</land>
     <refuel/>
@@ -13218,7 +12706,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>0</class>
    <population>130</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -13248,7 +12735,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>P</class>
    <population>50000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -13281,7 +12767,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>0</class>
    <population>4000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -13327,7 +12812,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>M</class>
    <population>500000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -13367,7 +12851,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>M</class>
    <population>15000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -13406,7 +12889,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>M</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>
@@ -13440,7 +12922,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -13457,7 +12938,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -13474,7 +12954,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>A</class>
    <population>0</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services/>
   </general>
  </asset>
@@ -13496,7 +12975,6 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <class>M</class>
    <population>13000000</population>
    <hide>0.010000</hide>
-   <onMap>1</onMap>
    <services>
     <land/>
     <refuel/>

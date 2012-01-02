@@ -152,7 +152,6 @@ static int dsys_saveSystem( xmlTextWriterPtr writer, const StarSystem *sys )
       if (jp->flags & JP_AUTOPOS)
          xmlw_elemEmpty( writer, "autopos" );
       xmlw_elem( writer, "type", "%d", jp->type );
-      xmlw_elem( writer, "onMap", "%d", jp->onMap );
       xmlw_endElem( writer ); /* "jump" */
    }
    xmlw_endElem( writer ); /* "jumps" */

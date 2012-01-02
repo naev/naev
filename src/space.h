@@ -106,7 +106,6 @@ typedef struct Planet_ {
    int presenceRange; /**< The range of presence exertion of this asset. */
    int real; /**< If the asset is tangible or not. */
    double hide; /**< The ewarfare hide value for an asset. */
-   int onMap; /**< If the asset is on maps or not. */
 
    /* Landing details. */
    int land_override; /**< Forcibly allows the player to either be able to land or not (+1 is land, -1 is not, 0 otherwise). */
@@ -205,7 +204,6 @@ typedef struct JumpPoint_ {
    unsigned int flags; /**< Flags related to the jump point's status. */
    int type; /**< Type of Jump Point */
    double hide; /**< ewarfare hide value for the jump point */
-   int onMap; /**< Whether the jump point is on maps */
    double angle; /**< Direction the jump is facing. */
    double cosa; /**< Cosinus of the angle. */
    double sina; /**< Sinus of the angle. */

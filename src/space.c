@@ -1668,7 +1668,6 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
    flags          = 0;
    planet->real   = ASSET_REAL;
    planet->hide   = 0.01;
-   planet->onMap  = 1;
 
    /* Get the name. */
    xmlr_attr( parent, "name", planet->name );
@@ -1754,7 +1753,6 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
             xmlr_strd(cur, "description", planet->description );
             xmlr_ulong(cur, "population", planet->population );
             xmlr_float(cur, "hide", planet->hide );
-            xmlr_int(cur, "onMap", planet->onMap );
 
             if (xml_isNode(cur,"class"))
                planet->class =
@@ -2413,7 +2411,6 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
    j->targetid = j->target->id;
    j->radius = 200.;
    pos = 0;
-   j->onMap = 1;
 
    /* Parse data. */
    cur = node->xmlChildrenNode;
@@ -2453,8 +2450,6 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
       else if (xml_isNode(cur,"hide")) {
          xmlr_float( cur,"hide", j->hide );
       }
-      else if (xml_isNode(cur,"onMap"))
-         xmlr_int( cur,"onMap", j->onMap );
    } while (xml_nextNode(cur));
 
    if (!jp_isFlag(j,JP_AUTOPOS) && !pos)

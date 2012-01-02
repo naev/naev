@@ -354,7 +354,7 @@ static int outfit_canBuy( Outfit* outfit, int q, int errmsg )
       return 0;
    }
    /* Map already mapped */
-   else if (outfit_isMap(outfit) && map_isMapped(NULL,outfit->u.map.radius)) {
+   else if (outfit_isMap(outfit) && map_isMapped(outfit)) {
       if (errmsg != 0)
          dialogue_alert( "You already own this map." );
       return 0;

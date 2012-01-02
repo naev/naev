@@ -554,6 +554,8 @@ void load_all (void)
    tech_load(); /* dep for space */
    loadscreen_render( 11./LOADING_STAGES, "Loading the Universe..." );
    space_load();
+   loadscreen_render( 12./LOADING_STAGES, "Populating Maps..." );
+   outfit_mapParse();
    background_init();
    player_init(); /* Initialize player stuff. */
    loadscreen_render( 1., "Loading Completed!" );
