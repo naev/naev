@@ -440,7 +440,7 @@ function land()
     if planet.cur() == jorekplanet1 and stage == 2 then
         -- Thank you player, but our SHITMAN is in another castle.
         tk.msg(NPCtitle, NPCtext)
-        barmanNPC = misn.npcAdd("neutral/barman", "Barman", "barman", NPCdesc, 4)
+        barmanNPC = misn.npcAdd("barman", "Barman", "neutral/barman", NPCdesc, 4)
     elseif planet.cur() == jorekplanet2 and stage == 3 then
         joreknpc = misn.npcAdd("jorek", "Jorek", "neutral/unique/jorek", Jordesc, 4)
     end
