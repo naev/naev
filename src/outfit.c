@@ -1725,6 +1725,10 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
          else
             WARN("map %s has invalid system %s.", temp->name, buf);
       }
+      else if (xml_isNode(node,"short_desc")) {
+         temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
+         snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX, "%s", xml_get(node) );
+      }
       else if (xml_isNode(node,"all")) { /* Add everything to the map */
          system_stack = system_getAll(&nsys);
          for (i=0;i<nsys;i++) {
@@ -1743,13 +1747,10 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
    array_shrink(&temp->u.map->assets);
    array_shrink(&temp->u.map->jumps);
 
-   /* Set short description. */
-   /*temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
-   snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
-         "%s\n"
-         "%.0f jumps",
-         outfit_getType(temp),
-         temp->u.map.radius );*/
+   if (temp->desc_short == NULL) {
+      temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
+      WARN("Map '%s' has no short description",temp->name);
+   }
 }
 
 

@@ -2499,10 +2499,11 @@
   <general>
    <mass>0</mass>
    <price>5000</price>
-   <description>A star map will give you details about all systems up to 2 jumps away. It's a great risk-free way to discover parts of the universe. This one has Arcturus, Goddard, and Manuel Station.</description>
+   <description>A star map will give you details about popular locations. It's a great risk-free way to discover parts of the universe. This one has Arcturus, Goddard, and Manuel Station.</description>
    <gfx_store>map</gfx_store>
   </general>
   <specific type="map">
+   <short_desc>A test map.</short_desc>
    <sys name="Goddard">
     <asset>Manuel Station</asset>
     <jump>Arcturus</jump>
@@ -2520,6 +2521,7 @@
    <gfx_store>map</gfx_store>
   </general>
   <specific type="map">
+   <short_desc/>
    <all/>
   </specific>
  </outfit>
