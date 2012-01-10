@@ -364,17 +364,20 @@ static void map_update( unsigned int wid )
    nstanding = 0.;
    f         = -1;
    for (i=0; i<sys->nplanets; i++) {
-      if(sys->planets[i]->real == ASSET_REAL) {
-         if ((f==-1) && (sys->planets[i]->faction>0)) {
-            f = sys->planets[i]->faction;
-            standing += faction_getPlayer( f );
-            nstanding++;
-         }
-         else if (f != sys->planets[i]->faction && /** @todo more verbosity */
-                  (sys->planets[i]->faction>0)) {
-            snprintf( buf, PATH_MAX, "Multiple" );
-            break;
-         }
+      if (sys->planets[i]->real != ASSET_REAL)
+         continue;
+      if (!planet_isKnown(sys->planets[i]))
+         continue;
+
+      if ((f==-1) && (sys->planets[i]->faction>0)) {
+         f = sys->planets[i]->faction;
+         standing += faction_getPlayer( f );
+         nstanding++;
+      }
+      else if (f != sys->planets[i]->faction && /** @todo more verbosity */
+               (sys->planets[i]->faction>0)) {
+         snprintf( buf, PATH_MAX, "Multiple" );
+         break;
       }
    }
    if (f == -1) {
@@ -440,7 +443,9 @@ static void map_update( unsigned int wid )
    p = 0;
    buf[0] = '\0';
    for (i=0; i<sys->nplanets; i++) {
-      if(sys->planets[i]->real != ASSET_REAL)
+      if (sys->planets[i]->real != ASSET_REAL)
+         continue;
+      if (!planet_isKnown(sys->planets[i]))
          continue;
 
       /* Colourize output. */
@@ -474,7 +479,8 @@ static void map_update( unsigned int wid )
    window_moveWidget( wid, "txtServices", x + 50, y-gl_smallFont.h-5 );
    services = 0;
    for (i=0; i<sys->nplanets; i++)
-      services |= sys->planets[i]->services;
+      if (planet_isKnown(sys->planets[i]))
+         services |= sys->planets[i]->services;
    buf[0] = '\0';
    p = 0;
    /*snprintf(buf, sizeof(buf), "%f\n", sys->prices[0]);*/ /*Hack to control prices. */
@@ -735,9 +741,9 @@ void map_renderSystems( double bx, double by, double x, double y,
    for (i=0; i<systems_nstack; i++) {
       sys = system_getIndex( i );
 
-      /* check to make sure system is known or adjacent to known (or marked) */
-      if (!editor && (!sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED)
-            && !space_sysReachable(sys)))
+      /* if system is not known, reachable, or marked. and we are not in the editor */
+      if ((!sys_isKnown(sys) && !sys_isFlag(sys, SYSTEM_MARKED | SYSTEM_CMARKED)
+           && !space_sysReachable(sys)) && !editor)
          continue;
 
       tx = x + sys->pos.x*map_zoom;
@@ -780,7 +786,7 @@ void map_renderSystems( double bx, double by, double x, double y,
          gl_drawCircleInRect( tx, ty, 0.5*r, bx, by, w, h, col, 1 );
       }
 
-      if (!editor && !sys_isKnown(sys))
+      if (!sys_isKnown(sys) && !editor)
          continue; /* we don't draw hyperspace lines */
 
       /* draw the hyperspace paths */
@@ -790,6 +796,9 @@ void map_renderSystems( double bx, double by, double x, double y,
       for (j=0; j<sys->njumps; j++) {
 
          jsys = sys->jumps[j].target;
+
+         if (!space_sysReachableFromSys(jsys,sys) && !editor)
+            continue;
 
          /* Draw the lines. */
          vertex[0]  = x + sys->pos.x * map_zoom;
@@ -1421,6 +1430,7 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
    int i, j, cost, ojumps;
 
    StarSystem *sys, *ssys, *esys, **res;
+   JumpPoint *jp;
 
    SysNode *cur, *neighbour;
    SysNode *open, *closed;
@@ -1440,7 +1450,7 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
    }
 
    /* Check self. */
-   if (ssys == esys || ssys->njumps == 0) {
+   if ((ssys == esys) || (ssys->njumps==0)) {
       (*njumps) = 0;
       if (old_data != NULL)
          free( old_data );
@@ -1470,17 +1480,22 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
          break;
 
       /* get best from open and toss to closed */
-      open = A_rm( open, cur->sys );
+      open   = A_rm( open, cur->sys );
       closed = A_add( closed, cur );
-      cost = A_g(cur) + 1;
+      cost   = A_g(cur) + 1;
 
       for (i=0; i<cur->sys->njumps; i++) {
-         sys = cur->sys->jumps[i].target;
+         jp  = &cur->sys->jumps[i];
+         sys = jp->target;
 
          /* Make sure it's reachable */
-         if (!ignore_known &&
-               ((!sys_isKnown(sys) &&
-                  (!sys_isKnown(cur->sys) || !space_sysReachable(esys)))))
+         if (!ignore_known) {
+            if (!jp_isKnown(jp))
+               continue;
+            if (!sys_isKnown(sys) && !space_sysReachable(sys))
+               continue;
+         }
+         if (jp->type == 1)
             continue;
 
          neighbour = A_newNode( sys, NULL );
@@ -1494,10 +1509,10 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
             closed = A_rm( closed, sys ); /* shouldn't happen */
 
          if ((ocost == NULL) && (ccost == NULL)) {
-            neighbour->g = cost;
-            neighbour->r = A_g(neighbour) + A_h(cur->sys,sys);
+            neighbour->g      = cost;
+            neighbour->r      = A_g(neighbour) + A_h(cur->sys,sys);
             neighbour->parent = cur;
-            open = A_add( open, neighbour );
+            open              = A_add( open, neighbour );
          }
       }
 
@@ -1506,18 +1521,19 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
          break;
    }
 
-   /* build path backwards if not broken from loop. */
-   if (j <= MAP_LOOP_PROT) {
+   /* Build path backwards if not broken from loop. */
+   if (esys == cur->sys) {
       (*njumps) = A_g(cur);
       if (old_data == NULL)
-         res = malloc( sizeof(StarSystem*) * (*njumps) );
+         res      = malloc( sizeof(StarSystem*) * (*njumps) );
       else {
-         *njumps = *njumps + ojumps;
-         res = realloc( old_data, sizeof(StarSystem*) * (*njumps) );
+         *njumps  = *njumps + ojumps;
+         res      = realloc( old_data, sizeof(StarSystem*) * (*njumps) );
       }
+      /* Build path. */
       for (i=0; i<((*njumps)-ojumps); i++) {
          res[(*njumps)-i-1] = cur->sys;
-         cur = cur->parent;
+         cur                = cur->parent;
       }
    }
    else {
@@ -1545,6 +1561,8 @@ int map_map( const char* targ_sys, int r )
    int i, dep;
    StarSystem *sys, *jsys;
    SysNode *closed, *open, *cur, *neighbour;
+   Planet *p;
+   JumpPoint *jp;
 
    A_gc = NULL;
    open = closed = NULL;
@@ -1564,12 +1582,29 @@ int map_map( const char* targ_sys, int r )
       open = A_rm( open, sys );
       closed = A_add( closed, cur );
 
+      /* check the planets */
+      for (i=0; i<sys->nplanets; i++) {
+         p = sys->planets[i];
+         if (!planet_isKnown(p) && (p->onMap >= 1))
+            planet_setFlag(p,PLANET_KNOWN);
+      }
+
       /* check its jumps */
       for (i=0; i<sys->njumps; i++) {
-         jsys = cur->sys->jumps[i].target;
 
-         /* System has already been parsed or is too deep */
-         if ((A_in(closed,jsys) != NULL) || (dep+1 > r))
+         jp = &sys->jumps[i];
+
+         /* if jump not on map or is exit only. */
+         if ((jp->onMap <= 0) || (jp->type == 1))
+            continue;
+
+         if (!jp_isKnown(jp))
+             jp_setFlag(jp,JP_KNOWN);
+
+         jsys = jp->target;
+
+         /* System has already been parsed or is too deep or cannot be seen from that jump */
+         if ((A_in(closed,jsys) != NULL) || (dep+1 > r) || (jp->onMap == 1))
              continue;
 
          /* create new node and such */

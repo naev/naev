@@ -193,6 +193,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet );
 static int player_parseEscorts( xmlNodePtr parent );
 static void player_addOutfitToPilot( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s );
 /* Misc. */
+static void player_planetOutOfRangeMsg (void);
 static int player_outfitCompare( const void *arg1, const void *arg2 );
 static int player_thinkMouseFly(void);
 static int preemption = 0; /* Hyperspace target/untarget preemption. */
@@ -1364,6 +1365,11 @@ void player_land (void)
 
       player_land(); /* rerun land protocol */
    }
+   /*check if planet is in range*/
+   else if (!pilot_inRangePlanet( player.p, player.p->nav_planet)) {
+      player_planetOutOfRangeMsg();
+      return;
+   }
    else if (player_isFlag(PLAYER_NOLAND)) {
       player_message( "\er%s", player_message_noland );
       return;
@@ -1950,6 +1956,16 @@ static void player_checkHail (void)
 
 
 /**
+ * @brief Displays an out of range message for the player's currently selected planet.
+ */
+static void player_planetOutOfRangeMsg (void)
+{
+   player_message( "\er%s is out of comm range, unable to contact.",
+         cur_system->planets[player.p->nav_planet]->name );
+}
+
+
+/**
  * @brief Opens communication with the player's target.
  */
 void player_hail (void)
@@ -1960,8 +1976,12 @@ void player_hail (void)
 
    if (player.p->target != player.p->id)
       comm_openPilot(player.p->target);
-   else if(player.p->nav_planet != -1)
-      comm_openPlanet( cur_system->planets[ player.p->nav_planet ] );
+   else if(player.p->nav_planet != -1) {
+      if (pilot_inRangePlanet( player.p, player.p->nav_planet ))
+         comm_openPlanet( cur_system->planets[ player.p->nav_planet ] );
+      else
+         player_planetOutOfRangeMsg();
+   }
    else
       player_message("\erNo target selected to hail.");
 
@@ -1979,8 +1999,12 @@ void player_hailPlanet (void)
    if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
       return;
 
-   if (player.p->nav_planet != -1)
-      comm_openPlanet( cur_system->planets[ player.p->nav_planet ] );
+   if (player.p->nav_planet != -1) {
+      if (pilot_inRangePlanet( player.p, player.p->nav_planet ))
+         comm_openPlanet( cur_system->planets[ player.p->nav_planet ] );
+      else
+         player_planetOutOfRangeMsg();
+   }
    else
       player_message("\erNo target selected to hail.");
 }
