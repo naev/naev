@@ -37,6 +37,7 @@
   <colour>purple</colour>
   <spawn>proteron</spawn>
   <lua>proteron</lua>
+  <equip>empire</equip>
   <allies>
   </allies>
   <enemies>
@@ -76,6 +77,7 @@
   <colour>red</colour>
   <spawn>pirate</spawn>
   <lua>pirate</lua>
+  <equip>pirate</equip>
   <enemies>
    <enemy>Civilian</enemy>
    <enemy>Empire</enemy>
@@ -97,6 +99,7 @@
   <player>1</player>
   <spawn>empire</spawn>
   <lua>empire</lua>
+  <equip>empire</equip>
   <allies>
    <ally>Dvaered</ally>
    <ally>Goddard</ally>
@@ -123,6 +126,7 @@
   <player>-100</player>
   <colour>silver</colour>
   <spawn>collective</spawn>
+  <equip>collective</equip>
   <enemies>
    <enemy>Empire</enemy>
    <enemy>Pirate</enemy>
@@ -135,6 +139,7 @@
   <colour>orange</colour>
   <spawn>flf</spawn>
   <lua>flf</lua>
+  <equip>pirate</equip>
   <enemies>
    <enemy>Dvaered</enemy>
   </enemies>
@@ -146,6 +151,7 @@
   <player>1</player>
   <spawn>dvaered</spawn>
   <lua>dvaered</lua>
+  <equip>dvaered</equip>
   <allies>
    <ally>Empire</ally>
   </allies>
@@ -173,6 +179,7 @@
   <player>3</player>
   <spawn>sirius</spawn>
   <lua>sirius</lua>
+  <equip>sirius</equip>
   <allies>
   </allies>
   <enemies>
@@ -186,6 +193,7 @@
   <player>2</player>
   <spawn>goddard</spawn>
   <lua>independent</lua>
+  <equip>empire</equip>
   <allies>
    <ally>Empire</ally>
   </allies>
