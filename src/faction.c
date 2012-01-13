@@ -804,15 +804,15 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
          continue;
       }
 
-      if (xml_isNode(node, "lua")) {
+      if (xml_isNode(node, "standing")) {
          if (temp->state != NULL)
-            WARN("Faction '%s' has duplicate 'lua' tag.", temp->name);
-         snprintf( buf, sizeof(buf), "dat/factions/%s.lua", xml_raw(node) );
+            WARN("Faction '%s' has duplicate 'standing' tag.", temp->name);
+         snprintf( buf, sizeof(buf), "dat/factions/standing/%s.lua", xml_raw(node) );
          temp->state = nlua_newState();
          nlua_loadStandard( temp->state, 0 );
          dat = ndata_read( buf, &ndat );
          if (luaL_dobuffer(temp->state, dat, ndat, buf) != 0) {
-            WARN("Failed to run reputation script: %s\n"
+            WARN("Failed to run standing script: %s\n"
                   "%s\n"
                   "Most likely Lua file has improper syntax, please check",
                   buf, lua_tostring(temp->state,-1));

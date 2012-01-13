@@ -1,6 +1,6 @@
 
 
-include "dat/factions/skel.lua"
+include "dat/factions/standing/skel.lua"
 
 
 _fcap_kill     = 30 -- Kill cap
