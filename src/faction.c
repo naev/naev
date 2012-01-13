@@ -788,7 +788,7 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
       if (xml_isNode(node, "spawn")) {
          if (temp->sched_state != NULL)
             WARN("Faction '%s' has duplicate 'spawn' tag.", temp->name);
-         snprintf( buf, sizeof(buf), "ai/spawn/%s.lua", xml_raw(node) );
+         snprintf( buf, sizeof(buf), "dat/factions/spawn/%s.lua", xml_raw(node) );
          temp->sched_state = nlua_newState();
          nlua_loadStandard( temp->sched_state, 0 );
          dat = ndata_read( buf, &ndat );
