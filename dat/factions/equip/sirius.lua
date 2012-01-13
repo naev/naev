@@ -1,15 +1,18 @@
+-- Generic equipping routines, helper functions and outfit definitions.
+include("dat/factions/equip/generic.lua")
+
 --[[
--- @brief Does empire pilot equipping
+-- @brief Does sirius pilot equipping
 --
 --    @param p Pilot to equip
 --]]
-function equip_empire( p )
+function equip( p )
    -- Get ship info
    local shiptype, shipsize = equip_getShipBroad( p:ship():class() )
 
    -- Split by type
    if shiptype == "military" then
-      equip_empireMilitary( p, shipsize )
+      equip_siriusMilitary( p, shipsize )
    else
       equip_generic( p )
    end
@@ -17,44 +20,44 @@ end
 
 
 -- CANNONS
-function equip_forwardEmpLow ()
-   return { "Laser Cannon MK2", "Laser Cannon MK3" }
+function equip_forwardSrsLow ()
+   return { "Razor MK2", "Razor MK3", "Ion Cannon" }
 end
-function equip_forwardEmpMed ()
-   return { "Laser Cannon MK3", "Ripper Cannon", "Heavy Ripper Cannon" }
+function equip_forwardSrsMed ()
+   return { "Heavy Ion Cannon", "Razor MK3", }
 end
 -- TURRETS
-function equip_turretEmpLow ()
-   return { "Laser Turret MK2" }
+function equip_turretSrsLow ()
+   return { "Razor Turret MK1" }
 end
-function equip_turretEmpMed ()
-   return { "Laser Turret MK2", "Laser Turret MK3" }
+function equip_turretSrsMed ()
+   return { "Razor Turret MK2", "Razor Turret MK3", "Heavy Ion Turret" }
 end
-function equip_turretEmpHig ()
-   return { "Heavy Laser", "Turbolaser" }
+function equip_turretSrsHig ()
+   return { "Heavy Ion Turret" }
 end
 -- RANGED
-function equip_rangedEmp ()
+function equip_rangedSrs ()
    return { "Unicorp Headhunter Launcher" }
 end
-function equip_secondaryEmp ()
+function equip_secondarySrs ()
    return { "Unicorp Headhunter Launcher" }
 end
 
 
 
 --[[
--- @brief Equips a empire military type ship.
+-- @brief Equips a sirius military type ship.
 --]]
-function equip_empireMilitary( p, shipsize )
-   local medium, low, apu
+function equip_siriusMilitary( p, shipsize )
+   local primary, secondary, medium, low, apu
    local use_primary, use_secondary, use_medium, use_low
-   local use_forward, use_turrets, use_medturrets
    local nhigh, nmedium, nlow = p:ship():slots()
    local scramble
 
    -- Defaults
    medium      = { "Unicorp Scrambler" }
+   secondary   = { }
    apu         = { }
    weapons     = {}
    scramble    = false
@@ -73,10 +76,11 @@ function equip_empireMilitary( p, shipsize )
 
       -- Fighter
       elseif class == "Fighter" then
+         primary        = icmb( equip_forwardSrsLow(), equip_forwardSrsMed() )
          use_primary    = nhigh-1
          use_secondary  = 1
-         addWeapons( equip_forwardEmpMed(), use_primary )
-         addWeapons( equip_secondaryEmp(), use_secondary )
+         addWeapons( primary, use_primary )
+         addWeapons( equip_secondarySrs(), use_secondary )
          medium         = equip_mediumLow()
          low            = equip_lowLow()
          apu            = equip_apuLow()
@@ -85,8 +89,8 @@ function equip_empireMilitary( p, shipsize )
       elseif class == "Bomber" then
          use_primary    = rnd.rnd(1,2)
          use_secondary  = nhigh - use_primary
-         addWeapons( equip_forwardEmpLow(), use_primary )
-         addWeapons( equip_rangedEmp(), use_secondary )
+         addWeapons( equip_forwardSrsLow(), use_primary )
+         addWeapons( equip_secondarySrs(), use_secondary )
          medium         = equip_mediumLow()
          low            = equip_lowLow()
          apu            = equip_apuLow()
@@ -97,10 +101,11 @@ function equip_empireMilitary( p, shipsize )
       
       -- Corvette
       if class == "Corvette" then
+         primary        = icmb( equip_forwardSrsMed(), equip_turretSrsLow() )
          use_secondary  = rnd.rnd(1,2)
          use_primary    = nhigh - use_secondary
-         addWeapons( equip_forwardEmpMed(), use_primary )
-         addWeapons( equip_secondaryEmp(), use_secondary )
+         addWeapons( primary, use_primary )
+         addWeapons( equip_secondarySrs(), use_secondary )
          medium         = equip_mediumMed()
          low            = equip_lowMed()
          apu            = equip_apuMed()
@@ -108,28 +113,22 @@ function equip_empireMilitary( p, shipsize )
 
       -- Destroyer
       if class == "Destroyer" then
+         scramble       = true
+         primary        = icmb( equip_forwardSrsMed(), equip_turretSrsMed() )
          use_secondary  = rnd.rnd(1,2)
-         use_turrets    = nhigh - use_secondary - rnd.rnd(1,2)
-         use_forward    = nhigh - use_secondary - use_turrets
-         addWeapons( equip_secondaryEmp(), use_secondary )
-         addWeapons( equip_turretEmpMed(), use_turrets )
-         addWeapons( equip_forwardEmpMed(), use_forward )
+         use_primary    = nhigh - use_secondary
+         addWeapons( primary, use_primary )
+         addWeapons( equip_secondarySrs(), use_secondary )
          medium         = equip_mediumMed()
          low            = equip_lowMed()
          apu            = equip_apuMed()
       end
 
-   else -- "heavy"
+   else
+      use_primary    = nhigh-2
       use_secondary  = 2
-      if rnd.rnd() > 0.4 then -- Anti-fighter variant.
-         use_turrets    = nhigh - use_secondary - rnd.rnd(2,3)
-         use_medturrets = nhigh - use_secondary - use_turrets
-         addWeapons( equip_turretEmpMed(), use_medturrets )
-      else -- Anti-capital variant.
-         use_turrets    = nhigh - use_secondary
-      end
-      addWeapons( equip_turretEmpHig(), use_turrets )
-      addWeapons( equip_secondaryEmp(), use_secondary )
+      addWeapons( equip_turretSrsHig(), use_primary )
+      addWeapons( equip_secondarySrs(), use_secondary )
       medium         = equip_mediumHig()
       low            = equip_lowHig()
       apu            = equip_apuHig()

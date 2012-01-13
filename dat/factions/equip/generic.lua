@@ -1,3 +1,9 @@
+-- Outfit definitions
+include("dat/factions/equip/outfits.lua")
+
+-- Helper functions
+include("dat/factions/equip/helper.lua")
+
 --[[
 -- @brief Does generic pilot equipping
 --

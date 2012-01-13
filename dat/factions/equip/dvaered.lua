@@ -1,9 +1,12 @@
+-- Generic equipping routines, helper functions and outfit definitions.
+include("dat/factions/equip/generic.lua")
+
 --[[
 -- @brief Does dvaered pilot equipping
 --
 --    @param p Pilot to equip
 --]]
-function equip_dvaered( p )
+function equip( p )
    -- Get ship info
    local shiptype, shipsize = equip_getShipBroad( p:ship():class() )
 
