@@ -38,7 +38,7 @@ A window opens in the darkness, infinitely far away and infinitely large. A face
 
 The creator turns to go, then pauses.
 
-"By the way, we're working hard on improving life, the universe, and all that, but we're a bit short handed. If you like this existence but think the details could be improved, the universe creation team could use your help. We'd be especially happy to see you if you have any special skill in drawing planets, designing ships, scripting the underlying laws of nature, or composing the music of the spheres. For information on how to contribute, just point your web-of-reality browser to http://naev.org/."
+"By the way, we're working hard on improving life, the universe, and all that, but we're a bit short handed. If you like this existence but think the details could be improved, the universe creation team could use your help. We'd be especially happy to see you if you have any special skill in drawing planets, designing ships, scripting the underlying laws of nature, or composing the music of the spheres. For information on how to contribute, just point your web-of-reality browser to http://blog.naev.org/."
 
 The watchmaker lifts his eyes up beyond your frame of reference and smiles.
 
