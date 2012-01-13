@@ -1,4 +1,4 @@
-include("ai/spawn/common.lua")
+include("dat/factions/spawn/common.lua")
 
 
 -- @brief Spawns a capship with escorts.
