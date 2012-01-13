@@ -83,6 +83,10 @@ typedef struct Faction_ {
    /* Behaviour. */
    lua_State *state; /**< Faction specific state. */
 
+   /* Equipping. */
+   lua_State *equip_state; /**< Faction equipper state. */
+
+
    /* Flags. */
    unsigned int flags; /**< Flags affecting the faction. */
 } Faction;
@@ -313,6 +317,20 @@ lua_State *faction_getScheduler( int f )
    }
 
    return faction_stack[f].sched_state;
+}
+
+
+/**
+ * @brief Gets the equipper state associated to the faction scheduler.
+ */
+lua_State *faction_getEquipper( int f )
+{
+   if (!faction_isFaction(f)) {
+      WARN("Faction id '%d' is invalid.",f);
+      return NULL;
+   }
+
+   return faction_stack[f].equip_state;
 }
 
 
@@ -794,12 +812,31 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
          nlua_loadStandard( temp->state, 0 );
          dat = ndata_read( buf, &ndat );
          if (luaL_dobuffer(temp->state, dat, ndat, buf) != 0) {
-            WARN("Failed to run spawn script: %s\n"
+            WARN("Failed to run reputation script: %s\n"
                   "%s\n"
                   "Most likely Lua file has improper syntax, please check",
                   buf, lua_tostring(temp->state,-1));
             lua_close( temp->state );
             temp->state = NULL;
+         }
+         free(dat);
+         continue;
+      }
+
+      if (xml_isNode(node, "equip")) {
+         if (temp->equip_state != NULL)
+            WARN("Faction '%s' has duplicate 'equip' tag.", temp->name);
+         snprintf( buf, sizeof(buf), "dat/factions/equip/%s.lua", xml_raw(node) );
+         temp->equip_state = nlua_newState();
+         nlua_loadStandard( temp->equip_state, 0 );
+         dat = ndata_read( buf, &ndat );
+         if (luaL_dobuffer(temp->equip_state, dat, ndat, buf) != 0) {
+            WARN("Failed to run equip script: %s\n"
+                  "%s\n"
+                  "Most likely Lua file has improper syntax, please check",
+                  buf, lua_tostring(temp->equip_state,-1));
+            lua_close( temp->equip_state );
+            temp->equip_state = NULL;
          }
          free(dat);
          continue;
