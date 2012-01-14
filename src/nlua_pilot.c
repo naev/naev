@@ -2636,17 +2636,18 @@ lua_rawset( L, -3 )
  *  <li> cpu_max <br />
  *  <li> fuel <br />
  *  <li> fuel_max <br />
+ *  <li> mass <br />
  *  <li> thrust <br />
  *  <li> speed <br />
+ *  <li> speed_max <br />
  *  <li> turn <br />
+ *  <li> speed_max <br />
  *  <li> armour <br />
  *  <li> shield <br />
  *  <li> energy <br />
  *  <li> armour_regen <br />
  *  <li> shield_regen <br />
  *  <li> energy_regen <br />
- *  <li> jam_range <br />
- *  <li> jam_chance <br />
  *  <li> jump_delay <br />
  * </ul>
  *

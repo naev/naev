@@ -793,6 +793,9 @@ void player_cleanup (void)
    /* Stop the sounds. */
    sound_stopAll();
 
+   /* Reset time compression. */
+   pause_setSpeed( 1.0 );
+
    /* Clean up. */
    memset( &player, 0, sizeof(Player_t) );
    player_setFlag(PLAYER_CREATING);
@@ -2122,6 +2125,9 @@ void player_destroyed (void)
 
    /* Stop sounds. */
    player_soundStop();
+
+   /* Reset time compression when player dies. */
+   pause_setSpeed( 1. );
 }
 
 

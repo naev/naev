@@ -914,6 +914,9 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter, const Da
          pilot_isFlag( p, PILOT_INVISIBLE))
       return 0.;
 
+   /* Reset disable timer. */
+   p->dtimer_accum = 0.;
+
    /* Defaults. */
    pshooter       = NULL;
    dam_mod        = 0.;
