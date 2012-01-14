@@ -200,14 +200,8 @@ end
 
 -- Handle distress signals
 function distress ( pilot, attacker )
-
    -- Make sure target exists
-   if not ai.exists( attacker ) then
-      return
-   end
-
-   -- Must be aggressive
-   if not mem.aggressive then
+   if not attacker:exists() then
       return
    end
 
@@ -216,13 +210,43 @@ function distress ( pilot, attacker )
       return
    end
 
-   -- If ally, engage offender
-   if ai.isally(pilot) then
-      t = attacker
-   -- If enemy, engage distressed pilot
-   elseif ai.isenemy(pilot) then
-      t = pilot
-   -- Else ignore
+   pid    = pilot:id()
+   aid    = attacker:id()
+   pfact  = pilot:faction()
+   afact  = attacker:faction()
+   aifact = ai.getPilot():faction()
+
+   -- Ships should always defend their brethren.
+   if pfact == aifact then
+      -- We don't want to cause a complete breakdown in social order.
+      if afact == aifact then
+         return
+      else
+         t = aid
+      end
+   elseif mem.aggressive then
+      -- Aggressive ships follow their brethren into battle!
+      if afact == aifact then
+         t = pid
+      elseif pfact:areAllies(aifact) then
+         -- When your allies are fighting, stay out of it.
+         if afact:areAllies(aifact) then
+            return
+         -- Victim is an ally, but the attacker isn't.
+         else
+            t = aid
+         end
+      -- We already know the victim isn't an ally.
+      elseif afact:areAllies(aifact) or pfact:areEnemies(aifact) and not afact:areEnemies(aifact) then
+         t = pid
+      -- The victim and attacker are now guaranteed to be neutral.
+      -- We'll be nice and go after the aggressor if the victim is peaceful.
+      elseif not pilot:memoryCheck("aggressive") then
+         t = aid
+      end
+   -- Non-aggressive ships will flee if their enemies attack neutral or allied vessels.
+   elseif afact:areEnemies(aifact) and not pfact:areEnemies(aifact) then
+      t = aid
    else
       return
    end
@@ -230,7 +254,11 @@ function distress ( pilot, attacker )
    local task = ai.taskname()
    -- If not attacking nor fleeing, begin attacking
    if task ~= "attack" and task ~= "runaway" then
-      ai.pushtask( "attack", t )
+      if mem.aggressive then
+         ai.pushtask( "attack", t )
+      else
+         ai.pushtask( "runaway", t )
+      end
    -- We're sort of busy
    elseif task == "attack" then
       local target = ai.target()
