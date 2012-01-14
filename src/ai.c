@@ -674,7 +674,7 @@ static int ai_loadEquip (void)
 {
    char *buf;
    uint32_t bufsize;
-   const char *filename = "ai/equip/equip.lua";
+   const char *filename = "dat/factions/equip/generic.lua";
    lua_State *L;
 
    /* Make sure doesn't already exist. */
@@ -1040,18 +1040,13 @@ void ai_getDistress( Pilot* p, const Pilot* distressed )
 static void ai_create( Pilot* pilot, char *param )
 {
    LuaPilot lp;
-   LuaFaction lf;
    lua_State *L;
    int errf, nparam;
+   char *func;
 
    L = equip_L;
-
-#if DEBUGGING
-   lua_pushcfunction(L, nlua_errTrace);
-   errf = -4;
-#else /* DEBUGGING */
+   func = "equip_generic";
    errf = 0;
-#endif /* DEBUGGING */
 
    /* Set creation mode. */
    if (!pilot_isFlag(pilot, PILOT_CREATED_AI))
@@ -1060,18 +1055,26 @@ static void ai_create( Pilot* pilot, char *param )
    /* Create equipment first - only if creating for the first time. */
    if (!pilot_isFlag(pilot,PILOT_PLAYER) && ((aiL_status==AI_STATUS_CREATE) ||
             !pilot_isFlag(pilot, PILOT_EMPTY))) {
-      lua_getglobal(L, "equip");
+      if  (faction_getEquipper( pilot->faction ) != NULL) {
+         L = faction_getEquipper( pilot->faction );
+         func = "equip";
+      }
+#if DEBUGGING
+      lua_pushcfunction(L, nlua_errTrace);
+      errf = -4;
+#endif /* DEBUGGING */
+      lua_getglobal(L, func);
       lp.pilot = pilot->id;
       lua_pushpilot(L,lp);
-      lf.f = pilot->faction;
-      lua_pushfaction(L,lf);
-      if (lua_pcall(L, 2, 0, errf)) { /* Error has occurred. */
-         WARN("Pilot '%s' equip -> '%s': %s", pilot->name, "equip", lua_tostring(L,-1));
+      if (lua_pcall(L, 1, 0, errf)) { /* Error has occurred. */
+         WARN("Pilot '%s' equip -> '%s': %s", pilot->name, func, lua_tostring(L,-1));
          lua_pop(L,1);
       }
    }
+
 #if DEBUGGING
-   lua_pop(L,1);
+   if (errf)
+      lua_pop(L,1);
 #endif /* DEBUGGING */
 
    /* Must have AI. */
