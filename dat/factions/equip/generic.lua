@@ -14,9 +14,9 @@ function equip_generic( p )
    local shiptype, shipsize = equip_getShipBroad( p:ship():class() )
 
    -- Split by type
-   if shiptype == "civilian" then
+   if shiptype == "civilian" and p:faction() ~= faction.get("Trader") then
       equip_genericCivilian( p, shipsize )
-   elseif shiptype == "merchant" then
+   elseif shiptype == "merchant" or p:faction() == faction.get("Trader") then
       equip_genericMerchant( p, shipsize )
    elseif shiptype == "military" then
       equip_genericMilitary( p, shipsize )
@@ -85,7 +85,18 @@ function equip_genericMerchant( p, shipsize )
 
    -- Equip by size
    if shipsize == "small" then
-      addWeapons( equip_forwardLow(), use_primary )
+      r = rnd.rnd()
+      if r > 0.9 or r > 0.2 and use_primary < 2 then -- 10% chance of all-turrets.
+         addWeapons( equip_turretLow(), use_primary )
+      elseif r > 0.2 then -- 70% chance of mixed loadout.
+         use_turrets = rnd.rnd( 1, use_primary-1 )
+         use_primary = use_primary - use_turrets
+         addWeapons( equip_turretLow(), use_turrets )
+         addWeapons( equip_forwardLow(), use_primary )
+      else -- Poor guy gets no turrets.
+         addWeapons( equip_forwardLow(), use_primary )
+      end
+
       medium   = { "Unicorp Scrambler" }
       if rnd.rnd() > 0.8 then
          use_medium = 1
@@ -131,6 +142,7 @@ function equip_genericMilitary( p, shipsize )
    -- Defaults
    medium      = { "Unicorp Scrambler" }
    apu         = { }
+   weapons     = {}
 
    -- Equip by size and type
    if shipsize == "small" then
