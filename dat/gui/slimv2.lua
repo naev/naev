@@ -62,6 +62,9 @@ function create()
    lockonB = tex.open( base .. "padlockB.png" )
    active =  tex.open( base .. "active.png" )
    
+   gui.targetPlanetGFX( tex.open( base .. "radar_planet.png" ) )
+   gui.targetPilotGFX(  tex.open( base .. "radar_ship.png" ) )
+   
    --Get positions
    --Radar
    radar_w = 126
@@ -92,15 +95,15 @@ function create()
    
    lockon_w, lockon_h = lockonA:dim()
    
-   slotA_w, _ = slotA:dim()
-   slotAend_w, _ = slotAend:dim()
-   slotB_w, _ = slotB:dim()
-   slotBend_w, _ = slotBend:dim()
-   slotC_w, _ = slotC:dim()
-   slotCend_w, _ = slotCend:dim()
-   slotAe_w, _ = slotAe:dim()
-   slotBe_w, _ = slotBe:dim()
-   slotCe_w, _ = slotCe:dim()
+   slotA_w, slotA_h = slotA:dim()
+   slotAend_w, slotAend_h = slotAend:dim()
+   slotB_w, slotB_h = slotB:dim()
+   slotBend_w, slotBend_h = slotBend:dim()
+   slotC_w, slotC_h = slotC:dim()
+   slotCend_w, slotCend_h = slotCend:dim()
+   slotAe_w, slotAe_h = slotAe:dim()
+   slotBe_w, slotBe_h = slotBe:dim()
+   slotCe_w, slotCe_h = slotCe:dim()
 
    --Bars
    bar_w = 86
@@ -262,9 +265,9 @@ function render_bar( left, name, value, text, txtcol, stress )
    bg_x = s_x - 30
    if left then
       scal = -1
-      bg_x = s_x - 3
+      bg_x = s_x + bar_w + 30
    end
-   gfx.renderTexRaw( bar_bg, bg_x, s_y-2, bar_bg_w, bar_bg_h, 1, 1, 0, 0, scal, 1 )
+   gfx.renderTexRaw( bar_bg, bg_x, s_y-2, bar_bg_w * scal, bar_bg_h, 1, 1, 0, 0, 1, 1 )
    --Icon
    ic_w, ic_h = s_icon:dim()
    ic_c_x = s_x - 15
@@ -428,20 +431,20 @@ function render( dt, dt_mod )
             postfix = "end"
          end
          if i <= 3 then
-            gfx.renderTex( _G["slotA" .. postfix], slot_x + slot_w - _G["slotA"..postfix.."_w"], 0, -1, 1 )
+            gfx.renderTexRaw( _G["slotA" .. postfix], slot_x + slot_w, 0, -1*_G["slotA"..postfix.."_w"], _G["slotA"..postfix.."_h"], 1, 1, 0, 0, 1, 1 )
          elseif i == 4 then
-            gfx.renderTex( _G["slotB" .. postfix], slot_x + slot_w - _G["slotB"..postfix.."_w"], 0, -1, 1 )
+            gfx.renderTexRaw( _G["slotB" .. postfix], slot_x + slot_w, 0, -1*_G["slotB"..postfix.."_w"], _G["slotB"..postfix.."_h"], 1, 1, 0, 0, 1, 1 )
          else
-            gfx.renderTex( _G["slotC" .. postfix], slot_x + slot_w - _G["slotC"..postfix.."_w"], 0, -1, 1 )
+            gfx.renderTexRaw( _G["slotC" .. postfix], slot_x + slot_w, 0, -1*_G["slotC"..postfix.."_w"], _G["slotC"..postfix.."_h"], 1, 1, 0, 0, 1, 1 )
          end
                
       else
          if i == 1 then
-            gfx.renderTex( slotAe, slot_x + slot_w - slotAe_w, 0, -1, 1 )
+            gfx.renderTexRaw( slotAe, slot_x + slot_w, 0, -1*slotAe_w, slotAe_h, 1, 1, 0, 0, 1, 1 )
          elseif i <= 3 then
-            gfx.renderTex( slotBe, slot_x + slot_w - slotBe_w, slote_y, -1, 1 )
+            gfx.renderTex( slotBe, slot_x, slote_y, 1, 1 )
          else
-            gfx.renderTex( slotCe, slot_x + slot_w - slotCe_w, slote_y, -1, 1 )
+            gfx.renderTexRaw( slotCe, slot_x + slot_w, 0, -1*slotCe_w, slotCe_h, 1, 1, 0, 0, 1, 1 )
          end
       end
       i = i + 1
