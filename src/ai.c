@@ -174,6 +174,7 @@ static int aiL_subtaskname( lua_State *L ); /* string subtaskname() */
 static int aiL_getsubtarget( lua_State *L ); /* pointer subtarget() */
 
 /* consult values */
+static int aiL_getPilot( lua_State *L ); /* number getPilot() */
 static int aiL_getplayer( lua_State *L ); /* number getPlayer() */
 static int aiL_getrndpilot( lua_State *L ); /* number getrndpilot() */
 static int aiL_getnearestpilot( lua_State *L ); /* number getnearestpilot() */
@@ -289,6 +290,7 @@ static const luaL_reg aiL_methods[] = {
    { "isdisabled", aiL_isdisabled },
    { "haslockon", aiL_haslockon },
    /* get */
+   { "getPilot", aiL_getPilot },
    { "getPlayer", aiL_getplayer },
    { "rndpilot", aiL_getrndpilot },
    { "nearestpilot", aiL_getnearestpilot },
@@ -738,8 +740,8 @@ static int ai_loadProfile( const char* filename )
    }
    L = prof->L;
 
-   /* open basic Lua stuff */
-   nlua_loadBasic(L);
+   /* Prepare API. */
+   nlua_loadStandard(L,0);
 
    /* constants */
    lua_regnumber(L, "player", PLAYER_ID); /* player ID */
@@ -985,6 +987,7 @@ void ai_refuel( Pilot* refueler, unsigned int target )
 void ai_getDistress( Pilot* p, const Pilot* distressed )
 {
    lua_State *L;
+   LuaPilot ldistressed, ltarget;
    int errf;
 
    /* Ignore distress signals when under manual control. */
@@ -1017,8 +1020,10 @@ void ai_getDistress( Pilot* p, const Pilot* distressed )
    }
 
    /* Run the function. */
-   lua_pushnumber(L, distressed->id);
-   lua_pushnumber(L, distressed->target);
+   ldistressed.pilot = distressed->id;
+   ltarget.pilot = distressed->target;
+   lua_pushpilot(L, ldistressed);
+   lua_pushpilot(L, ltarget);
    if (lua_pcall(L, 2, 0, errf)) {
       WARN("Pilot '%s' ai -> 'distress': %s", cur_pilot->name, lua_tostring(L,-1));
       lua_pop(L,1);
@@ -1414,6 +1419,24 @@ static int aiL_getsubtarget( lua_State *L )
    return ai_tasktarget( L, t->subtask );
 }
 
+
+/**
+ * @brief Gets the AI's pilot.
+ *    @return The AI pilot's ship identifier.
+ * @luafunc getPilot()
+ *    @param L Lua state.
+ *    @return Number of Lua parameters.
+ */
+static int aiL_getPilot( lua_State *L )
+{
+   LuaPilot p;
+   p.pilot = cur_pilot->id;
+
+   lua_pushpilot(L, p);
+   return 1;
+}
+
+
 /**
  * @brief Gets the player.
  *    @return The player's ship identifier.
@@ -1426,6 +1449,7 @@ static int aiL_getplayer( lua_State *L )
    lua_pushnumber(L, PLAYER_ID);
    return 1;
 }
+
 
 /**
  * @brief Gets a random target's ID
