@@ -1211,7 +1211,7 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
    node  = parent->xmlChildrenNode;
    do { /* load all the data */
       xml_onlyNodes(node);
-      xmlr_int(node,"delay",temp->u.lau.delay);
+      xmlr_float(node,"delay",temp->u.lau.delay);
       xmlr_float(node,"cpu",temp->u.lau.cpu);
       xmlr_strd(node,"ammo",temp->u.lau.ammo_name);
       xmlr_int(node,"amount",temp->u.lau.amount);
@@ -1244,7 +1244,7 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing '"s"' element", temp->name) /**< Define to help check for data errors. */
    MELEMENT(temp->u.lau.ammo_name==NULL,"ammo");
-   MELEMENT(temp->u.lau.delay==0,"delay");
+   MELEMENT(temp->u.lau.delay==0.,"delay");
    MELEMENT(temp->u.lau.cpu==0.,"cpu");
    MELEMENT(temp->u.lau.amount==0.,"amount");
 #undef MELEMENT
