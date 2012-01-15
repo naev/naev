@@ -1086,7 +1086,7 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
    dmg.damage        = MAX( 0., w->dam_mod * w->strength * odmg->damage * dt );
    dmg.penetration   = odmg->penetration;
    dmg.type          = odmg->type;
-   dmg.disable       = odmg->disable;
+   dmg.disable       = odmg->disable * dt;
 
    /* Have pilot take damage and get real damage done. */
    damage = pilot_hit( p, w->solid, w->parent, &dmg );
