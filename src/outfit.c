@@ -1014,7 +1014,6 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
       temp->u.blt.falloff = temp->u.blt.range;
 
    /* Post processing. */
-   temp->u.blt.delay   /= 1000.;
    temp->u.blt.swivel  *= M_PI/180.;
    if (outfit_isTurret(temp))
       temp->u.blt.swivel = M_PI;
@@ -1150,8 +1149,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
    } while (xml_nextNode(node));
 
    /* Post processing. */
-   temp->u.bem.delay /= 1000.;
-   temp->u.bem.turn   *= M_PI/180.; /* Convert to rad/s. */
+   temp->u.bem.turn     *= M_PI/180.; /* Convert to rad/s. */
 
    /* Set default outfit size if necessary. */
    if (temp->slot.size == OUTFIT_SLOT_SIZE_NA)
@@ -1215,7 +1213,7 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
    node  = parent->xmlChildrenNode;
    do { /* load all the data */
       xml_onlyNodes(node);
-      xmlr_int(node,"delay",temp->u.lau.delay);
+      xmlr_float(node,"delay",temp->u.lau.delay);
       xmlr_float(node,"cpu",temp->u.lau.cpu);
       xmlr_strd(node,"ammo",temp->u.lau.ammo_name);
       xmlr_int(node,"amount",temp->u.lau.amount);
@@ -1227,7 +1225,6 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
    } while (xml_nextNode(node));
 
    /* Post processing. */
-   temp->u.lau.delay /= 1000.;
    temp->u.lau.arc *= M_PI/180.;
 
    /* Set default outfit size if necessary. */
@@ -1249,7 +1246,7 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing '"s"' element", temp->name) /**< Define to help check for data errors. */
    MELEMENT(temp->u.lau.ammo_name==NULL,"ammo");
-   MELEMENT(temp->u.lau.delay==0,"delay");
+   MELEMENT(temp->u.lau.delay==0.,"delay");
    MELEMENT(temp->u.lau.cpu==0.,"cpu");
    MELEMENT(temp->u.lau.amount==0.,"amount");
 #undef MELEMENT
