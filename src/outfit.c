@@ -1012,7 +1012,6 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
       temp->u.blt.falloff = temp->u.blt.range;
 
    /* Post processing. */
-   temp->u.blt.delay   /= 1000.;
    temp->u.blt.swivel  *= M_PI/180.;
    if (outfit_isTurret(temp))
       temp->u.blt.swivel = M_PI;
@@ -1148,8 +1147,6 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
    } while (xml_nextNode(node));
 
    /* Post processing. */
-   temp->u.bem.delay    /= 1000.;
-   temp->u.bem.duration /= 1000.;
    temp->u.bem.turn     *= M_PI/180.; /* Convert to rad/s. */
 
    /* Set default outfit size if necessary. */
@@ -1226,7 +1223,6 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
    } while (xml_nextNode(node));
 
    /* Post processing. */
-   temp->u.lau.delay /= 1000.;
    temp->u.lau.arc *= M_PI/180.;
 
    /* Set default outfit size if necessary. */
