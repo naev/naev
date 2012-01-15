@@ -1148,8 +1148,9 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
    } while (xml_nextNode(node));
 
    /* Post processing. */
-   temp->u.bem.delay /= 1000.;
-   temp->u.bem.turn   *= M_PI/180.; /* Convert to rad/s. */
+   temp->u.bem.delay    /= 1000.;
+   temp->u.bem.duration /= 1000.;
+   temp->u.bem.turn     *= M_PI/180.; /* Convert to rad/s. */
 
    /* Set default outfit size if necessary. */
    if (temp->slot.size == OUTFIT_SLOT_SIZE_NA)

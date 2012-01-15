@@ -1319,7 +1319,7 @@
   </general>
   <specific type="beam" secondary="1">
    <cpu>15</cpu>
-   <delay>6000</delay>
+   <delay>6</delay>
    <duration>3</duration>
    <range>300</range>
    <energy>65</energy>
@@ -1354,7 +1354,7 @@
   </general>
   <specific type="turret beam" secondary="1">
    <cpu>80</cpu>
-   <delay>10000</delay>
+   <delay>10</delay>
    <duration>5</duration>
    <range>400</range>
    <turn>35</turn>
