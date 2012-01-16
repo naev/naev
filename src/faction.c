@@ -43,55 +43,6 @@
 #define CHUNK_SIZE         32 /**< Size of chunk for allocation. */
 
 
-#define FACTION_STATIC        (1<<0) /**< Faction doesn't change standing with player. */
-#define FACTION_INVISIBLE     (1<<1) /**< Faction isn't exposed to the player. */
-
-#define faction_setFlag(fa,f) ((fa)->flags |= (f))
-#define faction_isFlag(fa,f)  ((fa)->flags & (f))
-
-
-/**
- * @struct Faction
- *
- * @brief Represents a faction.
- */
-typedef struct Faction_ {
-   char *name; /**< Normal Name. */
-   char *longname; /**< Long Name. */
-   char *displayname; /**< Display name. */
-
-   /* Graphics. */
-   glTexture *logo_small; /**< Small logo. */
-   glTexture *logo_tiny; /**< Tiny logo. */
-   const glColour *colour; /**< Faction specific colour. */
-
-   /* Enemies */
-   int *enemies; /**< Enemies by ID of the faction. */
-   int nenemies; /**< Number of enemies. */
-
-   /* Allies */
-   int *allies; /**< Allies by ID of the faction. */
-   int nallies; /**< Number of allies. */
-
-   /* Player information. */
-   double player_def; /**< Default player standing. */
-   double player; /**< Standing with player - from -100 to 100 */
-
-   /* Scheduler. */
-   lua_State *sched_state; /**< Lua scheduler script. */
-
-   /* Behaviour. */
-   lua_State *state; /**< Faction specific state. */
-
-   /* Equipping. */
-   lua_State *equip_state; /**< Faction equipper state. */
-
-
-   /* Flags. */
-   unsigned int flags; /**< Flags affecting the faction. */
-} Faction;
-
-
 static Faction* faction_stack = NULL; /**< Faction stack. */
 int faction_nstack = 0; /**< Number of factions in the faction stack. */
 
@@ -152,6 +103,33 @@ int* faction_getAll( int *n )
 
    *n = m;
    return f;
+}
+
+/**
+ * @brief Gets all the known factions.
+ */
+int* faction_getKnown( int *n )
+{
+   int i;
+   int *f;
+   int m;
+
+   /* Set up. */
+   f  = malloc( sizeof(int) * faction_nstack );
+
+   /* Get IDs. */
+   m = 0;
+   for (i=0; i<faction_nstack; i++)
+      if (!faction_isFlag( &faction_stack[i], FACTION_INVISIBLE ) && faction_isKnown( &faction_stack[i] ))
+         f[m++] = i;
+
+   *n = m;
+   return f;
+}
+
+Faction* faction_pointer( int n )
+{
+   return &faction_stack[n];
 }
 
 
