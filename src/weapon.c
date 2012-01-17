@@ -531,7 +531,6 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
 
          /* most missiles behave the same */
          case OUTFIT_TYPE_AMMO:
-         case OUTFIT_TYPE_TURRET_AMMO:
 
             w->timer -= dt;
             if (w->timer < 0.) {
@@ -678,7 +677,6 @@ static void weapon_render( Weapon* w, const double dt )
    switch (w->outfit->type) {
       /* Weapons that use sprites. */
       case OUTFIT_TYPE_AMMO:
-      case OUTFIT_TYPE_TURRET_AMMO:
       case OUTFIT_TYPE_BOLT:
       case OUTFIT_TYPE_TURRET_BOLT:
          gfx = outfit_gfx(w->outfit);
@@ -1288,7 +1286,7 @@ static void weapon_createAmmo( Weapon *w, const Outfit* launcher, double T,
    Outfit* outfit = launcher->u.lau.ammo;
 
    pilot_target = NULL;
-   if ((w->outfit->type == OUTFIT_TYPE_TURRET_AMMO) || (w->outfit->type == OUTFIT_TYPE_AMMO && launcher->type == OUTFIT_TYPE_TURRET_LAUNCHER)) {
+   if (w->outfit->type == OUTFIT_TYPE_AMMO && launcher->type == OUTFIT_TYPE_TURRET_LAUNCHER) {
       pilot_target = pilot_get(w->target);
       rdir = weapon_aimTurret( w, outfit, parent, pilot_target, pos, vel, dir, M_PI );
    }

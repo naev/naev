@@ -1887,7 +1887,7 @@
    <gfx_store>empgrenade</gfx_store>
    <description>This is a grenade that can be launched to unleash an electromagnetic pulse, rapidly disabling the electronics of enemy ships. Useful for taking ships alive, as the EM pulses rarely destroy the ship; leaving it floating disabled in space.</description>
   </general>
-  <specific type="turret ammo">
+  <specific type="ammo">
    <gfx spin="0.3">empgrenade</gfx>
    <sound>grenadefire</sound>
    <sound_hit>empexplode</sound_hit>
