@@ -394,8 +394,7 @@ int outfit_isLauncher( const Outfit* o )
  */
 int outfit_isAmmo( const Outfit* o )
 {
-   return ( (o->type==OUTFIT_TYPE_AMMO)  ||
-         (o->type==OUTFIT_TYPE_TURRET_AMMO) );
+   return (o->type==OUTFIT_TYPE_AMMO);
 }
 /**
  * @brief Checks if outfit is a seeking weapon.
@@ -405,7 +404,7 @@ int outfit_isAmmo( const Outfit* o )
 int outfit_isSeeker( const Outfit* o )
 {
    if (((o->type==OUTFIT_TYPE_AMMO) || (o->type==OUTFIT_TYPE_TURRET_LAUNCHER) ||
-            (o->type==OUTFIT_TYPE_LAUNCHER) || (o->type==OUTFIT_TYPE_TURRET_AMMO) ) &&
+            (o->type==OUTFIT_TYPE_LAUNCHER)) &&
          (o->u.amm.ai > 0))
       return 1;
    return 0;
@@ -841,7 +840,6 @@ static OutfitType outfit_strToOutfitType( char *buf )
    O_CMP("launcher",       OUTFIT_TYPE_LAUNCHER);
    O_CMP("ammo",           OUTFIT_TYPE_AMMO);
    O_CMP("turret launcher",OUTFIT_TYPE_TURRET_LAUNCHER);
-   O_CMP("turret ammo",    OUTFIT_TYPE_TURRET_AMMO);
    O_CMP("modification",   OUTFIT_TYPE_MODIFCATION);
    O_CMP("afterburner",    OUTFIT_TYPE_AFTERBURNER);
    O_CMP("fighter bay",    OUTFIT_TYPE_FIGHTER_BAY);
