@@ -246,6 +246,8 @@ if __name__ == "__main__":
     myTpl = env.get_template('ships_index.html')
     yaarh = harvester(naevPath)
     shipIStore = path.normpath(storagePath + '/ships/')
+    if not path.exists(storagePath):
+        mkdir(storagePath, 0755)
     if not path.exists(shipIStore):
         mkdir(shipIStore, 0755)
     myTpl.stream(shipList=yaarh.get_by('class'), date=date).dump(shipIStore+'/index.html')
