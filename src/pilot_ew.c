@@ -119,12 +119,13 @@ void pilot_updateSensorRange (void)
  */
 int pilot_inRange( const Pilot *p, double x, double y )
 {
-   double d;
+   double d, sense;
 
    /* Get distance. */
    d = pow2(x-p->solid->pos.x) + pow2(y-p->solid->pos.y);
 
-   if (d < sensor_curRange)
+   sense = sensor_curRange * p->ew_detect;
+   if (d < sense)
       return 1;
 
    return 0;
