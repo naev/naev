@@ -778,7 +778,8 @@ void pilot_distress( Pilot *p, const char *msg, int ignore_int )
             (!ignore_int && pilot_inRangePilot(p, pilot_stack[i]))) {
 
          /* Send AI the distress signal. */
-         if (pilot_stack[i]->ai != NULL)
+         if (pilot_stack[i]->ai != NULL &&
+               !pilot_isFlag(pilot_stack[i], PILOT_DEAD))
             ai_getDistress( pilot_stack[i], p );
 
          /* Check if should take faction hit. */
