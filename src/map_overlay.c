@@ -273,7 +273,7 @@ void ovr_render( double dt )
 
    /* Render jump points. */
    for (i=0; i<cur_system->njumps; i++)
-      if ((i != player.p->nav_hyperspace) && (cur_system->jumps[i].type != 2))
+      if ((i != player.p->nav_hyperspace) && !jp_isFlag(&cur_system->jumps[i], JP_HIDDEN) && !jp_isFlag(&cur_system->jumps[i], JP_EXITONLY))
          gui_renderJumpPoint( i, RADAR_RECT, w, h, res, 1 );
    if (player.p->nav_hyperspace > -1)
       gui_renderJumpPoint( player.p->nav_hyperspace, RADAR_RECT, w, h, res, 1 );
