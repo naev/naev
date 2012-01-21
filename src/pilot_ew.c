@@ -215,12 +215,10 @@ int pilot_inRangeJump( const Pilot *p, int i )
    jp = &cur_system->jumps[i];
 
    /* jump point is not exit only */
-   if (jp->type == 0) /* regular */
+   if (!jp_isFlag( jp, JP_HIDDEN ) && !jp_isFlag( jp, JP_EXITONLY )) /* regular */
       sense = sensor_curRange * p->ew_jumpDetect;
-   else if (jp->type == 1) /* exit only */
+   else if (jp_isFlag( jp, JP_HIDDEN ) || jp_isFlag( jp, JP_EXITONLY )) /* exit only */
       return 0;
-   else
-      WARN("Jump point %s in %s has unknown type %d.",jp->target->name,cur_system->name,jp->type);
 
    hide = jp->hide;
 

@@ -326,12 +326,18 @@ static void sysedit_editJumpClose( unsigned int wid, char *unused )
    JumpPoint *j;
 
    j = &sysedit_sys->jumps[ sysedit_select[0].u.jump ];
-   if (jp_hidden == 1)
-      j->type = 1;
-   else if (jp_exit == 1)
-      j->type = 2;
-   else
-      j->type = 0;
+   if (jp_hidden == 1) {
+      jp_setFlag( j, JP_HIDDEN );
+      jp_rmFlag( j, JP_EXITONLY );
+   }
+   else if (jp_exit == 1) {
+      jp_setFlag( j, JP_EXITONLY );
+      jp_rmFlag( j, JP_HIDDEN );
+   }
+   else {
+      jp_rmFlag( j, JP_HIDDEN );
+      jp_rmFlag( j, JP_EXITONLY );
+   }
    j->hide  = atof(window_getInput( sysedit_widEdit, "inpHide" ));
    j->onMap = atoi(window_getInput( sysedit_widEdit, "inpOnMap" ));
 
@@ -1279,9 +1285,9 @@ static void sysedit_editJump( void )
    x = 20;
 
    /* Initial checkbox state */
-   if (j->type == 1)
+   if (jp_isFlag( j, JP_HIDDEN ))
       jp_hidden = 1;
-   else if (j->type == 2)
+   else if (jp_isFlag( j, JP_EXITONLY ))
       jp_exit = 1;
    /* Create check boxes. */
    window_addCheckbox( wid, x, y, 100, 20,

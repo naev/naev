@@ -1517,7 +1517,7 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
             if (!sys_isKnown(sys) && !space_sysReachable(sys))
                continue;
          }
-         if (jp->type == 1)
+         if (jp_isFlag( jp, JP_EXITONLY ))
             continue;
 
          neighbour = A_newNode( sys, NULL );
@@ -1617,7 +1617,7 @@ int map_map( const char* targ_sys, int r )
          jp = &sys->jumps[i];
 
          /* if jump not on map or is exit only. */
-         if ((jp->onMap <= 0) || (jp->type == 1))
+         if ((jp->onMap <= 0) || jp_isFlag( jp, JP_EXITONLY ))
             continue;
 
          if (!jp_isKnown(jp))

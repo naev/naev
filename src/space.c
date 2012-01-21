@@ -2447,9 +2447,10 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
       }
       else if (xml_isNode(cur,"autopos"))
          jp_setFlag(j,JP_AUTOPOS);
-      else if (xml_isNode(cur,"type")) {
-         xmlr_int( cur, "type", j->type );
-      }
+      else if (xml_isNode(cur,"hidden"))
+         jp_setFlag(j,JP_HIDDEN);
+      else if (xml_isNode(cur,"exitonly"))
+         jp_setFlag(j,JP_EXITONLY);
       else if (xml_isNode(cur,"hide")) {
          xmlr_float( cur,"hide", j->hide );
       }
@@ -2710,7 +2711,7 @@ static void space_renderJumpPoint( JumpPoint *jp, int i )
 {
    glColour *c;
 
-   if (jp->type==1)
+   if (jp_isFlag( jp, JP_HIDDEN ) || jp_isFlag( jp, JP_EXITONLY ))
       return;
 
    if ((player.p != NULL) && (i==player.p->nav_hyperspace) &&
