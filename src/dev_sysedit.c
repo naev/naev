@@ -1733,6 +1733,7 @@ static void sysedit_planetGFX( unsigned int wid_unused, char *wgt )
    /* Find images first. */
    path           = land ? PLANET_LAND_GFX_PATH : PLANET_SPACE_GFX_PATH;
    files          = ndata_list( path, &nfiles );
+   ndata_sortName( files, nfiles );
    png_files      = malloc( sizeof(char*) * nfiles );
    tex            = malloc( sizeof(glTexture*) * nfiles );
    sysedit_tex    = malloc( sizeof(glTexture*) * nfiles );

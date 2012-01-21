@@ -775,3 +775,31 @@ char** ndata_list( const char* path, uint32_t* nfiles )
    return filterList( ndata_fileList, ndata_fileNList, path, nfiles );
 }
 
+
+/**
+ * @brief Small qsort wrapper.
+ */
+static int ndata_sortFunc( const void *name1, const void *name2 )
+{
+   const char **f1, **f2;
+   f1 = (const char**) name1;
+   f2 = (const char**) name2;
+   return strcmp( f1[0], f2[0] );
+}
+
+
+/**
+ * @brief Sorts the files by name.
+ *
+ * Meant to be used directly by ndata_list.
+ *
+ *    @param files Filenames to sort.
+ *    @param nfiles Number of files to sort.
+ */
+void ndata_sortName( char **files, uint32_t nfiles )
+{
+   qsort( files, nfiles, sizeof(char*), ndata_sortFunc );
+}
+
+
+
