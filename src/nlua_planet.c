@@ -51,6 +51,8 @@ static int planetL_gfxExterior( lua_State *L );
 static int planetL_shipsSold( lua_State *L );
 static int planetL_outfitsSold( lua_State *L );
 static int planetL_commoditiesSold( lua_State *L );
+static int planetL_isKnown( lua_State *L );
+static int planetL_setKnown( lua_State *L );
 static const luaL_reg planet_methods[] = {
    { "cur", planetL_cur },
    { "get", planetL_get },
@@ -72,6 +74,8 @@ static const luaL_reg planet_methods[] = {
    { "shipsSold", planetL_shipsSold },
    { "outfitsSold", planetL_outfitsSold },
    { "commoditiesSold", planetL_commoditiesSold },
+   { "isKnown", planetL_isKnown },
+   { "setKnown", planetL_setKnown },
    {0,0}
 }; /**< Planet metatable methods. */
 
@@ -792,5 +796,41 @@ static int planetL_commoditiesSold( lua_State *L )
    return 1;
 }
 
+/**
+ * @brief Checks to see if a planet is known by the player.
+ *
+ * @usage b = p:isKnown()
+ *
+ *    @luaparam s Planet to check if the player knows.
+ *    @luareturn true if the player knows the planet.
+ * @luafunc isKnown( p )
+ */
+static int planetL_isKnown( lua_State *L )
+{
+   Planet *p = luaL_validplanet(L,1);
+   lua_pushboolean(L, planet_isKnown(p));
+   return 1;
+}
 
+/**
+ * @brief Sets a planets's known state.
+ *
+ * @usage p:setKnown( false ) -- Makes planet unknown.
+ *    @luaparam p Planet to set known.
+ *    @luaparam b Whether or not to set as known (defaults to false).
+ * @luafunc setKnown( p, b )
+ */
+static int planetL_setKnown( lua_State *L )
+{
+   int b;
+   Planet *p;
 
+   p = luaL_validplanet(L,1);
+   b = lua_toboolean(L, 2);
+
+   if (b)
+      planet_setFlag( p, PLANET_KNOWN );
+   else
+      planet_rmFlag( p, PLANET_KNOWN );
+   return 0;
+}
