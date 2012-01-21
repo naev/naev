@@ -174,7 +174,7 @@
    <y>-4050.000000</y>
   </pos>
   <GFX>
-   <space>G01.png</space>
+   <space>G03.png</space>
    <exterior>methane.png</exterior>
   </GFX>
   <general>
@@ -190,7 +190,7 @@
    <y>-22770.000000</y>
   </pos>
   <GFX>
-   <space>M08.png</space>
+   <space>M09.png</space>
    <exterior>aquatic2.png</exterior>
   </GFX>
   <general>
@@ -246,7 +246,7 @@
    <y>10841.160191</y>
   </pos>
   <GFX>
-   <space>A00.png</space>
+   <space>A04.png</space>
    <exterior>lava.png</exterior>
   </GFX>
   <presence>
@@ -349,7 +349,7 @@
    <y>-1801.492703</y>
   </pos>
   <GFX>
-   <space>O01.png</space>
+   <space>O03.png</space>
    <exterior>station05.png</exterior>
   </GFX>
   <general>
@@ -605,7 +605,7 @@
    <y>16821.213540</y>
   </pos>
   <GFX>
-   <space>J01.png</space>
+   <space>J05.png</space>
    <exterior>station00.png</exterior>
   </GFX>
   <general>
@@ -621,7 +621,7 @@
    <y>16600.550706</y>
   </pos>
   <GFX>
-   <space>moon-P01.png</space>
+   <space>moon-P03.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
   <presence>
@@ -915,7 +915,7 @@
    <y>4620.000000</y>
   </pos>
   <GFX>
-   <space>M08.png</space>
+   <space>M09.png</space>
    <exterior>aquatic2.png</exterior>
   </GFX>
   <general>
@@ -979,7 +979,7 @@
    <y>21582.000000</y>
   </pos>
   <GFX>
-   <space>G00.png</space>
+   <space>G03.png</space>
    <exterior>snow.png</exterior>
   </GFX>
   <general>
@@ -1115,7 +1115,7 @@
    <y>-10437.336689</y>
   </pos>
   <GFX>
-   <space>I00.png</space>
+   <space>I02.png</space>
    <exterior>methane.png</exterior>
   </GFX>
   <general>
@@ -1163,7 +1163,7 @@
    <y>-10635.425534</y>
   </pos>
   <GFX>
-   <space>moon-D01.png</space>
+   <space>moon-D02.png</space>
    <exterior>station01.png</exterior>
   </GFX>
   <general>
@@ -1317,7 +1317,7 @@
    <y>2540.000000</y>
   </pos>
   <GFX>
-   <space>A03.png</space>
+   <space>A04.png</space>
    <exterior>desertic4.png</exterior>
   </GFX>
   <general>
@@ -1333,7 +1333,7 @@
    <y>29824.260295</y>
   </pos>
   <GFX>
-   <space>O01.png</space>
+   <space>O03.png</space>
    <exterior>station01.png</exterior>
   </GFX>
   <general>
@@ -1512,7 +1512,7 @@
    <y>-11640.000000</y>
   </pos>
   <GFX>
-   <space>H01.png</space>
+   <space>H03.png</space>
    <exterior>desertic3.png</exterior>
   </GFX>
   <presence>
@@ -1554,7 +1554,7 @@
    <y>-8820.000000</y>
   </pos>
   <GFX>
-   <space>J02.png</space>
+   <space>J05.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
   <general>
@@ -1618,7 +1618,7 @@
    <y>-11240.786446</y>
   </pos>
   <GFX>
-   <space>J02.png</space>
+   <space>J06.png</space>
    <exterior>aquatic3.png</exterior>
   </GFX>
   <presence>
@@ -1833,7 +1833,7 @@
    <y>-15603.178986</y>
   </pos>
   <GFX>
-   <space>J01.png</space>
+   <space>J06.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
   <general>
@@ -1881,7 +1881,7 @@
    <y>-9450.000000</y>
   </pos>
   <GFX>
-   <space>O01.png</space>
+   <space>O03.png</space>
    <exterior>aquatic2.png</exterior>
   </GFX>
   <general>
@@ -2085,7 +2085,7 @@
    <y>-9361.000000</y>
   </pos>
   <GFX>
-   <space>J00.png</space>
+   <space>J05.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
   <general>
@@ -2117,7 +2117,7 @@
    <y>-3302.910419</y>
   </pos>
   <GFX>
-   <space>J02.png</space>
+   <space>J07.png</space>
    <exterior>station03.png</exterior>
   </GFX>
   <general>
@@ -2191,7 +2191,7 @@
    <y>21686.000000</y>
   </pos>
   <GFX>
-   <space>A01.png</space>
+   <space>A04.png</space>
    <exterior>lava.png</exterior>
   </GFX>
   <presence>
@@ -2223,7 +2223,7 @@
    <y>-8361.449225</y>
   </pos>
   <GFX>
-   <space>I01.png</space>
+   <space>I03.png</space>
    <exterior>station01.png</exterior>
   </GFX>
   <general>
@@ -2384,7 +2384,7 @@
    <y>66600.000000</y>
   </pos>
   <GFX>
-   <space>M08.png</space>
+   <space>M09.png</space>
    <exterior>forest2.png</exterior>
   </GFX>
   <presence>
@@ -2480,7 +2480,7 @@
    <y>-3440.000000</y>
   </pos>
   <GFX>
-   <space>G01.png</space>
+   <space>G03.png</space>
    <exterior>snow.png</exterior>
   </GFX>
   <presence>
@@ -2882,7 +2882,7 @@
    <y>1434.000000</y>
   </pos>
   <GFX>
-   <space>J01.png</space>
+   <space>J07.png</space>
    <exterior>methane.png</exterior>
   </GFX>
   <general>
@@ -3268,7 +3268,7 @@
    <y>9205.498988</y>
   </pos>
   <GFX>
-   <space>O01.png</space>
+   <space>O03.png</space>
    <exterior>oceanic.png</exterior>
   </GFX>
   <presence>
@@ -3418,7 +3418,7 @@
    <y>-6950.000000</y>
   </pos>
   <GFX>
-   <space>J00.png</space>
+   <space>J06.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
   <general>
@@ -3470,7 +3470,7 @@
    <y>-6152.632949</y>
   </pos>
   <GFX>
-   <space>I00.png</space>
+   <space>I03.png</space>
    <exterior>aquatic2.png</exterior>
   </GFX>
   <general>
@@ -3592,7 +3592,7 @@
    <y>-18950.000000</y>
   </pos>
   <GFX>
-   <space>A00.png</space>
+   <space>A04.png</space>
    <exterior>station00.png</exterior>
   </GFX>
   <presence>
@@ -3669,7 +3669,7 @@
    <y>9618.349768</y>
   </pos>
   <GFX>
-   <space>J02.png</space>
+   <space>J08.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
   <general>
@@ -3765,7 +3765,7 @@
    <y>2285.984224</y>
   </pos>
   <GFX>
-   <space>I01.png</space>
+   <space>I04.png</space>
    <exterior>station05.png</exterior>
   </GFX>
   <general>
@@ -3934,7 +3934,7 @@
    <y>9988.554651</y>
   </pos>
   <GFX>
-   <space>J00.png</space>
+   <space>J07.png</space>
    <exterior>station00.png</exterior>
   </GFX>
   <general>
@@ -4077,7 +4077,7 @@
    <y>-3385.866684</y>
   </pos>
   <GFX>
-   <space>moon-P02.png</space>
+   <space>moon-P03.png</space>
    <exterior>aquatic.png</exterior>
   </GFX>
   <general>
@@ -4135,7 +4135,7 @@
    <y>-6116.121552</y>
   </pos>
   <GFX>
-   <space>I01.png</space>
+   <space>I05.png</space>
    <exterior>station00.png</exterior>
   </GFX>
   <general>
@@ -4453,7 +4453,7 @@
    <y>7693.271214</y>
   </pos>
   <GFX>
-   <space>A03.png</space>
+   <space>A04.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
   <general>
@@ -4549,7 +4549,7 @@
    <y>-8125.122171</y>
   </pos>
   <GFX>
-   <space>I00.png</space>
+   <space>I04.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
   <general>
@@ -4806,7 +4806,7 @@
    <y>11878.412610</y>
   </pos>
   <GFX>
-   <space>I01.png</space>
+   <space>I06.png</space>
    <exterior>lava.png</exterior>
   </GFX>
   <general>
@@ -5174,7 +5174,7 @@
    <y>-1715.052669</y>
   </pos>
   <GFX>
-   <space>A00.png</space>
+   <space>A04.png</space>
    <exterior>lava.png</exterior>
   </GFX>
   <presence>
@@ -5951,7 +5951,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <y>13445.015432</y>
   </pos>
   <GFX>
-   <space>H00.png</space>
+   <space>H03.png</space>
    <exterior>aquatic2.png</exterior>
   </GFX>
   <general>
@@ -6047,7 +6047,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <y>4150.000000</y>
   </pos>
   <GFX>
-   <space>M08.png</space>
+   <space>M09.png</space>
    <exterior>forest.png</exterior>
   </GFX>
   <presence>
@@ -6242,7 +6242,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <y>-7500.000000</y>
   </pos>
   <GFX>
-   <space>M08.png</space>
+   <space>M09.png</space>
    <exterior>aquatic2.png</exterior>
   </GFX>
   <presence>
@@ -6578,7 +6578,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <y>-21140.000000</y>
   </pos>
   <GFX>
-   <space>O01.png</space>
+   <space>O03.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
   <general>
@@ -6682,7 +6682,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <y>7156.309957</y>
   </pos>
   <GFX>
-   <space>J00.png</space>
+   <space>J08.png</space>
    <exterior>station05.png</exterior>
   </GFX>
   <general>
@@ -6913,7 +6913,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <y>18760.000000</y>
   </pos>
   <GFX>
-   <space>I01.png</space>
+   <space>I07.png</space>
    <exterior>aquatic.png</exterior>
   </GFX>
   <general>
@@ -6929,7 +6929,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <y>26572.715435</y>
   </pos>
   <GFX>
-   <space>I00.png</space>
+   <space>I05.png</space>
    <exterior>station00.png</exterior>
   </GFX>
   <general>
@@ -6999,7 +6999,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
    <y>3894.469528</y>
   </pos>
   <GFX>
-   <space>I00.png</space>
+   <space>I06.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
   <general>
@@ -7146,7 +7146,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <y>14032.927476</y>
   </pos>
   <GFX>
-   <space>moon-P02.png</space>
+   <space>moon-P03.png</space>
    <exterior>station00.png</exterior>
   </GFX>
   <general>
@@ -7394,7 +7394,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <y>10020.000000</y>
   </pos>
   <GFX>
-   <space>M08.png</space>
+   <space>M09.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
   <general>
@@ -7485,7 +7485,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <y>1900.000000</y>
   </pos>
   <GFX>
-   <space>G01.png</space>
+   <space>G03.png</space>
    <exterior>oceanic2.png</exterior>
   </GFX>
   <general>
@@ -7533,7 +7533,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <y>-3366.492496</y>
   </pos>
   <GFX>
-   <space>H01.png</space>
+   <space>H03.png</space>
    <exterior>desertic2.png</exterior>
   </GFX>
   <presence>
@@ -7856,7 +7856,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <y>-9824.157202</y>
   </pos>
   <GFX>
-   <space>J00.png</space>
+   <space>J08.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
   <general>
@@ -8526,7 +8526,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <y>-13250.000000</y>
   </pos>
   <GFX>
-   <space>I00.png</space>
+   <space>I07.png</space>
    <exterior>forest.png</exterior>
   </GFX>
   <general>
@@ -8719,7 +8719,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <y>1750.000000</y>
   </pos>
   <GFX>
-   <space>H02.png</space>
+   <space>H03.png</space>
    <exterior>snow.png</exterior>
   </GFX>
   <general>
@@ -8949,7 +8949,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <y>-36461.207252</y>
   </pos>
   <GFX>
-   <space>G00.png</space>
+   <space>G03.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
   <general>
@@ -9110,7 +9110,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <y>1453.882562</y>
   </pos>
   <GFX>
-   <space>moon-D01.png</space>
+   <space>moon-D02.png</space>
    <exterior>snow.png</exterior>
   </GFX>
   <general>
@@ -9749,7 +9749,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <y>16360.000000</y>
   </pos>
   <GFX>
-   <space>G00.png</space>
+   <space>G03.png</space>
    <exterior>traderoom.png</exterior>
   </GFX>
   <general>
@@ -10634,7 +10634,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <y>3967.793771</y>
   </pos>
   <GFX>
-   <space>J04.png</space>
+   <space>J06.png</space>
    <exterior>lava.png</exterior>
   </GFX>
   <general>
@@ -11169,7 +11169,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <y>-12323.849114</y>
   </pos>
   <GFX>
-   <space>J04.png</space>
+   <space>J08.png</space>
    <exterior>station03.png</exterior>
   </GFX>
   <general>
@@ -12839,7 +12839,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <y>6364.565702</y>
   </pos>
   <GFX>
-   <space>M08.png</space>
+   <space>M09.png</space>
    <exterior>forest2.png</exterior>
   </GFX>
   <presence>

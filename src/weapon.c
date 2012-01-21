@@ -531,7 +531,6 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
 
          /* most missiles behave the same */
          case OUTFIT_TYPE_AMMO:
-         case OUTFIT_TYPE_TURRET_AMMO:
 
             w->timer -= dt;
             if (w->timer < 0.) {
@@ -678,7 +677,6 @@ static void weapon_render( Weapon* w, const double dt )
    switch (w->outfit->type) {
       /* Weapons that use sprites. */
       case OUTFIT_TYPE_AMMO:
-      case OUTFIT_TYPE_TURRET_AMMO:
       case OUTFIT_TYPE_BOLT:
       case OUTFIT_TYPE_TURRET_BOLT:
          gfx = outfit_gfx(w->outfit);
@@ -1181,8 +1179,7 @@ static double weapon_aimTurret( Weapon *w, const Outfit *outfit, const Pilot *pa
       lead_angle = M_PI*pilot_ewWeaponTrack( parent, pilot_target, outfit->u.blt.track );
 
       /*only do this if the lead angle is implemented; save compute cycled on fixed weapons*/
-      if (fabs( angle_diff(ANGLE(x, y), VANGLE(relative_location)) ) > lead_angle) {
-
+      if (lead_angle && fabs( angle_diff(ANGLE(x, y), VANGLE(relative_location)) ) > lead_angle) {
          /* the target is moving too fast for the turret to keep up */
          if (ANGLE(x, y) < VANGLE(relative_location))
             rdir = angle_diff(lead_angle, VANGLE(relative_location));
@@ -1271,14 +1268,14 @@ static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
  * @brief Creates the ammo specific properties of a weapon.
  *
  *    @param w Weapon to create ammo specific properties of.
- *    @param outfit Outfit which spawned the weapon.
+ *    @param launcher Outfit which spawned the weapon.
  *    @param T temperature of the shooter.
  *    @param dir Direction the shooter is facing.
  *    @param pos Position of the shooter.
  *    @param vel Velocity of the shooter.
  *    @param parent Shooter.
  */
-static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
+static void weapon_createAmmo( Weapon *w, const Outfit* launcher, double T,
       const double dir, const Vector2d* pos, const Vector2d* vel, const Pilot* parent )
 {
    (void) T;
@@ -1286,17 +1283,20 @@ static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
    double mass, rdir;
    Pilot *pilot_target;
    glTexture *gfx;
+   Outfit* ammo;
 
    pilot_target = NULL;
-   if (w->outfit->type == OUTFIT_TYPE_TURRET_AMMO) {
+   ammo = launcher->u.lau.ammo;
+   if (w->outfit->type == OUTFIT_TYPE_AMMO &&
+            launcher->type == OUTFIT_TYPE_TURRET_LAUNCHER) {
       pilot_target = pilot_get(w->target);
-      rdir = weapon_aimTurret( w, outfit, parent, pilot_target, pos, vel, dir, M_PI );
+      rdir = weapon_aimTurret( w, ammo, parent, pilot_target, pos, vel, dir, M_PI );
    }
-   else {
-      rdir        = dir;
-   }
-   /*if (outfit->u.amm.accuracy != 0.) {
-      rdir += RNG_2SIGMA() * outfit->u.amm.accuracy/2. * 1./180.*M_PI;
+   else
+      rdir = dir;
+
+   /*if (ammo->u.amm.accuracy != 0.) {
+      rdir += RNG_2SIGMA() * ammo->u.amm.accuracy/2. * 1./180.*M_PI;
       if ((rdir > 2.*M_PI) || (rdir < 0.))
          rdir = fmod(rdir, 2.*M_PI);
    }*/
@@ -1307,13 +1307,13 @@ static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
 
    /* If thrust is 0. we assume it starts out at speed. */
    vectcpy( &v, vel );
-   if (outfit->u.amm.thrust == 0.)
+   if (ammo->u.amm.thrust == 0.)
       vect_cadd( &v, cos(rdir) * w->outfit->u.amm.speed,
             sin(rdir) * w->outfit->u.amm.speed );
 
    /* Set up ammo details. */
    mass        = w->outfit->mass;
-   w->timer    = outfit->u.amm.duration;
+   w->timer    = ammo->u.amm.duration;
    w->solid    = solid_create( mass, rdir, pos, &v, SOLID_UPDATE_RK4 );
    if (w->outfit->u.amm.thrust != 0.)
       weapon_setThrust( w, w->outfit->u.amm.thrust * mass );
@@ -1369,7 +1369,10 @@ static Weapon* weapon_create( const Outfit* outfit, double T,
    w->faction  = parent->faction; /* non-changeable */
    w->parent   = parent->id; /* non-changeable */
    w->target   = target; /* non-changeable */
-   w->outfit   = outfit; /* non-changeable */
+   if (outfit_isLauncher(outfit))
+      w->outfit   = outfit->u.lau.ammo; /* non-changeable */
+   else
+      w->outfit   = outfit; /* non-changeable */
    w->update   = weapon_update;
    w->status   = WEAPON_STATUS_OK;
    w->strength = 1.;
@@ -1408,8 +1411,8 @@ static Weapon* weapon_create( const Outfit* outfit, double T,
          break;
 
       /* Treat seekers together. */
-      case OUTFIT_TYPE_AMMO:
-      case OUTFIT_TYPE_TURRET_AMMO:
+      case OUTFIT_TYPE_LAUNCHER:
+      case OUTFIT_TYPE_TURRET_LAUNCHER:
          weapon_createAmmo( w, outfit, T, dir, pos, vel, parent );
          break;
 
@@ -1450,7 +1453,7 @@ void weapon_add( const Outfit* outfit, const double T, const double dir,
    GLsizei size;
 
    if (!outfit_isBolt(outfit) &&
-         !outfit_isAmmo(outfit)) {
+         !outfit_isLauncher(outfit)) {
       ERR("Trying to create a Weapon from a non-Weapon type Outfit");
       return;
    }

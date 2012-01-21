@@ -299,16 +299,16 @@ static void sysedit_editPntClose( unsigned int wid, char *unused )
    char *inp;
 
    p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
-   p->population = (uint64_t)strtoull(window_getInput( sysedit_widEdit, "inpPop" ), 0, 10);
-   p->class      = planetclass_get( window_getInput( sysedit_widEdit, "inpClass" )[0] );
+   p->population     = (uint64_t)strtoull(window_getInput( sysedit_widEdit, "inpPop" ), 0, 10);
+   p->class          = planetclass_get( window_getInput( sysedit_widEdit, "inpClass" )[0] );
    inp = window_getInput( sysedit_widEdit, "inpLand" );
    if (inp == NULL || strlen(inp) == 0)
       free( p->land_func );
    else
       p->land_func = strdup( inp );
    p->presenceAmount = atof(window_getInput( sysedit_widEdit, "inpPresence" ));
-   p->presenceRange = atoi(window_getInput( sysedit_widEdit, "inpPresenceRange" ));
-   p->hide = atof(window_getInput( sysedit_widEdit, "inpHide" ));
+   p->presenceRange  = atoi(window_getInput( sysedit_widEdit, "inpPresenceRange" ));
+   p->hide           = atof(window_getInput( sysedit_widEdit, "inpHide" ));
 
    window_close( wid, unused );
 }
@@ -322,8 +322,8 @@ static void sysedit_editJumpClose( unsigned int wid, char *unused )
    JumpPoint *j;
 
    j = &sysedit_sys->jumps[ sysedit_select[0].u.jump ];
-   j->type = atoi(window_getInput( sysedit_widEdit, "inpType" ));
-   j->hide = atof(window_getInput( sysedit_widEdit, "inpHide" ));
+   j->type  = atoi(window_getInput( sysedit_widEdit, "inpType" ));
+   j->hide  = atof(window_getInput( sysedit_widEdit, "inpHide" ));
 
    window_close( wid, unused );
 }
@@ -1709,6 +1709,7 @@ static void sysedit_planetGFX( unsigned int wid_unused, char *wgt )
    /* Find images first. */
    path           = land ? PLANET_LAND_GFX_PATH : PLANET_SPACE_GFX_PATH;
    files          = ndata_list( path, &nfiles );
+   ndata_sortName( files, nfiles );
    png_files      = malloc( sizeof(char*) * nfiles );
    tex            = malloc( sizeof(glTexture*) * nfiles );
    sysedit_tex    = malloc( sizeof(glTexture*) * nfiles );

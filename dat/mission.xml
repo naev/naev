@@ -651,4 +651,16 @@
    <location>None</location>
   </avail>
  </mission>
+ <mission name="Waste dump">
+  <lua>empire/waste_dump</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>3</priority>
+   <chance>50</chance>
+   <location>Computer</location>
+   <system>Shakar</system>
+  </avail>
+ </mission>
 </Missions>

@@ -104,7 +104,8 @@ void pilot_updateSensorRange (void)
    sensor_curRange  = 10000;
    sensor_curRange /= ((cur_system->interference + 200) / 100.);
 
-   /* Speeds up calculations. */
+   /* Speeds up calculations as we compare it against vectors later on
+    * and we want to avoid actually calculating the sqrt(). */
    sensor_curRange = pow2(sensor_curRange);
 }
 
@@ -119,12 +120,13 @@ void pilot_updateSensorRange (void)
  */
 int pilot_inRange( const Pilot *p, double x, double y )
 {
-   double d;
+   double d, sense;
 
    /* Get distance. */
    d = pow2(x-p->solid->pos.x) + pow2(y-p->solid->pos.y);
 
-   if (d < sensor_curRange)
+   sense = sensor_curRange * p->ew_detect;
+   if (d < sense)
       return 1;
 
    return 0;
