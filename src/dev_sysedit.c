@@ -330,6 +330,8 @@ static void sysedit_editJumpClose( unsigned int wid, char *unused )
       j->type = 1;
    else if (jp_exit == 1)
       j->type = 2;
+   else
+      j->type = 0;
    j->hide  = atof(window_getInput( sysedit_widEdit, "inpHide" ));
    j->onMap = atoi(window_getInput( sysedit_widEdit, "inpOnMap" ));
 
