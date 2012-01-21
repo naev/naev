@@ -104,7 +104,8 @@ void pilot_updateSensorRange (void)
    sensor_curRange  = 10000;
    sensor_curRange /= ((cur_system->interference + 200) / 100.);
 
-   /* Speeds up calculations. */
+   /* Speeds up calculations as we compare it against vectors later on
+    * and we want to avoid actually calculating the sqrt(). */
    sensor_curRange = pow2(sensor_curRange);
 }
 
