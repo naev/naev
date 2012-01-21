@@ -793,6 +793,9 @@ void map_renderSystems( double bx, double by, double x, double y,
       glShadeModel(GL_SMOOTH);
       col = &cDarkBlue;
       /* first we draw all of the paths. */
+      gl_vboActivateOffset( map_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
+      gl_vboActivateOffset( map_vbo, GL_COLOR_ARRAY,
+            sizeof(GLfloat) * 2*3, 4, GL_FLOAT, 0 );
       for (j=0; j<sys->njumps; j++) {
 
          jsys = sys->jumps[j].target;
@@ -820,12 +823,9 @@ void map_renderSystems( double bx, double by, double x, double y,
          vertex[16] = col->b;
          vertex[17] = 0.;
          gl_vboSubData( map_vbo, 0, sizeof(GLfloat) * 3*(2+4), vertex );
-         gl_vboActivateOffset( map_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
-         gl_vboActivateOffset( map_vbo, GL_COLOR_ARRAY,
-               sizeof(GLfloat) * 2*3, 4, GL_FLOAT, 0 );
          glDrawArrays( GL_LINE_STRIP, 0, 3 );
-         gl_vboDeactivate();
       }
+      gl_vboDeactivate();
       glShadeModel( GL_FLAT );
    }
 }
