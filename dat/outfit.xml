@@ -2495,21 +2495,216 @@
    <tur_damage>-5</tur_damage>
   </specific>
  </outfit>
- <outfit name="Star Map">
+ <outfit name="Map: Nebula Edge">
   <general>
    <mass>0</mass>
-   <price>5000</price>
-   <description>A star map will give you details about popular locations. It's a great risk-free way to discover parts of the universe. This one has Arcturus, Goddard, and Manuel Station.</description>
+   <price>25000</price>
+   <description>This map contains the route leading from Dvaered/Imperial space to the edge of the Nebula. It also lists the two Imperial stations along the route.</description>
    <gfx_store>map</gfx_store>
   </general>
   <specific type="map">
-   <short_desc>A test map.</short_desc>
-   <sys name="Goddard">
-    <asset>Manuel Station</asset>
-    <jump>Arcturus</jump>
+   <short_desc>A Star Map.</short_desc>
+   <sys name="Raelid">
+    <asset>Marius Station</asset>
+    <jump>Arcanis</jump>
    </sys>
-   <sys name="Arcturus">
-    <jump>Goddard</jump>
+   <sys name="Arcanis">
+    <jump>Raelid</jump>
+    <jump>Zylex</jump>
+   </sys>
+   <sys name="Zylex">
+    <jump>Arcanis</jump>
+    <jump>Doeston</jump>
+   </sys>
+   <sys name="Doeston">
+    <asset>Cerberus</asset>
+    <jump>Zylex</jump>
+   </sys>
+  </specific>
+ </outfit>
+ <outfit name="Map: Dvaered-Soromid trade route">
+  <general>
+   <mass>0</mass>
+   <price>30000</price>
+   <description>This map contains the main route between Dvaered and Soromid controlled space.</description>
+   <gfx_store>map</gfx_store>
+  </general>
+  <specific type="map">
+   <short_desc>A Star Map.</short_desc>
+   <sys name="Zacron">
+    <jump>Raelid</jump>
+   </sys>
+   <sys name="Raelid">
+    <jump>Zacron</jump>
+    <jump>Surano</jump>
+   </sys>
+   <sys name="Surano">
+    <jump>Raelid</jump>
+    <jump>Thorndyke</jump>
+   </sys>
+   <sys name="Thorndyke">
+    <jump>Surano</jump>
+    <jump>Pilatis</jump>
+   </sys>
+   <sys name="Pilatis">
+    <jump>Thorndyke</jump>
+    <jump>Defa</jump>
+   </sys>
+   <sys name="Defa">
+    <jump>Pilatis</jump>
+    <jump>Oberon</jump>
+   </sys>
+   <sys name="Oberon">
+    <asset>Soromid Customs Central</asset>
+    <jump>Defa</jump>
+   </sys>
+  </specific>
+ </outfit>
+ <outfit name="Map: Sirian border systems">
+  <general>
+   <mass>0</mass>
+   <price>15000</price>
+   <description>This map contains the systems that lead to Sirius controlled space.</description>
+   <gfx_store>map</gfx_store>
+  </general>
+  <specific type="map">
+   <short_desc>A Star Map.</short_desc>
+   <sys name="Nougat">
+    <jump>Esker</jump>
+   </sys>
+   <sys name="Esker">
+    <jump>Nougat</jump>
+    <asset>Fyruse Station</asset>
+    <asset>Esker I</asset>
+   </sys>
+   <sys name="Fidelis">
+    <jump>Eye of Night</jump>
+   </sys>
+   <sys name="Eye of Night">
+    <jump>Fidelis</jump>
+    <asset>Inios Station</asset>
+    <asset>Eye of Night III</asset>
+   </sys>
+  </specific>
+ </outfit>
+ <outfit name="Map: The Frontier">
+  <general>
+   <mass>0</mass>
+   <price>50000</price>
+   <description>This map contains the location of all eleven Frontier worlds, plus the Frontier Council.</description>
+   <gfx_store>map</gfx_store>
+  </general>
+  <specific type="map">
+   <short_desc>A Star Map.</short_desc>
+   <sys name="Theras">
+    <asset>Cetrat</asset>
+   </sys>
+   <sys name="Gilligan's Light">
+    <asset>Dawn</asset>
+    <asset>The Frontier Council</asset>
+   </sys>
+   <sys name="Haleb">
+    <asset>Jorlan</asset>
+   </sys>
+   <sys name="Norpin">
+    <asset>New Dortmund</asset>
+   </sys>
+   <sys name="Triap">
+    <asset>Khelim</asset>
+   </sys>
+   <sys name="Brimstone">
+    <asset>Nonuri</asset>
+   </sys>
+   <sys name="Shickhaw">
+    <asset>Avoss</asset>
+   </sys>
+   <sys name="Andee">
+    <asset>Varaati</asset>
+   </sys>
+   <sys name="Karman">
+    <asset>Atalanta</asset>
+   </sys>
+   <sys name="Gyrios">
+    <asset>Lapra</asset>
+    <asset>Jaegnhild</asset>
+   </sys>
+  </specific>
+ </outfit>
+ <outfit name="Map: Sol">
+  <general>
+   <mass>0</mass>
+   <price>100000</price>
+   <description>This map contains the location of the Sol system. Nothing is known about this system other than its location.</description>
+   <gfx_store>map</gfx_store>
+  </general>
+  <specific type="map">
+   <short_desc>A Star Map.</short_desc>
+   <sys name="Sol">
+   </sys>
+  </specific>
+ </outfit>
+ <outfit name="Map: Dvaered Core">
+  <general>
+   <mass>0</mass>
+   <price>25000</price>
+   <description>This map lists the locations of all the Dvaered worlds and stations close to the Dvaered capital.</description>
+   <gfx_store>map</gfx_store>
+  </general>
+  <specific type="map">
+   <short_desc>A Star Map.</short_desc>
+   <sys name="Dvaer">
+    <jump>Beeklo</jump>
+    <jump>Radix</jump>
+    <jump>Urbanus</jump>
+    <jump>Gremlin</jump>
+    <asset>Dvaer Prime</asset>
+    <asset>Dvaered High Command</asset>
+    <asset>Dvaer II</asset>
+    <asset>Eist Shipyard</asset>
+    <asset>Dvaer III</asset>
+    <asset>Dvaer IIIa</asset>
+    <asset>Dvaer IV</asset>
+    <asset>Laarss</asset>
+   </sys>
+   <sys name="Gremlin">
+    <jump>Dvaer</jump>
+   </sys>
+   <sys name="Urbanus">
+    <jump>Dvaer</jump>
+    <asset>Urbanus Crops</asset>
+    <asset>Onyx Shipyard</asset>
+    <asset>Trincea</asset>
+   </sys>
+   <sys name="Radix">
+    <jump>Dvaer</jump>
+    <asset>Myuirr Station</asset>
+    <asset>Stutee</asset>
+   </sys>
+   <sys name="Beeklo">
+    <jump>Dvaer</jump>
+    <asset>Inios Station</asset>
+    <asset>Totoran</asset>
+    <asset>Icarus</asset>
+    <asset>Adham</asset>
+    <asset>Diabolos</asset>
+   </sys>
+  </specific>
+ </outfit>
+ <outfit name="Map: Pirate strongholds">
+  <general>
+   <mass>0</mass>
+   <price>100000</price>
+   <description>This map contains the location of the Pirate strongholds. Top secret!</description>
+   <gfx_store>map</gfx_store>
+  </general>
+  <specific type="map">
+   <short_desc>A Star Map.</short_desc>
+   <sys name="New Haven">
+    <asset>New Haven</asset>
+   </sys>
+   <sys name="Kretogg">
+    <asset>Vorca</asset>
+    <asset>Warden's End</asset>
    </sys>
   </specific>
  </outfit>
