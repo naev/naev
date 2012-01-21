@@ -299,17 +299,17 @@ static void sysedit_editPntClose( unsigned int wid, char *unused )
    char *inp;
 
    p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
-   p->population = (uint64_t)strtoull(window_getInput( sysedit_widEdit, "inpPop" ), 0, 10);
-   p->class      = planetclass_get( window_getInput( sysedit_widEdit, "inpClass" )[0] );
+   p->population     = (uint64_t)strtoull(window_getInput( sysedit_widEdit, "inpPop" ), 0, 10);
+   p->class          = planetclass_get( window_getInput( sysedit_widEdit, "inpClass" )[0] );
    inp = window_getInput( sysedit_widEdit, "inpLand" );
    if (inp == NULL || strlen(inp) == 0)
       free( p->land_func );
    else
       p->land_func = strdup( inp );
    p->presenceAmount = atof(window_getInput( sysedit_widEdit, "inpPresence" ));
-   p->presenceRange = atoi(window_getInput( sysedit_widEdit, "inpPresenceRange" ));
-   p->hide = atof(window_getInput( sysedit_widEdit, "inpHide" ));
-   p->onMap = atoi(window_getInput( sysedit_widEdit, "inpOnMap" ));
+   p->presenceRange  = atoi(window_getInput( sysedit_widEdit, "inpPresenceRange" ));
+   p->hide           = atof(window_getInput( sysedit_widEdit, "inpHide" ));
+   p->onMap          = atoi(window_getInput( sysedit_widEdit, "inpOnMap" ));
 
    window_close( wid, unused );
 }
@@ -323,8 +323,8 @@ static void sysedit_editJumpClose( unsigned int wid, char *unused )
    JumpPoint *j;
 
    j = &sysedit_sys->jumps[ sysedit_select[0].u.jump ];
-   j->type = atoi(window_getInput( sysedit_widEdit, "inpType" ));
-   j->hide = atof(window_getInput( sysedit_widEdit, "inpHide" ));
+   j->type  = atoi(window_getInput( sysedit_widEdit, "inpType" ));
+   j->hide  = atof(window_getInput( sysedit_widEdit, "inpHide" ));
    j->onMap = atoi(window_getInput( sysedit_widEdit, "inpOnMap" ));
 
    window_close( wid, unused );
