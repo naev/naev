@@ -139,6 +139,10 @@ void faction_clearKnown()
          faction_rmFlag( &faction_stack[i], FACTION_KNOWN );
 }
 
+
+/**
+ * @brief Returns a pointer to a faction
+ */
 Faction* faction_pointer( int n )
 {
    return &faction_stack[n];
@@ -1156,7 +1160,7 @@ int pfaction_load( xmlNodePtr parent )
                         continue;
                      }
                      if (xml_isNode(sub,"known")) {
-                        faction_setFlag(faction_pointer(faction), FACTION_KNOWN);
+                        faction_setFlag(&faction_stack[faction], FACTION_KNOWN);
                         continue;
                      }
                   } while (xml_nextNode(sub));
