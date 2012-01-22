@@ -19,6 +19,7 @@
 #define FACTION_KNOWN         (1<<2) /**< Faction is known to the player. */
 
 #define faction_setFlag(fa,f) ((fa)->flags |= (f))
+#define faction_rmFlag(fa,f)  ((fa)->flags &= ~(f))
 #define faction_isFlag(fa,f)  ((fa)->flags & (f))
 #define faction_isKnown(fa)   ((fa)->flags & (FACTION_KNOWN))
 
@@ -100,6 +101,7 @@ int areAllies( int a, int b );
 int factions_load (void);
 void factions_free (void);
 void factions_reset (void);
+void faction_clearKnown(void);
 
 
 #endif /* FACTION_H */
