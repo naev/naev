@@ -2872,7 +2872,7 @@ static int pilotL_cargoList( lua_State *L )
 static int pilotL_getColour( lua_State *L )
 {
    Pilot *p;
-   glColour *col;
+   const glColour *col;
    LuaColour lc;
 
    /* Get the pilot. */

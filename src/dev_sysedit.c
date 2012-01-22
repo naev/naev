@@ -113,7 +113,7 @@ static void sysedit_buttonZoom( unsigned int wid, char* str );
 static void sysedit_render( double bx, double by, double w, double h, void *data );
 static void sysedit_renderBG( double bx, double bw, double w, double h, double x, double y);
 static void sysedit_renderSprite( glTexture *gfx, double bx, double by, double x, double y,
-      int sx, int sy, glColour *c, int selected, const char *caption );
+      int sx, int sy, const glColour *c, int selected, const char *caption );
 static void sysedit_renderOverlay( double bx, double by, double bw, double bh, void* data );
 static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, void *data );
@@ -536,7 +536,7 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
    Planet *p;
    JumpPoint *jp;
    double x,y, z;
-   glColour *c;
+   const glColour *c;
    int selected;
    Select_t sel;
 
@@ -648,10 +648,11 @@ static void sysedit_renderBG( double bx, double by, double w, double h, double x
  * @brief Renders a sprite for the custom widget.
  */
 static void sysedit_renderSprite( glTexture *gfx, double bx, double by, double x, double y,
-      int sx, int sy, glColour *c, int selected, const char *caption )
+      int sx, int sy, const glColour *c, int selected, const char *caption )
 {
    double tx, ty, z;
-   glColour cc, *col;
+   glColour cc;
+   const glColour *col;
 
    /* Comfort. */
    z  = sysedit_zoom;

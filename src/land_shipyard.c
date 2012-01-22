@@ -512,7 +512,7 @@ static void shipyard_renderSlotsRow( double bx, double by, double bw, char *str,
    (void) bw;
    int i;
    double x;
-   glColour *c;
+   const glColour *c;
 
    x = bx;
 

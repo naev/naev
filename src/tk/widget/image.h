@@ -17,7 +17,7 @@
  */
 typedef struct WidgetImageData_{
    glTexture* image; /**< Image to display. */
-   glColour* colour; /**< Colour to warp to. */
+   glColour colour; /**< Colour to warp to. */
    int border; /**< 1 if widget should have border. */
 } WidgetImageData;
 
@@ -32,7 +32,7 @@ void window_addImage( const unsigned int wid,
 void window_modifyImage( const unsigned int wid,
       char* name, glTexture* image, int w, int h );
 void window_imgColour( const unsigned int wid,
-      char* name, glColour* colour );
+      char* name, const glColour* colour );
 glTexture* window_getImage( const unsigned int wid, char* name );
 
 

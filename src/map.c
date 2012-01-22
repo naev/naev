@@ -731,7 +731,8 @@ void map_renderSystems( double bx, double by, double x, double y,
       double w, double h, double r, int editor)
 {
    int i, j, k;
-   glColour *col, c, *cole;
+   const glColour *col, *cole;
+   glColour c;
    GLfloat vertex[8*(2+4)];
    StarSystem *sys, *jsys;
    int sw, sh;
@@ -850,7 +851,7 @@ void map_renderSystems( double bx, double by, double x, double y,
 static void map_renderPath( double x, double y )
 {
    int j;
-   glColour *col;
+   const glColour *col;
    GLfloat vertex[8*(2+4)];
    StarSystem *jsys, *lsys;
    double fuel;

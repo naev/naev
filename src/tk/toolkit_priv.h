@@ -17,9 +17,9 @@
 /*
  * Colours to use.
  */
-extern glColour* toolkit_colLight;
-extern glColour* toolkit_col;
-extern glColour* toolkit_colDark;
+extern const glColour* toolkit_colLight;
+extern const glColour* toolkit_col;
+extern const glColour* toolkit_colDark;
 
 
 /**
@@ -189,12 +189,12 @@ void toolkit_prevFocus( Window *wdw );
 
 /* Render stuff. */
 void toolkit_drawOutline( int x, int y, int w, int h, int b,
-                          glColour* c, glColour* lc );
+                          const glColour* c, const glColour* lc );
 void toolkit_drawOutlineThick( int x, int y, int w, int h, int b,
-                          int thick, glColour* c, glColour* lc );
+                          int thick, const glColour* c, const glColour* lc );
 void toolkit_drawScrollbar( int x, int y, int w, int h, double pos );
 void toolkit_drawRect( int x, int y, int w, int h,
-                       glColour* c, glColour* lc );
+                       const glColour* c, const glColour* lc );
 void toolkit_drawAltText( int bx, int by, const char *alt );
 
 

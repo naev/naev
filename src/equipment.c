@@ -334,7 +334,8 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       int selected, Outfit *o, Pilot *p, CstSlotWidget *wgt )
 {
    int i, level;
-   glColour *c, *dc, bc;
+   const glColour *c, *dc;
+   glColour bc;
 
    /* Render text. */
    if ((o != NULL) && (lst[0].slot.type == o->slot.type))
@@ -505,7 +506,7 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
    double percent;
    double x, y;
    double w, h;
-   glColour *lc, *c, *dc;
+   const glColour *lc, *c, *dc;
 
    /* Must have selected ship. */
    if (eq_wgt.selected == NULL)
@@ -554,7 +555,8 @@ static void equipment_renderOverlayColumn( double x, double y, double w, double 
       int n, PilotOutfitSlot *lst, int mover, CstSlotWidget *wgt )
 {
    int i;
-   glColour *c, tc;
+   const glColour *c;
+   glColour tc;
    int text_width, xoff, yoff, top;
    const char *display;
    int subtitle;
@@ -752,7 +754,7 @@ static void equipment_renderShip( double bx, double by,
       double bw, double bh, double x, double y, Pilot* p )
 {
    int sx, sy;
-   glColour *lc, *c, *dc;
+   const glColour *lc, *c, *dc;
    unsigned int tick;
    double dt;
    double px, py;
@@ -1270,7 +1272,8 @@ static void equipment_genLists( unsigned int wid )
    char **quantity;
    Outfit *o;
    Pilot *s;
-   glColour *bg, *c, blend;
+   const glColour *c;
+   glColour *bg, blend;
    char **slottype;
    const char *typename;
 
@@ -1335,7 +1338,7 @@ static void equipment_genLists( unsigned int wid )
             c = outfit_slotSizeColour( &o->slot );
             if (c == NULL)
                c = &cBlack;
-            col_blend( &blend, *c, cGrey70, 0.4 );
+            col_blend( &blend, c, &cGrey70, 0.4 );
             memcpy( &bg[i], &blend, sizeof(glColour) );
 
             /* Short description. */

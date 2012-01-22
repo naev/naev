@@ -347,7 +347,7 @@ void osd_render (void)
    double p;
    int i, j, l;
    int w, x;
-   glColour *c;
+   const glColour *c;
 
    /* Nothing to render. */
    if (osd_list == NULL)

@@ -281,7 +281,7 @@ static void tab_render( Widget* tab, double bx, double by )
 {
    int i, x;
    Window *wdw;
-   glColour *c, *lc;
+   const glColour *c, *lc;
 
    /** Get window. */
    wdw = window_wget( tab->dat.tab.windows[ tab->dat.tab.active ] );

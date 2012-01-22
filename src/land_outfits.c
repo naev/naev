@@ -80,7 +80,8 @@ void outfits_open( unsigned int wid )
    int w, h;
    int iw, ih;
    int bw, bh;
-   glColour *bg, *c, blend;
+   glColour *bg, blend;
+   const glColour *c;
    char **slottype;
    const char *slotname;
 
@@ -156,7 +157,7 @@ void outfits_open( unsigned int wid )
          c = outfit_slotSizeColour( &outfits[i]->slot );
          if (c == NULL)
             c = &cBlack;
-         col_blend( &blend, *c, cGrey70, 0.4 );
+         col_blend( &blend, c, &cGrey70, 0.4 );
          memcpy( &bg[i], &blend, sizeof(glColour) );
 
          /* Get slot name. */

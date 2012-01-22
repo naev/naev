@@ -1496,7 +1496,7 @@ char planet_getColourChar( Planet *p )
 /**
  * @brief Gets the planet colour.
  */
-glColour* planet_getColour( Planet *p )
+const glColour* planet_getColour( Planet *p )
 {
    if (!planet_hasService( p, PLANET_SERVICE_INHABITED ))
       return &cInert;
@@ -2704,7 +2704,7 @@ void planets_render (void)
  */
 static void space_renderJumpPoint( JumpPoint *jp, int i )
 {
-   glColour *c;
+   const glColour *c;
 
    if (jp_isFlag( jp, JP_HIDDEN ) || jp_isFlag( jp, JP_EXITONLY ))
       return;

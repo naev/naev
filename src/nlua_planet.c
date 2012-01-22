@@ -510,7 +510,7 @@ static int planetL_faction( lua_State *L )
 static int planetL_colour( lua_State *L )
 {
    Planet *p;
-   glColour *col;
+   const glColour *col;
    LuaColour lc;
 
    p = luaL_validplanet(L,1);

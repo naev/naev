@@ -281,7 +281,7 @@ const char *outfit_slotSize( const Outfit* o )
  *    @param os Outfit slot to get the slot size colour of.
  *    @return The slot size colour of the outfit slot.
  */
-glColour *outfit_slotSizeColour( const OutfitSlot* os )
+const glColour *outfit_slotSizeColour( const OutfitSlot* os )
 {
    if (os->size == OUTFIT_SLOT_SIZE_HEAVY)
       return &cFontBlue;
