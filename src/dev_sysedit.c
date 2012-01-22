@@ -327,11 +327,11 @@ static void sysedit_editJumpClose( unsigned int wid, char *unused )
    j = &sysedit_sys->jumps[ sysedit_select[0].u.jump ];
    if (jp_hidden == 1) {
       jp_setFlag( j, JP_HIDDEN );
-      jp_rmFlag( j, JP_EXITONLY );
+      jp_rmFlag(  j, JP_EXITONLY );
    }
    else if (jp_exit == 1) {
       jp_setFlag( j, JP_EXITONLY );
-      jp_rmFlag( j, JP_HIDDEN );
+      jp_rmFlag(  j, JP_HIDDEN );
    }
    else {
       jp_rmFlag( j, JP_HIDDEN );
@@ -1216,7 +1216,7 @@ static void jp_type_check_hidden_update( unsigned int wid, char* str )
    (void) str;
    if (jp_hidden == 0) {
       jp_hidden = 1;
-      jp_exit = 0;
+      jp_exit   = 0;
    }
    else
       jp_hidden = 0;
@@ -1231,7 +1231,7 @@ static void jp_type_check_exit_update( unsigned int wid, char* str )
 {
    (void) str;
    if (jp_exit == 0) {
-      jp_exit = 1;
+      jp_exit   = 1;
       jp_hidden = 0;
    }
    else
@@ -1272,10 +1272,12 @@ static void sysedit_editJump( void )
    x = 20;
 
    /* Initial checkbox state */
+   jp_hidden = 0;
+   jp_exit   = 0;
    if (jp_isFlag( j, JP_HIDDEN ))
       jp_hidden = 1;
    else if (jp_isFlag( j, JP_EXITONLY ))
-      jp_exit = 1;
+      jp_exit   = 1;
    /* Create check boxes. */
    window_addCheckbox( wid, x, y, 100, 20,
          "chkHidden", "Hidden", jp_type_check_hidden_update, jp_hidden );
