@@ -127,6 +127,18 @@ int* faction_getKnown( int *n )
    return f;
 }
 
+/**
+ * @brief Clears the known factions.
+ */
+void faction_clearKnown()
+{
+   int i;
+
+   for ( i=0; i<faction_nstack; i++)
+      if ( faction_isKnown( &faction_stack[i] ))
+         faction_rmFlag( &faction_stack[i], FACTION_KNOWN );
+}
+
 Faction* faction_pointer( int n )
 {
    return &faction_stack[n];
