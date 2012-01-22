@@ -191,7 +191,7 @@ typedef struct SystemPresence_ {
 #define jp_isKnown(j)     jp_isFlag(j,JP_KNOWN) /**< Checks if jump is known. */
 #define jp_isFlag(j,f)    ((j)->flags & (f)) /**< Checks jump flag. */
 #define jp_setFlag(j,f)   ((j)->flags |= (f)) /**< Sets a jump flag. */
-#define jp_rmFlag(j,f)    ((j)->flags &= ~(f)) /**< Removes a system flag. */
+#define jp_rmFlag(j,f)    ((j)->flags &= ~(f)) /**< Removes a jump flag. */
 
 
 
