@@ -807,12 +807,12 @@ void map_renderSystems( double bx, double by, double x, double y,
          for (k=0; k<jsys->njumps; k++) {
             if (jsys->jumps[i].target == sys) {
                if (jp_isFlag(&sys->jumps[j], JP_EXITONLY))
-                  cole = &cRed;
+                  cole = &cWhite;
                break;
             }
          }
          if (jp_isFlag(&sys->jumps[j], JP_EXITONLY))
-            col = &cRed;
+            col = &cWhite;
          else
             col = &cBlue;
 
@@ -826,15 +826,15 @@ void map_renderSystems( double bx, double by, double x, double y,
          vertex[6]  = col->r;
          vertex[7]  = col->g;
          vertex[8]  = col->b;
-         vertex[9]  = 0.;
+         vertex[9]  = 0.2;
          vertex[10] = (col->r + cole->r)/2.;
          vertex[11] = (col->g + cole->g)/2.;
          vertex[12] = (col->b + cole->b)/2.;
-         vertex[13] = 1.;
+         vertex[13] = 0.8;
          vertex[14] = cole->r;
          vertex[15] = cole->g;
          vertex[16] = cole->b;
-         vertex[17] = 0.;
+         vertex[17] = 0.2;
          gl_vboSubData( map_vbo, 0, sizeof(GLfloat) * 3*(2+4), vertex );
          glDrawArrays( GL_LINE_STRIP, 0, 3 );
       }
