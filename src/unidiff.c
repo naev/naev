@@ -69,6 +69,8 @@ typedef enum UniHunkType_ {
    /* Target should be system. */
    HUNK_TYPE_ASSET_ADD,
    HUNK_TYPE_ASSET_REMOVE,
+   HUNK_TYPE_JUMP_ADD,
+   HUNK_TYPE_JUMP_REMOVE,
    HUNK_TYPE_FLEET_ADD,
    HUNK_TYPE_FLEET_REMOVE,
    HUNK_TYPE_FLEETGROUP_ADD,
@@ -87,6 +89,7 @@ typedef struct UniHunk_ {
    UniHunkTarget_t target; /**< Hunk's target. */
 
    UniHunkType_t type; /**< Type of hunk it is. */
+   xmlNodePtr node; /**< Parent node. */
    union {
       char *name;
       Fleet *fleet;
@@ -285,6 +288,34 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
             diff_hunkSuccess( diff, &hunk );
          continue;
       }
+      else if (xml_isNode(cur,"jump")) {
+         hunk.target.type = base.target.type;
+         hunk.target.u.name = strdup(base.target.u.name);
+
+         /* Get the jump point to modify. */
+         xmlr_attr(cur,"target",hunk.u.name);
+
+         /* Get the type. */
+         xmlr_attr(cur,"type",buf);
+         if (buf==NULL) {
+            WARN("Unidiff '%s': Null hunk type.", diff->name);
+            continue;
+         }
+
+         if (strcmp(buf,"add")==0)
+            hunk.type = HUNK_TYPE_JUMP_ADD;
+         else if (strcmp(buf,"remove")==0)
+            hunk.type = HUNK_TYPE_JUMP_REMOVE;
+
+         hunk.node = cur;
+
+         /* Apply diff. */
+         if (diff_patchHunk( &hunk ) < 0)
+            diff_hunkFailed( diff, &hunk );
+         else
+            diff_hunkSuccess( diff, &hunk );
+         continue;
+      }
       else if (xml_isNode(cur, "fleet")) {
          hunk.target.type = base.target.type;
          hunk.target.u.name = strdup(base.target.u.name);
@@ -442,6 +473,12 @@ static int diff_patch( xmlNodePtr parent )
             case HUNK_TYPE_ASSET_REMOVE:
                WARN("   [%s] asset remove: '%s'", target, fail->u.name);
                break;
+            case HUNK_TYPE_JUMP_ADD:
+               WARN("   [%s] jump add: '%s'", target, fail->u.name);
+               break;
+            case HUNK_TYPE_JUMP_REMOVE:
+               WARN("   [%s] jump remove: '%s'", target, fail->u.name);
+               break;
 #if 0
             case HUNK_TYPE_FLEET_ADD:
                WARN("   [%s] fleet add: '%s' (%d%% chance)", target,
@@ -492,12 +529,19 @@ static int diff_patchHunk( UniHunk_t *hunk )
 {
    switch (hunk->type) {
 
-      /* Adding a asset. */
+      /* Adding an asset. */
       case HUNK_TYPE_ASSET_ADD:
          return system_addPlanet( system_get(hunk->target.u.name), hunk->u.name );
-      /* Removing a asset. */
+      /* Removing an asset. */
       case HUNK_TYPE_ASSET_REMOVE:
          return system_rmPlanet( system_get(hunk->target.u.name), hunk->u.name );
+
+      /* Adding a Jump. */
+      case HUNK_TYPE_JUMP_ADD:
+         return system_addJump( system_get(hunk->target.u.name), hunk->node );
+      /* Removing a jump. */
+      case HUNK_TYPE_JUMP_REMOVE:
+         return system_rmJump( system_get(hunk->target.u.name), hunk->u.name );
 
       /* Adding a fleet. */
       case HUNK_TYPE_FLEET_ADD:
@@ -638,6 +682,13 @@ static int diff_removeDiff( UniDiff_t *diff )
             hunk.type = HUNK_TYPE_ASSET_ADD;
             break;
 
+         case HUNK_TYPE_JUMP_ADD:
+            hunk.type = HUNK_TYPE_JUMP_REMOVE;
+            break;
+         case HUNK_TYPE_JUMP_REMOVE:
+            hunk.type = HUNK_TYPE_JUMP_ADD;
+            break;
+
          case HUNK_TYPE_FLEET_ADD:
             hunk.type = HUNK_TYPE_FLEET_REMOVE;
             break;
@@ -705,6 +756,8 @@ static void diff_cleanupHunk( UniHunk_t *hunk )
    switch (hunk->type) {
       case HUNK_TYPE_ASSET_ADD:
       case HUNK_TYPE_ASSET_REMOVE:
+      case HUNK_TYPE_JUMP_ADD:
+      case HUNK_TYPE_JUMP_REMOVE:
       case HUNK_TYPE_TECH_ADD:
       case HUNK_TYPE_TECH_REMOVE:
          if (hunk->u.name != NULL)

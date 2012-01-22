@@ -778,7 +778,8 @@ void pilot_distress( Pilot *p, const char *msg, int ignore_int )
             (!ignore_int && pilot_inRangePilot(p, pilot_stack[i]))) {
 
          /* Send AI the distress signal. */
-         if (pilot_stack[i]->ai != NULL)
+         if ((pilot_stack[i]->ai != NULL) &&
+               !pilot_isFlag(pilot_stack[i], PILOT_DEAD))
             ai_getDistress( pilot_stack[i], p );
 
          /* Check if should take faction hit. */
@@ -862,9 +863,9 @@ int pilot_getJumps( const Pilot* p )
  *    @param p Pilot to get colour of.
  *    @return The colour of the pilot.
  */
-glColour* pilot_getColour( const Pilot* p )
+const glColour* pilot_getColour( const Pilot* p )
 {
-   glColour *col;
+   const glColour *col;
 
    if (pilot_inRangePilot(player.p, p) == -1) col = &cMapNeutral;
    else if (pilot_isDisabled(p) || pilot_isFlag(p,PILOT_DEAD)) col = &cInert;
@@ -913,6 +914,9 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter, const Da
    if (pilot_isFlag( p, PILOT_INVINCIBLE) ||
          pilot_isFlag( p, PILOT_INVISIBLE))
       return 0.;
+
+   /* Reset disable timer. */
+   p->dtimer_accum = 0.;
 
    /* Defaults. */
    pshooter       = NULL;
@@ -1310,7 +1314,7 @@ void pilot_renderOverlay( Pilot* p, const double dt )
  */
 void pilot_update( Pilot* pilot, const double dt )
 {
-   int i;
+   int i, n;
    unsigned int l;
    Pilot *target;
    double a, px,py, vx,vy;
@@ -1340,6 +1344,7 @@ void pilot_update( Pilot* pilot, const double dt )
    for (i=0; i<MAX_AI_TIMERS; i++)
       if (pilot->timer[i] > 0.)
          pilot->timer[i] -= dt;
+   n = 0;
    /* Update heat. */
    a = -1.;
    Q = 0.;
@@ -1349,12 +1354,28 @@ void pilot_update( Pilot* pilot, const double dt )
       /* Picky about our outfits. */
       if (o->outfit == NULL)
          continue;
-      if (!o->active || outfit_isMod(o->outfit))
+      if (!o->active)
          continue;
 
       /* Handle firerate timer. */
       if (o->timer > 0.)
          o->timer -= dt * pilot_heatFireRateMod( o->heat_T );
+
+      /* Handle state timer. */
+      if (o->stimer >= 0.) {
+         o->stimer -= dt;
+         if (o->stimer < 0.) {
+            if (o->state == PILOT_OUTFIT_ON) {
+               o->stimer = outfit_cooldown( o->outfit );
+               o->state  = PILOT_OUTFIT_COOLDOWN;
+               n++;
+            }
+            else if (o->state == PILOT_OUTFIT_COOLDOWN) {
+               o->state  = PILOT_OUTFIT_OFF;
+               n++;
+            }
+         }
+      }
 
       /* Handle heat. */
       Q  += pilot_heatUpdateSlot( pilot, o, dt );
@@ -1362,6 +1383,10 @@ void pilot_update( Pilot* pilot, const double dt )
       /* Handle lockons. */
       pilot_lockUpdateSlot( pilot, o, target, &a, dt );
    }
+
+   /* Must recalculate stats because something changed state. */
+   if (n > 0)
+      pilot_calcStats( pilot );
 
    /* Global heat. */
    pilot_heatUpdateShip( pilot, Q, dt );
@@ -2464,14 +2489,17 @@ void pilot_clearTimers( Pilot *pilot )
    int i;
    PilotOutfitSlot *o;
 
-   pilot->ptimer = 0.;
-   pilot->tcontrol = 0.;
+   pilot->ptimer     = 0.; /* Pilot timer. */
+   pilot->tcontrol   = 0.; /* AI control timer. */
+   pilot->stimer     = 0.; /* Shield timer. */
+   pilot->dtimer     = 0.; /* Disable timer. */
    for (i=0; i<MAX_AI_TIMERS; i++)
-      pilot->timer[i] = 0.;
+      pilot->timer[i] = 0.; /* Specific AI timers. */
    for (i=0; i<pilot->noutfits; i++) {
       o = pilot->outfits[i];
-      if (o->timer > 0.)
-         o->timer = 0.;
+      o->timer    = 0.; /* Last used timer. */
+      o->stimer   = 0.; /* State timer. */
+      o->state    = PILOT_OUTFIT_OFF; /* Set off. */
    }
 }
 

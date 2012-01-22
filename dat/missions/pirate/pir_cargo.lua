@@ -41,7 +41,7 @@ end
 
 -- Create the mission
 function create()
-   -- Note: this mission does not make any mission claims. 
+   -- Note: this mission does not make any system claims. 
 
    -- target destination
    local planets = {} 

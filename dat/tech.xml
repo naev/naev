@@ -119,7 +119,13 @@
   <item>Power Regulation Override</item>
   <item>Improved Power Regulator</item>
   <item>Improved Refrigeration Cycle</item>
-  <item>Star Map</item>
+  <item>Map: Nebula Edge</item>
+  <item>Map: Dvaered-Soromid trade route</item>
+  <item>Map: Sirian border systems</item>
+  <item>Map: The Frontier</item>
+  <item>Map: Sol</item>
+  <item>Map: Dvaered Core</item>
+  <item>Map: Pirate strongholds</item>
   <item>Unicorp Scrambler</item>
   <item>Milspec Scrambler</item>
   <item>Unicorp Jammer</item>
@@ -398,7 +404,7 @@
   <item>Battery</item>
   <item>Solar Panel</item>
   <item>Fuel Pod</item>
-  <item>Star Map</item>
+  <item>Star Maps</item>
   <item>Large Civilian Vessel License</item>
   <item>GUI - Brushed</item>
   </tech>
@@ -414,7 +420,7 @@
   <item>Generic Afterburner</item>
   <item>Cargo Pod</item>
   <item>Boarding Androids MKI</item>
-  <item>Star Map</item>
+  <item>Star Maps</item>
   <item>Unicorp Scrambler</item>
   <item>Unicorp Jammer</item>
   <item>Large Civilian Vessel License</item>
@@ -458,7 +464,7 @@
   <item>Cargo Pod</item>
   <item>Boarding Androids MKI</item>
   <item>Boarding Androids MKII</item>
-  <item>Star Map</item>
+  <item>Star Maps</item>
   <item>Unicorp Scrambler</item>
   <item>Unicorp Jammer</item>
   <item>Light Combat Vessel License</item>
@@ -484,7 +490,7 @@
   <item>Targeting Array</item>
   <item>Forward Shock Absorbers</item>
   <item>Power Regulation Override</item>
-  <item>Star Map</item>
+  <item>Star Maps</item>
   <item>Unicorp Scrambler</item>
   <item>Unicorp Jammer</item>
   <item>Lancelot Fighter Bay</item>
@@ -503,7 +509,7 @@
   <item>Hellburner</item>
   <item>Improved Power Regulator</item>
   <item>Improved Refrigeration Cycle</item>
-  <item>Star Map</item>
+  <item>Star Maps</item>
   <item>Milspec Scrambler</item>
   <item>Milspec Jammer</item>
   <item>Lancelot Fighter Bay</item>
@@ -529,6 +535,14 @@
   <item>Spearhead Missile</item>
   <item>TeraCom Medusa Launcher</item>
   <item>Medusa Missile</item>
+ </tech>
+ <tech name="Star Maps">
+  <item>Map: Nebula Edge</item>
+  <item>Map: Dvaered-Soromid trade route</item>
+  <item>Map: Sirian border systems</item>
+  <item>Map: The Frontier</item>
+  <item>Map: Sol</item>
+  <item>Map: Dvaered Core</item>
  </tech>
 
  <!-- Ships -->

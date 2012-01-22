@@ -53,7 +53,7 @@ end
 function land()
     if planet.cur() == planet.get("Rin") then
         if not (player.misnActive("Tutorial Mission") or player.misnDone("Tutorial Mission")) then
-            tutNPC = evt.npcAdd("NPC", "Tutorial employee", "thief1", "This person has a mission for you!")
+            tutNPC = evt.npcAdd("NPC", "Tutorial employee", "neutral/thief1", "This person has a mission for you!")
         end
     end
 end

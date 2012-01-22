@@ -633,7 +633,7 @@ static int playerL_allowLand( lua_State *L )
  * @usage player.landWindow( "outfits" )
  *    @luaparam winname Name of the window.
  *    @luareturn True on success.
- * @luafunc landwindow( winname )
+ * @luafunc landWindow( winname )
  */
 static int playerL_landWindow( lua_State *L )
 {
@@ -1048,6 +1048,7 @@ static int playerL_teleport( lua_State *L )
    hooks_run( "jumpin" );
    hooks_run( "enter" );
    events_trigger( EVENT_TRIGGER_ENTER );
+   missions_run( MIS_AVAIL_SPACE, -1, NULL, NULL );
 
    /* Reset targets when teleporting */
    player_targetPlanetSet( -1 );

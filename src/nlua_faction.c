@@ -523,7 +523,7 @@ static int factionL_colour( lua_State *L )
 {
    int lf;
    LuaColour lc;
-   glColour *col;
+   const glColour *col;
    lf = luaL_validfaction(L,1);
    col = faction_getColour(lf);
    if (col == NULL)

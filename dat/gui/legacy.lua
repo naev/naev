@@ -283,7 +283,7 @@ function render_target ()
       return
    end
 
-   local det, fuz = pp:inrange(ptarget)
+   local det, scan = pp:inrange(ptarget)
 
    -- Must be detected
    if not det then
@@ -295,7 +295,7 @@ function render_target ()
    arm, shi, stress, dis = ptarget:health()
 
    -- Get colour
-   if dis or fuz then
+   if dis or not scan then
       col = col_gray
    else
       col = ptarget:colour()
@@ -303,7 +303,7 @@ function render_target ()
 
    -- Render target graphic
    local x, y
-   if fuz then
+   if not scan then
       str = "Unknown"
       w = gfx.printDim( true, str )
       x = target_x + (target_w - w)/2
@@ -317,7 +317,7 @@ function render_target ()
 
    -- Display name
    local name
-   if fuz then
+   if not scan then
       name = "Unknown"
    else
       name = ptarget:name()
@@ -326,14 +326,14 @@ function render_target ()
    gfx.print( w > target_w, name, target_x, target_y-13, col, target_w )
 
    -- Display faction
-   if not fuz then
+   if scan then
       local faction = target_fact:name()
       local w = gfx.printDim( nil, faction )
       gfx.print( true, faction, target_x, target_y-26, col_white, target_w )
    end
 
    -- Display health
-   if not fuz then
+   if scan then
       local str
       if dis then
          str = "Disabled"
@@ -346,7 +346,7 @@ function render_target ()
    end
 
    -- Render faction logo.
-   if not fuz and target_gfxFact ~= nil then
+   if scan and target_gfxFact ~= nil then
       gfx.renderTex( target_gfxFact, target_x + target_w - target_gf_w - 3, target_y - target_gf_h + 3 )
    end
 end

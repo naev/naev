@@ -39,7 +39,7 @@ extern glFont gl_defFontMono; /**< Default mono font. */
  * @brief Evil hack to allow restoring, yes it makes me cry myself to sleep.
  */
 typedef struct glFontRestore_s {
-   glColour *col; /**< Colour to restore. */
+   const glColour *col; /**< Colour to restore. */
 } glFontRestore;
 
 
@@ -67,7 +67,7 @@ int gl_printMidRaw( const glFont *ft_font, const int width,
 int gl_printTextRaw( const glFont *ft_font,
       const int width, const int height,
       double bx, double by,
-      glColour* c, const char *text );
+      const glColour* c, const char *text );
 
 
 /*
@@ -88,7 +88,7 @@ int gl_printMid( const glFont *ft_font, const int width,
 int gl_printText( const glFont *ft_font,
       const int width, const int height,
       double bx, double by,
-      glColour* c, const char *fmt, ... );
+      const glColour* c, const char *fmt, ... );
 
 
 /* Dimension stuff. */

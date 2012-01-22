@@ -277,7 +277,7 @@ static int mission_meetReq( int mission, int faction,
       return 0;
 
    /* Match faction. */
-   if (!mission_matchFaction(misn,faction))
+   if ((faction >= 0) && !mission_matchFaction(misn,faction))
       return 0;
 
    /* Must not be already done or running if unique. */
@@ -323,19 +323,19 @@ void missions_run( int loc, int faction, const char* planet, const char* sysname
 
    for (i=0; i<mission_nstack; i++) {
       misn = &mission_stack[i];
-      if (misn->avail.loc==loc) {
+      if (misn->avail.loc != loc)
+         continue;
 
-         if (!mission_meetReq(i, faction, planet, sysname))
-            continue;
+      if (!mission_meetReq(i, faction, planet, sysname))
+         continue;
 
-         chance = (double)(misn->avail.chance % 100)/100.;
-         if (chance == 0.) /* We want to consider 100 -> 100% not 0% */
-            chance = 1.;
+      chance = (double)(misn->avail.chance % 100)/100.;
+      if (chance == 0.) /* We want to consider 100 -> 100% not 0% */
+         chance = 1.;
 
-         if (RNGF() < chance) {
-            mission_init( &mission, misn, 1, 1, NULL );
-            mission_cleanup(&mission); /* it better clean up for itself or we do it */
-         }
+      if (RNGF() < chance) {
+         mission_init( &mission, misn, 1, 1, NULL );
+         mission_cleanup(&mission); /* it better clean up for itself or we do it */
       }
    }
 }
@@ -746,6 +746,7 @@ static int mission_location( const char* loc )
    else if (strcmp(loc,"Shipyard")==0) return MIS_AVAIL_SHIPYARD;
    else if (strcmp(loc,"Land")==0) return MIS_AVAIL_LAND;
    else if (strcmp(loc,"Commodity")==0) return MIS_AVAIL_COMMODITY;
+   else if (strcmp(loc,"Space")==0) return MIS_AVAIL_SPACE;
    return -1;
 }
 

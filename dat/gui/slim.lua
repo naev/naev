@@ -400,7 +400,7 @@ function render_armourBar( name, value, stress_value, txt, txtcol, size, col, bg
       gfx.renderTex( l_bg, l_x + offsets[1], l_y + 2)
    end
    if not value then value = 100 end
-   if not stress_value then stress_value = 100 end
+   if not stress_value then stress_value = 0 end
    if bgc then gfx.renderRect( l_x + offsets[1], l_y + 2, l_bar_w, l_bar_h, bgc ) end
    gfx.renderRect( l_x + offsets[1], l_y + 2, value/100. * l_bar_w, l_bar_h, l_col )
    gfx.renderRect( l_x + offsets[1], l_y + 2, (stress_value/100) * (value/100) * l_bar_w, l_bar_h, col_stress )
@@ -606,13 +606,13 @@ function render( dt, dt_mod )
 
    --Target Pane
    if ptarget then
-      ta_detect, ta_fuzzy = pp:inrange( ptarget )
+      ta_detect, ta_scanned = pp:inrange( ptarget )
       if ta_detect then
          --Frame
          gfx.renderTex( target_pane, ta_pane_x, ta_pane_y )
          gfx.renderTex( target_bg, ta_image_x, ta_image_y )
 
-         if not ta_fuzzy then
+         if ta_scanned then
             ptarget_target = ptarget:target()
             ta_armour, ta_shield, ta_stress, ta_disabled = ptarget:health()
             tflags = ptarget:flags()
@@ -641,7 +641,7 @@ function render( dt, dt_mod )
 
          --Text, warning light & other texts
          local htspeed = round(ta_speed / ta_stats.speed_max * 100,0)
-         if not ta_fuzzy then
+         if ta_scanned then
             --Bar Texts
             shi = tostring( round(ta_shield) ) .. "% (" .. tostring(round(ta_stats.shield  * ta_shield / 100)) .. ")"
             arm = tostring( round(ta_armour) ) .. "% (" .. tostring(round(ta_stats.armour  * ta_armour / 100)) .. ")"
@@ -703,7 +703,7 @@ function render( dt, dt_mod )
          else
             -- Unset stats.
             shi, ene, arm = nil
-            ta_shield, ta_armour, ta_energy = nil
+            ta_shield, ta_armour, ta_energy, ta_stress = nil
 
             --Bar Texts
             spe = round(ta_speed)

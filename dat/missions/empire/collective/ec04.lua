@@ -80,6 +80,7 @@ function create ()
 
       hook.enter("enter")
       hook.land("land")
+      hook.load("load")
    end
 end
 
@@ -130,6 +131,7 @@ function enter()
         hook.timer(500, "proximity", {location = misn_target:pos(), radius = 3000, funcname = "idle"})
 
         misn_stage = 1
+        misn.osdActive(2)
     elseif system.cur() == misn_target_sys and misn_stage == 2 then
         -- Case taken off from the planet
         pilot.clear()
@@ -154,9 +156,11 @@ function enter()
         end
 
         player.allowLand(false, land_msg)
+        misn.osdActive(3)
     elseif misn_stage == 1 then
         -- Case jumped back out without landing
         misn_stage = 0
+        misn.osdActive(1)
     elseif misn_stage == 2 then
         -- Case jumped out after landing
         misn_stage = 3
@@ -236,5 +240,14 @@ function land ()
       faction.modPlayerSingle("Empire",5)
 
       misn.finish(true)
+   end
+end
+
+-- Load hook. Makes sure the player doesn't start landed.
+function load()
+   if planet.cur() == misn_target then
+      tk.msg( title[2], text[3] )
+      tk.msg( title[2], text[5] )
+      player.takeoff()
    end
 end

@@ -67,6 +67,7 @@ static int pilotL_target( lua_State *L );
 static int pilotL_inrange( lua_State *L );
 static int pilotL_nav( lua_State *L );
 static int pilotL_weapset( lua_State *L );
+static int pilotL_actives( lua_State *L );
 static int pilotL_outfits( lua_State *L );
 static int pilotL_rename( lua_State *L );
 static int pilotL_position( lua_State *L );
@@ -83,6 +84,7 @@ static int pilotL_setFaction( lua_State *L );
 static int pilotL_setHostile( lua_State *L );
 static int pilotL_setFriendly( lua_State *L );
 static int pilotL_setInvincible( lua_State *L );
+static int pilotL_setInvincPlayer( lua_State *L );
 static int pilotL_setInvisible( lua_State *L );
 static int pilotL_setVisplayer( lua_State *L );
 static int pilotL_setVisible( lua_State *L );
@@ -144,6 +146,7 @@ static const luaL_reg pilotL_methods[] = {
    { "inrange", pilotL_inrange },
    { "nav", pilotL_nav },
    { "weapset", pilotL_weapset },
+   { "actives", pilotL_actives },
    { "outfits", pilotL_outfits },
    { "rename", pilotL_rename },
    { "pos", pilotL_position },
@@ -174,6 +177,7 @@ static const luaL_reg pilotL_methods[] = {
    { "setHostile", pilotL_setHostile },
    { "setFriendly", pilotL_setFriendly },
    { "setInvincible", pilotL_setInvincible },
+   { "setInvincPlayer", pilotL_setInvincPlayer },
    { "setInvisible", pilotL_setInvisible },
    { "setVisplayer", pilotL_setVisplayer },
    { "setVisible", pilotL_setVisible },
@@ -230,6 +234,7 @@ static const luaL_reg pilotL_cond_methods[] = {
    { "inrange", pilotL_inrange },
    { "nav", pilotL_nav },
    { "weapset", pilotL_weapset },
+   { "actives", pilotL_actives },
    { "outfits", pilotL_outfits },
    { "pos", pilotL_position },
    { "vel", pilotL_velocity },
@@ -740,19 +745,43 @@ static int pilotL_clear( lua_State *L )
 /**
  * @brief Disables or enables pilot spawning in the current system.
  *
- * If player jumps the spawn is enabled again automatically.
+ * If player jumps the spawn is enabled again automatically. Global spawning takes priority over faction spawning.
  *
- * @usage pilot.togglespawn( false )
+ * @usage pilot.togglespawn() -- Defaults to flipping the global spawning (true->false and false->true)
+ * @usage pilot.togglespawn( false ) -- Disables global spawning
+ * @usage pliot.togglespawn( "Pirates" ) -- Defaults to disabling pirate spawning
+ * @usage pilot.togglespawn( "Pirates", true ) -- Turns on pirate spawning
  *
+ *    @luaparam fid Faction to enable or disable spawning off. If ommited it works on global spawning.
  *    @luaparam enable true enables spawn, false disables it.
  *    @luareturn The current spawn state.
- * @luafunc toggleSpawn( enable )
+ * @luafunc toggleSpawn( fid, enable )
  */
 static int pilotL_toggleSpawn( lua_State *L )
 {
+   int i, f, b;
+
    /* Setting it directly. */
-   if ((lua_gettop(L) > 0) && lua_isboolean(L,1))
-      space_spawn = lua_toboolean(L,1);
+   if (lua_gettop(L) > 0) {
+      if (lua_isfaction(L,1) || lua_isstring(L,1)) {
+
+         f = luaL_validfaction(L,1);
+         b = !lua_toboolean(L,2);
+
+         /* Find the faction and set. */
+         for (i=0; i<cur_system->npresence; i++) {
+            if (cur_system->presence[i].faction != f)
+               continue;
+            cur_system->presence[i].disabled = b;
+            break;
+         }
+
+      }
+      else if (lua_isboolean(L,1))
+         space_spawn = lua_toboolean(L,1);
+      else
+         NLUA_INVALID_PARAMETER(L);
+   }
    /* Toggling. */
    else
       space_spawn = !space_spawn;
@@ -980,7 +1009,7 @@ static int pilotL_target( lua_State *L )
 /**
  * @brief Checks to see if pilot is in range of pilot.
  *
- * @usage detected, fuzzy = p:inrange( target )
+ * @usage detected, scanned = p:inrange( target )
  *
  *    @luaparam p Pilot to see if another pilot is in range.
  *    @luareturn Checks to see if the target is detected and if it's scanned.
@@ -997,17 +1026,17 @@ static int pilotL_inrange( lua_State *L )
 
    /* Check if in range. */
    ret = pilot_inRangePilot( p, t );
-   if (ret == 1) {
+   if (ret == 1) { /* In range. */
       lua_pushboolean(L,1);
+      lua_pushboolean(L,1);
+   }
+   else if (ret == 0) { /* Not in range. */
+      lua_pushboolean(L,0);
       lua_pushboolean(L,0);
    }
-   else if (ret == 0) {
-      lua_pushboolean(L,0);
-      lua_pushboolean(L,0);
-   }
-   else {
+   else { /* Detected fuzzy. */
       lua_pushboolean(L,1);
-      lua_pushboolean(L,1);
+      lua_pushboolean(L,0);
    }
    return 2;
 }
@@ -1177,6 +1206,11 @@ static int pilotL_weapset( lua_State *L )
          if (level != level_match)
             continue;
 
+         /* Must be weapon. */
+         if (outfit_isJammer(o) ||
+               outfit_isMod(o))
+            continue;
+
          /* Set up for creation. */
          lua_pushnumber(L,++k);
          lua_newtable(L);
@@ -1274,6 +1308,115 @@ static int pilotL_weapset( lua_State *L )
       }
    }
    return 2;
+}
+
+
+/**
+ * @brief Gets the active outfits and their states of the pilot.
+ *
+ * The active outfits have the following structure: <br />
+ * <ul>
+ *  <li> name: Name of the set. <br />
+ *  <li> type: Type of the outfit. <br />
+ *  <li> state: State of the outfit, which can be one of { "off", "warmup", "on", "cooldown" }. <br />
+ *  <li> duration: Set only if state is "on". Indicates duration value (0 = just finished, 1 = just on). <br />
+ *  <li> cooldown: Set only if state is "cooldown". Indicates cooldown value (0 = just ending, 1 = just started cooling down). <br />
+ * </ul>
+ *
+ * An example would be:
+ * <pre><code>
+ * act_outfits = p:actives()
+ * print( "Weapnset Name: " .. ws_name )
+ * for _,o in ipairs(act_outfits) do
+ *    print( "Name: " .. o.name )
+ *    print( "State: " .. o.state )
+ * end
+ * </code></pre>
+ *
+ * @usage act_outfits = p:actives() -- Gets the table of active outfits
+ *
+ *    @luaparam p Pilot to get active outfits of.
+ *    @luareturn The table with each active outfit's information.
+ * @luafunc actives( p )
+ */
+static int pilotL_actives( lua_State *L )
+{
+   Pilot *p;
+   int i, k;
+   double d;
+   PilotOutfitSlot *o;
+   const char *str;
+
+   /* Parse parameters. */
+   p   = luaL_validpilot(L,1);
+
+   k = 0;
+   lua_newtable(L);
+   for (i=0; i<p->noutfits; i++) {
+
+      /* Get active outfits. */
+      o = p->outfits[i];
+      if (o->outfit == NULL)
+         continue;
+      if (!o->active)
+         continue;
+      if (!outfit_isJammer(o->outfit) &&
+            !outfit_isMod(o->outfit))
+         continue;
+
+      /* Set up for creation. */
+      lua_pushnumber(L,++k);
+      lua_newtable(L);
+
+      /* Name. */
+      lua_pushstring(L,"name");
+      lua_pushstring(L,o->outfit->name);
+      lua_rawset(L,-3);
+
+      /* Type. */
+      lua_pushstring(L, "type");
+      lua_pushstring(L, outfit_getType(o->outfit));
+      lua_rawset(L,-3);
+
+      /* State and timer. */
+      switch (o->state) {
+         case PILOT_OUTFIT_OFF:
+            str = "off";
+            break;
+         case PILOT_OUTFIT_WARMUP:
+            str = "warmup";
+            break;
+         case PILOT_OUTFIT_ON:
+            str = "on";
+            d = outfit_duration(o->outfit);
+            if (d==0.)
+               d = 1.;
+            else
+               d = o->stimer / d;
+            lua_pushstring(L,"duration");
+            lua_pushnumber(L, d );
+            lua_rawset(L,-3);
+            break;
+         case PILOT_OUTFIT_COOLDOWN:
+            str = "cooldown";
+            d = outfit_cooldown(o->outfit);
+            if (d==0.)
+               d = 0.;
+            else
+               d = o->stimer / d;
+            lua_pushstring(L,"cooldown");
+            lua_pushnumber(L, d );
+            lua_rawset(L,-3);
+            break;
+      }
+      lua_pushstring(L,"state");
+      lua_pushstring(L,str);
+      lua_rawset(L,-3);
+
+      /* Set table in table. */
+      lua_rawset(L,-3);
+   }
+   return 1;
 }
 
 
@@ -1714,6 +1857,41 @@ static int pilotL_setInvincible( lua_State *L )
       pilot_setFlag(p, PILOT_INVINCIBLE);
    else
       pilot_rmFlag(p, PILOT_INVINCIBLE);
+
+   return 0;
+}
+
+
+/**
+ * @brief Sets the pilot's invincibility status towards the player.
+ *
+ * @usage p:setInvincPlayer() -- p can not be hit by the player anymore
+ * @usage p:setInvincPlayer(true) -- p can not be hit by the player anymore
+ * @usage p:setInvincPlayer(false) -- p can be hit by the player again
+ *
+ *    @luaparam p Pilot to set invincibility status of (only affects player).
+ *    @luaparam state State to set invincibility, if omitted defaults to true.
+ * @luafunc setInvincPlayer( p, state )
+ */
+static int pilotL_setInvincPlayer( lua_State *L )
+{
+   Pilot *p;
+   int state;
+
+   /* Get the pilot. */
+   p = luaL_validpilot(L,1);
+
+   /* Get state. */
+   if (lua_gettop(L) > 1)
+      state = lua_toboolean(L, 2);
+   else
+      state = 1;
+
+   /* Set status. */
+   if (state)
+      pilot_setFlag(p, PILOT_INVINC_PLAYER);
+   else
+      pilot_rmFlag(p, PILOT_INVINC_PLAYER);
 
    return 0;
 }
@@ -2462,17 +2640,18 @@ lua_rawset( L, -3 )
  *  <li> cpu_max <br />
  *  <li> fuel <br />
  *  <li> fuel_max <br />
+ *  <li> mass <br />
  *  <li> thrust <br />
  *  <li> speed <br />
+ *  <li> speed_max <br />
  *  <li> turn <br />
+ *  <li> speed_max <br />
  *  <li> armour <br />
  *  <li> shield <br />
  *  <li> energy <br />
  *  <li> armour_regen <br />
  *  <li> shield_regen <br />
  *  <li> energy_regen <br />
- *  <li> jam_range <br />
- *  <li> jam_chance <br />
  *  <li> jump_delay <br />
  * </ul>
  *
@@ -2697,7 +2876,7 @@ static int pilotL_cargoList( lua_State *L )
 static int pilotL_getColour( lua_State *L )
 {
    Pilot *p;
-   glColour *col;
+   const glColour *col;
    LuaColour lc;
 
    /* Get the pilot. */
@@ -3323,7 +3502,7 @@ static int pilotL_hyperspace( lua_State *L )
  *
  * Pilot must be under manual control for this to work.
  *
- *    @luaparam p Pilot to tell to hyperspace.
+ *    @luaparam p Pilot to tell to land.
  *    @luaparam planet Optional planet to land on, uses random if nil.
  * @luasee control
  * @luafunc land( p, planet )

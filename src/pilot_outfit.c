@@ -24,6 +24,12 @@
 
 /**
  * @brief Updates the lockons on the pilot's launchers
+ *
+ *    @param p Pilot being updated.
+ *    @param o Slot being updated.
+ *    @param t Pilot that is currently the target of p (or NULL if not applicable).
+ *    @param a Angle to update if necessary. Should be initialized to -1 before the loop.
+ *    @param dt Current delta tick.
  */
 void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, double *a, double dt )
 {
@@ -97,6 +103,8 @@ void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, double *a, do
 
 /**
  * @brief Clears pilot's missile lockon timers.
+ *
+ *    @param p Pilot to clear missile lockon timers.
  */
 void pilot_lockClear( Pilot *p )
 {
@@ -442,6 +450,7 @@ int pilot_rmOutfit( Pilot* pilot, PilotOutfitSlot *s )
  * @brief Pilot sanity check - makes sure stats are sane.
  *
  *    @param p Pilot to check.
+ *    @return The reason why the pilot is not sane (or NULL if sane).
  */
 const char* pilot_checkSanity( Pilot *p )
 {
@@ -494,6 +503,10 @@ const char* pilot_checkSanity( Pilot *p )
 /**
  * @brief Checks to see if can equip/remove an outfit from a slot.
  *
+ *    @param p Pilot to check if can equip.
+ *    @param s Slot being checked to see if it can equip/remove an outfit.
+ *    @param o Outfit to check.
+ *    @param add Whether or not to consider it's being added or removed.
  *    @return NULL if can swap, or error message if can't.
  */
 const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o, int add )
@@ -727,8 +740,9 @@ int pilot_rmAmmo( Pilot* pilot, PilotOutfitSlot *s, int quantity )
  * @brief Gets all the outfits in nice text form.
  *
  *    @param pilot Pilot to get the outfits from.
+ *    @@return A list of all the outfits in a nice form.
  */
-char* pilot_getOutfits( Pilot* pilot )
+char* pilot_getOutfits( const Pilot* pilot )
 {
    int i;
    char *buf;
@@ -824,7 +838,7 @@ void pilot_calcStats( Pilot* pilot )
       pilot->mass_outfit   += o->mass;
 
       /* Active outfits must be on to affect stuff. */
-      if (slot->active && (slot->state==PILOT_OUTFIT_OFF))
+      if (slot->active && !(slot->state==PILOT_OUTFIT_ON))
          continue;
 
       if (outfit_isMod(o)) { /* Modification */
@@ -849,8 +863,8 @@ void pilot_calcStats( Pilot* pilot )
       else if (outfit_isAfterburner(o)) /* Afterburner */
          pilot->afterburner = pilot->outfits[i]; /* Set afterburner */
       else if (outfit_isJammer(o)) { /* Jammer */
-         pilot->jamming           = 1;
-         pilot->energy_regen     -= o->u.jam.energy;
+         pilot->jamming        = 1;
+         pilot->energy_regen  -= o->u.jam.energy;
       }
 
       /* Add ammo mass. */
@@ -875,8 +889,10 @@ void pilot_calcStats( Pilot* pilot )
     */
    s->ew_hide           = 1. + (s->ew_hide-1.) * exp( -0.2 * (double)(MAX(amount.ew_hide-1,0)) );
    s->ew_detect         = 1. + (s->ew_detect-1.) * exp( -0.2 * (double)(MAX(amount.ew_detect-1,0)) );
+   s->ew_jumpDetect     = 1. + (s->ew_jumpDetect-1.) * exp( -0.2 * (double)(MAX(amount.ew_jumpDetect-1,0)) );
    pilot->ew_base_hide  = s->ew_hide;
    pilot->ew_detect     = s->ew_detect;
+   pilot->ew_jumpDetect     = s->ew_jumpDetect;
    /* Fire rate:
     *  amount = p * exp( -0.15 * (n-1) )
     *  1x 15% -> 15%
@@ -932,6 +948,8 @@ void pilot_calcStats( Pilot* pilot )
 
 /**
  * @brief Updates the pilot stats after mass change.
+ *
+ *    @param pilot Pilot to update his mass.
  */
 void pilot_updateMass( Pilot *pilot )
 {

@@ -7,6 +7,23 @@
  * @file pilot_weapon.c
  *
  * @brief Handles pilot weapon sets.
+ *
+ * Cheat sheet: how this works (it's complicated).
+ *
+ * KEYPRESS
+ * 1) weapSetPress
+ * 2) weapSetFire
+ * 2.1) Modifications get turned on/off
+ * 2.2) Weapons go to shootWeaponSetOutfit
+ *
+ * UPDATE
+ * 1) weapSetUpdate
+ * 2.1) fire set => weapSetFire
+ * 2.1.1) Modifications get turned on/off
+ * 2.1.2) Weapons go to shootWeaponSetOutfit
+ * 2.2) weapsetUpdateOutfits
+ *
+ * So to actually modify stuff, chances are you want to go to pilot_weapSetFire.
  */
 
 
@@ -97,7 +114,8 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
       if (outfit_isMod(o)) {
          can_use = ((o->u.mod.energy_regen >= 0.) || !ooe);
          if ((ws->slots[i].slot->state == PILOT_OUTFIT_OFF) && can_use) {
-            ws->slots[i].slot->state = PILOT_OUTFIT_ON;
+            ws->slots[i].slot->state  = PILOT_OUTFIT_ON;
+            ws->slots[i].slot->stimer = outfit_duration( ws->slots[i].slot->outfit );
             recalc = 1;
          }
          else if (!can_use) {
@@ -147,6 +165,20 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
 
 
 /**
+ * @brief Useful function for AI, clears activeness of all weapon sets.
+ */
+void pilot_weapSetAIClear( Pilot* p )
+{
+   int i;
+   PilotWeaponSet *ws;
+   for (i=0; i<PILOT_WEAPON_SETS; i++) {
+      ws = &p->weapon_sets[i];
+      ws->active = 0;
+   }
+}
+
+
+/**
  * @brief Handles a weapon set press.
  *
  *    @param p Pilot the weapon set belongs to.
@@ -155,58 +187,104 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
  */
 void pilot_weapSetPress( Pilot* p, int id, int type )
 {
+   int i, l, on, n;
    PilotWeaponSet *ws;
 
    ws = pilot_weapSet(p,id);
 
    /* Handle fire groups. */
-   if (ws->fire) {
-      if (type > 0)
-         ws->active = 1;
-      else if (type < 0)
-         ws->active = 0;
+   switch (ws->type) {
+      case WEAPSET_TYPE_CHANGE:
+         /* On press just change active weapon set to whatever is available. */
+         if (type > 0) {
+            if (id != p->active_set)
+               pilot_weapSetUpdateOutfits( p, ws );
+            p->active_set = id;
+         }
+         break;
+
+      case WEAPSET_TYPE_WEAPON:
+         /* Activation philosophy here is to turn on while pressed and off
+          * when it's not held anymore. */
+         if (type > 0)
+            ws->active = 1;
+         else if (type < 0)
+            ws->active = 0;
+         break;
+
+      case WEAPSET_TYPE_ACTIVE:
+         /* The behaviour here is more complex. WHat we do is consider a group
+          * to be entirely off if not all outfits are either on or cooling down.
+          * In the case it's deemed to be off, all outfits that are off get turned
+          * on, otherwise all outfits that are on are turrned to cooling down. */
+         /* Only care about presses. */
+         if (type < 0)
+            break;
+
+         /* Decide what to do. */
+         on = 1;
+         l  = array_size(ws->slots);
+         for (i=0; i<l; i++) {
+            if (ws->slots[i].slot->state == PILOT_OUTFIT_OFF) {
+               on = 0;
+               break;
+            }
+         }
+
+         /* Turn them off. */
+         n = 0;
+         if (on) {
+            for (i=0; i<l; i++) {
+               if (ws->slots[i].slot->state != PILOT_OUTFIT_ON)
+                  continue;
+               ws->slots[i].slot->state  = PILOT_OUTFIT_COOLDOWN;
+               ws->slots[i].slot->stimer = outfit_cooldown( ws->slots[i].slot->outfit );
+               n++;
+            }
+         }
+         /* Turn them on. */
+         else {
+            for (i=0; i<l; i++) {
+               if (ws->slots[i].slot->state != PILOT_OUTFIT_OFF)
+                  continue;
+               ws->slots[i].slot->state  = PILOT_OUTFIT_ON;
+               ws->slots[i].slot->stimer = outfit_duration( ws->slots[i].slot->outfit );
+               n++;
+            }
+         }
+         /* Must recalculate stats. */
+         if (n > 0)
+            pilot_calcStats( p );
+
+         break;
    }
-   else if (type > 0)
-      pilot_weapSetExec( p, id );
 }
 
 
 /**
  * @brief Updates the pilot's weapon sets.
+ *
+ *    @param p Pilot to update.
  */
 void pilot_weapSetUpdate( Pilot* p )
 {
-   int i;
-
-   for (i=0; i<PILOT_WEAPON_SETS; i++)
-      if (p->weapon_sets[i].active)
-         pilot_weapSetExec( p, i );
-}
-
-
-/**
- * @brief Executes a weapon set.
- *
- * This sets the weapon set as active for active sets or fires them for fire sets.
- *
- *    @param p Pilot to manipulate.
- *    @param id ID of the weapon set.
- */
-void pilot_weapSetExec( Pilot* p, int id )
-{
    PilotWeaponSet *ws;
+   int i;
 
    /* Must not be doing hyperspace procedures. */
    if (pilot_isFlag( p, PILOT_HYP_BEGIN))
       return;
 
-   ws = pilot_weapSet(p,id);
-   if (ws->fire)
-      pilot_weapSetFire( p, ws, -1 );
-   else {
-      if (id != p->active_set)
-         pilot_weapSetUpdateOutfits( p, ws );
-      p->active_set = id;
+   for (i=0; i<PILOT_WEAPON_SETS; i++) {
+      ws = &p->weapon_sets[i];
+      if (ws->slots == NULL)
+         continue;
+
+      /* Weapons must get "fired" every turn. */
+      if (ws->type == WEAPSET_TYPE_WEAPON) {
+         if (ws->active)
+            pilot_weapSetFire( p, ws, -1 );
+      }
    }
 }
 
@@ -228,17 +306,17 @@ static void pilot_weapSetUpdateOutfits( Pilot* p, PilotWeaponSet *ws )
 
 
 /**
- * @brief Checks the current weapon set mode.
+ * @brief Checks the current weapon set type.
  *
  *    @param p Pilot to manipulate.
  *    @param id ID of the weapon set to check.
- *    @return The fire mode of the weapon set.
+ *    @return The type of the weapon set.
  */
-int pilot_weapSetModeCheck( Pilot* p, int id )
+int pilot_weapSetTypeCheck( Pilot* p, int id )
 {
    PilotWeaponSet *ws;
    ws = pilot_weapSet(p,id);
-   return ws->fire;
+   return ws->type;
 }
 
 
@@ -249,11 +327,23 @@ int pilot_weapSetModeCheck( Pilot* p, int id )
  *    @param id ID of the weapon set.
  *    @param fire Whether or not to enable fire mode.
  */
-void pilot_weapSetMode( Pilot* p, int id, int fire )
+void pilot_weapSetType( Pilot* p, int id, int type )
 {
+   int i;
    PilotWeaponSet *ws;
+
    ws = pilot_weapSet(p,id);
-   ws->fire = fire;
+   ws->type = type;
+
+   /* Set levels just in case. */
+   if (ws->slots == NULL)
+      return;
+
+   /* See if we must overwrite levels. */
+   if ((ws->type == WEAPSET_TYPE_WEAPON) ||
+         (ws->type == WEAPSET_TYPE_ACTIVE))
+      for (i=0; i<array_size(ws->slots); i++)
+         ws->slots[i].level = 0;
 }
 
 
@@ -288,34 +378,48 @@ void pilot_weapSetInrange( Pilot* p, int id, int inrange )
 
 
 /**
- * @brief Sets the weapon set name.
- *
- *    @param p Pilot to manipulate.
- *    @param id ID of the weapon set.
- *    @param name Name to set for the weapon set.
- */
-void pilot_weapSetNameSet( Pilot* p, int id, const char *name )
-{
-   PilotWeaponSet *ws;
-
-   ws = pilot_weapSet(p,id);
-   if (ws->name != NULL) {
-      if (strcmp(ws->name,name)==0)
-         return;
-      free( ws->name );
-   }
-   ws->name = strdup(name);
-}
-
-
-/**
  * @brief Gets the name of a weapon set.
  */
 const char *pilot_weapSetName( Pilot* p, int id )
 {
    PilotWeaponSet *ws;
    ws = pilot_weapSet(p,id);
-   return ws->name;
+   if ((ws->slots == NULL) || (array_size(ws->slots)==0))
+      return "Unused";
+   switch (ws->type) {
+      case WEAPSET_TYPE_CHANGE: return "Weapons - Switched";  break;
+      case WEAPSET_TYPE_WEAPON: return "Weapons - Instant";   break;
+      case WEAPSET_TYPE_ACTIVE: return "Abilities - Toggled"; break;
+   }
+   return NULL;
+}
+
+
+/**
+ * @brief Removes slots by type from the weapon set.
+ */
+void pilot_weapSetRmSlot( Pilot *p, int id, OutfitSlotType type )
+{
+   int i, n, l;
+   PilotWeaponSet *ws;
+
+   /* We must clean up the slots. */
+   n  = 0; /* Number to remove. */
+   ws = pilot_weapSet(p,id);
+   if (ws->slots == NULL)
+      return;
+   l  = array_size(ws->slots);
+   for (i=0; i<l; i++) {
+      if (ws->slots->slot->sslot->slot.type != type)
+         continue;
+
+      /* Move down. */
+      memmove( &ws->slots[i], &ws->slots[i+1], sizeof(PilotWeaponSetOutfit) * (l-i-1) );
+      n++;
+   }
+
+   /* Remove surplus. */
+   array_erase( &ws->slots, &ws->slots[l-n], &ws->slots[l] );
 }
 
 
@@ -582,10 +686,6 @@ void pilot_weapSetCleanup( Pilot* p, int id )
    if (ws->slots != NULL)
       array_free( ws->slots );
    ws->slots = NULL;
-
-   if (ws->name != NULL)
-      free( ws->name );
-   ws->name = NULL;
 
    /* Update range. */
    pilot_weapSetUpdateRange( ws );
@@ -874,7 +974,7 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
       energy      = outfit_energy(w->u.ammo.outfit)*energy_mod;
       p->energy  -= energy;
       pilot_heatAddSlot( p, w );
-      weapon_add( w->u.ammo.outfit, w->heat_T, p->solid->dir,
+      weapon_add( w->outfit, w->heat_T, p->solid->dir,
             &vp, &p->solid->vel, p, p->target );
 
       w->u.ammo.quantity -= 1; /* we just shot it */
@@ -980,33 +1080,21 @@ void pilot_weaponAuto( Pilot *p )
    pilot_weaponClear( p );
 
    /* Set modes. */
-   pilot_weapSetMode( p, 0, 0 );
-   pilot_weapSetMode( p, 1, 0 );
-   pilot_weapSetMode( p, 2, 0 );
-   pilot_weapSetMode( p, 3, 0 );
-   pilot_weapSetMode( p, 4, 1 );
-   pilot_weapSetMode( p, 5, 1 );
-   pilot_weapSetMode( p, 6, 0 );
-   pilot_weapSetMode( p, 7, 0 );
-   pilot_weapSetMode( p, 8, 0 );
-   pilot_weapSetMode( p, 9, 0 );
+   pilot_weapSetType( p, 0, WEAPSET_TYPE_CHANGE );
+   pilot_weapSetType( p, 1, WEAPSET_TYPE_CHANGE );
+   pilot_weapSetType( p, 2, WEAPSET_TYPE_CHANGE );
+   pilot_weapSetType( p, 3, WEAPSET_TYPE_CHANGE );
+   pilot_weapSetType( p, 4, WEAPSET_TYPE_WEAPON );
+   pilot_weapSetType( p, 5, WEAPSET_TYPE_WEAPON );
+   pilot_weapSetType( p, 6, WEAPSET_TYPE_ACTIVE );
+   pilot_weapSetType( p, 7, WEAPSET_TYPE_ACTIVE );
+   pilot_weapSetType( p, 8, WEAPSET_TYPE_ACTIVE );
+   pilot_weapSetType( p, 9, WEAPSET_TYPE_ACTIVE );
 
    /* All should be inrange. */
    if (!pilot_isPlayer(p))
       for (i=0; i<PILOT_WEAPON_SETS; i++)
          pilot_weapSetInrange( p, i, 1 );
-
-   /* Set names. */
-   pilot_weapSetNameSet( p, 0, "All" );
-   pilot_weapSetNameSet( p, 1, "Forward" );
-   pilot_weapSetNameSet( p, 2, "Turret" );
-   pilot_weapSetNameSet( p, 3, "Fwd/Tur" );
-   pilot_weapSetNameSet( p, 4, "Seekers" );
-   pilot_weapSetNameSet( p, 5, "Fighter Bays" );
-   pilot_weapSetNameSet( p, 6, "Weaponset 7" );
-   pilot_weapSetNameSet( p, 7, "Weaponset 8" );
-   pilot_weapSetNameSet( p, 8, "Weaponset 9" );
-   pilot_weapSetNameSet( p, 9, "Weaponset 0" );
 
    /* Iterate through all the outfits. */
    for (i=0; i<p->outfit_nweapon; i++) {
@@ -1070,7 +1158,7 @@ void pilot_weaponSetDefault( Pilot *p )
    int i;
 
    /* If current set isn't a fire group no need to worry. */
-   if (!p->weapon_sets[ p->active_set ].fire) {
+   if (!p->weapon_sets[ p->active_set ].type == WEAPSET_TYPE_CHANGE) {
       /* Update active weapon set. */
       pilot_weapSetUpdateOutfits( p, &p->weapon_sets[ p->active_set ] );
       return;
@@ -1078,7 +1166,7 @@ void pilot_weaponSetDefault( Pilot *p )
 
    /* Find first fire group. */
    for (i=0; i<PILOT_WEAPON_SETS; i++)
-      if (!p->weapon_sets[i].fire)
+      if (!p->weapon_sets[i].type != WEAPSET_TYPE_CHANGE)
          break;
 
    /* Set active set to first if all fire groups or first non-fire group. */
@@ -1100,6 +1188,7 @@ void pilot_weaponSetDefault( Pilot *p )
 void pilot_weaponSane( Pilot *p )
 {
    int i, j;
+   int n, l;
    PilotWeaponSet *ws;
 
    for (j=0; j<PILOT_WEAPON_SETS; j++) {
@@ -1107,13 +1196,25 @@ void pilot_weaponSane( Pilot *p )
       if (ws->slots == NULL)
          continue;
 
-      for (i=0; i<array_size(ws->slots); i++) {
+      l = array_size(ws->slots);
+      n = 0;
+      for (i=0; i<l; i++) {
          if (ws->slots[i].slot->outfit != NULL)
             continue;
 
-         array_erase( &ws->slots, &ws->slots[i], &ws->slots[i+1] );
-         i--;
+         /* Move down. */
+         memmove( &ws->slots[i], &ws->slots[i+1], sizeof(PilotWeaponSetOutfit) * (l-i-1) );
+         n++;
       }
+      /* Remove surplus. */
+      if (n > 0)
+         array_erase( &ws->slots, &ws->slots[l-n], &ws->slots[l] );
+
+      /* See if we must overwrite levels. */
+      if ((ws->type == WEAPSET_TYPE_WEAPON) ||
+            (ws->type == WEAPSET_TYPE_ACTIVE))
+         for (i=0; i<array_size(ws->slots); i++)
+            ws->slots[i].level = 0;
    }
 
    /* Update range. */

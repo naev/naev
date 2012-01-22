@@ -59,7 +59,7 @@ glFont gl_defFontMono; /**< Default mono font. */
 
 
 /* Last used colour. */
-static glColour *font_lastCol    = NULL; /**< Stores last colour used (activated by '\e'). */
+static const glColour *font_lastCol    = NULL; /**< Stores last colour used (activated by '\e'). */
 static int font_restoreLast      = 0; /**< Restore last colour. */
 
 
@@ -68,7 +68,7 @@ static int font_restoreLast      = 0; /**< Restore last colour. */
  */
 static int font_limitSize( const glFont *ft_font, int *width,
       const char *text, const int max );
-static glColour* gl_fontGetColour( int ch );
+static const glColour* gl_fontGetColour( int ch );
 /* Render. */
 static void gl_fontRenderStart( const glFont* font, double x, double y, const glColour *c );
 static int gl_fontRenderCharacter( const glFont* font, int ch, const glColour *c, int state );
@@ -117,7 +117,7 @@ void gl_printRestore( const glFontRestore *restore )
 void gl_printStoreMax( glFontRestore *restore, const char *text, int max )
 {
    int i;
-   glColour *col;
+   const glColour *col;
 
    col = NULL;
    for (i=0; (text[i]!='\0') && (i<=max); i++) {
@@ -456,7 +456,7 @@ int gl_printMid( const glFont *ft_font, const int width,
 int gl_printTextRaw( const glFont *ft_font,
       const int width, const int height,
       double bx, double by,
-      glColour* c, const char *text )
+      const glColour* c, const char *text )
 {
    int ret, i, p, s;
    double x,y;
@@ -513,7 +513,7 @@ int gl_printTextRaw( const glFont *ft_font,
 int gl_printText( const glFont *ft_font,
       const int width, const int height,
       double bx, double by,
-      glColour* c, const char *fmt, ... )
+      const glColour* c, const char *fmt, ... )
 {
    /*float h = ft_font->h / .63;*/ /* slightly increase fontsize */
    char text[4096]; /* holds the string */
@@ -924,9 +924,9 @@ static void gl_fontRenderStart( const glFont* font, double x, double y, const gl
 /**
  * @brief Gets the colour from a character.
  */
-static glColour* gl_fontGetColour( int ch )
+static const glColour* gl_fontGetColour( int ch )
 {
-   glColour *col;
+   const glColour *col;
    switch (ch) {
       /* TOP SECRET COLOUR CONVENTION
        * FOR YOUR EYES ONLY
@@ -967,7 +967,7 @@ static int gl_fontRenderCharacter( const glFont* font, int ch, const glColour *c
 {
    GLushort ind[6];
    double a;
-   glColour *col;
+   const glColour *col;
 
    /* Handle escape sequences. */
    if (ch == '\e') /* Start sequence. */

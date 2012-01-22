@@ -29,6 +29,7 @@
 #include "unidiff.h"
 #include "nlua_var.h"
 #include "land.h"
+#include "hook.h"
 
 
 #define LOAD_WIDTH      600 /**< Load window width. */

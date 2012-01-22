@@ -35,6 +35,7 @@
 
 /* Hook methods. */
 static int hookL_rm( lua_State *L );
+static int hook_load( lua_State *L );
 static int hook_land( lua_State *L );
 static int hook_takeoff( lua_State *L );
 static int hook_jumpout( lua_State *L );
@@ -53,6 +54,7 @@ static int hook_standing( lua_State *L );
 static int hook_pilot( lua_State *L );
 static const luaL_reg hook_methods[] = {
    { "rm", hookL_rm },
+   { "load", hook_load },
    { "land", hook_land },
    { "takeoff", hook_takeoff },
    { "jumpout", hook_jumpout },
@@ -310,6 +312,23 @@ static int hook_land( lua_State *L )
       h = hook_generic( L, where, 0., 1, 0 );
    }
 
+   lua_pushnumber( L, h );
+   return 1;
+}
+/**
+ * @brief Hooks the function to the player loading the game (starts landed).
+ *
+ * @usage hook.load( "my_function" ) -- Load calls my_function
+ *
+ *    @luaparam funcname Name of function to run when hook is triggered.
+ *    @luaparam arg Argument to pass to hook.
+ *    @luareturn Hook identifier.
+ * @luafunc load( funcname, arg )
+ */
+static int hook_load( lua_State *L )
+{
+   unsigned int h;
+   h = hook_generic( L, "load", 0., 1, 0 );
    lua_pushnumber( L, h );
    return 1;
 }

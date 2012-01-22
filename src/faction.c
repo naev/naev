@@ -63,7 +63,7 @@ typedef struct Faction_ {
    /* Graphics. */
    glTexture *logo_small; /**< Small logo. */
    glTexture *logo_tiny; /**< Tiny logo. */
-   glColour *colour; /**< Faction specific colour. */
+   const glColour *colour; /**< Faction specific colour. */
 
    /* Enemies */
    int *enemies; /**< Enemies by ID of the faction. */
@@ -82,6 +82,10 @@ typedef struct Faction_ {
 
    /* Behaviour. */
    lua_State *state; /**< Faction specific state. */
+
+   /* Equipping. */
+   lua_State *equip_state; /**< Faction equipper state. */
+
 
    /* Flags. */
    unsigned int flags; /**< Flags affecting the faction. */
@@ -253,7 +257,7 @@ glTexture* faction_logoTiny( int f )
  *    @param f Faction to get the colour of.
  *    @return The faction's colour
  */
-glColour* faction_colour( int f )
+const glColour* faction_colour( int f )
 {
    if (!faction_isFaction(f)) {
       WARN("Faction id '%d' is invalid.",f);
@@ -313,6 +317,20 @@ lua_State *faction_getScheduler( int f )
    }
 
    return faction_stack[f].sched_state;
+}
+
+
+/**
+ * @brief Gets the equipper state associated to the faction scheduler.
+ */
+lua_State *faction_getEquipper( int f )
+{
+   if (!faction_isFaction(f)) {
+      WARN("Faction id '%d' is invalid.",f);
+      return NULL;
+   }
+
+   return faction_stack[f].equip_state;
 }
 
 
@@ -541,7 +559,7 @@ double faction_getPlayerDef( int f )
  *    @param f Faction to get the colour of based on player's standing.
  *    @return Pointer to the colour.
  */
-glColour* faction_getColour( int f )
+const glColour* faction_getColour( int f )
 {
    if (f<0) return &cInert;
    else if (areAllies(FACTION_PLAYER,f)) return &cFriend;
@@ -770,7 +788,7 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
       if (xml_isNode(node, "spawn")) {
          if (temp->sched_state != NULL)
             WARN("Faction '%s' has duplicate 'spawn' tag.", temp->name);
-         snprintf( buf, sizeof(buf), "ai/spawn/%s.lua", xml_raw(node) );
+         snprintf( buf, sizeof(buf), "dat/factions/spawn/%s.lua", xml_raw(node) );
          temp->sched_state = nlua_newState();
          nlua_loadStandard( temp->sched_state, 0 );
          dat = ndata_read( buf, &ndat );
@@ -786,20 +804,39 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
          continue;
       }
 
-      if (xml_isNode(node, "lua")) {
+      if (xml_isNode(node, "standing")) {
          if (temp->state != NULL)
-            WARN("Faction '%s' has duplicate 'lua' tag.", temp->name);
-         snprintf( buf, sizeof(buf), "dat/factions/%s.lua", xml_raw(node) );
+            WARN("Faction '%s' has duplicate 'standing' tag.", temp->name);
+         snprintf( buf, sizeof(buf), "dat/factions/standing/%s.lua", xml_raw(node) );
          temp->state = nlua_newState();
          nlua_loadStandard( temp->state, 0 );
          dat = ndata_read( buf, &ndat );
          if (luaL_dobuffer(temp->state, dat, ndat, buf) != 0) {
-            WARN("Failed to run spawn script: %s\n"
+            WARN("Failed to run standing script: %s\n"
                   "%s\n"
                   "Most likely Lua file has improper syntax, please check",
                   buf, lua_tostring(temp->state,-1));
             lua_close( temp->state );
             temp->state = NULL;
+         }
+         free(dat);
+         continue;
+      }
+
+      if (xml_isNode(node, "equip")) {
+         if (temp->equip_state != NULL)
+            WARN("Faction '%s' has duplicate 'equip' tag.", temp->name);
+         snprintf( buf, sizeof(buf), "dat/factions/equip/%s.lua", xml_raw(node) );
+         temp->equip_state = nlua_newState();
+         nlua_loadStandard( temp->equip_state, 0 );
+         dat = ndata_read( buf, &ndat );
+         if (luaL_dobuffer(temp->equip_state, dat, ndat, buf) != 0) {
+            WARN("Failed to run equip script: %s\n"
+                  "%s\n"
+                  "Most likely Lua file has improper syntax, please check",
+                  buf, lua_tostring(temp->equip_state,-1));
+            lua_close( temp->equip_state );
+            temp->equip_state = NULL;
          }
          free(dat);
          continue;

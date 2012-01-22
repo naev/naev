@@ -678,13 +678,14 @@ static void uniedit_jumpAdd( StarSystem *sys, StarSystem *targ )
    sys->njumps++;
    sys->jumps  = realloc( sys->jumps, sizeof(JumpPoint) * sys->njumps );
    jp          = &sys->jumps[ sys->njumps-1 ];
+   memset( jp, 0, sizeof(JumpPoint) );
 
    /* Fill it out with basics. */
    jp->target  = targ;
    jp->targetid = targ->id;
    jp->radius  = 200.;
    jp->flags   = JP_AUTOPOS; /* Will automatically create position. */
-
+   jp->hide    = 0.;
 }
 
 

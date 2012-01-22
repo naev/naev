@@ -413,6 +413,8 @@ end
 function continueAmbush()
     genbu:setHostile()
     genbu:attack(player.pilot())
+    waves = 0
+    maxwaves = 5
     spinter = hook.timer(5000, "spawnInterceptors")
 end
 
@@ -427,7 +429,10 @@ function spawnInterceptors()
         j:control()
         j:attack(player.pilot())
     end
-    spinter = hook.timer(30000, "spawnInterceptors")
+    if waves < maxwaves then 
+       waves = waves + 1
+       spinter = hook.timer(25000, "spawnInterceptors")
+    end
 end
 
 -- Land hook
@@ -435,9 +440,9 @@ function land()
     if planet.cur() == jorekplanet1 and stage == 2 then
         -- Thank you player, but our SHITMAN is in another castle.
         tk.msg(NPCtitle, NPCtext)
-        barmanNPC = misn.npcAdd("barman", "Barman", "barman", NPCdesc, 4)
+        barmanNPC = misn.npcAdd("barman", "Barman", "neutral/barman", NPCdesc, 4)
     elseif planet.cur() == jorekplanet2 and stage == 3 then
-        joreknpc = misn.npcAdd("jorek", "Jorek", "jorek", Jordesc, 4)
+        joreknpc = misn.npcAdd("jorek", "Jorek", "neutral/unique/jorek", Jordesc, 4)
     end
 end
 

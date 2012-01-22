@@ -29,19 +29,7 @@
   <avail>
    <chance>100</chance>
    <location>Computer</location>
-   <cond>(function ()
-            local fac = faction.get("Empire")
-            for _, enemy in pairs(fac:enemies()) do
-                if enemy:playerStanding() &gt; 20 then
-                    return false
-                end
-            end
-            if fac:playerStanding() &lt; 0 then
-                return true
-            end
-            return false
-          end
-         )()</cond>
+   <cond></cond>
   </avail>
  </mission>
  <mission name="Dvaered Rehabilitation">
@@ -50,19 +38,7 @@
   <avail>
    <chance>100</chance>
    <location>Computer</location>
-   <cond>(function ()
-            local fac = faction.get("Dvaered")
-            for _, enemy in pairs(fac:enemies()) do
-                if enemy:playerStanding() &gt; 20 then
-                    return false
-                end
-            end
-            if fac:playerStanding() &lt; 0 then
-                return true
-            end
-            return false
-          end
-         )()</cond>
+   <cond></cond>
   </avail>
  </mission>
  <mission name="Sirius Rehabilitation">
@@ -71,40 +47,16 @@
   <avail>
    <chance>100</chance>
    <location>Computer</location>
-   <cond>(function ()
-            local fac = faction.get("Sirius")
-            for _, enemy in pairs(fac:enemies()) do
-                if enemy:playerStanding() &gt; 20 then
-                    return false
-                end
-            end
-            if fac:playerStanding() &lt; 0 then
-                return true
-            end
-            return false
-          end
-         )()</cond>
+   <cond></cond>
   </avail>
  </mission>
  <mission name="Soromid Rehabilitation">
-  <lua>sirius/srs_rehab</lua>
+  <lua>soromid/srm_rehab</lua>
   <flags/>
   <avail>
    <chance>100</chance>
    <location>Computer</location>
-   <cond>(function ()
-            local fac = faction.get("Soromid")
-            for _, enemy in pairs(fac:enemies()) do
-                if enemy:playerStanding() &gt; 20 then
-                    return false
-                end
-            end
-            if fac:playerStanding() &lt; 0 then
-                return true
-            end
-            return false
-          end
-         )()</cond>
+   <cond></cond>
   </avail>
  </mission>
  <mission name="Cargo Rush">
@@ -657,11 +609,58 @@
    <location>Bar</location>
   </avail>
  </mission>
+ <mission name="Sirian Bounty">
+  <lua>sirius/achack/achack01</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <cond>planet.cur() == planet.get("The Wringer")</cond>
+   <chance>50</chance>
+   <location>Bar</location>
+  </avail>
+ </mission>
+ <mission name="Harja's Vengeance">
+  <lua>sirius/achack/achack02</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <cond>planet.get("Violin Station"):system():jumpDist() &lt; 4</cond>
+   <chance>10</chance>
+   <location>Bar</location>
+   <faction>Sirius</faction>
+  </avail>
+ </mission>
+ <mission name="Joanne's Doubt">
+  <lua>sirius/achack/achack03</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <cond></cond>
+   <chance>10</chance>
+   <location>Bar</location>
+   <faction>Sirius</faction>
+  </avail>
+ </mission>
  <mission name="Kidnapped">
   <lua>neutral/kidnapped/traffic_00</lua>
   <avail>
    <chance>100</chance>
    <location>None</location>
+  </avail>
+ </mission>
+ <mission name="Waste dump">
+  <lua>empire/waste_dump</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>3</priority>
+   <chance>50</chance>
+   <location>Computer</location>
+   <system>Shakar</system>
   </avail>
  </mission>
 </Missions>

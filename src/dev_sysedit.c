@@ -94,6 +94,9 @@ static int sysedit_dragSel    = 0;  /**< Dragging system around. */
 static double sysedit_mx      = 0.; /**< Cursor X position. */
 static double sysedit_my      = 0.; /**< Cursor Y position. */
 
+/* Stored checkbox values. */
+static int jp_hidden = 0; /**< Jump point hidden checkbox value. */
+static int jp_exit   = 0; /**< Jump point exit only checkbox value. */
 
 /*
  * Property editor stuff.
@@ -110,7 +113,7 @@ static void sysedit_buttonZoom( unsigned int wid, char* str );
 static void sysedit_render( double bx, double by, double w, double h, void *data );
 static void sysedit_renderBG( double bx, double bw, double w, double h, double x, double y);
 static void sysedit_renderSprite( glTexture *gfx, double bx, double by, double x, double y,
-      int sx, int sy, glColour *c, int selected, const char *caption );
+      int sx, int sy, const glColour *c, int selected, const char *caption );
 static void sysedit_renderOverlay( double bx, double by, double bw, double bh, void* data );
 static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, void *data );
@@ -141,6 +144,8 @@ static void sysedit_btnGFXClose( unsigned int wid, char *wgt );
 static void sysedit_btnGFXApply( unsigned int wid, char *wgt );
 static void sysedit_btnFaction( unsigned int wid_unused, char *unused );
 static void sysedit_btnFactionSet( unsigned int wid, char *unused );
+/* Jump editing */
+static void sysedit_editJump( void );
 /* Keybindings handling. */
 static int sysedit_keys( unsigned int wid, SDLKey key, SDLMod mod );
 /* Selection. */
@@ -297,15 +302,42 @@ static void sysedit_editPntClose( unsigned int wid, char *unused )
    char *inp;
 
    p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
-   p->population = (uint64_t)strtoull(window_getInput( sysedit_widEdit, "inpPop" ), 0, 10);
-   p->class      = planetclass_get( window_getInput( sysedit_widEdit, "inpClass" )[0] );
+   p->population     = (uint64_t)strtoull(window_getInput( sysedit_widEdit, "inpPop" ), 0, 10);
+   p->class          = planetclass_get( window_getInput( sysedit_widEdit, "inpClass" )[0] );
    inp = window_getInput( sysedit_widEdit, "inpLand" );
    if (inp == NULL || strlen(inp) == 0)
       free( p->land_func );
    else
       p->land_func = strdup( inp );
    p->presenceAmount = atof(window_getInput( sysedit_widEdit, "inpPresence" ));
-   p->presenceRange = atoi(window_getInput( sysedit_widEdit, "inpPresenceRange" ));
+   p->presenceRange  = atoi(window_getInput( sysedit_widEdit, "inpPresenceRange" ));
+   p->hide           = atof(window_getInput( sysedit_widEdit, "inpHide" ));
+
+   window_close( wid, unused );
+}
+
+/**
+ * @brief Closes the jump editor, saving the changes made.
+ */
+static void sysedit_editJumpClose( unsigned int wid, char *unused )
+{
+   (void) unused;
+   JumpPoint *j;
+
+   j = &sysedit_sys->jumps[ sysedit_select[0].u.jump ];
+   if (jp_hidden == 1) {
+      jp_setFlag( j, JP_HIDDEN );
+      jp_rmFlag(  j, JP_EXITONLY );
+   }
+   else if (jp_exit == 1) {
+      jp_setFlag( j, JP_EXITONLY );
+      jp_rmFlag(  j, JP_HIDDEN );
+   }
+   else {
+      jp_rmFlag( j, JP_HIDDEN );
+      jp_rmFlag( j, JP_EXITONLY );
+   }
+   j->hide  = atof(window_getInput( sysedit_widEdit, "inpHide" ));
 
    window_close( wid, unused );
 }
@@ -504,7 +536,7 @@ static void sysedit_render( double bx, double by, double w, double h, void *data
    Planet *p;
    JumpPoint *jp;
    double x,y, z;
-   glColour *c;
+   const glColour *c;
    int selected;
    Select_t sel;
 
@@ -593,7 +625,7 @@ static void sysedit_renderBG( double bx, double by, double w, double h, double x
 
    /* Comfort. */
    z  = sysedit_zoom;
-   s  = 500.;
+   s  = 1000.;
 
    /* Draw lines that go through 0,0 */
    gl_renderRect( x-1., by, 3., h, &cLightBlue );
@@ -616,10 +648,11 @@ static void sysedit_renderBG( double bx, double by, double w, double h, double x
  * @brief Renders a sprite for the custom widget.
  */
 static void sysedit_renderSprite( glTexture *gfx, double bx, double by, double x, double y,
-      int sx, int sy, glColour *c, int selected, const char *caption )
+      int sx, int sy, const glColour *c, int selected, const char *caption )
 {
    double tx, ty, z;
-   glColour cc, *col;
+   glColour cc;
+   const glColour *col;
 
    /* Comfort. */
    z  = sysedit_zoom;
@@ -723,7 +756,7 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
 
                /* Threshold. */
                t  = p->gfx_space->sw * p->gfx_space->sh / 4.; /* Radius^2 */
-               t *= pow2(sysedit_zoom);
+               t *= pow2(2.*sysedit_zoom);
 
                /* Can select. */
                if ((pow2(mx-x)+pow2(my-y)) < t) {
@@ -741,9 +774,9 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
                            /* Detect double click to open planet editor. */
                            if ((SDL_GetTicks() - sysedit_dragTime < SYSEDIT_DRAG_THRESHOLD*2)
                                  && (sysedit_moved < SYSEDIT_MOVE_THRESHOLD)) {
-                                 sysedit_editPnt();
-                                 sysedit_dragSel = 0;
-                                 return;
+                              sysedit_editPnt();
+                              sysedit_dragSel = 0;
+                              return;
                            }
                            sysedit_tadd      = -1;
                         }
@@ -784,7 +817,7 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
 
                /* Threshold. */
                t  = jumppoint_gfx->sw * jumppoint_gfx->sh / 4.; /* Radius^2 */
-               t *= pow2(sysedit_zoom);
+               t *= pow2(2.*sysedit_zoom);
 
                /* Can select. */
                if ((pow2(mx-x)+pow2(my-y)) < t) {
@@ -798,8 +831,16 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
                         /* Check modifier. */
                         if (mod & (KMOD_LCTRL | KMOD_RCTRL))
                            sysedit_tadd      = 0;
-                        else
+                        else {
+                           /* Detect double click to open planet editor. */
+                           if ((SDL_GetTicks() - sysedit_dragTime < SYSEDIT_DRAG_THRESHOLD*2)
+                                 && (sysedit_moved < SYSEDIT_MOVE_THRESHOLD)) {
+                              sysedit_editJump();
+                              sysedit_dragSel = 0;
+                              return;
+                           }
                            sysedit_tadd      = -1;
+                        }
                         sysedit_dragTime  = SDL_GetTicks();
                         sysedit_moved     = 0;
                         return;
@@ -983,7 +1024,7 @@ static void sysedit_checkButtons (void)
       window_disableButton( sysedit_wid, "btnReset" );
 
    /* Editor - just one planet. */
-   if ((sel_planet==1) && (sel_jump==0))
+   if (((sel_planet==1) && (sel_jump==0)) || ((sel_planet==0) && (sel_jump==1)))
       window_enableButton( sysedit_wid, "btnEdit" );
    else
       window_disableButton( sysedit_wid, "btnEdit" );
@@ -1125,6 +1166,15 @@ static void sysedit_editPnt( void )
    window_setInputFilter( wid, "inpPresenceRange",
          "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`." );
 
+   s = "hide";
+   l = gl_printWidthRaw( NULL, s );
+   window_addText( wid, x, y, l, 20, 1, "txtHide",
+         NULL, &cBlack, s );
+   window_addInput( wid, x += l + 5, y, 50, 20, "inpHide", 4, 1, NULL );
+   window_setInputFilter( wid, "inpHide",
+         "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`" );
+   x += 50 + 10;
+
    /* Bottom buttons. */
    window_addButton( wid, -20 - bw*3 - 15*3, 35 + BUTTON_HEIGHT, bw, BUTTON_HEIGHT,
          "btnRmService", "Rm Service", sysedit_btnRmService );
@@ -1151,9 +1201,107 @@ static void sysedit_editPnt( void )
    window_setInput( wid, "inpPresence", buf );
    snprintf( buf, sizeof(buf), "%d", p->presenceRange );
    window_setInput( wid, "inpPresenceRange", buf );
+   snprintf( buf, sizeof(buf), "%g", p->hide );
+   window_setInput( wid, "inpHide", buf );
 
    /* Generate the list. */
    sysedit_genServicesList( wid );
+}
+
+/**
+ * @brief Updates the jump point checkboxes.
+ */
+static void jp_type_check_hidden_update( unsigned int wid, char* str )
+{
+   (void) str;
+   if (jp_hidden == 0) {
+      jp_hidden = 1;
+      jp_exit   = 0;
+   }
+   else
+      jp_hidden = 0;
+   window_checkboxSet( wid, "chkHidden", jp_hidden );
+   window_checkboxSet( wid, "chkExit",   jp_exit );
+}
+
+/**
+ * @brief Updates the jump point checkboxes.
+ */
+static void jp_type_check_exit_update( unsigned int wid, char* str )
+{
+   (void) str;
+   if (jp_exit == 0) {
+      jp_exit   = 1;
+      jp_hidden = 0;
+   }
+   else
+      jp_exit = 0;
+   window_checkboxSet( wid, "chkHidden", jp_hidden );
+   window_checkboxSet( wid, "chkExit",   jp_exit );
+}
+
+/**
+ * @brief Edits a jump.
+ */
+static void sysedit_editJump( void )
+{
+   unsigned int wid;
+   int x, y, w, l, bw;
+   char buf[1024], *s;
+   JumpPoint *j;
+
+   j = &sysedit_sys->jumps[ sysedit_select[0].u.jump ];
+
+   /* Create the window. */
+   wid = window_create( EDITOR_WDWNAME, -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
+   sysedit_widEdit = wid;
+
+   bw = (SYSEDIT_EDIT_WIDTH - 40 - 15 * 3) / 4.;
+
+   /* Target lable. */
+   y = -40;
+   snprintf( buf, sizeof(buf), "Target: " );
+   w = gl_printWidthRaw( NULL, buf );
+   window_addText( wid, 20, y, 180, 15, 0, "txtTargetLabel", &gl_smallFont, &cDConsole, buf );
+   snprintf( buf, sizeof(buf), "%s", j->target->name );
+   window_addText( wid, 20 + w, y, 180, 15, 0, "txtName", &gl_smallFont, &cBlack, buf );
+
+   y -= gl_defFont.h + 10;
+
+   /* Input widgets and labels. */
+   x = 20;
+
+   /* Initial checkbox state */
+   jp_hidden = 0;
+   jp_exit   = 0;
+   if (jp_isFlag( j, JP_HIDDEN ))
+      jp_hidden = 1;
+   else if (jp_isFlag( j, JP_EXITONLY ))
+      jp_exit   = 1;
+   /* Create check boxes. */
+   window_addCheckbox( wid, x, y, 100, 20,
+         "chkHidden", "Hidden", jp_type_check_hidden_update, jp_hidden );
+   y -= 20;
+   window_addCheckbox( wid, x, y, 100, 20,
+         "chkExit", "Exit only", jp_type_check_exit_update, jp_exit );
+   y -= 30;
+
+   s = "Hide"; //TODO: if inpType == 0 disable hide box
+   l = gl_printWidthRaw( NULL, s );
+   window_addText( wid, x, y, l, 20, 1, "txtHide",
+         NULL, &cBlack, s );
+   window_addInput( wid, x + l + 8, y, 50, 20, "inpHide", 4, 1, NULL );
+   window_setInputFilter( wid, "inpHide",
+         "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`" );
+   x += 50 + 10;
+
+   /* Bottom buttons. */
+   window_addButton( wid, -20, 20, bw, BUTTON_HEIGHT,
+         "btnClose", "Close", sysedit_editJumpClose );
+
+   /* Load current values. */
+   snprintf( buf, sizeof(buf), "%g", j->hide );
+   window_setInput( wid, "inpHide", buf );
 }
 
 /**
@@ -1566,8 +1714,14 @@ static void sysedit_btnEdit( unsigned int wid_unused, char *unused )
 {
    (void) wid_unused;
    (void) unused;
+   Select_t *sel;
 
-   sysedit_editPnt();
+   sel = &sysedit_select[0];
+
+   if (sel->type==SELECT_PLANET)
+      sysedit_editPnt();
+   else if (sel->type==SELECT_JUMPPOINT)
+      sysedit_editJump();
 }
 
 
@@ -1605,6 +1759,7 @@ static void sysedit_planetGFX( unsigned int wid_unused, char *wgt )
    /* Find images first. */
    path           = land ? PLANET_LAND_GFX_PATH : PLANET_SPACE_GFX_PATH;
    files          = ndata_list( path, &nfiles );
+   ndata_sortName( files, nfiles );
    png_files      = malloc( sizeof(char*) * nfiles );
    tex            = malloc( sizeof(glTexture*) * nfiles );
    sysedit_tex    = malloc( sizeof(glTexture*) * nfiles );

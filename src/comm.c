@@ -239,6 +239,15 @@ int comm_openPlanet( Planet *planet )
       return 0;
    }
 
+   /* Make sure planet in range. */
+   /* Function uses planet index in local system, so I moved this to player.c.
+   if ( pilot_inRangePlanet( player.p, planet->id ) <= 0 ) {
+      player_message("\erTarget is out of communications range.");
+      comm_planet = NULL;
+      return 0;
+   }
+   */
+
    comm_planet = planet;
 
    /* Create the generic comm window. */
@@ -272,7 +281,7 @@ static unsigned int comm_open( glTexture *gfx, int faction,
    glTexture *logo;
    char *stand;
    unsigned int wid;
-   glColour *c;
+   const glColour *c;
    glFont *font;
    int gw, gh;
    double aspect;
@@ -573,7 +582,7 @@ static void comm_requestFuel( unsigned int wid, char *unused )
    /* See if player can get refueled. */
    ret = comm_getNumber( &val, "refuel" );
    msg = comm_getString( "refuel_msg" );
-   if ((ret != 0) || (msg == NULL)) {
+   if ((ret != 0) || (msg == NULL) || pilot_isFlag(comm_pilot, PILOT_MANUAL_CONTROL)) {
       dialogue_msg( "Request Fuel", "\"Sorry, I'm busy now.\"" );
       return;
    }

@@ -358,7 +358,8 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       int selected, Outfit *o, Pilot *p, CstSlotWidget *wgt )
 {
    int i, level;
-   glColour *c, *dc, bc, *rc;
+   const glColour *c, *dc, *rc;
+   glColour bc;
 
    /* Render text. */
    if ((o != NULL) && (lst[0].sslot->slot.type == o->slot.type))
@@ -539,7 +540,7 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
    double percent;
    double x, y;
    double w, h;
-   glColour *lc, *c, *dc;
+   const glColour *lc, *c, *dc;
 
    /* Must have selected ship. */
    if (eq_wgt.selected == NULL)
@@ -588,7 +589,8 @@ static void equipment_renderOverlayColumn( double x, double y, double w, double 
       int n, PilotOutfitSlot *lst, int mover, CstSlotWidget *wgt )
 {
    int i;
-   glColour *c, tc;
+   const glColour *c;
+   glColour tc;
    int text_width, xoff, yoff, top;
    const char *display;
    int subtitle;
@@ -799,7 +801,7 @@ static void equipment_renderShip( double bx, double by,
       double bw, double bh, double x, double y, Pilot* p )
 {
    int sx, sy;
-   glColour *lc, *c, *dc;
+   const glColour *lc, *c, *dc;
    unsigned int tick;
    double dt;
    double px, py;
@@ -935,8 +937,28 @@ static int equipment_mouseColumn( unsigned int wid, SDL_Event* event,
          /* See if we should add it or remove it. */
          if (exists==level)
             pilot_weapSetRm( p, wgt->weapons, &os[ret] );
-         else
-            pilot_weapSetAdd( p, wgt->weapons, &os[ret], level );
+         else {
+            /* This is a bloody awful place to do this. I hate it. HATE!. */
+            /* Case active outfit, convert the weapon group to active outfit. */
+            if ((os->sslot->slot.type == OUTFIT_SLOT_STRUCTURE) ||
+                  (os->sslot->slot.type == OUTFIT_SLOT_UTILITY)) {
+               pilot_weapSetRmSlot( p, wgt->weapons, OUTFIT_SLOT_WEAPON );
+               pilot_weapSetAdd( p, wgt->weapons, &os[ret], 0 );
+               pilot_weapSetType( p, wgt->weapons, WEAPSET_TYPE_ACTIVE );
+            }
+            /* Case change weapon groups or active weapon. */
+            else {
+               pilot_weapSetRmSlot( p, wgt->weapons, OUTFIT_SLOT_STRUCTURE );
+               pilot_weapSetRmSlot( p, wgt->weapons, OUTFIT_SLOT_UTILITY );
+               if (pilot_weapSetTypeCheck( p, wgt->weapons) == WEAPSET_TYPE_CHANGE)
+                  pilot_weapSetType( p, wgt->weapons, WEAPSET_TYPE_CHANGE );
+               else {
+                  pilot_weapSetType( p, wgt->weapons, WEAPSET_TYPE_WEAPON );
+                  level = 0;
+               }
+               pilot_weapSetAdd( p, wgt->weapons, &os[ret], level );
+            }
+         }
          p->autoweap = 0; /* Disable autoweap. */
          info_update(); /* Need to update weapons. */
       }
@@ -1429,7 +1451,8 @@ static void equipment_addOutfitListSingle( unsigned int wid,
    char **alt;
    char **quantity;
    Outfit *o;
-   glColour *bg, *c, blend;
+   const glColour *c;
+   glColour *bg, blend;
    char **slottype;
    const char *typename;
 
@@ -1473,7 +1496,7 @@ static void equipment_addOutfitListSingle( unsigned int wid,
       c = outfit_slotSizeColour( &o->slot );
       if (c == NULL)
          c = &cBlack;
-      col_blend( &blend, *c, cGrey70, 0.4 );
+      col_blend( &blend, c, &cGrey70, 0.4 );
       memcpy( &bg[i], &blend, sizeof(glColour) );
 
       /* Short description. */

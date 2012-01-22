@@ -47,7 +47,6 @@ typedef enum OutfitType_ {
    OUTFIT_TYPE_LAUNCHER, /**< Launcher. */
    OUTFIT_TYPE_AMMO, /**< Launcher ammo. */
    OUTFIT_TYPE_TURRET_LAUNCHER, /**< Turret launcher. */
-   OUTFIT_TYPE_TURRET_AMMO, /**< Turret launcher ammo. */
    OUTFIT_TYPE_MODIFCATION, /**< Modifies the ship base features. */
    OUTFIT_TYPE_AFTERBURNER, /**< Gives the ship afterburn capability. */
    OUTFIT_TYPE_JAMMER, /**< Used to nullify seeker missiles. */
@@ -204,14 +203,20 @@ typedef struct OutfitAmmoData_ {
  * These modify the ship's basic properties when equipped on a pilot.
  */
 typedef struct OutfitModificationData_ {
+   /* Active information (if applicable). */
    int active;       /**< Outfit is active. */
+   double duration;  /**< Time the active outfit stays on (in seconds). */
+   double cooldown;  /**< Time the active outfit stays off after it's duration (in seconds). */
 
-   /* movement */
-   double thrust;    /**< Maximum thrust modifier, this is absolute and is per 100 mass. */
-   double turn;      /**< Maximum turn modifier, this is absolute and is per 100 mass. */
-   double speed;     /**< Maximum speed modifier, this is absolute and per 100 mass. */
+   /* Movement. */
+   double thrust;    /**< Maximum thrust modifier. */
+   double thrust_rel; /**< Relative thrust modifier. */
+   double turn;      /**< Maximum turn modifier. */
+   double turn_rel;  /**< Relative turn modifier. */
+   double speed;     /**< Maximum speed modifier. */
+   double speed_rel; /**< Relative speed modifier. */
 
-   /* health */
+   /* Health. */
    double armour;    /**< Maximum armour modifier. */
    double armour_regen; /**< Armour regeneration modifier. */
    double shield;    /**< Maximum shield modifier. */
@@ -221,11 +226,11 @@ typedef struct OutfitModificationData_ {
    double cpu;       /**< CPU modifier. */
    double absorb;    /**< Absorption factor. */
 
-   /* misc */
+   /* Misc. */
    double cargo;     /**< Cargo space modifier. */
    double fuel;      /**< Maximum fuel modifier. */
 
-   /* stats */
+   /* Stats. */
    ShipStatList *stats; /**< Stat list. */
 } OutfitModificationData;
 
@@ -261,14 +266,9 @@ typedef struct OutfitFighterData_ {
    int sound;        /**< Sound to make when launching. */
 } OutfitFighterData;
 
-/**
- * @brief Represents a map, is not actually stored on a ship but put into the nav system.
- *
- * Basically just marks an amount of systems when the player buys it as known.
- */
-typedef struct OutfitMapData_ {
-   double radius;    /**< Number of jumps to add all systems within. */
-} OutfitMapData;
+/* Forward declaration */
+struct OutfitMapData_s;
+typedef struct OutfitMapData_s OutfitMapData_t;
 
 /**
  * @brief Represents a jammer.
@@ -312,17 +312,17 @@ typedef struct Outfit_ {
    /* Type dependent */
    OutfitType type; /**< Type of the outfit. */
    union {
-      OutfitBoltData blt;        /**< BOLT */
-      OutfitBeamData bem;        /**< BEAM */
-      OutfitLauncherData lau;    /**< MISSILE */
-      OutfitAmmoData amm;        /**< AMMO */
+      OutfitBoltData blt;         /**< BOLT */
+      OutfitBeamData bem;         /**< BEAM */
+      OutfitLauncherData lau;     /**< MISSILE */
+      OutfitAmmoData amm;         /**< AMMO */
       OutfitModificationData mod; /**< MODIFICATION */
-      OutfitAfterburnerData afb; /**< AFTERBURNER */
-      OutfitJammerData jam;      /**< JAMMER */
-      OutfitFighterBayData bay;  /**< FIGHTER_BAY */
-      OutfitFighterData fig;     /**< FIGHTER */
-      OutfitMapData map;         /**< MAP */
-      OutfitGUIData gui;         /**< GUI */
+      OutfitAfterburnerData afb;  /**< AFTERBURNER */
+      OutfitJammerData jam;       /**< JAMMER */
+      OutfitFighterBayData bay;   /**< FIGHTER_BAY */
+      OutfitFighterData fig;      /**< FIGHTER */
+      OutfitMapData_t *map;       /**< MAP */
+      OutfitGUIData gui;          /**< GUI */
    } u; /**< Holds the type-based outfit data. */
 } Outfit;
 
@@ -366,7 +366,7 @@ char **outfit_searchFuzzyCase( const char* name, int *n );
  */
 const char *outfit_slotName( const Outfit* o );
 const char *outfit_slotSize( const Outfit* o );
-glColour *outfit_slotSizeColour( const OutfitSlot* os );
+const glColour *outfit_slotSizeColour( const OutfitSlot* os );
 OutfitSlotSize outfit_toSlotSize( const char *s );
 glTexture* outfit_gfx( const Outfit* o );
 int outfit_spfxArmour( const Outfit* o );
@@ -383,11 +383,14 @@ double outfit_speed( const Outfit* o );
 double outfit_spin( const Outfit* o );
 int outfit_sound( const Outfit* o );
 int outfit_soundHit( const Outfit* o );
-
+/* Active outfits. */
+double outfit_duration( const Outfit* o );
+double outfit_cooldown( const Outfit* o );
 /*
  * loading/freeing outfit stack
  */
 int outfit_load (void);
+int outfit_mapParse(void);
 void outfit_free (void);
 
 

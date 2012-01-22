@@ -354,7 +354,7 @@ static void bkg_sort( background_image_t *arr )
  * @brief Adds a new background image.
  */
 unsigned int background_addImage( glTexture *image, double x, double y,
-      double move, double scale, glColour *col, int foreground )
+      double move, double scale, const glColour *col, int foreground )
 {
    background_image_t *bkg, **arr;
 

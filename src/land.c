@@ -1253,6 +1253,10 @@ void land( Planet* p, int load )
    /* Create all the windows. */
    land_genWindows( load, 0 );
 
+   /* Hack so that load can run player.takeoff(). */
+   if (load)
+      hooks_run( "load" );
+
    /* Mission forced take off. */
    if (land_takeoff)
       takeoff(0);
@@ -1486,6 +1490,7 @@ void takeoff( int delay )
    if (menu_isOpen(MENU_MAIN))
       return;
    events_trigger( EVENT_TRIGGER_ENTER );
+   missions_run( MIS_AVAIL_SPACE, -1, NULL, NULL );
    if (menu_isOpen(MENU_MAIN))
       return;
    player.p->ptimer = PILOT_TAKEOFF_DELAY;

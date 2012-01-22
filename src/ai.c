@@ -174,6 +174,7 @@ static int aiL_subtaskname( lua_State *L ); /* string subtaskname() */
 static int aiL_getsubtarget( lua_State *L ); /* pointer subtarget() */
 
 /* consult values */
+static int aiL_getPilot( lua_State *L ); /* number getPilot() */
 static int aiL_getplayer( lua_State *L ); /* number getPlayer() */
 static int aiL_getrndpilot( lua_State *L ); /* number getrndpilot() */
 static int aiL_getnearestpilot( lua_State *L ); /* number getnearestpilot() */
@@ -289,6 +290,7 @@ static const luaL_reg aiL_methods[] = {
    { "isdisabled", aiL_isdisabled },
    { "haslockon", aiL_haslockon },
    /* get */
+   { "getPilot", aiL_getPilot },
    { "getPlayer", aiL_getplayer },
    { "rndpilot", aiL_getrndpilot },
    { "nearestpilot", aiL_getnearestpilot },
@@ -674,7 +676,7 @@ static int ai_loadEquip (void)
 {
    char *buf;
    uint32_t bufsize;
-   const char *filename = "ai/equip/equip.lua";
+   const char *filename = "dat/factions/equip/generic.lua";
    lua_State *L;
 
    /* Make sure doesn't already exist. */
@@ -738,8 +740,8 @@ static int ai_loadProfile( const char* filename )
    }
    L = prof->L;
 
-   /* open basic Lua stuff */
-   nlua_loadBasic(L);
+   /* Prepare API. */
+   nlua_loadStandard(L,0);
 
    /* constants */
    lua_regnumber(L, "player", PLAYER_ID); /* player ID */
@@ -849,6 +851,7 @@ void ai_think( Pilot* pilot, const double dt )
    pilot_turn        = 0.;
    pilot_flags       = 0;
    /* pilot_setTarget( cur_pilot, cur_pilot->id ); */
+   pilot_weapSetAIClear( cur_pilot ); /* Hack so shit works. TODO fix. */
 
    /* Get current task. */
    t = ai_curTask( cur_pilot );
@@ -984,6 +987,7 @@ void ai_refuel( Pilot* refueler, unsigned int target )
 void ai_getDistress( Pilot* p, const Pilot* distressed )
 {
    lua_State *L;
+   LuaPilot ldistressed, ltarget;
    int errf;
 
    /* Ignore distress signals when under manual control. */
@@ -1016,8 +1020,10 @@ void ai_getDistress( Pilot* p, const Pilot* distressed )
    }
 
    /* Run the function. */
-   lua_pushnumber(L, distressed->id);
-   lua_pushnumber(L, distressed->target);
+   ldistressed.pilot = distressed->id;
+   ltarget.pilot = distressed->target;
+   lua_pushpilot(L, ldistressed);
+   lua_pushpilot(L, ltarget);
    if (lua_pcall(L, 2, 0, errf)) {
       WARN("Pilot '%s' ai -> 'distress': %s", cur_pilot->name, lua_tostring(L,-1));
       lua_pop(L,1);
@@ -1039,18 +1045,13 @@ void ai_getDistress( Pilot* p, const Pilot* distressed )
 static void ai_create( Pilot* pilot, char *param )
 {
    LuaPilot lp;
-   LuaFaction lf;
    lua_State *L;
    int errf, nparam;
+   char *func;
 
    L = equip_L;
-
-#if DEBUGGING
-   lua_pushcfunction(L, nlua_errTrace);
-   errf = -4;
-#else /* DEBUGGING */
+   func = "equip_generic";
    errf = 0;
-#endif /* DEBUGGING */
 
    /* Set creation mode. */
    if (!pilot_isFlag(pilot, PILOT_CREATED_AI))
@@ -1059,18 +1060,26 @@ static void ai_create( Pilot* pilot, char *param )
    /* Create equipment first - only if creating for the first time. */
    if (!pilot_isFlag(pilot,PILOT_PLAYER) && ((aiL_status==AI_STATUS_CREATE) ||
             !pilot_isFlag(pilot, PILOT_EMPTY))) {
-      lua_getglobal(L, "equip");
+      if  (faction_getEquipper( pilot->faction ) != NULL) {
+         L = faction_getEquipper( pilot->faction );
+         func = "equip";
+      }
+#if DEBUGGING
+      lua_pushcfunction(L, nlua_errTrace);
+      errf = -4;
+#endif /* DEBUGGING */
+      lua_getglobal(L, func);
       lp.pilot = pilot->id;
       lua_pushpilot(L,lp);
-      lf.f = pilot->faction;
-      lua_pushfaction(L,lf);
-      if (lua_pcall(L, 2, 0, errf)) { /* Error has occurred. */
-         WARN("Pilot '%s' equip -> '%s': %s", pilot->name, "equip", lua_tostring(L,-1));
+      if (lua_pcall(L, 1, 0, errf)) { /* Error has occurred. */
+         WARN("Pilot '%s' equip -> '%s': %s", pilot->name, func, lua_tostring(L,-1));
          lua_pop(L,1);
       }
    }
+
 #if DEBUGGING
-   lua_pop(L,1);
+   if (errf)
+      lua_pop(L,1);
 #endif /* DEBUGGING */
 
    /* Must have AI. */
@@ -1410,6 +1419,24 @@ static int aiL_getsubtarget( lua_State *L )
    return ai_tasktarget( L, t->subtask );
 }
 
+
+/**
+ * @brief Gets the AI's pilot.
+ *    @return The AI pilot's ship identifier.
+ * @luafunc getPilot()
+ *    @param L Lua state.
+ *    @return Number of Lua parameters.
+ */
+static int aiL_getPilot( lua_State *L )
+{
+   LuaPilot p;
+   p.pilot = cur_pilot->id;
+
+   lua_pushpilot(L, p);
+   return 1;
+}
+
+
 /**
  * @brief Gets the player.
  *    @return The player's ship identifier.
@@ -1422,6 +1449,7 @@ static int aiL_getplayer( lua_State *L )
    lua_pushnumber(L, PLAYER_ID);
    return 1;
 }
+
 
 /**
  * @brief Gets a random target's ID
@@ -2691,7 +2719,7 @@ static int aiL_hyperspace( lua_State *L )
  */
 static int aiL_nearhyptarget( lua_State *L )
 {
-   JumpPoint *jp;
+   JumpPoint *jp, *jiter;
    double mindist, dist;
    int i, j;
    LuaVector lv;
@@ -2706,9 +2734,14 @@ static int aiL_nearhyptarget( lua_State *L )
    jp      = NULL;
    j       = 0;
    for (i=0; i <cur_system->njumps; i++) {
-      dist  = vect_dist2( &cur_pilot->solid->pos, &cur_system->jumps[i].pos );
+      jiter = &cur_system->jumps[i];
+      /* We want only standard jump points to be used. */
+      if (jp_isFlag(jiter, JP_HIDDEN) || jp_isFlag(jiter, JP_EXITONLY))
+         continue;
+      /* Get nearest distance. */
+      dist  = vect_dist2( &cur_pilot->solid->pos, &jiter->pos );
       if (dist < mindist) {
-         jp       = &cur_system->jumps[i];
+         jp       = jiter;
          mindist  = dist;
          j        = i;
       }
@@ -2739,7 +2772,7 @@ static int aiL_nearhyptarget( lua_State *L )
  */
 static int aiL_rndhyptarget( lua_State *L )
 {
-   JumpPoint **jumps;
+   JumpPoint **jumps, *jiter;
    int i, j, r;
    LuaVector lv;
    int *id;
@@ -2754,8 +2787,12 @@ static int aiL_rndhyptarget( lua_State *L )
    id    = malloc( sizeof(int) * cur_system->njumps );
    j = 0;
    for (i=0; i < cur_system->njumps; i++) {
+      jiter = &cur_system->jumps[i];
+      /* We want only standard jump points to be used. */
+      if (jp_isFlag(jiter, JP_HIDDEN) || jp_isFlag(jiter, JP_EXITONLY))
+         continue;
       id[j]      = i;
-      jumps[j++] = &cur_system->jumps[i];
+      jumps[j++] = jiter;
    }
 
    /* Choose random jump point. */
@@ -2919,8 +2956,6 @@ static int aiL_settarget( lua_State *L )
 /**
  * @brief Sets the active weapon set (or fires another weapon set).
  *
- *
- *
  *    @luaparam id ID of the weapon set to switch to or fire.
  * @luafunc weapset( id )
  */
@@ -2928,7 +2963,7 @@ static int aiL_weapSet( lua_State *L )
 {
    int id;
    id = luaL_checkint(L,1);
-   pilot_weapSetExec( cur_pilot, id );
+   pilot_weapSetPress( cur_pilot, id, 1 );
    return 0;
 }
 

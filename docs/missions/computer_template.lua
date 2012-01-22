@@ -64,7 +64,7 @@ function create ()
    misn.setDesc( misn_desc)
 
    -- Markers indicate target system, you may or may not be interested in setting it.
-   misn.setMarker( systemX, "" ) --change as appropriate to point to a system object and marker style.
+   misn.markerAdd( systemX, "" ) --change as appropriate to point to a system object and marker style.
 
 end
 

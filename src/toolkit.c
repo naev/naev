@@ -57,9 +57,9 @@ static char input_text              = 0; /**< Current character. */
 /*
  * default outline colours
  */
-glColour* toolkit_colLight = &cGrey90; /**< Light outline colour. */
-glColour* toolkit_col      = &cGrey70; /**< Normal outline colour. */
-glColour* toolkit_colDark  = &cGrey30; /**< Dark outline colour. */
+const glColour* toolkit_colLight = &cGrey90; /**< Light outline colour. */
+const glColour* toolkit_col      = &cGrey70; /**< Normal outline colour. */
+const glColour* toolkit_colDark  = &cGrey30; /**< Dark outline colour. */
 
 
 /*
@@ -849,7 +849,7 @@ static void widget_kill( Widget *wgt )
  *    @param lc Light colour.
  */
 void toolkit_drawOutlineThick( int x, int y, int w, int h, int b,
-                          int thick, glColour* c, glColour* lc )
+                          int thick, const glColour* c, const glColour* lc )
 {
    GLshort tri[5][4];
    glColour colours[10];
@@ -934,7 +934,7 @@ void toolkit_drawOutlineThick( int x, int y, int w, int h, int b,
  *    @param lc Light colour.
  */
 void toolkit_drawOutline( int x, int y, int w, int h, int b,
-                          glColour* c, glColour* lc )
+                          const glColour* c, const glColour* lc )
 {
    GLshort lines[4][2];
    glColour colours[4];
@@ -991,7 +991,7 @@ void toolkit_drawOutline( int x, int y, int w, int h, int b,
  *    @param lc Light colour.
  */
 void toolkit_drawRect( int x, int y, int w, int h,
-                       glColour* c, glColour* lc )
+                       const glColour* c, const glColour* lc )
 {
    GLshort vertex[4][2];
    glColour colours[4];
@@ -1090,7 +1090,7 @@ static void window_renderBorder( Window* w )
    int i;
    GLshort cx, cy;
    double x, y;
-   glColour *lc, *c, *dc, *oc;
+   const glColour *lc, *c, *dc, *oc;
    GLshort vertex[31*4];
    GLfloat colours[31*4];
 
