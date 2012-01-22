@@ -730,8 +730,8 @@ void map_renderParams( double bx, double by, double xpos, double ypos,
 void map_renderSystems( double bx, double by, double x, double y,
       double w, double h, double r, int editor)
 {
-   int i,j;
-   glColour *col, c;
+   int i, j, k;
+   glColour *col, c, *cole;
    GLfloat vertex[8*(2+4)];
    StarSystem *sys, *jsys;
    int sw, sh;
@@ -793,17 +793,28 @@ void map_renderSystems( double bx, double by, double x, double y,
 
       /* draw the hyperspace paths */
       glShadeModel(GL_SMOOTH);
-      col = &cDarkBlue;
       /* first we draw all of the paths. */
       gl_vboActivateOffset( map_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
       gl_vboActivateOffset( map_vbo, GL_COLOR_ARRAY,
             sizeof(GLfloat) * 2*3, 4, GL_FLOAT, 0 );
       for (j=0; j<sys->njumps; j++) {
-
          jsys = sys->jumps[j].target;
-
          if (!space_sysReachableFromSys(jsys,sys) && !editor)
             continue;
+
+         /* Choose colours. */
+         cole = &cBlue;
+         for (k=0; k<jsys->njumps; k++) {
+            if (jsys->jumps[i].target == sys) {
+               if (jp_isFlag(&sys->jumps[j], JP_EXITONLY))
+                  cole = &cRed;
+               break;
+            }
+         }
+         if (jp_isFlag(&sys->jumps[j], JP_EXITONLY))
+            col = &cRed;
+         else
+            col = &cBlue;
 
          /* Draw the lines. */
          vertex[0]  = x + sys->pos.x * map_zoom;
@@ -816,13 +827,13 @@ void map_renderSystems( double bx, double by, double x, double y,
          vertex[7]  = col->g;
          vertex[8]  = col->b;
          vertex[9]  = 0.;
-         vertex[10] = col->r;
-         vertex[11] = col->g;
-         vertex[12] = col->b;
-         vertex[13] = col->a;
-         vertex[14] = col->r;
-         vertex[15] = col->g;
-         vertex[16] = col->b;
+         vertex[10] = (col->r + cole->r)/2.;
+         vertex[11] = (col->g + cole->g)/2.;
+         vertex[12] = (col->b + cole->b)/2.;
+         vertex[13] = 1.;
+         vertex[14] = cole->r;
+         vertex[15] = cole->g;
+         vertex[16] = cole->b;
          vertex[17] = 0.;
          gl_vboSubData( map_vbo, 0, sizeof(GLfloat) * 3*(2+4), vertex );
          glDrawArrays( GL_LINE_STRIP, 0, 3 );
