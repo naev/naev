@@ -755,7 +755,7 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
 
                /* Threshold. */
                t  = p->gfx_space->sw * p->gfx_space->sh / 4.; /* Radius^2 */
-               t *= pow2(sysedit_zoom);
+               t *= pow2(2.*sysedit_zoom);
 
                /* Can select. */
                if ((pow2(mx-x)+pow2(my-y)) < t) {
@@ -816,7 +816,7 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
 
                /* Threshold. */
                t  = jumppoint_gfx->sw * jumppoint_gfx->sh / 4.; /* Radius^2 */
-               t *= pow2(sysedit_zoom);
+               t *= pow2(2.*sysedit_zoom);
 
                /* Can select. */
                if ((pow2(mx-x)+pow2(my-y)) < t) {
