@@ -813,6 +813,11 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
          continue;
       }
 
+      if (xml_isNode(node, "known")) {
+         faction_setFlag(temp, FACTION_KNOWN);
+         continue;
+      }
+
       if (xml_isNode(node, "equip")) {
          if (temp->equip_state != NULL)
             WARN("Faction '%s' has duplicate 'equip' tag.", temp->name);
