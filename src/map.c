@@ -1585,16 +1585,13 @@ int map_map( const Outfit *map )
    int i;
 
    for (i=0; i<array_size(map->u.map->systems);i++)
-      if (!sys_isKnown(map->u.map->systems[i]))
-         sys_setFlag(map->u.map->systems[i], SYSTEM_KNOWN);
+      sys_setFlag(map->u.map->systems[i], SYSTEM_KNOWN);
 
    for (i=0; i<array_size(map->u.map->assets);i++)
-      if (!planet_isKnown(map->u.map->assets[i]))
-         planet_setFlag(map->u.map->assets[i], PLANET_KNOWN);
+      planet_setFlag(map->u.map->assets[i], PLANET_KNOWN);
 
    for (i=0; i<array_size(map->u.map->jumps);i++)
-      if (!jp_isKnown(map->u.map->jumps[i]))
-         jp_setFlag(map->u.map->jumps[i], JP_KNOWN);
+      jp_setFlag(map->u.map->jumps[i], JP_KNOWN);
 
    return 1;
 }
