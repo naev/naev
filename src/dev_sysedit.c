@@ -625,7 +625,7 @@ static void sysedit_renderBG( double bx, double by, double w, double h, double x
 
    /* Comfort. */
    z  = sysedit_zoom;
-   s  = 500.;
+   s  = 1000.;
 
    /* Draw lines that go through 0,0 */
    gl_renderRect( x-1., by, 3., h, &cLightBlue );
