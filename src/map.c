@@ -1519,7 +1519,7 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
             if (!sys_isKnown(sys) && !space_sysReachable(sys))
                continue;
          }
-         if (jp->type == 1)
+         if (jp_isFlag( jp, JP_EXITONLY ))
             continue;
 
          neighbour = A_newNode( sys, NULL );

@@ -94,6 +94,9 @@ static int sysedit_dragSel    = 0;  /**< Dragging system around. */
 static double sysedit_mx      = 0.; /**< Cursor X position. */
 static double sysedit_my      = 0.; /**< Cursor Y position. */
 
+/* Stored checkbox values. */
+static int jp_hidden = 0; /**< Jump point hidden checkbox value. */
+static int jp_exit   = 0; /**< Jump point exit only checkbox value. */
 
 /*
  * Property editor stuff.
@@ -322,7 +325,18 @@ static void sysedit_editJumpClose( unsigned int wid, char *unused )
    JumpPoint *j;
 
    j = &sysedit_sys->jumps[ sysedit_select[0].u.jump ];
-   j->type  = atoi(window_getInput( sysedit_widEdit, "inpType" ));
+   if (jp_hidden == 1) {
+      jp_setFlag( j, JP_HIDDEN );
+      jp_rmFlag( j, JP_EXITONLY );
+   }
+   else if (jp_exit == 1) {
+      jp_setFlag( j, JP_EXITONLY );
+      jp_rmFlag( j, JP_HIDDEN );
+   }
+   else {
+      jp_rmFlag( j, JP_HIDDEN );
+      jp_rmFlag( j, JP_EXITONLY );
+   }
    j->hide  = atof(window_getInput( sysedit_widEdit, "inpHide" ));
 
    window_close( wid, unused );
@@ -1195,6 +1209,38 @@ static void sysedit_editPnt( void )
 }
 
 /**
+ * @brief Updates the jump point checkboxes.
+ */
+static void jp_type_check_hidden_update( unsigned int wid, char* str )
+{
+   (void) str;
+   if (jp_hidden == 0) {
+      jp_hidden = 1;
+      jp_exit = 0;
+   }
+   else
+      jp_hidden = 0;
+   window_checkboxSet( wid, "chkHidden", jp_hidden );
+   window_checkboxSet( wid, "chkExit",   jp_exit );
+}
+
+/**
+ * @brief Updates the jump point checkboxes.
+ */
+static void jp_type_check_exit_update( unsigned int wid, char* str )
+{
+   (void) str;
+   if (jp_exit == 0) {
+      jp_exit = 1;
+      jp_hidden = 0;
+   }
+   else
+      jp_exit = 0;
+   window_checkboxSet( wid, "chkHidden", jp_hidden );
+   window_checkboxSet( wid, "chkExit",   jp_exit );
+}
+
+/**
  * @brief Edits a jump.
  */
 static void sysedit_editJump( void )
@@ -1225,14 +1271,18 @@ static void sysedit_editJump( void )
    /* Input widgets and labels. */
    x = 20;
 
-   s = "type"; //TODO: switch to checkbox.
-   l = gl_printWidthRaw( NULL, s );
-   window_addText( wid, x, y, l, 20, 1, "txtType",
-         NULL, &cBlack, s );
-   window_addInput( wid, x += l + 5, y, 20, 20, "inpType", 1, 1, NULL );
-   window_setInputFilter( wid, "inpType",
-         "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`23456789" );
-   x += 20 + 10;
+   /* Initial checkbox state */
+   if (jp_isFlag( j, JP_HIDDEN ))
+      jp_hidden = 1;
+   else if (jp_isFlag( j, JP_EXITONLY ))
+      jp_exit = 1;
+   /* Create check boxes. */
+   window_addCheckbox( wid, x, y, 100, 20,
+         "chkHidden", "Hidden", jp_type_check_hidden_update, jp_hidden );
+   y -= 20;
+   window_addCheckbox( wid, x, y, 100, 20,
+         "chkExit", "Exit only", jp_type_check_exit_update, jp_exit );
+   y -= 30;
 
    s = "hide"; //TODO: if inpType == 0 disable hide box
    l = gl_printWidthRaw( NULL, s );
@@ -1248,8 +1298,6 @@ static void sysedit_editJump( void )
          "btnClose", "Close", sysedit_editJumpClose );
 
    /* Load current values. */
-   snprintf( buf, sizeof(buf), "%d", j->type );
-   window_setInput( wid, "inpType", buf );
    snprintf( buf, sizeof(buf), "%g", j->hide );
    window_setInput( wid, "inpHide", buf );
 }

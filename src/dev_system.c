@@ -151,7 +151,8 @@ static int dsys_saveSystem( xmlTextWriterPtr writer, const StarSystem *sys )
          xmlw_elem( writer, "radius", "%f", jp->radius );
       if (jp->flags & JP_AUTOPOS)
          xmlw_elemEmpty( writer, "autopos" );
-      xmlw_elem( writer, "type", "%d", jp->type );
+      if (jp->flags & JP_HIDDEN)
+         xmlw_elemEmpty( writer, "hidden" );
       xmlw_elem( writer, "hide", "%f", jp->hide );
       xmlw_endElem( writer ); /* "jump" */
    }

@@ -186,6 +186,8 @@ typedef struct SystemPresence_ {
  */
 #define JP_AUTOPOS      (1<<0) /**< Automatically position jump point based on system radius. */
 #define JP_KNOWN        (1<<1) /**< Jump point is known. */
+#define JP_HIDDEN       (1<<2) /**< Jump point is hidden. */
+#define JP_EXITONLY     (1<<3) /**< Jump point is exit only */
 #define jp_isKnown(j)     jp_isFlag(j,JP_KNOWN) /**< Checks if jump is known. */
 #define jp_isFlag(j,f)    ((j)->flags & (f)) /**< Checks jump flag. */
 #define jp_setFlag(j,f)   ((j)->flags |= (f)) /**< Sets a jump flag. */
@@ -202,7 +204,6 @@ typedef struct JumpPoint_ {
    Vector2d pos; /**< Position in the system. */
    double radius; /**< Radius of jump range. */
    unsigned int flags; /**< Flags related to the jump point's status. */
-   int type; /**< Type of Jump Point */
    double hide; /**< ewarfare hide value for the jump point */
    double angle; /**< Direction the jump is facing. */
    double cosa; /**< Cosinus of the angle. */
