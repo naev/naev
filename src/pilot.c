@@ -863,9 +863,9 @@ int pilot_getJumps( const Pilot* p )
  *    @param p Pilot to get colour of.
  *    @return The colour of the pilot.
  */
-glColour* pilot_getColour( const Pilot* p )
+const glColour* pilot_getColour( const Pilot* p )
 {
-   glColour *col;
+   const glColour *col;
 
    if (pilot_inRangePilot(player.p, p) == -1) col = &cMapNeutral;
    else if (pilot_isDisabled(p) || pilot_isFlag(p,PILOT_DEAD)) col = &cInert;

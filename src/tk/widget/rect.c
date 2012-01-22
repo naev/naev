@@ -33,7 +33,7 @@ static void rct_render( Widget* rct, double bx, double by );
 void window_addRect( const unsigned int wid,
                      const int x, const int y, /* position */
                      const int w, const int h, /* size */
-                     char* name, glColour* colour, int border )
+                     char* name, const glColour* colour, int border )
 {
    Window *wdw = window_wget(wid);
    Widget *wgt = window_newWidget(wdw, name);
@@ -45,7 +45,12 @@ void window_addRect( const unsigned int wid,
 
    /* specific */
    wgt->render          = rct_render;
-   wgt->dat.rct.colour  = colour;
+   if (colour != NULL) {
+      wgt->dat.rct.colour  = *colour;
+      wgt->dat.rct.fill    = 1;
+   }
+   else
+      wgt->dat.rct.fill    = 0;
    wgt->dat.rct.border  = border;
 
    /* position/size */
@@ -69,8 +74,8 @@ static void rct_render( Widget* rct, double bx, double by )
    x = bx + rct->x;
    y = by + rct->y;
 
-   if (rct->dat.rct.colour) /* draw rect only if it exists */
-      toolkit_drawRect( x, y, rct->w, rct->h, rct->dat.rct.colour, NULL );
+   if (rct->dat.rct.fill) /* draw rect only if it exists */
+      toolkit_drawRect( x, y, rct->w, rct->h, &rct->dat.rct.colour, NULL );
 
    if (rct->dat.rct.border) {
       /* inner outline */

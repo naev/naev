@@ -162,7 +162,7 @@ void weapon_minimap( const double res, const double w,
    int i, rc, p;
    double x, y;
    Weapon *wp;
-   glColour *c;
+   const glColour *c;
    GLsizei offset;
    Pilot *par;
 

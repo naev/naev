@@ -2295,7 +2295,7 @@ int player_outfitOwned( const Outfit* o )
 
    /* Special case map. */
    if ((outfit_isMap(o)) &&
-         map_isMapped( NULL, o->u.map.radius ))
+         map_isMapped(o))
       return 1;
 
    /* Special case license. */
@@ -2389,7 +2389,7 @@ int player_addOutfit( const Outfit *o, int quantity )
 
    /* special case if it's a map */
    if (outfit_isMap(o)) {
-      map_map(NULL,o->u.map.radius);
+      map_map(o);
       return 1; /* Success. */
    }
    /* special case if it's an outfit */

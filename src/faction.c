@@ -63,7 +63,7 @@ typedef struct Faction_ {
    /* Graphics. */
    glTexture *logo_small; /**< Small logo. */
    glTexture *logo_tiny; /**< Tiny logo. */
-   glColour *colour; /**< Faction specific colour. */
+   const glColour *colour; /**< Faction specific colour. */
 
    /* Enemies */
    int *enemies; /**< Enemies by ID of the faction. */
@@ -257,7 +257,7 @@ glTexture* faction_logoTiny( int f )
  *    @param f Faction to get the colour of.
  *    @return The faction's colour
  */
-glColour* faction_colour( int f )
+const glColour* faction_colour( int f )
 {
    if (!faction_isFaction(f)) {
       WARN("Faction id '%d' is invalid.",f);
@@ -559,7 +559,7 @@ double faction_getPlayerDef( int f )
  *    @param f Faction to get the colour of based on player's standing.
  *    @return Pointer to the colour.
  */
-glColour* faction_getColour( int f )
+const glColour* faction_getColour( int f )
 {
    if (f<0) return &cInert;
    else if (areAllies(FACTION_PLAYER,f)) return &cFriend;

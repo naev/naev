@@ -216,7 +216,7 @@ static void cli_render( double bx, double by, double w, double h, void *data )
 {
    (void) data;
    int i, y;
-   glColour *c;
+   const glColour *c;
 
    /* Draw the text. */
    i = cli_viewport;
