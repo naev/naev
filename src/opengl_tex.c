@@ -749,9 +749,7 @@ void gl_getSpriteFromDir( int* x, int* y, const glTexture* t, const double dir )
  */
 int gl_needPOT (void)
 {
-   if (gl_tex_ext_npot == 0)
-      return 1;
-   else if (conf.npot == 1)
+   if (gl_tex_ext_npot && conf.npot)
       return 0;
    else
       return 1;
