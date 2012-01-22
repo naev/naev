@@ -40,14 +40,17 @@ extern const glColour cGrey20;
 extern const glColour cGrey10;
 
 extern const glColour cGreen;
+extern const glColour cPrimeGreen;
 extern const glColour cDarkRed;
 extern const glColour cRed;
+extern const glColour cPrimeRed;
 extern const glColour cOrange;
 extern const glColour cYellow;
 extern const glColour cMidnightBlue;
 extern const glColour cDarkBlue;
 extern const glColour cBlue;
 extern const glColour cLightBlue;
+extern const glColour cPrimeBlue;
 extern const glColour cPurple;
 extern const glColour cDarkPurple;
 extern const glColour cBrown;

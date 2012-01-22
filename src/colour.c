@@ -39,9 +39,11 @@ const glColour cBlack      = { .r=0.00, .g=0.00, .b=0.00, .a=1. }; /**< Black */
 
 /* Greens. */
 const glColour cGreen      = { .r=0.20, .g=0.80, .b=0.20, .a=1. }; /**< Green */
+const glColour cPrimeGreen = { .r=0.00, .g=1.00, .b=0.00, .a=1. }; /**< Primary Green */
 /* Reds. */
 const glColour cDarkRed    = { .r=0.60, .g=0.10, .b=0.10, .a=1. }; /**< Dark Red */
 const glColour cRed        = { .r=0.80, .g=0.20, .b=0.20, .a=1. }; /**< Red */
+const glColour cPrimeRed   = { .r=1.00, .g=0.00, .b=0.00, .a=1. }; /**< Primary Red */
 /* Oranges. */
 const glColour cOrange     = { .r=0.90, .g=0.70, .b=0.10, .a=1. }; /**< Orange */
 /* Yellows. */
@@ -52,6 +54,7 @@ const glColour cMidnightBlue = { .r=0.40, .g=0.4, .b=0.60, .a=1. }; /**< Midnigh
 const glColour cDarkBlue   = { .r=0.10, .g=0.10, .b=0.60, .a=1. }; /**< Dark Blue */
 const glColour cBlue       = { .r=0.20, .g=0.20, .b=0.80, .a=1. }; /**< Blue */
 const glColour cLightBlue  = { .r=0.40, .g=0.40, .b=1.00, .a=1. }; /**< Light Blue */
+const glColour cPrimeBlue  = { .r=0.00, .g=0.00, .b=1.00, .a=1. }; /**< Primary Blue */
 const glColour cCyan       = { .r=0.00, .g=1.00, .b=1.00, .a=1. }; /* Cyan. */
 /* Purples. */
 const glColour cPurple     = { .r=0.90, .g=0.10, .b=0.90, .a=1. }; /**< Purple */

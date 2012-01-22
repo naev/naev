@@ -1296,7 +1296,7 @@ void player_targetPlanet (void)
 
       /* In range, target planet. */
       if ((cur_system->planets[ id ]->real == ASSET_REAL)
-            && pilot_inRangePlanet( player.p, id )) {
+            && planet_isKnown(cur_system->planets[id])) {
          player_targetPlanetSet( id );
          return;
       }
