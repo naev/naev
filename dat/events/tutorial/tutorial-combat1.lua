@@ -184,7 +184,7 @@ function input(inputname, inputpress)
     if inputname == "info" and inputpress and waitinfo then
         waitinfo = false
         pp:rmOutfit("all")
-        pp:addOutfit("Mace Launcher", 2)
+        pp:addOutfit("Unicorp Mace Launcher", 2)
         pp:addOutfit("Laser Cannon MK2", 2)
         
         player.omsgRm(omsg)
@@ -220,7 +220,7 @@ function captainpractice()
     tk.msg(title1, message8)
 
     pp:rmOutfit("all")
-    pp:addOutfit("Mace Launcher", 2)
+    pp:addOutfit("Unicorp Mace Launcher", 2)
     pp:addOutfit("Laser Cannon MK2", 2)
 
     captainTP = pilot.add("Civilian Llama", "baddie_norun")[1]
