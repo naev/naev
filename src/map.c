@@ -798,22 +798,26 @@ void map_renderSystems( double bx, double by, double x, double y,
       gl_vboActivateOffset( map_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
       gl_vboActivateOffset( map_vbo, GL_COLOR_ARRAY,
             sizeof(GLfloat) * 2*3, 4, GL_FLOAT, 0 );
-      for (j=0; j<sys->njumps; j++) {
+      for (j = 0; j < sys->njumps; j++) {
          jsys = sys->jumps[j].target;
          if (!space_sysReachableFromSys(jsys,sys) && !editor)
             continue;
 
          /* Choose colours. */
          cole = &cBlue;
-         for (k=0; k<jsys->njumps; k++) {
-            if (jsys->jumps[i].target == sys) {
-               if (jp_isFlag(&sys->jumps[j], JP_EXITONLY))
+         for (k = 0; k < jsys->njumps; k++) {
+            if (jsys->jumps[k].target == sys) {
+               if (jp_isFlag(&jsys->jumps[k], JP_EXITONLY))
                   cole = &cWhite;
+               else if (jp_isFlag(&jsys->jumps[k], JP_HIDDEN))
+                  cole = &cRed;
                break;
             }
          }
          if (jp_isFlag(&sys->jumps[j], JP_EXITONLY))
             col = &cWhite;
+         else if (jp_isFlag(&sys->jumps[j], JP_HIDDEN))
+            col = &cRed;
          else
             col = &cBlue;
 
@@ -946,7 +950,7 @@ void map_renderNames( double x, double y, int editor )
          tx  = x + map_zoom*sys->pos.x + d*vx;
          ty  = y + map_zoom*sys->pos.y + d*vy;
          /* Display. */
-         snprintf( buf, sizeof(buf), "H: %.2f", sys->jumps[j].hide );
+         snprintf( buf, sizeof(buf), "H: %.1f", sys->jumps[j].hide );
          gl_print( &gl_smallFont,
                tx, ty,
                &cGrey70, buf );

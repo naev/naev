@@ -1048,7 +1048,6 @@ void pilot_updateDisable( Pilot* p, const unsigned int shooter )
    Pilot *pshooter;
    HookParam hparam;
 
-   /* TODO: Remove check for player.p once disable recovery is implemented. */
    if ((!pilot_isFlag(p, PILOT_DISABLED)) &&
        (!pilot_isFlag(p, PILOT_NODISABLE) || (p->armour <= 0.)) &&
        (p->armour <= p->stress)) { /* Pilot should be disabled. */
