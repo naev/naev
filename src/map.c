@@ -950,7 +950,7 @@ void map_renderNames( double x, double y, int editor )
          tx  = x + map_zoom*sys->pos.x + d*vx;
          ty  = y + map_zoom*sys->pos.y + d*vy;
          /* Display. */
-         snprintf( buf, sizeof(buf), "H: %.2f", sys->jumps[j].hide );
+         snprintf( buf, sizeof(buf), "H: %.1f", sys->jumps[j].hide );
          gl_print( &gl_smallFont,
                tx, ty,
                &cGrey70, buf );
