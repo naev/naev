@@ -184,7 +184,6 @@ static int player_saveEscorts( xmlTextWriterPtr writer );
 static int player_saveShipSlot( xmlTextWriterPtr writer, PilotOutfitSlot *slot, int i );
 static int player_saveShip( xmlTextWriterPtr writer,
       Pilot* ship, char* loc );
-static int player_saveFactions( xmlTextWriterPtr writer );
 static Planet* player_parse( xmlNodePtr parent );
 static int player_parseDoneMissions( xmlNodePtr parent );
 static int player_parseDoneEvents( xmlNodePtr parent );
@@ -192,7 +191,6 @@ static int player_parseLicenses( xmlNodePtr parent );
 static void player_parseShipSlot( xmlNodePtr node, Pilot *ship, PilotOutfitSlot *slot );
 static int player_parseShip( xmlNodePtr parent, int is_player, char *planet );
 static int player_parseEscorts( xmlNodePtr parent );
-static int player_parseFactions( xmlNodePtr parent );
 static void player_addOutfitToPilot( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s );
 /* Misc. */
 static void player_planetOutOfRangeMsg (void);
@@ -2803,27 +2801,6 @@ int player_save( xmlTextWriterPtr writer )
    player_saveEscorts(writer);
    xmlw_endElem(writer); /* "escorts" */
 
-   /* Factions the player knows about. */
-   xmlw_startElem(writer, "factions");
-   player_saveFactions(writer);
-   xmlw_endElem(writer); /* "factions" */
-
-   return 0;
-}
-
-/**
- * @brief Saves the players known faction info
- */
-static int player_saveFactions( xmlTextWriterPtr writer )
-{
-   int nfac, i;
-   int *factions;
-
-   factions = faction_getAll( &nfac );
-   for ( i=0; i<nfac; i++ )
-      if ( faction_isKnown( faction_pointer( factions[i] )))
-         xmlw_elem(writer,"faction","%s",faction_name( factions[i] ));
-
    return 0;
 }
 
@@ -2967,36 +2944,6 @@ static int player_saveShip( xmlTextWriterPtr writer,
 }
 
 /**
- * @brief Loads the players knowledge of factions.
- *
- *    @param parent Node where the faction stuff is to be found.
- *    @return 0 on success.
- */
-static int player_parseFactions( xmlNodePtr parent )
-{
-   xmlNodePtr node, cur;
-   Faction *fac;
-
-   faction_clearKnown();
-
-   node = parent->xmlChildrenNode;
-   do {
-      if (xml_isNode(node,"factions")) {
-         cur = node->xmlChildrenNode;
-
-         do {
-            fac = faction_pointer(faction_get(xml_get(node)));
-            if (fac != NULL) /* Must exist */
-               faction_setFlag(fac,FACTION_KNOWN);
-         } while (xml_nextNode(cur));
-      }
-   } while (xml_nextNode(node));
-
-   return 0;
-
-}
-
-/**
  * @brief Loads the player stuff.
  *
  *    @param parent Node where the player stuff is to be found.
@@ -3022,8 +2969,6 @@ Planet* player_load( xmlNodePtr parent )
          player_parseDoneEvents( node );
       else if (xml_isNode(node,"escorts"))
          player_parseEscorts(node);
-      else if (xml_isNode(node,"factions"))
-         player_parseFactions(node);
    } while (xml_nextNode(node));
 
    return pnt;

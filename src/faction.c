@@ -1109,7 +1109,9 @@ int pfaction_save( xmlTextWriterPtr writer )
       xmlw_startElem(writer,"faction");
 
       xmlw_attr(writer,"name","%s",faction_stack[i].name);
-      xmlw_str(writer, "%f", faction_stack[i].player);
+      xmlw_elem(writer, "standing", "%f", faction_stack[i].player);
+      if (faction_isKnown(&faction_stack[i]))
+         xmlw_elemEmpty(writer, "known");
 
       xmlw_endElem(writer); /* "faction" */
    }
@@ -1128,7 +1130,7 @@ int pfaction_save( xmlTextWriterPtr writer )
  */
 int pfaction_load( xmlNodePtr parent )
 {
-   xmlNodePtr node, cur;
+   xmlNodePtr node, cur, sub;
    char *str;
    int faction;
 
@@ -1139,14 +1141,25 @@ int pfaction_load( xmlNodePtr parent )
          cur = node->xmlChildrenNode;
          do {
             if (xml_isNode(cur,"faction")) {
-               xmlr_attr(cur,"name",str);
+               xmlr_attr(cur, "name", str);
                faction = faction_get(str);
 
                if (faction != -1) { /* Faction is valid. */
 
-                  /* Must not be static. */
-                  if (!faction_isFlag( &faction_stack[faction], FACTION_STATIC ))
-                     faction_stack[faction].player = xml_getFloat(cur);
+                  sub = cur->xmlChildrenNode;
+                  do {
+                     if (xml_isNode(sub,"standing")) {
+
+                        /* Must not be static. */
+                        if (!faction_isFlag( &faction_stack[faction], FACTION_STATIC ))
+                           faction_stack[faction].player = xml_getFloat(sub);
+                        continue;
+                     }
+                     if (xml_isNode(sub,"known")) {
+                        faction_setFlag(faction_pointer(faction), FACTION_KNOWN);
+                        continue;
+                     }
+                  } while (xml_nextNode(sub));
                }
                free(str);
             }
