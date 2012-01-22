@@ -1286,11 +1286,11 @@ static void sysedit_editJump( void )
          "chkExit", "Exit only", jp_type_check_exit_update, jp_exit );
    y -= 30;
 
-   s = "hide"; //TODO: if inpType == 0 disable hide box
+   s = "Hide"; //TODO: if inpType == 0 disable hide box
    l = gl_printWidthRaw( NULL, s );
    window_addText( wid, x, y, l, 20, 1, "txtHide",
          NULL, &cBlack, s );
-   window_addInput( wid, x += l + 5, y, 50, 20, "inpHide", 4, 1, NULL );
+   window_addInput( wid, x + l + 8, y, 50, 20, "inpHide", 4, 1, NULL );
    window_setInputFilter( wid, "inpHide",
          "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`" );
    x += 50 + 10;
