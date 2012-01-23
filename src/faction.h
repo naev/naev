@@ -69,7 +69,7 @@ int faction_isFaction( int f );
 int faction_get( const char* name );
 int* faction_getAll( int *n );
 int* faction_getKnown( int *n );
-Faction* faction_pointer( int n );
+int faction_isKnown( int id );
 char* faction_name( int f );
 char* faction_shortname( int f );
 char* faction_longname( int f );
@@ -81,6 +81,9 @@ const glColour* faction_colour( int f );
 int* faction_getEnemies( int f, int *n );
 int* faction_getAllies( int f, int *n );
 int* faction_getGroup( int *n, int which );
+
+/* set stuff */
+int faction_setKnown( int id, int state );
 
 /* player stuff */
 void faction_modPlayer( int f, double mod, const char *source );

@@ -42,6 +42,55 @@
 
 #define CHUNK_SIZE         32 /**< Size of chunk for allocation. */
 
+#define FACTION_STATIC        (1<<0) /**< Faction doesn't change standing with player. */
+#define FACTION_INVISIBLE     (1<<1) /**< Faction isn't exposed to the player. */
+#define FACTION_KNOWN         (1<<2) /**< Faction is known to the player. */
+
+#define faction_setFlag(fa,f) ((fa)->flags |= (f))
+#define faction_rmFlag(fa,f)  ((fa)->flags &= ~(f))
+#define faction_isFlag(fa,f)  ((fa)->flags & (f))
+#define faction_isKnown_(fa)   ((fa)->flags & (FACTION_KNOWN))
+
+/**
+ * @struct Faction
+ *
+ * @brief Represents a faction.
+ */
+typedef struct Faction_ {
+   char *name; /**< Normal Name. */
+   char *longname; /**< Long Name. */
+   char *displayname; /**< Display name. */
+
+   /* Graphics. */
+   glTexture *logo_small; /**< Small logo. */
+   glTexture *logo_tiny; /**< Tiny logo. */
+   const glColour *colour; /**< Faction specific colour. */
+
+   /* Enemies */
+   int *enemies; /**< Enemies by ID of the faction. */
+   int nenemies; /**< Number of enemies. */
+
+   /* Allies */
+   int *allies; /**< Allies by ID of the faction. */
+   int nallies; /**< Number of allies. */
+
+   /* Player information. */
+   double player_def; /**< Default player standing. */
+   double player; /**< Standing with player - from -100 to 100 */
+
+   /* Scheduler. */
+   lua_State *sched_state; /**< Lua scheduler script. */
+
+   /* Behaviour. */
+   lua_State *state; /**< Faction specific state. */
+
+   /* Equipping. */
+   lua_State *equip_state; /**< Faction equipper state. */
+
+
+   /* Flags. */
+   unsigned int flags; /**< Flags affecting the faction. */
+} Faction;
 
 static Faction* faction_stack = NULL; /**< Faction stack. */
 int faction_nstack = 0; /**< Number of factions in the faction stack. */
@@ -120,7 +169,7 @@ int* faction_getKnown( int *n )
    /* Get IDs. */
    m = 0;
    for (i=0; i<faction_nstack; i++)
-      if (!faction_isFlag( &faction_stack[i], FACTION_INVISIBLE ) && faction_isKnown( &faction_stack[i] ))
+      if (!faction_isFlag( &faction_stack[i], FACTION_INVISIBLE ) && faction_isKnown_( &faction_stack[i] ))
          f[m++] = i;
 
    *n = m;
@@ -135,19 +184,30 @@ void faction_clearKnown()
    int i;
 
    for ( i=0; i<faction_nstack; i++)
-      if ( faction_isKnown( &faction_stack[i] ))
+      if ( faction_isKnown_( &faction_stack[i] ))
          faction_rmFlag( &faction_stack[i], FACTION_KNOWN );
 }
 
-
 /**
- * @brief Returns a pointer to a faction
+ * @brief Is the faction known?
  */
-Faction* faction_pointer( int n )
+int faction_isKnown( int id )
 {
-   return &faction_stack[n];
+   return faction_isKnown_( &faction_stack[id] );
 }
 
+/**
+ * @brief Sets the factions known state
+ */
+int faction_setKnown( int id, int state )
+{
+   if (state)
+      faction_setFlag( &faction_stack[id], FACTION_KNOWN );
+   else
+      faction_rmFlag( &faction_stack[id], FACTION_KNOWN );
+
+   return 0;
+}
 
 /**
  * @brief Gets a factions "real" name.
@@ -1114,7 +1174,8 @@ int pfaction_save( xmlTextWriterPtr writer )
 
       xmlw_attr(writer,"name","%s",faction_stack[i].name);
       xmlw_elem(writer, "standing", "%f", faction_stack[i].player);
-      if (faction_isKnown(&faction_stack[i]))
+
+      if (faction_isKnown_(&faction_stack[i]))
          xmlw_elemEmpty(writer, "known");
 
       xmlw_endElem(writer); /* "faction" */

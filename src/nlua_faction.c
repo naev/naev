@@ -550,7 +550,7 @@ static int factionL_colour( lua_State *L )
  */
 static int factionL_isknown( lua_State *L )
 {
-   Faction *fac = faction_pointer(luaL_validfaction(L, 1));
+   int fac = luaL_validfaction(L, 1);
    lua_pushboolean(L, faction_isKnown(fac));
    return 1;
 }
@@ -566,16 +566,13 @@ static int factionL_isknown( lua_State *L )
  */
 static int factionL_setknown( lua_State *L )
 {
-   int b;
-   Faction *fac;
+   int b, fac;
 
-   fac = faction_pointer(luaL_validfaction(L, 1));
+   fac = luaL_validfaction(L, 1);
    b   = lua_toboolean(L, 2);
 
-   if (b)
-      faction_setFlag( fac, FACTION_KNOWN );
-   else
-      faction_rmFlag( fac, FACTION_KNOWN );
+   faction_setKnown( fac, b );
+
    return 0;
 }
 
