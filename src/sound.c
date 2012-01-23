@@ -429,6 +429,9 @@ int sound_playPos( int sound, double px, double py, double vx, double vy )
    if ((sound < 0) || (sound >= sound_nlist))
       return -1;
 
+   if (!pilot_inRange( player.p, px, py ))
+      return 0;
+
    /* Gets a new voice. */
    v = voice_new();
 
