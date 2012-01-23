@@ -249,12 +249,12 @@ void background_renderStars( const double dt )
    if ((player.p != NULL) && !player_isFlag(PLAYER_DESTROYED) &&
          !player_isFlag(PLAYER_CREATING)) {
 
-      if (pilot_isFlag(player.p,PILOT_HYPERSPACE)) {/* hyperspace fancy effects */
+      if (pilot_isFlag(player.p,PILOT_HYPERSPACE)) { /* hyperspace fancy effects */
 
          glShadeModel(GL_SMOOTH);
          shade_mode = 1;
 
-         /* lines will be based on velocity */
+         /* lines get longer the closer we are to finishing the jump */
          m  = MAX( 0, HYPERSPACE_STARS_BLUR-player.p->ptimer );
          m /= HYPERSPACE_STARS_BLUR;
          m *= HYPERSPACE_STARS_LENGTH;
