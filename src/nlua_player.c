@@ -472,7 +472,7 @@ static int playerL_autonavDest( lua_State *L )
  * Possible options are:<br/>
  * <ul>
  *  <li>abort : (string) autonav abort message
- *  <li>2x : (boolean) allows the player to enable doublespeed to "skip", default disabled
+ *  <li>no2x : (boolean) whether to prevent the player from engaging double-speed, default false
  *  <li>gui : (boolean) enables the player's gui, default disabled
  * </ul>
  *
@@ -510,7 +510,7 @@ static int playerL_cinematics( lua_State *L )
       f_gui = lua_toboolean(L, -1);
       lua_pop( L, 1 );
 
-      lua_getfield( L, 2, "2x" );
+      lua_getfield( L, 2, "no2x" );
       f_2x = lua_toboolean(L, -1);
       lua_pop( L, 1 );
    }
@@ -525,8 +525,9 @@ static int playerL_cinematics( lua_State *L )
       /* Do stuff. */
       player_autonavAbort( abort_msg );
       player_rmFlag( PLAYER_DOUBLESPEED );
+      pause_setSpeed(1.);
 
-      if (f_gui)
+      if (!f_gui)
          player_setFlag( PLAYER_CINEMATICS_GUI );
 
       if (f_2x)
