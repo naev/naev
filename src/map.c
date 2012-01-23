@@ -290,6 +290,7 @@ static void map_update( unsigned int wid )
    int p;
    glTexture *logo;
    double w;
+   double unknownPresence;
 
    /* Needs map to update. */
    if (!map_isOpen())
@@ -421,16 +422,24 @@ static void map_update( unsigned int wid )
    hasPresence = 0;
    buf[0]      = '\0';
    l           = 0;
+   unknownPresence = 0;
    for (i=0; i < sys->npresence; i++) {
       if (sys->presence[i].value <= 0)
          continue;
       hasPresence = 1;
-      t           = faction_getColourChar(sys->presence[i].faction);
-      /* Use map grey instead of default neutral colour */
-      l += snprintf( &buf[l], PATH_MAX-l, "%s\e0%s: \e%c%.0f",
-                     (l==0)?"":"\n", faction_shortname(sys->presence[i].faction),
-                     (t=='N')?'M':t, sys->presence[i].value);
+      if (faction_isKnown( faction_pointer(sys->presence[i].faction))) {
+         t           = faction_getColourChar(sys->presence[i].faction);
+         /* Use map grey instead of default neutral colour */
+         l += snprintf( &buf[l], PATH_MAX-l, "%s\e0%s: \e%c%.0f",
+                        (l==0)?"":"\n", faction_shortname(sys->presence[i].faction),
+                        (t=='N')?'M':t, sys->presence[i].value);
+      }
+      else
+         unknownPresence += sys->presence[i].value;
    }
+   if (unknownPresence != 0)
+      l += snprintf( &buf[l], PATH_MAX-l, "%s\e0%s: \e%c%.0f",
+                     (l==0)?"":"\n", "Unknown", 'M', unknownPresence);
    if (hasPresence == 0)
       snprintf(buf, PATH_MAX, "N/A");
    window_moveWidget( wid, "txtSPresence", x, y );

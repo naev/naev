@@ -2804,7 +2804,6 @@ int player_save( xmlTextWriterPtr writer )
    return 0;
 }
 
-
 /**
  * @brief Saves an outfit slot.
  */
@@ -2943,7 +2942,6 @@ static int player_saveShip( xmlTextWriterPtr writer,
 
    return 0;
 }
-
 
 /**
  * @brief Loads the player stuff.

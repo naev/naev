@@ -179,10 +179,14 @@ int pilot_inRangePlanet( const Pilot *p, int target )
    if ( p == NULL )
       return 0;
 
-   sense = sensor_curRange * p->ew_detect;
-
    /* Get the planet. */
    pnt = cur_system->planets[target];
+
+   /* target must not be virtual */
+   if ( !pnt->real )
+      return 0;
+
+   sense = sensor_curRange * p->ew_detect;
 
    /* Get distance. */
    d = vect_dist2( &p->solid->pos, &pnt->pos );

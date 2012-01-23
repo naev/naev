@@ -109,6 +109,7 @@ StarSystem *cur_system = NULL; /**< Current star system. */
 glTexture *jumppoint_gfx = NULL; /**< Jump point graphics. */
 static lua_State *landing_lua = NULL; /**< Landing lua. */
 static int space_fchg = 0; /**< Faction change counter, to avoid unnecessary calls. */
+static int space_simulating = 0; /** Are we simulating space? */
 
 
 /*
@@ -1231,15 +1232,23 @@ void space_update( const double dt )
       space_fchg = 0;
    }
 
-   /* Planet updates */
-   for (i=0; i<cur_system->nplanets; i++)
-      if (( !planet_isKnown( cur_system->planets[i] )) && ( pilot_inRangePlanet( player.p, i )))
-         planet_setFlag( cur_system->planets[i], PLANET_KNOWN );
+   if (!space_simulating) {
+      /* Planet updates */
+      for (i=0; i<cur_system->nplanets; i++)
+         if (( !planet_isKnown( cur_system->planets[i] )) && ( pilot_inRangePlanet( player.p, i ))) {
+            planet_setFlag( cur_system->planets[i], PLANET_KNOWN );
+            player_message( "You discovered \e%c%s\e\0.",
+                  planet_getColourChar( cur_system->planets[i] ),
+                  cur_system->planets[i]->name );
+         }
 
-   /* Jump point updates */
-   for (i=0; i<cur_system->njumps; i++)
-      if (( !jp_isKnown( &cur_system->jumps[i] )) && ( pilot_inRangeJump( player.p, i )))
-         jp_setFlag( &cur_system->jumps[i], JP_KNOWN );
+      /* Jump point updates */
+      for (i=0; i<cur_system->njumps; i++)
+         if (( !jp_isKnown( &cur_system->jumps[i] )) && ( pilot_inRangeJump( player.p, i ))) {
+            jp_setFlag( &cur_system->jumps[i], JP_KNOWN );
+            player_message( "You discovered a Jump Point." );
+         }
+   }
 }
 
 
@@ -1344,6 +1353,7 @@ void space_init( const char* sysname )
    sys_setFlag(cur_system,SYSTEM_KNOWN);
 
    /* Simulate system. */
+   space_simulating = 1;
    if (player.p != NULL)
       pilot_setFlag( player.p, PILOT_INVISIBLE );
    player_messageToggle( 0 );
@@ -1358,6 +1368,7 @@ void space_init( const char* sysname )
    player_messageToggle( 1 );
    if (player.p != NULL)
       pilot_rmFlag( player.p, PILOT_INVISIBLE );
+   space_simulating = 0;
 
    /* Refresh overlay if necessary (player kept it open). */
    ovr_refresh();
