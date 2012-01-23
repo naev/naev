@@ -1235,7 +1235,9 @@ void space_update( const double dt )
    for (i=0; i<cur_system->nplanets; i++)
       if (( !planet_isKnown( cur_system->planets[i] )) && ( pilot_inRangePlanet( player.p, i ))) {
          planet_setFlag( cur_system->planets[i], PLANET_KNOWN );
-         player_message( "You discovered %s.", cur_system->planets[i]->name );
+         player_message( "You discovered \e%c%s\e\0.",
+               planet_getColourChar( cur_system->planets[i] ),
+               cur_system->planets[i]->name );
       }
 
    /* Jump point updates */
