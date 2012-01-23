@@ -1233,13 +1233,17 @@ void space_update( const double dt )
 
    /* Planet updates */
    for (i=0; i<cur_system->nplanets; i++)
-      if (( !planet_isKnown( cur_system->planets[i] )) && ( pilot_inRangePlanet( player.p, i )))
+      if (( !planet_isKnown( cur_system->planets[i] )) && ( pilot_inRangePlanet( player.p, i ))) {
          planet_setFlag( cur_system->planets[i], PLANET_KNOWN );
+         player_message( "You discovered %s.", cur_system->planets[i]->name );
+      }
 
    /* Jump point updates */
    for (i=0; i<cur_system->njumps; i++)
-      if (( !jp_isKnown( &cur_system->jumps[i] )) && ( pilot_inRangeJump( player.p, i )))
+      if (( !jp_isKnown( &cur_system->jumps[i] )) && ( pilot_inRangeJump( player.p, i ))) {
          jp_setFlag( &cur_system->jumps[i], JP_KNOWN );
+         player_message( "You discovered a Jump Point." ); 
+      }
 }
 
 
