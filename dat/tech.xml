@@ -125,6 +125,7 @@
   <item>Map: The Frontier</item>
   <item>Map: Sol</item>
   <item>Map: Dvaered Core</item>
+  <item>Map: Empire Core</item>
   <item>Map: Pirate strongholds</item>
   <item>Unicorp Scrambler</item>
   <item>Milspec Scrambler</item>
@@ -425,6 +426,7 @@
   <item>Map: The Frontier</item>
   <item>Map: Sol</item>
   <item>Map: Dvaered Core</item>
+  <item>Map: Empire Core</item>
  </tech>
 
  <!-- Ships -->
