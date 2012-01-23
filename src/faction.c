@@ -43,55 +43,6 @@
 #define CHUNK_SIZE         32 /**< Size of chunk for allocation. */
 
 
-#define FACTION_STATIC        (1<<0) /**< Faction doesn't change standing with player. */
-#define FACTION_INVISIBLE     (1<<1) /**< Faction isn't exposed to the player. */
-
-#define faction_setFlag(fa,f) ((fa)->flags |= (f))
-#define faction_isFlag(fa,f)  ((fa)->flags & (f))
-
-
-/**
- * @struct Faction
- *
- * @brief Represents a faction.
- */
-typedef struct Faction_ {
-   char *name; /**< Normal Name. */
-   char *longname; /**< Long Name. */
-   char *displayname; /**< Display name. */
-
-   /* Graphics. */
-   glTexture *logo_small; /**< Small logo. */
-   glTexture *logo_tiny; /**< Tiny logo. */
-   const glColour *colour; /**< Faction specific colour. */
-
-   /* Enemies */
-   int *enemies; /**< Enemies by ID of the faction. */
-   int nenemies; /**< Number of enemies. */
-
-   /* Allies */
-   int *allies; /**< Allies by ID of the faction. */
-   int nallies; /**< Number of allies. */
-
-   /* Player information. */
-   double player_def; /**< Default player standing. */
-   double player; /**< Standing with player - from -100 to 100 */
-
-   /* Scheduler. */
-   lua_State *sched_state; /**< Lua scheduler script. */
-
-   /* Behaviour. */
-   lua_State *state; /**< Faction specific state. */
-
-   /* Equipping. */
-   lua_State *equip_state; /**< Faction equipper state. */
-
-
-   /* Flags. */
-   unsigned int flags; /**< Flags affecting the faction. */
-} Faction;
-
-
 static Faction* faction_stack = NULL; /**< Faction stack. */
 int faction_nstack = 0; /**< Number of factions in the faction stack. */
 
@@ -152,6 +103,49 @@ int* faction_getAll( int *n )
 
    *n = m;
    return f;
+}
+
+/**
+ * @brief Gets all the known factions.
+ */
+int* faction_getKnown( int *n )
+{
+   int i;
+   int *f;
+   int m;
+
+   /* Set up. */
+   f  = malloc( sizeof(int) * faction_nstack );
+
+   /* Get IDs. */
+   m = 0;
+   for (i=0; i<faction_nstack; i++)
+      if (!faction_isFlag( &faction_stack[i], FACTION_INVISIBLE ) && faction_isKnown( &faction_stack[i] ))
+         f[m++] = i;
+
+   *n = m;
+   return f;
+}
+
+/**
+ * @brief Clears the known factions.
+ */
+void faction_clearKnown()
+{
+   int i;
+
+   for ( i=0; i<faction_nstack; i++)
+      if ( faction_isKnown( &faction_stack[i] ))
+         faction_rmFlag( &faction_stack[i], FACTION_KNOWN );
+}
+
+
+/**
+ * @brief Returns a pointer to a faction
+ */
+Faction* faction_pointer( int n )
+{
+   return &faction_stack[n];
 }
 
 
@@ -823,6 +817,11 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
          continue;
       }
 
+      if (xml_isNode(node, "known")) {
+         faction_setFlag(temp, FACTION_KNOWN);
+         continue;
+      }
+
       if (xml_isNode(node, "equip")) {
          if (temp->equip_state != NULL)
             WARN("Faction '%s' has duplicate 'equip' tag.", temp->name);
@@ -1114,7 +1113,9 @@ int pfaction_save( xmlTextWriterPtr writer )
       xmlw_startElem(writer,"faction");
 
       xmlw_attr(writer,"name","%s",faction_stack[i].name);
-      xmlw_str(writer, "%f", faction_stack[i].player);
+      xmlw_elem(writer, "standing", "%f", faction_stack[i].player);
+      if (faction_isKnown(&faction_stack[i]))
+         xmlw_elemEmpty(writer, "known");
 
       xmlw_endElem(writer); /* "faction" */
    }
@@ -1133,7 +1134,7 @@ int pfaction_save( xmlTextWriterPtr writer )
  */
 int pfaction_load( xmlNodePtr parent )
 {
-   xmlNodePtr node, cur;
+   xmlNodePtr node, cur, sub;
    char *str;
    int faction;
 
@@ -1144,14 +1145,25 @@ int pfaction_load( xmlNodePtr parent )
          cur = node->xmlChildrenNode;
          do {
             if (xml_isNode(cur,"faction")) {
-               xmlr_attr(cur,"name",str);
+               xmlr_attr(cur, "name", str);
                faction = faction_get(str);
 
                if (faction != -1) { /* Faction is valid. */
 
-                  /* Must not be static. */
-                  if (!faction_isFlag( &faction_stack[faction], FACTION_STATIC ))
-                     faction_stack[faction].player = xml_getFloat(cur);
+                  sub = cur->xmlChildrenNode;
+                  do {
+                     if (xml_isNode(sub,"standing")) {
+
+                        /* Must not be static. */
+                        if (!faction_isFlag( &faction_stack[faction], FACTION_STATIC ))
+                           faction_stack[faction].player = xml_getFloat(sub);
+                        continue;
+                     }
+                     if (xml_isNode(sub,"known")) {
+                        faction_setFlag(&faction_stack[faction], FACTION_KNOWN);
+                        continue;
+                     }
+                  } while (xml_nextNode(sub));
                }
                free(str);
             }

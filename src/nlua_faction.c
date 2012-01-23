@@ -40,6 +40,8 @@ static int factionL_allies( lua_State *L );
 static int factionL_logoSmall( lua_State *L );
 static int factionL_logoTiny( lua_State *L );
 static int factionL_colour( lua_State *L );
+static int factionL_isknown( lua_State *L );
+static int factionL_setknown( lua_State *L );
 static const luaL_reg faction_methods[] = {
    { "get", factionL_get },
    { "__eq", factionL_eq },
@@ -57,6 +59,8 @@ static const luaL_reg faction_methods[] = {
    { "logoSmall", factionL_logoSmall },
    { "logoTiny", factionL_logoTiny },
    { "colour", factionL_colour },
+   { "isKnown", factionL_isknown },
+   { "setKnown", factionL_setknown },
    {0,0}
 }; /**< Faction metatable methods. */
 static const luaL_reg faction_methods_cond[] = {
@@ -73,6 +77,7 @@ static const luaL_reg faction_methods_cond[] = {
    { "logoSmall", factionL_logoSmall },
    { "logoTiny", factionL_logoTiny },
    { "colour", factionL_colour },
+   { "isKnown", factionL_isknown },
    {0,0}
 }; /**< Factions read only metatable methods. */
 
@@ -534,4 +539,43 @@ static int factionL_colour( lua_State *L )
 }
 
 
+/**
+ * @brief Checks to see if a faction is known by the player.
+ *
+ * @usage b = f:isKnown()
+ *
+ *    @luaparam f Faction to check if the player knows.
+ *    @luareturn true if the player knows the faction.
+ * @luafunc isKnown( f )
+ */
+static int factionL_isknown( lua_State *L )
+{
+   Faction *fac = faction_pointer(luaL_validfaction(L, 1));
+   lua_pushboolean(L, faction_isKnown(fac));
+   return 1;
+}
+
+
+/**
+ * @brief Sets a faction's known state.
+ *
+ * @usage f:setKnown( false ) -- Makes faction unknown.
+ *    @luaparam f Faction to set known.
+ *    @luaparam b Whether or not to set as known (defaults to false).
+ * @luafunc setKnown( f, b )
+ */
+static int factionL_setknown( lua_State *L )
+{
+   int b;
+   Faction *fac;
+
+   fac = faction_pointer(luaL_validfaction(L, 1));
+   b   = lua_toboolean(L, 2);
+
+   if (b)
+      faction_setFlag( fac, FACTION_KNOWN );
+   else
+      faction_rmFlag( fac, FACTION_KNOWN );
+   return 0;
+}
 

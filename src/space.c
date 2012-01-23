@@ -3190,7 +3190,7 @@ void system_addPresence( StarSystem *sys, int faction, double amount, int range 
 
    /* Create the initial queue consisting of sys adjacencies. */
    for (i=0; i < sys->njumps; i++) {
-      if (sys->jumps[i].target->spilled == 0) {
+      if (sys->jumps[i].target->spilled == 0 && !jp_isFlag( &sys->jumps[i], JP_HIDDEN ) && !jp_isFlag( &sys->jumps[i], JP_EXITONLY )) {
          q_enqueue( q, sys->jumps[i].target );
          sys->jumps[i].target->spilled = 1;
       }
@@ -3212,7 +3212,7 @@ void system_addPresence( StarSystem *sys, int faction, double amount, int range 
 
       /* Enqueue all its adjacencies to the next range queue. */
       for (i=0; i < cur->njumps; i++) {
-         if (cur->jumps[i].target->spilled == 0) {
+         if (cur->jumps[i].target->spilled == 0 && !jp_isFlag( &cur->jumps[i], JP_HIDDEN ) && !jp_isFlag( &cur->jumps[i], JP_EXITONLY )) {
             q_enqueue( qn, cur->jumps[i].target );
             cur->jumps[i].target->spilled = 1;
          }
