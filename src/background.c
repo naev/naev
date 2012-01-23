@@ -249,14 +249,13 @@ void background_renderStars( const double dt )
    if ((player.p != NULL) && !player_isFlag(PLAYER_DESTROYED) &&
          !player_isFlag(PLAYER_CREATING)) {
 
-      if (pilot_isFlag(player.p,PILOT_HYPERSPACE) && /* hyperspace fancy effects */
-            (player.p->ptimer < HYPERSPACE_STARS_BLUR)) {
+      if (pilot_isFlag(player.p,PILOT_HYPERSPACE)) {/* hyperspace fancy effects */
 
          glShadeModel(GL_SMOOTH);
          shade_mode = 1;
 
          /* lines will be based on velocity */
-         m  = HYPERSPACE_STARS_BLUR-player.p->ptimer;
+         m  = MAX( 0, HYPERSPACE_STARS_BLUR-player.p->ptimer );
          m /= HYPERSPACE_STARS_BLUR;
          m *= HYPERSPACE_STARS_LENGTH;
          x = m*cos(VANGLE(player.p->solid->vel));
