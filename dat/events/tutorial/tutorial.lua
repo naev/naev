@@ -26,6 +26,7 @@ function create()
     player.teleport("Mohawk")
     player.msgClear()
     player.swapShip("Llama", "Tutorial Llama", "Paul 2", true, true)
+    player.cinematics(true, { no2x = true })
 
     pp:setPos(vec2.new(0, 0))
     pp:setVel(vec2.new(0, 0))
@@ -50,6 +51,7 @@ function startModule(module)
     if selection == menux then -- Quit to main menu
         tut.main_menu()
     end
+    player.cinematics(false)
     naev.eventStart(module)
     evt.finish(true) -- While the module is running, the event should not.
 end
