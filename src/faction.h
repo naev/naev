@@ -14,55 +14,6 @@
 
 #define FACTION_PLAYER  0  /**< Hardcoded player faction identifier. */
 
-#define FACTION_STATIC        (1<<0) /**< Faction doesn't change standing with player. */
-#define FACTION_INVISIBLE     (1<<1) /**< Faction isn't exposed to the player. */
-#define FACTION_KNOWN         (1<<2) /**< Faction is known to the player. */
-
-#define faction_setFlag(fa,f) ((fa)->flags |= (f))
-#define faction_rmFlag(fa,f)  ((fa)->flags &= ~(f))
-#define faction_isFlag(fa,f)  ((fa)->flags & (f))
-#define faction_isKnown(fa)   ((fa)->flags & (FACTION_KNOWN))
-
-/**
- * @struct Faction
- *
- * @brief Represents a faction.
- */
-typedef struct Faction_ {
-   char *name; /**< Normal Name. */
-   char *longname; /**< Long Name. */
-   char *displayname; /**< Display name. */
-
-   /* Graphics. */
-   glTexture *logo_small; /**< Small logo. */
-   glTexture *logo_tiny; /**< Tiny logo. */
-   const glColour *colour; /**< Faction specific colour. */
-
-   /* Enemies */
-   int *enemies; /**< Enemies by ID of the faction. */
-   int nenemies; /**< Number of enemies. */
-
-   /* Allies */
-   int *allies; /**< Allies by ID of the faction. */
-   int nallies; /**< Number of allies. */
-
-   /* Player information. */
-   double player_def; /**< Default player standing. */
-   double player; /**< Standing with player - from -100 to 100 */
-
-   /* Scheduler. */
-   lua_State *sched_state; /**< Lua scheduler script. */
-
-   /* Behaviour. */
-   lua_State *state; /**< Faction specific state. */
-
-   /* Equipping. */
-   lua_State *equip_state; /**< Faction equipper state. */
-
-
-   /* Flags. */
-   unsigned int flags; /**< Flags affecting the faction. */
-} Faction;
 
 /* get stuff */
 int faction_isFaction( int f );
