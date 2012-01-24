@@ -650,7 +650,7 @@ int space_sysReachable( StarSystem *sys )
 
    /* check to see if it is adjacent to known */
    for (i=0; i<sys->njumps; i++)
-      if (jp_isKnown( jump_get( sys->name, sys->jumps[i].target )))
+      if (jp_isKnown( jump_getTarget( sys, sys->jumps[i].target )))
          return 1;
 
    return 0;
@@ -687,7 +687,7 @@ int space_sysReachableFromSys( StarSystem *target, StarSystem *sys )
    JumpPoint *jp;
 
    /* check to see if sys contains a known jump point to target */
-   jp = jump_get( target->name, sys );
+   jp = jump_getTarget( target, sys );
    if ( jp == NULL )
       return 0;
    else if ( jp_isKnown( jp ))
@@ -971,7 +971,7 @@ char **planet_searchFuzzyCase( const char* planetname, int *n )
  *    @param sys System jump is in.
  *    @return Jump point matich jumpname in sys or NULL if not found.
  */
-JumpPoint* jump_get( const char* jumpname, StarSystem* sys )
+JumpPoint* jump_get( const char* jumpname, const StarSystem* sys )
 {
    int i;
    JumpPoint *jp;

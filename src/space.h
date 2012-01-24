@@ -306,7 +306,7 @@ void planet_updateLand( Planet *p );
 /*
  * jump stuff
  */
-JumpPoint* jump_get( const char* jumpname, StarSystem* sys );
+JumpPoint* jump_get( const char* jumpname, const StarSystem* sys );
 JumpPoint* jump_getTarget( StarSystem* target, const StarSystem* sys );
 
 /*
