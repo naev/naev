@@ -107,6 +107,7 @@ static int planet_mstack = 0; /**< Memory size of planet stack. */
 static int systems_loading = 1; /**< Systems are loading. */
 StarSystem *cur_system = NULL; /**< Current star system. */
 glTexture *jumppoint_gfx = NULL; /**< Jump point graphics. */
+static glTexture *jumpbuoy_gfx = NULL; /**< Jump buoy graphics. */
 static lua_State *landing_lua = NULL; /**< Landing lua. */
 static int space_fchg = 0; /**< Faction change counter, to avoid unnecessary calls. */
 static int space_simulating = 0; /** Are we simulating space? */
@@ -2530,6 +2531,7 @@ int space_load (void)
 
    /* Load jump point graphic - must be before systems_load(). */
    jumppoint_gfx = gl_newSprite( "gfx/planet/space/jumppoint.png", 4, 4, OPENGL_TEX_MIPMAPS );
+   jumpbuoy_gfx = gl_newImage( "gfx/planet/space/jumpbuoy.png", 0 );
 
    /* Load planets. */
    ret = planets_load();
@@ -2727,6 +2729,13 @@ static void space_renderJumpPoint( JumpPoint *jp, int i )
       c = NULL;
 
    gl_blitSprite( jumppoint_gfx, jp->pos.x, jp->pos.y, jp->sx, jp->sy, c );
+
+   /* Draw buoys next to "highway" jump points. */
+   /* if (jp->hide == 0.) { */
+   if (1) {
+      gl_blitSprite( jumpbuoy_gfx, jp->pos.x + 200 * jp->sina, jp->pos.y + 200 * jp->cosa, 0, 0, NULL ); /* Left */
+      gl_blitSprite( jumpbuoy_gfx, jp->pos.x + -200 * jp->sina, jp->pos.y + -200 * jp->cosa, 0, 0, NULL ); /* Right */
+   }
 }
 
 
@@ -2751,6 +2760,9 @@ void space_exit (void)
    if (jumppoint_gfx != NULL)
       gl_freeTexture(jumppoint_gfx);
    jumppoint_gfx = NULL;
+   if (jumpbuoy_gfx != NULL)
+      gl_freeTexture(jumpbuoy_gfx);
+   jumpbuoy_gfx = NULL;
 
    /* Free the names. */
    if (planetname_stack != NULL)
