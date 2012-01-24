@@ -58,6 +58,8 @@ function hail(p)
     hook.rm(hook3)
     hook.rm(hook4)
     hook.rm(hailhook)
+    
+    player.commClose()
 
     vendetta:control()
     vendetta:hyperspace()
