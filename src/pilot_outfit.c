@@ -848,6 +848,11 @@ void pilot_calcStats( Pilot* pilot )
       /* Add mass. */
       pilot->mass_outfit   += o->mass;
 
+      /* Add ammo mass. */
+      if (outfit_ammo(o) != NULL)
+         if (slot->u.ammo.outfit != NULL)
+            pilot->mass_outfit += slot->u.ammo.quantity * slot->u.ammo.outfit->mass;
+
       /* Active outfits must be on to affect stuff. */
       if (slot->active && !(slot->state==PILOT_OUTFIT_ON))
          continue;
@@ -886,12 +891,6 @@ void pilot_calcStats( Pilot* pilot )
       else if (outfit_isJammer(o)) { /* Jammer */
          pilot->jamming        = 1;
          pilot->energy_regen  -= o->u.jam.energy;
-      }
-
-      /* Add ammo mass. */
-      if (outfit_ammo(o) != NULL) {
-         if (slot->u.ammo.outfit != NULL)
-            pilot->mass_outfit += slot->u.ammo.quantity * slot->u.ammo.outfit->mass;
       }
    }
 
@@ -938,9 +937,6 @@ void pilot_calcStats( Pilot* pilot )
    pilot->energy = ec * pilot->energy_max;
    pilot->fuel   = fc * pilot->fuel_max;
 
-   /* Calculate mass. */
-   pilot->solid->mass = pilot->ship->mass + pilot->stats.cargo_inertia*pilot->mass_cargo + pilot->mass_outfit;
-
    /* Calculate the heat. */
    pilot_heatCalc( pilot );
 
@@ -959,8 +955,10 @@ void pilot_calcStats( Pilot* pilot )
  */
 void pilot_updateMass( Pilot *pilot )
 {
-   pilot->turn = pilot->turn_base * pilot->ship->mass / pilot->solid->mass;
+   /* Calculate mass. */
+   pilot->solid->mass = pilot->ship->mass + pilot->stats.cargo_inertia*pilot->mass_cargo + pilot->mass_outfit;
 
+   pilot->turn = pilot->turn_base * pilot->ship->mass / pilot->solid->mass;
    /* Need to recalculate electronic warfare mass change. */
    pilot_ewUpdateStatic( pilot );
 }
