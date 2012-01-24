@@ -555,7 +555,8 @@ static int pilotL_addFleet( lua_State *L )
       ls    = lua_tosystem(L,3);
       ss    = system_getIndex( ls->id );
       for (i=0; i<cur_system->njumps; i++) {
-         if (cur_system->jumps[i].target == ss && !jp_isFlag( jump_get( cur_system->name, cur_system->jumps[i].target ), JP_EXITONLY )) {
+         if ((cur_system->jumps[i].target == ss)
+               && !jp_isFlag( jump_getTarget( cur_system, cur_system->jumps[i].target ), JP_EXITONLY )) {
             jump = i;
             break;
          }
