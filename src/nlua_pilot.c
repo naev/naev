@@ -608,7 +608,7 @@ static int pilotL_addFleet( lua_State *L )
          jumpind = malloc( sizeof(int) * cur_system->njumps );
          for (i=0; i<cur_system->njumps; i++)
             if (!ignore_rules && (system_getPresence( cur_system->jumps[i].target, lf.f ) > 0) &&
-                  (!jp_isFlag( jump_get( cur_system->name, cur_system->jumps[i].target ), JP_EXITONLY )))
+                  (!jp_isFlag( jump_getTarget( cur_system, cur_system->jumps[i].target ), JP_EXITONLY )))
                jumpind[ njumpind++ ] = i;
       }
 
