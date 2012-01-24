@@ -993,6 +993,27 @@ JumpPoint* jump_get( const char* jumpname, StarSystem* sys )
 
 
 /**
+ * @brief Less safe version of jump_get that works with pointers.
+ *
+ *    @param target Target system jump leads to.
+ *    @param sys System to look in.
+ *    @return Jump point in sys to target or NULL if not found.
+ */
+JumpPoint* jump_getTarget( StarSystem* target, const StarSystem* sys )
+{
+   int i;
+   JumpPoint *jp;
+   for (i=0; i<sys->njumps; i++) {
+      jp = &sys->jumps[i];
+      if (jp->target == target)
+         return jp;
+   }
+   WARN("Jump point to '%s' not found in %s", target->name, sys->name);
+   return NULL;
+}
+
+
+/**
  * @brief Controls fleet spawning.
  *
  *    @param dt Current delta tick.
