@@ -747,6 +747,7 @@ void pilot_broadcast( Pilot *p, const char *msg, int ignore_int )
 void pilot_distress( Pilot *p, const char *msg, int ignore_int )
 {
    int i, r;
+   double d, range;
    Pilot *t;
 
    /* Broadcast the message. */
@@ -774,13 +775,24 @@ void pilot_distress( Pilot *p, const char *msg, int ignore_int )
 
    /* Now we must check to see if a pilot is in range. */
    for (i=0; i<pilot_nstack; i++) {
-      if ((pilot_stack[i]->id != p->id) &&
-            (!ignore_int && pilot_inRangePilot(p, pilot_stack[i]))) {
+      /* Skip if unsuitable. */
+      if ((pilot_stack[i]->ai == NULL) || (pilot_stack[i]->id == p->id) ||
+            (pilot_isFlag(pilot_stack[i], PILOT_DEAD)))
+         continue;
+
+      if (!ignore_int) {
+         if (!pilot_inRangePilot(p, pilot_stack[i])) {
+            /* Range is 7500 at 0 interference.
+             * Fall-off based on pilot_updateSensorRange()
+             */
+            d     = vect_dist( &p->solid->pos, &pilot_stack[i]->solid->pos );
+            range = 7500. / ((cur_system->interference + 200) / 200.);
+            if (d > range)
+               continue;
+         }
 
          /* Send AI the distress signal. */
-         if ((pilot_stack[i]->ai != NULL) &&
-               !pilot_isFlag(pilot_stack[i], PILOT_DEAD))
-            ai_getDistress( pilot_stack[i], p );
+         ai_getDistress( pilot_stack[i], p );
 
          /* Check if should take faction hit. */
          if (!areEnemies(p->faction, pilot_stack[i]->faction))
