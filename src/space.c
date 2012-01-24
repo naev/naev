@@ -967,8 +967,9 @@ char **planet_searchFuzzyCase( const char* planetname, int *n )
 /**
  * @brief Gets a jump point based on its target and system.
  *
- *    @param planetname Name to match.
- *    @return Planet matching planetname.
+ *    @param jumpname Name to match.
+ *    @param sys System jump is in.
+ *    @return Jump point matich jumpname in sys or NULL if not found.
  */
 JumpPoint* jump_get( const char* jumpname, StarSystem* sys )
 {
