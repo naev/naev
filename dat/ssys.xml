@@ -320,11 +320,11 @@
   <jumps>
    <jump target="Arcturus">
     <autopos/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
    <jump target="Gamma Polaris">
     <autopos/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
    <jump target="Hekaras">
     <autopos/>
@@ -418,7 +418,7 @@
   <jumps>
    <jump target="Apez">
     <autopos/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
    <jump target="Borla">
     <autopos/>
@@ -426,7 +426,7 @@
    </jump>
    <jump target="Goddard">
     <autopos/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
   </jumps>
  </ssys>
@@ -1395,7 +1395,7 @@
   <jumps>
    <jump target="Overture">
     <autopos/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
   </jumps>
  </ssys>
@@ -2111,7 +2111,7 @@
   <jumps>
    <jump target="Apez">
     <autopos/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
    <jump target="Koralis">
     <autopos/>
@@ -2119,7 +2119,7 @@
    </jump>
    <jump target="Qex">
     <autopos/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
    <jump target="Shakar">
     <autopos/>
@@ -3694,7 +3694,7 @@
   <jumps>
    <jump target="Dohriabi">
     <autopos/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
    <jump target="Nartur">
     <autopos/>
@@ -3706,7 +3706,7 @@
    </jump>
    <jump target="Uhriabi">
     <autopos/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
    <jump target="Waterhole">
     <autopos/>
@@ -4040,7 +4040,7 @@
    </jump>
    <jump target="Gamma Polaris">
     <autopos/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
    <jump target="Koralis">
     <autopos/>
@@ -4048,7 +4048,7 @@
    </jump>
    <jump target="Uhriabi">
     <autopos/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
   </jumps>
  </ssys>
@@ -5142,11 +5142,11 @@
   <jumps>
    <jump target="Overture">
     <autopos/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
    <jump target="Qex">
     <autopos/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
   </jumps>
  </ssys>
