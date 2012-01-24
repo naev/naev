@@ -96,13 +96,13 @@ double pilot_ewMass( double mass )
 void pilot_updateSensorRange (void)
 {
    /* Calculate the sensor sensor_curRange. */
-   /* 0    ->   5000.0
-    * 250  ->   2222.22222222
-    * 500  ->   1428.57142857
-    * 750  ->   1052.63157895
-    * 1000 ->    833.333333333 */
-   sensor_curRange  = 10000;
-   sensor_curRange /= ((cur_system->interference + 200) / 100.);
+   /* 0    ->   7500.0
+    * 250  ->   3333.33333333
+    * 500  ->   2142.85714285
+    * 750  ->   1578.94736842
+    * 1000 ->   1250.0 */
+   sensor_curRange  = 7500;
+   sensor_curRange /= ((cur_system->interference + 200) / 200.);
 
    /* Speeds up calculations as we compare it against vectors later on
     * and we want to avoid actually calculating the sqrt(). */
