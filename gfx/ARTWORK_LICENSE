@@ -277,6 +277,9 @@
      * minimal_planet.png
      * minimal_pilot.png
    * gfx
+     * planet
+       * space
+        * jumpbuoy.png
      * outfit
        * space
          * gatling.png
