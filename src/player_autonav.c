@@ -50,9 +50,9 @@ void player_autonavStart (void)
    if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
       return;
 
-   if (player.p->nav_hyperspace == -1 && player.p->nav_planet== -1)
+   if ((player.p->nav_hyperspace == -1) && (player.p->nav_planet== -1))
       return;
-   else  if (player.p->nav_planet != -1 && !player_getHypPreempt()) {
+   else if ((player.p->nav_planet != -1) && !player_getHypPreempt()) {
       player_autonavPnt( cur_system->planets[ player.p->nav_planet ]->name );
       return;
    }
