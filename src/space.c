@@ -3346,19 +3346,19 @@ void system_addAllPlanetsPresence( StarSystem *sys )
  *    @param sys Pointer to the system to process.
  *    @return 0 If empty; otherwise 1.
  */
-int system_hasPlanet( StarSystem *sys )
+int system_hasPlanet( const StarSystem *sys )
 {
    int i;
 
    /* Check for NULL and display a warning. */
-   if(sys == NULL) {
+   if (sys == NULL) {
       WARN("sys == NULL");
       return 0;
    }
 
    /* Go through all the assets and look for a real one. */
-   for(i = 0; i < sys->nplanets; i++)
-      if(sys->planets[i]->real == ASSET_REAL)
+   for (i = 0; i < sys->nplanets; i++)
+      if (sys->planets[i]->real == ASSET_REAL)
          return 1;
 
    return 0;

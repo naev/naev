@@ -376,7 +376,7 @@ int space_rmMarker( int sys, SysMarker type );
 void space_clearKnown (void);
 void space_clearMarkers (void);
 void space_clearComputerMarkers (void);
-int system_hasPlanet( StarSystem *sys );
+int system_hasPlanet( const StarSystem *sys );
 
 
 /*
