@@ -693,20 +693,39 @@ static int systemL_isknown( lua_State *L )
  * @usage s:setKnown( false ) -- Makes system unknown.
  *    @luaparam s System to set known.
  *    @luaparam b Whether or not to set as known (defaults to false).
+ *    @luaparam r Whether or not to iterate over the system's assets and jump points (defaults to false).
  * @luafunc setKnown( s, b )
  */
 static int systemL_setknown( lua_State *L )
 {
-   int b;
+   int b, r, i;
    StarSystem *sys;
 
+   r = 0;
    sys = luaL_validsystem(L, 1);
    b   = lua_toboolean(L, 2);
+   if (lua_gettop(L) > 2)
+      r   = lua_toboolean(L, 3);
 
    if (b)
       sys_setFlag( sys, SYSTEM_KNOWN );
    else
       sys_rmFlag( sys, SYSTEM_KNOWN );
+
+   if (r) {
+      if (b) {
+         for (i=0; i < cur_system->nplanets; i++)
+            planet_setFlag( cur_system->planets[i], PLANET_KNOWN );
+         for (i=0; i < cur_system->njumps; i++)
+            jp_setFlag( &cur_system->jumps[i], JP_KNOWN );
+     }
+     else {
+         for (i=0; i < cur_system->nplanets; i++)
+            planet_rmFlag( cur_system->planets[i], PLANET_KNOWN );
+         for (i=0; i < cur_system->njumps; i++)
+            jp_rmFlag( &cur_system->jumps[i], JP_KNOWN );
+     }
+   }
    return 0;
 }
 
