@@ -188,10 +188,10 @@ typedef struct SystemPresence_ {
 #define JP_KNOWN        (1<<1) /**< Jump point is known. */
 #define JP_HIDDEN       (1<<2) /**< Jump point is hidden. */
 #define JP_EXITONLY     (1<<3) /**< Jump point is exit only */
-#define jp_isKnown(j)     jp_isFlag(j,JP_KNOWN) /**< Checks if jump is known. */
 #define jp_isFlag(j,f)    ((j)->flags & (f)) /**< Checks jump flag. */
 #define jp_setFlag(j,f)   ((j)->flags |= (f)) /**< Sets a jump flag. */
 #define jp_rmFlag(j,f)    ((j)->flags &= ~(f)) /**< Removes a jump flag. */
+#define jp_isKnown(j)     jp_isFlag(j,JP_KNOWN) /**< Checks if jump is known. */
 
 
 
