@@ -46,11 +46,11 @@
   <jumps>
    <jump target="Gilligan's Tomb">
     <autopos/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
    <jump target="Vanir">
     <autopos/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
   </jumps>
  </ssys>
@@ -83,7 +83,7 @@
   <jumps>
    <jump target="Vanir">
     <autopos/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
   </jumps>
  </ssys>
@@ -215,11 +215,11 @@
   <jumps>
    <jump target="Humdrum">
     <autopos/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
    <jump target="Lapis">
     <autopos/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
   </jumps>
  </ssys>
@@ -551,11 +551,11 @@
   <jumps>
    <jump target="Darkstone">
     <autopos/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
    <jump target="Dvaer">
     <autopos/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
   </jumps>
  </ssys>
@@ -888,7 +888,7 @@
   <jumps>
    <jump target="Feye">
     <autopos/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
    <jump target="Jervis">
     <autopos/>
@@ -896,7 +896,7 @@
    </jump>
    <jump target="Sergio Vix">
     <autopos/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
   </jumps>
  </ssys>
@@ -1198,11 +1198,11 @@
   <jumps>
    <jump target="Beeklo">
     <autopos/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
    <jump target="Verex">
     <autopos/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
   </jumps>
  </ssys>
@@ -1431,7 +1431,7 @@
    </jump>
    <jump target="Tarsus">
     <autopos/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
    <jump target="Torg">
     <autopos/>
@@ -1591,7 +1591,7 @@
   <jumps>
    <jump target="Beeklo">
     <autopos/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
    <jump target="Gremlin">
     <autopos/>
@@ -1603,7 +1603,7 @@
    </jump>
    <jump target="Urbanus">
     <autopos/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
   </jumps>
  </ssys>
@@ -1635,11 +1635,11 @@
    </jump>
    <jump target="Esker">
     <autopos/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
    <jump target="Gilligan's Tomb">
     <autopos/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
    <jump target="Herakin">
     <pos x="25532.127636" y="-19674.201177"/>
@@ -1726,7 +1726,7 @@
     <hide>0.700000</hide>
    </jump>
    <jump target="Qex">
-    <pos x="-8255.553797" y="11609.116198"/>
+    <pos x="0.000000" y="0.000000"/>
     <hide>0.700000</hide>
    </jump>
    <jump target="Zied">
@@ -1793,11 +1793,11 @@
   <jumps>
    <jump target="Eiderdown">
     <pos x="23295.488541" y="-26098.818616"/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
    <jump target="Modus Manis">
     <autopos/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
    <jump target="Nougat">
     <autopos/>
@@ -1833,7 +1833,7 @@
    </jump>
    <jump target="Lapis">
     <autopos/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
    <jump target="Ruttwi">
     <autopos/>
@@ -1871,11 +1871,11 @@
    </jump>
    <jump target="Hatter">
     <autopos/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
    <jump target="Shikima">
     <pos x="-20143.133265" y="-21795.269630"/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
   </jumps>
  </ssys>
@@ -1905,7 +1905,7 @@
   <jumps>
    <jump target="Cerberus">
     <autopos/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
   </jumps>
  </ssys>
@@ -2263,11 +2263,11 @@
   <jumps>
    <jump target="Adraia">
     <autopos/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
    <jump target="Eiderdown">
     <autopos/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
   </jumps>
  </ssys>
@@ -2581,7 +2581,7 @@
   <jumps>
    <jump target="Father's Pride">
     <pos x="12476.717946" y="-12440.153048"/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
    <jump target="Khaas">
     <autopos/>
@@ -2593,7 +2593,7 @@
    </jump>
    <jump target="Sergio Vix">
     <autopos/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
   </jumps>
  </ssys>
@@ -2703,11 +2703,11 @@
    </jump>
    <jump target="Anarbalis">
     <autopos/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
    <jump target="Modus Manis">
     <autopos/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
   </jumps>
  </ssys>
@@ -3041,11 +3041,11 @@
   <jumps>
    <jump target="Anarbalis">
     <autopos/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
    <jump target="Eye of Night">
     <autopos/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
    <jump target="Lazuli">
     <autopos/>
@@ -3249,11 +3249,11 @@
   <jumps>
    <jump target="Esker">
     <autopos/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
    <jump target="Humdrum">
     <autopos/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
    <jump target="Tarmak">
     <autopos/>
@@ -3577,7 +3577,7 @@
    </jump>
    <jump target="Shikima">
     <autopos/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
    <jump target="Thirty Stars">
     <pos x="19272.562144" y="8011.507651"/>
@@ -4035,7 +4035,7 @@
   </assets>
   <jumps>
    <jump target="Eneguoz">
-    <pos x="6884.083705" y="-12741.656927"/>
+    <pos x="0.000000" y="0.000000"/>
     <hide>0.700000</hide>
    </jump>
    <jump target="Gamma Polaris">
@@ -4303,7 +4303,7 @@
   <jumps>
    <jump target="Cerberus">
     <autopos/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
    <jump target="Elza">
     <autopos/>
@@ -4311,7 +4311,7 @@
    </jump>
    <jump target="Hatter">
     <pos x="19754.322856" y="-13904.725724"/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
   </jumps>
  </ssys>
@@ -4399,11 +4399,11 @@
   <jumps>
    <jump target="Father's Pride">
     <pos x="20114.506612" y="-123.784296"/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
    <jump target="Oberon">
     <pos x="-19820.237648" y="200.204296"/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
   </jumps>
  </ssys>
@@ -4801,7 +4801,7 @@
   <jumps>
    <jump target="Doranthex">
     <autopos/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
    <jump target="Klantar">
     <autopos/>
@@ -4809,7 +4809,7 @@
    </jump>
    <jump target="Verex">
     <autopos/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
   </jumps>
  </ssys>
@@ -5205,7 +5205,7 @@
   <jumps>
    <jump target="Dvaer">
     <autopos/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
    <jump target="Ksher">
     <autopos/>
@@ -5292,11 +5292,11 @@
   <jumps>
    <jump target="Adraia">
     <autopos/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
    <jump target="Aesir">
     <autopos/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
   </jumps>
  </ssys>
@@ -5344,7 +5344,7 @@
    </jump>
    <jump target="Darkstone">
     <autopos/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
    <jump target="Ginger">
     <autopos/>
@@ -5352,7 +5352,7 @@
    </jump>
    <jump target="Tarsus">
     <autopos/>
-    <hide>0.700000</hide>
+    <hide>0.000000</hide>
    </jump>
   </jumps>
  </ssys>
