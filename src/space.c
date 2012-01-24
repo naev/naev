@@ -2731,8 +2731,7 @@ static void space_renderJumpPoint( JumpPoint *jp, int i )
    gl_blitSprite( jumppoint_gfx, jp->pos.x, jp->pos.y, jp->sx, jp->sy, c );
 
    /* Draw buoys next to "highway" jump points. */
-   /* if (jp->hide == 0.) { */
-   if (1) {
+   if (jp->hide == 0.) {
       gl_blitSprite( jumpbuoy_gfx, jp->pos.x + 200 * jp->sina, jp->pos.y + 200 * jp->cosa, 0, 0, NULL ); /* Left */
       gl_blitSprite( jumpbuoy_gfx, jp->pos.x + -200 * jp->sina, jp->pos.y + -200 * jp->cosa, 0, 0, NULL ); /* Right */
    }
