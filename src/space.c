@@ -48,6 +48,7 @@
 #include "nmath.h"
 #include "map.h"
 #include "damagetype.h"
+#include "hook.h"
 
 
 #define XML_PLANET_ID         "Assets" /**< Planet xml document tag. */
@@ -1179,6 +1180,7 @@ void space_update( const double dt )
    int i;
    Pilot *p;
    Damage dmg;
+   HookParam hparam[3];
 
    /* Needs a current system. */
    if (cur_system == NULL)
@@ -1263,6 +1265,12 @@ void space_update( const double dt )
             player_message( "You discovered \e%c%s\e\0.",
                   planet_getColourChar( cur_system->planets[i] ),
                   cur_system->planets[i]->name );
+            hparam[0].type  = HOOK_PARAM_STRING;
+            hparam[0].u.str = "asset";
+            hparam[1].type  = HOOK_PARAM_ASSET;
+            hparam[1].u.la.id = cur_system->planets[i]->id;
+            hparam[2].type  = HOOK_PARAM_SENTINEL;
+            hooks_runParam( "discover", hparam );
          }
 
       /* Jump point updates */
@@ -1270,6 +1278,10 @@ void space_update( const double dt )
          if (( !jp_isKnown( &cur_system->jumps[i] )) && ( pilot_inRangeJump( player.p, i ))) {
             jp_setFlag( &cur_system->jumps[i], JP_KNOWN );
             player_message( "You discovered a Jump Point." );
+            hparam[0].type  = HOOK_PARAM_STRING;
+            hparam[0].u.str = "jump";
+            hparam[1].type  = HOOK_PARAM_SENTINEL;
+            hooks_runParam( "discover", hparam );
          }
    }
 }

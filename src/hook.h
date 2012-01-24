@@ -11,6 +11,7 @@
 
 #include "nlua_pilot.h"
 #include "nlua_faction.h"
+#include "nlua_planet.h"
 
 
 #define HOOK_MAX_PARAM  3 /**< Maximum hook params, to avoid dynamic allocation. */
@@ -26,6 +27,7 @@ typedef enum HookParamType_e {
    HOOK_PARAM_BOOL, /**< Boolean parameter. */
    HOOK_PARAM_PILOT, /**< Pilot hook parameter. */
    HOOK_PARAM_FACTION, /**< Faction hook parameter. */
+   HOOK_PARAM_ASSET, /**< Asset hook parameter. */
    HOOK_PARAM_SENTINEL /**< Enum sentinel. */
 } HookParamType;
 
@@ -40,6 +42,7 @@ typedef struct HookParam_s {
       int b; /**< Boolean parameter. */
       LuaPilot lp; /**< Hook parameter pilot data. */
       LuaFaction lf; /**< Hook parameter faction data. */
+      LuaPlanet la; /**< Hook parameter planet data. */
    } u; /**< Hook parameter data. */
 } HookParam;
 
@@ -76,7 +79,8 @@ int pilot_runHookParam( Pilot* p, int hook_type, HookParam *param, int nparam );
  *    - "board" - When any pilot is boarded
  *    - "input" - When an input command is pressed
  *    - "standing" - Whenever faction changes.
- *    - "load" - run on load.
+ *    - "load" - Run on load.
+ *    - "discover" - When something is discovered.
  *  - Landing
  *    - "land" - When landed
  *    - "outfits" - When visited outfitter
