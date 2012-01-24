@@ -87,35 +87,35 @@
  */
 /* encompassing element */
 #define xmlw_startElem(w,str)   \
-if (xmlTextWriterStartElement(w,(xmlChar*)str) < 0) { \
-   ERR("xmlw: unable to create start element"); return -1; }
+do {if (xmlTextWriterStartElement(w,(xmlChar*)str) < 0) { \
+   ERR("xmlw: unable to create start element"); return -1; } } while(0)
 #define xmlw_endElem(w) \
-if (xmlTextWriterEndElement(w) < 0) { \
-   ERR("xmlw: unable to create end element"); return -1; }
+do {if (xmlTextWriterEndElement(w) < 0) { \
+   ERR("xmlw: unable to create end element"); return -1; } } while(0)
 /* other stuff */
 #define xmlw_elemEmpty(w,n)   \
-do { xmlw_startElem(w,n); xmlw_endElem(w) } while (0)
+do { xmlw_startElem(w,n); xmlw_endElem(w); } while(0)
 #define xmlw_elem(w,n,str,args...) \
-if (xmlTextWriterWriteFormatElement(w,(xmlChar*)n, \
+do { if (xmlTextWriterWriteFormatElement(w,(xmlChar*)n, \
       str, ## args) < 0) { \
-   ERR("xmlw: unable to write format element"); return -1; }
+   ERR("xmlw: unable to write format element"); return -1; } } while(0)
 #define xmlw_raw(w,b,l) \
-if (xmlTextWriterWriteRawLen(w,(xmlChar*)b,l) < 0) { \
-   ERR("xmlw: unable to write raw element"); return -1; }
+do {if (xmlTextWriterWriteRawLen(w,(xmlChar*)b,l) < 0) { \
+   ERR("xmlw: unable to write raw element"); return -1; } } while(0)
 #define xmlw_attr(w,str,val...)  \
-if (xmlTextWriterWriteFormatAttribute(w,(xmlChar*)str, \
+do {if (xmlTextWriterWriteFormatAttribute(w,(xmlChar*)str, \
       ## val) < 0) { \
-   ERR("xmlw: unable to write element attribute"); return -1; }
+   ERR("xmlw: unable to write element attribute"); return -1; } } while(0)
 #define xmlw_str(w,str,val...) \
-if (xmlTextWriterWriteFormatString(w,str, ## val) < 0) { \
-   ERR("xmlw: unable to write element data"); return -1; }
+do {if (xmlTextWriterWriteFormatString(w,str, ## val) < 0) { \
+   ERR("xmlw: unable to write element data"); return -1; } } while(0)
 /* document level */
 #define xmlw_start(w) \
-if (xmlTextWriterStartDocument(writer, NULL, "UTF-8", NULL) < 0) { \
-   ERR("xmlw: unable to start document"); return -1; }
+do {if (xmlTextWriterStartDocument(writer, NULL, "UTF-8", NULL) < 0) { \
+   ERR("xmlw: unable to start document"); return -1; } } while(0)
 #define xmlw_done(w) \
-if (xmlTextWriterEndDocument(w) < 0) { \
-   ERR("xmlw: unable to end document"); return -1; }
+do {if (xmlTextWriterEndDocument(w) < 0) { \
+   ERR("xmlw: unable to end document"); return -1; } } while(0)
 
 
 /*
