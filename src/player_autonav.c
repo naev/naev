@@ -50,8 +50,12 @@ void player_autonavStart (void)
    if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
       return;
 
-   if (player.p->nav_hyperspace == -1)
+   if (player.p->nav_hyperspace == -1 && player.p->nav_planet== -1)
       return;
+   else  if (player.p->nav_planet != -1 && !player_getHypPreempt()) {
+      player_autonavPnt( cur_system->planets[ player.p->nav_planet ]->name );
+      return;
+   }
 
    if (player.p->fuel < HYPERSPACE_FUEL) {
       player_message("\erNot enough fuel to jump for autonav.");
@@ -132,7 +136,23 @@ void player_autonavPos( double x, double y )
 {
    player_autonavSetup();
    player.autonav    = AUTONAV_POS_APPROACH;
+   player.autonavmsg = "position";
    vect_cset( &player.autonav_pos, x, y );
+}
+
+
+/**
+ * @brief Starts autonav with a planet destination.
+ */
+void player_autonavPnt( char *name )
+{
+   Planet *p;
+
+   p = planet_get( name );
+   player_autonavSetup();
+   player.autonav    = AUTONAV_POS_APPROACH;
+   player.autonavmsg = p->name;
+   vect_cset( &player.autonav_pos, p->pos.x, p->pos.y );
 }
 
 
@@ -233,7 +253,7 @@ static void player_autonav (void)
       case AUTONAV_POS_APPROACH:
          ret = player_autonavApproach( &player.autonav_pos, &d, 1 );
          if (ret) {
-            player_message( "\epAutonav arrived at position." );
+            player_message( "\epAutonav arrived at %s.", player.autonavmsg );
             player_autonavEnd();
          }
          else if (!tc_rampdown) {

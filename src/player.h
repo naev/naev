@@ -63,6 +63,7 @@ typedef struct Player_s {
    double crating; /**< Combat rating. */
    int autonav; /**< Current autonav state. */
    Vector2d autonav_pos; /**< Target autonav position. */
+   char *autonavmsg; /**< String to print on arrival. */
    double tc_max; /**< Maximum time compression value (bounded by ship speed or conf setting). */
    double autonav_timer; /**< Timer that begins counting down when autonav aborts due to combat. */
    double mousex; /**< Mouse X position (for mouse flying). */
@@ -200,6 +201,7 @@ void player_update( Pilot *pplayer, const double dt );
 void player_updateSpecific( Pilot *pplayer, const double dt );
 void player_brokeHyperspace (void);
 void player_hyperspacePreempt( int );
+int player_getHypPreempt(void);
 
 /*
  * Targeting.

@@ -1268,6 +1268,7 @@ void player_targetPlanetSet( int id )
 
    old = player.p->nav_planet;
    player.p->nav_planet = id;
+   player_hyperspacePreempt(0);
    if (old != id) {
       player_rmFlag(PLAYER_LANDACK);
       if (id >= 0)
@@ -1469,6 +1470,7 @@ void player_targetHyperspaceSet( int id )
 
    old = player.p->nav_hyperspace;
    player.p->nav_hyperspace = id;
+   player_hyperspacePreempt(1);
    if ((old != id) && (id >= 0))
       player_soundPlayGUI(snd_nav,1);
    gui_setNav();
@@ -1505,6 +1507,7 @@ void player_targetHyperspace (void)
       map_select( cur_system->jumps[ id ].target, 0 );
 }
 
+
 /**
  * @brief Enables or disables jump points preempting planets in autoface and target clearing.
  *
@@ -1514,6 +1517,18 @@ void player_hyperspacePreempt( int preempt )
 {
    preemption = preempt;
 }
+
+
+/**
+ * @brief Returns whether the jump point target should preempt the planet target.
+ *
+ *    @return Boolean; 1 preempts planet target.
+ */
+int player_getHypPreempt(void)
+{
+   return preemption;
+}
+
 
 /**
  * @brief Starts the hail sounds and aborts autoNav
@@ -1649,7 +1664,7 @@ void player_brokeHyperspace (void)
    /* Disable autonavigation if arrived. */
    if (player_isFlag(PLAYER_AUTONAV)) {
       if (player.p->nav_hyperspace == -1) {
-         player_message( "\epAutonav arrived at destination.");
+         player_message( "\epAutonav arrived at the %s system.", cur_system->name);
          player_autonavEnd();
       }
       else {
