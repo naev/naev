@@ -3026,7 +3026,7 @@ int space_sysSave( xmlTextWriterPtr writer )
 
       if (!sys_isKnown(&systems_stack[i])) continue; /* not known */
 
-      xmlw_startElem(writer,"known")
+      xmlw_startElem(writer,"known");
 
       xmlw_attr(writer,"sys","%s",systems_stack[i].name);
 
