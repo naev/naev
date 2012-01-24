@@ -714,16 +714,16 @@ static int systemL_setknown( lua_State *L )
 
    if (r) {
       if (b) {
-         for (i=0; i < cur_system->nplanets; i++)
-            planet_setFlag( cur_system->planets[i], PLANET_KNOWN );
-         for (i=0; i < cur_system->njumps; i++)
-            jp_setFlag( &cur_system->jumps[i], JP_KNOWN );
+         for (i=0; i < sys->nplanets; i++)
+            planet_setFlag( sys->planets[i], PLANET_KNOWN );
+         for (i=0; i < sys->njumps; i++)
+            jp_setFlag( &sys->jumps[i], JP_KNOWN );
      }
      else {
-         for (i=0; i < cur_system->nplanets; i++)
-            planet_rmFlag( cur_system->planets[i], PLANET_KNOWN );
-         for (i=0; i < cur_system->njumps; i++)
-            jp_rmFlag( &cur_system->jumps[i], JP_KNOWN );
+         for (i=0; i < sys->nplanets; i++)
+            planet_rmFlag( sys->planets[i], PLANET_KNOWN );
+         for (i=0; i < sys->njumps; i++)
+            jp_rmFlag( &sys->jumps[i], JP_KNOWN );
      }
    }
    return 0;
