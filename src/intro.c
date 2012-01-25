@@ -68,7 +68,7 @@ static int intro_load( const char *text );
 static void intro_cleanup (void);
 static scroll_buf_t *arrange_scroll_buf( scroll_buf_t *arr, int n );
 static void intro_event_handler( int *stop, double *offset, double *vel );
-static inline void initialize_image( intro_img_t *img );
+static void initialize_image( intro_img_t *img );
 static void intro_fade_image_in( intro_img_t *side, intro_img_t *transition,
                                  const char *img_file );
 static int intro_draw_text( scroll_buf_t *sb_list, double offset,
@@ -197,7 +197,7 @@ static scroll_buf_t *arrange_scroll_buf( scroll_buf_t *arr, int n )
  *
  *    @brief img Image to initialize.
  */
-static inline void initialize_image( intro_img_t *img )
+static void initialize_image( intro_img_t *img )
 {
    img->tex = NULL;
    img->x   = 100.;
