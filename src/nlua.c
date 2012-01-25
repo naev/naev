@@ -28,6 +28,7 @@
 #include "nlua_vec2.h"
 #include "nlua_diff.h"
 #include "nlua_outfit.h"
+#include "nlua_commodity.h"
 #include "nlua_cli.h"
 
 
@@ -183,17 +184,19 @@ static int nlua_packfileLoader( lua_State* L )
  *
  * Loads the modules:
  *  - naev
+ *  - var
  *  - space
  *    - planet
  *    - system
- *  - var
- *  - pilot
  *  - time
  *  - player
+ *  - pilot
+ *  - rnd
  *  - diff
  *  - faction
  *  - vec2
  *  - outfit
+ *  - commodity
  *
  * Only is missing:
  *  - misn
@@ -222,6 +225,7 @@ int nlua_loadStandard( lua_State *L, int readonly )
    r |= nlua_loadFaction(L,readonly);
    r |= nlua_loadVector(L);
    r |= nlua_loadOutfit(L,readonly);
+   r |= nlua_loadCommodity(L,readonly);
 
    return r;
 }
