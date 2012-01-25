@@ -191,7 +191,7 @@ int pilot_inRangePlanet( const Pilot *p, int target )
    /* Get distance. */
    d = vect_dist2( &p->solid->pos, &pnt->pos );
 
-   if ( d * pnt->hide * ( 1 + cur_system->interference / 200 ) < sense )
+   if (d * pnt->hide < sense )
       return 1;
 
    return 0;
@@ -229,7 +229,7 @@ int pilot_inRangeJump( const Pilot *p, int i )
    /* Get distance. */
    d = vect_dist2( &p->solid->pos, &jp->pos );
 
-   if ( d * hide * ( 1 + cur_system->interference / 200 ) < sense )
+   if (d * hide < sense)
       return 1;
 
    return 0;
