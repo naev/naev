@@ -158,12 +158,21 @@ Planet* luaL_validplanet( lua_State *L, int ind )
 {
    LuaPlanet *lp;
    Planet *p;
-   lp = luaL_checkplanet( L, ind );
-   p  = planet_getIndex( lp->id );
-   if (p == NULL) {
-      NLUA_ERROR( L, "Planet is invalid" );
+
+   if (lua_isplanet(L, ind)) {
+      lp = luaL_checkplanet(L, ind);
+      p  = planet_getIndex(lp->id);
+   }
+   else if (lua_isstring(L, ind))
+      p = planet_get( lua_tostring(L, ind) );
+   else {
+      luaL_typerror(L, ind, PLANET_METATABLE);
       return NULL;
    }
+
+   if (p == NULL)
+      NLUA_ERROR(L, "Planet is invalid");
+
    return p;
 }
 /**

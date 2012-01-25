@@ -118,13 +118,19 @@ Commodity* luaL_validcommodity( lua_State *L, int ind )
    LuaCommodity *lo;
    Commodity *o;
 
-   /* Get the commodity. */
-   lo = luaL_checkcommodity(L,ind);
-   o  = lo->commodity;
-   if (o==NULL) {
-      NLUA_ERROR(L,"Commodity is invalid.");
+   if (lua_iscommodity(L, ind)) {
+      lo = luaL_checkcommodity(L, ind);
+      o  = lo->commodity;
+   }
+   else if (lua_isstring(L, ind))
+      o = commodity_get( lua_tostring(L, ind) );
+   else {
+      luaL_typerror(L, ind, COMMODITY_METATABLE);
       return NULL;
    }
+
+   if (o == NULL)
+      NLUA_ERROR(L, "Commodity is invalid.");
 
    return o;
 }

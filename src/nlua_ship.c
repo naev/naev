@@ -127,13 +127,19 @@ Ship* luaL_validship( lua_State *L, int ind )
    LuaShip *ls;
    Ship *s;
 
-   /* Get the ship. */
-   ls = luaL_checkship(L,ind);
-   s  = ls->ship;
-   if (s==NULL) {
-      NLUA_ERROR(L,"Ship is invalid.");
+   if (lua_isship(L, ind)) {
+      ls = luaL_checkship(L,ind);
+      s  = ls->ship;
+   }
+   else if (lua_isstring(L, ind))
+      s = ship_get( lua_tostring(L, ind) );
+   else {
+      luaL_typerror(L, ind, SHIP_METATABLE);
       return NULL;
    }
+
+   if (s == NULL)
+      NLUA_ERROR(L, "Ship is invalid.");
 
    return s;
 }

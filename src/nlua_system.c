@@ -158,7 +158,7 @@ LuaSystem* luaL_checksystem( lua_State *L, int ind )
 }
 
 /**
- * @brief Gets system at index raising an error if type doesn't match.
+ * @brief Gets system (or system name) at index raising an error if type doesn't match.
  *
  *    @param L Lua state to get system from.
  *    @param ind Index position of system.
@@ -168,12 +168,21 @@ StarSystem* luaL_validsystem( lua_State *L, int ind )
 {
    LuaSystem *ls;
    StarSystem *s;
-   ls = luaL_checksystem( L, ind );
-   s  = system_getIndex( ls->id );
-   if (s == NULL) {
-      NLUA_ERROR( L, "System is invalid" );
+
+   if (lua_issystem(L, ind)) {
+      ls = luaL_checksystem(L, ind);
+      s = system_getIndex( ls->id );
+   }
+   else if (lua_isstring(L, ind))
+      s = system_get( lua_tostring(L, ind) );
+   else {
+      luaL_typerror(L, ind, FACTION_METATABLE);
       return NULL;
    }
+
+   if (s == NULL)
+      NLUA_ERROR(L, "System is invalid");
+
    return s;
 }
 
