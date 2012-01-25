@@ -116,9 +116,9 @@ int ovr_input( SDL_Event *event )
             ((pntid >=0 && player.p->nav_planet == pntid) ||
             (jpid >=0 && player.p->nav_planet == jpid))))
          player_targetSet( pid );
-      else if ((pntid >= 0) && (d < pow2(r))) /* Planet is closest. */
+      else if ((pntid >= 0) && (d < pow2(r)) && player_validPlanet( pntid )) /* Planet is closest. */
          player_targetPlanetSet( pntid );
-      else if ((jpid >= 0) && (d < pow2(r))) /* Jump point is closest. */
+      else if ((jpid >= 0) && (d < pow2(r)) && player_validJump( jpid )) /* Jump point is closest. */
          player_targetHyperspaceSet( jpid );
       else
          return 0;
