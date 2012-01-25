@@ -1294,10 +1294,8 @@ void player_targetPlanet (void)
    id = player.p->nav_planet+1;
    player_hyperspacePreempt(0);
    while (id < cur_system->nplanets) {
-
       /* In range, target planet. */
-      if ((cur_system->planets[ id ]->real == ASSET_REAL)
-            && planet_isKnown(cur_system->planets[id])) {
+      if (player_validPlanet(id)) {
          player_targetPlanetSet( id );
          return;
       }
@@ -1307,6 +1305,31 @@ void player_targetPlanet (void)
 
    /* Untarget if out of range. */
    player_targetPlanetSet( -1 );
+}
+
+
+/**
+ * @brief Checks whether a planet is real and known.
+ */
+int player_validPlanet( int id )
+{
+   if ((cur_system->planets[ id ]->real == ASSET_REAL)
+      && planet_isKnown(cur_system->planets[id]))
+      return 1;
+
+   return 0;
+}
+
+
+/*
+ * @brief Checks whether a jump is known.
+ */
+int player_validJump( int id )
+{
+   if (jp_isKnown( &cur_system->jumps[ id ] ))
+      return 1;
+
+   return 0;
 }
 
 
@@ -1482,7 +1505,7 @@ void player_targetHyperspaceSet( int id )
  */
 void player_targetHyperspace (void)
 {
-   int id;
+   int id, i;
 
    /* Not under manual control. */
    if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
@@ -1495,8 +1518,16 @@ void player_targetHyperspace (void)
       id = -1;
       player_hyperspacePreempt(0);
    }
-   else
-      player_hyperspacePreempt(1);
+   else {
+      for (i=id; i<cur_system->njumps; i++) {
+         if (player_validJump( i )) {
+            id = i;
+            break;
+         }
+         else
+            id = -1;
+      }
+   }
 
    player_targetHyperspaceSet( id );
 
