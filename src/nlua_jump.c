@@ -297,7 +297,7 @@ static int jumpL_isKnown( lua_State *L )
 }
 
 /**
- * @brief Sets a jumps's known state.
+ * @brief Sets a jump's known state.
  *
  * @usage p:setKnown( false ) -- Makes jump unknown.
  *    @luaparam p Jump to set known.
