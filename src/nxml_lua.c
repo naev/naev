@@ -373,7 +373,7 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
             ss = system_get(xml_get(node));
             system_get(xmlr_attr(node,"dest",buf));
             dest = system_get( buf );
-            if (ss != NULL && dest != NULL) {
+            if ((ss != NULL) && (dest != NULL)) {
                lj.srcid = ss->id;
                lj.destid = dest->id;
                lua_pushjump(L,lj);
