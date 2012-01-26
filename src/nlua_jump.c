@@ -31,7 +31,7 @@ static const luaL_reg jump_methods[] = {
    { "get", jumpL_get },
    { "__eq", jumpL_eq },
    { "pos", jumpL_position },
-   { "isKnown", jumpL_isKnown },
+   { "known", jumpL_isKnown },
    { "setKnown", jumpL_setKnown },
    {0,0}
 }; /**< Jump metatable methods. */
@@ -71,7 +71,7 @@ int nlua_loadJump( lua_State *L, int readonly )
  *
  * @code
  * j = jump.get("Gamma Polaris", "Apez") -- Get the jump from Gamma Polaris to Apez
- * if j:isKnown() then -- The jump is known
+ * if j:known() then -- The jump is known
  *    v = j:pos() -- Get the position
  *    -- Do other stuff
  * end
@@ -277,11 +277,11 @@ static int jumpL_position( lua_State *L )
 /**
  * @brief Checks to see if a jump is known by the player.
  *
- * @usage b = p:isKnown()
+ * @usage b = p:known()
  *
  *    @luaparam s Jump to check if the player knows.
  *    @luareturn true if the player knows the jump.
- * @luafunc isKnown( p )
+ * @luafunc known( p )
  */
 static int jumpL_isKnown( lua_State *L )
 {
