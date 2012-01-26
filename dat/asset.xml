@@ -2930,6 +2930,22 @@
    <item>Heavy Civilian Combat Ships</item>
   </tech>
  </asset>
+ <asset name="Elixir I">
+  <pos>
+   <x>14818.376965</x>
+   <y>-496.705373</y>
+  </pos>
+  <GFX>
+   <space>moon-P01.png</space>
+   <exterior>forest.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <hide>0.000000</hide>
+   <services/>
+  </general>
+ </asset>
  <asset name="Elza I">
   <pos>
    <x>-2287.252336</x>
@@ -10704,6 +10720,38 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <bar>What is a spaceport bar? A miserable pile of drink, noise, data terminals, and of course the occasional fight. Takeru's bar has all of these components, which makes it a comfortable place to be for anyone with more than a few light years under his belt.</bar>
   </general>
  </asset>
+ <asset name="Tandar I">
+  <pos>
+   <x>6787.873038</x>
+   <y>-3749.976470</y>
+  </pos>
+  <GFX>
+   <space>I02.png</space>
+   <exterior>oceanic2.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <hide>0.000000</hide>
+   <services/>
+  </general>
+ </asset>
+ <asset name="Tandar Ia">
+  <pos>
+   <x>7120.888036</x>
+   <y>-3208.396890</y>
+  </pos>
+  <GFX>
+   <space>moon-D02.png</space>
+   <exterior>station04.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <hide>0.000000</hide>
+   <services/>
+  </general>
+ </asset>
  <asset name="Tankard Station">
   <pos>
    <x>-20551.681519</x>
@@ -11893,6 +11941,38 @@ New Dortmund was never very successful in any sense of the term, but it is still
    </commodities>
    <description>Valt is recent home to a Dvaered mining colony. An utterly inhospitable world, the extremely thin atmosphere makes the surface highly dangerous due to its perpetual bombardment by asteroids and solar radiation. The colony is situated nearly a kilometre below the planet's surface, in an immense, resource-rich cavern.</description>
    <bar>The Valt spaceport bar is nothing special. It's rather clean for a Dvaered bar, though that may speak more about the small size of the settlement than the pride the proprietor takes in keeping his establishment clean.</bar>
+  </general>
+ </asset>
+ <asset name="Valt I">
+  <pos>
+   <x>-6268.132613</x>
+   <y>-6415.466081</y>
+  </pos>
+  <GFX>
+   <space>J02.png</space>
+   <exterior>snow.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <hide>0.000000</hide>
+   <services/>
+  </general>
+ </asset>
+ <asset name="Valt II">
+  <pos>
+   <x>34959.845064</x>
+   <y>-76.465126</y>
+  </pos>
+  <GFX>
+   <space>S00.png</space>
+   <exterior>snow.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <hide>0.000000</hide>
+   <services/>
   </general>
  </asset>
  <asset name="Vanir I">
