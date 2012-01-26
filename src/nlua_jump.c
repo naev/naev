@@ -245,7 +245,7 @@ static int jumpL_get( lua_State *L )
 /**
  * @brief You can use the '=' operator within Lua to compare jumps with this.
  *
- * @usage if j.__eq( jump.get( "Rhu", "Ruttwi" ) ) then -- Do something
+ * @usage if j:__eq( jump.get( "Rhu", "Ruttwi" ) ) then -- Do something
  *    @luaparam j Jump comparing.
  *    @luaparam comp jump to compare against.
  *    @luareturn true if both jumps are the same.
