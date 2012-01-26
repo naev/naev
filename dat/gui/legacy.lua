@@ -211,7 +211,7 @@ function render_nav ()
       gfx.print( nil, "Hyperspace", nav_x, y, col_console, nav_w, true )
       y = y - 5 - smallfont_h
       if nav_hyp ~= nil then
-         if nav_hyp:isKnown() then
+         if nav_hyp:known() then
             str = nav_hyp:name()
          else
             str = "Unknown"
