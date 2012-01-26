@@ -1295,7 +1295,7 @@ void player_targetPlanet (void)
    player_hyperspacePreempt(0);
    while (id < cur_system->nplanets) {
       /* In range, target planet. */
-      if (player_validPlanet(id)) {
+      if (planet_isKnown( system_getIndex(id) )) {
          player_targetPlanetSet( id );
          return;
       }
@@ -1305,37 +1305,6 @@ void player_targetPlanet (void)
 
    /* Untarget if out of range. */
    player_targetPlanetSet( -1 );
-}
-
-
-/**
- * @brief Checks whether a planet is real and known.
- *
- *    @param id Planet to be checked.
- *    @return Whether the player knows of the planet.
- */
-int player_validPlanet( int id )
-{
-   if ((cur_system->planets[ id ]->real == ASSET_REAL)
-         && planet_isKnown(cur_system->planets[id]))
-      return 1;
-
-   return 0;
-}
-
-
-/**
- * @brief Checks whether a jump is known.
- *
- *    @param id Jump to be checked.
- *    @return Whether the player knows of the jump.
- */
-int player_validJump( int id )
-{
-   if (jp_isKnown( &cur_system->jumps[ id ] ))
-      return 1;
-
-   return 0;
 }
 
 
@@ -1526,7 +1495,7 @@ void player_targetHyperspace (void)
    }
    else {
       for (i=id; i<cur_system->njumps; i++) {
-         if (player_validJump( i )) {
+         if (jp_isKnown( &cur_system->jumps[i])) {
             id = i;
             break;
          }

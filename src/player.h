@@ -211,11 +211,9 @@ void player_targetClear (void);
 /* Planets. */
 void player_targetPlanetSet( int id );
 void player_targetPlanet (void);
-int player_validPlanet( int id );
 /* Hyperspace. */
 void player_targetHyperspaceSet( int id );
 void player_targetHyperspace (void);
-int player_validJump( int id );
 /* Pilots. */
 void player_targetSet( unsigned int id );
 void player_targetHostile (void);
