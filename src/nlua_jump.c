@@ -19,9 +19,6 @@
 #include "nlua_vec2.h"
 #include "nlua_system.h"
 #include "log.h"
-#include "rng.h"
-#include "map.h"
-#include "nmath.h"
 
 
 /* Jump metatable methods */
@@ -297,8 +294,8 @@ static int jumpL_position( lua_State *L )
  */
 static int jumpL_isKnown( lua_State *L )
 {
-   JumpPoint *p = luaL_validjump(L,1);
-   lua_pushboolean(L, jp_isKnown(p));
+   JumpPoint *jp = luaL_validjump(L,1);
+   lua_pushboolean(L, jp_isKnown(jp));
    return 1;
 }
 
@@ -313,14 +310,14 @@ static int jumpL_isKnown( lua_State *L )
 static int jumpL_setKnown( lua_State *L )
 {
    int b;
-   JumpPoint *p;
+   JumpPoint *jp;
 
    p = luaL_validjump(L,1);
    b = lua_toboolean(L, 2);
 
    if (b)
-      jp_setFlag( p, JP_KNOWN );
+      jp_setFlag( jp, JP_KNOWN );
    else
-      jp_rmFlag( p, JP_KNOWN );
+      jp_rmFlag( jp, JP_KNOWN );
    return 0;
 }
