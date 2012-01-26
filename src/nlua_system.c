@@ -60,7 +60,7 @@ static const luaL_reg system_methods[] = {
    { "planets", systemL_planets },
    { "presence", systemL_presence },
    { "radius", systemL_radius },
-   { "isKnown", systemL_isknown },
+   { "known", systemL_isknown },
    { "setKnown", systemL_setknown },
    { "mrkClear", systemL_mrkClear },
    { "mrkAdd", systemL_mrkAdd },
@@ -82,7 +82,7 @@ static const luaL_reg system_cond_methods[] = {
    { "planets", systemL_planets },
    { "presence", systemL_presence },
    { "radius", systemL_radius },
-   { "isKnown", systemL_isknown },
+   { "known", systemL_isknown },
    {0,0}
 }; /**< Read only system metatable methods. */
 
@@ -682,11 +682,11 @@ static int systemL_radius( lua_State *L )
 /**
  * @brief Checks to see if a system is known by the player.
  *
- * @usage b = s:isKnown()
+ * @usage b = s:known()
  *
  *    @luaparam s System to check if the player knows.
  *    @luareturn true if the player knows the system.
- * @luafunc isKnown( s )
+ * @luafunc known( s )
  */
 static int systemL_isknown( lua_State *L )
 {

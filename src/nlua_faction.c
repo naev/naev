@@ -59,7 +59,7 @@ static const luaL_reg faction_methods[] = {
    { "logoSmall", factionL_logoSmall },
    { "logoTiny", factionL_logoTiny },
    { "colour", factionL_colour },
-   { "isKnown", factionL_isknown },
+   { "known", factionL_isknown },
    { "setKnown", factionL_setknown },
    {0,0}
 }; /**< Faction metatable methods. */
@@ -77,7 +77,7 @@ static const luaL_reg faction_methods_cond[] = {
    { "logoSmall", factionL_logoSmall },
    { "logoTiny", factionL_logoTiny },
    { "colour", factionL_colour },
-   { "isKnown", factionL_isknown },
+   { "known", factionL_isknown },
    {0,0}
 }; /**< Factions read only metatable methods. */
 
@@ -542,11 +542,11 @@ static int factionL_colour( lua_State *L )
 /**
  * @brief Checks to see if a faction is known by the player.
  *
- * @usage b = f:isKnown()
+ * @usage b = f:known()
  *
  *    @luaparam f Faction to check if the player knows.
  *    @luareturn true if the player knows the faction.
- * @luafunc isKnown( f )
+ * @luafunc known( f )
  */
 static int factionL_isknown( lua_State *L )
 {

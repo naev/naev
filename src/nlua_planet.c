@@ -74,7 +74,7 @@ static const luaL_reg planet_methods[] = {
    { "shipsSold", planetL_shipsSold },
    { "outfitsSold", planetL_outfitsSold },
    { "commoditiesSold", planetL_commoditiesSold },
-   { "isKnown", planetL_isKnown },
+   { "known", planetL_isKnown },
    { "setKnown", planetL_setKnown },
    {0,0}
 }; /**< Planet metatable methods. */
@@ -808,11 +808,11 @@ static int planetL_commoditiesSold( lua_State *L )
 /**
  * @brief Checks to see if a planet is known by the player.
  *
- * @usage b = p:isKnown()
+ * @usage b = p:known()
  *
  *    @luaparam s Planet to check if the player knows.
  *    @luareturn true if the player knows the planet.
- * @luafunc isKnown( p )
+ * @luafunc known( p )
  */
 static int planetL_isKnown( lua_State *L )
 {

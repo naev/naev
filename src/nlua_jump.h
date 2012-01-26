@@ -19,8 +19,8 @@
  * @brief Lua StarSystem Wrapper.
  */
 typedef struct LuaJump_s {
-   int id; /**< Jump point ID. */
-   int sysid; /**< Star system ID. */
+   int srcid; /**< Starting star system ID. */
+   int destid; /**< Destination star system ID. */
 } LuaJump;
 
 

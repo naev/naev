@@ -282,7 +282,7 @@ function update_nav()
       gui.fpsPos( 15, screen_h - 28 - 15 - deffont_h )
    end
    if nav_hyp then
-      if nav_hyp:isKnown() then
+      if nav_hyp:known() then
          navstring = nav_hyp:name()
       else
          navstring = "Unknown"
