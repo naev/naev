@@ -35,6 +35,13 @@ static const luaL_reg jump_methods[] = {
    { "setKnown", jumpL_setKnown },
    {0,0}
 }; /**< Jump metatable methods. */
+static const luaL_reg jump_cond_methods[] = {
+   { "get", jumpL_get },
+   { "__eq", jumpL_eq },
+   { "pos", jumpL_position },
+   { "known", jumpL_isKnown },
+   {0,0}
+}; /**< Read only jmp metatable methods. */
 
 
 /**
@@ -46,7 +53,6 @@ static const luaL_reg jump_methods[] = {
  */
 int nlua_loadJump( lua_State *L, int readonly )
 {
-   (void) readonly;
    /* Create the metatable */
    luaL_newmetatable(L, JUMP_METATABLE);
 
@@ -55,7 +61,10 @@ int nlua_loadJump( lua_State *L, int readonly )
    lua_setfield(L,-2,"__index");
 
    /* Register the values */
-   luaL_register(L, NULL, jump_methods);
+   if (readonly)
+      luaL_register(L, NULL, jump_cond_methods);
+   else
+      luaL_register(L, NULL, jump_methods);
 
    /* Clean up. */
    lua_setfield(L, LUA_GLOBALSINDEX, JUMP_METATABLE);
