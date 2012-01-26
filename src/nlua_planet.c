@@ -78,6 +78,30 @@ static const luaL_reg planet_methods[] = {
    { "setKnown", planetL_setKnown },
    {0,0}
 }; /**< Planet metatable methods. */
+static const luaL_reg planet_cond_methods[] = {
+   { "cur", planetL_cur },
+   { "get", planetL_get },
+   { "getLandable", planetL_getLandable },
+   { "getAll", planetL_getAll },
+   { "system", planetL_system },
+   { "__eq", planetL_eq },
+   { "__tostring", planetL_name },
+   { "name", planetL_name },
+   { "faction", planetL_faction },
+   { "colour", planetL_colour },
+   { "class", planetL_class },
+   { "pos", planetL_position },
+   { "services", planetL_services },
+   { "canLand", planetL_canland },
+   { "landOverride", planetL_landOverride },
+   { "gfxSpace", planetL_gfxSpace },
+   { "gfxExterior", planetL_gfxExterior },
+   { "shipsSold", planetL_shipsSold },
+   { "outfitsSold", planetL_outfitsSold },
+   { "commoditiesSold", planetL_commoditiesSold },
+   { "known", planetL_isKnown },
+   {0,0}
+}; /**< Read only planet metatable methods. */
 
 
 /**
@@ -89,7 +113,6 @@ static const luaL_reg planet_methods[] = {
  */
 int nlua_loadPlanet( lua_State *L, int readonly )
 {
-   (void) readonly;
    /* Create the metatable */
    luaL_newmetatable(L, PLANET_METATABLE);
 
@@ -98,7 +121,10 @@ int nlua_loadPlanet( lua_State *L, int readonly )
    lua_setfield(L,-2,"__index");
 
    /* Register the values */
-   luaL_register(L, NULL, planet_methods);
+   if (readonly)
+      luaL_register(L, NULL, planet_cond_methods);
+   else
+      luaL_register(L, NULL, planet_methods);
 
    /* Clean up. */
    lua_setfield(L, LUA_GLOBALSINDEX, PLANET_METATABLE);
