@@ -119,8 +119,8 @@ JumpPoint* luaL_validjump( lua_State *L, int ind )
 
    if (lua_isjump(L, ind)) {
       lj = luaL_checkjump(L, ind);
-      a = system_getIndex( lj->sysid );
-      jp = &a->jumps[lj->id];
+      a = system_getIndex( lj->srcid );
+      b = system_getIndex( lj->destid );
    }
    else if (lua_gettop(L) > 1) {
       if (lua_isstring(L, ind))
@@ -132,14 +132,14 @@ JumpPoint* luaL_validjump( lua_State *L, int ind )
          b = system_get( lua_tostring( L, ind+1 ));
       else if (lua_issystem(L, ind+1))
          b = system_getIndex( lua_tosystem(L, ind+1)->id );
-
-      if (b != NULL && a != NULL)
-         jp = jump_get( b->name, a );
    }
    else {
       luaL_typerror(L, ind, JUMP_METATABLE);
       return NULL;
    }
+
+   if (b != NULL && a != NULL)
+         jp = jump_getTarget( b, a );
 
    if (jp == NULL)
       NLUA_ERROR(L, "Jump is invalid");
@@ -201,7 +201,6 @@ int lua_isjump( lua_State *L, int ind )
 static int jumpL_get( lua_State *L )
 {
    LuaJump lj;
-   int i;
    StarSystem *a, *b;
 
    if (lua_gettop(L) > 1) {
@@ -220,13 +219,11 @@ static int jumpL_get( lua_State *L )
          return 0;
       }
       
-      lj.sysid = a->id;
-      for (i=0; i<a->njumps; i++) {
-         if (a->jumps[i].targetid == b->id) {
-            lj.id = i;
-            lua_pushjump(L, lj);
-            return 1;
-         }
+      if (jump_getTarget(b, a) != NULL) {
+         lj.srcid  = a->id;
+         lj.destid = b->id;
+         lua_pushjump(L, lj);
+         return 1;
       }
    }
    else
@@ -250,7 +247,7 @@ static int jumpL_eq( lua_State *L )
    LuaJump *a, *b;
    a = luaL_checkjump(L,1);
    b = luaL_checkjump(L,2);
-   lua_pushboolean(L,(a->id == b->id));
+   lua_pushboolean(L,((a->srcid == b->srcid) && (a->destid == b->destid)));
    return 1;
 }
 
@@ -303,7 +300,7 @@ static int jumpL_setKnown( lua_State *L )
    int b;
    JumpPoint *jp;
 
-   p = luaL_validjump(L,1);
+   jp = luaL_validjump(L,1);
    b = lua_toboolean(L, 2);
 
    if (b)
