@@ -119,7 +119,7 @@ JumpPoint* luaL_validjump( lua_State *L, int ind )
 
    if (lua_isjump(L, ind)) {
       lj = luaL_checkjump(L, ind);
-      a = system_getIndex( lj->sysid );
+      a  = system_getIndex( lj->sysid );
       jp = &a->jumps[lj->id];
    }
    else if (lua_gettop(L) > 1) {
@@ -303,8 +303,8 @@ static int jumpL_setKnown( lua_State *L )
    int b;
    JumpPoint *jp;
 
-   p = luaL_validjump(L,1);
-   b = lua_toboolean(L, 2);
+   jp = luaL_validjump(L,1);
+   b  = lua_toboolean(L, 2);
 
    if (b)
       jp_setFlag( jp, JP_KNOWN );
