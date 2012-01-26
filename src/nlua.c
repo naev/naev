@@ -188,6 +188,7 @@ static int nlua_packfileLoader( lua_State* L )
  *  - space
  *    - planet
  *    - system
+ *    - jumps
  *  - time
  *  - player
  *  - pilot
@@ -216,7 +217,7 @@ int nlua_loadStandard( lua_State *L, int readonly )
    r |= nlua_loadBasic(L);
    r |= nlua_loadNaev(L);
    r |= nlua_loadVar(L,readonly);
-   r |= nlua_loadSpace(L,readonly); /* planet, system */
+   r |= nlua_loadSpace(L,readonly); /* systems, planets, jumps */
    r |= nlua_loadTime(L,readonly);
    r |= nlua_loadPlayer(L,readonly);
    r |= nlua_loadPilot(L,readonly);

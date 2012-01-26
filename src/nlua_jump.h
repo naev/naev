@@ -16,10 +16,10 @@
 
 
 /**
- * @brief Lua StarSystem Wrapper.
+ * @brief Lua jump Wrapper.
  */
 typedef struct LuaJump_s {
-   int srcid; /**< Starting star system ID. */
+   int srcid;  /**< Starting star system ID. */
    int destid; /**< Destination star system ID. */
 } LuaJump;
 
