@@ -1617,7 +1617,7 @@ int map_map( const Outfit *map )
       sys_setFlag(map->u.map->systems[i], SYSTEM_KNOWN);
 
    for (i=0; i<array_size(map->u.map->assets);i++)
-      planet_setFlag(map->u.map->assets[i], PLANET_KNOWN);
+      planet_setKnown(map->u.map->assets[i]);
 
    for (i=0; i<array_size(map->u.map->jumps);i++)
       jp_setFlag(map->u.map->jumps[i], JP_KNOWN);

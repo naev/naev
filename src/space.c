@@ -904,6 +904,15 @@ Planet* planet_getAll( int *n )
 
 
 /**
+ * @brief Sets a planet's known status, if it's real.
+ */
+void planet_setKnown( Planet *p )
+{
+   if (p->real == ASSET_REAL)
+      planet_setFlag(p, PLANET_KNOWN);
+}
+
+/**
  * @brief Check to see if a planet exists.
  *
  *    @param planetname Name of the planet to see if it exists.
@@ -1261,7 +1270,7 @@ void space_update( const double dt )
       /* Planet updates */
       for (i=0; i<cur_system->nplanets; i++)
          if (( !planet_isKnown( cur_system->planets[i] )) && ( pilot_inRangePlanet( player.p, i ))) {
-            planet_setFlag( cur_system->planets[i], PLANET_KNOWN );
+            planet_setKnown( cur_system->planets[i] );
             player_message( "You discovered \e%c%s\e\0.",
                   planet_getColourChar( cur_system->planets[i] ),
                   cur_system->planets[i]->name );
@@ -3107,7 +3116,7 @@ static int space_parseAssets( xmlNodePtr parent, StarSystem* sys )
       if (xml_isNode(node,"planet")) {
          planet = planet_get(xml_get(node));
          if (planet != NULL) /* Must exist */
-            planet_setFlag(planet,PLANET_KNOWN);
+            planet_setKnown(planet);
       }
       else if (xml_isNode(node,"jump")) {
          jp = jump_get(xml_get(node), sys);

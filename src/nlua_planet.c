@@ -838,7 +838,7 @@ static int planetL_setKnown( lua_State *L )
    b = lua_toboolean(L, 2);
 
    if (b)
-      planet_setFlag( p, PLANET_KNOWN );
+      planet_setKnown( p );
    else
       planet_rmFlag( p, PLANET_KNOWN );
    return 0;
