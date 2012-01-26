@@ -1314,7 +1314,7 @@ void player_targetPlanet (void)
 int player_validPlanet( int id )
 {
    if ((cur_system->planets[ id ]->real == ASSET_REAL)
-      && planet_isKnown(cur_system->planets[id]))
+         && planet_isKnown(cur_system->planets[id]))
       return 1;
 
    return 0;
