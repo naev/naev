@@ -1310,6 +1310,9 @@ void player_targetPlanet (void)
 
 /**
  * @brief Checks whether a planet is real and known.
+ *
+ *    @param id Planet to be checked.
+ *    @return Whether the player knows of the planet.
  */
 int player_validPlanet( int id )
 {
@@ -1321,8 +1324,11 @@ int player_validPlanet( int id )
 }
 
 
-/*
+/**
  * @brief Checks whether a jump is known.
+ *
+ *    @param id Jump to be checked.
+ *    @return Whether the player knows of the jump.
  */
 int player_validJump( int id )
 {
