@@ -249,7 +249,7 @@ static int jumpL_get( lua_State *L )
  *    @luaparam j Jump comparing.
  *    @luaparam comp jump to compare against.
  *    @luareturn true if both jumps are the same.
- * @luafunc __eq( p, comp )
+ * @luafunc __eq( j, comp )
  */
 static int jumpL_eq( lua_State *L )
 {
@@ -264,10 +264,10 @@ static int jumpL_eq( lua_State *L )
 /**
  * @brief Gets the position of the jump in the system.
  *
- * @usage v = p:pos()
- *    @luaparam p Jump to get the position of.
+ * @usage v = j:pos()
+ *    @luaparam j Jump to get the position of.
  *    @luareturn The position of the jump in the system as a vec2.
- * @luafunc pos( p )
+ * @luafunc pos( j )
  */
 static int jumpL_position( lua_State *L )
 {
@@ -283,11 +283,11 @@ static int jumpL_position( lua_State *L )
 /**
  * @brief Checks to see if a jump is known by the player.
  *
- * @usage b = p:known()
+ * @usage b = j:known()
  *
  *    @luaparam s Jump to check if the player knows.
  *    @luareturn true if the player knows the jump.
- * @luafunc known( p )
+ * @luafunc known( j )
  */
 static int jumpL_isKnown( lua_State *L )
 {
@@ -302,7 +302,7 @@ static int jumpL_isKnown( lua_State *L )
  * @usage p:setKnown( false ) -- Makes jump unknown.
  *    @luaparam p Jump to set known.
  *    @luaparam b Whether or not to set as known (defaults to false).
- * @luafunc setKnown( p, b )
+ * @luafunc setKnown( j, b )
  */
 static int jumpL_setKnown( lua_State *L )
 {
