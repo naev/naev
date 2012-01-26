@@ -70,9 +70,9 @@ int nlua_loadJump( lua_State *L, int readonly )
  * Generally you do something like:
  *
  * @code
- * p,s = jump.get() -- Get current jump and system
- * if p:services()["inhabited"] > 0 then -- jump is inhabited
- *    v = p:pos() -- Get the position
+ * j = jump.get("Gamma Polaris", "Apez") -- Get the jump from Gamma Polaris to Apez
+ * if j:isKnown() then -- The jump is known
+ *    v = j:pos() -- Get the position
  *    -- Do other stuff
  * end
  * @endcode
@@ -108,8 +108,7 @@ LuaJump* luaL_checkjump( lua_State *L, int ind )
  * @brief Gets a jump directly.
  *
  *    @param L Lua state to get jump from.
- *    @param ind Index of source system.
- *    @param b Index of destination system.
+ *    @param ind Index to check.
  *    @return Jump found at the index in the state.
  */
 JumpPoint* luaL_validjump( lua_State *L, int ind )
@@ -167,8 +166,7 @@ LuaJump* lua_pushjump( lua_State *L, LuaJump jump )
  * @brief Checks to see if ind is a jump.
  *
  *    @param L Lua state to check.
- *    @param a Index of source system.
- *    @param b Index of destination system.
+ *    @param ind Index to check.
  *    @return 1 if ind is a jump.
  */
 int lua_isjump( lua_State *L, int ind )
@@ -191,19 +189,13 @@ int lua_isjump( lua_State *L, int ind )
 /**
  * @brief Gets a jump.
  *
- * Possible values of param: <br/>
- *    - bool : Gets a random jump. <br/>
- *    - faction : Gets random jump belonging to faction matching the number. <br/>
- *    - string : Gets the jump by name. <br/>
- *    - table : Gets random jump belonging to any of the factions in the
- *               table. <br/>
+ * Possible values of params: <br/>
+ *    - string : Gets the jump by system name. <br/>
+ *    - system : Gets the jump by system. <br/>
  *
- * @usage p,s = jump.get( "Anecu" ) -- Gets jump by name
- * @usage p,s = jump.get( faction.get( "Empire" ) ) -- Gets random Empire jump
- * @usage p,s = jump.get(true) -- Gets completely random jump
- * @usage p,s = jump.get( { faction.get("Empire"), faction.get("Dvaered") } ) -- Random jump belonging to Empire or Dvaered
+ * @usage j  = jump.get( "Ogat", "Goddard" ) -- Returns the Ogat to Goddard jump.
  *    @luaparam param See description.
- *    @luareturn Returns the jump and the system it belongs to.
+ *    @luareturn Returns the jump and the it belongs to.
  * @luafunc get( param )
  */
 static int jumpL_get( lua_State *L )
@@ -247,9 +239,8 @@ static int jumpL_get( lua_State *L )
 /**
  * @brief You can use the '=' operator within Lua to compare jumps with this.
  *
- * @usage if p.__eq( jump.get( "Anecu" ) ) then -- Do something
- * @usage if p == jump.get( "Anecu" ) then -- Do something
- *    @luaparam p Jump comparing.
+ * @usage if j.__eq( jump.get( "Rhu", "Ruttwi" ) ) then -- Do something
+ *    @luaparam j Jump comparing.
  *    @luaparam comp jump to compare against.
  *    @luareturn true if both jumps are the same.
  * @luafunc __eq( p, comp )
