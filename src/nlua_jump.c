@@ -21,16 +21,23 @@
 #include "log.h"
 
 
+static JumpPoint* luaL_validjumpSystem( lua_State *L, int ind, StarSystem **sys );
+
+
 /* Jump metatable methods */
 static int jumpL_get( lua_State *L );
 static int jumpL_eq( lua_State *L );
 static int jumpL_position( lua_State *L );
+static int jumpL_system( lua_State *L );
+static int jumpL_dest( lua_State *L );
 static int jumpL_isKnown( lua_State *L );
 static int jumpL_setKnown( lua_State *L );
 static const luaL_reg jump_methods[] = {
    { "get", jumpL_get },
    { "__eq", jumpL_eq },
    { "pos", jumpL_position },
+   { "system", jumpL_system },
+   { "dest", jumpL_dest },
    { "known", jumpL_isKnown },
    { "setKnown", jumpL_setKnown },
    {0,0}
@@ -39,9 +46,11 @@ static const luaL_reg jump_cond_methods[] = {
    { "get", jumpL_get },
    { "__eq", jumpL_eq },
    { "pos", jumpL_position },
+   { "system", jumpL_system },
+   { "dest", jumpL_dest },
    { "known", jumpL_isKnown },
    {0,0}
-}; /**< Read only jmp metatable methods. */
+}; /**< Read only jump metatable methods. */
 
 
 /**
@@ -113,14 +122,19 @@ LuaJump* luaL_checkjump( lua_State *L, int ind )
    luaL_typerror(L, ind, JUMP_METATABLE);
    return NULL;
 }
+
+
 /**
- * @brief Gets a jump directly.
+ * @brief Back-end for luaL_validjump.
  *
  *    @param L Lua state to get jump from.
  *    @param ind Index to check.
+ *    @param[out] sys System the jump exists in.
  *    @return Jump found at the index in the state.
+ *
+ * @sa luaL_validjump
  */
-JumpPoint* luaL_validjump( lua_State *L, int ind )
+static JumpPoint* luaL_validjumpSystem( lua_State *L, int ind, StarSystem **outsys )
 {
    LuaJump *lj;
    JumpPoint *jp;
@@ -153,8 +167,26 @@ JumpPoint* luaL_validjump( lua_State *L, int ind )
    if (jp == NULL)
       NLUA_ERROR(L, "Jump is invalid");
 
+   if (outsys != NULL)
+      *outsys = a;
    return jp;
 }
+
+
+/**
+ * @brief Gets a jump directly.
+ *
+ *    @param L Lua state to get jump from.
+ *    @param ind Index to check.
+ *    @param[out] sys System the jump exists in.
+ *    @return Jump found at the index in the state.
+ */
+JumpPoint* luaL_validjump( lua_State *L, int ind )
+{
+   return luaL_validjumpSystem(L, ind, NULL);
+}
+
+
 /**
  * @brief Pushes a jump on the stack.
  *
@@ -281,6 +313,46 @@ static int jumpL_position( lua_State *L )
 
 
 /**
+ * @brief Gets the system that a jump point exists in.
+ *
+ * @usage s = j:system()
+ *    @luaparam j Jump to get the system of.
+ *    @luareturn The jump's system.
+ * @luafunc system( j )
+ */
+static int jumpL_system( lua_State *L )
+{
+   StarSystem *sys;
+   LuaSystem ls;
+
+   luaL_validjumpSystem(L, 1, &sys);
+   ls.id = sys->id;
+   lua_pushsystem(L,ls);
+   return 1;
+}
+
+
+/**
+ * @brief Gets the system that a jump point exits into.
+ *
+ * @usage v = j:dest()
+ *    @luaparam j Jump to get the destination of.
+ *    @luareturn The jump's destination system.
+ * @luafunc dest( j )
+ */
+static int jumpL_dest( lua_State *L )
+{
+   JumpPoint *jp;
+   LuaSystem ls;
+
+   jp = luaL_validjump(L,1);
+   ls.id = jp->targetid;
+   lua_pushsystem(L,ls);
+   return 1;
+}
+
+
+/**
  * @brief Checks to see if a jump is known by the player.
  *
  * @usage b = j:known()
@@ -291,7 +363,9 @@ static int jumpL_position( lua_State *L )
  */
 static int jumpL_isKnown( lua_State *L )
 {
-   JumpPoint *jp = luaL_validjump(L,1);
+   JumpPoint *jp;
+
+   jp = luaL_validjump(L,1);
    lua_pushboolean(L, jp_isKnown(jp));
    return 1;
 }
