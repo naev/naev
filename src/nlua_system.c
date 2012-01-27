@@ -35,7 +35,6 @@ static int systemL_faction( lua_State *L );
 static int systemL_nebula( lua_State *L );
 static int systemL_jumpdistance( lua_State *L );
 static int systemL_adjacent( lua_State *L );
-static int systemL_jumpPos( lua_State *L );
 static int systemL_hasPresence( lua_State *L );
 static int systemL_planets( lua_State *L );
 static int systemL_presence( lua_State *L );
@@ -55,7 +54,6 @@ static const luaL_reg system_methods[] = {
    { "nebula", systemL_nebula },
    { "jumpDist", systemL_jumpdistance },
    { "adjacentSystems", systemL_adjacent },
-   { "jumpPos", systemL_jumpPos },
    { "hasPresence", systemL_hasPresence },
    { "planets", systemL_planets },
    { "presence", systemL_presence },
@@ -77,7 +75,6 @@ static const luaL_reg system_cond_methods[] = {
    { "nebula", systemL_nebula },
    { "jumpDist", systemL_jumpdistance },
    { "adjacentSystems", systemL_adjacent },
-   { "jumpPos", systemL_jumpPos },
    { "hasPresence", systemL_hasPresence },
    { "planets", systemL_planets },
    { "presence", systemL_presence },
@@ -465,40 +462,6 @@ static int systemL_adjacent( lua_State *L )
       lua_rawset(L,-3);
    }
 
-   return 1;
-}
-
-
-/**
- * @brief Gets the position of a jump point from one system to another.
- *
- * @usage v = system.cur():jumpPos( neighbour_system ) -- Gets the position of the jump point to neighbour_system
- *
- *    @luaparam from System jumping from.
- *    @luaparam to System jumping to.
- *    @luareturn A Vector2D containing the jump position or nil if not connected.
- * @luafunc jumpPos( from, to )
- */
-static int systemL_jumpPos( lua_State *L )
-{
-   LuaVector lv;
-   StarSystem *from, *to;
-   int i;
-
-   from  = luaL_validsystem(L,1);
-   to    = luaL_validsystem(L,2);
-
-   for (i=0; i<from->njumps; i++) {
-      /* Wait until found. */
-      if (from->jumps[i].target != to)
-         continue;
-
-      vectcpy( &lv.vec, &from->jumps[i].pos );
-      lua_pushvector(L,lv);
-      return 1;
-   }
-
-   lua_pushnil(L);
    return 1;
 }
 
