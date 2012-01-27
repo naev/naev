@@ -174,6 +174,7 @@ function spawnNPC()
    -- Select a faction for the NPC. NPCs may not have a specific faction.
    local npcname = civ_name
    local factions = {}
+   local sys = nil
    for i, _ in pairs(msg_lore) do
       factions[#factions + 1] = i
    end
@@ -203,7 +204,7 @@ function spawnNPC()
       msg = getLoreMessage(fac)
    elseif select <= 0.55 then
       -- Jump point message.
-      msg = getJmpMessage()
+      msg, sys = getJmpMessage()
    elseif select <= 0.8 then
       -- Gameplay tip message.
       msg = getTipMessage()
@@ -212,7 +213,7 @@ function spawnNPC()
       msg = getHintMessage()
    end
    
-   local npcdata = {name = npcname, msg = msg}
+   local npcdata = {name = npcname, msg = msg, sys = sys}
    
    id = evt.npcAdd("talkNPC", npcname, portrait, desc, 10)
    npcs[id] = npcdata
@@ -239,29 +240,26 @@ end
 -- Returns a jump point message and updates jump point known status accordingly. If all jumps are known by the player, defaults to a lore message.
 function getJmpMessage()
    -- Collect a table of jump points in the system the player does NOT know.
-   local myjumps = {}
    local mytargets = {}
    for _, adjsys in ipairs(system.cur():adjacentSystems()) do
       local myjump = jump.get(system.cur(), adjsys)
       if not myjump:known() then
-         myjumps[#myjumps + 1] = myjump
-         mytargets[#mytargets + 1] = adjsys:name()
+         mytargets[#mytargets + 1] = adjsys
       end
    end
    
-   if #myjumps == 0 then -- The player already knows all jumps in this system.
-      return getLoreMessage()
+   if #mytargets == 0 then -- The player already knows all jumps in this system.
+      return getLoreMessage(), nil
    end
    
    -- All jump messages are valid always.
    if #msg_jmp == 0 then
-      return getLoreMessage()
+      return getLoreMessage(), nil
    end
    local retmsg =  msg_jmp[rnd.rnd(1, #msg_jmp)]
-   local sel = rnd.rnd(1, #myjumps)
-   myjumps[sel]:setKnown(true)
+   local sel = rnd.rnd(1, #mytargets)
 
-   return retmsg:format(mytargets[sel])
+   return retmsg:format(mytargets[sel]:name()), mytargets[sel]
 end
 
 -- Returns a tip message.
@@ -316,7 +314,12 @@ end
 function talkNPC(id)
    local npcdata = npcs[id]
    
-   tk.msg(npcdata["name"], "\"" .. npcdata["msg"] .. "\"")
+   if npcdata.sys then
+      -- This is a jump point NPC - update map.
+      jump.get(system.cur(), npcdata.sys):setKnown(true)
+   end
+   
+   tk.msg(npcdata.name, "\"" .. npcdata.msg .. "\"")
 end
 
 --[[
