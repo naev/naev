@@ -235,7 +235,7 @@ void dtype_free (void)
  *
  *    @param[out] dshield Real shield damage.
  *    @param[out] darmour Real armour damage.
- *    @param[out] knockback Knocback modifier.
+ *    @param[out] knockback Knockback modifier.
  *    @param[in] absorb Absorption value.
  *    @param[in] dmg Damage information.
  */

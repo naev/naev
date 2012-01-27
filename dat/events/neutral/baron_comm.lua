@@ -23,6 +23,7 @@ end
 -- Triggered when the player hails the ship
 function hail()
     naev.missionStart("Baron")
+    player.commClose()
     evt.finish(true)
 end
 

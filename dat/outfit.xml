@@ -1,4 +1,4 @@
-<Outfits>
+   <Outfits>
 
  <!-- LASER TREE -->
  <outfit name="Laser Cannon MK1">
@@ -16,7 +16,7 @@
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>500</delay>
+   <delay>0.5</delay>
    <speed>550</speed>
    <range>550</range>
    <falloff>275</falloff>
@@ -48,7 +48,7 @@
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>550</delay>
+   <delay>0.55</delay>
    <speed>550</speed>
    <range>575</range>
    <falloff>300</falloff>
@@ -81,7 +81,7 @@
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>600</delay>
+   <delay>0.6</delay>
    <speed>550</speed>
    <range>600</range>
    <falloff>325</falloff>
@@ -116,7 +116,7 @@
    <sound>ripper</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>1200</delay>
+   <delay>1.2</delay>
    <speed>700</speed>
    <range>900</range>
    <falloff>600</falloff>
@@ -149,7 +149,7 @@
    <sound>ripper</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>1250</delay>
+   <delay>1.25</delay>
    <speed>700</speed>
    <range>1300</range>
    <falloff>850</falloff>
@@ -182,7 +182,7 @@
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>350</delay>
+   <delay>0.35</delay>
    <speed>550</speed>
    <range>800</range>
    <falloff>500</falloff>
@@ -213,7 +213,7 @@
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>375</delay>
+   <delay>0.375</delay>
    <speed>550</speed>
    <range>1000</range>
    <falloff>600</falloff>
@@ -245,7 +245,7 @@
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>400</delay>
+   <delay>0.4</delay>
    <speed>550</speed>
    <range>1200</range>
    <falloff>700</falloff>
@@ -277,7 +277,7 @@
    <sound>laser</sound>
    <spfx_shield>ShiM</spfx_shield>
    <spfx_armour>ExpM</spfx_armour>
-   <delay>1400</delay>
+   <delay>1.4</delay>
    <speed>550</speed>
    <range>2200</range>
    <falloff>1600</falloff>
@@ -309,7 +309,7 @@
    <sound>laser</sound>
    <spfx_shield>ShiM</spfx_shield>
    <spfx_armour>ExpM</spfx_armour>
-   <delay>1450</delay>
+   <delay>1.45</delay>
    <speed>550</speed>
    <range>2800</range>
    <falloff>2000</falloff>
@@ -343,7 +343,7 @@
    <sound>ion</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>600</delay>
+   <delay>0.6</delay>
    <speed>800</speed>
    <range>900</range>
    <falloff>700</falloff>
@@ -375,7 +375,7 @@
    <sound>ion</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>600</delay>
+   <delay>0.6</delay>
    <speed>800</speed>
    <range>950</range>
    <falloff>725</falloff>
@@ -407,7 +407,7 @@
    <sound>ion</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>600</delay>
+   <delay>0.6</delay>
    <speed>800</speed>
    <range>1000</range>
    <falloff>750</falloff>
@@ -439,7 +439,7 @@
    <sound>ion</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>500</delay>
+   <delay>0.5</delay>
    <speed>800</speed>
    <range>1100</range>
    <falloff>750</falloff>
@@ -470,7 +470,7 @@
    <sound>ion</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>500</delay>
+   <delay>0.5</delay>
    <speed>800</speed>
    <range>1600</range>
    <falloff>1100</falloff>
@@ -501,7 +501,7 @@
    <sound>ion</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>500</delay>
+   <delay>0.5</delay>
    <speed>800</speed>
    <range>1800</range>
    <falloff>1400</falloff>
@@ -532,7 +532,7 @@
    <sound>ion</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>1000</delay>
+   <delay>1</delay>
    <speed>500</speed>
    <range>700</range>
    <falloff>500</falloff>
@@ -565,7 +565,7 @@
    <sound>ion</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>1300</delay>
+   <delay>1.3</delay>
    <speed>500</speed>
    <range>1100</range>
    <falloff>800</falloff>
@@ -598,7 +598,7 @@
    <sound>ion</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>1300</delay>
+   <delay>1.3</delay>
    <speed>500</speed>
    <range>1300</range>
    <falloff>1000</falloff>
@@ -637,7 +637,7 @@
    <sound_hit>medexp0</sound_hit>
    <spfx_shield>ExpS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>350</delay>
+   <delay>0.35</delay>
    <speed>500</speed>
    <range blowup="armour">700</range>
    <energy>6</energy>
@@ -668,7 +668,7 @@
    <sound_hit>medexp0</sound_hit>
    <spfx_shield>ExpS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>375</delay>
+   <delay>0.375</delay>
    <speed>500</speed>
    <range blowup="armour">800</range>
    <energy>8.5</energy>
@@ -699,7 +699,7 @@
    <sound_hit>medexp0</sound_hit>
    <spfx_shield>ExpS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>400</delay>
+   <delay>0.4</delay>
    <speed>500</speed>
    <range blowup="armour">900</range>
    <energy>11</energy>
@@ -731,7 +731,7 @@
    <sound_hit>medexp0</sound_hit>
    <spfx_shield>ExpS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>325</delay>
+   <delay>0.325</delay>
    <speed>500</speed>
    <range blowup="armour">800</range>
    <energy>7</energy>
@@ -762,7 +762,7 @@
    <sound_hit>medexp0</sound_hit>
    <spfx_shield>ExpS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>275</delay>
+   <delay>0.275</delay>
    <speed>500</speed>
    <range blowup="armour">1000</range>
    <energy>10.5</energy>
@@ -794,7 +794,7 @@
    <sound_hit>medexp0</sound_hit>
    <spfx_shield>ExpS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>1440</delay>
+   <delay>1.44</delay>
    <speed>575</speed>
    <range blowup="armour">1200</range>
    <energy>38</energy>
@@ -826,7 +826,7 @@
    <sound_hit>medexp0</sound_hit>
    <spfx_shield>ExpS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>1400</delay>
+   <delay>1.4</delay>
    <speed>575</speed>
    <range blowup="armour">1500</range>
    <energy>44</energy>
@@ -858,7 +858,7 @@
    <sound_hit>medexp0</sound_hit>
    <spfx_shield>ExpS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>1500</delay>
+   <delay>1.5</delay>
    <speed>575</speed>
    <range blowup="armour">1750</range>
    <energy>53</energy>
@@ -890,7 +890,7 @@
    <sound_hit>medexp0</sound_hit>
    <spfx_shield>ShiM</spfx_shield>
    <spfx_armour>ExpM</spfx_armour>
-   <delay>1700</delay>
+   <delay>1.7</delay>
    <speed>700</speed>
    <range>2200</range>
    <falloff>1600</falloff>
@@ -924,7 +924,7 @@
    <sound_hit>medexp0</sound_hit>
    <spfx_shield>ShiM</spfx_shield>
    <spfx_armour>ExpM</spfx_armour>
-   <delay>1400</delay>
+   <delay>1.4</delay>
    <speed>700</speed>
    <range>2200</range>
    <falloff>1600</falloff>
@@ -957,7 +957,7 @@
    <sound>mass</sound>
    <spfx_shield>ShiM</spfx_shield>
    <spfx_armour>ExpM</spfx_armour>
-   <delay>1100</delay>
+   <delay>1.1</delay>
    <speed>675</speed>
    <range>1900</range>
    <falloff>1400</falloff>
@@ -991,7 +991,7 @@
    <sound>plasma</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>PlaS</spfx_armour>
-   <delay>675</delay>
+   <delay>0.675</delay>
    <speed>450</speed>
    <range>450</range>
    <falloff>210</falloff>
@@ -1023,7 +1023,7 @@
    <sound>plasma</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>PlaS2</spfx_armour>
-   <delay>675</delay>
+   <delay>0.675</delay>
    <speed>450</speed>
    <range>625</range>
    <falloff>260</falloff>
@@ -1056,7 +1056,7 @@
    <sound>plasma</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>PlaS2</spfx_armour>
-   <delay>675</delay>
+   <delay>0.675</delay>
    <speed>450</speed>
    <range>700</range>
    <falloff>310</falloff>
@@ -1089,7 +1089,7 @@
    <sound>plasma</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>PlaS</spfx_armour>
-   <delay>450</delay>
+   <delay>0.45</delay>
    <speed>450</speed>
    <range>700</range>
    <falloff>310</falloff>
@@ -1120,7 +1120,7 @@
    <sound>plasma</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>PlaS2</spfx_armour>
-   <delay>475</delay>
+   <delay>0.475</delay>
    <speed>450</speed>
    <range>900</range>
    <falloff>510</falloff>
@@ -1151,7 +1151,7 @@
    <sound>plasma</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>PlaS2</spfx_armour>
-   <delay>750</delay>
+   <delay>0.75</delay>
    <speed>550</speed>
    <range>1125</range>
    <falloff>225</falloff>
@@ -1184,7 +1184,7 @@
    <sound>plasma</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>PlaS2</spfx_armour>
-   <delay>750</delay>
+   <delay>0.75</delay>
    <speed>550</speed>
    <range>1525</range>
    <falloff>900</falloff>
@@ -1217,7 +1217,7 @@
    <sound>plasma</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>PlaS2</spfx_armour>
-   <delay>875</delay>
+   <delay>0.875</delay>
    <speed>650</speed>
    <range>1025</range>
    <falloff>225</falloff>
@@ -1250,7 +1250,7 @@
    <sound>plasma</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>PlaS2</spfx_armour>
-   <delay>1000</delay>
+   <delay>1</delay>
    <speed>650</speed>
    <range>1325</range>
    <falloff>225</falloff>
@@ -1283,7 +1283,7 @@
    <sound>plasma</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>PlaS2</spfx_armour>
-   <delay>1100</delay>
+   <delay>1.1</delay>
    <speed>650</speed>
    <range>1700</range>
    <falloff>1300</falloff>
@@ -1319,7 +1319,7 @@
   </general>
   <specific type="beam" secondary="1">
    <cpu>15</cpu>
-   <delay>6000</delay>
+   <delay>6</delay>
    <duration>3</duration>
    <range>300</range>
    <energy>65</energy>
@@ -1354,7 +1354,7 @@
   </general>
   <specific type="turret beam" secondary="1">
    <cpu>80</cpu>
-   <delay>10000</delay>
+   <delay>10</delay>
    <duration>5</duration>
    <range>400</range>
    <turn>35</turn>
@@ -1392,7 +1392,7 @@
    <sound>neutron</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>900</delay>
+   <delay>0.9</delay>
    <speed>650</speed>
    <range>425</range>
    <falloff>250</falloff>
@@ -1423,7 +1423,7 @@
   <specific type="launcher" secondary="1">
    <cpu>4</cpu>
    <ammo>Fury Missile</ammo>
-   <delay>4000</delay>
+   <delay>4</delay>
    <amount>20</amount>
    <lockon>9</lockon>
    <arc>6</arc>
@@ -1441,7 +1441,7 @@
   <specific type="launcher" secondary="1">
    <cpu>6</cpu>
    <ammo>Fury Missile</ammo>
-   <delay>4000</delay>
+   <delay>4</delay>
    <amount>20</amount>
    <lockon>7</lockon>
    <arc>8</arc>
@@ -1459,7 +1459,7 @@
   <specific type="turret launcher" secondary="1">
    <cpu>9</cpu>
    <ammo>Fury Missile</ammo>
-   <delay>4000</delay>
+   <delay>4</delay>
    <amount>30</amount>
    <lockon>8</lockon>
    <ew_target>1.5</ew_target>
@@ -1503,7 +1503,7 @@
   <specific type="launcher" secondary="1">
    <cpu>5</cpu>
    <ammo>Headhunter Missile</ammo>
-   <delay>5000</delay>
+   <delay>5</delay>
    <amount>15</amount>
    <lockon>12</lockon>
    <arc>6</arc>
@@ -1522,7 +1522,7 @@
   <specific type="launcher" secondary="1">
    <cpu>8</cpu>
    <ammo>Headhunter Missile</ammo>
-   <delay>5000</delay>
+   <delay>5</delay>
    <amount>15</amount>
    <lockon>9</lockon>
    <arc>8</arc>
@@ -1540,7 +1540,7 @@
   <specific type="turret launcher" secondary="1">
    <cpu>14</cpu>
    <ammo>Headhunter Missile</ammo>
-   <delay>5000</delay>
+   <delay>5</delay>
    <amount>20</amount>
    <lockon>10</lockon>
    <ew_target>1</ew_target>
@@ -1585,7 +1585,7 @@
   <specific type="launcher" secondary="1">
    <cpu>6</cpu>
    <ammo>Vengeance Missile</ammo>
-   <delay>6000</delay>
+   <delay>6</delay>
    <amount>10</amount>
    <lockon>17</lockon>
    <arc>6</arc>
@@ -1604,7 +1604,7 @@
   <specific type="launcher" secondary="1">
    <cpu>10</cpu>
    <ammo>Vengeance Missile</ammo>
-   <delay>6000</delay>
+   <delay>6</delay>
    <amount>10</amount>
    <lockon>12</lockon>
    <arc>8</arc>
@@ -1622,7 +1622,7 @@
   <specific type="turret launcher" secondary="1">
    <cpu>14</cpu>
    <ammo>Headhunter Missile</ammo>
-   <delay>6000</delay>
+   <delay>6</delay>
    <amount>15</amount>
    <lockon>14</lockon>
    <ew_target>0.75</ew_target>
@@ -1667,7 +1667,7 @@
   <specific type="launcher" secondary="1">
    <cpu>3</cpu>
    <ammo>Mace Rocket</ammo>
-   <delay>300</delay>
+   <delay>0.36</delay>
    <amount>50</amount>
   </specific>
  </outfit>
@@ -1683,7 +1683,7 @@
   <specific type="launcher" secondary="1">
    <cpu>5</cpu>
    <ammo>Mace Rocket</ammo>
-   <delay>250</delay>
+   <delay>0.3</delay>
    <amount>50</amount>
   </specific>
  </outfit>
@@ -1701,9 +1701,9 @@
    <sound_hit>lrgexp0</sound_hit>
    <spfx_shield>ExpM</spfx_shield>
    <spfx_armour>ExpM</spfx_armour>
-   <duration blowup="armour">1.3</duration>
-   <thrust>0</thrust>
-   <speed>1500</speed>
+   <duration blowup="armour">1.5</duration>
+   <thrust>1200</thrust>
+   <speed>1800</speed>
    <damage>
     <type>impact</type>
     <penetrate>0</penetrate>
@@ -1725,7 +1725,7 @@
   <specific type="launcher" secondary="1">
    <cpu>5</cpu>
    <ammo>Banshee Rocket</ammo>
-   <delay>1000</delay>
+   <delay>1</delay>
    <amount>20</amount>
   </specific>
  </outfit>
@@ -1741,7 +1741,7 @@
   <specific type="launcher" secondary="1">
    <cpu>8</cpu>
    <ammo>Banshee Rocket</ammo>
-   <delay>700</delay>
+   <delay>0.7</delay>
    <amount>20</amount>
   </specific>
  </outfit>
@@ -1784,7 +1784,7 @@
   <specific type="launcher" secondary="1">
    <cpu>13</cpu>
    <ammo>Caesar IV Torpedo</ammo>
-   <delay>10000</delay>
+   <delay>10</delay>
    <lockon>20</lockon>
    <arc>6</arc>
    <ew_target>0.4</ew_target>
@@ -1831,7 +1831,7 @@
   <specific type="launcher" secondary="1">
    <cpu>20</cpu>
    <ammo>Imperator Torpedo</ammo>
-   <delay>11000</delay>
+   <delay>11</delay>
    <lockon>24</lockon>
    <arc>6</arc>
    <ew_target>0.3</ew_target>
@@ -1876,7 +1876,7 @@
   <specific type="turret launcher" secondary="1">
    <cpu>8</cpu>
    <ammo>EMP Grenade</ammo>
-   <delay>2000</delay>
+   <delay>2</delay>
    <amount>18</amount>
   </specific>
  </outfit>
@@ -1887,7 +1887,7 @@
    <gfx_store>empgrenade</gfx_store>
    <description>This is a grenade that can be launched to unleash an electromagnetic pulse, rapidly disabling the electronics of enemy ships. Useful for taking ships alive, as the EM pulses rarely destroy the ship; leaving it floating disabled in space.</description>
   </general>
-  <specific type="turret ammo">
+  <specific type="ammo">
    <gfx spin="0.3">empgrenade</gfx>
    <sound>grenadefire</sound>
    <sound_hit>empexplode</sound_hit>
@@ -1916,7 +1916,7 @@
   <specific type="launcher" secondary="1">
    <cpu>4</cpu>
    <ammo>Medusa Missile</ammo>
-   <delay>4000</delay>
+   <delay>4</delay>
    <amount>6</amount>
    <lockon>9</lockon>
    <arc>6</arc>
@@ -1934,7 +1934,7 @@
   <specific type="launcher" secondary="1">
    <cpu>6</cpu>
    <ammo>Medusa Missile</ammo>
-   <delay>3500</delay>
+   <delay>3.5</delay>
    <amount>8</amount>
    <lockon>7</lockon>
    <arc>8</arc>
@@ -1979,7 +1979,7 @@
   <specific type="launcher" secondary="1">
    <cpu>7</cpu>
    <ammo>Spearhead Missile</ammo>
-   <delay>4000</delay>
+   <delay>4</delay>
    <amount>8</amount>
    <lockon>12</lockon>
    <arc>6</arc>
@@ -2495,15 +2495,280 @@
    <tur_damage>-5</tur_damage>
   </specific>
  </outfit>
- <outfit name="Star Map">
+ <outfit name="Map: Nebula Edge">
   <general>
    <mass>0</mass>
-   <price>5000</price>
-   <description>A star map will give you details about all systems up to 2 jumps away. It's a great risk-free way to discover parts of the universe.</description>
+   <price>25000</price>
+   <description>This map contains the route leading from Dvaered/Imperial space to the edge of the Nebula. It also lists the two Imperial stations along the route.</description>
    <gfx_store>map</gfx_store>
   </general>
   <specific type="map">
-   <radius>2</radius>
+   <short_desc>A Star Map.</short_desc>
+   <sys name="Raelid">
+    <asset>Marius Station</asset>
+    <jump>Arcanis</jump>
+   </sys>
+   <sys name="Arcanis">
+    <jump>Raelid</jump>
+    <jump>Zylex</jump>
+   </sys>
+   <sys name="Zylex">
+    <jump>Arcanis</jump>
+    <jump>Doeston</jump>
+   </sys>
+   <sys name="Doeston">
+    <asset>Cerberus</asset>
+    <jump>Zylex</jump>
+   </sys>
+  </specific>
+ </outfit>
+ <outfit name="Map: Dvaered-Soromid trade route">
+  <general>
+   <mass>0</mass>
+   <price>30000</price>
+   <description>This map contains the main route between Dvaered and Soromid controlled space.</description>
+   <gfx_store>map</gfx_store>
+  </general>
+  <specific type="map">
+   <short_desc>A Star Map.</short_desc>
+   <sys name="Zacron">
+    <jump>Raelid</jump>
+   </sys>
+   <sys name="Raelid">
+    <jump>Zacron</jump>
+    <jump>Surano</jump>
+   </sys>
+   <sys name="Surano">
+    <jump>Raelid</jump>
+    <jump>Thorndyke</jump>
+   </sys>
+   <sys name="Thorndyke">
+    <jump>Surano</jump>
+    <jump>Pilatis</jump>
+   </sys>
+   <sys name="Pilatis">
+    <jump>Thorndyke</jump>
+    <jump>Defa</jump>
+   </sys>
+   <sys name="Defa">
+    <jump>Pilatis</jump>
+    <jump>Oberon</jump>
+   </sys>
+   <sys name="Oberon">
+    <asset>Soromid Customs Central</asset>
+    <jump>Defa</jump>
+   </sys>
+  </specific>
+ </outfit>
+ <outfit name="Map: Sirian border systems">
+  <general>
+   <mass>0</mass>
+   <price>15000</price>
+   <description>This map contains the systems that lead to Sirius controlled space.</description>
+   <gfx_store>map</gfx_store>
+  </general>
+  <specific type="map">
+   <short_desc>A Star Map.</short_desc>
+   <sys name="Nougat">
+    <jump>Esker</jump>
+   </sys>
+   <sys name="Esker">
+    <jump>Nougat</jump>
+    <asset>Fyruse Station</asset>
+    <asset>Esker I</asset>
+   </sys>
+   <sys name="Fidelis">
+    <jump>Eye of Night</jump>
+   </sys>
+   <sys name="Eye of Night">
+    <jump>Fidelis</jump>
+    <asset>Inios Station</asset>
+    <asset>Eye of Night III</asset>
+   </sys>
+  </specific>
+ </outfit>
+ <outfit name="Map: The Frontier">
+  <general>
+   <mass>0</mass>
+   <price>50000</price>
+   <description>This map contains the location of all eleven Frontier worlds, plus the Frontier Council.</description>
+   <gfx_store>map</gfx_store>
+  </general>
+  <specific type="map">
+   <short_desc>A Star Map.</short_desc>
+   <sys name="Theras">
+    <asset>Cetrat</asset>
+   </sys>
+   <sys name="Gilligan's Light">
+    <asset>Dawn</asset>
+    <asset>The Frontier Council</asset>
+   </sys>
+   <sys name="Haleb">
+    <asset>Jorlan</asset>
+   </sys>
+   <sys name="Norpin">
+    <asset>New Dortmund</asset>
+   </sys>
+   <sys name="Triap">
+    <asset>Khelim</asset>
+   </sys>
+   <sys name="Brimstone">
+    <asset>Nonuri</asset>
+   </sys>
+   <sys name="Shickhaw">
+    <asset>Avoss</asset>
+   </sys>
+   <sys name="Andee">
+    <asset>Varaati</asset>
+   </sys>
+   <sys name="Karman">
+    <asset>Atalanta</asset>
+   </sys>
+   <sys name="Gyrios">
+    <asset>Lapra</asset>
+    <asset>Jaegnhild</asset>
+   </sys>
+  </specific>
+ </outfit>
+ <outfit name="Map: Sol">
+  <general>
+   <mass>0</mass>
+   <price>100000</price>
+   <description>This map contains the location of the Sol system. Nothing is known about this system other than its location.</description>
+   <gfx_store>map</gfx_store>
+  </general>
+  <specific type="map">
+   <short_desc>A Star Map.</short_desc>
+   <sys name="Sol">
+   </sys>
+  </specific>
+ </outfit>
+ <outfit name="Map: Dvaered Core">
+  <general>
+   <mass>0</mass>
+   <price>25000</price>
+   <description>This map lists the locations of all Dvaered worlds and stations close to the Dvaered capital.</description>
+   <gfx_store>map</gfx_store>
+  </general>
+  <specific type="map">
+   <short_desc>A Star Map.</short_desc>
+   <sys name="Dvaer">
+    <jump>Beeklo</jump>
+    <jump>Radix</jump>
+    <jump>Urbanus</jump>
+    <jump>Gremlin</jump>
+    <asset>Dvaer Prime</asset>
+    <asset>Dvaered High Command</asset>
+    <asset>Dvaer II</asset>
+    <asset>Eist Shipyard</asset>
+    <asset>Dvaer III</asset>
+    <asset>Dvaer IIIa</asset>
+    <asset>Dvaer IV</asset>
+    <asset>Laarss</asset>
+   </sys>
+   <sys name="Gremlin">
+    <jump>Dvaer</jump>
+   </sys>
+   <sys name="Urbanus">
+    <jump>Dvaer</jump>
+    <asset>Urbanus Crops</asset>
+    <asset>Onyx Shipyard</asset>
+    <asset>Trincea</asset>
+   </sys>
+   <sys name="Radix">
+    <jump>Dvaer</jump>
+    <asset>Myuirr Station</asset>
+    <asset>Stutee</asset>
+   </sys>
+   <sys name="Beeklo">
+    <jump>Dvaer</jump>
+    <asset>Inios Station</asset>
+    <asset>Totoran</asset>
+    <asset>Icarus</asset>
+    <asset>Adham</asset>
+    <asset>Diabolos</asset>
+   </sys>
+  </specific>
+ </outfit>
+ <outfit name="Map: Empire Core">
+  <general>
+   <mass>0</mass>
+   <price>25000</price>
+   <description>This map lists the locations of all Imperial worlds and stations close to the Imperial capital.</description>
+   <gfx_store>map</gfx_store>
+  </general>
+  <specific type="map">
+   <short_desc>A Star Map.</short_desc>
+   <sys name="Gamma Polaris">
+    <jump>Qex</jump>
+    <jump>Koralis</jump>
+    <jump>Sirou</jump>
+    <jump>Shakar</jump>
+    <jump>Apez</jump>
+    <asset>Polaris Prime</asset>
+    <asset>Emperor's Fist</asset>
+    <asset>Vuere</asset>
+    <asset>New Pluto</asset>
+    <asset>New Deimos</asset>
+    <asset>New Phobos</asset>
+    <asset>New Mars</asset>
+    <asset>Halir</asset>
+   </sys>
+   <sys name="Qex">
+    <jump>Gamma Polaris</jump>
+    <asset>Semper</asset>
+    <asset>Reidd</asset>
+    <asset>Ammu</asset>
+    <asset>Qex II</asset>
+    <asset>Qex IV</asset>
+    <asset>Qex V</asset>
+   </sys>
+   <sys name="Koralis">
+    <jump>Gamma Polaris</jump>
+    <asset>Luxsor</asset>
+    <asset>Paxsor</asset>
+    <asset>Fuzka</asset>
+    <asset>Koralis IV</asset>
+    <asset>Koralis VI</asset>
+    <asset>Aillis</asset>
+   </sys>
+   <sys name="Sirou">
+    <jump>Gamma Polaris</jump>
+   </sys>
+   <sys name="Shakar">
+    <jump>Gamma Polaris</jump>
+    <asset>Nova Shakar</asset>
+    <asset>Zembla Shakar</asset>
+    <asset>Shakar I</asset>
+    <asset>Shakar III</asset>
+   </sys>
+   <sys name="Apez">
+    <jump>Gamma Polaris</jump>
+    <asset>Apez V</asset>
+    <asset>Zeo</asset>
+    <asset>Dowue</asset>
+    <asset>Gem</asset>
+    <asset>Crylo</asset>
+    <asset>Apez II</asset>
+   </sys>
+  </specific>
+ </outfit>
+ <outfit name="Map: Pirate strongholds">
+  <general>
+   <mass>0</mass>
+   <price>100000</price>
+   <description>This map contains the location of the Pirate strongholds. Top secret!</description>
+   <gfx_store>map</gfx_store>
+  </general>
+  <specific type="map">
+   <short_desc>A Star Map.</short_desc>
+   <sys name="New Haven">
+    <asset>New Haven</asset>
+   </sys>
+   <sys name="Kretogg">
+    <asset>Vorca</asset>
+    <asset>Warden's End</asset>
+   </sys>
   </specific>
  </outfit>
  <outfit name="Ultra Map">
@@ -2514,7 +2779,8 @@
    <gfx_store>map</gfx_store>
   </general>
   <specific type="map">
-   <radius>999</radius>
+   <short_desc/>
+   <all/>
   </specific>
  </outfit>
  <outfit name="Unicorp Scrambler">
@@ -2612,7 +2878,7 @@
   <specific type="fighter bay" secondary="1">
    <cpu>60</cpu>
    <ammo>Lancelot Fighter</ammo>
-   <delay>4000</delay>
+   <delay>4</delay>
    <amount>2</amount>
   </specific>
  </outfit>
@@ -2640,7 +2906,7 @@
   <specific type="fighter bay" secondary="1">
    <cpu>120</cpu>
    <ammo>Drone Fighter</ammo>
-   <delay>1000</delay>
+   <delay>1</delay>
    <amount>3</amount>
   </specific>
  </outfit>
@@ -2743,7 +3009,7 @@
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>550</delay>
+   <delay>0.55</delay>
    <speed>550</speed>
    <range>420</range>
    <falloff>250</falloff>
@@ -2774,7 +3040,7 @@
    <sound>ripper</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>1260</delay>
+   <delay>1.26</delay>
    <speed>700</speed>
    <range>1900</range>
    <falloff>1500</falloff>
@@ -2800,7 +3066,7 @@
   </general>
   <specific type="beam">
    <cpu>1</cpu>
-   <delay>10000</delay>
+   <delay>10</delay>
    <duration>5</duration>
    <range>400</range>
    <turn>35</turn>
@@ -2833,7 +3099,7 @@
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>850</delay>
+   <delay>0.85</delay>
    <speed>600</speed>
    <range>550</range>
    <falloff>270</falloff>

@@ -123,13 +123,19 @@ Outfit* luaL_validoutfit( lua_State *L, int ind )
    LuaOutfit *lo;
    Outfit *o;
 
-   /* Get the outfit. */
-   lo = luaL_checkoutfit(L,ind);
-   o  = lo->outfit;
-   if (o==NULL) {
-      NLUA_ERROR(L,"Outfit is invalid.");
+   if (lua_isoutfit(L, ind)) {
+      lo = luaL_checkoutfit(L,ind);
+      o  = lo->outfit;
+   }
+   else if (lua_isstring(L, ind))
+      o = outfit_get( lua_tostring(L, ind) );
+   else {
+      luaL_typerror(L, ind, OUTFIT_METATABLE);
       return NULL;
    }
+
+   if (o == NULL)
+      NLUA_ERROR(L, "Outfit is invalid.");
 
    return o;
 }

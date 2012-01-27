@@ -249,26 +249,25 @@ void background_renderStars( const double dt )
    if ((player.p != NULL) && !player_isFlag(PLAYER_DESTROYED) &&
          !player_isFlag(PLAYER_CREATING)) {
 
-      if (pilot_isFlag(player.p,PILOT_HYPERSPACE) && /* hyperspace fancy effects */
-            (player.p->ptimer < HYPERSPACE_STARS_BLUR)) {
+      if (pilot_isFlag(player.p,PILOT_HYPERSPACE)) { /* hyperspace fancy effects */
 
          glShadeModel(GL_SMOOTH);
          shade_mode = 1;
 
-         /* lines will be based on velocity */
-         m  = HYPERSPACE_STARS_BLUR-player.p->ptimer;
+         /* lines get longer the closer we are to finishing the jump */
+         m  = MAX( 0, HYPERSPACE_STARS_BLUR-player.p->ptimer );
          m /= HYPERSPACE_STARS_BLUR;
          m *= HYPERSPACE_STARS_LENGTH;
          x = m*cos(VANGLE(player.p->solid->vel));
          y = m*sin(VANGLE(player.p->solid->vel));
       }
-      else if (dt_mod > 3.) {
+      else if (dt_mod * VMOD(player.p->solid->vel) > 500. ){
 
          glShadeModel(GL_SMOOTH);
          shade_mode = 1;
 
          /* lines will be based on velocity */
-         m = (dt_mod-3.)*VMOD(player.p->solid->vel)/10.;
+         m = dt_mod*VMOD(player.p->solid->vel)/25. - 20;
          x = m*cos(VANGLE(player.p->solid->vel));
          y = m*sin(VANGLE(player.p->solid->vel));
       }
@@ -354,7 +353,7 @@ static void bkg_sort( background_image_t *arr )
  * @brief Adds a new background image.
  */
 unsigned int background_addImage( glTexture *image, double x, double y,
-      double move, double scale, glColour *col, int foreground )
+      double move, double scale, const glColour *col, int foreground )
 {
    background_image_t *bkg, **arr;
 

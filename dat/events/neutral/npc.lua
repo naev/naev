@@ -128,6 +128,18 @@ else --default english
                                "Afterburners only work when you activate them. While they're inactive all they do is slow you down!"
                               }
 
+   -- Jump point messages.
+   -- For giving the location of a jump point in the current system to the player for free.
+   -- All messages must contain exactly one %s, this is the name of the target system.
+   -- ALL NPCs have a chance to say one of these lines instead of a lore message.
+   -- So, make sure the tips are always faction neutral.
+   msg_jmp =                  {"Hi there, traveler. Is your system map up to date? Just in case you didn't know already, let me give you the location of the jump from here to %s. I hope that helps.",
+                               "Quite a lot of people who come in here complain that they don't know how to get to %s. I travel there often, so I know exactly where the jump point is. Here, let me show you.",
+                               "So you're still getting to know about this area, huh? Tell you what, I'll give you the coordinates of the jump to %s. Check your map next time you take off!",
+                               "True fact, there's a direct jump from here to %s. Want to know where it is? It'll cost you! Ha ha, just kidding. Here you go, I've added it to your map.",
+                               "There's a system just one jump away by the name of %s. I can tell you where the jump point is. There, I've updated your map. Don't mention it."
+                              }
+
    -- Mission hint messages. Each element should be a table containing the mission name and the corresponding hint.
    -- ALL NPCs have a chance to say one of these lines instead of a lore message.
    -- So, make sure the hints are always faction neutral.
@@ -186,10 +198,13 @@ function spawnNPC()
    -- Select what this NPC should say.
    select = rnd.rnd()
    local msg
-   if select <= 0.4 then
+   if select <= 0.3 then
       -- Lore message.
       msg = getLoreMessage(fac)
-   elseif select <= 0.7 then
+   elseif select <= 0.55 then
+      -- Jump point message.
+      msg = getJmpMessage()
+   elseif select <= 0.8 then
       -- Gameplay tip message.
       msg = getTipMessage()
    else
@@ -219,6 +234,34 @@ function getLoreMessage(fac)
    local pick = facmsg[select]
    table.remove(facmsg, select)
    return pick
+end
+
+-- Returns a jump point message and updates jump point known status accordingly. If all jumps are known by the player, defaults to a lore message.
+function getJmpMessage()
+   -- Collect a table of jump points in the system the player does NOT know.
+   local myjumps = {}
+   local mytargets = {}
+   for _, adjsys in ipairs(system.cur():adjacentSystems()) do
+      local myjump = jump.get(system.cur(), adjsys)
+      if not myjump:known() then
+         myjumps[#myjumps + 1] = myjump
+         mytargets[#mytargets + 1] = adjsys:name()
+      end
+   end
+   
+   if #myjumps == 0 then -- The player already knows all jumps in this system.
+      return getLoreMessage()
+   end
+   
+   -- All jump messages are valid always.
+   if #msg_jmp == 0 then
+      return getLoreMessage()
+   end
+   local retmsg =  msg_jmp[rnd.rnd(1, #msg_jmp)]
+   local sel = rnd.rnd(1, #myjumps)
+   myjumps[sel]:setKnown(true)
+
+   return retmsg:format(mytargets[sel])
 end
 
 -- Returns a tip message.

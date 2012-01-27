@@ -748,7 +748,7 @@ static void info_openStandings( unsigned int wid )
          &gl_smallFont, &cBlack, NULL );
 
    /* Gets the faction standings. */
-   info_factions  = faction_getAll( &n );
+   info_factions  = faction_getKnown( &n );
    str            = malloc( sizeof(char*) * n );
 
    /* Create list. */

@@ -77,6 +77,7 @@ CODE_SOURCE = \
 	nlua_gfx.c \
 	nlua_gui.c \
 	nlua_hook.c \
+	nlua_jump.c \
 	nlua_misn.c \
 	nlua_music.c \
 	nlua_naev.c \
@@ -214,6 +215,7 @@ CODE_SOURCE = \
 	nlua_gfx.h \
 	nlua_gui.h \
 	nlua_hook.h \
+	nlua_jump.h \
 	nlua_misn.h \
 	nlua_music.h \
 	nlua_naev.h \

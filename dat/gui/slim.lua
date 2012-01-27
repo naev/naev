@@ -282,7 +282,7 @@ function update_nav()
       gui.fpsPos( 15, screen_h - 28 - 15 - deffont_h )
    end
    if nav_hyp then
-      if nav_hyp:isKnown() then
+      if nav_hyp:known() then
          navstring = nav_hyp:name()
       else
          navstring = "Unknown"
@@ -400,7 +400,7 @@ function render_armourBar( name, value, stress_value, txt, txtcol, size, col, bg
       gfx.renderTex( l_bg, l_x + offsets[1], l_y + 2)
    end
    if not value then value = 100 end
-   if not stress_value then stress_value = 100 end
+   if not stress_value then stress_value = 0 end
    if bgc then gfx.renderRect( l_x + offsets[1], l_y + 2, l_bar_w, l_bar_h, bgc ) end
    gfx.renderRect( l_x + offsets[1], l_y + 2, value/100. * l_bar_w, l_bar_h, l_col )
    gfx.renderRect( l_x + offsets[1], l_y + 2, (stress_value/100) * (value/100) * l_bar_w, l_bar_h, col_stress )
@@ -703,7 +703,7 @@ function render( dt, dt_mod )
          else
             -- Unset stats.
             shi, ene, arm = nil
-            ta_shield, ta_armour, ta_energy = nil
+            ta_shield, ta_armour, ta_energy, ta_stress = nil
 
             --Bar Texts
             spe = round(ta_speed)

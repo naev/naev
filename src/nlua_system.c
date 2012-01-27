@@ -60,7 +60,7 @@ static const luaL_reg system_methods[] = {
    { "planets", systemL_planets },
    { "presence", systemL_presence },
    { "radius", systemL_radius },
-   { "isKnown", systemL_isknown },
+   { "known", systemL_isknown },
    { "setKnown", systemL_setknown },
    { "mrkClear", systemL_mrkClear },
    { "mrkAdd", systemL_mrkAdd },
@@ -82,7 +82,7 @@ static const luaL_reg system_cond_methods[] = {
    { "planets", systemL_planets },
    { "presence", systemL_presence },
    { "radius", systemL_radius },
-   { "isKnown", systemL_isknown },
+   { "known", systemL_isknown },
    {0,0}
 }; /**< Read only system metatable methods. */
 
@@ -158,7 +158,7 @@ LuaSystem* luaL_checksystem( lua_State *L, int ind )
 }
 
 /**
- * @brief Gets system at index raising an error if type doesn't match.
+ * @brief Gets system (or system name) at index raising an error if type doesn't match.
  *
  *    @param L Lua state to get system from.
  *    @param ind Index position of system.
@@ -168,12 +168,21 @@ StarSystem* luaL_validsystem( lua_State *L, int ind )
 {
    LuaSystem *ls;
    StarSystem *s;
-   ls = luaL_checksystem( L, ind );
-   s  = system_getIndex( ls->id );
-   if (s == NULL) {
-      NLUA_ERROR( L, "System is invalid" );
+
+   if (lua_issystem(L, ind)) {
+      ls = luaL_checksystem(L, ind);
+      s = system_getIndex( ls->id );
+   }
+   else if (lua_isstring(L, ind))
+      s = system_get( lua_tostring(L, ind) );
+   else {
+      luaL_typerror(L, ind, FACTION_METATABLE);
       return NULL;
    }
+
+   if (s == NULL)
+      NLUA_ERROR(L, "System is invalid");
+
    return s;
 }
 
@@ -673,11 +682,11 @@ static int systemL_radius( lua_State *L )
 /**
  * @brief Checks to see if a system is known by the player.
  *
- * @usage b = s:isKnown()
+ * @usage b = s:known()
  *
  *    @luaparam s System to check if the player knows.
  *    @luareturn true if the player knows the system.
- * @luafunc isKnown( s )
+ * @luafunc known( s )
  */
 static int systemL_isknown( lua_State *L )
 {
@@ -693,20 +702,39 @@ static int systemL_isknown( lua_State *L )
  * @usage s:setKnown( false ) -- Makes system unknown.
  *    @luaparam s System to set known.
  *    @luaparam b Whether or not to set as known (defaults to false).
+ *    @luaparam r Whether or not to iterate over the system's assets and jump points (defaults to false).
  * @luafunc setKnown( s, b )
  */
 static int systemL_setknown( lua_State *L )
 {
-   int b;
+   int b, r, i;
    StarSystem *sys;
 
+   r = 0;
    sys = luaL_validsystem(L, 1);
    b   = lua_toboolean(L, 2);
+   if (lua_gettop(L) > 2)
+      r   = lua_toboolean(L, 3);
 
    if (b)
       sys_setFlag( sys, SYSTEM_KNOWN );
    else
       sys_rmFlag( sys, SYSTEM_KNOWN );
+
+   if (r) {
+      if (b) {
+         for (i=0; i < sys->nplanets; i++)
+            planet_setKnown( sys->planets[i] );
+         for (i=0; i < sys->njumps; i++)
+            jp_setFlag( &sys->jumps[i], JP_KNOWN );
+     }
+     else {
+         for (i=0; i < sys->nplanets; i++)
+            planet_rmFlag( sys->planets[i], PLANET_KNOWN );
+         for (i=0; i < sys->njumps; i++)
+            jp_rmFlag( &sys->jumps[i], JP_KNOWN );
+     }
+   }
    return 0;
 }
 

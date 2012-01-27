@@ -116,9 +116,9 @@ int ovr_input( SDL_Event *event )
             ((pntid >=0 && player.p->nav_planet == pntid) ||
             (jpid >=0 && player.p->nav_planet == jpid))))
          player_targetSet( pid );
-      else if ((pntid >= 0) && (d < pow2(r))) /* Planet is closest. */
+      else if ((pntid >= 0) && (d < pow2(r)) && planet_isKnown(pnt)) /* Planet is closest. */
          player_targetPlanetSet( pntid );
-      else if ((jpid >= 0) && (d < pow2(r))) /* Jump point is closest. */
+      else if ((jpid >= 0) && (d < pow2(r)) && jp_isKnown(jp)) /* Jump point is closest. */
          player_targetHyperspaceSet( jpid );
       else
          return 0;
@@ -273,7 +273,7 @@ void ovr_render( double dt )
 
    /* Render jump points. */
    for (i=0; i<cur_system->njumps; i++)
-      if ((i != player.p->nav_hyperspace) && (cur_system->jumps[i].type != 2))
+      if ((i != player.p->nav_hyperspace) && !jp_isFlag(&cur_system->jumps[i], JP_HIDDEN) && !jp_isFlag(&cur_system->jumps[i], JP_EXITONLY))
          gui_renderJumpPoint( i, RADAR_RECT, w, h, res, 1 );
    if (player.p->nav_hyperspace > -1)
       gui_renderJumpPoint( player.p->nav_hyperspace, RADAR_RECT, w, h, res, 1 );

@@ -23,7 +23,7 @@
 /* Hyperspace parameters. */
 #define HYPERSPACE_ENGINE_DELAY  3. /**< Time to warm up engine (seconds). */
 #define HYPERSPACE_FLY_DELAY     5. /**< Time it takes to hyperspace (seconds). */
-#define HYPERSPACE_STARS_BLUR    3. /**< How long the stars blur at max (pixels). */
+#define HYPERSPACE_STARS_BLUR    3. /**< How long it takes for stars to start blurring (seconds). */
 #define HYPERSPACE_STARS_LENGTH  250 /**< Length the stars blur to at max (pixels). */
 #define HYPERSPACE_FADEOUT       1. /**< How long the fade is (seconds). */
 #define HYPERSPACE_FUEL          100.  /**< how much fuel it takes */
@@ -103,20 +103,20 @@
 #define PILOT_LANDING      28 /**< Pilot is landing. */
 #define PILOT_TAKEOFF      29 /**< Pilot is taking off. */
 #define PILOT_DISABLED     30 /**< Pilot is disabled. */
-#define PILOT_DISABLED_PERM 43 /**< Pilot is permanently disabled. */
-#define PILOT_DEAD         31 /**< Pilot is in it's dying throes */
-#define PILOT_DEATH_SOUND  32 /**< Pilot just did death explosion. */
-#define PILOT_EXPLODED     33 /**< Pilot did final death explosion. */
-#define PILOT_DELETE       34 /**< Pilot will get deleted asap. */
-#define PILOT_VISPLAYER    35 /**< Pilot is always visible to the player (only player). */
-#define PILOT_VISIBLE      36 /**< Pilot is always visible to other pilots. */
-#define PILOT_HILIGHT      37 /**< Pilot is hilighted when visible (this does not increase visibility). */
-#define PILOT_INVISIBLE    38 /**< Pilot is invisible to other pilots. */
-#define PILOT_BOARDABLE    39 /**< Pilot can be boarded even while active. */
-#define PILOT_NOJUMP       40 /**< Pilot cannot engage hyperspace engines. */
-#define PILOT_NOLAND       41 /**< Pilot cannot land on stations or planets. */
-#define PILOT_NODEATH      42 /**< Pilot can not die, will stay at 1 armour. */
-#define PILOT_INVINC_PLAYER 43 /**< Pilot can not be hurt by the player. */
+#define PILOT_DISABLED_PERM 31 /**< Pilot is permanently disabled. */
+#define PILOT_DEAD         32 /**< Pilot is in it's dying throes */
+#define PILOT_DEATH_SOUND  33 /**< Pilot just did death explosion. */
+#define PILOT_EXPLODED     34 /**< Pilot did final death explosion. */
+#define PILOT_DELETE       35 /**< Pilot will get deleted asap. */
+#define PILOT_VISPLAYER    36 /**< Pilot is always visible to the player (only player). */
+#define PILOT_VISIBLE      37 /**< Pilot is always visible to other pilots. */
+#define PILOT_HILIGHT      38 /**< Pilot is hilighted when visible (this does not increase visibility). */
+#define PILOT_INVISIBLE    39 /**< Pilot is invisible to other pilots. */
+#define PILOT_BOARDABLE    40 /**< Pilot can be boarded even while active. */
+#define PILOT_NOJUMP       41 /**< Pilot cannot engage hyperspace engines. */
+#define PILOT_NOLAND       42 /**< Pilot cannot land on stations or planets. */
+#define PILOT_NODEATH      43 /**< Pilot can not die, will stay at 1 armour. */
+#define PILOT_INVINC_PLAYER 44 /**< Pilot can not be hurt by the player. */
 #define PILOT_FLAGS_MAX    PILOT_INVINC_PLAYER+1 /* Maximum number of flags. */
 typedef char PilotFlags[ PILOT_FLAGS_MAX ];
 
@@ -417,7 +417,7 @@ unsigned int pilot_getNearestPilot( const Pilot* p );
 double pilot_getNearestPos( const Pilot *p, unsigned int *tp, double x, double y, int disabled );
 double pilot_getNearestAng( const Pilot *p, unsigned int *tp, double ang, int disabled );
 int pilot_getJumps( const Pilot* p );
-glColour* pilot_getColour( const Pilot* p );
+const glColour* pilot_getColour( const Pilot* p );
 
 /* non-lua wrappers */
 double pilot_relsize( const Pilot* cur_pilot, const Pilot* p );

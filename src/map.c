@@ -23,6 +23,8 @@
 #include "dialogue.h"
 #include "gui.h"
 #include "map_find.h"
+#include "array.h"
+#include "mapData.h"
 
 
 #define MAP_WDWNAME     "Star Map" /**< Map window name. */
@@ -288,6 +290,7 @@ static void map_update( unsigned int wid )
    int p;
    glTexture *logo;
    double w;
+   double unknownPresence;
 
    /* Needs map to update. */
    if (!map_isOpen())
@@ -419,16 +422,24 @@ static void map_update( unsigned int wid )
    hasPresence = 0;
    buf[0]      = '\0';
    l           = 0;
+   unknownPresence = 0;
    for (i=0; i < sys->npresence; i++) {
       if (sys->presence[i].value <= 0)
          continue;
       hasPresence = 1;
-      t           = faction_getColourChar(sys->presence[i].faction);
-      /* Use map grey instead of default neutral colour */
-      l += snprintf( &buf[l], PATH_MAX-l, "%s\e0%s: \e%c%.0f",
-                     (l==0)?"":"\n", faction_shortname(sys->presence[i].faction),
-                     (t=='N')?'M':t, sys->presence[i].value);
+      if (faction_isKnown( sys->presence[i].faction )) {
+         t           = faction_getColourChar(sys->presence[i].faction);
+         /* Use map grey instead of default neutral colour */
+         l += snprintf( &buf[l], PATH_MAX-l, "%s\e0%s: \e%c%.0f",
+                        (l==0)?"":"\n", faction_shortname(sys->presence[i].faction),
+                        (t=='N')?'M':t, sys->presence[i].value);
+      }
+      else
+         unknownPresence += sys->presence[i].value;
    }
+   if (unknownPresence != 0)
+      l += snprintf( &buf[l], PATH_MAX-l, "%s\e0%s: \e%c%.0f",
+                     (l==0)?"":"\n", "Unknown", 'M', unknownPresence);
    if (hasPresence == 0)
       snprintf(buf, PATH_MAX, "N/A");
    window_moveWidget( wid, "txtSPresence", x, y );
@@ -728,8 +739,9 @@ void map_renderParams( double bx, double by, double xpos, double ypos,
 void map_renderSystems( double bx, double by, double x, double y,
       double w, double h, double r, int editor)
 {
-   int i,j;
-   glColour *col, c;
+   int i, j, k;
+   const glColour *col, *cole;
+   glColour c;
    GLfloat vertex[8*(2+4)];
    StarSystem *sys, *jsys;
    int sw, sh;
@@ -791,14 +803,32 @@ void map_renderSystems( double bx, double by, double x, double y,
 
       /* draw the hyperspace paths */
       glShadeModel(GL_SMOOTH);
-      col = &cDarkBlue;
       /* first we draw all of the paths. */
-      for (j=0; j<sys->njumps; j++) {
-
+      gl_vboActivateOffset( map_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
+      gl_vboActivateOffset( map_vbo, GL_COLOR_ARRAY,
+            sizeof(GLfloat) * 2*3, 4, GL_FLOAT, 0 );
+      for (j = 0; j < sys->njumps; j++) {
          jsys = sys->jumps[j].target;
-
          if (!space_sysReachableFromSys(jsys,sys) && !editor)
             continue;
+
+         /* Choose colours. */
+         cole = &cBlue;
+         for (k = 0; k < jsys->njumps; k++) {
+            if (jsys->jumps[k].target == sys) {
+               if (jp_isFlag(&jsys->jumps[k], JP_EXITONLY))
+                  cole = &cWhite;
+               else if (jp_isFlag(&jsys->jumps[k], JP_HIDDEN))
+                  cole = &cRed;
+               break;
+            }
+         }
+         if (jp_isFlag(&sys->jumps[j], JP_EXITONLY))
+            col = &cWhite;
+         else if (jp_isFlag(&sys->jumps[j], JP_HIDDEN))
+            col = &cRed;
+         else
+            col = &cBlue;
 
          /* Draw the lines. */
          vertex[0]  = x + sys->pos.x * map_zoom;
@@ -810,22 +840,19 @@ void map_renderSystems( double bx, double by, double x, double y,
          vertex[6]  = col->r;
          vertex[7]  = col->g;
          vertex[8]  = col->b;
-         vertex[9]  = 0.;
-         vertex[10] = col->r;
-         vertex[11] = col->g;
-         vertex[12] = col->b;
-         vertex[13] = col->a;
-         vertex[14] = col->r;
-         vertex[15] = col->g;
-         vertex[16] = col->b;
-         vertex[17] = 0.;
+         vertex[9]  = 0.2;
+         vertex[10] = (col->r + cole->r)/2.;
+         vertex[11] = (col->g + cole->g)/2.;
+         vertex[12] = (col->b + cole->b)/2.;
+         vertex[13] = 0.8;
+         vertex[14] = cole->r;
+         vertex[15] = cole->g;
+         vertex[16] = cole->b;
+         vertex[17] = 0.2;
          gl_vboSubData( map_vbo, 0, sizeof(GLfloat) * 3*(2+4), vertex );
-         gl_vboActivateOffset( map_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
-         gl_vboActivateOffset( map_vbo, GL_COLOR_ARRAY,
-               sizeof(GLfloat) * 2*3, 4, GL_FLOAT, 0 );
          glDrawArrays( GL_LINE_STRIP, 0, 3 );
-         gl_vboDeactivate();
       }
+      gl_vboDeactivate();
       glShadeModel( GL_FLAT );
    }
 }
@@ -837,7 +864,7 @@ void map_renderSystems( double bx, double by, double x, double y,
 static void map_renderPath( double x, double y )
 {
    int j;
-   glColour *col;
+   const glColour *col;
    GLfloat vertex[8*(2+4)];
    StarSystem *jsys, *lsys;
    double fuel;
@@ -896,9 +923,10 @@ static void map_renderPath( double x, double y )
  */
 void map_renderNames( double x, double y, int editor )
 {
-   double tx, ty;
-   StarSystem *sys;
-   int i;
+   double tx,ty, vx,vy, d,n;
+   StarSystem *sys, *jsys;
+   int i, j;
+   char buf[32];
 
    /*
     * Second pass - System names
@@ -915,6 +943,31 @@ void map_renderNames( double x, double y, int editor )
       gl_print( &gl_smallFont,
             tx, ty,
             &cWhite, sys->name );
+
+      /* Raw hidden values if we're in the editor. */
+      if (!editor || (map_zoom <= 1.0))
+         continue;
+      for (j=0; j<sys->njumps; j++) {
+         jsys = sys->jumps[j].target;
+         /* Calculate offset. */
+         vx  = jsys->pos.x - sys->pos.x;
+         vy  = jsys->pos.y - sys->pos.y;
+         n   = sqrt( pow2(vx) + pow2(vy) );
+         vx /= n;
+         vy /= n;
+         d   = MAX(n*0.3*map_zoom, 15);
+         tx  = x + map_zoom*sys->pos.x + d*vx;
+         ty  = y + map_zoom*sys->pos.y + d*vy;
+         /* Display. */
+         n = sys->jumps[j].hide;
+         if (n == 0.)
+            snprintf( buf, sizeof(buf), "\egH: %.1f", n );
+         else
+            snprintf( buf, sizeof(buf), "H: %.1f", n );
+         gl_print( &gl_smallFont,
+               tx, ty,
+               &cGrey70, buf );
+      }
    }
 }
 
@@ -1495,7 +1548,7 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
             if (!sys_isKnown(sys) && !space_sysReachable(sys))
                continue;
          }
-         if (jp->type == 1)
+         if (jp_isFlag( jp, JP_EXITONLY ))
             continue;
 
          neighbour = A_newNode( sys, NULL );
@@ -1556,128 +1609,46 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
  *    @param r Radius (in jumps) to mark as known.
  *    @return 0 on success.
  */
-int map_map( const char* targ_sys, int r )
+int map_map( const Outfit *map )
 {
-   int i, dep;
-   StarSystem *sys, *jsys;
-   SysNode *closed, *open, *cur, *neighbour;
-   Planet *p;
-   JumpPoint *jp;
+   int i;
 
-   A_gc = NULL;
-   open = closed = NULL;
+   for (i=0; i<array_size(map->u.map->systems);i++)
+      sys_setFlag(map->u.map->systems[i], SYSTEM_KNOWN);
 
-   if (targ_sys == NULL) sys = cur_system;
-   else sys = system_get( targ_sys );
-   sys_setFlag(sys,SYSTEM_KNOWN);
-   open = A_newNode( sys, NULL );
-   open->r = 0;
+   for (i=0; i<array_size(map->u.map->assets);i++)
+      planet_setKnown(map->u.map->assets[i]);
 
-   while ((cur = A_lowest(open)) != NULL) {
+   for (i=0; i<array_size(map->u.map->jumps);i++)
+      jp_setFlag(map->u.map->jumps[i], JP_KNOWN);
 
-      /* mark system as known and go to next */
-      sys = cur->sys;
-      dep = cur->r;
-      sys_setFlag(sys,SYSTEM_KNOWN);
-      open = A_rm( open, sys );
-      closed = A_add( closed, cur );
-
-      /* check the planets */
-      for (i=0; i<sys->nplanets; i++) {
-         p = sys->planets[i];
-         if (!planet_isKnown(p) && (p->onMap >= 1))
-            planet_setFlag(p,PLANET_KNOWN);
-      }
-
-      /* check its jumps */
-      for (i=0; i<sys->njumps; i++) {
-
-         jp = &sys->jumps[i];
-
-         /* if jump not on map or is exit only. */
-         if ((jp->onMap <= 0) || (jp->type == 1))
-            continue;
-
-         if (!jp_isKnown(jp))
-             jp_setFlag(jp,JP_KNOWN);
-
-         jsys = jp->target;
-
-         /* System has already been parsed or is too deep or cannot be seen from that jump */
-         if ((A_in(closed,jsys) != NULL) || (dep+1 > r) || (jp->onMap == 1))
-             continue;
-
-         /* create new node and such */
-         neighbour = A_newNode( jsys, NULL );
-         neighbour->r = dep+1;
-         open = A_add( open, neighbour );
-      }
-   }
-
-   A_freeList(A_gc);
-   return 0;
+   return 1;
 }
 
 
 /**
- * @brief Check to see if radius is mapped (known).
+ * @brief Check to see if map data is already mapped (known).
  *
- *    @param targ_sys Name of the system in the center of the "known" circle.
- *    @param r Radius to check (in jumps) if is mapped.
- *    @return 1 if circle was already mapped, 0 if it wasn't.
+ *    @param map Map outfit to check.
+ *    @return 1 if already mapped, 0 if it wasn't.
  */
-int map_isMapped( const char* targ_sys, int r )
+int map_isMapped( const Outfit* map )
 {
-   int i, dep, ret;
-   StarSystem *sys, *jsys;
-   SysNode *closed, *open, *cur, *neighbour;
+   int i;
 
-   A_gc = NULL;
-   open = closed = NULL;
+   for (i=0; i<array_size(map->u.map->systems);i++)
+      if (!sys_isKnown(map->u.map->systems[i]))
+         return 0;
 
-   if (targ_sys == NULL)
-      sys = cur_system;
-   else
-      sys = system_get( targ_sys );
-   open     = A_newNode( sys, NULL );
-   open->r  = 0;
-   ret      = 1;
+   for (i=0; i<array_size(map->u.map->assets);i++)
+      if (!planet_isKnown(map->u.map->assets[i]))
+         return 0;
 
-   while ((cur = A_lowest(open)) != NULL) {
+   for (i=0; i<array_size(map->u.map->jumps);i++)
+      if (!jp_isKnown(map->u.map->jumps[i]))
+         return 0;
 
-      /* Check if system is known. */
-      sys      = cur->sys;
-      dep      = cur->r;
-      if (!sys_isFlag(sys,SYSTEM_KNOWN)) {
-         ret = 0;
-         break;
-      }
-
-      /* We close the current system. */
-      open     = A_rm( open, sys );
-      closed   = A_add( closed, cur );
-
-      /* System is past the limit. */
-      if (dep+1 > r)
-         continue;
-
-      /* check its jumps */
-      for (i=0; i<sys->njumps; i++) {
-         jsys = sys->jumps[i].target;
-
-         /* System has already been parsed. */
-         if (A_in(closed,jsys) != NULL)
-             continue;
-
-         /* create new node and such */
-         neighbour      = A_newNode( jsys, NULL );
-         neighbour->r   = dep+1;
-         open           = A_add( open, neighbour );
-      }
-   }
-
-   A_freeList(A_gc);
-   return ret;
+   return 1;
 }
 
 

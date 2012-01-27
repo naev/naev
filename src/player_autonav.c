@@ -23,6 +23,7 @@ extern double player_acc; /**< Player acceleration. */
 extern int map_npath; /**< @todo remove */
 
 static double tc_mod    = 1.; /**< Time compression modifier. */
+static double tc_base   = 1.; /**< Base compression modifier. */
 static double tc_down   = 0.; /**< Rate of decrement. */
 static int tc_rampdown  = 0; /**< Ramping down time compression? */
 static double lasts;
@@ -49,8 +50,12 @@ void player_autonavStart (void)
    if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
       return;
 
-   if (player.p->nav_hyperspace == -1)
+   if ((player.p->nav_hyperspace == -1) && (player.p->nav_planet== -1))
       return;
+   else if ((player.p->nav_planet != -1) && !player_getHypPreempt()) {
+      player_autonavPnt( cur_system->planets[ player.p->nav_planet ]->name );
+      return;
+   }
 
    if (player.p->fuel < HYPERSPACE_FUEL) {
       player_message("\erNot enough fuel to jump for autonav.");
@@ -78,7 +83,8 @@ static void player_autonavSetup (void)
 {
    player_message("\epAutonav initialized.");
    if (!player_isFlag(PLAYER_AUTONAV)) {
-      tc_mod    = 1.;
+      tc_base   = player_isFlag(PLAYER_DOUBLESPEED) ? 2. : 1.;
+      tc_mod    = tc_base;
       if (conf.compression_mult > 1.)
          player.tc_max = MIN( conf.compression_velocity / solid_maxspeed(player.p->solid, player.p->speed, player.p->thrust), conf.compression_mult );
       else
@@ -130,7 +136,23 @@ void player_autonavPos( double x, double y )
 {
    player_autonavSetup();
    player.autonav    = AUTONAV_POS_APPROACH;
+   player.autonavmsg = "position";
    vect_cset( &player.autonav_pos, x, y );
+}
+
+
+/**
+ * @brief Starts autonav with a planet destination.
+ */
+void player_autonavPnt( char *name )
+{
+   Planet *p;
+
+   p = planet_get( name );
+   player_autonavSetup();
+   player.autonav    = AUTONAV_POS_APPROACH;
+   player.autonavmsg = p->name;
+   vect_cset( &player.autonav_pos, p->pos.x, p->pos.y );
 }
 
 
@@ -184,7 +206,7 @@ static void player_autonav (void)
             player.autonav = AUTONAV_JUMP_BRAKE;
          else if (!tc_rampdown && (map_npath<=1)) {
             vel   = MIN( 1.5*player.p->speed, VMOD(player.p->solid->vel) );
-            t     = d / vel * 1.1;
+            t     = d / vel * (1.2 - .1 * tc_base);
             /* tint is the integral of the time in per time units.
              *
              * tc_mod
@@ -203,10 +225,10 @@ static void player_autonav (void)
              *  tc_mod to 1 during 3 seconds. This can be used then to compare when we want to
              *  start decrementing.
              */
-            tint  = 3. + 0.5*(3.*(tc_mod-1.));
+            tint  = 3. + 0.5*(3.*(tc_mod-tc_base));
             if (t < tint) {
                tc_rampdown = 1;
-               tc_down     = (tc_mod-1.) / 3.;
+               tc_down     = (tc_mod-tc_base) / 3.;
             }
          }
          break;
@@ -224,23 +246,23 @@ static void player_autonav (void)
          /* See if should ramp down. */
          if (!tc_rampdown && (map_npath<=1)) {
             tc_rampdown = 1;
-            tc_down     = (tc_mod-1.) / 3.;
+            tc_down     = (tc_mod-tc_base) / 3.;
          }
          break;
 
       case AUTONAV_POS_APPROACH:
          ret = player_autonavApproach( &player.autonav_pos, &d, 1 );
          if (ret) {
-            player_message( "\epAutonav arrived at position." );
+            player_message( "\epAutonav arrived at %s.", player.autonavmsg );
             player_autonavEnd();
          }
          else if (!tc_rampdown) {
             vel   = MIN( 1.5*player.p->speed, VMOD(player.p->solid->vel) );
-            t     = d / vel * 0.925;
-            tint  = 3. + 0.5*(3.*(tc_mod-1.));
+            t     = d / vel * (1. - 0.075 * tc_base);
+            tint  = 3. + 0.5*(3.*(tc_mod-tc_base));
             if (t < tint) {
                tc_rampdown = 1;
-               tc_down     = (tc_mod-1.) / 3.;
+               tc_down     = (tc_mod-tc_base) / 3.;
             }
          }
          break;
@@ -419,14 +441,14 @@ void player_updateAutonav( double dt )
        */
       /* 5 second deadtime. */
       if (player.p->dtimer_accum < dis_dead)
-         tc_mod = 1.;
+         tc_mod = tc_base;
       else {
          /* Normal. */
          if (player.p->dtimer > (dis_max-1.)*dis_ramp/2.+dis_ramp+dis_dead)
             tc_mod = MIN( dis_max, tc_mod + dis_mod*dt );
          /* Ramp down. */
          else
-            tc_mod = MAX( 1., tc_mod - dis_mod*dt );
+            tc_mod = MAX( tc_base, tc_mod - dis_mod*dt );
       }
       pause_setSpeed( tc_mod );
       return;
@@ -438,8 +460,8 @@ void player_updateAutonav( double dt )
 
    /* Ramping down. */
    if (tc_rampdown) {
-      if (tc_mod != 1.) {
-         tc_mod = MAX( 1., tc_mod-tc_down*dt );
+      if (tc_mod != tc_base) {
+         tc_mod = MAX( tc_base, tc_mod-tc_down*dt );
          pause_setSpeed( tc_mod );
       }
       return;
@@ -449,7 +471,7 @@ void player_updateAutonav( double dt )
    if (tc_mod == player.tc_max)
       return;
    else
-      tc_mod += 0.2 * dt * (player.tc_max-1.);
+      tc_mod += 0.2 * dt * (player.tc_max-tc_base);
    /* Avoid going over. */
    if (tc_mod > player.tc_max)
       tc_mod = player.tc_max;

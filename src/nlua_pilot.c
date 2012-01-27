@@ -555,7 +555,8 @@ static int pilotL_addFleet( lua_State *L )
       ls    = lua_tosystem(L,3);
       ss    = system_getIndex( ls->id );
       for (i=0; i<cur_system->njumps; i++) {
-         if (cur_system->jumps[i].target == ss) {
+         if ((cur_system->jumps[i].target == ss)
+               && !jp_isFlag( jump_getTarget( cur_system, cur_system->jumps[i].target ), JP_EXITONLY )) {
             jump = i;
             break;
          }
@@ -606,7 +607,8 @@ static int pilotL_addFleet( lua_State *L )
       if (cur_system->njumps > 0) {
          jumpind = malloc( sizeof(int) * cur_system->njumps );
          for (i=0; i<cur_system->njumps; i++)
-            if (!ignore_rules && (system_getPresence( cur_system->jumps[i].target, lf.f ) > 0))
+            if (!ignore_rules && (system_getPresence( cur_system->jumps[i].target, lf.f ) > 0) &&
+                  (!jp_isFlag( jump_getTarget( cur_system, cur_system->jumps[i].target ), JP_EXITONLY )))
                jumpind[ njumpind++ ] = i;
       }
 
@@ -2872,7 +2874,7 @@ static int pilotL_cargoList( lua_State *L )
 static int pilotL_getColour( lua_State *L )
 {
    Pilot *p;
-   glColour *col;
+   const glColour *col;
    LuaColour lc;
 
    /* Get the pilot. */

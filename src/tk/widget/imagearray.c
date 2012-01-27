@@ -131,7 +131,8 @@ static void iar_render( Widget* iar, double bx, double by )
    double scroll_pos;
    int xelem, yelem;
    double xspace;
-   glColour *c, *dc, *lc, tc, fontcolour;
+   const glColour *c, *dc, *lc;
+   glColour tc, fontcolour;
    int is_selected;
    int tw;
    double d;

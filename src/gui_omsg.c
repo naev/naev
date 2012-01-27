@@ -35,7 +35,7 @@ typedef struct omsg_s {
    int nlines;       /**< Message lines. */
    double duration;  /**< Time left. */
    int font;         /**< Font to use. */
-   glColour *col;    /**< Colour to use. */
+   const glColour *col;    /**< Colour to use. */
 } omsg_t;
 static omsg_t *omsg_array           = NULL;  /**< Array of messages. */
 static unsigned int omsg_idgen      = 0;     /**< Unique ID generator. */

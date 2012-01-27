@@ -200,14 +200,8 @@ end
 
 -- Handle distress signals
 function distress ( pilot, attacker )
-
    -- Make sure target exists
-   if not ai.exists( attacker ) then
-      return
-   end
-
-   -- Must be aggressive
-   if not mem.aggressive then
+   if not attacker:exists() then
       return
    end
 
@@ -216,13 +210,58 @@ function distress ( pilot, attacker )
       return
    end
 
-   -- If ally, engage offender
-   if ai.isally(pilot) then
-      t = attacker
-   -- If enemy, engage distressed pilot
-   elseif ai.isenemy(pilot) then
-      t = pilot
-   -- Else ignore
+   pid    = pilot:id()
+   aid    = attacker:id()
+   pfact  = pilot:faction()
+   afact  = attacker:faction()
+   aifact = ai.getPilot():faction()
+   p_ally  = aifact:areAllies(pfact)
+   a_ally  = aifact:areAllies(afact)
+   p_enemy = aifact:areEnemies(pfact)
+   a_enemy = aifact:areEnemies(afact)
+
+   -- Ships should always defend their brethren.
+   if pfact == aifact then
+      -- We don't want to cause a complete breakdown in social order.
+      if afact == aifact then
+         return
+      else
+         t = aid
+      end
+   elseif mem.aggressive then
+      -- Aggressive ships follow their brethren into battle!
+      if afact == aifact then
+         t = pid
+      elseif p_ally then
+         -- When your allies are fighting, stay out of it.
+         if a_ally then
+            return
+         end
+
+         -- Victim is an ally, but the attacker isn't.
+         t = aid
+      -- Victim isn't an ally. Attack the victim if the attacker is our ally.
+      elseif a_ally then
+         t = pid
+      elseif p_enemy then
+         -- If they're both enemies, may as well let them destroy each other.
+         if a_enemy then
+            return
+         end
+
+         t = pid
+      elseif a_enemy then
+         t = aid
+      -- We'll be nice and go after the aggressor if the victim is peaceful.
+      elseif not pilot:memoryCheck("aggressive") then
+         t = aid
+      -- An aggressive, neutral ship is fighting another neutral ship. Who cares?
+      else
+         return
+      end
+   -- Non-aggressive ships will flee if their enemies attack neutral or allied vessels.
+   elseif a_enemy and not p_enemy then
+      t = aid
    else
       return
    end
@@ -230,7 +269,11 @@ function distress ( pilot, attacker )
    local task = ai.taskname()
    -- If not attacking nor fleeing, begin attacking
    if task ~= "attack" and task ~= "runaway" then
-      ai.pushtask( "attack", t )
+      if mem.aggressive then
+         ai.pushtask( "attack", t )
+      else
+         ai.pushtask( "runaway", t )
+      end
    -- We're sort of busy
    elseif task == "attack" then
       local target = ai.target()

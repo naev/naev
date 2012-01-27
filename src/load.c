@@ -396,7 +396,7 @@ static void load_menu_load( unsigned int wdw, char *str )
                   "Save game '%s' version does not match Naev version:\n"
                   "   Save version: \er%s\e0\n"
                   "   Naev version: \eD%s\e0\n"
-                  "Are you sure you want to load the game? It may have loss of data.",
+                  "Are you sure you want to load this game? It may lose data.",
                   save, ns[pos].version, naev_version(0) ))
             return;
       }
