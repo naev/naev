@@ -234,9 +234,9 @@ int lua_isjump( lua_State *L, int ind )
  *    - string : Gets the jump by system name. <br/>
  *    - system : Gets the jump by system. <br/>
  *
- * @usage j  = jump.get( "Ogat", "Goddard" ) -- Returns the Ogat to Goddard jump.
+ * @usage j,r  = jump.get( "Ogat", "Goddard" ) -- Returns the Ogat to Goddard and Goddard to Ogat jumps.
  *    @luaparam param See description.
- *    @luareturn Returns the jump and the it belongs to.
+ *    @luareturn Returns the jump and the inverse (where it exits).
  * @luafunc get( param )
  */
 static int jumpL_get( lua_State *L )
@@ -264,7 +264,12 @@ static int jumpL_get( lua_State *L )
          lj.srcid  = a->id;
          lj.destid = b->id;
          lua_pushjump(L, lj);
-         return 1;
+
+         /* The inverse. If it doesn't exist, there are bigger problems. */
+         lj.srcid  = b->id;
+         lj.destid = a->id;
+         lua_pushjump(L, lj);
+         return 2;
       }
    }
    else
