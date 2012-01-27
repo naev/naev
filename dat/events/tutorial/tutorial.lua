@@ -9,6 +9,7 @@ else -- default english
     menutext = "Welcome to the Naev tutorial menu. Please select a tutorial module from the list below:"
 
     menubasic = "Tutorial: Basic Operation"
+    menudiscover = "Tutorial: Exploration and Discovery"
     menuinterstellar = "Tutorial: Interstellar Flight"
     menubasiccombat = "Tutorial: Basic Combat"
     menumisscombat = "Tutorial: Missile Combat"
@@ -35,13 +36,14 @@ function create()
     pp:setNoLand(false)
     pp:setNoJump(false)
     
-    system.get("Mohawk"):setKnown(false)
-    system.get("Cherokee"):setKnown(false)
-    system.get("Iroquois"):setKnown(false)
-    system.get("Navajo"):setKnown(false)
+    system.get("Mohawk"):setKnown(false, true)
+    system.get("Cherokee"):setKnown(false, true)
+    system.get("Iroquois"):setKnown(false, true)
+    system.get("Navajo"):setKnown(false, true)
+    system.get("Sioux"):setKnown(false, true)
 
     -- Create menu.
-    _, selection = tk.choice(menutitle, menutext, menubasic, menuinterstellar, menucomms, menubasiccombat, menumisscombat, menudisable, menuplanet, menumissions, menux)
+    _, selection = tk.choice(menutitle, menutext, menubasic, menudiscover, menuinterstellar, menucomms, menubasiccombat, menumisscombat, menudisable, menuplanet, menumissions, menux)
     
     startModule(selection)
 end

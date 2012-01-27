@@ -918,11 +918,11 @@
   <jumps>
    <jump target="Iroquois">
     <autopos/>
-    <hide>1.600000</hide>
+    <hide>0.010000</hide>
    </jump>
    <jump target="Mohawk">
     <autopos/>
-    <hide>1.600000</hide>
+    <hide>0.010000</hide>
    </jump>
   </jumps>
  </ssys>
@@ -2784,14 +2784,19 @@
   <jumps>
    <jump target="Cherokee">
     <autopos/>
-    <hide>1.600000</hide>
+    <hide>0.010000</hide>
    </jump>
    <jump target="Mohawk">
     <autopos/>
-    <hide>1.600000</hide>
+    <hide>0.010000</hide>
    </jump>
    <jump target="Navajo">
     <autopos/>
+    <hide>0.010000</hide>
+   </jump>
+   <jump target="Sioux">
+    <autopos/>
+    <exitonly/>
     <hide>1.600000</hide>
    </jump>
   </jumps>
@@ -3282,11 +3287,11 @@
   <jumps>
    <jump target="Cherokee">
     <autopos/>
-    <hide>1.600000</hide>
+    <hide>0.010000</hide>
    </jump>
    <jump target="Iroquois">
     <autopos/>
-    <hide>1.600000</hide>
+    <hide>0.010000</hide>
    </jump>
   </jumps>
  </ssys>
@@ -3438,7 +3443,7 @@
   <jumps>
    <jump target="Iroquois">
     <autopos/>
-    <hide>1.600000</hide>
+    <hide>0.010000</hide>
    </jump>
   </jumps>
  </ssys>
@@ -4452,6 +4457,29 @@
     <hide>1.600000</hide>
    </jump>
    <jump target="Alteris">
+    <autopos/>
+    <hide>1.600000</hide>
+   </jump>
+  </jumps>
+ </ssys>
+ <ssys name="Sioux">
+  <general>
+   <radius>14000.000000</radius>
+   <stars>400</stars>
+   <asteroids>0</asteroids>
+   <interference>400.000000</interference>
+   <nebula volatility="0.000000">100.000000</nebula>
+  </general>
+  <pos>
+   <x>-490.000000</x>
+   <y>-141.000000</y>
+  </pos>
+  <assets>
+   <asset>Rein</asset>
+   <asset>Tein</asset>
+  </assets>
+  <jumps>
+   <jump target="Iroquois">
     <autopos/>
     <hide>1.600000</hide>
    </jump>

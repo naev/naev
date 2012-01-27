@@ -12,7 +12,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -33,7 +33,7 @@
   <general>
    <class>P</class>
    <population>100</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -59,7 +59,7 @@
   <general>
    <class>P</class>
    <population>4000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -83,7 +83,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -132,7 +132,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -164,7 +164,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -180,7 +180,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -196,7 +196,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -217,7 +217,7 @@
   <general>
    <class>M</class>
    <population>6000000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -257,7 +257,7 @@
   <general>
    <class>A</class>
    <population>60000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -291,7 +291,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -307,7 +307,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -323,7 +323,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -339,7 +339,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -355,7 +355,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -371,7 +371,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -387,7 +387,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -440,7 +440,7 @@
   <general>
    <class>O</class>
    <population>70000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -476,7 +476,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -497,7 +497,7 @@
   <general>
    <class>O</class>
    <population>450000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -539,7 +539,7 @@
   <general>
    <class>Y</class>
    <population>1000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -579,7 +579,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -595,7 +595,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -611,7 +611,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -674,7 +674,7 @@
   <general>
    <class>M</class>
    <population>9000000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -768,7 +768,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -789,7 +789,7 @@
   <general>
    <class>H</class>
    <population>32000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -822,7 +822,7 @@
   <general>
    <class>Y</class>
    <population>150000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -855,7 +855,7 @@
   <general>
    <class>P</class>
    <population>2000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -895,7 +895,7 @@
   <general>
    <class>A</class>
    <population>600000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land>land_lowclass</land>
     <refuel/>
@@ -921,7 +921,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -937,7 +937,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -985,7 +985,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -1006,7 +1006,7 @@
   <general>
    <class>A</class>
    <population>300000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land>land_lowclass</land>
     <refuel/>
@@ -1061,7 +1061,7 @@
   <general>
    <class>M</class>
    <population>40000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -1121,7 +1121,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -1137,7 +1137,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -1153,7 +1153,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -1206,7 +1206,7 @@
   <general>
    <class>M</class>
    <population>7000000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -1245,7 +1245,7 @@
   <general>
    <class>M</class>
    <population>5000000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -1284,7 +1284,7 @@
   <general>
    <class>M</class>
    <population>17000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -1323,7 +1323,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -1339,7 +1339,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -1400,7 +1400,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -1416,7 +1416,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -1448,7 +1448,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -1469,7 +1469,7 @@
   <general>
    <class>O</class>
    <population>930000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -1502,7 +1502,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -1523,7 +1523,7 @@
   <general>
    <class>H</class>
    <population>20000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -1560,7 +1560,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -1576,7 +1576,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -1608,7 +1608,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -1629,7 +1629,7 @@
   <general>
    <class>O</class>
    <population>200000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -1703,7 +1703,7 @@
   <general>
    <class>M</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land>land_hiclass</land>
     <refuel/>
@@ -1730,7 +1730,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -1778,7 +1778,7 @@
   <general>
    <class>K</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -1839,7 +1839,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -1855,7 +1855,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -1887,7 +1887,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -1952,7 +1952,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -1989,7 +1989,7 @@
   <general>
    <class>O</class>
    <population>4000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land>land_hiclass</land>
     <refuel/>
@@ -2017,7 +2017,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -2033,7 +2033,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -2091,7 +2091,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -2107,7 +2107,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -2123,7 +2123,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -2139,7 +2139,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -2160,7 +2160,7 @@
   <general>
    <class>G</class>
    <population>2000000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -2202,7 +2202,7 @@
   <general>
    <class>A</class>
    <population>40000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -2229,7 +2229,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -2250,7 +2250,7 @@
   <general>
    <class>P</class>
    <population>125000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -2286,7 +2286,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -2302,7 +2302,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -2339,7 +2339,7 @@
   <general>
    <class>M</class>
    <population>7000000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -2374,7 +2374,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -2395,7 +2395,7 @@
   <general>
    <class>M</class>
    <population>8000000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -2433,7 +2433,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -2491,7 +2491,7 @@
   <general>
    <class>M</class>
    <population>2000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -2523,7 +2523,7 @@
   <general>
    <class>P</class>
    <population>1000000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -2558,7 +2558,7 @@
   <general>
    <class>P</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -2574,7 +2574,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -2590,7 +2590,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -2606,7 +2606,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -2638,7 +2638,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -2659,7 +2659,7 @@
   <general>
    <class>A</class>
    <population>1474836480</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land>land_hiclass</land>
     <refuel/>
@@ -2803,7 +2803,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -2824,7 +2824,7 @@
   <general>
    <class>O</class>
    <population>1500000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -2856,7 +2856,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -2872,7 +2872,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -2888,7 +2888,7 @@
   <general>
    <class>J</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
    </services>
@@ -2942,7 +2942,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.000000</hide>
+   <hide>0.200000</hide>
    <services/>
   </general>
  </asset>
@@ -2958,7 +2958,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -2974,7 +2974,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -3011,7 +3011,7 @@
   <general>
    <class>M</class>
    <population>4000000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -3049,7 +3049,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -3086,7 +3086,7 @@
   <general>
    <class>M</class>
    <population>150000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -3170,7 +3170,7 @@
   <general>
    <class>C</class>
    <population>127000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land>land_hiclass</land>
     <refuel/>
@@ -3194,7 +3194,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -3210,7 +3210,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -3226,7 +3226,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -3258,7 +3258,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -3274,7 +3274,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -3295,7 +3295,7 @@
   <general>
    <class>O</class>
    <population>5000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -3332,7 +3332,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -3348,7 +3348,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -3364,7 +3364,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -3408,7 +3408,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -3424,7 +3424,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -3440,7 +3440,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -3492,7 +3492,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -3508,7 +3508,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -3524,7 +3524,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -3561,7 +3561,7 @@
   <general>
    <class>Y</class>
    <population>1500000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -3619,7 +3619,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -3675,7 +3675,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -3691,7 +3691,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -3707,7 +3707,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -3755,7 +3755,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -3771,7 +3771,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -3787,7 +3787,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -3835,7 +3835,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -3856,7 +3856,7 @@
   <general>
    <class>M</class>
    <population>400000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -3924,7 +3924,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -3940,7 +3940,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -3956,7 +3956,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -4009,7 +4009,7 @@
   <general>
    <class>O</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -4073,7 +4073,7 @@
   <general>
    <class>O</class>
    <population>1000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land>land_hiclass</land>
     <refuel/>
@@ -4120,7 +4120,7 @@
   <general>
    <class>M</class>
    <population>6000000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -4157,7 +4157,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -4178,7 +4178,7 @@
   <general>
    <class>H</class>
    <population>3000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -4210,7 +4210,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -4263,7 +4263,7 @@
   <general>
    <class>M</class>
    <population>1000000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -4298,7 +4298,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -4314,7 +4314,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -4335,7 +4335,7 @@
   <general>
    <class>M</class>
    <population>7000000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -4392,7 +4392,7 @@
   <general>
    <class>G</class>
    <population>1000000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -4427,7 +4427,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -4443,7 +4443,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -4475,7 +4475,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -4491,7 +4491,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -4544,7 +4544,7 @@
   <general>
    <class>X</class>
    <population>1000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -4571,7 +4571,7 @@
   <general>
    <class>I</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -4592,7 +4592,7 @@
   <general>
    <class>M</class>
    <population>3000000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land>land_lowclass</land>
     <refuel/>
@@ -4699,7 +4699,7 @@
   <general>
    <class>C</class>
    <population>60000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -4726,7 +4726,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -4742,7 +4742,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -4758,7 +4758,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -4828,7 +4828,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -4915,7 +4915,7 @@
   <general>
    <class>S</class>
    <population>10000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land>land_lowclass</land>
     <refuel/>
@@ -4945,7 +4945,7 @@
   <general>
    <class>M</class>
    <population>4000000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -4998,7 +4998,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -5035,7 +5035,7 @@
   <general>
    <class>H</class>
    <population>12000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -5201,7 +5201,7 @@
   <general>
    <class>A</class>
    <population>1000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -5227,7 +5227,7 @@
   <general>
    <class>G</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land>land_lowclass</land>
     <refuel/>
@@ -5286,7 +5286,7 @@
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -5349,7 +5349,7 @@
   <general>
    <class>M</class>
    <population>9000000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -5427,7 +5427,7 @@
   <general>
    <class>G</class>
    <population>170000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -5460,7 +5460,7 @@
   <general>
    <class>D</class>
    <population>5000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land>land_lowclass</land>
     <refuel/>
@@ -5495,7 +5495,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -5511,7 +5511,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -5527,7 +5527,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -5543,7 +5543,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -5564,7 +5564,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>Y</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land>srm_mil_kataka</land>
     <refuel/>
@@ -5605,7 +5605,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>Y</class>
    <population>5000000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -5640,7 +5640,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -5656,7 +5656,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -5688,7 +5688,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -5720,7 +5720,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -5736,7 +5736,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -5752,7 +5752,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -5768,7 +5768,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -5784,7 +5784,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -5800,7 +5800,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -5821,7 +5821,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>G</class>
    <population>900000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land>land_hiclass</land>
     <refuel/>
@@ -5856,7 +5856,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -5893,7 +5893,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>K</class>
    <population>350000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -5935,7 +5935,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>K</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -5969,7 +5969,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -5985,7 +5985,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -6017,7 +6017,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -6033,7 +6033,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -6049,7 +6049,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -6070,7 +6070,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>M</class>
    <population>6000000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -6129,7 +6129,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>M</class>
    <population>500000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -6208,7 +6208,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>M</class>
    <population>3000000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land>land_hiclass</land>
     <refuel/>
@@ -6265,7 +6265,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>M</class>
    <population>4000000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -6303,7 +6303,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>M</class>
    <population>600000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -6422,7 +6422,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -6438,7 +6438,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -6580,7 +6580,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -6596,7 +6596,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -6612,7 +6612,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -6649,7 +6649,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>1000000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -6684,7 +6684,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -6700,7 +6700,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -6721,7 +6721,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>O</class>
    <population>400000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -6754,7 +6754,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>L</class>
    <population>3000000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land>srs_mil_mutris</land>
     <refuel/>
@@ -6796,7 +6796,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>Y</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -6872,7 +6872,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>H</class>
    <population>200000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -6899,7 +6899,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -6915,7 +6915,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -6931,7 +6931,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -6947,7 +6947,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -6984,7 +6984,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>O</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -7017,7 +7017,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -7038,7 +7038,7 @@ Jorlan's inhabitants are mostly part of the ore refining process, as it supplies
   <general>
    <class>A</class>
    <population>1000000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -7079,7 +7079,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>D</class>
    <population>9000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land>pir_clanworld</land>
     <refuel/>
@@ -7125,7 +7125,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>K</class>
    <population>100000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -7148,7 +7148,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -7222,7 +7222,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -7238,7 +7238,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -7259,7 +7259,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>M</class>
    <population>10000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -7324,7 +7324,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>I</class>
    <population>130000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -7359,7 +7359,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>H</class>
    <population>260000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -7396,7 +7396,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -7412,7 +7412,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -7449,7 +7449,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>M</class>
    <population>812000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -7503,7 +7503,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -7519,7 +7519,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -7535,7 +7535,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -7556,7 +7556,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>H</class>
    <population>20000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -7630,7 +7630,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>O</class>
    <population>700000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -7760,7 +7760,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>X</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -7842,7 +7842,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -7858,7 +7858,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -7874,7 +7874,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>J</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -7890,7 +7890,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -7922,7 +7922,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -7954,7 +7954,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -7970,7 +7970,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -7991,7 +7991,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>M</class>
    <population>100000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -8030,7 +8030,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>G</class>
    <population>65000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -8151,7 +8151,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>S</class>
    <population>50000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -8185,7 +8185,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>K</class>
    <population>500000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -8251,7 +8251,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -8267,7 +8267,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -8366,7 +8366,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>M</class>
    <population>400000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -8409,7 +8409,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>M</class>
    <population>1200000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -8448,7 +8448,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -8480,7 +8480,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -8496,7 +8496,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -8512,7 +8512,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -8528,7 +8528,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -8544,7 +8544,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -8560,7 +8560,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -8576,7 +8576,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -8592,7 +8592,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -8629,7 +8629,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>S</class>
    <population>500000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -8670,7 +8670,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>O</class>
    <population>5000000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -8721,7 +8721,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -8737,7 +8737,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -8753,7 +8753,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -8769,7 +8769,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -8820,7 +8820,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -8907,6 +8907,22 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <item>Basic Outfits 2</item>
   </tech>
  </asset>
+ <asset name="Rein">
+  <pos>
+   <x>2517.471372</x>
+   <y>2266.733993</y>
+  </pos>
+  <GFX>
+   <space>moon-P02.png</space>
+   <exterior>station01.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <hide>0.200000</hide>
+   <services/>
+  </general>
+ </asset>
  <asset name="Rhaana">
   <pos>
    <x>14760.000000</x>
@@ -8919,7 +8935,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -8935,7 +8951,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -8951,7 +8967,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -8967,7 +8983,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -9004,7 +9020,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>M</class>
    <population>100000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -9043,7 +9059,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>H</class>
    <population>50000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -9144,7 +9160,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -9160,7 +9176,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -9491,7 +9507,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -9507,7 +9523,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -9539,7 +9555,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -9555,7 +9571,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -9681,7 +9697,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>P</class>
    <population>27000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -9715,7 +9731,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>M</class>
    <population>7500000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -9751,7 +9767,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -9767,7 +9783,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -9783,7 +9799,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -9877,7 +9893,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>P</class>
    <population>150000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -9912,7 +9928,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -9928,7 +9944,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -9944,7 +9960,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -9976,7 +9992,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -9997,7 +10013,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>L</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -10039,7 +10055,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>M</class>
    <population>2000000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -10081,7 +10097,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>M</class>
    <population>130000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -10229,7 +10245,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>M</class>
    <population>40000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -10261,7 +10277,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -10568,7 +10584,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -10584,7 +10600,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -10636,7 +10652,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -10652,7 +10668,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -10705,7 +10721,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>M</class>
    <population>1000000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -10732,7 +10748,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.000000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -10748,7 +10764,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.000000</hide>
+   <hide>0.200000</hide>
    <services/>
   </general>
  </asset>
@@ -10805,7 +10821,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -10847,7 +10863,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>M</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -10863,7 +10879,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -10897,6 +10913,22 @@ New Dortmund was never very successful in any sense of the term, but it is still
    </commodities>
    <description>Tau Station was constructed with the sole purpose of exploiting the algae produced on Tau Prime. Being a completely oceanic world with a highly corrosive atmosphere, it was deemed more profitable to build an orbiting station, rather than a platform city on the surface. From the station windows you can see heavy algae collectors flying to and from the surface on their endless algae runs.</description>
    <bar>The Tau Prime algae has a powerful odour which pervades the bar. The air is wreathed in the smell, such that you can taste it. It doesn't taste nearly as good unprocessed. Most algae runners stop to grab drinks between runs to try to get the taste of the algae out of their mouth, though the liquors the bar serves happen to be made with processed algae.</bar>
+  </general>
+ </asset>
+ <asset name="Tein">
+  <pos>
+   <x>2132.315563</x>
+   <y>1963.660570</y>
+  </pos>
+  <GFX>
+   <space>X00.png</space>
+   <exterior>desertic4.png</exterior>
+  </GFX>
+  <general>
+   <class>A</class>
+   <population>0</population>
+   <hide>0.080000</hide>
+   <services/>
   </general>
  </asset>
  <asset name="Terminus">
@@ -10948,7 +10980,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>L</class>
    <population>2000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land>land_lowclass</land>
     <refuel/>
@@ -11137,7 +11169,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>D</class>
    <population>100000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -11219,7 +11251,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -11240,7 +11272,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>M</class>
    <population>50000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land>land_hiclass</land>
     <refuel/>
@@ -11282,7 +11314,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>G</class>
    <population>350000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -11316,7 +11348,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>P</class>
    <population>2000000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -11353,7 +11385,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>M</class>
    <population>4000000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -11389,7 +11421,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -11410,7 +11442,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>M</class>
    <population>8500000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -11491,7 +11523,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>M</class>
    <population>2133437257</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land>land_hiclass</land>
     <refuel/>
@@ -11547,7 +11579,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>J</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -11563,7 +11595,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -11584,7 +11616,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>M</class>
    <population>1000000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -11618,7 +11650,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>Y</class>
    <population>10000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -11645,7 +11677,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -11682,7 +11714,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>M</class>
    <population>1500000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -11749,7 +11781,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -11781,7 +11813,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -11797,7 +11829,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -11813,7 +11845,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -11834,7 +11866,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>M</class>
    <population>3100000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -11870,7 +11902,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>K</class>
    <population>400000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land>land_lowclass</land>
     <refuel/>
@@ -11905,7 +11937,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -11926,7 +11958,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>K</class>
    <population>15000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -11955,7 +11987,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.000000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -11971,7 +12003,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.000000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -11987,7 +12019,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -12003,7 +12035,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -12040,7 +12072,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>M</class>
    <population>500000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -12082,7 +12114,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>M</class>
    <population>500000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land>land_hiclass</land>
     <refuel/>
@@ -12150,7 +12182,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -12166,7 +12198,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>H</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -12236,7 +12268,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>P</class>
    <population>40000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -12277,7 +12309,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>M</class>
    <population>5500000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land>land_hiclass</land>
     <refuel/>
@@ -12496,7 +12528,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>P</class>
    <population>4500</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -12526,7 +12558,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -12563,7 +12595,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>Y</class>
    <population>9000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land>pir_clanworld</land>
     <refuel/>
@@ -12609,7 +12641,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>C</class>
    <population>50000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land>land_hiclass</land>
     <refuel/>
@@ -12641,7 +12673,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>4500</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -12662,7 +12694,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>P</class>
    <population>5000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -12695,7 +12727,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>A</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services/>
   </general>
  </asset>
@@ -12748,7 +12780,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>O</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land>srm_mil_restricted</land>
     <refuel/>
@@ -12810,7 +12842,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>P</class>
    <population>50000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -12926,7 +12958,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>M</class>
    <population>15000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -12964,7 +12996,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>M</class>
    <population>0</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
@@ -13050,7 +13082,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   <general>
    <class>M</class>
    <population>13000000</population>
-   <hide>0.020000</hide>
+   <hide>0.080000</hide>
    <services>
     <land/>
     <refuel/>
