@@ -73,15 +73,15 @@ function input(inputname, inputpress)
    end
 end
 
-function discover(discovered)
+function discover(disctype, discovered)
    -- TODO: test for the actual discovered object.
-   if tein:known() and (not rein:known()) and (not jmp:known()) then
+   if disctype == "asset" and discovered == tein then
       tk.msg(title1, message4)
-   elseif tein:known() and rein:known() and (not jmp:known()) then
+   elseif disctype == "asset" and discovered == rein then
       tk.msg(title1, message5)
       system.mrkRm(marker)
       marker = system.mrkAdd("Fly here", jmp:pos())
-   elseif jmp:known() then
+   elseif disctype == "jump" then
       tk.msg(title1, message6)
       tk.msg(title1, message7)
       tk.msg(title1, message8)
