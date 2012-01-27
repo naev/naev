@@ -34,6 +34,7 @@
 #include "nlua_system.h"
 #include "nlua_planet.h"
 #include "map.h"
+#include "map_overlay.h"
 #include "hook.h"
 #include "comm.h"
 #include "land_outfits.h"
@@ -525,6 +526,7 @@ static int playerL_cinematics( lua_State *L )
       /* Do stuff. */
       player_autonavAbort( abort_msg );
       player_rmFlag( PLAYER_DOUBLESPEED );
+      ovr_setOpen(0);
       pause_setSpeed(1.);
 
       if (!f_gui)
