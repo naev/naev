@@ -1289,7 +1289,7 @@ void space_update( const double dt )
             player_message( "You discovered a Jump Point." );
             hparam[0].type  = HOOK_PARAM_STRING;
             hparam[0].u.str = "jump";
-            hparam[1].type  = HOOK_PARAM_ASSET;
+            hparam[1].type  = HOOK_PARAM_JUMP;
             hparam[1].u.lj.srcid = cur_system->id;
             hparam[1].u.lj.destid = cur_system->jumps[i].target->id;
             hparam[4].type  = HOOK_PARAM_SENTINEL;
