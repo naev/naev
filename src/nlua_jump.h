@@ -12,7 +12,7 @@
 #include "space.h"
 
 
-#define JUMP_METATABLE   "jump" /**< System metatable identifier. */
+#define JUMP_METATABLE   "jump" /**< Lua metatable identifier. */
 
 
 /**
@@ -39,5 +39,5 @@ JumpPoint* luaL_validjump( lua_State *L, int ind );
 int lua_isjump( lua_State *L, int ind );
 
 
-#endif /* NLUA_SYSTEM_H */
+#endif /* NLUA_JUMP_H */
 
