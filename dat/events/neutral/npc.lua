@@ -174,7 +174,7 @@ function spawnNPC()
    -- Select a faction for the NPC. NPCs may not have a specific faction.
    local npcname = civ_name
    local factions = {}
-   local sys = nil
+   local func = nil
    for i, _ in pairs(msg_lore) do
       factions[#factions + 1] = i
    end
@@ -204,7 +204,7 @@ function spawnNPC()
       msg = getLoreMessage(fac)
    elseif select <= 0.55 then
       -- Jump point message.
-      msg, sys = getJmpMessage()
+      msg, func = getJmpMessage()
    elseif select <= 0.8 then
       -- Gameplay tip message.
       msg = getTipMessage()
@@ -213,7 +213,7 @@ function spawnNPC()
       msg = getHintMessage()
    end
    
-   local npcdata = {name = npcname, msg = msg, sys = sys}
+   local npcdata = {name = npcname, msg = msg, func = func}
    
    id = evt.npcAdd("talkNPC", npcname, portrait, desc, 10)
    npcs[id] = npcdata
@@ -258,8 +258,11 @@ function getJmpMessage()
    end
    local retmsg =  msg_jmp[rnd.rnd(1, #msg_jmp)]
    local sel = rnd.rnd(1, #mytargets)
+   local myfunc = function()
+                     jump.get(system.cur(), mytargets[sel]):setKnown(true)
+                  end
 
-   return retmsg:format(mytargets[sel]:name()), mytargets[sel]
+   return retmsg:format(mytargets[sel]:name()), myfunc
 end
 
 -- Returns a tip message.
@@ -314,9 +317,9 @@ end
 function talkNPC(id)
    local npcdata = npcs[id]
    
-   if npcdata.sys then
-      -- This is a jump point NPC - update map.
-      jump.get(system.cur(), npcdata.sys):setKnown(true)
+   if npcdata.func then
+      -- Execute NPC specific code
+      npcdata.func()
    end
    
    tk.msg(npcdata.name, "\"" .. npcdata.msg .. "\"")
