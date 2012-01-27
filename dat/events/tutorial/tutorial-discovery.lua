@@ -61,7 +61,7 @@ function create()
    tk.msg(title1, message1)
    tk.msg(title1, message2:format(tutGetKey("overlay")))
 
-   hook.input("input")
+   inhook = hook.input("input")
 end
 
 function input(inputname, inputpress)
@@ -70,6 +70,7 @@ function input(inputname, inputpress)
       marker = system.mrkAdd("Fly here", tein:pos())
       omsg = player.omsgAdd(navomsg, 0)
       hook.discover("discover")
+      hook.rm(inhook)
    end
 end
 
