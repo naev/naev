@@ -35,6 +35,7 @@
 #include "ntime.h"
 #include "hook.h"
 #include "map.h"
+#include "map_overlay.h"
 #include "nfile.h"
 #include "spfx.h"
 #include "unidiff.h"
@@ -732,6 +733,7 @@ void player_cleanup (void)
    /* Clean up gui. */
    gui_cleanup();
    player_guiCleanup();
+   ovr_setOpen(0);
 
    /* clean up the stack */
    for (i=0; i<player_nstack; i++) {
