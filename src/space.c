@@ -1292,7 +1292,7 @@ void space_update( const double dt )
             hparam[1].type  = HOOK_PARAM_JUMP;
             hparam[1].u.lj.srcid = cur_system->id;
             hparam[1].u.lj.destid = cur_system->jumps[i].target->id;
-            hparam[4].type  = HOOK_PARAM_SENTINEL;
+            hparam[2].type  = HOOK_PARAM_SENTINEL;
             hooks_runParam( "discover", hparam );
          }
    }
