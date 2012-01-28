@@ -19,6 +19,7 @@
 #define AUTONAV_JUMP_APPROACH   0 /**< Player is approaching a jump. */
 #define AUTONAV_JUMP_BRAKE      1 /**< Player is braking at a jump. */
 #define AUTONAV_POS_APPROACH   10 /**< Player is going to a position. */
+#define AUTONAV_PNT_APPROACH   11 /**< Player is going to a planet. */
 
 
 void player_thinkAutonav( Pilot *pplayer, double dt );
