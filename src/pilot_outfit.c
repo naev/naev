@@ -817,7 +817,8 @@ void pilot_calcStats( Pilot* pilot )
    /* Energy. */
    pilot->energy_max    = pilot->ship->energy;
    pilot->energy_regen  = pilot->ship->energy_regen;
-   /* Stats. */
+   pilot->energy_loss   = 0.; /* Initially no net loss. */
+   /* Stats. */ 
    memcpy( &pilot->stats, &pilot->ship->stats_array, sizeof(ShipStats) );
    memset( &amount, 0, sizeof(ShipStats) );
 
@@ -890,7 +891,7 @@ void pilot_calcStats( Pilot* pilot )
          pilot->afterburner = pilot->outfits[i]; /* Set afterburner */
       else if (outfit_isJammer(o)) { /* Jammer */
          pilot->jamming        = 1;
-         pilot->energy_regen  -= o->u.jam.energy;
+         pilot->energy_loss   += o->u.jam.energy;
       }
    }
 

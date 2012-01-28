@@ -1561,6 +1561,7 @@ void pilot_update( Pilot* pilot, const double dt )
     */
    pilot->energy += (pilot->energy_max - pilot->energy) *
          (1. - exp( -dt / pilot->energy_tau));
+   pilot->energy -= pilot->energy_loss * dt;
 
    /* Player damage decay. */
    if (pilot->player_damage > 0.)
@@ -1568,9 +1569,8 @@ void pilot_update( Pilot* pilot, const double dt )
    else
       pilot->player_damage = 0.;
 
-   /* check limits */
-   if (pilot->energy > pilot->energy_max)
-      pilot->energy = pilot->energy_max;
+   /* Enforce energy limits. */
+   pilot->energy = CLAMP( 0., pilot->energy_max, pilot->energy );
 
    /* Pilot is board/refueling.  Hack to match speeds. */
    if (pilot_isFlag(pilot, PILOT_REFUELBOARDING))

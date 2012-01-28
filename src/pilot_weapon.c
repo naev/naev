@@ -38,6 +38,8 @@
 #include "weapon.h"
 #include "escort.h"
 
+#include "player.h"
+
 
 /*
  * Prototypes.
@@ -122,6 +124,15 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
                ws->slots[i].slot->state = PILOT_OUTFIT_OFF;
                recalc = 1;
             }
+         }
+         continue;
+      }
+      else if (outfit_isJammer(o)) {
+         can_use = ((o->u.jam.energy < 0.) || !ooe);
+         if ((ws->slots[i].slot->state == PILOT_OUTFIT_OFF) && can_use) {
+            ws->slots[i].slot->state  = PILOT_OUTFIT_ON;
+            ws->slots[i].slot->stimer = outfit_duration( ws->slots[i].slot->outfit );
+            recalc = 1;
          }
          continue;
       }

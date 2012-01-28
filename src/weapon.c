@@ -491,6 +491,7 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
          continue;
       w->jam_power = 0.;
    }
+   /* Iterate over all pilots. */
    for (i=0; i<pilot_nstack; i++) {
       p = pilot_stack[i];
 
@@ -500,14 +501,19 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
 
       /* Iterate over outfits to find jammers. */
       for (j=0; j<p->noutfits; j++) {
-         o    = p->outfits[i]->outfit;
+         o    = p->outfits[j]->outfit;
          if (o==NULL)
             continue;
 
+         /* Must be on. */
+         if (p->outfits[j]->state != PILOT_OUTFIT_ON)
+            continue;
+
+         /* Must be a jammer. */
          if (!outfit_isJammer(o))
             continue;
-     
-         /* Find jammers. */
+    
+         /* Apply jamming. */
          for (k=0; k < *nlayer; k++) {
             w = wlayer[k];
             if (!outfit_isSeeker( w->outfit ))
@@ -518,7 +524,7 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
                continue;
 
             /* We only consider the strongest jammer. */
-            w->jam_power = MAX( w->jam_power, o->u.jam.power );
+            w->jam_power = MIN( 1., MAX( w->jam_power, o->u.jam.power ) );
          }
       }
    }

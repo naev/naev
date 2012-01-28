@@ -298,6 +298,7 @@ typedef struct Pilot_ {
    double energy_max; /**< Maximum energy. */
    double energy_regen; /**< Energy regeneration rate (per second). */
    double energy_tau; /**< Tau regeneration rate for energy. */
+   double energy_loss; /**< Linear loss that bypasses the actual RC circuit stuff. */
 
    /* Electronic warfare. */
    double ew_base_hide; /**< Base static hide factor. */
