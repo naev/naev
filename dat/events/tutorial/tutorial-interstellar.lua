@@ -23,6 +23,8 @@ For now, press %s repeatedly to cycle through the jump points until you no longe
 
 You'll see a button in the lower right that says "Autonav". Clicking this button will automatically make your ship fly to your selected destination. You can also engage the autonav at any time during flight by pressing %s. The autonav will continue to jump until it either reaches its destination, until you run out of fuel or until you come under enemy attack, whichever comes first.
 
+Note that the autonav can also be used to fly to a planet or station. Simply target one and engage the autonav - this has the same effect as right-clicking on it on the map overlay.
+
 Select a hyperspace target and jump to another system.]]
     message6 = [[Well done! You've successfully performed a hyperspace jump to another system. From here you can jump to yet other systems to continue your exploration.
 
