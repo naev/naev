@@ -242,12 +242,12 @@ function getJmpMessage()
    -- Collect a table of jump points in the system the player does NOT know.
    local mytargets = {}
    for _, adjsys in ipairs(system.cur():adjacentSystems()) do
-      local myjump = jump.get(system.cur(), adjsys)
-      if not myjump:known() then
+      local j = jump.get(system.cur(), adjsys)
+      if not j:known() and not j:hidden() and not j:exitonly() then
          mytargets[#mytargets + 1] = adjsys
       end
    end
-   
+
    if #mytargets == 0 then -- The player already knows all jumps in this system.
       return getLoreMessage(), nil
    end
