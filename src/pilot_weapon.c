@@ -190,6 +190,9 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
    PilotWeaponSet *ws;
 
    ws = pilot_weapSet(p,id);
+   /* Case no outfits. */
+   if (ws->slots == NULL)
+      return;
 
    /* Handle fire groups. */
    switch (ws->type) {
