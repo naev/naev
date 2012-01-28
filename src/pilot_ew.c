@@ -96,15 +96,16 @@ double pilot_ewMass( double mass )
 void pilot_updateSensorRange (void)
 {
    /* Calculate the sensor sensor_curRange. */
-   /* 0    ->   5000.0
-    * 250  ->   2222.22222222
-    * 500  ->   1428.57142857
-    * 750  ->   1052.63157895
-    * 1000 ->    833.333333333 */
-   sensor_curRange  = 10000;
-   sensor_curRange /= ((cur_system->interference + 200) / 100.);
+   /* 0    ->   7500.0
+    * 250  ->   3333.33333333
+    * 500  ->   2142.85714285
+    * 750  ->   1578.94736842
+    * 1000 ->   1250.0 */
+   sensor_curRange  = 7500;
+   sensor_curRange /= ((cur_system->interference + 200) / 200.);
 
-   /* Speeds up calculations. */
+   /* Speeds up calculations as we compare it against vectors later on
+    * and we want to avoid actually calculating the sqrt(). */
    sensor_curRange = pow2(sensor_curRange);
 }
 
@@ -119,12 +120,13 @@ void pilot_updateSensorRange (void)
  */
 int pilot_inRange( const Pilot *p, double x, double y )
 {
-   double d;
+   double d, sense;
 
    /* Get distance. */
    d = pow2(x-p->solid->pos.x) + pow2(y-p->solid->pos.y);
 
-   if (d < sensor_curRange)
+   sense = sensor_curRange * p->ew_detect;
+   if (d < sense)
       return 1;
 
    return 0;
@@ -177,15 +179,19 @@ int pilot_inRangePlanet( const Pilot *p, int target )
    if ( p == NULL )
       return 0;
 
-   sense = sensor_curRange * p->ew_detect;
-
    /* Get the planet. */
    pnt = cur_system->planets[target];
+
+   /* target must not be virtual */
+   if ( !pnt->real )
+      return 0;
+
+   sense = sensor_curRange * p->ew_detect;
 
    /* Get distance. */
    d = vect_dist2( &p->solid->pos, &pnt->pos );
 
-   if ( d * pnt->hide * ( 1 + cur_system->interference / 200 ) < sense )
+   if (d * pnt->hide < sense )
       return 1;
 
    return 0;
@@ -213,19 +219,17 @@ int pilot_inRangeJump( const Pilot *p, int i )
    jp = &cur_system->jumps[i];
 
    /* jump point is not exit only */
-   if (jp->type == 0) /* regular */
+   if (!jp_isFlag( jp, JP_HIDDEN ) && !jp_isFlag( jp, JP_EXITONLY )) /* regular */
       sense = sensor_curRange * p->ew_jumpDetect;
-   else if (jp->type == 1) /* exit only */
+   else if (jp_isFlag( jp, JP_HIDDEN ) || jp_isFlag( jp, JP_EXITONLY )) /* exit only */
       return 0;
-   else
-      WARN("Jump point %s in %s has unknown type %d.",jp->target->name,cur_system->name,jp->type);
 
    hide = jp->hide;
 
    /* Get distance. */
    d = vect_dist2( &p->solid->pos, &jp->pos );
 
-   if ( d * hide * ( 1 + cur_system->interference / 200 ) < sense )
+   if (d * hide < sense)
       return 1;
 
    return 0;

@@ -196,7 +196,7 @@ end
 
 function tgt_getPos( tgt )
    if tgt.type == "jump" then
-      return system.cur():jumpPos( tgt.data )
+      return jump.pos(system.cur(), tgt.data)
    else
       return tgt.data:pos()
    end

@@ -277,6 +277,9 @@
      * minimal_planet.png
      * minimal_pilot.png
    * gfx
+     * planet
+       * space
+        * jumpbuoy.png
      * outfit
        * space
          * gatling.png
@@ -507,6 +510,7 @@
        * rhino
          * rhino.png
          * rhino_pirate.png
+
  * Author: bornloser, License: CC-by-sa 3.0
    * gfx
      * ship
@@ -514,3 +518,46 @@
          * phalanx.png
          * phalanx_dvaered.png
          * phalanx_pirate.png
+
+ * Author: Andmiw, License: CC-by-sa 3.0
+   * gfx
+     * planet
+       * space
+         * A04.png
+         * G03.png
+         * H03.png
+         * I02.png
+         * I03.png
+         * I04.png
+         * I05.png
+         * I06.png
+         * I07.png
+         * J05.png
+         * J06.png
+         * J07.png
+         * J08.png
+         * M09.png
+         * O03.png
+         * Moon-D02.png
+         * moon-P03.png
+     * bkg
+       * star
+         * redgiant02.png
+
+ * Author: M. R. Bokhari "Viruk" <withextremeprejudice@gmail.com>, License: CC-by-sa v3
+   * gfx
+     * ship
+       * arx
+         * arx.png
+       * brigand
+         * brigand.png
+       * ira
+         * ira.png
+       * marauder
+         * marauder.png
+       * nyx
+         * nyx.png
+       * odium
+         * odium.png
+       * reaver
+         * reaver.png

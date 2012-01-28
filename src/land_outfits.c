@@ -80,7 +80,8 @@ void outfits_open( unsigned int wid )
    int w, h;
    int iw, ih;
    int bw, bh;
-   glColour *bg, *c, blend;
+   glColour *bg, blend;
+   const glColour *c;
    char **slottype;
    const char *slotname;
 
@@ -156,7 +157,7 @@ void outfits_open( unsigned int wid )
          c = outfit_slotSizeColour( &outfits[i]->slot );
          if (c == NULL)
             c = &cBlack;
-         col_blend( &blend, *c, cGrey70, 0.4 );
+         col_blend( &blend, c, &cGrey70, 0.4 );
          memcpy( &bg[i], &blend, sizeof(glColour) );
 
          /* Get slot name. */
@@ -354,7 +355,7 @@ static int outfit_canBuy( Outfit* outfit, int q, int errmsg )
       return 0;
    }
    /* Map already mapped */
-   else if (outfit_isMap(outfit) && map_isMapped(NULL,outfit->u.map.radius)) {
+   else if (outfit_isMap(outfit) && map_isMapped(outfit)) {
       if (errmsg != 0)
          dialogue_alert( "You already own this map." );
       return 0;

@@ -747,6 +747,7 @@ void pilot_broadcast( Pilot *p, const char *msg, int ignore_int )
 void pilot_distress( Pilot *p, const char *msg, int ignore_int )
 {
    int i, r;
+   double d, range;
    Pilot *t;
 
    /* Broadcast the message. */
@@ -774,12 +775,24 @@ void pilot_distress( Pilot *p, const char *msg, int ignore_int )
 
    /* Now we must check to see if a pilot is in range. */
    for (i=0; i<pilot_nstack; i++) {
-      if ((pilot_stack[i]->id != p->id) &&
-            (!ignore_int && pilot_inRangePilot(p, pilot_stack[i]))) {
+      /* Skip if unsuitable. */
+      if ((pilot_stack[i]->ai == NULL) || (pilot_stack[i]->id == p->id) ||
+            (pilot_isFlag(pilot_stack[i], PILOT_DEAD)))
+         continue;
+
+      if (!ignore_int) {
+         if (!pilot_inRangePilot(p, pilot_stack[i])) {
+            /* Range is 7500 at 0 interference.
+             * Fall-off based on pilot_updateSensorRange()
+             */
+            d     = vect_dist( &p->solid->pos, &pilot_stack[i]->solid->pos );
+            range = 7500. / ((cur_system->interference + 200) / 200.);
+            if (d > range)
+               continue;
+         }
 
          /* Send AI the distress signal. */
-         if (pilot_stack[i]->ai != NULL)
-            ai_getDistress( pilot_stack[i], p );
+         ai_getDistress( pilot_stack[i], p );
 
          /* Check if should take faction hit. */
          if (!areEnemies(p->faction, pilot_stack[i]->faction))
@@ -862,9 +875,9 @@ int pilot_getJumps( const Pilot* p )
  *    @param p Pilot to get colour of.
  *    @return The colour of the pilot.
  */
-glColour* pilot_getColour( const Pilot* p )
+const glColour* pilot_getColour( const Pilot* p )
 {
-   glColour *col;
+   const glColour *col;
 
    if (pilot_inRangePilot(player.p, p) == -1) col = &cMapNeutral;
    else if (pilot_isDisabled(p) || pilot_isFlag(p,PILOT_DEAD)) col = &cInert;
@@ -1047,7 +1060,6 @@ void pilot_updateDisable( Pilot* p, const unsigned int shooter )
    Pilot *pshooter;
    HookParam hparam;
 
-   /* TODO: Remove check for player.p once disable recovery is implemented. */
    if ((!pilot_isFlag(p, PILOT_DISABLED)) &&
        (!pilot_isFlag(p, PILOT_NODISABLE) || (p->armour <= 0.)) &&
        (p->armour <= p->stress)) { /* Pilot should be disabled. */

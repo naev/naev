@@ -41,8 +41,9 @@ function cargo_calculateDistance(routesys, routepos, destsys, destplanet)
         -- So, get the next system on the route, and the distance between our entry point and the jump point to the next system.
         -- Then, set the exit jump point as the next entry point.
         local tempsys = getNextSystem(routesys, destsys)
-        traveldist = traveldist + vec2.dist(routepos, routesys:jumpPos(tempsys))
-        routepos = tempsys:jumpPos(routesys)
+        local j,r = jump.get( routesys, tempsys )
+        traveldist = traveldist + vec2.dist(routepos, j:pos())
+        routepos = r:pos()
         routesys = tempsys
     end
 

@@ -218,6 +218,9 @@ function choose_ambient ()
       elseif factions["Dvaered"] then
          ambient = { "dvaered1", "dvaered2" }
          add_neutral = true
+      elseif factions["Za'lek"] then -- TODO: Have Za'lek faction actually exist in-game.
+         ambient = { "zalek1" }
+         add_neutral = true
       elseif nebu then
          ambient = { "ambient1", "ambient3" }
          add_neutral = true

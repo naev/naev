@@ -45,7 +45,7 @@ void window_addImage( const unsigned int wid,
    wgt->render          = img_render;
    wgt->dat.img.image   = image;
    wgt->dat.img.border  = border;
-   wgt->dat.img.colour  = NULL; /* normal colour */
+   wgt->dat.img.colour  = cWhite; /* normal colour */
 
    /* position/size */
    wgt->w = (w > 0) ? w : ((image==NULL) ? 0 : wgt->dat.img.image->sw);
@@ -80,7 +80,7 @@ static void img_render( Widget* img, double bx, double by )
     * image
     */
    gl_blitScale( img->dat.img.image, x, y,
-         w, h, img->dat.img.colour );
+         w, h, &img->dat.img.colour );
 
    if (img->dat.img.border) {
       /* inner outline (outwards) */
@@ -163,7 +163,7 @@ void window_modifyImage( const unsigned int wid,
  *    @param colour New colour to use.
  */
 void window_imgColour( const unsigned int wid,
-      char* name, glColour* colour )
+      char* name, const glColour* colour )
 {
    Widget *wgt;
 
@@ -179,6 +179,6 @@ void window_imgColour( const unsigned int wid,
    }
 
    /* Set the colour. */
-   wgt->dat.img.colour = colour;
+   wgt->dat.img.colour = *colour;
 }
 

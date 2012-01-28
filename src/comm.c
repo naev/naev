@@ -281,7 +281,7 @@ static unsigned int comm_open( glTexture *gfx, int faction,
    glTexture *logo;
    char *stand;
    unsigned int wid;
-   glColour *c;
+   const glColour *c;
    glFont *font;
    int gw, gh;
    double aspect;

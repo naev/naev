@@ -29,6 +29,7 @@ void player_autonavAbort( const char *reason );
 int player_shouldAbortAutonav( int damaged );
 void player_autonavStartWindow( unsigned int wid, char *str);
 void player_autonavPos( double x, double y );
+void player_autonavPnt( char *name );
 
 
 #endif /* PLAYER_AUTONAV_H */

@@ -2727,7 +2727,7 @@ static int aiL_hyperspace( lua_State *L )
  */
 static int aiL_nearhyptarget( lua_State *L )
 {
-   JumpPoint *jp;
+   JumpPoint *jp, *jiter;
    double mindist, dist;
    int i, j;
    LuaVector lv;
@@ -2742,9 +2742,14 @@ static int aiL_nearhyptarget( lua_State *L )
    jp      = NULL;
    j       = 0;
    for (i=0; i <cur_system->njumps; i++) {
-      dist  = vect_dist2( &cur_pilot->solid->pos, &cur_system->jumps[i].pos );
+      jiter = &cur_system->jumps[i];
+      /* We want only standard jump points to be used. */
+      if (jp_isFlag(jiter, JP_HIDDEN) || jp_isFlag(jiter, JP_EXITONLY))
+         continue;
+      /* Get nearest distance. */
+      dist  = vect_dist2( &cur_pilot->solid->pos, &jiter->pos );
       if (dist < mindist) {
-         jp       = &cur_system->jumps[i];
+         jp       = jiter;
          mindist  = dist;
          j        = i;
       }
@@ -2775,7 +2780,7 @@ static int aiL_nearhyptarget( lua_State *L )
  */
 static int aiL_rndhyptarget( lua_State *L )
 {
-   JumpPoint **jumps;
+   JumpPoint **jumps, *jiter;
    int i, j, r;
    LuaVector lv;
    int *id;
@@ -2790,8 +2795,12 @@ static int aiL_rndhyptarget( lua_State *L )
    id    = malloc( sizeof(int) * cur_system->njumps );
    j = 0;
    for (i=0; i < cur_system->njumps; i++) {
+      jiter = &cur_system->jumps[i];
+      /* We want only standard jump points to be used. */
+      if (jp_isFlag(jiter, JP_HIDDEN) || jp_isFlag(jiter, JP_EXITONLY))
+         continue;
       id[j]      = i;
-      jumps[j++] = &cur_system->jumps[i];
+      jumps[j++] = jiter;
    }
 
    /* Choose random jump point. */

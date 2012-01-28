@@ -215,6 +215,10 @@ function distress ( pilot, attacker )
    pfact  = pilot:faction()
    afact  = attacker:faction()
    aifact = ai.getPilot():faction()
+   p_ally  = aifact:areAllies(pfact)
+   a_ally  = aifact:areAllies(afact)
+   p_enemy = aifact:areEnemies(pfact)
+   a_enemy = aifact:areEnemies(afact)
 
    -- Ships should always defend their brethren.
    if pfact == aifact then
@@ -228,24 +232,35 @@ function distress ( pilot, attacker )
       -- Aggressive ships follow their brethren into battle!
       if afact == aifact then
          t = pid
-      elseif pfact:areAllies(aifact) then
+      elseif p_ally then
          -- When your allies are fighting, stay out of it.
-         if afact:areAllies(aifact) then
+         if a_ally then
             return
-         -- Victim is an ally, but the attacker isn't.
-         else
-            t = aid
          end
-      -- We already know the victim isn't an ally.
-      elseif afact:areAllies(aifact) or pfact:areEnemies(aifact) and not afact:areEnemies(aifact) then
+
+         -- Victim is an ally, but the attacker isn't.
+         t = aid
+      -- Victim isn't an ally. Attack the victim if the attacker is our ally.
+      elseif a_ally then
          t = pid
-      -- The victim and attacker are now guaranteed to be neutral.
+      elseif p_enemy then
+         -- If they're both enemies, may as well let them destroy each other.
+         if a_enemy then
+            return
+         end
+
+         t = pid
+      elseif a_enemy then
+         t = aid
       -- We'll be nice and go after the aggressor if the victim is peaceful.
       elseif not pilot:memoryCheck("aggressive") then
          t = aid
+      -- An aggressive, neutral ship is fighting another neutral ship. Who cares?
+      else
+         return
       end
    -- Non-aggressive ships will flee if their enemies attack neutral or allied vessels.
-   elseif afact:areEnemies(aifact) and not pfact:areEnemies(aifact) then
+   elseif a_enemy and not p_enemy then
       t = aid
    else
       return

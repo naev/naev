@@ -128,6 +128,18 @@ else --default english
                                "Afterburners only work when you activate them. While they're inactive all they do is slow you down!"
                               }
 
+   -- Jump point messages.
+   -- For giving the location of a jump point in the current system to the player for free.
+   -- All messages must contain exactly one %s, this is the name of the target system.
+   -- ALL NPCs have a chance to say one of these lines instead of a lore message.
+   -- So, make sure the tips are always faction neutral.
+   msg_jmp =                  {"Hi there, traveler. Is your system map up to date? Just in case you didn't know already, let me give you the location of the jump from here to %s. I hope that helps.",
+                               "Quite a lot of people who come in here complain that they don't know how to get to %s. I travel there often, so I know exactly where the jump point is. Here, let me show you.",
+                               "So you're still getting to know about this area, huh? Tell you what, I'll give you the coordinates of the jump to %s. Check your map next time you take off!",
+                               "True fact, there's a direct jump from here to %s. Want to know where it is? It'll cost you! Ha ha, just kidding. Here you go, I've added it to your map.",
+                               "There's a system just one jump away by the name of %s. I can tell you where the jump point is. There, I've updated your map. Don't mention it."
+                              }
+
    -- Mission hint messages. Each element should be a table containing the mission name and the corresponding hint.
    -- ALL NPCs have a chance to say one of these lines instead of a lore message.
    -- So, make sure the hints are always faction neutral.
@@ -162,6 +174,7 @@ function spawnNPC()
    -- Select a faction for the NPC. NPCs may not have a specific faction.
    local npcname = civ_name
    local factions = {}
+   local func = nil
    for i, _ in pairs(msg_lore) do
       factions[#factions + 1] = i
    end
@@ -186,10 +199,13 @@ function spawnNPC()
    -- Select what this NPC should say.
    select = rnd.rnd()
    local msg
-   if select <= 0.4 then
+   if select <= 0.3 then
       -- Lore message.
       msg = getLoreMessage(fac)
-   elseif select <= 0.7 then
+   elseif select <= 0.55 then
+      -- Jump point message.
+      msg, func = getJmpMessage()
+   elseif select <= 0.8 then
       -- Gameplay tip message.
       msg = getTipMessage()
    else
@@ -197,7 +213,7 @@ function spawnNPC()
       msg = getHintMessage()
    end
    
-   local npcdata = {name = npcname, msg = msg}
+   local npcdata = {name = npcname, msg = msg, func = func}
    
    id = evt.npcAdd("talkNPC", npcname, portrait, desc, 10)
    npcs[id] = npcdata
@@ -219,6 +235,33 @@ function getLoreMessage(fac)
    local pick = facmsg[select]
    table.remove(facmsg, select)
    return pick
+end
+
+-- Returns a jump point message and updates jump point known status accordingly. If all jumps are known by the player, defaults to a lore message.
+function getJmpMessage()
+   -- Collect a table of jump points in the system the player does NOT know.
+   local mytargets = {}
+   for _,j in ipairs(system.cur():jumps(true)) do
+      if not j:known() and not j:hidden() then
+         table.insert(mytargets, j)
+      end
+   end
+
+   if #mytargets == 0 then -- The player already knows all jumps in this system.
+      return getLoreMessage(), nil
+   end
+   
+   -- All jump messages are valid always.
+   if #msg_jmp == 0 then
+      return getLoreMessage(), nil
+   end
+   local retmsg =  msg_jmp[rnd.rnd(1, #msg_jmp)]
+   local sel = rnd.rnd(1, #mytargets)
+   local myfunc = function()
+                     mytargets[sel]:setKnown(true)
+                  end
+
+   return retmsg:format(mytargets[sel]:dest():name()), myfunc
 end
 
 -- Returns a tip message.
@@ -273,7 +316,12 @@ end
 function talkNPC(id)
    local npcdata = npcs[id]
    
-   tk.msg(npcdata["name"], "\"" .. npcdata["msg"] .. "\"")
+   if npcdata.func then
+      -- Execute NPC specific code
+      npcdata.func()
+   end
+   
+   tk.msg(npcdata.name, "\"" .. npcdata.msg .. "\"")
 end
 
 --[[

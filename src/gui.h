@@ -47,7 +47,7 @@ void gui_setGeneric ( Pilot* pilot );
  */
 void gui_renderReticles( double dt );
 void gui_render( double dt );
-void gui_renderTargetReticles( int x, int y, int w, int h, glColour* c );
+void gui_renderTargetReticles( int x, int y, int w, int h, const glColour* c );
 void gui_forceBlink (void);
 
 /*

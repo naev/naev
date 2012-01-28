@@ -35,6 +35,7 @@
 #include "ntime.h"
 #include "hook.h"
 #include "map.h"
+#include "map_overlay.h"
 #include "nfile.h"
 #include "spfx.h"
 #include "unidiff.h"
@@ -732,6 +733,7 @@ void player_cleanup (void)
    /* Clean up gui. */
    gui_cleanup();
    player_guiCleanup();
+   ovr_setOpen(0);
 
    /* clean up the stack */
    for (i=0; i<player_nstack; i++) {
@@ -1268,6 +1270,7 @@ void player_targetPlanetSet( int id )
 
    old = player.p->nav_planet;
    player.p->nav_planet = id;
+   player_hyperspacePreempt(0);
    if (old != id) {
       player_rmFlag(PLAYER_LANDACK);
       if (id >= 0)
@@ -1293,10 +1296,10 @@ void player_targetPlanet (void)
    id = player.p->nav_planet+1;
    player_hyperspacePreempt(0);
    while (id < cur_system->nplanets) {
-
       /* In range, target planet. */
-      if ((cur_system->planets[ id ]->real == ASSET_REAL)
-            && pilot_inRangePlanet( player.p, id )) {
+      if (planet_isKnown( cur_system->planets[id] )) {
+         if ((cur_system->planets[ id ]->real != ASSET_REAL))
+            DEBUG("Well, shit.");
          player_targetPlanetSet( id );
          return;
       }
@@ -1469,6 +1472,7 @@ void player_targetHyperspaceSet( int id )
 
    old = player.p->nav_hyperspace;
    player.p->nav_hyperspace = id;
+   player_hyperspacePreempt(1);
    if ((old != id) && (id >= 0))
       player_soundPlayGUI(snd_nav,1);
    gui_setNav();
@@ -1480,7 +1484,7 @@ void player_targetHyperspaceSet( int id )
  */
 void player_targetHyperspace (void)
 {
-   int id;
+   int id, i;
 
    /* Not under manual control. */
    if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
@@ -1493,8 +1497,16 @@ void player_targetHyperspace (void)
       id = -1;
       player_hyperspacePreempt(0);
    }
-   else
-      player_hyperspacePreempt(1);
+   else {
+      for (i=id; i<cur_system->njumps; i++) {
+         if (jp_isKnown( &cur_system->jumps[i])) {
+            id = i;
+            break;
+         }
+         else
+            id = -1;
+      }
+   }
 
    player_targetHyperspaceSet( id );
 
@@ -1505,6 +1517,7 @@ void player_targetHyperspace (void)
       map_select( cur_system->jumps[ id ].target, 0 );
 }
 
+
 /**
  * @brief Enables or disables jump points preempting planets in autoface and target clearing.
  *
@@ -1514,6 +1527,18 @@ void player_hyperspacePreempt( int preempt )
 {
    preemption = preempt;
 }
+
+
+/**
+ * @brief Returns whether the jump point target should preempt the planet target.
+ *
+ *    @return Boolean; 1 preempts planet target.
+ */
+int player_getHypPreempt(void)
+{
+   return preemption;
+}
+
 
 /**
  * @brief Starts the hail sounds and aborts autoNav
@@ -1649,7 +1674,7 @@ void player_brokeHyperspace (void)
    /* Disable autonavigation if arrived. */
    if (player_isFlag(PLAYER_AUTONAV)) {
       if (player.p->nav_hyperspace == -1) {
-         player_message( "\epAutonav arrived at destination.");
+         player_message( "\epAutonav arrived at the %s system.", cur_system->name);
          player_autonavEnd();
       }
       else {
@@ -2295,7 +2320,7 @@ int player_outfitOwned( const Outfit* o )
 
    /* Special case map. */
    if ((outfit_isMap(o)) &&
-         map_isMapped( NULL, o->u.map.radius ))
+         map_isMapped(o))
       return 1;
 
    /* Special case license. */
@@ -2389,7 +2414,7 @@ int player_addOutfit( const Outfit *o, int quantity )
 
    /* special case if it's a map */
    if (outfit_isMap(o)) {
-      map_map(NULL,o->u.map.radius);
+      map_map(o);
       return 1; /* Success. */
    }
    /* special case if it's an outfit */
@@ -2804,7 +2829,6 @@ int player_save( xmlTextWriterPtr writer )
    return 0;
 }
 
-
 /**
  * @brief Saves an outfit slot.
  */
@@ -2943,7 +2967,6 @@ static int player_saveShip( xmlTextWriterPtr writer,
 
    return 0;
 }
-
 
 /**
  * @brief Loads the player stuff.

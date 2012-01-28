@@ -16,6 +16,10 @@
   <lua>tutorial/tutorial-basic</lua>
   <trigger>none</trigger>
  </event>
+ <event name="Tutorial: Exploration and Discovery">
+  <lua>tutorial/tutorial-discovery</lua>
+  <trigger>none</trigger>
+ </event>
  <event name="Tutorial: Interstellar Flight">
   <lua>tutorial/tutorial-interstellar</lua>
   <trigger>none</trigger>

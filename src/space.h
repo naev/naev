@@ -106,7 +106,6 @@ typedef struct Planet_ {
    int presenceRange; /**< The range of presence exertion of this asset. */
    int real; /**< If the asset is tangible or not. */
    double hide; /**< The ewarfare hide value for an asset. */
-   int onMap; /**< If the asset is on maps or not. */
 
    /* Landing details. */
    int land_override; /**< Forcibly allows the player to either be able to land or not (+1 is land, -1 is not, 0 otherwise). */
@@ -187,10 +186,12 @@ typedef struct SystemPresence_ {
  */
 #define JP_AUTOPOS      (1<<0) /**< Automatically position jump point based on system radius. */
 #define JP_KNOWN        (1<<1) /**< Jump point is known. */
-#define jp_isKnown(j)     jp_isFlag(j,JP_KNOWN) /**< Checks if jump is known. */
+#define JP_HIDDEN       (1<<2) /**< Jump point is hidden. */
+#define JP_EXITONLY     (1<<3) /**< Jump point is exit only */
 #define jp_isFlag(j,f)    ((j)->flags & (f)) /**< Checks jump flag. */
 #define jp_setFlag(j,f)   ((j)->flags |= (f)) /**< Sets a jump flag. */
-#define jp_rmFlag(j,f)    ((j)->flags &= ~(f)) /**< Removes a system flag. */
+#define jp_rmFlag(j,f)    ((j)->flags &= ~(f)) /**< Removes a jump flag. */
+#define jp_isKnown(j)     jp_isFlag(j,JP_KNOWN) /**< Checks if jump is known. */
 
 
 
@@ -203,9 +204,7 @@ typedef struct JumpPoint_ {
    Vector2d pos; /**< Position in the system. */
    double radius; /**< Radius of jump range. */
    unsigned int flags; /**< Flags related to the jump point's status. */
-   int type; /**< Type of Jump Point */
    double hide; /**< ewarfare hide value for the jump point */
-   int onMap; /**< Whether the jump point is on maps */
    double angle; /**< Direction the jump is facing. */
    double cosa; /**< Cosinus of the angle. */
    double sina; /**< Sinus of the angle. */
@@ -290,6 +289,7 @@ char* planet_getSystem( const char* planetname );
 Planet* planet_getAll( int *n );
 Planet* planet_get( const char* planetname );
 Planet* planet_getIndex( int ind );
+void planet_setKnown( Planet *p );
 int planet_index( const Planet *p );
 int planet_exists( const char* planetname );
 const char *planet_existsCase( const char* planetname );
@@ -301,13 +301,14 @@ PlanetClass planetclass_get( const char a );
 credits_t planet_commodityPrice( const Planet *p, const Commodity *c );
 /* Land related stuff. */
 char planet_getColourChar( Planet *p );
-glColour* planet_getColour( Planet *p );
+const glColour* planet_getColour( Planet *p );
 void planet_updateLand( Planet *p );
 
 /*
  * jump stuff
  */
-JumpPoint* jump_get( const char* jumpname, StarSystem* sys );
+JumpPoint* jump_get( const char* jumpname, const StarSystem* sys );
+JumpPoint* jump_getTarget( StarSystem* target, const StarSystem* sys );
 
 /*
  * system adding/removing stuff.
@@ -376,7 +377,7 @@ int space_rmMarker( int sys, SysMarker type );
 void space_clearKnown (void);
 void space_clearMarkers (void);
 void space_clearComputerMarkers (void);
-int system_hasPlanet( StarSystem *sys );
+int system_hasPlanet( const StarSystem *sys );
 
 
 /*
