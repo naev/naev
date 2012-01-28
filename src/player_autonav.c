@@ -150,9 +150,27 @@ void player_autonavPnt( char *name )
 
    p = planet_get( name );
    player_autonavSetup();
-   player.autonav    = AUTONAV_POS_APPROACH;
+   player.autonav    = AUTONAV_PNT_APPROACH;
    player.autonavmsg = p->name;
    vect_cset( &player.autonav_pos, p->pos.x, p->pos.y );
+}
+
+
+/**
+ * @brief Handles common time accel ramp-down for autonav to positions and planets.
+ */
+static void player_autonavRampdown( double d )
+{
+   double t, tint;
+   double vel;
+
+   vel   = MIN( 1.5*player.p->speed, VMOD(player.p->solid->vel) );
+   t     = d / vel * (1. - 0.075 * tc_base);
+   tint  = 3. + 0.5*(3.*(tc_mod-tc_base));
+   if (t < tint) {
+      tc_rampdown = 1;
+      tc_down     = (tc_mod-tc_base) / 3.;
+   }
 }
 
 
@@ -253,18 +271,22 @@ static void player_autonav (void)
       case AUTONAV_POS_APPROACH:
          ret = player_autonavApproach( &player.autonav_pos, &d, 1 );
          if (ret) {
-            player_message( "\epAutonav arrived at %s.", player.autonavmsg );
+            player_message( "\epAutonav arrived at position." );
             player_autonavEnd();
          }
-         else if (!tc_rampdown) {
-            vel   = MIN( 1.5*player.p->speed, VMOD(player.p->solid->vel) );
-            t     = d / vel * (1. - 0.075 * tc_base);
-            tint  = 3. + 0.5*(3.*(tc_mod-tc_base));
-            if (t < tint) {
-               tc_rampdown = 1;
-               tc_down     = (tc_mod-tc_base) / 3.;
-            }
+         else if (!tc_rampdown)
+            player_autonavRampdown(d);
+         break;
+      case AUTONAV_PNT_APPROACH:
+         ret = player_autonavApproach( &player.autonav_pos, &d, 1 );
+         if (ret) {
+            player_message( "\epAutonav arrived at \e%c%s\e\0.",
+                  planet_getColourChar( planet_get(player.autonavmsg) ),
+                  player.autonavmsg );
+            player_autonavEnd();
          }
+         else if (!tc_rampdown)
+            player_autonavRampdown(d);
          break;
    }
 }
