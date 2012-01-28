@@ -1325,7 +1325,7 @@ void pilot_renderOverlay( Pilot* p, const double dt )
  */
 void pilot_update( Pilot* pilot, const double dt )
 {
-   int i, n;
+   int i, nchg;
    unsigned int l;
    Pilot *target;
    double a, px,py, vx,vy;
@@ -1355,10 +1355,10 @@ void pilot_update( Pilot* pilot, const double dt )
    for (i=0; i<MAX_AI_TIMERS; i++)
       if (pilot->timer[i] > 0.)
          pilot->timer[i] -= dt;
-   n = 0;
    /* Update heat. */
    a = -1.;
    Q = 0.;
+   nchg = 0; /* Number of outfits that change state, processed at the end. */
    for (i=0; i<pilot->noutfits; i++) {
       o = pilot->outfits[i];
 
@@ -1379,11 +1379,11 @@ void pilot_update( Pilot* pilot, const double dt )
             if (o->state == PILOT_OUTFIT_ON) {
                o->stimer = outfit_cooldown( o->outfit );
                o->state  = PILOT_OUTFIT_COOLDOWN;
-               n++;
+               nchg++;
             }
             else if (o->state == PILOT_OUTFIT_COOLDOWN) {
                o->state  = PILOT_OUTFIT_OFF;
-               n++;
+               nchg++;
             }
          }
       }
@@ -1394,10 +1394,6 @@ void pilot_update( Pilot* pilot, const double dt )
       /* Handle lockons. */
       pilot_lockUpdateSlot( pilot, o, target, &a, dt );
    }
-
-   /* Must recalculate stats because something changed state. */
-   if (n > 0)
-      pilot_calcStats( pilot );
 
    /* Global heat. */
    pilot_heatUpdateShip( pilot, Q, dt );
@@ -1562,15 +1558,31 @@ void pilot_update( Pilot* pilot, const double dt )
    pilot->energy += (pilot->energy_max - pilot->energy) *
          (1. - exp( -dt / pilot->energy_tau));
    pilot->energy -= pilot->energy_loss * dt;
+   if (pilot->energy > pilot->energy_max)
+      pilot->energy = pilot->energy_max;
+   else if (pilot->energy < 0.) {
+      pilot->energy = 0.;
+      /* Stop all on outfits. */
+      for (i=0; i<pilot->noutfits; i++) {
+         o = pilot->outfits[i];
+         /* Picky about our outfits. */
+         if (o->outfit == NULL)
+            continue;
+         if (!o->active)
+            continue;
+         if (o->state == PILOT_OUTFIT_ON) {
+            o->stimer = outfit_cooldown( o->outfit );
+            o->state  = PILOT_OUTFIT_COOLDOWN;
+            nchg++;
+         }
+      }
+   }
 
    /* Player damage decay. */
    if (pilot->player_damage > 0.)
       pilot->player_damage -= dt * PILOT_HOSTILE_DECAY;
    else
       pilot->player_damage = 0.;
-
-   /* Enforce energy limits. */
-   pilot->energy = CLAMP( 0., pilot->energy_max, pilot->energy );
 
    /* Pilot is board/refueling.  Hack to match speeds. */
    if (pilot_isFlag(pilot, PILOT_REFUELBOARDING))
@@ -1631,6 +1643,10 @@ void pilot_update( Pilot* pilot, const double dt )
    pilot->solid->update( pilot->solid, dt );
    gl_getSpriteFromDir( &pilot->tsx, &pilot->tsy,
          pilot->ship->gfx_space, pilot->solid->dir );
+
+   /* Must recalculate stats because something changed state. */
+   if (nchg > 0)
+      pilot_calcStats( pilot );
 }
 
 
