@@ -28,6 +28,8 @@ static JumpPoint* luaL_validjumpSystem( lua_State *L, int ind, StarSystem **sys 
 static int jumpL_get( lua_State *L );
 static int jumpL_eq( lua_State *L );
 static int jumpL_position( lua_State *L );
+static int jumpL_hidden( lua_State *L );
+static int jumpL_exitonly( lua_State *L );
 static int jumpL_system( lua_State *L );
 static int jumpL_dest( lua_State *L );
 static int jumpL_isKnown( lua_State *L );
@@ -36,6 +38,8 @@ static const luaL_reg jump_methods[] = {
    { "get", jumpL_get },
    { "__eq", jumpL_eq },
    { "pos", jumpL_position },
+   { "hidden", jumpL_hidden },
+   { "exitonly", jumpL_exitonly },
    { "system", jumpL_system },
    { "dest", jumpL_dest },
    { "known", jumpL_isKnown },
@@ -46,6 +50,8 @@ static const luaL_reg jump_cond_methods[] = {
    { "get", jumpL_get },
    { "__eq", jumpL_eq },
    { "pos", jumpL_position },
+   { "hidden", jumpL_hidden },
+   { "exitonly", jumpL_exitonly },
    { "system", jumpL_system },
    { "dest", jumpL_dest },
    { "known", jumpL_isKnown },
@@ -313,6 +319,40 @@ static int jumpL_position( lua_State *L )
    jp = luaL_validjump(L,1);
    vectcpy(&v.vec, &jp->pos);
    lua_pushvector(L, v);
+   return 1;
+}
+
+
+/**
+ * @brief Checks whether a jump is hidden.
+ *
+ * @usage if not j:hidden() then -- Exclude hidden jumps.
+ *    @luaparam j Jump to get the hidden status of.
+ *    @luareturn Whether the jump is hidden.
+ * @luafunc hidden( j )
+ */
+static int jumpL_hidden( lua_State *L )
+{
+   JumpPoint *jp;
+   jp = luaL_validjump(L,1);
+   lua_pushboolean(L, jp_isFlag(jp, JP_HIDDEN) );
+   return 1;
+}
+
+
+/**
+ * @brief Checks whether a jump is exit-only.
+ *
+ * @usage if jump.exitonly("Eneguoz", "Zied") then -- The jump point in Eneguoz cannot be entered.
+ *    @luaparam j Jump to get the exit-only status of.
+ *    @luareturn Whether the jump is exit-only.
+ * @luafunc exitonly( j )
+ */
+static int jumpL_exitonly( lua_State *L )
+{
+   JumpPoint *jp;
+   jp = luaL_validjump(L,1);
+   lua_pushboolean(L, jp_isFlag(jp, JP_EXITONLY) );
    return 1;
 }
 
