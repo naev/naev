@@ -1565,7 +1565,7 @@
    <thrust>0</thrust>
    <turn>35</turn>
    <speed>550</speed>
-   <resist>7</resist>
+   <resist>10</resist>
    <damage>
     <type>impact</type>
     <penetrate>10</penetrate>
@@ -1648,7 +1648,7 @@
    <thrust>0</thrust>
    <turn>30</turn>
    <speed>400</speed>
-   <resist>10</resist>
+   <resist>20</resist>
    <damage>
     <type>impact</type>
     <penetrate>20</penetrate>
@@ -1707,7 +1707,6 @@
    <duration blowup="armour">1.5</duration>
    <thrust>1200</thrust>
    <speed>1800</speed>
-   <resist>100</resist>
    <damage>
     <type>impact</type>
     <penetrate>0</penetrate>
@@ -1766,7 +1765,6 @@
    <duration blowup="shield">7</duration>
    <thrust>0</thrust>
    <speed>200</speed>
-   <resist>100</resist>
    <damage>
     <type>impact</type>
     <penetrate>70</penetrate>
@@ -1965,7 +1963,7 @@
    <thrust>0</thrust>
    <turn>50</turn>
    <speed>500</speed>
-   <resist>10</resist>
+   <resist>15</resist>
    <damage>
     <type>emp</type>
     <penetrate>15</penetrate>
@@ -2012,7 +2010,7 @@
    <thrust>0</thrust>
    <turn>35</turn>
    <speed>600</speed>
-   <resist>7</resist>
+   <resist>12</resist>
    <damage>
     <type>shieldbreaker</type>
     <penetrate>20</penetrate>
@@ -2832,8 +2830,8 @@
   </general>
   <specific type="jammer">
    <cpu>-4</cpu>
-   <range>100</range>
-   <power>15</power>
+   <range>170</range>
+   <power>35</power>
    <energy>-15</energy>
   </specific>
  </outfit>
@@ -2847,8 +2845,8 @@
   </general>
   <specific type="jammer">
    <cpu>-8</cpu>
-   <range>130</range>
-   <power>25</power>
+   <range>230</range>
+   <power>50</power>
    <energy>-30</energy>
   </specific>
  </outfit>
