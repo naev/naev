@@ -84,14 +84,11 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
       return 0;
 
    /* If inrange is set we only fire at targets in range. */
+   dist2 = INFINITY; /* With no target we just set distance to infinity. */
    if (ws->inrange) {
-      if (p->target == p->id)
-         dist2 = INFINITY; /* With no target we just set distance to infinity. */
-      else {
+      if (p->target != p->id) {
          pt = pilot_get( p->target );
-         if (pt == NULL)
-            dist2 = INFINITY;
-         else
+         if (pt != NULL)
             dist2 = vect_dist2( &p->solid->pos, &pt->solid->pos );
       }
    }
@@ -720,7 +717,9 @@ int pilot_shoot( Pilot* p, int level )
    ws = pilot_weapSet( p, p->active_set );
 
    /* Fire weapons. */
-   return pilot_weapSetFire( p, ws, level );
+   if (ws->type == WEAPSET_TYPE_WEAPON)
+      return pilot_weapSetFire( p, ws, level );
+   return 0;
 }
 
 
