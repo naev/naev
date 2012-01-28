@@ -61,7 +61,7 @@ function create()
    tk.msg(title1, message1)
    tk.msg(title1, message2:format(tutGetKey("overlay")))
 
-   hook.input("input")
+   inhook = hook.input("input")
 end
 
 function input(inputname, inputpress)
@@ -70,18 +70,19 @@ function input(inputname, inputpress)
       marker = system.mrkAdd("Fly here", tein:pos())
       omsg = player.omsgAdd(navomsg, 0)
       hook.discover("discover")
+      hook.rm(inhook)
    end
 end
 
-function discover(discovered)
+function discover(disctype, discovered)
    -- TODO: test for the actual discovered object.
-   if tein:known() and (not rein:known()) and (not jmp:known()) then
+   if disctype == "asset" and discovered == tein then
       tk.msg(title1, message4)
-   elseif tein:known() and rein:known() and (not jmp:known()) then
+   elseif disctype == "asset" and discovered == rein then
       tk.msg(title1, message5)
       system.mrkRm(marker)
       marker = system.mrkAdd("Fly here", jmp:pos())
-   elseif jmp:known() then
+   elseif disctype == "jump" then
       tk.msg(title1, message6)
       tk.msg(title1, message7)
       tk.msg(title1, message8)

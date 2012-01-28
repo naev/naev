@@ -187,7 +187,7 @@ void ovr_refresh (void)
  *
  *    @param open Whether or not to open it.
  */
-static void ovr_setOpen( int open )
+void ovr_setOpen( int open )
 {
    if (open && !ovr_open) {
       ovr_open = 1;

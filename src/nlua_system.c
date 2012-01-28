@@ -19,6 +19,7 @@
 #include "nlua_faction.h"
 #include "nlua_vec2.h"
 #include "nlua_planet.h"
+#include "nlua_jump.h"
 #include "log.h"
 #include "rng.h"
 #include "land.h"
@@ -35,7 +36,7 @@ static int systemL_faction( lua_State *L );
 static int systemL_nebula( lua_State *L );
 static int systemL_jumpdistance( lua_State *L );
 static int systemL_adjacent( lua_State *L );
-static int systemL_jumpPos( lua_State *L );
+static int systemL_jumps( lua_State *L );
 static int systemL_hasPresence( lua_State *L );
 static int systemL_planets( lua_State *L );
 static int systemL_presence( lua_State *L );
@@ -55,7 +56,7 @@ static const luaL_reg system_methods[] = {
    { "nebula", systemL_nebula },
    { "jumpDist", systemL_jumpdistance },
    { "adjacentSystems", systemL_adjacent },
-   { "jumpPos", systemL_jumpPos },
+   { "jumps", systemL_jumps },
    { "hasPresence", systemL_hasPresence },
    { "planets", systemL_planets },
    { "presence", systemL_presence },
@@ -77,7 +78,7 @@ static const luaL_reg system_cond_methods[] = {
    { "nebula", systemL_nebula },
    { "jumpDist", systemL_jumpdistance },
    { "adjacentSystems", systemL_adjacent },
-   { "jumpPos", systemL_jumpPos },
+   { "jumps", systemL_jumps },
    { "hasPresence", systemL_hasPresence },
    { "planets", systemL_planets },
    { "presence", systemL_presence },
@@ -470,35 +471,40 @@ static int systemL_adjacent( lua_State *L )
 
 
 /**
- * @brief Gets the position of a jump point from one system to another.
+ * @brief Gets all the jumps in a system.
  *
- * @usage v = system.cur():jumpPos( neighbour_system ) -- Gets the position of the jump point to neighbour_system
+ * @usage for _,s in ipairs( sys:jumps() ) do -- Iterate over jumps.
  *
- *    @luaparam from System jumping from.
- *    @luaparam to System jumping to.
- *    @luareturn A Vector2D containing the jump position or nil if not connected.
- * @luafunc jumpPos( from, to )
+ *    @luaparam s System to get the jumps of.
+ *    @luaparam exitonly Whether to exclude exit-only jumps (default false).
+ *    @luareturn An ordered table with all the jumps.
+ * @luafunc jumps( s )
  */
-static int systemL_jumpPos( lua_State *L )
+static int systemL_jumps( lua_State *L )
 {
-   LuaVector lv;
-   StarSystem *from, *to;
-   int i;
+   int i, exitonly, pushed;
+   LuaJump lj;
+   StarSystem *s;
 
-   from  = luaL_validsystem(L,1);
-   to    = luaL_validsystem(L,2);
+   s = luaL_validsystem(L,1);
+   exitonly = lua_toboolean(L,2);
+   pushed = 0;
 
-   for (i=0; i<from->njumps; i++) {
-      /* Wait until found. */
-      if (from->jumps[i].target != to)
-         continue;
+   /* Push all jumps. */
+   lua_newtable(L);
+   for (i=0; i<s->njumps; i++) {
+      /* Skip exit-only jumps if requested. */
+      if ((exitonly) && (jp_isFlag( jump_getTarget( s->jumps[i].target, s ),
+            JP_EXITONLY)))
+            continue;
 
-      vectcpy( &lv.vec, &from->jumps[i].pos );
-      lua_pushvector(L,lv);
-      return 1;
+      lj.srcid  = s->id;
+      lj.destid = s->jumps[i].targetid;
+      lua_pushnumber(L,++pushed); /* key. */
+      lua_pushjump(L,lj); /* value. */
+      lua_rawset(L,-3);
    }
 
-   lua_pushnil(L);
    return 1;
 }
 

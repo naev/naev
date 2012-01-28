@@ -98,7 +98,7 @@ function accept ()
          misn_target_sys1:name(), misn_final_sys:name() ) )
 
    hook.jumpout("jumpout")
-   hook.enter("jump")
+   hook.enter("jumpin")
    hook.land("land")
 end
 
@@ -109,7 +109,7 @@ end
 
 
 -- Handles jumping to target system
-function jump ()
+function jumpin ()
     if misn_stage == 0 then
         -- Entering target system?
         if system.cur() == misn_final_sys then
