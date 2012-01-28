@@ -19,6 +19,7 @@
 #include "nlua_faction.h"
 #include "nlua_vec2.h"
 #include "nlua_planet.h"
+#include "nlua_jump.h"
 #include "log.h"
 #include "rng.h"
 #include "land.h"
@@ -35,6 +36,7 @@ static int systemL_faction( lua_State *L );
 static int systemL_nebula( lua_State *L );
 static int systemL_jumpdistance( lua_State *L );
 static int systemL_adjacent( lua_State *L );
+static int systemL_jumps( lua_State *L );
 static int systemL_hasPresence( lua_State *L );
 static int systemL_planets( lua_State *L );
 static int systemL_presence( lua_State *L );
@@ -54,6 +56,7 @@ static const luaL_reg system_methods[] = {
    { "nebula", systemL_nebula },
    { "jumpDist", systemL_jumpdistance },
    { "adjacentSystems", systemL_adjacent },
+   { "jumps", systemL_jumps },
    { "hasPresence", systemL_hasPresence },
    { "planets", systemL_planets },
    { "presence", systemL_presence },
@@ -75,6 +78,7 @@ static const luaL_reg system_cond_methods[] = {
    { "nebula", systemL_nebula },
    { "jumpDist", systemL_jumpdistance },
    { "adjacentSystems", systemL_adjacent },
+   { "jumps", systemL_jumps },
    { "hasPresence", systemL_hasPresence },
    { "planets", systemL_planets },
    { "presence", systemL_presence },
@@ -459,6 +463,45 @@ static int systemL_adjacent( lua_State *L )
       sysp.id = system_index( s->jumps[i].target );
       lua_pushnumber(L,i+1); /* key. */
       lua_pushsystem(L,sysp); /* value. */
+      lua_rawset(L,-3);
+   }
+
+   return 1;
+}
+
+
+/**
+ * @brief Gets all the jumps in a system.
+ *
+ * @usage for _,s in ipairs( sys:jumps() ) do -- Iterate over jumps.
+ *
+ *    @luaparam s System to get the jumps of.
+ *    @luaparam exitonly Whether to exclude exit-only jumps (default false).
+ *    @luareturn An ordered table with all the jumps.
+ * @luafunc jumps( s )
+ */
+static int systemL_jumps( lua_State *L )
+{
+   int i, exitonly, pushed;
+   LuaJump lj;
+   StarSystem *s;
+
+   s = luaL_validsystem(L,1);
+   exitonly = lua_toboolean(L,2);
+   pushed = 0;
+
+   /* Push all jumps. */
+   lua_newtable(L);
+   for (i=0; i<s->njumps; i++) {
+      /* Skip exit-only jumps if requested. */
+      if ((exitonly) && (jp_isFlag( jump_getTarget( s->jumps[i].target, s ),
+            JP_EXITONLY)))
+            continue;
+
+      lj.srcid  = s->id;
+      lj.destid = s->jumps[i].targetid;
+      lua_pushnumber(L,++pushed); /* key. */
+      lua_pushjump(L,lj); /* value. */
       lua_rawset(L,-3);
    }
 
