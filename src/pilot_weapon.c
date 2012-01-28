@@ -38,6 +38,8 @@
 #include "weapon.h"
 #include "escort.h"
 
+#include "player.h"
+
 
 /*
  * Prototypes.
@@ -72,7 +74,7 @@ static PilotWeaponSet* pilot_weapSet( Pilot* p, int id )
  */
 static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
 {
-   int i, j, ret, s, recalc, ooe, can_use;
+   int i, j, ret, s;
    Pilot *pt;
    double dist2;
    Outfit *o;
@@ -82,22 +84,17 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
       return 0;
 
    /* If inrange is set we only fire at targets in range. */
+   dist2 = INFINITY; /* With no target we just set distance to infinity. */
    if (ws->inrange) {
-      if (p->target == p->id)
-         dist2 = INFINITY; /* With no target we just set distance to infinity. */
-      else {
+      if (p->target != p->id) {
          pt = pilot_get( p->target );
-         if (pt == NULL)
-            dist2 = INFINITY;
-         else
+         if (pt != NULL)
             dist2 = vect_dist2( &p->solid->pos, &pt->solid->pos );
       }
    }
 
    /* Fire. */
-   recalc = 0;
    ret    = 0;
-   ooe    = (p->energy <= 0.);
    for (i=0; i<array_size(ws->slots); i++) {
       o = ws->slots[i].slot->outfit;
 
@@ -108,23 +105,6 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
       /* Only "active" outfits. */
       if ((level != -1) && (ws->slots[i].level != level))
          continue;
-
-      /* Modifications get a special deal. */
-      if (outfit_isMod(o)) {
-         can_use = ((o->u.mod.energy_regen >= 0.) || !ooe);
-         if ((ws->slots[i].slot->state == PILOT_OUTFIT_OFF) && can_use) {
-            ws->slots[i].slot->state  = PILOT_OUTFIT_ON;
-            ws->slots[i].slot->stimer = outfit_duration( ws->slots[i].slot->outfit );
-            recalc = 1;
-         }
-         else if (!can_use) {
-            if (ws->slots[i].slot->state != PILOT_OUTFIT_OFF) {
-               ws->slots[i].slot->state = PILOT_OUTFIT_OFF;
-               recalc = 1;
-            }
-         }
-         continue;
-      }
 
       /* Only run once for each weapon type in the group. */
       s = 0;
@@ -154,10 +134,6 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
       /* Shoot the weapon of the weaponset. */
       ret += pilot_shootWeaponSetOutfit( p, ws, o, level );
    }
-
-   /* Must recalculate. */
-   if (recalc)
-      pilot_calcStats( p );
 
    return ret;
 }
@@ -741,7 +717,9 @@ int pilot_shoot( Pilot* p, int level )
    ws = pilot_weapSet( p, p->active_set );
 
    /* Fire weapons. */
-   return pilot_weapSetFire( p, ws, level );
+   if (ws->type == WEAPSET_TYPE_WEAPON)
+      return pilot_weapSetFire( p, ws, level );
+   return 0;
 }
 
 
