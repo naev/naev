@@ -1393,7 +1393,7 @@ static int pilotL_actives( lua_State *L )
             d = outfit_duration(o->outfit);
             if (d==0.)
                d = 1.;
-            else
+            else if (!isinf(o->stimer))
                d = o->stimer / d;
             lua_pushstring(L,"duration");
             lua_pushnumber(L, d );
@@ -1404,7 +1404,7 @@ static int pilotL_actives( lua_State *L )
             d = outfit_cooldown(o->outfit);
             if (d==0.)
                d = 0.;
-            else
+            else if (!isinf(o->stimer))
                d = o->stimer / d;
             lua_pushstring(L,"cooldown");
             lua_pushnumber(L, d );
