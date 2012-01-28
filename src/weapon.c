@@ -523,7 +523,7 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
                continue;
 
             /* We only consider the strongest jammer. */
-            w->jam_power = MIN( 1., MAX( w->jam_power, o->u.jam.power ) );
+            w->jam_power = CLAMP( 0., 1., MAX( w->jam_power, (o->u.jam.power - w->outfit->u.amm.resist) ) );
          }
       }
    }
