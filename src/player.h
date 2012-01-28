@@ -225,7 +225,7 @@ void player_targetEscort( int prev );
 /*
  * keybind actions
  */
-void player_weapSetPress( int id, int type );
+void player_weapSetPress( int id, int type, int repeat );
 void player_land (void);
 int player_jump (void);
 void player_screenshot (void);

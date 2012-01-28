@@ -867,25 +867,25 @@ static void input_key( int keynum, double value, double kabs, int repeat )
 
    /* Weapon sets. */
    } else if (KEY("weapset1")) {
-      player_weapSetPress( 0, value );
+      player_weapSetPress( 0, value, repeat );
    } else if (KEY("weapset2")) {
-      player_weapSetPress( 1, value );
+      player_weapSetPress( 1, value, repeat );
    } else if (KEY("weapset3")) {
-      player_weapSetPress( 2, value );
+      player_weapSetPress( 2, value, repeat );
    } else if (KEY("weapset4")) {
-      player_weapSetPress( 3, value );
+      player_weapSetPress( 3, value, repeat );
    } else if (KEY("weapset5")) {
-      player_weapSetPress( 4, value );
+      player_weapSetPress( 4, value, repeat );
    } else if (KEY("weapset6")) {
-      player_weapSetPress( 5, value );
+      player_weapSetPress( 5, value, repeat );
    } else if (KEY("weapset7")) {
-      player_weapSetPress( 6, value );
+      player_weapSetPress( 6, value, repeat );
    } else if (KEY("weapset8")) {
-      player_weapSetPress( 7, value );
+      player_weapSetPress( 7, value, repeat );
    } else if (KEY("weapset9")) {
-      player_weapSetPress( 8, value );
+      player_weapSetPress( 8, value, repeat );
    } else if (KEY("weapset0")) {
-      player_weapSetPress( 9, value );
+      player_weapSetPress( 9, value, repeat );
 
    /*
     * space

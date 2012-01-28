@@ -1241,8 +1241,11 @@ void player_updateSpecific( Pilot *pplayer, const double dt )
 /**
  * @brief Activates a player's weapon set.
  */
-void player_weapSetPress( int id, int type )
+void player_weapSetPress( int id, int type, int repeat )
 {
+   if (repeat)
+      return;
+
    if ((type > 0) && ((player.p == NULL) || toolkit_isOpen()))
       return;
 
