@@ -266,8 +266,11 @@ void background_renderStars( const double dt )
          glShadeModel(GL_SMOOTH);
          shade_mode = 1;
 
-         /* lines will be based on velocity */
-         m = dt_mod*VMOD(player.p->solid->vel)/25. - 20;
+         /* Very short lines tend to flicker horribly. A stock Llama at 2x
+          * speed just so happens to make very short lines. A 5px minimum
+          * is long enough to (mostly) alleviate the flickering.
+          */
+         m = MAX( 5, dt_mod*VMOD(player.p->solid->vel)/25. - 20 );
          x = m*cos(VANGLE(player.p->solid->vel));
          y = m*sin(VANGLE(player.p->solid->vel));
       }
