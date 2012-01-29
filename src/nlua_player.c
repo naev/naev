@@ -1052,10 +1052,12 @@ static int playerL_teleport( lua_State *L )
    events_trigger( EVENT_TRIGGER_ENTER );
    missions_run( MIS_AVAIL_SPACE, -1, NULL, NULL );
 
-   /* Reset targets when teleporting */
-   player_targetPlanetSet( -1 );
+   /* Reset targets when teleporting.
+    * The hyperspace target MUST be reset first, as both functions  invoke
+    * gui_setNav() which will do an invalid read if the old jump is stored.
+    */
    player_targetHyperspaceSet( -1 );
-   gui_setNav();
+   player_targetPlanetSet( -1 );
 
    /* Move to planet. */
    if (pnt != NULL)
