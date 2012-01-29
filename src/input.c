@@ -902,10 +902,8 @@ static void input_key( int keynum, double value, double kabs, int repeat )
          player_land();
       }
    } else if (KEY("thyperspace") && NOHYP() && NOLAND() && NODEAD()) {
-      if (value==KEY_PRESS) {
-         player_autonavAbort(NULL);
+      if (value==KEY_PRESS)
          player_targetHyperspace();
-      }
    } else if (KEY("starmap") && NOHYP() && NODEAD() && !repeat) {
       if (value==KEY_PRESS) map_open();
    } else if (KEY("jump") && INGAME() && !repeat) {
@@ -1229,23 +1227,29 @@ static void input_clickevent( SDL_Event* event )
    else if (pntid >= 0) { /* Planet is closest. */
       if (pntid == player.p->nav_planet) {
          pnt = cur_system->planets[ pntid ];
-         if (planet_hasService(pnt, PLANET_SERVICE_LAND) &&
-               (pnt->faction < 0 || (!areEnemies( player.p->faction, pnt->faction ) || pnt->bribed )))
-            player_land();
+         player_hyperspacePreempt(0);
+         if (planet_hasService(pnt, PLANET_SERVICE_LAND)) {
+            if ((pnt->faction >= 0) && (areEnemies( player.p->faction, pnt->faction ) && !pnt->bribed))
+               player_hailPlanet();
+            else if (vect_dist2(&player.p->solid->pos,&pnt->pos) > pow2(pnt->radius))
+               player_autonavStart();
+            else
+               player_land();
+         }
          else
-            player_hailPlanet();
+            player_autonavStart();
       }
       else
          player_targetPlanetSet( pntid );
    }
    else if (jpid >= 0) { /* Jump point is closest. */
       if (jpid == player.p->nav_hyperspace) {
-         if (space_canHyperspace(player.p)) {
-            if (!paused) player_autonavAbort(NULL);
+         if (space_canHyperspace(player.p))
             player_jump();
-         }
-         else
+         else {
+            player_hyperspacePreempt(1);
             player_autonavStart();
+         }
       }
       else
          player_targetHyperspaceSet( jpid );
