@@ -618,7 +618,7 @@ static void gui_renderBorder( double dt )
       pnt = cur_system->planets[i];
 
       /* See if in sensor range. */
-      if (!pilot_inRangePlanet(player.p, i))
+      if (!planet_isKnown( pnt ))
          continue;
 
       /* Check if out of range. */
@@ -662,7 +662,7 @@ static void gui_renderBorder( double dt )
       jp  = &cur_system->jumps[i];
 
       /* See if in sensor range. */
-      if (!pilot_inRangeJump(player.p, i))
+      if (!jp_isKnown( jp ) || jp_isFlag( jp, JP_EXITONLY ))
          continue;
 
       /* Check if out of range. */
