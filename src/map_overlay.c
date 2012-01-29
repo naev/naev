@@ -141,7 +141,19 @@ int ovr_input( SDL_Event *event )
       x  = ((double)mx - SCREEN_W/2.) * ovr_res;
       y  = ((double)my - SCREEN_H/2.) * ovr_res;
 
-      /* Go to position. */
+      /* Go to planet. */
+      d = system_getClosest( cur_system, &pntid, &jpid, x, y );
+      if (pntid >= 0) {
+         pnt = cur_system->planets[ pntid ];
+         r  = MAX( 1.5 * pnt->radius, 20. * ovr_res );
+         if ((d < pow2(r)) && planet_isKnown(pnt)) {
+            player_autonavPnt( pnt->name );
+            player_targetPlanetSet( pntid );
+            return 1;
+         }
+      }
+
+      /* Fall-through and go to position. */
       player_autonavPos( x, y );
 
       return 1;
