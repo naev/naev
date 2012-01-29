@@ -155,7 +155,7 @@ else --default english
 
    -- Mission after-care messages. Each element should be a table containing the mission name and a line of text.
    -- This text will be said by NPCs once the player has completed the mission in question.
-   -- Make sure the hints are always faction neutral.
+   -- Make sure the messages are always faction neutral.
    msg_mdone =                {{"Nebula Satellite", "Heard some crazy scientists got someone to put a satellite inside the nebula for them. I thought everyone with half a brain knew to stay out of there, but oh well."},
                                {"Shadow Vigil", "Did you hear? There was some big incident during a diplomatic meeting between the Empire and the Dvaered. Nobody knows what exactly happened, but both diplomats died. Now both sides are accusing the other of foul play. Could get ugly."},
                                {"Operation Cold Metal", "Hey, remember the Collective? They got wiped out! I feel so much better now that there aren't a bunch of robot ships out there to get me anymore."},
@@ -165,7 +165,7 @@ else --default english
 
    -- Event after-care messages. Each element should be a table containing the event name and a line of text.
    -- This text will be said by NPCs once the player has completed the event in question.
-   -- Make sure the hints are always faction neutral.
+   -- Make sure the messages are always faction neutral.
    msg_edone =                {{"Animal trouble", "What? You had rodents sabotage your ship? Man, you're lucky to be alive. If it had hit the wrong power line..."},
                                {"Naev Needs You!", "What do you mean, the world ended and then the creator of the universe came and fixed it? What kind of illegal substance are you on? Get away from me, you lunatic."}
                               }
@@ -278,6 +278,7 @@ function getJmpMessage()
                      mytargets[sel]:setKnown(true)
                   end
 
+   -- Don't need to remove messages from tables here.
    return retmsg:format(mytargets[sel]:dest():name()), myfunc
 end
 
@@ -287,7 +288,10 @@ function getTipMessage()
    if #msg_tip == 0 then
       return getLoreMessage()
    end
-   return msg_tip[rnd.rnd(1, #msg_tip)]
+   local sel = rnd.rnd(1, #msg_tip)
+   local pick = msg_tip[sel]
+   table.remove(msg_tip, sel)
+   return pick
 end
 
 -- Returns a mission hint message, a mission after-care message, OR a lore message if no missionlikes are left.
@@ -309,12 +313,12 @@ function getMissionLikeMessage()
    -- After-care messages are only valid if the relevant mission has been completed.
    for i, j in pairs(msg_mdone) do
       if not player.misnDone(j[1]) then
-         table.remove(msg_mhint, i)
+         table.remove(msg_mdone, i)
       end
    end
    for i, j in pairs(msg_edone) do
       if not player.evtDone(j[1]) then
-         table.remove(msg_ehint, i)
+         table.remove(msg_edone, i)
       end
    end
    
