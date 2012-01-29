@@ -1270,7 +1270,7 @@ void player_targetPlanetSet( int id )
 
    old = player.p->nav_planet;
    player.p->nav_planet = id;
-   player_hyperspacePreempt(0);
+   player_hyperspacePreempt((id < 0) ? 1 : 0);
    if (old != id) {
       player_rmFlag(PLAYER_LANDACK);
       if (id >= 0)
@@ -1470,7 +1470,7 @@ void player_targetHyperspaceSet( int id )
 
    old = player.p->nav_hyperspace;
    player.p->nav_hyperspace = id;
-   player_hyperspacePreempt(1);
+   player_hyperspacePreempt((id < 0) ? 0 : 1);
    if ((old != id) && (id >= 0))
       player_soundPlayGUI(snd_nav,1);
    gui_setNav();
@@ -1491,10 +1491,8 @@ void player_targetHyperspace (void)
    id = player.p->nav_hyperspace+1;
    map_clear(); /* clear the current map path */
 
-   if (id >= cur_system->njumps) {
+   if (id >= cur_system->njumps)
       id = -1;
-      player_hyperspacePreempt(0);
-   }
    else {
       for (i=id; i<cur_system->njumps; i++) {
          if (jp_isKnown( &cur_system->jumps[i])) {
