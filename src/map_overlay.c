@@ -147,8 +147,18 @@ int ovr_input( SDL_Event *event )
          pnt = cur_system->planets[ pntid ];
          r  = MAX( 1.5 * pnt->radius, 20. * ovr_res );
          if ((d < pow2(r)) && planet_isKnown(pnt)) {
-            player_autonavPnt( pnt->name );
             player_targetPlanetSet( pntid );
+            player_autonavPnt( pnt->name );
+            return 1;
+         }
+      }
+      /* Engage regular jump autonav. */
+      else if (jpid >= 0) {
+         jp = &cur_system->jumps[ jpid ];
+         r  = MAX( 1.5 * jp->radius, 20. * ovr_res );
+         if ((d < pow2(r)) && jp_isKnown(jp)) {
+            player_targetHyperspaceSet( jpid );
+            player_autonavStart();
             return 1;
          }
       }
