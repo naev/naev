@@ -1298,8 +1298,6 @@ void player_targetPlanet (void)
    while (id < cur_system->nplanets) {
       /* In range, target planet. */
       if (planet_isKnown( cur_system->planets[id] )) {
-         if ((cur_system->planets[ id ]->real != ASSET_REAL))
-            DEBUG("Well, shit.");
          player_targetPlanetSet( id );
          return;
       }
