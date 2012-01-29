@@ -26,6 +26,7 @@ void player_thinkAutonav( Pilot *pplayer, double dt );
 void player_updateAutonav( double dt );
 void player_autonavStart (void);
 void player_autonavEnd (void);
+void player_autonavAbortJump( const char *reason );
 void player_autonavAbort( const char *reason );
 int player_shouldAbortAutonav( int damaged );
 void player_autonavStartWindow( unsigned int wid, char *str);

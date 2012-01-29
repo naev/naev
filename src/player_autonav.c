@@ -67,10 +67,6 @@ void player_autonavStart (void)
       return;
    }
 
-   if player_isFlag(PLAYER_AUTONAV) {
-      player_autonavAbort(NULL);
-      return;
-   }
    player_autonavSetup();
    player.autonav = AUTONAV_JUMP_APPROACH;
 }
@@ -175,7 +171,29 @@ static void player_autonavRampdown( double d )
 
 
 /**
+ * @brief Aborts regular interstellar autonav, but not in-system autonav.
+ *
+ *    @param reason Human-readable string describing abort condition.
+ */
+void player_autonavAbortJump( const char *reason )
+{
+   /* No point if player is beyond aborting. */
+   if ((player.p==NULL) || ((player.p != NULL) && pilot_isFlag(player.p, PILOT_HYPERSPACE)))
+      return;
+
+   if (!player_isFlag(PLAYER_AUTONAV) || ((player.autonav != AUTONAV_JUMP_APPROACH) &&
+         (player.autonav != AUTONAV_JUMP_BRAKE)))
+      return;
+
+   /* It's definitely not in-system autonav. */
+   player_autonavAbort(reason);
+}
+
+
+/**
  * @brief Aborts autonav.
+ *
+ *    @param reason Human-readable string describing abort condition.
  */
 void player_autonavAbort( const char *reason )
 {
