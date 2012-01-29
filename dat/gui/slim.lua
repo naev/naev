@@ -325,6 +325,7 @@ end
 
 function update_system()
    sys = system.cur()
+   sysname = sys:name()
 end
 
 function render_bar( name, value, txt, txtcol, size, col, bgc )
@@ -819,7 +820,7 @@ function render( dt, dt_mod )
       fuelstring = "none"
    end
 
-   local bartext = { "Pilot: ", pname, "System: ", sys:name(), "Time: ", time.str(), "Credits: ",
+   local bartext = { "Pilot: ", pname, "System: ", sysname, "Time: ", time.str(), "Credits: ",
          largeNumber( credits, 2 ), "Nav: ", navstring, "Fuel: ", fuelstring,
          "WSet: ", wset_name, "Cargo: " }
    for k,v in ipairs(bartext) do
