@@ -617,7 +617,7 @@ static void gui_renderBorder( double dt )
 
       pnt = cur_system->planets[i];
 
-      /* See if in sensor range. */
+      /* Skip if unknown. */
       if (!planet_isKnown( pnt ))
          continue;
 
@@ -661,7 +661,7 @@ static void gui_renderBorder( double dt )
    for (i=0; i<cur_system->njumps; i++) {
       jp  = &cur_system->jumps[i];
 
-      /* See if in sensor range. */
+      /* Skip if unknown or exit-only. */
       if (!jp_isKnown( jp ) || jp_isFlag( jp, JP_EXITONLY ))
          continue;
 
