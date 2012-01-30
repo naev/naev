@@ -643,7 +643,7 @@ static int systemL_presence( lua_State *L )
       /* A faction id was given. */
       lf     = lua_tofaction(L, 2);
       nfct   = 1;
-      fct    = malloc(sizeof(int) * nfct);
+      fct    = malloc(sizeof(int));
       fct[0] = lf->f;
    }
    else NLUA_INVALID_PARAMETER(L);
