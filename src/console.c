@@ -93,12 +93,15 @@ static int cli_printCore( lua_State *L, int cli_only );
  */
 static int cli_printCore( lua_State *L, int cli_only )
 {
-   int n = lua_gettop(L);  /* number of arguments */
+   int n; /* number of arguments */
    int i;
    char buf[LINE_LENGTH];
    int p;
    const char *s;
+
+   n = lua_gettop(L);
    p = 0;
+
    lua_getglobal(L, "tostring");
    for (i=1; i<=n; i++) {
       lua_pushvalue(L, -1);  /* function to be called */
@@ -121,7 +124,8 @@ static int cli_printCore( lua_State *L, int cli_only )
    }
 
    /* Add last line if needed. */
-   cli_addMessage(buf);
+   if (n > 0)
+      cli_addMessage(buf);
 
    return 0;
 }
