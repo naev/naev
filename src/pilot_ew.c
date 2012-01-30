@@ -218,12 +218,11 @@ int pilot_inRangeJump( const Pilot *p, int i )
    /* Get the jump point. */
    jp = &cur_system->jumps[i];
 
-   /* jump point is not exit only */
-   if (!jp_isFlag( jp, JP_HIDDEN ) && !jp_isFlag( jp, JP_EXITONLY )) /* regular */
-      sense = sensor_curRange * p->ew_jumpDetect;
-   else if (jp_isFlag( jp, JP_HIDDEN ) || jp_isFlag( jp, JP_EXITONLY )) /* exit only */
+   /* We don't want exit-only or unknown hidden jumps. */
+   if ((jp_isFlag(jp, JP_EXITONLY)) || ((jp_isFlag(jp, JP_HIDDEN)) && (!jp_isKnown(jp)) ))
       return 0;
 
+   sense = sensor_curRange * p->ew_jumpDetect;
    hide = jp->hide;
 
    /* Get distance. */
