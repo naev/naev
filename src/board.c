@@ -372,7 +372,7 @@ static void board_update( unsigned int wdw )
 
    /* Credits. */
    credits2str( cred, p->credits, 2 );
-   j += snprintf( &str[j], PATH_MAX-j, "%s\n", cred );
+   j += snprintf( &str[j], PATH_MAX, "%s\n", cred );
 
    /* Commodities. */
    if (p->ncommodities==0)
