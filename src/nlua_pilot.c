@@ -819,7 +819,7 @@ static int pilotL_getPilots( lua_State *L )
    if (lua_istable(L,1) || lua_isfaction(L,1)) {
       if (lua_isfaction(L,1)) {
          nfactions = 1;
-         factions = malloc( sizeof(int) * nfactions );
+         factions = malloc( sizeof(int) );
          f = lua_tofaction(L,1);
          factions[0] = f->f;
       }
