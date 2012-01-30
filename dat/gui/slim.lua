@@ -812,9 +812,9 @@ function render( dt, dt_mod )
    gfx.renderTexRaw( bottom_bar, 0, 0, screen_w, 30, 1, 1, 0, 0, 1, 1 )
 
    fuel = player.fuel()
-   if fuel > 100 then
-      fuelstring = round(fuel/100.) .. " Jumps"
-   elseif fuel == 100 then
+   if fuel >= 200 then
+      fuelstring = math.floor(fuel/100.) .. " Jumps"
+   elseif fuel < 200 and fuel >= 100 then
       fuelstring = round(fuel/100.) .. " Jump"
    else
       fuelstring = "none"
