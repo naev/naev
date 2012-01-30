@@ -147,6 +147,11 @@ static JumpPoint* luaL_validjumpSystem( lua_State *L, int ind, int *offset, Star
    JumpPoint *jp;
    StarSystem *a, *b;
 
+   /* Defaults. */
+   jp = NULL;
+   a = NULL;
+   b = NULL;
+
    if (lua_isjump(L, ind)) {
       lj = luaL_checkjump(L, ind);
       a = system_getIndex( lj->srcid );
@@ -255,6 +260,10 @@ static int jumpL_get( lua_State *L )
 {
    LuaJump lj;
    StarSystem *a, *b;
+
+   /* Defaults. */
+   a = NULL;
+   b = NULL;
 
    if (lua_gettop(L) > 1) {
       if (lua_isstring(L, 1))
