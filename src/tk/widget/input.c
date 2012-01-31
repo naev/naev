@@ -339,6 +339,7 @@ char* window_setInput( const unsigned int wid, char* name, const char *msg )
    }
    else {
       strncpy( wgt->dat.inp.input, msg, wgt->dat.inp.max );
+      wgt->dat.inp.input[ wgt->dat.inp.max-1 ] = '\0';
       wgt->dat.inp.pos = strlen( wgt->dat.inp.input );
    }
 
