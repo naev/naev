@@ -1502,6 +1502,7 @@ void weapon_add( const Outfit* outfit, const double T, const double dir,
       weapon_vboData = realloc( weapon_vboData, size );
       if (weapon_vbo == NULL)
          weapon_vbo = gl_vboCreateStream( size, NULL );
+      gl_vboData( weapon_vbo, size, weapon_vboData );
    }
 }
 
@@ -1584,6 +1585,7 @@ unsigned int beam_start( const Outfit* outfit,
       weapon_vboData = realloc( weapon_vboData, size );
       if (weapon_vbo == NULL)
          weapon_vbo = gl_vboCreateStream( size, NULL );
+      gl_vboData( weapon_vbo, size, weapon_vboData );
    }
 
    return w->ID;
