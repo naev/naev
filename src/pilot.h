@@ -134,7 +134,7 @@ typedef enum PilotOutfitState_ {
    PILOT_OUTFIT_OFF,    /**< Normal state. */
    PILOT_OUTFIT_WARMUP, /**< Outfit is starting to warm up. */
    PILOT_OUTFIT_ON,     /**< Outfit is activated and running. */
-   PILOT_OUTFIT_COOLDOWN, /**< Outfit is cooling down. */
+   PILOT_OUTFIT_COOLDOWN /**< Outfit is cooling down. */
 } PilotOutfitState;
 
 
