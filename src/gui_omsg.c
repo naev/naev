@@ -112,6 +112,11 @@ static void omsg_setMsg( omsg_t *omsg, const char *msg )
       n += s+1;
       m++;
    }
+
+   /* Avoid zero-length malloc. */
+   if (m == 0)
+      return;
+
    /* Second pass allocate. */
    omsg->msg = malloc( m * sizeof(char*) );
    omsg->nlines = m;
