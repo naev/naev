@@ -183,7 +183,7 @@ static void commodity_exchange_open( unsigned int wid )
    /* buttons */
    window_addButton( wid, -20, 20,
          LAND_BUTTON_WIDTH, LAND_BUTTON_HEIGHT, "btnCommodityClose",
-         "Takeoff", land_buttonTakeoff );
+         "Take Off", land_buttonTakeoff );
    window_addButton( wid, -40-((LAND_BUTTON_WIDTH-20)/2), 20*2 + LAND_BUTTON_HEIGHT,
          (LAND_BUTTON_WIDTH-20)/2, LAND_BUTTON_HEIGHT, "btnCommodityBuy",
          "Buy", commodity_buy );
@@ -498,7 +498,7 @@ static void bar_open( unsigned int wid )
    /* Buttons */
    window_addButton( wid, -20, 20,
          bw, bh, "btnCloseBar",
-         "Takeoff", land_buttonTakeoff );
+         "Take Off", land_buttonTakeoff );
    window_addButton( wid, -20 - bw - 20, 20,
          bw, bh, "btnApproach",
          "Approach", bar_approach );
@@ -728,7 +728,7 @@ static void misn_open( unsigned int wid )
    /* buttons */
    window_addButton( wid, -20, 20,
          LAND_BUTTON_WIDTH,LAND_BUTTON_HEIGHT, "btnCloseMission",
-         "Takeoff", land_buttonTakeoff );
+         "Take Off", land_buttonTakeoff );
    window_addButton( wid, -20, 40+LAND_BUTTON_HEIGHT,
          LAND_BUTTON_WIDTH,LAND_BUTTON_HEIGHT, "btnAcceptMission",
          "Accept Mission", misn_accept );
@@ -1304,7 +1304,7 @@ static void land_createMainTab( unsigned int wid )
    /* first column */
    window_addButton( wid, -20, 20,
          LAND_BUTTON_WIDTH, LAND_BUTTON_HEIGHT, "btnTakeoff",
-         "Takeoff", land_buttonTakeoff );
+         "Take Off", land_buttonTakeoff );
 
    /*
     * Checkboxes.

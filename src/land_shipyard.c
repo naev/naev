@@ -76,7 +76,7 @@ void shipyard_open( unsigned int wid )
    /* buttons */
    window_addButton( wid, -20, 20,
          bw, bh, "btnCloseShipyard",
-         "Takeoff", land_buttonTakeoff );
+         "Take Off", land_buttonTakeoff );
    window_addButton( wid, -40 - bw, 20,
          bw, bh, "btnTradeShip",
          "Trade-In", shipyard_trade );

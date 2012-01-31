@@ -94,7 +94,7 @@ void outfits_open( unsigned int wid )
    /* buttons */
    window_addButton( wid, -20, 20,
          bw, bh, "btnCloseOutfits",
-         "Takeoff", land_buttonTakeoff );
+         "Take Off", land_buttonTakeoff );
    window_addButton( wid, -40-bw, 20,
          bw, bh, "btnSellOutfit",
          "Sell", outfits_sell );
