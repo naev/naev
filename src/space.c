@@ -609,7 +609,7 @@ double system_getClosestAng( const StarSystem *sys, int *pnt, int *jp, double x,
    /* Default output. */
    *pnt = -1;
    *jp  = -1;
-   a    = INFINITY;
+   a    = ang + M_PI;
 
    /* Planets. */
    for (i=0; i<sys->nplanets; i++) {

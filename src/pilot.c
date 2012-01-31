@@ -467,7 +467,7 @@ double pilot_getNearestAng( const Pilot *p, unsigned int *tp, double ang, int di
    double rx, ry;
 
    *tp = PLAYER_ID;
-   a   = INFINITY;
+   a   = ang + M_PI;
    for (i=0; i<pilot_nstack; i++) {
 
       /* Must not be self. */
