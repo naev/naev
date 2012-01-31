@@ -239,7 +239,7 @@ void equipment_open( unsigned int wid )
    /* buttons */
    window_addButton( wid, -20, 20,
          bw, bh, "btnCloseEquipment",
-         "Takeoff", land_buttonTakeoff );
+         "Take Off", land_buttonTakeoff );
    window_addButton( wid, -20 - (15+bw), 20,
          bw, bh, "btnSetGUI",
          "Set GUI", equipment_setGui );

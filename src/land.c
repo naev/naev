@@ -104,7 +104,6 @@ static glTexture *mission_portrait = NULL; /**< Mission portrait. */
  */
 static int last_window = 0; /**< Default window. */
 
-
 /*
  * Error handling.
  */
@@ -183,7 +182,7 @@ static void commodity_exchange_open( unsigned int wid )
    /* buttons */
    window_addButton( wid, -20, 20,
          LAND_BUTTON_WIDTH, LAND_BUTTON_HEIGHT, "btnCommodityClose",
-         "Takeoff", land_buttonTakeoff );
+         "Take Off", land_buttonTakeoff );
    window_addButton( wid, -40-((LAND_BUTTON_WIDTH-20)/2), 20*2 + LAND_BUTTON_HEIGHT,
          (LAND_BUTTON_WIDTH-20)/2, LAND_BUTTON_HEIGHT, "btnCommodityBuy",
          "Buy", commodity_buy );
@@ -199,7 +198,7 @@ static void commodity_exchange_open( unsigned int wid )
    window_addText( wid, -20, -40, LAND_BUTTON_WIDTH, 60, 0,
          "txtSInfo", &gl_smallFont, &cDConsole,
          "You have:\n"
-         "Market price:\n"
+         "Market Price:\n"
          "\n"
          "Free Space:\n" );
    window_addText( wid, -20, -40, LAND_BUTTON_WIDTH/2, 60, 0,
@@ -259,6 +258,17 @@ static void commodity_update( unsigned int wid, char* str )
          pilot_cargoFree(player.p));
    window_modifyText( wid, "txtDInfo", buf );
    window_modifyText( wid, "txtDesc", com->description );
+
+   /* Button enabling/disabling */
+   if (player_hasCredits( planet_commodityPrice( land_planet, com ) * commodity_getMod() ))
+      window_enableButton( wid, "btnCommodityBuy" );
+   else
+      window_disableButton( wid, "btnCommodityBuy" );
+
+   if (pilot_cargoOwned( player.p, comname ) > 0)
+      window_enableButton( wid, "btnCommoditySell" );
+   else
+      window_disableButton( wid, "btnCommoditySell" );
 }
 /**
  * @brief Buys the selected commodity.
@@ -279,7 +289,6 @@ static void commodity_buy( unsigned int wid, char* str )
    comname = toolkit_getList( wid, "lstGoods" );
    com   = commodity_get( comname );
    price = planet_commodityPrice( land_planet, com );
-   price *= q;
 
    /* Check stuff. */
    if (!player_hasCredits( price )) {
@@ -293,6 +302,7 @@ static void commodity_buy( unsigned int wid, char* str )
 
    /* Make the buy. */
    q = pilot_cargoAdd( player.p, com, q );
+   price *= q;
    player_modCredits( -price );
    land_checkAddRefuel();
    commodity_update(wid, NULL);
@@ -498,7 +508,7 @@ static void bar_open( unsigned int wid )
    /* Buttons */
    window_addButton( wid, -20, 20,
          bw, bh, "btnCloseBar",
-         "Takeoff", land_buttonTakeoff );
+         "Take Off", land_buttonTakeoff );
    window_addButton( wid, -20 - bw - 20, 20,
          bw, bh, "btnApproach",
          "Approach", bar_approach );
@@ -728,7 +738,7 @@ static void misn_open( unsigned int wid )
    /* buttons */
    window_addButton( wid, -20, 20,
          LAND_BUTTON_WIDTH,LAND_BUTTON_HEIGHT, "btnCloseMission",
-         "Takeoff", land_buttonTakeoff );
+         "Take Off", land_buttonTakeoff );
    window_addButton( wid, -20, 40+LAND_BUTTON_HEIGHT,
          LAND_BUTTON_WIDTH,LAND_BUTTON_HEIGHT, "btnAcceptMission",
          "Accept Mission", misn_accept );
@@ -1080,7 +1090,7 @@ void land_genWindows( int load, int changetab )
    regen = landed;
 
    /* Create window. */
-   if ((SCREEN_W < 1024) || (SCREEN_H < 768)) {
+   if ((gl_screen.rw < 1024) || (gl_screen.rh < 768)) {
       w = -1; /* Fullscreen. */
       h = -1;
    }
@@ -1304,7 +1314,7 @@ static void land_createMainTab( unsigned int wid )
    /* first column */
    window_addButton( wid, -20, 20,
          LAND_BUTTON_WIDTH, LAND_BUTTON_HEIGHT, "btnTakeoff",
-         "Takeoff", land_buttonTakeoff );
+         "Take Off", land_buttonTakeoff );
 
    /*
     * Checkboxes.
