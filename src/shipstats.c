@@ -117,8 +117,8 @@ static const ShipStatsLookup ss_lookup[] = {
    
    B__ELEM( SS_TYPE_B_INSTANT_JUMP,    misc_instant_jump, "Instant Jump" ),
 
-   /* Sentinal. */
-   N__ELEM( SS_TYPE_SENTINAL )
+   /* Sentinel. */
+   N__ELEM( SS_TYPE_SENTINEL )
 };
 
 
@@ -187,7 +187,7 @@ int ss_check (void)
 {
    ShipStatsType i;
 
-   for (i=0; i<=SS_TYPE_SENTINAL; i++) {
+   for (i=0; i<=SS_TYPE_SENTINEL; i++) {
       if (ss_lookup[i].type != i) {
          WARN("ss_lookup: %s should have id %d but has %d",
                ss_lookup[i].name, i, ss_lookup[i].type );
@@ -213,7 +213,7 @@ int ss_statsInit( ShipStats *stats )
    memset( stats, 0, sizeof(ShipStats) );
 
    ptr = (char*) stats;
-   for (i=0; i<SS_TYPE_SENTINAL; i++) {
+   for (i=0; i<SS_TYPE_SENTINEL; i++) {
       sl = &ss_lookup[ i ];
 
       /* Only want valid names. */
@@ -340,7 +340,7 @@ const char* ss_nameFromType( ShipStatsType type )
 ShipStatsType ss_typeFromName( const char *name )
 {
    int i;
-   for (i=0; i<SS_TYPE_SENTINAL; i++)
+   for (i=0; i<SS_TYPE_SENTINEL; i++)
       if ((ss_lookup[i].name != NULL) && (strcmp(name,ss_lookup[i].name)==0))
          return ss_lookup[i].type;
    return SS_TYPE_NIL;
@@ -496,7 +496,7 @@ int ss_statsDesc( const ShipStats *s, char *buf, int len, int newline )
 
    l   = 0;
    ptr = (char*) s;
-   for (i=0; i<SS_TYPE_SENTINAL; i++) {
+   for (i=0; i<SS_TYPE_SENTINEL; i++) {
       sl = &ss_lookup[ i ];
 
       /* Only want valid names. */
