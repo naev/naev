@@ -298,7 +298,7 @@ static void shipyard_buy( unsigned int wid, char* str )
 
    credits_t targetprice = ship->price;
 
-   if (land_errDialogue( shipname, "buy" ))
+   if (land_errDialogue( shipname, "buyShip" ))
       return;
 
    credits2str( buf, targetprice, 2 );
@@ -349,8 +349,8 @@ int shipyard_canBuy ( char *shipname )
 int can_sell( char* shipname )
 {
    int failure = 0;
-   if (strcmp( shipname, player.p->name )==0) { /* Already onboard. */
-      land_errDialogueBuild( "You can't sell the ship you're piloting.", shipname );
+   if (strcmp( shipname, player.p->name )==0) { /* Already on-board. */
+      land_errDialogueBuild( "You can't sell the ship you're piloting!", shipname );
       failure = 1;
    }
 
@@ -426,7 +426,7 @@ static void shipyard_trade( unsigned int wid, char* str )
    credits_t targetprice = ship->price;
    credits_t playerprice = player_shipPrice(player.p->name);
 
-   if (land_errDialogue( shipname, "trade" ))
+   if (land_errDialogue( shipname, "tradeShip" ))
       return;
 
    credits2str( buf, targetprice, 2 );

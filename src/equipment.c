@@ -1521,7 +1521,10 @@ void equipment_updateShips( unsigned int wid, char* str )
       }
       else { /* ship is here */
          window_buttonCaption( wid, "btnChangeShip", "Swap Ship" );
-         window_enableButton( wid, "btnChangeShip" );
+         if (can_swapEquipment( ship->name ))
+            window_enableButton( wid, "btnChangeShip" );
+         else
+            window_disableButton( wid, "btnChangeShip" );
       }
       /* If ship is there you can always sell. */
       window_enableButton( wid, "btnSellShip" );
@@ -1840,7 +1843,7 @@ static void equipment_sellShip( unsigned int wid, char* str )
 
    shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
 
-   if (land_errDialogue( shipname, "sell" ))
+   if (land_errDialogue( shipname, "sellShip" ))
       return;
 
    /* Calculate price. */

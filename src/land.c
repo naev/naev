@@ -103,6 +103,8 @@ static glTexture *mission_portrait = NULL; /**< Mission portrait. */
  * player stuff
  */
 static int last_window = 0; /**< Default window. */
+static int commodity_mod = 10;
+
 
 /*
  * Error handling.
@@ -124,6 +126,8 @@ static void commodity_exchange_open( unsigned int wid );
 static void commodity_update( unsigned int wid, char* str );
 static void commodity_buy( unsigned int wid, char* str );
 static void commodity_sell( unsigned int wid, char* str );
+static int commodity_canBuy( char *name );
+static int commodity_canSell( char *name );
 static int commodity_getMod (void);
 static void commodity_renderMod( double bx, double by, double w, double h, void *data );
 /* spaceport bar */
@@ -260,16 +264,59 @@ static void commodity_update( unsigned int wid, char* str )
    window_modifyText( wid, "txtDesc", com->description );
 
    /* Button enabling/disabling */
-   if (player_hasCredits( planet_commodityPrice( land_planet, com ) * commodity_getMod() ))
+   if (commodity_canBuy( comname ))
       window_enableButton( wid, "btnCommodityBuy" );
    else
       window_disableButton( wid, "btnCommodityBuy" );
 
-   if (pilot_cargoOwned( player.p, comname ) > 0)
+   if (commodity_canSell( comname ))
       window_enableButton( wid, "btnCommoditySell" );
    else
       window_disableButton( wid, "btnCommoditySell" );
 }
+
+
+static int commodity_canBuy( char *name )
+{
+   int failure;
+   unsigned int q, price;
+   Commodity *com;
+   char buf[ECON_CRED_STRLEN];
+
+   failure = 0;
+   q = commodity_getMod();
+   com = commodity_get( name );
+   price = planet_commodityPrice( land_planet, com ) * q;
+
+   if (!player_hasCredits( price )) {
+      credits2str( buf, price - player.p->credits, 2 );
+      land_errDialogueBuild("You need %s more credits.", buf );
+      failure = 1;
+   }
+   if (pilot_cargoFree(player.p) <= 0) {
+      land_errDialogueBuild("No cargo space available!");
+      failure = 1;
+   }
+
+   return !failure;
+}
+
+
+static int commodity_canSell( char *name )
+{
+   int failure;
+
+   failure = 0;
+
+   if (pilot_cargoOwned( player.p, name ) == 0) {
+      land_errDialogueBuild("You can't sell something you don't have!");
+      failure = 1;
+   }
+
+   return !failure;
+}
+
+
 /**
  * @brief Buys the selected commodity.
  *    @param wid Window buying from.
@@ -291,14 +338,8 @@ static void commodity_buy( unsigned int wid, char* str )
    price = planet_commodityPrice( land_planet, com );
 
    /* Check stuff. */
-   if (!player_hasCredits( price )) {
-      dialogue_alert( "Insufficient credits!" );
+   if (land_errDialogue( comname, "buyCommodity" ))
       return;
-   }
-   else if (pilot_cargoFree(player.p) <= 0) {
-      dialogue_alert( "Insufficient free space!" );
-      return;
-   }
 
    /* Make the buy. */
    q = pilot_cargoAdd( player.p, com, q );
@@ -336,6 +377,10 @@ static void commodity_sell( unsigned int wid, char* str )
    comname = toolkit_getList( wid, "lstGoods" );
    com   = commodity_get( comname );
    price = planet_commodityPrice( land_planet, com );
+
+   /* Check stuff. */
+   if (land_errDialogue( comname, "sellCommodity" ))
+      return;
 
    /* Remove commodity. */
    q = pilot_cargoRm( player.p, com, q );
@@ -388,6 +433,10 @@ static void commodity_renderMod( double bx, double by, double w, double h, void 
    char buf[8];
 
    q = commodity_getMod();
+   if (q != commodity_mod) {
+      commodity_update( land_getWid(LAND_WINDOW_COMMODITY), NULL );
+      commodity_mod = q;
+   }
    snprintf( buf, 8, "%dx", q );
    gl_printMid( &gl_smallFont, w, bx, by, &cBlack, buf );
 }
@@ -404,9 +453,10 @@ int can_swapEquipment( char* shipname )
    Pilot *newship;
    newship = player_getShip(shipname);
 
-   if (strcmp(shipname,player.p->name)==0) /* Already onboard. */
+   if (strcmp(shipname,player.p->name)==0) { /* Already onboard. */
       land_errDialogueBuild( "You're already onboard the %s.", shipname );
       failure = 1;
+   }
    if (strcmp(loc,land_planet->name)) { /* Ship isn't here. */
       dialogue_alert( "You must transport the ship to %s to be able to get in.",
             land_planet->name );
@@ -427,22 +477,30 @@ int can_swapEquipment( char* shipname )
 
 /**
  * @brief Generates error dialogues used by several landing tabs.
- *    @param shipname Ship being acted upon.
+ *    @param name Name of the ship, outfit or commodity being acted upon.
  *    @param type Type of action.
  */
-int land_errDialogue( char* shipname, char* type )
+int land_errDialogue( char* name, char* type )
 {
    errorlist_ptr = NULL;
-   if (strcmp(type,"trade")==0)
-      shipyard_canTrade( shipname );
-   else if (strcmp(type,"buy")==0)
-      shipyard_canBuy( shipname );
+   if (strcmp(type,"tradeShip")==0)
+      shipyard_canTrade( name );
+   else if (strcmp(type,"buyShip")==0)
+      shipyard_canBuy( name );
    else if (strcmp(type,"swapEquipment")==0)
-      can_swapEquipment( shipname );
+      can_swapEquipment( name );
    else if (strcmp(type,"swap")==0)
-      can_swap( shipname );
-   else if (strcmp(type,"sell")==0)
-      can_sell( shipname );
+      can_swap( name );
+   else if (strcmp(type,"sellShip")==0)
+      can_sell( name );
+   else if (strcmp(type,"buyOutfit")==0)
+      outfit_canBuy( name );
+   else if (strcmp(type,"sellOutfit")==0)
+      outfit_canSell( name );
+   else if (strcmp(type,"buyCommodity")==0)
+      commodity_canBuy( name );
+   else if (strcmp(type,"sellCommodity")==0)
+      commodity_canSell( name );
    if (errorlist_ptr != NULL) {
       dialogue_alert( "%s", errorlist );
       return 1;
