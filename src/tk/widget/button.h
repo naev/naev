@@ -15,6 +15,7 @@ typedef struct WidgetButtonData_ {
    void (*fptr) (unsigned int,char*); /**< Activate callback. */
    char *display; /**< Displayed text. */
    int disabled; /**< 1 if button is disabled, 0 if enabled. */
+   int softdisable; /**< Whether the function should still run if disabled. */
    SDLKey key;
 } WidgetButtonData;
 
@@ -35,6 +36,7 @@ void window_addButton( const unsigned int wid,
 
 /* Misc functions. */
 void window_disableButton( const unsigned int wid, char* name );
+void window_disableButtonSoft( const unsigned int wid, char* name );
 void window_enableButton( const unsigned int wid, char *name );
 void window_buttonCaption( const unsigned int wid, char *name, char *display );
 

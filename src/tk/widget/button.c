@@ -149,11 +149,30 @@ void window_disableButton( const unsigned int wid, char* name )
 
    /* Disable button. */
    wgt->dat.btn.disabled = 1;
-   wgt_rmFlag(wgt, WGT_FLAG_CANFOCUS);
 
    /* Sanitize focus. */
    wdw = window_wget(wid);
    toolkit_focusSanitize(wdw);
+}
+
+
+/**
+ * @brief Disables a button, while still running the button's function.
+ *
+ *    @param wid ID of the window to get widget from.
+ *    @param name Name of the button to disable.
+ */
+void window_disableButtonSoft( const unsigned int wid, char *name )
+{
+   Widget *wgt;
+
+   /* Get the widget. */
+      wgt = btn_get( wid, name );
+      if (wgt == NULL)
+         return;
+
+   wgt->dat.btn.softdisable = 1;
+   window_disableButton( wid, name );
 }
 
 
@@ -238,8 +257,8 @@ static int btn_key( Widget* btn, SDLKey key, SDLMod mod )
 {
    (void) mod;
 
-   /* Don't grab disabled events. */
-   if (btn->dat.btn.disabled)
+   /* Don't grab disabled events. Soft-disabling falls through. */
+   if ((btn->dat.btn.disabled) && (!btn->dat.btn.softdisable))
       return 0;
 
    if (key == SDLK_RETURN || key == SDLK_KP_ENTER)
