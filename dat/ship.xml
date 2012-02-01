@@ -215,8 +215,8 @@
   </movement>
   <health>
    <absorb>13</absorb>
-   <shield>200</shield>
-   <armour>500</armour>
+   <shield>180</shield>
+   <armour>240</armour>
    <energy>405</energy>
    <shield_regen>6</shield_regen>
    <armour_regen>0</armour_regen>
@@ -225,9 +225,9 @@
   <characteristics>
    <cpu>30</cpu>
    <crew>3</crew>
-   <mass>150</mass>
+   <mass>180</mass>
    <fuel>500</fuel>
-   <cap_cargo>75</cap_cargo>
+   <cap_cargo>65</cap_cargo>
   </characteristics>
   <slots>
    <weapon x="11" y="0" h="-7"/>
@@ -259,8 +259,8 @@
   </movement>
   <health>
    <absorb>18</absorb>
-   <shield>200</shield>
-   <armour>70</armour>
+   <shield>240</shield>
+   <armour>130</armour>
    <energy>580</energy>
    <shield_regen>5</shield_regen>
    <armour_regen>0</armour_regen>
@@ -269,7 +269,7 @@
   <characteristics>
    <cpu>35</cpu>
    <crew>4</crew>
-   <mass>120</mass>
+   <mass>225</mass>
    <fuel>500</fuel>
    <cap_cargo>45</cap_cargo>
   </characteristics>
