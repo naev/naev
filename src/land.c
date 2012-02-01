@@ -267,12 +267,12 @@ static void commodity_update( unsigned int wid, char* str )
    if (commodity_canBuy( comname ))
       window_enableButton( wid, "btnCommodityBuy" );
    else
-      window_disableButton( wid, "btnCommodityBuy" );
+      window_disableButtonSoft( wid, "btnCommodityBuy" );
 
    if (commodity_canSell( comname ))
       window_enableButton( wid, "btnCommoditySell" );
    else
-      window_disableButton( wid, "btnCommoditySell" );
+      window_disableButtonSoft( wid, "btnCommoditySell" );
 }
 
 

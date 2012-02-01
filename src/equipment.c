@@ -1508,14 +1508,14 @@ void equipment_updateShips( unsigned int wid, char* str )
 
    /* button disabling */
    if (onboard) {
-      window_disableButton( wid, "btnSellShip" );
-      window_disableButton( wid, "btnChangeShip" );
+      window_disableButtonSoft( wid, "btnSellShip" );
+      window_disableButtonSoft( wid, "btnChangeShip" );
    }
    else {
       if (strcmp(land_planet->name,loc)) { /* ship not here */
          window_buttonCaption( wid, "btnChangeShip", "Transport" );
          if (!player_hasCredits( price ))
-            window_disableButton( wid, "btnChangeShip" );
+            window_disableButtonSoft( wid, "btnChangeShip" );
          else
             window_enableButton( wid, "btnChangeShip" );
       }
@@ -1524,7 +1524,7 @@ void equipment_updateShips( unsigned int wid, char* str )
          if (can_swapEquipment( ship->name ))
             window_enableButton( wid, "btnChangeShip" );
          else
-            window_disableButton( wid, "btnChangeShip" );
+            window_disableButtonSoft( wid, "btnChangeShip" );
       }
       /* If ship is there you can always sell. */
       window_enableButton( wid, "btnSellShip" );

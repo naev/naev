@@ -261,12 +261,12 @@ void shipyard_update( unsigned int wid, char* str )
    window_modifyText( wid,  "txtDDesc", buf );
 
    if (!shipyard_canBuy( shipname ))
-      window_disableButton( wid, "btnBuyShip");
+      window_disableButtonSoft( wid, "btnBuyShip");
    else
       window_enableButton( wid, "btnBuyShip");
 
    if (!shipyard_canTrade( shipname ))
-      window_disableButton( wid, "btnTradeShip");
+      window_disableButtonSoft( wid, "btnTradeShip");
    else
       window_enableButton( wid, "btnTradeShip");
 }

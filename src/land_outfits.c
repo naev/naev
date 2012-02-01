@@ -269,13 +269,13 @@ void outfits_update( unsigned int wid, char* str )
    if (outfit_canBuy(outfitname) > 0)
       window_enableButton( wid, "btnBuyOutfit" );
    else
-      window_disableButton( wid, "btnBuyOutfit" );
+      window_disableButtonSoft( wid, "btnBuyOutfit" );
 
    /* gray out sell button */
    if (outfit_canSell(outfitname) > 0)
       window_enableButton( wid, "btnSellOutfit" );
    else
-      window_disableButton( wid, "btnSellOutfit" );
+      window_disableButtonSoft( wid, "btnSellOutfit" );
 
    /* new text */
    window_modifyText( wid, "txtDescription", outfit->description );
