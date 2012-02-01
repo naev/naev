@@ -738,6 +738,7 @@
    <item>High Tech Upgrades 1</item>
    <item>Basic Civilian Ships</item>
    <item>Heavy Civilian Combat Ships</item>
+   <item>Empire Military Ships</item>
   </tech>
  </asset>
  <asset name="Arcturus I">
@@ -3180,6 +3181,32 @@
    <commodities/>
    <description>Emperor's Fist is intended to be the new homeworld of the Emperor himself since the last one was destroyed in the Incident. It's a massive project that is attempting to completely transform a C-class world into that which is suitable for the highest ranks of the Empire's aristocracy. Currently it possesses few amenities beyond the Starport.</description>
    <bar>The bar is designed for those working on the terraforming project. Small compared to many planetary bars, it nonetheless has a steady flow of patrons, largely consisting of off-duty terraforming workers.</bar>
+  </general>
+ </asset>
+ <asset name="Emperor's Wrath">
+  <pos>
+   <x>14872.002040</x>
+   <y>4776.912950</y>
+  </pos>
+  <GFX>
+   <space>wrath.png</space>
+   <exterior>station03.png</exterior>
+  </GFX>
+  <presence>
+   <faction>Empire</faction>
+   <value>100.000000</value>
+   <range>0</range>
+  </presence>
+  <general>
+   <class>0</class>
+   <population>5000</population>
+   <hide>0.800000</hide>
+   <services>
+    <land>emp_mil_wrath</land>
+    <refuel/>
+   </services>
+   <commodities/>
+   <description>The Emperor's Wrath is where the Emperor and his Council reside. It is a massive space ship, offering enough space for a permanent military installation, the Emperor's personal city, and the administration of the entire Empire. In addition, the Wrath serves as a symbol of the Emperor's power. The ship is essentially functional, capable of flight under its own power and even hyperspace jumps, but it has not moved from its current orbit around Emperor's Fist since it was first commisioned. The Wrath is closed to the public, conducting its official business via the nearby station of Polaris Prime. Very few people have the privilege to step aboard the ship at all.</description>
   </general>
  </asset>
  <asset name="Eneguoz II">
@@ -8306,8 +8333,8 @@ New Dortmund was never very successful in any sense of the term, but it is still
  </asset>
  <asset name="Polaris Prime">
   <pos>
-   <x>14797.406966</x>
-   <y>4825.680532</y>
+   <x>13874.285594</x>
+   <y>4806.246398</y>
   </pos>
   <GFX>
    <space>002.png</space>
@@ -8323,7 +8350,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <population>318000</population>
    <hide>0.600000</hide>
    <services>
-    <land>emp_mil_polprime</land>
+    <land>land_hiclass</land>
     <refuel/>
     <bar/>
     <commodity/>
@@ -8337,14 +8364,13 @@ New Dortmund was never very successful in any sense of the term, but it is still
     <commodity>Luxury Goods</commodity>
     <commodity>Industrial Goods</commodity>
    </commodities>
-   <description>Polaris Prime has recently become home to the Emperor himself as he plans and constructs his new stronghold on Emperor's Fist. It is an immense station with booming commerce, with a large loading area and frequent freight transfers between the station and Emperor's Fist below.</description>
-   <bar>Since you aren't allowed in the fancier bars you wander into the spaceport bar. A simple, utilitarian bar patronized largely by off-duty dock workers and terraformers, it is nonetheless kept immaculately clean. You can only imagine how luxurious the Emperor's personal bar must be.</bar>
+   <description>Polaris Prime is the service station for the Emperor's Wrath. Normal people are not allowed to set foot on the gargantuan ship, so all official business has to happen on Polaris Prime. The station is a trade hub as well as a center of government, serving as the civilian end of the Empire's capital.</description>
+   <bar>A simple, utilitarian bar patronized largely by off-duty dock workers and terraformers, this bar is nonetheless kept immaculately clean. It clearly means to set the... bar for all bars in Emire space.</bar>
   </general>
   <tech>
    <item>Laser 1</item>
    <item>Laser 2</item>
    <item>Laser 3</item>
-   <item>Empire Military Ships</item>
    <item>High Tech Upgrades 2</item>
    <item>Heavy Weapons 2</item>
   </tech>
