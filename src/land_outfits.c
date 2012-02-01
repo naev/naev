@@ -92,15 +92,15 @@ void outfits_open( unsigned int wid )
    window_setAccept( wid, outfits_buy );
 
    /* buttons */
-   window_addButton( wid, -20, 20,
+   window_addButtonKey( wid, -20, 20,
          bw, bh, "btnCloseOutfits",
-         "Take Off", land_buttonTakeoff );
-   window_addButton( wid, -40-bw, 20,
+         "Take Off", land_buttonTakeoff, SDLK_t );
+   window_addButtonKey( wid, -40-bw, 20,
          bw, bh, "btnSellOutfit",
-         "Sell", outfits_sell );
-   window_addButton( wid, -60-bw*2, 20,
+         "Sell", outfits_sell, SDLK_s );
+   window_addButtonKey( wid, -60-bw*2, 20,
          bw, bh, "btnBuyOutfit",
-         "Buy", outfits_buy );
+         "Buy", outfits_buy, SDLK_b );
 
    /* fancy 128x128 image */
    window_addRect( wid, 19 + iw + 20, -50, 128, 129, "rctImage", &cBlack, 0 );

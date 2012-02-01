@@ -180,15 +180,15 @@ static void commodity_exchange_open( unsigned int wid )
    window_dimWindow( wid, &w, &h );
 
    /* buttons */
-   window_addButton( wid, -20, 20,
+   window_addButtonKey( wid, -20, 20,
          LAND_BUTTON_WIDTH, LAND_BUTTON_HEIGHT, "btnCommodityClose",
-         "Take Off", land_buttonTakeoff );
-   window_addButton( wid, -40-((LAND_BUTTON_WIDTH-20)/2), 20*2 + LAND_BUTTON_HEIGHT,
+         "Take Off", land_buttonTakeoff, SDLK_t );
+   window_addButtonKey( wid, -40-((LAND_BUTTON_WIDTH-20)/2), 20*2 + LAND_BUTTON_HEIGHT,
          (LAND_BUTTON_WIDTH-20)/2, LAND_BUTTON_HEIGHT, "btnCommodityBuy",
-         "Buy", commodity_buy );
-   window_addButton( wid, -20, 20*2 + LAND_BUTTON_HEIGHT,
+         "Buy", commodity_buy, SDLK_b );
+   window_addButtonKey( wid, -20, 20*2 + LAND_BUTTON_HEIGHT,
          (LAND_BUTTON_WIDTH-20)/2, LAND_BUTTON_HEIGHT, "btnCommoditySell",
-         "Sell", commodity_sell );
+         "Sell", commodity_sell, SDLK_s );
 
       /* cust draws the modifier */
    window_addCust( wid, -40-((LAND_BUTTON_WIDTH-20)/2), 60+ 2*LAND_BUTTON_HEIGHT,
@@ -506,12 +506,12 @@ static void bar_open( unsigned int wid )
    dh = gl_printHeightRaw( &gl_smallFont, w - iw - 60, land_planet->bar_description );
 
    /* Buttons */
-   window_addButton( wid, -20, 20,
+   window_addButtonKey( wid, -20, 20,
          bw, bh, "btnCloseBar",
-         "Take Off", land_buttonTakeoff );
-   window_addButton( wid, -20 - bw - 20, 20,
+         "Take Off", land_buttonTakeoff, SDLK_t );
+   window_addButtonKey( wid, -20 - bw - 20, 20,
          bw, bh, "btnApproach",
-         "Approach", bar_approach );
+         "Approach", bar_approach, SDLK_a );
 
    /* Bar description. */
    window_addText( wid, iw + 40, -40,
@@ -736,12 +736,12 @@ static void misn_open( unsigned int wid )
    window_onClose( wid, misn_close );
 
    /* buttons */
-   window_addButton( wid, -20, 20,
+   window_addButtonKey( wid, -20, 20,
          LAND_BUTTON_WIDTH,LAND_BUTTON_HEIGHT, "btnCloseMission",
-         "Take Off", land_buttonTakeoff );
-   window_addButton( wid, -20, 40+LAND_BUTTON_HEIGHT,
+         "Take Off", land_buttonTakeoff, SDLK_t );
+   window_addButtonKey( wid, -20, 40+LAND_BUTTON_HEIGHT,
          LAND_BUTTON_WIDTH,LAND_BUTTON_HEIGHT, "btnAcceptMission",
-         "Accept Mission", misn_accept );
+         "Accept Mission", misn_accept, SDLK_a );
 
    /* text */
    y = -60;
@@ -1312,9 +1312,9 @@ static void land_createMainTab( unsigned int wid )
     * buttons
     */
    /* first column */
-   window_addButton( wid, -20, 20,
+   window_addButtonKey( wid, -20, 20,
          LAND_BUTTON_WIDTH, LAND_BUTTON_HEIGHT, "btnTakeoff",
-         "Take Off", land_buttonTakeoff );
+         "Take Off", land_buttonTakeoff, SDLK_t );
 
    /*
     * Checkboxes.

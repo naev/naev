@@ -237,21 +237,21 @@ void equipment_open( unsigned int wid )
    equipment_addAmmo();
 
    /* buttons */
-   window_addButton( wid, -20, 20,
+   window_addButtonKey( wid, -20, 20,
          bw, bh, "btnCloseEquipment",
-         "Take Off", land_buttonTakeoff );
-   window_addButton( wid, -20 - (15+bw), 20,
+         "Take Off", land_buttonTakeoff, SDLK_t );
+   window_addButtonKey( wid, -20 - (15+bw), 20,
          bw, bh, "btnSetGUI",
-         "Set GUI", equipment_setGui );
-   window_addButton( wid, -20 - (15+bw)*2, 20,
+         "Set GUI", equipment_setGui, SDLK_g );
+   window_addButtonKey( wid, -20 - (15+bw)*2, 20,
          bw, bh, "btnSellShip",
-         "Sell Ship", equipment_sellShip );
-   window_addButton( wid, -20 - (15+bw)*3, 20,
+         "Sell Ship", equipment_sellShip, SDLK_s );
+   window_addButtonKey( wid, -20 - (15+bw)*3, 20,
          bw, bh, "btnChangeShip",
-         "Swap Ship", equipment_transChangeShip );
-   window_addButton( wid, -20 - (15+bw)*4, 20,
+         "Swap Ship", equipment_transChangeShip, SDLK_p );
+   window_addButtonKey( wid, -20 - (15+bw)*4, 20,
          bw, bh, "btnUnequipShip",
-         "Unequip", equipment_unequipShip );
+         "Unequip", equipment_unequipShip, SDLK_u );
 
    /* text */
    buf = "Name:\n"
