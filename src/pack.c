@@ -569,8 +569,7 @@ Packfile_t* pack_open( const char* packfile, const char* filename )
    uint64_t end64;
 
    /* Allocate memory. */
-   file = malloc(sizeof(Packfile_t));
-   memset( file, 0, sizeof(Packfile_t) );
+   file = calloc( 1, sizeof(Packfile_t) );
 
 #if HAS_FD
    file->fd = open( packfile, O_RDONLY );

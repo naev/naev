@@ -86,8 +86,7 @@ static gl_vbo* gl_vboCreate( GLenum target, GLsizei size, void* data, GLenum usa
    gl_vbo *vbo;
 
    /* Allocate. */
-   vbo = malloc( sizeof(gl_vbo) );
-   memset( vbo, 0, sizeof(gl_vbo) );
+   vbo = calloc( 1, sizeof(gl_vbo) );
 
    /* General stuff. */
    vbo->size = size;
