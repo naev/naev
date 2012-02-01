@@ -1898,8 +1898,8 @@
    <damage>
     <type>emp</type>
     <penetrate>50</penetrate>
-    <physical>50</physical>
-    <disable>1</disable>
+    <physical>8</physical>
+    <disable>40</disable>
    </damage>
    <ai>dumb</ai>
   </specific>
