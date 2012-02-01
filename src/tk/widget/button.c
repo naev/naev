@@ -10,6 +10,7 @@
 
 
 #include "tk/toolkit_priv.h"
+#include "nstring.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -19,6 +20,67 @@ static int btn_key( Widget* btn, SDLKey key, SDLMod mod );
 static void btn_render( Widget* btn, double bx, double by );
 static void btn_cleanup( Widget* btn );
 static Widget* btn_get( const unsigned int wid, const char* name );
+static void btn_updateHotkey( Widget *btn );
+
+
+/**
+ * @brief Adds a button widget to a window, with a hotkey that enables the button to be activated with that key.
+ *
+ * Position origin is 0,0 at bottom left.  If you use negative X or Y
+ *  positions.  They actually count from the opposite side in.
+ *
+ *    @param wid ID of the window to add the widget to.
+ *    @param x X position within the window to use.
+ *    @param y Y position within the window to use.
+ *    @param w Width of the widget.
+ *    @param h Height of the widget.
+ *    @param name Name of the widget to use internally.
+ *    @param display Text displayed on the button (centered).
+ *    @param call Function to call when button is pressed. Parameter passed
+ *                is the name of the button.
+ *    @param key Hotkey for using the button without it being focused.
+ */
+void window_addButtonKey( const unsigned int wid,
+                       const int x, const int y,
+                       const int w, const int h,
+                       char* name, char* display,
+                       void (*call) (unsigned int wgt, char* wdwname),
+                       SDLKey key )
+{
+   Window *wdw = window_wget(wid);
+   Widget *wgt = window_newWidget(wdw, name);
+   if (wgt == NULL)
+      return;
+
+   /* generic */
+   wgt->type = WIDGET_BUTTON;
+
+   /* specific */
+   wgt->keyevent           = btn_key;
+   wgt->render             = btn_render;
+   wgt->cleanup            = btn_cleanup;
+   wgt_setFlag(wgt, WGT_FLAG_CANFOCUS);
+   wgt->dat.btn.display    = strdup(display);
+   wgt->dat.btn.disabled   = 0; /* initially enabled */
+   wgt->dat.btn.fptr       = call;
+   if (key != 0) {
+      wgt->dat.btn.key = key;
+      btn_updateHotkey(wgt);
+   }
+
+   /* position/size */
+   wgt->w = (double) w;
+   wgt->h = (double) h;
+   toolkit_setPos( wdw, wgt, x, y );
+
+   if (wgt->dat.btn.fptr == NULL) { /* Disable if function is NULL. */
+      wgt->dat.btn.disabled = 1;
+      wgt_rmFlag(wgt, WGT_FLAG_CANFOCUS);
+   }
+
+   if (wdw->focus == -1) /* initialize the focus */
+      toolkit_nextFocus( wdw );
+}
 
 
 /**
@@ -43,36 +105,9 @@ void window_addButton( const unsigned int wid,
                        char* name, char* display,
                        void (*call) (unsigned int wgt, char* wdwname) )
 {
-   Window *wdw = window_wget(wid);
-   Widget *wgt = window_newWidget(wdw, name);
-   if (wgt == NULL)
-      return;
-
-   /* generic */
-   wgt->type = WIDGET_BUTTON;
-
-   /* specific */
-   wgt->keyevent           = btn_key;
-   wgt->render             = btn_render;
-   wgt->cleanup            = btn_cleanup;
-   wgt_setFlag(wgt, WGT_FLAG_CANFOCUS);
-   wgt->dat.btn.display    = strdup(display);
-   wgt->dat.btn.disabled   = 0; /* initially enabled */
-   wgt->dat.btn.fptr       = call;
-
-   /* position/size */
-   wgt->w = (double) w;
-   wgt->h = (double) h;
-   toolkit_setPos( wdw, wgt, x, y );
-
-   if (wgt->dat.btn.fptr == NULL) { /* Disable if function is NULL. */
-      wgt->dat.btn.disabled = 1;
-      wgt_rmFlag(wgt, WGT_FLAG_CANFOCUS);
-   }
-
-   if (wdw->focus == -1) /* initialize the focus */
-      toolkit_nextFocus( wdw );
+   window_addButtonKey( wid, x, y, w, h, name, display, call, 0 );
 }
+
 
 /**
  * @brief Gets a button widget.
@@ -163,6 +198,28 @@ void window_buttonCaption( const unsigned int wid, char *name, char *display )
    if (wgt->dat.btn.display != NULL)
       free(wgt->dat.btn.display);
    wgt->dat.btn.display = strdup(display);
+
+   if (wgt->dat.btn.key != 0)
+      btn_updateHotkey(wgt);
+}
+
+
+static void btn_updateHotkey( Widget *btn )
+{
+   char buf[PATH_MAX];
+   const char *match, *display;
+
+   display = btn->dat.btn.display;
+   match = nstrcasestr( display, SDL_GetKeyName(btn->dat.btn.key) );
+   if (match != NULL) {
+      strncpy( buf, display, match - display );
+      buf[match-display] = '\0';
+      snprintf( &buf[match-display], sizeof(buf), "\eb%c\e0%s", match[0], match+1 );
+
+      if (btn->dat.btn.display != NULL)
+         free(btn->dat.btn.display);
+      btn->dat.btn.display = strdup(buf);
+   }
 }
 
 
