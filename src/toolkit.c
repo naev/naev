@@ -2260,6 +2260,56 @@ static Widget* toolkit_getFocus( Window *wdw )
 
 
 /**
+ * @brief Sets the focused widget in a window.
+ *
+ *    @param wid ID of the window to get widget from.
+ *    @param name Name of the widget to set focus to.
+ */
+void window_setFocus( const unsigned int wid, const char* wgtname )
+{
+   Window *wdw;
+   Widget *wgt;
+
+   /* Get window. */
+   wdw = window_wget(wid);
+   if (wdw == NULL)
+      return;
+
+   /* Get widget. */
+   wgt = window_getwgt(wid,wgtname);
+   if (wgt == NULL)
+      return;
+
+   wdw->focus = wgt->id;
+}
+
+
+/**
+ * @brief Gets the focused widget in a window.
+ *
+ *    @param wid ID of the window to get widget from.
+ *    @return The focused widget's name.
+ */
+char* window_getFocus( const unsigned int wid )
+{
+   Window *wdw;
+   Widget *wgt;
+
+   /* Get window. */
+   wdw = window_wget(wid);
+   if (wdw == NULL)
+      return NULL;
+
+   /* Find focused widget. */
+   for (wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next)
+      if (wgt->id == wdw->focus)
+         return wgt->name;
+
+   return NULL;
+}
+
+
+/**
  * @brief Initializes the toolkit.
  *
  *    @return 0 on success.
