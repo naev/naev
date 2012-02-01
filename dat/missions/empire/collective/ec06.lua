@@ -168,8 +168,6 @@ function jumpin ()
             end
             
             hook.timer(500, "proximity", {location = fleetEpos, radius = 800, funcname = "prestartBattle"})
-            -- hook.timer(500, "proximity", {location = fleetCpos, radius = 3500, funcname = "startBattle"})
-            -- This can't work yet! Only one proximity hook can be active at a time.
 
             if last_sys ~= misn_target_sys2 then
             -- Jumped in through the wrong jump point
