@@ -157,6 +157,26 @@ void window_disableButton( const unsigned int wid, char* name )
 
 
 /**
+ * @brief Disables a button, while still running the button's function.
+ *
+ *    @param wid ID of the window to get widget from.
+ *    @param name Name of the button to disable.
+ */
+void window_disableButtonSoft( const unsigned int wid, char *name )
+{
+   Widget *wgt;
+
+   /* Get the widget. */
+      wgt = btn_get( wid, name );
+      if (wgt == NULL)
+         return;
+
+   wgt->dat.btn.softdisable = 1;
+   window_disableButton( wid, name );
+}
+
+
+/**
  * @brief Enables a button.
  *
  *    @param wid ID of the window to get widget from.
@@ -236,6 +256,10 @@ static void btn_updateHotkey( Widget *btn )
 static int btn_key( Widget* btn, SDLKey key, SDLMod mod )
 {
    (void) mod;
+
+   /* Don't grab disabled events. Soft-disabling falls through. */
+   if ((btn->dat.btn.disabled) && (!btn->dat.btn.softdisable))
+      return 0;
 
    if (key == SDLK_RETURN || key == SDLK_KP_ENTER)
       if (btn->dat.btn.fptr != NULL) {

@@ -1782,7 +1782,9 @@ static void toolkit_mouseEventWidget( Window *w, Widget *wgt,
             break;
 
          if (wgt->status==WIDGET_STATUS_MOUSEDOWN) {
-            if (wgt->type==WIDGET_BUTTON) {
+            /* Soft-disabled buttons will run anyway. */
+            if ((wgt->type==WIDGET_BUTTON) && ((wgt->dat.btn.disabled==0) ||
+                  (wgt->dat.btn.softdisable))) {
                if (wgt->dat.btn.fptr==NULL)
                   DEBUG("Toolkit: Button '%s' of Window '%s' "
                         "doesn't have a function trigger",
