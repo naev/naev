@@ -204,6 +204,9 @@ void window_buttonCaption( const unsigned int wid, char *name, char *display )
 }
 
 
+/**
+ * @brief Checks a button's hotkey against its label and highlights the hotkey, if present.
+ */
 static void btn_updateHotkey( Widget *btn )
 {
    char buf[PATH_MAX];
