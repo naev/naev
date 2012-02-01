@@ -1101,13 +1101,16 @@ void equipment_regenLists( unsigned int wid, int outfits, int ships )
    int ret;
    int nout, nship;
    double offout, offship;
-   char *s, selship[PATH_MAX];
+   char *s, *focused, selship[PATH_MAX];
 
    /* Default.s */
    nout     = 0;
    nship    = 0;
    offout   = 0.;
    offship  = 0.;
+
+   /* Save focus. */
+   focused = window_getFocus(wid);
 
    /* Save positions. */
    if (outfits) {
@@ -1146,6 +1149,9 @@ void equipment_regenLists( unsigned int wid, int outfits, int ships )
          equipment_updateShips( wid, NULL );
       }
    }
+
+   /* Restore focus. */
+   window_setFocus( wid, focused );
 }
 
 

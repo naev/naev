@@ -543,12 +543,15 @@ static void bar_open( unsigned int wid )
 static int bar_genList( unsigned int wid )
 {
    glTexture **portraits;
-   char **names;
+   char **names, *focused;
    int w, h, iw, ih, bw, bh;
    int n;
 
    /* Get dimensions. */
    bar_getDim( wid, &w, &h, &iw, &ih, &bw, &bh );
+
+   /* Save focus. */
+   focused = window_getFocus(wid);
 
    /* Destroy widget if already exists. */
    if (widget_exists( wid, "iarMissions" ))
@@ -583,6 +586,9 @@ static int bar_genList( unsigned int wid )
 
    /* write the outfits stuff */
    bar_update( wid, NULL );
+
+   /* Restore focus. */
+   window_setFocus( wid, focused );
 
    return 0;
 }
