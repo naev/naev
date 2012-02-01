@@ -149,7 +149,6 @@ void window_disableButton( const unsigned int wid, char* name )
 
    /* Disable button. */
    wgt->dat.btn.disabled = 1;
-   wgt_rmFlag(wgt, WGT_FLAG_CANFOCUS);
 
    /* Sanitize focus. */
    wdw = window_wget(wid);
@@ -237,10 +236,6 @@ static void btn_updateHotkey( Widget *btn )
 static int btn_key( Widget* btn, SDLKey key, SDLMod mod )
 {
    (void) mod;
-
-   /* Don't grab disabled events. */
-   if (btn->dat.btn.disabled)
-      return 0;
 
    if (key == SDLK_RETURN || key == SDLK_KP_ENTER)
       if (btn->dat.btn.fptr != NULL) {
