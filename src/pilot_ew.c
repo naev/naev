@@ -186,7 +186,8 @@ int pilot_inRangePlanet( const Pilot *p, int target )
    if ( !pnt->real )
       return 0;
 
-   sense = sensor_curRange * p->ew_detect;
+   /* @TODO ew_detect should be squared upon being set. */
+   sense = sensor_curRange * pow2(p->ew_detect);
 
    /* Get distance. */
    d = vect_dist2( &p->solid->pos, &pnt->pos );

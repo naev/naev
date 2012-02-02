@@ -1921,6 +1921,9 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
    }
 #undef MELEMENT
 
+   /* Square to allow for linear multiplication with squared distances. */
+   planet->hide = pow2(planet->hide);
+
    return 0;
 }
 
@@ -2513,6 +2516,9 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
 
    if (!jp_isFlag(j,JP_AUTOPOS) && !pos)
       WARN("JumpPoint in system '%s' is missing pos element but does not have autopos flag.", sys->name);
+
+   /* Square to allow for linear multiplication with squared distances. */
+   j->hide = pow2(j->hide);
 
    /* Added jump. */
    sys->njumps++;
