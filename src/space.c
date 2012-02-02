@@ -2904,7 +2904,7 @@ void space_clearKnown (void)
          jp_rmFlag(&sys->jumps[j],JP_KNOWN);
    }
    for (j=0; j<planet_nstack; j++)
-      planet_rmFlag(&planet_stack[i],PLANET_KNOWN);
+      planet_rmFlag(&planet_stack[j],PLANET_KNOWN);
 }
 
 
