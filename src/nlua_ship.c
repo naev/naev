@@ -235,12 +235,12 @@ static int shipL_get( lua_State *L )
    return 1;
 }
 /**
- * @brief Gets the name of the ship's ship.
+ * @brief Gets the name of the ship.
  *
  * @usage shipname = s:name()
  *
  *    @luaparam s Ship to get ship name.
- *    @luareturn The name of the ship's ship.
+ *    @luareturn The name of the ship.
  * @luafunc name( s )
  */
 static int shipL_name( lua_State *L )
@@ -280,12 +280,12 @@ static int shipL_baseType( lua_State *L )
 
 
 /**
- * @brief Gets the name of the ship's ship class.
+ * @brief Gets the name of the ship's class.
  *
  * @usage shipclass = s:class()
  *
  *    @luaparam s Ship to get ship class name.
- *    @luareturn The name of the ship's ship class.
+ *    @luareturn The name of the ship's class.
  * @luafunc class( s )
  */
 static int shipL_class( lua_State *L )
@@ -301,7 +301,7 @@ static int shipL_class( lua_State *L )
 
 
 /**
- * @brief Gets the amount of the ship's ship slots.
+ * @brief Gets the amount of the ship's slots.
  *
  * @usage slots_weapon, slots_utility, slots_structure = p:slots()
  *
@@ -330,7 +330,7 @@ static int shipL_slots( lua_State *L )
  * @usage cpu_left = s:cpu()
  *
  *    @luaparam s Ship to get available CPU of.
- *    @luareturn The CPU available on the ship's ship.
+ *    @luareturn The CPU available on the ship.
  * @luafunc cpu( s )
  */
 static int shipL_CPU( lua_State *L )
