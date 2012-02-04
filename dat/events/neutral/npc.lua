@@ -106,7 +106,7 @@ else --default english
                                "We have the Dvaered encroaching on our territory on one side, and the Sirius zealots on the other. Sometimes I worry that in a few decacycles, the Frontier will no longer exist.",
                                "Have you visited the Frontier Museum? They've got a scale model of a First Growth colony ship on display in one of the big rooms. Even scaled down like that, it's massive! Imagine how overwhelming the real ones must have been.",
                                "There are eleven true Frontier worlds, because eleven colony ships successfully completed their journey in the First Growth. But did you know that there were twenty colony ships to begin with? Nine of them never made it. Some are said to have mysteriously disappeared. I wonder what happened to them?",
-                               "We don't have much here in the Frontier, other than our long history leading directly back to Earth. But I don't mind. I'm happy living here, and I wouldn't want to move anywhere else."
+                               "We don't have much here in the Frontier, other than our long history leading directly back to Earth. But I don't mind. I'm happy living here, and I wouldn't want to move anywhere else.",
                                "You know the Frontier Liberation Front? They're the guerilla movement that fights for the Frontier. Not to be confused with the Liberation Front of the Frontier, the Frontier Front for Liberation, or the Liberal Frontier's Front!"
                               }
 
