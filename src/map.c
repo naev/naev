@@ -1288,7 +1288,7 @@ void map_select( StarSystem *sys, char shifted )
          if (map_npath==0) {
             player_hyperspacePreempt(0);
             player_targetHyperspaceSet( -1 );
-            player_autonavAbort(NULL);
+            player_autonavAbortJump(NULL);
          }
          else  {
             /* see if it is a valid hyperspace target */
@@ -1296,8 +1296,6 @@ void map_select( StarSystem *sys, char shifted )
                if (map_path[0] == cur_system->jumps[i].target) {
                   player_hyperspacePreempt(1);
                   player_targetHyperspaceSet( i );
-                  if (!shifted)
-                     player_autonavAbort(NULL);
                   break;
                }
             }
@@ -1305,7 +1303,7 @@ void map_select( StarSystem *sys, char shifted )
       }
       else { /* unreachable. */
          player_targetHyperspaceSet( -1 );
-         player_autonavAbort(NULL);
+         player_autonavAbortJump(NULL);
       }
    }
 

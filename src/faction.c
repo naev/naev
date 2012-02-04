@@ -1040,8 +1040,7 @@ int factions_load (void)
    }
 
    /* player faction is hard-coded */
-   faction_stack = malloc( sizeof(Faction) );
-   memset(faction_stack, 0, sizeof(Faction) );
+   faction_stack = calloc( 1, sizeof(Faction) );
    faction_stack[0].name = strdup("Player");
    faction_stack[0].flags = FACTION_STATIC | FACTION_INVISIBLE;
    faction_nstack++;

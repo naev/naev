@@ -237,21 +237,21 @@ void equipment_open( unsigned int wid )
    equipment_addAmmo();
 
    /* buttons */
-   window_addButton( wid, -20, 20,
+   window_addButtonKey( wid, -20, 20,
          bw, bh, "btnCloseEquipment",
-         "Takeoff", land_buttonTakeoff );
-   window_addButton( wid, -20 - (15+bw), 20,
+         "Take Off", land_buttonTakeoff, SDLK_t );
+   window_addButtonKey( wid, -20 - (15+bw), 20,
          bw, bh, "btnSetGUI",
-         "Set GUI", equipment_setGui );
-   window_addButton( wid, -20 - (15+bw)*2, 20,
+         "Set GUI", equipment_setGui, SDLK_g );
+   window_addButtonKey( wid, -20 - (15+bw)*2, 20,
          bw, bh, "btnSellShip",
-         "Sell Ship", equipment_sellShip );
-   window_addButton( wid, -20 - (15+bw)*3, 20,
+         "Sell Ship", equipment_sellShip, SDLK_s );
+   window_addButtonKey( wid, -20 - (15+bw)*3, 20,
          bw, bh, "btnChangeShip",
-         "Swap Ship", equipment_transChangeShip );
-   window_addButton( wid, -20 - (15+bw)*4, 20,
+         "Swap Ship", equipment_transChangeShip, SDLK_p );
+   window_addButtonKey( wid, -20 - (15+bw)*4, 20,
          bw, bh, "btnUnequipShip",
-         "Unequip", equipment_unequipShip );
+         "Unequip", equipment_unequipShip, SDLK_u );
 
    /* text */
    buf = "Name:\n"
@@ -1101,13 +1101,16 @@ void equipment_regenLists( unsigned int wid, int outfits, int ships )
    int ret;
    int nout, nship;
    double offout, offship;
-   char *s, selship[PATH_MAX];
+   char *s, *focused, selship[PATH_MAX];
 
    /* Default.s */
    nout     = 0;
    nship    = 0;
    offout   = 0.;
    offship  = 0.;
+
+   /* Save focus. */
+   focused = window_getFocus(wid);
 
    /* Save positions. */
    if (outfits) {
@@ -1146,6 +1149,9 @@ void equipment_regenLists( unsigned int wid, int outfits, int ships )
          equipment_updateShips( wid, NULL );
       }
    }
+
+   /* Restore focus. */
+   window_setFocus( wid, focused );
 }
 
 
@@ -1502,20 +1508,23 @@ void equipment_updateShips( unsigned int wid, char* str )
 
    /* button disabling */
    if (onboard) {
-      window_disableButton( wid, "btnSellShip" );
-      window_disableButton( wid, "btnChangeShip" );
+      window_disableButtonSoft( wid, "btnSellShip" );
+      window_disableButtonSoft( wid, "btnChangeShip" );
    }
    else {
       if (strcmp(land_planet->name,loc)) { /* ship not here */
          window_buttonCaption( wid, "btnChangeShip", "Transport" );
          if (!player_hasCredits( price ))
-            window_disableButton( wid, "btnChangeShip" );
+            window_disableButtonSoft( wid, "btnChangeShip" );
          else
             window_enableButton( wid, "btnChangeShip" );
       }
       else { /* ship is here */
          window_buttonCaption( wid, "btnChangeShip", "Swap Ship" );
-         window_enableButton( wid, "btnChangeShip" );
+         if (can_swapEquipment( ship->name ))
+            window_enableButton( wid, "btnChangeShip" );
+         else
+            window_disableButtonSoft( wid, "btnChangeShip" );
       }
       /* If ship is there you can always sell. */
       window_enableButton( wid, "btnSellShip" );
@@ -1834,7 +1843,7 @@ static void equipment_sellShip( unsigned int wid, char* str )
 
    shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
 
-   if (land_errDialogue( shipname, "sell" ))
+   if (land_errDialogue( shipname, "sellShip" ))
       return;
 
    /* Calculate price. */

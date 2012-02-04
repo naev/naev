@@ -168,7 +168,7 @@
      * store
        * droid.png
 
- * Author: W. R. van Hage <http://www.xs4all.nl/~wrvh/galaxymap/>, License: CC-By-SA 3.0
+ * Author: W. R. van Hage <http://www.xs4all.nl/~wrvh/galaxymap/>, License: CC-by-sa 3.0
    * outfit
      * store
        * map.png
@@ -178,12 +178,12 @@
      * store
        * solar.png
  
- * Author: Kristian Mølhave, License: CC-By 3.0
+ * Author: Kristian Mølhave, License: CC-by 3.0
    * outfit
      * store
        * nanobond.png
  
- * Author: Justin Nichol <http://justinnichol.wordpress.com/>, License: CC-By v3.0
+ * Author: Justin Nichol <http://justinnichol.wordpress.com/>, License: CC-by 3.0
    * planet
      * space
        * moon-A01.png
@@ -227,7 +227,7 @@
        * plas.png
        * plam.png
  
- * Author: Josiah Schwartfeger, License: CC-by v3.0
+ * Author: Josiah Schwartfeger, License: CC-by 3.0
    * outfit
      * store
        * fuel_pod.png
@@ -260,7 +260,7 @@
      * kestrel_pirate.png
      * peacemaker.png
 
- * Author: Renderwahn, License: CC-by v3.0
+ * Author: Renderwahn, License: CC-by 3.0
    * gfx
      * spfx
        * debris0.png
@@ -272,7 +272,7 @@
      * logo
        * pirate_small.png
 
- * Author: Sean Hildebrand, License: CC-by v3.0
+ * Author: Sean Hildebrand, License: CC-by 3.0
    * gui
      * minimal_planet.png
      * minimal_pilot.png
@@ -363,7 +363,7 @@
          * efficiency_turret.png
          * firerate_turret.png
 
- * Author: Enigmatic, License: CC-by v3.0
+ * Author: Enigmatic, License: CC-by 3.0
    * gfx
      * logo
        * collective_small.png
@@ -446,7 +446,7 @@
          * yellow01.png
          * yellow02.png
 
- * Author: Scaatis, CC-by v3.0
+ * Author: Scaatis, CC-by 3.0
    * gfx
      * Naev.png
      * gui
@@ -510,6 +510,9 @@
        * rhino
          * rhino.png
          * rhino_pirate.png
+     * planet
+       * space
+         * wrath.png
 
  * Author: bornloser, License: CC-by-sa 3.0
    * gfx
@@ -544,7 +547,7 @@
        * star
          * redgiant02.png
 
- * Author: M. R. Bokhari "Viruk" <withextremeprejudice@gmail.com>, License: CC-by-sa v3
+ * Author: M. R. Bokhari "Viruk" <withextremeprejudice@gmail.com>, License: CC-by-sa 3.0
    * gfx
      * ship
        * arx
@@ -561,3 +564,13 @@
          * odium.png
        * reaver
          * reaver.png
+
+ * Author: SolCommand <http://solcommand.com>, License: CC-by 3.0
+   * gfx
+     * outfit
+       * store
+         * gaussgun.png
+         * gaussturret.png
+         * shredder.png
+         * vulcangun.png
+         * vulcanturret.png

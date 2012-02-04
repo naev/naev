@@ -74,15 +74,15 @@ void shipyard_open( unsigned int wid )
    bh = LAND_BUTTON_HEIGHT;
 
    /* buttons */
-   window_addButton( wid, -20, 20,
+   window_addButtonKey( wid, -20, 20,
          bw, bh, "btnCloseShipyard",
-         "Takeoff", land_buttonTakeoff );
-   window_addButton( wid, -40 - bw, 20,
+         "Take Off", land_buttonTakeoff, SDLK_t );
+   window_addButtonKey( wid, -40 - bw, 20,
          bw, bh, "btnTradeShip",
-         "Trade-In", shipyard_trade );
-   window_addButton( wid, -60 - bw*2, 20,
+         "Trade-In", shipyard_trade, SDLK_r );
+   window_addButtonKey( wid, -60 - bw*2, 20,
          bw, bh, "btnBuyShip",
-         "Buy", shipyard_buy );
+         "Buy", shipyard_buy, SDLK_b );
 
    /* target gfx */
    window_addRect( wid, -41, -50,
@@ -261,12 +261,12 @@ void shipyard_update( unsigned int wid, char* str )
    window_modifyText( wid,  "txtDDesc", buf );
 
    if (!shipyard_canBuy( shipname ))
-      window_disableButton( wid, "btnBuyShip");
+      window_disableButtonSoft( wid, "btnBuyShip");
    else
       window_enableButton( wid, "btnBuyShip");
 
    if (!shipyard_canTrade( shipname ))
-      window_disableButton( wid, "btnTradeShip");
+      window_disableButtonSoft( wid, "btnTradeShip");
    else
       window_enableButton( wid, "btnTradeShip");
 }
@@ -298,7 +298,7 @@ static void shipyard_buy( unsigned int wid, char* str )
 
    credits_t targetprice = ship->price;
 
-   if (land_errDialogue( shipname, "buy" ))
+   if (land_errDialogue( shipname, "buyShip" ))
       return;
 
    credits2str( buf, targetprice, 2 );
@@ -349,8 +349,8 @@ int shipyard_canBuy ( char *shipname )
 int can_sell( char* shipname )
 {
    int failure = 0;
-   if (strcmp( shipname, player.p->name )==0) { /* Already onboard. */
-      land_errDialogueBuild( "You can't sell the ship you're piloting.", shipname );
+   if (strcmp( shipname, player.p->name )==0) { /* Already on-board. */
+      land_errDialogueBuild( "You can't sell the ship you're piloting!", shipname );
       failure = 1;
    }
 
@@ -426,7 +426,7 @@ static void shipyard_trade( unsigned int wid, char* str )
    credits_t targetprice = ship->price;
    credits_t playerprice = player_shipPrice(player.p->name);
 
-   if (land_errDialogue( shipname, "trade" ))
+   if (land_errDialogue( shipname, "tradeShip" ))
       return;
 
    credits2str( buf, targetprice, 2 );

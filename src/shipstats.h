@@ -83,7 +83,7 @@ typedef enum ShipStatsType_ {
     */
    SS_TYPE_B_INSTANT_JUMP, /**< Do not require brake or chargeup to jump. */
 
-   SS_TYPE_SENTINAL,          /**< Sentinal for end of types. */
+   SS_TYPE_SENTINEL          /**< Sentinel for end of types. */
 } ShipStatsType;
 
 /**

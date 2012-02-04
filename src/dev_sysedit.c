@@ -302,11 +302,13 @@ static void sysedit_editPntClose( unsigned int wid, char *unused )
    char *inp;
 
    p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
-   p->population     = (uint64_t)strtoull(window_getInput( sysedit_widEdit, "inpPop" ), 0, 10);
+   p->population     = (uint64_t)strtoull( window_getInput( sysedit_widEdit, "inpPop" ), 0, 10);
    p->class          = planetclass_get( window_getInput( sysedit_widEdit, "inpClass" )[0] );
-   inp = window_getInput( sysedit_widEdit, "inpLand" );
-   if (inp == NULL || strlen(inp) == 0)
+   inp               = window_getInput( sysedit_widEdit, "inpLand" );
+   if ((inp == NULL) || (strlen(inp) == 0)) {
       free( p->land_func );
+      p->land_func = NULL;
+   }
    else
       p->land_func = strdup( inp );
    p->presenceAmount = atof(window_getInput( sysedit_widEdit, "inpPresence" ));

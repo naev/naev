@@ -11,7 +11,7 @@ if lang == 'es' then --not translated atm
 else --default english
    -- Portraits.
    -- When adding portraits, make sure to add them to the table of the faction they belong to.
-   -- Does your faction not have a table? Then just add it. The script will find and use it if it exists. 
+   -- Does your faction not have a table? Then just add it. The script will find and use it if it exists.
    -- Make sure you spell the faction name exactly the same as in faction.xml though!
    civ_port = {}
    civ_port["general"] =   {"neutral/male1",
@@ -152,13 +152,30 @@ else --default english
    -- Make sure the hints are always faction neutral.
    msg_ehint =                {{"FLF/DV Derelicts", "The FLF and the Dvaered sometimes clash in Surano. If you go there, you might find something of interest... Or not."}
                               }
-end   
+
+   -- Mission after-care messages. Each element should be a table containing the mission name and a line of text.
+   -- This text will be said by NPCs once the player has completed the mission in question.
+   -- Make sure the messages are always faction neutral.
+   msg_mdone =                {{"Nebula Satellite", "Heard some crazy scientists got someone to put a satellite inside the nebula for them. I thought everyone with half a brain knew to stay out of there, but oh well."},
+                               {"Shadow Vigil", "Did you hear? There was some big incident during a diplomatic meeting between the Empire and the Dvaered. Nobody knows what exactly happened, but both diplomats died. Now both sides are accusing the other of foul play. Could get ugly."},
+                               {"Operation Cold Metal", "Hey, remember the Collective? They got wiped out! I feel so much better now that there aren't a bunch of robot ships out there to get me anymore."},
+                               {"Baron", "Some thieves broke into a museum on Varia and stole a holopainting! Most of the thieves were caught, but the one who carried the holopainting offworld is still at large. No leads. Damn criminals..."},
+                               {"Destroy the FLF base!", "The Dvaered scored a major victory against the FLF recently. They went into Sigur and blew the hidden base there to bits! I bet that was a serious setback for the FLF."}
+                              }
+
+   -- Event after-care messages. Each element should be a table containing the event name and a line of text.
+   -- This text will be said by NPCs once the player has completed the event in question.
+   -- Make sure the messages are always faction neutral.
+   msg_edone =                {{"Animal trouble", "What? You had rodents sabotage your ship? Man, you're lucky to be alive. If it had hit the wrong power line..."},
+                               {"Naev Needs You!", "What do you mean, the world ended and then the creator of the universe came and fixed it? What kind of illegal substance are you on? Get away from me, you lunatic."}
+                              }
+end
 
 
 function create()
    -- Logic to decide what to spawn, if anything.
    -- TODO: Do not spawn any NPCs on restricted assets.
-   
+
    local num_npc = rnd.rnd(1, 5)
    npcs = {}
    for i = 0, num_npc do
@@ -184,7 +201,7 @@ function spawnNPC()
    if select >= (0.5) and planet.cur():faction() ~= nil then
       fac = planet.cur():faction():name()
    end
-   
+
    -- Append the faction to the civilian name, unless there is no faction.
    if fac ~= "general" then
       npcname = fac .. " " .. civ_name
@@ -195,7 +212,7 @@ function spawnNPC()
 
    -- Select a description for the civilian.
    local desc = civ_desc[rnd.rnd(1, #civ_desc)]
-   
+
    -- Select what this NPC should say.
    select = rnd.rnd()
    local msg
@@ -210,11 +227,11 @@ function spawnNPC()
       msg = getTipMessage()
    else
       -- Mission hint message.
-      msg = getHintMessage()
+      msg = getMissionLikeMessage()
    end
-   
+
    local npcdata = {name = npcname, msg = msg, func = func}
-   
+
    id = evt.npcAdd("talkNPC", npcname, portrait, desc, 10)
    npcs[id] = npcdata
 end
@@ -250,7 +267,7 @@ function getJmpMessage()
    if #mytargets == 0 then -- The player already knows all jumps in this system.
       return getLoreMessage(), nil
    end
-   
+
    -- All jump messages are valid always.
    if #msg_jmp == 0 then
       return getLoreMessage(), nil
@@ -261,6 +278,7 @@ function getJmpMessage()
                      mytargets[sel]:setKnown(true)
                   end
 
+   -- Don't need to remove messages from tables here.
    return retmsg:format(mytargets[sel]:dest():name()), myfunc
 end
 
@@ -270,11 +288,15 @@ function getTipMessage()
    if #msg_tip == 0 then
       return getLoreMessage()
    end
-   return msg_tip[rnd.rnd(1, #msg_tip)]
+   local sel = rnd.rnd(1, #msg_tip)
+   local pick = msg_tip[sel]
+   table.remove(msg_tip, sel)
+   return pick
 end
 
--- Returns a mission hint message, OR a lore message if no hints are left.
-function getHintMessage()
+-- Returns a mission hint message, a mission after-care message, OR a lore message if no missionlikes are left.
+function getMissionLikeMessage()
+   -- Hints.
    -- Hint messages are only valid if the relevant mission has not been completed and is not currently active.
    for i, j in pairs(msg_mhint) do
       if player.misnDone(j[1]) or player.misnActive(j[1]) then
@@ -286,20 +308,37 @@ function getHintMessage()
          table.remove(msg_ehint, i)
       end
    end
+
+   -- After-care.
+   -- After-care messages are only valid if the relevant mission has been completed.
+   for i, j in pairs(msg_mdone) do
+      if not player.misnDone(j[1]) then
+         table.remove(msg_mdone, i)
+      end
+   end
+   for i, j in pairs(msg_edone) do
+      if not player.evtDone(j[1]) then
+         table.remove(msg_edone, i)
+      end
+   end
    
-   if #msg_mhint + #msg_ehint == 0 then
+   -- Combine message tables. We don't need to do any more mission/event tests after this.
+   if not msg_combined then
+      msg_combined = {}
+      for i, j in ipairs(msg_mhint) do msg_combined[#msg_combined + 1] = j[2] end
+      for i, j in ipairs(msg_ehint) do msg_combined[#msg_combined + 1] = j[2] end
+      for i, j in ipairs(msg_mdone) do msg_combined[#msg_combined + 1] = j[2] end
+      for i, j in ipairs(msg_edone) do msg_combined[#msg_combined + 1] = j[2] end
+   end
+
+   if #msg_combined == 0 then
       return getLoreMessage()
    else
       -- Select a string, then remove it from the list of valid strings. This ensures all NPCs have something different to say.
-      local select = rnd.rnd(1, #msg_mhint + #msg_ehint)
+      local sel = rnd.rnd(1, #msg_combined)
       local pick
-      if select > #msg_mhint then
-         pick = msg_ehint[select - #msg_mhint][2]
-         table.remove(msg_ehint, select - #msg_mhint)
-      else
-         pick = msg_mhint[select][2]
-         table.remove(msg_mhint, select)
-      end
+      pick = msg_combined[sel]
+      table.remove(msg_combined, sel)
       return pick
    end
 end
@@ -315,12 +354,12 @@ end
 
 function talkNPC(id)
    local npcdata = npcs[id]
-   
+
    if npcdata.func then
       -- Execute NPC specific code
       npcdata.func()
    end
-   
+
    tk.msg(npcdata.name, "\"" .. npcdata.msg .. "\"")
 end
 

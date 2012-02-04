@@ -628,7 +628,7 @@
    <mass>4</mass>
    <price>6000</price>
    <description>The Gauss Gun is one of the oldest weapon designs in the galaxy today, dating back to the times of the Federation. It fires a rapid stream of high velocity projectiles at a target, dealing damage through sheer kinetic impact. Gauss Guns are popular among small time pirates for being a cheap, reliable weapon.</description>
-   <gfx_store>gatling</gfx_store>
+   <gfx_store>gaussgun</gfx_store>
   </general>
   <specific type="bolt">
    <cpu>4</cpu>
@@ -659,7 +659,7 @@
    <mass>6</mass>
    <price>13000</price>
    <description>The Vulcan Gun improves over the Gauss Gun with increased range and damage, achieved by using a heavier calibre ammunition. A skilled pilot can wreak some serious havoc with a pair of Vulcan Guns installed in his ship.</description>
-   <gfx_store>gatling</gfx_store>
+   <gfx_store>vulcangun</gfx_store>
   </general>
   <specific type="bolt">
    <cpu>6</cpu>
@@ -690,7 +690,7 @@
    <mass>10</mass>
    <price>22000</price>
    <description>The Shredder quite lives up to the name its Dvaered manufacturers gave it. The sheer damage dealing capacity of this weapon makes Dvaered fighters dangerous to engage by ships that aren't substantially larger than they are.</description>
-   <gfx_store>gatling</gfx_store>
+   <gfx_store>shredder</gfx_store>
   </general>
   <specific type="bolt">
    <cpu>8</cpu>
@@ -719,10 +719,9 @@
    <slot>weapon</slot>
    <size>light</size>
    <mass>18</mass>
-   <license>Heavy Weapon License</license>
    <price>16000</price>
    <description>One of the more common countermeasures employed by low-budget merchant ships, the turret version of the Gauss Gun provides basic defense against lone pirates. A more determined attacker is unlikely to be deterred, however.</description>
-   <gfx_store>railgunturret</gfx_store>
+   <gfx_store>gaussturret</gfx_store>
   </general>
   <specific type="turret bolt">
    <cpu>8</cpu>
@@ -753,7 +752,7 @@
    <license>Heavy Weapon License</license>
    <price>37000</price>
    <description>Turreted Vulcan Guns pack the same caliber ammunition as their fixed mount brethren. Ships not nimble enough to evade its relentless stream of projectiles might find themselves riddled with hull punctures before long.</description>
-   <gfx_store>railgunturret</gfx_store>
+   <gfx_store>vulcanturret</gfx_store>
   </general>
   <specific type="turret bolt">
    <cpu>16</cpu>
@@ -1904,8 +1903,8 @@
    <damage>
     <type>emp</type>
     <penetrate>50</penetrate>
-    <physical>50</physical>
-    <disable>1</disable>
+    <physical>8</physical>
+    <disable>40</disable>
    </damage>
    <ai>dumb</ai>
   </specific>
@@ -2310,6 +2309,8 @@
   </general>
   <specific type="afterburner">
    <cpu>2</cpu>
+   <duration>5</duration>
+   <cooldown>10</cooldown>
    <rumble>0.5</rumble>
    <sound>afterburner</sound>
    <thrust>100</thrust>
@@ -2328,6 +2329,8 @@
   </general>
   <specific type="afterburner">
    <cpu>6</cpu>
+   <duration>5</duration>
+   <cooldown>5</cooldown>
    <rumble>0.9</rumble>
    <sound>afterburner</sound>
    <thrust>185</thrust>

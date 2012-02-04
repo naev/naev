@@ -1037,6 +1037,15 @@ static int playerL_teleport( lua_State *L )
    /* Free graphics. */
    space_gfxUnload( cur_system );
 
+   /* Reset targets when teleporting.
+    * Both of these functions invoke gui_setNav(), which updates jump and
+    * planet targets simultaneously. Thus, invalid reads may arise and the
+    * target reset must be done prior to calling space_init and destroying
+    * the old system.
+    */
+   player_targetHyperspaceSet( -1 );
+   player_targetPlanetSet( -1 );
+
    /* Go to the new system. */
    space_init( name );
 
@@ -1051,11 +1060,6 @@ static int playerL_teleport( lua_State *L )
    hooks_run( "enter" );
    events_trigger( EVENT_TRIGGER_ENTER );
    missions_run( MIS_AVAIL_SPACE, -1, NULL, NULL );
-
-   /* Reset targets when teleporting */
-   player_targetPlanetSet( -1 );
-   player_targetHyperspaceSet( -1 );
-   gui_setNav();
 
    /* Move to planet. */
    if (pnt != NULL)

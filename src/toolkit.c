@@ -1782,8 +1782,9 @@ static void toolkit_mouseEventWidget( Window *w, Widget *wgt,
             break;
 
          if (wgt->status==WIDGET_STATUS_MOUSEDOWN) {
-            if ((wgt->type==WIDGET_BUTTON) &&
-                  (wgt->dat.btn.disabled==0)) {
+            /* Soft-disabled buttons will run anyway. */
+            if ((wgt->type==WIDGET_BUTTON) && ((wgt->dat.btn.disabled==0) ||
+                  (wgt->dat.btn.softdisable))) {
                if (wgt->dat.btn.fptr==NULL)
                   DEBUG("Toolkit: Button '%s' of Window '%s' "
                         "doesn't have a function trigger",
@@ -1890,6 +1891,11 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
             return 1;
       }
    }
+
+   for (wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next)
+      if ((wgt->type == WIDGET_BUTTON) && (wgt->dat.btn.key != 0) &&
+            (wgt->dat.btn.key == key))
+         return (wgt->keyevent( wgt, SDLK_RETURN, mod ));
 
    /* Handle other cases where event might be used by the window. */
    switch (key) {
@@ -2250,6 +2256,56 @@ static Widget* toolkit_getFocus( Window *wdw )
    /* Not found. */
    toolkit_focusClear( wdw );
    wdw->focus = -1;
+   return NULL;
+}
+
+
+/**
+ * @brief Sets the focused widget in a window.
+ *
+ *    @param wid ID of the window to get widget from.
+ *    @param name Name of the widget to set focus to.
+ */
+void window_setFocus( const unsigned int wid, const char* wgtname )
+{
+   Window *wdw;
+   Widget *wgt;
+
+   /* Get window. */
+   wdw = window_wget(wid);
+   if (wdw == NULL)
+      return;
+
+   /* Get widget. */
+   wgt = window_getwgt(wid,wgtname);
+   if (wgt == NULL)
+      return;
+
+   wdw->focus = wgt->id;
+}
+
+
+/**
+ * @brief Gets the focused widget in a window.
+ *
+ *    @param wid ID of the window to get widget from.
+ *    @return The focused widget's name.
+ */
+char* window_getFocus( const unsigned int wid )
+{
+   Window *wdw;
+   Widget *wgt;
+
+   /* Get window. */
+   wdw = window_wget(wid);
+   if (wdw == NULL)
+      return NULL;
+
+   /* Find focused widget. */
+   for (wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next)
+      if (wgt->id == wdw->focus)
+         return wgt->name;
+
    return NULL;
 }
 

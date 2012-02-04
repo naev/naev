@@ -66,8 +66,7 @@ void window_addInput( const unsigned int wid,
    wgt->dat.inp.oneline = oneline;
    wgt->dat.inp.pos     = 0;
    wgt->dat.inp.view    = 0;
-   wgt->dat.inp.input   = malloc(sizeof(char)*wgt->dat.inp.max);
-   memset(wgt->dat.inp.input, 0, wgt->dat.inp.max*sizeof(char));
+   wgt->dat.inp.input   = calloc( wgt->dat.inp.max, sizeof(char) );
 
    /* position/size */
    wgt->w = (double) w;
@@ -339,6 +338,7 @@ char* window_setInput( const unsigned int wid, char* name, const char *msg )
    }
    else {
       strncpy( wgt->dat.inp.input, msg, wgt->dat.inp.max );
+      wgt->dat.inp.input[ wgt->dat.inp.max-1 ] = '\0';
       wgt->dat.inp.pos = strlen( wgt->dat.inp.input );
    }
 

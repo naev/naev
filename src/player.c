@@ -1273,7 +1273,7 @@ void player_targetPlanetSet( int id )
 
    old = player.p->nav_planet;
    player.p->nav_planet = id;
-   player_hyperspacePreempt(0);
+   player_hyperspacePreempt((id < 0) ? 1 : 0);
    if (old != id) {
       player_rmFlag(PLAYER_LANDACK);
       if (id >= 0)
@@ -1289,29 +1289,29 @@ void player_targetPlanetSet( int id )
  */
 void player_targetPlanet (void)
 {
-   int id;
+   int id, i;
 
    /* Not under manual control. */
    if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
       return;
 
    /* Find next planet target. */
-   id = player.p->nav_planet+1;
-   player_hyperspacePreempt(0);
-   while (id < cur_system->nplanets) {
-      /* In range, target planet. */
-      if (planet_isKnown( cur_system->planets[id] )) {
-         if ((cur_system->planets[ id ]->real != ASSET_REAL))
-            DEBUG("Well, shit.");
-         player_targetPlanetSet( id );
-         return;
-      }
+   for (id=player.p->nav_planet+1; id<cur_system->nplanets; id++)
+      if (planet_isKnown( cur_system->planets[id] ))
+         break;
 
-      id++;
+   /* Try to select the lowest-indexed valid planet. */
+   if (id >= cur_system->nplanets ) {
+      id = -1;
+      for (i=0; i<cur_system->nplanets; i++)
+         if (planet_isKnown( cur_system->planets[i] )) {
+            id = i;
+            break;
+         }
    }
 
    /* Untarget if out of range. */
-   player_targetPlanetSet( -1 );
+   player_targetPlanetSet( id );
 }
 
 
@@ -1475,7 +1475,7 @@ void player_targetHyperspaceSet( int id )
 
    old = player.p->nav_hyperspace;
    player.p->nav_hyperspace = id;
-   player_hyperspacePreempt(1);
+   player_hyperspacePreempt((id < 0) ? 0 : 1);
    if ((old != id) && (id >= 0))
       player_soundPlayGUI(snd_nav,1);
    gui_setNav();
@@ -1493,22 +1493,20 @@ void player_targetHyperspace (void)
    if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
       return;
 
-   id = player.p->nav_hyperspace+1;
    map_clear(); /* clear the current map path */
 
+   for (id=player.p->nav_hyperspace+1; id<cur_system->njumps; id++)
+      if (jp_isKnown( &cur_system->jumps[id]))
+         break;
+
+   /* Try to find the lowest-indexed valid jump. */
    if (id >= cur_system->njumps) {
       id = -1;
-      player_hyperspacePreempt(0);
-   }
-   else {
-      for (i=id; i<cur_system->njumps; i++) {
+      for (i=0; i<cur_system->njumps; i++)
          if (jp_isKnown( &cur_system->jumps[i])) {
             id = i;
             break;
          }
-         else
-            id = -1;
-      }
    }
 
    player_targetHyperspaceSet( id );

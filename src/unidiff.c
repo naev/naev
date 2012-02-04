@@ -42,7 +42,7 @@
 typedef enum UniHunkTargetType_ {
    HUNK_TARGET_NONE,
    HUNK_TARGET_SYSTEM,
-   HUNK_TARGET_TECH,
+   HUNK_TARGET_TECH
 } UniHunkTargetType_t;
 
 
@@ -76,7 +76,7 @@ typedef enum UniHunkType_ {
    HUNK_TYPE_FLEETGROUP_ADD,
    HUNK_TYPE_FLEETGROUP_REMOVE,
    HUNK_TYPE_TECH_ADD,
-   HUNK_TYPE_TECH_REMOVE,
+   HUNK_TYPE_TECH_REMOVE
 } UniHunkType_t;
 
 
