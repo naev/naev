@@ -857,6 +857,10 @@ void pilot_calcStats( Pilot* pilot )
          if (slot->u.ammo.outfit != NULL)
             pilot->mass_outfit += slot->u.ammo.quantity * slot->u.ammo.outfit->mass;
 
+      /* Set afterburner. */
+      if (outfit_isAfterburner(o))
+         pilot->afterburner = pilot->outfits[i];
+
       /* Active outfits must be on to affect stuff. */
       if (slot->active && !(slot->state==PILOT_OUTFIT_ON))
          continue;
@@ -892,7 +896,6 @@ void pilot_calcStats( Pilot* pilot )
      
       }
       else if (outfit_isAfterburner(o)) { /* Afterburner */
-         pilot->afterburner = pilot->outfits[i]; /* Set afterburner */
          pilot_setFlag( pilot, PILOT_AFTERBURNER ); /* We use old school flags for this still... */
       }
       else if (outfit_isJammer(o)) { /* Jammer */
