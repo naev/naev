@@ -788,6 +788,9 @@ void pilot_calcStats( Pilot* pilot )
    double arel, srel, erel; /* relative health bonuses. */
    ShipStats amount, *s;
 
+   /* @TODO remove old school PILOT_AFTERBURN flags. */
+   pilot_rmFlag( pilot, PILOT_AFTERBURNER );
+
    /*
     * set up the basic stuff
     */
@@ -886,9 +889,12 @@ void pilot_calcStats( Pilot* pilot )
           * Stats.
           */
          ss_statsModFromList( &pilot->stats, o->u.mod.stats, &amount );
-      
-      else if (outfit_isAfterburner(o)) /* Afterburner */
+     
+      }
+      else if (outfit_isAfterburner(o)) { /* Afterburner */
          pilot->afterburner = pilot->outfits[i]; /* Set afterburner */
+         pilot_setFlag( pilot, PILOT_AFTERBURNER ); /* We use old school flags for this still... */
+      }
       else if (outfit_isJammer(o)) { /* Jammer */
          pilot->jamming        = 1;
          pilot->energy_loss   += o->u.jam.energy;

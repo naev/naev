@@ -724,7 +724,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
                (t-input_accelLast <= conf.afterburn_sens))
             player_afterburn();
          else if (value==KEY_RELEASE)
-            player_afterburnOver(0);
+            player_afterburnOver();
 
          if (value==KEY_PRESS)
             input_accelLast = t;

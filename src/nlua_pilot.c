@@ -1210,7 +1210,8 @@ static int pilotL_weapset( lua_State *L )
 
          /* Must be weapon. */
          if (outfit_isJammer(o) ||
-               outfit_isMod(o))
+               outfit_isMod(o) ||
+               outfit_isAfterburner(o))
             continue;
 
          /* Set up for creation. */
@@ -1364,7 +1365,8 @@ static int pilotL_actives( lua_State *L )
       if (!o->active)
          continue;
       if (!outfit_isJammer(o->outfit) &&
-            !outfit_isMod(o->outfit))
+            !outfit_isMod(o->outfit) &&
+            !outfit_isAfterburner(o->outfit))
          continue;
 
       /* Set up for creation. */

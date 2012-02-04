@@ -1529,7 +1529,7 @@ void pilot_update( Pilot* pilot, const double dt )
    if (pilot->armour > pilot->armour_max)
       pilot->armour = pilot->armour_max;
 
-   /* regen shield */
+   /* Regen shield */
    if (pilot->stimer <= 0.) {
       pilot->shield += pilot->shield_regen * dt;
       if (pilot->sbonus > 0.)
@@ -1537,10 +1537,6 @@ void pilot_update( Pilot* pilot, const double dt )
       if (pilot->shield > pilot->shield_max)
          pilot->shield = pilot->shield_max;
    }
-
-   /* Update energy */
-   if ((pilot->energy < 1.) && pilot_isFlag(pilot, PILOT_AFTERBURNER))
-      pilot_rmFlag(pilot, PILOT_AFTERBURNER); /* Break afterburner */
 
    /*
     * Using RC circuit energy loading.
@@ -1577,6 +1573,10 @@ void pilot_update( Pilot* pilot, const double dt )
          }
       }
    }
+
+   /* Must recalculate stats because something changed state. */
+   if (nchg > 0)
+      pilot_calcStats( pilot );
 
    /* Player damage decay. */
    if (pilot->player_damage > 0.)
@@ -1643,10 +1643,6 @@ void pilot_update( Pilot* pilot, const double dt )
    pilot->solid->update( pilot->solid, dt );
    gl_getSpriteFromDir( &pilot->tsx, &pilot->tsy,
          pilot->ship->gfx_space, pilot->solid->dir );
-
-   /* Must recalculate stats because something changed state. */
-   if (nchg > 0)
-      pilot_calcStats( pilot );
 }
 
 

@@ -1155,13 +1155,9 @@ void player_think( Pilot* pplayer, const double dt )
    /*
     * Afterburn!
     */
-   if (player_isFlag(PLAYER_AFTERBURNER)) {
-      if (pilot_isFlag(player.p,PILOT_AFTERBURNER)) {
-         afb = pplayer->afterburner->outfit;
-         pilot_setThrust( pplayer, 1. + afb->u.afb.thrust * MIN( 1., afb->u.afb.mass_limit/player.p->solid->mass ) );
-      }
-      else /* Ran out of energy */
-         player_afterburnOver(1);
+   if (pilot_isFlag(player.p,PILOT_AFTERBURNER)) {
+      afb = pplayer->afterburner->outfit;
+      pilot_setThrust( pplayer, 1. + afb->u.afb.thrust * MIN( 1., afb->u.afb.mass_limit/player.p->solid->mass ) );
    }
    else
       pilot_setThrust( pplayer, player_acc );
@@ -1196,7 +1192,7 @@ void player_updateSpecific( Pilot *pplayer, const double dt )
    int engsound;
 
    /* Calculate engine sound to use. */
-   if (player_isFlag(PLAYER_AFTERBURNER))
+   if (pilot_isFlag(pplayer, PILOT_AFTERBURNER))
       engsound = pplayer->afterburner->outfit->u.afb.sound;
    else if (pplayer->solid->thrust > 0.) {
       /* See if is in hyperspace. */
@@ -1249,8 +1245,16 @@ void player_weapSetPress( int id, int type, int repeat )
    if ((type > 0) && ((player.p == NULL) || toolkit_isOpen()))
       return;
 
-   if (player.p != NULL)
-      pilot_weapSetPress( player.p, id, type );
+   if (player.p == NULL)
+      return;
+
+   if (pilot_isFlag(player.p, PILOT_HYP_PREP) || 
+         pilot_isFlag(player.p, PILOT_HYPERSPACE) ||
+         pilot_isFlag(player.p, PILOT_LANDING) ||
+         pilot_isFlag(player.p, PILOT_TAKEOFF))
+      return;
+
+   pilot_weapSetPress( player.p, id, type );
 }
 
 
@@ -1428,7 +1432,7 @@ void player_land (void)
       }
 
       /* Stop afterburning. */
-      player_afterburnOver(1);
+      player_afterburnOver();
       /* Stop accelerating. */
       player_accelOver();
 
@@ -1700,7 +1704,7 @@ void player_brokeHyperspace (void)
  */
 void player_afterburn (void)
 {
-   double afb_mod;
+   //double afb_mod;
 
    if (pilot_isFlag(player.p, PILOT_HYP_PREP) || pilot_isFlag(player.p, PILOT_HYPERSPACE) ||
          pilot_isFlag(player.p, PILOT_LANDING) || pilot_isFlag(player.p, PILOT_TAKEOFF))
@@ -1711,30 +1715,37 @@ void player_afterburn (void)
       return;
 
    /** @todo fancy effect? */
-   if ((player.p != NULL) && (player.p->afterburner!=NULL)) {
-      afb_mod = MIN( 1., player.p->afterburner->outfit->u.afb.mass_limit / player.p->solid->mass );
+   if (player.p == NULL)
+      return;
+   if (player.p->afterburner == NULL)
+      return;
 
-      player_setFlag(PLAYER_AFTERBURNER);
+   if (player.p->afterburner->state == PILOT_OUTFIT_OFF) {
+      player.p->afterburner->state  = PILOT_OUTFIT_ON;
+      player.p->afterburner->stimer = outfit_duration( player.p->afterburner->outfit );
       pilot_setFlag(player.p,PILOT_AFTERBURNER);
-      spfx_shake( afb_mod * player.p->afterburner->outfit->u.afb.rumble * SHAKE_MAX );
-      if (toolkit_isOpen() || paused)
-         player_soundPause();
    }
+
+   //afb_mod = MIN( 1., player.p->afterburner->outfit->u.afb.mass_limit / player.p->solid->mass );
+   //spfx_shake( afb_mod * player.p->afterburner->outfit->u.afb.rumble * SHAKE_MAX );
 }
 
 
 /**
  * @brief Deactivates the afterburner.
  */
-void player_afterburnOver (int type)
+void player_afterburnOver (void)
 {
-   if ((player.p != NULL) && (player.p->afterburner!=NULL)) {
-      player_rmFlag(PLAYER_AFTERBURNER);
+   if (player.p == NULL)
+      return;
+   if (player.p->afterburner == NULL)
+      return;
+
+   if (player.p->afterburner->state == PILOT_OUTFIT_ON) {
+      player.p->afterburner->state  = PILOT_OUTFIT_COOLDOWN;
+      player.p->afterburner->stimer = outfit_cooldown( player.p->afterburner->outfit );
       pilot_rmFlag(player.p,PILOT_AFTERBURNER);
    }
-
-   if (type)
-      player_accel(1.);
 }
 
 
