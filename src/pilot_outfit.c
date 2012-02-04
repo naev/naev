@@ -885,8 +885,8 @@ void pilot_calcStats( Pilot* pilot )
          /*
           * Stats.
           */
-         ss_statsModFromList( &pilot->stats, o->u.mod.stats, &amount ); /* TODO Handle q or remove it? */
-      }
+         ss_statsModFromList( &pilot->stats, o->u.mod.stats, &amount );
+      
       else if (outfit_isAfterburner(o)) /* Afterburner */
          pilot->afterburner = pilot->outfits[i]; /* Set afterburner */
       else if (outfit_isJammer(o)) { /* Jammer */
