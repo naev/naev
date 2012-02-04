@@ -720,7 +720,7 @@ int pilot_shoot( Pilot* p, int level )
    ws = pilot_weapSet( p, p->active_set );
 
    /* Fire weapons. */
-   if (ws->type == WEAPSET_TYPE_WEAPON)
+   if (ws->type == WEAPSET_TYPE_CHANGE) /* Must be a change set or a weaponset. */
       return pilot_weapSetFire( p, ws, level );
    return 0;
 }
