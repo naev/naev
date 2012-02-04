@@ -2302,6 +2302,8 @@
   </general>
   <specific type="afterburner">
    <cpu>2</cpu>
+   <duration>5</duration>
+   <cooldown>10</cooldown>
    <rumble>0.5</rumble>
    <sound>afterburner</sound>
    <thrust>100</thrust>
@@ -2320,6 +2322,8 @@
   </general>
   <specific type="afterburner">
    <cpu>6</cpu>
+   <duration>5</duration>
+   <cooldown>5</cooldown>
    <rumble>0.9</rumble>
    <sound>afterburner</sound>
    <thrust>185</thrust>

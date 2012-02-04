@@ -237,12 +237,16 @@ typedef struct OutfitModificationData_ {
  * @brief Represents an afterburner.
  */
 typedef struct OutfitAfterburnerData_ {
+   /* Duration. */
+   double duration;  /**< Duration of afterburner. */
+   double cooldown;  /**< Cooldown of afterburner. */
+   /* Internal properties. */
+   double cpu;       /**< CPU usage. */
    double rumble;    /**< Percent of rumble */
    int sound;        /**< Sound of the afterburner */
    double thrust;    /**< Percent of thrust increase based on ship base. */
    double speed;     /**< Percent of speed to increase based on ship base. */
    double energy;    /**< Energy usage while active */
-   double cpu;       /**< CPU usage. */
    double mass_limit; /**< Limit at which effectiveness starts to drop. */
 } OutfitAfterburnerData;
 
