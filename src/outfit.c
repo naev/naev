@@ -345,6 +345,8 @@ int outfit_isActive( const Outfit* o )
       return 1;
    if (outfit_isJammer(o))
       return 1;
+   if (outfit_isAfterburner(o))
+      return 1;
    return 0;
 }
 
@@ -1361,12 +1363,14 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
          "%.0f Damage [%s]\n"
          "%.0f Energy\n"
          "%.0f Maximum Speed\n"
+         "%.0f%% Jam resistance\n"
          "%.1f duration",
          outfit_getType(temp),
          temp->u.amm.dmg.penetration*100.,
          temp->u.amm.dmg.damage, dtype_damageTypeToStr(temp->u.amm.dmg.type),
          temp->u.amm.energy,
          temp->u.amm.speed,
+         temp->u.amm.resist,
          temp->u.amm.duration );
    if (temp->u.blt.dmg.disable > 0.) {
       l += snprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
@@ -1868,7 +1872,7 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define
 
 /**
  * @brief Parses and returns Outfit from parent node.
- *
+ 
  *    @param temp Outfit to load into.
  *    @param parent Parent node to parse outfit from.
  *    @return 0 on success.

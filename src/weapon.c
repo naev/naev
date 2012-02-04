@@ -66,6 +66,7 @@ typedef struct Weapon_ {
    unsigned int target; /**< target to hit, only used by seeking things */
    const Outfit* outfit; /**< related outfit that fired it or whatnot */
 
+   double real_vel; /**< Keeps track of the real velocity. */
    double jam_power; /**< Power being jammed by. */
    double dam_mod; /**< Damage modifier. */
    int voice; /**< Weapon's voice. */
@@ -310,7 +311,6 @@ static void weapon_setTurn( Weapon *w, double turn )
 static void think_seeker( Weapon* w, const double dt )
 {
    double diff;
-   double vel;
    Pilot *p;
    Vector2d v;
    double t, turn_max;
@@ -369,10 +369,11 @@ static void think_seeker( Weapon* w, const double dt )
    }
 
    /* Limit speed here */
-   vel  = MIN(w->outfit->u.amm.speed, VMOD(w->solid->vel) + w->outfit->u.amm.thrust*dt);
-   vel *= (1. - w->jam_power);
-   vect_pset( &w->solid->vel, vel, w->solid->dir );
-   /*limit_speed( &w->solid->vel, w->outfit->u.amm.speed, dt );*/
+   w->real_vel = MIN( w->outfit->u.amm.speed, w->real_vel + w->outfit->u.amm.thrust*dt );
+   vect_pset( &w->solid->vel, (1. - w->jam_power) * w->real_vel, w->solid->dir );
+
+   /* Modulate max speed. */
+   //w->solid->speed_max = w->outfit->u.amm.speed * (1. - w->jam_power);
 }
 
 
@@ -491,6 +492,7 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
          continue;
       w->jam_power = 0.;
    }
+   /* Iterate over all pilots. */
    for (i=0; i<pilot_nstack; i++) {
       p = pilot_stack[i];
 
@@ -500,14 +502,17 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
 
       /* Iterate over outfits to find jammers. */
       for (j=0; j<p->noutfits; j++) {
-         o    = p->outfits[i]->outfit;
+         o    = p->outfits[j]->outfit;
          if (o==NULL)
             continue;
-
+         /* Must be on. */
+         if (p->outfits[j]->state != PILOT_OUTFIT_ON)
+            continue;
+         /* Must be a jammer. */
          if (!outfit_isJammer(o))
             continue;
-     
-         /* Find jammers. */
+    
+         /* Apply jamming. */
          for (k=0; k < *nlayer; k++) {
             w = wlayer[k];
             if (!outfit_isSeeker( w->outfit ))
@@ -518,7 +523,7 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
                continue;
 
             /* We only consider the strongest jammer. */
-            w->jam_power = MAX( w->jam_power, o->u.jam.power );
+            w->jam_power = CLAMP( 0., 1., MAX( w->jam_power, (o->u.jam.power - w->outfit->u.amm.resist) ) );
          }
       }
    }
@@ -1310,14 +1315,16 @@ static void weapon_createAmmo( Weapon *w, const Outfit* launcher, double T,
    if (ammo->u.amm.thrust == 0.)
       vect_cadd( &v, cos(rdir) * w->outfit->u.amm.speed,
             sin(rdir) * w->outfit->u.amm.speed );
+   w->real_vel = VMOD(v);
 
    /* Set up ammo details. */
    mass        = w->outfit->mass;
    w->timer    = ammo->u.amm.duration;
    w->solid    = solid_create( mass, rdir, pos, &v, SOLID_UPDATE_RK4 );
-   if (w->outfit->u.amm.thrust != 0.)
+   if (w->outfit->u.amm.thrust != 0.) {
       weapon_setThrust( w, w->outfit->u.amm.thrust * mass );
-   w->solid->speed_max = w->outfit->u.amm.speed; /* Limit speed. */
+      w->solid->speed_max = w->outfit->u.amm.speed; /* Limit speed, we only care if it has thrust. */
+   }
 
    /* Handle seekers. */
    if (w->outfit->u.amm.ai > 0) {

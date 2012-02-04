@@ -179,8 +179,8 @@ static int gfxL_renderTex( lua_State *L )
  *    @luaparam sprite_y Y sprite to render.
  *    @luaparam tex_x X sprite texture offset as [0.:1.].
  *    @luaparam tex_y Y sprite texture offset as [0.:1.].
- *    @luaparam tex_w Sprite width to display as [0.:1.].
- *    @luaparam tex_h Sprite height to display as [0.:1.]
+ *    @luaparam tex_w Sprite width to display as [-1.:1.]. Note if negative, it will flip the image horizontally.
+ *    @luaparam tex_h Sprite height to display as [-1.:1.] Note if negative, it will flip the image vertically.
  *    @luaparam colour [OPTIONAL] Colour to use when rendering.
  * @luafunc renderTexRaw( tex, pos_x, pos_y, pos_w, pos_h, sprite_x, sprite_y, tex_x, tex_y, tex_w, tex_h, colour )
  */
@@ -220,10 +220,14 @@ static int gfxL_renderTexRaw( lua_State *L )
 
    /* Translate as needed. */
    t  = lt->tex;
-   tx = (tx*t->sw + t->sw*(double)(sx)) / t->rw;
-   ty = (ty*t->sh + t->sh*(t->sy-(double)sy-1)) / t->rh;
-   tw = tw*t->srw;
-   th = th*t->srh;
+   tx = (tx * t->sw + t->sw * (double)(sx)) / t->rw;
+   tw = tw * t->srw;
+   if (tw < 0)
+      tx -= tw;
+   ty = (ty * t->sh + t->sh * (t->sy - (double)sy-1)) / t->rh;
+   th = th * t->srh;
+   if (th < 0)
+      ty -= th;
 
    /* Render. */
    gl_blitTexture( t, px, py, pw, ph, tx, ty, tw, th, (lc==NULL) ? NULL : &lc->col );
