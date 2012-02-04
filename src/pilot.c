@@ -47,8 +47,8 @@
 #include "damagetype.h"
 
 
-#define PILOT_CHUNK_MIN 128 /**< Maximum chunks to increment pilot_stack by */
-#define PILOT_CHUNK_MAX 2048 /**< Minimum chunks to increment pilot_stack by */
+#define PILOT_CHUNK_MIN 128 /**< Minimum chunks to increment pilot_stack by */
+#define PILOT_CHUNK_MAX 2048 /**< Maximum chunks to increment pilot_stack by */
 #define CHUNK_SIZE      32 /**< Size to allocate memory by. */
 
 /* ID Generators. */
