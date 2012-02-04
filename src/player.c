@@ -1705,6 +1705,8 @@ void player_brokeHyperspace (void)
 void player_afterburn (void)
 {
    //double afb_mod;
+   if (player.p == NULL)
+      return;
 
    if (pilot_isFlag(player.p, PILOT_HYP_PREP) || pilot_isFlag(player.p, PILOT_HYPERSPACE) ||
          pilot_isFlag(player.p, PILOT_LANDING) || pilot_isFlag(player.p, PILOT_TAKEOFF))
@@ -1715,8 +1717,6 @@ void player_afterburn (void)
       return;
 
    /** @todo fancy effect? */
-   if (player.p == NULL)
-      return;
    if (player.p->afterburner == NULL)
       return;
 
