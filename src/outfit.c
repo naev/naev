@@ -345,6 +345,8 @@ int outfit_isActive( const Outfit* o )
       return 1;
    if (outfit_isJammer(o))
       return 1;
+   if (outfit_isAfterburner(o))
+      return 1;
    return 0;
 }
 

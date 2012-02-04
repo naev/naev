@@ -64,7 +64,6 @@ const char *keybind_info[][3] = {
    { "left", "Turn Left", "Makes your ship turn left." },
    { "right", "Turn Right", "Makes your ship turn right." },
    { "reverse", "Reverse", "Makes your ship face the direction you're moving from. Useful for braking." },
-   { "afterburn", "Afterburner", "Engages the ship's afterburner, if one is installed." },
    /* Targeting */
    { "target_next", "Target Next", "Cycles through ship targets." },
    { "target_prev", "Target Previous", "Cycles backwards through ship targets." },
@@ -138,7 +137,6 @@ const char *keybind_info[][3] = {
  * accel hacks
  */
 static unsigned int input_accelLast = 0; /**< Used to see if double tap */
-static int input_afterburnerButton  = 0; /**< Used to see if afterburner button is pressed. */
 static int input_accelButton        = 0; /**< Used to show whether accel is pressed. */
 
 
@@ -196,7 +194,6 @@ void input_setDefault (void)
    input_setKeybind( "left", KEYBIND_KEYBOARD, SDLK_LEFT, NMOD_ALL );
    input_setKeybind( "right", KEYBIND_KEYBOARD, SDLK_RIGHT, NMOD_ALL );
    input_setKeybind( "reverse", KEYBIND_KEYBOARD, SDLK_DOWN, NMOD_ALL );
-   input_setKeybind( "afterburn", KEYBIND_KEYBOARD, SDLK_z, NMOD_ALL );
    /* Targeting */
    input_setKeybind( "target_next", KEYBIND_KEYBOARD, SDLK_t, NMOD_NONE );
    input_setKeybind( "target_prev", KEYBIND_KEYBOARD, SDLK_t, NMOD_CTRL );
@@ -726,23 +723,11 @@ static void input_key( int keynum, double value, double kabs, int repeat )
                (value==KEY_PRESS) && INGAME() && NOHYP() && NODEAD() &&
                (t-input_accelLast <= conf.afterburn_sens))
             player_afterburn();
-         else if ((value==KEY_RELEASE) && !input_afterburnerButton)
+         else if (value==KEY_RELEASE)
             player_afterburnOver(0);
 
          if (value==KEY_PRESS)
             input_accelLast = t;
-      }
-   /* Afterburning. */
-   } else if (KEY("afterburn") && !repeat) {
-      if ((value==KEY_PRESS) && INGAME() && NOHYP() && NODEAD()) {
-         player_afterburn();
-         input_afterburnerButton = 1;
-      }
-      else if (value==KEY_RELEASE) {
-         player_afterburnOver(0);
-         input_afterburnerButton = 0;
-         if (!input_accelButton)
-            player_accelOver();
       }
 
    /* turning left */

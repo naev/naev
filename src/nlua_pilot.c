@@ -1345,15 +1345,16 @@ static int pilotL_actives( lua_State *L )
 {
    Pilot *p;
    int i, k;
-   double d;
    PilotOutfitSlot *o;
    const char *str;
+   double d;
 
    /* Parse parameters. */
    p   = luaL_validpilot(L,1);
 
    k = 0;
    lua_newtable(L);
+
    for (i=0; i<p->noutfits; i++) {
 
       /* Get active outfits. */
