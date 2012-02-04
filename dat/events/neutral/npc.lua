@@ -107,6 +107,7 @@ else --default english
                                "Have you visited the Frontier Museum? They've got a scale model of a First Growth colony ship on display in one of the big rooms. Even scaled down like that, it's massive! Imagine how overwhelming the real ones must have been.",
                                "There are eleven true Frontier worlds, because eleven colony ships successfully completed their journey in the First Growth. But did you know that there were twenty colony ships to begin with? Nine of them never made it. Some are said to have mysteriously disappeared. I wonder what happened to them?",
                                "We don't have much here in the Frontier, other than our long history leading directly back to Earth. But I don't mind. I'm happy living here, and I wouldn't want to move anywhere else."
+                               "You know the Frontier Liberation Front? They're the guerilla movement that fights for the Frontier. Not to be confused with the Liberation Front of the Frontier, the Frontier Front for Liberation, or the Liberal Frontier's Front!"
                               }
 
    msg_lore["Pirate"] =       {"Hi mate. Money or your life! Heh heh, just messing with you."
@@ -125,7 +126,10 @@ else --default english
                                "If you're on a mission you just can't beat, you can open the information panel and abort the mission. There's no penalty for doing it, so don't hesitate to try the mission again later.",
                                "Don't forget that you can revisit the tutorial modules at any time from the main menu. I know I do.",
                                "Some weapons have a different effect on shields than they do on armour. Keep that in mind when equipping your ship.",
-                               "Afterburners only work when you activate them. While they're inactive all they do is slow you down!"
+                               "Afterburners only work when you activate them. While they're inactive all they do is slow you down!",
+                               "There are passive outfits and active outfits. The passive ones modify your ship continuously, but the active ones only work if you turn them on. You usually can't keep an active outfit on all the time, so you need to be careful only to use it when you need it.",
+                               "If you're new to the galaxy, I recommend you buy a map or two. It can make exploration a bit easier.",
+                               "Missile jammers slow down missiles close to your ship. If your enemies are using missiles, it can be very helpful to have one on board."
                               }
 
    -- Jump point messages.
