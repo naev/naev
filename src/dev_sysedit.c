@@ -313,7 +313,7 @@ static void sysedit_editPntClose( unsigned int wid, char *unused )
       p->land_func = strdup( inp );
    p->presenceAmount = atof(window_getInput( sysedit_widEdit, "inpPresence" ));
    p->presenceRange  = atoi(window_getInput( sysedit_widEdit, "inpPresenceRange" ));
-   p->hide           = atof(window_getInput( sysedit_widEdit, "inpHide" ));
+   p->hide           = pow2( atof(window_getInput( sysedit_widEdit, "inpHide" )) );
 
    window_close( wid, unused );
 }
@@ -339,7 +339,7 @@ static void sysedit_editJumpClose( unsigned int wid, char *unused )
       jp_rmFlag( j, JP_HIDDEN );
       jp_rmFlag( j, JP_EXITONLY );
    }
-   j->hide  = atof(window_getInput( sysedit_widEdit, "inpHide" ));
+   j->hide  = pow2( atof(window_getInput( sysedit_widEdit, "inpHide" )) );
 
    window_close( wid, unused );
 }
@@ -1204,7 +1204,7 @@ static void sysedit_editPnt( void )
    window_setInput( wid, "inpPresence", buf );
    snprintf( buf, sizeof(buf), "%d", p->presenceRange );
    window_setInput( wid, "inpPresenceRange", buf );
-   snprintf( buf, sizeof(buf), "%g", p->hide );
+   snprintf( buf, sizeof(buf), "%g", sqrt(p->hide) );
    window_setInput( wid, "inpHide", buf );
 
    /* Generate the list. */
@@ -1303,7 +1303,7 @@ static void sysedit_editJump( void )
          "btnClose", "Close", sysedit_editJumpClose );
 
    /* Load current values. */
-   snprintf( buf, sizeof(buf), "%g", j->hide );
+   snprintf( buf, sizeof(buf), "%g", sqrt(j->hide) );
    window_setInput( wid, "inpHide", buf );
 }
 
