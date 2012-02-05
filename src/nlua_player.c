@@ -789,7 +789,11 @@ static int playerL_rmOutfit( lua_State *L )
       q = luaL_checkint(L, 2);
 
    if (strcmp(str,"all")==0) {
-      noutfits = MAX(1, player_numOutfits());
+      noutfits = player_numOutfits();
+      /* Removing nothing is a bad idea. */
+      if (noutfits == 0)
+         return;
+
       outfits = malloc( sizeof(char*) * noutfits );
       player_getOutfits(outfits, NULL);
       for (i=0; i<noutfits; i++) {
