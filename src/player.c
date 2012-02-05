@@ -2392,7 +2392,7 @@ void player_getOutfits( char** soutfits, glTexture** toutfits )
          sizeof(PlayerOutfit_t), player_outfitCompare );
 
    /* Now built name and texture structure. */
-   if (toutfits != NULL)
+   if (toutfits != NULL) {
       for (i=0; i<player_noutfits; i++) {
          soutfits[i] = strdup( player_outfits[i].o->name );
          toutfits[i] = player_outfits[i].o->gfx_store;
