@@ -9,6 +9,16 @@
 --    idle - current playing music ran out
 ]]--
 last = "idle"
+
+-- Faction-specific songs.
+factional = {
+   Collective = { "collective1", "collective2", "automat" },
+   Empire     = { "empire1", "empire2" },
+   Sirius     = { "sirius1", "sirius2" },
+   Dvaered    = { "dvaered1", "dvaered2" },
+   ["Za'lek"] = { "zalek1" } -- TODO: Have Za'lek faction actually exist in-game.
+}
+
 function choose( str )
    -- Stores all the available sound types and their functions
    choose_table = {
@@ -175,23 +185,19 @@ function choose_ambient ()
 
    -- Get information about the current system
    local sys                  = system.cur()
-   local factions             = sys:faction()
+   local factions             = sys:presences()
+   local faction              = sys:faction()
    local nebu_dens, nebu_vol  = sys:nebula()
 
    -- Check to see if changing faction zone
-   if not factions[last_sysFaction] then
-
+   if faction ~= last_sysFaction then
       -- Table must not be empty
       if next(factions) ~= nil then
          force = true
       end
 
       if force then
-         -- Give first value to last faction
-         for k,v in pairs(factions) do
-            last_sysFaction = k
-            break
-         end
+         last_sysFaction = faction
       end
    end
 
@@ -207,20 +213,11 @@ function choose_ambient ()
       -- Choose the music, bias by faction first
       local add_neutral = false
       local neutral_prob = 0.6
-      if factions["Collective"] then
-         ambient = { "collective1", "collective2", "automat" }
-      elseif factions["Empire"] then
-         ambient = { "empire1", "empire2" }
-         add_neutral = true
-      elseif factions["Sirius"] then
-         ambient = { "sirius1", "sirius2" }
-         add_neutral = true
-      elseif factions["Dvaered"] then
-         ambient = { "dvaered1", "dvaered2" }
-         add_neutral = true
-      elseif factions["Za'lek"] then -- TODO: Have Za'lek faction actually exist in-game.
-         ambient = { "zalek1" }
-         add_neutral = true
+      if factional[faction:name()] then
+         ambient = factional[faction:name()]
+         if faction:name() ~= "Collective" then
+            add_neutral = true
+         end
       elseif nebu then
          ambient = { "ambient1", "ambient3" }
          add_neutral = true
