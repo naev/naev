@@ -27,13 +27,13 @@ There is still one thing left in this system for you to find: the jump point lea
    message6 = [[Well done, you have found the jump point. As you can see, you had to get pretty close to it before it appeared! Just like with planets though, jump points will always be visible to you once you know where they are.]]
    message7 = [[Jump points are vitally important to pilots who want to travel through the galaxy, yet they can be hard to find. Fortunately, there are a few things that make this easier:
 
-* Keep an eye on other ships in the system. Especially trader ships have a tendency to travel to other systems. If you see one heading to a part of space that seems empty to you, follow them! They will likely lead you to a jump point.
+- Keep an eye on other ships in the system. Especially trader ships have a tendency to travel to other systems. If you see one heading to a part of space that seems empty to you, follow them! They will likely lead you to a jump point.
 
-* When you land on a planet, don't forget to chat up the people in the bar. They can be quite friendly, and some of them may even help you out by telling you the location of a jump point in the system.
+- When you land on a planet, don't forget to chat up the people in the bar. They can be quite friendly, and some of them may even help you out by telling you the location of a jump point in the system.
 
-* Keep a look out for Star Maps. These maps are sold on planets, and each one reveals a specific part of the galaxy. Most maps reveal several systems at once, and will usually reveal some or all of their jump points as well.
+- Keep a look out for Star Maps. These maps are sold on planets, and each one reveals a specific part of the galaxy. Most maps reveal several systems at once, and will usually reveal some or all of their jump points as well.
 
-* Not all jump points are hard to find! Some of them have buoys placed next to them that transmit their coordinates. You will be able to see these jump points from any distance away. Jumps like these are usually arranged in a long chain of jumps, and these chains are called Highways. Highways are found in large faction territories.]]
+- Not all jump points are hard to find! Some of them have buoys placed next to them that transmit their coordinates. You will be able to see these jump points from any distance away. Jumps like these are usually arranged in a long chain of jumps, and these chains are called Highways. Highways are found in large faction territories.]]
 
 message8 = [[You now know about discovering planets and jump points, and you also know that some systems can make that process more difficult. As a final tip, rumor has it that some jump points can not be discovered at all unless you have special sensors on board and know exactly where to look. It even seems some jump points can not be seen or used at all, and only serve as exit points...
 
