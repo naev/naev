@@ -92,7 +92,10 @@ else --default english
                                "You can easily tell the different echelons apart. Every Sirian citizen and soldier wears clothing appropriate to his or her echelon."
                               }
 
-   msg_lore["Soromid"] =      {"Hello. Can I interest you in one of our galaxy famous gene treatments? You look like you could use them..."
+   msg_lore["Soromid"] =      {"Hello. Can I interest you in one of our galaxy famous cosmetic gene treatments? You look like you could use them...",
+                               "Can you believe it? I was going to visit Sorom to find my roots, and then boom! It got burnt to a crisp! Even now, cycles later, I still can't believe it.",
+                               "Yes, it's true, our military ships are alive. Us normal folk don't get to own bioships though, we have to make do with synthetic constructs just like everyone else.",
+                               "Everyone knows that we Soromid altered ourselves to survive the deadly conditions on Sorom during the Great Quarantine. What you don't hear so often is that billions of us died from the therapy itself. We paid a high price for survival."
                               }
 
    msg_lore["Za'lek"] =       {"It's not easy, dancing to those scientists' tunes. They give you the most impossible tasks! Like, where am I supposed to get a triple redundant helitron converter? Honestly."
