@@ -101,7 +101,7 @@
   <lua>sirius/achack04</lua>
   <trigger>enter</trigger>
   <chance>5</chance>
-  <cond>not player.misnActive("Sirian Truce") and system.cur():faction()["Sirius"] &gt; 0 and var.peek("achack04repeat") and time.get() - time.fromnumber(var.peek("achack04repeat")) &gt; time.create(0, 30, 0)</cond>
+  <cond>not player.misnActive("Sirian Truce") and not player.misnDone("Sirian Truce") and system.cur():faction()["Sirius"] &gt; 0 and var.peek("achack04repeat") and time.get() - time.fromnumber(var.peek("achack04repeat")) &gt; time.create(0, 30, 0)</cond>
   <flags>
   </flags>
  </event>
