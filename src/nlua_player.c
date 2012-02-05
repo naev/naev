@@ -763,7 +763,9 @@ static int playerL_addOutfit( lua_State *L  )
    return 0;
 }
 /**
- * @brief Removes an outfit to the player's outfit list.
+ * @brief Removes an outfit from the player's outfit list.
+ *
+ * "all" will remove all outfits.
  *
  * @usage player.rmOutfit( "Plasma Blaster", 2 ) -- Removes two plasma blasters from the player
  *
@@ -774,8 +776,9 @@ static int playerL_addOutfit( lua_State *L  )
 static int playerL_rmOutfit( lua_State *L )
 {
    const char *str;
+   char **outfits;
    Outfit *o;
-   int q;
+   int i, q, noutfits;
 
    /* Defaults. */
    q = 1;
@@ -785,15 +788,27 @@ static int playerL_rmOutfit( lua_State *L )
    if (lua_gettop(L) > 1)
       q = luaL_checkint(L, 2);
 
-   /* Get outfit. */
-   o = outfit_get( str );
-   if (o==NULL) {
-      NLUA_ERROR(L, "Outfit '%s' not found.", str);
-      return 0;
+   if (strcmp(str,"all")==0) {
+      noutfits = MAX(1, player_numOutfits());
+      outfits = malloc( sizeof(char*) * noutfits );
+      player_getOutfits(outfits, NULL);
+      for (i=0; i<noutfits; i++) {
+         o = outfit_get(outfits[i]);
+         q = player_outfitOwned(o);
+         player_rmOutfit(o, q);
+      }
    }
+   else {
+      /* Get outfit. */
+      o = outfit_get( str );
+      if (o==NULL) {
+         NLUA_ERROR(L, "Outfit '%s' not found.", str);
+         return 0;
+      }
 
-   /* Add the outfits. */
-   player_rmOutfit( o, q );
+      /* Remove the outfits. */
+      player_rmOutfit( o, q );
+   }
 
    /* Update equipment list. */
    outfits_updateEquipmentOutfits();
