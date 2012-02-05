@@ -800,7 +800,11 @@ static int playerL_rmOutfit( lua_State *L )
          o = outfit_get(outfits[i]);
          q = player_outfitOwned(o);
          player_rmOutfit(o, q);
+         /* Free memory. */
+         free( outfits[i] );
       }
+      /* Clean up. */
+      free(outfits);
    }
    else {
       /* Get outfit. */
