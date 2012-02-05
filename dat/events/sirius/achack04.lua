@@ -10,7 +10,7 @@ function create()
 end
 
 function startMission()
-   naev.misnStart("Sirian Truce")
+   naev.missionStart("Sirian Truce")
    cleanup()
 end
 
