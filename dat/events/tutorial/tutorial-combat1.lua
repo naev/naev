@@ -30,8 +30,8 @@ Before you attack the drone, you should target it. To do so, you can use %s, whi
 
 Target the drone, then shoot at it until it is destroyed.]]
     message8 = [[Well done, you have just destroyed your enemy. You now know the basics of ship to ship combat. As the final part of this tutorial, you're going to fight against a live opponent. We've hired the best fighter pilot in the sector to test your mettle, he will jump into the system any moment now. Good luck, you're going to need it!]]
-    message9 = [[Oh. Well, good job, you've defeated your opponent. You'll notice he didn't become disabled before being destroyed. Some enemies are like that, especially if they're important for a mission, so keep that in mind.]]
-    message10 = [[Another thing you might have noticed is that your weapons started lose accuracy during the battle. This is because of heat. Weapons heat up when fired, and when they become too hot they will first lose accuracy, and then firing rate, to the point where they won't fire at all anymore. If you find your weapons are overheating a lot, consider switching them out for a while using weapon groups.]]
+    message9 = [[Oh. Well, good job, you've defeated your opponent. Don't worry about him though, he made it out before his ship blew. He mentioned he was good at that. Maybe that should have given us a clue...]]
+    message10 = [[Something you might have noticed if the battle lasted for a while is that your weapons started lose accuracy. This is because of heat. Weapons heat up when fired, and when they become too hot they will first lose accuracy, and then firing rate, to the point where they won't fire at all anymore. If you find your weapons are overheating a lot, consider switching them out for a while using weapon groups.]]
     message11 = [[You now know the basic principles of combat. As a final tip, you can target specific enemies at long range by clicking on them on the overlay map.
     
 Congratulations! This concludes the basic combat tutorial.]]

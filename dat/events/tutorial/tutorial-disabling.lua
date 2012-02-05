@@ -112,6 +112,7 @@ end
 
 -- Player is disabled
 function playerdisabled()
+   player.pilot():setInvincible(true)
    pirates[1]:control()
    pirates[2]:control()
    pirates[1]:hyperspace()

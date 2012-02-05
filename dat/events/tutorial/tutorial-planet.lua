@@ -17,7 +17,7 @@ To access the more interesting facilities on Paul 2, you will need to click on t
 Select any tab now to view a short explanation on what you can do there. Once you have seen enough, press the takeoff button to end this tutorial.]]
     message3 = [[This is the outfit seller. Here you may buy and sell things such as weapons, ship upgrades and ammunition. Note that you need to visit the equipment facility to actually install most outfits into your ship.
 
-A particular item of interest that most outfit sellers will carry is the star map. Buying a star map will give you information about surrounding systems, so it's a useful item when you're just starting out.]]
+A particular item of interest that most outfit sellers will carry is the star map. Buying a star map will give you information remote systems and their jump points, so it's a useful item when you're just starting out.]]
     message4 = [[This is the spaceport bar. Here you may find people who are interested in giving you missions. You will also see a news feed on the right of the screen. You can approach patrons by clicking on their portrait and then clicking on the "approach" button.
 
 There are no mission givers here at the moment. Missions are explained in more detail in another tutorial.]]
@@ -26,7 +26,7 @@ There are no mission givers here at the moment. Missions are explained in more d
 There is no work available right now. Missions are explained in more detail in another tutorial.]]
     message6 = [[This is the equipment screen, where you can customize your ship, as well as switch to another ship if you own more than one.
 
-You have been given a modest selection of equipment. Try installing it in your ship by right-clicking the item boxes in the inventory panel. Be careful, however, of the following:
+You have been given a modest selection of equipment. Try installing it in your ship by right-clicking the item boxes in the inventory panel. You can uninstall them again by right-clicking on the ship slots they are installed in. Be careful, however, of the following:
 
 - Each outfit is either a Structure, Utility or Weapon outfit, and can ONLY be installed in an appropriate slot.
 
@@ -51,12 +51,13 @@ function create()
     
     tk.msg(title1, message1)
     
+    player.rmOutfit("all")
     player.pilot():rmOutfit("all")
     player.pay(-player.credits())
     player.addOutfit("Laser Cannon MK1", 2)
     player.addOutfit("Plasma Blaster MK1", 1)
     player.addOutfit("Engine Reroute", 1)
-    player.addOutfit("Fuel Pod", 1)
+    player.addOutfit("Unicorp Scrambler", 1)
     player.addOutfit("Cargo Pod", 1)
     player.pilot():control()
     player.pilot():land(planet.get("Paul 2"))
