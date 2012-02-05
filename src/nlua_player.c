@@ -73,7 +73,9 @@ static int playerL_landWindow( lua_State *L );
 /* Hail stuff. */
 static int playerL_commclose( lua_State *L );
 /* Cargo stuff. */
+static int playerL_numOutfit( lua_State *L );
 static int playerL_addOutfit( lua_State *L );
+static int playerL_rmOutfit( lua_State *L );
 static int playerL_addShip( lua_State *L );
 static int playerL_swapShip( lua_State *L );
 static int playerL_misnActive( lua_State *L );
@@ -104,7 +106,9 @@ static const luaL_reg playerL_methods[] = {
    { "allowLand", playerL_allowLand },
    { "landWindow", playerL_landWindow },
    { "commClose", playerL_commclose },
+   { "numOutfit", playerL_numOutfit },
    { "addOutfit", playerL_addOutfit },
+   { "rmOutfit", playerL_rmOutfit },
    { "addShip", playerL_addShip },
    { "swapShip", playerL_swapShip },
    { "misnActive", playerL_misnActive },
@@ -124,6 +128,7 @@ static const luaL_reg playerL_cond_methods[] = {
    { "fuel", playerL_fuel },
    { "autonav", playerL_autonav },
    { "autonavDest", playerL_autonavDest },
+   { "numOutfit", playerL_numOutfit },
    { "misnActive", playerL_misnActive },
    { "misnDone", playerL_misnDone },
    { "evtActive", playerL_evtActive },
@@ -688,6 +693,37 @@ static int playerL_commclose( lua_State *L )
 
 
 /**
+ * @brief Gets the number of outfits the player owns in his list (excludes equipped on ships).
+ *
+ * @usage q = player.numOutfit( "Laser Cannon" ) -- Number of 'Laser Cannons' the player owns (unequipped)
+ *
+ *    @luaparam name Name of the outfit to give.
+ *    @luareturn The quantity the player owns.
+ * @luafunc addOutfit( name )
+ */
+static int playerL_numOutfit( lua_State *L )
+{
+   const char *str;
+   Outfit *o;
+   int q;
+
+   /* Handle parameters. */
+   str = luaL_checkstring(L, 1);
+
+   /* Get outfit. */
+   o = outfit_get( str );
+   if (o==NULL) {
+      NLUA_ERROR(L, "Outfit '%s' not found.", str);
+      return 0;
+   }
+
+   /* Count the outfit. */
+   q = player_outfitOwned( o );
+   lua_pushnumber( L, q );
+
+   return 1;
+}
+/**
  * @brief Adds an outfit to the player's outfit list.
  *
  * @usage player.addOutfit( "Laser Cannon" ) -- Gives the player a laser cannon
@@ -720,6 +756,44 @@ static int playerL_addOutfit( lua_State *L  )
 
    /* Add the outfits. */
    player_addOutfit( o, q );
+
+   /* Update equipment list. */
+   outfits_updateEquipmentOutfits();
+
+   return 0;
+}
+/**
+ * @brief Removes an outfit to the player's outfit list.
+ *
+ * @usage player.rmOutfit( "Plasma Blaster", 2 ) -- Removes two plasma blasters from the player
+ *
+ *    @luaparam name Name of the outfit to give.
+ *    @luaparam q Optional parameter that sets the quantity to give (default 1).
+ * @luafunc rmOutfit( name, q )
+ */
+static int playerL_rmOutfit( lua_State *L )
+{
+   const char *str;
+   Outfit *o;
+   int q;
+
+   /* Defaults. */
+   q = 1;
+
+   /* Handle parameters. */
+   str = luaL_checkstring(L, 1);
+   if (lua_gettop(L) > 1)
+      q = luaL_checkint(L, 2);
+
+   /* Get outfit. */
+   o = outfit_get( str );
+   if (o==NULL) {
+      NLUA_ERROR(L, "Outfit '%s' not found.", str);
+      return 0;
+   }
+
+   /* Add the outfits. */
+   player_rmOutfit( o, q );
 
    /* Update equipment list. */
    outfits_updateEquipmentOutfits();
