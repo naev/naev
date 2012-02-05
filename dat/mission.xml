@@ -644,6 +644,15 @@
    <faction>Sirius</faction>
   </avail>
  </mission>
+ <mission name="Sirian Truce">
+  <lua>sirius/achack/achack04</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <location>None</location>
+  </avail>
+ </mission>
  <mission name="Kidnapped">
   <lua>neutral/kidnapped/traffic_00</lua>
   <avail>

@@ -97,6 +97,14 @@
   <flags>
   </flags>
  </event>
+ <event name="Achack04 Helper">
+  <lua>sirius/achack04</lua>
+  <trigger>enter</trigger>
+  <chance>5</chance>
+  <cond>system.cur():faction()["Sirius"] and var.peek("achack04repeat") and time.get() - time.fromnumber(var.peek("achack04repeat")) > time.create(0, 30, 0)</cond>
+  <flags>
+  </flags>
+ </event>
  <event name="Shipwreck">
   <lua>neutral/shipwreck</lua>
   <trigger>enter</trigger>
