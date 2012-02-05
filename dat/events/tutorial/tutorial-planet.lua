@@ -51,8 +51,6 @@ function create()
     
     tk.msg(title1, message1)
     
-    player.rmOutfit("all")
-    player.pilot():rmOutfit("all")
     player.pay(-player.credits())
     player.addOutfit("Laser Cannon MK1", 2)
     player.addOutfit("Plasma Blaster MK1", 1)

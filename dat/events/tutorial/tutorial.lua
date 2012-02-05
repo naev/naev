@@ -27,6 +27,8 @@ function create()
     player.teleport("Mohawk")
     player.msgClear()
     player.swapShip("Llama", "Tutorial Llama", "Paul 2", true, true)
+    player.rmOutfit("all")
+    player.pilot():rmOutfit("all") 
     player.cinematics(true, { no2x = true })
 
     pp:setPos(vec2.new(0, 0))
