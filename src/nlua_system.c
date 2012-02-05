@@ -37,7 +37,7 @@ static int systemL_nebula( lua_State *L );
 static int systemL_jumpdistance( lua_State *L );
 static int systemL_adjacent( lua_State *L );
 static int systemL_jumps( lua_State *L );
-static int systemL_hasPresence( lua_State *L );
+static int systemL_presences( lua_State *L );
 static int systemL_planets( lua_State *L );
 static int systemL_presence( lua_State *L );
 static int systemL_radius( lua_State *L );
@@ -57,7 +57,7 @@ static const luaL_reg system_methods[] = {
    { "jumpDist", systemL_jumpdistance },
    { "adjacentSystems", systemL_adjacent },
    { "jumps", systemL_jumps },
-   { "hasPresence", systemL_hasPresence },
+   { "presences", systemL_presences },
    { "planets", systemL_planets },
    { "presence", systemL_presence },
    { "radius", systemL_radius },
@@ -79,7 +79,7 @@ static const luaL_reg system_cond_methods[] = {
    { "jumpDist", systemL_jumpdistance },
    { "adjacentSystems", systemL_adjacent },
    { "jumps", systemL_jumps },
-   { "hasPresence", systemL_hasPresence },
+   { "presences", systemL_presences },
    { "planets", systemL_planets },
    { "presence", systemL_presence },
    { "radius", systemL_radius },
@@ -336,36 +336,26 @@ static int systemL_name( lua_State *L )
 }
 
 /**
- * @brief Gets system factions.
- *
- * @code
- * sys   = system.get() -- Get current system
- * facts = sys:faction() -- Get factions
- * if facts[ "Empire" ] then
- *    -- Do something since there is at least one Empire planet in the system
- * end
- * value = facts[ "Pirate" ] or 0 -- Get value of pirates in the system
- * @endcode
+ * @brief Gets system faction.
  *
  *    @luaparam s System to get the factions of.
- *    @luareturn A table containing all the factions in the system.
+ *    @luareturn The dominant faction in the system.
  * @luafunc faction( s )
  */
 static int systemL_faction( lua_State *L )
 {
    int i;
+   LuaFaction lf;
    StarSystem *s;
 
    s = luaL_validsystem(L,1);
 
-   /* Return result in table */
-   lua_newtable(L);
-   for (i=0; i<s->npresence; i++) {
-      lua_pushstring( L, faction_name(s->presence[i].faction) ); /* t, k */
-      lua_pushnumber(L,s->presence[i].value); /* t, k, v */
-      lua_settable(L,-3);  /* t */
-      /* allows syntax foo = space.faction("foo"); if foo["bar"] then ... end */
-   }
+   if (s->faction == -1)
+      return 0;
+   else
+      lf.f = s->faction;
+
+   lua_pushfaction(L,lf);
    return 1;
 
 }
@@ -510,48 +500,30 @@ static int systemL_jumps( lua_State *L )
 
 
 /**
- * @brief Checks to see if a faction has presence in a system.
+ * @brief Returns the factions that have presence in a system and their respective presence values.
  *
- * This checks to see if the faction has a possibility of having any ships at all
- *  be randomly generated in the system.
+ *  @usage if sys:presences()["Empire"] then -- Checks to see if Empire has ships in the system
+ *  @usage if sys:presences()[faction.get("Pirate")] then -- Checks to see if the Pirates have ships in the system
  *
- *  @usage if sys:hasPresence( "Empire" ) then -- Checks to see if Empire has ships in the system
- *  @usage if sys:hasPresence( faction.get("Pirate") ) then -- Checks to see if the Pirate has ships in the system
- *
- *    @luaparam s System to check to see if has presence of a certain faction.
- *    @luaparam f Faction or name of faction to check to see if has presence in the system.
- *    @luareturn true If faction has presence in the system, false otherwise.
- * @luafunc hasPresence( s, f )
+ *    @luaparam s System to get the factional presences of.
+ *    @luareturn A table with the factions that have presence in the system.
+ * @luafunc presences( s )
  */
-static int systemL_hasPresence( lua_State *L )
+static int systemL_presences( lua_State *L )
 {
-   LuaFaction *lf;
    StarSystem *s;
-   int fct;
-   int i, found;
+   int i;
 
    s = luaL_validsystem(L,1);
 
-   /* Get the second parameter. */
-   if (lua_isstring(L,2)) {
-      fct = faction_get( lua_tostring(L,2) );
-   }
-   else if (lua_isfaction(L,2)) {
-      lf = lua_tofaction(L,2);
-      fct = lf->f;
-   }
-   else NLUA_INVALID_PARAMETER(L);
-
-   /* Try to find a fleet of the faction. */
-   found = 0;
+   /* Return result in table */
+   lua_newtable(L);
    for (i=0; i<s->npresence; i++) {
-      if (s->presence[i].faction == fct) {
-         found = 1;
-         break;
-      }
+      lua_pushstring( L, faction_name(s->presence[i].faction) ); /* t, k */
+      lua_pushnumber(L,s->presence[i].value); /* t, k, v */
+      lua_settable(L,-3);  /* t */
+      /* allows syntax foo = system.presences(); if foo["bar"] then ... end */
    }
-
-   lua_pushboolean(L, found);
    return 1;
 }
 
