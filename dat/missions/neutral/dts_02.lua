@@ -107,9 +107,9 @@ end
 function create()
 
       this_planet, this_system = planet.cur()
-      if ( this_system:hasPresence( "Pirate") or 
-           this_system:hasPresence( "Collective") or 
-           this_system:hasPresence( "FLF") or
+      if ( this_system:presences()["Pirate"] or 
+           this_system:presences()["Collective"] or 
+           this_system:presences()["FLF"] or
            this_system:name() == "Gamma Polaris" or
            this_system:name() == "Doeston" or
            this_system:name() == "NGC-7291") then

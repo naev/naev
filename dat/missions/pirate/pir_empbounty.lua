@@ -101,7 +101,7 @@ end
 
 function emp_systems_filter( sys, data )
    -- Must have Empire
-   if not sys:hasPresence( "Empire" ) then
+   if not sys:presences()["Empire"] then
       return false
    end
 

@@ -317,7 +317,7 @@
   </flags>
   <avail>
    <priority>4</priority>
-   <cond>player.getRating() &gt; 30 and system.cur():hasPresence("Pirate")</cond>
+   <cond>player.getRating() &gt; 30 and system.cur():presences()["Pirate"] ~= nil</cond>
    <chance>20</chance>
    <done>Empire Shipping 3</done>
    <location>Bar</location>
@@ -330,7 +330,7 @@
   <lua>empire/emp_pirbounty</lua>
   <avail>
    <priority>4</priority>
-   <cond>player.getRating() &gt; 50 and system.cur():hasPresence("Pirate")</cond>
+   <cond>player.getRating() &gt; 50 and system.cur():presences()["Pirate"] ~= nil</cond>
    <chance>10</chance>
    <done>Empire HCVL</done>
    <location>Bar</location>
@@ -571,7 +571,7 @@
   <lua>pirate/pir_empbounty</lua>
   <avail>
    <priority>4</priority>
-   <cond>player.getRating() &gt; 50 and system.cur():hasPresence("Pirate")</cond>
+   <cond>player.getRating() &gt; 50 and system.cur():presences()["Pirate"] ~= nil</cond>
    <chance>10</chance>
    <done>Hitman 3</done>
    <location>Bar</location>

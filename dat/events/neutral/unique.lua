@@ -9,10 +9,10 @@ function create ()
 
    -- Find possible uniques
    unique_list = {}
-   if sys:hasPresence("Pirate") then
+   if sys:presences()["Pirate"] then
       unique_list[ #unique_list+1 ] = "Pirate"
    end
-   if sys:hasPresence("Empire") then
+   if sys:presences()["Empire"] then
       unique_list[ #unique_list+1 ] = "Empire"
    end
 
