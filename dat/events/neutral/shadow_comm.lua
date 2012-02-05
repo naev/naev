@@ -96,6 +96,8 @@ function finish()
     if not hailed then
         var.pop("shadowvigil_active")
     end
-    hook.rm(hailhook)
+    if hailhook then
+        hook.rm(hailhook)
+    end
     evt.finish()
 end
