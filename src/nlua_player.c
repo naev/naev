@@ -792,7 +792,7 @@ static int playerL_rmOutfit( lua_State *L )
       noutfits = player_numOutfits();
       /* Removing nothing is a bad idea. */
       if (noutfits == 0)
-         return;
+         return 0;
 
       outfits = malloc( sizeof(char*) * noutfits );
       player_getOutfits(outfits, NULL);
