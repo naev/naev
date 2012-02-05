@@ -158,7 +158,7 @@ static int dsys_saveSystem( xmlTextWriterPtr writer, const StarSystem *sys )
          xmlw_elemEmpty( writer, "hidden" );
       if (jp_isFlag( jp, JP_EXITONLY ))
          xmlw_elemEmpty( writer, "exitonly" );
-      xmlw_elem( writer, "hide", "%f", jp->hide );
+      xmlw_elem( writer, "hide", "%f", sqrt(jp->hide) );
       xmlw_endElem( writer ); /* "jump" */
    }
    xmlw_endElem( writer ); /* "jumps" */
