@@ -2373,7 +2373,7 @@ static int player_outfitCompare( const void *arg1, const void *arg2 )
 /**
  * @brief Prepares two arrays for displaying in an image array.
  *
- *    @param[out] soutfits Names of outfits to .
+ *    @param[out] soutfits Names of outfits the player owns.
  *    @param[out] toutfits Textures of outfits for image array.
  */
 void player_getOutfits( char** soutfits, glTexture** toutfits )
@@ -2382,7 +2382,8 @@ void player_getOutfits( char** soutfits, glTexture** toutfits )
 
    if (player_noutfits == 0) {
       soutfits[0] = strdup( "None" );
-      toutfits[0] = NULL;
+      if (toutfits != NULL)
+         toutfits[0] = NULL;
       return;
    }
 
@@ -2391,10 +2392,15 @@ void player_getOutfits( char** soutfits, glTexture** toutfits )
          sizeof(PlayerOutfit_t), player_outfitCompare );
 
    /* Now built name and texture structure. */
-   for (i=0; i<player_noutfits; i++) {
-      soutfits[i] = strdup( player_outfits[i].o->name );
-      toutfits[i] = player_outfits[i].o->gfx_store;
+   if (toutfits != NULL)
+      for (i=0; i<player_noutfits; i++) {
+         soutfits[i] = strdup( player_outfits[i].o->name );
+         toutfits[i] = player_outfits[i].o->gfx_store;
+      }
    }
+   else
+      for (i=0; i<player_noutfits; i++)
+         soutfits[i] = strdup( player_outfits[i].o->name );
 }
 
 
