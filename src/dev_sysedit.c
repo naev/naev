@@ -381,6 +381,7 @@ static void sysedit_btnNew( unsigned int wid_unused, char *unused )
    p->gfx_exteriorPath  = strdup( b->gfx_exteriorPath );
    p->pos.x             = sysedit_xpos / sysedit_zoom;
    p->pos.y             = sysedit_ypos / sysedit_zoom;
+   p->hide              = pow2(0.25);
 
    /* Add new planet. */
    system_addPlanet( sysedit_sys, name );
