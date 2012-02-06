@@ -344,7 +344,6 @@ static int systemL_name( lua_State *L )
  */
 static int systemL_faction( lua_State *L )
 {
-   int i;
    LuaFaction lf;
    StarSystem *s;
 
