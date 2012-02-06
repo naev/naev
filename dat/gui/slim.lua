@@ -40,6 +40,9 @@ function create()
    col_temperature = col_heat
    col_missile = colour.new(col_txt_enm)
 
+   -- Active outfit bar
+   col_slot_bg = colour.new( 12/255, 14/255, 20/255 )
+
    --Load Images
    local base = "gfx/gui/slim/"
    player_pane_t = tex.open( base .. "frame_player_top.png" )
@@ -96,6 +99,12 @@ function create()
    gui.targetPlanetGFX( tex.open( base .. "radar_planet.png" ) )
    gui.targetPilotGFX(  tex.open( base .. "radar_ship.png" ) )
 
+   -- Active outfit list.
+   slot = tex.open( base .. "slot.png" )
+   slotend = tex.open( base .. "slotend.png" )
+   cooldown = tex.open( base .. "cooldown.png", 6, 6 )
+   active =  tex.open( base .. "active.png" )
+
    --Messages
    gui.mesgInit( screen_w - 400, 20, 28+15+5 )
 
@@ -135,6 +144,21 @@ function create()
    -- Missile lock warning
    missile_lock_text = "Warning - Missile Lockon Detected"
    missile_lock_length = gfx.printDim( false, missile_lock_text )
+
+   -- Active outfit bar
+   slot_w, slot_h = slot:dim()
+   slot_y = screen_h - slot_h - 15
+   slot_img_offs_x = 4
+   slot_img_offs_y = 5
+
+   slot_txt_offs_x = slot_img_offs_x + 24
+   slot_txt_offs_y = 9
+   slot_txt_w = 40
+
+   slot_img_w = 64
+
+   slot_w, slot_h = slot:dim()
+   slotend_w, slotend_h = slotend:dim()
 
    --Target Pane
    ta_pane_w, ta_pane_h = target_pane:dim()
@@ -328,6 +352,23 @@ function update_system()
    sysname = sys:name()
 end
 
+function update_wset()
+   wset_name, wset  = pp:weapset()
+   weap_icons = {}
+
+   for k, v in ipairs( wset ) do
+      weap_icons[k] = outfit.get( v.name ):icon()
+   end
+
+   aset = pp:actives()
+   active_icons = {}
+
+   for k, v in ipairs( aset ) do
+      active_icons[k] = outfit.get( v.name ):icon()
+   end
+   slot_start_x = screen_w/2 - #aset/2 * slot_w
+end
+
 function render_bar( name, value, txt, txtcol, size, col, bgc )
    if size then
       offsets = { 22, 5, 9, 3 }
@@ -472,6 +513,7 @@ function render( dt, dt_mod )
    autonav = player.autonav()
    wset_name, wset  = pp:weapset(true)
    credits = player.credits()
+   update_wset() -- Ugly.
 
    --Radar
    gfx.renderTex( radar_gfx, radar_x, radar_y )
@@ -603,6 +645,45 @@ function render( dt, dt_mod )
    end
    if autonav then
       gfx.renderTex( warnlight3, pl_pane_x + 162, pl_pane_y + 12 )
+   end
+
+   --Left side
+   i = 1
+   for i=1,#aset do
+      local slot_x = screen_w - slot_start_x - i * slot_w
+      if i <= #aset then
+         --There is something in this slot
+         gfx.renderRect( slot_x, slot_y, slot_w, slot_h, col_slot_bg ) --Background
+
+         gfx.renderTexRaw( active_icons[i], slot_x + slot_img_offs_x, slot_y + slot_img_offs_y + 2, slot_img_w, slot_img_w, 1, 1, 0, 0, 1, 1 ) --Image 
+
+         if aset[i].state == "on" then
+            gfx.renderTex( active, slot_x + slot_img_offs_x + 2, slot_y + slot_img_offs_y )
+         elseif aset[i].state == "cooldown" then
+         --Cooldown
+            local texnum = round(aset[i].cooldown*35) --Turn the 0..1 cooldown number into a 0..35 tex id where 0 is ready.
+            gfx.renderTex( cooldown, slot_x + slot_img_offs_x, slot_y + slot_img_offs_y, (texnum % 6) + 1, math.floor( texnum / 6 ) + 1 )
+
+            --A strange thing: The texture at 6,6 is never drawn, the one at 5,6 only about 50% of the time. Otherwise, they're skipped
+            --is this an error in my code or bobbens' ?
+         elseif aset[i].state == "on" then
+            --"Heat"
+            gfx.renderRect( slot_x + slot_img_offs_x, slot_img_offs_y, slot_img_w, slot_img_w * (1-aset[i].duration), col_slot_heat )
+         end
+
+         --Frame
+         local postfix = ""
+         if i >= #aset then
+            postfix = "end"
+         end
+
+         if i == 1 then
+            gfx.renderTexRaw( _G["slotend"], slot_x + slot_w, slot_y, -1*_G["slot"..postfix.."_w"], _G["slot"..postfix.."_h"], 1, 1, 0, 0, -1, 1 )
+         else
+            gfx.renderTexRaw( _G["slot" .. postfix], slot_x + slot_w, slot_y, -1*_G["slot"..postfix.."_w"], _G["slot"..postfix.."_h"], 1, 1, 0, 0, 1, 1 )
+         end
+      end
+      i = i + 1
    end
 
    --Target Pane
