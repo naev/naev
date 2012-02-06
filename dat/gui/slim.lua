@@ -490,8 +490,12 @@ function render_ammoBar( name, x, y, value, txt, txtcol, col )
    if value[4] then
       if value[4] == -1 or pilot.player():target() == nil then
          trackcol = col_txt_una
+      elseif value[4] < 1. then
+         local h, s, v = col_txt_una:hsv()
+         trackcol = colour.new( col_txt_una )
+         trackcol:setHSV( h, s, v + value[4] * (1-v))
       else
-         trackcol = colour.new(1-value[4], value[4], 0)
+         trackcol = colour.new( "Green" )
       end
       gfx.renderTex( tracking_light, x + offsets[7], y + offsets[8], trackcol )
       textoffset = track_w + 2
