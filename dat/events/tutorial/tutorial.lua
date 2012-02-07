@@ -13,6 +13,7 @@ else -- default english
     menuinterstellar = "Tutorial: Interstellar Flight"
     menubasiccombat = "Tutorial: Basic Combat"
     menumisscombat = "Tutorial: Missile Combat"
+    menuaoutfits = "Tutorial: Activated Outfits"
     menudisable = "Tutorial: Disabling"
     menuplanet = "Tutorial: The Planetary Screen"
     menutrade = "Tutorial: Trade"
@@ -45,7 +46,7 @@ function create()
     system.get("Sioux"):setKnown(false, true)
 
     -- Create menu.
-    _, selection = tk.choice(menutitle, menutext, menubasic, menudiscover, menuinterstellar, menucomms, menubasiccombat, menumisscombat, menudisable, menuplanet, menumissions, menux)
+    _, selection = tk.choice(menutitle, menutext, menubasic, menudiscover, menuinterstellar, menucomms, menubasiccombat, menumisscombat, menuaoutfits, menudisable, menuplanet, menumissions, menux)
     
     startModule(selection)
 end
