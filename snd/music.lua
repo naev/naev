@@ -187,6 +187,9 @@ function choose_ambient ()
    local sys                  = system.cur()
    local factions             = sys:presences()
    local faction              = sys:faction()
+   if faction then
+      faction = faction:name()
+   end
    local nebu_dens, nebu_vol  = sys:nebula()
 
    -- Check to see if changing faction zone
@@ -213,9 +216,9 @@ function choose_ambient ()
       -- Choose the music, bias by faction first
       local add_neutral = false
       local neutral_prob = 0.6
-      if factional[faction:name()] then
-         ambient = factional[faction:name()]
-         if faction:name() ~= "Collective" then
+      if factional[faction] then
+         ambient = factional[faction]
+         if faction ~= "Collective" then
             add_neutral = true
          end
       elseif nebu then
