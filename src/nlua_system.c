@@ -338,7 +338,7 @@ static int systemL_name( lua_State *L )
 /**
  * @brief Gets system faction.
  *
- *    @luaparam s System to get the factions of.
+ *    @luaparam s System to get the faction of.
  *    @luareturn The dominant faction in the system.
  * @luafunc faction( s )
  */
