@@ -108,6 +108,10 @@ Contributions
    Cypher3c <cypher3c@gmail.com>
       * Spiced up the boring generic cargo missios.
 
+   Nathan Loewen <loewen.nathan@gmail.com>
+      * Missions
+      * Misc coding support
+
    Fisherman
       * Threading code to speed up nebula generation (and in the future who knows?)
       * Hot dog mission
@@ -127,10 +131,6 @@ Contributions
 
    Old Man <oldtopman@gmail.com>
       * Desura Maintainer
-
-   Nathan Loewen <loewen.nathan@gmail.com>
-      * Missions
-      * Misc coding support
 
 
 Testers
