@@ -626,7 +626,7 @@
    <unique />
   </flags>
   <avail>
-   <cond>planet.get("Violin Station"):system():jumpDist() &lt; 4</cond>
+   <cond>player.misnDone("Sirian Bounty") and planet.get("Violin Station"):system():jumpDist() &lt; 4</cond>
    <chance>10</chance>
    <location>Bar</location>
    <faction>Sirius</faction>
@@ -638,7 +638,7 @@
    <unique />
   </flags>
   <avail>
-   <cond></cond>
+   <cond>player.misnDone("Harja's Vengeance")</cond>
    <chance>10</chance>
    <location>Bar</location>
    <faction>Sirius</faction>
