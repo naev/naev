@@ -119,7 +119,7 @@ All perfectly against regulation, no doubt, but the woman from the prefecture wi
    osd["title"] = "Waste disposal"
    osd["directions"] = "Fly to %s and dump the cargo into the atmosphere."
    osd["directions1"] = "Fly to %s and in the %s system and dump the cargo into the atmosphere."
-   osd["protip"] = "Fly into %s at top speed. Spin around in atmo and throw on the breaks."
+   osd["protip"] = "Fly into %s at top speed. Spin around in atmo and throw on the brakes."
    osd["done1"] = "Return to %s to collect the rest of your payment."
    osd["done2"] = "Return to %s to report on your success."
 

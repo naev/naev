@@ -10,11 +10,10 @@
 #include "pilot.h"
 
 /* flag defines */
-#define PLAYER_ACCEL       0   /**< player is turning left */
-#define PLAYER_TURN_LEFT   1   /**< player is turning left */
-#define PLAYER_TURN_RIGHT  2   /**< player is turning right */
-#define PLAYER_REVERSE     3   /**< player is facing opposite of vel */
-#define PLAYER_AFTERBURNER 4   /**< player is afterburning */
+#define PLAYER_TURN_LEFT   0   /**< player is turning left */
+#define PLAYER_TURN_RIGHT  1   /**< player is turning right */
+#define PLAYER_REVERSE     2   /**< player is facing opposite of vel */
+#define PLAYER_ACCEL       3   /**< player is accelerating */
 #define PLAYER_DESTROYED   9   /**< player is destroyed */
 #define PLAYER_FACE        10  /**< player is facing target */
 #define PLAYER_PRIMARY     11  /**< player is shooting primary weapon */
@@ -64,6 +63,7 @@ typedef struct Player_s {
    double crating; /**< Combat rating. */
    int autonav; /**< Current autonav state. */
    Vector2d autonav_pos; /**< Target autonav position. */
+   char *autonavmsg; /**< String to print on arrival. */
    double tc_max; /**< Maximum time compression value (bounded by ship speed or conf setting). */
    double autonav_timer; /**< Timer that begins counting down when autonav aborts due to combat. */
    double mousex; /**< Mouse X position (for mouse flying). */
@@ -203,6 +203,7 @@ void player_update( Pilot *pplayer, const double dt );
 void player_updateSpecific( Pilot *pplayer, const double dt );
 void player_brokeHyperspace (void);
 void player_hyperspacePreempt( int );
+int player_getHypPreempt(void);
 
 /*
  * Targeting.
@@ -226,12 +227,12 @@ void player_targetEscort( int prev );
 /*
  * keybind actions
  */
-void player_weapSetPress( int id, int type );
+void player_weapSetPress( int id, int type, int repeat );
 void player_land (void);
 int player_jump (void);
 void player_screenshot (void);
 void player_afterburn (void);
-void player_afterburnOver (int type);
+void player_afterburnOver (void);
 void player_accel( double acc );
 void player_accelOver (void);
 void player_hail (void);

@@ -54,8 +54,8 @@ function emp_mil_restricted( pnt )
          "\"Don't attempt to bribe an Empire official, pilot.\"")
 end
 
--- Empire Polaris Prime.
-function emp_mil_polprime( pnt )
+-- Empire Emperor's Wrath.
+function emp_mil_wrath( pnt )
    return land_military(pnt, 75,
          "The Emperor permits you to land.",
          "You may not approach the Emperor.",

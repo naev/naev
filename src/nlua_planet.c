@@ -74,10 +74,34 @@ static const luaL_reg planet_methods[] = {
    { "shipsSold", planetL_shipsSold },
    { "outfitsSold", planetL_outfitsSold },
    { "commoditiesSold", planetL_commoditiesSold },
-   { "isKnown", planetL_isKnown },
+   { "known", planetL_isKnown },
    { "setKnown", planetL_setKnown },
    {0,0}
 }; /**< Planet metatable methods. */
+static const luaL_reg planet_cond_methods[] = {
+   { "cur", planetL_cur },
+   { "get", planetL_get },
+   { "getLandable", planetL_getLandable },
+   { "getAll", planetL_getAll },
+   { "system", planetL_system },
+   { "__eq", planetL_eq },
+   { "__tostring", planetL_name },
+   { "name", planetL_name },
+   { "faction", planetL_faction },
+   { "colour", planetL_colour },
+   { "class", planetL_class },
+   { "pos", planetL_position },
+   { "services", planetL_services },
+   { "canLand", planetL_canland },
+   { "landOverride", planetL_landOverride },
+   { "gfxSpace", planetL_gfxSpace },
+   { "gfxExterior", planetL_gfxExterior },
+   { "shipsSold", planetL_shipsSold },
+   { "outfitsSold", planetL_outfitsSold },
+   { "commoditiesSold", planetL_commoditiesSold },
+   { "known", planetL_isKnown },
+   {0,0}
+}; /**< Read only planet metatable methods. */
 
 
 /**
@@ -89,7 +113,6 @@ static const luaL_reg planet_methods[] = {
  */
 int nlua_loadPlanet( lua_State *L, int readonly )
 {
-   (void) readonly;
    /* Create the metatable */
    luaL_newmetatable(L, PLANET_METATABLE);
 
@@ -98,7 +121,10 @@ int nlua_loadPlanet( lua_State *L, int readonly )
    lua_setfield(L,-2,"__index");
 
    /* Register the values */
-   luaL_register(L, NULL, planet_methods);
+   if (readonly)
+      luaL_register(L, NULL, planet_cond_methods);
+   else
+      luaL_register(L, NULL, planet_methods);
 
    /* Clean up. */
    lua_setfield(L, LUA_GLOBALSINDEX, PLANET_METATABLE);
@@ -158,12 +184,21 @@ Planet* luaL_validplanet( lua_State *L, int ind )
 {
    LuaPlanet *lp;
    Planet *p;
-   lp = luaL_checkplanet( L, ind );
-   p  = planet_getIndex( lp->id );
-   if (p == NULL) {
-      NLUA_ERROR( L, "Planet is invalid" );
+
+   if (lua_isplanet(L, ind)) {
+      lp = luaL_checkplanet(L, ind);
+      p  = planet_getIndex(lp->id);
+   }
+   else if (lua_isstring(L, ind))
+      p = planet_get( lua_tostring(L, ind) );
+   else {
+      luaL_typerror(L, ind, PLANET_METATABLE);
       return NULL;
    }
+
+   if (p == NULL)
+      NLUA_ERROR(L, "Planet is invalid");
+
    return p;
 }
 /**
@@ -799,11 +834,11 @@ static int planetL_commoditiesSold( lua_State *L )
 /**
  * @brief Checks to see if a planet is known by the player.
  *
- * @usage b = p:isKnown()
+ * @usage b = p:known()
  *
  *    @luaparam s Planet to check if the player knows.
  *    @luareturn true if the player knows the planet.
- * @luafunc isKnown( p )
+ * @luafunc known( p )
  */
 static int planetL_isKnown( lua_State *L )
 {
@@ -829,7 +864,7 @@ static int planetL_setKnown( lua_State *L )
    b = lua_toboolean(L, 2);
 
    if (b)
-      planet_setFlag( p, PLANET_KNOWN );
+      planet_setKnown( p );
    else
       planet_rmFlag( p, PLANET_KNOWN );
    return 0;

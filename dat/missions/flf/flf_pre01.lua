@@ -104,7 +104,7 @@ function enter()
         -- Collect information needed for course calculations
         local spread = 45 -- max degrees off-course for waypoints
         local basepos = vec2.new(-8700,-3000) -- NOTE: Should be identical to the location in asset.xml!
-        local jumppos = system.cur():jumpPos(system.get("Behar"))
+        local jumppos = jump.pos( system.cur(), "Behar" )
         
         -- Calculate course
         local dist = vec2.dist(basepos, jumppos) -- The distance from the jump point to the base

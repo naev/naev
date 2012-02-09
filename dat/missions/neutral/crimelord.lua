@@ -76,8 +76,8 @@ function enter () --aforementioned triggered function
     if system.cur() == targetsystem then --when in target system
         local defenderships = { "Lancelot", "Lancelot", "Admonisher", "Pacifier",
                 "Hawking", "Kestrel" }
-        defenders = addRawShips( defenderships, "dvaered", system.jumpPos(targetsystem,
-                last_system), "Associates" ) --add a defending force to help you
+        defenders = addRawShips( defenderships, "dvaered", jump.pos(targetsystem, last_system),
+            "Associates" ) --add a defending force to help you
         renameShips( defenders, "^", "Associate " )
         for pilot_number, pilot_object in pairs(defenders) do
             pilot_object:setFriendly() --I think they like you

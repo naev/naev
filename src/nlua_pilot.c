@@ -555,7 +555,8 @@ static int pilotL_addFleet( lua_State *L )
       ls    = lua_tosystem(L,3);
       ss    = system_getIndex( ls->id );
       for (i=0; i<cur_system->njumps; i++) {
-         if (cur_system->jumps[i].target == ss) {
+         if ((cur_system->jumps[i].target == ss)
+               && !jp_isFlag( jump_getTarget( cur_system, cur_system->jumps[i].target ), JP_EXITONLY )) {
             jump = i;
             break;
          }
@@ -606,7 +607,8 @@ static int pilotL_addFleet( lua_State *L )
       if (cur_system->njumps > 0) {
          jumpind = malloc( sizeof(int) * cur_system->njumps );
          for (i=0; i<cur_system->njumps; i++)
-            if (!ignore_rules && (system_getPresence( cur_system->jumps[i].target, lf.f ) > 0))
+            if (!ignore_rules && (system_getPresence( cur_system->jumps[i].target, lf.f ) > 0) &&
+                  (!jp_isFlag( jump_getTarget( cur_system, cur_system->jumps[i].target ), JP_EXITONLY )))
                jumpind[ njumpind++ ] = i;
       }
 
@@ -817,7 +819,7 @@ static int pilotL_getPilots( lua_State *L )
    if (lua_istable(L,1) || lua_isfaction(L,1)) {
       if (lua_isfaction(L,1)) {
          nfactions = 1;
-         factions = malloc( sizeof(int) * nfactions );
+         factions = malloc( sizeof(int) );
          f = lua_tofaction(L,1);
          factions[0] = f->f;
       }
@@ -1208,7 +1210,8 @@ static int pilotL_weapset( lua_State *L )
 
          /* Must be weapon. */
          if (outfit_isJammer(o) ||
-               outfit_isMod(o))
+               outfit_isMod(o) ||
+               outfit_isAfterburner(o))
             continue;
 
          /* Set up for creation. */
@@ -1343,15 +1346,16 @@ static int pilotL_actives( lua_State *L )
 {
    Pilot *p;
    int i, k;
-   double d;
    PilotOutfitSlot *o;
    const char *str;
+   double d;
 
    /* Parse parameters. */
    p   = luaL_validpilot(L,1);
 
    k = 0;
    lua_newtable(L);
+
    for (i=0; i<p->noutfits; i++) {
 
       /* Get active outfits. */
@@ -1361,7 +1365,8 @@ static int pilotL_actives( lua_State *L )
       if (!o->active)
          continue;
       if (!outfit_isJammer(o->outfit) &&
-            !outfit_isMod(o->outfit))
+            !outfit_isMod(o->outfit) &&
+            !outfit_isAfterburner(o->outfit))
          continue;
 
       /* Set up for creation. */
@@ -1391,7 +1396,7 @@ static int pilotL_actives( lua_State *L )
             d = outfit_duration(o->outfit);
             if (d==0.)
                d = 1.;
-            else
+            else if (!isinf(o->stimer))
                d = o->stimer / d;
             lua_pushstring(L,"duration");
             lua_pushnumber(L, d );
@@ -1402,7 +1407,7 @@ static int pilotL_actives( lua_State *L )
             d = outfit_cooldown(o->outfit);
             if (d==0.)
                d = 0.;
-            else
+            else if (!isinf(o->stimer))
                d = o->stimer / d;
             lua_pushstring(L,"cooldown");
             lua_pushnumber(L, d );

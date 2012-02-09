@@ -261,7 +261,7 @@ function enter()
     elseif system.cur() == ambushsys and stage == 5 then
         pilot.clear()
         pilot.toggleSpawn(false)
-        hook.timer(500, "invProximity", { location = system.cur():jumpPos(system.get("Suna")), radius = 8000, funcname = "startAmbush" }) -- Starts an inverse proximity poll for distance from the jump point.
+        hook.timer(500, "invProximity", { location = jump.pos(system.cur(), "Suna"), radius = 8000, funcname = "startAmbush" }) -- Starts an inverse proximity poll for distance from the jump point.
     elseif system.cur() == safesys and stage == 5 then
         stage = 6 -- stop spawning the Genbu
     elseif genbuspawned and stage == 5 then

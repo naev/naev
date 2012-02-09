@@ -116,9 +116,9 @@ int ovr_input( SDL_Event *event )
             ((pntid >=0 && player.p->nav_planet == pntid) ||
             (jpid >=0 && player.p->nav_planet == jpid))))
          player_targetSet( pid );
-      else if ((pntid >= 0) && (d < pow2(r))) /* Planet is closest. */
+      else if ((pntid >= 0) && (d < pow2(r)) && planet_isKnown(pnt)) /* Planet is closest. */
          player_targetPlanetSet( pntid );
-      else if ((jpid >= 0) && (d < pow2(r))) /* Jump point is closest. */
+      else if ((jpid >= 0) && (d < pow2(r)) && jp_isKnown(jp)) /* Jump point is closest. */
          player_targetHyperspaceSet( jpid );
       else
          return 0;
@@ -141,7 +141,29 @@ int ovr_input( SDL_Event *event )
       x  = ((double)mx - SCREEN_W/2.) * ovr_res;
       y  = ((double)my - SCREEN_H/2.) * ovr_res;
 
-      /* Go to position. */
+      /* Go to planet. */
+      d = system_getClosest( cur_system, &pntid, &jpid, x, y );
+      if (pntid >= 0) {
+         pnt = cur_system->planets[ pntid ];
+         r  = MAX( 1.5 * pnt->radius, 20. * ovr_res );
+         if ((d < pow2(r)) && planet_isKnown(pnt)) {
+            player_targetPlanetSet( pntid );
+            player_autonavPnt( pnt->name );
+            return 1;
+         }
+      }
+      /* Engage regular jump autonav. */
+      else if (jpid >= 0) {
+         jp = &cur_system->jumps[ jpid ];
+         r  = MAX( 1.5 * jp->radius, 20. * ovr_res );
+         if ((d < pow2(r)) && jp_isKnown(jp)) {
+            player_targetHyperspaceSet( jpid );
+            player_autonavStart();
+            return 1;
+         }
+      }
+
+      /* Fall-through and go to position. */
       player_autonavPos( x, y );
 
       return 1;
@@ -187,7 +209,7 @@ void ovr_refresh (void)
  *
  *    @param open Whether or not to open it.
  */
-static void ovr_setOpen( int open )
+void ovr_setOpen( int open )
 {
    if (open && !ovr_open) {
       ovr_open = 1;

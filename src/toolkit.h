@@ -33,6 +33,7 @@ unsigned int window_create( const char* name,
 void window_setAccept( const unsigned int wid, void (*fptr)(unsigned int,char*) );
 void window_setCancel( const unsigned int wid, void (*cancel)(unsigned int,char*) );
 void window_setBorder( unsigned int wid, int enable );
+void window_setFocus( const unsigned int wid, const char* wgtname );
 void window_handleKeys( const unsigned int wid,
       int (*keyhandler)(unsigned int,SDLKey,SDLMod) );
 void window_handleEvents( const unsigned int wid,
@@ -47,6 +48,7 @@ int window_exists( const char* wdwname );
 int widget_exists( const unsigned int wid, const char* wgtname );
 unsigned int window_get( const char* wdwname );
 void window_dimWindow( const unsigned int wid, int *w, int *h );
+char* window_getFocus( const unsigned int wid );
 void window_posWidget( const unsigned int wid,
       char* name, int *x, int *y );
 void window_moveWidget( const unsigned int wid,

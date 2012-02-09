@@ -146,8 +146,8 @@ int comm_openPilot( unsigned int pilot )
    /* Have pilot stop hailing. */
    pilot_rmFlag( comm_pilot, PILOT_HAILING );
 
-   /* Create the pilot window. */
-   wid = comm_openPilotWindow();
+   /* Don't close automatically. */
+   comm_commClose = 0;
 
    /* Run generic hail hooks. */
    hparam[0].type       = HOOK_PARAM_PILOT;
@@ -156,19 +156,17 @@ int comm_openPilot( unsigned int pilot )
    run = 0;
    run += hooks_runParam( "hail", hparam );
    run += pilot_runHook( comm_pilot, PILOT_HOOK_HAIL );
-   /* Reopen window in case something changed. */
-   if (run > 0) {
-      comm_close( wid, NULL );
-      comm_pilot = p;
-      wid = comm_openPilotWindow();
-   }
 
    /* Close window if necessary. */
-   if (comm_commClose)
-      comm_close( wid, NULL );
+   if (comm_commClose) {
+      comm_pilot  = NULL;
+      comm_planet = NULL;
+      comm_commClose = 0;
+      return 0;
+   }
 
-   /* Don't close automatically. */
-   comm_commClose = 0;
+   /* Create the pilot window. */
+   wid = comm_openPilotWindow();
 
    return 0;
 }

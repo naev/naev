@@ -69,7 +69,7 @@ end
 
 -- Checks to see if jump target is interesting
 function check_jmp_target( jmp )
-   return jmp:hasPresence( f_dvaered )
+   return jmp:presences()[ f_dvaered ] ~= nil
 end
 
 -- Checks to see if planet target is interesting
@@ -196,7 +196,7 @@ end
 
 function tgt_getPos( tgt )
    if tgt.type == "jump" then
-      return system.cur():jumpPos( tgt.data )
+      return jump.pos(system.cur(), tgt.data)
    else
       return tgt.data:pos()
    end

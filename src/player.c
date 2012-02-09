@@ -35,6 +35,7 @@
 #include "ntime.h"
 #include "hook.h"
 #include "map.h"
+#include "map_overlay.h"
 #include "nfile.h"
 #include "spfx.h"
 #include "unidiff.h"
@@ -735,6 +736,7 @@ void player_cleanup (void)
    /* Clean up gui. */
    gui_cleanup();
    player_guiCleanup();
+   ovr_setOpen(0);
 
    /* clean up the stack */
    for (i=0; i<player_nstack; i++) {
@@ -1161,13 +1163,9 @@ void player_think( Pilot* pplayer, const double dt )
    /*
     * Afterburn!
     */
-   if (player_isFlag(PLAYER_AFTERBURNER)) {
-      if (pilot_isFlag(player.p,PILOT_AFTERBURNER)) {
-         afb = pplayer->afterburner->outfit;
-         pilot_setThrust( pplayer, 1. + afb->u.afb.thrust * MIN( 1., afb->u.afb.mass_limit/player.p->solid->mass ) );
-      }
-      else /* Ran out of energy */
-         player_afterburnOver(1);
+   if (pilot_isFlag(player.p,PILOT_AFTERBURNER)) {
+      afb = pplayer->afterburner->outfit;
+      pilot_setThrust( pplayer, 1. + afb->u.afb.thrust * MIN( 1., afb->u.afb.mass_limit/player.p->solid->mass ) );
    }
    else
       pilot_setThrust( pplayer, player_acc );
@@ -1202,7 +1200,7 @@ void player_updateSpecific( Pilot *pplayer, const double dt )
    int engsound;
 
    /* Calculate engine sound to use. */
-   if (player_isFlag(PLAYER_AFTERBURNER))
+   if (pilot_isFlag(pplayer, PILOT_AFTERBURNER))
       engsound = pplayer->afterburner->outfit->u.afb.sound;
    else if ((pplayer->solid->thrust > 1e-3) || (pplayer->solid->thrust < -1e-3)) {
       /* See if is in hyperspace. */
@@ -1247,13 +1245,24 @@ void player_updateSpecific( Pilot *pplayer, const double dt )
 /**
  * @brief Activates a player's weapon set.
  */
-void player_weapSetPress( int id, int type )
+void player_weapSetPress( int id, int type, int repeat )
 {
+   if (repeat)
+      return;
+
    if ((type > 0) && ((player.p == NULL) || toolkit_isOpen()))
       return;
 
-   if (player.p != NULL)
-      pilot_weapSetPress( player.p, id, type );
+   if (player.p == NULL)
+      return;
+
+   if (pilot_isFlag(player.p, PILOT_HYP_PREP) || 
+         pilot_isFlag(player.p, PILOT_HYPERSPACE) ||
+         pilot_isFlag(player.p, PILOT_LANDING) ||
+         pilot_isFlag(player.p, PILOT_TAKEOFF))
+      return;
+
+   pilot_weapSetPress( player.p, id, type );
 }
 
 
@@ -1276,6 +1285,7 @@ void player_targetPlanetSet( int id )
 
    old = player.p->nav_planet;
    player.p->nav_planet = id;
+   player_hyperspacePreempt((id < 0) ? 1 : 0);
    if (old != id) {
       player_rmFlag(PLAYER_LANDACK);
       if (id >= 0)
@@ -1291,29 +1301,29 @@ void player_targetPlanetSet( int id )
  */
 void player_targetPlanet (void)
 {
-   int id;
+   int id, i;
 
    /* Not under manual control. */
    if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
       return;
 
    /* Find next planet target. */
-   id = player.p->nav_planet+1;
-   player_hyperspacePreempt(0);
-   while (id < cur_system->nplanets) {
+   for (id=player.p->nav_planet+1; id<cur_system->nplanets; id++)
+      if (planet_isKnown( cur_system->planets[id] ))
+         break;
 
-      /* In range, target planet. */
-      if ((cur_system->planets[ id ]->real == ASSET_REAL)
-            && pilot_inRangePlanet( player.p, id )) {
-         player_targetPlanetSet( id );
-         return;
-      }
-
-      id++;
+   /* Try to select the lowest-indexed valid planet. */
+   if (id >= cur_system->nplanets ) {
+      id = -1;
+      for (i=0; i<cur_system->nplanets; i++)
+         if (planet_isKnown( cur_system->planets[i] )) {
+            id = i;
+            break;
+         }
    }
 
    /* Untarget if out of range. */
-   player_targetPlanetSet( -1 );
+   player_targetPlanetSet( id );
 }
 
 
@@ -1430,7 +1440,7 @@ void player_land (void)
       }
 
       /* Stop afterburning. */
-      player_afterburnOver(1);
+      player_afterburnOver();
       /* Stop accelerating. */
       player_accelOver();
 
@@ -1477,6 +1487,7 @@ void player_targetHyperspaceSet( int id )
 
    old = player.p->nav_hyperspace;
    player.p->nav_hyperspace = id;
+   player_hyperspacePreempt((id < 0) ? 0 : 1);
    if ((old != id) && (id >= 0))
       player_soundPlayGUI(snd_nav,1);
    gui_setNav();
@@ -1488,21 +1499,27 @@ void player_targetHyperspaceSet( int id )
  */
 void player_targetHyperspace (void)
 {
-   int id;
+   int id, i;
 
    /* Not under manual control. */
    if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
       return;
 
-   id = player.p->nav_hyperspace+1;
    map_clear(); /* clear the current map path */
 
+   for (id=player.p->nav_hyperspace+1; id<cur_system->njumps; id++)
+      if (jp_isKnown( &cur_system->jumps[id]))
+         break;
+
+   /* Try to find the lowest-indexed valid jump. */
    if (id >= cur_system->njumps) {
       id = -1;
-      player_hyperspacePreempt(0);
+      for (i=0; i<cur_system->njumps; i++)
+         if (jp_isKnown( &cur_system->jumps[i])) {
+            id = i;
+            break;
+         }
    }
-   else
-      player_hyperspacePreempt(1);
 
    player_targetHyperspaceSet( id );
 
@@ -1513,6 +1530,7 @@ void player_targetHyperspace (void)
       map_select( cur_system->jumps[ id ].target, 0 );
 }
 
+
 /**
  * @brief Enables or disables jump points preempting planets in autoface and target clearing.
  *
@@ -1522,6 +1540,18 @@ void player_hyperspacePreempt( int preempt )
 {
    preemption = preempt;
 }
+
+
+/**
+ * @brief Returns whether the jump point target should preempt the planet target.
+ *
+ *    @return Boolean; 1 preempts planet target.
+ */
+int player_getHypPreempt(void)
+{
+   return preemption;
+}
+
 
 /**
  * @brief Starts the hail sounds and aborts autoNav
@@ -1657,7 +1687,7 @@ void player_brokeHyperspace (void)
    /* Disable autonavigation if arrived. */
    if (player_isFlag(PLAYER_AUTONAV)) {
       if (player.p->nav_hyperspace == -1) {
-         player_message( "\epAutonav arrived at destination.");
+         player_message( "\epAutonav arrived at the %s system.", cur_system->name);
          player_autonavEnd();
       }
       else {
@@ -1682,7 +1712,9 @@ void player_brokeHyperspace (void)
  */
 void player_afterburn (void)
 {
-   double afb_mod;
+   //double afb_mod;
+   if (player.p == NULL)
+      return;
 
    if (pilot_isFlag(player.p, PILOT_HYP_PREP) || pilot_isFlag(player.p, PILOT_HYPERSPACE) ||
          pilot_isFlag(player.p, PILOT_LANDING) || pilot_isFlag(player.p, PILOT_TAKEOFF))
@@ -1693,30 +1725,35 @@ void player_afterburn (void)
       return;
 
    /** @todo fancy effect? */
-   if ((player.p != NULL) && (player.p->afterburner!=NULL)) {
-      afb_mod = MIN( 1., player.p->afterburner->outfit->u.afb.mass_limit / player.p->solid->mass );
+   if (player.p->afterburner == NULL)
+      return;
 
-      player_setFlag(PLAYER_AFTERBURNER);
+   if (player.p->afterburner->state == PILOT_OUTFIT_OFF) {
+      player.p->afterburner->state  = PILOT_OUTFIT_ON;
+      player.p->afterburner->stimer = outfit_duration( player.p->afterburner->outfit );
       pilot_setFlag(player.p,PILOT_AFTERBURNER);
-      spfx_shake( afb_mod * player.p->afterburner->outfit->u.afb.rumble * SHAKE_MAX );
-      if (toolkit_isOpen() || paused)
-         player_soundPause();
    }
+
+   //afb_mod = MIN( 1., player.p->afterburner->outfit->u.afb.mass_limit / player.p->solid->mass );
+   //spfx_shake( afb_mod * player.p->afterburner->outfit->u.afb.rumble * SHAKE_MAX );
 }
 
 
 /**
  * @brief Deactivates the afterburner.
  */
-void player_afterburnOver (int type)
+void player_afterburnOver (void)
 {
-   if ((player.p != NULL) && (player.p->afterburner!=NULL)) {
-      player_rmFlag(PLAYER_AFTERBURNER);
+   if (player.p == NULL)
+      return;
+   if (player.p->afterburner == NULL)
+      return;
+
+   if (player.p->afterburner->state == PILOT_OUTFIT_ON) {
+      player.p->afterburner->state  = PILOT_OUTFIT_COOLDOWN;
+      player.p->afterburner->stimer = outfit_cooldown( player.p->afterburner->outfit );
       pilot_rmFlag(player.p,PILOT_AFTERBURNER);
    }
-
-   if (type)
-      player_accel(1.);
 }
 
 
@@ -2344,7 +2381,7 @@ static int player_outfitCompare( const void *arg1, const void *arg2 )
 /**
  * @brief Prepares two arrays for displaying in an image array.
  *
- *    @param[out] soutfits Names of outfits to .
+ *    @param[out] soutfits Names of outfits the player owns.
  *    @param[out] toutfits Textures of outfits for image array.
  */
 int player_getOutfits( char** soutfits, glTexture** toutfits )
@@ -2839,7 +2876,6 @@ int player_save( xmlTextWriterPtr writer )
    return 0;
 }
 
-
 /**
  * @brief Saves an outfit slot.
  */
@@ -2978,7 +3014,6 @@ static int player_saveShip( xmlTextWriterPtr writer,
 
    return 0;
 }
-
 
 /**
  * @brief Loads the player stuff.

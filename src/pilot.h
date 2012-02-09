@@ -23,7 +23,7 @@
 /* Hyperspace parameters. */
 #define HYPERSPACE_ENGINE_DELAY  3. /**< Time to warm up engine (seconds). */
 #define HYPERSPACE_FLY_DELAY     5. /**< Time it takes to hyperspace (seconds). */
-#define HYPERSPACE_STARS_BLUR    3. /**< How long the stars blur at max (pixels). */
+#define HYPERSPACE_STARS_BLUR    3. /**< How long it takes for stars to start blurring (seconds). */
 #define HYPERSPACE_STARS_LENGTH  250 /**< Length the stars blur to at max (pixels). */
 #define HYPERSPACE_FADEOUT       1. /**< How long the fade is (seconds). */
 #define HYPERSPACE_THRUST        2000./**< How much thrust you use in hyperspace. */
@@ -133,7 +133,7 @@ typedef enum PilotOutfitState_ {
    PILOT_OUTFIT_OFF,    /**< Normal state. */
    PILOT_OUTFIT_WARMUP, /**< Outfit is starting to warm up. */
    PILOT_OUTFIT_ON,     /**< Outfit is activated and running. */
-   PILOT_OUTFIT_COOLDOWN, /**< Outfit is cooling down. */
+   PILOT_OUTFIT_COOLDOWN /**< Outfit is cooling down. */
 } PilotOutfitState;
 
 
@@ -299,6 +299,7 @@ typedef struct Pilot_ {
    double energy_max; /**< Maximum energy. */
    double energy_regen; /**< Energy regeneration rate (per second). */
    double energy_tau; /**< Tau regeneration rate for energy. */
+   double energy_loss; /**< Linear loss that bypasses the actual RC circuit stuff. */
 
    /* Electronic warfare. */
    double ew_base_hide; /**< Base static hide factor. */
@@ -477,6 +478,7 @@ void pilot_free( Pilot* p );
  */
 void pilot_setThrust( Pilot *p, double thrust );
 void pilot_setTurn( Pilot *p, double turn );
+void pilot_setAfterburner( Pilot *p, int state );
 
 
 /*

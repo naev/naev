@@ -629,7 +629,7 @@
    <mass>4</mass>
    <price>6000</price>
    <description>The Gauss Gun is one of the oldest weapon designs in the galaxy today, dating back to the times of the Federation. It fires a rapid stream of high velocity projectiles at a target, dealing damage through sheer kinetic impact. Gauss Guns are popular among small time pirates for being a cheap, reliable weapon.</description>
-   <gfx_store>gatling</gfx_store>
+   <gfx_store>gaussgun</gfx_store>
   </general>
   <specific type="bolt">
    <cpu>4</cpu>
@@ -660,7 +660,7 @@
    <mass>6</mass>
    <price>13000</price>
    <description>The Vulcan Gun improves over the Gauss Gun with increased range and damage, achieved by using a heavier calibre ammunition. A skilled pilot can wreak some serious havoc with a pair of Vulcan Guns installed in his ship.</description>
-   <gfx_store>gatling</gfx_store>
+   <gfx_store>vulcangun</gfx_store>
   </general>
   <specific type="bolt">
    <cpu>6</cpu>
@@ -691,7 +691,7 @@
    <mass>10</mass>
    <price>22000</price>
    <description>The Shredder quite lives up to the name its Dvaered manufacturers gave it. The sheer damage dealing capacity of this weapon makes Dvaered fighters dangerous to engage by ships that aren't substantially larger than they are.</description>
-   <gfx_store>gatling</gfx_store>
+   <gfx_store>shredder</gfx_store>
   </general>
   <specific type="bolt">
    <cpu>8</cpu>
@@ -720,10 +720,9 @@
    <slot>weapon</slot>
    <size>small</size>
    <mass>18</mass>
-   <license>Heavy Weapon License</license>
    <price>16000</price>
    <description>One of the more common countermeasures employed by low-budget merchant ships, the turret version of the Gauss Gun provides basic defense against lone pirates. A more determined attacker is unlikely to be deterred, however.</description>
-   <gfx_store>railgunturret</gfx_store>
+   <gfx_store>gaussturret</gfx_store>
   </general>
   <specific type="turret bolt">
    <cpu>8</cpu>
@@ -754,7 +753,7 @@
    <license>Heavy Weapon License</license>
    <price>37000</price>
    <description>Turreted Vulcan Guns pack the same caliber ammunition as their fixed mount brethren. Ships not nimble enough to evade its relentless stream of projectiles might find themselves riddled with hull punctures before long.</description>
-   <gfx_store>railgunturret</gfx_store>
+   <gfx_store>vulcanturret</gfx_store>
   </general>
   <specific type="turret bolt">
    <cpu>16</cpu>
@@ -1486,6 +1485,7 @@
    <thrust>0</thrust>
    <turn>45</turn>
    <speed>700</speed>
+   <resist>5</resist>
    <damage>
     <type>impact</type>
     <penetrate>5</penetrate>
@@ -1571,6 +1571,7 @@
    <thrust>0</thrust>
    <turn>35</turn>
    <speed>550</speed>
+   <resist>10</resist>
    <damage>
     <type>impact</type>
     <penetrate>10</penetrate>
@@ -1656,6 +1657,7 @@
    <thrust>0</thrust>
    <turn>30</turn>
    <speed>400</speed>
+   <resist>20</resist>
    <damage>
     <type>impact</type>
     <penetrate>20</penetrate>
@@ -1823,6 +1825,7 @@
    <thrust>0</thrust>
    <turn>20</turn>
    <speed>170</speed>
+   <resist>100</resist>
    <damage>
     <type>impact</type>
     <penetrate>50</penetrate>
@@ -1870,6 +1873,7 @@
    <thrust>0</thrust>
    <turn>22</turn>
    <speed>75</speed>
+   <resist>100</resist>
    <damage>
     <type>impact</type>
     <penetrate>90</penetrate>
@@ -1914,8 +1918,8 @@
    <damage>
     <type>emp</type>
     <penetrate>50</penetrate>
-    <physical>50</physical>
-    <disable>1</disable>
+    <physical>8</physical>
+    <disable>40</disable>
    </damage>
    <ai>dumb</ai>
   </specific>
@@ -1975,6 +1979,7 @@
    <thrust>0</thrust>
    <turn>50</turn>
    <speed>500</speed>
+   <resist>15</resist>
    <damage>
     <type>emp</type>
     <penetrate>15</penetrate>
@@ -2022,6 +2027,7 @@
    <thrust>0</thrust>
    <turn>35</turn>
    <speed>600</speed>
+   <resist>12</resist>
    <damage>
     <type>shieldbreaker</type>
     <penetrate>20</penetrate>
@@ -2341,6 +2347,8 @@
   </general>
   <specific type="afterburner">
    <cpu>2</cpu>
+   <duration>5</duration>
+   <cooldown>10</cooldown>
    <rumble>0.5</rumble>
    <sound>afterburner</sound>
    <thrust>100</thrust>
@@ -2360,6 +2368,8 @@
   </general>
   <specific type="afterburner">
    <cpu>6</cpu>
+   <duration>5</duration>
+   <cooldown>5</cooldown>
    <rumble>0.9</rumble>
    <sound>afterburner</sound>
    <thrust>185</thrust>
@@ -2667,7 +2677,7 @@
   <general>
    <mass>0</mass>
    <price>25000</price>
-   <description>This map lists the locations of all the Dvaered worlds and stations close to the Dvaered capital.</description>
+   <description>This map lists the locations of all Dvaered worlds and stations close to the Dvaered capital.</description>
    <gfx_store>map</gfx_store>
   </general>
   <specific type="map">
@@ -2707,6 +2717,69 @@
     <asset>Icarus</asset>
     <asset>Adham</asset>
     <asset>Diabolos</asset>
+   </sys>
+  </specific>
+ </outfit>
+ <outfit name="Map: Empire Core">
+  <general>
+   <mass>0</mass>
+   <price>25000</price>
+   <description>This map lists the locations of all Imperial worlds and stations close to the Imperial capital.</description>
+   <gfx_store>map</gfx_store>
+  </general>
+  <specific type="map">
+   <short_desc>A Star Map.</short_desc>
+   <sys name="Gamma Polaris">
+    <jump>Qex</jump>
+    <jump>Koralis</jump>
+    <jump>Sirou</jump>
+    <jump>Shakar</jump>
+    <jump>Apez</jump>
+    <asset>Polaris Prime</asset>
+    <asset>Emperor's Fist</asset>
+    <asset>Vuere</asset>
+    <asset>New Pluto</asset>
+    <asset>New Deimos</asset>
+    <asset>New Phobos</asset>
+    <asset>New Mars</asset>
+    <asset>Halir</asset>
+   </sys>
+   <sys name="Qex">
+    <jump>Gamma Polaris</jump>
+    <asset>Semper</asset>
+    <asset>Reidd</asset>
+    <asset>Ammu</asset>
+    <asset>Qex II</asset>
+    <asset>Qex IV</asset>
+    <asset>Qex V</asset>
+   </sys>
+   <sys name="Koralis">
+    <jump>Gamma Polaris</jump>
+    <asset>Luxsor</asset>
+    <asset>Paxsor</asset>
+    <asset>Fuzka</asset>
+    <asset>Koralis IV</asset>
+    <asset>Koralis VI</asset>
+    <asset>Aillis</asset>
+   </sys>
+   <sys name="Sirou">
+    <jump>Gamma Polaris</jump>
+   </sys>
+   <sys name="Shakar">
+    <jump>Gamma Polaris</jump>
+    <asset>Nova Shakar</asset>
+    <asset>Zembla Shakar</asset>
+    <asset>Shakar I</asset>
+    <asset>Shakar III</asset>
+   </sys>
+   <sys name="Apez">
+    <jump>Gamma Polaris</jump>
+    <asset>Apez V</asset>
+    <asset>Zeo</asset>
+    <asset>Dowue</asset>
+    <asset>Gem</asset>
+    <asset>Crylo</asset>
+    <asset>Apez II</asset>
    </sys>
   </specific>
  </outfit>
@@ -2783,8 +2856,8 @@
   </general>
   <specific type="jammer">
    <cpu>-4</cpu>
-   <range>1</range>
-   <power>1</power>
+   <range>170</range>
+   <power>35</power>
    <energy>-15</energy>
   </specific>
  </outfit>
@@ -2799,8 +2872,8 @@
   </general>
   <specific type="jammer">
    <cpu>-8</cpu>
-   <range>1</range>
-   <power>1</power>
+   <range>230</range>
+   <power>50</power>
    <energy>-30</energy>
   </specific>
  </outfit>
@@ -2813,6 +2886,17 @@
   </general>
   <specific type="gui">
    <gui>brushed</gui>
+  </specific>
+ </outfit>
+ <outfit name="GUI - Slimv2">
+  <general>
+   <mass>0</mass>
+   <price>75000</price>
+   <description>This is a new GUI which will become available to you by purchase. It has a brushed steel look.</description>
+   <gfx_store>brushedGUI</gfx_store>
+  </general>
+  <specific type="gui">
+   <gui>slimv2</gui>
   </specific>
  </outfit>
 <!-- Escort Outfits -->

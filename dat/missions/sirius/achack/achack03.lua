@@ -120,7 +120,7 @@ end
 
 -- Date hook.
 function date()
-   if (harja == nil or not harja:exists()) and system.cur():hasPresence("Sirius") then
+   if (harja == nil or not harja:exists()) and system.cur():presences()["Sirius"] then
       -- Determine spawn point. The reason why we don't use the normal random is that we don't want Harja spawning from the same place as the player.
       local spawnpoints = _mergeTables(system.cur():adjacentSystems(), system.cur():planets()) -- _mergeTables() is defined in scripts/fleethelper.lua.
       for i, j in ipairs(spawnpoints) do

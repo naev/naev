@@ -58,6 +58,8 @@ function hail(p)
     hook.rm(hook3)
     hook.rm(hook4)
     hook.rm(hailhook)
+    
+    player.commClose()
 
     vendetta:control()
     vendetta:hyperspace()
@@ -94,6 +96,8 @@ function finish()
     if not hailed then
         var.pop("shadowvigil_active")
     end
-    hook.rm(hailie)
+    if hailhook then
+        hook.rm(hailhook)
+    end
     evt.finish()
 end

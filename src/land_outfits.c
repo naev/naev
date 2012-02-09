@@ -29,13 +29,15 @@
 #include "dialogue.h"
 
 
+/* Modifier for buying and selling quantity. */
+static int outfits_mod = 1;
+
+
 /*
  * Helper functions.
  */
 static void outfits_getSize( unsigned int wid, int *w, int *h,
       int *iw, int *ih, int *bw, int *bh );
-static int outfit_canBuy( Outfit* outfit, int q, int errmsg );
-static int outfit_canSell( Outfit* outfit, int q, int errmsg );
 static void outfits_buy( unsigned int wid, char* str );
 static void outfits_sell( unsigned int wid, char* str );
 static int outfits_getMod (void);
@@ -92,15 +94,15 @@ void outfits_open( unsigned int wid )
    window_setAccept( wid, outfits_buy );
 
    /* buttons */
-   window_addButton( wid, -20, 20,
+   window_addButtonKey( wid, -20, 20,
          bw, bh, "btnCloseOutfits",
-         "Takeoff", land_buttonTakeoff );
-   window_addButton( wid, -40-bw, 20,
+         "Take Off", land_buttonTakeoff, SDLK_t );
+   window_addButtonKey( wid, -40-bw, 20,
          bw, bh, "btnSellOutfit",
-         "Sell", outfits_sell );
-   window_addButton( wid, -60-bw*2, 20,
+         "Sell", outfits_sell, SDLK_s );
+   window_addButtonKey( wid, -60-bw*2, 20,
          bw, bh, "btnBuyOutfit",
-         "Buy", outfits_buy );
+         "Buy", outfits_buy, SDLK_b );
 
    /* fancy 128x128 image */
    window_addRect( wid, 19 + iw + 20, -50, 128, 129, "rctImage", &cBlack, 0 );
@@ -264,16 +266,16 @@ void outfits_update( unsigned int wid, char* str )
    /* new image */
    window_modifyImage( wid, "imgOutfit", outfit->gfx_store, 0, 0 );
 
-   if (outfit_canBuy(outfit,1,0) > 0)
+   if (outfit_canBuy(outfitname) > 0)
       window_enableButton( wid, "btnBuyOutfit" );
    else
-      window_disableButton( wid, "btnBuyOutfit" );
+      window_disableButtonSoft( wid, "btnBuyOutfit" );
 
    /* gray out sell button */
-   if (outfit_canSell(outfit,1,0) > 0)
+   if (outfit_canSell(outfitname) > 0)
       window_enableButton( wid, "btnSellOutfit" );
    else
-      window_disableButton( wid, "btnSellOutfit" );
+      window_disableButtonSoft( wid, "btnSellOutfit" );
 
    /* new text */
    window_modifyText( wid, "txtDescription", outfit->description );
@@ -332,55 +334,55 @@ void outfits_updateEquipmentOutfits( void )
 /**
  * @brief Checks to see if the player can buy the outfit.
  *    @param outfit Outfit to buy.
- *    @param q Quantity to buy.
- *    @param errmsg Should alert the player?
  */
-static int outfit_canBuy( Outfit* outfit, int q, int errmsg )
+int outfit_canBuy( char *name )
 {
+   int failure;
+   unsigned int q, price;
+   Outfit *outfit;
    char buf[ECON_CRED_STRLEN];
+
+   failure = 0;
+   q = outfits_getMod();
+   outfit = outfit_get(name);
+   price = outfit->price * q;
 
    /* takes away cargo space but you don't have any */
    if (outfit_isMod(outfit) && (outfit->u.mod.cargo < 0)
          && (pilot_cargoFree(player.p) < -outfit->u.mod.cargo)) {
-      if (errmsg != 0)
-         dialogue_alert( "You need to empty your cargo first." );
-      return 0;
-   }
-   /* not enough $$ */
-   else if (!player_hasCredits( q*outfit->price )) {
-      if (errmsg != 0) {
-         credits2str( buf, q*outfit->price - player.p->credits, 2 );
-         dialogue_alert( "You need %s more credits.", buf);
-      }
-      return 0;
+      land_errDialogueBuild( "You need to empty your cargo first." );
+      failure = 1;
    }
    /* Map already mapped */
-   else if (outfit_isMap(outfit) && map_isMapped(outfit)) {
-      if (errmsg != 0)
-         dialogue_alert( "You already own this map." );
+   if (outfit_isMap(outfit) && map_isMapped(outfit)) {
+      land_errDialogueBuild( "You already own this map." );
+      failure = 1;
       return 0;
    }
    /* GUI already owned */
-   else if (outfit_isGUI(outfit) && player_guiCheck(outfit->u.gui.gui)) {
-      if (errmsg != 0)
-         dialogue_alert( "You already own this GUI." );
+   if (outfit_isGUI(outfit) && player_guiCheck(outfit->u.gui.gui)) {
+      land_errDialogueBuild( "You already own this GUI." );
       return 0;
    }
    /* Already has license. */
-   else if (outfit_isLicense(outfit) && player_hasLicense(outfit->name)) {
-      if (errmsg != 0)
-         dialogue_alert( "You already have this license." );
+   if (outfit_isLicense(outfit) && player_hasLicense(outfit->name)) {
+      land_errDialogueBuild( "You already have this license." );
       return 0;
+   }
+   /* not enough $$ */
+   if (!player_hasCredits( q*outfit->price )) {
+      credits2str( buf, price - player.p->credits, 2 );
+      land_errDialogueBuild( "You need %s more credits.", buf);
+      failure = 1;
    }
    /* Needs license. */
-   else if (!player_hasLicense(outfit->license)) {
-      if (errmsg != 0)
-         dialogue_alert( "You need the '%s' license to buy this outfit.",
+   if (!player_hasLicense(outfit->license)) {
+      land_errDialogueBuild( "You need the '%s' license to buy this outfit.",
                outfit->license );
-      return 0;
+      failure = 1;
    }
 
-   return 1;
+   return !failure;
 }
 
 
@@ -413,7 +415,7 @@ static void outfits_buy( unsigned int wid, char* str )
    q = outfits_getMod();
 
    /* can buy the outfit? */
-   if (outfit_canBuy(outfit, q, 1) == 0)
+   if (land_errDialogue( outfitname, "buyOutfit" ))
       return;
 
    /* Actually buy the outfit. */
@@ -424,33 +426,40 @@ static void outfits_buy( unsigned int wid, char* str )
 /**
  * @brief Checks to see if the player can sell the selected outfit.
  *    @param outfit Outfit to try to sell.
- *    @param q Quantity to try to sell.
- *    @param errmsg Should alert player?
  */
-static int outfit_canSell( Outfit* outfit, int q, int errmsg )
+int outfit_canSell( char *name )
 {
-   (void) q;
+   int failure;
+   Outfit *outfit;
+
+   failure = 0;
+   outfit = outfit_get(name);
 
    /* Map check. */
-   if (outfit_isMap(outfit))
-      return 0;
+   if (outfit_isMap(outfit)) {
+      land_errDialogueBuild("You can't sell a map.");
+      failure = 1;
+   }
 
    /* GUI check. */
-   if (outfit_isGUI(outfit))
-      return 0;
+   if (outfit_isGUI(outfit)) {
+      land_errDialogueBuild("You can't sell a GUI.");
+      failure = 1;
+   }
 
    /* License check. */
-   if (outfit_isLicense(outfit))
-      return 0;
+   if (outfit_isLicense(outfit)) {
+      land_errDialogueBuild("You can't sell a license.");
+      failure = 1;
+   }
 
    /* has no outfits to sell */
    if (player_outfitOwned(outfit) <= 0) {
-      if (errmsg != 0)
-         dialogue_alert( "You can't sell something you don't have." );
-      return 0;
+      land_errDialogueBuild( "You can't sell something you don't have!" );
+      failure = 1;
    }
 
-   return 1;
+   return !failure;
 }
 /**
  * @brief Attempts to sell the selected outfit the player has.
@@ -469,8 +478,8 @@ static void outfits_sell( unsigned int wid, char* str )
 
    q = outfits_getMod();
 
-   /* has no outfits to sell */
-   if (outfit_canSell( outfit, q, 1 ) == 0)
+   /* Check various failure conditions. */
+   if (land_errDialogue( outfitname, "sellOutfit" ))
       return;
 
    player_modCredits( outfit->price * player_rmOutfit( outfit, q ) );
@@ -510,6 +519,10 @@ static void outfits_renderMod( double bx, double by, double w, double h, void *d
    char buf[8];
 
    q = outfits_getMod();
+   if (q != outfits_mod) {
+      outfits_updateEquipmentOutfits();
+      outfits_mod = q;
+   }
    if (q==1) return; /* Ignore no modifier. */
 
    snprintf( buf, 8, "%dx", q );

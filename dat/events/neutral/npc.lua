@@ -11,7 +11,7 @@ if lang == 'es' then --not translated atm
 else --default english
    -- Portraits.
    -- When adding portraits, make sure to add them to the table of the faction they belong to.
-   -- Does your faction not have a table? Then just add it. The script will find and use it if it exists. 
+   -- Does your faction not have a table? Then just add it. The script will find and use it if it exists.
    -- Make sure you spell the faction name exactly the same as in faction.xml though!
    civ_port = {}
    civ_port["general"] =   {"neutral/male1",
@@ -92,7 +92,10 @@ else --default english
                                "You can easily tell the different echelons apart. Every Sirian citizen and soldier wears clothing appropriate to his or her echelon."
                               }
 
-   msg_lore["Soromid"] =      {"Hello. Can I interest you in one of our galaxy famous gene treatments? You look like you could use them..."
+   msg_lore["Soromid"] =      {"Hello. Can I interest you in one of our galaxy famous cosmetic gene treatments? You look like you could use them...",
+                               "Can you believe it? I was going to visit Sorom to find my roots, and then boom! It got burnt to a crisp! Even now, cycles later, I still can't believe it.",
+                               "Yes, it's true, our military ships are alive. Us normal folk don't get to own bioships though, we have to make do with synthetic constructs just like everyone else.",
+                               "Everyone knows that we Soromid altered ourselves to survive the deadly conditions on Sorom during the Great Quarantine. What you don't hear so often is that billions of us died from the therapy itself. We paid a high price for survival."
                               }
 
    msg_lore["Za'lek"] =       {"It's not easy, dancing to those scientists' tunes. They give you the most impossible tasks! Like, where am I supposed to get a triple redundant helitron converter? Honestly."
@@ -106,7 +109,8 @@ else --default english
                                "We have the Dvaered encroaching on our territory on one side, and the Sirius zealots on the other. Sometimes I worry that in a few decacycles, the Frontier will no longer exist.",
                                "Have you visited the Frontier Museum? They've got a scale model of a First Growth colony ship on display in one of the big rooms. Even scaled down like that, it's massive! Imagine how overwhelming the real ones must have been.",
                                "There are eleven true Frontier worlds, because eleven colony ships successfully completed their journey in the First Growth. But did you know that there were twenty colony ships to begin with? Nine of them never made it. Some are said to have mysteriously disappeared. I wonder what happened to them?",
-                               "We don't have much here in the Frontier, other than our long history leading directly back to Earth. But I don't mind. I'm happy living here, and I wouldn't want to move anywhere else."
+                               "We don't have much here in the Frontier, other than our long history leading directly back to Earth. But I don't mind. I'm happy living here, and I wouldn't want to move anywhere else.",
+                               "You know the Frontier Liberation Front? They're the guerilla movement that fights for the Frontier. Not to be confused with the Liberation Front of the Frontier, the Frontier Front for Liberation, or the Liberal Frontier's Front!"
                               }
 
    msg_lore["Pirate"] =       {"Hi mate. Money or your life! Heh heh, just messing with you."
@@ -125,7 +129,22 @@ else --default english
                                "If you're on a mission you just can't beat, you can open the information panel and abort the mission. There's no penalty for doing it, so don't hesitate to try the mission again later.",
                                "Don't forget that you can revisit the tutorial modules at any time from the main menu. I know I do.",
                                "Some weapons have a different effect on shields than they do on armour. Keep that in mind when equipping your ship.",
-                               "Afterburners only work when you activate them. While they're inactive all they do is slow you down!"
+                               "Afterburners only work when you activate them. While they're inactive all they do is slow you down!",
+                               "There are passive outfits and active outfits. The passive ones modify your ship continuously, but the active ones only work if you turn them on. You usually can't keep an active outfit on all the time, so you need to be careful only to use it when you need it.",
+                               "If you're new to the galaxy, I recommend you buy a map or two. It can make exploration a bit easier.",
+                               "Missile jammers slow down missiles close to your ship. If your enemies are using missiles, it can be very helpful to have one on board."
+                              }
+
+   -- Jump point messages.
+   -- For giving the location of a jump point in the current system to the player for free.
+   -- All messages must contain exactly one %s, this is the name of the target system.
+   -- ALL NPCs have a chance to say one of these lines instead of a lore message.
+   -- So, make sure the tips are always faction neutral.
+   msg_jmp =                  {"Hi there, traveler. Is your system map up to date? Just in case you didn't know already, let me give you the location of the jump from here to %s. I hope that helps.",
+                               "Quite a lot of people who come in here complain that they don't know how to get to %s. I travel there often, so I know exactly where the jump point is. Here, let me show you.",
+                               "So you're still getting to know about this area, huh? Tell you what, I'll give you the coordinates of the jump to %s. Check your map next time you take off!",
+                               "True fact, there's a direct jump from here to %s. Want to know where it is? It'll cost you! Ha ha, just kidding. Here you go, I've added it to your map.",
+                               "There's a system just one jump away by the name of %s. I can tell you where the jump point is. There, I've updated your map. Don't mention it."
                               }
 
    -- Mission hint messages. Each element should be a table containing the mission name and the corresponding hint.
@@ -140,13 +159,30 @@ else --default english
    -- Make sure the hints are always faction neutral.
    msg_ehint =                {{"FLF/DV Derelicts", "The FLF and the Dvaered sometimes clash in Surano. If you go there, you might find something of interest... Or not."}
                               }
-end   
+
+   -- Mission after-care messages. Each element should be a table containing the mission name and a line of text.
+   -- This text will be said by NPCs once the player has completed the mission in question.
+   -- Make sure the messages are always faction neutral.
+   msg_mdone =                {{"Nebula Satellite", "Heard some crazy scientists got someone to put a satellite inside the nebula for them. I thought everyone with half a brain knew to stay out of there, but oh well."},
+                               {"Shadow Vigil", "Did you hear? There was some big incident during a diplomatic meeting between the Empire and the Dvaered. Nobody knows what exactly happened, but both diplomats died. Now both sides are accusing the other of foul play. Could get ugly."},
+                               {"Operation Cold Metal", "Hey, remember the Collective? They got wiped out! I feel so much better now that there aren't a bunch of robot ships out there to get me anymore."},
+                               {"Baron", "Some thieves broke into a museum on Varia and stole a holopainting! Most of the thieves were caught, but the one who carried the holopainting offworld is still at large. No leads. Damn criminals..."},
+                               {"Destroy the FLF base!", "The Dvaered scored a major victory against the FLF recently. They went into Sigur and blew the hidden base there to bits! I bet that was a serious setback for the FLF."}
+                              }
+
+   -- Event after-care messages. Each element should be a table containing the event name and a line of text.
+   -- This text will be said by NPCs once the player has completed the event in question.
+   -- Make sure the messages are always faction neutral.
+   msg_edone =                {{"Animal trouble", "What? You had rodents sabotage your ship? Man, you're lucky to be alive. If it had hit the wrong power line..."},
+                               {"Naev Needs You!", "What do you mean, the world ended and then the creator of the universe came and fixed it? What kind of illegal substance are you on? Get away from me, you lunatic."}
+                              }
+end
 
 
 function create()
    -- Logic to decide what to spawn, if anything.
    -- TODO: Do not spawn any NPCs on restricted assets.
-   
+
    local num_npc = rnd.rnd(1, 5)
    npcs = {}
    for i = 0, num_npc do
@@ -162,6 +198,7 @@ function spawnNPC()
    -- Select a faction for the NPC. NPCs may not have a specific faction.
    local npcname = civ_name
    local factions = {}
+   local func = nil
    for i, _ in pairs(msg_lore) do
       factions[#factions + 1] = i
    end
@@ -171,7 +208,7 @@ function spawnNPC()
    if select >= (0.5) and planet.cur():faction() ~= nil then
       fac = planet.cur():faction():name()
    end
-   
+
    -- Append the faction to the civilian name, unless there is no faction.
    if fac ~= "general" then
       npcname = fac .. " " .. civ_name
@@ -182,23 +219,26 @@ function spawnNPC()
 
    -- Select a description for the civilian.
    local desc = civ_desc[rnd.rnd(1, #civ_desc)]
-   
+
    -- Select what this NPC should say.
    select = rnd.rnd()
    local msg
-   if select <= 0.4 then
+   if select <= 0.3 then
       -- Lore message.
       msg = getLoreMessage(fac)
-   elseif select <= 0.7 then
+   elseif select <= 0.55 then
+      -- Jump point message.
+      msg, func = getJmpMessage()
+   elseif select <= 0.8 then
       -- Gameplay tip message.
       msg = getTipMessage()
    else
       -- Mission hint message.
-      msg = getHintMessage()
+      msg = getMissionLikeMessage()
    end
-   
-   local npcdata = {name = npcname, msg = msg}
-   
+
+   local npcdata = {name = npcname, msg = msg, func = func}
+
    id = evt.npcAdd("talkNPC", npcname, portrait, desc, 10)
    npcs[id] = npcdata
 end
@@ -221,17 +261,49 @@ function getLoreMessage(fac)
    return pick
 end
 
+-- Returns a jump point message and updates jump point known status accordingly. If all jumps are known by the player, defaults to a lore message.
+function getJmpMessage()
+   -- Collect a table of jump points in the system the player does NOT know.
+   local mytargets = {}
+   for _,j in ipairs(system.cur():jumps(true)) do
+      if not j:known() and not j:hidden() then
+         table.insert(mytargets, j)
+      end
+   end
+
+   if #mytargets == 0 then -- The player already knows all jumps in this system.
+      return getLoreMessage(), nil
+   end
+
+   -- All jump messages are valid always.
+   if #msg_jmp == 0 then
+      return getLoreMessage(), nil
+   end
+   local retmsg =  msg_jmp[rnd.rnd(1, #msg_jmp)]
+   local sel = rnd.rnd(1, #mytargets)
+   local myfunc = function()
+                     mytargets[sel]:setKnown(true)
+                  end
+
+   -- Don't need to remove messages from tables here.
+   return retmsg:format(mytargets[sel]:dest():name()), myfunc
+end
+
 -- Returns a tip message.
 function getTipMessage()
    -- All tip messages are valid always.
    if #msg_tip == 0 then
       return getLoreMessage()
    end
-   return msg_tip[rnd.rnd(1, #msg_tip)]
+   local sel = rnd.rnd(1, #msg_tip)
+   local pick = msg_tip[sel]
+   table.remove(msg_tip, sel)
+   return pick
 end
 
--- Returns a mission hint message, OR a lore message if no hints are left.
-function getHintMessage()
+-- Returns a mission hint message, a mission after-care message, OR a lore message if no missionlikes are left.
+function getMissionLikeMessage()
+   -- Hints.
    -- Hint messages are only valid if the relevant mission has not been completed and is not currently active.
    for i, j in pairs(msg_mhint) do
       if player.misnDone(j[1]) or player.misnActive(j[1]) then
@@ -243,20 +315,37 @@ function getHintMessage()
          table.remove(msg_ehint, i)
       end
    end
+
+   -- After-care.
+   -- After-care messages are only valid if the relevant mission has been completed.
+   for i, j in pairs(msg_mdone) do
+      if not player.misnDone(j[1]) then
+         table.remove(msg_mdone, i)
+      end
+   end
+   for i, j in pairs(msg_edone) do
+      if not player.evtDone(j[1]) then
+         table.remove(msg_edone, i)
+      end
+   end
    
-   if #msg_mhint + #msg_ehint == 0 then
+   -- Combine message tables. We don't need to do any more mission/event tests after this.
+   if not msg_combined then
+      msg_combined = {}
+      for i, j in ipairs(msg_mhint) do msg_combined[#msg_combined + 1] = j[2] end
+      for i, j in ipairs(msg_ehint) do msg_combined[#msg_combined + 1] = j[2] end
+      for i, j in ipairs(msg_mdone) do msg_combined[#msg_combined + 1] = j[2] end
+      for i, j in ipairs(msg_edone) do msg_combined[#msg_combined + 1] = j[2] end
+   end
+
+   if #msg_combined == 0 then
       return getLoreMessage()
    else
       -- Select a string, then remove it from the list of valid strings. This ensures all NPCs have something different to say.
-      local select = rnd.rnd(1, #msg_mhint + #msg_ehint)
+      local sel = rnd.rnd(1, #msg_combined)
       local pick
-      if select > #msg_mhint then
-         pick = msg_ehint[select - #msg_mhint][2]
-         table.remove(msg_ehint, select - #msg_mhint)
-      else
-         pick = msg_mhint[select][2]
-         table.remove(msg_mhint, select)
-      end
+      pick = msg_combined[sel]
+      table.remove(msg_combined, sel)
       return pick
    end
 end
@@ -272,8 +361,13 @@ end
 
 function talkNPC(id)
    local npcdata = npcs[id]
-   
-   tk.msg(npcdata["name"], "\"" .. npcdata["msg"] .. "\"")
+
+   if npcdata.func then
+      -- Execute NPC specific code
+      npcdata.func()
+   end
+
+   tk.msg(npcdata.name, "\"" .. npcdata.msg .. "\"")
 end
 
 --[[

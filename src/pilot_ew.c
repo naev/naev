@@ -96,13 +96,13 @@ double pilot_ewMass( double mass )
 void pilot_updateSensorRange (void)
 {
    /* Calculate the sensor sensor_curRange. */
-   /* 0    ->   5000.0
-    * 250  ->   2222.22222222
-    * 500  ->   1428.57142857
-    * 750  ->   1052.63157895
-    * 1000 ->    833.333333333 */
-   sensor_curRange  = 10000;
-   sensor_curRange /= ((cur_system->interference + 200) / 100.);
+   /* 0    ->   7500.0
+    * 250  ->   3333.33333333
+    * 500  ->   2142.85714285
+    * 750  ->   1578.94736842
+    * 1000 ->   1250.0 */
+   sensor_curRange  = 7500;
+   sensor_curRange /= ((cur_system->interference + 200) / 200.);
 
    /* Speeds up calculations as we compare it against vectors later on
     * and we want to avoid actually calculating the sqrt(). */
@@ -179,15 +179,20 @@ int pilot_inRangePlanet( const Pilot *p, int target )
    if ( p == NULL )
       return 0;
 
-   sense = sensor_curRange * p->ew_detect;
-
    /* Get the planet. */
    pnt = cur_system->planets[target];
+
+   /* target must not be virtual */
+   if ( !pnt->real )
+      return 0;
+
+   /* @TODO ew_detect should be squared upon being set. */
+   sense = sensor_curRange * pow2(p->ew_detect);
 
    /* Get distance. */
    d = vect_dist2( &p->solid->pos, &pnt->pos );
 
-   if ( d * pnt->hide * ( 1 + cur_system->interference / 200 ) < sense )
+   if (d * pnt->hide < sense )
       return 1;
 
    return 0;
@@ -214,18 +219,17 @@ int pilot_inRangeJump( const Pilot *p, int i )
    /* Get the jump point. */
    jp = &cur_system->jumps[i];
 
-   /* jump point is not exit only */
-   if (!jp_isFlag( jp, JP_HIDDEN ) && !jp_isFlag( jp, JP_EXITONLY )) /* regular */
-      sense = sensor_curRange * p->ew_jumpDetect;
-   else if (jp_isFlag( jp, JP_HIDDEN ) || jp_isFlag( jp, JP_EXITONLY )) /* exit only */
+   /* We don't want exit-only or unknown hidden jumps. */
+   if ((jp_isFlag(jp, JP_EXITONLY)) || ((jp_isFlag(jp, JP_HIDDEN)) && (!jp_isKnown(jp)) ))
       return 0;
 
+   sense = sensor_curRange * p->ew_jumpDetect;
    hide = jp->hide;
 
    /* Get distance. */
    d = vect_dist2( &p->solid->pos, &jp->pos );
 
-   if ( d * hide * ( 1 + cur_system->interference / 200 ) < sense )
+   if (d * hide < sense)
       return 1;
 
    return 0;

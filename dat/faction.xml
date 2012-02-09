@@ -21,6 +21,7 @@
  <faction name="Civilian">
   <invisible />
   <static />
+  <known/>
   <player>0</player>
   <colour>black</colour>
   <spawn>civilian</spawn>
@@ -45,6 +46,7 @@
   </enemies>
  </faction>
  <faction name="Frontier">
+  <known/>
   <logo>frontier</logo>
   <longname>Frontier Alliance</longname>
   <player>3</player>
@@ -58,6 +60,7 @@
   </enemies>
  </faction>
  <faction name="Trader">
+  <known/>
   <logo>trader</logo>
   <longname>Space Traders Guild</longname>
   <player>3</player>
@@ -71,6 +74,7 @@
   </enemies>
  </faction>
  <faction name="Pirate">
+  <known/>
   <logo>pirate</logo>
   <longname>Galactic Pirates</longname>
   <player>-20</player>
@@ -94,6 +98,7 @@
   </enemies>
  </faction>
  <faction name="Empire">
+  <known/>
   <logo>empire</logo>
   <colour>green</colour>
   <player>1</player>
@@ -110,6 +115,7 @@
   </enemies>
  </faction>
  <faction name="Soromid">
+  <known/>
   <logo>empire</logo>
   <colour>orange</colour>
   <player>0</player>
@@ -145,6 +151,7 @@
   </enemies>
  </faction>
  <faction name="Dvaered">
+  <known/>
   <logo>dvaered</logo>
   <colour>brown</colour>
   <longname>House Dvaered</longname>
@@ -161,6 +168,7 @@
   </enemies>
  </faction>
  <faction name="Za'lek">
+  <known/>
   <logo>zalek</logo>
   <longname>House Za'lek</longname>
   <player>2</player>
@@ -173,6 +181,7 @@
   </enemies>
  </faction>
  <faction name="Sirius">
+  <known/>
   <logo>sirius</logo>
   <colour>aqua</colour>
   <longname>House Sirius</longname>
@@ -187,6 +196,7 @@
   </enemies>
  </faction>
  <faction name="Goddard">
+  <known/>
   <logo>goddard</logo>
   <colour>blue</colour>
   <longname>House Goddard</longname>

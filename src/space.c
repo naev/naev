@@ -48,6 +48,7 @@
 #include "nmath.h"
 #include "map.h"
 #include "damagetype.h"
+#include "hook.h"
 
 
 #define XML_PLANET_ID         "Assets" /**< Planet xml document tag. */
@@ -107,8 +108,10 @@ static int planet_mstack = 0; /**< Memory size of planet stack. */
 static int systems_loading = 1; /**< Systems are loading. */
 StarSystem *cur_system = NULL; /**< Current star system. */
 glTexture *jumppoint_gfx = NULL; /**< Jump point graphics. */
+static glTexture *jumpbuoy_gfx = NULL; /**< Jump buoy graphics. */
 static lua_State *landing_lua = NULL; /**< Landing lua. */
 static int space_fchg = 0; /**< Faction change counter, to avoid unnecessary calls. */
+static int space_simulating = 0; /** Are we simulating space? */
 
 
 /*
@@ -559,7 +562,7 @@ double system_getClosest( const StarSystem *sys, int *pnt, int *jp, double x, do
    /* Default output. */
    *pnt = -1;
    *jp  = -1;
-   d    = 10e10;
+   d    = INFINITY;
 
    /* Planets. */
    for (i=0; i<sys->nplanets; i++) {
@@ -606,7 +609,7 @@ double system_getClosestAng( const StarSystem *sys, int *pnt, int *jp, double x,
    /* Default output. */
    *pnt = -1;
    *jp  = -1;
-   a    = 10e10;
+   a    = ang + M_PI;
 
    /* Planets. */
    for (i=0; i<sys->nplanets; i++) {
@@ -648,7 +651,7 @@ int space_sysReachable( StarSystem *sys )
 
    /* check to see if it is adjacent to known */
    for (i=0; i<sys->njumps; i++)
-      if (jp_isKnown( jump_get( sys->name, sys->jumps[i].target )))
+      if (jp_isKnown( jump_getTarget( sys, sys->jumps[i].target )))
          return 1;
 
    return 0;
@@ -685,7 +688,7 @@ int space_sysReachableFromSys( StarSystem *target, StarSystem *sys )
    JumpPoint *jp;
 
    /* check to see if sys contains a known jump point to target */
-   jp = jump_get( target->name, sys );
+   jp = jump_getTarget( target, sys );
    if ( jp == NULL )
       return 0;
    else if ( jp_isKnown( jp ))
@@ -901,6 +904,15 @@ Planet* planet_getAll( int *n )
 
 
 /**
+ * @brief Sets a planet's known status, if it's real.
+ */
+void planet_setKnown( Planet *p )
+{
+   if (p->real == ASSET_REAL)
+      planet_setFlag(p, PLANET_KNOWN);
+}
+
+/**
  * @brief Check to see if a planet exists.
  *
  *    @param planetname Name of the planet to see if it exists.
@@ -965,10 +977,11 @@ char **planet_searchFuzzyCase( const char* planetname, int *n )
 /**
  * @brief Gets a jump point based on its target and system.
  *
- *    @param planetname Name to match.
- *    @return Planet matching planetname.
+ *    @param jumpname Name to match.
+ *    @param sys System jump is in.
+ *    @return Jump point matich jumpname in sys or NULL if not found.
  */
-JumpPoint* jump_get( const char* jumpname, StarSystem* sys )
+JumpPoint* jump_get( const char* jumpname, const StarSystem* sys )
 {
    int i;
    JumpPoint *jp;
@@ -985,6 +998,27 @@ JumpPoint* jump_get( const char* jumpname, StarSystem* sys )
    }
 
    WARN("Jump point '%s' not found in %s", jumpname, sys->name);
+   return NULL;
+}
+
+
+/**
+ * @brief Less safe version of jump_get that works with pointers.
+ *
+ *    @param target Target system jump leads to.
+ *    @param sys System to look in.
+ *    @return Jump point in sys to target or NULL if not found.
+ */
+JumpPoint* jump_getTarget( StarSystem* target, const StarSystem* sys )
+{
+   int i;
+   JumpPoint *jp;
+   for (i=0; i<sys->njumps; i++) {
+      jp = &sys->jumps[i];
+      if (jp->target == target)
+         return jp;
+   }
+   WARN("Jump point to '%s' not found in %s", target->name, sys->name);
    return NULL;
 }
 
@@ -1155,6 +1189,7 @@ void space_update( const double dt )
    int i;
    Pilot *p;
    Damage dmg;
+   HookParam hparam[3];
 
    /* Needs a current system. */
    if (cur_system == NULL)
@@ -1231,15 +1266,36 @@ void space_update( const double dt )
       space_fchg = 0;
    }
 
-   /* Planet updates */
-   for (i=0; i<cur_system->nplanets; i++)
-      if (( !planet_isKnown( cur_system->planets[i] )) && ( pilot_inRangePlanet( player.p, i )))
-         planet_setFlag( cur_system->planets[i], PLANET_KNOWN );
+   if (!space_simulating) {
+      /* Planet updates */
+      for (i=0; i<cur_system->nplanets; i++)
+         if (( !planet_isKnown( cur_system->planets[i] )) && ( pilot_inRangePlanet( player.p, i ))) {
+            planet_setKnown( cur_system->planets[i] );
+            player_message( "You discovered \e%c%s\e\0.",
+                  planet_getColourChar( cur_system->planets[i] ),
+                  cur_system->planets[i]->name );
+            hparam[0].type  = HOOK_PARAM_STRING;
+            hparam[0].u.str = "asset";
+            hparam[1].type  = HOOK_PARAM_ASSET;
+            hparam[1].u.la.id = cur_system->planets[i]->id;
+            hparam[2].type  = HOOK_PARAM_SENTINEL;
+            hooks_runParam( "discover", hparam );
+         }
 
-   /* Jump point updates */
-   for (i=0; i<cur_system->njumps; i++)
-      if (( !jp_isKnown( &cur_system->jumps[i] )) && ( pilot_inRangeJump( player.p, i )))
-         jp_setFlag( &cur_system->jumps[i], JP_KNOWN );
+      /* Jump point updates */
+      for (i=0; i<cur_system->njumps; i++)
+         if (( !jp_isKnown( &cur_system->jumps[i] )) && ( pilot_inRangeJump( player.p, i ))) {
+            jp_setFlag( &cur_system->jumps[i], JP_KNOWN );
+            player_message( "You discovered a Jump Point." );
+            hparam[0].type  = HOOK_PARAM_STRING;
+            hparam[0].u.str = "jump";
+            hparam[1].type  = HOOK_PARAM_JUMP;
+            hparam[1].u.lj.srcid = cur_system->id;
+            hparam[1].u.lj.destid = cur_system->jumps[i].target->id;
+            hparam[2].type  = HOOK_PARAM_SENTINEL;
+            hooks_runParam( "discover", hparam );
+         }
+   }
 }
 
 
@@ -1344,6 +1400,7 @@ void space_init( const char* sysname )
    sys_setFlag(cur_system,SYSTEM_KNOWN);
 
    /* Simulate system. */
+   space_simulating = 1;
    if (player.p != NULL)
       pilot_setFlag( player.p, PILOT_INVISIBLE );
    player_messageToggle( 0 );
@@ -1358,6 +1415,7 @@ void space_init( const char* sysname )
    player_messageToggle( 1 );
    if (player.p != NULL)
       pilot_rmFlag( player.p, PILOT_INVISIBLE );
+   space_simulating = 0;
 
    /* Refresh overlay if necessary (player kept it open). */
    ovr_refresh();
@@ -1862,6 +1920,9 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
             "presence" );
    }
 #undef MELEMENT
+
+   /* Square to allow for linear multiplication with squared distances. */
+   planet->hide = pow2(planet->hide);
 
    return 0;
 }
@@ -2456,6 +2517,9 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
    if (!jp_isFlag(j,JP_AUTOPOS) && !pos)
       WARN("JumpPoint in system '%s' is missing pos element but does not have autopos flag.", sys->name);
 
+   /* Square to allow for linear multiplication with squared distances. */
+   j->hide = pow2(j->hide);
+
    /* Added jump. */
    sys->njumps++;
 
@@ -2519,6 +2583,7 @@ int space_load (void)
 
    /* Load jump point graphic - must be before systems_load(). */
    jumppoint_gfx = gl_newSprite( "gfx/planet/space/jumppoint.png", 4, 4, OPENGL_TEX_MIPMAPS );
+   jumpbuoy_gfx = gl_newImage( "gfx/planet/space/jumpbuoy.png", 0 );
 
    /* Load planets. */
    ret = planets_load();
@@ -2716,6 +2781,12 @@ static void space_renderJumpPoint( JumpPoint *jp, int i )
       c = NULL;
 
    gl_blitSprite( jumppoint_gfx, jp->pos.x, jp->pos.y, jp->sx, jp->sy, c );
+
+   /* Draw buoys next to "highway" jump points. */
+   if (jp->hide == 0.) {
+      gl_blitSprite( jumpbuoy_gfx, jp->pos.x + 200 * jp->sina, jp->pos.y + 200 * jp->cosa, 0, 0, NULL ); /* Left */
+      gl_blitSprite( jumpbuoy_gfx, jp->pos.x + -200 * jp->sina, jp->pos.y + -200 * jp->cosa, 0, 0, NULL ); /* Right */
+   }
 }
 
 
@@ -2740,6 +2811,9 @@ void space_exit (void)
    if (jumppoint_gfx != NULL)
       gl_freeTexture(jumppoint_gfx);
    jumppoint_gfx = NULL;
+   if (jumpbuoy_gfx != NULL)
+      gl_freeTexture(jumpbuoy_gfx);
+   jumpbuoy_gfx = NULL;
 
    /* Free the names. */
    if (planetname_stack != NULL)
@@ -2830,7 +2904,7 @@ void space_clearKnown (void)
          jp_rmFlag(&sys->jumps[j],JP_KNOWN);
    }
    for (j=0; j<planet_nstack; j++)
-      planet_rmFlag(&planet_stack[i],PLANET_KNOWN);
+      planet_rmFlag(&planet_stack[j],PLANET_KNOWN);
 }
 
 
@@ -2970,7 +3044,7 @@ int space_sysSave( xmlTextWriterPtr writer )
 
       if (!sys_isKnown(&systems_stack[i])) continue; /* not known */
 
-      xmlw_startElem(writer,"known")
+      xmlw_startElem(writer,"known");
 
       xmlw_attr(writer,"sys","%s",systems_stack[i].name);
 
@@ -3051,7 +3125,7 @@ static int space_parseAssets( xmlNodePtr parent, StarSystem* sys )
       if (xml_isNode(node,"planet")) {
          planet = planet_get(xml_get(node));
          if (planet != NULL) /* Must exist */
-            planet_setFlag(planet,PLANET_KNOWN);
+            planet_setKnown(planet);
       }
       else if (xml_isNode(node,"jump")) {
          jp = jump_get(xml_get(node), sys);
@@ -3190,7 +3264,7 @@ void system_addPresence( StarSystem *sys, int faction, double amount, int range 
 
    /* Create the initial queue consisting of sys adjacencies. */
    for (i=0; i < sys->njumps; i++) {
-      if (sys->jumps[i].target->spilled == 0) {
+      if (sys->jumps[i].target->spilled == 0 && !jp_isFlag( &sys->jumps[i], JP_HIDDEN ) && !jp_isFlag( &sys->jumps[i], JP_EXITONLY )) {
          q_enqueue( q, sys->jumps[i].target );
          sys->jumps[i].target->spilled = 1;
       }
@@ -3212,7 +3286,7 @@ void system_addPresence( StarSystem *sys, int faction, double amount, int range 
 
       /* Enqueue all its adjacencies to the next range queue. */
       for (i=0; i < cur->njumps; i++) {
-         if (cur->jumps[i].target->spilled == 0) {
+         if (cur->jumps[i].target->spilled == 0 && !jp_isFlag( &cur->jumps[i], JP_HIDDEN ) && !jp_isFlag( &cur->jumps[i], JP_EXITONLY )) {
             q_enqueue( qn, cur->jumps[i].target );
             cur->jumps[i].target->spilled = 1;
          }
@@ -3302,19 +3376,19 @@ void system_addAllPlanetsPresence( StarSystem *sys )
  *    @param sys Pointer to the system to process.
  *    @return 0 If empty; otherwise 1.
  */
-int system_hasPlanet( StarSystem *sys )
+int system_hasPlanet( const StarSystem *sys )
 {
    int i;
 
    /* Check for NULL and display a warning. */
-   if(sys == NULL) {
+   if (sys == NULL) {
       WARN("sys == NULL");
       return 0;
    }
 
    /* Go through all the assets and look for a real one. */
-   for(i = 0; i < sys->nplanets; i++)
-      if(sys->planets[i]->real == ASSET_REAL)
+   for (i = 0; i < sys->nplanets; i++)
+      if (sys->planets[i]->real == ASSET_REAL)
          return 1;
 
    return 0;

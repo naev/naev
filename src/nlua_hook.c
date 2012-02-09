@@ -51,6 +51,7 @@ static int hook_input( lua_State *L );
 static int hook_mouse( lua_State *L );
 static int hook_safe( lua_State *L );
 static int hook_standing( lua_State *L );
+static int hook_discover( lua_State *L );
 static int hook_pilot( lua_State *L );
 static const luaL_reg hook_methods[] = {
    { "rm", hookL_rm },
@@ -70,6 +71,7 @@ static const luaL_reg hook_methods[] = {
    { "mouse", hook_mouse },
    { "safe", hook_safe },
    { "standing", hook_standing },
+   { "discover", hook_discover },
    { "pilot", hook_pilot },
    {0,0}
 }; /**< Hook Lua methods. */
@@ -556,6 +558,27 @@ static int hook_standing( lua_State *L )
 {
    unsigned int h;
    h = hook_generic( L, "standing", 0., 1, 0 );
+   lua_pushnumber( L, h );
+   return 1;
+}
+/**
+ * @brief Hooks the function to when the player discovers an asset, jump point or the likes.
+ *
+ * The parameters passed to the function are the type which can be one of:<br/>
+ * - "asset" <br/>
+ * - "jump" <br/>
+ * and the actual asset or jump point discovered with the following format: <br/>
+ * function f( type, discovery )
+ *
+ *    @luaparam funcname Name of function to run when hook is triggered.
+ *    @luaparam arg Argument to pass to hook.
+ *    @luareturn Hook identifier.
+ * @luafunc discover( funcname, arg )
+ */
+static int hook_discover( lua_State *L )
+{
+   unsigned int h;
+   h = hook_generic( L, "discover", 0., 1, 0 );
    lua_pushnumber( L, h );
    return 1;
 }

@@ -617,8 +617,8 @@ static void gui_renderBorder( double dt )
 
       pnt = cur_system->planets[i];
 
-      /* See if in sensor range. */
-      if (!pilot_inRangePlanet(player.p, i))
+      /* Skip if unknown. */
+      if (!planet_isKnown( pnt ))
          continue;
 
       /* Check if out of range. */
@@ -661,8 +661,8 @@ static void gui_renderBorder( double dt )
    for (i=0; i<cur_system->njumps; i++) {
       jp  = &cur_system->jumps[i];
 
-      /* See if in sensor range. */
-      if (!pilot_inRangeJump(player.p, i))
+      /* Skip if unknown or exit-only. */
+      if (!jp_isKnown( jp ) || jp_isFlag( jp, JP_EXITONLY ))
          continue;
 
       /* Check if out of range. */

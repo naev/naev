@@ -289,6 +289,7 @@ static void map_update( unsigned int wid )
    int p;
    glTexture *logo;
    double w;
+   double unknownPresence;
 
    /* Needs map to update. */
    if (!map_isOpen())
@@ -420,18 +421,26 @@ static void map_update( unsigned int wid )
    hasPresence = 0;
    buf[0]      = '\0';
    l           = 0;
+   unknownPresence = 0;
    for (i=0; i < sys->npresence; i++) {
       if (sys->presence[i].value <= 0)
          continue;
       hasPresence = 1;
-      t           = faction_getColourChar(sys->presence[i].faction);
-      /* Use map grey instead of default neutral colour */
-      l += snprintf( &buf[l], PATH_MAX-l, "%s\e0%s: \e%c%.0f",
-                     (l==0)?"":"\n", faction_shortname(sys->presence[i].faction),
-                     (t=='N')?'M':t, sys->presence[i].value);
+      if (faction_isKnown( sys->presence[i].faction )) {
+         t           = faction_getColourChar(sys->presence[i].faction);
+         /* Use map grey instead of default neutral colour */
+         l += snprintf( &buf[l], PATH_MAX-l, "%s\e0%s: \e%c%.0f",
+                        (l==0)?"":"\n", faction_shortname(sys->presence[i].faction),
+                        (t=='N')?'M':t, sys->presence[i].value);
+      }
+      else
+         unknownPresence += sys->presence[i].value;
       if (l > PATH_MAX)
          break;
    }
+   if (unknownPresence != 0)
+      l += snprintf( &buf[l], PATH_MAX-l, "%s\e0%s: \e%c%.0f",
+                     (l==0)?"":"\n", "Unknown", 'M', unknownPresence);
    if (hasPresence == 0)
       snprintf(buf, PATH_MAX, "N/A");
    window_moveWidget( wid, "txtSPresence", x, y );
@@ -801,22 +810,26 @@ void map_renderSystems( double bx, double by, double x, double y,
       gl_vboActivateOffset( map_vbo, GL_VERTEX_ARRAY, 0, 2, GL_FLOAT, 0 );
       gl_vboActivateOffset( map_vbo, GL_COLOR_ARRAY,
             sizeof(GLfloat) * 2*3, 4, GL_FLOAT, 0 );
-      for (j=0; j<sys->njumps; j++) {
+      for (j = 0; j < sys->njumps; j++) {
          jsys = sys->jumps[j].target;
          if (!space_sysReachableFromSys(jsys,sys) && !editor)
             continue;
 
          /* Choose colours. */
          cole = &cBlue;
-         for (k=0; k<jsys->njumps; k++) {
-            if (jsys->jumps[i].target == sys) {
-               if (jp_isFlag(&sys->jumps[j], JP_EXITONLY))
+         for (k = 0; k < jsys->njumps; k++) {
+            if (jsys->jumps[k].target == sys) {
+               if (jp_isFlag(&jsys->jumps[k], JP_EXITONLY))
                   cole = &cWhite;
+               else if (jp_isFlag(&jsys->jumps[k], JP_HIDDEN))
+                  cole = &cRed;
                break;
             }
          }
          if (jp_isFlag(&sys->jumps[j], JP_EXITONLY))
             col = &cWhite;
+         else if (jp_isFlag(&sys->jumps[j], JP_HIDDEN))
+            col = &cRed;
          else
             col = &cBlue;
 
@@ -949,7 +962,11 @@ void map_renderNames( double x, double y, int editor )
          tx  = x + map_zoom*sys->pos.x + d*vx;
          ty  = y + map_zoom*sys->pos.y + d*vy;
          /* Display. */
-         snprintf( buf, sizeof(buf), "H: %.2f", sys->jumps[j].hide );
+         n = sys->jumps[j].hide;
+         if (n == 0.)
+            snprintf( buf, sizeof(buf), "\egH: %.1f", n );
+         else
+            snprintf( buf, sizeof(buf), "H: %.1f", n );
          gl_print( &gl_smallFont,
                tx, ty,
                &cGrey70, buf );
@@ -1274,7 +1291,7 @@ void map_select( StarSystem *sys, char shifted )
          if (map_npath==0) {
             player_hyperspacePreempt(0);
             player_targetHyperspaceSet( -1 );
-            player_autonavAbort(NULL);
+            player_autonavAbortJump(NULL);
          }
          else  {
             /* see if it is a valid hyperspace target */
@@ -1282,8 +1299,6 @@ void map_select( StarSystem *sys, char shifted )
                if (map_path[0] == cur_system->jumps[i].target) {
                   player_hyperspacePreempt(1);
                   player_targetHyperspaceSet( i );
-                  if (!shifted)
-                     player_autonavAbort(NULL);
                   break;
                }
             }
@@ -1291,7 +1306,7 @@ void map_select( StarSystem *sys, char shifted )
       }
       else { /* unreachable. */
          player_targetHyperspaceSet( -1 );
-         player_autonavAbort(NULL);
+         player_autonavAbortJump(NULL);
       }
    }
 
@@ -1603,7 +1618,7 @@ int map_map( const Outfit *map )
       sys_setFlag(map->u.map->systems[i], SYSTEM_KNOWN);
 
    for (i=0; i<array_size(map->u.map->assets);i++)
-      planet_setFlag(map->u.map->assets[i], PLANET_KNOWN);
+      planet_setKnown(map->u.map->assets[i]);
 
    for (i=0; i<array_size(map->u.map->jumps);i++)
       jp_setFlag(map->u.map->jumps[i], JP_KNOWN);

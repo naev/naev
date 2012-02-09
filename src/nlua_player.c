@@ -34,6 +34,7 @@
 #include "nlua_system.h"
 #include "nlua_planet.h"
 #include "map.h"
+#include "map_overlay.h"
 #include "hook.h"
 #include "comm.h"
 #include "land_outfits.h"
@@ -72,7 +73,9 @@ static int playerL_landWindow( lua_State *L );
 /* Hail stuff. */
 static int playerL_commclose( lua_State *L );
 /* Cargo stuff. */
+static int playerL_numOutfit( lua_State *L );
 static int playerL_addOutfit( lua_State *L );
+static int playerL_rmOutfit( lua_State *L );
 static int playerL_addShip( lua_State *L );
 static int playerL_swapShip( lua_State *L );
 static int playerL_misnActive( lua_State *L );
@@ -103,7 +106,9 @@ static const luaL_reg playerL_methods[] = {
    { "allowLand", playerL_allowLand },
    { "landWindow", playerL_landWindow },
    { "commClose", playerL_commclose },
+   { "numOutfit", playerL_numOutfit },
    { "addOutfit", playerL_addOutfit },
+   { "rmOutfit", playerL_rmOutfit },
    { "addShip", playerL_addShip },
    { "swapShip", playerL_swapShip },
    { "misnActive", playerL_misnActive },
@@ -123,6 +128,7 @@ static const luaL_reg playerL_cond_methods[] = {
    { "fuel", playerL_fuel },
    { "autonav", playerL_autonav },
    { "autonavDest", playerL_autonavDest },
+   { "numOutfit", playerL_numOutfit },
    { "misnActive", playerL_misnActive },
    { "misnDone", playerL_misnDone },
    { "evtActive", playerL_evtActive },
@@ -473,7 +479,7 @@ static int playerL_autonavDest( lua_State *L )
  * Possible options are:<br/>
  * <ul>
  *  <li>abort : (string) autonav abort message
- *  <li>2x : (boolean) allows the player to enable doublespeed to "skip", default disabled
+ *  <li>no2x : (boolean) whether to prevent the player from engaging double-speed, default false
  *  <li>gui : (boolean) enables the player's gui, default disabled
  * </ul>
  *
@@ -511,7 +517,7 @@ static int playerL_cinematics( lua_State *L )
       f_gui = lua_toboolean(L, -1);
       lua_pop( L, 1 );
 
-      lua_getfield( L, 2, "2x" );
+      lua_getfield( L, 2, "no2x" );
       f_2x = lua_toboolean(L, -1);
       lua_pop( L, 1 );
    }
@@ -526,8 +532,10 @@ static int playerL_cinematics( lua_State *L )
       /* Do stuff. */
       player_autonavAbort( abort_msg );
       player_rmFlag( PLAYER_DOUBLESPEED );
+      ovr_setOpen(0);
+      pause_setSpeed(1.);
 
-      if (f_gui)
+      if (!f_gui)
          player_setFlag( PLAYER_CINEMATICS_GUI );
 
       if (f_2x)
@@ -686,6 +694,37 @@ static int playerL_commclose( lua_State *L )
 
 
 /**
+ * @brief Gets the number of outfits the player owns in his list (excludes equipped on ships).
+ *
+ * @usage q = player.numOutfit( "Laser Cannon" ) -- Number of 'Laser Cannons' the player owns (unequipped)
+ *
+ *    @luaparam name Name of the outfit to give.
+ *    @luareturn The quantity the player owns.
+ * @luafunc addOutfit( name )
+ */
+static int playerL_numOutfit( lua_State *L )
+{
+   const char *str;
+   Outfit *o;
+   int q;
+
+   /* Handle parameters. */
+   str = luaL_checkstring(L, 1);
+
+   /* Get outfit. */
+   o = outfit_get( str );
+   if (o==NULL) {
+      NLUA_ERROR(L, "Outfit '%s' not found.", str);
+      return 0;
+   }
+
+   /* Count the outfit. */
+   q = player_outfitOwned( o );
+   lua_pushnumber( L, q );
+
+   return 1;
+}
+/**
  * @brief Adds an outfit to the player's outfit list.
  *
  * @usage player.addOutfit( "Laser Cannon" ) -- Gives the player a laser cannon
@@ -718,6 +757,67 @@ static int playerL_addOutfit( lua_State *L  )
 
    /* Add the outfits. */
    player_addOutfit( o, q );
+
+   /* Update equipment list. */
+   outfits_updateEquipmentOutfits();
+
+   return 0;
+}
+/**
+ * @brief Removes an outfit from the player's outfit list.
+ *
+ * "all" will remove all outfits.
+ *
+ * @usage player.rmOutfit( "Plasma Blaster", 2 ) -- Removes two plasma blasters from the player
+ *
+ *    @luaparam name Name of the outfit to give.
+ *    @luaparam q Optional parameter that sets the quantity to give (default 1).
+ * @luafunc rmOutfit( name, q )
+ */
+static int playerL_rmOutfit( lua_State *L )
+{
+   const char *str;
+   char **outfits;
+   Outfit *o;
+   int i, q, noutfits;
+
+   /* Defaults. */
+   q = 1;
+
+   /* Handle parameters. */
+   str = luaL_checkstring(L, 1);
+   if (lua_gettop(L) > 1)
+      q = luaL_checkint(L, 2);
+
+   if (strcmp(str,"all")==0) {
+      noutfits = player_numOutfits();
+      /* Removing nothing is a bad idea. */
+      if (noutfits == 0)
+         return 0;
+
+      outfits = malloc( sizeof(char*) * noutfits );
+      player_getOutfits(outfits, NULL);
+      for (i=0; i<noutfits; i++) {
+         o = outfit_get(outfits[i]);
+         q = player_outfitOwned(o);
+         player_rmOutfit(o, q);
+         /* Free memory. */
+         free( outfits[i] );
+      }
+      /* Clean up. */
+      free(outfits);
+   }
+   else {
+      /* Get outfit. */
+      o = outfit_get( str );
+      if (o==NULL) {
+         NLUA_ERROR(L, "Outfit '%s' not found.", str);
+         return 0;
+      }
+
+      /* Remove the outfits. */
+      player_rmOutfit( o, q );
+   }
 
    /* Update equipment list. */
    outfits_updateEquipmentOutfits();
@@ -1035,6 +1135,15 @@ static int playerL_teleport( lua_State *L )
    /* Free graphics. */
    space_gfxUnload( cur_system );
 
+   /* Reset targets when teleporting.
+    * Both of these functions invoke gui_setNav(), which updates jump and
+    * planet targets simultaneously. Thus, invalid reads may arise and the
+    * target reset must be done prior to calling space_init and destroying
+    * the old system.
+    */
+   player_targetHyperspaceSet( -1 );
+   player_targetPlanetSet( -1 );
+
    /* Go to the new system. */
    space_init( name );
 
@@ -1049,11 +1158,6 @@ static int playerL_teleport( lua_State *L )
    hooks_run( "enter" );
    events_trigger( EVENT_TRIGGER_ENTER );
    missions_run( MIS_AVAIL_SPACE, -1, NULL, NULL );
-
-   /* Reset targets when teleporting */
-   player_targetPlanetSet( -1 );
-   player_targetHyperspaceSet( -1 );
-   gui_setNav();
 
    /* Move to planet. */
    if (pnt != NULL)

@@ -64,7 +64,6 @@ const char *keybind_info[][3] = {
    { "left", "Turn Left", "Makes your ship turn left." },
    { "right", "Turn Right", "Makes your ship turn right." },
    { "reverse", "Reverse", "Makes your ship face the direction you're moving from. Useful for braking." },
-   { "afterburn", "Afterburner", "Engages the ship's afterburner, if one is installed." },
    /* Targeting */
    { "target_next", "Target Next", "Cycles through ship targets." },
    { "target_prev", "Target Previous", "Cycles backwards through ship targets." },
@@ -138,7 +137,6 @@ const char *keybind_info[][3] = {
  * accel hacks
  */
 static unsigned int input_accelLast = 0; /**< Used to see if double tap */
-static int input_afterburnerButton  = 0; /**< Used to see if afterburner button is pressed. */
 static int input_accelButton        = 0; /**< Used to show whether accel is pressed. */
 
 
@@ -196,7 +194,6 @@ void input_setDefault (void)
    input_setKeybind( "left", KEYBIND_KEYBOARD, SDLK_LEFT, NMOD_ALL );
    input_setKeybind( "right", KEYBIND_KEYBOARD, SDLK_RIGHT, NMOD_ALL );
    input_setKeybind( "reverse", KEYBIND_KEYBOARD, SDLK_DOWN, NMOD_ALL );
-   input_setKeybind( "afterburn", KEYBIND_KEYBOARD, SDLK_z, NMOD_ALL );
    /* Targeting */
    input_setKeybind( "target_next", KEYBIND_KEYBOARD, SDLK_t, NMOD_NONE );
    input_setKeybind( "target_prev", KEYBIND_KEYBOARD, SDLK_t, NMOD_CTRL );
@@ -728,23 +725,11 @@ static void input_key( int keynum, double value, double kabs, int repeat )
                (value==KEY_PRESS) && INGAME() && NOHYP() && NODEAD() &&
                (t-input_accelLast <= conf.afterburn_sens))
             player_afterburn();
-         else if ((value==KEY_RELEASE) && !input_afterburnerButton)
-            player_afterburnOver(0);
+         else if (value==KEY_RELEASE)
+            player_afterburnOver();
 
          if (value==KEY_PRESS)
             input_accelLast = t;
-      }
-   /* Afterburning. */
-   } else if (KEY("afterburn") && !repeat) {
-      if ((value==KEY_PRESS) && INGAME() && NOHYP() && NODEAD()) {
-         player_afterburn();
-         input_afterburnerButton = 1;
-      }
-      else if (value==KEY_RELEASE) {
-         player_afterburnOver(0);
-         input_afterburnerButton = 0;
-         if (!input_accelButton)
-            player_accelOver();
       }
 
    /* turning left */
@@ -869,25 +854,25 @@ static void input_key( int keynum, double value, double kabs, int repeat )
 
    /* Weapon sets. */
    } else if (KEY("weapset1")) {
-      player_weapSetPress( 0, value );
+      player_weapSetPress( 0, value, repeat );
    } else if (KEY("weapset2")) {
-      player_weapSetPress( 1, value );
+      player_weapSetPress( 1, value, repeat );
    } else if (KEY("weapset3")) {
-      player_weapSetPress( 2, value );
+      player_weapSetPress( 2, value, repeat );
    } else if (KEY("weapset4")) {
-      player_weapSetPress( 3, value );
+      player_weapSetPress( 3, value, repeat );
    } else if (KEY("weapset5")) {
-      player_weapSetPress( 4, value );
+      player_weapSetPress( 4, value, repeat );
    } else if (KEY("weapset6")) {
-      player_weapSetPress( 5, value );
+      player_weapSetPress( 5, value, repeat );
    } else if (KEY("weapset7")) {
-      player_weapSetPress( 6, value );
+      player_weapSetPress( 6, value, repeat );
    } else if (KEY("weapset8")) {
-      player_weapSetPress( 7, value );
+      player_weapSetPress( 7, value, repeat );
    } else if (KEY("weapset9")) {
-      player_weapSetPress( 8, value );
+      player_weapSetPress( 8, value, repeat );
    } else if (KEY("weapset0")) {
-      player_weapSetPress( 9, value );
+      player_weapSetPress( 9, value, repeat );
 
    /*
     * space
@@ -904,10 +889,8 @@ static void input_key( int keynum, double value, double kabs, int repeat )
          player_land();
       }
    } else if (KEY("thyperspace") && NOHYP() && NOLAND() && NODEAD()) {
-      if (value==KEY_PRESS) {
-         player_autonavAbort(NULL);
+      if (value==KEY_PRESS)
          player_targetHyperspace();
-      }
    } else if (KEY("starmap") && NOHYP() && NODEAD() && !repeat) {
       if (value==KEY_PRESS) map_open();
    } else if (KEY("jump") && INGAME() && !repeat) {
@@ -1231,23 +1214,29 @@ static void input_clickevent( SDL_Event* event )
    else if (pntid >= 0) { /* Planet is closest. */
       if (pntid == player.p->nav_planet) {
          pnt = cur_system->planets[ pntid ];
-         if (planet_hasService(pnt, PLANET_SERVICE_LAND) &&
-               (pnt->faction < 0 || (!areEnemies( player.p->faction, pnt->faction ) || pnt->bribed )))
-            player_land();
+         player_hyperspacePreempt(0);
+         if (planet_hasService(pnt, PLANET_SERVICE_LAND)) {
+            if ((pnt->faction >= 0) && (areEnemies( player.p->faction, pnt->faction ) && !pnt->bribed))
+               player_hailPlanet();
+            else if (vect_dist2(&player.p->solid->pos,&pnt->pos) > pow2(pnt->radius))
+               player_autonavStart();
+            else
+               player_land();
+         }
          else
-            player_hailPlanet();
+            player_autonavStart();
       }
       else
          player_targetPlanetSet( pntid );
    }
    else if (jpid >= 0) { /* Jump point is closest. */
       if (jpid == player.p->nav_hyperspace) {
-         if (space_canHyperspace(player.p)) {
-            if (!paused) player_autonavAbort(NULL);
+         if (space_canHyperspace(player.p))
             player_jump();
-         }
-         else
+         else {
+            player_hyperspacePreempt(1);
             player_autonavStart();
+         }
       }
       else
          player_targetHyperspaceSet( jpid );

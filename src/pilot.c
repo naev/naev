@@ -47,8 +47,8 @@
 #include "damagetype.h"
 
 
-#define PILOT_CHUNK_MIN 128 /**< Maximum chunks to increment pilot_stack by */
-#define PILOT_CHUNK_MAX 2048 /**< Minimum chunks to increment pilot_stack by */
+#define PILOT_CHUNK_MIN 128 /**< Minimum chunks to increment pilot_stack by */
+#define PILOT_CHUNK_MAX 2048 /**< Maximum chunks to increment pilot_stack by */
 #define CHUNK_SIZE      32 /**< Size to allocate memory by. */
 
 /* ID Generators. */
@@ -467,7 +467,7 @@ double pilot_getNearestAng( const Pilot *p, unsigned int *tp, double ang, int di
    double rx, ry;
 
    *tp = PLAYER_ID;
-   a  = 10e10;
+   a   = ang + M_PI;
    for (i=0; i<pilot_nstack; i++) {
 
       /* Must not be self. */
@@ -747,6 +747,7 @@ void pilot_broadcast( Pilot *p, const char *msg, int ignore_int )
 void pilot_distress( Pilot *p, const char *msg, int ignore_int )
 {
    int i, r;
+   double d, range;
    Pilot *t;
 
    /* Broadcast the message. */
@@ -774,13 +775,24 @@ void pilot_distress( Pilot *p, const char *msg, int ignore_int )
 
    /* Now we must check to see if a pilot is in range. */
    for (i=0; i<pilot_nstack; i++) {
-      if ((pilot_stack[i]->id != p->id) &&
-            (!ignore_int && pilot_inRangePilot(p, pilot_stack[i]))) {
+      /* Skip if unsuitable. */
+      if ((pilot_stack[i]->ai == NULL) || (pilot_stack[i]->id == p->id) ||
+            (pilot_isFlag(pilot_stack[i], PILOT_DEAD)))
+         continue;
+
+      if (!ignore_int) {
+         if (!pilot_inRangePilot(p, pilot_stack[i])) {
+            /* Range is 7500 at 0 interference.
+             * Fall-off based on pilot_updateSensorRange()
+             */
+            d     = vect_dist( &p->solid->pos, &pilot_stack[i]->solid->pos );
+            range = 7500. / ((cur_system->interference + 200) / 200.);
+            if (d > range)
+               continue;
+         }
 
          /* Send AI the distress signal. */
-         if ((pilot_stack[i]->ai != NULL) &&
-               !pilot_isFlag(pilot_stack[i], PILOT_DEAD))
-            ai_getDistress( pilot_stack[i], p );
+         ai_getDistress( pilot_stack[i], p );
 
          /* Check if should take faction hit. */
          if (!areEnemies(p->faction, pilot_stack[i]->faction))
@@ -1048,7 +1060,6 @@ void pilot_updateDisable( Pilot* p, const unsigned int shooter )
    Pilot *pshooter;
    HookParam hparam;
 
-   /* TODO: Remove check for player.p once disable recovery is implemented. */
    if ((!pilot_isFlag(p, PILOT_DISABLED)) &&
        (!pilot_isFlag(p, PILOT_NODISABLE) || (p->armour <= 0.)) &&
        (p->armour <= p->stress)) { /* Pilot should be disabled. */
@@ -1314,7 +1325,7 @@ void pilot_renderOverlay( Pilot* p, const double dt )
  */
 void pilot_update( Pilot* pilot, const double dt )
 {
-   int i, n;
+   int i, nchg;
    unsigned int l;
    Pilot *target;
    double a, px,py, vx,vy;
@@ -1344,10 +1355,10 @@ void pilot_update( Pilot* pilot, const double dt )
    for (i=0; i<MAX_AI_TIMERS; i++)
       if (pilot->timer[i] > 0.)
          pilot->timer[i] -= dt;
-   n = 0;
    /* Update heat. */
    a = -1.;
    Q = 0.;
+   nchg = 0; /* Number of outfits that change state, processed at the end. */
    for (i=0; i<pilot->noutfits; i++) {
       o = pilot->outfits[i];
 
@@ -1368,11 +1379,11 @@ void pilot_update( Pilot* pilot, const double dt )
             if (o->state == PILOT_OUTFIT_ON) {
                o->stimer = outfit_cooldown( o->outfit );
                o->state  = PILOT_OUTFIT_COOLDOWN;
-               n++;
+               nchg++;
             }
             else if (o->state == PILOT_OUTFIT_COOLDOWN) {
                o->state  = PILOT_OUTFIT_OFF;
-               n++;
+               nchg++;
             }
          }
       }
@@ -1383,10 +1394,6 @@ void pilot_update( Pilot* pilot, const double dt )
       /* Handle lockons. */
       pilot_lockUpdateSlot( pilot, o, target, &a, dt );
    }
-
-   /* Must recalculate stats because something changed state. */
-   if (n > 0)
-      pilot_calcStats( pilot );
 
    /* Global heat. */
    pilot_heatUpdateShip( pilot, Q, dt );
@@ -1522,7 +1529,7 @@ void pilot_update( Pilot* pilot, const double dt )
    if (pilot->armour > pilot->armour_max)
       pilot->armour = pilot->armour_max;
 
-   /* regen shield */
+   /* Regen shield */
    if (pilot->stimer <= 0.) {
       pilot->shield += pilot->shield_regen * dt;
       if (pilot->sbonus > 0.)
@@ -1530,10 +1537,6 @@ void pilot_update( Pilot* pilot, const double dt )
       if (pilot->shield > pilot->shield_max)
          pilot->shield = pilot->shield_max;
    }
-
-   /* Update energy */
-   if ((pilot->energy < 1.) && pilot_isFlag(pilot, PILOT_AFTERBURNER))
-      pilot_rmFlag(pilot, PILOT_AFTERBURNER); /* Break afterburner */
 
    /*
     * Using RC circuit energy loading.
@@ -1550,16 +1553,36 @@ void pilot_update( Pilot* pilot, const double dt )
     */
    pilot->energy += (pilot->energy_max - pilot->energy) *
          (1. - exp( -dt / pilot->energy_tau));
+   pilot->energy -= pilot->energy_loss * dt;
+   if (pilot->energy > pilot->energy_max)
+      pilot->energy = pilot->energy_max;
+   else if (pilot->energy < 0.) {
+      pilot->energy = 0.;
+      /* Stop all on outfits. */
+      for (i=0; i<pilot->noutfits; i++) {
+         o = pilot->outfits[i];
+         /* Picky about our outfits. */
+         if (o->outfit == NULL)
+            continue;
+         if (!o->active)
+            continue;
+         if (o->state == PILOT_OUTFIT_ON) {
+            o->stimer = outfit_cooldown( o->outfit );
+            o->state  = PILOT_OUTFIT_COOLDOWN;
+            nchg++;
+         }
+      }
+   }
+
+   /* Must recalculate stats because something changed state. */
+   if (nchg > 0)
+      pilot_calcStats( pilot );
 
    /* Player damage decay. */
    if (pilot->player_damage > 0.)
       pilot->player_damage -= dt * PILOT_HOSTILE_DECAY;
    else
       pilot->player_damage = 0.;
-
-   /* check limits */
-   if (pilot->energy > pilot->energy_max)
-      pilot->energy = pilot->energy_max;
 
    /* Pilot is board/refueling.  Hack to match speeds. */
    if (pilot_isFlag(pilot, PILOT_REFUELBOARDING))

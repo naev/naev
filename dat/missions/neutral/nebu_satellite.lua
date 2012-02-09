@@ -89,7 +89,7 @@ function accept ()
    misn.osdCreate(mtitle[1], {mdesc[1]:format(satellite_sys:name())})
    -- Set up hooks
    hook.land("land")
-   hook.enter("jump")
+   hook.enter("jumpin")
 end
 
 
@@ -104,7 +104,7 @@ function land ()
 end
 
 
-function jump ()
+function jumpin ()
    sys = system.cur()
    -- Launch satellite
    if misn_stage == 0 and sys == satellite_sys then
