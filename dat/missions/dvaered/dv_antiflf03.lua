@@ -95,7 +95,7 @@ function create()
         abort()
     end 
 
-    misn.setNPC("Dvaered liaison", "dvaered/dv_miliraty_m1.png")
+    misn.setNPC("Dvaered liaison", "dvaered/dv_military_m1")
     misn.setDesc(npc_desc)
 end
 
