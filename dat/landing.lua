@@ -209,12 +209,12 @@ end
 function land_military( pnt, land_floor, ok_msg, notyet_msg, no_msg, nobribe )
    local fct = pnt:faction()
    local standing = fct:playerStanding()
-   local can_land = standing > land_floor
+   local can_land = standing >= land_floor
 
    local land_msg
    if can_land then
       land_msg = ok_msg
-   elseif standing >= land_floor then
+   elseif standing >= 0 then
       land_msg = notyet_msg
    else
       land_msg = no_msg
