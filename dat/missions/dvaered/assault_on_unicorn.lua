@@ -76,12 +76,12 @@ function death(pilot,killer)
       reward_table = {
          ["Hyena"]             =  1000,
          ["Pirate Shark"]      =  2000,
-         ["Pirate Vendetta"]   =  5000,
-         ["Pirate Rhino"]      =  6000,
-         ["Pirate Ancestor"]   =  7000,
-         ["Pirate Phalanx"]    =  8000,
+         ["Pirate Vendetta"]   =  4000,
+         ["Pirate Ancestor"]   =  5000,
+         ["Pirate Rhino"]      = 10000,
+         ["Pirate Phalanx"]    = 11000,
          ["Pirate Admonisher"] = 12000,
-         ["Pirate Kestrel"]    = 20000
+         ["Pirate Kestrel"]    = 24000
       }
 
       killed_ship = pilot:ship():name()
@@ -106,6 +106,7 @@ function land()
 
       tk.msg(title[2], text[2]:format( numstring( bounty_earned )))
       player.pay(bounty_earned)
+      faction.modPlayerSingle( "Dvaered", math.pow( bounty_earned, 0.5 ) / 100 )
       misn.finish(true)
    end
 end
