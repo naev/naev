@@ -17,7 +17,7 @@ else
    title = {}
    text = {}
    title[2] = "Mission accomplished"
-   text[2] = "As you land, you see a Dvaered military official approaching. He thanks you for your hard and diligent work, and hands you the bounty that you have earned."
+   text[2] = "As you land, you see a Dvaered military official approaching. Thanking you for your hard and diligent work, he hands you the bounty you've earned, a number of chips worth %s credits."
 
    osd_msg = {}
    osd_msg[1] = "Fly to the Unicorn system."
@@ -91,7 +91,7 @@ function death(pilot,killer)
       if bounty_earned == max_payment then
          osd_msg[2] = osd_msg3:format(planet_start_name)
       else
-         osd_msg[2] = osd_msg2:format(pirates_killed, bounty_earned, planet_start_name)
+         osd_msg[2] = osd_msg2:format(pirates_killed, numstring( bounty_earned ), planet_start_name)
       end
       misn.osdCreate(misn_title, osd_msg)
       misn.osdActive(2)
@@ -104,7 +104,7 @@ function land()
          var.pop( "assault_on_unicorn_check" )
       end
 
-      tk.msg(title[2],text[2])
+      tk.msg(title[2], text[2]:format( numstring( bounty_earned )))
       player.pay(bounty_earned)
       misn.finish(true)
    end
