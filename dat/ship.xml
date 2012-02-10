@@ -780,7 +780,7 @@
  <ship name="Empire Lancelot">
   <base_type>Lancelot</base_type>
   <GFX>lancelot_empire</GFX>
-  <GUI>slimv2</GUI>
+  <GUI>slim</GUI>
   <sound>engine</sound>
   <class>Fighter</class>
   <price>500000</price>
