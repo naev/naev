@@ -837,6 +837,11 @@ void pilot_calcStats( Pilot* pilot )
       /* Add mass. */
       pilot->mass_outfit   += o->mass;
 
+      if (outfit_isAfterburner(o)) { /* Afterburner */
+         pilot->afterburner = pilot->outfits[i]; /* Set afterburner */
+         continue;
+      }
+
       /* Active outfits must be on to affect stuff. */
       if (slot->active && !(slot->state==PILOT_OUTFIT_ON))
          continue;
@@ -860,8 +865,6 @@ void pilot_calcStats( Pilot* pilot )
          /* Stats. */
          ss_statsModFromList( &pilot->stats, o->u.mod.stats, &amount );
       }
-      else if (outfit_isAfterburner(o)) /* Afterburner */
-         pilot->afterburner = pilot->outfits[i]; /* Set afterburner */
       else if (outfit_isJammer(o)) { /* Jammer */
          pilot->jamming        = 1;
          pilot->energy_regen  -= o->u.jam.energy;
