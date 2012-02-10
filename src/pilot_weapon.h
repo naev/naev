@@ -57,6 +57,8 @@ void pilot_weaponClear( Pilot *p );
 void pilot_weaponAuto( Pilot *p );
 void pilot_weaponSetDefault( Pilot *p );
 void pilot_weaponSane( Pilot *p );
+void pilot_outfitOn( Pilot *p, Outfit *outfit );
+void pilot_outfitOff( Pilot *p, Outfit *outfit );
 
 
 #endif /* PILOT_WEAPON_H */
