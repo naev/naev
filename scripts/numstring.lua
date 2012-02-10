@@ -3,7 +3,7 @@
 function numstring(number)
     number = math.floor(number + 0.5)
     local numberstring = ""
-    while number > 1000 do
+    while number >= 1000 do
         local newnumber = number % 1000
         local newsection = "" .. newnumber
         if newnumber == 0 then newnumber = 1 end -- Special hack for a segment of only zeroes.

@@ -315,4 +315,14 @@
    <enemy>Achack_sirius</enemy>
   </enemies>
  </faction>
+ <faction name="Kidnappers">
+  <display>Pirate</display>
+  <invisible />
+  <static />
+  <logo>pirate</logo>
+  <colour>red</colour>
+  <allies />
+  <player>0</player>
+  <enemies />
+ </faction>
 </Factions>
