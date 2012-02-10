@@ -1926,12 +1926,25 @@ void player_targetEscort( int prev )
  */
 void player_targetNearest (void)
 {
-   unsigned int t;
+   unsigned int t, dt, old;
+   double d;
 
-   t = player.p->target;
-   pilot_setTarget( player.p, pilot_getNearestPilot(player.p) );
+   d = pilot_getNearestPos( player.p, &dt, player.p->solid->pos.x,
+         player.p->solid->pos.y, 1 );
+   t = dt;
 
-   if ((player.p->target != PLAYER_ID) && (t != player.p->target)) {
+   /* Disabled ships are typically only valid if within 500 px of the player. */
+   if ((d > 250000) && (pilot_isDisabled( pilot_get(dt) ))) {
+      t = pilot_getNearestPilot(player.p);
+      /* Try to target a disabled ship if there are no active ships in range. */
+      if (t == PLAYER_ID)
+         t = dt;
+   }
+
+   old = player.p->target;
+   pilot_setTarget( player.p, t );
+
+   if ((player.p->target != PLAYER_ID) && (old != player.p->target)) {
       gui_forceBlink();
       player_soundPlayGUI( snd_target, 1 );
    }
