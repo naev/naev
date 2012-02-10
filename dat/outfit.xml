@@ -3852,7 +3852,7 @@
   </general>
   <specific type="modification">
    <cpu>240</cpu>
-   <shield>100</shield>
+   <shield>1000</shield>
    <shield_regen>12</shield_regen>
    <energy>4800</energy>
    <energy_regen>180</energy_regen>
