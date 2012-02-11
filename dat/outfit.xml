@@ -2310,13 +2310,13 @@
   <specific type="afterburner">
    <cpu>2</cpu>
    <duration>5</duration>
-   <cooldown>10</cooldown>
+   <cooldown>8</cooldown>
    <rumble>0.5</rumble>
    <sound>afterburner</sound>
-   <thrust>100</thrust>
-   <speed>50</speed>
+   <thrust>180</thrust>
+   <speed>30</speed>
    <energy>60</energy>
-   <mass_limit>250</mass_limit>
+   <mass_limit>160</mass_limit>
   </specific>
  </outfit>
  <outfit name="Hellburner">
@@ -2330,13 +2330,13 @@
   <specific type="afterburner">
    <cpu>6</cpu>
    <duration>5</duration>
-   <cooldown>5</cooldown>
+   <cooldown>6</cooldown>
    <rumble>0.9</rumble>
    <sound>afterburner</sound>
-   <thrust>185</thrust>
-   <speed>85</speed>
+   <thrust>300</thrust>
+   <speed>45</speed>
    <energy>65</energy>
-   <mass_limit>400</mass_limit>
+   <mass_limit>250</mass_limit>
   </specific>
  </outfit>
   <outfit name="Auxiliary Processing Unit I">
