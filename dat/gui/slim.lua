@@ -149,13 +149,9 @@ function create()
    slot_w, slot_h = slot:dim()
    slot_y = screen_h - slot_h - 15
    slot_img_offs_x = 4
-   slot_img_offs_y = 5
+   slot_img_offs_y = 6
 
-   slot_txt_offs_x = slot_img_offs_x + 24
-   slot_txt_offs_y = 9
-   slot_txt_w = 40
-
-   slot_img_w = 64
+   slot_img_w = 48
 
    slot_w, slot_h = slot:dim()
    slotend_w, slotend_h = slotend:dim()
@@ -655,7 +651,13 @@ function render( dt, dt_mod )
       gfx.renderTex( warnlight3, pl_pane_x + 162, pl_pane_y + 12 )
    end
 
-   --Left side
+   -- Active outfits
+
+   -- Draw the left-side bar cap.
+   if #aset > 0 then
+      gfx.renderTexRaw( slotend, slot_start_x - slotend_w, slot_y, slotend_w, slotend_h, 1, 1, 0, 0, -1, 1 )
+   end
+
    i = 1
    for i=1,#aset do
       local slot_x = screen_w - slot_start_x - i * slot_w
@@ -666,32 +668,22 @@ function render( dt, dt_mod )
          gfx.renderTexRaw( active_icons[i], slot_x + slot_img_offs_x, slot_y + slot_img_offs_y + 2, slot_img_w, slot_img_w, 1, 1, 0, 0, 1, 1 ) --Image 
 
          if aset[i].state == "on" then
-            gfx.renderTex( active, slot_x + slot_img_offs_x + 2, slot_y + slot_img_offs_y )
+            gfx.renderTex( active, slot_x + slot_img_offs_x, slot_y + slot_img_offs_y )
          elseif aset[i].state == "cooldown" then
          --Cooldown
             local texnum = round(aset[i].cooldown*35) --Turn the 0..1 cooldown number into a 0..35 tex id where 0 is ready.
             gfx.renderTex( cooldown, slot_x + slot_img_offs_x, slot_y + slot_img_offs_y, (texnum % 6) + 1, math.floor( texnum / 6 ) + 1 )
-
-            --A strange thing: The texture at 6,6 is never drawn, the one at 5,6 only about 50% of the time. Otherwise, they're skipped
-            --is this an error in my code or bobbens' ?
-         elseif aset[i].state == "on" then
-            --"Heat"
-            gfx.renderRect( slot_x + slot_img_offs_x, slot_img_offs_y, slot_img_w, slot_img_w * (1-aset[i].duration), col_slot_heat )
          end
 
          --Frame
-         local postfix = ""
-         if i >= #aset then
-            postfix = "end"
-         end
-
-         if i == 1 then
-            gfx.renderTexRaw( _G["slotend"], slot_x + slot_w, slot_y, -1*_G["slot"..postfix.."_w"], _G["slot"..postfix.."_h"], 1, 1, 0, 0, -1, 1 )
-         else
-            gfx.renderTexRaw( _G["slot" .. postfix], slot_x + slot_w, slot_y, -1*_G["slot"..postfix.."_w"], _G["slot"..postfix.."_h"], 1, 1, 0, 0, 1, 1 )
-         end
+         gfx.renderTexRaw( slot, slot_x + slot_w, slot_y, -1*slot_w, slot_h, 1, 1, 0, 0, 1, 1 )
       end
       i = i + 1
+   end
+
+   -- Draw the right-side bar cap.
+   if #aset > 0 then
+      gfx.renderTexRaw( slotend, slot_start_x + #aset * slot_w, slot_y, slotend_w, slotend_h, 1, 1, 0, 0, 1, 1 )
    end
 
    --Target Pane
