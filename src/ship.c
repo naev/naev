@@ -618,7 +618,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
             xmlr_float(cur,"mass",temp->mass);
             xmlr_float(cur,"cpu",temp->cpu);
             xmlr_int(cur,"fuel",temp->fuel);
-            xmlr_float(cur,"cap_cargo",temp->cap_cargo);
+            xmlr_float(cur,"cargo",temp->cap_cargo);
             /* All the xmlr_ stuff have continue cases. */
             WARN("Ship '%s' has unknown characteristic node '%s'.", temp->name, cur->name);
          } while (xml_nextNode(cur));
