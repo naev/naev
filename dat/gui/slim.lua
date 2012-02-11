@@ -147,7 +147,7 @@ function create()
 
    -- Active outfit bar
    slot_w, slot_h = slot:dim()
-   slot_y = screen_h - slot_h - 15
+   slot_y = screen_h - slot_h - 16
    slot_img_offs_x = 4
    slot_img_offs_y = 6
 
