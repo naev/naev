@@ -722,9 +722,9 @@ static void input_key( int keynum, double value, double kabs, int repeat )
          if ((conf.afterburn_sens != 0) &&
                (value==KEY_PRESS) && INGAME() && NOHYP() && NODEAD() &&
                (t-input_accelLast <= conf.afterburn_sens))
-            player_afterburn();
+            pilot_afterburn( player.p );
          else if (value==KEY_RELEASE)
-            player_afterburnOver();
+            pilot_afterburnOver( player.p );
 
          if (value==KEY_PRESS)
             input_accelLast = t;
