@@ -8,6 +8,7 @@
   <enemies />
  </faction>
  <faction name="Independent">
+  <known/>
   <player>3</player>
   <colour>blue</colour>
   <spawn>independent</spawn>
@@ -128,6 +129,7 @@
  </faction>
  <faction name="Collective">
   <static />
+  <known/>
   <logo>collective</logo>
   <player>-100</player>
   <colour>silver</colour>
@@ -139,6 +141,7 @@
   </enemies>
  </faction>
  <faction name="FLF">
+  <known/>
   <logo>flf</logo>
   <longname>Frontier Liberation Front</longname>
   <player>0</player>
