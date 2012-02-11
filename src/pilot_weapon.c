@@ -215,8 +215,12 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
             for (i=0; i<l; i++) {
                if (ws->slots[i].slot->state != PILOT_OUTFIT_ON)
                   continue;
-               ws->slots[i].slot->state  = PILOT_OUTFIT_COOLDOWN;
-               ws->slots[i].slot->stimer = outfit_cooldown( ws->slots[i].slot->outfit );
+               if (outfit_isAfterburner(ws->slots[i].slot->outfit)) /* Afterburners */
+                  pilot_afterburnOver( p );
+               else {
+                  ws->slots[i].slot->state  = PILOT_OUTFIT_COOLDOWN;
+                  ws->slots[i].slot->stimer = outfit_cooldown( ws->slots[i].slot->outfit );
+               }
                n++;
             }
          }
@@ -225,8 +229,12 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
             for (i=0; i<l; i++) {
                if (ws->slots[i].slot->state != PILOT_OUTFIT_OFF)
                   continue;
-               ws->slots[i].slot->state  = PILOT_OUTFIT_ON;
-               ws->slots[i].slot->stimer = outfit_duration( ws->slots[i].slot->outfit );
+               if (outfit_isAfterburner(ws->slots[i].slot->outfit))
+                  pilot_afterburn( p );
+               else {
+                  ws->slots[i].slot->state  = PILOT_OUTFIT_ON;
+                  ws->slots[i].slot->stimer = outfit_duration( ws->slots[i].slot->outfit );
+               }
                n++;
             }
          }

@@ -1432,7 +1432,7 @@ void player_land (void)
       }
 
       /* Stop afterburning. */
-      player_afterburnOver();
+      pilot_afterburnOver( player.p );
       /* Stop accelerating. */
       player_accelOver();
 
@@ -1696,56 +1696,6 @@ void player_brokeHyperspace (void)
 
    /* Player sound. */
    player_soundPlay( snd_hypJump, 1 );
-}
-
-
-/**
- * @brief Activate the afterburner.
- */
-void player_afterburn (void)
-{
-   //double afb_mod;
-   if (player.p == NULL)
-      return;
-
-   if (pilot_isFlag(player.p, PILOT_HYP_PREP) || pilot_isFlag(player.p, PILOT_HYPERSPACE) ||
-         pilot_isFlag(player.p, PILOT_LANDING) || pilot_isFlag(player.p, PILOT_TAKEOFF))
-      return;
-
-   /* Not under manual control. */
-   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
-      return;
-
-   /** @todo fancy effect? */
-   if (player.p->afterburner == NULL)
-      return;
-
-   if (player.p->afterburner->state == PILOT_OUTFIT_OFF) {
-      player.p->afterburner->state  = PILOT_OUTFIT_ON;
-      player.p->afterburner->stimer = outfit_duration( player.p->afterburner->outfit );
-      pilot_setFlag(player.p,PILOT_AFTERBURNER);
-   }
-
-   //afb_mod = MIN( 1., player.p->afterburner->outfit->u.afb.mass_limit / player.p->solid->mass );
-   //spfx_shake( afb_mod * player.p->afterburner->outfit->u.afb.rumble * SHAKE_MAX );
-}
-
-
-/**
- * @brief Deactivates the afterburner.
- */
-void player_afterburnOver (void)
-{
-   if (player.p == NULL)
-      return;
-   if (player.p->afterburner == NULL)
-      return;
-
-   if (player.p->afterburner->state == PILOT_OUTFIT_ON) {
-      player.p->afterburner->state  = PILOT_OUTFIT_COOLDOWN;
-      player.p->afterburner->stimer = outfit_cooldown( player.p->afterburner->outfit );
-      pilot_rmFlag(player.p,PILOT_AFTERBURNER);
-   }
 }
 
 

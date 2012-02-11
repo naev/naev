@@ -228,8 +228,6 @@ void player_weapSetPress( int id, int type, int repeat );
 void player_land (void);
 int player_jump (void);
 void player_screenshot (void);
-void player_afterburn (void);
-void player_afterburnOver (void);
 void player_accel( double acc );
 void player_accelOver (void);
 void player_hail (void);
