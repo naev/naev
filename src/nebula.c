@@ -85,7 +85,7 @@ static double puff_y          = 0.;
  * prototypes
  */
 static int nebu_checkCompat( const char* file );
-static void nebu_loadTexture( SDL_Surface *sur, int w, int h, GLuint tex );
+static int nebu_loadTexture( SDL_Surface *sur, int w, int h, GLuint tex );
 static int nebu_generate (void);
 static int saveNebula( float *map, const uint32_t w, const uint32_t h, const char* file );
 static SDL_Surface* loadNebula( const char* file );
@@ -127,36 +127,34 @@ int nebu_init (void)
       nebu_ph = nebu_h;
    }
 
-   nebu_generatePuffs();
-
    /* Load each, checking for compatibility and padding */
    glGenTextures( NEBULA_Z, nebu_textures );
    for (i=0; i<NEBULA_Z; i++) {
       snprintf( nebu_file, PATH_MAX, NEBULA_PATH_BG, nebu_w, nebu_h, i );
 
-      if (nebu_checkCompat( nebu_file )) { /* Incompatible */
-         LOG("No nebula found, generating (this may take a while).");
+      /* Check compatibility. */
+      if (nebu_checkCompat( nebu_file ))
+         goto no_nebula;
 
-         /* So we generate and reload */
-         ret = nebu_generate();
-         if (ret != 0) /* An error has happened - break recursivity*/
-            return ret;
-
-         return nebu_init();
-      }
-
-      /* Load the file */
+      /* Try to load. */
       nebu_sur = loadNebula( nebu_file );
+      if (nebu_sur == NULL)
+         goto no_nebula;
       if ((nebu_sur->w != nebu_w) || (nebu_sur->h != nebu_h))
          WARN("Nebula raw size doesn't match expected! (%dx%d instead of %dx%d)",
                nebu_sur->w, nebu_sur->h, nebu_w, nebu_h );
 
       /* Load the texture */
-      nebu_loadTexture( nebu_sur, nebu_pw, nebu_ph, nebu_textures[i] );
+      ret = nebu_loadTexture( nebu_sur, nebu_pw, nebu_ph, nebu_textures[i] );
+      if (ret)
+         goto no_nebula;
    }
 
-   DEBUG("Loaded %d Nebula Layers", NEBULA_Z);
+   /* Generate puffs after the recursivity stuff. */
+   nebu_generatePuffs();
 
+   /* Display loaded nebulas. */
+   DEBUG("Loaded %d Nebula Layers", NEBULA_Z);
 
    /* Create the VBO. */
    /* Vertex. */
@@ -191,6 +189,15 @@ int nebu_init (void)
    nebu_vboBG = gl_vboCreateStatic( sizeof(GLfloat) * (4*2*3), vertex );
 
    return 0;
+no_nebula:
+   LOG("No nebula found, generating (this may take a while).");
+
+   /* So we generate and reload */
+   ret = nebu_generate();
+   if (ret != 0) /* An error has happened - break recursivity*/
+      return ret;
+
+   return nebu_init();
 }
 
 
@@ -212,8 +219,9 @@ double nebu_getSightRadius (void)
  *    @param w Expected width of surface.
  *    @param h Expected height of surface.
  *    @param tex Already generated texture to load into.
+ *    @return 0 on success;
  */
-static void nebu_loadTexture( SDL_Surface *sur, int w, int h, GLuint tex )
+static int nebu_loadTexture( SDL_Surface *sur, int w, int h, GLuint tex )
 {
    SDL_Surface *nebu_sur;
 
@@ -222,7 +230,7 @@ static void nebu_loadTexture( SDL_Surface *sur, int w, int h, GLuint tex )
          ((nebu_sur->w != w) || (nebu_sur->h != h))) {
       WARN("Nebula size doesn't match expected! (%dx%d instead of %dx%d)",
             nebu_sur->w, nebu_sur->h, nebu_pw, nebu_ph );
-      return;
+      return -1;
    }
 
    /* Load the texture */
@@ -238,6 +246,7 @@ static void nebu_loadTexture( SDL_Surface *sur, int w, int h, GLuint tex )
 
    SDL_FreeSurface(nebu_sur);
    gl_checkErr();
+   return 0;
 }
 
 
