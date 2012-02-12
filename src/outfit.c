@@ -1492,7 +1492,7 @@ if ((x) != 0.) \
    DESC_ADD1( temp->u.mod.armour_regen, "Armour Per Second" );
    DESC_ADD1( temp->u.mod.shield_regen, "Shield Per Second" );
    DESC_ADD1( temp->u.mod.energy_regen, "Energy Per Second" );
-   DESC_ADD0( -temp->u.mod.cpu, "CPU" );
+   DESC_ADD1( -temp->u.mod.cpu, "CPU" );
    DESC_ADD0( temp->u.mod.cargo, "Cargo" );
    DESC_ADD0( temp->u.mod.crew_rel, "%% Crew" );
    DESC_ADD0( temp->u.mod.mass_rel, "%% Mass" );
