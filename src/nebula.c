@@ -302,6 +302,11 @@ void nebu_exit (void)
  */
 void nebu_render( const double dt )
 {
+   /* Must exist. */
+   if (nebu_vboBG == NULL)
+      return;
+
+   /* Different rendering backends. */
    if (nglActiveTexture != NULL)
       nebu_renderMultitexture(dt);
 
