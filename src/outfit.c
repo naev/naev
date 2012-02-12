@@ -1552,6 +1552,7 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
    snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s\n"
          "Requires %.0f CPU\n"
+         "Only one can be equipped\n"
          "%.1f Duration %.1f Cooldown\n"
          "%.0f Maximum Effective Mass\n"
          "%.0f%% Thrust\n"
