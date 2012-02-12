@@ -726,7 +726,6 @@ const char* outfit_getType( const Outfit* o )
          "Launcher",
          "Ammunition",
          "Turret Launcher",
-         "Turret Ammunition",
          "Ship Modification",
          "Afterburner",
          "Jammer",
