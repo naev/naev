@@ -37,6 +37,8 @@ struct Outfit_;
  * @brief Different types of existing outfits.
  *
  * Outfits are organized by the order here
+ *
+ * @note If you modify this DON'T FORGET TO MODIFY outfit_getType too!!!
  */
 typedef enum OutfitType_ {
    OUTFIT_TYPE_NULL, /**< Null type. */
