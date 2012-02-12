@@ -77,7 +77,7 @@ static int land_regen = 0; /**< Whether or not regenning. */
 static const char *land_windowNames[LAND_NUMWINDOWS] = {
    "Landing Main",
    "Spaceport Bar",
-   "Mission",
+   "Missions",
    "Outfits",
    "Shipyard",
    "Equipment",
