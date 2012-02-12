@@ -1492,7 +1492,7 @@ if ((x) != 0.) \
    DESC_ADD1( temp->u.mod.armour_regen, "Armour Per Second" );
    DESC_ADD1( temp->u.mod.shield_regen, "Shield Per Second" );
    DESC_ADD1( temp->u.mod.energy_regen, "Energy Per Second" );
-   DESC_ADD0( temp->u.mod.cpu, "CPU" );
+   DESC_ADD1( -temp->u.mod.cpu, "CPU" );
    DESC_ADD0( temp->u.mod.cargo, "Cargo" );
    DESC_ADD0( temp->u.mod.crew_rel, "%% Crew" );
    DESC_ADD0( temp->u.mod.mass_rel, "%% Mass" );
@@ -1512,7 +1512,7 @@ if ((x) != 0.) \
    temp->u.mod.energy_rel /= 100.;
    temp->u.mod.mass_rel   /= 100.;
    temp->u.mod.crew_rel   /= 100.;
-   temp->u.mod.cpu         = -temp->u.mod.cpu; /* Invert sign so it works with outfit_cpu. */
+   temp->u.mod.cpu         = temp->u.mod.cpu;
 }
 
 
@@ -1553,7 +1553,7 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
    snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s\n"
          "\erActived Outfit\e0\n"
-         "Requires %.0f CPU\n"
+         "Needs %.0f CPU\n"
          "Only one can be equipped\n"
          "%.1f Duration %.1f Cooldown\n"
          "%.0f Maximum Effective Mass\n"
