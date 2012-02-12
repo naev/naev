@@ -84,6 +84,7 @@ static double puff_y          = 0.;
 /*
  * prototypes
  */
+static int nebu_init_recursive( int iter );
 static int nebu_checkCompat( const char* file );
 static int nebu_loadTexture( SDL_Surface *sur, int w, int h, GLuint tex );
 static int nebu_generate (void);
@@ -104,12 +105,30 @@ static void nebu_renderMultitexture( const double dt );
  */
 int nebu_init (void)
 {
+   return nebu_init_recursive( 0 );
+}
+
+
+/**
+ * @brief Small wrapper that handles recursivity limits.
+ *
+ *    @param iter Iteration of recursivity.
+ *    @return 0 on success.
+ */
+static int nebu_init_recursive( int iter )
+{
    int i;
    char nebu_file[PATH_MAX];
    SDL_Surface* nebu_sur;
    int ret;
    GLfloat vertex[4*3*2];
    GLfloat tw, th;
+
+   /* Avoid too much recursivity. */
+   if (iter > 3) {
+      WARN("Unable to generate nebula after 3 attempts, something has really gone wrong!");
+      return -1;
+   }
 
    /* Special code to regenerate the nebula */
    if ((nebu_w == -9) && (nebu_h == -9))
@@ -197,7 +216,7 @@ no_nebula:
    if (ret != 0) /* An error has happened - break recursivity*/
       return ret;
 
-   return nebu_init();
+   return nebu_init_recursive( iter+1 );
 }
 
 
@@ -727,7 +746,8 @@ static int nebu_generate (void)
    for (i=0; i<NEBULA_Z; i++) {
       snprintf( nebu_file, PATH_MAX, NEBULA_PATH_BG, w, h, i );
       ret = saveNebula( &nebu[ i*w*h ], w, h, nebu_file );
-      if (ret != 0) break; /* An error has happened */
+      if (ret != 0)
+         break; /* An error has happened */
    }
 
    /* Cleanup */
