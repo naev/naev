@@ -1630,16 +1630,20 @@ void pilot_update( Pilot* pilot, const double dt )
    if (!pilot_isFlag(pilot, PILOT_HYPERSPACE)) { /* limit the speed */
 
       /* pilot is afterburning */
-      if (pilot_isFlag(pilot, PILOT_AFTERBURNER) && /* must have enough energy left */
-               (pilot->energy > pilot->afterburner->outfit->u.afb.energy * dt)) {
-         pilot->solid->speed_max = pilot->speed +
-               pilot->speed * pilot->afterburner->outfit->u.afb.speed *
-               MIN( 1., pilot->afterburner->outfit->u.afb.mass_limit/pilot->solid->mass);
+      if (pilot_isFlag(pilot, PILOT_AFTERBURNER)) {
+         if (pilot->energy > pilot->afterburner->outfit->u.afb.energy * dt) { /* must have enough energy left */
+            pilot->solid->speed_max = pilot->speed +
+                  pilot->speed * pilot->afterburner->outfit->u.afb.speed *
+                  MIN( 1., pilot->afterburner->outfit->u.afb.mass_limit/pilot->solid->mass);
 
-         if (pilot->id == PLAYER_ID)
-            spfx_shake( 0.75*SHAKE_DECAY * dt); /* shake goes down at quarter speed */
+            if (pilot->id == PLAYER_ID)
+               spfx_shake( 0.75*SHAKE_DECAY * dt); /* shake goes down at quarter speed */
 
-         pilot->energy -= pilot->afterburner->outfit->u.afb.energy * dt; /* energy loss */
+            pilot->energy -= pilot->afterburner->outfit->u.afb.energy * dt; /* energy loss */
+         }
+         else {
+            pilot_afterburnOver( pilot );
+         }
       }
       else /* normal limit */
          pilot->solid->speed_max = pilot->speed;
