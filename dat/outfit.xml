@@ -2802,7 +2802,7 @@
    <gfx_store>jammer0</gfx_store>
   </general>
   <specific type="jammer">
-   <cpu>-1</cpu>
+   <cpu>1</cpu>
    <range>1</range>
    <power>1</power>
    <energy>-15</energy>
@@ -2817,7 +2817,7 @@
    <gfx_store>jammer1</gfx_store>
   </general>
   <specific type="jammer">
-   <cpu>-3</cpu>
+   <cpu>3</cpu>
    <range>1</range>
    <power>1</power>
    <energy>-15</energy>
@@ -2832,7 +2832,7 @@
    <gfx_store>jammer0</gfx_store>
   </general>
   <specific type="jammer">
-   <cpu>-4</cpu>
+   <cpu>4</cpu>
    <range>170</range>
    <power>35</power>
    <energy>-15</energy>
@@ -2847,7 +2847,7 @@
    <gfx_store>jammer1</gfx_store>
   </general>
   <specific type="jammer">
-   <cpu>-8</cpu>
+   <cpu>8</cpu>
    <range>230</range>
    <power>50</power>
    <energy>-30</energy>
