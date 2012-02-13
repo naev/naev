@@ -828,6 +828,19 @@ void pilot_calcStats( Pilot* pilot )
    /* cargo has to be reset */
    pilot_cargoCalc(pilot);
 
+   /* Slot voodoo. */
+   s        = &pilot->stats;
+   /*
+    * Electronic warfare setting base parameters.
+    * @TODO ew_hide and ew_detect should be squared so XML-sourced values are linear.
+    */
+   s->ew_hide           = 1. + (s->ew_hide-1.) * exp( -0.2 * (double)(MAX(amount.ew_hide-1,0)) );
+   s->ew_detect         = 1. + (s->ew_detect-1.) * exp( -0.2 * (double)(MAX(amount.ew_detect-1,0)) );
+   s->ew_jumpDetect     = 1. + (s->ew_jumpDetect-1.) * exp( -0.2 * (double)(MAX(amount.ew_jumpDetect-1,0)) );
+   pilot->ew_base_hide  = s->ew_hide;
+   pilot->ew_detect     = s->ew_detect;
+   pilot->ew_jumpDetect = pow2(s->ew_jumpDetect);
+
    /*
     * now add outfit changes
     */
@@ -889,6 +902,7 @@ void pilot_calcStats( Pilot* pilot )
          pilot->cargo_free    += o->u.mod.cargo;
          pilot->mass_outfit   += o->u.mod.mass_rel * pilot->ship->mass;
          pilot->crew          += o->u.mod.crew_rel * pilot->ship->crew;
+         pilot->ew_base_hide  += o->u.mod.hide;
          /*
           * Stats.
           */
@@ -907,18 +921,6 @@ void pilot_calcStats( Pilot* pilot )
    /* Set final energy tau. */
    pilot->energy_tau = pilot->energy_max / pilot->energy_regen;
 
-   /* Slot voodoo. */
-   s        = &pilot->stats;
-   /*
-    * Electronic warfare setting base parameters.
-    * @TODO ew_hide and ew_detect should be squared so XML-sourced values are linear.
-    */
-   s->ew_hide           = 1. + (s->ew_hide-1.) * exp( -0.2 * (double)(MAX(amount.ew_hide-1,0)) );
-   s->ew_detect         = 1. + (s->ew_detect-1.) * exp( -0.2 * (double)(MAX(amount.ew_detect-1,0)) );
-   s->ew_jumpDetect     = 1. + (s->ew_jumpDetect-1.) * exp( -0.2 * (double)(MAX(amount.ew_jumpDetect-1,0)) );
-   pilot->ew_base_hide  = s->ew_hide;
-   pilot->ew_detect     = s->ew_detect;
-   pilot->ew_jumpDetect = pow2(s->ew_jumpDetect);
    /* Fire rate:
     *  amount = p * exp( -0.15 * (n-1) )
     *  1x 15% -> 15%

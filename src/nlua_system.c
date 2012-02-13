@@ -613,14 +613,14 @@ static int systemL_presence( lua_State *L )
       else /* Invalid command string. */
          used = 0;
    }
-   if (!used && ((lua_tofaction(L, 2)) || (lua_isstring(L, 2)))) {
+
+   if (!used) {
       /* A faction id was given. */
       f      = luaL_validfaction(L, 2);
       nfct   = 1;
       fct    = malloc(sizeof(int));
       fct[0] = f;
    }
-   else NLUA_INVALID_PARAMETER(L);
 
    /* Add up the presence values. */
    presence = 0;

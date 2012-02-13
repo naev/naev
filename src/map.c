@@ -248,7 +248,7 @@ void map_open (void)
    /*
     * Bottom stuff
     *
-    * [+] [-]  Nebula, Asteroids, Interference
+    * [+] [-]  Nebula, Interference
     */
    /* Zoom buttons */
    window_addButton( wid, 40, 20, 30, 30, "btnZoomIn", "+", map_buttonZoom );

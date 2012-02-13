@@ -26,6 +26,10 @@
 #include "dev_sysedit.h"
 
 
+#define HIDE_DEFAULT_JUMP        1.25 /**< Default hide value for new planets. */
+#define RADIUS_DEFAULT           10000 /**< Default radius for new systems. */
+#define STARS_DENSITY_DEFAULT    400 /**< Default stars density for new systems. */
+
 #define BUTTON_WIDTH    80 /**< Map button width. */
 #define BUTTON_HEIGHT   30 /**< Map button height. */
 
@@ -625,8 +629,8 @@ static void uniedit_newSys( double x, double y )
    sys->name   = name;
    sys->pos.x  = x;
    sys->pos.y  = y;
-   sys->stars  = 400;
-   sys->radius = 10000.;
+   sys->stars  = STARS_DENSITY_DEFAULT;
+   sys->radius = RADIUS_DEFAULT;
 
    /* Select new system. */
    uniedit_deselect();
@@ -685,7 +689,7 @@ static void uniedit_jumpAdd( StarSystem *sys, StarSystem *targ )
    jp->targetid = targ->id;
    jp->radius  = 200.;
    jp->flags   = JP_AUTOPOS; /* Will automatically create position. */
-   jp->hide    = pow2(1.25);
+   jp->hide    = pow2(HIDE_DEFAULT_JUMP);
 }
 
 
