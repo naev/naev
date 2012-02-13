@@ -854,7 +854,7 @@ static SDL_Surface* loadNebula( const char* file )
    npng_close( npng );
    SDL_RWclose( rw );
    if (sur == NULL) {
-      ERR("Unable to load Nebula image: %s", file);
+      WARN("Unable to load Nebula image: %s", file);
       return NULL;
    }
 
