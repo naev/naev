@@ -49,10 +49,6 @@ void pilot_ewUpdateDynamic( Pilot *p )
    /* Update hide. */
    p->ew_heat     = pilot_ewHeat( p->heat_T );
    p->ew_hide     = p->ew_base_hide * p->ew_mass * p->ew_heat;
-
-   /* Update evasion. */
-   p->ew_movement = pilot_ewMovement( VMOD(p->solid->vel) );
-   p->ew_evasion  = p->ew_hide * p->ew_movement * EVASION_SCALE;
 }
 
 
@@ -67,6 +63,17 @@ double pilot_ewMovement( double vmod )
    return 1. + vmod / 100.;
 }
 
+/**
+ * @brief Gets the electronic warfare evasion modifier for two given pilots.
+ *
+ *    @param pilot The pilot doing the detection.
+ *    @param target The pilot doing the evading.
+ *    @return The electronic warfare evasion modifier.
+ */
+double pilot_ewEvasion( const Pilot *pilot, const Pilot *target )
+{
+   return (pilot->ew_hide * pilot_ewMovement( vect_dist( &pilot->solid->vel, &target->solid->vel )) * EVASION_SCALE);
+}
 
 /**
  * @brief Gets the electronic warfare heat modifier for a given temperature.
@@ -150,7 +157,7 @@ int pilot_inRangePilot( const Pilot *p, const Pilot *target )
    d = vect_dist2( &p->solid->pos, &target->solid->pos );
 
    sense = sensor_curRange * p->ew_detect;
-   if (d * target->ew_evasion < sense)
+   if (d * pilot_ewEvasion( p, target ) < sense)
       return 1;
    else if  (d * target->ew_hide < sense)
       return -1;
@@ -242,13 +249,14 @@ int pilot_inRangeJump( const Pilot *p, int i )
  */
 double pilot_ewWeaponTrack( const Pilot *p, const Pilot *t, double track )
 {
-   double limit, lead;
+   double limit, lead, evade;
 
    limit = track * p->ew_detect;
-   if (t->ew_evasion < limit)
+   evade = pilot_ewEvasion( p, t );
+   if ( evade < limit )
       lead = 1.;
    else
-      lead = MAX( 0., 1. - 0.5*(t->ew_evasion/limit - 1.));
+      lead = MAX( 0., 1. - 0.5*(evade/limit - 1.));
    return lead;
 }
 
