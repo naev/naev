@@ -230,7 +230,7 @@ typedef struct OutfitModificationData_ {
    double crew_rel;  /**< Relative crew modification. */
    double mass_rel;  /**< Relative mass modification. */
    double fuel;      /**< Maximum fuel modifier. */
-   double hide;      /**< Absolute hide modifies. */
+   double hide;      /**< Absolute hide modifier. */
 
    /* Stats. */
    ShipStatList *stats; /**< Stat list. */
