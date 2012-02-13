@@ -73,7 +73,6 @@
 /* used to overcome warnings due to 0 values */
 #define FLAG_XSET             (1<<0) /**< Set the X position value. */
 #define FLAG_YSET             (1<<1) /**< Set the Y position value. */
-#define FLAG_ASTEROIDSSET     (1<<2) /**< Set the asteroid value. */
 #define FLAG_INTERFERENCESET  (1<<3) /**< Set the interference value. */
 #define FLAG_SERVICESSET      (1<<4) /**< Set the service value. */
 #define FLAG_FACTIONSET       (1<<5) /**< Set the faction value. */
@@ -2313,11 +2312,7 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
             xmlr_strd( cur, "background", sys->background );
             xmlr_int( cur, "stars", sys->stars );
             xmlr_float( cur, "radius", sys->radius );
-            if (xml_isNode(cur,"asteroids")) {
-               flags |= FLAG_ASTEROIDSSET;
-               sys->asteroids = xml_getInt(cur);
-            }
-            else if (xml_isNode(cur,"interference")) {
+            if (xml_isNode(cur,"interference")) {
                flags |= FLAG_INTERFERENCESET;
                sys->interference = xml_getFloat(cur);
             }
@@ -2355,7 +2350,6 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
    MELEMENT((flags&FLAG_YSET)==0,"y");
    MELEMENT(sys->stars==0,"stars");
    MELEMENT(sys->radius==0.,"radius");
-   MELEMENT((flags&FLAG_ASTEROIDSSET)==0,"asteroids");
    MELEMENT((flags&FLAG_INTERFERENCESET)==0,"inteference");
 #undef MELEMENT
 
