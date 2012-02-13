@@ -2315,7 +2315,7 @@
    <sound>afterburner</sound>
    <thrust>180</thrust>
    <speed>30</speed>
-   <energy>60</energy>
+   <energy>40</energy>
    <mass_limit>160</mass_limit>
   </specific>
  </outfit>
