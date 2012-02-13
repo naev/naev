@@ -23,6 +23,7 @@
 static double sensor_curRange    = 0.; /**< Current base sensor range, used to calculate
                                          what is in range and what isn't. */
 
+#define  EVASION_SCALE 1.15            /**< Scales the evasion factor to the hide factor. Ensures that ships always have an evasion factor higher than their hide factor. */
 
 /**
  * @brief Updates the pilot's static electronic warfare properties.
@@ -50,7 +51,7 @@ void pilot_ewUpdateDynamic( Pilot *p )
 
    /* Update evasion. */
    p->ew_movement = pilot_ewMovement( VMOD(p->solid->vel) );
-   p->ew_evasion  = p->ew_hide * p->ew_movement;
+   p->ew_evasion  = p->ew_hide * p->ew_movement * EVASION_SCALE;
 }
 
 
