@@ -491,13 +491,14 @@ const char* pilot_checkSanity( Pilot *p )
  * @brief Checks to see if a pilot has an outfit with a specific outfit type.
  *
  *    @param p Pilot to check.
- *    @param t Outfit to check.
+ *    @param t Outfit type to check.
  *    @return the amount of outfits of this type the pilot has.
  */
 int pilot_hasOutfitType( Pilot *p, OutfitType t)
 {
    int i, count = 0;
    for (i = 0; i < p->noutfits; i++) {
+      if (p->outfits[i]->outfit == NULL) continue;
       if (p->outfits[i]->outfit->type == t)
          count++;
    }
