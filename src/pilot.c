@@ -1612,6 +1612,8 @@ void pilot_update( Pilot* pilot, const double dt )
       if (pilot_isFlag(pilot, PILOT_AFTERBURNER) && pilot->id == PLAYER_ID) {
          spfx_shake( 0.75*SHAKE_DECAY * dt); /* shake goes down at quarter speed */
       }
+      else
+         pilot->solid->speed_max = pilot->speed;
    }
    else
       pilot->solid->speed_max = -1.; /* Disables max speed. */
