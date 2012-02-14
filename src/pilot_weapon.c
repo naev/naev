@@ -1209,3 +1209,95 @@ void pilot_weaponSane( Pilot *p )
    pilot_weapSetUpdateRange( ws );
 }
 
+/**
+ * @brief Dissables a given active outfit.
+ *
+ * @param p Pilot whos outfit we are dissabling.
+ * @return Weather the outfit was actualy disabled.
+ */
+void pilot_outfitOff( Pilot *p, PilotOutfitSlot *o )
+{
+   if (outfit_isAfterburner( o->outfit )) /* Afterburners */
+      pilot_afterburnOver( p );
+   else {
+      o->stimer = outfit_cooldown( o->outfit );
+      o->state  = PILOT_OUTFIT_COOLDOWN;
+   }
+}
+
+/**
+ * @brief Dissables all active outfits for a pilot.
+ *
+ * @param p Pilot whos outfits we are dissabling.
+ * @return Weather any outfits were actualy disabled.
+ */
+int pilot_outfitOffAll( Pilot *p )
+{
+   PilotOutfitSlot *o;
+   int nchg;
+   int i;
+
+   nchg = 0;
+   for (i=0; i<p->noutfits; i++) {
+      o = p->outfits[i];
+      /* Picky about our outfits. */
+      if (o->outfit == NULL)
+         continue;
+      if (!o->active)
+         continue;
+      if (o->state == PILOT_OUTFIT_ON) {
+         pilot_outfitOff( p, o );
+         nchg++;
+      }
+   }
+   return (nchg > 0);
+}
+
+/**
+ * @brief Activate the afterburner.
+ */
+void pilot_afterburn (Pilot *p)
+{
+   //double afb_mod;
+   if (p == NULL)
+      return;
+
+   if (pilot_isFlag(p, PILOT_HYP_PREP) || pilot_isFlag(p, PILOT_HYPERSPACE) ||
+         pilot_isFlag(p, PILOT_LANDING) || pilot_isFlag(p, PILOT_TAKEOFF))
+      return;
+
+   /* Not under manual control. */
+   if (pilot_isFlag( p, PILOT_MANUAL_CONTROL ))
+      return;
+
+   /** @todo fancy effect? */
+   if (p->afterburner == NULL)
+      return;
+
+   if (p->afterburner->state == PILOT_OUTFIT_OFF) {
+      p->afterburner->state  = PILOT_OUTFIT_ON;
+      p->afterburner->stimer = outfit_duration( p->afterburner->outfit );
+      pilot_setFlag(p,PILOT_AFTERBURNER);
+   }
+
+   //afb_mod = MIN( 1., player.p->afterburner->outfit->u.afb.mass_limit / player.p->solid->mass );
+   //spfx_shake( afb_mod * player.p->afterburner->outfit->u.afb.rumble * SHAKE_MAX );
+}
+
+
+/**
+ * @brief Deactivates the afterburner.
+ */
+void pilot_afterburnOver (Pilot *p)
+{
+   if (p == NULL)
+      return;
+   if (p->afterburner == NULL)
+      return;
+
+   if (p->afterburner->state == PILOT_OUTFIT_ON) {
+      p->afterburner->state  = PILOT_OUTFIT_COOLDOWN;
+      p->afterburner->stimer = outfit_cooldown( p->afterburner->outfit );
+      pilot_rmFlag(p,PILOT_AFTERBURNER);
+   }
+}
