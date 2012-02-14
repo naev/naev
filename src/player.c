@@ -1436,6 +1436,9 @@ void player_land (void)
       /* Stop accelerating. */
       player_accelOver();
 
+      /* Stop all on outfits. */
+      pilot_outfitOffAll( player.p );
+
       /* Start landing. */
       if (runcount == 0)
          landtarget = player.p->nav_planet;
