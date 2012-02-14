@@ -23,7 +23,7 @@
 static double sensor_curRange    = 0.; /**< Current base sensor range, used to calculate
                                          what is in range and what isn't. */
 
-#define  EVASION_SCALE              1.15           /**< Scales the evasion factor to the hide factor. Ensures that ships always have an evasion factor higher than their hide factor. */
+#define  EVASION_SCALE              1.25           /**< Scales the evasion factor to the hide factor. Ensures that ships always have an evasion factor higher than their hide factor. */
 #define  SENSOR_DEFAULT_RANGE       7500           /**< The default sensor range for all ships. */
 
 /**
@@ -60,7 +60,7 @@ void pilot_ewUpdateDynamic( Pilot *p )
  */
 double pilot_ewMovement( double vmod )
 {
-   return 1. + vmod / 100.;
+   return 1. + vmod / 350.;
 }
 
 /**
@@ -72,7 +72,7 @@ double pilot_ewMovement( double vmod )
  */
 double pilot_ewEvasion( const Pilot *pilot, const Pilot *target )
 {
-   return (pilot->ew_hide * pilot_ewMovement( vect_dist( &pilot->solid->vel, &target->solid->vel )) * EVASION_SCALE);
+   return (target->ew_hide * pilot_ewMovement( vect_dist( &pilot->solid->vel, &target->solid->vel )) * EVASION_SCALE);
 }
 
 /**
@@ -190,8 +190,7 @@ int pilot_inRangePlanet( const Pilot *p, int target )
    if ( !pnt->real )
       return 0;
 
-   /* @TODO ew_detect should be squared upon being set. */
-   sense = sensor_curRange * pow2(p->ew_detect);
+   sense = sensor_curRange * p->ew_detect;
 
    /* Get distance. */
    d = vect_dist2( &p->solid->pos, &pnt->pos );
