@@ -212,17 +212,7 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
          /* Turn them off. */
          n = 0;
          if (on) {
-            for (i=0; i<l; i++) {
-               if (ws->slots[i].slot->state != PILOT_OUTFIT_ON)
-                  continue;
-               if (outfit_isAfterburner(ws->slots[i].slot->outfit)) /* Afterburners */
-                  pilot_afterburnOver( p );
-               else {
-                  ws->slots[i].slot->state  = PILOT_OUTFIT_COOLDOWN;
-                  ws->slots[i].slot->stimer = outfit_cooldown( ws->slots[i].slot->outfit );
-               }
-               n++;
-            }
+            pilot_outfitOffAll( p );
          }
          /* Turn them on. */
          else {
