@@ -22,6 +22,12 @@
 #include "gui.h"
 
 
+/*
+ * Prototypes.
+ */
+static int pilot_hasOutfitLimit( Pilot *p, const char *limit );
+
+
 /**
  * @brief Updates the lockons on the pilot's launchers
  *
@@ -494,15 +500,18 @@ const char* pilot_checkSanity( Pilot *p )
  *    @param t Outfit type to check.
  *    @return the amount of outfits of this type the pilot has.
  */
-int pilot_hasOutfitType( Pilot *p, OutfitType t)
+static int pilot_hasOutfitLimit( Pilot *p, const char *limit )
 {
-   int i, count = 0;
-   for (i = 0; i < p->noutfits; i++) {
-      if (p->outfits[i]->outfit == NULL) continue;
-      if (p->outfits[i]->outfit->type == t)
-         count++;
+   int i;
+   Outfit *o;
+   for (i = 0; i<p->noutfits; i++) {
+      o = p->outfits[i]->outfit;
+      if (o == NULL)
+         continue;
+      if ((o->limit != NULL) && (strcmp(o->limit,limit)==0))
+         return 1;
    }
-   return count;
+   return 0;
 }
 
 /**
@@ -530,7 +539,7 @@ const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o, int add )
          return "Insufficient CPU";
 
       /* Can't add more than one outfit of the same type if the outfit type is limited. */
-      if (outfit_hasLimit(o) && (pilot_hasOutfitType(p, o->type)))
+      if ((o->limit != NULL) && pilot_hasOutfitLimit( p, o->limit ))
          return "Already have an outfit of this type installed";
 
       /* Must not drive some things negative. */
