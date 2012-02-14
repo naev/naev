@@ -911,12 +911,19 @@ void pilot_calcStats( Pilot* pilot )
       }
       else if (outfit_isAfterburner(o)) { /* Afterburner */
          pilot_setFlag( pilot, PILOT_AFTERBURNER ); /* We use old school flags for this still... */
+         pilot->energy_loss += pilot->afterburner->outfit->u.afb.energy; /* energy loss */
+         pilot->solid->speed_max = pilot->speed +
+               pilot->speed * pilot->afterburner->outfit->u.afb.speed *
+               MIN( 1., pilot->afterburner->outfit->u.afb.mass_limit/pilot->solid->mass);
       }
       else if (outfit_isJammer(o)) { /* Jammer */
          pilot->jamming        = 1;
          pilot->energy_loss   += o->u.jam.energy;
       }
    }
+
+   if (!pilot_isFlag( pilot, PILOT_AFTERBURNER ))
+      pilot->solid->speed_max = pilot->speed;
 
    /* Set final energy tau. */
    pilot->energy_tau = pilot->energy_max / pilot->energy_regen;

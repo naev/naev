@@ -1268,6 +1268,7 @@ void pilot_afterburn (Pilot *p)
       p->afterburner->state  = PILOT_OUTFIT_ON;
       p->afterburner->stimer = outfit_duration( p->afterburner->outfit );
       pilot_setFlag(p,PILOT_AFTERBURNER);
+      pilot_calcStats( p );
    }
 
    //afb_mod = MIN( 1., player.p->afterburner->outfit->u.afb.mass_limit / player.p->solid->mass );
@@ -1289,5 +1290,6 @@ void pilot_afterburnOver (Pilot *p)
       p->afterburner->state  = PILOT_OUTFIT_COOLDOWN;
       p->afterburner->stimer = outfit_cooldown( p->afterburner->outfit );
       pilot_rmFlag(p,PILOT_AFTERBURNER);
+      pilot_calcStats( p );
    }
 }
