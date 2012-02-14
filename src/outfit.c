@@ -2158,18 +2158,14 @@ void outfit_free (void)
          free(o->u.map);
 
       /* strings */
-      if (o->typename)
-         free(o->typename);
-      if (o->description)
-         free(o->description);
+      free(o->typename);
+      free(o->description);
       free(o->limit);
-      if (o->desc_short)
-         free(o->desc_short);
+      free(o->desc_short);
+      free(o->license);
+      free(o->name);
       if (o->gfx_store)
          gl_freeTexture(o->gfx_store);
-      if (o->license)
-         free(o->license);
-      free(o->name);
    }
 
    array_free(outfit_stack);
