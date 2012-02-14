@@ -585,6 +585,17 @@ int outfit_amount( const Outfit* o )
    else if (outfit_isFighterBay(o)) return o->u.bay.amount;
    return -1;
 }
+
+/**
+ * @brief Checks if the outfit is limited.
+ *    @param o Outfit to get information from.
+ */
+int outfit_hasLimit( const Outfit* o )
+{
+   if (o->limit) return 1;
+   return 0;
+}
+
 /**
  * @brief Gets the outfit's energy usage.
  *    @param o Outfit to get information from.
@@ -1910,6 +1921,7 @@ static int outfit_parse( Outfit* temp, const xmlNodePtr parent )
             xmlr_strd(cur,"license",temp->license);
             xmlr_float(cur,"mass",temp->mass);
             xmlr_long(cur,"price",temp->price);
+            xmlr_int(cur,"limit",temp->limit);
             xmlr_strd(cur,"description",temp->description);
             xmlr_strd(cur,"typename",temp->typename);
             if (xml_isNode(cur,"gfx_store")) {

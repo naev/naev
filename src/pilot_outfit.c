@@ -487,6 +487,22 @@ const char* pilot_checkSanity( Pilot *p )
    return NULL;
 }
 
+/**
+ * @brief Checks to see if a pilot has an outfit with a specific outfit type.
+ *
+ *    @param p Pilot to check.
+ *    @param t Outfit to check.
+ *    @return the amount of outfits of this type the pilot has.
+ */
+int pilot_hasOutfitType( Pilot *p, OutfitType t)
+{
+   int i, count = 0;
+   for (i = 0; i < p->noutfits; i++) {
+      if (p->outfits[i]->outfit->type == t)
+         count++;
+   }
+   return count;
+}
 
 /**
  * @brief Checks to see if can equip/remove an outfit from a slot.
@@ -512,10 +528,9 @@ const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o, int add )
       if ((outfit_cpu(o) > 0) && (p->cpu < outfit_cpu(o)))
          return "Insufficient CPU";
 
-      /* Can't add more than one afterburner. */
-      if (outfit_isAfterburner(o) &&
-            (p->afterburner != NULL))
-         return "Already have an afterburner";
+      /* Can't add more than one outfit of the same type if the outfit type is limited. */
+      if (outfit_hasLimit(o) && (pilot_hasOutfitType(p, o->type)))
+         return "Already have an outfit of this type installed";
 
       /* Must not drive some things negative. */
       if (outfit_isMod(o)) {
