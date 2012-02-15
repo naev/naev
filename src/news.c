@@ -213,7 +213,10 @@ void news_widget( unsigned int wid, int x, int y, int w, int h )
 
       /* Copy the line. */
       if (news_nlines+1 > news_mlines) {
-         news_mlines += 128;
+         if (news_mlines == 0)
+            news_mlines = 256;
+         else
+            news_mlines *= 2;
          news_lines = realloc( news_lines, sizeof(char*) * news_mlines );
       }
       news_lines[news_nlines] = malloc( i + 1 );
