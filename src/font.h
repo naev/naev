@@ -100,6 +100,7 @@ int gl_printHeight( const glFont *ft_font,
       const int width, const char *fmt, ... );
 
 /* Restore hacks. */
+void gl_printRestoreClear (void);
 void gl_printRestoreInit( glFontRestore *restore );
 void gl_printRestoreLast (void);
 void gl_printRestore( const glFontRestore *restore );

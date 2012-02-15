@@ -76,7 +76,7 @@ static void news_mouse( unsigned int wid, SDL_Event *event, double mx, double my
 static void news_render( double bx, double by, double w, double h, void *data )
 {
    (void) data;
-   int i, s, m, p, f;
+   int i, s, m, p;
    unsigned int t;
    double y, dt;
 
@@ -112,14 +112,12 @@ static void news_render( double bx, double by, double w, double h, void *data )
    y = news_pos - s * (news_font->h+5.);
 
    /* Draw loop. */
-   f = 0;
+   gl_printRestoreClear();
    for (i=s; i<p; i++) {
 
-      if (f!=0)
-         gl_printRestoreLast();
+      gl_printRestoreLast();
       gl_printMidRaw( news_font, w-40.,
             bx+10, by+y, &cConsole, news_lines[i] );
-      f = 1;
 
       /* Increment line and position. */
       y -= news_font->h + 5.;
