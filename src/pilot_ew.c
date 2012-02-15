@@ -35,7 +35,7 @@ void pilot_ewUpdateStatic( Pilot *p )
 {
    p->ew_mass     = pilot_ewMass( p->solid->mass );
    p->ew_heat     = pilot_ewHeat( p->heat_T );
-   p->ew_hide     = p->ew_base_hide * p->ew_mass * p->ew_heat;
+   p->ew_hide     = pow2(p->ew_base_hide * p->ew_mass * p->ew_heat);
 }
 
 
