@@ -127,7 +127,7 @@ void gl_printStoreMax( glFontRestore *restore, const char *text, int max )
    int i;
    const glColour *col;
 
-   col = NULL;
+   col = restore->col; /* Use whatever is there. */
    for (i=0; (text[i]!='\0') && (i<=max); i++) {
       /* Only want escape sequences. */
       if (text[i] != '\e')
