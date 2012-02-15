@@ -76,7 +76,7 @@ static void news_mouse( unsigned int wid, SDL_Event *event, double mx, double my
 static void news_render( double bx, double by, double w, double h, void *data )
 {
    (void) data;
-   int i ,f;
+   int i, s, m, p, f;
    unsigned int t;
    double y, dt;
 
@@ -91,31 +91,29 @@ static void news_render( double bx, double by, double w, double h, void *data )
 
    /* Make sure user isn't silly and drags it to negative values. */
    if (news_pos < 0.)
-      news_pos += (news_font->h + 5.) * news_nlines + h + 3;
+      news_pos = 0.;
 
    /* background */
    gl_renderRect( bx, by, w, h, &cBlack );
 
    /* Render the text. */
-   i = (int)(news_pos / (news_font->h + 5.));
-   if (i > news_nlines + (int)(h/(news_font->h + 5.)) + 3) {
+   p = (int)ceil( news_pos / (news_font->h + 5.));
+   m = (int)ceil(        h / (news_font->h + 5.));
+   if (p > news_nlines + m + 1) {
       news_pos = 0.;
       return;
    }
 
+   /* Get positions to make sure inbound. */
+   s = MAX(0,p-m);
+   p = MIN(p+1,news_nlines-1);
+
    /* Get start position. */
-   y = news_pos - (i+1) * (news_font->h + 5.) - 10.;
+   y = news_pos - s * (news_font->h+5.);
 
    /* Draw loop. */
    f = 0;
-   while (i >= 0) {
-
-      /* Skip in line isn't valid. */
-      if (i >= news_nlines) {
-         i--;
-         y += news_font->h + 5.;
-         continue;
-      }
+   for (i=s; i<p; i++) {
 
       if (f!=0)
          gl_printRestoreLast();
@@ -124,8 +122,7 @@ static void news_render( double bx, double by, double w, double h, void *data )
       f = 1;
 
       /* Increment line and position. */
-      i--;
-      y += news_font->h + 5.;
+      y -= news_font->h + 5.;
    }
 
 }
