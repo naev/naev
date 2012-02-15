@@ -72,7 +72,8 @@ double pilot_ewMovement( double vmod )
  */
 double pilot_ewEvasion( const Pilot *pilot, const Pilot *target )
 {
-   return (target->ew_hide * ( 1 + 1/pow( target->solid->mass, .2 )) * pilot_ewMovement( vect_dist( &pilot->solid->vel, &target->solid->vel )) * EVASION_SCALE);
+   return (target->ew_hide * ( 1 + 1/pow( target->solid->mass, .2 ))
+            * pilot_ewMovement( vect_dist( &pilot->solid->vel, &target->solid->vel )) * EVASION_SCALE);
 }
 
 /**
@@ -159,7 +160,7 @@ int pilot_inRangePilot( const Pilot *p, const Pilot *target )
    sense = sensor_curRange * p->ew_detect;
    if (d * pilot_ewEvasion( p, target ) < sense)
       return 1;
-   else if  (d * target->ew_hide < sense)
+   else if  (d * target->ew_hide < sense * pilot_ewMovement( vect_dist( &p->solid->vel, &target->solid->vel )))
       return -1;
 
    return 0;
