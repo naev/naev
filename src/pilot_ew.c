@@ -70,9 +70,9 @@ double pilot_ewMovement( double vmod )
  *    @param target The pilot doing the evading.
  *    @return The electronic warfare evasion modifier.
  */
-double pilot_ewEvasion( const Pilot *pilot, const Pilot *target )
+double pilot_ewEvasion( const Pilot *target )
 {
-   return (pilot->ew_hide * pilot_ewMovement( vect_dist( &pilot->solid->vel, &target->solid->vel )) * EVASION_SCALE);
+   return (target->ew_hide * ( 1 + 1/pow( target->solid->mass, .2 )) * EVASION_SCALE);
 }
 
 /**
@@ -146,7 +146,7 @@ int pilot_inRange( const Pilot *p, double x, double y )
  */
 int pilot_inRangePilot( const Pilot *p, const Pilot *target )
 {
-   double d, sense;
+   double d, sense, ewMovement;
 
    /* Special case player or omni-visible. */
    if ((pilot_isPlayer(p) && pilot_isFlag(target, PILOT_VISPLAYER)) ||
@@ -157,9 +157,10 @@ int pilot_inRangePilot( const Pilot *p, const Pilot *target )
    d = vect_dist2( &p->solid->pos, &target->solid->pos );
 
    sense = sensor_curRange * p->ew_detect;
-   if (d * pilot_ewEvasion( p, target ) < sense)
+   ewMovement = pilot_ewMovement( vect_dist( &p->solid->vel, &target->solid->vel ));
+   if (d * pilot_ewEvasion( target ) * ewMovement < sense)
       return 1;
-   else if  (d * target->ew_hide < sense)
+   else if  (d * target->ew_hide < sense * ewMovement)
       return -1;
 
    return 0;
@@ -190,8 +191,7 @@ int pilot_inRangePlanet( const Pilot *p, int target )
    if ( !pnt->real )
       return 0;
 
-   /* @TODO ew_detect should be squared upon being set. */
-   sense = sensor_curRange * pow2(p->ew_detect);
+   sense = sensor_curRange * p->ew_detect;
 
    /* Get distance. */
    d = vect_dist2( &p->solid->pos, &pnt->pos );
@@ -252,7 +252,7 @@ double pilot_ewWeaponTrack( const Pilot *p, const Pilot *t, double track )
    double limit, lead, evade;
 
    limit = track * p->ew_detect;
-   evade = pilot_ewEvasion( p, t );
+   evade = pilot_ewEvasion( t ) * pilot_ewMovement( vect_dist( &p->solid->vel, &t->solid->vel ));
    if ( evade < limit )
       lead = 1.;
    else
