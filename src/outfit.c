@@ -585,6 +585,7 @@ int outfit_amount( const Outfit* o )
    else if (outfit_isFighterBay(o)) return o->u.bay.amount;
    return -1;
 }
+
 /**
  * @brief Gets the outfit's energy usage.
  *    @param o Outfit to get information from.
@@ -1910,6 +1911,7 @@ static int outfit_parse( Outfit* temp, const xmlNodePtr parent )
             xmlr_strd(cur,"license",temp->license);
             xmlr_float(cur,"mass",temp->mass);
             xmlr_long(cur,"price",temp->price);
+            xmlr_strd(cur,"limit",temp->limit);
             xmlr_strd(cur,"description",temp->description);
             xmlr_strd(cur,"typename",temp->typename);
             if (xml_isNode(cur,"gfx_store")) {
@@ -2156,17 +2158,14 @@ void outfit_free (void)
          free(o->u.map);
 
       /* strings */
-      if (o->typename)
-         free(o->typename);
-      if (o->description)
-         free(o->description);
-      if (o->desc_short)
-         free(o->desc_short);
+      free(o->typename);
+      free(o->description);
+      free(o->limit);
+      free(o->desc_short);
+      free(o->license);
+      free(o->name);
       if (o->gfx_store)
          gl_freeTexture(o->gfx_store);
-      if (o->license)
-         free(o->license);
-      free(o->name);
    }
 
    array_free(outfit_stack);

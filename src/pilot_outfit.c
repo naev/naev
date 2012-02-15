@@ -22,6 +22,12 @@
 #include "gui.h"
 
 
+/*
+ * Prototypes.
+ */
+static int pilot_hasOutfitLimit( Pilot *p, const char *limit );
+
+
 /**
  * @brief Updates the lockons on the pilot's launchers
  *
@@ -487,6 +493,26 @@ const char* pilot_checkSanity( Pilot *p )
    return NULL;
 }
 
+/**
+ * @brief Checks to see if a pilot has an outfit with a specific outfit type.
+ *
+ *    @param p Pilot to check.
+ *    @param t Outfit type to check.
+ *    @return the amount of outfits of this type the pilot has.
+ */
+static int pilot_hasOutfitLimit( Pilot *p, const char *limit )
+{
+   int i;
+   Outfit *o;
+   for (i = 0; i<p->noutfits; i++) {
+      o = p->outfits[i]->outfit;
+      if (o == NULL)
+         continue;
+      if ((o->limit != NULL) && (strcmp(o->limit,limit)==0))
+         return 1;
+   }
+   return 0;
+}
 
 /**
  * @brief Checks to see if can equip/remove an outfit from a slot.
@@ -512,10 +538,9 @@ const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o, int add )
       if ((outfit_cpu(o) > 0) && (p->cpu < outfit_cpu(o)))
          return "Insufficient CPU";
 
-      /* Can't add more than one afterburner. */
-      if (outfit_isAfterburner(o) &&
-            (p->afterburner != NULL))
-         return "Already have an afterburner";
+      /* Can't add more than one outfit of the same type if the outfit type is limited. */
+      if ((o->limit != NULL) && pilot_hasOutfitLimit( p, o->limit ))
+         return "Already have an outfit of this type installed";
 
       /* Must not drive some things negative. */
       if (outfit_isMod(o)) {

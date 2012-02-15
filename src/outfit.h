@@ -305,6 +305,7 @@ typedef struct Outfit_ {
    OutfitSlot slot;  /**< Slot the outfit fits into. */
    char *license;    /**< Licenses needed to buy it. */
    double mass;      /**< How much weapon capacity is needed. */
+   char *limit;      /**< Name to limit to one per ship (ignored if NULL). */
 
    /* store stuff */
    credits_t price;  /**< Base sell price. */

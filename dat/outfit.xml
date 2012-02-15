@@ -2306,6 +2306,7 @@
    <price>20000</price>
    <description>Being able to run from your enemies has saved many a pilot, and a generic afterburner will allow you that luxury. Though it may not be as powerful as higher-end alternatives, it makes up for that difference by entering at a much lower price point.</description>
    <gfx_store>afterburner</gfx_store>
+   <limit>afterburner</limit>
   </general>
   <specific type="afterburner">
    <cpu>2</cpu>
@@ -2326,6 +2327,7 @@
    <price>95000</price>
    <description>The Hellburner is one of the best afterburners on the market. Through proprietary pressurization ducts, the Hellburner is able to generate far more thrust than generic alternatives, despite using only slightly more energy. A great asset to any pilot who seeks manoeuvrability and speed.</description>
    <gfx_store>afterburner2</gfx_store>
+   <limit>afterburner</limit>
   </general>
   <specific type="afterburner">
    <cpu>6</cpu>
@@ -2828,6 +2830,7 @@
    <price>40000</price>
    <description>Unlike general purpose scrambler systems, jammers are heavy-duty pieces of hardware used for serious electronic warfare in space. A jammer works by actively interfering with nearby ships' sensor systems, rather than modulating the signature of the ship it's installed in. This is much more effective, but it also uses a lot more power. For this reason, jammer systems are inactive until needed, and must be activated manually.</description>
    <gfx_store>jammer0</gfx_store>
+   <limit>jammer</limit>
   </general>
   <specific type="jammer">
    <cpu>4</cpu>
@@ -2843,6 +2846,7 @@
    <price>250000</price>
    <description>Does your work require you to venture into dangerous territory? Are you facing opposition your shields can't handle? The Milspec U-9 "Magus" jammer is what you need! Throw the bloodhounds off your scent with a press of a button. While your enemies are still trying to make sense out of the garble they're getting on their sensors, you will already have made your escape! Fly safe, fly Milspec.</description>
    <gfx_store>jammer1</gfx_store>
+   <limit>jammer</limit>
   </general>
   <specific type="jammer">
    <cpu>8</cpu>
