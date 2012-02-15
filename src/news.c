@@ -180,7 +180,7 @@ static void news_mouse( unsigned int wid, SDL_Event *event, double mx, double my
 void news_widget( unsigned int wid, int x, int y, int w, int h )
 {
    int i, p, len;
-   char buf[4096];
+   char buf[8192];
 
    /* Sane defaults. */
    news_pos    = h/3;
@@ -213,15 +213,17 @@ void news_widget( unsigned int wid, int x, int y, int w, int h )
          else
             news_mlines *= 2;
          news_lines    = realloc( news_lines, sizeof(char*) * news_mlines );
-         news_restores = realloc( news_lines, sizeof(glFontRestore*) * news_mlines );
+         news_restores = realloc( news_restores, sizeof(glFontRestore) * news_mlines );
       }
       news_lines[ news_nlines ]    = malloc( i + 1 );
       strncpy( news_lines[news_nlines], &buf[p], i );
       news_lines[ news_nlines ][i] = '\0';
       if (news_nlines==0)
          gl_printRestoreInit( &news_restores[ news_nlines ] );
-      else 
-         gl_printStore( &news_restores[ news_nlines ], news_lines[news_nlines-1 ] );
+      else  {
+         memcpy( &news_restores[ news_nlines ], &news_restores[ news_nlines-1 ], sizeof(glFontRestore) );
+         gl_printStore( &news_restores[ news_nlines ], news_lines[ news_nlines-1 ] );
+      }
  
       p += i + 1; /* Move pointer. */
       news_nlines++; /* New line. */
@@ -320,6 +322,7 @@ void news_exit (void)
    /* Clean the lines. */
    news_cleanLines();
    free(news_lines);
+   free(news_restores);
    news_lines  = NULL;
    news_mlines = 0;
 
