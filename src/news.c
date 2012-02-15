@@ -51,6 +51,7 @@ static int news_drag          = 0; /**< Is dragging news? */
 static double news_pos        = 0.; /**< Position of the news feed. */
 static glFont *news_font      = &gl_defFont; /**< Font to use. */
 static char **news_lines      = NULL; /**< Text per line. */
+static glFontRestore *news_restores = NULL; /**< Restorations. */
 static int news_nlines        = 0; /**< Number of lines used. */
 static int news_mlines        = 0; /**< Lines allocated. */
 
@@ -112,10 +113,9 @@ static void news_render( double bx, double by, double w, double h, void *data )
    y = news_pos - s * (news_font->h+5.);
 
    /* Draw loop. */
-   gl_printRestoreClear();
    for (i=s; i<p; i++) {
 
-      gl_printRestoreLast();
+      gl_printRestore( &news_restores[i] );
       gl_printMidRaw( news_font, w-40.,
             bx+10, by+y, &cConsole, news_lines[i] );
 
@@ -212,12 +212,17 @@ void news_widget( unsigned int wid, int x, int y, int w, int h )
             news_mlines = 256;
          else
             news_mlines *= 2;
-         news_lines = realloc( news_lines, sizeof(char*) * news_mlines );
+         news_lines    = realloc( news_lines, sizeof(char*) * news_mlines );
+         news_restores = realloc( news_lines, sizeof(glFontRestore*) * news_mlines );
       }
-      news_lines[news_nlines] = malloc( i + 1 );
+      news_lines[ news_nlines ]    = malloc( i + 1 );
       strncpy( news_lines[news_nlines], &buf[p], i );
-      news_lines[news_nlines][i] = '\0';
-
+      news_lines[ news_nlines ][i] = '\0';
+      if (news_nlines==0)
+         gl_printRestoreInit( &news_restores[ news_nlines ] );
+      else 
+         gl_printStore( &news_restores[ news_nlines ], news_lines[news_nlines-1 ] );
+ 
       p += i + 1; /* Move pointer. */
       news_nlines++; /* New line. */
    }
