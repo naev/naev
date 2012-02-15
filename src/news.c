@@ -193,8 +193,8 @@ void news_widget( unsigned int wid, int x, int y, int w, int h )
    p = 0;
    for (i=0; i<news_nbuf; i++) {
       p += snprintf( &buf[p], sizeof(buf)-p,
-            "%s\n\n"
-            "%s\n\n\n\n"
+            "%s\n\n\e0"
+            "%s\n\n\n\n\e0"
             , news_buf[i].title, news_buf[i].desc );
    }
    len = p;
