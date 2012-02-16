@@ -2187,7 +2187,11 @@ static void system_init( StarSystem *sys )
 StarSystem *system_new (void)
 {
    StarSystem *sys;
-   int realloced;
+   int realloced, id;
+
+   /* Protect current system in case of realloc. */
+   if (cur_system != NULL)
+      id = system_index( cur_system );
 
    /* Check if memory needs to grow. */
    systems_nstack++;
@@ -2198,6 +2202,10 @@ StarSystem *system_new (void)
       realloced         = 1;
    }
    sys = &systems_stack[ systems_nstack-1 ];
+
+   /* Reset cur_system. */
+   if (cur_system != NULL)
+      cur_system = system_getIndex( id );
 
    /* Initialize system and id. */
    system_init( sys );

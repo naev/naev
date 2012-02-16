@@ -41,9 +41,9 @@
 #define SYSEDIT_DRAG_THRESHOLD   300   /**< Drag threshold. */
 #define SYSEDIT_MOVE_THRESHOLD   10    /**< Movement threshold. */
 
-
-#define SYSEDIT_ZOOM_MAX         1.    /**< Maximum zoom (close). */
-#define SYSEDIT_ZOOM_MIN         0.01  /**< Minimum zoom (far). */
+#define SYSEDIT_ZOOM_STEP        1.2   /**< Factor to zoom by for each zoom level. */
+#define SYSEDIT_ZOOM_MAX         1     /**< Maximum zoom level (close). */
+#define SYSEDIT_ZOOM_MIN         -23   /**< Minimum zoom level (far). */
 
 
 #define PLANET_SPACE_GFX_PATH    "gfx/planet/space" /**< Path to planet space graphics. */
@@ -173,7 +173,7 @@ void sysedit_open( StarSystem *sys )
    /* Reset some variables. */
    sysedit_sys    = sys;
    sysedit_drag   = 0;
-   sysedit_zoom   = 0.10;
+   sysedit_zoom   = pow(SYSEDIT_ZOOM_STEP, SYSEDIT_ZOOM_MIN);
    sysedit_xpos   = 0.;
    sysedit_ypos   = 0.;
 
@@ -963,12 +963,12 @@ static void sysedit_buttonZoom( unsigned int wid, char* str )
 
    /* Apply zoom. */
    if (strcmp(str,"btnZoomIn")==0) {
-      sysedit_zoom *= 1.2;
-      sysedit_zoom = MIN( SYSEDIT_ZOOM_MAX, sysedit_zoom );
+      sysedit_zoom *= SYSEDIT_ZOOM_STEP;
+      sysedit_zoom = MIN( pow(SYSEDIT_ZOOM_STEP, SYSEDIT_ZOOM_MAX), sysedit_zoom );
    }
    else if (strcmp(str,"btnZoomOut")==0) {
-      sysedit_zoom *= 0.8;
-      sysedit_zoom = MAX( SYSEDIT_ZOOM_MIN, sysedit_zoom );
+      sysedit_zoom /= SYSEDIT_ZOOM_STEP;
+      sysedit_zoom = MAX( pow(SYSEDIT_ZOOM_STEP, SYSEDIT_ZOOM_MIN), sysedit_zoom );
    }
 
    /* Transform coords back. */

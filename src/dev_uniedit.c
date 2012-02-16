@@ -41,6 +41,9 @@
 #define UNIEDIT_DRAG_THRESHOLD   300   /**< Drag threshold. */
 #define UNIEDIT_MOVE_THRESHOLD   10    /**< Movement threshold. */
 
+#define UNIEDIT_ZOOM_STEP        1.2   /**< Factor to zoom by for each zoom level. */
+#define UNIEDIT_ZOOM_MAX         5     /**< Maximum uniedit zoom level (close). */
+#define UNIEDIT_ZOOM_MIN         -5    /**< Minimum uniedit zoom level (far). */
 
 /*
  * The editor modes.
@@ -624,6 +627,10 @@ static void uniedit_newSys( double x, double y )
       return;
    }
 
+   /* Transform coordinates back to normal if zoomed */
+   x /= uniedit_zoom;
+   y /= uniedit_zoom;
+
    /* Create the system. */
    sys         = system_new();
    sys->name   = name;
@@ -857,12 +864,12 @@ static void uniedit_buttonZoom( unsigned int wid, char* str )
 
    /* Apply zoom. */
    if (strcmp(str,"btnZoomIn")==0) {
-      uniedit_zoom *= 1.2;
-      uniedit_zoom = MIN(2.5, uniedit_zoom);
+      uniedit_zoom *= UNIEDIT_ZOOM_STEP;
+      uniedit_zoom = MIN(pow(UNIEDIT_ZOOM_STEP, UNIEDIT_ZOOM_MAX), uniedit_zoom);
    }
    else if (strcmp(str,"btnZoomOut")==0) {
-      uniedit_zoom *= 0.8;
-      uniedit_zoom = MAX(0.5, uniedit_zoom);
+      uniedit_zoom /= UNIEDIT_ZOOM_STEP;
+      uniedit_zoom = MAX(pow(UNIEDIT_ZOOM_STEP, UNIEDIT_ZOOM_MIN), uniedit_zoom);
    }
 
    /* Hack for the circles to work. */

@@ -959,11 +959,11 @@ void map_renderNames( double x, double y, int editor )
          tx  = x + map_zoom*sys->pos.x + d*vx;
          ty  = y + map_zoom*sys->pos.y + d*vy;
          /* Display. */
-         n = sys->jumps[j].hide;
+         n = sqrt(sys->jumps[j].hide);
          if (n == 0.)
-            snprintf( buf, sizeof(buf), "\egH: %.1f", n );
+            snprintf( buf, sizeof(buf), "\egH: %.2f", n );
          else
-            snprintf( buf, sizeof(buf), "H: %.1f", n );
+            snprintf( buf, sizeof(buf), "H: %.2f", n );
          gl_print( &gl_smallFont,
                tx, ty,
                &cGrey70, buf );
