@@ -627,6 +627,10 @@ static void uniedit_newSys( double x, double y )
       return;
    }
 
+   /* Transform coordinates back to normal if zoomed */
+   x /= uniedit_zoom;
+   y /= uniedit_zoom;
+
    /* Create the system. */
    sys         = system_new();
    sys->name   = name;
