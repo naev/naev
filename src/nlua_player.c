@@ -353,7 +353,7 @@ static int playerL_omsgRm( lua_State *L )
  *
  * @usage player.allowSave( b )
  *    @luaparam b true if the player is allowed to save, false otherwise. Defaults to true.
- * @luafunc omsgRm( id )
+ * @luafunc allowSave( b )
  */
 static int playerL_allowSave( lua_State *L )
 {
