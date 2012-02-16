@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Missions>
  <mission name="Tutorial Mission">
   <lua>tutorial/tutmis</lua>
@@ -670,6 +670,16 @@
    <chance>50</chance>
    <location>Computer</location>
    <system>Shakar</system>
+  </avail>
+ </mission>
+ <mission name="oldtopman">
+  <lua>neutral/ruse</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>100</chance>
+   <location>Bar</location>
   </avail>
  </mission>
 </Missions>
