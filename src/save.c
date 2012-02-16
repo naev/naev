@@ -91,8 +91,8 @@ int save_all (void)
    xmlDocPtr doc;
    xmlTextWriterPtr writer;
 
-   /* Do not save during tutorial. */
-   if (player_isTut())
+   /* Do not save during tutorial. Or if saving is off. */
+   if (player_isTut() || player_isFlag(PLAYER_NOSAVE))
       return 0;
 
    /* Create the writer. */
