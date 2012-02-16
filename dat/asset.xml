@@ -3502,6 +3502,7 @@
   <tech>
    <item>Kinetic 1</item>
    <item>Kinetic 2</item>
+   <item>Kinetic 3</item>
    <item>Basic Outfits 1</item>
    <item>Missiles 1</item>
    <item>Missiles 2</item>
@@ -4642,6 +4643,8 @@
    <item>Basic Outfits 2</item>
    <item>Low Tech Upgrades</item>
    <item>Basic Civilian Ships</item>
+   <item>Light Civilian Combat Ships</item>
+   <item>Bulk Trade Ships</item>
   </tech>
  </asset>
  <asset name="Hankies">
@@ -7629,7 +7632,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
     <commodity>Food</commodity>
     <commodity>Medicine</commodity>
    </commodities>
-   <description>Built to defend the Empire from the Collective, the Omega Station has observed countless battles fought in its sector. Its presence has helped stem the flow of Collective drones into Empire space..</description>
+   <description>Built to defend the Empire from the Collective, the Omega Station has observed countless battles fought in its sector. Its presence has helped stem the flow of Collective drones into Empire space.</description>
    <bar>The Omega Canteen is a dark place that seems calm, although everytime a robotic drone approaches an alarm sounds sending pilots to man their ships to fight off the menace.</bar>
   </general>
   <tech>
@@ -8365,12 +8368,13 @@ New Dortmund was never very successful in any sense of the term, but it is still
     <commodity>Industrial Goods</commodity>
    </commodities>
    <description>Polaris Prime is the service station for the Emperor's Wrath. Normal people are not allowed to set foot on the gargantuan ship, so all official business has to happen on Polaris Prime. The station is a trade hub as well as a center of government, serving as the civilian end of the Empire's capital.</description>
-   <bar>A simple, utilitarian bar patronized largely by off-duty dock workers and terraformers, this bar is nonetheless kept immaculately clean. It clearly means to set the... bar for all bars in Emire space.</bar>
+   <bar>A simple, utilitarian bar patronized largely by off-duty dock workers and terraformers, this bar is nonetheless kept immaculately clean. It clearly means to set the... bar for all bars in Empire space.</bar>
   </general>
   <tech>
    <item>Laser 1</item>
    <item>Laser 2</item>
    <item>Laser 3</item>
+   <item>Basic Civilian Ships</item>
    <item>High Tech Upgrades 2</item>
    <item>Heavy Weapons 2</item>
   </tech>
@@ -10510,6 +10514,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
   </general>
   <tech>
    <item>Kinetic 2</item>
+   <item>Kinetic 3</item>
    <item>Heavy Weapons 1</item>
    <item>Missiles 1</item>
    <item>Missiles 2</item>
@@ -10813,7 +10818,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <population>3000</population>
    <hide>0.750000</hide>
    <services>
-    <land>dv_mil_restricted</land>
+    <land>srs_mil_restricted</land>
     <refuel/>
     <bar/>
     <missions/>
@@ -12378,7 +12383,7 @@ New Dortmund was never very successful in any sense of the term, but it is still
    <population>2000</population>
    <hide>0.750000</hide>
    <services>
-    <land>dv_mil_restricted</land>
+    <land>srs_mil_restricted</land>
     <refuel/>
    </services>
    <commodities/>

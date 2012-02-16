@@ -4,7 +4,6 @@
   <general>
    <radius>17500.000000</radius>
    <stars>300</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -32,7 +31,6 @@
   <general>
    <radius>17500.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -58,7 +56,6 @@
   <general>
    <radius>25900.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -91,7 +88,6 @@
   <general>
    <radius>21500.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -133,7 +129,6 @@
   <general>
    <radius>15750.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -161,7 +156,6 @@
   <general>
    <radius>24500.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -194,7 +188,6 @@
   <general>
    <radius>17500.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -227,7 +220,6 @@
   <general>
    <radius>24500.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -256,7 +248,6 @@
   <general>
    <radius>2500.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -279,7 +270,6 @@
   <general>
    <radius>17500.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -299,7 +289,6 @@
   <general>
    <radius>19687.500000</radius>
    <stars>500</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -336,7 +325,6 @@
   <general>
    <radius>14000.000000</radius>
    <stars>500</stars>
-   <asteroids>0</asteroids>
    <interference>600.000000</interference>
    <nebula volatility="100.000000">600.000000</nebula>
   </general>
@@ -370,7 +358,6 @@
   <general>
    <radius>14000.000000</radius>
    <stars>500</stars>
-   <asteroids>0</asteroids>
    <interference>200.000000</interference>
    <nebula volatility="0.000000">200.000000</nebula>
   </general>
@@ -394,7 +381,6 @@
   <general>
    <radius>17500.000000</radius>
    <stars>500</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -434,7 +420,6 @@
   <general>
    <radius>10000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -454,7 +439,6 @@
   <general>
    <radius>21000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -479,7 +463,6 @@
   <general>
    <radius>10000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>250.000000</interference>
    <nebula volatility="0.000000">400.000000</nebula>
   </general>
@@ -502,7 +485,6 @@
   <general>
    <radius>17500.000000</radius>
    <stars>160</stars>
-   <asteroids>0</asteroids>
    <interference>50.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -530,7 +512,6 @@
   <general>
    <radius>23100.000000</radius>
    <stars>500</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -563,7 +544,6 @@
   <general>
    <radius>14000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>300.000000</interference>
    <nebula volatility="0.000000">250.000000</nebula>
   </general>
@@ -587,7 +567,6 @@
   <general>
    <radius>35000.000000</radius>
    <stars>500</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -620,7 +599,6 @@
   <general>
    <radius>10500.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -644,7 +622,6 @@
   <general>
    <radius>17500.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -684,7 +661,6 @@
   <general>
    <radius>28000.000000</radius>
    <stars>100</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -713,7 +689,6 @@
   <general>
    <radius>19250.000000</radius>
    <stars>100</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -741,7 +716,6 @@
   <general>
    <radius>24500.000000</radius>
    <stars>200</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -773,7 +747,6 @@
   <general>
    <radius>21000.000000</radius>
    <stars>200</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -806,7 +779,6 @@
   <general>
    <radius>17500.000000</radius>
    <stars>200</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -839,7 +811,6 @@
   <general>
    <radius>28000.000000</radius>
    <stars>200</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -866,7 +837,6 @@
   <general>
    <radius>26250.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -904,7 +874,6 @@
   <general>
    <radius>5000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -930,7 +899,6 @@
   <general>
    <radius>14000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -961,7 +929,6 @@
   <general>
    <radius>24500.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -997,7 +964,6 @@
   <general>
    <radius>14000.000000</radius>
    <stars>300</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -1027,7 +993,6 @@
   <general>
    <radius>11000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -1055,7 +1020,6 @@
   <general>
    <radius>24500.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>50.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -1085,7 +1049,6 @@
   <general>
    <radius>17500.000000</radius>
    <stars>500</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -1118,7 +1081,6 @@
   <general>
    <radius>15600.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -1142,7 +1104,6 @@
   <general>
    <radius>17500.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -1178,7 +1139,6 @@
   <general>
    <radius>24500.000000</radius>
    <stars>500</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -1210,7 +1170,6 @@
   <general>
    <radius>12250.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -1234,7 +1193,6 @@
   <general>
    <radius>19250.000000</radius>
    <stars>500</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -1274,7 +1232,6 @@
   <general>
    <radius>17500.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -1306,7 +1263,6 @@
   <general>
    <radius>12950.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -1339,7 +1295,6 @@
   <general>
    <radius>12250.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>400.000000</interference>
    <nebula volatility="0.000000">400.000000</nebula>
   </general>
@@ -1378,7 +1333,6 @@
   <general>
    <radius>10500.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -1403,7 +1357,6 @@
   <general>
    <radius>26600.000000</radius>
    <stars>500</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -1447,7 +1400,6 @@
   <general>
    <radius>31500.000000</radius>
    <stars>600</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -1477,7 +1429,6 @@
   <general>
    <radius>28000.000000</radius>
    <stars>500</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -1506,7 +1457,6 @@
   <general>
    <radius>14000.000000</radius>
    <stars>300</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -1540,7 +1490,6 @@
   <general>
    <radius>24500.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -1566,7 +1515,6 @@
   <general>
    <radius>35000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -1611,7 +1559,6 @@
   <general>
    <radius>17500.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -1651,7 +1598,6 @@
   <general>
    <radius>15750.000000</radius>
    <stars>120</stars>
-   <asteroids>0</asteroids>
    <interference>100.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -1677,7 +1623,6 @@
   <general>
    <radius>15000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -1707,7 +1652,6 @@
   <general>
    <radius>14000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -1742,7 +1686,6 @@
   <general>
    <radius>17500.000000</radius>
    <stars>500</stars>
-   <asteroids>0</asteroids>
    <interference>50.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -1773,7 +1716,6 @@
   <general>
    <radius>22750.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -1811,7 +1753,6 @@
   <general>
    <radius>24500.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -1847,7 +1788,6 @@
   <general>
    <radius>17500.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -1885,7 +1825,6 @@
   <general>
    <radius>26000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -1915,7 +1854,6 @@
   <general>
    <radius>21000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -1947,7 +1885,6 @@
   <general>
    <radius>10000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -1975,7 +1912,6 @@
   <general>
    <radius>22750.000000</radius>
    <stars>300</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -2008,7 +1944,6 @@
   <general>
    <radius>17500.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -2035,7 +1970,6 @@
   <general>
    <radius>17500.000000</radius>
    <stars>140</stars>
-   <asteroids>0</asteroids>
    <interference>50.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -2057,7 +1991,6 @@
   <general>
    <radius>14000.000000</radius>
    <stars>200</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -2089,7 +2022,6 @@
   <general>
    <radius>30000.000000</radius>
    <stars>500</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -2138,7 +2070,6 @@
   <general>
    <radius>16800.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -2173,7 +2104,6 @@
   <general>
    <radius>14000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -2197,7 +2127,6 @@
   <general>
    <radius>24500.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -2225,7 +2154,6 @@
   <general>
    <radius>28000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -2252,7 +2180,6 @@
   <general>
    <radius>17500.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -2278,7 +2205,6 @@
   <general>
    <radius>25200.000000</radius>
    <stars>500</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -2305,7 +2231,6 @@
   <general>
    <radius>21000.000000</radius>
    <stars>500</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -2343,7 +2268,6 @@
   <general>
    <radius>14000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -2369,7 +2293,6 @@
   <general>
    <radius>21250.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -2399,7 +2322,6 @@
   <general>
    <radius>21000.000000</radius>
    <stars>200</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -2427,7 +2349,6 @@
   <general>
    <radius>30000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -2457,7 +2378,6 @@
   <general>
    <radius>21000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>800.000000</interference>
    <nebula volatility="400.000000">800.000000</nebula>
   </general>
@@ -2481,7 +2401,6 @@
   <general>
    <radius>28000.000000</radius>
    <stars>500</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -2507,7 +2426,6 @@
   <general>
    <radius>21700.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -2541,7 +2459,6 @@
   <general>
    <radius>17500.000000</radius>
    <stars>100</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -2565,7 +2482,6 @@
   <general>
    <radius>15400.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -2604,7 +2520,6 @@
   <general>
    <radius>14000.000000</radius>
    <stars>300</stars>
-   <asteroids>0</asteroids>
    <interference>300.000000</interference>
    <nebula volatility="0.000000">200.000000</nebula>
   </general>
@@ -2630,7 +2545,6 @@
   <general>
    <radius>24500.000000</radius>
    <stars>500</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -2658,7 +2572,6 @@
   <general>
    <radius>20000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -2686,7 +2599,6 @@
   <general>
    <radius>21000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -2718,7 +2630,6 @@
   <general>
    <radius>21000.000000</radius>
    <stars>500</stars>
-   <asteroids>0</asteroids>
    <interference>50.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -2743,7 +2654,6 @@
   <general>
    <radius>14000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>350.000000</interference>
    <nebula volatility="0.000000">400.000000</nebula>
   </general>
@@ -2771,7 +2681,6 @@
   <general>
    <radius>6000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -2806,7 +2715,6 @@
   <general>
    <radius>13000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -2830,7 +2738,6 @@
   <general>
    <radius>22750.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -2865,7 +2772,6 @@
   <general>
    <radius>7000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -2889,7 +2795,6 @@
   <general>
    <radius>10500.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -2913,7 +2818,6 @@
   <general>
    <radius>18900.000000</radius>
    <stars>500</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -2946,7 +2850,6 @@
   <general>
    <radius>14000.000000</radius>
    <stars>500</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -2979,7 +2882,6 @@
   <general>
    <radius>17500.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -3005,7 +2907,6 @@
   <general>
    <radius>15400.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -3033,7 +2934,6 @@
   <general>
    <radius>17500.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -3069,7 +2969,6 @@
   <general>
    <radius>21000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -3096,7 +2995,6 @@
   <general>
    <radius>17500.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -3135,7 +3033,6 @@
   <general>
    <radius>14000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -3159,7 +3056,6 @@
   <general>
    <radius>23800.000000</radius>
    <stars>500</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -3191,7 +3087,6 @@
   <general>
    <radius>24500.000000</radius>
    <stars>200</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -3216,7 +3111,6 @@
   <general>
    <radius>10500.000000</radius>
    <stars>500</stars>
-   <asteroids>0</asteroids>
    <interference>100.000000</interference>
    <nebula volatility="0.000000">100.000000</nebula>
   </general>
@@ -3238,7 +3132,6 @@
   <general>
    <radius>21000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -3273,7 +3166,6 @@
   <general>
    <radius>5000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -3300,7 +3192,6 @@
   <general>
    <radius>18000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -3331,7 +3222,6 @@
   <general>
    <radius>24500.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -3353,7 +3243,6 @@
   <general>
    <radius>10000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -3373,7 +3262,6 @@
   <general>
    <radius>17500.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>350.000000</interference>
    <nebula volatility="0.000000">300.000000</nebula>
   </general>
@@ -3397,7 +3285,6 @@
   <general>
    <radius>24500.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -3429,7 +3316,6 @@
   <general>
    <radius>10000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -3452,7 +3338,6 @@
   <general>
    <radius>28000.000000</radius>
    <stars>100</stars>
-   <asteroids>0</asteroids>
    <interference>300.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -3477,7 +3362,6 @@
   <general>
    <radius>21000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -3504,7 +3388,6 @@
   <general>
    <radius>28000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -3531,7 +3414,6 @@
   <general>
    <radius>21000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -3562,7 +3444,6 @@
   <general>
    <radius>13300.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -3597,7 +3478,6 @@
   <general>
    <radius>18000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -3621,7 +3501,6 @@
   <general>
    <radius>24500.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -3659,7 +3538,6 @@
   <general>
    <radius>10500.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>450.000000</interference>
    <nebula volatility="50.000000">500.000000</nebula>
   </general>
@@ -3685,7 +3563,6 @@
   <general>
    <radius>21000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -3726,7 +3603,6 @@
   <general>
    <radius>10500.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -3746,7 +3622,6 @@
   <general>
    <radius>14000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>250.000000</interference>
    <nebula volatility="0.000000">400.000000</nebula>
   </general>
@@ -3770,7 +3645,6 @@
   <general>
    <radius>16450.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -3799,7 +3673,6 @@
   <general>
    <radius>15400.000000</radius>
    <stars>300</stars>
-   <asteroids>0</asteroids>
    <interference>300.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -3832,7 +3705,6 @@
   <general>
    <radius>10500.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -3865,7 +3737,6 @@
   <general>
    <radius>10500.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>800.000000</interference>
    <nebula volatility="300.000000">800.000000</nebula>
   </general>
@@ -3891,7 +3762,6 @@
   <general>
    <radius>15750.000000</radius>
    <stars>150</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -3915,7 +3785,6 @@
   <general>
    <radius>3500.000000</radius>
    <stars>500</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -3941,7 +3810,6 @@
   <general>
    <radius>14000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -3968,7 +3836,6 @@
   <general>
    <radius>14000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -3999,7 +3866,6 @@
   <general>
    <radius>17500.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -4023,7 +3889,6 @@
   <general>
    <radius>17500.000000</radius>
    <stars>500</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -4064,7 +3929,6 @@
   <general>
    <radius>24500.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -4097,7 +3961,6 @@
   <general>
    <radius>17500.000000</radius>
    <stars>500</stars>
-   <asteroids>0</asteroids>
    <interference>100.000000</interference>
    <nebula volatility="0.000000">100.000000</nebula>
   </general>
@@ -4141,7 +4004,6 @@
   <general>
    <radius>12400.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -4165,7 +4027,6 @@
   <general>
    <radius>28000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -4198,7 +4059,6 @@
   <general>
    <radius>10500.000000</radius>
    <stars>200</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -4229,7 +4089,6 @@
   <general>
    <radius>17500.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -4261,7 +4120,6 @@
   <general>
    <radius>22750.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -4291,7 +4149,6 @@
   <general>
    <radius>14000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -4327,7 +4184,6 @@
   <general>
    <radius>14000.000000</radius>
    <stars>500</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -4358,7 +4214,6 @@
   <general>
    <radius>31500.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -4388,7 +4243,6 @@
   <general>
    <radius>14000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -4419,7 +4273,6 @@
   <general>
    <radius>28000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>350.000000</interference>
    <nebula volatility="0.000000">300.000000</nebula>
   </general>
@@ -4441,7 +4294,6 @@
   <general>
    <radius>15750.000000</radius>
    <stars>200</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -4467,7 +4319,6 @@
   <general>
    <radius>14000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>400.000000</interference>
    <nebula volatility="0.000000">100.000000</nebula>
   </general>
@@ -4490,7 +4341,6 @@
   <general>
    <radius>10500.000000</radius>
    <stars>500</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -4510,7 +4360,6 @@
   <general>
    <radius>19250.000000</radius>
    <stars>500</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -4536,7 +4385,6 @@
   <general>
    <radius>35000.000000</radius>
    <stars>500</stars>
-   <asteroids>0</asteroids>
    <interference>950.000000</interference>
    <nebula volatility="500.000000">900.000000</nebula>
   </general>
@@ -4560,7 +4408,6 @@
   <general>
    <radius>24500.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -4584,7 +4431,6 @@
   <general>
    <radius>14000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -4610,7 +4456,6 @@
   <general>
    <radius>10000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -4635,7 +4480,6 @@
   <general>
    <radius>19250.000000</radius>
    <stars>600</stars>
-   <asteroids>0</asteroids>
    <interference>100.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -4659,7 +4503,6 @@
   <general>
    <radius>18200.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -4701,7 +4544,6 @@
   <general>
    <radius>3500.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -4716,7 +4558,6 @@
   <general>
    <radius>3500.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -4731,7 +4572,6 @@
   <general>
    <radius>3500.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -4746,7 +4586,6 @@
   <general>
    <radius>15000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -4785,7 +4624,6 @@
   <general>
    <radius>14000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -4815,7 +4653,6 @@
   <general>
    <radius>21000.000000</radius>
    <stars>500</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -4851,7 +4688,6 @@
   <general>
    <radius>24500.000000</radius>
    <stars>600</stars>
-   <asteroids>0</asteroids>
    <interference>50.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -4888,7 +4724,6 @@
   <general>
    <radius>17500.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>50.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -4924,7 +4759,6 @@
   <general>
    <radius>15750.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>150.000000</interference>
    <nebula volatility="0.000000">200.000000</nebula>
   </general>
@@ -4950,7 +4784,6 @@
   <general>
    <radius>12950.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>150.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -4974,7 +4807,6 @@
   <general>
    <radius>10000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -5002,7 +4834,6 @@
   <general>
    <radius>17500.000000</radius>
    <stars>500</stars>
-   <asteroids>0</asteroids>
    <interference>200.000000</interference>
    <nebula volatility="0.000000">150.000000</nebula>
   </general>
@@ -5028,7 +4859,6 @@
   <general>
    <radius>21000.000000</radius>
    <stars>100</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -5057,7 +4887,6 @@
   <general>
    <radius>28000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>500.000000</interference>
    <nebula volatility="100.000000">500.000000</nebula>
   </general>
@@ -5077,7 +4906,6 @@
   <general>
    <radius>21000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>650.000000</interference>
    <nebula volatility="150.000000">700.000000</nebula>
   </general>
@@ -5099,7 +4927,6 @@
   <general>
    <radius>24500.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -5134,7 +4961,6 @@
   <general>
    <radius>14000.000000</radius>
    <stars>500</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -5160,7 +4986,6 @@
   <general>
    <radius>14000.000000</radius>
    <stars>500</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -5188,7 +5013,6 @@
   <general>
    <radius>17500.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -5219,7 +5043,6 @@
   <general>
    <radius>21000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -5255,7 +5078,6 @@
   <general>
    <radius>24500.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -5285,7 +5107,6 @@
   <general>
    <radius>20000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -5308,7 +5129,6 @@
   <general>
    <radius>20720.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -5341,7 +5161,6 @@
   <general>
    <radius>10000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -5361,7 +5180,6 @@
   <general>
    <radius>26250.000000</radius>
    <stars>500</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -5397,7 +5215,6 @@
   <general>
    <radius>28000.000000</radius>
    <stars>500</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -5425,7 +5242,6 @@
   <general>
    <radius>18900.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -5453,7 +5269,6 @@
   <general>
    <radius>19000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -5483,7 +5298,6 @@
   <general>
    <radius>19250.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -5513,7 +5327,6 @@
   <general>
    <radius>17500.000000</radius>
    <stars>500</stars>
-   <asteroids>0</asteroids>
    <interference>50.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -5543,7 +5356,6 @@
   <general>
    <radius>17500.000000</radius>
    <stars>500</stars>
-   <asteroids>0</asteroids>
    <interference>700.000000</interference>
    <nebula volatility="250.000000">750.000000</nebula>
   </general>
@@ -5565,7 +5377,6 @@
   <general>
    <radius>7000.000000</radius>
    <stars>500</stars>
-   <asteroids>0</asteroids>
    <interference>0.000000</interference>
    <nebula volatility="0.000000">0.000000</nebula>
   </general>
@@ -5596,7 +5407,6 @@
   <general>
    <radius>14000.000000</radius>
    <stars>400</stars>
-   <asteroids>0</asteroids>
    <interference>300.000000</interference>
    <nebula volatility="0.000000">250.000000</nebula>
   </general>

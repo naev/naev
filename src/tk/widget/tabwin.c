@@ -139,8 +139,7 @@ static int tab_raw( Widget* tab, SDL_Event *event )
    }
 
    /* Give the active window the input. */
-   toolkit_inputWindow( wdw, event, 0 );
-   return 0; /* Never block event. */
+   return toolkit_inputWindow( wdw, event, 0 );
 }
 
 

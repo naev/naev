@@ -246,10 +246,10 @@ void omsg_render( double dt )
       memcpy( &col, omsg->col, sizeof(glColour) );
       if (omsg->duration < 1.)
          col.a = omsg->duration;
+      gl_printRestoreClear();
       for (j=0; j<omsg->nlines; j++) {
          y -= font->h * 1.5;
-         if (j>0)
-            gl_printRestoreLast();
+         gl_printRestoreLast();
          gl_printMidRaw( font, omsg_center_w, x, y, &col, omsg->msg[j] );
       }
    }

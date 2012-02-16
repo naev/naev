@@ -69,7 +69,7 @@ end
 
 -- Checks to see if jump target is interesting
 function check_jmp_target( jmp )
-   return jmp:presences()[ f_dvaered ] ~= nil
+   return jmp:presences( f_dvaered ) ~= nil
 end
 
 -- Checks to see if planet target is interesting

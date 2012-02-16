@@ -1892,6 +1892,7 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
       }
    }
 
+   /* Handle button hotkeys. */
    for (wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next)
       if ((wgt->type == WIDGET_BUTTON) && (wgt->dat.btn.key != 0) &&
             (wgt->dat.btn.key == key))

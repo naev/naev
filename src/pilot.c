@@ -1377,8 +1377,7 @@ void pilot_update( Pilot* pilot, const double dt )
          o->stimer -= dt;
          if (o->stimer < 0.) {
             if (o->state == PILOT_OUTFIT_ON) {
-               o->stimer = outfit_cooldown( o->outfit );
-               o->state  = PILOT_OUTFIT_COOLDOWN;
+               pilot_outfitOff( pilot, o );
                nchg++;
             }
             else if (o->state == PILOT_OUTFIT_COOLDOWN) {
@@ -1559,19 +1558,7 @@ void pilot_update( Pilot* pilot, const double dt )
    else if (pilot->energy < 0.) {
       pilot->energy = 0.;
       /* Stop all on outfits. */
-      for (i=0; i<pilot->noutfits; i++) {
-         o = pilot->outfits[i];
-         /* Picky about our outfits. */
-         if (o->outfit == NULL)
-            continue;
-         if (!o->active)
-            continue;
-         if (o->state == PILOT_OUTFIT_ON) {
-            o->stimer = outfit_cooldown( o->outfit );
-            o->state  = PILOT_OUTFIT_COOLDOWN;
-            nchg++;
-         }
-      }
+      nchg += pilot_outfitOffAll( pilot );
    }
 
    /* Must recalculate stats because something changed state. */
@@ -1622,18 +1609,10 @@ void pilot_update( Pilot* pilot, const double dt )
    if (!pilot_isFlag(pilot, PILOT_HYPERSPACE)) { /* limit the speed */
 
       /* pilot is afterburning */
-      if (pilot_isFlag(pilot, PILOT_AFTERBURNER) && /* must have enough energy left */
-               (pilot->energy > pilot->afterburner->outfit->u.afb.energy * dt)) {
-         pilot->solid->speed_max = pilot->speed +
-               pilot->speed * pilot->afterburner->outfit->u.afb.speed *
-               MIN( 1., pilot->afterburner->outfit->u.afb.mass_limit/pilot->solid->mass);
-
-         if (pilot->id == PLAYER_ID)
-            spfx_shake( 0.75*SHAKE_DECAY * dt); /* shake goes down at quarter speed */
-
-         pilot->energy -= pilot->afterburner->outfit->u.afb.energy * dt; /* energy loss */
+      if (pilot_isFlag(pilot, PILOT_AFTERBURNER) && pilot->id == PLAYER_ID) {
+         spfx_shake( 0.75*SHAKE_DECAY * dt); /* shake goes down at quarter speed */
       }
-      else /* normal limit */
+      else
          pilot->solid->speed_max = pilot->speed;
    }
    else
@@ -1644,7 +1623,6 @@ void pilot_update( Pilot* pilot, const double dt )
    gl_getSpriteFromDir( &pilot->tsx, &pilot->tsy,
          pilot->ship->gfx_space, pilot->solid->dir );
 }
-
 
 /**
  * @brief Deletes a pilot.

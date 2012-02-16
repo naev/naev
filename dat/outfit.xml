@@ -1,4 +1,4 @@
-   <Outfits>
+<Outfits>
 
  <!-- LASER TREE -->
  <outfit name="Laser Cannon MK1">
@@ -2087,7 +2087,7 @@
    <description>Adding a complementary reactor to your ship is a great way to get that extra energy boost you need. This does not replace the existing reactor but works alongside it and hooks up directly to the energy flux.</description>
   </general>
   <specific type="modification">
-   <cpu>-5</cpu>
+   <cpu>5</cpu>
    <energy>20</energy>
    <energy_regen>4.7</energy_regen>
   </specific>
@@ -2102,7 +2102,7 @@
    <description>The class II reactor uses a newer fusion technology than the class I, permitting it to have greater energy density. The result is a mid-sized reactor that is best used on ships with moderate energy demands.</description>
   </general>
   <specific type="modification">
-   <cpu>-10</cpu>
+   <cpu>10</cpu>
    <energy>60</energy>
    <energy_regen>10.5</energy_regen>
   </specific>
@@ -2117,7 +2117,7 @@
    <description>The immense class III reactor provides enough power for nearly anything. The technology used in this reactor is particularly groundbreaking, with the best energy density of the three reactor classes. The huge size of the class III results in it only fitting comfortably on large vessels, though its energy output would be excessive for anything less.</description>
   </general>
   <specific type="modification">
-   <cpu>-20</cpu>
+   <cpu>20</cpu>
    <energy>180</energy>
    <energy_regen>23.7</energy_regen>
   </specific>
@@ -2185,7 +2185,7 @@
    <gfx_store>shield</gfx_store>
   </general>
   <specific type="modification">
-   <cpu>-5</cpu>
+   <cpu>5</cpu>
    <shield>15</shield>
    <shield_regen>0.5</shield_regen>
    <energy_regen>-0.85</energy_regen>
@@ -2276,7 +2276,7 @@
    <gfx_store>stabilizer</gfx_store>
   </general>
   <specific type="modification">
-   <cpu>-2</cpu>
+   <cpu>2</cpu>
    <speed>3</speed>
    <speed_rel>15</speed_rel>
    <turn_rel>3</turn_rel>
@@ -2306,17 +2306,18 @@
    <price>20000</price>
    <description>Being able to run from your enemies has saved many a pilot, and a generic afterburner will allow you that luxury. Though it may not be as powerful as higher-end alternatives, it makes up for that difference by entering at a much lower price point.</description>
    <gfx_store>afterburner</gfx_store>
+   <limit>afterburner</limit>
   </general>
   <specific type="afterburner">
    <cpu>2</cpu>
    <duration>5</duration>
-   <cooldown>10</cooldown>
+   <cooldown>8</cooldown>
    <rumble>0.5</rumble>
    <sound>afterburner</sound>
-   <thrust>100</thrust>
-   <speed>50</speed>
-   <energy>60</energy>
-   <mass_limit>250</mass_limit>
+   <thrust>180</thrust>
+   <speed>30</speed>
+   <energy>40</energy>
+   <mass_limit>160</mass_limit>
   </specific>
  </outfit>
  <outfit name="Hellburner">
@@ -2326,17 +2327,18 @@
    <price>95000</price>
    <description>The Hellburner is one of the best afterburners on the market. Through proprietary pressurization ducts, the Hellburner is able to generate far more thrust than generic alternatives, despite using only slightly more energy. A great asset to any pilot who seeks manoeuvrability and speed.</description>
    <gfx_store>afterburner2</gfx_store>
+   <limit>afterburner</limit>
   </general>
   <specific type="afterburner">
    <cpu>6</cpu>
    <duration>5</duration>
-   <cooldown>5</cooldown>
+   <cooldown>6</cooldown>
    <rumble>0.9</rumble>
    <sound>afterburner</sound>
-   <thrust>185</thrust>
-   <speed>85</speed>
+   <thrust>300</thrust>
+   <speed>45</speed>
    <energy>65</energy>
-   <mass_limit>400</mass_limit>
+   <mass_limit>250</mass_limit>
   </specific>
  </outfit>
   <outfit name="Auxiliary Processing Unit I">
@@ -2349,7 +2351,7 @@
    <description>The Advanced Nanosystems APU I is an obsolete design intended for light vessels. It is relatively light weight, though it's less power efficient than its successors.</description>
   </general>
   <specific type="modification">
-   <cpu>10</cpu>
+   <cpu>-10</cpu>
    <energy_regen>-3.35</energy_regen>
   </specific>
  </outfit>
@@ -2363,7 +2365,7 @@
    <description>The Advanced Nanosystems APU II is a mid-range design suitable for medium-sized vessels as well as lightly-equipped capital ships. Its substantial mass and power consumption make it unsuitable for light vessels.</description>
   </general>
   <specific type="modification">
-   <cpu>20</cpu>
+   <cpu>-20</cpu>
    <energy_regen>-6.25</energy_regen>
   </specific>
  </outfit>
@@ -2377,7 +2379,7 @@
    <description>The Advanced Nanosystems APU III is a high-end general-purpose processor suitable for capital ships. Its high power-efficiency is achieved by using cutting-edge superconducting materials.</description>
   </general>
   <specific type="modification">
-   <cpu>40</cpu>
+   <cpu>-40</cpu>
    <energy_regen>-12</energy_regen>
   </specific>
  </outfit>
@@ -2801,11 +2803,10 @@
    <description>Scramblers distort a ship's electromagnetic signature, making it harder for various sensors to pick it up. In effect, a scrambler reduces the distance at which the ship can be detected and scanned, and makes it harder for missiles to lock on. The effect is quite limited however, and multiple scramblers may be required for the desired effect. On the upside, scramblers put a minimal strain on the ship's resources, and are always active.</description>
    <gfx_store>jammer0</gfx_store>
   </general>
-  <specific type="jammer">
-   <cpu>-1</cpu>
-   <range>1</range>
-   <power>1</power>
-   <energy>-15</energy>
+  <specific type="modification">
+   <cpu>1</cpu>
+   <energy>-10</energy>
+   <hide>1.5</hide>
   </specific>
  </outfit>
  <outfit name="Milspec Scrambler">
@@ -2816,11 +2817,10 @@
    <description>Milspec knows what's important out there. It's that you don't get shot! And the best way not to get shot is not to get targeted in the first place. The Milspec RX 500-C scrambler will put the wool over your enemies' sensors, at a minimal cost to you or your ship's reactor! Fly safe, fly Milspec.</description>
    <gfx_store>jammer1</gfx_store>
   </general>
-  <specific type="jammer">
-   <cpu>-3</cpu>
-   <range>1</range>
-   <power>1</power>
+  <specific type="modification">
+   <cpu>3</cpu>
    <energy>-15</energy>
+   <hide>2.5</hide>
   </specific>
  </outfit>
  <outfit name="Unicorp Jammer">
@@ -2830,9 +2830,10 @@
    <price>40000</price>
    <description>Unlike general purpose scrambler systems, jammers are heavy-duty pieces of hardware used for serious electronic warfare in space. A jammer works by actively interfering with nearby ships' sensor systems, rather than modulating the signature of the ship it's installed in. This is much more effective, but it also uses a lot more power. For this reason, jammer systems are inactive until needed, and must be activated manually.</description>
    <gfx_store>jammer0</gfx_store>
+   <limit>jammer</limit>
   </general>
   <specific type="jammer">
-   <cpu>-4</cpu>
+   <cpu>4</cpu>
    <range>170</range>
    <power>35</power>
    <energy>-15</energy>
@@ -2845,9 +2846,10 @@
    <price>250000</price>
    <description>Does your work require you to venture into dangerous territory? Are you facing opposition your shields can't handle? The Milspec U-9 "Magus" jammer is what you need! Throw the bloodhounds off your scent with a press of a button. While your enemies are still trying to make sense out of the garble they're getting on their sensors, you will already have made your escape! Fly safe, fly Milspec.</description>
    <gfx_store>jammer1</gfx_store>
+   <limit>jammer</limit>
   </general>
   <specific type="jammer">
-   <cpu>-8</cpu>
+   <cpu>8</cpu>
    <range>230</range>
    <power>50</power>
    <energy>-30</energy>

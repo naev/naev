@@ -1432,9 +1432,12 @@ void player_land (void)
       }
 
       /* Stop afterburning. */
-      player_afterburnOver();
+      pilot_afterburnOver( player.p );
       /* Stop accelerating. */
       player_accelOver();
+
+      /* Stop all on outfits. */
+      pilot_outfitOffAll( player.p );
 
       /* Start landing. */
       if (runcount == 0)
@@ -1700,56 +1703,6 @@ void player_brokeHyperspace (void)
 
 
 /**
- * @brief Activate the afterburner.
- */
-void player_afterburn (void)
-{
-   //double afb_mod;
-   if (player.p == NULL)
-      return;
-
-   if (pilot_isFlag(player.p, PILOT_HYP_PREP) || pilot_isFlag(player.p, PILOT_HYPERSPACE) ||
-         pilot_isFlag(player.p, PILOT_LANDING) || pilot_isFlag(player.p, PILOT_TAKEOFF))
-      return;
-
-   /* Not under manual control. */
-   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
-      return;
-
-   /** @todo fancy effect? */
-   if (player.p->afterburner == NULL)
-      return;
-
-   if (player.p->afterburner->state == PILOT_OUTFIT_OFF) {
-      player.p->afterburner->state  = PILOT_OUTFIT_ON;
-      player.p->afterburner->stimer = outfit_duration( player.p->afterburner->outfit );
-      pilot_setFlag(player.p,PILOT_AFTERBURNER);
-   }
-
-   //afb_mod = MIN( 1., player.p->afterburner->outfit->u.afb.mass_limit / player.p->solid->mass );
-   //spfx_shake( afb_mod * player.p->afterburner->outfit->u.afb.rumble * SHAKE_MAX );
-}
-
-
-/**
- * @brief Deactivates the afterburner.
- */
-void player_afterburnOver (void)
-{
-   if (player.p == NULL)
-      return;
-   if (player.p->afterburner == NULL)
-      return;
-
-   if (player.p->afterburner->state == PILOT_OUTFIT_ON) {
-      player.p->afterburner->state  = PILOT_OUTFIT_COOLDOWN;
-      player.p->afterburner->stimer = outfit_cooldown( player.p->afterburner->outfit );
-      pilot_rmFlag(player.p,PILOT_AFTERBURNER);
-   }
-}
-
-
-/**
  * @brief Start accelerating.
  *
  *    @param acc How much thrust should be applied of maximum (0 - 1).
@@ -1926,12 +1879,25 @@ void player_targetEscort( int prev )
  */
 void player_targetNearest (void)
 {
-   unsigned int t;
+   unsigned int t, dt, old;
+   double d;
 
-   t = player.p->target;
-   pilot_setTarget( player.p, pilot_getNearestPilot(player.p) );
+   d = pilot_getNearestPos( player.p, &dt, player.p->solid->pos.x,
+         player.p->solid->pos.y, 1 );
+   t = dt;
 
-   if ((player.p->target != PLAYER_ID) && (t != player.p->target)) {
+   /* Disabled ships are typically only valid if within 500 px of the player. */
+   if ((d > 250000) && (pilot_isDisabled( pilot_get(dt) ))) {
+      t = pilot_getNearestPilot(player.p);
+      /* Try to target a disabled ship if there are no active ships in range. */
+      if (t == PLAYER_ID)
+         t = dt;
+   }
+
+   old = player.p->target;
+   pilot_setTarget( player.p, t );
+
+   if ((player.p->target != PLAYER_ID) && (old != player.p->target)) {
       gui_forceBlink();
       player_soundPlayGUI( snd_target, 1 );
    }

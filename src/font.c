@@ -75,6 +75,15 @@ static void gl_fontRenderEnd (void);
 
 
 /**
+ * @brief Clears the restoration.
+ */
+void gl_printRestoreClear (void)
+{
+   font_lastCol = NULL;
+}
+
+
+/**
  * @brief Restores last colour.
  */
 void gl_printRestoreLast (void)
@@ -118,7 +127,7 @@ void gl_printStoreMax( glFontRestore *restore, const char *text, int max )
    int i;
    const glColour *col;
 
-   col = NULL;
+   col = restore->col; /* Use whatever is there. */
    for (i=0; (text[i]!='\0') && (i<=max); i++) {
       /* Only want escape sequences. */
       if (text[i] != '\e')
@@ -470,14 +479,16 @@ int gl_printTextRaw( const glFont *ft_font,
    x = bx;
    y = by + height - (double)ft_font->h; /* y is top left corner */
 
+   /* Clears restoration. */
+   gl_printRestoreClear();
+
    s = 0;
    p = 0; /* where we last drew up to */
    while (y - by > -1e-5) {
       ret = gl_printWidthForText( ft_font, &text[p], width );
 
       /* Must restore stuff. */
-      if (p!=0)
-         gl_printRestoreLast();
+      gl_printRestoreLast();
 
       /* Render it. */
       gl_fontRenderStart(ft_font, x, y, c);
@@ -916,7 +927,6 @@ static void gl_fontRenderStart( const glFont* font, double x, double y, const gl
          COLOUR(*c);
    }
    font_restoreLast = 0;
-   font_lastCol = NULL; /* Clear so it doesn't appear later. */
 
    /* Activate the appropriate VBOs. */
    gl_vboActivateOffset( font->vbo_tex,  GL_TEXTURE_COORD_ARRAY, 0, 2, GL_FLOAT, 0 );

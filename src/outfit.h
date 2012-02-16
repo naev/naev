@@ -37,6 +37,8 @@ struct Outfit_;
  * @brief Different types of existing outfits.
  *
  * Outfits are organized by the order here
+ *
+ * @note If you modify this DON'T FORGET TO MODIFY outfit_getType too!!!
  */
 typedef enum OutfitType_ {
    OUTFIT_TYPE_NULL, /**< Null type. */
@@ -228,6 +230,7 @@ typedef struct OutfitModificationData_ {
    double crew_rel;  /**< Relative crew modification. */
    double mass_rel;  /**< Relative mass modification. */
    double fuel;      /**< Maximum fuel modifier. */
+   double hide;      /**< Absolute hide modifier. */
 
    /* Stats. */
    ShipStatList *stats; /**< Stat list. */
@@ -302,6 +305,7 @@ typedef struct Outfit_ {
    OutfitSlot slot;  /**< Slot the outfit fits into. */
    char *license;    /**< Licenses needed to buy it. */
    double mass;      /**< How much weapon capacity is needed. */
+   char *limit;      /**< Name to limit to one per ship (ignored if NULL). */
 
    /* store stuff */
    credits_t price;  /**< Base sell price. */
