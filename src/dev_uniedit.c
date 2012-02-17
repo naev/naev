@@ -312,6 +312,9 @@ static void uniedit_btnOpen( unsigned int wid_unused, char *unused )
       return;
 
    sysedit_open( uniedit_sys[0] );
+
+   /* Update sidebar text. */
+   uniedit_selectText();
 }
 
 
@@ -671,6 +674,9 @@ static void uniedit_toggleJump( StarSystem *sys )
 
    /* Reconstruct universe presences. */
    space_reconstructPresences();
+
+   /* Update sidebar text. */
+   uniedit_selectText();
 }
 
 
