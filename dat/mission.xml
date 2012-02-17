@@ -684,7 +684,6 @@
  <mission name="The Runaway">
   <lua>neutral/runaway</lua>
   <flags>
-   <unique />
   </flags>
   <avail>
    <chance>100</chance>

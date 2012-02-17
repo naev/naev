@@ -1,4 +1,3 @@
-
 lang = naev.lang()
 if lang == "es" then -- Spanish version of the texts would follow
 elseif lang == "de" then -- German version of the texts would follow
@@ -22,6 +21,8 @@ post_accept[1] = [["Thank you. But we must leave now, before anyone sees me."]]
 post_accept[2] = "Deliver Cynthia to %s in the %s system. %s credits await you."
 misn_accomplished = [[As you walk into the docking bay, she warns you to look out behind yourself.
 When you look back to where she was, nothing remains but a tidy pile of credit chips and a worthless pendant.]]
+osd_text = {}
+osd_text[1] = "Deliver Cynthia to Zhiru in the Goddard system"
 
 end
 
@@ -54,7 +55,12 @@ function accept ()
       tk.msg( title, not_enough_cargospace )
       misn.finish()
    end
-
+   
+   if misn.accept() then
+      misn.osdCreate(title,osd_text)
+      misn.osdActive(1)
+   end
+   
    cargoID = misn.cargoAdd( cargoname, 0 )
 
    misn.setTitle( title )
@@ -87,5 +93,6 @@ end
 
 function abort ()
    misn.cargoRm( cargoID )
+   misn.osdDestroy()
    misn.finish( false )
 end
