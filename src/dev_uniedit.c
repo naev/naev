@@ -668,6 +668,9 @@ static void uniedit_toggleJump( StarSystem *sys )
 
    /* Reconstruct jumps just in case. */
    systems_reconstructJumps();
+
+   /* Reconstruct universe presences. */
+   space_reconstructPresences();
 }
 
 
