@@ -25,7 +25,7 @@ else -- default english
    misn_desc[1] = "Check for survivors on %s in %s."
    misn_desc[2] = "Travel back to %s in %s."
    title = {}
-   title[1] = "Collective Espionage"
+   title[1] = "Collective Extraction"
    title[2] = "Planet %s"
    title[3] = "Mission Accomplished"
    text = {}
@@ -80,12 +80,12 @@ function create ()
 
       hook.enter("enter")
       hook.land("land")
-      hook.load("load")
    end
 end
 
 -- Handles the Collective encounters.
 function enter()
+    player.allowSave() -- This mission disables saving, which is dangerous. Should be turned back on ASAP.
     if system.cur() == misn_target_sys and misn_stage == 0 then
         -- Case jumped in before landing
         pilot.clear()
@@ -212,6 +212,7 @@ end
 function land ()
    -- Just landing
    if misn_stage == 1 and planet.cur() == misn_target then
+      player.allowSave(false) -- This prevents the player from starting on Eiroik if he dies after taking off.
       player.takeoff()
 
       -- Some flavour text
@@ -240,14 +241,5 @@ function land ()
       faction.modPlayerSingle("Empire",5)
 
       misn.finish(true)
-   end
-end
-
--- Load hook. Makes sure the player doesn't start landed.
-function load()
-   if planet.cur() == misn_target then
-      tk.msg( title[2], text[3] )
-      tk.msg( title[2], text[5] )
-      player.takeoff()
    end
 end

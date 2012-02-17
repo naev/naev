@@ -30,7 +30,9 @@ else -- default english
    text = {}
    text[1] = [[    You meet up with Lt. Commander Dimitri.
     "We managed to capture the drone after you located it. It didn't seem to be in good health. Our scientists are studying it as we speak, but we've found something strange in it. Some sort of weird wireless module. We'd like you to do a deep scan of the nearby Collective systems to see if you can pick up any strange wireless communications. This will be a dangerous mission, because you'll need to stay in the system long enough for the scan to complete. I recommend a fast ship to outrun the drones. Are you interested in doing this now?"]]
-   text[2] = [[    "You need to jump to each of the systems indicated on your map, and stay in the system until the scan finishes. If you jump out prematurely, you'll have to restart the scan from scratch when you return. Like I said, it's best if you tried to avoid the drones, but if you think you can take them, go for it! Good luck."]]
+   text[2] = [[    "You need to jump to each of the systems indicated on your map, and stay in the system until the scan finishes. If you jump out prematurely, you'll have to restart the scan from scratch when you return.
+   "Of course, we're not sending you in blind. I have updated your ship's computer with a map of the Collective systems, at least the part we know about. I'm afraid it's not very complete intel, but it should be enough.
+   "Like I said, it's best if you tried to avoid the drones, but if you think you can take them, go for it! Good luck."]]
    text[3] = [[    After landing, Lt. Commander Dimitri greets you on the land pad.
     "I suppose all went well? Those drones can really give a beating. We'll have the researchers start looking at your logs right away. Meet me in the bar again in a while."]]
     
@@ -70,6 +72,7 @@ function accept ()
    misn.osdCreate(misn_title, misn_desc)
 
    tk.msg( title[2], text[2] )
+   player.addOutfit("Map: Collective Space")
 
    hook.enter("enter")
    hook.land("land")
