@@ -49,6 +49,9 @@ else -- default english
     The crewmen finally unpack the holopainting. You glance at the three dimensional depiction of a Dvaered warlord, who seems to be discussing strategy with his staff. Unfortunately you don't seem to be able to appreciate Dvaered art, and you lose interest almost right away.
     You cough to get the Baron's attention. He looks up, clearly displeased at the disturbance, then notices you for the first time. "Ah, of course," he grunts. "I suppose you must be paid for your service. Here, have some credits. Now leave me alone. I have art to admire." The Baron tosses you a couple of credit chips, and then you are once again air to him. You are left with little choice but to return to your ship, undock, and be on your way.]]
     
+    title[7] = "The Baron's Daughter"
+    text[7] = [[Holding up a picture, the baron asks, "In your many travels, I don't suppose that you've met my daughter?" You admit that you've seen too many people to remember yet another teenage face. "My men found this pendant on your ship when we unloaded the picture. Guards, SEIZE HIM!" After attempting to fight the guards, you are overcome and pinned to a wall. "Now, have you seen MY DAUGHTER?" You lie and say that you found it lying about on Polaris Prime. As the Baron overturns his desk, sending priceless antiques everywhere, you make a break for it. You barely make it to your ship as gunfire bursts from all sides. ]]
+    
     refusetitle = "Never the wiser"
     refusetext = [[    "Oh. Oh well, too bad. I'll just try to find someone who will take the job, then. Sorry for taking up your time. See you around!"]]
     
@@ -154,6 +157,9 @@ end
 function board()
     tk.msg(title[5], text[5])
     tk.msg(title[6], text[6])
+    if player.misnDone("The Runaway") then
+      tk.msg(title[7], text[7])
+    end
     player.pay( credits )
     player.refuel()
     player.unboard()

@@ -681,14 +681,15 @@
    <system>Shakar</system>
   </avail>
  </mission>
- <mission name="oldtopman">
-  <lua>neutral/ruse</lua>
+ <mission name="The Runaway">
+  <lua>neutral/runaway</lua>
   <flags>
    <unique />
   </flags>
   <avail>
    <chance>100</chance>
    <location>Bar</location>
+   <system>Gamma Polaris</system>
   </avail>
  </mission>
 </Missions>
