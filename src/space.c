@@ -3277,8 +3277,12 @@ void system_addPresence( StarSystem *sys, int faction, double amount, int range 
       /* Pull one off the current range queue. */
       cur = q_dequeue(q);
 
+      /* Ran out of candidates before running out of spill range! */
+      if (cur == NULL)
+         break;
+
       /* Enqueue all its adjacencies to the next range queue. */
-      for (i=0; i < cur->njumps; i++) {
+      for (i=0; i<cur->njumps; i++) {
          if (cur->jumps[i].target->spilled == 0 && !jp_isFlag( &cur->jumps[i], JP_HIDDEN ) && !jp_isFlag( &cur->jumps[i], JP_EXITONLY )) {
             q_enqueue( qn, cur->jumps[i].target );
             cur->jumps[i].target->spilled = 1;
