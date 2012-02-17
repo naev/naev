@@ -1,3 +1,8 @@
+--[[
+This is the "The Runaway" mission as described on the wiki.
+There will be more missions to detail how you are percieved as the kidnapper of "Cynthia"
+--]]
+
 lang = naev.lang()
 if lang == "es" then -- Spanish version of the texts would follow
 elseif lang == "de" then -- German version of the texts would follow
