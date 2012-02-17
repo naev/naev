@@ -35,7 +35,7 @@ void pilot_ewUpdateStatic( Pilot *p )
 {
    p->ew_mass     = pilot_ewMass( p->solid->mass );
    p->ew_heat     = pilot_ewHeat( p->heat_T );
-   p->ew_hide     = p->ew_base_hide * p->ew_mass * p->ew_heat;
+   p->ew_hide     = pow2(p->ew_base_hide * p->ew_mass * p->ew_heat);
 }
 
 
@@ -64,15 +64,14 @@ double pilot_ewMovement( double vmod )
 }
 
 /**
- * @brief Gets the electronic warfare evasion modifier for two given pilots.
+ * @brief Gets the electronic warfare evasion modifier for a given pilot.
  *
- *    @param pilot The pilot doing the detection.
  *    @param target The pilot doing the evading.
  *    @return The electronic warfare evasion modifier.
  */
 double pilot_ewEvasion( const Pilot *target )
 {
-   return (target->ew_hide * ( 1 + 1/pow( target->solid->mass, .2 )) * EVASION_SCALE);
+   return (target->ew_hide * EVASION_SCALE);
 }
 
 /**
