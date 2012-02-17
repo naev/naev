@@ -24,6 +24,7 @@
 #include "dialogue.h"
 #include "tk/toolkit_priv.h"
 #include "dev_sysedit.h"
+#include "pause.h"
 
 
 #define HIDE_DEFAULT_JUMP        1.25 /**< Default hide value for new planets. */
@@ -126,6 +127,9 @@ void uniedit_open( unsigned int wid_unused, char *unused )
    (void) wid_unused;
    (void) unused;
    unsigned int wid;
+
+   /* Pause. */
+   pause_game();
 
    /* Needed to generate faction disk. */
    map_setZoom( 1. );
@@ -248,6 +252,9 @@ static void uniedit_close( unsigned int wid, char *wgt )
 
    /* Reconstruct jumps. */
    systems_reconstructJumps();
+
+   /* Unpause. */
+   unpause_game();
 
    /* Close the window. */
    window_close( wid, wgt );
