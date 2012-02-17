@@ -142,7 +142,6 @@ static StarSystem* system_parse( StarSystem *system, const xmlNodePtr parent );
 static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys );
 static void system_parseJumps( const xmlNodePtr parent );
 /* misc */
-static void system_setFaction( StarSystem *sys );
 static int getPresenceIndex( StarSystem *sys, int faction );
 static void presenceCleanup( StarSystem *sys );
 static void system_scheduler( double dt, int init );
@@ -2397,7 +2396,7 @@ static int sys_cmpSysFaction( const void *a, const void *b )
  *    @param sys System to set the faction of.
  *    @return Faction that controls the system.
  */
-static void system_setFaction( StarSystem *sys )
+void system_setFaction( StarSystem *sys )
 {
    int i, j;
    Planet *pnt;
@@ -2604,7 +2603,7 @@ int space_load (void)
    for (i=0; i<systems_nstack; i++)
       system_addAllPlanetsPresence(&systems_stack[i]);
 
-   /* Determine dominant faction. */ 
+   /* Determine dominant faction. */
    for (i=0; i<systems_nstack; i++)
       system_setFaction( &systems_stack[i] );
 
@@ -3286,8 +3285,12 @@ void system_addPresence( StarSystem *sys, int faction, double amount, int range 
       /* Pull one off the current range queue. */
       cur = q_dequeue(q);
 
+      /* Ran out of candidates before running out of spill range! */
+      if (cur == NULL)
+         break;
+
       /* Enqueue all its adjacencies to the next range queue. */
-      for (i=0; i < cur->njumps; i++) {
+      for (i=0; i<cur->njumps; i++) {
          if (cur->jumps[i].target->spilled == 0 && !jp_isFlag( &cur->jumps[i], JP_HIDDEN ) && !jp_isFlag( &cur->jumps[i], JP_EXITONLY )) {
             q_enqueue( qn, cur->jumps[i].target );
             cur->jumps[i].target->spilled = 1;
@@ -3365,10 +3368,36 @@ void system_addAllPlanetsPresence( StarSystem *sys )
       return;
    }
 
-   for(i = 0; i < sys->nplanets; i++)
+   for(i=0; i<sys->nplanets; i++)
       system_addPresence(sys, sys->planets[i]->faction, sys->planets[i]->presenceAmount, sys->planets[i]->presenceRange);
+}
 
-   return;
+
+/**
+ * @brief Reset the presence of all systems.
+ */
+void space_reconstructPresences( void )
+{
+   int i;
+
+   /* Reset the presence in each system. */
+   for (i=0; i<systems_nstack; i++) {
+      if (systems_stack[i].presence)
+         free(systems_stack[i].presence);
+      systems_stack[i].presence  = NULL;
+      systems_stack[i].npresence = 0;
+      systems_stack[i].ownerpresence = 0.;
+   }
+
+   /* Re-add presence to each system. */
+   for (i=0; i<systems_nstack; i++)
+      system_addAllPlanetsPresence(&systems_stack[i]);
+
+   /* Determine dominant faction. */
+   for (i=0; i<systems_nstack; i++) {
+      system_setFaction( &systems_stack[i] );
+      systems_stack[i].ownerpresence = system_getPresence( &systems_stack[i], systems_stack[i].faction );
+   }
 }
 
 
