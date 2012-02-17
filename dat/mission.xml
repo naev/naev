@@ -682,7 +682,7 @@
   </avail>
  </mission>
  <mission name="The Runaway">
-  <lua>neutral/runaway</lua>
+  <lua>runaway/runaway_cynthia</lua>
   <flags>
     <unique />
   </flags>
@@ -690,6 +690,17 @@
    <chance>110</chance>
    <location>Bar</location>
    <system>Gamma Polaris</system>
+  </avail>
+ </mission>
+ <mission name="The Search for Cynthia">
+  <lua>runaway/runaway_search</lua>
+  <flags>
+  </flags>
+  <avail>
+   <cond>player.misnDone("The Runaway")</cond>
+   <chance>100</chance>
+   <location>Bar</location>
+   <system>Goddard</system>
   </avail>
  </mission>
 </Missions>
