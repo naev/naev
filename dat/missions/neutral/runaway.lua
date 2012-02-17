@@ -16,10 +16,12 @@ You wonder who she is, but you dare not ask. Do you accept?]]
 not_enough_cargospace = "Your cargo hold doesn't have enough free space."
 misn_desc = "Deliver Cynthia safely to %s in the %s system."
 reward_desc = "%s credits on delivery."
+
 post_accept = {}
 post_accept[1] = [["Thank you. But we must leave now, before anyone sees me."]]
 misn_accomplished = [[As you walk into the docking bay, she warns you to look out behind yourself.
 When you look back to where she was, nothing remains but a tidy pile of credit chips and a worthless pendant.]]
+
 osd_text = {}
 osd_text[1] = "Deliver Cynthia to Zhiru in the Goddard system"
 
@@ -38,18 +40,19 @@ function create ()
 
    reward = 75000
    
-
    misn.setNPC( npc_name, "neutral/miner2" )
    misn.setDesc( bar_desc )
 end
 
 
 function accept ()
-
+   --This mission does not make any system claims
    if not tk.yesno( title, string.format( misn_desc_pre_accept, reward, targetworld:name() ) ) then
       misn.finish()
    end
-
+   
+   --Our *cargo* weighs nothing
+   --This will probably cause a mess if this fails
    if player.pilot():cargoFree() < 0 then
       tk.msg( title, not_enough_cargospace )
       misn.finish()
@@ -79,6 +82,7 @@ function accept ()
 end
 
 function land ()
+  --If we land, check if we're at our destination
    if planet.cur() == targetworld then
       misn.cargoRm( cargoID )
       player.pay( reward )
@@ -90,6 +94,7 @@ function land ()
 end
 
 function abort ()
+  --Clean up
    misn.cargoRm( cargoID )
    misn.osdDestroy()
    misn.finish( false )
