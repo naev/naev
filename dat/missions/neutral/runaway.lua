@@ -14,11 +14,10 @@ You wonder who she must be to have this many credits on her person.
 "I need you to take me to Zhiru."
 You wonder who she is, but you dare not ask. Do you accept?]]
 not_enough_cargospace = "Your cargo hold doesn't have enough free space."
-misn_desc = "Deliver the cargo safely to %s in the %s system."
+misn_desc = "Deliver Cynthia safely to %s in the %s system."
 reward_desc = "%s credits on delivery."
 post_accept = {}
 post_accept[1] = [["Thank you. But we must leave now, before anyone sees me."]]
-post_accept[2] = "Deliver Cynthia to %s in the %s system. %s credits await you."
 misn_accomplished = [[As you walk into the docking bay, she warns you to look out behind yourself.
 When you look back to where she was, nothing remains but a tidy pile of credit chips and a worthless pendant.]]
 osd_text = {}
@@ -74,7 +73,6 @@ function accept ()
    misn.accept()
 
    tk.msg( title, post_accept[1] )
-   tk.msg( title, string.format( post_accept[2], targetworld:name(), targetworld_sys:name(), reward ) )
 
 
    hook.land("land")

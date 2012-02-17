@@ -684,9 +684,10 @@
  <mission name="The Runaway">
   <lua>neutral/runaway</lua>
   <flags>
+    <unique />
   </flags>
   <avail>
-   <chance>100</chance>
+   <chance>110</chance>
    <location>Bar</location>
    <system>Gamma Polaris</system>
   </avail>
