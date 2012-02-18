@@ -69,8 +69,7 @@ static char* xdgEnvDup(const char *name)
     env = xdgGetEnv( name );
     if (env != NULL)
         return strdup(env);
-    else
-        return NULL;
+     return NULL;
 }
 
 /** 
@@ -79,10 +78,9 @@ static char* xdgEnvDup(const char *name)
  * Sets @c errno to @c EINVAL if variable is not set or empty.
  *    @param envname Name of environment variable.
  *    @param relativefallback Path starting with "/" and relative to @c \$HOME to use as fallback.
- *    @param fallbacklength @c strlen(relativefallback).
  *    @return The home directory path or @c NULL of an error occurs.
  */
-static char * xdgGetRelativeHome( const char *envname, const char *relativefallback, unsigned int fallbacklength )
+static char * xdgGetRelativeHome( const char *envname, const char *relativefallback )
 {
     char *relhome;
     relhome = xdgEnvDup(envname);
@@ -94,6 +92,8 @@ static char * xdgGetRelativeHome( const char *envname, const char *relativefallb
         if (home == NULL)
             return NULL;
         homelen = strlen(home);
+        unsigned int fallbacklength;
+        fallbacklength = strlen( relativefallback );
         relhome = malloc( homelen + fallbacklength + 1 );
         if (relhome == NULL)
            return NULL;
@@ -116,7 +116,7 @@ const char* nfile_dataPath (void)
 
     if (naev_dataPath[0] == '\0') {
 #if HAS_UNIX
-        path = xdgGetRelativeHome("XDG_DATA_HOME", "/.local/share", strlen ("/.local/share"));
+        path = xdgGetRelativeHome( "XDG_DATA_HOME", "/.local/share" );
         if (path == NULL) {
             WARN("$XDG_DATA_HOME isn't set, using current directory.");
             path = strdup(".");
@@ -155,7 +155,7 @@ const char* nfile_configPath (void)
 
     if (naev_configPath[0] == '\0') {
 #if HAS_UNIX
-        path = xdgGetRelativeHome( "XDG_CONFIG_HOME", "/.config", strlen("/.config") );
+        path = xdgGetRelativeHome( "XDG_CONFIG_HOME", "/.config" );
         if (path == NULL) {
             WARN("$XDG_CONFIG_HOME isn't set, using current directory.");
             path = strdup(".");
@@ -194,7 +194,7 @@ const char* nfile_cachePath (void)
 
     if (naev_cachePath[0] == '\0') {
 #if HAS_UNIX
-        path = xdgGetRelativeHome("XDG_CACHE_HOME", "/.cache", strlen ("/.cache"));
+        path = xdgGetRelativeHome( "XDG_CACHE_HOME", "/.cache" );
         if (path == NULL) {
             WARN("$XDG_CACHE_HOME isn't set, using current directory.");
             path = strdup(".");
