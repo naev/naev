@@ -1,6 +1,8 @@
 --[[
-This is the "The Runaway" mission as described on the wiki.
-There will be more missions to detail how you are percieved as the kidnapper of "Cynthia"
+This is the second half of "The Runaway"
+Here, Cynthia's father pays you to track down his daughter.
+It is alluded to that Cynthia ran away due to her abusive mother.
+The father has been named after me, Old T. Man.
 --]]
 
 lang = naev.lang()
@@ -20,15 +22,22 @@ post_accept = {}
 post_accept[1] = [[Looking at the picture, you see that the locket matches the one that Cynthia wore, so you hand it to her father. "I believe that this was hers." Stunned, the man hands you a list of planets that they wanted to look for her on.]]
 
 misn_nifiheim = "After throughly searching the spaceport, you decide that she wasn't there."
-misn_nova_shakar = "At last! You find her, but she ducks into a tour bus when she sees you. The schedule says it's destined for Torloth"
-misn_torloth = "After chasing Cynthia through most of the station, you find her curled up at the end of a hall, crying. She comes on your ship without complaint."
+misn_nova_shakar = "At last! You find her, but she ducks into a tour bus when she sees you. The schedule says it's destined for Torloth. You begin to wonder if she'll want to be found."
+misn_torloth = "After chasing Cynthia through most of the station, you find her curled up at the end of a hall, crying. As you approach, she screams \"Why can't you leave me alone? I don't want to go back to my terrible parents!\" Will you take her anyway?"
+misn_capture = "Cynthia stops crying and proceeds to hide in the farthest corner of your ship. Attemps to talk to her turn up fruitless."
+misn_release = "\"Please, please, please don't ever come looking for me again, I beg of you!\""
+misn_release_father = "You tell the father that you checked every place on the list, and then some, but his daughter was nowhere to be found. You buy the old man a drink, then go back to the spaceport. Before you leave, he hands you a few credits. \"For your troubles.\""
 misn_father = "As Cynthia sees her father, she begins her crying anew. You overhear the father talking about how her abusive mother died. Cynthia becomes visibly happier, so you pick up your payment and depart."
 
 osd_text = {}
-osd_text[1] = "Search for Cynthia on Nifiheim in Dorihabi"
-osd_text[2] = "Search for Cynthia on Nova Shakar in Shakar"
-osd_text[3] = "Catch Cynthia on Torloth in Cygnus"
-osd_text[4] = "Return to Cynthia's father on Zhiru in the Goddard system."
+osd_text[1] = "Search for Cynthia on Niflheim in Dohriabi."
+osd_text[2] = "Search for Cynthia on Nova Shakar in Shakar."
+osd_text[3] = "Search for Cynthia on Selphod in Eridani."
+osd_text[4] = "Search for Cynthia on Emperor's Fist in Gamma Polaris."
+
+osd3 = "Catch Cynthia on Torloth in Cygnus"
+osd4 = "Return Cynthia to her father on Zhiru in the Goddard system."
+osdlie = "Go to Zhiru in Goddard to lie to Cynthia's father"
 
 end
 
@@ -36,12 +45,13 @@ end
 function create ()
    startworld, startworld_sys = planet.cur()
 
-   targetworld_sys = system.get("Dorihabi")
-   targetworld = planet.get("Nifiheim")
-
+   targetworld_sys = system.get("Dohriabi")
+   targetworld = planet.get("Niflheim")
+   
+   releasereward = 25000
    reward = 100000
    
-   misn.setNPC( npc_name, "neutral/miner2" )
+   misn.setNPC( npc_name, "neutral/male1" )
    misn.setDesc( bar_desc )
 end
 
@@ -62,7 +72,7 @@ function accept ()
    misn.setReward( string.format( reward_desc, reward ) )
 
    misn.setDesc( string.format( misn_desc, targetworld:name(), targetworld_sys:name() ) )
-   runawayMarker = misn.markerAdd( system.get("Nifiheim"), "low")
+   runawayMarker = misn.markerAdd( system.get("Dohriabi"), "low")
 
 
    misn.accept()
@@ -75,35 +85,57 @@ end
 
 function land ()
   
-  --If we land on Nifiheim, display message, reset target and carry on.
-   if planet.cur() == targetworld and targetworld == targetworld = planet.get("Nifiheim") then
+  --If we land on Niflheim, display message, reset target and carry on.
+   if planet.cur() == targetworld and targetworld == planet.get("Niflheim") then
       targetworld = planet.get("Nova Shakar")
       tk.msg(title, misn_nifiheim)
       misn.osdActive(2)
-      misn.markerMove(runawayMarker, system.get("Dorihabi"))
+      misn.markerMove(runawayMarker, system.get("Shakar"))
    end
    
    --If we land on Nova Shakar, display message, reset target and carry on.
-   if planet.cur() == targetworld and targetworld == targetworld = planet.get("Nova Shakar") then
+   if planet.cur() == targetworld and targetworld == planet.get("Nova Shakar") then
       targetworld = planet.get("Torloth")
       tk.msg(title, misn_nova_shakar)
+      osd_text[3] = osd3
+      osd_text[4] = osd4
+      misn.osdDestroy()
+      misn.osdCreate(title,osd_text)
       misn.osdActive(3)
-      misn.markermove(runawayMarker, system.get("Shakar"))
+      misn.markerMove(runawayMarker, system.get("Cygnus"))
    end
    
-   --If we land on Torloth, display message, reset target and carry on.
-   if planet.cur() == targetworld and targetworld == targetworld = planet.get("Torloth") then
+   --If we land on Torloth, change osd, display message, reset target and carry on.
+   if planet.cur() == targetworld and targetworld == planet.get("Torloth") then
       targetworld = planet.get("Zhiru")
-      tk.msg(title, misn_torloth)
+      
+      --If you decide to release her, speak appropiately, otherwise carry on
+      if not tk.yesno(title, misn_torloth) then
+         osd_text[4] = osdlie
+         tk.msg(title, misn_release)
+      else
+	 tk.msg(title, misn_capture)
+      end
+      
+      misn.osdDestroy()
+      misn.osdCreate(title,osd_text)
       misn.osdActive(4)
-      misn.markermove(runawayMarker, system.get("Goddard"))
+      misn.markerMove(runawayMarker, system.get("Goddard"))
    end
    
    --If we land on Zhiru to finish the mission, clean up, reward, and leave.
-   if planet.cur() == targetworld and targetworld == targetworld = planet.get("Zhiru") then
+   if planet.cur() == targetworld and targetworld == planet.get("Zhiru") then
       misn.markerRm(runawayMarker)
-      tk.msg(title, misn_father)
-      player.pay(reward)
+      
+      --Talk to the father and get the reward
+      if osd_text[4] == osd4 then
+         tk.msg(title, misn_father)
+         player.pay(reward)
+      else
+	 tk.msg(title, misn_release_father)
+	 player.pay(releasereward)
+      end
+      
       misn.osdDestroy()
       misn.finish(true)
    end
@@ -111,6 +143,7 @@ end
 
 function abort ()
   --Clean up
+   misn.markerRm(runawayMarker)
    misn.osdDestroy()
    misn.finish( false )
 end
