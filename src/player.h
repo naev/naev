@@ -31,7 +31,8 @@
 #define PLAYER_HOOK_HYPER  27
 #define PLAYER_TUTORIAL    30  /**< Player is doing the tutorial. */
 #define PLAYER_MFLY        31  /**< Player has enabled mouse flying. */
-#define PLAYER_FLAGS_MAX   PLAYER_MFLY + 1 /* Maximum number of flags. */
+#define PLAYER_NOSAVE      32  /**< Player is not allowed to save. */
+#define PLAYER_FLAGS_MAX   PLAYER_NOSAVE + 1 /* Maximum number of flags. */
 typedef char PlayerFlags[ PLAYER_FLAGS_MAX ];
 
 /* flag functions */

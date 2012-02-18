@@ -15,6 +15,7 @@
  * Sensors and range.
  */
 void pilot_updateSensorRange (void);
+double pilot_sensorRange( void );
 int pilot_inRange( const Pilot *p, double x, double y );
 int pilot_inRangePilot( const Pilot *p, const Pilot *target );
 int pilot_inRangePlanet( const Pilot *p, int target );

@@ -28,6 +28,7 @@
 #include "physics.h"
 #include "conf.h"
 #include "player.h"
+#include "camera.h"
 
 
 #define SOUND_PREFIX       "snd/sounds/" /**< Prefix of where to find sounds. */
@@ -422,6 +423,8 @@ int sound_playPos( int sound, double px, double py, double vx, double vy )
 {
    alVoice *v;
    alSound *s;
+   double cx, cy, dist;
+   int target;
 
    if (sound_disabled)
       return 0;
@@ -429,8 +432,20 @@ int sound_playPos( int sound, double px, double py, double vx, double vy )
    if ((sound < 0) || (sound >= sound_nlist))
       return -1;
 
-   if (player.p != NULL && !pilot_inRange( player.p, px, py ))
-      return 0;
+   target = cam_getTarget();
+
+   /* Following a pilot. */
+   if (target) {
+      if (!pilot_inRange( pilot_get( target ), px, py ))
+         return 0;
+   }
+   /* Set to a position. */
+   else {
+      cam_getPos(&cx, &cy);
+      dist = pow2(px - cx) + pow2(py - cy);
+      if (dist > pilot_sensorRange())
+         return 0;
+   }
 
    /* Gets a new voice. */
    v = voice_new();
