@@ -172,6 +172,7 @@ void naev_quit (void)
 int main( int argc, char** argv )
 {
    char buf[PATH_MAX];
+   int oldconfig;
 
    /* Save the binary path. */
    binary_path = strdup(argv[0]);
@@ -220,6 +221,20 @@ int main( int argc, char** argv )
 
    /* Set the configuration. */
    snprintf(buf, PATH_MAX, "%s"CONF_FILE, nfile_configPath());
+
+#if HAS_UNIX
+   oldconfig = 0;
+   if (!nfile_fileExists( buf )) {
+      char *home, buf2[PATH_MAX];
+      home = SDL_getenv( "HOME" );
+      if (home != NULL) {
+         snprintf( buf2, PATH_MAX, "%s/.naev/"CONF_FILE, home );
+         if (nfile_fileExists( buf2 ))
+            oldconfig = 1;
+      }
+   }
+#endif /* HAS_UNIX */
+
    conf_setDefaults(); /* set the default config values */
    conf_loadConfig(buf); /* Lua to parse the configuration file */
    conf_parseCLI( argc, argv ); /* parse CLI arguments */
@@ -330,6 +345,17 @@ int main( int argc, char** argv )
    if ((SDL_GetTicks() - time_ms) < NAEV_INIT_DELAY)
       SDL_Delay( NAEV_INIT_DELAY - (SDL_GetTicks() - time_ms) );
    fps_init(); /* initializes the time_ms */
+
+#ifdef HAS_UNIX
+   /* Tell the player to migrate their configuration files out of ~/.naev */
+   if (oldconfig) {
+      dialogue_alert( "Your configuration files are in a deprecated location and must be migrated:\n"
+            "   \er%s/.naev/\e0\n\n"
+            "Please run the update script, likely found in your Naev data directory:\n"
+            "   \er%s/naev-confupdate.sh\e0", SDL_getenv("HOME"), ndata_getDirname() );
+   }
+#endif
+
    /*
     * main loop
     */
