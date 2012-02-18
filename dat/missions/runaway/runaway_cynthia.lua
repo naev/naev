@@ -44,7 +44,7 @@ function create ()
    end
 
    reward = 75000
-   
+
    misn.setNPC( npc_name, "neutral/miner2" )
    misn.setDesc( bar_desc )
 end
@@ -55,19 +55,19 @@ function accept ()
    if not tk.yesno( title, string.format( misn_desc_pre_accept, reward, targetworld:name() ) ) then
       misn.finish()
    end
-   
+
    --Our *cargo* weighs nothing
    --This will probably cause a mess if this fails
    if player.pilot():cargoFree() < 0 then
       tk.msg( title, not_enough_cargospace )
       misn.finish()
    end
-   
+
    if misn.accept() then
       misn.osdCreate(title,osd_text)
       misn.osdActive(1)
    end
-   
+
    cargoID = misn.cargoAdd( cargoname, 0 )
 
    misn.setTitle( title )

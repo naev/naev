@@ -50,10 +50,10 @@ function create ()
 
    targetworld_sys = system.get("Dohriabi")
    targetworld = planet.get("Niflheim")
-   
+
    releasereward = 25000
    reward = 100000
-   
+
    misn.setNPC( npc_name, "neutral/male1" )
    misn.setDesc( bar_desc )
 end
@@ -64,7 +64,7 @@ function accept ()
    if not tk.yesno( title, string.format( misn_desc_pre_accept, reward, targetworld:name() ) ) then
       misn.finish()
    end
-   
+
    --Set up the osd
    if misn.accept() then
       misn.osdCreate(title,osd_text)
@@ -86,65 +86,69 @@ function accept ()
 end
 
 function land ()
-  
-  --If we land on Niflheim, display message, reset target and carry on.
-   if planet.cur() == targetworld and targetworld == planet.get("Niflheim") then
+   -- Only proceed if at the target.
+   if planet.cur() ~= targetworld then
+      return
+   end
+
+   --If we land on Niflheim, display message, reset target and carry on.
+   if targetworld == planet.get("Niflheim") then
       targetworld = planet.get("Nova Shakar")
       tk.msg(title, misn_nifiheim)
       misn.osdActive(2)
       misn.markerMove(runawayMarker, system.get("Shakar"))
    end
-   
+
    --If we land on Nova Shakar, display message, reset target and carry on.
-   if planet.cur() == targetworld and targetworld == planet.get("Nova Shakar") then
+   if targetworld == planet.get("Nova Shakar") then
       targetworld = planet.get("Torloth")
       tk.msg(title, misn_nova_shakar)
-      
+
       --Add in the *secret* osd text
       osd_text[3] = osd3
       osd_text[4] = osd4
-      
+
       --Update the osd
       misn.osdDestroy()
       misn.osdCreate(title,osd_text)
       misn.osdActive(3)
-      
+
       misn.markerMove(runawayMarker, system.get("Cygnus"))
    end
-   
+
    --If we land on Torloth, change osd, display message, reset target and carry on.
-   if planet.cur() == targetworld and targetworld == planet.get("Torloth") then
+   if targetworld == planet.get("Torloth") then
       targetworld = planet.get("Zhiru")
-      
+
       --If you decide to release her, speak appropiately, otherwise carry on
       if not tk.yesno(title, misn_torloth) then
          osd_text[4] = osdlie
          tk.msg(title, misn_release)
       else
-	 tk.msg(title, misn_capture)
+         tk.msg(title, misn_capture)
       end
-      
+
       --Update the osd
       misn.osdDestroy()
       misn.osdCreate(title,osd_text)
       misn.osdActive(4)
-      
+
       misn.markerMove(runawayMarker, system.get("Goddard"))
    end
-   
+
    --If we land on Zhiru to finish the mission, clean up, reward, and leave.
-   if planet.cur() == targetworld and targetworld == planet.get("Zhiru") then
+   if targetworld == planet.get("Zhiru") then
       misn.markerRm(runawayMarker)
-      
+
       --Talk to the father and get the reward
       if osd_text[4] == osd4 then
          tk.msg(title, misn_father)
          player.pay(reward)
       else
-	 tk.msg(title, misn_release_father)
-	 player.pay(releasereward)
+	      tk.msg(title, misn_release_father)
+	      player.pay(releasereward)
       end
-      
+
       --Clean up and close up shop
       misn.osdDestroy()
       misn.finish(true)
