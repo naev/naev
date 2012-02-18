@@ -98,7 +98,8 @@ static char * xdgGetRelativeHome( const char *envname, const char *relativefallb
         if (relhome == NULL)
            return NULL;
         memcpy( relhome, home, homelen );
-        memcpy( &relhome[ homelen ], relativefallback, fallbacklength+1 );
+        memcpy( &relhome[ homelen ], relativefallback, fallbacklength + 1 );
+        relhome[ homelen + fallbacklength ] = '\0'; /* Just in case. */
     }
     return relhome;
 }
