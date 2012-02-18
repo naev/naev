@@ -656,9 +656,10 @@ float* noise_genNebulaMap( const int w, const int h, const int n, float rug )
    zoom        = rug * ((float)h/768.)*((float)w/1024.);
 
    /* create noise and data */
-   noise       = noise_new( 3, hurst, lacunarity );
+   noise      = noise_new( 3, hurst, lacunarity );
    nebula     = malloc(sizeof(float)*w*h*n);
    if (nebula == NULL) {
+      noise_delete( noise );
       WARN("Out of memory!");
       return NULL;
    }
@@ -746,8 +747,9 @@ float* noise_genNebulaPuffMap( const int w, const int h, float rug )
 
    /* create noise and data */
    noise       = noise_new( 2, hurst, lacunarity );
-   nebula     = malloc(sizeof(float)*w*h);
+   nebula      = malloc(sizeof(float)*w*h);
    if (nebula == NULL) {
+      noise_delete( noise );
       WARN("Out of memory!");
       return NULL;
    }
