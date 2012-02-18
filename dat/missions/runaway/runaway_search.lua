@@ -18,6 +18,7 @@ misn_desc_pre_accept = [[Approaching him, he hands you a paper. It offers a 100,
 "That's my girl. She disappeared quite a few STU ago. We managed to track her down to here, but where she went afterwards remains a mystery. We know she was kidnapped, but if you know anything..." The man begins to cry. "Have you seen any trace of her?"]]
 misn_desc = "Search for Cynthia."
 reward_desc = "%s credits on delivery."
+cargoname = "Person"
 
 post_accept = {}
 post_accept[1] = [[Looking at the picture, you see that the locket matches the one that Cynthia wore, so you hand it to her father. "I believe that this was hers." Stunned, the man hands you a list of planets that they wanted to look for her on.]]
@@ -122,6 +123,7 @@ function land ()
          tk.msg(title, misn_release)
       else
 	 tk.msg(title, misn_capture)
+	 cargoID = misn.cargoAdd( cargoname, 0 )
       end
       
       --Update the osd
@@ -140,6 +142,7 @@ function land ()
       if osd_text[4] == osd4 then
          tk.msg(title, misn_father)
          player.pay(reward)
+	 misn.cargoRm( cargoID )
       else
 	 tk.msg(title, misn_release_father)
 	 player.pay(releasereward)
