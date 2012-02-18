@@ -133,6 +133,7 @@ static void sysedit_btnEdit( unsigned int wid_unused, char *unused );
 static void sysedit_editPnt( void );
 static void sysedit_editPntClose( unsigned int wid, char *unused );
 static void sysedit_planetDesc( unsigned int wid, char *unused );
+static void sysedit_planetDescReturn( unsigned int wid, char *unused );
 static void sysedit_planetDescClose( unsigned int wid, char *unused );
 static void sysedit_genServicesList( unsigned int wid );
 static void sysedit_btnTechEdit( unsigned int wid, char *unused );
@@ -146,6 +147,7 @@ static void sysedit_btnGFXClose( unsigned int wid, char *wgt );
 static void sysedit_btnGFXApply( unsigned int wid, char *wgt );
 static void sysedit_btnFaction( unsigned int wid_unused, char *unused );
 static void sysedit_btnFactionSet( unsigned int wid, char *unused );
+static void sysedit_editJumpClose( unsigned int wid, char *unused );
 /* Jump editing */
 static void sysedit_editJump( void );
 /* Keybindings handling. */
@@ -326,32 +328,6 @@ static void sysedit_editPntClose( unsigned int wid, char *unused )
 
    /* Add the new presence. */
    system_addPresence(sysedit_sys, p->faction, p->presenceAmount, p->presenceRange);
-
-   window_close( wid, unused );
-}
-
-/**
- * @brief Closes the jump editor, saving the changes made.
- */
-static void sysedit_editJumpClose( unsigned int wid, char *unused )
-{
-   (void) unused;
-   JumpPoint *j;
-
-   j = &sysedit_sys->jumps[ sysedit_select[0].u.jump ];
-   if (jp_hidden == 1) {
-      jp_setFlag( j, JP_HIDDEN );
-      jp_rmFlag(  j, JP_EXITONLY );
-   }
-   else if (jp_exit == 1) {
-      jp_setFlag( j, JP_EXITONLY );
-      jp_rmFlag(  j, JP_HIDDEN );
-   }
-   else {
-      jp_rmFlag( j, JP_HIDDEN );
-      jp_rmFlag( j, JP_EXITONLY );
-   }
-   j->hide  = pow2( atof(window_getInput( sysedit_widEdit, "inpHide" )) );
 
    window_close( wid, unused );
 }
@@ -1321,6 +1297,32 @@ static void sysedit_editJump( void )
 }
 
 /**
+ * @brief Closes the jump editor, saving the changes made.
+ */
+static void sysedit_editJumpClose( unsigned int wid, char *unused )
+{
+   (void) unused;
+   JumpPoint *j;
+
+   j = &sysedit_sys->jumps[ sysedit_select[0].u.jump ];
+   if (jp_hidden == 1) {
+      jp_setFlag( j, JP_HIDDEN );
+      jp_rmFlag(  j, JP_EXITONLY );
+   }
+   else if (jp_exit == 1) {
+      jp_setFlag( j, JP_EXITONLY );
+      jp_rmFlag(  j, JP_HIDDEN );
+   }
+   else {
+      jp_rmFlag( j, JP_HIDDEN );
+      jp_rmFlag( j, JP_EXITONLY );
+   }
+   j->hide  = pow2( atof(window_getInput( sysedit_widEdit, "inpHide" )) );
+
+   window_close( wid, unused );
+}
+
+/**
  * @brief Displays the planet landing description and bar description in a separate window.
  */
 static void sysedit_planetDesc( unsigned int wid, char *unused )
@@ -1345,7 +1347,7 @@ static void sysedit_planetDesc( unsigned int wid, char *unused )
    bw = (SYSEDIT_EDIT_WIDTH - 40 - 15 * 3) / 4.;
 
    window_addButton( wid, -20 - bw*3 - 15*3, 20, bw, BUTTON_HEIGHT,
-         "btnProperties", "Properties", window_close );
+         "btnProperties", "Properties", sysedit_planetDescReturn );
 
    window_addButton( wid, -20, 20, bw, BUTTON_HEIGHT,
          "btnClose", "Close", sysedit_planetDescClose );
@@ -1354,16 +1356,47 @@ static void sysedit_planetDesc( unsigned int wid, char *unused )
    window_addText( wid, x, y, w, gl_defFont.h, 0, "txtDescriptionLabel", &gl_defFont, &cBlack,
          "Landing Description" );
    y -= gl_defFont.h + 10;
-   window_addText( wid, x, y, w, h, 0, "txtDescription", &gl_smallFont, &cBlack,
-         desc );
+   window_addInput( wid, x, y, w, h, "txtDescription", 1024, 0,
+         NULL );
+   window_setInputFilter( wid, "txtDescription",
+         "[]{}/\\~<>@#$^&|_" );
    y -= h + 10;
+   /* Load current values. */
+   window_setInput( wid, "txtDescription", desc );
 
    /* Bar description label and text. */
    window_addText( wid, x, y, w, gl_defFont.h, 0, "txtBarDescriptionLabel", &gl_defFont, &cBlack,
          "Bar Description" );
    y -= gl_defFont.h + 10;
-   window_addText( wid, x, y, w, h, 0, "txtBarDescription", &gl_smallFont, &cBlack,
-         bardesc );
+   window_addInput( wid, x, y, w, h, "txtBarDescription", 1024, 0,
+         NULL );
+   window_setInputFilter( wid, "txtBarDescription",
+         "[]{}/\\~<>@#$^&|_" );
+   /* Load current values. */
+   window_setInput( wid, "txtBarDescription", bardesc );
+}
+
+/**
+ * @brief Closes the planet description window and returns to the properties window.
+ */
+static void sysedit_planetDescReturn( unsigned int wid, char *unused )
+{
+   Planet *p;
+   char *desc, *bardesc, *mydesc, *mybardesc;
+
+   p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
+
+   mydesc = window_getInput( wid, "txtDescription" );
+   mybardesc = window_getInput( wid, "txtBarDescription" );
+
+   desc    = p->description;
+   bardesc = p->bar_description;
+   desc = realloc(desc, sizeof(mydesc));
+   bardesc = realloc(bardesc, sizeof(mybardesc));
+   memcpy( desc, mydesc, sizeof(mydesc));
+   memcpy( bardesc, mybardesc, sizeof(mybardesc));
+
+   window_close( wid, unused );
 }
 
 /**
@@ -1371,10 +1404,9 @@ static void sysedit_planetDesc( unsigned int wid, char *unused )
  */
 static void sysedit_planetDescClose( unsigned int wid, char *unused )
 {
-   window_close( wid, unused );
+   sysedit_planetDescReturn( wid, unused );
    sysedit_editPntClose( sysedit_widEdit, unused );
 }
-
 
 /**
  * @brief Generates the planet services list.
