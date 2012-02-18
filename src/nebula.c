@@ -32,8 +32,7 @@
 
 #define NEBULA_Z             16 /**< Z plane */
 #define NEBULA_PUFFS         32 /**< Amount of puffs to generate */
-#define NEBULA_DIR           "gen/" /**< Directory containing the nebula stuff. */
-#define NEBULA_PATH_BG       NEBULA_DIR"nebu_bg_%dx%d_%02d.png" /**< Nebula path format. */
+#define NEBULA_PATH_BG       "nebu_bg_%dx%d_%02d.png" /**< Nebula path format. */
 
 #define NEBULA_PUFF_BUFFER   300 /**< Nebula buffer */
 
@@ -739,7 +738,7 @@ static int nebu_generate (void)
    h = SCREEN_H;
 
    /* Try to make the dir first if it fails. */
-   nfile_dirMakeExist( "%s"NEBULA_DIR, nfile_basePath() );
+   nfile_dirMakeExist( "%s", nfile_cachePath() );
 
    /* Generate all the nebula backgrounds */
    nebu = noise_genNebulaMap( w, h, NEBULA_Z, 5. );
@@ -798,7 +797,7 @@ static void nebu_generatePuffs (void)
 static int nebu_checkCompat( const char* file )
 {
    /* first check to see if file exists */
-   if (nfile_fileExists("%s%s", nfile_basePath(), file) == 0)
+   if (nfile_fileExists("%s%s", nfile_cachePath(), file) == 0)
       return -1;
    return 0;
 }
@@ -823,7 +822,7 @@ static int saveNebula( float *map, const uint32_t w, const uint32_t h, const cha
    sur = nebu_surfaceFromNebulaMap( map, w, h );
 
    /* save */
-   snprintf(file_path, PATH_MAX, "%s%s", nfile_basePath(), file );
+   snprintf(file_path, PATH_MAX, "%s%s", nfile_cachePath(), file );
    ret = SDL_SavePNG( sur, file_path );
 
    /* cleanup */
@@ -847,7 +846,7 @@ static SDL_Surface* loadNebula( const char* file )
    npng_t *npng;
 
    /* loads the file */
-   snprintf(file_path, PATH_MAX, "%s%s", nfile_basePath(), file );
+   snprintf(file_path, PATH_MAX, "%s%s", nfile_cachePath(), file );
    rw    = SDL_RWFromFile( file_path, "rb" );;
    npng  = npng_open( rw );
    sur   = npng_readSurface( npng, 0, 1 );

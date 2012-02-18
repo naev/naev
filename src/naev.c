@@ -192,8 +192,8 @@ int main( int argc, char** argv )
    debug_sigInit();
 
    /* Create the home directory if needed. */
-   if (nfile_dirMakeExist("%s", nfile_basePath()))
-      WARN("Unable to create naev directory '%s'", nfile_basePath());
+   if (nfile_dirMakeExist("%s", nfile_configPath()))
+      WARN("Unable to create config directory '%s'", nfile_configPath());
 
    /* Must be initialized before input_init is called. */
    if (SDL_InitSubSystem(SDL_INIT_VIDEO) < 0) {
@@ -219,7 +219,7 @@ int main( int argc, char** argv )
    input_init();
 
    /* Set the configuration. */
-   snprintf(buf, PATH_MAX, "%s"CONF_FILE, nfile_basePath());
+   snprintf(buf, PATH_MAX, "%s"CONF_FILE, nfile_configPath());
    conf_setDefaults(); /* set the default config values */
    conf_loadConfig(buf); /* Lua to parse the configuration file */
    conf_parseCLI( argc, argv ); /* parse CLI arguments */
