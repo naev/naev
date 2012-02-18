@@ -133,7 +133,7 @@ const char* nfile_dataPath (void)
          WARN("%%APPDATA%% isn't set, using current directory.");
          path = ".";
       }
-      snprintf( naev_base, PATH_MAX, "%s/naev/", path );
+      snprintf( naev_dataPath, PATH_MAX, "%s/naev/", path );
 #else
 #error "Feature needs implementation on this Operating System for Naev to work."
 #endif
@@ -172,7 +172,7 @@ const char* nfile_configPath (void)
          WARN("%%APPDATA%% isn't set, using current directory.");
          path = ".";
       }
-      snprintf( naev_base, PATH_MAX, "%s/naev/", path );
+      snprintf( naev_configPath, PATH_MAX, "%s/naev/", path );
 #else
 #error "Feature needs implementation on this Operating System for Naev to work."
 #endif
@@ -211,7 +211,7 @@ const char* nfile_cachePath (void)
          WARN("%%APPDATA%% isn't set, using current directory.");
          path = ".";
       }
-      snprintf( naev_base, PATH_MAX, "%s/naev/", path );
+      snprintf( naev_cachePath, PATH_MAX, "%s/naev/", path );
 #else
 #error "Feature needs implementation on this Operating System for Naev to work."
 #endif
