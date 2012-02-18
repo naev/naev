@@ -3,6 +3,7 @@ This is the second half of "The Runaway"
 Here, Cynthia's father pays you to track down his daughter.
 It is alluded to that Cynthia ran away due to her abusive mother.
 The father has been named after me, Old T. Man.
+I'm joking about the last line a little. If you want to name him, feel free.
 --]]
 
 lang = naev.lang()
@@ -29,12 +30,14 @@ misn_release = "\"Please, please, please don't ever come looking for me again, I
 misn_release_father = "You tell the father that you checked every place on the list, and then some, but his daughter was nowhere to be found. You buy the old man a drink, then go back to the spaceport. Before you leave, he hands you a few credits. \"For your troubles.\""
 misn_father = "As Cynthia sees her father, she begins her crying anew. You overhear the father talking about how her abusive mother died. Cynthia becomes visibly happier, so you pick up your payment and depart."
 
+--Here are stored the fake texts for the osd
 osd_text = {}
 osd_text[1] = "Search for Cynthia on Niflheim in Dohriabi."
 osd_text[2] = "Search for Cynthia on Nova Shakar in Shakar."
 osd_text[3] = "Search for Cynthia on Selphod in Eridani."
 osd_text[4] = "Search for Cynthia on Emperor's Fist in Gamma Polaris."
 
+--Can't let them see what's coming up, can I?
 osd3 = "Catch Cynthia on Torloth in Cygnus"
 osd4 = "Return Cynthia to her father on Zhiru in the Goddard system."
 osdlie = "Go to Zhiru in Goddard to lie to Cynthia's father"
@@ -62,18 +65,17 @@ function accept ()
       misn.finish()
    end
    
+   --Set up the osd
    if misn.accept() then
       misn.osdCreate(title,osd_text)
       misn.osdActive(1)
    end
 
    misn.setTitle( title )
-
    misn.setReward( string.format( reward_desc, reward ) )
 
    misn.setDesc( string.format( misn_desc, targetworld:name(), targetworld_sys:name() ) )
    runawayMarker = misn.markerAdd( system.get("Dohriabi"), "low")
-
 
    misn.accept()
 
@@ -97,11 +99,16 @@ function land ()
    if planet.cur() == targetworld and targetworld == planet.get("Nova Shakar") then
       targetworld = planet.get("Torloth")
       tk.msg(title, misn_nova_shakar)
+      
+      --Add in the *secret* osd text
       osd_text[3] = osd3
       osd_text[4] = osd4
+      
+      --Update the osd
       misn.osdDestroy()
       misn.osdCreate(title,osd_text)
       misn.osdActive(3)
+      
       misn.markerMove(runawayMarker, system.get("Cygnus"))
    end
    
@@ -117,9 +124,11 @@ function land ()
 	 tk.msg(title, misn_capture)
       end
       
+      --Update the osd
       misn.osdDestroy()
       misn.osdCreate(title,osd_text)
       misn.osdActive(4)
+      
       misn.markerMove(runawayMarker, system.get("Goddard"))
    end
    
@@ -136,6 +145,7 @@ function land ()
 	 player.pay(releasereward)
       end
       
+      --Clean up and close up shop
       misn.osdDestroy()
       misn.finish(true)
    end
