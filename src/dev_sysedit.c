@@ -276,6 +276,9 @@ static void sysedit_close( unsigned int wid, char *wgt )
    /* Remove selection. */
    sysedit_deselect();
 
+   /* Set the dominant faction. */
+   system_setFaction( sysedit_sys );
+
    /* Close the window. */
    window_close( wid, wgt );
 }
@@ -304,6 +307,10 @@ static void sysedit_editPntClose( unsigned int wid, char *unused )
    char *inp;
 
    p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
+
+   /* Remove the old presence. */
+   system_addPresence(sysedit_sys, p->faction, -p->presenceAmount, p->presenceRange);
+
    p->population     = (uint64_t)strtoull( window_getInput( sysedit_widEdit, "inpPop" ), 0, 10);
    p->class          = planetclass_get( window_getInput( sysedit_widEdit, "inpClass" )[0] );
    inp               = window_getInput( sysedit_widEdit, "inpLand" );
@@ -316,6 +323,9 @@ static void sysedit_editPntClose( unsigned int wid, char *unused )
    p->presenceAmount = atof(window_getInput( sysedit_widEdit, "inpPresence" ));
    p->presenceRange  = atoi(window_getInput( sysedit_widEdit, "inpPresenceRange" ));
    p->hide           = pow2( atof(window_getInput( sysedit_widEdit, "inpHide" )) );
+
+   /* Add the new presence. */
+   system_addPresence(sysedit_sys, p->faction, p->presenceAmount, p->presenceRange);
 
    window_close( wid, unused );
 }

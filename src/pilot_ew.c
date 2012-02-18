@@ -114,6 +114,17 @@ void pilot_updateSensorRange (void)
 
 
 /**
+ * @brief Returns the default sensor range for the current system.
+ *
+ *    @return Sensor range.
+ */
+double pilot_sensorRange( void )
+{
+   return sensor_curRange;
+}
+
+
+/**
  * @brief Check to see if a position is in range of the pilot.
  *
  *    @param p Pilot to check to see if position is in his sensor range.
