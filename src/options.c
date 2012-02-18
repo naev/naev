@@ -1061,10 +1061,10 @@ static void opt_video( unsigned int wid )
    }
    res   = malloc( sizeof(char*) * (i+j) );
    nres  = 0;
+   res_def = 0;
    if (j) {
       res[0]   = malloc(16);
       snprintf( res[0], 16, "%dx%d", conf.width, conf.height );
-      res_def  = 0;
       nres     = 1;
    }
    for (i=0; modes[i]; i++) {
