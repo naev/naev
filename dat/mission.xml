@@ -695,10 +695,11 @@
  <mission name="The Search for Cynthia">
   <lua>runaway/runaway_search</lua>
   <flags>
+    <unique />
   </flags>
   <avail>
    <cond>player.misnDone("The Runaway")</cond>
-   <chance>100</chance>
+   <chance>110</chance>
    <location>Bar</location>
    <system>Goddard</system>
   </avail>
