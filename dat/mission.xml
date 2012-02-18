@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Missions>
  <mission name="Tutorial Mission">
   <lua>tutorial/tutmis</lua>
@@ -679,6 +679,29 @@
    <chance>50</chance>
    <location>Computer</location>
    <system>Shakar</system>
+  </avail>
+ </mission>
+ <mission name="The Runaway">
+  <lua>runaway/runaway_cynthia</lua>
+  <flags>
+    <unique />
+  </flags>
+  <avail>
+   <chance>110</chance>
+   <location>Bar</location>
+   <system>Gamma Polaris</system>
+  </avail>
+ </mission>
+ <mission name="The Search for Cynthia">
+  <lua>runaway/runaway_search</lua>
+  <flags>
+    <unique />
+  </flags>
+  <avail>
+   <cond>player.misnDone("The Runaway")</cond>
+   <chance>110</chance>
+   <location>Bar</location>
+   <system>Goddard</system>
   </avail>
  </mission>
 </Missions>
