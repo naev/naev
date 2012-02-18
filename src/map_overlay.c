@@ -100,7 +100,7 @@ int ovr_input( SDL_Event *event )
       p     = pilot_get(pid);
       rp    = MAX( 1.5 * PILOT_SIZE_APROX * p->ship->gfx_space->sw / 2, 20.*ovr_res );
 
-      if (pntid >=0) { /* Planet is closer. */
+      if (pntid >= 0) { /* Planet is closer. */
          pnt = cur_system->planets[ pntid ];
          r  = MAX( 1.5 * pnt->radius, 20. * ovr_res );
       }
