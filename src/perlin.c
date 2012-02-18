@@ -170,9 +170,9 @@ static float lattice1( perlin_data_t *pdata, int ix, float fx )
 }
 
 
-#define SWAP(a, b, t)      t = a; a = b; b = t /**< Swaps two values. */
-#define FLOOR(a) ((int)a - (a < 0 && a != (int)a)) /**< Limits to 0. */
-#define CUBIC(a)  ( a * a * (3 - 2*a) ) /**< Does cubic filtering. */
+#define SWAP(a, b, t)      (t) = (a); (a) = (b); (b) = (t) /**< Swaps two values. */
+#define FLOOR(a)           ((int)(a) - ((a) < 0 && (a) != (int)(a))) /**< Limits to 0. */
+#define CUBIC(a)           ( (a) * (a) * (3 - 2*(a)) ) /**< Does cubic filtering. */
 
 
 /**
@@ -476,7 +476,7 @@ float noise_turbulence1( perlin_data_t* pdata, float f[1], int octaves )
    /* Inner loop of spectral construction, where the fractal is built */
    for(i=0; i<octaves; i++)
    {
-      value += ABS(noise_get2(pdata,tf)) * pdata->exponent[i];
+      value += ABS(noise_get1(pdata,tf)) * pdata->exponent[i];
       tf[0] *= pdata->lacunarity;
    }
 
