@@ -709,7 +709,10 @@ Mission* missions_genList( int *n, int faction,
                m++;
                /* Extra allocation. */
                if (m > alloced) {
-                  alloced += 32;
+                  if (alloced == 0)
+                     alloced = 32;
+                  else
+                     alloced *= 2;
                   tmp      = realloc( tmp, sizeof(Mission) * alloced );
                }
                /* Initialize the mission. */
