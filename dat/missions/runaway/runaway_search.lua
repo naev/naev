@@ -142,10 +142,10 @@ function land ()
       if osd_text[4] == osd4 then
          tk.msg(title, misn_father)
          player.pay(reward)
-	 misn.cargoRm( cargoID )
+         misn.cargoRm( cargoID )
       else
-	 tk.msg(title, misn_release_father)
-	 player.pay(releasereward)
+         tk.msg(title, misn_release_father)
+         player.pay(releasereward)
       end
       
       --Clean up and close up shop
@@ -156,6 +156,7 @@ end
 
 function abort ()
   --Clean up
+   misn.cargoRm( cargoID )
    misn.markerRm(runawayMarker)
    misn.osdDestroy()
    misn.finish( false )
