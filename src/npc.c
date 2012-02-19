@@ -87,8 +87,10 @@ static unsigned int npc_add( NPC_t *npc )
    NPC_t *new_npc;
 
    /* Must be landed. */
-   if (!landed)
+   if (!landed) {
+      npc_free( npc );
       return 0;
+   }
 
    /* Create if needed. */
    if (npc_array == NULL)
