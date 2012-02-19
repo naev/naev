@@ -4,7 +4,7 @@
 # by only migrating explicitly Naev-owned files.
 
 # Set defaults if XDG variables aren't defined.
-[[ -z $XDG_DATA_HOME ]] && XDG_DATE_HOME=$HOME/.local/share
+[[ -z $XDG_DATA_HOME ]] && XDG_DATA_HOME=$HOME/.local/share
 [[ -z $XDG_CONFIG_HOME ]] && XDG_CONFIG_HOME=$HOME/.config
 [[ -z $XDG_CACHE_HOME ]] && XDG_CACHE_HOME=$HOME/.cache
 
