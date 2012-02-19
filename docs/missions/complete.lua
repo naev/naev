@@ -100,7 +100,6 @@ just call them using the correct syntax. You'll see a few examples later on.
 
 All other functions obviously have to be defined prior to use.
 
-The cli API is useless at this time.
 misn and evt provide very similar things, you should use misn for missions and evt for events respectively.
 
 
@@ -113,8 +112,11 @@ function create()
 end
 
  Create the mission - OBLIGATORY for every mission
+   This is the script entry point.
    You have to define this function and set a few basic parameters which
-   will be used by the bar, the mission computer and your board computer
+   will be used by the bar, the mission computer and your board computer.
+   For missions that are started in other ways, this function is simply
+   the entry point, and you can use it however you wish.
 
 
 
@@ -139,7 +141,7 @@ end
 
 
 function create ()
-   -- This will get called when the conditions in mission.xml are met.
+   -- This will get called when the conditions in mission.xml are met (or when the mission is initiated from another script).
    -- It is used to set up mission variables.
 
    -- Get the planet and system at which we currently are.
