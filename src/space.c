@@ -60,7 +60,7 @@
 
 #define LANDING_DATA          "dat/landing.lua" /**< Lua script containing landing data. */
 #define PLANET_DATA           "dat/assets" /**< XML file containing planets. */
-#define SYSTEM_DATA           "dat/ssys.xml" /**< XML file containing systems. */
+#define SYSTEM_DATA           "dat/ssys" /**< XML file containing systems. */
 
 #define PLANET_GFX_SPACE      "gfx/planet/space/" /**< Location of planet space graphics. */
 #define PLANET_GFX_EXTERIOR   "gfx/planet/exterior/" /**< Location of planet exterior graphics (when landed). */
@@ -1501,7 +1501,6 @@ static int planets_load ( void )
 
       file = malloc((strlen(PLANET_DATA)+strlen(planet_files[i])+2)*sizeof(char));
       snprintf(file,(strlen(PLANET_DATA)+strlen(planet_files[i])+2)*sizeof(char),"%s/%s",PLANET_DATA,planet_files[i]);
-      WARN("%s",file);
       buf = ndata_read( file, &bufsize );
       doc = xmlParseMemory( buf, bufsize );
       if (doc == NULL) {
@@ -2641,33 +2640,11 @@ int space_load (void)
 static int systems_load (void)
 {
    uint32_t bufsize;
-   char *buf;
+   char *buf, **system_files, *file;
    xmlNodePtr node;
    xmlDocPtr doc;
    StarSystem *sys;
-
-   /* Load the file. */
-   buf = ndata_read( SYSTEM_DATA, &bufsize );
-   if (buf == NULL)
-      return -1;
-
-   doc = xmlParseMemory( buf, bufsize );
-   if (doc == NULL) {
-      WARN("'%s' is not a valid XML file.", SYSTEM_DATA);
-      return -1;
-   }
-
-   node = doc->xmlChildrenNode;
-   if (!xml_isNode(node,XML_SYSTEM_ID)) {
-      ERR("Malformed "SYSTEM_DATA" file: missing root element '"XML_SYSTEM_ID"'");
-      return -1;
-   }
-
-   node = node->xmlChildrenNode; /* first system node */
-   if (node == NULL) {
-      ERR("Malformed "SYSTEM_DATA" file: does not contain elements");
-      return -1;
-   }
+   int nfiles, i;
 
    /* Allocate if needed. */
    if (systems_stack == NULL) {
@@ -2676,28 +2653,56 @@ static int systems_load (void)
       systems_nstack = 0;
    }
 
+   system_files = nfile_readDir( &nfiles, SYSTEM_DATA );
 
    /*
     * First pass - loads all the star systems_stack.
     */
-   do {
-      if (xml_isNode(node,XML_SYSTEM_TAG)) {
-         sys = system_new();
-         system_parse( sys, node );
-      }
-   } while (xml_nextNode(node));
+   for (i=0; i<nfiles; i++) {
 
+      file = malloc((strlen(SYSTEM_DATA)+strlen(system_files[i])+2)*sizeof(char));
+      snprintf(file,(strlen(SYSTEM_DATA)+strlen(system_files[i])+2)*sizeof(char),"%s/%s",SYSTEM_DATA,system_files[i]);
+      /* Load the file. */
+      buf = ndata_read( file, &bufsize );
+      doc = xmlParseMemory( buf, bufsize );
+      if (doc == NULL) {
+         ERR("%s file is invalid xml!",file);
+         return -1;
+      }
+
+      node = doc->xmlChildrenNode; /* first planet node */
+      if (node == NULL) {
+         ERR("Malformed %s file: does not contain elements",file);
+         return -1;
+      }
+
+      sys = system_new();
+      system_parse( sys, node );
+   }
 
    /*
     * Second pass - loads all the jump routes.
     */
-   node = doc->xmlChildrenNode->xmlChildrenNode;
-   do {
-      if (xml_isNode(node,XML_SYSTEM_TAG))
-         system_parseJumps(node); /* will automatically load the jumps into the system */
+   for (i=0; i<nfiles; i++) {
 
-   } while (xml_nextNode(node));
+      file = malloc((strlen(SYSTEM_DATA)+strlen(system_files[i])+2)*sizeof(char));
+      snprintf(file,(strlen(SYSTEM_DATA)+strlen(system_files[i])+2)*sizeof(char),"%s/%s",SYSTEM_DATA,system_files[i]);
+      /* Load the file. */
+      buf = ndata_read( file, &bufsize );
+      doc = xmlParseMemory( buf, bufsize );
+      if (doc == NULL) {
+         ERR("%s file is invalid xml!",file);
+         return -1;
+      }
 
+      node = doc->xmlChildrenNode; /* first planet node */
+      if (node == NULL) {
+         ERR("Malformed %s file: does not contain elements",file);
+         return -1;
+      }
+
+      system_parseJumps(node); /* will automatically load the jumps into the system */
+   }
 
    /*
     * cleanup
