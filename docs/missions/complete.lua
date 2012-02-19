@@ -1,4 +1,4 @@
-﻿--[[      Test Mission
+--[[      Test Mission
 
          Heavily annotated mission with the sole purpose of learning the ropes of mission creation.
 
@@ -201,7 +201,7 @@ function accept ()
    -- Description is visible in OSD and the onboard computer, it shouldn't be too long either.
    misn.setDesc( string.format( misn_desc, targetworld:name(), targetworld_sys:name() ) )
    -- Set marker to a system, visible in any mission computer and the onboard computer.
-   misn.setMarker( targetworld_sys )
+   misn.markerAdd( targetworld, "high")
 
 
    -- Add mission

@@ -483,6 +483,34 @@ const char* ndata_name (void)
 
 
 /**
+ * @brief Gets the directory where ndata is loaded from.
+ *
+ *    @return Directory name that ndata is inside of.
+ */
+const char* ndata_getDirname(void)
+{
+   char *path;
+
+   path = (char*)ndata_getPath();
+   if (path != NULL)
+      return nfile_dirname( path );
+
+   switch (ndata_source) {
+      case NDATA_SRC_LAIDOUT:
+         return ".";
+      case NDATA_SRC_DIRNAME:
+         return ndata_dirname;
+      case NDATA_SRC_NDATADEF:
+         return nfile_dirname( NDATA_DEF );
+      case NDATA_SRC_BINARY:
+         return nfile_dirname( naev_binary() );
+   }
+
+   return NULL;
+}
+
+
+/**
  * @brief Reads a file from the ndata.
  *
  *    @param filename Name of the file to read.

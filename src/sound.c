@@ -423,6 +423,7 @@ int sound_playPos( int sound, double px, double py, double vx, double vy )
 {
    alVoice *v;
    alSound *s;
+   Pilot *p;
    double cx, cy, dist;
    int target;
 
@@ -435,8 +436,9 @@ int sound_playPos( int sound, double px, double py, double vx, double vy )
    target = cam_getTarget();
 
    /* Following a pilot. */
-   if (target) {
-      if (!pilot_inRange( pilot_get( target ), px, py ))
+   p = pilot_get(target);
+   if (target && (p != NULL)) {
+      if (!pilot_inRange( p, px, py ))
          return 0;
    }
    /* Set to a position. */

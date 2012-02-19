@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Commodities>
  <commodity name="Food">
   <description>Evolving from the military rations of centuries past, modern packaged meals are rich in nutrients and able to last decades in their vacuum-sealed packaging.</description>
@@ -46,4 +46,5 @@
  <commodity name="Teenagers"/>
  <commodity name="The Rescued Children"/>
  <commodity name="Waste Containers"/>
+ <commodity name="Person"/>
 </Commodities>

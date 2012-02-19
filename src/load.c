@@ -173,7 +173,7 @@ int load_refresh (void)
    load_saves = array_create( nsave_t );
 
    /* load the saves */
-   files = nfile_readDir( &nfiles, "%ssaves", nfile_basePath() );
+   files = nfile_readDir( &nfiles, "%ssaves", nfile_dataPath() );
    for (i=0; i<nfiles; i++) {
       len = strlen(files[i]);
 
@@ -196,7 +196,7 @@ int load_refresh (void)
    for (i=0; i<nfiles; i++) {
       if (!ok)
          ns = &array_grow( &load_saves );
-      snprintf( buf, sizeof(buf), "%ssaves/%s", nfile_basePath(), files[i] );
+      snprintf( buf, sizeof(buf), "%ssaves/%s", nfile_dataPath(), files[i] );
       ok = load_load( ns, buf );
    }
 
