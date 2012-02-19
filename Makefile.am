@@ -11,6 +11,7 @@ appicondir = $(datadir)/pixmaps
 appicon_DATA = extras/logos/naev.png
 Graphicsdir = $(datadir)/applications
 Graphics_DATA = naev.desktop
+dist_pkgdata_DATA = naev-confupdate.sh
 
 dist_man6_MANS = naev.6
 dist_doc_DATA = AUTHORS README TODO LICENSE
