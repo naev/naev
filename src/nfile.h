@@ -17,6 +17,8 @@ char** nfile_readDir( int* nfiles, const char* path, ... );
 char* nfile_readFile( int* filesize, const char* path, ... );
 int nfile_touch( const char* path, ... );
 int nfile_writeFile( const char* data, int len, const char* path, ... );
+int nfile_delete( const char* file );
+int nfile_rename( const char* oldname, const char* newname );
 
 
 #endif /* NFILE_H */

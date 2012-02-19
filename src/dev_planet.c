@@ -15,33 +15,8 @@
 #include <stdlib.h> /* qsort */
 
 #include "nxml.h"
-#include "space.h"
 #include "physics.h"
-
-
-/*
- * Prototypes.
- */
-static int dpl_compPlanet( const void *planet1, const void *planet2 );
-static int dpl_savePlanet( xmlTextWriterPtr writer, const Planet *p );
-
-
-/**
- * @brief Compare function for planet qsort.
- *
- *    @param planet1 First planet to compare.
- *    @param planet2 Second planet to compare.
- *    @return Order in which they should be shifted.
- */
-static int dpl_compPlanet( const void *planet1, const void *planet2 )
-{
-   const Planet *p1, *p2;
-
-   p1 = * (const Planet**) planet1;
-   p2 = * (const Planet**) planet2;
-
-   return strcmp( p1->name, p2->name );
-}
+#include "nfile.h"
 
 
 /**
@@ -51,10 +26,25 @@ static int dpl_compPlanet( const void *planet1, const void *planet2 )
  *    @param p Planet to save.
  *    @return 0 on success.
  */
-static int dpl_savePlanet( xmlTextWriterPtr writer, const Planet *p )
+int dpl_savePlanet( const Planet *p )
 {
+   xmlDocPtr doc;
+   xmlTextWriterPtr writer;
+   char *file;
    int i;
 
+   /* Create the writer. */
+   writer = xmlNewTextWriterDoc(&doc, 0);
+   if (writer == NULL) {
+      WARN("testXmlwriterDoc: Error creating the xml writer");
+      return -1;
+   }
+
+   /* Set the writer parameters. */
+   xmlw_setParams( writer );
+
+   /* Start writer. */
+   xmlw_start(writer);
    xmlw_startElem( writer, "asset" );
 
    /* Attributes. */
@@ -132,6 +122,18 @@ static int dpl_savePlanet( xmlTextWriterPtr writer, const Planet *p )
       tech_groupWrite( writer, p->tech );
 
    xmlw_endElem( writer ); /** "planet" */
+   xmlw_done( writer );
+
+   /* No need for writer anymore. */
+   xmlFreeTextWriter( writer );
+
+   /* Write data. */
+   file = malloc((strlen(p->name)+20)*sizeof(char));
+   snprintf(file,(strlen(p->name)+20)*sizeof(char),"dat/assets/%s.xml",p->name);
+   xmlSaveFileEnc( file, doc, "UTF-8" );
+
+   /* Clean up. */
+   xmlFreeDoc(doc);
 
    return 0;
 }
@@ -145,53 +147,14 @@ static int dpl_savePlanet( xmlTextWriterPtr writer, const Planet *p )
 int dpl_saveAll (void)
 {
    int i;
-   /*char file[PATH_MAX];*/
-   xmlDocPtr doc;
-   xmlTextWriterPtr writer;
    int np;
    const Planet *p;
-   const Planet **sorted_p;
 
-   /* Create the writer. */
-   writer = xmlNewTextWriterDoc(&doc, 0);
-   if (writer == NULL) {
-      WARN("testXmlwriterDoc: Error creating the xml writer");
-      return -1;
-   }
-
-   /* Set the writer parameters. */
-   xmlw_setParams( writer );
-
-   /* Start writer. */
-   xmlw_start(writer);
-   xmlw_startElem( writer, "Assets" );
-
-   /* Sort planets. */
-   p        = planet_getAll( &np );
-   sorted_p = malloc( sizeof(Planet*) * np );
-   for (i=0; i<np; i++)
-      sorted_p[i]  = &p[i];
-   qsort( sorted_p, np, sizeof(Planet*), dpl_compPlanet );
+   p = planet_getAll( &np );
 
    /* Write planets. */
    for (i=0; i<np; i++)
-      dpl_savePlanet( writer, sorted_p[i] );
-
-   /* Clean up sorted planet.s */
-   free(sorted_p);
-
-   /* End writer. */
-   xmlw_endElem( writer ); /* "Assets" */
-   xmlw_done( writer );
-
-   /* No need for writer anymore. */
-   xmlFreeTextWriter( writer );
-
-   /* Write data. */
-   xmlSaveFileEnc( "asset.xml", doc, "UTF-8" );
-
-   /* Clean up. */
-   xmlFreeDoc(doc);
+      dpl_savePlanet( &p[i] );
 
    return 0;
 }

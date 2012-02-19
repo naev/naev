@@ -24,6 +24,7 @@
 #include "dialogue.h"
 #include "tk/toolkit_priv.h"
 #include "ndata.h"
+#include "nfile.h"
 
 
 #define EDITOR_WDWNAME  "Planet Property Editor"
@@ -293,7 +294,7 @@ static void sysedit_save( unsigned int wid_unused, char *unused )
    (void) unused;
 
    dsys_saveAll();
-   dpl_saveAll();
+   //dpl_saveAll();
 }
 
 
@@ -326,6 +327,8 @@ static void sysedit_editPntClose( unsigned int wid, char *unused )
 
    /* Add the new presence. */
    system_addPresence(sysedit_sys, p->faction, p->presenceAmount, p->presenceRange);
+
+   dpl_savePlanet( p );
 
    window_close( wid, unused );
 }
@@ -408,7 +411,7 @@ static void sysedit_btnRename( unsigned int wid_unused, char *unused )
    (void) wid_unused;
    (void) unused;
    int i;
-   char *name;
+   char *name, *oldName, *newName;
    Select_t *sel;
    Planet *p;
    for (i=0; i<sysedit_nselect; i++) {
@@ -431,6 +434,13 @@ static void sysedit_btnRename( unsigned int wid_unused, char *unused )
          }
 
          /* Rename. */
+         oldName = malloc((16+strlen(p->name))*sizeof(char));
+         snprintf(oldName,(16+strlen(p->name))*sizeof(char),"dat/assets/%s.xml",p->name);
+         newName = malloc((16+strlen(name))*sizeof(char));
+         snprintf(newName,(16+strlen(name))*sizeof(char),"dat/assets/%s.xml",name);
+         nfile_rename(oldName,newName);
+         free(oldName);
+         free(newName);
          free(p->name);
          p->name = name;
          window_modifyText( sysedit_widEdit, "txtName", p->name );
@@ -447,11 +457,20 @@ static void sysedit_btnRemove( unsigned int wid_unused, char *unused )
    (void) wid_unused;
    (void) unused;
    Select_t *sel;
+   char *file;
    int i;
-   for (i=0; i<sysedit_nselect; i++) {
-      sel = &sysedit_select[i];
-      if (sel->type == SELECT_PLANET)
-         system_rmPlanet( sysedit_sys, sysedit_sys->planets[ sel->u.planet ]->name );
+
+   if (dialogue_YesNo( "Remove selected planets?", "This can not be undone." )) {
+      for (i=0; i<sysedit_nselect; i++) {
+         sel = &sysedit_select[i];
+         if (sel->type == SELECT_PLANET) {
+            file = malloc((16+strlen(sysedit_sys->planets[ sel->u.planet ]->name))*sizeof(char));
+            snprintf(file,(16+strlen(sysedit_sys->planets[ sel->u.planet ]->name))*sizeof(char),
+                           "dat/assets/%s.xml",sysedit_sys->planets[ sel->u.planet ]->name);
+            nfile_delete(file);
+            system_rmPlanet( sysedit_sys, sysedit_sys->planets[ sel->u.planet ]->name );
+         }
+      }
    }
 }
 
