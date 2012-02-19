@@ -172,7 +172,6 @@ void naev_quit (void)
 int main( int argc, char** argv )
 {
    char buf[PATH_MAX];
-   int oldconfig;
 
    /* Save the binary path. */
    binary_path = strdup(argv[0]);
@@ -223,7 +222,7 @@ int main( int argc, char** argv )
    snprintf(buf, PATH_MAX, "%s"CONF_FILE, nfile_configPath());
 
 #if HAS_UNIX
-   oldconfig = 0;
+   int oldconfig = 0;
    if (!nfile_fileExists( buf )) {
       char *home, buf2[PATH_MAX];
       home = SDL_getenv( "HOME" );
