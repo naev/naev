@@ -21,6 +21,7 @@
 #include "log.h"
 #include "rng.h"
 #include "ndata.h"
+#include "nfile.h"
 #include "pilot.h"
 #include "player.h"
 #include "pause.h"
@@ -58,7 +59,7 @@
 #define XML_SYSTEM_TAG        "ssys" /**< Individual systems xml tag. */
 
 #define LANDING_DATA          "dat/landing.lua" /**< Lua script containing landing data. */
-#define PLANET_DATA           "dat/asset.xml" /**< XML file containing planets. */
+#define PLANET_DATA           "dat/assets" /**< XML file containing planets. */
 #define SYSTEM_DATA           "dat/ssys.xml" /**< XML file containing systems. */
 
 #define PLANET_GFX_SPACE      "gfx/planet/space/" /**< Location of planet space graphics. */
@@ -1466,11 +1467,13 @@ Planet *planet_new (void)
 static int planets_load ( void )
 {
    uint32_t bufsize;
-   char *buf;
+   char *buf, **planet_files, *file;
    xmlNodePtr node;
    xmlDocPtr doc;
    Planet *p;
    lua_State *L;
+   int nfiles;
+   int i;
 
    /* Load landing stuff. */
    landing_lua = nlua_newState();
@@ -1485,26 +1488,6 @@ static int planets_load ( void )
    }
    free(buf);
 
-   /* Load XML stuff. */
-   buf = ndata_read( PLANET_DATA, &bufsize );
-   doc = xmlParseMemory( buf, bufsize );
-   if (doc == NULL) {
-      ERR(PLANET_DATA" file is invalid xml!");
-      return -1;
-   }
-
-   node = doc->xmlChildrenNode;
-   if (strcmp((char*)node->name,XML_PLANET_ID)) {
-      ERR("Malformed "PLANET_DATA" file: missing root element '"XML_PLANET_ID"'");
-      return -1;
-   }
-
-   node = node->xmlChildrenNode; /* first system node */
-   if (node == NULL) {
-      ERR("Malformed "PLANET_DATA" file: does not contain elements");
-      return -1;
-   }
-
    /* Initialize stack if needed. */
    if (planet_stack == NULL) {
       planet_mstack = CHUNK_SIZE;
@@ -1512,12 +1495,32 @@ static int planets_load ( void )
       planet_nstack = 0;
    }
 
-   do {
+   /* Load XML stuff. */
+   planet_files = nfile_readDir( &nfiles, PLANET_DATA );
+   for ( i = 0; i < nfiles; i++ ) {
+
+      file = malloc((strlen(PLANET_DATA)+strlen(planet_files[i])+2)*sizeof(char));
+      snprintf(file,(strlen(PLANET_DATA)+strlen(planet_files[i])+2)*sizeof(char),"%s/%s",PLANET_DATA,planet_files[i]);
+      WARN("%s",file);
+      buf = ndata_read( file, &bufsize );
+      doc = xmlParseMemory( buf, bufsize );
+      if (doc == NULL) {
+         ERR("%s file is invalid xml!",file);
+         return -1;
+      }
+
+      node = doc->xmlChildrenNode; /* first planet node */
+      if (node == NULL) {
+         ERR("Malformed %s file: does not contain elements",file);
+         return -1;
+      }
+
       if (xml_isNode(node,XML_PLANET_TAG)) {
          p = planet_new();
          planet_parse( p, node );
       }
-   } while (xml_nextNode(node));
+
+   }
 
    /*
     * free stuff
