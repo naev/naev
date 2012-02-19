@@ -1504,14 +1504,14 @@ static int planets_load ( void )
       buf = ndata_read( file, &bufsize );
       doc = xmlParseMemory( buf, bufsize );
       if (doc == NULL) {
-         ERR("%s file is invalid xml!",file);
-         return -1;
+         WARN("%s file is invalid xml!",file);
+         continue;
       }
 
       node = doc->xmlChildrenNode; /* first planet node */
       if (node == NULL) {
-         ERR("Malformed %s file: does not contain elements",file);
-         return -1;
+         WARN("Malformed %s file: does not contain elements",file);
+         continue;
       }
 
       if (xml_isNode(node,XML_PLANET_TAG)) {
@@ -2666,14 +2666,14 @@ static int systems_load (void)
       buf = ndata_read( file, &bufsize );
       doc = xmlParseMemory( buf, bufsize );
       if (doc == NULL) {
-         ERR("%s file is invalid xml!",file);
-         return -1;
+         WARN("%s file is invalid xml!",file);
+         continue;
       }
 
       node = doc->xmlChildrenNode; /* first planet node */
       if (node == NULL) {
-         ERR("Malformed %s file: does not contain elements",file);
-         return -1;
+         WARN("Malformed %s file: does not contain elements",file);
+         continue;
       }
 
       sys = system_new();
@@ -2691,14 +2691,12 @@ static int systems_load (void)
       buf = ndata_read( file, &bufsize );
       doc = xmlParseMemory( buf, bufsize );
       if (doc == NULL) {
-         ERR("%s file is invalid xml!",file);
-         return -1;
+         continue;
       }
 
       node = doc->xmlChildrenNode; /* first planet node */
       if (node == NULL) {
-         ERR("Malformed %s file: does not contain elements",file);
-         return -1;
+         continue;
       }
 
       system_parseJumps(node); /* will automatically load the jumps into the system */
