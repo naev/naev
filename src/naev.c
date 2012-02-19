@@ -345,7 +345,7 @@ int main( int argc, char** argv )
       SDL_Delay( NAEV_INIT_DELAY - (SDL_GetTicks() - time_ms) );
    fps_init(); /* initializes the time_ms */
 
-#ifdef HAS_UNIX
+#if HAS_UNIX
    /* Tell the player to migrate their configuration files out of ~/.naev */
    if (oldconfig) {
       dialogue_alert( "Your configuration files are in a deprecated location and must be migrated:\n"
