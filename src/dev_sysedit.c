@@ -444,6 +444,7 @@ static void sysedit_btnRename( unsigned int wid_unused, char *unused )
          free(p->name);
          p->name = name;
          window_modifyText( sysedit_widEdit, "txtName", p->name );
+         dpl_savePlanet( p );
       }
    }
 }
