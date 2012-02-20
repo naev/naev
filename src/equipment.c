@@ -242,7 +242,7 @@ void equipment_open( unsigned int wid )
          bw, bh, "btnCloseEquipment",
          "Take Off", land_buttonTakeoff, SDLK_t );
    window_addButtonKey( wid, -20 - (15+bw), 20,
-         bw, bh, "btnSetGUI",
+         bw, bh, "btnRenameShip",
          "Rename", equipment_renameShip, SDLK_r );
    window_addButtonKey( wid, -20 - (15+bw)*2, 20,
          bw, bh, "btnSellShip",
