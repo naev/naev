@@ -30,7 +30,8 @@
  */
 typedef struct ndata_start_s {
    char *name; /**< Name of ndata. */
-   char *ship; /**< Default starting ship name. */
+   char *ship; /**< Default starting ship model. */
+   char *shipname; /**< Default starting ship name. */
    unsigned int credits; /**< Starting credits. */
    ntime_t date; /**< Starting date. */
    char *system; /**< Starting system. */
@@ -96,12 +97,15 @@ int start_load (void)
          do {
             xml_onlyNodes(cur);
 
-            xmlr_strd( cur, "ship",    start_data.ship );
             xmlr_uint( cur, "credits", start_data.credits );
             xmlr_strd( cur, "mission", start_data.mission );
             xmlr_strd( cur, "event",   start_data.event );
 
-            if (xml_isNode(cur,"system")) {
+            if (xml_isNode(cur,"ship")) {
+               xmlr_attr(cur, "name", start_data.shipname);
+               xmlr_strd( cur, "ship",    start_data.ship );
+            }
+            else if (xml_isNode(cur,"system")) {
                tmp = cur->children;
                do {
                   xml_onlyNodes(tmp);
@@ -222,6 +226,16 @@ const char* start_name (void)
 const char* start_ship (void)
 {
    return start_data.ship;
+}
+
+
+/**
+ * @brief Gets the module's starting ship's name.
+ *    @return The default name of the starting ship.
+ */
+const char* start_shipname (void)
+{
+   return start_data.shipname;
 }
 
 
