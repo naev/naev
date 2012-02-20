@@ -403,10 +403,10 @@ int main( int argc, char** argv )
       }
       else {
          dialogue_alert(
-               "To migrate your configuration files manuallly\n"
-               "please exit naev and then run the update script,\n"
+               "To manually migrate your configuration files "
+               "please exit Naev and run the update script, "
                "likely found in your Naev data directory:\n"
-               "   \er%s/naev-confupdate.sh\e0", SDL_getenv("HOME"), ndata_getDirname() );
+               "   \er%s/naev-confupdate.sh\e0", home, path );
       }
    }
 #endif
