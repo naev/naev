@@ -223,6 +223,7 @@ int main( int argc, char** argv )
    snprintf(buf, PATH_MAX, "%s"CONF_FILE, nfile_configPath());
 
 #if HAS_UNIX
+   /* TODO get rid of this cruft ASAP. */
    int oldconfig = 0;
    if (!nfile_fileExists( buf )) {
       char *home, buf2[PATH_MAX];
@@ -348,6 +349,7 @@ int main( int argc, char** argv )
 
 #if HAS_UNIX
    /* Tell the player to migrate their configuration files out of ~/.naev */
+   /* TODO get rid of this cruft ASAP. */
    if (oldconfig) {
       char path[PATH_MAX], *script, *home;
       uint32_t scriptsize;
@@ -379,16 +381,17 @@ int main( int argc, char** argv )
          }
 
          /* We couldn't find the script. */
-         if (ret == -1)
+         if (ret == -1) {
             dialogue_alert( "The update script was not found at:\n\er%s\e0\n\n"
                   "Please locate and run it manually.", path );
+         }
          /* Restart, as the script succeeded. */
          else if (!ret) {
             dialogue_msg( "Update Completed",
                   "Configuration files were successfully migrated. Naev will now restart." );
             execv(argv[0], argv);
          }
-         else /* I sincerely hope this else is never hit. */
+         else { /* I sincerely hope this else is never hit. */
             dialogue_alert( "The update script encountered an error. Please exit Naev and move your config and save files manually:\n\n"
                   "\er%s/%s\e0 =>\n   \eD%s\e0\n\n"
                   "\er%s/%s\e0 =>\n   \eD%s\e0\n\n"
@@ -396,6 +399,14 @@ int main( int argc, char** argv )
                   home, ".naev/conf.lua", nfile_configPath(),
                   home, ".naev/{saves,screenshots}/", nfile_dataPath(),
                   home, ".naev/gen/*.png", nfile_cachePath() );
+         }
+      }
+      else {
+         dialogue_alert(
+               "To migrate your configuration files manuallly\n"
+               "please exit naev and then run the update script,\n"
+               "likely found in your Naev data directory:\n"
+               "   \er%s/naev-confupdate.sh\e0", SDL_getenv("HOME"), ndata_getDirname() );
       }
    }
 #endif
