@@ -29,7 +29,6 @@
 #include "conf.h"
 #include "gui.h"
 #include "land_outfits.h"
-#include "player_gui.h"
 #include "info.h"
 #include "shipstats.h"
 #include "tk/toolkit_priv.h" /* Yes, I'm a bad person, abstractions be damned! */
@@ -40,9 +39,6 @@
 #define BUTTON_HEIGHT   40 /**< Default button height. */
 
 #define SHIP_ALT_MAX    256 /**< Maximum ship alt text. */
-
-#define SETGUI_WIDTH    400 /**< Load window width. */
-#define SETGUI_HEIGHT   300 /**< Load window height. */
 
 
 /*
@@ -88,8 +84,6 @@ static void equipment_transportShip( unsigned int wid );
 static void equipment_unequipShip( unsigned int wid, char* str );
 static credits_t equipment_transportPrice( char *shipname );
 static void equipment_rightClickOutfits( unsigned int wid, char* str );
-static void equipment_toggleGuiOverride( unsigned int wid, char *name );
-static void setgui_load( unsigned int wdw, char *str );
 
 
 /**
@@ -1634,116 +1628,6 @@ static void equipment_transportShip( unsigned int wid )
    player_setLoc( shipname, land_planet->name );
 }
 
-
-/**
- * @brief Closes the GUI selection menu.
- *
- *    @param wdw Window triggering function.
- *    @param str Unused.
- */
-static void setgui_close( unsigned int wdw, char *str )
-{
-   (void)str;
-   window_destroy( wdw );
-}
-
-
-/**
- * @brief Allows the player to set a different GUI.
- *
- *    @param wid Window id.
- *    @param name of widget.
- */
-void equipment_setGui( unsigned int wid, char* str )
-{
-   (void)str;
-   int i;
-   char **guis;
-   int nguis;
-   char **gui_copy;
-
-   /* Get the available GUIs. */
-   guis = player_guiList( &nguis );
-
-   /* In case there are none. */
-   if (guis == NULL) {
-      WARN("No GUI available.");
-      dialogue_alert( "There are no GUI available, this means something went wrong somewhere. Inform the Naev maintainer." );
-      return;
-   }
-
-   /* window */
-   wid = window_create( "Select GUI", -1, -1, SETGUI_WIDTH, SETGUI_HEIGHT );
-   window_setCancel( wid, setgui_close );
-
-   /* Copy GUI. */
-   gui_copy = malloc( sizeof(char*) * nguis );
-   for (i=0; i<nguis; i++)
-      gui_copy[i] = strdup( guis[i] );
-
-   /* List */
-   window_addList( wid, 20, -50,
-         SETGUI_WIDTH-BUTTON_WIDTH/2 - 60, SETGUI_HEIGHT-110,
-         "lstGUI", gui_copy, nguis, 0, NULL );
-   toolkit_setList( wid, "lstGUI", gui_pick() );
-
-   /* buttons */
-   window_addButton( wid, -20, 20, BUTTON_WIDTH/2, BUTTON_HEIGHT,
-         "btnBack", "Cancel", setgui_close );
-   window_addButton( wid, -20, 30 + BUTTON_HEIGHT, BUTTON_WIDTH/2, BUTTON_HEIGHT,
-         "btnLoad", "Load", setgui_load );
-
-   /* Checkboxes */
-   window_addCheckbox( wid, 20, 20,
-         BUTTON_WIDTH, BUTTON_HEIGHT, "chkOverride", "Override GUI",
-         equipment_toggleGuiOverride, player.guiOverride );
-   equipment_toggleGuiOverride( wid, "chkOverride" );
-
-   /* default action */
-   window_setAccept( wid, setgui_load );
-}
-
-
-/**
- * @brief Loads a GUI.
- *
- *    @param wdw Window triggering function.
- *    @param str Unused.
- */
-static void setgui_load( unsigned int wdw, char *str )
-{
-   (void)str;
-   char *gui;
-   int wid;
-
-   wid = window_get( "Select GUI" );
-   gui = toolkit_getList( wid, "lstGUI" );
-   if (strcmp(gui,"None") == 0)
-      return;
-
-   /* Set the GUI. */
-   if (player.gui != NULL)
-      free( player.gui );
-   player.gui = strdup( gui );
-
-   /* Close menus before loading for proper rendering. */
-   setgui_close(wdw, NULL);
-
-   /* Load the GUI. */
-   gui_load( gui_pick() );
-}
-
-
-/**
- * @brief GUI override was toggled.
- *
- *    @param wid Window id.
- *    @param name of widget.
- */
-static void equipment_toggleGuiOverride( unsigned int wid, char *name )
-{
-   player.guiOverride = window_checkboxState( wid, name );
-}
 
 
 /**
