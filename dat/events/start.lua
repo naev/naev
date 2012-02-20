@@ -12,11 +12,12 @@ function name()
       "Eclipse",
       "Windjammer",
       "Icarus",
-      "Heart of Gold", -- Yes, really.
-      "Enterprise", -- Doubly so.
-      "Voyager", -- Inferior to the former.
-      "Serenity", -- I'm on a roll!
-      "Century Eagle", -- I've heard George Lucas is pretty litigious.
+      "Heart of Lead",
+      "Exitprise",
+      "Commuter",
+      "Serendipity",
+      "Aluminum Mallard", -- Because we might as well allude to an existing parody. Proper spelling would be "Aluminium", by the way.
+      "Titanic MLXVII",
       "Planet Jumper",
       "Outward Bound",
       "Shove Off",
