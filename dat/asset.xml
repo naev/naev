@@ -2761,7 +2761,7 @@
   </pos>
   <GFX>
    <space>002.png</space>
-   <exterior>station00.png</exterior>
+   <exterior>station02.png</exterior>
   </GFX>
   <presence>
    <faction>Dvaered</faction>

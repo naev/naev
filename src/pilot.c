@@ -777,7 +777,8 @@ void pilot_distress( Pilot *p, const char *msg, int ignore_int )
    for (i=0; i<pilot_nstack; i++) {
       /* Skip if unsuitable. */
       if ((pilot_stack[i]->ai == NULL) || (pilot_stack[i]->id == p->id) ||
-            (pilot_isFlag(pilot_stack[i], PILOT_DEAD)))
+            (pilot_isFlag(pilot_stack[i], PILOT_DEAD)) ||
+            (pilot_isFlag(pilot_stack[i], PILOT_DELETE)))
          continue;
 
       if (!ignore_int) {

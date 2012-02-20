@@ -390,6 +390,7 @@ void player_new (void)
 static int player_newMake (void)
 {
    Ship *ship;
+   const char *shipname;
    double x,y;
 
    /* Time. */
@@ -401,11 +402,13 @@ static int player_newMake (void)
 
    /* Try to create the pilot, if fails reask for player name. */
    ship = ship_get( start_ship() );
+   shipname = start_shipname();
    if (ship==NULL) {
       WARN("Ship not properly set by module.");
       return -1;
    }
-   if (player_newShip( ship, NULL, 0, 0 ) == NULL) {
+   /* Setting a default name in the XML prevents naming prompt. */
+   if (player_newShip( ship, shipname, 0, (shipname==NULL) ? 0 : 1 ) == NULL) {
       player_new();
       return -1;
    }

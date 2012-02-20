@@ -4,7 +4,7 @@
 # by only migrating explicitly Naev-owned files.
 
 # Set defaults if XDG variables aren't defined.
-[[ -z $XDG_DATA_HOME ]] && XDG_DATE_HOME=$HOME/.local/share
+[[ -z $XDG_DATA_HOME ]] && XDG_DATA_HOME=$HOME/.local/share
 [[ -z $XDG_CONFIG_HOME ]] && XDG_CONFIG_HOME=$HOME/.config
 [[ -z $XDG_CACHE_HOME ]] && XDG_CACHE_HOME=$HOME/.cache
 
@@ -16,8 +16,9 @@ cd "$HOME/.naev" || exit
 
 if mkdir -p "$XDG_DATA_HOME/naev"; then
    # Attempt to migrate each save, but don't overwrite existing ones.
-   if [[ -d saves/ ]]; then
-      mkdir -p "$XDG_DATA_HOME/naev/saves" && mv -n saves/*.ns "$XDG_DATA_HOME/naev/saves/"
+   if [[ -d saves/ ]] && mkdir -p "$XDG_DATA_HOME/naev/saves"; then
+      mv -n saves/*.ns "$XDG_DATA_HOME/naev/saves/"
+      stat *.ns.backup >/dev/null 2>&1 && mv -n saves/*.ns.backup "$XDG_DATA_HOME/naev/saves"
    fi
 
    # Screenshots are numbered from zero, so old screenshots cannot coexist with new ones.
