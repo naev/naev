@@ -81,6 +81,7 @@ static void equipment_mouseSlots( unsigned int wid, SDL_Event* event,
 static char eq_qCol( double cur, double base, int inv );
 static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot );
 static void equipment_sellShip( unsigned int wid, char* str );
+static void equipment_renameShip( unsigned int wid, char *str );
 static void equipment_transChangeShip( unsigned int wid, char* str );
 static void equipment_changeShip( unsigned int wid );
 static void equipment_transportShip( unsigned int wid );
@@ -242,7 +243,7 @@ void equipment_open( unsigned int wid )
          "Take Off", land_buttonTakeoff, SDLK_t );
    window_addButtonKey( wid, -20 - (15+bw), 20,
          bw, bh, "btnSetGUI",
-         "Set GUI", equipment_setGui, SDLK_g );
+         "Rename", equipment_renameShip, SDLK_r );
    window_addButtonKey( wid, -20 - (15+bw)*2, 20,
          bw, bh, "btnSellShip",
          "Sell Ship", equipment_sellShip, SDLK_s );
@@ -1868,6 +1869,45 @@ static void equipment_sellShip( unsigned int wid, char* str )
    dialogue_msg( "Ship Sold", "You have sold your ship %s for %s credits.", name, buf );
    free(name);
 }
+
+
+/**
+ * @brief Renames the selected ship.
+ *
+ *    @param The ship to rename.
+ */
+static void equipment_renameShip( unsigned int wid, char *str )
+{
+   (void)str;
+   Pilot *ship;
+   char *shipname, *newname;
+
+   shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
+   ship = player_getShip(shipname);
+   newname = dialogue_input( "Ship Name", 3, 20,
+         "Please enter a new name for your %s:", ship->ship->name );
+
+   /* Player cancelled the dialogue. */
+   if (newname == NULL)
+      return;
+
+   /* Must not have same name. */
+   if (player_hasShip(newname)) {
+      dialogue_msg( "Name Collision",
+            "Please do not give the ship the same name as another of your ships.");
+      return;
+   }
+
+   if (ship->name != NULL)
+      free (ship->name);
+
+   ship->name = strdup( newname );
+
+   /* Destroy widget - must be before widget. */
+   equipment_regenLists( wid, 0, 1 );
+}
+
+
 /**
  * @brief Gets the ship's transport price.
  *    @param shipname Name of the ship to get the transport price.
