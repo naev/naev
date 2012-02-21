@@ -122,7 +122,6 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
       double w, double h, void *data );
 /* Button functions. */
 static void sysedit_close( unsigned int wid, char *wgt );
-static void sysedit_save( unsigned int wid_unused, char *unused );
 static void sysedit_btnNew( unsigned int wid_unused, char *unused );
 static void sysedit_btnRename( unsigned int wid_unused, char *unused );
 static void sysedit_btnRemove( unsigned int wid_unused, char *unused );
@@ -191,11 +190,6 @@ void sysedit_open( StarSystem *sys )
    window_addButton( wid, -15, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnClose", "Close", sysedit_close );
    i = 1;
-
-   /* Save button. */
-   window_addButton( wid, -15, 20+(BUTTON_HEIGHT+20)*i, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnSave", "Save", sysedit_save );
-   i += 2;
 
    /* Scale. */
    window_addButton( wid, -15, 20+(BUTTON_HEIGHT+20)*i, BUTTON_WIDTH, BUTTON_HEIGHT,
@@ -280,21 +274,11 @@ static void sysedit_close( unsigned int wid, char *wgt )
    /* Set the dominant faction. */
    system_setFaction( sysedit_sys );
 
+   /* Save the system */
+   dsys_saveSystem( sysedit_sys );
+
    /* Close the window. */
    window_close( wid, wgt );
-}
-
-
-/**
- * @brief Saves the systems.
- */
-static void sysedit_save( unsigned int wid_unused, char *unused )
-{
-   (void) wid_unused;
-   (void) unused;
-
-   dsys_saveAll();
-   //dpl_saveAll();
 }
 
 

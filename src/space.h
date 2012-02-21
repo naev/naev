@@ -312,6 +312,7 @@ JumpPoint* jump_getTarget( StarSystem* target, const StarSystem* sys );
 /*
  * system adding/removing stuff.
  */
+void system_reconstructJumps (StarSystem *sys);
 void systems_reconstructJumps (void);
 void systems_reconstructPlanets (void);
 StarSystem *system_new (void);

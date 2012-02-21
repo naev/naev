@@ -2219,6 +2219,37 @@ StarSystem *system_new (void)
    return sys;
 }
 
+/**
+ * @brief Reconstructs the jumps for a single system.
+ */
+void system_reconstructJumps (StarSystem *sys)
+{
+   int j;
+   JumpPoint *jp;
+   double a;
+
+   for (j=0; j<sys->njumps; j++) {
+      jp          = &sys->jumps[j];
+      jp->target  = system_getIndex( jp->targetid );
+
+      /* Get heading. */
+      a = atan2( jp->target->pos.y - sys->pos.y, jp->target->pos.x - sys->pos.x );
+      if (a < 0.)
+         a += 2.*M_PI;
+
+      /* Update position if needed.. */
+      if (jp->flags & JP_AUTOPOS) {
+         jp->pos.x   = sys->radius*cos(a);
+         jp->pos.y   = sys->radius*sin(a);
+      }
+
+      /* Update jump specific data. */
+      gl_getSpriteFromDir( &jp->sx, &jp->sy, jumppoint_gfx, a );
+      jp->angle = 2.*M_PI-a;
+      jp->cosa  = cos(jp->angle);
+      jp->sina  = sin(jp->angle);
+   }
+}
 
 /**
  * @brief Reconstructs the jumps.
@@ -2226,33 +2257,11 @@ StarSystem *system_new (void)
 void systems_reconstructJumps (void)
 {
    StarSystem *sys;
-   JumpPoint *jp;
-   int i, j;
-   double a;
+   int i;
 
    for (i=0; i<systems_nstack; i++) {
       sys = &systems_stack[i];
-      for (j=0; j<sys->njumps; j++) {
-         jp          = &sys->jumps[j];
-         jp->target  = system_getIndex( jp->targetid );
-
-         /* Get heading. */
-         a = atan2( jp->target->pos.y - sys->pos.y, jp->target->pos.x - sys->pos.x );
-         if (a < 0.)
-            a += 2.*M_PI;
-
-         /* Update position if needed.. */
-         if (jp->flags & JP_AUTOPOS) {
-            jp->pos.x   = sys->radius*cos(a);
-            jp->pos.y   = sys->radius*sin(a);
-         }
-
-         /* Update jump specific data. */
-         gl_getSpriteFromDir( &jp->sx, &jp->sy, jumppoint_gfx, a );
-         jp->angle = 2.*M_PI-a;
-         jp->cosa  = cos(jp->angle);
-         jp->sina  = sin(jp->angle);
-      }
+      system_reconstructJumps(sys);
    }
 }
 

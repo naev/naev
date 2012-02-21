@@ -25,6 +25,7 @@
 #include "tk/toolkit_priv.h"
 #include "dev_sysedit.h"
 #include "pause.h"
+#include "nfile.h"
 
 
 #define HIDE_DEFAULT_JUMP        1.25 /**< Default hide value for new planets. */
@@ -109,7 +110,6 @@ static void uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
       double w, double h, void *data );
 /* Button functions. */
 static void uniedit_close( unsigned int wid, char *wgt );
-static void uniedit_save( unsigned int wid_unused, char *unused );
 static void uniedit_btnJump( unsigned int wid_unused, char *unused );
 static void uniedit_btnRename( unsigned int wid_unused, char *unused );
 static void uniedit_btnEdit( unsigned int wid_unused, char *unused );
@@ -155,10 +155,6 @@ void uniedit_open( unsigned int wid_unused, char *unused )
    /* Close button. */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnClose", "Close", uniedit_close );
-
-   /*Save button. */
-   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*1, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnSave", "Save", uniedit_save );
 
    /* Jump toggle. */
    window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*3, BUTTON_WIDTH, BUTTON_HEIGHT,
@@ -258,19 +254,6 @@ static void uniedit_close( unsigned int wid, char *wgt )
 
    /* Close the window. */
    window_close( wid, wgt );
-}
-
-
-/**
- * @brief Saves the systems.
- */
-static void uniedit_save( unsigned int wid_unused, char *unused )
-{
-   (void) wid_unused;
-   (void) unused;
-
-   dsys_saveAll();
-   dpl_saveAll();
 }
 
 
@@ -527,6 +510,10 @@ static void uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
                }
             }
             uniedit_dragSys   = 0;
+            for (i=0; i<uniedit_nsys; i++) {
+               dsys_saveSystem(uniedit_sys[i]);
+               dsys_saveSystem(uniedit_sys[i]);
+            }
          }
          break;
 
@@ -586,7 +573,7 @@ static int uniedit_checkName( char *name )
 static void uniedit_renameSys (void)
 {
    int i;
-   char *name;
+   char *name, *oldName, *newName;
    StarSystem *sys;
 
    for (i=0; i<uniedit_nsys; i++) {
@@ -607,8 +594,16 @@ static void uniedit_renameSys (void)
       }
 
       /* Change the name. */
+      oldName = malloc((16+strlen(sys->name))*sizeof(char));
+      snprintf(oldName,(16+strlen(sys->name))*sizeof(char),"dat/assets/%s.xml",sys->name);
+      newName = malloc((16+strlen(name))*sizeof(char));
+      snprintf(newName,(16+strlen(name))*sizeof(char),"dat/assets/%s.xml",name);
+      nfile_rename(oldName,newName);
+      free(oldName);
+      free(newName);
       free(sys->name);
       sys->name = name;
+      dsys_saveSystem(sys);
    }
 }
 
@@ -652,6 +647,8 @@ static void uniedit_newSys( double x, double y )
    /* Select new system. */
    uniedit_deselect();
    uniedit_selectAdd( sys );
+
+   dsys_saveSystem( sys );
 }
 
 
@@ -688,6 +685,9 @@ static void uniedit_toggleJump( StarSystem *sys )
 
    /* Reconstruct universe presences. */
    space_reconstructPresences();
+
+   dsys_saveSystem( sys );
+   dsys_saveSystem( isys );
 
    /* Update sidebar text. */
    uniedit_selectText();
@@ -997,6 +997,8 @@ static void uniedit_editSysClose( unsigned int wid, char *name )
    /* Text might need changing. */
    uniedit_selectText();
 
+   dsys_saveSystem( uniedit_sys[0] );
+
    /* Close the window. */
    window_close( wid, name );
 }
@@ -1099,6 +1101,8 @@ static void uniedit_btnEditAddAssetAdd( unsigned int wid, char *unused )
 
    /* Regenerate the list. */
    uniedit_editGenList( uniedit_widEdit );
+
+   dsys_saveSystem( uniedit_sys[0] );
 
    /* Close the window. */
    window_close( wid, unused );
