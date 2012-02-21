@@ -903,6 +903,9 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
                   sysedit_selectAdd( &sysedit_tsel );
             }
             sysedit_drag      = 0;
+            for (i=0; i<sysedit_nselect; i++) {
+               dpl_savePlanet(sysedit_sys->planets[ sysedit_select[i].u.planet ]);
+            }
          }
          if (sysedit_dragSel) {
             if ((SDL_GetTicks() - sysedit_dragTime < SYSEDIT_DRAG_THRESHOLD) &&

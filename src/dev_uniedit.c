@@ -512,7 +512,6 @@ static void uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
             uniedit_dragSys   = 0;
             for (i=0; i<uniedit_nsys; i++) {
                dsys_saveSystem(uniedit_sys[i]);
-               dsys_saveSystem(uniedit_sys[i]);
             }
          }
          break;
