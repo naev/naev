@@ -28,6 +28,7 @@
 
 #if HAS_POSIX
 #include <time.h>
+#include <unistd.h>
 #endif /* HAS_POSIX */
 
 #if defined(HAVE_FENV_H) && defined(DEBUGGING)
@@ -222,6 +223,7 @@ int main( int argc, char** argv )
    snprintf(buf, PATH_MAX, "%s"CONF_FILE, nfile_configPath());
 
 #if HAS_UNIX
+   /* TODO get rid of this cruft ASAP. */
    int oldconfig = 0;
    if (!nfile_fileExists( buf )) {
       char *home, buf2[PATH_MAX];
@@ -347,11 +349,65 @@ int main( int argc, char** argv )
 
 #if HAS_UNIX
    /* Tell the player to migrate their configuration files out of ~/.naev */
+   /* TODO get rid of this cruft ASAP. */
    if (oldconfig) {
-      dialogue_alert( "Your configuration files are in a deprecated location and must be migrated:\n"
+      char path[PATH_MAX], *script, *home;
+      uint32_t scriptsize;
+      int ret;
+
+      snprintf( path, PATH_MAX, "%s/naev-confupdate.sh", ndata_getDirname() );
+      home = SDL_getenv("HOME");
+      ret = dialogue_YesNo( "Warning", "Your configuration files are in a deprecated location and must be migrated:\n"
             "   \er%s/.naev/\e0\n\n"
-            "Please run the update script, likely found in your Naev data directory:\n"
-            "   \er%s/naev-confupdate.sh\e0", SDL_getenv("HOME"), ndata_getDirname() );
+            "The update script can likely be found in your Naev data directory:\n"
+            "   \er%s\e0\n\n"
+            "Would you like to run it automatically?", home, path );
+
+      /* Try to run the script. */
+      if (ret) {
+         ret = -1;
+         /* Running from ndata. */
+         if (ndata_getPath() != NULL) {
+            script = ndata_read( "naev-confupdate.sh", &scriptsize );
+            if (script != NULL)
+               ret = system(script);
+         }
+
+         /* Running from laid-out files or ndata_read failed. */
+         if ((nfile_fileExists(path)) && (ret == -1)) {
+            script = nfile_readFile( (int*)&scriptsize, path );
+            if (script != NULL)
+               ret = system(script);
+         }
+
+         /* We couldn't find the script. */
+         if (ret == -1) {
+            dialogue_alert( "The update script was not found at:\n\er%s\e0\n\n"
+                  "Please locate and run it manually.", path );
+         }
+         /* Restart, as the script succeeded. */
+         else if (!ret) {
+            dialogue_msg( "Update Completed",
+                  "Configuration files were successfully migrated. Naev will now restart." );
+            execv(argv[0], argv);
+         }
+         else { /* I sincerely hope this else is never hit. */
+            dialogue_alert( "The update script encountered an error. Please exit Naev and move your config and save files manually:\n\n"
+                  "\er%s/%s\e0 =>\n   \eD%s\e0\n\n"
+                  "\er%s/%s\e0 =>\n   \eD%s\e0\n\n"
+                  "\er%s/%s\e0 =>\n   \eD%snebula/\e0\n\n",
+                  home, ".naev/conf.lua", nfile_configPath(),
+                  home, ".naev/{saves,screenshots}/", nfile_dataPath(),
+                  home, ".naev/gen/*.png", nfile_cachePath() );
+         }
+      }
+      else {
+         dialogue_alert(
+               "To manually migrate your configuration files "
+               "please exit Naev and run the update script, "
+               "likely found in your Naev data directory:\n"
+               "   \er%s/naev-confupdate.sh\e0", home, path );
+      }
    }
 #endif
 
