@@ -121,7 +121,7 @@ void pilot_heatAddSlot( Pilot *p, PilotOutfitSlot *o )
    if (o->outfit->type == OUTFIT_TYPE_BOLT)
       hmod = p->stats.fwd_heat;
    else if (o->outfit->type == OUTFIT_TYPE_TURRET_BOLT)
-      hmod = p->stats.fwd_heat;
+      hmod = p->stats.tur_heat;
    else
       hmod = 1.;
    o->heat_T += hmod * outfit_heat(o->outfit) / o->heat_C;

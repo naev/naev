@@ -2446,7 +2446,7 @@
    <gfx_store>accuracy_turret</gfx_store>
   </general>
   <specific type="modification">
-   <tur_heat>-25</tur_heat>
+   <tur_heat>-15</tur_heat>
    <tur_firerate>-10</tur_firerate>
   </specific>
  </outfit>
