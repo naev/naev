@@ -189,6 +189,7 @@ int dsys_saveSystem( StarSystem *sys )
 
    /* Write data. */
    cleanName = malloc((strlen(sys->name)+1)*sizeof(char));
+   memset(cleanName, 0, strlen(sys->name)+1);
    pos = 0;
    for (i=0; i<strlen(cleanName); i++) {
       if (isalnum(sys->name[i])) {
@@ -196,12 +197,13 @@ int dsys_saveSystem( StarSystem *sys )
          pos++;
       }
    }
-   file = malloc((strlen(sys->name)+20)*sizeof(char));
-   snprintf(file,(strlen(sys->name)+20)*sizeof(char),"dat/ssys/%s.xml",sys->name);
+   file = malloc((strlen(cleanName)+20)*sizeof(char));
+   snprintf(file,(strlen(cleanName)+20)*sizeof(char),"dat/ssys/%s.xml",cleanName);
    xmlSaveFileEnc( file, doc, "UTF-8" );
 
    /* Clean up. */
    xmlFreeDoc(doc);
+   free(cleanName);
 
 
    return 0;
