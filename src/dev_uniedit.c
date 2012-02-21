@@ -594,9 +594,9 @@ static void uniedit_renameSys (void)
 
       /* Change the name. */
       oldName = malloc((16+strlen(sys->name))*sizeof(char));
-      snprintf(oldName,(16+strlen(sys->name))*sizeof(char),"dat/assets/%s.xml",sys->name);
+      snprintf(oldName,(16+strlen(sys->name))*sizeof(char),"dat/ssys/%s.xml",sys->name);
       newName = malloc((16+strlen(name))*sizeof(char));
-      snprintf(newName,(16+strlen(name))*sizeof(char),"dat/assets/%s.xml",name);
+      snprintf(newName,(16+strlen(name))*sizeof(char),"dat/ssys/%s.xml",name);
       nfile_rename(oldName,newName);
       free(oldName);
       free(newName);
