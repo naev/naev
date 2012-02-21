@@ -91,12 +91,12 @@ static int dsys_compJump( const void *jmp1, const void *jmp2 )
  */
 int dsys_saveSystem( StarSystem *sys )
 {
-   int i;
+   int i, pos;
    xmlDocPtr doc;
    xmlTextWriterPtr writer;
    const Planet **sorted_planets;
    const JumpPoint **sorted_jumps, *jp;
-   char *file;
+   char *file, *cleanName;
 
 
    /* Reconstruct jumps so jump pos are updated. */
@@ -188,6 +188,14 @@ int dsys_saveSystem( StarSystem *sys )
    xmlFreeTextWriter(writer);
 
    /* Write data. */
+   cleanName = malloc((strlen(sys->name)+1)*sizeof(char));
+   pos = 0;
+   for (i=0; i<strlen(cleanName); i++) {
+      if (isalnum(sys->name[i])) {
+         cleanName[pos] = sys->name[i];
+         pos++;
+      }
+   }
    file = malloc((strlen(sys->name)+20)*sizeof(char));
    snprintf(file,(strlen(sys->name)+20)*sizeof(char),"dat/ssys/%s.xml",sys->name);
    xmlSaveFileEnc( file, doc, "UTF-8" );
@@ -209,7 +217,7 @@ int dsys_saveAll (void)
 {
    int i;
    int nsys;
-   const StarSystem *sys;
+   StarSystem *sys;
 
    sys = system_getAll( &nsys );
 

@@ -30,8 +30,8 @@ int dpl_savePlanet( const Planet *p )
 {
    xmlDocPtr doc;
    xmlTextWriterPtr writer;
-   char *file;
-   int i;
+   char *file, *cleanName;
+   int i, pos;
 
    /* Create the writer. */
    writer = xmlNewTextWriterDoc(&doc, 0);
@@ -128,8 +128,16 @@ int dpl_savePlanet( const Planet *p )
    xmlFreeTextWriter( writer );
 
    /* Write data. */
-   file = malloc((strlen(p->name)+20)*sizeof(char));
-   snprintf(file,(strlen(p->name)+20)*sizeof(char),"dat/assets/%s.xml",p->name);
+   cleanName = malloc((strlen(p->name)+1)*sizeof(char));
+   pos = 0;
+   for (i=0; i<strlen(cleanName); i++) {
+      if (isalnum(p->name[i])) {
+         cleanName[pos] = p->name[i];
+         pos++;
+      }
+   }
+   file = malloc((strlen(cleanName)+20)*sizeof(char));
+   snprintf(file,(strlen(cleanName)+20)*sizeof(char),"dat/assets/%s.xml",cleanName);
    xmlSaveFileEnc( file, doc, "UTF-8" );
 
    /* Clean up. */
