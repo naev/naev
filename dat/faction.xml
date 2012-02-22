@@ -131,6 +131,8 @@
  <faction name="Thurion">
   <logo>thurion</logo>
   <colour>grey50</colour>
+  <spawn>independent</spawn>
+  <standing>independent</standing>
   <player>1</player>
   <enemies>
    <enemy>Pirate</enemy>

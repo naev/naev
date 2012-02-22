@@ -460,7 +460,7 @@
    <crew>2</crew>
    <mass>75</mass>
    <fuel>600</fuel>
-   <cap_cargo>10</cap_cargo>
+   <cargo>10</cargo>
   </characteristics>
   <slots>
    <weapon x="8" y="-5" h="-2" >medium</weapon>
