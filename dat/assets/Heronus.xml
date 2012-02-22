@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Heronus">
+ <pos>
+  <x>-13175.246585</x>
+  <y>17327.640126</y>
+ </pos>
+ <GFX>
+  <space>moon-M04.png</space>
+  <exterior>aquatic3.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>O</class>
+  <population>0</population>
+  <hide>0.500000</hide>
+  <services>
+   <land>srm_mil_restricted</land>
+   <refuel/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>The first Soromid bioships were grown on Sorom itself, and it was in those ships that the Soromid spread through the galaxy. But Sorom is no more. Nowadays, most Soromid ships are grown here, on Heronus. The planet's gravitic and atmospheric properties make it ideal for raising ships in all kinds of sizes and shapes. A carrier class vessel can reach maturity in as few as four SCU.</description>
+ </general>
+ <tech>
+  <item>Soromid Military Ships</item>
+ </tech>
+</asset>

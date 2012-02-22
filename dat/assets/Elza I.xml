@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Elza I">
+ <pos>
+  <x>-2287.252336</x>
+  <y>-2453.597961</y>
+ </pos>
+ <GFX>
+  <space>D01.png</space>
+  <exterior>station00.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Lorelei">
+ <pos>
+  <x>-38220.000000</x>
+  <y>4150.000000</y>
+ </pos>
+ <GFX>
+  <space>M09.png</space>
+  <exterior>forest.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>6000000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Luxury Goods</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Churchill's economic position has turned Lorelei into a well developed world. The constant trade revenues have allowed for large habitation complexes and underground factories that wouldn't look out of place on a Dvaered industrial world. However, unlike the Dvaered, the Sirii have put some thought into their infrastructure, and pollution is kept to a minimum.</description>
+  <bar>Because the Sirii didn't want to waste space on a full-fledged spaceport bar, the bar on Lorelei is a virtual one. Visitors enter a VR booth and are given the illusion of being in a large, luxurious spaceport bar, where they can interact with other visitors and the uplink avatars. It is even possible to consume beverages in the virtual bar, as the VR booth is capable of stimulating the part of the human brain that deals with food and drink.</bar>
+ </general>
+ <tech>
+  <item>Ion 1</item>
+  <item>Basic Trade Ships</item>
+  <item>Basic Outfits 2</item>
+  <item>Low Tech Upgrades</item>
+  <item>Missiles 2</item>
+ </tech>
+</asset>

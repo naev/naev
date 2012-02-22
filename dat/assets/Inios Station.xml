@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Inios Station">
+ <pos>
+  <x>16510.246913</x>
+  <y>862.507713</y>
+ </pos>
+ <GFX>
+  <space>003.png</space>
+  <exterior>station04.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>5000</population>
+  <hide>0.750000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Inios Station is something like a border guard between Sirius and Dvaered controlled territories. Though officially not a military complex, Inios does garrison far more combat capable ships that one might expect of a commercial station. Whenever the Dvaered send in skirmish fleets to try the Sirius defenses, it is Inios Station that sends them on their way home.</description>
+  <bar>The bar is built against an outer wall. Several large windows allow patrons to look out on the frozen wastes of Eye of Night III, the planet around which the station orbits. Not coincidentally, the windows also allow people to see the Sirius armed forces docking and taking off, emphasizing the military capacity of the station.</bar>
+ </general>
+ <tech>
+  <item>Ion 1</item>
+  <item>Ion 2</item>
+  <item>Light Civilian Combat Ships</item>
+  <item>Basic Outfits 2</item>
+ </tech>
+</asset>

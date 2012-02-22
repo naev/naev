@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Soromid Wards Beta">
+ <pos>
+  <x>7808.800001</x>
+  <y>16514.977244</y>
+ </pos>
+ <GFX>
+  <space>station-commerce.png</space>
+  <exterior>traderoom.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>0</population>
+  <hide>0.750000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+  </services>
+  <commodities/>
+  <description>While Soromid Wards Alpha in Shikima handles seven out of ten gene therapy clients, it is ill equipped for some of the more invasive operations. Soromid Wards Beta, on the other hand, has several facilities that make such operations possible. Of course these advanced procedrues come at a higher cost, so the clients visiting Beta tend to be from the upper classes of galactic society.</description>
+  <bar>The spacedock bar, which doubles as a waiting room for clients, provides its visitors with information on the services that are rendered on Beta, such as ocular augmentation, bone and muscle reinforcement, disease immunities and reproductive facility expansion.</bar>
+ </general>
+</asset>

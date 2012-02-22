@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Unicorn I">
+ <pos>
+  <x>-8825.801545</x>
+  <y>-1774.282960</y>
+ </pos>
+ <GFX>
+  <space>J03.png</space>
+  <exterior>oceanic2.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

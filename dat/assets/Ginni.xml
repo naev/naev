@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Ginni">
+ <pos>
+  <x>4951.946517</x>
+  <y>16999.507498</y>
+ </pos>
+ <GFX>
+  <space>M00.png</space>
+  <exterior>forest2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>1000000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+  </commodities>
+  <description>Somewhat unusually in Dvaered space, Ginni is primarily a crop growing world. Though most Dvaered worlds trace their lineage to either mining or industrial roots, Ginni was a food producer even in the days when the Empire was still in control. Hoewever, with the change in political influence throughout the region, Ginni's government wisely chose to ally with the Dvaered movement.</description>
+  <bar>A lot of planetside spaceport bars have windows that give visitors a glance of the immediate environment, but the one on Ginni does not. This is because the sunlight on Ginni can get rather intense, and it was cheaper to build a wall than an automatically adjusting viewport. Besides, there's not too much to see anyway.</bar>
+ </general>
+ <tech>
+  <item>Kinetic 1</item>
+  <item>Kinetic 2</item>
+  <item>Basic Outfits 1</item>
+  <item>Basic Outfits 2</item>
+  <item>Missiles 1</item>
+ </tech>
+</asset>

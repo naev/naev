@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Chriik">
+ <pos>
+  <x>15300.000000</x>
+  <y>-11640.000000</y>
+ </pos>
+ <GFX>
+  <space>H03.png</space>
+  <exterior>desertic3.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>H</class>
+  <population>20000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Chriik is a dead world. Like most desert planets it has no bodies of water and a hot climate, but unlike most desert planets, it doesn't have any indigenous life whatsoever. Indeed, there is no reason why anyone or anything would want to live here in the first place. This makes it a perfect planet for major industries to set up shop, since they can pollute all they want without repercussions.</description>
+  <bar>The spaceport bar is a popular place on Chriik, because even inside the habitation complexes the air is so dry it will parch you out in record time.</bar>
+ </general>
+ <tech>
+  <item>Ion 2</item>
+  <item>Heavy Civilian Combat Ships</item>
+  <item>Basic Outfits 2</item>
+  <item>Missiles 1</item>
+  <item>Missiles 2</item>
+ </tech>
+</asset>

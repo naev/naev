@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Petaat">
+ <pos>
+  <x>9405.612680</x>
+  <y>15098.052006</y>
+ </pos>
+ <GFX>
+  <space>S01.png</space>
+  <exterior>traderoom.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>S</class>
+  <population>50000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Medicine</commodity>
+  </commodities>
+  <description>Petaat can be called a civilian Dvaered world, if you're feeling nice. Fact is that people live here, and a Dvaered Warlord controls the local government. But that's about as far as it goes. Petaat is a very unpleasant world, its surface constantly plagued by dust storms and its soil unfit for crop growing. The people living here only do so because they don't have the means to leave.</description>
+  <bar>Amazingly, Petaat does have a spaceport bar, despite the fact that this is, well, Petaat. It's rather a dump, though. If you didn't know better you'd think yourself in a decaying slum. Most people here look like they belong in one, too.</bar>
+ </general>
+</asset>

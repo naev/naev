@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Crylo">
+ <pos>
+  <x>-12956.459922</x>
+  <y>-11240.786446</y>
+ </pos>
+ <GFX>
+  <space>J06.png</space>
+  <exterior>aquatic3.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>O</class>
+  <population>200000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Crylo is an oceanic world with very little land surface, but it sports a surprising number of inhabitants. As it happens, the aquatic life found on this world is considered a delicacy in large parts of the galaxy, which has both attracted people to settle on the planet and spawned a flourishing fishing industry.</description>
+  <bar>Fishing is the name of the game on Crylo, and the spaceport bar is nothing if not in character. Almost everything in here is fish-themed, including the bar, which has been made out of the spine of some gargantuan aquatic creature.</bar>
+ </general>
+ <tech>
+  <item>Laser 2</item>
+  <item>Light Civilian Combat Ships</item>
+  <item>Basic Outfits 2</item>
+  <item>Missiles 1</item>
+  <item>Missiles 2</item>
+ </tech>
+</asset>

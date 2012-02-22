@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Em 1">
+ <pos>
+  <x>-8400.000000</x>
+  <y>-17360.000000</y>
+ </pos>
+ <GFX>
+  <space>M01.png</space>
+  <exterior>oceanic.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>4000000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Em 1 is a completely unremarkable world. It's just one of those places that contribute to the Empire's treasury and serve no other purpose of note.</description>
+  <bar>The bar exclusively plays local music, serves local food and drink and provides mainly local news. The people here apparently seem to want to cling on to what little personality the world still has, for fear that Em 1 will really become just an extension of the Imperial economy.</bar>
+ </general>
+ <tech>
+  <item>Laser 1</item>
+  <item>Basic Trade Ships</item>
+  <item>Basic Outfits 1</item>
+  <item>Missiles 1</item>
+  <item>Missiles 2</item>
+ </tech>
+</asset>

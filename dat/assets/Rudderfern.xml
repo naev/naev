@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Rudderfern">
+ <pos>
+  <x>-22830.899336</x>
+  <y>-7419.439987</y>
+ </pos>
+ <GFX>
+  <space>moon-L00.png</space>
+  <exterior>forest2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>L</class>
+  <population>900000000</population>
+  <hide>0.500000</hide>
+  <services>
+   <land>land_hiclass</land>
+   <refuel/>
+   <bar/>
+   <outfits/>
+  </services>
+  <commodities/>
+  <description>Rudderfern is a small but wealthy Soromid colony. Its primary, Father's Pride III, is far too hostile for even the Soromid to utilize, but its moon has very Earth-like properties, apart from its low gravity. Many well-to-do Soromid have settled here, enjoying the pleasant environment and the high level of security offered in Father's Pride.</description>
+  <bar>Most planets have spaceport bars. Not Rudderfern. It has a spaceport lounge. It has classy furniture, richly decorated walls and ceilings, and even actual Soromid serving personnel. Rudderfern rather takes pride in officially having the highest class spaceport bar in the known galaxy.</bar>
+ </general>
+ <tech>
+  <item>Basic Outfits 1</item>
+  <item>Plasma 1</item>
+  <item>Low Tech Upgrades</item>
+  <item>Missiles 1</item>
+ </tech>
+</asset>

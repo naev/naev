@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Draconis Gamma">
+ <pos>
+  <x>-24930.000000</x>
+  <y>-9720.000000</y>
+ </pos>
+ <GFX>
+  <space>D01.png</space>
+  <exterior>traderoom.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

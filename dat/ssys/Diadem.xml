@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ssys name="Diadem">
+ <general>
+  <radius>12950.000000</radius>
+  <stars>400</stars>
+  <interference>0.000000</interference>
+  <nebula volatility="0.000000">0.000000</nebula>
+ </general>
+ <pos>
+  <x>179.666667</x>
+  <y>420.066667</y>
+ </pos>
+ <assets>
+  <asset>Diadem I</asset>
+  <asset>Diadem II</asset>
+  <asset>Leo</asset>
+  <asset>Riun</asset>
+ </assets>
+ <jumps>
+  <jump target="Dendria">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Khaas">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Solene">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+ </jumps>
+</ssys>

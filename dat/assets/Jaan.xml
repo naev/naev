@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Jaan">
+ <pos>
+  <x>-17106.988508</x>
+  <y>-10288.870591</y>
+ </pos>
+ <GFX>
+  <space>M00.png</space>
+  <exterior>forest2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>9000000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Medicine</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Jaan is one of the most densely populated planets in this corner of the galaxy. The world benefits greatly from nearby Nexus operations, which makes it a popular place to live despite the environmental issues that inevitably come with a large population, and the problems with security that have arisen in recent years.</description>
+  <bar>Jaan has a big spaceport, and to facilitate the many pilots and crews that pass through it has multiple spaceport bars. Each spaceport bar is exactly the same as all the others, though. Not even the people who frequently visit Jaan can tell them apart. This regularly causes problems for unsuspecting people who promised to meet at the spaceport bar.</bar>
+ </general>
+ <tech>
+  <item>Laser 1</item>
+  <item>Basic Outfits 1</item>
+  <item>Missiles 1</item>
+  <item>Missiles 2</item>
+ </tech>
+</asset>

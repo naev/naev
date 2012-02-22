@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Caladan">
+ <pos>
+  <x>-13061.286600</x>
+  <y>-11944.148856</y>
+ </pos>
+ <GFX>
+  <space>M01.png</space>
+  <exterior>oceanic.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>17000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+   <commodity>Medicine</commodity>
+  </commodities>
+  <description>The surface of the planet is predominantly covered with water and the planetary climate is characterized by abundant precipitation and strong winds, though sufficiently tolerable to make costly weather modification equipment unnecessary. Habitable land is often characterized by soft meadows, swamps and dense forests. The resource base of Caladan consists mainly of agriculture and biomass, with the locally bred and grown pundi rice being its main export, and fishing a traditional source of sustenance for its people. Other traditional products include wine and various livestock, most prominently cattle. Cuisine on Caladan is rather refined, with most dishes containing meat.</description>
+  <bar>The bar is just off the starport with a great view of the harbor. You could watch the fishermen run frantically about attending their duties for hours.</bar>
+ </general>
+ <tech>
+  <item>Laser 1</item>
+  <item>Basic Outfits 1</item>
+  <item>Basic Outfits 2</item>
+  <item>Basic Civilian Ships</item>
+  <item>Basic Trade Ships</item>
+ </tech>
+</asset>

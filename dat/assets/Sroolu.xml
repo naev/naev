@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Sroolu">
+ <pos>
+  <x>4159.837315</x>
+  <y>-21174.045924</y>
+ </pos>
+ <GFX>
+  <space>moon-H00.png</space>
+  <exterior>oceanic.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>H</class>
+  <population>1200000</population>
+  <hide>0.500000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <outfits/>
+  </services>
+  <commodities>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Sroolu is the lone moon oribiting An'ku II. The colony here mostly concerns itself with harvesting the resources that can be found in An'ku, refining them for processing and even producing some low-level end products out of them. The operation seems to be making profit, though it seems it is fated to remain a minor player in the Sirian economy.</description>
+  <bar>Sroolu is only a small colony, but its bar is huge, even by intergalactic standards. It seems whoever built it intended for the entire workforce to fit inside at once. Suffice to say only part of the bar's floor surface is actually in use, the remaining space being screened off by mobile panels.</bar>
+ </general>
+ <tech>
+  <item>Basic Outfits 1</item>
+  <item>Missiles 1</item>
+  <item>Missiles 2</item>
+ </tech>
+</asset>

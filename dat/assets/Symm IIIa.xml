@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Symm IIIa">
+ <pos>
+  <x>3663.680133</x>
+  <y>3548.372981</y>
+ </pos>
+ <GFX>
+  <space>moon-O00.png</space>
+  <exterior>desertic2.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.500000</hide>
+  <services/>
+ </general>
+</asset>

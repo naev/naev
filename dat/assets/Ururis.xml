@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Ururis">
+ <pos>
+  <x>25380.000000</x>
+  <y>-2480.000000</y>
+ </pos>
+ <GFX>
+  <space>M03.png</space>
+  <exterior>forest2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>3100000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Ururis is a relatively wealthy Sirian world. It lies on several major trade routes, which brings in quite a bit of revenue. Cashing in on the amount of visitors it gets, the local government often stages entertainment events designed to make the maximum amount of profit possible.</description>
+ </general>
+ <tech>
+  <item>Ion 2</item>
+  <item>Missiles 1</item>
+  <item>High Tech Upgrades 1</item>
+  <item>Light Civilian Combat Ships</item>
+ </tech>
+</asset>

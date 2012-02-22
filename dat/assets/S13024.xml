@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="S13024">
+ <pos>
+  <x>1813.437925</x>
+  <y>-11001.523413</y>
+ </pos>
+ <GFX>
+  <space>001.png</space>
+  <exterior>station01.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Collective</faction>
+  <value>15.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>3</class>
+  <population>0</population>
+  <hide>0.750000</hide>
+  <services/>
+ </general>
+</asset>

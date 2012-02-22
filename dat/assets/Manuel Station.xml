@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Manuel Station">
+ <pos>
+  <x>-6490.624381</x>
+  <y>-8887.528980</y>
+ </pos>
+ <GFX>
+  <space>station-shipyard.png</space>
+  <exterior>station03.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Goddard</faction>
+  <value>100.000000</value>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>2000</population>
+  <hide>0.750000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Manuel Station is named after Eduard Manuel Goddard, the man to which House Goddard owes its existence. The station is primarily a shipyard, and thus contributes a great deal to House Goddard's local economy. Its position around Goddard III is no coincidence, as the lifeless planet provides many of the raw materials needed to produce space ships.</description>
+  <bar>The station's bar is more businesslike than recreative. The people who come here are either traders who came to load or unload goods, or potential customers looking for a Goddard-made ship. Nobody is really interested in just passing the time, because time is money on Manuel Station.</bar>
+ </general>
+ <tech>
+  <item>Laser 1</item>
+  <item>Kinetic 1</item>
+  <item>Heavy Civilian Combat Ships</item>
+  <item>Bulk Trade Ships</item>
+  <item>Goddard Ship</item>
+  <item>Basic Outfits 2</item>
+  <item>High Tech Upgrades 1</item>
+  <item>Missiles 1</item>
+  <item>Missiles 2</item>
+ </tech>
+</asset>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Wildwood Station">
+ <pos>
+  <x>-7343.434885</x>
+  <y>-3353.838054</y>
+ </pos>
+ <GFX>
+  <space>station-commerce3.png</space>
+  <exterior>traderoom.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>75.000000</value>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>130</population>
+  <hide>0.750000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+  </services>
+  <commodities/>
+  <description>Almost anyone who seeks to travel from Dvaered to Soromid space, or the other way around, stops by Wildwood on the way. It's a long haul, and Wildwood is one of the sparse providers of refuel along the route. While mainly a commercially oriented installation, Wildwood is also home to a small Soromid military outpost. The ships stationed here provide a bare minimum of protection to the traffic that passes through the system.</description>
+  <bar>Ships need fuel, and so do their captains. Wildwood's spacedock bar, though modest, offers captains stopping by a respectable choice in beverages and pastimes before they have to move on.</bar>
+ </general>
+</asset>

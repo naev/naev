@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Eye of Night I">
+ <pos>
+  <x>-239.444444</x>
+  <y>12235.555556</y>
+ </pos>
+ <GFX>
+  <space>K02.png</space>
+  <exterior>traderoom.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

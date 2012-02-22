@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Gaula Foods">
+ <pos>
+  <x>22534.320057</x>
+  <y>-5891.042114</y>
+ </pos>
+ <GFX>
+  <space>station-agriculture.png</space>
+  <exterior>station05.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>50.000000</value>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>0</population>
+  <hide>0.750000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+  </commodities>
+  <description>Gaula Foods is the food factory that processes the produce grown on Gaula into human digestible meal units. The station outputs an amazing variety of foodstuffs considering the limited diversity of the plants they are made from.</description>
+  <bar>The bar offers samples of most of the products made in the factory complex. The taste is generally not bad, although after a while it starts to get a little samey.</bar>
+ </general>
+</asset>

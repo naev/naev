@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Europea">
+ <pos>
+  <x>9066.069227</x>
+  <y>9205.498988</y>
+ </pos>
+ <GFX>
+  <space>O03.png</space>
+  <exterior>oceanic.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>50.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>O</class>
+  <population>5000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Medicine</commodity>
+  </commodities>
+  <description>Europea is almost completely covered in water, which was considered undesirable in the early days of the First Growth. However, it was soon discovered that Europea's biosphere contained many organisms that were useful in the production of high-grade medicine, and an exception was made. This means that Europea is one of the earliest O-class planets that were ever colonized. Today, the world still thrives on its medical exports, though advances in medicinal technology since the days of the First Growth have rendered a considerable portion of it obsolete.</description>
+  <bar>Perhaps uniquely in the galaxy, both the spaceport and its associated facilities are afloat without tethers. This means that the location of the spaceport itself changes over time as the platform is carried on the major currents that span the face of the planet.</bar>
+ </general>
+ <tech>
+  <item>Laser 2</item>
+  <item>Heavy Civilian Combat Ships</item>
+  <item>Basic Outfits 2</item>
+  <item>Missiles 1</item>
+  <item>Missiles 2</item>
+ </tech>
+</asset>

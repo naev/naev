@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Anecu">
+ <pos>
+  <x>-30000.000000</x>
+  <y>-10800.000000</y>
+ </pos>
+ <GFX>
+  <space>O00.png</space>
+  <exterior>aquatic.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>O</class>
+  <population>70000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Medicine</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Luxury Goods</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Anecu is a completely aquatic planet. Its surface is covered completely by water. In the shallow areas great underwater cities are constructed, as the climate above the water can be very harsh (waves been recorded to be up to 2 kilometres high). The planet boasts extensive ship-designing facilities, using the high-pressure of the water as a benchmark against which ships are measured.</description>
+  <bar>The spaceport bar is approximately 3 kilometres below the surface of the planet. The walls are constructed from a hardened, transparent polymer that allows you to see into the darkness of the water. Every so often you can see gelatinous creatures sliding around, barely illuminated by the bar lighting.</bar>
+ </general>
+ <tech>
+  <item>Kinetic 1</item>
+  <item>Basic Outfits 1</item>
+ </tech>
+</asset>

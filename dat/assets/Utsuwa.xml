@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Utsuwa">
+ <pos>
+  <x>-13000.000000</x>
+  <y>-4700.000000</y>
+ </pos>
+ <GFX>
+  <space>K00.png</space>
+  <exterior>mining3.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>K</class>
+  <population>400000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land>land_lowclass</land>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities>
+   <commodity>Ore</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Ore</commodity>
+  </commodities>
+  <description>Many people who live in the Empire think of the Dvaered as unsophisticated, brawny louts who spend all day down in the mines and all night picking fights with each other. This is a stereotype, and it's hardly a fair description of Dvaered society as a whole, but it happens to be absolutely accurate when it comes to the Dvaereds on Utsuwa. The colony on this planet is a full-time mining operation, and all who live on Utsuwa work in the mining industry or its peripherals. Needless to say, House Dvaered gets a significant amount of its raw resources from here.</description>
+  <bar>This bar is a miner's bar, alpha and omega. Virtually all its patrons are miners, and they do what miners do, which is drink, fight, and talk about miner things. Fortunately, the owner of the bar is considerate of outside visitors, so in addition to Miner's Ale, Miner's Vodka, Miner's Whiskey and Bloody Miners you can also order a light beer, which has a little wooden miner's pickaxe in it.</bar>
+ </general>
+ <tech>
+  <item>Kinetic 1</item>
+  <item>Basic Outfits 1</item>
+  <item>Missiles 2</item>
+ </tech>
+</asset>

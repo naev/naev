@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Green Eye">
+ <pos>
+  <x>-57840.000000</x>
+  <y>8400.000000</y>
+ </pos>
+ <GFX>
+  <space>moon-J01.png</space>
+  <exterior>mining6.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.500000</hide>
+  <services/>
+ </general>
+</asset>

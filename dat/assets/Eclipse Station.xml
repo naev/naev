@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Eclipse Station">
+ <pos>
+  <x>-9543.149055</x>
+  <y>-11138.579005</y>
+ </pos>
+ <GFX>
+  <space>002.png</space>
+  <exterior>station00.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>4000</population>
+  <hide>0.750000</hide>
+  <services>
+   <land>dv_mil_restricted</land>
+   <refuel/>
+   <bar/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>Eclipse Station is the major military outpost in this area of Dvaered space. It serves as a customs checkpoint for Imperial and Consortium traders looking to travel to Dvaer and beyond. Simultaneously, it is charged with minimizing the Pirate threat in this region of space. It therefore comes as no surprise that Eclipse Station stations a sizeable fleet.</description>
+  <bar>This bar is clearly not a place for relaxation. It is frequented mostly by traders who are waiting for their shipments to clear. The appointments are drab and functional, and the smell of cleaning chemicals is prevalent.</bar>
+ </general>
+ <tech>
+  <item>Kinetic 1</item>
+  <item>Kinetic 2</item>
+  <item>Heavy Civilian Combat Ships</item>
+  <item>High Tech Upgrades 1</item>
+  <item>Missiles 1</item>
+  <item>Missiles 2</item>
+ </tech>
+</asset>

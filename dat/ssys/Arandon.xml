@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ssys name="Arandon">
+ <general>
+  <radius>14000.000000</radius>
+  <stars>500</stars>
+  <interference>600.000000</interference>
+  <nebula volatility="100.000000">600.000000</nebula>
+ </general>
+ <pos>
+  <x>570.000000</x>
+  <y>100.000000</y>
+ </pos>
+ <assets>
+  <asset>Virtual Empire Unpresence</asset>
+ </assets>
+ <jumps>
+  <jump target="Doeston">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Oriantis">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Polaris">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Zerantix">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+ </jumps>
+</ssys>

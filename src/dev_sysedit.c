@@ -24,6 +24,7 @@
 #include "dialogue.h"
 #include "tk/toolkit_priv.h"
 #include "ndata.h"
+#include "nfile.h"
 
 
 #define EDITOR_WDWNAME  "Planet Property Editor"
@@ -121,7 +122,6 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
       double w, double h, void *data );
 /* Button functions. */
 static void sysedit_close( unsigned int wid, char *wgt );
-static void sysedit_save( unsigned int wid_unused, char *unused );
 static void sysedit_btnNew( unsigned int wid_unused, char *unused );
 static void sysedit_btnRename( unsigned int wid_unused, char *unused );
 static void sysedit_btnRemove( unsigned int wid_unused, char *unused );
@@ -190,11 +190,6 @@ void sysedit_open( StarSystem *sys )
    window_addButton( wid, -15, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnClose", "Close", sysedit_close );
    i = 1;
-
-   /* Save button. */
-   window_addButton( wid, -15, 20+(BUTTON_HEIGHT+20)*i, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnSave", "Save", sysedit_save );
-   i += 2;
 
    /* Scale. */
    window_addButton( wid, -15, 20+(BUTTON_HEIGHT+20)*i, BUTTON_WIDTH, BUTTON_HEIGHT,
@@ -279,21 +274,11 @@ static void sysedit_close( unsigned int wid, char *wgt )
    /* Set the dominant faction. */
    system_setFaction( sysedit_sys );
 
+   /* Save the system */
+   dsys_saveSystem( sysedit_sys );
+
    /* Close the window. */
    window_close( wid, wgt );
-}
-
-
-/**
- * @brief Saves the systems.
- */
-static void sysedit_save( unsigned int wid_unused, char *unused )
-{
-   (void) wid_unused;
-   (void) unused;
-
-   dsys_saveAll();
-   dpl_saveAll();
 }
 
 
@@ -326,6 +311,8 @@ static void sysedit_editPntClose( unsigned int wid, char *unused )
 
    /* Add the new presence. */
    system_addPresence(sysedit_sys, p->faction, p->presenceAmount, p->presenceRange);
+
+   dpl_savePlanet( p );
 
    window_close( wid, unused );
 }
@@ -408,7 +395,7 @@ static void sysedit_btnRename( unsigned int wid_unused, char *unused )
    (void) wid_unused;
    (void) unused;
    int i;
-   char *name;
+   char *name, *oldName, *newName;
    Select_t *sel;
    Planet *p;
    for (i=0; i<sysedit_nselect; i++) {
@@ -431,9 +418,17 @@ static void sysedit_btnRename( unsigned int wid_unused, char *unused )
          }
 
          /* Rename. */
+         oldName = malloc((16+strlen(p->name))*sizeof(char));
+         snprintf(oldName,(16+strlen(p->name))*sizeof(char),"dat/assets/%s.xml",p->name);
+         newName = malloc((16+strlen(name))*sizeof(char));
+         snprintf(newName,(16+strlen(name))*sizeof(char),"dat/assets/%s.xml",name);
+         nfile_rename(oldName,newName);
+         free(oldName);
+         free(newName);
          free(p->name);
          p->name = name;
          window_modifyText( sysedit_widEdit, "txtName", p->name );
+         dpl_savePlanet( p );
       }
    }
 }
@@ -447,11 +442,20 @@ static void sysedit_btnRemove( unsigned int wid_unused, char *unused )
    (void) wid_unused;
    (void) unused;
    Select_t *sel;
+   char *file;
    int i;
-   for (i=0; i<sysedit_nselect; i++) {
-      sel = &sysedit_select[i];
-      if (sel->type == SELECT_PLANET)
-         system_rmPlanet( sysedit_sys, sysedit_sys->planets[ sel->u.planet ]->name );
+
+   if (dialogue_YesNo( "Remove selected planets?", "This can not be undone." )) {
+      for (i=0; i<sysedit_nselect; i++) {
+         sel = &sysedit_select[i];
+         if (sel->type == SELECT_PLANET) {
+            file = malloc((16+strlen(sysedit_sys->planets[ sel->u.planet ]->name))*sizeof(char));
+            snprintf(file,(16+strlen(sysedit_sys->planets[ sel->u.planet ]->name))*sizeof(char),
+                           "dat/assets/%s.xml",sysedit_sys->planets[ sel->u.planet ]->name);
+            nfile_delete(file);
+            system_rmPlanet( sysedit_sys, sysedit_sys->planets[ sel->u.planet ]->name );
+         }
+      }
    }
 }
 
@@ -899,6 +903,9 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
                   sysedit_selectAdd( &sysedit_tsel );
             }
             sysedit_drag      = 0;
+            for (i=0; i<sysedit_nselect; i++) {
+               dpl_savePlanet(sysedit_sys->planets[ sysedit_select[i].u.planet ]);
+            }
          }
          if (sysedit_dragSel) {
             if ((SDL_GetTicks() - sysedit_dragTime < SYSEDIT_DRAG_THRESHOLD) &&

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Marius Station">
+ <pos>
+  <x>-6537.980310</x>
+  <y>8415.469108</y>
+ </pos>
+ <GFX>
+  <space>station-battlestation.png</space>
+  <exterior>station04.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>100.000000</value>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>2000</population>
+  <hide>0.750000</hide>
+  <services>
+   <land>emp_mil_restricted</land>
+   <refuel/>
+   <bar/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>Marius Station used to be a customs station of the old Empire, checking traffic bound for Sol and the core Imperial systems. Now, in the post-Incident era, the station serves as the first line of defense from hostile elements that threaten the isolated colonies at Tau Prime and beyond. But since it is perpetually under-staffed and under-equipped, Marius Station is barely capable of maintaining its own presence in Raelid, let alone protect anything else.</description>
+  <bar>This bar is self-service most of the time. All Empire personnel on board have their hands full with double shifts, repair duties and briefings. Few have the spare time to even visit the spacedock bar, let alone staff it.</bar>
+ </general>
+ <tech>
+  <item>Heavy Civilian Combat Ships</item>
+  <item>Basic Outfits 2</item>
+  <item>Missiles 1</item>
+  <item>Missiles 2</item>
+ </tech>
+</asset>

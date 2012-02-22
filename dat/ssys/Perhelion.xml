@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ssys name="Perhelion">
+ <general>
+  <radius>16450.000000</radius>
+  <stars>400</stars>
+  <interference>0.000000</interference>
+  <nebula volatility="0.000000">0.000000</nebula>
+ </general>
+ <pos>
+  <x>61.000000</x>
+  <y>-739.000000</y>
+ </pos>
+ <assets>
+  <asset>Perhelion Alpha</asset>
+  <asset>Perhelion Beta</asset>
+  <asset>Perhelion Gamma</asset>
+  <asset>Virtual Pirate Unpresence</asset>
+ </assets>
+ <jumps>
+  <jump target="Daravon">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Urbanus">
+   <pos x="21791.360195" y="4943.063790"/>
+   <hide>1.250000</hide>
+  </jump>
+ </jumps>
+</ssys>

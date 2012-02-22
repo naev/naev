@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Virtual Pirate Small">
+ <virtual/>
+ <presence>
+  <faction>Pirate</faction>
+  <value>100.000000</value>
+  <range>3</range>
+ </presence>
+</asset>

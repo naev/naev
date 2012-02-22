@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ssys name="Koralis">
+ <general>
+  <radius>14000.000000</radius>
+  <stars>500</stars>
+  <interference>0.000000</interference>
+  <nebula volatility="0.000000">0.000000</nebula>
+ </general>
+ <pos>
+  <x>-222.000000</x>
+  <y>-330.000000</y>
+ </pos>
+ <assets>
+  <asset>Aillis</asset>
+  <asset>Fuzka</asset>
+  <asset>Koralis IV</asset>
+  <asset>Koralis VI</asset>
+  <asset>Luxsor</asset>
+  <asset>Paxsor</asset>
+  <asset>Virtual Civilian Standard</asset>
+  <asset>Virtual Trader Area</asset>
+ </assets>
+ <jumps>
+  <jump target="Gamma Polaris">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Qex">
+   <pos x="-8810.152489" y="-15443.708459"/>
+   <hide>1.250000</hide>
+  </jump>
+ </jumps>
+</ssys>

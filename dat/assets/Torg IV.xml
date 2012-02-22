@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Torg IV">
+ <pos>
+  <x>6947.698228</x>
+  <y>-12323.849114</y>
+ </pos>
+ <GFX>
+  <space>J08.png</space>
+  <exterior>station03.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

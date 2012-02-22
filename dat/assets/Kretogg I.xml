@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Kretogg I">
+ <pos>
+  <x>-7954.714288</x>
+  <y>1876.054512</y>
+ </pos>
+ <GFX>
+  <space>J03.png</space>
+  <exterior>oceanic2.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>
