@@ -693,6 +693,13 @@ int nfile_writeFile( const char* data, int len, const char* path, ... )
    return 0;
 }
 
+
+/**
+ * @brief Deletes a file.
+ *
+ *    @param file File to delete.
+ *    @return 0 on success.
+ */
 int nfile_delete( const char* file )
 {
    if (!unlink(file)) {
@@ -702,6 +709,13 @@ int nfile_delete( const char* file )
    return 0;
 }
 
+/**
+ * @brief Renames a file.
+ *
+ *    @param oldname Old name of the file.
+ *    @param newname New name to set the file to.
+ *    @return 0 on success.
+ */
 int nfile_rename( const char* oldname, const char* newname )
 {
    if (!nfile_fileExists(oldname)) {
