@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Proteron Kahan">
+ <base_type>Kahan</base_type>
+ <GFX sx="10" sy="10">kahan</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Destroyer</class>
+ <price>2100000</price>
+ <fabricator>House Proteron</fabricator>
+ <license>Medium Combat Vessel License</license>
+ <description>The Kahan is a cutting-edge vessel. Its design was completed shortly before the Incident, and it was on track to become the Proteron military's primary combat vessel. While possessing fewer weapon mounts than the Pacifier, it makes up for it with its ability to mount higher-tech weapons.</description>
+ <movement>
+  <thrust>140</thrust>
+  <turn>65</turn>
+  <speed>150</speed>
+ </movement>
+ <health>
+  <absorb>43</absorb>
+  <shield>600</shield>
+  <armour>1000</armour>
+  <energy>1600</energy>
+  <shield_regen>10</shield_regen>
+  <armour_regen>0</armour_regen>
+  <energy_regen>50</energy_regen>
+ </health>
+ <characteristics>
+  <cpu>90</cpu>
+  <crew>20</crew>
+  <mass>650</mass>
+  <fuel>400</fuel>
+  <cargo>90</cargo>
+ </characteristics>
+ <slots>
+  <weapon x="28" y="0" h="5">heavy</weapon>
+	<weapon x="18" y="0" h="5">heavy</weapon>
+  <weapon x="-30" y="-8" h="3"/>
+  <weapon x="-30" y="8" h="3"/>
+  <utility>heavy</utility>
+  <utility>heavy</utility>
+  <utility/>
+  <utility/>
+  <utility/>
+  <structure>heavy</structure>
+  <structure/>
+  <structure/>
+ </slots>
+ <stats>
+  <ew_detect>5</ew_detect>
+  <tur_energy>-5</tur_energy>
+ </stats>
+</ship>

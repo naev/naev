@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Proteron Archimedes">
+ <base_type>Archimedes</base_type>
+ <GFX sx="12" sy="12">archimedes</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Cruiser</class>
+ <price>6250000</price>
+ <fabricator>House Proteron</fabricator>
+ <license>Heavy Combat Vessel License</license>
+ <description>The Archimedes is a last-generation heavy cruiser. While many were being retired at the time of the Incident, the remnants of House Proteron have retrofitted them and offered some for sale to the public.</description>
+ <movement>
+  <thrust>70</thrust>
+  <turn>45</turn>
+  <speed>90</speed>
+ </movement>
+ <health>
+  <absorb>63</absorb>
+  <shield>700</shield>
+  <armour>3300</armour>
+  <energy>2400</energy>
+  <shield_regen>12</shield_regen>
+  <armour_regen>0</armour_regen>
+  <energy_regen>75</energy_regen>
+ </health>
+ <characteristics>
+  <cpu>130</cpu>
+  <crew>40</crew>
+  <mass>4200</mass>
+  <fuel>400</fuel>
+  <cargo>480</cargo>
+ </characteristics>
+ <slots>
+  <weapon x="40" y="0" h="0"/>
+  <weapon x="25" y="-4" h="0"/>
+  <weapon x="25" y="4" h="0"/>
+  <weapon x="0" y="-6" h="2"/>
+  <weapon x="0" y="6" h="2"/>
+  <weapon x="-25" y="-8" h="3"/>
+  <weapon x="-25" y="8" h="3"/>
+  <utility/>
+  <utility/>
+  <utility/>
+  <utility/>
+  <utility/>
+  <structure/>
+  <structure/>
+  <structure/>
+  <structure/>
+  <structure/>
+  <structure/>
+ </slots>
+ <stats>
+  <ew_detect>-5</ew_detect>
+  <tur_firerate>5</tur_firerate>
+ </stats>
+</ship>

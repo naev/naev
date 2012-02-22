@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Dvaered Phalanx">
+ <base_type>Phalanx</base_type>
+ <GFX sx="10" sy="10">phalanx_dvaered</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Corvette</class>
+ <price>850000</price>
+ <fabricator>House Dvaered</fabricator>
+ <license>Medium Combat Vessel License</license>
+ <description>While somewhat technologically antiquated, the Phalanx's large energy capacity and heavy armour allow it to remain an effective combat vessel.</description>
+ <movement>
+  <thrust>180</thrust>
+  <turn>100</turn>
+  <speed>190</speed>
+ </movement>
+ <health>
+  <absorb>28</absorb>
+  <shield>410</shield>
+  <armour>430</armour>
+  <energy>1125</energy>
+  <shield_regen>8</shield_regen>
+  <armour_regen>0</armour_regen>
+  <energy_regen>38.3</energy_regen>
+ </health>
+ <characteristics>
+  <cpu>54</cpu>
+  <crew>15</crew>
+  <mass>380</mass>
+  <fuel>400</fuel>
+  <cargo>45</cargo>
+ </characteristics>
+ <slots>
+  <weapon x="8" y="0" h="2"/>
+  <weapon x="4" y="5" h="-2"/>
+  <weapon x="4" y="-5" h="-2"/>
+  <weapon x="0" y="10" h="-2">light</weapon>
+  <weapon x="0" y="-10" h="-2">light</weapon>
+  <utility/>
+  <utility/>
+  <utility>light</utility>
+  <structure/>
+  <structure/>
+  <structure/>
+  <structure/>
+ </slots>
+ <stats>
+  <fwd_damage>4</fwd_damage>
+ </stats>
+</ship>

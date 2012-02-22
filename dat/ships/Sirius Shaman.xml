@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Sirius Shaman">
+ <base_type>shaman</base_type>
+ <GFX>shaman</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Bomber</class>
+ <price>525000</price>
+ <fabricator>Sirius Systems</fabricator>
+ <license>Light Combat Vessel License</license>
+ <description>Though its relatively sleek form may cause it to be mistaken for a light fighter from a distance, the Shaman is anything but. A purpose-built light missile platform, few enemies escape the reach of the Shaman.</description>
+ <movement>
+  <thrust>200</thrust>
+  <turn>115</turn>
+  <speed>210</speed>
+ </movement>
+ <health>
+  <absorb>9</absorb>
+  <shield>300</shield>
+  <armour>150</armour>
+  <energy>680</energy>
+  <shield_regen>7</shield_regen>
+  <armour_regen>0</armour_regen>
+  <energy_regen>30</energy_regen>
+ </health>
+ <characteristics>
+  <cpu>45</cpu>
+  <crew>4</crew>
+  <mass>195</mass>
+  <fuel>300</fuel>
+  <cargo>25</cargo>
+ </characteristics>
+ <slots>
+  <weapon x="4" y="0" h="0"/>
+  <weapon x="4" y="0" h="0"/>
+  <weapon x="-2" y="4" h="-1"/>
+  <weapon x="-2" y="-4" h="-1"/>
+  <utility/>
+  <utility/>
+  <structure/>
+  <structure/>
+  <structure/>
+ </slots>
+ <stats>
+  <launch_rate>5</launch_rate>
+  <launch_range>15</launch_range>
+ </stats>
+</ship>

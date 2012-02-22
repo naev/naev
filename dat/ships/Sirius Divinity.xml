@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Sirius Divinity">
+ <base_type>Divinity</base_type>
+ <GFX sx="12" sy="12">divinity</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Carrier</class>
+ <price>7200000</price>
+ <fabricator>Sirius Systems</fabricator>
+ <license>Heavy Combat Vessel License</license>
+ <description>Whilst the Dogma is said to form the core of any Sirian fleet, few combat pilots would dismiss the significance of the Divinity. Though not exceptionally formidable in direct combat, the Divinity's ability to field a multitude of fighters gives it unparalleled flexibility in combat, serving as a key logistical vessel in any sizable fleet.</description>
+ <movement>
+  <thrust>55</thrust>
+  <turn>55</turn>
+  <speed>75</speed>
+ </movement>
+ <health>
+  <absorb>64</absorb>
+  <shield>880</shield>
+  <armour>4400</armour>
+  <energy>1800</energy>
+  <shield_regen>11</shield_regen>
+  <armour_regen>0</armour_regen>
+  <energy_regen>66.7</energy_regen>
+ </health>
+ <characteristics>
+  <cpu>120</cpu>
+  <crew>36</crew>
+  <mass>3900</mass>
+  <fuel>500</fuel>
+  <cargo>440</cargo>
+ </characteristics>
+ <slots>
+  <weapon x="40" y="0" h="0"/>
+  <weapon x="20" y="0" h="0"/>
+  <weapon x="20" y="0" h="0"/>
+  <weapon x="-20" y="0" h="0"/>
+  <weapon x="-40" y="0" h="0"/>
+  <utility/>
+  <utility/>
+  <utility/>
+  <utility/>
+  <structure/>
+  <structure/>
+  <structure/>
+  <structure/>
+  <structure/>
+ </slots>
+ <stats>
+  <launch_rate>15</launch_rate>
+  <ew_detect>10</ew_detect>
+ </stats>
+</ship>

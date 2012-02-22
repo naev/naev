@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Quicksilver">
+ <base_type>Quicksilver</base_type>
+ <GFX sx="10" sy="10">quicksilver</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Courier</class>
+ <price>800000</price>
+ <fabricator>Melendez Corp.</fabricator>
+ <description>While still a cargo hauler, the Quicksilver is quite different from Melendez's other offerings. Featuring a streamlined frame and oversized engines, it's the prime choice for expedient shipping.</description>
+ <movement>
+  <thrust>260</thrust>
+  <turn>120</turn>
+  <speed>280</speed>
+ </movement>
+ <health>
+  <absorb>18</absorb>
+  <shield>240</shield>
+  <armour>130</armour>
+  <energy>580</energy>
+  <shield_regen>5</shield_regen>
+  <armour_regen>0</armour_regen>
+  <energy_regen>20</energy_regen>
+ </health>
+ <characteristics>
+  <cpu>35</cpu>
+  <crew>4</crew>
+  <mass>225</mass>
+  <fuel>500</fuel>
+  <cargo>50</cargo>
+ </characteristics>
+ <slots>
+  <weapon x="15" y="0" h="5"/>
+  <weapon x="-10" y="-3" h="0"/>
+  <weapon x="-10" y="3" h="0"/>
+  <utility/>
+  <utility/>
+  <structure/>
+  <structure/>
+  <structure/>
+ </slots>
+ <stats>
+  <jump_delay>-25</jump_delay>
+ </stats>
+</ship>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Lancelot">
+ <base_type>Lancelot</base_type>
+ <GFX>lancelot</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Fighter</class>
+ <price>500000</price>
+ <fabricator>Nexus Shipyards</fabricator>
+ <license>Light Combat Vessel License</license>
+ <description>One of the prize heavy fighters of Nexus Shipyards. The Lancelot was originally a classified design for the Empire military, but its existence was revealed during an aborted test flight. Now a modified version is available for civilians, though it doesn't quite match the original specifications. It is used by security agencies all over the universe for its reliability and availability.</description>
+ <movement>
+  <thrust>220</thrust>
+  <turn>135</turn>
+  <speed>260</speed>
+ </movement>
+ <health>
+  <absorb>12</absorb>
+  <shield>280</shield>
+  <armour>110</armour>
+  <energy>730</energy>
+  <shield_regen>7</shield_regen>
+  <armour_regen>0</armour_regen>
+  <energy_regen>32.7</energy_regen>
+ </health>
+ <characteristics>
+  <cpu>40</cpu>
+  <crew>4</crew>
+  <mass>180</mass>
+  <fuel>400</fuel>
+  <cargo>25</cargo>
+ </characteristics>
+ <slots>
+  <weapon x="12" y="0" h="0">medium</weapon>
+  <weapon x="12" y="0" h="0"/>
+  <weapon x="-3" y="0" h="2"/>
+  <weapon x="-3" y="0" h="2"/>
+  <utility/>
+  <utility/>
+  <utility/>
+  <structure/>
+  <structure/>
+ </slots>
+ <stats>
+  <fwd_firerate>3</fwd_firerate>
+ </stats>
+</ship>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Vendetta">
+ <base_type>Vendetta</base_type>
+ <GFX>vendetta</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Fighter</class>
+ <price>400000</price>
+ <fabricator>House Dvaered</fabricator>
+ <license>Light Combat Vessel License</license>
+ <description>The Vendetta displays the House Dvaered philosophy very well. Give a ship many intimidating guns, layer it with heavy armour, and neglect the electronics. Due to the obsolete electronics used in the Vendetta, it is better suited to skirmishes than extended battles, as it possesses inferior shield and energy regeneration compared to other ships of its class, though it can unleash a truly fearsome barrage.</description>
+ <movement>
+  <thrust>220</thrust>
+  <turn>125</turn>
+  <speed>230</speed>
+ </movement>
+ <health>
+  <absorb>11</absorb>
+  <shield>200</shield>
+  <armour>200</armour>
+  <energy>800</energy>
+  <shield_regen>6</shield_regen>
+  <armour_regen>0</armour_regen>
+  <energy_regen>20</energy_regen>
+ </health>
+ <characteristics>
+  <cpu>30</cpu>
+  <crew>4</crew>
+  <mass>170</mass>
+  <fuel>300</fuel>
+  <cargo>25</cargo>
+ </characteristics>
+ <slots>
+  <weapon x="16" y="-9" h="0"/>
+  <weapon x="16" y="9" h="0"/>
+  <weapon x="13" y="-13" h="0"/>
+  <weapon x="13" y="13" h="0"/>
+  <weapon x="19" y="0" h="-2"/>
+  <weapon x="3" y="0" h="2"/>
+  <utility/>
+  <structure/>
+ </slots>
+ <stats>
+  <fwd_energy>-10</fwd_energy>
+  <fwd_heat>-10</fwd_heat>
+  <fwd_firerate>-5</fwd_firerate>
+ </stats>
+</ship>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Hawking">
+ <base_type>Hawking</base_type>
+ <GFX sx="12" sy="12">hawking</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Cruiser</class>
+ <price>7500000</price>
+ <fabricator>Nexus Shipyards</fabricator>
+ <license>Heavy Combat Vessel License</license>
+ <description>The Hawking is the flagship vessel of Nexus Shipyards. A large cruiser designed for extended engagements, it is widely used by the Empire to exert control over their territories. In terms of raw firepower, the Hawking is second only to the flagship of House Goddard, though its narrower frame allows it to present a smaller target to the enemy.</description>
+ <movement>
+  <thrust>60</thrust>
+  <turn>50</turn>
+  <speed>70</speed>
+ </movement>
+ <health>
+  <absorb>59</absorb>
+  <shield>700</shield>
+  <armour>2200</armour>
+  <energy>2700</energy>
+  <shield_regen>10</shield_regen>
+  <armour_regen>0</armour_regen>
+  <energy_regen>85.3</energy_regen>
+ </health>
+ <characteristics>
+  <cpu>150</cpu>
+  <crew>35</crew>
+  <mass>3750</mass>
+  <fuel>300</fuel>
+  <cargo>420</cargo>
+ </characteristics>
+ <slots>
+  <weapon x="40" y="0" h="2"/>
+  <weapon x="25" y="0" h="2"/>
+  <weapon x="12" y="-6" h="0"/>
+  <weapon x="12" y="6" h="0"/>
+  <weapon x="0" y="0" h="7"/>
+  <weapon x="-15" y="0" h="7"/>
+  <weapon x="-33" y="0" h="7"/>
+  <utility/>
+  <utility/>
+  <utility/>
+  <utility/>
+  <utility/>
+  <structure/>
+  <structure/>
+  <structure/>
+  <structure/>
+  <structure/>
+ </slots>
+ <stats>
+  <heat_dissipation>15</heat_dissipation>
+  <tur_energy>-5</tur_energy>
+ </stats>
+</ship>

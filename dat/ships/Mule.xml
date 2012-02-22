@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Mule">
+ <base_type>Mule</base_type>
+ <GFX sx="10" sy="10">mule</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Freighter</class>
+ <price>900000</price>
+ <fabricator>Melendez Corp.</fabricator>
+ <license>Large Civilian Vessel License</license>
+ <description>A heavy freighter specialized in transporting cargo throughout the galaxy. Also has sufficient accommodations for passengers depending on the model, allowing for enjoyable cruises. The Mule was a favorite target of pirates until they added defensive capabilities to the new models which have proved highly effective against ill-prepared pirates.</description>
+ <movement>
+  <thrust>100</thrust>
+  <turn>60</turn>
+  <speed>100</speed>
+ </movement>
+ <health>
+  <absorb>50</absorb>
+  <shield>190</shield>
+  <armour>750</armour>
+  <energy>600</energy>
+  <shield_regen>4</shield_regen>
+  <armour_regen>0</armour_regen>
+  <energy_regen>26.7</energy_regen>
+ </health>
+ <characteristics>
+  <cpu>43</cpu>
+  <crew>13</crew>
+  <mass>1250</mass>
+  <fuel>500</fuel>
+  <cargo>360</cargo>
+ </characteristics>
+ <slots>
+  <weapon x="25" y="0" h="0">heavy</weapon>
+  <weapon x="-15" y="0" h="4"/>
+  <weapon x="15" y="0" h="4"/>
+  <utility/>
+  <utility/>
+  <utility/>
+  <structure/>
+  <structure/>
+  <structure/>
+  <structure/>
+  <structure/>
+  <structure/>
+ </slots>
+ <stats>
+  <cargo_inertia>-20</cargo_inertia>
+ </stats>
+</ship>
+<!-- Fighters -->

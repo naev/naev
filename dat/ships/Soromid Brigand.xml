@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Soromid Brigand">
+ <base_type>Brigand</base_type>
+ <GFX>brigand</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Fighter</class>
+ <price>280000</price>
+ <fabricator>Soromid</fabricator>
+ <license>Light Combat Vessel License</license>
+ <description>The Brigand is a fast, maneuverable bioship that the Soromid use for system patrols and police duties. The ship is lighly armoured and fairly fragile, but it makes up for this by being fast to grow and therefore relatively expendable.</description>
+ <movement>
+  <thrust>250</thrust>
+  <turn>145</turn>
+  <speed>290</speed>
+ </movement>
+ <health>
+  <absorb>8</absorb>
+  <shield>210</shield>
+  <armour>90</armour>
+  <energy>580</energy>
+  <shield_regen>7</shield_regen>
+  <armour_regen>2</armour_regen>
+  <energy_regen>22.3</energy_regen>
+ </health>
+ <characteristics>
+  <cpu>32</cpu>
+  <crew>2</crew>
+  <mass>86</mass>
+  <fuel>300</fuel>
+  <cargo>15</cargo>
+ </characteristics>
+ <slots>
+  <weapon x="12" y="0" h="0"/>
+  <weapon x="-3" y="0" h="2"/>
+  <weapon x="3" y="0" h="2"/>
+  <utility/>
+  <utility/>
+  <structure/>
+  <structure/>
+ </slots>
+</ship>

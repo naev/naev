@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Base">
+ <base_type>Base</base_type>
+ <GFX sx="1" sy="1">base</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Cruiser</class>
+ <price>1</price>
+ <fabricator>N/A</fabricator>
+ <description>This is a base. It's for AI use only. Don't buy it. Seriously.</description>
+ <movement>
+  <thrust>0</thrust>
+  <turn>100</turn>
+  <speed>0</speed>
+ </movement>
+ <health>
+  <absorb>80</absorb>
+  <shield>8000</shield>
+  <armour>5000</armour>
+  <energy>10000</energy>
+  <shield_regen>3.3</shield_regen>
+  <armour_regen>0</armour_regen>
+  <energy_regen>166.7</energy_regen>
+ </health>
+ <characteristics>
+  <cpu>500</cpu>
+  <crew>500</crew>
+  <mass>100000</mass>
+  <fuel>1</fuel>
+  <cargo>5000</cargo>
+ </characteristics>
+ <slots>
+  <weapon x="0" y="0" h="0"/>
+  <weapon x="0" y="0" h="0"/>
+  <weapon x="50" y="0" h="5"/>
+  <weapon x="-50" y="0" h="5"/>
+  <weapon x="0" y="50" h="5"/>
+  <weapon x="0" y="-40" h="5"/>
+  <weapon x="0" y="0" h="30"/>
+  <weapon x="0" y="0" h="30"/>
+  <utility/>
+  <utility/>
+  <utility/>
+  <utility/>
+  <utility/>
+  <utility/>
+  <structure/>
+  <structure/>
+  <structure/>
+  <structure/>
+  <structure/>
+  <structure/>
+ </slots>
+</ship>
+<!-- Special craft, mainly used for missioning purposes. -->

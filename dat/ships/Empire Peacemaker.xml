@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Empire Peacemaker">
+ <base_type>Peacemaker</base_type>
+ <GFX sx="12" sy="12">peacemaker</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Carrier</class>
+ <price>18000000</price>
+ <fabricator>Nexus Shipyards</fabricator>
+ <license>Heavy Combat Vessel License</license>
+ <description>Built under contract for the Empire by Nexus Shipyards, the Peacemaker is one of the grandest vessels in the galaxy, dwarfing even the mighty Goddard. Peacemakers typically function as flag ships in Imperial fleets, and can provide the fighter and bomber squadrons with much needed resupplies. Like most capital ships, however, it is vulnerable to attack from enemy bombers.</description>
+ <movement>
+  <thrust>40</thrust>
+  <turn>35</turn>
+  <speed>45</speed>
+ </movement>
+ <health>
+  <absorb>78</absorb>
+  <shield>1000</shield>
+  <armour>5000</armour>
+  <energy>4800</energy>
+  <shield_regen>12</shield_regen>
+  <armour_regen>0</armour_regen>
+  <energy_regen>118.3</energy_regen>
+ </health>
+ <characteristics>
+  <cpu>240</cpu>
+  <crew>65</crew>
+  <mass>6200</mass>
+  <fuel>500</fuel>
+  <cargo>680</cargo>
+ </characteristics>
+ <slots>
+  <weapon x="40" y="0" h="2"/>
+  <weapon x="25" y="0" h="2"/>
+  <weapon x="12" y="-6" h="0"/>
+  <weapon x="12" y="6" h="0"/>
+  <weapon x="0" y="0" h="7"/>
+  <weapon x="0" y="0" h="7"/>
+  <weapon x="-15" y="0" h="7"/>
+  <weapon x="-33" y="0" h="7"/>
+  <utility/>
+  <utility/>
+  <utility/>
+  <utility/>
+  <utility/>
+  <utility/>
+  <structure/>
+  <structure/>
+  <structure/>
+  <structure/>
+  <structure/>
+  <structure/>
+ </slots>
+ <stats>
+  <tur_energy>-10</tur_energy>
+  <tur_firerate>-5</tur_firerate>
+  <ammo_capacity>25</ammo_capacity>
+  <misc_instant_jump>1</misc_instant_jump>
+ </stats>
+</ship>
+<!-- Note: the base is NOT a normal ship. Do not add to techs or fleets! -->

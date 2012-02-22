@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Koala">
+ <base_type>Koala</base_type>
+ <GFX>koala</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Courier</class>
+ <price>260000</price>
+ <fabricator>Melendez Corp.</fabricator>
+ <description>The Koala is your standard cargo vessel. It's a small ship with little weapon space but a decent amount of cargo space. Good for the entrepreneur working his way to a vast space trade empire.</description>
+ <movement>
+  <thrust>200</thrust>
+  <turn>140</turn>
+  <speed>220</speed>
+ </movement>
+ <health>
+  <absorb>13</absorb>
+  <shield>180</shield>
+  <armour>240</armour>
+  <energy>405</energy>
+  <shield_regen>6</shield_regen>
+  <armour_regen>0</armour_regen>
+  <energy_regen>16.7</energy_regen>
+ </health>
+ <characteristics>
+  <cpu>30</cpu>
+  <crew>3</crew>
+  <mass>180</mass>
+  <fuel>500</fuel>
+  <cargo>65</cargo>
+ </characteristics>
+ <slots>
+  <weapon x="11" y="0" h="-7"/>
+  <weapon x="-5" y="0" h="3"/>
+  <utility/>
+  <utility/>
+  <structure/>
+  <structure/>
+  <structure/>
+  <structure/>
+ </slots>
+ <stats>
+  <cargo_inertia>-10</cargo_inertia>
+ </stats>
+</ship>

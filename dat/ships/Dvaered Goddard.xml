@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Dvaered Goddard">
+ <base_type>Goddard</base_type>
+ <GFX sx="12" sy="12">goddard_dvaered</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Cruiser</class>
+ <price>11500000</price>
+ <fabricator>House Goddard</fabricator>
+ <license>Heavy Combat Vessel License</license>
+ <description>A Dvaered Goddard.</description>
+ <movement>
+  <thrust>60</thrust>
+  <turn>45</turn>
+  <speed>60</speed>
+ </movement>
+ <health>
+  <absorb>69</absorb>
+  <shield>900</shield>
+  <armour>4300</armour>
+  <energy>4000</energy>
+  <shield_regen>10</shield_regen>
+  <armour_regen>0</armour_regen>
+  <energy_regen>90.7</energy_regen>
+ </health>
+ <characteristics>
+  <cpu>140</cpu>
+  <crew>52</crew>
+  <mass>4950</mass>
+  <fuel>500</fuel>
+  <cargo>540</cargo>
+ </characteristics>
+ <slots>
+  <weapon x="-10" y="-13" h="2"/>
+  <weapon x="-10" y="13" h="2"/>
+  <weapon x="-15" y="-25" h="3"/>
+  <weapon x="-15" y="25" h="3"/>
+  <weapon x="16" y="0" h="3"/>
+  <weapon x="0" y="0" h="5"/>
+  <weapon x="-20" y="0" h="5"/>
+  <utility/>
+  <utility/>
+  <utility/>
+  <utility/>
+  <utility/>
+  <structure/>
+  <structure/>
+  <structure/>
+  <structure/>
+  <structure/>
+  <structure/>
+ </slots>
+ <stats>
+  <launch_rate>10</launch_rate>
+  <launch_range>10</launch_range>
+  <heat_dissipation>-10</heat_dissipation>
+  <tur_damage>10</tur_damage>
+ </stats>
+</ship>

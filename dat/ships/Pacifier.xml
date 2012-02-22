@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Pacifier">
+ <base_type>Pacifier</base_type>
+ <GFX sx="10" sy="10">pacifier</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Destroyer</class>
+ <price>1500000</price>
+ <fabricator>Nexus Shipyards</fabricator>
+ <license>Medium Combat Vessel License</license>
+ <description>The Pacifier is one of the older and trustier designs of Nexus Shipyards. It was designed primarily as a border-patrol vessel, and as such it is able to withstand heavy punishment from raiding parties. The Pacifier features high fuel capacity to facilitate lengthy patrol routes.</description>
+ <movement>
+  <thrust>140</thrust>
+  <turn>95</turn>
+  <speed>150</speed>
+ </movement>
+ <health>
+  <absorb>42</absorb>
+  <shield>500</shield>
+  <armour>950</armour>
+  <energy>1410</energy>
+  <shield_regen>10</shield_regen>
+  <armour_regen>0</armour_regen>
+  <energy_regen>55.2</energy_regen>
+ </health>
+ <characteristics>
+  <cpu>83</cpu>
+  <crew>17</crew>
+  <mass>730</mass>
+  <fuel>500</fuel>
+  <cargo>95</cargo>
+ </characteristics>
+ <slots>
+  <weapon x="-15" y="-10" h="-10">heavy</weapon>
+  <weapon x="-15" y="10" h="-10">heavy</weapon>
+  <weapon x="20" y="0" h="-10"/>
+  <weapon x="4" y="-5" h="-10"/>
+  <weapon x="4" y="5" h="-10"/>
+  <utility>heavy</utility>
+  <utility>heavy</utility>
+  <utility/>
+  <utility/>
+  <structure>heavy</structure>
+  <structure/>
+  <structure/>
+ </slots>
+ <stats>
+  <tur_energy>-5</tur_energy>
+ </stats>
+</ship>

@@ -23,7 +23,6 @@
  * Prototypes.
  */
 static int dsys_compPlanet( const void *planet1, const void *planet2 );
-static int dsys_compSys( const void *sys1, const void *sys2 );
 static int dsys_compJump( const void *jmp1, const void *jmp2 );
 
 
@@ -42,24 +41,6 @@ static int dsys_compPlanet( const void *planet1, const void *planet2 )
    p2 = * (const Planet**) planet2;
 
    return strcmp( p1->name, p2->name );
-}
-
-
-/**
- * @brief Function for qsorting systems.
- *
- *    @param sys1 System 1 to sort.
- *    @param sys2 System 2 to sort.
- *    @return Order to sort.
- */
-static int dsys_compSys( const void *sys1, const void *sys2 )
-{
-   const StarSystem *s1, *s2;
-
-   s1 = * (const StarSystem**) sys1;
-   s2 = * (const StarSystem**) sys2;
-
-   return strcmp( s1->name, s2->name );
 }
 
 

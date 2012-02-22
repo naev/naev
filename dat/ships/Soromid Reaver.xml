@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Soromid Reaver">
+ <base_type>Reaver</base_type>
+ <GFX>reaver</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Fighter</class>
+ <price>500000</price>
+ <fabricator>Soromid</fabricator>
+ <license>Light Combat Vessel License</license>
+ <description>Reavers are often found at the forefront of Soromid military engagements. Their good speed and maneuverability are compounded by their durability, making the Reaver one of the most effective heavy fighters in the galaxy.</description>
+ <movement>
+  <thrust>220</thrust>
+  <turn>135</turn>
+  <speed>260</speed>
+ </movement>
+ <health>
+  <absorb>12</absorb>
+  <shield>280</shield>
+  <armour>110</armour>
+  <energy>730</energy>
+  <shield_regen>8</shield_regen>
+  <armour_regen>3</armour_regen>
+  <energy_regen>32.7</energy_regen>
+ </health>
+ <characteristics>
+  <cpu>40</cpu>
+  <crew>4</crew>
+  <mass>180</mass>
+  <fuel>400</fuel>
+  <cargo>25</cargo>
+ </characteristics>
+ <slots>
+  <weapon x="12" y="0" h="0">medium</weapon>
+  <weapon x="12" y="0" h="0"/>
+  <weapon x="-3" y="0" h="2"/>
+  <weapon x="-3" y="0" h="2"/>
+  <utility/>
+  <utility/>
+  <utility/>
+  <structure/>
+  <structure/>
+ </slots>
+ <stats>
+  <fwd_firerate>3</fwd_firerate>
+ </stats>
+</ship>
