@@ -131,8 +131,8 @@ int dpl_savePlanet( const Planet *p )
    cleanName = malloc((strlen(p->name)+1)*sizeof(char));
    memset(cleanName, 0, strlen(p->name)+1);
    pos = 0;
-   for (i=0; i<strlen(cleanName); i++) {
-      if (isalnum(p->name[i])) {
+   for (i=0; i<(int)strlen(p->name); i++) {
+      if (!ispunct(p->name[i])) {
          cleanName[pos] = p->name[i];
          pos++;
       }
