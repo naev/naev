@@ -3,22 +3,24 @@
  <general>
   <radius>35000.000000</radius>
   <stars>500</stars>
+  <asteroids>0</asteroids>
   <interference>950.000000</interference>
-  <nebula volatility="500.000000">900.000000</nebula>
+  <nebula volatility="600.000000">900.000000</nebula>
  </general>
  <pos>
-  <x>636.000000</x>
-  <y>249.000000</y>
+  <x>963.000000</x>
+  <y>26.000000</y>
  </pos>
  <assets/>
  <jumps>
   <jump target="Haered">
-   <autopos/>
-   <hide>1.250000</hide>
+    <autopos/>
   </jump>
   <jump target="Polaris">
-   <autopos/>
-   <hide>1.250000</hide>
+    <autopos/>
+  </jump>
+  <jump target="Tide">
+    <autopos/>
   </jump>
  </jumps>
 </ssys>

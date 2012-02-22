@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ssys name="Seport">
+ <general>
+  <radius>10000.000000</radius>
+  <stars>400</stars>
+  <asteroids>0</asteroids>
+  <interference>0.000000</interference>
+  <nebula volatility="200.000000">600.000000</nebula>
+ </general>
+ <pos>
+  <x>862.000000</x>
+  <y>172.000000</y>
+ </pos>
+ <assets>
+  <asset>Coran</asset>
+  <asset>HS-224</asset>
+  <asset>SY-314</asset>
+ </assets>
+ <jumps>
+  <jump target="Aet">
+    <autopos/>
+  </jump>
+  <jump target="Rotide">
+    <autopos/>
+  </jump>
+ </jumps>
+</ssys>
