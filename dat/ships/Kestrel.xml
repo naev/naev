@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Kestrel">
+ <base_type>Kestrel</base_type>
+ <GFX sx="10" sy="10">kestrel</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Cruiser</class>
+ <price>6000000</price>
+ <fabricator>Krain Industries</fabricator>
+ <license>Heavy Combat Vessel License</license>
+ <description>The ship that single-handedly put Krain Industries on the map, the Kestrel was designed to be a sleek heavy assault cruiser. Generally more fragile than other cruisers, it manages to combine excellent manoeuvrability and firepower with state-of-the-art electronics, making for a truly fearsome ship in the hands of an able captain.</description>
+ <movement>
+  <thrust>100</thrust>
+  <turn>80</turn>
+  <speed>110</speed>
+ </movement>
+ <health>
+  <absorb>53</absorb>
+  <shield>700</shield>
+  <armour>2500</armour>
+  <energy>2400</energy>
+  <shield_regen>10</shield_regen>
+  <armour_regen>0</armour_regen>
+  <energy_regen>74.7</energy_regen>
+ </health>
+ <characteristics>
+  <cpu>170</cpu>
+  <crew>27</crew>
+  <mass>2800</mass>
+  <fuel>400</fuel>
+  <cargo>320</cargo>
+ </characteristics>
+ <slots>
+  <weapon x="-23" y="-15" h="5"/>
+  <weapon x="-23" y="15" h="5"/>
+  <weapon x="44" y="0" h="0"/>
+  <weapon x="-6" y="0" h="12"/>
+  <weapon x="-24" y="-8" h="8">medium</weapon>
+  <weapon x="-24" y="8" h="8">medium</weapon>
+  <utility/>
+  <utility/>
+  <utility/>
+  <utility/>
+  <utility>medium</utility>
+  <structure/>
+  <structure/>
+  <structure/>
+  <structure>medium</structure>
+ </slots>
+ <stats>
+  <heat_dissipation>10</heat_dissipation>
+ </stats>
+</ship>

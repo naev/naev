@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Shark">
+ <base_type>Shark</base_type>
+ <GFX>shark</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Fighter</class>
+ <price>280000</price>
+ <fabricator>Nexus Shipyards</fabricator>
+ <license>Light Combat Vessel License</license>
+ <description>A newer Nexus Shipyards design, the Shark is an agile light fighter designed for in-system patrolling. While it's not as capable as its larger relative, the Lancelot, it's still an effective addition to any fleet.</description>
+ <movement>
+  <thrust>250</thrust>
+  <turn>145</turn>
+  <speed>290</speed>
+ </movement>
+ <health>
+  <absorb>8</absorb>
+  <shield>200</shield>
+  <armour>60</armour>
+  <energy>580</energy>
+  <shield_regen>7</shield_regen>
+  <armour_regen>0</armour_regen>
+  <energy_regen>22.3</energy_regen>
+ </health>
+ <characteristics>
+  <cpu>32</cpu>
+  <crew>2</crew>
+  <mass>86</mass>
+  <fuel>300</fuel>
+  <cargo>15</cargo>
+ </characteristics>
+ <slots>
+  <weapon x="12" y="0" h="0"/>
+  <weapon x="-3" y="0" h="2"/>
+  <weapon x="3" y="0" h="2"/>
+  <utility/>
+  <utility/>
+  <structure/>
+  <structure/>
+ </slots>
+</ship>

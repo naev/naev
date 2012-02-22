@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Ancestor">
+ <base_type>Ancestor</base_type>
+ <GFX>ancestor</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Bomber</class>
+ <price>600000</price>
+ <fabricator>House Dvaered</fabricator>
+ <license>Light Combat Vessel License</license>
+ <description>Commonly referred to as the little Goddard, the Ancestor also has its roots in the primitive flying machines used by men many ages ago. Unlike the Goddard though, the electronics are done by House Dvaered, making it considerably inferior in that area.</description>
+ <movement>
+  <thrust>180</thrust>
+  <turn>105</turn>
+  <speed>220</speed>
+ </movement>
+ <health>
+  <absorb>7</absorb>
+  <shield>240</shield>
+  <armour>140</armour>
+  <energy>720</energy>
+  <shield_regen>7</shield_regen>
+  <armour_regen>0</armour_regen>
+  <energy_regen>23.3</energy_regen>
+ </health>
+ <characteristics>
+  <cpu>42</cpu>
+  <crew>6</crew>
+  <mass>140</mass>
+  <fuel>300</fuel>
+  <cargo>20</cargo>
+ </characteristics>
+ <slots>
+  <weapon x="8" y="0" h="0"/>
+  <weapon x="8" y="0" h="0"/>
+  <weapon x="-2" y="9" h="-1"/>
+  <weapon x="-2" y="-9" h="-1"/>
+  <utility/>
+  <utility/>
+  <structure/>
+ </slots>
+ <stats>
+  <launch_rate>5</launch_rate>
+  <launch_range>10</launch_range>
+ </stats>
+</ship>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Pirate Rhino">
+ <base_type>Rhino</base_type>
+ <GFX sx="10" sy="10">rhino_pirate</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Armoured Transport</class>
+ <price>1100000</price>
+ <fabricator>Skull and Bones</fabricator>
+ <description>The traditional Skull and Bones refit has left the Rhino substantially more manoeuvrable, though somewhat less armoured. Exploiting its large cargo bay and durability, the Rhino has become an excellent scavenger ship.</description>
+ <movement>
+  <thrust>115</thrust>
+  <turn>75</turn>
+  <speed>150</speed>
+ </movement>
+ <health>
+  <absorb>40</absorb>
+  <shield>270</shield>
+  <armour>1200</armour>
+  <energy>970</energy>
+  <shield_regen>5</shield_regen>
+  <armour_regen>0</armour_regen>
+  <energy_regen>43.3</energy_regen>
+ </health>
+ <characteristics>
+  <cpu>58</cpu>
+  <crew>10</crew>
+  <mass>920</mass>
+  <fuel>500</fuel>
+  <cargo>210</cargo>
+ </characteristics>
+ <slots>
+  <weapon x="25" y="-3" h="4">heavy</weapon>
+  <weapon x="25" y="3" h="4">heavy</weapon>
+  <weapon x="-15" y="-3" h="4"/>
+  <weapon x="-15" y="3" h="4"/>
+  <utility/>
+  <utility/>
+  <utility/>
+  <structure/>
+  <structure/>
+  <structure/>
+  <structure/>
+ </slots>
+ <stats>
+  <cargo_inertia>10</cargo_inertia>
+ </stats>
+</ship>

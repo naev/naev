@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Gawain">
+ <base_type>Gawain</base_type>
+ <GFX>gawain</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Luxury Yacht</class>
+ <price>500000</price>
+ <fabricator>Nexus Shipyards</fabricator>
+ <description>The Gawain is a very high-end ship, outpacing nearly all other production vessels. It relies heavily on technology first implemented on the Lancelot, and is widely used as a sporting vessel as it is extremely manoeuvrable, though they rarely see combat due to their meager weapons space and relative fragility.</description>
+ <movement>
+  <thrust>320</thrust>
+  <turn>170</turn>
+  <speed>340</speed>
+ </movement>
+ <health>
+  <absorb>2</absorb>
+  <shield>180</shield>
+  <armour>80</armour>
+  <energy>550</energy>
+  <shield_regen>5</shield_regen>
+  <armour_regen>0</armour_regen>
+  <energy_regen>23.3</energy_regen>
+ </health>
+ <characteristics>
+  <cpu>34</cpu>
+  <crew>2</crew>
+  <mass>63</mass>
+  <fuel>400</fuel>
+  <cargo>15</cargo>
+ </characteristics>
+ <slots>
+  <weapon x="12" y="0" h="-2"/>
+  <weapon x="-5" y="0" h="1"/>
+  <utility/>
+  <utility/>
+  <utility/>
+  <structure/>
+  <structure/>
+ </slots>
+</ship>

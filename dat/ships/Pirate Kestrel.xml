@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Pirate Kestrel">
+ <base_type>Kestrel</base_type>
+ <GFX sx="10" sy="10">kestrel_pirate</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Cruiser</class>
+ <price>5700000</price>
+ <fabricator>Skull and Bones</fabricator>
+ <description>The Kestrel is the best ship offered by the Skull and Bones. It is extremely agile for a cruiser yet doesn't lack the firepower necessary to question the authority of the Empire. A very strong ship for those pirates who can afford it.</description>
+ <movement>
+  <thrust>110</thrust>
+  <turn>85</turn>
+  <speed>110</speed>
+ </movement>
+ <health>
+  <absorb>55</absorb>
+  <shield>800</shield>
+  <armour>2000</armour>
+  <energy>2450</energy>
+  <shield_regen>9</shield_regen>
+  <armour_regen>0</armour_regen>
+  <energy_regen>72</energy_regen>
+ </health>
+ <characteristics>
+  <cpu>180</cpu>
+  <crew>28</crew>
+  <mass>2725</mass>
+  <fuel>400</fuel>
+  <cargo>300</cargo>
+ </characteristics>
+ <slots>
+  <weapon x="-23" y="-15" h="5"/>
+  <weapon x="-23" y="15" h="5"/>
+  <weapon x="44" y="0" h="0"/>
+  <weapon x="-6" y="0" h="12"/>
+  <weapon x="-24" y="-8" h="8">medium</weapon>
+  <weapon x="-24" y="8" h="8">medium</weapon>
+  <utility/>
+  <utility/>
+  <utility/>
+  <utility/>
+  <utility>medium</utility>
+  <structure/>
+  <structure/>
+  <structure/>
+  <structure>medium</structure>
+ </slots>
+ <stats>
+  <heat_dissipation>10</heat_dissipation>
+ </stats>
+</ship>

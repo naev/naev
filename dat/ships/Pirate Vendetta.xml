@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Pirate Vendetta">
+ <base_type>Vendetta</base_type>
+ <GFX>vendetta_pirate</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Fighter</class>
+ <price>450000</price>
+ <fabricator>Skull and Bones</fabricator>
+ <description>The Pirate Vendetta is even more intimidating than its regular counterpart. It's been heavily tweaked to be more adjusted to the pirate style of flying. Some of the armour has been removed to make more room for loot, while the reactor has been jacked up by a dubious technician. The ship ends up being substantially better than the original, but every so often the reactor goes nova destroying the ship. You hope it won't happen to you if you get in one.</description>
+ <movement>
+  <thrust>230</thrust>
+  <turn>135</turn>
+  <speed>240</speed>
+ </movement>
+ <health>
+  <absorb>12</absorb>
+  <shield>220</shield>
+  <armour>180</armour>
+  <energy>820</energy>
+  <shield_regen>6</shield_regen>
+  <armour_regen>0</armour_regen>
+  <energy_regen>20.8</energy_regen>
+ </health>
+ <characteristics>
+  <cpu>32</cpu>
+  <crew>4</crew>
+  <mass>180</mass>
+  <fuel>300</fuel>
+  <cargo>25</cargo>
+ </characteristics>
+ <slots>
+  <weapon x="16" y="-9" h="0"/>
+  <weapon x="16" y="9" h="0"/>
+  <weapon x="13" y="-13" h="0"/>
+  <weapon x="13" y="13" h="0"/>
+  <weapon x="19" y="0" h="-2"/>
+  <weapon x="3" y="0" h="2"/>
+  <utility/>
+  <structure/>
+ </slots>
+ <stats>
+  <fwd_energy>-10</fwd_energy>
+  <fwd_heat>-10</fwd_heat>
+  <fwd_firerate>-5</fwd_firerate>
+ </stats>
+</ship>

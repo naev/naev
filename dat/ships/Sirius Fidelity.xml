@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Sirius Fidelity">
+ <base_type>Fidelity</base_type>
+ <GFX>fidelity</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Fighter</class>
+ <price>350000</price>
+ <license>Light Combat Vessel License</license>
+ <fabricator>Sirius Systems</fabricator>
+ <description>The Fidelity is the light fighter of House Sirius. While not particularly competent alone, it's often employed as a forward scout, bringing with it far deadlier allies.</description>
+ <movement>
+  <thrust>260</thrust>
+  <turn>130</turn>
+  <speed>280</speed>
+ </movement>
+ <health>
+  <absorb>11</absorb>
+  <shield>220</shield>
+  <armour>90</armour>
+  <energy>650</energy>
+  <shield_regen>7</shield_regen>
+  <armour_regen>0</armour_regen>
+  <energy_regen>25</energy_regen>
+ </health>
+ <characteristics>
+  <cpu>35</cpu>
+  <crew>2</crew>
+  <mass>95</mass>
+  <fuel>300</fuel>
+  <cargo>15</cargo>
+ </characteristics>
+ <slots>
+  <weapon x="10" y="-2" h="0"/>
+  <weapon x="10" y="2" h="0"/>
+  <weapon x="0" y="-4" h="-3"/>
+  <weapon x="0" y="4" h="-3"/>
+  <utility/>
+  <utility/>
+  <structure/>
+  <structure/>
+ </slots>
+ <stats>
+  <ew_detect>10</ew_detect>
+ </stats>
+</ship>
