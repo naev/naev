@@ -1067,7 +1067,6 @@ static void uniedit_editGenList( unsigned int wid )
  */
 static void uniedit_editSysClose( unsigned int wid, char *name )
 {
-   char *inp;
    StarSystem *sys;
    double scale;
    
