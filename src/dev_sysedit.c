@@ -483,10 +483,8 @@ static void sysedit_btnScale( unsigned int wid_unused, char *unused )
 {
    (void) wid_unused;
    (void) unused;
-   char *str, buf[PATH_MAX];
+   char *str;
    double s;
-   Planet *p;
-   JumpPoint *jp;
    int i;
    StarSystem *sys;
 
@@ -506,27 +504,39 @@ static void sysedit_btnScale( unsigned int wid_unused, char *unused )
          return;
    }
 
+   sysedit_sysScale(sys, s);
+}
+
+/**
+ * @brief Scales a system.
+ */
+void sysedit_sysScale( StarSystem *sys, double factor )
+{
+   char buf[PATH_MAX];
+   Planet *p;
+   JumpPoint *jp;
+   int i;
+
    /* Scale radius. */
-   sys->radius *= s;
+   sys->radius *= factor;
    snprintf( buf, sizeof(buf), "Radius: %.0f", sys->radius );
    window_modifyText( sysedit_wid, "txtSelected", buf );
 
    /* Scale planets. */
    for (i=0; i<sys->nplanets; i++) {
       p     = sys->planets[i];
-      vect_cset( &p->pos, p->pos.x*s, p->pos.y*s );
+      vect_cset( &p->pos, p->pos.x*factor, p->pos.y*factor );
    }
 
    /* Scale jumps. */
    for (i=0; i<sys->njumps; i++) {
       jp    = &sys->jumps[i];
-      vect_cset( &jp->pos, jp->pos.x*s, jp->pos.y*s );
+      vect_cset( &jp->pos, jp->pos.x*factor, jp->pos.y*factor );
    }
 
    /* Must reconstruct jumps. */
    systems_reconstructJumps();
 }
-
 
 /**
  * @brief Toggles the grid.
