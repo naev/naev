@@ -644,14 +644,17 @@ double system_getClosestAng( const StarSystem *sys, int *pnt, int *jp, double x,
 int space_sysReachable( StarSystem *sys )
 {
    int i;
+   JumpPoint *jp;
 
    if (sys_isKnown(sys))
       return 1; /* it is known */
 
    /* check to see if it is adjacent to known */
-   for (i=0; i<sys->njumps; i++)
-      if (jp_isKnown( jump_getTarget( sys, sys->jumps[i].target )))
+   for (i=0; i<sys->njumps; i++) {
+      jp = jump_getTarget( sys, sys->jumps[i].target );
+      if (jp && jp_isKnown( jp ))
          return 1;
+   }
 
    return 0;
 }
