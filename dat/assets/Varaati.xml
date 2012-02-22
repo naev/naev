@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Varaati">
+ <pos>
+  <x>20300.000000</x>
+  <y>21350.000000</y>
+ </pos>
+ <GFX>
+  <space>M03.png</space>
+  <exterior>oceanic2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Frontier</faction>
+  <value>60.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>500000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>The sixteenth colony ship to be launched from Earth, Archimedes had many improvements over its predecessors. Though high-yield terraformind was still unknown in those days, the ship did have rather effective atmospheric equalizers and soil enhancers, which allowed it to transform Varaati from a primordeal world into a stable class M. Despite this success, Varaati's economic development started relatively late in the game, placing it a good distance behind Hope and Tori.</description>
+  <bar>Varaati's spaceport bar is one of those places where everything is in a state of disrepair, where none of the safety regulations are met and where the air is thick with odors you don't want to guess the origin of. In short, it's a great place to hang out.</bar>
+ </general>
+ <tech>
+  <item>Basic Outfits 2</item>
+  <item>Missiles 1</item>
+  <item>Basic Trade Ships</item>
+  <item>Bulk Trade Ships</item>
+ </tech>
+</asset>

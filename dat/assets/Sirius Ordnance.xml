@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Sirius Ordnance">
+ <pos>
+  <x>5966.666667</x>
+  <y>19366.197274</y>
+ </pos>
+ <GFX>
+  <space>station-fleetbase3.png</space>
+  <exterior>station05.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <value>10.000000</value>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>2000</population>
+  <hide>0.750000</hide>
+  <services>
+   <land>srs_mil_restricted</land>
+   <refuel/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>As with most of the Sirius fleet, the equipment installed on the ships is produced right here at Aesir. As a general rule, no finished ship leaves the system without being fully equipped first.</description>
+ </general>
+ <tech>
+  <item>Ion 1</item>
+  <item>Ion 2</item>
+  <item>Ion 3</item>
+  <item>High Tech Upgrades 2</item>
+  <item>Missiles 1</item>
+  <item>Missiles 2</item>
+ </tech>
+</asset>

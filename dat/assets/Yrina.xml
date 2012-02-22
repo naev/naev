@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Yrina">
+ <pos>
+  <x>28159.705105</x>
+  <y>8322.145136</y>
+ </pos>
+ <GFX>
+  <space>P03.png</space>
+  <exterior>snow.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>P</class>
+  <population>50000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities>
+   <commodity>Ore</commodity>
+  </commodities>
+  <description>Yrina is a resource world that's being strip-mined by the Sirii. The climate is harsh and almost all of the planet's surface is frozen, but in some cases that is actually desirable, as substances that would normally be fluid are now solid, and therefore mined more easily. Yrina supplies mostly Aesir, but some of the more exotic elements are exported to other perts of Sirius space, and beyond.</description>
+  <bar>The bar has various displays that provide the patrons with details about the mining process, and the current state of the operation in various areas. Though to most visitors it is of passing interest at best, you've got to at least hand it to the Sirius that they take an informative approach to their operation here.</bar>
+ </general>
+</asset>

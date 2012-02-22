@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Nova Shakar">
+ <pos>
+  <x>-10796.405599</x>
+  <y>-7216.167022</y>
+ </pos>
+ <GFX>
+  <space>M05.png</space>
+  <exterior>forest2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>812000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Medicine</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Nova Shakar was an utterly unremarkable Empire planet until the Emperor's Fist project began. Increasingly, Empire officials are settling here, given its close proximity to Gamma Polaris. In the time since then, it's become a supplier of many materials for the project, gaining importance within the Empire.</description>
+  <bar>While not a grandiose affair, the spaceport bar is reasonably sized and immaculately clean. Due to the increasing number of Empire officials making their home here, it remains busy throughout the day.</bar>
+ </general>
+ <tech>
+  <item>Laser 1</item>
+  <item>Laser 2</item>
+  <item>Light Civilian Combat Ships</item>
+  <item>Basic Outfits 2</item>
+ </tech>
+</asset>

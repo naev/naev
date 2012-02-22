@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Luxsor">
+ <pos>
+  <x>-638.461900</x>
+  <y>8974.249360</y>
+ </pos>
+ <GFX>
+  <space>moon-A00.png</space>
+  <exterior>forest.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.500000</hide>
+  <services/>
+ </general>
+</asset>

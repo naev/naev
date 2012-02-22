@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Hartwell Station">
+ <pos>
+  <x>10165.228472</x>
+  <y>-10541.797739</y>
+ </pos>
+ <GFX>
+  <space>station-fleetbase2.png</space>
+  <exterior>station03.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>1300</population>
+  <hide>0.750000</hide>
+  <services>
+   <land>srm_mil_restricted</land>
+   <refuel/>
+   <bar/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>Father's Pride is an important junction in Soromid space, and it needs to be well secured. Hartwell Station does just that. Besides securing local traffic, it also sends patrols into neighbouring systems, particularly Shikima, as Soromid Wards Alpha is a vital asset to the Soromid economy.</description>
+  <bar>It's typically only Soromid officers who frequent the recreational facilities on a military station. Regular Soromid sailors tend to stay with the ships, caring for them and making sure they are in good health.</bar>
+ </general>
+ <tech>
+  <item>Soromid Military Ships</item>
+ </tech>
+</asset>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Durumdra">
+ <pos>
+  <x>6810.831786</x>
+  <y>-20480.644679</y>
+ </pos>
+ <GFX>
+  <space>P01.png</space>
+  <exterior>snow.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>50.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>P</class>
+  <population>1000000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>While Durumdra technically classifies as a P class ice world, the place can be quite comfortable to live. Some regions near the equator melt during part of the planet's solar cycle, and during this period there is an outburst of life, ranging from vegetation to small hibernating animals. By Dvaered standards, the planet is not so bad at all.</description>
+  <bar>Durumdra doesn't have much to distinguish itself by in the galaxy, but the spaceport bar comes a long way. It has drinks from all over the galaxy, though Draygar's awkward location means that most of them are rather pricey. Nevertheless, Durumdra has earned itself a footnote in several noted galactic tourist guides.</bar>
+ </general>
+ <tech>
+  <item>Kinetic 1</item>
+  <item>Basic Outfits 1</item>
+  <item>Basic Outfits 2</item>
+  <item>Missiles 1</item>
+ </tech>
+</asset>

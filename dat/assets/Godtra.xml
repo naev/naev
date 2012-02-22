@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Godtra">
+ <pos>
+  <x>-5947.221096</x>
+  <y>-5823.731170</y>
+ </pos>
+ <GFX>
+  <space>M08.png</space>
+  <exterior>forest.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>7000000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Godtra is a reasonably balanced world, with a sizeable civilian population, a fair amount of heavy industry and some farming for internal consumption, though the population largely depends on Torg Crops for sustenance. As Godtra is one of the wealthiest Dvaered systems within a few jumps, it is a popular target for Warlords to conquer.</description>
+  <bar>A pretty decent place as far as spaceport bars go, Godtra's bar is well equipped to facilitate traders and other offworlders. The data uplinks are decently speedy, which is rare on a Dvaered world. Clearly, the local infrastructure has been well designed.</bar>
+ </general>
+ <tech>
+  <item>Kinetic 1</item>
+  <item>Kinetic 2</item>
+  <item>Basic Outfits 2</item>
+  <item>High Tech Upgrades 1</item>
+  <item>Missiles 2</item>
+ </tech>
+</asset>

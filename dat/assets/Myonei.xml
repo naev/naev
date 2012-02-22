@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Myonei">
+ <pos>
+  <x>-17821.865227</x>
+  <y>-17114.204956</y>
+ </pos>
+ <GFX>
+  <space>K03.png</space>
+  <exterior>gas.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>Y</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Myonei is an industry planet supplying many of the surrounding Soromid worlds with basic necessities. The atmosphere is so dense that it can actually be tapped for raw materials. Most of the infrastructure on the planet is dedicated to the industry, with all of the permanent workforce living up on the moon of Culex.</description>
+  <bar>As Myonei has quite a lot of goods to transport offworld at any given time, there is never a lull in the bustle of the spaceport bar. Freighter captains make up most of the clientele, as the workers tend to work continuous shifts and head straight to Culex when they get off.</bar>
+ </general>
+ <tech>
+  <item>Plasma 1</item>
+  <item>Basic Outfits 2</item>
+  <item>High Tech Upgrades 1</item>
+  <item>Basic Civilian Ships</item>
+  <item>Basic Trade Ships</item>
+ </tech>
+</asset>

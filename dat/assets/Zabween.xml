@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Zabween">
+ <pos>
+  <x>285.354495</x>
+  <y>12012.328125</y>
+ </pos>
+ <GFX>
+  <space>000.png</space>
+  <exterior>station00.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>4000</population>
+  <hide>0.750000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Medicine</commodity>
+   <commodity>Luxury Goods</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Zabween is an old station. It was first created as an outpost to fight piracy, but with the destruction of the Haven it has settled into a more traditional role. It presently functions as a largely commercial station, trading in many commodities. It keeps a museum with all sorts of ships and weapons that were used in the final fight against Haven.</description>
+  <bar>The bar walls are decorated with pictures of Empire soldiers who have fallen in the fight against Haven and piracy in general. It has become customary for the Empire to post pictures of the fallen, honouring those who gave their lives protecting the Empire's ideals. They are working on another addition to be able to fit more pictures.</bar>
+ </general>
+ <tech>
+  <item>Laser 2</item>
+  <item>Basic Outfits 2</item>
+  <item>Low Tech Upgrades</item>
+  <item>Basic Civilian Ships</item>
+  <item>Light Civilian Combat Ships</item>
+  <item>Missiles 1</item>
+ </tech>
+</asset>

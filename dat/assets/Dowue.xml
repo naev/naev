@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Dowue">
+ <pos>
+  <x>-2774.694760</x>
+  <y>-3802.503709</y>
+ </pos>
+ <GFX>
+  <space>P02.png</space>
+  <exterior>snow.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>P</class>
+  <population>125000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Medicine</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Dowue is a planet known for the infamous "Dowue Syndrome", a condition where patients will temporarily go insane with hysteria due to prolonged expose of certain visual wavelengths. This was at first attributed a contaminated shipment of food, but later it was found that the sun in the Apez system emitted abnormal wavelengths, whose effects where multiplied by contaminants in Dowue's atmosphere. Shortly thereafter, it became mandatory for all personnel to wear special goggles designed to filter out the harmful light.</description>
+  <bar>The Dowue Spaceport Bar is better known as the Frozen Shrimp after some ancient crustaceans found during the construction of the spaceport. It is a place where most of the personnel spend their time. The dangers, even with protective goggles, of the Dowue Syndrome persuade most people to stay indoors, and the bar lies in the heart of the spaceport.</bar>
+ </general>
+ <tech>
+  <item>Laser 1</item>
+  <item>Basic Outfits 1</item>
+  <item>Low Tech Upgrades</item>
+ </tech>
+</asset>

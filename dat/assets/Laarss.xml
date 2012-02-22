@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Laarss">
+ <pos>
+  <x>14354.175136</x>
+  <y>-15731.478785</y>
+ </pos>
+ <GFX>
+  <space>G02.png</space>
+  <exterior>mining6.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>G</class>
+  <population>900000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land>land_hiclass</land>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+  </commodities>
+  <description>Laarss is a resource world. Before the inception of House Dvaered, it used to supply the Imperial economy with raw materials at bottom prices. Nowadays, its chief export market is Eist Shipyard, which is in constant need of ship building resources. Though Laarss is largely the same mining colony it was before, working here is considered something of a privilege among Dvaered citizens, considering its location in Dvaer.</description>
+  <bar>Though technically this place is the spaceport bar, its main function is a place of leisure for the local population. At all times, you can find large groups of Dvaered workers here, spending their off-time and their credits on booze and entertainment.</bar>
+ </general>
+ <tech>
+  <item>Kinetic 1</item>
+  <item>Basic Outfits 2</item>
+  <item>Missiles 1</item>
+  <item>Missiles 2</item>
+ </tech>
+</asset>

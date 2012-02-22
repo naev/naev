@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Sudra">
+ <pos>
+  <x>15240.000000</x>
+  <y>-4680.000000</y>
+ </pos>
+ <GFX>
+  <space>moon-M02.png</space>
+  <exterior>desertic2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>400000</population>
+  <hide>0.500000</hide>
+  <services>
+   <land>land_lowclass</land>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Medicine</commodity>
+   <commodity>Luxury Goods</commodity>
+  </commodities>
+  <description>Located on the fringes of Dvaered controlled territory, Sudra has a relatively high amount of illegal activity going on. Though the Dvaered authorities actively try to stamp out criminal elements and make arrests almost every week, they are fighting a futile battle.</description>
+  <bar>This spaceport bar is unsavory. No other word will describe the place with the same accuracy. A good portion of the bar's clientele are wearing hoods, masks, or other garments to hide their personal features. The lighting is set to quite a dim level, allowing customers to find corners as dark as they please. Despite these obvious signs, the Dvaered officials that sometimes frequent the bar don't seem very keen to investigate.</bar>
+ </general>
+ <tech>
+  <item>Kinetic 2</item>
+  <item>Basic Outfits 1</item>
+  <item>Heavy Weapons 1</item>
+  <item>Missiles 1</item>
+ </tech>
+</asset>

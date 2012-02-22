@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ssys name="Theras">
+ <general>
+  <radius>17500.000000</radius>
+  <stars>400</stars>
+  <interference>50.000000</interference>
+  <nebula volatility="0.000000">0.000000</nebula>
+ </general>
+ <pos>
+  <x>436.000000</x>
+  <y>-382.000000</y>
+ </pos>
+ <assets>
+  <asset>Cetrat</asset>
+  <asset>Theras II</asset>
+  <asset>Theras III</asset>
+  <asset>Virtual Civilian Standard</asset>
+  <asset>Virtual Dvaered Small</asset>
+  <asset>Virtual FLF Small</asset>
+  <asset>Virtual Trader Area</asset>
+ </assets>
+ <jumps>
+  <jump target="Dakron">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Gilligan's Light">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Haleb">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+ </jumps>
+</ssys>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Hatter I">
+ <pos>
+  <x>8211.628418</x>
+  <y>-1914.511475</y>
+ </pos>
+ <GFX>
+  <space>A00.png</space>
+  <exterior>aquatic.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

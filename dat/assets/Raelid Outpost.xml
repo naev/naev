@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Raelid Outpost">
+ <pos>
+  <x>3521.076561</x>
+  <y>-4727.509766</y>
+ </pos>
+ <GFX>
+  <space>002.png</space>
+  <exterior>station02.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>3000</population>
+  <hide>0.750000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <outfits/>
+  </services>
+  <commodities/>
+  <description>Constructed by many captured and then enslaved FLF armsmen. The station seems sturdy, but you can't help wondering whether there's a bomb hidden somewhere, waiting to kill the Dvaered oppressors.</description>
+  <bar>The Raelid bar fits the Dvaered stereotype well. It's one of the more prominent areas as soon as you exit the docking area, and, as many Dvaered bars seem to be, it's much larger than it functionally needs to be. Far from the spotless bars of Polaris Prime, it's encrusted with dirt and you can sense the presence of other patrons by their smell alone. Truly, a Dvaered bar.</bar>
+ </general>
+ <tech>
+  <item>Kinetic 1</item>
+  <item>Basic Outfits 1</item>
+  <item>Missiles 1</item>
+ </tech>
+</asset>

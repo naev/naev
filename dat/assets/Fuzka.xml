@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Fuzka">
+ <pos>
+  <x>-13133.181669</x>
+  <y>-5107.348427</y>
+ </pos>
+ <GFX>
+  <space>M02.png</space>
+  <exterior>forest2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>50.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>400000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Medicine</commodity>
+   <commodity>Luxury Goods</commodity>
+  </commodities>
+  <description>Fuzka is a fairly typical Imperial civilian world. It has a good atmosphere, stable tectonics and a large population. The world grows most of its own food, but still needs imports to make ends meet. The local population is as well off as can be expected from a middle-class Imperial colony. Otherwise, there is little to note about Fuzka.</description>
+  <bar>The bar caters to its clientele with considerable efficiency. Since Fuzka has quite a high amount of civilian traffic, its bar needs to handle the many passengers who are waiting for their transport to depart.</bar>
+ </general>
+ <tech>
+  <item>Laser 1</item>
+  <item>Laser 2</item>
+  <item>Basic Outfits 1</item>
+  <item>Basic Outfits 2</item>
+  <item>Low Tech Upgrades</item>
+  <item>Basic Civilian Ships</item>
+  <item>Light Civilian Combat Ships</item>
+ </tech>
+</asset>

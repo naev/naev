@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Uhriabi-17">
+ <pos>
+  <x>-3280.000000</x>
+  <y>17440.000000</y>
+ </pos>
+ <GFX>
+  <space>J02.png</space>
+  <exterior>traderoom.png</exterior>
+ </GFX>
+ <general>
+  <class>J</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Virtual Frontier Unpresence">
+ <virtual/>
+ <presence>
+  <faction>Frontier</faction>
+  <value>-1000.000000</value>
+  <range>0</range>
+ </presence>
+</asset>

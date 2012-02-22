@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Kataka">
+ <pos>
+  <x>-5945.866695</x>
+  <y>8183.563291</y>
+ </pos>
+ <GFX>
+  <space>K03.png</space>
+  <exterior>gas.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>300.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>Y</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services>
+   <land>srm_mil_kataka</land>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>With the loss of Sorom, the Soromid had to decide on a new political capital. After some debate, it was decided that Kataka would fill this position. Kataka is by no means a pleasant world, but the Soromid being the Soromid, that made no difference. Present day, Kataka is home to most if not all of the influential Soromid citizens. Authorities on all aspects of Soromid can be found here.</description>
+  <bar>It's quite unusual for a non-Soromid to be granted landing rights on Kataka. And even when this happens, offworlders are usually restricted to the spaceport facility, and if they have business with planetside officials then those officials come to them. The spaceport bar is built for such occurrences, providing private booths where people may converse in private.</bar>
+ </general>
+ <tech>
+  <item>Basic Outfits 2</item>
+  <item>Heavy Weapons 2</item>
+  <item>Plasma 2</item>
+  <item>High Tech Upgrades 1</item>
+ </tech>
+</asset>

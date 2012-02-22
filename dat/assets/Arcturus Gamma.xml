@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Arcturus Gamma">
+ <pos>
+  <x>11296.801928</x>
+  <y>6891.698934</y>
+ </pos>
+ <GFX>
+  <space>station-fleetbase2.png</space>
+  <exterior>station03.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>1</class>
+  <population>52000</population>
+  <hide>0.750000</hide>
+  <services>
+   <land>emp_mil_restricted</land>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Medicine</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Luxury Goods</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Arcturus Gamma is the Empire's first line of defense when it comes to their core systems. Piracy is nearly non-existent in the core systems due to the large standing force stationed here, and their routine patrols.</description>
+  <bar>A truly utilitarian place, the Arcturus Gamma bar is metallic grey, meticulously maintained, and full of off-duty Empire soldiers.</bar>
+ </general>
+ <tech>
+  <item>Laser 1</item>
+  <item>Laser 2</item>
+  <item>Laser 3</item>
+  <item>Basic Outfits 1</item>
+  <item>Basic Outfits 2</item>
+  <item>Heavy Weapons 1</item>
+  <item>High Tech Upgrades 1</item>
+  <item>Basic Civilian Ships</item>
+  <item>Heavy Civilian Combat Ships</item>
+  <item>Empire Military Ships</item>
+ </tech>
+</asset>

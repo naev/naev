@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Thymo">
+ <pos>
+  <x>24202.720556</x>
+  <y>-18121.767832</y>
+ </pos>
+ <GFX>
+  <space>D02.png</space>
+  <exterior>desertic2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>D</class>
+  <population>100000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+  </commodities>
+  <description>People sometimes joke that Soromid will live anywhere, like vermin. This is not true. But a pilot looking at the colony on Thymo might well understand why people say such things. The planet is uninteresting by all means, having little in the way of natural resources and lacking an atmosphere entirely. But the Soromid still live here, mainly because they can. Thymo counts as a civilian world, albeit not a very rich one.</description>
+  <bar>Like everything on Thymo, the spaceport bar is sober, utilitarian, efficient. Some pilots like it that way though, as the modest but content clientele testifies.</bar>
+ </general>
+ <tech>
+  <item>Basic Outfits 1</item>
+  <item>Plasma 1</item>
+  <item>Low Tech Upgrades</item>
+  <item>Missiles 1</item>
+  <item>Missiles 2</item>
+ </tech>
+</asset>

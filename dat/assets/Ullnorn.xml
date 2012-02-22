@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Ullnorn">
+ <pos>
+  <x>2880.000000</x>
+  <y>3600.000000</y>
+ </pos>
+ <GFX>
+  <space>A00.png</space>
+  <exterior>lava.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>Y</class>
+  <population>10000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities>
+   <commodity>Ore</commodity>
+  </commodities>
+  <description>Ullnorn isn't actually a habitable planet, and there is no good reason why humans should make their home here. The fact that they do can be traced back to a Dvaered in-house conflict between two minor Warlords, who each claimed dominion over Ginger and everything in it. With both sides unwilling to back down, it came down to whoever held a permanent presence in the system. Thus, the colony on Ullnorn was established. Today, it is populated by Dvaered citizens unwilling to live there, but too stubborn to leave, lest their rivals claim victory in the age-old dispute.</description>
+  <bar>This is a bar. It has to be, because you usually don't have to pay for muddy rainwater. It doesn't seem this place is frequented by its patrons for the purpose of entertainment, because there are no recreational facilities, not even a jukebox. The few appointments are welded to the floor, and everything else is either made out of steel or has steel bars covering it. Clearly, this is a place where fists meet faces. Maybe you shouldn't stay here too long...</bar>
+ </general>
+</asset>

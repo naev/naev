@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Basel I">
+ <pos>
+  <x>-1001.400659</x>
+  <y>-860.838607</y>
+ </pos>
+ <GFX>
+  <space>moon-A00.png</space>
+  <exterior>forest.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.500000</hide>
+  <services/>
+ </general>
+</asset>

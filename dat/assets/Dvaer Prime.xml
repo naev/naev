@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Dvaer Prime">
+ <pos>
+  <x>-16120.928515</x>
+  <y>-12212.790161</y>
+ </pos>
+ <GFX>
+  <space>L00.png</space>
+  <exterior>mining2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>A</class>
+  <population>1474836480</population>
+  <hide>0.250000</hide>
+  <services>
+   <land>land_hiclass</land>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Dvaer Prime is the capital world in Dvaered space. It was the world on which the Old Empire granted House Dvaered its status as a Great House, and the Dvaered chose to name their people after it. However, iconic though the planet may be, it is of little actual consequence. At best it is fought over jealously by the Dvaered Warlords, who consider ownership of the world a matter of great prestige, but otherwise there is nothing that sets Dvaer Prime apart from other planets. After all, the decisions are all made in Dvaered High Command, which floats in high orbit over Dvaer Prime.</description>
+  <bar>Dvaer Prime sports a well appointed spaceport bar. It is not so much luxurious as it is grimy, but at least all necessary facilities are present and in working order, and the drinks are decent enough by Dvaered standards. A holopainting on the wall commemorates the inauguration ceremony for House Dvaered, but it is faded and warped in places, a testament to the fact that most Dvaered citizens have long ago forgotten that they are technically still part of the Empire.</bar>
+ </general>
+ <tech>
+  <item>Kinetic 1</item>
+  <item>Kinetic 2</item>
+  <item>Bulk Trade Ships</item>
+  <item>Light Civilian Combat Ships</item>
+  <item>Low Tech Upgrades</item>
+  <item>Missiles 1</item>
+ </tech>
+</asset>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="INSS-3">
+ <pos>
+  <x>-540.665429</x>
+  <y>14054.067443</y>
+ </pos>
+ <GFX>
+  <space>station-agriculture.png</space>
+  <exterior>forest.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>10.000000</value>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>1000</population>
+  <hide>0.750000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <commodity/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+  </commodities>
+  <description>Somehwat curiously, Imperial Nutrient Supply Station 3 is actually owned by House Dvaered. Though initially constructed by the Empire, the station was ceded to House Dvaered as part of its official inception. INSS-3 still provides food for the Imperial colonies at Tau Prime and Draconis, though the price of food there has gone up by a fair margin ever since the change in ownership.</description>
+  <bar>The bar is not much to speak of. The Dvaered have shown a greater interest in farming than in public relations, so the spaceport bar has been largely neglected. It's a wonder the basic facilities are even functional at all.</bar>
+ </general>
+</asset>

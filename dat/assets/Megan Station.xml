@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Megan Station">
+ <pos>
+  <x>10991.232815</x>
+  <y>-5153.224088</y>
+ </pos>
+ <GFX>
+  <space>station-powerplant.png</space>
+  <exterior>traderoom.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Frontier</faction>
+  <value>10.000000</value>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>300</population>
+  <hide>0.750000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+  </services>
+  <commodities/>
+  <description>The Frontier is relatively poor, and part of the reason for this is that the Frontier is lacking in energy output. In an attempt to reinforce this weak link, the Frontier Council sanctioned the construction of a deep space power generator, whish was to provide energy cells to industries across Frontier space. That generator is Megan Station.</description>
+  <bar>The spacedock bar is quite plain in its appointments. The Frontier people have learned to be practical and utilitarian, and so didn't waste any more space or effort on the bar onboard Megan than was required.</bar>
+ </general>
+</asset>

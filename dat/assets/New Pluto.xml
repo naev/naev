@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="New Pluto">
+ <pos>
+  <x>-10360.291323</x>
+  <y>14032.927476</y>
+ </pos>
+ <GFX>
+  <space>moon-P03.png</space>
+  <exterior>station00.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.500000</hide>
+  <services/>
+ </general>
+</asset>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Arrentil">
+ <pos>
+  <x>-12160.000000</x>
+  <y>6880.000000</y>
+ </pos>
+ <GFX>
+  <space>Y00.png</space>
+  <exterior>gas.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>Y</class>
+  <population>150000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+  </commodities>
+  <description>As is typical for Soromid worlds, Arrentil would be considered utterly inhospitable by the rest of humanity. The atmosphere is toxic and the surface unstable, but the Soromid have managed to tame this world. Of course even they need to live in sheltered habitats, but in spite of that the population is thriving and the economy is stable. By all means, Arrentil is an example of Soromid persistence.</description>
+  <bar>(null)</bar>
+ </general>
+</asset>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Myuirr Station">
+ <pos>
+  <x>6203.038328</x>
+  <y>-8375.950143</y>
+ </pos>
+ <GFX>
+  <space>station-cylinder.png</space>
+  <exterior>station03.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>10.000000</value>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>500</population>
+  <hide>0.750000</hide>
+  <services>
+   <land>dv_mil_restricted</land>
+   <refuel/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities>
+   <commodity>Ore</commodity>
+  </commodities>
+  <description>The Dvaered war machine relies a lot on flinging chunks of matter at enemy ships, and those chunks of matter have to come from somewhere. Myuirr Station is one of the most productive ammunition production facilities in Dvaered space. It produces ordinance for a variety of ballistic and missile weaponry. The portion of its produce that isn't claimed by Dvaered High Command in tax is sold to Warlords, retailers and civilians for profit.</description>
+ </general>
+ <tech>
+  <item>Missiles 1</item>
+  <item>Missiles 2</item>
+ </tech>
+</asset>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Warden's End">
+ <pos>
+  <x>19417.876493</x>
+  <y>7674.371325</y>
+ </pos>
+ <GFX>
+  <space>000.png</space>
+  <exterior>station00.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Pirate</faction>
+  <value>300.000000</value>
+  <range>5</range>
+ </presence>
+ <general>
+  <class>A</class>
+  <population>4500</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

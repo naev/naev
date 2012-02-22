@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Violin Station">
+ <pos>
+  <x>8471.615119</x>
+  <y>17666.192451</y>
+ </pos>
+ <GFX>
+  <space>station-battlestation.png</space>
+  <exterior>station05.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>2000</population>
+  <hide>0.750000</hide>
+  <services>
+   <land>srs_mil_restricted</land>
+   <refuel/>
+  </services>
+  <commodities/>
+  <description>Violin Station is one of the more important Sirian military outposts. With so much traffic coming through Churchill, extra security is called for. Violin Station also responds to disturbances in Eiderdown, when the Wringer is causing trouble again.</description>
+ </general>
+</asset>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Daahrax">
+ <pos>
+  <x>-3276.389448</x>
+  <y>-14880.268740</y>
+ </pos>
+ <GFX>
+  <space>K02.png</space>
+  <exterior>mining4.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>K</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities>
+   <commodity>Medicine</commodity>
+  </commodities>
+  <description>When the Soromid claimed the barren world of Hadosh I, they had the privilege of naming it and its moon. The planet came to be known as Daahrax. However, in an impressive display of bureaucratic indecision, the planet's moon remains unnamed. There is constant debate in the various governmental institutions, and time and again naming commissions are created whose suggestions are promptly rejected. It doesn't seem the Soromid are going to come up with a good name anytime soon.</description>
+  <bar>Hello, traveler, welcome to the Daahrax spaceport bar. A word of advice, don't ask about the moon. Trust me, don't do it. The locals are a little touchy on the subject. How about a drink instead?</bar>
+ </general>
+</asset>
