@@ -2522,11 +2522,15 @@
    </sys>
    <sys name="Arcanis">
     <jump>Raelid</jump>
-    <jump>Zylex</jump>
+    <jump>Sonas</jump>
    </sys>
    <sys name="Zylex">
-    <jump>Arcanis</jump>
+    <jump>Sonas</jump>
     <jump>Doeston</jump>
+   </sys>
+   <sys name="Sonas">
+    <jump>Zylex</jump>
+    <jump>Arcanis</jump>
    </sys>
    <sys name="Doeston">
     <asset>Cerberus</asset>
