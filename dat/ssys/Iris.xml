@@ -3,7 +3,6 @@
  <general>
   <radius>14000.000000</radius>
   <stars>400</stars>
-  <asteroids>0</asteroids>
   <interference>350.000000</interference>
   <nebula volatility="50.000000">400.000000</nebula>
  </general>
@@ -18,13 +17,16 @@
  </assets>
  <jumps>
   <jump target="Midoros">
-    <autopos/>
+   <autopos/>
+   <hide>1.250000</hide>
   </jump>
   <jump target="Oriantis">
-    <autopos/>
+   <autopos/>
+   <hide>1.250000</hide>
   </jump>
   <jump target="Percival">
-    <autopos/>
+   <autopos/>
+   <hide>1.250000</hide>
   </jump>
  </jumps>
 </ssys>
