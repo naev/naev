@@ -107,7 +107,6 @@ static int dsys_saveSystem( xmlTextWriterPtr writer, const StarSystem *sys )
       xmlw_elem( writer, "background", "%s", sys->background );
    xmlw_elem( writer, "radius", "%f", sys->radius );
    xmlw_elem( writer, "stars", "%d", sys->stars );
-   xmlw_elem( writer, "asteroids", "%d", sys->asteroids );
    xmlw_elem( writer, "interference", "%f", sys->interference );
    xmlw_startElem( writer, "nebula" );
    xmlw_attr( writer, "volatility", "%f", sys->nebu_volatility );
@@ -141,18 +140,24 @@ static int dsys_saveSystem( xmlTextWriterPtr writer, const StarSystem *sys )
       jp = sorted_jumps[i];
       xmlw_startElem( writer, "jump" );
       xmlw_attr( writer, "target", "%s", jp->target->name );
-      if (!jp->flags & JP_AUTOPOS) {
+      /* Position. */
+      if (!jp_isFlag( jp, JP_AUTOPOS )) {
          xmlw_startElem( writer, "pos" );
          xmlw_attr( writer, "x", "%f", jp->pos.x );
          xmlw_attr( writer, "y", "%f", jp->pos.y );
          xmlw_endElem( writer ); /* "pos" */
       }
+      else
+         xmlw_elemEmpty( writer, "autopos" );
+      /* Radius and misc properties. */
       if (jp->radius != 200.)
          xmlw_elem( writer, "radius", "%f", jp->radius );
-      xmlw_startElem( writer, "flags" );
-      if (jp->flags & JP_AUTOPOS)
-         xmlw_elemEmpty( writer, "autopos" );
-      xmlw_endElem( writer ); /* "flags" */
+      /* More flags. */
+      if (jp_isFlag( jp, JP_HIDDEN ))
+         xmlw_elemEmpty( writer, "hidden" );
+      if (jp_isFlag( jp, JP_EXITONLY ))
+         xmlw_elemEmpty( writer, "exitonly" );
+      xmlw_elem( writer, "hide", "%f", sqrt(jp->hide) );
       xmlw_endElem( writer ); /* "jump" */
    }
    xmlw_endElem( writer ); /* "jumps" */

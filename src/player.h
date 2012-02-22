@@ -13,7 +13,6 @@
 #define PLAYER_TURN_LEFT   0   /**< player is turning left */
 #define PLAYER_TURN_RIGHT  1   /**< player is turning right */
 #define PLAYER_REVERSE     2   /**< player is facing opposite of vel */
-#define PLAYER_AFTERBURNER 3   /**< player is afterburning */
 #define PLAYER_DESTROYED   9   /**< player is destroyed */
 #define PLAYER_FACE        10  /**< player is facing target */
 #define PLAYER_PRIMARY     11  /**< player is shooting primary weapon */
@@ -32,7 +31,8 @@
 #define PLAYER_HOOK_HYPER  27
 #define PLAYER_TUTORIAL    30  /**< Player is doing the tutorial. */
 #define PLAYER_MFLY        31  /**< Player has enabled mouse flying. */
-#define PLAYER_FLAGS_MAX   PLAYER_MFLY + 1 /* Maximum number of flags. */
+#define PLAYER_NOSAVE      32  /**< Player is not allowed to save. */
+#define PLAYER_FLAGS_MAX   PLAYER_NOSAVE + 1 /* Maximum number of flags. */
 typedef char PlayerFlags[ PLAYER_FLAGS_MAX ];
 
 /* flag functions */
@@ -63,6 +63,7 @@ typedef struct Player_s {
    double crating; /**< Combat rating. */
    int autonav; /**< Current autonav state. */
    Vector2d autonav_pos; /**< Target autonav position. */
+   char *autonavmsg; /**< String to print on arrival. */
    double tc_max; /**< Maximum time compression value (bounded by ship speed or conf setting). */
    double autonav_timer; /**< Timer that begins counting down when autonav aborts due to combat. */
    double mousex; /**< Mouse X position (for mouse flying). */
@@ -147,7 +148,7 @@ Pilot* player_getShip( char* shipname );
 char* player_getLoc( char* shipname );
 void player_setLoc( char* shipname, char* loc );
 void player_swapShip( char* shipname );
-int player_shipPrice( char* shipname );
+credits_t player_shipPrice( char* shipname );
 void player_rmShip( char* shipname );
 
 
@@ -200,6 +201,7 @@ void player_update( Pilot *pplayer, const double dt );
 void player_updateSpecific( Pilot *pplayer, const double dt );
 void player_brokeHyperspace (void);
 void player_hyperspacePreempt( int );
+int player_getHypPreempt(void);
 
 /*
  * Targeting.
@@ -223,12 +225,10 @@ void player_targetEscort( int prev );
 /*
  * keybind actions
  */
-void player_weapSetPress( int id, int type );
+void player_weapSetPress( int id, int type, int repeat );
 void player_land (void);
 int player_jump (void);
 void player_screenshot (void);
-void player_afterburn (void);
-void player_afterburnOver (int type);
 void player_accel( double acc );
 void player_accelOver (void);
 void player_hail (void);

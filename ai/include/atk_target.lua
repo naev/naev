@@ -101,7 +101,7 @@ end
 -- big game hunter attack pattern using heuristic target identification.
 --]]
 function atk_heuristic_big_game_think ()
-   local enemy = ai.getenemy_heuristic(0.9, 0.9, 0.9, 20000)
+   local enemy         = ai.getenemy_heuristic(0.9, 0.9, 0.9, 20000)
    local nearest_enemy = ai.getenemy()
    local dist = 0
    local sizedist = 0

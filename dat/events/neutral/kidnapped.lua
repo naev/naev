@@ -24,6 +24,7 @@ end
 --Pa and Ma have been hailed. The mission can begin, and panma should land on the planet Brooks
 function hail()
     panma:control(false)
+    player.commClose()
     naev.missionStart("Kidnapped")
     evt.finish(true)
 end

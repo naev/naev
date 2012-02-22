@@ -78,7 +78,11 @@ typedef enum PlanetClass_ {
 /*
  * Planet flags.
  */
-#define planet_isKnown(p)           (1) /**< Is a planet known (always true for now). */
+#define PLANET_KNOWN       (1<<0) /**< Planet is known. */
+#define planet_isFlag(p,f)    ((p)->flags & (f)) /**< Checks planet flag. */
+#define planet_setFlag(p,f)   ((p)->flags |= (f)) /**< Sets a planet flag. */
+#define planet_rmFlag(p,f)    ((p)->flags &= ~(f)) /**< Removes a planet flag. */
+#define planet_isKnown(p)     planet_isFlag(p,PLANET_KNOWN) /**< Checks if planet is known. */
 
 
 /**
@@ -101,6 +105,7 @@ typedef struct Planet_ {
    double presenceAmount; /**< The amount of presence this asset exerts. */
    int presenceRange; /**< The range of presence exertion of this asset. */
    int real; /**< If the asset is tangible or not. */
+   double hide; /**< The ewarfare hide value for an asset. */
 
    /* Landing details. */
    int land_override; /**< Forcibly allows the player to either be able to land or not (+1 is land, -1 is not, 0 otherwise). */
@@ -126,6 +131,9 @@ typedef struct Planet_ {
    char *gfx_spacePath; /**< Name of the gfx_space for saving purposes. */
    char *gfx_exterior; /**< Don't actually load the texture */
    char *gfx_exteriorPath; /**< Name of the gfx_exterior for saving purposes. */
+
+   /* Misc. */
+   unsigned int flags; /**< flags for planet properties */
 } Planet;
 
 
@@ -169,6 +177,7 @@ typedef struct SystemPresence_ {
    double value; /**< Amount of presence. */
    double curUsed; /**< Presence currently used. */
    double timer; /**< Current faction timer. */
+   int disabled; /**< Whether or not spawning is disabled for this presence. */
 } SystemPresence;
 
 
@@ -176,8 +185,13 @@ typedef struct SystemPresence_ {
  * Jump point flags.
  */
 #define JP_AUTOPOS      (1<<0) /**< Automatically position jump point based on system radius. */
-#define JP_DISABLED     (1<<1) /**< Jump point is disabled. */
-#define JP_HIDDEN       (1<<2) /**< Jump point is hidden by default. */
+#define JP_KNOWN        (1<<1) /**< Jump point is known. */
+#define JP_HIDDEN       (1<<2) /**< Jump point is hidden. */
+#define JP_EXITONLY     (1<<3) /**< Jump point is exit only */
+#define jp_isFlag(j,f)    ((j)->flags & (f)) /**< Checks jump flag. */
+#define jp_setFlag(j,f)   ((j)->flags |= (f)) /**< Sets a jump flag. */
+#define jp_rmFlag(j,f)    ((j)->flags &= ~(f)) /**< Removes a jump flag. */
+#define jp_isKnown(j)     jp_isFlag(j,JP_KNOWN) /**< Checks if jump is known. */
 
 
 
@@ -190,7 +204,7 @@ typedef struct JumpPoint_ {
    Vector2d pos; /**< Position in the system. */
    double radius; /**< Radius of jump range. */
    unsigned int flags; /**< Flags related to the jump point's status. */
-   int known; /**< Is the jump point known? */
+   double hide; /**< ewarfare hide value for the jump point */
    double angle; /**< Direction the jump is facing. */
    double cosa; /**< Cosinus of the angle. */
    double sina; /**< Sinus of the angle. */
@@ -212,7 +226,6 @@ struct StarSystem_ {
    char* name; /**< star system name */
    Vector2d pos; /**< position */
    int stars; /**< Amount of "stars" it has. */
-   int asteroids; /**< @todo implement asteroids */
    double interference; /**< in % @todo implement interference. */
    double nebu_density; /**< Nebula density (0. - 1000.) */
    double nebu_volatility; /**< Nebula volatility (0. - 1000.) */
@@ -275,6 +288,7 @@ char* planet_getSystem( const char* planetname );
 Planet* planet_getAll( int *n );
 Planet* planet_get( const char* planetname );
 Planet* planet_getIndex( int ind );
+void planet_setKnown( Planet *p );
 int planet_index( const Planet *p );
 int planet_exists( const char* planetname );
 const char *planet_existsCase( const char* planetname );
@@ -286,8 +300,14 @@ PlanetClass planetclass_get( const char a );
 credits_t planet_commodityPrice( const Planet *p, const Commodity *c );
 /* Land related stuff. */
 char planet_getColourChar( Planet *p );
-glColour* planet_getColour( Planet *p );
+const glColour* planet_getColour( Planet *p );
 void planet_updateLand( Planet *p );
+
+/*
+ * jump stuff
+ */
+JumpPoint* jump_get( const char* jumpname, const StarSystem* sys );
+JumpPoint* jump_getTarget( StarSystem* target, const StarSystem* sys );
 
 /*
  * system adding/removing stuff.
@@ -297,6 +317,8 @@ void systems_reconstructPlanets (void);
 StarSystem *system_new (void);
 int system_addPlanet( StarSystem *sys, const char *planetname );
 int system_rmPlanet( StarSystem *sys, const char *planetname );
+int system_addJump( StarSystem *sys, xmlNodePtr node );
+int system_rmJump( StarSystem *sys, const char *jumpname );
 int system_addFleet( StarSystem *sys, Fleet *fleet );
 int system_rmFleet( StarSystem *sys, Fleet *fleet );
 
@@ -313,6 +335,7 @@ void planets_render (void);
 void system_addPresence( StarSystem *sys, int faction, double amount, int range );
 double system_getPresence( StarSystem *sys, int faction );
 void system_addAllPlanetsPresence( StarSystem *sys );
+void space_reconstructPresences( void );
 void system_rmCurrentPresence( StarSystem *sys, int faction, double amount );
 
 /*
@@ -339,8 +362,9 @@ StarSystem* system_getIndex( int id );
 int system_index( StarSystem *sys );
 int space_sysReachable( StarSystem *sys );
 int space_sysReallyReachable( char* sysname );
-char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions );
-char* space_getRndPlanet (void);
+int space_sysReachableFromSys( StarSystem *target, StarSystem *sys );
+char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions, int landable );
+char* space_getRndPlanet( int landable );
 double system_getClosest( const StarSystem *sys, int *pnt, int *jp, double x, double y );
 double system_getClosestAng( const StarSystem *sys, int *pnt, int *jp, double x, double y, double ang );
 
@@ -353,7 +377,7 @@ int space_rmMarker( int sys, SysMarker type );
 void space_clearKnown (void);
 void space_clearMarkers (void);
 void space_clearComputerMarkers (void);
-int system_hasPlanet( StarSystem *sys );
+int system_hasPlanet( const StarSystem *sys );
 
 
 /*
@@ -367,6 +391,7 @@ int space_calcJumpInPos( StarSystem *in, StarSystem *out, Vector2d *pos, Vector2
 /*
  * Misc.
  */
+void system_setFaction( StarSystem *sys );
 void space_factionChange (void);
 
 

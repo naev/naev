@@ -18,11 +18,10 @@
 
 
 void expl_explode( double x, double y, double vx, double vy,
-      double radius, DamageType dtype, double damage, double penetration,
+      double radius, const Damage *dmg,
       const Pilot *parent, int mode );
 void expl_explodeDamage( double x, double y, double radius,
-      DamageType dtype, double damage, double penetration,
-      const Pilot *parent, int mode );
+      const Damage *dmg, const Pilot *parent, int mode );
 
 
 #endif /* EXPLOSION_H */

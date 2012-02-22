@@ -23,6 +23,7 @@
 #include "nlua_ship.h"
 #include "nlua_system.h"
 #include "nlua_planet.h"
+#include "nlua_outfit.h"
 #include "log.h"
 #include "rng.h"
 #include "pilot.h"
@@ -34,6 +35,7 @@
 #include "weapon.h"
 #include "gui.h"
 #include "camera.h"
+#include "damagetype.h"
 
 
 /*
@@ -65,6 +67,8 @@ static int pilotL_target( lua_State *L );
 static int pilotL_inrange( lua_State *L );
 static int pilotL_nav( lua_State *L );
 static int pilotL_weapset( lua_State *L );
+static int pilotL_actives( lua_State *L );
+static int pilotL_outfits( lua_State *L );
 static int pilotL_rename( lua_State *L );
 static int pilotL_position( lua_State *L );
 static int pilotL_velocity( lua_State *L );
@@ -80,6 +84,7 @@ static int pilotL_setFaction( lua_State *L );
 static int pilotL_setHostile( lua_State *L );
 static int pilotL_setFriendly( lua_State *L );
 static int pilotL_setInvincible( lua_State *L );
+static int pilotL_setInvincPlayer( lua_State *L );
 static int pilotL_setInvisible( lua_State *L );
 static int pilotL_setVisplayer( lua_State *L );
 static int pilotL_setVisible( lua_State *L );
@@ -141,6 +146,8 @@ static const luaL_reg pilotL_methods[] = {
    { "inrange", pilotL_inrange },
    { "nav", pilotL_nav },
    { "weapset", pilotL_weapset },
+   { "actives", pilotL_actives },
+   { "outfits", pilotL_outfits },
    { "rename", pilotL_rename },
    { "pos", pilotL_position },
    { "vel", pilotL_velocity },
@@ -170,6 +177,7 @@ static const luaL_reg pilotL_methods[] = {
    { "setHostile", pilotL_setHostile },
    { "setFriendly", pilotL_setFriendly },
    { "setInvincible", pilotL_setInvincible },
+   { "setInvincPlayer", pilotL_setInvincPlayer },
    { "setInvisible", pilotL_setInvisible },
    { "setVisplayer", pilotL_setVisplayer },
    { "setVisible", pilotL_setVisible },
@@ -226,6 +234,8 @@ static const luaL_reg pilotL_cond_methods[] = {
    { "inrange", pilotL_inrange },
    { "nav", pilotL_nav },
    { "weapset", pilotL_weapset },
+   { "actives", pilotL_actives },
+   { "outfits", pilotL_outfits },
    { "pos", pilotL_position },
    { "vel", pilotL_velocity },
    { "dir", pilotL_dir },
@@ -545,7 +555,8 @@ static int pilotL_addFleet( lua_State *L )
       ls    = lua_tosystem(L,3);
       ss    = system_getIndex( ls->id );
       for (i=0; i<cur_system->njumps; i++) {
-         if (cur_system->jumps[i].target == ss) {
+         if ((cur_system->jumps[i].target == ss)
+               && !jp_isFlag( jump_getTarget( cur_system, cur_system->jumps[i].target ), JP_EXITONLY )) {
             jump = i;
             break;
          }
@@ -596,7 +607,8 @@ static int pilotL_addFleet( lua_State *L )
       if (cur_system->njumps > 0) {
          jumpind = malloc( sizeof(int) * cur_system->njumps );
          for (i=0; i<cur_system->njumps; i++)
-            if (!ignore_rules && (system_getPresence( cur_system->jumps[i].target, lf.f ) > 0))
+            if (!ignore_rules && (system_getPresence( cur_system->jumps[i].target, lf.f ) > 0) &&
+                  (!jp_isFlag( jump_getTarget( cur_system, cur_system->jumps[i].target ), JP_EXITONLY )))
                jumpind[ njumpind++ ] = i;
       }
 
@@ -735,19 +747,43 @@ static int pilotL_clear( lua_State *L )
 /**
  * @brief Disables or enables pilot spawning in the current system.
  *
- * If player jumps the spawn is enabled again automatically.
+ * If player jumps the spawn is enabled again automatically. Global spawning takes priority over faction spawning.
  *
- * @usage pilot.togglespawn( false )
+ * @usage pilot.togglespawn() -- Defaults to flipping the global spawning (true->false and false->true)
+ * @usage pilot.togglespawn( false ) -- Disables global spawning
+ * @usage pliot.togglespawn( "Pirates" ) -- Defaults to disabling pirate spawning
+ * @usage pilot.togglespawn( "Pirates", true ) -- Turns on pirate spawning
  *
+ *    @luaparam fid Faction to enable or disable spawning off. If ommited it works on global spawning.
  *    @luaparam enable true enables spawn, false disables it.
  *    @luareturn The current spawn state.
- * @luafunc toggleSpawn( enable )
+ * @luafunc toggleSpawn( fid, enable )
  */
 static int pilotL_toggleSpawn( lua_State *L )
 {
+   int i, f, b;
+
    /* Setting it directly. */
-   if ((lua_gettop(L) > 0) && lua_isboolean(L,1))
-      space_spawn = lua_toboolean(L,1);
+   if (lua_gettop(L) > 0) {
+      if (lua_isfaction(L,1) || lua_isstring(L,1)) {
+
+         f = luaL_validfaction(L,1);
+         b = !lua_toboolean(L,2);
+
+         /* Find the faction and set. */
+         for (i=0; i<cur_system->npresence; i++) {
+            if (cur_system->presence[i].faction != f)
+               continue;
+            cur_system->presence[i].disabled = b;
+            break;
+         }
+
+      }
+      else if (lua_isboolean(L,1))
+         space_spawn = lua_toboolean(L,1);
+      else
+         NLUA_INVALID_PARAMETER(L);
+   }
    /* Toggling. */
    else
       space_spawn = !space_spawn;
@@ -783,7 +819,7 @@ static int pilotL_getPilots( lua_State *L )
    if (lua_istable(L,1) || lua_isfaction(L,1)) {
       if (lua_isfaction(L,1)) {
          nfactions = 1;
-         factions = malloc( sizeof(int) * nfactions );
+         factions = malloc( sizeof(int) );
          f = lua_tofaction(L,1);
          factions[0] = f->f;
       }
@@ -975,7 +1011,7 @@ static int pilotL_target( lua_State *L )
 /**
  * @brief Checks to see if pilot is in range of pilot.
  *
- * @usage detected, fuzzy = p:inrange( target )
+ * @usage detected, scanned = p:inrange( target )
  *
  *    @luaparam p Pilot to see if another pilot is in range.
  *    @luareturn Checks to see if the target is detected and if it's scanned.
@@ -992,17 +1028,17 @@ static int pilotL_inrange( lua_State *L )
 
    /* Check if in range. */
    ret = pilot_inRangePilot( p, t );
-   if (ret == 1) {
+   if (ret == 1) { /* In range. */
       lua_pushboolean(L,1);
+      lua_pushboolean(L,1);
+   }
+   else if (ret == 0) { /* Not in range. */
+      lua_pushboolean(L,0);
       lua_pushboolean(L,0);
    }
-   else if (ret == 0) {
-      lua_pushboolean(L,0);
-      lua_pushboolean(L,0);
-   }
-   else {
+   else { /* Detected fuzzy. */
       lua_pushboolean(L,1);
-      lua_pushboolean(L,1);
+      lua_pushboolean(L,0);
    }
    return 2;
 }
@@ -1059,6 +1095,7 @@ static int pilotL_nav( lua_State *L )
  *  <li> left: Absolute ammo left or nil if not applicable. <br />
  *  <li> left_p: Relative ammo left [0:1] or nil if not applicable <br />
  *  <li> lockon: Lockon [0:1] for seeker weapons or nil if not applicable. <br />
+ *  <li> in_arc: Whether or not the target is in targetting arc or nil if not applicable. <br />
  *  <li> level: Level of the weapon (1 is primary, 2 is secondary). <br />
  *  <li> temp: Temperature of the weapon. <br />
  *  <li> type: Type of the weapon. <br />
@@ -1095,6 +1132,8 @@ static int pilotL_weapset( lua_State *L )
    Outfit *ammo, *o;
    double delay, firemod, enermod, t;
    int id, all, level, level_match;
+   int is_lau, is_fb;
+   const Damage *dmg;
 
    /* Defaults. */
    po_list = NULL;
@@ -1139,24 +1178,40 @@ static int pilotL_weapset( lua_State *L )
 
       /* Iterate over weapons. */
       for (i=0; i<n; i++) {
+         /* Get base look ups. */
          if (all) {
-            slot  = p->outfits[i];
-            o     = slot->outfit;
+            slot     = p->outfits[i];
+            o        = slot->outfit;
+            if (o == NULL)
+               continue;
+            is_lau   = outfit_isLauncher(o);
+            is_fb    = outfit_isFighterBay(o);
 
             /* Must be valid weapon. */
-            if ((o == NULL) || !(outfit_isBolt(o) || outfit_isBeam(o) ||
-                  outfit_isLauncher(o) || outfit_isFighterBay(o)))
+            if (!(outfit_isBolt(o) || outfit_isBeam(o) ||
+                  is_lau || is_fb))
                continue;
 
-            level = slot->level;
+            level    = slot->level;
          }
          else {
-            slot  = po_list[i].slot;
-            level = po_list[i].level;
+            slot     = po_list[i].slot;
+            o        = slot->outfit;
+            if (o == NULL)
+               continue;
+            is_lau   = outfit_isLauncher(o);
+            is_fb    = outfit_isFighterBay(o);
+            level    = po_list[i].level;
          }
 
          /* Must match level. */
          if (level != level_match)
+            continue;
+
+         /* Must be weapon. */
+         if (outfit_isJammer(o) ||
+               outfit_isMod(o) ||
+               outfit_isAfterburner(o))
             continue;
 
          /* Set up for creation. */
@@ -1187,31 +1242,31 @@ static int pilotL_weapset( lua_State *L )
          }
 
          /* Ammo quantity absolute. */
-         if ((outfit_isLauncher(slot->outfit) ||
-                  outfit_isFighterBay(slot->outfit)) &&
+         if ((is_lau || is_fb) &&
                (slot->u.ammo.outfit != NULL)) {
             lua_pushstring(L,"left");
             lua_pushnumber( L, slot->u.ammo.quantity );
             lua_rawset(L,-3);
-         }
 
          /* Ammo quantity relative. */
-         if ((outfit_isLauncher(slot->outfit) ||
-                  outfit_isFighterBay(slot->outfit)) &&
-               (slot->u.ammo.outfit != NULL)) {
             lua_pushstring(L,"left_p");
             lua_pushnumber( L, (double)slot->u.ammo.quantity / (double)outfit_amount(slot->outfit) );
             lua_rawset(L,-3);
          }
 
          /* Launcher lockon. */
-         if (outfit_isSeeker(slot->outfit)) {
+         if (is_lau) {
             t = slot->u.ammo.lockon_timer;
             lua_pushstring(L, "lockon");
             if (t <= 0.)
                lua_pushnumber(L, 1.);
             else
                lua_pushnumber(L, 1. - (t / slot->outfit->u.lau.lockon));
+            lua_rawset(L,-3);
+
+         /* Is in arc. */
+            lua_pushstring(L, "in_arc");
+            lua_pushboolean(L, slot->u.ammo.in_arc);
             lua_rawset(L,-3);
          }
 
@@ -1231,12 +1286,15 @@ static int pilotL_weapset( lua_State *L )
          lua_rawset(L,-3);
 
          /* Damage type. */
-         lua_pushstring(L, "dtype");
-         if (outfit_isLauncher(slot->outfit) && (slot->u.ammo.outfit != NULL))
-            lua_pushstring(L, outfit_damageTypeToStr( outfit_damageType(slot->u.ammo.outfit) ));
+         if (is_lau && (slot->u.ammo.outfit != NULL))
+            dmg = outfit_damage( slot->u.ammo.outfit );
          else
-            lua_pushstring(L, outfit_damageTypeToStr( outfit_damageType(slot->outfit) ));
-         lua_rawset(L,-3);
+            dmg = outfit_damage( slot->outfit );
+         if (dmg != NULL) {
+            lua_pushstring(L, "dtype");
+            lua_pushstring(L, dtype_damageTypeToStr( dmg->type ) );
+            lua_rawset(L,-3);
+         }
 
          /* Track. */
          if (slot->outfit->type == OUTFIT_TYPE_TURRET_BOLT) {
@@ -1253,6 +1311,152 @@ static int pilotL_weapset( lua_State *L )
       }
    }
    return 2;
+}
+
+
+/**
+ * @brief Gets the active outfits and their states of the pilot.
+ *
+ * The active outfits have the following structure: <br />
+ * <ul>
+ *  <li> name: Name of the set. <br />
+ *  <li> type: Type of the outfit. <br />
+ *  <li> state: State of the outfit, which can be one of { "off", "warmup", "on", "cooldown" }. <br />
+ *  <li> duration: Set only if state is "on". Indicates duration value (0 = just finished, 1 = just on). <br />
+ *  <li> cooldown: Set only if state is "cooldown". Indicates cooldown value (0 = just ending, 1 = just started cooling down). <br />
+ * </ul>
+ *
+ * An example would be:
+ * <pre><code>
+ * act_outfits = p:actives()
+ * print( "Weapnset Name: " .. ws_name )
+ * for _,o in ipairs(act_outfits) do
+ *    print( "Name: " .. o.name )
+ *    print( "State: " .. o.state )
+ * end
+ * </code></pre>
+ *
+ * @usage act_outfits = p:actives() -- Gets the table of active outfits
+ *
+ *    @luaparam p Pilot to get active outfits of.
+ *    @luareturn The table with each active outfit's information.
+ * @luafunc actives( p )
+ */
+static int pilotL_actives( lua_State *L )
+{
+   Pilot *p;
+   int i, k;
+   PilotOutfitSlot *o;
+   const char *str;
+   double d;
+
+   /* Parse parameters. */
+   p   = luaL_validpilot(L,1);
+
+   k = 0;
+   lua_newtable(L);
+
+   for (i=0; i<p->noutfits; i++) {
+
+      /* Get active outfits. */
+      o = p->outfits[i];
+      if (o->outfit == NULL)
+         continue;
+      if (!o->active)
+         continue;
+      if (!outfit_isJammer(o->outfit) &&
+            !outfit_isMod(o->outfit) &&
+            !outfit_isAfterburner(o->outfit))
+         continue;
+
+      /* Set up for creation. */
+      lua_pushnumber(L,++k);
+      lua_newtable(L);
+
+      /* Name. */
+      lua_pushstring(L,"name");
+      lua_pushstring(L,o->outfit->name);
+      lua_rawset(L,-3);
+
+      /* Type. */
+      lua_pushstring(L, "type");
+      lua_pushstring(L, outfit_getType(o->outfit));
+      lua_rawset(L,-3);
+
+      /* State and timer. */
+      switch (o->state) {
+         case PILOT_OUTFIT_OFF:
+            str = "off";
+            break;
+         case PILOT_OUTFIT_WARMUP:
+            str = "warmup";
+            break;
+         case PILOT_OUTFIT_ON:
+            str = "on";
+            d = outfit_duration(o->outfit);
+            if (d==0.)
+               d = 1.;
+            else if (!isinf(o->stimer))
+               d = o->stimer / d;
+            lua_pushstring(L,"duration");
+            lua_pushnumber(L, d );
+            lua_rawset(L,-3);
+            break;
+         case PILOT_OUTFIT_COOLDOWN:
+            str = "cooldown";
+            d = outfit_cooldown(o->outfit);
+            if (d==0.)
+               d = 0.;
+            else if (!isinf(o->stimer))
+               d = o->stimer / d;
+            lua_pushstring(L,"cooldown");
+            lua_pushnumber(L, d );
+            lua_rawset(L,-3);
+            break;
+      }
+      lua_pushstring(L,"state");
+      lua_pushstring(L,str);
+      lua_rawset(L,-3);
+
+      /* Set table in table. */
+      lua_rawset(L,-3);
+   }
+   return 1;
+}
+
+
+/**
+ * @brief Gets the outfits of a pilot.
+ *
+ *    @luaparam p Pilot to get outfits of.
+ *    @luareturn The outfits of the pilot in an ordered list.
+ * @luafunc outfits( p )
+ */
+static int pilotL_outfits( lua_State *L )
+{
+   int i, j;
+   Pilot *p;
+   LuaOutfit lo;
+
+   /* Parse parameters */
+   p  = luaL_validpilot(L,1);
+
+   j  = 1;
+   lua_newtable( L );
+   for (i=0; i<p->noutfits; i++) {
+
+      /* Get outfit. */
+      if (p->outfits[i]->outfit == NULL)
+         continue;
+
+      /* Set the outfit. */
+      lo.outfit = p->outfits[i]->outfit;
+      lua_pushnumber( L, j++ );
+      lua_pushoutfit( L, lo );
+      lua_rawset( L, -3 );
+   }
+
+   return 1;
 }
 
 
@@ -1664,6 +1868,41 @@ static int pilotL_setInvincible( lua_State *L )
 
 
 /**
+ * @brief Sets the pilot's invincibility status towards the player.
+ *
+ * @usage p:setInvincPlayer() -- p can not be hit by the player anymore
+ * @usage p:setInvincPlayer(true) -- p can not be hit by the player anymore
+ * @usage p:setInvincPlayer(false) -- p can be hit by the player again
+ *
+ *    @luaparam p Pilot to set invincibility status of (only affects player).
+ *    @luaparam state State to set invincibility, if omitted defaults to true.
+ * @luafunc setInvincPlayer( p, state )
+ */
+static int pilotL_setInvincPlayer( lua_State *L )
+{
+   Pilot *p;
+   int state;
+
+   /* Get the pilot. */
+   p = luaL_validpilot(L,1);
+
+   /* Get state. */
+   if (lua_gettop(L) > 1)
+      state = lua_toboolean(L, 2);
+   else
+      state = 1;
+
+   /* Set status. */
+   if (state)
+      pilot_setFlag(p, PILOT_INVINC_PLAYER);
+   else
+      pilot_rmFlag(p, PILOT_INVINC_PLAYER);
+
+   return 0;
+}
+
+
+/**
  * @brief Sets the pilot's invisibility status.
  *
  * An invisible pilot is neither updated nor drawn. It stays frozen in time
@@ -1889,8 +2128,8 @@ static int pilotL_disable( lua_State *L )
 
    /* Disable the pilot. */
    p->shield = 0.;
-   p->armour = PILOT_DISABLED_ARMOR * p->ship->armour;
-   pilot_setFlag( p, PILOT_DISABLED );
+   p->stress = p->armour;
+   pilot_updateDisable(p, 0);
 
    return 0;
 }
@@ -2184,30 +2423,39 @@ static int pilotL_changeAI( lua_State *L )
  *
  * @usage p:setHealth( 100, 100 ) -- Sets pilot to full health
  * @usage p:setHealth(  70,   0 ) -- Sets pilot to 70% armour
+ * @usage p:setHealth( 100, 100, 0 ) -- Sets pilot to full health and no stress
  *
  *    @luaparam p Pilot to set health of.
  *    @luaparam armour Value to set armour to, should be double from 0-100 (in percent).
  *    @luaparam shield Value to set shield to, should be double from 0-100 (in percent).
- * @luafunc setHealth( p, armour, shield )
+ *    @luaparam stress Optional value to set stress (disable damage) to, should be double from 0-100 (in percent of current armour). If missing, defaults to 0.
+ * @luafunc setHealth( p, armour, shield, stress )
  */
 static int pilotL_setHealth( lua_State *L )
 {
    Pilot *p;
-   double a, s;
+   double a, s, st;
 
    /* Handle parameters. */
    p  = luaL_validpilot(L,1);
    a  = luaL_checknumber(L, 2);
    s  = luaL_checknumber(L, 3);
-   a /= 100.;
-   s /= 100.;
+   if (lua_gettop(L) > 3)
+      st = luaL_checknumber(L, 4);
+   else
+      st = 0;
+
+   a  /= 100.;
+   s  /= 100.;
+   st /= 100.;
 
    /* Set health. */
    p->armour = a * p->armour_max;
    p->shield = s * p->shield_max;
+   p->stress = st * p->armour;
 
-   /* Undisable if was disabled. */
-   pilot_rmFlag( p, PILOT_DISABLED );
+   /* Update disable status. */
+   pilot_updateDisable(p, 0);
 
    return 0;
 }
@@ -2312,10 +2560,10 @@ static int pilotL_setNodisable( lua_State *L )
 /**
  * @brief Gets the pilot's health.
  *
- * @usage armour, shield, dis = p:health()
+ * @usage armour, shield, stress, dis = p:health()
  *
  *    @luaparam p Pilot to get health of.
- *    @luareturn The armour and shield of the pilot in % [0:100], followed by a boolean indicating if pilot is disabled.
+ *    @luareturn The armour, shield nd stress of the pilot in % [0:100], followed by a boolean indicating if pilot is disabled.
  * @luafunc health( p )
  */
 static int pilotL_getHealth( lua_State *L )
@@ -2326,11 +2574,12 @@ static int pilotL_getHealth( lua_State *L )
    p  = luaL_validpilot(L,1);
 
    /* Return parameters. */
-   lua_pushnumber(L, p->armour / p->armour_max * 100. );
-   lua_pushnumber(L, p->shield / p->shield_max * 100. );
+   lua_pushnumber(L,(p->armour_max > 0.) ? p->armour / p->armour_max * 100. : 0. );
+   lua_pushnumber(L,(p->shield_max > 0.) ? p->shield / p->shield_max * 100. : 0. );
+   lua_pushnumber(L, MIN( 1., p->stress / p->armour ) * 100. );
    lua_pushboolean(L, pilot_isDisabled(p));
 
-   return 3;
+   return 4;
 }
 
 
@@ -2351,7 +2600,7 @@ static int pilotL_getEnergy( lua_State *L )
    p  = luaL_validpilot(L,1);
 
    /* Return parameter. */
-   lua_pushnumber(L, p->energy / p->energy_max * 100. );
+   lua_pushnumber(L, (p->energy_max > 0.) ? p->energy / p->energy_max * 100. : 0. );
 
    return 1;
 }
@@ -2392,17 +2641,18 @@ lua_rawset( L, -3 )
  *  <li> cpu_max <br />
  *  <li> fuel <br />
  *  <li> fuel_max <br />
+ *  <li> mass <br />
  *  <li> thrust <br />
  *  <li> speed <br />
+ *  <li> speed_max <br />
  *  <li> turn <br />
+ *  <li> speed_max <br />
  *  <li> armour <br />
  *  <li> shield <br />
  *  <li> energy <br />
  *  <li> armour_regen <br />
  *  <li> shield_regen <br />
  *  <li> energy_regen <br />
- *  <li> jam_range <br />
- *  <li> jam_chance <br />
  *  <li> jump_delay <br />
  * </ul>
  *
@@ -2439,9 +2689,6 @@ static int pilotL_getStats( lua_State *L )
    PUSH_DOUBLE( L, "armour_regen", p->armour_regen );
    PUSH_DOUBLE( L, "shield_regen", p->shield_regen );
    PUSH_DOUBLE( L, "energy_regen", p->energy_regen );
-   /* Jam. */
-   PUSH_DOUBLE( L, "jam_range", p->jam_range );
-   PUSH_DOUBLE( L, "jam_chance", p->jam_chance );
    /* Stats. */
    PUSH_DOUBLE( L, "jump_delay", ntime_convertSTU( pilot_hyperspaceDelay(p) ) );
 
@@ -2630,7 +2877,7 @@ static int pilotL_cargoList( lua_State *L )
 static int pilotL_getColour( lua_State *L )
 {
    Pilot *p;
-   glColour *col;
+   const glColour *col;
    LuaColour lc;
 
    /* Get the pilot. */
@@ -3253,7 +3500,7 @@ static int pilotL_hyperspace( lua_State *L )
  *
  * Pilot must be under manual control for this to work.
  *
- *    @luaparam p Pilot to tell to hyperspace.
+ *    @luaparam p Pilot to tell to land.
  *    @luaparam planet Optional planet to land on, uses random if nil.
  * @luasee control
  * @luafunc land( p, planet )

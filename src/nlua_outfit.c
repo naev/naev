@@ -29,6 +29,7 @@ static int outfitL_type( lua_State *L );
 static int outfitL_typeBroad( lua_State *L );
 static int outfitL_cpu( lua_State *L );
 static int outfitL_slot( lua_State *L );
+static int outfitL_icon( lua_State *L );
 static const luaL_reg outfitL_methods[] = {
    { "__tostring", outfitL_name },
    { "__eq", outfitL_eq },
@@ -38,6 +39,7 @@ static const luaL_reg outfitL_methods[] = {
    { "typeBroad", outfitL_typeBroad },
    { "cpu", outfitL_cpu },
    { "slot", outfitL_slot },
+   { "icon", outfitL_icon },
    {0,0}
 }; /**< Outfit metatable methods. */
 
@@ -121,13 +123,19 @@ Outfit* luaL_validoutfit( lua_State *L, int ind )
    LuaOutfit *lo;
    Outfit *o;
 
-   /* Get the outfit. */
-   lo = luaL_checkoutfit(L,ind);
-   o  = lo->outfit;
-   if (o==NULL) {
-      NLUA_ERROR(L,"Outfit is invalid.");
+   if (lua_isoutfit(L, ind)) {
+      lo = luaL_checkoutfit(L,ind);
+      o  = lo->outfit;
+   }
+   else if (lua_isstring(L, ind))
+      o = outfit_get( lua_tostring(L, ind) );
+   else {
+      luaL_typerror(L, ind, OUTFIT_METATABLE);
       return NULL;
    }
+
+   if (o == NULL)
+      NLUA_ERROR(L, "Outfit is invalid.");
 
    return o;
 }
@@ -316,4 +324,22 @@ static int outfitL_slot( lua_State *L )
    return 2;
 }
 
+
+/**
+ * @brief Gets the store icon for an outfit.
+ *
+ * @usage ico = o:icon() -- Gets the shop icon for an outfit
+ *
+ *    @luaparam o Outfit to get information of.
+ *    @luareturn The texture containing the icon of the outfit.
+ * @luafunc icon( o )
+ */
+static int outfitL_icon( lua_State *L )
+{
+   LuaTex lt;
+   Outfit *o = luaL_validoutfit(L,1);
+   lt.tex = gl_dupTexture( o->gfx_store );
+   lua_pushtex( L, lt );
+   return 1;
+}
 

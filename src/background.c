@@ -167,6 +167,10 @@ void background_moveStars( double x, double y )
 /**
  * @brief Renders the starry background.
  *
+ * This could really benefit from OpenCL directly. It would probably give a great
+ *  speed up, although we'll consider it when we get a runtime linking OpenCL
+ *  framework someday.
+ *
  *    @param dt Current delta tick.
  */
 void background_renderStars( const double dt )
@@ -204,6 +208,7 @@ void background_renderStars( const double dt )
       hw = w/2.;
       hh = h/2.;
 
+      /* Calculate multiple updates in the case the ship is moving really ridiculously fast. */
       if ((star_x > SCREEN_W) || (star_y > SCREEN_H)) {
          sx = ceil( star_x / SCREEN_W );
          sy = ceil( star_y / SCREEN_H );
@@ -218,7 +223,7 @@ void background_renderStars( const double dt )
       for (j=0; j < n; j++) {
          for (i=0; i < nstars; i++) {
 
-            /* calculate new position */
+            /* Calculate new position */
             b = 1./(9. - 10.*star_colour[8*i+3]);
             star_vertex[4*i+0] = star_vertex[4*i+0] + star_x*b;
             star_vertex[4*i+1] = star_vertex[4*i+1] + star_y*b;
@@ -244,26 +249,28 @@ void background_renderStars( const double dt )
    if ((player.p != NULL) && !player_isFlag(PLAYER_DESTROYED) &&
          !player_isFlag(PLAYER_CREATING)) {
 
-      if (pilot_isFlag(player.p,PILOT_HYPERSPACE) && /* hyperspace fancy effects */
-            (player.p->ptimer < HYPERSPACE_STARS_BLUR)) {
+      if (pilot_isFlag(player.p,PILOT_HYPERSPACE)) { /* hyperspace fancy effects */
 
          glShadeModel(GL_SMOOTH);
          shade_mode = 1;
 
-         /* lines will be based on velocity */
-         m  = HYPERSPACE_STARS_BLUR-player.p->ptimer;
+         /* lines get longer the closer we are to finishing the jump */
+         m  = MAX( 0, HYPERSPACE_STARS_BLUR-player.p->ptimer );
          m /= HYPERSPACE_STARS_BLUR;
          m *= HYPERSPACE_STARS_LENGTH;
          x = m*cos(VANGLE(player.p->solid->vel));
          y = m*sin(VANGLE(player.p->solid->vel));
       }
-      else if (dt_mod > 3.) {
+      else if (dt_mod * VMOD(player.p->solid->vel) > 500. ){
 
          glShadeModel(GL_SMOOTH);
          shade_mode = 1;
 
-         /* lines will be based on velocity */
-         m = (dt_mod-3.)*VMOD(player.p->solid->vel)/10.;
+         /* Very short lines tend to flicker horribly. A stock Llama at 2x
+          * speed just so happens to make very short lines. A 5px minimum
+          * is long enough to (mostly) alleviate the flickering.
+          */
+         m = MAX( 5, dt_mod*VMOD(player.p->solid->vel)/25. - 20 );
          x = m*cos(VANGLE(player.p->solid->vel));
          y = m*sin(VANGLE(player.p->solid->vel));
       }
@@ -349,7 +356,7 @@ static void bkg_sort( background_image_t *arr )
  * @brief Adds a new background image.
  */
 unsigned int background_addImage( glTexture *image, double x, double y,
-      double move, double scale, glColour *col, int foreground )
+      double move, double scale, const glColour *col, int foreground )
 {
    background_image_t *bkg, **arr;
 

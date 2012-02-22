@@ -119,7 +119,7 @@ end
 
 function create ()
     -- Note: this mission makes no system claims.
-    misn.setNPC(npc_desc, "thief2")
+    misn.setNPC(npc_desc, "neutral/thief2")
     misn.setDesc(bar_desc)
 end
 
@@ -199,16 +199,16 @@ end
 
 function land()
     if planet.cur() == artefactplanetA and not artefactA then
-        sellnpc = misn.npcAdd("seller", "Artefact seller", "thief1", sellerdesc, 4)
+        sellnpc = misn.npcAdd("seller", "Artefact seller", "neutral/thief1", sellerdesc, 4)
     elseif planet.cur() == artefactplanetB and not artefactB then
-        sellnpc = misn.npcAdd("seller", "Artefact seller", "thief2", sellerdesc, 4)
+        sellnpc = misn.npcAdd("seller", "Artefact seller", "neutral/thief2", sellerdesc, 4)
     elseif planet.cur() == artefactplanetC and not artefactC then
-        sellnpc = misn.npcAdd("seller", "Artefact seller", "thief3", sellerdesc, 4)
+        sellnpc = misn.npcAdd("seller", "Artefact seller", "neutral/thief3", sellerdesc, 4)
     elseif planet.cur() == flintplanet then
         if flintleyfirst then
-            flintnpc = misn.npcAdd("flintley", flint_npc1, "flintley", flint_bar1, 4)
+            flintnpc = misn.npcAdd("flintley", flint_npc1, "neutral/unique/flintley", flint_bar1, 4)
         else
-            flintnpc = misn.npcAdd("flintley", flint_npc2, "flintley", flint_bar2, 4)
+            flintnpc = misn.npcAdd("flintley", flint_npc2, "neutral/unique/flintley", flint_bar2, 4)
         end
     end
 end

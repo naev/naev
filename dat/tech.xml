@@ -81,6 +81,11 @@
   <item>Imperator Torpedo</item>
   <item>EMP Grenade Launcher</item>
   <item>EMP Grenade</item>
+  <item>Unicorp Medusa Launcher</item>
+  <item>TeraCom Medusa Launcher</item>
+  <item>Medusa Missile</item>
+  <item>Enygma Systems Spearhead Launcher</item>
+  <item>Spearhead Missile</item>
   <item>Battery</item>
   <item>Battery II</item>
   <item>Battery III</item>
@@ -114,7 +119,15 @@
   <item>Power Regulation Override</item>
   <item>Improved Power Regulator</item>
   <item>Improved Refrigeration Cycle</item>
-  <item>Star Map</item>
+  <item>Map: Nebula Edge</item>
+  <item>Map: Collective Space</item>
+  <item>Map: Dvaered-Soromid trade route</item>
+  <item>Map: Sirian border systems</item>
+  <item>Map: The Frontier</item>
+  <item>Map: Sol</item>
+  <item>Map: Dvaered Core</item>
+  <item>Map: Empire Core</item>
+  <item>Map: Pirate strongholds</item>
   <item>Unicorp Scrambler</item>
   <item>Milspec Scrambler</item>
   <item>Unicorp Jammer</item>
@@ -177,6 +190,13 @@
   <item>Sirius Divinity</item>
   <item>Sirius Dogma</item>
   <item>Thurion Ingenuity</item>
+  <item>Soromid Brigand</item>
+  <item>Soromid Reaver</item>
+  <item>Soromid Marauder</item>
+  <item>Soromid Odium</item>
+  <item>Soromid Nyx</item>
+  <item>Soromid Ira</item>
+  <item>Soromid Arx</item>
   <item>Vendetta</item>
   <item>Vigilance</item>
  </tech>
@@ -264,7 +284,7 @@
   <item>Battery</item>
   <item>Solar Panel</item>
   <item>Fuel Pod</item>
-  <item>Star Map</item>
+  <item>Star Maps</item>
   <item>Large Civilian Vessel License</item>
   <item>GUI - Brushed</item>
   </tech>
@@ -281,11 +301,13 @@
   <item>Auxiliary Processing Unit I</item>
   <item>Cargo Pod</item>
   <item>Boarding Androids MKI</item>
-  <item>Star Map</item>
+  <item>Star Maps</item>
   <item>Unicorp Scrambler</item>
   <item>Unicorp Jammer</item>
   <item>Large Civilian Vessel License</item>
   <item>GUI - Brushed</item>
+  <item>Unicorp Medusa Launcher</item>
+  <item>Medusa Missile</item>
   </tech>
  <tech name="Heavy Weapons 1">
   <item>Laser Turret MK1</item>
@@ -296,6 +318,8 @@
   <item>Ripper Cannon</item>
   <item>EMP Grenade Launcher</item>
   <item>EMP Grenade</item>
+  <item>Enygma Systems Spearhead Launcher</item>
+  <item>Spearhead Missile</item>
   <item>Medium Weapon License</item>
   <item>Medium Combat Vessel License</item>
   </tech>
@@ -322,7 +346,7 @@
   <item>Cargo Pod</item>
   <item>Boarding Androids MKI</item>
   <item>Boarding Androids MKII</item>
-  <item>Star Map</item>
+  <item>Star Maps</item>
   <item>Unicorp Scrambler</item>
   <item>Unicorp Jammer</item>
   <item>Light Combat Vessel License</item>
@@ -350,7 +374,7 @@
   <item>Targeting Array</item>
   <item>Forward Shock Absorbers</item>
   <item>Power Regulation Override</item>
-  <item>Star Map</item>
+  <item>Star Maps</item>
   <item>Unicorp Scrambler</item>
   <item>Unicorp Jammer</item>
   <item>Lancelot Fighter Bay</item>
@@ -370,7 +394,7 @@
   <item>Auxiliary Processing Unit III</item>
   <item>Improved Power Regulator</item>
   <item>Improved Refrigeration Cycle</item>
-  <item>Star Map</item>
+  <item>Star Maps</item>
   <item>Milspec Scrambler</item>
   <item>Milspec Jammer</item>
   <item>Lancelot Fighter Bay</item>
@@ -382,6 +406,8 @@
   <item>Banshee Rocket</item>
   <item>Unicorp Fury Launcher</item>
   <item>Fury Missile</item>
+  <item>Unicorp Medusa Launcher</item>
+  <item>Medusa Missile</item>
  </tech>
  <tech name="Missiles 2">
   <item>Unicorp Headhunter Launcher</item>
@@ -390,6 +416,19 @@
   <item>Mace Rocket</item>
   <item>Unicorp Caesar IV Launcher</item>
   <item>Caesar IV Torpedo</item>
+  <item>Enygma Systems Spearhead Launcher</item>
+  <item>Spearhead Missile</item>
+  <item>TeraCom Medusa Launcher</item>
+  <item>Medusa Missile</item>
+ </tech>
+ <tech name="Star Maps">
+  <item>Map: Nebula Edge</item>
+  <item>Map: Dvaered-Soromid trade route</item>
+  <item>Map: Sirian border systems</item>
+  <item>Map: The Frontier</item>
+  <item>Map: Sol</item>
+  <item>Map: Dvaered Core</item>
+  <item>Map: Empire Core</item>
  </tech>
 
  <!-- Ships -->

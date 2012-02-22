@@ -40,7 +40,7 @@ void window_addText( const unsigned int wid,
                      const int x, const int y,
                      const int w, const int h,
                      const int centered, const char* name,
-                     glFont* font, glColour* colour, const char* string )
+                     glFont* font, const glColour* colour, const char* string )
 {
    Window *wdw = window_wget(wid);
    Widget *wgt = window_newWidget(wdw, name);
@@ -54,7 +54,7 @@ void window_addText( const unsigned int wid,
    wgt->render             = txt_render;
    wgt->cleanup            = txt_cleanup;
    wgt->dat.txt.font       = (font==NULL) ? &gl_defFont : font;
-   wgt->dat.txt.colour     = (colour==NULL) ? &cBlack : colour;
+   wgt->dat.txt.colour     = (colour==NULL) ? cBlack : *colour;
    wgt->dat.txt.centered   = centered;
    wgt->dat.txt.text       = (string==NULL) ? NULL : strdup(string);
 
@@ -82,11 +82,11 @@ static void txt_render( Widget* txt, double bx, double by )
       gl_printMidRaw( txt->dat.txt.font, txt->w,
             bx + txt->x,
             by + txt->y + (txt->h - txt->dat.txt.font->h)/2.,
-            txt->dat.txt.colour, txt->dat.txt.text );
+            &txt->dat.txt.colour, txt->dat.txt.text );
    else
       gl_printTextRaw( txt->dat.txt.font, txt->w, txt->h,
             bx + txt->x, by + txt->y,
-            txt->dat.txt.colour, txt->dat.txt.text );
+            &txt->dat.txt.colour, txt->dat.txt.text );
 }
 
 

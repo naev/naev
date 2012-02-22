@@ -47,7 +47,7 @@ include("scripts/jumpdist.lua")
 
 
 function create ()
-   -- Note: this mission does not make any mission claims. 
+   -- Note: this mission does not make any system claims. 
    -- Create the target pirate
    emp_name, emp_ship, emp_outfits = emp_generate()
 
@@ -101,7 +101,7 @@ end
 
 function emp_systems_filter( sys, data )
    -- Must have Empire
-   if not sys:hasPresence( "Empire" ) then
+   if not sys:presences()["Empire"] then
       return false
    end
 
@@ -145,7 +145,7 @@ function sys_enter ()
       if cur_sys == last_sys then
          pos = player.pilot():pos()
       else
-         pos = cur_sys:jumpPos( last_sys )
+         pos = jump.pos(cur_sys, last_sys)
       end
       local x,y = pos:get()
       local d = rnd.rnd( 1500, 2500 )

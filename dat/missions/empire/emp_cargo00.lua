@@ -8,6 +8,7 @@
 ]]--
 
 include "scripts/numstring.lua"
+include "scripts/jumpdist.lua"
 
 lang = naev.lang()
 if lang == "es" then
@@ -37,19 +38,22 @@ function create ()
    local landed, landed_sys = planet.cur()
 
    -- target destination
-   local i = 0
-   local s
-   repeat
-      dest,sys = planet.get( misn.factions() )
-      s = dest:services()
-      i = i + 1
-   until (s["land"] and s["inhabited"] and landed_sys:jumpDist(sys) > 0) or i > 10
-   -- infinite loop protection
-   if i > 10 then
-      misn.finish(false)
-   end
+   local planets = {} 
+   getsysatdistance( system.cur(), 1, 6,
+       function(s)
+           for i, v in ipairs(s:planets()) do
+               if v:faction() == faction.get("Empire") and v:canLand() then
+                   planets[#planets + 1] = {v, s}
+               end
+           end 
+           return false
+       end ) 
+   if #planets == 0 then abort() end -- Sanity in case no suitable planets are in range. 
+   local index = rnd.rnd(1, #planets)
+   dest = planets[index][1]
+   sys = planets[index][2]
 
-   misn.setNPC( "Lieutenant", "czesc" )
+   misn.setNPC( "Lieutenant", "empire/unique/czesc" )
    misn.setDesc( bar_desc )
 end
 
@@ -96,3 +100,6 @@ function land()
    end
 end
 
+function abort()
+   misn.finish(false)
+end

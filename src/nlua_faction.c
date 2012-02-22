@@ -40,6 +40,8 @@ static int factionL_allies( lua_State *L );
 static int factionL_logoSmall( lua_State *L );
 static int factionL_logoTiny( lua_State *L );
 static int factionL_colour( lua_State *L );
+static int factionL_isknown( lua_State *L );
+static int factionL_setknown( lua_State *L );
 static const luaL_reg faction_methods[] = {
    { "get", factionL_get },
    { "__eq", factionL_eq },
@@ -57,6 +59,8 @@ static const luaL_reg faction_methods[] = {
    { "logoSmall", factionL_logoSmall },
    { "logoTiny", factionL_logoTiny },
    { "colour", factionL_colour },
+   { "known", factionL_isknown },
+   { "setKnown", factionL_setknown },
    {0,0}
 }; /**< Faction metatable methods. */
 static const luaL_reg faction_methods_cond[] = {
@@ -73,6 +77,7 @@ static const luaL_reg faction_methods_cond[] = {
    { "logoSmall", factionL_logoSmall },
    { "logoTiny", factionL_logoTiny },
    { "colour", factionL_colour },
+   { "known", factionL_isknown },
    {0,0}
 }; /**< Factions read only metatable methods. */
 
@@ -523,7 +528,7 @@ static int factionL_colour( lua_State *L )
 {
    int lf;
    LuaColour lc;
-   glColour *col;
+   const glColour *col;
    lf = luaL_validfaction(L,1);
    col = faction_getColour(lf);
    if (col == NULL)
@@ -534,4 +539,40 @@ static int factionL_colour( lua_State *L )
 }
 
 
+/**
+ * @brief Checks to see if a faction is known by the player.
+ *
+ * @usage b = f:known()
+ *
+ *    @luaparam f Faction to check if the player knows.
+ *    @luareturn true if the player knows the faction.
+ * @luafunc known( f )
+ */
+static int factionL_isknown( lua_State *L )
+{
+   int fac = luaL_validfaction(L, 1);
+   lua_pushboolean(L, faction_isKnown(fac));
+   return 1;
+}
+
+
+/**
+ * @brief Sets a faction's known state.
+ *
+ * @usage f:setKnown( false ) -- Makes faction unknown.
+ *    @luaparam f Faction to set known.
+ *    @luaparam b Whether or not to set as known (defaults to false).
+ * @luafunc setKnown( f, b )
+ */
+static int factionL_setknown( lua_State *L )
+{
+   int b, fac;
+
+   fac = luaL_validfaction(L, 1);
+   b   = lua_toboolean(L, 2);
+
+   faction_setKnown( fac, b );
+
+   return 0;
+}
 

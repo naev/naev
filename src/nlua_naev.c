@@ -228,7 +228,7 @@ static int naev_eventStart( lua_State *L )
 /**
  * @brief Starts a mission, does no check start conditions.
  *
- * @usage naev.missionStart( "Some Event" )
+ * @usage naev.missionStart( "Some Mission" )
  *    @luaparam misnname Name of the mission to start.
  *    @luareturn true on success.
  * @luafunc missionStart( misnname )

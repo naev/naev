@@ -43,7 +43,7 @@ function create ()
     getsysatdistance( system.cur(), 2, 4,
         function(s)
             for i, v in ipairs(s:planets()) do
-                if v:faction() == faction.get("Sirius") and v:class() == "M" then
+                if v:faction() == faction.get("Sirius") and v:class() == "M" and v:canLand() then
                     planets[#planets + 1] = {v, s}
                 end
            end
@@ -61,7 +61,7 @@ function create ()
     misndesc = misndesc:format(destplanet:name(), destsys:name())
     OSD[1] = OSD[1]:format(destsys:name(), destplanet:name())
 
-    misn.setNPC(NPCname, "sirius_fyrra_f1")
+    misn.setNPC(NPCname, "sirius/sirius_fyrra_f1")
     misn.setDesc(NPCdesc)
 end
 

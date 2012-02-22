@@ -32,7 +32,7 @@ void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, double *a, do
 void pilot_lockClear( Pilot *p );
 
 /* Other. */
-char* pilot_getOutfits( Pilot* pilot );
+char* pilot_getOutfits( const Pilot* pilot );
 void pilot_calcStats( Pilot* pilot );
 void pilot_updateMass( Pilot *pilot );
 

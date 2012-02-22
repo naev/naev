@@ -25,7 +25,7 @@ else -- default english
    misn_desc[1] = "Check for survivors on %s in %s."
    misn_desc[2] = "Travel back to %s in %s."
    title = {}
-   title[1] = "Collective Espionage"
+   title[1] = "Collective Extraction"
    title[2] = "Planet %s"
    title[3] = "Mission Accomplished"
    text = {}
@@ -85,6 +85,7 @@ end
 
 -- Handles the Collective encounters.
 function enter()
+    player.allowSave() -- This mission disables saving, which is dangerous. Should be turned back on ASAP.
     if system.cur() == misn_target_sys and misn_stage == 0 then
         -- Case jumped in before landing
         pilot.clear()
@@ -130,6 +131,7 @@ function enter()
         hook.timer(500, "proximity", {location = misn_target:pos(), radius = 3000, funcname = "idle"})
 
         misn_stage = 1
+        misn.osdActive(2)
     elseif system.cur() == misn_target_sys and misn_stage == 2 then
         -- Case taken off from the planet
         pilot.clear()
@@ -154,9 +156,11 @@ function enter()
         end
 
         player.allowLand(false, land_msg)
+        misn.osdActive(3)
     elseif misn_stage == 1 then
         -- Case jumped back out without landing
         misn_stage = 0
+        misn.osdActive(1)
     elseif misn_stage == 2 then
         -- Case jumped out after landing
         misn_stage = 3
@@ -208,6 +212,7 @@ end
 function land ()
    -- Just landing
    if misn_stage == 1 and planet.cur() == misn_target then
+      player.allowSave(false) -- This prevents the player from starting on Eiroik if he dies after taking off.
       player.takeoff()
 
       -- Some flavour text

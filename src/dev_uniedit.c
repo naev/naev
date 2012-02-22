@@ -24,7 +24,12 @@
 #include "dialogue.h"
 #include "tk/toolkit_priv.h"
 #include "dev_sysedit.h"
+#include "pause.h"
 
+
+#define HIDE_DEFAULT_JUMP        1.25 /**< Default hide value for new planets. */
+#define RADIUS_DEFAULT           10000 /**< Default radius for new systems. */
+#define STARS_DENSITY_DEFAULT    400 /**< Default stars density for new systems. */
 
 #define BUTTON_WIDTH    80 /**< Map button width. */
 #define BUTTON_HEIGHT   30 /**< Map button height. */
@@ -37,6 +42,9 @@
 #define UNIEDIT_DRAG_THRESHOLD   300   /**< Drag threshold. */
 #define UNIEDIT_MOVE_THRESHOLD   10    /**< Movement threshold. */
 
+#define UNIEDIT_ZOOM_STEP        1.2   /**< Factor to zoom by for each zoom level. */
+#define UNIEDIT_ZOOM_MAX         5     /**< Maximum uniedit zoom level (close). */
+#define UNIEDIT_ZOOM_MIN         -5    /**< Minimum uniedit zoom level (far). */
 
 /*
  * The editor modes.
@@ -119,6 +127,9 @@ void uniedit_open( unsigned int wid_unused, char *unused )
    (void) wid_unused;
    (void) unused;
    unsigned int wid;
+
+   /* Pause. */
+   pause_game();
 
    /* Needed to generate faction disk. */
    map_setZoom( 1. );
@@ -242,6 +253,9 @@ static void uniedit_close( unsigned int wid, char *wgt )
    /* Reconstruct jumps. */
    systems_reconstructJumps();
 
+   /* Unpause. */
+   unpause_game();
+
    /* Close the window. */
    window_close( wid, wgt );
 }
@@ -308,6 +322,9 @@ static void uniedit_btnOpen( unsigned int wid_unused, char *unused )
       return;
 
    sysedit_open( uniedit_sys[0] );
+
+   /* Update sidebar text. */
+   uniedit_selectText();
 }
 
 
@@ -620,13 +637,17 @@ static void uniedit_newSys( double x, double y )
       return;
    }
 
+   /* Transform coordinates back to normal if zoomed */
+   x /= uniedit_zoom;
+   y /= uniedit_zoom;
+
    /* Create the system. */
    sys         = system_new();
    sys->name   = name;
    sys->pos.x  = x;
    sys->pos.y  = y;
-   sys->stars  = 400;
-   sys->radius = 10000.;
+   sys->stars  = STARS_DENSITY_DEFAULT;
+   sys->radius = RADIUS_DEFAULT;
 
    /* Select new system. */
    uniedit_deselect();
@@ -664,6 +685,12 @@ static void uniedit_toggleJump( StarSystem *sys )
 
    /* Reconstruct jumps just in case. */
    systems_reconstructJumps();
+
+   /* Reconstruct universe presences. */
+   space_reconstructPresences();
+
+   /* Update sidebar text. */
+   uniedit_selectText();
 }
 
 
@@ -678,13 +705,14 @@ static void uniedit_jumpAdd( StarSystem *sys, StarSystem *targ )
    sys->njumps++;
    sys->jumps  = realloc( sys->jumps, sizeof(JumpPoint) * sys->njumps );
    jp          = &sys->jumps[ sys->njumps-1 ];
+   memset( jp, 0, sizeof(JumpPoint) );
 
    /* Fill it out with basics. */
    jp->target  = targ;
    jp->targetid = targ->id;
    jp->radius  = 200.;
    jp->flags   = JP_AUTOPOS; /* Will automatically create position. */
-
+   jp->hide    = pow2(HIDE_DEFAULT_JUMP);
 }
 
 
@@ -852,12 +880,12 @@ static void uniedit_buttonZoom( unsigned int wid, char* str )
 
    /* Apply zoom. */
    if (strcmp(str,"btnZoomIn")==0) {
-      uniedit_zoom *= 1.2;
-      uniedit_zoom = MIN(2.5, uniedit_zoom);
+      uniedit_zoom *= UNIEDIT_ZOOM_STEP;
+      uniedit_zoom = MIN(pow(UNIEDIT_ZOOM_STEP, UNIEDIT_ZOOM_MAX), uniedit_zoom);
    }
    else if (strcmp(str,"btnZoomOut")==0) {
-      uniedit_zoom *= 0.8;
-      uniedit_zoom = MAX(0.5, uniedit_zoom);
+      uniedit_zoom /= UNIEDIT_ZOOM_STEP;
+      uniedit_zoom = MAX(pow(UNIEDIT_ZOOM_STEP, UNIEDIT_ZOOM_MIN), uniedit_zoom);
    }
 
    /* Hack for the circles to work. */

@@ -168,20 +168,39 @@ static int texL_close( lua_State *L )
 /**
  * @brief Opens a texture.
  *
+ * @usage t = tex.open( "no_sprites.png" )
+ * @usage t = tex.open( "spritesheet.png", 6, 6 )
+ *
  *    @luaparam path Path to open.
+ *    @luaparam sx Optional number of x sprites (defaults 1).
+ *    @luaparam sy Optional number of y sprites (defaults 1).
  *    @luareturn The opened texture or nil on error.
- * @luafunc open( path )
+ * @luafunc open( path, sx, sy )
  */
 static int texL_open( lua_State *L )
 {
    const char *path;
    LuaTex lt;
+   int sx, sy;
+
+   /* Defaults. */
+   sx = 0;
+   sy = 0;
 
    /* Get path. */
    path = luaL_checkstring( L, 1 );
+   if (lua_gettop(L)>1) {
+      sx = luaL_checkinteger(L,2);
+      sy = luaL_checkinteger(L,3);
+      if ((sx < 0 ) || (sy < 0))
+         NLUA_ERROR( L, "Spritesheet dimensions must be positive" );
+   }
 
    /* Push new texture. */
-   lt.tex = gl_newImage( path, 0 );
+   if ((sx <=0 ) || (sy <= 0))
+      lt.tex = gl_newImage( path, 0 );
+   else
+      lt.tex = gl_newSprite( path, sx, sy, 0 );
    if (lt.tex == NULL)
       return 0;
    lua_pushtex( L, lt );

@@ -238,7 +238,7 @@ void conf_setVideoDefaults (void)
    conf.mipmaps      = 0; /* Also cause for issues. */
    conf.compress     = 0;
    conf.interpolate  = 1;
-   conf.npot         = 1;
+   conf.npot         = 0;
 
    /* Window. */
    conf.fullscreen   = f;
@@ -372,6 +372,7 @@ int conf_loadConfig ( const char* file )
       conf_loadInt("afterburn_sensitivity",conf.afterburn_sens);
       conf_loadInt("mouse_thrust",conf.mouse_thrust);
       conf_loadFloat("autonav_abort",conf.autonav_abort);
+      conf_loadBool("devmode",conf.devmode);
       conf_loadBool("conf_nosave",conf.nosave);
 
       /* Debugging. */
@@ -957,6 +958,10 @@ int conf_saveConfig ( const char* file )
 
    conf_saveComment("Condition under which the autonav aborts.");
    conf_saveFloat("autonav_abort",conf.autonav_abort);
+   conf_saveEmptyLine();
+
+   conf_saveComment("Enables developer mode (universe editor and teh likes)");
+   conf_saveInt("devmode",conf.devmode);
    conf_saveEmptyLine();
 
    conf_saveComment("Save the config everytime game exits (rewriting this bit)");

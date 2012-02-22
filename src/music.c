@@ -124,6 +124,7 @@ void music_update( double dt )
    }
    music_runchoose = 0;
    strncpy(buf, music_situation, PATH_MAX);
+   buf[ PATH_MAX-1 ] = '\0';
    SDL_mutexV(music_lock);
    music_runLua( buf );
 
@@ -619,6 +620,7 @@ int music_chooseDelay( const char* situation, double delay )
    music_timer       = delay;
    music_runchoose   = 0;
    strncpy(music_situation, situation, PATH_MAX);
+   music_situation[ PATH_MAX-1 ] = '\0';
    SDL_mutexV(music_lock);
 
    return 0;
@@ -640,6 +642,7 @@ void music_rechoose (void)
    music_timer       = 0.;
    music_runchoose   = 1;
    strncpy(music_situation, "idle", PATH_MAX);
+   music_situation[ PATH_MAX-1 ] = '\0';
    SDL_mutexV(music_lock);
 }
 

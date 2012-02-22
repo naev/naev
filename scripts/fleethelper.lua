@@ -44,7 +44,7 @@ end
 -- @brief Wrapper for pilot.addRaw() that can operate on tables of ships.
 --
 -- @usage pilots = addRawShips( "Hyena", "pirate", nil, "Pirate" ) -- Creates a facsimile of a Pirate Hyena.
--- @usage pilots = addRawShips( { "Rhino", "Koala" }, nil, "Trader", 2 ) -- Creates four Trader ships.
+-- @usage pilots = addRawShips( { "Rhino", "Koala" }, nil, nil, "Trader", 2 ) -- Creates four Trader ships.
 --
 --    @luaparam ship Ship to add.
 --    @luaparam ai AI to give the pilot.

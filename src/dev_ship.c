@@ -14,6 +14,7 @@
 
 #include "SDL.h"
 
+#include "log.h"
 #include "ship.h"
 
 
@@ -29,12 +30,17 @@ void dship_csv( const char *path )
 
    /* File to output to. */
    rw = SDL_RWFromFile( path, "w" );
+   if (rw == NULL) {
+      WARN("Unable to open '%s' for writing: %s", path, SDL_GetError());
+      return;
+   }
 
    /* Write "header" */
    l = snprintf( buf, sizeof(buf),
          "name,class,base_type,price,license,fabricator,"
          "thrust,turn,speed,"
          "crew,mass,cpu,fuel,cap_cargo,"
+         "absorb,"
          "armour,armour_regen,"
          "shield,shield_regen,"
          "energy,energy_regen,"
@@ -50,6 +56,7 @@ void dship_csv( const char *path )
             "%s,%s,%s,%"CREDITS_PRI",%s,%s,"
             "%f,%f,%f,"
             "%d,%f,%f,%d,%f,"
+            "%f,"
             "%f,%f,"
             "%f,%f,"
             "%f,%f,"
@@ -57,6 +64,7 @@ void dship_csv( const char *path )
             s->name, ship_class(s), s->base_type, s->price, s->license, s->fabricator,
             s->thrust/s->mass, s->turn*180./M_PI, s->speed,
             s->crew, s->mass, s->cpu, s->fuel, s->cap_cargo,
+            s->dmg_absorb*100,
             s->armour, s->armour_regen,
             s->shield, s->shield_regen,
             s->energy, s->energy_regen,

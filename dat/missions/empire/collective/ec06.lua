@@ -59,7 +59,7 @@ function create ()
         abort()
     end
 
-   misn.setNPC( "Keer", "keer" )
+   misn.setNPC( "Keer", "empire/unique/keer" )
    misn.setDesc( bar_desc )
 end
 
@@ -98,7 +98,7 @@ function accept ()
          misn_target_sys1:name(), misn_final_sys:name() ) )
 
    hook.jumpout("jumpout")
-   hook.enter("jump")
+   hook.enter("jumpin")
    hook.land("land")
 end
 
@@ -109,7 +109,7 @@ end
 
 
 -- Handles jumping to target system
-function jump ()
+function jumpin ()
     if misn_stage == 0 then
         -- Entering target system?
         if system.cur() == misn_final_sys then
@@ -144,6 +144,7 @@ function jump ()
                 fleetC[#fleetC + 1] = pilot.add("Trinity", nil, fleetCpos + vec2.new(300, 0))[1]
                 hook.pilot(fleetC[#fleetC], "death", "col_dead")
                 fleetC[#fleetC]:setNodisable()
+                fleetC[#fleetC]:setFaction( "Collective" )
             end
             droneC = addShips("Collective Drone", nil, fleetCpos, 60)
             
@@ -167,8 +168,6 @@ function jump ()
             end
             
             hook.timer(500, "proximity", {location = fleetEpos, radius = 800, funcname = "prestartBattle"})
-            -- hook.timer(500, "proximity", {location = fleetCpos, radius = 3500, funcname = "startBattle"})
-            -- This can't work yet! Only one proximity hook can be active at a time.
 
             if last_sys ~= misn_target_sys2 then
             -- Jumped in through the wrong jump point

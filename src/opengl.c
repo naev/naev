@@ -39,6 +39,7 @@
 #include <string.h>
 #include <stdarg.h> /* va_list for gl_print */
 
+#include <zlib.h> /* Z_DEFAULT_COMPRESSION */ 
 #include <png.h>
 
 #include "SDL.h"
@@ -827,11 +828,13 @@ static int write_png( const char *file_name, png_bytep *rows,
 
    /* Clean up. */
    fclose(fp);
+   png_destroy_write_struct( &png_ptr, &info_ptr );
 
    return 0;
 
 ERR_FAIL:
    fclose(fp);
+   png_destroy_write_struct( &png_ptr, &info_ptr );
    return -1;
 }
 

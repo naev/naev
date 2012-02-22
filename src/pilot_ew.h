@@ -15,9 +15,11 @@
  * Sensors and range.
  */
 void pilot_updateSensorRange (void);
+double pilot_sensorRange( void );
 int pilot_inRange( const Pilot *p, double x, double y );
 int pilot_inRangePilot( const Pilot *p, const Pilot *target );
 int pilot_inRangePlanet( const Pilot *p, int target );
+int pilot_inRangeJump( const Pilot *p, int target );
 
 /*
  * Weapon tracking.
@@ -34,6 +36,7 @@ void pilot_ewUpdateDynamic( Pilot *p );
  * Individual electronic warfare properties.
  */
 double pilot_ewMovement( double vmod );
+double pilot_ewEvasion( const Pilot *target );
 double pilot_ewHeat( double T );
 double pilot_ewMass( double mass );
 

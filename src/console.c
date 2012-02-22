@@ -52,7 +52,7 @@ static glFont *cli_font     = NULL; /**< CLI font to use. */
  * Buffers.
  */
 #define BUF_LINES          128 /**< Number of lines in the buffer. */
-#define LINE_LENGTH        80 /**< Length of lines in the buffer. */
+#define LINE_LENGTH        256 /**< Length of lines in the buffer. */
 static int cli_cursor      = 0; /**< Current cursor position. */
 static char cli_buffer[BUF_LINES][LINE_LENGTH]; /**< CLI buffer. */
 static int cli_viewport    = 0; /**< Current viewport. */
@@ -93,12 +93,15 @@ static int cli_printCore( lua_State *L, int cli_only );
  */
 static int cli_printCore( lua_State *L, int cli_only )
 {
-   int n = lua_gettop(L);  /* number of arguments */
+   int n; /* number of arguments */
    int i;
    char buf[LINE_LENGTH];
    int p;
    const char *s;
+
+   n = lua_gettop(L);
    p = 0;
+
    lua_getglobal(L, "tostring");
    for (i=1; i<=n; i++) {
       lua_pushvalue(L, -1);  /* function to be called */
@@ -121,7 +124,8 @@ static int cli_printCore( lua_State *L, int cli_only )
    }
 
    /* Add last line if needed. */
-   cli_addMessage(buf);
+   if (n > 0)
+      cli_addMessage(buf);
 
    return 0;
 }
@@ -190,8 +194,10 @@ void cli_addMessage( const char *msg )
    if (cli_state == NULL)
       return;
 
-   if (msg != NULL)
+   if (msg != NULL) {
       strncpy( cli_buffer[cli_cursor], msg, LINE_LENGTH );
+      cli_buffer[cli_cursor][LINE_LENGTH-1] = '\0';
+   }
    else
       cli_buffer[cli_cursor][0] = '\0';
 
@@ -214,7 +220,7 @@ static void cli_render( double bx, double by, double w, double h, void *data )
 {
    (void) data;
    int i, y;
-   glColour *c;
+   const glColour *c;
 
    /* Draw the text. */
    i = cli_viewport;

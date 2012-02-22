@@ -20,6 +20,7 @@ CODE_SOURCE = \
 	cond.c \
 	conf.c \
 	console.c \
+	damagetype.c \
 	debris.c \
 	dev.c \
 	dev_outfit.c \
@@ -76,6 +77,7 @@ CODE_SOURCE = \
 	nlua_gfx.c \
 	nlua_gui.c \
 	nlua_hook.c \
+	nlua_jump.c \
 	nlua_misn.c \
 	nlua_music.c \
 	nlua_naev.c \
@@ -128,6 +130,7 @@ CODE_SOURCE = \
 	rng.c \
 	save.c \
 	ship.c \
+	shipstats.c \
 	sound.c \
 	sound_openal.c \
 	sound_sdlmix.c \
@@ -154,6 +157,7 @@ CODE_SOURCE = \
 	conf.h \
 	config.h \
 	console.h \
+	damagetype.h \
 	debris.h \
 	dev.h \
 	dev_outfit.h \
@@ -211,6 +215,7 @@ CODE_SOURCE = \
 	nlua_gfx.h \
 	nlua_gui.h \
 	nlua_hook.h \
+	nlua_jump.h \
 	nlua_misn.h \
 	nlua_music.h \
 	nlua_naev.h \
@@ -265,6 +270,7 @@ CODE_SOURCE = \
 	rng.h \
 	save.h \
 	ship.h \
+	shipstats.h \
 	sound.h \
 	sound_openal.h \
 	sound_priv.h \

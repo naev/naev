@@ -25,35 +25,38 @@ typedef struct glColour_ {
  * default colours
  */
 /* greyscale */
-extern glColour cWhite;
+extern const glColour cWhite;
 #define cGrey  cGrey70
-extern glColour cBlack;
+extern const glColour cBlack;
 /* greys */
-extern glColour cGrey90;
-extern glColour cGrey80;
-extern glColour cGrey70;
-extern glColour cGrey60;
-extern glColour cGrey50;
-extern glColour cGrey40;
-extern glColour cGrey30;
-extern glColour cGrey20;
-extern glColour cGrey10;
+extern const glColour cGrey90;
+extern const glColour cGrey80;
+extern const glColour cGrey70;
+extern const glColour cGrey60;
+extern const glColour cGrey50;
+extern const glColour cGrey40;
+extern const glColour cGrey30;
+extern const glColour cGrey20;
+extern const glColour cGrey10;
 
-extern glColour cGreen;
-extern glColour cDarkRed;
-extern glColour cRed;
-extern glColour cOrange;
-extern glColour cYellow;
-extern glColour cMidnightBlue;
-extern glColour cDarkBlue;
-extern glColour cBlue;
-extern glColour cLightBlue;
-extern glColour cPurple;
-extern glColour cDarkPurple;
-extern glColour cBrown;
-extern glColour cGold;
-extern glColour cSilver;
-extern glColour cAqua;
+extern const glColour cGreen;
+extern const glColour cPrimeGreen;
+extern const glColour cDarkRed;
+extern const glColour cRed;
+extern const glColour cPrimeRed;
+extern const glColour cOrange;
+extern const glColour cYellow;
+extern const glColour cMidnightBlue;
+extern const glColour cDarkBlue;
+extern const glColour cBlue;
+extern const glColour cLightBlue;
+extern const glColour cPrimeBlue;
+extern const glColour cPurple;
+extern const glColour cDarkPurple;
+extern const glColour cBrown;
+extern const glColour cGold;
+extern const glColour cSilver;
+extern const glColour cAqua;
 
 /*
  * game specific
@@ -61,42 +64,42 @@ extern glColour cAqua;
 /*
  * game specific
  */
-extern glColour cBlackHilight;
-extern glColour cConsole;
-extern glColour cDConsole;
+extern const glColour cBlackHilight;
+extern const glColour cConsole;
+extern const glColour cDConsole;
 /* toolkit */
-extern glColour cHilight;
+extern const glColour cHilight;
 /* objects */
-extern glColour cInert;
-extern glColour cNeutral;
-extern glColour cMapNeutral;
-extern glColour cFriend;
-extern glColour cHostile;
-extern glColour cRestricted;
-extern glColour cDRestricted;
+extern const glColour cInert;
+extern const glColour cNeutral;
+extern const glColour cMapNeutral;
+extern const glColour cFriend;
+extern const glColour cHostile;
+extern const glColour cRestricted;
+extern const glColour cDRestricted;
 /* radar */
-extern glColour cRadar_player;
-extern glColour cRadar_tPilot;
-extern glColour cRadar_tPlanet;
-extern glColour cRadar_weap;
-extern glColour cRadar_hilight;
+extern const glColour cRadar_player;
+extern const glColour cRadar_tPilot;
+extern const glColour cRadar_tPlanet;
+extern const glColour cRadar_weap;
+extern const glColour cRadar_hilight;
 /* health */
-extern glColour cShield;
-extern glColour cArmour;
-extern glColour cEnergy;
-extern glColour cFuel;
+extern const glColour cShield;
+extern const glColour cArmour;
+extern const glColour cEnergy;
+extern const glColour cFuel;
 /* Deiz's Super Font Palette */
-extern glColour cFontRed;
-extern glColour cFontGreen;
-extern glColour cFontBlue;
-extern glColour cFontYellow;
-extern glColour cFontWhite;
-extern glColour cFontPurple;
-extern glColour cFontFriendly;
-extern glColour cFontHostile;
-extern glColour cFontNeutral;
+extern const glColour cFontRed;
+extern const glColour cFontGreen;
+extern const glColour cFontBlue;
+extern const glColour cFontYellow;
+extern const glColour cFontWhite;
+extern const glColour cFontPurple;
+extern const glColour cFontFriendly;
+extern const glColour cFontHostile;
+extern const glColour cFontNeutral;
 
-glColour* col_fromName( const char* name );
+const glColour* col_fromName( const char* name );
 
 
 /*
@@ -104,7 +107,7 @@ glColour* col_fromName( const char* name );
  */
 void col_hsv2rgb( double *r, double *g, double *b, double h, double s, double v );
 void col_rgb2hsv( double *h, double *s, double *v, double r, double g, double b );
-void col_blend( glColour *out, glColour fg, glColour bg, double alpha );
+void col_blend( glColour *blend, const glColour *fg, const glColour *bg, double alpha );
 
 
 

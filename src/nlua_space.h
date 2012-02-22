@@ -11,6 +11,7 @@
 
 #include "nlua_planet.h"
 #include "nlua_system.h"
+#include "nlua_jump.h"
 
 
 /*

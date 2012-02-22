@@ -60,7 +60,7 @@ Accept the mission anyway?]]
 	cargo_land_p3 = {}
 	cargo_land_p3[1] = " are carried out of your ship by a sullen group of workers. They are not happy that they have to work overtime because you were late. You are paid only %d of the %d you were promised."
 	cargo_land_p3[2] = " are rushed out of your vessel by a team shortly after you land. Your late arrival is stretching quite a few schedules! Your pay is only %d instead of %d because of that."
-	cargo_land_p3[3] = " are unloaded by an exhausted-looking bunch of dockworkers. You failed to miss the deadline, so your reward is only %d instead of the %d you were hoping for."
+	cargo_land_p3[3] = " are unloaded by an exhausted-looking bunch of dockworkers. You missed the deadline, so your reward is only %d instead of the %d you were hoping for."
 
     accept_title = "Mission Accepted"
     

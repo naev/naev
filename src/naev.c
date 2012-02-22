@@ -28,6 +28,7 @@
 
 #if HAS_POSIX
 #include <time.h>
+#include <unistd.h>
 #endif /* HAS_POSIX */
 
 #if defined(HAVE_FENV_H) && defined(DEBUGGING)
@@ -65,6 +66,7 @@
 #include "sound.h"
 #include "music.h"
 #include "spfx.h"
+#include "damagetype.h"
 #include "economy.h"
 #include "menu.h"
 #include "mission.h"
@@ -191,8 +193,8 @@ int main( int argc, char** argv )
    debug_sigInit();
 
    /* Create the home directory if needed. */
-   if (nfile_dirMakeExist("%s", nfile_basePath()))
-      WARN("Unable to create naev directory '%s'", nfile_basePath());
+   if (nfile_dirMakeExist("%s", nfile_configPath()))
+      WARN("Unable to create config directory '%s'", nfile_configPath());
 
    /* Must be initialized before input_init is called. */
    if (SDL_InitSubSystem(SDL_INIT_VIDEO) < 0) {
@@ -218,7 +220,22 @@ int main( int argc, char** argv )
    input_init();
 
    /* Set the configuration. */
-   snprintf(buf, PATH_MAX, "%s"CONF_FILE, nfile_basePath());
+   snprintf(buf, PATH_MAX, "%s"CONF_FILE, nfile_configPath());
+
+#if HAS_UNIX
+   /* TODO get rid of this cruft ASAP. */
+   int oldconfig = 0;
+   if (!nfile_fileExists( buf )) {
+      char *home, buf2[PATH_MAX];
+      home = SDL_getenv( "HOME" );
+      if (home != NULL) {
+         snprintf( buf2, PATH_MAX, "%s/.naev/"CONF_FILE, home );
+         if (nfile_fileExists( buf2 ))
+            oldconfig = 1;
+      }
+   }
+#endif /* HAS_UNIX */
+
    conf_setDefaults(); /* set the default config values */
    conf_loadConfig(buf); /* Lua to parse the configuration file */
    conf_parseCLI( argc, argv ); /* parse CLI arguments */
@@ -329,6 +346,71 @@ int main( int argc, char** argv )
    if ((SDL_GetTicks() - time_ms) < NAEV_INIT_DELAY)
       SDL_Delay( NAEV_INIT_DELAY - (SDL_GetTicks() - time_ms) );
    fps_init(); /* initializes the time_ms */
+
+#if HAS_UNIX
+   /* Tell the player to migrate their configuration files out of ~/.naev */
+   /* TODO get rid of this cruft ASAP. */
+   if (oldconfig) {
+      char path[PATH_MAX], *script, *home;
+      uint32_t scriptsize;
+      int ret;
+
+      snprintf( path, PATH_MAX, "%s/naev-confupdate.sh", ndata_getDirname() );
+      home = SDL_getenv("HOME");
+      ret = dialogue_YesNo( "Warning", "Your configuration files are in a deprecated location and must be migrated:\n"
+            "   \er%s/.naev/\e0\n\n"
+            "The update script can likely be found in your Naev data directory:\n"
+            "   \er%s\e0\n\n"
+            "Would you like to run it automatically?", home, path );
+
+      /* Try to run the script. */
+      if (ret) {
+         ret = -1;
+         /* Running from ndata. */
+         if (ndata_getPath() != NULL) {
+            script = ndata_read( "naev-confupdate.sh", &scriptsize );
+            if (script != NULL)
+               ret = system(script);
+         }
+
+         /* Running from laid-out files or ndata_read failed. */
+         if ((nfile_fileExists(path)) && (ret == -1)) {
+            script = nfile_readFile( (int*)&scriptsize, path );
+            if (script != NULL)
+               ret = system(script);
+         }
+
+         /* We couldn't find the script. */
+         if (ret == -1) {
+            dialogue_alert( "The update script was not found at:\n\er%s\e0\n\n"
+                  "Please locate and run it manually.", path );
+         }
+         /* Restart, as the script succeeded. */
+         else if (!ret) {
+            dialogue_msg( "Update Completed",
+                  "Configuration files were successfully migrated. Naev will now restart." );
+            execv(argv[0], argv);
+         }
+         else { /* I sincerely hope this else is never hit. */
+            dialogue_alert( "The update script encountered an error. Please exit Naev and move your config and save files manually:\n\n"
+                  "\er%s/%s\e0 =>\n   \eD%s\e0\n\n"
+                  "\er%s/%s\e0 =>\n   \eD%s\e0\n\n"
+                  "\er%s/%s\e0 =>\n   \eD%snebula/\e0\n\n",
+                  home, ".naev/conf.lua", nfile_configPath(),
+                  home, ".naev/{saves,screenshots}/", nfile_dataPath(),
+                  home, ".naev/gen/*.png", nfile_cachePath() );
+         }
+      }
+      else {
+         dialogue_alert(
+               "To manually migrate your configuration files "
+               "please exit Naev and run the update script, "
+               "likely found in your Naev data directory:\n"
+               "   \er%s/naev-confupdate.sh\e0", home, path );
+      }
+   }
+#endif
+
    /*
     * main loop
     */
@@ -541,6 +623,8 @@ void load_all (void)
    events_load(); /* no dep */
    loadscreen_render( 6./LOADING_STAGES, "Loading Special Effects..." );
    spfx_load(); /* no dep */
+   loadscreen_render( 6./LOADING_STAGES, "Loading Damage Types..." );
+   dtype_load(); /* no dep */
    loadscreen_render( 7./LOADING_STAGES, "Loading Outfits..." );
    outfit_load(); /* dep for ships */
    loadscreen_render( 8./LOADING_STAGES, "Loading Ships..." );
@@ -551,6 +635,8 @@ void load_all (void)
    tech_load(); /* dep for space */
    loadscreen_render( 11./LOADING_STAGES, "Loading the Universe..." );
    space_load();
+   loadscreen_render( 12./LOADING_STAGES, "Populating Maps..." );
+   outfit_mapParse();
    background_init();
    player_init(); /* Initialize player stuff. */
    loadscreen_render( 1., "Loading Completed!" );
@@ -577,6 +663,7 @@ void unload_all (void)
    ships_free();
    outfit_free();
    spfx_free(); /* gets rid of the special effect */
+   dtype_free(); /* gets rid of the damage types */
    missions_free();
    events_cleanup(); /* Clean up events. */
    factions_free();

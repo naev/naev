@@ -54,8 +54,8 @@ function emp_mil_restricted( pnt )
          "\"Don't attempt to bribe an Empire official, pilot.\"")
 end
 
--- Empire Polaris Prime.
-function emp_mil_polprime( pnt )
+-- Empire Emperor's Wrath.
+function emp_mil_wrath( pnt )
    return land_military(pnt, 75,
          "The Emperor permits you to land.",
          "You may not approach the Emperor.",
@@ -209,12 +209,12 @@ end
 function land_military( pnt, land_floor, ok_msg, notyet_msg, no_msg, nobribe )
    local fct = pnt:faction()
    local standing = fct:playerStanding()
-   local can_land = standing > land_floor
+   local can_land = standing >= land_floor
 
    local land_msg
    if can_land then
       land_msg = ok_msg
-   elseif standing >= land_floor then
+   elseif standing >= 0 then
       land_msg = notyet_msg
    else
       land_msg = no_msg

@@ -58,7 +58,7 @@ glFont gl_smallFont; /**< Small font. */
 
 
 /* Last used colour. */
-static glColour *font_lastCol    = NULL; /**< Stores last colour used (activated by '\e'). */
+static const glColour *font_lastCol    = NULL; /**< Stores last colour used (activated by '\e'). */
 static int font_restoreLast      = 0; /**< Restore last colour. */
 
 
@@ -67,11 +67,20 @@ static int font_restoreLast      = 0; /**< Restore last colour. */
  */
 static int font_limitSize( const glFont *ft_font, int *width,
       const char *text, const int max );
-static glColour* gl_fontGetColour( int ch );
+static const glColour* gl_fontGetColour( int ch );
 /* Render. */
 static void gl_fontRenderStart( const glFont* font, double x, double y, const glColour *c );
 static int gl_fontRenderCharacter( const glFont* font, int ch, const glColour *c, int state );
 static void gl_fontRenderEnd (void);
+
+
+/**
+ * @brief Clears the restoration.
+ */
+void gl_printRestoreClear (void)
+{
+   font_lastCol = NULL;
+}
 
 
 /**
@@ -116,9 +125,9 @@ void gl_printRestore( const glFontRestore *restore )
 void gl_printStoreMax( glFontRestore *restore, const char *text, int max )
 {
    int i;
-   glColour *col;
+   const glColour *col;
 
-   col = NULL;
+   col = restore->col; /* Use whatever is there. */
    for (i=0; (text[i]!='\0') && (i<=max); i++) {
       /* Only want escape sequences. */
       if (text[i] != '\e')
@@ -459,7 +468,7 @@ int gl_printMid( const glFont *ft_font, const int width,
 int gl_printTextRaw( const glFont *ft_font,
       const int width, const int height,
       double bx, double by,
-      glColour* c, const char *text )
+      const glColour* c, const char *text )
 {
    int ret, i, p, s;
    double x,y;
@@ -470,14 +479,16 @@ int gl_printTextRaw( const glFont *ft_font,
    x = bx;
    y = by + height - (double)ft_font->h; /* y is top left corner */
 
+   /* Clears restoration. */
+   gl_printRestoreClear();
+
    s = 0;
    p = 0; /* where we last drew up to */
    while (y - by > -1e-5) {
       ret = gl_printWidthForText( ft_font, &text[p], width );
 
       /* Must restore stuff. */
-      if (p!=0)
-         gl_printRestoreLast();
+      gl_printRestoreLast();
 
       /* Render it. */
       gl_fontRenderStart(ft_font, x, y, c);
@@ -516,7 +527,7 @@ int gl_printTextRaw( const glFont *ft_font,
 int gl_printText( const glFont *ft_font,
       const int width, const int height,
       double bx, double by,
-      glColour* c, const char *fmt, ... )
+      const glColour* c, const char *fmt, ... )
 {
    /*float h = ft_font->h / .63;*/ /* slightly increase fontsize */
    char text[4096]; /* holds the string */
@@ -916,7 +927,6 @@ static void gl_fontRenderStart( const glFont* font, double x, double y, const gl
          COLOUR(*c);
    }
    font_restoreLast = 0;
-   font_lastCol = NULL; /* Clear so it doesn't appear later. */
 
    /* Activate the appropriate VBOs. */
    gl_vboActivateOffset( font->vbo_tex,  GL_TEXTURE_COORD_ARRAY, 0, 2, GL_FLOAT, 0 );
@@ -927,9 +937,9 @@ static void gl_fontRenderStart( const glFont* font, double x, double y, const gl
 /**
  * @brief Gets the colour from a character.
  */
-static glColour* gl_fontGetColour( int ch )
+static const glColour* gl_fontGetColour( int ch )
 {
-   glColour *col;
+   const glColour *col;
    switch (ch) {
       /* TOP SECRET COLOUR CONVENTION
        * FOR YOUR EYES ONLY
@@ -970,7 +980,7 @@ static int gl_fontRenderCharacter( const glFont* font, int ch, const glColour *c
 {
    GLushort ind[6];
    double a;
-   glColour *col;
+   const glColour *col;
 
    /* Handle escape sequences. */
    if (ch == '\e') /* Start sequence. */

@@ -66,6 +66,8 @@ typedef struct Weapon_ {
    unsigned int target; /**< target to hit, only used by seeking things */
    const Outfit* outfit; /**< related outfit that fired it or whatnot */
 
+   double real_vel; /**< Keeps track of the real velocity. */
+   double jam_power; /**< Power being jammed by. */
    double dam_mod; /**< Damage modifier. */
    int voice; /**< Weapon's voice. */
    double exp_timer; /**< Explosion timer for beams. */
@@ -161,7 +163,7 @@ void weapon_minimap( const double res, const double w,
    int i, rc, p;
    double x, y;
    Weapon *wp;
-   glColour *c;
+   const glColour *c;
    GLsizei offset;
    Pilot *par;
 
@@ -309,11 +311,9 @@ static void weapon_setTurn( Weapon *w, double turn )
 static void think_seeker( Weapon* w, const double dt )
 {
    double diff;
-   double vel;
    Pilot *p;
-   int effect;
    Vector2d v;
-   double t;
+   double t, turn_max;
 
    if (w->target == w->parent)
       return; /* no self shooting */
@@ -329,31 +329,6 @@ static void think_seeker( Weapon* w, const double dt )
    switch (w->status) {
 
       case WEAPON_STATUS_OK: /* Check to see if can get jammed */
-         if ((p->jam_range != 0.) &&  /* Target has jammer and weapon is in range */
-               (vect_dist(&w->solid->pos,&p->solid->pos) < p->jam_range)) {
-
-            /* Check to see if weapon gets jammed */
-            if (RNGF() < p->jam_chance - w->outfit->u.amm.resist) {
-               w->status = WEAPON_STATUS_JAMMED;
-               /* Give it a nice random effect */
-               effect = RNG(0,3);
-               switch (effect) {
-                  case 0: /* Stuck in left loop */
-                     weapon_setTurn( w, w->outfit->u.amm.turn );
-                     break;
-                  case 1: /* Stuck in right loop */
-                     weapon_setTurn( w, -w->outfit->u.amm.turn );
-                     break;
-
-                  default: /* Blow up. */
-                     w->timer = -1.;
-                     break;
-               }
-            }
-            else /* Can't get jammed anymore */
-               w->status = WEAPON_STATUS_UNJAMMED;
-         }
-
       /* Purpose fallthrough */
       case WEAPON_STATUS_UNJAMMED: /* Work as expected */
 
@@ -379,7 +354,8 @@ static void think_seeker( Weapon* w, const double dt )
          }
 
          /* Set turn. */
-         weapon_setTurn( w, CLAMP( -w->outfit->u.amm.turn, w->outfit->u.amm.turn,
+         turn_max = w->outfit->u.amm.turn * (1. - w->jam_power);
+         weapon_setTurn( w, CLAMP( -turn_max, turn_max,
                   10 * diff * w->outfit->u.amm.turn ));
          break;
 
@@ -393,9 +369,11 @@ static void think_seeker( Weapon* w, const double dt )
    }
 
    /* Limit speed here */
-   vel = MIN(w->outfit->u.amm.speed, VMOD(w->solid->vel) + w->outfit->u.amm.thrust*dt);
-   vect_pset( &w->solid->vel, vel, w->solid->dir );
-   /*limit_speed( &w->solid->vel, w->outfit->u.amm.speed, dt );*/
+   w->real_vel = MIN( w->outfit->u.amm.speed, w->real_vel + w->outfit->u.amm.thrust*dt );
+   vect_pset( &w->solid->vel, (1. - w->jam_power) * w->real_vel, w->solid->dir );
+
+   /* Modulate max speed. */
+   //w->solid->speed_max = w->outfit->u.amm.speed * (1. - w->jam_power);
 }
 
 
@@ -484,9 +462,11 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
    Weapon **wlayer;
    int *nlayer;
    Weapon *w;
-   int i;
+   int i, j, k;
    int spfx;
    int s;
+   Pilot *p;
+   Outfit *o;
 
    /* Choose layer. */
    switch (layer) {
@@ -504,6 +484,50 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
          return;
    }
 
+   /** @TODO optimize me plz. */
+   /* Reset jam power. */
+   for (k=0; k < *nlayer; k++) {
+      w = wlayer[k];
+      if (!outfit_isSeeker( w->outfit ))
+         continue;
+      w->jam_power = 0.;
+   }
+   /* Iterate over all pilots. */
+   for (i=0; i<pilot_nstack; i++) {
+      p = pilot_stack[i];
+
+      /* Must be jamming. */
+      if (!p->jamming)
+         continue;
+
+      /* Iterate over outfits to find jammers. */
+      for (j=0; j<p->noutfits; j++) {
+         o    = p->outfits[j]->outfit;
+         if (o==NULL)
+            continue;
+         /* Must be on. */
+         if (p->outfits[j]->state != PILOT_OUTFIT_ON)
+            continue;
+         /* Must be a jammer. */
+         if (!outfit_isJammer(o))
+            continue;
+    
+         /* Apply jamming. */
+         for (k=0; k < *nlayer; k++) {
+            w = wlayer[k];
+            if (!outfit_isSeeker( w->outfit ))
+               continue;
+
+            /* Must be in range. */
+            if (o->u.jam.range2 < vect_dist2( &w->solid->pos, &p->solid->pos ))
+               continue;
+
+            /* We only consider the strongest jammer. */
+            w->jam_power = CLAMP( 0., 1., MAX( w->jam_power, (o->u.jam.power - w->outfit->u.amm.resist) ) );
+         }
+      }
+   }
+
    i = 0;
    while (i < *nlayer) {
       w = wlayer[i];
@@ -512,7 +536,6 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
 
          /* most missiles behave the same */
          case OUTFIT_TYPE_AMMO:
-         case OUTFIT_TYPE_TURRET_AMMO:
 
             w->timer -= dt;
             if (w->timer < 0.) {
@@ -659,7 +682,6 @@ static void weapon_render( Weapon* w, const double dt )
    switch (w->outfit->type) {
       /* Weapons that use sprites. */
       case OUTFIT_TYPE_AMMO:
-      case OUTFIT_TYPE_TURRET_AMMO:
       case OUTFIT_TYPE_BOLT:
       case OUTFIT_TYPE_TURRET_BOLT:
          gfx = outfit_gfx(w->outfit);
@@ -812,6 +834,11 @@ static int weapon_checkCanHit( Weapon* w, Pilot *p )
 
    /* Go "through" dead pilots. */
    if (pilot_isFlag(p, PILOT_DEAD))
+      return 0;
+
+   /* Player can not hit special pilots. */
+   if ((w->faction == FACTION_PLAYER) &&
+         pilot_isFlag(p, PILOT_INVINC_PLAYER))
       return 0;
 
    /* Always hit target. */
@@ -991,17 +1018,19 @@ static void weapon_hitAI( Pilot *p, Pilot *shooter, double dmg )
 static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos )
 {
    Pilot *parent;
-   int spfx;
-   double damage, penetration;
-   DamageType dtype;
+   int s, spfx;
+   double damage;
    WeaponLayer spfx_layer;
-   int s;
+   Damage dmg;
+   const Damage *odmg;
 
    /* Get general details. */
-   parent = pilot_get(w->parent);
-   damage = w->strength * outfit_damage(w->outfit);
-   penetration = outfit_penetration(w->outfit);
-   dtype  = outfit_damageType(w->outfit);
+   odmg              = outfit_damage( w->outfit );
+   parent            = pilot_get( w->parent );
+   dmg.damage        = MAX( 0., w->dam_mod * w->strength * odmg->damage );
+   dmg.penetration   = odmg->penetration;
+   dmg.type          = odmg->type;
+   dmg.disable       = odmg->disable;
 
    /* Play sound if they have it. */
    s = outfit_soundHit(w->outfit);
@@ -1013,7 +1042,7 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos )
             w->solid->vel.y);
 
    /* Have pilot take damage and get real damage done. */
-   damage = pilot_hit( p, w->solid, w->parent, dtype, MAX(0.,w->dam_mod*damage), penetration );
+   damage = pilot_hit( p, w->solid, w->parent, &dmg );
 
    /* Get the layer. */
    spfx_layer = (p==player.p) ? SPFX_LAYER_FRONT : SPFX_LAYER_BACK;
@@ -1049,18 +1078,21 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
    (void) layer;
    Pilot *parent;
    int spfx;
-   double damage, penetration;
-   DamageType dtype;
+   double damage;
    WeaponLayer spfx_layer;
+   Damage dmg;
+   const Damage *odmg;
 
    /* Get general details. */
-   parent = pilot_get(w->parent);
-   damage = outfit_damage(w->outfit) * dt;
-   penetration = outfit_penetration(w->outfit);
-   dtype  = outfit_damageType(w->outfit);
+   odmg              = outfit_damage( w->outfit );
+   parent            = pilot_get( w->parent );
+   dmg.damage        = MAX( 0., w->dam_mod * w->strength * odmg->damage * dt );
+   dmg.penetration   = odmg->penetration;
+   dmg.type          = odmg->type;
+   dmg.disable       = odmg->disable * dt;
 
    /* Have pilot take damage and get real damage done. */
-   damage = pilot_hit( p, w->solid, w->parent, dtype, MAX(0.,w->dam_mod*damage), penetration );
+   damage = pilot_hit( p, w->solid, w->parent, &dmg );
 
    /* Add sprite, layer depends on whether player shot or not. */
    if (w->exp_timer == -1.) {
@@ -1079,10 +1111,10 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
       spfx_add( spfx, pos[1].x, pos[1].y,
             VX(p->solid->vel), VY(p->solid->vel), spfx_layer );
          w->exp_timer = -2;
-   }
 
-   /* Inform AI that it's been hit. */
-   weapon_hitAI( p, parent, damage );
+      /* Inform AI that it's been hit, to not saturate ai Lua with messages. */
+      weapon_hitAI( p, parent, damage );
+   }
 }
 
 
@@ -1152,8 +1184,7 @@ static double weapon_aimTurret( Weapon *w, const Outfit *outfit, const Pilot *pa
       lead_angle = M_PI*pilot_ewWeaponTrack( parent, pilot_target, outfit->u.blt.track );
 
       /*only do this if the lead angle is implemented; save compute cycled on fixed weapons*/
-      if (fabs( angle_diff(ANGLE(x, y), VANGLE(relative_location)) ) > lead_angle) {
-
+      if (lead_angle && fabs( angle_diff(ANGLE(x, y), VANGLE(relative_location)) ) > lead_angle) {
          /* the target is moving too fast for the turret to keep up */
          if (ANGLE(x, y) < VANGLE(relative_location))
             rdir = angle_diff(lead_angle, VANGLE(relative_location));
@@ -1209,9 +1240,9 @@ static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
 
    /* Stat modifiers. */
    if (outfit->type == OUTFIT_TYPE_TURRET_BOLT)
-      w->dam_mod *= parent->stats.damage_turret;
+      w->dam_mod *= parent->stats.tur_damage;
    else
-      w->dam_mod *= parent->stats.damage_forward;
+      w->dam_mod *= parent->stats.fwd_damage;
 
    /* Calculate direction. */
    rdir += RNG_2SIGMA() * acc;
@@ -1242,14 +1273,14 @@ static void weapon_createBolt( Weapon *w, const Outfit* outfit, double T,
  * @brief Creates the ammo specific properties of a weapon.
  *
  *    @param w Weapon to create ammo specific properties of.
- *    @param outfit Outfit which spawned the weapon.
+ *    @param launcher Outfit which spawned the weapon.
  *    @param T temperature of the shooter.
  *    @param dir Direction the shooter is facing.
  *    @param pos Position of the shooter.
  *    @param vel Velocity of the shooter.
  *    @param parent Shooter.
  */
-static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
+static void weapon_createAmmo( Weapon *w, const Outfit* launcher, double T,
       const double dir, const Vector2d* pos, const Vector2d* vel, const Pilot* parent )
 {
    (void) T;
@@ -1257,17 +1288,20 @@ static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
    double mass, rdir;
    Pilot *pilot_target;
    glTexture *gfx;
+   Outfit* ammo;
 
    pilot_target = NULL;
-   if (w->outfit->type == OUTFIT_TYPE_TURRET_AMMO) {
+   ammo = launcher->u.lau.ammo;
+   if (w->outfit->type == OUTFIT_TYPE_AMMO &&
+            launcher->type == OUTFIT_TYPE_TURRET_LAUNCHER) {
       pilot_target = pilot_get(w->target);
-      rdir = weapon_aimTurret( w, outfit, parent, pilot_target, pos, vel, dir, M_PI );
+      rdir = weapon_aimTurret( w, ammo, parent, pilot_target, pos, vel, dir, M_PI );
    }
-   else {
-      rdir        = dir;
-   }
-   /*if (outfit->u.amm.accuracy != 0.) {
-      rdir += RNG_2SIGMA() * outfit->u.amm.accuracy/2. * 1./180.*M_PI;
+   else
+      rdir = dir;
+
+   /*if (ammo->u.amm.accuracy != 0.) {
+      rdir += RNG_2SIGMA() * ammo->u.amm.accuracy/2. * 1./180.*M_PI;
       if ((rdir > 2.*M_PI) || (rdir < 0.))
          rdir = fmod(rdir, 2.*M_PI);
    }*/
@@ -1278,17 +1312,19 @@ static void weapon_createAmmo( Weapon *w, const Outfit* outfit, double T,
 
    /* If thrust is 0. we assume it starts out at speed. */
    vectcpy( &v, vel );
-   if (outfit->u.amm.thrust == 0.)
+   if (ammo->u.amm.thrust == 0.)
       vect_cadd( &v, cos(rdir) * w->outfit->u.amm.speed,
             sin(rdir) * w->outfit->u.amm.speed );
+   w->real_vel = VMOD(v);
 
    /* Set up ammo details. */
    mass        = w->outfit->mass;
-   w->timer    = outfit->u.amm.duration;
+   w->timer    = ammo->u.amm.duration;
    w->solid    = solid_create( mass, rdir, pos, &v, SOLID_UPDATE_RK4 );
-   if (w->outfit->u.amm.thrust != 0.)
+   if (w->outfit->u.amm.thrust != 0.) {
       weapon_setThrust( w, w->outfit->u.amm.thrust * mass );
-   w->solid->speed_max = w->outfit->u.amm.speed; /* Limit speed. */
+      w->solid->speed_max = w->outfit->u.amm.speed; /* Limit speed, we only care if it has thrust. */
+   }
 
    /* Handle seekers. */
    if (w->outfit->u.amm.ai > 0) {
@@ -1335,13 +1371,15 @@ static Weapon* weapon_create( const Outfit* outfit, double T,
    Weapon* w;
 
    /* Create basic features */
-   w           = malloc( sizeof(Weapon) );
-   memset( w, 0, sizeof(Weapon) );
+   w           = calloc( 1, sizeof(Weapon) );
    w->dam_mod  = 1.; /* Default of 100% damage. */
    w->faction  = parent->faction; /* non-changeable */
    w->parent   = parent->id; /* non-changeable */
    w->target   = target; /* non-changeable */
-   w->outfit   = outfit; /* non-changeable */
+   if (outfit_isLauncher(outfit))
+      w->outfit   = outfit->u.lau.ammo; /* non-changeable */
+   else
+      w->outfit   = outfit; /* non-changeable */
    w->update   = weapon_update;
    w->status   = WEAPON_STATUS_OK;
    w->strength = 1.;
@@ -1380,8 +1418,8 @@ static Weapon* weapon_create( const Outfit* outfit, double T,
          break;
 
       /* Treat seekers together. */
-      case OUTFIT_TYPE_AMMO:
-      case OUTFIT_TYPE_TURRET_AMMO:
+      case OUTFIT_TYPE_LAUNCHER:
+      case OUTFIT_TYPE_TURRET_LAUNCHER:
          weapon_createAmmo( w, outfit, T, dir, pos, vel, parent );
          break;
 
@@ -1422,7 +1460,7 @@ void weapon_add( const Outfit* outfit, const double T, const double dir,
    GLsizei size;
 
    if (!outfit_isBolt(outfit) &&
-         !outfit_isAmmo(outfit)) {
+         !outfit_isLauncher(outfit)) {
       ERR("Trying to create a Weapon from a non-Weapon type Outfit");
       return;
    }
@@ -1471,6 +1509,7 @@ void weapon_add( const Outfit* outfit, const double T, const double dir,
       weapon_vboData = realloc( weapon_vboData, size );
       if (weapon_vbo == NULL)
          weapon_vbo = gl_vboCreateStream( size, NULL );
+      gl_vboData( weapon_vbo, size, weapon_vboData );
    }
 }
 
@@ -1553,6 +1592,7 @@ unsigned int beam_start( const Outfit* outfit,
       weapon_vboData = realloc( weapon_vboData, size );
       if (weapon_vbo == NULL)
          weapon_vbo = gl_vboCreateStream( size, NULL );
+      gl_vboData( weapon_vbo, size, weapon_vboData );
    }
 
    return w->ID;
@@ -1733,7 +1773,7 @@ void weapon_exit (void)
  * @brief Clears possible exploded weapons.
  */
 void weapon_explode( double x, double y, double radius,
-      DamageType dtype, double damage,
+      int dtype, double damage,
       const Pilot *parent, int mode )
 {
    (void)dtype;

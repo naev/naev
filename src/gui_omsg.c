@@ -35,7 +35,7 @@ typedef struct omsg_s {
    int nlines;       /**< Message lines. */
    double duration;  /**< Time left. */
    int font;         /**< Font to use. */
-   glColour *col;    /**< Colour to use. */
+   const glColour *col;    /**< Colour to use. */
 } omsg_t;
 static omsg_t *omsg_array           = NULL;  /**< Array of messages. */
 static unsigned int omsg_idgen      = 0;     /**< Unique ID generator. */
@@ -112,6 +112,11 @@ static void omsg_setMsg( omsg_t *omsg, const char *msg )
       n += s+1;
       m++;
    }
+
+   /* Avoid zero-length malloc. */
+   if (m == 0)
+      return;
+
    /* Second pass allocate. */
    omsg->msg = malloc( m * sizeof(char*) );
    omsg->nlines = m;
@@ -241,10 +246,10 @@ void omsg_render( double dt )
       memcpy( &col, omsg->col, sizeof(glColour) );
       if (omsg->duration < 1.)
          col.a = omsg->duration;
+      gl_printRestoreClear();
       for (j=0; j<omsg->nlines; j++) {
          y -= font->h * 1.5;
-         if (j>0)
-            gl_printRestoreLast();
+         gl_printRestoreLast();
          gl_printMidRaw( font, omsg_center_w, x, y, &col, omsg->msg[j] );
       }
    }

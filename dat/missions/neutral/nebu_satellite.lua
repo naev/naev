@@ -41,15 +41,18 @@ end
 
 
 function create ()
-   -- Note: this mission does not make any mission claims.
+   -- Note: this mission does not make any system claims.
    -- Set up mission variables
    misn_stage = 0
-   homeworld, homeworld_sys = planet.get( misn.factions() )
+   homeworld, homeworld_sys = planet.getLandable( misn.factions() )
+   if homeworld == nil then
+      misn.finish(false)
+   end
    satellite_sys = system.get("Arandon") -- Not too unstable
    credits = 75000
 
    -- Set stuff up for the spaceport bar
-   misn.setNPC( "Scientists", "scientist" )
+   misn.setNPC( "Scientists", "neutral/scientist" )
    misn.setDesc( bar_desc )
 end
 
@@ -86,7 +89,7 @@ function accept ()
    misn.osdCreate(mtitle[1], {mdesc[1]:format(satellite_sys:name())})
    -- Set up hooks
    hook.land("land")
-   hook.enter("jump")
+   hook.enter("jumpin")
 end
 
 
@@ -101,7 +104,7 @@ function land ()
 end
 
 
-function jump ()
+function jumpin ()
    sys = system.cur()
    -- Launch satellite
    if misn_stage == 0 and sys == satellite_sys then

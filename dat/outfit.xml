@@ -16,7 +16,7 @@
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>500</delay>
+   <delay>0.5</delay>
    <speed>550</speed>
    <range>550</range>
    <falloff>275</falloff>
@@ -24,7 +24,12 @@
    <heatup>15</heatup>
    <track>3</track>
    <swivel>3</swivel>
-   <damage type="energy" penetrate="0">6</damage>
+   <damage>
+    <type>normal</type>
+    <penetrate>0</penetrate>
+    <physical>6</physical>
+    <disable>1</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Laser Cannon MK2">
@@ -43,7 +48,7 @@
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>550</delay>
+   <delay>0.55</delay>
    <speed>550</speed>
    <range>575</range>
    <falloff>300</falloff>
@@ -52,7 +57,12 @@
    <heatup>20</heatup>
    <track>3</track>
    <swivel>4</swivel>
-   <damage type="energy" penetrate="14">8.5</damage>
+   <damage>
+    <type>normal</type>
+    <penetrate>5</penetrate>
+    <physical>8.5</physical>
+    <disable>1</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Laser Cannon MK3">
@@ -71,7 +81,7 @@
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>600</delay>
+   <delay>0.6</delay>
    <speed>550</speed>
    <range>600</range>
    <falloff>325</falloff>
@@ -80,7 +90,12 @@
    <heatup>25</heatup>
    <track>3</track>
    <swivel>5</swivel>
-   <damage type="energy" penetrate="22">12</damage>
+   <damage>
+    <type>normal</type>
+    <penetrate>13</penetrate>
+    <physical>12</physical>
+    <disable>2</disable>
+   </damage>
   </specific>
  </outfit>
  <!-- TODO laser pd mk1 -->
@@ -101,7 +116,7 @@
    <sound>ripper</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>1200</delay>
+   <delay>1.2</delay>
    <speed>700</speed>
    <range>900</range>
    <falloff>600</falloff>
@@ -110,7 +125,12 @@
    <heatup>30</heatup>
    <track>2</track>
    <swivel>7</swivel>
-   <damage type="energy" penetrate="30">29</damage>
+   <damage>
+    <type>normal</type>
+    <penetrate>13</penetrate>
+    <physical>29</physical>
+    <disable>2</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Heavy Ripper Cannon">
@@ -129,7 +149,7 @@
    <sound>ripper</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>1250</delay>
+   <delay>1.25</delay>
    <speed>700</speed>
    <range>1300</range>
    <falloff>850</falloff>
@@ -138,7 +158,12 @@
    <heatup>35</heatup>
    <track>2</track>
    <swivel>10</swivel>
-   <damage type="energy" penetrate="40">42</damage>
+   <damage>
+    <type>normal</type>
+    <penetrate>20</penetrate>
+    <physical>42</physical>
+    <disable>2</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Laser Turret MK1">
@@ -157,14 +182,19 @@
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>350</delay>
+   <delay>0.35</delay>
    <speed>550</speed>
    <range>800</range>
    <falloff>500</falloff>
    <energy>9</energy>
    <heatup>25</heatup>
    <track>2</track>
-   <damage type="energy" penetrate="20">8</damage>
+   <damage>
+    <type>normal</type>
+    <penetrate>20</penetrate>
+    <physical>8</physical>
+    <disable>1</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Laser Turret MK2">
@@ -183,7 +213,7 @@
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>375</delay>
+   <delay>0.375</delay>
    <speed>550</speed>
    <range>1000</range>
    <falloff>600</falloff>
@@ -191,7 +221,12 @@
    <energy>11</energy>
    <heatup>30</heatup>
    <track>1.75</track>
-   <damage type="energy" penetrate="27">10.5</damage>
+   <damage>
+    <type>normal</type>
+    <penetrate>27</penetrate>
+    <physical>10.5</physical>
+    <disable>1</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Laser Turret MK3">
@@ -210,7 +245,7 @@
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>400</delay>
+   <delay>0.4</delay>
    <speed>550</speed>
    <range>1200</range>
    <falloff>700</falloff>
@@ -218,7 +253,12 @@
    <energy>13</energy>
    <heatup>35</heatup>
    <track>1.5</track>
-   <damage type="energy" penetrate="35">14</damage>
+   <damage>
+    <type>normal</type>
+    <penetrate>35</penetrate>
+    <physical>14</physical>
+    <disable>2</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Heavy Laser">
@@ -237,7 +277,7 @@
    <sound>laser</sound>
    <spfx_shield>ShiM</spfx_shield>
    <spfx_armour>ExpM</spfx_armour>
-   <delay>1400</delay>
+   <delay>1.4</delay>
    <speed>550</speed>
    <range>2200</range>
    <falloff>1600</falloff>
@@ -245,7 +285,12 @@
    <energy>72</energy>
    <heatup>50</heatup>
    <track>0.5</track>
-   <damage type="energy" penetrate="60">64</damage>
+   <damage>
+    <type>normal</type>
+    <penetrate>50</penetrate>
+    <physical>64</physical>
+    <disable>3</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Turbolaser">
@@ -264,7 +309,7 @@
    <sound>laser</sound>
    <spfx_shield>ShiM</spfx_shield>
    <spfx_armour>ExpM</spfx_armour>
-   <delay>1450</delay>
+   <delay>1.45</delay>
    <speed>550</speed>
    <range>2800</range>
    <falloff>2000</falloff>
@@ -272,7 +317,12 @@
    <energy>85</energy>
    <heatup>60</heatup>
    <track>0.3</track>
-   <damage type="energy" penetrate="75">82</damage>
+   <damage>
+    <type>normal</type>
+    <penetrate>75</penetrate>
+    <physical>82</physical>
+    <disable>4</disable>
+   </damage>
   </specific>
  </outfit>
 
@@ -293,7 +343,7 @@
    <sound>ion</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>600</delay>
+   <delay>0.6</delay>
    <speed>800</speed>
    <range>900</range>
    <falloff>700</falloff>
@@ -302,7 +352,12 @@
    <heatup>20</heatup>
    <track>2.25</track>
    <swivel>5</swivel>
-   <damage type="ion" penetrate="0">7</damage>
+   <damage>
+    <type>ion</type>
+    <penetrate>0</penetrate>
+    <physical>6</physical>
+    <disable>2</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Razor MK2">
@@ -320,7 +375,7 @@
    <sound>ion</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>600</delay>
+   <delay>0.6</delay>
    <speed>800</speed>
    <range>950</range>
    <falloff>725</falloff>
@@ -329,7 +384,12 @@
    <heatup>25</heatup>
    <track>2.25</track>
    <swivel>6</swivel>
-   <damage type="ion" penetrate="5">9</damage>
+   <damage>
+    <type>ion</type>
+    <penetrate>5</penetrate>
+    <physical>8</physical>
+    <disable>2</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Razor MK3">
@@ -347,7 +407,7 @@
    <sound>ion</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>600</delay>
+   <delay>0.6</delay>
    <speed>800</speed>
    <range>1000</range>
    <falloff>750</falloff>
@@ -356,7 +416,12 @@
    <heatup>30</heatup>
    <track>2.25</track>
    <swivel>7</swivel>
-   <damage type="ion" penetrate="11">11.5</damage>
+   <damage>
+    <type>ion</type>
+    <penetrate>11</penetrate>
+    <physical>10</physical>
+    <disable>3</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Razor Turret MK1">
@@ -374,7 +439,7 @@
    <sound>ion</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>500</delay>
+   <delay>0.5</delay>
    <speed>800</speed>
    <range>1100</range>
    <falloff>750</falloff>
@@ -382,7 +447,12 @@
    <energy>6.5</energy>
    <heatup>30</heatup>
    <track>2</track>
-   <damage type="ion" penetrate="7">7.5</damage>
+   <damage>
+    <type>ion</type>
+    <penetrate>7</penetrate>
+    <physical>6.5</physical>
+    <disable>2</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Razor Turret MK2">
@@ -400,7 +470,7 @@
    <sound>ion</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>500</delay>
+   <delay>0.5</delay>
    <speed>800</speed>
    <range>1600</range>
    <falloff>1100</falloff>
@@ -408,7 +478,12 @@
    <energy>13</energy>
    <heatup>35</heatup>
    <track>1.8</track>
-   <damage type="ion" penetrate="17">13</damage>
+   <damage>
+    <type>ion</type>
+    <penetrate>17</penetrate>
+    <physical>11</physical>
+    <disable>3</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Razor Turret MK3">
@@ -426,7 +501,7 @@
    <sound>ion</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>500</delay>
+   <delay>0.5</delay>
    <speed>800</speed>
    <range>1800</range>
    <falloff>1400</falloff>
@@ -434,7 +509,12 @@
    <energy>15</energy>
    <heatup>40</heatup>
    <track>1.6</track>
-   <damage type="ion" penetrate="24">16</damage>
+   <damage>
+    <type>ion</type>
+    <penetrate>24</penetrate>
+    <physical>14</physical>
+    <disable>4</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Ion Cannon">
@@ -446,22 +526,27 @@
    <description>Ion Cannons are primarily nonlethal weapons designed to short out internal ship systems and rendering it disabled without killing the crew in the process. The standard Ion Cannon is the most basic and compact design, which allows it to be mounted on small craft. This makes the Ion Cannon one of the most popular weapons for weaker pirates.</description>
    <gfx_store>ioncannon</gfx_store>
   </general>
-  <specific type="bolt">
-   <cpu>12</cpu>
+  <specific type="bolt" secondary="1">
+   <cpu>6</cpu>
    <gfx>ionM</gfx>
    <sound>ion</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>1340</delay>
+   <delay>1</delay>
    <speed>500</speed>
    <range>700</range>
    <falloff>500</falloff>
    <gfx_end>ionM-end</gfx_end>
-   <energy>30</energy>
+   <energy>20</energy>
    <heatup>50</heatup>
    <track>2</track>
    <swivel>6</swivel>
-   <damage type="ion" penetrate="11">28</damage>
+   <damage>
+    <type>ion</type>
+    <penetrate>11</penetrate>
+    <physical>3.5</physical>
+    <disable>10</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Heavy Ion Cannon">
@@ -474,22 +559,27 @@
    <description>The Heavy Ion Cannon does a far better job at disabling ships than the standard model, but it requires a medium mount. Most militaries employ these weapons on specialized capture teams, but the design is licensed for public use as well.</description>
    <gfx_store>ioncannon</gfx_store>
   </general>
-  <specific type="bolt">
-   <cpu>16</cpu>
+  <specific type="bolt" secondary="1">
+   <cpu>12</cpu>
    <gfx>ionL</gfx>
    <sound>ion</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>1520</delay>
+   <delay>1.3</delay>
    <speed>500</speed>
    <range>1100</range>
    <falloff>800</falloff>
    <gfx_end>ionL-end</gfx_end>
-   <energy>45</energy>
+   <energy>35</energy>
    <heatup>60</heatup>
    <track>2</track>
    <swivel>8</swivel>
-   <damage type="ion" penetrate="22">48</damage>
+   <damage>
+    <type>ion</type>
+    <penetrate>17</penetrate>
+    <physical>6.5</physical>
+    <disable>18</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Heavy Ion Turret">
@@ -502,13 +592,13 @@
    <description>The Heavy Ion Turret is a Sirius military design, applying brute force to its target's internal systems. When coupled with Razor weaponry, it is terribly efficient at reducing enemy warships to tumbling hunks of junk.</description>
    <gfx_store>ionturret</gfx_store>
   </general>
-  <specific type="turret bolt">
+  <specific type="turret bolt" secondary="1">
    <cpu>24</cpu>
    <gfx>ionL</gfx>
    <sound>ion</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>1300</delay>
+   <delay>1.3</delay>
    <speed>500</speed>
    <range>1300</range>
    <falloff>1000</falloff>
@@ -516,7 +606,12 @@
    <energy>54</energy>
    <heatup>60</heatup>
    <track>0.9</track>
-   <damage type="ion" penetrate="40">48</damage>
+   <damage>
+    <type>ion</type>
+    <penetrate>30</penetrate>
+    <physical>10</physical>
+    <disable>30</disable>
+   </damage>
   </specific>
  </outfit>
  <!-- TODO shock artillery -->
@@ -533,7 +628,7 @@
    <mass>4</mass>
    <price>6000</price>
    <description>The Gauss Gun is one of the oldest weapon designs in the galaxy today, dating back to the times of the Federation. It fires a rapid stream of high velocity projectiles at a target, dealing damage through sheer kinetic impact. Gauss Guns are popular among small time pirates for being a cheap, reliable weapon.</description>
-   <gfx_store>gatling</gfx_store>
+   <gfx_store>gaussgun</gfx_store>
   </general>
   <specific type="bolt">
    <cpu>4</cpu>
@@ -542,14 +637,19 @@
    <sound_hit>medexp0</sound_hit>
    <spfx_shield>ExpS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>350</delay>
+   <delay>0.35</delay>
    <speed>500</speed>
    <range blowup="armour">700</range>
    <energy>6</energy>
    <heatup>20</heatup>
    <track>2</track>
    <swivel>4</swivel>
-   <damage type="kinetic" penetrate="3">6</damage>
+   <damage>
+    <type>impact</type>
+    <penetrate>3</penetrate>
+    <physical>6</physical>
+    <disable>1</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Vulcan Gun">
@@ -559,7 +659,7 @@
    <mass>6</mass>
    <price>13000</price>
    <description>The Vulcan Gun improves over the Gauss Gun with increased range and damage, achieved by using a heavier calibre ammunition. A skilled pilot can wreak some serious havoc with a pair of Vulcan Guns installed in his ship.</description>
-   <gfx_store>gatling</gfx_store>
+   <gfx_store>vulcangun</gfx_store>
   </general>
   <specific type="bolt">
    <cpu>6</cpu>
@@ -568,14 +668,19 @@
    <sound_hit>medexp0</sound_hit>
    <spfx_shield>ExpS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>375</delay>
+   <delay>0.375</delay>
    <speed>500</speed>
    <range blowup="armour">800</range>
    <energy>8.5</energy>
    <heatup>25</heatup>
    <track>2</track>
    <swivel>6</swivel>
-   <damage type="kinetic" penetrate="12">8.5</damage>
+   <damage>
+    <type>impact</type>
+    <penetrate>12</penetrate>
+    <physical>8.5</physical>
+    <disable>1</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Shredder">
@@ -585,7 +690,7 @@
    <mass>10</mass>
    <price>22000</price>
    <description>The Shredder quite lives up to the name its Dvaered manufacturers gave it. The sheer damage dealing capacity of this weapon makes Dvaered fighters dangerous to engage by ships that aren't substantially larger than they are.</description>
-   <gfx_store>gatling</gfx_store>
+   <gfx_store>shredder</gfx_store>
   </general>
   <specific type="bolt">
    <cpu>8</cpu>
@@ -594,14 +699,19 @@
    <sound_hit>medexp0</sound_hit>
    <spfx_shield>ExpS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>400</delay>
+   <delay>0.4</delay>
    <speed>500</speed>
    <range blowup="armour">900</range>
    <energy>11</energy>
    <heatup>30</heatup>
    <track>1.5</track>
    <swivel>8</swivel>
-   <damage type="kinetic" penetrate="25">12</damage>
+   <damage>
+    <type>impact</type>
+    <penetrate>20</penetrate>
+    <physical>12</physical>
+    <disable>1</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Turreted Gauss Gun">
@@ -609,10 +719,9 @@
    <slot>weapon</slot>
    <size>light</size>
    <mass>18</mass>
-   <license>Heavy Weapon License</license>
    <price>16000</price>
    <description>One of the more common countermeasures employed by low-budget merchant ships, the turret version of the Gauss Gun provides basic defense against lone pirates. A more determined attacker is unlikely to be deterred, however.</description>
-   <gfx_store>railgunturret</gfx_store>
+   <gfx_store>gaussturret</gfx_store>
   </general>
   <specific type="turret bolt">
    <cpu>8</cpu>
@@ -621,13 +730,18 @@
    <sound_hit>medexp0</sound_hit>
    <spfx_shield>ExpS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>325</delay>
+   <delay>0.325</delay>
    <speed>500</speed>
    <range blowup="armour">800</range>
    <energy>7</energy>
    <heatup>40</heatup>
    <track>2.2</track>
-   <damage type="kinetic" penetrate="11">6.5</damage>
+   <damage>
+    <type>impact</type>
+    <penetrate>11</penetrate>
+    <physical>6.5</physical>
+    <disable>1</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Turreted Vulcan Gun">
@@ -638,7 +752,7 @@
    <license>Heavy Weapon License</license>
    <price>37000</price>
    <description>Turreted Vulcan Guns pack the same caliber ammunition as their fixed mount brethren. Ships not nimble enough to evade its relentless stream of projectiles might find themselves riddled with hull punctures before long.</description>
-   <gfx_store>railgunturret</gfx_store>
+   <gfx_store>vulcanturret</gfx_store>
   </general>
   <specific type="turret bolt">
    <cpu>16</cpu>
@@ -647,13 +761,18 @@
    <sound_hit>medexp0</sound_hit>
    <spfx_shield>ExpS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>275</delay>
+   <delay>0.275</delay>
    <speed>500</speed>
    <range blowup="armour">1000</range>
    <energy>10.5</energy>
    <heatup>45</heatup>
    <track>2.05</track>
-   <damage type="kinetic" penetrate="24">9.5</damage>
+   <damage>
+    <type>impact</type>
+    <penetrate>20</penetrate>
+    <physical>9.5</physical>
+    <disable>1</disable>
+   </damage>
   </specific>
  </outfit>
  <!-- TODO flak -->
@@ -674,14 +793,19 @@
    <sound_hit>medexp0</sound_hit>
    <spfx_shield>ExpS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>1440</delay>
+   <delay>1.44</delay>
    <speed>575</speed>
    <range blowup="armour">1200</range>
    <energy>38</energy>
    <heatup>50</heatup>
    <track>1.5</track>
    <swivel>8</swivel>
-   <damage type="kinetic" penetrate="29">36</damage>
+   <damage>
+    <type>impact</type>
+    <penetrate>29</penetrate>
+    <physical>36</physical>
+    <disable>2</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Mass Driver MK2">
@@ -701,14 +825,19 @@
    <sound_hit>medexp0</sound_hit>
    <spfx_shield>ExpS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>1400</delay>
+   <delay>1.4</delay>
    <speed>575</speed>
    <range blowup="armour">1500</range>
    <energy>44</energy>
    <heatup>60</heatup>
    <track>1.4</track>
    <swivel>10</swivel>
-   <damage type="kinetic" penetrate="43">42</damage>
+   <damage>
+    <type>impact</type>
+    <penetrate>43</penetrate>
+    <physical>42</physical>
+    <disable>2</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Mass Driver MK3">
@@ -728,14 +857,19 @@
    <sound_hit>medexp0</sound_hit>
    <spfx_shield>ExpS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>1500</delay>
+   <delay>1.5</delay>
    <speed>575</speed>
    <range blowup="armour">1750</range>
    <energy>53</energy>
    <heatup>70</heatup>
    <track>1.2</track>
    <swivel>13</swivel>
-   <damage type="kinetic" penetrate="50">54</damage>
+   <damage>
+    <type>impact</type>
+    <penetrate>50</penetrate>
+    <physical>54</physical>
+    <disable>2</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Railgun">
@@ -755,7 +889,7 @@
    <sound_hit>medexp0</sound_hit>
    <spfx_shield>ShiM</spfx_shield>
    <spfx_armour>ExpM</spfx_armour>
-   <delay>1700</delay>
+   <delay>1.7</delay>
    <speed>700</speed>
    <range>2200</range>
    <falloff>1600</falloff>
@@ -764,7 +898,12 @@
    <heatup>90</heatup>
    <track>0.8</track>
    <swivel>15</swivel>
-   <damage type="kinetic" penetrate="60">70</damage>
+   <damage>
+    <type>impact</type>
+    <penetrate>60</penetrate>
+    <physical>70</physical>
+    <disable>3</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Repeating Railgun">
@@ -784,7 +923,7 @@
    <sound_hit>medexp0</sound_hit>
    <spfx_shield>ShiM</spfx_shield>
    <spfx_armour>ExpM</spfx_armour>
-   <delay>1400</delay>
+   <delay>1.4</delay>
    <speed>700</speed>
    <range>2200</range>
    <falloff>1600</falloff>
@@ -793,7 +932,12 @@
    <heatup>100</heatup>
    <track>0.6</track>
    <swivel>16</swivel>
-   <damage type="kinetic" penetrate="80">76</damage>
+   <damage>
+    <type>impact</type>
+    <penetrate>70</penetrate>
+    <physical>76</physical>
+    <disable>3</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Railgun Turret">
@@ -812,7 +956,7 @@
    <sound>mass</sound>
    <spfx_shield>ShiM</spfx_shield>
    <spfx_armour>ExpM</spfx_armour>
-   <delay>1100</delay>
+   <delay>1.1</delay>
    <speed>675</speed>
    <range>1900</range>
    <falloff>1400</falloff>
@@ -820,7 +964,12 @@
    <energy>66</energy>
    <heatup>90</heatup>
    <track>0.25</track>
-   <damage type="kinetic" penetrate="55">58</damage>
+   <damage>
+    <type>impact</type>
+    <penetrate>55</penetrate>
+    <physical>58</physical>
+    <disable>3</disable>
+   </damage>
   </specific>
  </outfit>
 
@@ -841,7 +990,7 @@
    <sound>plasma</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>PlaS</spfx_armour>
-   <delay>675</delay>
+   <delay>0.675</delay>
    <speed>450</speed>
    <range>450</range>
    <falloff>210</falloff>
@@ -849,7 +998,12 @@
    <heatup>20</heatup>
    <track>2</track>
    <swivel>4</swivel>
-   <damage type="energy" penetrate="8">9</damage>
+   <damage>
+    <type>normal</type>
+    <penetrate>8</penetrate>
+    <physical>9</physical>
+    <disable>1</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Plasma Blaster MK2">
@@ -868,7 +1022,7 @@
    <sound>plasma</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>PlaS2</spfx_armour>
-   <delay>675</delay>
+   <delay>0.675</delay>
    <speed>450</speed>
    <range>625</range>
    <falloff>260</falloff>
@@ -877,7 +1031,12 @@
    <heatup>25</heatup>
    <track>2</track>
    <swivel>5</swivel>
-   <damage type="energy" penetrate="18">12</damage>
+   <damage>
+    <type>normal</type>
+    <penetrate>18</penetrate>
+    <physical>12</physical>
+    <disable>1</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Plasma Blaster MK3">
@@ -896,7 +1055,7 @@
    <sound>plasma</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>PlaS2</spfx_armour>
-   <delay>675</delay>
+   <delay>0.675</delay>
    <speed>450</speed>
    <range>700</range>
    <falloff>310</falloff>
@@ -905,7 +1064,12 @@
    <heatup>30</heatup>
    <track>2</track>
    <swivel>6</swivel>
-   <damage type="energy" penetrate="25">16</damage>
+   <damage>
+    <type>normal</type>
+    <penetrate>23</penetrate>
+    <physical>16</physical>
+    <disable>1</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Plasma Turret MK1">
@@ -924,14 +1088,19 @@
    <sound>plasma</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>PlaS</spfx_armour>
-   <delay>450</delay>
+   <delay>0.45</delay>
    <speed>450</speed>
    <range>700</range>
    <falloff>310</falloff>
    <energy>9.5</energy>
    <heatup>25</heatup>
    <track>1.8</track>
-   <damage type="energy" penetrate="12">9</damage>
+   <damage>
+    <type>normal</type>
+    <penetrate>12</penetrate>
+    <physical>9</physical>
+    <disable>1</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Plasma Turret MK2">
@@ -950,14 +1119,19 @@
    <sound>plasma</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>PlaS2</spfx_armour>
-   <delay>475</delay>
+   <delay>0.475</delay>
    <speed>450</speed>
    <range>900</range>
    <falloff>510</falloff>
    <energy>13.5</energy>
    <heatup>30</heatup>
    <track>1.6</track>
-   <damage type="energy" penetrate="27">14</damage>
+   <damage>
+    <type>normal</type>
+    <penetrate>18</penetrate>
+    <physical>14</physical>
+    <disable>1</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="BioPlasma Organ Stage 1">
@@ -976,7 +1150,7 @@
    <sound>plasma</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>PlaS2</spfx_armour>
-   <delay>750</delay>
+   <delay>0.75</delay>
    <speed>550</speed>
    <range>1125</range>
    <falloff>225</falloff>
@@ -985,7 +1159,12 @@
    <heatup>40</heatup>
    <track>2</track>
    <swivel>10</swivel>
-   <damage type="energy" penetrate="30">25</damage>
+   <damage>
+    <type>normal</type>
+    <penetrate>30</penetrate>
+    <physical>25</physical>
+    <disable>2</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="BioPlasma Organ Stage 2">
@@ -1004,7 +1183,7 @@
    <sound>plasma</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>PlaS2</spfx_armour>
-   <delay>750</delay>
+   <delay>0.75</delay>
    <speed>550</speed>
    <range>1525</range>
    <falloff>900</falloff>
@@ -1013,7 +1192,12 @@
    <heatup>50</heatup>
    <track>2</track>
    <swivel>13</swivel>
-   <damage type="energy" penetrate="40">38</damage>
+   <damage>
+    <type>normal</type>
+    <penetrate>35</penetrate>
+    <physical>38</physical>
+    <disable>2</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Plasma Cluster Cannon MK1">
@@ -1032,7 +1216,7 @@
    <sound>plasma</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>PlaS2</spfx_armour>
-   <delay>875</delay>
+   <delay>0.875</delay>
    <speed>650</speed>
    <range>1025</range>
    <falloff>225</falloff>
@@ -1041,7 +1225,12 @@
    <heatup>40</heatup>
    <track>1.5</track>
    <swivel>11</swivel>
-   <damage type="energy" penetrate="25">30</damage>
+   <damage>
+    <type>normal</type>
+    <penetrate>25</penetrate>
+    <physical>50</physical>
+    <disable>2</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Plasma Cluster Cannon MK2">
@@ -1060,7 +1249,7 @@
    <sound>plasma</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>PlaS2</spfx_armour>
-   <delay>1000</delay>
+   <delay>1</delay>
    <speed>650</speed>
    <range>1325</range>
    <falloff>225</falloff>
@@ -1069,7 +1258,12 @@
    <heatup>45</heatup>
    <track>1.5</track>
    <swivel>14</swivel>
-   <damage type="energy" penetrate="35">39</damage>
+   <damage>
+    <type>normal</type>
+    <penetrate>35</penetrate>
+    <physical>39</physical>
+    <disable>2</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Plasma Cluster Cannon MK3">
@@ -1088,7 +1282,7 @@
    <sound>plasma</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>PlaS2</spfx_armour>
-   <delay>1100</delay>
+   <delay>1.1</delay>
    <speed>650</speed>
    <range>1700</range>
    <falloff>1300</falloff>
@@ -1097,7 +1291,12 @@
    <energy>45</energy>
    <track>1.2</track>
    <swivel>16</swivel>
-   <damage type="energy" penetrate="42">46</damage>
+   <damage>
+    <type>normal</type>
+    <penetrate>42</penetrate>
+    <physical>46</physical>
+    <disable>2</disable>
+   </damage>
   </specific>
  </outfit>
  <!-- TODO plasma lance -->
@@ -1119,12 +1318,17 @@
   </general>
   <specific type="beam" secondary="1">
    <cpu>15</cpu>
-   <delay>6000</delay>
+   <delay>6</delay>
    <duration>3</duration>
    <range>300</range>
    <energy>65</energy>
    <heatup>60</heatup>
-   <damage type="energy" penetrate="50">50</damage>
+   <damage>
+    <type>normal</type>
+    <penetrate>50</penetrate>
+    <physical>50</physical>
+    <disable>0</disable>
+   </damage>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
    <gfx>beam_orion</gfx>
@@ -1149,13 +1353,18 @@
   </general>
   <specific type="turret beam" secondary="1">
    <cpu>80</cpu>
-   <delay>10000</delay>
+   <delay>10</delay>
    <duration>5</duration>
    <range>400</range>
    <turn>35</turn>
    <energy>200</energy>
    <heatup>60</heatup>
-   <damage type="energy" penetrate="90">150</damage>
+   <damage>
+    <type>normal</type>
+    <penetrate>90</penetrate>
+    <physical>150</physical>
+    <disable>0</disable>
+   </damage>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
    <gfx>beam_ragnarok</gfx>
@@ -1182,7 +1391,7 @@
    <sound>neutron</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>900</delay>
+   <delay>0.9</delay>
    <speed>650</speed>
    <range>425</range>
    <falloff>250</falloff>
@@ -1191,7 +1400,12 @@
    <heatup>40</heatup>
    <track>3</track>
    <swivel>2.5</swivel>
-   <damage type="energy" penetrate="22">20</damage>
+   <damage>
+    <type>normal</type>
+    <penetrate>22</penetrate>
+    <physical>20</physical>
+    <disable>1</disable>
+   </damage>
   </specific>
  </outfit>
 
@@ -1208,9 +1422,9 @@
   <specific type="launcher" secondary="1">
    <cpu>4</cpu>
    <ammo>Fury Missile</ammo>
-   <delay>2500</delay>
+   <delay>4</delay>
    <amount>20</amount>
-   <lockon>6</lockon>
+   <lockon>9</lockon>
    <arc>6</arc>
    <ew_target>1.5</ew_target>
   </specific>
@@ -1226,9 +1440,9 @@
   <specific type="launcher" secondary="1">
    <cpu>6</cpu>
    <ammo>Fury Missile</ammo>
-   <delay>2500</delay>
+   <delay>4</delay>
    <amount>20</amount>
-   <lockon>4</lockon>
+   <lockon>7</lockon>
    <arc>8</arc>
    <ew_target>1.5</ew_target>
   </specific>
@@ -1244,9 +1458,9 @@
   <specific type="turret launcher" secondary="1">
    <cpu>9</cpu>
    <ammo>Fury Missile</ammo>
-   <delay>2500</delay>
+   <delay>4</delay>
    <amount>30</amount>
-   <lockon>5</lockon>
+   <lockon>8</lockon>
    <ew_target>1.5</ew_target>
   </specific>
  </outfit>
@@ -1263,11 +1477,17 @@
    <sound_hit>medexp1</sound_hit>
    <spfx_shield>ExpM</spfx_shield>
    <spfx_armour>ExpM</spfx_armour>
-   <duration blowup="armour">5</duration>
-   <thrust>700</thrust>
-   <turn>100</turn>
-   <speed>1200</speed>
-   <damage type="kinetic" penetrate="5">40</damage>
+   <duration blowup="armour">4</duration>
+   <thrust>0</thrust>
+   <turn>45</turn>
+   <speed>700</speed>
+   <resist>5</resist>
+   <damage>
+    <type>impact</type>
+    <penetrate>5</penetrate>
+    <physical>40</physical>
+    <disable>1</disable>
+   </damage>
    <ai>smart</ai>
   </specific>
  </outfit>
@@ -1283,9 +1503,9 @@
   <specific type="launcher" secondary="1">
    <cpu>5</cpu>
    <ammo>Headhunter Missile</ammo>
-   <delay>3000</delay>
+   <delay>5</delay>
    <amount>15</amount>
-   <lockon>8</lockon>
+   <lockon>12</lockon>
    <arc>6</arc>
    <ew_target>1</ew_target>
   </specific>
@@ -1302,9 +1522,9 @@
   <specific type="launcher" secondary="1">
    <cpu>8</cpu>
    <ammo>Headhunter Missile</ammo>
-   <delay>3000</delay>
+   <delay>5</delay>
    <amount>15</amount>
-   <lockon>5</lockon>
+   <lockon>9</lockon>
    <arc>8</arc>
    <ew_target>1</ew_target>
   </specific>
@@ -1320,9 +1540,9 @@
   <specific type="turret launcher" secondary="1">
    <cpu>14</cpu>
    <ammo>Headhunter Missile</ammo>
-   <delay>3000</delay>
+   <delay>5</delay>
    <amount>20</amount>
-   <lockon>6</lockon>
+   <lockon>10</lockon>
    <ew_target>1</ew_target>
   </specific>
  </outfit>
@@ -1340,11 +1560,17 @@
    <sound_hit>medexp0</sound_hit>
    <spfx_shield>ExpM</spfx_shield>
    <spfx_armour>ExpM</spfx_armour>
-   <duration blowup="armour">7</duration>
-   <thrust>550</thrust>
-   <turn>70</turn>
-   <speed>1000</speed>
-   <damage type="kinetic" penetrate="10">80</damage>
+   <duration blowup="armour">5</duration>
+   <thrust>0</thrust>
+   <turn>35</turn>
+   <speed>550</speed>
+   <resist>10</resist>
+   <damage>
+    <type>impact</type>
+    <penetrate>10</penetrate>
+    <physical>80</physical>
+    <disable>1</disable>
+   </damage>
    <ai>smart</ai>
   </specific>
  </outfit>
@@ -1360,9 +1586,9 @@
   <specific type="launcher" secondary="1">
    <cpu>6</cpu>
    <ammo>Vengeance Missile</ammo>
-   <delay>3500</delay>
+   <delay>6</delay>
    <amount>10</amount>
-   <lockon>11</lockon>
+   <lockon>17</lockon>
    <arc>6</arc>
    <ew_target>0.75</ew_target>
   </specific>
@@ -1379,9 +1605,9 @@
   <specific type="launcher" secondary="1">
    <cpu>10</cpu>
    <ammo>Vengeance Missile</ammo>
-   <delay>3500</delay>
+   <delay>6</delay>
    <amount>10</amount>
-   <lockon>7</lockon>
+   <lockon>12</lockon>
    <arc>8</arc>
    <ew_target>0.75</ew_target>
   </specific>
@@ -1397,9 +1623,9 @@
   <specific type="turret launcher" secondary="1">
    <cpu>14</cpu>
    <ammo>Headhunter Missile</ammo>
-   <delay>3500</delay>
+   <delay>6</delay>
    <amount>15</amount>
-   <lockon>8</lockon>
+   <lockon>14</lockon>
    <ew_target>0.75</ew_target>
   </specific>
  </outfit>
@@ -1407,7 +1633,7 @@
   <general>
    <license>Medium Weapon License</license>
    <mass>1</mass>
-   <price>800</price>
+   <price>1500</price>
    <description>Vengeance class interceptor missiles are the heaviest interceptor missiles currently in production. Almost half the missile hull is used for payload, which decreases its ability to catch fast targets. Best used against corvette class targets.</description>
    <gfx_store>headhunter</gfx_store>
   </general>
@@ -1417,11 +1643,17 @@
    <sound_hit>medexp0</sound_hit>
    <spfx_shield>ExpM</spfx_shield>
    <spfx_armour>ExpM</spfx_armour>
-   <duration blowup="armour">9</duration>
-   <thrust>450</thrust>
-   <turn>45</turn>
-   <speed>700</speed>
-   <damage type="kinetic" penetrate="20">150</damage>
+   <duration blowup="armour">7</duration>
+   <thrust>0</thrust>
+   <turn>30</turn>
+   <speed>400</speed>
+   <resist>20</resist>
+   <damage>
+    <type>impact</type>
+    <penetrate>20</penetrate>
+    <physical>150</physical>
+    <disable>1</disable>
+   </damage>
    <ai>smart</ai>
   </specific>
  </outfit>
@@ -1437,7 +1669,7 @@
   <specific type="launcher" secondary="1">
    <cpu>3</cpu>
    <ammo>Mace Rocket</ammo>
-   <delay>300</delay>
+   <delay>0.36</delay>
    <amount>50</amount>
   </specific>
  </outfit>
@@ -1453,7 +1685,7 @@
   <specific type="launcher" secondary="1">
    <cpu>5</cpu>
    <ammo>Mace Rocket</ammo>
-   <delay>250</delay>
+   <delay>0.3</delay>
    <amount>50</amount>
   </specific>
  </outfit>
@@ -1471,10 +1703,15 @@
    <sound_hit>lrgexp0</sound_hit>
    <spfx_shield>ExpM</spfx_shield>
    <spfx_armour>ExpM</spfx_armour>
-   <duration blowup="armour">1.3</duration>
-   <thrust>1500</thrust>
-   <speed>1500</speed>
-   <damage type="kinetic" penetrate="0">15</damage>
+   <duration blowup="armour">1.5</duration>
+   <thrust>1200</thrust>
+   <speed>1800</speed>
+   <damage>
+    <type>impact</type>
+    <penetrate>0</penetrate>
+    <physical>15</physical>
+    <disable>0</disable>
+   </damage>
    <ai>dumb</ai>
   </specific>
  </outfit>
@@ -1490,7 +1727,7 @@
   <specific type="launcher" secondary="1">
    <cpu>5</cpu>
    <ammo>Banshee Rocket</ammo>
-   <delay>1000</delay>
+   <delay>1</delay>
    <amount>20</amount>
   </specific>
  </outfit>
@@ -1506,7 +1743,7 @@
   <specific type="launcher" secondary="1">
    <cpu>8</cpu>
    <ammo>Banshee Rocket</ammo>
-   <delay>700</delay>
+   <delay>0.7</delay>
    <amount>20</amount>
   </specific>
  </outfit>
@@ -1524,10 +1761,15 @@
    <sound_hit>bansheeexp</sound_hit>
    <spfx_shield>EmpS</spfx_shield>
    <spfx_armour>EmpS</spfx_armour>
-   <duration blowup="shield">5</duration>
+   <duration blowup="shield">7</duration>
    <thrust>0</thrust>
    <speed>200</speed>
-   <damage type="emp" penetrate="70">110</damage>
+   <damage>
+    <type>impact</type>
+    <penetrate>70</penetrate>
+    <physical>110</physical>
+    <disable>3</disable>
+   </damage>
    <ai>dumb</ai>
   </specific>
  </outfit>
@@ -1543,9 +1785,9 @@
   </general>
   <specific type="launcher" secondary="1">
    <cpu>13</cpu>
-   <ammo>Caesar IV Missile</ammo>
-   <delay>7000</delay>
-   <lockon>12</lockon>
+   <ammo>Caesar IV Torpedo</ammo>
+   <delay>10</delay>
+   <lockon>20</lockon>
    <arc>6</arc>
    <ew_target>0.4</ew_target>
    <amount>6</amount>
@@ -1563,13 +1805,19 @@
    <gfx>caesar</gfx>
    <sound>mace</sound>
    <sound_hit>lrgexp0</sound_hit>
-   <spfx_shield>ExpL</spfx_shield>
-   <spfx_armour>ExpL</spfx_armour>
-   <duration blowup="armour">12</duration>
-   <thrust>125</thrust>
+   <spfx_shield>ExpM2</spfx_shield>
+   <spfx_armour>ExpM2</spfx_armour>
+   <duration blowup="armour">33</duration>
+   <thrust>0</thrust>
    <turn>20</turn>
    <speed>170</speed>
-   <damage type="kinetic" penetrate="50">400</damage>
+   <resist>100</resist>
+   <damage>
+    <type>impact</type>
+    <penetrate>50</penetrate>
+    <physical>400</physical>
+    <disable>5</disable>
+   </damage>
    <ai>smart</ai>
   </specific>
  </outfit>
@@ -1585,9 +1833,9 @@
   </general>
   <specific type="launcher" secondary="1">
    <cpu>20</cpu>
-   <ammo>Imperator Missile</ammo>
-   <delay>8000</delay>
-   <lockon>13</lockon>
+   <ammo>Imperator Torpedo</ammo>
+   <delay>11</delay>
+   <lockon>24</lockon>
    <arc>6</arc>
    <ew_target>0.3</ew_target>
    <amount>5</amount>
@@ -1605,13 +1853,19 @@
    <gfx>caesar</gfx>
    <sound>mace</sound>
    <sound_hit>lrgexp0</sound_hit>
-   <spfx_shield>ExpL</spfx_shield>
-   <spfx_armour>ExpL</spfx_armour>
-   <duration blowup="armour">12</duration>
-   <thrust>125</thrust>
-   <turn>20</turn>
-   <speed>70</speed>
-   <damage type="kinetic" penetrate="90">800</damage>
+   <spfx_shield>ExpL2</spfx_shield>
+   <spfx_armour>ExpL2</spfx_armour>
+   <duration blowup="armour">60</duration>
+   <thrust>0</thrust>
+   <turn>22</turn>
+   <speed>75</speed>
+   <resist>100</resist>
+   <damage>
+    <type>impact</type>
+    <penetrate>90</penetrate>
+    <physical>800</physical>
+    <disable>10</disable>
+   </damage>
    <ai>smart</ai>
   </specific>
  </outfit>
@@ -1626,7 +1880,7 @@
   <specific type="turret launcher" secondary="1">
    <cpu>8</cpu>
    <ammo>EMP Grenade</ammo>
-   <delay>2000</delay>
+   <delay>2</delay>
    <amount>18</amount>
   </specific>
  </outfit>
@@ -1637,7 +1891,7 @@
    <gfx_store>empgrenade</gfx_store>
    <description>This is a grenade that can be launched to unleash an electromagnetic pulse, rapidly disabling the electronics of enemy ships. Useful for taking ships alive, as the EM pulses rarely destroy the ship; leaving it floating disabled in space.</description>
   </general>
-  <specific type="turret ammo">
+  <specific type="ammo">
    <gfx spin="0.3">empgrenade</gfx>
    <sound>grenadefire</sound>
    <sound_hit>empexplode</sound_hit>
@@ -1646,8 +1900,123 @@
    <duration blowup="shield">1.3</duration>
    <thrust>0</thrust>
    <speed>400</speed>
-   <damage type="emp" penetrate="50">50</damage>
+   <damage>
+    <type>emp</type>
+    <penetrate>50</penetrate>
+    <physical>8</physical>
+    <disable>40</disable>
+   </damage>
    <ai>dumb</ai>
+  </specific>
+ </outfit>
+ <outfit name="Unicorp Medusa Launcher">
+  <general>
+   <slot>weapon</slot>
+   <mass>8</mass>
+   <price>25000</price>
+   <description>This launcher fires Medusa class EMP cruise missiles. The magazine size is quite limited, but often a couple of well placed Medusas are enough to disable the target.</description>
+   <gfx_store>seekerlauncher</gfx_store>
+  </general>
+  <specific type="launcher" secondary="1">
+   <cpu>4</cpu>
+   <ammo>Medusa Missile</ammo>
+   <delay>4</delay>
+   <amount>6</amount>
+   <lockon>9</lockon>
+   <arc>6</arc>
+   <ew_target>0.75</ew_target>
+  </specific>
+ </outfit>
+ <outfit name="TeraCom Medusa Launcher">
+  <general>
+   <slot>weapon</slot>
+   <mass>9</mass>
+   <price>40000</price>
+   <description>TeraCom have built a highly efficient Medusa launcher, capable of locking on and firing faster than the standard specification, and holding a greater amount in the magazine as well.</description>
+   <gfx_store>seekerlauncher</gfx_store>
+  </general>
+  <specific type="launcher" secondary="1">
+   <cpu>6</cpu>
+   <ammo>Medusa Missile</ammo>
+   <delay>3.5</delay>
+   <amount>8</amount>
+   <lockon>7</lockon>
+   <arc>8</arc>
+   <ew_target>0.75</ew_target>
+  </specific>
+ </outfit>
+ <outfit name="Medusa Missile">
+  <general>
+   <mass>1</mass>
+   <price>1000</price>
+   <description>The Medusa class EMP cruise missile is a nonlethal weapon designed to knock out a ship's internal systems, rendering it harmless and ready for boarding. The warhead does only limited damage, so even lightly armoured targets can effectively be disabled with this weapon. However, the Medusa is not the most agile missile on the market.</description>
+   <gfx_store>seeker</gfx_store>
+  </general>
+  <specific type="ammo">
+   <gfx>seeker</gfx>
+   <sound>seeker</sound>
+   <sound_hit>medexp1</sound_hit>
+   <spfx_shield>EmpM</spfx_shield>
+   <spfx_armour>EmpM</spfx_armour>
+   <duration blowup="armour">5</duration>
+   <thrust>0</thrust>
+   <turn>50</turn>
+   <speed>500</speed>
+   <resist>15</resist>
+   <damage>
+    <type>emp</type>
+    <penetrate>15</penetrate>
+    <physical>20</physical>
+    <disable>100</disable>
+   </damage>
+   <ai>smart</ai>
+  </specific>
+ </outfit>
+ <outfit name="Enygma Systems Spearhead Launcher">
+  <general>
+   <slot>weapon</slot>
+   <license>Medium Weapon License</license>
+   <mass>15</mass>
+   <price>70000</price>
+   <description>This launcher fires Spearhead class shieldbreaker missiles. Its basic design is largely similar to that of most conventional missile launchers, save for the unique mechanism that charges and primes the missile warheads.</description>
+   <gfx_store>headhunterlauncher</gfx_store>
+  </general>
+  <specific type="launcher" secondary="1">
+   <cpu>7</cpu>
+   <ammo>Spearhead Missile</ammo>
+   <delay>4</delay>
+   <amount>8</amount>
+   <lockon>12</lockon>
+   <arc>6</arc>
+   <ew_target>0.70</ew_target>
+  </specific>
+ </outfit>
+ <outfit name="Spearhead Missile">
+  <general>
+   <license>Medium Weapon License</license>
+   <mass>1</mass>
+   <price>1500</price>
+   <description>The Spearhead class shieldbreaker missile is one of Enygma Systems' more specialised pieces of hardware. Its sole function is to do massive damage to shielding. It uses a special energy discharge warhead that is quite effective at disrupting shields, but has little effect on physical objects. The Spearhead's limited agility make it primarily suited to fighting corvette class ships or heavier.</description>
+   <gfx_store>headhunter</gfx_store>
+  </general>
+  <specific type="ammo">
+   <gfx>headhunter</gfx>
+   <sound>missile</sound>
+   <sound_hit>medexp0</sound_hit>
+   <spfx_shield>ExpM</spfx_shield>
+   <spfx_armour>ExpM</spfx_armour>
+   <duration blowup="armour">7</duration>
+   <thrust>0</thrust>
+   <turn>35</turn>
+   <speed>600</speed>
+   <resist>12</resist>
+   <damage>
+    <type>shieldbreaker</type>
+    <penetrate>20</penetrate>
+    <physical>300</physical>
+    <disable>10</disable>
+   </damage>
+   <ai>smart</ai>
   </specific>
  </outfit>
 
@@ -1718,7 +2087,7 @@
    <description>Adding a complementary reactor to your ship is a great way to get that extra energy boost you need. This does not replace the existing reactor but works alongside it and hooks up directly to the energy flux.</description>
   </general>
   <specific type="modification">
-   <cpu>-5</cpu>
+   <cpu>5</cpu>
    <energy>20</energy>
    <energy_regen>4.7</energy_regen>
   </specific>
@@ -1733,7 +2102,7 @@
    <description>The class II reactor uses a newer fusion technology than the class I, permitting it to have greater energy density. The result is a mid-sized reactor that is best used on ships with moderate energy demands.</description>
   </general>
   <specific type="modification">
-   <cpu>-10</cpu>
+   <cpu>10</cpu>
    <energy>60</energy>
    <energy_regen>10.5</energy_regen>
   </specific>
@@ -1748,7 +2117,7 @@
    <description>The immense class III reactor provides enough power for nearly anything. The technology used in this reactor is particularly groundbreaking, with the best energy density of the three reactor classes. The huge size of the class III results in it only fitting comfortably on large vessels, though its energy output would be excessive for anything less.</description>
   </general>
   <specific type="modification">
-   <cpu>-20</cpu>
+   <cpu>20</cpu>
    <energy>180</energy>
    <energy_regen>23.7</energy_regen>
   </specific>
@@ -1816,7 +2185,7 @@
    <gfx_store>shield</gfx_store>
   </general>
   <specific type="modification">
-   <cpu>-5</cpu>
+   <cpu>5</cpu>
    <shield>15</shield>
    <shield_regen>0.5</shield_regen>
    <energy_regen>-0.85</energy_regen>
@@ -1907,7 +2276,7 @@
    <gfx_store>stabilizer</gfx_store>
   </general>
   <specific type="modification">
-   <cpu>-2</cpu>
+   <cpu>2</cpu>
    <speed>3</speed>
    <speed_rel>15</speed_rel>
    <turn_rel>3</turn_rel>
@@ -1937,15 +2306,18 @@
    <price>20000</price>
    <description>Being able to run from your enemies has saved many a pilot, and a generic afterburner will allow you that luxury. Though it may not be as powerful as higher-end alternatives, it makes up for that difference by entering at a much lower price point.</description>
    <gfx_store>afterburner</gfx_store>
+   <limit>afterburner</limit>
   </general>
   <specific type="afterburner">
    <cpu>2</cpu>
+   <duration>5</duration>
+   <cooldown>8</cooldown>
    <rumble>0.5</rumble>
    <sound>afterburner</sound>
-   <thrust>100</thrust>
-   <speed>50</speed>
-   <energy>60</energy>
-   <mass_limit>250</mass_limit>
+   <thrust>180</thrust>
+   <speed>30</speed>
+   <energy>40</energy>
+   <mass_limit>160</mass_limit>
   </specific>
  </outfit>
  <outfit name="Hellburner">
@@ -1955,15 +2327,18 @@
    <price>95000</price>
    <description>The Hellburner is one of the best afterburners on the market. Through proprietary pressurization ducts, the Hellburner is able to generate far more thrust than generic alternatives, despite using only slightly more energy. A great asset to any pilot who seeks manoeuvrability and speed.</description>
    <gfx_store>afterburner2</gfx_store>
+   <limit>afterburner</limit>
   </general>
   <specific type="afterburner">
    <cpu>6</cpu>
+   <duration>5</duration>
+   <cooldown>6</cooldown>
    <rumble>0.9</rumble>
    <sound>afterburner</sound>
-   <thrust>185</thrust>
-   <speed>85</speed>
+   <thrust>300</thrust>
+   <speed>45</speed>
    <energy>65</energy>
-   <mass_limit>400</mass_limit>
+   <mass_limit>250</mass_limit>
   </specific>
  </outfit>
   <outfit name="Auxiliary Processing Unit I">
@@ -1976,7 +2351,7 @@
    <description>The Advanced Nanosystems APU I is an obsolete design intended for light vessels. It is relatively light weight, though it's less power efficient than its successors.</description>
   </general>
   <specific type="modification">
-   <cpu>10</cpu>
+   <cpu>-10</cpu>
    <energy_regen>-3.35</energy_regen>
   </specific>
  </outfit>
@@ -1990,7 +2365,7 @@
    <description>The Advanced Nanosystems APU II is a mid-range design suitable for medium-sized vessels as well as lightly-equipped capital ships. Its substantial mass and power consumption make it unsuitable for light vessels.</description>
   </general>
   <specific type="modification">
-   <cpu>20</cpu>
+   <cpu>-20</cpu>
    <energy_regen>-6.25</energy_regen>
   </specific>
  </outfit>
@@ -2004,7 +2379,7 @@
    <description>The Advanced Nanosystems APU III is a high-end general-purpose processor suitable for capital ships. Its high power-efficiency is achieved by using cutting-edge superconducting materials.</description>
   </general>
   <specific type="modification">
-   <cpu>40</cpu>
+   <cpu>-40</cpu>
    <energy_regen>-12</energy_regen>
   </specific>
  </outfit>
@@ -2071,8 +2446,8 @@
    <gfx_store>accuracy_turret</gfx_store>
   </general>
   <specific type="modification">
-   <heat_turret>-25</heat_turret>
-   <firerate_turret>-10</firerate_turret>
+   <tur_heat>-15</tur_heat>
+   <tur_firerate>-10</tur_firerate>
   </specific>
  </outfit>
  <outfit name="Forward Shock Absorbers">
@@ -2085,7 +2460,7 @@
    <gfx_store>accuracy_forward</gfx_store>
   </general>
   <specific type="modification">
-   <heat_forward>-15</heat_forward>
+   <fwd_heat>-15</fwd_heat>
   </specific>
  </outfit>
  <outfit name="Power Regulation Override">
@@ -2098,9 +2473,9 @@
    <gfx_store>damage_forward</gfx_store>
   </general>
   <specific type="modification">
-   <damage_forward>15</damage_forward>
-   <heat_forward>5</heat_forward>
-   <energy_forward>5</energy_forward>
+   <fwd_damage>15</fwd_damage>
+   <fwd_heat>5</fwd_heat>
+   <fwd_energy>5</fwd_energy>
   </specific>
  </outfit>
  <outfit name="Improved Power Regulator">
@@ -2113,8 +2488,8 @@
    <description>Improved power regulation allows your turrets to waste less power when firing, though feeding turrets the bare minimum wattage results in a slightly decreased rate of fire.</description>
   </general>
   <specific type="modification">
-   <firerate_turret>-5</firerate_turret>
-   <energy_turret>-10</energy_turret>
+   <tur_firerate>-5</tur_firerate>
+   <tur_energy>-10</tur_energy>
   </specific>
  </outfit>
  <outfit name="Improved Refrigeration Cycle">
@@ -2127,20 +2502,316 @@
    <gfx_store>firerate_turret</gfx_store>
   </general>
   <specific type="modification">
-   <firerate_turret>15</firerate_turret>
-   <heat_turret>5</heat_turret>
-   <damage_turret>-5</damage_turret>
+   <tur_firerate>15</tur_firerate>
+   <tur_heat>5</tur_heat>
+   <tur_damage>-5</tur_damage>
   </specific>
  </outfit>
- <outfit name="Star Map">
+ <outfit name="Map: Nebula Edge">
   <general>
    <mass>0</mass>
-   <price>5000</price>
-   <description>A star map will give you details about all systems up to 2 jumps away. It's a great risk-free way to discover parts of the universe.</description>
+   <price>25000</price>
+   <description>This map contains the route leading from Dvaered/Imperial space to the edge of the Nebula. It also lists the two Imperial stations along the route.</description>
    <gfx_store>map</gfx_store>
   </general>
   <specific type="map">
-   <radius>2</radius>
+   <short_desc>A Star Map.</short_desc>
+   <sys name="Raelid">
+    <asset>Marius Station</asset>
+    <jump>Arcanis</jump>
+   </sys>
+   <sys name="Arcanis">
+    <jump>Raelid</jump>
+    <jump>Zylex</jump>
+   </sys>
+   <sys name="Zylex">
+    <jump>Arcanis</jump>
+    <jump>Doeston</jump>
+   </sys>
+   <sys name="Doeston">
+    <asset>Cerberus</asset>
+    <jump>Zylex</jump>
+   </sys>
+  </specific>
+ </outfit>
+ <outfit name="Map: Collective Space">
+  <general>
+   <mass>0</mass>
+   <price>25000</price>
+   <description>This map charts the known jumps that connect the systems occupied by the Collective. Sadly, the Empire has no accurate intel about Collective assets in the area.</description>
+   <gfx_store>map</gfx_store>
+  </general>
+  <specific type="map">
+   <short_desc>A Star Map.</short_desc>
+   <sys name="Hades">
+    <jump>C-43</jump>
+    <jump>C-59</jump>
+    <jump>Fortitude</jump>
+   </sys>
+   <sys name="C-43">
+    <jump>Hades</jump>
+    <jump>C-14</jump>
+   </sys>
+   <sys name="C-14">
+    <jump>C-43</jump>
+   </sys>
+   <sys name="C-59">
+    <jump>Hades</jump>
+    <jump>C-43</jump>
+   </sys>
+   <sys name="C-28">
+    <jump>C-59</jump>
+    <jump>C-00</jump>
+   </sys>
+  </specific>
+ </outfit>
+ <outfit name="Map: Dvaered-Soromid trade route">
+  <general>
+   <mass>0</mass>
+   <price>30000</price>
+   <description>This map contains the main route between Dvaered and Soromid controlled space.</description>
+   <gfx_store>map</gfx_store>
+  </general>
+  <specific type="map">
+   <short_desc>A Star Map.</short_desc>
+   <sys name="Zacron">
+    <jump>Raelid</jump>
+   </sys>
+   <sys name="Raelid">
+    <jump>Zacron</jump>
+    <jump>Surano</jump>
+   </sys>
+   <sys name="Surano">
+    <jump>Raelid</jump>
+    <jump>Thorndyke</jump>
+   </sys>
+   <sys name="Thorndyke">
+    <jump>Surano</jump>
+    <jump>Pilatis</jump>
+   </sys>
+   <sys name="Pilatis">
+    <jump>Thorndyke</jump>
+    <jump>Defa</jump>
+   </sys>
+   <sys name="Defa">
+    <jump>Pilatis</jump>
+    <jump>Oberon</jump>
+   </sys>
+   <sys name="Oberon">
+    <asset>Soromid Customs Central</asset>
+    <jump>Defa</jump>
+   </sys>
+  </specific>
+ </outfit>
+ <outfit name="Map: Sirian border systems">
+  <general>
+   <mass>0</mass>
+   <price>15000</price>
+   <description>This map contains the systems that lead to Sirius controlled space.</description>
+   <gfx_store>map</gfx_store>
+  </general>
+  <specific type="map">
+   <short_desc>A Star Map.</short_desc>
+   <sys name="Nougat">
+    <jump>Esker</jump>
+   </sys>
+   <sys name="Esker">
+    <jump>Nougat</jump>
+    <asset>Fyruse Station</asset>
+    <asset>Esker I</asset>
+   </sys>
+   <sys name="Fidelis">
+    <jump>Eye of Night</jump>
+   </sys>
+   <sys name="Eye of Night">
+    <jump>Fidelis</jump>
+    <asset>Inios Station</asset>
+    <asset>Eye of Night III</asset>
+   </sys>
+  </specific>
+ </outfit>
+ <outfit name="Map: The Frontier">
+  <general>
+   <mass>0</mass>
+   <price>50000</price>
+   <description>This map contains the location of all eleven Frontier worlds, plus the Frontier Council.</description>
+   <gfx_store>map</gfx_store>
+  </general>
+  <specific type="map">
+   <short_desc>A Star Map.</short_desc>
+   <sys name="Theras">
+    <asset>Cetrat</asset>
+   </sys>
+   <sys name="Gilligan's Light">
+    <asset>Dawn</asset>
+    <asset>The Frontier Council</asset>
+   </sys>
+   <sys name="Haleb">
+    <asset>Jorlan</asset>
+   </sys>
+   <sys name="Norpin">
+    <asset>New Dortmund</asset>
+   </sys>
+   <sys name="Triap">
+    <asset>Khelim</asset>
+   </sys>
+   <sys name="Brimstone">
+    <asset>Nonuri</asset>
+   </sys>
+   <sys name="Shickhaw">
+    <asset>Avoss</asset>
+   </sys>
+   <sys name="Andee">
+    <asset>Varaati</asset>
+   </sys>
+   <sys name="Karman">
+    <asset>Atalanta</asset>
+   </sys>
+   <sys name="Gyrios">
+    <asset>Lapra</asset>
+    <asset>Jaegnhild</asset>
+   </sys>
+  </specific>
+ </outfit>
+ <outfit name="Map: Sol">
+  <general>
+   <mass>0</mass>
+   <price>100000</price>
+   <description>This map contains the location of the Sol system. Nothing is known about this system other than its location.</description>
+   <gfx_store>map</gfx_store>
+  </general>
+  <specific type="map">
+   <short_desc>A Star Map.</short_desc>
+   <sys name="Sol">
+   </sys>
+  </specific>
+ </outfit>
+ <outfit name="Map: Dvaered Core">
+  <general>
+   <mass>0</mass>
+   <price>25000</price>
+   <description>This map lists the locations of all Dvaered worlds and stations close to the Dvaered capital.</description>
+   <gfx_store>map</gfx_store>
+  </general>
+  <specific type="map">
+   <short_desc>A Star Map.</short_desc>
+   <sys name="Dvaer">
+    <jump>Beeklo</jump>
+    <jump>Radix</jump>
+    <jump>Urbanus</jump>
+    <jump>Gremlin</jump>
+    <asset>Dvaer Prime</asset>
+    <asset>Dvaered High Command</asset>
+    <asset>Dvaer II</asset>
+    <asset>Eist Shipyard</asset>
+    <asset>Dvaer III</asset>
+    <asset>Dvaer IIIa</asset>
+    <asset>Dvaer IV</asset>
+    <asset>Laarss</asset>
+   </sys>
+   <sys name="Gremlin">
+    <jump>Dvaer</jump>
+   </sys>
+   <sys name="Urbanus">
+    <jump>Dvaer</jump>
+    <asset>Urbanus Crops</asset>
+    <asset>Onyx Shipyard</asset>
+    <asset>Trincea</asset>
+   </sys>
+   <sys name="Radix">
+    <jump>Dvaer</jump>
+    <asset>Myuirr Station</asset>
+    <asset>Stutee</asset>
+   </sys>
+   <sys name="Beeklo">
+    <jump>Dvaer</jump>
+    <asset>Inios Station</asset>
+    <asset>Totoran</asset>
+    <asset>Icarus</asset>
+    <asset>Adham</asset>
+    <asset>Diabolos</asset>
+   </sys>
+  </specific>
+ </outfit>
+ <outfit name="Map: Empire Core">
+  <general>
+   <mass>0</mass>
+   <price>25000</price>
+   <description>This map lists the locations of all Imperial worlds and stations close to the Imperial capital.</description>
+   <gfx_store>map</gfx_store>
+  </general>
+  <specific type="map">
+   <short_desc>A Star Map.</short_desc>
+   <sys name="Gamma Polaris">
+    <jump>Qex</jump>
+    <jump>Koralis</jump>
+    <jump>Sirou</jump>
+    <jump>Shakar</jump>
+    <jump>Apez</jump>
+    <asset>Polaris Prime</asset>
+    <asset>Emperor's Fist</asset>
+    <asset>Vuere</asset>
+    <asset>New Pluto</asset>
+    <asset>New Deimos</asset>
+    <asset>New Phobos</asset>
+    <asset>New Mars</asset>
+    <asset>Halir</asset>
+   </sys>
+   <sys name="Qex">
+    <jump>Gamma Polaris</jump>
+    <asset>Semper</asset>
+    <asset>Reidd</asset>
+    <asset>Ammu</asset>
+    <asset>Qex II</asset>
+    <asset>Qex IV</asset>
+    <asset>Qex V</asset>
+   </sys>
+   <sys name="Koralis">
+    <jump>Gamma Polaris</jump>
+    <asset>Luxsor</asset>
+    <asset>Paxsor</asset>
+    <asset>Fuzka</asset>
+    <asset>Koralis IV</asset>
+    <asset>Koralis VI</asset>
+    <asset>Aillis</asset>
+   </sys>
+   <sys name="Sirou">
+    <jump>Gamma Polaris</jump>
+   </sys>
+   <sys name="Shakar">
+    <jump>Gamma Polaris</jump>
+    <asset>Nova Shakar</asset>
+    <asset>Zembla Shakar</asset>
+    <asset>Shakar I</asset>
+    <asset>Shakar III</asset>
+   </sys>
+   <sys name="Apez">
+    <jump>Gamma Polaris</jump>
+    <asset>Apez V</asset>
+    <asset>Zeo</asset>
+    <asset>Dowue</asset>
+    <asset>Gem</asset>
+    <asset>Crylo</asset>
+    <asset>Apez II</asset>
+   </sys>
+  </specific>
+ </outfit>
+ <outfit name="Map: Pirate strongholds">
+  <general>
+   <mass>0</mass>
+   <price>100000</price>
+   <description>This map contains the location of the Pirate strongholds. Top secret!</description>
+   <gfx_store>map</gfx_store>
+  </general>
+  <specific type="map">
+   <short_desc>A Star Map.</short_desc>
+   <sys name="New Haven">
+    <asset>New Haven</asset>
+   </sys>
+   <sys name="Kretogg">
+    <asset>Vorca</asset>
+    <asset>Warden's End</asset>
+   </sys>
   </specific>
  </outfit>
  <outfit name="Ultra Map">
@@ -2151,7 +2822,8 @@
    <gfx_store>map</gfx_store>
   </general>
   <specific type="map">
-   <radius>999</radius>
+   <short_desc/>
+   <all/>
   </specific>
  </outfit>
  <outfit name="Unicorp Scrambler">
@@ -2164,8 +2836,8 @@
   </general>
   <specific type="modification">
    <cpu>1</cpu>
-   <energy>5</energy>
-   <ew_hide>7</ew_hide>
+   <energy>-10</energy>
+   <hide>1.5</hide>
   </specific>
  </outfit>
  <outfit name="Milspec Scrambler">
@@ -2178,8 +2850,8 @@
   </general>
   <specific type="modification">
    <cpu>3</cpu>
-   <energy>10</energy>
-   <ew_hide>11</ew_hide>
+   <energy>-15</energy>
+   <hide>2.5</hide>
   </specific>
  </outfit>
  <outfit name="Unicorp Jammer">
@@ -2189,12 +2861,13 @@
    <price>40000</price>
    <description>Unlike general purpose scrambler systems, jammers are heavy-duty pieces of hardware used for serious electronic warfare in space. A jammer works by actively interfering with nearby ships' sensor systems, rather than modulating the signature of the ship it's installed in. This is much more effective, but it also uses a lot more power. For this reason, jammer systems are inactive until needed, and must be activated manually.</description>
    <gfx_store>jammer0</gfx_store>
+   <limit>jammer</limit>
   </general>
   <specific type="jammer">
    <cpu>4</cpu>
-   <range>0</range>
-   <chance>0</chance>
-   <energy>15</energy>
+   <range>170</range>
+   <power>35</power>
+   <energy>-15</energy>
   </specific>
  </outfit>
  <outfit name="Milspec Jammer">
@@ -2204,12 +2877,13 @@
    <price>250000</price>
    <description>Does your work require you to venture into dangerous territory? Are you facing opposition your shields can't handle? The Milspec U-9 "Magus" jammer is what you need! Throw the bloodhounds off your scent with a press of a button. While your enemies are still trying to make sense out of the garble they're getting on their sensors, you will already have made your escape! Fly safe, fly Milspec.</description>
    <gfx_store>jammer1</gfx_store>
+   <limit>jammer</limit>
   </general>
   <specific type="jammer">
    <cpu>8</cpu>
-   <range>0</range>
-   <chance>0</chance>
-   <energy>30</energy>
+   <range>230</range>
+   <power>50</power>
+   <energy>-30</energy>
   </specific>
  </outfit>
  <outfit name="GUI - Brushed">
@@ -2221,6 +2895,17 @@
   </general>
   <specific type="gui">
    <gui>brushed</gui>
+  </specific>
+ </outfit>
+ <outfit name="GUI - Slimv2">
+  <general>
+   <mass>0</mass>
+   <price>75000</price>
+   <description>This is a new GUI which will become available to you by purchase. It has a brushed steel look.</description>
+   <gfx_store>brushedGUI</gfx_store>
+  </general>
+  <specific type="gui">
+   <gui>slimv2</gui>
   </specific>
  </outfit>
 <!-- Escort Outfits -->
@@ -2236,7 +2921,7 @@
   <specific type="fighter bay" secondary="1">
    <cpu>60</cpu>
    <ammo>Lancelot Fighter</ammo>
-   <delay>4000</delay>
+   <delay>4</delay>
    <amount>2</amount>
   </specific>
  </outfit>
@@ -2264,7 +2949,7 @@
   <specific type="fighter bay" secondary="1">
    <cpu>120</cpu>
    <ammo>Drone Fighter</ammo>
-   <delay>1000</delay>
+   <delay>1</delay>
    <amount>3</amount>
   </specific>
  </outfit>
@@ -2367,7 +3052,7 @@
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>550</delay>
+   <delay>0.55</delay>
    <speed>550</speed>
    <range>420</range>
    <falloff>250</falloff>
@@ -2375,7 +3060,12 @@
    <heatup>1500</heatup>
    <track>3</track>
    <swivel>3</swivel>
-   <damage type="energy" penetrate="0">0.1</damage>
+   <damage>
+    <type>normal</type>
+    <penetrate>0</penetrate>
+    <physical>0.1</physical>
+    <disable>0</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Base Ripper MK2">
@@ -2393,7 +3083,7 @@
    <sound>ripper</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>1260</delay>
+   <delay>1.26</delay>
    <speed>700</speed>
    <range>1900</range>
    <falloff>1500</falloff>
@@ -2401,7 +3091,12 @@
    <energy>1</energy>
    <heatup>10000</heatup>
    <track>2</track>
-   <damage type="energy" penetrate="50">22.5</damage>
+   <damage>
+    <type>normal</type>
+    <penetrate>50</penetrate>
+    <physical>22.5</physical>
+    <disable>1</disable>
+   </damage>
   </specific>
  </outfit>
  <outfit name="Cheater's Ragnarok Beam">
@@ -2414,12 +3109,17 @@
   </general>
   <specific type="beam">
    <cpu>1</cpu>
-   <delay>10000</delay>
+   <delay>10</delay>
    <duration>5</duration>
    <range>400</range>
    <turn>35</turn>
    <energy>20</energy>
-   <damage type="energy" penetrate="100">150</damage>
+   <damage>
+    <type>normal</type>
+    <penetrate>100</penetrate>
+    <physical>150</physical>
+    <disable>1</disable>
+   </damage>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
    <gfx>beam_ragnarok</gfx>
@@ -2442,14 +3142,32 @@
    <sound>laser</sound>
    <spfx_shield>ShiS</spfx_shield>
    <spfx_armour>ExpS</spfx_armour>
-   <delay>850</delay>
+   <delay>0.85</delay>
    <speed>600</speed>
    <range>550</range>
    <falloff>270</falloff>
    <gfx_end>laser1S</gfx_end>
    <energy>1</energy>
    <heatup>60</heatup>
-   <damage type="energy" penetrate="30">15</damage>
+   <damage>
+    <type>normal</type>
+    <penetrate>30</penetrate>
+    <physical>15</physical>
+    <disable>1</disable>
+   </damage>
+  </specific>
+ </outfit>
+ <outfit name="Shield Nullifier">
+  <general>
+   <typename>Shield Power Modifier</typename>
+   <slot>structure</slot>
+   <mass>1</mass>
+   <price>1</price>
+   <description>This outfit removes all shields from the ship. For tutorial purposes.</description>
+   <gfx_store>capacitor8</gfx_store>
+  </general>
+  <specific type="modification">
+   <shield_mod>-200</shield_mod>
   </specific>
  </outfit>
 </Outfits>
