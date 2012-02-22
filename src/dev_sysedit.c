@@ -477,7 +477,7 @@ static void sysedit_btnReset( unsigned int wid_unused, char *unused )
 
 
 /**
- * @brief Scales a system.
+ * @brief Interface for scaling a system from the system view.
  */
 static void sysedit_btnScale( unsigned int wid_unused, char *unused )
 {
