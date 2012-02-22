@@ -38,42 +38,187 @@
 #define BLOCK_SIZE      128*1024 /**< 128 kilobytes. */
 
 
-
-static char naev_base[PATH_MAX] = "\0"; /**< Stores Naev's base path. */
-/**
- * @brief Gets Naev's base path (for saves and such).
- *
- *    @return The base path to Naev.
- */
-char* nfile_basePath (void)
-{
-   char *home;
-
-   if (naev_base[0] == '\0') {
 #if HAS_UNIX
-      home = getenv("HOME");
-      if (home == NULL) {
-         WARN("$HOME isn't set, using current directory.");
-         home = ".";
-      }
-#ifdef PREFSDIR_DEF
-      snprintf( naev_base, PATH_MAX, "%s/%s/", home, PREFSDIR_DEF );
-#else
-      snprintf( naev_base, PATH_MAX, "%s/.naev/", home );
+//! http://n.ethz.ch/student/nevillm/download/libxdg-basedir/doc/basedir_8c_source.html
+
+/**
+ * Get value of an environment variable.
+ * Sets @c errno to @c EINVAL if variable is not set or empty.
+ *    @param name Name of environment variable.
+ *    @return The environment variable or NULL if an error occurs.
+ */
+static char* xdgGetEnv(const char *name)
+{
+    char *env = SDL_getenv(name);
+    if ((env != NULL) && (env[0] != '\0'))
+        return env;
+    /* What errno signifies missing env var? */
+    errno = EINVAL;
+    return NULL;
+}
+
+/** 
+ * Duplicate an environment variable.
+ * Sets @c errno to @c ENOMEM if unable to allocate duplicate string.
+ * Sets @c errno to @c EINVAL if variable is not set or empty.
+ *    @return The duplicated string or NULL if an error occurs.
+ */
+static char* xdgEnvDup(const char *name)
+{
+    const char *env;
+    env = xdgGetEnv( name );
+    if (env != NULL)
+        return strdup(env);
+     return NULL;
+}
+
+/** 
+ * Get a home directory from the environment or a fallback relative to @c \$HOME.
+ * Sets @c errno to @c ENOMEM if unable to allocate duplicate string.
+ * Sets @c errno to @c EINVAL if variable is not set or empty.
+ *    @param envname Name of environment variable.
+ *    @param relativefallback Path starting with "/" and relative to @c \$HOME to use as fallback.
+ *    @return The home directory path or @c NULL of an error occurs.
+ */
+static char * xdgGetRelativeHome( const char *envname, const char *relativefallback )
+{
+    char *relhome;
+    relhome = xdgEnvDup(envname);
+    if ((relhome == NULL) && (errno != ENOMEM)) {
+        errno = 0;
+        const char *home;
+        unsigned int homelen;
+        home = xdgGetEnv( "HOME" );
+        if (home == NULL)
+            return NULL;
+        homelen = strlen(home);
+        unsigned int fallbacklength;
+        fallbacklength = strlen( relativefallback );
+        relhome = malloc( homelen + fallbacklength + 1 );
+        if (relhome == NULL)
+           return NULL;
+        memcpy( relhome, home, homelen );
+        memcpy( &relhome[ homelen ], relativefallback, fallbacklength + 1 );
+        relhome[ homelen + fallbacklength ] = '\0'; /* Just in case. */
+    }
+    return relhome;
+}
 #endif
+
+static char naev_dataPath[PATH_MAX] = "\0"; /**< Store Naev's data path. */
+/**
+ * @brief Gets Naev's data path (for user data such as saves and screenshots)
+ *
+ *    @return The xdg data path.
+ */
+const char* nfile_dataPath (void)
+{
+    char *path;
+
+    if (naev_dataPath[0] == '\0') {
+#if HAS_UNIX
+        path = xdgGetRelativeHome( "XDG_DATA_HOME", "/.local/share" );
+        if (path == NULL) {
+            WARN("$XDG_DATA_HOME isn't set, using current directory.");
+            path = strdup(".");
+        }
+
+        snprintf( naev_dataPath, PATH_MAX, "%s/naev/", path );
+
+        if (path != NULL) {
+            free (path);
+        }
 #elif HAS_WIN32
-      home = getenv("APPDATA");
-      if (home == NULL) {
+      path = SDL_getenv("APPDATA");
+      if (path == NULL) {
          WARN("%%APPDATA%% isn't set, using current directory.");
-         home = ".";
+         path = ".";
       }
-      snprintf( naev_base, PATH_MAX, "%s/naev/", home );
+      snprintf( naev_dataPath, PATH_MAX, "%s/naev/", path );
 #else
 #error "Feature needs implementation on this Operating System for Naev to work."
 #endif
-   }
+    }
 
-   return naev_base;
+    return naev_dataPath;
+}
+
+
+static char naev_configPath[PATH_MAX] = "\0"; /**< Store Naev's config path. */
+/**
+ * @brief Gets Naev's config path (for user preferences such as conf.lua)
+ *
+ *    @return The xdg config path.
+ */
+const char* nfile_configPath (void)
+{
+    char *path;
+
+    if (naev_configPath[0] == '\0') {
+#if HAS_UNIX
+        path = xdgGetRelativeHome( "XDG_CONFIG_HOME", "/.config" );
+        if (path == NULL) {
+            WARN("$XDG_CONFIG_HOME isn't set, using current directory.");
+            path = strdup(".");
+        }
+
+        snprintf( naev_configPath, PATH_MAX, "%s/naev/", path );
+
+        if (path != NULL) {
+            free (path);
+        }
+#elif HAS_WIN32
+      path = SDL_getenv("APPDATA");
+      if (path == NULL) {
+         WARN("%%APPDATA%% isn't set, using current directory.");
+         path = ".";
+      }
+      snprintf( naev_configPath, PATH_MAX, "%s/naev/", path );
+#else
+#error "Feature needs implementation on this Operating System for Naev to work."
+#endif
+    }
+
+    return naev_configPath;
+}
+
+
+static char naev_cachePath[PATH_MAX] = "\0"; /**< Store Naev's cache path. */
+/**
+ * @brief Gets Naev's cache path (for cached data such as generated textures)
+ *
+ *    @return The xdg cache path.
+ */
+const char* nfile_cachePath (void)
+{
+    char *path;
+
+    if (naev_cachePath[0] == '\0') {
+#if HAS_UNIX
+        path = xdgGetRelativeHome( "XDG_CACHE_HOME", "/.cache" );
+        if (path == NULL) {
+            WARN("$XDG_CACHE_HOME isn't set, using current directory.");
+            path = strdup(".");
+        }
+
+        snprintf( naev_cachePath, PATH_MAX, "%s/naev/", path );
+
+        if (path != NULL) {
+            free (path);
+        }
+#elif HAS_WIN32
+      path = SDL_getenv("APPDATA");
+      if (path == NULL) {
+         WARN("%%APPDATA%% isn't set, using current directory.");
+         path = ".";
+      }
+      snprintf( naev_cachePath, PATH_MAX, "%s/naev/", path );
+#else
+#error "Feature needs implementation on this Operating System for Naev to work."
+#endif
+    }
+
+    return naev_cachePath;
 }
 
 
@@ -108,8 +253,6 @@ char* nfile_dirname( char *path )
 
 /**
  * @brief Creates a directory if it doesn't exist.
- *
- * Uses relative paths to basePath.
  *
  *    @param path Path to create directory if it doesn't exist.
  *    @return 0 on success.

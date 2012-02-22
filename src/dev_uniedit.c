@@ -37,7 +37,7 @@
 
 
 #define UNIEDIT_EDIT_WIDTH       400 /**< System editor width. */
-#define UNIEDIT_EDIT_HEIGHT      300 /**< System editor height. */
+#define UNIEDIT_EDIT_HEIGHT      450 /**< System editor height. */
 
 
 #define UNIEDIT_DRAG_THRESHOLD   300   /**< Drag threshold. */
@@ -902,16 +902,20 @@ static void uniedit_buttonZoom( unsigned int wid, char* str )
 static void uniedit_editSys (void)
 {
    unsigned int wid;
-   int y;
-   char buf[128];
+   int x, y, l;
+   char buf[128], *s;
+   StarSystem *sys;
 
    /* Must have a system. */
    if (uniedit_nsys == 0)
       return;
+   sys   = uniedit_sys[0];
 
    /* Create the window. */
    wid = window_create( "Star System Property Editor", -1, -1, UNIEDIT_EDIT_WIDTH, UNIEDIT_EDIT_HEIGHT );
    uniedit_widEdit = wid;
+
+   x = 20;
 
    /* Close button. */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
@@ -920,9 +924,79 @@ static void uniedit_editSys (void)
    /* Rename button. */
    y = -45;
    snprintf( buf, sizeof(buf), "Name: \en%s", (uniedit_nsys > 1) ? "\ervarious" : uniedit_sys[0]->name );
-   window_addText( wid, 20, y, 180, 15, 0, "txtName", &gl_smallFont, &cDConsole, buf );
+   window_addText( wid, x, y, 180, 15, 0, "txtName", &gl_smallFont, &cDConsole, buf );
    window_addButton( wid, 200, y+3, BUTTON_WIDTH, 21, "btnRename", "Rename", uniedit_btnEditRename );
+
    y -= 30;
+
+   /* Add general stats */
+   s = "Radius";
+   l = gl_printWidthRaw( NULL, s );
+   window_addText( wid, x, y, l, 20, 1, "txtRadius",
+         NULL, &cBlack, s );
+   window_addInput( wid, x += l + 7, y, 80, 20, "inpRadius", 10, 1, NULL );
+   window_setInputFilter( wid, "inpRadius",
+         "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`" );
+   x += 80 + 12;
+   s = "(Scales asset positions)";
+   l = gl_printWidthRaw( NULL, s );
+   window_addText( wid, x, y, l, 20, 1, "txtRadiusComment",
+         NULL, &cBlack, s );
+
+   /* New row. */
+   x = 20;
+   y -= gl_defFont.h + 15;
+   
+   s = "Stars";
+   l = gl_printWidthRaw( NULL, s );
+   window_addText( wid, x, y, l, 20, 1, "txtStars",
+         NULL, &cBlack, s );
+   window_addInput( wid, x += l + 7, y, 50, 20, "inpStars", 4, 1, NULL );
+   window_setInputFilter( wid, "inpStars",
+         "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`" );
+   x += 50 + 12;
+
+   s = "Interference";
+   l = gl_printWidthRaw( NULL, s );
+   window_addText( wid, x, y, l, 20, 1, "txtInterference",
+         NULL, &cBlack, s );
+   window_addInput( wid, x += l + 7, y, 55, 20, "inpInterference", 5, 1, NULL );
+   window_setInputFilter( wid, "inpInterference",
+         "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`" );
+
+   /* New row. */
+   x = 20;
+   y -= gl_defFont.h + 15;
+
+   s = "Nebula";
+   l = gl_printWidthRaw( NULL, s );
+   window_addText( wid, x, y, l, 20, 1, "txtNebula",
+         NULL, &cBlack, s );
+   window_addInput( wid, x += l + 7, y, 50, 20, "inpNebula", 4, 1, NULL );
+   window_setInputFilter( wid, "inpNebula",
+         "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`" );
+   x += 50 + 12;
+
+   s = "Volatility";
+   l = gl_printWidthRaw( NULL, s );
+   window_addText( wid, x, y, l, 20, 1, "txtVolatility",
+         NULL, &cBlack, s );
+   window_addInput( wid, x += l + 7, y, 50, 20, "inpVolatility", 4, 1, NULL );
+   window_setInputFilter( wid, "inpVolatility",
+         "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`" );
+   x += 50 + 12;
+
+   /* Load values */
+   snprintf( buf, sizeof(buf), "%g", sys->radius );
+   window_setInput( wid, "inpRadius", buf );
+   snprintf( buf, sizeof(buf), "%d", sys->stars );
+   window_setInput( wid, "inpStars", buf );
+   snprintf( buf, sizeof(buf), "%g", sys->interference );
+   window_setInput( wid, "inpInterference", buf );
+   snprintf( buf, sizeof(buf), "%g", sys->nebu_density );
+   window_setInput( wid, "inpNebula", buf );
+   snprintf( buf, sizeof(buf), "%g", sys->nebu_volatility );
+   window_setInput( wid, "inpVolatility", buf );
 
    /* Generate the list. */
    uniedit_editGenList( wid );
@@ -944,7 +1018,7 @@ static void uniedit_editGenList( unsigned int wid )
    if (widget_exists( wid, "lstAssets" ))
       window_destroyWidget( wid, "lstAssets" );
 
-   y = -75;
+   y = -175;
 
    /* Check to see if it actually has virtual assets. */
    sys   = uniedit_sys[0];
@@ -989,10 +1063,26 @@ static void uniedit_editGenList( unsigned int wid )
 
 
 /**
- * @brief Closes the system property editor.
+ * @brief Closes the system property editor, saving the changes made.
  */
 static void uniedit_editSysClose( unsigned int wid, char *name )
 {
+   char *inp;
+   StarSystem *sys;
+   double scale;
+   
+   /* We already know the system exists because we checked when opening the dialog. */
+   sys   = uniedit_sys[0];
+
+   /* Changes in radius need to scale the system asset positions. */
+   scale = atof(window_getInput( wid, "inpRadius" )) / sys->radius;
+   sysedit_sysScale(sys, scale);
+
+   sys->stars           = atoi(window_getInput( wid, "inpStars" ));
+   sys->interference    = atof(window_getInput( wid, "inpInterference" ));
+   sys->nebu_density    = atof(window_getInput( wid, "inpDensity" ));
+   sys->nebu_volatility = atof(window_getInput( wid, "inpVolatility" ));
+
    /* Text might need changing. */
    uniedit_selectText();
 

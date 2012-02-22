@@ -142,7 +142,12 @@ function tgt_str( tgt, simple )
    if tgt.type == "jump" then
       typename = "Jump Point to"
    else
-      typename = "Planet"
+      -- Numeric classes are for stations.
+      if tonumber( tgt.data:class() ) then
+         typename = "Station"
+      else
+         typename = "Planet"
+      end
    end
    if simple then
       return string.format( "%s %s", typename, tgt.data:name() )

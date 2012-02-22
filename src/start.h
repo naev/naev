@@ -21,6 +21,7 @@ void start_cleanup (void);
  */
 const char* start_name (void);
 const char* start_ship (void);
+const char* start_shipname (void);
 unsigned int start_credits (void);
 ntime_t start_date (void);
 const char* start_system (void);

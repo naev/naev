@@ -81,7 +81,7 @@ static void player_autonavSetup (void)
    if (!player_isFlag(PLAYER_AUTONAV)) {
       tc_base   = player_isFlag(PLAYER_DOUBLESPEED) ? 2. : 1.;
       tc_mod    = tc_base;
-      if (conf.compression_mult > 1.)
+      if (conf.compression_mult >= 1.)
          player.tc_max = MIN( conf.compression_velocity / solid_maxspeed(player.p->solid, player.p->speed, player.p->thrust), conf.compression_mult );
       else
          player.tc_max = conf.compression_velocity / solid_maxspeed(player.p->solid, player.p->speed, player.p->thrust);

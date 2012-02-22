@@ -7,7 +7,9 @@
 #  define NFILE_H
 
 
-char* nfile_basePath (void);
+const char* nfile_dataPath (void);
+const char* nfile_configPath (void);
+const char* nfile_cachePath (void);
 char* nfile_dirname( char *path );
 int nfile_dirMakeExist( const char* path, ... ); /* Creates if doesn't exist, 0 success */
 int nfile_dirExists( const char* path, ... ); /* Returns 1 on exists. */

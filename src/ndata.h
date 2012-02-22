@@ -23,6 +23,7 @@ void ndata_close (void);
  */
 int ndata_check( const char* path );
 int ndata_setPath( const char* path );
+const char* ndata_getDirname(void);
 const char* ndata_getPath (void);
 const char* ndata_name (void);
 
