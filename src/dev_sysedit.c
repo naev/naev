@@ -1382,19 +1382,15 @@ static void sysedit_planetDesc( unsigned int wid, char *unused )
 static void sysedit_planetDescReturn( unsigned int wid, char *unused )
 {
    Planet *p;
-   char *desc, *bardesc, *mydesc, *mybardesc;
+   char *mydesc, *mybardesc;
 
    p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
 
    mydesc = window_getInput( wid, "txtDescription" );
    mybardesc = window_getInput( wid, "txtBarDescription" );
 
-   desc    = p->description;
-   bardesc = p->bar_description;
-   desc = realloc(desc, sizeof(mydesc));
-   bardesc = realloc(bardesc, sizeof(mybardesc));
-   memcpy( desc, mydesc, sizeof(mydesc));
-   memcpy( bardesc, mybardesc, sizeof(mybardesc));
+   p->description = strdup( mydesc );
+   p->bar_description = strdup( mybardesc );
 
    window_close( wid, unused );
 }
