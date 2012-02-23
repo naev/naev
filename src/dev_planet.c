@@ -132,6 +132,31 @@ static int dpl_savePlanet( xmlTextWriterPtr writer, const Planet *p )
       tech_groupWrite( writer, p->tech );
 
    xmlw_endElem( writer ); /** "planet" */
+   xmlw_done( writer );
+
+   /* No need for writer anymore. */
+   xmlFreeTextWriter( writer );
+
+   /* Write data. */
+   cleanName = malloc((strlen(p->name)+1)*sizeof(char));
+   memset(cleanName, 0, strlen(p->name)+1);
+   pos = 0;
+   for (i=0; i<(int)strlen(p->name); i++) {
+      if (!ispunct(p->name[i])) {
+         if (p->name[i] == ' ')
+            cleanName[pos] = '_';
+         else
+            cleanName[pos] = tolower(p->name[i]);
+         pos++;
+      }
+   }
+   file = malloc((strlen(cleanName)+20)*sizeof(char));
+   snprintf(file,(strlen(cleanName)+20)*sizeof(char),"dat/assets/%s.xml",cleanName);
+   xmlSaveFileEnc( file, doc, "UTF-8" );
+
+   /* Clean up. */
+   xmlFreeDoc(doc);
+   free(cleanName);
 
    return 0;
 }
