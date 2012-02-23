@@ -108,19 +108,10 @@ function goodevent()
         tk.msg(gtitle, gtext[2])
         player.addOutfit("Star Map", 1)
     elseif event == 3 then
-        local factions = {"Empire", "Dvaered"} -- TODO: Add more factions as they appear
+        local factions = {"Empire", "Dvaered", "Sirius", "Soromid"} -- TODO: Add more factions as they appear
         rndfact = factions[rnd.rnd(1, #factions)]
         tk.msg(gtitle, string.format(gtext[3], rndfact))
         faction.modPlayerSingle(rndfact, 3)
---    elseif event == 2 then
---        tk.msg(gtitle, gtext[2])
---        --effects here
---    elseif event == 2 then
---        tk.msg(gtitle, gtext[2])
---        --effects here
---    elseif event == 2 then
---        tk.msg(gtitle, gtext[2])
---        --effects here
     end
     destroyevent()
 end
@@ -132,7 +123,7 @@ function badevent()
         tk.msg(btitle, btext[1])
         p:setHealth(0,0)
         player.pilot():control(true)
-        hook.pilot( p, "exploded", "derelict_exploded" )
+        hook.pilot(p, "exploded", "derelict_exploded")
     elseif event == 2 then
         tk.msg(btitle, btext[2])
         player.pilot():setFuel(false)
@@ -150,25 +141,13 @@ function badevent()
         a1:attack(player.pilot())
         a2:control()
         a2:attack(player.pilot())
---    elseif event == 2 then
---        tk.msg(btitle, btext[2])
---        --effects here
---    elseif event == 2 then
---        tk.msg(btitle, btext[2])
---        --effects here
---    elseif event == 2 then
---        tk.msg(btitle, btext[2])
---        --effects here
---    elseif event == 2 then
---        tk.msg(btitle, btext[2])
---        --effects here
     end
     destroyevent()
 end
 
 function derelict_exploded()
    player.pilot():control(false)
-   player.pilot():setHealth( 42, 0 ) -- Not pretty, but we can fix it properly post-beta.
+   player.pilot():setHealth(42, 0)
 end
 
 function missionevent()
