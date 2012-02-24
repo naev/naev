@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Battery">
+ <general>
+  <typename>Power Modifier</typename>
+  <slot>structure</slot>
+  <mass>6</mass>
+  <price>40000</price>
+  <description>A large battery unit designed to hold 200 MJ of energy. Small enough to mount on many light vessels.</description>
+  <gfx_store>capacitor-g</gfx_store>
+ </general>
+ <specific type="modification">
+  <cpu>0</cpu>
+  <energy>200</energy>
+ </specific>
+</outfit>

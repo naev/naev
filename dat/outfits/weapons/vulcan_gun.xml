@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Vulcan Gun">
+ <general>
+  <slot>weapon</slot>
+  <size>light</size>
+  <mass>6</mass>
+  <price>13000</price>
+  <description>The Vulcan Gun improves over the Gauss Gun with increased range and damage, achieved by using a heavier calibre ammunition. A skilled pilot can wreak some serious havoc with a pair of Vulcan Guns installed in his ship.</description>
+  <gfx_store>vulcangun</gfx_store>
+ </general>
+ <specific type="bolt">
+  <cpu>6</cpu>
+  <gfx>gatling</gfx>
+  <sound>autocannon</sound>
+  <sound_hit>medexp0</sound_hit>
+  <spfx_shield>ExpS</spfx_shield>
+  <spfx_armour>ExpS</spfx_armour>
+  <delay>0.375</delay>
+  <speed>500</speed>
+  <range blowup="armour">800</range>
+  <energy>8.5</energy>
+  <heatup>25</heatup>
+  <track>2</track>
+  <swivel>6</swivel>
+  <damage>
+   <type>impact</type>
+   <penetrate>12</penetrate>
+   <physical>8.5</physical>
+   <disable>1</disable>
+  </damage>
+ </specific>
+</outfit>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Pirate Landing Pass">
+ <!-- this outfit should be considered contraband once it is implimented -->
+ <general>
+  <mass>0</mass>
+  <price>1</price>
+  <gfx_store>license</gfx_store>
+  <!--this outfit really does absolutly nothing. its effects are implemented in the pirate mission, hitman 3 where you receive it.-->
+  <description>This license gives you authorization to land on pirate worlds and gives access to missions in the pirate mission computer.</description>
+ </general>
+ <specific type="license"/>
+</outfit>
+
+
+<!-- Cheats. For missions, honest! -->

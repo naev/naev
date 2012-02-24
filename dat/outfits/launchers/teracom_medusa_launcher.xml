@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="TeraCom Medusa Launcher">
+ <general>
+  <slot>weapon</slot>
+  <mass>9</mass>
+  <price>40000</price>
+  <description>TeraCom have built a highly efficient Medusa launcher, capable of locking on and firing faster than the standard specification, and holding a greater amount in the magazine as well.</description>
+  <gfx_store>seekerlauncher</gfx_store>
+ </general>
+ <specific type="launcher" secondary="1">
+  <cpu>6</cpu>
+  <ammo>Medusa Missile</ammo>
+  <delay>3.5</delay>
+  <amount>8</amount>
+  <lockon>7</lockon>
+  <arc>8</arc>
+  <ew_target>0.75</ew_target>
+ </specific>
+</outfit>

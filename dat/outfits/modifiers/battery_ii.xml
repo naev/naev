@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <outfit name="Battery II">
+ <general>
+  <typename>Power Modifier</typename>
+  <slot>structure</slot>
+  <mass>30</mass>
+  <price>120000</price>
+  <description>A large battery unit designed to hold 400 MJ of energy. Ideally mounted on medium-to-large vessels.</description>
+  <gfx_store>capacitor2-g</gfx_store>
+ </general>
+ <specific type="modification">
+  <cpu>0</cpu>
+  <energy>400</energy>
+ </specific>
+</outfit>

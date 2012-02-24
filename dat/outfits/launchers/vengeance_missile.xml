@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Vengeance Missile">
+ <general>
+  <license>Medium Weapon License</license>
+  <mass>1</mass>
+  <price>1500</price>
+  <description>Vengeance class interceptor missiles are the heaviest interceptor missiles currently in production. Almost half the missile hull is used for payload, which decreases its ability to catch fast targets. Best used against corvette class targets.</description>
+  <gfx_store>headhunter</gfx_store>
+ </general>
+ <specific type="ammo">
+  <gfx>headhunter</gfx>
+  <sound>missile</sound>
+  <sound_hit>medexp0</sound_hit>
+  <spfx_shield>ExpM</spfx_shield>
+  <spfx_armour>ExpM</spfx_armour>
+  <duration blowup="armour">7</duration>
+  <thrust>0</thrust>
+  <turn>30</turn>
+  <speed>400</speed>
+  <resist>20</resist>
+  <damage>
+   <type>impact</type>
+   <penetrate>20</penetrate>
+   <physical>150</physical>
+   <disable>1</disable>
+  </damage>
+  <ai>smart</ai>
+ </specific>
+</outfit>

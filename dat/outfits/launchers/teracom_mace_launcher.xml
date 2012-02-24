@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="TeraCom Mace Launcher">
+ <general>
+  <slot>weapon</slot>
+  <license>Medium Weapon License</license>
+  <mass>10</mass>
+  <price>30000</price>
+  <description>TeraCom's Mace launcher uses an advanced reload mechanism that allows the launcher to fire more rockets in less time.</description>
+  <gfx_store>macelauncher</gfx_store>
+ </general>
+ <specific type="launcher" secondary="1">
+  <cpu>5</cpu>
+  <ammo>Mace Rocket</ammo>
+  <delay>0.3</delay>
+  <amount>50</amount>
+ </specific>
+</outfit>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="TeraCom Vengeance Launcher">
+ <general>
+  <slot>weapon</slot>
+  <license>Medium Weapon License</license>
+  <mass>15</mass>
+  <price>150000</price>
+  <description>TeraCom's patented launcher hardware considerably reduces the time it takes to achieve a lock. Sometimes, those few seconds can make all the difference.</description>
+  <gfx_store>headhunterlauncher</gfx_store>
+ </general>
+ <specific type="launcher" secondary="1">
+  <cpu>10</cpu>
+  <ammo>Vengeance Missile</ammo>
+  <delay>6</delay>
+  <amount>10</amount>
+  <lockon>12</lockon>
+  <arc>8</arc>
+  <ew_target>0.75</ew_target>
+ </specific>
+</outfit>

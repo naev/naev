@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Razor MK2">
+ <general>
+  <slot>weapon</slot>
+  <size>light</size>
+  <mass>4</mass>
+  <price>11000</price>
+  <description>The upgraded civilian Razor model packs increased overall effectiveness compared to its predecessor, and has less difficulty in overloading capital ship grade shielding. As with the basic model, the Razor MK2 is best used to drain a target's shields, paving the way for other weapons to deliver the finishing blow.</description>
+  <gfx_store>ioncannon</gfx_store>
+ </general>
+ <specific type="bolt">
+  <cpu>6</cpu>
+  <gfx>razorS</gfx>
+  <sound>ion</sound>
+  <spfx_shield>ShiS</spfx_shield>
+  <spfx_armour>ExpS</spfx_armour>
+  <delay>0.6</delay>
+  <speed>800</speed>
+  <range>950</range>
+  <falloff>725</falloff>
+  <gfx_end>razorS-end</gfx_end>
+  <energy>7</energy>
+  <heatup>25</heatup>
+  <track>2.25</track>
+  <swivel>6</swivel>
+  <damage>
+   <type>ion</type>
+   <penetrate>5</penetrate>
+   <physical>8</physical>
+   <disable>2</disable>
+  </damage>
+ </specific>
+</outfit>

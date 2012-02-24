@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Map: Collective Space">
+ <general>
+  <mass>0</mass>
+  <price>25000</price>
+  <description>This map charts the known jumps that connect the systems occupied by the Collective. Sadly, the Empire has no accurate intel about Collective assets in the area.</description>
+  <gfx_store>map</gfx_store>
+ </general>
+ <specific type="map">
+  <short_desc>A Star Map.</short_desc>
+  <sys name="Hades">
+   <jump>C-43</jump>
+   <jump>C-59</jump>
+   <jump>Fortitude</jump>
+  </sys>
+  <sys name="C-43">
+   <jump>Hades</jump>
+   <jump>C-14</jump>
+  </sys>
+  <sys name="C-14">
+   <jump>C-43</jump>
+  </sys>
+  <sys name="C-59">
+   <jump>Hades</jump>
+   <jump>C-43</jump>
+  </sys>
+  <sys name="C-28">
+   <jump>C-59</jump>
+   <jump>C-00</jump>
+  </sys>
+ </specific>
+</outfit>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Milspec Scrambler">
+ <general>
+  <slot>utility</slot>
+  <mass>3</mass>
+  <price>250000</price>
+  <description>Milspec knows what's important out there. It's that you don't get shot! And the best way not to get shot is not to get targeted in the first place. The Milspec RX 500-C scrambler will put the wool over your enemies' sensors, at a minimal cost to you or your ship's reactor! Fly safe, fly Milspec.</description>
+  <gfx_store>jammer1</gfx_store>
+ </general>
+ <specific type="modification">
+  <cpu>3</cpu>
+  <energy>-15</energy>
+  <hide>2.5</hide>
+ </specific>
+</outfit>

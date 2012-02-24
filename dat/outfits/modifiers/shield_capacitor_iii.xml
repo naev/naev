@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Shield Capacitor III">
+ <general>
+  <typename>Shield Power Modifier</typename>
+  <slot>structure</slot>
+  <mass>36</mass>
+  <price>220000</price>
+  <description>A heavy duty shield enhancer for ships that face combat on a regular basis.</description>
+  <gfx_store>capacitor4</gfx_store>
+ </general>
+ <specific type="modification">
+  <shield>145</shield>
+ </specific>
+</outfit>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Razor Turret MK1">
+ <general>
+  <slot>weapon</slot>
+  <size>light</size>
+  <mass>16</mass>
+  <price>14000</price>
+  <description>Razor Turrets are popular among traders. Their high damage against shields is a great deterrent against attackers, because nothing puts a space pilot on edge like his shields rapidly coming down.</description>
+  <gfx_store>ionturret</gfx_store>
+ </general>
+ <specific type="turret bolt">
+  <cpu>9</cpu>
+  <gfx>razorS</gfx>
+  <sound>ion</sound>
+  <spfx_shield>ShiS</spfx_shield>
+  <spfx_armour>ExpS</spfx_armour>
+  <delay>0.5</delay>
+  <speed>800</speed>
+  <range>1100</range>
+  <falloff>750</falloff>
+  <gfx_end>razorS-end</gfx_end>
+  <energy>6.5</energy>
+  <heatup>30</heatup>
+  <track>2</track>
+  <damage>
+   <type>ion</type>
+   <penetrate>7</penetrate>
+   <physical>6.5</physical>
+   <disable>2</disable>
+  </damage>
+ </specific>
+</outfit>

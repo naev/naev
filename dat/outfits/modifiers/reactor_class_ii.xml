@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Reactor Class II">
+ <general>
+  <typename>Energy Modifier</typename>
+  <slot>utility</slot>
+  <mass>30</mass>
+  <price>530000</price>
+  <gfx_store>reactor_ii</gfx_store>
+  <description>The class II reactor uses a newer fusion technology than the class I, permitting it to have greater energy density. The result is a mid-sized reactor that is best used on ships with moderate energy demands.</description>
+ </general>
+ <specific type="modification">
+  <cpu>10</cpu>
+  <energy>60</energy>
+  <energy_regen>10.5</energy_regen>
+ </specific>
+</outfit>

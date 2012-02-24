@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Map: Pirate strongholds">
+ <general>
+  <mass>0</mass>
+  <price>100000</price>
+  <description>This map contains the location of the Pirate strongholds. Top secret!</description>
+  <gfx_store>map</gfx_store>
+ </general>
+ <specific type="map">
+  <short_desc>A Star Map.</short_desc>
+  <sys name="New Haven">
+   <asset>New Haven</asset>
+  </sys>
+  <sys name="Kretogg">
+   <asset>Vorca</asset>
+   <asset>Warden's End</asset>
+  </sys>
+ </specific>
+</outfit>

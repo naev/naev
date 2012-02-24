@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Railgun Turret">
+ <general>
+  <slot>weapon</slot>
+  <size>heavy</size>
+  <mass>64</mass>
+  <license>Heavy Weapon License</license>
+  <price>105000</price>
+  <description>While one 150mm railgun is a formidable weapon, the ultimate in brute-force capital ship weaponry is the 150mm railgun turret. Mounting two railguns in a specialized turret housing, it manages to mitigate the recoil normally associated with railguns, at a slight velocity cost.</description>
+  <gfx_store>railgunturret</gfx_store>
+ </general>
+ <specific type="turret bolt">
+  <cpu>34</cpu>
+  <gfx>massL</gfx>
+  <sound>mass</sound>
+  <spfx_shield>ShiM</spfx_shield>
+  <spfx_armour>ExpM</spfx_armour>
+  <delay>1.1</delay>
+  <speed>675</speed>
+  <range>1900</range>
+  <falloff>1400</falloff>
+  <gfx_end>massL-end</gfx_end>
+  <energy>66</energy>
+  <heatup>90</heatup>
+  <track>0.25</track>
+  <damage>
+   <type>impact</type>
+   <penetrate>55</penetrate>
+   <physical>58</physical>
+   <disable>3</disable>
+  </damage>
+ </specific>
+</outfit>
+
+
+<!-- PLASMA TREE -->

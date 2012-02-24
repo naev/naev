@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Droid Repair Crew">
+ <general>
+  <typename>Armour Repair Modifier</typename>
+  <slot>utility</slot>
+  <mass>3</mass>
+  <price>430000</price>
+  <gfx_store>droid</gfx_store>
+  <description>This low maintenance droid crew will scour your ship to repair any damages caused by space hazards. They are very small and able to work both on the interior or exterior of the ship. Power is drawn from the ship to feed the robots, although the load is generally very low compared to the benefits of having a robotic repair crew.</description>
+ </general>
+ <specific type="modification">
+  <armour_regen>1.7</armour_regen>
+  <energy>-5</energy>
+  <energy_regen>-0.65</energy_regen>
+ </specific>
+</outfit>
+<!-- Movement-Related Outfits -->

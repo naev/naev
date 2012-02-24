@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Improved Refrigeration Cycle">
+ <general>
+  <typename>Weapon Modfier (Turret)</typename>
+  <slot>structure</slot>
+  <mass>5</mass>
+  <price>90000</price>
+  <description>By adding an auxiliary coolant reservoir, the ship can keep is able to dissipate heat more quickly, allowing it to exceed standard firing rates. The side effect of having everything cool faster is minor instabilities that end up affecting both accuracy and damage. Only the turrets are affected by this modification.</description>
+  <gfx_store>firerate_turret</gfx_store>
+ </general>
+ <specific type="modification">
+  <tur_firerate>15</tur_firerate>
+  <tur_heat>5</tur_heat>
+  <tur_damage>-5</tur_damage>
+ </specific>
+</outfit>

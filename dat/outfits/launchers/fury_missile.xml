@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Fury Missile">
+ <general>
+  <mass>1</mass>
+  <price>400</price>
+  <description>The Fury class interceptor missile is a lightweight missile propelled by a powerful engine, delivering its payload to its target quickly and efficiently. Its high agility come at the cost of destructive power, however, limiting its effectiveness to light, nimble fighters.</description>
+  <gfx_store>seeker</gfx_store>
+ </general>
+ <specific type="ammo">
+  <gfx>seeker</gfx>
+  <sound>seeker</sound>
+  <sound_hit>medexp1</sound_hit>
+  <spfx_shield>ExpM</spfx_shield>
+  <spfx_armour>ExpM</spfx_armour>
+  <duration blowup="armour">4</duration>
+  <thrust>0</thrust>
+  <turn>45</turn>
+  <speed>700</speed>
+  <resist>5</resist>
+  <damage>
+   <type>impact</type>
+   <penetrate>5</penetrate>
+   <physical>40</physical>
+   <disable>1</disable>
+  </damage>
+  <ai>smart</ai>
+ </specific>
+</outfit>

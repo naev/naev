@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Mass Driver MK2">
+ <general>
+  <slot>weapon</slot>
+  <size>medium</size>
+  <license>Medium Weapon License</license>
+  <mass>18</mass>
+  <price>32000</price>
+  <description>The MK2 version of the Mass Driver differs little from its weaker model in its working. Rather, the parts it's made of have a better performance curve, allowing the driver rounds to be fired with increased force.</description>
+  <gfx_store>gatling</gfx_store>
+ </general>
+ <specific type="bolt">
+  <cpu>15</cpu>
+  <gfx>autocannon</gfx>
+  <sound>autocannon</sound>
+  <sound_hit>medexp0</sound_hit>
+  <spfx_shield>ExpS</spfx_shield>
+  <spfx_armour>ExpS</spfx_armour>
+  <delay>1.4</delay>
+  <speed>575</speed>
+  <range blowup="armour">1500</range>
+  <energy>44</energy>
+  <heatup>60</heatup>
+  <track>1.4</track>
+  <swivel>10</swivel>
+  <damage>
+   <type>impact</type>
+   <penetrate>43</penetrate>
+   <physical>42</physical>
+   <disable>2</disable>
+  </damage>
+ </specific>
+</outfit>

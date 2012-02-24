@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="TeraCom Headhunter Launcher">
+ <general>
+  <slot>weapon</slot>
+  <license>Medium Weapon License</license>
+  <mass>10</mass>
+  <price>100000</price>
+  <description>This is TeraCom's model Headhunter launcher. Though somewhat pricey and demanding on the ship's resources, the patented tracking and missile arming technology allows pilots to fire their missiles before the competition does.</description>
+  <gfx_store>headhunterlauncher</gfx_store>
+ </general>
+ <specific type="launcher" secondary="1">
+  <cpu>8</cpu>
+  <ammo>Headhunter Missile</ammo>
+  <delay>5</delay>
+  <amount>15</amount>
+  <lockon>9</lockon>
+  <arc>8</arc>
+  <ew_target>1</ew_target>
+ </specific>
+</outfit>

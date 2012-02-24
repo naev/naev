@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Shield Nullifier">
+ <general>
+  <typename>Shield Power Modifier</typename>
+  <slot>structure</slot>
+  <mass>1</mass>
+  <price>1</price>
+  <description>This outfit removes all shields from the ship. For tutorial purposes.</description>
+  <gfx_store>capacitor8</gfx_store>
+ </general>
+ <specific type="modification">
+  <shield_mod>-200</shield_mod>
+ </specific>
+</outfit>

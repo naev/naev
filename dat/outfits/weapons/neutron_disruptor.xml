@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Neutron Disruptor">
+ <general>
+  <slot>weapon</slot>
+  <size>light</size>
+  <mass>6</mass>
+  <price>18500</price>
+  <license>Heavy Weapon License</license>
+  <description>The Neutron Disruptor uses high-energy pulses that modify the base composition of molecules, causing heavy damage. This weapon was first popular with the Collective, as until recently, firing it would produce radiation lethal to humans aboard the ship.</description>
+  <gfx_store>neutron</gfx_store>
+ </general>
+ <specific type="bolt">
+  <cpu>8</cpu>
+  <gfx>neutron</gfx>
+  <sound>neutron</sound>
+  <spfx_shield>ShiS</spfx_shield>
+  <spfx_armour>ExpS</spfx_armour>
+  <delay>0.9</delay>
+  <speed>650</speed>
+  <range>425</range>
+  <falloff>250</falloff>
+  <gfx_end>neutron-end</gfx_end>
+  <energy>15</energy>
+  <heatup>40</heatup>
+  <track>3</track>
+  <swivel>2.5</swivel>
+  <damage>
+   <type>normal</type>
+   <penetrate>22</penetrate>
+   <physical>20</physical>
+   <disable>1</disable>
+  </damage>
+ </specific>
+</outfit>
+
+
+<!-- Missile Weapons -->

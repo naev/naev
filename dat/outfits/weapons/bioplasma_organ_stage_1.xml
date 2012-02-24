@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="BioPlasma Organ Stage 1">
+ <general>
+  <slot>weapon</slot>
+  <size>light</size>
+  <license>Medium Weapon License</license>
+  <mass>0</mass>
+  <price>18000</price>
+  <description>The mark 2 plasma blaster improves on its predecessor in many ways, maintaining good energy efficiency while augmenting range and firepower. Though intended primarily for military use, many have found their way to pirate hands.</description>
+  <gfx_store>plasma2</gfx_store>
+ </general>
+ <specific type="bolt">
+  <cpu>1</cpu>
+  <gfx>plasma2</gfx>
+  <sound>plasma</sound>
+  <spfx_shield>ShiS</spfx_shield>
+  <spfx_armour>PlaS2</spfx_armour>
+  <delay>0.75</delay>
+  <speed>550</speed>
+  <range>1125</range>
+  <falloff>225</falloff>
+  <gfx_end>plasma2-end</gfx_end>
+  <energy>20</energy>
+  <heatup>40</heatup>
+  <track>2</track>
+  <swivel>10</swivel>
+  <damage>
+   <type>normal</type>
+   <penetrate>30</penetrate>
+   <physical>25</physical>
+   <disable>2</disable>
+  </damage>
+ </specific>
+</outfit>
