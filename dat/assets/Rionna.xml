@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Rionna">
+ <pos>
+  <x>-11580.000000</x>
+  <y>10680.000000</y>
+ </pos>
+ <GFX>
+  <space>P00.png</space>
+  <exterior>snow.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>H</class>
+  <population>50000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Rionna is a cold world, but it was not always so. Only a hundred years ago, it was classified as a class M planet, though even then it was on the chilly side. The reason why the face of the planet is covered in ice now is that the local star is going through a dim phase. Astronomers have predicted that in another century and a half, the star will brighten up again, and Rionna will once again be green. The population has dug in, preferring to wait for better years than to move offworld and leave their homes behind.</description>
+  <bar>This spaceport bar is wholly unremarkable. It could be any other bar on any other planet. The only thing that reminds you that you're still on Rionna is that the patrons are all wearing warm clothes.</bar>
+ </general>
+ <tech>
+  <item>Ion 1</item>
+  <item>Basic Outfits 1</item>
+ </tech>
+</asset>

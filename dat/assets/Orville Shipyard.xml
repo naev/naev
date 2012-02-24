@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Orville Shipyard">
+ <pos>
+  <x>-8020.974940</x>
+  <y>-6034.193104</y>
+ </pos>
+ <GFX>
+  <space>station-shipyard.png</space>
+  <exterior>station04.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>2000</population>
+  <hide>0.750000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <commodity/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Orville Shipyard is a relatively modest ship building facility, though it is invaluable to Inios Station and Brandt Station, as most of their reinforcements come from here. The station relies on Mastodon Station for the ships' energy cores and weaponry, as Rhu is too far removed from Aesir to send the ships to be outfitted at Sirius Ordnance.</description>
+  <bar>Over the bar in this facility, there is a counter display that keeps track of the amount of ships that have been produced at Orville Shipyard since it was commissioned. Clearly, the people here at Rhu take pride in being able to contribute to the Sirian military effort.</bar>
+ </general>
+ <tech>
+  <item>Light Civilian Combat Ships</item>
+ </tech>
+</asset>

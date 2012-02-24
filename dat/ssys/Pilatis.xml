@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ssys name="Pilatis">
+ <general>
+  <radius>15400.000000</radius>
+  <stars>300</stars>
+  <interference>300.000000</interference>
+  <nebula volatility="0.000000">0.000000</nebula>
+ </general>
+ <pos>
+  <x>259.000000</x>
+  <y>131.000000</y>
+ </pos>
+ <assets>
+  <asset>Pilatis I</asset>
+  <asset>Pilatis II</asset>
+  <asset>Pilatis III</asset>
+  <asset>Wildwood Station</asset>
+ </assets>
+ <jumps>
+  <jump target="Defa">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Halo">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Thorndyke">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+ </jumps>
+</ssys>

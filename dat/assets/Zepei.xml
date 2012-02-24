@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Zepei">
+ <pos>
+  <x>20400.000000</x>
+  <y>3840.000000</y>
+ </pos>
+ <GFX>
+  <space>M02.png</space>
+  <exterior>oceanic.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Zepei has a modest native population, and a sizeable non-permanent population. The surface of the planet is covered with holiday resorts, nature parks and outdoor sports areas. Most of the vacation goers are Soromid. Non-modified humans would find the recreational activities too rough for comfort.</description>
+  <bar>The spaceport bar is not frequented much. The Soromid who come here on vacation typically go straight to the terminals, and they constitute most of the spaceport's traffic. The bar is used only by the captains of the supply and trade ships that land on Zeppei.</bar>
+ </general>
+ <tech>
+  <item>Basic Outfits 1</item>
+  <item>Missiles 1</item>
+ </tech>
+</asset>

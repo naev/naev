@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Torg Crops">
+ <pos>
+  <x>-2701.724375</x>
+  <y>12569.305869</y>
+ </pos>
+ <GFX>
+  <space>station-agriculture.png</space>
+  <exterior>traderoom.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>10.000000</value>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>1000</population>
+  <hide>0.750000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <commodity/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+  </commodities>
+  <description>Torg Crops is a crop growing station constructed by the Dvaered to avert a famine that threatened to erupt in the Torg and Doranthex systems some years ago. It's currently running at about 80% of its potential output, but since population figures have remained relatively stable recently it seems that the station won't need to be expanded anytime soon.</description>
+  <bar>The spacedock bar here exclusively serves drinks that have been produced from the plants that are grown on station. This means that while the drinks have all kinds of exotic colors, they all basically taste like cabbage.</bar>
+ </general>
+</asset>

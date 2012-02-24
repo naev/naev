@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Rhu II">
+ <pos>
+  <x>-256.700627</x>
+  <y>17156.369158</y>
+ </pos>
+ <GFX>
+  <space>S01.png</space>
+  <exterior>station00.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

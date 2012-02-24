@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Beene">
+ <pos>
+  <x>9360.000000</x>
+  <y>-6320.000000</y>
+ </pos>
+ <GFX>
+  <space>G01.png</space>
+  <exterior>mining5.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>100.000000</value>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>A</class>
+  <population>300000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land>land_lowclass</land>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+  </commodities>
+  <description>Beene is rich in all sorts of common minerals, so the Soromid are using this world the same way anyone would: as a source of raw materials. The elements mined here are processed into standard packages used by the Soromid bioships, which means Beene is quite an important strategic location for the Soromid fleet.</description>
+  <bar>Pilots are advised to wear air-sealed suits when visiting Beene's bar. The planet's atmosphere can cause serious problems for normal humans, and the Soromid haven't bothered installing decontamination filters for the local population. As such, having a drink in Beene's bar is a bit of an ordeal. It's one of the less popular places among traders.</bar>
+ </general>
+ <tech>
+  <item>Basic Outfits 1</item>
+  <item>Basic Trade Ships</item>
+ </tech>
+</asset>

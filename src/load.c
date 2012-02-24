@@ -173,12 +173,13 @@ int load_refresh (void)
    load_saves = array_create( nsave_t );
 
    /* load the saves */
-   files = nfile_readDir( &nfiles, "%ssaves", nfile_basePath() );
+   files = nfile_readDir( &nfiles, "%ssaves", nfile_dataPath() );
    for (i=0; i<nfiles; i++) {
       len = strlen(files[i]);
 
-      /* no save extension */
-      if ((len < 5) || strcmp(&files[i][len-3],".ns")) {
+      /* no save or backup save extension */
+      if (((len < 5) || strcmp(&files[i][len-3],".ns")) &&
+            ((len < 12) || strcmp(&files[i][len-10],".ns.backup"))) {
          free(files[i]);
          memmove( &files[i], &files[i+1], sizeof(char*) * (nfiles-i-1) );
          nfiles--;
@@ -196,7 +197,7 @@ int load_refresh (void)
    for (i=0; i<nfiles; i++) {
       if (!ok)
          ns = &array_grow( &load_saves );
-      snprintf( buf, sizeof(buf), "%ssaves/%s", nfile_basePath(), files[i] );
+      snprintf( buf, sizeof(buf), "%ssaves/%s", nfile_dataPath(), files[i] );
       ok = load_load( ns, buf );
    }
 
@@ -263,9 +264,9 @@ nsave_t *load_getList( int *n )
 void load_loadGameMenu (void)
 {
    unsigned int wid;
-   char **names;
+   char **names, buf[PATH_MAX];
    nsave_t *nslist, *ns;
-   int i, n;
+   int i, n, len;
 
    /* window */
    wid = window_create( "Load Game", -1, -1, LOAD_WIDTH, LOAD_HEIGHT );
@@ -281,7 +282,13 @@ void load_loadGameMenu (void)
       names = malloc( sizeof(char*)*n );
       for (i=0; i<n; i++) {
          ns       = &nslist[i];
-         names[i] = strdup( ns->name );
+         len      = strlen(ns->path);
+         if (strcmp(&ns->path[len-10],".ns.backup")==0) {
+            snprintf( buf, sizeof(buf), "%s \er(Backup)\e0", ns->name );
+            names[i] = strdup(buf);
+         }
+         else
+            names[i] = strdup( ns->name );
       }
    }
    /* case there are no files */

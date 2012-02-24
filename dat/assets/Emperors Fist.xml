@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Emperor's Fist">
+ <pos>
+  <x>14437.024197</x>
+  <y>4251.607749</y>
+ </pos>
+ <GFX>
+  <space>C00.png</space>
+  <exterior>mining5.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>C</class>
+  <population>127000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land>land_hiclass</land>
+   <refuel/>
+   <bar/>
+   <missions/>
+  </services>
+  <commodities/>
+  <description>Emperor's Fist is intended to be the new homeworld of the Emperor himself since the last one was destroyed in the Incident. It's a massive project that is attempting to completely transform a C-class world into that which is suitable for the highest ranks of the Empire's aristocracy. Currently it possesses few amenities beyond the Starport.</description>
+  <bar>The bar is designed for those working on the terraforming project. Small compared to many planetary bars, it nonetheless has a steady flow of patrons, largely consisting of off-duty terraforming workers.</bar>
+ </general>
+</asset>

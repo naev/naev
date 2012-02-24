@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Soromid Databank">
+ <pos>
+  <x>10950.997946</x>
+  <y>12105.389613</y>
+ </pos>
+ <GFX>
+  <space>station-sphere.png</space>
+  <exterior>traderoom.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>0</population>
+  <hide>0.750000</hide>
+  <services>
+   <land>srm_mil_restricted</land>
+   <refuel/>
+   <bar/>
+  </services>
+  <commodities/>
+  <description>The Soromid Databank is the primary Soromid data center. All administration about interplanetary policy as well as the records of the gene treatment industry are managed here. This is why, although the Soromid Databank is not a military base, it has been classified a restricted facility.</description>
+  <bar>Most visitors don't make it past the spacedock bar, not even ranking Soromid personnel. The data center is managed mostly by internal automated drones, requiring manual maintenance only occasionally. Information requests are taken at booths adjoining the spacedock bar, which are manned by secretive-looking Soromid who never leave the station.</bar>
+ </general>
+</asset>

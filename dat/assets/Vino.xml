@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Vino">
+ <pos>
+  <x>-24839.302216</x>
+  <y>-9566.085831</y>
+ </pos>
+ <GFX>
+  <space>M06.png</space>
+  <exterior>mining3.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>5500000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land>land_hiclass</land>
+   <refuel/>
+   <bar/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Though Vino is a good world for civilian habitation by most standards, the local government is rather distrustful of offworlders. It has made immigration procedures so arduous that the vast majority of potential newcomers gives up when they see the requirements. On the flipside, Vinoan citizens are loath to leave their world, be it temporarily or permanently. This makes Vino an isolated enclave, although trade is still at a decent level despite everything.</description>
+  <bar>Vino has a spaceport bar, but only because the government couldn't close it down without running into Empire-wide spaceport regulations. So although the place is open and functional, no effort has been spared to make the place as inhospitable and unpleasant as possible. Real seasoned traders have learned to ignore it, though.</bar>
+ </general>
+ <tech>
+  <item>Laser 1</item>
+  <item>Basic Trade Ships</item>
+  <item>Basic Outfits 1</item>
+  <item>Low Tech Upgrades</item>
+ </tech>
+</asset>

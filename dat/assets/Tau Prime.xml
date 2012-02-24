@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Tau Prime">
+ <pos>
+  <x>8491.064816</x>
+  <y>-13844.050924</y>
+ </pos>
+ <GFX>
+  <space>M02.png</space>
+  <exterior>traderoom.png</exterior>
+ </GFX>
+ <general>
+  <class>M</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

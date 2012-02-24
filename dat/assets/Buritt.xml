@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Buritt">
+ <pos>
+  <x>-17923.429420</x>
+  <y>-1441.372771</y>
+ </pos>
+ <GFX>
+  <space>M02.png</space>
+  <exterior>forest2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>5000000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Luxury Goods</commodity>
+  </commodities>
+  <description>Not as nice as Varia in the Darkstone system, Buritt is nevertheless a reasonably habitable world. You will find much of the Dvaered middle class here, such as it is. You will also find a large-scale pollution of the natural environment, but the Dvaered being Dvaered, no attempt is being made to address this.</description>
+  <bar>If this spaceport bar didn't play a locally produced, incessant, droning, brain-melting music, it would be quite a comfortable place to be. But it does, so it isn't.</bar>
+ </general>
+ <tech>
+  <item>Kinetic 1</item>
+  <item>Basic Outfits 1</item>
+  <item>Low Tech Upgrades</item>
+ </tech>
+</asset>

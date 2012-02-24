@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Sheik Hall">
+ <pos>
+  <x>37294.924364</x>
+  <y>5095.314814</y>
+ </pos>
+ <GFX>
+  <space>moon-A00.png</space>
+  <exterior>aquatic2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>Y</class>
+  <population>400000</population>
+  <hide>0.500000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <commodity/>
+  </services>
+  <commodities>
+   <commodity>Luxury Goods</commodity>
+  </commodities>
+  <description>Since well before the rise of House Dvaered, Sheik Hall has been an important exporter of precious metals and valuable minerals. The people on this planet make their living by mining those resources, and crafting jewellery out of them. Though the planet's raw output isn't very high by any standard, the amount of money involved is on par with a medium-sized mining colony.</description>
+  <bar>The bar is ornately decorated with all that glitters and gleams. Of course, everything you can see here is a replica, as the real valuables are all shipped offworld. Nevertheless, it's attractive to pretend that you're surrounded by riches for a moment.</bar>
+ </general>
+</asset>

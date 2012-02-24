@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ssys name="Cygnus">
+ <general>
+  <radius>24500.000000</radius>
+  <stars>400</stars>
+  <interference>50.000000</interference>
+  <nebula volatility="0.000000">0.000000</nebula>
+ </general>
+ <pos>
+  <x>83.000000</x>
+  <y>-92.000000</y>
+ </pos>
+ <assets>
+  <asset>Cygnus IV</asset>
+  <asset>Hassak</asset>
+  <asset>Inca</asset>
+  <asset>Jaan</asset>
+  <asset>Maya</asset>
+  <asset>Torloth</asset>
+  <asset>Triton Station</asset>
+  <asset>Virtual Civilian Standard</asset>
+  <asset>Virtual Trader Area</asset>
+ </assets>
+ <jumps>
+  <jump target="Delta Pavonis">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+ </jumps>
+</ssys>

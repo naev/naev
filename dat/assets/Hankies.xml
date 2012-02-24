@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Hankies">
+ <pos>
+  <x>160.000000</x>
+  <y>17520.000000</y>
+ </pos>
+ <GFX>
+  <space>moon-G00.png</space>
+  <exterior>mining4.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>G</class>
+  <population>35000000</population>
+  <hide>0.500000</hide>
+  <services>
+   <land>land_hiclass</land>
+   <refuel/>
+   <bar/>
+   <commodity/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Hankies is something of a holiday resort as well as retreat for the wealthy. It is mainly a consumer world, having neither the land for agriculture nor the resources for industry. It does, however, have a pleasant ecosystem and a wealth of beautiful geography.</description>
+  <bar>Since Hankies doesn't have much to offer, the bar is almost entirely an import product. The architecture, the facilities and the drinks can all be traced offworld. The only thing that is truly authentic to this world is the view from the windows - a mountain range stretching away into the distance.</bar>
+ </general>
+</asset>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Waterhole's Moon">
+ <pos>
+  <x>-5089.422980</x>
+  <y>-1733.131108</y>
+ </pos>
+ <GFX>
+  <space>moon-G00.png</space>
+  <exterior>oceanic2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>A</class>
+  <population>5000</population>
+  <hide>0.500000</hide>
+  <services>
+   <land>land_lowclass</land>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+  </commodities>
+  <description>In the days of the Old Empire, Waterhole was the farthest outpost of the Empire. To the Imperials, it was the last outpost of civilization, the last bastion of safety before venturing out into the systems beyond. It is because of this that Waterhole, the system and the planet, derive their names. Now, centuries later, Waterhole remains at the border of Empire space. It is still the last stop for traders venturing out, and the first of those coming in.</description>
+  <bar>Waterhole's moon wouldn't be Waterhole's moon if its bar wasn't called The Waterhole. Though the place is open to visitors from all origins and walks of life, the majority of the clientele is Imperial in nature. It seems that nothing creates a longing for home like being away from it for prolonged periods of time.</bar>
+ </general>
+</asset>

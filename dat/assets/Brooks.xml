@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Brooks">
+ <pos>
+  <x>-10667.555844</x>
+  <y>-4262.926639</y>
+ </pos>
+ <GFX>
+  <space>M08.png</space>
+  <exterior>aquatic2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>7000000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Luxury Goods</commodity>
+  </commodities>
+  <description>Brooks is a bustling, highly populated Imperial civilian planet. With the decline of the Empire, it has found itself on the border with dangerous space, a rather uncomfortable position. As Brooks is a rich planet with a lot of economical and political weight within the Empire, the Imperial Navy protects Arcturus for Brooks' sake as much as for the Imperial core systems.</description>
+  <bar>On Brooks, everything is expensive, something that comes with most economically booming worlds. However, most traders put up with the inflated prices for refreshments and services at the spaceport bar, because Brooks is a place where profit is made.</bar>
+ </general>
+ <tech>
+  <item>Laser 1</item>
+  <item>Basic Outfits 1</item>
+  <item>Basic Outfits 2</item>
+  <item>Missiles 2</item>
+ </tech>
+</asset>

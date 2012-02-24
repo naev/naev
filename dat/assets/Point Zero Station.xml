@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Point Zero Station">
+ <pos>
+  <x>2610.831152</x>
+  <y>1623.876319</y>
+ </pos>
+ <GFX>
+  <space>station-sphere.png</space>
+  <exterior>traderoom.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>140</population>
+  <hide>0.750000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Acting as the primary gateway for goods traveling to and from Father's Pride, Point Zero Station is a busy commercial port. Many traders are willing to trade here rather than take the trouble of visiting the systems beyond Point Zero themselves, though there's always the entrepreneur who believes the extra jumps will be worth the payout.</description>
+  <bar>Reminiscent of the stock markets on pre-Federation Earth, the spacedock bar of Point Zero Station is one of the biggest and most important facilities aboard. People come here on business just as much as to socialize. Commodity exchange rates are displayed on big screens along the walls, and for a small fee a pilot can make use of a private trade booth.</bar>
+ </general>
+</asset>

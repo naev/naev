@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Diabolos">
+ <pos>
+  <x>12182.413409</x>
+  <y>-6354.687071</y>
+ </pos>
+ <GFX>
+  <space>station-sphere.png</space>
+  <exterior>traderoom.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>10.000000</value>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>2000</population>
+  <hide>0.750000</hide>
+  <services>
+   <land/>
+   <refuel/>
+  </services>
+  <commodities/>
+  <description>Diabolos station was constructed especially for the sport that made Totoran famous. The station sports two separate arenas. The first one is a deadly, three dimensional labyrinth filled with dangerous traps and obstacles. It fills most of the station's bulk. The second arena is actually space itself. Gladiators fight in lifesuits on the outer hull of the station, without lifelines.</description>
+ </general>
+</asset>

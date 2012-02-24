@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Tarsus Station">
+ <pos>
+  <x>-8814.746224</x>
+  <y>-7876.111106</y>
+ </pos>
+ <GFX>
+  <space>000.png</space>
+  <exterior>station03.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>3000</population>
+  <hide>0.750000</hide>
+  <services>
+   <land>dv_mil_restricted</land>
+   <refuel/>
+  </services>
+  <commodities/>
+  <description>Tarsus Station is a Dvaered military base. It was constructed shortly after the Incident, when piracy and the FLF began to gain in power. Tarsus Station serves as one of the key fortifications in the defense of the Dvaered core systems.</description>
+ </general>
+</asset>

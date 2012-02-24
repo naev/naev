@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Eenerim">
+ <pos>
+  <x>14893.737658</x>
+  <y>2266.770636</y>
+ </pos>
+ <GFX>
+  <space>M00.png</space>
+  <exterior>oceanic.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>O</class>
+  <population>1500000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Medicine</commodity>
+  </commodities>
+  <description>With over 80% of its surface covered in water, Eenerim teeters on the brink of classes M and O. The population here is spread out over many small or medium sized islands scattered evenly across the globe. The Sirius governemt has divided up the land between the three echelons, with each island predominantly inhabited by either Shaira, Fyrra or Serra.</description>
+  <bar>The spaceport bar here is utterly unremarkable. That's not a bad thing, of course, because bars that distinguish themselves more often than not do so in an unpleasant way.</bar>
+ </general>
+ <tech>
+  <item>Bulk Trade Ships</item>
+ </tech>
+</asset>

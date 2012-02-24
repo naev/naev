@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Ulios">
+ <pos>
+  <x>17880.000000</x>
+  <y>-8100.000000</y>
+ </pos>
+ <GFX>
+  <space>M08.png</space>
+  <exterior>traderoom.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Independent</faction>
+  <value>100.000000</value>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>1000000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities>
+   <commodity>Ore</commodity>
+   <commodity>Food</commodity>
+   <commodity>Medicine</commodity>
+  </commodities>
+  <description>Ulios is a backwater independent world. Though a province of the Old Empire before the Incident, the planet has recently declared its independence and is now governed by a small political elite headed by Baron Dovai Sauterfeldt. As the Empire is all but impotent in this region of space and the world is too remote and isolated to be of much interest to the Dvaered, Ulios' independence stands.</description>
+  <bar>Despite the relatively accommodating interior, Ulios' spaceport bar doesn't get too many customers. Traders do visit the world, but as there is little profit to be made the ships are few and far between. The captains often choose to conduct their business and move on rather than stay and kick back for a few STP.</bar>
+ </general>
+</asset>

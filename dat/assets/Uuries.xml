@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Uuries">
+ <pos>
+  <x>18879.572578</x>
+  <y>-2960.851363</y>
+ </pos>
+ <GFX>
+  <space>D00.png</space>
+  <exterior>forest.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

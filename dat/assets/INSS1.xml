@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="INSS-1">
+ <pos>
+  <x>16124.597177</x>
+  <y>-11480.653305</y>
+ </pos>
+ <GFX>
+  <space>station-agriculture.png</space>
+  <exterior>forest.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>10.000000</value>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>800</population>
+  <hide>0.750000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <commodity/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+  </commodities>
+  <description>INSS-1, or Imperial Nutrient Supply Station 1, was the first in a number of Imperially funded space-side crop growing projects. The main purpose of the station is to grow food for nearby colonies and stations at extreme efficiency.</description>
+  <bar>Trim and functional, the bar here is situated in the central growing dome of ISS-1. The windows look out on vast stretches of multi-layered crop beds, and there's always a harvester to be seen at work somewhere out there.</bar>
+ </general>
+</asset>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Mastodon Station">
+ <pos>
+  <x>22542.588874</x>
+  <y>1758.254694</y>
+ </pos>
+ <GFX>
+  <space>station-powerplant.png</space>
+  <exterior>station03.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <value>10.000000</value>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>200</population>
+  <hide>0.750000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <commodity/>
+  </services>
+  <commodities>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Mastodon Station is a power generator, supplying the local planets with energy cells. It also produces power cores and low power energy weapons for the ships produced at Orville Shipyard.</description>
+  <bar>The spacedock bar is constantly filled with the low hum of heavy machinery. The entire station reverberates with it, which really gives you the impression that the place is active.</bar>
+ </general>
+</asset>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Oma">
+ <pos>
+  <x>-3100.298044</x>
+  <y>-3366.492496</y>
+ </pos>
+ <GFX>
+  <space>H03.png</space>
+  <exterior>desertic2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>H</class>
+  <population>20000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+  </commodities>
+  <description>Oma is one of the harsher desert worlds. The external temperature varies nearly 400 degrees each day, making it completely incapable of sustaining human life outside of climate-controlled bases. The lack of proper terraforming equipment also makes it hard on the visitors by the drastic temperature changes they endure across the base.</description>
+  <bar>The Lost Drunk isn't much of a bar. The high price of most beverages and the low population results in few customers. From what you can see it's mainly shipping pilots and the odd mercenary sitting apart from each other. Not a jolly place.</bar>
+ </general>
+</asset>

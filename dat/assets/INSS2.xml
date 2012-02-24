@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="INSS-2">
+ <pos>
+  <x>-4539.645412</x>
+  <y>9719.966587</y>
+ </pos>
+ <GFX>
+  <space>station-agriculture.png</space>
+  <exterior>forest.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>10.000000</value>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>800</population>
+  <hide>0.750000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <commodity/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+  </commodities>
+  <description>INSS-2, or Imperial Nutrient Supply Station 2, was built in this remote secion of space to compensate for the lack of farming output in the sector. Food is not a very profitable commodity to trade over long distances, and the colonies in Nartur found themselves limited in their growth due to chronic shortages. INSS-2 has allowed them to grow.</description>
+  <bar>Trim and functional, the bar here is situated in the central growing dome of ISS-2. The windows look out on vast stretches of multi-layered crop beds, and there's always a harvester to be seen at work somewhere out there.</bar>
+ </general>
+</asset>

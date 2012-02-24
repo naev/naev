@@ -11,6 +11,7 @@ appicondir = $(datadir)/pixmaps
 appicon_DATA = extras/logos/naev.png
 Graphicsdir = $(datadir)/applications
 Graphics_DATA = naev.desktop
+dist_pkgdata_DATA = naev-confupdate.sh
 
 dist_man6_MANS = naev.6
 dist_doc_DATA = AUTHORS README TODO LICENSE
@@ -49,7 +50,7 @@ $(DATA_ARCHIVE): $(PACK) VERSION
 	@echo " PACK   $(DATA_ARCHIVE)"
 	cd "$(top_srcdir)" && \
 	$(abs_top_builddir)/$(PACK) "$(abs_top_builddir)/$(DATA_ARCHIVE)" \
-	  AUTHORS VERSION \
+	  AUTHORS VERSION naev-confupdate.sh \
 	  $$(find ai      -type f -name '*.lua'; \
 	     find gfx     -type f -name '*.png'; \
 	     find snd     -type f \

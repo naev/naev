@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Khelim">
+ <pos>
+  <x>-5534.972756</x>
+  <y>11532.092902</y>
+ </pos>
+ <GFX>
+  <space>Y00.png</space>
+  <exterior>methane.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Frontier</faction>
+  <value>60.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>Y</class>
+  <population>5000000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Khelim was the target world for Majestic, the eleventh colony ship sent from Earth in the First Growth. Majestic was populated chiefly by people from India and the Middle East, and though interstellar traffic has been commonplace for many years now, the characteristic features of that area can still be seen on the faces of the people of Khelim.</description>
+  <bar>The Crescent Blade bar is about as respectable as low-profile bars come. It has all the standard facilities the galactic traveler has come to rely on, and the service leaves nothing to be desired. Other than that, the place is unremarkable.</bar>
+ </general>
+ <tech>
+  <item>Basic Outfits 1</item>
+  <item>Basic Outfits 2</item>
+  <item>Missiles 1</item>
+ </tech>
+</asset>

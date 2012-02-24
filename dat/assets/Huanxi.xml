@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Huan'xi">
+ <pos>
+  <x>39360.000000</x>
+  <y>10640.000000</y>
+ </pos>
+ <GFX>
+  <space>M07.png</space>
+  <exterior>forest.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>4000000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Huan'xi may be a relatively remote planet, but it has a thriving agriculture. The planet's soil is extremely fertile, allowing for multiple crops per cycle. The planet also exports unique foodstuffs that are difficult to produce elsewhere. Indeed, one can find "genuine Huan'xi products" in food outlets all over the galaxy.</description>
+  <bar>The rustic feel of this bar is the product of a careful choice of appointments, music and holographic illusions. The owner clearly feels that customers will be attracted by the atmosphere of his establishments, rather than by the drinks he serves.</bar>
+ </general>
+ <tech>
+  <item>Ion 1</item>
+  <item>Basic Trade Ships</item>
+  <item>Bulk Trade Ships</item>
+  <item>Basic Outfits 1</item>
+ </tech>
+</asset>

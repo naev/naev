@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ssys name="Eye of Night">
+ <general>
+  <radius>24500.000000</radius>
+  <stars>400</stars>
+  <interference>0.000000</interference>
+  <nebula volatility="0.000000">0.000000</nebula>
+ </general>
+ <pos>
+  <x>335.000000</x>
+  <y>-732.000000</y>
+ </pos>
+ <assets>
+  <asset>Eye of Night I</asset>
+  <asset>Eye of Night II</asset>
+  <asset>Eye of Night III</asset>
+  <asset>Inios Station</asset>
+  <asset>Traal</asset>
+  <asset>Virtual Civilian Standard</asset>
+  <asset>Virtual Trader Area</asset>
+ </assets>
+ <jumps>
+  <jump target="Fidelis">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Lapis">
+   <autopos/>
+   <hide>0.000000</hide>
+  </jump>
+  <jump target="Ruttwi">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+ </jumps>
+</ssys>

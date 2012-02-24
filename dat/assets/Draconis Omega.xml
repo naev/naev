@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Draconis Omega">
+ <pos>
+  <x>20160.000000</x>
+  <y>66600.000000</y>
+ </pos>
+ <GFX>
+  <space>M09.png</space>
+  <exterior>forest2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>8000000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Medicine</commodity>
+   <commodity>Luxury Goods</commodity>
+  </commodities>
+  <description>Draconis Omega was one of the old Empire's best colonies. The planet is large compared to Earth, yet its gravity is comparable. This made it ideal as a population base, which it remains today. Draconis Omega remains firmly loyal to the Empire despite its now isolated position. The people here believe that the after effects of the Incident are only temporary, and that the Empire will one day regain its former glory, in which Draconis Omega will feature prominently.</description>
+  <bar>Ever the optimists, the people of Draconis Omega have decorated their spaceport bar with displays of past Imperial power, portraits of former Emperors and charts that show the size of the Empire when it was at its peak. It's clear that the inhabitants truly believe that the good times will one day return.</bar>
+ </general>
+ <tech>
+  <item>Laser 1</item>
+  <item>Bulk Trade Ships</item>
+  <item>Basic Civilian Ships</item>
+  <item>Basic Outfits 1</item>
+  <item>Low Tech Upgrades</item>
+ </tech>
+</asset>

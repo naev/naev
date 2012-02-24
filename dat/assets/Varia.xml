@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Varia">
+ <pos>
+  <x>-9713.888889</x>
+  <y>-290.555556</y>
+ </pos>
+ <GFX>
+  <space>M04.png</space>
+  <exterior>forest.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>500000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land>land_hiclass</land>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Medicine</commodity>
+   <commodity>Luxury Goods</commodity>
+  </commodities>
+  <description>Varia is a Dvaered world, so it can't be called lush or relaxing. But it's the next best thing. The climate on Varia is as close to old Earth's as makes no difference, and the inhabitants of this world typically lead healthy, long lives. In fact, the planet is so nice that some feel it is wasted on the Dvaered, who misuse the bounty the planet offers for their crude, destructive forms of entertainment.</description>
+  <bar>Varia's bar is more like a bar complex than a bar. With multiple rooms, each decorated in different styles and each serving different beverages, the discerning alcoholic with money to spare could spend all week here without ever getting bored. Most of the merchants and businesspeople prefer to stick to the main room, however.</bar>
+ </general>
+ <tech>
+  <item>Kinetic 1</item>
+  <item>Basic Outfits 1</item>
+  <item>Basic Outfits 2</item>
+  <item>Missiles 1</item>
+ </tech>
+</asset>

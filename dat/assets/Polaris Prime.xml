@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Polaris Prime">
+ <pos>
+  <x>13874.285594</x>
+  <y>4806.246398</y>
+ </pos>
+ <GFX>
+  <space>002.png</space>
+  <exterior>traderoom.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>300.000000</value>
+  <range>3</range>
+ </presence>
+ <general>
+  <class>1</class>
+  <population>318000</population>
+  <hide>0.750000</hide>
+  <services>
+   <land>land_hiclass</land>
+   <refuel/>
+   <bar/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Medicine</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Luxury Goods</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Polaris Prime is the service station for the Emperor's Wrath. Normal people are not allowed to set foot on the gargantuan ship, so all official business has to happen on Polaris Prime. The station is a trade hub as well as a center of government, serving as the civilian end of the Empire's capital.</description>
+  <bar>A simple, utilitarian bar patronized largely by off-duty dock workers and terraformers, this bar is nonetheless kept immaculately clean. It clearly means to set the... bar for all bars in Empire space.</bar>
+ </general>
+ <tech>
+  <item>Laser 1</item>
+  <item>Laser 2</item>
+  <item>Laser 3</item>
+  <item>Basic Civilian Ships</item>
+  <item>High Tech Upgrades 2</item>
+  <item>Heavy Weapons 2</item>
+ </tech>
+</asset>

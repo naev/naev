@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="New Mars">
+ <pos>
+  <x>12735.693828</x>
+  <y>-19340.936117</y>
+ </pos>
+ <GFX>
+  <space>K00.png</space>
+  <exterior>desertic.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>50.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>K</class>
+  <population>100000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+  </services>
+  <commodities/>
+  <description>The Emperor's Fist project needs a lot of raw materials. A portion of those materials are mined right here on New Mars, which has the advantage that no trip through hyperspace is needed to get them to location. New Mars is being systematically strip-mined, and as such the planet has nothing to offer in the way of leisure or tourism.</description>
+  <bar>Clean and functional, this bar has been built according to recent Imperial standards. It's more a utility service than a place to unwind.</bar>
+ </general>
+</asset>

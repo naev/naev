@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Pultatis II">
+ <pos>
+  <x>-8250.000000</x>
+  <y>6250.000000</y>
+ </pos>
+ <GFX>
+  <space>H01.png</space>
+  <exterior>desertic2.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

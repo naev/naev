@@ -227,9 +227,6 @@ static void opt_gameplay( unsigned int wid )
 #ifdef NDATA_DEF
          "ndata: "NDATA_DEF"\n"
 #endif /* NDATA_DEF */
-#ifdef PREFSDIR_DEF
-         "preference directory: "PREFSDIR_DEF"\n"
-#endif /* PREFSDIR_DEF */
          );
 
 
@@ -1064,10 +1061,10 @@ static void opt_video( unsigned int wid )
    }
    res   = malloc( sizeof(char*) * (i+j) );
    nres  = 0;
+   res_def = 0;
    if (j) {
       res[0]   = malloc(16);
       snprintf( res[0], 16, "%dx%d", conf.width, conf.height );
-      res_def  = 0;
       nres     = 1;
    }
    for (i=0; modes[i]; i++) {

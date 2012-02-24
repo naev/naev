@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Vuere">
+ <pos>
+  <x>4053.695496</x>
+  <y>17341.104186</y>
+ </pos>
+ <GFX>
+  <space>C01.png</space>
+  <exterior>oceanic2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>50.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>C</class>
+  <population>50000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land>land_hiclass</land>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+  </commodities>
+  <description>The Emperor's Fist project needs labor. A lot of labor. And while the world itself remains unfit for habitation, the workforce needs someplace else to live. The inhabitants of Halir refused to provide them shelter, invoking various complicated rights and regulations, so rather than persuade the local government, the Imperial Council decided to deploy prefab survival units on Vuere. As such, Vuere should be considered a temporary camp rather than a colony. However, with a population this size and a projected duration of stay this long, it is doubtful if Vuere will ever truly be abandoned.</description>
+  <bar>The bar is surprisingly hospitable for such a makeshift settlement. The inhabitants apparently feel the need to make up for the harsh environment of their C-class planet by making their indoor areas as comfortable and appeasing as they can. The bar is a prime example of this.</bar>
+ </general>
+</asset>

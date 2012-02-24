@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Arch Arai">
+ <pos>
+  <x>9162.462434</x>
+  <y>16600.550706</y>
+ </pos>
+ <GFX>
+  <space>moon-P03.png</space>
+  <exterior>traderoom.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>P</class>
+  <population>5000000</population>
+  <hide>0.500000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Medicine</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Once an independent world home to pirates and black market traders, Arch Arai has long since fallen under the spell of the Touched. Now it is a fairly law-abiding Sirius world, earning its existence through trade and industry like every other planet.</description>
+  <bar>This bar is a quiet place. Though it is certainly not lacking in patronage, the people who come here don't seem about to make a fuss over anything. The effect is contagious, making newcomers follow the example of those who are already there almost instinctively.</bar>
+ </general>
+ <tech>
+  <item>Ion 1</item>
+  <item>Basic Outfits 1</item>
+  <item>Basic Civilian Ships</item>
+ </tech>
+</asset>

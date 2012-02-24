@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="DVNN Central">
+ <pos>
+  <x>11185.917396</x>
+  <y>25623.169472</y>
+ </pos>
+ <GFX>
+  <space>station-powerplant.png</space>
+  <exterior>traderoom.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>50.000000</value>
+  <range>3</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>1000</population>
+  <hide>0.750000</hide>
+  <services>
+   <land/>
+   <bar/>
+  </services>
+  <commodities/>
+  <description>Even before House Dvaered gained its independence, there were unofficial news channels that fueled the discontent among the Imperial labor force. Later, after their work was done, these channels pooled their resources to establish the Dvaered News Network, or DVNN. This station serves as the main nexus for all Dvaered mass media. As such it is coveted by many a Warlord, but Dvaered High Command makes sure that the station remains firmly under its control.</description>
+  <bar>Spaceport bar, waiting lounge, interview room, this facility is everything at once. It's the only place accessible to non-DVNN personnel, so all dealings with visitors have to take place here. In fact, one of the Dvaered reality shows is a live feed from the spaceport bar on DVNN Central, showing how the various visitors behave. The Dvaered seem to find this entertaining.</bar>
+ </general>
+</asset>

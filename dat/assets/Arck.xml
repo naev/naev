@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Arck">
+ <pos>
+  <x>13328.000000</x>
+  <y>-35428.000000</y>
+ </pos>
+ <GFX>
+  <space>M01.png</space>
+  <exterior>oceanic2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>9000000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Medicine</commodity>
+   <commodity>Luxury Goods</commodity>
+  </commodities>
+  <description>With nine billion inhabitants, Arck is one of the most densely populated worlds in the galaxy. Most of the planet's surface is covered by a gigantic, sprawling city. Naturally, with so much inhabitation comes massive environmental pollution, and many skeptics believe that what the Dvaered are doing here is a form of reverse terraforming - an attempt to turn Arck into an X class planet.</description>
+  <bar>The spaceport on Arck is located right in the middle of a particularly densely populated urban center. The associated spaceport bar has been expanded and turned into a general leisure facility for the local inhabitants, something that often irritates traders who come here to do business, only to find themselves in the middle of a Dvaered Turborave party.</bar>
+ </general>
+</asset>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="M.K.">
+ <pos>
+  <x>-10298.000000</x>
+  <y>2166.000000</y>
+ </pos>
+ <GFX>
+  <space>M01.png</space>
+  <exterior>oceanic2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>500000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Medicine</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>M.K, a rather oddly named planet, holds a special place in many Soromid's hearts. It is the closest inhabited world to Sorom that survived the Incident. It has little else to set it apart, however. The local economy is operating along predictable lines, and the population is no better off than on most Soromid worlds. To most traders, M.K. is just another market to make profit in.</description>
+  <bar>Both Soromid and non-Soromid frequent this spaceport bar. As Wildwood station is more of a service utility than a real community, M.K. is often the first real Soromid port most new traders visit. It is therefore here they get their first taste of a full-fledged Soromid society. It's not uncommon to find yound pilots looking at the surroundings with a mixture of wonder and nervousness.</bar>
+ </general>
+ <tech>
+  <item>Plasma 1</item>
+  <item>Basic Outfits 2</item>
+  <item>Missiles 1</item>
+  <item>Missiles 2</item>
+ </tech>
+</asset>
