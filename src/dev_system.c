@@ -174,7 +174,10 @@ int dsys_saveSystem( StarSystem *sys )
    pos = 0;
    for (i=0; i<(int)strlen(sys->name); i++) {
       if (!ispunct(sys->name[i])) {
-         cleanName[pos] = sys->name[i];
+         if (sys->name[i] == ' ')
+            cleanName[pos] = '_';
+         else
+            cleanName[pos] = tolower(sys->name[i]);
          pos++;
       }
    }
@@ -185,7 +188,6 @@ int dsys_saveSystem( StarSystem *sys )
    /* Clean up. */
    xmlFreeDoc(doc);
    free(cleanName);
-
 
    return 0;
 }

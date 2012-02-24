@@ -133,7 +133,10 @@ int dpl_savePlanet( const Planet *p )
    pos = 0;
    for (i=0; i<(int)strlen(p->name); i++) {
       if (!ispunct(p->name[i])) {
-         cleanName[pos] = p->name[i];
+         if (p->name[i] == ' ')
+            cleanName[pos] = '_';
+         else
+            cleanName[pos] = tolower(p->name[i]);
          pos++;
       }
    }

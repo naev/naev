@@ -2483,7 +2483,7 @@ void pilots_renderOverlay( double dt )
  */
 void pilot_clearTimers( Pilot *pilot )
 {
-   int i;
+   int i, n;
    PilotOutfitSlot *o;
 
    pilot->ptimer     = 0.; /* Pilot timer. */
@@ -2492,12 +2492,20 @@ void pilot_clearTimers( Pilot *pilot )
    pilot->dtimer     = 0.; /* Disable timer. */
    for (i=0; i<MAX_AI_TIMERS; i++)
       pilot->timer[i] = 0.; /* Specific AI timers. */
+   n = 0;
    for (i=0; i<pilot->noutfits; i++) {
       o = pilot->outfits[i];
       o->timer    = 0.; /* Last used timer. */
       o->stimer   = 0.; /* State timer. */
-      o->state    = PILOT_OUTFIT_OFF; /* Set off. */
+      if (o->state != PILOT_OUTFIT_OFF) {
+         o->state    = PILOT_OUTFIT_OFF; /* Set off. */
+         n++;
+      }
    }
+
+   /* Must recalculate stats. */
+   if (n > 0)
+      pilot_calcStats( pilot );
 }
 
 
