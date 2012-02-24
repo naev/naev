@@ -25,6 +25,7 @@
 
 #include "log.h"
 #include "ndata.h"
+#include "nfile.h"
 #include "spfx.h"
 #include "array.h"
 #include "ship.h"
@@ -42,7 +43,7 @@
 #define XML_OUTFIT_ID      "Outfits"   /**< XML section identifier. */
 #define XML_OUTFIT_TAG     "outfit"    /**< XML section identifier. */
 
-#define OUTFIT_DATA  "dat/outfit.xml" /**< File that contains the outfit data. */
+#define OUTFIT_DATA  "dat/outfits" /**< File that contains the outfit data. */
 #define OUTFIT_GFX   "gfx/outfit/" /**< Path to outfit graphics. */
 
 
@@ -65,8 +66,9 @@ static Outfit* outfit_stack = NULL; /**< Stack of outfits. */
 static OutfitType outfit_strToOutfitType( char *buf );
 static int outfit_setDefaultSize( Outfit *o );
 /* parsing */
+static int outfit_loadDir( char *dir );
 static int outfit_parseDamage( Damage *dmg, xmlNodePtr node );
-static int outfit_parse( Outfit* temp, const xmlNodePtr parent );
+static int outfit_parse( Outfit* temp, const char* file );
 static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent );
 static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent );
 static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent );
@@ -1884,11 +1886,21 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define
  *    @param parent Parent node to parse outfit from.
  *    @return 0 on success.
  */
-static int outfit_parse( Outfit* temp, const xmlNodePtr parent )
+static int outfit_parse( Outfit* temp, const char* file )
 {
-   xmlNodePtr cur, node;
+   xmlNodePtr cur, node, parent;
    char *prop;
    const char *cprop;
+   uint32_t bufsize;
+   char *buf = ndata_read( file, &bufsize );
+
+   xmlDocPtr doc = xmlParseMemory( buf, bufsize );
+
+   parent = doc->xmlChildrenNode; /* first system node */
+   if (parent == NULL) {
+      ERR("Malformed '"OUTFIT_DATA"' file: does not contain elements");
+      return -1;
+   }
 
    /* Clear data. */
    memset( temp, 0, sizeof(Outfit) );
@@ -2006,9 +2018,33 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define
    MELEMENT(temp->description==NULL,"description");
 #undef MELEMENT
 
+   xmlFreeDoc(doc);
+   free(buf);
+
    return 0;
 }
 
+
+static int outfit_loadDir( char *dir )
+{
+   int nfiles;
+   char **outfit_files;
+   char *file;
+   int i;
+
+   outfit_files = nfile_readDir( &nfiles, dir );
+   for (i=0; i<nfiles; i++) {
+      file = malloc((strlen(dir)+strlen(outfit_files[i])+2)*sizeof(char));
+      snprintf(file,(strlen(dir)+strlen(outfit_files[i])+2)*sizeof(char),"%s/%s",dir,outfit_files[i]);
+      if (nfile_dirExists( file )) {
+         outfit_loadDir( file );
+      }
+      else
+         outfit_parse( &array_grow(&outfit_stack), file );
+   }
+
+   return 0;
+}
 
 /**
  * @brief Loads all the outfits.
@@ -2019,30 +2055,10 @@ int outfit_load (void)
 {
    int i;
    Outfit *o;
-   uint32_t bufsize;
-   char *buf = ndata_read( OUTFIT_DATA, &bufsize );
-
-   xmlNodePtr node;
-   xmlDocPtr doc = xmlParseMemory( buf, bufsize );
-
-   node = doc->xmlChildrenNode;
-   if (!xml_isNode(node,XML_OUTFIT_ID)) {
-      ERR("Malformed '"OUTFIT_DATA"' file: missing root element '"XML_OUTFIT_ID"'");
-      return -1;
-   }
-
-   node = node->xmlChildrenNode; /* first system node */
-   if (node == NULL) {
-      ERR("Malformed '"OUTFIT_DATA"' file: does not contain elements");
-      return -1;
-   }
 
    /* First pass, loads up ammunition. */
    outfit_stack = array_create(Outfit);
-   do {
-      if (xml_isNode(node,XML_OUTFIT_TAG))
-         outfit_parse( &array_grow(&outfit_stack), node );
-   } while (xml_nextNode(node));
+   outfit_loadDir( OUTFIT_DATA );
    array_shrink(&outfit_stack);
 
 
@@ -2064,9 +2080,6 @@ int outfit_load (void)
       else if (outfit_isFighterBay(&outfit_stack[i]))
          o->u.bay.ammo = outfit_get( o->u.bay.ammo_name );
    }
-
-   xmlFreeDoc(doc);
-   free(buf);
 
    DEBUG("Loaded %d Outfit%s", array_size(outfit_stack), (array_size(outfit_stack)==1) ? "" : "s" );
 
