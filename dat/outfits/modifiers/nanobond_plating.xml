@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Nanobond Plating">
+ <general>
+  <typename>Armour Modifier</typename>
+  <slot>structure</slot>
+  <mass/>
+  <price>365000</price>
+  <gfx_store>nanobond</gfx_store>
+  <description>Nanobond is the successor to Plasteel. It follows the same approach but has a greatly refined manufacturing process, providing greater particle density. The result is a much more robust material, although it is substantially more expensive.</description>
+ </general>
+ <specific type="modification">
+  <armour_rel>25</armour_rel>
+  <mass_rel>15</mass_rel>
+ </specific>
+</outfit>

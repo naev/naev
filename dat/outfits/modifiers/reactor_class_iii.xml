@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Reactor Class III">
+ <general>
+  <typename>Energy Modifier</typename>
+  <slot>utility</slot>
+  <mass>90</mass>
+  <price>970000</price>
+  <gfx_store>reactor_iii</gfx_store>
+  <description>The immense class III reactor provides enough power for nearly anything. The technology used in this reactor is particularly groundbreaking, with the best energy density of the three reactor classes. The huge size of the class III results in it only fitting comfortably on large vessels, though its energy output would be excessive for anything less.</description>
+ </general>
+ <specific type="modification">
+  <cpu>20</cpu>
+  <energy>180</energy>
+  <energy_regen>23.7</energy_regen>
+ </specific>
+</outfit>
+<!-- Shield and Armour-Related Outfits -->

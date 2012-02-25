@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="TeraCom Banshee Launcher">
+ <general>
+  <slot>weapon</slot>
+  <license>Medium Weapon License</license>
+  <mass>17</mass>
+  <price>45000</price>
+  <gfx_store>bansheelauncher</gfx_store>
+  <description>TeraCom has equipped its Banshee launcher model with high grade reload and tube cooling systems, giving a significant boost to rate of fire.</description>
+ </general>
+ <specific type="launcher" secondary="1">
+  <cpu>8</cpu>
+  <ammo>Banshee Rocket</ammo>
+  <delay>0.7</delay>
+  <amount>20</amount>
+ </specific>
+</outfit>

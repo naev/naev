@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Map: The Frontier">
+ <general>
+  <mass>0</mass>
+  <price>50000</price>
+  <description>This map contains the location of all eleven Frontier worlds, plus the Frontier Council.</description>
+  <gfx_store>map</gfx_store>
+ </general>
+ <specific type="map">
+  <short_desc>A Star Map.</short_desc>
+  <sys name="Theras">
+   <asset>Cetrat</asset>
+  </sys>
+  <sys name="Gilligan's Light">
+   <asset>Dawn</asset>
+   <asset>The Frontier Council</asset>
+  </sys>
+  <sys name="Haleb">
+   <asset>Jorlan</asset>
+  </sys>
+  <sys name="Norpin">
+   <asset>New Dortmund</asset>
+  </sys>
+  <sys name="Triap">
+   <asset>Khelim</asset>
+  </sys>
+  <sys name="Brimstone">
+   <asset>Nonuri</asset>
+  </sys>
+  <sys name="Shickhaw">
+   <asset>Avoss</asset>
+  </sys>
+  <sys name="Andee">
+   <asset>Varaati</asset>
+  </sys>
+  <sys name="Karman">
+   <asset>Atalanta</asset>
+  </sys>
+  <sys name="Gyrios">
+   <asset>Lapra</asset>
+   <asset>Jaegnhild</asset>
+  </sys>
+ </specific>
+</outfit>

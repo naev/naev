@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <outfit name="Auxiliary Processing Unit III">
+ <general>
+  <typename>CPU Modifier</typename>
+  <slot>utility</slot>
+  <mass>112</mass>
+  <price>360000</price>
+  <gfx_store>cpu_iii</gfx_store>
+  <description>The Advanced Nanosystems APU III is a high-end general-purpose processor suitable for capital ships. Its high power-efficiency is achieved by using cutting-edge superconducting materials.</description>
+ </general>
+ <specific type="modification">
+  <cpu>-40</cpu>
+  <energy_regen>-12</energy_regen>
+ </specific>
+</outfit>
+<!-- Miscellaneous Outfits (Expansion outfits, countermeasures, map.) -->

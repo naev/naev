@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Medium Weapon License">
+ <general>
+  <mass>0</mass>
+  <price>50000</price>
+  <gfx_store>license</gfx_store>
+  <description>This license will authorize you to buy and use medium weapons like the ion cannon.</description>
+ </general>
+ <specific type="license"/>
+</outfit>

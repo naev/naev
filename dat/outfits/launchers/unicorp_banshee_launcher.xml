@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Unicorp Banshee Launcher">
+ <general>
+  <slot>weapon</slot>
+  <license>Medium Weapon License</license>
+  <mass>17</mass>
+  <price>25000</price>
+  <gfx_store>bansheelauncher</gfx_store>
+  <description>This launcher fires Banshee class heavy rockets. It is small enough to be mounted on medium hardpoints, and light enough on system load to be an interesting choice for bombers.</description>
+ </general>
+ <specific type="launcher" secondary="1">
+  <cpu>5</cpu>
+  <ammo>Banshee Rocket</ammo>
+  <delay>1</delay>
+  <amount>20</amount>
+ </specific>
+</outfit>

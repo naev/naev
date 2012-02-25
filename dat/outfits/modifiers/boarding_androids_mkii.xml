@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Boarding Androids MKII">
+ <general>
+  <typename>Crew enhancement</typename>
+  <slot>utility</slot>
+  <mass>3</mass>
+  <price>50000</price>
+  <description>The Boarding Android Mark II improves upon the wide variety of implements sported by its predecessor, additionally including scissor-hands and a rape whistle. </description>
+  <gfx_store>cargo_pod</gfx_store>
+ </general>
+ <specific type="modification">
+  <crew_rel>35</crew_rel>
+ </specific>
+</outfit>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Shield Capacitor IV">
+ <general>
+  <typename>Shield Power Modifier</typename>
+  <slot>structure</slot>
+  <mass>72</mass>
+  <price>400000</price>
+  <description>The pinnacle in shield boosting technology, reinforcing the defenses of ships fighting on the front lines.</description>
+  <gfx_store>capacitor8</gfx_store>
+ </general>
+ <specific type="modification">
+  <shield>280</shield>
+ </specific>
+</outfit>

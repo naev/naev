@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Improved Power Regulator">
+ <general>
+  <typename>Weapon Modfier (Turret)</typename>
+  <slot>structure</slot>
+  <mass>3</mass>
+  <price>130000</price>
+  <gfx_store>efficiency_turret</gfx_store>
+  <description>Improved power regulation allows your turrets to waste less power when firing, though feeding turrets the bare minimum wattage results in a slightly decreased rate of fire.</description>
+ </general>
+ <specific type="modification">
+  <tur_firerate>-5</tur_firerate>
+  <tur_energy>-10</tur_energy>
+ </specific>
+</outfit>

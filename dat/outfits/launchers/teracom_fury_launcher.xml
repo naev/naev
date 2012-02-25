@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="TeraCom Fury Launcher">
+ <general>
+  <slot>weapon</slot>
+  <mass>9</mass>
+  <price>40000</price>
+  <description>The TeraCom Fury Launcher is a high-performance missile launcher equipped with patented target tracking and missile arming technology, allowing pilots to get a lock on their target faster and more easily than with launchers made by competing brands.</description>
+  <gfx_store>seekerlauncher</gfx_store>
+ </general>
+ <specific type="launcher" secondary="1">
+  <cpu>6</cpu>
+  <ammo>Fury Missile</ammo>
+  <delay>4</delay>
+  <amount>20</amount>
+  <lockon>7</lockon>
+  <arc>8</arc>
+  <ew_target>1.5</ew_target>
+ </specific>
+</outfit>

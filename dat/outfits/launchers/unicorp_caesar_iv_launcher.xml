@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Unicorp Caesar IV Launcher">
+ <general>
+  <slot>weapon</slot>
+  <size>medium</size>
+  <license>Heavy Weapon License</license>
+  <mass>30</mass>
+  <price>120000</price>
+  <description>the Caesar IV launcher does what it says on the box, which is launch Caesar IV torpedoes.</description>
+  <gfx_store>caesarlauncher</gfx_store>
+ </general>
+ <specific type="launcher" secondary="1">
+  <cpu>13</cpu>
+  <ammo>Caesar IV Torpedo</ammo>
+  <delay>10</delay>
+  <lockon>20</lockon>
+  <arc>6</arc>
+  <ew_target>0.4</ew_target>
+  <amount>6</amount>
+ </specific>
+</outfit>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Railgun">
+ <general>
+  <slot>weapon</slot>
+  <size>heavy</size>
+  <license>Heavy Weapon License</license>
+  <mass>37</mass>
+  <price>72000</price>
+  <description>The railgun is a cannon that uses heavy magnetic pulses to accelerate pieces of debris to extremely high velocities. The impact caused by the pieces of debris can tear apart even the strongest ship hulls.</description>
+  <gfx_store>railgun</gfx_store>
+ </general>
+ <specific type="bolt">
+  <cpu>26</cpu>
+  <gfx>massL</gfx>
+  <sound>mass</sound>
+  <sound_hit>medexp0</sound_hit>
+  <spfx_shield>ShiM</spfx_shield>
+  <spfx_armour>ExpM</spfx_armour>
+  <delay>1.7</delay>
+  <speed>700</speed>
+  <range>2200</range>
+  <falloff>1600</falloff>
+  <gfx_end>massL-end</gfx_end>
+  <energy>74</energy>
+  <heatup>90</heatup>
+  <track>0.8</track>
+  <swivel>15</swivel>
+  <damage>
+   <type>impact</type>
+   <penetrate>60</penetrate>
+   <physical>70</physical>
+   <disable>3</disable>
+  </damage>
+ </specific>
+</outfit>
