@@ -14,7 +14,6 @@
 
 #include <errno.h>
 
-
 #include "log.h"
 #include "opengl.h"
 #include "nfile.h"
@@ -28,6 +27,7 @@
 #include "spfx.h"
 #include "npng.h"
 #include "camera.h"
+#include "nstring.h"
 
 
 #define NEBULA_Z             16 /**< Z plane */
@@ -149,7 +149,7 @@ static int nebu_init_recursive( int iter )
    /* Load each, checking for compatibility and padding */
    glGenTextures( NEBULA_Z, nebu_textures );
    for (i=0; i<NEBULA_Z; i++) {
-      snprintf( nebu_file, PATH_MAX, NEBULA_PATH_BG, nebu_w, nebu_h, i );
+      nsnprintf( nebu_file, PATH_MAX, NEBULA_PATH_BG, nebu_w, nebu_h, i );
 
       /* Check compatibility. */
       if (nebu_checkCompat( nebu_file ))
@@ -752,7 +752,7 @@ static int nebu_generate (void)
 
    /* Save each nebula as an image */
    for (i=0; i<NEBULA_Z; i++) {
-      snprintf( nebu_file, PATH_MAX, NEBULA_PATH_BG, w, h, i );
+      nsnprintf( nebu_file, PATH_MAX, NEBULA_PATH_BG, w, h, i );
       ret = saveNebula( &nebu[ i*w*h ], w, h, nebu_file );
       if (ret != 0)
          break; /* An error has happened */
@@ -826,7 +826,7 @@ static int saveNebula( float *map, const uint32_t w, const uint32_t h, const cha
    sur = nebu_surfaceFromNebulaMap( map, w, h );
 
    /* save */
-   snprintf(file_path, PATH_MAX, "%s"NEBULA_PATH_DIR"%s", nfile_cachePath(), file );
+   nsnprintf(file_path, PATH_MAX, "%s"NEBULA_PATH_DIR"%s", nfile_cachePath(), file );
    ret = SDL_SavePNG( sur, file_path );
 
    /* cleanup */
@@ -850,7 +850,7 @@ static SDL_Surface* loadNebula( const char* file )
    npng_t *npng;
 
    /* loads the file */
-   snprintf(file_path, PATH_MAX, "%s"NEBULA_PATH_DIR"%s", nfile_cachePath(), file );
+   nsnprintf(file_path, PATH_MAX, "%s"NEBULA_PATH_DIR"%s", nfile_cachePath(), file );
    rw    = SDL_RWFromFile( file_path, "rb" );;
    npng  = npng_open( rw );
    sur   = npng_readSurface( npng, 0, 1 );

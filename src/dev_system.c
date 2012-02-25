@@ -17,6 +17,7 @@
 #include "nxml.h"
 #include "space.h"
 #include "physics.h"
+#include "nstring.h"
 
 
 /*
@@ -182,7 +183,7 @@ int dsys_saveSystem( StarSystem *sys )
       }
    }
    file = malloc((pos+20)*sizeof(char));
-   snprintf(file,(pos+20)*sizeof(char),"dat/ssys/%s.xml",cleanName);
+   nsnprintf(file,(pos+20)*sizeof(char),"dat/ssys/%s.xml",cleanName);
    xmlSaveFileEnc( file, doc, "UTF-8" );
 
    /* Clean up. */

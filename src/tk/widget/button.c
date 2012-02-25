@@ -13,7 +13,7 @@
 #include "nstring.h"
 
 #include <stdlib.h>
-#include <string.h>
+#include "nstring.h"
 
 
 static int btn_key( Widget* btn, SDLKey key, SDLMod mod );
@@ -236,7 +236,7 @@ static void btn_updateHotkey( Widget *btn )
    if (match != NULL) {
       strncpy( buf, display, match - display );
       buf[match-display] = '\0';
-      snprintf( &buf[match-display], sizeof(buf), "\eb%c\e0%s", match[0], match+1 );
+      nsnprintf( &buf[match-display], sizeof(buf), "\eb%c\e0%s", match[0], match+1 );
 
       if (btn->dat.btn.display != NULL)
          free(btn->dat.btn.display);

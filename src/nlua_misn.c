@@ -15,7 +15,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
+#include "nstring.h"
 #include <math.h>
 
 #include <lua.h>
@@ -558,7 +558,7 @@ static int misn_setNPC( lua_State *L )
    cur_mission->npc = strdup(name);
 
    /* Set portrait. */
-   snprintf( buf, PATH_MAX, "gfx/portraits/%s.png", str );
+   nsnprintf( buf, PATH_MAX, "gfx/portraits/%s.png", str );
    cur_mission->portrait = gl_newImage( buf, 0 );
 
    return 0;
@@ -911,7 +911,7 @@ static int misn_npcAdd( lua_State *L )
       priority = 5;
 
    /* Set path. */
-   snprintf( portrait, PATH_MAX, "gfx/portraits/%s.png", gfx );
+   nsnprintf( portrait, PATH_MAX, "gfx/portraits/%s.png", gfx );
 
    cur_mission = misn_getFromLua(L);
 

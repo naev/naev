@@ -12,7 +12,7 @@
 #include "colour.h"
 
 #include <math.h>
-#include <string.h>
+#include "nstring.h"
 
 #include "nmath.h"
 #include "naev.h"

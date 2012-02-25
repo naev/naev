@@ -18,6 +18,7 @@
 #ifdef DEBUGGING
 #include "ndata.h"
 #endif /* DEBUGGING */
+#include "nstring.h"
 
 
 static char** gui_list = NULL; /**< List of GUIs the player has. */
@@ -62,7 +63,7 @@ int player_guiAdd( char* name )
    /* Make sure the GUI is vaild. */
    SDL_RWops *rw;
    char buf[PATH_MAX];
-   snprintf( buf, sizeof(buf), "dat/gui/%s.lua", name );
+   nsnprintf( buf, sizeof(buf), "dat/gui/%s.lua", name );
    rw = ndata_rwops( buf );
    if (rw == NULL) {
       WARN("GUI '%s' does not exist as a file: '%s' not found.", name, buf );

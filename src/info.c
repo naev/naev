@@ -13,7 +13,7 @@
 
 #include "naev.h"
 
-#include <string.h>
+#include "nstring.h"
 
 #include "menu.h"
 #include "toolkit.h"
@@ -193,7 +193,7 @@ static void info_openMain( unsigned int wid )
          "Fuel:"
          );
    credits2str( creds, player.p->credits, 2 );
-   snprintf( str, 128,
+   nsnprintf( str, 128,
          "%s\n"
          "%s\n"
          "%s\n"
@@ -406,7 +406,7 @@ static void ship_update( unsigned int wid )
 
    cargo = pilot_cargoUsed( player.p ) + pilot_cargoFree( player.p );
    hyp_delay = ntime_pretty( pilot_hyperspaceDelay( player.p ), 2 );
-   len = snprintf( buf, sizeof(buf),
+   len = nsnprintf( buf, sizeof(buf),
          "%s\n"
          "%s\n"
          "%s\n"
@@ -714,7 +714,7 @@ static void cargo_genList( unsigned int wid )
       buf = malloc(sizeof(char*)*player.p->ncommodities);
       for (i=0; i<player.p->ncommodities; i++) {
          buf[i] = malloc(sizeof(char)*128);
-         snprintf(buf[i],128, "%s%s %d",
+         nsnprintf(buf[i],128, "%s%s %d",
                player.p->commodities[i].commodity->name,
                (player.p->commodities[i].id != 0) ? "*" : "",
                player.p->commodities[i].quantity);
@@ -877,7 +877,7 @@ static void info_openStandings( unsigned int wid )
    for (i=0; i<n; i++) {
       str[i] = malloc( 256 );
       m = round( faction_getPlayer( info_factions[i] ) );
-      snprintf( str[i], 256, "%s   [ %+d%% ]",
+      nsnprintf( str[i], 256, "%s   [ %+d%% ]",
             faction_name( info_factions[i] ), m );
    }
 
@@ -924,7 +924,7 @@ static void standings_update( unsigned int wid, char* str )
    window_moveWidget( wid, "txtName", lw+40, y );
    y -= 40;
    m = round( faction_getPlayer( info_factions[p] ) );
-   snprintf( buf, sizeof(buf), "%+d%%   [ %s ]", m, faction_getStanding( m ) );
+   nsnprintf( buf, sizeof(buf), "%+d%%   [ %s ]", m, faction_getStanding( m ) );
    window_modifyText( wid, "txtStanding", buf );
    window_moveWidget( wid, "txtStanding", lw+40, y );
 }

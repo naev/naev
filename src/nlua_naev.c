@@ -22,6 +22,7 @@
 #include "nstd.h"
 #include "input.h"
 #include "land.h"
+#include "nstring.h"
 
 
 /* Naev methods. */
@@ -117,27 +118,27 @@ static int naev_keyGet( lua_State *L )
          p = 0;
          /* Handle mod. */
          if ((mod != NMOD_NONE) && (mod != NMOD_ALL))
-            p += snprintf( &buf[p], sizeof(buf)-p, "%s + ", input_modToText(mod) );
+            p += nsnprintf( &buf[p], sizeof(buf)-p, "%s + ", input_modToText(mod) );
          /* Print key. */
          if (nstd_isalpha(key))
-            p += snprintf( &buf[p], sizeof(buf)-p, "%c", nstd_toupper(key) );
+            p += nsnprintf( &buf[p], sizeof(buf)-p, "%c", nstd_toupper(key) );
          else
-            p += snprintf( &buf[p], sizeof(buf)-p, "%s", SDL_GetKeyName(key) );
+            p += nsnprintf( &buf[p], sizeof(buf)-p, "%s", SDL_GetKeyName(key) );
          lua_pushstring( L, buf );
          break;
 
       case KEYBIND_JBUTTON:
-         snprintf( buf, sizeof(buf), "joy button %d", key );
+         nsnprintf( buf, sizeof(buf), "joy button %d", key );
          lua_pushstring( L, buf );
          break;
 
       case KEYBIND_JAXISPOS:
-         snprintf( buf, sizeof(buf), "joy axis %d-", key );
+         nsnprintf( buf, sizeof(buf), "joy axis %d-", key );
          lua_pushstring( L, buf );
          break;
 
       case KEYBIND_JAXISNEG:
-         snprintf( buf, sizeof(buf), "joy axis %d+", key );
+         nsnprintf( buf, sizeof(buf), "joy axis %d+", key );
          lua_pushstring( L, buf );
          break;
    }

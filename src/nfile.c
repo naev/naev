@@ -16,7 +16,7 @@
 #include "naev.h"
 
 #include <stdio.h>
-#include <string.h>
+#include "nstring.h"
 #include <stdarg.h>
 #include <stdlib.h>
 #include <dirent.h>
@@ -123,7 +123,7 @@ const char* nfile_dataPath (void)
             path = strdup(".");
         }
 
-        snprintf( naev_dataPath, PATH_MAX, "%s/naev/", path );
+        nsnprintf( naev_dataPath, PATH_MAX, "%s/naev/", path );
 
         if (path != NULL) {
             free (path);
@@ -134,7 +134,7 @@ const char* nfile_dataPath (void)
          WARN("%%APPDATA%% isn't set, using current directory.");
          path = ".";
       }
-      snprintf( naev_dataPath, PATH_MAX, "%s/naev/", path );
+      nsnprintf( naev_dataPath, PATH_MAX, "%s/naev/", path );
 #else
 #error "Feature needs implementation on this Operating System for Naev to work."
 #endif
@@ -162,7 +162,7 @@ const char* nfile_configPath (void)
             path = strdup(".");
         }
 
-        snprintf( naev_configPath, PATH_MAX, "%s/naev/", path );
+        nsnprintf( naev_configPath, PATH_MAX, "%s/naev/", path );
 
         if (path != NULL) {
             free (path);
@@ -173,7 +173,7 @@ const char* nfile_configPath (void)
          WARN("%%APPDATA%% isn't set, using current directory.");
          path = ".";
       }
-      snprintf( naev_configPath, PATH_MAX, "%s/naev/", path );
+      nsnprintf( naev_configPath, PATH_MAX, "%s/naev/", path );
 #else
 #error "Feature needs implementation on this Operating System for Naev to work."
 #endif
@@ -201,7 +201,7 @@ const char* nfile_cachePath (void)
             path = strdup(".");
         }
 
-        snprintf( naev_cachePath, PATH_MAX, "%s/naev/", path );
+        nsnprintf( naev_cachePath, PATH_MAX, "%s/naev/", path );
 
         if (path != NULL) {
             free (path);
@@ -212,7 +212,7 @@ const char* nfile_cachePath (void)
          WARN("%%APPDATA%% isn't set, using current directory.");
          path = ".";
       }
-      snprintf( naev_cachePath, PATH_MAX, "%s/naev/", path );
+      nsnprintf( naev_cachePath, PATH_MAX, "%s/naev/", path );
 #else
 #error "Feature needs implementation on this Operating System for Naev to work."
 #endif
@@ -243,7 +243,7 @@ char* nfile_dirname( char *path )
       return path;
 
    /* New dirname. */
-   snprintf( dirname_buf, MIN(sizeof(dirname_buf), (size_t)(i+1)),  path );
+   nsnprintf( dirname_buf, MIN(sizeof(dirname_buf), (size_t)(i+1)),  path );
    return dirname_buf;
 #else
 #error "Functionality not implemented for your OS."
@@ -374,7 +374,7 @@ int nfile_backupIfExists( const char* path, ... )
    }
 
    if (nfile_fileExists(file)) {
-      snprintf(backup, PATH_MAX, "%s.backup", file);
+      nsnprintf(backup, PATH_MAX, "%s.backup", file);
 
       /* Open files. */
       f_in  = fopen( file, "r" );
@@ -460,7 +460,7 @@ char** nfile_readDir( int* nfiles, const char* path, ... )
          continue;
 
       /* Stat the file */
-      snprintf( file, PATH_MAX, "%s/%s", base, name );
+      nsnprintf( file, PATH_MAX, "%s/%s", base, name );
       if (stat(file, &sb) == -1)
          continue; /* Unable to stat */
 

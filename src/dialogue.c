@@ -27,7 +27,6 @@
 
 #include <stdarg.h>
 #include <stdlib.h>
-#include <string.h>
 
 #include "log.h"
 #include "toolkit.h"
@@ -35,6 +34,7 @@
 #include "opengl.h"
 #include "input.h"
 #include "menu.h"
+#include "nstring.h"
 
 
 static int dialogue_open; /**< Number of dialogues open. */

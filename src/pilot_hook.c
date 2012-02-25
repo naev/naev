@@ -14,7 +14,7 @@
 
 #include "naev.h"
 
-#include <string.h>
+#include "nstring.h"
 #include <math.h>
 #include <stdlib.h>
 #include <limits.h>

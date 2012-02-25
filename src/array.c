@@ -1,8 +1,9 @@
 #include "array.h"
 
 #include <stdlib.h>
-#include <string.h>
 #include <stdio.h>
+
+#include "nstring.h"
 
 void *_array_create_helper(size_t e_size)
 {

@@ -15,7 +15,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
+#include "nstring.h"
 #include <math.h>
 
 #include "land_outfits.h"
@@ -241,7 +241,7 @@ static void commodity_update( unsigned int wid, char* str )
 
    comname = toolkit_getList( wid, "lstGoods" );
    if ((comname==NULL) || (strcmp( comname, "None" )==0)) {
-      snprintf( buf, PATH_MAX,
+      nsnprintf( buf, PATH_MAX,
          "NA Tons\n"
          "NA Credits/Ton\n"
          "\n"
@@ -252,7 +252,7 @@ static void commodity_update( unsigned int wid, char* str )
    com = commodity_get( comname );
 
    /* modify text */
-   snprintf( buf, PATH_MAX,
+   nsnprintf( buf, PATH_MAX,
          "%d Tons\n"
          "%"CREDITS_PRI" Credits/Ton\n"
          "\n"
@@ -437,7 +437,7 @@ static void commodity_renderMod( double bx, double by, double w, double h, void 
       commodity_update( land_getWid(LAND_WINDOW_COMMODITY), NULL );
       commodity_mod = q;
    }
-   snprintf( buf, 8, "%dx", q );
+   nsnprintf( buf, 8, "%dx", q );
    gl_printMid( &gl_smallFont, w, bx, by, &cBlack, buf );
 }
 
@@ -525,9 +525,9 @@ void land_errDialogueBuild( const char *fmt, ... )
    }
 
    if (errorlist_ptr == NULL) /* Initialize on first run. */
-      errorappend = snprintf( errorlist, sizeof(errorlist), "%s", errorreason );
+      errorappend = nsnprintf( errorlist, sizeof(errorlist), "%s", errorreason );
    else /* Append newest error to the existing list. */
-      snprintf( &errorlist[errorappend],  sizeof(errorlist)-errorappend, "\n%s", errorreason );
+      nsnprintf( &errorlist[errorappend],  sizeof(errorlist)-errorappend, "\n%s", errorreason );
    errorlist_ptr = errorlist;
 }
 
@@ -950,7 +950,7 @@ static void misn_update( unsigned int wid, char* str )
 
    /* Update date stuff. */
    buf = ntime_pretty( 0, 2 );
-   snprintf( txt, sizeof(txt), "%s\n%d Tons", buf, player.p->cargo_free );
+   nsnprintf( txt, sizeof(txt), "%s\n%d Tons", buf, player.p->cargo_free );
    free(buf);
    window_modifyText( wid, "txtDate", txt );
 
@@ -1049,20 +1049,20 @@ void land_checkAddRefuel (void)
    if (widget_exists( land_windows[0], "btnRefuel" )) {
       window_enableButton( land_windows[0], "btnRefuel");
       credits2str( cred, player.p->credits, 2 );
-      snprintf( buf, sizeof(buf), "Credits: %s", cred );
+      nsnprintf( buf, sizeof(buf), "Credits: %s", cred );
       window_modifyText( land_windows[0], "txtRefuel", buf );
    }
    /* Else create it. */
    else {
       /* Refuel button. */
       credits2str( cred, refuel_price(), 2 );
-      snprintf( buf, sizeof(buf), "Refuel %s", cred );
+      nsnprintf( buf, sizeof(buf), "Refuel %s", cred );
       window_addButton( land_windows[0], -20, 20 + (LAND_BUTTON_HEIGHT + 20),
             LAND_BUTTON_WIDTH,LAND_BUTTON_HEIGHT, "btnRefuel",
             buf, spaceport_refuel );
       /* Player credits. */
       credits2str( cred, player.p->credits, 2 );
-      snprintf( buf, sizeof(buf), "Credits: %s", cred );
+      nsnprintf( buf, sizeof(buf), "Credits: %s", cred );
       window_addText( land_windows[0], -20, 20 + 2*(LAND_BUTTON_HEIGHT + 20),
             LAND_BUTTON_WIDTH, gl_smallFont.h, 1, "txtRefuel",
             &gl_smallFont, &cBlack, buf );

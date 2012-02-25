@@ -17,7 +17,7 @@
 #include "naev.h"
 
 #include <math.h>
-#include <string.h>
+#include "nstring.h"
 #include <stdlib.h>
 
 #include "nxml.h"
@@ -1039,7 +1039,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
-   l = snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
+   l = nsnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s [%s]\n"
          "Needs %.0f CPU\n"
          "%.0f%% Penetration\n"
@@ -1057,12 +1057,12 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
          temp->u.blt.range,
          temp->u.blt.heatup);
    if (!outfit_isTurret(temp)) {
-      l += snprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
+      l += nsnprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
          "\n%.1f degree swivel",
          temp->u.blt.swivel*180./M_PI );
    }
    if (temp->u.blt.dmg.disable > 0.) {
-      l += snprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
+      l += nsnprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
          "\n%.0f Disable",
          temp->u.blt.dmg.disable );
    }
@@ -1162,7 +1162,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
-   l = snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
+   l = nsnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s\n"
          "Needs %.0f CPU\n"
          "%.0f%% Penetration\n"
@@ -1180,7 +1180,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
          temp->u.bem.range,
          temp->u.bem.heatup);
    if (temp->u.blt.dmg.disable > 0.) {
-      l += snprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
+      l += nsnprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
          "\n%.0f Disable/s",
          temp->u.bem.dmg.disable );
    }
@@ -1238,7 +1238,7 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
-   snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
+   nsnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s\n"
          "Needs %.0f CPU\n"
          "%.1f Shots Per Second\n"
@@ -1360,7 +1360,7 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
-   l = snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
+   l = nsnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s\n"
          "%.0f%% Penetration\n"
          "%.0f Damage [%s]\n"
@@ -1376,7 +1376,7 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
          temp->u.amm.resist,
          temp->u.amm.duration );
    if (temp->u.blt.dmg.disable > 0.) {
-      l += snprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
+      l += nsnprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
          "\n%.0f Disable",
          temp->u.amm.dmg.disable );
    }
@@ -1469,7 +1469,7 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
-   i = snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
+   i = nsnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s"
          "%s",
          outfit_getType(temp),
@@ -1477,7 +1477,7 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
 
 #define DESC_ADD(x, s, n) \
 if ((x) != 0.) \
-   i += snprintf( &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, \
+   i += nsnprintf( &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, \
          "\n%+."n"f "s, x )
 #define DESC_ADD0(x, s)    DESC_ADD( x, s, "0" )
 #define DESC_ADD1(x, s)    DESC_ADD( x, s, "1" )
@@ -1556,7 +1556,7 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
-   snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
+   nsnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s\n"
          "\erActived Outfit\e0\n"
          "Needs %.0f CPU\n"
@@ -1625,7 +1625,7 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
-   snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
+   nsnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s\n"
          "Needs %.0f CPU\n"
          "%.1f Launches Per Second\n"
@@ -1666,7 +1666,7 @@ static void outfit_parseSFighter( Outfit *temp, const xmlNodePtr parent )
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
-   snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
+   nsnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s",
          outfit_getType(temp) );
 
@@ -1743,7 +1743,7 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
       }
       else if (xml_isNode(node,"short_desc")) {
          temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
-         snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX, "%s", xml_get(node) );
+         nsnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX, "%s", xml_get(node) );
       }
       else if (xml_isNode(node,"all")) { /* Add everything to the map */
          system_stack = system_getAll(&nsys);
@@ -1793,7 +1793,7 @@ static void outfit_parseSGUI( Outfit *temp, const xmlNodePtr parent )
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
-   snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
+   nsnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "GUI (Graphical User Interface)" );
 
    if (temp->u.gui.gui==NULL)
@@ -1822,7 +1822,7 @@ static void outfit_parseSLicense( Outfit *temp, const xmlNodePtr parent )
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
-   snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
+   nsnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s",
          outfit_getType(temp) );
 }
@@ -1855,7 +1855,7 @@ static void outfit_parseSJammer( Outfit *temp, const xmlNodePtr parent )
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
-   snprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
+   nsnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s\n"
          "\erActived Outfit\e0\n"
          "Needs %.0f CPU\n"
@@ -2036,7 +2036,7 @@ static int outfit_loadDir( char *dir )
    outfit_files = nfile_readDir( &nfiles, dir );
    for (i=0; i<nfiles; i++) {
       file = malloc((strlen(dir)+strlen(outfit_files[i])+2)*sizeof(char));
-      snprintf(file,(strlen(dir)+strlen(outfit_files[i])+2)*sizeof(char),"%s/%s",dir,outfit_files[i]);
+      nsnprintf(file,(strlen(dir)+strlen(outfit_files[i])+2)*sizeof(char),"%s/%s",dir,outfit_files[i]);
       if (nfile_dirExists( file )) {
          outfit_loadDir( file );
       }
@@ -2108,7 +2108,7 @@ int outfit_mapParse()
    for (i=0; i<nfiles; i++) {
 
       file = malloc((strlen(MAP_DATA)+strlen(map_files[i])+2)*sizeof(char));
-      snprintf(file,(strlen(MAP_DATA)+strlen(map_files[i])+2)*sizeof(char),"%s/%s",MAP_DATA,map_files[i]);
+      nsnprintf(file,(strlen(MAP_DATA)+strlen(map_files[i])+2)*sizeof(char),"%s/%s",MAP_DATA,map_files[i]);
 
       buf = ndata_read( file, &bufsize );
       doc = xmlParseMemory( buf, bufsize );

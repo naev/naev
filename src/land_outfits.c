@@ -15,7 +15,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
+#include "nstring.h"
 #include <math.h>
 
 #include "log.h"
@@ -209,7 +209,7 @@ void outfits_updateQuantities( unsigned int wid )
       len = owned / 10 + 4;
       if (owned >= 1) {
          quantity[i] = malloc( len );
-         snprintf( quantity[i], len, "%d", owned );
+         nsnprintf( quantity[i], len, "%d", owned );
       }
       else
          quantity[i] = NULL;
@@ -241,7 +241,7 @@ void outfits_update( unsigned int wid, char* str )
       window_modifyImage( wid, "imgOutfit", NULL, 0, 0 );
       window_disableButton( wid, "btnBuyOutfit" );
       window_disableButton( wid, "btnSellOutfit" );
-      snprintf( buf, PATH_MAX,
+      nsnprintf( buf, PATH_MAX,
             "NA\n"
             "\n"
             "NA\n"
@@ -281,7 +281,7 @@ void outfits_update( unsigned int wid, char* str )
    window_modifyText( wid, "txtDescription", outfit->description );
    credits2str( buf2, outfit->price, 2 );
    credits2str( buf3, player.p->credits, 2 );
-   snprintf( buf, PATH_MAX,
+   nsnprintf( buf, PATH_MAX,
          "%d\n"
          "\n"
          "%s\n"
@@ -525,7 +525,7 @@ static void outfits_renderMod( double bx, double by, double w, double h, void *d
    }
    if (q==1) return; /* Ignore no modifier. */
 
-   snprintf( buf, 8, "%dx", q );
+   nsnprintf( buf, 8, "%dx", q );
    gl_printMid( &gl_smallFont, w, bx, by, &cBlack, buf );
 }
 

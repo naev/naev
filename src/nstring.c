@@ -87,10 +87,10 @@ const char *nstrcasestr( const char *haystack, const char *needle )
 
 
 /**
- * @brief snprintf wrapper.
+ * @brief nsnprintf wrapper.
  */
 #if !HAS_POSIX
-int nsnprintf( char *text, size_t maxlen, const char *fmt, ... )
+int nnsnprintf( char *text, size_t maxlen, const char *fmt, ... )
 {
    va_list ap;
    int retval;

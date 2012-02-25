@@ -13,7 +13,7 @@
 
 #include "naev.h"
 
-#include <string.h>
+#include "nstring.h"
 #include <limits.h>
 
 #include "nxml.h"
@@ -391,7 +391,7 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
 #endif /* ! SDL_VERSION_ATLEAST(1,3,0) */
 
    /* Load the store surface. */
-   snprintf( buf, sizeof(buf), "%s_gfx_store.png", temp->name );
+   nsnprintf( buf, sizeof(buf), "%s_gfx_store.png", temp->name );
    temp->gfx_store = gl_loadImagePad( buf, gfx_store, 0, SHIP_TARGET_W, SHIP_TARGET_H, 1, 1, 1 );
 
 #if 0 /* Disabled for now due to issues with larger sprites. */
@@ -426,7 +426,7 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
 #endif
 
    /* Load the surface. */
-   snprintf( buf, sizeof(buf), "%s_gfx_target.png", temp->name );
+   nsnprintf( buf, sizeof(buf), "%s_gfx_target.png", temp->name );
    temp->gfx_target = gl_loadImagePad( buf, gfx, 0, sw, sh, 1, 1, 1 );
 
    return 0;
@@ -462,7 +462,7 @@ static int ship_loadGFX( Ship *temp, char *buf, int sx, int sy )
    }
 
    /* Load the space sprite. */
-   snprintf( str, PATH_MAX, SHIP_GFX"%s/%s"SHIP_EXT, base, buf );
+   nsnprintf( str, PATH_MAX, SHIP_GFX"%s/%s"SHIP_EXT, base, buf );
    rw    = ndata_rwops( str );
    npng  = npng_open( rw );
    npng_dim( npng, &w, &h );
@@ -483,7 +483,7 @@ static int ship_loadGFX( Ship *temp, char *buf, int sx, int sy )
 
    /* Load the engine sprite .*/
    if (conf.engineglow && conf.interpolate) {
-      snprintf( str, PATH_MAX, SHIP_GFX"%s/%s"SHIP_ENGINE SHIP_EXT, base, buf );
+      nsnprintf( str, PATH_MAX, SHIP_GFX"%s/%s"SHIP_ENGINE SHIP_EXT, base, buf );
       temp->gfx_engine = gl_newSprite( str, sx, sy, OPENGL_TEX_MIPMAPS );
       if (temp->gfx_engine == NULL)
          WARN("Ship '%s' does not have an engine sprite (%s).", temp->name, str );
@@ -494,7 +494,7 @@ static int ship_loadGFX( Ship *temp, char *buf, int sx, int sy )
    temp->mangle /= temp->gfx_space->sx * temp->gfx_space->sy;
 
    /* Get the comm graphic for future loading. */
-   snprintf( str, PATH_MAX, SHIP_GFX"%s/%s"SHIP_COMM SHIP_EXT, base, buf );
+   nsnprintf( str, PATH_MAX, SHIP_GFX"%s/%s"SHIP_COMM SHIP_EXT, base, buf );
    temp->gfx_comm = strdup(str);
 
    return 0;
@@ -828,7 +828,7 @@ int ships_load (void)
    ship_files = nfile_readDir( &nfiles, SHIP_DATA );
    for ( i = 0; i < nfiles; i++ ) {
       file = malloc((strlen(SHIP_DATA)+strlen(ship_files[i])+2)*sizeof(char));
-      snprintf(file,(strlen(SHIP_DATA)+strlen(ship_files[i])+2)*sizeof(char),"%s/%s",SHIP_DATA,ship_files[i]);
+      nsnprintf(file,(strlen(SHIP_DATA)+strlen(ship_files[i])+2)*sizeof(char),"%s/%s",SHIP_DATA,ship_files[i]);
       buf = ndata_read( file, &bufsize );
 
       doc = xmlParseMemory( buf, bufsize );

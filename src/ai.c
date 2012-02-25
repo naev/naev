@@ -67,7 +67,6 @@
 
 #include <stdlib.h>
 #include <stdio.h> /* malloc realloc */
-#include <string.h> /* strncpy strlen strncat strcmp strdup */
 #include <math.h>
 #include <ctype.h> /* isdigit */
 
@@ -75,6 +74,7 @@
 #include <lauxlib.h>
 #include <lualib.h>
 
+#include "nstring.h" /* strncpy strlen strncat strcmp strdup */
 #include "log.h"
 #include "pilot.h"
 #include "player.h"
@@ -544,7 +544,7 @@ int ai_pinit( Pilot *p, const char *ai )
    prof = ai_getProfile(buf);
    if (prof == NULL) {
       WARN("AI Profile '%s' not found, using dummy fallback.", buf);
-      snprintf(buf, sizeof(buf), "dummy" );
+      nsnprintf(buf, sizeof(buf), "dummy" );
       prof = ai_getProfile(buf);
    }
    p->ai = prof;
@@ -649,7 +649,7 @@ int ai_load (void)
       if ((flen > suflen) &&
             strncmp(&files[i][flen-suflen], AI_SUFFIX, suflen)==0) {
 
-         snprintf( path, PATH_MAX, AI_PREFIX"%s", files[i] );
+         nsnprintf( path, PATH_MAX, AI_PREFIX"%s", files[i] );
          if (ai_loadProfile(path)) /* Load the profile */
             WARN("Error loading AI profile '%s'", path);
       }
@@ -3346,7 +3346,7 @@ static int aiL_broadcast( lua_State *L )
 static int aiL_distress( lua_State *L )
 {
    if (lua_isstring(L,1))
-      snprintf( aiL_distressmsg, PATH_MAX, "%s", lua_tostring(L,1) );
+      nsnprintf( aiL_distressmsg, PATH_MAX, "%s", lua_tostring(L,1) );
    else if (lua_isnil(L,1))
       aiL_distressmsg[0] = '\0';
    else
