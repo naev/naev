@@ -45,6 +45,7 @@
 
 #define OUTFIT_DATA  "dat/outfits" /**< File that contains the outfit data. */
 #define OUTFIT_GFX   "gfx/outfit/" /**< Path to outfit graphics. */
+#define MAP_DATA     "dat/outfits/maps"    /**< File that contains the map data. */
 
 
 #define OUTFIT_SHORTDESC_MAX  256
@@ -2093,49 +2094,54 @@ int outfit_load (void)
 
 int outfit_mapParse()
 {
+   int i;
    Outfit *o;
    uint32_t bufsize;
-   char *buf = ndata_read( OUTFIT_DATA, &bufsize );
-
+   char *buf;
    xmlNodePtr node, cur;
-   xmlDocPtr doc = xmlParseMemory( buf, bufsize );
+   xmlDocPtr doc;
+   char **map_files;
+   int nfiles;
+   char *file;
 
-   node = doc->xmlChildrenNode;
-   if (!xml_isNode(node,XML_OUTFIT_ID)) {
-      ERR("Malformed '"OUTFIT_DATA"' file: missing root element '"XML_OUTFIT_ID"'");
-      return -1;
-   }
+   map_files = nfile_readDir( &nfiles, MAP_DATA );
+   for (i=0; i<nfiles; i++) {
 
-   node = node->xmlChildrenNode; /* first system node */
-   if (node == NULL) {
-      ERR("Malformed '"OUTFIT_DATA"' file: does not contain elements");
-      return -1;
-   }
+      file = malloc((strlen(MAP_DATA)+strlen(map_files[i])+2)*sizeof(char));
+      snprintf(file,(strlen(MAP_DATA)+strlen(map_files[i])+2)*sizeof(char),"%s/%s",MAP_DATA,map_files[i]);
 
-   do {
-      if (xml_isNode(node,XML_OUTFIT_TAG)) {
+      buf = ndata_read( file, &bufsize );
+      doc = xmlParseMemory( buf, bufsize );
 
-         o = outfit_get(xml_nodeProp(node,"name"));
-
-         if (!outfit_isMap(o)) /* If its not a map, we don't care. */
-            continue;
-
-         cur = node->xmlChildrenNode;
-
-         do { /* load all the data */
-
-            /* Only handle nodes. */
-            xml_onlyNodes(cur);
-
-            if (xml_isNode(cur,"specific"))
-               outfit_parseSMap(o, cur);
-
-         } while (xml_nextNode(cur));
+      node = doc->xmlChildrenNode; /* first system node */
+      if (node == NULL) {
+         WARN("Malformed '"OUTFIT_DATA"' file: does not contain elements");
+         return -1;
       }
-   } while (xml_nextNode(node));
 
-   xmlFreeDoc(doc);
-   free(buf);
+      o = outfit_get(xml_nodeProp(node,"name"));
+
+      if (!outfit_isMap(o)) { /* If its not a map, we don't care. */
+         WARN("%s is not a map",file);
+         continue;
+      }
+
+      cur = node->xmlChildrenNode;
+
+      do { /* load all the data */
+
+         /* Only handle nodes. */
+         xml_onlyNodes(cur);
+
+         if (xml_isNode(cur,"specific"))
+            outfit_parseSMap(o, cur);
+
+      } while (xml_nextNode(cur));
+
+      free(file);
+      xmlFreeDoc(doc);
+      free(buf);
+   }
 
    return 0;
 }
