@@ -126,7 +126,10 @@ unsigned int osd_create( const char *title, int nitems, const char **items, int 
             w -= osd_hyphenLen;
 
          if (j+1 > m) {
-            m += 32;
+            if (m==0)
+               m = 32;
+            else
+               m *= 2;
             osd->items[i].chunks = realloc( osd->items[i].chunks, m * sizeof(char*));
          }
 
