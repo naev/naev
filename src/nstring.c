@@ -90,7 +90,7 @@ const char *nstrcasestr( const char *haystack, const char *needle )
  * @brief nsnprintf wrapper.
  */
 #if !HAS_POSIX
-int nnsnprintf( char *text, size_t maxlen, const char *fmt, ... )
+int nsnprintf( char *text, size_t maxlen, const char *fmt, ... )
 {
    va_list ap;
    int retval;
@@ -98,6 +98,9 @@ int nnsnprintf( char *text, size_t maxlen, const char *fmt, ... )
    va_start(ap, fmt);
    retval = vsnprintf(text, maxlen, fmt, ap);
    va_end(ap);
+
+   /* mingw64 doesn't seem to want to null terminate stuff... */
+   text[ maxlen-1 ] = '\0';
 
    return retval;
 }
