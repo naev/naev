@@ -14,13 +14,12 @@
 
 #include "naev.h"
 
-#include "nstring.h"
 #include <math.h>
 #include <stdlib.h>
 #include <limits.h>
 
 #include "nxml.h"
-
+#include "nstring.h"
 #include "log.h"
 #include "weapon.h"
 #include "ndata.h"
@@ -1437,15 +1436,10 @@ void pilot_update( Pilot* pilot, const double dt )
    }
    /* he's dead jim */
    else if (pilot_isFlag(pilot,PILOT_DEAD)) {
-      if (pilot->ptimer < 0.) { /* completely destroyed with final explosion */
-         if (pilot->id==PLAYER_ID) /* player.p handled differently */
-            player_destroyed();
-         pilot_delete(pilot);
-         return;
-      }
 
       /* pilot death sound */
-      if (!pilot_isFlag(pilot,PILOT_DEATH_SOUND) && (pilot->ptimer < 0.050)) {
+      if (!pilot_isFlag(pilot,PILOT_DEATH_SOUND) &&
+            (pilot->ptimer < 0.050)) {
 
          /* Play random explosion sound. */
          nsnprintf(buf, sizeof(buf), "explosion%d", RNG(0,2));
@@ -1455,10 +1449,11 @@ void pilot_update( Pilot* pilot, const double dt )
          pilot_setFlag(pilot,PILOT_DEATH_SOUND);
       }
       /* final explosion */
-      else if (!pilot_isFlag(pilot,PILOT_EXPLODED) && (pilot->ptimer < 0.200)) {
+      else if (!pilot_isFlag(pilot,PILOT_EXPLODED) &&
+            (pilot->ptimer < 0.200)) {
 
          /* Damage from explosion. */
-         a = sqrt(pilot->solid->mass);
+         a                 = sqrt(pilot->solid->mass);
          dmg.type          = dtype_get("explosion_splash");
          dmg.damage        = MAX(0., 2. * (a * (1. + sqrt(pilot->fuel + 1.) / 28.)));
          dmg.penetration   = 1.; /* Full penetration. */
@@ -1491,8 +1486,18 @@ void pilot_update( Pilot* pilot, const double dt )
 
          /* set explosions */
          l = (pilot->id==PLAYER_ID) ? SPFX_LAYER_FRONT : SPFX_LAYER_BACK;
-         if (RNGF() > 0.8) spfx_add( spfx_get("ExpM"), px, py, vx, vy, l );
-         else spfx_add( spfx_get("ExpS"), px, py, vx, vy, l );
+         if (RNGF() > 0.8)
+            spfx_add( spfx_get("ExpM"), px, py, vx, vy, l );
+         else
+            spfx_add( spfx_get("ExpS"), px, py, vx, vy, l );
+      }
+
+      /* completely destroyed with final explosion */
+      if (pilot->ptimer < 0.) {
+         if (pilot->id==PLAYER_ID) /* player.p handled differently */
+            player_destroyed();
+         pilot_delete(pilot);
+         return;
       }
    }
    else if (pilot->armour <= 0.) { /* PWNED */
