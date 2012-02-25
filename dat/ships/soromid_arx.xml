@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Soromid Arx">
+ <base_type>Arx</base_type>
+ <GFX sx="12" sy="12">arx</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Carrier</class>
+ <price>7200000</price>
+ <fabricator>Soromid</fabricator>
+ <license>Heavy Combat Vessel License</license>
+ <description>The Soromid Arx usually features in Soromid fleets as a command vessel and fighter carrier. It provides small craft with refuel and rearm services and has excellent durability. It is, however, lacking in both the speed and mobility areas.</description>
+ <movement>
+  <thrust>55</thrust>
+  <turn>55</turn>
+  <speed>75</speed>
+ </movement>
+ <health>
+  <absorb>64</absorb>
+  <shield>900</shield>
+  <armour>3700</armour>
+  <energy>1800</energy>
+  <shield_regen>10</shield_regen>
+  <armour_regen>6</armour_regen>
+  <energy_regen>66.7</energy_regen>
+ </health>
+ <characteristics>
+  <cpu>120</cpu>
+  <crew>36</crew>
+  <mass>3900</mass>
+  <fuel>500</fuel>
+  <cargo>440</cargo>
+ </characteristics>
+ <slots>
+  <weapon x="40" y="0" h="0"/>
+  <weapon x="20" y="0" h="0"/>
+  <weapon x="20" y="0" h="0"/>
+  <weapon x="-20" y="0" h="0"/>
+  <weapon x="-40" y="0" h="0"/>
+  <utility/>
+  <utility/>
+  <utility/>
+  <utility/>
+  <structure/>
+  <structure/>
+  <structure/>
+  <structure/>
+  <structure/>
+ </slots>
+ <stats>
+  <launch_rate>15</launch_rate>
+  <ew_detect>10</ew_detect>
+ </stats>
+</ship>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Soromid Wards Gamma">
+ <pos>
+  <x>11050.675296</x>
+  <y>6217.996620</y>
+ </pos>
+ <GFX>
+  <space>station-commerce.png</space>
+  <exterior>traderoom.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>0</population>
+  <hide>0.750000</hide>
+  <services>
+   <land>land_hiclass</land>
+   <refuel/>
+   <bar/>
+  </services>
+  <commodities/>
+  <description>Soromid Wards Gamma can be considered a private facility. While Alpha and Beta cater to the gene treatment needs of the rest of the galaxy, Gamma is for Soromid only. The operations here are geared toward a higher tolerance for modification that normal humans would likely not survive. The patients here are usually colonists or working personnel who need to adapt themselves to a particular climate.</description>
+  <bar>Unlike Alpha and Beta, the spacedock bar on Gamma does not offer much information on what goes on in the facility. The Soromid learn about their genes and the modifications in youth education. They know what they're coming for.</bar>
+ </general>
+</asset>

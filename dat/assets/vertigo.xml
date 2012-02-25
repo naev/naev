@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Vertigo">
+ <pos>
+  <x>-1176.579442</x>
+  <y>26162.619259</y>
+ </pos>
+ <GFX>
+  <space>moon-D01.png</space>
+  <exterior>mining5.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>50.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>D</class>
+  <population>10000</population>
+  <hide>0.500000</hide>
+  <services>
+   <land>land_lowclass</land>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Vertigo is the second moon orbiting Nartur IV. While the rock itself is utterly uninteresting, it's Nartur's first moon that is. It is a semi-fluid sphere of valuable mineral that often gets used in hyperdrives. Vertigo is the closest place where a harvesting base can be set up, short of building a whole new starbase.</description>
+  <bar>Vertigo's spaceport bar has an excellent view of Nartur IV and IVa. Depending on the phase of the various orbital cycles, it can be quite a fetching sight. Of course, some of the time there's very little to see at all.</bar>
+ </general>
+</asset>

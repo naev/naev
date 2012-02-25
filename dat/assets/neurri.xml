@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Neurri">
+ <pos>
+  <x>25997.457782</x>
+  <y>-4421.823264</y>
+ </pos>
+ <GFX>
+  <space>O02.png</space>
+  <exterior>mining2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>O</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+  </commodities>
+  <description>Though life on Neurri is tough, the planet has nevertheless evolved to one of the most prominent pieces of real estate in Soromid space. Kataka's presence implies that Feye gets a lot of traffic, so economically Neurri is in a good position. The world mostly subsists on rendering services to Kataka, though a modest private ship building company has settled here as well.</description>
+  <bar>For many non-Soromid, Neurri's bar is a home away from home. Quite a lot of traders come to this planet, so the spaceport bar always has a high number of "regulars" in it. Not that they really mind being around the Soromid, of course. Fine people, the Soromid. They just start giving you the creeps after a while, know what I mean?</bar>
+ </general>
+ <tech>
+  <item>Basic Trade Ships</item>
+  <item>Bulk Trade Ships</item>
+ </tech>
+</asset>

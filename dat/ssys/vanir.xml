@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ssys name="Vanir">
+ <general>
+  <radius>20720.000000</radius>
+  <stars>400</stars>
+  <interference>0.000000</interference>
+  <nebula volatility="0.000000">0.000000</nebula>
+ </general>
+ <pos>
+  <x>980.000000</x>
+  <y>-418.000000</y>
+ </pos>
+ <assets>
+  <asset>Fort Sirius</asset>
+  <asset>Sinass</asset>
+  <asset>Vanir I</asset>
+  <asset>Vanir II</asset>
+  <asset>Vanir Ia</asset>
+  <asset>Virtual Civilian Standard</asset>
+  <asset>Virtual Trader Area</asset>
+  <asset>Yrina</asset>
+ </assets>
+ <jumps>
+  <jump target="Adraia">
+   <autopos/>
+   <hide>0.000000</hide>
+  </jump>
+  <jump target="Aesir">
+   <autopos/>
+   <hide>0.000000</hide>
+  </jump>
+ </jumps>
+</ssys>

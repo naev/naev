@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Sirius Dogma">
+ <base_type>Dogma</base_type>
+ <GFX sx="12" sy="12">dogma</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Cruiser</class>
+ <price>8300000</price>
+ <fabricator>Sirius Systems</fabricator>
+ <license>Heavy Combat Vessel License</license>
+ <description>The backbone of the House Sirius fleet, the Dogma is a sight to behold. Trimmed in gold and silver and fielding a large array of weapons, the Dogma is seldom surpassed in either prestige or military might.</description>
+ <movement>
+  <thrust>50</thrust>
+  <turn>55</turn>
+  <speed>65</speed>
+ </movement>
+ <health>
+  <absorb>67</absorb>
+  <shield>900</shield>
+  <armour>4200</armour>
+  <energy>3100</energy>
+  <shield_regen>11</shield_regen>
+  <armour_regen>0</armour_regen>
+  <energy_regen>88.3</energy_regen>
+ </health>
+ <characteristics>
+  <cpu>160</cpu>
+  <crew>43</crew>
+  <mass>4200</mass>
+  <fuel>400</fuel>
+  <cargo>470</cargo>
+ </characteristics>
+ <slots>
+  <weapon x="40" y="0" h="2"/>
+  <weapon x="25" y="0" h="2"/>
+  <weapon x="12" y="0" h="3"/>
+  <weapon x="0" y="0" h="4"/>
+  <weapon x="-15" y="0" h="6"/>
+  <weapon x="-33" y="0" h="6"/>
+  <utility/>
+  <utility/>
+  <utility/>
+  <utility/>
+  <utility/>
+  <structure/>
+  <structure/>
+  <structure/>
+  <structure/>
+  <structure/>
+ </slots>
+ <stats>
+  <ew_detect>10</ew_detect>
+ </stats>
+</ship>

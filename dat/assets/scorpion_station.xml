@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Scorpion Station">
+ <pos>
+  <x>-11302.327703</x>
+  <y>7269.819086</y>
+ </pos>
+ <GFX>
+  <space>station-fleetbase2.png</space>
+  <exterior>station04.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>0</population>
+  <hide>0.750000</hide>
+  <services>
+   <land>srm_mil_restricted</land>
+   <refuel/>
+   <bar/>
+   <outfits/>
+  </services>
+  <commodities/>
+  <description>Scorpion is hardly the most prestigious post for a Soromid captain to be assigned to, but the peace needs to be kept everywhere, even in Hadosh.</description>
+  <bar>The spacedock bar is a place to meet officers and make formal inquiries. It's not of much use for anything else.</bar>
+ </general>
+ <tech>
+  <item>Plasma 2</item>
+  <item>High Tech Upgrades 2</item>
+  <item>Missiles 1</item>
+  <item>Missiles 2</item>
+ </tech>
+</asset>

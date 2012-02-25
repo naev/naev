@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Icarus">
+ <pos>
+  <x>-3624.623724</x>
+  <y>-1715.052669</y>
+ </pos>
+ <GFX>
+  <space>A04.png</space>
+  <exterior>lava.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>10.000000</value>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>A</class>
+  <population>1000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+  </services>
+  <commodities/>
+  <description>Named after the figure from Greek mythology, Icarus is a hot world with extreme seismic activity. This makes it the perfect location for some of Totoran's volcanic-themed arenas. Gladiators fighting on Icarus have as much to fear from the environment as they have from each other, and the most spectacular kills made in the arenas here involve the unstable terrain itself.</description>
+ </general>
+</asset>

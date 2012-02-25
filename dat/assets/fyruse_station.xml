@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Fyruse Station">
+ <pos>
+  <x>3795.124991</x>
+  <y>8868.896979</y>
+ </pos>
+ <GFX>
+  <space>station-fleetbase.png</space>
+  <exterior>station05.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>2000</population>
+  <hide>0.750000</hide>
+  <services>
+   <land>srs_mil_restricted</land>
+   <refuel/>
+   <bar/>
+  </services>
+  <commodities/>
+  <description>The Sirii have a rather extensive military infrastructure within their borders, and Fyruse Station is part of that infrastructure. There's a regular detachment stationed here, making sure that law and order are maintained as well as can reasonably be expected in Esker and its neighboring systems. Fyruse Station also acts as a border guard for Frontier space, though nobody really believes in the need for such.</description>
+  <bar>As Fyruse Station is a Sirius-only facility, the bar is divided in three sections, one for each echelon. In the rare event that a non-Sirius visitor is allowed on board, they will be catered for in the Shaira section.</bar>
+ </general>
+</asset>

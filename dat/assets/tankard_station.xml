@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Tankard Station">
+ <pos>
+  <x>-20551.681519</x>
+  <y>12636.184692</y>
+ </pos>
+ <GFX>
+  <space>station-commerce3.png</space>
+  <exterior>traderoom.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <value>50.000000</value>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>3000</population>
+  <hide>0.750000</hide>
+  <services>
+   <land>srs_mil_restricted</land>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities>
+   <commodity>Medicine</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Tankard Station is a Sirius economical space facility. It processes a large portion of all trade transactions made within An'ku, and also serves as a terminal for the materials produced by Sroolu. There is also a small security detail stationed here, but this is merely for the purpose of customs, not so much the repulsion of hostile elements.</description>
+  <bar>Serving both as a trading hub and an outlet of consumer end products, the spacedock bar on Tankard Station is always a bustle of activity. In fact, the actual bar seems more like a section of a larger commerce center than the other way around.</bar>
+ </general>
+ <tech>
+  <item>Ion 1</item>
+  <item>Basic Outfits 1</item>
+  <item>Low Tech Upgrades</item>
+  <item>Missiles 1</item>
+ </tech>
+</asset>

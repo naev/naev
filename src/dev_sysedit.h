@@ -12,6 +12,6 @@
 
 
 void sysedit_open( StarSystem *sys );
-
+void sysedit_sysScale( StarSystem *sys, double factor );
 
 #endif /* DEV_SYSEDIT_H */

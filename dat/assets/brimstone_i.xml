@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Brimstone I">
+ <pos>
+  <x>11870.221386</x>
+  <y>-10437.336689</y>
+ </pos>
+ <GFX>
+  <space>I02.png</space>
+  <exterior>methane.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

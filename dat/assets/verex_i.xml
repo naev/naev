@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Verex I">
+ <pos>
+  <x>-8578.407922</x>
+  <y>-15276.183128</y>
+ </pos>
+ <GFX>
+  <space>moon-A00.png</space>
+  <exterior>forest.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.500000</hide>
+  <services/>
+ </general>
+</asset>

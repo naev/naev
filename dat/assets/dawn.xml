@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Dawn">
+ <pos>
+  <x>-3764.344765</x>
+  <y>9623.930431</y>
+ </pos>
+ <GFX>
+  <space>O01.png</space>
+  <exterior>oceanic2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Frontier</faction>
+  <value>60.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>O</class>
+  <population>4000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land>land_hiclass</land>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Gilligan's Light was one of the first systems to ever be chosen for a colonization project, and Dawn was the first world on which humans set foot in this sector of space, despite the fact that the colony ship sent here, Mythril, was only the fifth to be launched. Nevertheless, Dawn proved to be one of the most fertile expeditions in the First Growth, and its development outstripped that of most of the other worlds. With the advent of hyperspace travel, Dawn found itself the local capital of the Frontier worlds, and so is graced by the Frontier Council hanging overhead. This status is strictly symbolic, but it explains why the FLF have chosen to rally around Gilligan's Light.</description>
+  <bar>Dawn's bar has a rustic feel to it, as the locals have made a point of keeping the style close to what was the prevalent design in the early expansion era. Other than that, this bar doesn't have much to set it apart from others. The noise, the smell and the drunks are features that are commonplace throughout the galaxy.</bar>
+ </general>
+</asset>

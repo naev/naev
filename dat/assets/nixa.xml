@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Nixa">
+ <pos>
+  <x>6416.652506</x>
+  <y>-7838.062872</y>
+ </pos>
+ <GFX>
+  <space>M05.png</space>
+  <exterior>forest2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>50.000000</value>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>10000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <commodity/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+  </commodities>
+  <description>Nixa is a young colony. It was first settled mere years before the Incident occurred. With the galaxy-wide economic collapse that followed in its wake, Nixa's budding growth came close to a halt. The population struggles to make the colonization project a success even so, but now that Dune has become a fringe system, chances of that seem remote.</description>
+  <bar>Nixa's bar is still the makeshift affair it was when the planet was first colonized. There haven't been the resources nor the time to replace it with something more solid.</bar>
+ </general>
+</asset>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Sindbad">
+ <pos>
+  <x>-8700.000000</x>
+  <y>-3000.000000</y>
+ </pos>
+ <GFX>
+  <space>000.png</space>
+  <exterior>station04.png</exterior>
+ </GFX>
+ <presence>
+  <faction>FLF</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>1000</population>
+  <hide>0.750000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+  </services>
+  <commodities>
+   <commodity>Ore</commodity>
+  </commodities>
+  <description>From the outside, FLF station Sindbad looks like a piece of junk. This suits the FLF, as their base isn't meant to stand out. The more travelers believe that the station is just another carcass floating in space, the better. On the inside however, Sindbad looks, well, it still looks like a piece of junk. The FLF have limited resources, and the fact that they have a secret, autonomous outpost at all must be considered an achievement. Still, Sindbad is more than a token resistance. The base has all the facilities and defensive capabilities that befit a structure its size, and while stealth remains the FLF's best protection from their Dvaered oppressors, Sindbad can defend itself if need be.</description>
+  <bar>The FLF don't have much use for leisures, so it's debatable whether this place can be called a bar. Still, it provides space to sit and talk, and it serves a liquid that seems different from industrial acid, in that it doesn't burn a hole through your stomach. The people here are mostly hard-faced men, and the topics of conversation are limited to the Dvaered and the FLF's cause.</bar>
+ </general>
+</asset>

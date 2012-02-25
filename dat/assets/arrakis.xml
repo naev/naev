@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Arrakis">
+ <pos>
+  <x>-8182.701784</x>
+  <y>-5241.257434</y>
+ </pos>
+ <GFX>
+  <space>H00.png</space>
+  <exterior>desertic.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>75.000000</value>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>H</class>
+  <population>32000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+  </commodities>
+  <description>Arrakis is a desert planet with no natural precipitation. The locals are continuously discussing sandworms, though you're not sure what to make of it.</description>
+  <bar>The Arrakeen canteen is one of the shadier bars in Empire space. Lying on the border of the Empire, few patrols come through, and many scoundrels and mercenaries can be found plying their trade. The spice must flow, they said. It may not, but at least the rum does.</bar>
+ </general>
+</asset>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Soromid Odium">
+ <base_type>Odium</base_type>
+ <GFX>odium</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Corvette</class>
+ <price>900000</price>
+ <fabricator>Soromid</fabricator>
+ <license>Medium Combat Vessel License</license>
+ <description>The Odium offers a good balance between shields and armour, as well as an impressive amount of system hardpoints for a ship its size. It can often be found dominating smaller military engagements.</description>
+ <movement>
+  <thrust>180</thrust>
+  <turn>115</turn>
+  <speed>170</speed>
+ </movement>
+ <health>
+  <absorb>25</absorb>
+  <shield>480</shield>
+  <armour>450</armour>
+  <energy>1064</energy>
+  <shield_regen>8</shield_regen>
+  <armour_regen>4</armour_regen>
+  <energy_regen>43.3</energy_regen>
+ </health>
+ <characteristics>
+  <cpu>60</cpu>
+  <crew>13</crew>
+  <mass>320</mass>
+  <fuel>400</fuel>
+  <cargo>45</cargo>
+ </characteristics>
+ <slots>
+  <weapon x="15" y="0" h="2"/>
+  <weapon x="4" y="2" h="-5"/>
+  <weapon x="4" y="-2" h="-5"/>
+  <weapon x="-9" y="-5" h="-9">light</weapon>
+  <weapon x="-9" y="5" h="-9">light</weapon>
+  <utility/>
+  <utility/>
+  <utility>light</utility>
+  <structure/>
+  <structure/>
+  <structure/>
+ </slots>
+ <stats>
+  <fwd_energy>-3</fwd_energy>
+ </stats>
+</ship>

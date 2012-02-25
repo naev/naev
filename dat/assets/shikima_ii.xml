@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Shikima II">
+ <pos>
+  <x>6360.000000</x>
+  <y>9680.000000</y>
+ </pos>
+ <GFX>
+  <space>moon-G01.png</space>
+  <exterior>aquatic.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.500000</hide>
+  <services/>
+ </general>
+</asset>

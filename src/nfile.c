@@ -693,3 +693,44 @@ int nfile_writeFile( const char* data, int len, const char* path, ... )
    return 0;
 }
 
+
+/**
+ * @brief Deletes a file.
+ *
+ *    @param file File to delete.
+ *    @return 0 on success.
+ */
+int nfile_delete( const char* file )
+{
+   if (!unlink(file)) {
+      WARN( "Error deleting file %s",file );
+      return -1;
+   }
+   return 0;
+}
+
+/**
+ * @brief Renames a file.
+ *
+ *    @param oldname Old name of the file.
+ *    @param newname New name to set the file to.
+ *    @return 0 on success.
+ */
+int nfile_rename( const char* oldname, const char* newname )
+{
+   if (!nfile_fileExists(oldname)) {
+      WARN("Can not rename non existant file %s",oldname);
+      return -1;
+   }
+   if (newname == NULL) {
+      WARN("Can not rename to NULL file name");
+      return -1;
+   }
+   if (nfile_fileExists( newname )) {
+      WARN("Error renaming %s to %s. %s already exists",oldname,newname,newname);
+      return -1;
+   }
+   if (!rename(oldname,newname))
+      WARN("Error renaming %s to %s",oldname,newname);
+   return 0;
+}

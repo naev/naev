@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Flach">
+ <pos>
+  <x>16436.574074</x>
+  <y>3715.740741</y>
+ </pos>
+ <GFX>
+  <space>Y00.png</space>
+  <exterior>lava.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>100.000000</value>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>Y</class>
+  <population>1500000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+  </commodities>
+  <description>Quite a lot of Soromid live on Flach. Where normal humans would have built a mining colony here at best, the Soromid found the planet good enough to build extensive megacities and suburban industries.</description>
+  <bar>The spaceport bar is one of the few places on the planet that is environmentally conditioned to suit normal humans. Any non-Soromid wishing to visit the actual population centers will need to wear protective clothing, or suffer the consequences.</bar>
+ </general>
+ <tech>
+  <item>Missiles 1</item>
+  <item>Missiles 2</item>
+  <item>Basic Outfits 2</item>
+  <item>Basic Trade Ships</item>
+  <item>Light Civilian Combat Ships</item>
+ </tech>
+</asset>

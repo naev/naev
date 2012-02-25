@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Pirate Shark">
+ <base_type>Shark</base_type>
+ <GFX>shark_pirate</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Fighter</class>
+ <price>280000</price>
+ <fabricator>Skull and Bones</fabricator>
+ <description>The nimble Nexus Shipyards Shark has proved an excellent canvas for the Skull and Bones technicians. Fitted with an additional weapon mount, its handling suffers minimally while it's able to bring substantially more firepower to bear.</description>
+ <movement>
+  <thrust>240</thrust>
+  <turn>140</turn>
+  <speed>290</speed>
+ </movement>
+ <health>
+  <absorb>9</absorb>
+  <shield>220</shield>
+  <armour>60</armour>
+  <energy>580</energy>
+  <shield_regen>7</shield_regen>
+  <armour_regen>0</armour_regen>
+  <energy_regen>22.3</energy_regen>
+ </health>
+ <characteristics>
+  <cpu>32</cpu>
+  <crew>2</crew>
+  <mass>90</mass>
+  <fuel>300</fuel>
+  <cargo>15</cargo>
+ </characteristics>
+ <slots>
+  <weapon x="12" y="0" h="0"/>
+  <weapon x="12" y="0" h="0"/>
+  <weapon x="-3" y="0" h="2"/>
+  <weapon x="3" y="0" h="2"/>
+  <utility/>
+  <utility/>
+  <structure/>
+  <structure/>
+ </slots>
+</ship>

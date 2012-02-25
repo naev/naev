@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Madeleine Station">
+ <pos>
+  <x>14794.876439</x>
+  <y>-4639.755662</y>
+ </pos>
+ <GFX>
+  <space>station-fleetbase3.png</space>
+  <exterior>station03.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>1000</population>
+  <hide>0.750000</hide>
+  <services>
+   <land>emp_mil_restricted</land>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <outfits/>
+  </services>
+  <commodities/>
+  <description>In a strange twist of fate, Madeleine station was named after the granddaughter of the first commander to be stationed here. The place serves as the Empire's southernmost military base. It was originally little more than a minor depot, but has grown into an important line of defense against the southern pirates in recent years.</description>
+  <bar>Since traders don't come to this military base, the bar is only frequented by Imperial military personnel. It's more like a canteen than a bar, really.</bar>
+ </general>
+ <tech>
+  <item>Laser 1</item>
+  <item>Laser 2</item>
+  <item>High Tech Upgrades 1</item>
+  <item>Basic Outfits 2</item>
+  <item>Missiles 1</item>
+  <item>Missiles 2</item>
+ </tech>
+</asset>

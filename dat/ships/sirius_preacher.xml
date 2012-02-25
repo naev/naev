@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Sirius Preacher">
+ <base_type>Preacher</base_type>
+ <GFX sx="10" sy="10">preacher</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Corvette</class>
+ <price>720000</price>
+ <fabricator>Sirius Systems</fabricator>
+ <license>Medium Combat Vessel License</license>
+ <description>The Preacher, as its name implies, is the primary vessel by which House Sirius projects its message and will. Fielding a large array of weaponry, the Preacher is adept at making converts out of unbelievers.</description>
+ <movement>
+  <thrust>170</thrust>
+  <turn>100</turn>
+  <speed>170</speed>
+ </movement>
+ <health>
+  <absorb>29</absorb>
+  <shield>450</shield>
+  <armour>500</armour>
+  <energy>960</energy>
+  <shield_regen>9</shield_regen>
+  <armour_regen>0</armour_regen>
+  <energy_regen>40.8</energy_regen>
+ </health>
+ <characteristics>
+  <cpu>55</cpu>
+  <crew>11</crew>
+  <mass>280</mass>
+  <fuel>400</fuel>
+  <cargo>40</cargo>
+ </characteristics>
+ <slots>
+  <weapon x="15" y="1" h="2"/>
+  <weapon x="15" y="-1" h="2"/>
+  <weapon x="-9" y="-10" h="2"/>
+  <weapon x="-9" y="10" h="2"/>
+  <weapon x="-9" y="-3" h="2">light</weapon>
+  <weapon x="-9" y="3" h="2">light</weapon>
+  <utility/>
+  <utility/>
+  <utility>light</utility>
+  <structure/>
+  <structure/>
+ </slots>
+ <stats>
+  <fwd_damage>5</fwd_damage>
+ </stats>
+</ship>

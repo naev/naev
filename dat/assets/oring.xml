@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Oring">
+ <pos>
+  <x>-3986.781946</x>
+  <y>5934.294267</y>
+ </pos>
+ <GFX>
+  <space>X01.png</space>
+  <exterior>mining.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>X</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>The Soromid have only started challenging Oring as recently as 30 SCU ago. Though the planet has no soil suitable for cultivation and is constantly plagued by rust winds, the Soromid intend to one day house a large population on this world. Right now, there is a modest number of colonists living in underground habitats while the terraforming complexes on the surface labor to alter the atmospheric makeup. It's quite fascinating, to someone who's into this sort of thing.</description>
+  <bar>The spaceport bar is not too remarkable, as you might expect from a colonist world. The place is functional and simple. There is, however, a public display that shows the current state of the terraforming operation. It never visibly changes, but the graphs show that over the cycles, progress is being made.</bar>
+ </general>
+ <tech>
+  <item>Basic Outfits 1</item>
+ </tech>
+</asset>

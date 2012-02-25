@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Koralis IV">
+ <pos>
+  <x>-2040.407967</x>
+  <y>-1971.707362</y>
+ </pos>
+ <GFX>
+  <space>moon-A00.png</space>
+  <exterior>aquatic2.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.500000</hide>
+  <services/>
+ </general>
+</asset>

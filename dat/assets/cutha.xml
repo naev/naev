@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Cutha">
+ <pos>
+  <x>25900.000000</x>
+  <y>24990.000000</y>
+ </pos>
+ <GFX>
+  <space>M04.png</space>
+  <exterior>oceanic2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services>
+   <land>land_hiclass</land>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+  </commodities>
+  <description>Cutha is a marvel of planetary engineering. It started out as a fairly hostile world, its atmosphere filled with toxic substances, but the Soromid have tamed it and turned it into a pretty decent place to live. Of course, even Soromid engineering has its limits, so Cutha isn't quite as nice a world as Turawee in Sarcophagus, but the result is still impressive. Nowadays, Cutha houses most of the Soromid involved in the military operations at Heronus.</description>
+  <bar>Cutha's bar is very close to being an open-air bar. The airspace is still fully enclosed, but most of the surfaces that aren't the actual floor are transparent. The ceiling in particular is made of a material that's all but invisible to the naked eye, and with the artificial breeze that blows through the bar it's very easy to believe the illusion that one is actually outside. Only on rainy days is the effect spoiled.</bar>
+ </general>
+</asset>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Map: Dvaered Core">
+ <general>
+  <mass>0</mass>
+  <price>25000</price>
+  <description>This map lists the locations of all Dvaered worlds and stations close to the Dvaered capital.</description>
+  <gfx_store>map</gfx_store>
+ </general>
+ <specific type="map">
+  <short_desc>A Star Map.</short_desc>
+  <sys name="Dvaer">
+   <jump>Beeklo</jump>
+   <jump>Radix</jump>
+   <jump>Urbanus</jump>
+   <jump>Gremlin</jump>
+   <asset>Dvaer Prime</asset>
+   <asset>Dvaered High Command</asset>
+   <asset>Dvaer II</asset>
+   <asset>Eist Shipyard</asset>
+   <asset>Dvaer III</asset>
+   <asset>Dvaer IIIa</asset>
+   <asset>Dvaer IV</asset>
+   <asset>Laarss</asset>
+  </sys>
+  <sys name="Gremlin">
+   <jump>Dvaer</jump>
+  </sys>
+  <sys name="Urbanus">
+   <jump>Dvaer</jump>
+   <asset>Urbanus Crops</asset>
+   <asset>Onyx Shipyard</asset>
+   <asset>Trincea</asset>
+  </sys>
+  <sys name="Radix">
+   <jump>Dvaer</jump>
+   <asset>Myuirr Station</asset>
+   <asset>Stutee</asset>
+  </sys>
+  <sys name="Beeklo">
+   <jump>Dvaer</jump>
+   <asset>Inios Station</asset>
+   <asset>Totoran</asset>
+   <asset>Icarus</asset>
+   <asset>Adham</asset>
+   <asset>Diabolos</asset>
+  </sys>
+ </specific>
+</outfit>

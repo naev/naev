@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Greis">
+ <pos>
+  <x>-6442.157187</x>
+  <y>14944.299442</y>
+ </pos>
+ <GFX>
+  <space>G01.png</space>
+  <exterior>mining5.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>G</class>
+  <population>1000000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Greis has a tradition, and that tradition is that whichever Warlord controls the planet renames it after himself. This often causes confusion among spacers everywhere, who will refer to the world by names that have been rendered obsolete. The current warlord is a man named Harmstadt Greis. His rule isn't particularly benevolent, but he at least doesn't seem worse than most Dvaered Warlords.</description>
+  <bar>At the center of this spaceport bar stands a pillar, on which are displayed all the names that the planet has been known by, including the name of one unfortunate Warlord named Clerke, who was in control of this world for a little under four hours.</bar>
+ </general>
+ <tech>
+  <item>Kinetic 2</item>
+  <item>Basic Outfits 2</item>
+  <item>Missiles 1</item>
+ </tech>
+</asset>

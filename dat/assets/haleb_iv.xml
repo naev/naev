@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Haleb IV">
+ <pos>
+  <x>-9097.124865</x>
+  <y>-8125.122171</y>
+ </pos>
+ <GFX>
+  <space>I04.png</space>
+  <exterior>traderoom.png</exterior>
+ </GFX>
+ <general>
+  <class>I</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

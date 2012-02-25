@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Phee">
+ <pos>
+  <x>6915.504984</x>
+  <y>1693.555901</y>
+ </pos>
+ <GFX>
+  <space>K04.png</space>
+  <exterior>lava.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>K</class>
+  <population>500000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+  </commodities>
+  <description>Phee is a tad hot, but it's still habitable. The people who live here have to be healthy and robust to stand the environment, and that's the reason why Dvaered High Command likes to conscript new soldiers from this world. But rather than feel dissatisfied about this, the population takes pride in its history of military service. These people are true Dvaered.</description>
+  <bar>The owner of the bar has served in several Dvaered campaigns in his day, and it shows. The bar is decorated with trophies and other memorabilia from those days, and the man will tell anyone who will listen about what he calls his glory days.</bar>
+ </general>
+ <tech>
+  <item>Kinetic 1</item>
+  <item>Basic Civilian Ships</item>
+  <item>Basic Outfits 1</item>
+ </tech>
+</asset>

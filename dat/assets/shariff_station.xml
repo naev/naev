@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Shariff Station">
+ <pos>
+  <x>8176.922812</x>
+  <y>-3831.949938</y>
+ </pos>
+ <GFX>
+  <space>station-fleetbase.png</space>
+  <exterior>station03.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>2000</population>
+  <hide>0.750000</hide>
+  <services>
+   <land>srs_mil_restricted</land>
+   <refuel/>
+  </services>
+  <commodities/>
+  <description>For being a Dvaered military base, Shariff Station has it tough. This close to Frontier space, the station is a popular target for FLF raids, and despite the many extra security measures that have been implemented in the past years, the losses continue to pile up.</description>
+ </general>
+</asset>

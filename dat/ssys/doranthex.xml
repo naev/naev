@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ssys name="Doranthex">
+ <general>
+  <radius>26600.000000</radius>
+  <stars>500</stars>
+  <interference>0.000000</interference>
+  <nebula volatility="0.000000">0.000000</nebula>
+ </general>
+ <pos>
+  <x>213.000000</x>
+  <y>-346.000000</y>
+ </pos>
+ <assets>
+  <asset>Doranthex Prime</asset>
+  <asset>Doranthex Secundus</asset>
+  <asset>Secundus Alpha</asset>
+  <asset>Secundus Beta</asset>
+  <asset>Virtual Civilian Standard</asset>
+  <asset>Virtual Frontier Unpresence</asset>
+  <asset>Virtual Trader Area</asset>
+ </assets>
+ <jumps>
+  <jump target="Dakron">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Ogat">
+   <pos x="-26146.261342" y="30826.874429"/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Tarsus">
+   <autopos/>
+   <hide>0.000000</hide>
+  </jump>
+  <jump target="Torg">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Tuoladis">
+   <pos x="11836.302770" y="31893.263337"/>
+   <hide>1.250000</hide>
+  </jump>
+ </jumps>
+</ssys>

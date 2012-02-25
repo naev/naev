@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Schroedinger">
+ <base_type>Schroedinger</base_type>
+ <GFX>schroedinger</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Scout</class>
+ <price>180000</price>
+ <fabricator>Sirius Systems</fabricator>
+ <description>The Schroedinger is primarily used as a reconnaissance vessel. It requires a skeleton crew due to its advanced automation subsystems, and its proprietary fuel tanks allow it to have range much greater than most ships. The downside is that the ship is extremely vulnerable to attack due to its light armour and low amount of weapons space. It is also equipped with a pair of Eraedon engines, making it highly manoeuvrable.</description>
+ <movement>
+  <thrust>260</thrust>
+  <turn>165</turn>
+  <speed>300</speed>
+ </movement>
+ <health>
+  <absorb>5</absorb>
+  <shield>130</shield>
+  <armour>50</armour>
+  <energy>360</energy>
+  <shield_regen>6</shield_regen>
+  <armour_regen>0</armour_regen>
+  <energy_regen>13.3</energy_regen>
+ </health>
+ <characteristics>
+  <cpu>50</cpu>
+  <crew>2</crew>
+  <mass>42</mass>
+  <fuel>800</fuel>
+  <cargo>10</cargo>
+ </characteristics>
+ <slots>
+  <weapon x="9" y="0" h="-2"/>
+  <utility>medium</utility>
+  <utility/>
+  <utility/>
+  <utility/>
+  <structure/>
+ </slots>
+ <stats>
+  <ew_detect>25</ew_detect>
+  <ew_hide>10</ew_hide>
+ </stats>
+</ship>

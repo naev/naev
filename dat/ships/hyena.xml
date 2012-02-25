@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Hyena">
+ <base_type>Hyena</base_type>
+ <GFX>hyena</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Fighter</class>
+ <price>180000</price>
+ <fabricator>Aerosys</fabricator>
+ <description>The star product of Aerosys, the Hyena quickly has become a favorite of pirates far and wide. Not much of a fighter, nor does it pack too much of a punch, but in groups they can overcome nearly any vessel. While Aerosys claim that their ships are only sold to reputable pilots, it's suspected that they sell to anyone willing to pay, as it seems there are countless Hyenas among the pirate ranks.</description>
+ <movement>
+  <thrust>300</thrust>
+  <turn>180</turn>
+  <speed>330</speed>
+ </movement>
+ <health>
+  <absorb>3</absorb>
+  <shield>170</shield>
+  <armour>50</armour>
+  <energy>440</energy>
+  <shield_regen>7</shield_regen>
+  <armour_regen>0</armour_regen>
+  <energy_regen>18.3</energy_regen>
+ </health>
+ <characteristics>
+  <cpu>20</cpu>
+  <crew>2</crew>
+  <mass>70</mass>
+  <fuel>300</fuel>
+  <cargo>10</cargo>
+ </characteristics>
+ <slots>
+  <weapon x="15" y="0" h="-3"/>
+  <weapon x="15" y="0" h="-3"/>
+  <weapon x="0" y="0" h="0"/>
+  <utility/>
+  <structure/>
+ </slots>
+</ship>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Map: Sirian border systems">
+ <general>
+  <mass>0</mass>
+  <price>15000</price>
+  <description>This map contains the systems that lead to Sirius controlled space.</description>
+  <gfx_store>map</gfx_store>
+ </general>
+ <specific type="map">
+  <short_desc>A Star Map.</short_desc>
+  <sys name="Nougat">
+   <jump>Esker</jump>
+  </sys>
+  <sys name="Esker">
+   <jump>Nougat</jump>
+   <asset>Fyruse Station</asset>
+   <asset>Esker I</asset>
+  </sys>
+  <sys name="Fidelis">
+   <jump>Eye of Night</jump>
+  </sys>
+  <sys name="Eye of Night">
+   <jump>Fidelis</jump>
+   <asset>Inios Station</asset>
+   <asset>Eye of Night III</asset>
+  </sys>
+ </specific>
+</outfit>

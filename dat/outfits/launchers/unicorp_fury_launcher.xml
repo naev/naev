@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Unicorp Fury Launcher">
+ <general>
+  <slot>weapon</slot>
+  <mass>8</mass>
+  <price>25000</price>
+  <description>This missile launcher fires Fury class interceptor missiles. It is built out of standard parts, which make it serviceable and efficient.</description>
+  <gfx_store>seekerlauncher</gfx_store>
+ </general>
+ <specific type="launcher" secondary="1">
+  <cpu>4</cpu>
+  <ammo>Fury Missile</ammo>
+  <delay>4</delay>
+  <amount>20</amount>
+  <lockon>9</lockon>
+  <arc>6</arc>
+  <ew_target>1.5</ew_target>
+ </specific>
+</outfit>

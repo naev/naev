@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Adham">
+ <pos>
+  <x>27913.769923</x>
+  <y>5174.627773</y>
+ </pos>
+ <GFX>
+  <space>P03.png</space>
+  <exterior>snow.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>10.000000</value>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>P</class>
+  <population>100</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+  </services>
+  <commodities/>
+  <description>Adham is a cold, lifeless planet. The only reason why there is a landing strip here at all is that the planet hosts the three arctic-themed arenas for Totoran's gladiatiorial games. While the landing zone and a small buffer around it is considered neutral territory, most of the planet's surface is subject to the destructive sport that is so popular among Totoran's visitors.</description>
+ </general>
+</asset>

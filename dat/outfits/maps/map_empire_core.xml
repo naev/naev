@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Map: Empire Core">
+ <general>
+  <mass>0</mass>
+  <price>25000</price>
+  <description>This map lists the locations of all Imperial worlds and stations close to the Imperial capital.</description>
+  <gfx_store>map</gfx_store>
+ </general>
+ <specific type="map">
+  <short_desc>A Star Map.</short_desc>
+  <sys name="Gamma Polaris">
+   <jump>Qex</jump>
+   <jump>Koralis</jump>
+   <jump>Sirou</jump>
+   <jump>Shakar</jump>
+   <jump>Apez</jump>
+   <asset>Polaris Prime</asset>
+   <asset>Emperor's Fist</asset>
+   <asset>Vuere</asset>
+   <asset>New Pluto</asset>
+   <asset>New Deimos</asset>
+   <asset>New Phobos</asset>
+   <asset>New Mars</asset>
+   <asset>Halir</asset>
+  </sys>
+  <sys name="Qex">
+   <jump>Gamma Polaris</jump>
+   <asset>Semper</asset>
+   <asset>Reidd</asset>
+   <asset>Ammu</asset>
+   <asset>Qex II</asset>
+   <asset>Qex IV</asset>
+   <asset>Qex V</asset>
+  </sys>
+  <sys name="Koralis">
+   <jump>Gamma Polaris</jump>
+   <asset>Luxsor</asset>
+   <asset>Paxsor</asset>
+   <asset>Fuzka</asset>
+   <asset>Koralis IV</asset>
+   <asset>Koralis VI</asset>
+   <asset>Aillis</asset>
+  </sys>
+  <sys name="Sirou">
+   <jump>Gamma Polaris</jump>
+  </sys>
+  <sys name="Shakar">
+   <jump>Gamma Polaris</jump>
+   <asset>Nova Shakar</asset>
+   <asset>Zembla Shakar</asset>
+   <asset>Shakar I</asset>
+   <asset>Shakar III</asset>
+  </sys>
+  <sys name="Apez">
+   <jump>Gamma Polaris</jump>
+   <asset>Apez V</asset>
+   <asset>Zeo</asset>
+   <asset>Dowue</asset>
+   <asset>Gem</asset>
+   <asset>Crylo</asset>
+   <asset>Apez II</asset>
+  </sys>
+ </specific>
+</outfit>

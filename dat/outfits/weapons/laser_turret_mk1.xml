@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Laser Turret MK1">
+ <general>
+  <slot>weapon</slot>
+  <size>medium</size>
+  <license>Medium Weapon License</license>
+  <mass>26</mass>
+  <price>17500</price>
+  <description>A pair of laser cannons mounted on a rotating turret, providing excellent point-defense capabilities. With a full 360 degrees of rotation, laser turrets provide affordable, energy-efficient firepower to less manoeuvrable ships.</description>
+  <gfx_store>laserturret</gfx_store>
+ </general>
+ <specific type="turret bolt">
+  <cpu>14</cpu>
+  <gfx>laser1M</gfx>
+  <sound>laser</sound>
+  <spfx_shield>ShiS</spfx_shield>
+  <spfx_armour>ExpS</spfx_armour>
+  <delay>0.35</delay>
+  <speed>550</speed>
+  <range>800</range>
+  <falloff>500</falloff>
+  <energy>9</energy>
+  <heatup>25</heatup>
+  <track>2</track>
+  <damage>
+   <type>normal</type>
+   <penetrate>20</penetrate>
+   <physical>8</physical>
+   <disable>1</disable>
+  </damage>
+ </specific>
+</outfit>

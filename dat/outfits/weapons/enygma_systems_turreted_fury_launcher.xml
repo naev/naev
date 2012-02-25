@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Enygma Systems Turreted Fury Launcher">
+ <general>
+  <slot>weapon</slot>
+  <mass>30</mass>
+  <price>80000</price>
+  <description>Enygma Systems has developed a turret mounted Fury launcher. It comes at a steep price, but can be a powerful means of discouraging pirate fighters.</description>
+  <gfx_store>seekerlauncher</gfx_store>
+ </general>
+ <specific type="turret launcher" secondary="1">
+  <cpu>9</cpu>
+  <ammo>Fury Missile</ammo>
+  <delay>4</delay>
+  <amount>30</amount>
+  <lockon>8</lockon>
+  <ew_target>1.5</ew_target>
+ </specific>
+</outfit>

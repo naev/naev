@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Praxis">
+ <pos>
+  <x>-5844.907407</x>
+  <y>8169.259259</y>
+ </pos>
+ <GFX>
+  <space>M00.png</space>
+  <exterior>oceanic2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>400000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Praxis is an anomaly in Dvaered culture, known for its commerce rather than production of materials. Beginning as a small colony, it has become increasingly important since the Incident. Praxis is now considered one of the core Dvaered worlds, the gateway through which Dvaered ore and materials flow into Empire space.</description>
+  <bar>While not nearly as pristine as many Empire bars, the Praxis bar is remarkably well-kept for a Dvaered bar.</bar>
+ </general>
+ <tech>
+  <item>Kinetic 1</item>
+  <item>Basic Trade Ships</item>
+  <item>Bulk Trade Ships</item>
+  <item>Basic Outfits 1</item>
+  <item>Basic Outfits 2</item>
+ </tech>
+</asset>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Nonuri">
+ <pos>
+  <x>13346.980601</x>
+  <y>-10858.126526</y>
+ </pos>
+ <GFX>
+  <space>moon-M03.png</space>
+  <exterior>station03.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Frontier</faction>
+  <value>60.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>A</class>
+  <population>900000</population>
+  <hide>0.500000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities>
+   <commodity>Medicine</commodity>
+   <commodity>Luxury Goods</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Nonuri is a world with an under-developed economy, even by Frontier standards. It barely manages to keep itself from going bankrupt. The people who live here stay mainly out of a sense of belonging, a feeling that Nonuri is their birthright. In fact, Nonuri was colonized by the colony ship Petrovosk, which makes Nonuri one of the oldest extrasolar human settlements. Unfortunately for the locals, most of the galaxy doesn't care quite as much as they do.</description>
+  <bar>The spaceport bar is humble, yet tidy and functional. The Nonurians may not enjoy a rich life, but they make the most of what they've got. Though the equipment is outdated, in some cases by several generations, this bar has most of the things an intergalactic traveler needs to keep abreast of events.</bar>
+ </general>
+</asset>

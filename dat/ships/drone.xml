@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Drone">
+ <base_type>Drone</base_type>
+ <GFX>drone</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Drone</class>
+ <price>300000</price>
+ <fabricator>Robosys</fabricator>
+ <description>This is a modified version of the robotic drone that includes a life support system for humans.</description>
+ <movement>
+  <thrust>320</thrust>
+  <turn>200</turn>
+  <speed>360</speed>
+ </movement>
+ <health>
+  <absorb>15</absorb>
+  <shield>150</shield>
+  <armour>80</armour>
+  <energy>600</energy>
+  <shield_regen>5</shield_regen>
+  <armour_regen>7</armour_regen>
+  <energy_regen>20</energy_regen>
+ </health>
+ <characteristics>
+  <cpu>70</cpu>
+  <crew>1</crew>
+  <mass>40</mass>
+  <fuel>200</fuel>
+  <cargo>1</cargo>
+ </characteristics>
+ <slots>
+  <weapon x="5" y="0" h="-5"/>
+  <weapon x="5" y="0" h="-5"/>
+  <weapon x="5" y="0" h="-5"/>
+  <utility/>
+  <structure/>
+ </slots>
+</ship>
+<!-- Cargo Haulers -->

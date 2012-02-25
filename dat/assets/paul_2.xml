@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Paul 2">
+ <pos>
+  <x>-3610.361825</x>
+  <y>-4237.848978</y>
+ </pos>
+ <GFX>
+  <space>M00.png</space>
+  <exterior>forest2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Independent</faction>
+  <value>80.000000</value>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>100000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Paul 2 is a planet of merchants and entrepreneurs. Though the planet doesn't have a global government as such, the population has agreed on a number of general rules that count as law of some sort. It works surprisingly well.</description>
+  <bar>Like many planets in the galaxy nowadays, Paul 2's economy relies heavily on interplanetary trade. The spaceport bar doubles as a trade center, allowing traders to buy and sell wares without ever leaving the spaceport.</bar>
+ </general>
+ <tech>
+  <item>Basic Outfits 1</item>
+ </tech>
+</asset>

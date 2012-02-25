@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="New Haven">
+ <pos>
+  <x>-57520.000000</x>
+  <y>4400.000000</y>
+ </pos>
+ <GFX>
+  <space>X01.png</space>
+  <exterior>gas.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Pirate</faction>
+  <value>600.000000</value>
+  <range>5</range>
+ </presence>
+ <general>
+  <class>D</class>
+  <population>9000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land>pir_clanworld</land>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Medicine</commodity>
+   <commodity>Luxury Goods</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>New Haven is a planet located beyond the boundaries of law and justice. Founded by Bartax the Great, one of the most successful pirates to ever live, after Haven was annihilated. The planet's atmosphere is highly toxic and has high levels of radiation outside of the stronghold. These very features are what made the Empire classify it as uninhabitable, as it lacks strategic resources necessary to justify the cost of terraforming. Its distance from other civilized worlds affords it protection from prying eyes.</description>
+  <bar>The Slop and Grill is one of the nastiest taverns in the universe. The food and drink don't help matters. Most of it is brewed on New Haven and wouldn't pass any of the minimal health insurance tests. Some of the booze even doubles as ship fuel if needed. The clients are also deep space thugs, pirates, black marketers, mercenaries and other shady folk that insist on keeping the ground coated with blood and broken teeth. Not a great place to bring the family.</bar>
+ </general>
+ <tech>
+  <item>Plasma 1</item>
+  <item>Plasma 2</item>
+  <item>Pirate Ships</item>
+  <item>Missiles 1</item>
+  <item>Missiles 2</item>
+  <item>Heavy Weapons 1</item>
+  <item>Low Tech Upgrades</item>
+  <item>High Tech Upgrades 1</item>
+ </tech>
+</asset>

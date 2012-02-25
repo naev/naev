@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Engine Reroute">
+ <general>
+  <typename>Manoevrability Modifier</typename>
+  <slot>structure</slot>
+  <mass>0</mass>
+  <price>125000</price>
+  <description>This enhancement routes energy from the ship's energy supplies to the engine, giving the ship an increased thrust. It does not increase the ship's max speed nor turning abilities.</description>
+  <gfx_store>reroute</gfx_store>
+ </general>
+ <specific type="modification">
+  <cpu>0</cpu>
+  <thrust>3</thrust>
+  <thrust_rel>10</thrust_rel>
+  <energy_regen>-0.85</energy_regen>
+ </specific>
+</outfit>

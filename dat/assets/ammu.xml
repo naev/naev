@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Ammu">
+ <pos>
+  <x>8159.024083</x>
+  <y>10841.160191</y>
+ </pos>
+ <GFX>
+  <space>A04.png</space>
+  <exterior>lava.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>A</class>
+  <population>60000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Ammu is a generally calm planet, once one is accustomed to the constant rumbling of the lava flows. Lava eruptions are often felt in the subterranean spaceport, but the way it doesn't seem to faze the locals reassures you.</description>
+  <bar>The Ammu Spaceport Bar, known as "The Heatsink" due to its frigid temperatures, in contrast to the rest of the station. While primarily known for their temperature, that's not to say they can't whip up a mean Pan-Galactic Gargle Blaster.</bar>
+ </general>
+ <tech>
+  <item>Laser 1</item>
+  <item>Basic Outfits 1</item>
+ </tech>
+</asset>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ssys name="Draconis">
+ <general>
+  <radius>31500.000000</radius>
+  <stars>600</stars>
+  <interference>0.000000</interference>
+  <nebula volatility="0.000000">0.000000</nebula>
+ </general>
+ <pos>
+  <x>190.000000</x>
+  <y>-56.000000</y>
+ </pos>
+ <assets>
+  <asset>Draconis Alpha</asset>
+  <asset>Draconis Beta</asset>
+  <asset>Draconis Delta</asset>
+  <asset>Draconis Epsilon</asset>
+  <asset>Draconis Gamma</asset>
+  <asset>Draconis Omega</asset>
+  <asset>Virtual Civilian Standard</asset>
+  <asset>Virtual Trader Area</asset>
+  <asset>Zabween</asset>
+ </assets>
+ <jumps>
+  <jump target="Tau Prime">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+ </jumps>
+</ssys>

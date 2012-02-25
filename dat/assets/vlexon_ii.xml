@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Vlexon II">
+ <pos>
+  <x>2560.000000</x>
+  <y>19360.000000</y>
+ </pos>
+ <GFX>
+  <space>moon-A00.png</space>
+  <exterior>aquatic2.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.500000</hide>
+  <services/>
+ </general>
+</asset>

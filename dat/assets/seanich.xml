@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Seanich">
+ <pos>
+  <x>18820.828324</x>
+  <y>10428.462646</y>
+ </pos>
+ <GFX>
+  <space>moon-M00.png</space>
+  <exterior>forest.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>50.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>90000000</population>
+  <hide>0.500000</hide>
+  <services>
+   <land>land_lowclass</land>
+   <refuel/>
+   <bar/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Medicine</commodity>
+  </commodities>
+  <description>On the edge of the Delta Pavonis system, unnoticed by all but a few, orbits the tiny world of Seanich. Though technically a registered Imperial colony, this backwater planet does not receive the attention that should come with its status. The population is decidedly upset about this, to the point that the local administration has stopped paying taxes to the central Imperial government in protest. The Imperial government hasn't noticed.</description>
+  <bar>Seanich has a pretty well-appointed spaceport bar. It has all the facilities a spacer could need, and many are quite up to date. Sadly, this hasn't helped to make the unfortunate colony more conspicuous in the galaxy. Most of the tables are empty.</bar>
+ </general>
+ <tech>
+  <item>Laser 1</item>
+  <item>Basic Outfits 1</item>
+  <item>Missiles 2</item>
+ </tech>
+</asset>

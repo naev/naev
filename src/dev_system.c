@@ -23,9 +23,7 @@
  * Prototypes.
  */
 static int dsys_compPlanet( const void *planet1, const void *planet2 );
-static int dsys_compSys( const void *sys1, const void *sys2 );
 static int dsys_compJump( const void *jmp1, const void *jmp2 );
-static int dsys_saveSystem( xmlTextWriterPtr writer, const StarSystem *sys );
 
 
 /**
@@ -43,24 +41,6 @@ static int dsys_compPlanet( const void *planet1, const void *planet2 )
    p2 = * (const Planet**) planet2;
 
    return strcmp( p1->name, p2->name );
-}
-
-
-/**
- * @brief Function for qsorting systems.
- *
- *    @param sys1 System 1 to sort.
- *    @param sys2 System 2 to sort.
- *    @return Order to sort.
- */
-static int dsys_compSys( const void *sys1, const void *sys2 )
-{
-   const StarSystem *s1, *s2;
-
-   s1 = * (const StarSystem**) sys1;
-   s2 = * (const StarSystem**) sys2;
-
-   return strcmp( s1->name, s2->name );
 }
 
 
@@ -90,12 +70,31 @@ static int dsys_compJump( const void *jmp1, const void *jmp2 )
  *    @param sys Star system to save.
  *    @return 0 on success.
  */
-static int dsys_saveSystem( xmlTextWriterPtr writer, const StarSystem *sys )
+int dsys_saveSystem( StarSystem *sys )
 {
-   int i;
+   int i, pos;
+   xmlDocPtr doc;
+   xmlTextWriterPtr writer;
    const Planet **sorted_planets;
    const JumpPoint **sorted_jumps, *jp;
+   char *file, *cleanName;
 
+
+   /* Reconstruct jumps so jump pos are updated. */
+   system_reconstructJumps(sys);
+
+   /* Create the writer. */
+   writer = xmlNewTextWriterDoc(&doc, 0);
+   if (writer == NULL) {
+      WARN("testXmlwriterDoc: Error creating the xml writer");
+      return -1;
+   }
+
+   /* Set the writer parameters. */
+   xmlw_setParams( writer );
+
+   /* Start writer. */
+   xmlw_start(writer);
    xmlw_startElem( writer, "ssys" );
 
    /* Attributes. */
@@ -164,6 +163,31 @@ static int dsys_saveSystem( xmlTextWriterPtr writer, const StarSystem *sys )
    free(sorted_jumps);
 
    xmlw_endElem( writer ); /** "ssys" */
+   xmlw_done(writer);
+
+   /* No need for writer anymore. */
+   xmlFreeTextWriter(writer);
+
+   /* Write data. */
+   cleanName = malloc((strlen(sys->name)+1)*sizeof(char));
+   memset(cleanName, 0, strlen(sys->name)+1);
+   pos = 0;
+   for (i=0; i<(int)strlen(sys->name); i++) {
+      if (!ispunct(sys->name[i])) {
+         if (sys->name[i] == ' ')
+            cleanName[pos] = '_';
+         else
+            cleanName[pos] = tolower(sys->name[i]);
+         pos++;
+      }
+   }
+   file = malloc((pos+20)*sizeof(char));
+   snprintf(file,(pos+20)*sizeof(char),"dat/ssys/%s.xml",cleanName);
+   xmlSaveFileEnc( file, doc, "UTF-8" );
+
+   /* Clean up. */
+   xmlFreeDoc(doc);
+   free(cleanName);
 
    return 0;
 }
@@ -177,56 +201,14 @@ static int dsys_saveSystem( xmlTextWriterPtr writer, const StarSystem *sys )
 int dsys_saveAll (void)
 {
    int i;
-   /*char file[PATH_MAX];*/
-   xmlDocPtr doc;
-   xmlTextWriterPtr writer;
    int nsys;
-   const StarSystem *sys;
-   const StarSystem **sorted_sys;
+   StarSystem *sys;
 
-   /* Reconstruct jumps so jump pos are updated. */
-   systems_reconstructJumps();
-
-   /* Create the writer. */
-   writer = xmlNewTextWriterDoc(&doc, 0);
-   if (writer == NULL) {
-      WARN("testXmlwriterDoc: Error creating the xml writer");
-      return -1;
-   }
-
-   /* Set the writer parameters. */
-   xmlw_setParams( writer );
-
-   /* Start writer. */
-   xmlw_start(writer);
-   xmlw_startElem( writer, "Systems" );
-
-   /* Sort systems. */
    sys = system_getAll( &nsys );
-   sorted_sys = malloc( sizeof(StarSystem*) * nsys );
-   for (i=0; i<nsys; i++)
-      sorted_sys[i] = &sys[i];
-   qsort( sorted_sys, nsys, sizeof(StarSystem*), dsys_compSys );
 
    /* Write systems. */
    for (i=0; i<nsys; i++)
-      dsys_saveSystem( writer, sorted_sys[i] );
-
-   /* Clean up sorted system.s */
-   free(sorted_sys);
-
-   /* End writer. */
-   xmlw_endElem( writer ); /* "Systems" */
-   xmlw_done(writer);
-
-   /* No need for writer anymore. */
-   xmlFreeTextWriter(writer);
-
-   /* Write data. */
-   xmlSaveFileEnc( "ssys.xml", doc, "UTF-8" );
-
-   /* Clean up. */
-   xmlFreeDoc(doc);
+      dsys_saveSystem( &sys[i] );
 
    return 0;
 }

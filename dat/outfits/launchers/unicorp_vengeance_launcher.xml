@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Unicorp Vengeance Launcher">
+ <general>
+  <slot>weapon</slot>
+  <license>Medium Weapon License</license>
+  <mass>15</mass>
+  <price>70000</price>
+  <description>This launcher fires Vengeance class interceptor missiles. Its bulk makes it less suitable for ships that rely on mobility, but it's relatively efficient otherwise.</description>
+  <gfx_store>headhunterlauncher</gfx_store>
+ </general>
+ <specific type="launcher" secondary="1">
+  <cpu>6</cpu>
+  <ammo>Vengeance Missile</ammo>
+  <delay>6</delay>
+  <amount>10</amount>
+  <lockon>17</lockon>
+  <arc>6</arc>
+  <ew_target>0.75</ew_target>
+ </specific>
+</outfit>

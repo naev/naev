@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Vorca">
+ <pos>
+  <x>-12000.000000</x>
+  <y>-22000.000000</y>
+ </pos>
+ <GFX>
+  <space>Y00.png</space>
+  <exterior>gas.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Pirate</faction>
+  <value>300.000000</value>
+  <range>5</range>
+ </presence>
+ <general>
+  <class>Y</class>
+  <population>9000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land>pir_clanworld</land>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Medicine</commodity>
+   <commodity>Luxury Goods</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Vorca has long been the main base of operations of small time gangsters and crooks, but it didn't grow into a serious Pirate clan until the Dvaered Revolts. In that time of tension and discord, many decided to turn their backs on the Empire entirely and eke out a new life and accrue wealth by taking it from others. Those who survived in that line of work flocked to Vorca, and now the planet is host to an impressive fleet of private, more-or-less similarly aligned ships.</description>
+  <bar>The average space pilot would, when walking into a Pirate bar, expect utter chaos, frought with boozing, gambling, violence and narcotic substances. This is an expectation the bar on Vorca does not live up to. As a matter of fact, the establisment is quite tightly policed by henchmen of the clan leaders, and as such is one of the most orderly places within several jumps. The bar serves as a neutral ground among the Pirates themselves, and a meeting place for those who, for whatever reason, want to solicit their aid.</bar>
+ </general>
+ <tech>
+  <item>Plasma 1</item>
+  <item>Plasma 2</item>
+  <item>Pirate Ships</item>
+  <item>Missiles 1</item>
+  <item>Missiles 2</item>
+  <item>Heavy Weapons 1</item>
+  <item>Low Tech Upgrades</item>
+  <item>High Tech Upgrades 1</item>
+ </tech>
+</asset>

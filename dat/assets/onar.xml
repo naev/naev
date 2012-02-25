@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Onar">
+ <pos>
+  <x>20081.982211</x>
+  <y>-11605.752853</y>
+ </pos>
+ <GFX>
+  <space>O01.png</space>
+  <exterior>aquatic3.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>50.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>O</class>
+  <population>700000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Onar serves as one of House Dvaered's foremost weapons development facilities. The planet has a peculiar characteristic that causes its gravity to fluctuate from region to region, which makes for an ideal testing environment to test ballistic weaponry.</description>
+  <bar>Every visitor to Onar is required to check in at the spaceport bar immediately after landing. Nobody is allowed off the premises of the spaceport without a good reason, and even then they will be accompanied by an official Dvaered chaperone. Most visitors therefore find themselves confined to the spaceport bar.</bar>
+ </general>
+ <tech>
+  <item>Kinetic 2</item>
+  <item>Basic Outfits 2</item>
+  <item>Missiles 2</item>
+  <item>Heavy Weapons 1</item>
+ </tech>
+</asset>

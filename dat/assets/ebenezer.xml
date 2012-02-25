@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Ebenezer">
+ <pos>
+  <x>-13000.000000</x>
+  <y>7735.000000</y>
+ </pos>
+ <GFX>
+  <space>moon-M00.png</space>
+  <exterior>methane.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>50.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>I</class>
+  <population>10000</population>
+  <hide>0.500000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+  </services>
+  <commodities/>
+  <description>A small moon orbiting Sarcophagus II, Ebenezer's atmosphere is deadly to humand and Soromid alike. However, the Soromid found out that their biological ships quite like it here, and a few weeks of continued exposure makes the outer skin tougher and more resistant to damage. Most Soromid military ships will make a visit to Ebenezer early on in their lives for this reason.</description>
+  <bar>There's really not too much to to on Ebenezer. The Soromid who live here permanently are here to oversee the ships tethered to the surface, and their population isn't large enough to present much of a market. Traders don't often come to this place.</bar>
+ </general>
+</asset>

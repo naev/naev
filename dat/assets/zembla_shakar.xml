@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Zembla Shakar">
+ <pos>
+  <x>-5765.480628</x>
+  <y>3573.203240</y>
+ </pos>
+ <GFX>
+  <space>moon-M06.png</space>
+  <exterior>forest.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>500000</population>
+  <hide>0.500000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Medicine</commodity>
+   <commodity>Luxury Goods</commodity>
+  </commodities>
+  <description>Zembla Shakar is like a resort for the elite within the Shakar system. The people who live here live on gigantic estates that they usually haven't seen all of. Most of the planet is off-limits to offworlders, and most traffic to the planet consists of import luxury goods and export waste products.</description>
+  <bar>The bar is where traders wait until their cargo is loaded and unloaded. Pilots who come here expecting a glimpse of the rich lands that cover the surface of the planet will be disappointed, as there is very little to see here.</bar>
+ </general>
+ <tech>
+  <item>Laser 1</item>
+  <item>Basic Outfits 2</item>
+ </tech>
+</asset>

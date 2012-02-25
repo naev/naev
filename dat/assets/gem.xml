@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Gem">
+ <pos>
+  <x>-2316.897947</x>
+  <y>-3385.866684</y>
+ </pos>
+ <GFX>
+  <space>moon-P03.png</space>
+  <exterior>aquatic.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.500000</hide>
+  <services/>
+ </general>
+</asset>

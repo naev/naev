@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Andee II">
+ <pos>
+  <x>-17080.000000</x>
+  <y>630.000000</y>
+ </pos>
+ <GFX>
+  <space>K00.png</space>
+  <exterior>traderoom.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

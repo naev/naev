@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Dvaered Vendetta">
+ <base_type>Vendetta</base_type>
+ <GFX>vendetta_dvaered</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Fighter</class>
+ <price>400000</price>
+ <fabricator>House Dvaered</fabricator>
+ <description>A Dvaered Vendetta.</description>
+ <movement>
+  <thrust>220</thrust>
+  <turn>125</turn>
+  <speed>230</speed>
+ </movement>
+ <health>
+  <absorb>13</absorb>
+  <shield>230</shield>
+  <armour>220</armour>
+  <energy>800</energy>
+  <shield_regen>6</shield_regen>
+  <armour_regen>0</armour_regen>
+  <energy_regen>20</energy_regen>
+ </health>
+ <characteristics>
+  <cpu>28</cpu>
+  <crew>4</crew>
+  <mass>190</mass>
+  <fuel>300</fuel>
+  <cargo>25</cargo>
+ </characteristics>
+ <slots>
+  <weapon x="16" y="-9" h="0"/>
+  <weapon x="16" y="9" h="0"/>
+  <weapon x="13" y="-13" h="0"/>
+  <weapon x="13" y="13" h="0"/>
+  <weapon x="19" y="0" h="-2"/>
+  <weapon x="3" y="0" h="2"/>
+  <utility/>
+  <structure/>
+ </slots>
+ <stats>
+  <fwd_energy>-5</fwd_energy>
+  <fwd_heat>-10</fwd_heat>
+  <fwd_firerate>-3</fwd_firerate>
+ </stats>
+</ship>

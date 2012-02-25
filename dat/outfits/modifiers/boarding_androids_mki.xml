@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Boarding Androids MKI">
+  <general>
+   <typename>Crew enhancement</typename>
+   <slot>utility</slot>
+   <mass>1</mass>
+   <price>20000</price>
+   <description>The Asimov Destructicorp Boarding Android is the latest in robotic hostile takeover technology. Equipped with a multifunction plasma blaster/cutting torch/can opener/spatula, the Boarding Android is ready for any situation, be it tactical or culinary.</description>
+   <gfx_store>cargo_pod</gfx_store>
+  </general>
+  <specific type="modification">
+   <crew_rel>20</crew_rel>
+  </specific>
+</outfit>

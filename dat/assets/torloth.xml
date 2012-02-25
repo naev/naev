@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Torloth">
+ <pos>
+  <x>7357.793065</x>
+  <y>-12642.861857</y>
+ </pos>
+ <GFX>
+  <space>G00.png</space>
+  <exterior>mining2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>G</class>
+  <population>350000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Torloth is a heavy mining planet. It has rich ores and minerals in abundance with no local fauna to speak of. It's one of the strongholds of the Nexus corporation, housing some of their important ship factories, though the heavy gravity of the planet necessitates constructing larger ships off-world. Torloth produces ships exclusively for delivery to Nexus depots and endorsed shipyards.</description>
+  <bar>The spaceport bar is carved from a rich mineral deposit lending the walls a glimmering, reflective quality. The local brews often include minerals in their production process, giving them a rich, somewhat saline taste.</bar>
+ </general>
+</asset>

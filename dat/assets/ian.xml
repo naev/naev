@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Ian">
+ <pos>
+  <x>-30777.238017</x>
+  <y>7088.682857</y>
+ </pos>
+ <GFX>
+  <space>moon-M02.png</space>
+  <exterior>forest.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>100000000</population>
+  <hide>0.500000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Luxury Goods</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Serving as the main consumer world on the eastern fringe of Empire space, Ian makes up for its small size by its wealth. The little sphere is quite a pleasant place to live, and many retiring Imperial officials and aristocrats have made the place their home. And where wealth goes, industry follows - Ian has its own modest ship construction facilities.</description>
+  <bar>On Ian, it's all about being seen. The bar never goes quiet, though the level of noise also never grows to uncivilized proportions. Both the gentry and the rich upstarts come to the recreational facilities to mingle and to strut their stuff to the offworlders who come here on business.</bar>
+ </general>
+ <tech>
+  <item>Laser 1</item>
+  <item>Basic Civilian Ships</item>
+  <item>Basic Outfits 1</item>
+  <item>Basic Outfits 2</item>
+ </tech>
+</asset>
