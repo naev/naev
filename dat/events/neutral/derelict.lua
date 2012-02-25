@@ -73,7 +73,7 @@ function create ()
     p:rename("Derelict")
     hook.pilot(p, "board", "board")
     hook.pilot(p, "death", "destroyevent")
-    hook.enter("destroyevent")
+    hook.jumpout("destroyevent")
     hook.land("destroyevent")
 end
 
@@ -120,6 +120,7 @@ function badevent()
     -- Roll for bad event, handle accordingly
     event = rnd.rnd(1, #btext)
     if event == 1 then
+        p:hookClear() -- So the pilot doesn't end the event by dying.
         tk.msg(btitle, btext[1])
         p:setHealth(0,0)
         player.pilot():control(true)
@@ -127,6 +128,7 @@ function badevent()
     elseif event == 2 then
         tk.msg(btitle, btext[2])
         player.pilot():setFuel(false)
+        destroyevent()
     elseif event == 3 then
         tk.msg(btitle, btext[3])
         v1 = pilot.add("Pirate Vendetta", "pirate", player.pos() + vec2.new( 300, 300))[1]
@@ -141,13 +143,14 @@ function badevent()
         a1:attack(player.pilot())
         a2:control()
         a2:attack(player.pilot())
+        destroyevent()
     end
-    destroyevent()
 end
 
 function derelict_exploded()
    player.pilot():control(false)
    player.pilot():setHealth(42, 0)
+   destroyEvent()
 end
 
 function missionevent()
