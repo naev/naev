@@ -38,7 +38,7 @@ else -- default english
     --=== BAD EVENTS ===--
     btitle = "Oh no!"
     btext = {}
-    btext[1] = [[No sooner do you affix your boarding clamp to the derelect ship or it triggers a boobytrap! The derelict explodes, severely damaging your ship. You escaped death this time, but it was a close call!]]
+    btext[1] = [[The moment you affix your boarding clamp to the derelect ship, it triggers a boobytrap! The derelict explodes, severely damaging your ship. You escaped death this time, but it was a close call!]]
     btext[2] = [[You board the derelict ship and search its interior, but you find nothing. When you return to your ship, however, it turns out there were Space Leeches onboard the derelict - and they've now attacked themselves to your ship! You scorch them off with a plasma torch, but it's too late. The little buggers have already drunk all of your fuel. You're not jumping anywhere until you find some more!]]
     btext[3] = [[You affix your boarding clamp and walk aboard the derelict ship. You've only spent a couple of minutes searching the interior when there is a proximity alarm from your ship! Pirates are closing on your position! Clearly this derelict was a trap! You run back onto your ship and prepare to unboard, but you've lost precious time. The pirates are already in firing range...]]
 
