@@ -10,7 +10,7 @@
 
 #include <stdlib.h> /* atoi */
 #include <unistd.h> /* getopt */
-#include <string.h> /* strdup */
+#include "nstring.h" /* strdup */
 #include <getopt.h> /* getopt_long */
 
 #include "nlua.h"
@@ -597,7 +597,7 @@ void conf_parseCLI( int argc, char** argv )
 
 
 /**
- * @brief snprintf-like function to quote and escape a string for use in Lua source code
+ * @brief nsnprintf-like function to quote and escape a string for use in Lua source code
  *
  *    @param str The destination buffer
  *    @param size The maximum amount of space in str to use
@@ -615,7 +615,7 @@ static size_t quoteLuaString(char *str, size_t size, const char *text)
 
    /* Write a Lua nil if we are given a NULL pointer */
    if (text == NULL)
-      return snprintf(str, size, "nil");
+      return nsnprintf(str, size, "nil");
 
    count = 0;
 
@@ -671,7 +671,7 @@ static size_t quoteLuaString(char *str, size_t size, const char *text)
       if (count == size)
          return count;
 
-      count += snprintf(&str[count], size-count, "%03u", *in);
+      count += nsnprintf(&str[count], size-count, "%03u", *in);
       if (count == size)
          return count;
    }
@@ -683,7 +683,7 @@ static size_t quoteLuaString(char *str, size_t size, const char *text)
 
    /* zero-terminate, if possible */
    if (count != size)
-      str[count] = '\0';   /* don't increase count, like snprintf */
+      str[count] = '\0';   /* don't increase count, like nsnprintf */
 
    /* return the amount of characters written */
    return count;
@@ -691,26 +691,26 @@ static size_t quoteLuaString(char *str, size_t size, const char *text)
 
 
 #define  conf_saveComment(t)     \
-pos += snprintf(&buf[pos], sizeof(buf)-pos, "-- %s\n", t);
+pos += nsnprintf(&buf[pos], sizeof(buf)-pos, "-- %s\n", t);
 
 #define  conf_saveEmptyLine()     \
 if (sizeof(buf) != pos) \
    buf[pos++] = '\n';
 
 #define  conf_saveInt(n,i)    \
-pos += snprintf(&buf[pos], sizeof(buf)-pos, "%s = %d\n", n, i);
+pos += nsnprintf(&buf[pos], sizeof(buf)-pos, "%s = %d\n", n, i);
 
 #define  conf_saveFloat(n,f)    \
-pos += snprintf(&buf[pos], sizeof(buf)-pos, "%s = %f\n", n, f);
+pos += nsnprintf(&buf[pos], sizeof(buf)-pos, "%s = %f\n", n, f);
 
 #define  conf_saveBool(n,b)    \
 if (b) \
-   pos += snprintf(&buf[pos], sizeof(buf)-pos, "%s = true\n", n); \
+   pos += nsnprintf(&buf[pos], sizeof(buf)-pos, "%s = true\n", n); \
 else \
-   pos += snprintf(&buf[pos], sizeof(buf)-pos, "%s = false\n", n);
+   pos += nsnprintf(&buf[pos], sizeof(buf)-pos, "%s = false\n", n);
 
 #define  conf_saveString(n,s) \
-pos += snprintf(&buf[pos], sizeof(buf)-pos, "%s = ", n); \
+pos += nsnprintf(&buf[pos], sizeof(buf)-pos, "%s = ", n); \
 pos += quoteLuaString(&buf[pos], sizeof(buf)-pos, s); \
 if (sizeof(buf) != pos) \
    buf[pos++] = '\n';
@@ -1020,10 +1020,10 @@ int conf_saveConfig ( const char* file )
          quoteLuaString(keyname, sizeof(keyname)-1, SDL_GetKeyName(key));
       /* If SDL can't describe the key, store it as an integer */
       if (type != KEYBIND_KEYBOARD || strcmp(keyname, "\"unknown key\"") == 0)
-         snprintf(keyname, sizeof(keyname)-1, "%d", key);
+         nsnprintf(keyname, sizeof(keyname)-1, "%d", key);
 
       /* Write out a simple Lua table containing the keybind info */
-      pos += snprintf(&buf[pos], sizeof(buf)-pos, "%s = { type = \"%s\", mod = \"%s\", key = %s }\n",
+      pos += nsnprintf(&buf[pos], sizeof(buf)-pos, "%s = { type = \"%s\", mod = \"%s\", key = %s }\n",
             keybind_info[i][0], typename, modname, keyname);
    }
    conf_saveEmptyLine();

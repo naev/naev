@@ -18,7 +18,7 @@
 #include "naev.h"
 
 #include <stdio.h>
-#include <string.h>
+#include "nstring.h"
 #include <stdint.h>
 
 #ifdef HAVE_SUITESPARSE_CS_H
@@ -95,19 +95,19 @@ credits_t economy_getPrice( const Commodity *com,
 void credits2str( char *str, credits_t credits, int decimals )
 {
    if (decimals < 0)
-      snprintf( str, ECON_CRED_STRLEN, "%"CREDITS_PRI, credits );
+      nsnprintf( str, ECON_CRED_STRLEN, "%"CREDITS_PRI, credits );
    else if (credits >= 1000000000000000LL)
-      snprintf( str, ECON_CRED_STRLEN, "%.*fQ", decimals, (double)credits / 1000000000000000. );
+      nsnprintf( str, ECON_CRED_STRLEN, "%.*fQ", decimals, (double)credits / 1000000000000000. );
    else if (credits >= 1000000000000LL)
-      snprintf( str, ECON_CRED_STRLEN, "%.*fT", decimals, (double)credits / 1000000000000. );
+      nsnprintf( str, ECON_CRED_STRLEN, "%.*fT", decimals, (double)credits / 1000000000000. );
    else if (credits >= 1000000000L)
-      snprintf( str, ECON_CRED_STRLEN, "%.*fB", decimals, (double)credits / 1000000000. );
+      nsnprintf( str, ECON_CRED_STRLEN, "%.*fB", decimals, (double)credits / 1000000000. );
    else if (credits >= 1000000)
-      snprintf( str, ECON_CRED_STRLEN, "%.*fM", decimals, (double)credits / 1000000. );
+      nsnprintf( str, ECON_CRED_STRLEN, "%.*fM", decimals, (double)credits / 1000000. );
    else if (credits >= 1000)
-      snprintf( str, ECON_CRED_STRLEN, "%.*fK", decimals, (double)credits / 1000. );
+      nsnprintf( str, ECON_CRED_STRLEN, "%.*fK", decimals, (double)credits / 1000. );
    else
-      snprintf (str, ECON_CRED_STRLEN, "%"CREDITS_PRI, credits );
+      nsnprintf (str, ECON_CRED_STRLEN, "%"CREDITS_PRI, credits );
 }
 
 

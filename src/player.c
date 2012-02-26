@@ -58,6 +58,7 @@
 #include "player_gui.h"
 #include "start.h"
 #include "input.h"
+#include "nstring.h"
 
 
 /*
@@ -470,7 +471,7 @@ Pilot* player_newShip( Ship* ship, const char *def_name,
       ship_name = malloc( len );
       strncpy( ship_name, def_name, len );
       while (player_hasShip(ship_name)) {
-         snprintf( ship_name, len, "%s %d", def_name, i );
+         nsnprintf( ship_name, len, "%s %d", def_name, i );
          i++;
       }
    }
@@ -1923,7 +1924,7 @@ void player_screenshot (void)
 
    /* Try to find current screenshots. */
    for ( ; screenshot_cur < 1000; screenshot_cur++) {
-      snprintf( filename, PATH_MAX, "%sscreenshots/screenshot%03d.png",
+      nsnprintf( filename, PATH_MAX, "%sscreenshots/screenshot%03d.png",
             nfile_dataPath(), screenshot_cur );
       if (!nfile_fileExists( filename ))
          break;

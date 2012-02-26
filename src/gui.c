@@ -14,7 +14,6 @@
 #include "naev.h"
 
 #include <stdlib.h>
-#include <string.h>
 
 #include "player.h"
 #include "nxml.h"
@@ -57,6 +56,7 @@
 #include "nlua_gui.h"
 #include "nlua_tex.h"
 #include "gui_omsg.h"
+#include "nstring.h"
 
 
 #define XML_GUI_ID   "GUIs" /**< XML section identifier for GUI document. */
@@ -336,12 +336,12 @@ void player_messageRaw( const char *str )
 
       /* Add the new one */
       if (p == 0) {
-         snprintf( mesg_stack[mesg_pointer].str, i+1, "%s", &str[p] );
+         nsnprintf( mesg_stack[mesg_pointer].str, i+1, "%s", &str[p] );
          gl_printRestoreInit( &mesg_stack[mesg_pointer].restore );
       }
       else {
          mesg_stack[mesg_pointer].str[0] = '\t'; /* Hack to indent. */
-         snprintf( &mesg_stack[mesg_pointer].str[1], i+1, "%s", &str[p] );
+         nsnprintf( &mesg_stack[mesg_pointer].str[1], i+1, "%s", &str[p] );
          gl_printStoreMax( &mesg_stack[mesg_pointer].restore, str, p );
       }
       mesg_stack[mesg_pointer].t = mesg_timeout;
@@ -2049,7 +2049,7 @@ int gui_load( const char* name )
    gui_cleanup();
 
    /* Open file. */
-   snprintf( path, sizeof(path), "dat/gui/%s.lua", name );
+   nsnprintf( path, sizeof(path), "dat/gui/%s.lua", name );
    buf = ndata_read( path, &bufsize );
    if (buf == NULL) {
       WARN("Unable to find GUI '%s'.", path );

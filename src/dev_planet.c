@@ -17,6 +17,7 @@
 #include "nxml.h"
 #include "physics.h"
 #include "nfile.h"
+#include "nstring.h"
 
 
 /**
@@ -141,7 +142,7 @@ int dpl_savePlanet( const Planet *p )
       }
    }
    file = malloc((strlen(cleanName)+20)*sizeof(char));
-   snprintf(file,(strlen(cleanName)+20)*sizeof(char),"dat/assets/%s.xml",cleanName);
+   nsnprintf(file,(strlen(cleanName)+20)*sizeof(char),"dat/assets/%s.xml",cleanName);
    xmlSaveFileEnc( file, doc, "UTF-8" );
 
    /* Clean up. */

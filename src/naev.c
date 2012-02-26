@@ -24,7 +24,7 @@
 
 
 /* global */
-#include <string.h> /* strdup */
+#include "nstring.h" /* strdup */
 
 #if HAS_POSIX
 #include <time.h>
@@ -220,7 +220,7 @@ int main( int argc, char** argv )
    input_init();
 
    /* Set the configuration. */
-   snprintf(buf, PATH_MAX, "%s"CONF_FILE, nfile_configPath());
+   nsnprintf(buf, PATH_MAX, "%s"CONF_FILE, nfile_configPath());
 
 #if HAS_UNIX
    /* TODO get rid of this cruft ASAP. */
@@ -229,7 +229,7 @@ int main( int argc, char** argv )
       char *home, buf2[PATH_MAX];
       home = SDL_getenv( "HOME" );
       if (home != NULL) {
-         snprintf( buf2, PATH_MAX, "%s/.naev/"CONF_FILE, home );
+         nsnprintf( buf2, PATH_MAX, "%s/.naev/"CONF_FILE, home );
          if (nfile_fileExists( buf2 ))
             oldconfig = 1;
       }
@@ -355,7 +355,7 @@ int main( int argc, char** argv )
       uint32_t scriptsize;
       int ret;
 
-      snprintf( path, PATH_MAX, "%s/naev-confupdate.sh", ndata_getDirname() );
+      nsnprintf( path, PATH_MAX, "%s/naev-confupdate.sh", ndata_getDirname() );
       home = SDL_getenv("HOME");
       ret = dialogue_YesNo( "Warning", "Your configuration files are in a deprecated location and must be migrated:\n"
             "   \er%s/.naev/\e0\n\n"
@@ -508,7 +508,7 @@ void loadscreen_load (void)
    cam_setZoom( conf.zoom_far );
 
    /* Load the texture */
-   snprintf( file_path, PATH_MAX, "gfx/loading/%s", loadscreens[ RNG_SANE(0,nload-1) ] );
+   nsnprintf( file_path, PATH_MAX, "gfx/loading/%s", loadscreens[ RNG_SANE(0,nload-1) ] );
    loading = gl_newImage( file_path, 0 );
 
    /* Create the stars. */
@@ -966,7 +966,7 @@ static void window_caption (void)
    npng_t *npng;
 
    /* Set caption. */
-   snprintf(buf, PATH_MAX ,APPNAME" - %s", ndata_name());
+   nsnprintf(buf, PATH_MAX ,APPNAME" - %s", ndata_name());
    SDL_WM_SetCaption(buf, APPNAME);
 
    /* Set icon. */
@@ -997,7 +997,7 @@ char *naev_version( int long_version )
 {
    /* Set short version if needed. */
    if (short_version[0] == '\0')
-      snprintf( short_version, sizeof(short_version),
+      nsnprintf( short_version, sizeof(short_version),
 #if VREV < 0
             "%d.%d.0-beta%d",
             VMAJOR, VMINOR, ABS(VREV)
@@ -1010,7 +1010,7 @@ char *naev_version( int long_version )
    /* Set up the long version. */
    if (long_version) {
       if (human_version[0] == '\0')
-         snprintf( human_version, sizeof(human_version),
+         nsnprintf( human_version, sizeof(human_version),
                " "APPNAME" v%s%s - %s", short_version,
 #ifdef DEBUGGING
                " debug",

@@ -25,6 +25,7 @@
 #include "tk/toolkit_priv.h"
 #include "ndata.h"
 #include "nfile.h"
+#include "nstring.h"
 
 
 #define EDITOR_WDWNAME  "Planet Property Editor"
@@ -181,7 +182,7 @@ void sysedit_open( StarSystem *sys )
    space_gfxLoad( sysedit_sys );
 
    /* Create the window. */
-   snprintf( buf, sizeof(buf), "%s - Star System Editor", sys->name );
+   nsnprintf( buf, sizeof(buf), "%s - Star System Editor", sys->name );
    wid = window_create( buf, -1, -1, -1, -1 );
    window_handleKeys( wid, sysedit_keys );
    sysedit_wid = wid;
@@ -230,7 +231,7 @@ void sysedit_open( StarSystem *sys )
    window_addButton( wid, 80, 20, 30, 30, "btnZoomOut", "-", sysedit_buttonZoom );
 
    /* Selected text. */
-   snprintf( buf, sizeof(buf), "Radius: %.0f", sys->radius );
+   nsnprintf( buf, sizeof(buf), "Radius: %.0f", sys->radius );
    window_addText( wid, 140, 10, SCREEN_W - 80 - 30 - 30 - BUTTON_WIDTH - 20, 30, 0,
          "txtSelected", &gl_smallFont, &cBlack, buf );
 
@@ -419,9 +420,9 @@ static void sysedit_btnRename( unsigned int wid_unused, char *unused )
 
          /* Rename. */
          oldName = malloc((16+strlen(p->name))*sizeof(char));
-         snprintf(oldName,(16+strlen(p->name))*sizeof(char),"dat/assets/%s.xml",p->name);
+         nsnprintf(oldName,(16+strlen(p->name))*sizeof(char),"dat/assets/%s.xml",p->name);
          newName = malloc((16+strlen(name))*sizeof(char));
-         snprintf(newName,(16+strlen(name))*sizeof(char),"dat/assets/%s.xml",name);
+         nsnprintf(newName,(16+strlen(name))*sizeof(char),"dat/assets/%s.xml",name);
          nfile_rename(oldName,newName);
          free(oldName);
          free(newName);
@@ -450,7 +451,7 @@ static void sysedit_btnRemove( unsigned int wid_unused, char *unused )
          sel = &sysedit_select[i];
          if (sel->type == SELECT_PLANET) {
             file = malloc((16+strlen(sysedit_sys->planets[ sel->u.planet ]->name))*sizeof(char));
-            snprintf(file,(16+strlen(sysedit_sys->planets[ sel->u.planet ]->name))*sizeof(char),
+            nsnprintf(file,(16+strlen(sysedit_sys->planets[ sel->u.planet ]->name))*sizeof(char),
                            "dat/assets/%s.xml",sysedit_sys->planets[ sel->u.planet ]->name);
             nfile_delete(file);
             system_rmPlanet( sysedit_sys, sysedit_sys->planets[ sel->u.planet ]->name );
@@ -523,7 +524,7 @@ void sysedit_sysScale( StarSystem *sys, double factor )
 
    /* Scale radius. */
    sys->radius *= factor;
-   snprintf( buf, sizeof(buf), "Radius: %.0f", sys->radius );
+   nsnprintf( buf, sizeof(buf), "Radius: %.0f", sys->radius );
    window_modifyText( sysedit_wid, "txtSelected", buf );
 
    /* Scale planets. */
@@ -1137,10 +1138,10 @@ static void sysedit_editPnt( void )
 
    /* Rename button. */
    y = -40;
-   snprintf( buf, sizeof(buf), "Name: " );
+   nsnprintf( buf, sizeof(buf), "Name: " );
    w = gl_printWidthRaw( NULL, buf );
    window_addText( wid, 20, y, 180, 15, 0, "txtNameLabel", &gl_smallFont, &cDConsole, buf );
-   snprintf( buf, sizeof(buf), "%s", p->name );
+   nsnprintf( buf, sizeof(buf), "%s", p->name );
    window_addText( wid, 20 + w, y, 180, 15, 0, "txtName", &gl_smallFont, &cBlack, buf );
    window_addButton( wid, -20, y - gl_defFont.h/2. + BUTTON_HEIGHT/2., bw, BUTTON_HEIGHT, "btnRename",
          "Rename", sysedit_btnRename );
@@ -1150,7 +1151,7 @@ static void sysedit_editPnt( void )
    y -= gl_defFont.h + 5;
 
    window_addText( wid, 20, y, 180, 15, 0, "txtFactionLabel", &gl_smallFont, &cDConsole, "Faction: " );
-   snprintf( buf, sizeof(buf), "%s", p->faction > 0 ? faction_name( p->faction ) : "None" );
+   nsnprintf( buf, sizeof(buf), "%s", p->faction > 0 ? faction_name( p->faction ) : "None" );
    window_addText( wid, 20 + w, y, 180, 15, 0, "txtFaction", &gl_smallFont, &cBlack, buf );
    y -= gl_defFont.h + 5;
 
@@ -1225,16 +1226,16 @@ static void sysedit_editPnt( void )
          "btnClose", "Close", sysedit_editPntClose );
 
    /* Load current values. */
-   snprintf( buf, sizeof(buf), "%"PRIu64, p->population );
+   nsnprintf( buf, sizeof(buf), "%"PRIu64, p->population );
    window_setInput( wid, "inpPop", buf );
-   snprintf( buf, sizeof(buf), "%c", planet_getClass(p) );
+   nsnprintf( buf, sizeof(buf), "%c", planet_getClass(p) );
    window_setInput( wid, "inpClass", buf );
    window_setInput( wid, "inpLand", p->land_func );
-   snprintf( buf, sizeof(buf), "%g", p->presenceAmount );
+   nsnprintf( buf, sizeof(buf), "%g", p->presenceAmount );
    window_setInput( wid, "inpPresence", buf );
-   snprintf( buf, sizeof(buf), "%d", p->presenceRange );
+   nsnprintf( buf, sizeof(buf), "%d", p->presenceRange );
    window_setInput( wid, "inpPresenceRange", buf );
-   snprintf( buf, sizeof(buf), "%g", sqrt(p->hide) );
+   nsnprintf( buf, sizeof(buf), "%g", sqrt(p->hide) );
    window_setInput( wid, "inpHide", buf );
 
    /* Generate the list. */
@@ -1293,10 +1294,10 @@ static void sysedit_editJump( void )
 
    /* Target lable. */
    y = -40;
-   snprintf( buf, sizeof(buf), "Target: " );
+   nsnprintf( buf, sizeof(buf), "Target: " );
    w = gl_printWidthRaw( NULL, buf );
    window_addText( wid, 20, y, 180, 15, 0, "txtTargetLabel", &gl_smallFont, &cDConsole, buf );
-   snprintf( buf, sizeof(buf), "%s", j->target->name );
+   nsnprintf( buf, sizeof(buf), "%s", j->target->name );
    window_addText( wid, 20 + w, y, 180, 15, 0, "txtName", &gl_smallFont, &cBlack, buf );
 
    y -= gl_defFont.h + 10;
@@ -1333,7 +1334,7 @@ static void sysedit_editJump( void )
          "btnClose", "Close", sysedit_editJumpClose );
 
    /* Load current values. */
-   snprintf( buf, sizeof(buf), "%g", sqrt(j->hide) );
+   nsnprintf( buf, sizeof(buf), "%g", sqrt(j->hide) );
    window_setInput( wid, "inpHide", buf );
 }
 
@@ -1777,7 +1778,7 @@ static void sysedit_planetGFX( unsigned int wid_unused, char *wgt )
 
    p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
    /* Create the window. */
-   snprintf( buf, sizeof(buf), "%s - Planet Properties", p->name );
+   nsnprintf( buf, sizeof(buf), "%s - Planet Properties", p->name );
    wid = window_create( buf, -1, -1, -1, -1 );
    window_dimWindow( wid, &w, &h );
 
@@ -1799,7 +1800,7 @@ static void sysedit_planetGFX( unsigned int wid_unused, char *wgt )
    bg             = malloc( sizeof(glColour) * nfiles );
    j              = 0;
    for (i=0; i<nfiles; i++) {
-      snprintf( buf, sizeof(buf), "%s/%s", path, files[i] );
+      nsnprintf( buf, sizeof(buf), "%s/%s", path, files[i] );
       t              = gl_newImage( buf, OPENGL_TEX_MIPMAPS );
       if (t != NULL) {
          tex[j]         = t;
@@ -1856,11 +1857,11 @@ static void sysedit_btnGFXApply( unsigned int wid, char *wgt )
 
    /* New path. */
    path = land ? PLANET_LAND_GFX_PATH : PLANET_SPACE_GFX_PATH;
-   snprintf( buf, sizeof(buf), "%s/%s", path, str );
+   nsnprintf( buf, sizeof(buf), "%s/%s", path, str );
 
    if (land) {
       free( p->gfx_exteriorPath );
-      snprintf( buf, sizeof(buf), PLANET_GFX_EXTERIOR"%s", str );
+      nsnprintf( buf, sizeof(buf), PLANET_GFX_EXTERIOR"%s", str );
       p->gfx_exteriorPath = strdup( str );
       p->gfx_exterior = strdup( buf );
    }

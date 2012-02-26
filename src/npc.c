@@ -13,7 +13,7 @@
 
 #include "naev.h"
 
-#include <string.h>
+#include "nstring.h"
 
 #include "log.h"
 #include "land.h"

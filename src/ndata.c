@@ -45,6 +45,7 @@
 #include "nfile.h"
 #include "conf.h"
 #include "npng.h"
+#include "nstring.h"
 #include "start.h"
 
 
@@ -259,7 +260,7 @@ static char *ndata_findInDir( const char *path )
          /* Formatting. */
          l           = strlen(files[i]) + strlen(path) + 2;
          ndata_file  = malloc( l );
-         snprintf( ndata_file, l, "%s/%s", path, files[i] );
+         nsnprintf( ndata_file, l, "%s/%s", path, files[i] );
 
          /* Must be packfile. */
          if (pack_check(ndata_file)) {
@@ -314,13 +315,13 @@ static int ndata_openPackfile (void)
       if (ndata_isndata("%s-%d.%d.0-beta%d", NDATA_FILENAME,
                VMAJOR, VMINOR, ABS(VREV) )) {
          ndata_filename = malloc(PATH_MAX);
-         snprintf( ndata_filename, PATH_MAX, "%s-%d.%d.0-beta%d",
+         nsnprintf( ndata_filename, PATH_MAX, "%s-%d.%d.0-beta%d",
                NDATA_FILENAME, VMAJOR, VMINOR, ABS(VREV) );
       }
 #else /* VREV < 0 */
       if (ndata_isndata("%s-%d.%d.%d", NDATA_FILENAME, VMAJOR, VMINOR, VREV )) {
          ndata_filename = malloc(PATH_MAX);
-         snprintf( ndata_filename, PATH_MAX, "%s-%d.%d.%d",
+         nsnprintf( ndata_filename, PATH_MAX, "%s-%d.%d.%d",
                NDATA_FILENAME, VMAJOR, VMINOR, VREV );
       }
 #endif /* VREV < 0 */
@@ -333,7 +334,7 @@ static int ndata_openPackfile (void)
 
          /* Check in NDATA_DEF path. */
          buf = strdup(NDATA_DEF);
-         snprintf( path, PATH_MAX, "%s", nfile_dirname( buf ) );
+         nsnprintf( path, PATH_MAX, "%s", nfile_dirname( buf ) );
          ndata_filename = ndata_findInDir( path );
          free(buf);
 
@@ -344,7 +345,7 @@ static int ndata_openPackfile (void)
          /* Keep looking. */
          if (ndata_filename == NULL) {
             buf = strdup( naev_binary() );
-            snprintf( path, PATH_MAX, "%s", nfile_dirname( buf ) );
+            nsnprintf( path, PATH_MAX, "%s", nfile_dirname( buf ) );
             ndata_filename = ndata_findInDir( path );
             free(buf);
          }
@@ -538,7 +539,7 @@ void* ndata_read( const char* filename, uint32_t *filesize )
       /* We can try to use the dirname path. */
       if ((ndata_filename == NULL) && (ndata_dirname != NULL) &&
             (ndata_source <= NDATA_SRC_DIRNAME)) {
-         snprintf( path, sizeof(path), "%s/%s", ndata_dirname, filename );
+         nsnprintf( path, sizeof(path), "%s/%s", ndata_dirname, filename );
          if (nfile_fileExists( path )) {
             buf = nfile_readFile( &nbuf, path );
             if (buf != NULL) {
@@ -553,7 +554,7 @@ void* ndata_read( const char* filename, uint32_t *filesize )
       /* We can also try default location. */
       if (ndata_source <= NDATA_SRC_NDATADEF) {
          buf = strdup( NDATA_DEF );
-         snprintf( path, sizeof(path), "%s/%s", nfile_dirname(buf), filename );
+         nsnprintf( path, sizeof(path), "%s/%s", nfile_dirname(buf), filename );
          free(buf);
          if (nfile_fileExists( path )) {
             buf = nfile_readFile( &nbuf, path );
@@ -569,7 +570,7 @@ void* ndata_read( const char* filename, uint32_t *filesize )
       /* Try binary location. */
       if (ndata_source <= NDATA_SRC_BINARY) {
          buf = strdup( naev_binary() );
-         snprintf( path, sizeof(path), "%s/%s", nfile_dirname(buf), filename );
+         nsnprintf( path, sizeof(path), "%s/%s", nfile_dirname(buf), filename );
          free(buf);
          if (nfile_fileExists( path )) {
             buf = nfile_readFile( &nbuf, path );
@@ -626,7 +627,7 @@ SDL_RWops *ndata_rwops( const char* filename )
       /* Try to open from dirname. */
       if ((ndata_filename == NULL) && (ndata_dirname != NULL) &&
             (ndata_source <= NDATA_SRC_DIRNAME)) {
-         snprintf( path, sizeof(path), "%s/%s", ndata_dirname, filename );
+         nsnprintf( path, sizeof(path), "%s/%s", ndata_dirname, filename );
          rw = SDL_RWFromFile( path, "rb" );
          if (rw != NULL) {
             ndata_source = NDATA_SRC_DIRNAME;
@@ -638,7 +639,7 @@ SDL_RWops *ndata_rwops( const char* filename )
       /* Try to open from def. */
       if (ndata_source <= NDATA_SRC_NDATADEF) {
          tmp = strdup( NDATA_DEF );
-         snprintf( path, sizeof(path), "%s/%s", nfile_dirname(tmp), filename );
+         nsnprintf( path, sizeof(path), "%s/%s", nfile_dirname(tmp), filename );
          free(tmp);
          rw = SDL_RWFromFile( path, "rb" );
          if (rw != NULL) {
@@ -651,7 +652,7 @@ SDL_RWops *ndata_rwops( const char* filename )
       /* Try to open from binary. */
       if (ndata_source <= NDATA_SRC_BINARY) {
          tmp = strdup( naev_binary() );
-         snprintf( path, sizeof(path), "%s/%s", nfile_dirname(tmp), filename );
+         nsnprintf( path, sizeof(path), "%s/%s", nfile_dirname(tmp), filename );
          free(tmp);
          rw = SDL_RWFromFile( path, "rb" );
          if (rw != NULL) {
@@ -755,7 +756,7 @@ char** ndata_list( const char* path, uint32_t* nfiles )
       /* Dirname search. */
       if ((ndata_filename == NULL) && (ndata_dirname != NULL) &&
             (ndata_source <= NDATA_SRC_NDATADEF)) {
-         snprintf( buf, sizeof(buf), "%s/%s", ndata_dirname, path );
+         nsnprintf( buf, sizeof(buf), "%s/%s", ndata_dirname, path );
          files = nfile_readDir( &n, buf );
          if (files != NULL) {
             *nfiles = n;
@@ -766,7 +767,7 @@ char** ndata_list( const char* path, uint32_t* nfiles )
       /* NDATA_DEF. */
       if (ndata_source <= NDATA_SRC_BINARY) {
          tmp = strdup( NDATA_DEF );
-         snprintf( buf, sizeof(buf), "%s/%s", nfile_dirname(tmp), path );
+         nsnprintf( buf, sizeof(buf), "%s/%s", nfile_dirname(tmp), path );
          free(tmp);
          files = nfile_readDir( &n, buf );
          if (files != NULL) {
@@ -778,7 +779,7 @@ char** ndata_list( const char* path, uint32_t* nfiles )
       /* Binary. */
       if (ndata_source <= NDATA_SRC_BINARY) {
          tmp = strdup( naev_binary() );
-         snprintf( buf, sizeof(buf), "%s/%s", nfile_dirname(tmp), path );
+         nsnprintf( buf, sizeof(buf), "%s/%s", nfile_dirname(tmp), path );
          free(tmp);
          files = nfile_readDir( &n, buf );
          if (files != NULL) {

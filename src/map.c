@@ -25,6 +25,7 @@
 #include "map_find.h"
 #include "array.h"
 #include "mapData.h"
+#include "nstring.h"
 
 
 #define MAP_WDWNAME     "Star Map" /**< Map window name. */
@@ -379,7 +380,7 @@ static void map_update( unsigned int wid )
       }
       else if (f != sys->planets[i]->faction && /** @todo more verbosity */
                (sys->planets[i]->faction>0)) {
-         snprintf( buf, PATH_MAX, "Multiple" );
+         nsnprintf( buf, PATH_MAX, "Multiple" );
          break;
       }
    }
@@ -391,7 +392,7 @@ static void map_update( unsigned int wid )
    }
    else {
       if (i==sys->nplanets) /* saw them all and all the same */
-         snprintf( buf, PATH_MAX, "%s", faction_longname(f) );
+         nsnprintf( buf, PATH_MAX, "%s", faction_longname(f) );
 
       /* Modify the image. */
       logo = faction_logoSmall(f);
@@ -430,7 +431,7 @@ static void map_update( unsigned int wid )
       if (faction_isKnown( sys->presence[i].faction )) {
          t           = faction_getColourChar(sys->presence[i].faction);
          /* Use map grey instead of default neutral colour */
-         l += snprintf( &buf[l], PATH_MAX-l, "%s\e0%s: \e%c%.0f",
+         l += nsnprintf( &buf[l], PATH_MAX-l, "%s\e0%s: \e%c%.0f",
                         (l==0)?"":"\n", faction_shortname(sys->presence[i].faction),
                         (t=='N')?'M':t, sys->presence[i].value);
       }
@@ -438,10 +439,10 @@ static void map_update( unsigned int wid )
          unknownPresence += sys->presence[i].value;
    }
    if (unknownPresence != 0)
-      l += snprintf( &buf[l], PATH_MAX-l, "%s\e0%s: \e%c%.0f",
+      l += nsnprintf( &buf[l], PATH_MAX-l, "%s\e0%s: \e%c%.0f",
                      (l==0)?"":"\n", "Unknown", 'M', unknownPresence);
    if (hasPresence == 0)
-      snprintf(buf, PATH_MAX, "N/A");
+      nsnprintf(buf, PATH_MAX, "N/A");
    window_moveWidget( wid, "txtSPresence", x, y );
    window_moveWidget( wid, "txtPresence", x + 50, y-gl_smallFont.h-5 );
    window_modifyText( wid, "txtPresence", buf );
@@ -468,10 +469,10 @@ static void map_update( unsigned int wid )
          t = 'S';
 
       if (!hasPlanets)
-         p += snprintf( &buf[p], PATH_MAX-p, "\e%c%s\en",
+         p += nsnprintf( &buf[p], PATH_MAX-p, "\e%c%s\en",
                t, sys->planets[i]->name );
       else
-         p += snprintf( &buf[p], PATH_MAX-p, ",\n\e%c%s\en",
+         p += nsnprintf( &buf[p], PATH_MAX-p, ",\n\e%c%s\en",
                t, sys->planets[i]->name );
       hasPlanets = 1;
    }
@@ -494,15 +495,15 @@ static void map_update( unsigned int wid )
          services |= sys->planets[i]->services;
    buf[0] = '\0';
    p = 0;
-   /*snprintf(buf, sizeof(buf), "%f\n", sys->prices[0]);*/ /*Hack to control prices. */
+   /*nsnprintf(buf, sizeof(buf), "%f\n", sys->prices[0]);*/ /*Hack to control prices. */
    if (services & PLANET_SERVICE_COMMODITY)
-      p += snprintf( &buf[p], PATH_MAX-p, "Commodity\n");
+      p += nsnprintf( &buf[p], PATH_MAX-p, "Commodity\n");
    if (services & PLANET_SERVICE_OUTFITS)
-      p += snprintf( &buf[p], PATH_MAX-p, "Outfits\n");
+      p += nsnprintf( &buf[p], PATH_MAX-p, "Outfits\n");
    if (services & PLANET_SERVICE_SHIPYARD)
-      p += snprintf( &buf[p], PATH_MAX-p, "Shipyard\n");
+      p += nsnprintf( &buf[p], PATH_MAX-p, "Shipyard\n");
    if (buf[0] == '\0')
-      p += snprintf( &buf[p], PATH_MAX-p, "None");
+      p += nsnprintf( &buf[p], PATH_MAX-p, "None");
    window_modifyText( wid, "txtServices", buf );
 
 
@@ -516,32 +517,32 @@ static void map_update( unsigned int wid )
 
       /* Volatility */
       if (sys->nebu_volatility > 700.)
-         p += snprintf(&buf[p], PATH_MAX-p, " Volatile");
+         p += nsnprintf(&buf[p], PATH_MAX-p, " Volatile");
       else if (sys->nebu_volatility > 300.)
-         p += snprintf(&buf[p], PATH_MAX-p, " Dangerous");
+         p += nsnprintf(&buf[p], PATH_MAX-p, " Dangerous");
       else if (sys->nebu_volatility > 0.)
-         p += snprintf(&buf[p], PATH_MAX-p, " Unstable");
+         p += nsnprintf(&buf[p], PATH_MAX-p, " Unstable");
 
       /* Density */
       if (sys->nebu_density > 700.)
-         p += snprintf(&buf[p], PATH_MAX-p, " Dense");
+         p += nsnprintf(&buf[p], PATH_MAX-p, " Dense");
       else if (sys->nebu_density < 300.)
-         p += snprintf(&buf[p], PATH_MAX-p, " Light");
-      p += snprintf(&buf[p], PATH_MAX-p, " Nebula");
+         p += nsnprintf(&buf[p], PATH_MAX-p, " Light");
+      p += nsnprintf(&buf[p], PATH_MAX-p, " Nebula");
    }
    /* Interference. */
    if (sys->interference > 0.) {
 
       if (buf[0] != '\0')
-         p += snprintf(&buf[p], PATH_MAX-p, ",");
+         p += nsnprintf(&buf[p], PATH_MAX-p, ",");
 
       /* Density. */
       if (sys->interference > 700.)
-         p += snprintf(&buf[p], PATH_MAX-p, " Dense");
+         p += nsnprintf(&buf[p], PATH_MAX-p, " Dense");
       else if (sys->interference < 300.)
-         p += snprintf(&buf[p], PATH_MAX-p, " Light");
+         p += nsnprintf(&buf[p], PATH_MAX-p, " Light");
 
-      p += snprintf(&buf[p], PATH_MAX-p, " Interference");
+      p += nsnprintf(&buf[p], PATH_MAX-p, " Interference");
    }
    window_modifyText( wid, "txtSystemStatus", buf );
 }
@@ -961,9 +962,9 @@ void map_renderNames( double x, double y, int editor )
          /* Display. */
          n = sqrt(sys->jumps[j].hide);
          if (n == 0.)
-            snprintf( buf, sizeof(buf), "\egH: %.2f", n );
+            nsnprintf( buf, sizeof(buf), "\egH: %.2f", n );
          else
-            snprintf( buf, sizeof(buf), "H: %.2f", n );
+            nsnprintf( buf, sizeof(buf), "H: %.2f", n );
          gl_print( &gl_smallFont,
                tx, ty,
                &cGrey70, buf );

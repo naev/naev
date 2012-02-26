@@ -15,7 +15,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
+#include "nstring.h"
 #include <math.h>
 
 #include "log.h"
@@ -718,14 +718,14 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
    /* Get text. */
    if (o->desc_short == NULL)
       return;
-   pos = snprintf( alt, sizeof(alt),
+   pos = nsnprintf( alt, sizeof(alt),
          "%s\n"
          "\n"
          "%s",
          o->name,
          o->desc_short );
    if (o->mass > 0.)
-      pos += snprintf( &alt[pos], sizeof(alt)-pos,
+      pos += nsnprintf( &alt[pos], sizeof(alt)-pos,
             "\n%.0f Tons",
             o->mass );
 
@@ -1245,7 +1245,7 @@ int equipment_shipStats( char *buf, int max_len,  const Pilot *s, int dpseps )
    /* Write to buffer. */
    l = 0;
    if (dps > 0.)
-      l += snprintf( &buf[l], (max_len-l),
+      l += nsnprintf( &buf[l], (max_len-l),
             "%s%.2f DPS [%.2f EPS]", (l!=0)?"\n":"", dps, eps );
    l += ss_statsDesc( &s->stats, &buf[l], (max_len-l), 1 );
    return l;
@@ -1305,7 +1305,7 @@ static void equipment_genLists( unsigned int wid )
       for (i=0; i<nships; i++) {
          s        = player_getShip( sships[i] );
          alt[i]   = malloc( sizeof(char) * SHIP_ALT_MAX );
-         l        = snprintf( &alt[i][0], SHIP_ALT_MAX, "Ship Stats\n" );
+         l        = nsnprintf( &alt[i][0], SHIP_ALT_MAX, "Ship Stats\n" );
          l        = equipment_shipStats( &alt[i][l], SHIP_ALT_MAX-l, s, 1 );
          if (l == 0) {
             free( alt[i] );
@@ -1348,14 +1348,14 @@ static void equipment_genLists( unsigned int wid )
             else {
                l = strlen(o->desc_short) + 128;
                alt[i] = malloc( l );
-               p = snprintf( alt[i], l,
+               p = nsnprintf( alt[i], l,
                      "%s\n"
                      "\n"
                      "%s",
                      o->name,
                      o->desc_short );
                if (o->mass > 0.)
-                  p += snprintf( &alt[i][p], l-p,
+                  p += nsnprintf( &alt[i][p], l-p,
                         "\n%.0f Tons",
                         o->mass );
             }
@@ -1364,7 +1364,7 @@ static void equipment_genLists( unsigned int wid )
             p = player_outfitOwned(o);
             l = p / 10 + 4;
             quantity[i] = malloc( l );
-            snprintf( quantity[i], l, "%d", p );
+            nsnprintf( quantity[i], l, "%d", p );
 
             /* Slot type. */
             if ((strcmp(outfit_slotName(o),"NA") != 0) &&
@@ -1440,7 +1440,7 @@ void equipment_updateShips( unsigned int wid, char* str )
       loc    = player_getLoc(ship->name);
       price  = equipment_transportPrice( shipname );
       onboard = 0;
-      snprintf( sysname, sizeof(sysname), " in the %s system",
+      nsnprintf( sysname, sizeof(sysname), " in the %s system",
             planet_getSystem(loc) );
    }
    eq_wgt.selected = ship;
@@ -1450,7 +1450,7 @@ void equipment_updateShips( unsigned int wid, char* str )
    credits2str( buf3, player_shipPrice(shipname), 2 ); /* sell price */
    cargo = pilot_cargoFree(ship) + pilot_cargoUsed(ship);
    nt = ntime_pretty( pilot_hyperspaceDelay( ship ), 2 );
-   snprintf( buf, sizeof(buf),
+   nsnprintf( buf, sizeof(buf),
          "%s\n"
          "%s\n"
          "%s\n"

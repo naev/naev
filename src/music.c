@@ -24,6 +24,7 @@
 #include "log.h"
 #include "ndata.h"
 #include "conf.h"
+#include "nstring.h"
 
 
 #define MUSIC_PREFIX       "snd/music/" /**< Prefix of where tho find musics. */
@@ -417,7 +418,7 @@ int music_load( const char* name )
    /* Load new music. */
    music_name  = strdup(name);
    music_start = SDL_GetTicks();
-   snprintf( filename, PATH_MAX, MUSIC_PREFIX"%s"MUSIC_SUFFIX, name);
+   nsnprintf( filename, PATH_MAX, MUSIC_PREFIX"%s"MUSIC_SUFFIX, name);
    rw = ndata_rwops( filename );
    if (rw == NULL) {
       WARN("Music '%s' not found.", filename);

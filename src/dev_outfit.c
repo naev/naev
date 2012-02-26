@@ -17,6 +17,7 @@
 #include "log.h"
 #include "outfit.h"
 #include "damagetype.h"
+#include "nstring.h"
 
 
 /**
@@ -38,7 +39,7 @@ void dout_csvBolt( const char *path )
    }
 
    /* Write "header" */
-   l = snprintf( buf, sizeof(buf),
+   l = nsnprintf( buf, sizeof(buf),
          "name,type,slot,license,"
          "mass,price,"
          "delay,speed,range,falloff,"
@@ -57,7 +58,7 @@ void dout_csvBolt( const char *path )
          continue;
 
       dmg = &o->u.blt.dmg;
-      l = snprintf( buf, sizeof(buf),
+      l = nsnprintf( buf, sizeof(buf),
             "%s,%s,%s,%s,"
             "%f,%"CREDITS_PRI","
             "%f,%f,%f,%f,"

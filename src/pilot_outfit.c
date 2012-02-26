@@ -20,6 +20,7 @@
 #include "player.h"
 #include "space.h"
 #include "gui.h"
+#include "nstring.h"
 
 
 /*
@@ -788,12 +789,12 @@ char* pilot_getOutfits( const Pilot* pilot )
    for (i=1; i<pilot->noutfits; i++) {
       if (pilot->outfits[i]->outfit == NULL)
          continue;
-      p += snprintf( &buf[p], len-p, (p==0) ? "%s" : ", %s",
+      p += nsnprintf( &buf[p], len-p, (p==0) ? "%s" : ", %s",
             pilot->outfits[i]->outfit->name );
    }
 
    if (p==0)
-      p += snprintf( &buf[p], len-p, "None" );
+      p += nsnprintf( &buf[p], len-p, "None" );
 
    return buf;
 }

@@ -1503,7 +1503,7 @@ static int planets_load ( void )
    for ( i = 0; i < nfiles; i++ ) {
 
       file = malloc((strlen(PLANET_DATA)+strlen(planet_files[i])+2)*sizeof(char));
-      snprintf(file,(strlen(PLANET_DATA)+strlen(planet_files[i])+2)*sizeof(char),"%s/%s",PLANET_DATA,planet_files[i]);
+      nsnprintf(file,(strlen(PLANET_DATA)+strlen(planet_files[i])+2)*sizeof(char),"%s/%s",PLANET_DATA,planet_files[i]);
       buf = ndata_read( file, &bufsize );
       doc = xmlParseMemory( buf, bufsize );
       if (doc == NULL) {
@@ -1747,7 +1747,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
          cur = node->children;
          do {
             if (xml_isNode(cur,"space")) { /* load space gfx */
-               snprintf( str, PATH_MAX, PLANET_GFX_SPACE"%s", xml_get(cur));
+               nsnprintf( str, PATH_MAX, PLANET_GFX_SPACE"%s", xml_get(cur));
                planet->gfx_spaceName = strdup(str);
                planet->gfx_spacePath = xml_getStrd(cur);
                rw = ndata_rwops( planet->gfx_spaceName );
@@ -1772,7 +1772,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
                }
             }
             else if (xml_isNode(cur,"exterior")) { /* load land gfx */
-               snprintf( str, PATH_MAX, PLANET_GFX_EXTERIOR"%s", xml_get(cur));
+               nsnprintf( str, PATH_MAX, PLANET_GFX_EXTERIOR"%s", xml_get(cur));
                planet->gfx_exterior = strdup(str);
                planet->gfx_exteriorPath = xml_getStrd(cur);
             }
@@ -2673,7 +2673,7 @@ static int systems_load (void)
    for (i=0; i<nfiles; i++) {
 
       file = malloc((strlen(SYSTEM_DATA)+strlen(system_files[i])+2)*sizeof(char));
-      snprintf(file,(strlen(SYSTEM_DATA)+strlen(system_files[i])+2)*sizeof(char),"%s/%s",SYSTEM_DATA,system_files[i]);
+      nsnprintf(file,(strlen(SYSTEM_DATA)+strlen(system_files[i])+2)*sizeof(char),"%s/%s",SYSTEM_DATA,system_files[i]);
       /* Load the file. */
       buf = ndata_read( file, &bufsize );
       doc = xmlParseMemory( buf, bufsize );
@@ -2698,7 +2698,7 @@ static int systems_load (void)
    for (i=0; i<nfiles; i++) {
 
       file = malloc((strlen(SYSTEM_DATA)+strlen(system_files[i])+2)*sizeof(char));
-      snprintf(file,(strlen(SYSTEM_DATA)+strlen(system_files[i])+2)*sizeof(char),"%s/%s",SYSTEM_DATA,system_files[i]);
+      nsnprintf(file,(strlen(SYSTEM_DATA)+strlen(system_files[i])+2)*sizeof(char),"%s/%s",SYSTEM_DATA,system_files[i]);
       /* Load the file. */
       buf = ndata_read( file, &bufsize );
       doc = xmlParseMemory( buf, bufsize );

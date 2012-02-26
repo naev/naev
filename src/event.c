@@ -18,7 +18,7 @@
 #include "naev.h"
 
 #include <stdint.h>
-#include <string.h>
+#include "nstring.h"
 #include <stdlib.h>
 
 #include "log.h"
@@ -481,7 +481,7 @@ static int event_parse( EventData_t *temp, const xmlNodePtr parent )
       xml_onlyNodes(node);
 
       if (xml_isNode(node,"lua")) {
-         snprintf( str, PATH_MAX, EVENT_LUA_PATH"%s.lua", xml_get(node) );
+         nsnprintf( str, PATH_MAX, EVENT_LUA_PATH"%s.lua", xml_get(node) );
          temp->lua = strdup( str );
          str[0] = '\0';
 

@@ -8,7 +8,7 @@
 #include "naev.h"
 
 #include <stdlib.h>
-#include <string.h>
+#include "nstring.h"
 
 #include "log.h"
 #include "opengl.h"
@@ -126,7 +126,10 @@ unsigned int osd_create( const char *title, int nitems, const char **items, int 
             w -= osd_hyphenLen;
 
          if (j+1 > m) {
-            m += 32;
+            if (m==0)
+               m = 32;
+            else
+               m *= 2;
             osd->items[i].chunks = realloc( osd->items[i].chunks, m * sizeof(char*));
          }
 
@@ -134,20 +137,20 @@ unsigned int osd_create( const char *title, int nitems, const char **items, int 
          if (j==0) {
             if (t==1) {
                osd->items[i].chunks[j] = malloc(s+4);
-               snprintf( osd->items[i].chunks[j], s+4, "   %s", &items[i][n+1] );
+               nsnprintf( osd->items[i].chunks[j], s+4, "   %s", &items[i][n+1] );
             }
             else {
                osd->items[i].chunks[j] = malloc(s+3);
-               snprintf( osd->items[i].chunks[j], s+3, "- %s", &items[i][n] );
+               nsnprintf( osd->items[i].chunks[j], s+3, "- %s", &items[i][n] );
             }
          }
          else if (t==1) {
             osd->items[i].chunks[j] = malloc(s+4);
-            snprintf( osd->items[i].chunks[j], s+4, "   %s", &items[i][n] );
+            nsnprintf( osd->items[i].chunks[j], s+4, "   %s", &items[i][n] );
          }
          else {
             osd->items[i].chunks[j] = malloc(s+1);
-            snprintf( osd->items[i].chunks[j], s+1, "%s", &items[i][n] );
+            nsnprintf( osd->items[i].chunks[j], s+1, "%s", &items[i][n] );
          }
 
          /* Go to next line. */

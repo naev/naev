@@ -15,7 +15,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
+#include "nstring.h"
 #include <math.h>
 
 #include "log.h"
@@ -175,7 +175,7 @@ void shipyard_update( unsigned int wid, char* str )
       window_modifyImage( wid, "imgTarget", NULL, 0, 0 );
       window_disableButton( wid, "btnBuyShip");
       window_disableButton( wid, "btnTradeShip");
-      snprintf( buf, PATH_MAX,
+      nsnprintf( buf, PATH_MAX,
             "None\n"
             "NA\n"
             "NA\n"
@@ -215,7 +215,7 @@ void shipyard_update( unsigned int wid, char* str )
    window_modifyText( wid, "txtDescription", ship->description );
    credits2str( buf2, ship->price, 2 );
    credits2str( buf3, player.p->credits, 2 );
-   snprintf( buf, PATH_MAX,
+   nsnprintf( buf, PATH_MAX,
          "%s\n"
          "%s\n"
          "%s\n"

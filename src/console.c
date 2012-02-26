@@ -13,7 +13,7 @@
 #include "naev.h"
 
 #include <stdlib.h>
-#include <string.h>
+#include "nstring.h"
 
 #define lua_c
 #include <lua.h>
@@ -115,7 +115,7 @@ static int cli_printCore( lua_State *L, int cli_only )
          LOG( "%s", s );
 
       /* Add to console. */
-      p += snprintf( &buf[p], LINE_LENGTH-p, "%s%s", (i>1) ? "   " : "", s );
+      p += nsnprintf( &buf[p], LINE_LENGTH-p, "%s%s", (i>1) ? "   " : "", s );
       if (p >= LINE_LENGTH) {
          cli_addMessage(buf);
          p = 0;
@@ -164,10 +164,10 @@ static int cli_script( lua_State *L )
 
    /* Try to find the file if it exists. */
    if (nfile_fileExists(fname))
-      snprintf( buf, sizeof(buf), "%s", fname );
+      nsnprintf( buf, sizeof(buf), "%s", fname );
    else {
       bbuf = strdup( naev_binary() );
-      snprintf( buf, sizeof(buf), "%s/%s", nfile_dirname( bbuf ), fname );
+      nsnprintf( buf, sizeof(buf), "%s/%s", nfile_dirname( bbuf ), fname );
       free(bbuf);
    }
 
@@ -378,7 +378,7 @@ static void cli_input( unsigned int wid, char *unused )
       return;
 
    /* Put the message in the console. */
-   snprintf( buf, LINE_LENGTH, "%s %s",
+   nsnprintf( buf, LINE_LENGTH, "%s %s",
          cli_firstline ? "> " : ">>", str );
    cli_addMessage( buf );
 

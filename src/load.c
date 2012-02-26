@@ -30,6 +30,7 @@
 #include "nlua_var.h"
 #include "land.h"
 #include "hook.h"
+#include "nstring.h"
 
 
 #define LOAD_WIDTH      600 /**< Load window width. */
@@ -197,7 +198,7 @@ int load_refresh (void)
    for (i=0; i<nfiles; i++) {
       if (!ok)
          ns = &array_grow( &load_saves );
-      snprintf( buf, sizeof(buf), "%ssaves/%s", nfile_dataPath(), files[i] );
+      nsnprintf( buf, sizeof(buf), "%ssaves/%s", nfile_dataPath(), files[i] );
       ok = load_load( ns, buf );
    }
 
@@ -284,7 +285,7 @@ void load_loadGameMenu (void)
          ns       = &nslist[i];
          len      = strlen(ns->path);
          if (strcmp(&ns->path[len-10],".ns.backup")==0) {
-            snprintf( buf, sizeof(buf), "%s \er(Backup)\e0", ns->name );
+            nsnprintf( buf, sizeof(buf), "%s \er(Backup)\e0", ns->name );
             names[i] = strdup(buf);
          }
          else
@@ -351,7 +352,7 @@ static void load_menu_update( unsigned int wid, char *str )
    /* Display text. */
    credits2str( credits, ns->credits, 2 );
    ntime_prettyBuf( date, sizeof(date), ns->date, 2 );
-   snprintf( buf, sizeof(buf),
+   nsnprintf( buf, sizeof(buf),
          "\eDName:\n"
          "\e0   %s\n"
          "\eDVersion:\n"

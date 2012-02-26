@@ -22,6 +22,7 @@
 #include "economy.h"
 #include "hook.h"
 #include "damagetype.h"
+#include "nstring.h"
 
 
 #define BOARDING_WIDTH  300 /**< Boarding window width. */
@@ -372,23 +373,23 @@ static void board_update( unsigned int wdw )
 
    /* Credits. */
    credits2str( cred, p->credits, 2 );
-   j += snprintf( &str[j], PATH_MAX, "%s\n", cred );
+   j += nsnprintf( &str[j], PATH_MAX, "%s\n", cred );
 
    /* Commodities. */
    if (p->ncommodities==0)
-      j += snprintf( &str[j], PATH_MAX-j, "none\n" );
+      j += nsnprintf( &str[j], PATH_MAX-j, "none\n" );
    else {
       for (i=0; i<p->ncommodities; i++)
-         j += snprintf( &str[j], PATH_MAX-j,
+         j += nsnprintf( &str[j], PATH_MAX-j,
                "%d %s\n",
                p->commodities[i].quantity, p->commodities[i].commodity->name );
    }
 
    /* Fuel. */
    if (p->fuel <= 0.)
-      snprintf( &str[j], PATH_MAX-j, "none\n" );
+      nsnprintf( &str[j], PATH_MAX-j, "none\n" );
    else
-      snprintf( &str[j], PATH_MAX-j, "%.0f Units\n", p->fuel );
+      nsnprintf( &str[j], PATH_MAX-j, "%.0f Units\n", p->fuel );
 
    window_modifyText( wdw, "txtData", str );
 }

@@ -25,6 +25,7 @@
 #include "nlua_var.h"
 #include "ndata.h"
 #include "toolkit.h"
+#include "nstring.h"
 
 
 #define LUA_NEWS     "dat/news.lua"
@@ -192,7 +193,7 @@ void news_widget( unsigned int wid, int x, int y, int w, int h )
    /* Load up the news in a string. */
    p = 0;
    for (i=0; i<news_nbuf; i++) {
-      p += snprintf( &buf[p], sizeof(buf)-p,
+      p += nsnprintf( &buf[p], sizeof(buf)-p,
             "%s\n\n\e0"
             "%s\n\n\n\n\e0"
             , news_buf[i].title, news_buf[i].desc );

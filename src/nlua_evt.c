@@ -15,7 +15,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
+#include "nstring.h"
 #include <math.h>
 
 #include <lua.h>
@@ -211,7 +211,7 @@ static int evt_npcAdd( lua_State *L )
       priority = 5;
 
    /* Set path. */
-   snprintf( portrait, PATH_MAX, "gfx/portraits/%s.png", gfx );
+   nsnprintf( portrait, PATH_MAX, "gfx/portraits/%s.png", gfx );
 
    cur_event = event_getFromLua(L);
 

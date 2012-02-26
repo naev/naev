@@ -23,6 +23,7 @@
 #include "sound_openal.h"
 #include "sound_sdlmix.h"
 #include "log.h"
+#include "nstring.h"
 #include "ndata.h"
 #include "music.h"
 #include "physics.h"
@@ -745,7 +746,7 @@ static int sound_makeList (void)
 
       /* Load the sound. */
       sound_list[sound_nlist-1].name = strdup(tmp);
-      snprintf( path, PATH_MAX, SOUND_PREFIX"%s", files[i] );
+      nsnprintf( path, PATH_MAX, SOUND_PREFIX"%s", files[i] );
       if (sound_load( &sound_list[sound_nlist-1], path ))
          sound_nlist--; /* Song not actually added. */
 
