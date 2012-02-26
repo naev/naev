@@ -420,9 +420,9 @@ static void sysedit_btnRename( unsigned int wid_unused, char *unused )
 
          /* Rename. */
          oldName = malloc((16+strlen(p->name))*sizeof(char));
-         nsnprintf(oldName,(16+strlen(p->name))*sizeof(char),"dat/assets/%s.xml",p->name);
+         nsnprintf(oldName,15+strlen(p->name),"dat/assets/%s.xml",p->name);
          newName = malloc((16+strlen(name))*sizeof(char));
-         nsnprintf(newName,(16+strlen(name))*sizeof(char),"dat/assets/%s.xml",name);
+         nsnprintf(newName,15+strlen(name),"dat/assets/%s.xml",name);
          nfile_rename(oldName,newName);
          free(oldName);
          free(newName);
