@@ -129,8 +129,7 @@ int dpl_savePlanet( const Planet *p )
    xmlFreeTextWriter( writer );
 
    /* Write data. */
-   cleanName = malloc((strlen(p->name)+1)*sizeof(char));
-   memset(cleanName, 0, strlen(p->name)+1);
+   cleanName = calloc( 1, (strlen(p->name)+1) * sizeof(char) );
    pos = 0;
    for (i=0; i<(int)strlen(p->name); i++) {
       if (!ispunct(p->name[i])) {

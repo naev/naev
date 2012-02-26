@@ -170,8 +170,7 @@ int dsys_saveSystem( StarSystem *sys )
    xmlFreeTextWriter(writer);
 
    /* Write data. */
-   cleanName = malloc((strlen(sys->name)+1)*sizeof(char));
-   memset(cleanName, 0, strlen(sys->name)+1);
+   cleanName = calloc( 1, (strlen(sys->name)+1)*sizeof(char) );
    pos = 0;
    for (i=0; i<(int)strlen(sys->name); i++) {
       if (!ispunct(sys->name[i])) {
