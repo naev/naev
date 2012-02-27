@@ -29,7 +29,7 @@
 #include "nstring.h"
 
 
-#define HIDE_DEFAULT_JUMP        1.25 /**< Default hide value for new planets. */
+#define HIDE_DEFAULT_JUMP        1.25 /**< Default hide value for new jumps. */
 #define RADIUS_DEFAULT           10000 /**< Default radius for new systems. */
 #define STARS_DENSITY_DEFAULT    400 /**< Default stars density for new systems. */
 
@@ -1121,7 +1121,7 @@ static void uniedit_btnEditRmAsset( unsigned int wid, char *unused )
 
 
 /**
- * @brief Adds a new asset.
+ * @brief Adds a new virtual asset.
  */
 static void uniedit_btnEditAddAsset( unsigned int parent, char *unused )
 {
@@ -1169,7 +1169,7 @@ static void uniedit_btnEditAddAsset( unsigned int parent, char *unused )
 
 
 /**
- * @brief Actually adds the asset.
+ * @brief Actually adds the virtual asset.
  */
 static void uniedit_btnEditAddAssetAdd( unsigned int wid, char *unused )
 {

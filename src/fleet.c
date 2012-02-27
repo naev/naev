@@ -27,7 +27,6 @@
 #include "rng.h"
 
 
-#define FLEET_DATA      "dat/fleet.xml" /**< Where to find fleet data. */
 
 #define CHUNK_SIZE      32 /**< Size to allocate memory by. */
 
@@ -118,7 +117,7 @@ static int fleet_parse( Fleet *temp, const xmlNodePtr parent )
 
    temp->name = (char*)xmlGetProp(parent,(xmlChar*)"name"); /* already mallocs */
    if (temp->name == NULL)
-      WARN("Fleet in "FLEET_DATA" has invalid or no name");
+      WARN("Fleet in "FLEET_DATA_PATH" has invalid or no name");
 
    do { /* load all the data */
       xml_onlyNodes(node);
@@ -220,18 +219,18 @@ static int fleet_loadFleets (void)
    xmlDocPtr doc;
 
    /* Load the data. */
-   buf = ndata_read( FLEET_DATA, &bufsize);
+   buf = ndata_read( FLEET_DATA_PATH, &bufsize);
    doc = xmlParseMemory( buf, bufsize );
 
    node = doc->xmlChildrenNode; /* fleets node */
    if (strcmp((char*)node->name,"Fleets")) {
-      ERR("Malformed "FLEET_DATA" file: missing root element 'Fleets'.");
+      ERR("Malformed "FLEET_DATA_PATH" file: missing root element 'Fleets'.");
       return -1;
    }
 
    node = node->xmlChildrenNode; /* first fleet node */
    if (node == NULL) {
-      ERR("Malformed "FLEET_DATA" file: does not contain elements.");
+      ERR("Malformed "FLEET_DATA_PATH" file: does not contain elements.");
       return -1;
    }
 

@@ -32,9 +32,6 @@
 #define XML_FACTION_ID     "Factions"   /**< XML section identifier */
 #define XML_FACTION_TAG    "faction" /**< XML tag identifier. */
 
-#define FACTION_DATA       "dat/faction.xml" /**< Faction xml file. */
-#define FACTION_LOGO_PATH  "gfx/logo/" /**< Path to logo gfx. */
-
 
 #define PLAYER_ALLY        70. /**< Above this player is considered ally. */
 #define PLAYER_ENEMY       0. /**< Below this the player is considered an enemy. */
@@ -816,7 +813,7 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
 
    temp->name = xml_nodeProp(parent,"name");
    if (temp->name == NULL)
-      WARN("Faction from "FACTION_DATA" has invalid or no name");
+      WARN("Faction from "FACTION_DATA_PATH" has invalid or no name");
 
    player = 0;
    node = parent->xmlChildrenNode;
@@ -1022,20 +1019,20 @@ int factions_load (void)
 {
    int mem;
    uint32_t bufsize;
-   char *buf = ndata_read( FACTION_DATA, &bufsize);
+   char *buf = ndata_read( FACTION_DATA_PATH, &bufsize);
 
    xmlNodePtr factions, node;
    xmlDocPtr doc = xmlParseMemory( buf, bufsize );
 
    node = doc->xmlChildrenNode; /* Factions node */
    if (!xml_isNode(node,XML_FACTION_ID)) {
-      ERR("Malformed "FACTION_DATA" file: missing root element '"XML_FACTION_ID"'");
+      ERR("Malformed "FACTION_DATA_PATH" file: missing root element '"XML_FACTION_ID"'");
       return -1;
    }
 
    factions = node->xmlChildrenNode; /* first faction node */
    if (factions == NULL) {
-      ERR("Malformed "FACTION_DATA" file: does not contain elements");
+      ERR("Malformed "FACTION_DATA_PATH" file: does not contain elements");
       return -1;
    }
 

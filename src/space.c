@@ -58,15 +58,8 @@
 #define XML_SYSTEM_ID         "Systems" /**< Systems xml document tag. */
 #define XML_SYSTEM_TAG        "ssys" /**< Individual systems xml tag. */
 
-#define LANDING_DATA          "dat/landing.lua" /**< Lua script containing landing data. */
-#define PLANET_DATA           "dat/assets" /**< XML file containing planets. */
-#define SYSTEM_DATA           "dat/ssys" /**< XML file containing systems. */
-
-#define PLANET_GFX_SPACE      "gfx/planet/space/" /**< Location of planet space graphics. */
-#define PLANET_GFX_EXTERIOR   "gfx/planet/exterior/" /**< Location of planet exterior graphics (when landed). */
-
-#define PLANET_GFX_EXTERIOR_W 400 /**< Planet exterior graphic width. */
-#define PLANET_GFX_EXTERIOR_H 400 /**< Planet exterior graphic height. */
+#define PLANET_GFX_EXTERIOR_PATH_W 400 /**< Planet exterior graphic width. */
+#define PLANET_GFX_EXTERIOR_PATH_H 400 /**< Planet exterior graphic height. */
 
 #define CHUNK_SIZE            32 /**< Size to allocate by. */
 #define CHUNK_SIZE_SMALL       8 /**< Smaller size to allocate chunks by. */
@@ -1482,12 +1475,12 @@ static int planets_load ( void )
    landing_lua = nlua_newState();
    L           = landing_lua;
    nlua_loadStandard(L, 1);
-   buf = ndata_read( LANDING_DATA, &bufsize );
-   if (luaL_dobuffer(landing_lua, buf, bufsize, LANDING_DATA) != 0) {
+   buf = ndata_read( LANDING_DATA_PATH, &bufsize );
+   if (luaL_dobuffer(landing_lua, buf, bufsize, LANDING_DATA_PATH) != 0) {
       WARN( "Failed to load landing file: %s\n"
             "%s\n"
             "Most likely Lua file has improper syntax, please check",
-            LANDING_DATA, lua_tostring(L,-1));
+            LANDING_DATA_PATH, lua_tostring(L,-1));
    }
    free(buf);
 
@@ -1499,11 +1492,11 @@ static int planets_load ( void )
    }
 
    /* Load XML stuff. */
-   planet_files = nfile_readDir( &nfiles, PLANET_DATA );
+   planet_files = nfile_readDir( &nfiles, PLANET_DATA_PATH );
    for ( i = 0; i < nfiles; i++ ) {
 
-      file = malloc((strlen(PLANET_DATA)+strlen(planet_files[i])+2)*sizeof(char));
-      nsnprintf(file,(strlen(PLANET_DATA)+strlen(planet_files[i])+2)*sizeof(char),"%s/%s",PLANET_DATA,planet_files[i]);
+      file = malloc((strlen(PLANET_DATA_PATH)+strlen(planet_files[i])+2)*sizeof(char));
+      nsnprintf(file,(strlen(PLANET_DATA_PATH)+strlen(planet_files[i])+2)*sizeof(char),"%s/%s",PLANET_DATA_PATH,planet_files[i]);
       buf = ndata_read( file, &bufsize );
       doc = xmlParseMemory( buf, bufsize );
       if (doc == NULL) {
@@ -1632,7 +1625,7 @@ void planet_updateLand( Planet *p )
    if (lua_isstring(L,-4))
       p->land_msg = strdup( lua_tostring(L,-4) );
    else {
-      WARN( LANDING_DATA": %s (%s) -> return parameter 2 is not a string!", str, p->name );
+      WARN( LANDING_DATA_PATH": %s (%s) -> return parameter 2 is not a string!", str, p->name );
       p->land_msg = strdup( "Invalid land message" );
    }
    /* Parse bribing. */
@@ -1642,21 +1635,21 @@ void planet_updateLand( Planet *p )
       if (lua_isstring(L,-2))
          p->bribe_msg = strdup( lua_tostring(L,-2) );
       else {
-         WARN( LANDING_DATA": %s (%s) -> return parameter 4 is not a string!", str, p->name );
+         WARN( LANDING_DATA_PATH": %s (%s) -> return parameter 4 is not a string!", str, p->name );
          p->bribe_msg = strdup( "Invalid bribe message" );
       }
       /* We also need the bribe ACK message. */
       if (lua_isstring(L,-1))
          p->bribe_ack_msg = strdup( lua_tostring(L,-1) );
       else {
-         WARN( LANDING_DATA": %s -> return parameter 5 is not a string!", str, p->name );
+         WARN( LANDING_DATA_PATH": %s -> return parameter 5 is not a string!", str, p->name );
          p->bribe_ack_msg = strdup( "Invalid bribe ack message" );
       }
    }
    else if (lua_isstring(L,-3))
       p->bribe_msg = strdup( lua_tostring(L,-3) );
    else if (!lua_isnil(L,-3))
-      WARN( LANDING_DATA": %s (%s) -> return parameter 3 is not a number or string or nil!", str, p->name );
+      WARN( LANDING_DATA_PATH": %s (%s) -> return parameter 3 is not a number or string or nil!", str, p->name );
 
 #if DEBUGGING
    lua_pop(L,6);
@@ -1719,11 +1712,6 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
    char str[PATH_MAX], *tmp;
    xmlNodePtr node, cur, ccur;
    unsigned int flags;
-   SDL_RWops *rw;
-   npng_t *npng;
-   png_uint_32 w, h;
-   int nbuf;
-   char *buf;
 
    /* Clear up memory for sane defaults. */
    flags          = 0;
@@ -1747,32 +1735,13 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
          cur = node->children;
          do {
             if (xml_isNode(cur,"space")) { /* load space gfx */
-               nsnprintf( str, PATH_MAX, PLANET_GFX_SPACE"%s", xml_get(cur));
+               nsnprintf( str, PATH_MAX, PLANET_GFX_SPACE_PATH"%s", xml_get(cur));
                planet->gfx_spaceName = strdup(str);
                planet->gfx_spacePath = xml_getStrd(cur);
-               rw = ndata_rwops( planet->gfx_spaceName );
-               if (rw == NULL)
-                  WARN("Planet '%s' has inexisting graphic '%s'!", planet->name, planet->gfx_spaceName );
-               else {
-                  npng = npng_open( rw );
-                  if (npng != NULL) {
-                     npng_dim( npng, &w, &h );
-                     nbuf = npng_metadata( npng, "radius", &buf );
-                     if (nbuf > 0) {
-                        strncpy( str, buf, MIN( (unsigned int)nbuf, sizeof(str) ) );
-                        str[ nbuf ] = '\0';
-                        planet->radius = atof( str );
-                     }
-                     else
-                        planet->radius = 0.8 * (double)(w+h)/4.; /* (w+h)/2 is diameter, /2 for radius */
-
-                     npng_close( npng );
-                  }
-                  SDL_RWclose( rw );
-               }
+               planet_setRadiusFromGFX(planet);
             }
             else if (xml_isNode(cur,"exterior")) { /* load land gfx */
-               nsnprintf( str, PATH_MAX, PLANET_GFX_EXTERIOR"%s", xml_get(cur));
+               nsnprintf( str, PATH_MAX, PLANET_GFX_EXTERIOR_PATH"%s", xml_get(cur));
                planet->gfx_exterior = strdup(str);
                planet->gfx_exteriorPath = xml_getStrd(cur);
             }
@@ -1835,7 +1804,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
                            lua_getglobal( landing_lua, tmp );
                            if (lua_isnil(landing_lua,-1))
                               WARN("Planet '%s' has landing function '%s' which is not found in '%s'.",
-                                    planet->name, tmp, LANDING_DATA);
+                                    planet->name, tmp, LANDING_DATA_PATH);
                            lua_pop(landing_lua,1);
                         }
 #endif /* DEBUGGING */
@@ -1930,6 +1899,48 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
    return 0;
 }
 
+
+/**
+ * @brief Sets a planet's radius based on which space gfx it uses.
+ *
+ *    @param planet Planet to set radius for.
+ *    @return 0 on success.
+ */
+int planet_setRadiusFromGFX(Planet* planet)
+{
+   SDL_RWops *rw;
+   npng_t *npng;
+   png_uint_32 w, h;
+   int nbuf;
+   char *buf, path[PATH_MAX], str[PATH_MAX];
+   
+   /* New path. */
+   nsnprintf( path, sizeof(path), "%s/%s", PLANET_GFX_SPACE_PATH, planet->gfx_spacePath );
+   
+   rw = ndata_rwops( path );
+   if (rw == NULL) {
+      WARN("Planet '%s' has inexisting graphic '%s'!", planet->name, planet->gfx_spacePath );
+      return -1;
+   }
+   else {
+      npng = npng_open( rw );
+      if (npng != NULL) {
+         npng_dim( npng, &w, &h );
+         nbuf = npng_metadata( npng, "radius", &buf );
+         if (nbuf > 0) {
+            strncpy( str, buf, MIN( (unsigned int)nbuf, sizeof(str) ) );
+            str[ nbuf ] = '\0';
+            planet->radius = atof( str );
+         }
+         else
+            planet->radius = 0.8 * (double)(w+h)/4.; /* (w+h)/2 is diameter, /2 for radius */
+
+         npng_close( npng );
+      }
+      SDL_RWclose( rw );
+   }
+   return 0;
+}
 
 /**
  * @brief Adds a planet to a star system.
@@ -2665,15 +2676,15 @@ static int systems_load (void)
       systems_nstack = 0;
    }
 
-   system_files = nfile_readDir( &nfiles, SYSTEM_DATA );
+   system_files = nfile_readDir( &nfiles, SYSTEM_DATA_PATH );
 
    /*
     * First pass - loads all the star systems_stack.
     */
    for (i=0; i<nfiles; i++) {
 
-      file = malloc((strlen(SYSTEM_DATA)+strlen(system_files[i])+2)*sizeof(char));
-      nsnprintf(file,(strlen(SYSTEM_DATA)+strlen(system_files[i])+2)*sizeof(char),"%s/%s",SYSTEM_DATA,system_files[i]);
+      file = malloc((strlen(SYSTEM_DATA_PATH)+strlen(system_files[i])+2)*sizeof(char));
+      nsnprintf(file,(strlen(SYSTEM_DATA_PATH)+strlen(system_files[i])+2)*sizeof(char),"%s/%s",SYSTEM_DATA_PATH,system_files[i]);
       /* Load the file. */
       buf = ndata_read( file, &bufsize );
       doc = xmlParseMemory( buf, bufsize );
@@ -2697,8 +2708,8 @@ static int systems_load (void)
     */
    for (i=0; i<nfiles; i++) {
 
-      file = malloc((strlen(SYSTEM_DATA)+strlen(system_files[i])+2)*sizeof(char));
-      nsnprintf(file,(strlen(SYSTEM_DATA)+strlen(system_files[i])+2)*sizeof(char),"%s/%s",SYSTEM_DATA,system_files[i]);
+      file = malloc((strlen(SYSTEM_DATA_PATH)+strlen(system_files[i])+2)*sizeof(char));
+      nsnprintf(file,(strlen(SYSTEM_DATA_PATH)+strlen(system_files[i])+2)*sizeof(char),"%s/%s",SYSTEM_DATA_PATH,system_files[i]);
       /* Load the file. */
       buf = ndata_read( file, &bufsize );
       doc = xmlParseMemory( buf, bufsize );

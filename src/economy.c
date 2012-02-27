@@ -39,7 +39,6 @@
 
 #define XML_COMMODITY_ID      "Commodities" /**< XML document identifier */
 #define XML_COMMODITY_TAG     "commodity" /**< XML commodity identifier. */
-#define COMMODITY_DATA        "dat/commodity.xml" /**< Commodity XML file. */
 
 
 /*
@@ -205,7 +204,7 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
    /* Get name. */
    xmlr_attr( parent, "name", temp->name );
    if (temp->name == NULL)
-      WARN("Commodity from "COMMODITY_DATA" has invalid or no name");
+      WARN("Commodity from "COMMODITY_DATA_PATH" has invalid or no name");
 
    /* Parse body. */
    node = parent->xmlChildrenNode;
@@ -279,26 +278,26 @@ int commodity_load (void)
    xmlDocPtr doc;
 
    /* Load the file. */
-   buf = ndata_read( COMMODITY_DATA, &bufsize);
+   buf = ndata_read( COMMODITY_DATA_PATH, &bufsize);
    if (buf == NULL)
       return -1;
 
    /* Handle the XML. */
    doc = xmlParseMemory( buf, bufsize );
    if (doc == NULL) {
-      WARN("'%s' is not valid XML.", COMMODITY_DATA);
+      WARN("'%s' is not valid XML.", COMMODITY_DATA_PATH);
       return -1;
    }
 
    node = doc->xmlChildrenNode; /* Commodities node */
    if (strcmp((char*)node->name,XML_COMMODITY_ID)) {
-      ERR("Malformed "COMMODITY_DATA" file: missing root element '"XML_COMMODITY_ID"'");
+      ERR("Malformed "COMMODITY_DATA_PATH" file: missing root element '"XML_COMMODITY_ID"'");
       return -1;
    }
 
    node = node->xmlChildrenNode; /* first faction node */
    if (node == NULL) {
-      ERR("Malformed "COMMODITY_DATA" file: does not contain elements");
+      ERR("Malformed "COMMODITY_DATA_PATH" file: does not contain elements");
       return -1;
    }
 
@@ -321,7 +320,7 @@ int commodity_load (void)
          }
       }
       else
-         WARN("'"COMMODITY_DATA"' has unknown node '%s'.", node->name);
+         WARN("'"COMMODITY_DATA_PATH"' has unknown node '%s'.", node->name);
    } while (xml_nextNode(node));
 
    xmlFreeDoc(doc);
