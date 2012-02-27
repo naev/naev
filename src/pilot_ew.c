@@ -23,7 +23,7 @@
 static double sensor_curRange    = 0.; /**< Current base sensor range, used to calculate
                                          what is in range and what isn't. */
 
-#define  EVASION_SCALE              1.15           /**< Scales the evasion factor to the hide factor. Ensures that ships always have an evasion factor higher than their hide factor. */
+#define  EVASION_SCALE              1.25           /**< Scales the evasion factor to the hide factor. Ensures that ships always have an evasion factor higher than their hide factor. */
 #define  SENSOR_DEFAULT_RANGE       7500           /**< The default sensor range for all ships. */
 
 /**
@@ -52,7 +52,7 @@ void pilot_ewUpdateDynamic( Pilot *p )
 
    /* Update evasion. */
    p->ew_movement = pilot_ewMovement( VMOD(p->solid->vel) );
-   p->ew_evasion  = p->ew_hide * p->ew_movement * EVASION_SCALE;
+   p->ew_evasion  = p->ew_hide * EVASION_SCALE;
 }
 
 
@@ -88,7 +88,7 @@ double pilot_ewHeat( double T )
  */
 double pilot_ewMass( double mass )
 {
-   return 1. / (1. + pow( mass, 0.75 ) / 100. );
+   return 1. / (.1 + pow( mass, 0.75 ) / 120. );
 }
 
 
@@ -256,10 +256,10 @@ double pilot_ewWeaponTrack( const Pilot *p, const Pilot *t, double track )
    double limit, lead;
 
    limit = track * p->ew_detect;
-   if (t->ew_evasion < limit)
+   if (t->ew_evasion * t->ew_movement < limit)
       lead = 1.;
    else
-      lead = MAX( 0., 1. - 0.5*(t->ew_evasion/limit - 1.));
+      lead = MAX( 0., 1. - 0.5*((t->ew_evasion  * t->ew_movement)/limit - 1.));
    return lead;
 }
 
