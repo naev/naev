@@ -5,7 +5,7 @@ include "scripts/jumpdist.lua"
 
    MISSION: Waste Dump (dat/empire/waste_dump.lua)
    DESCRIPTION: Take toxic waste and dump it over an uninhabited planet. 
-		Mission concieved for the Shakar system.
+		Mission conceived for the Shakar system.
 		It would begin at the mission computer on Zembla Shakar
 		To change the system, just change the mission.xml entry.
    NOTES: This mission requires balancing to make sure it works with all ship types, possibly normalisation of the fraction of the top speed required for mission success according to the top speed, turn, and acceleration of the player's ship.
@@ -17,7 +17,7 @@ else
 
    misn_title = "Emergency atmospheric dump" 
    misn_reward = 10000 -- To be updated when Naev gets an economy.
-   misn_desc = "Discrete pilot wanted for in-system shipment. Licensed haulers only."
+   misn_desc = "Discreet pilot wanted for in-system shipment. Licensed haulers only."
 
 -- Create the tables
    title = {}
@@ -173,7 +173,7 @@ Yes, this is very much the long way around.
       end
    end
 
-   misn.markerAdd( dumping_system, "computer" ) --change as appropriate to point to a system object and marker style.
+   misn.markerAdd( dumping_system, "computer" )
      
 end
 
