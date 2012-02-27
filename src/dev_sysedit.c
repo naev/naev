@@ -382,6 +382,7 @@ static void sysedit_btnNew( unsigned int wid_unused, char *unused )
    p->pos.x             = sysedit_xpos / sysedit_zoom;
    p->pos.y             = sysedit_ypos / sysedit_zoom;
    p->hide              = pow2(HIDE_DEFAULT_PLANET);
+   p->radius            = b->radius;
 
    /* Add new planet. */
    system_addPlanet( sysedit_sys, name );
