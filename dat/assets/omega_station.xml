@@ -18,7 +18,7 @@
   <population>14000</population>
   <hide>0.750000</hide>
   <services>
-   <land>emp_mil_restricted</land>
+   <land>emp_mil_omega</land>
    <refuel/>
    <bar/>
    <missions/>

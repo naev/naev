@@ -54,6 +54,21 @@ function emp_mil_restricted( pnt )
          "\"Don't attempt to bribe an Empire official, pilot.\"")
 end
 
+-- Empire Omega Station.
+function emp_mil_omega( pnt )
+   local required = 30
+
+   if player.misnDone("Collective Scouting") or player.misnActive("Collective Scouting") then
+      required = 0
+   end
+
+   return land_military(pnt, required,
+         "Permission to land granted.",
+         "You are not authorized to land here.",
+         "Landing request denied.",
+         "\"Don't attempt to bribe an Empire official, pilot.\"")
+end
+
 -- Empire Emperor's Wrath.
 function emp_mil_wrath( pnt )
    return land_military(pnt, 75,
