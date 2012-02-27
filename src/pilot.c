@@ -1999,6 +1999,9 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    /* cargo - must be set before calcStats */
    pilot->cargo_free = pilot->ship->cap_cargo; /* should get redone with calcCargo */
 
+   /* Initialize heat. */
+   pilot_heatReset( pilot );
+
    /* set the pilot stats based on his ship and outfits */
    pilot_calcStats( pilot );
 
