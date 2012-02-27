@@ -58,7 +58,7 @@ end
 function emp_mil_omega( pnt )
    local required = 30
 
-   if player.misnDone("Collective Scouting") or player.misnActive("Collective Scouting") then
+   if player.misnDone("Empire Shipping 3") or player.misnActive("Empire Shipping 3") then
       required = 0
    end
 
