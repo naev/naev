@@ -1080,7 +1080,7 @@ static void uniedit_editSysClose( unsigned int wid, char *name )
 
    sys->stars           = atoi(window_getInput( wid, "inpStars" ));
    sys->interference    = atof(window_getInput( wid, "inpInterference" ));
-   sys->nebu_density    = atof(window_getInput( wid, "inpDensity" ));
+   sys->nebu_density    = atof(window_getInput( wid, "inpNebula" ));
    sys->nebu_volatility = atof(window_getInput( wid, "inpVolatility" ));
 
    /* Text might need changing. */

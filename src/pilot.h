@@ -305,6 +305,8 @@ typedef struct Pilot_ {
    double ew_mass;   /**< Mass factor. */
    double ew_heat;   /**< Heat factor, affects hide. */
    double ew_hide;   /**< Static hide factor. */
+   double ew_movement; /**< Movement factor. */
+   double ew_evasion; /**< Dynamic evasion factor. */
    double ew_detect; /**< Static detection factor. */
    double ew_jumpDetect; /** Static jump detection factor */
 

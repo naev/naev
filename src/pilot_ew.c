@@ -23,7 +23,7 @@
 static double sensor_curRange    = 0.; /**< Current base sensor range, used to calculate
                                          what is in range and what isn't. */
 
-#define  EVASION_SCALE              1.15           /**< Scales the evasion factor to the hide factor. Ensures that ships always have an evasion factor higher than their hide factor. */
+#define  EVASION_SCALE              1.25           /**< Scales the evasion factor to the hide factor. Ensures that ships always have an evasion factor higher than their hide factor. */
 #define  SENSOR_DEFAULT_RANGE       7500           /**< The default sensor range for all ships. */
 
 /**
@@ -35,7 +35,7 @@ void pilot_ewUpdateStatic( Pilot *p )
 {
    p->ew_mass     = pilot_ewMass( p->solid->mass );
    p->ew_heat     = pilot_ewHeat( p->heat_T );
-   p->ew_hide     = pow2(p->ew_base_hide * p->ew_mass * p->ew_heat);
+   p->ew_hide     = p->ew_base_hide * p->ew_mass * p->ew_heat;
 }
 
 
@@ -49,6 +49,10 @@ void pilot_ewUpdateDynamic( Pilot *p )
    /* Update hide. */
    p->ew_heat     = pilot_ewHeat( p->heat_T );
    p->ew_hide     = p->ew_base_hide * p->ew_mass * p->ew_heat;
+
+   /* Update evasion. */
+   p->ew_movement = pilot_ewMovement( VMOD(p->solid->vel) );
+   p->ew_evasion  = p->ew_hide * EVASION_SCALE;
 }
 
 
@@ -60,19 +64,9 @@ void pilot_ewUpdateDynamic( Pilot *p )
  */
 double pilot_ewMovement( double vmod )
 {
-   return 1. + vmod / 1000.;
+   return 1. + vmod / 100.;
 }
 
-/**
- * @brief Gets the electronic warfare evasion modifier for a given pilot.
- *
- *    @param target The pilot doing the evading.
- *    @return The electronic warfare evasion modifier.
- */
-double pilot_ewEvasion( const Pilot *target )
-{
-   return (target->ew_hide * EVASION_SCALE);
-}
 
 /**
  * @brief Gets the electronic warfare heat modifier for a given temperature.
@@ -94,7 +88,7 @@ double pilot_ewHeat( double T )
  */
 double pilot_ewMass( double mass )
 {
-   return 1. / (1. + pow( mass, 0.75 ) / 100. );
+   return 1. / (.1 + pow( mass, 0.75 ) / 120. );
 }
 
 
@@ -156,7 +150,7 @@ int pilot_inRange( const Pilot *p, double x, double y )
  */
 int pilot_inRangePilot( const Pilot *p, const Pilot *target )
 {
-   double d, sense, ewMovement;
+   double d, sense;
 
    /* Special case player or omni-visible. */
    if ((pilot_isPlayer(p) && pilot_isFlag(target, PILOT_VISPLAYER)) ||
@@ -167,10 +161,9 @@ int pilot_inRangePilot( const Pilot *p, const Pilot *target )
    d = vect_dist2( &p->solid->pos, &target->solid->pos );
 
    sense = sensor_curRange * p->ew_detect;
-   ewMovement = pilot_ewMovement( vect_dist( &p->solid->vel, &target->solid->vel ));
-   if (d * pilot_ewEvasion( target ) * ewMovement < sense)
+   if (d * target->ew_evasion < sense)
       return 1;
-   else if  (d * target->ew_hide < sense * ewMovement)
+   else if  (d * target->ew_hide < sense)
       return -1;
 
    return 0;
@@ -201,7 +194,8 @@ int pilot_inRangePlanet( const Pilot *p, int target )
    if ( !pnt->real )
       return 0;
 
-   sense = sensor_curRange * p->ew_detect;
+   /* @TODO ew_detect should be squared upon being set. */
+   sense = sensor_curRange * pow2(p->ew_detect);
 
    /* Get distance. */
    d = vect_dist2( &p->solid->pos, &pnt->pos );
@@ -259,14 +253,13 @@ int pilot_inRangeJump( const Pilot *p, int i )
  */
 double pilot_ewWeaponTrack( const Pilot *p, const Pilot *t, double track )
 {
-   double limit, lead, evade;
+   double limit, lead;
 
    limit = track * p->ew_detect;
-   evade = pilot_ewEvasion( t ) * pilot_ewMovement( vect_dist( &p->solid->vel, &t->solid->vel ));
-   if ( evade < limit )
+   if (t->ew_evasion * t->ew_movement < limit)
       lead = 1.;
    else
-      lead = MAX( 0., 1. - 0.5*(evade/limit - 1.));
+      lead = MAX( 0., 1. - 0.5*((t->ew_evasion  * t->ew_movement)/limit - 1.));
    return lead;
 }
 
