@@ -31,9 +31,6 @@
 #define CHUNK_SIZE      32 /**< Size of chunk to allocate. */
 
 
-#define DIFF_DATA       "dat/unidiff.xml" /**< Unidiff XML file. */
-
-
 /**
  * @enum UniHunkTargetType_t
  *
@@ -194,7 +191,7 @@ int diff_apply( const char *name )
    if (diff_isApplied(name))
       return 0;
 
-   buf = ndata_read( DIFF_DATA, &bufsize );
+   buf = ndata_read( DIFF_DATA_PATH, &bufsize );
    doc = xmlParseMemory( buf, bufsize );
 
    node = doc->xmlChildrenNode;
@@ -232,7 +229,7 @@ int diff_apply( const char *name )
    xmlFreeDoc(doc);
    free(buf);
 
-   WARN("UniDiff '%s' not found in "DIFF_DATA".", name);
+   WARN("UniDiff '%s' not found in "DIFF_DATA_PATH".", name);
    return -1;
 }
 

@@ -43,10 +43,6 @@
 #define XML_OUTFIT_ID      "Outfits"   /**< XML section identifier. */
 #define XML_OUTFIT_TAG     "outfit"    /**< XML section identifier. */
 
-#define OUTFIT_DATA  "dat/outfits" /**< File that contains the outfit data. */
-#define OUTFIT_GFX   "gfx/outfit/" /**< Path to outfit graphics. */
-#define MAP_DATA     "dat/outfits/maps"    /**< File that contains the map data. */
-
 
 #define OUTFIT_SHORTDESC_MAX  256
 
@@ -969,7 +965,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
       /* Graphics. */
       if (xml_isNode(node,"gfx")) {
          temp->u.blt.gfx_space = xml_parseTexture( node,
-               OUTFIT_GFX"space/%s.png", 6, 6,
+               OUTFIT_GFX_PATH"space/%s.png", 6, 6,
                OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS );
          xmlr_attr(node, "spin", buf);
          if (buf != NULL) {
@@ -983,7 +979,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
          if (!conf.interpolate)
             continue;
          temp->u.blt.gfx_end = xml_parseTexture( node,
-               OUTFIT_GFX"space/%s.png", 6, 6,
+               OUTFIT_GFX_PATH"space/%s.png", 6, 6,
                OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS );
          continue;
       }
@@ -1125,7 +1121,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
       /* Graphic stuff. */
       if (xml_isNode(node,"gfx")) {
          temp->u.bem.gfx = xml_parseTexture( node,
-               OUTFIT_GFX"space/%s.png", 1, 1, OPENGL_TEX_MIPMAPS );
+               OUTFIT_GFX_PATH"space/%s.png", 1, 1, OPENGL_TEX_MIPMAPS );
          continue;
       }
       if (xml_isNode(node,"spfx_armour")) {
@@ -1307,7 +1303,7 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"energy",temp->u.amm.energy);
       if (xml_isNode(node,"gfx")) {
          temp->u.amm.gfx_space = xml_parseTexture( node,
-               OUTFIT_GFX"space/%s.png", 6, 6,
+               OUTFIT_GFX_PATH"space/%s.png", 6, 6,
                OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS );
          xmlr_attr(node, "spin", buf);
          if (buf != NULL) {
@@ -1899,7 +1895,7 @@ static int outfit_parse( Outfit* temp, const char* file )
 
    parent = doc->xmlChildrenNode; /* first system node */
    if (parent == NULL) {
-      ERR("Malformed '"OUTFIT_DATA"' file: does not contain elements");
+      ERR("Malformed '"OUTFIT_DATA_PATH"' file: does not contain elements");
       return -1;
    }
 
@@ -1908,7 +1904,7 @@ static int outfit_parse( Outfit* temp, const char* file )
 
    temp->name = xml_nodeProp(parent,"name"); /* already mallocs */
    if (temp->name == NULL)
-      WARN("Outfit in "OUTFIT_DATA" has invalid or no name");
+      WARN("Outfit in "OUTFIT_DATA_PATH" has invalid or no name");
 
    node = parent->xmlChildrenNode;
 
@@ -1929,7 +1925,7 @@ static int outfit_parse( Outfit* temp, const char* file )
             xmlr_strd(cur,"typename",temp->typename);
             if (xml_isNode(cur,"gfx_store")) {
                temp->gfx_store = xml_parseTexture( cur,
-                     OUTFIT_GFX"store/%s.png", 1, 1, OPENGL_TEX_MIPMAPS );
+                     OUTFIT_GFX_PATH"store/%s.png", 1, 1, OPENGL_TEX_MIPMAPS );
                continue;
             }
             else if (xml_isNode(cur,"slot")) {
@@ -2059,7 +2055,7 @@ int outfit_load (void)
 
    /* First pass, loads up ammunition. */
    outfit_stack = array_create(Outfit);
-   outfit_loadDir( OUTFIT_DATA );
+   outfit_loadDir( OUTFIT_DATA_PATH );
    array_shrink(&outfit_stack);
 
 
@@ -2104,18 +2100,18 @@ int outfit_mapParse()
    int nfiles;
    char *file;
 
-   map_files = nfile_readDir( &nfiles, MAP_DATA );
+   map_files = nfile_readDir( &nfiles, MAP_DATA_PATH );
    for (i=0; i<nfiles; i++) {
 
-      file = malloc((strlen(MAP_DATA)+strlen(map_files[i])+2)*sizeof(char));
-      nsnprintf(file,(strlen(MAP_DATA)+strlen(map_files[i])+2)*sizeof(char),"%s/%s",MAP_DATA,map_files[i]);
+      file = malloc((strlen(MAP_DATA_PATH)+strlen(map_files[i])+2)*sizeof(char));
+      nsnprintf(file,(strlen(MAP_DATA_PATH)+strlen(map_files[i])+2)*sizeof(char),"%s/%s",MAP_DATA_PATH,map_files[i]);
 
       buf = ndata_read( file, &bufsize );
       doc = xmlParseMemory( buf, bufsize );
 
       node = doc->xmlChildrenNode; /* first system node */
       if (node == NULL) {
-         WARN("Malformed '"OUTFIT_DATA"' file: does not contain elements");
+         WARN("Malformed '"OUTFIT_DATA_PATH"' file: does not contain elements");
          return -1;
       }
 

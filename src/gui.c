@@ -62,8 +62,6 @@
 #define XML_GUI_ID   "GUIs" /**< XML section identifier for GUI document. */
 #define XML_GUI_TAG  "gui" /**<  XML Section identifier for GUI tags. */
 
-#define GUI_GFX      "gfx/gui/" /**< Location of the GUI graphics. */
-
 #define INTERFERENCE_LAYERS      16 /**< Number of interference layers. */
 #define INTERFERENCE_CHANGE_DT   0.1 /**< Speed to change at. */
 

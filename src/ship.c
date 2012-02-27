@@ -32,8 +32,6 @@
 #define XML_ID    "Ships"  /**< XML document identifier */
 #define XML_SHIP  "ship" /**< XML individual ship identifier. */
 
-#define SHIP_DATA    "dat/ships" /**< XML file containing ships. */
-#define SHIP_GFX     "gfx/ship/" /**< Location of ship graphics. */
 #define SHIP_EXT     ".png" /**< Ship graphics extension format. */
 #define SHIP_ENGINE  "_engine" /**< Engine graphic extension. */
 #define SHIP_TARGET  "_target" /**< Target graphic extension. */
@@ -462,7 +460,7 @@ static int ship_loadGFX( Ship *temp, char *buf, int sx, int sy )
    }
 
    /* Load the space sprite. */
-   nsnprintf( str, PATH_MAX, SHIP_GFX"%s/%s"SHIP_EXT, base, buf );
+   nsnprintf( str, PATH_MAX, SHIP_GFX_PATH"%s/%s"SHIP_EXT, base, buf );
    rw    = ndata_rwops( str );
    npng  = npng_open( rw );
    npng_dim( npng, &w, &h );
@@ -483,7 +481,7 @@ static int ship_loadGFX( Ship *temp, char *buf, int sx, int sy )
 
    /* Load the engine sprite .*/
    if (conf.engineglow && conf.interpolate) {
-      nsnprintf( str, PATH_MAX, SHIP_GFX"%s/%s"SHIP_ENGINE SHIP_EXT, base, buf );
+      nsnprintf( str, PATH_MAX, SHIP_GFX_PATH"%s/%s"SHIP_ENGINE SHIP_EXT, base, buf );
       temp->gfx_engine = gl_newSprite( str, sx, sy, OPENGL_TEX_MIPMAPS );
       if (temp->gfx_engine == NULL)
          WARN("Ship '%s' does not have an engine sprite (%s).", temp->name, str );
@@ -494,7 +492,7 @@ static int ship_loadGFX( Ship *temp, char *buf, int sx, int sy )
    temp->mangle /= temp->gfx_space->sx * temp->gfx_space->sy;
 
    /* Get the comm graphic for future loading. */
-   nsnprintf( str, PATH_MAX, SHIP_GFX"%s/%s"SHIP_COMM SHIP_EXT, base, buf );
+   nsnprintf( str, PATH_MAX, SHIP_GFX_PATH"%s/%s"SHIP_COMM SHIP_EXT, base, buf );
    temp->gfx_comm = strdup(str);
 
    return 0;
@@ -529,7 +527,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    /* Get name. */
    xmlr_attr(parent,"name",temp->name);
    if (temp->name == NULL)
-      WARN("Ship in "SHIP_DATA" has invalid or no name");
+      WARN("Ship in "SHIP_DATA_PATH" has invalid or no name");
 
    /* Load data. */
    node = parent->xmlChildrenNode;
@@ -825,10 +823,10 @@ int ships_load (void)
       ship_stack = array_create(Ship);
    }
 
-   ship_files = nfile_readDir( &nfiles, SHIP_DATA );
+   ship_files = nfile_readDir( &nfiles, SHIP_DATA_PATH );
    for ( i = 0; i < nfiles; i++ ) {
-      file = malloc((strlen(SHIP_DATA)+strlen(ship_files[i])+2)*sizeof(char));
-      nsnprintf(file,(strlen(SHIP_DATA)+strlen(ship_files[i])+2)*sizeof(char),"%s/%s",SHIP_DATA,ship_files[i]);
+      file = malloc((strlen(SHIP_DATA_PATH)+strlen(ship_files[i])+2)*sizeof(char));
+      nsnprintf(file,(strlen(SHIP_DATA_PATH)+strlen(ship_files[i])+2)*sizeof(char),"%s/%s",SHIP_DATA_PATH,ship_files[i]);
       buf = ndata_read( file, &bufsize );
 
       doc = xmlParseMemory( buf, bufsize );

@@ -26,6 +26,7 @@
 #include "ndata.h"
 #include "nfile.h"
 #include "nstring.h"
+#include "npng.h"
 
 
 #define EDITOR_WDWNAME  "Planet Property Editor"
@@ -46,14 +47,6 @@
 #define SYSEDIT_ZOOM_STEP        1.2   /**< Factor to zoom by for each zoom level. */
 #define SYSEDIT_ZOOM_MAX         1     /**< Maximum zoom level (close). */
 #define SYSEDIT_ZOOM_MIN         -23   /**< Minimum zoom level (far). */
-
-
-#define PLANET_SPACE_GFX_PATH    "gfx/planet/space" /**< Path to planet space graphics. */
-#define PLANET_LAND_GFX_PATH     "gfx/planet/exterior" /**< Path to planet landing graphics. */
-
-
-#define PLANET_GFX_SPACE      "gfx/planet/space/" /**< Location of planet space graphics. */
-#define PLANET_GFX_EXTERIOR   "gfx/planet/exterior/" /**< Location of planet exterior graphics (when landed). */
 
 
 /*
@@ -1792,7 +1785,7 @@ static void sysedit_planetGFX( unsigned int wid_unused, char *wgt )
          land ? "btnApplyLand" : "btnApplySpace", "Apply", sysedit_btnGFXApply );
 
    /* Find images first. */
-   path           = land ? PLANET_LAND_GFX_PATH : PLANET_SPACE_GFX_PATH;
+   path           = land ? PLANET_GFX_EXTERIOR_PATH : PLANET_GFX_SPACE_PATH;
    files          = ndata_list( path, &nfiles );
    ndata_sortName( files, nfiles );
    png_files      = malloc( sizeof(char*) * nfiles );
@@ -1857,12 +1850,12 @@ static void sysedit_btnGFXApply( unsigned int wid, char *wgt )
       return;
 
    /* New path. */
-   path = land ? PLANET_LAND_GFX_PATH : PLANET_SPACE_GFX_PATH;
+   path = land ? PLANET_GFX_EXTERIOR_PATH : PLANET_GFX_SPACE_PATH;
    nsnprintf( buf, sizeof(buf), "%s/%s", path, str );
 
    if (land) {
       free( p->gfx_exteriorPath );
-      nsnprintf( buf, sizeof(buf), PLANET_GFX_EXTERIOR"%s", str );
+      nsnprintf( buf, sizeof(buf), PLANET_GFX_EXTERIOR_PATH"%s", str );
       p->gfx_exteriorPath = strdup( str );
       p->gfx_exterior = strdup( buf );
    }
@@ -1871,6 +1864,7 @@ static void sysedit_btnGFXApply( unsigned int wid, char *wgt )
       gl_freeTexture( p->gfx_space );
       p->gfx_space     = gl_newImage( buf, OPENGL_TEX_MIPMAPS );
       p->gfx_spacePath = strdup( str );
+      planet_setRadiusFromGFX(p);
    }
 
    /* For now we close. */

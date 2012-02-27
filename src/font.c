@@ -31,9 +31,6 @@
 #include "ndata.h"
 
 
-#define FONT_DEF  "dat/font.ttf" /**< Default font path. */
-
-
 /**
  * @brief Stores a font character.
  */
@@ -1060,9 +1057,9 @@ void gl_fontInit( glFont* font, const char *fname, const unsigned int h )
       font = &gl_defFont;
 
    /* Read the font. */
-   buf = ndata_read( (fname!=NULL) ? fname : FONT_DEF, &bufsize );
+   buf = ndata_read( (fname!=NULL) ? fname : FONT_DEFAULT_PATH, &bufsize );
    if (buf == NULL) {
-      WARN("Unable to read font: %s", (fname!=NULL) ? fname : FONT_DEF);
+      WARN("Unable to read font: %s", (fname!=NULL) ? fname : FONT_DEFAULT_PATH);
       return;
    }
 
@@ -1077,14 +1074,14 @@ void gl_fontInit( glFont* font, const char *fname, const unsigned int h )
    /* create a FreeType font library */
    if (FT_Init_FreeType(&library)) {
       WARN("FT_Init_FreeType failed with font %s.",
-            (fname!=NULL) ? fname : FONT_DEF );
+            (fname!=NULL) ? fname : FONT_DEFAULT_PATH );
       return;
    }
 
    /* object which freetype uses to store font info */
    if (FT_New_Memory_Face( library, buf, bufsize, 0, &face )) {
       WARN("FT_New_Face failed loading library from %s",
-            (fname!=NULL) ? fname : FONT_DEF );
+            (fname!=NULL) ? fname : FONT_DEFAULT_PATH );
       return;
    }
 
