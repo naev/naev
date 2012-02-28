@@ -7,7 +7,7 @@
   <gfx_store>seeker</gfx_store>
  </general>
  <specific type="ammo">
-  <gfx>seeker</gfx>
+  <gfx>fury</gfx>
   <sound>seeker</sound>
   <sound_hit>medexp1</sound_hit>
   <spfx_shield>ExpM</spfx_shield>
