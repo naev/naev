@@ -23,7 +23,6 @@
 #include "array.h"
 
 
-#define TECH_DATA           "dat/tech.xml"   /**< XML file containing techs. */
 #define XML_TECH_ID         "Techs"          /**< Tech xml document tag. */
 #define XML_TECH_TAG        "tech"           /**< Individual tech xml tag. */
 
@@ -105,28 +104,28 @@ int tech_load (void)
    tech_group_t *tech;
 
    /* Load the data. */
-   data = ndata_read( TECH_DATA, &bufsize );
+   data = ndata_read( TECH_DATA_PATH, &bufsize );
    if (data == NULL)
       return -1;
 
    /* Load the document. */
    doc = xmlParseMemory( data, bufsize );
    if (doc == NULL) {
-      WARN("'%s' is not a valid XML file.", TECH_DATA);
+      WARN("'%s' is not a valid XML file.", TECH_DATA_PATH);
       return -1;
    }
 
    /* Load root element. */
    parent = doc->xmlChildrenNode;
    if (!xml_isNode(parent,XML_TECH_ID)) {
-      WARN("Malformed "TECH_DATA" file: missing root element '"XML_TECH_ID"'");
+      WARN("Malformed "TECH_DATA_PATH" file: missing root element '"XML_TECH_ID"'");
       return -1;
    }
 
    /* Get first node. */
    node = parent->xmlChildrenNode;
    if (node == NULL) {
-      WARN("Malformed "TECH_DATA" file: does not contain elements");
+      WARN("Malformed "TECH_DATA_PATH" file: does not contain elements");
       return -1;
    }
 

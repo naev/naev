@@ -302,6 +302,7 @@ credits_t planet_commodityPrice( const Planet *p, const Commodity *c );
 char planet_getColourChar( Planet *p );
 const glColour* planet_getColour( Planet *p );
 void planet_updateLand( Planet *p );
+int planet_setRadiusFromGFX(Planet* planet);
 
 /*
  * jump stuff
@@ -349,7 +350,6 @@ void space_update( const double dt );
  */
 void space_gfxLoad( StarSystem *sys );
 void space_gfxUnload( StarSystem *sys );
-
 
 /*
  * Getting stuff.

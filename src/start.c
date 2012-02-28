@@ -22,7 +22,6 @@
 
 
 #define XML_START_ID    "Start"  /**< XML document tag of module start file. */
-#define START_DATA      "dat/start.xml" /**< Path to module start file. */
 
 
 /**
@@ -69,7 +68,7 @@ int start_load (void)
    stu = -1;
 
    /* Try to read the file. */
-   buf = ndata_read( START_DATA, &bufsize );
+   buf = ndata_read( START_DATA_PATH, &bufsize );
    if (buf == NULL)
       return -1;
 
@@ -78,13 +77,13 @@ int start_load (void)
 
    node = doc->xmlChildrenNode;
    if (!xml_isNode(node,XML_START_ID)) {
-      ERR("Malformed '"START_DATA"' file: missing root element '"XML_START_ID"'");
+      ERR("Malformed '"START_DATA_PATH"' file: missing root element '"XML_START_ID"'");
       return -1;
    }
 
    node = node->xmlChildrenNode; /* first system node */
    if (node == NULL) {
-      ERR("Malformed '"START_DATA"' file: does not contain elements");
+      ERR("Malformed '"START_DATA_PATH"' file: does not contain elements");
       return -1;
    }
    do {
@@ -114,11 +113,11 @@ int start_load (void)
                   /* position */
                   xmlr_float( tmp, "x", start_data.x );
                   xmlr_float( tmp, "y", start_data.y );
-                  WARN("'"START_DATA"' has unknown system node '%s'.", tmp->name);
+                  WARN("'"START_DATA_PATH"' has unknown system node '%s'.", tmp->name);
                } while (xml_nextNode(tmp));
                continue;
             }
-            WARN("'"START_DATA"' has unknown player node '%s'.", cur->name);
+            WARN("'"START_DATA_PATH"' has unknown player node '%s'.", cur->name);
          } while (xml_nextNode(cur));
          continue;
       }
@@ -131,7 +130,7 @@ int start_load (void)
             xmlr_int( cur, "scu", scu );
             xmlr_int( cur, "stp", stp );
             xmlr_int( cur, "stu", stu );
-            WARN("'"START_DATA"' has unknown date node '%s'.", cur->name);
+            WARN("'"START_DATA_PATH"' has unknown date node '%s'.", cur->name);
          } while (xml_nextNode(cur));
          continue;
       }
@@ -153,17 +152,17 @@ int start_load (void)
                   /* position */
                   xmlr_float( tmp, "x", start_data.tutx );
                   xmlr_float( tmp, "y", start_data.tuty );
-                  WARN("'"START_DATA"' has unknown system node '%s'.", tmp->name);
+                  WARN("'"START_DATA_PATH"' has unknown system node '%s'.", tmp->name);
                } while (xml_nextNode(tmp));
                continue;
             }
 
-            WARN("'"START_DATA"' has unknown tutorial node '%s'.", cur->name);
+            WARN("'"START_DATA_PATH"' has unknown tutorial node '%s'.", cur->name);
          } while (xml_nextNode(cur));
          continue;
       }
 
-      WARN("'"START_DATA"' has unknown node '%s'.", node->name);
+      WARN("'"START_DATA_PATH"' has unknown node '%s'.", node->name);
    } while (xml_nextNode(node));
 
    /* Clean up. */

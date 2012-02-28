@@ -27,10 +27,7 @@
 #include "nstring.h"
 
 
-#define MUSIC_PREFIX       "snd/music/" /**< Prefix of where tho find musics. */
 #define MUSIC_SUFFIX       ".ogg" /**< Suffix of musics. */
-
-#define MUSIC_LUA_PATH     "snd/music.lua" /**<  Lua music control file. */
 
 
 #define CHUNK_SIZE         32 /**< Size of a chunk to allocate. */
@@ -330,7 +327,7 @@ static int music_find (void)
       return 0;
 
    /* get the file list */
-   files = ndata_list( MUSIC_PREFIX, &nfiles );
+   files = ndata_list( MUSIC_PATH, &nfiles );
 
    /* load the profiles */
    nmusic = 0;
@@ -418,7 +415,7 @@ int music_load( const char* name )
    /* Load new music. */
    music_name  = strdup(name);
    music_start = SDL_GetTicks();
-   nsnprintf( filename, PATH_MAX, MUSIC_PREFIX"%s"MUSIC_SUFFIX, name);
+   nsnprintf( filename, PATH_MAX, MUSIC_PATH"%s"MUSIC_SUFFIX, name);
    rw = ndata_rwops( filename );
    if (rw == NULL) {
       WARN("Music '%s' not found.", filename);
