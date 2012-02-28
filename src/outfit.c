@@ -2034,13 +2034,14 @@ static int outfit_loadDir( char *dir )
    outfit_files = nfile_readDir( &nfiles, dir );
    for (i=0; i<nfiles; i++) {
       file = malloc((strlen(dir)+strlen(outfit_files[i])+2)*sizeof(char));
-      nsnprintf(file,(strlen(dir)+strlen(outfit_files[i])+2)*sizeof(char),"%s/%s",dir,outfit_files[i]);
+      nsnprintf(file,(strlen(dir)+strlen(outfit_files[i])+2)*sizeof(char),"%s%s",dir,outfit_files[i]);
       if (nfile_dirExists( file )) {
          outfit_loadDir( file );
       }
       else
          outfit_parse( &array_grow(&outfit_stack), file );
    }
+   array_shrink( &outfit_stack );
 
    return 0;
 }
@@ -2106,7 +2107,7 @@ int outfit_mapParse()
    for (i=0; i<nfiles; i++) {
 
       file = malloc((strlen(MAP_DATA_PATH)+strlen(map_files[i])+2)*sizeof(char));
-      nsnprintf(file,(strlen(MAP_DATA_PATH)+strlen(map_files[i])+2)*sizeof(char),"%s/%s",MAP_DATA_PATH,map_files[i]);
+      nsnprintf(file,(strlen(MAP_DATA_PATH)+strlen(map_files[i])+2)*sizeof(char),"%s%s",MAP_DATA_PATH,map_files[i]);
 
       buf = ndata_read( file, &bufsize );
       doc = xmlParseMemory( buf, bufsize );
