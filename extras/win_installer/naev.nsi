@@ -16,7 +16,7 @@
 ;General
 
 ;Name and file
-!define VERSION "0.5.0"
+!define VERSION "0.5.1"
 !define URL "http://naev.org"
 Name "Naev"
 OutFile "naev-${VERSION}-win32.exe"
