@@ -824,7 +824,7 @@ int ships_load (void)
    }
 
    ship_files = nfile_readDir( &nfiles, SHIP_DATA_PATH );
-   for ( i = 0; i < nfiles; i++ ) {
+   for (i = 0; i < nfiles; i++ ) {
       file = malloc((strlen(SHIP_DATA_PATH)+strlen(ship_files[i])+2)*sizeof(char));
       nsnprintf(file,(strlen(SHIP_DATA_PATH)+strlen(ship_files[i])+2)*sizeof(char),"%s/%s",SHIP_DATA_PATH,ship_files[i]);
       buf = ndata_read( file, &bufsize );
@@ -844,12 +844,16 @@ int ships_load (void)
    
       if (xml_isNode(node, XML_SHIP))
          /* Load the ship. */
-         ship_parse(&array_grow(&ship_stack), node);
-      array_shrink(&ship_stack);
+         ship_parse( &array_grow(&ship_stack), node );
+
+      /* Clean up. */
+      xmlFreeDoc(doc);
+      free(buf);
    }
 
-   xmlFreeDoc(doc);
-   free(buf);
+   /* Shrink stack. */
+   array_shrink(&ship_stack);
+
 
    DEBUG("Loaded %d Ship%s", array_size(ship_stack), (array_size(ship_stack)==1) ? "" : "s" );
 

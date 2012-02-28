@@ -35,11 +35,11 @@
 
 #define MISSION_LUA_PATH         "dat/missions/" /**< Path to Lua files. */
 #define EVENT_LUA_PATH           "dat/events/" /**< Path to Lua files. */
-#define OUTFIT_DATA_PATH         "dat/outfits" /**< Path to outfits. */
-#define MAP_DATA_PATH            "dat/outfits/maps" /**< Path to maps. */
-#define PLANET_DATA_PATH         "dat/assets" /**< Path to planets. */
-#define SYSTEM_DATA_PATH         "dat/ssys" /**< Path to systems. */
-#define SHIP_DATA_PATH           "dat/ships" /**< Path to ships. */
+#define OUTFIT_DATA_PATH         "dat/outfits/" /**< Path to outfits. */
+#define MAP_DATA_PATH            "dat/outfits/maps/" /**< Path to maps. */
+#define PLANET_DATA_PATH         "dat/assets/" /**< Path to planets. */
+#define SYSTEM_DATA_PATH         "dat/ssys/" /**< Path to systems. */
+#define SHIP_DATA_PATH           "dat/ships/" /**< Path to ships. */
 
 #define LANDING_DATA_PATH        "dat/landing.lua" /**< Lua script containing landing data. */
 
