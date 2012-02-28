@@ -2646,7 +2646,6 @@ lua_rawset( L, -3 )
  *  <li> speed <br />
  *  <li> speed_max <br />
  *  <li> turn <br />
- *  <li> speed_max <br />
  *  <li> armour <br />
  *  <li> shield <br />
  *  <li> energy <br />

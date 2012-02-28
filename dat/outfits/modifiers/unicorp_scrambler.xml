@@ -10,6 +10,6 @@
  <specific type="modification">
   <cpu>1</cpu>
   <energy>-10</energy>
-  <hide>1.5</hide>
+  <hide_rel>15</hide_rel>
  </specific>
 </outfit>
