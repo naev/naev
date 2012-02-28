@@ -2680,7 +2680,7 @@ static int pilotL_getStats( lua_State *L )
    /* Movement. */
    PUSH_DOUBLE( L, "thrust", p->thrust );
    PUSH_DOUBLE( L, "speed", p->speed );
-   PUSH_DOUBLE( L, "turn", p->turn * 180 / M_PI ); /* Convert back to grad. */
+   PUSH_DOUBLE( L, "turn", p->turn * 180. / M_PI ); /* Convert back to grad. */
    PUSH_DOUBLE( L, "speed_max", solid_maxspeed(p->solid, p->speed, p->thrust) );
    /* Health. */
    PUSH_DOUBLE( L, "armour", p->armour_max );
