@@ -176,22 +176,7 @@ Yes, this is very much the long way around.
    
    w, h = dumping_planet:gfxSpace():dim() -- Find the radius of the planet for aero-braking
    dumping_planet_radius = 1.0 * (w + h) / 4 
-   if dumping_planet_radius < ( 90 / player_stats.turn * player_stats.speed * 1.5) then 
-      print( "\nShip name: " .. player.pilot():ship():name())
-      print( "planet radius: " .. dumping_planet_radius)
-      print( "player drift speed: " .. player_stats.speed)
-      print( "player turn speed: " .. player_stats.turn)
-      print( "comparison number: " .. 90 / player_stats.turn * player_stats.speed * 1.5)
-      print( "ratio: " .. ( 90 / player_stats.turn * player_stats.speed * 1.5) / dumping_planet_radius)
-      abort() 
-   end -- only offer mission if player ship can do it
-
-   print( "\nShip name: " .. player.pilot():ship():name())
-   print( "planet radius: " .. dumping_planet_radius)
-   print( "player drift speed: " .. player_stats.speed)
-   print( "player turn speed: " .. player_stats.turn)
-   print( "comparison number: " .. 90 / player_stats.turn * player_stats.speed * 1.5)
-   print( "ratio: " .. ( 90 / player_stats.turn * player_stats.speed * 1.5) / dumping_planet_radius)
+   if dumping_planet_radius < ( 90 / player_stats.turn * player_stats.speed * 1.5) then misn.finish( false) end -- only offer mission if player ship can do it
 
    misn.markerAdd( dumping_system, "computer" )
      
