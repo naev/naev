@@ -1448,7 +1448,7 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"cargo",temp->u.mod.cargo);
       xmlr_float(node,"crew_rel", temp->u.mod.crew_rel);
       xmlr_float(node,"mass_rel",temp->u.mod.mass_rel);
-      xmlr_float(node,"hide",temp->u.mod.hide);
+      xmlr_float(node,"hide_rel",temp->u.mod.hide_rel);
       /* Stats. */
       ll = ss_listFromXML( node );
       if (ll != NULL) {
@@ -1498,7 +1498,7 @@ if ((x) != 0.) \
    DESC_ADD0( temp->u.mod.cargo, "Cargo" );
    DESC_ADD0( temp->u.mod.crew_rel, "%% Crew" );
    DESC_ADD0( temp->u.mod.mass_rel, "%% Mass" );
-   DESC_ADD0( temp->u.mod.hide, "Hide" );
+   DESC_ADD0( temp->u.mod.hide_rel, "%% Hide" );
 #undef DESC_ADD1
 #undef DESC_ADD0
 #undef DESC_ADD
@@ -1515,6 +1515,7 @@ if ((x) != 0.) \
    temp->u.mod.energy_rel /= 100.;
    temp->u.mod.mass_rel   /= 100.;
    temp->u.mod.crew_rel   /= 100.;
+   temp->u.mod.hide_rel   /= 100.;
    temp->u.mod.cpu         = temp->u.mod.cpu;
 }
 

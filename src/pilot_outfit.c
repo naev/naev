@@ -928,7 +928,7 @@ void pilot_calcStats( Pilot* pilot )
          pilot->cargo_free    += o->u.mod.cargo;
          pilot->mass_outfit   += o->u.mod.mass_rel * pilot->ship->mass;
          pilot->crew          += o->u.mod.crew_rel * pilot->ship->crew;
-         pilot->ew_base_hide  += o->u.mod.hide;
+         pilot->ew_base_hide  += o->u.mod.hide_rel * pilot->ew_base_hide;
          /*
           * Stats.
           */
