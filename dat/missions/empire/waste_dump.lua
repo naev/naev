@@ -138,6 +138,7 @@ function create ()
 --   dumping_planet = planet.get( "Shakar I")
    cargo = "Waste Containers"
    amount = 50
+   player_stats = player.pilot():stats()
 
 --[[
 To make this mission more future proof against changes in systems, it
@@ -159,7 +160,7 @@ Yes, this is very much the long way around.
       end
    end
      
-   if #uninhabited == 0 then abort() end -- Sanity in case no suitable planets are in range.
+   if #uninhabited == 0 then misn.finish( false) end -- Sanity in case no suitable planets are in range.
      
    local nearest
    for k, v in ipairs(uninhabited) do
@@ -172,6 +173,10 @@ Yes, this is very much the long way around.
          dumping_system = dumping_planet:system()
       end
    end
+   
+   w, h = dumping_planet:gfxSpace():dim() -- Find the radius of the planet for aero-braking
+   dumping_planet_radius = 1.0 * (w + h) / 4 
+   if dumping_planet_radius < ( 90 / player_stats.turn * player_stats.speed * 1.5) then misn.finish( false) end -- only offer mission if player ship can do it
 
    misn.markerAdd( dumping_system, "computer" )
      
@@ -214,8 +219,6 @@ function accept ()
    misn.cargoAdd( cargo, amount)
 --   misn.osdCreate( osd["title"], {osd["directions"]})
 
-   w, h = dumping_planet:gfxSpace():dim() -- Find the radius of the planet for aero-braking
-   dumping_planet_radius = 1.0 * (w + h) / 4 
    landed = true
 
    hook.enter( "enterWasteMission", dumping_system)
@@ -260,7 +263,7 @@ function hardBurn ()
 --      print( "Atmospheric exit.") -- Used print statements for testing the conditions.
       entry = false
       dumpingZone()
-   elseif entry == true and player.pilot():vel():mod() <= pp_top_speed * .81 then
+   elseif entry == true and player.pilot():vel():mod() <= player_stats.speed - 3 then
       -- The player executes the manoeuvre.
       if paid ~= true then
          tk.msg( title["burn1"], string.format( text["burn1"], player.ship(), mission_planet:name()))
