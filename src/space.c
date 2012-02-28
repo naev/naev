@@ -1915,7 +1915,7 @@ int planet_setRadiusFromGFX(Planet* planet)
    char *buf, path[PATH_MAX], str[PATH_MAX];
    
    /* New path. */
-   nsnprintf( path, sizeof(path), "%s/%s", PLANET_GFX_SPACE_PATH, planet->gfx_spacePath );
+   nsnprintf( path, sizeof(path), "%s%s", PLANET_GFX_SPACE_PATH, planet->gfx_spacePath );
    
    rw = ndata_rwops( path );
    if (rw == NULL) {
