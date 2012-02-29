@@ -702,7 +702,7 @@ int nfile_writeFile( const char* data, int len, const char* path, ... )
  */
 int nfile_delete( const char* file )
 {
-   if (!unlink(file)) {
+   if (unlink(file)) {
       WARN( "Error deleting file %s",file );
       return -1;
    }
@@ -730,7 +730,7 @@ int nfile_rename( const char* oldname, const char* newname )
       WARN("Error renaming %s to %s. %s already exists",oldname,newname,newname);
       return -1;
    }
-   if (!rename(oldname,newname))
+   if (rename(oldname,newname))
       WARN("Error renaming %s to %s",oldname,newname);
    return 0;
 }
