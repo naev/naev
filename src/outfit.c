@@ -2024,6 +2024,9 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define
 }
 
 
+/**
+ * @brief Loads all the files in a directory.
+ */
 static int outfit_loadDir( char *dir )
 {
    uint32_t nfiles, isfile;
@@ -2076,7 +2079,6 @@ int outfit_load (void)
    outfit_stack = array_create(Outfit);
    outfit_loadDir( OUTFIT_DATA_PATH );
    array_shrink(&outfit_stack);
-
 
    /* Second pass, sets up ammunition relationships. */
    for (i=0; i<array_size(outfit_stack); i++) {
