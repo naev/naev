@@ -530,6 +530,66 @@ char** nfile_readDir( int* nfiles, const char* path, ... )
 
 
 /**
+ * @brief Lists all the visible files in a directory, at any depth.
+ *
+ * Should also sort by last modified but that's up to the OS in question.
+ * Paths are relative to base directory.
+ *
+ *    @param[out] nfiles Returns how many files there are.
+ *    @param path Directory to read.
+ */
+char** nfile_readDirRecursive( int* nfiles, const char* path, ... )
+{
+   char **tfiles, **out, **cfiles, *buf, base[PATH_MAX];
+   int i, j, ls, mfiles, tmp, cn;
+   va_list ap;
+
+   va_start(ap, path);
+   vsnprintf( base, PATH_MAX, path, ap );
+   va_end(ap);
+
+   mfiles = 128;
+   out = malloc(sizeof(char*)*mfiles);
+   tfiles = nfile_readDir( &tmp, base );
+   *nfiles = 0;
+
+   for (i=0; i<tmp; i++) {
+      ls = strlen(base) + strlen(tfiles[i]) + 1;
+      buf = malloc(ls * sizeof(char));
+      nsnprintf( buf, ls, "%s%s", path, tfiles[i] );
+      if (nfile_dirExists(buf)) {
+         /* Append slash if necessary. */
+         if (strcmp(&buf[ls-1],"/")!=0) {
+            buf = realloc( buf, (ls+1) * sizeof(char) );
+            nsnprintf( buf, ls+1, "%s%s/", path, tfiles[i] );
+         }
+
+         /* Iterate over children. */
+         cfiles = nfile_readDirRecursive( &cn, buf );
+         for (j=0; j<cn; j++) {
+            if ((*nfiles+1) > mfiles) {
+               mfiles *= 2;
+               out = realloc( out, sizeof(char*)*mfiles );
+            }
+            out[(*nfiles)++] = strdup( cfiles[j] );
+         }
+         free(cfiles);
+      }
+      else {
+         if ((*nfiles+1) > mfiles) {
+            mfiles *= 2;
+            out = realloc( out, sizeof(char*)*mfiles );
+         }
+         out[(*nfiles)++] = strdup( buf );
+      }
+     free(buf);
+   }
+
+   free(tfiles);
+   return out;
+}
+
+/**
  * @brief Tries to read a file.
  *
  *    @param filesize Stores the size of the file.

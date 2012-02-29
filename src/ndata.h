@@ -73,7 +73,7 @@ const char* ndata_name (void);
  */
 void* ndata_read( const char* filename, uint32_t *filesize );
 char** ndata_list( const char *path, uint32_t* nfiles );
-char** ndata_listDirs( const char *path, uint32_t* nfiles );
+char** ndata_listRecursive( const char *path, uint32_t* nfiles );
 void ndata_sortName( char **files, uint32_t nfiles );
 
 

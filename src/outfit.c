@@ -2026,44 +2026,20 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define
 
 /**
  * @brief Loads all the files in a directory.
+ *
+ *    @param dir Directory to load files from.
+ *    @return 0 on success.
  */
 static int outfit_loadDir( char *dir )
 {
-   uint32_t nfiles, isfile;
+   uint32_t nfiles;
    char **outfit_files;
-   char *file, *buf;
-   int i, len, sl;
+   int i;
 
-   outfit_files = ndata_listDirs( dir, &nfiles );
-   for (i=0; i<(int)nfiles; i++) {
-      sl  = (strlen(outfit_files[i]) + strlen(dir) + 1);
-      buf = malloc( sl * sizeof(char) );
-      nsnprintf( buf, sl, "%s%s", dir, outfit_files[i] );
+   outfit_files = ndata_listRecursive( dir, &nfiles );
+   for (i=0; i<(int)nfiles; i++)
+      outfit_parse( &array_grow(&outfit_stack), outfit_files[i] );
 
-      /* Horrible hack. Returns 1 for single files and 0 for directories. */
-      ndata_list( buf, &isfile );
-      free( buf );
-
-      file = malloc( sl*sizeof(char) );
-      nsnprintf( file, sl, "%s%s", dir, outfit_files[i] );
-      if (isfile != 1) {
-         len = strlen(file);
-         if (strcmp(&file[len-1],"/")==0)
-            outfit_loadDir( file );
-         /* Directories must always have trailing slashes. */
-         else {
-            sl  = strlen(file)+2;
-            buf = malloc( sl*sizeof(char) );
-            nsnprintf( buf, sl, "%s/", file );
-            outfit_loadDir( buf );
-            free( buf );
-         }
-      }
-      else
-         outfit_parse( &array_grow(&outfit_stack), file );
-
-      free( file );
-   }
    array_shrink( &outfit_stack );
 
    return 0;
