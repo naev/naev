@@ -2029,26 +2029,28 @@ static int outfit_loadDir( char *dir )
    uint32_t nfiles, isfile;
    char **outfit_files;
    char *file, *buf;
-   int i, len;
+   int i, len, sl;
 
    outfit_files = ndata_listDirs( dir, &nfiles );
    for (i=0; i<(int)nfiles; i++) {
-      buf = malloc( (strlen(outfit_files[i]) + strlen(dir) + 1) * sizeof(char) );
-      nsnprintf( buf, strlen(outfit_files[i]) + strlen(dir) + 1, "%s%s", dir, outfit_files[i] );
+      sl  = (strlen(outfit_files[i]) + strlen(dir) + 1);
+      buf = malloc( sl * sizeof(char) );
+      nsnprintf( buf, sl, "%s%s", dir, outfit_files[i] );
 
       /* Horrible hack. Returns 1 for single files and 0 for directories. */
       ndata_list( buf, &isfile );
 
-      file = malloc((strlen(dir)+strlen(outfit_files[i])+1)*sizeof(char));
-      nsnprintf(file,strlen(dir)+strlen(outfit_files[i])+1,"%s%s",dir,outfit_files[i]);
+      file = malloc( sl*sizeof(char) );
+      nsnprintf( file, sl, "%s%s", dir, outfit_files[i] );
       if (isfile != 1) {
          len = strlen(file);
          if (strcmp(&file[len-1],"/")==0)
             outfit_loadDir( file );
          /* Directories must always have trailing slashes. */
          else {
-            buf = malloc( (strlen(file)+2) * sizeof(char) );
-            nsnprintf(buf,strlen(file)+2,"%s/", file );
+            sl = strlen(file)+2;
+            buf = malloc( sl*sizeof(char) );
+            nsnprintf( buf, sl, "%s/", file );
             outfit_loadDir( buf );
          }
       }
