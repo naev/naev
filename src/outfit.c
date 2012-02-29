@@ -2040,7 +2040,7 @@ static int outfit_loadDir( char *dir )
       buf = malloc( sl * sizeof(char) );
       nsnprintf( buf, sl, "%s%s", dir, outfit_files[i] );
 
-      ndata = ndata_getPath();
+      ndata = (char*)ndata_getPath();
       if (ndata != NULL) {
          /* Horrible hack. Returns 1 for single files and 0 for directories. */
          ndata_list( buf, &isfile );
