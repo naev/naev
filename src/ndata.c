@@ -87,8 +87,9 @@ static char *ndata_findInDir( const char *path );
 static int ndata_openPackfile (void);
 static int ndata_isndata( const char *path, ... );
 static void ndata_notfound (void);
+static char** ndata_listBackend( const char* path, uint32_t* nfiles, int dirs );
 static char** filterList( const char** list, int nlist,
-      const char* path, uint32_t* nfiles );
+      const char* path, uint32_t* nfiles, int dirs );
 
 
 /**
@@ -685,12 +686,13 @@ SDL_RWops *ndata_rwops( const char* filename )
  *    @param list List to filter.
  *    @param nlist Members in list.
  *    @param path Path to filter.
+ *    @param dirs Whether directories should be included.
  *    @param[out] nfiles Files that match.
  */
 static char** filterList( const char** list, int nlist,
-      const char* path, uint32_t* nfiles )
+      const char* path, uint32_t* nfiles, int dirs )
 {
-   char **filtered;
+   char **filtered, *tmp;
    int i, j, k;
    int len;
 
@@ -707,8 +709,15 @@ static char** filterList( const char** list, int nlist,
 
       /* Make sure there are no stray '/'. */
       for (k=len; list[i][k] != '\0'; k++)
-         if (list[i][k] == '/')
+         if (list[i][k] == '/') {
+            if (dirs) {
+               tmp = malloc( (k-len+2) * sizeof(char) );
+               nsnprintf( tmp, k-len+2, "%s", &list[i][len] );
+               filtered[j++] = strdup(tmp);
+               free(tmp);
+            }
             break;
+         }
       if (list[i][k] != '\0')
          continue;
 
@@ -731,7 +740,7 @@ static char** filterList( const char** list, int nlist,
  *    @param nfiles Number of files found.
  *    @return List of files found.
  */
-char** ndata_list( const char* path, uint32_t* nfiles )
+static char** ndata_listBackend( const char* path, uint32_t* nfiles, int dirs )
 {
    (void) path;
    char **files, buf[PATH_MAX], *tmp;
@@ -739,7 +748,7 @@ char** ndata_list( const char* path, uint32_t* nfiles )
 
    /* Already loaded the list. */
    if (ndata_fileList != NULL)
-      return filterList( ndata_fileList, ndata_fileNList, path, nfiles );
+      return filterList( ndata_fileList, ndata_fileNList, path, nfiles, dirs );
 
    /* See if can load from local directory. */
    if (ndata_cache == NULL) {
@@ -801,7 +810,55 @@ char** ndata_list( const char* path, uint32_t* nfiles )
    /* Load list. */
    ndata_fileList = pack_listfilesCached( ndata_cache, &ndata_fileNList );
 
-   return filterList( ndata_fileList, ndata_fileNList, path, nfiles );
+   return filterList( ndata_fileList, ndata_fileNList, path, nfiles, dirs );
+}
+
+/**
+ * @brief Gets a list of files in the ndata, excluding directories.
+ *
+ *    @sa ndata_listBackend
+ */
+char** ndata_list( const char* path, uint32_t* nfiles )
+{
+   return ndata_listBackend( path, nfiles, 0 );
+}
+
+
+/**
+ * @brief Gets a list of files in the ndata, including directories.
+ *
+ *    @sa ndata_listBackend
+ */
+char** ndata_listDirs( const char* path, uint32_t* nfiles )
+{
+   char **tmpout, **output;
+   uint32_t tmp;
+   int i, j, nout, have;
+
+   tmpout = ndata_listBackend( path, &tmp, 1 );
+
+   nout = 0;
+   output = malloc( sizeof(char*) * tmp );
+
+   /* Duplicate directories must be removed. */
+   if (tmp)
+      output[nout++] = tmpout[0];
+   for (i=0; i<(int)tmp; i++) {
+      have = 0;
+      for (j=0; j<nout; j++) {
+         /* We have this one already. */
+         if (strcmp(tmpout[i],output[j])==0) {
+            have = 1;
+            break;
+         }
+      }
+      /* Add new file or directory to output. */
+      if (!have)
+         output[nout++] = tmpout[i];
+   }
+
+   *nfiles = nout;
+   return output;
 }
 
 
