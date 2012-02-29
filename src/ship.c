@@ -809,9 +809,9 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
  */
 int ships_load (void)
 {
-   uint32_t bufsize;
+   uint32_t bufsize, nfiles;
    char *buf, **ship_files, *file;
-   int i, nfiles;
+   int i, sl;
    xmlNodePtr node;
    xmlDocPtr doc;
 
@@ -823,21 +823,28 @@ int ships_load (void)
       ship_stack = array_create(Ship);
    }
 
-   ship_files = nfile_readDir( &nfiles, SHIP_DATA_PATH );
-   for (i = 0; i < nfiles; i++ ) {
-      file = malloc((strlen(SHIP_DATA_PATH)+strlen(ship_files[i])+2)*sizeof(char));
-      nsnprintf(file,(strlen(SHIP_DATA_PATH)+strlen(ship_files[i])+2)*sizeof(char),"%s/%s",SHIP_DATA_PATH,ship_files[i]);
-      buf = ndata_read( file, &bufsize );
+   ship_files = ndata_list( SHIP_DATA_PATH, &nfiles );
+   for (i=0; i<(int)nfiles; i++) {
 
-      doc = xmlParseMemory( buf, bufsize );
+      /* Get the file name .*/
+      sl   = strlen(SHIP_DATA_PATH)+strlen(ship_files[i])+1;
+      file = malloc( sl*sizeof(char) );
+      nsnprintf( file, sl, "%s%s", SHIP_DATA_PATH, ship_files[i] );
+
+      /* Load the XML. */
+      buf  = ndata_read( file, &bufsize );
+      doc  = xmlParseMemory( buf, bufsize );
    
       if (doc == NULL) {
+         free(buf);
          WARN("%s file is invalid xml!",file);
          continue;
       }
    
       node = doc->xmlChildrenNode; /* First ship node */
       if (node == NULL) {
+         xmlFreeDoc(doc);
+         free(buf);
          WARN("Malformed %s file: does not contain elements",file);
          continue;
       }
@@ -853,8 +860,6 @@ int ships_load (void)
 
    /* Shrink stack. */
    array_shrink(&ship_stack);
-
-
    DEBUG("Loaded %d Ship%s", array_size(ship_stack), (array_size(ship_stack)==1) ? "" : "s" );
 
    return 0;

@@ -567,12 +567,33 @@ static int uniedit_checkName( char *name )
 }
 
 
+char *uniedit_nameFilter( char *name )
+{
+   int i, pos;
+   char *out;
+
+   out = calloc( 1, (strlen(name)+1) * sizeof(char) );
+   pos = 0;
+   for (i=0; i<(int)strlen(name); i++) {
+      if (!ispunct(name[i])) {
+         if (name[i] == ' ')
+            out[pos] = '_';
+         else
+            out[pos] = tolower(name[i]);
+         pos++;
+      }
+   }
+
+   return out;
+}
+
+
 /**
  * @brief Renames all the currently selected systems.
  */
 static void uniedit_renameSys (void)
 {
-   int i;
+   int i, j;
    char *name, *oldName, *newName;
    StarSystem *sys;
 
@@ -594,16 +615,20 @@ static void uniedit_renameSys (void)
       }
 
       /* Change the name. */
-      oldName = malloc((16+strlen(sys->name))*sizeof(char));
-      nsnprintf(oldName,15+strlen(sys->name),"dat/ssys/%s.xml",sys->name);
-      newName = malloc((16+strlen(name))*sizeof(char));
-      nsnprintf(newName,15+strlen(name),"dat/ssys/%s.xml",name);
+      oldName = malloc((14+strlen(sys->name))*sizeof(char));
+      nsnprintf(oldName,14+strlen(sys->name),"dat/ssys/%s.xml", uniedit_nameFilter(sys->name) );
+      newName = malloc((14+strlen(name))*sizeof(char));
+      nsnprintf(newName,14+strlen(name),"dat/ssys/%s.xml", uniedit_nameFilter(name) );
       nfile_rename(oldName,newName);
       free(oldName);
       free(newName);
       free(sys->name);
       sys->name = name;
       dsys_saveSystem(sys);
+
+      /* Re-save adjacent systems. */
+      for (j=0; j<sys->njumps; j++)
+         dsys_saveSystem( sys->jumps[j].target );
    }
 }
 
