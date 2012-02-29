@@ -2031,7 +2031,7 @@ static int outfit_loadDir( char *dir )
 {
    uint32_t nfiles, isfile;
    char **outfit_files;
-   char *file, *buf;
+   char *file, *buf, *ndata;
    int i, len, sl;
 
    outfit_files = ndata_listDirs( dir, &nfiles );
@@ -2040,13 +2040,16 @@ static int outfit_loadDir( char *dir )
       buf = malloc( sl * sizeof(char) );
       nsnprintf( buf, sl, "%s%s", dir, outfit_files[i] );
 
-      /* Horrible hack. Returns 1 for single files and 0 for directories. */
-      ndata_list( buf, &isfile );
-      free( buf );
+      ndata = ndata_getPath();
+      if (ndata != NULL) {
+         /* Horrible hack. Returns 1 for single files and 0 for directories. */
+         ndata_list( buf, &isfile );
+         free( buf );
+      }
 
       file = malloc( sl*sizeof(char) );
       nsnprintf( file, sl, "%s%s", dir, outfit_files[i] );
-      if (isfile != 1) {
+      if (((ndata != NULL) && (isfile != 1)) || nfile_dirExists(file) ) {
          len = strlen(file);
          if (strcmp(&file[len-1],"/")==0)
             outfit_loadDir( file );
