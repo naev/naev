@@ -89,7 +89,7 @@ static int ndata_isndata( const char *path, ... );
 static void ndata_notfound (void);
 static char** ndata_listBackend( const char* path, uint32_t* nfiles, int dirs );
 static char** filterList( const char** list, int nlist,
-      const char* path, uint32_t* nfiles, int dirs );
+      const char* path, uint32_t* nfiles, int recursive );
 
 
 /**
@@ -686,15 +686,14 @@ SDL_RWops *ndata_rwops( const char* filename )
  *    @param list List to filter.
  *    @param nlist Members in list.
  *    @param path Path to filter.
- *    @param dirs Whether directories should be included.
+ *    @param recursive Whether all children at any depth should be listed.
  *    @param[out] nfiles Files that match.
  */
 static char** filterList( const char** list, int nlist,
-      const char* path, uint32_t* nfiles, int dirs )
+      const char* path, uint32_t* nfiles, int recursive )
 {
-   char **filtered, *tmp;
-   int i, j, k, sl;
-   int len;
+   char **filtered;
+   int i, j, k, len;
 
    /* Maximum size by default. */
    filtered = malloc(sizeof(char*) * nlist);
@@ -709,21 +708,18 @@ static char** filterList( const char** list, int nlist,
 
       /* Make sure there are no stray '/'. */
       for (k=len; list[i][k] != '\0'; k++)
-         if (list[i][k] == '/') {
-            if (dirs) {
-               sl  = k-len + 2;
-               tmp = malloc( sl*sizeof(char) );
-               nsnprintf( tmp, sl, "%s", &list[i][len] );
-               filtered[j++] = strdup(tmp);
-               free(tmp);
-            }
-            break;
-         }
+         if (list[i][k] == '/')
+            if (!recursive)
+               break;
+
       if (list[i][k] != '\0')
          continue;
 
       /* Copy the file name without the path. */
-      filtered[j++] = strdup(&list[i][len]);
+      if (!recursive)
+         filtered[j++] = strdup(&list[i][len]);
+      else /* Recursive needs paths. */
+         filtered[j++] = strdup(list[i]);
    }
 
    /* Return results. */
@@ -741,22 +737,28 @@ static char** filterList( const char** list, int nlist,
  *    @param nfiles Number of files found.
  *    @return List of files found.
  */
-static char** ndata_listBackend( const char* path, uint32_t* nfiles, int dirs )
+static char** ndata_listBackend( const char* path, uint32_t* nfiles, int recursive )
 {
    (void) path;
    char **files, buf[PATH_MAX], *tmp;
    int n;
+   char** (*nfile_readFunc) ( int* nfiles, const char* path, ... ) = NULL;
+
+   if (recursive)
+      nfile_readFunc = nfile_readDirRecursive;
+   else
+      nfile_readFunc = nfile_readDir;
 
    /* Already loaded the list. */
    if (ndata_fileList != NULL)
-      return filterList( ndata_fileList, ndata_fileNList, path, nfiles, dirs );
+      return filterList( ndata_fileList, ndata_fileNList, path, nfiles, recursive );
 
    /* See if can load from local directory. */
    if (ndata_cache == NULL) {
 
       /* Local search. */
       if (ndata_source <= NDATA_SRC_LAIDOUT) {
-         files = nfile_readDir( &n, path );
+         files = nfile_readFunc( &n, path );
          if (files != NULL) {
             *nfiles = n;
             return files;
@@ -767,7 +769,7 @@ static char** ndata_listBackend( const char* path, uint32_t* nfiles, int dirs )
       if ((ndata_filename == NULL) && (ndata_dirname != NULL) &&
             (ndata_source <= NDATA_SRC_NDATADEF)) {
          nsnprintf( buf, sizeof(buf), "%s/%s", ndata_dirname, path );
-         files = nfile_readDir( &n, buf );
+         files = nfile_readFunc( &n, buf );
          if (files != NULL) {
             *nfiles = n;
             return files;
@@ -779,7 +781,7 @@ static char** ndata_listBackend( const char* path, uint32_t* nfiles, int dirs )
          tmp = strdup( NDATA_DEF );
          nsnprintf( buf, sizeof(buf), "%s/%s", nfile_dirname(tmp), path );
          free(tmp);
-         files = nfile_readDir( &n, buf );
+         files = nfile_readFunc( &n, buf );
          if (files != NULL) {
             *nfiles = n;
             return files;
@@ -791,7 +793,7 @@ static char** ndata_listBackend( const char* path, uint32_t* nfiles, int dirs )
          tmp = strdup( naev_binary() );
          nsnprintf( buf, sizeof(buf), "%s/%s", nfile_dirname(tmp), path );
          free(tmp);
-         files = nfile_readDir( &n, buf );
+         files = nfile_readFunc( &n, buf );
          if (files != NULL) {
             *nfiles = n;
             return files;
@@ -811,11 +813,11 @@ static char** ndata_listBackend( const char* path, uint32_t* nfiles, int dirs )
    /* Load list. */
    ndata_fileList = pack_listfilesCached( ndata_cache, &ndata_fileNList );
 
-   return filterList( ndata_fileList, ndata_fileNList, path, nfiles, dirs );
+   return filterList( ndata_fileList, ndata_fileNList, path, nfiles, recursive );
 }
 
 /**
- * @brief Gets a list of files in the ndata, excluding directories.
+ * @brief Gets a list of files in the ndata that are direct children of a path.
  *
  *    @sa ndata_listBackend
  */
@@ -826,40 +828,13 @@ char** ndata_list( const char* path, uint32_t* nfiles )
 
 
 /**
- * @brief Gets a list of files in the ndata, including directories.
+ * @brief Gets a list of files in the ndata below a certain path.
  *
  *    @sa ndata_listBackend
  */
-char** ndata_listDirs( const char* path, uint32_t* nfiles )
+char** ndata_listRecursive( const char* path, uint32_t* nfiles )
 {
-   char **tmpout, **output;
-   uint32_t tmp;
-   int i, j, nout, have;
-
-   tmpout = ndata_listBackend( path, &tmp, 1 );
-
-   nout = 0;
-   output = malloc( sizeof(char*) * tmp );
-
-   /* Duplicate directories must be removed. */
-   if (tmp)
-      output[nout++] = tmpout[0];
-   for (i=0; i<(int)tmp; i++) {
-      have = 0;
-      for (j=0; j<nout; j++) {
-         /* We have this one already. */
-         if (strcmp(tmpout[i],output[j])==0) {
-            have = 1;
-            break;
-         }
-      }
-      /* Add new file or directory to output. */
-      if (!have)
-         output[nout++] = tmpout[i];
-   }
-
-   *nfiles = nout;
-   return output;
+   return ndata_listBackend( path, nfiles, 1 );
 }
 
 
