@@ -2042,6 +2042,7 @@ static int outfit_loadDir( char *dir )
 
       /* Horrible hack. Returns 1 for single files and 0 for directories. */
       ndata_list( buf, &isfile );
+      free( buf );
 
       file = malloc( sl*sizeof(char) );
       nsnprintf( file, sl, "%s%s", dir, outfit_files[i] );
@@ -2051,14 +2052,17 @@ static int outfit_loadDir( char *dir )
             outfit_loadDir( file );
          /* Directories must always have trailing slashes. */
          else {
-            sl = strlen(file)+2;
+            sl  = strlen(file)+2;
             buf = malloc( sl*sizeof(char) );
             nsnprintf( buf, sl, "%s/", file );
             outfit_loadDir( buf );
+            free( buf );
          }
       }
       else
          outfit_parse( &array_grow(&outfit_stack), file );
+
+      free( file );
    }
    array_shrink( &outfit_stack );
 
