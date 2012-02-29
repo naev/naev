@@ -809,9 +809,9 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
  */
 int ships_load (void)
 {
-   uint32_t bufsize;
+   uint32_t bufsize, nfiles;
    char *buf, **ship_files, *file;
-   int i, nfiles;
+   int i;
    xmlNodePtr node;
    xmlDocPtr doc;
 
@@ -823,10 +823,10 @@ int ships_load (void)
       ship_stack = array_create(Ship);
    }
 
-   ship_files = nfile_readDir( &nfiles, SHIP_DATA_PATH );
-   for (i = 0; i < nfiles; i++ ) {
-      file = malloc((strlen(SHIP_DATA_PATH)+strlen(ship_files[i])+2)*sizeof(char));
-      nsnprintf(file,(strlen(SHIP_DATA_PATH)+strlen(ship_files[i])+2)*sizeof(char),"%s/%s",SHIP_DATA_PATH,ship_files[i]);
+   ship_files = ndata_list( SHIP_DATA_PATH, &nfiles );
+   for (i = 0; i < (int)nfiles; i++ ) {
+      file = malloc((strlen(SHIP_DATA_PATH)+strlen(ship_files[i])+1)*sizeof(char));
+      nsnprintf(file,strlen(SHIP_DATA_PATH)+strlen(ship_files[i])+1,"%s%s",SHIP_DATA_PATH,ship_files[i]);
       buf = ndata_read( file, &bufsize );
 
       doc = xmlParseMemory( buf, bufsize );

@@ -1468,7 +1468,7 @@ static int planets_load ( void )
    xmlDocPtr doc;
    Planet *p;
    lua_State *L;
-   int nfiles;
+   uint32_t nfiles;
    int i;
 
    /* Load landing stuff. */
@@ -1492,11 +1492,11 @@ static int planets_load ( void )
    }
 
    /* Load XML stuff. */
-   planet_files = nfile_readDir( &nfiles, PLANET_DATA_PATH );
-   for ( i = 0; i < nfiles; i++ ) {
+   planet_files = ndata_list( PLANET_DATA_PATH, &nfiles );
+   for ( i = 0; i < (int)nfiles; i++ ) {
 
       file = malloc((strlen(PLANET_DATA_PATH)+strlen(planet_files[i])+2)*sizeof(char));
-      nsnprintf(file,(strlen(PLANET_DATA_PATH)+strlen(planet_files[i])+2)*sizeof(char),"%s/%s",PLANET_DATA_PATH,planet_files[i]);
+      nsnprintf(file,(strlen(PLANET_DATA_PATH)+strlen(planet_files[i])+2)*sizeof(char),"%s%s",PLANET_DATA_PATH,planet_files[i]);
       buf = ndata_read( file, &bufsize );
       doc = xmlParseMemory( buf, bufsize );
       if (doc == NULL) {
@@ -2667,7 +2667,8 @@ static int systems_load (void)
    xmlNodePtr node;
    xmlDocPtr doc;
    StarSystem *sys;
-   int nfiles, i;
+   int i;
+   uint32_t nfiles;
 
    /* Allocate if needed. */
    if (systems_stack == NULL) {
@@ -2676,15 +2677,15 @@ static int systems_load (void)
       systems_nstack = 0;
    }
 
-   system_files = nfile_readDir( &nfiles, SYSTEM_DATA_PATH );
+   system_files = ndata_list( SYSTEM_DATA_PATH, &nfiles );
 
    /*
     * First pass - loads all the star systems_stack.
     */
-   for (i=0; i<nfiles; i++) {
+   for (i=0; i<(int)nfiles; i++) {
 
       file = malloc((strlen(SYSTEM_DATA_PATH)+strlen(system_files[i])+2)*sizeof(char));
-      nsnprintf(file,(strlen(SYSTEM_DATA_PATH)+strlen(system_files[i])+2)*sizeof(char),"%s/%s",SYSTEM_DATA_PATH,system_files[i]);
+      nsnprintf(file,(strlen(SYSTEM_DATA_PATH)+strlen(system_files[i])+2)*sizeof(char),"%s%s",SYSTEM_DATA_PATH,system_files[i]);
       /* Load the file. */
       buf = ndata_read( file, &bufsize );
       doc = xmlParseMemory( buf, bufsize );
@@ -2706,10 +2707,10 @@ static int systems_load (void)
    /*
     * Second pass - loads all the jump routes.
     */
-   for (i=0; i<nfiles; i++) {
+   for (i=0; i<(int)nfiles; i++) {
 
       file = malloc((strlen(SYSTEM_DATA_PATH)+strlen(system_files[i])+2)*sizeof(char));
-      nsnprintf(file,(strlen(SYSTEM_DATA_PATH)+strlen(system_files[i])+2)*sizeof(char),"%s/%s",SYSTEM_DATA_PATH,system_files[i]);
+      nsnprintf(file,(strlen(SYSTEM_DATA_PATH)+strlen(system_files[i])+2)*sizeof(char),"%s%s",SYSTEM_DATA_PATH,system_files[i]);
       /* Load the file. */
       buf = ndata_read( file, &bufsize );
       doc = xmlParseMemory( buf, bufsize );
