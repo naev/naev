@@ -834,6 +834,8 @@ int ships_load (void)
       /* Load the XML. */
       buf  = ndata_read( file, &bufsize );
       doc  = xmlParseMemory( buf, bufsize );
+
+      free(file);
    
       if (doc == NULL) {
          free(buf);

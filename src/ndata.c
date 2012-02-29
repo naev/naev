@@ -693,7 +693,7 @@ static char** filterList( const char** list, int nlist,
       const char* path, uint32_t* nfiles, int dirs )
 {
    char **filtered, *tmp;
-   int i, j, k;
+   int i, j, k, sl;
    int len;
 
    /* Maximum size by default. */
@@ -711,8 +711,9 @@ static char** filterList( const char** list, int nlist,
       for (k=len; list[i][k] != '\0'; k++)
          if (list[i][k] == '/') {
             if (dirs) {
-               tmp = malloc( (k-len+2) * sizeof(char) );
-               nsnprintf( tmp, k-len+2, "%s", &list[i][len] );
+               sl  = k-len + 2;
+               tmp = malloc( sl*sizeof(char) );
+               nsnprintf( tmp, sl, "%s", &list[i][len] );
                filtered[j++] = strdup(tmp);
                free(tmp);
             }
