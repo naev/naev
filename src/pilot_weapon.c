@@ -39,6 +39,7 @@
 #include "escort.h"
 
 #include "player.h"
+#include "spfx.h"
 
 
 /*
@@ -1248,7 +1249,8 @@ int pilot_outfitOffAll( Pilot *p )
  */
 void pilot_afterburn (Pilot *p)
 {
-   //double afb_mod;
+   double afb_mod;
+
    if (p == NULL)
       return;
 
@@ -1271,8 +1273,10 @@ void pilot_afterburn (Pilot *p)
       pilot_calcStats( p );
    }
 
-   //afb_mod = MIN( 1., player.p->afterburner->outfit->u.afb.mass_limit / player.p->solid->mass );
-   //spfx_shake( afb_mod * player.p->afterburner->outfit->u.afb.rumble * SHAKE_MAX );
+   if (p == player.p) {
+      afb_mod = MIN( 1., player.p->afterburner->outfit->u.afb.mass_limit / player.p->solid->mass );
+      spfx_shake( afb_mod * player.p->afterburner->outfit->u.afb.rumble * SHAKE_MAX );
+   }
 }
 
 
