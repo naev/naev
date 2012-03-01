@@ -259,21 +259,25 @@ static int mkpath( const char *path, mode_t mode )
    size_t len;
    int ret;
 
+   if (path == NULL)
+      return 0;
+
    strncpy( opath, path, sizeof(opath) );
    len = strlen(opath);
    if (opath[len - 1] == '/')
       opath[len - 1] = '\0';
-   for (p = opath; *p; p++)
-      if (*p == '/') {
-         *p = '\0';
-         if (access(opath, F_OK)) {
+   for (p=&opath[1]; p[0]!='\0'; p++) {
+      if (p[0] == '/') {
+         p[0] = '\0';
+         if (!nfile_dirExists(opath)) {
             ret = mkdir( opath, mode );
             if (ret)
                return ret;
          }
-         *p = '/';
+         p[0] = '/';
       }
-   if (access(opath, F_OK)) { /* if path is not terminated with / */
+   }
+   if (!nfile_dirExists(opath)) { /* if path is not terminated with / */
       ret = mkdir( opath, mode );
       if (ret)
          return ret;
