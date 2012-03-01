@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Perhelion Gamma">
+ <pos>
+  <x>-5087.007787</x>
+  <y>3264.979223</y>
+ </pos>
+ <GFX>
+  <space>moon-J02.png</space>
+  <exterior>oceanic.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.500000</hide>
+  <services/>
+ </general>
+</asset>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Three and a half Kings">
+ <pos>
+  <x>-19071.692886</x>
+  <y>12147.629022</y>
+ </pos>
+ <GFX>
+  <space>003.png</space>
+  <exterior>station03.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>50.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>500</population>
+  <hide>0.750000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>It's a nickname, of course. How could it not be? Trouble is, nobody remembers where the name came from, and, bizarrely, there are no records of the station's original name. It's quite a famous story, both within Hekaras and elsewhere. Meanwhile, all involved simply call it Three and a half Kings. It seems to work for them.</description>
+  <bar>This is a typical stationside bar. It has viewports looking into space, which are of course ignored by everyone, since anyone who comes to a station like this has seen all the space they could possibly want to.</bar>
+ </general>
+ <tech>
+  <item>Laser 1</item>
+  <item>Laser 2</item>
+  <item>Light Civilian Combat Ships</item>
+  <item>Basic Civilian Ships</item>
+  <item>Basic Outfits 1</item>
+  <item>Basic Outfits 2</item>
+  <item>Missiles 1</item>
+  <item>Low Tech Upgrades</item>
+ </tech>
+</asset>

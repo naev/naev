@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Brandt Station">
+ <pos>
+  <x>25493.195808</x>
+  <y>13169.297828</y>
+ </pos>
+ <GFX>
+  <space>station-battlestation.png</space>
+  <exterior>station05.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>1000</population>
+  <hide>0.750000</hide>
+  <services>
+   <land>srs_mil_restricted</land>
+   <refuel/>
+   <bar/>
+  </services>
+  <commodities/>
+  <description>Serving as a local security checkpoint, Brandt Station sports two squadrons of light response ships. The station is responsible mainly for Niger, Lazuli and Anarbalis, as the ships here are not equipped to handle the stress of the border conflicts with the Dvaered at Eye of Night.</description>
+  <bar>Curiously, this spacedock bar seems to make no distinction between the three Sirian echelons in any way. However, the soldiers and sailors stationed on Brandt Station all know their place, and treat each other accordingly.</bar>
+ </general>
+</asset>

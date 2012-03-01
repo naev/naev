@@ -3,15 +3,8 @@
 function numstring(number)
     number = math.floor(number + 0.5)
     local numberstring = ""
-    while number > 1000 do
-        local newnumber = number % 1000
-        local newsection = "" .. newnumber
-        if newnumber == 0 then newnumber = 1 end -- Special hack for a segment of only zeroes.
-        while newnumber < 100 do
-            newsection = "0" .. newsection
-            newnumber = newnumber * 10
-        end
-        numberstring = "," .. newsection .. numberstring
+    while number >= 1000 do
+        numberstring = string.format( ",%03d%s", number % 1000, numberstring )
         number = math.floor(number / 1000)
     end
     numberstring = number % 1000 .. numberstring

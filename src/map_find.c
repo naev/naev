@@ -424,10 +424,10 @@ static int map_findSearchSystems( unsigned int parent, const char *name )
 
       /* Set fancy name. */
       if (ret)
-         snprintf( found[n].display, sizeof(found[n].display),
+         nsnprintf( found[n].display, sizeof(found[n].display),
                "%s (unknown route)", sys->name );
       else
-         snprintf( found[n].display, sizeof(found[n].display),
+         nsnprintf( found[n].display, sizeof(found[n].display),
                "%s (%d jumps, %.0fk distance)",
                sys->name, found[n].jumps, found[n].distance/1000. );
       n++;
@@ -535,11 +535,11 @@ static int map_findSearchPlanets( unsigned int parent, const char *name )
 
       /* Set fancy name. */
       if (ret)
-         snprintf( found[n].display, sizeof(found[n].display),
+         nsnprintf( found[n].display, sizeof(found[n].display),
                "\e%c%s (%s, unknown route)",
                colcode, names[i], sys->name );
       else
-         snprintf( found[n].display, sizeof(found[n].display),
+         nsnprintf( found[n].display, sizeof(found[n].display),
                "\e%c%s (%s, %d jumps, %.0fk distance)",
                colcode, names[i], sys->name, found[n].jumps, found[n].distance/1000. );
       n++;
@@ -675,7 +675,7 @@ static void map_showOutfitDetail(unsigned int wid, char* wgtname, int x, int y, 
    window_modifyText( wid, "txtDescription", outfit->description );
    credits2str( buf2, outfit->price, 2 );
    credits2str( buf3, player.p->credits, 2 );
-   snprintf( buf, PATH_MAX,
+   nsnprintf( buf, PATH_MAX,
          "%d\n"
          "\n"
          "%s\n"
@@ -786,11 +786,11 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
 
       /* Set fancy name. */
       if (ret)
-         snprintf( found[n].display, sizeof(found[n].display),
+         nsnprintf( found[n].display, sizeof(found[n].display),
                "%s (%s, unknown route)",
                pnt->name, sys->name );
       else
-         snprintf( found[n].display, sizeof(found[n].display),
+         nsnprintf( found[n].display, sizeof(found[n].display),
                "%s (%s, %d jumps, %.0fk distance)",
                pnt->name, sys->name, found[n].jumps, found[n].distance/1000. );
       n++;
@@ -937,11 +937,11 @@ static int map_findSearchShips( unsigned int parent, const char *name )
 
       /* Set fancy name. */
       if (ret)
-         snprintf( found[n].display, sizeof(found[n].display),
+         nsnprintf( found[n].display, sizeof(found[n].display),
                "%s (%s, unknown route)",
                pnt->name, sys->name );
       else
-         snprintf( found[n].display, sizeof(found[n].display),
+         nsnprintf( found[n].display, sizeof(found[n].display),
                "%s (%s, %d jumps, %.0fk distance)",
                pnt->name, sys->name, found[n].jumps, found[n].distance/1000. );
       n++;

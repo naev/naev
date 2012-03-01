@@ -13,7 +13,7 @@
 
 #include "naev.h"
 
-#include <string.h>
+#include "nstring.h"
 #include <limits.h>
 
 #include "nxml.h"
@@ -27,13 +27,12 @@
 #include "colour.h"
 #include "shipstats.h"
 #include "slots.h"
+#include "nfile.h"
 
 
 #define XML_ID    "Ships"  /**< XML document identifier */
 #define XML_SHIP  "ship" /**< XML individual ship identifier. */
 
-#define SHIP_DATA    "dat/ship.xml" /**< XML file containing ships. */
-#define SHIP_GFX     "gfx/ship/" /**< Location of ship graphics. */
 #define SHIP_EXT     ".png" /**< Ship graphics extension format. */
 #define SHIP_ENGINE  "_engine" /**< Engine graphic extension. */
 #define SHIP_TARGET  "_target" /**< Target graphic extension. */
@@ -421,7 +420,7 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
 #endif /* ! SDL_VERSION_ATLEAST(1,3,0) */
 
    /* Load the store surface. */
-   snprintf( buf, sizeof(buf), "%s_gfx_store.png", temp->name );
+   nsnprintf( buf, sizeof(buf), "%s_gfx_store.png", temp->name );
    temp->gfx_store = gl_loadImagePad( buf, gfx_store, 0, SHIP_TARGET_W, SHIP_TARGET_H, 1, 1, 1 );
 
 #if 0 /* Disabled for now due to issues with larger sprites. */
@@ -456,7 +455,7 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
 #endif
 
    /* Load the surface. */
-   snprintf( buf, sizeof(buf), "%s_gfx_target.png", temp->name );
+   nsnprintf( buf, sizeof(buf), "%s_gfx_target.png", temp->name );
    temp->gfx_target = gl_loadImagePad( buf, gfx, 0, sw, sh, 1, 1, 1 );
 
    return 0;
@@ -492,7 +491,7 @@ static int ship_loadGFX( Ship *temp, char *buf, int sx, int sy )
    }
 
    /* Load the space sprite. */
-   snprintf( str, PATH_MAX, SHIP_GFX"%s/%s"SHIP_EXT, base, buf );
+   nsnprintf( str, PATH_MAX, SHIP_GFX_PATH"%s/%s"SHIP_EXT, base, buf );
    rw    = ndata_rwops( str );
    npng  = npng_open( rw );
    npng_dim( npng, &w, &h );
@@ -513,7 +512,7 @@ static int ship_loadGFX( Ship *temp, char *buf, int sx, int sy )
 
    /* Load the engine sprite .*/
    if (conf.engineglow && conf.interpolate) {
-      snprintf( str, PATH_MAX, SHIP_GFX"%s/%s"SHIP_ENGINE SHIP_EXT, base, buf );
+      nsnprintf( str, PATH_MAX, SHIP_GFX_PATH"%s/%s"SHIP_ENGINE SHIP_EXT, base, buf );
       temp->gfx_engine = gl_newSprite( str, sx, sy, OPENGL_TEX_MIPMAPS );
       if (temp->gfx_engine == NULL)
          WARN("Ship '%s' does not have an engine sprite (%s).", temp->name, str );
@@ -524,7 +523,7 @@ static int ship_loadGFX( Ship *temp, char *buf, int sx, int sy )
    temp->mangle /= temp->gfx_space->sx * temp->gfx_space->sy;
 
    /* Get the comm graphic for future loading. */
-   snprintf( str, PATH_MAX, SHIP_GFX"%s/%s"SHIP_COMM SHIP_EXT, base, buf );
+   nsnprintf( str, PATH_MAX, SHIP_GFX_PATH"%s/%s"SHIP_COMM SHIP_EXT, base, buf );
    temp->gfx_comm = strdup(str);
 
    return 0;
@@ -875,38 +874,59 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
  */
 int ships_load (void)
 {
-   uint32_t bufsize;
-   char *buf = ndata_read( SHIP_DATA, &bufsize);
+   uint32_t bufsize, nfiles;
+   char *buf, **ship_files, *file;
+   int i, sl;
+   xmlNodePtr node;
+   xmlDocPtr doc;
 
    /* Sanity. */
    ss_check();
 
-   xmlNodePtr node;
-   xmlDocPtr doc = xmlParseMemory( buf, bufsize );
-
-   node = doc->xmlChildrenNode; /* Ships node */
-   if (strcmp((char*)node->name,XML_ID)) {
-      ERR("Malformed "SHIP_DATA" file: missing root element '"XML_ID"'");
-      return -1;
+   /* Initialize stack if needed. */
+   if (ship_stack == NULL) {
+      ship_stack = array_create(Ship);
    }
 
-   node = node->xmlChildrenNode; /* first ship node */
-   if (node == NULL) {
-      ERR("Malformed "SHIP_DATA" file: does not contain elements");
-      return -1;
-   }
+   ship_files = ndata_list( SHIP_DATA_PATH, &nfiles );
+   for (i=0; i<(int)nfiles; i++) {
 
-   ship_stack = array_create(Ship);
-   do {
+      /* Get the file name .*/
+      sl   = strlen(SHIP_DATA_PATH)+strlen(ship_files[i])+1;
+      file = malloc( sl*sizeof(char) );
+      nsnprintf( file, sl, "%s%s", SHIP_DATA_PATH, ship_files[i] );
+
+      /* Load the XML. */
+      buf  = ndata_read( file, &bufsize );
+      doc  = xmlParseMemory( buf, bufsize );
+
+      free(file);
+   
+      if (doc == NULL) {
+         free(buf);
+         WARN("%s file is invalid xml!",file);
+         continue;
+      }
+   
+      node = doc->xmlChildrenNode; /* First ship node */
+      if (node == NULL) {
+         xmlFreeDoc(doc);
+         free(buf);
+         WARN("Malformed %s file: does not contain elements",file);
+         continue;
+      }
+   
       if (xml_isNode(node, XML_SHIP))
          /* Load the ship. */
-         ship_parse(&array_grow(&ship_stack), node);
-   } while (xml_nextNode(node));
+         ship_parse( &array_grow(&ship_stack), node );
+
+      /* Clean up. */
+      xmlFreeDoc(doc);
+      free(buf);
+   }
+
+   /* Shrink stack. */
    array_shrink(&ship_stack);
-
-   xmlFreeDoc(doc);
-   free(buf);
-
    DEBUG("Loaded %d Ship%s", array_size(ship_stack), (array_size(ship_stack)==1) ? "" : "s" );
 
    return 0;

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Jorlan">
+ <pos>
+  <x>2166.504922</x>
+  <y>12008.424609</y>
+ </pos>
+ <GFX>
+  <space>D01.png</space>
+  <exterior>traderoom.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Frontier</faction>
+  <value>60.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>D</class>
+  <population>5000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land>land_lowclass</land>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Jorlan is one of the least successful Frontier worlds. Its colony ship, Santa Maria, arrived to find a barren, desolate rock that had next to no potential for human inhabitants. But with the only other reachable planet being a gas giant, Santa Maria's captain was faced with the choice to settle or perish. Somehow, his expedition has managed to eke out an existence on Jorlan.
+Jorlan's inhabitants are mostly part of the ore refining process, as it supplies most of the Frontier with all sorts of alloys. Gas miners are also sent to Haleb IV every dozen STP when the climate conditions are favorable.</description>
+  <bar>Rather out of character for a heavy-industry world, the people of Jorlan people don't really have a habit of drinking. You see numerous other spacefarers, but no natives.</bar>
+ </general>
+ <tech>
+  <item>Basic Outfits 2</item>
+  <item>Low Tech Upgrades</item>
+ </tech>
+</asset>

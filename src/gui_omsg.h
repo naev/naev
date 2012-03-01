@@ -10,7 +10,6 @@
 
 
 #define OMSG_FONT_DEFAULT_SIZE      16
-#define OMSG_FONT_DEFAULT_PATH      "dat/mono.ttf"
 
 
 /*

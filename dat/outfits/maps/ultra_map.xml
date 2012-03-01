@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Ultra Map">
+ <general>
+  <mass>0</mass>
+  <price>1</price>
+  <description>For cheating.</description>
+  <gfx_store>map</gfx_store>
+ </general>
+ <specific type="map">
+  <short_desc/>
+  <all/>
+ </specific>
+</outfit>

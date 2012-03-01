@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Hadosh II">
+ <pos>
+  <x>-11781.014820</x>
+  <y>7693.271214</y>
+ </pos>
+ <GFX>
+  <space>A04.png</space>
+  <exterior>traderoom.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

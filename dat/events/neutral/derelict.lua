@@ -38,7 +38,7 @@ else -- default english
     --=== BAD EVENTS ===--
     btitle = "Oh no!"
     btext = {}
-    btext[1] = [[No sooner do you affix your boarding clamp to the derelect ship or it triggers a boobytrap! The derelict explodes, severely damaging your ship. You escaped death this time, but it was a close call!]]
+    btext[1] = [[The moment you affix your boarding clamp to the derelect ship, it triggers a boobytrap! The derelict explodes, severely damaging your ship. You escaped death this time, but it was a close call!]]
     btext[2] = [[You board the derelict ship and search its interior, but you find nothing. When you return to your ship, however, it turns out there were Space Leeches onboard the derelict - and they've now attacked themselves to your ship! You scorch them off with a plasma torch, but it's too late. The little buggers have already drunk all of your fuel. You're not jumping anywhere until you find some more!]]
     btext[3] = [[You affix your boarding clamp and walk aboard the derelict ship. You've only spent a couple of minutes searching the interior when there is a proximity alarm from your ship! Pirates are closing on your position! Clearly this derelict was a trap! You run back onto your ship and prepare to unboard, but you've lost precious time. The pirates are already in firing range...]]
 
@@ -73,7 +73,7 @@ function create ()
     p:rename("Derelict")
     hook.pilot(p, "board", "board")
     hook.pilot(p, "death", "destroyevent")
-    hook.enter("destroyevent")
+    hook.jumpout("destroyevent")
     hook.land("destroyevent")
 end
 
@@ -108,19 +108,10 @@ function goodevent()
         tk.msg(gtitle, gtext[2])
         player.addOutfit("Star Map", 1)
     elseif event == 3 then
-        local factions = {"Empire", "Dvaered"} -- TODO: Add more factions as they appear
+        local factions = {"Empire", "Dvaered", "Sirius", "Soromid"} -- TODO: Add more factions as they appear
         rndfact = factions[rnd.rnd(1, #factions)]
         tk.msg(gtitle, string.format(gtext[3], rndfact))
         faction.modPlayerSingle(rndfact, 3)
---    elseif event == 2 then
---        tk.msg(gtitle, gtext[2])
---        --effects here
---    elseif event == 2 then
---        tk.msg(gtitle, gtext[2])
---        --effects here
---    elseif event == 2 then
---        tk.msg(gtitle, gtext[2])
---        --effects here
     end
     destroyevent()
 end
@@ -129,13 +120,15 @@ function badevent()
     -- Roll for bad event, handle accordingly
     event = rnd.rnd(1, #btext)
     if event == 1 then
+        p:hookClear() -- So the pilot doesn't end the event by dying.
         tk.msg(btitle, btext[1])
         p:setHealth(0,0)
         player.pilot():control(true)
-        hook.pilot( p, "exploded", "derelict_exploded" )
+        hook.pilot(p, "exploded", "derelict_exploded")
     elseif event == 2 then
         tk.msg(btitle, btext[2])
         player.pilot():setFuel(false)
+        destroyevent()
     elseif event == 3 then
         tk.msg(btitle, btext[3])
         v1 = pilot.add("Pirate Vendetta", "pirate", player.pos() + vec2.new( 300, 300))[1]
@@ -150,25 +143,14 @@ function badevent()
         a1:attack(player.pilot())
         a2:control()
         a2:attack(player.pilot())
---    elseif event == 2 then
---        tk.msg(btitle, btext[2])
---        --effects here
---    elseif event == 2 then
---        tk.msg(btitle, btext[2])
---        --effects here
---    elseif event == 2 then
---        tk.msg(btitle, btext[2])
---        --effects here
---    elseif event == 2 then
---        tk.msg(btitle, btext[2])
---        --effects here
+        destroyevent()
     end
-    destroyevent()
 end
 
 function derelict_exploded()
    player.pilot():control(false)
-   player.pilot():setHealth( 42, 0 ) -- Not pretty, but we can fix it properly post-beta.
+   player.pilot():setHealth(42, 0)
+   destroyEvent()
 end
 
 function missionevent()

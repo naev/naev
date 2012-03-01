@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Large Civilian Vessel License">
+ <general>
+  <mass>0</mass>
+  <price>75000</price>
+  <gfx_store>license</gfx_store>
+  <description>This license will authorize you to buy freighter-class ships.</description>
+ </general>
+ <specific type="license"/>
+</outfit>

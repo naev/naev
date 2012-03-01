@@ -15,7 +15,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
+#include "nstring.h"
 #include <math.h>
 
 #include <lua.h>
@@ -681,7 +681,7 @@ static int hook_pilot( lua_State *L )
    }
 
    /* actually add the hook */
-   snprintf( buf, sizeof(buf), "p_%s", hook_type );
+   nsnprintf( buf, sizeof(buf), "p_%s", hook_type );
    h = hook_generic( L, buf, 0., 3, 0 );
    if (p==NULL)
       pilots_addGlobalHook( type, h );

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Jaegnhild">
+ <pos>
+  <x>19330.000000</x>
+  <y>-3515.000000</y>
+ </pos>
+ <GFX>
+  <space>moon-O00.png</space>
+  <exterior>oceanic2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Frontier</faction>
+  <value>60.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>O</class>
+  <population>30000000</population>
+  <hide>0.500000</hide>
+  <services>
+   <land>land_hiclass</land>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>There can almost be no greater contrast than there is between Jaegnhild and its primary, Uuries. One is an ocean world, filled with all kinds of unlikely forms of life, while the other is a lifeless chunk of coalesced dust. Jaegnhild was one of the last colonies established in the First Growth, but among all the chosen worlds it was perhaps the most suitable to life when the colony ship arrived. Though not many call the floating cities their home, the standard of living is unusually high for a Frontier world.</description>
+  <bar>Jaegnhild's bar is built into an ancient compartiment of the colony ship Pristine, which brought the first human settlers to this world so many years ago. Though most of the structure has been rebuilt using newer materials, the original plating can still be seen in places.</bar>
+ </general>
+ <tech>
+  <item>Basic Trade Ships</item>
+ </tech>
+</asset>

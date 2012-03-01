@@ -14,13 +14,12 @@
 
 #include "naev.h"
 
-#include <string.h>
 #include <math.h>
 #include <stdlib.h>
 #include <limits.h>
 
 #include "nxml.h"
-
+#include "nstring.h"
 #include "log.h"
 #include "hook.h"
 #include "array.h"

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Warei">
+ <pos>
+  <x>8542.018003</x>
+  <y>-9238.378166</y>
+ </pos>
+ <GFX>
+  <space>P00.png</space>
+  <exterior>mining3.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>P</class>
+  <population>5000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Part of the reason why Warei's surface is permanently frozen is because the planet's core is cold. This is a fascinating abberation from the standard planetary model, but more than that it offers great economical possibilities as there are vast amounts of raw minerals to be had under the crust. The Soromid have taken to set up a parts and ship manufacutring complex here.</description>
+  <bar>Even the Soromid need protection from the cold climate, but they're certainly more resistant to it than normal humans. Most non-Soromid traders visiting Warei complain about the cold - the ambient temperature in the bar is far from comfortable.</bar>
+ </general>
+ <tech>
+  <item>Light Civilian Combat Ships</item>
+  <item>Bulk Trade Ships</item>
+ </tech>
+</asset>

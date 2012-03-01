@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Heronus Orbital">
+ <pos>
+  <x>-12991.493773</x>
+  <y>17143.680277</y>
+ </pos>
+ <GFX>
+  <space>station-battlestation.png</space>
+  <exterior>station04.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>0</population>
+  <hide>0.750000</hide>
+  <services>
+   <land>srm_mil_restricted</land>
+   <refuel/>
+   <bar/>
+   <outfits/>
+  </services>
+  <commodities/>
+  <description>Heronus Orbital is a military base directly tied to Heronus below. Its primary duty is to protect the planet, because it is vital to the Soromid fleet. If Heronus were to cease producing new ships, the Soromid would suffer a tremendous blow to their military capabilities. Needless to say, Heronus Orbital is one of the most heavily armed stations in Soromid space.</description>
+  <bar>A large viewport gives a magnificent view of the young ships that occasionally lift off from Heronus. There's something about the sheen of a ship that has not yet undergone treatment at Ebenezer that particularly catches the eye.</bar>
+ </general>
+ <tech>
+  <item>Plasma 2</item>
+  <item>Missiles 1</item>
+  <item>Missiles 2</item>
+  <item>Basic Outfits 2</item>
+  <item>High Tech Upgrades 2</item>
+ </tech>
+</asset>

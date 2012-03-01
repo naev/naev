@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Mouddar">
+ <pos>
+  <x>4755.463992</x>
+  <y>-15972.357019</y>
+ </pos>
+ <GFX>
+  <space>O00.png</space>
+  <exterior>aquatic2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>50.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>O</class>
+  <population>400000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Medicine</commodity>
+  </commodities>
+  <description>Mouddar is a bit of a leisure resort, in all but name. While the planet does have a resident population, most of its income is from tourism. The planet is speckled with tiny coral peninsulae, which are prefect for all kinds of water sports. Unfortunately, the enthusiasm of the Imperial adolescents who come here has had a detrimental effect on the environment.</description>
+  <bar>Nobody really cares about Mouddar's spaceport bar, apart from the traders who only stop here to load and unload. Most civilian visitors, though, immediately head for the sun, sand and surf that they came here to enjoy.</bar>
+ </general>
+</asset>

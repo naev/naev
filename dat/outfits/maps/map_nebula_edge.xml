@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Map: Nebula Edge">
+ <general>
+  <mass>0</mass>
+  <price>25000</price>
+  <description>This map contains the route leading from Dvaered/Imperial space to the edge of the Nebula. It also lists the two Imperial stations along the route.</description>
+  <gfx_store>map</gfx_store>
+ </general>
+ <specific type="map">
+  <short_desc>A Star Map.</short_desc>
+  <sys name="Raelid">
+   <asset>Marius Station</asset>
+   <jump>Arcanis</jump>
+  </sys>
+  <sys name="Arcanis">
+   <jump>Raelid</jump>
+   <jump>Zylex</jump>
+  </sys>
+  <sys name="Zylex">
+   <jump>Arcanis</jump>
+   <jump>Doeston</jump>
+  </sys>
+  <sys name="Doeston">
+   <asset>Cerberus</asset>
+   <jump>Zylex</jump>
+  </sys>
+ </specific>
+</outfit>

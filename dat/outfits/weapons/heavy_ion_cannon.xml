@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Heavy Ion Cannon">
+ <general>
+  <slot>weapon</slot>
+  <size>medium</size>
+  <license>Medium Weapon License</license>
+  <mass>14</mass>
+  <price>32000</price>
+  <description>The Heavy Ion Cannon does a far better job at disabling ships than the standard model, but it requires a medium mount. Most militaries employ these weapons on specialized capture teams, but the design is licensed for public use as well.</description>
+  <gfx_store>ioncannon</gfx_store>
+ </general>
+ <specific type="bolt" secondary="1">
+  <cpu>12</cpu>
+  <gfx>ionL</gfx>
+  <sound>ion</sound>
+  <spfx_shield>ShiS</spfx_shield>
+  <spfx_armour>ExpS</spfx_armour>
+  <delay>1.3</delay>
+  <speed>500</speed>
+  <range>1100</range>
+  <falloff>800</falloff>
+  <gfx_end>ionL-end</gfx_end>
+  <energy>35</energy>
+  <heatup>60</heatup>
+  <track>2</track>
+  <swivel>8</swivel>
+  <damage>
+   <type>ion</type>
+   <penetrate>17</penetrate>
+   <physical>6.5</physical>
+   <disable>18</disable>
+  </damage>
+ </specific>
+</outfit>

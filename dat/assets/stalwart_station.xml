@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Stalwart Station">
+ <pos>
+  <x>19653.539772</x>
+  <y>2091.424297</y>
+ </pos>
+ <GFX>
+  <space>station-fleetbase.png</space>
+  <exterior>station04.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>2</class>
+  <population>12000</population>
+  <hide>0.750000</hide>
+  <services>
+   <land>dv_mil_restricted</land>
+   <refuel/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Since well-to-do Dvaereds have laid complete claim to Varia's surface, all industrial and military enterprises have been moved offworld to Stalwart Station. While two-thirds of the station's decks are in use by major Dvaered corporations, there is enough space left for a respectable military wing. In fact, Stalwart Station features as the base of most military operations in the surrounding systems.</description>
+ </general>
+ <tech>
+  <item>Kinetic 2</item>
+  <item>Kinetic 3</item>
+  <item>Heavy Weapons 1</item>
+  <item>Missiles 1</item>
+  <item>Missiles 2</item>
+  <item>Low Tech Upgrades</item>
+  <item>Heavy Civilian Combat Ships</item>
+ </tech>
+</asset>

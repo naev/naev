@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Fried Ia">
+ <pos>
+  <x>-12094.025264</x>
+  <y>1795.654737</y>
+ </pos>
+ <GFX>
+  <space>moon-P01.png</space>
+  <exterior>station01.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.500000</hide>
+  <services/>
+ </general>
+</asset>

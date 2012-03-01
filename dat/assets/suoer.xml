@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Suoer">
+ <pos>
+  <x>23465.000000</x>
+  <y>3380.000000</y>
+ </pos>
+ <GFX>
+  <space>moon-M04.png</space>
+  <exterior>aquatic2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>100000000</population>
+  <hide>0.500000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Though Suoer classifies as a moon, it is technically a sister planet to Esker IV. Its superdense core gives it so much gravity that it significantly affects its primary, so both planets orbit each other. Suoer's high gravity also makes it a comfortable world to live on for humans.</description>
+ </general>
+ <tech>
+  <item>Ion 1</item>
+  <item>Missiles 1</item>
+  <item>Basic Outfits 1</item>
+  <item>Basic Civilian Ships</item>
+ </tech>
+</asset>

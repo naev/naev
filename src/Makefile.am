@@ -190,6 +190,7 @@ CODE_SOURCE = \
 	load.h \
 	log.h \
 	map.h \
+	mapData.h \
 	map_find.h \
 	map_overlay.h \
 	md5.h \

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Mass Driver MK3">
+ <general>
+  <slot>weapon</slot>
+  <size>medium</size>
+  <license>Medium Weapon License</license>
+  <mass>22</mass>
+  <price>41000</price>
+  <description>If ever there was a clear example of House Dvaered's lack of subtlety, then the Mass Driver MK3 would be it. Typically mounted on medium escorts, these weapons can reduce any other ship to an inert lump of metal.</description>
+  <gfx_store>gatling</gfx_store>
+ </general>
+ <specific type="bolt">
+  <cpu>18</cpu>
+  <gfx>autocannon</gfx>
+  <sound>autocannon</sound>
+  <sound_hit>medexp0</sound_hit>
+  <spfx_shield>ExpS</spfx_shield>
+  <spfx_armour>ExpS</spfx_armour>
+  <delay>1.5</delay>
+  <speed>575</speed>
+  <range blowup="armour">1750</range>
+  <energy>53</energy>
+  <heatup>70</heatup>
+  <track>1.2</track>
+  <swivel>13</swivel>
+  <damage>
+   <type>impact</type>
+   <penetrate>50</penetrate>
+   <physical>54</physical>
+   <disable>2</disable>
+  </damage>
+ </specific>
+</outfit>

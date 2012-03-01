@@ -12,7 +12,7 @@
 #include "tk/toolkit_priv.h"
 
 #include <stdlib.h>
-#include <string.h>
+#include "nstring.h"
 
 #include "toolkit.h"
 #include "font.h"
@@ -157,8 +157,7 @@ static int tab_raw( Widget* tab, SDL_Event *event )
    }
 
    /* Give the active window the input. */
-   toolkit_inputWindow( wdw, event, 0 );
-   return 0; /* Never block event. */
+   return toolkit_inputWindow( wdw, event, 0 );
 }
 
 

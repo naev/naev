@@ -25,6 +25,7 @@
 #include "nlua_var.h"
 #include "ndata.h"
 #include "toolkit.h"
+#include "nstring.h"
 
 
 #define LUA_NEWS     "dat/news.lua"
@@ -51,6 +52,7 @@ static int news_drag          = 0; /**< Is dragging news? */
 static double news_pos        = 0.; /**< Position of the news feed. */
 static glFont *news_font      = &gl_defFont; /**< Font to use. */
 static char **news_lines      = NULL; /**< Text per line. */
+static glFontRestore *news_restores = NULL; /**< Restorations. */
 static int news_nlines        = 0; /**< Number of lines used. */
 static int news_mlines        = 0; /**< Lines allocated. */
 
@@ -76,7 +78,7 @@ static void news_mouse( unsigned int wid, SDL_Event *event, double mx, double my
 static void news_render( double bx, double by, double w, double h, void *data )
 {
    (void) data;
-   int i;
+   int i, s, m, p;
    unsigned int t;
    double y, dt;
 
@@ -91,37 +93,35 @@ static void news_render( double bx, double by, double w, double h, void *data )
 
    /* Make sure user isn't silly and drags it to negative values. */
    if (news_pos < 0.)
-      news_pos += (news_font->h + 5.) * news_nlines + h + 3;
+      news_pos = 0.;
 
    /* background */
    gl_renderRect( bx, by, w, h, &cBlack );
 
    /* Render the text. */
-   i = (int)(news_pos / (news_font->h + 5.));
-   if (i > news_nlines + (int)(h/(news_font->h + 5.)) + 3) {
+   p = (int)ceil( news_pos / (news_font->h + 5.));
+   m = (int)ceil(        h / (news_font->h + 5.));
+   if (p > news_nlines + m + 1) {
       news_pos = 0.;
       return;
    }
 
+   /* Get positions to make sure inbound. */
+   s = MAX(0,p-m);
+   p = MIN(p+1,news_nlines-1);
+
    /* Get start position. */
-   y = news_pos - (i+1) * (news_font->h + 5.) - 10.;
+   y = news_pos - s * (news_font->h+5.);
 
    /* Draw loop. */
-   while (i >= 0) {
+   for (i=s; i<p; i++) {
 
-      /* Skip in line isn't valid. */
-      if (i >= news_nlines) {
-         i--;
-         y += news_font->h + 5.;
-         continue;
-      }
-
+      gl_printRestore( &news_restores[i] );
       gl_printMidRaw( news_font, w-40.,
             bx+10, by+y, &cConsole, news_lines[i] );
 
       /* Increment line and position. */
-      i--;
-      y += news_font->h + 5.;
+      y -= news_font->h + 5.;
    }
 
 }
@@ -181,7 +181,7 @@ static void news_mouse( unsigned int wid, SDL_Event *event, double mx, double my
 void news_widget( unsigned int wid, int x, int y, int w, int h )
 {
    int i, p, len;
-   char buf[4096];
+   char buf[8192];
 
    /* Sane defaults. */
    news_pos    = h/3;
@@ -193,9 +193,9 @@ void news_widget( unsigned int wid, int x, int y, int w, int h )
    /* Load up the news in a string. */
    p = 0;
    for (i=0; i<news_nbuf; i++) {
-      p += snprintf( &buf[p], sizeof(buf)-p,
-            "%s\n\n"
-            "%s\n\n\n\n"
+      p += nsnprintf( &buf[p], sizeof(buf)-p,
+            "%s\n\n\e0"
+            "%s\n\n\n\n\e0"
             , news_buf[i].title, news_buf[i].desc );
    }
    len = p;
@@ -209,13 +209,23 @@ void news_widget( unsigned int wid, int x, int y, int w, int h )
 
       /* Copy the line. */
       if (news_nlines+1 > news_mlines) {
-         news_mlines += 128;
-         news_lines = realloc( news_lines, sizeof(char*) * news_mlines );
+         if (news_mlines == 0)
+            news_mlines = 256;
+         else
+            news_mlines *= 2;
+         news_lines    = realloc( news_lines, sizeof(char*) * news_mlines );
+         news_restores = realloc( news_restores, sizeof(glFontRestore) * news_mlines );
       }
-      news_lines[news_nlines] = malloc( i + 1 );
+      news_lines[ news_nlines ]    = malloc( i + 1 );
       strncpy( news_lines[news_nlines], &buf[p], i );
-      news_lines[news_nlines][i] = '\0';
-
+      news_lines[ news_nlines ][i] = '\0';
+      if (news_nlines==0)
+         gl_printRestoreInit( &news_restores[ news_nlines ] );
+      else  {
+         memcpy( &news_restores[ news_nlines ], &news_restores[ news_nlines-1 ], sizeof(glFontRestore) );
+         gl_printStore( &news_restores[ news_nlines ], news_lines[ news_nlines-1 ] );
+      }
+ 
       p += i + 1; /* Move pointer. */
       news_nlines++; /* New line. */
    }
@@ -313,6 +323,7 @@ void news_exit (void)
    /* Clean the lines. */
    news_cleanLines();
    free(news_lines);
+   free(news_restores);
    news_lines  = NULL;
    news_mlines = 0;
 

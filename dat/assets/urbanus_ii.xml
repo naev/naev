@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Urbanus II">
+ <pos>
+  <x>2403.259278</x>
+  <y>-2059.936524</y>
+ </pos>
+ <GFX>
+  <space>K04.png</space>
+  <exterior>aquatic2.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Laser Turret MK3">
+ <general>
+  <slot>weapon</slot>
+  <size>medium</size>
+  <license>Medium Weapon License</license>
+  <mass>30</mass>
+  <price>45000</price>
+  <description>The Laser Turret MK3 is often found on Imperial fast response fleets, for use against fleets of small to medium ships. This weapon is one of the mainstays in the Imperial space forces.</description>
+  <gfx_store>laserturret2</gfx_store>
+ </general>
+ <specific type="turret bolt">
+  <cpu>18</cpu>
+  <gfx>laser3M</gfx>
+  <sound>laser</sound>
+  <spfx_shield>ShiS</spfx_shield>
+  <spfx_armour>ExpS</spfx_armour>
+  <delay>0.4</delay>
+  <speed>550</speed>
+  <range>1200</range>
+  <falloff>700</falloff>
+  <gfx_end>laser2M</gfx_end>
+  <energy>13</energy>
+  <heatup>35</heatup>
+  <track>1.5</track>
+  <damage>
+   <type>normal</type>
+   <penetrate>35</penetrate>
+   <physical>14</physical>
+   <disable>2</disable>
+  </damage>
+ </specific>
+</outfit>

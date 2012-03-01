@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Radix III">
+ <pos>
+  <x>9292.187990</x>
+  <y>5727.672471</y>
+ </pos>
+ <GFX>
+  <space>I00.png</space>
+  <exterior>lava.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

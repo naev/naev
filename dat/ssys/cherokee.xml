@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ssys name="Cherokee">
+ <general>
+  <radius>5000.000000</radius>
+  <stars>400</stars>
+  <interference>0.000000</interference>
+  <nebula volatility="0.000000">0.000000</nebula>
+ </general>
+ <pos>
+  <x>-342.666667</x>
+  <y>-152.000000</y>
+ </pos>
+ <assets>
+  <asset>Abandoned Station</asset>
+ </assets>
+ <jumps>
+  <jump target="Iroquois">
+   <autopos/>
+   <hide>0.100000</hide>
+  </jump>
+  <jump target="Mohawk">
+   <autopos/>
+   <hide>0.100000</hide>
+  </jump>
+ </jumps>
+</ssys>

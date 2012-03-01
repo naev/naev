@@ -22,6 +22,7 @@
 #include "economy.h"
 #include "hook.h"
 #include "damagetype.h"
+#include "nstring.h"
 
 
 #define BOARDING_WIDTH  300 /**< Boarding window width. */
@@ -372,7 +373,7 @@ static void board_update( unsigned int wdw )
 
    /* Credits. */
    credits2str( cred, p->credits, 2 );
-   j += snprintf( &str[j], PATH_MAX, "%s\n", cred );
+   j += nsnprintf( &str[j], PATH_MAX, "%s\n", cred );
 
    /* Commodities. */
    if ((p->ncommodities==0) && (j < PATH_MAX))

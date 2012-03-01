@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Culex">
+ <pos>
+  <x>-17337.694408</x>
+  <y>-16625.248069</y>
+ </pos>
+ <GFX>
+  <space>moon-M06.png</space>
+  <exterior>oceanic.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>0</population>
+  <hide>0.500000</hide>
+  <services>
+   <land>land_lowclass</land>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+  </commodities>
+  <description>Culex is the moon of planet Myonei. Myonei itself is a factory world, but it's too unpleasant for even the geneticlaly altered Soromid to live on. Fortunately, Culex is quite suitable for inhabitation, and so the workers who labor on the surface have their homes here. Culex is little more than a habitat, with no economy of its own. It's fairly uninteresting to most people who don't actually live there.</description>
+  <bar>As Culex sees little traffic other than the forensic kind, the spaceport bar has been repurposed as a community centre for the locals. The standard facilities are still present and operational, but in a minimal fashion. Most of the facility is filled with recreational facilities and even a dance floor.</bar>
+ </general>
+</asset>

@@ -18,6 +18,7 @@
 #include "nluadef.h"
 #include "nlua_space.h"
 #include "hook.h"
+#include "nstring.h"
 
 
 #define ESCORT_PREALLOC    8 /**< Number of escorts to automatically allocate first. */
@@ -94,7 +95,7 @@ unsigned int escort_create( Pilot *p, char *ship,
    /* Get important stuff. */
    parent = p->id;
    s = ship_get(ship);
-   snprintf(buf, 16, "escort*%u", parent);
+   nsnprintf(buf, 16, "escort*%u", parent);
 
    /* Set flags. */
    pilot_clearFlagsRaw( f );

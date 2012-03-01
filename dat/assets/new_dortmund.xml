@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="New Dortmund">
+ <pos>
+  <x>-30820.101542</x>
+  <y>-18688.394805</y>
+ </pos>
+ <GFX>
+  <space>M07.png</space>
+  <exterior>forest2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Frontier</faction>
+  <value>60.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>A</class>
+  <population>1000000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Medicine</commodity>
+   <commodity>Luxury Goods</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>New Dortmund was founded by the very first colony ship to leave Earth, Genesis. The planet itself was known only by its systematic designation for a long time, New Dortmund being the name of the settlement. However, since the settlement was the only thing the colonists knew for many years, its name became synonymous with the world. The moon Folevo was named after the leader of the Genesis expedition, who sadly perished only a few years after the initial touchdown.
+New Dortmund was never very successful in any sense of the term, but it is still pulling its weight in the overall Frontier economy.</description>
+  <bar>New Dortmund's spaceport bar is mostly deserted, the locals frequenting their own establishments and offworlders preferring to stay with their ships. The only reason the place is still running is because the Frontier Council subsidizes it, on the basis that a spaceport bar will help attract people to New Dortmund. So far, it hasn't.</bar>
+ </general>
+ <tech>
+  <item>Basic Outfits 2</item>
+  <item>Bulk Trade Ships</item>
+ </tech>
+</asset>

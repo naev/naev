@@ -54,6 +54,21 @@ function emp_mil_restricted( pnt )
          "\"Don't attempt to bribe an Empire official, pilot.\"")
 end
 
+-- Empire Omega Station.
+function emp_mil_omega( pnt )
+   local required = 30
+
+   if player.misnDone("Empire Shipping 3") or player.misnActive("Empire Shipping 3") then
+      required = 0
+   end
+
+   return land_military(pnt, required,
+         "Permission to land granted.",
+         "You are not authorized to land here.",
+         "Landing request denied.",
+         "\"Don't attempt to bribe an Empire official, pilot.\"")
+end
+
 -- Empire Emperor's Wrath.
 function emp_mil_wrath( pnt )
    return land_military(pnt, 75,
@@ -209,12 +224,12 @@ end
 function land_military( pnt, land_floor, ok_msg, notyet_msg, no_msg, nobribe )
    local fct = pnt:faction()
    local standing = fct:playerStanding()
-   local can_land = standing > land_floor
+   local can_land = standing >= land_floor
 
    local land_msg
    if can_land then
       land_msg = ok_msg
-   elseif standing >= land_floor then
+   elseif standing >= 0 then
       land_msg = notyet_msg
    else
       land_msg = no_msg

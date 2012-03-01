@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Sarcophagus II">
+ <pos>
+  <x>-12547.664172</x>
+  <y>7337.493844</y>
+ </pos>
+ <GFX>
+  <space>G00.png</space>
+  <exterior>desertic2.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

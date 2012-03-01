@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Map: Dvaered-Soromid trade route">
+ <general>
+  <mass>0</mass>
+  <price>30000</price>
+  <description>This map contains the main route between Dvaered and Soromid controlled space.</description>
+  <gfx_store>map</gfx_store>
+ </general>
+ <specific type="map">
+  <short_desc>A Star Map.</short_desc>
+  <sys name="Zacron">
+   <jump>Raelid</jump>
+  </sys>
+  <sys name="Raelid">
+   <jump>Zacron</jump>
+   <jump>Surano</jump>
+  </sys>
+  <sys name="Surano">
+   <jump>Raelid</jump>
+   <jump>Thorndyke</jump>
+  </sys>
+  <sys name="Thorndyke">
+   <jump>Surano</jump>
+   <jump>Pilatis</jump>
+  </sys>
+  <sys name="Pilatis">
+   <jump>Thorndyke</jump>
+   <jump>Defa</jump>
+  </sys>
+  <sys name="Defa">
+   <jump>Pilatis</jump>
+   <jump>Oberon</jump>
+  </sys>
+  <sys name="Oberon">
+   <asset>Soromid Customs Central</asset>
+   <jump>Defa</jump>
+  </sys>
+ </specific>
+</outfit>

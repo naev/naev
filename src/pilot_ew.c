@@ -23,6 +23,8 @@
 static double sensor_curRange    = 0.; /**< Current base sensor range, used to calculate
                                          what is in range and what isn't. */
 
+#define  EVASION_SCALE              1.25           /**< Scales the evasion factor to the hide factor. Ensures that ships always have an evasion factor higher than their hide factor. */
+#define  SENSOR_DEFAULT_RANGE       7500           /**< The default sensor range for all ships. */
 
 /**
  * @brief Updates the pilot's static electronic warfare properties.
@@ -50,7 +52,7 @@ void pilot_ewUpdateDynamic( Pilot *p )
 
    /* Update evasion. */
    p->ew_movement = pilot_ewMovement( VMOD(p->solid->vel) );
-   p->ew_evasion  = p->ew_hide * p->ew_movement;
+   p->ew_evasion  = p->ew_hide * EVASION_SCALE;
 }
 
 
@@ -86,7 +88,7 @@ double pilot_ewHeat( double T )
  */
 double pilot_ewMass( double mass )
 {
-   return 1. / (1. + pow( mass, 0.75 ) / 100. );
+   return 1. / (.1 + pow( mass, 0.75 ) / 120. );
 }
 
 
@@ -95,18 +97,24 @@ double pilot_ewMass( double mass )
  */
 void pilot_updateSensorRange (void)
 {
-   /* Calculate the sensor sensor_curRange. */
-   /* 0    ->   7500.0
-    * 250  ->   3333.33333333
-    * 500  ->   2142.85714285
-    * 750  ->   1578.94736842
-    * 1000 ->   1250.0 */
-   sensor_curRange  = 7500;
-   sensor_curRange /= ((cur_system->interference + 200) / 200.);
+   /* Adjust sensor range based on system interference. */
+   /* See: http://www.wolframalpha.com/input/?i=y+%3D+7500+%2F+%28%28x+%2B+200%29+%2F+200%29+from+x%3D0+to+1000 */
+   sensor_curRange = SENSOR_DEFAULT_RANGE / ((cur_system->interference + 200) / 200.);
 
    /* Speeds up calculations as we compare it against vectors later on
     * and we want to avoid actually calculating the sqrt(). */
    sensor_curRange = pow2(sensor_curRange);
+}
+
+
+/**
+ * @brief Returns the default sensor range for the current system.
+ *
+ *    @return Sensor range.
+ */
+double pilot_sensorRange( void )
+{
+   return sensor_curRange;
 }
 
 
@@ -247,11 +255,11 @@ double pilot_ewWeaponTrack( const Pilot *p, const Pilot *t, double track )
 {
    double limit, lead;
 
-   limit = track * p->ew_detect * p->stats.tur_tracking;
-   if (t->ew_evasion < limit)
+   limit = track * p->ew_detect;
+   if (t->ew_evasion * t->ew_movement < limit)
       lead = 1.;
    else
-      lead = MAX( 0., 1. - 0.5*(t->ew_evasion/limit - 1.));
+      lead = MAX( 0., 1. - 0.5*((t->ew_evasion  * t->ew_movement)/limit - 1.));
    return lead;
 }
 

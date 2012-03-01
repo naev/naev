@@ -226,7 +226,6 @@ struct StarSystem_ {
    char* name; /**< star system name */
    Vector2d pos; /**< position */
    int stars; /**< Amount of "stars" it has. */
-   int asteroids; /**< @todo implement asteroids */
    double interference; /**< in % @todo implement interference. */
    double nebu_density; /**< Nebula density (0. - 1000.) */
    double nebu_volatility; /**< Nebula volatility (0. - 1000.) */
@@ -303,6 +302,7 @@ credits_t planet_commodityPrice( const Planet *p, const Commodity *c );
 char planet_getColourChar( Planet *p );
 const glColour* planet_getColour( Planet *p );
 void planet_updateLand( Planet *p );
+int planet_setRadiusFromGFX(Planet* planet);
 
 /*
  * jump stuff
@@ -313,6 +313,7 @@ JumpPoint* jump_getTarget( StarSystem* target, const StarSystem* sys );
 /*
  * system adding/removing stuff.
  */
+void system_reconstructJumps (StarSystem *sys);
 void systems_reconstructJumps (void);
 void systems_reconstructPlanets (void);
 StarSystem *system_new (void);
@@ -336,6 +337,7 @@ void planets_render (void);
 void system_addPresence( StarSystem *sys, int faction, double amount, int range );
 double system_getPresence( StarSystem *sys, int faction );
 void system_addAllPlanetsPresence( StarSystem *sys );
+void space_reconstructPresences( void );
 void system_rmCurrentPresence( StarSystem *sys, int faction, double amount );
 
 /*
@@ -348,7 +350,6 @@ void space_update( const double dt );
  */
 void space_gfxLoad( StarSystem *sys );
 void space_gfxUnload( StarSystem *sys );
-
 
 /*
  * Getting stuff.
@@ -391,6 +392,7 @@ int space_calcJumpInPos( StarSystem *in, StarSystem *out, Vector2d *pos, Vector2
 /*
  * Misc.
  */
+void system_setFaction( StarSystem *sys );
 void space_factionChange (void);
 
 

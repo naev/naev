@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Father's Pride I">
+ <pos>
+  <x>-9350.000000</x>
+  <y>6900.000000</y>
+ </pos>
+ <GFX>
+  <space>D00.png</space>
+  <exterior>lava.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

@@ -43,7 +43,7 @@
 #endif /* HAS_FD */
 #include <unistd.h> /* WRITE() */
 #include <errno.h> /* error numbers */
-#include <string.h> /* strlen() and friends */
+#include "nstring.h" /* strlen() and friends */
 #include <stdlib.h> /* malloc */
 #if HAS_POSIX
 #include <arpa/inet.h> /* ntohl */

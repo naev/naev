@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Tau Station">
+ <pos>
+  <x>8917.170749</x>
+  <y>-13303.144273</y>
+ </pos>
+ <GFX>
+  <space>000.png</space>
+  <exterior>station04.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>12000</population>
+  <hide>0.750000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+  </commodities>
+  <description>Tau Station was constructed with the sole purpose of exploiting the algae produced on Tau Prime. Being a completely oceanic world with a highly corrosive atmosphere, it was deemed more profitable to build an orbiting station, rather than a platform city on the surface. From the station windows you can see heavy algae collectors flying to and from the surface on their endless algae runs.</description>
+  <bar>The Tau Prime algae has a powerful odour which pervades the bar. The air is wreathed in the smell, such that you can taste it. It doesn't taste nearly as good unprocessed. Most algae runners stop to grab drinks between runs to try to get the taste of the algae out of their mouth, though the liquors the bar serves happen to be made with processed algae.</bar>
+ </general>
+</asset>

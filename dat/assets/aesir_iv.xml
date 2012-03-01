@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Aesir IV">
+ <pos>
+  <x>10900.000000</x>
+  <y>-13900.000000</y>
+ </pos>
+ <GFX>
+  <space>J04.png</space>
+  <exterior>lava.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

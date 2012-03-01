@@ -13,7 +13,7 @@
 
 #include "naev.h"
 
-#include <string.h>
+#include "nstring.h"
 
 #include "menu.h"
 #include "toolkit.h"
@@ -27,11 +27,16 @@
 #include "map.h"
 #include "land.h"
 #include "equipment.h"
+#include "gui.h"
+#include "player_gui.h"
 #include "tk/toolkit_priv.h"
 
 
 #define BUTTON_WIDTH    90 /**< Button width, standard across menus. */
 #define BUTTON_HEIGHT   30 /**< Button height, standard across menus. */
+
+#define SETGUI_WIDTH    400 /**< GUI selection window width. */
+#define SETGUI_HEIGHT   300 /**< GUI selection window height. */
 
 #define menu_Open(f)    (menu_open |= (f)) /**< Marks a menu as opened. */
 #define menu_Close(f)   (menu_open &= ~(f)) /**< Marks a menu as closed. */
@@ -68,6 +73,9 @@ static int *info_factions;
 /* information menu */
 static void info_close( unsigned int wid, char* str );
 static void info_openMain( unsigned int wid );
+static void info_setGui( unsigned int wid, char* str );
+static void setgui_load( unsigned int wdw, char *str );
+static void info_toggleGuiOverride( unsigned int wid, char *name );
 static void info_openShip( unsigned int wid );
 static void info_openWeapons( unsigned int wid );
 static void info_openCargo( unsigned int wid );
@@ -185,7 +193,7 @@ static void info_openMain( unsigned int wid )
          "Fuel:"
          );
    credits2str( creds, player.p->credits, 2 );
-   snprintf( str, 128,
+   nsnprintf( str, 128,
          "%s\n"
          "%s\n"
          "%s\n"
@@ -208,6 +216,9 @@ static void info_openMain( unsigned int wid )
    window_addButton( wid, -20, 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnClose", "Close", info_close );
+   window_addButton( wid, -20 - (15+BUTTON_WIDTH), 20,
+         BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnSetGUI", "Set GUI", info_setGui );
 
    /* List. */
    buf = player_getLicenses( &nlicenses );
@@ -218,6 +229,117 @@ static void info_openMain( unsigned int wid )
          NULL, &cDConsole, "Licenses" );
    window_addList( wid, -20, -70, w-80-200-40, h-110-BUTTON_HEIGHT,
          "lstLicenses", licenses, nlicenses, 0, NULL );
+}
+
+
+/**
+ * @brief Closes the GUI selection menu.
+ *
+ *    @param wdw Window triggering function.
+ *    @param str Unused.
+ */
+static void setgui_close( unsigned int wdw, char *str )
+{
+   (void)str;
+   window_destroy( wdw );
+}
+
+
+/**
+ * @brief Allows the player to set a different GUI.
+ *
+ *    @param wid Window id.
+ *    @param name of widget.
+ */
+static void info_setGui( unsigned int wid, char* str )
+{
+   (void)str;
+   int i;
+   char **guis;
+   int nguis;
+   char **gui_copy;
+
+   /* Get the available GUIs. */
+   guis = player_guiList( &nguis );
+
+   /* In case there are none. */
+   if (guis == NULL) {
+      WARN("No GUI available.");
+      dialogue_alert( "There are no GUI available, this means something went wrong somewhere. Inform the Naev maintainer." );
+      return;
+   }
+
+   /* window */
+   wid = window_create( "Select GUI", -1, -1, SETGUI_WIDTH, SETGUI_HEIGHT );
+   window_setCancel( wid, setgui_close );
+
+   /* Copy GUI. */
+   gui_copy = malloc( sizeof(char*) * nguis );
+   for (i=0; i<nguis; i++)
+      gui_copy[i] = strdup( guis[i] );
+
+   /* List */
+   window_addList( wid, 20, -50,
+         SETGUI_WIDTH-BUTTON_WIDTH/2 - 60, SETGUI_HEIGHT-110,
+         "lstGUI", gui_copy, nguis, 0, NULL );
+   toolkit_setList( wid, "lstGUI", gui_pick() );
+
+   /* buttons */
+   window_addButton( wid, -20, 20, BUTTON_WIDTH/2, BUTTON_HEIGHT,
+         "btnBack", "Cancel", setgui_close );
+   window_addButton( wid, -20, 30 + BUTTON_HEIGHT, BUTTON_WIDTH/2, BUTTON_HEIGHT,
+         "btnLoad", "Load", setgui_load );
+
+   /* Checkboxes */
+   window_addCheckbox( wid, 20, 20,
+         BUTTON_WIDTH, BUTTON_HEIGHT, "chkOverride", "Override GUI",
+         info_toggleGuiOverride, player.guiOverride );
+   info_toggleGuiOverride( wid, "chkOverride" );
+
+   /* default action */
+   window_setAccept( wid, setgui_load );
+}
+
+
+/**
+ * @brief Loads a GUI.
+ *
+ *    @param wdw Window triggering function.
+ *    @param str Unused.
+ */
+static void setgui_load( unsigned int wdw, char *str )
+{
+   (void)str;
+   char *gui;
+   int wid;
+
+   wid = window_get( "Select GUI" );
+   gui = toolkit_getList( wid, "lstGUI" );
+   if (strcmp(gui,"None") == 0)
+      return;
+
+   /* Set the GUI. */
+   if (player.gui != NULL)
+      free( player.gui );
+   player.gui = strdup( gui );
+
+   /* Close menus before loading for proper rendering. */
+   setgui_close(wdw, NULL);
+
+   /* Load the GUI. */
+   gui_load( gui_pick() );
+}
+
+
+/**
+ * @brief GUI override was toggled.
+ *
+ *    @param wid Window id.
+ *    @param name of widget.
+ */
+static void info_toggleGuiOverride( unsigned int wid, char *name )
+{
+   player.guiOverride = window_checkboxState( wid, name );
 }
 
 
@@ -284,7 +406,7 @@ static void ship_update( unsigned int wid )
 
    cargo = pilot_cargoUsed( player.p ) + pilot_cargoFree( player.p );
    hyp_delay = ntime_pretty( pilot_hyperspaceDelay( player.p ), 2 );
-   len = snprintf( buf, sizeof(buf),
+   len = nsnprintf( buf, sizeof(buf),
          "%s\n"
          "%s\n"
          "%s\n"
@@ -592,7 +714,7 @@ static void cargo_genList( unsigned int wid )
       buf = malloc(sizeof(char*)*player.p->ncommodities);
       for (i=0; i<player.p->ncommodities; i++) {
          buf[i] = malloc(sizeof(char)*128);
-         snprintf(buf[i],128, "%s%s %d",
+         nsnprintf(buf[i],128, "%s%s %d",
                player.p->commodities[i].commodity->name,
                (player.p->commodities[i].id != 0) ? "*" : "",
                player.p->commodities[i].quantity);
@@ -755,7 +877,7 @@ static void info_openStandings( unsigned int wid )
    for (i=0; i<n; i++) {
       str[i] = malloc( 256 );
       m = round( faction_getPlayer( info_factions[i] ) );
-      snprintf( str[i], 256, "%s   [ %+d%% ]",
+      nsnprintf( str[i], 256, "%s   [ %+d%% ]",
             faction_name( info_factions[i] ), m );
    }
 
@@ -802,7 +924,7 @@ static void standings_update( unsigned int wid, char* str )
    window_moveWidget( wid, "txtName", lw+40, y );
    y -= 40;
    m = round( faction_getPlayer( info_factions[p] ) );
-   snprintf( buf, sizeof(buf), "%+d%%   [ %s ]", m, faction_getStanding( m ) );
+   nsnprintf( buf, sizeof(buf), "%+d%%   [ %s ]", m, faction_getStanding( m ) );
    window_modifyText( wid, "txtStanding", buf );
    window_moveWidget( wid, "txtStanding", lw+40, y );
 }

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="The Frontier Council">
+ <pos>
+  <x>-4232.400889</x>
+  <y>9914.102486</y>
+ </pos>
+ <GFX>
+  <space>station-cylinder.png</space>
+  <exterior>traderoom.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Frontier</faction>
+  <value>60.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>500</population>
+  <hide>0.750000</hide>
+  <services>
+   <land/>
+   <refuel/>
+  </services>
+  <commodities/>
+  <description>This is the seat of the Frontier Council, the over-arching political body representing the Frontier to the rest of the galaxy. While the Council does not rule the Frontier worlds as such, it does set global policies such as trade taxes and constitutional standards.</description>
+ </general>
+</asset>

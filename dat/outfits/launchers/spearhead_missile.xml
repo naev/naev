@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Spearhead Missile">
+ <general>
+  <license>Medium Weapon License</license>
+  <mass>1</mass>
+  <price>1500</price>
+  <description>The Spearhead class shieldbreaker missile is one of Enygma Systems' more specialised pieces of hardware. Its sole function is to do massive damage to shielding. It uses a special energy discharge warhead that is quite effective at disrupting shields, but has little effect on physical objects. The Spearhead's limited agility make it primarily suited to fighting corvette class ships or heavier.</description>
+  <gfx_store>headhunter</gfx_store>
+ </general>
+ <specific type="ammo">
+  <gfx>headhunter</gfx>
+  <sound>missile</sound>
+  <sound_hit>medexp0</sound_hit>
+  <spfx_shield>ExpM</spfx_shield>
+  <spfx_armour>ExpM</spfx_armour>
+  <duration blowup="armour">7</duration>
+  <thrust>0</thrust>
+  <turn>35</turn>
+  <speed>600</speed>
+  <resist>12</resist>
+  <damage>
+   <type>shieldbreaker</type>
+   <penetrate>20</penetrate>
+   <physical>300</physical>
+   <disable>10</disable>
+  </damage>
+  <ai>smart</ai>
+ </specific>
+</outfit>
+
+
+<!-- Energy-Related Outfits -->

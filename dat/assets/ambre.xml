@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Ambre">
+ <pos>
+  <x>6807.927752</x>
+  <y>7498.946100</y>
+ </pos>
+ <GFX>
+  <space>M08.png</space>
+  <exterior>forest.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>6000000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Luxury Goods</commodity>
+  </commodities>
+  <description>Ambre was one of the planets that played a key role in the workers' revolts that eventually led to the establishment of House Dvaered. In those days, the planet was home to a considerable percentage of the Imperial workforce in this sector of space. Without laborers to work the mines and construction yards, the Empire stood to lose astronomical amounts of money each cycle. This was an important reason for the Emperor to grant House Dvaered its independence.</description>
+  <bar>Ambre's spaceport bar is never quiet. At regular intervals, all other noise in the bar is drowned out by the sound of cargo pods trundling across the railway just below. This is because the bar was built relatively late in the planet's development, as the Imperial government didn't see the need for one when Ambre was still little more than a labor camp. As a result, the bar had to be squeezed into one the only remaining space available, which was right over the freight lines.</bar>
+ </general>
+ <tech>
+  <item>Kinetic 1</item>
+  <item>Basic Outfits 1</item>
+  <item>Missiles 1</item>
+  <item>Low Tech Upgrades</item>
+ </tech>
+</asset>

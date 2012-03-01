@@ -478,9 +478,6 @@ void pilot_free( Pilot* p );
  */
 void pilot_setThrust( Pilot *p, double thrust );
 void pilot_setTurn( Pilot *p, double turn );
-void pilot_afterburn ( Pilot *p );
-void pilot_afterburnOver ( Pilot *p );
-
 
 /*
  * update

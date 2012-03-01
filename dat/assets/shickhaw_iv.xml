@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Shickhaw IV">
+ <pos>
+  <x>-1390.848765</x>
+  <y>43329.922840</y>
+ </pos>
+ <GFX>
+  <space>P01.png</space>
+  <exterior>traderoom.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

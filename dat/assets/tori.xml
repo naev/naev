@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Tori">
+ <pos>
+  <x>24881.073332</x>
+  <y>32050.673926</y>
+ </pos>
+ <GFX>
+  <space>M05.png</space>
+  <exterior>forest.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Frontier</faction>
+  <value>60.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>50000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land>land_hiclass</land>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>When the thirteenth colony ship, Yamato Nadeshiko, arrived at Tori, it was sterile. though it had both water and carbon in abundant supply, there was no life to be found. With the arrival of the mostly Asian human colonists, this changed. Human flora thrived on the planet, and within a century the planet had acquired a fully functional ecosystem. This marvel has inspired the inhabitants of Tori to leave much of the world's surface to nature. Though this means Tori's economoc potential remains largely untapped, the thriving tourist industry largely compensates.</description>
+  <bar>The spaceport bar is more than just functional. Since most new arrivals on the planet come here first, the authorities have taken pains to make the bar appealing and comfortable. Of course, the fact that Tori is a tourist attraction also means drinks are quite expensive in this bar...</bar>
+ </general>
+ <tech>
+  <item>Basic Civilian Ships</item>
+  <item>Basic Outfits 1</item>
+  <item>Low Tech Upgrades</item>
+  <item>Basic Trade Ships</item>
+ </tech>
+</asset>

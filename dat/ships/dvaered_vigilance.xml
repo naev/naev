@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Dvaered Vigilance">
+ <base_type>Vigilance</base_type>
+ <GFX sx="10" sy="10">vigilance_dvaered</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Destroyer</class>
+ <price>900000</price>
+ <fabricator>House Dvaered</fabricator>
+ <license>Medium Combat Vessel License</license>
+ <description>The Vigilance is the embodiment of Dvaered philosophy. Featuring immense energy reserves and six weapon hardpoints, it's designed to hit as hard as possible. Given its Dvaered origins, it possesses inferior technology relative to its counterparts.</description>
+ <health>
+  <absorb>19</absorb>
+  <armour>350</armour>
+  <armour_regen>0</armour_regen>
+ </health>
+ <characteristics>
+  <crew>15</crew>
+  <mass>410</mass>
+  <cargo>20</cargo>
+ </characteristics>
+ <slots>
+  <weapon size="large" x="28" y="-3" h="-0"/>
+  <weapon size="large" x="28" y="3" h="-0"/>
+  <weapon size="medium" x="10" y="-3" h="2"/>
+  <weapon size="medium" x="10" y="3" h="2"/>
+  <weapon size="medium" x="-22" y="-8" h="-0"/>
+  <weapon size="medium" x="-22" y="8" h="-0"/>
+  <utility size="medium" prop="systems">Basic Medium Systems</utility>
+  <utility size="large"/>
+  <utility size="large"/>
+  <utility size="medium"/>
+  <structure size="medium" prop="engines">Manufacturer Medium Engine</structure>
+  <structure size="medium" prop="hull">Unmodified Medium Hull</structure>
+  <structure size="large"/>
+  <structure size="medium"/>
+  <structure size="medium"/>
+  <structure size="medium"/>
+ </slots>
+ <stats>
+  <fuel_consumption>200</fuel_consumption>
+  <speed_mod>0</speed_mod>
+  <turn_mod>0</turn_mod>
+  <thrust_mod>0</thrust_mod>
+  <armour_mod>15</armour_mod>
+  <shield_mod>0</shield_mod>
+  <energy_mod>20</energy_mod>
+  <energy_regen_mod>0</energy_regen_mod>
+  <cargo_mod>-50</cargo_mod>
+  <ew_detect>10</ew_detect>
+  <ew_hide>0</ew_hide>
+ </stats>
+</ship>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Unicorp D-16 Heavy Plating">
+ <general>
+  <typename>Core Systems</typename>
+  <slot prop="hull">structure</slot>
+  <size>large</size>
+  <mass>800</mass>
+  <price>2500000</price>
+  <description>D-16 plating is a cost-effective armour configuration for capital ships. It is comparatively weak, but the low weight can be a plus to some.</description>
+  <gfx_store>nanobond</gfx_store>
+ </general>
+ <specific type="modification">
+  <cargo>50</cargo>
+  <absorb>27</absorb>
+  <armour>1300</armour>
+  <armour_regen>0</armour_regen>
+  <ew_hide>0</ew_hide>
+ </specific>
+</outfit>

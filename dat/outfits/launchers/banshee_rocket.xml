@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Banshee Rocket">
+ <general>
+  <license>Medium Weapon License</license>
+  <mass>2</mass>
+  <price>500</price>
+  <description>The Banshee class heavy rocket is sometimes labeled the "poor man's torpedo". It has a relatively weak engine, but packs a powerful punch that can do respectable damage even to capital ships.</description>
+  <gfx_store>banshee</gfx_store>
+ </general>
+ <specific type="ammo">
+  <gfx>banshee</gfx>
+  <sound>missile</sound>
+  <sound_hit>bansheeexp</sound_hit>
+  <spfx_shield>EmpS</spfx_shield>
+  <spfx_armour>EmpS</spfx_armour>
+  <duration blowup="shield">7</duration>
+  <thrust>0</thrust>
+  <speed>200</speed>
+  <damage>
+   <type>impact</type>
+   <penetrate>70</penetrate>
+   <physical>110</physical>
+   <disable>3</disable>
+  </damage>
+  <ai>dumb</ai>
+ </specific>
+</outfit>

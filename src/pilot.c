@@ -14,13 +14,12 @@
 
 #include "naev.h"
 
-#include <string.h>
 #include <math.h>
 #include <stdlib.h>
 #include <limits.h>
 
 #include "nxml.h"
-
+#include "nstring.h"
 #include "log.h"
 #include "weapon.h"
 #include "ndata.h"
@@ -777,7 +776,8 @@ void pilot_distress( Pilot *p, const char *msg, int ignore_int )
    for (i=0; i<pilot_nstack; i++) {
       /* Skip if unsuitable. */
       if ((pilot_stack[i]->ai == NULL) || (pilot_stack[i]->id == p->id) ||
-            (pilot_isFlag(pilot_stack[i], PILOT_DEAD)))
+            (pilot_isFlag(pilot_stack[i], PILOT_DEAD)) ||
+            (pilot_isFlag(pilot_stack[i], PILOT_DELETE)))
          continue;
 
       if (!ignore_int) {
@@ -1377,12 +1377,7 @@ void pilot_update( Pilot* pilot, const double dt )
          o->stimer -= dt;
          if (o->stimer < 0.) {
             if (o->state == PILOT_OUTFIT_ON) {
-               if (outfit_isAfterburner( o->outfit )) /* Afterburners */
-                  pilot_afterburnOver( pilot );
-               else {
-                  o->stimer = outfit_cooldown( o->outfit );
-                  o->state  = PILOT_OUTFIT_COOLDOWN;
-               }
+               pilot_outfitOff( pilot, o );
                nchg++;
             }
             else if (o->state == PILOT_OUTFIT_COOLDOWN) {
@@ -1441,28 +1436,24 @@ void pilot_update( Pilot* pilot, const double dt )
    }
    /* he's dead jim */
    else if (pilot_isFlag(pilot,PILOT_DEAD)) {
-      if (pilot->ptimer < 0.) { /* completely destroyed with final explosion */
-         if (pilot->id==PLAYER_ID) /* player.p handled differently */
-            player_destroyed();
-         pilot_delete(pilot);
-         return;
-      }
 
       /* pilot death sound */
-      if (!pilot_isFlag(pilot,PILOT_DEATH_SOUND) && (pilot->ptimer < 0.050)) {
+      if (!pilot_isFlag(pilot,PILOT_DEATH_SOUND) &&
+            (pilot->ptimer < 0.050)) {
 
          /* Play random explosion sound. */
-         snprintf(buf, sizeof(buf), "explosion%d", RNG(0,2));
+         nsnprintf(buf, sizeof(buf), "explosion%d", RNG(0,2));
          sound_playPos( sound_get(buf), pilot->solid->pos.x, pilot->solid->pos.y,
                pilot->solid->vel.x, pilot->solid->vel.y );
 
          pilot_setFlag(pilot,PILOT_DEATH_SOUND);
       }
       /* final explosion */
-      else if (!pilot_isFlag(pilot,PILOT_EXPLODED) && (pilot->ptimer < 0.200)) {
+      else if (!pilot_isFlag(pilot,PILOT_EXPLODED) &&
+            (pilot->ptimer < 0.200)) {
 
          /* Damage from explosion. */
-         a = sqrt(pilot->solid->mass);
+         a                 = sqrt(pilot->solid->mass);
          dmg.type          = dtype_get("explosion_splash");
          dmg.damage        = MAX(0., 2. * (a * (1. + sqrt(pilot->fuel + 1.) / 28.)));
          dmg.penetration   = 1.; /* Full penetration. */
@@ -1495,8 +1486,18 @@ void pilot_update( Pilot* pilot, const double dt )
 
          /* set explosions */
          l = (pilot->id==PLAYER_ID) ? SPFX_LAYER_FRONT : SPFX_LAYER_BACK;
-         if (RNGF() > 0.8) spfx_add( spfx_get("ExpM"), px, py, vx, vy, l );
-         else spfx_add( spfx_get("ExpS"), px, py, vx, vy, l );
+         if (RNGF() > 0.8)
+            spfx_add( spfx_get("ExpM"), px, py, vx, vy, l );
+         else
+            spfx_add( spfx_get("ExpS"), px, py, vx, vy, l );
+      }
+
+      /* completely destroyed with final explosion */
+      if (pilot->ptimer < 0.) {
+         if (pilot->id==PLAYER_ID) /* player.p handled differently */
+            player_destroyed();
+         pilot_delete(pilot);
+         return;
       }
    }
    else if (pilot->armour <= 0.) { /* PWNED */
@@ -1563,23 +1564,7 @@ void pilot_update( Pilot* pilot, const double dt )
    else if (pilot->energy < 0.) {
       pilot->energy = 0.;
       /* Stop all on outfits. */
-      for (i=0; i<pilot->noutfits; i++) {
-         o = pilot->outfits[i];
-         /* Picky about our outfits. */
-         if (o->outfit == NULL)
-            continue;
-         if (!o->active)
-            continue;
-         if (o->state == PILOT_OUTFIT_ON) {
-            if (outfit_isAfterburner( o->outfit )) /* Afterburners */
-               pilot_afterburnOver( pilot );
-            else {
-               o->stimer = outfit_cooldown( o->outfit );
-               o->state  = PILOT_OUTFIT_COOLDOWN;
-            }
-            nchg++;
-         }
-      }
+      nchg += pilot_outfitOffAll( pilot );
    }
 
    /* Must recalculate stats because something changed state. */
@@ -1630,18 +1615,10 @@ void pilot_update( Pilot* pilot, const double dt )
    if (!pilot_isFlag(pilot, PILOT_HYPERSPACE)) { /* limit the speed */
 
       /* pilot is afterburning */
-      if (pilot_isFlag(pilot, PILOT_AFTERBURNER) && /* must have enough energy left */
-               (pilot->energy > pilot->afterburner->outfit->u.afb.energy * dt)) {
-         pilot->solid->speed_max = pilot->speed +
-               pilot->speed * pilot->afterburner->outfit->u.afb.speed *
-               MIN( 1., pilot->afterburner->outfit->u.afb.mass_limit/pilot->solid->mass);
-
-         if (pilot->id == PLAYER_ID)
-            spfx_shake( 0.75*SHAKE_DECAY * dt); /* shake goes down at quarter speed */
-
-         pilot->energy -= pilot->afterburner->outfit->u.afb.energy * dt; /* energy loss */
+      if (pilot_isFlag(pilot, PILOT_AFTERBURNER) && pilot->id == PLAYER_ID) {
+         spfx_shake( 0.75*SHAKE_DECAY * dt); /* shake goes down at quarter speed */
       }
-      else /* normal limit */
+      else
          pilot->solid->speed_max = pilot->speed;
    }
    else
@@ -1652,7 +1629,6 @@ void pilot_update( Pilot* pilot, const double dt )
    gl_getSpriteFromDir( &pilot->tsx, &pilot->tsy,
          pilot->ship->gfx_space, pilot->solid->dir );
 }
-
 
 /**
  * @brief Activate the afterburner.
@@ -2072,6 +2048,9 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
 
    /* cargo - must be set before calcStats */
    pilot->cargo_free = pilot->ship->cap_cargo; /* should get redone with calcCargo */
+
+   /* Initialize heat. */
+   pilot_heatReset( pilot );
 
    /* set the pilot stats based on his ship and outfits */
    pilot_calcStats( pilot );
@@ -2567,7 +2546,7 @@ void pilots_renderOverlay( double dt )
  */
 void pilot_clearTimers( Pilot *pilot )
 {
-   int i;
+   int i, n;
    PilotOutfitSlot *o;
 
    pilot->ptimer     = 0.; /* Pilot timer. */
@@ -2576,12 +2555,20 @@ void pilot_clearTimers( Pilot *pilot )
    pilot->dtimer     = 0.; /* Disable timer. */
    for (i=0; i<MAX_AI_TIMERS; i++)
       pilot->timer[i] = 0.; /* Specific AI timers. */
+   n = 0;
    for (i=0; i<pilot->noutfits; i++) {
       o = pilot->outfits[i];
       o->timer    = 0.; /* Last used timer. */
       o->stimer   = 0.; /* State timer. */
-      o->state    = PILOT_OUTFIT_OFF; /* Set off. */
+      if (o->state != PILOT_OUTFIT_OFF) {
+         o->state    = PILOT_OUTFIT_OFF; /* Set off. */
+         n++;
+      }
    }
+
+   /* Must recalculate stats. */
+   if (n > 0)
+      pilot_calcStats( pilot );
 }
 
 

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Shakar III">
+ <pos>
+  <x>6359.007813</x>
+  <y>-7100.286078</y>
+ </pos>
+ <GFX>
+  <space>moon-G01.png</space>
+  <exterior>aquatic.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.500000</hide>
+  <services/>
+ </general>
+</asset>

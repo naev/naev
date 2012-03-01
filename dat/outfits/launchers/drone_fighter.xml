@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Drone Fighter">
+ <general>
+  <license>Light Combat Vessel License</license>
+  <mass>15</mass>
+  <price>700000</price>
+  <gfx_store>drone_fighter</gfx_store>
+  <description>The Drone is a fearsome craft using very advanced AI techniques to be able to pilot itself. The fact it doesn't need a pilot nor life support systems makes it a much smaller and compact vessel.</description>
+ </general>
+ <specific type="fighter">
+  <ship>Drone</ship>
+ </specific>
+</outfit>
+<!-- Licenses -->

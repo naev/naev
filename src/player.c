@@ -58,6 +58,7 @@
 #include "player_gui.h"
 #include "start.h"
 #include "input.h"
+#include "nstring.h"
 
 
 /*
@@ -344,7 +345,7 @@ void player_new (void)
       return;
    }
 
-   if (nfile_fileExists("%ssaves/%s.ns", nfile_basePath(), player.name)) {
+   if (nfile_fileExists("%ssaves/%s.ns", nfile_dataPath(), player.name)) {
       r = dialogue_YesNo("Overwrite",
             "You already have a pilot named %s. Overwrite?",player.name);
       if (r==0) { /* no */
@@ -390,6 +391,7 @@ void player_new (void)
 static int player_newMake (void)
 {
    Ship *ship;
+   const char *shipname;
    double x,y;
 
    /* Time. */
@@ -401,11 +403,13 @@ static int player_newMake (void)
 
    /* Try to create the pilot, if fails reask for player name. */
    ship = ship_get( start_ship() );
+   shipname = start_shipname();
    if (ship==NULL) {
       WARN("Ship not properly set by module.");
       return -1;
    }
-   if (player_newShip( ship, NULL, 0, 0 ) == NULL) {
+   /* Setting a default name in the XML prevents naming prompt. */
+   if (player_newShip( ship, shipname, 0, (shipname==NULL) ? 0 : 1 ) == NULL) {
       player_new();
       return -1;
    }
@@ -467,7 +471,7 @@ Pilot* player_newShip( Ship* ship, const char *def_name,
       ship_name = malloc( len );
       strncpy( ship_name, def_name, len );
       while (player_hasShip(ship_name)) {
-         snprintf( ship_name, len, "%s %d", def_name, i );
+         nsnprintf( ship_name, len, "%s %d", def_name, i );
          i++;
       }
    }
@@ -1444,6 +1448,9 @@ void player_land (void)
       /* Stop accelerating. */
       player_accelOver();
 
+      /* Stop all on outfits. */
+      pilot_outfitOffAll( player.p );
+
       /* Start landing. */
       if (runcount == 0)
          landtarget = player.p->nav_planet;
@@ -1884,12 +1891,25 @@ void player_targetEscort( int prev )
  */
 void player_targetNearest (void)
 {
-   unsigned int t;
+   unsigned int t, dt, old;
+   double d;
 
-   t = player.p->target;
-   pilot_setTarget( player.p, pilot_getNearestPilot(player.p) );
+   d = pilot_getNearestPos( player.p, &dt, player.p->solid->pos.x,
+         player.p->solid->pos.y, 1 );
+   t = dt;
 
-   if ((player.p->target != PLAYER_ID) && (t != player.p->target)) {
+   /* Disabled ships are typically only valid if within 500 px of the player. */
+   if ((d > 250000) && (pilot_isDisabled( pilot_get(dt) ))) {
+      t = pilot_getNearestPilot(player.p);
+      /* Try to target a disabled ship if there are no active ships in range. */
+      if (t == PLAYER_ID)
+         t = dt;
+   }
+
+   old = player.p->target;
+   pilot_setTarget( player.p, t );
+
+   if ((player.p->target != PLAYER_ID) && (old != player.p->target)) {
       gui_forceBlink();
       player_soundPlayGUI( snd_target, 1 );
    }
@@ -1905,15 +1925,15 @@ void player_screenshot (void)
 {
    char filename[PATH_MAX];
 
-   if (nfile_dirMakeExist("%sscreenshots", nfile_basePath())) {
+   if (nfile_dirMakeExist("%s", nfile_dataPath()) < 0 || nfile_dirMakeExist("%sscreenshots", nfile_dataPath()) < 0) {
       WARN("Aborting screenshot");
       return;
    }
 
    /* Try to find current screenshots. */
    for ( ; screenshot_cur < 1000; screenshot_cur++) {
-      snprintf( filename, PATH_MAX, "%sscreenshots/screenshot%03d.png",
-            nfile_basePath(), screenshot_cur );
+      nsnprintf( filename, PATH_MAX, "%sscreenshots/screenshot%03d.png",
+            nfile_dataPath(), screenshot_cur );
       if (!nfile_fileExists( filename ))
          break;
    }

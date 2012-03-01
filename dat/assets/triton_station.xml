@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Triton Station">
+ <pos>
+  <x>-589.969301</x>
+  <y>15169.574360</y>
+ </pos>
+ <GFX>
+  <space>station-shipyard.png</space>
+  <exterior>station05.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>50.000000</value>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>1500</population>
+  <hide>0.750000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <commodity/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Triton Station is a shipyard station that's owned by the Empire, but most of its compartments have been leased by the Nexus corporation. The company produces combat-capable ships here, and given the stability of the neighboring systems, there certainly is a market for them.</description>
+  <bar>The spaceport bar is a public facility onboard the station, and so the Empire runs it. As such, the bar complies with galactic standards, something that might not have been the case if Nexus had been in charge.</bar>
+ </general>
+ <tech>
+  <item>Light Civilian Combat Ships</item>
+  <item>Basic Civilian Ships</item>
+ </tech>
+</asset>

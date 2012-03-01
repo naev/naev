@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Kestrel">
+ <base_type>Kestrel</base_type>
+ <GFX sx="10" sy="10">kestrel</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Cruiser</class>
+ <price>3000000</price>
+ <fabricator>Krain Industries</fabricator>
+ <license>Heavy Combat Vessel License</license>
+ <description>The ship that single-handedly put Krain Industries on the map, the Kestrel was designed to be a sleek heavy assault cruiser. Generally more fragile than other cruisers, it manages to combine excellent manoeuvrability and firepower with state-of-the-art electronics, making for a truly fearsome ship in the hands of an able captain.</description>
+ <health>
+  <absorb>25</absorb>
+  <armour>500</armour>
+  <armour_regen>0</armour_regen>
+ </health>
+ <characteristics>
+  <crew>27</crew>
+  <mass>1400</mass>
+  <cargo>25</cargo>
+ </characteristics>
+ <slots>
+  <weapon size="large" x="-23" y="-15" h="5"/>
+  <weapon size="large" x="-23" y="15" h="5"/>
+  <weapon size="large" x="44" y="0" h="0"/>
+  <weapon size="large" x="-6" y="0" h="12"/>
+  <weapon size="medium" x="-24" y="-8" h="8"/>
+  <weapon size="medium" x="-24" y="8" h="8"/>
+  <utility size="large" prop="systems">Basic Large Systems</utility>
+  <utility size="large"/>
+  <utility size="large"/>
+  <utility size="large"/>
+  <utility size="large"/>
+  <utility size="medium"/>
+  <structure size="large" prop="engines">Manufacturer Large Engine</structure>
+  <structure size="large" prop="hull">Unmodified Large Hull</structure>
+  <structure size="large"/>
+  <structure size="large"/>
+  <structure size="large"/>
+  <structure size="medium"/>
+ </slots>
+ <stats>
+  <fuel_consumption>400</fuel_consumption>
+  <speed_mod>10</speed_mod>
+  <turn_mod>10</turn_mod>
+  <thrust_mod>0</thrust_mod>
+  <armour_mod>0</armour_mod>
+  <shield_mod>0</shield_mod>
+  <energy_mod>0</energy_mod>
+  <energy_regen_mod>10</energy_regen_mod>
+  <cargo_mod>-20</cargo_mod>
+  <ew_detect>0</ew_detect>
+  <ew_hide>0</ew_hide>
+ </stats>
+</ship>

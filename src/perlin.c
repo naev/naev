@@ -47,7 +47,7 @@
 
 #include <math.h>
 #include <stdlib.h>
-#include <string.h>
+#include "nstring.h"
 
 #include "SDL.h"
 #include "SDL_thread.h"
@@ -170,9 +170,9 @@ static float lattice1( perlin_data_t *pdata, int ix, float fx )
 }
 
 
-#define SWAP(a, b, t)      t = a; a = b; b = t /**< Swaps two values. */
-#define FLOOR(a) ((int)a - (a < 0 && a != (int)a)) /**< Limits to 0. */
-#define CUBIC(a)  ( a * a * (3 - 2*a) ) /**< Does cubic filtering. */
+#define SWAP(a, b, t)      (t) = (a); (a) = (b); (b) = (t) /**< Swaps two values. */
+#define FLOOR(a)           ((int)(a) - ((a) < 0 && (a) != (int)(a))) /**< Limits to 0. */
+#define CUBIC(a)           ( (a) * (a) * (3 - 2*(a)) ) /**< Does cubic filtering. */
 
 
 /**
@@ -476,7 +476,7 @@ float noise_turbulence1( perlin_data_t* pdata, float f[1], int octaves )
    /* Inner loop of spectral construction, where the fractal is built */
    for(i=0; i<octaves; i++)
    {
-      value += ABS(noise_get2(pdata,tf)) * pdata->exponent[i];
+      value += ABS(noise_get1(pdata,tf)) * pdata->exponent[i];
       tf[0] *= pdata->lacunarity;
    }
 
@@ -656,9 +656,10 @@ float* noise_genNebulaMap( const int w, const int h, const int n, float rug )
    zoom        = rug * ((float)h/768.)*((float)w/1024.);
 
    /* create noise and data */
-   noise       = noise_new( 3, hurst, lacunarity );
+   noise      = noise_new( 3, hurst, lacunarity );
    nebula     = malloc(sizeof(float)*w*h*n);
    if (nebula == NULL) {
+      noise_delete( noise );
       WARN("Out of memory!");
       return NULL;
    }
@@ -746,8 +747,9 @@ float* noise_genNebulaPuffMap( const int w, const int h, float rug )
 
    /* create noise and data */
    noise       = noise_new( 2, hurst, lacunarity );
-   nebula     = malloc(sizeof(float)*w*h);
+   nebula      = malloc(sizeof(float)*w*h);
    if (nebula == NULL) {
+      noise_delete( noise );
       WARN("Out of memory!");
       return NULL;
    }

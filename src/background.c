@@ -29,6 +29,7 @@
 #include "nlua_bkg.h"
 #include "camera.h"
 #include "nebula.h"
+#include "nstring.h"
 
 
 /**
@@ -426,7 +427,7 @@ static lua_State* background_create( const char *name )
    lua_State *L;
 
    /* Create file name. */
-   snprintf( path, sizeof(path), "dat/bkg/%s.lua", name );
+   nsnprintf( path, sizeof(path), "dat/bkg/%s.lua", name );
 
    /* Create the Lua state. */
    L = nlua_newState();

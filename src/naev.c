@@ -24,10 +24,11 @@
 
 
 /* global */
-#include <string.h> /* strdup */
+#include "nstring.h" /* strdup */
 
 #if HAS_POSIX
 #include <time.h>
+#include <unistd.h>
 #endif /* HAS_POSIX */
 
 #if defined(HAVE_FENV_H) && defined(DEBUGGING)
@@ -193,8 +194,8 @@ int main( int argc, char** argv )
    debug_sigInit();
 
    /* Create the home directory if needed. */
-   if (nfile_dirMakeExist("%s", nfile_basePath()))
-      WARN("Unable to create naev directory '%s'", nfile_basePath());
+   if (nfile_dirMakeExist("%s", nfile_configPath()))
+      WARN("Unable to create config directory '%s'", nfile_configPath());
 
    /* Must be initialized before input_init is called. */
    if (SDL_InitSubSystem(SDL_INIT_VIDEO) < 0) {
@@ -220,7 +221,22 @@ int main( int argc, char** argv )
    input_init();
 
    /* Set the configuration. */
-   snprintf(buf, PATH_MAX, "%s"CONF_FILE, nfile_basePath());
+   nsnprintf(buf, PATH_MAX, "%s"CONF_FILE, nfile_configPath());
+
+#if HAS_UNIX
+   /* TODO get rid of this cruft ASAP. */
+   int oldconfig = 0;
+   if (!nfile_fileExists( buf )) {
+      char *home, buf2[PATH_MAX];
+      home = SDL_getenv( "HOME" );
+      if (home != NULL) {
+         nsnprintf( buf2, PATH_MAX, "%s/.naev/"CONF_FILE, home );
+         if (nfile_fileExists( buf2 ))
+            oldconfig = 1;
+      }
+   }
+#endif /* HAS_UNIX */
+
    conf_setDefaults(); /* set the default config values */
    conf_loadConfig(buf); /* Lua to parse the configuration file */
    conf_parseCLI( argc, argv ); /* parse CLI arguments */
@@ -332,6 +348,71 @@ int main( int argc, char** argv )
    if ((SDL_GetTicks() - time_ms) < NAEV_INIT_DELAY)
       SDL_Delay( NAEV_INIT_DELAY - (SDL_GetTicks() - time_ms) );
    fps_init(); /* initializes the time_ms */
+
+#if HAS_UNIX
+   /* Tell the player to migrate their configuration files out of ~/.naev */
+   /* TODO get rid of this cruft ASAP. */
+   if (oldconfig) {
+      char path[PATH_MAX], *script, *home;
+      uint32_t scriptsize;
+      int ret;
+
+      nsnprintf( path, PATH_MAX, "%s/naev-confupdate.sh", ndata_getDirname() );
+      home = SDL_getenv("HOME");
+      ret = dialogue_YesNo( "Warning", "Your configuration files are in a deprecated location and must be migrated:\n"
+            "   \er%s/.naev/\e0\n\n"
+            "The update script can likely be found in your Naev data directory:\n"
+            "   \er%s\e0\n\n"
+            "Would you like to run it automatically?", home, path );
+
+      /* Try to run the script. */
+      if (ret) {
+         ret = -1;
+         /* Running from ndata. */
+         if (ndata_getPath() != NULL) {
+            script = ndata_read( "naev-confupdate.sh", &scriptsize );
+            if (script != NULL)
+               ret = system(script);
+         }
+
+         /* Running from laid-out files or ndata_read failed. */
+         if ((nfile_fileExists(path)) && (ret == -1)) {
+            script = nfile_readFile( (int*)&scriptsize, path );
+            if (script != NULL)
+               ret = system(script);
+         }
+
+         /* We couldn't find the script. */
+         if (ret == -1) {
+            dialogue_alert( "The update script was not found at:\n\er%s\e0\n\n"
+                  "Please locate and run it manually.", path );
+         }
+         /* Restart, as the script succeeded. */
+         else if (!ret) {
+            dialogue_msg( "Update Completed",
+                  "Configuration files were successfully migrated. Naev will now restart." );
+            execv(argv[0], argv);
+         }
+         else { /* I sincerely hope this else is never hit. */
+            dialogue_alert( "The update script encountered an error. Please exit Naev and move your config and save files manually:\n\n"
+                  "\er%s/%s\e0 =>\n   \eD%s\e0\n\n"
+                  "\er%s/%s\e0 =>\n   \eD%s\e0\n\n"
+                  "\er%s/%s\e0 =>\n   \eD%snebula/\e0\n\n",
+                  home, ".naev/conf.lua", nfile_configPath(),
+                  home, ".naev/{saves,screenshots}/", nfile_dataPath(),
+                  home, ".naev/gen/*.png", nfile_cachePath() );
+         }
+      }
+      else {
+         dialogue_alert(
+               "To manually migrate your configuration files "
+               "please exit Naev and run the update script, "
+               "likely found in your Naev data directory:\n"
+               "   \er%s/naev-confupdate.sh\e0", home, path );
+      }
+   }
+#endif
+
    /*
     * main loop
     */
@@ -430,7 +511,7 @@ void loadscreen_load (void)
    cam_setZoom( conf.zoom_far );
 
    /* Load the texture */
-   snprintf( file_path, PATH_MAX, "gfx/loading/%s", loadscreens[ RNG_SANE(0,nload-1) ] );
+   nsnprintf( file_path, PATH_MAX, "gfx/loading/%s", loadscreens[ RNG_SANE(0,nload-1) ] );
    loading = gl_newImage( file_path, 0 );
 
    /* Create the stars. */
@@ -892,7 +973,7 @@ static void window_caption (void)
    npng_t *npng;
 
    /* Set caption. */
-   snprintf(buf, PATH_MAX ,APPNAME" - %s", ndata_name());
+   nsnprintf(buf, PATH_MAX ,APPNAME" - %s", ndata_name());
    SDL_WM_SetCaption(buf, APPNAME);
 
    /* Set icon. */
@@ -923,7 +1004,7 @@ char *naev_version( int long_version )
 {
    /* Set short version if needed. */
    if (short_version[0] == '\0')
-      snprintf( short_version, sizeof(short_version),
+      nsnprintf( short_version, sizeof(short_version),
 #if VREV < 0
             "%d.%d.0-beta%d",
             VMAJOR, VMINOR, ABS(VREV)
@@ -936,7 +1017,7 @@ char *naev_version( int long_version )
    /* Set up the long version. */
    if (long_version) {
       if (human_version[0] == '\0')
-         snprintf( human_version, sizeof(human_version),
+         nsnprintf( human_version, sizeof(human_version),
                " "APPNAME" v%s%s - %s", short_version,
 #ifdef DEBUGGING
                " debug",

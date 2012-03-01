@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Gaula">
+ <pos>
+  <x>22862.808960</x>
+  <y>-6234.902954</y>
+ </pos>
+ <GFX>
+  <space>O00.png</space>
+  <exterior>aquatic2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>O</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+  </commodities>
+  <description>Soromid space is low on worlds suitable for agriculture, so the Soromid need to rely on alternative food production. Gaula, an aquatic planet, is one such alternative. Vast stretches of the ocean floor are taken up by enormous submarine farms where certain kinds of underwater flora are cultivated and harvested, to be processed into food by the factory station up above.</description>
+  <bar>The spaceport and its accompanying support facilities are floating on a platform above one of the primary farms on Gaula. The water is strictly off-limits, and anyone foolish enough to dump waste into the ocean is harshly penalized.</bar>
+ </general>
+</asset>

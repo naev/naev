@@ -20,6 +20,7 @@
 #include "nlua_faction.h"
 #include "nlua_ship.h"
 #include "nlua_time.h"
+#include "nstring.h"
 
 
 /*
@@ -232,7 +233,7 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
          }
          else if (lua_istime(L,-1)) {
             lt = lua_totime(L,-1);
-            snprintf( buf, sizeof(buf), "%"PRId64, lt->t );
+            nsnprintf( buf, sizeof(buf), "%"PRId64, lt->t );
             nxml_saveData( writer, "time",
                   name, buf, keynum );
             /* key, value */

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Shiarta">
+ <pos>
+  <x>3548.820120</x>
+  <y>8089.172879</y>
+ </pos>
+ <GFX>
+  <space>P04.png</space>
+  <exterior>snow.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>50.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>P</class>
+  <population>150000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Where Oma is too hot, Shiarta is too cold for comfort. Still, the Empire is always in need of raw materials, and Shiarta is rich in same.</description>
+  <bar>The spaceport bar sells only a select number of drinks. Like most mining worlds, there is not much in the way of luxury to be found on Shiarta. There is, however, one small piece of good news: ice cubes are free of charge.</bar>
+ </general>
+ <tech>
+  <item>Laser 1</item>
+  <item>Basic Outfits 1</item>
+  <item>Basic Outfits 2</item>
+  <item>Missiles 1</item>
+ </tech>
+</asset>

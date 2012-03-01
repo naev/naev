@@ -14,7 +14,6 @@
 #include "naev.h"
 
 #include <stdlib.h>
-#include <string.h>
 
 #include "player.h"
 #include "nxml.h"
@@ -57,12 +56,11 @@
 #include "nlua_gui.h"
 #include "nlua_tex.h"
 #include "gui_omsg.h"
+#include "nstring.h"
 
 
 #define XML_GUI_ID   "GUIs" /**< XML section identifier for GUI document. */
 #define XML_GUI_TAG  "gui" /**<  XML Section identifier for GUI tags. */
-
-#define GUI_GFX      "gfx/gui/" /**< Location of the GUI graphics. */
 
 #define INTERFERENCE_LAYERS      16 /**< Number of interference layers. */
 #define INTERFERENCE_CHANGE_DT   0.1 /**< Speed to change at. */
@@ -336,12 +334,12 @@ void player_messageRaw( const char *str )
 
       /* Add the new one */
       if (p == 0) {
-         snprintf( mesg_stack[mesg_pointer].str, i+1, "%s", &str[p] );
+         nsnprintf( mesg_stack[mesg_pointer].str, i+1, "%s", &str[p] );
          gl_printRestoreInit( &mesg_stack[mesg_pointer].restore );
       }
       else {
          mesg_stack[mesg_pointer].str[0] = '\t'; /* Hack to indent. */
-         snprintf( &mesg_stack[mesg_pointer].str[1], i+1, "%s", &str[p] );
+         nsnprintf( &mesg_stack[mesg_pointer].str[1], i+1, "%s", &str[p] );
          gl_printStoreMax( &mesg_stack[mesg_pointer].restore, str, p );
       }
       mesg_stack[mesg_pointer].t = mesg_timeout;
@@ -1100,12 +1098,12 @@ static void gui_renderMessages( double dt )
    h  = conf.mesg_visible*gl_defFont.h*1.2;
    gl_renderRect( x-2., y-2., gui_mesg_w-13., h+4., &cBlackHilight );
 
+   /* Set up position. */
+   vx = x;
+   vy = y;
+
    /* Must be run here. */
    if (mesg_viewpoint != -1) {
-      /* Set up position. */
-      vx = x;
-      vy = y;
-
       /* Data. */
       hs = h*(double)conf.mesg_visible/(double)mesg_max;
       o  = mesg_pointer - mesg_viewpoint;
@@ -2048,7 +2046,7 @@ int gui_load( const char* name )
    gui_cleanup();
 
    /* Open file. */
-   snprintf( path, sizeof(path), "dat/gui/%s.lua", name );
+   nsnprintf( path, sizeof(path), "dat/gui/%s.lua", name );
    buf = ndata_read( path, &bufsize );
    if (buf == NULL) {
       WARN("Unable to find GUI '%s'.", path );

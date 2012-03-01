@@ -15,7 +15,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
+#include "nstring.h"
 #include <math.h>
 
 #include <lua.h>
@@ -53,6 +53,7 @@ static int playerL_msgClear( lua_State *L );
 static int playerL_omsgAdd( lua_State *L );
 static int playerL_omsgChange( lua_State *L );
 static int playerL_omsgRm( lua_State *L );
+static int playerL_allowSave( lua_State *L );
 /* Faction stuff. */
 static int playerL_getRating( lua_State *L );
 static int playerL_getPosition( lua_State *L );
@@ -93,6 +94,7 @@ static const luaL_reg playerL_methods[] = {
    { "omsgAdd", playerL_omsgAdd },
    { "omsgChange", playerL_omsgChange },
    { "omsgRm", playerL_omsgRm },
+   { "allowSave", playerL_allowSave },
    { "getRating", playerL_getRating },
    { "pos", playerL_getPosition },
    { "pilot", playerL_getPilot },
@@ -344,6 +346,27 @@ static int playerL_omsgRm( lua_State *L )
    unsigned int id;
    id       = luaL_checklong(L,1);
    omsg_rm( id );
+   return 0;
+}
+/**
+ * @brief Sets player save ability.
+ *
+ * @usage player.allowSave( b )
+ *    @luaparam b true if the player is allowed to save, false otherwise. Defaults to true.
+ * @luafunc allowSave( b )
+ */
+static int playerL_allowSave( lua_State *L )
+{
+   unsigned int b;
+   if (lua_gettop(L)==0)
+      b = 1;
+   else
+      b = lua_toboolean(L, 1); 
+
+   if (b)
+      player_rmFlag(PLAYER_NOSAVE);
+   else
+      player_setFlag(PLAYER_NOSAVE);
    return 0;
 }
 /**

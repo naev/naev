@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Missions>
  <mission name="Tutorial Mission">
   <lua>tutorial/tutmis</lua>
@@ -259,6 +259,15 @@
    <done>Empire Shipping 3</done>
    <faction>Dvaered</faction>
   </avail>
+ </mission>
+ <mission name="Assault on Unicorn">
+  <lua>dvaered/assault_on_unicorn</lua>
+  <avail>
+    <cond>faction.playerStanding("Dvaered") &gt; 5 and player.getRating() &gt; 100 and system.cur() == system.get("Pudas") and not var.peek("assault_on_unicorn_check")</cond>
+   <chance>75</chance>
+   <location>Computer</location>
+   <done>Empire Shipping 3</done>
+   </avail>
  </mission>
  <mission name="Defend the System 1">
   <lua>neutral/dts_00</lua>
@@ -670,6 +679,29 @@
    <chance>50</chance>
    <location>Computer</location>
    <system>Shakar</system>
+  </avail>
+ </mission>
+ <mission name="The Runaway">
+  <lua>runaway/runaway_cynthia</lua>
+  <flags>
+    <unique />
+  </flags>
+  <avail>
+   <chance>110</chance>
+   <location>Bar</location>
+   <system>Gamma Polaris</system>
+  </avail>
+ </mission>
+ <mission name="The Search for Cynthia">
+  <lua>runaway/runaway_search</lua>
+  <flags>
+    <unique />
+  </flags>
+  <avail>
+   <cond>player.misnDone("The Runaway")</cond>
+   <chance>110</chance>
+   <location>Bar</location>
+   <system>Goddard</system>
   </avail>
  </mission>
 </Missions>

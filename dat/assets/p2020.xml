@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="P2020">
+ <pos>
+  <x>-19460.000000</x>
+  <y>28280.000000</y>
+ </pos>
+ <GFX>
+  <space>moon-I01.png</space>
+  <exterior>station03.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.500000</hide>
+  <services/>
+ </general>
+</asset>

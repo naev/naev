@@ -11,6 +11,7 @@ appicondir = $(datadir)/pixmaps
 appicon_DATA = extras/logos/naev.png
 Graphicsdir = $(datadir)/applications
 Graphics_DATA = naev.desktop
+dist_pkgdata_DATA = naev-confupdate.sh
 
 dist_man6_MANS = naev.6
 dist_doc_DATA = AUTHORS README TODO LICENSE
@@ -48,14 +49,14 @@ $(MKSPR):
 $(DATA_ARCHIVE): $(PACK) VERSION
 	@echo " PACK   $(DATA_ARCHIVE)"
 	cd "$(top_srcdir)" && \
-	$(abs_top_builddir)/$(PACK) "$(abs_top_builddir)/$(DATA_ARCHIVE)" \
-	  AUTHORS VERSION \
-	  $$(find ai      -type f -name '*.lua'; \
-	     find gfx     -type f -name '*.png'; \
+	  (find AUTHORS VERSION naev-confupdate.sh -print0; \
+	     find ai      -type f -name '*.lua' -print0; \
+	     find gfx     -type f -name '*.png' -print0; \
 	     find snd     -type f \
-	          \( -name '*.ogg' -o -name '*.wav' -o -name '*.lua' \); \
-	     find scripts -type f -name '*.lua'; \
-	     find dat     -type f);
+	          \( -name '*.ogg' -o -name '*.wav' -o -name '*.lua' \) -print0; \
+	     find scripts -type f -name '*.lua' -print0; \
+	     find dat     -type f -print0) | xargs -0 \
+	$(abs_top_builddir)/$(PACK) "$(abs_top_builddir)/$(DATA_ARCHIVE)";
 else
 utils:
 

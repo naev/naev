@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Freshwater Station">
+ <pos>
+  <x>-13589.830053</x>
+  <y>11789.469068</y>
+ </pos>
+ <GFX>
+  <space>station-agriculture.png</space>
+  <exterior>traderoom.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <value>10.000000</value>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>200</population>
+  <hide>0.750000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+  </commodities>
+  <description>After the success of the Empire's experimental INNS-1, the Sirii saw potential for off-world crop growing in the Anarbalis system. Aptly named, Freshwater Station produces carefully engineered bumper crops for consumption by Sirian worlds in the immediate vicinity.</description>
+  <bar>The bar is dominated by the likeness of the Touched who officially blessed the station. The local Sirian workers seem to take particular pride in the visit, since the Touched usually operate only in population centers.</bar>
+ </general>
+</asset>
