@@ -251,6 +251,40 @@ char* nfile_dirname( char *path )
 }
 
 
+#if HAS_POSIX
+static int mkpath( const char *path, mode_t mode )
+{
+   char opath[PATH_MAX];
+   char *p;
+   size_t len;
+   int ret;
+
+   strncpy( opath, path, sizeof(opath) );
+   len = strlen(opath);
+   if (opath[len - 1] == '/')
+      opath[len - 1] = '\0';
+   for (p = opath; *p; p++)
+      if (*p == '/') {
+         *p = '\0';
+         if (access(opath, F_OK)) {
+            ret = mkdir( opath, mode );
+            if (ret)
+               return ret;
+         }
+         *p = '/';
+      }
+   if (access(opath, F_OK)) { /* if path is not terminated with / */
+      ret = mkdir( opath, mode );
+      if (ret)
+         return ret;
+   }
+
+   return 0;
+}
+#endif /* HAS_POSIX */
+
+
+
 /**
  * @brief Creates a directory if it doesn't exist.
  *
@@ -275,7 +309,7 @@ int nfile_dirMakeExist( const char* path, ... )
       return 0;
 
 #if HAS_POSIX
-   if (mkdir(file, S_IRWXU | S_IRWXG | S_IRWXO) < 0) {
+   if (mkpath(file, S_IRWXU | S_IRWXG | S_IRWXO) < 0) {
       WARN("Dir '%s' does not exist and unable to create: %s", file, strerror(errno));
       return -1;
    }
