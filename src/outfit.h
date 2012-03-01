@@ -206,32 +206,37 @@ typedef struct OutfitAmmoData_ {
  */
 typedef struct OutfitModificationData_ {
    /* Active information (if applicable). */
-   int active;       /**< Outfit is active. */
-   double duration;  /**< Time the active outfit stays on (in seconds). */
-   double cooldown;  /**< Time the active outfit stays off after it's duration (in seconds). */
+   int active; /**< Outfit is active. */
+   double duration; /**< Time the active outfit stays on (in seconds). */
+   double cooldown; /**< Time the active outfit stays off after it's duration (in seconds). */
 
    /* Movement. */
-   double thrust;    /**< Maximum thrust modifier. */
+   double thrust; /**< Maximum thrust modifier. */
    double thrust_rel; /**< Relative thrust modifier. */
-   double turn;      /**< Maximum turn modifier. */
-   double turn_rel;  /**< Relative turn modifier. */
-   double speed;     /**< Maximum speed modifier. */
+   double turn; /**< Maximum turn modifier. */
+   double turn_rel; /**< Relative turn modifier. */
+   double speed; /**< Maximum speed modifier. */
    double speed_rel; /**< Relative speed modifier. */
 
    /* Health. */
-   double armour;    /**< Maximum armour modifier. */
+   double armour; /**< Maximum armour modifier. */
+   double armour_rel; /**< Relative to armour base modifier. */
    double armour_regen; /**< Armour regeneration modifier. */
-   double shield;    /**< Maximum shield modifier. */
+   double shield; /**< Maximum shield modifier. */
+   double shield_rel; /**< Relative to shield base modifier. */
    double shield_regen; /**< Shield regeneration modifier. */
-   double energy;    /**< Maximum energy modifier. */
+   double energy; /**< Maximum energy modifier. */
+   double energy_rel; /**< Relative to energy base modifier. */
    double energy_regen; /**< Energy regeneration modifier. */
-   double cpu;       /**< CPU modifier. */
+   double cpu; /**< CPU modifier. */
    double absorb;    /**< Absorption factor. */
 
    /* Misc. */
-   double cargo;     /**< Cargo space modifier. */
-   double fuel;      /**< Maximum fuel modifier. */
-   double hide_rel;  /**< Relative hide modifier. */
+   double cargo; /**< Cargo space modifier. */
+   double crew_rel; /**< Relative crew modification. */
+   double mass_rel; /**< Relative mass modification. */
+   double fuel; /**< Maximum fuel modifier. */
+   double hide_rel; /**< Relative hide modifier. */
 
    /* Stats. */
    ShipStatList *stats; /**< Stat list. */

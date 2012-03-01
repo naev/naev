@@ -654,7 +654,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    /* Get name. */
    xmlr_attr(parent,"name",temp->name);
    if (temp->name == NULL)
-      WARN("Ship in "SHIP_DATA" has invalid or no name");
+      WARN("Ship in "SHIP_DATA_PATH" has invalid or no name");
    
    /* Datat that must be loaded first. */
    node = parent->xmlChildrenNode;

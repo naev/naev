@@ -2,7 +2,7 @@
 <outfit name="Railgun">
  <general>
   <slot>weapon</slot>
-  <size>heavy</size>
+  <size>large</size>
   <license>Heavy Weapon License</license>
   <mass>37</mass>
   <price>72000</price>

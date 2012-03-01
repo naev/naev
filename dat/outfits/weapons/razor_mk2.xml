@@ -2,7 +2,7 @@
 <outfit name="Razor MK2">
  <general>
   <slot>weapon</slot>
-  <size>light</size>
+  <size>small</size>
   <mass>4</mass>
   <price>11000</price>
   <description>The upgraded civilian Razor model packs increased overall effectiveness compared to its predecessor, and has less difficulty in overloading capital ship grade shielding. As with the basic model, the Razor MK2 is best used to drain a target's shields, paving the way for other weapons to deliver the finishing blow.</description>

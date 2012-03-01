@@ -2,7 +2,7 @@
 <outfit name="Razor Turret MK1">
  <general>
   <slot>weapon</slot>
-  <size>light</size>
+  <size>small</size>
   <mass>16</mass>
   <price>14000</price>
   <description>Razor Turrets are popular among traders. Their high damage against shields is a great deterrent against attackers, because nothing puts a space pilot on edge like his shields rapidly coming down.</description>

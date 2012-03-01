@@ -2,7 +2,7 @@
 <outfit name="BioPlasma Organ Stage 1">
  <general>
   <slot>weapon</slot>
-  <size>light</size>
+  <size>small</size>
   <license>Medium Weapon License</license>
   <mass>1</mass>
   <price>18000</price>

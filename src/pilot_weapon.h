@@ -62,7 +62,6 @@ void pilot_afterburnOver ( Pilot *p );
 void pilot_outfitOff( Pilot *p, PilotOutfitSlot *o );
 int pilot_outfitOffAll( Pilot *p );
 //void pilot_outfitOn( Pilot *p, Outfit *outfit );
->>>>>>> cc0275939dc368be877210e9d8e7c25ebc6ef4b5
 
 
 #endif /* PILOT_WEAPON_H */

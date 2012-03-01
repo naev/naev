@@ -2,6 +2,7 @@
 <outfit name="Generic Afterburner">
  <general>
   <slot>utility</slot>
+  <size>small</size>
   <mass>6</mass>
   <price>20000</price>
   <description>Being able to run from your enemies has saved many a pilot, and a generic afterburner will allow you that luxury. Though it may not be as powerful as higher-end alternatives, it makes up for that difference by entering at a much lower price point.</description>

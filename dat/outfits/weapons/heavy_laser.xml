@@ -2,7 +2,7 @@
 <outfit name="Heavy Laser">
  <general>
   <slot>weapon</slot>
-  <size>heavy</size>
+  <size>large</size>
   <license>Heavy Weapon License</license>
   <mass>53</mass>
   <price>65000</price>

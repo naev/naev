@@ -2,7 +2,7 @@
 <outfit name="Laser Cannon MK2">
  <general>
   <slot>weapon</slot>
-  <size>light</size>
+  <size>small</size>
   <license>Medium Weapon License</license>
   <mass>4.5</mass>
   <price>12500</price>

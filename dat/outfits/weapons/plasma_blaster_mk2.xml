@@ -2,7 +2,7 @@
 <outfit name="Plasma Blaster MK2">
  <general>
   <slot>weapon</slot>
-  <size>light</size>
+  <size>small</size>
   <license>Medium Weapon License</license>
   <mass>7</mass>
   <price>17000</price>

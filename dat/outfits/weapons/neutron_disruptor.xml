@@ -2,7 +2,7 @@
 <outfit name="Neutron Disruptor">
  <general>
   <slot>weapon</slot>
-  <size>light</size>
+  <size>small</size>
   <mass>6</mass>
   <price>18500</price>
   <license>Heavy Weapon License</license>

@@ -2,7 +2,7 @@
 <outfit name="Plasma Turret MK1">
  <general>
   <slot>weapon</slot>
-  <size>light</size>
+  <size>small</size>
   <license>Medium Weapon License</license>
   <mass>18</mass>
   <price>21000</price>

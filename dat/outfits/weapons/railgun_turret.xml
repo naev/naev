@@ -2,7 +2,7 @@
 <outfit name="Railgun Turret">
  <general>
   <slot>weapon</slot>
-  <size>heavy</size>
+  <size>large</size>
   <mass>64</mass>
   <license>Heavy Weapon License</license>
   <price>105000</price>

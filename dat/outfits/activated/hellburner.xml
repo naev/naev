@@ -2,6 +2,7 @@
 <outfit name="Hellburner">
  <general>
   <slot>utility</slot>
+  <size>small</size>
   <mass>10</mass>
   <price>95000</price>
   <description>The Hellburner is one of the best afterburners on the market. Through proprietary pressurization ducts, the Hellburner is able to generate far more thrust than generic alternatives, despite using only slightly more energy. A great asset to any pilot who seeks manoeuvrability and speed.</description>

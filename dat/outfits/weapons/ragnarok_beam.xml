@@ -2,7 +2,7 @@
 <outfit name="Ragnarok Beam">
  <general>
   <slot>weapon</slot>
-  <size>heavy</size>
+  <size>large</size>
   <license>Heavy Weapon License</license>
   <mass>140</mass>
   <price>745000</price>

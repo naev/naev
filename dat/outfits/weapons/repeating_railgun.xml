@@ -2,7 +2,7 @@
 <outfit name="Repeating Railgun">
  <general>
   <slot>weapon</slot>
-  <size>heavy</size>
+  <size>large</size>
   <license>Heavy Weapon License</license>
   <mass>43</mass>
   <price>86000</price>

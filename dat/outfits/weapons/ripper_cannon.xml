@@ -2,7 +2,7 @@
 <outfit name="Ripper Cannon">
  <general>
   <slot>weapon</slot>
-  <size>light</size>
+  <size>small</size>
   <license>Medium Weapon License</license>
   <mass>8</mass>
   <price>35000</price>

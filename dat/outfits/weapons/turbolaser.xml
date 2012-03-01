@@ -2,7 +2,7 @@
 <outfit name="Turbolaser">
  <general>
   <slot>weapon</slot>
-  <size>heavy</size>
+  <size>large</size>
   <license>Heavy Weapon License</license>
   <mass>57</mass>
   <price>125000</price>
