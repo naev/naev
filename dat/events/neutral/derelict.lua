@@ -106,7 +106,7 @@ function goodevent()
         player.pay(rnd.rnd(5000,30000)) --5K - 30K
     elseif event == 2 then
         tk.msg(gtitle, gtext[2])
-        player.addOutfit("Star Map", 1)
+        -- player.addOutfit("Star Map", 1)
     elseif event == 3 then
         local factions = {"Empire", "Dvaered", "Sirius", "Soromid"} -- TODO: Add more factions as they appear
         rndfact = factions[rnd.rnd(1, #factions)]
