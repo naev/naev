@@ -34,6 +34,7 @@ ssys:
     Is called by ''asset``.
 """
 import os,sys
+from glob import glob
 #from . import readers
 
 from ._Readers import readers
@@ -41,15 +42,27 @@ from ._Readers import readers
 class items(readers):
     def __init__(self, **config):
         xmlFile = os.path.join(config['datpath'], config['xml_file'])
+        if '*' in xmlFile:
+            xmlFile = glob(xmlFile)
         readers.__init__(self, xmlFile, config['verbose'])
         self._unidiff = config['unidiffobj']
         self.usedItem = list()
 
         self.itemNames = list()
         print('Compiling {0} list ...'.format(config['item']),end='       ')
-        for item in self.xmlData.findall(config['item']):
-            self.itemNames.append(item.attrib['name'])
-        print("DONE")
+        try:
+            if type(self.xmlData) is not type(list()):
+                for item in self.xmlData.findall(config['item']):
+                    self.itemNames.append(item.attrib['name'])
+            else:
+                for itemList in self.xmlData:
+                    for item in itemList.findall(config['item']):
+                        self.itemNames.append(item.attrib['name'])
+        except Exception as e:
+            print('FAILED')
+            raise e
+        else:
+            print("DONE")
 
     def find(self, name):
         raise NotImplementedError("'find' from 'items' superobject " \
@@ -96,7 +109,7 @@ class tech(items):
 
 class assets(items):
     def __init__(self, **config):
-        config['xml_file'] = 'asset.xml'
+        config['xml_file'] = 'assets/*.xml'
         config['item'] = 'asset'
         items.__init__(self, **config)
         self.ssys = ssys(**config)
@@ -105,29 +118,29 @@ class assets(items):
         self.ssys.validateAssets(self.itemNames)
 
     def validateTechs(self, techNames):
-        techs = self.xmlData.findall('asset/tech/item')
         techList = list()
-        for tech in techs:
-            techList.append(tech.text)
-        del(techs)
+        for techs in self.xmlData:
+            techs = techs.getroot()
+            for tech in techs.findall('tech/item'):
+                techList.append(tech.text)
 
         for tech in techNames:
             if tech not in techList and not self._unidiff.findTech(tech):
-                print("Warning: tech ''{0}`` not present in asset.xml".format(tech))
+                print("Warning: tech ''{0}`` not present in the assets xml".format(tech))
 
 class ssys(readers):
     def __init__(self, **config):
-        xmlFile = os.path.join(config['datpath'], 'ssys.xml')
+        xmlFile = glob(os.path.join(config['datpath'], 'ssys/*.xml'))
         readers.__init__(self, xmlFile, config['verbose'])
         self._unidiff = config['unidiffobj']
 
     def validateAssets(self, assetNames):
-        assets = self.xmlData.findall('ssys/assets/asset')
+        # TODO check for empty assets[/asset] <- return '\n  ' if empty
         assetList = list()
-        for asset in assets:
-            assetList.append(asset.text)
-        del(assets)
+        for assets in self.xmlData:
+            for asset in assets.findall('ssys/assets/asset/'):
+                assetList.append(asset.text)
 
         for asset in assetNames:
             if asset not in assetList and not self._unidiff.findAsset(asset):
-                print("Warning: asset ''{0}`` not present in ssys.xml".format(asset))
+                print("Warning: asset ''{0}`` not present in the ssys xml".format(asset))
