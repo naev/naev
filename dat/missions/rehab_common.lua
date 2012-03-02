@@ -36,9 +36,21 @@ Cost: %s credits]]
 end
 
 function create()
-   -- Note: this mission does not make any system claims.
+    -- Note: this mission does not make any system claims.
 
+    -- Only spawn this mission if the player needs it.
     rep = fac:playerStanding()
+    if rep >= 0 then
+       misn.finish()
+    end
+    
+    -- Don't spawn this mission if the player is buddies with this faction's enemies.
+    for _, enemy in pairs(fac:enemies()) do
+       if enemy:playerStanding() > 20 then
+          misn.finish()
+       end
+    end
+
     setFine(rep)
     
     misn.setTitle(misn_title:format(fac:name()))
@@ -63,7 +75,6 @@ function accept()
     
     hook.standing("standing")
     
-    last_modified = false
     excess = 5 -- The maximum amount of reputation the player can LOSE before the contract is void.
 end
 
@@ -101,7 +112,6 @@ end
 
 -- On abort, reset reputation.
 function abort()
-    last_modified = true
     fac:modPlayerRaw(rep)
     misn.finish()
 end

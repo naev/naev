@@ -36,7 +36,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
+#include "nstring.h"
 #include <stdarg.h> /* va_list for gl_print */
 
 #include <zlib.h> /* Z_DEFAULT_COMPRESSION */ 

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Anubis">
+ <pos>
+  <x>-18055.631906</x>
+  <y>49.276734</y>
+ </pos>
+ <GFX>
+  <space>Y00.png</space>
+  <exterior>lava.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>Y</class>
+  <population>1000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Named after the Egyptian god of death, Anubis was established as a mining base by a mining faction even before the Faction Wars. The abundance of radioactive and heavy elements made the planet a good location to produce weapons, a lucrative business given its proximity to Sol. During the Faction Wars, Anubis was annexed by the Empire, but the local population subsequently joined the protest movement that eventually led to the establishment of House Dvaered. Today, the Dvaered use Anubis to produce ammunition and light combat ships to supply Raelid Outpost.</description>
+  <bar>What is beautiful is often dangerous, but sometimes it also works the other way around. The spaceport bar on Anubis has a view over a ravine in the planet's surface, and the radioactive storms that frequently rage through it are quite a sight to behold. It is only offworlders who appreciate it, though, as most locals know how unpleasant it is to have to work in conditions like that.</bar>
+ </general>
+ <tech>
+  <item>Kinetic 1</item>
+  <item>Kinetic 2</item>
+  <item>Basic Trade Ships</item>
+  <item>Light Civilian Combat Ships</item>
+  <item>Basic Outfits 1</item>
+  <item>Missiles 1</item>
+  <item>Missiles 2</item>
+ </tech>
+</asset>

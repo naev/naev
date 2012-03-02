@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Lapra">
+ <pos>
+  <x>10995.000000</x>
+  <y>24825.000000</y>
+ </pos>
+ <GFX>
+  <space>K02.png</space>
+  <exterior>mining.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Frontier</faction>
+  <value>60.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>K</class>
+  <population>350000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Though Coriolis was the second colony ship, it arrived at Lapra well after New Dortmund had been colonized due to technical difficulties and unforeseen incidents during the journey. When it finally did establish orbit around Lapra, it found a world so low on potential for life that the trip almost seemed like a lost cause. However, upon touchdown the colonists found that there were many useful minerals hidden below the surface of the planet. The colony on Lapra has survived, first out of sheer necessity and later by virtue of its exports.</description>
+  <bar>Lapra's bar looks more like a market than a place for relaxation, and indeed that is exactly what it is. Not only do traders come here to make transactions, the local population also uses the bar as a center for commerce. That said, one can still find a drink and a news terminal, if one looks hard enough.</bar>
+ </general>
+ <tech>
+  <item>Basic Outfits 1</item>
+  <item>Basic Outfits 2</item>
+  <item>Light Civilian Combat Ships</item>
+  <item>Bulk Trade Ships</item>
+ </tech>
+</asset>

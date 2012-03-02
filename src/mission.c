@@ -14,7 +14,7 @@
 #include "naev.h"
 
 #include <stdint.h>
-#include <string.h>
+#include "nstring.h"
 #include <stdlib.h>
 
 #include "nlua.h"
@@ -42,9 +42,6 @@
 
 #define XML_MISSION_ID        "Missions" /**< XML document identifier */
 #define XML_MISSION_TAG       "mission" /**< XML mission tag. */
-
-#define MISSION_DATA          "dat/mission.xml" /**< Path to missions XML. */
-#define MISSION_LUA_PATH      "dat/missions/" /**< Path to Lua files. */
 
 #define MISSION_CHUNK         32 /**< Chunk allocation. */
 
@@ -277,7 +274,7 @@ static int mission_meetReq( int mission, int faction,
       return 0;
 
    /* Match faction. */
-   if (!mission_matchFaction(misn,faction))
+   if ((faction >= 0) && !mission_matchFaction(misn,faction))
       return 0;
 
    /* Must not be already done or running if unique. */
@@ -323,19 +320,19 @@ void missions_run( int loc, int faction, const char* planet, const char* sysname
 
    for (i=0; i<mission_nstack; i++) {
       misn = &mission_stack[i];
-      if (misn->avail.loc==loc) {
+      if (misn->avail.loc != loc)
+         continue;
 
-         if (!mission_meetReq(i, faction, planet, sysname))
-            continue;
+      if (!mission_meetReq(i, faction, planet, sysname))
+         continue;
 
-         chance = (double)(misn->avail.chance % 100)/100.;
-         if (chance == 0.) /* We want to consider 100 -> 100% not 0% */
-            chance = 1.;
+      chance = (double)(misn->avail.chance % 100)/100.;
+      if (chance == 0.) /* We want to consider 100 -> 100% not 0% */
+         chance = 1.;
 
-         if (RNGF() < chance) {
-            mission_init( &mission, misn, 1, 1, NULL );
-            mission_cleanup(&mission); /* it better clean up for itself or we do it */
-         }
+      if (RNGF() < chance) {
+         mission_init( &mission, misn, 1, 1, NULL );
+         mission_cleanup(&mission); /* it better clean up for itself or we do it */
       }
    }
 }
@@ -709,7 +706,10 @@ Mission* missions_genList( int *n, int faction,
                m++;
                /* Extra allocation. */
                if (m > alloced) {
-                  alloced += 32;
+                  if (alloced == 0)
+                     alloced = 32;
+                  else
+                     alloced *= 2;
                   tmp      = realloc( tmp, sizeof(Mission) * alloced );
                }
                /* Initialize the mission. */
@@ -746,6 +746,7 @@ static int mission_location( const char* loc )
    else if (strcmp(loc,"Shipyard")==0) return MIS_AVAIL_SHIPYARD;
    else if (strcmp(loc,"Land")==0) return MIS_AVAIL_LAND;
    else if (strcmp(loc,"Commodity")==0) return MIS_AVAIL_COMMODITY;
+   else if (strcmp(loc,"Space")==0) return MIS_AVAIL_SPACE;
    return -1;
 }
 
@@ -778,7 +779,7 @@ static int mission_parse( MissionData* temp, const xmlNodePtr parent )
    /* get the name */
    temp->name = xml_nodeProp(parent,"name");
    if (temp->name == NULL)
-      WARN("Mission in "MISSION_DATA" has invalid or no name");
+      WARN("Mission in "MISSION_DATA_PATH" has invalid or no name");
 
    node = parent->xmlChildrenNode;
 
@@ -790,7 +791,7 @@ static int mission_parse( MissionData* temp, const xmlNodePtr parent )
       xml_onlyNodes(node);
 
       if (xml_isNode(node,"lua")) {
-         snprintf( str, PATH_MAX, MISSION_LUA_PATH"%s.lua", xml_get(node) );
+         nsnprintf( str, PATH_MAX, MISSION_LUA_PATH"%s.lua", xml_get(node) );
          temp->lua = strdup( str );
          str[0] = '\0';
 
@@ -870,20 +871,20 @@ int missions_load (void)
 {
    int m;
    uint32_t bufsize;
-   char *buf = ndata_read( MISSION_DATA, &bufsize );
+   char *buf = ndata_read( MISSION_DATA_PATH, &bufsize );
 
    xmlNodePtr node;
    xmlDocPtr doc = xmlParseMemory( buf, bufsize );
 
    node = doc->xmlChildrenNode;
    if (!xml_isNode(node,XML_MISSION_ID)) {
-      ERR("Malformed '"MISSION_DATA"' file: missing root element '"XML_MISSION_ID"'");
+      ERR("Malformed '"MISSION_DATA_PATH"' file: missing root element '"XML_MISSION_ID"'");
       return -1;
    }
 
    node = node->xmlChildrenNode; /* first mission node */
    if (node == NULL) {
-      ERR("Malformed '"MISSION_DATA"' file: does not contain elements");
+      ERR("Malformed '"MISSION_DATA_PATH"' file: does not contain elements");
       return -1;
    }
 

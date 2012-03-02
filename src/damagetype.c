@@ -27,8 +27,6 @@
 #define DTYPE_XML_ID     "dtypes"   /**< XML Document tag. */
 #define DTYPE_XML_TAG    "dtype"    /**< DTYPE XML node tag. */
 
-#define DTYPE_DATA       "dat/damagetype.xml" /**< Location of the spfx datafile. */
-
 #define DTYPE_CHUNK_MIN  256     /**< Minimum chunk to alloc when needed */
 
 /**
@@ -165,20 +163,20 @@ int dtype_load (void)
    xmlDocPtr doc;
 
    /* Load and read the data. */
-   buf = ndata_read( DTYPE_DATA, &bufsize );
+   buf = ndata_read( DTYPE_DATA_PATH, &bufsize );
    doc = xmlParseMemory( buf, bufsize );
 
    /* Check to see if document exists. */
    node = doc->xmlChildrenNode;
    if (!xml_isNode(node,DTYPE_XML_ID)) {
-      ERR("Malformed '"DTYPE_DATA"' file: missing root element '"DTYPE_XML_ID"'");
+      ERR("Malformed '"DTYPE_DATA_PATH"' file: missing root element '"DTYPE_XML_ID"'");
       return -1;
    }
 
    /* Check to see if is populated. */
    node = node->xmlChildrenNode; /* first system node */
    if (node == NULL) {
-      ERR("Malformed '"DTYPE_DATA"' file: does not contain elements");
+      ERR("Malformed '"DTYPE_DATA_PATH"' file: does not contain elements");
       return -1;
    }
 
@@ -188,7 +186,7 @@ int dtype_load (void)
       xml_onlyNodes(node);
 
       if (!xml_isNode(node,DTYPE_XML_TAG)) {
-         WARN("'"DTYPE_DATA"' has unknown node '%s'.", node->name);
+         WARN("'"DTYPE_DATA_PATH"' has unknown node '%s'.", node->name);
          continue;
       }
 
@@ -235,7 +233,7 @@ void dtype_free (void)
  *
  *    @param[out] dshield Real shield damage.
  *    @param[out] darmour Real armour damage.
- *    @param[out] knockback Knocback modifier.
+ *    @param[out] knockback Knockback modifier.
  *    @param[in] absorb Absorption value.
  *    @param[in] dmg Damage information.
  */

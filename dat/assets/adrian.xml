@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Adrian">
+ <pos>
+  <x>-179.477707</x>
+  <y>5286.959359</y>
+ </pos>
+ <GFX>
+  <space>P04.png</space>
+  <exterior>snow.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>P</class>
+  <population>4000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+  </services>
+  <commodities/>
+  <description>A cold and unpleasant world, the Sirius established their colony on Adrian in the days when they were just expanding into Eiderdown. At the time the system was controlled by the Empire, but with a firm beachhead in the system it was a matter of a few cycles before the Sirii came to power. Today, Adrian persists, despite having served its only purpose.</description>
+  <bar>Heating on P class worlds is often a costly affair, so the temperature is kept at an acceptable, though uncomfortable low. Most patrons of this spaceport bar are in full winter getups.</bar>
+ </general>
+</asset>

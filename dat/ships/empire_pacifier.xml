@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Empire Pacifier">
+ <base_type>Pacifier</base_type>
+ <GFX sx="10" sy="10">pacifier_empire</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Destroyer</class>
+ <price>1500000</price>
+ <fabricator>Nexus Shipyards</fabricator>
+ <license>Medium Combat Vessel License</license>
+ <description>An Empire Pacifier.</description>
+ <movement>
+  <thrust>150</thrust>
+  <turn>100</turn>
+  <speed>150</speed>
+ </movement>
+ <health>
+  <absorb>44</absorb>
+  <shield>530</shield>
+  <armour>1100</armour>
+  <energy>1440</energy>
+  <shield_regen>10</shield_regen>
+  <armour_regen>0</armour_regen>
+  <energy_regen>56</energy_regen>
+ </health>
+ <characteristics>
+  <cpu>84</cpu>
+  <crew>17</crew>
+  <mass>730</mass>
+  <fuel>500</fuel>
+  <cargo>95</cargo>
+ </characteristics>
+ <slots>
+  <weapon x="-15" y="-10" h="-10">heavy</weapon>
+  <weapon x="-15" y="10" h="-10">heavy</weapon>
+  <weapon x="20" y="0" h="-10"/>
+  <weapon x="4" y="-5" h="-10"/>
+  <weapon x="4" y="5" h="-10"/>
+  <utility>heavy</utility>
+  <utility>heavy</utility>
+  <utility/>
+  <utility/>
+  <structure>heavy</structure>
+  <structure/>
+  <structure/>
+ </slots>
+ <stats>
+  <launch_range>10</launch_range>
+  <tur_energy>-5</tur_energy>
+ </stats>
+</ship>
+<!-- Cruisers -->

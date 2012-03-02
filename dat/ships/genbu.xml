@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Genbu">
+ <base_type>Kestrel</base_type>
+ <GFX sx="10" sy="10">kestrel_pirate</GFX>
+ <GUI>minimal</GUI>
+ <sound>engine</sound>
+ <class>Cruiser</class>
+ <price>5700000</price>
+ <fabricator>Skull and Bones</fabricator>
+ <description>This is one of the Four Winds flagships. It's tough.</description>
+ <movement>
+  <thrust>120</thrust>
+  <turn>85</turn>
+  <speed>110</speed>
+ </movement>
+ <health>
+  <absorb>60</absorb>
+  <shield>9000</shield>
+  <armour>15000</armour>
+  <energy>5000</energy>
+  <shield_regen>20</shield_regen>
+  <armour_regen>0</armour_regen>
+  <energy_regen>166.7</energy_regen>
+ </health>
+ <characteristics>
+  <cpu>180</cpu>
+  <crew>28</crew>
+  <mass>2725</mass>
+  <fuel>300</fuel>
+  <cargo>320</cargo>
+ </characteristics>
+ <slots>
+  <weapon x="-24" y="-8" h="8"/>
+  <weapon x="-24" y="8" h="8"/>
+  <weapon x="-23" y="-15" h="5"/>
+  <weapon x="-23" y="15" h="5"/>
+  <weapon x="44" y="0" h="0"/>
+  <weapon x="-6" y="0" h="12"/>
+  <utility/>
+  <utility/>
+  <utility/>
+  <utility/>
+  <utility/>
+  <structure/>
+  <structure/>
+  <structure/>
+  <structure/>
+ </slots>
+</ship>

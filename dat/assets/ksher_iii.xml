@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Ksher III">
+ <pos>
+  <x>-3652.000000</x>
+  <y>-7524.000000</y>
+ </pos>
+ <GFX>
+  <space>M01.png</space>
+  <exterior>methane.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

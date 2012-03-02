@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Llama">
+ <base_type>Llama</base_type>
+ <GFX>llama</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Yacht</class>
+ <price>120000</price>
+ <fabricator>Melendez Corp.</fabricator>
+ <description>One of the most widely used ships in the galaxy. Renowned for its stability and stubbornness. The design hasn't been modified much since its creation many many years ago. It was one of the first civilian use spacecrafts, first used by aristocracy and now used by everyone who cannot afford better.</description>
+ <movement>
+  <thrust>180</thrust>
+  <turn>150</turn>
+  <speed>200</speed>
+ </movement>
+ <health>
+  <absorb>0</absorb>
+  <shield>100</shield>
+  <armour>50</armour>
+  <energy>320</energy>
+  <shield_regen>3</shield_regen>
+  <armour_regen>0</armour_regen>
+  <energy_regen>16.7</energy_regen>
+ </health>
+ <characteristics>
+  <cpu>18</cpu>
+  <crew>2</crew>
+  <mass>83</mass>
+  <fuel>400</fuel>
+  <cargo>20</cargo>
+ </characteristics>
+ <slots>
+  <weapon x="7" y="0" h="1"/>
+  <weapon x="-3" y="0" h="2"/>
+  <utility/>
+  <utility/>
+  <structure/>
+  <structure/>
+ </slots>
+</ship>

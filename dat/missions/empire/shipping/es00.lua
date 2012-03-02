@@ -49,7 +49,7 @@ function create ()
    end
 
    -- Spaceport bar stuff
-   misn.setNPC( "Commander", "soldner" )
+   misn.setNPC( "Commander", "empire/unique/soldner" )
    misn.setDesc( bar_desc )
 end
 

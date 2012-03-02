@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Niflheim">
+ <pos>
+  <x>-9965.863598</x>
+  <y>2823.758187</y>
+ </pos>
+ <GFX>
+  <space>station-sphere.png</space>
+  <exterior>traderoom.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>3000</population>
+  <hide>0.750000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities>
+   <commodity>Medicine</commodity>
+   <commodity>Luxury Goods</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Although not a large installation by any measure, Niflheim is the main commercial station in the southwestern quadrant of Empire space. Though it doesn't see as much traffic as the more centrally located trade hubs, it provides a good opportunity for traders between the Empire, the Za'lek and the Consortium to meet and greet. Of course, the Imperial Navy also uses this station as a base of operations.</description>
+  <bar>On Niflheim, space is at a premium. As such there is not much room to spare for leisure, which shows in the spaceport bar. All tables are stand-up arrangements, and there is not much room to maneuver. Any visitor will have to be prepared for some necessary intimacies if he wants to frequent this establishment.</bar>
+ </general>
+ <tech>
+  <item>Laser 1</item>
+  <item>Missiles 1</item>
+  <item>Basic Outfits 1</item>
+  <item>Basic Outfits 2</item>
+  <item>Low Tech Upgrades</item>
+ </tech>
+</asset>

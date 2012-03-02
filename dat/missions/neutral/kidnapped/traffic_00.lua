@@ -125,15 +125,15 @@ end
   
 function land1()
   if planet.cur() == planet.get(bar1) and not eavesdropped1 and not eavesdropped2 then
-    bar1pir1 = misn.npcAdd("firstpirates", "Pirate", "thief1", pir1_disc)
-    bar1pir2 = misn.npcAdd("firstpirates", "Pirate", "thief2", pir1_disc)
+    bar1pir1 = misn.npcAdd("firstpirates", "Pirate", "neutral/thief1", pir1_disc)
+    bar1pir2 = misn.npcAdd("firstpirates", "Pirate", "neutral/thief2", pir1_disc)
   end
 end
 
 function land2()
   if planet.cur() == planet.get(bar2) and eavesdropped1 and not eavesdropped2 then
-    bar2pir1 = misn.npcAdd("secondpirates", "Pirate", "thief3", pir2_disc)
-    bar2pir2 = misn.npcAdd("secondpirates", "Pirate", "thief1", pir2_disc)
+    bar2pir1 = misn.npcAdd("secondpirates", "Pirate", "neutral/thief3", pir2_disc)
+    bar2pir2 = misn.npcAdd("secondpirates", "Pirate", "neutral/thief1", pir2_disc)
   end
 end
 
@@ -175,6 +175,7 @@ function jumpin()
   if eavesdropped1 and eavesdropped2 and system.cur() == system.get(sysname2) then
     kidnappers = pilot.add("Trader Koala", nil, planet.get("Zhiru"):pos() + vec2.new(-800,-800))[1]
     kidnappers:rename("Progeny")
+    kidnappers:setFaction("Kidnappers")
     kidnappers:setHilight(true)
     kidnappers:setVisible(true)
     kidnappers:control()
@@ -231,6 +232,7 @@ function boardkidnappers()
   misn.osdCreate(osdtitle, {osdmsg[4]})
   misn.markerMove(misn_mark, system.get(sysname1))
   kidnappers:setHilight(false)
+  kidnappers:hookClear()
   thekids = misn.cargoAdd("The Rescued Children", 0)
   player.unboard()
   lhook = hook.land("land3", "land")

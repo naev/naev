@@ -179,6 +179,17 @@ void cam_setTargetPos( double x, double y, int soft_over )
 
 
 /**
+ * @brief Returns the camera's current target.
+ *
+ *    @return 0 if focused on position, else returns pilot ID.
+ */
+int cam_getTarget( void )
+{
+   return camera_followpilot;
+}
+
+
+/**
  * @brief Updates the camera.
  *
  *    @param dt Current delta tick.

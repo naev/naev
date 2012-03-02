@@ -21,6 +21,7 @@
 #include "nluadef.h"
 #include "nlua_planet.h"
 #include "nlua_system.h"
+#include "nlua_jump.h"
 
 
 /**
@@ -34,6 +35,7 @@ int nlua_loadSpace( lua_State *L, int readonly )
 {
    nlua_loadPlanet( L, readonly );
    nlua_loadSystem( L, readonly );
+   nlua_loadJump( L, readonly );
 
    return 0;
 }

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Rin">
+ <pos>
+  <x>6553.591163</x>
+  <y>-4814.834850</y>
+ </pos>
+ <GFX>
+  <space>M02.png</space>
+  <exterior>forest.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Independent</faction>
+  <value>80.000000</value>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>100000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Rin is a quiet world, far away from the turmoil that plagues most of the galaxy. The inhabitants are friendly, always happy to help a beginning captain get his space legs.</description>
+  <bar>If space is just getting a bit too much for you, the spaceport bar on Rin is the place to take a load off. It's a tidy place, and the clientele is well behaved. You will find no unsavory figures here.</bar>
+ </general>
+ <tech>
+  <item>Basic Outfits 1</item>
+ </tech>
+</asset>

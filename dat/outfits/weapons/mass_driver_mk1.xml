@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Mass Driver MK1">
+ <general>
+  <slot>weapon</slot>
+  <size>medium</size>
+  <license>Medium Weapon License</license>
+  <mass>14</mass>
+  <price>25000</price>
+  <description>Mass Drivers fire massive slugs of matter at enemy ships, dealing damage through kinetic impact and knocking the target back. One of the most economical heavy weapons in the galaxy.</description>
+  <gfx_store>gatling</gfx_store>
+ </general>
+ <specific type="bolt">
+  <cpu>12</cpu>
+  <gfx>autocannon</gfx>
+  <sound>autocannon</sound>
+  <sound_hit>medexp0</sound_hit>
+  <spfx_shield>ExpS</spfx_shield>
+  <spfx_armour>ExpS</spfx_armour>
+  <delay>1.44</delay>
+  <speed>575</speed>
+  <range blowup="armour">1200</range>
+  <energy>38</energy>
+  <heatup>50</heatup>
+  <track>1.5</track>
+  <swivel>8</swivel>
+  <damage>
+   <type>impact</type>
+   <penetrate>29</penetrate>
+   <physical>36</physical>
+   <disable>2</disable>
+  </damage>
+ </specific>
+</outfit>

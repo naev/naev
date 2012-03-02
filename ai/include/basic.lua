@@ -306,6 +306,7 @@ function __run_turret ()
    -- Shoot the target
    local target   = ai.target()
    if ai.exists(target) then
+      ai.hostile(target)
       ai.settarget( target )
       local dist    = ai.dist(target)
       -- See if we have some turret to use

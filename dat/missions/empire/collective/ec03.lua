@@ -47,7 +47,7 @@ end
 
 function create ()
    -- Note: this mission does not make any system claims.
-   misn.setNPC( "Dimitri", "dimitri" )
+   misn.setNPC( "Dimitri", "empire/unique/dimitri" )
    misn.setDesc( bar_desc )
 end
 
@@ -80,13 +80,13 @@ function accept ()
       osd_msg[3] = osd_msg[3]:format(misn_base:name())
       misn.osdCreate(misn_title, osd_msg)
 
-      hook.enter("jump")
+      hook.enter("jumpin")
       hook.land("land")
    end
 end
 
 -- Handles jumping to target system
-function jump()
+function jumpin()
     if misn_stage == 0 and system.cur() == misn_target_sys then
         misn.osdActive(2)
         hook.pilot(nil, "death", "death")

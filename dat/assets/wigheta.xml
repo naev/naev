@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Wigheta">
+ <pos>
+  <x>997.580582</x>
+  <y>15496.946610</y>
+ </pos>
+ <GFX>
+  <space>O00.png</space>
+  <exterior>aquatic.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>O</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services>
+   <land>srm_mil_restricted</land>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>While the main line of Soromid military ship production is located on Heronus in Uridhrion, there is a secondary ship plant here on Wigheta. Wigheta does not grow the regular models, however. Instead, the world is acts as a research facility for bioships, where new designs and growth methods are invented and tested. It's a slow and expensive process, and Wigheta only produces a useful result once every few cycles, but without the work done here the Soromid bioship technology will never evolve.</description>
+  <bar>Wigheta's spaceport bar is located close to the actual landing docks of the spaceport. The research done on Wigheta is top-secret, so every precaution is being taken to prevent visitors from wandering into places they shouldn't.</bar>
+ </general>
+</asset>

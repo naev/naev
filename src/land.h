@@ -65,7 +65,7 @@ void bar_regen (void);
 int can_swap( char* shipname );
 int can_swapEquipment( char* shipname );
 int can_sell( char* shipname );
-int land_errDialogue( char* shipname, char* type );
+int land_errDialogue( char* name, char* type );
 void land_errDialogueBuild( const char *fmt, ... );
 
 

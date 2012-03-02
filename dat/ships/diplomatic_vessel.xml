@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Diplomatic Vessel">
+ <base_type>Gawain</base_type>
+ <GFX>gawain</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Scout</class>
+ <price>180000</price>
+ <fabricator>Sirius Systems</fabricator>
+ <description>This is a diplomatic vessel. Not to be used by the player or the normal AIs.</description>
+ <movement>
+  <thrust>100</thrust>
+  <turn>135</turn>
+  <speed>100</speed>
+ </movement>
+ <health>
+  <absorb>10</absorb>
+  <shield>400</shield>
+  <armour>400</armour>
+  <energy>730</energy>
+  <shield_regen>2.5</shield_regen>
+  <armour_regen>0</armour_regen>
+  <energy_regen>32.7</energy_regen>
+ </health>
+ <characteristics>
+  <cpu>40</cpu>
+  <crew>4</crew>
+  <mass>180</mass>
+  <fuel>400</fuel>
+  <cargo>15</cargo>
+ </characteristics>
+ <slots>
+  <weapon x="9" y="0" h="-2"/>
+  <utility/>
+  <utility/>
+  <utility/>
+  <utility/>
+  <structure/>
+ </slots>
+</ship>

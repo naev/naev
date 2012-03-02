@@ -40,6 +40,9 @@ function create()
    col_temperature = col_heat
    col_missile = colour.new(col_txt_enm)
 
+   -- Active outfit bar
+   col_slot_bg = colour.new( 12/255, 14/255, 20/255 )
+
    --Load Images
    local base = "gfx/gui/slim/"
    player_pane_t = tex.open( base .. "frame_player_top.png" )
@@ -96,6 +99,12 @@ function create()
    gui.targetPlanetGFX( tex.open( base .. "radar_planet.png" ) )
    gui.targetPilotGFX(  tex.open( base .. "radar_ship.png" ) )
 
+   -- Active outfit list.
+   slot = tex.open( base .. "slot.png" )
+   slotend = tex.open( base .. "slotend.png" )
+   cooldown = tex.open( base .. "cooldown.png", 6, 6 )
+   active =  tex.open( base .. "active.png" )
+
    --Messages
    gui.mesgInit( screen_w - 400, 20, 28+15+5 )
 
@@ -135,6 +144,17 @@ function create()
    -- Missile lock warning
    missile_lock_text = "Warning - Missile Lockon Detected"
    missile_lock_length = gfx.printDim( false, missile_lock_text )
+
+   -- Active outfit bar
+   slot_w, slot_h = slot:dim()
+   slot_y = screen_h - slot_h - 16
+   slot_img_offs_x = 4
+   slot_img_offs_y = 6
+
+   slot_img_w = 48
+
+   slot_w, slot_h = slot:dim()
+   slotend_w, slotend_h = slotend:dim()
 
    --Target Pane
    ta_pane_w, ta_pane_h = target_pane:dim()
@@ -282,7 +302,7 @@ function update_nav()
       gui.fpsPos( 15, screen_h - 28 - 15 - deffont_h )
    end
    if nav_hyp then
-      if nav_hyp:isKnown() then
+      if nav_hyp:known() then
          navstring = nav_hyp:name()
       else
          navstring = "Unknown"
@@ -325,6 +345,24 @@ end
 
 function update_system()
    sys = system.cur()
+   sysname = sys:name()
+end
+
+function update_wset()
+   wset_name, wset  = pp:weapset()
+   weap_icons = {}
+
+   for k, v in ipairs( wset ) do
+      weap_icons[k] = outfit.get( v.name ):icon()
+   end
+
+   aset = pp:actives()
+   active_icons = {}
+
+   for k, v in ipairs( aset ) do
+      active_icons[k] = outfit.get( v.name ):icon()
+   end
+   slot_start_x = screen_w/2 - #aset/2 * slot_w
 end
 
 function render_bar( name, value, txt, txtcol, size, col, bgc )
@@ -400,7 +438,7 @@ function render_armourBar( name, value, stress_value, txt, txtcol, size, col, bg
       gfx.renderTex( l_bg, l_x + offsets[1], l_y + 2)
    end
    if not value then value = 100 end
-   if not stress_value then stress_value = 100 end
+   if not stress_value then stress_value = 0 end
    if bgc then gfx.renderRect( l_x + offsets[1], l_y + 2, l_bar_w, l_bar_h, bgc ) end
    gfx.renderRect( l_x + offsets[1], l_y + 2, value/100. * l_bar_w, l_bar_h, l_col )
    gfx.renderRect( l_x + offsets[1], l_y + 2, (stress_value/100) * (value/100) * l_bar_w, l_bar_h, col_stress )
@@ -448,7 +486,15 @@ function render_ammoBar( name, x, y, value, txt, txtcol, col )
    if value[4] then
       if value[4] == -1 or pilot.player():target() == nil then
          trackcol = col_txt_una
-      else
+      elseif value[5] then -- Handling missile lock-on.
+         if value[4] < 1. then
+            local h, s, v = col_txt_una:hsv()
+            trackcol = colour.new( col_txt_una )
+            trackcol:setHSV( h, s, v + value[4] * (1-v))
+         else
+            trackcol = colour.new( "Green" )
+         end
+      else -- Handling turret tracking.
          trackcol = colour.new(1-value[4], value[4], 0)
       end
       gfx.renderTex( tracking_light, x + offsets[7], y + offsets[8], trackcol )
@@ -471,6 +517,7 @@ function render( dt, dt_mod )
    autonav = player.autonav()
    wset_name, wset  = pp:weapset(true)
    credits = player.credits()
+   update_wset() -- Ugly.
 
    --Radar
    gfx.renderTex( radar_gfx, radar_x, radar_y )
@@ -565,7 +612,7 @@ function render( dt, dt_mod )
          if not weapon.in_arc and pilot.player():target() ~= nil then
             col = col_txt_una
          end
-         values = {weapon.left_p, weapon.cooldown, weapon.level, weapon.track or weapon.lockon}
+         values = {weapon.left_p, weapon.cooldown, weapon.level, weapon.track or weapon.lockon, weapon.lockon }
          render_ammoBar( "ammo", x_ammo, y_ammo - (num)*28, values, txt, col, 2, col_ammo )
       else
          col = col_txt_bar
@@ -604,15 +651,50 @@ function render( dt, dt_mod )
       gfx.renderTex( warnlight3, pl_pane_x + 162, pl_pane_y + 12 )
    end
 
+   -- Active outfits
+
+   -- Draw the left-side bar cap.
+   if #aset > 0 then
+      gfx.renderTexRaw( slotend, slot_start_x - slotend_w, slot_y, slotend_w, slotend_h, 1, 1, 0, 0, -1, 1 )
+   end
+
+   i = 1
+   for i=1,#aset do
+      local slot_x = screen_w - slot_start_x - i * slot_w
+      if i <= #aset then
+         --There is something in this slot
+         gfx.renderRect( slot_x, slot_y, slot_w, slot_h, col_slot_bg ) --Background
+
+         gfx.renderTexRaw( active_icons[i], slot_x + slot_img_offs_x, slot_y + slot_img_offs_y + 2, slot_img_w, slot_img_w, 1, 1, 0, 0, 1, 1 ) --Image 
+
+         if aset[i].state == "on" then
+            gfx.renderTex( active, slot_x + slot_img_offs_x, slot_y + slot_img_offs_y )
+         elseif aset[i].state == "cooldown" then
+         --Cooldown
+            local texnum = round(aset[i].cooldown*35) --Turn the 0..1 cooldown number into a 0..35 tex id where 0 is ready.
+            gfx.renderTex( cooldown, slot_x + slot_img_offs_x, slot_y + slot_img_offs_y, (texnum % 6) + 1, math.floor( texnum / 6 ) + 1 )
+         end
+
+         --Frame
+         gfx.renderTexRaw( slot, slot_x + slot_w, slot_y, -1*slot_w, slot_h, 1, 1, 0, 0, 1, 1 )
+      end
+      i = i + 1
+   end
+
+   -- Draw the right-side bar cap.
+   if #aset > 0 then
+      gfx.renderTexRaw( slotend, slot_start_x + #aset * slot_w, slot_y, slotend_w, slotend_h, 1, 1, 0, 0, 1, 1 )
+   end
+
    --Target Pane
    if ptarget then
-      ta_detect, ta_fuzzy = pp:inrange( ptarget )
+      ta_detect, ta_scanned = pp:inrange( ptarget )
       if ta_detect then
          --Frame
          gfx.renderTex( target_pane, ta_pane_x, ta_pane_y )
          gfx.renderTex( target_bg, ta_image_x, ta_image_y )
 
-         if not ta_fuzzy then
+         if ta_scanned then
             ptarget_target = ptarget:target()
             ta_armour, ta_shield, ta_stress, ta_disabled = ptarget:health()
             tflags = ptarget:flags()
@@ -641,7 +723,7 @@ function render( dt, dt_mod )
 
          --Text, warning light & other texts
          local htspeed = round(ta_speed / ta_stats.speed_max * 100,0)
-         if not ta_fuzzy then
+         if ta_scanned then
             --Bar Texts
             shi = tostring( round(ta_shield) ) .. "% (" .. tostring(round(ta_stats.shield  * ta_shield / 100)) .. ")"
             arm = tostring( round(ta_armour) ) .. "% (" .. tostring(round(ta_stats.armour  * ta_armour / 100)) .. ")"
@@ -703,7 +785,7 @@ function render( dt, dt_mod )
          else
             -- Unset stats.
             shi, ene, arm = nil
-            ta_shield, ta_armour, ta_energy = nil
+            ta_shield, ta_armour, ta_energy, ta_stress = nil
 
             --Bar Texts
             spe = round(ta_speed)
@@ -811,15 +893,15 @@ function render( dt, dt_mod )
    gfx.renderTexRaw( bottom_bar, 0, 0, screen_w, 30, 1, 1, 0, 0, 1, 1 )
 
    fuel = player.fuel()
-   if fuel > 100 then
-      fuelstring = round(fuel/100.) .. " Jumps"
-   elseif fuel == 100 then
+   if fuel >= 200 then
+      fuelstring = math.floor(fuel/100.) .. " Jumps"
+   elseif fuel < 200 and fuel >= 100 then
       fuelstring = round(fuel/100.) .. " Jump"
    else
       fuelstring = "none"
    end
 
-   local bartext = { "Pilot: ", pname, "System: ", sys:name(), "Time: ", time.str(), "Credits: ",
+   local bartext = { "Pilot: ", pname, "System: ", sysname, "Time: ", time.str(), "Credits: ",
          largeNumber( credits, 2 ), "Nav: ", navstring, "Fuel: ", fuelstring,
          "WSet: ", wset_name, "Cargo: " }
    for k,v in ipairs(bartext) do

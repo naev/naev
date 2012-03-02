@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Razor MK1">
+ <general>
+  <slot>weapon</slot>
+  <size>light</size>
+  <mass>2.2</mass>
+  <price>7000</price>
+  <description>Razors fire concentrated pockets of high energy ions that are very effective at draining shields, but have only limited effect on a ship's armour. As such, Razors are best used in the initial phase of an engagement, and swapped out for other weapons once the target's shields come down.</description>
+  <gfx_store>ioncannon</gfx_store>
+ </general>
+ <specific type="bolt">
+  <cpu>5</cpu>
+  <gfx>razorS</gfx>
+  <sound>ion</sound>
+  <spfx_shield>ShiS</spfx_shield>
+  <spfx_armour>ExpS</spfx_armour>
+  <delay>0.6</delay>
+  <speed>800</speed>
+  <range>900</range>
+  <falloff>700</falloff>
+  <gfx_end>razorS-end</gfx_end>
+  <energy>6</energy>
+  <heatup>20</heatup>
+  <track>2.25</track>
+  <swivel>5</swivel>
+  <damage>
+   <type>ion</type>
+   <penetrate>0</penetrate>
+   <physical>6</physical>
+   <disable>2</disable>
+  </damage>
+ </specific>
+</outfit>

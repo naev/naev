@@ -14,7 +14,6 @@
 #include "naev.h"
 
 #include <stdlib.h>
-#include <string.h>
 
 #include "player.h"
 #include "nxml.h"
@@ -57,12 +56,11 @@
 #include "nlua_gui.h"
 #include "nlua_tex.h"
 #include "gui_omsg.h"
+#include "nstring.h"
 
 
 #define XML_GUI_ID   "GUIs" /**< XML section identifier for GUI document. */
 #define XML_GUI_TAG  "gui" /**<  XML Section identifier for GUI tags. */
-
-#define GUI_GFX      "gfx/gui/" /**< Location of the GUI graphics. */
 
 #define INTERFERENCE_LAYERS      16 /**< Number of interference layers. */
 #define INTERFERENCE_CHANGE_DT   0.1 /**< Speed to change at. */
@@ -193,10 +191,10 @@ static void gui_renderPilotTarget( double dt );
 static void gui_renderPlanetTarget( double dt );
 static void gui_renderBorder( double dt );
 static void gui_renderMessages( double dt );
-static glColour *gui_getPlanetColour( int i );
-static void gui_renderRadarOutOfRange( RadarShape sh, int w, int h, int cx, int cy, glColour *col );
+static const glColour *gui_getPlanetColour( int i );
+static void gui_renderRadarOutOfRange( RadarShape sh, int w, int h, int cx, int cy, const glColour *col );
 static void gui_planetBlink( int w, int h, int rc, int cx, int cy, GLfloat vr, RadarShape shape );
-static glColour* gui_getPilotColour( const Pilot* p );
+static const glColour* gui_getPilotColour( const Pilot* p );
 static void gui_renderInterference (void);
 static void gui_calcBorders (void);
 /* Lua GUI. */
@@ -336,12 +334,12 @@ void player_messageRaw( const char *str )
 
       /* Add the new one */
       if (p == 0) {
-         snprintf( mesg_stack[mesg_pointer].str, i+1, "%s", &str[p] );
+         nsnprintf( mesg_stack[mesg_pointer].str, i+1, "%s", &str[p] );
          gl_printRestoreInit( &mesg_stack[mesg_pointer].restore );
       }
       else {
          mesg_stack[mesg_pointer].str[0] = '\t'; /* Hack to indent. */
-         snprintf( &mesg_stack[mesg_pointer].str[1], i+1, "%s", &str[p] );
+         nsnprintf( &mesg_stack[mesg_pointer].str[1], i+1, "%s", &str[p] );
          gl_printStoreMax( &mesg_stack[mesg_pointer].restore, str, p );
       }
       mesg_stack[mesg_pointer].t = mesg_timeout;
@@ -391,7 +389,7 @@ static void gui_renderPlanetTarget( double dt )
 {
    (void) dt;
    double x,y, w,h;
-   glColour *c;
+   const glColour *c;
    Planet *planet;
    JumpPoint *jp;
 
@@ -446,7 +444,7 @@ static void gui_renderPlanetTarget( double dt )
  *    @param h Height.
  *    @param c Colour.
  */
-void gui_renderTargetReticles( int x, int y, int w, int h, glColour* c )
+void gui_renderTargetReticles( int x, int y, int w, int h, const glColour* c )
 {
    /* Must not be NULL. */
    if (gui_target_planet == NULL)
@@ -474,7 +472,7 @@ static void gui_renderPilotTarget( double dt )
 {
    (void) dt;
    Pilot *p;
-   glColour *c;
+   const glColour *c;
    double x, y;
 
    /* Player is most likely dead. */
@@ -592,7 +590,7 @@ static void gui_renderBorder( double dt )
    int hw, hh;
    double rx,ry;
    double cx,cy;
-   glColour *col;
+   const glColour *col;
    double int_a;
    GLfloat vertex[5*2], colours[5*4];
 
@@ -617,8 +615,8 @@ static void gui_renderBorder( double dt )
 
       pnt = cur_system->planets[i];
 
-      /* See if in sensor range. */
-      if (!pilot_inRangePlanet(player.p, i))
+      /* Skip if unknown. */
+      if (!planet_isKnown( pnt ))
          continue;
 
       /* Check if out of range. */
@@ -661,8 +659,8 @@ static void gui_renderBorder( double dt )
    for (i=0; i<cur_system->njumps; i++) {
       jp  = &cur_system->jumps[i];
 
-      /* See if in sensor range. */
-      if (!pilot_inRangePlanet(player.p, i))
+      /* Skip if unknown or exit-only. */
+      if (!jp_isKnown( jp ) || jp_isFlag( jp, JP_EXITONLY ))
          continue;
 
       /* Check if out of range. */
@@ -1100,12 +1098,12 @@ static void gui_renderMessages( double dt )
    h  = conf.mesg_visible*gl_defFont.h*1.2;
    gl_renderRect( x-2., y-2., gui_mesg_w-13., h+4., &cBlackHilight );
 
+   /* Set up position. */
+   vx = x;
+   vy = y;
+
    /* Must be run here. */
    if (mesg_viewpoint != -1) {
-      /* Set up position. */
-      vx = x;
-      vy = y;
-
       /* Data. */
       hs = h*(double)conf.mesg_visible/(double)mesg_max;
       o  = mesg_pointer - mesg_viewpoint;
@@ -1206,9 +1204,9 @@ static void gui_renderInterference (void)
  *
  * @sa pilot_getColour
  */
-static glColour* gui_getPilotColour( const Pilot* p )
+static const glColour* gui_getPilotColour( const Pilot* p )
 {
-   glColour *col;
+   const glColour *col;
 
    if (p->id == player.p->target)
       col = &cRadar_tPilot;
@@ -1232,7 +1230,8 @@ void gui_renderPilot( const Pilot* p, RadarShape shape, double w, double h, doub
    int i, curs;
    int x, y, sx, sy;
    double px, py;
-   glColour *col, ccol;
+   const glColour *col;
+   glColour ccol;
    GLfloat vertex[2*8], colours[4*8];
    GLfloat cx, cy;
    int rc;
@@ -1383,9 +1382,9 @@ void gui_renderPlayer( double res, int overlay )
  *    @param i Index of the planet to get colour of.
  *    @return Colour of the planet.
  */
-static glColour *gui_getPlanetColour( int i )
+static const glColour *gui_getPlanetColour( int i )
 {
-   glColour *col;
+   const glColour *col;
    Planet *planet;
 
    planet = cur_system->planets[i];
@@ -1474,7 +1473,7 @@ static void gui_planetBlink( int w, int h, int rc, int cx, int cy, GLfloat vr, R
 /**
  * @brief Renders an out of range marker for the planet.
  */
-static void gui_renderRadarOutOfRange( RadarShape sh, int w, int h, int cx, int cy, glColour *col )
+static void gui_renderRadarOutOfRange( RadarShape sh, int w, int h, int cx, int cy, const glColour *col )
 {
    GLfloat vertex[2*2], colours[8*2];
    double a;
@@ -1545,12 +1544,12 @@ void gui_renderPlanet( int ind, RadarShape shape, double w, double h, double res
    int cx, cy, r, rc;
    GLfloat vx, vy, vr;
    GLfloat a;
-   glColour *col;
+   const glColour *col;
    Planet *planet;
    GLfloat vertex[5*2], colours[5*4];
 
-   /* Make sure is in range. */
-   if (!pilot_inRangePlanet( player.p, ind ))
+   /* Make sure is known. */
+   if ( !planet_isKnown( cur_system->planets[ind] ))
       return;
 
    /* Default values. */
@@ -1649,7 +1648,7 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
    GLfloat a;
    GLfloat ca, sa;
    GLfloat vx, vy, vr;
-   glColour *col;
+   const glColour *col;
    GLfloat vertex[4*2], colours[4*4];
    JumpPoint *jp;
 
@@ -1669,6 +1668,10 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
       rc = (int)(w*w);
    else
       rc = 0;
+
+   /* Check if known */
+   if (!jp_isKnown(jp))
+      return;
 
    /* Check if in range. */
    if (shape == RADAR_RECT) {
@@ -2044,7 +2047,7 @@ int gui_load( const char* name )
    gui_cleanup();
 
    /* Open file. */
-   snprintf( path, sizeof(path), "dat/gui/%s.lua", name );
+   nsnprintf( path, sizeof(path), "dat/gui/%s.lua", name );
    buf = ndata_read( path, &bufsize );
    if (buf == NULL) {
       WARN("Unable to find GUI '%s'.", path );

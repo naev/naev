@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Unicorp Mace Launcher">
+ <general>
+  <slot>weapon</slot>
+  <license>Medium Weapon License</license>
+  <mass>10</mass>
+  <price>19000</price>
+  <description>This launcher fires unguided Mace rockets. Its low requirements and complete lack of energy consumption make it a useful assist weapon in fast paced dogfights.</description>
+  <gfx_store>macelauncher</gfx_store>
+ </general>
+ <specific type="launcher" secondary="1">
+  <cpu>3</cpu>
+  <ammo>Mace Rocket</ammo>
+  <delay>0.36</delay>
+  <amount>50</amount>
+ </specific>
+</outfit>

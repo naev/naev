@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Empire Lancelot">
+ <base_type>Lancelot</base_type>
+ <GFX>lancelot_empire</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Fighter</class>
+ <price>500000</price>
+ <fabricator>Nexus Shipyards</fabricator>
+ <license>Light Combat Vessel License</license>
+ <description>An Empire Lancelot.</description>
+ <movement>
+  <thrust>220</thrust>
+  <turn>135</turn>
+  <speed>260</speed>
+ </movement>
+ <health>
+  <absorb>14</absorb>
+  <shield>300</shield>
+  <armour>130</armour>
+  <energy>730</energy>
+  <shield_regen>8</shield_regen>
+  <armour_regen>0</armour_regen>
+  <energy_regen>32.7</energy_regen>
+ </health>
+ <characteristics>
+  <cpu>42</cpu>
+  <crew>4</crew>
+  <mass>190</mass>
+  <fuel>400</fuel>
+  <cargo>25</cargo>
+ </characteristics>
+ <slots>
+  <weapon x="12" y="0" h="0">medium</weapon>
+  <weapon x="12" y="0" h="0"/>
+  <weapon x="-3" y="0" h="2"/>
+  <weapon x="-3" y="0" h="2"/>
+  <utility/>
+  <utility/>
+  <utility/>
+  <structure/>
+  <structure/>
+ </slots>
+ <stats>
+  <fwd_firerate>4</fwd_firerate>
+ </stats>
+</ship>

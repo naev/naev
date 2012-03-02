@@ -15,7 +15,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
+#include "nstring.h"
 #include <math.h>
 
 #include <lua.h>
@@ -211,7 +211,7 @@ static int evt_npcAdd( lua_State *L )
       priority = 5;
 
    /* Set path. */
-   snprintf( portrait, PATH_MAX, "gfx/portraits/%s.png", gfx );
+   nsnprintf( portrait, PATH_MAX, "gfx/portraits/%s.png", gfx );
 
    cur_event = event_getFromLua(L);
 
@@ -266,7 +266,7 @@ static int evt_finish( lua_State *L )
    Event_t *cur_event;
 
    b = lua_toboolean(L,1);
-   lua_pushboolean( L, b );
+   lua_pushboolean( L, 1 );
    lua_setglobal( L, "__evt_delete" );
 
    cur_event = event_getFromLua(L);

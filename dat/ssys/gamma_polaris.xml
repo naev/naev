@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ssys name="Gamma Polaris">
+ <general>
+  <radius>30000.000000</radius>
+  <stars>500</stars>
+  <interference>0.000000</interference>
+  <nebula volatility="0.000000">0.000000</nebula>
+ </general>
+ <pos>
+  <x>-172.000000</x>
+  <y>-296.000000</y>
+ </pos>
+ <assets>
+  <asset>Emperor's Fist</asset>
+  <asset>Emperor's Wrath</asset>
+  <asset>Halir</asset>
+  <asset>New Deimos</asset>
+  <asset>New Mars</asset>
+  <asset>New Phobos</asset>
+  <asset>New Pluto</asset>
+  <asset>Polaris Prime</asset>
+  <asset>Virtual Civilian Standard</asset>
+  <asset>Virtual Civilian Standard</asset>
+  <asset>Virtual Trader Area</asset>
+  <asset>Vuere</asset>
+ </assets>
+ <jumps>
+  <jump target="Apez">
+   <autopos/>
+   <hide>0.000000</hide>
+  </jump>
+  <jump target="Koralis">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Qex">
+   <autopos/>
+   <hide>0.000000</hide>
+  </jump>
+  <jump target="Shakar">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Sirou">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+ </jumps>
+</ssys>

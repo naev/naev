@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Enygma Systems Spearhead Launcher">
+ <general>
+  <slot>weapon</slot>
+  <license>Medium Weapon License</license>
+  <mass>15</mass>
+  <price>70000</price>
+  <description>This launcher fires Spearhead class shieldbreaker missiles. Its basic design is largely similar to that of most conventional missile launchers, save for the unique mechanism that charges and primes the missile warheads.</description>
+  <gfx_store>headhunterlauncher</gfx_store>
+ </general>
+ <specific type="launcher" secondary="1">
+  <cpu>7</cpu>
+  <ammo>Spearhead Missile</ammo>
+  <delay>4</delay>
+  <amount>8</amount>
+  <lockon>12</lockon>
+  <arc>6</arc>
+  <ew_target>0.70</ew_target>
+ </specific>
+</outfit>

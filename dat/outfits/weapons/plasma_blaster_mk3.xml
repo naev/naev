@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Plasma Blaster MK3">
+ <general>
+  <slot>weapon</slot>
+  <size>light</size>
+  <license>Medium Weapon License</license>
+  <mass>9</mass>
+  <price>26000</price>
+  <description>The Plasma Blaster MK3 is a Soromid refinement to what was originally an Imperial design. It is one of the few Soromid military weapons that are compatible with standard ship mount points. The Soromid use it mainly for local law enforcement purposes.</description>
+  <gfx_store>plasma2</gfx_store>
+ </general>
+ <specific type="bolt">
+  <cpu>7</cpu>
+  <gfx>plasma2</gfx>
+  <sound>plasma</sound>
+  <spfx_shield>ShiS</spfx_shield>
+  <spfx_armour>PlaS2</spfx_armour>
+  <delay>0.675</delay>
+  <speed>450</speed>
+  <range>700</range>
+  <falloff>310</falloff>
+  <gfx_end>plasma2-end</gfx_end>
+  <energy>12.5</energy>
+  <heatup>30</heatup>
+  <track>2</track>
+  <swivel>6</swivel>
+  <damage>
+   <type>normal</type>
+   <penetrate>23</penetrate>
+   <physical>16</physical>
+   <disable>1</disable>
+  </damage>
+ </specific>
+</outfit>

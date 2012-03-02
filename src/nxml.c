@@ -13,6 +13,8 @@
 
 #include "naev.h"
 
+#include "nstring.h"
+
 
 /**
  * @brief Parses a texture handling the sx and sy elements.
@@ -59,7 +61,7 @@ glTexture* xml_parseTexture( xmlNodePtr node,
       return NULL;
 
    /* Convert name. */
-   snprintf( filename, PATH_MAX, (path != NULL) ? path : "%s", buf );
+   nsnprintf( filename, PATH_MAX, (path != NULL) ? path : "%s", buf );
 
    /* Load the graphic. */
    if ((sx == 1) && (sy == 1))

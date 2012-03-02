@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Fernando Station">
+ <pos>
+  <x>12376.160912</x>
+  <y>625.892062</y>
+ </pos>
+ <GFX>
+  <space>station-fleetbase.png</space>
+  <exterior>station05.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>2000</population>
+  <hide>0.750000</hide>
+  <services>
+   <land>dv_mil_restricted</land>
+   <refuel/>
+   <bar/>
+   <outfits/>
+  </services>
+  <commodities/>
+  <description>Officially, Fernando Station is a local security nexus, meant to keep the local systems safe from pirates and the FLF. But it is rather heavily equipped for simply maintaining law and order. Some people believe that the Dvaered are gradually reinforcing Ogat, preparing for a military conflict with the Empire. Nothing currently suggests that the Dvaered are on the warpath, but Fernando Station might be a harbinger of things to come.</description>
+  <bar>The spacedock bar is mainly frequented by Dvaered military pilots, as can be expected from a bar on a military base. The drinks served here are mostly free of mind-altering substances, a serious detractor to the ordinary visitor, but then Fernando station isn't out to make itself attractive.</bar>
+ </general>
+ <tech>
+  <item>Kinetic 1</item>
+  <item>Kinetic 2</item>
+  <item>Kinetic 3</item>
+  <item>Basic Outfits 1</item>
+  <item>Missiles 1</item>
+  <item>Missiles 2</item>
+ </tech>
+</asset>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="The Wringer">
+ <pos>
+  <x>1951.744467</x>
+  <y>5691.325470</y>
+ </pos>
+ <GFX>
+  <space>002.png</space>
+  <exterior>station02.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Independent</faction>
+  <value>100.000000</value>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>3000</population>
+  <hide>0.750000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+  </services>
+  <commodities/>
+  <description>The Wringer is actually called Ulysses Outpost, but apart from a few worn, rusted name plates there is nothing that reminds the people onboard of that name. Once an outlying scientific installation of the Old Empire, the facility was abandoned as the funds needed to keep it running dried up under ever increasing budget cuts following the end of the Empire's golden age. Since then, the station has been claimed by petty criminals and loners, people who are persona non grata in whatever region they come from, but are unwilling or unable to turn pirate. Needless to say, the Wringer is not the most pleasant of places, and few come here by choice. Even the Touched avoid the Wringer, despite the fact that Suna is within Sirius borders.</description>
+  <bar>The Wringer doesn't have a clear infrastructure, but most people agree that this compartment counts as the spaceport bar. It distinguishes itself by having slightly more drunks lying in the corners than the rest of the station, thanks to the availability of booze at the fenced-off bar on one side.</bar>
+ </general>
+</asset>

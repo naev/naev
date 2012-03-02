@@ -26,59 +26,65 @@ tens of lightyears, resulting in a massive, volatile nebula.
 .SH OPTIONS
 .
 .TP
+.BI --devmode
+Enables the universe editor (accessible via main menu).
+.TP
+.BI --devcsv
+Generates CSV output from ndata for development purposes.
+.TP
 .BI -F,\ --fps \ number
-limits frames per second
+Limits frames per second to \fInumber\fP
 .TP
 .B -f, --fullscreen
-runs the game in full screen mode
+Runs the game in full-screen mode
 .TP
 .B -G, --generate
-regenerates the nebula images (Slow)
+Regenerates the nebula images (slow)
 .TP
 .BI -H \ number
-sets the window height to \fInumber\fP
+Sets the window height to \fInumber\fP
 .TP
 .B -h, --help
-display a help message and exit
+Display a help message and exit
 .TP
 .BI -J,\ --Joystick \ string
-use joystick whose name contains \fIstring\fP
+Use joystick whose name contains \fIstring\fP
 .TP
 .BI -j,\ --joystick \ number
-use joystick \fInumber\fP
+Use joystick \fInumber\fP
 .TP
-.B --M, --mute
-disables sound
+.B -M, --mute
+Disables sound
 .TP
-.B -S, --sound
-forcibly enables sound
+.B -N, --nondata
+Disables single-file ndata loading, falling back to laid-out files.
 .TP
 .BI -m,\ --mvol \ number
-sets the music volume to \fInumber\fP
+Sets the music volume to \fInumber\fP
+.TP
+.B -S, --sound
+Forcibly enables sound
 .TP
 .BI -s,\ --svol \ number
-sets the sound volume to \fInumber\fP
+Sets the sound volume to \fInumber\fP
 .TP
 .B -V, --vsync
-limits frames per second to screen refresh rate
+Limits frames per second to screen refresh rate
 .TP
 .B -v, --version
-prints the version and exits
+Prints the version and exits
 .TP
 .BI -W \ number
-sets the window width to \fInumber\fP
+Sets the window width to \fInumber\fP
 
 .SH AUTHOR
 .
-Written by Edgar Simo <bobbens@gmail.com>.
+Originally written by Edgar Simo <bobbens@gmail.com>. Currently
+developed by the Naev Team.
 .br
-Major contributions by Nikola Whallon <6.saturn.6@gmail.com>, Josiah
-Schwartfeger, and Sean Hildebrand <silverwraithii@gmail.com>.
-
 An exhaustive list of contributors can be found at:
 .br
 http://github.com/bobbens/naev/blob/master/AUTHORS.
 
-This manual page was originally written by Sean Hildebrand.
 .br
 Visit the official homepage: http://naev.org/

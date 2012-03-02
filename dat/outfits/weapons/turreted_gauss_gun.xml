@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Turreted Gauss Gun">
+ <general>
+  <slot>weapon</slot>
+  <size>light</size>
+  <mass>18</mass>
+  <price>16000</price>
+  <description>One of the more common countermeasures employed by low-budget merchant ships, the turret version of the Gauss Gun provides basic defense against lone pirates. A more determined attacker is unlikely to be deterred, however.</description>
+  <gfx_store>gaussturret</gfx_store>
+ </general>
+ <specific type="turret bolt">
+  <cpu>8</cpu>
+  <gfx>gatling</gfx>
+  <sound>autocannon</sound>
+  <sound_hit>medexp0</sound_hit>
+  <spfx_shield>ExpS</spfx_shield>
+  <spfx_armour>ExpS</spfx_armour>
+  <delay>0.325</delay>
+  <speed>500</speed>
+  <range blowup="armour">800</range>
+  <energy>7</energy>
+  <heatup>40</heatup>
+  <track>2.2</track>
+  <damage>
+   <type>impact</type>
+   <penetrate>11</penetrate>
+   <physical>6.5</physical>
+   <disable>1</disable>
+  </damage>
+ </specific>
+</outfit>

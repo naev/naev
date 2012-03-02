@@ -38,6 +38,8 @@
 #include "weapon.h"
 #include "escort.h"
 
+#include "player.h"
+
 
 /*
  * Prototypes.
@@ -72,7 +74,7 @@ static PilotWeaponSet* pilot_weapSet( Pilot* p, int id )
  */
 static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
 {
-   int i, j, ret, s, recalc, ooe, can_use;
+   int i, j, ret, s;
    Pilot *pt;
    double dist2;
    Outfit *o;
@@ -82,22 +84,17 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
       return 0;
 
    /* If inrange is set we only fire at targets in range. */
+   dist2 = INFINITY; /* With no target we just set distance to infinity. */
    if (ws->inrange) {
-      if (p->target == p->id)
-         dist2 = INFINITY; /* With no target we just set distance to infinity. */
-      else {
+      if (p->target != p->id) {
          pt = pilot_get( p->target );
-         if (pt == NULL)
-            dist2 = INFINITY;
-         else
+         if (pt != NULL)
             dist2 = vect_dist2( &p->solid->pos, &pt->solid->pos );
       }
    }
 
    /* Fire. */
-   recalc = 0;
    ret    = 0;
-   ooe    = (p->energy <= 0.);
    for (i=0; i<array_size(ws->slots); i++) {
       o = ws->slots[i].slot->outfit;
 
@@ -108,22 +105,6 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
       /* Only "active" outfits. */
       if ((level != -1) && (ws->slots[i].level != level))
          continue;
-
-      /* Modifications get a special deal. */
-      if (outfit_isMod(o)) {
-         can_use = ((o->u.mod.energy_regen >= 0.) || !ooe);
-         if ((ws->slots[i].slot->state == PILOT_OUTFIT_OFF) && can_use) {
-            ws->slots[i].slot->state = PILOT_OUTFIT_ON;
-            recalc = 1;
-         }
-         else if (!can_use) {
-            if (ws->slots[i].slot->state != PILOT_OUTFIT_OFF) {
-               ws->slots[i].slot->state = PILOT_OUTFIT_OFF;
-               recalc = 1;
-            }
-         }
-         continue;
-      }
 
       /* Only run once for each weapon type in the group. */
       s = 0;
@@ -154,14 +135,13 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
       ret += pilot_shootWeaponSetOutfit( p, ws, o, level );
    }
 
-   /* Must recalculate. */
-   if (recalc)
-      pilot_calcStats( p );
-
    return ret;
 }
 
 
+/**
+ * @brief Useful function for AI, clears activeness of all weapon sets.
+ */
 void pilot_weapSetAIClear( Pilot* p )
 {
    int i;
@@ -182,13 +162,18 @@ void pilot_weapSetAIClear( Pilot* p )
  */
 void pilot_weapSetPress( Pilot* p, int id, int type )
 {
+   int i, l, on, n;
    PilotWeaponSet *ws;
 
    ws = pilot_weapSet(p,id);
+   /* Case no outfits. */
+   if (ws->slots == NULL)
+      return;
 
    /* Handle fire groups. */
    switch (ws->type) {
       case WEAPSET_TYPE_CHANGE:
+         /* On press just change active weapon set to whatever is available. */
          if (type > 0) {
             if (id != p->active_set)
                pilot_weapSetUpdateOutfits( p, ws );
@@ -197,6 +182,8 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
          break;
 
       case WEAPSET_TYPE_WEAPON:
+         /* Activation philosophy here is to turn on while pressed and off
+          * when it's not held anymore. */
          if (type > 0)
             ws->active = 1;
          else if (type < 0)
@@ -204,8 +191,47 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
          break;
 
       case WEAPSET_TYPE_ACTIVE:
-         if (type > 0)
+         /* The behaviour here is more complex. WHat we do is consider a group
+          * to be entirely off if not all outfits are either on or cooling down.
+          * In the case it's deemed to be off, all outfits that are off get turned
+          * on, otherwise all outfits that are on are turrned to cooling down. */
+         /* Only care about presses. */
+         if (type < 0)
             break;
+
+         /* Decide what to do. */
+         on = 1;
+         l  = array_size(ws->slots);
+         for (i=0; i<l; i++) {
+            if (ws->slots[i].slot->state == PILOT_OUTFIT_OFF) {
+               on = 0;
+               break;
+            }
+         }
+
+         /* Turn them off. */
+         n = 0;
+         if (on) {
+            pilot_outfitOffAll( p );
+         }
+         /* Turn them on. */
+         else {
+            for (i=0; i<l; i++) {
+               if (ws->slots[i].slot->state != PILOT_OUTFIT_OFF)
+                  continue;
+               if (outfit_isAfterburner(ws->slots[i].slot->outfit))
+                  pilot_afterburn( p );
+               else {
+                  ws->slots[i].slot->state  = PILOT_OUTFIT_ON;
+                  ws->slots[i].slot->stimer = outfit_duration( ws->slots[i].slot->outfit );
+               }
+               n++;
+            }
+         }
+         /* Must recalculate stats. */
+         if (n > 0)
+            pilot_calcStats( p );
+
          break;
    }
 }
@@ -227,8 +253,14 @@ void pilot_weapSetUpdate( Pilot* p )
 
    for (i=0; i<PILOT_WEAPON_SETS; i++) {
       ws = &p->weapon_sets[i];
-      if (ws->active)
-         pilot_weapSetFire( p, ws, -1 );
+      if (ws->slots == NULL)
+         continue;
+
+      /* Weapons must get "fired" every turn. */
+      if (ws->type == WEAPSET_TYPE_WEAPON) {
+         if (ws->active)
+            pilot_weapSetFire( p, ws, -1 );
+      }
    }
 }
 
@@ -273,9 +305,21 @@ int pilot_weapSetTypeCheck( Pilot* p, int id )
  */
 void pilot_weapSetType( Pilot* p, int id, int type )
 {
+   int i;
    PilotWeaponSet *ws;
+
    ws = pilot_weapSet(p,id);
    ws->type = type;
+
+   /* Set levels just in case. */
+   if (ws->slots == NULL)
+      return;
+
+   /* See if we must overwrite levels. */
+   if ((ws->type == WEAPSET_TYPE_WEAPON) ||
+         (ws->type == WEAPSET_TYPE_ACTIVE))
+      for (i=0; i<array_size(ws->slots); i++)
+         ws->slots[i].level = 0;
 }
 
 
@@ -674,7 +718,9 @@ int pilot_shoot( Pilot* p, int level )
    ws = pilot_weapSet( p, p->active_set );
 
    /* Fire weapons. */
-   return pilot_weapSetFire( p, ws, level );
+   if (ws->type == WEAPSET_TYPE_CHANGE) /* Must be a change set or a weaponset. */
+      return pilot_weapSetFire( p, ws, level );
+   return 0;
 }
 
 
@@ -906,7 +952,7 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
       energy      = outfit_energy(w->u.ammo.outfit)*energy_mod;
       p->energy  -= energy;
       pilot_heatAddSlot( p, w );
-      weapon_add( w->u.ammo.outfit, w->heat_T, p->solid->dir,
+      weapon_add( w->outfit, w->heat_T, p->solid->dir,
             &vp, &p->solid->vel, p, p->target );
 
       w->u.ammo.quantity -= 1; /* we just shot it */
@@ -1120,6 +1166,7 @@ void pilot_weaponSetDefault( Pilot *p )
 void pilot_weaponSane( Pilot *p )
 {
    int i, j;
+   int n, l;
    PilotWeaponSet *ws;
 
    for (j=0; j<PILOT_WEAPON_SETS; j++) {
@@ -1127,16 +1174,122 @@ void pilot_weaponSane( Pilot *p )
       if (ws->slots == NULL)
          continue;
 
-      for (i=0; i<array_size(ws->slots); i++) {
+      l = array_size(ws->slots);
+      n = 0;
+      for (i=0; i<l; i++) {
          if (ws->slots[i].slot->outfit != NULL)
             continue;
 
-         array_erase( &ws->slots, &ws->slots[i], &ws->slots[i+1] );
-         i--;
+         /* Move down. */
+         memmove( &ws->slots[i], &ws->slots[i+1], sizeof(PilotWeaponSetOutfit) * (l-i-1) );
+         n++;
       }
+      /* Remove surplus. */
+      if (n > 0)
+         array_erase( &ws->slots, &ws->slots[l-n], &ws->slots[l] );
+
+      /* See if we must overwrite levels. */
+      if ((ws->type == WEAPSET_TYPE_WEAPON) ||
+            (ws->type == WEAPSET_TYPE_ACTIVE))
+         for (i=0; i<array_size(ws->slots); i++)
+            ws->slots[i].level = 0;
    }
 
    /* Update range. */
    pilot_weapSetUpdateRange( ws );
 }
 
+/**
+ * @brief Dissables a given active outfit.
+ *
+ * @param p Pilot whos outfit we are dissabling.
+ * @return Weather the outfit was actualy disabled.
+ */
+void pilot_outfitOff( Pilot *p, PilotOutfitSlot *o )
+{
+   if (outfit_isAfterburner( o->outfit )) /* Afterburners */
+      pilot_afterburnOver( p );
+   else {
+      o->stimer = outfit_cooldown( o->outfit );
+      o->state  = PILOT_OUTFIT_COOLDOWN;
+   }
+}
+
+/**
+ * @brief Dissables all active outfits for a pilot.
+ *
+ * @param p Pilot whos outfits we are dissabling.
+ * @return Weather any outfits were actualy disabled.
+ */
+int pilot_outfitOffAll( Pilot *p )
+{
+   PilotOutfitSlot *o;
+   int nchg;
+   int i;
+
+   nchg = 0;
+   for (i=0; i<p->noutfits; i++) {
+      o = p->outfits[i];
+      /* Picky about our outfits. */
+      if (o->outfit == NULL)
+         continue;
+      if (!o->active)
+         continue;
+      if (o->state == PILOT_OUTFIT_ON) {
+         pilot_outfitOff( p, o );
+         nchg++;
+      }
+   }
+   return (nchg > 0);
+}
+
+/**
+ * @brief Activate the afterburner.
+ */
+void pilot_afterburn (Pilot *p)
+{
+   //double afb_mod;
+   if (p == NULL)
+      return;
+
+   if (pilot_isFlag(p, PILOT_HYP_PREP) || pilot_isFlag(p, PILOT_HYPERSPACE) ||
+         pilot_isFlag(p, PILOT_LANDING) || pilot_isFlag(p, PILOT_TAKEOFF))
+      return;
+
+   /* Not under manual control. */
+   if (pilot_isFlag( p, PILOT_MANUAL_CONTROL ))
+      return;
+
+   /** @todo fancy effect? */
+   if (p->afterburner == NULL)
+      return;
+
+   if (p->afterburner->state == PILOT_OUTFIT_OFF) {
+      p->afterburner->state  = PILOT_OUTFIT_ON;
+      p->afterburner->stimer = outfit_duration( p->afterburner->outfit );
+      pilot_setFlag(p,PILOT_AFTERBURNER);
+      pilot_calcStats( p );
+   }
+
+   //afb_mod = MIN( 1., player.p->afterburner->outfit->u.afb.mass_limit / player.p->solid->mass );
+   //spfx_shake( afb_mod * player.p->afterburner->outfit->u.afb.rumble * SHAKE_MAX );
+}
+
+
+/**
+ * @brief Deactivates the afterburner.
+ */
+void pilot_afterburnOver (Pilot *p)
+{
+   if (p == NULL)
+      return;
+   if (p->afterburner == NULL)
+      return;
+
+   if (p->afterburner->state == PILOT_OUTFIT_ON) {
+      p->afterburner->state  = PILOT_OUTFIT_COOLDOWN;
+      p->afterburner->stimer = outfit_cooldown( p->afterburner->outfit );
+      pilot_rmFlag(p,PILOT_AFTERBURNER);
+      pilot_calcStats( p );
+   }
+}

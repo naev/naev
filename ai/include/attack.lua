@@ -20,6 +20,7 @@ include("ai/include/atk_corvette.lua")
 include("ai/include/atk_capital.lua")
 --include("ai/include/atk_cruiser.lua")
 --include("ai/include/atk_carrier.lua")
+include("ai/include/atk_drone.lua")
 
 -- Set attack variables
 mem.atk_changetarget  = 2 -- Distance at which target changes
@@ -77,8 +78,11 @@ function attack_choose ()
    if class == "Bomber" then
       atk_bomber_init()
 
-   elseif class == "Fighter" or class == "Drone" then
+   elseif class == "Fighter" then
       atk_fighter_init()
+
+   elseif class == "Drone" then
+      atk_drone_init()
 
    -- Medium ships
    elseif class == "Corvette" then

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Proteron Derivative">
+ <base_type>Derivative</base_type>
+ <GFX>derivative</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Fighter</class>
+ <price>290000</price>
+ <fabricator>Krain Industries</fabricator>
+ <license>Light Combat Vessel License</license>
+ <description>While lesser known among the general public than the Kestrel, the Derivative is where Krain Industries does the majority of its business. True to its name, it's the latest in a long line of largely carrier-based fighters. Packing relatively little firepower, they're ill-suited to duelling, but a carrier group unleashing several squadrons has been known to turn the tide of battle on many occasions.</description>
+ <movement>
+  <thrust>280</thrust>
+  <turn>140</turn>
+  <speed>300</speed>
+ </movement>
+ <health>
+  <absorb>9</absorb>
+  <shield>200</shield>
+  <armour>70</armour>
+  <energy>500</energy>
+  <shield_regen>8</shield_regen>
+  <armour_regen>0</armour_regen>
+  <energy_regen>20</energy_regen>
+ </health>
+ <characteristics>
+  <cpu>30</cpu>
+  <crew>2</crew>
+  <mass>80</mass>
+  <fuel>300</fuel>
+  <cargo>15</cargo>
+ </characteristics>
+ <slots>
+  <weapon x="10" y="0" h="0"/>
+  <weapon x="0" y="-4" h="-3"/>
+  <weapon x="0" y="4" h="-3"/>
+  <utility/>
+  <utility/>
+  <structure/>
+  <structure/>
+ </slots>
+ <stats>
+  <fwd_damage>5</fwd_damage>
+ </stats>
+</ship>

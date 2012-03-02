@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Plasma Cluster Cannon MK3">
+ <general>
+  <slot>weapon</slot>
+  <size>medium</size>
+  <license>Medium Weapon License</license>
+  <mass>26</mass>
+  <price>18000</price>
+  <description>The mark 2 plasma blaster improves on its predecessor in many ways, maintaining good energy efficiency while augmenting range and firepower. Though intended primarily for military use, many have found their way to pirate hands.</description>
+  <gfx_store>plasma2</gfx_store>
+ </general>
+ <specific type="bolt">
+  <cpu>34</cpu>
+  <gfx>plasma2</gfx>
+  <sound>plasma</sound>
+  <spfx_shield>ShiS</spfx_shield>
+  <spfx_armour>PlaS2</spfx_armour>
+  <delay>1.1</delay>
+  <speed>650</speed>
+  <range>1700</range>
+  <falloff>1300</falloff>
+  <gfx_end>plasma2-end</gfx_end>
+  <heatup>50</heatup>
+  <energy>45</energy>
+  <track>1.2</track>
+  <swivel>16</swivel>
+  <damage>
+   <type>normal</type>
+   <penetrate>42</penetrate>
+   <physical>46</physical>
+   <disable>2</disable>
+  </damage>
+ </specific>
+</outfit>
+<!-- TODO plasma lance -->
+<!-- TODO bioplasma lance -->
+
+
+<!-- BEAM TREE -->
+<!-- TODO micro-beam -->
+<!-- TODO heavy micro-beam -->

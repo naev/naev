@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Sirius Shipyards">
+ <pos>
+  <x>30766.666667</x>
+  <y>7166.666667</y>
+ </pos>
+ <GFX>
+  <space>station-shipyard2.png</space>
+  <exterior>station04.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <value>10.000000</value>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>4000</population>
+  <hide>0.750000</hide>
+  <services>
+   <land>srs_mil_restricted</land>
+   <refuel/>
+   <commodity/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Sirius Shipyards is where most of the Sirius fleet is built, though some of the smaller support ships are actually constructed elsewhere. Though Aesir is not an ideal location for mass producing warships, the Sirii believe that building ships in proximity to Mutris will endow some small portion of Sirichana's power on the ships produced.</description>
+ </general>
+ <tech>
+  <item>Sirius Military Ships</item>
+ </tech>
+</asset>

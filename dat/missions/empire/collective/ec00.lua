@@ -57,7 +57,7 @@ function create ()
         abort()
     end  
 
-   misn.setNPC( "Lt. Commander", "dimitri" )
+   misn.setNPC( "Lt. Commander", "empire/unique/dimitri" )
    misn.setDesc( bar_desc )
 end
 

@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.61])
-AC_INIT([naev], [0.5.0], [bobbens@gmail.com])
+AC_INIT([naev], [0.5.1], [bobbens@gmail.com])
 AC_CONFIG_SRCDIR([src/naev.c])
 AC_CONFIG_HEADERS([src/config.h])
 AC_CONFIG_MACRO_DIR([m4])
@@ -229,20 +229,6 @@ AS_IF([test -z "$ndata_path" || test "$ndata_path" = "yes"], [
 ])
 AC_SUBST([ndata_path])
 
-# --with-preferences-dir
-prefsdir=".$PACKAGE_NAME"
-expand_variable prefsdir
-
-AC_MSG_CHECKING([for preferences directory])
-AC_ARG_WITH([preferences-dir],
-  AC_HELP_STRING([--with-preferences-dir=DIR], [preferences directory]),
-  [prefsdir="$withval"], [])
-AC_MSG_RESULT([$prefsdir])
-AS_IF([test -z "$prefsdir" || test "$prefsdir" = "yes"], [
-  AC_ERROR([The preferences directory must be explicitly specified])
-])
-AC_SUBST([prefsdir])
-
 #
 # Checks for libraries.
 #
@@ -390,7 +376,7 @@ AS_IF([test "$enable_debug" != "no"], [
      case "$host" in
        *-linux-gnu)
          AC_DEFINE([HAS_BFD], 1, [Define to 1 to enable bfd backtrace code])
-         NAEV_LIBS="$NAEV_LIBS -lbfd -liberty -rdynamic"
+         NAEV_LIBS="$NAEV_LIBS -lbfd -liberty -rdynamic -ldl"
          ;;
      esac
   ])
@@ -543,7 +529,7 @@ case "$host" in
     AC_DEFINE([FREEBSD], 1, [Define to 1 if running on FreeBSD])
     ;;
   *-mingw*)
-    AC_CHECK_TOOL(WINDRES, windres) 
+    AC_CHECK_TOOL(WINDRES, windres)
     AC_DEFINE([WIN32], 1, [Define to 1 if running on Windows])
     ;;
   *-darwin*)
@@ -554,10 +540,6 @@ esac
 # NDATA_DEF
 AC_DEFINE_UNQUOTED([NDATA_DEF], ["$ndata_path"],
       [Define to the path to the data file])
-
-# PREFSDIR_DEF
-AC_DEFINE_UNQUOTED([PREFSDIR_DEF], ["$prefsdir"],
-      [Define to preferences directory])
 
 # GIT_COMMIT
 AS_IF([test -n "$GIT_COMMIT"], [
@@ -608,7 +590,6 @@ AC_OUTPUT
 echo
 AC_MSG_NOTICE([prefix:      $prefix])
 AC_MSG_NOTICE([ndata:       $ndata_path])
-AC_MSG_NOTICE([prefsdir:    $prefsdir])
 echo
 AC_MSG_NOTICE([sound backends:])
 AC_MSG_NOTICE([  OpenAL:    $have_openal])

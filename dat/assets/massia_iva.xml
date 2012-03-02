@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Massia IVa">
+ <pos>
+  <x>-1088.000000</x>
+  <y>-15096.000000</y>
+ </pos>
+ <GFX>
+  <space>moon-G01.png</space>
+  <exterior>aquatic.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.500000</hide>
+  <services/>
+ </general>
+</asset>

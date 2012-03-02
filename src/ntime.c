@@ -36,7 +36,7 @@
 #include "naev.h"
 
 #include <stdio.h>
-#include <string.h>
+#include "nstring.h"
 #include <stdlib.h>
 
 #include "hook.h"
@@ -214,11 +214,11 @@ void ntime_prettyBuf( char *str, int max, ntime_t t, int d )
    stp = ntime_getSTP( nt );
    stu = ntime_getSTU( nt );
    if ((scu==0) && (stp==0)) /* only STU */
-      snprintf( str, max, "%04d STU", stu );
+      nsnprintf( str, max, "%04d STU", stu );
    else if ((scu==0) || (d==0))
-      snprintf( str, max, "%.*f STP", d, stp + 0.0001 * stu );
+      nsnprintf( str, max, "%.*f STP", d, stp + 0.0001 * stu );
    else /* UST format */
-      snprintf( str, max, "UST %d:%.*f", scu, d, stp + 0.0001 * stu );
+      nsnprintf( str, max, "UST %d:%.*f", scu, d, stp + 0.0001 * stu );
 }
 
 

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Jorcan">
+ <pos>
+  <x>14226.623033</x>
+  <y>-4360.650738</y>
+ </pos>
+ <GFX>
+  <space>G01.png</space>
+  <exterior>mining.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>G</class>
+  <population>170000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+  </commodities>
+  <description>Jorcan is a very barren, dull planet, like most mining worlds. Having been mined for decades, its resources have been nearly exhausted. However, mining corporations are known to persist until there's no longer a profit to be made, leaving depleted, dead planets.</description>
+  <bar>The one word that would describe the Jorcan spaceport bar would be dust. It's everywhere: on the seats, on the counter, in the drinks, on everyone's faces. A coarse soot has coated your palm just holding your drink. You wonder if it will ever wash off.</bar>
+ </general>
+</asset>

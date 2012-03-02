@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Donnar">
+ <pos>
+  <x>23841.859354</x>
+  <y>5606.161715</y>
+ </pos>
+ <GFX>
+  <space>G00.png</space>
+  <exterior>desertic2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>G</class>
+  <population>2000000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Despite not officially classifying as habitable, the Dvaered have settled on Donnar in sufficient numbers to give the planet the status of civilian world. Though the soil is barely fertile and the atmosphere is less than pleasant for even the most hardy plant life, Donnar has the major advantage of having almost no seismic activity at all. And as many a colony prospector can tell you, a stable planet is a good planet.</description>
+  <bar>Donnar has something unusual to offer to offworlders. The spaceport bar is constructed like an arena, with the spectator area fulfilling the functions that most other spaceport bars do, and the central area serving as the stage for entertainment of all kinds, ranging from fights to displays of art. The concept is rather ingenious, and many a spacer is as astonished at the display as they are at the fact that the Dvaered came up with this idea.</bar>
+ </general>
+ <tech>
+  <item>Kinetic 1</item>
+  <item>Kinetic 2</item>
+  <item>Basic Outfits 2</item>
+  <item>Low Tech Upgrades</item>
+  <item>High Tech Upgrades 1</item>
+ </tech>
+</asset>

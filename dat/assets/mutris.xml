@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Mutris">
+ <pos>
+  <x>33152.000000</x>
+  <y>30118.000000</y>
+ </pos>
+ <GFX>
+  <space>L00.png</space>
+  <exterior>mining4.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <value>300.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>L</class>
+  <population>3000000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land>srs_mil_mutris</land>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Mutris. The very heart of Sirius space. This is where Crater City is to be found, home of Sirichana and the many Sirii pilgrims who will one day become the Touched. Crater City being the most holy of places, the airspace in a wide area around it is closed. The spaceport is located thousands of kilometers away. All approaches happen under a tight escort, and non-Sirii are confined to the commercial district of the planet's political capital.</description>
+  <bar>The spaceport bar is the primary meeting place for offworlders on Mutris. Since only Sirii may venture beyond the commercial district, all others are either conducting business or relaxing here. As far as bars go, Mutris' is a fairly accomodating one, though the various religious references make it somewhat uncomfortable to some.</bar>
+ </general>
+ <tech>
+  <item>Ion 2</item>
+  <item>Basic Outfits 2</item>
+  <item>High Tech Upgrades 1</item>
+  <item>Basic Civilian Ships</item>
+ </tech>
+</asset>

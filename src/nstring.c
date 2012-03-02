@@ -12,8 +12,6 @@
 
 #include "naev.h"
 
-#include <string.h>
-
 #include "log.h"
 
 
@@ -65,11 +63,9 @@ const char *nstrnstr( const char *haystack, const char *needle, size_t size )
  *    @param needle String to find.
  *    @return Pointer in haystack where needle was found or NULL if not found.
  */
+#if !HAS_POSIX
 const char *nstrcasestr( const char *haystack, const char *needle )
 {
-#if HAS_POSIX
-   return strcasestr( haystack, needle );
-#else /* HAS_POSIX */
    size_t hay_len, needle_len;
 
    /* Get lengths. */
@@ -86,8 +82,28 @@ const char *nstrcasestr( const char *haystack, const char *needle )
    }
 
    return NULL;
-#endif /* HAS_POSIX */
 }
+#endif /* !HAS_POSIX */
 
+
+/**
+ * @brief nsnprintf wrapper.
+ */
+#if !HAS_POSIX
+int nsnprintf( char *text, size_t maxlen, const char *fmt, ... )
+{
+   va_list ap;
+   int retval;
+
+   va_start(ap, fmt);
+   retval = vsnprintf(text, maxlen, fmt, ap);
+   va_end(ap);
+
+   /* mingw64 doesn't seem to want to null terminate stuff... */
+   text[ maxlen-1 ] = '\0';
+
+   return retval;
+}
+#endif /* !HAS_POSIX */
 
 

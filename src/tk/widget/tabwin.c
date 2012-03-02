@@ -12,7 +12,7 @@
 #include "tk/toolkit_priv.h"
 
 #include <stdlib.h>
-#include <string.h>
+#include "nstring.h"
 
 #include "toolkit.h"
 #include "font.h"
@@ -139,8 +139,7 @@ static int tab_raw( Widget* tab, SDL_Event *event )
    }
 
    /* Give the active window the input. */
-   toolkit_inputWindow( wdw, event, 0 );
-   return 0; /* Never block event. */
+   return toolkit_inputWindow( wdw, event, 0 );
 }
 
 
@@ -281,7 +280,7 @@ static void tab_render( Widget* tab, double bx, double by )
 {
    int i, x;
    Window *wdw;
-   glColour *c, *lc;
+   const glColour *c, *lc;
 
    /** Get window. */
    wdw = window_wget( tab->dat.tab.windows[ tab->dat.tab.active ] );

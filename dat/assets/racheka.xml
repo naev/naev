@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Racheka">
+ <pos>
+  <x>-2670.288085</x>
+  <y>3099.441530</y>
+ </pos>
+ <GFX>
+  <space>M01.png</space>
+  <exterior>mining4.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>O</class>
+  <population>5000000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Medicine</commodity>
+  </commodities>
+  <description>Racheka is a relatively young Sirius colony. Where most Sirius planets are converted planets that once belonged to another faction, Racheka was actually established by Sirius colonists a considerable time after Sirichana settled on Mutris. Perhaps for this reason the Sirian religion can be felt very strongly here, as there are no remnants of other cultures mingling in the lives of the population.</description>
+  <bar>The first thing anyone notices when they step into the bar is the ceiling, which is a holographic display of the galaxy, centered around Anarbalis. Though an impressive display as well as a marvel of technology, the bar's proprietor apparently doesn't realize that many of his customers spend all day looking at the stars, and therefore have little desire to look at them when onworld.</bar>
+ </general>
+ <tech>
+  <item>Ion 2</item>
+  <item>Basic Outfits 2</item>
+  <item>Bulk Trade Ships</item>
+ </tech>
+</asset>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Zhiru">
+ <pos>
+  <x>9549.349193</x>
+  <y>-1582.542056</y>
+ </pos>
+ <GFX>
+  <space>M04.png</space>
+  <exterior>oceanic.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Goddard</faction>
+  <value>100.000000</value>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>13000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Zhiru was once home to Eduard Manuel Goddard, the man who single-handedly designed the then-revolutionary Goddard battlecruiser, and who would establish the minor House Goddard. Now Zhiru has a booming spacecraft industry, specialized in the creation and maintenance of the Goddard ships. This is all possible due to the weak gravity and atmosphere that envelops Zhiru, which allows the massive spacecraft to land and take off with little difficulty.</description>
+  <bar>The Goddard Bar is, unsurprisingly, an obsolete model of their eponymous ship, stripped and refitted in the form of a bar. It's surprisingly comfortable and cozy as a bar, although every so often you can hear creaking in the ancient metal frame.</bar>
+ </general>
+ <tech>
+  <item>Laser 1</item>
+  <item>Kinetic 1</item>
+  <item>Basic Civilian Ships</item>
+  <item>Goddard Ship</item>
+  <item>Basic Outfits 1</item>
+  <item>Basic Outfits 2</item>
+  <item>Low Tech Upgrades</item>
+ </tech>
+</asset>

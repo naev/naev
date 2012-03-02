@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Memory of Sorom">
+ <pos>
+  <x>7378.896977</x>
+  <y>-6488.413784</y>
+ </pos>
+ <GFX>
+  <space>station-fleetbase.png</space>
+  <exterior>station05.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>0</population>
+  <hide>0.750000</hide>
+  <services>
+   <land>srm_mil_restricted</land>
+   <refuel/>
+   <bar/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>This is the headquarters of all spaceborne Soromid military operations. It was dedicated in memory of the Soromid's original homeworld, Sorom. Though the Incident happened many SCU ago and most Soromid are too young to remember their planet of origin, the emotional attachment is shared among young and old alike.</description>
+  <bar>The spacedock bar, if you can even call it that, is just a modest section of a larger facility that's used for all sorts of military-to-civilian business, such as recruitment procedures. The place is always busy. Memory of Sorom is not a place for anyone to relax.</bar>
+ </general>
+ <tech>
+  <item>Soromid Military Ships</item>
+  <item>Heavy Civilian Combat Ships</item>
+ </tech>
+</asset>

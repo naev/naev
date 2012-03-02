@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Cerberus">
+ <pos>
+  <x>2340.937745</x>
+  <y>-3014.492093</y>
+ </pos>
+ <GFX>
+  <space>003.png</space>
+  <exterior>traderoom.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>700</population>
+  <hide>0.750000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+  </services>
+  <commodities/>
+  <description>Named after the guardian dog of hell for its role in monitoring and observing the immense Sol nebula. It was created shortly after the nebula stabilized. Exact details are confidential and there's more than enough military influence to make it suspicious. With all the conspiracy theories around the Incident, one can never be too sure where reality ends and fiction starts.</description>
+  <bar>The bar is maintained by off-duty scientists and soldiers. It's rather small and has a minuscule selection of beverages. There's little ambient noise; it seems as though boredom has gotten the best of most personnel.</bar>
+ </general>
+</asset>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Totoran">
+ <pos>
+  <x>21648.000000</x>
+  <y>33132.000000</y>
+ </pos>
+ <GFX>
+  <space>M06.png</space>
+  <exterior>traderoom.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>P</class>
+  <population>2000000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <outfits/>
+  </services>
+  <commodities/>
+  <description>Welcome to Totoran, home of the galaxy's biggest and best fighting tournament: The Crimson Gauntlet! With 34 major rankings and 17 deadly arenas, there is always a fight to suit your tastes! Feel the adrenaline rush as you watch the head-to-head duels, team melees and blind hunts careen to their violent finales! Sponsor a contestant, invest in his equipment, see him obliterate his opponents and win a fortune! Snacks available at all licensed outlets.</description>
+  <bar>This bar is always full of people, some crowding around the many holovid pillars to watch the fights in the tournament, others drinking their sorrows away if their contestant was unlucky. The air is buzzing with excitement, and it's hard to make oneself heard over the din. For this reason, orders are placed through terminals projected onto the table surface, and drinks are served from a small dispenser in the middle of the table. Obviously, this establishment is making a lot of money.</bar>
+ </general>
+ <tech>
+  <item>Kinetic 1</item>
+  <item>Kinetic 2</item>
+  <item>Basic Outfits 1</item>
+  <item>Basic Outfits 2</item>
+  <item>Missiles 1</item>
+ </tech>
+</asset>

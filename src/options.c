@@ -13,7 +13,7 @@
 
 #include "naev.h"
 
-#include <string.h>
+#include "nstring.h"
 
 #include "SDL.h"
 
@@ -178,9 +178,9 @@ static void opt_gameplay( unsigned int wid )
    y -= 20;
    path = ndata_getPath();
    if (path == NULL)
-      snprintf( buf, sizeof(buf), "not using ndata" );
+      nsnprintf( buf, sizeof(buf), "not using ndata" );
    else
-      snprintf( buf, sizeof(buf), "ndata: %s", path);
+      nsnprintf( buf, sizeof(buf), "ndata: %s", path);
    window_addText( wid, x, y, cw, 20, 1, "txtNdata",
          NULL, NULL, buf );
    y -= 40;
@@ -227,9 +227,6 @@ static void opt_gameplay( unsigned int wid )
 #ifdef NDATA_DEF
          "ndata: "NDATA_DEF"\n"
 #endif /* NDATA_DEF */
-#ifdef PREFSDIR_DEF
-         "preference directory: "PREFSDIR_DEF"\n"
-#endif /* PREFSDIR_DEF */
          );
 
 
@@ -349,9 +346,9 @@ static void opt_gameplayUpdate( unsigned int wid, char *str )
    window_checkboxSet( wid, "chkCompress", conf.save_compress );
 
    /* Input boxes. */
-   snprintf( vmsg, sizeof(vmsg), "%d", conf.mesg_visible );
+   nsnprintf( vmsg, sizeof(vmsg), "%d", conf.mesg_visible );
    window_setInput( wid, "inpMSG", vmsg );
-   snprintf( tmax, sizeof(tmax), "%g", conf.compression_mult );
+   nsnprintf( tmax, sizeof(tmax), "%g", conf.compression_mult );
    window_setInput( wid, "inpTMax", tmax );
 }
 
@@ -366,11 +363,11 @@ static void opt_getAutonavAbortStr( char *buf, int max )
 {
    /* Generate message. */
    if (conf.autonav_abort >= 1.)
-      snprintf( buf, max, "Missile Lock" );
+      nsnprintf( buf, max, "Missile Lock" );
    else if (conf.autonav_abort > 0.)
-      snprintf( buf, max, "%.0f%% Shield", conf.autonav_abort * 100 );
+      nsnprintf( buf, max, "%.0f%% Shield", conf.autonav_abort * 100 );
    else
-      snprintf( buf, max, "Armour Damage" );
+      nsnprintf( buf, max, "Armour Damage" );
 }
 
 
@@ -475,37 +472,37 @@ static void menuKeybinds_genList( unsigned int wid )
          case KEYBIND_KEYBOARD:
             /* Generate mod text. */
             if (mod == NMOD_ALL)
-               snprintf( mod_text, sizeof(mod_text), "any+" );
+               nsnprintf( mod_text, sizeof(mod_text), "any+" );
             else {
                p = 0;
                mod_text[0] = '\0';
                if (mod & NMOD_SHIFT)
-                  p += snprintf( &mod_text[p], sizeof(mod_text)-p, "shift+" );
+                  p += nsnprintf( &mod_text[p], sizeof(mod_text)-p, "shift+" );
                if (mod & NMOD_CTRL)
-                  p += snprintf( &mod_text[p], sizeof(mod_text)-p, "ctrl+" );
+                  p += nsnprintf( &mod_text[p], sizeof(mod_text)-p, "ctrl+" );
                if (mod & NMOD_ALT)
-                  p += snprintf( &mod_text[p], sizeof(mod_text)-p, "alt+" );
+                  p += nsnprintf( &mod_text[p], sizeof(mod_text)-p, "alt+" );
                if (mod & NMOD_META)
-                  p += snprintf( &mod_text[p], sizeof(mod_text)-p, "meta+" );
+                  p += nsnprintf( &mod_text[p], sizeof(mod_text)-p, "meta+" );
             }
 
             /* SDL_GetKeyName returns lowercase which is ugly. */
             if (nstd_isalpha(key))
-               snprintf(str[j], l, "%s <%s%c>", keybind_info[j][1], mod_text, nstd_toupper(key) );
+               nsnprintf(str[j], l, "%s <%s%c>", keybind_info[j][1], mod_text, nstd_toupper(key) );
             else
-               snprintf(str[j], l, "%s <%s%s>", keybind_info[j][1], mod_text, SDL_GetKeyName(key) );
+               nsnprintf(str[j], l, "%s <%s%s>", keybind_info[j][1], mod_text, SDL_GetKeyName(key) );
             break;
          case KEYBIND_JAXISPOS:
-            snprintf(str[j], l, "%s <ja+%d>", keybind_info[j][1], key);
+            nsnprintf(str[j], l, "%s <ja+%d>", keybind_info[j][1], key);
             break;
          case KEYBIND_JAXISNEG:
-            snprintf(str[j], l, "%s <ja-%d>", keybind_info[j][1], key);
+            nsnprintf(str[j], l, "%s <ja-%d>", keybind_info[j][1], key);
             break;
          case KEYBIND_JBUTTON:
-            snprintf(str[j], l, "%s <jb%d>", keybind_info[j][1], key);
+            nsnprintf(str[j], l, "%s <jb%d>", keybind_info[j][1], key);
             break;
          default:
-            snprintf(str[j], l, "%s", keybind_info[j][1]);
+            nsnprintf(str[j], l, "%s", keybind_info[j][1]);
             break;
       }
    }
@@ -547,34 +544,34 @@ static void menuKeybinds_update( unsigned int wid, char *name )
    /* Create the text. */
    switch (type) {
       case KEYBIND_NULL:
-         snprintf(binding, sizeof(binding), "Not bound");
+         nsnprintf(binding, sizeof(binding), "Not bound");
          break;
       case KEYBIND_KEYBOARD:
          /* SDL_GetKeyName returns lowercase which is ugly. */
          if (nstd_isalpha(key))
-            snprintf(binding, sizeof(binding), "keyboard:   %s%s%c",
+            nsnprintf(binding, sizeof(binding), "keyboard:   %s%s%c",
                   (mod != KMOD_NONE) ? input_modToText(mod) : "",
                   (mod != KMOD_NONE) ? " + " : "",
                   nstd_toupper(key));
          else
-            snprintf(binding, sizeof(binding), "keyboard:   %s%s%s",
+            nsnprintf(binding, sizeof(binding), "keyboard:   %s%s%s",
                   (mod != KMOD_NONE) ? input_modToText(mod) : "",
                   (mod != KMOD_NONE) ? " + " : "",
                   SDL_GetKeyName(key));
          break;
       case KEYBIND_JAXISPOS:
-         snprintf(binding, sizeof(binding), "joy axis pos:   <%d>", key );
+         nsnprintf(binding, sizeof(binding), "joy axis pos:   <%d>", key );
          break;
       case KEYBIND_JAXISNEG:
-         snprintf(binding, sizeof(binding), "joy axis neg:   <%d>", key );
+         nsnprintf(binding, sizeof(binding), "joy axis neg:   <%d>", key );
          break;
       case KEYBIND_JBUTTON:
-         snprintf(binding, sizeof(binding), "joy button:   <%d>", key);
+         nsnprintf(binding, sizeof(binding), "joy button:   <%d>", key);
          break;
    }
 
    /* Update text. */
-   snprintf(buf, 1024, "%s\n\n%s\n", desc, binding);
+   nsnprintf(buf, 1024, "%s\n\n%s\n", desc, binding);
    window_modifyText( wid, "txtDesc", buf );
 }
 
@@ -647,13 +644,13 @@ static void opt_audioLevelStr( char *buf, int max, int type, double pos )
    vol = type ? music_getVolumeLog() : sound_getVolumeLog();
 
    if (vol == 0.)
-      snprintf( buf, max, "%s Volume: Muted", str );
+      nsnprintf( buf, max, "%s Volume: Muted", str );
    else if (strcmp(conf.sound_backend,"openal")==0) {
       magic = -48. / log(0.00390625); /* -48 dB minimum divided by logarithm of volume floor. */
-      snprintf( buf, max, "%s Volume: %.2f (%.0f dB)", str, pos, log(vol) * magic );
+      nsnprintf( buf, max, "%s Volume: %.2f (%.0f dB)", str, pos, log(vol) * magic );
    }
    else if (strcmp(conf.sound_backend,"sdlmix")==0)
-      snprintf( buf, max, "%s Volume: %.2f", str, pos );
+      nsnprintf( buf, max, "%s Volume: %.2f", str, pos );
 }
 
 
@@ -1049,7 +1046,7 @@ static void opt_video( unsigned int wid )
          NULL, &cDConsole, "Resolution" );
    y -= 40;
    window_addInput( wid, x, y, 100, 20, "inpRes", 16, 1, NULL );
-   snprintf( buf, sizeof(buf), "%dx%d", conf.width, conf.height );
+   nsnprintf( buf, sizeof(buf), "%dx%d", conf.width, conf.height );
    window_setInput( wid, "inpRes", buf );
    window_setInputFilter( wid, "inpRes",
          "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`" );
@@ -1064,15 +1061,15 @@ static void opt_video( unsigned int wid )
    }
    res   = malloc( sizeof(char*) * (i+j) );
    nres  = 0;
+   res_def = 0;
    if (j) {
       res[0]   = malloc(16);
-      snprintf( res[0], 16, "%dx%d", conf.width, conf.height );
-      res_def  = 0;
+      nsnprintf( res[0], 16, "%dx%d", conf.width, conf.height );
       nres     = 1;
    }
    for (i=0; modes[i]; i++) {
       res[ nres ] = malloc(16);
-      snprintf( res[ nres ], 16, "%dx%d", modes[i]->w, modes[i]->h );
+      nsnprintf( res[ nres ], 16, "%dx%d", modes[i]->w, modes[i]->h );
       if ((modes[i]->w == conf.width) && (modes[i]->h == conf.height))
          res_def = i;
       nres++;
@@ -1092,7 +1089,7 @@ static void opt_video( unsigned int wid )
    toolkit_setListPos( wid, "lstRes", res_def);
    window_setInputFilter( wid, "inpFPS",
          "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`" );
-   snprintf( buf, sizeof(buf), "%d", conf.fps_max );
+   nsnprintf( buf, sizeof(buf), "%d", conf.fps_max );
    window_setInput( wid, "inpFPS", buf );
    y -= 30;
    window_addCheckbox( wid, x, y, cw, 20,
@@ -1205,7 +1202,7 @@ static void opt_videoSave( unsigned int wid, char *str )
       conf.width  = w;
       conf.height = h;
       opt_needRestart();
-      snprintf( buf, sizeof(buf), "%dx%d", conf.width, conf.height );
+      nsnprintf( buf, sizeof(buf), "%dx%d", conf.width, conf.height );
       window_setInput( wid, "inpRes", buf );
    }
 
@@ -1281,9 +1278,9 @@ static void opt_videoUpdate( unsigned int wid, char *str )
    char buf[16];
 
    /* Inputs. */
-   snprintf( buf, sizeof(buf), "%dx%d", conf.width, conf.height );
+   nsnprintf( buf, sizeof(buf), "%dx%d", conf.width, conf.height );
    window_setInput( wid, "inpRes", buf );
-   snprintf( buf, sizeof(buf), "%d", conf.fps_max );
+   nsnprintf( buf, sizeof(buf), "%d", conf.fps_max );
    window_setInput( wid, "inpFPS", buf );
 
    /* Checkboxkes. */

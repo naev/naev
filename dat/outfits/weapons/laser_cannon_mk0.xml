@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Laser Cannon MK0">
+ <general>
+  <slot>weapon</slot>
+  <size>light</size>
+  <mass>4</mass>
+  <price>5000</price>
+  <description>A home-made laser cannon for personal use by Captain T. Practice.</description>
+  <gfx_store>laser</gfx_store>
+  </general>
+ <specific type="bolt">
+  <cpu>5</cpu>
+  <gfx>laser1S</gfx>
+  <sound>laser</sound>
+  <spfx_shield>ShiS</spfx_shield>
+  <spfx_armour>ExpS</spfx_armour>
+  <delay>0.55</delay>
+  <speed>550</speed>
+  <range>420</range>
+  <falloff>250</falloff>
+  <energy>3</energy>
+  <heatup>1500</heatup>
+  <track>3</track>
+  <swivel>3</swivel>
+  <damage>
+   <type>normal</type>
+   <penetrate>0</penetrate>
+   <physical>0.1</physical>
+   <disable>0</disable>
+  </damage>
+ </specific>
+</outfit>

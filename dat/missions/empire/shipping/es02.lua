@@ -66,7 +66,7 @@ function create ()
    end
 
    -- Add NPC.
-   misn.setNPC( "Soldner", "soldner" )
+   misn.setNPC( "Soldner", "empire/unique/soldner" )
    misn.setDesc( bar_desc )
 end
 
@@ -144,7 +144,7 @@ function enter ()
    if misn_stage == 0 and sys == destsys then
 
       -- Put the VIP a ways off of the player but near the jump.
-      enter_vect = system.jumpPos(sys,prevsys)
+      enter_vect = jump.pos(sys, prevsys)
       m,a = enter_vect:polar()
       enter_vect:setP( m-3000, a )
       p = pilot.add( "Trader Gawain", "dummy", enter_vect )

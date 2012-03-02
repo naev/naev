@@ -53,7 +53,7 @@ function create ()
    dest = planets[index][1]
    sys = planets[index][2]
 
-   misn.setNPC( "Lieutenant", "czesc" )
+   misn.setNPC( "Lieutenant", "empire/unique/czesc" )
    misn.setDesc( bar_desc )
 end
 

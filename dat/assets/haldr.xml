@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Haldr">
+ <pos>
+  <x>-30090.992878</x>
+  <y>13378.186545</y>
+ </pos>
+ <GFX>
+  <space>X01.png</space>
+  <exterior>aquatic2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>X</class>
+  <population>1000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+  </commodities>
+  <description>Haldr ranks quite high on the official list of "most unpleasant inhabited planets in the galaxy", which is compiled at regular intervals by the Gilligan Foundation. Indeed, even the most optimistic space traveler would be hard pressed to find a good reason why anyone would want to come to Haldr, let alone stay there. As it turns out, Dvaered High Command has such a reason: Haldr serves as a training grounds for Dvaered military recruits. Though many an upcoming soldier finds death on the radioactive surface of Haldr, those who survive make for tough fighters indeed.</description>
+  <bar>To get into Haldr's bar, you first have to undergo a rigorous decontamination procedure, even when you're coming straight from the spaceport dock. This fact has made more than a few visitors so uneasy that they never want to visit Haldr again.</bar>
+ </general>
+</asset>

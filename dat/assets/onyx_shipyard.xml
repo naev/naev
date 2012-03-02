@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Onyx Shipyard">
+ <pos>
+  <x>-20041.450059</x>
+  <y>-3282.365686</y>
+ </pos>
+ <GFX>
+  <space>station-shipyard.png</space>
+  <exterior>station03.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>10.000000</value>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>2000</population>
+  <hide>0.750000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>The Onyx Shipyard is a modern, high-tech shipyard. At least by Dvaered standards. The place builds both combat and trade vessels, and commissions a portion of the Dvaered fleet. Several Warlords also have personal contracts at Onyx, drawing ships for their private fleets from here.</description>
+  <bar>Each table in the spaceport bar is themed around a ship design that is manufactured here. Some are even built out of old or faulty components of the ships in question. Of course it's not very artistic, considering that a Dvaered came up with it, but there's still a certain class to it that gets potential buyers in the mood.</bar>
+ </general>
+ <tech>
+  <item>Heavy Civilian Combat Ships</item>
+  <item>Bulk Trade Ships</item>
+ </tech>
+</asset>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Laser Turret MK2">
+ <general>
+  <slot>weapon</slot>
+  <size>medium</size>
+  <license>Medium Weapon License</license>
+  <mass>28</mass>
+  <price>28000</price>
+  <description>A pair of mark 2 laser cannons mounted on a rotating turret, providing excellent point-defense capabilities. This new offering has quickly won the hearts of high-value traders for its superior firepower and range, easily warding off most pirates.</description>
+  <gfx_store>laserturret2</gfx_store>
+ </general>
+ <specific type="turret bolt">
+  <cpu>16</cpu>
+  <gfx>laser2M</gfx>
+  <sound>laser</sound>
+  <spfx_shield>ShiS</spfx_shield>
+  <spfx_armour>ExpS</spfx_armour>
+  <delay>0.375</delay>
+  <speed>550</speed>
+  <range>1000</range>
+  <falloff>600</falloff>
+  <gfx_end>laser1M</gfx_end>
+  <energy>11</energy>
+  <heatup>30</heatup>
+  <track>1.75</track>
+  <damage>
+   <type>normal</type>
+   <penetrate>27</penetrate>
+   <physical>10.5</physical>
+   <disable>1</disable>
+  </damage>
+ </specific>
+</outfit>

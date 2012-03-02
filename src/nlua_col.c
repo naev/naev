@@ -185,7 +185,7 @@ static int colL_eq( lua_State *L )
  */
 static int colL_new( lua_State *L )
 {
-   glColour *col;
+   const glColour *col;
    LuaColour lc, *lc2;
 
    if (lua_gettop(L)==0) {

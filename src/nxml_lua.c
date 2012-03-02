@@ -20,6 +20,7 @@
 #include "nlua_faction.h"
 #include "nlua_ship.h"
 #include "nlua_time.h"
+#include "nstring.h"
 
 
 /*
@@ -56,6 +57,31 @@ static int nxml_saveData( xmlTextWriterPtr writer,
 
 
 /**
+ * @brief Jump-specific nxml_saveData derivative.
+ *
+ *    @param writer XML Writer to use to persist stuff.
+ *    @param name Name of the data to save.
+ *    @param start System in which the jump is.
+ *    @param dest Jump's destination system.
+ *    @return 0 on success.
+ */
+static int nxml_saveJump( xmlTextWriterPtr writer,
+      const char *name, const char *start, const char *dest )
+{
+   xmlw_startElem(writer,"data");
+
+   xmlw_attr(writer,"type","jump");
+   xmlw_attr(writer,"name","%s",name);
+   xmlw_attr(writer,"dest","%s",dest);
+   xmlw_str(writer,"%s",start);
+
+   xmlw_endElem(writer); /* "data" */
+
+   return 0;
+}
+
+
+/**
  * @brief Persists the node on the top of the stack and pops it.
  *
  *    @param L Lua state with node to persist on top of the stack.
@@ -71,8 +97,9 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
    LuaFaction *f;
    LuaShip *sh;
    LuaTime *lt;
+   LuaJump *lj;
    Planet *pnt;
-   StarSystem *ss;
+   StarSystem *ss, *dest;
    char buf[PATH_MAX];
    const char *name, *str;
    int keynum;
@@ -206,11 +233,20 @@ static int nxml_persistDataNode( lua_State *L, xmlTextWriterPtr writer, int inta
          }
          else if (lua_istime(L,-1)) {
             lt = lua_totime(L,-1);
-            snprintf( buf, sizeof(buf), "%"PRId64, lt->t );
+            nsnprintf( buf, sizeof(buf), "%"PRId64, lt->t );
             nxml_saveData( writer, "time",
                   name, buf, keynum );
             /* key, value */
             break;
+         }
+         else if (lua_isjump(L,-1)) {
+            lj = lua_tojump(L,-1);
+            ss = system_getIndex( lj->srcid );
+            dest = system_getIndex( lj->destid );
+            if ((ss == NULL) || (dest == NULL))
+               WARN("Failed to save invalid jump.");
+            else
+               nxml_saveJump( writer, name, ss->name, dest->name );
          }
          /* Purpose fallthrough. */
 
@@ -266,8 +302,9 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
    LuaFaction f;
    LuaShip sh;
    LuaTime lt;
+   LuaJump lj;
    Planet *pnt;
-   StarSystem *ss;
+   StarSystem *ss, *dest;
    xmlNodePtr node;
    char *name, *type, *buf, *num;
 
@@ -332,6 +369,18 @@ static int nxml_unpersistDataNode( lua_State *L, xmlNodePtr parent )
          else if (strcmp(type,"time")==0) {
             lt.t = xml_getLong(node);
             lua_pushtime(L,lt);
+         }
+         else if (strcmp(type,"jump")==0) {
+            ss = system_get(xml_get(node));
+            system_get(xmlr_attr(node,"dest",buf));
+            dest = system_get( buf );
+            if ((ss != NULL) && (dest != NULL)) {
+               lj.srcid = ss->id;
+               lj.destid = dest->id;
+               lua_pushjump(L,lj);
+            }
+            else
+               WARN("Failed to load unexistent jump from '%s' to '%s'", xml_get(node), buf);
          }
          else {
             WARN("Unknown Lua data type!");

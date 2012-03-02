@@ -19,6 +19,7 @@
 #include "nlua_faction.h"
 #include "nlua_vec2.h"
 #include "nlua_planet.h"
+#include "nlua_jump.h"
 #include "log.h"
 #include "rng.h"
 #include "land.h"
@@ -35,8 +36,8 @@ static int systemL_faction( lua_State *L );
 static int systemL_nebula( lua_State *L );
 static int systemL_jumpdistance( lua_State *L );
 static int systemL_adjacent( lua_State *L );
-static int systemL_jumpPos( lua_State *L );
-static int systemL_hasPresence( lua_State *L );
+static int systemL_jumps( lua_State *L );
+static int systemL_presences( lua_State *L );
 static int systemL_planets( lua_State *L );
 static int systemL_presence( lua_State *L );
 static int systemL_radius( lua_State *L );
@@ -55,12 +56,12 @@ static const luaL_reg system_methods[] = {
    { "nebula", systemL_nebula },
    { "jumpDist", systemL_jumpdistance },
    { "adjacentSystems", systemL_adjacent },
-   { "jumpPos", systemL_jumpPos },
-   { "hasPresence", systemL_hasPresence },
+   { "jumps", systemL_jumps },
+   { "presences", systemL_presences },
    { "planets", systemL_planets },
    { "presence", systemL_presence },
    { "radius", systemL_radius },
-   { "isKnown", systemL_isknown },
+   { "known", systemL_isknown },
    { "setKnown", systemL_setknown },
    { "mrkClear", systemL_mrkClear },
    { "mrkAdd", systemL_mrkAdd },
@@ -77,12 +78,12 @@ static const luaL_reg system_cond_methods[] = {
    { "nebula", systemL_nebula },
    { "jumpDist", systemL_jumpdistance },
    { "adjacentSystems", systemL_adjacent },
-   { "jumpPos", systemL_jumpPos },
-   { "hasPresence", systemL_hasPresence },
+   { "jumps", systemL_jumps },
+   { "presences", systemL_presences },
    { "planets", systemL_planets },
    { "presence", systemL_presence },
    { "radius", systemL_radius },
-   { "isKnown", systemL_isknown },
+   { "known", systemL_isknown },
    {0,0}
 }; /**< Read only system metatable methods. */
 
@@ -158,7 +159,7 @@ LuaSystem* luaL_checksystem( lua_State *L, int ind )
 }
 
 /**
- * @brief Gets system at index raising an error if type doesn't match.
+ * @brief Gets system (or system name) at index raising an error if type doesn't match.
  *
  *    @param L Lua state to get system from.
  *    @param ind Index position of system.
@@ -168,12 +169,21 @@ StarSystem* luaL_validsystem( lua_State *L, int ind )
 {
    LuaSystem *ls;
    StarSystem *s;
-   ls = luaL_checksystem( L, ind );
-   s  = system_getIndex( ls->id );
-   if (s == NULL) {
-      NLUA_ERROR( L, "System is invalid" );
+
+   if (lua_issystem(L, ind)) {
+      ls = luaL_checksystem(L, ind);
+      s = system_getIndex( ls->id );
+   }
+   else if (lua_isstring(L, ind))
+      s = system_get( lua_tostring(L, ind) );
+   else {
+      luaL_typerror(L, ind, FACTION_METATABLE);
       return NULL;
    }
+
+   if (s == NULL)
+      NLUA_ERROR(L, "System is invalid");
+
    return s;
 }
 
@@ -326,36 +336,25 @@ static int systemL_name( lua_State *L )
 }
 
 /**
- * @brief Gets system factions.
+ * @brief Gets system faction.
  *
- * @code
- * sys   = system.get() -- Get current system
- * facts = sys:faction() -- Get factions
- * if facts[ "Empire" ] then
- *    -- Do something since there is at least one Empire planet in the system
- * end
- * value = facts[ "Pirate" ] or 0 -- Get value of pirates in the system
- * @endcode
- *
- *    @luaparam s System to get the factions of.
- *    @luareturn A table containing all the factions in the system.
+ *    @luaparam s System to get the faction of.
+ *    @luareturn The dominant faction in the system.
  * @luafunc faction( s )
  */
 static int systemL_faction( lua_State *L )
 {
-   int i;
+   LuaFaction lf;
    StarSystem *s;
 
    s = luaL_validsystem(L,1);
 
-   /* Return result in table */
-   lua_newtable(L);
-   for (i=0; i<s->npresence; i++) {
-      lua_pushstring( L, faction_name(s->presence[i].faction) ); /* t, k */
-      lua_pushnumber(L,s->presence[i].value); /* t, k, v */
-      lua_settable(L,-3);  /* t */
-      /* allows syntax foo = space.faction("foo"); if foo["bar"] then ... end */
-   }
+   if (s->faction == -1)
+      return 0;
+   else
+      lf.f = s->faction;
+
+   lua_pushfaction(L,lf);
    return 1;
 
 }
@@ -461,82 +460,69 @@ static int systemL_adjacent( lua_State *L )
 
 
 /**
- * @brief Gets the position of a jump point from one system to another.
+ * @brief Gets all the jumps in a system.
  *
- * @usage v = system.cur():jumpPos( neighbour_system ) -- Gets the position of the jump point to neighbour_system
+ * @usage for _,s in ipairs( sys:jumps() ) do -- Iterate over jumps.
  *
- *    @luaparam from System jumping from.
- *    @luaparam to System jumping to.
- *    @luareturn A Vector2D containing the jump position or nil if not connected.
- * @luafunc jumpPos( from, to )
+ *    @luaparam s System to get the jumps of.
+ *    @luaparam exitonly Whether to exclude exit-only jumps (default false).
+ *    @luareturn An ordered table with all the jumps.
+ * @luafunc jumps( s )
  */
-static int systemL_jumpPos( lua_State *L )
+static int systemL_jumps( lua_State *L )
 {
-   LuaVector lv;
-   StarSystem *from, *to;
-   int i;
+   int i, exitonly, pushed;
+   LuaJump lj;
+   StarSystem *s;
 
-   from  = luaL_validsystem(L,1);
-   to    = luaL_validsystem(L,2);
+   s = luaL_validsystem(L,1);
+   exitonly = lua_toboolean(L,2);
+   pushed = 0;
 
-   for (i=0; i<from->njumps; i++) {
-      /* Wait until found. */
-      if (from->jumps[i].target != to)
-         continue;
+   /* Push all jumps. */
+   lua_newtable(L);
+   for (i=0; i<s->njumps; i++) {
+      /* Skip exit-only jumps if requested. */
+      if ((exitonly) && (jp_isFlag( jump_getTarget( s->jumps[i].target, s ),
+            JP_EXITONLY)))
+            continue;
 
-      vectcpy( &lv.vec, &from->jumps[i].pos );
-      lua_pushvector(L,lv);
-      return 1;
+      lj.srcid  = s->id;
+      lj.destid = s->jumps[i].targetid;
+      lua_pushnumber(L,++pushed); /* key. */
+      lua_pushjump(L,lj); /* value. */
+      lua_rawset(L,-3);
    }
 
-   lua_pushnil(L);
    return 1;
 }
 
 
 /**
- * @brief Checks to see if a faction has presence in a system.
+ * @brief Returns the factions that have presence in a system and their respective presence values.
  *
- * This checks to see if the faction has a possibility of having any ships at all
- *  be randomly generated in the system.
+ *  @usage if sys:presences()["Empire"] then -- Checks to see if Empire has ships in the system
+ *  @usage if sys:presences()[faction.get("Pirate")] then -- Checks to see if the Pirates have ships in the system
  *
- *  @usage if sys:hasPresence( "Empire" ) then -- Checks to see if Empire has ships in the system
- *  @usage if sys:hasPresence( faction.get("Pirate") ) then -- Checks to see if the Pirate has ships in the system
- *
- *    @luaparam s System to check to see if has presence of a certain faction.
- *    @luaparam f Faction or name of faction to check to see if has presence in the system.
- *    @luareturn true If faction has presence in the system, false otherwise.
- * @luafunc hasPresence( s, f )
+ *    @luaparam s System to get the factional presences of.
+ *    @luareturn A table with the factions that have presence in the system.
+ * @luafunc presences( s )
  */
-static int systemL_hasPresence( lua_State *L )
+static int systemL_presences( lua_State *L )
 {
-   LuaFaction *lf;
    StarSystem *s;
-   int fct;
-   int i, found;
+   int i;
 
    s = luaL_validsystem(L,1);
 
-   /* Get the second parameter. */
-   if (lua_isstring(L,2)) {
-      fct = faction_get( lua_tostring(L,2) );
-   }
-   else if (lua_isfaction(L,2)) {
-      lf = lua_tofaction(L,2);
-      fct = lf->f;
-   }
-   else NLUA_INVALID_PARAMETER(L);
-
-   /* Try to find a fleet of the faction. */
-   found = 0;
+   /* Return result in table */
+   lua_newtable(L);
    for (i=0; i<s->npresence; i++) {
-      if (s->presence[i].faction == fct) {
-         found = 1;
-         break;
-      }
+      lua_pushstring( L, faction_name(s->presence[i].faction) ); /* t, k */
+      lua_pushnumber(L,s->presence[i].value); /* t, k, v */
+      lua_settable(L,-3);  /* t */
+      /* allows syntax foo = system.presences(); if foo["bar"] then ... end */
    }
-
-   lua_pushboolean(L, found);
    return 1;
 }
 
@@ -596,21 +582,24 @@ static int systemL_planets( lua_State *L )
 static int systemL_presence( lua_State *L )
 {
    StarSystem *sys;
-   LuaFaction *lf;
    int *fct;
    int nfct;
    double presence;
-   int i;
+   int i, f, used;
    const char *cmd;
 
    /* Get parameters. */
    sys = luaL_validsystem(L, 1);
+
+   /* Allow fall-through. */
+   used = 0;
 
    /* Get the second parameter. */
    if (lua_isstring(L, 2)) {
       /* A string command has been given. */
       cmd  = lua_tostring(L, 2);
       nfct = 0;
+      used = 1;
 
       /* Check the command string and get the appropriate faction group.*/
       if(strcmp(cmd, "all") == 0)
@@ -622,16 +611,16 @@ static int systemL_presence( lua_State *L )
       else if(strcmp(cmd, "neutral") == 0)
          fct = faction_getGroup(&nfct, 2);
       else /* Invalid command string. */
-         NLUA_INVALID_PARAMETER(L);
+         used = 0;
    }
-   else if (lua_isfaction(L, 2)) {
+
+   if (!used) {
       /* A faction id was given. */
-      lf     = lua_tofaction(L, 2);
+      f      = luaL_validfaction(L, 2);
       nfct   = 1;
-      fct    = malloc(sizeof(int) * nfct);
-      fct[0] = lf->f;
+      fct    = malloc(sizeof(int));
+      fct[0] = f;
    }
-   else NLUA_INVALID_PARAMETER(L);
 
    /* Add up the presence values. */
    presence = 0;
@@ -673,11 +662,11 @@ static int systemL_radius( lua_State *L )
 /**
  * @brief Checks to see if a system is known by the player.
  *
- * @usage b = s:isKnown()
+ * @usage b = s:known()
  *
  *    @luaparam s System to check if the player knows.
  *    @luareturn true if the player knows the system.
- * @luafunc isKnown( s )
+ * @luafunc known( s )
  */
 static int systemL_isknown( lua_State *L )
 {
@@ -693,20 +682,39 @@ static int systemL_isknown( lua_State *L )
  * @usage s:setKnown( false ) -- Makes system unknown.
  *    @luaparam s System to set known.
  *    @luaparam b Whether or not to set as known (defaults to false).
+ *    @luaparam r Whether or not to iterate over the system's assets and jump points (defaults to false).
  * @luafunc setKnown( s, b )
  */
 static int systemL_setknown( lua_State *L )
 {
-   int b;
+   int b, r, i;
    StarSystem *sys;
 
+   r = 0;
    sys = luaL_validsystem(L, 1);
    b   = lua_toboolean(L, 2);
+   if (lua_gettop(L) > 2)
+      r   = lua_toboolean(L, 3);
 
    if (b)
       sys_setFlag( sys, SYSTEM_KNOWN );
    else
       sys_rmFlag( sys, SYSTEM_KNOWN );
+
+   if (r) {
+      if (b) {
+         for (i=0; i < sys->nplanets; i++)
+            planet_setKnown( sys->planets[i] );
+         for (i=0; i < sys->njumps; i++)
+            jp_setFlag( &sys->jumps[i], JP_KNOWN );
+     }
+     else {
+         for (i=0; i < sys->nplanets; i++)
+            planet_rmFlag( sys->planets[i], PLANET_KNOWN );
+         for (i=0; i < sys->njumps; i++)
+            jp_rmFlag( &sys->jumps[i], JP_KNOWN );
+     }
+   }
    return 0;
 }
 

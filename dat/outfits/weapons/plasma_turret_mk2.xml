@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Plasma Turret MK2">
+ <general>
+  <slot>weapon</slot>
+  <size>medium</size>
+  <license>Medium Weapon License</license>
+  <mass>24</mass>
+  <price>31000</price>
+  <description>The mark 2 plasma blaster improves on its predecessor in many ways, maintaining good energy efficiency while augmenting range and firepower. Though intended primarily for military use, many have found their way to pirate hands.</description>
+  <gfx_store>plasma2</gfx_store>
+ </general>
+ <specific type="turret bolt">
+  <cpu>16</cpu>
+  <gfx>plasma2</gfx>
+  <sound>plasma</sound>
+  <spfx_shield>ShiS</spfx_shield>
+  <spfx_armour>PlaS2</spfx_armour>
+  <delay>0.475</delay>
+  <speed>450</speed>
+  <range>900</range>
+  <falloff>510</falloff>
+  <energy>13.5</energy>
+  <heatup>30</heatup>
+  <track>1.6</track>
+  <damage>
+   <type>normal</type>
+   <penetrate>18</penetrate>
+   <physical>14</physical>
+   <disable>1</disable>
+  </damage>
+ </specific>
+</outfit>

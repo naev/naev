@@ -2,7 +2,7 @@
 <Start>
  <name>Sea of Darkness</name>
  <player>
-  <ship>Llama</ship>
+  <ship name="El Ego de Deiz">Llama</ship>
   <credits>30000</credits>
   <system>
    <name>Hakoi</name>

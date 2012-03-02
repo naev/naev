@@ -89,7 +89,7 @@ function get_pir_system( sys )
    -- Only take into account system with pirates.
    local pir_sys = {}
    for _,k in ipairs(adj_sys) do
-      if k:hasPresence( "Pirate" ) then
+      if k:presences()["Pirate"] then
          pir_sys[ #pir_sys+1 ] = k
       end
    end
@@ -128,7 +128,7 @@ function sys_enter ()
       if cur_sys == last_sys then
          pos = player.pilot():pos()
       else
-         pos = cur_sys:jumpPos( last_sys )
+         pos = jump.pos(cur_sys, last_sys)
       end
       local x,y = pos:get()
       local d = rnd.rnd( 1500, 2500 )

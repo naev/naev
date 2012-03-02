@@ -1,4 +1,4 @@
-﻿--[[      Test Mission
+--[[      Test Mission
 
          Heavily annotated mission with the sole purpose of learning the ropes of mission creation.
 
@@ -100,7 +100,6 @@ just call them using the correct syntax. You'll see a few examples later on.
 
 All other functions obviously have to be defined prior to use.
 
-The cli API is useless at this time.
 misn and evt provide very similar things, you should use misn for missions and evt for events respectively.
 
 
@@ -113,8 +112,11 @@ function create()
 end
 
  Create the mission - OBLIGATORY for every mission
+   This is the script entry point.
    You have to define this function and set a few basic parameters which
-   will be used by the bar, the mission computer and your board computer
+   will be used by the bar, the mission computer and your board computer.
+   For missions that are started in other ways, this function is simply
+   the entry point, and you can use it however you wish.
 
 
 
@@ -139,15 +141,8 @@ end
 
 
 function create ()
-   -- This will get called when the conditions in mission.xml are met.
+   -- This will get called when the conditions in mission.xml are met (or when the mission is initiated from another script).
    -- It is used to set up mission variables.
-
-   -- IMPORTANT: system claiming
-   -- Missions and events may "claim" one or more systems for prioritized use. When a mission has claimed a system, it acquires the "right" to temporarily modify that system.
-   -- For example, all the pilots may be cleared out, or the spawn rates may be changed. Obviously, only one mission may do this at a time, or serious conflicts ensue.
-   -- Therefore, you have to make your mission claim any systems you want to get privileged rights on.
-   -- When a mission tries to claim a system that is already claimed, the mission MUST terminate.
-   -- If you do not need to claim any systems, please make a comment at the beginning of the create() function that states so.
 
    -- Get the planet and system at which we currently are.
    startworld, startworld_sys = planet.cur()
@@ -156,6 +151,15 @@ function create ()
    targetworld_sys = system.get("Gamma Polaris")
    targetworld = planet.get("Polaris Prime")
 
+   -- IMPORTANT: system claiming
+   -- Missions and events may "claim" one or more systems for prioritized use. When a mission has claimed a system, it acquires the "right" to temporarily modify that system.
+   -- For example, all the pilots may be cleared out, or the spawn rates may be changed. Obviously, only one mission may do this at a time, or serious conflicts ensue.
+   -- Therefore, you have to make your mission claim any systems you want to get privileged rights on.
+   -- When a mission tries to claim a system that is already claimed, the mission MUST terminate.
+   -- If you do not need to claim any systems, please make a comment at the beginning of the create() function that states so.
+   if not misn.claim ( {targetworld_sys} ) then
+      abort() -- Note: this assumes you have an abort() function in your script. You may also just use misn.finish() here.
+   end
 
    -- Set a reward. This is just a useful variable, nothing special.
    reward = 10000
@@ -199,7 +203,7 @@ function accept ()
    -- Description is visible in OSD and the onboard computer, it shouldn't be too long either.
    misn.setDesc( string.format( misn_desc, targetworld:name(), targetworld_sys:name() ) )
    -- Set marker to a system, visible in any mission computer and the onboard computer.
-   misn.setMarker( targetworld_sys )
+   misn.markerAdd( targetworld, "high")
 
 
    -- Add mission

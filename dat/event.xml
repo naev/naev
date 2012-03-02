@@ -16,6 +16,10 @@
   <lua>tutorial/tutorial-basic</lua>
   <trigger>none</trigger>
  </event>
+ <event name="Tutorial: Exploration and Discovery">
+  <lua>tutorial/tutorial-discovery</lua>
+  <trigger>none</trigger>
+ </event>
  <event name="Tutorial: Interstellar Flight">
   <lua>tutorial/tutorial-interstellar</lua>
   <trigger>none</trigger>
@@ -26,6 +30,10 @@
  </event>
  <event name="Tutorial: Missile Combat">
   <lua>tutorial/tutorial-combat2</lua>
+  <trigger>none</trigger>
+ </event>
+ <event name="Tutorial: Activated Outfits">
+  <lua>tutorial/tutorial-aoutfits</lua>
   <trigger>none</trigger>
  </event>
  <event name="Tutorial: Disabling">
@@ -48,7 +56,7 @@
   <lua>neutral/derelict</lua>
   <trigger>enter</trigger>
   <chance>10</chance>
-  <cond>next(system.cur():faction()) ~= nil</cond>
+  <cond>system.cur():faction() ~= nil</cond>
  </event>
  <event name="Unique">
   <lua>neutral/unique</lua>
@@ -90,6 +98,14 @@
   <trigger>enter</trigger>
   <chance>3</chance>
   <cond>system.cur():presence("hostile") &lt; 300 and player.misnDone("Shadow Vigil") and not (player.misnDone("Dark Shadow") or var.peek("darkshadow_active") == true)</cond>
+  <flags>
+  </flags>
+ </event>
+ <event name="Achack04 Helper">
+  <lua>sirius/achack04</lua>
+  <trigger>enter</trigger>
+  <chance>5</chance>
+  <cond>not player.misnActive("Sirian Truce") and not player.misnDone("Sirian Truce") and player.misnDone("Joanne's Doubt") and system.cur():presences()["Sirius"] ~= nil and (var.peek("achack04repeat") == nil or time.get() - time.fromnumber(var.peek("achack04repeat")) &gt; time.create(0, 30, 0))</cond>
   <flags>
   </flags>
  </event>

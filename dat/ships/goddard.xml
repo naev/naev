@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Goddard">
+ <base_type>Goddard</base_type>
+ <GFX sx="12" sy="12">goddard</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Cruiser</class>
+ <price>11500000</price>
+ <fabricator>House Goddard</fabricator>
+ <license>Heavy Combat Vessel License</license>
+ <description>The archaic design of the Goddard is deceiving. Although it takes the shape of traditional flying intra-planet vessels, it's very suited for space travel. Production is entirely done on Zhiru in the Goddard system by House Goddard. Over time, specialization and improvements on the original design have kept it very competitive in the market. It's a classic of space.</description>
+ <movement>
+  <thrust>60</thrust>
+  <turn>45</turn>
+  <speed>60</speed>
+ </movement>
+ <health>
+  <absorb>65</absorb>
+  <shield>850</shield>
+  <armour>4000</armour>
+  <energy>4000</energy>
+  <shield_regen>10</shield_regen>
+  <armour_regen>0</armour_regen>
+  <energy_regen>90.7</energy_regen>
+ </health>
+ <characteristics>
+  <cpu>150</cpu>
+  <crew>52</crew>
+  <mass>4750</mass>
+  <fuel>500</fuel>
+  <cargo>540</cargo>
+ </characteristics>
+ <slots>
+  <weapon x="-10" y="-13" h="2"/>
+  <weapon x="-10" y="13" h="2"/>
+  <weapon x="-15" y="-25" h="3"/>
+  <weapon x="-15" y="25" h="3"/>
+  <weapon x="16" y="0" h="3"/>
+  <weapon x="0" y="0" h="5"/>
+  <weapon x="-20" y="0" h="5"/>
+  <utility/>
+  <utility/>
+  <utility/>
+  <utility/>
+  <utility/>
+  <structure/>
+  <structure/>
+  <structure/>
+  <structure/>
+  <structure/>
+  <structure/>
+ </slots>
+ <stats>
+  <launch_rate>10</launch_rate>
+  <launch_range>10</launch_range>
+  <heat_dissipation>-10</heat_dissipation>
+ </stats>
+</ship>

@@ -16,7 +16,7 @@
 #include "naev.h"
 
 #include <stdio.h>
-#include <string.h>
+#include "nstring.h"
 #include <stdarg.h>
 #include <stdlib.h>
 #include <dirent.h>
@@ -38,42 +38,187 @@
 #define BLOCK_SIZE      128*1024 /**< 128 kilobytes. */
 
 
-
-static char naev_base[PATH_MAX] = "\0"; /**< Stores Naev's base path. */
-/**
- * @brief Gets Naev's base path (for saves and such).
- *
- *    @return The base path to Naev.
- */
-char* nfile_basePath (void)
-{
-   char *home;
-
-   if (naev_base[0] == '\0') {
 #if HAS_UNIX
-      home = getenv("HOME");
-      if (home == NULL) {
-         WARN("$HOME isn't set, using current directory.");
-         home = ".";
-      }
-#ifdef PREFSDIR_DEF
-      snprintf( naev_base, PATH_MAX, "%s/%s/", home, PREFSDIR_DEF );
-#else
-      snprintf( naev_base, PATH_MAX, "%s/.naev/", home );
+//! http://n.ethz.ch/student/nevillm/download/libxdg-basedir/doc/basedir_8c_source.html
+
+/**
+ * Get value of an environment variable.
+ * Sets @c errno to @c EINVAL if variable is not set or empty.
+ *    @param name Name of environment variable.
+ *    @return The environment variable or NULL if an error occurs.
+ */
+static char* xdgGetEnv(const char *name)
+{
+    char *env = SDL_getenv(name);
+    if ((env != NULL) && (env[0] != '\0'))
+        return env;
+    /* What errno signifies missing env var? */
+    errno = EINVAL;
+    return NULL;
+}
+
+/** 
+ * Duplicate an environment variable.
+ * Sets @c errno to @c ENOMEM if unable to allocate duplicate string.
+ * Sets @c errno to @c EINVAL if variable is not set or empty.
+ *    @return The duplicated string or NULL if an error occurs.
+ */
+static char* xdgEnvDup(const char *name)
+{
+    const char *env;
+    env = xdgGetEnv( name );
+    if (env != NULL)
+        return strdup(env);
+     return NULL;
+}
+
+/** 
+ * Get a home directory from the environment or a fallback relative to @c \$HOME.
+ * Sets @c errno to @c ENOMEM if unable to allocate duplicate string.
+ * Sets @c errno to @c EINVAL if variable is not set or empty.
+ *    @param envname Name of environment variable.
+ *    @param relativefallback Path starting with "/" and relative to @c \$HOME to use as fallback.
+ *    @return The home directory path or @c NULL of an error occurs.
+ */
+static char * xdgGetRelativeHome( const char *envname, const char *relativefallback )
+{
+    char *relhome;
+    relhome = xdgEnvDup(envname);
+    if ((relhome == NULL) && (errno != ENOMEM)) {
+        errno = 0;
+        const char *home;
+        unsigned int homelen;
+        home = xdgGetEnv( "HOME" );
+        if (home == NULL)
+            return NULL;
+        homelen = strlen(home);
+        unsigned int fallbacklength;
+        fallbacklength = strlen( relativefallback );
+        relhome = malloc( homelen + fallbacklength + 1 );
+        if (relhome == NULL)
+           return NULL;
+        memcpy( relhome, home, homelen );
+        memcpy( &relhome[ homelen ], relativefallback, fallbacklength + 1 );
+        relhome[ homelen + fallbacklength ] = '\0'; /* Just in case. */
+    }
+    return relhome;
+}
 #endif
+
+static char naev_dataPath[PATH_MAX] = "\0"; /**< Store Naev's data path. */
+/**
+ * @brief Gets Naev's data path (for user data such as saves and screenshots)
+ *
+ *    @return The xdg data path.
+ */
+const char* nfile_dataPath (void)
+{
+    char *path;
+
+    if (naev_dataPath[0] == '\0') {
+#if HAS_UNIX
+        path = xdgGetRelativeHome( "XDG_DATA_HOME", "/.local/share" );
+        if (path == NULL) {
+            WARN("$XDG_DATA_HOME isn't set, using current directory.");
+            path = strdup(".");
+        }
+
+        nsnprintf( naev_dataPath, PATH_MAX, "%s/naev/", path );
+
+        if (path != NULL) {
+            free (path);
+        }
 #elif HAS_WIN32
-      home = getenv("APPDATA");
-      if (home == NULL) {
+      path = SDL_getenv("APPDATA");
+      if (path == NULL) {
          WARN("%%APPDATA%% isn't set, using current directory.");
-         home = ".";
+         path = ".";
       }
-      snprintf( naev_base, PATH_MAX, "%s/naev/", home );
+      nsnprintf( naev_dataPath, PATH_MAX, "%s/naev/", path );
 #else
 #error "Feature needs implementation on this Operating System for Naev to work."
 #endif
-   }
+    }
 
-   return naev_base;
+    return naev_dataPath;
+}
+
+
+static char naev_configPath[PATH_MAX] = "\0"; /**< Store Naev's config path. */
+/**
+ * @brief Gets Naev's config path (for user preferences such as conf.lua)
+ *
+ *    @return The xdg config path.
+ */
+const char* nfile_configPath (void)
+{
+    char *path;
+
+    if (naev_configPath[0] == '\0') {
+#if HAS_UNIX
+        path = xdgGetRelativeHome( "XDG_CONFIG_HOME", "/.config" );
+        if (path == NULL) {
+            WARN("$XDG_CONFIG_HOME isn't set, using current directory.");
+            path = strdup(".");
+        }
+
+        nsnprintf( naev_configPath, PATH_MAX, "%s/naev/", path );
+
+        if (path != NULL) {
+            free (path);
+        }
+#elif HAS_WIN32
+      path = SDL_getenv("APPDATA");
+      if (path == NULL) {
+         WARN("%%APPDATA%% isn't set, using current directory.");
+         path = ".";
+      }
+      nsnprintf( naev_configPath, PATH_MAX, "%s/naev/", path );
+#else
+#error "Feature needs implementation on this Operating System for Naev to work."
+#endif
+    }
+
+    return naev_configPath;
+}
+
+
+static char naev_cachePath[PATH_MAX] = "\0"; /**< Store Naev's cache path. */
+/**
+ * @brief Gets Naev's cache path (for cached data such as generated textures)
+ *
+ *    @return The xdg cache path.
+ */
+const char* nfile_cachePath (void)
+{
+    char *path;
+
+    if (naev_cachePath[0] == '\0') {
+#if HAS_UNIX
+        path = xdgGetRelativeHome( "XDG_CACHE_HOME", "/.cache" );
+        if (path == NULL) {
+            WARN("$XDG_CACHE_HOME isn't set, using current directory.");
+            path = strdup(".");
+        }
+
+        nsnprintf( naev_cachePath, PATH_MAX, "%s/naev/", path );
+
+        if (path != NULL) {
+            free (path);
+        }
+#elif HAS_WIN32
+      path = SDL_getenv("APPDATA");
+      if (path == NULL) {
+         WARN("%%APPDATA%% isn't set, using current directory.");
+         path = ".";
+      }
+      nsnprintf( naev_cachePath, PATH_MAX, "%s/naev/", path );
+#else
+#error "Feature needs implementation on this Operating System for Naev to work."
+#endif
+    }
+
+    return naev_cachePath;
 }
 
 
@@ -98,7 +243,7 @@ char* nfile_dirname( char *path )
       return path;
 
    /* New dirname. */
-   snprintf( dirname_buf, MIN(sizeof(dirname_buf), (size_t)(i+1)),  path );
+   nsnprintf( dirname_buf, MIN(sizeof(dirname_buf), (size_t)(i+1)),  path );
    return dirname_buf;
 #else
 #error "Functionality not implemented for your OS."
@@ -106,10 +251,46 @@ char* nfile_dirname( char *path )
 }
 
 
+#if HAS_POSIX
+static int mkpath( const char *path, mode_t mode )
+{
+   char opath[PATH_MAX];
+   char *p;
+   size_t len;
+   int ret;
+
+   if (path == NULL)
+      return 0;
+
+   strncpy( opath, path, sizeof(opath) );
+   len = strlen(opath);
+   if (opath[len - 1] == '/')
+      opath[len - 1] = '\0';
+   for (p=&opath[1]; p[0]!='\0'; p++) {
+      if (p[0] == '/') {
+         p[0] = '\0';
+         if (!nfile_dirExists(opath)) {
+            ret = mkdir( opath, mode );
+            if (ret)
+               return ret;
+         }
+         p[0] = '/';
+      }
+   }
+   if (!nfile_dirExists(opath)) { /* if path is not terminated with / */
+      ret = mkdir( opath, mode );
+      if (ret)
+         return ret;
+   }
+
+   return 0;
+}
+#endif /* HAS_POSIX */
+
+
+
 /**
  * @brief Creates a directory if it doesn't exist.
- *
- * Uses relative paths to basePath.
  *
  *    @param path Path to create directory if it doesn't exist.
  *    @return 0 on success.
@@ -132,7 +313,7 @@ int nfile_dirMakeExist( const char* path, ... )
       return 0;
 
 #if HAS_POSIX
-   if (mkdir(file, S_IRWXU | S_IRWXG | S_IRWXO) < 0) {
+   if (mkpath(file, S_IRWXU | S_IRWXG | S_IRWXO) < 0) {
       WARN("Dir '%s' does not exist and unable to create: %s", file, strerror(errno));
       return -1;
    }
@@ -231,7 +412,7 @@ int nfile_backupIfExists( const char* path, ... )
    }
 
    if (nfile_fileExists(file)) {
-      snprintf(backup, PATH_MAX, "%s.backup", file);
+      nsnprintf(backup, PATH_MAX, "%s.backup", file);
 
       /* Open files. */
       f_in  = fopen( file, "r" );
@@ -317,7 +498,7 @@ char** nfile_readDir( int* nfiles, const char* path, ... )
          continue;
 
       /* Stat the file */
-      snprintf( file, PATH_MAX, "%s/%s", base, name );
+      nsnprintf( file, PATH_MAX, "%s/%s", base, name );
       if (stat(file, &sb) == -1)
          continue; /* Unable to stat */
 
@@ -385,6 +566,66 @@ char** nfile_readDir( int* nfiles, const char* path, ... )
    return files;
 }
 
+
+/**
+ * @brief Lists all the visible files in a directory, at any depth.
+ *
+ * Should also sort by last modified but that's up to the OS in question.
+ * Paths are relative to base directory.
+ *
+ *    @param[out] nfiles Returns how many files there are.
+ *    @param path Directory to read.
+ */
+char** nfile_readDirRecursive( int* nfiles, const char* path, ... )
+{
+   char **tfiles, **out, **cfiles, *buf, base[PATH_MAX];
+   int i, j, ls, mfiles, tmp, cn;
+   va_list ap;
+
+   va_start(ap, path);
+   vsnprintf( base, PATH_MAX, path, ap );
+   va_end(ap);
+
+   mfiles = 128;
+   out = malloc(sizeof(char*)*mfiles);
+   tfiles = nfile_readDir( &tmp, base );
+   *nfiles = 0;
+
+   for (i=0; i<tmp; i++) {
+      ls = strlen(base) + strlen(tfiles[i]) + 1;
+      buf = malloc(ls * sizeof(char));
+      nsnprintf( buf, ls, "%s%s", path, tfiles[i] );
+      if (nfile_dirExists(buf)) {
+         /* Append slash if necessary. */
+         if (strcmp(&buf[ls-1],"/")!=0) {
+            buf = realloc( buf, (ls+1) * sizeof(char) );
+            nsnprintf( buf, ls+1, "%s%s/", path, tfiles[i] );
+         }
+
+         /* Iterate over children. */
+         cfiles = nfile_readDirRecursive( &cn, buf );
+         for (j=0; j<cn; j++) {
+            if ((*nfiles+1) > mfiles) {
+               mfiles *= 2;
+               out = realloc( out, sizeof(char*)*mfiles );
+            }
+            out[(*nfiles)++] = strdup( cfiles[j] );
+         }
+         free(cfiles);
+      }
+      else {
+         if ((*nfiles+1) > mfiles) {
+            mfiles *= 2;
+            out = realloc( out, sizeof(char*)*mfiles );
+         }
+         out[(*nfiles)++] = strdup( buf );
+      }
+     free(buf);
+   }
+
+   free(tfiles);
+   return out;
+}
 
 /**
  * @brief Tries to read a file.
@@ -550,3 +791,44 @@ int nfile_writeFile( const char* data, int len, const char* path, ... )
    return 0;
 }
 
+
+/**
+ * @brief Deletes a file.
+ *
+ *    @param file File to delete.
+ *    @return 0 on success.
+ */
+int nfile_delete( const char* file )
+{
+   if (unlink(file)) {
+      WARN( "Error deleting file %s",file );
+      return -1;
+   }
+   return 0;
+}
+
+/**
+ * @brief Renames a file.
+ *
+ *    @param oldname Old name of the file.
+ *    @param newname New name to set the file to.
+ *    @return 0 on success.
+ */
+int nfile_rename( const char* oldname, const char* newname )
+{
+   if (!nfile_fileExists(oldname)) {
+      WARN("Can not rename non existant file %s",oldname);
+      return -1;
+   }
+   if (newname == NULL) {
+      WARN("Can not rename to NULL file name");
+      return -1;
+   }
+   if (nfile_fileExists( newname )) {
+      WARN("Error renaming %s to %s. %s already exists",oldname,newname,newname);
+      return -1;
+   }
+   if (rename(oldname,newname))
+      WARN("Error renaming %s to %s",oldname,newname);
+   return 0;
+}

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Nappi">
+ <pos>
+  <x>-17112.889013</x>
+  <y>2502.957678</y>
+ </pos>
+ <GFX>
+  <space>H01.png</space>
+  <exterior>desertic2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>50.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>H</class>
+  <population>200000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <commodity/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+  </commodities>
+  <description>Nappi is one of those names that gets chuckled over in distant spaceport bars. The world is home to a small population that moves across the face of the planet as the seasons progress, living a semi-nomadic life. The capital city is always populated though, because it is the only link to the rest of the galaxy.</description>
+  <bar>Few offworlders venture beyond the spaceport bar. There is little to do in the capital city other than to conduct trade, and the outside air becomes unpleasant after only minutes of exposure. Besides, there's very little to see, unless you enjoy looking at endless stretches of rock and sand.</bar>
+ </general>
+</asset>

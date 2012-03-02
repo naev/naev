@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Generic Afterburner">
+ <general>
+  <slot>utility</slot>
+  <mass>6</mass>
+  <price>20000</price>
+  <description>Being able to run from your enemies has saved many a pilot, and a generic afterburner will allow you that luxury. Though it may not be as powerful as higher-end alternatives, it makes up for that difference by entering at a much lower price point.</description>
+  <gfx_store>afterburner</gfx_store>
+  <limit>afterburner</limit>
+ </general>
+ <specific type="afterburner">
+  <cpu>2</cpu>
+  <duration>5</duration>
+  <cooldown>8</cooldown>
+  <rumble>0.5</rumble>
+  <sound>afterburner</sound>
+  <thrust>180</thrust>
+  <speed>30</speed>
+  <energy>40</energy>
+  <mass_limit>160</mass_limit>
+ </specific>
+</outfit>

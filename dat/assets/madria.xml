@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Madria">
+ <pos>
+  <x>-8515.000000</x>
+  <y>-1690.000000</y>
+ </pos>
+ <GFX>
+  <space>M08.png</space>
+  <exterior>forest2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>3000000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land>land_hiclass</land>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Medicine</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Madria is one of the few immigration worlds in Sirius space. Colonists from the Frontier constantly trickle into Esker, and they all end up here. The new arrivals are immediately converted and incorporated into the Shaira echelon, which is why that group is over-represented on this world. Only after several cycles of life on Madria do the immigrants get permission to move to other Sirius worlds or serve in the Sirius military.</description>
+  <bar>There are two spaceport bars on Madria, one for regular visitors and one for immigrants. The one for immigrants is more or less a portal into Sirius society - a one way portal. Normal spacers stay away from it.</bar>
+ </general>
+ <tech>
+  <item>Ion 1</item>
+  <item>Basic Trade Ships</item>
+  <item>Basic Outfits 2</item>
+ </tech>
+</asset>

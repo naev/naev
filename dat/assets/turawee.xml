@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Turawee">
+ <pos>
+  <x>16925.367382</x>
+  <y>4758.979987</y>
+ </pos>
+ <GFX>
+  <space>M02.png</space>
+  <exterior>forest2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>2133437257</population>
+  <hide>0.250000</hide>
+  <services>
+   <land>land_hiclass</land>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+  </commodities>
+  <description>There is literally a world of difference between Thymo and Turawee. Unlike its barren cousin, Turawee is a lush, comfortable world that was never charted even during the Third Growth. The Soromid, having few natural M-class planets at their disposal, take good care of this world. While most other factions would struggle with the trade-off between prosperity and ecology, the Soromid have managed to strike a perfect balance. Turawee may be the only inhabited planet in the galaxy whose environment has not been significantly altered in any way by its occupants.</description>
+  <bar>The Soromid are very protective of Turawee. Offworlders are allowed to land, but they have to abide by strict local rules. No smoking is allowed in this bar, nor can any unauthorized goods or substances be brought inside.</bar>
+ </general>
+ <tech>
+  <item>Plasma 1</item>
+  <item>Plasma 2</item>
+  <item>Low Tech Upgrades</item>
+  <item>High Tech Upgrades 1</item>
+  <item>Heavy Weapons 1</item>
+  <item>Missiles 1</item>
+  <item>Missiles 2</item>
+  <item>Light Civilian Combat Ships</item>
+  <item>Heavy Civilian Combat Ships</item>
+ </tech>
+</asset>

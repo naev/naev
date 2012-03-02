@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Traal">
+ <pos>
+  <x>-3800.357180</x>
+  <y>-8212.982546</y>
+ </pos>
+ <GFX>
+  <space>M06.png</space>
+  <exterior>forest2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>4000000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Traal is a pleasant civilian world. With stable tectonics and a favorable climate on most of its land masses, the world makes for good living. It comes as no surprise that the Dvaered eye it greedily, so close to their borders, but so long as Inios Station guards Eye of Night, Dvaered High Command can't claim Traal.</description>
+  <bar>Traal's spaceport bar is heavy on Sirian propaganda. With foreign territories just a jump away, the Sirii feel the need to spread their beliefs, even if only passively. Though House Sirius has stopped expanding in recent years, the Traalians believe that Sirichana is merely taking a pause to stabilize the existing Sirian worlds. Soon, they say, Fidelis will be Sirius space.</bar>
+ </general>
+ <tech>
+  <item>Ion 1</item>
+  <item>Basic Outfits 2</item>
+  <item>Low Tech Upgrades</item>
+  <item>Missiles 1</item>
+ </tech>
+</asset>

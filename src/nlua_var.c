@@ -15,7 +15,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
+#include "nstring.h"
 #include <math.h>
 
 #include <lua.h>
@@ -342,7 +342,6 @@ static int var_push( lua_State *L )
    misn_var var;
 
    str = luaL_checkstring(L,1);
-   var.name = strdup(str);
 
    /* store appropriate data */
    if (lua_isnil(L,2))
@@ -363,6 +362,8 @@ static int var_push( lua_State *L )
       NLUA_INVALID_PARAMETER(L);
       return 0;
    }
+   /* Set name. */
+   var.name = strdup(str);
    var_add( &var );
 
    return 0;

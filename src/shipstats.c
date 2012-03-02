@@ -14,6 +14,7 @@
 #include "naev.h"
 
 #include "log.h"
+#include "nstring.h"
 
 
 /**
@@ -93,6 +94,7 @@ static const ShipStatsLookup ss_lookup[] = {
 
    D__ELEM( SS_TYPE_D_EW_HIDE,         ew_hide,       "Cloaking" ),
    D__ELEM( SS_TYPE_D_EW_DETECT,       ew_detect,     "Detection" ),
+   D__ELEM( SS_TYPE_D_EW_JUMPDETECT,   ew_jumpDetect, "Jump Detection" ),
 
    D__ELEM( SS_TYPE_D_LAUNCH_RATE,     launch_rate,   "Launch Rate" ),
    D__ELEM( SS_TYPE_D_LAUNCH_RANGE,    launch_range,  "Launch Range" ),
@@ -116,8 +118,8 @@ static const ShipStatsLookup ss_lookup[] = {
    
    B__ELEM( SS_TYPE_B_INSTANT_JUMP,    misc_instant_jump, "Instant Jump" ),
 
-   /* Sentinal. */
-   N__ELEM( SS_TYPE_SENTINAL )
+   /* Sentinel. */
+   N__ELEM( SS_TYPE_SENTINEL )
 };
 
 
@@ -186,7 +188,7 @@ int ss_check (void)
 {
    ShipStatsType i;
 
-   for (i=0; i<=SS_TYPE_SENTINAL; i++) {
+   for (i=0; i<=SS_TYPE_SENTINEL; i++) {
       if (ss_lookup[i].type != i) {
          WARN("ss_lookup: %s should have id %d but has %d",
                ss_lookup[i].name, i, ss_lookup[i].type );
@@ -212,7 +214,7 @@ int ss_statsInit( ShipStats *stats )
    memset( stats, 0, sizeof(ShipStats) );
 
    ptr = (char*) stats;
-   for (i=0; i<SS_TYPE_SENTINAL; i++) {
+   for (i=0; i<SS_TYPE_SENTINEL; i++) {
       sl = &ss_lookup[ i ];
 
       /* Only want valid names. */
@@ -339,7 +341,7 @@ const char* ss_nameFromType( ShipStatsType type )
 ShipStatsType ss_typeFromName( const char *name )
 {
    int i;
-   for (i=0; i<SS_TYPE_SENTINAL; i++)
+   for (i=0; i<SS_TYPE_SENTINEL; i++)
       if ((ss_lookup[i].name != NULL) && (strcmp(name,ss_lookup[i].name)==0))
          return ss_lookup[i].type;
    return SS_TYPE_NIL;
@@ -385,7 +387,7 @@ static int ss_printD( char *buf, int len, int newline, double d, const ShipStats
 {
    if (fabs(d) < 1e-10)
       return 0;
-   return snprintf( buf, len, "%s\e%s%+.0f%% %s\e0",
+   return nsnprintf( buf, len, "%s\e%s%+.0f%% %s\e0",
          (newline) ? "\n" : "",
          ss_printD_colour( d, sl ),
          d*100., sl->display );
@@ -399,7 +401,7 @@ static int ss_printA( char *buf, int len, int newline, double d, const ShipStats
 {
    if (fabs(d) < 1e-10)
       return 0;
-   return snprintf( buf, len, "%s\e%s%+.0f %s\e0",
+   return nsnprintf( buf, len, "%s\e%s%+.0f %s\e0",
          (newline) ? "\n" : "",
          ss_printD_colour( d, sl ),
          d, sl->display );
@@ -413,7 +415,7 @@ static int ss_printI( char *buf, int len, int newline, int i, const ShipStatsLoo
 {
    if (i == 0)
       return 0;
-   return snprintf( buf, len, "%s\e%s%+d %s\e0",
+   return nsnprintf( buf, len, "%s\e%s%+d %s\e0",
          (newline) ? "\n" : "",
          ss_printI_colour( i, sl ),
          i, sl->display );
@@ -427,7 +429,7 @@ static int ss_printB( char *buf, int len, int newline, int b, const ShipStatsLoo
 {
    if (!b)
       return 0;
-   return snprintf( buf, len, "%s\e%s%s\e0",
+   return nsnprintf( buf, len, "%s\e%s%s\e0",
          (newline) ? "\n" : "",
          ss_printI_colour( b, sl ),
          sl->display );
@@ -495,7 +497,7 @@ int ss_statsDesc( const ShipStats *s, char *buf, int len, int newline )
 
    l   = 0;
    ptr = (char*) s;
-   for (i=0; i<SS_TYPE_SENTINAL; i++) {
+   for (i=0; i<SS_TYPE_SENTINEL; i++) {
       sl = &ss_lookup[ i ];
 
       /* Only want valid names. */

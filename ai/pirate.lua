@@ -24,7 +24,7 @@ function create ()
    end
 
    -- Not too much money
-   ai.setcredits(ai.shipprice()/80 , ai.shipprice()/30 )
+   ai.setcredits( rnd.int(ai.shipprice()/80 , ai.shipprice()/30) )
 
    -- Deal with bribeability
    if rnd.rnd() < 0.05 then

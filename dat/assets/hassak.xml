@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Hassak">
+ <pos>
+  <x>21594.608970</x>
+  <y>10226.293190</y>
+ </pos>
+ <GFX>
+  <space>C00.png</space>
+  <exterior>mining2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>50.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>C</class>
+  <population>60000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <commodity/>
+  </services>
+  <commodities>
+   <commodity>Ore</commodity>
+   <commodity>Food</commodity>
+  </commodities>
+  <description>Not exactly unhabitable and not exactly habitable, Hassak is one of those places where the less fortunate in society end up. The people here have it hard, with storms of almost every variety plagueing the landscape on a regular basis. The population feeds itself with the sale of raw minerals to the Nexus corporation, which buys well under the market price, because it can.</description>
+  <bar>The bar on Hassak is a lousy affair. The planet is poor, and so can't afford any luxury, least of all for offworlders. The Empire has provided the world with basic facilities and equipment because it is bound to do so by intergalactic treaties, but most of it is old and run-down.</bar>
+ </general>
+</asset>

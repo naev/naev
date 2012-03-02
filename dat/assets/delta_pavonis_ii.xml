@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Delta Pavonis II">
+ <pos>
+  <x>-9783.174932</x>
+  <y>9701.669603</y>
+ </pos>
+ <GFX>
+  <space>C01.png</space>
+  <exterior>station02.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

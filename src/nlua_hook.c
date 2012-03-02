@@ -15,7 +15,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
+#include "nstring.h"
 #include <math.h>
 
 #include <lua.h>
@@ -35,6 +35,7 @@
 
 /* Hook methods. */
 static int hookL_rm( lua_State *L );
+static int hook_load( lua_State *L );
 static int hook_land( lua_State *L );
 static int hook_takeoff( lua_State *L );
 static int hook_jumpout( lua_State *L );
@@ -50,9 +51,11 @@ static int hook_input( lua_State *L );
 static int hook_mouse( lua_State *L );
 static int hook_safe( lua_State *L );
 static int hook_standing( lua_State *L );
+static int hook_discover( lua_State *L );
 static int hook_pilot( lua_State *L );
 static const luaL_reg hook_methods[] = {
    { "rm", hookL_rm },
+   { "load", hook_load },
    { "land", hook_land },
    { "takeoff", hook_takeoff },
    { "jumpout", hook_jumpout },
@@ -68,6 +71,7 @@ static const luaL_reg hook_methods[] = {
    { "mouse", hook_mouse },
    { "safe", hook_safe },
    { "standing", hook_standing },
+   { "discover", hook_discover },
    { "pilot", hook_pilot },
    {0,0}
 }; /**< Hook Lua methods. */
@@ -314,6 +318,23 @@ static int hook_land( lua_State *L )
    return 1;
 }
 /**
+ * @brief Hooks the function to the player loading the game (starts landed).
+ *
+ * @usage hook.load( "my_function" ) -- Load calls my_function
+ *
+ *    @luaparam funcname Name of function to run when hook is triggered.
+ *    @luaparam arg Argument to pass to hook.
+ *    @luareturn Hook identifier.
+ * @luafunc load( funcname, arg )
+ */
+static int hook_load( lua_State *L )
+{
+   unsigned int h;
+   h = hook_generic( L, "load", 0., 1, 0 );
+   lua_pushnumber( L, h );
+   return 1;
+}
+/**
  * @brief Hooks the function to the player taking off.
  *
  *    @luaparam funcname Name of function to run when hook is triggered.
@@ -541,6 +562,27 @@ static int hook_standing( lua_State *L )
    return 1;
 }
 /**
+ * @brief Hooks the function to when the player discovers an asset, jump point or the likes.
+ *
+ * The parameters passed to the function are the type which can be one of:<br/>
+ * - "asset" <br/>
+ * - "jump" <br/>
+ * and the actual asset or jump point discovered with the following format: <br/>
+ * function f( type, discovery )
+ *
+ *    @luaparam funcname Name of function to run when hook is triggered.
+ *    @luaparam arg Argument to pass to hook.
+ *    @luareturn Hook identifier.
+ * @luafunc discover( funcname, arg )
+ */
+static int hook_discover( lua_State *L )
+{
+   unsigned int h;
+   h = hook_generic( L, "discover", 0., 1, 0 );
+   lua_pushnumber( L, h );
+   return 1;
+}
+/**
  * @brief Hook run at the end of each frame.
  *
  * This hook is a good way to do possibly breaking stuff like for example player.teleport().
@@ -639,7 +681,7 @@ static int hook_pilot( lua_State *L )
    }
 
    /* actually add the hook */
-   snprintf( buf, sizeof(buf), "p_%s", hook_type );
+   nsnprintf( buf, sizeof(buf), "p_%s", hook_type );
    h = hook_generic( L, buf, 0., 3, 0 );
    if (p==NULL)
       pilots_addGlobalHook( type, h );

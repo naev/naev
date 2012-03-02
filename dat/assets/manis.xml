@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Manis">
+ <pos>
+  <x>16020.000000</x>
+  <y>-7500.000000</y>
+ </pos>
+ <GFX>
+  <space>M09.png</space>
+  <exterior>aquatic2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>4000000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Manis is a cool world, though it still counts as earthlike. Unlike many other class M planets in the galaxy, no terraforming was ever performed here, so the world has almost the same ecosystem it did when it was first settled during the Second Growth. Many people are attracted to this "authentic" feel of the planet, which accounts for a significant portion of its popularity.</description>
+  <bar>Perhaps uniquely in the entire galaxy, Manis' spaceport bar doesn't serve alcohol. It has any amount of sodas and herbal teas available, but they don't seem as effective at attracting customers to the bar as would your ordinary spacer's swill.</bar>
+ </general>
+ <tech>
+  <item>Low Tech Upgrades</item>
+ </tech>
+</asset>

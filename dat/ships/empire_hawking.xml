@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Empire Hawking">
+ <base_type>Hawking</base_type>
+ <GFX sx="12" sy="12">hawking_empire</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Cruiser</class>
+ <price>7500000</price>
+ <fabricator>Nexus Shipyards</fabricator>
+ <license>Heavy Combat Vessel License</license>
+ <description>An Empire Hawking.</description>
+ <movement>
+  <thrust>62</thrust>
+  <turn>53</turn>
+  <speed>75</speed>
+ </movement>
+ <health>
+  <absorb>63</absorb>
+  <shield>750</shield>
+  <armour>3000</armour>
+  <energy>2700</energy>
+  <shield_regen>11</shield_regen>
+  <armour_regen>0</armour_regen>
+  <energy_regen>85.3</energy_regen>
+ </health>
+ <characteristics>
+  <cpu>157</cpu>
+  <crew>35</crew>
+  <mass>3750</mass>
+  <fuel>300</fuel>
+  <cargo>420</cargo>
+ </characteristics>
+ <slots>
+  <weapon x="40" y="0" h="2"/>
+  <weapon x="25" y="0" h="2"/>
+  <weapon x="12" y="-6" h="0"/>
+  <weapon x="12" y="6" h="0"/>
+  <weapon x="0" y="0" h="7"/>
+  <weapon x="-15" y="0" h="7"/>
+  <weapon x="-33" y="0" h="7"/>
+  <utility/>
+  <utility/>
+  <utility/>
+  <utility/>
+  <utility/>
+  <structure/>
+  <structure/>
+  <structure/>
+  <structure/>
+  <structure/>
+ </slots>
+ <stats>
+  <heat_dissipation>15</heat_dissipation>
+  <tur_energy>-5</tur_energy>
+  <tur_damage>5</tur_damage>
+ </stats>
+</ship>

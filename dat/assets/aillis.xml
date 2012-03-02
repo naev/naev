@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Aillis">
+ <pos>
+  <x>7879.119607</x>
+  <y>-14515.904442</y>
+ </pos>
+ <GFX>
+  <space>moon-J01.png</space>
+  <exterior>mining6.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>50.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>1000000</population>
+  <hide>0.500000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Aillis is the base of operations for miners who mine Koralis VI. Koralis VI itself is highly radioactive, so no human habitation is, or will ever be, possible. However, some of the heavy elements of the planet are quite valuable, and so Aillis offers a fair living for those who don't shun heavy, dangerous labor.</description>
+  <bar>Though this bar is not exactly inhospitable, it also doesn't make you feel very welcome. Running costs are kept low, which means maintenance and service suffer. Nevertheless, it's quite possible to have a good time here.</bar>
+ </general>
+</asset>

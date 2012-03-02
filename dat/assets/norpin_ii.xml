@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Norpin II">
+ <pos>
+  <x>-15040.000000</x>
+  <y>11200.000000</y>
+ </pos>
+ <GFX>
+  <space>H02.png</space>
+  <exterior>desertic3.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Frontier</faction>
+  <value>60.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>H</class>
+  <population>260000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Medicine</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Norpin II is truly at the edge of the frontier, a barely-habitable world being mined and terraformed, though the latter is being done as cheaply as possible, resulting in very poor conditions. The Dvaered are loathed here, and it's rumored that the local shipyard is a major source of FLF vessels.</description>
+  <bar>The Norpin II bar isn't the safest place around. With a deep-seated loathing of the Dvaered, the local citizens have brawled with Dvaered soldiers on numerous occasions.</bar>
+ </general>
+ <tech>
+  <item>Basic Trade Ships</item>
+  <item>Basic Civilian Ships</item>
+  <item>Basic Outfits 1</item>
+ </tech>
+</asset>

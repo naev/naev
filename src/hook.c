@@ -27,7 +27,7 @@
 #include "naev.h"
 
 #include <stdlib.h>
-#include <string.h>
+#include "nstring.h"
 
 #include "log.h"
 #include "nxml.h"
@@ -276,6 +276,12 @@ static int hook_parseParam( lua_State *L, HookParam *param )
             break;
          case HOOK_PARAM_FACTION:
             lua_pushfaction( L, param[n].u.lf );
+            break;
+         case HOOK_PARAM_ASSET:
+            lua_pushplanet( L, param[n].u.la );
+            break;
+         case HOOK_PARAM_JUMP:
+            lua_pushjump( L, param[n].u.lj );
             break;
 
          default:

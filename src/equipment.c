@@ -15,7 +15,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
+#include "nstring.h"
 #include <math.h>
 
 #include "log.h"
@@ -29,7 +29,6 @@
 #include "conf.h"
 #include "gui.h"
 #include "land_outfits.h"
-#include "player_gui.h"
 #include "info.h"
 #include "shipstats.h"
 #include "tk/toolkit_priv.h" /* Yes, I'm a bad person, abstractions be damned! */
@@ -40,9 +39,6 @@
 #define BUTTON_HEIGHT   40 /**< Default button height. */
 
 #define SHIP_ALT_MAX    256 /**< Maximum ship alt text. */
-
-#define SETGUI_WIDTH    400 /**< Load window width. */
-#define SETGUI_HEIGHT   300 /**< Load window height. */
 
 
 /*
@@ -81,14 +77,13 @@ static void equipment_mouseSlots( unsigned int wid, SDL_Event* event,
 static char eq_qCol( double cur, double base, int inv );
 static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot );
 static void equipment_sellShip( unsigned int wid, char* str );
+static void equipment_renameShip( unsigned int wid, char *str );
 static void equipment_transChangeShip( unsigned int wid, char* str );
 static void equipment_changeShip( unsigned int wid );
 static void equipment_transportShip( unsigned int wid );
 static void equipment_unequipShip( unsigned int wid, char* str );
 static credits_t equipment_transportPrice( char *shipname );
 static void equipment_rightClickOutfits( unsigned int wid, char* str );
-static void equipment_toggleGuiOverride( unsigned int wid, char *name );
-static void setgui_load( unsigned int wdw, char *str );
 
 
 /**
@@ -237,21 +232,21 @@ void equipment_open( unsigned int wid )
    equipment_addAmmo();
 
    /* buttons */
-   window_addButton( wid, -20, 20,
+   window_addButtonKey( wid, -20, 20,
          bw, bh, "btnCloseEquipment",
-         "Takeoff", land_buttonTakeoff );
-   window_addButton( wid, -20 - (15+bw), 20,
-         bw, bh, "btnSetGUI",
-         "Set GUI", equipment_setGui );
-   window_addButton( wid, -20 - (15+bw)*2, 20,
+         "Take Off", land_buttonTakeoff, SDLK_t );
+   window_addButtonKey( wid, -20 - (15+bw), 20,
+         bw, bh, "btnRenameShip",
+         "Rename", equipment_renameShip, SDLK_r );
+   window_addButtonKey( wid, -20 - (15+bw)*2, 20,
          bw, bh, "btnSellShip",
-         "Sell Ship", equipment_sellShip );
-   window_addButton( wid, -20 - (15+bw)*3, 20,
+         "Sell Ship", equipment_sellShip, SDLK_s );
+   window_addButtonKey( wid, -20 - (15+bw)*3, 20,
          bw, bh, "btnChangeShip",
-         "Swap Ship", equipment_transChangeShip );
-   window_addButton( wid, -20 - (15+bw)*4, 20,
+         "Swap Ship", equipment_transChangeShip, SDLK_p );
+   window_addButtonKey( wid, -20 - (15+bw)*4, 20,
          bw, bh, "btnUnequipShip",
-         "Unequip", equipment_unequipShip );
+         "Unequip", equipment_unequipShip, SDLK_u );
 
    /* text */
    buf = "Name:\n"
@@ -334,7 +329,8 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       int selected, Outfit *o, Pilot *p, CstSlotWidget *wgt )
 {
    int i, level;
-   glColour *c, *dc, bc;
+   const glColour *c, *dc;
+   glColour bc;
 
    /* Render text. */
    if ((o != NULL) && (lst[0].slot.type == o->slot.type))
@@ -505,7 +501,7 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
    double percent;
    double x, y;
    double w, h;
-   glColour *lc, *c, *dc;
+   const glColour *lc, *c, *dc;
 
    /* Must have selected ship. */
    if (eq_wgt.selected == NULL)
@@ -554,7 +550,8 @@ static void equipment_renderOverlayColumn( double x, double y, double w, double 
       int n, PilotOutfitSlot *lst, int mover, CstSlotWidget *wgt )
 {
    int i;
-   glColour *c, tc;
+   const glColour *c;
+   glColour tc;
    int text_width, xoff, yoff, top;
    const char *display;
    int subtitle;
@@ -721,14 +718,14 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
    /* Get text. */
    if (o->desc_short == NULL)
       return;
-   pos = snprintf( alt, sizeof(alt),
+   pos = nsnprintf( alt, sizeof(alt),
          "%s\n"
          "\n"
          "%s",
          o->name,
          o->desc_short );
    if (o->mass > 0.)
-      pos += snprintf( &alt[pos], sizeof(alt)-pos,
+      pos += nsnprintf( &alt[pos], sizeof(alt)-pos,
             "\n%.0f Tons",
             o->mass );
 
@@ -752,7 +749,7 @@ static void equipment_renderShip( double bx, double by,
       double bw, double bh, double x, double y, Pilot* p )
 {
    int sx, sy;
-   glColour *lc, *c, *dc;
+   const glColour *lc, *c, *dc;
    unsigned int tick;
    double dt;
    double px, py;
@@ -894,18 +891,20 @@ static int equipment_mouseColumn( unsigned int wid, SDL_Event* event,
             if ((os->slot.type == OUTFIT_SLOT_STRUCTURE) ||
                (os->slot.type == OUTFIT_SLOT_UTILITY)) {
                pilot_weapSetRmSlot( p, wgt->weapons, OUTFIT_SLOT_WEAPON );
-               pilot_weapSetAdd( p, wgt->weapons, &os[ret], level );
+               pilot_weapSetAdd( p, wgt->weapons, &os[ret], 0 );
                pilot_weapSetType( p, wgt->weapons, WEAPSET_TYPE_ACTIVE );
             }
             /* Case change weapon groups or active weapon. */
             else {
                pilot_weapSetRmSlot( p, wgt->weapons, OUTFIT_SLOT_STRUCTURE );
                pilot_weapSetRmSlot( p, wgt->weapons, OUTFIT_SLOT_UTILITY );
-               pilot_weapSetAdd( p, wgt->weapons, &os[ret], level );
                if (pilot_weapSetTypeCheck( p, wgt->weapons) == WEAPSET_TYPE_CHANGE)
                   pilot_weapSetType( p, wgt->weapons, WEAPSET_TYPE_CHANGE );
-               else
+               else {
                   pilot_weapSetType( p, wgt->weapons, WEAPSET_TYPE_WEAPON );
+                  level = 0;
+               }
+               pilot_weapSetAdd( p, wgt->weapons, &os[ret], level );
             }
          }
          p->autoweap = 0; /* Disable autoweap. */
@@ -1097,13 +1096,16 @@ void equipment_regenLists( unsigned int wid, int outfits, int ships )
    int ret;
    int nout, nship;
    double offout, offship;
-   char *s, selship[PATH_MAX];
+   char *s, *focused, selship[PATH_MAX];
 
    /* Default.s */
    nout     = 0;
    nship    = 0;
    offout   = 0.;
    offship  = 0.;
+
+   /* Save focus. */
+   focused = window_getFocus(wid);
 
    /* Save positions. */
    if (outfits) {
@@ -1142,6 +1144,9 @@ void equipment_regenLists( unsigned int wid, int outfits, int ships )
          equipment_updateShips( wid, NULL );
       }
    }
+
+   /* Restore focus. */
+   window_setFocus( wid, focused );
 }
 
 
@@ -1240,7 +1245,7 @@ int equipment_shipStats( char *buf, int max_len,  const Pilot *s, int dpseps )
    /* Write to buffer. */
    l = 0;
    if (dps > 0.)
-      l += snprintf( &buf[l], (max_len-l),
+      l += nsnprintf( &buf[l], (max_len-l),
             "%s%.2f DPS [%.2f EPS]", (l!=0)?"\n":"", dps, eps );
    l += ss_statsDesc( &s->stats, &buf[l], (max_len-l), 1 );
    return l;
@@ -1268,7 +1273,8 @@ static void equipment_genLists( unsigned int wid )
    char **quantity;
    Outfit *o;
    Pilot *s;
-   glColour *bg, *c, blend;
+   const glColour *c;
+   glColour *bg, blend;
    char **slottype;
    const char *typename;
 
@@ -1299,7 +1305,7 @@ static void equipment_genLists( unsigned int wid )
       for (i=0; i<nships; i++) {
          s        = player_getShip( sships[i] );
          alt[i]   = malloc( sizeof(char) * SHIP_ALT_MAX );
-         l        = snprintf( &alt[i][0], SHIP_ALT_MAX, "Ship Stats\n" );
+         l        = nsnprintf( &alt[i][0], SHIP_ALT_MAX, "Ship Stats\n" );
          l        = equipment_shipStats( &alt[i][l], SHIP_ALT_MAX-l, s, 1 );
          if (l == 0) {
             free( alt[i] );
@@ -1333,7 +1339,7 @@ static void equipment_genLists( unsigned int wid )
             c = outfit_slotSizeColour( &o->slot );
             if (c == NULL)
                c = &cBlack;
-            col_blend( &blend, *c, cGrey70, 0.4 );
+            col_blend( &blend, c, &cGrey70, 0.4 );
             memcpy( &bg[i], &blend, sizeof(glColour) );
 
             /* Short description. */
@@ -1342,14 +1348,14 @@ static void equipment_genLists( unsigned int wid )
             else {
                l = strlen(o->desc_short) + 128;
                alt[i] = malloc( l );
-               p = snprintf( alt[i], l,
+               p = nsnprintf( alt[i], l,
                      "%s\n"
                      "\n"
                      "%s",
                      o->name,
                      o->desc_short );
                if (o->mass > 0.)
-                  p += snprintf( &alt[i][p], l-p,
+                  p += nsnprintf( &alt[i][p], l-p,
                         "\n%.0f Tons",
                         o->mass );
             }
@@ -1358,7 +1364,7 @@ static void equipment_genLists( unsigned int wid )
             p = player_outfitOwned(o);
             l = p / 10 + 4;
             quantity[i] = malloc( l );
-            snprintf( quantity[i], l, "%d", p );
+            nsnprintf( quantity[i], l, "%d", p );
 
             /* Slot type. */
             if ((strcmp(outfit_slotName(o),"NA") != 0) &&
@@ -1434,7 +1440,7 @@ void equipment_updateShips( unsigned int wid, char* str )
       loc    = player_getLoc(ship->name);
       price  = equipment_transportPrice( shipname );
       onboard = 0;
-      snprintf( sysname, sizeof(sysname), " in the %s system",
+      nsnprintf( sysname, sizeof(sysname), " in the %s system",
             planet_getSystem(loc) );
    }
    eq_wgt.selected = ship;
@@ -1444,7 +1450,7 @@ void equipment_updateShips( unsigned int wid, char* str )
    credits2str( buf3, player_shipPrice(shipname), 2 ); /* sell price */
    cargo = pilot_cargoFree(ship) + pilot_cargoUsed(ship);
    nt = ntime_pretty( pilot_hyperspaceDelay( ship ), 2 );
-   snprintf( buf, sizeof(buf),
+   nsnprintf( buf, sizeof(buf),
          "%s\n"
          "%s\n"
          "%s\n"
@@ -1497,20 +1503,23 @@ void equipment_updateShips( unsigned int wid, char* str )
 
    /* button disabling */
    if (onboard) {
-      window_disableButton( wid, "btnSellShip" );
-      window_disableButton( wid, "btnChangeShip" );
+      window_disableButtonSoft( wid, "btnSellShip" );
+      window_disableButtonSoft( wid, "btnChangeShip" );
    }
    else {
       if (strcmp(land_planet->name,loc)) { /* ship not here */
          window_buttonCaption( wid, "btnChangeShip", "Transport" );
          if (!player_hasCredits( price ))
-            window_disableButton( wid, "btnChangeShip" );
+            window_disableButtonSoft( wid, "btnChangeShip" );
          else
             window_enableButton( wid, "btnChangeShip" );
       }
       else { /* ship is here */
          window_buttonCaption( wid, "btnChangeShip", "Swap Ship" );
-         window_enableButton( wid, "btnChangeShip" );
+         if (can_swapEquipment( ship->name ))
+            window_enableButton( wid, "btnChangeShip" );
+         else
+            window_disableButtonSoft( wid, "btnChangeShip" );
       }
       /* If ship is there you can always sell. */
       window_enableButton( wid, "btnSellShip" );
@@ -1620,116 +1629,6 @@ static void equipment_transportShip( unsigned int wid )
 }
 
 
-/**
- * @brief Closes the GUI selection menu.
- *
- *    @param wdw Window triggering function.
- *    @param str Unused.
- */
-static void setgui_close( unsigned int wdw, char *str )
-{
-   (void)str;
-   window_destroy( wdw );
-}
-
-
-/**
- * @brief Allows the player to set a different GUI.
- *
- *    @param wid Window id.
- *    @param name of widget.
- */
-void equipment_setGui( unsigned int wid, char* str )
-{
-   (void)str;
-   int i;
-   char **guis;
-   int nguis;
-   char **gui_copy;
-
-   /* Get the available GUIs. */
-   guis = player_guiList( &nguis );
-
-   /* In case there are none. */
-   if (guis == NULL) {
-      WARN("No GUI available.");
-      dialogue_alert( "There are no GUI available, this means something went wrong somewhere. Inform the Naev maintainer." );
-      return;
-   }
-
-   /* window */
-   wid = window_create( "Select GUI", -1, -1, SETGUI_WIDTH, SETGUI_HEIGHT );
-   window_setCancel( wid, setgui_close );
-
-   /* Copy GUI. */
-   gui_copy = malloc( sizeof(char*) * nguis );
-   for (i=0; i<nguis; i++)
-      gui_copy[i] = strdup( guis[i] );
-
-   /* List */
-   window_addList( wid, 20, -50,
-         SETGUI_WIDTH-BUTTON_WIDTH/2 - 60, SETGUI_HEIGHT-110,
-         "lstGUI", gui_copy, nguis, 0, NULL );
-   toolkit_setList( wid, "lstGUI", gui_pick() );
-
-   /* buttons */
-   window_addButton( wid, -20, 20, BUTTON_WIDTH/2, BUTTON_HEIGHT,
-         "btnBack", "Cancel", setgui_close );
-   window_addButton( wid, -20, 30 + BUTTON_HEIGHT, BUTTON_WIDTH/2, BUTTON_HEIGHT,
-         "btnLoad", "Load", setgui_load );
-
-   /* Checkboxes */
-   window_addCheckbox( wid, 20, 20,
-         BUTTON_WIDTH, BUTTON_HEIGHT, "chkOverride", "Override GUI",
-         equipment_toggleGuiOverride, player.guiOverride );
-   equipment_toggleGuiOverride( wid, "chkOverride" );
-
-   /* default action */
-   window_setAccept( wid, setgui_load );
-}
-
-
-/**
- * @brief Loads a GUI.
- *
- *    @param wdw Window triggering function.
- *    @param str Unused.
- */
-static void setgui_load( unsigned int wdw, char *str )
-{
-   (void)str;
-   char *gui;
-   int wid;
-
-   wid = window_get( "Select GUI" );
-   gui = toolkit_getList( wid, "lstGUI" );
-   if (strcmp(gui,"None") == 0)
-      return;
-
-   /* Set the GUI. */
-   if (player.gui != NULL)
-      free( player.gui );
-   player.gui = strdup( gui );
-
-   /* Close menus before loading for proper rendering. */
-   setgui_close(wdw, NULL);
-
-   /* Load the GUI. */
-   gui_load( gui_pick() );
-}
-
-
-/**
- * @brief GUI override was toggled.
- *
- *    @param wid Window id.
- *    @param name of widget.
- */
-static void equipment_toggleGuiOverride( unsigned int wid, char *name )
-{
-   player.guiOverride = window_checkboxState( wid, name );
-}
-
 
 /**
  * @brief Unequips the player's ship.
@@ -1829,7 +1728,7 @@ static void equipment_sellShip( unsigned int wid, char* str )
 
    shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
 
-   if (land_errDialogue( shipname, "sell" ))
+   if (land_errDialogue( shipname, "sellShip" ))
       return;
 
    /* Calculate price. */
@@ -1854,6 +1753,45 @@ static void equipment_sellShip( unsigned int wid, char* str )
    dialogue_msg( "Ship Sold", "You have sold your ship %s for %s credits.", name, buf );
    free(name);
 }
+
+
+/**
+ * @brief Renames the selected ship.
+ *
+ *    @param The ship to rename.
+ */
+static void equipment_renameShip( unsigned int wid, char *str )
+{
+   (void)str;
+   Pilot *ship;
+   char *shipname, *newname;
+
+   shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
+   ship = player_getShip(shipname);
+   newname = dialogue_input( "Ship Name", 3, 20,
+         "Please enter a new name for your %s:", ship->ship->name );
+
+   /* Player cancelled the dialogue. */
+   if (newname == NULL)
+      return;
+
+   /* Must not have same name. */
+   if (player_hasShip(newname)) {
+      dialogue_msg( "Name Collision",
+            "Please do not give the ship the same name as another of your ships.");
+      return;
+   }
+
+   if (ship->name != NULL)
+      free (ship->name);
+
+   ship->name = strdup( newname );
+
+   /* Destroy widget - must be before widget. */
+   equipment_regenLists( wid, 0, 1 );
+}
+
+
 /**
  * @brief Gets the ship's transport price.
  *    @param shipname Name of the ship to get the transport price.

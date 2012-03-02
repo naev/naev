@@ -15,7 +15,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
+#include "nstring.h"
 #include <math.h>
 
 #include "land_outfits.h"
@@ -77,7 +77,7 @@ static int land_regen = 0; /**< Whether or not regenning. */
 static const char *land_windowNames[LAND_NUMWINDOWS] = {
    "Landing Main",
    "Spaceport Bar",
-   "Mission",
+   "Missions",
    "Outfits",
    "Shipyard",
    "Equipment",
@@ -103,6 +103,7 @@ static glTexture *mission_portrait = NULL; /**< Mission portrait. */
  * player stuff
  */
 static int last_window = 0; /**< Default window. */
+static int commodity_mod = 10;
 
 
 /*
@@ -125,6 +126,8 @@ static void commodity_exchange_open( unsigned int wid );
 static void commodity_update( unsigned int wid, char* str );
 static void commodity_buy( unsigned int wid, char* str );
 static void commodity_sell( unsigned int wid, char* str );
+static int commodity_canBuy( char *name );
+static int commodity_canSell( char *name );
 static int commodity_getMod (void);
 static void commodity_renderMod( double bx, double by, double w, double h, void *data );
 /* spaceport bar */
@@ -181,15 +184,15 @@ static void commodity_exchange_open( unsigned int wid )
    window_dimWindow( wid, &w, &h );
 
    /* buttons */
-   window_addButton( wid, -20, 20,
+   window_addButtonKey( wid, -20, 20,
          LAND_BUTTON_WIDTH, LAND_BUTTON_HEIGHT, "btnCommodityClose",
-         "Takeoff", land_buttonTakeoff );
-   window_addButton( wid, -40-((LAND_BUTTON_WIDTH-20)/2), 20*2 + LAND_BUTTON_HEIGHT,
+         "Take Off", land_buttonTakeoff, SDLK_t );
+   window_addButtonKey( wid, -40-((LAND_BUTTON_WIDTH-20)/2), 20*2 + LAND_BUTTON_HEIGHT,
          (LAND_BUTTON_WIDTH-20)/2, LAND_BUTTON_HEIGHT, "btnCommodityBuy",
-         "Buy", commodity_buy );
-   window_addButton( wid, -20, 20*2 + LAND_BUTTON_HEIGHT,
+         "Buy", commodity_buy, SDLK_b );
+   window_addButtonKey( wid, -20, 20*2 + LAND_BUTTON_HEIGHT,
          (LAND_BUTTON_WIDTH-20)/2, LAND_BUTTON_HEIGHT, "btnCommoditySell",
-         "Sell", commodity_sell );
+         "Sell", commodity_sell, SDLK_s );
 
       /* cust draws the modifier */
    window_addCust( wid, -40-((LAND_BUTTON_WIDTH-20)/2), 60+ 2*LAND_BUTTON_HEIGHT,
@@ -199,7 +202,7 @@ static void commodity_exchange_open( unsigned int wid )
    window_addText( wid, -20, -40, LAND_BUTTON_WIDTH, 60, 0,
          "txtSInfo", &gl_smallFont, &cDConsole,
          "You have:\n"
-         "Market price:\n"
+         "Market Price:\n"
          "\n"
          "Free Space:\n" );
    window_addText( wid, -20, -40, LAND_BUTTON_WIDTH/2, 60, 0,
@@ -238,7 +241,7 @@ static void commodity_update( unsigned int wid, char* str )
 
    comname = toolkit_getList( wid, "lstGoods" );
    if ((comname==NULL) || (strcmp( comname, "None" )==0)) {
-      snprintf( buf, PATH_MAX,
+      nsnprintf( buf, PATH_MAX,
          "NA Tons\n"
          "NA Credits/Ton\n"
          "\n"
@@ -249,7 +252,7 @@ static void commodity_update( unsigned int wid, char* str )
    com = commodity_get( comname );
 
    /* modify text */
-   snprintf( buf, PATH_MAX,
+   nsnprintf( buf, PATH_MAX,
          "%d Tons\n"
          "%"CREDITS_PRI" Credits/Ton\n"
          "\n"
@@ -259,7 +262,61 @@ static void commodity_update( unsigned int wid, char* str )
          pilot_cargoFree(player.p));
    window_modifyText( wid, "txtDInfo", buf );
    window_modifyText( wid, "txtDesc", com->description );
+
+   /* Button enabling/disabling */
+   if (commodity_canBuy( comname ))
+      window_enableButton( wid, "btnCommodityBuy" );
+   else
+      window_disableButtonSoft( wid, "btnCommodityBuy" );
+
+   if (commodity_canSell( comname ))
+      window_enableButton( wid, "btnCommoditySell" );
+   else
+      window_disableButtonSoft( wid, "btnCommoditySell" );
 }
+
+
+static int commodity_canBuy( char *name )
+{
+   int failure;
+   unsigned int q, price;
+   Commodity *com;
+   char buf[ECON_CRED_STRLEN];
+
+   failure = 0;
+   q = commodity_getMod();
+   com = commodity_get( name );
+   price = planet_commodityPrice( land_planet, com ) * q;
+
+   if (!player_hasCredits( price )) {
+      credits2str( buf, price - player.p->credits, 2 );
+      land_errDialogueBuild("You need %s more credits.", buf );
+      failure = 1;
+   }
+   if (pilot_cargoFree(player.p) <= 0) {
+      land_errDialogueBuild("No cargo space available!");
+      failure = 1;
+   }
+
+   return !failure;
+}
+
+
+static int commodity_canSell( char *name )
+{
+   int failure;
+
+   failure = 0;
+
+   if (pilot_cargoOwned( player.p, name ) == 0) {
+      land_errDialogueBuild("You can't sell something you don't have!");
+      failure = 1;
+   }
+
+   return !failure;
+}
+
+
 /**
  * @brief Buys the selected commodity.
  *    @param wid Window buying from.
@@ -279,20 +336,14 @@ static void commodity_buy( unsigned int wid, char* str )
    comname = toolkit_getList( wid, "lstGoods" );
    com   = commodity_get( comname );
    price = planet_commodityPrice( land_planet, com );
-   price *= q;
 
    /* Check stuff. */
-   if (!player_hasCredits( price )) {
-      dialogue_alert( "Insufficient credits!" );
+   if (land_errDialogue( comname, "buyCommodity" ))
       return;
-   }
-   else if (pilot_cargoFree(player.p) <= 0) {
-      dialogue_alert( "Insufficient free space!" );
-      return;
-   }
 
    /* Make the buy. */
    q = pilot_cargoAdd( player.p, com, q );
+   price *= q;
    player_modCredits( -price );
    land_checkAddRefuel();
    commodity_update(wid, NULL);
@@ -326,6 +377,10 @@ static void commodity_sell( unsigned int wid, char* str )
    comname = toolkit_getList( wid, "lstGoods" );
    com   = commodity_get( comname );
    price = planet_commodityPrice( land_planet, com );
+
+   /* Check stuff. */
+   if (land_errDialogue( comname, "sellCommodity" ))
+      return;
 
    /* Remove commodity. */
    q = pilot_cargoRm( player.p, com, q );
@@ -378,7 +433,11 @@ static void commodity_renderMod( double bx, double by, double w, double h, void 
    char buf[8];
 
    q = commodity_getMod();
-   snprintf( buf, 8, "%dx", q );
+   if (q != commodity_mod) {
+      commodity_update( land_getWid(LAND_WINDOW_COMMODITY), NULL );
+      commodity_mod = q;
+   }
+   nsnprintf( buf, 8, "%dx", q );
    gl_printMid( &gl_smallFont, w, bx, by, &cBlack, buf );
 }
 
@@ -394,9 +453,10 @@ int can_swapEquipment( char* shipname )
    Pilot *newship;
    newship = player_getShip(shipname);
 
-   if (strcmp(shipname,player.p->name)==0) /* Already onboard. */
+   if (strcmp(shipname,player.p->name)==0) { /* Already onboard. */
       land_errDialogueBuild( "You're already onboard the %s.", shipname );
       failure = 1;
+   }
    if (strcmp(loc,land_planet->name)) { /* Ship isn't here. */
       dialogue_alert( "You must transport the ship to %s to be able to get in.",
             land_planet->name );
@@ -417,22 +477,30 @@ int can_swapEquipment( char* shipname )
 
 /**
  * @brief Generates error dialogues used by several landing tabs.
- *    @param shipname Ship being acted upon.
+ *    @param name Name of the ship, outfit or commodity being acted upon.
  *    @param type Type of action.
  */
-int land_errDialogue( char* shipname, char* type )
+int land_errDialogue( char* name, char* type )
 {
    errorlist_ptr = NULL;
-   if (strcmp(type,"trade")==0)
-      shipyard_canTrade( shipname );
-   else if (strcmp(type,"buy")==0)
-      shipyard_canBuy( shipname );
+   if (strcmp(type,"tradeShip")==0)
+      shipyard_canTrade( name );
+   else if (strcmp(type,"buyShip")==0)
+      shipyard_canBuy( name );
    else if (strcmp(type,"swapEquipment")==0)
-      can_swapEquipment( shipname );
+      can_swapEquipment( name );
    else if (strcmp(type,"swap")==0)
-      can_swap( shipname );
-   else if (strcmp(type,"sell")==0)
-      can_sell( shipname );
+      can_swap( name );
+   else if (strcmp(type,"sellShip")==0)
+      can_sell( name );
+   else if (strcmp(type,"buyOutfit")==0)
+      outfit_canBuy( name );
+   else if (strcmp(type,"sellOutfit")==0)
+      outfit_canSell( name );
+   else if (strcmp(type,"buyCommodity")==0)
+      commodity_canBuy( name );
+   else if (strcmp(type,"sellCommodity")==0)
+      commodity_canSell( name );
    if (errorlist_ptr != NULL) {
       dialogue_alert( "%s", errorlist );
       return 1;
@@ -457,9 +525,9 @@ void land_errDialogueBuild( const char *fmt, ... )
    }
 
    if (errorlist_ptr == NULL) /* Initialize on first run. */
-      errorappend = snprintf( errorlist, sizeof(errorlist), "%s", errorreason );
+      errorappend = nsnprintf( errorlist, sizeof(errorlist), "%s", errorreason );
    else /* Append newest error to the existing list. */
-      snprintf( &errorlist[errorappend],  sizeof(errorlist)-errorappend, "\n%s", errorreason );
+      nsnprintf( &errorlist[errorappend],  sizeof(errorlist)-errorappend, "\n%s", errorreason );
    errorlist_ptr = errorlist;
 }
 
@@ -496,12 +564,12 @@ static void bar_open( unsigned int wid )
    dh = gl_printHeightRaw( &gl_smallFont, w - iw - 60, land_planet->bar_description );
 
    /* Buttons */
-   window_addButton( wid, -20, 20,
+   window_addButtonKey( wid, -20, 20,
          bw, bh, "btnCloseBar",
-         "Takeoff", land_buttonTakeoff );
-   window_addButton( wid, -20 - bw - 20, 20,
+         "Take Off", land_buttonTakeoff, SDLK_t );
+   window_addButtonKey( wid, -20 - bw - 20, 20,
          bw, bh, "btnApproach",
-         "Approach", bar_approach );
+         "Approach", bar_approach, SDLK_a );
 
    /* Bar description. */
    window_addText( wid, iw + 40, -40,
@@ -533,12 +601,15 @@ static void bar_open( unsigned int wid )
 static int bar_genList( unsigned int wid )
 {
    glTexture **portraits;
-   char **names;
+   char **names, *focused;
    int w, h, iw, ih, bw, bh;
    int n;
 
    /* Get dimensions. */
    bar_getDim( wid, &w, &h, &iw, &ih, &bw, &bh );
+
+   /* Save focus. */
+   focused = window_getFocus(wid);
 
    /* Destroy widget if already exists. */
    if (widget_exists( wid, "iarMissions" ))
@@ -573,6 +644,9 @@ static int bar_genList( unsigned int wid )
 
    /* write the outfits stuff */
    bar_update( wid, NULL );
+
+   /* Restore focus. */
+   window_setFocus( wid, focused );
 
    return 0;
 }
@@ -726,12 +800,12 @@ static void misn_open( unsigned int wid )
    window_onClose( wid, misn_close );
 
    /* buttons */
-   window_addButton( wid, -20, 20,
+   window_addButtonKey( wid, -20, 20,
          LAND_BUTTON_WIDTH,LAND_BUTTON_HEIGHT, "btnCloseMission",
-         "Takeoff", land_buttonTakeoff );
-   window_addButton( wid, -20, 40+LAND_BUTTON_HEIGHT,
+         "Take Off", land_buttonTakeoff, SDLK_t );
+   window_addButtonKey( wid, -20, 40+LAND_BUTTON_HEIGHT,
          LAND_BUTTON_WIDTH,LAND_BUTTON_HEIGHT, "btnAcceptMission",
-         "Accept Mission", misn_accept );
+         "Accept Mission", misn_accept, SDLK_a );
 
    /* text */
    y = -60;
@@ -876,7 +950,7 @@ static void misn_update( unsigned int wid, char* str )
 
    /* Update date stuff. */
    buf = ntime_pretty( 0, 2 );
-   snprintf( txt, sizeof(txt), "%s\n%d Tons", buf, player.p->cargo_free );
+   nsnprintf( txt, sizeof(txt), "%s\n%d Tons", buf, player.p->cargo_free );
    free(buf);
    window_modifyText( wid, "txtDate", txt );
 
@@ -975,20 +1049,20 @@ void land_checkAddRefuel (void)
    if (widget_exists( land_windows[0], "btnRefuel" )) {
       window_enableButton( land_windows[0], "btnRefuel");
       credits2str( cred, player.p->credits, 2 );
-      snprintf( buf, sizeof(buf), "Credits: %s", cred );
+      nsnprintf( buf, sizeof(buf), "Credits: %s", cred );
       window_modifyText( land_windows[0], "txtRefuel", buf );
    }
    /* Else create it. */
    else {
       /* Refuel button. */
       credits2str( cred, refuel_price(), 2 );
-      snprintf( buf, sizeof(buf), "Refuel %s", cred );
+      nsnprintf( buf, sizeof(buf), "Refuel %s", cred );
       window_addButton( land_windows[0], -20, 20 + (LAND_BUTTON_HEIGHT + 20),
             LAND_BUTTON_WIDTH,LAND_BUTTON_HEIGHT, "btnRefuel",
             buf, spaceport_refuel );
       /* Player credits. */
       credits2str( cred, player.p->credits, 2 );
-      snprintf( buf, sizeof(buf), "Credits: %s", cred );
+      nsnprintf( buf, sizeof(buf), "Credits: %s", cred );
       window_addText( land_windows[0], -20, 20 + 2*(LAND_BUTTON_HEIGHT + 20),
             LAND_BUTTON_WIDTH, gl_smallFont.h, 1, "txtRefuel",
             &gl_smallFont, &cBlack, buf );
@@ -1080,7 +1154,7 @@ void land_genWindows( int load, int changetab )
    regen = landed;
 
    /* Create window. */
-   if ((SCREEN_W < 1024) || (SCREEN_H < 768)) {
+   if ((gl_screen.rw < 1024) || (gl_screen.rh < 768)) {
       w = -1; /* Fullscreen. */
       h = -1;
    }
@@ -1253,6 +1327,10 @@ void land( Planet* p, int load )
    /* Create all the windows. */
    land_genWindows( load, 0 );
 
+   /* Hack so that load can run player.takeoff(). */
+   if (load)
+      hooks_run( "load" );
+
    /* Mission forced take off. */
    if (land_takeoff)
       takeoff(0);
@@ -1298,9 +1376,9 @@ static void land_createMainTab( unsigned int wid )
     * buttons
     */
    /* first column */
-   window_addButton( wid, -20, 20,
+   window_addButtonKey( wid, -20, 20,
          LAND_BUTTON_WIDTH, LAND_BUTTON_HEIGHT, "btnTakeoff",
-         "Takeoff", land_buttonTakeoff );
+         "Take Off", land_buttonTakeoff, SDLK_t );
 
    /*
     * Checkboxes.
@@ -1486,6 +1564,7 @@ void takeoff( int delay )
    if (menu_isOpen(MENU_MAIN))
       return;
    events_trigger( EVENT_TRIGGER_ENTER );
+   missions_run( MIS_AVAIL_SPACE, -1, NULL, NULL );
    if (menu_isOpen(MENU_MAIN))
       return;
    player.p->ptimer = PILOT_TAKEOFF_DELAY;

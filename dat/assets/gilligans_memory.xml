@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Gilligan's Memory">
+ <pos>
+  <x>2560.000000</x>
+  <y>-6640.000000</y>
+ </pos>
+ <GFX>
+  <space>M00.png</space>
+  <exterior>station03.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>H</class>
+  <population>3000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <outfits/>
+  </services>
+  <commodities>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Wilibrord Gilligan was a famous explorer of space in the times of the Second Growth. He is responsible for charting many of the currently known jump routes, having a knack for spotting the areas in space that allowed entry into hyperspace for prolonged periods. In those days this was exceptional, since scanning technology was nowhere near as advanced as now. In honor of Gilligan's services to the old Factions, he was granted his own star system and settlement therein. After the Faction Wars, Gilligan's Memory came to fall under Sirian rule, though the Sirii have chosen to uphold Gilligan's memory.</description>
+  <bar>Predictably, the spaceport bar is themed on Wilibrord Gilligan, showing his likeness in several places and displaying a map of his travels through the galaxy on the wall. A popular topic in this bar is the dwarf planets in Gilligan's Memory, particularly speculations on why Gilligan chose to name them the way he did.</bar>
+ </general>
+ <tech>
+  <item>Ion 1</item>
+  <item>Basic Outfits 1</item>
+  <item>Basic Outfits 2</item>
+  <item>Low Tech Upgrades</item>
+ </tech>
+</asset>

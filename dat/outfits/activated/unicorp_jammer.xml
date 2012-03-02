@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Unicorp Jammer">
+ <general>
+  <slot>utility</slot>
+  <mass>2</mass>
+  <price>40000</price>
+  <description>Unlike general purpose scrambler systems, jammers are heavy-duty pieces of hardware used for serious electronic warfare in space. A jammer works by actively interfering with nearby ships' sensor systems, rather than modulating the signature of the ship it's installed in. This is much more effective, but it also uses a lot more power. For this reason, jammer systems are inactive until needed, and must be activated manually.</description>
+  <gfx_store>jammer0</gfx_store>
+  <limit>jammer</limit>
+ </general>
+ <specific type="jammer">
+  <cpu>4</cpu>
+  <range>170</range>
+  <power>35</power>
+  <energy>-15</energy>
+ </specific>
+</outfit>

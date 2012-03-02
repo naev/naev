@@ -33,7 +33,6 @@ void pilot_heatCalc( Pilot *p )
    p->heat_emis   = 0.8; /**< @TODO make it influencable. */
    p->heat_cond   = STEEL_HEAT_CONDUCTIVITY;
    p->heat_C      = STEEL_HEAT_CAPACITY * mass_kg;
-   p->heat_T      = CONST_SPACE_STAR_TEMP; /* Reset temperature. */
 
    /* We'll approximate area for a sphere.
     *
@@ -122,7 +121,7 @@ void pilot_heatAddSlot( Pilot *p, PilotOutfitSlot *o )
    if (o->outfit->type == OUTFIT_TYPE_BOLT)
       hmod = p->stats.fwd_heat;
    else if (o->outfit->type == OUTFIT_TYPE_TURRET_BOLT)
-      hmod = p->stats.fwd_heat;
+      hmod = p->stats.tur_heat;
    else
       hmod = 1.;
    o->heat_T += hmod * outfit_heat(o->outfit) / o->heat_C;

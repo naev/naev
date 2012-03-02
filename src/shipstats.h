@@ -43,6 +43,7 @@ typedef enum ShipStatsType_ {
    /* Stealth. */
    SS_TYPE_D_EW_HIDE,         /**< Electronic warfare hide modifier. */
    SS_TYPE_D_EW_DETECT,       /**< Electronic warfare detection modifier. */
+   SS_TYPE_D_EW_JUMPDETECT,       /**< Electronic warfare jump point detection modifier. */
 
    /* Launchers. */
    SS_TYPE_D_LAUNCH_RATE,     /**< Launch rate for missiles. */  /* TODO */
@@ -82,7 +83,7 @@ typedef enum ShipStatsType_ {
     */
    SS_TYPE_B_INSTANT_JUMP, /**< Do not require brake or chargeup to jump. */
 
-   SS_TYPE_SENTINAL,          /**< Sentinal for end of types. */
+   SS_TYPE_SENTINEL          /**< Sentinel for end of types. */
 } ShipStatsType;
 
 /**
@@ -153,6 +154,7 @@ typedef struct ShipStats_ {
    /* Stealth. */
    double ew_hide;         /**< Electronic warfare hide modifier. */
    double ew_detect;       /**< Electronic warfare detection modifier. */
+   double ew_jumpDetect;       /**< Electronic warfare jump point detection modifier. */
 
    /* Military type. */
    double heat_dissipation; /**< Global ship dissipation. */

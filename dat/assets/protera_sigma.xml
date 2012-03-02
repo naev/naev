@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Protera Sigma">
+ <pos>
+  <x>0.000000</x>
+  <y>0.000000</y>
+ </pos>
+ <GFX>
+  <space>M05.png</space>
+  <exterior>oceanic2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Proteron</faction>
+  <value>300.000000</value>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>1200000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+   <commodity>Medicine</commodity>
+  </commodities>
+  <description>Protera Sigma is the only Proteron colony known to have survived the Incident. One of the earlier Proteron settlements, it has an established shipyard and access to the original blueprints, so Proteron shipbuilding traditions live on.</description>
+  <bar>Rather distinct from traditional Empire bars, the Protera Sigma bar is entirely open and without seats, as the Proteron believe one should stand while eating and drinking. Despite this curiosity, their brews don't stray far from typical Empire faire.</bar>
+ </general>
+ <tech>
+  <item>Basic Outfits 2</item>
+  <item>Low Tech Upgrades</item>
+  <item>High Tech Upgrades 1</item>
+  <item>Missiles 2</item>
+  <item>Proteron Military Ships</item>
+ </tech>
+</asset>

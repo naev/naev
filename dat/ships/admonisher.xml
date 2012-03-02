@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Admonisher">
+ <base_type>Admonisher</base_type>
+ <GFX>admonisher</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Corvette</class>
+ <price>900000</price>
+ <fabricator>Nexus Shipyards</fabricator>
+ <license>Medium Combat Vessel License</license>
+ <description>A very versatile combat ship. Nexus defines the Admonisher as a compromise between the ruggedness of the Pacifier and the agility of the Lancelot. Overall a very solid fighter.</description>
+ <movement>
+  <thrust>170</thrust>
+  <turn>115</turn>
+  <speed>175</speed>
+ </movement>
+ <health>
+  <absorb>25</absorb>
+  <shield>480</shield>
+  <armour>440</armour>
+  <energy>1064</energy>
+  <shield_regen>9</shield_regen>
+  <armour_regen>0</armour_regen>
+  <energy_regen>43.3</energy_regen>
+ </health>
+ <characteristics>
+  <cpu>60</cpu>
+  <crew>13</crew>
+  <mass>320</mass>
+  <fuel>400</fuel>
+  <cargo>45</cargo>
+ </characteristics>
+ <slots>
+  <weapon x="15" y="0" h="2"/>
+  <weapon x="4" y="2" h="-5"/>
+  <weapon x="4" y="-2" h="-5"/>
+  <weapon x="-9" y="-5" h="-9">light</weapon>
+  <weapon x="-9" y="5" h="-9">light</weapon>
+  <utility/>
+  <utility/>
+  <utility>light</utility>
+  <structure/>
+  <structure/>
+  <structure/>
+ </slots>
+ <stats>
+  <fwd_energy>-3</fwd_energy>
+ </stats>
+</ship>

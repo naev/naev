@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Pirate Ancestor">
+ <base_type>Ancestor</base_type>
+ <GFX>ancestor_pirate</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Bomber</class>
+ <price>550000</price>
+ <fabricator>Skull and Bones</fabricator>
+ <description>Ancestors were one of the first ships to be fancied by pirates. The big intimidating wings and good top speeds would usually get ships to surrender without firing a shot. As better ships came out in the market, their use has fallen due to their archaic electronics and targeting systems.</description>
+ <movement>
+  <thrust>180</thrust>
+  <turn>100</turn>
+  <speed>225</speed>
+ </movement>
+ <health>
+  <absorb>8</absorb>
+  <shield>240</shield>
+  <armour>130</armour>
+  <energy>720</energy>
+  <shield_regen>7</shield_regen>
+  <armour_regen>0</armour_regen>
+  <energy_regen>21.7</energy_regen>
+ </health>
+ <characteristics>
+  <cpu>43</cpu>
+  <crew>6</crew>
+  <mass>147</mass>
+  <fuel>400</fuel>
+  <cargo>20</cargo>
+ </characteristics>
+ <slots>
+  <weapon x="8" y="0" h="0"/>
+  <weapon x="8" y="0" h="0"/>
+  <weapon x="-2" y="9" h="-1"/>
+  <weapon x="-2" y="-9" h="-1"/>
+  <utility/>
+  <utility/>
+  <structure/>
+ </slots>
+ <stats>
+  <launch_rate>5</launch_rate>
+  <launch_range>10</launch_range>
+  <launch_lockon>10</launch_lockon>
+ </stats>
+</ship>
+<!-- Corvettes -->

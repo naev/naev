@@ -513,7 +513,7 @@ function render( dt )
    
    --Popup left
    if ptarget ~= nil then
-      ta_detect, ta_fuzzy = pp:inrange(ptarget)
+      ta_detect, ta_scanned = pp:inrange(ptarget)
       
       if ta_detect then
          gfx.renderTex( popup_pilot, popup_left_x + mod_x, popup_left_y ) --Frame
@@ -521,7 +521,7 @@ function render( dt )
          --Target Image
          gfx.renderTex( target_bg, target_image_x + mod_x, target_image_y )
          ta_dist = pp:pos():dist(ptarget:pos())
-         if not ta_fuzzy then
+         if ta_scanned then
             ta_armour, ta_shield = ptarget:health()
             ta_energy = ptarget:energy()
             ta_name = ptarget:name()

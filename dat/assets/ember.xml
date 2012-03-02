@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Ember">
+ <pos>
+  <x>1418.183425</x>
+  <y>-19401.440034</y>
+ </pos>
+ <GFX>
+  <space>moon-A01.png</space>
+  <exterior>traderoom.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>A</class>
+  <population>2000000000</population>
+  <hide>0.500000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+   <commodity>Medicine</commodity>
+  </commodities>
+  <description>Ember, like its primary Forge, is a hot world. Its surface is molten in places, its atmosphere will burn an unprotected human to a crisp in seconds and seismic activity makes the planet a death trap even in a protected environment. Despite all this, the Sirii have established a sizeable industry on Forge's moon. Located on a relatively stable plate, this complex collects the rare materials produced by Ember's volcanic activity and turns them into raw materials for ship building. The business is quite lucrative, supplying a significant portion of all materials for Sirius' ships.</description>
+  <bar>Ember's spaceport bar is frequented by workers from the industrial complex, most of them from the Shaira echelon. They have many tales to tell of the dangers of their job and the brutal nature of Ember's weather. None of them seem to be discontent with their lives, though.</bar>
+ </general>
+ <tech>
+  <item>Ion 1</item>
+  <item>Basic Outfits 1</item>
+  <item>Low Tech Upgrades</item>
+ </tech>
+</asset>

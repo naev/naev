@@ -20,6 +20,13 @@
 #include "player.h"
 #include "space.h"
 #include "gui.h"
+#include "nstring.h"
+
+
+/*
+ * Prototypes.
+ */
+static int pilot_hasOutfitLimit( Pilot *p, const char *limit );
 
 
 /**
@@ -487,6 +494,26 @@ const char* pilot_checkSanity( Pilot *p )
    return NULL;
 }
 
+/**
+ * @brief Checks to see if a pilot has an outfit with a specific outfit type.
+ *
+ *    @param p Pilot to check.
+ *    @param t Outfit type to check.
+ *    @return the amount of outfits of this type the pilot has.
+ */
+static int pilot_hasOutfitLimit( Pilot *p, const char *limit )
+{
+   int i;
+   Outfit *o;
+   for (i = 0; i<p->noutfits; i++) {
+      o = p->outfits[i]->outfit;
+      if (o == NULL)
+         continue;
+      if ((o->limit != NULL) && (strcmp(o->limit,limit)==0))
+         return 1;
+   }
+   return 0;
+}
 
 /**
  * @brief Checks to see if can equip/remove an outfit from a slot.
@@ -512,10 +539,9 @@ const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o, int add )
       if ((outfit_cpu(o) > 0) && (p->cpu < outfit_cpu(o)))
          return "Insufficient CPU";
 
-      /* Can't add more than one afterburner. */
-      if (outfit_isAfterburner(o) &&
-            (p->afterburner != NULL))
-         return "Already have an afterburner";
+      /* Can't add more than one outfit of the same type if the outfit type is limited. */
+      if ((o->limit != NULL) && pilot_hasOutfitLimit( p, o->limit ))
+         return "Already have an outfit of this type installed";
 
       /* Must not drive some things negative. */
       if (outfit_isMod(o)) {
@@ -763,12 +789,12 @@ char* pilot_getOutfits( const Pilot* pilot )
    for (i=1; i<pilot->noutfits; i++) {
       if (pilot->outfits[i]->outfit == NULL)
          continue;
-      p += snprintf( &buf[p], len-p, (p==0) ? "%s" : ", %s",
+      p += nsnprintf( &buf[p], len-p, (p==0) ? "%s" : ", %s",
             pilot->outfits[i]->outfit->name );
    }
 
    if (p==0)
-      p += snprintf( &buf[p], len-p, "None" );
+      p += nsnprintf( &buf[p], len-p, "None" );
 
    return buf;
 }
@@ -787,6 +813,9 @@ void pilot_calcStats( Pilot* pilot )
    double ac, sc, ec, fc; /* temporary health coefficients to set */
    double arel, srel, erel; /* relative health bonuses. */
    ShipStats amount, *s;
+
+   /* @TODO remove old school PILOT_AFTERBURN flags. */
+   pilot_rmFlag( pilot, PILOT_AFTERBURNER );
 
    /*
     * set up the basic stuff
@@ -817,12 +846,26 @@ void pilot_calcStats( Pilot* pilot )
    /* Energy. */
    pilot->energy_max    = pilot->ship->energy;
    pilot->energy_regen  = pilot->ship->energy_regen;
-   /* Stats. */
+   pilot->energy_loss   = 0.; /* Initially no net loss. */
+   /* Stats. */ 
    memcpy( &pilot->stats, &pilot->ship->stats_array, sizeof(ShipStats) );
    memset( &amount, 0, sizeof(ShipStats) );
 
    /* cargo has to be reset */
    pilot_cargoCalc(pilot);
+
+   /* Slot voodoo. */
+   s        = &pilot->stats;
+   /*
+    * Electronic warfare setting base parameters.
+    * @TODO ew_hide and ew_detect should be squared so XML-sourced values are linear.
+    */
+   s->ew_hide           = 1. + (s->ew_hide-1.) * exp( -0.2 * (double)(MAX(amount.ew_hide-1,0)) );
+   s->ew_detect         = 1. + (s->ew_detect-1.) * exp( -0.2 * (double)(MAX(amount.ew_detect-1,0)) );
+   s->ew_jumpDetect     = 1. + (s->ew_jumpDetect-1.) * exp( -0.2 * (double)(MAX(amount.ew_jumpDetect-1,0)) );
+   pilot->ew_base_hide  = s->ew_hide;
+   pilot->ew_detect     = s->ew_detect;
+   pilot->ew_jumpDetect = pow2(s->ew_jumpDetect);
 
    /*
     * now add outfit changes
@@ -848,8 +891,17 @@ void pilot_calcStats( Pilot* pilot )
       /* Add mass. */
       pilot->mass_outfit   += o->mass;
 
+      /* Add ammo mass. */
+      if (outfit_ammo(o) != NULL)
+         if (slot->u.ammo.outfit != NULL)
+            pilot->mass_outfit += slot->u.ammo.quantity * slot->u.ammo.outfit->mass;
+
+      /* Set afterburner. */
+      if (outfit_isAfterburner(o))
+         pilot->afterburner = pilot->outfits[i];
+
       /* Active outfits must be on to affect stuff. */
-      if (slot->active && (slot->state==PILOT_OUTFIT_OFF))
+      if (slot->active && !(slot->state==PILOT_OUTFIT_ON))
          continue;
 
       if (outfit_isMod(o)) { /* Modification */
@@ -876,37 +928,32 @@ void pilot_calcStats( Pilot* pilot )
          pilot->cargo_free    += o->u.mod.cargo;
          pilot->mass_outfit   += o->u.mod.mass_rel * pilot->ship->mass;
          pilot->crew          += o->u.mod.crew_rel * pilot->ship->crew;
+         pilot->ew_base_hide  += o->u.mod.hide_rel * pilot->ew_base_hide;
          /*
           * Stats.
           */
-         ss_statsModFromList( &pilot->stats, o->u.mod.stats, &amount ); /* TODO Handle q or remove it? */
+         ss_statsModFromList( &pilot->stats, o->u.mod.stats, &amount );
+     
       }
-      else if (outfit_isAfterburner(o)) /* Afterburner */
-         pilot->afterburner = pilot->outfits[i]; /* Set afterburner */
+      else if (outfit_isAfterburner(o)) { /* Afterburner */
+         pilot_setFlag( pilot, PILOT_AFTERBURNER ); /* We use old school flags for this still... */
+         pilot->energy_loss += pilot->afterburner->outfit->u.afb.energy; /* energy loss */
+         pilot->solid->speed_max = pilot->speed +
+               pilot->speed * pilot->afterburner->outfit->u.afb.speed *
+               MIN( 1., pilot->afterburner->outfit->u.afb.mass_limit/pilot->solid->mass);
+      }
       else if (outfit_isJammer(o)) { /* Jammer */
-         pilot->jamming           = 1;
-         pilot->energy_regen     -= o->u.jam.energy;
-      }
-
-      /* Add ammo mass. */
-      if (outfit_ammo(o) != NULL) {
-         if (slot->u.ammo.outfit != NULL)
-            pilot->mass_outfit += slot->u.ammo.quantity * slot->u.ammo.outfit->mass;
+         pilot->jamming        = 1;
+         pilot->energy_loss   += o->u.jam.energy;
       }
    }
+
+   if (!pilot_isFlag( pilot, PILOT_AFTERBURNER ))
+      pilot->solid->speed_max = pilot->speed;
 
    /* Set final energy tau. */
    pilot->energy_tau = pilot->energy_max / pilot->energy_regen;
 
-   /* Slot voodoo. */
-   s        = &pilot->stats;
-   /*
-    * Electronic warfare setting base parameters.
-    */
-   s->ew_hide           = 1. + (s->ew_hide-1.) * exp( -0.2 * (double)(MAX(amount.ew_hide-1,0)) );
-   s->ew_detect         = 1. + (s->ew_detect-1.) * exp( -0.2 * (double)(MAX(amount.ew_detect-1,0)) );
-   pilot->ew_base_hide  = s->ew_hide;
-   pilot->ew_detect     = s->ew_detect;
    /* Fire rate:
     *  amount = p * exp( -0.15 * (n-1) )
     *  1x 15% -> 15%
@@ -936,9 +983,6 @@ void pilot_calcStats( Pilot* pilot )
    pilot->energy = ec * pilot->energy_max;
    pilot->fuel   = fc * pilot->fuel_max;
 
-   /* Calculate mass. */
-   pilot->solid->mass = pilot->ship->mass + pilot->stats.cargo_inertia*pilot->mass_cargo + pilot->mass_outfit;
-
    /* Calculate the heat. */
    pilot_heatCalc( pilot );
 
@@ -957,8 +1001,10 @@ void pilot_calcStats( Pilot* pilot )
  */
 void pilot_updateMass( Pilot *pilot )
 {
-   pilot->turn = pilot->turn_base * pilot->ship->mass / pilot->solid->mass;
+   /* Calculate mass. */
+   pilot->solid->mass = pilot->ship->mass + pilot->stats.cargo_inertia*pilot->mass_cargo + pilot->mass_outfit;
 
+   pilot->turn = pilot->turn_base * pilot->ship->mass / pilot->solid->mass;
    /* Need to recalculate electronic warfare mass change. */
    pilot_ewUpdateStatic( pilot );
 }
