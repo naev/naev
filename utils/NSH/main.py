@@ -202,7 +202,7 @@ class fashion:
             mySlot = item.findtext('general/slot')
             if mySlot is None:
                 mySlot = "NA"
-            if not self.slots.haskey(mySlots):
+            if not self.slots.haskey(mySlot):
                 self.slots.update({mySlot: []})
             self.slots[mySlot].append(self._parseOutfit(item.getparent()))
 
