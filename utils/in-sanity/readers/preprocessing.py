@@ -91,15 +91,15 @@ class tech(items):
         config['xml_file'] = 'tech.xml'
         config['item'] = 'tech'
         items.__init__(self, **config)
-        self.assets = assets(**config)
-
-        print('techs validation ...')
-        self.assets.validateTechs(self.itemNames)
+        self.assets = assets(techItem=self.findItem, **config)
 
         self.techItems = list()
         for item in self.xmlData.findall('tech/item'):
             if item.text not in self.techItems:
                 self.techItems.append(item.text)
+
+        print('techs validation ...')
+        self.assets.validateTechs(self.itemNames)
 
     def findItem(self, name):
         if name in self.techItems or self._unidiff.findTech(name):
@@ -108,11 +108,12 @@ class tech(items):
             return False
 
 class assets(items):
-    def __init__(self, **config):
+    def __init__(self, techItem, **config):
         config['xml_file'] = 'assets/*.xml'
         config['item'] = 'asset'
         items.__init__(self, **config)
         self.ssys = ssys(**config)
+        self.techItem = techItem
 
         print('assets validation ...')
         self.ssys.validateAssets(self.itemNames)
@@ -122,9 +123,12 @@ class assets(items):
         for techs in self.xmlData:
             techs = techs.getroot()
             for tech in techs.findall('tech/item'):
-                techList.append(tech.text)
+                if tech.text not in techList:
+                    techList.append(tech.text)
 
         for tech in techNames:
+            if self.techItem(tech):
+                continue
             if tech not in techList and not self._unidiff.findTech(tech):
                 print("Warning: tech ''{0}`` not present in the assets xml".format(tech))
 
