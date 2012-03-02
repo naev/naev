@@ -161,7 +161,11 @@ class fashion:
     # of them are unique. Here is a list: map, gui, license, ammo, modification.
     def __init__(self, xmlPath):
         if self.__xmlData is None:
-            self.__xmlData = etree.parse(path.join(xmlPath, "outfit.xml"))
+            self.__xmlData = dict()
+            __xmlData = glob.glob(path.join(xmlPath, 'outfits/*.xml'))
+            for item in __xmlData:
+                basename = path.basename(item)
+                self.__xmlData[basename] = etree.parse(item)
 
         self.slots={}
 
@@ -194,13 +198,11 @@ class fashion:
                 }
 
     def groupBySlots(self):
-        uglyMess = self.__xmlData.findall('outfit/general')
-        for item in uglyMess:
-            if item.find('slot') is not None:
-                mySlot = item.findtext('slot')
-            else:
-                mySlot = 'NA'
-            if not self.slots.has_key(mySlot):
+        for item in self.__xmlData.itervalues():
+            mySlot = item.findtext('general/slot')
+            if mySlot is None:
+                mySlot = "NA"
+            if not self.slots.haskey(mySlots):
                 self.slots.update({mySlot: []})
             self.slots[mySlot].append(self._parseOutfit(item.getparent()))
 
