@@ -6,6 +6,7 @@
 
 from os import path
 from jinja2 import Environment, FileSystemLoader
+import glob
 try:
     from lxml import etree
 except ImportError:
@@ -83,12 +84,12 @@ class harvester:
 
     def __init__(self, xmlPath):
         if self.__xmlData is None:
-            self.__xmlData = etree.parse(path.join(xmlPath, "ship.xml"))
+            self.__xmlData = glob.glob(path.join(xmlPath, "ships/*.xml"))
 
-        data = self.__xmlData.findall('ship')
         self.ships = dict()
         self.shipSortBy = dict()
-        for ship in data:
+        for ship in self.__xmlData:
+            ship = etree.parse(ship).getroot()
             shipName = ship.get('name')
             shipClass = ship.find('class').text
 
@@ -106,7 +107,7 @@ class harvester:
                         self.shipSortBy[details.tag].update({details.text:[]})
 
                 # my, my ... You're quite empty. Let's go for the children.
-                if '\n   ' in details.text:
+                if '\n  ' in details.text:
                     compiled = dict()
                     for subDetails in details.iterchildren():
                         # we're talking about slots
@@ -231,6 +232,7 @@ if __name__ == "__main__":
 
     if len(arguments) != 1:
         parser.error("A wise man would know where to store the generated files.")
+    currentPath = path.abspath(path.curdir)
     storagePath = path.abspath(path.normpath(arguments[0]))
     tplPath = path.abspath(path.normpath(cfg.templates))
     naevPath = path.abspath(path.normpath("../../dat/"))
@@ -275,3 +277,17 @@ if __name__ == "__main__":
                 )
             myTpl.stream(slotName=slotName, outfitData=outfitDetails,
                     date=date).dump(myStorage)
+
+    from shutil import copy
+    cssFiles = glob.glob(currentPath+'/*.css')
+    f = None
+    while len(cssFiles) > 0:
+        if f is None:
+            print('Copying css files ...')
+        f = cssFiles.pop()
+        bname = path.basename(f)
+        if not path.exists(storagePath + '/' + bname):
+            copy(f, storagePath)
+        else:
+            pass
+
