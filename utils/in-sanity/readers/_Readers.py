@@ -4,25 +4,12 @@
 # Trying to get an etree.
 try:
     from lxml import etree as ET
-    print('Running with lxml.etree')
 except ImportError:
     try:
-        import xml.etree.cElementTree as ET
-        print("running with cElementTree on Python 2.5+")
+        import xml.etree.ElementTree as ET
     except ImportError:
-        try:
-            import xml.etree.ElementTree as ET
-            print("running with ElementTree on Python 2.5+")
-        except ImportError:
-            try:
-                import cElementTree as ET
-                print("running with cElementTree")
-            except ImportError:
-                try:
-                    import elementtree.ElementTree as ET
-                    print("running with ElementTree")
-                except ImportError:
-                    print("Failed to import ElementTree from any known place")
+        print("Failed to import ElementTree from any known place")
+        exit()
 
 
 class readers:
@@ -33,7 +20,7 @@ class readers:
     _verbose=None
     xmlData=None
 
-    def __init__(self, xmlFile, verbose=False):
+    def __init__(self, xmlFiles, verbose=False):
         """
         Set verbosity level and load xml file.
         The file must be valid.
@@ -42,7 +29,12 @@ class readers:
         self.nameList=list()
 
         if self.xmlData is None:
-            self.xmlData = ET.parse( xmlFile )
+            if type(xmlFiles) is not type(list()):
+                self.xmlData = ET.parse(xmlFiles)
+                return
+            self.xmlData = list()
+            for xfile in xmlFiles:
+                self.xmlData.append(ET.parse( xfile ))
 
     def get_unused(self):
         """
