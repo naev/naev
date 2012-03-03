@@ -86,9 +86,10 @@ void window_addInput( const unsigned int wid,
 static void inp_render( Widget* inp, double bx, double by )
 {
    double x, y, ty;
-   char buf[ 4096 ];
-   int w, m, p, len;
+   char buf[ 512 ], *str;
+   int w, m, p;
    int lines;
+   char c;
 
    x = bx + inp->x;
    y = by + inp->y;
@@ -110,32 +111,38 @@ static void inp_render( Widget* inp, double bx, double by )
 
    /* Draw cursor. */
    if (wgt_isFlag( inp, WGT_FLAG_FOCUSED )) {
-      m = MIN( inp->dat.inp.pos - inp->dat.inp.view, PATH_MAX-1 );
-      strncpy( buf, &inp->dat.inp.input[ inp->dat.inp.view ], m );
-      buf[ m ] = '\0';
-
-
       if (inp->dat.inp.oneline) {
+         m = MIN( inp->dat.inp.pos - inp->dat.inp.view, (int)sizeof(buf)-1 );
+         strncpy( buf, &inp->dat.inp.input[ inp->dat.inp.view ], m );
+         buf[ m ] = '\0';
          w = gl_printWidthRaw( inp->dat.inp.font, buf );
          toolkit_drawRect( x + 5. + w, y + (inp->h - inp->dat.inp.font->h - 4.)/2.,
                1., inp->dat.inp.font->h + 4., &cBlack, &cBlack );
       }
       else {
          /* Wrap the cursor around if the text is longer than the width of the widget. */
+         str   = inp->dat.inp.input;
+         w     = 0;
          p     = 0;
          lines = 0;
-         len   = strlen(buf);
          do {
-            w      = gl_printWidthForText( inp->dat.inp.font, &buf[p], inp->w-10 );
-            lines += 1;
-            if (buf[p+w] == '\0')
-               break;
             p     += w;
-            if ((buf[p] == '\n') || (buf[p] == ' '))
-               p  += 1;
-         } while (1);
+            if ((p != 0) && ((str[p] == '\n') || (str[p] == ' ')))
+               p++;
+            w      = gl_printWidthForText( inp->dat.inp.font, &str[p], inp->w-10 );
+            lines += 1;
+            if (str[p+w] == '\0')
+               break;
+         } while (p+w < inp->dat.inp.pos);
 
-         w = gl_printWidthRaw( inp->dat.inp.font, &buf[p] );
+         /* Hack because we have to avoid wraps when counting lines, so here we
+          * handle the last line partially. */
+         c = str[ inp->dat.inp.pos ];
+         str[ inp->dat.inp.pos ] = '\0';
+         w = gl_printWidthRaw( inp->dat.inp.font, &str[p] );
+         str[ inp->dat.inp.pos ] = c;
+
+         /* Get the actual width now. */
          toolkit_drawRect( x + 5. + w, y + inp->h - lines * (inp->dat.inp.font->h + 5) - 3.,
                1., inp->dat.inp.font->h + 4., &cBlack, &cBlack );
       }
