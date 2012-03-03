@@ -86,9 +86,8 @@ void window_addInput( const unsigned int wid,
 static void inp_render( Widget* inp, double bx, double by )
 {
    double x, y, ty;
-   char buf[ PATH_MAX ];
-   int w;
-   int m;
+   char buf[ 4096 ];
+   int w, m, p, len;
    int lines;
 
    x = bx + inp->x;
@@ -114,20 +113,29 @@ static void inp_render( Widget* inp, double bx, double by )
       m = MIN( inp->dat.inp.pos - inp->dat.inp.view, PATH_MAX-1 );
       strncpy( buf, &inp->dat.inp.input[ inp->dat.inp.view ], m );
       buf[ m ] = '\0';
-      w = gl_printWidthRaw( inp->dat.inp.font, buf );
-      if (inp->dat.inp.oneline)
+
+
+      if (inp->dat.inp.oneline) {
+         w = gl_printWidthRaw( inp->dat.inp.font, buf );
          toolkit_drawRect( x + 5. + w, y + (inp->h - inp->dat.inp.font->h - 4.)/2.,
                1., inp->dat.inp.font->h + 4., &cBlack, &cBlack );
+      }
       else {
          /* Wrap the cursor around if the text is longer than the width of the widget. */
+         p     = 0;
+         lines = 0;
+         len   = strlen(buf);
+         do {
+            w      = gl_printWidthForText( inp->dat.inp.font, &buf[p], inp->w-10 );
+            lines += 1;
+            if (buf[p+w] == '\0')
+               break;
+            p     += w;
+            if ((buf[p] == '\n') || (buf[p] == ' '))
+               p  += 1;
+         } while (1);
 
-         /* The following doesn't work right because gl_printTextRaw wraps the text well before the end of the box.
-          * What's needed is a function that, given a font, a width and a number, returns the line breaks needed to fit the text in a box of that width.
-          * Also a function that returns the actual w for the character at that position, after wrapping.
-          */
-         lines = 1 + (int) (w / (inp->w - 5));
-         w = w % (inp->w - 5);
-
+         w = gl_printWidthRaw( inp->dat.inp.font, &buf[p] );
          toolkit_drawRect( x + 5. + w, y + inp->h - lines * (inp->dat.inp.font->h + 5) - 3.,
                1., inp->dat.inp.font->h + 4., &cBlack, &cBlack );
       }
