@@ -1399,11 +1399,20 @@ static void sysedit_planetDescReturn( unsigned int wid, char *unused )
 
    p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
 
-   mydesc = window_getInput( wid, "txtDescription" );
+   mydesc    = window_getInput( wid, "txtDescription" );
    mybardesc = window_getInput( wid, "txtBarDescription" );
 
-   p->description = strdup( mydesc );
-   p->bar_description = strdup( mybardesc );
+   if (p->description)
+      free(p->description);
+   if (p->bar_description)
+      free(p->bar_description);
+   p->description     = NULL;
+   p->bar_description = NULL;
+
+   if (mydesc != NULL)
+      p->description     = strdup( mydesc );
+   if (mybardesc != NULL)
+      p->bar_description = strdup( mybardesc );
 
    window_close( wid, unused );
 }
