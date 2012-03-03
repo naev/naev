@@ -618,6 +618,15 @@
    <location>Bar</location>
   </avail>
  </mission>
+ <mission name="Sirius Pilgrimage Transport">
+  <lua>sirius/srs_ferry</lua>
+  <avail>
+   <chance>266</chance>
+   <cond>faction.playerStanding("Sirius") > 5</cond>
+   <location>Computer</location>
+   <faction>Sirius</faction>
+  </avail>
+ </mission>
  <mission name="Sirian Bounty">
   <lua>sirius/achack/achack01</lua>
   <flags>
