@@ -241,12 +241,13 @@ static int inp_addKey( Widget* inp, SDLKey key )
 static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
 {
    (void) mod;
-   int n;
+   int n, curpos, prevpos, curchars, prevchars, charsfromleft;
+   char* str;
 
    /*
     * Handle arrow keys.
     */
-    if ((key == SDLK_LEFT) || (key == SDLK_RIGHT)) {
+    if ((key == SDLK_LEFT) || (key == SDLK_RIGHT) || (key == SDLK_UP) || (key == SDLK_DOWN)) {
       /* Move pointer. */
       if (key == SDLK_LEFT) {
          if (inp->dat.inp.pos > 0)
@@ -258,9 +259,55 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
             inp->dat.inp.pos += 1;
       }
       /* TODO: up and down keys. */
-      else if (inp->dat.inp.oneline && key == SDLK_UP) {
+      else if (!inp->dat.inp.oneline && key == SDLK_UP) {
+         str   = inp->dat.inp.input;
+         curpos = 0;
+         prevpos = 0;
+         curchars = 0;
+         /* Keep not-printing the lines until the current pos is smaller than the virtual pos.
+          * At this point, we've arrived at the line the cursor is on. */
+         while (inp->dat.inp.pos > curpos) {
+            prevpos = curpos;
+            prevchars = curchars;
+            curchars = gl_printWidthForText( inp->dat.inp.font, &str[curpos], inp->w-10 );
+            curpos += curchars;
+         }
+         
+         /* Set the pos to the same number of characters from the left hand edge, on the previous line.
+          * This is more or less equal to going up a line. */
+         charsfromleft = inp->dat.inp.pos - prevpos;
+         inp->dat.inp.pos = prevpos - prevchars;
+         inp->dat.inp.pos += charsfromleft;
       }
-      else if (inp->dat.inp.oneline && key == SDLK_DOWN) {
+      else if (!inp->dat.inp.oneline && key == SDLK_DOWN) {
+         str   = inp->dat.inp.input;
+         curpos = 0;
+         prevpos = 0;
+         curchars = 0;
+         /* Keep not-printing the lines until the current pos is smaller than the virtual pos.
+          * At this point, we've arrived at the line the cursor is on. */
+         while (inp->dat.inp.pos > curpos) {
+            prevpos = curpos;
+            prevchars = curchars;
+            curchars = gl_printWidthForText( inp->dat.inp.font, &str[curpos], inp->w-10 );
+            curpos += curchars;
+         }
+         
+         /*Take note how many chars from the left we have.*/
+         charsfromleft = inp->dat.inp.pos - prevpos;
+         
+         /* Now not-print one more line. This is the line we want to move the cursor to. */
+         prevpos = curpos;
+         prevchars = curchars;
+         curchars = gl_printWidthForText( inp->dat.inp.font, &str[curpos], inp->w-10 );
+         curpos += curchars;
+         
+         /* Set the pos to the same number of characters from the left hand edge, on this line.
+          * This is more or less equal to going down a line.
+          * But make sure never to go past the end of the string. */
+         inp->dat.inp.pos = prevpos;
+         inp->dat.inp.pos += charsfromleft;
+         inp->dat.inp.pos = MIN(inp->dat.inp.pos, (int)strlen(inp->dat.inp.input));
       }
 
       return 1;
@@ -305,7 +352,7 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
 
    /* end -> move to end */
    if (key == SDLK_END) {
-      inp->dat.inp.pos = inp->dat.inp.max-1;
+      inp->dat.inp.pos = strlen(inp->dat.inp.input);
    }
 
    /* in limits. */
