@@ -258,7 +258,6 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
                (inp->dat.inp.input[inp->dat.inp.pos] != '\0'))
             inp->dat.inp.pos += 1;
       }
-      /* TODO: up and down keys. */
       else if (!inp->dat.inp.oneline && key == SDLK_UP) {
          str   = inp->dat.inp.input;
          curpos = 0;
