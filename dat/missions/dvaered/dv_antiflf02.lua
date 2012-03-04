@@ -75,7 +75,7 @@ else -- default english
     
     misn_desc = "You have been recruited to act as a red herring in a military operation of Dvaered design. Your chief purpose is to goad the FLF into showing themselves, then disabling and boarding one of their ships. You will fail this mission if you disable or destroy any Dvaered ship, or if you leave the system before the operation is complete."
     
-    comm_msg["enter"] = "Here come the FLF! All units, disable the terrorist ships!"
+    comm_msg["enter"] = "Here come the FLF! All units, switch to EMPs and disable the terrorist ships!"
     comm_msg["victory"] = "All targets neutralized. Download the flight log and let's get out of here!"
 end
 
@@ -101,7 +101,7 @@ function accept()
         misn.osdCreate(misn_title, osd_desc)
         misn.setDesc(misn_desc)
         misn.setTitle(misn_title)
-        misn.markerAdd( system.get(destsysname), "low" )
+        marker = misn.markerAdd( system.get(destsysname), "low" )
         
         missionstarted = false
         DVdisablefail = true
@@ -171,11 +171,13 @@ end
 function pollHealth()
     shieldDV = 0
     parmor, pshield = player.pilot():health()
+    local maxshieldDV = 0
     for i, j in ipairs(fleetDV) do
+        maxshield = maxshield + j:stats()["shield"]
         armor, shield = j:health()
         shieldDV = shieldDV + shield
     end
-    if parmor <= 70 and pshield <= 10 and shieldDV <= 250 then
+    if parmor <= 60 and pshield <= 10 and shieldDV <= (maxshieldDV - 50) then
         spawnFLF()
     else
         hook.timer(500, "pollHealth")
@@ -190,11 +192,14 @@ function spawnFLF()
         j:setFriendly()
         j:setHilight(false)
         j:changeAI("dvaered_norun")
+        j:setInvincPlayer()
+        -- Re-outfit the ships to use disable weapons. Kind of ugly, should probably be handled via AI orders in the future.
+        j:addOutfit("EMP Grenade Launcher", 3)
     end
     angle = rnd.rnd() * 2 * math.pi
     dist = 800
     vecFLF = vec2.new(math.cos(angle) * dist, math.sin(angle) * dist)
-    fleetFLF = addShips( "FLF Vendetta", "flf_norun", player.pilot():pos() + vecFLF, 6 )
+    fleetFLF = addShips( "FLF Vendetta", "flf_norun", player.pilot():pos() + vecFLF, 4 )
     flfactive = #fleetFLF
     fleetDV[1]:comm(comm_msg["enter"])
     
@@ -243,6 +248,7 @@ function boardFLF()
     missionstarted = false
     logsfound = true
     player.unboard()
+    misn.markerRm(marker)
     for i, j in ipairs(fleetDV) do
         if j:exists() then
             j:changeAI("flee") -- Make them jump out (if they're not dead!)
