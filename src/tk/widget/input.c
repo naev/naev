@@ -12,9 +12,10 @@
 #include "tk/toolkit_priv.h"
 
 #include <stdlib.h>
-#include "nstring.h"
+#include <assert.h>
 
 #include "nstd.h"
+#include "nstring.h"
 
 
 static void inp_render( Widget* inp, double bx, double by );
@@ -85,9 +86,10 @@ void window_addInput( const unsigned int wid,
 static void inp_render( Widget* inp, double bx, double by )
 {
    double x, y, ty;
-   char buf[ PATH_MAX ];
-   int w;
-   int m;
+   char buf[ 512 ], *str;
+   int w, m, p;
+   int lines;
+   char c;
 
    x = bx + inp->x;
    y = by + inp->y;
@@ -95,12 +97,12 @@ static void inp_render( Widget* inp, double bx, double by )
    /* main background */
    toolkit_drawRect( x, y, inp->w, inp->h, &cWhite, NULL );
 
-   /* center vertically */
    if (inp->dat.inp.oneline)
+      /* center vertically */
       ty = y - (inp->h - gl_smallFont.h)/2.;
    else {
-      WARN("Multi-line input widgets unsupported atm.");
-      return;
+      /* Align top-left. */
+      ty = y - gl_smallFont.h / 2.;
    }
 
    /* Draw text. */
@@ -109,12 +111,41 @@ static void inp_render( Widget* inp, double bx, double by )
 
    /* Draw cursor. */
    if (wgt_isFlag( inp, WGT_FLAG_FOCUSED )) {
-      m = MIN( inp->dat.inp.pos - inp->dat.inp.view, PATH_MAX-1 );
-      strncpy( buf, &inp->dat.inp.input[ inp->dat.inp.view ], m );
-      buf[ m ] = '\0';
-      w = gl_printWidthRaw( inp->dat.inp.font, buf );
-      toolkit_drawRect( x+5.+w, y + (inp->h - inp->dat.inp.font->h - 4.)/2.,
-            1., inp->dat.inp.font->h + 4., &cBlack, &cBlack );
+      if (inp->dat.inp.oneline) {
+         m = MIN( inp->dat.inp.pos - inp->dat.inp.view, (int)sizeof(buf)-1 );
+         strncpy( buf, &inp->dat.inp.input[ inp->dat.inp.view ], m );
+         buf[ m ] = '\0';
+         w = gl_printWidthRaw( inp->dat.inp.font, buf );
+         toolkit_drawRect( x + 5. + w, y + (inp->h - inp->dat.inp.font->h - 4.)/2.,
+               1., inp->dat.inp.font->h + 4., &cBlack, &cBlack );
+      }
+      else {
+         /* Wrap the cursor around if the text is longer than the width of the widget. */
+         str   = inp->dat.inp.input;
+         w     = 0;
+         p     = 0;
+         lines = 0;
+         do {
+            p     += w;
+            if ((p != 0) && ((str[p] == '\n') || (str[p] == ' ')))
+               p++;
+            w      = gl_printWidthForText( inp->dat.inp.font, &str[p], inp->w-10 );
+            lines += 1;
+            if (str[p+w] == '\0')
+               break;
+         } while (p+w < inp->dat.inp.pos);
+
+         /* Hack because we have to avoid wraps when counting lines, so here we
+          * handle the last line partially. */
+         c = str[ inp->dat.inp.pos ];
+         str[ inp->dat.inp.pos ] = '\0';
+         w = gl_printWidthRaw( inp->dat.inp.font, &str[p] );
+         str[ inp->dat.inp.pos ] = c;
+
+         /* Get the actual width now. */
+         toolkit_drawRect( x + 5. + w, y + inp->h - lines * (inp->dat.inp.font->h + 5) - 3.,
+               1., inp->dat.inp.font->h + 4., &cBlack, &cBlack );
+      }
    }
 
    /* inner outline */
@@ -172,30 +203,30 @@ static int inp_addKey( Widget* inp, SDLKey key )
    /* No sense to use SDLKey below this. */
    c = key;
 
+   /* Make sure it's not full. */
+   if (strlen(inp->dat.inp.input) >= (size_t)inp->dat.inp.max-1)
+      return 0;
+
+   /* Check to see if is in filter to ignore. */
+   if (inp->dat.inp.filter != NULL)
+      for (i=0; inp->dat.inp.filter[i] != '\0'; i++)
+         if (inp->dat.inp.filter[i] == c)
+            return 0; /* Ignored. */
+
+   /* Add key. */
+   memmove( &inp->dat.inp.input[ inp->dat.inp.pos+1 ],
+         &inp->dat.inp.input[ inp->dat.inp.pos ],
+         inp->dat.inp.max - inp->dat.inp.pos - 2 );
+   inp->dat.inp.input[ inp->dat.inp.pos++ ] = c;
+
    if (inp->dat.inp.oneline) {
-
-      /* Make sure it's not full. */
-      if (strlen(inp->dat.inp.input) >= (size_t)inp->dat.inp.max-1)
-         return 0;
-
-      /* Check to see if is in filter to ignore. */
-      if (inp->dat.inp.filter != NULL)
-         for (i=0; inp->dat.inp.filter[i] != '\0'; i++)
-            if (inp->dat.inp.filter[i] == c)
-               return 0; /* Ignored. */
-
-      /* Add key. */
-      memmove( &inp->dat.inp.input[ inp->dat.inp.pos+1 ],
-            &inp->dat.inp.input[ inp->dat.inp.pos ],
-            inp->dat.inp.max - inp->dat.inp.pos - 2 );
-      inp->dat.inp.input[ inp->dat.inp.pos++ ] = c;
-
+      /* We can't wrap the text, so we need to scroll it out. */
       n = gl_printWidthRaw( inp->dat.inp.font, inp->dat.inp.input+inp->dat.inp.view );
       if (n+10 > inp->w)
          inp->dat.inp.view++;
-      return 1;
    }
-   return 0;
+
+   return 1;
 }
 
 
@@ -226,40 +257,52 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
                (inp->dat.inp.input[inp->dat.inp.pos] != '\0'))
             inp->dat.inp.pos += 1;
       }
+      /* TODO: up and down keys. */
+      else if (inp->dat.inp.oneline && key == SDLK_UP) {
+      }
+      else if (inp->dat.inp.oneline && key == SDLK_DOWN) {
+      }
 
       return 1;
    }
 
    /* Only catch some keys. */
-   if ((key != SDLK_BACKSPACE) && (key != SDLK_RETURN) && (key != SDLK_KP_ENTER))
+   if ((key != SDLK_BACKSPACE) && (key != SDLK_DELETE) && (key != SDLK_RETURN) && (key != SDLK_KP_ENTER))
       return 0;
 
-   if (inp->dat.inp.oneline) {
+   /* backspace -> delete text */
+   if ((key == SDLK_BACKSPACE) && (inp->dat.inp.pos > 0)) {
+      inp->dat.inp.pos--;
+      memmove( &inp->dat.inp.input[ inp->dat.inp.pos ],
+            &inp->dat.inp.input[ inp->dat.inp.pos+1 ],
+            sizeof(char)*(inp->dat.inp.max - inp->dat.inp.pos - 1) );
+      inp->dat.inp.input[ inp->dat.inp.max - 1 ] = '\0';
 
-      /* backspace -> delete text */
-      if ((key == SDLK_BACKSPACE) && (inp->dat.inp.pos > 0)) {
-         inp->dat.inp.pos--;
-         memmove( &inp->dat.inp.input[ inp->dat.inp.pos ],
-               &inp->dat.inp.input[ inp->dat.inp.pos+1 ],
-               sizeof(char)*(inp->dat.inp.max - inp->dat.inp.pos - 1) );
-         inp->dat.inp.input[ inp->dat.inp.max - 1 ] = '\0';
-
-         if (inp->dat.inp.view > 0) {
-            n = gl_printWidthRaw( &gl_smallFont,
-                  inp->dat.inp.input + inp->dat.inp.view - 1 );
-            if (n+10 < inp->w)
-               inp->dat.inp.view--;
-         }
-         return 1;
+      if (inp->dat.inp.oneline && inp->dat.inp.view > 0) {
+         n = gl_printWidthRaw( &gl_smallFont,
+               inp->dat.inp.input + inp->dat.inp.view - 1 );
+         if (n+10 < inp->w)
+            inp->dat.inp.view--;
       }
+      return 1;
+   }
 
-      /* in limits. */
-      else if ((inp->dat.inp.pos < inp->dat.inp.max-1)) {
+   /* delete -> delete text */
+   if (key == SDLK_DELETE) {
+      memmove( &inp->dat.inp.input[ inp->dat.inp.pos ],
+            &inp->dat.inp.input[ inp->dat.inp.pos+1 ],
+            sizeof(char)*(inp->dat.inp.max - inp->dat.inp.pos - 1) );
+      inp->dat.inp.input[ inp->dat.inp.max - 1 ] = '\0';
 
-         if ((key==SDLK_RETURN || key==SDLK_KP_ENTER) && !inp->dat.inp.oneline) {
-            inp->dat.inp.input[ inp->dat.inp.pos++ ] = '\n';
-            return 1;
-         }
+      return 1;
+   }
+
+   /* in limits. */
+   else if ((inp->dat.inp.pos < inp->dat.inp.max-1)) {
+
+      if ((key==SDLK_RETURN || key==SDLK_KP_ENTER) && !inp->dat.inp.oneline) {
+         inp->dat.inp.input[ inp->dat.inp.pos++ ] = '\n';
+         return 1;
       }
    }
    return 0;
