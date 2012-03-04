@@ -193,7 +193,7 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
          break;
 
       case WEAPSET_TYPE_ACTIVE:
-         /* The behaviour here is more complex. WHat we do is consider a group
+         /* The behaviour here is more complex. What we do is consider a group
           * to be entirely off if not all outfits are either on or cooling down.
           * In the case it's deemed to be off, all outfits that are off get turned
           * on, otherwise all outfits that are on are turrned to cooling down. */
