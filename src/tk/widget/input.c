@@ -280,9 +280,9 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
       }
       else if (!inp->dat.inp.oneline && key == SDLK_DOWN) {
          str   = inp->dat.inp.input;
-         curpos = 0;
+         curpos = -1;
          prevpos = 0;
-         curchars = 0;
+         curchars = 1;
          /* Keep not-printing the lines until the current pos is smaller than the virtual pos.
           * At this point, we've arrived at the line the cursor is on. */
          while (inp->dat.inp.pos > curpos) {
