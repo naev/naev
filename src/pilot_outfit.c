@@ -897,6 +897,7 @@ void pilot_calcStats( Pilot* pilot )
          pilot->shield_regen  += o->u.mod.shield_regen;
          pilot->energy_max    += o->u.mod.energy;
          pilot->energy_regen  += o->u.mod.energy_regen;
+         pilot->energy_loss   += o->u.mod.energy_loss;
          /* Fuel. */
          pilot->fuel_max      += o->u.mod.fuel;
          /* Misc. */
