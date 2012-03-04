@@ -267,7 +267,8 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
    }
 
    /* Only catch some keys. */
-   if ((key != SDLK_BACKSPACE) && (key != SDLK_DELETE) && (key != SDLK_RETURN) && (key != SDLK_KP_ENTER))
+   if ((key != SDLK_BACKSPACE) && (key != SDLK_DELETE) && (key != SDLK_RETURN) && (key != SDLK_KP_ENTER)
+                               && (key != SDLK_HOME) && (key != SDLK_END))
       return 0;
 
    /* backspace -> delete text */
@@ -297,10 +298,27 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
       return 1;
    }
 
+   /* home -> move to start */
+   if (key == SDLK_HOME) {
+      inp->dat.inp.pos = 0;
+   }
+
+   /* end -> move to end */
+   if (key == SDLK_END) {
+      inp->dat.inp.pos = inp->dat.inp.max-1;
+   }
+
    /* in limits. */
    else if ((inp->dat.inp.pos < inp->dat.inp.max-1)) {
 
       if ((key==SDLK_RETURN || key==SDLK_KP_ENTER) && !inp->dat.inp.oneline) {
+         /* Make sure it's not full. */
+         if (strlen(inp->dat.inp.input) >= (size_t)inp->dat.inp.max-1)
+            return 0;
+
+         memmove( &inp->dat.inp.input[ inp->dat.inp.pos+1 ],
+               &inp->dat.inp.input[ inp->dat.inp.pos ],
+               inp->dat.inp.max - inp->dat.inp.pos - 2 );
          inp->dat.inp.input[ inp->dat.inp.pos++ ] = '\n';
          return 1;
       }
