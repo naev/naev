@@ -9,8 +9,8 @@
   <gfx_store>jammer1</gfx_store>
  </general>
  <specific type="modification">
-  <cpu>3</cpu>
- <energy>-15</energy>
+  <cpu>-3</cpu>
+  <energy>-15</energy>
   <hide_rel>30</hide_rel>
  </specific>
 </outfit>

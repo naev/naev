@@ -10,7 +10,6 @@
   <gfx_store>thruster</gfx_store>
  </general>
  <specific type="modification">
-  <cpu>0</cpu>
   <turn>5</turn>
   <turn_mod>10</turn_mod>
   <energy_regen>-0.15</energy_regen>
