@@ -32,7 +32,7 @@ else -- default english
     gtitle = "Lucky find!"
     gtext = {}
     gtext[1] = [[The derelict appears deserted, its passengers long gone. However, they seem to have left behind a small amount of credit chips in their hurry to leave! You decide to help yourself to them, and leave the derelict.]]
-    gtext[2] = [[The derelict is empty, and seems to have been thoroughly picked over by other space bucceneers. However, the ship's computer contains an updated map of the surrounding systems! You download it into your own computer.]]
+    gtext[2] = [[The derelict is empty, and seems to have been thoroughly picked over by other space bucceneers. However, the ship's computer contains a map of the %s! You download it into your own computer.]]
     gtext[3] = [[This ship looks like any old piece of scrap at a glance, but it is actually an antique, one of the very first of its kind ever produced! Museums all over the galaxy would love to have a ship like this. You plant a beacon on the derelict to mark it for salvaging, and contact the %s authorities. Your reputation with them has slightly improved.]]
     
     --=== BAD EVENTS ===--
@@ -101,12 +101,41 @@ end
 function goodevent()
     -- Roll for good event, handle accordingly
     event = rnd.rnd(1, #gtext)
+
+    -- Only give a map if unknown.
+    if event == 2 then
+        maps = {
+            ["Map: Dvaered-Soromid trade route"] = "Dvaered-Soromid trade route",
+            ["Map: Sirian border systems"] = "Sirian border systems",
+            ["Map: Dvaered Core"] = "Dvaered core systems",
+            ["Map: Empire Core"]  = "Empire core systems",
+            ["Map: Nebula Edge"]  = "Sol nebula edge",
+            ["Map: The Frontier"] = "Frontier systems"
+        }
+        unknown = {}
+
+        for k,v in pairs(maps) do
+            if player.numOutfit(k) == 0 then
+                table.insert( unknown, k )
+            end
+        end
+
+        -- All maps are known.
+        if #unknown == 0 then
+            while event == 2 do
+                event = rnd.rnd(1, #gtext)
+            end
+        end
+    end
+
+
     if event == 1 then
         tk.msg(gtitle, gtext[1])
         player.pay(rnd.rnd(5000,30000)) --5K - 30K
     elseif event == 2 then
-        tk.msg(gtitle, gtext[2])
-        player.addOutfit("Star Map", 1)
+        local choice = unknown[rnd.rnd(1,#unknown)]
+        tk.msg(gtitle, gtext[2]:format(maps[choice]))
+        player.addOutfit(choice, 1)
     elseif event == 3 then
         local factions = {"Empire", "Dvaered", "Sirius", "Soromid"} -- TODO: Add more factions as they appear
         rndfact = factions[rnd.rnd(1, #factions)]

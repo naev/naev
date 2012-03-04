@@ -1058,8 +1058,8 @@ static void ai_create( Pilot* pilot, char *param )
       aiL_status = AI_STATUS_CREATE;
 
    /* Create equipment first - only if creating for the first time. */
-   if (!pilot_isFlag(pilot,PILOT_PLAYER) && ((aiL_status==AI_STATUS_CREATE) ||
-            !pilot_isFlag(pilot, PILOT_EMPTY))) {
+   if (!pilot_isFlag(pilot,PILOT_PLAYER) && (aiL_status==AI_STATUS_CREATE) &&
+            !pilot_isFlag(pilot, PILOT_EMPTY)) {
       if  (faction_getEquipper( pilot->faction ) != NULL) {
          L = faction_getEquipper( pilot->faction );
          func = "equip";
