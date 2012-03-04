@@ -10,7 +10,7 @@
   <gfx_store>reroute</gfx_store>
  </general>
  <specific type="modification">
-  <cpu>0</cpu>
+  <cpu>-1</cpu>
   <thrust>3</thrust>
   <thrust_mod>10</thrust_mod>
   <energy_regen>-0.85</energy_regen>

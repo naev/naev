@@ -12,7 +12,7 @@
  <specific type="modification">
   <cpu>-2</cpu>
   <speed>3</speed>
-  <speed_mod>15</speed_mod>
+  <speed_mod>10</speed_mod>
   <turn_mod>3</turn_mod>
   <energy_regen>-0.15</energy_regen>
  </specific>

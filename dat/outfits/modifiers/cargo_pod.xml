@@ -6,7 +6,7 @@
   <size>small</size>
   <mass>3</mass>
   <price>35000</price>
-  <description>Cargo pods are large containers you can attach to dedicated weapon space allowing you to transport more cargo. The drawback is that you lose a substantial amount of weapon space and won't be able to defend your cargo as well.</description>
+  <description>Cargo pods are large containers that increase a ship's cargo capacity.</description>
   <gfx_store>cargo_pod</gfx_store>
  </general>
  <specific type="modification">
