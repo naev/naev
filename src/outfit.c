@@ -1868,6 +1868,7 @@ static void outfit_parseSJammer( Outfit *temp, const xmlNodePtr parent )
          "%s\n"
          "\erActivated Outfit\e0\n"
          "Needs %.0f CPU\n"
+         "Only one can be equipped\n"
          "%.0f Range\n"
          "%.0f%% Power\n"
          "%.1f EPS",
