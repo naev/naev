@@ -296,8 +296,9 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
             curchars = gl_printWidthForText( inp->dat.inp.font, &str[curpos], inp->w-10 );
             curpos += curchars;
          }
-         
-         /* Set the pos to the same number of characters from the left hand edge, on the previous line (unless there aren't that many chars).
+
+         /* Set the pos to the same number of characters from the left hand
+          * edge, on the previous line (unless there aren't that many chars).
           * This is more or less equal to going up a line. */
          charsfromleft = inp->dat.inp.pos - prevpos;
          inp->dat.inp.pos = prevpos - prevchars;
@@ -316,17 +317,18 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
             curchars = gl_printWidthForText( inp->dat.inp.font, &str[curpos], inp->w-10 );
             curpos += curchars;
          }
-         
-         /*Take note how many chars from the left we have.*/
+
+         /* Take note how many chars from the left we have. */
          charsfromleft = inp->dat.inp.pos - prevpos;
-         
+
          /* Now not-print one more line. This is the line we want to move the cursor to. */
          prevpos = curpos;
          prevchars = curchars;
          curchars = gl_printWidthForText( inp->dat.inp.font, &str[curpos], inp->w-10 );
          curpos += curchars;
-         
-         /* Set the pos to the same number of characters from the left hand edge, on this line (unless there aren't that many chars).
+
+         /* Set the pos to the same number of characters from the left hand
+          * edge, on this line (unless there aren't that many chars).
           * This is more or less equal to going down a line.
           * But make sure never to go past the end of the string. */
          inp->dat.inp.pos = prevpos;
