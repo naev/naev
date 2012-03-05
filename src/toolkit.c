@@ -2181,7 +2181,7 @@ void toolkit_prevFocus( Window *wdw )
             wdw->focus = -1;
          else {
             wdw->focus = prev->id;
-            wgt_setFlag( wgt, WGT_FLAG_FOCUSED );
+            wgt_setFlag( prev, WGT_FLAG_FOCUSED );
          }
          return;
       }
