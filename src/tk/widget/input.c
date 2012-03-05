@@ -242,6 +242,7 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
 {
    (void) mod;
    int n, curpos, prevpos, curchars, prevchars, charsfromleft;
+   int len;
    char* str;
 
    /*
@@ -267,15 +268,18 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
          }
       }
       else if (key == SDLK_RIGHT) {
-         if (inp->dat.inp.pos < (int)strlen(inp->dat.inp.input)) {
+         len = (int)strlen(inp->dat.inp.input);
+         if (inp->dat.inp.pos < len) {
             if (mod & KMOD_CTRL) {
                /* We want to position the cursor at the end of the next word. */
                /* Begin by skipping all whitespace. */
-               while (inp->dat.inp.input[inp->dat.inp.pos] == ' ' && inp->dat.inp.pos < (int)strlen(inp->dat.inp.input)) {
+               while ((inp->dat.inp.input[inp->dat.inp.pos] == ' ')
+                     && (inp->dat.inp.pos < len)) {
                   inp->dat.inp.pos++;
                }
                /* Now skip until we encounter whitespace (or EOL). */
-               while (inp->dat.inp.input[inp->dat.inp.pos] != ' ' && inp->dat.inp.pos < (int)strlen(inp->dat.inp.input)) {
+               while ((inp->dat.inp.input[inp->dat.inp.pos] != ' ')
+                     && (inp->dat.inp.pos < len)) {
                   inp->dat.inp.pos++;
                }
             }
@@ -284,72 +288,77 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
          }
       }
       else if (!inp->dat.inp.oneline && key == SDLK_UP) {
-         str   = inp->dat.inp.input;
-         curpos = 0;
-         prevpos = 0;
+         str      = inp->dat.inp.input;
+         curpos   = 0;
+         prevpos  = 0;
          curchars = 0;
 
-         if(inp->dat.inp.pos == 0) /* We can't move beyond the current line, as it is the first one. */
+         if (inp->dat.inp.pos == 0) /* We can't move beyond the current line, as it is the first one. */
             return 1;
 
          /* Keep not-printing the lines until the current pos is smaller than the virtual pos.
           * At this point, we've arrived at the line the cursor is on. */
          while (inp->dat.inp.pos > curpos) {
-            prevpos = curpos;
+            prevpos   = curpos;
             prevchars = curchars;
-            curchars = gl_printWidthForText( inp->dat.inp.font, &str[curpos], inp->w-10 );
-            curpos += curchars;
+            curchars  = gl_printWidthForText( inp->dat.inp.font, &str[curpos], inp->w-10 );
+            curpos   += curchars;
          }
 
          /* Set the pos to the same number of characters from the left hand
           * edge, on the previous line (unless there aren't that many chars).
           * This is more or less equal to going up a line. */
-         charsfromleft = inp->dat.inp.pos - prevpos;
-         inp->dat.inp.pos = prevpos - prevchars;
+         charsfromleft     = inp->dat.inp.pos - prevpos;
+         inp->dat.inp.pos  = prevpos - prevchars;
          inp->dat.inp.pos += MIN(charsfromleft, prevchars);
       }
       else if (!inp->dat.inp.oneline && key == SDLK_DOWN) {
-         str   = inp->dat.inp.input;
-         curpos = 0;
-         prevpos = 0;
+         str      = inp->dat.inp.input;
+         curpos   = 0;
+         prevpos  = 0;
          curchars = 0;
-         
-         if(inp->dat.inp.pos == (int)strlen(inp->dat.inp.input)) /* We can't move beyond the current line, as it is the last one. */
+        
+         /* We can't move beyond the current line, as it is the last one. */
+         if (inp->dat.inp.pos == (int)strlen(inp->dat.inp.input))
             return 1;
          
          /* Keep not-printing the lines until the current pos is smaller than the virtual pos.
           * At this point, we've arrived at the line the cursor is on. */
          while (inp->dat.inp.pos >= curpos) {
-            prevpos = curpos;
+            prevpos   = curpos;
             prevchars = curchars;
-            curchars = gl_printWidthForText( inp->dat.inp.font, &str[curpos], inp->w-10 );
-            curpos += curchars;
+            curchars  = gl_printWidthForText( inp->dat.inp.font, &str[curpos], inp->w-10 );
+            curpos   += curchars;
          }
 
          /* Take note how many chars from the left we have. */
          charsfromleft = inp->dat.inp.pos - prevpos;
 
          /* Now not-print one more line. This is the line we want to move the cursor to. */
-         prevpos = curpos;
+         prevpos   = curpos;
          prevchars = curchars;
-         curchars = gl_printWidthForText( inp->dat.inp.font, &str[curpos], inp->w-10 );
-         curpos += curchars;
+         curchars  = gl_printWidthForText( inp->dat.inp.font, &str[curpos], inp->w-10 );
+         curpos   += curchars;
 
          /* Set the pos to the same number of characters from the left hand
           * edge, on this line (unless there aren't that many chars).
           * This is more or less equal to going down a line.
           * But make sure never to go past the end of the string. */
-         inp->dat.inp.pos = prevpos;
+         inp->dat.inp.pos  = prevpos;
          inp->dat.inp.pos += MIN(charsfromleft, curchars);
-         inp->dat.inp.pos = MIN(inp->dat.inp.pos, (int)strlen(inp->dat.inp.input));
+         inp->dat.inp.pos  = MIN(inp->dat.inp.pos, (int)strlen(inp->dat.inp.input));
       }
 
       return 1;
    }
 
    /* Only catch some keys. */
-   if ((key != SDLK_BACKSPACE) && (key != SDLK_DELETE) && (key != SDLK_RETURN) && (key != SDLK_KP_ENTER)
-                               && (key != SDLK_HOME) && (key != SDLK_END))
+   if ((key != SDLK_BACKSPACE) && 
+         (key != SDLK_DELETE) &&
+         (key != SDLK_RETURN) &&
+         (key != SDLK_KP_ENTER) &&
+         (key != SDLK_HOME) &&
+         (key != SDLK_END))
       return 0;
 
    /* backspace -> delete text */
@@ -380,12 +389,12 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
    }
 
    /* home -> move to start */
-   if (key == SDLK_HOME) {
+   else if (key == SDLK_HOME) {
       inp->dat.inp.pos = 0;
    }
 
    /* end -> move to end */
-   if (key == SDLK_END) {
+   else if (key == SDLK_END) {
       inp->dat.inp.pos = strlen(inp->dat.inp.input);
    }
 
