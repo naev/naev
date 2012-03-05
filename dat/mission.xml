@@ -622,7 +622,7 @@
   <lua>sirius/srs_ferry</lua>
   <avail>
    <chance>266</chance>
-   <cond>faction.playerStanding("Sirius") > 5</cond>
+   <cond>faction.playerStanding("Sirius") &gt; 5</cond>
    <location>Computer</location>
    <faction>Sirius</faction>
   </avail>
