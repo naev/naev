@@ -313,7 +313,7 @@ static void sysedit_editPntClose( unsigned int wid, char *unused )
 }
 
 /**
- * @brief Enters the editor in new system mode.
+ * @brief Enters the editor in new planet mode.
  */
 static void sysedit_btnNew( unsigned int wid_unused, char *unused )
 {
@@ -354,6 +354,7 @@ static void sysedit_btnNew( unsigned int wid_unused, char *unused )
 
    /* Add new planet. */
    system_addPlanet( sysedit_sys, name );
+   dpl_savePlanet( p );
 
    /* Reload graphics. */
    space_gfxLoad( sysedit_sys );
