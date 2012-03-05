@@ -899,6 +899,12 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
                }
             }
             sysedit_dragSel   = 0;
+            /* Save all planets in our selection - their positions might have changed. */
+            for (i=0; i<sysedit_nselect; i++) {
+               if (sysedit_select[i].type == SELECT_PLANET) {
+                  dpl_savePlanet( sys->planets[ sysedit_select[i].u.planet ] );
+               }
+            }
          }
          break;
 
