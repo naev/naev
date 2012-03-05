@@ -250,13 +250,38 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
     if ((key == SDLK_LEFT) || (key == SDLK_RIGHT) || (key == SDLK_UP) || (key == SDLK_DOWN)) {
       /* Move pointer. */
       if (key == SDLK_LEFT) {
-         if (inp->dat.inp.pos > 0)
-            inp->dat.inp.pos -= 1;
+         if (inp->dat.inp.pos > 0) {
+            if (mod & KMOD_CTRL) {
+               /* We want to position the cursor at the end of the previous word. */
+               /* Begin by skipping all non-whitespace. */
+               while (inp->dat.inp.input[inp->dat.inp.pos-1] != ' ' && inp->dat.inp.pos > 0) {
+                  inp->dat.inp.pos--;
+               }
+               /* Now skip until we encounter non-whitespace (or SOL). */
+               while (inp->dat.inp.input[inp->dat.inp.pos-1] == ' ' && inp->dat.inp.pos > 0) {
+                  inp->dat.inp.pos--;
+               }
+            }
+            else
+               inp->dat.inp.pos -= 1;
+         }
       }
       else if (key == SDLK_RIGHT) {
-         if ((inp->dat.inp.pos < inp->dat.inp.max-1) &&
-               (inp->dat.inp.input[inp->dat.inp.pos] != '\0'))
-            inp->dat.inp.pos += 1;
+         if (inp->dat.inp.pos < (int)strlen(inp->dat.inp.input)) {
+            if (mod & KMOD_CTRL) {
+               /* We want to position the cursor at the end of the next word. */
+               /* Begin by skipping all whitespace. */
+               while (inp->dat.inp.input[inp->dat.inp.pos] == ' ' && inp->dat.inp.pos < (int)strlen(inp->dat.inp.input)) {
+                  inp->dat.inp.pos++;
+               }
+               /* Now skip until we encounter whitespace (or EOL). */
+               while (inp->dat.inp.input[inp->dat.inp.pos] != ' ' && inp->dat.inp.pos < (int)strlen(inp->dat.inp.input)) {
+                  inp->dat.inp.pos++;
+               }
+            }
+            else
+               inp->dat.inp.pos += 1;
+         }
       }
       else if (!inp->dat.inp.oneline && key == SDLK_UP) {
          str   = inp->dat.inp.input;
