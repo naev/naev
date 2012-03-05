@@ -528,6 +528,7 @@ static int diff_patchHunk( UniHunk_t *hunk )
 
       /* Adding an asset. */
       case HUNK_TYPE_ASSET_ADD:
+         planet_updateLand( planet_get(hunk->u.name) );
          return system_addPlanet( system_get(hunk->target.u.name), hunk->u.name );
       /* Removing an asset. */
       case HUNK_TYPE_ASSET_REMOVE:
