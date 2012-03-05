@@ -49,8 +49,7 @@ else -- default english
     title_p1 = " space transport to %s for %s-class citizen"
 
     -- Note: please leave the trailing space on the line below! Needed to make the newline show up.
---Cargo: %s (%d tonnes)
-    title_p2 = [[
+    title_p2 = [[ 
 Jumps: %d
 Travel distance: %d
 Time limit: %s]]

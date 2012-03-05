@@ -749,10 +749,10 @@ static int pilotL_clear( lua_State *L )
  *
  * If player jumps the spawn is enabled again automatically. Global spawning takes priority over faction spawning.
  *
- * @usage pilot.togglespawn() -- Defaults to flipping the global spawning (true->false and false->true)
- * @usage pilot.togglespawn( false ) -- Disables global spawning
- * @usage pliot.togglespawn( "Pirates" ) -- Defaults to disabling pirate spawning
- * @usage pilot.togglespawn( "Pirates", true ) -- Turns on pirate spawning
+ * @usage pilot.toggleSpawn() -- Defaults to flipping the global spawning (true->false and false->true)
+ * @usage pilot.toggleSpawn( false ) -- Disables global spawning
+ * @usage pliot.toggleSpawn( "Pirates" ) -- Defaults to disabling pirate spawning
+ * @usage pilot.toggleSpawn( "Pirates", true ) -- Turns on pirate spawning
  *
  *    @luaparam fid Faction to enable or disable spawning off. If ommited it works on global spawning.
  *    @luaparam enable true enables spawn, false disables it.

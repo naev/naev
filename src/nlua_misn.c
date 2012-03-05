@@ -957,7 +957,7 @@ static int misn_npcRm( lua_State *L )
  * Claiming systems is a way to avoid mission collisions preemptively.
  *
  * Note it does not actually claim the systems if it fails to claim. It also
- *  does not work more then once.
+ *  does not work more than once.
  *
  * @usage if not misn.claim( { system.get("Gamma Polaris") } ) then misn.finish( false ) end
  * @usage if not misn.claim( system.get("Gamma Polaris") ) then misn.finish( false ) end
