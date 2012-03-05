@@ -288,6 +288,10 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
          curpos = 0;
          prevpos = 0;
          curchars = 0;
+
+         if(inp->dat.inp.pos == 0) /* We can't move beyond the current line, as it is the first one. */
+            return 1;
+
          /* Keep not-printing the lines until the current pos is smaller than the virtual pos.
           * At this point, we've arrived at the line the cursor is on. */
          while (inp->dat.inp.pos > curpos) {
@@ -306,12 +310,16 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
       }
       else if (!inp->dat.inp.oneline && key == SDLK_DOWN) {
          str   = inp->dat.inp.input;
-         curpos = -1;
+         curpos = 0;
          prevpos = 0;
-         curchars = 1;
+         curchars = 0;
+         
+         if(inp->dat.inp.pos == (int)strlen(inp->dat.inp.input)) /* We can't move beyond the current line, as it is the last one. */
+            return 1;
+         
          /* Keep not-printing the lines until the current pos is smaller than the virtual pos.
           * At this point, we've arrived at the line the cursor is on. */
-         while (inp->dat.inp.pos > curpos) {
+         while (inp->dat.inp.pos >= curpos) {
             prevpos = curpos;
             prevchars = curchars;
             curchars = gl_printWidthForText( inp->dat.inp.font, &str[curpos], inp->w-10 );
