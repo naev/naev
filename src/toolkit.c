@@ -49,6 +49,7 @@ static int window_dead = 0; /**< There are dead windows lying around. */
  * simulate keypresses when holding
  */
 static SDLKey input_key             = 0; /**< Current pressed key. */
+static SDLMod input_mod             = 0; /**< Current pressed modifier. */
 static unsigned int input_keyTime   = 0; /**< Tick pressed. */
 static int input_keyCounter         = 0; /**< Number of repetitions. */
 static char input_text              = 0; /**< Current character. */
@@ -1814,14 +1815,13 @@ static void toolkit_mouseEventWidget( Window *w, Widget *wgt,
  *
  *    @param key Key to register as down.
  */
-static void toolkit_regKey( SDLKey key, SDLKey c )
+static void toolkit_regKey( SDLKey key, SDLKey c, SDLMod mod )
 {
-   if ((input_key==0) && (input_keyTime==0)) {
-      input_key         = key;
-      input_keyTime     = SDL_GetTicks();
-      input_keyCounter  = 0;
-      input_text        = nstd_checkascii(c) ? c : 0;
-   }
+   input_key         = key;
+   input_mod         = mod;
+   input_keyTime     = SDL_GetTicks();
+   input_keyCounter  = 0;
+   input_text        = nstd_checkascii(c) ? c : 0;
 }
 /**
  * @brief Unregisters a key.
@@ -1830,8 +1830,12 @@ static void toolkit_regKey( SDLKey key, SDLKey c )
  */
 static void toolkit_unregKey( SDLKey key )
 {
+   /* If the key released was the key we're holding down, unregister it. */
    if (input_key == key)
-      toolkit_clearKey();
+      input_key = 0;
+   /* If the key released was NOT the key we're holding down, a modifier is involved. */
+   else
+      input_mod = 0;
 }
 /**
  * @brief Clears the registered keys.
@@ -1839,6 +1843,7 @@ static void toolkit_unregKey( SDLKey key )
 void toolkit_clearKey (void)
 {
    input_key         = 0;
+   input_mod         = 0;
    input_keyTime     = 0;
    input_keyCounter  = 0;
    input_text        = 0;
@@ -1863,7 +1868,7 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
 
    /* Hack to simulate key repetition */
    if (event->type == SDL_KEYDOWN)
-      toolkit_regKey(key, event->key.keysym.unicode);
+      toolkit_regKey(key, event->key.keysym.unicode, mod);
    else if (event->type == SDL_KEYUP)
       toolkit_unregKey(key);
 
@@ -1881,7 +1886,7 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
    /* Trigger event function if exists. */
    if (wgt != NULL) {
       if (wgt->keyevent != NULL) {
-         if (wgt->keyevent( wgt, key, mod ))
+         if (wgt->keyevent( wgt, input_key, input_mod ))
             return 1;
       }
       if (wgt->textevent != NULL) {
@@ -1895,8 +1900,8 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
    /* Handle button hotkeys. */
    for (wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next)
       if ((wgt->type == WIDGET_BUTTON) && (wgt->dat.btn.key != 0) &&
-            (wgt->dat.btn.key == key))
-         return (wgt->keyevent( wgt, SDLK_RETURN, mod ));
+            (wgt->dat.btn.key == input_key))
+         return (wgt->keyevent( wgt, SDLK_RETURN, input_mod ));
 
    /* Handle other cases where event might be used by the window. */
    switch (key) {
@@ -1928,7 +1933,7 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
 
    /* Finally the stuff gets passed to the custom key handler if it's defined. */
    if (wdw->keyevent != NULL)
-      (*wdw->keyevent)( wdw->id, key, mod );
+      (*wdw->keyevent)( wdw->id, input_key, input_mod );
 
    return 0;
 }
@@ -2035,7 +2040,7 @@ void toolkit_update (void)
    }
 
    /* Must have a key pressed. */
-   if (input_key == 0)
+   if (input_key == 0 && input_mod == 0)
       return;
 
    t = SDL_GetTicks();
@@ -2062,7 +2067,7 @@ void toolkit_update (void)
                event.type           = SDL_KEYDOWN;
                event.key.state      = SDL_PRESSED;
                event.key.keysym.sym = input_key;
-               event.key.keysym.mod = 0;
+               event.key.keysym.mod = input_mod;
                ret = wgt->rawevent( wgt, &event );
                if (ret != 0)
                   return;
@@ -2073,7 +2078,7 @@ void toolkit_update (void)
       /* Handle the focused widget. */
       wgt = toolkit_getFocus( wdw );
       if ((wgt != NULL) && (wgt->keyevent != NULL))
-         wgt->keyevent( wgt, input_key, 0 );
+         wgt->keyevent( wgt, input_key, input_mod );
 
       if ((input_text != 0) && (wgt != NULL) && (wgt->textevent != NULL)) {
          buf[0] = input_text;
