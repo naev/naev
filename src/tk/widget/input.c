@@ -241,7 +241,7 @@ static int inp_addKey( Widget* inp, SDLKey key )
 static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
 {
    (void) mod;
-   int n, curpos, prevpos, curchars, prevchars, charsfromleft;
+   int n, curpos, prevpos, curchars, prevchars, charsfromleft, lines;
    int len;
    char* str;
 
@@ -292,6 +292,7 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
          curpos   = 0;
          prevpos  = 0;
          curchars = 0;
+         lines    = 0;
 
          if (inp->dat.inp.pos == 0) /* We can't move beyond the current line, as it is the first one. */
             return 1;
@@ -301,14 +302,26 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
          while (inp->dat.inp.pos > curpos) {
             prevpos   = curpos;
             prevchars = curchars;
-            curchars  = gl_printWidthForText( inp->dat.inp.font, &str[curpos], inp->w-10 );
-            curpos   += curchars;
+            /* Handle newline-only lines. */
+            if (str[curpos] == '\n') {
+               curchars = 1;
+               curpos++;
+            }
+            else {
+               curchars  = gl_printWidthForText( inp->dat.inp.font, &str[curpos], inp->w-10 );
+               curpos   += curchars;
+            }
+            lines++;
          }
 
          /* Set the pos to the same number of characters from the left hand
           * edge, on the previous line (unless there aren't that many chars).
           * This is more or less equal to going up a line. */
          charsfromleft     = inp->dat.inp.pos - prevpos;
+         /* Hack for moving up to the first line. */
+         if (lines == 2)
+            charsfromleft--;
+
          inp->dat.inp.pos  = prevpos - prevchars;
          inp->dat.inp.pos += MIN(charsfromleft, prevchars);
       }
@@ -317,6 +330,7 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
          curpos   = 0;
          prevpos  = 0;
          curchars = 0;
+         lines    = 0;
         
          /* We can't move beyond the current line, as it is the last one. */
          if (inp->dat.inp.pos == (int)strlen(inp->dat.inp.input))
@@ -327,12 +341,23 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
          while (inp->dat.inp.pos >= curpos) {
             prevpos   = curpos;
             prevchars = curchars;
-            curchars  = gl_printWidthForText( inp->dat.inp.font, &str[curpos], inp->w-10 );
-            curpos   += curchars;
+            /* Handle newline-only lines. */
+            if (str[curpos] == '\n') {
+               curchars = 1;
+               curpos++;
+            }
+            else {
+               curchars  = gl_printWidthForText( inp->dat.inp.font, &str[curpos], inp->w-10 );
+               curpos   += curchars;
+            }
+            lines++;
          }
 
          /* Take note how many chars from the left we have. */
          charsfromleft = inp->dat.inp.pos - prevpos;
+         /* Hack for moving down from the first line. */
+         if (lines == 1)
+            charsfromleft++;
 
          /* Now not-print one more line. This is the line we want to move the cursor to. */
          prevpos   = curpos;
