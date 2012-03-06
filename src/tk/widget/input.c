@@ -19,6 +19,7 @@
 
 
 static void inp_render( Widget* inp, double bx, double by );
+static int inp_isBreaker(char c);
 static int inp_key( Widget* inp, SDLKey key, SDLMod mod );
 static int inp_text( Widget* inp, const char *buf );
 static int inp_addKey( Widget* inp, SDLKey key );
@@ -229,6 +230,25 @@ static int inp_addKey( Widget* inp, SDLKey key )
    return 1;
 }
 
+/**
+ * @brief Checks if a character is a breaker character (for editing purposes)
+ *
+ *    @param c character to check.
+ *    @return 1 if the char is a breaker, 0 if it isn't.
+ */
+static int inp_isBreaker(char c)
+{
+   char* breakers = ";:.-_ ";
+   int i;
+   
+   for (i = 0; i < (int)strlen(breakers); i++) {
+      if (breakers[i] == c)
+         return 1;
+   }
+   
+   return 0;
+}
+
 
 /**
  * @brief Handles input for an input widget.
@@ -253,13 +273,13 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
       if (key == SDLK_LEFT) {
          if (inp->dat.inp.pos > 0) {
             if (mod & KMOD_CTRL) {
-               /* We want to position the cursor at the end of the previous word. */
-               /* Begin by skipping all non-whitespace. */
-               while (inp->dat.inp.input[inp->dat.inp.pos-1] != ' ' && inp->dat.inp.pos > 0) {
+               /* We want to position the cursor at the start of the previous or current word. */
+               /* Begin by skipping all breakers. */
+               while (inp_isBreaker(inp->dat.inp.input[inp->dat.inp.pos-1]) && inp->dat.inp.pos > 0) {
                   inp->dat.inp.pos--;
                }
-               /* Now skip until we encounter non-whitespace (or SOL). */
-               while (inp->dat.inp.input[inp->dat.inp.pos-1] == ' ' && inp->dat.inp.pos > 0) {
+               /* Now skip until we encounter a breaker (or SOL). */
+               while (!inp_isBreaker(inp->dat.inp.input[inp->dat.inp.pos-1]) && inp->dat.inp.pos > 0) {
                   inp->dat.inp.pos--;
                }
             }
@@ -271,14 +291,14 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
          len = (int)strlen(inp->dat.inp.input);
          if (inp->dat.inp.pos < len) {
             if (mod & KMOD_CTRL) {
-               /* We want to position the cursor at the end of the next word. */
-               /* Begin by skipping all whitespace. */
-               while ((inp->dat.inp.input[inp->dat.inp.pos] == ' ')
+               /* We want to position the cursor at the start of the next word. */
+               /* Begin by skipping all non-breakers. */
+               while (!inp_isBreaker(inp->dat.inp.input[inp->dat.inp.pos])
                      && (inp->dat.inp.pos < len)) {
                   inp->dat.inp.pos++;
                }
-               /* Now skip until we encounter whitespace (or EOL). */
-               while ((inp->dat.inp.input[inp->dat.inp.pos] != ' ')
+               /* Now skip until we encounter a non-breaker (or EOL). */
+               while (inp_isBreaker(inp->dat.inp.input[inp->dat.inp.pos])
                      && (inp->dat.inp.pos < len)) {
                   inp->dat.inp.pos++;
                }
