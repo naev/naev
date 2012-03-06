@@ -408,30 +408,27 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
 
    /* backspace -> delete text */
    if ((key == SDLK_BACKSPACE) && (inp->dat.inp.pos > 0)) {
+      /* We want to move inp->dat.inp.pos backward and delete all characters caught between it and curpos at the end. */
+      curpos = inp->dat.inp.pos;
       if (inp->dat.inp.pos > 0) {
          if (mod & KMOD_CTRL) {
             /* We want to delete up to the start of the previous or current word. */
-            /* Begin by deleting all breakers. */
+            /* Begin by skipping all breakers. */
             while (inp_isBreaker(inp->dat.inp.input[inp->dat.inp.pos-1]) && inp->dat.inp.pos > 0) {
                inp->dat.inp.pos--;
-               memmove( &inp->dat.inp.input[ inp->dat.inp.pos ],
-                     &inp->dat.inp.input[ inp->dat.inp.pos+1 ],
-                     sizeof(char)*(inp->dat.inp.max - inp->dat.inp.pos - 1) );
             }
-            /* Now delete until we encounter a breaker (or SOL). */
+            /* Now skip until we encounter a breaker (or SOL). */
             while (!inp_isBreaker(inp->dat.inp.input[inp->dat.inp.pos-1]) && inp->dat.inp.pos > 0) {
                inp->dat.inp.pos--;
-               memmove( &inp->dat.inp.input[ inp->dat.inp.pos ],
-                     &inp->dat.inp.input[ inp->dat.inp.pos+1 ],
-                     sizeof(char)*(inp->dat.inp.max - inp->dat.inp.pos - 1) );
             }
          }
          else {
-         inp->dat.inp.pos--;
-         memmove( &inp->dat.inp.input[ inp->dat.inp.pos ],
-               &inp->dat.inp.input[ inp->dat.inp.pos+1 ],
-               sizeof(char)*(inp->dat.inp.max - inp->dat.inp.pos - 1) );
+            inp->dat.inp.pos--;
          }
+         /* Actually delete the chars. */
+         memmove( &inp->dat.inp.input[ inp->dat.inp.pos ],
+               &inp->dat.inp.input[ curpos ],
+               sizeof(char)*(inp->dat.inp.max - curpos + inp->dat.inp.pos) );
       }
       inp->dat.inp.input[ inp->dat.inp.max - 1 ] = '\0';
 
@@ -447,29 +444,29 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
    /* delete -> delete text */
    if (key == SDLK_DELETE) {
       len = (int)strlen(inp->dat.inp.input);
+      /* We want to move curpos forward and delete all characters caught between it and inp->dat.inp.pos at the end. */
+      curpos = inp->dat.inp.pos;
       if (inp->dat.inp.pos < len) {
          if (mod & KMOD_CTRL) {
             /* We want to delete up until the start of the next word. */
-            /* Begin by deleting all non-breakers. */
-            while (!inp_isBreaker(inp->dat.inp.input[inp->dat.inp.pos])
-                  && (inp->dat.inp.pos < len)) {
-               memmove( &inp->dat.inp.input[ inp->dat.inp.pos ],
-                     &inp->dat.inp.input[ inp->dat.inp.pos+1 ],
-                     sizeof(char)*(inp->dat.inp.max - inp->dat.inp.pos - 1) );
+            /* Begin by skipping all non-breakers. */
+            while (!inp_isBreaker(inp->dat.inp.input[curpos])
+                  && (curpos < len)) {
+               curpos++;
             }
-            /* Now delete until we encounter a non-breaker (or EOL). */
-            while (inp_isBreaker(inp->dat.inp.input[inp->dat.inp.pos])
-                  && (inp->dat.inp.pos < len)) {
-               memmove( &inp->dat.inp.input[ inp->dat.inp.pos ],
-                     &inp->dat.inp.input[ inp->dat.inp.pos+1 ],
-                     sizeof(char)*(inp->dat.inp.max - inp->dat.inp.pos - 1) );
+            /* Now skip until we encounter a non-breaker (or EOL). */
+            while (inp_isBreaker(inp->dat.inp.input[curpos])
+                  && (curpos < len)) {
+               curpos++;
             }
          }
          else {
-            memmove( &inp->dat.inp.input[ inp->dat.inp.pos ],
-                  &inp->dat.inp.input[ inp->dat.inp.pos+1 ],
-                  sizeof(char)*(inp->dat.inp.max - inp->dat.inp.pos - 1) );
+            curpos++;
          }
+         /* Actually delete the chars. */
+         memmove( &inp->dat.inp.input[ inp->dat.inp.pos ],
+               &inp->dat.inp.input[ curpos ],
+               sizeof(char)*(inp->dat.inp.max - curpos + inp->dat.inp.pos) );
       }
       inp->dat.inp.input[ inp->dat.inp.max - 1 ] = '\0';
 
