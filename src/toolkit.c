@@ -143,6 +143,7 @@ void toolkit_setPos( Window *wdw, Widget *wgt, int x, int y )
 Widget* window_newWidget( Window* w, const char *name )
 {
    Widget *wgt, *wlast, *wtmp;
+   char *saved_name = NULL;
 
    /* NULL protection. */
    if (w==NULL)
@@ -172,6 +173,8 @@ Widget* window_newWidget( Window* w, const char *name )
          wlast->next = wgt->next;
 
       /* Prepare and return this widget. */
+      saved_name = wgt->name;
+      wgt->name  = NULL;
       widget_cleanup(wgt);
       break;
    }
@@ -185,7 +188,10 @@ Widget* window_newWidget( Window* w, const char *name )
    wgt->type   = WIDGET_NULL;
    wgt->status = WIDGET_STATUS_NORMAL;
    wgt->wdw    = w->id;
-   wgt->name   = strdup(name);
+   if (saved_name != NULL) /* Hack to avoid frees so _getFocus works in the same frame. */
+      wgt->name   = saved_name;
+   else
+      wgt->name   = strdup(name);
    wgt->id     = ++w->idgen;
 
    /* Set up. */
@@ -671,8 +677,7 @@ void widget_cleanup( Widget *widget )
       widget->cleanup(widget);
 
    /* General freeing. */
-   if (widget->name)
-      free(widget->name);
+   free(widget->name);
 }
 
 
