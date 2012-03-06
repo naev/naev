@@ -408,10 +408,31 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
 
    /* backspace -> delete text */
    if ((key == SDLK_BACKSPACE) && (inp->dat.inp.pos > 0)) {
-      inp->dat.inp.pos--;
-      memmove( &inp->dat.inp.input[ inp->dat.inp.pos ],
-            &inp->dat.inp.input[ inp->dat.inp.pos+1 ],
-            sizeof(char)*(inp->dat.inp.max - inp->dat.inp.pos - 1) );
+      if (inp->dat.inp.pos > 0) {
+         if (mod & KMOD_CTRL) {
+            /* We want to delete up to the start of the previous or current word. */
+            /* Begin by deleting all breakers. */
+            while (inp_isBreaker(inp->dat.inp.input[inp->dat.inp.pos-1]) && inp->dat.inp.pos > 0) {
+               inp->dat.inp.pos--;
+               memmove( &inp->dat.inp.input[ inp->dat.inp.pos ],
+                     &inp->dat.inp.input[ inp->dat.inp.pos+1 ],
+                     sizeof(char)*(inp->dat.inp.max - inp->dat.inp.pos - 1) );
+            }
+            /* Now delete until we encounter a breaker (or SOL). */
+            while (!inp_isBreaker(inp->dat.inp.input[inp->dat.inp.pos-1]) && inp->dat.inp.pos > 0) {
+               inp->dat.inp.pos--;
+               memmove( &inp->dat.inp.input[ inp->dat.inp.pos ],
+                     &inp->dat.inp.input[ inp->dat.inp.pos+1 ],
+                     sizeof(char)*(inp->dat.inp.max - inp->dat.inp.pos - 1) );
+            }
+         }
+         else {
+         inp->dat.inp.pos--;
+         memmove( &inp->dat.inp.input[ inp->dat.inp.pos ],
+               &inp->dat.inp.input[ inp->dat.inp.pos+1 ],
+               sizeof(char)*(inp->dat.inp.max - inp->dat.inp.pos - 1) );
+         }
+      }
       inp->dat.inp.input[ inp->dat.inp.max - 1 ] = '\0';
 
       if (inp->dat.inp.oneline && inp->dat.inp.view > 0) {
@@ -425,9 +446,31 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
 
    /* delete -> delete text */
    if (key == SDLK_DELETE) {
-      memmove( &inp->dat.inp.input[ inp->dat.inp.pos ],
-            &inp->dat.inp.input[ inp->dat.inp.pos+1 ],
-            sizeof(char)*(inp->dat.inp.max - inp->dat.inp.pos - 1) );
+      len = (int)strlen(inp->dat.inp.input);
+      if (inp->dat.inp.pos < len) {
+         if (mod & KMOD_CTRL) {
+            /* We want to delete up until the start of the next word. */
+            /* Begin by deleting all non-breakers. */
+            while (!inp_isBreaker(inp->dat.inp.input[inp->dat.inp.pos])
+                  && (inp->dat.inp.pos < len)) {
+               memmove( &inp->dat.inp.input[ inp->dat.inp.pos ],
+                     &inp->dat.inp.input[ inp->dat.inp.pos+1 ],
+                     sizeof(char)*(inp->dat.inp.max - inp->dat.inp.pos - 1) );
+            }
+            /* Now delete until we encounter a non-breaker (or EOL). */
+            while (inp_isBreaker(inp->dat.inp.input[inp->dat.inp.pos])
+                  && (inp->dat.inp.pos < len)) {
+               memmove( &inp->dat.inp.input[ inp->dat.inp.pos ],
+                     &inp->dat.inp.input[ inp->dat.inp.pos+1 ],
+                     sizeof(char)*(inp->dat.inp.max - inp->dat.inp.pos - 1) );
+            }
+         }
+         else {
+            memmove( &inp->dat.inp.input[ inp->dat.inp.pos ],
+                  &inp->dat.inp.input[ inp->dat.inp.pos+1 ],
+                  sizeof(char)*(inp->dat.inp.max - inp->dat.inp.pos - 1) );
+         }
+      }
       inp->dat.inp.input[ inp->dat.inp.max - 1 ] = '\0';
 
       return 1;
