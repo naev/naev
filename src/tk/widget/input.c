@@ -238,7 +238,7 @@ static int inp_addKey( Widget* inp, SDLKey key )
  */
 static int inp_isBreaker(char c)
 {
-   char* breakers = ";:.-_ ";
+   char* breakers = ";:.-_ \n";
    int i;
    
    for (i = 0; i < (int)strlen(breakers); i++) {
