@@ -1837,10 +1837,7 @@ static void toolkit_unregKey( SDLKey key )
 {
    /* If the key released was the key we're holding down, unregister it. */
    if (input_key == key)
-      input_key = 0;
-   /* If the key released was NOT the key we're holding down, a modifier is involved. */
-   else
-      input_mod = 0;
+      toolkit_clearKey();
 }
 /**
  * @brief Clears the registered keys.
