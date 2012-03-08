@@ -19,6 +19,7 @@
 
 
 static void inp_render( Widget* inp, double bx, double by );
+static int inp_isBreaker(char c);
 static int inp_key( Widget* inp, SDLKey key, SDLMod mod );
 static int inp_text( Widget* inp, const char *buf );
 static int inp_addKey( Widget* inp, SDLKey key );
@@ -87,7 +88,7 @@ static void inp_render( Widget* inp, double bx, double by )
 {
    double x, y, ty;
    char buf[ 512 ], *str;
-   int w, m, p;
+   int w, m, p, s;
    int lines;
    char c;
 
@@ -125,10 +126,12 @@ static void inp_render( Widget* inp, double bx, double by )
          w     = 0;
          p     = 0;
          lines = 0;
+         s     = 0;
          do {
             p     += w;
-            if ((p != 0) && ((str[p] == '\n') || (str[p] == ' ')))
+            if ((s != 0) && ((str[p] == '\n') || (str[p] == ' ')))
                p++;
+            s      = 1;
             w      = gl_printWidthForText( inp->dat.inp.font, &str[p], inp->w-10 );
             lines += 1;
             if (str[p+w] == '\0')
@@ -229,6 +232,25 @@ static int inp_addKey( Widget* inp, SDLKey key )
    return 1;
 }
 
+/**
+ * @brief Checks if a character is a breaker character (for editing purposes)
+ *
+ *    @param c character to check.
+ *    @return 1 if the char is a breaker, 0 if it isn't.
+ */
+static int inp_isBreaker(char c)
+{
+   char* breakers = ";:.-_ \n";
+   int i;
+   
+   for (i = 0; i < (int)strlen(breakers); i++) {
+      if (breakers[i] == c)
+         return 1;
+   }
+   
+   return 0;
+}
+
 
 /**
  * @brief Handles input for an input widget.
@@ -241,42 +263,176 @@ static int inp_addKey( Widget* inp, SDLKey key )
 static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
 {
    (void) mod;
-   int n;
+   int n, curpos, prevpos, curchars, prevchars, charsfromleft, lines;
+   int len;
+   char* str;
 
    /*
     * Handle arrow keys.
     */
-    if ((key == SDLK_LEFT) || (key == SDLK_RIGHT)) {
+    if ((key == SDLK_LEFT) || (key == SDLK_RIGHT) || (key == SDLK_UP) || (key == SDLK_DOWN)) {
       /* Move pointer. */
       if (key == SDLK_LEFT) {
-         if (inp->dat.inp.pos > 0)
-            inp->dat.inp.pos -= 1;
+         if (inp->dat.inp.pos > 0) {
+            if (mod & KMOD_CTRL) {
+               /* We want to position the cursor at the start of the previous or current word. */
+               /* Begin by skipping all breakers. */
+               while (inp_isBreaker(inp->dat.inp.input[inp->dat.inp.pos-1]) && inp->dat.inp.pos > 0) {
+                  inp->dat.inp.pos--;
+               }
+               /* Now skip until we encounter a breaker (or SOL). */
+               while (!inp_isBreaker(inp->dat.inp.input[inp->dat.inp.pos-1]) && inp->dat.inp.pos > 0) {
+                  inp->dat.inp.pos--;
+               }
+            }
+            else
+               inp->dat.inp.pos -= 1;
+         }
       }
       else if (key == SDLK_RIGHT) {
-         if ((inp->dat.inp.pos < inp->dat.inp.max-1) &&
-               (inp->dat.inp.input[inp->dat.inp.pos] != '\0'))
-            inp->dat.inp.pos += 1;
+         len = (int)strlen(inp->dat.inp.input);
+         if (inp->dat.inp.pos < len) {
+            if (mod & KMOD_CTRL) {
+               /* We want to position the cursor at the start of the next word. */
+               /* Begin by skipping all non-breakers. */
+               while (!inp_isBreaker(inp->dat.inp.input[inp->dat.inp.pos])
+                     && (inp->dat.inp.pos < len)) {
+                  inp->dat.inp.pos++;
+               }
+               /* Now skip until we encounter a non-breaker (or EOL). */
+               while (inp_isBreaker(inp->dat.inp.input[inp->dat.inp.pos])
+                     && (inp->dat.inp.pos < len)) {
+                  inp->dat.inp.pos++;
+               }
+            }
+            else
+               inp->dat.inp.pos += 1;
+         }
       }
-      /* TODO: up and down keys. */
-      else if (inp->dat.inp.oneline && key == SDLK_UP) {
+      else if (!inp->dat.inp.oneline && key == SDLK_UP) {
+         str      = inp->dat.inp.input;
+         curpos   = 0;
+         prevpos  = 0;
+         curchars = 0;
+         lines    = 0;
+
+         if (inp->dat.inp.pos == 0) /* We can't move beyond the current line, as it is the first one. */
+            return 1;
+
+         /* Keep not-printing the lines until the current pos is smaller than the virtual pos.
+          * At this point, we've arrived at the line the cursor is on. */
+         while (inp->dat.inp.pos > curpos) {
+            prevpos   = curpos;
+            prevchars = curchars;
+            /* Handle newline-only lines. */
+            if (str[curpos] == '\n') {
+               curchars = 1;
+               curpos++;
+            }
+            else {
+               curchars  = gl_printWidthForText( inp->dat.inp.font, &str[curpos], inp->w-10 );
+               curpos   += curchars;
+            }
+            lines++;
+         }
+
+         /* Set the pos to the same number of characters from the left hand
+          * edge, on the previous line (unless there aren't that many chars).
+          * This is more or less equal to going up a line. */
+         charsfromleft     = inp->dat.inp.pos - prevpos;
+         /* Hack for moving up to the first line. */
+         if (lines == 2)
+            charsfromleft--;
+
+         inp->dat.inp.pos  = prevpos - prevchars;
+         inp->dat.inp.pos += MIN(charsfromleft, prevchars);
       }
-      else if (inp->dat.inp.oneline && key == SDLK_DOWN) {
+      else if (!inp->dat.inp.oneline && key == SDLK_DOWN) {
+         str      = inp->dat.inp.input;
+         curpos   = 0;
+         prevpos  = 0;
+         curchars = 0;
+         lines    = 0;
+        
+         /* We can't move beyond the current line, as it is the last one. */
+         if (inp->dat.inp.pos == (int)strlen(inp->dat.inp.input))
+            return 1;
+         
+         /* Keep not-printing the lines until the current pos is smaller than the virtual pos.
+          * At this point, we've arrived at the line the cursor is on. */
+         while (inp->dat.inp.pos >= curpos) {
+            prevpos   = curpos;
+            prevchars = curchars;
+            /* Handle newline-only lines. */
+            if (str[curpos] == '\n') {
+               curchars = 1;
+               curpos++;
+            }
+            else {
+               curchars  = gl_printWidthForText( inp->dat.inp.font, &str[curpos], inp->w-10 );
+               curpos   += curchars;
+            }
+            lines++;
+         }
+
+         /* Take note how many chars from the left we have. */
+         charsfromleft = inp->dat.inp.pos - prevpos;
+         /* Hack for moving down from the first line. */
+         if (lines == 1)
+            charsfromleft++;
+
+         /* Now not-print one more line. This is the line we want to move the cursor to. */
+         prevpos   = curpos;
+         prevchars = curchars;
+         curchars  = gl_printWidthForText( inp->dat.inp.font, &str[curpos], inp->w-10 );
+         curpos   += curchars;
+
+         /* Set the pos to the same number of characters from the left hand
+          * edge, on this line (unless there aren't that many chars).
+          * This is more or less equal to going down a line.
+          * But make sure never to go past the end of the string. */
+         inp->dat.inp.pos  = prevpos;
+         inp->dat.inp.pos += MIN(charsfromleft, curchars);
+         inp->dat.inp.pos  = MIN(inp->dat.inp.pos, (int)strlen(inp->dat.inp.input));
       }
 
       return 1;
    }
 
    /* Only catch some keys. */
-   if ((key != SDLK_BACKSPACE) && (key != SDLK_DELETE) && (key != SDLK_RETURN) && (key != SDLK_KP_ENTER))
+   if ((key != SDLK_BACKSPACE) && 
+         (key != SDLK_DELETE) &&
+         (key != SDLK_RETURN) &&
+         (key != SDLK_KP_ENTER) &&
+         (key != SDLK_HOME) &&
+         (key != SDLK_END))
       return 0;
 
    /* backspace -> delete text */
    if ((key == SDLK_BACKSPACE) && (inp->dat.inp.pos > 0)) {
-      inp->dat.inp.pos--;
+      /* We want to move inp->dat.inp.pos backward and delete all characters caught between it and curpos at the end. */
+      curpos = inp->dat.inp.pos;
+      if (inp->dat.inp.pos > 0) {
+         if (mod & KMOD_CTRL) {
+            /* We want to delete up to the start of the previous or current word. */
+            /* Begin by skipping all breakers. */
+            while (inp_isBreaker(inp->dat.inp.input[inp->dat.inp.pos-1]) && inp->dat.inp.pos > 0) {
+               inp->dat.inp.pos--;
+            }
+            /* Now skip until we encounter a breaker (or SOL). */
+            while (!inp_isBreaker(inp->dat.inp.input[inp->dat.inp.pos-1]) && inp->dat.inp.pos > 0) {
+               inp->dat.inp.pos--;
+            }
+         }
+         else {
+            inp->dat.inp.pos--;
+         }
+      }
+      /* Actually delete the chars. */
       memmove( &inp->dat.inp.input[ inp->dat.inp.pos ],
-            &inp->dat.inp.input[ inp->dat.inp.pos+1 ],
-            sizeof(char)*(inp->dat.inp.max - inp->dat.inp.pos - 1) );
-      inp->dat.inp.input[ inp->dat.inp.max - 1 ] = '\0';
+            &inp->dat.inp.input[ curpos ],
+            sizeof(char)*(inp->dat.inp.max - curpos) );
+      inp->dat.inp.input[ inp->dat.inp.max - curpos + inp->dat.inp.pos ] = '\0';
 
       if (inp->dat.inp.oneline && inp->dat.inp.view > 0) {
          n = gl_printWidthRaw( &gl_smallFont,
@@ -289,18 +445,57 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
 
    /* delete -> delete text */
    if (key == SDLK_DELETE) {
+      len = (int)strlen(inp->dat.inp.input);
+      /* We want to move curpos forward and delete all characters caught between it and inp->dat.inp.pos at the end. */
+      curpos = inp->dat.inp.pos;
+      if (inp->dat.inp.pos < len) {
+         if (mod & KMOD_CTRL) {
+            /* We want to delete up until the start of the next word. */
+            /* Begin by skipping all non-breakers. */
+            while (!inp_isBreaker(inp->dat.inp.input[curpos])
+                  && (curpos < len)) {
+               curpos++;
+            }
+            /* Now skip until we encounter a non-breaker (or EOL). */
+            while (inp_isBreaker(inp->dat.inp.input[curpos])
+                  && (curpos < len)) {
+               curpos++;
+            }
+         }
+         else {
+            curpos++;
+         }
+      }
+      /* Actually delete the chars. */
       memmove( &inp->dat.inp.input[ inp->dat.inp.pos ],
-            &inp->dat.inp.input[ inp->dat.inp.pos+1 ],
-            sizeof(char)*(inp->dat.inp.max - inp->dat.inp.pos - 1) );
-      inp->dat.inp.input[ inp->dat.inp.max - 1 ] = '\0';
+            &inp->dat.inp.input[ curpos ],
+            sizeof(char)*(inp->dat.inp.max - curpos) );
+      inp->dat.inp.input[ inp->dat.inp.max - curpos + inp->dat.inp.pos ] = '\0';
 
       return 1;
+   }
+
+   /* home -> move to start */
+   else if (key == SDLK_HOME) {
+      inp->dat.inp.pos = 0;
+   }
+
+   /* end -> move to end */
+   else if (key == SDLK_END) {
+      inp->dat.inp.pos = strlen(inp->dat.inp.input);
    }
 
    /* in limits. */
    else if ((inp->dat.inp.pos < inp->dat.inp.max-1)) {
 
       if ((key==SDLK_RETURN || key==SDLK_KP_ENTER) && !inp->dat.inp.oneline) {
+         /* Make sure it's not full. */
+         if (strlen(inp->dat.inp.input) >= (size_t)inp->dat.inp.max-1)
+            return 0;
+
+         memmove( &inp->dat.inp.input[ inp->dat.inp.pos+1 ],
+               &inp->dat.inp.input[ inp->dat.inp.pos ],
+               inp->dat.inp.max - inp->dat.inp.pos - 2 );
          inp->dat.inp.input[ inp->dat.inp.pos++ ] = '\n';
          return 1;
       }

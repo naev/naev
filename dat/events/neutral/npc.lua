@@ -303,39 +303,34 @@ end
 
 -- Returns a mission hint message, a mission after-care message, OR a lore message if no missionlikes are left.
 function getMissionLikeMessage()
-   -- Hints.
-   -- Hint messages are only valid if the relevant mission has not been completed and is not currently active.
-   for i, j in pairs(msg_mhint) do
-      if player.misnDone(j[1]) or player.misnActive(j[1]) then
-         table.remove(msg_mhint, i)
-      end
-   end
-   for i, j in pairs(msg_ehint) do
-      if player.evtDone(j[1]) or player.evtActive(j[1]) then
-         table.remove(msg_ehint, i)
-      end
-   end
-
-   -- After-care.
-   -- After-care messages are only valid if the relevant mission has been completed.
-   for i, j in pairs(msg_mdone) do
-      if not player.misnDone(j[1]) then
-         table.remove(msg_mdone, i)
-      end
-   end
-   for i, j in pairs(msg_edone) do
-      if not player.evtDone(j[1]) then
-         table.remove(msg_edone, i)
-      end
-   end
-   
-   -- Combine message tables. We don't need to do any more mission/event tests after this.
    if not msg_combined then
       msg_combined = {}
-      for i, j in ipairs(msg_mhint) do msg_combined[#msg_combined + 1] = j[2] end
-      for i, j in ipairs(msg_ehint) do msg_combined[#msg_combined + 1] = j[2] end
-      for i, j in ipairs(msg_mdone) do msg_combined[#msg_combined + 1] = j[2] end
-      for i, j in ipairs(msg_edone) do msg_combined[#msg_combined + 1] = j[2] end
+
+      -- Hints.
+      -- Hint messages are only valid if the relevant mission has not been completed and is not currently active.
+      for i, j in pairs(msg_mhint) do
+         if not (player.misnDone(j[1]) or player.misnActive(j[1])) then
+            msg_combined[#msg_combined + 1] = j[2]
+         end
+      end
+      for i, j in pairs(msg_ehint) do
+         if not(player.evtDone(j[1]) or player.evtActive(j[1])) then
+            msg_combined[#msg_combined + 1] = j[2]
+         end
+      end
+   
+      -- After-care.
+      -- After-care messages are only valid if the relevant mission has been completed.
+      for i, j in pairs(msg_mdone) do
+         if player.misnDone(j[1]) then
+            msg_combined[#msg_combined + 1] = j[2]
+         end
+      end
+      for i, j in pairs(msg_edone) do
+         if player.evtDone(j[1]) then
+            msg_combined[#msg_combined + 1] = j[2]
+         end
+      end
    end
 
    if #msg_combined == 0 then

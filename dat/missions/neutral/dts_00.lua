@@ -75,10 +75,10 @@ Your comrades raise a cheer everyone shakes the postmasters hand. One of them ki
 "It's strange, though," he mutters. "I've never seen pirates swarm like that before."]]
 
 -- Other text for the mission
-   comm[8] = "You fled battle. The Empire won't forget."
+   comm[8] = "You fled from the battle. The Empire won't forget."
    comm[9] = "Comm Trader>You're a coward, %s. You better hope I never see you again."
    comm[10] = "Comm Trader>You're running away now, %s? The fight's finished, you know..."
-   title[4] = "Good job"
+   title[4] = "Good job!"
    text[4] = [[You jump out of %s the sweat still running down your face. The fight to clear the system was brief but intense. After a moment, another ship enters on the same vector. The blast marks on the sides of his craft show it too comes from combat with the pirates. Your comm beeps.
 
 "Good flying, mate. We got those pirates on the run!"  The pilot exclaims. "You didn't want to go back for the cash either, eh?  I don't blame you. I hate pirates, but I don't want the Empire's money!"  He smiles grimly. "It's strange, though. I've never seen pirates swarm that way before."
