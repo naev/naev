@@ -88,7 +88,7 @@ static void inp_render( Widget* inp, double bx, double by )
 {
    double x, y, ty;
    char buf[ 512 ], *str;
-   int w, m, p;
+   int w, m, p, s;
    int lines;
    char c;
 
@@ -126,10 +126,12 @@ static void inp_render( Widget* inp, double bx, double by )
          w     = 0;
          p     = 0;
          lines = 0;
+         s     = 0;
          do {
             p     += w;
-            if ((p != 0) && ((str[p] == '\n') || (str[p] == ' ')))
+            if ((s != 0) && ((str[p] == '\n') || (str[p] == ' ')))
                p++;
+            s      = 1;
             w      = gl_printWidthForText( inp->dat.inp.font, &str[p], inp->w-10 );
             lines += 1;
             if (str[p+w] == '\0')
