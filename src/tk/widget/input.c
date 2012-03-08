@@ -425,12 +425,12 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
          else {
             inp->dat.inp.pos--;
          }
-         /* Actually delete the chars. */
-         memmove( &inp->dat.inp.input[ inp->dat.inp.pos ],
-               &inp->dat.inp.input[ curpos ],
-               sizeof(char)*(inp->dat.inp.max - curpos + inp->dat.inp.pos) );
       }
-      inp->dat.inp.input[ inp->dat.inp.max - 1 ] = '\0';
+      /* Actually delete the chars. */
+      memmove( &inp->dat.inp.input[ inp->dat.inp.pos ],
+            &inp->dat.inp.input[ curpos ],
+            sizeof(char)*(inp->dat.inp.max - curpos) );
+      inp->dat.inp.input[ inp->dat.inp.max - curpos + inp->dat.inp.pos ] = '\0';
 
       if (inp->dat.inp.oneline && inp->dat.inp.view > 0) {
          n = gl_printWidthRaw( &gl_smallFont,
@@ -463,12 +463,12 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
          else {
             curpos++;
          }
-         /* Actually delete the chars. */
-         memmove( &inp->dat.inp.input[ inp->dat.inp.pos ],
-               &inp->dat.inp.input[ curpos ],
-               sizeof(char)*(inp->dat.inp.max - curpos + inp->dat.inp.pos) );
       }
-      inp->dat.inp.input[ inp->dat.inp.max - 1 ] = '\0';
+      /* Actually delete the chars. */
+      memmove( &inp->dat.inp.input[ inp->dat.inp.pos ],
+            &inp->dat.inp.input[ curpos ],
+            sizeof(char)*(inp->dat.inp.max - curpos) );
+      inp->dat.inp.input[ inp->dat.inp.max - curpos + inp->dat.inp.pos ] = '\0';
 
       return 1;
    }
