@@ -303,7 +303,9 @@ end
 
 -- Returns a mission hint message, a mission after-care message, OR a lore message if no missionlikes are left.
 function getMissionLikeMessage()
-   local msg_combined = {}
+   if not msg_combined then
+      msg_combined = {}
+   end
 
    -- Hints.
    -- Hint messages are only valid if the relevant mission has not been completed and is not currently active.
