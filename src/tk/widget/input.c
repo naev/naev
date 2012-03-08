@@ -324,15 +324,15 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
          while (inp->dat.inp.pos > curpos) {
             prevpos   = curpos;
             prevchars = curchars;
-            /* Handle newline-only lines. */
+
+            curchars  = gl_printWidthForText( inp->dat.inp.font, &str[curpos], inp->w-10 );
+            curpos   += curchars;
+            /* Handle newlines. */
             if (str[curpos] == '\n') {
-               curchars = 1;
+               curchars++;
                curpos++;
             }
-            else {
-               curchars  = gl_printWidthForText( inp->dat.inp.font, &str[curpos], inp->w-10 );
-               curpos   += curchars;
-            }
+
             lines++;
          }
 
@@ -363,14 +363,13 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
          while (inp->dat.inp.pos >= curpos) {
             prevpos   = curpos;
             prevchars = curchars;
-            /* Handle newline-only lines. */
+
+            curchars  = gl_printWidthForText( inp->dat.inp.font, &str[curpos], inp->w-10 );
+            curpos   += curchars;
+            /* Handle newlines. */
             if (str[curpos] == '\n') {
-               curchars = 1;
+               curchars++;
                curpos++;
-            }
-            else {
-               curchars  = gl_printWidthForText( inp->dat.inp.font, &str[curpos], inp->w-10 );
-               curpos   += curchars;
             }
             lines++;
          }
