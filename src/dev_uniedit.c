@@ -111,6 +111,7 @@ static void uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
       double w, double h, void *data );
 /* Button functions. */
 static void uniedit_close( unsigned int wid, char *wgt );
+static void uniedit_save( unsigned int wid_unused, char *unused );
 static void uniedit_btnJump( unsigned int wid_unused, char *unused );
 static void uniedit_btnRename( unsigned int wid_unused, char *unused );
 static void uniedit_btnEdit( unsigned int wid_unused, char *unused );
@@ -156,6 +157,10 @@ void uniedit_open( unsigned int wid_unused, char *unused )
    /* Close button. */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnClose", "Close", uniedit_close );
+
+   /* Save button. */
+   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*1, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnSave", "Save All", uniedit_save );
 
    /* Jump toggle. */
    window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*3, BUTTON_WIDTH, BUTTON_HEIGHT,
@@ -255,6 +260,18 @@ static void uniedit_close( unsigned int wid, char *wgt )
 
    /* Close the window. */
    window_close( wid, wgt );
+}
+
+/*
+ * @brief Saves the systems.
+ */
+static void uniedit_save( unsigned int wid_unused, char *unused )
+{
+   (void) wid_unused;
+   (void) unused;
+
+   dsys_saveAll();
+   dpl_saveAll();
 }
 
 
