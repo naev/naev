@@ -30,8 +30,6 @@
 #include "npng.h"
 
 
-#define EDITOR_WDWNAME  "Planet Property Editor"
-
 #define HIDE_DEFAULT_PLANET      0.25 /**< Default hide value for new planets. */
 
 #define BUTTON_WIDTH    90 /**< Map button width. */
@@ -315,7 +313,7 @@ static void sysedit_editPntClose( unsigned int wid, char *unused )
 }
 
 /**
- * @brief Enters the editor in new system mode.
+ * @brief Enters the editor in new planet mode.
  */
 static void sysedit_btnNew( unsigned int wid_unused, char *unused )
 {
@@ -356,6 +354,7 @@ static void sysedit_btnNew( unsigned int wid_unused, char *unused )
 
    /* Add new planet. */
    system_addPlanet( sysedit_sys, name );
+   dpl_savePlanet( p );
 
    /* Reload graphics. */
    space_gfxLoad( sysedit_sys );
@@ -900,6 +899,10 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
                }
             }
             sysedit_dragSel   = 0;
+            /* Save all planets in our selection - their positions might have changed. */
+            for (i=0; i<sysedit_nselect; i++)
+               if (sysedit_select[i].type == SELECT_PLANET)
+                  dpl_savePlanet( sys->planets[ sysedit_select[i].u.planet ] );
          }
          break;
 
@@ -1096,13 +1099,14 @@ static void sysedit_editPnt( void )
 {
    unsigned int wid;
    int x, y, w, l, bw;
-   char buf[1024], *s;
+   char buf[1024], *s, title[100];
    Planet *p;
 
    p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
 
    /* Create the window. */
-   wid = window_create( EDITOR_WDWNAME, -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
+   sprintf(title, "Planet Property Editor - %s", p->name);
+   wid = window_create( title, -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
    sysedit_widEdit = wid;
 
    bw = (SYSEDIT_EDIT_WIDTH - 40 - 15 * 3) / 4.;
@@ -1257,7 +1261,7 @@ static void sysedit_editJump( void )
    j = &sysedit_sys->jumps[ sysedit_select[0].u.jump ];
 
    /* Create the window. */
-   wid = window_create( EDITOR_WDWNAME, -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
+   wid = window_create( "Jump Point Editor", -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
    sysedit_widEdit = wid;
 
    bw = (SYSEDIT_EDIT_WIDTH - 40 - 15 * 3) / 4.;
@@ -1342,12 +1346,13 @@ static void sysedit_planetDesc( unsigned int wid, char *unused )
    (void) unused;
    int x, y, h, w, bw;
    Planet *p;
-   char *desc, *bardesc;
+   char *desc, *bardesc, title[100];
 
    p = sysedit_sys->planets[ sysedit_select[0].u.planet ];
 
    /* Create the window. */
-   wid = window_create( "Planet Information", -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
+   sprintf(title, "Planet Information - %s", p->name);
+   wid = window_create( title, -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
    window_setCancel( wid, window_close );
 
    x = 20;
