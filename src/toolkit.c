@@ -1816,18 +1816,54 @@ static void toolkit_mouseEventWidget( Window *w, Widget *wgt,
 
 
 /**
+ * @brief Maps modifier keysyms (ctrl, alt, shift) to SDLMods.
+ *
+ *    @param key Key to convert.
+ *    @return The SDLMod corresponding to the key, or 0 if none correspond.
+ */
+static SDLMod toolkit_mapMod( SDLKey key )
+{
+   switch(key) {
+      case SDLK_LCTRL:
+         return KMOD_LCTRL;
+      case SDLK_RCTRL:
+         return KMOD_RCTRL;
+      case SDLK_LALT:
+         return KMOD_LALT;
+      case SDLK_RALT:
+         return KMOD_RALT;
+      case SDLK_LSHIFT:
+         return KMOD_LSHIFT;
+      case SDLK_RSHIFT:
+         return KMOD_RSHIFT;
+      default:
+         return 0;
+   }
+}
+
+/**
  * @brief Registers a key as down (for key repetition).
  *
  *    @param key Key to register as down.
  */
-static void toolkit_regKey( SDLKey key, SDLKey c, SDLMod mod )
+static void toolkit_regKey( SDLKey key, SDLKey c )
 {
-   input_key         = key;
-   input_mod         = mod;
-   input_keyTime     = SDL_GetTicks();
-   input_keyCounter  = 0;
-   input_text        = nstd_checkascii(c) ? c : 0;
+   SDLMod mod;
+   
+   /* See if our key is in fact a modifier key, and if it is, convert it to a mod.
+    * If it is indeed a mod, do not register a new key but add the modifier to the mod mask instead.
+    */
+   mod = toolkit_mapMod(key);
+   if (mod)
+      input_mod         |= mod;
+   else {
+      input_key         = key;
+      input_keyTime     = SDL_GetTicks();
+      input_keyCounter  = 0;
+      input_text        = nstd_checkascii(c) ? c : 0;
+   }
 }
+
 /**
  * @brief Unregisters a key.
  *
@@ -1835,17 +1871,24 @@ static void toolkit_regKey( SDLKey key, SDLKey c, SDLMod mod )
  */
 static void toolkit_unregKey( SDLKey key )
 {
-   /* If the key released was the key we're holding down, unregister it. */
-   if (input_key == key)
+   SDLMod mod;
+   
+   /* See if our key is in fact a modifier key, and if it is, convert it to a mod.
+    * If it is indeed a mod, do not unregister the key but subtract the modifier from the mod mask instead.
+    */
+   mod = toolkit_mapMod(key);
+   if (mod)
+      input_mod         &= ~mod;
+   else
       toolkit_clearKey();
 }
+
 /**
  * @brief Clears the registered keys.
  */
 void toolkit_clearKey (void)
 {
    input_key         = 0;
-   input_mod         = 0;
    input_keyTime     = 0;
    input_keyCounter  = 0;
    input_text        = 0;
@@ -1870,7 +1913,7 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
 
    /* Hack to simulate key repetition */
    if (event->type == SDL_KEYDOWN)
-      toolkit_regKey(key, event->key.keysym.unicode, mod);
+      toolkit_regKey(key, event->key.keysym.unicode);
    else if (event->type == SDL_KEYUP)
       toolkit_unregKey(key);
 
