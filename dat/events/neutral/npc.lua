@@ -305,34 +305,34 @@ end
 function getMissionLikeMessage()
    if not msg_combined then
       msg_combined = {}
-   end
 
-   -- Hints.
-   -- Hint messages are only valid if the relevant mission has not been completed and is not currently active.
-   for i, j in pairs(msg_mhint) do
-      if not (player.misnDone(j[1]) or player.misnActive(j[1])) then
-         msg_combined[#msg_combined + 1] = j[2]
+      -- Hints.
+      -- Hint messages are only valid if the relevant mission has not been completed and is not currently active.
+      for i, j in pairs(msg_mhint) do
+         if not (player.misnDone(j[1]) or player.misnActive(j[1])) then
+            msg_combined[#msg_combined + 1] = j[2]
+         end
       end
-   end
-   for i, j in pairs(msg_ehint) do
-      if not(player.evtDone(j[1]) or player.evtActive(j[1])) then
-         msg_combined[#msg_combined + 1] = j[2]
+      for i, j in pairs(msg_ehint) do
+         if not(player.evtDone(j[1]) or player.evtActive(j[1])) then
+            msg_combined[#msg_combined + 1] = j[2]
+         end
       end
-   end
-
-   -- After-care.
-   -- After-care messages are only valid if the relevant mission has been completed.
-   for i, j in pairs(msg_mdone) do
-      if player.misnDone(j[1]) then
-         msg_combined[#msg_combined + 1] = j[2]
-      end
-   end
-   for i, j in pairs(msg_edone) do
-      if player.evtDone(j[1]) then
-         msg_combined[#msg_combined + 1] = j[2]
-      end
-   end
    
+      -- After-care.
+      -- After-care messages are only valid if the relevant mission has been completed.
+      for i, j in pairs(msg_mdone) do
+         if player.misnDone(j[1]) then
+            msg_combined[#msg_combined + 1] = j[2]
+         end
+      end
+      for i, j in pairs(msg_edone) do
+         if player.evtDone(j[1]) then
+            msg_combined[#msg_combined + 1] = j[2]
+         end
+      end
+   end
+
    if #msg_combined == 0 then
       return getLoreMessage()
    else
