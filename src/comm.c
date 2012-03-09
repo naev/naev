@@ -679,6 +679,9 @@ static const char* comm_getString( char *str )
    lua_State *L;
    const char *ret;
 
+   if (comm_pilot->ai == NULL)
+      return NULL;
+
    /* Get memory table. */
    L = comm_pilot->ai->L;
    lua_getglobal( L, "mem" );
