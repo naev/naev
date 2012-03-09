@@ -199,6 +199,7 @@ static int inp_addKey( Widget* inp, SDLKey key )
     * Handle arrow keys.
     * @todo finish implementing, no cursor makes it complicated to see where you are.
     */
+
    /* Only catch some keys. */
    if (!nstd_isgraph(key) && (key != ' '))
       return 0;
@@ -206,21 +207,22 @@ static int inp_addKey( Widget* inp, SDLKey key )
    /* No sense to use SDLKey below this. */
    c = key;
 
-   /* Make sure it's not full. */
-   if (strlen(inp->dat.inp.input) >= (size_t)inp->dat.inp.max-1)
-      return 0;
-
    /* Check to see if is in filter to ignore. */
    if (inp->dat.inp.filter != NULL)
       for (i=0; inp->dat.inp.filter[i] != '\0'; i++)
          if (inp->dat.inp.filter[i] == c)
-            return 0; /* Ignored. */
+            return 1; /* Ignored. */
+
+   /* Make sure it's not full. */
+   if (strlen(inp->dat.inp.input) >= (size_t)inp->dat.inp.max-1)
+      return 1;
 
    /* Add key. */
    memmove( &inp->dat.inp.input[ inp->dat.inp.pos+1 ],
          &inp->dat.inp.input[ inp->dat.inp.pos ],
          inp->dat.inp.max - inp->dat.inp.pos - 2 );
    inp->dat.inp.input[ inp->dat.inp.pos++ ] = c;
+   inp->dat.inp.input[ inp->dat.inp.max-1 ] = '\0';
 
    if (inp->dat.inp.oneline) {
       /* We can't wrap the text, so we need to scroll it out. */
