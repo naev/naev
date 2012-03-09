@@ -1758,17 +1758,23 @@ static void pilot_hyperspace( Pilot* p, double dt )
             pilot_setThrust( p, 0. );
 
             /* Face system headed to. */
-            sys = cur_system->jumps[p->nav_hyperspace].target;
-            a = ANGLE( sys->pos.x - cur_system->pos.x, sys->pos.y - cur_system->pos.y );
+            sys  = cur_system->jumps[p->nav_hyperspace].target;
+            a    = ANGLE( sys->pos.x - cur_system->pos.x, sys->pos.y - cur_system->pos.y );
             diff = pilot_face( p, a );
 
             if (ABS(diff) < MAX_DIR_ERR) { /* we can now prepare the jump */
-               pilot_setTurn( p, 0. );
-               p->ptimer = HYPERSPACE_ENGINE_DELAY * !p->stats.misc_instant_jump;
-               pilot_setFlag(p, PILOT_HYP_BEGIN);
-               /* Player plays sound. */
-               if (p->id == PLAYER_ID)
-                  player_soundPlay( snd_hypPowUp, 1 );
+               if (jp_isFlag( &cur_system->jumps[p->nav_hyperspace], JP_EXITONLY )) {
+                  WARN( "Pilot '%s' trying to jump through exit-only jump from '%s' to '%s'",
+                        p->name, cur_system->name, sys->name );
+               }
+               else {
+                  pilot_setTurn( p, 0. );
+                  p->ptimer = HYPERSPACE_ENGINE_DELAY * !p->stats.misc_instant_jump;
+                  pilot_setFlag(p, PILOT_HYP_BEGIN);
+                  /* Player plays sound. */
+                  if (p->id == PLAYER_ID)
+                     player_soundPlay( snd_hypPowUp, 1 );
+               }
             }
          }
       }
