@@ -587,10 +587,8 @@ static int pilotL_addFleetFrom( lua_State *L, int from_ship )
       }
 
       /* Free memory allocated. */
-      if (ind != NULL )
-         free( ind );
-      if (jumpind != NULL)
-         free( jumpind );
+      free( ind );
+      free( jumpind );
    }
 
    /* Set up velocities and such. */
