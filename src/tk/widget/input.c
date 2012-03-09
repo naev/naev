@@ -496,7 +496,9 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
    }
 
    /* in limits. */
-   else if ((key==SDLK_RETURN || key==SDLK_KP_ENTER) && !inp->dat.inp.oneline) {
+   else if (key==SDLK_RETURN || key==SDLK_KP_ENTER) {
+      if (inp->dat.inp.oneline)
+         return 0; /* Enter does not work in one-liners. */
       /* Empty. */
       if ((inp->dat.inp.pos >= inp->dat.inp.max-1))
          return 1;
