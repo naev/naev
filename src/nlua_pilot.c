@@ -3463,9 +3463,15 @@ static int pilotL_hyperspace( lua_State *L )
       /* Find the jump. */
       for (i=0; i < cur_system->njumps; i++) {
          jp = &cur_system->jumps[i];
-         if (jp->target == ss) {
-            break;
+         if (jp->target != ss)
+            continue;
+         /* Found target. */
+
+         if (jp_isFlag( jp, JP_EXITONLY )) {
+            NLUA_ERROR( L, "Pilot '%s' can't jump out exit only jump '%s'", p->name, ss->name );
+            return 0;
          }
+         break;
       }
       if (i >= cur_system->njumps) {
          NLUA_ERROR( L, "System '%s' is not adjacent to current system '%s'", ss->name, cur_system->name );
