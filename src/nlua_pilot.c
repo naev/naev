@@ -49,6 +49,7 @@ extern int pilot_nstack;
  * Prototypes.
  */
 static Task *pilotL_newtask( lua_State *L, Pilot* p, const char *task );
+static int pilotL_addFleetFrom( lua_State *L, int from_ship );
 
 
 /* Pilot metatable methods. */
@@ -417,76 +418,14 @@ static int pilotL_getPlayer( lua_State *L )
 
 
 /**
- * @brief Adds a ship with an AI and faction to the system (instead of a predefined fleet).
- *
- * @usage p = pilot.addRaw( "Empire Shark", "empire", nil, "Empire" ) -- Creates a pilot analogous to the Empire Shark fleet.
- *
- *    @luaparam shipname Name of the ship to add.
- *    @luaparam ai AI to give the pilot.
- *    @luaparam param Position to create the pilot at. See pilot.add for further information.
- *    @luaparam faction Faction to give the pilot.
- *    @luareturn Table populated with the created pilot.
- * @luafunc addRaw( shipname, ai, param, faction )
+ * @brief Wrapper with common code for pilotL_addFleet and pilotL_addFleetRaw.
  */
-static int pilotL_addFleetRaw(lua_State *L )
-{
-   int i, ret;
-   LuaPilot lp;
-
-   for (i=0; i<5; i++)
-      lua_pushnil( L );
-   ret = pilotL_addFleet( L );
-   if (ret > 0) { /* Pilot ID is valid. */
-      lua_newtable(L);
-
-      /* we push each pilot created into a table and return it */
-      lua_pushnumber(L,1); /* index, starts with 1 */
-      lp.pilot = ret;
-      lua_pushpilot(L,lp); /* value = LuaPilot */
-      lua_rawset(L,-3); /* store the value in the table */
-      return 1;
-   }
-   return 0;
-}
-
-
-/**
- * @brief Adds a fleet to the system.
- *
- * You can then iterate over the pilots to change parameters like so:
- * @code
- * p = pilot.add( "Sml Trader Convoy" )
- * for k,v in pairs(p) do
- *    v:setHostile()
- * end
- * @endcode
- *
- * How param works (by type of value passed): <br/>
- *  - nil: spawns pilot randomly entering from jump points with presence of their faction or taking off from non-hostile planets <br/>
- *  - planet: pilot takes off from the planet <br/>
- *  - system: jumps pilot in from the system <br/>
- *  - vec2: pilot is created at the position (no jump/takeoff) <br/>
- *  - true: Acts like nil, but does not avoid jump points with no presence <br/>
- *
- * @usage p = pilot.add( "Pirate Hyena" ) -- Just adds the pilot (will jump in or take off).
- * @usage p = pilot.add( "Trader Llama", "dummy" ) -- Overrides AI with dummy ai.
- * @usage p = pilot.add( "Sml Trader Convoy", nil, vec2.new( 1000, 200 ) ) -- Pilot won't jump in, will just appear.
- * @usage p = pilot.add( "Empire Pacifier", nil, system.get("Goddard") ) -- Have the pilot jump in from the system.
- * @usage p = pilot.add( "Goddard Goddard", nil, planet.get("Zhiru") ) -- Have the pilot take off from a planet.
- *
- *    @luaparam fleetname Name of the fleet to add.
- *    @luaparam ai If set will override the standard fleet AI.  nil means use default.
- *    @luaparam param Position to create pilot at, if it's a system it'll try to jump in from that system, if it's
- *              a planet it'll try to take off from it.
- *    @luareturn Table populated with all the pilots created.  The keys are ordered numbers.
- * @luafunc add( fleetname, ai, param )
- */
-static int pilotL_addFleet( lua_State *L )
+static int pilotL_addFleetFrom( lua_State *L, int from_ship )
 {
    Fleet *flt;
    Ship *ship;
    const char *fltname, *fltai, *faction;
-   int i, first, raw;
+   int i, first;
    unsigned int p;
    double a, r;
    Vector2d vv,vp, vn;
@@ -509,14 +448,12 @@ static int pilotL_addFleet( lua_State *L )
    vectnull(&vn); /* Need to determine angle. */
    jump = -1;
    a    = 0.;
-   raw  = 0;
 
    /* Parse first argument - Fleet Name */
    fltname = luaL_checkstring(L,1);
 
    /* pull the fleet */
-   if (lua_gettop(L) >= 5) {
-      raw = 1;
+   if (from_ship) {
       ship = ship_get( fltname );
       if (ship == NULL) {
          NLUA_ERROR(L,"Ship '%s' not found!", fltname);
@@ -650,10 +587,8 @@ static int pilotL_addFleet( lua_State *L )
       }
 
       /* Free memory allocated. */
-      if (ind != NULL )
-         free( ind );
-      if (jumpind != NULL)
-         free( jumpind );
+      free( ind );
+      free( jumpind );
    }
 
    /* Set up velocities and such. */
@@ -667,10 +602,20 @@ static int pilotL_addFleet( lua_State *L )
    if (a < 0.)
       a += 2.*M_PI;
 
-   if (!raw) {
+   lua_newtable(L);
+   if (from_ship) {
+      /* Create the pilot. */
+      p = pilot_create( ship, fltname, lf.f, fltai, a, &vp, &vv, flags, -1 );
+
+      /* we push each pilot created into a table and return it */
+      lua_pushnumber(L,1); /* index, starts with 1 */
+      lp.pilot = p;
+      lua_pushpilot(L,lp); /* value = LuaPilot */
+      lua_rawset(L,-3); /* store the value in the table */
+   }
+   else {
       /* now we start adding pilots and toss ids into the table we return */
       first = 1;
-      lua_newtable(L);
       for (i=0; i<flt->npilots; i++) {
          plt = &flt->pilots[i];
 
@@ -690,12 +635,62 @@ static int pilotL_addFleet( lua_State *L )
          lua_rawset(L,-3); /* store the value in the table */
       }
    }
-   else {
-      /* Create the pilot. */
-      p = pilot_create( ship, fltname, lf.f, fltai, a, &vp, &vv, flags, -1 );
-      return p;
-   }
    return 1;
+}
+
+
+/**
+ * @brief Adds a fleet to the system.
+ *
+ * You can then iterate over the pilots to change parameters like so:
+ * @code
+ * p = pilot.add( "Sml Trader Convoy" )
+ * for k,v in pairs(p) do
+ *    v:setHostile()
+ * end
+ * @endcode
+ *
+ * How param works (by type of value passed): <br/>
+ *  - nil: spawns pilot randomly entering from jump points with presence of their faction or taking off from non-hostile planets <br/>
+ *  - planet: pilot takes off from the planet <br/>
+ *  - system: jumps pilot in from the system <br/>
+ *  - vec2: pilot is created at the position (no jump/takeoff) <br/>
+ *  - true: Acts like nil, but does not avoid jump points with no presence <br/>
+ *
+ * @usage p = pilot.add( "Pirate Hyena" ) -- Just adds the pilot (will jump in or take off).
+ * @usage p = pilot.add( "Trader Llama", "dummy" ) -- Overrides AI with dummy ai.
+ * @usage p = pilot.add( "Sml Trader Convoy", nil, vec2.new( 1000, 200 ) ) -- Pilot won't jump in, will just appear.
+ * @usage p = pilot.add( "Empire Pacifier", nil, system.get("Goddard") ) -- Have the pilot jump in from the system.
+ * @usage p = pilot.add( "Goddard Goddard", nil, planet.get("Zhiru") ) -- Have the pilot take off from a planet.
+ *
+ *    @luaparam fleetname Name of the fleet to add.
+ *    @luaparam ai If set will override the standard fleet AI.  nil means use default.
+ *    @luaparam param Position to create pilot at, if it's a system it'll try to jump in from that system, if it's
+ *              a planet it'll try to take off from it.
+ *    @luareturn Table populated with all the pilots created.  The keys are ordered numbers.
+ * @luafunc add( fleetname, ai, param )
+ */
+static int pilotL_addFleet( lua_State *L )
+{
+   return pilotL_addFleetFrom( L, 0 );
+}
+
+
+/**
+ * @brief Adds a ship with an AI and faction to the system (instead of a predefined fleet).
+ *
+ * @usage p = pilot.addRaw( "Empire Shark", "empire", nil, "Empire" ) -- Creates a pilot analogous to the Empire Shark fleet.
+ *
+ *    @luaparam shipname Name of the ship to add.
+ *    @luaparam ai AI to give the pilot.
+ *    @luaparam param Position to create the pilot at. See pilot.add for further information.
+ *    @luaparam faction Faction to give the pilot.
+ *    @luareturn Table populated with the created pilot.
+ * @luafunc addRaw( shipname, ai, param, faction )
+ */
+static int pilotL_addFleetRaw(lua_State *L )
+{
+   return pilotL_addFleetFrom( L, 1 );
 }
 
 
@@ -3475,9 +3470,15 @@ static int pilotL_hyperspace( lua_State *L )
       /* Find the jump. */
       for (i=0; i < cur_system->njumps; i++) {
          jp = &cur_system->jumps[i];
-         if (jp->target == ss) {
-            break;
+         if (jp->target != ss)
+            continue;
+         /* Found target. */
+
+         if (jp_isFlag( jp, JP_EXITONLY )) {
+            NLUA_ERROR( L, "Pilot '%s' can't jump out exit only jump '%s'", p->name, ss->name );
+            return 0;
          }
+         break;
       }
       if (i >= cur_system->njumps) {
          NLUA_ERROR( L, "System '%s' is not adjacent to current system '%s'", ss->name, cur_system->name );

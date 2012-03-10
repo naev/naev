@@ -253,7 +253,7 @@ function nerds_land2()
 
 	if intime and planet.cur() == destPlanet then
 	-- you pickup the nerds in time
-		nerdswon = rnd.rnd() >= 0.8
+		nerdswon = rnd.rnd() >= 0.6
 		if nerdswon then
 			tk.msg(title[8], string.format(text[8], planet.name(srcPlanet)))
 		else
