@@ -63,7 +63,7 @@ static int news_mlines        = 0; /**< Lines allocated. */
 static void news_cleanBuffer (void);
 static void news_cleanLines (void);
 static void news_render( double bx, double by, double w, double h, void *data );
-static void news_mouse( unsigned int wid, SDL_Event *event, double mx, double my,
+static int news_mouse( unsigned int wid, SDL_Event *event, double mx, double my,
       double w, double h, void *mouse );
 
 
@@ -136,7 +136,7 @@ static void news_render( double bx, double by, double w, double h, void *data )
  *    @param w Width of the widget.
  *    @param h Height of the widget.
  */
-static void news_mouse( unsigned int wid, SDL_Event *event, double mx, double my,
+static int news_mouse( unsigned int wid, SDL_Event *event, double mx, double my,
       double w, double h, void *data )
 {
    (void) wid;
@@ -146,7 +146,7 @@ static void news_mouse( unsigned int wid, SDL_Event *event, double mx, double my
       case SDL_MOUSEBUTTONDOWN:
          /* Must be in bounds. */
          if ((mx < 0.) || (mx > w) || (my < 0.) || (my > h))
-            return;
+            return 0;
 
          if (event->button.button == SDL_BUTTON_WHEELUP)
             news_pos -= h/3.;
@@ -154,7 +154,7 @@ static void news_mouse( unsigned int wid, SDL_Event *event, double mx, double my
             news_pos += h/3.;
          else if (!news_drag)
             news_drag = 1;
-         break;
+         return 1;
 
       case SDL_MOUSEBUTTONUP:
          if (news_drag)
@@ -166,6 +166,8 @@ static void news_mouse( unsigned int wid, SDL_Event *event, double mx, double my
             news_pos -= event->motion.yrel;
          break;
    }
+
+   return 0;
 }
 
 

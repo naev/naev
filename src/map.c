@@ -72,7 +72,7 @@ static void map_renderMarkers( double x, double y, double r );
 static void map_drawMarker( double x, double y, double r,
       int num, int cur, int type );
 /* Mouse. */
-static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
+static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, void *data );
 /* Misc. */
 static int map_keyHandler( unsigned int wid, SDLKey key, SDLMod mod );
@@ -1042,7 +1042,7 @@ static void map_renderMarkers( double x, double y, double r )
  *    @param w Width of the widget.
  *    @param h Height of the widget.
  */
-static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
+static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, void *data )
 {
    (void) wid;
@@ -1058,7 +1058,7 @@ static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       case SDL_MOUSEBUTTONDOWN:
          /* Must be in bounds. */
          if ((mx < 0.) || (mx > w) || (my < 0.) || (my > h))
-            return;
+            return 0;
 
          /* Zooming */
          if (event->button.button == SDL_BUTTON_WHEELUP)
@@ -1091,7 +1091,7 @@ static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
             }
             map_drag = 1;
          }
-         break;
+         return 1;
 
       case SDL_MOUSEBUTTONUP:
          if (map_drag)
@@ -1106,6 +1106,8 @@ static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
          }
          break;
    }
+
+   return 0;
 }
 /**
  * @brief Handles the button zoom clicks.

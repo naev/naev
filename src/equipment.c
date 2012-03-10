@@ -89,7 +89,7 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
 static void equipment_renderShip( double bx, double by,
       double bw, double bh, double x, double y, Pilot *p );
 static int equipment_mouseInColumn( double y, double h, int n, double my );
-static void equipment_mouseSlots( unsigned int wid, SDL_Event* event,
+static int equipment_mouseSlots( unsigned int wid, SDL_Event* event,
       double x, double y, double w, double h, void *data );
 /* Misc. */
 static char eq_qCol( double cur, double base, int inv );
@@ -982,7 +982,7 @@ static int equipment_mouseColumn( unsigned int wid, SDL_Event* event,
  *    @param bh Base window height.
  *    @param data Custom widget data.
  */
-static void equipment_mouseSlots( unsigned int wid, SDL_Event* event,
+static int equipment_mouseSlots( unsigned int wid, SDL_Event* event,
       double mx, double my, double bw, double bh, void *data )
 {
    (void) bw;
@@ -1000,12 +1000,12 @@ static void equipment_mouseSlots( unsigned int wid, SDL_Event* event,
 
    /* Must have selected ship. */
    if (p == NULL)
-      return;
+      return 0;
 
    /* Must be left click for now. */
    if ((event->type != SDL_MOUSEBUTTONDOWN) &&
          (event->type != SDL_MOUSEMOTION))
-      return;
+      return 0;
 
    /* Get dimensions. */
    equipment_calculateSlots( p, bw, bh, &w, &h, &n, &m );
@@ -1019,7 +1019,7 @@ static void equipment_mouseSlots( unsigned int wid, SDL_Event* event,
       ret = equipment_mouseColumn( wid, event, mx, my, y, h,
             p->outfit_nweapon, p->outfit_weapon, p, selected, wgt );
       if (ret)
-         return;
+         return !!(event->type == SDL_MOUSEBUTTONDOWN);
    }
    selected += p->outfit_nweapon;
    x += tw;
@@ -1027,7 +1027,7 @@ static void equipment_mouseSlots( unsigned int wid, SDL_Event* event,
       ret = equipment_mouseColumn( wid, event, mx, my, y, h,
             p->outfit_nutility, p->outfit_utility, p, selected, wgt );
       if (ret)
-         return;
+         return !!(event->type == SDL_MOUSEBUTTONDOWN);
    }
    selected += p->outfit_nutility;
    x += tw;
@@ -1035,11 +1035,12 @@ static void equipment_mouseSlots( unsigned int wid, SDL_Event* event,
       ret = equipment_mouseColumn( wid, event, mx, my, y, h,
             p->outfit_nstructure, p->outfit_structure, p, selected, wgt );
       if (ret)
-         return;
+         return !!(event->type == SDL_MOUSEBUTTONDOWN);
    }
 
    /* Not over anything. */
    wgt->mouseover = -1;
+   return 0;
 }
 
 

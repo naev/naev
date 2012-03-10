@@ -107,7 +107,7 @@ static void uniedit_jumpRm( StarSystem *sys, StarSystem *targ );
 static void uniedit_buttonZoom( unsigned int wid, char* str );
 static void uniedit_render( double bx, double by, double w, double h, void *data );
 static void uniedit_renderOverlay( double bx, double by, double bw, double bh, void* data );
-static void uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
+static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, void *data );
 /* Button functions. */
 static void uniedit_close( unsigned int wid, char *wgt );
@@ -394,7 +394,7 @@ static void uniedit_renderOverlay( double bx, double by, double bw, double bh, v
 /**
  * @brief System editor custom widget mouse handling.
  */
-static void uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
+static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, void *data )
 {
    (void) wid;
@@ -414,13 +414,17 @@ static void uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
       case SDL_MOUSEBUTTONDOWN:
          /* Must be in bounds. */
          if ((mx < 0.) || (mx > w) || (my < 0.) || (my > h))
-            return;
+            return 0;
 
          /* Zooming */
-         if (event->button.button == SDL_BUTTON_WHEELUP)
+         if (event->button.button == SDL_BUTTON_WHEELUP) {
             uniedit_buttonZoom( 0, "btnZoomIn" );
-         else if (event->button.button == SDL_BUTTON_WHEELDOWN)
+            return 1;
+         }
+         else if (event->button.button == SDL_BUTTON_WHEELDOWN) {
             uniedit_buttonZoom( 0, "btnZoomOut" );
+            return 1;
+         }
 
          /* selecting star system */
          else {
@@ -430,7 +434,7 @@ static void uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
             if (uniedit_mode == UNIEDIT_NEWSYS) {
                uniedit_newSys( mx, my );
                uniedit_mode = UNIEDIT_DEFAULT;
-               return;
+               return 1;
             }
 
             for (i=0; i<systems_nstack; i++) {
@@ -453,7 +457,7 @@ static void uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
                            && (uniedit_moved < UNIEDIT_MOVE_THRESHOLD)) {
                         if (uniedit_nsys == 1) {
                            sysedit_open( uniedit_sys[0] );
-                           return;
+                           return 1;
                         }
                      }
 
@@ -470,7 +474,7 @@ static void uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
                         uniedit_dragTime  = SDL_GetTicks();
                         uniedit_moved     = 0;
                      }
-                     return;
+                     return 1;
                   }
 
                   if (uniedit_mode == UNIEDIT_DEFAULT) {
@@ -492,7 +496,7 @@ static void uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
                      uniedit_toggleJump( sys );
                      uniedit_mode = UNIEDIT_DEFAULT;
                   }
-                  return;
+                  return 1;
                }
             }
 
@@ -503,7 +507,7 @@ static void uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
                uniedit_moved     = 0;
                uniedit_tsys      = NULL;
             }
-            return;
+            return 1;
          }
          break;
 
@@ -561,6 +565,8 @@ static void uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
          }
          break;
    }
+
+   return 0;
 }
 
 
