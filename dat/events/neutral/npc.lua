@@ -106,7 +106,7 @@ else --default english
    msg_lore["Za'lek"] =       {"It's not easy, dancing to those scientists' tunes. They give you the most impossible tasks! Like, where am I supposed to get a triple redundant helitron converter? Honestly.",
                                "The Soromids? Hah! We Za'lek are the only true scientists in this galaxy.",
                                "I don't understand why we bother sending our research results to the Empire. These simpletons can't understand the simplest formulas!",
-										 }
+                               }
 
    msg_lore["Proteron"] =     {"Hello, traveler. Welcome to Proteron space. We are an evil, power hungry dystopia on a quest for dominance over the galaxy. Would you like a brochure?"
                               }
@@ -121,7 +121,7 @@ else --default english
                               }
 
    msg_lore["Pirate"] =       {"Hi mate. Money or your life! Heh heh, just messing with you.",
-										 "Hey, look at these new scars I got!",
+                               "Hey, look at these new scars I got!",
                               }
 
    -- Gameplay tip messages.
