@@ -3265,16 +3265,19 @@ static int pilotL_goto( lua_State *L )
  *
  * @usage p:face( enemy_pilot ) -- Face enemy pilot
  * @usage p:face( vec2.new( 0, 0 ) ) -- Face origin
+ * @usage p:face( enemy_pilot, true ) -- Task lasts until the enemy pilot is faced
  *
  *    @luaparam p Pilot to add task to.
  *    @luaparam target Target to face (can be vec2 or pilot).
- * @luafunc face( p, target )
+ *    @luaparams towards Optional parameter that makes the task end when the target is faced (otherwise it's an enduring state.
+ * @luafunc face( p, target, towards )
  */
 static int pilotL_face( lua_State *L )
 {
    Pilot *p, *pt;
    LuaVector *vt;
    Task *t;
+   int towards;
 
    /* Get parameters. */
    pt = NULL;
@@ -3284,9 +3287,16 @@ static int pilotL_face( lua_State *L )
       pt = luaL_validpilot(L,2);
    else
       vt = luaL_checkvector(L,2);
+   if (lua_gettop(L) > 2)
+      towards = lua_toboolean(L,3);
+   else
+      towards = 0;
 
    /* Set the task. */
-   t        = pilotL_newtask( L, p, "__face" );
+   if (towards)
+      t     = pilotL_newtask( L, p, "__face_towards" );
+   else
+      t     = pilotL_newtask( L, p, "__face" );
    if (pt != NULL) {
       t->dtype = TASKDATA_INT;
       t->dat.num = pt->id;

@@ -13,6 +13,13 @@ function __face ()
    local target = ai.target()
    ai.face( target )
 end
+function __face_towards ()
+   local target = ai.target()
+   local off = ai.face( target )
+   if math.abs(off) < 5 then
+      ai.poptask()
+   end
+end
 
 
 --[[
