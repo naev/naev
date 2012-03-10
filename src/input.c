@@ -1253,18 +1253,22 @@ static void input_clickevent( SDL_Event* event )
  */
 void input_handle( SDL_Event* event )
 {
+   int ismouse = 0;
+
    /* Special case mouse stuff. */
    if ((event->type == SDL_MOUSEMOTION)  ||
          (event->type == SDL_MOUSEBUTTONDOWN) ||
          (event->type == SDL_MOUSEBUTTONUP)) {
       input_mouseTimer = MOUSE_HIDE;
       SDL_ShowCursor( SDL_ENABLE );
+      ismouse = 1;
    }
 
    if (toolkit_isOpen()) { /* toolkit handled completely separately */
       if (toolkit_input(event))
          return; /* we don't process it if toolkit grabs it */
-      return; /* Toolkit absorbs everything. */
+      if (ismouse)
+         return; /* Toolkit absorbs everything mousy. */
    }
 
    if (ovr_isOpen())
