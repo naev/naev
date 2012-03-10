@@ -16,6 +16,7 @@
 #include "nstring.h"
 
 
+static int btn_mclick( Widget* btn, int button, int x, int y );
 static int btn_key( Widget* btn, SDLKey key, SDLMod mod );
 static void btn_render( Widget* btn, double bx, double by );
 static void btn_cleanup( Widget* btn );
@@ -59,6 +60,7 @@ void window_addButtonKey( const unsigned int wid,
    wgt->keyevent           = btn_key;
    wgt->render             = btn_render;
    wgt->cleanup            = btn_cleanup;
+   wgt->mclickevent        = btn_mclick;
    wgt_setFlag(wgt, WGT_FLAG_CANFOCUS);
    wgt->dat.btn.display    = strdup(display);
    wgt->dat.btn.disabled   = 0; /* initially enabled */
@@ -345,3 +347,18 @@ static void btn_cleanup( Widget *btn )
    if (btn->dat.btn.display != NULL)
       free(btn->dat.btn.display);
 }
+
+
+/**
+ * @brief Basically traps click events.
+ */
+static int btn_mclick( Widget* btn, int button, int x, int y )
+{
+   (void) btn;
+   (void) button;
+   (void) x;
+   (void) y;
+   return 1;
+}
+
+
