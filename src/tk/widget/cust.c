@@ -45,7 +45,7 @@ void window_addCust( const unsigned int wid,
                      const int w, const int h, /* size */
                      char* name, const int border,
                      void (*render) (double x, double y, double w, double h, void *data),
-                     void (*mouse) (unsigned int wid, SDL_Event* event,
+                     int (*mouse) (unsigned int wid, SDL_Event* event,
                                     double x, double y, double w, double h, void *data),
                      void *data )
 {

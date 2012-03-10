@@ -74,8 +74,8 @@ static GLsizei toolkit_vboColourOffset; /**< Colour offset. */
  * static prototypes
  */
 /* input */
-static void toolkit_mouseEvent( Window *w, SDL_Event* event );
-static void toolkit_mouseEventWidget( Window *w, Widget *wgt,
+static int toolkit_mouseEvent( Window *w, SDL_Event* event );
+static int toolkit_mouseEventWidget( Window *w, Widget *wgt,
       Uint32 type, Uint8 button, int x, int y, int rx, int ry );
 static int toolkit_keyEvent( Window *wdw, SDL_Event* event );
 /* focus */
@@ -1604,8 +1604,7 @@ int toolkit_inputWindow( Window *wdw, SDL_Event *event, int purge )
          case SDL_MOUSEMOTION:
          case SDL_MOUSEBUTTONDOWN:
          case SDL_MOUSEBUTTONUP:
-            toolkit_mouseEvent(wdw, event);
-            ret = 1;
+            ret = toolkit_mouseEvent(wdw, event);
             break;
 
          case SDL_KEYDOWN:
@@ -1678,23 +1677,24 @@ Uint32 toolkit_inputTranslateCoords( Window *w, SDL_Event *event,
  *    @param wdw Window receiving the mouse event.
  *    @param event Mouse event to handle.
  */
-static void toolkit_mouseEvent( Window *w, SDL_Event* event )
+static int toolkit_mouseEvent( Window *w, SDL_Event* event )
 {
    Widget *wgt;
    Uint32 type;
    Uint8 button;
-   int x, y, rx, ry;
+   int x, y, rx, ry, ret;
 
    /* Translate mouse coords. */
    type = toolkit_inputTranslateCoords( w, event, &x, &y, &rx, &ry );
 
    /* Check each widget. */
+   ret = 0;
    for (wgt=w->widgets; wgt!=NULL; wgt=wgt->next) {
 
       /* custom widgets take it from here */
       if (wgt->type==WIDGET_CUST) {
          if (wgt->dat.cst.mouse)
-            wgt->dat.cst.mouse( w->id, event, x-wgt->x, y-wgt->y, wgt->w, wgt->h,
+            ret |= wgt->dat.cst.mouse( w->id, event, x-wgt->x, y-wgt->y, wgt->w, wgt->h,
                   wgt->dat.cst.userdata );
       }
       else {
@@ -1703,9 +1703,11 @@ static void toolkit_mouseEvent( Window *w, SDL_Event* event )
             button = event->motion.state;
          else
             button = event->button.button;
-         toolkit_mouseEventWidget( w, wgt, type, button, x, y, rx, ry );
+         ret |= toolkit_mouseEventWidget( w, wgt, type, button, x, y, rx, ry );
       }
    }
+
+   return ret;
 }
 
 
@@ -1716,10 +1718,10 @@ static void toolkit_mouseEvent( Window *w, SDL_Event* event )
  *    @param wgt Widget receiving event.
  *    @param event Event received by the window.
  */
-static void toolkit_mouseEventWidget( Window *w, Widget *wgt,
+static int toolkit_mouseEventWidget( Window *w, Widget *wgt,
       Uint32 type, Uint8 button, int x, int y, int rx, int ry )
 {
-   int inbounds;
+   int ret, inbounds;
 
    /* Widget translations. */
    x -= wgt->x;
@@ -1729,6 +1731,7 @@ static void toolkit_mouseEventWidget( Window *w, Widget *wgt,
    inbounds = !((x < 0) || (x >= wgt->w) || (y < 0) || (y >= wgt->h));
 
    /* Regular widgets. */
+   ret = 0;
    switch (type) {
       case SDL_MOUSEMOTION:
          /* Change the status of the widget if mouse isn't down. */
@@ -1751,7 +1754,7 @@ static void toolkit_mouseEventWidget( Window *w, Widget *wgt,
 
          /* Try to give the event to the widget. */
          if (inbounds && (wgt->mmoveevent != NULL))
-            (*wgt->mmoveevent)( wgt, x, y, rx, ry );
+            ret |= (*wgt->mmoveevent)( wgt, x, y, rx, ry );
 
          break;
 
@@ -1771,7 +1774,7 @@ static void toolkit_mouseEventWidget( Window *w, Widget *wgt,
 
          /* Try to give the event to the widget. */
          if (wgt->mclickevent != NULL)
-            (*wgt->mclickevent)( wgt, button, x, y );
+            ret |= (*wgt->mclickevent)( wgt, button, x, y );
          break;
 
       case SDL_MOUSEBUTTONUP:
@@ -1788,8 +1791,10 @@ static void toolkit_mouseEventWidget( Window *w, Widget *wgt,
                   DEBUG("Toolkit: Button '%s' of Window '%s' "
                         "doesn't have a function trigger",
                         wgt->name, w->name );
-               else
+               else {
                   (*wgt->dat.btn.fptr)(w->id, wgt->name);
+                  ret = 1;
+               }
             }
          }
 
@@ -1805,6 +1810,8 @@ static void toolkit_mouseEventWidget( Window *w, Widget *wgt,
 
          break;
    }
+
+   return ret;
 }
 
 

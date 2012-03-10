@@ -199,6 +199,7 @@ static int inp_addKey( Widget* inp, SDLKey key )
     * Handle arrow keys.
     * @todo finish implementing, no cursor makes it complicated to see where you are.
     */
+
    /* Only catch some keys. */
    if (!nstd_isgraph(key) && (key != ' '))
       return 0;
@@ -206,21 +207,22 @@ static int inp_addKey( Widget* inp, SDLKey key )
    /* No sense to use SDLKey below this. */
    c = key;
 
-   /* Make sure it's not full. */
-   if (strlen(inp->dat.inp.input) >= (size_t)inp->dat.inp.max-1)
-      return 0;
-
    /* Check to see if is in filter to ignore. */
    if (inp->dat.inp.filter != NULL)
       for (i=0; inp->dat.inp.filter[i] != '\0'; i++)
          if (inp->dat.inp.filter[i] == c)
-            return 0; /* Ignored. */
+            return 1; /* Ignored. */
+
+   /* Make sure it's not full. */
+   if (strlen(inp->dat.inp.input) >= (size_t)inp->dat.inp.max-1)
+      return 1;
 
    /* Add key. */
    memmove( &inp->dat.inp.input[ inp->dat.inp.pos+1 ],
          &inp->dat.inp.input[ inp->dat.inp.pos ],
          inp->dat.inp.max - inp->dat.inp.pos - 2 );
    inp->dat.inp.input[ inp->dat.inp.pos++ ] = c;
+   inp->dat.inp.input[ inp->dat.inp.max-1 ] = '\0';
 
    if (inp->dat.inp.oneline) {
       /* We can't wrap the text, so we need to scroll it out. */
@@ -270,7 +272,10 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
    /*
     * Handle arrow keys.
     */
-    if ((key == SDLK_LEFT) || (key == SDLK_RIGHT) || (key == SDLK_UP) || (key == SDLK_DOWN)) {
+    if ((key == SDLK_LEFT) ||
+         (key == SDLK_RIGHT) ||
+         (key == SDLK_UP) ||
+         (key == SDLK_DOWN)) {
       /* Move pointer. */
       if (key == SDLK_LEFT) {
          if (inp->dat.inp.pos > 0) {
@@ -309,7 +314,10 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
                inp->dat.inp.pos += 1;
          }
       }
-      else if (!inp->dat.inp.oneline && key == SDLK_UP) {
+      else if (key == SDLK_UP) {
+         if (inp->dat.inp.oneline)
+            return 0;
+
          str      = inp->dat.inp.input;
          curpos   = 0;
          prevpos  = 0;
@@ -324,15 +332,15 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
          while (inp->dat.inp.pos > curpos) {
             prevpos   = curpos;
             prevchars = curchars;
-            /* Handle newline-only lines. */
+
+            curchars  = gl_printWidthForText( inp->dat.inp.font, &str[curpos], inp->w-10 );
+            curpos   += curchars;
+            /* Handle newlines. */
             if (str[curpos] == '\n') {
-               curchars = 1;
+               curchars++;
                curpos++;
             }
-            else {
-               curchars  = gl_printWidthForText( inp->dat.inp.font, &str[curpos], inp->w-10 );
-               curpos   += curchars;
-            }
+
             lines++;
          }
 
@@ -347,7 +355,10 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
          inp->dat.inp.pos  = prevpos - prevchars;
          inp->dat.inp.pos += MIN(charsfromleft, prevchars);
       }
-      else if (!inp->dat.inp.oneline && key == SDLK_DOWN) {
+      else if (key == SDLK_DOWN) {
+         if (inp->dat.inp.oneline)
+            return 0;
+
          str      = inp->dat.inp.input;
          curpos   = 0;
          prevpos  = 0;
@@ -363,14 +374,13 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
          while (inp->dat.inp.pos >= curpos) {
             prevpos   = curpos;
             prevchars = curchars;
-            /* Handle newline-only lines. */
+
+            curchars  = gl_printWidthForText( inp->dat.inp.font, &str[curpos], inp->w-10 );
+            curpos   += curchars;
+            /* Handle newlines. */
             if (str[curpos] == '\n') {
-               curchars = 1;
+               curchars++;
                curpos++;
-            }
-            else {
-               curchars  = gl_printWidthForText( inp->dat.inp.font, &str[curpos], inp->w-10 );
-               curpos   += curchars;
             }
             lines++;
          }
@@ -409,7 +419,10 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
       return 0;
 
    /* backspace -> delete text */
-   if ((key == SDLK_BACKSPACE) && (inp->dat.inp.pos > 0)) {
+   if (key == SDLK_BACKSPACE) {
+      if (inp->dat.inp.pos <= 0)
+         return 1; /* We still catch the event. */
+
       /* We want to move inp->dat.inp.pos backward and delete all characters caught between it and curpos at the end. */
       curpos = inp->dat.inp.pos;
       if (inp->dat.inp.pos > 0) {
@@ -442,9 +455,8 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
       }
       return 1;
    }
-
    /* delete -> delete text */
-   if (key == SDLK_DELETE) {
+   else if (key == SDLK_DELETE) {
       len = (int)strlen(inp->dat.inp.input);
       /* We want to move curpos forward and delete all characters caught between it and inp->dat.inp.pos at the end. */
       curpos = inp->dat.inp.pos;
@@ -474,32 +486,34 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
 
       return 1;
    }
-
    /* home -> move to start */
    else if (key == SDLK_HOME) {
       inp->dat.inp.pos = 0;
+      return 1;
    }
-
    /* end -> move to end */
    else if (key == SDLK_END) {
       inp->dat.inp.pos = strlen(inp->dat.inp.input);
+      return 1;
    }
 
    /* in limits. */
-   else if ((inp->dat.inp.pos < inp->dat.inp.max-1)) {
-
-      if ((key==SDLK_RETURN || key==SDLK_KP_ENTER) && !inp->dat.inp.oneline) {
-         /* Make sure it's not full. */
-         if (strlen(inp->dat.inp.input) >= (size_t)inp->dat.inp.max-1)
-            return 0;
-
-         memmove( &inp->dat.inp.input[ inp->dat.inp.pos+1 ],
-               &inp->dat.inp.input[ inp->dat.inp.pos ],
-               inp->dat.inp.max - inp->dat.inp.pos - 2 );
-         inp->dat.inp.input[ inp->dat.inp.pos++ ] = '\n';
+   else if (key==SDLK_RETURN || key==SDLK_KP_ENTER) {
+      if (inp->dat.inp.oneline)
+         return 0; /* Enter does not work in one-liners. */
+      /* Empty. */
+      if ((inp->dat.inp.pos >= inp->dat.inp.max-1))
          return 1;
-      }
+
+      memmove( &inp->dat.inp.input[ inp->dat.inp.pos+1 ],
+            &inp->dat.inp.input[ inp->dat.inp.pos ],
+            inp->dat.inp.max - inp->dat.inp.pos - 2 );
+      inp->dat.inp.input[ inp->dat.inp.pos++ ] = '\n';
+      inp->dat.inp.input[ inp->dat.inp.max-1 ] = '\0'; /* Make sure it's NUL terminated. */
+      return 1;
    }
+
+   /* Nothing caught anything so just return. */
    return 0;
 }
 
