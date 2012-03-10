@@ -1604,12 +1604,12 @@ int toolkit_inputWindow( Window *wdw, SDL_Event *event, int purge )
          case SDL_MOUSEMOTION:
          case SDL_MOUSEBUTTONDOWN:
          case SDL_MOUSEBUTTONUP:
-            ret = toolkit_mouseEvent(wdw, event);
+            ret |= toolkit_mouseEvent(wdw, event);
             break;
 
          case SDL_KEYDOWN:
          case SDL_KEYUP:
-            ret =  toolkit_keyEvent(wdw, event);
+            ret |= toolkit_keyEvent(wdw, event);
             break;
       }
    }
