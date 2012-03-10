@@ -1261,9 +1261,11 @@ void input_handle( SDL_Event* event )
       SDL_ShowCursor( SDL_ENABLE );
    }
 
-   if (toolkit_isOpen()) /* toolkit handled completely separately */
+   if (toolkit_isOpen()) { /* toolkit handled completely separately */
       if (toolkit_input(event))
          return; /* we don't process it if toolkit grabs it */
+      return; /* Toolkit absorbs everything. */
+   }
 
    if (ovr_isOpen())
       if (ovr_input(event))
