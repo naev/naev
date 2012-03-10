@@ -152,6 +152,7 @@ function follow ()
  
    -- Will just float without a target to escort.
    if not ai.exists(target) then
+      ai.poptask()
       return
    end
    

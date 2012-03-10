@@ -1042,6 +1042,8 @@ static int pilotL_inrange( lua_State *L )
 /**
  * @brief Gets the nav target of the pilot.
  *
+ * This will only terminate when the target following pilot disappears (land, death, jump, etc...).
+ *
  * @usage planet, hyperspace = p:nav()
  *
  *    @luaparam p Pilot to get nav info of.
