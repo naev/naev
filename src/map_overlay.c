@@ -83,6 +83,12 @@ int ovr_input( SDL_Event *event )
    if (player_isFlag(PLAYER_DESTROYED) || (player.p == NULL))
       return 0;
 
+   /* Ignore when jumping. */
+   if (pilot_isFlag(player.p,PILOT_HYP_PREP) ||
+         pilot_isFlag(player.p,PILOT_HYP_BEGIN) ||
+         pilot_isFlag(player.p,PILOT_HYPERSPACE))
+      return 0;
+
    /* Selection. */
    if (event->button.button == SDL_BUTTON_LEFT) {
       /* Translate from window to screen. */
