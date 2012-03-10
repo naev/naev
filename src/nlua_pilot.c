@@ -3276,7 +3276,7 @@ static int pilotL_goto( lua_State *L )
  *
  *    @luaparam p Pilot to add task to.
  *    @luaparam target Target to face (can be vec2 or pilot).
- *    @luaparams towards Optional parameter that makes the task end when the target is faced (otherwise it's an enduring state.
+ *    @luaparam towards Optional parameter that makes the task end when the target is faced (otherwise it's an enduring state).
  * @luafunc face( p, target, towards )
  */
 static int pilotL_face( lua_State *L )
