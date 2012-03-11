@@ -143,6 +143,12 @@ void conf_setDefaults (void)
    conf.zoom_speed   = 0.25;
    conf.zoom_stars   = 1.;
 
+   /* Font sizes. */
+   conf.font_size_console = 10;
+   conf.font_size_intro   = 18;
+   conf.font_size_def     = 12;
+   conf.font_size_small   = 10;
+
    /* Misc. */
    conf.nosave       = 0;
    conf.devmode      = 0;
@@ -364,6 +370,12 @@ int conf_loadConfig ( const char* file )
       conf_loadFloat("zoom_near",conf.zoom_near);
       conf_loadFloat("zoom_speed",conf.zoom_speed);
       conf_loadFloat("zoom_stars",conf.zoom_stars);
+
+      /* Font size. */
+      conf_loadInt("font_size_console",conf.font_size_console);
+      conf_loadInt("font_size_intro",conf.font_size_intro);
+      conf_loadInt("font_size_def",conf.font_size_def);
+      conf_loadInt("font_size_small",conf.font_size_small);
 
       /* Misc. */
       conf_loadFloat("compression_velocity",conf.compression_velocity);
@@ -933,6 +945,19 @@ int conf_saveConfig ( const char* file )
 
    conf_saveComment("Zooming modulation factor for the starry background");
    conf_saveFloat("zoom_stars",conf.zoom_stars);
+   conf_saveEmptyLine();
+
+   /* Fonts. */
+   conf_saveComment("Font sizes (in pixels) for NAEV");
+   conf_saveComment("Warning, setting to other than the default can cause visual glitches!");
+   conf_saveComment("Console default: 10");
+   conf_saveInt("font_size_console",conf.font_size_console);
+   conf_saveComment("Intro default: 18");
+   conf_saveInt("font_size_intro",conf.font_size_intro);
+   conf_saveComment("Default size: 12");
+   conf_saveInt("font_size_def",conf.font_size_def);
+   conf_saveComment("Small size: 10");
+   conf_saveInt("font_size_small",conf.font_size_small);
    conf_saveEmptyLine();
 
    /* Misc. */

@@ -29,7 +29,6 @@
 #include "conf.h"
 
 
-#define INTRO_FONT_SIZE    18. /**< Intro text font size. */
 #define INTRO_SPEED        30. /**< Speed of text in characters / second. */
 
 
@@ -94,7 +93,7 @@ static int intro_load( const char *text )
    intro_length = intro_size; /* Length approximation. */
 
    /* Create intro font. */
-   gl_fontInit( &intro_font, "dat/mono.ttf", INTRO_FONT_SIZE );
+   gl_fontInit( &intro_font, "dat/mono.ttf", conf.font_size_intro );
 
    /* Load lines. */
    p = 0;

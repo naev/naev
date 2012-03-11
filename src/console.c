@@ -33,9 +33,7 @@
 #include "toolkit.h"
 #include "nfile.h"
 #include "menu.h"
-
-
-#define CONSOLE_FONT_SIZE  10 /**< Size of the console font. */
+#include "conf.h"
 
 
 #define BUTTON_WIDTH    50 /**< Button width. */
@@ -323,7 +321,7 @@ int cli_init (void)
 
    /* Set the font. */
    cli_font    = malloc( sizeof(glFont) );
-   gl_fontInit( cli_font, "dat/mono.ttf", CONSOLE_FONT_SIZE );
+   gl_fontInit( cli_font, "dat/mono.ttf", conf.font_size_console );
 
    /* Clear the buffer. */
    memset( cli_buffer, 0, sizeof(cli_buffer) );
