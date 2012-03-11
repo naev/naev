@@ -3033,6 +3033,10 @@ static int pilotL_control( lua_State *L )
       pilot_rmFlag(p, PILOT_MANUAL_CONTROL);
       if (pilot_isPlayer(p))
          ai_destroy( p );
+      /* Note, we do not set p->ai to NULL, we just clear the tasks and memory. This
+       * is because the player always has an ai named "player", which is used for
+       * manual control among other things. Basically a pilot always has to hav an ai
+       * even if it's the player for things to work. */
    }
 
    /* Clear task. */
