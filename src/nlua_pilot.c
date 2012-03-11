@@ -3031,10 +3031,8 @@ static int pilotL_control( lua_State *L )
    }
    else {
       pilot_rmFlag(p, PILOT_MANUAL_CONTROL);
-      if (pilot_isPlayer(p)) {
+      if (pilot_isPlayer(p))
          ai_destroy( p );
-         p->ai = NULL;
-      }
    }
 
    /* Clear task. */
