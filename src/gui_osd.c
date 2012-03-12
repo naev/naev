@@ -13,6 +13,7 @@
 #include "log.h"
 #include "opengl.h"
 #include "font.h"
+#include "array.h"
 
 
 /**
@@ -28,8 +29,6 @@ typedef struct OSDmsg_s {
  * @brief On Screen Display element.
  */
 typedef struct OSD_s {
-   struct OSD_s *next; /**< Next OSD in the linked list. */
-
    unsigned int id; /**< OSD id. */
    int priority; /**< Priority level. */
    char *title; /**< Title of the OSD. */
@@ -68,6 +67,46 @@ static int osd_hyphenLen = 0;
 static OSD_t *osd_get( unsigned int osd );
 static int osd_free( OSD_t *osd );
 static void osd_calcDimensions (void);
+/* Sort. */
+static int osd_sortCompare( const void * arg1, const void * arg2 );
+static void osd_sort (void);
+
+
+static int osd_sortCompare( const void *arg1, const void *arg2 )
+{
+   const OSD_t *osd1, *osd2;
+   int ret;
+
+   osd1 = (OSD_t*)arg1;
+   osd2 = (OSD_t*)arg2;
+
+   /* Compare priority. */
+   if (osd1->priority > osd2->priority)
+      return +1;                                                                                                                           
+   else if (osd1->priority < osd2->priority)
+      return -1;
+
+   /* Compare name. */
+   ret = strcmp( osd1->title, osd2->title );
+   if (ret != 0)
+      return ret;
+
+   /* Compare ID. */
+   if (osd1->id > osd2->id)
+      return +1;
+   else if (osd1->id < osd2->id)
+      return -1;
+   return 0;
+}
+
+
+/**
+ * @brief Sorts the OSD list.
+ */
+static void osd_sort (void)
+{
+   qsort( osd_list, array_size(osd_list), sizeof(OSD_t), osd_sortCompare );
+}
 
 
 /**
@@ -81,11 +120,13 @@ static void osd_calcDimensions (void);
 unsigned int osd_create( const char *title, int nitems, const char **items, int priority )
 {
    int i, j, n, m, l, s, w, t;
-   OSD_t *osd, *ll;
+   OSD_t *osd;
 
    /* Create. */
-   osd         = calloc( 1, sizeof(OSD_t) );
-   osd->next   = NULL;
+   if (osd_list == NULL)
+      osd_list = array_create( OSD_t );
+   osd         = &array_grow( &osd_list );
+   memset( osd, 0, sizeof(OSD_t) );
    osd->id     = ++osd_idgen;
    osd->active = 0;
 
@@ -160,19 +201,6 @@ unsigned int osd_create( const char *title, int nitems, const char **items, int 
       osd->items[i].nchunks = j;
    }
 
-   /* Append to linked list. */
-   if (osd_list == NULL)
-      osd_list = osd;
-   else {
-      for (ll = osd_list; ll->next != NULL; ll = ll->next) {
-         if (ll->next->priority > priority) {
-            osd->next = ll->next;
-            break;
-         }
-      }
-      ll->next = osd;
-   }
-
    /* Recalculate dimensions. */
    osd_calcDimensions();
 
@@ -187,9 +215,12 @@ unsigned int osd_create( const char *title, int nitems, const char **items, int 
  */
 static OSD_t *osd_get( unsigned int osd )
 {
+   int i;
    OSD_t *ll;
 
-   for (ll = osd_list; ll != NULL; ll = ll->next) {
+   ll = NULL;
+   for (i=0; i<array_size(osd_list); i++) {
+      ll = &osd_list[i];
       if (ll->id == osd)
          break;
    }
@@ -219,8 +250,6 @@ static int osd_free( OSD_t *osd )
    free(osd->msg);
    free(osd->items);
 
-   free(osd);
-
    return 0;
 }
 
@@ -232,34 +261,28 @@ static int osd_free( OSD_t *osd )
  */
 int osd_destroy( unsigned int osd )
 {
-   OSD_t *ll, *lp;
+   int i;
+   OSD_t *ll;
 
-   lp = NULL;
-   for (ll = osd_list; ll != NULL; ll = ll->next) {
+   for (i=0; i<array_size( osd_list ); i++) {
+      ll = &osd_list[i];
+      if (ll->id != osd)
+         continue;
 
-      /* Matches. */
-      if (ll->id == osd) {
+      /* Clean up. */
+      osd_free( &osd_list[i] );
 
-         /* Remove from list. */
-         if (lp == NULL)
-            osd_list = ll->next;
-         else
-            lp->next = ll->next;
+      /* Remove. */
+      array_erase( &osd_list, &osd_list[i], &osd_list[i+1] );
 
-         /* Free. */
-         osd_free( ll );
+      /* Recalculate dimensions. */
+      osd_calcDimensions();
 
-         /* Recalculate dimensions. */
-         osd_calcDimensions();
-
-         return 0;
-      }
-
-      /* Save last iteration. */
-      lp = ll;
+      /* Done here. */
+      break;
    }
 
-   return -1;
+   return 0;
 }
 
 
@@ -336,8 +359,19 @@ int osd_setup( int x, int y, int w, int h )
  */
 void osd_exit (void)
 {
-   while (osd_list != NULL)
-      osd_destroy(osd_list->id);
+   int i;
+   OSD_t *ll;
+
+   if (osd_list == NULL)
+      return;
+
+   for (i=0; i<array_size(osd_list); i++) {
+      ll = &osd_list[i];
+      osd_free( ll );
+   }
+
+   array_free( osd_list );
+   osd_list = NULL;
 }
 
 
@@ -348,7 +382,7 @@ void osd_render (void)
 {
    OSD_t *ll;
    double p;
-   int i, j, l;
+   int i, j, k, l;
    int w, x;
    const glColour *c;
 
@@ -362,7 +396,8 @@ void osd_render (void)
    /* Render each thingy. */
    p = osd_y-gl_smallFont.h;
    l = 0;
-   for (ll = osd_list; ll != NULL; ll = ll->next) {
+   for (k=0; k<array_size(osd_list); k++) {
+      ll = &osd_list[k];
       x = osd_x;
       w = osd_w;
 
@@ -408,9 +443,13 @@ static void osd_calcDimensions (void)
    if (osd_list == NULL)
       return;
 
+   /* Sort them buggers. */
+   osd_sort();
+
    /* Render each thingy. */
    len = 0;
-   for (ll = osd_list; ll != NULL; ll = ll->next) {
+   for (i=0; i<array_size(osd_list); i++) {
+      ll = &osd_list[i];
 
       /* Print title. */
       len += gl_smallFont.h + 5.;
