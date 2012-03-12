@@ -9,6 +9,18 @@ commtext=[[A Sirian appears on your viewscreen. He seems different than most Sir
 
 You feel a brief but overpowering urge to follow him, but it passes and your head clears. The Sirian ship makes no further attempt to communicate with you.]]
 
+althoughEnemy={
+"%s, although you are an enemy of House Sirius, I shall not attack unless provoked, for I abhor violence!",
+"%s, although you are an enemy of House Sirius, I shall not attack unless provoked, for I believe mercy is a great Truth!",
+"%s, although you are an enemy of House Sirius, I shall not attack unless provoked, for you too are Sirichana's child!"
+}
+
+friend={
+"%s, I foresee in you a great Sirian citizen, and I look forward to your friendship!",
+"%s, I foresee a bright future for you, illuminated by Sirichana's light!",
+"%s, may Sirichana's light illuminate your path!"
+}
+
 followSirichana={
 "You shall all follow Sirichana henceforth!",
 "Sirichana shall lead you to peace and wisdom!",
@@ -102,11 +114,19 @@ end
 --Start the real mission after a short delay
 function funStartsSoon()
 	playerP=player.pilot() --save player's pilot
+	rep=faction.playerStanding(faction.get("Sirius"))
 	hook.timer(5000, "theFunBegins") --for effect, so that we can see them jumping in!
 end
 
 --the preaching's about to begin!
 function theFunBegins()
+	if rep < 0 then
+		local dist = vec2.dist(jump.get(system.cur(),curr):pos(),player.pos()) --please note the order of system.cur() and curr matters!
+		if dist < 6000 then
+			hook.timer(5000,"theFunBegins") --wait some more time
+			return
+		end
+	end
 	--summon a preacher from the jump point and highlight him and take control and focus on him
 	preacher=pilot.addRaw("Sirius Reverance", "sirius_norun", curr, "Sirius")[1]
 	preacher:setHilight()
@@ -166,26 +186,41 @@ function theFunBegins()
 	attackers={}
 	
 	--make these followers follow the Touched one
+	--if Sirius is an enemy still keep these guys neutral... at first
 	for _, j in ipairs(followers) do
+		j:setFriendly()
 		j:control()
 		j:follow(preacher)
 		hook.pilot(j,"attacked","violence")
 	end
+	preacher:setFriendly()
 	
 	--pick a random follower and have him praise Sirichana, after a delay
 	hook.timer(4000,"praise")
 	
+	--have the preacher say something cool
+	hook.timer(8000,"preacherSpeak")
+	
 	--add some normal pirates for fun :)
-	hook.timer(7500,"pirateSpawn")
+	hook.timer(12500,"pirateSpawn")
 	
 	--hook up timers for releasing cinematics (and you of course :P)
-	hook.timer(15500,"release")
+	hook.timer(17500,"release")
 	
 	--hook up timer for re-hailing player
 	hailHook=hook.date(time.create(0, 0, 1000), "reHail") --hail every 1000 STU till player answers
 	
 	--when hailed, the preacher preaches to you
 	hook.pilot(preach, "hail", "hail")
+end
+
+function preacherSpeak()
+	camera.set(preacher,true)
+	if rep < 0 then
+		preacher:comm(string.format(althoughEnemy[rnd.rnd(1,#althoughEnemy)],player.name()), true)
+	else
+		preacher:comm(string.format(friend[rnd.rnd(1,#friend)],player.name()), true)
+	end
 end
 
 --re-hail the player
