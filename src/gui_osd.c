@@ -127,7 +127,7 @@ static void osd_sort (void)
  */
 unsigned int osd_create( const char *title, int nitems, const char **items, int priority )
 {
-   int i, j, n, m, l, s, w, t;
+   int i, j, n, m, l, s, w, t, id;
    OSD_t *osd;
 
    /* Create. */
@@ -210,12 +210,13 @@ unsigned int osd_create( const char *title, int nitems, const char **items, int 
    }
 
    /* Sort them buggers. */
+   id = osd->id; /* WE MUST SAVE THE ID BEFORE WE SORT. Or we get stuck with an invalid osd pointer. */
    osd_sort();
 
    /* Recalculate dimensions. */
    osd_calcDimensions();
 
-   return osd->id;
+   return id;
 }
 
 
