@@ -444,7 +444,7 @@ void osd_render (void)
 static void osd_calcDimensions (void)
 {
    OSD_t *ll;
-   int i, j;
+   int i, j, k;
    double len;
 
    /* Nothing to render. */
@@ -456,8 +456,8 @@ static void osd_calcDimensions (void)
 
    /* Render each thingy. */
    len = 0;
-   for (i=0; i<array_size(osd_list); i++) {
-      ll = &osd_list[i];
+   for (k=0; k<array_size(osd_list); k++) {
+      ll = &osd_list[k];
 
       /* Print title. */
       len += gl_smallFont.h + 5.;
