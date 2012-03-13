@@ -75,7 +75,7 @@ static void osd_sort (void);
 static int osd_sortCompare( const void *arg1, const void *arg2 )
 {
    const OSD_t *osd1, *osd2;
-   int ret;
+   int ret, i, m;
 
    osd1 = (OSD_t*)arg1;
    osd2 = (OSD_t*)arg2;
@@ -90,6 +90,14 @@ static int osd_sortCompare( const void *arg1, const void *arg2 )
    ret = strcmp( osd1->title, osd2->title );
    if (ret != 0)
       return ret;
+
+   /* Compare items. */
+   m = MIN(osd1->nitems, osd2->nitems);
+   for(i=0; i<m; i++) {
+      ret = strcmp( osd1->msg[i], osd2->msg[i] );
+      if (ret != 0)
+         return ret;
+   }
 
    /* Compare ID. */
    if (osd1->id > osd2->id)
