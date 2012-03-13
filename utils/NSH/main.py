@@ -170,7 +170,7 @@ class fashion:
     def __init__(self, xmlPath):
         if self.__xmlData is None:
             self.__xmlData = dict()
-            __xmlData = glob.glob(path.join(xmlPath, 'outfits/*.xml'))
+            __xmlData = glob.glob(path.join(xmlPath, 'outfits/*/*.xml'))
             for item in __xmlData:
                 basename = path.basename(item)
                 self.__xmlData[basename] = etree.parse(item)
@@ -210,9 +210,9 @@ class fashion:
             mySlot = item.findtext('general/slot')
             if mySlot is None:
                 mySlot = "NA"
-            if not self.slots.haskey(mySlot):
+            if not self.slots.has_key(mySlot):
                 self.slots.update({mySlot: []})
-            self.slots[mySlot].append(self._parseOutfit(item.getparent()))
+            self.slots[mySlot].append(self._parseOutfit(item.getroot()))
 
         return self.slots
 
@@ -290,13 +290,11 @@ if __name__ == "__main__":
 
     from shutil import copy
     cssFiles = glob.glob(currentPath+'/*.css')
-    f = None
     while len(cssFiles) > 0:
-        if f is None:
-            print('Copying css files ...')
         f = cssFiles.pop()
         bname = path.basename(f)
         if not path.exists(storagePath + '/' + bname):
+            print('Copying css file: '+bname+' in '+storagePath)
             copy(f, storagePath)
         else:
             pass
