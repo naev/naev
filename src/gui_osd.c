@@ -226,16 +226,14 @@ static OSD_t *osd_get( unsigned int osd )
    int i;
    OSD_t *ll;
 
-   ll = NULL;
    for (i=0; i<array_size(osd_list); i++) {
       ll = &osd_list[i];
       if (ll->id == osd)
-         break;
+         return ll;
    }
 
-   if (ll == NULL)
-      WARN("OSD '%d' not found.", osd);
-   return ll;
+   WARN("OSD '%d' not found.", osd);
+   return NULL;
 }
 
 
@@ -287,9 +285,10 @@ int osd_destroy( unsigned int osd )
       osd_calcDimensions();
 
       /* Done here. */
-      break;
+      return 0;
    }
 
+   WARN("OSD '%u' not found to destroy.", osd );
    return 0;
 }
 
