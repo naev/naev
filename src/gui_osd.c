@@ -209,6 +209,9 @@ unsigned int osd_create( const char *title, int nitems, const char **items, int 
       osd->items[i].nchunks = j;
    }
 
+   /* Sort them buggers. */
+   osd_sort();
+
    /* Recalculate dimensions. */
    osd_calcDimensions();
 
@@ -449,9 +452,6 @@ static void osd_calcDimensions (void)
    /* Nothing to render. */
    if (osd_list == NULL)
       return;
-
-   /* Sort them buggers. */
-   osd_sort();
 
    /* Render each thingy. */
    len = 0;
