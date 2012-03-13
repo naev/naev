@@ -357,7 +357,7 @@ end
 
 --everything is done
 function cleanup()
-	playerP:setInvincible(false)
+	player.pilot():setInvincible(false)
 	evt.finish()
 end
 
