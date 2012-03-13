@@ -20,28 +20,36 @@ def getShipStatsLabels(label):
     Custom filter for the template enigne.
     usage: {{ ship.stats|getStatsLabel }}
     """
-    labels = {'jump_delay': "Jump Time",
-            'jump_range': "Jump Range",
-            'cargo_inertia': "Cargo Inertia",
-            'jam_range': "Jam Range",
-            'ew_detect': "Detection",
-            'ew_hide': "Cloaking",
-            'heat_dissipation': "Heat Dissipation",
-            'launch_rate': "Launch Rate",
-            'launch_range': "Launch Range",
-            'jam_counter': "Jam Countermeasures",
-            'ammo_capacity': "Ammo Capacity",
-            'heat_forward': "Heat (Cannon)",
-            'damage_forward': "Damage (Cannon)",
-            'firerate_forward': "Fire Rate (Cannon)",
-            'energy_forward': "Energy Usage (Cannon)",
-            'heat_turret': "Heat (Turret)",
-            'damage_turret': "Damage (Turret)",
-            'firerate_turret': "Fire Rate (Turret)",
-            'energy_turret': "Energy Usage (Turret)",
-            'nebula_dmg_shield': "Nebula Damage (Shield)",
-            'nebula_dmg_armour': "Nebula Damage (Armour)"}
-    return labels[label] if labels.has_key(label) else ""
+    labels = {'speed_mod': "Speed",
+    'turn_mod': "Turn",
+    'thrust_mod': "Thrust",
+    'cargo_mod': "Cargo space",
+    'armour_mod': "Armour strength",
+    'armour_regen_mod': "Armour regeneration",
+    'shield_mod': "Shield strength",
+    'shield_regen_mod': "Shield regeneration",
+    'jump_delay': "Jump Time",
+    'cargo_inertia': "Cargo Inertia",
+    'ew_hide': "Cloaking",
+    'ew_detect': "Detection",
+    'ew_jumpDetect': "Jump Detection",
+    'launch_rate': "Launch Rate",
+    'launch_range': "Launch Range",
+    'ammo_capacity': "Ammo Capacity",
+    'launch_lockon': "Launch Lockon",
+    'fwd_heat': "Heat (Cannon)",
+    'fwd_damage': "Damage (Cannon)",
+    'fwd_firerate': "Fire Rate (Cannon)",
+    'fwd_energy': "Energy Usage (Cannon)",
+    'tur_heat': "Heat (Turret)",
+    'tur_damage': "Damage (Turret)",
+    'tur_firerate': "Fire Rate (Turret)",
+    'tur_energy': "Energy Usage (Turret)",
+    'nebula_dmg_shield': "Nebula Damage (Shield)",
+    'nebula_dmg_armour': "Nebula Damage (Armour)",
+    'heat_dissipation': "Heat Dissipation"
+    }
+    return labels[label] if labels.has_key(label) else label+"(NOTFOUND)"
 
 def getStatsLabelsLabel(label):
     labelsLabel = {
@@ -67,7 +75,7 @@ def getStatsLabelsLabel(label):
             'nebula_dmg_shield': "Modulates the amount of damage that the nebula deals to the shield.",
             'nebula_dmg_armour': "Modulates the amount of damage that the nebula deals to armour."
             }
-    return labelsLabel[label] if labelsLabel.has_key(label) else ""
+    return labelsLabel[label] if labelsLabel.has_key(label) else label+"(NOTFOUND)"
 
 class harvester:
     __xmlData=None
