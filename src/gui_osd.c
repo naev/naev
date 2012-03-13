@@ -127,7 +127,7 @@ static void osd_sort (void)
  */
 unsigned int osd_create( const char *title, int nitems, const char **items, int priority )
 {
-   int i, j, n, m, l, s, w, t;
+   int i, j, n, m, l, s, w, t, id;
    OSD_t *osd;
 
    /* Create. */
@@ -209,10 +209,14 @@ unsigned int osd_create( const char *title, int nitems, const char **items, int 
       osd->items[i].nchunks = j;
    }
 
+   /* Sort them buggers. */
+   id = osd->id; /* WE MUST SAVE THE ID BEFORE WE SORT. Or we get stuck with an invalid osd pointer. */
+   osd_sort();
+
    /* Recalculate dimensions. */
    osd_calcDimensions();
 
-   return osd->id;
+   return id;
 }
 
 
@@ -226,16 +230,14 @@ static OSD_t *osd_get( unsigned int osd )
    int i;
    OSD_t *ll;
 
-   ll = NULL;
    for (i=0; i<array_size(osd_list); i++) {
       ll = &osd_list[i];
       if (ll->id == osd)
-         break;
+         return ll;
    }
 
-   if (ll == NULL)
-      WARN("OSD '%d' not found.", osd);
-   return ll;
+   WARN("OSD '%d' not found.", osd);
+   return NULL;
 }
 
 
@@ -287,9 +289,10 @@ int osd_destroy( unsigned int osd )
       osd_calcDimensions();
 
       /* Done here. */
-      break;
+      return 0;
    }
 
+   WARN("OSD '%u' not found to destroy.", osd );
    return 0;
 }
 
@@ -450,9 +453,6 @@ static void osd_calcDimensions (void)
    /* Nothing to render. */
    if (osd_list == NULL)
       return;
-
-   /* Sort them buggers. */
-   osd_sort();
 
    /* Render each thingy. */
    len = 0;
