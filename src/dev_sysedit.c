@@ -272,8 +272,14 @@ static void sysedit_close( unsigned int wid, char *wgt )
    /* Save the system */
    dsys_saveSystem( sysedit_sys );
 
+   /* Reconstruct universe presences. */
+   space_reconstructPresences();
+
    /* Close the window. */
    window_close( wid, wgt );
+
+   /* Update the universe editor's sidebar text. */
+   uniedit_selectText();
 }
 
 
@@ -413,16 +419,17 @@ static void sysedit_btnRemove( unsigned int wid_unused, char *unused )
    (void) wid_unused;
    (void) unused;
    Select_t *sel;
-   char *file;
+   char *file, *cleanName;
    int i;
 
    if (dialogue_YesNo( "Remove selected planets?", "This can not be undone." )) {
       for (i=0; i<sysedit_nselect; i++) {
          sel = &sysedit_select[i];
          if (sel->type == SELECT_PLANET) {
-            file = malloc((16+strlen(sysedit_sys->planets[ sel->u.planet ]->name))*sizeof(char));
-            nsnprintf(file,(16+strlen(sysedit_sys->planets[ sel->u.planet ]->name))*sizeof(char),
-                           "dat/assets/%s.xml",sysedit_sys->planets[ sel->u.planet ]->name);
+            cleanName = uniedit_nameFilter( sysedit_sys->planets[  sel->u.planet ]->name );
+            file = malloc(16+strlen(cleanName)*sizeof(char));
+            nsnprintf(file,16+strlen(cleanName)*sizeof(char),
+                           "dat/assets/%s.xml",cleanName);
             nfile_delete(file);
             system_rmPlanet( sysedit_sys, sysedit_sys->planets[ sel->u.planet ]->name );
          }
