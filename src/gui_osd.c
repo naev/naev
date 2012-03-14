@@ -99,6 +99,12 @@ static int osd_sortCompare( const void *arg1, const void *arg2 )
          return ret;
    }
 
+   /* Compare on length. */
+   if (osd1->nitems > osd2->nitems)
+      return +1;
+   if (osd1->nitems < osd2->nitems)
+      return -1;
+
    /* Compare ID. */
    if (osd1->id > osd2->id)
       return +1;
