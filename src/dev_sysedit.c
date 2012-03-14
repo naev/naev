@@ -272,8 +272,14 @@ static void sysedit_close( unsigned int wid, char *wgt )
    /* Save the system */
    dsys_saveSystem( sysedit_sys );
 
+   /* Reconstruct universe presences. */
+   space_reconstructPresences();
+
    /* Close the window. */
    window_close( wid, wgt );
+
+   /* Update the universe editor's sidebar text. */
+   uniedit_selectText();
 }
 
 
