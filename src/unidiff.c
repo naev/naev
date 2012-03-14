@@ -436,7 +436,7 @@ static int diff_patchTech( UniDiff_t *diff, xmlNodePtr node )
  */
 static int diff_patch( xmlNodePtr parent )
 {
-   int i;
+   int i, sys;
    UniDiff_t *diff;
    UniHunk_t *fail;
    xmlNodePtr node;
@@ -447,11 +447,16 @@ static int diff_patch( xmlNodePtr parent )
    memset(diff, 0, sizeof(UniDiff_t));
    xmlr_attr(parent,"name",diff->name);
 
+   /* Whether a system's assets were modified. */
+   sys = 0;
+
    node = parent->xmlChildrenNode;
    do {
       xml_onlyNodes(node);
-      if (xml_isNode(node,"system"))
+      if (xml_isNode(node,"system")) {
+         sys = 1;
          diff_patchSystem( diff, node );
+      }
       else if (xml_isNode(node, "tech"))
          diff_patchTech( diff, node );
       else
@@ -507,6 +512,10 @@ static int diff_patch( xmlNodePtr parent )
          }
       }
    }
+
+   /* Prune presences if necessary. */
+   if (sys)
+      system_presenceCleanupAll();
 
    /* Update overlay map just in case. */
    ovr_refresh();

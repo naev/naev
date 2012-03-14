@@ -3250,6 +3250,18 @@ static void presenceCleanup( StarSystem *sys )
 
 
 /**
+ * @brief Sloppily sanitize invalid presences across all systems.
+ */
+void system_presenceCleanupAll( void )
+{
+   int i;
+
+   for (i=0; i<systems_nstack; i++)
+      presenceCleanup( &systems_stack[i] );
+}
+
+
+/**
  * @brief Adds (or removes) some presence to a system.
  *
  *    @param sys Pointer to the system to add to or remove from.
