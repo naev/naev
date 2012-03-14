@@ -334,6 +334,7 @@ void planets_render (void);
 /*
  * Presence stuff.
  */
+void system_presenceCleanupAll( void );
 void system_addPresence( StarSystem *sys, int faction, double amount, int range );
 double system_getPresence( StarSystem *sys, int faction );
 void system_addAllPlanetsPresence( StarSystem *sys );
