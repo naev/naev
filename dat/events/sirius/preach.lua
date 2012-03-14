@@ -104,6 +104,8 @@ function create()
 	v = var.peek( "si_convert" ) -- Get the value
 	if v == nil then -- Doesn't exist, so create
 		var.push( "si_convert", 1 )
+	else
+		var.push( "si_convert", v+1 )
 	end
 	
 	--start the fun when the player jumps
