@@ -75,7 +75,7 @@ static void osd_sort (void);
 static int osd_sortCompare( const void *arg1, const void *arg2 )
 {
    const OSD_t *osd1, *osd2;
-   int ret;
+   int ret, i, m;
 
    osd1 = (OSD_t*)arg1;
    osd2 = (OSD_t*)arg2;
@@ -90,6 +90,20 @@ static int osd_sortCompare( const void *arg1, const void *arg2 )
    ret = strcmp( osd1->title, osd2->title );
    if (ret != 0)
       return ret;
+
+   /* Compare items. */
+   m = MIN(osd1->nitems, osd2->nitems);
+   for(i=0; i<m; i++) {
+      ret = strcmp( osd1->msg[i], osd2->msg[i] );
+      if (ret != 0)
+         return ret;
+   }
+
+   /* Compare on length. */
+   if (osd1->nitems > osd2->nitems)
+      return +1;
+   if (osd1->nitems < osd2->nitems)
+      return -1;
 
    /* Compare ID. */
    if (osd1->id > osd2->id)
@@ -119,7 +133,7 @@ static void osd_sort (void)
  */
 unsigned int osd_create( const char *title, int nitems, const char **items, int priority )
 {
-   int i, j, n, m, l, s, w, t;
+   int i, j, n, m, l, s, w, t, id;
    OSD_t *osd;
 
    /* Create. */
@@ -201,10 +215,14 @@ unsigned int osd_create( const char *title, int nitems, const char **items, int 
       osd->items[i].nchunks = j;
    }
 
+   /* Sort them buggers. */
+   id = osd->id; /* WE MUST SAVE THE ID BEFORE WE SORT. Or we get stuck with an invalid osd pointer. */
+   osd_sort();
+
    /* Recalculate dimensions. */
    osd_calcDimensions();
 
-   return osd->id;
+   return id;
 }
 
 
@@ -218,16 +236,14 @@ static OSD_t *osd_get( unsigned int osd )
    int i;
    OSD_t *ll;
 
-   ll = NULL;
    for (i=0; i<array_size(osd_list); i++) {
       ll = &osd_list[i];
       if (ll->id == osd)
-         break;
+         return ll;
    }
 
-   if (ll == NULL)
-      WARN("OSD '%d' not found.", osd);
-   return ll;
+   WARN("OSD '%d' not found.", osd);
+   return NULL;
 }
 
 
@@ -279,9 +295,10 @@ int osd_destroy( unsigned int osd )
       osd_calcDimensions();
 
       /* Done here. */
-      break;
+      return 0;
    }
 
+   WARN("OSD '%u' not found to destroy.", osd );
    return 0;
 }
 
@@ -436,20 +453,17 @@ void osd_render (void)
 static void osd_calcDimensions (void)
 {
    OSD_t *ll;
-   int i, j;
+   int i, j, k;
    double len;
 
    /* Nothing to render. */
    if (osd_list == NULL)
       return;
 
-   /* Sort them buggers. */
-   osd_sort();
-
    /* Render each thingy. */
    len = 0;
-   for (i=0; i<array_size(osd_list); i++) {
-      ll = &osd_list[i];
+   for (k=0; k<array_size(osd_list); k++) {
+      ll = &osd_list[k];
 
       /* Print title. */
       len += gl_smallFont.h + 5.;

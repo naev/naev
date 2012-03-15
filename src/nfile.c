@@ -263,6 +263,7 @@ static int mkpath( const char *path, mode_t mode )
       return 0;
 
    strncpy( opath, path, sizeof(opath) );
+   opath[ PATH_MAX-1 ] = '\0';
    len = strlen(opath);
    if (opath[len - 1] == '/')
       opath[len - 1] = '\0';

@@ -104,6 +104,8 @@ function create()
 	v = var.peek( "si_convert" ) -- Get the value
 	if v == nil then -- Doesn't exist, so create
 		var.push( "si_convert", 1 )
+	else
+		var.push( "si_convert", v+1 )
 	end
 	
 	--start the fun when the player jumps
@@ -211,7 +213,7 @@ function theFunBegins()
 	hailHook=hook.date(time.create(0, 0, 1000), "reHail") --hail every 1000 STU till player answers
 	
 	--when hailed, the preacher preaches to you
-	hook.pilot(preach, "hail", "hail")
+	hook.pilot(preacher, "hail", "hail")
 end
 
 function preacherSpeak()
@@ -357,7 +359,7 @@ end
 
 --everything is done
 function cleanup()
-	playerP:setInvincible(false)
+	player.pilot():setInvincible(false)
 	evt.finish()
 end
 
