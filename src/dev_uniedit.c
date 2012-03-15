@@ -322,9 +322,6 @@ static void uniedit_btnOpen( unsigned int wid_unused, char *unused )
       return;
 
    sysedit_open( uniedit_sys[0] );
-
-   /* Update sidebar text. */
-   uniedit_selectText();
 }
 
 
