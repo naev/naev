@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Zalek Naval Academy">
+ <pos>
+  <x>9899.205090</x>
+  <y>-4541.095850</y>
+ </pos>
+ <GFX>
+  <space>station-shipyard2.png</space>
+  <exterior>station03.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Za'lek</faction>
+  <value>200.000000</value>
+  <range>5</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>9000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land>zlk_mil_academy</land>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>The Zalek Naval Academy, headed by General Michael van Horn, is the nerve center of the Za'lek's military complex. Officers are trained here, and graduate with their prized PhD's in military science. Few people except those trusted explicitly by the Za'lek are allowed here.</description>
+  <bar>You see cadets cavorting loudly and drunkenly in here, happy about their results in some test. Several of them make loud and rude comments about one doctor Cassini.</bar>
+ </general>
+ <tech>
+  <item>Laser 1</item>
+  <item>Laser 2</item>
+  <item>Laser 3</item>
+  <item>Light Civilian Combat Ships</item>
+  <item>Heavy Civilian Combat Ships</item>
+  <item>Za'lek Military Ships</item>
+  <item>Heavy Weapons 1</item>
+  <item>Heavy Weapons 2</item>
+  <item>Plasma 1</item>
+  <item>Plasma 2</item>
+  <item>Kinetic 1</item>
+  <item>Kinetic 3</item>
+  <item>Ion 1</item>
+  <item>Star Maps</item>
+  <item>Missiles 1</item>
+  <item>Missiles 2</item>
+ </tech>
+</asset>

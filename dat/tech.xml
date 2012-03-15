@@ -128,6 +128,7 @@
   <item>Map: Dvaered Core</item>
   <item>Map: Empire Core</item>
   <item>Map: Pirate strongholds</item>
+  <item>Ultra Map</item>
   <item>Unicorp Scrambler</item>
   <item>Milspec Scrambler</item>
   <item>Unicorp Jammer</item>
@@ -177,6 +178,7 @@
   <item>Pirate Rhino</item>
   <item>Pirate Shark</item>
   <item>Pirate Vendetta</item>
+  <item>Proteron Watson</item>
   <item>Proteron Archimedes</item>
   <item>Proteron Derivative</item>
   <item>Proteron Kahan</item>
@@ -198,6 +200,7 @@
   <item>Soromid Arx</item>
   <item>Vendetta</item>
   <item>Vigilance</item>
+  <item>Za'lek Diablo</item>
  </tech>
  <tech name="All Commodities">
   <item>Food</item>
@@ -419,6 +422,7 @@
   <item>Spearhead Missile</item>
   <item>TeraCom Medusa Launcher</item>
   <item>Medusa Missile</item>
+  <item>Enygma Systems Turreted Fury Launcher</item>
  </tech>
  <tech name="Star Maps">
   <item>Map: Nebula Edge</item>
@@ -491,6 +495,7 @@
   <item>Pirate Vendetta</item>
  </tech>
  <tech name="Proteron Military Ships">
+  <item>Proteron Watson</item>
   <item>Proteron Archimedes</item>
   <item>Proteron Derivative</item>
   <item>Proteron Kahan</item>
@@ -510,6 +515,10 @@
   <item>Soromid Nyx</item>
   <item>Soromid Ira</item>
   <item>Soromid Arx</item>
+ </tech>
+ <tech name="Za'lek Military Ships">
+  <item>Za'lek Diablo</item>
+
  </tech>
 
  <tech name="__Heavy Weapon License">

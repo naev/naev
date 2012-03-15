@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Virtual Za'lek Unpresence">
+ <virtual/>
+ <presence>
+  <faction>Za'lek</faction>
+  <value>-1000.000000</value>
+  <range>0</range>
+ </presence>
+</asset>

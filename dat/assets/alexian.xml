@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Alexian">
+ <pos>
+  <x>-3537.609701</x>
+  <y>-11739.034437</y>
+ </pos>
+ <GFX>
+  <space>M00.png</space>
+  <exterior>aquatic.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Za'lek</faction>
+  <value>200.000000</value>
+  <range>5</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>3500000</population>
+  <hide>0.100000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>Alexian is the closest thing the Za'lek have to a capital. It is where the COnsortium of Universities convene, and where the Acadamy of Military Sciences makes its headquarters. Much of the planet is off-limits to outsiders, but the spaceport and bar are both open to the public.</description>
+  <bar>the bar is populated by scientists and groups of Military Acadamy cadets chatting amiably. Nontheless there seems to be a lot of tension between certain groups of Za'lek.</bar>
+ </general>
+ <tech>
+  <item>Laser 1</item>
+  <item>Laser 2</item>
+  <item>Ion 1</item>
+  <item>Star Maps</item>
+  <item>Basic Civilian Ships</item>
+  <item>Basic Trade Ships</item>
+  <item>Bulk Trade Ships</item>
+  <item>Low Tech Upgrades</item>
+  <item>Basic Outfits 1</item>
+  <item>Basic Outfits 2</item>
+  <item>Kinetic 1</item>
+  <item>Missiles 1</item>
+ </tech>
+</asset>

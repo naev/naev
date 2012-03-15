@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Eiger">
+ <pos>
+  <x>9892.364074</x>
+  <y>-761.783789</y>
+ </pos>
+ <GFX>
+  <space>I00.png</space>
+  <exterior>traderoom.png</exterior>
+ </GFX>
+ <general>
+  <class>I</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

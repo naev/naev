@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Menaan">
+ <pos>
+  <x>14141.718276</x>
+  <y>-19473.711674</y>
+ </pos>
+ <GFX>
+  <space>O01.png</space>
+  <exterior>aquatic2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Za'lek</faction>
+  <value>400.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>O</class>
+  <population>3000000</population>
+  <hide>0.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+  </services>
+  <commodities/>
+  <description>Menaan is a civilian world, remaining as neutral as the station that polices it. It is a common retirement and vactation spot all across Za'lek space. Several minor un iversities call this place home, and it is here where the gap between the intellectual elite and the common man is the thinnest.</description>
+  <bar>The bar is a snapshot of theZa'lek population as a whole. Several group of scientists and intellectuals are arguing over theirt pet thories and ideas, while many of the laborers and soldiers ignore them in favor of their day-to-day lives. It is a lively place with a lot to do.</bar>
+ </general>
+</asset>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Kaiser Station">
+ <pos>
+  <x>-3070.704994</x>
+  <y>2246.857313</y>
+ </pos>
+ <GFX>
+  <space>station-cylinder.png</space>
+  <exterior>station05.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Za'lek</faction>
+  <value>250.000000</value>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>A</class>
+  <population>5000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>Kaiser Station is a focal point for traffic coming into and out of the Za'lek core. The station is mostly policed by older crewmen who accepted a quieter assignment before they retire to a nicer world. Several factions have secretly fought over the station, but it remains aggressively neutral in internal squabbles.</description>
+ </general>
+ <tech>
+  <item>Basic Civilian Ships</item>
+  <item>Heavy Civilian Combat Ships</item>
+  <item>High Tech Upgrades 1</item>
+  <item>High Tech Upgrades 2</item>
+  <item>Kinetic 2</item>
+  <item>Laser 2</item>
+  <item>Laser 3</item>
+  <item>Basic Outfits 1</item>
+  <item>Light Civilian Combat Ships</item>
+ </tech>
+</asset>

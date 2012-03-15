@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Gilgamesh">
+ <pos>
+  <x>-15151.058834</x>
+  <y>8749.681078</y>
+ </pos>
+ <GFX>
+  <space>K03.png</space>
+  <exterior>gas.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Za'lek</faction>
+  <value>200.000000</value>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>Y</class>
+  <population>100000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+  </services>
+  <commodities/>
+  <description>Gilgamesh is a hostile world, virtually useless to most. However, it has valuable minerals in it's crust, so mining operations take place here. Besides that, there is nothing else of interest.</description>
+ </general>
+</asset>

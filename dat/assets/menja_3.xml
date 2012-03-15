@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Menja 3">
+ <pos>
+  <x>3093.077562</x>
+  <y>-13049.352262</y>
+ </pos>
+ <GFX>
+  <space>H02.png</space>
+  <exterior>station05.png</exterior>
+ </GFX>
+ <general>
+  <class>H</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

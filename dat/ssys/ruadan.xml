@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ssys name="Ruadan">
+ <general>
+  <radius>18000.000000</radius>
+  <stars>350</stars>
+  <interference>0.000000</interference>
+  <nebula volatility="0.000000">0.000000</nebula>
+ </general>
+ <pos>
+  <x>-523.154321</x>
+  <y>-1270.793210</y>
+ </pos>
+ <assets>
+  <asset>Ruadan</asset>
+  <asset>Virtual Pirate Unpresence</asset>
+  <asset>Virtual Za'lek Medium</asset>
+  <asset>Virtual Za'lek Small</asset>
+ </assets>
+ <jumps>
+  <jump target="Copernicus">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+ </jumps>
+</ssys>

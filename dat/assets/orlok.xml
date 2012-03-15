@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Orlok">
+ <pos>
+  <x>10159.463980</x>
+  <y>1686.854397</y>
+ </pos>
+ <GFX>
+  <space>D00.png</space>
+  <exterior>mining3.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Za'lek</faction>
+  <value>300.000000</value>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>D</class>
+  <population>75000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+  </services>
+  <commodities/>
+  <description>There is precious little to reccomend Orlok to anyone but miners and scientists who want to test their theories in peace. The planet is thoroughly strip-mined and several universities maintain labrotories here, which aren't open to the public. Beyond that, not much else.</description>
+ </general>
+</asset>

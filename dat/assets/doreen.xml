@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Doreen">
+ <pos>
+  <x>-14960.864995</x>
+  <y>-9771.487469</y>
+ </pos>
+ <GFX>
+  <space>P04.png</space>
+  <exterior>snow.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Za'lek</faction>
+  <value>300.000000</value>
+  <range>5</range>
+ </presence>
+ <general>
+  <class>P</class>
+  <population>2500000</population>
+  <hide>0.000000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities>
+   <commodity>Luxury Goods</commodity>
+   <commodity>Medicine</commodity>
+   <commodity>Food</commodity>
+  </commodities>
+  <description>Doreen is another university planet. Despite the unreleting cold, the planet is one of the more densely populated Za'lek worlds, with several repsectable universities having their main campus here. The standard of living his high, and much of the elite choose to make this world their home, despite the cold.</description>
+  <bar>This bar is higher-class than many others, with classy music playing in the background, and real wooden furniature. It's all self-serve, however. But the food is good and hot, and the drinks are cold. There's little else one could want.</bar>
+ </general>
+</asset>
