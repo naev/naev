@@ -1784,9 +1784,13 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
             xmlr_ulong(cur, "population", planet->population );
             xmlr_float(cur, "hide", planet->hide );
 
-            if (xml_isNode(cur,"class"))
-               planet->class =
-                  planetclass_get(cur->children->content[0]);
+            if (xml_isNode(cur,"class")) {
+               tmp = xml_get(cur);
+               if (tmp != NULL)
+                  planet->class = planetclass_get( tmp[0] );
+               else
+                  WARN("Planet '%s' has empty class tag.", planet->name);
+            }
             else if (xml_isNode(cur, "services")) {
                flags |= FLAG_SERVICESSET;
                ccur = cur->children;
