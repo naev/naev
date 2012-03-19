@@ -293,7 +293,9 @@ credits_t ship_basePrice( Ship* s )
  */
 glTexture* ship_loadCommGFX( Ship* s )
 {
-   return gl_newImage( s->gfx_comm, 0 );
+   if (s->gfx_comm != NULL)
+      return gl_newImage( s->gfx_comm, 0 );
+   return NULL;
 }
 
 
