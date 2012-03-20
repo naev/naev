@@ -9,7 +9,7 @@
  </general>
  <specific type="modification">
   <cpu>1</cpu>
-  <energy>-10</energy>
+  <energy_regen>-10</energy_regen>
   <ew_jump_detect>60</ew_jump_detect>
  </specific>
 </outfit>
