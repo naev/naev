@@ -88,8 +88,9 @@ static const ShipStatsLookup ss_lookup[] = {
    D__ELEM( SS_TYPE_D_ARMOUR_REGEN_MOD,   armour_regen_mod, "Armour regeneration" ),
    D__ELEM( SS_TYPE_D_SHIELD_MOD,         shield_mod,    "Shield strength" ),
    D__ELEM( SS_TYPE_D_SHIELD_REGEN_MOD,   shield_regen_mod, "Shield regeneration" ),
-   D__ELEM( SS_TYPE_D_ENERGY_MOD,         energy_mod,    "Energy strength" ),
+   D__ELEM( SS_TYPE_D_ENERGY_MOD,         energy_mod,    "Energy capacity" ),
    D__ELEM( SS_TYPE_D_ENERGY_REGEN_MOD,   energy_regen_mod, "Energy regeneration" ),
+   D__ELEM( SS_TYPE_D_CPU_MOD,            cpu_mod,       "CPU capacity" ),
 
    DI_ELEM( SS_TYPE_D_JUMP_DELAY,         jump_delay,    "Jump Time" ),
    DI_ELEM( SS_TYPE_D_CARGO_INERTIA,      cargo_inertia, "Cargo Inertia" ),
