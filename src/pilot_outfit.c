@@ -856,16 +856,6 @@ void pilot_calcStats( Pilot* pilot )
 
    /* Slot voodoo. */
    s        = &pilot->stats;
-   /*
-    * Electronic warfare setting base parameters.
-    * @TODO ew_hide and ew_detect should be squared so XML-sourced values are linear.
-    */
-   s->ew_hide           = 1. + (s->ew_hide-1.) * exp( -0.2 * (double)(MAX(amount.ew_hide-1,0)) );
-   s->ew_detect         = 1. + (s->ew_detect-1.) * exp( -0.2 * (double)(MAX(amount.ew_detect-1,0)) );
-   s->ew_jump_detect    = 1. + (s->ew_jump_detect-1.) * exp( -0.2 * (double)(MAX(amount.ew_jump_detect-1,0)) );
-   pilot->ew_base_hide  = s->ew_hide;
-   pilot->ew_detect     = s->ew_detect;
-   pilot->ew_jump_detect = pow2(s->ew_jump_detect);
 
    /*
     * now add outfit changes
@@ -968,6 +958,16 @@ void pilot_calcStats( Pilot* pilot )
    if (amount.tur_firerate > 0) {
       s->tur_firerate = 1. + (s->tur_firerate-1.) * exp( -0.15 * (double)(MAX(amount.tur_firerate-1,0)) );
    }
+   /*
+    * Electronic warfare setting base parameters.
+    * @TODO ew_hide and ew_detect should be squared so XML-sourced values are linear.
+    */
+   s->ew_hide           = 1. + (s->ew_hide-1.) * exp( -0.2 * (double)(MAX(amount.ew_hide-1,0)) );
+   s->ew_detect         = 1. + (s->ew_detect-1.) * exp( -0.2 * (double)(MAX(amount.ew_detect-1,0)) );
+   s->ew_jump_detect    = 1. + (s->ew_jump_detect-1.) * exp( -0.2 * (double)(MAX(amount.ew_jump_detect-1,0)) );
+   pilot->ew_base_hide  = s->ew_hide;
+   pilot->ew_detect     = s->ew_detect;
+   pilot->ew_jump_detect = pow2(s->ew_jump_detect);
 
    /* Increase health by relative bonuses. */
    pilot->armour_max += arel * pilot->ship->armour;
