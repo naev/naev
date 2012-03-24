@@ -44,10 +44,7 @@
 #define XML_OUTFIT_TAG     "outfit"    /**< XML section identifier. */
 
 
-#define OUTFIT_SHORTDESC_MAX  256
-
-
-#define CHUNK_SIZE            64 /**< Size to reallocate by. */
+#define OUTFIT_SHORTDESC_MAX  256 /**< Max length of the short description of the outfit. */
 
 
 /*
