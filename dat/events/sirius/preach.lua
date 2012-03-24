@@ -405,4 +405,5 @@ function jumpCleanup()
 			j:hyperspace(target,true) --attack back as they move away?
 		end
 	end
+	evt.finish()
 end
