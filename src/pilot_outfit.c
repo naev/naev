@@ -918,7 +918,6 @@ void pilot_calcStats( Pilot* pilot )
          pilot->cargo_free    += o->u.mod.cargo;
          pilot->mass_outfit   += o->u.mod.mass_rel * pilot->ship->mass;
          pilot->crew          += o->u.mod.crew_rel * pilot->ship->crew;
-         pilot->ew_base_hide  += o->u.mod.hide_rel * pilot->ew_base_hide;
          /*
           * Stats.
           */
@@ -952,19 +951,19 @@ void pilot_calcStats( Pilot* pilot )
     *  6x 15% -> 42.51%
     */
    if (amount.fwd_firerate > 0) {
-      s->fwd_firerate = 1. + (s->fwd_firerate-1.) * exp( -0.15 * (double)(MAX(amount.fwd_firerate-1,0)) );
+      s->fwd_firerate = 1. + (s->fwd_firerate-1.) * exp( -0.15 * (double)(MAX(amount.fwd_firerate-1.,0)) );
    }
    /* Cruiser. */
    if (amount.tur_firerate > 0) {
-      s->tur_firerate = 1. + (s->tur_firerate-1.) * exp( -0.15 * (double)(MAX(amount.tur_firerate-1,0)) );
+      s->tur_firerate = 1. + (s->tur_firerate-1.) * exp( -0.15 * (double)(MAX(amount.tur_firerate-1.,0)) );
    }
    /*
     * Electronic warfare setting base parameters.
     * @TODO ew_hide and ew_detect should be squared so XML-sourced values are linear.
     */
-   s->ew_hide           = 1. + (s->ew_hide-1.)        * exp( -0.2 * (double)(MAX(amount.ew_hide-1,0)) );
-   s->ew_detect         = 1. + (s->ew_detect-1.)      * exp( -0.2 * (double)(MAX(amount.ew_detect-1,0)) );
-   s->ew_jump_detect    = 1. + (s->ew_jump_detect-1.) * exp( -0.2 * (double)(MAX(amount.ew_jump_detect-1,0)) );
+   s->ew_hide           = 1. + (s->ew_hide-1.)        * exp( -0.2 * (double)(MAX(amount.ew_hide-1.,0)) );
+   s->ew_detect         = 1. + (s->ew_detect-1.)      * exp( -0.2 * (double)(MAX(amount.ew_detect-1.,0)) );
+   s->ew_jump_detect    = 1. + (s->ew_jump_detect-1.) * exp( -0.2 * (double)(MAX(amount.ew_jump_detect-1.,0)) );
    pilot->ew_base_hide  = s->ew_hide;
    pilot->ew_detect     = s->ew_detect;
    pilot->ew_jump_detect = pow2(s->ew_jump_detect);
