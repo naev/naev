@@ -291,6 +291,7 @@ function getJmpMessage()
    local sel = rnd.rnd(1, #mytargets)
    local myfunc = function()
                      mytargets[sel]:setKnown(true)
+                     mytargets[sel]:system():setKnown(true, false)
                   end
 
    -- Don't need to remove messages from tables here.
