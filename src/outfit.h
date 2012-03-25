@@ -280,7 +280,8 @@ typedef struct OutfitMapData_s OutfitMapData_t;
  * @brief Represents a local map.
  */
 typedef struct OutfitLocalMapData_ {
-   double hide; /**< Hide level to detect. */
+   double jump_detect;     /**< Ability to detect jumps. */
+   double asset_detect;    /**< Ability to detect assets. */
 } OutfitLocalMapData;
 
 /**

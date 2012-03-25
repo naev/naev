@@ -1790,10 +1790,13 @@ static void outfit_parseSLocalMap( Outfit *temp, const xmlNodePtr parent )
 
    do {
       xml_onlyNodes(node);
-      xmlr_float(node,"hide",temp->u.lmap.hide);
+      xmlr_float(node,"asset_detect",temp->u.lmap.asset_detect);
+      xmlr_float(node,"jump_detect",temp->u.lmap.jump_detect);
       WARN("Outfit '%s' has unknown node '%s'",temp->name, node->name);
    } while (xml_nextNode(node));
 
+   temp->u.lmap.asset_detect = pow2( temp->u.lmap.asset_detect );
+   temp->u.lmap.jump_detect  = pow2( temp->u.lmap.jump_detect );
 
    /* Set short description. */
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
@@ -2154,7 +2157,6 @@ int outfit_mapParse (void)
       o = outfit_get(xml_nodeProp(node,"name"));
 
       if (!outfit_isMap(o)) { /* If its not a map, we don't care. */
-         WARN("%s is not a map",file);
          continue;
       }
 

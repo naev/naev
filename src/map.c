@@ -1658,16 +1658,30 @@ int localmap_map( const Outfit *lmap )
 {
    int i;
    JumpPoint *jp;
-   double hide;
+   Planet *p;
+   double detect, mod;
 
    if (cur_system==NULL)
       return 0;
 
-   hide = lmap->u.lmap.hide;
+   mod = pow2( 200. / (cur_system->interference + 200.) );
+
+   detect = lmap->u.lmap.jump_detect;
    for (i=0; i<cur_system->njumps; i++) {
       jp = &cur_system->jumps[i];
-      if (jp->hide >= hide)
+      if (jp_isFlag(jp, JP_EXITONLY) || jp_isFlag(jp, JP_HIDDEN))
+         continue;
+      if (mod*jp->hide <= detect)
          jp_setFlag( jp, JP_KNOWN );
+   }
+
+   detect = lmap->u.lmap.asset_detect;
+   for (i=0; i<cur_system->nplanets; i++) {
+      p = cur_system->planets[i];
+      if (p->real != ASSET_REAL)
+         continue;
+      if (mod*p->hide <= detect)
+         planet_setKnown( p );
    }
    return 0;
 }
@@ -1679,17 +1693,30 @@ int localmap_isMapped( const Outfit *lmap )
 {
    int i;
    JumpPoint *jp;
-   double hide;
+   Planet *p;
+   double detect, mod;
 
    if (cur_system==NULL)
-      return 0;
+      return 1;
 
-   hide = lmap->u.lmap.hide;
+   mod = pow2( 200. / (cur_system->interference + 200.) );
+
+   detect = lmap->u.lmap.jump_detect;
    for (i=0; i<cur_system->njumps; i++) {
       jp = &cur_system->jumps[i];
-      if ((jp->hide < hide) || jp_isKnown( jp ))
+      if (jp_isFlag(jp, JP_EXITONLY) || jp_isFlag(jp, JP_HIDDEN))
          continue;
-      return 0;
+      if ((mod*jp->hide <= detect) && !jp_isKnown( jp ))
+         return 0;
+   }
+
+   detect = lmap->u.lmap.asset_detect;
+   for (i=0; i<cur_system->nplanets; i++) {
+      p = cur_system->planets[i];
+      if (p->real != ASSET_REAL)
+         continue;
+      if ((mod*p->hide <= detect) && !planet_isKnown( p ))
+         return 0;
    }
    return 1;
 }
