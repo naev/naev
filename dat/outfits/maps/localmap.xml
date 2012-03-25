@@ -2,7 +2,7 @@
 <outfit name="Local System Map">
  <general>
   <mass>0</mass>
-  <price>25000</price>
+  <price>5000</price>
   <description>This map contains information about the local system.</description>
   <gfx_store>map</gfx_store>
  </general>
