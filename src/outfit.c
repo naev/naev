@@ -73,6 +73,7 @@ static void outfit_parseSJammer( Outfit *temp, const xmlNodePtr parent );
 static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent );
 static void outfit_parseSFighter( Outfit *temp, const xmlNodePtr parent );
 static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent );
+static void outfit_parseSLocalMap( Outfit *temp, const xmlNodePtr parent );
 static void outfit_parseSGUI( Outfit *temp, const xmlNodePtr parent );
 static void outfit_parseSLicense( Outfit *temp, const xmlNodePtr parent );
 
@@ -475,6 +476,15 @@ int outfit_isMap( const Outfit* o )
    return (o->type==OUTFIT_TYPE_MAP);
 }
 /**
+ * @brief Checks if outfit is a local space map.
+ *    @param o Outfit to check.
+ *    @return 1 if o is a map.
+ */
+int outfit_isLocalMap( const Outfit* o )
+{
+   return (o->type==OUTFIT_TYPE_LOCALMAP);
+}
+/**
  * @brief Checks if outfit is a license.
  *    @param o Outfit to check.
  *    @return 1 if o is a license.
@@ -759,6 +769,7 @@ const char* outfit_getTypeBroad( const Outfit* o )
    else if (outfit_isFighterBay(o)) return "Fighter Bay";
    else if (outfit_isFighter(o))    return "Fighter";
    else if (outfit_isMap(o))        return "Map";
+   else if (outfit_isLocalMap(o))   return "Local Map";
    else if (outfit_isGUI(o))        return "GUI";
    else if (outfit_isLicense(o))    return "License";
    else                             return "Unknown";
@@ -848,6 +859,7 @@ static OutfitType outfit_strToOutfitType( char *buf )
    O_CMP("fighter",        OUTFIT_TYPE_FIGHTER);
    O_CMP("jammer",         OUTFIT_TYPE_JAMMER);
    O_CMP("map",            OUTFIT_TYPE_MAP);
+   O_CMP("localmap",       OUTFIT_TYPE_LOCALMAP);
    O_CMP("license",        OUTFIT_TYPE_LICENSE);
    O_CMP("gui",            OUTFIT_TYPE_GUI);
 
@@ -1763,6 +1775,35 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
 
 
 /**
+ * @brief Parses the map tidbits of the outfit.
+ *
+ *    @param temp Outfit to finish loading.
+ *    @param parent Outfit's parent node.
+ */
+static void outfit_parseSLocalMap( Outfit *temp, const xmlNodePtr parent )
+{
+   xmlNodePtr node;
+   node = parent->children;
+
+   temp->slot.type         = OUTFIT_SLOT_NA;
+   temp->slot.size         = OUTFIT_SLOT_SIZE_NA;
+
+   do {
+      xml_onlyNodes(node);
+      xmlr_float(node,"hide",temp->u.lmap.hide);
+      WARN("Outfit '%s' has unknown node '%s'",temp->name, node->name);
+   } while (xml_nextNode(node));
+
+
+   /* Set short description. */
+   temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
+   nsnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
+         "%s",
+         outfit_getType(temp) );
+}
+
+
+/**
  * @brief Parses the GUI tidbits of the outfit.
  *
  *    @param temp Outfit to finish loading.
@@ -1989,6 +2030,8 @@ static int outfit_parse( Outfit* temp, const char* file )
             temp->slot.type         = OUTFIT_SLOT_NA;
             temp->slot.size         = OUTFIT_SLOT_SIZE_NA;
          }
+         else if (outfit_isLocalMap(temp))
+            outfit_parseSLocalMap( temp, node );
          else if (outfit_isGUI(temp))
             outfit_parseSGUI( temp, node );
          else if (outfit_isLicense(temp))
@@ -2082,8 +2125,7 @@ int outfit_load (void)
  * @brief Parses all the maps.
  *
  */
-
-int outfit_mapParse()
+int outfit_mapParse (void)
 {
    int i;
    Outfit *o;
