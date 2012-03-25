@@ -1652,6 +1652,50 @@ int map_isMapped( const Outfit* map )
 
 
 /**
+ * @brief Maps a local map.
+ */
+int localmap_map( const Outfit *lmap )
+{
+   int i;
+   JumpPoint *jp;
+   double hide;
+
+   if (cur_system==NULL)
+      return 0;
+
+   hide = lmap->u.lmap.hide;
+   for (i=0; i<cur_system->njumps; i++) {
+      jp = &cur_system->jumps[i];
+      if (jp->hide >= hide)
+         jp_setFlag( jp, JP_KNOWN );
+   }
+   return 0;
+}
+
+/**
+ * @brief Checks to see if the local map is mapped.
+ */
+int localmap_isMapped( const Outfit *lmap )
+{
+   int i;
+   JumpPoint *jp;
+   double hide;
+
+   if (cur_system==NULL)
+      return 0;
+
+   hide = lmap->u.lmap.hide;
+   for (i=0; i<cur_system->njumps; i++) {
+      jp = &cur_system->jumps[i];
+      if ((jp->hide < hide) || jp_isKnown( jp ))
+         continue;
+      return 0;
+   }
+   return 1;
+}
+
+
+/**
  * @brief Shows a map at x, y (relative to wid) with size w,h.
  *
  *    @param wid Window to show map on.

@@ -128,6 +128,7 @@
   <item>Map: Dvaered Core</item>
   <item>Map: Empire Core</item>
   <item>Map: Pirate strongholds</item>
+  <item>Local System Map</item>
   <item>Unicorp Scrambler</item>
   <item>Milspec Scrambler</item>
   <item>Unicorp Jammer</item>
@@ -431,6 +432,7 @@
   <item>Map: Sol</item>
   <item>Map: Dvaered Core</item>
   <item>Map: Empire Core</item>
+  <item>Local System Map</item>
  </tech>
 
  <!-- Ships -->

@@ -343,9 +343,9 @@ int outfit_canBuy( char *name )
    char buf[ECON_CRED_STRLEN];
 
    failure = 0;
-   q = outfits_getMod();
-   outfit = outfit_get(name);
-   price = outfit->price * q;
+   q       = outfits_getMod();
+   outfit  = outfit_get(name);
+   price   = outfit->price * q;
 
    /* takes away cargo space but you don't have any */
    if (outfit_isMod(outfit) && (outfit->u.mod.cargo < 0)
@@ -354,7 +354,8 @@ int outfit_canBuy( char *name )
       failure = 1;
    }
    /* Map already mapped */
-   if (outfit_isMap(outfit) && map_isMapped(outfit)) {
+   if ((outfit_isMap(outfit) && map_isMapped(outfit)) ||
+         (outfit_isLocalMap(outfit) && localmap_isMapped(outfit))) {
       land_errDialogueBuild( "You already own this map." );
       failure = 1;
       return 0;
@@ -436,7 +437,7 @@ int outfit_canSell( char *name )
    outfit = outfit_get(name);
 
    /* Map check. */
-   if (outfit_isMap(outfit)) {
+   if (outfit_isMap(outfit) || outfit_isLocalMap(outfit)) {
       land_errDialogueBuild("You can't sell a map.");
       failure = 1;
    }
