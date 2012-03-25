@@ -288,6 +288,7 @@
   <item>Star Maps</item>
   <item>Large Civilian Vessel License</item>
   <item>GUI - Brushed</item>
+  <item>Local System Map</item>
   </tech>
  <tech name="Basic Outfits 2">
   <item>Laser Cannon MK2</item>
@@ -310,6 +311,7 @@
   <item>Unicorp Medusa Launcher</item>
   <item>Jump Scanner</item>
   <item>Medusa Missile</item>
+  <item>Local System Map</item>
   </tech>
  <tech name="Heavy Weapons 1">
   <item>Laser Turret MK1</item>

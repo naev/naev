@@ -7,7 +7,7 @@
   <gfx_store>map</gfx_store>
  </general>
  <specific type="localmap">
-  <jump_detect>0.5</jump_detect>
-  <asset_detect>0.5</asset_detect>
+  <jump_detect>1.25</jump_detect>
+  <asset_detect>0.75</asset_detect>
  </specific>
 </outfit>
