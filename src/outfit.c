@@ -738,7 +738,8 @@ const char* outfit_getType( const Outfit* o )
          "Jammer",
          "Fighter Bay",
          "Fighter",
-         "Map",
+         "Star Map",
+         "Local Map",
          "GUI",
          "License"
    };
@@ -1768,8 +1769,10 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
    array_shrink(&temp->u.map->jumps);
 
    if (temp->desc_short == NULL) {
+      /* Set short description based on type. */
       temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
-      WARN("Map '%s' has no short description",temp->name);
+      nsnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
+            "%s", outfit_getType(temp) );
    }
 }
 
