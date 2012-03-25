@@ -1703,8 +1703,8 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
    temp->slot.size         = OUTFIT_SLOT_SIZE_NA;
 
    temp->u.map->systems = array_create(StarSystem*);
-   temp->u.map->assets = array_create(Planet*);
-   temp->u.map->jumps = array_create(JumpPoint*);
+   temp->u.map->assets  = array_create(Planet*);
+   temp->u.map->jumps   = array_create(JumpPoint*);
 
    do {
       xml_onlyNodes(node);
