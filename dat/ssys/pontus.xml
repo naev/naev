@@ -12,6 +12,10 @@
  </pos>
  <assets/>
  <jumps>
+  <jump target="Capricorn">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
   <jump target="Fortitude">
    <autopos/>
    <hide>1.250000</hide>
