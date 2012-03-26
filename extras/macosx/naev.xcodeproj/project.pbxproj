@@ -1742,7 +1742,7 @@
 				VALID_ARCHS = "i386 x86_64";
 				VMAJOR = 0;
 				VMINOR = 5;
-				VREV = 1;
+				VREV = 2;
 			};
 			name = Debug;
 		};
@@ -1785,7 +1785,7 @@
 				USE_OPENAL = 1;
 				VMAJOR = 0;
 				VMINOR = 5;
-				VREV = 1;
+				VREV = 2;
 			};
 			name = Release;
 		};
