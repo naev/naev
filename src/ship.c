@@ -29,7 +29,6 @@
 #include "nfile.h"
 
 
-#define XML_ID    "Ships"  /**< XML document identifier */
 #define XML_SHIP  "ship" /**< XML individual ship identifier. */
 
 #define SHIP_EXT     ".png" /**< Ship graphics extension format. */

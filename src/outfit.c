@@ -39,8 +39,6 @@
 
 #define outfit_setProp(o,p)      ((o)->properties |= p) /**< Checks outfit property. */
 
-
-#define XML_OUTFIT_ID      "Outfits"   /**< XML section identifier. */
 #define XML_OUTFIT_TAG     "outfit"    /**< XML section identifier. */
 
 
