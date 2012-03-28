@@ -8,6 +8,7 @@
 </head>
 
 <body>
+<%=luadoc.doclet.html.include("header.lp")%>
 <div id="container">
 
 <div id="product">
