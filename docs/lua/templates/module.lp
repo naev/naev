@@ -2,12 +2,13 @@
    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
 <head>
-    <title>Naev Lua API</title>
+    <title>Naev Lua API: <%=module_doc.name%></title>
     <link rel="stylesheet" href="<%=luadoc.doclet.html.link('luadoc.css', 'modules/'..module_doc.name)%>" type="text/css" />
 	<!--meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/-->
 </head>
 
 <body>
+<%=luadoc.doclet.html.include("header.lp")%>
 <div id="container">
 
 <div id="product">
