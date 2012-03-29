@@ -123,6 +123,9 @@ div.header, div.footer { margin-left: 0em; }
 
 #product_description
 {
+   margin: auto;
+   text-align: justify;
+   width: 50%;
 }
 
 #main
