@@ -20,7 +20,7 @@ class yamlLabelReader:
         import yaml
         self.ydata = yaml.load(stream)
 
-    def getShipStatsLabels(label):
+    def getShipStatsLabels(self, label):
         """
         Custom filter for the template enigne. Translate the xml values in
         pretty form.
@@ -29,7 +29,7 @@ class yamlLabelReader:
         labels = self.ydata['shipstats']
         return labels[label] if labels.has_key(label) else label+"(NOTFOUND)"
 
-    def getStatsLabelsLabel(label):
+    def getStatsLabelsLabel(self, label):
         """
         Custom filter for the template engine. Explain the components.
         usage: {{ stat|getStatsLabelsLabel }}
@@ -73,6 +73,10 @@ class harvester:
                         self.shipSortBy.update({details.tag: {}})
                     if not self.shipSortBy[details.tag].has_key(details.text):
                         self.shipSortBy[details.tag].update({details.text:[]})
+
+                # seems empty, ignoring. <- perhapse not a good idea
+                if not details.text:
+                    continue
 
                 # my, my ... You're quite empty. Let's go for the children.
                 if '\n  ' in details.text:
