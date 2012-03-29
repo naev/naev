@@ -612,7 +612,7 @@ void conf_parseCLI( int argc, char** argv )
 
          case 'C':
             conf.devcsv = 1;
-            LOG("Will generate CVS ouptut.");
+            LOG("Will generate CSV ouptut.");
             break;
 #endif /* DEBUGGING */
 

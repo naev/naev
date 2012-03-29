@@ -334,7 +334,7 @@ int main( int argc, char** argv )
    /* Data loading */
    load_all();
 
-   /* Generate the CVS. */
+   /* Generate the CSV. */
    if (conf.devcsv)
       dev_csv();
 
