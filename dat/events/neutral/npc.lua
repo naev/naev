@@ -59,7 +59,8 @@ else --default english
                                "Ah man, I lost all my money on Totoran. I love the fights they stage there, but the guys I bet on always lose. What am I doing wrong?",
                                "Don't try to fly into the inner nebula. I've known people who tried, and none of them came back.",
                                "Have you heard of Captain T. Practice? He's amazing, I'm his biggest fan!",
-                               "I wouldn't travel north from Alteris if I were you, unless you're a good fighter! That area of space has really gone down the drain since the Incident."
+                               "I wouldn't travel north from Alteris if I were you, unless you're a good fighter! That area of space has really gone down the drain since the Incident.",
+                               "Sometimes I look at the stars and wonder... are we the only sentient species in the universe?",
                               }
 
    msg_lore["Independent"] =  {"We're not part of any of the galactic superpowers. We can take care of ourselves!",
@@ -80,7 +81,8 @@ else --default english
                                "You better not mess with House Dvaered. Our military is the largest and strongest in the galaxy. Nobody can stand up to us!",
                                "House Dvaered? House? The Empire is weak and useless, we don't need them anymore! I say we declare ourselves an independent faction today. What are they going to do, subjugate us? We all know how well that went last time! Ha!",
                                "I'm thinking about joining the military. Every time I see or hear news about those rotten FLF bastards, it makes my blood boil! They should all be pounded into space dust!",
-                               "FLF terrorists? I'm not too worried about them. You'll see, High Command will have smoked them out of their den soon enough, and then the Frontier will be ours."
+                               "FLF terrorists? I'm not too worried about them. You'll see, High Command will have smoked them out of their den soon enough, and then the Frontier will be ours.",
+                               "Did you know that House Dvaered was named after a hero of the revolt? At least that's what my grandparents told me.",
                               }
 
    msg_lore["Sirius"] =       {"Greetings, traveler. May Sirichana's wisdom guide you as it guides me.",
@@ -89,17 +91,22 @@ else --default english
                                "My cousin was called to Mutris a cycle ago... He must be in Crater City by now. And one day, he will become one of the Touched!",
                                "Some people say Sirius society is unfair because our echelons are determined by birth. But even though we are different, we are all followers of Sirichana. Spiritually, we are equal.",
                                "House Sirius is officially part of the Empire, but everyone knows that's only true on paper. The Emperor has nothing to say in these systems. We follow Sirichana, and no-one else.",
-                               "You can easily tell the different echelons apart. Every Sirian citizen and soldier wears clothing appropriate to his or her echelon."
+                               "You can easily tell the different echelons apart. Every Sirian citizen and soldier wears clothing appropriate to his or her echelon.",
+                               "I hope to meet one of the Touched one day!",
                               }
 
    msg_lore["Soromid"] =      {"Hello. Can I interest you in one of our galaxy famous cosmetic gene treatments? You look like you could use them...",
                                "Can you believe it? I was going to visit Sorom to find my roots, and then boom! It got burnt to a crisp! Even now, cycles later, I still can't believe it.",
                                "Yes, it's true, our military ships are alive. Us normal folk don't get to own bioships though, we have to make do with synthetic constructs just like everyone else.",
-                               "Everyone knows that we Soromid altered ourselves to survive the deadly conditions on Sorom during the Great Quarantine. What you don't hear so often is that billions of us died from the therapy itself. We paid a high price for survival."
+                               "Everyone knows that we Soromid altered ourselves to survive the deadly conditions on Sorom during the Great Quarantine. What you don't hear so often is that billions of us died from the therapy itself. We paid a high price for survival.",
+                               "Our cosmetic gene treatments are even safer now for non-soromids, with a rate of survival of 99.4%!",
+                               "We have been rebuilding and enhancing our bodies for so long. I say we became a new species, one above human",
                               }
 
-   msg_lore["Za'lek"] =       {"It's not easy, dancing to those scientists' tunes. They give you the most impossible tasks! Like, where am I supposed to get a triple redundant helitron converter? Honestly."
-                              }
+   msg_lore["Za'lek"] =       {"It's not easy, dancing to those scientists' tunes. They give you the most impossible tasks! Like, where am I supposed to get a triple redundant helitron converter? Honestly.",
+                               "The Soromids? Hah! We Za'lek are the only true scientists in this galaxy.",
+                               "I don't understand why we bother sending our research results to the Empire. These simpletons can't understand the simplest formulas!",
+                               }
 
    msg_lore["Proteron"] =     {"Hello, traveler. Welcome to Proteron space. We are an evil, power hungry dystopia on a quest for dominance over the galaxy. Would you like a brochure?"
                               }
@@ -113,7 +120,8 @@ else --default english
                                "You know the Frontier Liberation Front? They're the guerilla movement that fights for the Frontier. Not to be confused with the Liberation Front of the Frontier, the Frontier Front for Liberation, or the Liberal Frontier's Front!"
                               }
 
-   msg_lore["Pirate"] =       {"Hi mate. Money or your life! Heh heh, just messing with you."
+   msg_lore["Pirate"] =       {"Hi mate. Money or your life! Heh heh, just messing with you.",
+                               "Hey, look at these new scars I got!",
                               }
 
    -- Gameplay tip messages.
@@ -283,6 +291,7 @@ function getJmpMessage()
    local sel = rnd.rnd(1, #mytargets)
    local myfunc = function()
                      mytargets[sel]:setKnown(true)
+                     mytargets[sel]:system():setKnown(true, false)
                   end
 
    -- Don't need to remove messages from tables here.
@@ -303,39 +312,34 @@ end
 
 -- Returns a mission hint message, a mission after-care message, OR a lore message if no missionlikes are left.
 function getMissionLikeMessage()
-   -- Hints.
-   -- Hint messages are only valid if the relevant mission has not been completed and is not currently active.
-   for i, j in pairs(msg_mhint) do
-      if player.misnDone(j[1]) or player.misnActive(j[1]) then
-         table.remove(msg_mhint, i)
-      end
-   end
-   for i, j in pairs(msg_ehint) do
-      if player.evtDone(j[1]) or player.evtActive(j[1]) then
-         table.remove(msg_ehint, i)
-      end
-   end
-
-   -- After-care.
-   -- After-care messages are only valid if the relevant mission has been completed.
-   for i, j in pairs(msg_mdone) do
-      if not player.misnDone(j[1]) then
-         table.remove(msg_mdone, i)
-      end
-   end
-   for i, j in pairs(msg_edone) do
-      if not player.evtDone(j[1]) then
-         table.remove(msg_edone, i)
-      end
-   end
-   
-   -- Combine message tables. We don't need to do any more mission/event tests after this.
    if not msg_combined then
       msg_combined = {}
-      for i, j in ipairs(msg_mhint) do msg_combined[#msg_combined + 1] = j[2] end
-      for i, j in ipairs(msg_ehint) do msg_combined[#msg_combined + 1] = j[2] end
-      for i, j in ipairs(msg_mdone) do msg_combined[#msg_combined + 1] = j[2] end
-      for i, j in ipairs(msg_edone) do msg_combined[#msg_combined + 1] = j[2] end
+
+      -- Hints.
+      -- Hint messages are only valid if the relevant mission has not been completed and is not currently active.
+      for i, j in pairs(msg_mhint) do
+         if not (player.misnDone(j[1]) or player.misnActive(j[1])) then
+            msg_combined[#msg_combined + 1] = j[2]
+         end
+      end
+      for i, j in pairs(msg_ehint) do
+         if not(player.evtDone(j[1]) or player.evtActive(j[1])) then
+            msg_combined[#msg_combined + 1] = j[2]
+         end
+      end
+   
+      -- After-care.
+      -- After-care messages are only valid if the relevant mission has been completed.
+      for i, j in pairs(msg_mdone) do
+         if player.misnDone(j[1]) then
+            msg_combined[#msg_combined + 1] = j[2]
+         end
+      end
+      for i, j in pairs(msg_edone) do
+         if player.evtDone(j[1]) then
+            msg_combined[#msg_combined + 1] = j[2]
+         end
+      end
    end
 
    if #msg_combined == 0 then

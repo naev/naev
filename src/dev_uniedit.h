@@ -9,6 +9,7 @@
 
 
 void uniedit_open( unsigned int wid_unused, char *unused );
+void uniedit_selectText (void);
 char *uniedit_nameFilter( char *name );
 
 

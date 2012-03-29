@@ -34,6 +34,10 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
 int map_map( const Outfit *map );
 int map_isMapped( const Outfit* map );
 
+/* Local map stuff. */
+int localmap_map( const Outfit *lmap );
+int localmap_isMapped( const Outfit *lmap );
+
 /* shows a map at x, y (relative to wid) with size w,h  */
 void map_show( int wid, int x, int y, int w, int h, double zoom );
 int map_center( const char *sys );

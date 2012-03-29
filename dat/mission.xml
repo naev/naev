@@ -21,6 +21,7 @@
    <faction>Frontier</faction>
    <faction>Goddard</faction>
    <faction>Sirius</faction>
+   <faction>Soromid</faction>
   </avail>
  </mission>
  <mission name="Empire Rehabilitation">
@@ -71,6 +72,7 @@
    <faction>Frontier</faction>
    <faction>Goddard</faction>
    <faction>Sirius</faction>
+   <faction>Soromid</faction>
   </avail>
  </mission>
  <mission name="Empire Recruitment">
@@ -616,6 +618,15 @@
   <avail>
    <chance>5</chance>
    <location>Bar</location>
+  </avail>
+ </mission>
+ <mission name="Sirius Pilgrimage Transport">
+  <lua>sirius/srs_ferry</lua>
+  <avail>
+   <chance>266</chance>
+   <cond>faction.playerStanding("Sirius") &gt; 5</cond>
+   <location>Computer</location>
+   <faction>Sirius</faction>
   </avail>
  </mission>
  <mission name="Sirian Bounty">

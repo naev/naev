@@ -26,7 +26,9 @@ function create ()
 end
 
 function startProblems()
-    -- TODO: cancel time compression here!
+    -- Cancel autonav.
+    player.cinematics(true)
+    player.cinematics(false)
     tk.msg(title[1], text[1])
     ps = player.pilot()
     ps:control()

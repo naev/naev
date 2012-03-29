@@ -99,8 +99,6 @@
 
 #define CONF_FILE       "conf.lua" /**< Configuration file by default. */
 #define VERSION_FILE    "VERSION" /**< Version file by default. */
-#define FONT_SIZE       12 /**< Normal font size. */
-#define FONT_SIZE_SMALL 10 /**< Small font size. */
 
 #define NAEV_INIT_DELAY 3000 /**< Minimum amount of time_ms to wait with loading screen */
 
@@ -274,8 +272,8 @@ int main( int argc, char** argv )
       exit(EXIT_FAILURE);
    }
    window_caption();
-   gl_fontInit( NULL, NULL, FONT_SIZE ); /* initializes default font to size */
-   gl_fontInit( &gl_smallFont, NULL, FONT_SIZE_SMALL ); /* small font */
+   gl_fontInit( NULL, NULL, conf.font_size_def ); /* initializes default font to size */
+   gl_fontInit( &gl_smallFont, NULL, conf.font_size_small ); /* small font */
 
    /* Display the load screen. */
    loadscreen_load();
@@ -332,7 +330,7 @@ int main( int argc, char** argv )
    /* Data loading */
    load_all();
 
-   /* Generate the CVS. */
+   /* Generate the CSV. */
    if (conf.devcsv)
       dev_csv();
 

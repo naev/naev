@@ -40,7 +40,7 @@ else -- default english
    title = {}
    text = {}
    title[1] = "In the bar"
-   text[1] = [[The bar rests in the dull clink of glasses and the scattered murmer of conversation when the door bursts open. An older couple stumbles in, faces gaping, eyes staring. They take a few steps before the woman sinks to her knees and bursts into tears.
+   text[1] = [[The bar rests in the dull clink of glasses and the scattered murmur of conversation when the door bursts open. An older couple stumbles in, faces gaping, eyes staring. They take a few steps before the woman sinks to her knees and bursts into tears.
 
 "Our son... his ship was supposed to land a minute ago," her partner says mechanically. "But pirates, suddenly everywhere-" he swallows. "-they didn't make it."  His wife throws her head back and wails.
 
@@ -68,17 +68,17 @@ When he shakes your hand, the Governor looks keenly at you at smiles, "Very well
 After meeting each surviving pilot, the tall man stands still for aide to attach an amplifier to his lapel. Then he turns his face to the news-casters and the crowd.]]
 
 -- Stage five: the commander welcomes you back
-   title[3] = "The Governor's speach"
+   title[3] = "The Governor's speech"
    text[3] = [[
-"Even here on %s, even in the protective embrace of civilization, we face many dangers. The ties that bind us through space to other worlds are fragile. When criminals attack these precious connections, they trouble the very foundations of our peace. How glad we are now for the security of the Empire whose young navy cadets led a team of independent pilots to defend us today."  The Governor turns to the pair of officers-in-training. "In the name of the Emperor, I have the privilege of decorating these two young heros with the %s Silver Heart. I hope they and their volunteers will not be too proud to also accept a generous purse, along with the gratitude of all our people. Please join me in applauding their bravery."
+"Even here on %s, even in the protective embrace of civilization, we face many dangers. The ties that bind us through space to other worlds are fragile. When criminals attack these precious connections, they trouble the very foundations of our peace. How glad we are now for the security of the Empire whose young navy cadets led a team of independent pilots to defend us today."  The Governor turns to the pair of officers-in-training. "In the name of the Emperor, I have the privilege of decorating these two young heroes with the %s Silver Heart. I hope they and their volunteers will not be too proud to also accept a generous purse, along with the gratitude of all our people. Please join me in applauding their bravery."
 
-The public ceremony only lasts a few minutes. Afterward, as interviewers draw the young navy officers aside and the crowd disperses, you catch sight of the elderly couple from the bar holding each other and looking up into the darkening sky.]]
+The public ceremony lasts only a few minutes. Afterwards, as interviewers draw the young navy officers aside and the crowd disperses, you catch sight of the elderly couple from the bar holding each other and looking up into the darkening sky.]]
 
 -- Other text for the mission
-   comm[8] = "You fled battle. The Empire wont forget."
+   comm[8] = "You fled from the battle. The Empire won't forget."
    comm[9] = "Comm Lancelot> You're a coward, %s. You better hope I never see you again."
    comm[10] = "Comm Lancelot> You're running away now, %s? The fight's finished, you know..."
-   title[4] = "Good job"
+   title[4] = "Good job!"
    text[4] = [[A freighter hails you as you jump into the system.
 
 "Thank you for responding %s, are you coming in from %s?  I have a delivery I need to get to %s and I can't wait much longer. Is the system safe now?"

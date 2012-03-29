@@ -81,7 +81,22 @@
   <lua>neutral/baron_comm</lua>
   <trigger>enter</trigger>
   <chance>4</chance>
-  <cond>player.misnDone("Baron") == false and var.peek("baron_active") == nil and system.cur():presence("friendly") &gt; 3.*system.cur():presence("hostile")</cond>
+  <cond>player.misnDone("Baron") == false and
+        player.misnActive("Baron") == false and
+        (
+           system.cur():faction() == faction.get("Empire") or
+           system.cur():faction() == faction.get("Dvaered") or
+           system.cur():faction() == faction.get("Sirius")
+        )
+  </cond>
+  <flags>
+  </flags>
+ </event>
+ <event name="Preacher">
+  <lua>sirius/preach</lua>
+  <trigger>enter</trigger>
+  <chance>10</chance>
+  <cond>system.cur():presence(faction.get("Sirius"))&gt;50 and (not player.evtActive ("Preacher")) and ( (var.peek("si_convert")==nil) or rnd.rnd(1,var.peek("si_convert")+1)==1)</cond>
   <flags>
   </flags>
  </event>

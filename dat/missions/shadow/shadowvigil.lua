@@ -86,7 +86,7 @@ else -- default english
     -- Endgame
     commmsg[11] = "This is Empire zero-zero-four. Transmitting clearance code now."
     commmsg[12] = "Empire zero-zero-four, your code checks out. Commence boarding maneuvers."
-    commmsg[13] = "This is leader, you're all clear. Execute, execute, execute!"
+    commmsg[13] = "This is your leader, you're all clear. Execute, execute, execute!"
     
     -- Refuel hint
     refueltitle = "Preparing for the job"
@@ -439,7 +439,7 @@ function diplomatJump()
             j:hyperspace(getNextSystem(system.cur(), misssys[stage])) -- Hyperspace toward the next destination system.
         end
     end
-    player.msg(string.format("Mission update: the diplomat has jumped for %s.", getNextSystem(system.cur(), misssys[stage]):name()))
+    player.msg(string.format("Mission update: The diplomat has jumped to %s.", getNextSystem(system.cur(), misssys[stage]):name()))
 end
 
 -- Handle the diplomat getting attacked.

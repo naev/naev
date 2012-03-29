@@ -10,7 +10,7 @@
  </general>
  <specific type="modification">
   <armour_regen>1.7</armour_regen>
-  <energy>-5</energy>
+  <energy_regen>-5</energy_regen>
   <energy_regen>-0.65</energy_regen>
  </specific>
 </outfit>

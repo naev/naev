@@ -72,6 +72,12 @@ typedef struct PlayerConf_s {
    double zoom_speed; /**< Maximum zoom speed change. */
    double zoom_stars; /**< How much stars can zoom (modulates zoom_[mix|max]). */
 
+   /* Font sizes. */
+   int font_size_console; /**< Console monospaced font size. */
+   int font_size_intro;   /**< Intro text font size. */
+   int font_size_def;     /**< Default large font size. */
+   int font_size_small;   /**< Default small font size. */
+
    /* Misc. */
    double compression_velocity; /**< Velocity to compress to. */
    double compression_mult; /**< Maximum time multiplier. */

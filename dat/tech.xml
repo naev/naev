@@ -128,10 +128,12 @@
   <item>Map: Dvaered Core</item>
   <item>Map: Empire Core</item>
   <item>Map: Pirate strongholds</item>
+  <item>Local System Map</item>
   <item>Unicorp Scrambler</item>
   <item>Milspec Scrambler</item>
   <item>Unicorp Jammer</item>
   <item>Milspec Jammer</item>
+  <item>Jump Scanner</item>
   <item>Lancelot Fighter Bay</item>
   <item>Lancelot Fighter</item>
   <item>Drone Fighter Bay</item>
@@ -286,6 +288,7 @@
   <item>Star Maps</item>
   <item>Large Civilian Vessel License</item>
   <item>GUI - Brushed</item>
+  <item>Local System Map</item>
   </tech>
  <tech name="Basic Outfits 2">
   <item>Laser Cannon MK2</item>
@@ -306,7 +309,9 @@
   <item>Large Civilian Vessel License</item>
   <item>GUI - Brushed</item>
   <item>Unicorp Medusa Launcher</item>
+  <item>Jump Scanner</item>
   <item>Medusa Missile</item>
+  <item>Local System Map</item>
   </tech>
  <tech name="Heavy Weapons 1">
   <item>Laser Turret MK1</item>
@@ -348,6 +353,7 @@
   <item>Star Maps</item>
   <item>Unicorp Scrambler</item>
   <item>Unicorp Jammer</item>
+  <item>Jump Scanner</item>
   <item>Light Combat Vessel License</item>
  </tech>
  <tech name="High Tech Upgrades 1">
@@ -428,6 +434,7 @@
   <item>Map: Sol</item>
   <item>Map: Dvaered Core</item>
   <item>Map: Empire Core</item>
+  <item>Local System Map</item>
  </tech>
 
  <!-- Ships -->

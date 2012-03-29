@@ -49,6 +49,7 @@ extern int pilot_nstack;
  * Prototypes.
  */
 static Task *pilotL_newtask( lua_State *L, Pilot* p, const char *task );
+static int pilotL_addFleetFrom( lua_State *L, int from_ship );
 
 
 /* Pilot metatable methods. */
@@ -417,76 +418,14 @@ static int pilotL_getPlayer( lua_State *L )
 
 
 /**
- * @brief Adds a ship with an AI and faction to the system (instead of a predefined fleet).
- *
- * @usage p = pilot.addRaw( "Empire Shark", "empire", nil, "Empire" ) -- Creates a pilot analogous to the Empire Shark fleet.
- *
- *    @luaparam shipname Name of the ship to add.
- *    @luaparam ai AI to give the pilot.
- *    @luaparam param Position to create the pilot at. See pilot.add for further information.
- *    @luaparam faction Faction to give the pilot.
- *    @luareturn Table populated with the created pilot.
- * @luafunc addRaw( shipname, ai, param, faction )
+ * @brief Wrapper with common code for pilotL_addFleet and pilotL_addFleetRaw.
  */
-static int pilotL_addFleetRaw(lua_State *L )
-{
-   int i, ret;
-   LuaPilot lp;
-
-   for (i=0; i<5; i++)
-      lua_pushnil( L );
-   ret = pilotL_addFleet( L );
-   if (ret > 0) { /* Pilot ID is valid. */
-      lua_newtable(L);
-
-      /* we push each pilot created into a table and return it */
-      lua_pushnumber(L,1); /* index, starts with 1 */
-      lp.pilot = ret;
-      lua_pushpilot(L,lp); /* value = LuaPilot */
-      lua_rawset(L,-3); /* store the value in the table */
-      return 1;
-   }
-   return 0;
-}
-
-
-/**
- * @brief Adds a fleet to the system.
- *
- * You can then iterate over the pilots to change parameters like so:
- * @code
- * p = pilot.add( "Sml Trader Convoy" )
- * for k,v in pairs(p) do
- *    v:setHostile()
- * end
- * @endcode
- *
- * How param works (by type of value passed): <br/>
- *  - nil: spawns pilot randomly entering from jump points with presence of their faction or taking off from non-hostile planets <br/>
- *  - planet: pilot takes off from the planet <br/>
- *  - system: jumps pilot in from the system <br/>
- *  - vec2: pilot is created at the position (no jump/takeoff) <br/>
- *  - true: Acts like nil, but does not avoid jump points with no presence <br/>
- *
- * @usage p = pilot.add( "Pirate Hyena" ) -- Just adds the pilot (will jump in or take off).
- * @usage p = pilot.add( "Trader Llama", "dummy" ) -- Overrides AI with dummy ai.
- * @usage p = pilot.add( "Sml Trader Convoy", nil, vec2.new( 1000, 200 ) ) -- Pilot won't jump in, will just appear.
- * @usage p = pilot.add( "Empire Pacifier", nil, system.get("Goddard") ) -- Have the pilot jump in from the system.
- * @usage p = pilot.add( "Goddard Goddard", nil, planet.get("Zhiru") ) -- Have the pilot take off from a planet.
- *
- *    @luaparam fleetname Name of the fleet to add.
- *    @luaparam ai If set will override the standard fleet AI.  nil means use default.
- *    @luaparam param Position to create pilot at, if it's a system it'll try to jump in from that system, if it's
- *              a planet it'll try to take off from it.
- *    @luareturn Table populated with all the pilots created.  The keys are ordered numbers.
- * @luafunc add( fleetname, ai, param )
- */
-static int pilotL_addFleet( lua_State *L )
+static int pilotL_addFleetFrom( lua_State *L, int from_ship )
 {
    Fleet *flt;
    Ship *ship;
    const char *fltname, *fltai, *faction;
-   int i, first, raw;
+   int i, first;
    unsigned int p;
    double a, r;
    Vector2d vv,vp, vn;
@@ -509,14 +448,12 @@ static int pilotL_addFleet( lua_State *L )
    vectnull(&vn); /* Need to determine angle. */
    jump = -1;
    a    = 0.;
-   raw  = 0;
 
    /* Parse first argument - Fleet Name */
    fltname = luaL_checkstring(L,1);
 
    /* pull the fleet */
-   if (lua_gettop(L) >= 5) {
-      raw = 1;
+   if (from_ship) {
       ship = ship_get( fltname );
       if (ship == NULL) {
          NLUA_ERROR(L,"Ship '%s' not found!", fltname);
@@ -650,10 +587,8 @@ static int pilotL_addFleet( lua_State *L )
       }
 
       /* Free memory allocated. */
-      if (ind != NULL )
-         free( ind );
-      if (jumpind != NULL)
-         free( jumpind );
+      free( ind );
+      free( jumpind );
    }
 
    /* Set up velocities and such. */
@@ -667,10 +602,20 @@ static int pilotL_addFleet( lua_State *L )
    if (a < 0.)
       a += 2.*M_PI;
 
-   if (!raw) {
+   lua_newtable(L);
+   if (from_ship) {
+      /* Create the pilot. */
+      p = pilot_create( ship, fltname, lf.f, fltai, a, &vp, &vv, flags, -1 );
+
+      /* we push each pilot created into a table and return it */
+      lua_pushnumber(L,1); /* index, starts with 1 */
+      lp.pilot = p;
+      lua_pushpilot(L,lp); /* value = LuaPilot */
+      lua_rawset(L,-3); /* store the value in the table */
+   }
+   else {
       /* now we start adding pilots and toss ids into the table we return */
       first = 1;
-      lua_newtable(L);
       for (i=0; i<flt->npilots; i++) {
          plt = &flt->pilots[i];
 
@@ -690,12 +635,62 @@ static int pilotL_addFleet( lua_State *L )
          lua_rawset(L,-3); /* store the value in the table */
       }
    }
-   else {
-      /* Create the pilot. */
-      p = pilot_create( ship, fltname, lf.f, fltai, a, &vp, &vv, flags, -1 );
-      return p;
-   }
    return 1;
+}
+
+
+/**
+ * @brief Adds a fleet to the system.
+ *
+ * You can then iterate over the pilots to change parameters like so:
+ * @code
+ * p = pilot.add( "Sml Trader Convoy" )
+ * for k,v in pairs(p) do
+ *    v:setHostile()
+ * end
+ * @endcode
+ *
+ * How param works (by type of value passed): <br/>
+ *  - nil: spawns pilot randomly entering from jump points with presence of their faction or taking off from non-hostile planets <br/>
+ *  - planet: pilot takes off from the planet <br/>
+ *  - system: jumps pilot in from the system <br/>
+ *  - vec2: pilot is created at the position (no jump/takeoff) <br/>
+ *  - true: Acts like nil, but does not avoid jump points with no presence <br/>
+ *
+ * @usage p = pilot.add( "Pirate Hyena" ) -- Just adds the pilot (will jump in or take off).
+ * @usage p = pilot.add( "Trader Llama", "dummy" ) -- Overrides AI with dummy ai.
+ * @usage p = pilot.add( "Sml Trader Convoy", nil, vec2.new( 1000, 200 ) ) -- Pilot won't jump in, will just appear.
+ * @usage p = pilot.add( "Empire Pacifier", nil, system.get("Goddard") ) -- Have the pilot jump in from the system.
+ * @usage p = pilot.add( "Goddard Goddard", nil, planet.get("Zhiru") ) -- Have the pilot take off from a planet.
+ *
+ *    @luaparam fleetname Name of the fleet to add.
+ *    @luaparam ai If set will override the standard fleet AI.  nil means use default.
+ *    @luaparam param Position to create pilot at, if it's a system it'll try to jump in from that system, if it's
+ *              a planet it'll try to take off from it.
+ *    @luareturn Table populated with all the pilots created.  The keys are ordered numbers.
+ * @luafunc add( fleetname, ai, param )
+ */
+static int pilotL_addFleet( lua_State *L )
+{
+   return pilotL_addFleetFrom( L, 0 );
+}
+
+
+/**
+ * @brief Adds a ship with an AI and faction to the system (instead of a predefined fleet).
+ *
+ * @usage p = pilot.addRaw( "Empire Shark", "empire", nil, "Empire" ) -- Creates a pilot analogous to the Empire Shark fleet.
+ *
+ *    @luaparam shipname Name of the ship to add.
+ *    @luaparam ai AI to give the pilot.
+ *    @luaparam param Position to create the pilot at. See pilot.add for further information.
+ *    @luaparam faction Faction to give the pilot.
+ *    @luareturn Table populated with the created pilot.
+ * @luafunc addRaw( shipname, ai, param, faction )
+ */
+static int pilotL_addFleetRaw(lua_State *L )
+{
+   return pilotL_addFleetFrom( L, 1 );
 }
 
 
@@ -749,10 +744,10 @@ static int pilotL_clear( lua_State *L )
  *
  * If player jumps the spawn is enabled again automatically. Global spawning takes priority over faction spawning.
  *
- * @usage pilot.togglespawn() -- Defaults to flipping the global spawning (true->false and false->true)
- * @usage pilot.togglespawn( false ) -- Disables global spawning
- * @usage pliot.togglespawn( "Pirates" ) -- Defaults to disabling pirate spawning
- * @usage pilot.togglespawn( "Pirates", true ) -- Turns on pirate spawning
+ * @usage pilot.toggleSpawn() -- Defaults to flipping the global spawning (true->false and false->true)
+ * @usage pilot.toggleSpawn( false ) -- Disables global spawning
+ * @usage pliot.toggleSpawn( "Pirates" ) -- Defaults to disabling pirate spawning
+ * @usage pilot.toggleSpawn( "Pirates", true ) -- Turns on pirate spawning
  *
  *    @luaparam fid Faction to enable or disable spawning off. If ommited it works on global spawning.
  *    @luaparam enable true enables spawn, false disables it.
@@ -1047,6 +1042,8 @@ static int pilotL_inrange( lua_State *L )
 /**
  * @brief Gets the nav target of the pilot.
  *
+ * This will only terminate when the target following pilot disappears (land, death, jump, etc...).
+ *
  * @usage planet, hyperspace = p:nav()
  *
  *    @luaparam p Pilot to get nav info of.
@@ -1089,22 +1086,22 @@ static int pilotL_nav( lua_State *L )
  *
  * The weapon sets have the following structure: <br />
  * <ul>
- *  <li> name: name of the set. <br />
- *  <li> cooldown: [0:1] value indicating if ready to shoot (1 is ready). <br />
- *  <li> ammo: Name of the ammo or nil if not applicable. <br />
- *  <li> left: Absolute ammo left or nil if not applicable. <br />
- *  <li> left_p: Relative ammo left [0:1] or nil if not applicable <br />
- *  <li> lockon: Lockon [0:1] for seeker weapons or nil if not applicable. <br />
- *  <li> in_arc: Whether or not the target is in targetting arc or nil if not applicable. <br />
- *  <li> level: Level of the weapon (1 is primary, 2 is secondary). <br />
- *  <li> temp: Temperature of the weapon. <br />
- *  <li> type: Type of the weapon. <br />
- *  <li> dtype: Damage type of the weapon. <br />
- *  <li> track: Tracking level of the weapon. <br />
+ *  <li> name: name of the set. </li>
+ *  <li> cooldown: [0:1] value indicating if ready to shoot (1 is ready). </li>
+ *  <li> ammo: Name of the ammo or nil if not applicable. </li>
+ *  <li> left: Absolute ammo left or nil if not applicable. </li>
+ *  <li> left_p: Relative ammo left [0:1] or nil if not applicable </li>
+ *  <li> lockon: Lockon [0:1] for seeker weapons or nil if not applicable. </li>
+ *  <li> in_arc: Whether or not the target is in targetting arc or nil if not applicable. </li>
+ *  <li> level: Level of the weapon (1 is primary, 2 is secondary). </li>
+ *  <li> temp: Temperature of the weapon. </li>
+ *  <li> type: Type of the weapon. </li>
+ *  <li> dtype: Damage type of the weapon. </li>
+ *  <li> track: Tracking level of the weapon. </li>
  * </ul>
  *
  * An example would be:
- * <pre><code>
+ * @code
  * ws_name, ws = p:weapset( true )
  * print( "Weapnset Name: " .. ws_name )
  * for _,w in ipairs(ws) do
@@ -1112,7 +1109,7 @@ static int pilotL_nav( lua_State *L )
  *    print( "Cooldown: " .. tostring(cooldown) )
  *    print( "Level: " .. tostring(level) )
  * end
- * </code></pre>
+ * @endcode
  *
  * @usage set_name, slots = p:weapset( true ) -- Gets info for all active weapons
  * @usage set_name, slots = p:weapset() -- Get info about the current set
@@ -1319,22 +1316,22 @@ static int pilotL_weapset( lua_State *L )
  *
  * The active outfits have the following structure: <br />
  * <ul>
- *  <li> name: Name of the set. <br />
- *  <li> type: Type of the outfit. <br />
- *  <li> state: State of the outfit, which can be one of { "off", "warmup", "on", "cooldown" }. <br />
- *  <li> duration: Set only if state is "on". Indicates duration value (0 = just finished, 1 = just on). <br />
- *  <li> cooldown: Set only if state is "cooldown". Indicates cooldown value (0 = just ending, 1 = just started cooling down). <br />
+ *  <li> name: Name of the set. </li>
+ *  <li> type: Type of the outfit. </li>
+ *  <li> state: State of the outfit, which can be one of { "off", "warmup", "on", "cooldown" }. </li>
+ *  <li> duration: Set only if state is "on". Indicates duration value (0 = just finished, 1 = just on). </li>
+ *  <li> cooldown: Set only if state is "cooldown". Indicates cooldown value (0 = just ending, 1 = just started cooling down). </li>
  * </ul>
  *
  * An example would be:
- * <pre><code>
+ * @code
  * act_outfits = p:actives()
  * print( "Weapnset Name: " .. ws_name )
  * for _,o in ipairs(act_outfits) do
  *    print( "Name: " .. o.name )
  *    print( "State: " .. o.state )
  * end
- * </code></pre>
+ * @endcode
  *
  * @usage act_outfits = p:actives() -- Gets the table of active outfits
  *
@@ -2637,22 +2634,22 @@ lua_rawset( L, -3 )
  *
  * Some of the stats are:<br />
  * <ul>
- *  <li> cpu <br />
- *  <li> cpu_max <br />
- *  <li> fuel <br />
- *  <li> fuel_max <br />
- *  <li> mass <br />
- *  <li> thrust <br />
- *  <li> speed <br />
- *  <li> speed_max <br />
- *  <li> turn <br />
- *  <li> armour <br />
- *  <li> shield <br />
- *  <li> energy <br />
- *  <li> armour_regen <br />
- *  <li> shield_regen <br />
- *  <li> energy_regen <br />
- *  <li> jump_delay <br />
+ *  <li> cpu </li>
+ *  <li> cpu_max </li>
+ *  <li> fuel </li>
+ *  <li> fuel_max </li>
+ *  <li> mass </li>
+ *  <li> thrust </li>
+ *  <li> speed </li>
+ *  <li> speed_max </li>
+ *  <li> turn </li>
+ *  <li> armour </li>
+ *  <li> shield </li>
+ *  <li> energy </li>
+ *  <li> armour_regen </li>
+ *  <li> shield_regen </li>
+ *  <li> energy_regen </li>
+ *  <li> jump_delay </li>
  * </ul>
  *
  * @usage stats = p:stats() print(stats.armour)
@@ -2824,9 +2821,9 @@ static int pilotL_cargoRm( lua_State *L )
  *
  * The list has the following members:<br />
  * <ul>
- * <li><b>name:</b> name of the cargo.
- * <li><b>q:</b> quantity of the cargo.
- * <li><b>m:</b> true if cargo is for a mission.
+ * <li><b>name:</b> name of the cargo.</li>
+ * <li><b>q:</b> quantity of the cargo.</li>
+ * <li><b>m:</b> true if cargo is for a mission.</li>
  * </ul>
  *
  * @usage for _,v in ipairs(pilot.cargoList(player.pilot())) do print( string.format("%s: %d", v.name, v.q ) ) end
@@ -2926,8 +2923,8 @@ static const struct pL_flag pL_flags[] = {
  *
  * Valid flags are:<br/>
  * <ul>
- *  <li> hailing: pilot is hailing the player.<br/>
- *  <li> boardable: pilot is boardable while active.<br/>
+ *  <li> hailing: pilot is hailing the player.</li>
+ *  <li> boardable: pilot is boardable while active.</li>
  * </ul>
  *    @luaparam p Pilot to get flags of.
  *    @luareturn Table with flag names an index, boolean as value.
@@ -3036,6 +3033,10 @@ static int pilotL_control( lua_State *L )
       pilot_rmFlag(p, PILOT_MANUAL_CONTROL);
       if (pilot_isPlayer(p))
          ai_destroy( p );
+      /* Note, we do not set p->ai to NULL, we just clear the tasks and memory.
+       * This is because the player always has an ai named "player", which is
+       * used for manual control among other things. Basically a pilot always
+       * has to have an AI even if it's the player for things to work. */
    }
 
    /* Clear task. */
@@ -3268,16 +3269,19 @@ static int pilotL_goto( lua_State *L )
  *
  * @usage p:face( enemy_pilot ) -- Face enemy pilot
  * @usage p:face( vec2.new( 0, 0 ) ) -- Face origin
+ * @usage p:face( enemy_pilot, true ) -- Task lasts until the enemy pilot is faced
  *
  *    @luaparam p Pilot to add task to.
  *    @luaparam target Target to face (can be vec2 or pilot).
- * @luafunc face( p, target )
+ *    @luaparam towards Optional parameter that makes the task end when the target is faced (otherwise it's an enduring state).
+ * @luafunc face( p, target, towards )
  */
 static int pilotL_face( lua_State *L )
 {
    Pilot *p, *pt;
    LuaVector *vt;
    Task *t;
+   int towards;
 
    /* Get parameters. */
    pt = NULL;
@@ -3287,9 +3291,16 @@ static int pilotL_face( lua_State *L )
       pt = luaL_validpilot(L,2);
    else
       vt = luaL_checkvector(L,2);
+   if (lua_gettop(L) > 2)
+      towards = lua_toboolean(L,3);
+   else
+      towards = 0;
 
    /* Set the task. */
-   t        = pilotL_newtask( L, p, "__face" );
+   if (towards)
+      t     = pilotL_newtask( L, p, "__face_towards" );
+   else
+      t     = pilotL_newtask( L, p, "__face" );
    if (pt != NULL) {
       t->dtype = TASKDATA_INT;
       t->dat.num = pt->id;
@@ -3468,9 +3479,15 @@ static int pilotL_hyperspace( lua_State *L )
       /* Find the jump. */
       for (i=0; i < cur_system->njumps; i++) {
          jp = &cur_system->jumps[i];
-         if (jp->target == ss) {
-            break;
+         if (jp->target != ss)
+            continue;
+         /* Found target. */
+
+         if (jp_isFlag( jp, JP_EXITONLY )) {
+            NLUA_ERROR( L, "Pilot '%s' can't jump out exit only jump '%s'", p->name, ss->name );
+            return 0;
          }
+         break;
       }
       if (i >= cur_system->njumps) {
          NLUA_ERROR( L, "System '%s' is not adjacent to current system '%s'", ss->name, cur_system->name );

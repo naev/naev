@@ -123,6 +123,9 @@ div.header, div.footer { margin-left: 0em; }
 
 #product_description
 {
+   margin: auto;
+   text-align: justify;
+   width: 50%;
 }
 
 #main
@@ -197,12 +200,31 @@ div.header, div.footer { margin-left: 0em; }
 	}
 	a { font-weight:bold; color: #004080; text-decoration: underline; }
 	
-	#main	{		background-color: #ffffff;		border-left: 0px;	}	
-	#container	{		margin-left: 2%;		margin-right: 2%;		background-color: #ffffff;	}
+	#main
+   {
+      background-color: #ffffff;
+      border-left: 0px;
+   }
+
+	#container
+   {
+      margin-left: 2%;
+      margin-right: 2%;
+      background-color: #ffffff;
+   }
 	
-	#content	{		margin-left: 0px;		padding: 1em;		border-left: 0px;		border-right: 0px;		background-color: #ffffff;	}
+	#content
+   {
+      margin-left: 0px;
+      padding: 1em;
+      border-left: 0px;
+      border-right: 0px;
+      background-color: #ffffff;
+   }
 	
-	#navigation	{		display: none;
+	#navigation
+   {
+      display: none;
 	}
 	pre.example {
 		font-family: "Andale Mono", monospace; 
@@ -218,7 +240,11 @@ table.module_list td
 	border-style: solid;
 	border-color: #cccccc;
 }
-table.module_list td.name { background-color: #f0f0f0; }
+table.module_list td.name
+{
+   background-color: #f0f0f0;
+   white-space: nowrap;
+}
 table.module_list td.summary { width: 100%; }
 
 table.file_list
@@ -235,7 +261,10 @@ table.file_list td
 	border-style: solid;
 	border-color: #cccccc;
 }
-table.file_list td.name { background-color: #f0f0f0; }
+table.file_list td.name {
+   background-color: #f0f0f0;
+   white-space: nowrap;
+}
 table.file_list td.summary { width: 100%; }
 
 
@@ -253,7 +282,11 @@ table.function_list td
 	border-style: solid;
 	border-color: #cccccc;
 }
-table.function_list td.name { background-color: #f0f0f0; }
+table.function_list td.name
+{
+   background-color: #f0f0f0;
+   white-space: nowrap;
+}
 table.function_list td.summary { width: 100%; }
 
 
@@ -282,5 +315,65 @@ dl.table dt {border-top: 1px solid #ccc; padding-top: 1em;}
 dl.table dd {padding-bottom: 1em;}
 dl.table h3 {padding: 0; margin: 0; font-size: medium;}
 
-#TODO: make module_list, file_list, function_list, table_list inherit from a list
+/* #TODO: make module_list, file_list, function_list, table_list inherit from a list */
 
+/* Naev header CSS. */
+#naev-header {
+   background-color: #ccc;
+   color: #fff;
+   margin: 0;
+   padding: 0;
+   font-size: 10px;
+   text-align: center;
+   line-height: 1;
+   font-family: Verdana, Helvetica, Arial, sans-serif;
+}
+
+#naev-header a:hover {
+   color: #103080;
+   text-decoration: underline;
+}
+
+#naev-header a {
+   color: #103080;
+   text-decoration: none;
+}
+
+#naev-top {
+   background: #202080;
+   background-image: url('http://naev.org/nebula-tile.png');
+   background-repeat: repeat-x;
+   padding: 0;
+   margin: 0;
+   font-family: Verdana, Helvetica, Arial, sans-serif;
+   height: 75px;
+}
+
+#naevimg {
+   vertical-align: baseline;
+   padding: 0;
+   margin: 0;
+   border: 0;
+}
+
+ul.naevlinks {
+   font-size: 10px;
+   font-weight: bold;
+   display: block;
+   border-top: 1px solid #888;
+   border-bottom: 1px solid #888;
+   padding: 0;
+   margin: 0;
+}
+
+ul.naevlinks li {
+   display: block;
+   list-style-type: none;
+   width: auto;
+   font-size: 1.1em;
+   line-height: 2.0em;
+   font-family: Verdana, Helvetica, Arial, sans-serif;
+   text-decoration: none;
+   padding: 0;
+   margin: 0;
+}

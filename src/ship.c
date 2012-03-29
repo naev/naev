@@ -54,7 +54,7 @@ static Ship* ship_stack = NULL; /**< Stack of ships available in the game. */
 /*
  * Prototypes
  */
-static int ship_loadGFX( Ship *temp, char *buf, int sx, int sy );
+static int ship_loadGFX( Ship *temp, char *buf, int sx, int sy, int engine );
 static int ship_parse( Ship *temp, xmlNodePtr parent );
 
 
@@ -293,7 +293,9 @@ credits_t ship_basePrice( Ship* s )
  */
 glTexture* ship_loadCommGFX( Ship* s )
 {
-   return gl_newImage( s->gfx_comm, 0 );
+   if (s->gfx_comm != NULL)
+      return gl_newImage( s->gfx_comm, 0 );
+   return NULL;
 }
 
 
@@ -437,7 +439,7 @@ static int ship_genTargetGFX( Ship *temp, SDL_Surface *surface, int sx, int sy )
  *    @param temp Ship to load into.
  *    @param buf Name of the texture to work with.
  */
-static int ship_loadGFX( Ship *temp, char *buf, int sx, int sy )
+static int ship_loadGFX( Ship *temp, char *buf, int sx, int sy, int engine )
 {
    char base[PATH_MAX], str[PATH_MAX];
    int i;
@@ -480,7 +482,7 @@ static int ship_loadGFX( Ship *temp, char *buf, int sx, int sy )
    SDL_FreeSurface( surface );
 
    /* Load the engine sprite .*/
-   if (conf.engineglow && conf.interpolate) {
+   if (engine && conf.engineglow && conf.interpolate) {
       nsnprintf( str, PATH_MAX, SHIP_GFX_PATH"%s/%s"SHIP_ENGINE SHIP_EXT, base, buf );
       temp->gfx_engine = gl_newSprite( str, sx, sy, OPENGL_TEX_MIPMAPS );
       if (temp->gfx_engine == NULL)
@@ -512,7 +514,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
    xmlNodePtr cur, node;
    int sx, sy;
    char *stmp, *buf;
-   int l, m, h;
+   int l, m, h, engine;
    OutfitSlotSize base_size;
    ShipStatList *ll;
 
@@ -561,8 +563,16 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          else
             sy = 8;
 
+         xmlr_attr(node, "noengine", stmp );
+         if (stmp != NULL) {
+            engine = 0;
+            free(stmp);
+         }
+         else
+            engine = 1;
+
          /* Load the graphics. */
-         ship_loadGFX( temp, buf, sx, sy );
+         ship_loadGFX( temp, buf, sx, sy, engine );
 
          continue;
       }

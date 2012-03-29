@@ -85,7 +85,6 @@ static double uniedit_my      = 0.; /**< Y mouse position. */
 static void uniedit_deselect (void);
 static void uniedit_selectAdd( StarSystem *sys );
 static void uniedit_selectRm( StarSystem *sys );
-static void uniedit_selectText (void);
 /* System editing. */
 static void uniedit_editSys (void);
 static void uniedit_editSysClose( unsigned int wid, char *name );
@@ -111,6 +110,7 @@ static void uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
       double w, double h, void *data );
 /* Button functions. */
 static void uniedit_close( unsigned int wid, char *wgt );
+static void uniedit_save( unsigned int wid_unused, char *unused );
 static void uniedit_btnJump( unsigned int wid_unused, char *unused );
 static void uniedit_btnRename( unsigned int wid_unused, char *unused );
 static void uniedit_btnEdit( unsigned int wid_unused, char *unused );
@@ -156,6 +156,10 @@ void uniedit_open( unsigned int wid_unused, char *unused )
    /* Close button. */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnClose", "Close", uniedit_close );
+
+   /* Save button. */
+   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*1, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnSave", "Save All", uniedit_save );
 
    /* Jump toggle. */
    window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*3, BUTTON_WIDTH, BUTTON_HEIGHT,
@@ -257,6 +261,18 @@ static void uniedit_close( unsigned int wid, char *wgt )
    window_close( wid, wgt );
 }
 
+/*
+ * @brief Saves the systems.
+ */
+static void uniedit_save( unsigned int wid_unused, char *unused )
+{
+   (void) wid_unused;
+   (void) unused;
+
+   dsys_saveAll();
+   dpl_saveAll();
+}
+
 
 /**
  * @brief Enters the editor in new jump mode.
@@ -306,9 +322,6 @@ static void uniedit_btnOpen( unsigned int wid_unused, char *unused )
       return;
 
    sysedit_open( uniedit_sys[0] );
-
-   /* Update sidebar text. */
-   uniedit_selectText();
 }
 
 
@@ -842,7 +855,7 @@ static void uniedit_selectRm( StarSystem *sys )
 /**
  * @brief Sets the selected system text.
  */
-static void uniedit_selectText (void)
+void uniedit_selectText (void)
 {
    int i, l;
    char buf[1024];
@@ -1107,6 +1120,9 @@ static void uniedit_editSysClose( unsigned int wid, char *name )
    sys->interference    = atof(window_getInput( wid, "inpInterference" ));
    sys->nebu_density    = atof(window_getInput( wid, "inpNebula" ));
    sys->nebu_volatility = atof(window_getInput( wid, "inpVolatility" ));
+
+   /* Reconstruct universe presences. */
+   space_reconstructPresences();
 
    /* Text might need changing. */
    uniedit_selectText();

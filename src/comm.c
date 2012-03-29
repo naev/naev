@@ -359,13 +359,13 @@ static unsigned int comm_open( glTexture *gfx, int faction,
          gh = MIN( GRAPHIC_HEIGHT, GRAPHIC_HEIGHT / aspect );
          gw = MIN( GRAPHIC_WIDTH, GRAPHIC_WIDTH * aspect );
       }
+
+      window_addImage( wid, 20 + (GRAPHIC_WIDTH-gw)/2,
+            -30 - (GRAPHIC_HEIGHT-gh)/2,
+            gw, gh, "imgGFX", comm_graphic, 0 );
    }
    else
       gh = gw = 0;
-
-   window_addImage( wid, 20 + (GRAPHIC_WIDTH-gw)/2,
-         -30 - (GRAPHIC_HEIGHT-gh)/2,
-         gw, gh, "imgGFX", comm_graphic, 0 );
 
    /* Faction logo. */
    if (logo != NULL) {
@@ -481,11 +481,13 @@ static void comm_bribePilot( unsigned int wid, char *unused )
    pilot_rmFlag( comm_pilot, PILOT_HYP_BEGIN );
 
    /* Don't allow rebribe. */
-   L = comm_pilot->ai->L;
-   lua_getglobal(L, "mem");
-   lua_pushnumber(L, 0);
-   lua_setfield(L, -2, "bribe");
-   lua_pop(L,1);
+   if (comm_pilot->ai != NULL) {
+      L = comm_pilot->ai->L;
+      lua_getglobal(L, "mem");
+      lua_pushnumber(L, 0);
+      lua_setfield(L, -2, "bribe");
+      lua_pop(L,1);
+   }
 
    /* Reopen window. */
    window_destroy( wid );
@@ -643,6 +645,9 @@ static int comm_getNumber( double *val, char* str )
    int ret;
    lua_State *L;
 
+   if (comm_pilot->ai == NULL)
+      return 1;
+
    /* Set up the state. */
    L = comm_pilot->ai->L;
    lua_getglobal( L, "mem" );
@@ -678,6 +683,9 @@ static const char* comm_getString( char *str )
 {
    lua_State *L;
    const char *ret;
+
+   if (comm_pilot->ai == NULL)
+      return NULL;
 
    /* Get memory table. */
    L = comm_pilot->ai->L;

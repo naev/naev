@@ -1784,9 +1784,13 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
             xmlr_ulong(cur, "population", planet->population );
             xmlr_float(cur, "hide", planet->hide );
 
-            if (xml_isNode(cur,"class"))
-               planet->class =
-                  planetclass_get(cur->children->content[0]);
+            if (xml_isNode(cur,"class")) {
+               tmp = xml_get(cur);
+               if (tmp != NULL)
+                  planet->class = planetclass_get( tmp[0] );
+               else
+                  WARN("Planet '%s' has empty class tag.", planet->name);
+            }
             else if (xml_isNode(cur, "services")) {
                flags |= FLAG_SERVICESSET;
                ccur = cur->children;
@@ -3234,20 +3238,30 @@ static void presenceCleanup( StarSystem *sys )
       return;
    }
 
-   /* Check the system for 0 value presences. */
+   /* Check the system for 0 and negative-value presences. */
    for (i=0; i < sys->npresence; i++) {
-      if (sys->presence[i].value != 0)
+      if (sys->presence[i].value > 0.)
          continue;
 
-      /* Remove the element with 0 value. */
+      /* Remove the element with invalid value. */
       memmove(&sys->presence[i], &sys->presence[i + 1],
               sizeof(SystemPresence) * (sys->npresence - (i + 1)));
       sys->npresence--;
       sys->presence = realloc(sys->presence, sizeof(SystemPresence) * sys->npresence);
       i--;  /* We'll want to check the new value we just copied in. */
    }
+}
 
-   return;
+
+/**
+ * @brief Sloppily sanitize invalid presences across all systems.
+ */
+void system_presenceCleanupAll( void )
+{
+   int i;
+
+   for (i=0; i<systems_nstack; i++)
+      presenceCleanup( &systems_stack[i] );
 }
 
 

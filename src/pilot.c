@@ -919,16 +919,13 @@ void pilot_setTarget( Pilot* p, unsigned int id )
 double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter, const Damage *dmg )
 {
    int mod;
-   double damage_shield, damage_armour, disable, knockback, dam_mod, ddmg, absorb, dmod;
+   double damage_shield, damage_armour, disable, knockback, dam_mod, ddmg, absorb, dmod, start;
    Pilot *pshooter;
 
    /* Invincible means no damage. */
    if (pilot_isFlag( p, PILOT_INVINCIBLE) ||
          pilot_isFlag( p, PILOT_INVISIBLE))
       return 0.;
-
-   /* Reset disable timer. */
-   p->dtimer_accum = 0.;
 
    /* Defaults. */
    pshooter       = NULL;
@@ -939,6 +936,13 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter, const Da
    absorb         = 1. - CLAMP( 0., 1., p->dmg_absorb - dmg->penetration );
    disable        = dmg->disable;
    dtype_calcDamage( &damage_shield, &damage_armour, absorb, &knockback, dmg );
+
+   /*
+    * Delay undisable if necessary. Amount varies with damage, as e.g. a
+    * single Laser Cannon shot should not reset a Peacemaker's timer.
+    */
+   if (!pilot_isFlag(p, PILOT_DEAD) && (p->dtimer_accum > 0.))
+      p->dtimer_accum -= MIN( pow(disable, .8), p->dtimer_accum );
 
    /* Ships that can not be disabled take raw armour damage instead of getting disabled. */
    if (pilot_isFlag( p, PILOT_NODISABLE )) {
@@ -952,17 +956,36 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter, const Da
     * Shields take entire blow.
     */
    if (p->shield - damage_shield > 0.) {
+      start      = p->shield;
       ddmg       = damage_shield;
       p->shield -= damage_shield;
       dam_mod    = damage_shield/p->shield_max;
+
+      /*
+       * Disabling damage leaks accordingly:
+       *    50% + (50% - mean shield % / 2)
+       *
+       * 50% leaks at 100% shield, scales to 100% by 0% shield.
+       *
+       * The damage is adjusted based on the mean of the starting and ending
+       * shield percentages. Using the starting percentage biases towards
+       * low-damage, high-ROF weapons, while using the ending percentage
+       * biases towards high-damage, low-ROF weapons.
+       */
+      p->stress += disable * (.5 + (.5 - ((start+p->shield) / p->shield_max) / 4.));
    }
    /*
     * Shields take part of the blow.
     */
    else if (p->shield > 0.) {
+      start      = p->shield;
       dmod        = (1. - p->shield/damage_shield);
       ddmg        = p->shield + dmod * damage_armour;
       p->shield   = 0.;
+
+      /* Leak some disabling damage through the remaining bit of shields. */
+      p->stress += disable * (1. - dmod) * (.5 + (.5 - (start / p->shield_max / 4.)));
+
       /* Reduce stress as armour is eaten away. */
       p->stress  *= (p->armour - dmod * damage_armour) / p->armour;
       p->armour  -= dmod * damage_armour;
@@ -1111,6 +1134,9 @@ void pilot_updateDisable( Pilot* p, const unsigned int shooter )
       pilot_rmFlag( p, PILOT_DISABLED ); /* Undisable. */
       pilot_rmFlag( p, PILOT_DISABLED_PERM ); /* Clear perma-disable flag if necessary. */
       pilot_rmFlag( p, PILOT_BOARDING ); /* Can get boarded again. */
+
+      /* Reset the accumulated disable time. */
+      p->dtimer_accum = 0.;
 
       /* TODO: Make undisabled pilot use up presence again. */
       pilot_runHook( p, PILOT_HOOK_UNDISABLE );
@@ -1407,13 +1433,12 @@ void pilot_update( Pilot* pilot, const double dt )
       pilot->stress = MAX(pilot->stress, 0);
    }
    else if (!pilot_isFlag(pilot, PILOT_DISABLED_PERM)) { /* Case pilot is disabled (but not permanently so). */
-      pilot->dtimer -= dt;
-      if (pilot->dtimer <= 0.) {
-         pilot->stress = 0.;
+      pilot->dtimer_accum += dt;
+      if (pilot->dtimer_accum >= pilot->dtimer) {
+         pilot->stress       = 0.;
+         pilot->dtimer_accum = 0;
          pilot_updateDisable(pilot, 0);
       }
-      else
-         pilot->dtimer_accum += dt;
    }
 
    /* Handle takeoff/landing. */
@@ -1733,17 +1758,23 @@ static void pilot_hyperspace( Pilot* p, double dt )
             pilot_setThrust( p, 0. );
 
             /* Face system headed to. */
-            sys = cur_system->jumps[p->nav_hyperspace].target;
-            a = ANGLE( sys->pos.x - cur_system->pos.x, sys->pos.y - cur_system->pos.y );
+            sys  = cur_system->jumps[p->nav_hyperspace].target;
+            a    = ANGLE( sys->pos.x - cur_system->pos.x, sys->pos.y - cur_system->pos.y );
             diff = pilot_face( p, a );
 
             if (ABS(diff) < MAX_DIR_ERR) { /* we can now prepare the jump */
-               pilot_setTurn( p, 0. );
-               p->ptimer = HYPERSPACE_ENGINE_DELAY * !p->stats.misc_instant_jump;
-               pilot_setFlag(p, PILOT_HYP_BEGIN);
-               /* Player plays sound. */
-               if (p->id == PLAYER_ID)
-                  player_soundPlay( snd_hypPowUp, 1 );
+               if (jp_isFlag( &cur_system->jumps[p->nav_hyperspace], JP_EXITONLY )) {
+                  WARN( "Pilot '%s' trying to jump through exit-only jump from '%s' to '%s'",
+                        p->name, cur_system->name, sys->name );
+               }
+               else {
+                  pilot_setTurn( p, 0. );
+                  p->ptimer = HYPERSPACE_ENGINE_DELAY * !p->stats.misc_instant_jump;
+                  pilot_setFlag(p, PILOT_HYP_BEGIN);
+                  /* Player plays sound. */
+                  if (p->id == PLAYER_ID)
+                     player_soundPlay( snd_hypPowUp, 1 );
+               }
             }
          }
       }

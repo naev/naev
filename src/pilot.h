@@ -308,7 +308,7 @@ typedef struct Pilot_ {
    double ew_movement; /**< Movement factor. */
    double ew_evasion; /**< Dynamic evasion factor. */
    double ew_detect; /**< Static detection factor. */
-   double ew_jumpDetect; /** Static jump detection factor */
+   double ew_jump_detect; /** Static jump detection factor */
 
    /* Heat. */
    double heat_T;    /**< Ship temperature. [K] */

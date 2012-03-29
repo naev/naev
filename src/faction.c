@@ -563,6 +563,9 @@ void faction_modPlayerRaw( int f, double mod )
    hparam[2].type    = HOOK_PARAM_SENTINEL;
    hooks_runParam( "standing", hparam );
 
+   /* Sanitize just in case. */
+   faction_sanitizePlayer( faction );
+
    /* Tell space the faction changed. */
    space_factionChange();
 }
