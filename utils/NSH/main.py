@@ -15,67 +15,27 @@ except ImportError:
 
 __version__ = "1.0"
 
-def getShipStatsLabels(label):
-    """
-    Custom filter for the template enigne.
-    usage: {{ ship.stats|getStatsLabel }}
-    """
-    labels = {'speed_mod': "Speed",
-    'turn_mod': "Turn",
-    'thrust_mod': "Thrust",
-    'cargo_mod': "Cargo space",
-    'armour_mod': "Armour strength",
-    'armour_regen_mod': "Armour regeneration",
-    'shield_mod': "Shield strength",
-    'shield_regen_mod': "Shield regeneration",
-    'jump_delay': "Jump Time",
-    'cargo_inertia': "Cargo Inertia",
-    'ew_hide': "Cloaking",
-    'ew_detect': "Detection",
-    'ew_jumpDetect': "Jump Detection",
-    'launch_rate': "Launch Rate",
-    'launch_range': "Launch Range",
-    'ammo_capacity': "Ammo Capacity",
-    'launch_lockon': "Launch Lockon",
-    'fwd_heat': "Heat (Cannon)",
-    'fwd_damage': "Damage (Cannon)",
-    'fwd_firerate': "Fire Rate (Cannon)",
-    'fwd_energy': "Energy Usage (Cannon)",
-    'tur_heat': "Heat (Turret)",
-    'tur_damage': "Damage (Turret)",
-    'tur_firerate': "Fire Rate (Turret)",
-    'tur_energy': "Energy Usage (Turret)",
-    'nebula_dmg_shield': "Nebula Damage (Shield)",
-    'nebula_dmg_armour': "Nebula Damage (Armour)",
-    'heat_dissipation': "Heat Dissipation"
-    }
-    return labels[label] if labels.has_key(label) else label+"(NOTFOUND)"
+class yamlLabelReader:
+    def __init__(self, stream):
+        import yaml
+        self.ydata = yaml.load(stream)
 
-def getStatsLabelsLabel(label):
-    labelsLabel = {
-            'jump_delay': "Modulates the time it takes to complete a hyperspace jump.",
-            'jump_range': "Modulates the distance a ship can be from a jump point when starting a jump.",
-            'cargo_inertia': "Modulates the impact that cargo has on manoeuvrability.",
-            'jam_range': "Modulates the distance at which jammers can affect incoming projectiles.",
-            'ew_detect': "Modulates the ability to detect other ships.",
-            'ew_hide': "Modulates the ship's electronic emissions and visibility to other ships.",
-            'heat_dissipation': "Modulates the rate at which heat can be dissipated from the ship and weapons.",
-            'launch_rate': "Modulates the rate at which projectiles are fired from launchers.",
-            'launch_range': "Modulates the distance projectiles travel once fired.",
-            'jam_counter': "Modulates the chance for a ship's missiles to resist an enemy's jamming.",
-            'ammo_capacity': "Modulates the amount of ammo equipped launchers can hold.",
-            'heat_forward': "Modulates the amount of heat that cannons generate.",
-            'damage_forward': "Modulates the per-shot damage dealt by cannons.",
-            'firerate_forward': "Modulates the fire rate of cannons.",
-            'energy_forward': "Modulates the amount of energy required by cannons.",
-            'heat_turret': "Modulates the amount of heat that turrets generate.",
-            'damage_turret': "Modulates the per-shot damage dealt by turrets.",
-            'firerate_turret': "Modulates the fire rate of turrets.",
-            'energy_turret': "Modulates the amount of energy required by turrets.",
-            'nebula_dmg_shield': "Modulates the amount of damage that the nebula deals to the shield.",
-            'nebula_dmg_armour': "Modulates the amount of damage that the nebula deals to armour."
-            }
-    return labelsLabel[label] if labelsLabel.has_key(label) else label+"(NOTFOUND)"
+    def getShipStatsLabels(label):
+        """
+        Custom filter for the template enigne. Translate the xml values in
+        pretty form.
+        usage: {{ ship.stats|getStatsLabel }}
+        """
+        labels = self.ydata['shipstats']
+        return labels[label] if labels.has_key(label) else label+"(NOTFOUND)"
+
+    def getStatsLabelsLabel(label):
+        """
+        Custom filter for the template engine. Explain the components.
+        usage: {{ stat|getStatsLabelsLabel }}
+        """
+        labelsLabel = self.ydata['statslabel']
+        return labelsLabel[label] if labelsLabel.has_key(label) else label+"(NOTFOUND)"
 
 class harvester:
     __xmlData=None
@@ -250,9 +210,10 @@ if __name__ == "__main__":
     date = str( datetime.utcnow().strftime("%c UTC") )
 
     myLoader = FileSystemLoader(cfg.templates if cfg.templates else tplPath)
+    labels = yamlLabelReader(open('labels.yml', 'r'))
     env = Environment(loader=myLoader)
-    env.filters['getStatsLabel'] = getShipStatsLabels
-    env.filters['getStatsLabelsLabel'] = getStatsLabelsLabel
+    env.filters['getStatsLabel'] = labels.getShipStatsLabels
+    env.filters['getStatsLabelsLabel'] = labels.getStatsLabelsLabel
 
     # creating ships html
     myTpl = env.get_template('ships_index.html')
