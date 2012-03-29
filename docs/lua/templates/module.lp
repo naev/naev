@@ -11,11 +11,11 @@
 <%=luadoc.doclet.html.include("header.lp")%>
 <div id="container">
 
-<div id="product">
+<!-- <div id="product">
 	<div id="product_logo"></div>
 	<div id="product_name"><big><b></b></big></div>
 	<div id="product_description"></div>
-</div> <!-- id="product" -->
+</div> --><!-- id="product" -->
 
 <div id="main">
 
