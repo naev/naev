@@ -27,7 +27,7 @@
 ;General
 
 ;Name and file
-Name "Naev-${VERSION}"
+Name "Naev"
 OutFile "naev-${VERSION}-win${ARCH}.exe"
 
 ;--------------------------------
