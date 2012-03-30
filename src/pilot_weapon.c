@@ -1298,5 +1298,6 @@ void pilot_afterburnOver (Pilot *p)
       p->afterburner->state  = PILOT_OUTFIT_OFF;
       pilot_rmFlag(p,PILOT_AFTERBURNER);
       pilot_calcStats( p );
+      sound_play(sound_get("afb_disengage"));
    }
 }
