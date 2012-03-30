@@ -611,7 +611,7 @@ int economy_update( unsigned int dt )
          X[i] = econ_calcSysI( dt, &systems_stack[i], j );
 
       /* Solve the system. */
-      ret = cs_lsolve( econ_G, X );
+      ret = cs_qrsol( 3, econ_G, X );
       if (ret != 1)
          WARN("Failed to solve the Economy System.");
 
