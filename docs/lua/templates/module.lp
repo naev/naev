@@ -1,20 +1,21 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Naev Lua API</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <title>Naev Lua API: <%=module_doc.name%></title>
     <link rel="stylesheet" href="<%=luadoc.doclet.html.link('luadoc.css', 'modules/'..module_doc.name)%>" type="text/css" />
-	<!--meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/-->
 </head>
 
 <body>
+<%=luadoc.doclet.html.include("header.lp")%>
 <div id="container">
 
-<div id="product">
+<!-- <div id="product">
 	<div id="product_logo"></div>
 	<div id="product_name"><big><b></b></big></div>
 	<div id="product_description"></div>
-</div> <!-- id="product" -->
+</div> --><!-- id="product" -->
 
 <div id="main">
 
@@ -27,7 +28,7 @@
 
 <h1>Module <code><%=module_doc.name%></code></h1>
 
-<p><%=module_doc.description%></p>
+<div><%=module_doc.description%></div>
 <%if module_doc.author then%>
 <p><b><%= #module_doc.author>1 and "Authors" or "Author" %>:</b>
 <table class="authors_list">
@@ -50,7 +51,7 @@
 <%for _, func_name in ipairs(module_doc.functions) do
   local func_data = module_doc.functions[func_name]%>
 	<tr>
-	<td class="name" nowrap><%=func_data.private and "local " or ""%><a href="#<%=func_name%>"><%=func_name%></a>&nbsp;(<%=table.concat(module_doc.functions[func_name].param, ", ")%>)</td>
+	<td class="name"><%=func_data.private and "local " or ""%><a href="#<%=func_name%>"><%=func_name%></a>&nbsp;(<%=table.concat(module_doc.functions[func_name].param, ", ")%>)</td>
 	<td class="summary"><%=module_doc.functions[func_name].summary%></td>
 	</tr>
 <%end%>
@@ -63,7 +64,7 @@
 <table class="table_list">
 <%for _, tab_name in ipairs(module_doc.tables) do%>
 	<tr>
-	<td class="name" nowrap><a href="#<%=tab_name%>"><%=tab_name%></a></td>
+	<td class="name"><a href="#<%=tab_name%>"><%=tab_name%></a></td>
 	<td class="summary"><%=module_doc.tables[tab_name].summary%></td>
 	</tr>
 <%end%>

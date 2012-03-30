@@ -67,13 +67,13 @@
   <lua>neutral/baron_flintley</lua>
   <trigger>land</trigger>
   <chance>100</chance>
-  <cond>var.peek("baron_active") == nil and planet.cur() == planet.get("Tau Station") and player.misnDone("Prince")</cond>
+  <cond>player.misnActive("Baron") == false and planet.cur() == planet.get("Tau Station") and player.misnDone("Prince")</cond>
  </event>
  <event name="Prowling baron">
   <lua>neutral/baron_prowl</lua>
   <trigger>enter</trigger>
   <chance>100</chance>
-  <cond>var.peek("baron_active") == nil and system.cur() == system.get("Ingot")</cond>
+  <cond>player.misnActive("Baron") == false and system.cur() == system.get("Ingot")</cond>
   <flags>
   </flags>
  </event>

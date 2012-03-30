@@ -14,6 +14,7 @@
 #include "nfile.h"
 
 #include "naev.h"
+#include "conf.h"
 
 #include <stdio.h>
 #include "nstring.h"
@@ -116,6 +117,11 @@ const char* nfile_dataPath (void)
     char *path;
 
     if (naev_dataPath[0] == '\0') {
+        /* Global override is set. */
+        if (conf.datapath) {
+           nsnprintf( naev_dataPath, PATH_MAX, "%s/naev/", conf.datapath );
+           return naev_dataPath;
+        }
 #if HAS_UNIX
         path = xdgGetRelativeHome( "XDG_DATA_HOME", "/.local/share" );
         if (path == NULL) {
@@ -155,6 +161,11 @@ const char* nfile_configPath (void)
     char *path;
 
     if (naev_configPath[0] == '\0') {
+        /* Global override is set. */
+        if (conf.datapath) {
+           nsnprintf( naev_configPath, PATH_MAX, "%s/naev/", conf.datapath );
+           return naev_configPath;
+        }
 #if HAS_UNIX
         path = xdgGetRelativeHome( "XDG_CONFIG_HOME", "/.config" );
         if (path == NULL) {
@@ -194,6 +205,11 @@ const char* nfile_cachePath (void)
     char *path;
 
     if (naev_cachePath[0] == '\0') {
+        /* Global override is set. */
+        if (conf.datapath) {
+           nsnprintf( naev_cachePath, PATH_MAX, "%s/naev/", conf.datapath );
+           return naev_cachePath;
+        }
 #if HAS_UNIX
         path = xdgGetRelativeHome( "XDG_CACHE_HOME", "/.cache" );
         if (path == NULL) {

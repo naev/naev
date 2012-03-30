@@ -1086,22 +1086,22 @@ static int pilotL_nav( lua_State *L )
  *
  * The weapon sets have the following structure: <br />
  * <ul>
- *  <li> name: name of the set. <br />
- *  <li> cooldown: [0:1] value indicating if ready to shoot (1 is ready). <br />
- *  <li> ammo: Name of the ammo or nil if not applicable. <br />
- *  <li> left: Absolute ammo left or nil if not applicable. <br />
- *  <li> left_p: Relative ammo left [0:1] or nil if not applicable <br />
- *  <li> lockon: Lockon [0:1] for seeker weapons or nil if not applicable. <br />
- *  <li> in_arc: Whether or not the target is in targetting arc or nil if not applicable. <br />
- *  <li> level: Level of the weapon (1 is primary, 2 is secondary). <br />
- *  <li> temp: Temperature of the weapon. <br />
- *  <li> type: Type of the weapon. <br />
- *  <li> dtype: Damage type of the weapon. <br />
- *  <li> track: Tracking level of the weapon. <br />
+ *  <li> name: name of the set. </li>
+ *  <li> cooldown: [0:1] value indicating if ready to shoot (1 is ready). </li>
+ *  <li> ammo: Name of the ammo or nil if not applicable. </li>
+ *  <li> left: Absolute ammo left or nil if not applicable. </li>
+ *  <li> left_p: Relative ammo left [0:1] or nil if not applicable </li>
+ *  <li> lockon: Lockon [0:1] for seeker weapons or nil if not applicable. </li>
+ *  <li> in_arc: Whether or not the target is in targetting arc or nil if not applicable. </li>
+ *  <li> level: Level of the weapon (1 is primary, 2 is secondary). </li>
+ *  <li> temp: Temperature of the weapon. </li>
+ *  <li> type: Type of the weapon. </li>
+ *  <li> dtype: Damage type of the weapon. </li>
+ *  <li> track: Tracking level of the weapon. </li>
  * </ul>
  *
  * An example would be:
- * <pre><code>
+ * @code
  * ws_name, ws = p:weapset( true )
  * print( "Weapnset Name: " .. ws_name )
  * for _,w in ipairs(ws) do
@@ -1109,7 +1109,7 @@ static int pilotL_nav( lua_State *L )
  *    print( "Cooldown: " .. tostring(cooldown) )
  *    print( "Level: " .. tostring(level) )
  * end
- * </code></pre>
+ * @endcode
  *
  * @usage set_name, slots = p:weapset( true ) -- Gets info for all active weapons
  * @usage set_name, slots = p:weapset() -- Get info about the current set
@@ -1316,22 +1316,22 @@ static int pilotL_weapset( lua_State *L )
  *
  * The active outfits have the following structure: <br />
  * <ul>
- *  <li> name: Name of the set. <br />
- *  <li> type: Type of the outfit. <br />
- *  <li> state: State of the outfit, which can be one of { "off", "warmup", "on", "cooldown" }. <br />
- *  <li> duration: Set only if state is "on". Indicates duration value (0 = just finished, 1 = just on). <br />
- *  <li> cooldown: Set only if state is "cooldown". Indicates cooldown value (0 = just ending, 1 = just started cooling down). <br />
+ *  <li> name: Name of the set. </li>
+ *  <li> type: Type of the outfit. </li>
+ *  <li> state: State of the outfit, which can be one of { "off", "warmup", "on", "cooldown" }. </li>
+ *  <li> duration: Set only if state is "on". Indicates duration value (0 = just finished, 1 = just on). </li>
+ *  <li> cooldown: Set only if state is "cooldown". Indicates cooldown value (0 = just ending, 1 = just started cooling down). </li>
  * </ul>
  *
  * An example would be:
- * <pre><code>
+ * @code
  * act_outfits = p:actives()
  * print( "Weapnset Name: " .. ws_name )
  * for _,o in ipairs(act_outfits) do
  *    print( "Name: " .. o.name )
  *    print( "State: " .. o.state )
  * end
- * </code></pre>
+ * @endcode
  *
  * @usage act_outfits = p:actives() -- Gets the table of active outfits
  *
@@ -2634,22 +2634,22 @@ lua_rawset( L, -3 )
  *
  * Some of the stats are:<br />
  * <ul>
- *  <li> cpu <br />
- *  <li> cpu_max <br />
- *  <li> fuel <br />
- *  <li> fuel_max <br />
- *  <li> mass <br />
- *  <li> thrust <br />
- *  <li> speed <br />
- *  <li> speed_max <br />
- *  <li> turn <br />
- *  <li> armour <br />
- *  <li> shield <br />
- *  <li> energy <br />
- *  <li> armour_regen <br />
- *  <li> shield_regen <br />
- *  <li> energy_regen <br />
- *  <li> jump_delay <br />
+ *  <li> cpu </li>
+ *  <li> cpu_max </li>
+ *  <li> fuel </li>
+ *  <li> fuel_max </li>
+ *  <li> mass </li>
+ *  <li> thrust </li>
+ *  <li> speed </li>
+ *  <li> speed_max </li>
+ *  <li> turn </li>
+ *  <li> armour </li>
+ *  <li> shield </li>
+ *  <li> energy </li>
+ *  <li> armour_regen </li>
+ *  <li> shield_regen </li>
+ *  <li> energy_regen </li>
+ *  <li> jump_delay </li>
  * </ul>
  *
  * @usage stats = p:stats() print(stats.armour)
@@ -2821,9 +2821,9 @@ static int pilotL_cargoRm( lua_State *L )
  *
  * The list has the following members:<br />
  * <ul>
- * <li><b>name:</b> name of the cargo.
- * <li><b>q:</b> quantity of the cargo.
- * <li><b>m:</b> true if cargo is for a mission.
+ * <li><b>name:</b> name of the cargo.</li>
+ * <li><b>q:</b> quantity of the cargo.</li>
+ * <li><b>m:</b> true if cargo is for a mission.</li>
  * </ul>
  *
  * @usage for _,v in ipairs(pilot.cargoList(player.pilot())) do print( string.format("%s: %d", v.name, v.q ) ) end
@@ -2923,8 +2923,8 @@ static const struct pL_flag pL_flags[] = {
  *
  * Valid flags are:<br/>
  * <ul>
- *  <li> hailing: pilot is hailing the player.<br/>
- *  <li> boardable: pilot is boardable while active.<br/>
+ *  <li> hailing: pilot is hailing the player.</li>
+ *  <li> boardable: pilot is boardable while active.</li>
  * </ul>
  *    @luaparam p Pilot to get flags of.
  *    @luareturn Table with flag names an index, boolean as value.
