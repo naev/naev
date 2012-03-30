@@ -1,3 +1,14 @@
+;For testing the script
+;SetCompress Off
+
+;Version, Arch, Icon and URL
+!define VERSION "0.5.2"
+!define ARCH "32"
+!define URL "http://naev.org"
+!define MUI_ICON "..\logos\logo.ico"
+;!define MUI_UNICON "..\logos\logo.ico"
+
+;Miscellaneous defines
 !define MULTIUSER_EXECUTIONLEVEL Highest
 !define MULTIUSER_MUI
 !define MULTIUSER_INSTALLMODE_COMMANDLINE
@@ -6,21 +17,18 @@
 !define MULTIUSER_INSTALLMODE_INSTDIR_REGISTRY_KEY "Software\Naev"
 !define MULTIUSER_INSTALLMODE_INSTDIR_REGISTRY_VALUENAME ""
 !define MULTIUSER_INSTALLMODE_INSTDIR "Naev"
+
+;Needed include files
 !include "MultiUser.nsh"
 !include "MUI2.nsh"
 !include "nsDialogs.nsh"
 !include "LogicLib.nsh"
-!define MUI_ICON "..\logos\logo.ico"
-;!define MUI_UNICON "..\logos\logo.ico"
 ;--------------------------------
 ;General
 
 ;Name and file
-!define VERSION "0.5.2"
-!define URL "http://naev.org"
-Name "Naev"
-OutFile "naev-${VERSION}-win32.exe"
-;OutFile "naev-${VERSION}-win64.exe"
+Name "Naev-${VERSION}"
+OutFile "naev-${VERSION}-win${ARCH}.exe"
 
 ;--------------------------------
 ;Variables
