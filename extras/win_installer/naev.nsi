@@ -178,6 +178,7 @@ Section "Uninstall"
 
    Delete "$SMPROGRAMS\$StartMenuFolder\Naev.lnk"
    RMDir "$SMPROGRAMS\$StartMenuFolder"
+   Delete "$DESKTOP\Naev.lnk"
 
    DeleteRegKey SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Naev"
    DeleteRegKey SHCTX "Software\Naev"
