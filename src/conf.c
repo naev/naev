@@ -281,6 +281,24 @@ void conf_cleanup (void)
 
 
 /*
+ * @brief Parses the local conf that dictates where user data goes.
+ */
+void conf_loadConfigPath( void )
+{
+   const char *file = "datapath.lua";
+
+   if (!nfile_fileExists(file))
+      return;
+
+   lua_State *L = nlua_newState();
+   if (luaL_dofile(L, file) == 0)
+      conf_loadString("datapath",conf.datapath);
+
+   lua_close(L);
+}
+
+
+/*
  * parses the config file
  */
 int conf_loadConfig ( const char* file )
