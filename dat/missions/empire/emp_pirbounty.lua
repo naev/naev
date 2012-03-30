@@ -59,6 +59,11 @@ function create ()
    -- Get target system
    near_sys = get_pir_system( system.cur() )
 
+   -- Handle edge cases where no suitable neighbours exist.
+   if not near_sys then
+      misn.finish(false)
+   end
+
    -- Get credits
    credits  = rnd.rnd(5,10) * 10000
 
