@@ -137,6 +137,17 @@ Function .onInit
 
    !insertmacro MULTIUSER_INIT
    !insertmacro MUI_LANGDLL_DISPLAY
+   
+   ReadRegStr $INSTDIR SHCTX "Software\Naev" ""
+   ${Unless} ${Errors}
+      ;If we get here we're already installed
+	  MessageBox MB_YESNO|MB_ICONEXCLAMATION "Naev is already installed! Would you like to remove the old install first?$\n$\nNote: This is HIGHLY RECOMMENDED!" IDNO skip
+	  ExecWait '"$INSTDIR\Uninstall.exe"' $0
+	  ${Unless} $0 = 0 ;note: = not ==
+	     MessageBox MB_OK|MB_ICONSTOP "The uninstall failed!"
+	  ${EndUnless}
+	  skip:
+   ${EndUnless}
 
 FunctionEnd
 
@@ -169,7 +180,7 @@ Section "Uninstall"
    RMDir "$SMPROGRAMS\$StartMenuFolder"
 
    DeleteRegKey SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Naev"
-   DeleteRegKey /ifempty SHCTX "Software\Naev"
+   DeleteRegKey SHCTX "Software\Naev"
 
 SectionEnd
 
