@@ -91,7 +91,7 @@ function accept ()
    -- Format and set osd message
    osd_msg[1] = osd_msg[1]:format(near_sys:name())
    osd_msg[2] = osd_msg[2]:format(pir_name)
-   misn.osdCreate(misn_title, osd_msg)
+   misn.osdCreate(misn_title:format( near_sys:name() ), osd_msg)
 
    -- Set hooks
    hook.enter("sys_enter")
