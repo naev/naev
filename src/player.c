@@ -1156,15 +1156,7 @@ void player_think( Pilot* pplayer, const double dt )
    }
 
 
-   /*
-    * Afterburn!
-    */
-   if (pilot_isFlag(player.p,PILOT_AFTERBURNER)) {
-      afb = pplayer->afterburner->outfit;
-      pilot_setThrust( pplayer, 1. + afb->u.afb.thrust * MIN( 1., afb->u.afb.mass_limit/player.p->solid->mass ) );
-   }
-   else
-      pilot_setThrust( pplayer, player_acc );
+   pilot_setThrust( pplayer, player_acc );
 }
 
 

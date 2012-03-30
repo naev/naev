@@ -1251,6 +1251,10 @@ void pilot_afterburn (Pilot *p)
 {
    double afb_mod;
 
+   /* The afterburner only works if its efficiency is high enough. */
+   if (pilot_heatEfficiencyMod( p->afterburner->heat_T ) < 0.3)
+      return;
+
    if (p == NULL)
       return;
 
@@ -1271,8 +1275,6 @@ void pilot_afterburn (Pilot *p)
       p->afterburner->stimer = outfit_duration( p->afterburner->outfit );
       pilot_setFlag(p,PILOT_AFTERBURNER);
       pilot_calcStats( p );
-      /* Abort autonav when afterburning. */
-      player_autonavAbort(NULL);
    }
 
    if (p == player.p) {
@@ -1293,8 +1295,7 @@ void pilot_afterburnOver (Pilot *p)
       return;
 
    if (p->afterburner->state == PILOT_OUTFIT_ON) {
-      p->afterburner->state  = PILOT_OUTFIT_COOLDOWN;
-      p->afterburner->stimer = outfit_cooldown( p->afterburner->outfit );
+      p->afterburner->state  = PILOT_OUTFIT_OFF;
       pilot_rmFlag(p,PILOT_AFTERBURNER);
       pilot_calcStats( p );
    }

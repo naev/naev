@@ -10,13 +10,12 @@
  </general>
  <specific type="afterburner">
   <cpu>2</cpu>
-  <duration>5</duration>
-  <cooldown>8</cooldown>
   <rumble>0.5</rumble>
   <sound>afterburner</sound>
   <thrust>180</thrust>
   <speed>30</speed>
   <energy>40</energy>
   <mass_limit>160</mass_limit>
+  <heatup>7</heatup>
  </specific>
 </outfit>

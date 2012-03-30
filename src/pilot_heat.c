@@ -110,8 +110,8 @@ void pilot_heatReset( Pilot *p )
 /**
  * @brief Adds heat to an outfit slot.
  *
- *    @param o Outfit to heat.
- *    @param energy Energy received by outfit (in MJ).
+ *    @param p Pilot whose slot it is.
+ *    @param o The slot in question.
  */
 void pilot_heatAddSlot( Pilot *p, PilotOutfitSlot *o )
 {
@@ -125,6 +125,26 @@ void pilot_heatAddSlot( Pilot *p, PilotOutfitSlot *o )
    else
       hmod = 1.;
    o->heat_T += hmod * outfit_heat(o->outfit) / o->heat_C;
+}
+
+
+/**
+ * @brief Adds heat to an outfit slot over a period of time.
+ *
+ *    @param p Pilot whose slot it is.
+ *    @param o The slot in question.
+ *    @param dt Delta tick.
+ */
+void pilot_heatAddSlotTime( Pilot *p, PilotOutfitSlot *o, double dt )
+{
+   double hmod;
+   /* We consider that only 1% of the energy is lost in the form of heat,
+    * this keeps numbers sane. */
+
+   /* @todo Handle beam modifiers for ships here. */
+   hmod = 1.;
+
+   o->heat_T += (hmod * outfit_heat(o->outfit) / o->heat_C) * dt;
 }
 
 
@@ -195,6 +215,15 @@ void pilot_heatUpdateShip( Pilot *p, double Q_cond, double dt )
 
    /* Update ship temperature. */
    p->heat_T  += Q / p->heat_C;
+}
+
+
+/**
+ * @brief Returns a 0:1 modifier representing efficiency (1. being normal).
+ */
+double pilot_heatEfficiencyMod( double T )
+{
+   return CLAMP( 0., 1., 1 - (T-250.)/400. );
 }
 
 
