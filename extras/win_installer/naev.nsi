@@ -121,13 +121,14 @@ Section "Naev Engine" BinarySection
 SectionEnd
 
 Section "Naev Data (Download)" DataSection
-
+	dwn:
     AddSize 202159 ;Size (kB) of Naev ndata
-    NSISdl::download "http://voxel.dl.sourceforge.net/project/naev/naev-${VERSION}/ndata-${VERSION}" "ndata"
+    NSISdl::download "http://prdownloads.sourceforge.net/naev/naev-${VERSION}/ndata-${VERSION}" "ndata"
     Pop $R0 ;Get the return value
-      StrCmp $R0 "success" +2
-        MessageBox MB_OK "Download failed: $R0"
-
+      StrCmp $R0 "success" skip
+        MessageBox MB_YESNO|MB_ICONEXCLAMATION "Download failed due to: $R0$\n$\nPlease note that naev wont work until you download ndata and put it in the same folder as naev.exe.$\n$\nRetry?" IDNO skip
+		Goto dwn
+		skip:
 SectionEnd
 
 ;--------------------------------
@@ -178,6 +179,7 @@ Section "Uninstall"
 
    Delete "$SMPROGRAMS\$StartMenuFolder\Naev.lnk"
    RMDir "$SMPROGRAMS\$StartMenuFolder"
+   Delete "$DESKTOP\Naev.lnk"
 
    DeleteRegKey SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Naev"
    DeleteRegKey SHCTX "Software\Naev"
