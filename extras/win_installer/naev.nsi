@@ -1,3 +1,14 @@
+;For testing the script
+;SetCompress Off
+
+;Version, Arch, Icon and URL
+!define VERSION "0.5.2"
+!define ARCH "32"
+!define URL "http://naev.org"
+!define MUI_ICON "..\logos\logo.ico"
+;!define MUI_UNICON "..\logos\logo.ico"
+
+;Miscellaneous defines
 !define MULTIUSER_EXECUTIONLEVEL Highest
 !define MULTIUSER_MUI
 !define MULTIUSER_INSTALLMODE_COMMANDLINE
@@ -6,21 +17,18 @@
 !define MULTIUSER_INSTALLMODE_INSTDIR_REGISTRY_KEY "Software\Naev"
 !define MULTIUSER_INSTALLMODE_INSTDIR_REGISTRY_VALUENAME ""
 !define MULTIUSER_INSTALLMODE_INSTDIR "Naev"
+
+;Needed include files
 !include "MultiUser.nsh"
 !include "MUI2.nsh"
 !include "nsDialogs.nsh"
 !include "LogicLib.nsh"
-!define MUI_ICON "..\logos\logo.ico"
-;!define MUI_UNICON "..\logos\logo.ico"
 ;--------------------------------
 ;General
 
 ;Name and file
-!define VERSION "0.5.2"
-!define URL "http://naev.org"
 Name "Naev"
-OutFile "naev-${VERSION}-win32.exe"
-;OutFile "naev-${VERSION}-win64.exe"
+OutFile "naev-${VERSION}-win${ARCH}.exe"
 
 ;--------------------------------
 ;Variables
@@ -129,6 +137,17 @@ Function .onInit
 
    !insertmacro MULTIUSER_INIT
    !insertmacro MUI_LANGDLL_DISPLAY
+   
+   ReadRegStr $INSTDIR SHCTX "Software\Naev" ""
+   ${Unless} ${Errors}
+      ;If we get here we're already installed
+	  MessageBox MB_YESNO|MB_ICONEXCLAMATION "Naev is already installed! Would you like to remove the old install first?$\n$\nNote: This is HIGHLY RECOMMENDED!" IDNO skip
+	  ExecWait '"$INSTDIR\Uninstall.exe"' $0
+	  ${Unless} $0 = 0 ;note: = not ==
+	     MessageBox MB_OK|MB_ICONSTOP "The uninstall failed!"
+	  ${EndUnless}
+	  skip:
+   ${EndUnless}
 
 FunctionEnd
 
@@ -161,7 +180,7 @@ Section "Uninstall"
    RMDir "$SMPROGRAMS\$StartMenuFolder"
 
    DeleteRegKey SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Naev"
-   DeleteRegKey /ifempty SHCTX "Software\Naev"
+   DeleteRegKey SHCTX "Software\Naev"
 
 SectionEnd
 
