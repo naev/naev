@@ -123,7 +123,7 @@ SectionEnd
 Section "Naev Data (Download)" DataSection
 
     AddSize 202159 ;Size (kB) of Naev ndata
-    NSISdl::download "http://voxel.dl.sourceforge.net/project/naev/naev-${VERSION}/ndata-${VERSION}" "ndata"
+    NSISdl::download "http://prdownloads.sourceforge.net/naev/naev-${VERSION}/ndata-${VERSION}" "ndata"
     Pop $R0 ;Get the return value
       StrCmp $R0 "success" +2
         MessageBox MB_OK "Download failed: $R0"
