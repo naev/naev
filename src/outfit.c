@@ -1578,16 +1578,14 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
          "%.0f%% Thrust\n"
          "%.0f%% Maximum Speed\n"
          "%.1f EPS\n"
-         "%.1f Rumble\n"
-         "%.1f seconds to overheat",
+         "%.1f Rumble\n",
          outfit_getType(temp),
          temp->u.afb.cpu,
          temp->u.afb.mass_limit,
          temp->u.afb.thrust + 100.,
          temp->u.afb.speed + 100.,
          temp->u.afb.energy,
-         temp->u.afb.rumble,
-         temp->u.afb.heatup );
+         temp->u.afb.rumble );
 
    /* Post processing. */
    temp->u.afb.thrust /= 100.;
