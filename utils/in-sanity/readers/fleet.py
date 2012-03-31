@@ -12,13 +12,11 @@ class fleet(readers):
         self._componentName = 'fleet'
         self.used=list()
         self.unknown=list()
-        self.missingLua = list()
 
         self.nameList = list()
         print('Compiling fleet list ...',end='      ')
         for fleet in self.xmlData.findall('fleet'):
             self.nameList.append(fleet.attrib['name'])
-            #self.missingLua.append(fleet.attrib['name'])
         print("DONE")
 
     def find(self, name):
