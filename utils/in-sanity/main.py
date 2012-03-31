@@ -42,7 +42,7 @@ class sanitizer:
             self.config['datpath'] = os.path.join(self.config['basepath'],
                                                   'dat/')
 
-        if self.config['use'] == 'missionxml':
+        if self.config['use'] == 'xml':
             self.dirtyfiles_from_xml()
         elif self.config['use'] == 'rawfiles':
             self.dirtyfiles_from_directory()
@@ -52,13 +52,8 @@ class sanitizer:
             self.addLuaFile(files, root)
         print('DONE')
 
-        print('Compiling events files...',end='      ')
-        for root, dir, files in os.walk(self.config['basepath']+'/dat/events/'):
-            self.addLuaFile(files, root)
-        print('DONE')
-
         print('Compiling AI Spawn files...', end='      ')
-        for root, dir, files in os.walk(self.config['basepath']+'/ai/spawn/'):
+        for root, dir, files in os.walk(self.config['datpath']+'factions/spawn/'):
             self.addLuaFile(files, root)
         print('DONE')
 
@@ -76,25 +71,27 @@ class sanitizer:
         """
         retrieve a list of files from the directory (the wild viking way)
         """
-        print('Compiling file list like a wild viking ...', end='       ')
-        for root, dir, files in os.walk(self.config['missionpath']):
-            self.addLuaFile(files, root)
-        print('DONE')
+        for name in "mission", "event":
+            print('Compiling ' + name + ' file list like a wild viking ...', end='       ')
+            for root, dir, files in os.walk("{0}/{1}s".format(luapath, name)):
+                self.addLuaFile(files, root)
+            print('DONE')
         return True
 
     def dirtyfiles_from_xml(self):
         """
-        retrieve a list of files from the mission.xml (the quiet british way)
+        retrieve a list of files from the mission and event XML (the quiet british way)
         """
         import xml.etree.ElementTree as ET
-        file = os.path.join(self.config['basepath'],'dat/mission.xml')
-        missionxml = ET.parse(file)
-        print('Compiling file list ...', end='      ')
-        for mission in missionxml.findall('mission'):
-            for lf in mission.findall('lua'):
-                lf = os.path.join(self.config['missionpath'], lf.text + '.lua')
-                self.luaScripts.append(lf)
-        print("DONE")
+        for name in "mission", "event":
+            print('Compiling {0} file list ...'.format(name), end='      ')
+            file = os.path.join(self.config['basepath'], "{0}/{1}.xml".format(luapath, name))
+            naevxml = ET.parse(file)
+            for mission in naevxml.findall(name):
+                for lf in mission.findall('lua'):
+                    lf = os.path.join("{0}/{1}s".format(luapath, name), lf.text + '.lua')
+                    self.luaScripts.append(lf)
+            print('DONE')
         return True
 
     def dah_doctor(self):
@@ -131,10 +128,12 @@ class sanitizer:
         rawstr = r"""
         (?P<func>
             pilot\.add\(|
+            pilot\.addRaw\(|
             player\.addShip\(|
             addOutfit\(|
-            diff\.apply\(
-        )"(?P<content>[^"]+)"""
+            diff\.apply\(|
+            scom\.addPilot\()\s* (?P<hackery>pilots,|
+        )\s*"(?P<content>[^"]+)"""
 
         search_cobj = re.compile(rawstr, re.VERBOSE| re.UNICODE)
 
@@ -169,6 +168,12 @@ class sanitizer:
 
                     if info['func'] == 'pilot.add':
                         if not fleetdata.find(info['content']):
+                            haserror=True
+                    if info['func'] == 'scom.addPilot':
+                        if not fleetdata.find(info['content']):
+                            haserror=True
+                    if info['func'] == 'pilot.addRaw':
+                        if not shipdata.find(info['content']):
                             haserror=True
                     if info['func'] == 'addOutfit':
                         if not outfitdata.find(info['content']):
@@ -250,7 +255,7 @@ if __name__ == "__main__":
                 Please, don't go insane.
              """ %  __version__)
     parser.add_argument('--use', '-u',
-                        choices=['missionxml','rawfiles'], default='missionxml',
+                        choices=['xml','rawfiles'], default='xml',
                         help="""
                         Use the rawfiles option to run into the directory like
                         a wild viking. Otherwise, the script will use the active
@@ -270,8 +275,8 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     basepath = os.path.abspath(args.basepath)
-    missionpath = os.path.abspath(basepath + '/dat/missions')
-    insanity = sanitizer(basepath=basepath, missionpath=missionpath,
+    luapath = os.path.abspath(basepath + '/dat/')
+    insanity = sanitizer(basepath=basepath, luapath=luapath,
                          verbose=args.verbose,use=args.use,
                          show_unused=args.show_unused)
 

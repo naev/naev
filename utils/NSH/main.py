@@ -68,6 +68,10 @@ class harvester:
             shipName = ship.get('name')
             shipClass = ship.find('class').text
 
+            # We only want to list player-available ships.
+            if ship.find('mission') is not None:
+                continue
+
             if not self.ships.has_key(shipName):
                 self.ships.update({shipName: dict()})
 
