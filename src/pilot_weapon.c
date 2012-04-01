@@ -1275,6 +1275,7 @@ void pilot_afterburn (Pilot *p)
       p->afterburner->stimer = outfit_duration( p->afterburner->outfit );
       pilot_setFlag(p,PILOT_AFTERBURNER);
       pilot_calcStats( p );
+      sound_play(p->afterburner->outfit->u.afb.sound_on); /* @todo Make this part of a more dynamic activated outfit sound system. */
    }
 
    if (p == player.p) {
@@ -1298,6 +1299,6 @@ void pilot_afterburnOver (Pilot *p)
       p->afterburner->state  = PILOT_OUTFIT_OFF;
       pilot_rmFlag(p,PILOT_AFTERBURNER);
       pilot_calcStats( p );
-      sound_play(sound_get("afb_disengage")); /* @todo Make this part of a more dynamic activated outfit sound system. */
+      sound_play(p->afterburner->outfit->u.afb.sound_off); /* @todo Make this part of a more dynamic activated outfit sound system. */
    }
 }

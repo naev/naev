@@ -244,7 +244,9 @@ typedef struct OutfitAfterburnerData_ {
    /* Internal properties. */
    double cpu;       /**< CPU usage. */
    double rumble;    /**< Percent of rumble */
-   int sound;        /**< Sound of the afterburner */
+   int sound_on;     /**< Sound of the afterburner turning on */
+   int sound;        /**< Sound of the afterburner being on */
+   int sound_off;    /**< Sound of the afterburner turning off */
    double thrust;    /**< Percent of thrust increase based on ship base. */
    double speed;     /**< Percent of speed to increase based on ship base. */
    double energy;    /**< Energy usage while active */

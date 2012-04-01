@@ -12,6 +12,7 @@
   <cpu>6</cpu>
   <rumble>0.9</rumble>
   <sound>afterburner</sound>
+  <sound_off>afb_disengage</sound_off>
   <thrust>300</thrust>
   <speed>45</speed>
   <energy>65</energy>
