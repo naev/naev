@@ -3,7 +3,7 @@
 cd "$(dirname $0)"
 
 export LC_ALL=C
-data="../../dat/outfit.xml"
+data="../../dat/outfits"
 
 # XML elements which use the directories.
 store="gfx_store"
@@ -15,7 +15,7 @@ for dir in store space; do
    echo -e "\n   Unused outfit $dir gfx"
    for img in *.png; do
       [[ $img =~ -end.png ]] && continue
-      if ! grep -q "<${!dir}[^_]*>${img%.png}<" "../$data"; then
+      if ! cat ../${data}/*/*.xml | grep -q "<${!dir}[^_]*>${img%.png}<"; then
          echo "      $img"
       fi
    done
@@ -28,7 +28,7 @@ for dir in store space; do
    echo -e "\n   Overused outfit $dir gfx"
    for img in *.png; do
       [[ $img =~ -end.png ]] && continue
-      count=$(grep -c "<${!dir}[^_]*>${img%.png}<" "../$data")
+      count=$(cat ../${data}/*/*.xml | grep -c "<${!dir}[^_]*>${img%.png}<")
       if [[ $count > 1 ]]; then
          echo "      $img => $count times"
       fi
