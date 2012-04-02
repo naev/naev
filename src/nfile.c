@@ -119,7 +119,7 @@ const char* nfile_dataPath (void)
     if (naev_dataPath[0] == '\0') {
         /* Global override is set. */
         if (conf.datapath) {
-           nsnprintf( naev_dataPath, PATH_MAX, "%s/naev/", conf.datapath );
+           nsnprintf( naev_dataPath, PATH_MAX, "%s/", conf.datapath );
            return naev_dataPath;
         }
 #if HAS_UNIX
@@ -163,7 +163,7 @@ const char* nfile_configPath (void)
     if (naev_configPath[0] == '\0') {
         /* Global override is set. */
         if (conf.datapath) {
-           nsnprintf( naev_configPath, PATH_MAX, "%s/naev/", conf.datapath );
+           nsnprintf( naev_configPath, PATH_MAX, "%s/", conf.datapath );
            return naev_configPath;
         }
 #if HAS_UNIX
@@ -207,7 +207,7 @@ const char* nfile_cachePath (void)
     if (naev_cachePath[0] == '\0') {
         /* Global override is set. */
         if (conf.datapath) {
-           nsnprintf( naev_cachePath, PATH_MAX, "%s/naev/", conf.datapath );
+           nsnprintf( naev_cachePath, PATH_MAX, "%s/", conf.datapath );
            return naev_cachePath;
         }
 #if HAS_UNIX
