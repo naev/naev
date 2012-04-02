@@ -2073,6 +2073,9 @@ void player_toggleMouseFly(void)
  */
 void player_toggleCooldown(void)
 {
+   if (pilot_isFlag(player.p, PILOT_TAKEOFF))
+      return;
+
    if (!pilot_isFlag(player.p, PILOT_COOLDOWN)) {
       if (VMOD(player.p->solid->vel) > MAX_HYPERSPACE_VEL) {
          player_message("\erYou are going too fast to begin cooldown.");

@@ -903,7 +903,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    } else if (KEY("mousefly") && NODEAD() && !repeat) {
       if (value==KEY_PRESS)
          player_toggleMouseFly();
-   } else if (KEY("cooldown") && INGAME() && NODEAD() && !repeat) {
+   } else if (KEY("cooldown") && NOLAND() && NODEAD() && !repeat) {
       if (value==KEY_PRESS)
          player_toggleCooldown();
 
