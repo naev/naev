@@ -227,6 +227,7 @@ double pilot_heatEfficiencyMod( double T )
    return CLAMP( 0., 1., 1 - (T-300.)/350. );
 }
 
+/**
  * @brief Overrides the usual heat model during active cooldown.
  *
  *    @param p  Pilot to update.
