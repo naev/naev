@@ -96,6 +96,7 @@ static int pilotL_flags( lua_State *L );
 static int pilotL_setActiveBoard( lua_State *L );
 static int pilotL_setNoDeath( lua_State *L );
 static int pilotL_disable( lua_State *L );
+static int pilotL_cooldown( lua_State *L );
 static int pilotL_setNoJump( lua_State *L );
 static int pilotL_setNoLand( lua_State *L );
 static int pilotL_addOutfit( lua_State *L );
@@ -186,6 +187,7 @@ static const luaL_reg pilotL_methods[] = {
    { "setActiveBoard", pilotL_setActiveBoard },
    { "setNoDeath", pilotL_setNoDeath },
    { "disable", pilotL_disable },
+   { "cooldown", pilotL_cooldown },
    { "setNoJump", pilotL_setNoJump },
    { "setNoLand", pilotL_setNoLand },
    /* Talk. */
@@ -2134,6 +2136,38 @@ static int pilotL_disable( lua_State *L )
    p->shield = 0.;
    p->stress = p->armour;
    pilot_updateDisable(p, 0);
+
+   return 0;
+}
+
+
+/**
+ * @brief Puts a pilot into cooldown mode.
+ *
+ * @usage p:cooldown( true )
+ *
+ *    @luaparam p Pilot to put into cooldown mode.
+ * @luafunc cooldown( p, state )
+ */
+static int pilotL_cooldown( lua_State *L )
+{
+   Pilot *p;
+   int state;
+
+   /* Get the pilot. */
+   p = luaL_validpilot(L,1);
+
+  /* Get state. */
+  if (lua_gettop(L) > 1)
+     state = lua_toboolean(L, 2);
+  else
+     state = 1;
+
+   /* Set status. */
+   if (state)
+      pilot_cooldown( p );
+   else
+      pilot_cooldownEnd( p );
 
    return 0;
 }

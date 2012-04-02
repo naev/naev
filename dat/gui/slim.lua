@@ -99,6 +99,22 @@ function create()
    gui.targetPlanetGFX( tex.open( base .. "radar_planet.png" ) )
    gui.targetPilotGFX(  tex.open( base .. "radar_ship.png" ) )
 
+   -- Cooldown pane.
+   cooldown_sheen = tex.open( base .. "cooldown-sheen.png" )
+   cooldown_bg = tex.open( base .. "cooldown-bg.png" )
+   cooldown_frame = tex.open( base .. "cooldown-frame.png" )
+   cooldown_panel = tex.open( base .. "cooldown-panel.png" )
+   cooldown_frame_x = screen_w/2. - 98
+   cooldown_frame_y = screen_h/2. + 60
+   cooldown_panel_x = cooldown_frame_x + 8
+   cooldown_panel_y = cooldown_frame_y + 8
+   cooldown_bg_x = cooldown_panel_x + 30
+   cooldown_bg_y = cooldown_panel_y + 2
+   cooldown_bg_w, cooldown_bg_h = cooldown_bg:dim()
+   cooldown_sheen_x = cooldown_bg_x
+   cooldown_sheen_y = cooldown_bg_y + 12
+   cooldown_elements = { "frame", "panel", "bg", "sheen" }
+
    -- Active outfit list.
    slot = tex.open( base .. "slot.png" )
    slotend = tex.open( base .. "slotend.png" )
@@ -148,6 +164,8 @@ function create()
    -- Active cooldown display
    cooldown_text = "Cooling down..."
    cooldown_length = gfx.printDim( false, cooldown_text )
+
+   --gfx.renderRect( screen_w/2 - 75, screen_h/2 + 50, (1 - percent) * 150, 20, col_shield )
 
    -- Active outfit bar
    slot_w, slot_h = slot:dim()
@@ -371,9 +389,12 @@ end
 
 
 function render_cooldown( percent, seconds )
-   gfx.print( false, cooldown_text, (screen_w - cooldown_length)/2, screen_h/2 + 80, col_txt_bar )
-   gfx.renderRect( screen_w/2 - 77, screen_h/2 + 48, 154, 24, col_txt_bar )
-   gfx.renderRect( screen_w/2 - 75, screen_h/2 + 50, (1 - percent) * 150, 20, col_shield )
+   gfx.renderTex( cooldown_frame, cooldown_frame_x, cooldown_frame_y )
+   gfx.renderTex( cooldown_bg, cooldown_bg_x, cooldown_bg_y )
+   gfx.renderRect( cooldown_bg_x, cooldown_bg_y, percent * cooldown_bg_w, cooldown_bg_h, col_temperature )
+   gfx.renderTex( cooldown_sheen, cooldown_sheen_x, cooldown_sheen_y )
+   gfx.renderTex( cooldown_panel, cooldown_panel_x, cooldown_panel_y )
+   gfx.print( false, "Cooling down...", cooldown_bg_x, cooldown_bg_y + cooldown_bg_h + 8, col_txt_bar, cooldown_bg_w, true )
 end
 
 
