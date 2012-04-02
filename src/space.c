@@ -1317,7 +1317,6 @@ void space_init( const char* sysname )
    if (player.p != NULL) {
       pilot_lockClear( player.p );
       pilot_clearTimers( player.p ); /* Clear timers. */
-      pilot_heatReset( player.p ); /* Resets the player's heat. */
       player_clearEscorts(); /* Must clear escorts to keep deployment sane. */
    }
 
