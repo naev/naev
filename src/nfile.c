@@ -268,7 +268,14 @@ char* nfile_dirname( char *path )
 
 
 #if HAS_POSIX
+#define MKDIR mkdir( opath, mode )
 static int mkpath( const char *path, mode_t mode )
+#elif HAS_WIN32
+#define MKDIR !CreateDirectory( opath, NULL )
+static int mkpath( const char *path )
+#else
+#error "Feature needs implementation on this Operating System for Naev to work."
+#endif
 {
    char opath[PATH_MAX];
    char *p;
@@ -287,7 +294,7 @@ static int mkpath( const char *path, mode_t mode )
       if (p[0] == '/') {
          p[0] = '\0';
          if (!nfile_dirExists(opath)) {
-            ret = mkdir( opath, mode );
+            ret = MKDIR;
             if (ret)
                return ret;
          }
@@ -295,15 +302,14 @@ static int mkpath( const char *path, mode_t mode )
       }
    }
    if (!nfile_dirExists(opath)) { /* if path is not terminated with / */
-      ret = mkdir( opath, mode );
+      ret = MKDIR;
       if (ret)
          return ret;
    }
 
    return 0;
 }
-#endif /* HAS_POSIX */
-
+#undef MKDIR
 
 
 /**
@@ -331,17 +337,14 @@ int nfile_dirMakeExist( const char* path, ... )
 
 #if HAS_POSIX
    if (mkpath(file, S_IRWXU | S_IRWXG | S_IRWXO) < 0) {
-      WARN("Dir '%s' does not exist and unable to create: %s", file, strerror(errno));
-      return -1;
-   }
 #elif HAS_WIN32
-   if (!CreateDirectory(file, NULL))  {
-      WARN("Dir '%s' does not exist and unable to create: %s", file, strerror(errno));
-      return -1;
-   }
+   if (mkpath(file) < 0) {
 #else
 #error "Feature needs implementation on this Operating System for Naev to work."
 #endif
+      WARN("Dir '%s' does not exist and unable to create: %s", file, strerror(errno));
+      return -1;
+   }
 
    return 0;
 }
