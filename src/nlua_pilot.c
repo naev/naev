@@ -1563,6 +1563,7 @@ static int pilotL_dir( lua_State *L )
  *
  *    @luaparam p Pilot to get temperature of.
  *    @luareturn The pilot's current temperature (in kelvin).
+ * @luafunc temp( p )
  */
 static int pilotL_temp( lua_State *L )
 {

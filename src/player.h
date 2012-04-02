@@ -235,6 +235,7 @@ void player_hail (void);
 void player_hailPlanet (void);
 void player_autohail (void);
 void player_toggleMouseFly(void);
+void player_toggleCooldown(void);
 
 
 #endif /* PLAYER_H */

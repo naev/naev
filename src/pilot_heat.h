@@ -58,6 +58,7 @@ void pilot_heatAddSlot( Pilot *p, PilotOutfitSlot *o );
 void pilot_heatAddSlotTime( Pilot *p, PilotOutfitSlot *o, double dt );
 double pilot_heatUpdateSlot( Pilot *p, PilotOutfitSlot *o, double dt );
 void pilot_heatUpdateShip( Pilot *p, double Q_cond, double dt );
+void pilot_heatUpdateCooldown( Pilot *p );
 
 /*
  * Modifiers.
