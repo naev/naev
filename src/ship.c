@@ -737,6 +737,10 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
          continue;
       }
 
+      /* Used by in-sanity and NSH utils, no in-game meaning. */
+      if (xml_isNode(node,"mission"))
+         continue;
+
       DEBUG("Ship '%s' has unknown node '%s'.", temp->name, node->name);
    } while (xml_nextNode(node));
 
