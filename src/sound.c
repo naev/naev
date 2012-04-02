@@ -385,7 +385,8 @@ int sound_play( int sound )
    alVoice *v;
    alSound *s;
 
-   if (sound_disabled)
+   /* Do not play sound if we can't play sound. */
+   if (sound_disabled || sound == 0)
       return 0;
 
    if ((sound < 0) || (sound >= sound_nlist))
@@ -428,7 +429,8 @@ int sound_playPos( int sound, double px, double py, double vx, double vy )
    double cx, cy, dist;
    int target;
 
-   if (sound_disabled)
+   /* Do not play sound if we can't play sound. */
+   if (sound_disabled || sound == 0)
       return 0;
 
    if ((sound < 0) || (sound >= sound_nlist))
@@ -710,6 +712,9 @@ static int sound_makeList (void)
    if (sound_disabled)
       return 0;
 
+   /* The first item in the sound list must be NULL, so that sound 0 is not valid. */
+   sound_nlist++;
+
    /* get the file list */
    files = ndata_list( SOUND_PREFIX, &nfiles );
 
@@ -870,7 +875,8 @@ int sound_createGroup( int size )
  */
 int sound_playGroup( int group, int sound, int once )
 {
-   if (sound_disabled)
+   /* Do not play sound if we can't play sound. */
+   if (sound_disabled || sound == 0)
       return 0;
 
    if ((sound < 0) || (sound >= sound_nlist))
