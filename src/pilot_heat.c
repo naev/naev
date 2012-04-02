@@ -82,6 +82,7 @@ double pilot_heatCalcOutfitArea( const Outfit *o )
 void pilot_heatCalcSlot( PilotOutfitSlot *o )
 {
    o->heat_T      = CONST_SPACE_STAR_TEMP; /* Reset temperature. */
+   o->heat_start  = CONST_SPACE_STAR_TEMP; /* For cooldown purposes. */
    if (o->outfit == NULL) {
       o->heat_C      = 1.;
       o->heat_area   = 0.;
@@ -197,6 +198,29 @@ void pilot_heatUpdateShip( Pilot *p, double Q_cond, double dt )
    p->heat_T  += Q / p->heat_C;
 }
 
+
+/**
+ * @brief Overrides the usual heat model during active cooldown.
+ *
+ *    @param p  Pilot to update.
+ *    @param dt Delta tick.
+ */
+void pilot_heatUpdateCooldown( Pilot *p )
+{
+   double t;
+   int i;
+   PilotOutfitSlot *o;
+
+   t = pow2( 1. - p->ctimer / p->cdelay );
+   p->heat_T = p->heat_start - CONST_SPACE_STAR_TEMP - (p->heat_start -
+         CONST_SPACE_STAR_TEMP) * t + CONST_SPACE_STAR_TEMP;
+
+   for (i=0; i<p->noutfits; i++) {
+      o = p->outfits[i];
+      o->heat_T = o->heat_start - CONST_SPACE_STAR_TEMP - (o->heat_start -
+            CONST_SPACE_STAR_TEMP) * t + CONST_SPACE_STAR_TEMP;
+   }
+}
 
 /**
  * @brief Returns a 0:1 modifier representing accuracy (0. being normal).

@@ -2077,6 +2077,27 @@ void player_toggleMouseFly(void)
 
 
 /**
+ * @brief Toggles active cooldown mode.
+ */
+void player_toggleCooldown(void)
+{
+   if (pilot_isFlag(player.p, PILOT_TAKEOFF))
+      return;
+
+   if (!pilot_isFlag(player.p, PILOT_COOLDOWN)) {
+      if (VMOD(player.p->solid->vel) > MAX_HYPERSPACE_VEL) {
+         player_message("\erYou are going too fast to begin cooldown.");
+         return;
+      }
+      pilot_cooldown( player.p );
+      player_message("\epActive cooldown engaged.");
+   }
+   else
+      pilot_cooldownEnd( player.p );
+}
+
+
+/**
  * @brief Handles mouse flying based on cursor position.
  *
  *    @return 1 if cursor is outside the dead zone, 0 if it isn't.

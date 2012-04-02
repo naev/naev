@@ -895,6 +895,12 @@ void gui_render( double dt )
       lua_pushnumber( gui_L, dt );
       lua_pushnumber( gui_L, dt_mod );
       gui_runFunc( "render", 2, 0 );
+      if (pilot_isFlag(player.p, PILOT_COOLDOWN)) {
+         gui_prepFunc( "render_cooldown" );
+         lua_pushnumber( gui_L, player.p->ctimer / player.p->cdelay  );
+         lua_pushnumber( gui_L, player.p->ctimer );
+         gui_runFunc( "render_cooldown", 2, 0 );
+      }
    }
 
    /* Messages. */
