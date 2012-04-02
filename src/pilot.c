@@ -1717,17 +1717,27 @@ void pilot_update( Pilot* pilot, const double dt )
          /* Heat up the afterburner. */
          pilot_heatAddSlotTime(pilot, pilot->afterburner, dt);
          /* If the afterburner's efficiency is reduced to 0, shut it off. */
-         if (pilot_heatEfficiencyMod( pilot->afterburner->heat_T ) == 0)
+         if (pilot_heatEfficiencyMod( pilot->afterburner->heat_T,
+                                      pilot->afterburner->outfit->u.afb.heat_base,
+                                      pilot->afterburner->outfit->u.afb.heat_cap )
+                                    == 0)
             pilot_afterburnOver(pilot);
          else {
             spfx_shake( 0.75*SHAKE_DECAY * dt); /* shake goes down at quarter speed */
             /* Adjust speed. Speed bonus falls as heat rises. */
             pilot->solid->speed_max = pilot->speed +
                   pilot->speed * pilot->afterburner->outfit->u.afb.speed *
-                  pilot_heatEfficiencyMod( pilot->afterburner->heat_T ) *
+                  pilot_heatEfficiencyMod( pilot->afterburner->heat_T,
+                                           pilot->afterburner->outfit->u.afb.heat_base,
+                                           pilot->afterburner->outfit->u.afb.heat_cap ) *
                   MIN( 1., pilot->afterburner->outfit->u.afb.mass_limit/pilot->solid->mass);
             /* Adjust thrust. Thrust bonus falls as heat rises. */
-            pilot_setThrust( pilot, 1. + pilot->afterburner->outfit->u.afb.thrust * MIN( 1., pilot->afterburner->outfit->u.afb.mass_limit/player.p->solid->mass ) * pilot_heatEfficiencyMod( pilot->afterburner->heat_T ));
+            pilot_setThrust( pilot, 1. + pilot->afterburner->outfit->u.afb.thrust * 
+                                         MIN( 1., pilot->afterburner->outfit->u.afb.mass_limit / player.p->solid->mass ) * 
+                                                  pilot_heatEfficiencyMod( pilot->afterburner->heat_T,
+                                                                           pilot->afterburner->outfit->u.afb.heat_base,
+                                                                           pilot->afterburner->outfit->u.afb.heat_cap )
+                           );
          }
       }
       else

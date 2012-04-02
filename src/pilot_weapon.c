@@ -1252,7 +1252,10 @@ void pilot_afterburn (Pilot *p)
    double afb_mod;
 
    /* The afterburner only works if its efficiency is high enough. */
-   if (pilot_heatEfficiencyMod( p->afterburner->heat_T ) < 0.3)
+   if (pilot_heatEfficiencyMod( p->afterburner->heat_T,
+                                p->afterburner->outfit->u.afb.heat_base,
+                                p->afterburner->outfit->u.afb.heat_cap )
+                              < 0.3)
       return;
 
    if (p == NULL)

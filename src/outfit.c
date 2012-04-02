@@ -1572,6 +1572,8 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"cpu",temp->u.afb.cpu);
       xmlr_float(node,"mass_limit",temp->u.afb.mass_limit);
       xmlr_float(node,"heatup",temp->u.afb.heatup);
+      xmlr_float(node,"heat_cap",temp->u.afb.heat_cap);
+      xmlr_float(node,"heat_base",temp->u.afb.heat_base);
       WARN("Outfit '%s' has unknown node '%s'",temp->name, node->name);
    } while (xml_nextNode(node));
 

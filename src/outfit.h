@@ -253,6 +253,8 @@ typedef struct OutfitAfterburnerData_ {
    double mass_limit; /**< Limit at which effectiveness starts to drop. */
    double heatup;    /**< How long it takes for the afterburner to overheat. */
    double heat;      /**< Heat per second. */
+   double heat_cap;  /**< Temperature at which the outfit overheats (K). */
+   double heat_base; /**< Temperature at which the outfit BEGINS to overheat(K). */
 } OutfitAfterburnerData;
 
 /**

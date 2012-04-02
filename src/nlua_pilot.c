@@ -1385,7 +1385,9 @@ static int pilotL_actives( lua_State *L )
 
       /* Heat. */
       lua_pushstring(L, "temp");
-      lua_pushnumber(L, 1 - pilot_heatEfficiencyMod(o->heat_T));
+      lua_pushnumber(L, 1 - pilot_heatEfficiencyMod(o->heat_T,
+                            o->outfit->u.afb.heat_base,
+                            o->outfit->u.afb.heat_cap));
       lua_rawset(L,-3);
 
       /* State and timer. */

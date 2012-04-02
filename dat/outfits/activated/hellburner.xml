@@ -18,5 +18,7 @@
   <energy>65</energy>
   <mass_limit>250</mass_limit>
   <heatup>10</heatup>
+  <heat_base>300</heat_base>
+  <heat_cap>350</heat_cap>
  </specific>
 </outfit>

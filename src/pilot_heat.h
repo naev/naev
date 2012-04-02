@@ -63,7 +63,7 @@ void pilot_heatUpdateCooldown( Pilot *p );
 /*
  * Modifiers.
  */
-double pilot_heatEfficiencyMod( double T );
+double pilot_heatEfficiencyMod( double T, double Tb, double Tc );
 double pilot_heatAccuracyMod( double T );
 double pilot_heatFireRateMod( double T );
 double pilot_heatFirePercent( double T );
