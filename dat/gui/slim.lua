@@ -145,6 +145,10 @@ function create()
    missile_lock_text = "Warning - Missile Lockon Detected"
    missile_lock_length = gfx.printDim( false, missile_lock_text )
 
+   -- Active cooldown display
+   cooldown_text = "Cooling down..."
+   cooldown_length = gfx.printDim( false, cooldown_text )
+
    -- Active outfit bar
    slot_w, slot_h = slot:dim()
    slot_y = screen_h - slot_h - 16
@@ -364,6 +368,14 @@ function update_wset()
    end
    slot_start_x = screen_w/2 - #aset/2 * slot_w
 end
+
+
+function render_cooldown( percent, seconds )
+   gfx.print( false, cooldown_text, (screen_w - cooldown_length)/2, screen_h/2 + 80, col_txt_bar )
+   gfx.renderRect( screen_w/2 - 77, screen_h/2 + 48, 154, 24, col_txt_bar )
+   gfx.renderRect( screen_w/2 - 75, screen_h/2 + 50, (1 - percent) * 150, 20, col_shield )
+end
+
 
 function render_bar( name, value, txt, txtcol, size, col, bgc )
    if size then
