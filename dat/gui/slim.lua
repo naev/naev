@@ -283,15 +283,6 @@ function update_nav()
    autonav_hyp = player.autonavDest()
    if nav_pnt then
       pntflags = nav_pnt:services()
-      n = 0
-      if pntflags.land then
-         services = { "land", "missions", "outfits", "shipyard", "commodity" }
-         for k,v in ipairs(services) do
-            if pntflags[tostring(v)] then
-               n = n + 1
-            end
-         end
-      end
       gui.osdInit( ta_pnt_pane_x + ta_pnt_pane_w + 8, screen_h - 63, 150, 500 )
       gui.fpsPos( ta_pnt_pane_x + ta_pnt_pane_w + 3, screen_h - 28 - 15 - deffont_h )
 
@@ -309,12 +300,25 @@ function update_nav()
       if ta_pntfact then
          ta_pnt_faction_gfx = ta_pntfact:logoTiny()
       end
+
       planet = { -- Table for convenience.
          name = nav_pnt:name(),
          pos = nav_pnt:pos(),
          class = nav_pnt:class(),
-         col = nav_pnt:colour()
+         col = nav_pnt:colour(),
+         services = {}
       }
+
+      if pntflags.land then
+         services = { "land", "missions", "outfits", "shipyard", "commodity" }
+         servicesp = { "Spaceport", "Missions", "Outfits", "Shipyard", "Commodity" }
+         for k,v in ipairs(services) do
+            if pntflags[tostring(v)] then
+               table.insert( planet.services, servicesp[k] )
+            end
+         end
+         planet.nservices = #planet.services
+      end
    else
       gui.osdInit( 23, screen_h - 63, 150, 500 )
       gui.fpsPos( 15, screen_h - 28 - 15 - deffont_h )
@@ -855,7 +859,7 @@ function render( dt, dt_mod )
       -- Extend the pane depending on the services available.
       services_h = 44
       if pntflags.land then
-         services_h = services_h + (14 * n)
+         services_h = services_h + (14 * planet.nservices)
       end
 
       -- Render background images.
@@ -892,21 +896,16 @@ function render( dt, dt_mod )
       -- Space out the text.
       services_h = 60
       if pntflags.land then
-         services = { "land", "missions", "outfits", "shipyard", "commodity" }
-         servicesp = { "Spaceport", "Missions", "Outfits", "Shipyard", "Commodity" }
-         for k,v in ipairs(services) do
-            if pntflags[tostring(v)] then
-               gfx.print(true, servicesp[k], ta_pnt_pane_x + 60, ta_pnt_pane_y - services_h, col_txt_top )
-               services_h = services_h + 14
-            end
+         local services_h = 60
+         for k,v in ipairs(planet.services) do
+            gfx.print(true, v, ta_pnt_pane_x + 60, ta_pnt_pane_y - services_h, col_txt_top )
+            services_h = services_h + 14
          end
       else
          gfx.print( true, "none", ta_pnt_pane_x + 110, ta_pnt_pane_y - 46, col_txt_una )
       end
 
-      if ta_pnt_dist then
-         gfx.print( false, largeNumber( ta_pnt_dist, 1 ), ta_pnt_pane_x + 110, ta_pnt_pane_y - 15, col_txt_std, 63, false )
-      end
+      gfx.print( false, largeNumber( ta_pnt_dist, 1 ), ta_pnt_pane_x + 110, ta_pnt_pane_y - 15, col_txt_std, 63, false )
       gfx.print( true, planet.name, ta_pnt_pane_x + 14, ta_pnt_pane_y + 149, planet.col )
    end
 
