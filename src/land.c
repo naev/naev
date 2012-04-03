@@ -1310,6 +1310,9 @@ void land( Planet* p, int load )
    if (landed)
       return;
 
+   /* Resets the player's heat. */
+   pilot_heatReset( player.p );
+
    /* Stop player sounds. */
    player_soundStop();
 

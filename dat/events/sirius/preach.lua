@@ -93,7 +93,7 @@ dyingMessage={
 }
 
 dead={
-"The Reverance is dead!",
+"The Reverence is dead!",
 "Someone killed the preacher!"
 }
 
@@ -130,7 +130,7 @@ function theFunBegins()
 		end
 	end
 	--summon a preacher from the jump point and highlight him and take control and focus on him
-	preacher=pilot.addRaw("Sirius Reverance", "sirius_norun", curr, "Sirius")[1]
+	preacher=pilot.addRaw("Sirius Reverence", "sirius_norun", curr, "Sirius")[1]
 	preacher:setHilight()
 	preacher:setVisplayer()
 	preacher:control()
@@ -227,7 +227,9 @@ end
 
 --re-hail the player
 function reHail()
-	preacher:hailPlayer()
+	if preacher:exists() then
+		preacher:hailPlayer()
+	end
 end
 
 --random praise for the Sirichana
@@ -403,4 +405,5 @@ function jumpCleanup()
 			j:hyperspace(target,true) --attack back as they move away?
 		end
 	end
+	evt.finish()
 end

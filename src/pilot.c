@@ -620,6 +620,63 @@ double pilot_face( Pilot* p, const double dir )
 
 
 /**
+ * @brief Begins active cooldown, reducing hull and outfit temperatures.
+ *
+ *    @param Pilot that should cool down.
+ */
+void pilot_cooldown( Pilot *p )
+{
+   int i;
+   double heat_capacity, heat_mean;
+   PilotOutfitSlot *o;
+
+   /* Calculate the ship's overall heat. */
+   heat_capacity = p->heat_C;
+   heat_mean = p->heat_T * p->heat_C;
+   for (i=0; i<p->noutfits; i++) {
+      o = p->outfits[i];
+      o->heat_start = o->heat_T;
+      heat_capacity += p->outfits[i]->heat_C;
+      heat_mean += o->heat_T * o->heat_C;
+   }
+
+   heat_mean /= heat_capacity;
+
+   /*
+    * Super heat penalty table:
+    *    300K: 13.3%
+    *    350K: 31.6%
+    *    400K: 52.5%
+    *    450K: 75.2%
+    *    500K: 99.4%
+    */
+   p->cdelay = pow( p->ship->mass, 0.4 ) * (1. + pow( MAX(1, heat_mean - CONST_SPACE_STAR_TEMP), 1.25) / 1000.);
+   p->ctimer = p->cdelay;
+   p->heat_start = p->heat_T;
+   pilot_setFlag(p, PILOT_COOLDOWN);
+}
+
+
+/**
+ * @brief Terminates active cooldown.
+ *
+ *    @param Pilot to stop cooling.
+ */
+void pilot_cooldownEnd( Pilot *p )
+{
+   /* Send message to player upon normal completion. */
+   if ((p->id == PLAYER_ID) && (p->ctimer < 0.))
+         player_message("\epActive cooldown completed.");
+
+   pilot_rmFlag(p, PILOT_COOLDOWN);
+
+   /* Cooldown finished naturally, reset heat just in case. */
+   if (p->ctimer < 0.)
+      pilot_heatReset( p );
+}
+
+
+/**
  * @brief Marks pilot as hostile to player.
  *
  *    @param p Pilot to mark as hostile to player.
@@ -1351,7 +1408,7 @@ void pilot_renderOverlay( Pilot* p, const double dt )
  */
 void pilot_update( Pilot* pilot, const double dt )
 {
-   int i, nchg;
+   int i, cooling, nchg;
    unsigned int l;
    Pilot *target;
    double a, px,py, vx,vy;
@@ -1370,11 +1427,20 @@ void pilot_update( Pilot* pilot, const double dt )
    else
       target = NULL;
 
+   cooling = pilot_isFlag(pilot, PILOT_COOLDOWN);
+
    /*
     * Update timers.
     */
    pilot->ptimer   -= dt;
    pilot->tcontrol -= dt;
+   if (cooling) {
+      pilot->ctimer   -= dt;
+      if (pilot->ctimer < 0.) {
+         pilot_cooldownEnd( pilot );
+         cooling = 0;
+      }
+   }
    pilot->stimer   -= dt;
    if (pilot->stimer <= 0.)
       pilot->sbonus   -= dt;
@@ -1414,14 +1480,18 @@ void pilot_update( Pilot* pilot, const double dt )
       }
 
       /* Handle heat. */
-      Q  += pilot_heatUpdateSlot( pilot, o, dt );
+      if (!cooling)
+         Q  += pilot_heatUpdateSlot( pilot, o, dt );
 
       /* Handle lockons. */
       pilot_lockUpdateSlot( pilot, o, target, &a, dt );
    }
 
    /* Global heat. */
-   pilot_heatUpdateShip( pilot, Q, dt );
+   if (!cooling)
+      pilot_heatUpdateShip( pilot, Q, dt );
+   else
+      pilot_heatUpdateCooldown( pilot );
 
    /* Update electronic warfare. */
    pilot_ewUpdateDynamic( pilot );
@@ -1533,7 +1603,7 @@ void pilot_update( Pilot* pilot, const double dt )
    }
 
    /* purpose fallthrough to get the movement like disabled */
-   if (pilot_isDisabled(pilot)) {
+   if (pilot_isDisabled(pilot) || pilot_isFlag(pilot, PILOT_COOLDOWN)) {
       /* Do the slow brake thing */
       pilot->solid->speed_max = 0.;
       pilot_setThrust( pilot, 0. );

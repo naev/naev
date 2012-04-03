@@ -37,7 +37,7 @@ $(NAEV):
 $(PACK):
 	$(MAKE) -C utils/pack
 
-VERSION:
+VERSION: src/config.h
 	echo $(VERSION) > $@
 
 if HAVE_UTILS

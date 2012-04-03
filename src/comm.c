@@ -359,13 +359,13 @@ static unsigned int comm_open( glTexture *gfx, int faction,
          gh = MIN( GRAPHIC_HEIGHT, GRAPHIC_HEIGHT / aspect );
          gw = MIN( GRAPHIC_WIDTH, GRAPHIC_WIDTH * aspect );
       }
+
+      window_addImage( wid, 20 + (GRAPHIC_WIDTH-gw)/2,
+            -30 - (GRAPHIC_HEIGHT-gh)/2,
+            gw, gh, "imgGFX", comm_graphic, 0 );
    }
    else
       gh = gw = 0;
-
-   window_addImage( wid, 20 + (GRAPHIC_WIDTH-gw)/2,
-         -30 - (GRAPHIC_HEIGHT-gh)/2,
-         gw, gh, "imgGFX", comm_graphic, 0 );
 
    /* Faction logo. */
    if (logo != NULL) {

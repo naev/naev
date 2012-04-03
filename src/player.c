@@ -2077,6 +2077,23 @@ void player_toggleMouseFly(void)
 
 
 /**
+ * @brief Toggles active cooldown mode.
+ */
+void player_toggleCooldown(void)
+{
+   if (pilot_isFlag(player.p, PILOT_TAKEOFF))
+      return;
+
+   if (!pilot_isFlag(player.p, PILOT_COOLDOWN)) {
+      pilot_cooldown( player.p );
+      player_message("\epActive cooldown engaged.");
+   }
+   else
+      pilot_cooldownEnd( player.p );
+}
+
+
+/**
  * @brief Handles mouse flying based on cursor position.
  *
  *    @return 1 if cursor is outside the dead zone, 0 if it isn't.
@@ -2301,8 +2318,8 @@ int player_outfitOwned( const Outfit* o )
    int i;
 
    /* Special case map. */
-   if ((outfit_isMap(o)) &&
-         map_isMapped(o))
+   if ((outfit_isMap(o) && map_isMapped(o)) ||
+         (outfit_isLocalMap(o) && localmap_isMapped(o)))
       return 1;
 
    /* Special case license. */
@@ -2404,6 +2421,10 @@ int player_addOutfit( const Outfit *o, int quantity )
    if (outfit_isMap(o)) {
       map_map(o);
       return 1; /* Success. */
+   }
+   else if (outfit_isLocalMap(o)) {
+      localmap_map(o);
+      return 1;
    }
    /* special case if it's an outfit */
    else if (outfit_isGUI(o)) {

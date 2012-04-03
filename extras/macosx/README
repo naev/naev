@@ -1,9 +1,9 @@
 NAEV FOR MAC OS X
 -----------------------
 
-This version is a universal binary, requiring MAC OS X 10.5+. It will not run on OS less than 10.5 because it uses a library that comes with the MAC OS X 10.5 operating system, specifically libpng. Not sure if it'll work with MAC OS X 10.4, even if it has libpng installed.
+This version is a universal binary, requiring Mac OS X 10.6+. It will not run on OS less than 10.6 my computer is no longer equipped with the Mac OS X 10.5 SDK.
 
-04/04/2011
+26/03/2012
 
 IMPORTANT!
 ----------

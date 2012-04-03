@@ -190,10 +190,6 @@ int main( int argc, char** argv )
    /* Set up debug signal handlers. */
    debug_sigInit();
 
-   /* Create the home directory if needed. */
-   if (nfile_dirMakeExist("%s", nfile_configPath()))
-      WARN("Unable to create config directory '%s'", nfile_configPath());
-
    /* Must be initialized before input_init is called. */
    if (SDL_InitSubSystem(SDL_INIT_VIDEO) < 0) {
       WARN("Unable to initialize SDL Video: %s", SDL_GetError());
@@ -217,6 +213,22 @@ int main( int argc, char** argv )
    /* Input must be initialized for config to work. */
    input_init();
 
+   conf_setDefaults(); /* set the default config values */
+
+   /*
+    * Attempts to load the data path from datapath.lua
+    * At this early point in the load process, the binary path
+    * is the only place likely to be checked.
+    */
+   conf_loadConfigPath();
+
+   /* Parse the user data path override first. */
+   conf_parseCLIPath( argc, argv );
+
+   /* Create the home directory if needed. */
+   if (nfile_dirMakeExist("%s", nfile_configPath()))
+      WARN("Unable to create config directory '%s'", nfile_configPath());
+
    /* Set the configuration. */
    nsnprintf(buf, PATH_MAX, "%s"CONF_FILE, nfile_configPath());
 
@@ -234,7 +246,6 @@ int main( int argc, char** argv )
    }
 #endif /* HAS_UNIX */
 
-   conf_setDefaults(); /* set the default config values */
    conf_loadConfig(buf); /* Lua to parse the configuration file */
    conf_parseCLI( argc, argv ); /* parse CLI arguments */
 
@@ -330,7 +341,7 @@ int main( int argc, char** argv )
    /* Data loading */
    load_all();
 
-   /* Generate the CVS. */
+   /* Generate the CSV. */
    if (conf.devcsv)
       dev_csv();
 
@@ -348,7 +359,7 @@ int main( int argc, char** argv )
 #if HAS_UNIX
    /* Tell the player to migrate their configuration files out of ~/.naev */
    /* TODO get rid of this cruft ASAP. */
-   if (oldconfig) {
+   if ((oldconfig) && (!conf.datapath)) {
       char path[PATH_MAX], *script, *home;
       uint32_t scriptsize;
       int ret;

@@ -148,7 +148,6 @@ function accept()
         misn.osdCreate(misn_title, { osd_msg[1]:format(baronsys:name()),
                                    })
         marker = misn.markerAdd(baronsys, "low")
-        var.push("baron_active", true)
         
         enterhook = hook.enter("enter")
     else
@@ -190,7 +189,6 @@ function board()
         player.unboard()
         pinnacle:setHealth(100,100)
         pinnacle:control(false)
-        var.pop("baron_active")
         player.pay(reward)
         misn.finish(true)
     end
@@ -402,5 +400,4 @@ end
 
 function abort()
     misn.finish(false)
-    var.pop("baron_active")
 end

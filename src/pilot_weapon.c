@@ -1271,6 +1271,8 @@ void pilot_afterburn (Pilot *p)
       p->afterburner->stimer = outfit_duration( p->afterburner->outfit );
       pilot_setFlag(p,PILOT_AFTERBURNER);
       pilot_calcStats( p );
+      /* Abort autonav when afterburning. */
+      player_autonavAbort(NULL);
    }
 
    if (p == player.p) {

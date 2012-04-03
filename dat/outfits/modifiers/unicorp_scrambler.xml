@@ -9,7 +9,7 @@
  </general>
  <specific type="modification">
   <cpu>1</cpu>
-  <energy>-10</energy>
-  <hide_rel>15</hide_rel>
+  <energy_regen>-10</energy_regen>
+  <ew_hide>15</ew_hide>
  </specific>
 </outfit>

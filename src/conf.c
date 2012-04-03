@@ -99,6 +99,7 @@ static void print_usage( char **argv )
    LOG("   -s f, --svol f        sets the sound volume to f");
    LOG("   -G, --generate        regenerates the nebula (slow)");
    LOG("   -N, --nondata         do not use ndata and try to use laid out files");
+   LOG("   -d, --datapath        specifies a custom path for all user data (saves, screenshots, etc.)");
 #ifdef DEBUGGING
    LOG("   --devmode             enables dev mode perks like the editors");
    LOG("   --devcsv              generates csv output from the ndata for development purposes");
@@ -276,6 +277,24 @@ void conf_cleanup (void)
 
    /* Clear memory. */
    memset( &conf, 0, sizeof(conf) );
+}
+
+
+/*
+ * @brief Parses the local conf that dictates where user data goes.
+ */
+void conf_loadConfigPath( void )
+{
+   const char *file = "datapath.lua";
+
+   if (!nfile_fileExists(file))
+      return;
+
+   lua_State *L = nlua_newState();
+   if (luaL_dofile(L, file) == 0)
+      conf_loadString("datapath",conf.datapath);
+
+   lua_close(L);
 }
 
 
@@ -506,6 +525,27 @@ int conf_loadConfig ( const char* file )
 }
 
 
+void conf_parseCLIPath( int argc, char** argv )
+{
+   static struct option long_options[] = {
+      { "datapath", required_argument, 0, 'd' },
+      { NULL, 0, 0, 0 }
+   };
+
+   int option_index = 1;
+   int c = 0;
+
+   while ((c = getopt_long(argc, argv, ":d:",
+         long_options, &option_index)) != -1) {
+      switch(c) {
+         case 'd':
+            conf.datapath = strdup(optarg);
+            break;
+      }
+   }
+}
+
+
 /*
  * parses the CLI options
  */
@@ -534,6 +574,7 @@ void conf_parseCLI( int argc, char** argv )
       { NULL, 0, 0, 0 } };
    int option_index = 1;
    int c = 0;
+   optind = 1;
    while ((c = getopt_long(argc, argv,
          "fF:Vd:j:J:W:H:MSm:s:GNhv",
          long_options, &option_index)) != -1) {
@@ -589,7 +630,7 @@ void conf_parseCLI( int argc, char** argv )
 
          case 'C':
             conf.devcsv = 1;
-            LOG("Will generate CVS ouptut.");
+            LOG("Will generate CSV ouptut.");
             break;
 #endif /* DEBUGGING */
 

@@ -117,7 +117,7 @@
  </faction>
  <faction name="Soromid">
   <known/>
-  <logo>empire</logo>
+  <logo>soromid</logo>
   <colour>orange</colour>
   <player>0</player>
   <spawn>soromid</spawn>

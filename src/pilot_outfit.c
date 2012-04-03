@@ -848,24 +848,14 @@ void pilot_calcStats( Pilot* pilot )
    pilot->energy_regen  = pilot->ship->energy_regen;
    pilot->energy_loss   = 0.; /* Initially no net loss. */
    /* Stats. */ 
-   memcpy( &pilot->stats, &pilot->ship->stats_array, sizeof(ShipStats) );
+   s = &pilot->stats;
+   memcpy( s, &pilot->ship->stats_array, sizeof(ShipStats) );
    memset( &amount, 0, sizeof(ShipStats) );
 
    /* cargo has to be reset */
    pilot_cargoCalc(pilot);
 
    /* Slot voodoo. */
-   s        = &pilot->stats;
-   /*
-    * Electronic warfare setting base parameters.
-    * @TODO ew_hide and ew_detect should be squared so XML-sourced values are linear.
-    */
-   s->ew_hide           = 1. + (s->ew_hide-1.) * exp( -0.2 * (double)(MAX(amount.ew_hide-1,0)) );
-   s->ew_detect         = 1. + (s->ew_detect-1.) * exp( -0.2 * (double)(MAX(amount.ew_detect-1,0)) );
-   s->ew_jumpDetect     = 1. + (s->ew_jumpDetect-1.) * exp( -0.2 * (double)(MAX(amount.ew_jumpDetect-1,0)) );
-   pilot->ew_base_hide  = s->ew_hide;
-   pilot->ew_detect     = s->ew_detect;
-   pilot->ew_jumpDetect = pow2(s->ew_jumpDetect);
 
    /*
     * now add outfit changes
@@ -928,11 +918,10 @@ void pilot_calcStats( Pilot* pilot )
          pilot->cargo_free    += o->u.mod.cargo;
          pilot->mass_outfit   += o->u.mod.mass_rel * pilot->ship->mass;
          pilot->crew          += o->u.mod.crew_rel * pilot->ship->crew;
-         pilot->ew_base_hide  += o->u.mod.hide_rel * pilot->ew_base_hide;
          /*
           * Stats.
           */
-         ss_statsModFromList( &pilot->stats, o->u.mod.stats, &amount );
+         ss_statsModFromList( s, o->u.mod.stats, &amount );
      
       }
       else if (outfit_isAfterburner(o)) { /* Afterburner */
@@ -962,20 +951,30 @@ void pilot_calcStats( Pilot* pilot )
     *  6x 15% -> 42.51%
     */
    if (amount.fwd_firerate > 0) {
-      s->fwd_firerate = 1. + (s->fwd_firerate-1.) * exp( -0.15 * (double)(MAX(amount.fwd_firerate-1,0)) );
+      s->fwd_firerate = 1. + (s->fwd_firerate-1.) * exp( -0.15 * (double)(MAX(amount.fwd_firerate-1.,0)) );
    }
    /* Cruiser. */
    if (amount.tur_firerate > 0) {
-      s->tur_firerate = 1. + (s->tur_firerate-1.) * exp( -0.15 * (double)(MAX(amount.tur_firerate-1,0)) );
+      s->tur_firerate = 1. + (s->tur_firerate-1.) * exp( -0.15 * (double)(MAX(amount.tur_firerate-1.,0)) );
    }
+   /*
+    * Electronic warfare setting base parameters.
+    * @TODO ew_hide and ew_detect should be squared so XML-sourced values are linear.
+    */
+   s->ew_hide           = 1. + (s->ew_hide-1.)        * exp( -0.2 * (double)(MAX(amount.ew_hide-1.,0)) );
+   s->ew_detect         = 1. + (s->ew_detect-1.)      * exp( -0.2 * (double)(MAX(amount.ew_detect-1.,0)) );
+   s->ew_jump_detect    = 1. + (s->ew_jump_detect-1.) * exp( -0.2 * (double)(MAX(amount.ew_jump_detect-1.,0)) );
+   pilot->ew_base_hide  = s->ew_hide;
+   pilot->ew_detect     = s->ew_detect;
+   pilot->ew_jump_detect = pow2(s->ew_jump_detect);
 
    /* Increase health by relative bonuses. */
    pilot->armour_max += arel * pilot->ship->armour;
-   pilot->armour_max *= pilot->stats.armour_mod;
+   pilot->armour_max *= s->armour_mod;
    pilot->shield_max += srel * pilot->ship->shield;
-   pilot->shield_max *= pilot->stats.shield_mod;
+   pilot->shield_max *= s->shield_mod;
    pilot->energy_max += erel * pilot->ship->energy;
-   /* pilot->energy_max *= pilot->stats.energy_mod; */
+   /* pilot->energy_max *= s->energy_mod; */
 
    /* Give the pilot his health proportion back */
    pilot->armour = ac * pilot->armour_max;

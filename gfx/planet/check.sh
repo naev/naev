@@ -3,14 +3,14 @@
 cd "$(dirname $0)"
 
 export LC_ALL=C
-data="../../dat/asset.xml"
+data="../../dat/assets"
 
 echo "Checking for unused graphics..."
 for dir in space exterior; do
    cd "$dir"
    echo -e "\n   Unused planet $dir gfx"
    for img in *.png; do
-      if ! grep -qF "<$dir>$img" "../$data"; then
+      if ! cat ../${data}/*.xml | grep -qF "<$dir>$img"; then
          echo "      $img"
       fi
    done
@@ -22,7 +22,7 @@ for dir in space exterior; do
    cd "$dir"
    echo -e "\n   Overused planet $dir gfx"
    for img in *.png; do
-      count=$(grep -cF "<$dir>$img" "../$data")
+      count=$(cat ../${data}/*.xml | grep -cF "<$dir>$img")
       if [[ $count > 1 ]]; then
          echo "      $img => $count times"
       fi

@@ -500,9 +500,9 @@ static int playerL_autonavDest( lua_State *L )
  *
  * Possible options are:<br/>
  * <ul>
- *  <li>abort : (string) autonav abort message
- *  <li>no2x : (boolean) whether to prevent the player from engaging double-speed, default false
- *  <li>gui : (boolean) enables the player's gui, default disabled
+ *  <li>abort : (string) autonav abort message</li>
+ *  <li>no2x : (boolean) whether to prevent the player from engaging double-speed, default false</li>
+ *  <li>gui : (boolean) enables the player's gui, default disabled</li>
  * </ul>
  *
  * @usage player.cinematics( true, { gui = true } ) -- Enables cinematics without hiding gui.

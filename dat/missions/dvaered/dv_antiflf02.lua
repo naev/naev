@@ -173,7 +173,7 @@ function pollHealth()
     parmor, pshield = player.pilot():health()
     local maxshieldDV = 0
     for i, j in ipairs(fleetDV) do
-        maxshield = maxshield + j:stats()["shield"]
+        maxshieldDV = maxshieldDV + j:stats()["shield"]
         armor, shield = j:health()
         shieldDV = shieldDV + shield
     end

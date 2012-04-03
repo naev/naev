@@ -127,7 +127,7 @@ int misn_loadLibs( lua_State *L )
    nlua_loadHook(L);
    nlua_loadMusic(L,0);
    nlua_loadTex(L,0);
-   nlua_loadBackground(L,0);
+   nlua_loadBackground(L,1);
    nlua_loadCamera(L,0);
    if (player_isTut())
       nlua_loadTut(L);
