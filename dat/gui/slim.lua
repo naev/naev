@@ -99,13 +99,29 @@ function create()
    gui.targetPlanetGFX( tex.open( base .. "radar_planet.png" ) )
    gui.targetPilotGFX(  tex.open( base .. "radar_ship.png" ) )
 
+   -- Active outfit list.
+   slot = tex.open( base .. "slot.png" )
+   slotend = tex.open( base .. "slotend.png" )
+   cooldown = tex.open( base .. "cooldown.png", 6, 6 )
+   active =  tex.open( base .. "active.png" )
+
+   -- Active outfit bar
+   slot_w, slot_h = slot:dim()
+   slot_y = screen_h - slot_h - 16
+   slot_img_offs_x = 4
+   slot_img_offs_y = 6
+   slot_img_w = 48
+   slot_w, slot_h = slot:dim()
+   slotend_w, slotend_h = slotend:dim()
+
    -- Cooldown pane.
    cooldown_sheen = tex.open( base .. "cooldown-sheen.png" )
    cooldown_bg = tex.open( base .. "cooldown-bg.png" )
    cooldown_frame = tex.open( base .. "cooldown-frame.png" )
    cooldown_panel = tex.open( base .. "cooldown-panel.png" )
-   cooldown_frame_x = screen_w/2. - 98
-   cooldown_frame_y = screen_h/2. + 60
+   cooldown_frame_w, cooldown_frame_h = cooldown_frame:dim()
+   cooldown_frame_x = (screen_w - cooldown_frame_w)/2.
+   cooldown_frame_y = math.min( slot_y - cooldown_frame_h - 10, (screen_h - cooldown_frame_h)/2. + 150 )
    cooldown_panel_x = cooldown_frame_x + 8
    cooldown_panel_y = cooldown_frame_y + 8
    cooldown_bg_x = cooldown_panel_x + 30
@@ -114,12 +130,6 @@ function create()
    cooldown_sheen_x = cooldown_bg_x
    cooldown_sheen_y = cooldown_bg_y + 12
    cooldown_elements = { "frame", "panel", "bg", "sheen" }
-
-   -- Active outfit list.
-   slot = tex.open( base .. "slot.png" )
-   slotend = tex.open( base .. "slotend.png" )
-   cooldown = tex.open( base .. "cooldown.png", 6, 6 )
-   active =  tex.open( base .. "active.png" )
 
    --Messages
    gui.mesgInit( screen_w - 400, 20, 28+15+5 )
@@ -166,17 +176,6 @@ function create()
    cooldown_length = gfx.printDim( false, cooldown_text )
 
    --gfx.renderRect( screen_w/2 - 75, screen_h/2 + 50, (1 - percent) * 150, 20, col_shield )
-
-   -- Active outfit bar
-   slot_w, slot_h = slot:dim()
-   slot_y = screen_h - slot_h - 16
-   slot_img_offs_x = 4
-   slot_img_offs_y = 6
-
-   slot_img_w = 48
-
-   slot_w, slot_h = slot:dim()
-   slotend_w, slotend_h = slotend:dim()
 
    --Target Pane
    ta_pane_w, ta_pane_h = target_pane:dim()
