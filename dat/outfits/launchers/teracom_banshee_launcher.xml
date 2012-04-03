@@ -11,7 +11,7 @@
  <specific type="launcher" secondary="1">
   <cpu>8</cpu>
   <ammo>Banshee Rocket</ammo>
-  <delay>0.7</delay>
+  <delay>1.2</delay>
   <amount>20</amount>
  </specific>
 </outfit>
