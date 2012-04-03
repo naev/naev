@@ -2166,7 +2166,7 @@ static int pilotL_cooldown( lua_State *L )
  * @usage p:setCooldown( true )
  *
  *    @luaparam p Pilot to modify the cooldown status of.
- *    @luaparam state Whether to enable or disable cooldown.
+ *    @luaparam state Whether to enable or disable cooldown (defaults to true).
  * @luafunc setCooldown( p, state )
  */
 static int pilotL_setCooldown( lua_State *L )
