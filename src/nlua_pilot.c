@@ -2489,7 +2489,7 @@ static int pilotL_changeAI( lua_State *L )
  *    @luaparam p Pilot to set health of.
  *    @luaparam temp Value to set temperature to. Values below base temperature will be clamped.
  *    @luaparam slots Whether slots should also be set to this temperature. Defaults to true.
- * @luafunc setTemp( p, armour, shield, stress )
+ * @luafunc setTemp( p, temp, slots )
  */
 static int pilotL_setTemp( lua_State *L )
 {

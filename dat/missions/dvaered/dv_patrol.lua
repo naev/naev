@@ -38,6 +38,9 @@ else -- default english
    osd_msg[4] = "Return to %s in the %s system"
    osd_msg[5] = "Next: %s"
    osd_msg[6] = "Jump to the %s system"
+   
+   refusetitle = "Already on patrol"
+   refusetext = "You have already accepted a patrol mission. Finish that mission first, or abort it before accepting this mission."
 end
 
 
@@ -284,6 +287,10 @@ end
 
 -- Mission is accepted
 function accept ()
+   if player.misnActive("Dvaered Patrol") then
+      tk.msg(refusetitle, refusetext)
+      misn.finish()
+   end
    if misn.accept() then
 
       -- Set the OSD
