@@ -98,6 +98,7 @@ static int pilotL_setActiveBoard( lua_State *L );
 static int pilotL_setNoDeath( lua_State *L );
 static int pilotL_disable( lua_State *L );
 static int pilotL_cooldown( lua_State *L );
+static int pilotL_setCooldown( lua_State *L );
 static int pilotL_setNoJump( lua_State *L );
 static int pilotL_setNoLand( lua_State *L );
 static int pilotL_addOutfit( lua_State *L );
@@ -157,6 +158,7 @@ static const luaL_reg pilotL_methods[] = {
    { "vel", pilotL_velocity },
    { "dir", pilotL_dir },
    { "temp", pilotL_temp },
+   { "cooldown", pilotL_cooldown },
    { "faction", pilotL_faction },
    { "health", pilotL_getHealth },
    { "energy", pilotL_getEnergy },
@@ -190,7 +192,7 @@ static const luaL_reg pilotL_methods[] = {
    { "setActiveBoard", pilotL_setActiveBoard },
    { "setNoDeath", pilotL_setNoDeath },
    { "disable", pilotL_disable },
-   { "cooldown", pilotL_cooldown },
+   { "setCooldown", pilotL_setCooldown },
    { "setNoJump", pilotL_setNoJump },
    { "setNoLand", pilotL_setNoLand },
    /* Talk. */
@@ -246,6 +248,7 @@ static const luaL_reg pilotL_cond_methods[] = {
    { "vel", pilotL_velocity },
    { "dir", pilotL_dir },
    { "temp", pilotL_temp },
+   { "cooldown", pilotL_cooldown },
    { "faction", pilotL_faction },
    { "health", pilotL_getHealth },
    { "energy", pilotL_getEnergy },
@@ -2139,14 +2142,37 @@ static int pilotL_disable( lua_State *L )
 
 
 /**
- * @brief Puts a pilot into cooldown mode.
+ * @brief Gets a pilot's cooldown state.
  *
- * @usage p:cooldown( true )
+ * @usage p:cooldown()
  *
- *    @luaparam p Pilot to put into cooldown mode.
- * @luafunc cooldown( p, state )
+ *    @luaparam p Pilot to check the cooldown status of.
+ * @luafunc cooldown( p )
  */
 static int pilotL_cooldown( lua_State *L )
+{
+   Pilot *p;
+
+   /* Get the pilot. */
+   p = luaL_validpilot(L,1);
+
+   /* Get the cooldown status. */
+   lua_pushboolean( L, pilot_isFlag(p, PILOT_COOLDOWN) );
+
+   return 1;
+}
+
+
+/**
+ * @brief Starts or stops a pilot's cooldown mode.
+ *
+ * @usage p:setCooldown( true )
+ *
+ *    @luaparam p Pilot to modify the cooldown status of.
+ *    @luaparam state Whether to enable or disable cooldown (defaults to true).
+ * @luafunc setCooldown( p, state )
+ */
+static int pilotL_setCooldown( lua_State *L )
 {
    Pilot *p;
    int state;

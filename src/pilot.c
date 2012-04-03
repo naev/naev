@@ -653,7 +653,7 @@ void pilot_cooldown( Pilot *p )
     *    450K: 75.2%
     *    500K: 99.4%
     */
-   p->cdelay = pow( p->solid->mass, 0.4 ) * (1. + pow( MAX(1, heat_mean - CONST_SPACE_STAR_TEMP), 1.25) / 1000.);
+   p->cdelay = pow( p->ship->mass, 0.4 ) * (1. + pow( MAX(1, heat_mean - CONST_SPACE_STAR_TEMP), 1.25) / 1000.);
    p->ctimer = p->cdelay;
    p->heat_start = p->heat_T;
    pilot_setFlag(p, PILOT_COOLDOWN);
