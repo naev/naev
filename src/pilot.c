@@ -630,18 +630,16 @@ void pilot_cooldown( Pilot *p )
    double heat_capacity, heat_mean;
    PilotOutfitSlot *o;
 
+   /* Figure out the total heat capacity. */
    heat_capacity = p->heat_C;
-   heat_mean = p->heat_T;
-   for (i=0; i<p->noutfits; i++) {
-      o = p->outfits[i];
-      o->heat_start = o->heat_T;
-      heat_capacity += o->heat_C;
-   }
+   for (i=0; i<p->noutfits; i++)
+      heat_capacity += p->outfits[i]->heat_C;
 
    /* Second pass to calculate the ship's overall heat. */
    heat_mean = p->heat_T * (p->heat_C / heat_capacity);
    for (i=0; i<p->noutfits; i++) {
       o = p->outfits[i];
+      o->heat_start = o->heat_T;
       heat_mean += o->heat_T * (o->heat_C / heat_capacity);
    }
 
