@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<asset name="Alexian">
+<asset name="Ruadan II">
  <pos>
-  <x>-4508.501751</x>
-  <y>-3358.373753</y>
+  <x>3941.629686</x>
+  <y>3980.147240</y>
  </pos>
  <GFX>
-  <space>M09.png</space>
-  <exterior>oceanic2.png</exterior>
+  <space>J04.png</space>
+  <exterior>gas.png</exterior>
  </GFX>
  <general>
   <class>A</class>

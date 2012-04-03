@@ -7,20 +7,16 @@
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>-570.214506</x>
-  <y>-801.375772</y>
+  <x>-673.698668</x>
+  <y>-1000.802738</y>
  </pos>
- <assets>
-  <asset>Academy of Humanities</asset>
-  <asset>Gilgamesh</asset>
-  <asset>Tiger</asset>
-  <asset>Virtual Civilian Standard</asset>
-  <asset>Virtual Trader Area</asset>
-  <asset>Virtual Trader Local</asset>
-  <asset>Virtual Za'lek Medium</asset>
- </assets>
+ <assets/>
  <jumps>
-  <jump target="Kaiser">
+  <jump target="Ruadan">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Zalek">
    <autopos/>
    <hide>1.250000</hide>
   </jump>

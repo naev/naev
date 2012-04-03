@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<asset name="Alexian">
+<asset name="Stoma">
  <pos>
-  <x>-4508.501751</x>
-  <y>-3358.373753</y>
+  <x>976.188887</x>
+  <y>-6877.694431</y>
  </pos>
  <GFX>
-  <space>M09.png</space>
-  <exterior>oceanic2.png</exterior>
+  <space>Y00.png</space>
+  <exterior>lava.png</exterior>
  </GFX>
  <general>
   <class>A</class>
