@@ -15,7 +15,7 @@
   <delay>10</delay>
   <lockon>20</lockon>
   <arc>6</arc>
-  <ew_target>0.4</ew_target>
+  <ew_target>0.5</ew_target>
   <amount>6</amount>
  </specific>
 </outfit>

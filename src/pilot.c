@@ -630,30 +630,35 @@ void pilot_cooldown( Pilot *p )
    double heat_capacity, heat_mean;
    PilotOutfitSlot *o;
 
+   if (p->id == PLAYER_ID)
+      player_message("\epActive cooldown engaged.");
+
+   /* Calculate the ship's overall heat. */
    heat_capacity = p->heat_C;
-   heat_mean = p->heat_T;
+   heat_mean = p->heat_T * p->heat_C;
    for (i=0; i<p->noutfits; i++) {
       o = p->outfits[i];
       o->heat_start = o->heat_T;
-      heat_capacity += o->heat_C;
+      heat_capacity += p->outfits[i]->heat_C;
+      heat_mean += o->heat_T * o->heat_C;
    }
 
-   /* Second pass to calculate the ship's overall heat. */
-   heat_mean = p->heat_T * (p->heat_C / heat_capacity);
-   for (i=0; i<p->noutfits; i++) {
-      o = p->outfits[i];
-      heat_mean += o->heat_T * (o->heat_C / heat_capacity);
-   }
+   heat_mean /= heat_capacity;
+
+   p->cdelay = 5. + pow(p->ship->mass, .5) / 2.;
 
    /*
+    * Base delay of about 11.7s for a Lancelot, 44.4s for a Peacemaker.
+    *
     * Super heat penalty table:
-    *    300K: 13.3%
-    *    350K: 31.6%
-    *    400K: 52.5%
-    *    450K: 75.2%
-    *    500K: 99.4%
+    *    300K:  13.4%
+    *    350K:  31.8%
+    *    400K:  52.8%
+    *    450K:  75.6%
+    *    500K: 100.0%
     */
-   p->cdelay = pow( p->solid->mass, 0.4 ) * (1. + pow( MAX(1, heat_mean - CONST_SPACE_STAR_TEMP), 1.25) / 1000.);
+   p->cdelay = (5. + pow(p->ship->mass, .5) /2.) *
+         (1. + pow(heat_mean / CONST_SPACE_STAR_TEMP - 1., 1.25));
    p->ctimer = p->cdelay;
    p->heat_start = p->heat_T;
    pilot_setFlag(p, PILOT_COOLDOWN);
@@ -664,12 +669,21 @@ void pilot_cooldown( Pilot *p )
  * @brief Terminates active cooldown.
  *
  *    @param Pilot to stop cooling.
+ *    @param Reason for the termination.
  */
-void pilot_cooldownEnd( Pilot *p )
+void pilot_cooldownEnd( Pilot *p, const char *reason )
 {
-   /* Send message to player upon normal completion. */
-   if ((p->id == PLAYER_ID) && (p->ctimer < 0.))
+   /* Send message to player. */
+   if (p->id == PLAYER_ID) {
+      if (p->ctimer < 0.)
          player_message("\epActive cooldown completed.");
+      else {
+         if (reason != NULL)
+            player_message("\erActive cooldown aborted: %s!", reason);
+         else
+            player_message("\erActive cooldown aborted!");
+      }
+   }
 
    pilot_rmFlag(p, PILOT_COOLDOWN);
 
@@ -1147,6 +1161,10 @@ void pilot_updateDisable( Pilot* p, const unsigned int shooter )
        (!pilot_isFlag(p, PILOT_NODISABLE) || (p->armour <= 0.)) &&
        (p->armour <= p->stress)) { /* Pilot should be disabled. */
 
+      /* Cooldown is an active process, so cancel it. */
+      if (pilot_isFlag(p, PILOT_COOLDOWN))
+         pilot_cooldownEnd(p, NULL);
+
       /* If hostile, must remove counter. */
       h = (pilot_isHostile(p)) ? 1 : 0;
       pilot_rmHostile(p);
@@ -1440,7 +1458,7 @@ void pilot_update( Pilot* pilot, const double dt )
    if (cooling) {
       pilot->ctimer   -= dt;
       if (pilot->ctimer < 0.) {
-         pilot_cooldownEnd( pilot );
+         pilot_cooldownEnd(pilot, NULL);
          cooling = 0;
       }
    }
