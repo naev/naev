@@ -220,13 +220,8 @@ void player_autonavAbort( const char *reason )
       /* Reset time compression. */
       player_autonavEnd();
    }
-   else if (pilot_isFlag(player.p, PILOT_COOLDOWN)) {
-      if (reason != NULL)
-         player_message("\erActive cooldown aborted: %s!", reason);
-      else
-         player_message("\erActive cooldown aborted!");
-      pilot_cooldownEnd(player.p);
-   }
+   else if (pilot_isFlag(player.p, PILOT_COOLDOWN))
+      pilot_cooldownEnd(player.p, reason);
 }
 
 

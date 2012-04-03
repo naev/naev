@@ -2084,12 +2084,10 @@ void player_toggleCooldown(void)
    if (pilot_isFlag(player.p, PILOT_TAKEOFF))
       return;
 
-   if (!pilot_isFlag(player.p, PILOT_COOLDOWN)) {
+   if (!pilot_isFlag(player.p, PILOT_COOLDOWN))
       pilot_cooldown( player.p );
-      player_message("\epActive cooldown engaged.");
-   }
    else
-      pilot_cooldownEnd( player.p );
+      pilot_cooldownEnd(player.p, NULL);
 }
 
 

@@ -2214,7 +2214,7 @@ static int pilotL_setCooldown( lua_State *L )
    if (state)
       pilot_cooldown( p );
    else
-      pilot_cooldownEnd( p );
+      pilot_cooldownEnd(p, NULL);
 
    return 0;
 }
