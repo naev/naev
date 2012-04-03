@@ -31,7 +31,6 @@ Before you attack the drone, you should target it. To do so, you can use %s, whi
 Target the drone, then shoot at it until it is destroyed.]]
     message8 = [[Well done, you have just destroyed your enemy. You now know the basics of ship to ship combat. As the final part of this tutorial, you're going to fight against a live opponent. We've hired the best fighter pilot in the sector to test your mettle, he will jump into the system any moment now. Good luck, you're going to need it!]]
     message9 = [[Oh. Well, good job, you've defeated your opponent. Don't worry about him though, he made it out before his ship blew. He mentioned he was good at that. Maybe that should have given us a clue...]]
-    message10 = [[Something you might have noticed if the battle lasted for a while is that your weapons started lose accuracy. This is because of heat. Weapons heat up when fired, and when they become too hot they will first lose accuracy, and then firing rate, to the point where they won't fire at all anymore. If you find your weapons are overheating a lot, consider switching them out for a while using weapon groups.]]
     message11 = [[You now know the basic principles of combat. As a final tip, you can target specific enemies at long range by clicking on them on the overlay map.
     
 Congratulations! This concludes the basic combat tutorial.]]
@@ -127,8 +126,8 @@ function create()
     pp:setDir(90)
     player.msgClear()
 
-    player.pilot():setNoLand()
-    player.pilot():setNoJump()
+    pp():setNoLand()
+    pp():setNoJump()
 
     tk.msg(title1, message1)
     tk.msg(title1, message2:format(tutGetKey("primary")))
@@ -138,6 +137,7 @@ function create()
 
     omsg = player.omsgAdd(wepomsg:format(tutGetKey("primary"), flytime), 0)
     hook.timer(1000, "flyUpdate")
+    playerHeatLoss()
 end
 
 -- Make the player fire his weapons.
@@ -196,7 +196,7 @@ end
 
 -- Hooked function, initiates drone target practice.
 function dummypractice()
-    drone = pilot.add("FLF Lancelot", "dummy", player.pilot():pos() + vec2.new(200, 0))[1]
+    drone = pilot.add("FLF Lancelot", "dummy", pp():pos() + vec2.new(200, 0))[1]
     drone:rename("Target drone")
     drone:setHostile()
     drone:setNodisable(true)
@@ -244,7 +244,6 @@ end
 -- Captain T. Practice is dead. Long live captain T. Practice.
 function captainTPrip()
     tk.msg(title1, message9)
-    tk.msg(title1, message10)
     tk.msg(title1, message11)
     hook.safe( "cleanup" )
 end
@@ -260,6 +259,12 @@ function taunt()
     taunthook = hook.timer(4000, "taunt")
 end
  
+-- Special timer for the player to stop him from heating up.
+function playerHeatLoss()
+    pp:setTemp(0)
+    hook.timer(500, "playerHeatLoss")
+end
+
 -- Cleanup function. Should be the exit point for the module in all cases.
 function cleanup()
     if not (omsg == nil) then player.omsgRm(omsg) end

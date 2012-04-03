@@ -32,6 +32,10 @@
   <lua>tutorial/tutorial-combat2</lua>
   <trigger>none</trigger>
  </event>
+ <event name="Tutorial: Heat">
+  <lua>tutorial/tutorial-heat</lua>
+  <trigger>none</trigger>
+ </event>
  <event name="Tutorial: Activated Outfits">
   <lua>tutorial/tutorial-aoutfits</lua>
   <trigger>none</trigger>
