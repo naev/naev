@@ -2474,7 +2474,7 @@ static int pilotL_setTemp( lua_State *L )
    /* Handle parameters. */
    p  = luaL_validpilot(L,1);
    kelvins  = luaL_checknumber(L, 2);
-   if (lua_gettop(L)==2)
+   if (lua_gettop(L) < 3)
       setOutfits = 1;
    else
       setOutfits = lua_toboolean(L, 3);
