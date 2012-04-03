@@ -907,7 +907,8 @@ static void input_key( int keynum, double value, double kabs, int repeat )
       if (value==KEY_PRESS) {
          if ((!paused) && (player_isFlag(PLAYER_AUTONAV)))
             player_autonavAbort(NULL);
-         player_toggleCooldown();
+         if (!pilot_isDisabled(player.p))
+            player_toggleCooldown();
       }
 
 

@@ -669,15 +669,20 @@ void pilot_cooldown( Pilot *p )
  * @brief Terminates active cooldown.
  *
  *    @param Pilot to stop cooling.
+ *    @param Reason for the termination.
  */
-void pilot_cooldownEnd( Pilot *p )
+void pilot_cooldownEnd( Pilot *p, const char *reason )
 {
    /* Send message to player. */
    if (p->id == PLAYER_ID) {
       if (p->ctimer < 0.)
          player_message("\epActive cooldown completed.");
-      else
-         player_message("\erActive cooldown aborted!");
+      else {
+         if (reason != NULL)
+            player_message("\erActive cooldown aborted: %s!", reason);
+         else
+            player_message("\erActive cooldown aborted!");
+      }
    }
 
    pilot_rmFlag(p, PILOT_COOLDOWN);
@@ -1156,6 +1161,10 @@ void pilot_updateDisable( Pilot* p, const unsigned int shooter )
        (!pilot_isFlag(p, PILOT_NODISABLE) || (p->armour <= 0.)) &&
        (p->armour <= p->stress)) { /* Pilot should be disabled. */
 
+      /* Cooldown is an active process, so cancel it. */
+      if (pilot_isFlag(p, PILOT_COOLDOWN))
+         pilot_cooldownEnd(p, NULL);
+
       /* If hostile, must remove counter. */
       h = (pilot_isHostile(p)) ? 1 : 0;
       pilot_rmHostile(p);
@@ -1449,7 +1458,7 @@ void pilot_update( Pilot* pilot, const double dt )
    if (cooling) {
       pilot->ctimer   -= dt;
       if (pilot->ctimer < 0.) {
-         pilot_cooldownEnd( pilot );
+         pilot_cooldownEnd(pilot, NULL);
          cooling = 0;
       }
    }
