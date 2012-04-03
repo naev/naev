@@ -630,6 +630,9 @@ void pilot_cooldown( Pilot *p )
    double heat_capacity, heat_mean;
    PilotOutfitSlot *o;
 
+   if (p->id == PLAYER_ID)
+      player_message("\epActive cooldown engaged.");
+
    /* Calculate the ship's overall heat. */
    heat_capacity = p->heat_C;
    heat_mean = p->heat_T * p->heat_C;
@@ -669,9 +672,13 @@ void pilot_cooldown( Pilot *p )
  */
 void pilot_cooldownEnd( Pilot *p )
 {
-   /* Send message to player upon normal completion. */
-   if ((p->id == PLAYER_ID) && (p->ctimer < 0.))
+   /* Send message to player. */
+   if (p->id == PLAYER_ID) {
+      if (p->ctimer < 0.)
          player_message("\epActive cooldown completed.");
+      else
+         player_message("\erActive cooldown aborted!");
+   }
 
    pilot_rmFlag(p, PILOT_COOLDOWN);
 

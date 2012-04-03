@@ -904,8 +904,11 @@ static void input_key( int keynum, double value, double kabs, int repeat )
       if (value==KEY_PRESS)
          player_toggleMouseFly();
    } else if (KEY("cooldown") && NOLAND() && NODEAD() && !repeat) {
-      if (value==KEY_PRESS)
+      if (value==KEY_PRESS) {
+         if ((!paused) && (player_isFlag(PLAYER_AUTONAV)))
+            player_autonavAbort(NULL);
          player_toggleCooldown();
+      }
 
 
    /*
