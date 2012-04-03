@@ -96,7 +96,7 @@ function news_addGeneric( rawtable )
       },
       {
          title = "Front Responsible for Shipping Woes",
-         desc = "A spokeswoman for the separatist group says they were behind the recent series of attacks on cargo ships operating between Dacron and Theras. Dvaered officials condemned the actions."
+         desc = "A spokeswoman for the separatist group says they were behind the recent series of attacks on cargo ships operating between Dakron and Theras. Dvaered officials condemned the actions."
       },
       {
          title = "Election on Caladan Marred by Fraud",
