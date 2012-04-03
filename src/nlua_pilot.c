@@ -27,6 +27,7 @@
 #include "log.h"
 #include "rng.h"
 #include "pilot.h"
+#include "pilot_heat.h"
 #include "player.h"
 #include "space.h"
 #include "ai.h"
@@ -103,6 +104,7 @@ static int pilotL_addOutfit( lua_State *L );
 static int pilotL_rmOutfit( lua_State *L );
 static int pilotL_setFuel( lua_State *L );
 static int pilotL_changeAI( lua_State *L );
+static int pilotL_setTemp( lua_State *L );
 static int pilotL_setHealth( lua_State *L );
 static int pilotL_setEnergy( lua_State *L );
 static int pilotL_setNoboard( lua_State *L );
@@ -168,6 +170,7 @@ static const luaL_reg pilotL_methods[] = {
    { "toggleSpawn", pilotL_toggleSpawn },
    /* Modify. */
    { "changeAI", pilotL_changeAI },
+   { "setTemp", pilotL_setTemp },
    { "setHealth", pilotL_setHealth },
    { "setEnergy", pilotL_setEnergy },
    { "setNoboard", pilotL_setNoboard },
@@ -2445,6 +2448,49 @@ static int pilotL_changeAI( lua_State *L )
    ret = ai_pinit( p, str );
    lua_pushboolean(L, ret);
    return 1;
+}
+
+
+/**
+ * @brief Sets the temperature of a pilot.
+ *
+ * All temperatures are in Kelvins. Note that temperatures cannot go below the base temperature of the Naev galaxy, which is 250K.
+ *
+ * @usage p:setTemp( 300, true ) -- Sets ship temperature to 300K, as well as all outfits.
+ * @usage p:setTemp( 500, false ) -- Sets ship temperature to 500K, but leaves outfits alone.
+ * @usage p:setTemp( 0 ) -- Sets ship temperature to the base temperature, as well as all outfits.
+ *
+ *    @luaparam p Pilot to set health of.
+ *    @luaparam temp Value to set temperature to. Values below base temperature will be clamped.
+ *    @luaparam slots Whether slots should also be set to this temperature. Defaults to true.
+ * @luafunc setTemp( p, armour, shield, stress )
+ */
+static int pilotL_setTemp( lua_State *L )
+{
+   Pilot *p;
+   int i, setOutfits = 1;
+   double kelvins;
+
+   /* Handle parameters. */
+   p  = luaL_validpilot(L,1);
+   kelvins  = luaL_checknumber(L, 2);
+   if (lua_gettop(L)==2)
+      setOutfits = 1;
+   else
+      setOutfits = lua_toboolean(L, 3);
+
+   /* Temperature must not go below base temp. */
+   kelvins = MAX(kelvins, CONST_SPACE_STAR_TEMP);
+
+   /* Handle pilot ship. */
+   p->heat_T = kelvins;
+
+   /* Handle pilot outfits (maybe). */
+   if (setOutfits)
+      for (i = 0; i < p->noutfits; i++)
+         p->outfits[i]->heat_T = kelvins;
+
+   return 0;
 }
 
 
