@@ -47,6 +47,11 @@ function _atk_g_capital( target, dist )
       mem.recharge = false
    end
 
+   -- Don't go on the offensive when in the middle of recharging or cooling.
+   if mem.recharge or mem.cooldown then
+      return
+   end
+
    --if we're far from the target, then turn and approach 
    if dist > range then
       dir = ai.idir(target)
@@ -65,30 +70,23 @@ function _atk_g_capital( target, dist )
       if dir < 10 and dir > -10 and ai.relvel(target) > -10 then 
          ai.accel()
       end
-      if mem.recharge == false then
-         ai.shoot(true)
-      end
+      ai.shoot(true)
 
    elseif dist > 0.3*range then
       --capital ship turning is slow
       --emphasize facing for being able to close quickly
       dir = ai.iface(target)
       -- Shoot if should be shooting.
-      if mem.recharge == false then
-         ai.shoot(true)
-      end
+      ai.shoot(true)
 
    --within close range; aim and blast away with everything
    else
-
       dir = ai.aim(target)
-      if mem.recharge == false then        
-         -- Shoot if should be shooting.
-         if dir < 10 then
-            ai.shoot()
-         end
-         ai.shoot(true)
+      -- Shoot if should be shooting.
+      if dir < 10 then
+         ai.shoot()
       end
+      ai.shoot(true)
 
    end
 end
