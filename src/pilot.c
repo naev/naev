@@ -642,15 +642,20 @@ void pilot_cooldown( Pilot *p )
 
    heat_mean /= heat_capacity;
 
+   p->cdelay = 5. + pow(p->ship->mass, .5) / 2.;
+
    /*
+    * Base delay of about 11.7s for a Lancelot, 44.4s for a Peacemaker.
+    *
     * Super heat penalty table:
-    *    300K: 13.3%
-    *    350K: 31.6%
-    *    400K: 52.5%
-    *    450K: 75.2%
-    *    500K: 99.4%
+    *    300K:  13.4%
+    *    350K:  31.8%
+    *    400K:  52.8%
+    *    450K:  75.6%
+    *    500K: 100.0%
     */
-   p->cdelay = pow( p->ship->mass, 0.4 ) * (1. + pow( MAX(1, heat_mean - CONST_SPACE_STAR_TEMP), 1.25) / 1000.);
+   p->cdelay = (5. + pow(p->ship->mass, .5) /2.) *
+         (1. + pow(heat_mean / CONST_SPACE_STAR_TEMP - 1., 1.25));
    p->ctimer = p->cdelay;
    p->heat_start = p->heat_T;
    pilot_setFlag(p, PILOT_COOLDOWN);
