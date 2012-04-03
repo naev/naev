@@ -630,6 +630,9 @@ void pilot_cooldown( Pilot *p )
    double heat_capacity, heat_mean;
    PilotOutfitSlot *o;
 
+   if (p->id == PLAYER_ID)
+      player_message("\epActive cooldown engaged.");
+
    /* Calculate the ship's overall heat. */
    heat_capacity = p->heat_C;
    heat_mean = p->heat_T * p->heat_C;
@@ -666,12 +669,21 @@ void pilot_cooldown( Pilot *p )
  * @brief Terminates active cooldown.
  *
  *    @param Pilot to stop cooling.
+ *    @param Reason for the termination.
  */
-void pilot_cooldownEnd( Pilot *p )
+void pilot_cooldownEnd( Pilot *p, const char *reason )
 {
-   /* Send message to player upon normal completion. */
-   if ((p->id == PLAYER_ID) && (p->ctimer < 0.))
+   /* Send message to player. */
+   if (p->id == PLAYER_ID) {
+      if (p->ctimer < 0.)
          player_message("\epActive cooldown completed.");
+      else {
+         if (reason != NULL)
+            player_message("\erActive cooldown aborted: %s!", reason);
+         else
+            player_message("\erActive cooldown aborted!");
+      }
+   }
 
    pilot_rmFlag(p, PILOT_COOLDOWN);
 
@@ -1149,6 +1161,10 @@ void pilot_updateDisable( Pilot* p, const unsigned int shooter )
        (!pilot_isFlag(p, PILOT_NODISABLE) || (p->armour <= 0.)) &&
        (p->armour <= p->stress)) { /* Pilot should be disabled. */
 
+      /* Cooldown is an active process, so cancel it. */
+      if (pilot_isFlag(p, PILOT_COOLDOWN))
+         pilot_cooldownEnd(p, NULL);
+
       /* If hostile, must remove counter. */
       h = (pilot_isHostile(p)) ? 1 : 0;
       pilot_rmHostile(p);
@@ -1442,7 +1458,7 @@ void pilot_update( Pilot* pilot, const double dt )
    if (cooling) {
       pilot->ctimer   -= dt;
       if (pilot->ctimer < 0.) {
-         pilot_cooldownEnd( pilot );
+         pilot_cooldownEnd(pilot, NULL);
          cooling = 0;
       }
    }

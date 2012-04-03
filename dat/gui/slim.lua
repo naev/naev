@@ -99,13 +99,29 @@ function create()
    gui.targetPlanetGFX( tex.open( base .. "radar_planet.png" ) )
    gui.targetPilotGFX(  tex.open( base .. "radar_ship.png" ) )
 
+   -- Active outfit list.
+   slot = tex.open( base .. "slot.png" )
+   slotend = tex.open( base .. "slotend.png" )
+   cooldown = tex.open( base .. "cooldown.png", 6, 6 )
+   active =  tex.open( base .. "active.png" )
+
+   -- Active outfit bar
+   slot_w, slot_h = slot:dim()
+   slot_y = screen_h - slot_h - 16
+   slot_img_offs_x = 4
+   slot_img_offs_y = 6
+   slot_img_w = 48
+   slot_w, slot_h = slot:dim()
+   slotend_w, slotend_h = slotend:dim()
+
    -- Cooldown pane.
    cooldown_sheen = tex.open( base .. "cooldown-sheen.png" )
    cooldown_bg = tex.open( base .. "cooldown-bg.png" )
    cooldown_frame = tex.open( base .. "cooldown-frame.png" )
    cooldown_panel = tex.open( base .. "cooldown-panel.png" )
-   cooldown_frame_x = screen_w/2. - 98
-   cooldown_frame_y = screen_h/2. + 60
+   cooldown_frame_w, cooldown_frame_h = cooldown_frame:dim()
+   cooldown_frame_x = (screen_w - cooldown_frame_w)/2.
+   cooldown_frame_y = math.min( slot_y - cooldown_frame_h - 10, (screen_h - cooldown_frame_h)/2. + 150 )
    cooldown_panel_x = cooldown_frame_x + 8
    cooldown_panel_y = cooldown_frame_y + 8
    cooldown_bg_x = cooldown_panel_x + 30
@@ -113,13 +129,6 @@ function create()
    cooldown_bg_w, cooldown_bg_h = cooldown_bg:dim()
    cooldown_sheen_x = cooldown_bg_x
    cooldown_sheen_y = cooldown_bg_y + 12
-   cooldown_elements = { "frame", "panel", "bg", "sheen" }
-
-   -- Active outfit list.
-   slot = tex.open( base .. "slot.png" )
-   slotend = tex.open( base .. "slotend.png" )
-   cooldown = tex.open( base .. "cooldown.png", 6, 6 )
-   active =  tex.open( base .. "active.png" )
 
    --Messages
    gui.mesgInit( screen_w - 400, 20, 28+15+5 )
@@ -164,19 +173,6 @@ function create()
    -- Active cooldown display
    cooldown_text = "Cooling down..."
    cooldown_length = gfx.printDim( false, cooldown_text )
-
-   --gfx.renderRect( screen_w/2 - 75, screen_h/2 + 50, (1 - percent) * 150, 20, col_shield )
-
-   -- Active outfit bar
-   slot_w, slot_h = slot:dim()
-   slot_y = screen_h - slot_h - 16
-   slot_img_offs_x = 4
-   slot_img_offs_y = 6
-
-   slot_img_w = 48
-
-   slot_w, slot_h = slot:dim()
-   slotend_w, slotend_h = slotend:dim()
 
    --Target Pane
    ta_pane_w, ta_pane_h = target_pane:dim()
@@ -394,7 +390,8 @@ function render_cooldown( percent, seconds )
    gfx.renderRect( cooldown_bg_x, cooldown_bg_y, percent * cooldown_bg_w, cooldown_bg_h, col_temperature )
    gfx.renderTex( cooldown_sheen, cooldown_sheen_x, cooldown_sheen_y )
    gfx.renderTex( cooldown_panel, cooldown_panel_x, cooldown_panel_y )
-   gfx.print( false, "Cooling down...", cooldown_bg_x, cooldown_bg_y + cooldown_bg_h + 8, col_txt_bar, cooldown_bg_w, true )
+   gfx.print(false, "Cooling down...", cooldown_frame_x,
+         cooldown_bg_y + cooldown_bg_h + 8, col_txt_bar, cooldown_frame_w, true )
 end
 
 
@@ -490,7 +487,7 @@ function render_armourBar( name, value, stress_value, txt, txtcol, size, col, bg
    end
 end
 
-function render_ammoBar( name, x, y, value, txt, txtcol, col )
+function render_ammoBar( name, x, y, value, txt, txtcol )
    offsets = { 2, 20, 3, 13, 22, 6, 2, 5 } --Bar, y of refire, sheen, y of sheen, y of refire sheen, y of text, x and y of tracking icon
    l_bg = _G["bg_" .. name]
    if name == "heat" then
@@ -599,7 +596,7 @@ function render( dt, dt_mod )
 
    --Speed
    local hspeed = round(speed / stats.speed_max * 100,0)
-   txt = tostring( hspeed ) .. "% (" .. tostring( round(speed)) .. ")"
+   txt = string.format( "%d%% (%d)", hspeed, round(speed) )
    if hspeed <= 100. then
       render_bar( "speed", hspeed, txt, col_txt_bar )
    elseif hspeed <= 200. then
@@ -624,8 +621,7 @@ function render( dt, dt_mod )
    render_bar( "temperature", temperature, txt, col_txt_bar )
 
    --Weapon bars
-   local num = 0
-   for k, weapon in ipairs(wset) do
+   for num, weapon in ipairs(wset) do
       txt = weapon.name
       if weapon.left then -- Truncate names for readability.
          if weapon.type == "Bolt Cannon" or weapon.type == "Beam Cannon" then
@@ -646,13 +642,12 @@ function render( dt, dt_mod )
             col = col_txt_una
          end
          values = {weapon.left_p, weapon.cooldown, weapon.level, weapon.track or weapon.lockon, weapon.lockon }
-         render_ammoBar( "ammo", x_ammo, y_ammo - (num)*28, values, txt, col, 2, col_ammo )
+         render_ammoBar( "ammo", x_ammo, y_ammo - (num-1)*28, values, txt, col, 2, col_ammo )
       else
          col = col_txt_bar
          values = {weapon.temp, weapon.cooldown, weapon.level, weapon.track}
-         render_ammoBar( "heat", x_ammo, y_ammo - (num)*28, values, txt, col, 2, col_heat )
+         render_ammoBar( "heat", x_ammo, y_ammo - (num-1)*28, values, txt, col, 2, col_heat )
       end
-      num = num + 1
    end
 
    --Warning Light
@@ -685,38 +680,27 @@ function render( dt, dt_mod )
    end
 
    -- Active outfits
-
-   -- Draw the left-side bar cap.
    if #aset > 0 then
+      -- Draw the left-side bar cap.
       gfx.renderTexRaw( slotend, slot_start_x - slotend_w, slot_y, slotend_w, slotend_h, 1, 1, 0, 0, -1, 1 )
-   end
 
-   i = 1
-   for i=1,#aset do
-      local slot_x = screen_w - slot_start_x - i * slot_w
-      if i <= #aset then
-         --There is something in this slot
-         gfx.renderRect( slot_x, slot_y, slot_w, slot_h, col_slot_bg ) --Background
-
+      gfx.renderRect( slot_start_x, slot_y, slot_w * #aset, slot_h, col_slot_bg ) -- Background for all slots.
+      for i=1,#aset do
+         local slot_x = screen_w - slot_start_x - i * slot_w
          gfx.renderTexRaw( active_icons[i], slot_x + slot_img_offs_x, slot_y + slot_img_offs_y + 2, slot_img_w, slot_img_w, 1, 1, 0, 0, 1, 1 ) --Image 
 
          if aset[i].state == "on" then
             gfx.renderTex( active, slot_x + slot_img_offs_x, slot_y + slot_img_offs_y )
          elseif aset[i].state == "cooldown" then
-         --Cooldown
             local texnum = round(aset[i].cooldown*35) --Turn the 0..1 cooldown number into a 0..35 tex id where 0 is ready.
             gfx.renderTex( cooldown, slot_x + slot_img_offs_x, slot_y + slot_img_offs_y, (texnum % 6) + 1, math.floor( texnum / 6 ) + 1 )
          end
 
-         --Frame
-         gfx.renderTexRaw( slot, slot_x + slot_w, slot_y, -1*slot_w, slot_h, 1, 1, 0, 0, 1, 1 )
+         gfx.renderTex( slot, slot_x, slot_y ) -- Frame
       end
-      i = i + 1
-   end
 
-   -- Draw the right-side bar cap.
-   if #aset > 0 then
-      gfx.renderTexRaw( slotend, slot_start_x + #aset * slot_w, slot_y, slotend_w, slotend_h, 1, 1, 0, 0, 1, 1 )
+      -- Draw the right-side bar cap.
+      gfx.renderTex( slotend, slot_start_x + #aset * slot_w, slot_y )
    end
 
    --Target Pane
@@ -800,11 +784,16 @@ function render( dt, dt_mod )
             end
 
             -- Status information
+            local status
             if ta_disabled then
                status = "Disabled"
-               gfx.print( true, status, ta_pane_x + 14, ta_pane_y + 94, col_txt_top )
             elseif tflags["boardable"] then
                status = "Boardable"
+            elseif ptarget:cooldown() then
+               status = "Cooling Down"
+            end
+
+            if status then
                gfx.print( true, status, ta_pane_x + 14, ta_pane_y + 94, col_txt_top )
             end
 
@@ -928,7 +917,7 @@ function render( dt, dt_mod )
    fuel = player.fuel()
    if fuel >= 200 then
       fuelstring = math.floor(fuel/100.) .. " Jumps"
-   elseif fuel < 200 and fuel >= 100 then
+   elseif fuel >= 100 then
       fuelstring = round(fuel/100.) .. " Jump"
    else
       fuelstring = "none"
