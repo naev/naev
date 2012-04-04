@@ -323,7 +323,7 @@ void sound_exit (void)
    }
 
    /* free the sounds */
-   for (i=1; i<sound_nlist; i++)
+   for (i=0; i<sound_nlist; i++)
       sound_free( &sound_list[i] );
    free( sound_list );
    sound_list = NULL;
@@ -350,7 +350,7 @@ int sound_get( char* name )
    if (sound_disabled)
       return 0;
 
-   for (i=1; i<sound_nlist; i++)
+   for (i=0; i<sound_nlist; i++)
       if (strcmp(name, sound_list[i].name)==0)
          return i;
 
@@ -389,7 +389,7 @@ int sound_play( int sound )
    if (sound_disabled || sound == 0)
       return 0;
 
-   if ((sound < 1) || (sound >= sound_nlist))
+   if ((sound < 0) || (sound >= sound_nlist))
       return -1;
 
    /* Gets a new voice. */
@@ -433,7 +433,7 @@ int sound_playPos( int sound, double px, double py, double vx, double vy )
    if (sound_disabled || sound == 0)
       return 0;
 
-   if ((sound < 1) || (sound >= sound_nlist))
+   if ((sound < 0) || (sound >= sound_nlist))
       return -1;
 
    target = cam_getTarget();
@@ -879,7 +879,7 @@ int sound_playGroup( int group, int sound, int once )
    if (sound_disabled || sound == 0)
       return 0;
 
-   if ((sound < 1) || (sound >= sound_nlist))
+   if ((sound < 0) || (sound >= sound_nlist))
       return -1;
 
    return sound_sys_playGroup( group, &sound_list[sound], once );
