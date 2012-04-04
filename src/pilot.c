@@ -702,6 +702,11 @@ void pilot_cooldown( Pilot *p )
  */
 void pilot_cooldownEnd( Pilot *p, const char *reason )
 {
+   if (pilot_isFlag(p, PILOT_COOLDOWN_BRAKE)) {
+      pilot_rmFlag(p, PILOT_COOLDOWN_BRAKE);
+      return;
+   }
+
    /* Send message to player. */
    if (p->id == PLAYER_ID) {
       if (p->ctimer < 0.)

@@ -220,6 +220,8 @@ void player_autonavAbort( const char *reason )
       /* Reset time compression. */
       player_autonavEnd();
    }
+   else if (pilot_isFlag(player.p, PILOT_COOLDOWN_BRAKE))
+      pilot_cooldownEnd(player.p, NULL);
    else if (pilot_isFlag(player.p, PILOT_COOLDOWN))
       pilot_cooldownEnd(player.p, reason);
 }

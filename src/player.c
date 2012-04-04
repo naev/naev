@@ -2084,7 +2084,8 @@ void player_toggleCooldown(void)
    if (pilot_isFlag(player.p, PILOT_TAKEOFF))
       return;
 
-   if (!pilot_isFlag(player.p, PILOT_COOLDOWN))
+   if ((!pilot_isFlag(player.p, PILOT_COOLDOWN)) &&
+            (!pilot_isFlag(player.p, PILOT_COOLDOWN_BRAKE)))
       pilot_cooldown( player.p );
    else
       pilot_cooldownEnd(player.p, NULL);
