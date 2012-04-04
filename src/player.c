@@ -1022,7 +1022,6 @@ void player_think( Pilot* pplayer, const double dt )
    Pilot *target;
    double turn;
    int facing;
-   Outfit *afb;
    int ret;
 
    /* last i heard, the dead don't think */

@@ -1438,6 +1438,7 @@ void pilot_update( Pilot* pilot, const double dt )
    double Q;
    Damage dmg;
    double stress_falloff;
+   double efficiency, thrust;
 
    /* Check target sanity. */
    if (pilot->target != pilot->id) {
@@ -1734,28 +1735,25 @@ void pilot_update( Pilot* pilot, const double dt )
       if (pilot_isFlag(pilot, PILOT_AFTERBURNER) && pilot->id == PLAYER_ID) {
          /* Heat up the afterburner. */
          pilot_heatAddSlotTime(pilot, pilot->afterburner, dt);
+
          /* If the afterburner's efficiency is reduced to 0, shut it off. */
-         if (pilot_heatEfficiencyMod( pilot->afterburner->heat_T,
-                                      pilot->afterburner->outfit->u.afb.heat_base,
-                                      pilot->afterburner->outfit->u.afb.heat_cap )
-                                    == 0)
+         if (pilot_heatEfficiencyMod(pilot->afterburner->heat_T,
+               pilot->afterburner->outfit->u.afb.heat_base,
+               pilot->afterburner->outfit->u.afb.heat_cap)==0)
             pilot_afterburnOver(pilot);
          else {
             spfx_shake( 0.75*SHAKE_DECAY * dt); /* shake goes down at quarter speed */
+            efficiency = pilot_heatEfficiencyMod( pilot->afterburner->heat_T,
+                  pilot->afterburner->outfit->u.afb.heat_base,
+                  pilot->afterburner->outfit->u.afb.heat_cap );
+            thrust = MIN( 1., pilot->afterburner->outfit->u.afb.mass_limit / pilot->solid->mass) * efficiency;
+
             /* Adjust speed. Speed bonus falls as heat rises. */
-            pilot->solid->speed_max = pilot->speed +
-                  pilot->speed * pilot->afterburner->outfit->u.afb.speed *
-                  pilot_heatEfficiencyMod( pilot->afterburner->heat_T,
-                                           pilot->afterburner->outfit->u.afb.heat_base,
-                                           pilot->afterburner->outfit->u.afb.heat_cap ) *
-                  MIN( 1., pilot->afterburner->outfit->u.afb.mass_limit/pilot->solid->mass);
+            pilot->solid->speed_max = pilot->speed * (1. +
+                  pilot->afterburner->outfit->u.afb.speed * thrust);
+
             /* Adjust thrust. Thrust bonus falls as heat rises. */
-            pilot_setThrust( pilot, 1. + pilot->afterburner->outfit->u.afb.thrust * 
-                                         MIN( 1., pilot->afterburner->outfit->u.afb.mass_limit / player.p->solid->mass ) * 
-                                                  pilot_heatEfficiencyMod( pilot->afterburner->heat_T,
-                                                                           pilot->afterburner->outfit->u.afb.heat_base,
-                                                                           pilot->afterburner->outfit->u.afb.heat_cap )
-                           );
+            pilot_setThrust(pilot, 1. + pilot->afterburner->outfit->u.afb.thrust * thrust);
          }
       }
       else

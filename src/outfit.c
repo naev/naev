@@ -1545,6 +1545,11 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
    node = parent->children;
    double C, area;
 
+   /* Defaults. */
+   temp->u.afb.sound = -1;
+   temp->u.afb.sound_on = -1;
+   temp->u.afb.sound_off = -1;
+
    /* must be >= 1. */
    temp->u.afb.thrust = 1.;
    temp->u.afb.speed  = 1.;
@@ -1586,7 +1591,7 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
          "%.0f%% Thrust\n"
          "%.0f%% Maximum Speed\n"
          "%.1f EPS\n"
-         "%.1f Rumble\n",
+         "%.1f Rumble",
          outfit_getType(temp),
          temp->u.afb.cpu,
          temp->u.afb.mass_limit,
