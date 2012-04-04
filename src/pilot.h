@@ -439,7 +439,7 @@ void pilot_updateDisable( Pilot* p, const unsigned int shooter );
 void pilot_explode( double x, double y, double radius, const Damage *dmg, const Pilot *parent );
 double pilot_face( Pilot* p, const double dir );
 void pilot_cooldown( Pilot *p );
-void pilot_cooldownEnd( Pilot *p );
+void pilot_cooldownEnd( Pilot *p, const char *reason );
 
 
 /* Misc. */
