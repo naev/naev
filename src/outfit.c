@@ -608,6 +608,8 @@ double outfit_energy( const Outfit* o )
 double outfit_heat( const Outfit* o )
 {
    if (outfit_isBolt(o)) return o->u.blt.heat;
+   else if (outfit_isAfterburner(o)) return o->u.afb.heat;
+   else if (outfit_isBeam(o)) return o->u.bem.heat;
    return -1;
 }
 /**
@@ -697,7 +699,7 @@ double outfit_duration( const Outfit* o )
 {
    if (outfit_isMod(o)) { if (o->u.mod.active) return o->u.mod.duration; }
    else if (outfit_isJammer(o)) return INFINITY;
-   else if (outfit_isAfterburner(o)) return o->u.afb.duration;
+   else if (outfit_isAfterburner(o)) return INFINITY;
    return -1.;
 }
 /**
@@ -709,7 +711,7 @@ double outfit_cooldown( const Outfit* o )
 {
    if (outfit_isMod(o)) { if (o->u.mod.active) return o->u.mod.cooldown; }
    else if (outfit_isJammer(o)) return 0.;
-   else if (outfit_isAfterburner(o)) return o->u.afb.cooldown;
+   else if (outfit_isAfterburner(o)) return 0.;
    return -1.;
 }
 
@@ -1102,6 +1104,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
 {
    int l;
    xmlNodePtr node;
+   double C, area;
 
    /* Defaults. */
    temp->u.bem.spfx_armour = -1;
@@ -1160,6 +1163,11 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
 
    /* Post processing. */
    temp->u.bem.turn     *= M_PI/180.; /* Convert to rad/s. */
+   C = pilot_heatCalcOutfitC(temp);
+   area = pilot_heatCalcOutfitArea(temp);
+   temp->u.bem.heat     = ((800.-CONST_SPACE_STAR_TEMP)*C +
+            STEEL_HEAT_CONDUCTIVITY * ((800-CONST_SPACE_STAR_TEMP) * area)) /
+         temp->u.bem.heatup;
 
    /* Set default outfit size if necessary. */
    if (temp->slot.size == OUTFIT_SLOT_SIZE_NA)
@@ -1535,6 +1543,12 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
 {
    xmlNodePtr node;
    node = parent->children;
+   double C, area;
+
+   /* Defaults. */
+   temp->u.afb.sound = -1;
+   temp->u.afb.sound_on = -1;
+   temp->u.afb.sound_off = -1;
 
    /* must be >= 1. */
    temp->u.afb.thrust = 1.;
@@ -1543,17 +1557,26 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
    do { /* parse the data */
       xml_onlyNodes(node);
       xmlr_float(node,"rumble",temp->u.afb.rumble);
+      if (xml_isNode(node,"sound_on")) {
+         temp->u.afb.sound_on = sound_get( xml_get(node) );
+         continue;
+      }
       if (xml_isNode(node,"sound")) {
          temp->u.afb.sound = sound_get( xml_get(node) );
          continue;
       }
-      xmlr_float(node,"duration",temp->u.afb.duration);
-      xmlr_float(node,"cooldown",temp->u.afb.cooldown);
+      if (xml_isNode(node,"sound_off")) {
+         temp->u.afb.sound_off = sound_get( xml_get(node) );
+         continue;
+      }
       xmlr_float(node,"thrust",temp->u.afb.thrust);
       xmlr_float(node,"speed",temp->u.afb.speed);
       xmlr_float(node,"energy",temp->u.afb.energy);
       xmlr_float(node,"cpu",temp->u.afb.cpu);
       xmlr_float(node,"mass_limit",temp->u.afb.mass_limit);
+      xmlr_float(node,"heatup",temp->u.afb.heatup);
+      xmlr_float(node,"heat_cap",temp->u.afb.heat_cap);
+      xmlr_float(node,"heat_base",temp->u.afb.heat_base);
       WARN("Outfit '%s' has unknown node '%s'",temp->name, node->name);
    } while (xml_nextNode(node));
 
@@ -1564,7 +1587,6 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
          "\erActivated Outfit\e0\n"
          "Needs %.0f CPU\n"
          "Only one can be equipped\n"
-         "%.1f Duration %.1f Cooldown\n"
          "%.0f Maximum Effective Mass\n"
          "%.0f%% Thrust\n"
          "%.0f%% Maximum Speed\n"
@@ -1572,7 +1594,6 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
          "%.1f Rumble",
          outfit_getType(temp),
          temp->u.afb.cpu,
-         temp->u.afb.duration, temp->u.afb.cooldown,
          temp->u.afb.mass_limit,
          temp->u.afb.thrust + 100.,
          temp->u.afb.speed + 100.,
@@ -1582,6 +1603,11 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
    /* Post processing. */
    temp->u.afb.thrust /= 100.;
    temp->u.afb.speed  /= 100.;
+   C = pilot_heatCalcOutfitC(temp);
+   area = pilot_heatCalcOutfitArea(temp);
+   temp->u.afb.heat    = ((800.-CONST_SPACE_STAR_TEMP)*C +
+            STEEL_HEAT_CONDUCTIVITY * ((800-CONST_SPACE_STAR_TEMP) * area)) /
+         temp->u.afb.heatup;
 
    /* Set default outfit size if necessary. */
    if (temp->slot.size == OUTFIT_SLOT_SIZE_NA)
@@ -1589,13 +1615,12 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
 
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define to help check for data errors. */
-   MELEMENT(temp->u.afb.duration==0.,"duration");
-   MELEMENT(temp->u.afb.cooldown==0.,"cooldown");
    MELEMENT(temp->u.afb.thrust==0.,"thrust");
    MELEMENT(temp->u.afb.speed==0.,"speed");
    MELEMENT(temp->u.afb.energy==0.,"energy");
    MELEMENT(temp->u.afb.cpu==0.,"cpu");
    MELEMENT(temp->u.afb.mass_limit==0.,"mass_limit");
+   MELEMENT(temp->u.afb.heatup==0.,"heatup");
 #undef MELEMENT
 }
 

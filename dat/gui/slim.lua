@@ -34,6 +34,8 @@ function create()
    col_ammo = colour.new(140/255,94/255,  7/255 )
    col_heat = colour.new(114/255,26/255, 14/255 )
    col_heat2 = colour.new( 222/255, 51/255, 27/255 )
+   col_afb = colour.new(col_heat)
+   col_afb:setAlpha(.5)
    col_ready = colour.new(14/255,108/255, 114/255 )
    col_prim = colour.new(71/255,234/255, 252/255 )
    col_sec = colour.new(136/255,179/255, 255/255 )
@@ -691,7 +693,17 @@ function render( dt, dt_mod )
       gfx.renderRect( slot_start_x, slot_y, slot_w * #aset, slot_h, col_slot_bg ) -- Background for all slots.
       for i=1,#aset do
          local slot_x = screen_w - slot_start_x - i * slot_w
+
+         -- Draw a heat background for certain outfits. TODO: detect if the outfit is heat based somehow!
+         if aset[i].type == "Afterburner" then
+            gfx.renderRect( slot_x, slot_y, slot_w, slot_h * aset[i].temp, col_heat ) -- Background (heat)
+         end
+
          gfx.renderTexRaw( active_icons[i], slot_x + slot_img_offs_x, slot_y + slot_img_offs_y + 2, slot_img_w, slot_img_w, 1, 1, 0, 0, 1, 1 ) --Image 
+
+         if aset[i].type == "Afterburner" then
+            gfx.renderRect( slot_x, slot_y, slot_w, slot_h * aset[i].temp, col_afb ) -- Foreground (heat)
+         end
 
          if aset[i].state == "on" then
             gfx.renderTex( active, slot_x + slot_img_offs_x, slot_y + slot_img_offs_y )

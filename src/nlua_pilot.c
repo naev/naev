@@ -1329,6 +1329,7 @@ static int pilotL_weapset( lua_State *L )
  * <ul>
  *  <li> name: Name of the set. </li>
  *  <li> type: Type of the outfit. </li>
+ *  <li> temp: The heat of the outfit's slot. A value between 0 and 1, where 1 is fully overheated. </li>
  *  <li> state: State of the outfit, which can be one of { "off", "warmup", "on", "cooldown" }. </li>
  *  <li> duration: Set only if state is "on". Indicates duration value (0 = just finished, 1 = just on). </li>
  *  <li> cooldown: Set only if state is "cooldown". Indicates cooldown value (0 = just ending, 1 = just started cooling down). </li>
@@ -1389,6 +1390,13 @@ static int pilotL_actives( lua_State *L )
       /* Type. */
       lua_pushstring(L, "type");
       lua_pushstring(L, outfit_getType(o->outfit));
+      lua_rawset(L,-3);
+
+      /* Heat. */
+      lua_pushstring(L, "temp");
+      lua_pushnumber(L, 1 - pilot_heatEfficiencyMod(o->heat_T,
+                            o->outfit->u.afb.heat_base,
+                            o->outfit->u.afb.heat_cap));
       lua_rawset(L,-3);
 
       /* State and timer. */
