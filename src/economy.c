@@ -611,7 +611,14 @@ int economy_update( unsigned int dt )
          X[i] = econ_calcSysI( dt, &systems_stack[i], j );
 
       /* Solve the system. */
-      ret = cs_lsolve( econ_G, X );
+      /** @TODO This should be improved to try to use better factorizations (LU/Cholesky)
+       * if possible or just outright try to use some other library that does fancy stuff
+       * like UMFPACK. Would be also interesting to see if it could be optimized so we
+       * store the factorization or update that instead of handling it individually. Another
+       * point of interest would be to split loops out to make the solving faster, however,
+       * this may be trickier to do (although it would surely let us use cholesky always if we
+       * enforce that condition). */
+      ret = cs_qrsol( 3, econ_G, X );
       if (ret != 1)
          WARN("Failed to solve the Economy System.");
 

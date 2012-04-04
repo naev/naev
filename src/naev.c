@@ -215,6 +215,13 @@ int main( int argc, char** argv )
 
    conf_setDefaults(); /* set the default config values */
 
+   /*
+    * Attempts to load the data path from datapath.lua
+    * At this early point in the load process, the binary path
+    * is the only place likely to be checked.
+    */
+   conf_loadConfigPath();
+
    /* Parse the user data path override first. */
    conf_parseCLIPath( argc, argv );
 

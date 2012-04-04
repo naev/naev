@@ -29,7 +29,6 @@
 #include "nfile.h"
 
 
-#define XML_ID    "Ships"  /**< XML document identifier */
 #define XML_SHIP  "ship" /**< XML individual ship identifier. */
 
 #define SHIP_EXT     ".png" /**< Ship graphics extension format. */
@@ -737,6 +736,10 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
 
          continue;
       }
+
+      /* Used by in-sanity and NSH utils, no in-game meaning. */
+      if (xml_isNode(node,"mission"))
+         continue;
 
       DEBUG("Ship '%s' has unknown node '%s'.", temp->name, node->name);
    } while (xml_nextNode(node));

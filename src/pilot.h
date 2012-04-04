@@ -117,7 +117,9 @@
 #define PILOT_NOLAND       42 /**< Pilot cannot land on stations or planets. */
 #define PILOT_NODEATH      43 /**< Pilot can not die, will stay at 1 armour. */
 #define PILOT_INVINC_PLAYER 44 /**< Pilot can not be hurt by the player. */
-#define PILOT_FLAGS_MAX    PILOT_INVINC_PLAYER+1 /* Maximum number of flags. */
+#define PILOT_COOLDOWN     45 /**< Pilot is in active cooldown mode. */
+#define PILOT_COOLDOWN_BRAKE 46 /**< Pilot is braking to enter active cooldown mode. */
+#define PILOT_FLAGS_MAX    PILOT_COOLDOWN_BRAKE+1 /* Maximum number of flags. */
 typedef char PilotFlags[ PILOT_FLAGS_MAX ];
 
 /* makes life easier */
@@ -166,6 +168,7 @@ typedef struct PilotOutfitSlot_ {
    double heat_T;    /**< Slot temperature. [K] */
    double heat_C;    /**< Slot heat capacity. [W/K] */
    double heat_area; /**< Slot area of contact with ship hull. [m^2] */
+   double heat_start; /**< Slot heat at the beginning of a cooldown period. */
 
    /* Current state. */
    PilotOutfitState state; /**< State of the outfit. */
@@ -316,6 +319,9 @@ typedef struct Pilot_ {
    double heat_emis; /**< Ship epsilon parameter (emissivity). [adimensional 0:1] */
    double heat_cond; /**< Ship conductivity parameter. [W/(m*K)] */
    double heat_area; /**< Effective heatsink area of the ship. [m^2] */
+   double cdelay;    /**< Duration a full active cooldown takes. */
+   double ctimer;    /**< Remaining cooldown time. */
+   double heat_start; /**< Temperature at the start of a cooldown. */
 
    /* Ship statistics. */
    ShipStats stats;  /**< Pilot's copy of ship statistics. */
@@ -383,9 +389,9 @@ typedef struct Pilot_ {
    double ptimer;    /**< generic timer for internal pilot use */
    double htimer;    /**< Hail animation timer. */
    double stimer;    /**< Shield regeneration timer. */
+   double sbonus;    /**< Shield regeneration bonus. */
    double dtimer;    /**< Disable timer. */
    double dtimer_accum; /**< Accumulated disable timer. */
-   double sbonus;    /**< Shield regeneration bonus. */
    int hail_pos;     /**< Hail animation position. */
    int lockons;      /**< Stores how many seeking weapons are targeting pilot */
    int *mounted;     /**< Number of mounted outfits on the mount. */
@@ -433,6 +439,9 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter, const Da
 void pilot_updateDisable( Pilot* p, const unsigned int shooter );
 void pilot_explode( double x, double y, double radius, const Damage *dmg, const Pilot *parent );
 double pilot_face( Pilot* p, const double dir );
+int pilot_brake( Pilot* p );
+void pilot_cooldown( Pilot *p );
+void pilot_cooldownEnd( Pilot *p, const char *reason );
 
 
 /* Misc. */

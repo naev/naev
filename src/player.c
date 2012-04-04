@@ -1022,7 +1022,6 @@ void player_think( Pilot* pplayer, const double dt )
    Pilot *target;
    double turn;
    int facing;
-   Outfit *afb;
    int ret;
 
    /* last i heard, the dead don't think */
@@ -1156,15 +1155,7 @@ void player_think( Pilot* pplayer, const double dt )
    }
 
 
-   /*
-    * Afterburn!
-    */
-   if (pilot_isFlag(player.p,PILOT_AFTERBURNER)) {
-      afb = pplayer->afterburner->outfit;
-      pilot_setThrust( pplayer, 1. + afb->u.afb.thrust * MIN( 1., afb->u.afb.mass_limit/player.p->solid->mass ) );
-   }
-   else
-      pilot_setThrust( pplayer, player_acc );
+   pilot_setThrust( pplayer, player_acc );
 }
 
 
@@ -2073,6 +2064,22 @@ void player_toggleMouseFly(void)
       player_message("\erMouse flying disabled.");
       player_accelOver();
    }
+}
+
+
+/**
+ * @brief Toggles active cooldown mode.
+ */
+void player_toggleCooldown(void)
+{
+   if (pilot_isFlag(player.p, PILOT_TAKEOFF))
+      return;
+
+   if ((!pilot_isFlag(player.p, PILOT_COOLDOWN)) &&
+            (!pilot_isFlag(player.p, PILOT_COOLDOWN_BRAKE)))
+      pilot_cooldown( player.p );
+   else
+      pilot_cooldownEnd(player.p, NULL);
 }
 
 

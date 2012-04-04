@@ -266,9 +266,10 @@ void map_open (void)
    map_update( wid );
 
    /*
-    * Disable Autonav button if player lacks fuel.
+    * Disable Autonav button if player lacks fuel or if target is not a valid hyperspace target.
     */
-   if ((player.p->fuel < HYPERSPACE_FUEL) || pilot_isFlag( player.p, PILOT_NOJUMP))
+   if ((player.p->fuel < HYPERSPACE_FUEL) || pilot_isFlag( player.p, PILOT_NOJUMP)
+         || map_selected == cur_system - systems_stack || map_npath == 0)
       window_disableButton( wid, "btnAutonav" );
 }
 
@@ -1264,8 +1265,10 @@ void map_select( StarSystem *sys, char shifted )
 
    wid = window_get(MAP_WDWNAME);
 
-   if (sys == NULL)
+   if (sys == NULL) {
       map_selectCur();
+      window_disableButton( wid, "btnAutonav" );
+   }
    else {
       map_selected = sys - systems_stack;
 
@@ -1290,6 +1293,7 @@ void map_select( StarSystem *sys, char shifted )
             player_hyperspacePreempt(0);
             player_targetHyperspaceSet( -1 );
             player_autonavAbortJump(NULL);
+            window_disableButton( wid, "btnAutonav" );
          }
          else  {
             /* see if it is a valid hyperspace target */
@@ -1300,11 +1304,13 @@ void map_select( StarSystem *sys, char shifted )
                   break;
                }
             }
+            window_enableButton( wid, "btnAutonav" );
          }
       }
       else { /* unreachable. */
          player_targetHyperspaceSet( -1 );
          player_autonavAbortJump(NULL);
+         window_disableButton( wid, "btnAutonav" );
       }
    }
 

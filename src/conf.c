@@ -281,6 +281,24 @@ void conf_cleanup (void)
 
 
 /*
+ * @brief Parses the local conf that dictates where user data goes.
+ */
+void conf_loadConfigPath( void )
+{
+   const char *file = "datapath.lua";
+
+   if (!nfile_fileExists(file))
+      return;
+
+   lua_State *L = nlua_newState();
+   if (luaL_dofile(L, file) == 0)
+      conf_loadString("datapath",conf.datapath);
+
+   lua_close(L);
+}
+
+
+/*
  * parses the config file
  */
 int conf_loadConfig ( const char* file )
@@ -517,7 +535,12 @@ void conf_parseCLIPath( int argc, char** argv )
    int option_index = 1;
    int c = 0;
 
-   while ((c = getopt_long(argc, argv, ":d:",
+   /* GNU giveth, and GNU taketh away.
+    * If we don't specify "-" as the first char, getopt will happily
+    * mangle the initial argument order, probably causing crashes when
+    * passing arguments that take values, such as -H and -W.
+    */
+   while ((c = getopt_long(argc, argv, "-:d:",
          long_options, &option_index)) != -1) {
       switch(c) {
          case 'd':

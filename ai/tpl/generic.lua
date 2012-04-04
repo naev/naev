@@ -13,6 +13,7 @@ mem.shield_run     = 0 -- At which shield to run
 mem.shield_return  = 0 -- At which shield to return to combat
 mem.aggressive     = false -- Should pilot actively attack enemies?
 mem.defensive      = true -- Should pilot defend itself
+mem.cooldown       = false -- Whether the pilot is currently cooling down.
 mem.safe_distance  = 300 -- Safe distance from enemies to jump
 mem.land_planet    = true -- Should land on planets?
 mem.land_friendly  = false -- Only land on friendly planets?
@@ -33,11 +34,38 @@ function control ()
    -- Reset distress if not fighting/running
    if task ~= "attack" and task ~= "runaway" then
       mem.attacked = nil
+
+      -- If the ship is hot, consider cooling down.
+      local pilot = ai.getPilot()
+      if not mem.cooldown and pilot:temp() > 300 then
+         -- Ship is quite hot, better cool down.
+         if pilot:temp() > 400 then
+            mem.cooldown = true
+            ai.getPilot():setCooldown(true)
+            return
+         end
+
+         local _,wset = pilot:weapset()
+         for k,v in ipairs(wset) do
+            -- Cool down if a weapon is suffering >= 20% accuracy loss.
+            -- This equates to a temperature of 560K presently.
+            if v.temp and v.temp > 0.2 then
+               mem.cooldown = true
+               ai.getPilot():setCooldown(true)
+               return
+            end
+         end
+      end
    end
 
    -- Get new task
    if task == "none" then
       local attack = false
+
+      -- We don't want to interrupt cooldown.
+      if mem.cooldown then
+         return
+      end
 
       -- We'll first check enemy.
       if enemy ~= nil and mem.aggressive then
@@ -154,6 +182,12 @@ function attacked ( attacker )
          -- Some taunting
          ai.hostile(attacker) -- Should be done before taunting
          taunt( attacker, false )
+
+         -- Cancel cooldown if necessary.
+         if mem.cooldown then
+            mem.cooldown = false
+            ai.getPilot():setCooldown( false )
+         end
 
          -- Now pilot fights back
          ai.pushtask("attack", attacker)

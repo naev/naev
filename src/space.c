@@ -52,10 +52,7 @@
 #include "hook.h"
 
 
-#define XML_PLANET_ID         "Assets" /**< Planet xml document tag. */
 #define XML_PLANET_TAG        "asset" /**< Individual planet xml tag. */
-
-#define XML_SYSTEM_ID         "Systems" /**< Systems xml document tag. */
 #define XML_SYSTEM_TAG        "ssys" /**< Individual systems xml tag. */
 
 #define PLANET_GFX_EXTERIOR_PATH_W 400 /**< Planet exterior graphic width. */
@@ -1317,7 +1314,6 @@ void space_init( const char* sysname )
    if (player.p != NULL) {
       pilot_lockClear( player.p );
       pilot_clearTimers( player.p ); /* Clear timers. */
-      pilot_heatReset( player.p ); /* Resets the player's heat. */
       player_clearEscorts(); /* Must clear escorts to keep deployment sane. */
    }
 

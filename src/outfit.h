@@ -145,6 +145,7 @@ typedef struct OutfitBeamData_ {
    double cpu;       /**< CPU usage. */
    Damage dmg;       /**< Damage done. */
    double heatup;    /**< How long it should take for the weapon to heat up (approx). */
+   double heat;      /**< Heat per second. */
 
    /* Graphics and sound. */
    glTexture *gfx;   /**< Base texture. */
@@ -240,17 +241,20 @@ typedef struct OutfitModificationData_ {
  * @brief Represents an afterburner.
  */
 typedef struct OutfitAfterburnerData_ {
-   /* Duration. */
-   double duration;  /**< Duration of afterburner. */
-   double cooldown;  /**< Cooldown of afterburner. */
    /* Internal properties. */
    double cpu;       /**< CPU usage. */
    double rumble;    /**< Percent of rumble */
-   int sound;        /**< Sound of the afterburner */
+   int sound_on;     /**< Sound of the afterburner turning on */
+   int sound;        /**< Sound of the afterburner being on */
+   int sound_off;    /**< Sound of the afterburner turning off */
    double thrust;    /**< Percent of thrust increase based on ship base. */
    double speed;     /**< Percent of speed to increase based on ship base. */
    double energy;    /**< Energy usage while active */
    double mass_limit; /**< Limit at which effectiveness starts to drop. */
+   double heatup;    /**< How long it takes for the afterburner to overheat. */
+   double heat;      /**< Heat per second. */
+   double heat_cap;  /**< Temperature at which the outfit overheats (K). */
+   double heat_base; /**< Temperature at which the outfit BEGINS to overheat(K). */
 } OutfitAfterburnerData;
 
 /**
