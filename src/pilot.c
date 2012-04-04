@@ -620,6 +620,27 @@ double pilot_face( Pilot* p, const double dir )
 
 
 /**
+ * @brief Causes the pilot to turn around and brake.
+ *
+ *    @param Pilot to brake.
+ */
+int pilot_brake( Pilot *p )
+{
+   double diff;
+
+   diff = pilot_face(p, VANGLE(p->solid->vel) + M_PI);
+   if (ABS(diff) < MAX_DIR_ERR && VMOD(p->solid->vel) > MIN_VEL_ERR) {
+      pilot_setThrust(p, 1.);
+      return 0;
+   }
+   else {
+      pilot_setThrust(p, 0.);
+      return 1;
+   }
+}
+
+
+/**
  * @brief Begins active cooldown, reducing hull and outfit temperatures.
  *
  *    @param Pilot that should cool down.
@@ -629,6 +650,14 @@ void pilot_cooldown( Pilot *p )
    int i;
    double heat_capacity, heat_mean;
    PilotOutfitSlot *o;
+
+   /* Brake if necessary. */
+   if (VMOD(p->solid->vel) > MIN_VEL_ERR) {
+      pilot_setFlag(p, PILOT_COOLDOWN_BRAKE);
+      return;
+   }
+   else
+      pilot_rmFlag(p, PILOT_COOLDOWN_BRAKE);
 
    if (p->id == PLAYER_ID)
       player_message("\epActive cooldown engaged.");
@@ -673,6 +702,11 @@ void pilot_cooldown( Pilot *p )
  */
 void pilot_cooldownEnd( Pilot *p, const char *reason )
 {
+   if (pilot_isFlag(p, PILOT_COOLDOWN_BRAKE)) {
+      pilot_rmFlag(p, PILOT_COOLDOWN_BRAKE);
+      return;
+   }
+
    /* Send message to player. */
    if (p->id == PLAYER_ID) {
       if (p->ctimer < 0.)
@@ -1623,6 +1657,11 @@ void pilot_update( Pilot* pilot, const double dt )
          pilot_dead( pilot, 0 ); /* start death stuff - dunno who killed. */
    }
 
+   /* Braking before cooldown. */
+   if (pilot_isFlag(pilot, PILOT_COOLDOWN_BRAKE))
+      if (pilot_brake( pilot ))
+         pilot_cooldown( pilot );
+
    /* purpose fallthrough to get the movement like disabled */
    if (pilot_isDisabled(pilot) || pilot_isFlag(pilot, PILOT_COOLDOWN)) {
       /* Do the slow brake thing */
@@ -1835,12 +1874,7 @@ static void pilot_hyperspace( Pilot* p, double dt )
          /* If the ship needs to charge up its hyperdrive, brake. */
          if (!p->stats.misc_instant_jump &&
                !pilot_isFlag(p, PILOT_HYP_BRAKE) && (VMOD(p->solid->vel) > MIN_VEL_ERR)) {
-            diff = pilot_face( p, VANGLE(p->solid->vel) + M_PI );
-
-            if (ABS(diff) < MAX_DIR_ERR)
-               pilot_setThrust( p, 1. );
-            else
-               pilot_setThrust( p, 0. );
+            pilot_brake(p);
          }
          /* face target */
          else {
