@@ -33,7 +33,7 @@ Heat is also reset to the base level when you land. So every time you take off, 
 There is a third way to lose heat, however.]]
    message6 = [[Every ship has the ability to go into a special cooling mode called Active Cooldown. When in Active Cooldown, ships rapidly lose their heat. By the end of the cooldown cycle, the ship and all its outfits will have cooled to the galactic base temperature.
 
-Let's try this now. Enter Active Cooldown mode by pressing %s. If you are moving, you may have to brake to a near stop first.]]
+Let's try this now. Enter Active Cooldown mode by pressing %s. If you are moving, you will automatically brake to a stop.]]
    message7 = [[You are now in Active Cooldown mode. You will see a progress bar above your ship. It is slowly draining. When the bar is completely empty, your ship will have cooled down. Don't touch any of the controls, or Active Cooldown will be canceled and you will have to restart it.
 
 Wait for your ship to cool. Keep a close eye on the temperature of your ship!]]
