@@ -1753,20 +1753,6 @@ void pilot_update( Pilot* pilot, const double dt )
       }
    }
 
-
-   /* Set engine glow. */
-   if (pilot->solid->thrust > 0.) {
-      /*pilot->engine_glow += pilot->thrust / pilot->speed * dt;*/
-      pilot->engine_glow += pilot->speed / pilot->thrust * dt * pilot->solid->mass;
-      if (pilot->engine_glow > 1.)
-         pilot->engine_glow = 1.;
-   }
-   else if (pilot->engine_glow > 0.) {
-      pilot->engine_glow -= pilot->speed / pilot->thrust * dt * pilot->solid->mass;
-      if (pilot->engine_glow < 0.)
-         pilot->engine_glow = 0.;
-   }
-
    /* Update weapons. */
    pilot_weapSetUpdate( pilot );
 
@@ -1802,6 +1788,19 @@ void pilot_update( Pilot* pilot, const double dt )
    }
    else
       pilot->solid->speed_max = -1.; /* Disables max speed. */
+
+   /* Set engine glow. */
+   if (pilot->solid->thrust > 0.) {
+      /*pilot->engine_glow += pilot->thrust / pilot->speed * dt;*/
+      pilot->engine_glow += pilot->speed / pilot->thrust * dt * pilot->solid->mass;
+      if (pilot->engine_glow > 1.)
+         pilot->engine_glow = 1.;
+   }
+   else if (pilot->engine_glow > 0.) {
+      pilot->engine_glow -= pilot->speed / pilot->thrust * dt * pilot->solid->mass;
+      if (pilot->engine_glow < 0.)
+         pilot->engine_glow = 0.;
+   }
 
    /* Update the solid, must be run after limit_speed. */
    pilot->solid->update( pilot->solid, dt );
