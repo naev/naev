@@ -29,7 +29,7 @@ function news_addGoddard( rawtable )
       --]]
       {
          title = "Goddard Earnings on the Rise",
-         desc = "House Goddard has once again increased it's earnings. \"Our investment in technology and quality has paid off.\", said Kari Baker, responsible of House Goddard marketing."
+         desc = "House Goddard has once again increased its earnings. \"Our investment in technology and quality has paid off.\", said Kari Baker, responsible of House Goddard marketing."
       },
       {
          title = "Goddard Awarded Best Ship",
