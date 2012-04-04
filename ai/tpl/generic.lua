@@ -31,13 +31,19 @@ function control ()
    local task = ai.taskname()
    local enemy = ai.getenemy()
 
+   -- Cooldown completes silently.
+   if mem.cooldown and not ai.getPilot():cooldown() then
+      mem.cooldown = false
+   end
+
    -- Reset distress if not fighting/running
    if task ~= "attack" and task ~= "runaway" then
       mem.attacked = nil
 
       -- If the ship is hot, consider cooling down.
+      -- Cooldown should not preempt boarding, and shields mustn't be low.
       local pilot = ai.getPilot()
-      if not mem.cooldown and pilot:temp() > 300 then
+      if task ~= "board" and not mem.cooldown and ai.pshield() > 50 and pilot:temp() > 300 then
          -- Ship is quite hot, better cool down.
          if pilot:temp() > 400 then
             mem.cooldown = true
