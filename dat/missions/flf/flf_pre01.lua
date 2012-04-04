@@ -184,7 +184,7 @@ function wakeUpGregarYouLazyBugger()
         misn.osdCreate(misn_title, {osd_desc[1]:format(destsysname), osd_adddesc, osd_desc[2]})
         misn.osdActive(2)
         hook.timer(2000, "annai")
-        OORT = hook.timer(4000, "outOfRange")
+        OORT = hook.timer(10000, "outOfRange")
     end
 end
 
@@ -197,6 +197,7 @@ function annai()
     for i, j in ipairs(fleetFLF) do
         if j:exists() then
             j:control()
+            j:goto(player.pos()) -- NOT the player pilot, or the task may not pop properly.
             j:goto(waypoint2, false)
             j:goto(waypoint1, false)
             j:goto(waypoint0 + poss[i])
