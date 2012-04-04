@@ -1251,12 +1251,6 @@ void pilot_afterburn (Pilot *p)
 {
    double afb_mod;
 
-   /* The afterburner only works if its efficiency is high enough. */
-   if (pilot_heatEfficiencyMod( p->afterburner->heat_T,
-         p->afterburner->outfit->u.afb.heat_base,
-         p->afterburner->outfit->u.afb.heat_cap ) < 0.3)
-      return;
-
    if (p == NULL)
       return;
 
@@ -1270,6 +1264,12 @@ void pilot_afterburn (Pilot *p)
 
    /** @todo fancy effect? */
    if (p->afterburner == NULL)
+      return;
+
+   /* The afterburner only works if its efficiency is high enough. */
+   if (pilot_heatEfficiencyMod( p->afterburner->heat_T,
+         p->afterburner->outfit->u.afb.heat_base,
+         p->afterburner->outfit->u.afb.heat_cap ) < 0.3)
       return;
 
    if (p->afterburner->state == PILOT_OUTFIT_OFF) {
