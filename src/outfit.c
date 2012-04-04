@@ -1710,8 +1710,7 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
 
       if (xml_isNode(node,"sys")) {
          buf = xml_nodeProp(node,"name");
-         if (buf != NULL) {
-            sys = system_get(buf);
+         if ((buf != NULL) && ((sys = system_get(buf)) != NULL)) {
             array_grow( &temp->u.map->systems ) = sys;
 
             cur = node->children;
@@ -1721,28 +1720,25 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
 
                if (xml_isNode(cur,"asset")) {
                   buf = xml_get(cur);
-                  if (buf != NULL) {
-                     asset = planet_get(buf);
+                  if ((buf != NULL) && ((asset = planet_get(buf)) != NULL))
                      array_grow( &temp->u.map->assets ) = asset;
-                  }
                   else
-                     WARN("map %s has invalid asset %s.", temp->name, buf);
+                     WARN("Map '%s' has invalid asset '%s'", temp->name, buf);
                }
                else if (xml_isNode(cur,"jump")) {
                   buf = xml_get(cur);
-                  if (buf != NULL) {
-                     jump = jump_get(xml_get(cur), temp->u.map->systems[array_size(temp->u.map->systems)-1] );
+                  if ((buf != NULL) && ((jump = jump_get(xml_get(cur),
+                        temp->u.map->systems[array_size(temp->u.map->systems)-1] )) != NULL))
                      array_grow( &temp->u.map->jumps ) = jump;
-                  }
                   else
-                     WARN("map %s has invalid jump point %s.", temp->name, buf);
+                     WARN("Map '%s' has invalid jump point '%s'", temp->name, buf);
                }
                else
                   WARN("Outfit '%s' has unknown node '%s'",temp->name, cur->name);
             } while (xml_nextNode(cur));
          }
          else
-            WARN("map %s has invalid system %s.", temp->name, buf);
+            WARN("Map '%s' has invalid system '%s'", temp->name, buf);
       }
       else if (xml_isNode(node,"short_desc")) {
          temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
