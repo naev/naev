@@ -623,20 +623,22 @@ double pilot_face( Pilot* p, const double dir )
  * @brief Causes the pilot to turn around and brake.
  *
  *    @param Pilot to brake.
+ *    @return 1 when braking has finished.
  */
 int pilot_brake( Pilot *p )
 {
    double diff;
 
    diff = pilot_face(p, VANGLE(p->solid->vel) + M_PI);
-   if (ABS(diff) < MAX_DIR_ERR && VMOD(p->solid->vel) > MIN_VEL_ERR) {
+   if (ABS(diff) < MAX_DIR_ERR && VMOD(p->solid->vel) > MIN_VEL_ERR)
       pilot_setThrust(p, 1.);
-      return 0;
-   }
    else {
       pilot_setThrust(p, 0.);
-      return 1;
+      if (VMOD(p->solid->vel) < MIN_VEL_ERR)
+         return 1;
    }
+
+   return 0;
 }
 
 
@@ -1873,9 +1875,8 @@ static void pilot_hyperspace( Pilot* p, double dt )
       else {
          /* If the ship needs to charge up its hyperdrive, brake. */
          if (!p->stats.misc_instant_jump &&
-               !pilot_isFlag(p, PILOT_HYP_BRAKE) && (VMOD(p->solid->vel) > MIN_VEL_ERR)) {
+               !pilot_isFlag(p, PILOT_HYP_BRAKE) && (VMOD(p->solid->vel) > MIN_VEL_ERR))
             pilot_brake(p);
-         }
          /* face target */
          else {
             /* Done braking or no braking required. */

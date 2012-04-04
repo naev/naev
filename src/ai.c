@@ -2513,18 +2513,14 @@ static int aiL_drift_facing( lua_State *L )
 static int aiL_brake( lua_State *L )
 {
    (void)L; /* hack to avoid -W -Wall warnings */
-   double diff, d;
+   int ret;
 
-   d = cur_pilot->solid->dir+M_PI;
-   if (d >= 2*M_PI) d = fmod(d, 2*M_PI);
+   ret = pilot_brake( cur_pilot );
 
-   diff = angle_diff(d,VANGLE(cur_pilot->solid->vel));
-   pilot_turn = 10*diff;
+   pilot_acc = cur_pilot->solid->thrust / cur_pilot->thrust;
+   pilot_turn = cur_pilot->solid->dir_vel / cur_pilot->turn;
 
-   if (ABS(diff) < MAX_DIR_ERR && VMOD(cur_pilot->solid->vel) > MIN_VEL_ERR)
-      pilot_acc = 1.;
-
-   return 0;
+   return ret;
 }
 
 
