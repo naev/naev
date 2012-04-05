@@ -312,11 +312,13 @@ int pilot_addOutfitRaw( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s )
       s->u.ammo.deployed = 0;
    }
    if (outfit_isTurret(outfit)) /* used to speed up AI */
-      pilot_setFlag(pilot, PILOT_HASTURRET);
+      pilot->nturrets++;
+   else if (outfit_isBolt(outfit))
+      pilot->ncannons++;
 
    if (outfit_isBeam(outfit)) { /* Used to speed up some calculations. */
       s->u.beamid = -1;
-      pilot_setFlag(pilot, PILOT_HASBEAMS);
+      pilot->nbeams++;
    }
    if (outfit_isLauncher(outfit)) {
       s->u.ammo.outfit   = NULL;
@@ -412,6 +414,16 @@ int pilot_addOutfit( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s )
 int pilot_rmOutfitRaw( Pilot* pilot, PilotOutfitSlot *s )
 {
    int ret;
+
+   /* Decrement counters if necessary. */
+   if (s->outfit != NULL) {
+      if (outfit_isTurret(s->outfit))
+         pilot->nturrets--;
+      else if (outfit_isBolt(s->outfit))
+         pilot->ncannons--;
+      if (outfit_isBeam(s->outfit))
+         pilot->nbeams--;
+   }
 
    /* Remove the outfit. */
    ret         = (s->outfit==NULL);

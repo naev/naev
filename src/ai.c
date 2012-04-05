@@ -238,6 +238,7 @@ static int aiL_combat( lua_State *L ); /* combat( number ) */
 static int aiL_settarget( lua_State *L ); /* settarget( number ) */
 static int aiL_weapSet( lua_State *L ); /* weapset( number ) */
 static int aiL_shoot( lua_State *L ); /* shoot( number ); number = 1,2,3 */
+static int aiL_hascannons( lua_State *L ); /* bool hascannons() */
 static int aiL_hasturrets( lua_State *L ); /* bool hasturrets() */
 static int aiL_getenemy( lua_State *L ); /* number getenemy() */
 static int aiL_getenemy_size( lua_State *L ); /* number getenemy_size() */
@@ -339,6 +340,7 @@ static const luaL_reg aiL_methods[] = {
    { "combat", aiL_combat },
    { "settarget", aiL_settarget },
    { "weapset", aiL_weapSet },
+   { "hascannons", aiL_hascannons },
    { "hasturrets", aiL_hasturrets },
    { "shoot", aiL_shoot },
    { "getenemy", aiL_getenemy },
@@ -2973,14 +2975,27 @@ static int aiL_weapSet( lua_State *L )
 
 
 /**
- * @brief Does the pilot have turrets.?
+ * @brief Does the pilot have cannons?
  *
- *    @luareturn true if the pilot has turrets
+ *    @luareturn True if the pilot has cannons.
+ * @luafunc hascannons()
+ */
+static int aiL_hascannons( lua_State *L )
+{
+   lua_pushboolean( L, cur_pilot->ncannons > 0 );
+   return 1;
+}
+
+
+/**
+ * @brief Does the pilot have turrets?
+ *
+ *    @luareturn True if the pilot has turrets.
  * @luafunc hasturrets()
  */
 static int aiL_hasturrets( lua_State *L )
 {
-   lua_pushboolean( L, pilot_isFlag(cur_pilot, PILOT_HASTURRET) );
+   lua_pushboolean( L, cur_pilot->nturrets > 0 );
    return 1;
 }
 
