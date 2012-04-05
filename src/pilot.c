@@ -620,6 +620,29 @@ double pilot_face( Pilot* p, const double dir )
 
 
 /**
+ * @brief Causes the pilot to turn around and brake.
+ *
+ *    @param Pilot to brake.
+ *    @return 1 when braking has finished.
+ */
+int pilot_brake( Pilot *p )
+{
+   double diff;
+
+   diff = pilot_face(p, VANGLE(p->solid->vel) + M_PI);
+   if (ABS(diff) < MAX_DIR_ERR && VMOD(p->solid->vel) > MIN_VEL_ERR)
+      pilot_setThrust(p, 1.);
+   else {
+      pilot_setThrust(p, 0.);
+      if (VMOD(p->solid->vel) < MIN_VEL_ERR)
+         return 1;
+   }
+
+   return 0;
+}
+
+
+/**
  * @brief Begins active cooldown, reducing hull and outfit temperatures.
  *
  *    @param Pilot that should cool down.
@@ -629,6 +652,14 @@ void pilot_cooldown( Pilot *p )
    int i;
    double heat_capacity, heat_mean;
    PilotOutfitSlot *o;
+
+   /* Brake if necessary. */
+   if (VMOD(p->solid->vel) > MIN_VEL_ERR) {
+      pilot_setFlag(p, PILOT_COOLDOWN_BRAKE);
+      return;
+   }
+   else
+      pilot_rmFlag(p, PILOT_COOLDOWN_BRAKE);
 
    if (p->id == PLAYER_ID)
       player_message("\epActive cooldown engaged.");
@@ -673,6 +704,11 @@ void pilot_cooldown( Pilot *p )
  */
 void pilot_cooldownEnd( Pilot *p, const char *reason )
 {
+   if (pilot_isFlag(p, PILOT_COOLDOWN_BRAKE)) {
+      pilot_rmFlag(p, PILOT_COOLDOWN_BRAKE);
+      return;
+   }
+
    /* Send message to player. */
    if (p->id == PLAYER_ID) {
       if (p->ctimer < 0.)
@@ -1438,6 +1474,7 @@ void pilot_update( Pilot* pilot, const double dt )
    double Q;
    Damage dmg;
    double stress_falloff;
+   double efficiency, thrust;
 
    /* Check target sanity. */
    if (pilot->target != pilot->id) {
@@ -1623,6 +1660,11 @@ void pilot_update( Pilot* pilot, const double dt )
          pilot_dead( pilot, 0 ); /* start death stuff - dunno who killed. */
    }
 
+   /* Braking before cooldown. */
+   if (pilot_isFlag(pilot, PILOT_COOLDOWN_BRAKE))
+      if (pilot_brake( pilot ))
+         pilot_cooldown( pilot );
+
    /* purpose fallthrough to get the movement like disabled */
    if (pilot_isDisabled(pilot) || pilot_isFlag(pilot, PILOT_COOLDOWN)) {
       /* Do the slow brake thing */
@@ -1711,6 +1753,41 @@ void pilot_update( Pilot* pilot, const double dt )
       }
    }
 
+   /* Update weapons. */
+   pilot_weapSetUpdate( pilot );
+
+   if (!pilot_isFlag(pilot, PILOT_HYPERSPACE)) { /* limit the speed */
+
+      /* pilot is afterburning */
+      if (pilot_isFlag(pilot, PILOT_AFTERBURNER) && pilot->id == PLAYER_ID) {
+         /* Heat up the afterburner. */
+         pilot_heatAddSlotTime(pilot, pilot->afterburner, dt);
+
+         /* If the afterburner's efficiency is reduced to 0, shut it off. */
+         if (pilot_heatEfficiencyMod(pilot->afterburner->heat_T,
+               pilot->afterburner->outfit->u.afb.heat_base,
+               pilot->afterburner->outfit->u.afb.heat_cap)==0)
+            pilot_afterburnOver(pilot);
+         else {
+            spfx_shake( 0.75*SHAKE_DECAY * dt); /* shake goes down at quarter speed */
+            efficiency = pilot_heatEfficiencyMod( pilot->afterburner->heat_T,
+                  pilot->afterburner->outfit->u.afb.heat_base,
+                  pilot->afterburner->outfit->u.afb.heat_cap );
+            thrust = MIN( 1., pilot->afterburner->outfit->u.afb.mass_limit / pilot->solid->mass) * efficiency;
+
+            /* Adjust speed. Speed bonus falls as heat rises. */
+            pilot->solid->speed_max = pilot->speed * (1. +
+                  pilot->afterburner->outfit->u.afb.speed * thrust);
+
+            /* Adjust thrust. Thrust bonus falls as heat rises. */
+            pilot_setThrust(pilot, 1. + pilot->afterburner->outfit->u.afb.thrust * thrust);
+         }
+      }
+      else
+         pilot->solid->speed_max = pilot->speed;
+   }
+   else
+      pilot->solid->speed_max = -1.; /* Disables max speed. */
 
    /* Set engine glow. */
    if (pilot->solid->thrust > 0.) {
@@ -1724,21 +1801,6 @@ void pilot_update( Pilot* pilot, const double dt )
       if (pilot->engine_glow < 0.)
          pilot->engine_glow = 0.;
    }
-
-   /* Update weapons. */
-   pilot_weapSetUpdate( pilot );
-
-   if (!pilot_isFlag(pilot, PILOT_HYPERSPACE)) { /* limit the speed */
-
-      /* pilot is afterburning */
-      if (pilot_isFlag(pilot, PILOT_AFTERBURNER) && pilot->id == PLAYER_ID) {
-         spfx_shake( 0.75*SHAKE_DECAY * dt); /* shake goes down at quarter speed */
-      }
-      else
-         pilot->solid->speed_max = pilot->speed;
-   }
-   else
-      pilot->solid->speed_max = -1.; /* Disables max speed. */
 
    /* Update the solid, must be run after limit_speed. */
    pilot->solid->update( pilot->solid, dt );
@@ -1834,14 +1896,8 @@ static void pilot_hyperspace( Pilot* p, double dt )
       else {
          /* If the ship needs to charge up its hyperdrive, brake. */
          if (!p->stats.misc_instant_jump &&
-               !pilot_isFlag(p, PILOT_HYP_BRAKE) && (VMOD(p->solid->vel) > MIN_VEL_ERR)) {
-            diff = pilot_face( p, VANGLE(p->solid->vel) + M_PI );
-
-            if (ABS(diff) < MAX_DIR_ERR)
-               pilot_setThrust( p, 1. );
-            else
-               pilot_setThrust( p, 0. );
-         }
+               !pilot_isFlag(p, PILOT_HYP_BRAKE) && (VMOD(p->solid->vel) > MIN_VEL_ERR))
+            pilot_brake(p);
          /* face target */
          else {
             /* Done braking or no braking required. */

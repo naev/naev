@@ -927,9 +927,6 @@ void pilot_calcStats( Pilot* pilot )
       else if (outfit_isAfterburner(o)) { /* Afterburner */
          pilot_setFlag( pilot, PILOT_AFTERBURNER ); /* We use old school flags for this still... */
          pilot->energy_loss += pilot->afterburner->outfit->u.afb.energy; /* energy loss */
-         pilot->solid->speed_max = pilot->speed +
-               pilot->speed * pilot->afterburner->outfit->u.afb.speed *
-               MIN( 1., pilot->afterburner->outfit->u.afb.mass_limit/pilot->solid->mass);
       }
       else if (outfit_isJammer(o)) { /* Jammer */
          pilot->jamming        = 1;

@@ -118,7 +118,8 @@
 #define PILOT_NODEATH      43 /**< Pilot can not die, will stay at 1 armour. */
 #define PILOT_INVINC_PLAYER 44 /**< Pilot can not be hurt by the player. */
 #define PILOT_COOLDOWN     45 /**< Pilot is in active cooldown mode. */
-#define PILOT_FLAGS_MAX    PILOT_COOLDOWN+1 /* Maximum number of flags. */
+#define PILOT_COOLDOWN_BRAKE 46 /**< Pilot is braking to enter active cooldown mode. */
+#define PILOT_FLAGS_MAX    PILOT_COOLDOWN_BRAKE+1 /* Maximum number of flags. */
 typedef char PilotFlags[ PILOT_FLAGS_MAX ];
 
 /* makes life easier */
@@ -438,6 +439,7 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter, const Da
 void pilot_updateDisable( Pilot* p, const unsigned int shooter );
 void pilot_explode( double x, double y, double radius, const Damage *dmg, const Pilot *parent );
 double pilot_face( Pilot* p, const double dir );
+int pilot_brake( Pilot* p );
 void pilot_cooldown( Pilot *p );
 void pilot_cooldownEnd( Pilot *p, const char *reason );
 

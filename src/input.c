@@ -670,7 +670,7 @@ void input_update( double dt )
 !pilot_isFlag(player.p,PILOT_HYP_BEGIN) &&\
 !pilot_isFlag(player.p,PILOT_HYPERSPACE)) /**< Make sure the player isn't jumping. */
 #define NODEAD()  ((player.p != NULL) && !pilot_isFlag(player.p,PILOT_DEAD)) /**< Player isn't dead. */
-#define NOLAND()  (!landed && !pilot_isFlag(player.p,PILOT_LANDING)) /**< Player isn't landed. */
+#define NOLAND()  ((player.p != NULL) && (!landed && !pilot_isFlag(player.p,PILOT_LANDING))) /**< Player isn't landed. */
 /**
  * @brief Runs the input command.
  *
