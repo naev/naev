@@ -48,11 +48,6 @@ function atk_generic_attacked( attacker )
       mem.recharge = false
    end
 
-   if mem.cooldown then
-      mem.cooldown = false
-      ai.getPilot():setCooldown( false )
-   end
-
    -- If no target automatically choose it
    if not ai.exists(target) then
       ai.pushtask("attack", attacker)
