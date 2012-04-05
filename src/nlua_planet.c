@@ -664,7 +664,7 @@ static int planetL_canland( lua_State *L )
 
 
 /**
- * @brief Lets player land on a planet no matter what.
+ * @brief Lets player land on a planet no matter what. The override lasts until the player jumps or lands.
  *
  * @usage p:landOverride( true ) -- Planet can land on p now.
  *    @luaparam p Planet to forcibly allow the player to land on.
