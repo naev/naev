@@ -69,6 +69,7 @@ static int pilotL_target( lua_State *L );
 static int pilotL_inrange( lua_State *L );
 static int pilotL_nav( lua_State *L );
 static int pilotL_weapset( lua_State *L );
+static int pilotL_weapsetHeat( lua_State *L );
 static int pilotL_actives( lua_State *L );
 static int pilotL_outfits( lua_State *L );
 static int pilotL_rename( lua_State *L );
@@ -152,6 +153,7 @@ static const luaL_reg pilotL_methods[] = {
    { "inrange", pilotL_inrange },
    { "nav", pilotL_nav },
    { "weapset", pilotL_weapset },
+   { "weapsetHeat", pilotL_weapsetHeat },
    { "actives", pilotL_actives },
    { "outfits", pilotL_outfits },
    { "rename", pilotL_rename },
@@ -244,6 +246,7 @@ static const luaL_reg pilotL_cond_methods[] = {
    { "inrange", pilotL_inrange },
    { "nav", pilotL_nav },
    { "weapset", pilotL_weapset },
+   { "weapsetHeat", pilotL_weapsetHeat },
    { "actives", pilotL_actives },
    { "outfits", pilotL_outfits },
    { "pos", pilotL_position },
@@ -1318,6 +1321,107 @@ static int pilotL_weapset( lua_State *L )
          lua_rawset(L,-3);
       }
    }
+   return 2;
+}
+
+
+/**
+ * @brief Gets heat information for a weapon set.
+ *
+ * @usage hmean, hpeak = p:weapsetHeat( true ) -- Gets info for all active weapons
+ * @usage hmean, hpeak = p:weapsetHeat() -- Get info about the current set
+ * @usage hmean, hpeak = p:weapsetHeat( 5 ) -- Get info about the set number 5
+ *
+ *    @luaparam p Pilot to get weapset weapon of.
+ *    @luaparam id ID of the set to get information of. Defaults to currently active set.
+ *    @luareturn The name of the set and a table with each slot's information.
+ * @luafunc weapsetHeat(p, id)
+ */
+static int pilotL_weapsetHeat( lua_State *L )
+{
+   Pilot *p;
+   PilotWeaponSetOutfit *po_list;
+   PilotOutfitSlot *slot;
+   Outfit *o;
+   int i, j, n;
+   int id, all, level, level_match;
+   double heat, heat_mean, heat_peak, nweapons;
+
+   /* Defaults. */
+   po_list = NULL;
+   heat_mean = 0.;
+   heat_peak = 0.;
+   nweapons = 0;
+
+   /* Parse parameters. */
+   all = 0;
+   p   = luaL_validpilot(L,1);
+   if (lua_gettop(L) > 1) {
+      if (lua_isnumber(L,2))
+         id = luaL_checkinteger(L,2) - 1;
+      else if (lua_isboolean(L,2)) {
+         all = lua_toboolean(L,2);
+         id  = p->active_set;
+      }
+      else
+         NLUA_INVALID_PARAMETER(L);
+   }
+   else
+      id = p->active_set;
+   id = CLAMP( 0, PILOT_WEAPON_SETS, id );
+
+   /* Push set. */
+   if (all)
+      n = p->noutfits;
+   else
+      po_list = pilot_weapSetList( p, id, &n );
+
+   for (j=0; j<=PILOT_WEAPSET_MAX_LEVELS; j++) {
+      /* Level to match. */
+      level_match = (j==PILOT_WEAPSET_MAX_LEVELS) ? -1 : j;
+
+       /* Iterate over weapons. */
+      for (i=0; i<n; i++) {
+         /* Get base look ups. */
+         if (all)
+            slot = p->outfits[i];
+         else
+            slot = po_list[i].slot;
+
+         o = slot->outfit;
+         if (o == NULL)
+            continue;
+
+         if (all)
+            level    = slot->level;
+         else
+            level    = po_list[i].level;
+
+         /* Must match level. */
+         if (level != level_match)
+            continue;
+
+         /* Must be weapon. */
+         if (outfit_isJammer(o) ||
+               outfit_isMod(o) ||
+               outfit_isAfterburner(o))
+            continue;
+
+         nweapons++;
+         heat = pilot_heatFirePercent(slot->heat_T);
+         heat_mean += heat;
+         if (heat > heat_peak)
+            heat_peak = heat;
+      }
+   }
+
+   /* Post-process. */
+   if (nweapons > 0)
+      heat_mean /= nweapons;
+
+   lua_pushnumber( L, heat_mean );
+   lua_pushnumber( L, heat_peak );
+
    return 2;
 }
 
