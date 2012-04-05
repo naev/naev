@@ -14,6 +14,7 @@ mem.shield_return  = 0 -- At which shield to return to combat
 mem.aggressive     = false -- Should pilot actively attack enemies?
 mem.defensive      = true -- Should pilot defend itself
 mem.cooldown       = false -- Whether the pilot is currently cooling down.
+mem.heatthreshold  = .5 -- Weapon heat to enter cooldown at [0-2 or nil]
 mem.safe_distance  = 300 -- Safe distance from enemies to jump
 mem.land_planet    = true -- Should land on planets?
 mem.land_friendly  = false -- Only land on friendly planets?
@@ -21,6 +22,8 @@ mem.distress       = true -- AI distresses
 mem.distressrate   = 3 -- Number of ticks before calling for help
 mem.distressmsg    = nil -- Message when calling for help
 mem.distressmsgfunc = nil -- Function to call when distressing
+mem.weapset = 3 -- Weapon set that should be used (tweaked based on heat).
+mem.tickssincecooldown = 0 -- Prevents overly-frequent cooldown attempts.
 
 
 -- Required control rate
@@ -31,27 +34,38 @@ function control ()
    local task = ai.taskname()
    local enemy = ai.getenemy()
 
+   -- Cooldown completes silently.
+   if mem.cooldown then
+      mem.tickssincecooldown = 0
+      if not ai.getPilot():cooldown() then
+         mem.cooldown = false
+      end
+   else
+      mem.tickssincecooldown = mem.tickssincecooldown + 1
+   end
+
    -- Reset distress if not fighting/running
    if task ~= "attack" and task ~= "runaway" then
       mem.attacked = nil
+      local p = ai.getPilot()
 
-      -- If the ship is hot, consider cooling down.
-      local pilot = ai.getPilot()
-      if not mem.cooldown and pilot:temp() > 300 then
-         -- Ship is quite hot, better cool down.
-         if pilot:temp() > 400 then
-            mem.cooldown = true
-            ai.getPilot():setCooldown(true)
+      -- Cooldown shouldn't preempt boarding, either.
+      if task ~= "board" then
+         -- Cooldown preempts everything we haven't explicitly checked for.
+         if mem.cooldown then
             return
-         end
-
-         local _,wset = pilot:weapset()
-         for k,v in ipairs(wset) do
-            -- Cool down if a weapon is suffering >= 20% accuracy loss.
-            -- This equates to a temperature of 560K presently.
-            if v.temp and v.temp > 0.2 then
+         -- If the ship is hot and shields are high, consider cooling down.
+         elseif ai.pshield() > 50 and p:temp() > 300 then
+            -- Ship is quite hot, better cool down.
+            if p:temp() > 400 then
                mem.cooldown = true
-               ai.getPilot():setCooldown(true)
+               p:setCooldown(true)
+               return
+            -- Cool down if the current weapon set is suffering from >= 20% accuracy loss.
+            -- This equates to a temperature of 560K presently.
+            elseif (p:weapsetHeat() > .2) then
+               mem.cooldown = true
+               p:setCooldown(true)
                return
             end
          end
@@ -61,11 +75,6 @@ function control ()
    -- Get new task
    if task == "none" then
       local attack = false
-
-      -- We don't want to interrupt cooldown.
-      if mem.cooldown then
-         return
-      end
 
       -- We'll first check enemy.
       if enemy ~= nil and mem.aggressive then
@@ -104,6 +113,9 @@ function control ()
          return
       end
 
+      -- Pick an appropriate weapon set.
+      choose_weapset()
+
       -- Runaway if needed
       if (mem.shield_run > 0 and ai.pshield() < mem.shield_run
                and ai.pshield() < ai.pshield(target) ) or
@@ -113,6 +125,9 @@ function control ()
 
       -- Think like normal
       else
+         -- Cool down, if necessary.
+         should_cooldown()
+
          attack_think()
       end
 
@@ -176,18 +191,22 @@ function attacked ( attacker )
    -- Notify that pilot has been attacked before
    mem.attacked = true
 
+   -- Cooldown should be left running if not taking heavy damage.
+   if mem.cooldown then
+      if ai.pshield() < 90 then
+         mem.cooldown = false
+         ai.getPilot():setCooldown( false )
+      else
+         return
+      end
+   end
+
    if task ~= "attack" and task ~= "runaway" then
 
       if mem.defensive then
          -- Some taunting
          ai.hostile(attacker) -- Should be done before taunting
          taunt( attacker, false )
-
-         -- Cancel cooldown if necessary.
-         if mem.cooldown then
-            mem.cooldown = false
-            ai.getPilot():setCooldown( false )
-         end
 
          -- Now pilot fights back
          ai.pushtask("attack", attacker)
@@ -351,3 +370,60 @@ function gen_distress ( target )
 
 end
 
+
+-- Picks an appropriate weapon set for ships with mixed weaponry.
+function choose_weapset()
+   if ai.hascannons() and ai.hasturrets() then
+      local p = ai.getPilot()
+      local meant, peakt = p:weapsetHeat( 3 )
+      local meanc, peakc = p:weapsetHeat( 2 )
+
+      --[[
+      -- Weapon groups:
+      --    1: Cannons
+      --    2: Turrets
+      --    3: Combined
+      --
+      -- Note: AI indexes from 0, but pilot module indexes from 1.
+      --]]
+
+      -- Use both if both are cool, or if both are similar in temperature.
+      if meant + meanc < .1 then
+         mem.weapset = 3
+      elseif peakt == 0 then
+         mem.weapset = 2
+      elseif peakc == 0 then
+         mem.weapset = 1
+      -- Both sets are similarly hot.
+      elseif math.abs(meant - meanc) < .15 then
+         mem.weapset = 3
+      -- An extremely-hot weapon is a good reason to pick another set.
+      elseif math.abs(peakt - peakc) > .4 then
+         if peakt > peakc then
+            mem.weapset = 1
+         else
+            mem.weapset = 2
+         end
+      elseif meant > meanc then
+         mem.weapset = 1
+      else
+         mem.weapset = 2
+      end
+   end
+end
+
+-- Puts the pilot into cooldown mode if its weapons are overly hot and its shields are relatively high.
+-- This can happen during combat, so mem.heatthreshold should be quite high.
+function should_cooldown()
+   local mean = ai.getPilot():weapsetHeat()
+
+   -- Don't want to cool down again so soon.
+   -- By default, 15 ticks will be 30 seconds.
+   if mem.tickssincecooldown < 15 then
+      return
+   -- The weapons are extremely hot and cooldown should be triggered.
+   elseif mean > mem.heatthreshold and ai.pshield() > 50 then
+      mem.cooldown = true
+      ai.getPilot():setCooldown(true)
+   end
+end
