@@ -43,19 +43,21 @@
 #define PILOT_WEAPON_SETS        10    /**< Number of weapon sets the pilot has. */
 #define PILOT_WEAPSET_MAX_LEVELS 2     /**< Maximum amount of weapon levels. */
 
-/* hooks */
-#define PILOT_HOOK_NONE    0 /**< No hook. */
-#define PILOT_HOOK_DEATH   1 /**< Pilot died. */
-#define PILOT_HOOK_BOARD   2 /**< Pilot got boarded. */
-#define PILOT_HOOK_DISABLE 3 /**< Pilot got disabled. */
-#define PILOT_HOOK_UNDISABLE 4 /**< Pilot recovered from  beingdisabled. */
-#define PILOT_HOOK_JUMP    5 /**< Pilot jumped. */
-#define PILOT_HOOK_HAIL    6 /**< Pilot is hailed. */
-#define PILOT_HOOK_LAND    7 /**< Pilot is landing. */
-#define PILOT_HOOK_ATTACKED 8 /**< Pilot is in manual override and is being attacked. */
-#define PILOT_HOOK_IDLE    9 /**< Pilot is in manual override and has just become idle. */
-#define PILOT_HOOK_EXPLODED 10 /**< Pilot died and exploded (about to be removed). */
-#define PILOT_HOOK_LOCKON  11 /**< Pilot had a launcher lockon. */
+enum {
+   /* hooks */
+   PILOT_HOOK_NONE,      /**< No hook. */
+   PILOT_HOOK_DEATH,     /**< Pilot died. */
+   PILOT_HOOK_BOARD,     /**< Pilot got boarded. */
+   PILOT_HOOK_DISABLE,   /**< Pilot got disabled. */
+   PILOT_HOOK_UNDISABLE, /**< Pilot recovered from being disabled. */
+   PILOT_HOOK_JUMP,      /**< Pilot jumped. */
+   PILOT_HOOK_HAIL,      /**< Pilot is hailed. */
+   PILOT_HOOK_LAND,      /**< Pilot is landing. */
+   PILOT_HOOK_ATTACKED,  /**< Pilot is in manual override and is being attacked. */
+   PILOT_HOOK_IDLE,      /**< Pilot is in manual override and has just become idle. */
+   PILOT_HOOK_EXPLODED,  /**< Pilot died and exploded (about to be removed). */
+   PILOT_HOOK_LOCKON     /**< Pilot had a launcher lockon. */
+};
 
 
 /* damage */
