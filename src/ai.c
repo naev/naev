@@ -3007,6 +3007,11 @@ static int aiL_hasturrets( lua_State *L )
  */
 static int aiL_shoot( lua_State *L )
 {
+   /* Cooldown is similar to a ship being disabled, but the AI continues to
+    * think during cooldown, and thus must not be allowed to fire weapons. */
+   if (pilot_isFlag(cur_pilot, PILOT_COOLDOWN))
+      return 0;
+
    if (lua_toboolean(L,1))
       ai_setFlag(AI_SECONDARY);
    else
