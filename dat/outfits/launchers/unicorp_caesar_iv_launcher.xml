@@ -6,7 +6,7 @@
   <license>Heavy Weapon License</license>
   <mass>30</mass>
   <price>120000</price>
-  <description>the Caesar IV launcher does what it says on the box, which is launch Caesar IV torpedoes.</description>
+  <description>The Caesar IV launcher does what it says on the box, which is launch Caesar IV torpedoes.</description>
   <gfx_store>caesarlauncher</gfx_store>
  </general>
  <specific type="launcher" secondary="1">

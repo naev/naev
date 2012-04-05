@@ -17,7 +17,7 @@ else -- default english
     commmsg = {}
     
     title[1] = "Reunion with Rebina"
-    text[1] = [[    You dock with the Seiryuu and shut down your engines. At the airlock, you are welcomed by two nondescript crewmen in grey uniforms who tell you to follow them into the ship. They lead you through corridors and passages that seem to lead to the bridge. On the way, you can't help but look around you in wonder. The ship isn't anything you're used to seeing. While some parts can be identified as such common features as doors and viewports, a lot of the equipment in the compartiments and niches seems strange, almost alien to you. Clearly the Seiryuu is not just any other Kestrel.
+    text[1] = [[    You dock with the Seiryuu and shut down your engines. At the airlock, you are welcomed by two nondescript crewmen in grey uniforms who tell you to follow them into the ship. They lead you through corridors and passages that seem to lead to the bridge. On the way, you can't help but look around you in wonder. The ship isn't anything you're used to seeing. While some parts can be identified as such common features as doors and viewports, a lot of the equipment in the compartments and niches seems strange, almost alien to you. Clearly the Seiryuu is not just any other Kestrel.
     On the bridge, you immediately spot - who else - the Seiryuu's captain, Rebina, seated in the captain's chair. The chair, too, is designed in the strange fashion that you've been seeing all over the ship. It sports several controls that you can't place, despite the fact that you're an experienced pilot yourself. The rest of the bridge is no different. All the regular stations and consoles seem to be there, but there are some others whose purpose you can only guess.
     Rebina swivels the chair around and smiles when she sees you. "Ah, %s," she says. "How good of you to come. I was hoping you'd get my invitation, since I was quite pleased with your performance last time. And I'm not the only one. As it turns out Jorek seems to have taken a liking to you as well. He may seem rough, but he's a good man at heart."]]
     
@@ -29,7 +29,7 @@ else -- default english
     
     text[3] = [[    "You may not know this, but there are tensions between the Imperial and Dvaered militaries. For some time now there have been incidents on the border, conflicts about customs, pilots disrespecting each other's flight trajectories, that sort of thing. It hasn't become a public affair yet, and the respective authorities don't want it to come to that. This is why they've arranged a secret diplomatic meeting to smooth things over and make arrangements to de-escalate the situation.
     "This is where we come in. Without going into the details, suffice to say we have an interest in making sure that this meeting does not meet with any unfortunate accidents. However, for reasons I can't explain to you now, we can't become involved directly. That's why I want you to go on our behalf.
-    "You will essentially be flying an escort mission. You will rendezvous with a small wing of private fighters, who will take you to your protegee, the Imperial representative. Once there, you will protect him from any threats you might encounter, and see him safely to Dvaered space. As soon as the Imperial representative has joined his Dvaered colleague, your mission will be complete and you will report back here.
+    "You will essentially be flying an escort mission. You will rendezvous with a small wing of private fighters, who will take you to your charge, the Imperial representative. Once there, you will protect him from any threats you might encounter, and see him safely to Dvaered space. As soon as the Imperial representative has joined his Dvaered colleague, your mission will be complete and you will report back here.
     "That will be all. I offer you a suitable monetary reward should you choose to accept. Can I count on you to undertake this task?"]]
     
     refusetitle = "Let sleeping shadows lie"
@@ -54,13 +54,13 @@ else -- default english
     escortdeathtitle = "The escorts are dead!"
     escortdeathtext = [[All of the escorts have been destroyed. With the flight leader out of the picture, the diplomat has decided to call off the mission.]]
     
-    landfailtitle = "You abandoned your protegee!"
+    landfailtitle = "You abandoned your charge!"
     landfailtext = "You have landed, but you were supposed to escort the diplomat. Your mission is a failure!"
     
     diplomatdeathtitle = "The diplomat is dead!"
     diplomatdeathtext = [[The diplomat you were supposed to be protecting has perished! Your mission has failed.]]
     
-    diplomatnoruntitle = "You have left your protegee behind!"
+    diplomatnoruntitle = "You have left your charge behind!"
     diplomatnoruntext = [[You have jumped before the diplomat you were supposed to be protecting did. By doing so you have abandoned your duties, and failed your mission.]]
     
     diplomatdistress = "Diplomatic vessel under fire!"
