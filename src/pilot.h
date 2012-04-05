@@ -43,8 +43,9 @@
 #define PILOT_WEAPON_SETS        10    /**< Number of weapon sets the pilot has. */
 #define PILOT_WEAPSET_MAX_LEVELS 2     /**< Maximum amount of weapon levels. */
 
+
+/* hooks */
 enum {
-   /* hooks */
    PILOT_HOOK_NONE,      /**< No hook. */
    PILOT_HOOK_DEATH,     /**< Pilot died. */
    PILOT_HOOK_BOARD,     /**< Pilot got boarded. */

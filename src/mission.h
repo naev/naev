@@ -12,8 +12,8 @@
 #include "nlua.h"
 
 
+/* availability by location */
 enum {
-   /* availability by location */
    MIS_AVAIL_NONE,       /**< Mission isn't available. */
    MIS_AVAIL_COMPUTER,   /**< Mission is available at mission computer. */
    MIS_AVAIL_BAR,        /**< Mission is available at bar. */
