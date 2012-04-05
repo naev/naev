@@ -665,7 +665,8 @@ void pilot_cooldown( Pilot *p )
       player_message("\epActive cooldown engaged.");
 
    /* Disable active outfits. */
-   pilot_outfitOffAll( p );
+   if (pilot_outfitOffAll( p ) > 0)
+      pilot_calcStats( p );
 
    /* Calculate the ship's overall heat. */
    heat_capacity = p->heat_C;
@@ -1236,7 +1237,8 @@ void pilot_updateDisable( Pilot* p, const unsigned int shooter )
       p->dtimer_accum = 0.;
 
       /* Disable active outfits. */
-      pilot_outfitOffAll( p );
+      if (pilot_outfitOffAll( p ) > 0)
+         pilot_calcStats( p );
 
       pilot_setFlag( p,PILOT_DISABLED ); /* set as disabled */
       /* Run hook */
