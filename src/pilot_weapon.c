@@ -1204,7 +1204,7 @@ void pilot_weaponSane( Pilot *p )
  * @brief Disables a given active outfit.
  *
  * @param p Pilot whose outfit we are disabling.
- * @return Weather the outfit was actualy disabled.
+ * @return Whether the outfit was actually disabled.
  */
 void pilot_outfitOff( Pilot *p, PilotOutfitSlot *o )
 {
@@ -1220,7 +1220,7 @@ void pilot_outfitOff( Pilot *p, PilotOutfitSlot *o )
  * @brief Disables all active outfits for a pilot.
  *
  * @param p Pilot whose outfits we are disabling.
- * @return Weather any outfits were actualy disabled.
+ * @return Whether any outfits were actually disabled.
  */
 int pilot_outfitOffAll( Pilot *p )
 {
