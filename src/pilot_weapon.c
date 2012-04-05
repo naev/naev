@@ -1291,7 +1291,7 @@ void pilot_afterburn (Pilot *p)
       sound_play(p->afterburner->outfit->u.afb.sound_on);
    }
 
-   if (p == player.p) {
+   if (pilot_isPlayer(p)) {
       afb_mod = MIN( 1., player.p->afterburner->outfit->u.afb.mass_limit / player.p->solid->mass );
       spfx_shake( afb_mod * player.p->afterburner->outfit->u.afb.rumble * SHAKE_MAX );
    }

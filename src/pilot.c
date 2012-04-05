@@ -1875,10 +1875,9 @@ static void pilot_hyperspace( Pilot* p, double dt )
       if (!can_hyp) {
          pilot_hyperspaceAbort( p );
 
-         if (p == player.p) {
+         if (pilot_isPlayer(p))
             if (!player_isFlag(PLAYER_AUTONAV))
                player_message( "\erStrayed too far from jump point: jump aborted." );
-         }
       }
       else {
          if (p->ptimer < 0.) { /* engines ready */
@@ -1896,10 +1895,9 @@ static void pilot_hyperspace( Pilot* p, double dt )
       if (!can_hyp) {
          pilot_hyperspaceAbort( p );
 
-         if (p == player.p) {
+         if (pilot_isPlayer(p))
             if (!player_isFlag(PLAYER_AUTONAV))
                player_message( "\erStrayed too far from jump point: jump aborted." );
-         }
       }
       else {
          /* If the ship needs to charge up its hyperdrive, brake. */
@@ -1935,7 +1933,7 @@ static void pilot_hyperspace( Pilot* p, double dt )
       }
    }
 
-   if (p == player.p)
+   if (pilot_isPlayer(p))
       player_updateSpecific( p, dt );
 }
 
