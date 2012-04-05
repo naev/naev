@@ -2753,7 +2753,7 @@ static int pilotL_setNoboard( lua_State *L )
    else
       disable = lua_toboolean(L, 2);
 
-   /* See if should mark as boarded. */
+   /* See if should prevent boarding. */
    if (disable)
       pilot_setFlag(p, PILOT_NOBOARD);
    else
@@ -2787,7 +2787,7 @@ static int pilotL_setNodisable( lua_State *L )
    else
       disable = lua_toboolean(L, 2);
 
-   /* See if should mark as boarded. */
+   /* See if should prevent disabling. */
    if (disable)
       pilot_setFlag(p, PILOT_NODISABLE);
    else
@@ -3266,7 +3266,6 @@ static int pilotL_control( lua_State *L )
    else
       enable = lua_toboolean(L, 2);
 
-   /* See if should mark as boarded. */
    if (enable) {
       pilot_setFlag(p, PILOT_MANUAL_CONTROL);
       if (pilot_isPlayer(p))
