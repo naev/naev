@@ -200,6 +200,10 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
          if (type < 0)
             break;
 
+         /* Must not be disabled or cooling down. */
+         if ((pilot_isDisabled(p)) || (pilot_isFlag(p, PILOT_COOLDOWN)))
+            return;
+
          /* Decide what to do. */
          on = 1;
          l  = array_size(ws->slots);
@@ -1204,23 +1208,29 @@ void pilot_weaponSane( Pilot *p )
  * @brief Disables a given active outfit.
  *
  * @param p Pilot whose outfit we are disabling.
- * @return Weather the outfit was actualy disabled.
+ * @return Whether the outfit was actually disabled.
  */
-void pilot_outfitOff( Pilot *p, PilotOutfitSlot *o )
+int pilot_outfitOff( Pilot *p, PilotOutfitSlot *o )
 {
+   /* Must not be disabled or cooling down. */
+   if ((pilot_isDisabled(p)) || (pilot_isFlag(p, PILOT_COOLDOWN)))
+      return 0;
+
    if (outfit_isAfterburner( o->outfit )) /* Afterburners */
       pilot_afterburnOver( p );
    else {
       o->stimer = outfit_cooldown( o->outfit );
       o->state  = PILOT_OUTFIT_COOLDOWN;
    }
+
+   return 1;
 }
 
 /**
  * @brief Disables all active outfits for a pilot.
  *
  * @param p Pilot whose outfits we are disabling.
- * @return Weather any outfits were actualy disabled.
+ * @return Whether any outfits were actually disabled.
  */
 int pilot_outfitOffAll( Pilot *p )
 {
@@ -1236,10 +1246,8 @@ int pilot_outfitOffAll( Pilot *p )
          continue;
       if (!o->active)
          continue;
-      if (o->state == PILOT_OUTFIT_ON) {
-         pilot_outfitOff( p, o );
-         nchg++;
-      }
+      if (o->state == PILOT_OUTFIT_ON)
+         nchg += pilot_outfitOff( p, o );
    }
    return (nchg > 0);
 }
@@ -1255,7 +1263,8 @@ void pilot_afterburn (Pilot *p)
       return;
 
    if (pilot_isFlag(p, PILOT_HYP_PREP) || pilot_isFlag(p, PILOT_HYPERSPACE) ||
-         pilot_isFlag(p, PILOT_LANDING) || pilot_isFlag(p, PILOT_TAKEOFF))
+         pilot_isFlag(p, PILOT_LANDING) || pilot_isFlag(p, PILOT_TAKEOFF) ||
+         pilot_isDisabled(p) || pilot_isFlag(p, PILOT_COOLDOWN))
       return;
 
    /* Not under manual control. */
