@@ -206,6 +206,11 @@ void player_autonavAbort( const char *reason )
    if ((player.p==NULL) || ((player.p != NULL) && pilot_isFlag(player.p, PILOT_HYPERSPACE)))
       return;
 
+   /* Cooldown (handled later) may be script-initiated and we don't
+    * want to make it player-abortable while under manual control. */
+   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
+      return;
+
    if (player_isFlag(PLAYER_AUTONAV)) {
       if (reason != NULL)
          player_message("\erAutonav aborted: %s!", reason);
