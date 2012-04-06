@@ -2329,7 +2329,7 @@ int gui_handleEvent( SDL_Event *evt )
    int ret;
    int x, y;
 
-   if (player.p != NULL)
+   if (player.p == NULL)
       return 0;
    if ((evt->type == SDL_MOUSEBUTTONDOWN) &&
          (pilot_isFlag(player.p,PILOT_HYP_PREP) ||
