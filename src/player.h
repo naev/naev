@@ -10,7 +10,7 @@
 #include "pilot.h"
 
 
-/** Player flag enum. These are bits in a 32 bit integer, so keep the PLAYER_FLAGS_MAX <= 32. */
+/** Player flag enum. */
 enum {
    PLAYER_TURN_LEFT,    /**< player is turning left */
    PLAYER_TURN_RIGHT,   /**< player is turning right */
