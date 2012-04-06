@@ -10,12 +10,12 @@
 #include "pilot.h"
 
 
-/* flag enum */
+/** Player flag enum. These are bits in a 32 bit integer, so keep the PLAYER_FLAGS_MAX <= 32. */
 enum {
    PLAYER_TURN_LEFT,    /**< player is turning left */
    PLAYER_TURN_RIGHT,   /**< player is turning right */
    PLAYER_REVERSE,      /**< player is facing opposite of vel */
-   PLAYER_DESTROYED = 9, /**< player is destroyed */
+   PLAYER_DESTROYED,    /**< player is destroyed */
    PLAYER_FACE,         /**< player is facing target */
    PLAYER_PRIMARY,      /**< player is shooting primary weapon */
    PLAYER_PRIMARY_L,    /**< player shot primary weapon last frame. */
@@ -28,9 +28,9 @@ enum {
    PLAYER_DOUBLESPEED,  /**< player is running at double speed. */
    PLAYER_CINEMATICS_GUI, /**< Disable rendering the GUI when in cinematics mode. */
    PLAYER_CINEMATICS_2X, /**< Disables usage of the 2x button when in cinematics mode. */
-   PLAYER_HOOK_LAND,
-   PLAYER_HOOK_JUMPIN,
-   PLAYER_HOOK_HYPER,
+   PLAYER_HOOK_LAND,    /**< Hook hack to avoid running hooks in the middle of the pilot stack. */
+   PLAYER_HOOK_JUMPIN,  /**< Hook hack to avoid running hooks in the middle of the pilot stack. */
+   PLAYER_HOOK_HYPER,   /**< Hook hack to avoid runving hooks in the middle of the pilot stack. */
    PLAYER_TUTORIAL,     /**< Player is doing the tutorial. */
    PLAYER_MFLY,         /**< Player has enabled mouse flying. */
    PLAYER_NOSAVE,       /**< Player is not allowed to save. */
