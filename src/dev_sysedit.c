@@ -1553,11 +1553,8 @@ static void sysedit_btnRmService( unsigned int wid, char *unused )
    p->services ^= planet_getService(selected);
 
    /* If landability was removed, the rest must go, too. */
-   if (strcmp(selected,"Land")==0) {
-      for (i=0; i<8; i++)
-         if (1<<i != PLANET_SERVICE_LAND)
-            p->services &= (1<<i) & planet_hasService(p, PLANET_SERVICE_LAND);
-   }
+   if (strcmp(selected,"Land")==0)
+      p->services = 0;
 
    sysedit_genServicesList( wid );
 }
