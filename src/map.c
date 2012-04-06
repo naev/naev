@@ -497,6 +497,8 @@ static void map_update( unsigned int wid )
    buf[0] = '\0';
    p = 0;
    /*nsnprintf(buf, sizeof(buf), "%f\n", sys->prices[0]);*/ /*Hack to control prices. */
+   if (services & PLANET_SERVICE_MISSIONS)
+      p += nsnprintf( &buf[p], PATH_MAX-p, "Missions\n");
    if (services & PLANET_SERVICE_COMMODITY)
       p += nsnprintf( &buf[p], PATH_MAX-p, "Commodity\n");
    if (services & PLANET_SERVICE_OUTFITS)
