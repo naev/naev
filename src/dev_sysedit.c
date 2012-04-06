@@ -1443,7 +1443,7 @@ static void sysedit_planetDescClose( unsigned int wid, char *unused )
  */
 static void sysedit_genServicesList( unsigned int wid )
 {
-   int i, j, n;
+   int i, j, n, nservices;
    Planet *p;
    char **have, **lack;
    int x, y, w, h, hpos, lpos;
@@ -1466,23 +1466,22 @@ static void sysedit_genServicesList( unsigned int wid )
    h = SYSEDIT_EDIT_HEIGHT - y - 130;
 
    /* Get all missing services. */
-   n = 0;
-   for (i=0; i<8; i++)
-      if (!planet_hasService(p, 1<<i) && (1<<i != PLANET_SERVICE_INHABITED))
+   n = nservices = 0;
+   for (i=1; i<PLANET_SERVICES_MAX; i<<=1) {
+      if (!planet_hasService(p, i) && (i != PLANET_SERVICE_INHABITED))
          n++;
+      nservices++; /* Cheaply track all service types. */
+   }
 
    /* Get all the services the planet has. */
    j = 0;
-   if (planet_hasService(p, PLANET_SERVICE_LAND)) {
-      have = malloc( sizeof(char*) * 8 );
-      for (i=0; i<8; i++)
-         if (planet_hasService(p, 1<<i)  && (1<<i != PLANET_SERVICE_INHABITED))
-            have[j++] = strdup( planet_getServiceName( 1<<i ) );
-   }
-   else {
-      have = malloc( sizeof(char*) );
+   have = malloc( sizeof(char*) * MAX(nservices - n, 1) );
+   if (nservices == n)
       have[j++] = strdup("None");
-   }
+   else
+      for (i=1; i<PLANET_SERVICES_MAX; i<<=1)
+         if (planet_hasService(p, i)  && (i != PLANET_SERVICE_INHABITED))
+            have[j++] = strdup( planet_getServiceName( i ) );
 
    /* Add list. */
    window_addList( wid, x, y, w, h, "lstServicesHave", have, j, 0, NULL );
@@ -1490,16 +1489,13 @@ static void sysedit_genServicesList( unsigned int wid )
 
    /* Add list of services the planet lacks. */
    j = 0;
-   if (n) {
-      lack = malloc( sizeof(char*) * n );
-      for (i=0; i<8; i++)
-         if (!planet_hasService(p, 1<<i) && (1<<i != PLANET_SERVICE_INHABITED))
-            lack[j++] = strdup( planet_getServiceName(1<<i) );
-   }
-   else {
-      lack = malloc( sizeof(char*) );
+   lack = malloc( sizeof(char*) * MAX(1, n) );
+   if (!n)
       lack[j++] = strdup( "None" );
-   }
+   else
+      for (i=1; i<PLANET_SERVICES_MAX; i<<=1)
+         if (!planet_hasService(p, i) && (i != PLANET_SERVICE_INHABITED))
+            lack[j++] = strdup( planet_getServiceName(i) );
 
    /* Add list. */
    window_addList( wid, x, y, w, h, "lstServicesLacked", lack, j, 0, NULL );
@@ -1541,7 +1537,6 @@ static void sysedit_btnRmService( unsigned int wid, char *unused )
 {
    (void) unused;
    char *selected;
-   int i;
    Planet *p;
 
    selected = toolkit_getList( wid, "lstServicesHave" );
@@ -1553,11 +1548,8 @@ static void sysedit_btnRmService( unsigned int wid, char *unused )
    p->services ^= planet_getService(selected);
 
    /* If landability was removed, the rest must go, too. */
-   if (strcmp(selected,"Land")==0) {
-      for (i=0; i<8; i++)
-         if (1<<i != PLANET_SERVICE_LAND)
-            p->services &= (1<<i) & planet_hasService(p, PLANET_SERVICE_LAND);
-   }
+   if (strcmp(selected,"Land")==0)
+      p->services = 0;
 
    sysedit_genServicesList( wid );
 }
