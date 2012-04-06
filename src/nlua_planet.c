@@ -603,9 +603,10 @@ static int planetL_class(lua_State *L )
  */
 static int planetL_services( lua_State *L )
 {
-   int i, len;
+   int i;
+   size_t len;
    Planet *p;
-   char *name, *lower;
+   char *name, lower[256];
    p = luaL_validplanet(L,1);
 
    /* Return result in table */
@@ -616,8 +617,7 @@ static int planetL_services( lua_State *L )
       if (planet_hasService(p, i)) {
          name = planet_getServiceName(i);
          len = strlen(name) + 1;
-         lower = malloc( len * sizeof(char) );
-         nsnprintf( lower, len, "%c%s", tolower(name[0]), &name[1] );
+         nsnprintf( lower, MIN(len,sizeof(lower)), "%c%s", tolower(name[0]), &name[1] );
 
          lua_pushstring(L, name);
          lua_setfield(L, -2, lower );
