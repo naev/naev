@@ -1384,7 +1384,7 @@ static void sysedit_planetDesc( unsigned int wid, char *unused )
    window_addInput( wid, x, y, w, h, "txtDescription", 1024, 0,
          NULL );
    window_setInputFilter( wid, "txtDescription",
-         "[]{}/\\~<>@#$^&|_" );
+         "[]{}~<>@#$^|_" );
    y -= h + 10;
    /* Load current values. */
    window_setInput( wid, "txtDescription", desc );
@@ -1396,7 +1396,7 @@ static void sysedit_planetDesc( unsigned int wid, char *unused )
    window_addInput( wid, x, y, w, h, "txtBarDescription", 1024, 0,
          NULL );
    window_setInputFilter( wid, "txtBarDescription",
-         "[]{}/\\~<>@#$^&|_" );
+         "[]{}~<>@#$^|_" );
    /* Load current values. */
    window_setInput( wid, "txtBarDescription", bardesc );
 }
