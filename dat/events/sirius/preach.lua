@@ -402,6 +402,7 @@ function jumpCleanup()
 	for _,j in ipairs(followers) do
 		if j:exists() then
 			j:taskClear()
+			j:control()
 			j:hyperspace(target,true) --attack back as they move away?
 		end
 	end
