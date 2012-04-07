@@ -28,7 +28,7 @@ else
    text[1] = [[As you approach the group, the babbling ceases and the papers are quickly and jealously stashed away. One of the girls comes forward and introduces herself.
 	"Hi, I'm Mia. We need transportation, and you look as if you could need some dough. Interested?"
 	You reply that for a deal to be worked out, they better provide some detail.
-	"Listen," she says, "there's this Homebrewn Processing Box Masters on %s. Right over there, this system. I'm sure our box will get us the first prize. You take us there, you take us back, you get 20000."
+	"Listen," she says, "there's this Homebrew Processing Box Masters on %s. Right over there, this system. I'm sure our box will get us the first prize. You take us there, you take us back, you get 20000."
 	You just start wondering at the boldness of so young a lady as she already signals her impatience. "What now, you do it?"]]
 
 	-- you accept
