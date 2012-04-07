@@ -22,7 +22,7 @@ text = {}
 osdmsg = {}
 
 title[1] = "Help!"
-text[1] = [[	"Hello %s, thank you so much for answering our hail! We really could use your help." said a haggard sounding man's voice over the comm. The man continued, "It's about our children, my wife's and mine. We were out on a family vacation to Antica, you see, and we were attacked by a gang of pirates." A woman's voice pipes up, "And he thought he could out-fly them! My husband used to be a bit of a pilot, but that was back when we were still dating and he would fly all the way to the Apez system to see me. But that was before we had children..." The woman trailed off as you could hear her filling up with fresh sorrow. 
+text[1] = [[   "Hello %s, thank you so much for answering our hail! We really could use your help." said a haggard sounding man's voice over the comm. The man continued, "It's about our children, my wife's and mine. We were out on a family vacation to Antica, you see, and we were attacked by a gang of pirates." A woman's voice pipes up, "And he thought he could out-fly them! My husband used to be a bit of a pilot, but that was back when we were still dating and he would fly all the way to the Apez system to see me. But that was before we had children..." The woman trailed off as you could hear her filling up with fresh sorrow. 
 The man quickly speaks up again, "Anyways, the pirates disabled our ship and we thought we were goners, but when they boarded us, they took our three children and left us! I tried to fight them, but they had my children, with knives to their necks... So we got a tow back to Brooks, and now we need to find someone who will rescue our children. We've heard of your skills; will you please help us?]]
 
 title[2] = "Thank you!"

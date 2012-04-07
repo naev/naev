@@ -5,9 +5,9 @@ include "scripts/jumpdist.lua"
 
    MISSION: Waste Dump (dat/empire/waste_dump.lua)
    DESCRIPTION: Take toxic waste and dump it over an uninhabited planet. 
-		Mission conceived for the Shakar system.
-		It would begin at the mission computer on Zembla Shakar
-		To change the system, just change the mission.xml entry.
+      Mission conceived for the Shakar system.
+      It would begin at the mission computer on Zembla Shakar
+      To change the system, just change the mission.xml entry.
    NOTES: This mission requires balancing to make sure it works with all ship types, possibly normalisation of the fraction of the top speed required for mission success according to the top speed, turn, and acceleration of the player's ship.
 --]]
 

@@ -198,7 +198,7 @@ end
 
 -- Taunt function.
 function taunt()
-	armour, shield = captainTP:health()
+    armour, shield = captainTP:health()
     if shield >= 40 then
         captainTP:comm(shield30[rnd.rnd(1, #shield30)])
     elseif armour >= 31 then

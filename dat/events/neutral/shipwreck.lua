@@ -40,9 +40,9 @@ function create ()
         v:setFaction("Derelict")
         v:disable()
         v:rename("Shipwrecked " .. shipname)
-		-- Added extra visibility for big systems (A.)
-		v:setVisplayer( true )
-		v:setHilight( true )
+        -- Added extra visibility for big systems (A.)
+        v:setVisplayer( true )
+        v:setHilight( true )
     end
 
     hook.timer(3000, "broadcast")

@@ -4,7 +4,7 @@
 
    Author: bobbens
       minor edits by Infiltrator
-		- Mission fixed to suit big systems (Anatolis, 11/02/2011)
+      - Mission fixed to suit big systems (Anatolis, 11/02/2011)
 
    Rescue a VIP stranded on a disabled ship in a system while FLF and Dvaered
     are fighting.
@@ -100,8 +100,8 @@ function accept ()
    hook.enter("enter")
    hook.jumpout("jumpout")
 
-	-- Initiate mission variables (A.)
-	prevsys = system.cur()
+   -- Initiate mission variables (A.)
+   prevsys = system.cur()
 end
 
 
@@ -171,7 +171,7 @@ function enter ()
       p:setHostile()
       p:attack( player.pilot() )
       
-	  -- Now Dvaered
+      -- Now Dvaered
       -- They will jump together with you in the system at the jumppoint. (A.)
       p = pilot.add( "Dvaered Med Force", nil, prevsys )
       for k,v in ipairs(p) do
@@ -195,8 +195,8 @@ function enter ()
 end
 
 function jumpout ()
-	-- Storing the system the player jumped from. 
-	prevsys = system.cur()
+   -- Storing the system the player jumped from.
+   prevsys = system.cur()
 end
 
 
@@ -242,7 +242,7 @@ function death ()
 end
 
 function abort ()
-	-- If aborted you'll also leave the VIP to fate. (A.)
+   -- If aborted you'll also leave the VIP to fate. (A.)
    player.msg( msg[2] )
    misn.finish(false)
 end
