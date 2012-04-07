@@ -94,9 +94,9 @@ Section "Naev Engine" BinarySection
    File bin\naev.exe
    File ..\logos\logo.ico
    
-	IntOp $PortID $PortID & ${SF_SELECTED}
-	
-	${If} $PortID = 0 ;this means that the section 'portable' was not selected
+   IntOp $PortID $PortID & ${SF_SELECTED}
+   
+   ${If} $PortID = 0 ;this means that the section 'portable' was not selected
    ;Store installation folder
    WriteRegStr SHCTX "Software\Naev" "" $INSTDIR
 
@@ -129,14 +129,14 @@ Section "Naev Engine" BinarySection
 SectionEnd
 
 Section "Naev Data (Download)" DataSection
-	dwn:
+   dwn:
     AddSize 202159 ;Size (kB) of Naev ndata
     NSISdl::download "http://prdownloads.sourceforge.net/naev/naev-${VERSION}/ndata-${VERSION}" "ndata"
     Pop $R0 ;Get the return value
       StrCmp $R0 "success" skip
         MessageBox MB_YESNO|MB_ICONEXCLAMATION "Download failed due to: $R0$\n$\nPlease note that naev wont work until you download ndata and put it in the same folder as naev.exe.$\n$\nRetry?" IDNO skip
-		Goto dwn
-		skip:
+      Goto dwn
+      skip:
 SectionEnd
 
 Section /o "Do a portable install" Portable
@@ -153,12 +153,12 @@ Function .onInit
    ReadRegStr $INSTDIR SHCTX "Software\Naev" ""
    ${Unless} ${Errors}
       ;If we get here we're already installed
-	  MessageBox MB_YESNO|MB_ICONEXCLAMATION "Naev is already installed! Would you like to remove the old install first?$\n$\nNote: This is HIGHLY RECOMMENDED!" IDNO skip
-	  ExecWait '"$INSTDIR\Uninstall.exe"' $0
-	  ${Unless} $0 = 0 ;note: = not ==
-	     MessageBox MB_OK|MB_ICONSTOP "The uninstall failed!"
-	  ${EndUnless}
-	  skip:
+     MessageBox MB_YESNO|MB_ICONEXCLAMATION "Naev is already installed! Would you like to remove the old install first?$\n$\nNote: This is HIGHLY RECOMMENDED!" IDNO skip
+     ExecWait '"$INSTDIR\Uninstall.exe"' $0
+     ${Unless} $0 = 0 ;note: = not ==
+        MessageBox MB_OK|MB_ICONSTOP "The uninstall failed!"
+     ${EndUnless}
+     skip:
    ${EndUnless}
 
 FunctionEnd
@@ -166,7 +166,7 @@ FunctionEnd
 ;TODO: someone please email me with a better way to do this
 ;--Sudarshan S
 Function .onSelChange
-	SectionGetFlags ${Portable} $PortID
+   SectionGetFlags ${Portable} $PortID
 FunctionEnd
 
 ;--------------------------------
@@ -176,7 +176,7 @@ FunctionEnd
    !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
       !insertmacro MUI_DESCRIPTION_TEXT ${BinarySection} "Naev engine. Requires ndata to run."
       !insertmacro MUI_DESCRIPTION_TEXT ${DataSection} "Provides all content and media."
-	  !insertmacro MUI_DESCRIPTION_TEXT ${Portable} "Perform a portable install. No uninstaller or registry entries are created and you can run off a pen drive"
+     !insertmacro MUI_DESCRIPTION_TEXT ${Portable} "Perform a portable install. No uninstaller or registry entries are created and you can run off a pen drive"
    !insertmacro MUI_FUNCTION_DESCRIPTION_END
 
 ;--------------------------------
