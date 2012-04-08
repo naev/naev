@@ -46,7 +46,7 @@ else -- default english
     misn_title = "A Small Distraction"
     osd_desc[1] = "Fly to the %s system"
     osd_desc[2] = "Fire on the Hawk and flee from the fighter escorts until the Dvaered fleet warps in and destorys the Hawk"  
-    misn_desc = "You have been recruited to distract the Dvaered escort ships and lead them away from the warpgate and the capital ship Hawk.  The Dvaered task force will jump in and attemp to destory the Hawk before they escort ships can return.  The mission will fail if the Hawk survives or the Dvaered task force is eliminated."
+    misn_desc = "You have been recruited to distract the Dvaered fighter escorts and lead them away from the warpgate and the capital ship Hawk.  The Dvaered task force will jump in and attemp to destory the Hawk before they escort ships can return.  The mission will fail if the Hawk survives or the Dvaered task force is eliminated."
 
 end
 
