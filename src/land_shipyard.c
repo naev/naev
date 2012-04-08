@@ -24,6 +24,7 @@
 #include "toolkit.h"
 #include "tk/toolkit_priv.h"
 #include "dialogue.h"
+#include "map_find.h"
 
 
 /*
@@ -40,6 +41,7 @@ static void shipyard_trade( unsigned int wid, char* str );
 static void shipyard_rmouse( unsigned int wid, char* widget_name );
 static void shipyard_renderSlots( double bx, double by, double bw, double bh, void *data );
 static void shipyard_renderSlotsRow( double bx, double by, double bw, char *str, ShipOutfitSlot *s, int n );
+static void shipyard_find( unsigned int wid, char* str );
 
 
 /**
@@ -54,7 +56,7 @@ void shipyard_open( unsigned int wid )
    int nships;
    int w, h;
    int iw, ih;
-   int bw, bh;
+   int bw, bh, padding, off;
    int th;
    int y;
    const char *buf;
@@ -69,20 +71,26 @@ void shipyard_open( unsigned int wid )
    iw = 310 + (w-800);
    ih = h - 60;
 
+   /* Left padding + per-button padding * nbuttons */
+   padding = 40 + 20 * 4;
+
    /* Calculate button dimensions. */
-   bw = (w - iw - 100) / 3;
+   bw = (w - iw - padding) / 4;
    bh = LAND_BUTTON_HEIGHT;
 
    /* buttons */
-   window_addButtonKey( wid, -20, 20,
+   window_addButtonKey( wid, off = -20, 20,
          bw, bh, "btnCloseShipyard",
          "Take Off", land_buttonTakeoff, SDLK_t );
-   window_addButtonKey( wid, -40 - bw, 20,
+   window_addButtonKey( wid, off -= 20+bw, 20,
          bw, bh, "btnTradeShip",
          "Trade-In", shipyard_trade, SDLK_r );
-   window_addButtonKey( wid, -60 - bw*2, 20,
+   window_addButtonKey( wid, off -= 20+bw, 20,
          bw, bh, "btnBuyShip",
          "Buy", shipyard_buy, SDLK_b );
+   window_addButtonKey( wid, off -= 20+bw, 20,
+         bw, bh, "btnFindShips",
+         "Find Ships", shipyard_find, SDLK_f );
 
    /* target gfx */
    window_addRect( wid, -41, -50,
@@ -271,6 +279,19 @@ void shipyard_update( unsigned int wid, char* str )
       window_enableButton( wid, "btnTradeShip");
 }
 
+
+/**
+ * @brief Starts the map find with ship search selected.
+ *    @param wid Window buying outfit from.
+ *    @param str Unused.
+ */
+static void shipyard_find( unsigned int wid, char* str )
+{
+   (void) str;
+   map_inputFindType(wid, "ship");
+}
+
+
 /**
  * @brief Player right-clicks on a ship.
  *    @param wid Window player is buying ship from.
@@ -281,6 +302,7 @@ static void shipyard_rmouse( unsigned int wid, char* widget_name )
 {
     return shipyard_buy(wid, widget_name);
 }
+
 
 /**
  * @brief Player attempts to buy a ship.
