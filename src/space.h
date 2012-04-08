@@ -72,6 +72,7 @@ typedef enum PlanetClass_ {
 #define PLANET_SERVICE_COMMODITY    (1<<5) /**< Can trade commodities. */
 #define PLANET_SERVICE_OUTFITS      (1<<6) /**< Can trade outfits. */
 #define PLANET_SERVICE_SHIPYARD     (1<<7) /**< Can trade ships. */
+#define PLANET_SERVICES_MAX         (PLANET_SERVICE_SHIPYARD<<1)
 #define planet_hasService(p,s)      ((p)->services & s) /**< Checks if planet has service. */
 
 
@@ -334,6 +335,7 @@ void planets_render (void);
 /*
  * Presence stuff.
  */
+void system_presenceCleanupAll( void );
 void system_addPresence( StarSystem *sys, int faction, double amount, int range );
 double system_getPresence( StarSystem *sys, int faction );
 void system_addAllPlanetsPresence( StarSystem *sys );

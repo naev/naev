@@ -91,7 +91,6 @@ function accept()
     tk.msg(title[2], text[2]:format(planetname, planetname, sysname2, planetname))
     
     misn.accept()
-    var.push("baron_active", true)
     
     misn.setTitle(misn_title)
     misn.setReward(misn_reward)
@@ -161,7 +160,6 @@ function board()
     pinnacle:changeAI("flee")
     pinnacle:setHilight(false)
     pinnacle:setActiveBoard(false)
-    var.pop("baron_active")
     misn.finish(true)
 end
 
@@ -196,6 +194,5 @@ function takeoff()
 end
 
 function abort()
-    var.pop("baron_active")
     misn.finish(false)
 end

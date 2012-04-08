@@ -100,8 +100,6 @@
 
 #define CONF_FILE       "conf.lua" /**< Configuration file by default. */
 #define VERSION_FILE    "VERSION" /**< Version file by default. */
-#define FONT_SIZE       12 /**< Normal font size. */
-#define FONT_SIZE_SMALL 10 /**< Small font size. */
 
 #define NAEV_INIT_DELAY 3000 /**< Minimum amount of time_ms to wait with loading screen */
 
@@ -193,10 +191,6 @@ int main( int argc, char** argv )
    /* Set up debug signal handlers. */
    debug_sigInit();
 
-   /* Create the home directory if needed. */
-   if (nfile_dirMakeExist("%s", nfile_configPath()))
-      WARN("Unable to create config directory '%s'", nfile_configPath());
-
    /* Must be initialized before input_init is called. */
    if (SDL_InitSubSystem(SDL_INIT_VIDEO) < 0) {
       WARN("Unable to initialize SDL Video: %s", SDL_GetError());
@@ -220,6 +214,22 @@ int main( int argc, char** argv )
    /* Input must be initialized for config to work. */
    input_init();
 
+   conf_setDefaults(); /* set the default config values */
+
+   /*
+    * Attempts to load the data path from datapath.lua
+    * At this early point in the load process, the binary path
+    * is the only place likely to be checked.
+    */
+   conf_loadConfigPath();
+
+   /* Parse the user data path override first. */
+   conf_parseCLIPath( argc, argv );
+
+   /* Create the home directory if needed. */
+   if (nfile_dirMakeExist("%s", nfile_configPath()))
+      WARN("Unable to create config directory '%s'", nfile_configPath());
+
    /* Set the configuration. */
    nsnprintf(buf, PATH_MAX, "%s"CONF_FILE, nfile_configPath());
 
@@ -237,7 +247,6 @@ int main( int argc, char** argv )
    }
 #endif /* HAS_UNIX */
 
-   conf_setDefaults(); /* set the default config values */
    conf_loadConfig(buf); /* Lua to parse the configuration file */
    conf_parseCLI( argc, argv ); /* parse CLI arguments */
 
@@ -275,9 +284,9 @@ int main( int argc, char** argv )
       exit(EXIT_FAILURE);
    }
    window_caption();
-   gl_fontInit( NULL, NULL, FONT_SIZE ); /* initializes default font to size */
-   gl_fontInit( &gl_smallFont, NULL, FONT_SIZE_SMALL ); /* small font */
-   gl_fontInit( &gl_defFontMono, "dat/mono.ttf", FONT_SIZE );
+   gl_fontInit( NULL, NULL, conf.font_size_def ); /* initializes default font to size */
+   gl_fontInit( &gl_smallFont, NULL, conf.font_size_small ); /* small font */
+   gl_fontInit( &gl_defFontMono, "dat/mono.ttf", conf.font_size_def );
 
    /* Display the load screen. */
    loadscreen_load();
@@ -334,7 +343,7 @@ int main( int argc, char** argv )
    /* Data loading */
    load_all();
 
-   /* Generate the CVS. */
+   /* Generate the CSV. */
    if (conf.devcsv)
       dev_csv();
 
@@ -352,7 +361,7 @@ int main( int argc, char** argv )
 #if HAS_UNIX
    /* Tell the player to migrate their configuration files out of ~/.naev */
    /* TODO get rid of this cruft ASAP. */
-   if (oldconfig) {
+   if ((oldconfig) && (!conf.datapath)) {
       char path[PATH_MAX], *script, *home;
       uint32_t scriptsize;
       int ret;

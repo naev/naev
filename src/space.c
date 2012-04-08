@@ -52,10 +52,7 @@
 #include "hook.h"
 
 
-#define XML_PLANET_ID         "Assets" /**< Planet xml document tag. */
 #define XML_PLANET_TAG        "asset" /**< Individual planet xml tag. */
-
-#define XML_SYSTEM_ID         "Systems" /**< Systems xml document tag. */
 #define XML_SYSTEM_TAG        "ssys" /**< Individual systems xml tag. */
 
 #define PLANET_GFX_EXTERIOR_PATH_W 400 /**< Planet exterior graphic width. */
@@ -1317,7 +1314,6 @@ void space_init( const char* sysname )
    if (player.p != NULL) {
       pilot_lockClear( player.p );
       pilot_clearTimers( player.p ); /* Clear timers. */
-      pilot_heatReset( player.p ); /* Resets the player's heat. */
       player_clearEscorts(); /* Must clear escorts to keep deployment sane. */
    }
 
@@ -1784,9 +1780,13 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
             xmlr_ulong(cur, "population", planet->population );
             xmlr_float(cur, "hide", planet->hide );
 
-            if (xml_isNode(cur,"class"))
-               planet->class =
-                  planetclass_get(cur->children->content[0]);
+            if (xml_isNode(cur,"class")) {
+               tmp = xml_get(cur);
+               if (tmp != NULL)
+                  planet->class = planetclass_get( tmp[0] );
+               else
+                  WARN("Planet '%s' has empty class tag.", planet->name);
+            }
             else if (xml_isNode(cur, "services")) {
                flags |= FLAG_SERVICESSET;
                ccur = cur->children;
@@ -3246,6 +3246,18 @@ static void presenceCleanup( StarSystem *sys )
       sys->presence = realloc(sys->presence, sizeof(SystemPresence) * sys->npresence);
       i--;  /* We'll want to check the new value we just copied in. */
    }
+}
+
+
+/**
+ * @brief Sloppily sanitize invalid presences across all systems.
+ */
+void system_presenceCleanupAll( void )
+{
+   int i;
+
+   for (i=0; i<systems_nstack; i++)
+      presenceCleanup( &systems_stack[i] );
 }
 
 

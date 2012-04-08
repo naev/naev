@@ -27,6 +27,7 @@
 #include "log.h"
 #include "rng.h"
 #include "pilot.h"
+#include "pilot_heat.h"
 #include "player.h"
 #include "space.h"
 #include "ai.h"
@@ -68,12 +69,14 @@ static int pilotL_target( lua_State *L );
 static int pilotL_inrange( lua_State *L );
 static int pilotL_nav( lua_State *L );
 static int pilotL_weapset( lua_State *L );
+static int pilotL_weapsetHeat( lua_State *L );
 static int pilotL_actives( lua_State *L );
 static int pilotL_outfits( lua_State *L );
 static int pilotL_rename( lua_State *L );
 static int pilotL_position( lua_State *L );
 static int pilotL_velocity( lua_State *L );
 static int pilotL_dir( lua_State *L );
+static int pilotL_ew( lua_State *L );
 static int pilotL_temp( lua_State *L );
 static int pilotL_faction( lua_State *L );
 static int pilotL_setPosition( lua_State *L );
@@ -96,12 +99,15 @@ static int pilotL_flags( lua_State *L );
 static int pilotL_setActiveBoard( lua_State *L );
 static int pilotL_setNoDeath( lua_State *L );
 static int pilotL_disable( lua_State *L );
+static int pilotL_cooldown( lua_State *L );
+static int pilotL_setCooldown( lua_State *L );
 static int pilotL_setNoJump( lua_State *L );
 static int pilotL_setNoLand( lua_State *L );
 static int pilotL_addOutfit( lua_State *L );
 static int pilotL_rmOutfit( lua_State *L );
 static int pilotL_setFuel( lua_State *L );
 static int pilotL_changeAI( lua_State *L );
+static int pilotL_setTemp( lua_State *L );
 static int pilotL_setHealth( lua_State *L );
 static int pilotL_setEnergy( lua_State *L );
 static int pilotL_setNoboard( lua_State *L );
@@ -147,13 +153,16 @@ static const luaL_reg pilotL_methods[] = {
    { "inrange", pilotL_inrange },
    { "nav", pilotL_nav },
    { "weapset", pilotL_weapset },
+   { "weapsetHeat", pilotL_weapsetHeat },
    { "actives", pilotL_actives },
    { "outfits", pilotL_outfits },
    { "rename", pilotL_rename },
    { "pos", pilotL_position },
    { "vel", pilotL_velocity },
    { "dir", pilotL_dir },
+   { "ew", pilotL_ew },
    { "temp", pilotL_temp },
+   { "cooldown", pilotL_cooldown },
    { "faction", pilotL_faction },
    { "health", pilotL_getHealth },
    { "energy", pilotL_getEnergy },
@@ -167,6 +176,7 @@ static const luaL_reg pilotL_methods[] = {
    { "toggleSpawn", pilotL_toggleSpawn },
    /* Modify. */
    { "changeAI", pilotL_changeAI },
+   { "setTemp", pilotL_setTemp },
    { "setHealth", pilotL_setHealth },
    { "setEnergy", pilotL_setEnergy },
    { "setNoboard", pilotL_setNoboard },
@@ -186,6 +196,7 @@ static const luaL_reg pilotL_methods[] = {
    { "setActiveBoard", pilotL_setActiveBoard },
    { "setNoDeath", pilotL_setNoDeath },
    { "disable", pilotL_disable },
+   { "setCooldown", pilotL_setCooldown },
    { "setNoJump", pilotL_setNoJump },
    { "setNoLand", pilotL_setNoLand },
    /* Talk. */
@@ -235,12 +246,15 @@ static const luaL_reg pilotL_cond_methods[] = {
    { "inrange", pilotL_inrange },
    { "nav", pilotL_nav },
    { "weapset", pilotL_weapset },
+   { "weapsetHeat", pilotL_weapsetHeat },
    { "actives", pilotL_actives },
    { "outfits", pilotL_outfits },
    { "pos", pilotL_position },
    { "vel", pilotL_velocity },
    { "dir", pilotL_dir },
+   { "ew", pilotL_ew },
    { "temp", pilotL_temp },
+   { "cooldown", pilotL_cooldown },
    { "faction", pilotL_faction },
    { "health", pilotL_getHealth },
    { "energy", pilotL_getEnergy },
@@ -1086,22 +1100,22 @@ static int pilotL_nav( lua_State *L )
  *
  * The weapon sets have the following structure: <br />
  * <ul>
- *  <li> name: name of the set. <br />
- *  <li> cooldown: [0:1] value indicating if ready to shoot (1 is ready). <br />
- *  <li> ammo: Name of the ammo or nil if not applicable. <br />
- *  <li> left: Absolute ammo left or nil if not applicable. <br />
- *  <li> left_p: Relative ammo left [0:1] or nil if not applicable <br />
- *  <li> lockon: Lockon [0:1] for seeker weapons or nil if not applicable. <br />
- *  <li> in_arc: Whether or not the target is in targetting arc or nil if not applicable. <br />
- *  <li> level: Level of the weapon (1 is primary, 2 is secondary). <br />
- *  <li> temp: Temperature of the weapon. <br />
- *  <li> type: Type of the weapon. <br />
- *  <li> dtype: Damage type of the weapon. <br />
- *  <li> track: Tracking level of the weapon. <br />
+ *  <li> name: name of the set. </li>
+ *  <li> cooldown: [0:1] value indicating if ready to shoot (1 is ready). </li>
+ *  <li> ammo: Name of the ammo or nil if not applicable. </li>
+ *  <li> left: Absolute ammo left or nil if not applicable. </li>
+ *  <li> left_p: Relative ammo left [0:1] or nil if not applicable </li>
+ *  <li> lockon: Lockon [0:1] for seeker weapons or nil if not applicable. </li>
+ *  <li> in_arc: Whether or not the target is in targetting arc or nil if not applicable. </li>
+ *  <li> level: Level of the weapon (1 is primary, 2 is secondary). </li>
+ *  <li> temp: Temperature of the weapon. </li>
+ *  <li> type: Type of the weapon. </li>
+ *  <li> dtype: Damage type of the weapon. </li>
+ *  <li> track: Tracking level of the weapon. </li>
  * </ul>
  *
  * An example would be:
- * <pre><code>
+ * @code
  * ws_name, ws = p:weapset( true )
  * print( "Weapnset Name: " .. ws_name )
  * for _,w in ipairs(ws) do
@@ -1109,7 +1123,7 @@ static int pilotL_nav( lua_State *L )
  *    print( "Cooldown: " .. tostring(cooldown) )
  *    print( "Level: " .. tostring(level) )
  * end
- * </code></pre>
+ * @endcode
  *
  * @usage set_name, slots = p:weapset( true ) -- Gets info for all active weapons
  * @usage set_name, slots = p:weapset() -- Get info about the current set
@@ -1312,26 +1326,128 @@ static int pilotL_weapset( lua_State *L )
 
 
 /**
+ * @brief Gets heat information for a weapon set.
+ *
+ * @usage hmean, hpeak = p:weapsetHeat( true ) -- Gets info for all active weapons
+ * @usage hmean, hpeak = p:weapsetHeat() -- Get info about the current set
+ * @usage hmean, hpeak = p:weapsetHeat( 5 ) -- Get info about the set number 5
+ *
+ *    @luaparam p Pilot to get weapset weapon of.
+ *    @luaparam id ID of the set to get information of. Defaults to currently active set.
+ *    @luareturn The name of the set and a table with each slot's information.
+ * @luafunc weapsetHeat(p, id)
+ */
+static int pilotL_weapsetHeat( lua_State *L )
+{
+   Pilot *p;
+   PilotWeaponSetOutfit *po_list;
+   PilotOutfitSlot *slot;
+   Outfit *o;
+   int i, j, n;
+   int id, all, level, level_match;
+   double heat, heat_mean, heat_peak, nweapons;
+
+   /* Defaults. */
+   po_list = NULL;
+   heat_mean = 0.;
+   heat_peak = 0.;
+   nweapons = 0;
+
+   /* Parse parameters. */
+   all = 0;
+   p   = luaL_validpilot(L,1);
+   if (lua_gettop(L) > 1) {
+      if (lua_isnumber(L,2))
+         id = luaL_checkinteger(L,2) - 1;
+      else if (lua_isboolean(L,2)) {
+         all = lua_toboolean(L,2);
+         id  = p->active_set;
+      }
+      else
+         NLUA_INVALID_PARAMETER(L);
+   }
+   else
+      id = p->active_set;
+   id = CLAMP( 0, PILOT_WEAPON_SETS, id );
+
+   /* Push set. */
+   if (all)
+      n = p->noutfits;
+   else
+      po_list = pilot_weapSetList( p, id, &n );
+
+   for (j=0; j<=PILOT_WEAPSET_MAX_LEVELS; j++) {
+      /* Level to match. */
+      level_match = (j==PILOT_WEAPSET_MAX_LEVELS) ? -1 : j;
+
+       /* Iterate over weapons. */
+      for (i=0; i<n; i++) {
+         /* Get base look ups. */
+         if (all)
+            slot = p->outfits[i];
+         else
+            slot = po_list[i].slot;
+
+         o = slot->outfit;
+         if (o == NULL)
+            continue;
+
+         if (all)
+            level    = slot->level;
+         else
+            level    = po_list[i].level;
+
+         /* Must match level. */
+         if (level != level_match)
+            continue;
+
+         /* Must be weapon. */
+         if (outfit_isJammer(o) ||
+               outfit_isMod(o) ||
+               outfit_isAfterburner(o))
+            continue;
+
+         nweapons++;
+         heat = pilot_heatFirePercent(slot->heat_T);
+         heat_mean += heat;
+         if (heat > heat_peak)
+            heat_peak = heat;
+      }
+   }
+
+   /* Post-process. */
+   if (nweapons > 0)
+      heat_mean /= nweapons;
+
+   lua_pushnumber( L, heat_mean );
+   lua_pushnumber( L, heat_peak );
+
+   return 2;
+}
+
+
+/**
  * @brief Gets the active outfits and their states of the pilot.
  *
  * The active outfits have the following structure: <br />
  * <ul>
- *  <li> name: Name of the set. <br />
- *  <li> type: Type of the outfit. <br />
- *  <li> state: State of the outfit, which can be one of { "off", "warmup", "on", "cooldown" }. <br />
- *  <li> duration: Set only if state is "on". Indicates duration value (0 = just finished, 1 = just on). <br />
- *  <li> cooldown: Set only if state is "cooldown". Indicates cooldown value (0 = just ending, 1 = just started cooling down). <br />
+ *  <li> name: Name of the set. </li>
+ *  <li> type: Type of the outfit. </li>
+ *  <li> temp: The heat of the outfit's slot. A value between 0 and 1, where 1 is fully overheated. </li>
+ *  <li> state: State of the outfit, which can be one of { "off", "warmup", "on", "cooldown" }. </li>
+ *  <li> duration: Set only if state is "on". Indicates duration value (0 = just finished, 1 = just on). </li>
+ *  <li> cooldown: Set only if state is "cooldown". Indicates cooldown value (0 = just ending, 1 = just started cooling down). </li>
  * </ul>
  *
  * An example would be:
- * <pre><code>
+ * @code
  * act_outfits = p:actives()
  * print( "Weapnset Name: " .. ws_name )
  * for _,o in ipairs(act_outfits) do
  *    print( "Name: " .. o.name )
  *    print( "State: " .. o.state )
  * end
- * </code></pre>
+ * @endcode
  *
  * @usage act_outfits = p:actives() -- Gets the table of active outfits
  *
@@ -1378,6 +1494,13 @@ static int pilotL_actives( lua_State *L )
       /* Type. */
       lua_pushstring(L, "type");
       lua_pushstring(L, outfit_getType(o->outfit));
+      lua_rawset(L,-3);
+
+      /* Heat. */
+      lua_pushstring(L, "temp");
+      lua_pushnumber(L, 1 - pilot_heatEfficiencyMod(o->heat_T,
+                            o->outfit->u.afb.heat_base,
+                            o->outfit->u.afb.heat_cap));
       lua_rawset(L,-3);
 
       /* State and timer. */
@@ -1530,6 +1653,27 @@ static int pilotL_velocity( lua_State *L )
 }
 
 /**
+ * @brief Gets the pilot's evasion.
+ *
+ * @usage d = p:ew()
+ *
+ *    @luaparam p Pilot to get the evasion of.
+ *    @luareturn The pilot's current evasion value.
+ * @luafunc ew( p )
+ */
+static int pilotL_ew( lua_State *L )
+{
+   Pilot *p;
+
+   /* Parse parameters */
+   p     = luaL_validpilot(L,1);
+
+   /* Push direction. */
+   lua_pushnumber( L, p->ew_evasion );
+   return 1;
+}
+
+/**
  * @brief Gets the pilot's direction.
  *
  * @usage d = p:dir()
@@ -1557,6 +1701,7 @@ static int pilotL_dir( lua_State *L )
  *
  *    @luaparam p Pilot to get temperature of.
  *    @luareturn The pilot's current temperature (in kelvin).
+ * @luafunc temp( p )
  */
 static int pilotL_temp( lua_State *L )
 {
@@ -2133,6 +2278,61 @@ static int pilotL_disable( lua_State *L )
 
 
 /**
+ * @brief Gets a pilot's cooldown state.
+ *
+ * @usage p:cooldown()
+ *
+ *    @luaparam p Pilot to check the cooldown status of.
+ * @luafunc cooldown( p )
+ */
+static int pilotL_cooldown( lua_State *L )
+{
+   Pilot *p;
+
+   /* Get the pilot. */
+   p = luaL_validpilot(L,1);
+
+   /* Get the cooldown status. */
+   lua_pushboolean( L, pilot_isFlag(p, PILOT_COOLDOWN) );
+
+   return 1;
+}
+
+
+/**
+ * @brief Starts or stops a pilot's cooldown mode.
+ *
+ * @usage p:setCooldown( true )
+ *
+ *    @luaparam p Pilot to modify the cooldown status of.
+ *    @luaparam state Whether to enable or disable cooldown (defaults to true).
+ * @luafunc setCooldown( p, state )
+ */
+static int pilotL_setCooldown( lua_State *L )
+{
+   Pilot *p;
+   int state;
+
+   /* Get the pilot. */
+   p = luaL_validpilot(L,1);
+
+  /* Get state. */
+  if (lua_gettop(L) > 1)
+     state = lua_toboolean(L, 2);
+  else
+     state = 1;
+
+   /* Set status. */
+   if (state)
+      pilot_cooldown( p );
+   else
+      pilot_cooldownEnd(p, NULL);
+
+   return 0;
+}
+
+
+/**
  * @brief Enables or disables a pilot's hyperspace engine.
  *
  * @usage p:setNoJump( true )
@@ -2418,6 +2618,49 @@ static int pilotL_changeAI( lua_State *L )
 
 
 /**
+ * @brief Sets the temperature of a pilot.
+ *
+ * All temperatures are in Kelvins. Note that temperatures cannot go below the base temperature of the Naev galaxy, which is 250K.
+ *
+ * @usage p:setTemp( 300, true ) -- Sets ship temperature to 300K, as well as all outfits.
+ * @usage p:setTemp( 500, false ) -- Sets ship temperature to 500K, but leaves outfits alone.
+ * @usage p:setTemp( 0 ) -- Sets ship temperature to the base temperature, as well as all outfits.
+ *
+ *    @luaparam p Pilot to set health of.
+ *    @luaparam temp Value to set temperature to. Values below base temperature will be clamped.
+ *    @luaparam slots Whether slots should also be set to this temperature. Defaults to true.
+ * @luafunc setTemp( p, temp, slots )
+ */
+static int pilotL_setTemp( lua_State *L )
+{
+   Pilot *p;
+   int i, setOutfits = 1;
+   double kelvins;
+
+   /* Handle parameters. */
+   p  = luaL_validpilot(L,1);
+   kelvins  = luaL_checknumber(L, 2);
+   if (lua_gettop(L) < 3)
+      setOutfits = 1;
+   else
+      setOutfits = lua_toboolean(L, 3);
+
+   /* Temperature must not go below base temp. */
+   kelvins = MAX(kelvins, CONST_SPACE_STAR_TEMP);
+
+   /* Handle pilot ship. */
+   p->heat_T = kelvins;
+
+   /* Handle pilot outfits (maybe). */
+   if (setOutfits)
+      for (i = 0; i < p->noutfits; i++)
+         p->outfits[i]->heat_T = kelvins;
+
+   return 0;
+}
+
+
+/**
  * @brief Sets the health of a pilot.
  *
  * This recovers the pilot's disabled state, although he may become disabled afterwards.
@@ -2514,7 +2757,7 @@ static int pilotL_setNoboard( lua_State *L )
    else
       disable = lua_toboolean(L, 2);
 
-   /* See if should mark as boarded. */
+   /* See if should prevent boarding. */
    if (disable)
       pilot_setFlag(p, PILOT_NOBOARD);
    else
@@ -2548,7 +2791,7 @@ static int pilotL_setNodisable( lua_State *L )
    else
       disable = lua_toboolean(L, 2);
 
-   /* See if should mark as boarded. */
+   /* See if should prevent disabling. */
    if (disable)
       pilot_setFlag(p, PILOT_NODISABLE);
    else
@@ -2638,22 +2881,22 @@ lua_rawset( L, -3 )
  *
  * Some of the stats are:<br />
  * <ul>
- *  <li> cpu <br />
- *  <li> cpu_max <br />
- *  <li> fuel <br />
- *  <li> fuel_max <br />
- *  <li> mass <br />
- *  <li> thrust <br />
- *  <li> speed <br />
- *  <li> speed_max <br />
- *  <li> turn <br />
- *  <li> armour <br />
- *  <li> shield <br />
- *  <li> energy <br />
- *  <li> armour_regen <br />
- *  <li> shield_regen <br />
- *  <li> energy_regen <br />
- *  <li> jump_delay <br />
+ *  <li> cpu </li>
+ *  <li> cpu_max </li>
+ *  <li> fuel </li>
+ *  <li> fuel_max </li>
+ *  <li> mass </li>
+ *  <li> thrust </li>
+ *  <li> speed </li>
+ *  <li> speed_max </li>
+ *  <li> turn </li>
+ *  <li> armour </li>
+ *  <li> shield </li>
+ *  <li> energy </li>
+ *  <li> armour_regen </li>
+ *  <li> shield_regen </li>
+ *  <li> energy_regen </li>
+ *  <li> jump_delay </li>
  * </ul>
  *
  * @usage stats = p:stats() print(stats.armour)
@@ -2825,9 +3068,9 @@ static int pilotL_cargoRm( lua_State *L )
  *
  * The list has the following members:<br />
  * <ul>
- * <li><b>name:</b> name of the cargo.
- * <li><b>q:</b> quantity of the cargo.
- * <li><b>m:</b> true if cargo is for a mission.
+ * <li><b>name:</b> name of the cargo.</li>
+ * <li><b>q:</b> quantity of the cargo.</li>
+ * <li><b>m:</b> true if cargo is for a mission.</li>
  * </ul>
  *
  * @usage for _,v in ipairs(pilot.cargoList(player.pilot())) do print( string.format("%s: %d", v.name, v.q ) ) end
@@ -2930,8 +3173,8 @@ static const struct pL_flag pL_flags[] = {
  *
  * Valid flags are:<br/>
  * <ul>
- *  <li> hailing: pilot is hailing the player.<br/>
- *  <li> boardable: pilot is boardable while active.<br/>
+ *  <li> hailing: pilot is hailing the player.</li>
+ *  <li> boardable: pilot is boardable while active.</li>
  * </ul>
  *    @luaparam p Pilot to get flags of.
  *    @luareturn Table with flag names an index, boolean as value.
@@ -3030,7 +3273,6 @@ static int pilotL_control( lua_State *L )
    else
       enable = lua_toboolean(L, 2);
 
-   /* See if should mark as boarded. */
    if (enable) {
       pilot_setFlag(p, PILOT_MANUAL_CONTROL);
       if (pilot_isPlayer(p))
@@ -3038,10 +3280,12 @@ static int pilotL_control( lua_State *L )
    }
    else {
       pilot_rmFlag(p, PILOT_MANUAL_CONTROL);
-      if (pilot_isPlayer(p)) {
+      if (pilot_isPlayer(p))
          ai_destroy( p );
-         p->ai = NULL;
-      }
+      /* Note, we do not set p->ai to NULL, we just clear the tasks and memory.
+       * This is because the player always has an ai named "player", which is
+       * used for manual control among other things. Basically a pilot always
+       * has to have an AI even if it's the player for things to work. */
    }
 
    /* Clear task. */

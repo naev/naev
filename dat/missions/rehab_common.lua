@@ -73,7 +73,7 @@ function accept()
     osd_msg[1] = osd_msg1:format(-rep)
     misn.osdCreate(misn_title:format(fac:name()), osd_msg)
     
-    hook.standing("standing")
+    standhook = hook.standing("standing")
     
     excess = 5 -- The maximum amount of reputation the player can LOSE before the contract is void.
 end
@@ -104,7 +104,8 @@ function standing(hookfac, delta)
             excess = excess + delta
             if excess < 0 then
                 tk.msg(failuretitle:format(fac:name()), failuretext)
-                fac:modPlayerRaw(rep)
+                hook.rm(standhook)
+                misn.finish()
             end
         end
     end
@@ -112,6 +113,6 @@ end
 
 -- On abort, reset reputation.
 function abort()
+    -- This will trigger the standing hook and cause mission failure.
     fac:modPlayerRaw(rep)
-    misn.finish()
 end

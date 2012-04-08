@@ -99,6 +99,7 @@ static void print_usage( char **argv )
    LOG("   -s f, --svol f        sets the sound volume to f");
    LOG("   -G, --generate        regenerates the nebula (slow)");
    LOG("   -N, --nondata         do not use ndata and try to use laid out files");
+   LOG("   -d, --datapath        specifies a custom path for all user data (saves, screenshots, etc.)");
 #ifdef DEBUGGING
    LOG("   --devmode             enables dev mode perks like the editors");
    LOG("   --devcsv              generates csv output from the ndata for development purposes");
@@ -142,6 +143,12 @@ void conf_setDefaults (void)
    conf.zoom_near    = 1.;
    conf.zoom_speed   = 0.25;
    conf.zoom_stars   = 1.;
+
+   /* Font sizes. */
+   conf.font_size_console = 10;
+   conf.font_size_intro   = 18;
+   conf.font_size_def     = 12;
+   conf.font_size_small   = 10;
 
    /* Misc. */
    conf.nosave       = 0;
@@ -274,6 +281,24 @@ void conf_cleanup (void)
 
 
 /*
+ * @brief Parses the local conf that dictates where user data goes.
+ */
+void conf_loadConfigPath( void )
+{
+   const char *file = "datapath.lua";
+
+   if (!nfile_fileExists(file))
+      return;
+
+   lua_State *L = nlua_newState();
+   if (luaL_dofile(L, file) == 0)
+      conf_loadString("datapath",conf.datapath);
+
+   lua_close(L);
+}
+
+
+/*
  * parses the config file
  */
 int conf_loadConfig ( const char* file )
@@ -364,6 +389,12 @@ int conf_loadConfig ( const char* file )
       conf_loadFloat("zoom_near",conf.zoom_near);
       conf_loadFloat("zoom_speed",conf.zoom_speed);
       conf_loadFloat("zoom_stars",conf.zoom_stars);
+
+      /* Font size. */
+      conf_loadInt("font_size_console",conf.font_size_console);
+      conf_loadInt("font_size_intro",conf.font_size_intro);
+      conf_loadInt("font_size_def",conf.font_size_def);
+      conf_loadInt("font_size_small",conf.font_size_small);
 
       /* Misc. */
       conf_loadFloat("compression_velocity",conf.compression_velocity);
@@ -494,6 +525,32 @@ int conf_loadConfig ( const char* file )
 }
 
 
+void conf_parseCLIPath( int argc, char** argv )
+{
+   static struct option long_options[] = {
+      { "datapath", required_argument, 0, 'd' },
+      { NULL, 0, 0, 0 }
+   };
+
+   int option_index = 1;
+   int c = 0;
+
+   /* GNU giveth, and GNU taketh away.
+    * If we don't specify "-" as the first char, getopt will happily
+    * mangle the initial argument order, probably causing crashes when
+    * passing arguments that take values, such as -H and -W.
+    */
+   while ((c = getopt_long(argc, argv, "-:d:",
+         long_options, &option_index)) != -1) {
+      switch(c) {
+         case 'd':
+            conf.datapath = strdup(optarg);
+            break;
+      }
+   }
+}
+
+
 /*
  * parses the CLI options
  */
@@ -522,6 +579,7 @@ void conf_parseCLI( int argc, char** argv )
       { NULL, 0, 0, 0 } };
    int option_index = 1;
    int c = 0;
+   optind = 1;
    while ((c = getopt_long(argc, argv,
          "fF:Vd:j:J:W:H:MSm:s:GNhv",
          long_options, &option_index)) != -1) {
@@ -577,7 +635,7 @@ void conf_parseCLI( int argc, char** argv )
 
          case 'C':
             conf.devcsv = 1;
-            LOG("Will generate CVS ouptut.");
+            LOG("Will generate CSV ouptut.");
             break;
 #endif /* DEBUGGING */
 
@@ -933,6 +991,19 @@ int conf_saveConfig ( const char* file )
 
    conf_saveComment("Zooming modulation factor for the starry background");
    conf_saveFloat("zoom_stars",conf.zoom_stars);
+   conf_saveEmptyLine();
+
+   /* Fonts. */
+   conf_saveComment("Font sizes (in pixels) for NAEV");
+   conf_saveComment("Warning, setting to other than the default can cause visual glitches!");
+   conf_saveComment("Console default: 10");
+   conf_saveInt("font_size_console",conf.font_size_console);
+   conf_saveComment("Intro default: 18");
+   conf_saveInt("font_size_intro",conf.font_size_intro);
+   conf_saveComment("Default size: 12");
+   conf_saveInt("font_size_def",conf.font_size_def);
+   conf_saveComment("Small size: 10");
+   conf_saveInt("font_size_small",conf.font_size_small);
    conf_saveEmptyLine();
 
    /* Misc. */

@@ -85,7 +85,6 @@ static double uniedit_my      = 0.; /**< Y mouse position. */
 static void uniedit_deselect (void);
 static void uniedit_selectAdd( StarSystem *sys );
 static void uniedit_selectRm( StarSystem *sys );
-static void uniedit_selectText (void);
 /* System editing. */
 static void uniedit_editSys (void);
 static void uniedit_editSysClose( unsigned int wid, char *name );
@@ -323,9 +322,6 @@ static void uniedit_btnOpen( unsigned int wid_unused, char *unused )
       return;
 
    sysedit_open( uniedit_sys[0] );
-
-   /* Update sidebar text. */
-   uniedit_selectText();
 }
 
 
@@ -865,7 +861,7 @@ static void uniedit_selectRm( StarSystem *sys )
 /**
  * @brief Sets the selected system text.
  */
-static void uniedit_selectText (void)
+void uniedit_selectText (void)
 {
    int i, l;
    char buf[1024];
@@ -1128,6 +1124,9 @@ static void uniedit_editSysClose( unsigned int wid, char *name )
    sys->interference    = atof(window_getInput( wid, "inpInterference" ));
    sys->nebu_density    = atof(window_getInput( wid, "inpNebula" ));
    sys->nebu_volatility = atof(window_getInput( wid, "inpVolatility" ));
+
+   /* Reconstruct universe presences. */
+   space_reconstructPresences();
 
    /* Text might need changing. */
    uniedit_selectText();

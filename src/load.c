@@ -164,7 +164,7 @@ static int load_load( nsave_t *save, const char *path )
  */
 int load_refresh (void)
 {
-   char **files, buf[PATH_MAX];
+   char **files, buf[PATH_MAX], *tmp;
    int nfiles, i, len;
    int ok;
    nsave_t *ns;
@@ -191,6 +191,24 @@ int load_refresh (void)
    /* Make sure files are none. */
    if (files == NULL)
       return 0;
+
+   /* Make sure backups are after saves. */
+   for (i=0; i<nfiles-1; i++) {
+      len = strlen( files[i] );
+
+      /* Only interested in swapping backup with file after it if it's not backup. */
+      if ((len < 12) || strcmp( &files[i][len-10],".ns.backup" ))
+         continue;
+
+      /* Don't match. */
+      if (strncmp( files[i], files[i+1], (len-10) ))
+         continue;
+  
+      /* Swap around. */
+      tmp         = files[i];
+      files[i]    = files[i+1];
+      files[i+1]  = tmp;
+   }
 
    /* Allocate and parse. */
    ok = 0;

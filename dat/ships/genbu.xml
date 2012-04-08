@@ -8,6 +8,7 @@
  <price>5700000</price>
  <fabricator>Skull and Bones</fabricator>
  <description>This is one of the Four Winds flagships. It's tough.</description>
+ <mission/>
  <movement>
   <thrust>120</thrust>
   <turn>85</turn>

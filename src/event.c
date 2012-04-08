@@ -274,7 +274,7 @@ static int event_create( int dataid, unsigned int *id )
    nlua_loadEvt(L);
    nlua_loadHook(L);
    nlua_loadTk(L);
-   nlua_loadBackground(L,0);
+   nlua_loadBackground(L,1);
    nlua_loadCamera(L,0);
    nlua_loadTex(L,0);
    nlua_loadMusic(L,0);

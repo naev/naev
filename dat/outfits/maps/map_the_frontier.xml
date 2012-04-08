@@ -3,11 +3,10 @@
  <general>
   <mass>0</mass>
   <price>50000</price>
-  <description>This map contains the location of all eleven Frontier worlds, plus the Frontier Council.</description>
+  <description>This map contains the location of all twelve Frontier worlds, plus the Frontier Council.</description>
   <gfx_store>map</gfx_store>
  </general>
  <specific type="map">
-  <short_desc>A Star Map.</short_desc>
   <sys name="Theras">
    <asset>Cetrat</asset>
   </sys>
@@ -29,6 +28,7 @@
   </sys>
   <sys name="Shickhaw">
    <asset>Avoss</asset>
+   <asset>Tori</asset>
   </sys>
   <sys name="Andee">
    <asset>Varaati</asset>

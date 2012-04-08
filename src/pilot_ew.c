@@ -231,7 +231,7 @@ int pilot_inRangeJump( const Pilot *p, int i )
    if ((jp_isFlag(jp, JP_EXITONLY)) || ((jp_isFlag(jp, JP_HIDDEN)) && (!jp_isKnown(jp)) ))
       return 0;
 
-   sense = sensor_curRange * p->ew_jumpDetect;
+   sense = sensor_curRange * p->ew_jump_detect;
    hide = jp->hide;
 
    /* Get distance. */

@@ -1,13 +1,14 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <title>Reference</title>
     <link rel="stylesheet" href="<%=luadoc.doclet.html.link('luadoc.css', 'files/'..file_doc.name)%>" type="text/css" />
-	<!--meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/-->
 </head>
 
 <body>
+<%=luadoc.doclet.html.include("header.lp")%>
 <div id="container">
 
 <div id="product">
@@ -52,7 +53,7 @@
 <%for _, func_name in ipairs(file_doc.functions) do
   local func_data = file_doc.functions[func_name]%>
 	<tr>
-	<td class="name" nowrap><%=func_data.private and "local " or ""%><a href="#<%=func_name%>"><%=func_name%></a>&nbsp;(<%=table.concat(func_data.param, ", ")%>)</td>
+	<td class="name"><%=func_data.private and "local " or ""%><a href="#<%=func_name%>"><%=func_name%></a>&nbsp;(<%=table.concat(func_data.param, ", ")%>)</td>
 	<td class="summary"><%=func_data.summary%></td>
 	</tr>
 <%end%>
@@ -65,7 +66,7 @@
 <table class="table_list">
 <%for _, tab_name in ipairs(file_doc.tables) do%>
 	<tr>
-	<td class="name" nowrap><a href="#<%=tab_name%>"><%=tab_name%></a></td>
+	<td class="name"><a href="#<%=tab_name%>"><%=tab_name%></a></td>
 	<td class="summary"><%=file_doc.tables[tab_name].summary%></td>
 	</tr>
 <%end%>

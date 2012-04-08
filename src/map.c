@@ -265,9 +265,10 @@ void map_open (void)
    map_update( wid );
 
    /*
-    * Disable Autonav button if player lacks fuel.
+    * Disable Autonav button if player lacks fuel or if target is not a valid hyperspace target.
     */
-   if ((player.p->fuel < player.p->fuel_consumption) || pilot_isFlag( player.p, PILOT_NOJUMP))
+   if ((player.p->fuel < player.p->fuel_consumption) || pilot_isFlag( player.p, PILOT_NOJUMP)
+         || map_selected == cur_system - systems_stack || map_npath == 0)
       window_disableButton( wid, "btnAutonav" );
 }
 
@@ -499,12 +500,9 @@ static void map_update( unsigned int wid )
    buf[0] = '\0';
    p = 0;
    /*nsnprintf(buf, sizeof(buf), "%f\n", sys->prices[0]);*/ /*Hack to control prices. */
-   if (services & PLANET_SERVICE_COMMODITY)
-      p += nsnprintf( &buf[p], PATH_MAX-p, "Commodity\n");
-   if (services & PLANET_SERVICE_OUTFITS)
-      p += nsnprintf( &buf[p], PATH_MAX-p, "Outfits\n");
-   if (services & PLANET_SERVICE_SHIPYARD)
-      p += nsnprintf( &buf[p], PATH_MAX-p, "Shipyard\n");
+   for (i=PLANET_SERVICE_MISSIONS; i<=PLANET_SERVICE_SHIPYARD; i<<=1)
+      if (services & i)
+         p += nsnprintf( &buf[p], PATH_MAX-p, "%s\n", planet_getServiceName(i) );
    if (buf[0] == '\0')
       p += nsnprintf( &buf[p], PATH_MAX-p, "None");
    window_modifyText( wid, "txtServices", buf );
@@ -1269,8 +1267,10 @@ void map_select( StarSystem *sys, char shifted )
 
    wid = window_get(MAP_WDWNAME);
 
-   if (sys == NULL)
+   if (sys == NULL) {
       map_selectCur();
+      window_disableButton( wid, "btnAutonav" );
+   }
    else {
       map_selected = sys - systems_stack;
 
@@ -1295,6 +1295,7 @@ void map_select( StarSystem *sys, char shifted )
             player_hyperspacePreempt(0);
             player_targetHyperspaceSet( -1 );
             player_autonavAbortJump(NULL);
+            window_disableButton( wid, "btnAutonav" );
          }
          else  {
             /* see if it is a valid hyperspace target */
@@ -1305,11 +1306,13 @@ void map_select( StarSystem *sys, char shifted )
                   break;
                }
             }
+            window_enableButton( wid, "btnAutonav" );
          }
       }
       else { /* unreachable. */
          player_targetHyperspaceSet( -1 );
          player_autonavAbortJump(NULL);
+         window_disableButton( wid, "btnAutonav" );
       }
    }
 
@@ -1652,6 +1655,77 @@ int map_isMapped( const Outfit* map )
       if (!jp_isKnown(map->u.map->jumps[i]))
          return 0;
 
+   return 1;
+}
+
+
+/**
+ * @brief Maps a local map.
+ */
+int localmap_map( const Outfit *lmap )
+{
+   int i;
+   JumpPoint *jp;
+   Planet *p;
+   double detect, mod;
+
+   if (cur_system==NULL)
+      return 0;
+
+   mod = pow2( 200. / (cur_system->interference + 200.) );
+
+   detect = lmap->u.lmap.jump_detect;
+   for (i=0; i<cur_system->njumps; i++) {
+      jp = &cur_system->jumps[i];
+      if (jp_isFlag(jp, JP_EXITONLY) || jp_isFlag(jp, JP_HIDDEN))
+         continue;
+      if (mod*jp->hide <= detect)
+         jp_setFlag( jp, JP_KNOWN );
+   }
+
+   detect = lmap->u.lmap.asset_detect;
+   for (i=0; i<cur_system->nplanets; i++) {
+      p = cur_system->planets[i];
+      if (p->real != ASSET_REAL)
+         continue;
+      if (mod*p->hide <= detect)
+         planet_setKnown( p );
+   }
+   return 0;
+}
+
+/**
+ * @brief Checks to see if the local map is mapped.
+ */
+int localmap_isMapped( const Outfit *lmap )
+{
+   int i;
+   JumpPoint *jp;
+   Planet *p;
+   double detect, mod;
+
+   if (cur_system==NULL)
+      return 1;
+
+   mod = pow2( 200. / (cur_system->interference + 200.) );
+
+   detect = lmap->u.lmap.jump_detect;
+   for (i=0; i<cur_system->njumps; i++) {
+      jp = &cur_system->jumps[i];
+      if (jp_isFlag(jp, JP_EXITONLY) || jp_isFlag(jp, JP_HIDDEN))
+         continue;
+      if ((mod*jp->hide <= detect) && !jp_isKnown( jp ))
+         return 0;
+   }
+
+   detect = lmap->u.lmap.asset_detect;
+   for (i=0; i<cur_system->nplanets; i++) {
+      p = cur_system->planets[i];
+      if (p->real != ASSET_REAL)
+         continue;
+      if ((mod*p->hide <= detect) && !planet_isKnown( p ))
+         return 0;
+   }
    return 1;
 }
 

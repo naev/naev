@@ -55,6 +55,7 @@ typedef enum OutfitType_ {
    OUTFIT_TYPE_FIGHTER_BAY, /**< Contains other ships. */
    OUTFIT_TYPE_FIGHTER, /**< Ship contained in FIGHTER_BAY. */
    OUTFIT_TYPE_MAP, /**< Gives the player more knowledge about systems. */
+   OUTFIT_TYPE_LOCALMAP, /**< Gives the player more knowledge about the current system. */
    OUTFIT_TYPE_GUI, /**< GUI for the player. */
    OUTFIT_TYPE_LICENSE, /**< License that allows player to buy special stuff. */
    OUTFIT_TYPE_SENTINEL /**< indicates last type */
@@ -149,6 +150,7 @@ typedef struct OutfitBeamData_ {
    double cpu;       /**< CPU usage. */
    Damage dmg;       /**< Damage done. */
    double heatup;    /**< How long it should take for the weapon to heat up (approx). */
+   double heat;      /**< Heat per second. */
 
    /* Graphics and sound. */
    glTexture *gfx;   /**< Base texture. */
@@ -206,38 +208,38 @@ typedef struct OutfitAmmoData_ {
  */
 typedef struct OutfitModificationData_ {
    /* Active information (if applicable). */
-   int active; /**< Outfit is active. */
-   double duration; /**< Time the active outfit stays on (in seconds). */
-   double cooldown; /**< Time the active outfit stays off after it's duration (in seconds). */
+   int active;       /**< Outfit is active. */
+   double duration;  /**< Time the active outfit stays on (in seconds). */
+   double cooldown;  /**< Time the active outfit stays off after it's duration (in seconds). */
 
    /* Movement. */
-   double thrust; /**< Maximum thrust modifier. */
-   double thrust_rel; /**< Relative thrust modifier. */
-   double turn; /**< Maximum turn modifier. */
-   double turn_rel; /**< Relative turn modifier. */
-   double speed; /**< Maximum speed modifier. */
-   double speed_rel; /**< Relative speed modifier. */
+   double thrust;       /**< Maximum thrust modifier. */
+   double thrust_rel;   /**< Relative thrust modifier. */
+   double turn;         /**< Maximum turn modifier. */
+   double turn_rel;     /**< Relative turn modifier. */
+   double speed;        /**< Maximum speed modifier. */
+   double speed_rel;    /**< Relative speed modifier. */
 
    /* Health. */
-   double armour; /**< Maximum armour modifier. */
-   double armour_rel; /**< Relative to armour base modifier. */
+   double armour;       /**< Maximum armour modifier. */
+   double armour_rel;   /**< Relative to armour base modifier. */
    double armour_regen; /**< Armour regeneration modifier. */
-   double shield; /**< Maximum shield modifier. */
-   double shield_rel; /**< Relative to shield base modifier. */
+   double shield;       /**< Maximum shield modifier. */
+   double shield_rel;   /**< Relative to shield base modifier. */
    double shield_regen; /**< Shield regeneration modifier. */
-   double energy; /**< Maximum energy modifier. */
-   double energy_rel; /**< Relative to energy base modifier. */
+   double energy;       /**< Maximum energy modifier. */
+   double energy_rel;   /**< Relative to energy base modifier. */
    double energy_regen; /**< Energy regeneration modifier. */
-   double energy_loss; /**< Energy regeneration modifier. */
-   double cpu; /**< CPU modifier. */
-   double absorb;    /**< Absorption factor. */
+   double energy_loss;  /**< Energy regeneration modifier. */
+   double cpu;          /**< CPU modifier. */
+   double absorb;       /**< Absorption factor. */
 
    /* Misc. */
-   double cargo; /**< Cargo space modifier. */
-   double crew_rel; /**< Relative crew modification. */
-   double mass_rel; /**< Relative mass modification. */
-   double fuel; /**< Maximum fuel modifier. */
-   double hide_rel; /**< Relative hide modifier. */
+   double cargo;     /**< Cargo space modifier. */
+   double crew_rel;  /**< Relative crew modification. */
+   double mass_rel;  /**< Relative mass modification. */
+   double fuel;      /**< Maximum fuel modifier. */
+   double hide_rel;  /**< Relative hide modifier. */
 
    /* Stats. */
    ShipStatList *stats; /**< Stat list. */
@@ -247,17 +249,20 @@ typedef struct OutfitModificationData_ {
  * @brief Represents an afterburner.
  */
 typedef struct OutfitAfterburnerData_ {
-   /* Duration. */
-   double duration;  /**< Duration of afterburner. */
-   double cooldown;  /**< Cooldown of afterburner. */
    /* Internal properties. */
    double cpu;       /**< CPU usage. */
    double rumble;    /**< Percent of rumble */
-   int sound;        /**< Sound of the afterburner */
+   int sound_on;     /**< Sound of the afterburner turning on */
+   int sound;        /**< Sound of the afterburner being on */
+   int sound_off;    /**< Sound of the afterburner turning off */
    double thrust;    /**< Percent of thrust increase based on ship base. */
    double speed;     /**< Percent of speed to increase based on ship base. */
    double energy;    /**< Energy usage while active */
    double mass_limit; /**< Limit at which effectiveness starts to drop. */
+   double heatup;    /**< How long it takes for the afterburner to overheat. */
+   double heat;      /**< Heat per second. */
+   double heat_cap;  /**< Temperature at which the outfit overheats (K). */
+   double heat_base; /**< Temperature at which the outfit BEGINS to overheat(K). */
 } OutfitAfterburnerData;
 
 /**
@@ -282,6 +287,14 @@ typedef struct OutfitFighterData_ {
 /* Forward declaration */
 struct OutfitMapData_s;
 typedef struct OutfitMapData_s OutfitMapData_t;
+
+/**
+ * @brief Represents a local map.
+ */
+typedef struct OutfitLocalMapData_ {
+   double jump_detect;     /**< Ability to detect jumps. */
+   double asset_detect;    /**< Ability to detect assets. */
+} OutfitLocalMapData;
 
 /**
  * @brief Represents a jammer.
@@ -336,6 +349,7 @@ typedef struct Outfit_ {
       OutfitFighterBayData bay;   /**< FIGHTER_BAY */
       OutfitFighterData fig;      /**< FIGHTER */
       OutfitMapData_t *map;       /**< MAP */
+      OutfitLocalMapData lmap;    /**< LOCALMAP */
       OutfitGUIData gui;          /**< GUI */
    } u; /**< Holds the type-based outfit data. */
 } Outfit;
@@ -363,6 +377,7 @@ int outfit_isJammer( const Outfit* o );
 int outfit_isFighterBay( const Outfit* o );
 int outfit_isFighter( const Outfit* o );
 int outfit_isMap( const Outfit* o );
+int outfit_isLocalMap( const Outfit* o );
 int outfit_isGUI( const Outfit* o );
 int outfit_isLicense( const Outfit* o );
 int outfit_isSecondary( const Outfit* o );

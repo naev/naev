@@ -19,6 +19,10 @@
   <asset>Virtual Trader Local</asset>
  </assets>
  <jumps>
+  <jump target="Pontus">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
   <jump target="Rockbed">
    <autopos/>
    <hide>1.250000</hide>

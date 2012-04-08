@@ -33,6 +33,7 @@
 #include "toolkit.h"
 #include "nfile.h"
 #include "menu.h"
+#include "conf.h"
 
 
 #define BUTTON_WIDTH    50 /**< Button width. */
@@ -319,7 +320,8 @@ int cli_init (void)
    lua_setglobal( cli_state, "__cli" );
 
    /* Set the font. */
-   cli_font    = &gl_defFontMono;
+   cli_font    = malloc( sizeof(glFont) );
+   gl_fontInit( cli_font, "dat/mono.ttf", conf.font_size_console );
 
    /* Clear the buffer. */
    memset( cli_buffer, 0, sizeof(cli_buffer) );

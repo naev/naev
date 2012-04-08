@@ -27,17 +27,17 @@ typedef enum ShipStatsType_ {
     * D: Double type data. Should be continuous.
     */
    /* General. */
-   SS_TYPE_D_SPEED_MOD,       /**< Speed multiplier. */
-   SS_TYPE_D_TURN_MOD,        /**< Turn multiplier. */
-   SS_TYPE_D_THRUST_MOD,      /**< Acceleration multiplier. */
-   SS_TYPE_D_CARGO_MOD,       /**< Cargo space multiplier. */
-   SS_TYPE_D_ARMOUR_MOD,      /**< Armour multiplier. */
+   SS_TYPE_D_SPEED_MOD,        /**< Speed multiplier. */
+   SS_TYPE_D_TURN_MOD,         /**< Turn multiplier. */
+   SS_TYPE_D_THRUST_MOD,       /**< Acceleration multiplier. */
+   SS_TYPE_D_CARGO_MOD,        /**< Cargo space multiplier. */
+   SS_TYPE_D_ARMOUR_MOD,       /**< Armour multiplier. */
    SS_TYPE_D_ARMOUR_REGEN_MOD, /**< Armour regeneration multiplier. */
-   SS_TYPE_D_SHIELD_MOD,      /**< Shield multiplier. */
+   SS_TYPE_D_SHIELD_MOD,       /**< Shield multiplier. */
    SS_TYPE_D_SHIELD_REGEN_MOD, /**< Shield regeneration multiplier. */
-   SS_TYPE_D_ENERGY_MOD,      /**< Energy multiplier. */
+   SS_TYPE_D_ENERGY_MOD,       /**< Energy multiplier. */
    SS_TYPE_D_ENERGY_REGEN_MOD, /**< Energy regeneration multiplier. */
-   SS_TYPE_D_CPU_MOD,         /**< CPU multiplier. */
+   SS_TYPE_D_CPU_MOD,          /**< CPU multiplier. */
    
    /* Freighter-type. */
    SS_TYPE_D_JUMP_DELAY,      /**< Modulates the time that passes during a hyperspace jump. */
@@ -46,7 +46,7 @@ typedef enum ShipStatsType_ {
    /* Stealth. */
    SS_TYPE_D_EW_HIDE,         /**< Electronic warfare hide modifier. */
    SS_TYPE_D_EW_DETECT,       /**< Electronic warfare detection modifier. */
-   SS_TYPE_D_EW_JUMPDETECT,       /**< Electronic warfare jump point detection modifier. */
+   SS_TYPE_D_EW_JUMPDETECT,   /**< Electronic warfare jump point detection modifier. */
 
    /* Launchers. */
    SS_TYPE_D_LAUNCH_RATE,     /**< Launch rate for missiles. */  /* TODO */
@@ -166,7 +166,7 @@ typedef struct ShipStats_ {
    /* Stealth. */
    double ew_hide;         /**< Electronic warfare hide modifier. */
    double ew_detect;       /**< Electronic warfare detection modifier. */
-   double ew_jumpDetect;       /**< Electronic warfare jump point detection modifier. */
+   double ew_jump_detect;  /**< Electronic warfare jump point detection modifier. */
 
    /* Military type. */
    double heat_dissipation; /**< Global ship dissipation. */
@@ -193,14 +193,14 @@ typedef struct ShipStats_ {
    double tur_energy;      /**< Consumption rate of turrets. */
 
    /* Engine limits. */
-   double engine_limit;    /**< Engine limit. */
+   double engine_limit;     /**< Engine limit. */
    double fuel_consumption; /**< Fuel consumption by engine. */
 
    /* Misc. */
    double nebula_dmg_shield; /**< Shield nebula resistance. */
    double nebula_dmg_armour; /**< Armour nebula resistance. */
-   int misc_instant_jump; /**< Do not require brake or chargeup to jump. */
-   int misc_reverse_thrust; /**< Do not require brake or chargeup to jump. */
+   int misc_instant_jump;    /**< Do not require brake or chargeup to jump. */
+   int misc_reverse_thrust;  /**< Do not require brake or chargeup to jump. */
 } ShipStats;
 
 

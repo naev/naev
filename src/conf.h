@@ -17,6 +17,7 @@ typedef struct PlayerConf_s {
 
    /* ndata. */
    char *ndata; /**< Ndata path to use. */
+   char *datapath; /**< Path for user data (saves, screenshots, etc.). */
 
    /* OpenGL properties. */
    int fsaa; /**< Full Scene Anti-Aliasing to use. */
@@ -72,6 +73,12 @@ typedef struct PlayerConf_s {
    double zoom_speed; /**< Maximum zoom speed change. */
    double zoom_stars; /**< How much stars can zoom (modulates zoom_[mix|max]). */
 
+   /* Font sizes. */
+   int font_size_console; /**< Console monospaced font size. */
+   int font_size_intro;   /**< Intro text font size. */
+   int font_size_def;     /**< Default large font size. */
+   int font_size_small;   /**< Default small font size. */
+
    /* Misc. */
    double compression_velocity; /**< Velocity to compress to. */
    double compression_mult; /**< Maximum time multiplier. */
@@ -97,7 +104,9 @@ void conf_setDefaults (void);
 void conf_setGameplayDefaults (void);
 void conf_setAudioDefaults (void);
 void conf_setVideoDefaults (void);
+void conf_loadConfigPath( void );
 int conf_loadConfig( const char* file );
+void conf_parseCLIPath( int argc, char** argv );
 void conf_parseCLI( int argc, char** argv );
 void conf_cleanup (void);
 

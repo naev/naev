@@ -43,24 +43,24 @@ Time limit: %s]]
 
 Accept the mission anyway?]]
 
-	--=Landing=--
-	
-	cargo_land_title = "Delivery success!"
+   --=Landing=--
+   
+   cargo_land_title = "Delivery success!"
 
-	cargo_land_p1 = {}
-	cargo_land_p1[1] = "The crates of "  --<<-- paired with cargo_accept_p2, don't mix this up!!
-	cargo_land_p1[2] = "The drums of "
-	cargo_land_p1[3] = "The containers of "
+   cargo_land_p1 = {}
+   cargo_land_p1[1] = "The crates of "  --<<-- paired with cargo_accept_p2, don't mix this up!!
+   cargo_land_p1[2] = "The drums of "
+   cargo_land_p1[3] = "The containers of "
 
-	cargo_land_p2 = {}
-	cargo_land_p2[1] = " are carried out of your ship by a sullen group of workers. The job takes inordinately long to complete, and the leader pays you without speaking a word."
-	cargo_land_p2[2] = " are rushed out of your vessel by a team shortly after you land. Before you can even collect your thoughts, one of them presses a credit chip in your hand and departs."
-	cargo_land_p2[3] = " are unloaded by an exhausted-looking bunch of dockworkers. Still, they make fairly good time, delivering your pay upon completion of the job."
+   cargo_land_p2 = {}
+   cargo_land_p2[1] = " are carried out of your ship by a sullen group of workers. The job takes inordinately long to complete, and the leader pays you without speaking a word."
+   cargo_land_p2[2] = " are rushed out of your vessel by a team shortly after you land. Before you can even collect your thoughts, one of them presses a credit chip in your hand and departs."
+   cargo_land_p2[3] = " are unloaded by an exhausted-looking bunch of dockworkers. Still, they make fairly good time, delivering your pay upon completion of the job."
 
-	cargo_land_p3 = {}
-	cargo_land_p3[1] = " are carried out of your ship by a sullen group of workers. They are not happy that they have to work overtime because you were late. You are paid only %d of the %d you were promised."
-	cargo_land_p3[2] = " are rushed out of your vessel by a team shortly after you land. Your late arrival is stretching quite a few schedules! Your pay is only %d instead of %d because of that."
-	cargo_land_p3[3] = " are unloaded by an exhausted-looking bunch of dockworkers. You missed the deadline, so your reward is only %d instead of the %d you were hoping for."
+   cargo_land_p3 = {}
+   cargo_land_p3[1] = " are carried out of your ship by a sullen group of workers. They are not happy that they have to work overtime because you were late. You are paid only %d of the %d you were promised."
+   cargo_land_p3[2] = " are rushed out of your vessel by a team shortly after you land. Your late arrival is stretching quite a few schedules! Your pay is only %d instead of %d because of that."
+   cargo_land_p3[3] = " are unloaded by an exhausted-looking bunch of dockworkers. You missed the deadline, so your reward is only %d instead of the %d you were hoping for."
 
     accept_title = "Mission Accepted"
     

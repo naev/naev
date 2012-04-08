@@ -1,3 +1,14 @@
+;For testing the script
+;SetCompress Off
+
+;Version, Arch, Icon and URL
+!define VERSION "0.5.2"
+!define ARCH "32"
+!define URL "http://naev.org"
+!define MUI_ICON "..\logos\logo.ico"
+;!define MUI_UNICON "..\logos\logo.ico"
+
+;Miscellaneous defines
 !define MULTIUSER_EXECUTIONLEVEL Highest
 !define MULTIUSER_MUI
 !define MULTIUSER_INSTALLMODE_COMMANDLINE
@@ -6,21 +17,18 @@
 !define MULTIUSER_INSTALLMODE_INSTDIR_REGISTRY_KEY "Software\Naev"
 !define MULTIUSER_INSTALLMODE_INSTDIR_REGISTRY_VALUENAME ""
 !define MULTIUSER_INSTALLMODE_INSTDIR "Naev"
+
+;Needed include files
 !include "MultiUser.nsh"
 !include "MUI2.nsh"
 !include "nsDialogs.nsh"
 !include "LogicLib.nsh"
-!define MUI_ICON "..\logos\logo.ico"
-;!define MUI_UNICON "..\logos\logo.ico"
 ;--------------------------------
 ;General
 
 ;Name and file
-!define VERSION "0.5.1"
-!define URL "http://naev.org"
 Name "Naev"
-OutFile "naev-${VERSION}-win32.exe"
-;OutFile "naev-${VERSION}-win64.exe"
+OutFile "naev-${VERSION}-win${ARCH}.exe"
 
 ;--------------------------------
 ;Variables
@@ -75,6 +83,8 @@ Var StartMenuFolder
 ;--------------------------------
 ;Installer Sections
 
+Var PortID
+
 Section "Naev Engine" BinarySection
 
    SectionIn RO
@@ -83,7 +93,10 @@ Section "Naev Engine" BinarySection
    File bin\*.dll
    File bin\naev.exe
    File ..\logos\logo.ico
-
+   
+   IntOp $PortID $PortID & ${SF_SELECTED}
+   
+   ${If} $PortID = 0 ;this means that the section 'portable' was not selected
    ;Store installation folder
    WriteRegStr SHCTX "Software\Naev" "" $INSTDIR
 
@@ -109,17 +122,24 @@ Section "Naev Engine" BinarySection
       CreateShortCut "$DESKTOP\Naev.lnk" "$INSTDIR\naev.exe"
 
    !insertmacro MUI_STARTMENU_WRITE_END
+   ${Else}
+   File "datapath.lua"
+   ${EndUnless}
 
 SectionEnd
 
 Section "Naev Data (Download)" DataSection
-
+   dwn:
     AddSize 202159 ;Size (kB) of Naev ndata
-    NSISdl::download "http://voxel.dl.sourceforge.net/project/naev/naev-${VERSION}/ndata-${VERSION}" "ndata"
+    NSISdl::download "http://prdownloads.sourceforge.net/naev/naev-${VERSION}/ndata-${VERSION}" "ndata"
     Pop $R0 ;Get the return value
-      StrCmp $R0 "success" +2
-        MessageBox MB_OK "Download failed: $R0"
+      StrCmp $R0 "success" skip
+        MessageBox MB_YESNO|MB_ICONEXCLAMATION "Download failed due to: $R0$\n$\nPlease note that naev wont work until you download ndata and put it in the same folder as naev.exe.$\n$\nRetry?" IDNO skip
+      Goto dwn
+      skip:
+SectionEnd
 
+Section /o "Do a portable install" Portable
 SectionEnd
 
 ;--------------------------------
@@ -129,7 +149,24 @@ Function .onInit
 
    !insertmacro MULTIUSER_INIT
    !insertmacro MUI_LANGDLL_DISPLAY
+   
+   ReadRegStr $INSTDIR SHCTX "Software\Naev" ""
+   ${Unless} ${Errors}
+      ;If we get here we're already installed
+     MessageBox MB_YESNO|MB_ICONEXCLAMATION "Naev is already installed! Would you like to remove the old install first?$\n$\nNote: This is HIGHLY RECOMMENDED!" IDNO skip
+     ExecWait '"$INSTDIR\Uninstall.exe"' $0
+     ${Unless} $0 = 0 ;note: = not ==
+        MessageBox MB_OK|MB_ICONSTOP "The uninstall failed!"
+     ${EndUnless}
+     skip:
+   ${EndUnless}
 
+FunctionEnd
+
+;TODO: someone please email me with a better way to do this
+;--Sudarshan S
+Function .onSelChange
+   SectionGetFlags ${Portable} $PortID
 FunctionEnd
 
 ;--------------------------------
@@ -139,6 +176,7 @@ FunctionEnd
    !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
       !insertmacro MUI_DESCRIPTION_TEXT ${BinarySection} "Naev engine. Requires ndata to run."
       !insertmacro MUI_DESCRIPTION_TEXT ${DataSection} "Provides all content and media."
+     !insertmacro MUI_DESCRIPTION_TEXT ${Portable} "Perform a portable install. No uninstaller or registry entries are created and you can run off a pen drive"
    !insertmacro MUI_FUNCTION_DESCRIPTION_END
 
 ;--------------------------------
@@ -159,9 +197,10 @@ Section "Uninstall"
 
    Delete "$SMPROGRAMS\$StartMenuFolder\Naev.lnk"
    RMDir "$SMPROGRAMS\$StartMenuFolder"
+   Delete "$DESKTOP\Naev.lnk"
 
    DeleteRegKey SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\Naev"
-   DeleteRegKey /ifempty SHCTX "Software\Naev"
+   DeleteRegKey SHCTX "Software\Naev"
 
 SectionEnd
 

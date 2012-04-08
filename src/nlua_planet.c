@@ -29,6 +29,7 @@
 #include "land.h"
 #include "map.h"
 #include "nmath.h"
+#include "nstring.h"
 
 
 /* Planet metatable methods */
@@ -595,50 +596,32 @@ static int planetL_class(lua_State *L )
  *  - "shipyard"<br />
  *
  * @usage if p:services()["refuel"] then -- Planet has refuel service.
- * #usage if p:services()["shipyard"] then -- Planet has shipyard service.
+ * @usage if p:services()["shipyard"] then -- Planet has shipyard service.
  *    @luaparam p Planet to get the services of.
  *    @luareturn Table containing all the services.
  * @luafunc services( p )
  */
 static int planetL_services( lua_State *L )
 {
+   int i;
+   size_t len;
    Planet *p;
+   char *name, lower[256];
    p = luaL_validplanet(L,1);
 
    /* Return result in table */
    lua_newtable(L);
-      /* allows syntax foo = space.faction("foo"); if foo["bar"] then ... end */
-   if (planet_hasService(p, PLANET_SERVICE_LAND)) {
-      lua_pushboolean(L,1); /* value */
-      lua_setfield(L,-2,"land"); /* key */
-   }
-   if (planet_hasService(p, PLANET_SERVICE_INHABITED)) {
-      lua_pushboolean(L,1); /* value */
-      lua_setfield(L,-2,"inhabited"); /* key */
-   }
-   if (planet_hasService(p, PLANET_SERVICE_REFUEL)) {
-      lua_pushboolean(L,1); /* value */
-      lua_setfield(L,-2,"refuel"); /* key */
-   }
-   if (planet_hasService(p, PLANET_SERVICE_BAR)) {
-      lua_pushboolean(L,1); /* value */
-      lua_setfield(L,-2,"bar"); /* key */
-   }
-   if (planet_hasService(p, PLANET_SERVICE_MISSIONS)) {
-      lua_pushboolean(L,1); /* value */
-      lua_setfield(L,-2,"missions"); /* key */
-   }
-   if (planet_hasService(p, PLANET_SERVICE_COMMODITY)) {
-      lua_pushboolean(L,1); /* value */
-      lua_setfield(L,-2,"commodity"); /* key */
-   }
-   if (planet_hasService(p, PLANET_SERVICE_OUTFITS)) {
-      lua_pushboolean(L,1); /* value */
-      lua_setfield(L,-2,"outfits"); /* key */
-   }
-   if (planet_hasService(p, PLANET_SERVICE_SHIPYARD)) {
-      lua_pushboolean(L,1); /* value */
-      lua_setfield(L,-2,"shipyard"); /* key */
+
+   /* allows syntax like foo = planet.get("foo"); if foo["bar"] then ... end */
+   for (i=1; i<PLANET_SERVICES_MAX; i<<=1) {
+      if (planet_hasService(p, i)) {
+         name = planet_getServiceName(i);
+         len = strlen(name) + 1;
+         nsnprintf( lower, MIN(len,sizeof(lower)), "%c%s", tolower(name[0]), &name[1] );
+
+         lua_pushstring(L, name);
+         lua_setfield(L, -2, lower );
+      }
    }
    return 1;
 }
@@ -664,7 +647,7 @@ static int planetL_canland( lua_State *L )
 
 
 /**
- * @brief Lets player land on a planet no matter what.
+ * @brief Lets player land on a planet no matter what. The override lasts until the player jumps or lands.
  *
  * @usage p:landOverride( true ) -- Planet can land on p now.
  *    @luaparam p Planet to forcibly allow the player to land on.

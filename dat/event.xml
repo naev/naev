@@ -33,6 +33,10 @@
   <lua>tutorial/tutorial-combat2</lua>
   <trigger>none</trigger>
  </event>
+ <event name="Tutorial: Heat">
+  <lua>tutorial/tutorial-heat</lua>
+  <trigger>none</trigger>
+ </event>
  <event name="Tutorial: Activated Outfits">
   <lua>tutorial/tutorial-aoutfits</lua>
   <trigger>none</trigger>
@@ -68,13 +72,13 @@
   <lua>neutral/baron_flintley</lua>
   <trigger>land</trigger>
   <chance>100</chance>
-  <cond>var.peek("baron_active") == nil and planet.cur() == planet.get("Tau Station") and player.misnDone("Prince")</cond>
+  <cond>player.misnActive("Baron") == false and planet.cur() == planet.get("Tau Station") and player.misnDone("Prince")</cond>
  </event>
  <event name="Prowling baron">
   <lua>neutral/baron_prowl</lua>
   <trigger>enter</trigger>
   <chance>100</chance>
-  <cond>var.peek("baron_active") == nil and system.cur() == system.get("Ingot")</cond>
+  <cond>player.misnActive("Baron") == false and system.cur() == system.get("Ingot")</cond>
   <flags>
   </flags>
  </event>
@@ -82,7 +86,22 @@
   <lua>neutral/baron_comm</lua>
   <trigger>enter</trigger>
   <chance>4</chance>
-  <cond>player.misnDone("Baron") == false and var.peek("baron_active") == nil and system.cur():presence("friendly") &gt; 3.*system.cur():presence("hostile")</cond>
+  <cond>player.misnDone("Baron") == false and
+        player.misnActive("Baron") == false and
+        (
+           system.cur():faction() == faction.get("Empire") or
+           system.cur():faction() == faction.get("Dvaered") or
+           system.cur():faction() == faction.get("Sirius")
+        )
+  </cond>
+  <flags>
+  </flags>
+ </event>
+ <event name="Preacher">
+  <lua>sirius/preach</lua>
+  <trigger>enter</trigger>
+  <chance>10</chance>
+  <cond>system.cur():presence(faction.get("Sirius"))&gt;50 and (not player.evtActive ("Preacher")) and ( (var.peek("si_convert")==nil) or rnd.rnd(1,var.peek("si_convert")+1)==1)</cond>
   <flags>
   </flags>
  </event>

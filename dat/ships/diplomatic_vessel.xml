@@ -8,6 +8,7 @@
  <price>180000</price>
  <fabricator>Sirius Systems</fabricator>
  <description>This is a diplomatic vessel. Not to be used by the player or the normal AIs.</description>
+ <mission/>
  <movement>
   <thrust>100</thrust>
   <turn>135</turn>

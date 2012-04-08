@@ -39,5 +39,6 @@
   <ew_detect>25</ew_detect>
   <ew_hide>10</ew_hide>
   <misc_instant_jump>1</misc_instant_jump>
+  <ew_jump_detect>25</ew_jump_detect>
  </stats>
 </ship>
