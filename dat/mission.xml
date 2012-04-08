@@ -724,7 +724,7 @@
    <cond>faction.playerStanding("Dvaered") &gt; 5 and player.getRating() &gt; 100</cond>
    <chance>10</chance>
    <location>Bar</location>
-   <planet>Doranthex Prime</planet>
+   <planet>Doranthex Prime</planet> temp
   </avail>
  </mission>
 </Missions>
