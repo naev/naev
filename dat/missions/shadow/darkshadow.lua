@@ -15,7 +15,7 @@ else -- default english
 
     title[1] = "An urgent invitation"
     text[1] = [[    Suddenly, out of nowhere, one of the dormant panels in your cockpit springs to life. It shows you a face you've never seen before in your life, but you recognize the plain grey uniform as belonging to the Four Winds.
-    "Hello %s," the face says. "You must be wondering who I am and how it is I'm talking to you like this. Neither question is important. What is important is that captain Rebina has urgent need of your services. You are to meet her on the Seiryuu, which is currently in orbit around %s in the % system. Please don't ask any questions now. We expect to see you as quickly as you can make your way here."
+    "Hello %s," the face says. "You must be wondering who I am and how it is I'm talking to you like this. Neither question is important. What is important is that captain Rebina has urgent need of your services. You are to meet her on the Seiryuu, which is currently in orbit around %s in the %s system. Please don't ask any questions now. We expect to see you as quickly as you can make your way here."
     The screen goes dead again. You decide to make a note of this in your log. Perhaps it would be a good idea to visit the Seiryuu once more, if only to find out how they got a private line to your ship!]]
 
     title[2] = "Disclosure"
