@@ -114,9 +114,9 @@ void outfits_open( unsigned int wid )
 
    /* the descriptive text */
    window_addText( wid, 20 + iw + 20 + 128 + 20, -60,
-         320, 160, 0, "txtOutfitName", &gl_defFont, &cBlack, NULL );
+         280, 160, 0, "txtOutfitName", &gl_defFont, &cBlack, NULL );
    window_addText( wid, 20 + iw + 20 + 128 + 20, -60 - gl_defFont.h - 20,
-         320, 160, 0, "txtDescShort", &gl_smallFont, &cBlack, NULL );
+         280, 160, 0, "txtDescShort", &gl_smallFont, &cBlack, NULL );
    window_addText( wid, 20 + iw + 20, -60-128-10,
          60, 160, 0, "txtSDesc", &gl_smallFont, &cDConsole,
          "Owned:\n"
@@ -301,7 +301,7 @@ void outfits_update( unsigned int wid, char* str )
    window_modifyText( wid, "txtDDesc", buf );
    window_modifyText( wid, "txtOutfitName", outfit->name );
    window_modifyText( wid, "txtDescShort", outfit->desc_short );
-   th = MAX( 128, gl_printHeightRaw( &gl_smallFont, 320, outfit->desc_short ) );
+   th = MAX( 128, gl_printHeightRaw( &gl_smallFont, 280, outfit->desc_short ) );
    window_moveWidget( wid, "txtSDesc", 40+iw+20, -60-th-20 );
    window_moveWidget( wid, "txtDDesc", 40+iw+20+60, -60-th-20 );
    th += gl_printHeightRaw( &gl_smallFont, 250, buf );
