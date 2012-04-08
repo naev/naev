@@ -715,4 +715,16 @@
    <system>Goddard</system>
   </avail>
  </mission>
+ <mission name="A Small Diversion">
+  <lua>dvaered/dv_diversion</lua>
+  <flags>
+    <unique />
+  </flags>
+  <avail>
+   <cond>faction.playerStanding("Dvaered") &gt; 5 and player.getRating() &gt; 100</cond>
+   <chance>10</chance>
+   <location>Bar</location>
+   <planet>Doranthex Prime</planet>
+  </avail>
+ </mission>
 </Missions>
