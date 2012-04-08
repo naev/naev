@@ -126,8 +126,8 @@ function land ()
          osd_text[4] = osdlie
          tk.msg(title, misn_release)
       else
-	      tk.msg(title, misn_capture)
-	      cargoID = misn.cargoAdd( cargoname, 0 )
+         tk.msg(title, misn_capture)
+         cargoID = misn.cargoAdd( cargoname, 0 )
       end
 
       --Update the osd
