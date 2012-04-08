@@ -27,6 +27,7 @@
 #include "player_gui.h"
 #include "toolkit.h"
 #include "dialogue.h"
+#include "map_find.h"
 
 
 /* Modifier for buying and selling quantity. */
@@ -43,6 +44,7 @@ static void outfits_sell( unsigned int wid, char* str );
 static int outfits_getMod (void);
 static void outfits_renderMod( double bx, double by, double w, double h, void *data );
 static void outfits_rmouse( unsigned int wid, char* widget_name );
+static void outfits_find( unsigned int wid, char* str );
 
 
 /**
@@ -51,6 +53,8 @@ static void outfits_rmouse( unsigned int wid, char* widget_name );
 static void outfits_getSize( unsigned int wid, int *w, int *h,
       int *iw, int *ih, int *bw, int *bh )
 {
+   int padding;
+
    /* Get window dimensions. */
    window_dimWindow( wid, w, h );
 
@@ -60,9 +64,12 @@ static void outfits_getSize( unsigned int wid, int *w, int *h,
    if (ih != NULL)
       *ih = *h - 60;
 
+   /* Left padding + per-button padding * nbuttons */
+   padding = 40 + 20 * 4;
+
    /* Calculate button dimensions. */
    if (bw != NULL)
-      *bw = (*w - (iw!=NULL?*iw:0) - 100) / 3;
+      *bw = (*w - (iw!=NULL?*iw:0) - padding) / 4;
    if (bh != NULL)
       *bh = LAND_BUTTON_HEIGHT;
 }
@@ -81,7 +88,7 @@ void outfits_open( unsigned int wid )
    int noutfits;
    int w, h;
    int iw, ih;
-   int bw, bh;
+   int bw, bh, off;
    glColour *bg, blend;
    const glColour *c;
    char **slottype;
@@ -94,15 +101,18 @@ void outfits_open( unsigned int wid )
    window_setAccept( wid, outfits_buy );
 
    /* buttons */
-   window_addButtonKey( wid, -20, 20,
+   window_addButtonKey( wid, off = -20, 20,
          bw, bh, "btnCloseOutfits",
          "Take Off", land_buttonTakeoff, SDLK_t );
-   window_addButtonKey( wid, -40-bw, 20,
+   window_addButtonKey( wid, off -= 20+bw, 20,
          bw, bh, "btnSellOutfit",
          "Sell", outfits_sell, SDLK_s );
-   window_addButtonKey( wid, -60-bw*2, 20,
+   window_addButtonKey( wid, off -= 20+bw, 20,
          bw, bh, "btnBuyOutfit",
          "Buy", outfits_buy, SDLK_b );
+   window_addButtonKey( wid, off -= 20+bw, 20,
+         bw, bh, "btnFindOutfits",
+         "Find Outfits", outfits_find, SDLK_f );
 
    /* fancy 128x128 image */
    window_addRect( wid, 19 + iw + 20, -50, 128, 129, "rctImage", &cBlack, 0 );
@@ -328,6 +338,18 @@ void outfits_updateEquipmentOutfits( void )
       equipment_addAmmo();
       equipment_regenLists( ew, 1, 0 );
    }
+}
+
+
+/**
+ * @brief Starts the map find with outfit search selected.
+ *    @param wid Window buying outfit from.
+ *    @param str Unused.
+ */
+static void outfits_find( unsigned int wid, char* str )
+{
+   (void) str;
+   map_inputFindType(wid, "outfit");
 }
 
 

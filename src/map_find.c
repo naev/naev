@@ -160,6 +160,32 @@ static void map_find_check_update( unsigned int wid, char* str )
 
 
 /**
+ * @brief Starts the map search with a specific default type.
+ *
+ *    @param Parent window's ID.
+ *    @param Default type to search for.
+ */
+void map_inputFindType( unsigned int parent, char *type )
+{
+   map_find_systems = 0;
+   map_find_planets = 0;
+   map_find_outfits = 0;
+   map_find_ships   = 0;
+
+   if (strcmp(type,"system")==0)
+      map_find_systems = 1;
+   else if (strcmp(type,"planet")==0)
+      map_find_planets = 1;
+   else if (strcmp(type,"outfit")==0)
+      map_find_outfits = 1;
+   else if (strcmp(type,"ship")==0)
+      map_find_ships   = 1;
+
+   map_inputFind(parent, NULL);
+}
+
+
+/**
  * @brief Closes the find window.
  */
 static void map_findClose( unsigned int wid, char* str )
