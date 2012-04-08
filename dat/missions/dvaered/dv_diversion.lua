@@ -15,7 +15,9 @@ else -- default english
     failtext = {}
     osd_desc = {}
     comm_msg = {}
-    chatter = {}    
+    chatter = {}
+    passtitle = {}
+    passtext = {}
 
     title[1] = "The job offer"
     text[1] = [[    You walk up to the Dvaered official at his table. He mentions that he was looking for a pilot like yourself for a simple job.
@@ -41,6 +43,9 @@ else -- default english
     failtext[3] = "The Hawk landed back on Jorcan.  You have failed your mission."
     failtitle[4] = "The Hawk is safe."
     failtext[4] = "The Hawk was able to fend off the attackers and destory their flagship.  You have failed your mission."
+
+    passtitle[1] = "The Dvaered official sent you a message."
+    passtext[1] = [[   "Thanks for the distraction.  I sent you a picture of all the medals I was awarded.  Oh and I also depositied 80000 credits in your account."]]
 
     npc_desc = "A high ranking Dvaered officer. It looks like he might have a job offer for you."
     
@@ -268,7 +273,7 @@ function jump_fleet_cap_dead () -- mission failed
 end      
 
 function complete()
-    tk.msg("The Dvaered official sent you a message", "Thanks for the distraction.  I sent you a picture of all the medals I was awarded.  Oh and I also depositied 80000 credits in your account.")                   
+    tk.msg(passtitle[1], passtext[1])
     player.pay(80000)
     jump_fleet[6]:broadcast(chatter[13])
     misn.finish(true)
