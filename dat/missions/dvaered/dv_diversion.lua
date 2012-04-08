@@ -15,7 +15,8 @@ else -- default english
     failtext = {}
     osd_desc = {}
     comm_msg = {}
-    
+    chatter = {}    
+
     title[1] = "The job offer"
     text[1] = [[    You walk up to the Dvaered official at his table. He mentions that he was looking for a pilot like yourself for a simple job.
     "I am looking for a skilled pilot to do a simple job for me, interested?"]]
@@ -48,6 +49,20 @@ else -- default english
     osd_desc[2] = "Fire on the Hawk and flee from the fighter escorts until the Dvaered fleet warps in and destorys the Hawk"  
     misn_desc = "You have been recruited to distract the Dvaered fighter escorts and lead them away from the warpgate and the capital ship Hawk.  The Dvaered task force will jump in and attemp to destory the Hawk before they escort ships can return.  The mission will fail if the Hawk survives or the Dvaered task force is eliminated."
 
+    chatter[0] = "Alright men this will be Hawk's maiden jump.  Continue on course to the Doranthex jump gate."
+    chatter[1] = "How dare he attack me!  Get him!"
+    chatter[2] = "You heard Warlord Khan, blow him to pieces!"
+    chatter[3] = "He's attacking us, blow him to pieces!"
+    chatter[4] = "Arrgh"
+    chatter[5] = "Khan is dead!  Who will be our warlord now?"
+    chatter[6] = "Obviously the one who killed him, idiot!"
+    chatter[7] = "I will never serve a different warlord than Khan!  Die, you traitors!"
+    chatter[8] = "Jorlan will be ours!  Khan prepare to die!"
+    chatter[9] = "All units, defend Hawk, we are under attack!"
+    chatter[10] = "All units, defend Hawk, we are under attack!"
+    chatter[11] = "Return to Hawk, Khan is in danger!"
+    chatter[12] = "Pathetic, can't even take down an unarmed ship."
+    chatter[13] = "I declare myself the Warlord of Jorlan!"
 end
 
 function create()
@@ -63,7 +78,7 @@ end
 function accept()
     if tk.yesno(title[1], text[1]) then
         destsysname = "Torg"
-	destplanetname = "Jorcan"
+        destplanetname = "Jorcan"
         tk.msg(title[2], string.format(text[2], destsysname))
         tk.msg(title[2], string.format(text[3], destsysname))
         tk.msg(title[2], text[4])
@@ -76,7 +91,7 @@ function accept()
         marker = misn.markerAdd( system.get(destsysname), "low" )
         
         missionstarted = false
-	jump_fleet_entered = false
+        jump_fleet_entered = false
        
         hook.jumpout("jumpout")
         hook.enter("enter")
@@ -97,28 +112,28 @@ function enter()
         pilot.clear()
         misn.osdActive(2)
         missionstarted = true
-	j = jump.get("Torg","Doranthex")
-	v = j:pos()
-     	hawk = pilot.add("Dvaered Goddard", "dvaered_norun", v-vec2.new(1500,8000))[1]
-	hawk:rename("Hawk")
+        j = jump.get("Torg","Doranthex")
+        v = j:pos()
+        hawk = pilot.add("Dvaered Goddard", "dvaered_norun", v-vec2.new(1500,8000))[1]
+        hawk:rename("Hawk")
         hawk:setHilight(true)
         hawk:setVisible(true)
-	pilot.cargoAdd(hawk, "Food", 500)
-	hawk:control()
-	hawk:hyperspace(Doranthex)
-	hawk:broadcast("Alright men this will be Hawk's maiden jump.  Continue on course to the Doranthex jump gate.")
-	fleetdv = pilot.add("Dvaered Home Guard", "dvaered_norun", hawk:pos()-vec2.new(1000,1500))
-    	for i, j in ipairs(fleetdv) do
+        pilot.cargoAdd(hawk, "Food", 500)
+        hawk:control()
+        hawk:hyperspace(Doranthex)
+        hawk:broadcast(chatter[0])
+        fleetdv = pilot.add("Dvaered Home Guard", "dvaered_norun", hawk:pos()-vec2.new(1000,1500))
+        for i, j in ipairs(fleetdv) do
             j:changeAI("dvaered_norun")
             j:setHilight(true)
             j:setVisible(true)
-	    j:control()
-	    j:goto(v)
-	    hook.pilot(j, "attacked", "fleetdv_attacked")
-    	end
+            j:control()
+            j:goto(v)
+            hook.pilot(j, "attacked", "fleetdv_attacked")
+        end
         hook.pilot( hawk, "jump", "hawk_jump" )
         hook.pilot( hawk, "land", "hawk_land" )
-	hook.pilot( hawk, "attacked", "hawk_attacked")
+        hook.pilot( hawk, "attacked", "hawk_attacked")
         hook.pilot( hawk, "death", "hawk_dead" )
         hook.timer(80000, "spawn_fleet")
     elseif missionstarted then -- The player has jumped away from the mission theater, which instantly ends the mission.
@@ -151,44 +166,44 @@ end
 function hawk_attacked () -- chased
     if jump_fleet_entered then
     else
-	hawk:broadcast("How dare he attack me!  Get him!")
-    	hawk:control()
-    	hawk:hyperspace(Doranthex)
-    	fleetdv[1]:broadcast("You heard Warlord Khan, blow him to pieces!")
+        hawk:broadcast(chatter[1])
+        hawk:control()
+        hawk:hyperspace(Doranthex)
+        fleetdv[1]:broadcast(chatter[2])
     end
     for i, j in ipairs(fleetdv) do
-    	j:control()
-	if jump_fleet_entered then 
+        j:control()
+        if jump_fleet_entered then 
            j:changeAI("dvaered_norun")
            j:control(false)
-	else 
-	   j:attack(player.pilot())
-	end
+        else 
+           j:attack(player.pilot())
+        end
     end
 end
 function fleetdv_attacked () -- chased
     if jump_fleet_entered then
     else
-    	hawk:control()
-    	hawk:hyperspace(Doranthex)
-	fleetdv[1]:broadcast("He's attacking us, blow him to pieces!")
+        hawk:control()
+        hawk:hyperspace(Doranthex)
+        fleetdv[1]:broadcast(chatter[3])
     end
     for i, j in ipairs(fleetdv) do
-    	j:control()
-	if jump_fleet_entered then 
+        j:control()
+        if jump_fleet_entered then 
            j:changeAI("dvaered_norun")
            j:control(false)
-	else 
-	   j:attack(player.pilot())
-	end
+        else 
+           j:attack(player.pilot())
+        end
     end
 end
 
 function hawk_dead () -- mission accomplished
-    hawk:broadcast("Arrgh")
-    fleetdv[1]:broadcast("Khan is dead!  Who will be our warlord now?")
-    fleetdv[2]:broadcast("Obviously the one who killed him, idiot!")
-    fleetdv[3]:broadcast("I will never serve a different warlord than Khan!  Die, you traitors!")
+    hawk:broadcast(chatter[4])
+    fleetdv[1]:broadcast(chatter[5])
+    fleetdv[2]:broadcast(chatter[6])
+    fleetdv[3]:broadcast(chatter[7])
     fleetdv[1]:setFaction("FLF")
     fleetdv[2]:setFaction("FLF")
     fleetdv[4]:setFaction("FLF")
@@ -201,61 +216,61 @@ function hawk_dead () -- mission accomplished
     fleetdv[14]:setFaction("FLF")
     for i, j in ipairs(fleetdv) do
         j:control(false)
-	j:setVisible(false)
+        j:setVisible(false)
     end
     hook.timer(10000, "complete")
     for i, j in ipairs(jump_fleet) do
-    	j:land(planet.get("Jorcan"))
+        j:land(planet.get("Jorcan"))
     end
 end
 
 function spawn_fleet() -- spawn warlord killing fleet
     jump_fleet_entered = true
     jump_fleet = pilot.add("Dvaered Med Force", "dvaered_norun", system.get("Doranthex"))
-    jump_fleet[6]:broadcast("Jorlan will be ours!  Khan prepare to die!")
+    jump_fleet[6]:broadcast(chatter[8])
     for i, j in ipairs(jump_fleet) do
         j:changeAI("dvaered_norun")
-    	j:setFaction("FLF")
+        j:setFaction("FLF")
         j:setHilight(true)
-   	j:setVisible()
-    	j:control()
-    	j:attack(hawk)
+        j:setVisible()
+        j:control()
+        j:attack(hawk)
     end
     hook.pilot( jump_fleet[6], "death", "jump_fleet_cap_dead")
-    hawk:broadcast("All units, defend Hawk, we are under attack!")
-    fleetdv[1]:broadcast("Return to Hawk, Khan is in danger!")    
+    hawk:broadcast(chatter[9])
+    fleetdv[1]:broadcast(chatter[10])
     hawk:control()
     hawk:land(planet.get("Jorcan"))
     for i, j in ipairs(fleetdv) do
         j:changeAI("dvaered_norun")
         j:control(false)
-	j:setFriendly()
+        j:setFriendly()
     end
 end
 function jump_fleet_cap_dead () -- mission failed
-    jump_fleet[6]:broadcast("Arrgh")
-    hawk:broadcast("Pathetic, can't even take down an unarmed ship.")
+    jump_fleet[6]:broadcast(chatter[4])
+    hawk:broadcast(chatter[12])
     hawk:setNoDeath()
     tk.msg(failtitle[4], failtext[4])
     faction.get("Dvaered"):modPlayerSingle(-5)
     hawk:land(planet.get("Jorcan"))
     for i, j in ipairs(fleetdv) do
         j:control()
-	j:follow(hawk)
+        j:follow(hawk)
         j:setHilight(false)
     end
     for i, j in ipairs(jump_fleet) do
         j:control()
-	j:follow(hawk)
+        j:follow(hawk)
         j:setHilight(false)
     end
     abort()
-end	 
+end      
 
 function complete()
-    tk.msg("The Dvaered official sent you a message", "Thanks for the distraction.  I sent you a picture of all the medals I was awarded.  Oh and I also depositied 80000 credits in your account.")    	       
+    tk.msg("The Dvaered official sent you a message", "Thanks for the distraction.  I sent you a picture of all the medals I was awarded.  Oh and I also depositied 80000 credits in your account.")                   
     player.pay(80000)
-    jump_fleet[6]:broadcast("I declare myself the Warlord of Jorlan!")
+    jump_fleet[6]:broadcast(chatter[13])
     misn.finish(true)
 end
 
