@@ -194,13 +194,15 @@ function fleetdv_attacked () -- chased
         fleetdv[1]:broadcast(chatter[3])
     end
     for i, j in ipairs(fleetdv) do
-        j:control()
-        if jump_fleet_entered then 
-           j:changeAI("dvaered_norun")
-           j:control(false)
-        else 
-           j:attack(player.pilot())
-        end
+    	if j:exists() then
+           j:control()
+           if jump_fleet_entered then 
+               j:changeAI("dvaered_norun")
+               j:control(false)
+           else 
+               j:attack(player.pilot())
+           end
+       end
     end
 end
 
@@ -225,7 +227,9 @@ function hawk_dead () -- mission accomplished
     end
     hook.timer(10000, "complete")
     for i, j in ipairs(jump_fleet) do
-        j:land(planet.get("Jorcan"))
+        if j:exists() then
+            j:land(planet.get("Jorcan"))
+	end    
     end
 end
 
