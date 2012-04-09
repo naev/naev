@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Fleets>
  <fleet name="Independent Schroedinger">
   <ai>independent</ai>
@@ -402,6 +402,26 @@
    <pilot name="Dvaered Vigilance" ship="Dvaered Vigilance"></pilot>
    <pilot name="Dvaered Vigilance" ship="Dvaered Vigilance"></pilot>
    <pilot name="Dvaered Vigilance" ship="Dvaered Vigilance"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Dvaered Home Guard">
+  <ai>dvaered</ai>
+  <faction>Dvaered</faction>
+  <pilots>
+   <pilot name="Dvaered Vendetta" ship="Dvaered Vendetta"></pilot>
+   <pilot name="Dvaered Vendetta" ship="Dvaered Vendetta"></pilot>
+   <pilot name="Dvaered Vendetta" ship="Dvaered Vendetta"></pilot>
+   <pilot name="Dvaered Vendetta" ship="Dvaered Vendetta"></pilot>
+   <pilot name="Dvaered Vendetta" ship="Dvaered Vendetta"></pilot>
+   <pilot name="Dvaered Vendetta" ship="Dvaered Vendetta"></pilot>
+   <pilot name="Dvaered Vendetta" ship="Dvaered Vendetta"></pilot>
+   <pilot name="Dvaered Vendetta" ship="Dvaered Vendetta"></pilot>
+   <pilot name="Dvaered Vendetta" ship="Dvaered Vendetta"></pilot>
+   <pilot name="Dvaered Vendetta" ship="Dvaered Vendetta"></pilot>
+   <pilot name="Dvaered Vendetta" ship="Dvaered Vendetta"></pilot>
+   <pilot name="Dvaered Vendetta" ship="Dvaered Vendetta"></pilot>
+   <pilot name="Dvaered Vendetta" ship="Dvaered Vendetta"></pilot>
+   <pilot name="Dvaered Vendetta" ship="Dvaered Vendetta"></pilot>
   </pilots>
  </fleet>
  <fleet name="Empire Shark">
