@@ -189,7 +189,7 @@ function _atk_d_space_sup( target, dist )
       --course facing and accelerate to close
       --dir = ai.iface(target)
       dir = ai.aim(target)
-      if dir < 15 and dir > -15 and ai.relvel(target) > -10 then
+      if dir < 15 and dir > -15 then
          ai.accel()
       end
 
