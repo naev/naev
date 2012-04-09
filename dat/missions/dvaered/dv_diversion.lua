@@ -159,13 +159,13 @@ end
 function hawk_jump () -- Got away
     tk.msg(failtitle[2], failtext[2])
     faction.get("Dvaered"):modPlayerSingle(-5)
-    abort()
+    hook.timer(10000, abort)
 end
 
 function hawk_land () -- Got away
     tk.msg(failtitle[3], failtext[3])
     faction.get("Dvaered"):modPlayerSingle(-5)
-    abort()
+    hook.timer(10000, abort)
 end
 
 function hawk_attacked () -- chased
@@ -246,6 +246,7 @@ function spawn_fleet() -- spawn warlord killing fleet
         j:attack(hawk)
     end
     hook.pilot( jump_fleet[6], "death", "jump_fleet_cap_dead")
+    camera.set(hawk, true, 5000)
     hawk:broadcast(chatter[9])
     fleetdv[1]:broadcast(chatter[10])
     hawk:control()
@@ -273,16 +274,18 @@ function jump_fleet_cap_dead () -- mission failed
         j:follow(hawk)
         j:setHilight(false)
     end
-    abort()
+    hook.timer(10000, abort)
 end      
 
 function complete()
     tk.msg(passtitle[1], passtext[1])
+    camera.set(player.pilot(), true)
     player.pay(80000)
     jump_fleet[6]:broadcast(chatter[13])
     misn.finish(true)
 end
 
 function abort()
+    camera.set(player.pilot(), true)
     misn.finish(false)
 end
