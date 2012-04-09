@@ -78,7 +78,7 @@ else -- default english
 
    taunts = {}
    taunts[1] = "It is too late! The plan is being put into movement!"
-   taunts[2] = "You have no idea whom you're messing with!"
+   taunts[2] = "You have no idea who you're messing with!"
    taunts[3] = "My drones will make mincemeat of you!"
 end
 
