@@ -160,6 +160,32 @@ static void map_find_check_update( unsigned int wid, char* str )
 
 
 /**
+ * @brief Starts the map search with a specific default type.
+ *
+ *    @param Parent window's ID.
+ *    @param Default type to search for.
+ */
+void map_inputFindType( unsigned int parent, char *type )
+{
+   map_find_systems = 0;
+   map_find_planets = 0;
+   map_find_outfits = 0;
+   map_find_ships   = 0;
+
+   if (strcmp(type,"system")==0)
+      map_find_systems = 1;
+   else if (strcmp(type,"planet")==0)
+      map_find_planets = 1;
+   else if (strcmp(type,"outfit")==0)
+      map_find_outfits = 1;
+   else if (strcmp(type,"ship")==0)
+      map_find_ships   = 1;
+
+   map_inputFind(parent, NULL);
+}
+
+
+/**
  * @brief Closes the find window.
  */
 static void map_findClose( unsigned int wid, char* str )
@@ -211,7 +237,7 @@ static void map_findDisplayResult( unsigned int parent, map_find_t *found, int n
    map_found_ncur = n;
 
    /* Create window. */
-   wid = window_create( "Search Results", -1, -1, 500, 400 );
+   wid = window_create( "Search Results", -1, -1, 500, 452 );
    window_setParent( wid, parent );
    window_setAccept( wid, map_findDisplayMark );
    window_setCancel( wid, window_close );
@@ -622,14 +648,14 @@ static void map_addOutfitDetailFields(unsigned int wid, int x, int y, int w, int
 
    iw = x;
 
-   window_addRect( wid, 19 + iw + 20, -50, 128, 129, "rctImage", &cBlack, 0 );
-   window_addImage( wid, 20 + iw + 20, -50-128, 0, 0, "imgOutfit", NULL, 1 );
+   window_addRect( wid, -1 + iw, -50, 128, 129, "rctImage", &cBlack, 0 );
+   window_addImage( wid, iw, -50-128, 0, 0, "imgOutfit", NULL, 1 );
 
-   window_addText( wid, 20 + iw + 20 + 128 + 20, -60,
-         320, 160, 0, "txtOutfitName", &gl_defFont, &cBlack, NULL );
-   window_addText( wid, 20 + iw + 20 + 128 + 20, -60 - gl_defFont.h - 20,
-         320, 160, 0, "txtDescShort", &gl_smallFont, &cBlack, NULL );
-   window_addText( wid, 20 + iw + 20, -60-128-10,
+   window_addText( wid, iw + 128 + 20, -60,
+         280, 160, 0, "txtOutfitName", &gl_defFont, &cBlack, NULL );
+   window_addText( wid, iw + 128 + 20, -60 - gl_defFont.h - 20,
+         280, 160, 0, "txtDescShort", &gl_smallFont, &cBlack, NULL );
+   window_addText( wid, iw+20, -60-128-10,
          60, 160, 0, "txtSDesc", &gl_smallFont, &cDConsole,
          "Owned:\n"
          "\n"
@@ -640,9 +666,9 @@ static void map_addOutfitDetailFields(unsigned int wid, int x, int y, int w, int
          "Price:\n"
          "Money:\n"
          "License:\n" );
-   window_addText( wid, 20 + iw + 20 + 60, -60-128-10,
-         250, 160, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
-   window_addText( wid, 20 + iw + 20, -60-128-10-160,
+   window_addText( wid, iw+20, -60-128-10,
+         280, 160, 0, "txtDDesc", &gl_smallFont, &cBlack, NULL );
+   window_addText( wid, iw+20, -60-128-10-160,
          w-(iw+80), 180, 0, "txtDescription",
          &gl_smallFont, NULL, NULL );
 }
@@ -666,7 +692,9 @@ static void map_showOutfitDetail(unsigned int wid, char* wgtname, int x, int y, 
    double th;
    int iw;
 
-   iw = w - 400;
+   /* 452 px is the sum of the 128 px outfit image width, its 4 px border,
+    * a 20 px gap, 280 px for the outfit's name and a final 20 px gap. */
+   iw = w - 452;
 
    outfit = outfit_get( toolkit_getList(wid, wgtname) );
    window_modifyText( wid, "txtOutfitName", outfit->name );
@@ -695,11 +723,11 @@ static void map_showOutfitDetail(unsigned int wid, char* wgtname, int x, int y, 
    window_modifyText( wid, "txtDDesc", buf );
    window_modifyText( wid, "txtOutfitName", outfit->name );
    window_modifyText( wid, "txtDescShort", outfit->desc_short );
-   th = MAX( 128, gl_printHeightRaw( &gl_smallFont, 320, outfit->desc_short ) );
-   window_moveWidget( wid, "txtSDesc", 40+iw+20, -60-th-20 );
-   window_moveWidget( wid, "txtDDesc", 40+iw+20+60, -60-th-20 );
-   th += gl_printHeightRaw( &gl_smallFont, 250, buf );
-   window_moveWidget( wid, "txtDescription", 20+iw+40, -60-th-40 );
+   th = MAX( 128, gl_printHeightRaw( &gl_smallFont, 280, outfit->desc_short ) );
+   window_moveWidget( wid, "txtSDesc", iw+20, -60-th-20 );
+   window_moveWidget( wid, "txtDDesc", iw+20+60, -60-th-20 );
+   th += gl_printHeightRaw( &gl_smallFont, 280, buf );
+   window_moveWidget( wid, "txtDescription", iw+20, -60-th-40 );
 }
 
 /**
@@ -735,7 +763,7 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
       list  = malloc( len*sizeof(char*) );
       for (i=0; i<len; i++)
          list[i] = strdup( names[i] );
-      i = dialogue_listPanel( "Search Results", list, len, 400, 550,
+      i = dialogue_listPanel( "Search Results", list, len, 452, 550,
             map_addOutfitDetailFields, map_showOutfitDetail,
             "Search results for outfits matching '%s':", name );
       if (i < 0) {
