@@ -378,7 +378,7 @@ int outfit_canBuy( char *name )
    /* Map already mapped */
    if ((outfit_isMap(outfit) && map_isMapped(outfit)) ||
          (outfit_isLocalMap(outfit) && localmap_isMapped(outfit))) {
-      land_errDialogueBuild( "You already own this map." );
+      land_errDialogueBuild( "You already know of everything this map contains." );
       failure = 1;
       return 0;
    }
