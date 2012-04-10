@@ -26,7 +26,7 @@ else -- default english
     "Greetings," she says, nodding at you in curt greeting. "I am Corporal Benito. And you are %s, the guy who got Lt. Fletcher back here in one piece. Oh yes, I know all about that. It's not a secret, after all. Besides, you can't keep anything a secret for long on a station like this in the first place." Benito's expression becomes a little more severe. "I'm not here to exchange pleasantries, however. You probably noticed, but people here are a little uneasy about your presence. They don't know what to make of you, see. You helped us once, it is true, but that doesn't tell us much. We don't know you."
     ]]
     
-    introrepeat = [[    "Hello again, %s" Corporal Benito says to you. "I see you've come back, though I can't imagine you're here to meet up with any friends."
+    introrepeat = [[    "Hello again, %s," Corporal Benito says to you. "I see you've come back, though I can't imagine you're here to meet up with any friends."
     ]]
     
     title[1] = "A chance to prove yourself"
