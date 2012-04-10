@@ -1,5 +1,7 @@
 --[[
 -- This is a oneoff mission where you help a new Dvaered Warlord takeover a planet
+-- To Do: fix fighters being idle after mission ends
+-- Other editors, feel free to update dialog to make it more dvaered like.
 --]]
 
 -- localization stuff, translators would work here
