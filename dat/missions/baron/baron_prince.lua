@@ -15,7 +15,7 @@ else -- default english
     misn_desc = {}
     
     title[1] = "His Baronship remembers you"
-    text[1] = [[    As you approach the stranger, he extends his hand in greeting. He introduces himself as an associate of Baron Sauterfeldt, the man you helped "acquire" a holopainting not too long ago.
+    text[1] = [[    As you approach the stranger, he extends his hand in greeting. He introduces himself as an associate of Baron Sauterfeldt, the man you helped to "acquire" a holopainting not too long ago.
     "The Baron was quite pleased with your performance in that matter," he confides. "He has asked me to try to find you again for another job not unlike the last one. The Baron is a collector, you see, and his hunger for new possessions is a hard one to satiate." He makes a face. "Of course, his methods aren't always completely respectable, as you've experienced for yourself. But I assure you that the Baron is not a bad man, he is simply very enthusiastic."
     You decide to keep your opinion of the fat aristocrat to yourself. Instead you inquire as to what the man wants from you this time. "To tell the truth, I don't actually know," the man says. "The Baron wants you to meet him so he can brief you in person. You will find his ship in the %s system. Shall I inform his lordship that you will be paying him a visit?"]]
 
@@ -46,7 +46,7 @@ else -- default english
     
     title[7] = "Flintley, at your service"
     
-    text[8] = [[    You approach the nervous looking man and inquire if he is Flintley, the historian in Baron Sauterfeldt's employ.
+    text[8] = [[    You approach the nervous-looking man and inquire if he is Flintley, the historian in Baron Sauterfeldt's employ.
     "Oh, yes. Yes! That is me! I'm Flintley," the man responds. "And you must be %s. I know what's going on, the people from the Pinnacle have informed me. Oh, but where are my manners. Let me properly introduce myself. My name is Flintley, and I'm an archaeologist and historian. The best in the galaxy, some might say, ha-ha!" He gives you a look. "Well, maybe not. But I'm quite knowledgeable about the history of the galaxy. Too bad not too many people seem interested in that these days. The only work I can really get is the occasional appraisal, like I'm doing now for his lordship. I wish I didn't have to take jobs like this, but there you have it."
     Flintley sighs. "Well, that's that. Come to me with any artefacts you manage to procure, and I'll analyze them to the best of my ability."]]
     
