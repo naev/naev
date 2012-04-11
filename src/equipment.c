@@ -31,6 +31,7 @@
 #include "land_outfits.h"
 #include "info.h"
 #include "shipstats.h"
+#include "map.h"
 #include "tk/toolkit_priv.h" /* Yes, I'm a bad person, abstractions be damned! */
 
 
@@ -1802,13 +1803,19 @@ static credits_t equipment_transportPrice( char* shipname )
    char *loc;
    Pilot* ship;
    credits_t price;
+   StarSystem **s;
+   int jumps;
 
    ship = player_getShip(shipname);
    loc = player_getLoc(shipname);
    if (strcmp(loc,land_planet->name)==0) /* already here */
       return 0;
 
-   price = (credits_t)ceil(sqrt(ship->ship->mass)*5000.);
+   s = map_getJumpPath( &jumps, cur_system->name, planet_getSystem(loc), 1, NULL );
+   free(s);
+
+   /* Modest base price scales fairly rapidly with distance. */
+   price = (credits_t)(ceil(sqrt(ship->ship->mass) * pow(jumps + 1, .6) * 10.) * 100.);
 
    return price;
 }

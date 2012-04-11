@@ -435,7 +435,7 @@ static int jumpL_isKnown( lua_State *L )
  *
  * @usage j:setKnown( false ) -- Makes jump unknown.
  *    @luaparam j Jump to set known.
- *    @luaparam b Whether or not to set as known (defaults to false).
+ *    @luaparam b Whether or not to set as known (defaults to true).
  * @luafunc setKnown( j, b )
  */
 static int jumpL_setKnown( lua_State *L )
@@ -444,7 +444,12 @@ static int jumpL_setKnown( lua_State *L )
    JumpPoint *jp;
 
    jp = luaL_validjumpSystem(L, 1, &offset, NULL);
-   b  = lua_toboolean(L, 1 + offset);
+
+   /* True is boolean isn't supplied. */
+   if (lua_gettop(L) > offset )
+      b  = lua_toboolean(L, 1 + offset);
+   else
+      b = 1;
 
    if (b)
       jp_setFlag( jp, JP_KNOWN );
