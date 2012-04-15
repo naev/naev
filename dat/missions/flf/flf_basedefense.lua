@@ -1,6 +1,6 @@
 --[[
 -- This is the flf version of dv_antiflf03.  Instead of attacking the flf base, you will defend it.  Reuses code from dv_antiflf03
--- To Do (anyone): make FLF return to base after victory, improve dialog
+-- To Do (anyone): improve dialog, add flf dialog
 --]]
 
 include "scripts/fleethelper.lua" 
@@ -109,7 +109,7 @@ function takeoff()
         fighterpos = {}
         basepos = vec2.new(-8700, -3000) -- NOTE: Should be the same coordinates as in asset.xml!
         DVbombers = 5 -- Amount of initial Dvaered bombers
-        DVreinforcements = 20 -- Amount of reinforcement Dvaered bombers
+        DVreinforcements = 30 -- Amount of reinforcement Dvaered bombers
         deathsFLF = 0
         time = 0
         stage = 0
@@ -303,6 +303,7 @@ function spawnFLFfighters()
     for i, j in ipairs(wingFLF) do
         fleetFLF[#fleetFLF + 1] = j
         setFLF( j )
+        j:setVisible(true)
         j:attack(targets[rnd.rnd(#targets - 1) + 1])
     end
 end
@@ -316,6 +317,7 @@ function spawnFLFbombers()
         setFLF( j )
         hook.pilot(j, "death", "deathFLF")
         j:rename("FLF Ancestor")
+        j:setVisible(true)
         j:attack(targets[rnd.rnd(#targets - 1) + 1])
     end
 end
@@ -328,6 +330,7 @@ function spawnFLFdestroyers()
         fleetFLF[#fleetFLF + 1] = j
         hook.pilot(j, "death", "deathFLF")
         setFLF( j )
+        j:setVisible(true)
         j:attack(targets[rnd.rnd(#targets - 1) + 1])
     end
 end
@@ -563,6 +566,13 @@ function deathObstinate()
         hook.rm(temp4)
     end
     hook.rm(controller)
+    for i, j in ipairs(fleetFLF) do
+        if j:exists() then
+            j:control()
+            j:land(planet.get(destplanet))
+        end
+    end
+    base:rm()
 end
 
 function attackedObstinate()

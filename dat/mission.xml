@@ -454,10 +454,10 @@
    <unique />
   </flags>
   <avail>
-   <chance>100</chance>
+   <chance>10</chance>
    <location>Bar</location>
    <done>Disrupt the Dvaered Patrols</done>
-   <cond>planet.cur():faction() == faction.get("Frontier")</cond>
+   <cond>planet.cur():faction() == faction.get("Frontier") and player.getRating() &gt; 100</cond>
   </avail>
  </mission>
  <mission name="Take the Dvaered crew home">
