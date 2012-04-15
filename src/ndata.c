@@ -510,7 +510,7 @@ const char* ndata_getDirname(void)
       case NDATA_SRC_DIRNAME:
          return ndata_dirname;
       case NDATA_SRC_NDATADEF:
-         return nfile_dirname( NDATA_DEF );
+         return nfile_dirname( strdup( NDATA_DEF ) );
       case NDATA_SRC_BINARY:
          return nfile_dirname( strdup( naev_binary() ) );
    }
@@ -697,18 +697,28 @@ SDL_RWops *ndata_rwops( const char* filename )
 static char **stripPath( const char **list, int nlist, const char *path )
 {
    int i, len;
-   char **out;
+   char **out, *buf;
 
    out = malloc(sizeof(char*) * nlist);
    len = strlen( path );
 
+   /* Slash-terminate as needed. */
+   if (strcmp(&path[len],"/")!=0) {
+      len++;
+      buf = malloc((len + 1) * sizeof(char));
+      nsnprintf(buf, len+1,  "%s/", path );
+   }
+   else
+      buf = strdup(path);
+
    for (i=0; i<nlist; i++) {
-      if (strncmp(list[i],path,len)==0)
+      if (strncmp(list[i],buf,len)==0)
          out[i] = strdup( &list[i][len] );
       else
          out[i] = strdup( list[i] );
    }
 
+   free(buf);
    return out;
 }
 
@@ -816,7 +826,7 @@ static char** ndata_listBackend( const char* path, uint32_t* nfiles, int recursi
          tmp = strdup( NDATA_DEF );
          nsnprintf( buf, sizeof(buf), "%s/%s", nfile_dirname(tmp), path );
          tfiles = nfile_readFunc( &n, buf );
-         files = stripPath( (const char**)tfiles, n, nfile_dirname(tmp) );
+         files = stripPath( (const char**)tfiles, n, tmp );
          free(tmp);
          free(tfiles);
          if (files != NULL) {
