@@ -210,6 +210,7 @@ end
 -- Cleanup function. Should be the exit point for the module in all cases.
 function cleanup()
     if not (omsg == nil) then player.omsgRm(omsg) end
+    var.push("var_next", "Tutorial: Heat")
     naev.keyEnableAll()
     naev.eventStart("Tutorial")
     evt.finish(true)
