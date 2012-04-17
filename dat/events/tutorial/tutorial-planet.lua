@@ -113,6 +113,7 @@ end
 -- Cleanup function. Should be the exit point for the module in all cases.
 function cleanup()
     naev.keyEnableAll()
+    var.push("tut_next", "Tutorial: Missions and Events")
     naev.eventStart("Tutorial")
     evt.finish(true)
 end
