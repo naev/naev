@@ -126,8 +126,8 @@ function create()
     pp:setDir(90)
     player.msgClear()
 
-    pp():setNoLand()
-    pp():setNoJump()
+    pp:setNoLand()
+    pp:setNoJump()
 
     tk.msg(title1, message1)
     tk.msg(title1, message2:format(tutGetKey("primary")))
