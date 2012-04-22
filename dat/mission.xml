@@ -739,4 +739,26 @@
    <planet>Doranthex Prime</planet>
   </avail>
  </mission>
+ <mission name="Racing Skills 1">
+  <lua>neutral/race1</lua>
+  <flags>
+    <unique />
+  </flags>
+  <avail>
+    <cond>player.pilot():ship():class() == "Yacht"</cond>
+   <chance>10</chance>
+   <location>Bar</location>
+  </avail>
+ </mission>
+ <mission name="Racing Skills 2">
+  <lua>neutral/race2</lua>
+  <flags>
+  </flags>
+  <avail>
+    <cond>player.pilot():ship():class() == "Yacht" and player.misnDone("Racing Skills 1")</cond>
+   <chance>2</chance>
+   <location>Bar</location>
+  </avail>
+ </mission>
+
 </Missions>
