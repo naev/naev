@@ -579,7 +579,12 @@ void conf_parseCLI( int argc, char** argv )
       { NULL, 0, 0, 0 } };
    int option_index = 1;
    int c = 0;
-   optind = 1;
+
+   /* man 3 getopt says optind should be initialized to 1, but that seems to
+    * cause all options to get parsed, i.e. we cannot detect a trailing ndata
+    * option.
+    */
+   optind = 0;
    while ((c = getopt_long(argc, argv,
          "fF:Vd:j:J:W:H:MSm:s:GNhv",
          long_options, &option_index)) != -1) {

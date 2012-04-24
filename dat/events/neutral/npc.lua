@@ -137,10 +137,11 @@ else --default english
                                "If you're on a mission you just can't beat, you can open the information panel and abort the mission. There's no penalty for doing it, so don't hesitate to try the mission again later.",
                                "Don't forget that you can revisit the tutorial modules at any time from the main menu. I know I do.",
                                "Some weapons have a different effect on shields than they do on armour. Keep that in mind when equipping your ship.",
-                               "Afterburners only work when you activate them. While they're inactive all they do is slow you down!",
+                               "Afterburners can speed you up a lot, but when they get hot they don't work as well anymore. Don't use them carelessly!",
                                "There are passive outfits and active outfits. The passive ones modify your ship continuously, but the active ones only work if you turn them on. You usually can't keep an active outfit on all the time, so you need to be careful only to use it when you need it.",
                                "If you're new to the galaxy, I recommend you buy a map or two. It can make exploration a bit easier.",
-                               "Missile jammers slow down missiles close to your ship. If your enemies are using missiles, it can be very helpful to have one on board."
+                               "Missile jammers slow down missiles close to your ship. If your enemies are using missiles, it can be very helpful to have one on board.",
+                               "If you're having trouble with overheating weapons or outfits, you can use " .. tutGetKey("cooldown") .. " to put your ship into Active Cooldown. Careful though, your energy and shields won't recharge while you do it!",
                               }
 
    -- Jump point messages.

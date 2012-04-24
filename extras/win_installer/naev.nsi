@@ -2,7 +2,7 @@
 ;SetCompress Off
 
 ;Version, Arch, Icon and URL
-!define VERSION "0.5.2"
+!define VERSION "0.5.3"
 !define ARCH "32"
 !define URL "http://naev.org"
 !define MUI_ICON "..\logos\logo.ico"

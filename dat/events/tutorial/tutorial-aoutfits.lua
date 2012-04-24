@@ -24,7 +24,9 @@ Once this is done, you can use the hotkey associated with the group (%s, %s, %s,
 Assign your Jammer to a group now and activate it. Keep an eye on your energy reserves when it is active.]]
    message4 = [[As you can see, the Jammer drains your energy while it is on. Since you will need your energy for other things, it's a good idea to only activate it when you need it.
 
-It is important to know that some activated outfits can remain on as long as you have the energy, while others will only stay on for a maximum amount of time. Also, some outfits will need to go through a cooldown period after shutting off, during which time you can't use them. When an outfit is in its cooldown period, you can look at its icon to see how far along it is.]]
+It is important to know that some activated outfits can remain on as long as you have the energy, while others will only stay on for a maximum amount of time. Also, some outfits will need to go through a cooldown period after shutting off, during which time you can't use them. When an outfit is in its cooldown period, you can look at its icon to see how far along it is.
+
+Some outfits may also lose effectiveness or shut off completely if they get hot.]]
 
    message5 = [[You now know how to assign an activated outfit to a group and how to turn it on. As a final tip, remember that you can assign as many activated outfits to the same group as you like. You can combine outfit effects this way.
 
@@ -79,6 +81,7 @@ end
 -- Cleanup function. Should be the exit point for the module in all cases.
 function cleanup()
     if not (omsg == nil) then player.omsgRm(omsg) end
+    var.push("tut_next", "Tutorial: Disabling")
     naev.keyEnableAll()
     naev.eventStart("Tutorial")
     evt.finish(true)
