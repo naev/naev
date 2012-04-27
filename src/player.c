@@ -3496,6 +3496,10 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
    }
    else
       ship = pilot_createEmpty( ship_parsed, name, faction_get("Player"), "player", flags );
+   /* Ship should not have default outfits. */
+   for (i=0; i<ship->noutfits; i++)
+      pilot_rmOutfitRaw( ship, ship->outfits[i] );
+
    /* Clean up. */
    free(name);
    free(model);
