@@ -2208,8 +2208,7 @@ static int player_shipsCompare( const void *arg1, const void *arg2 )
 
 
 /**
- * @brief Returns a buffer with all the player's ships names
- *        or "None" if there are no ships.
+ * @brief Returns a buffer with all the player's ships names.
  *
  *    @param sships Fills sships with player_nships ship names.
  *    @param tships Fills sships with player_nships ship target textures.
