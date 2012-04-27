@@ -2214,13 +2214,14 @@ static int player_shipsCompare( const void *arg1, const void *arg2 )
  *    @param sships Fills sships with player_nships ship names.
  *    @param tships Fills sships with player_nships ship target textures.
  *    @return Freshly allocated array with allocated ship names.
+ *    @return The number of ships the player has.
  */
-void player_ships( char** sships, glTexture** tships )
+int player_ships( char** sships, glTexture** tships )
 {
    int i;
 
    if (player_nstack == 0)
-      return;
+      return 0;
 
    /* Sort. */
    qsort( player_stack, player_nstack, sizeof(PlayerShip_t), player_shipsCompare );
@@ -2230,6 +2231,8 @@ void player_ships( char** sships, glTexture** tships )
       sships[i] = strdup(player_stack[i].p->name);
       tships[i] = player_stack[i].p->ship->gfx_store;
    }
+
+   return player_nstack;
 }
 
 

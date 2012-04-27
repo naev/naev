@@ -146,7 +146,7 @@ void player_soundResume (void);
 /*
  * player ships
  */
-void player_ships( char** sships, glTexture** tships );
+int player_ships( char** sships, glTexture** tships );
 int player_nships (void);
 int player_hasShip( char* shipname );
 Pilot* player_getShip( char* shipname );

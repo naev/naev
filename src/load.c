@@ -31,6 +31,7 @@
 #include "land.h"
 #include "hook.h"
 #include "nstring.h"
+#include "outfit.h"
 
 
 #define LOAD_WIDTH      600 /**< Load window width. */
@@ -435,7 +436,7 @@ static void load_menu_load( unsigned int wdw, char *str )
    menu_main_close();
 
    /* Try to load the game. */
-   if (load_game( ns[pos].path )) {
+   if (load_game( ns[pos].path, diff )) {
       /* Failed so reopen both. */
       menu_main();
       load_loadGameMenu();
@@ -481,11 +482,21 @@ static void load_menu_delete( unsigned int wdw, char *str )
  *    @param file File that contains the new game.
  *    @return 0 on success.
  */
-int load_game( const char* file )
+int load_game( const char* file, int version_diff )
 {
    xmlNodePtr node;
    xmlDocPtr doc;
    Planet *pnt;
+
+   /* Vars for loading old saves. */
+   int i,j;
+   int ret;
+   char **sships;
+   glTexture **tships;
+   int nships;
+   Outfit* o;
+   Pilot* ship;
+   char* oldName;
 
    /* Make sure it exists. */
    if (!nfile_fileExists(file)) {
@@ -517,6 +528,35 @@ int load_game( const char* file )
    events_loadActive(node);
    hook_load(node);
    space_sysLoad(node);
+
+   /* Sanitize for new version. */
+   if (version_diff <= -2) {
+      WARN("Old version detected. Sanitizing ships for slots");
+      sships = malloc(player_nships() * sizeof(char*));
+      tships = malloc(player_nships() * sizeof(glTexture*));
+      nships = player_ships( sships, tships );
+      for (i=0; i<nships; i++) {
+         ship = player_getShip( sships[i] );
+         for (j=0; j<ship[i].noutfits; j++) {
+            o = ship[i].outfits[j]->outfit;
+            ret = pilot_rmOutfitRaw( ship, ship->outfits[j] );
+            if (ret==0)
+               player_addOutfit( o, 1 );
+         }
+         oldName = ship->name;
+         player_rmShip(sships[i]);
+         player_newShip(ship_get(ship->ship->base_type), oldName, 0,0);
+      }
+      for (i=0; i<nships; i++) {
+         free(sships[i]);
+         free(tships[i]);
+      }
+      free(sships);
+      free(tships);
+      free(o);
+      free(ship);
+      free(oldName);
+   }
 
    /* Initialize the economy. */
    economy_init();
