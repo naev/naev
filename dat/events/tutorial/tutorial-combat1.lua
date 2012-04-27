@@ -196,7 +196,7 @@ end
 
 -- Hooked function, initiates drone target practice.
 function dummypractice()
-    drone = pilot.add("FLF Lancelot", "dummy", pp():pos() + vec2.new(200, 0))[1]
+    drone = pilot.add("FLF Lancelot", "dummy", pp:pos() + vec2.new(200, 0))[1]
     drone:rename("Target drone")
     drone:setHostile()
     drone:setNodisable(true)
