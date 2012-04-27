@@ -1455,6 +1455,26 @@ void player_land (void)
 }
 
 
+int player_canTakeoff(void)
+{
+   int i;
+
+   for (i=0; i<player.p->outfit_nstructure; i++)
+      if (player.p->outfit_structure[i].sslot->required && player.p->outfit_structure[i].outfit == NULL)
+         return 0;
+
+   for (i=0; i<player.p->outfit_nutility; i++)
+      if (player.p->outfit_utility[i].sslot->required && player.p->outfit_utility[i].outfit == NULL)
+         return 0;
+
+   for (i=0; i<player.p->outfit_nweapon; i++)
+      if (player.p->outfit_weapon[i].sslot->required && player.p->outfit_weapon[i].outfit == NULL)
+         return 0;
+
+   return 1;
+}
+
+
 /**
  * @brief Sets the no land message.
  *
