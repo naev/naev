@@ -1455,6 +1455,9 @@ void player_land (void)
 }
 
 
+/**
+ * @brief Checks whether the player's ship is able to takeoff.
+ */
 int player_canTakeoff(void)
 {
    int i;

@@ -1508,6 +1508,7 @@ void takeoff( int delay )
    if (!landed)
       return;
 
+   /* Player's ship is not able to fly. */
    if (!player_canTakeoff()) {
       dialogue_msg( "Ship not fit for flight", "All core outfits must be equiped for takeoff." );
       return;
