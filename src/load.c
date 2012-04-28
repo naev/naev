@@ -534,7 +534,7 @@ int load_game( const char* file, int version_diff )
       tships = malloc(player_nships() * sizeof(glTexture*));
       nships = player_ships( sships, tships );
       ship = player.p;
-      for (i=0; i<=nships; i++, ship = player_getShip( sships[i] )) {
+      for (i=-1; i<nships; i++, ship = player_getShip( sships[i] )) {
          /* Remove all outfits. */
          for (j=0; j<ship->noutfits; j++) {
             if (ship->outfits[j]->outfit != NULL) {
