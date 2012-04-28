@@ -31,6 +31,7 @@
 #include "land.h"
 #include "hook.h"
 #include "nstring.h"
+#include "outfit.h"
 
 
 #define LOAD_WIDTH      600 /**< Load window width. */
@@ -435,7 +436,7 @@ static void load_menu_load( unsigned int wdw, char *str )
    menu_main_close();
 
    /* Try to load the game. */
-   if (load_game( ns[pos].path )) {
+   if (load_game( ns[pos].path, diff )) {
       /* Failed so reopen both. */
       menu_main();
       load_loadGameMenu();
@@ -481,11 +482,19 @@ static void load_menu_delete( unsigned int wdw, char *str )
  *    @param file File that contains the new game.
  *    @return 0 on success.
  */
-int load_game( const char* file )
+int load_game( const char* file, int version_diff )
 {
    xmlNodePtr node;
    xmlDocPtr doc;
    Planet *pnt;
+
+   /* Vars for loading old saves. */
+   int i,j;
+   char **sships;
+   glTexture **tships;
+   int nships;
+   Pilot *ship;
+   int p;
 
    /* Make sure it exists. */
    if (!nfile_fileExists(file)) {
@@ -517,6 +526,53 @@ int load_game( const char* file )
    events_loadActive(node);
    hook_load(node);
    space_sysLoad(node);
+
+   /* Sanitize for new version. */
+   if (version_diff <= 0) {
+      WARN("Old version detected. Sanitizing ships for slots");
+      sships = malloc(player_nships() * sizeof(char*));
+      tships = malloc(player_nships() * sizeof(glTexture*));
+      nships = player_ships( sships, tships );
+      ship = player.p;
+      for (i=-1; i<nships; i++, ship = player_getShip( sships[i] )) {
+         /* Remove all outfits. */
+         for (j=0; j<ship->noutfits; j++) {
+            if (ship->outfits[j]->outfit != NULL) {
+               player_addOutfit( ship->outfits[j]->outfit, 1 );
+               pilot_rmOutfitRaw( ship, ship->outfits[j] );
+            }
+         }
+         /* Add default outfits. */
+         p = 0;
+         for (j=0; j<ship->outfit_nstructure; j++) {
+            ship->outfits[p] = &ship->outfit_structure[j];
+            ship->outfits[p]->sslot = &ship->ship->outfit_structure[j];
+            if (ship->ship->outfit_structure[j].data != NULL)
+               pilot_addOutfitRaw( ship, ship->ship->outfit_structure[j].data, ship->outfits[p] );
+            p++;
+         }
+         for (j=0; j<ship->outfit_nutility; j++) {
+            ship->outfits[p] = &ship->outfit_utility[j];
+            ship->outfits[p]->sslot = &ship->ship->outfit_utility[j];
+            if (ship->ship->outfit_utility[j].data != NULL)
+               pilot_addOutfitRaw( ship, ship->ship->outfit_utility[j].data, ship->outfits[p] );
+            p++;
+         }
+         for (j=0; j<ship->outfit_nweapon; j++) {
+            ship->outfits[p] = &ship->outfit_weapon[j];
+            ship->outfits[p]->sslot = &ship->ship->outfit_weapon[j];
+            if (ship->ship->outfit_weapon[j].data != NULL)
+               pilot_addOutfitRaw( ship, ship->ship->outfit_weapon[j].data, ship->outfits[p] );
+            p++;
+         }
+      }
+      for (i=0; i<nships; i++) {
+         free(sships[i]);
+         free(tships[i]);
+      }
+      free(sships);
+      free(tships);
+   }
 
    /* Initialize the economy. */
    economy_init();

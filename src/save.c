@@ -168,7 +168,7 @@ void save_reload (void)
 {
    char path[PATH_MAX];
    nsnprintf(path, PATH_MAX, "%ssaves/%s.ns", nfile_dataPath(), player.name);
-   load_game( path );
+   load_game( path, 0 );
 }
 
 

@@ -1456,6 +1456,29 @@ void player_land (void)
 
 
 /**
+ * @brief Checks whether the player's ship is able to takeoff.
+ */
+int player_canTakeoff(void)
+{
+   int i;
+
+   for (i=0; i<player.p->outfit_nstructure; i++)
+      if (player.p->outfit_structure[i].sslot->required && player.p->outfit_structure[i].outfit == NULL)
+         return 0;
+
+   for (i=0; i<player.p->outfit_nutility; i++)
+      if (player.p->outfit_utility[i].sslot->required && player.p->outfit_utility[i].outfit == NULL)
+         return 0;
+
+   for (i=0; i<player.p->outfit_nweapon; i++)
+      if (player.p->outfit_weapon[i].sslot->required && player.p->outfit_weapon[i].outfit == NULL)
+         return 0;
+
+   return 1;
+}
+
+
+/**
  * @brief Sets the no land message.
  *
  *    @brief str Message to set when the player is not allowed to land temporarily.
@@ -2185,19 +2208,19 @@ static int player_shipsCompare( const void *arg1, const void *arg2 )
 
 
 /**
- * @brief Returns a buffer with all the player's ships names
- *        or "None" if there are no ships.
+ * @brief Returns a buffer with all the player's ships names.
  *
  *    @param sships Fills sships with player_nships ship names.
  *    @param tships Fills sships with player_nships ship target textures.
  *    @return Freshly allocated array with allocated ship names.
+ *    @return The number of ships the player has.
  */
-void player_ships( char** sships, glTexture** tships )
+int player_ships( char** sships, glTexture** tships )
 {
    int i;
 
    if (player_nstack == 0)
-      return;
+      return 0;
 
    /* Sort. */
    qsort( player_stack, player_nstack, sizeof(PlayerShip_t), player_shipsCompare );
@@ -2207,6 +2230,8 @@ void player_ships( char** sships, glTexture** tships )
       sships[i] = strdup(player_stack[i].p->name);
       tships[i] = player_stack[i].p->ship->gfx_store;
    }
+
+   return player_nstack;
 }
 
 
@@ -3470,6 +3495,11 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
    }
    else
       ship = pilot_createEmpty( ship_parsed, name, faction_get("Player"), "player", flags );
+
+   /* Ship should not have default outfits. */
+   for (i=0; i<ship->noutfits; i++)
+      pilot_rmOutfitRaw( ship, ship->outfits[i] );
+
    /* Clean up. */
    free(name);
    free(model);

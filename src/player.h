@@ -134,6 +134,7 @@ const char* player_rating (void);
 int player_hasCredits( credits_t amount );
 credits_t player_modCredits( credits_t amount );
 void player_hailStart (void);
+int player_canTakeoff (void);
 /* Sounds. */
 void player_soundPlay( int sound, int once );
 void player_soundPlayGUI( int sound, int once );
@@ -145,7 +146,7 @@ void player_soundResume (void);
 /*
  * player ships
  */
-void player_ships( char** sships, glTexture** tships );
+int player_ships( char** sships, glTexture** tships );
 int player_nships (void);
 int player_hasShip( char* shipname );
 Pilot* player_getShip( char* shipname );
