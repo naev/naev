@@ -146,6 +146,7 @@ end
 function cleanup()
     if not (omsg == nil) then player.omsgRm(omsg) end
     naev.keyEnableAll()
+    var.push("tut_next", "Tutorial: Exploration and Discovery")
     naev.eventStart("Tutorial")
     evt.finish(true)
 end

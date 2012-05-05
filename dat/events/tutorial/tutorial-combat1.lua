@@ -126,8 +126,8 @@ function create()
     pp:setDir(90)
     player.msgClear()
 
-    pp():setNoLand()
-    pp():setNoJump()
+    pp:setNoLand()
+    pp:setNoJump()
 
     tk.msg(title1, message1)
     tk.msg(title1, message2:format(tutGetKey("primary")))
@@ -196,7 +196,7 @@ end
 
 -- Hooked function, initiates drone target practice.
 function dummypractice()
-    drone = pilot.add("FLF Lancelot", "dummy", pp():pos() + vec2.new(200, 0))[1]
+    drone = pilot.add("FLF Lancelot", "dummy", pp:pos() + vec2.new(200, 0))[1]
     drone:rename("Target drone")
     drone:setHostile()
     drone:setNodisable(true)
@@ -268,6 +268,7 @@ end
 -- Cleanup function. Should be the exit point for the module in all cases.
 function cleanup()
     if not (omsg == nil) then player.omsgRm(omsg) end
+    var.push("tut_next", "Tutorial: Missile Combat")
     naev.keyEnableAll()
     naev.eventStart("Tutorial")
     evt.finish(true)
