@@ -77,7 +77,7 @@
   <lua>neutral/baron_prowl</lua>
   <trigger>enter</trigger>
   <chance>100</chance>
-  <cond>player.misnActive("Baron") == false and system.cur() == system.get("Ingot")</cond>
+  <cond>player.misnActive("Baron") == false and player.misnActive("Prince") == false and system.cur() == system.get("Ingot")</cond>
   <flags>
   </flags>
  </event>
