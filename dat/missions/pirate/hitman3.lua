@@ -32,6 +32,7 @@ else -- Default to English
 
    msg = {}
    msg[1] = "Target destroyed. Mission objective updated"
+   msg[2] = "Target has jumped. Persue %s!"
 end
 
 
