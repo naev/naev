@@ -1,5 +1,7 @@
 --[[
 -- This is a oneoff mission where you help a new Dvaered Warlord takeover a planet
+-- To Do: fix fighters being idle after mission ends
+-- Other editors, feel free to update dialog to make it more dvaered like.
 --]]
 
 -- localization stuff, translators would work here
@@ -28,7 +30,7 @@ else -- default english
     However, it looks like there may be an opportunity for us in %s.  Warlord Khan of Jorcan has been building his newest flagship Hawk, and will be onboard the Hawk as it tests its hyperspace capabilities.  Since it's engines and weapons have not been fully installed yet, it will be substantially slower than normal and unable to defend itself.  
     To protect himself and the Hawk, Khan will have deployed a substantial escort fighter fleet to defend against any surprise attack."]]
     text[3] = [[    "That is where you come in.  You will jump into %s and find the Hawk and its escorts.  Before the Hawk is able to reach hyperspace, you will fire on it, and cause the fighters to engage with you.  At this point, you should run away from the Hawk and the jumppoint, so that the fighters will give chase.  Then we will jump into the system and destory the Hawk before the fighters can return."]]
-    text[4] = [[    "We will jump in approximately 8000 STU after you jump into Torg, so the fighters must be far enough away not to come back and attack us."]]
+    text[4] = [[    "We will jump in approximately 8000 STU after you jump into Torg, so the fighters must be far enough away not to come back and attack us.  You will probably want to use your fastest ship for this job."]]
     
     refusetitle = "Nuts"
     refusetext = [[    "I see. In that case, I'm going to have to ask you to leave. My job is to recruit a civilian, but you're clearly not the man I'm looking for. You may excuse yourself, citizen."]]
@@ -224,6 +226,7 @@ function hawk_dead () -- mission accomplished
     for i, j in ipairs(fleetdv) do
         j:control(false)
         j:setVisible(false)
+        j:setHilight(false)
     end
     hook.timer(10000, "complete")
     for i, j in ipairs(jump_fleet) do
@@ -234,6 +237,9 @@ function hawk_dead () -- mission accomplished
 end
 
 function spawn_fleet() -- spawn warlord killing fleet
+    -- Cancel autonav.
+    player.cinematics(true)
+    player.cinematics(false)
     jump_fleet_entered = true
     jump_fleet = pilot.add("Dvaered Med Force", "dvaered_norun", system.get("Doranthex"))
     jump_fleet[6]:broadcast(chatter[8])
@@ -246,7 +252,7 @@ function spawn_fleet() -- spawn warlord killing fleet
         j:attack(hawk)
     end
     hook.pilot( jump_fleet[6], "death", "jump_fleet_cap_dead")
-    camera.set(hawk, true, 5000)
+    camera.set(hawk)
     hawk:broadcast(chatter[9])
     fleetdv[1]:broadcast(chatter[10])
     hawk:control()
@@ -279,7 +285,7 @@ end
 
 function complete()
     tk.msg(passtitle[1], passtext[1])
-    camera.set(player.pilot(), true)
+    camera.set(player.pilot())
     player.pay(80000)
     jump_fleet[6]:broadcast(chatter[13])
     misn.finish(true)
