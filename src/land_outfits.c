@@ -193,7 +193,7 @@ void outfits_open( unsigned int wid )
    outfits_updateQuantities( wid );
    toolkit_setImageArraySlotType( wid, "iarOutfits", slottype );
    toolkit_setImageArrayBackground( wid, "iarOutfits", bg );
-   
+
    /* Set default keyboard focuse to the list */
    window_setFocus( wid , "iarOutfits" );
 }

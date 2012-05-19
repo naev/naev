@@ -915,7 +915,7 @@ static void misn_genList( unsigned int wid, int first )
    int i,j;
    char** misn_names, *focused;
    int w,h;
-   
+
    /* Save focus. */
    focused = strdup(window_getFocus(wid));
 
@@ -945,7 +945,7 @@ static void misn_genList( unsigned int wid, int first )
    window_addList( wid, 20, -40,
          w/2 - 30, h/2 - 35,
          "lstMission", misn_names, j, 0, misn_update );
-   
+
    /* Restore focus. */
    window_setFocus( wid, focused );
    free(focused);
