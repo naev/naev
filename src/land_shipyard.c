@@ -163,6 +163,8 @@ void shipyard_open( unsigned int wid )
 
    /* write the shipyard stuff */
    shipyard_update(wid, NULL);
+   /* Set default keyboard focuse to the list */
+   window_setFocus( wid , "iarShipyard" );
 }
 /**
  * @brief Updates the ships in the shipyard window.
