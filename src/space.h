@@ -164,6 +164,7 @@ typedef struct SystemPresence_ {
 #define JP_KNOWN        (1<<1) /**< Jump point is known. */
 #define JP_HIDDEN       (1<<2) /**< Jump point is hidden. */
 #define JP_EXITONLY     (1<<3) /**< Jump point is exit only */
+#define JP_HYPERGATE    (1<<4) /**< Jump point is actualy a hypergate */
 #define jp_isFlag(j,f)    ((j)->flags & (f)) /**< Checks jump flag. */
 #define jp_setFlag(j,f)   ((j)->flags |= (f)) /**< Sets a jump flag. */
 #define jp_rmFlag(j,f)    ((j)->flags &= ~(f)) /**< Removes a jump flag. */
@@ -378,7 +379,7 @@ JumpPoint* jump_getTarget( StarSystem* target, const StarSystem* sys );
 /*
  * system adding/removing stuff.
  */
-void system_reconstructJumps (StarSystem *sys);
+void system_reconstructJumps (StarSystem *sys, int realloc);
 void systems_reconstructJumps (void);
 void systems_reconstructPlanets (void);
 StarSystem *system_new (void);

@@ -34,5 +34,8 @@
    <autopos/>
    <hide>1.250000</hide>
   </jump>
+  <hypergate>
+   <pos x='1500' y='1000'/>
+  </hypergate>
  </jumps>
 </ssys>

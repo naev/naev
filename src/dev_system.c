@@ -85,7 +85,7 @@ int dsys_saveSystem( StarSystem *sys )
    char file[PATH_MAX], *cleanName;
 
    /* Reconstruct jumps so jump pos are updated. */
-   system_reconstructJumps(sys);
+   system_reconstructJumps(sys, 0);
 
    /* Create the writer. */
    writer = xmlNewTextWriterDoc(&doc, 0);

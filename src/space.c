@@ -18,6 +18,7 @@
 
 #include "nxml.h"
 
+#include "array.h"
 #include "opengl.h"
 #include "log.h"
 #include "rng.h"
@@ -107,6 +108,12 @@ static AsteroidType *asteroid_types = NULL; /**< Asteroid types stack. */
 static int asteroid_ntypes = 0; /**< Asteroid types stack size. */
 
 /*
+ * Hypergate system stack.
+ * Must be refreshed each time the any system or jump is added or removed.
+ */
+static JumpPoint **hypergate_stack = NULL; /**< Hypergate array. */
+
+/*
  * Misc.
  */
 static int systems_loading = 1; /**< Systems are loading. */
@@ -149,7 +156,7 @@ static void debris_init( Debris *deb );
 static int systems_load (void);
 static int asteroidTypes_load (void);
 static StarSystem* system_parse( StarSystem *system, const xmlNodePtr parent );
-static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys );
+static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys, int isHypergate );
 static int system_parseAsteroidField( const xmlNodePtr node, StarSystem *sys );
 static int system_parseAsteroidExclusion( const xmlNodePtr node, StarSystem *sys );
 static int system_parseJumpPointDiff( const xmlNodePtr node, StarSystem *sys );
@@ -2413,7 +2420,7 @@ int system_addJumpDiff( StarSystem *sys, xmlNodePtr node )
  */
 int system_addJump( StarSystem *sys, xmlNodePtr node )
 {
-   if (system_parseJumpPoint(node, sys) <= -1)
+   if (system_parseJumpPoint(node, sys, 0) <= -1)
       return 0;
    systems_reconstructJumps();
    economy_refresh();
@@ -2575,7 +2582,7 @@ StarSystem *system_new (void)
 /**
  * @brief Reconstructs the jumps for a single system.
  */
-void system_reconstructJumps (StarSystem *sys)
+void system_reconstructJumps (StarSystem *sys, int realloc)
 {
    double dx, dy;
    int j;
@@ -2583,17 +2590,31 @@ void system_reconstructJumps (StarSystem *sys)
    double a;
 
    for (j=0; j<sys->njumps; j++) {
-      jp             = &sys->jumps[j];
-      jp->from       = sys;
-      jp->target     = system_getIndex( jp->targetid );
-      jp->returnJump = jump_getTarget( sys, jp->target );
+      jp       = &sys->jumps[j];
+      jp->from = sys;
 
-      /* Get heading. */
-      dx = jp->target->pos.x - sys->pos.x;
-      dy = jp->target->pos.y - sys->pos.y;
-      a = atan2( dy, dx );
-      if (a < 0.)
-         a += 2.*M_PI;
+      if (jp_isFlag(jp, JP_HYPERGATE)) {
+         if (realloc)
+            array_push_back(&hypergate_stack, jp);
+
+         jp->targetid   = -1;
+         jp->target     = NULL;
+         jp->returnJump = NULL;
+
+         /* Get heading. */
+         a = 0; //TODO: Get this from XML
+      }
+      else {
+         jp->target     = system_getIndex( jp->targetid );
+         jp->returnJump = jump_getTarget( sys, jp->target );
+
+         /* Get heading. */
+         dx = jp->target->pos.x - sys->pos.x;
+         dy = jp->target->pos.y - sys->pos.y;
+         a = atan2( dy, dx );
+         if (a < 0.)
+            a += 2.*M_PI;
+      }
 
       /* Update position if needed.. */
       if (jp->flags & JP_AUTOPOS) {
@@ -2617,10 +2638,12 @@ void systems_reconstructJumps (void)
    StarSystem *sys;
    int i;
 
+   array_resize(&hypergate_stack, 0);
+
    /* So we need to calculate the shortest jump. */
    for (i=0; i<systems_nstack; i++) {
       sys = &systems_stack[i];
-      system_reconstructJumps(sys);
+      system_reconstructJumps(sys, 1);
    }
 }
 
@@ -2893,38 +2916,43 @@ static int system_parseJumpPointDiff( const xmlNodePtr node, StarSystem *sys )
  *    @param sys System to which the jump point belongs.
  *    @return 0 on success.
  */
-static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
+static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys, int isHypergate )
 {
    JumpPoint *j;
    char *buf;
    xmlNodePtr cur;
    double x, y;
-   StarSystem *target;
+   StarSystem *target = NULL;
    int pos;
 
    /* Get target. */
-   xmlr_attr( node, "target", buf );
-   if (buf == NULL) {
-      WARN(_("JumpPoint node for system '%s' has no target attribute."), sys->name);
-      return -1;
-   }
-   target = system_get(buf);
-   if (target == NULL) {
-      WARN(_("JumpPoint node for system '%s' has invalid target '%s'."), sys->name, buf );
+   if (!isHypergate) {
+      xmlr_attr( node, "target", buf );
+      if (buf == NULL) {
+         WARN(_("JumpPoint node for system '%s' has no target attribute."), sys->name);
+         return -1;
+      }
+      target = system_get(buf);
+      if (target == NULL) {
+         WARN(_("JumpPoint node for system '%s' has invalid target '%s'."), sys->name, buf );
+         free(buf);
+         return -1;
+      }
       free(buf);
-      return -1;
    }
 
 #ifdef DEBUGGING
    int i;
-   for (i=0; i<sys->njumps; i++) {
-      j = &sys->jumps[i];
-      if (j->targetid != target->id)
-         continue;
+   if (!isHypergate) {
+      for (i=0; i<sys->njumps; i++) {
+         j = &sys->jumps[i];
+         if (j->targetid != target->id)
+            continue;
 
-      WARN(_("Star System '%s' has duplicate jump point to '%s'."),
-            sys->name, target->name );
-      break;
+         WARN(_("Star System '%s' has duplicate jump point to '%s'."),
+               sys->name, target->name );
+         break;
+      }
    }
 #endif /* DEBUGGING */
 
@@ -2936,9 +2964,11 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
    /* Set some stuff. */
    j->from = sys;
    j->target = target;
-   free(buf);
-   j->targetid = j->target->id;
+   j->targetid = target ? target->id : -1;
    j->radius = 200.;
+
+   if (isHypergate)
+      jp_setFlag( j, JP_HYPERGATE );
 
    pos = 0;
 
@@ -2992,6 +3022,10 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
    /* Added jump. */
    sys->njumps++;
 
+   if (isHypergate) {
+      array_push_back( &hypergate_stack, j );
+   }
+
    return 0;
 }
 
@@ -3029,7 +3063,9 @@ static void system_parseJumps( const xmlNodePtr parent )
          cur = node->children;
          do {
             if (xml_isNode(cur,"jump"))
-               system_parseJumpPoint( cur, sys );
+               system_parseJumpPoint( cur, sys, 0 );
+            else if (xml_isNode(cur,"hypergate"))
+               system_parseJumpPoint( cur, sys, 1 );
          } while (xml_nextNode(cur));
       }
    } while (xml_nextNode(node));
@@ -3247,7 +3283,7 @@ static void system_parseAsteroids( const xmlNodePtr parent, StarSystem *sys )
  */
 int space_load (void)
 {
-   int i, j, len;
+   int i, len;
    int ret;
    StarSystem *sys;
    char **asteroid_files, file[PATH_MAX];
@@ -3295,17 +3331,10 @@ int space_load (void)
    for (i=0; i<systems_nstack; i++)
       system_setFaction( &systems_stack[i] );
 
-   /* Reconstruction. */
-   systems_reconstructJumps();
-   systems_reconstructPlanets();
-
    /* Fine tuning. */
    for (i=0; i<systems_nstack; i++) {
       sys = &systems_stack[i];
 
-      /* Save jump indexes. */
-      for (j=0; j<sys->njumps; j++)
-         sys->jumps[j].targetid = sys->jumps[j].target->id;
       sys->ownerpresence = system_getPresence( sys, sys->faction );
    }
 
@@ -3522,6 +3551,7 @@ static int systems_load (void)
    /*
     * Second pass - loads all the jump routes.
     */
+   hypergate_stack = array_create(JumpPoint*);
    for (i=0; i<nfiles; i++) {
 
       len  = strlen(SYSTEM_DATA_PATH)+strlen(system_files[i])+2;
@@ -3557,6 +3587,10 @@ static int systems_load (void)
    for (i=0; i<nfiles; i++)
       free( system_files[i] );
    free( system_files );
+
+   /* Reconstruction. */
+   systems_reconstructJumps();
+   systems_reconstructPlanets();
 
    return 0;
 }
@@ -4236,7 +4270,10 @@ void system_addPresence( StarSystem *sys, int faction, double amount, int range 
 
    /* Create the initial queue consisting of sys adjacencies. */
    for (i=0; i < sys->njumps; i++) {
-      if (sys->jumps[i].target->spilled == 0 && !jp_isFlag( &sys->jumps[i], JP_HIDDEN ) && !jp_isFlag( &sys->jumps[i], JP_EXITONLY )) {
+      if (jp_isFlag( &sys->jumps[i], JP_HYPERGATE )) {
+         //TODO: Spill presence through hypergates
+      }
+      else if (sys->jumps[i].target->spilled == 0 && !jp_isFlag( &sys->jumps[i], JP_HIDDEN ) && !jp_isFlag( &sys->jumps[i], JP_EXITONLY )) {
          q_enqueue( q, sys->jumps[i].target );
          sys->jumps[i].target->spilled = 1;
       }
