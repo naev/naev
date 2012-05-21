@@ -3716,6 +3716,8 @@ static void space_renderJumpPoint( JumpPoint *jp, int i )
       c = &cGreen;
    else if (jp_isFlag(jp, JP_HIDDEN))
       c = &cRed;
+   else if (jp_isFlag( jp, JP_HYPERGATE ))
+      c = &cBlue;
    else
       c = NULL;
 

@@ -1632,6 +1632,8 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
    }
    else if (jp_isFlag(jp, JP_HIDDEN))
       col = cRed;
+   else if (jp_isFlag( jp, JP_HYPERGATE ))
+      col = cBlue;
    else
       col = cWhite;
 
@@ -1652,8 +1654,12 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
     * rendering the text, since the problem could be caused by as little
     * as a font change, but using this fix for now. */
    col.a = MIN( col.a, 0.99 );
-   if (overlay)
-      gl_printRaw( &gl_smallFont, cx+vr+5., cy, &col, sys_isKnown(jp->target) ? jp->target->name : _("Unknown") );
+   if (overlay) {
+      if (jp_isFlag( jp, JP_HYPERGATE ))
+         gl_printRaw( &gl_smallFont, cx+vr+5., cy, &col, _("Hypergate") );
+      else
+         gl_printRaw( &gl_smallFont, cx+vr+5., cy, &col, sys_isKnown(jp->target) ? jp->target->name : _("Unknown") );
+   }
 }
 
 

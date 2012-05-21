@@ -1030,6 +1030,10 @@ void map_renderJumps( double x, double y, int editor)
       gl_vboActivateAttribOffset( map_vbo, shaders.smooth.vertex_color,
             sizeof(GLfloat) * 2*3, 4, GL_FLOAT, 0 );
       for (j = 0; j < sys->njumps; j++) {
+         /* Don't draw lines for hypergates. */
+         if (jp_isFlag( &sys->jumps[j], JP_HYPERGATE ))
+            continue;
+
          jsys = sys->jumps[j].target;
          if (!space_sysReachableFromSys(jsys,sys) && !editor)
             continue;
