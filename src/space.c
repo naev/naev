@@ -4333,10 +4333,8 @@ void system_addPresence( StarSystem *sys, int faction, double amount, int range 
 
    /* Create the initial queue consisting of sys adjacencies. */
    for (i=0; i < sys->njumps; i++) {
-      if (jp_isFlag( &sys->jumps[i], JP_HYPERGATE )) {
-         //TODO: Spill presence through hypergates
-      }
-      else if (sys->jumps[i].target->spilled == 0 && !jp_isFlag( &sys->jumps[i], JP_HIDDEN ) && !jp_isFlag( &sys->jumps[i], JP_EXITONLY )) {
+      if (!jp_isFlag( &sys->jumps[i], JP_HYPERGATE) && sys->jumps[i].target->spilled == 0 &&
+            !jp_isFlag( &sys->jumps[i], JP_HIDDEN ) && !jp_isFlag( &sys->jumps[i], JP_EXITONLY )) {
          q_enqueue( q, sys->jumps[i].target );
          sys->jumps[i].target->spilled = 1;
       }
