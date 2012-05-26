@@ -1049,15 +1049,21 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
          "%s [%s]\n"
          "Needs %.0f CPU\n"
          "%.0f%% Penetration\n"
-         "%.2f DPS [%.0f Damage]\n"
+         "%.2f DPS [%.0f Damage]\n",
+         outfit_getType(temp), dtype_damageTypeToStr(temp->u.blt.dmg.type),
+         temp->u.blt.cpu,
+         temp->u.blt.dmg.penetration*100.,
+         1./temp->u.blt.delay * temp->u.blt.dmg.damage, temp->u.blt.dmg.damage );
+   if (temp->u.blt.dmg.disable > 0.) {
+      l += nsnprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
+         "%.2f Disable/s [%.0f Disable]\n",
+         1./temp->u.blt.delay * temp->u.blt.dmg.disable, temp->u.blt.dmg.disable );
+   }
+   l += nsnprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
          "%.1f Shots Per Second\n"
          "%.1f EPS [%.0f Energy]\n"
          "%.0f Range\n"
          "%.1f second heat up",
-         outfit_getType(temp), dtype_damageTypeToStr(temp->u.blt.dmg.type),
-         temp->u.blt.cpu,
-         temp->u.blt.dmg.penetration*100.,
-         1./temp->u.blt.delay * temp->u.blt.dmg.damage, temp->u.blt.dmg.damage,
          1./temp->u.blt.delay,
          1./temp->u.blt.delay * temp->u.blt.energy, temp->u.blt.energy,
          temp->u.blt.range,
@@ -1066,11 +1072,6 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
       l += nsnprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
          "\n%.1f degree swivel",
          temp->u.blt.swivel*180./M_PI );
-   }
-   if (temp->u.blt.dmg.disable > 0.) {
-      l += nsnprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
-         "\n%.0f Disable",
-         temp->u.blt.dmg.disable );
    }
 
 
@@ -1179,24 +1180,25 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
          "%s\n"
          "Needs %.0f CPU\n"
          "%.0f%% Penetration\n"
-         "%.2f DPS [%s]\n"
+         "%.2f DPS [%s]\n",
+         outfit_getType(temp),
+         temp->u.bem.cpu,
+         temp->u.bem.dmg.penetration*100.,
+         temp->u.bem.dmg.damage, dtype_damageTypeToStr(temp->u.bem.dmg.type) );
+   if (temp->u.blt.dmg.disable > 0.) {
+      l += nsnprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
+         "%.0f Disable/s\n",
+         temp->u.bem.dmg.disable );
+   }
+   l += nsnprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
          "%.1f EPS\n"
          "%.1f Duration %.1f Cooldown\n"
          "%.0f Range\n"
          "%.1f second heat up",
-         outfit_getType(temp),
-         temp->u.bem.cpu,
-         temp->u.bem.dmg.penetration*100.,
-         temp->u.bem.dmg.damage, dtype_damageTypeToStr(temp->u.bem.dmg.type),
          temp->u.bem.energy,
          temp->u.bem.duration, temp->u.bem.delay - temp->u.bem.duration,
          temp->u.bem.range,
          temp->u.bem.heatup);
-   if (temp->u.blt.dmg.disable > 0.) {
-      l += nsnprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
-         "\n%.0f Disable/s",
-         temp->u.bem.dmg.disable );
-   }
 
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define to help check for data errors. */
@@ -1376,23 +1378,24 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
    l = nsnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s\n"
          "%.0f%% Penetration\n"
-         "%.0f Damage [%s]\n"
+         "%.0f Damage [%s]\n",
+         outfit_getType(temp),
+         temp->u.amm.dmg.penetration*100.,
+         temp->u.amm.dmg.damage, dtype_damageTypeToStr(temp->u.amm.dmg.type) );
+   if (temp->u.blt.dmg.disable > 0.) {
+      l += nsnprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
+         "%.0f Disable\n",
+         temp->u.amm.dmg.disable );
+   }
+   l += nsnprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
          "%.0f Energy\n"
          "%.0f Maximum Speed\n"
          "%.0f%% Jam resistance\n"
          "%.1f duration",
-         outfit_getType(temp),
-         temp->u.amm.dmg.penetration*100.,
-         temp->u.amm.dmg.damage, dtype_damageTypeToStr(temp->u.amm.dmg.type),
          temp->u.amm.energy,
          temp->u.amm.speed,
          temp->u.amm.resist,
          temp->u.amm.duration );
-   if (temp->u.blt.dmg.disable > 0.) {
-      l += nsnprintf( &temp->desc_short[l], OUTFIT_SHORTDESC_MAX-l,
-         "\n%.0f Disable",
-         temp->u.amm.dmg.disable );
-   }
 
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define to help check for data errors. */

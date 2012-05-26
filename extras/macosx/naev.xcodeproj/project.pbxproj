@@ -12,13 +12,8 @@
 		078F0EA91367DFAC0000064F /* Vorbis.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 078F0EA41367DFA10000064F /* Vorbis.framework */; };
 		078F0EBF1367E0CC0000064F /* Ogg.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 078F0EBE1367E0CC0000064F /* Ogg.framework */; };
 		078F0EC21367E0D20000064F /* Ogg.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 078F0EBE1367E0CC0000064F /* Ogg.framework */; };
-		078F0EFA1367E4210000064F /* SDL_mixer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 078F0EF91367E4210000064F /* SDL_mixer.framework */; };
-		078F0EFF1367E4250000064F /* SDL_mixer.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 078F0EF91367E4210000064F /* SDL_mixer.framework */; };
 		078F0F171367E8930000064F /* naev.icns in Resources */ = {isa = PBXBuildFile; fileRef = 078F0F161367E8930000064F /* naev.icns */; };
-		07925FF01046AF3A000A716C /* libxml.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 07B062FE104415F5006FECBB /* libxml.framework */; };
 		079260841046AF44000A716C /* SDL.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 07B066571044397F006FECBB /* SDL.framework */; };
-		079260861046AF44000A716C /* SDL_image.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 07B066501044397A006FECBB /* SDL_image.framework */; };
-		079260871046AF44000A716C /* FreeType.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 07B0664D10443965006FECBB /* FreeType.framework */; };
 		07ABFECD1349CA85000F9F93 /* lapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 07ABFE581349CA85000F9F93 /* lapi.c */; };
 		07ABFECE1349CA85000F9F93 /* lauxlib.c in Sources */ = {isa = PBXBuildFile; fileRef = 07ABFE5A1349CA85000F9F93 /* lauxlib.c */; };
 		07ABFECF1349CA85000F9F93 /* lbaselib.c in Sources */ = {isa = PBXBuildFile; fileRef = 07ABFE5C1349CA85000F9F93 /* lbaselib.c */; };
@@ -103,13 +98,9 @@
 		07ABFF241349CA85000F9F93 /* cs_utsolve.c in Sources */ = {isa = PBXBuildFile; fileRef = 07ABFEC81349CA85000F9F93 /* cs_utsolve.c */; };
 		07ABFF251349CA85000F9F93 /* lesser.txt in Resources */ = {isa = PBXBuildFile; fileRef = 07ABFEC91349CA85000F9F93 /* lesser.txt */; };
 		07ABFF261349CA85000F9F93 /* License.txt in Resources */ = {isa = PBXBuildFile; fileRef = 07ABFECA1349CA85000F9F93 /* License.txt */; };
-		07B062FF104415F5006FECBB /* libxml.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07B062FE104415F5006FECBB /* libxml.framework */; };
 		07B064D7104427EB006FECBB /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07B0632710441732006FECBB /* OpenGL.framework */; };
 		07B0653110442B78006FECBB /* SDLMain.m in Sources */ = {isa = PBXBuildFile; fileRef = 07B060C71044131E006FECBB /* SDLMain.m */; };
-		07B0664E10443965006FECBB /* FreeType.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07B0664D10443965006FECBB /* FreeType.framework */; };
-		07B066521044397A006FECBB /* SDL_image.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07B066501044397A006FECBB /* SDL_image.framework */; };
 		07B066581044397F006FECBB /* SDL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 07B066571044397F006FECBB /* SDL.framework */; };
-		07C01CD7135CEAB600EAA9C9 /* libpng12.0.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 07C01CD6135CEAB600EAA9C9 /* libpng12.0.dylib */; };
 		07DA1FD214FF79CC00567A5D /* ai.c in Sources */ = {isa = PBXBuildFile; fileRef = 07DA1EA014FF79CC00567A5D /* ai.c */; };
 		07DA1FD314FF79CC00567A5D /* array.c in Sources */ = {isa = PBXBuildFile; fileRef = 07DA1EA314FF79CC00567A5D /* array.c */; };
 		07DA1FD414FF79CC00567A5D /* background.c in Sources */ = {isa = PBXBuildFile; fileRef = 07DA1EA514FF79CC00567A5D /* background.c */; };
@@ -164,7 +155,6 @@
 		07DA200514FF79CC00567A5D /* mission.c in Sources */ = {isa = PBXBuildFile; fileRef = 07DA1F0614FF79CC00567A5D /* mission.c */; };
 		07DA200614FF79CC00567A5D /* music.c in Sources */ = {isa = PBXBuildFile; fileRef = 07DA1F0814FF79CC00567A5D /* music.c */; };
 		07DA200714FF79CC00567A5D /* music_openal.c in Sources */ = {isa = PBXBuildFile; fileRef = 07DA1F0A14FF79CC00567A5D /* music_openal.c */; };
-		07DA200814FF79CC00567A5D /* music_sdlmix.c in Sources */ = {isa = PBXBuildFile; fileRef = 07DA1F0C14FF79CC00567A5D /* music_sdlmix.c */; };
 		07DA200914FF79CC00567A5D /* naev.c in Sources */ = {isa = PBXBuildFile; fileRef = 07DA1F0E14FF79CC00567A5D /* naev.c */; };
 		07DA200A14FF79CC00567A5D /* ndata.c in Sources */ = {isa = PBXBuildFile; fileRef = 07DA1F1114FF79CC00567A5D /* ndata.c */; };
 		07DA200B14FF79CC00567A5D /* nebula.c in Sources */ = {isa = PBXBuildFile; fileRef = 07DA1F1314FF79CC00567A5D /* nebula.c */; };
@@ -238,7 +228,6 @@
 		07DA204F14FF79CD00567A5D /* shipstats.c in Sources */ = {isa = PBXBuildFile; fileRef = 07DA1F9D14FF79CC00567A5D /* shipstats.c */; };
 		07DA205014FF79CD00567A5D /* sound.c in Sources */ = {isa = PBXBuildFile; fileRef = 07DA1F9F14FF79CC00567A5D /* sound.c */; };
 		07DA205114FF79CD00567A5D /* sound_openal.c in Sources */ = {isa = PBXBuildFile; fileRef = 07DA1FA114FF79CC00567A5D /* sound_openal.c */; };
-		07DA205214FF79CD00567A5D /* sound_sdlmix.c in Sources */ = {isa = PBXBuildFile; fileRef = 07DA1FA414FF79CC00567A5D /* sound_sdlmix.c */; };
 		07DA205314FF79CD00567A5D /* space.c in Sources */ = {isa = PBXBuildFile; fileRef = 07DA1FA614FF79CC00567A5D /* space.c */; };
 		07DA205414FF79CD00567A5D /* spfx.c in Sources */ = {isa = PBXBuildFile; fileRef = 07DA1FA814FF79CC00567A5D /* spfx.c */; };
 		07DA205514FF79CD00567A5D /* start.c in Sources */ = {isa = PBXBuildFile; fileRef = 07DA1FAA14FF79CC00567A5D /* start.c */; };
@@ -260,6 +249,15 @@
 		07DA206514FF79CD00567A5D /* toolkit.c in Sources */ = {isa = PBXBuildFile; fileRef = 07DA1FCC14FF79CC00567A5D /* toolkit.c */; };
 		07DA206614FF79CD00567A5D /* unidiff.c in Sources */ = {isa = PBXBuildFile; fileRef = 07DA1FCE14FF79CC00567A5D /* unidiff.c */; };
 		07DA206714FF79CD00567A5D /* weapon.c in Sources */ = {isa = PBXBuildFile; fileRef = 07DA1FD014FF79CC00567A5D /* weapon.c */; };
+		7389C3E61556D0050052022A /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 7389C3E51556D0050052022A /* libxml2.dylib */; };
+		7389C5D31556ED430052022A /* music_sdlmix.c in Sources */ = {isa = PBXBuildFile; fileRef = 07DA1F0C14FF79CC00567A5D /* music_sdlmix.c */; };
+		7389C5D41556ED4C0052022A /* sound_sdlmix.c in Sources */ = {isa = PBXBuildFile; fileRef = 07DA1FA414FF79CC00567A5D /* sound_sdlmix.c */; };
+		7389C6861556FB9E0052022A /* SDL_mixer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7389C6851556FB9E0052022A /* SDL_mixer.framework */; };
+		7389C6A71556FC060052022A /* SDL_mixer.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 7389C6851556FB9E0052022A /* SDL_mixer.framework */; };
+		7389CE5B15572EBF0052022A /* freetype.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7389CE5A15572EBF0052022A /* freetype.framework */; };
+		7389CEBA15572ED30052022A /* freetype.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 7389CE5A15572EBF0052022A /* freetype.framework */; };
+		73F1007D154F82E10047827A /* libpng.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73F1007C154F82E10047827A /* libpng.framework */; };
+		73F10084154F83240047827A /* libpng.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = 73F1007C154F82E10047827A /* libpng.framework */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
 /* End PBXBuildFile section */
@@ -271,13 +269,12 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				078F0EFF1367E4250000064F /* SDL_mixer.framework in Copy Frameworks */,
+				7389CEBA15572ED30052022A /* freetype.framework in Copy Frameworks */,
+				7389C6A71556FC060052022A /* SDL_mixer.framework in Copy Frameworks */,
+				73F10084154F83240047827A /* libpng.framework in Copy Frameworks */,
 				078F0EC21367E0D20000064F /* Ogg.framework in Copy Frameworks */,
 				078F0EA91367DFAC0000064F /* Vorbis.framework in Copy Frameworks */,
 				079260841046AF44000A716C /* SDL.framework in Copy Frameworks */,
-				079260861046AF44000A716C /* SDL_image.framework in Copy Frameworks */,
-				079260871046AF44000A716C /* FreeType.framework in Copy Frameworks */,
-				07925FF01046AF3A000A716C /* libxml.framework in Copy Frameworks */,
 			);
 			name = "Copy Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -288,7 +285,6 @@
 		078F0DF71367D1AE0000064F /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		078F0EA41367DFA10000064F /* Vorbis.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Vorbis.framework; path = /Library/Frameworks/Vorbis.framework; sourceTree = "<absolute>"; };
 		078F0EBE1367E0CC0000064F /* Ogg.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Ogg.framework; path = /Library/Frameworks/Ogg.framework; sourceTree = "<absolute>"; };
-		078F0EF91367E4210000064F /* SDL_mixer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL_mixer.framework; path = /Library/Frameworks/SDL_mixer.framework; sourceTree = "<absolute>"; };
 		078F0F161367E8930000064F /* naev.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = naev.icns; sourceTree = "<group>"; };
 		07ABFE581349CA85000F9F93 /* lapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lapi.c; sourceTree = "<group>"; };
 		07ABFE591349CA85000F9F93 /* lapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lapi.h; sourceTree = "<group>"; };
@@ -405,12 +401,8 @@
 		07ABFECB1349CA85000F9F93 /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
 		07B060C61044131E006FECBB /* SDLMain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDLMain.h; sourceTree = "<group>"; };
 		07B060C71044131E006FECBB /* SDLMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SDLMain.m; sourceTree = "<group>"; };
-		07B062FE104415F5006FECBB /* libxml.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = libxml.framework; path = /Library/Frameworks/libxml.framework; sourceTree = "<absolute>"; };
 		07B0632710441732006FECBB /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
-		07B0664D10443965006FECBB /* FreeType.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FreeType.framework; path = /Library/Frameworks/FreeType.framework; sourceTree = "<absolute>"; };
-		07B066501044397A006FECBB /* SDL_image.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL_image.framework; path = /Library/Frameworks/SDL_image.framework; sourceTree = "<absolute>"; };
 		07B066571044397F006FECBB /* SDL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL.framework; path = /Library/Frameworks/SDL.framework; sourceTree = "<absolute>"; };
-		07C01CD6135CEAB600EAA9C9 /* libpng12.0.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libpng12.0.dylib; path = usr/X11/lib/libpng12.0.dylib; sourceTree = SDKROOT; };
 		07DA1E9D14FF6BF400567A5D /* Lua.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Lua.framework; path = Library/Frameworks/Lua.framework; sourceTree = SDKROOT; };
 		07DA1EA014FF79CC00567A5D /* ai.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ai.c; sourceTree = "<group>"; };
 		07DA1EA114FF79CC00567A5D /* ai.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ai.h; sourceTree = "<group>"; };
@@ -719,7 +711,10 @@
 		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		1DDD58150DA1D0A300B32029 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		32CA4F630368D1EE00C91783 /* naev_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = naev_Prefix.pch; sourceTree = "<group>"; };
+		7389C3E51556D0050052022A /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = /usr/lib/libxml2.dylib; sourceTree = "<absolute>"; };
+		7389C6851556FB9E0052022A /* SDL_mixer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL_mixer.framework; path = /Library/Frameworks/SDL_mixer.framework; sourceTree = "<absolute>"; };
+		7389CE5A15572EBF0052022A /* freetype.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = freetype.framework; path = /Library/Frameworks/freetype.framework; sourceTree = "<absolute>"; };
+		73F1007C154F82E10047827A /* libpng.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = libpng.framework; path = /Library/Frameworks/libpng.framework; sourceTree = "<absolute>"; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8D1107320486CEB800E47090 /* naev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = naev.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -729,17 +724,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7389CE5B15572EBF0052022A /* freetype.framework in Frameworks */,
+				73F1007D154F82E10047827A /* libpng.framework in Frameworks */,
 				07B064D7104427EB006FECBB /* OpenGL.framework in Frameworks */,
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
-				07B062FF104415F5006FECBB /* libxml.framework in Frameworks */,
-				07B0664E10443965006FECBB /* FreeType.framework in Frameworks */,
-				07B066521044397A006FECBB /* SDL_image.framework in Frameworks */,
 				07B066581044397F006FECBB /* SDL.framework in Frameworks */,
-				07C01CD7135CEAB600EAA9C9 /* libpng12.0.dylib in Frameworks */,
 				078F0DF81367D1AE0000064F /* OpenAL.framework in Frameworks */,
 				078F0EA51367DFA10000064F /* Vorbis.framework in Frameworks */,
 				078F0EBF1367E0CC0000064F /* Ogg.framework in Frameworks */,
-				078F0EFA1367E4210000064F /* SDL_mixer.framework in Frameworks */,
+				7389C3E61556D0050052022A /* libxml2.dylib in Frameworks */,
+				7389C6861556FB9E0052022A /* SDL_mixer.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1214,18 +1208,17 @@
 		1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7389C6851556FB9E0052022A /* SDL_mixer.framework */,
+				7389C3E51556D0050052022A /* libxml2.dylib */,
+				73F1007C154F82E10047827A /* libpng.framework */,
 				07DA1E9D14FF6BF400567A5D /* Lua.framework */,
-				078F0EF91367E4210000064F /* SDL_mixer.framework */,
 				078F0EBE1367E0CC0000064F /* Ogg.framework */,
 				078F0EA41367DFA10000064F /* Vorbis.framework */,
 				078F0DF71367D1AE0000064F /* OpenAL.framework */,
-				07C01CD6135CEAB600EAA9C9 /* libpng12.0.dylib */,
 				07B066571044397F006FECBB /* SDL.framework */,
-				07B066501044397A006FECBB /* SDL_image.framework */,
-				07B0664D10443965006FECBB /* FreeType.framework */,
 				07B0632710441732006FECBB /* OpenGL.framework */,
-				07B062FE104415F5006FECBB /* libxml.framework */,
 				1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */,
+				7389CE5A15572EBF0052022A /* freetype.framework */,
 			);
 			name = "Linked Frameworks";
 			sourceTree = "<group>";
@@ -1263,7 +1256,6 @@
 				07D130FF1055EC54005A8EDC /* lib */,
 				07B060C61044131E006FECBB /* SDLMain.h */,
 				07B060C71044131E006FECBB /* SDLMain.m */,
-				32CA4F630368D1EE00C91783 /* naev_Prefix.pch */,
 			);
 			name = Sources;
 			sourceTree = "<group>";
@@ -1321,7 +1313,6 @@
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "naev" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				en,
@@ -1366,7 +1357,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "script_file=\"libpaths.sh\"\n\necho \"Running a custom build phase script: $script_file\"\n${PROJECT_DIR}/scripts/${script_file}\n\nif [ ${CONFIGURATION} == \"Debug\" ]\nthen\n\tnaev=${PROJECT_DIR}/../..\n\tdebug=\"${TARGET_BUILD_DIR}/naev.app/Contents/Resources\"\n\t\n\tif [ ! -d ${debug}/gfx ] || [ ! -d ${debug}/dat ]  || [ ! -d ${debug}/ai ] || [ ! -d ${debug}/extras ]\n\tthen\n        ln -s ${naev}/gfx ${debug}/gfx\n\t\tln -s ${naev}/dat ${debug}/dat\n\t\tln -s ${naev}/ai ${debug}/ai\n\t\tln -s ${naev}/extras ${debug}/extras\n\t\tln -s ${naev}/scripts ${debug}/scripts\n\t\tln -s ${naev}/snd ${debug}/snd\n\tfi\nfi\n";
+			shellScript = "if [ ${CONFIGURATION} == \"Debug\" ]\nthen\n\tnaev=${PROJECT_DIR}/../..\n\tdebug=\"${TARGET_BUILD_DIR}/naev.app/Contents/Resources\"\n\t\n\tif [ ! -d ${debug}/gfx ] || [ ! -d ${debug}/dat ]  || [ ! -d ${debug}/ai ] || [ ! -d ${debug}/extras ]\n\tthen\n        ln -s ${naev}/gfx ${debug}/gfx\n\t\tln -s ${naev}/dat ${debug}/dat\n\t\tln -s ${naev}/ai ${debug}/ai\n\t\tln -s ${naev}/extras ${debug}/extras\n\t\tln -s ${naev}/scripts ${debug}/scripts\n\t\tln -s ${naev}/snd ${debug}/snd\n\tfi\nfi\n\necho \"Attempting to sanitize frameworks for packaging\"\n\n## Strip unnecessary architectures from libraries before packaging, as well as remove\n## any header files\n# First find if we are doing x86_64\napp_name=\"naev\"\ntemp_test=`file ${TARGET_BUILD_DIR}/${app_name}.app/Contents/MacOS/${app_name} | grep -o x86_64`\nlipo_flag=\"-remove\"\n\nif [ ! -z \"$temp_test\" ]; then\n  lipo_flag=\"-extract\"\n  echo \"stripping all but x86_64\"\nfi\n\n# Go to the frameworks directory\npushd \"${TARGET_BUILD_DIR}/${app_name}.app/Contents/Frameworks/\"\n\necho \"== You are here: $( pwd )\"\n\n# Do the strip!\nfor fw_dir in `ls -d *.framework`\ndo\n  # echo \"$fw_dir\"\n  fw_name=\"${fw_dir%\\.framework}\"\n  # echo \"$fw_name\"\n  pushd \"$fw_dir/Versions/A\"\n  cp \"$fw_name\" \"$fw_name\".orig\n  lipo \"$fw_name\".orig \"$lipo_flag\" x86_64 -output \"$fw_name\"\n  rm \"$fw_name\".orig\n  popd\ndone\n\n# Now clean up the headers\nfind . -type f -name '*.h' -exec rm -f {} \\;\n\npopd\n\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1509,7 +1500,6 @@
 				07DA200514FF79CC00567A5D /* mission.c in Sources */,
 				07DA200614FF79CC00567A5D /* music.c in Sources */,
 				07DA200714FF79CC00567A5D /* music_openal.c in Sources */,
-				07DA200814FF79CC00567A5D /* music_sdlmix.c in Sources */,
 				07DA200914FF79CC00567A5D /* naev.c in Sources */,
 				07DA200A14FF79CC00567A5D /* ndata.c in Sources */,
 				07DA200B14FF79CC00567A5D /* nebula.c in Sources */,
@@ -1583,7 +1573,6 @@
 				07DA204F14FF79CD00567A5D /* shipstats.c in Sources */,
 				07DA205014FF79CD00567A5D /* sound.c in Sources */,
 				07DA205114FF79CD00567A5D /* sound_openal.c in Sources */,
-				07DA205214FF79CD00567A5D /* sound_sdlmix.c in Sources */,
 				07DA205314FF79CD00567A5D /* space.c in Sources */,
 				07DA205414FF79CD00567A5D /* spfx.c in Sources */,
 				07DA205514FF79CD00567A5D /* start.c in Sources */,
@@ -1603,6 +1592,8 @@
 				07DA206514FF79CD00567A5D /* toolkit.c in Sources */,
 				07DA206614FF79CD00567A5D /* unidiff.c in Sources */,
 				07DA206714FF79CD00567A5D /* weapon.c in Sources */,
+				7389C5D31556ED430052022A /* music_sdlmix.c in Sources */,
+				7389C5D41556ED4C0052022A /* sound_sdlmix.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1628,33 +1619,63 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		C01FCF4B08A954540054247B /* Debug */ = {
+		7389C4821556DCF70052022A /* x86_64-Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\\\"$(SRCROOT)/Frameworks\\\"",
-				);
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_MODEL_TUNING = G5;
+				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = naev_Prefix.pch;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
-					"${SDKROOT}/usr/X11R6/include/**",
+					"/Developer/SDKs/MacOSX10.4u.sdk/usr/X11R6/include/**",
 					"../../src/**",
-					"../../lib/**",
 					"/Library/Frameworks/Lua.framework//**",
 					"/Library/Frameworks/SDL_image.framework/**",
 					"/Library/Frameworks/SDL_mixer.framework/**",
 					"/Library/Frameworks/SDL.framework/**",
 					"/Library/Frameworks/libpng.framework/**",
 					"/Library/Frameworks/FreeType.framework//**",
-					"${SDKROOT}/System/Library/Frameworks/OpenAL.framework/**",
-					"${SDKROOT}/System/Library/Frameworks/OpenGL.framework/**",
+					"/Developer/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks/OpenAL.framework/**",
+					"/Developer/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks/OpenGL.framework/**",
+					"../../lib/**",
+				);
+				MACOSX_DEPLOYMENT_TARGET = "";
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_CFLAGS = (
+					"-DVMAJOR=$(VMAJOR)",
+					"-DVMINOR=$(VMINOR)",
+					"-DVREV=$(VREV)",
+					"-DUSE_SDLMIX",
+				);
+				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
+				SDKROOT = macosx10.6;
+				VALID_ARCHS = "i386 ppc ppc64 ppc7400 ppc970 x86_64";
+				VMAJOR = 0;
+				VMINOR = 5;
+				VREV = 3;
+			};
+			name = "x86_64-Debug";
+		};
+		7389C4831556DCF70052022A /* x86_64-Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/Frameworks",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"../../src/**",
+					"../../lib/**",
+					"/usr/include/libxml2/**",
 				);
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
@@ -1665,7 +1686,133 @@
 					"\"$(LOCAL_LIBRARY_DIR)/Frameworks/libpng-1.2.5\"",
 					"\"$(SDKROOT)/usr/X11/lib\"",
 				);
+				MACOSX = 1;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH = YES;
+				OPENAL_ALC_H = "\"\\\"alc.h\\\"\"";
+				OPENAL_AL_H = "\"\\\"al.h\\\"\"";
 				PRODUCT_NAME = naev;
+				SDKROOT = macosx10.6;
+				USE_OPENAL = 1;
+				VALID_ARCHS = "i386 ppc x86_64";
+			};
+			name = "x86_64-Debug";
+		};
+		7389C4841556DD050052022A /* x86_64-Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					"/Developer/SDKs/MacOSX10.4u.sdk/usr/X11R6/include/**",
+					"../../src/**",
+					"/Library/Frameworks/Lua.framework//**",
+					"/Library/Frameworks/SDL_image.framework/**",
+					"/Library/Frameworks/SDL_mixer.framework/**",
+					"/Library/Frameworks/SDL.framework/**",
+					"/Library/Frameworks/libpng.framework/**",
+					"/Library/Frameworks/FreeType.framework//**",
+					"/Developer/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks/OpenAL.framework/**",
+					"/Developer/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks/OpenGL.framework/**",
+					"../../lib/**",
+				);
+				MACOSX = 1;
+				MACOSX_DEPLOYMENT_TARGET = "";
+				ONLY_ACTIVE_ARCH = YES;
+				OPENAL_ALC_H = "\"\\\"alc.h\\\"\"";
+				OPENAL_AL_H = "\"\\\"al.h\\\"\"";
+				OTHER_CFLAGS = (
+					"-DVMAJOR=$(VMAJOR)",
+					"-DVMINOR=$(VMINOR)",
+					"-DVREV=$(VREV)",
+					"-DUSE_SDLMIX",
+					"-DMACOSX=$(MACOSX)",
+					"-DUSE_OPENAL=$(USE_OPENAL)",
+					"-DOPENAL_AL_H=$(OPENAL_AL_H)",
+					"-DOPENAL_ALC_H=$(OPENAL_ALC_H)",
+				);
+				SDKROOT = macosx10.6;
+				USE_OPENAL = 1;
+				VMAJOR = 0;
+				VMINOR = 5;
+				VREV = 3;
+			};
+			name = "x86_64-Release";
+		};
+		7389C4851556DD050052022A /* x86_64-Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/Frameworks",
+				);
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"../../src/**",
+					"../../lib/**",
+					"/usr/include/libxml2/**",
+				);
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\\\"$(SRCROOT)\\\"",
+					"\\\"$(SDKROOT)/usr/X11/lib\\\"",
+					"\"$(SDKROOT)/usr/X11/lib\"",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_NAME = naev;
+				SDKROOT = macosx10.6;
+			};
+			name = "x86_64-Release";
+		};
+		C01FCF4B08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/Frameworks",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_VERSION = 4.0;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"../../src/**",
+					"../../lib/**",
+					"/usr/include/libxml2/**",
+				);
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\\\"$(SRCROOT)\\\"",
+					"\\\"$(SDKROOT)/usr/X11/lib\\\"",
+					"\"$(LOCAL_LIBRARY_DIR)/Frameworks/libpng-1.2.5\"",
+					"\"$(SDKROOT)/usr/X11/lib\"",
+				);
+				MACOSX = 1;
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				ONLY_ACTIVE_ARCH = YES;
+				OPENAL_ALC_H = "\"\\\"alc.h\\\"\"";
+				OPENAL_AL_H = "\"\\\"al.h\\\"\"";
+				PRODUCT_NAME = naev;
+				SDKROOT = macosx10.4;
+				USE_OPENAL = 1;
+				VALID_ARCHS = "i386 ppc x86_64";
 			};
 			name = Debug;
 		};
@@ -1677,23 +1824,16 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\\\"$(SRCROOT)/Frameworks\\\"",
+					"$(SRCROOT)/Frameworks",
 				);
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = naev_Prefix.pch;
+				GCC_VERSION = 4.0;
 				HEADER_SEARCH_PATHS = (
-					"${SDKROOT}/usr/X11R6/include/**",
+					"$(inherited)",
 					"../../src/**",
 					"../../lib/**",
-					"/Library/Frameworks/Lua.framework//**",
-					"/Library/Frameworks/SDL_image.framework/**",
-					"/Library/Frameworks/SDL_mixer.framework/**",
-					"/Library/Frameworks/SDL.framework/**",
-					"/Library/Frameworks/libpng.framework/**",
-					"/Library/Frameworks/FreeType.framework//**",
-					"${SDKROOT}/System/Library/Frameworks/OpenAL.framework/**",
-					"${SDKROOT}/System/Library/Frameworks/OpenGL.framework/**",
+					"/usr/include/libxml2/**",
 				);
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
@@ -1701,10 +1841,12 @@
 					"$(inherited)",
 					"\\\"$(SRCROOT)\\\"",
 					"\\\"$(SDKROOT)/usr/X11/lib\\\"",
-					"\"$(LOCAL_LIBRARY_DIR)/Frameworks/libpng-1.2.5\"",
 					"\"$(SDKROOT)/usr/X11/lib\"",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.4;
+				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = naev;
+				SDKROOT = macosx10.4;
 			};
 			name = Release;
 		};
@@ -1729,7 +1871,7 @@
 					"/Developer/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks/OpenGL.framework/**",
 					"../../lib/**",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				MACOSX_DEPLOYMENT_TARGET = "";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = (
 					"-DVMAJOR=$(VMAJOR)",
@@ -1739,7 +1881,7 @@
 				);
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				SDKROOT = macosx10.6;
-				VALID_ARCHS = "i386 x86_64";
+				VALID_ARCHS = "i386 ppc ppc64 ppc7400 ppc970 x86_64";
 				VMAJOR = 0;
 				VMINOR = 5;
 				VREV = 3;
@@ -1749,7 +1891,7 @@
 		C01FCF5008A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -1767,8 +1909,8 @@
 					"../../lib/**",
 				);
 				MACOSX = 1;
-				MACOSX_DEPLOYMENT_TARGET = 10.5;
-				ONLY_ACTIVE_ARCH = NO;
+				MACOSX_DEPLOYMENT_TARGET = "";
+				ONLY_ACTIVE_ARCH = YES;
 				OPENAL_ALC_H = "\"\\\"alc.h\\\"\"";
 				OPENAL_AL_H = "\"\\\"al.h\\\"\"";
 				OTHER_CFLAGS = (
@@ -1797,6 +1939,8 @@
 			buildConfigurations = (
 				C01FCF4B08A954540054247B /* Debug */,
 				C01FCF4C08A954540054247B /* Release */,
+				7389C4831556DCF70052022A /* x86_64-Debug */,
+				7389C4851556DD050052022A /* x86_64-Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1806,6 +1950,8 @@
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
 				C01FCF5008A954540054247B /* Release */,
+				7389C4821556DCF70052022A /* x86_64-Debug */,
+				7389C4841556DD050052022A /* x86_64-Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
