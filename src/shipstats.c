@@ -14,6 +14,7 @@
 #include "naev.h"
 
 #include "log.h"
+#include "nstring.h"
 
 
 /**
@@ -93,7 +94,7 @@ static const ShipStatsLookup ss_lookup[] = {
 
    D__ELEM( SS_TYPE_D_EW_HIDE,         ew_hide,       "Cloaking" ),
    D__ELEM( SS_TYPE_D_EW_DETECT,       ew_detect,     "Detection" ),
-   D__ELEM( SS_TYPE_D_EW_JUMPDETECT,   ew_jumpDetect, "Jump Detection" ),
+   D__ELEM( SS_TYPE_D_EW_JUMPDETECT,   ew_jump_detect, "Jump Detection" ),
 
    D__ELEM( SS_TYPE_D_LAUNCH_RATE,     launch_rate,   "Launch Rate" ),
    D__ELEM( SS_TYPE_D_LAUNCH_RANGE,    launch_range,  "Launch Range" ),
@@ -386,7 +387,7 @@ static int ss_printD( char *buf, int len, int newline, double d, const ShipStats
 {
    if (fabs(d) < 1e-10)
       return 0;
-   return snprintf( buf, len, "%s\e%s%+.0f%% %s\e0",
+   return nsnprintf( buf, len, "%s\e%s%+.0f%% %s\e0",
          (newline) ? "\n" : "",
          ss_printD_colour( d, sl ),
          d*100., sl->display );
@@ -400,7 +401,7 @@ static int ss_printA( char *buf, int len, int newline, double d, const ShipStats
 {
    if (fabs(d) < 1e-10)
       return 0;
-   return snprintf( buf, len, "%s\e%s%+.0f %s\e0",
+   return nsnprintf( buf, len, "%s\e%s%+.0f %s\e0",
          (newline) ? "\n" : "",
          ss_printD_colour( d, sl ),
          d, sl->display );
@@ -414,7 +415,7 @@ static int ss_printI( char *buf, int len, int newline, int i, const ShipStatsLoo
 {
    if (i == 0)
       return 0;
-   return snprintf( buf, len, "%s\e%s%+d %s\e0",
+   return nsnprintf( buf, len, "%s\e%s%+d %s\e0",
          (newline) ? "\n" : "",
          ss_printI_colour( i, sl ),
          i, sl->display );
@@ -428,7 +429,7 @@ static int ss_printB( char *buf, int len, int newline, int b, const ShipStatsLoo
 {
    if (!b)
       return 0;
-   return snprintf( buf, len, "%s\e%s%s\e0",
+   return nsnprintf( buf, len, "%s\e%s%s\e0",
          (newline) ? "\n" : "",
          ss_printI_colour( b, sl ),
          sl->display );

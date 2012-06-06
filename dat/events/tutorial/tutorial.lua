@@ -7,12 +7,15 @@ if lang == "es" then
 else -- default english
     menutitle = "Tutorial Menu"
     menutext = "Welcome to the Naev tutorial menu. Please select a tutorial module from the list below:"
+    
+    menuall = "Play All"
 
     menubasic = "Tutorial: Basic Operation"
     menudiscover = "Tutorial: Exploration and Discovery"
     menuinterstellar = "Tutorial: Interstellar Flight"
     menubasiccombat = "Tutorial: Basic Combat"
     menumisscombat = "Tutorial: Missile Combat"
+    menuheat = "Tutorial: Heat"
     menuaoutfits = "Tutorial: Activated Outfits"
     menudisable = "Tutorial: Disabling"
     menuplanet = "Tutorial: The Planetary Screen"
@@ -44,9 +47,19 @@ function create()
     system.get("Iroquois"):setKnown(false, true)
     system.get("Navajo"):setKnown(false, true)
     system.get("Sioux"):setKnown(false, true)
+    
+    if var.peek("tut_all") then
+        local nm = var.peek("tut_next")
+        var.pop("tut_next")
+        if nm == nil then
+            var.pop("tut_all")
+        else
+            startModule(nm)
+        end
+    end
 
     -- Create menu.
-    _, selection = tk.choice(menutitle, menutext, menubasic, menudiscover, menuinterstellar, menucomms, menubasiccombat, menumisscombat, menuaoutfits, menudisable, menuplanet, menumissions, menux)
+    _, selection = tk.choice(menutitle, menutext, menuall, menubasic, menudiscover, menuinterstellar, menucomms, menubasiccombat, menumisscombat, menuheat, menuaoutfits, menudisable, menuplanet, menumissions, menux)
     
     startModule(selection)
 end
@@ -55,6 +68,9 @@ end
 function startModule(module)
     if selection == menux then -- Quit to main menu
         tut.main_menu()
+    elseif selection == menuall then
+        var.push("tut_all", true)
+        module = menubasic
     end
     player.cinematics(false)
     naev.eventStart(module)

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Cargo Pod">
+ <general>
+  <typename>Cargo Expansion</typename>
+  <slot>structure</slot>
+  <mass>3</mass>
+  <price>35000</price>
+  <description>Cargo pods are large containers you can attach to dedicated weapon space allowing you to transport more cargo. The drawback is that you lose a substantial amount of weapon space and won't be able to defend your cargo as well.</description>
+  <gfx_store>cargo_pod</gfx_store>
+ </general>
+ <specific type="modification">
+  <cargo>15</cargo>
+ </specific>
+</outfit>

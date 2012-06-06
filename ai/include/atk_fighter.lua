@@ -163,7 +163,7 @@ function _atk_f_space_sup( target, dist )
       --drifting away from target, so emphasize intercept 
       --course facing and accelerate to close
       dir = ai.iface(target)
-      if dir < 10 and dir > -10 and ai.relvel(target) > -10 then
+      if dir < 10 and dir > -10 then
          ai.accel()
       end
 

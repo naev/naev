@@ -38,7 +38,8 @@ end
 function _atk_g_capital( target, dist )
    local range = ai.getweaprange(3)
    local dir = 0
-   ai.weapset( 3 ) -- Forward/turrets
+   local shoot = false
+   ai.weapset( mem.weapset )
 
    --capital ships tend to require heavier energy reserves and burst output for maximum effectiveness
    if ai.pcurenergy() <= 1 then
@@ -62,34 +63,37 @@ function _atk_g_capital( target, dist )
       --drifting away from target, so emphasize intercept 
       --course facing and accelerate to close
       dir = ai.iface(target)
-      if dir < 10 and dir > -10 and ai.relvel(target) > -10 then 
+      if dir < 10 and dir > -10 then
          ai.accel()
       end
-      if mem.recharge == false then
-         ai.shoot(true)
-      end
+      shoot = true
 
    elseif dist > 0.3*range then
       --capital ship turning is slow
       --emphasize facing for being able to close quickly
       dir = ai.iface(target)
-      -- Shoot if should be shooting.
-      if mem.recharge == false then
-         ai.shoot(true)
+      -- Only accelerate if the target is getting away.
+      if dir < 10 and dir > -10 and ai.relvel(target) > -10 then
+         ai.accel()
       end
+      -- Shoot if should be shooting.
+      shoot = true
 
    --within close range; aim and blast away with everything
    else
-
       dir = ai.aim(target)
-      if mem.recharge == false then        
-         -- Shoot if should be shooting.
-         if dir < 10 then
-            ai.shoot()
-         end
-         ai.shoot(true)
+      -- At point-blank range, we ignore recharge.
+      if dir < 10 then
+         ai.shoot()
       end
+      ai.shoot(true)
+   end
 
+   if shoot and not mem.recharge then
+      if dir < 10 then
+         ai.shoot()
+      end
+      ai.shoot(true)
    end
 end
 

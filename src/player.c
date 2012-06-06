@@ -58,6 +58,7 @@
 #include "player_gui.h"
 #include "start.h"
 #include "input.h"
+#include "nstring.h"
 
 
 /*
@@ -470,7 +471,7 @@ Pilot* player_newShip( Ship* ship, const char *def_name,
       ship_name = malloc( len );
       strncpy( ship_name, def_name, len );
       while (player_hasShip(ship_name)) {
-         snprintf( ship_name, len, "%s %d", def_name, i );
+         nsnprintf( ship_name, len, "%s %d", def_name, i );
          i++;
       }
    }
@@ -1021,7 +1022,6 @@ void player_think( Pilot* pplayer, const double dt )
    Pilot *target;
    double turn;
    int facing;
-   Outfit *afb;
    int ret;
 
    /* last i heard, the dead don't think */
@@ -1155,15 +1155,7 @@ void player_think( Pilot* pplayer, const double dt )
    }
 
 
-   /*
-    * Afterburn!
-    */
-   if (pilot_isFlag(player.p,PILOT_AFTERBURNER)) {
-      afb = pplayer->afterburner->outfit;
-      pilot_setThrust( pplayer, 1. + afb->u.afb.thrust * MIN( 1., afb->u.afb.mass_limit/player.p->solid->mass ) );
-   }
-   else
-      pilot_setThrust( pplayer, player_acc );
+   pilot_setThrust( pplayer, player_acc );
 }
 
 
@@ -1923,7 +1915,7 @@ void player_screenshot (void)
 
    /* Try to find current screenshots. */
    for ( ; screenshot_cur < 1000; screenshot_cur++) {
-      snprintf( filename, PATH_MAX, "%sscreenshots/screenshot%03d.png",
+      nsnprintf( filename, PATH_MAX, "%sscreenshots/screenshot%03d.png",
             nfile_dataPath(), screenshot_cur );
       if (!nfile_fileExists( filename ))
          break;
@@ -2072,6 +2064,26 @@ void player_toggleMouseFly(void)
       player_message("\erMouse flying disabled.");
       player_accelOver();
    }
+}
+
+
+/**
+ * @brief Toggles active cooldown mode.
+ */
+void player_toggleCooldown(void)
+{
+   if (pilot_isFlag(player.p, PILOT_TAKEOFF))
+      return;
+
+   /* Not under manual control. */
+   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
+      return;
+
+   if ((!pilot_isFlag(player.p, PILOT_COOLDOWN)) &&
+            (!pilot_isFlag(player.p, PILOT_COOLDOWN_BRAKE)))
+      pilot_cooldown( player.p );
+   else
+      pilot_cooldownEnd(player.p, NULL);
 }
 
 
@@ -2300,8 +2312,8 @@ int player_outfitOwned( const Outfit* o )
    int i;
 
    /* Special case map. */
-   if ((outfit_isMap(o)) &&
-         map_isMapped(o))
+   if ((outfit_isMap(o) && map_isMapped(o)) ||
+         (outfit_isLocalMap(o) && localmap_isMapped(o)))
       return 1;
 
    /* Special case license. */
@@ -2403,6 +2415,10 @@ int player_addOutfit( const Outfit *o, int quantity )
    if (outfit_isMap(o)) {
       map_map(o);
       return 1; /* Success. */
+   }
+   else if (outfit_isLocalMap(o)) {
+      localmap_map(o);
+      return 1;
    }
    /* special case if it's an outfit */
    else if (outfit_isGUI(o)) {

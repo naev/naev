@@ -18,7 +18,7 @@
 #include "naev.h"
 
 #include <stdint.h>
-#include <string.h>
+#include "nstring.h"
 #include <stdlib.h>
 
 #include "log.h"
@@ -44,9 +44,6 @@
 
 #define XML_EVENT_ID          "Events" /**< XML document identifier */
 #define XML_EVENT_TAG         "event" /**< XML event tag. */
-
-#define EVENT_DATA            "dat/event.xml" /**< Path to events XML. */
-#define EVENT_LUA_PATH        "dat/events/" /**< Path to Lua files. */
 
 #define EVENT_CHUNK           32 /**< Size to grow event data by. */
 
@@ -277,7 +274,7 @@ static int event_create( int dataid, unsigned int *id )
    nlua_loadEvt(L);
    nlua_loadHook(L);
    nlua_loadTk(L);
-   nlua_loadBackground(L,0);
+   nlua_loadBackground(L,1);
    nlua_loadCamera(L,0);
    nlua_loadTex(L,0);
    nlua_loadMusic(L,0);
@@ -471,7 +468,7 @@ static int event_parse( EventData_t *temp, const xmlNodePtr parent )
    /* get the name */
    temp->name = xml_nodeProp(parent, "name");
    if (temp->name == NULL)
-      WARN("Event in "EVENT_DATA" has invalid or no name");
+      WARN("Event in "EVENT_DATA_PATH" has invalid or no name");
 
    node = parent->xmlChildrenNode;
 
@@ -481,7 +478,7 @@ static int event_parse( EventData_t *temp, const xmlNodePtr parent )
       xml_onlyNodes(node);
 
       if (xml_isNode(node,"lua")) {
-         snprintf( str, PATH_MAX, EVENT_LUA_PATH"%s.lua", xml_get(node) );
+         nsnprintf( str, PATH_MAX, EVENT_LUA_PATH"%s.lua", xml_get(node) );
          temp->lua = strdup( str );
          str[0] = '\0';
 
@@ -571,30 +568,30 @@ int events_load (void)
    xmlDocPtr doc;
 
    /* Load the data. */
-   buf = ndata_read( EVENT_DATA, &bufsize );
+   buf = ndata_read( EVENT_DATA_PATH, &bufsize );
    if (buf == NULL) {
-      WARN("Unable to read data from '%s'", EVENT_DATA);
+      WARN("Unable to read data from '%s'", EVENT_DATA_PATH);
       return -1;
    }
 
    /* Load the document. */
    doc = xmlParseMemory( buf, bufsize );
    if (doc == NULL) {
-      WARN("Unable to parse document '%s'", EVENT_DATA);
+      WARN("Unable to parse document '%s'", EVENT_DATA_PATH);
       return -1;
    }
 
    /* Get the root node. */
    node = doc->xmlChildrenNode;
    if (!xml_isNode(node,XML_EVENT_ID)) {
-      WARN("Malformed '"EVENT_DATA"' file: missing root element '"XML_EVENT_ID"'");
+      WARN("Malformed '"EVENT_DATA_PATH"' file: missing root element '"XML_EVENT_ID"'");
       return -1;
    }
 
    /* Get the first node. */
    node = node->xmlChildrenNode; /* first event node */
    if (node == NULL) {
-      WARN("Malformed '"EVENT_DATA"' file: does not contain elements");
+      WARN("Malformed '"EVENT_DATA_PATH"' file: does not contain elements");
       return -1;
    }
 

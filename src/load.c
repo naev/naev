@@ -30,6 +30,7 @@
 #include "nlua_var.h"
 #include "land.h"
 #include "hook.h"
+#include "nstring.h"
 
 
 #define LOAD_WIDTH      600 /**< Load window width. */
@@ -163,7 +164,7 @@ static int load_load( nsave_t *save, const char *path )
  */
 int load_refresh (void)
 {
-   char **files, buf[PATH_MAX];
+   char **files, buf[PATH_MAX], *tmp;
    int nfiles, i, len;
    int ok;
    nsave_t *ns;
@@ -191,13 +192,31 @@ int load_refresh (void)
    if (files == NULL)
       return 0;
 
+   /* Make sure backups are after saves. */
+   for (i=0; i<nfiles-1; i++) {
+      len = strlen( files[i] );
+
+      /* Only interested in swapping backup with file after it if it's not backup. */
+      if ((len < 12) || strcmp( &files[i][len-10],".ns.backup" ))
+         continue;
+
+      /* Don't match. */
+      if (strncmp( files[i], files[i+1], (len-10) ))
+         continue;
+  
+      /* Swap around. */
+      tmp         = files[i];
+      files[i]    = files[i+1];
+      files[i+1]  = tmp;
+   }
+
    /* Allocate and parse. */
    ok = 0;
    ns = NULL;
    for (i=0; i<nfiles; i++) {
       if (!ok)
          ns = &array_grow( &load_saves );
-      snprintf( buf, sizeof(buf), "%ssaves/%s", nfile_dataPath(), files[i] );
+      nsnprintf( buf, sizeof(buf), "%ssaves/%s", nfile_dataPath(), files[i] );
       ok = load_load( ns, buf );
    }
 
@@ -284,7 +303,7 @@ void load_loadGameMenu (void)
          ns       = &nslist[i];
          len      = strlen(ns->path);
          if (strcmp(&ns->path[len-10],".ns.backup")==0) {
-            snprintf( buf, sizeof(buf), "%s \er(Backup)\e0", ns->name );
+            nsnprintf( buf, sizeof(buf), "%s \er(Backup)\e0", ns->name );
             names[i] = strdup(buf);
          }
          else
@@ -351,7 +370,7 @@ static void load_menu_update( unsigned int wid, char *str )
    /* Display text. */
    credits2str( credits, ns->credits, 2 );
    ntime_prettyBuf( date, sizeof(date), ns->date, 2 );
-   snprintf( buf, sizeof(buf),
+   nsnprintf( buf, sizeof(buf),
          "\eDName:\n"
          "\e0   %s\n"
          "\eDVersion:\n"

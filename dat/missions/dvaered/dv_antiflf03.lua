@@ -163,6 +163,8 @@ function enter()
         -- Wait for the player to fly to the Obstinate before commencing the mission
 
         hook.timer(500, "proximity", {anchor = obstinate, radius = 1500, funcname = "operationStart"})
+    elseif system.cur():name() == DVsys and victorious then -- Make sure the player can finish the missions properly.
+        planet.get(DVplanet):landOverride()
     elseif missionstarted then -- The player has jumped away from the mission theater, which instantly ends the mission and with it, the mini-campaign.
         tk.msg(failtitle[1], failtext[1])
         faction.get("Dvaered"):modPlayerSingle(-10)
@@ -463,7 +465,7 @@ end
 function spawnDVbomber()
     bomber = pilot.add("Dvaered Ancestor", "dvaered_norun", obstinate:pos())[1]
     bomber:rmOutfit("all")
-    foo = bomber:addOutfit("Imperator Launcher", 1, true)
+    foo = bomber:addOutfit("TeraCom Imperator Launcher", 1, true)
     bomber:addOutfit("Engine Reroute", 1)
     bomber:addOutfit("Vulcan Gun", 3)
     bomber:setNodisable(true)
@@ -575,7 +577,7 @@ function deathDVbomber()
             if not j:exists() then
                 bomber = pilot.add("Dvaered Ancestor", "dvaered_norun", obstinate:pos())[1]
                 bomber:rmOutfit("all")
-                bomber:addOutfit("Imperator Launcher", 1, true)
+                bomber:addOutfit("TeraCom Imperator Launcher", 1, true)
                 bomber:addOutfit("Engine Reroute", 1)
                 bomber:addOutfit("Vulcan Gun", 3)
                 bomber:setNodisable(true)

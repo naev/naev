@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Laser Cannon MK2">
+ <general>
+  <slot>weapon</slot>
+  <size>light</size>
+  <license>Medium Weapon License</license>
+  <mass>4.5</mass>
+  <price>12500</price>
+  <description>The mark 2 laser cannon improves on the original in many ways. Featuring increased range and greater firepower while only moderately increasing power demands, it's become a favourite civilian armament.</description>
+  <gfx_store>laser2</gfx_store>
+  </general>
+ <specific type="bolt">
+  <cpu>5</cpu>
+  <gfx>laser2S</gfx>
+  <sound>laser</sound>
+  <spfx_shield>ShiS</spfx_shield>
+  <spfx_armour>ExpS</spfx_armour>
+  <delay>0.55</delay>
+  <speed>550</speed>
+  <range>575</range>
+  <falloff>300</falloff>
+  <gfx_end>laser1S</gfx_end>
+  <energy>6</energy>
+  <heatup>20</heatup>
+  <track>3</track>
+  <swivel>4</swivel>
+  <damage>
+   <type>normal</type>
+   <penetrate>5</penetrate>
+   <physical>8.5</physical>
+   <disable>1</disable>
+  </damage>
+ </specific>
+</outfit>

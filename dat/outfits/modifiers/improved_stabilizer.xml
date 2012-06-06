@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Improved Stabilizer">
+ <general>
+  <typename>Manoevrability Modifier</typename>
+  <slot>structure</slot>
+  <mass>0</mass>
+  <price>135000</price>
+  <description>By improving your ship's stabilization systems drastically, this modification will allow you to reach higher speeds while still keeping the ship stable.</description>
+  <gfx_store>stabilizer</gfx_store>
+ </general>
+ <specific type="modification">
+  <cpu>2</cpu>
+  <speed>3</speed>
+  <speed_rel>15</speed_rel>
+  <turn_rel>3</turn_rel>
+  <energy_regen>-0.15</energy_regen>
+ </specific>
+</outfit>

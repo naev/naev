@@ -3,7 +3,7 @@
    MISSION: Hot dogs from space
    DESCRIPTION: An old man who owns a hot dog factory wants to go to space
 
-   The old man has elevated pressure in his chochlea so he can't go to space.
+   The old man has elevated pressure in his cochlea so he can't go to space.
    He's getting old and wants to go to space before he dies. He owns a hot dog
    factory and will pay you in hot dogs (food). Because of his illness, you
    can't land on any planet outside the system (the player doesn't know this).
@@ -24,9 +24,9 @@ else -- Default to English
    bar_desc = "You see an old man with a cap on, on which the letters R-E-Y-N-I-R are imprinted."
 
 -- Mission details. We store some text for the mission with specific variables.
-   misn_title = "Hot dogs from space"
-   misn_reward = "Hot dogs"
-   misn_desc = "Reynir wants to go to space and will give you tons of hot dogs."
+   misn_title = "Rich reward from space!"
+   misn_reward = "Lots of cash"
+   misn_desc = "Reynir wants to travel to space and will reward you richly."
 
    cargoname = "Food"
 
@@ -34,17 +34,17 @@ else -- Default to English
    title = {}    --Each dialog box has a title.
    text = {}      --We store mission text in tables.  As we need them, we create them.
    title[1] = "Spaceport Bar"    --Each chunk of text is stored by index in the table.
-   text[1] = [["Do you like hot dogs?"]]     --Use double brackets [[]] for block quotes over several lines.
+   text[1] = [["Do you like money?"]]     --Use double brackets [[]] for block quotes over several lines.
 
    text[2] = [["Ever since I was a kid I've wanted to go to space. However, my doctor says I can't go to space because I have an elevated pressure in my cochlea, a common disease around here.
-"I am getting old now, as you can see. Before I die I want to go to space, and I want you to fly me there! I own a hot dog factory, so I can pay you plenty in hot dogs. Will you do it?"]]
+"I am getting old now, as you can see. Before I die I want to travel to space, and I want you to fly me there! I own a hot dog factory, so I can reward you richly! Will you do it?"]]
    text[3] = [["Thank you so much! Just fly me around in the system, preferably near %s."]]
 
    title[4] = "Reynir"
    text[4] = [[Reynir walks out of the ship. You notice that he's bleeding out of both ears. "Where have you taken me?! Get me back to %s right now!!"]]
-   text[5] = [["Thank you so much! Here's %s tons of hot dogs!"]]
+   text[5] = [["Thank you so much! Here's %s tons of hot dogs. They're worth more than their weight in gold, aren't they?"]]
    text[7] = [[Reynir doesn't look happy when you meet him outside the ship.
-   "I lost my hearing out there! Damn you!! I made a promise, though, so I'd better keep it. Here's %d ton of hot dogs..."]]
+   "I lost my hearing out there! Damn you!! I made a promise, though, so I'd better keep it. Here's your reward, %d tons of hot dogs..."]]
    
 
    text[6] = [[Reynir walks out of the ship, amazed by the view. "So this is how %s looks like! I've always wondered... I want to go back to %s now, please."]]

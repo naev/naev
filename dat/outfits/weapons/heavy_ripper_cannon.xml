@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Heavy Ripper Cannon">
+ <general>
+  <slot>weapon</slot>
+  <size>medium</size>
+  <license>Heavy Weapon License</license>
+  <mass>14</mass>
+  <price>47500</price>
+  <description>By modulating the frequency of the basic Ripper Cannon, the Empire military increased its range, accuracy and destructive power. After reworking the power conduits, their efforts culminated in the devastating Heavy Ripper Cannon. The main drawback to this model is its increased bulk, which makes it unsuitable for smaller ships.</description>
+  <gfx_store>ripper</gfx_store>
+ </general>
+ <specific type="bolt">
+  <cpu>15</cpu>
+  <gfx>ripperM</gfx>
+  <sound>ripper</sound>
+  <spfx_shield>ShiS</spfx_shield>
+  <spfx_armour>ExpS</spfx_armour>
+  <delay>1.25</delay>
+  <speed>700</speed>
+  <range>1300</range>
+  <falloff>850</falloff>
+  <gfx_end>ripperM-end</gfx_end>
+  <energy>40</energy>
+  <heatup>35</heatup>
+  <track>2</track>
+  <swivel>10</swivel>
+  <damage>
+   <type>normal</type>
+   <penetrate>20</penetrate>
+   <physical>42</physical>
+   <disable>2</disable>
+  </damage>
+ </specific>
+</outfit>

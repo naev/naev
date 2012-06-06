@@ -15,7 +15,7 @@ else -- default english
     misn_desc = {}
     
     title[1] = "His Baronship remembers you"
-    text[1] = [[    As you approach the stranger, he extends his hand in greeting. He introduces himself as an associate of Baron Sauterfeldt, the man you helped "acquire" a holopainting not too long ago.
+    text[1] = [[    As you approach the stranger, he extends his hand in greeting. He introduces himself as an associate of Baron Sauterfeldt, the man you helped to "acquire" a holopainting not too long ago.
     "The Baron was quite pleased with your performance in that matter," he confides. "He has asked me to try to find you again for another job not unlike the last one. The Baron is a collector, you see, and his hunger for new possessions is a hard one to satiate." He makes a face. "Of course, his methods aren't always completely respectable, as you've experienced for yourself. But I assure you that the Baron is not a bad man, he is simply very enthusiastic."
     You decide to keep your opinion of the fat aristocrat to yourself. Instead you inquire as to what the man wants from you this time. "To tell the truth, I don't actually know," the man says. "The Baron wants you to meet him so he can brief you in person. You will find his ship in the %s system. Shall I inform his lordship that you will be paying him a visit?"]]
 
@@ -46,7 +46,7 @@ else -- default english
     
     title[7] = "Flintley, at your service"
     
-    text[8] = [[    You approach the nervous looking man and inquire if he is Flintley, the historian in Baron Sauterfeldt's employ.
+    text[8] = [[    You approach the nervous-looking man and inquire if he is Flintley, the historian in Baron Sauterfeldt's employ.
     "Oh, yes. Yes! That is me! I'm Flintley," the man responds. "And you must be %s. I know what's going on, the people from the Pinnacle have informed me. Oh, but where are my manners. Let me properly introduce myself. My name is Flintley, and I'm an archaeologist and historian. The best in the galaxy, some might say, ha-ha!" He gives you a look. "Well, maybe not. But I'm quite knowledgeable about the history of the galaxy. Too bad not too many people seem interested in that these days. The only work I can really get is the occasional appraisal, like I'm doing now for his lordship. I wish I didn't have to take jobs like this, but there you have it."
     Flintley sighs. "Well, that's that. Come to me with any artefacts you manage to procure, and I'll analyze them to the best of my ability."]]
     
@@ -60,18 +60,18 @@ else -- default english
 
     title[9] = "This is not the artefact you're looking for"
 
-    text[12] = [[    "Let's see what we have here," Flintly says as you hand him the artefact you bought on %s. "Ah, I know what this is without even looking anything up. It's a piece of an old-fashioned airlock mechanism, as used on most ships during the Faction Wars. That makes it rather old, but that also makes it worthless, I'm afraid. This is just old scrap." He gives you an apologetic look. "Don't let it get you down. Not many people would know this on first sight. Those scammers can be pretty clever."
+    text[12] = [[    "Let's see what we have here," Flintley says as you hand him the artefact you bought on %s. "Ah, I know what this is without even looking anything up. It's a piece of an old-fashioned airlock mechanism, as used on most ships during the Faction Wars. That makes it rather old, but that also makes it worthless, I'm afraid. This is just old scrap." He gives you an apologetic look. "Don't let it get you down. Not many people would know this on first sight. Those scammers can be pretty clever."
     You feel disappointed and frustrated, but you have no choice but to deposit the "artefact" into the nearest disintegrator inlet.]]
 
     text[13] = [[    You hand Flintley the artefact you procured on %s. He examines it for a few moments, then enters a few queries in the info terminal in his table. Once he has found what he was looking for, he heaves a sigh. "I'm sorry, %s. It seems you've been had. What you've got here is little more than a trinket. It's a piece of 'art' created by a third-rank sculptress named Biena Gharibri who lives on Lapra. She's not very talented, I'm afraid. Her creations have been called 'worse than Dvaered opera' by a leading art critic. I really don't think you want to present his lordship with this."
     You promptly decide to dispose of the thing, unwilling to carry it around with you a moment longer than necessary.]]
 
-    text[14] = [[    Flintly studies the object on the table for a while, checking the online database a number of times in the process. Then, finally, he turns to you. "I hate to say this, but it seems you've bought a counterfeit. It's a good one, though! That seller on %s must have known his stuff. You see, this is very similar to a number plate used by hovercars on Mars at the time of the Second Growth. However, it's missing a number of vital characteristics, and some details betray its recent manufacture. Close, %s, close. But no cigar."
+    text[14] = [[    Flintley studies the object on the table for a while, checking the online database a number of times in the process. Then, finally, he turns to you. "I hate to say this, but it seems you've bought a counterfeit. It's a good one, though! That seller on %s must have known his stuff. You see, this is very similar to a number plate used by hovercars on Mars at the time of the Second Growth. However, it's missing a number of vital characteristics, and some details betray its recent manufacture. Close, %s, close. But no cigar."
     You dispose of the counterfeit artefact. Hopefully the next one will be what Sauterfeldt is looking for...]]
     
     flintdeftitle = "Just passing through"
     
-    flintdeftext = [[    Flintley greets you. "Do you have any objects for me to look at, %s? No? Well, alright. I'll be here if you need me. Good luck out there."]]
+    flintdeftext = [[    Flintley greets you. "Do you have any objects for me to look at, %s? No? Well, all right. I'll be here if you need me. Good luck out there."]]
     
     title[10] = "From days long gone"
     
@@ -148,7 +148,6 @@ function accept()
         misn.osdCreate(misn_title, { osd_msg[1]:format(baronsys:name()),
                                    })
         marker = misn.markerAdd(baronsys, "low")
-        var.push("baron_active", true)
         
         enterhook = hook.enter("enter")
     else
@@ -190,7 +189,6 @@ function board()
         player.unboard()
         pinnacle:setHealth(100,100)
         pinnacle:control(false)
-        var.pop("baron_active")
         player.pay(reward)
         misn.finish(true)
     end
@@ -402,5 +400,4 @@ end
 
 function abort()
     misn.finish(false)
-    var.pop("baron_active")
 end

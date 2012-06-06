@@ -16,6 +16,7 @@
 
 #include "log.h"
 #include "nxml.h"
+#include "nstring.h"
 #include "player.h"
 #include "dialogue.h"
 #include "menu.h"
@@ -131,7 +132,7 @@ int save_all (void)
       WARN("Failed to create save directory '%ssaves'.", nfile_dataPath());
       goto err_writer;
    }
-   snprintf(file, PATH_MAX, "%ssaves/%s.ns", nfile_dataPath(), player.name);
+   nsnprintf(file, PATH_MAX, "%ssaves/%s.ns", nfile_dataPath(), player.name);
 
    /* Back up old savegame. */
    if (!save_loaded) {
@@ -166,7 +167,7 @@ err:
 void save_reload (void)
 {
    char path[PATH_MAX];
-   snprintf(path, PATH_MAX, "%ssaves/%s.ns", nfile_dataPath(), player.name);
+   nsnprintf(path, PATH_MAX, "%ssaves/%s.ns", nfile_dataPath(), player.name);
    load_game( path );
 }
 

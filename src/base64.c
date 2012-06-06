@@ -9,9 +9,9 @@
 #include "base64.h"
 
 #include <stdlib.h>
-#include <string.h>
 #include <stdint.h>
 
+#include "nstring.h"
 
 
 /* encode table - base 64 alphabet as defined by the rfc */

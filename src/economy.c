@@ -18,7 +18,7 @@
 #include "naev.h"
 
 #include <stdio.h>
-#include <string.h>
+#include "nstring.h"
 #include <stdint.h>
 
 #ifdef HAVE_SUITESPARSE_CS_H
@@ -39,7 +39,6 @@
 
 #define XML_COMMODITY_ID      "Commodities" /**< XML document identifier */
 #define XML_COMMODITY_TAG     "commodity" /**< XML commodity identifier. */
-#define COMMODITY_DATA        "dat/commodity.xml" /**< Commodity XML file. */
 
 
 /*
@@ -95,19 +94,19 @@ credits_t economy_getPrice( const Commodity *com,
 void credits2str( char *str, credits_t credits, int decimals )
 {
    if (decimals < 0)
-      snprintf( str, ECON_CRED_STRLEN, "%"CREDITS_PRI, credits );
+      nsnprintf( str, ECON_CRED_STRLEN, "%"CREDITS_PRI, credits );
    else if (credits >= 1000000000000000LL)
-      snprintf( str, ECON_CRED_STRLEN, "%.*fQ", decimals, (double)credits / 1000000000000000. );
+      nsnprintf( str, ECON_CRED_STRLEN, "%.*fQ", decimals, (double)credits / 1000000000000000. );
    else if (credits >= 1000000000000LL)
-      snprintf( str, ECON_CRED_STRLEN, "%.*fT", decimals, (double)credits / 1000000000000. );
+      nsnprintf( str, ECON_CRED_STRLEN, "%.*fT", decimals, (double)credits / 1000000000000. );
    else if (credits >= 1000000000L)
-      snprintf( str, ECON_CRED_STRLEN, "%.*fB", decimals, (double)credits / 1000000000. );
+      nsnprintf( str, ECON_CRED_STRLEN, "%.*fB", decimals, (double)credits / 1000000000. );
    else if (credits >= 1000000)
-      snprintf( str, ECON_CRED_STRLEN, "%.*fM", decimals, (double)credits / 1000000. );
+      nsnprintf( str, ECON_CRED_STRLEN, "%.*fM", decimals, (double)credits / 1000000. );
    else if (credits >= 1000)
-      snprintf( str, ECON_CRED_STRLEN, "%.*fK", decimals, (double)credits / 1000. );
+      nsnprintf( str, ECON_CRED_STRLEN, "%.*fK", decimals, (double)credits / 1000. );
    else
-      snprintf (str, ECON_CRED_STRLEN, "%"CREDITS_PRI, credits );
+      nsnprintf (str, ECON_CRED_STRLEN, "%"CREDITS_PRI, credits );
 }
 
 
@@ -205,7 +204,7 @@ static int commodity_parse( Commodity *temp, xmlNodePtr parent )
    /* Get name. */
    xmlr_attr( parent, "name", temp->name );
    if (temp->name == NULL)
-      WARN("Commodity from "COMMODITY_DATA" has invalid or no name");
+      WARN("Commodity from "COMMODITY_DATA_PATH" has invalid or no name");
 
    /* Parse body. */
    node = parent->xmlChildrenNode;
@@ -279,26 +278,26 @@ int commodity_load (void)
    xmlDocPtr doc;
 
    /* Load the file. */
-   buf = ndata_read( COMMODITY_DATA, &bufsize);
+   buf = ndata_read( COMMODITY_DATA_PATH, &bufsize);
    if (buf == NULL)
       return -1;
 
    /* Handle the XML. */
    doc = xmlParseMemory( buf, bufsize );
    if (doc == NULL) {
-      WARN("'%s' is not valid XML.", COMMODITY_DATA);
+      WARN("'%s' is not valid XML.", COMMODITY_DATA_PATH);
       return -1;
    }
 
    node = doc->xmlChildrenNode; /* Commodities node */
    if (strcmp((char*)node->name,XML_COMMODITY_ID)) {
-      ERR("Malformed "COMMODITY_DATA" file: missing root element '"XML_COMMODITY_ID"'");
+      ERR("Malformed "COMMODITY_DATA_PATH" file: missing root element '"XML_COMMODITY_ID"'");
       return -1;
    }
 
    node = node->xmlChildrenNode; /* first faction node */
    if (node == NULL) {
-      ERR("Malformed "COMMODITY_DATA" file: does not contain elements");
+      ERR("Malformed "COMMODITY_DATA_PATH" file: does not contain elements");
       return -1;
    }
 
@@ -321,7 +320,7 @@ int commodity_load (void)
          }
       }
       else
-         WARN("'"COMMODITY_DATA"' has unknown node '%s'.", node->name);
+         WARN("'"COMMODITY_DATA_PATH"' has unknown node '%s'.", node->name);
    } while (xml_nextNode(node));
 
    xmlFreeDoc(doc);
@@ -612,7 +611,14 @@ int economy_update( unsigned int dt )
          X[i] = econ_calcSysI( dt, &systems_stack[i], j );
 
       /* Solve the system. */
-      ret = cs_lsolve( econ_G, X );
+      /** @TODO This should be improved to try to use better factorizations (LU/Cholesky)
+       * if possible or just outright try to use some other library that does fancy stuff
+       * like UMFPACK. Would be also interesting to see if it could be optimized so we
+       * store the factorization or update that instead of handling it individually. Another
+       * point of interest would be to split loops out to make the solving faster, however,
+       * this may be trickier to do (although it would surely let us use cholesky always if we
+       * enforce that condition). */
+      ret = cs_qrsol( 3, econ_G, X );
       if (ret != 1)
          WARN("Failed to solve the Economy System.");
 

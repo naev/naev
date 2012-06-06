@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Reactor Class I">
+ <general>
+  <typename>Energy Modifier</typename>
+  <slot>utility</slot>
+  <mass>10</mass>
+  <price>170000</price>
+  <gfx_store>reactor_i</gfx_store>
+  <description>Adding a complementary reactor to your ship is a great way to get that extra energy boost you need. This does not replace the existing reactor but works alongside it and hooks up directly to the energy flux.</description>
+ </general>
+ <specific type="modification">
+  <cpu>5</cpu>
+  <energy>20</energy>
+  <energy_regen>4.7</energy_regen>
+ </specific>
+</outfit>

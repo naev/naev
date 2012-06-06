@@ -43,19 +43,22 @@
 #define PILOT_WEAPON_SETS        10    /**< Number of weapon sets the pilot has. */
 #define PILOT_WEAPSET_MAX_LEVELS 2     /**< Maximum amount of weapon levels. */
 
+
 /* hooks */
-#define PILOT_HOOK_NONE    0 /**< No hook. */
-#define PILOT_HOOK_DEATH   1 /**< Pilot died. */
-#define PILOT_HOOK_BOARD   2 /**< Pilot got boarded. */
-#define PILOT_HOOK_DISABLE 3 /**< Pilot got disabled. */
-#define PILOT_HOOK_UNDISABLE 4 /**< Pilot recovered from  beingdisabled. */
-#define PILOT_HOOK_JUMP    5 /**< Pilot jumped. */
-#define PILOT_HOOK_HAIL    6 /**< Pilot is hailed. */
-#define PILOT_HOOK_LAND    7 /**< Pilot is landing. */
-#define PILOT_HOOK_ATTACKED 8 /**< Pilot is in manual override and is being attacked. */
-#define PILOT_HOOK_IDLE    9 /**< Pilot is in manual override and has just become idle. */
-#define PILOT_HOOK_EXPLODED 10 /**< Pilot died and exploded (about to be removed). */
-#define PILOT_HOOK_LOCKON  11 /**< Pilot had a launcher lockon. */
+enum {
+   PILOT_HOOK_NONE,      /**< No hook. */
+   PILOT_HOOK_DEATH,     /**< Pilot died. */
+   PILOT_HOOK_BOARD,     /**< Pilot got boarded. */
+   PILOT_HOOK_DISABLE,   /**< Pilot got disabled. */
+   PILOT_HOOK_UNDISABLE, /**< Pilot recovered from being disabled. */
+   PILOT_HOOK_JUMP,      /**< Pilot jumped. */
+   PILOT_HOOK_HAIL,      /**< Pilot is hailed. */
+   PILOT_HOOK_LAND,      /**< Pilot is landing. */
+   PILOT_HOOK_ATTACKED,  /**< Pilot is in manual override and is being attacked. */
+   PILOT_HOOK_IDLE,      /**< Pilot is in manual override and has just become idle. */
+   PILOT_HOOK_EXPLODED,  /**< Pilot died and exploded (about to be removed). */
+   PILOT_HOOK_LOCKON     /**< Pilot had a launcher lockon. */
+};
 
 
 /* damage */
@@ -70,54 +73,56 @@
 #define pilot_isFlag(p,f)     ((p)->flags[f]) /**< Checks if flag f is set on pilot p. */
 #define pilot_setFlag(p,f)    ((p)->flags[f] = 1) /**< Sets flag f on pilot p. */
 #define pilot_rmFlag(p,f)     ((p)->flags[f] = 0) /**< Removes flag f on pilot p. */
-/* creation */
-#define PILOT_PLAYER       0 /**< Pilot is a player. */
-#define PILOT_ESCORT       1 /**< Pilot is an escort. */
-#define PILOT_CARRIED      2 /**< Pilot usually resides in a fighter bay. */
-#define PILOT_CREATED_AI   3 /** Pilot has already created AI. */
-#define PILOT_EMPTY        4 /**< Do not add pilot to stack. */
-#define PILOT_NO_OUTFITS   5 /**< Do not create the pilot with outfits. */
-#define PILOT_HASTURRET    6 /**< Pilot has turrets. */
-#define PILOT_HASBEAMS     7 /**< Pilot has beam weapons. */
-/* dynamic */
-#define PILOT_HAILING      8 /**< Pilot is hailing the player. */
-#define PILOT_NODISABLE    9 /**< Pilot can't be disabled. */
-#define PILOT_INVINCIBLE   10 /**< Pilot can't be hit ever. */
-#define PILOT_HOSTILE      11 /**< Pilot is hostile to the player. */
-#define PILOT_FRIENDLY     12 /**< Pilot is friendly to the player. */
-#define PILOT_COMBAT       13 /**< Pilot is engaged in combat. */
-#define PILOT_AFTERBURNER  14 /**< Pilot has his afterburner activated. */
-#define PILOT_HYP_PREP     15 /**< Pilot is getting ready for hyperspace. */
-#define PILOT_HYP_BRAKE    16 /**< PIlot has already braked before jumping. */
-#define PILOT_HYP_BEGIN    17 /**< Pilot is starting engines. */
-#define PILOT_HYPERSPACE   18 /**< Pilot is in hyperspace. */
-#define PILOT_HYP_END      19 /**< Pilot is exiting hyperspace. */
-#define PILOT_BOARDED      20 /**< Pilot has been boarded already. */
-#define PILOT_NOBOARD      21 /**< Pilot can't be boarded. */
-#define PILOT_BOARDING     22 /**< Pilot is currently boarding it's target. */
-#define PILOT_BRIBED       23 /**< Pilot has been bribed already. */
-#define PILOT_DISTRESSED   24 /**< Pilot has distressed once already. */
-#define PILOT_REFUELING    25 /**< Pilot is trying to refueling. */
-#define PILOT_REFUELBOARDING 26 /**< Pilot is actively refueling. */
-#define PILOT_MANUAL_CONTROL 27 /**< Pilot is under manual control of a mission or event. */
-#define PILOT_LANDING      28 /**< Pilot is landing. */
-#define PILOT_TAKEOFF      29 /**< Pilot is taking off. */
-#define PILOT_DISABLED     30 /**< Pilot is disabled. */
-#define PILOT_DISABLED_PERM 31 /**< Pilot is permanently disabled. */
-#define PILOT_DEAD         32 /**< Pilot is in it's dying throes */
-#define PILOT_DEATH_SOUND  33 /**< Pilot just did death explosion. */
-#define PILOT_EXPLODED     34 /**< Pilot did final death explosion. */
-#define PILOT_DELETE       35 /**< Pilot will get deleted asap. */
-#define PILOT_VISPLAYER    36 /**< Pilot is always visible to the player (only player). */
-#define PILOT_VISIBLE      37 /**< Pilot is always visible to other pilots. */
-#define PILOT_HILIGHT      38 /**< Pilot is hilighted when visible (this does not increase visibility). */
-#define PILOT_INVISIBLE    39 /**< Pilot is invisible to other pilots. */
-#define PILOT_BOARDABLE    40 /**< Pilot can be boarded even while active. */
-#define PILOT_NOJUMP       41 /**< Pilot cannot engage hyperspace engines. */
-#define PILOT_NOLAND       42 /**< Pilot cannot land on stations or planets. */
-#define PILOT_NODEATH      43 /**< Pilot can not die, will stay at 1 armour. */
-#define PILOT_INVINC_PLAYER 44 /**< Pilot can not be hurt by the player. */
-#define PILOT_FLAGS_MAX    PILOT_INVINC_PLAYER+1 /* Maximum number of flags. */
+enum {
+   /* creation */
+   PILOT_PLAYER,       /**< Pilot is a player. */
+   PILOT_ESCORT,       /**< Pilot is an escort. */
+   PILOT_CARRIED,      /**< Pilot usually resides in a fighter bay. */
+   PILOT_CREATED_AI,   /** Pilot has already created AI. */
+   PILOT_EMPTY,        /**< Do not add pilot to stack. */
+   PILOT_NO_OUTFITS,   /**< Do not create the pilot with outfits. */
+   /* dynamic */
+   PILOT_HAILING,      /**< Pilot is hailing the player. */
+   PILOT_NODISABLE,    /**< Pilot can't be disabled. */
+   PILOT_INVINCIBLE,   /**< Pilot can't be hit ever. */
+   PILOT_HOSTILE,      /**< Pilot is hostile to the player. */
+   PILOT_FRIENDLY,     /**< Pilot is friendly to the player. */
+   PILOT_COMBAT,       /**< Pilot is engaged in combat. */
+   PILOT_AFTERBURNER,  /**< Pilot has his afterburner activated. */
+   PILOT_HYP_PREP,     /**< Pilot is getting ready for hyperspace. */
+   PILOT_HYP_BRAKE,    /**< PIlot has already braked before jumping. */
+   PILOT_HYP_BEGIN,    /**< Pilot is starting engines. */
+   PILOT_HYPERSPACE,   /**< Pilot is in hyperspace. */
+   PILOT_HYP_END,      /**< Pilot is exiting hyperspace. */
+   PILOT_BOARDED,      /**< Pilot has been boarded already. */
+   PILOT_NOBOARD,      /**< Pilot can't be boarded. */
+   PILOT_BOARDING,     /**< Pilot is currently boarding it's target. */
+   PILOT_BRIBED,       /**< Pilot has been bribed already. */
+   PILOT_DISTRESSED,   /**< Pilot has distressed once already. */
+   PILOT_REFUELING,    /**< Pilot is trying to refueling. */
+   PILOT_REFUELBOARDING, /**< Pilot is actively refueling. */
+   PILOT_MANUAL_CONTROL, /**< Pilot is under manual control of a mission or event. */
+   PILOT_LANDING,      /**< Pilot is landing. */
+   PILOT_TAKEOFF,      /**< Pilot is taking off. */
+   PILOT_DISABLED,     /**< Pilot is disabled. */
+   PILOT_DISABLED_PERM, /**< Pilot is permanently disabled. */
+   PILOT_DEAD,         /**< Pilot is in it's dying throes */
+   PILOT_DEATH_SOUND,  /**< Pilot just did death explosion. */
+   PILOT_EXPLODED,     /**< Pilot did final death explosion. */
+   PILOT_DELETE,       /**< Pilot will get deleted asap. */
+   PILOT_VISPLAYER,    /**< Pilot is always visible to the player (only player). */
+   PILOT_VISIBLE,      /**< Pilot is always visible to other pilots. */
+   PILOT_HILIGHT,      /**< Pilot is hilighted when visible (this does not increase visibility). */
+   PILOT_INVISIBLE,    /**< Pilot is invisible to other pilots. */
+   PILOT_BOARDABLE,    /**< Pilot can be boarded even while active. */
+   PILOT_NOJUMP,       /**< Pilot cannot engage hyperspace engines. */
+   PILOT_NOLAND,       /**< Pilot cannot land on stations or planets. */
+   PILOT_NODEATH,      /**< Pilot can not die, will stay at 1 armour. */
+   PILOT_INVINC_PLAYER, /**< Pilot can not be hurt by the player. */
+   PILOT_COOLDOWN,     /**< Pilot is in active cooldown mode. */
+   PILOT_COOLDOWN_BRAKE, /**< Pilot is braking to enter active cooldown mode. */
+   PILOT_FLAGS_MAX     /**< Maximum number of flags. */
+};
 typedef char PilotFlags[ PILOT_FLAGS_MAX ];
 
 /* makes life easier */
@@ -166,6 +171,7 @@ typedef struct PilotOutfitSlot_ {
    double heat_T;    /**< Slot temperature. [K] */
    double heat_C;    /**< Slot heat capacity. [W/K] */
    double heat_area; /**< Slot area of contact with ship hull. [m^2] */
+   double heat_start; /**< Slot heat at the beginning of a cooldown period. */
 
    /* Current state. */
    PilotOutfitState state; /**< State of the outfit. */
@@ -305,8 +311,10 @@ typedef struct Pilot_ {
    double ew_mass;   /**< Mass factor. */
    double ew_heat;   /**< Heat factor, affects hide. */
    double ew_hide;   /**< Static hide factor. */
+   double ew_movement; /**< Movement factor. */
+   double ew_evasion; /**< Dynamic evasion factor. */
    double ew_detect; /**< Static detection factor. */
-   double ew_jumpDetect; /** Static jump detection factor */
+   double ew_jump_detect; /** Static jump detection factor */
 
    /* Heat. */
    double heat_T;    /**< Ship temperature. [K] */
@@ -314,6 +322,9 @@ typedef struct Pilot_ {
    double heat_emis; /**< Ship epsilon parameter (emissivity). [adimensional 0:1] */
    double heat_cond; /**< Ship conductivity parameter. [W/(m*K)] */
    double heat_area; /**< Effective heatsink area of the ship. [m^2] */
+   double cdelay;    /**< Duration a full active cooldown takes. */
+   double ctimer;    /**< Remaining cooldown time. */
+   double heat_start; /**< Temperature at the start of a cooldown. */
 
    /* Ship statistics. */
    ShipStats stats;  /**< Pilot's copy of ship statistics. */
@@ -335,6 +346,12 @@ typedef struct Pilot_ {
    PilotOutfitSlot *outfit_utility; /**< The utility slots. */
    int outfit_nweapon; /**< Number of weapon slots. */
    PilotOutfitSlot *outfit_weapon; /**< The weapon slots. */
+
+   /* Primarily for AI usage. */
+   int ncannons; /**< Number of cannons equipped. */
+   int nturrets; /**< Number of turrets equipped. */
+   int nbeams;   /**< Number of beams equipped. */
+
    /* For easier usage. */
    PilotOutfitSlot *afterburner; /**< the afterburner */
 
@@ -381,9 +398,9 @@ typedef struct Pilot_ {
    double ptimer;    /**< generic timer for internal pilot use */
    double htimer;    /**< Hail animation timer. */
    double stimer;    /**< Shield regeneration timer. */
+   double sbonus;    /**< Shield regeneration bonus. */
    double dtimer;    /**< Disable timer. */
    double dtimer_accum; /**< Accumulated disable timer. */
-   double sbonus;    /**< Shield regeneration bonus. */
    int hail_pos;     /**< Hail animation position. */
    int lockons;      /**< Stores how many seeking weapons are targeting pilot */
    int *mounted;     /**< Number of mounted outfits on the mount. */
@@ -431,6 +448,9 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter, const Da
 void pilot_updateDisable( Pilot* p, const unsigned int shooter );
 void pilot_explode( double x, double y, double radius, const Damage *dmg, const Pilot *parent );
 double pilot_face( Pilot* p, const double dir );
+int pilot_brake( Pilot* p );
+void pilot_cooldown( Pilot *p );
+void pilot_cooldownEnd( Pilot *p, const char *reason );
 
 
 /* Misc. */

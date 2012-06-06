@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Shredder">
+ <general>
+  <slot>weapon</slot>
+  <size>light</size>
+  <mass>10</mass>
+  <price>22000</price>
+  <description>The Shredder quite lives up to the name its Dvaered manufacturers gave it. The sheer damage dealing capacity of this weapon makes Dvaered fighters dangerous to engage by ships that aren't substantially larger than they are.</description>
+  <gfx_store>shredder</gfx_store>
+ </general>
+ <specific type="bolt">
+  <cpu>8</cpu>
+  <gfx>gatling</gfx>
+  <sound>autocannon</sound>
+  <sound_hit>medexp0</sound_hit>
+  <spfx_shield>ExpS</spfx_shield>
+  <spfx_armour>ExpS</spfx_armour>
+  <delay>0.4</delay>
+  <speed>500</speed>
+  <range blowup="armour">900</range>
+  <energy>11</energy>
+  <heatup>30</heatup>
+  <track>1.5</track>
+  <swivel>8</swivel>
+  <damage>
+   <type>impact</type>
+   <penetrate>20</penetrate>
+   <physical>12</physical>
+   <disable>1</disable>
+  </damage>
+ </specific>
+</outfit>

@@ -16,11 +16,9 @@
  * Basically just marks an amount of systems when the player buys it as known.
  */
 struct OutfitMapData_s {
-
    StarSystem **systems; /**< systems to mark as known. */
    JumpPoint **jumps; /**< jump points to mark as known. */
    Planet **assets; /**< assets to mark as known. */
-
 };
 
 #endif /* MAPDATA_H */

@@ -16,7 +16,7 @@ Open your system map (%s key).]]
    message3 = [[You're looking at the system map for this system. But it appears empty! This is because at the moment, your sensors haven't picked up anything yet. The interference is too strong to see anything from here.
 
 A marker has been placed on your map. Navigate toward it. Remember, you can right-click on a location to get there faster.]]
-   message4 = [[Something just happened. You discovered a planet in this system, it's called Tein. Planets are the biggest objects you'll encounter in any system, so you will usually discover them before anything else.
+   message4 = [[Something just happened. You discovered a planet in this system, called Tein. Planets are the biggest objects you'll encounter in any system, so you will usually discover them before anything else.
 
 Keep going.]]
    message5 = [[You've discovered something else, Tein's moon Rein. Moons are a lot smaller than planets and are therefore harder to detect.
@@ -94,6 +94,7 @@ end
 -- Cleanup function. Should be the exit point for the module in all cases.
 function cleanup()
     if not (omsg == nil) then player.omsgRm(omsg) end
+    var.push("tut_next", "Tutorial: Interstellar Flight")
     naev.keyEnableAll()
     naev.eventStart("Tutorial")
     evt.finish(true)

@@ -27,7 +27,7 @@
 #include "naev.h"
 
 #include <stdlib.h>
-#include <string.h>
+#include "nstring.h"
 
 #include "log.h"
 #include "nxml.h"
@@ -970,13 +970,12 @@ static int hooks_executeParam( const char* stack, HookParam *param )
    if ((player.p == NULL) || player_isFlag(PLAYER_DESTROYED))
       return 0;
 
-   /* Mark hooks as unrun. */
+   /* Reset the current stack's ran and creation flags. */
    for (h=hook_list; h!=NULL; h=h->next)
-      h->ran_once = 0;
-
-   /* Clear creation flags. */
-   for (h=hook_list; h!=NULL; h=h->next)
-      h->created = 0;
+      if (strcmp(stack, h->stack)==0) {
+         h->ran_once = 0;
+         h->created = 0;
+      }
 
    run = 0;
    hook_runningstack++; /* running hooks */

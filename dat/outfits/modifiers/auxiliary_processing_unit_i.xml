@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <outfit name="Auxiliary Processing Unit I">
+ <general>
+  <typename>CPU Modifier</typename>
+  <slot>utility</slot>
+  <mass>7</mass>
+  <price>80000</price>
+  <gfx_store>cpu_i</gfx_store>
+  <description>The Advanced Nanosystems APU I is an obsolete design intended for light vessels. It is relatively light weight, though it's less power efficient than its successors.</description>
+ </general>
+ <specific type="modification">
+  <cpu>-10</cpu>
+  <energy_regen>-3.35</energy_regen>
+ </specific>
+</outfit>

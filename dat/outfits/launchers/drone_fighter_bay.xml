@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Drone Fighter Bay">
+ <general>
+  <slot>weapon</slot>
+  <license>Light Combat Vessel License</license>
+  <mass>600</mass>
+  <price>1200000</price>
+  <gfx_store>drone_fighter</gfx_store>
+  <description>The Drone Fighter bay uses the advanced collective technologies to sustain a trio of Drone Fighters. Drone Fighters require no pilot making them a safer approach in dangerous situations. They do however need some careful maintenance. All the tools needed to take care of them are provided with the bay.</description>
+ </general>
+ <specific type="fighter bay" secondary="1">
+  <cpu>120</cpu>
+  <ammo>Drone Fighter</ammo>
+  <delay>1</delay>
+  <amount>3</amount>
+ </specific>
+</outfit>

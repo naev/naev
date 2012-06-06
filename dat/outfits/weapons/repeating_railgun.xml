@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Repeating Railgun">
+ <general>
+  <slot>weapon</slot>
+  <size>heavy</size>
+  <license>Heavy Weapon License</license>
+  <mass>43</mass>
+  <price>86000</price>
+  <description>While the Railgun was devastating in its effects, it wasn't quite devastating enough for Dvaered High Command. They had their engineers enhance the weapon into a heavier, faster firing variant that isn't so much a gun as it is a miniature meteor shower generator.</description>
+  <gfx_store>railgun</gfx_store>
+ </general>
+ <specific type="bolt">
+  <cpu>32</cpu>
+  <gfx>massL</gfx>
+  <sound>mass</sound>
+  <sound_hit>medexp0</sound_hit>
+  <spfx_shield>ShiM</spfx_shield>
+  <spfx_armour>ExpM</spfx_armour>
+  <delay>1.4</delay>
+  <speed>700</speed>
+  <range>2200</range>
+  <falloff>1600</falloff>
+  <gfx_end>massL-end</gfx_end>
+  <energy>78</energy>
+  <heatup>100</heatup>
+  <track>0.6</track>
+  <swivel>16</swivel>
+  <damage>
+   <type>impact</type>
+   <penetrate>70</penetrate>
+   <physical>76</physical>
+   <disable>3</disable>
+  </damage>
+ </specific>
+</outfit>

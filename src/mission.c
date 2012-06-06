@@ -14,7 +14,7 @@
 #include "naev.h"
 
 #include <stdint.h>
-#include <string.h>
+#include "nstring.h"
 #include <stdlib.h>
 
 #include "nlua.h"
@@ -42,9 +42,6 @@
 
 #define XML_MISSION_ID        "Missions" /**< XML document identifier */
 #define XML_MISSION_TAG       "mission" /**< XML mission tag. */
-
-#define MISSION_DATA          "dat/mission.xml" /**< Path to missions XML. */
-#define MISSION_LUA_PATH      "dat/missions/" /**< Path to Lua files. */
 
 #define MISSION_CHUNK         32 /**< Chunk allocation. */
 
@@ -782,7 +779,7 @@ static int mission_parse( MissionData* temp, const xmlNodePtr parent )
    /* get the name */
    temp->name = xml_nodeProp(parent,"name");
    if (temp->name == NULL)
-      WARN("Mission in "MISSION_DATA" has invalid or no name");
+      WARN("Mission in "MISSION_DATA_PATH" has invalid or no name");
 
    node = parent->xmlChildrenNode;
 
@@ -794,7 +791,7 @@ static int mission_parse( MissionData* temp, const xmlNodePtr parent )
       xml_onlyNodes(node);
 
       if (xml_isNode(node,"lua")) {
-         snprintf( str, PATH_MAX, MISSION_LUA_PATH"%s.lua", xml_get(node) );
+         nsnprintf( str, PATH_MAX, MISSION_LUA_PATH"%s.lua", xml_get(node) );
          temp->lua = strdup( str );
          str[0] = '\0';
 
@@ -874,20 +871,20 @@ int missions_load (void)
 {
    int m;
    uint32_t bufsize;
-   char *buf = ndata_read( MISSION_DATA, &bufsize );
+   char *buf = ndata_read( MISSION_DATA_PATH, &bufsize );
 
    xmlNodePtr node;
    xmlDocPtr doc = xmlParseMemory( buf, bufsize );
 
    node = doc->xmlChildrenNode;
    if (!xml_isNode(node,XML_MISSION_ID)) {
-      ERR("Malformed '"MISSION_DATA"' file: missing root element '"XML_MISSION_ID"'");
+      ERR("Malformed '"MISSION_DATA_PATH"' file: missing root element '"XML_MISSION_ID"'");
       return -1;
    }
 
    node = node->xmlChildrenNode; /* first mission node */
    if (node == NULL) {
-      ERR("Malformed '"MISSION_DATA"' file: does not contain elements");
+      ERR("Malformed '"MISSION_DATA_PATH"' file: does not contain elements");
       return -1;
    }
 

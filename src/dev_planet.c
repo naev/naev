@@ -9,6 +9,7 @@
  */
 
 #include "dev_planet.h"
+#include "dev_uniedit.h"
 
 #include "naev.h"
 
@@ -17,6 +18,7 @@
 #include "nxml.h"
 #include "physics.h"
 #include "nfile.h"
+#include "nstring.h"
 
 
 /**
@@ -31,7 +33,7 @@ int dpl_savePlanet( const Planet *p )
    xmlDocPtr doc;
    xmlTextWriterPtr writer;
    char *file, *cleanName;
-   int i, pos;
+   int i;
 
    /* Create the writer. */
    writer = xmlNewTextWriterDoc(&doc, 0);
@@ -128,20 +130,9 @@ int dpl_savePlanet( const Planet *p )
    xmlFreeTextWriter( writer );
 
    /* Write data. */
-   cleanName = malloc((strlen(p->name)+1)*sizeof(char));
-   memset(cleanName, 0, strlen(p->name)+1);
-   pos = 0;
-   for (i=0; i<(int)strlen(p->name); i++) {
-      if (!ispunct(p->name[i])) {
-         if (p->name[i] == ' ')
-            cleanName[pos] = '_';
-         else
-            cleanName[pos] = tolower(p->name[i]);
-         pos++;
-      }
-   }
-   file = malloc((strlen(cleanName)+20)*sizeof(char));
-   snprintf(file,(strlen(cleanName)+20)*sizeof(char),"dat/assets/%s.xml",cleanName);
+   cleanName = uniedit_nameFilter( p->name );
+   file = malloc((strlen(cleanName)+16)*sizeof(char));
+   nsnprintf(file,(strlen(cleanName)+16)*sizeof(char),"dat/assets/%s.xml",cleanName);
    xmlSaveFileEnc( file, doc, "UTF-8" );
 
    /* Clean up. */

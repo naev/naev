@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Turbolaser">
+ <general>
+  <slot>weapon</slot>
+  <size>heavy</size>
+  <license>Heavy Weapon License</license>
+  <mass>57</mass>
+  <price>125000</price>
+  <description>The military grade model of the Heavy Laser is one of the heaviest weapons found in the galaxy. Imperial Capital ships use it to lay down devastating barrages against enemy vessels.</description>
+  <gfx_store>laserturret2</gfx_store>
+ </general>
+ <specific type="turret bolt">
+  <cpu>38</cpu>
+  <gfx>laser4L</gfx>
+  <sound>laser</sound>
+  <spfx_shield>ShiM</spfx_shield>
+  <spfx_armour>ExpM</spfx_armour>
+  <delay>1.45</delay>
+  <speed>550</speed>
+  <range>2800</range>
+  <falloff>2000</falloff>
+  <gfx_end>laser3L</gfx_end>
+  <energy>85</energy>
+  <heatup>60</heatup>
+  <track>0.3</track>
+  <damage>
+   <type>normal</type>
+   <penetrate>75</penetrate>
+   <physical>82</physical>
+   <disable>4</disable>
+  </damage>
+ </specific>
+</outfit>
+
+
+<!-- ION TREE -->

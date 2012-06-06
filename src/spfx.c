@@ -35,8 +35,6 @@
 #define SPFX_XML_ID     "spfxs" /**< XML Document tag. */
 #define SPFX_XML_TAG    "spfx" /**< SPFX XML node tag. */
 
-#define SPFX_DATA       "dat/spfx.xml" /**< Location of the spfx datafile. */
-#define SPFX_GFX_PRE    "gfx/spfx/" /**< location of the graphic */
 #define SPFX_GFX_SUF    ".png" /**< Suffix of graphics. */
 
 #define SPFX_CHUNK_MAX  16384 /**< Maximum chunk to alloc when needed */
@@ -153,7 +151,7 @@ static int spfx_base_parse( SPFX_Base *temp, const xmlNodePtr parent )
       xmlr_float(node, "ttl", temp->ttl);
       if (xml_isNode(node,"gfx")) {
          temp->gfx = xml_parseTexture( node,
-               SPFX_GFX_PRE"%s"SPFX_GFX_SUF, 6, 5, 0 );
+               SPFX_GFX_PATH"%s"SPFX_GFX_SUF, 6, 5, 0 );
          continue;
       }
       WARN("SPFX '%s' has unknown node '%s'.", temp->name, node->name);
@@ -226,20 +224,20 @@ int spfx_load (void)
    xmlDocPtr doc;
 
    /* Load and read the data. */
-   buf = ndata_read( SPFX_DATA, &bufsize );
+   buf = ndata_read( SPFX_DATA_PATH, &bufsize );
    doc = xmlParseMemory( buf, bufsize );
 
    /* Check to see if document exists. */
    node = doc->xmlChildrenNode;
    if (!xml_isNode(node,SPFX_XML_ID)) {
-      ERR("Malformed '"SPFX_DATA"' file: missing root element '"SPFX_XML_ID"'");
+      ERR("Malformed '"SPFX_DATA_PATH"' file: missing root element '"SPFX_XML_ID"'");
       return -1;
    }
 
    /* Check to see if is populated. */
    node = node->xmlChildrenNode; /* first system node */
    if (node == NULL) {
-      ERR("Malformed '"SPFX_DATA"' file: does not contain elements");
+      ERR("Malformed '"SPFX_DATA_PATH"' file: does not contain elements");
       return -1;
    }
 
@@ -260,7 +258,7 @@ int spfx_load (void)
          spfx_base_parse( &spfx_effects[spfx_neffects-1], node );
       }
       else
-         WARN("'"SPFX_DATA"' has unknown node '%s'.", node->name);
+         WARN("'"SPFX_DATA_PATH"' has unknown node '%s'.", node->name);
    } while (xml_nextNode(node));
    /* Shrink back to minimum - shouldn't change ever. */
    spfx_effects = realloc(spfx_effects, sizeof(SPFX_Base) * spfx_neffects);

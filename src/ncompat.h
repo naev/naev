@@ -66,14 +66,5 @@
 #define HAS_FD     HAS_POSIX
 
 
-
-/*
- * Compatibility stuff.
- */
-#if HAS_WIN32
-char *strdup(const char *);
-#endif /* HAS_WIN32 */
-
-
 #endif /* NCOMPAT_H */
 

@@ -67,7 +67,6 @@
 
 #include <stdlib.h>
 #include <stdio.h> /* malloc realloc */
-#include <string.h> /* strncpy strlen strncat strcmp strdup */
 #include <math.h>
 #include <ctype.h> /* isdigit */
 
@@ -75,6 +74,7 @@
 #include <lauxlib.h>
 #include <lualib.h>
 
+#include "nstring.h" /* strncpy strlen strncat strcmp strdup */
 #include "log.h"
 #include "pilot.h"
 #include "player.h"
@@ -238,6 +238,7 @@ static int aiL_combat( lua_State *L ); /* combat( number ) */
 static int aiL_settarget( lua_State *L ); /* settarget( number ) */
 static int aiL_weapSet( lua_State *L ); /* weapset( number ) */
 static int aiL_shoot( lua_State *L ); /* shoot( number ); number = 1,2,3 */
+static int aiL_hascannons( lua_State *L ); /* bool hascannons() */
 static int aiL_hasturrets( lua_State *L ); /* bool hasturrets() */
 static int aiL_getenemy( lua_State *L ); /* number getenemy() */
 static int aiL_getenemy_size( lua_State *L ); /* number getenemy_size() */
@@ -339,6 +340,7 @@ static const luaL_reg aiL_methods[] = {
    { "combat", aiL_combat },
    { "settarget", aiL_settarget },
    { "weapset", aiL_weapSet },
+   { "hascannons", aiL_hascannons },
    { "hasturrets", aiL_hasturrets },
    { "shoot", aiL_shoot },
    { "getenemy", aiL_getenemy },
@@ -544,7 +546,7 @@ int ai_pinit( Pilot *p, const char *ai )
    prof = ai_getProfile(buf);
    if (prof == NULL) {
       WARN("AI Profile '%s' not found, using dummy fallback.", buf);
-      snprintf(buf, sizeof(buf), "dummy" );
+      nsnprintf(buf, sizeof(buf), "dummy" );
       prof = ai_getProfile(buf);
    }
    p->ai = prof;
@@ -649,7 +651,7 @@ int ai_load (void)
       if ((flen > suflen) &&
             strncmp(&files[i][flen-suflen], AI_SUFFIX, suflen)==0) {
 
-         snprintf( path, PATH_MAX, AI_PREFIX"%s", files[i] );
+         nsnprintf( path, PATH_MAX, AI_PREFIX"%s", files[i] );
          if (ai_loadProfile(path)) /* Load the profile */
             WARN("Error loading AI profile '%s'", path);
       }
@@ -1058,8 +1060,8 @@ static void ai_create( Pilot* pilot, char *param )
       aiL_status = AI_STATUS_CREATE;
 
    /* Create equipment first - only if creating for the first time. */
-   if (!pilot_isFlag(pilot,PILOT_PLAYER) && ((aiL_status==AI_STATUS_CREATE) ||
-            !pilot_isFlag(pilot, PILOT_EMPTY))) {
+   if (!pilot_isFlag(pilot,PILOT_PLAYER) && (aiL_status==AI_STATUS_CREATE) &&
+            !pilot_isFlag(pilot, PILOT_EMPTY)) {
       if  (faction_getEquipper( pilot->faction ) != NULL) {
          L = faction_getEquipper( pilot->faction );
          func = "equip";
@@ -2513,18 +2515,14 @@ static int aiL_drift_facing( lua_State *L )
 static int aiL_brake( lua_State *L )
 {
    (void)L; /* hack to avoid -W -Wall warnings */
-   double diff, d;
+   int ret;
 
-   d = cur_pilot->solid->dir+M_PI;
-   if (d >= 2*M_PI) d = fmod(d, 2*M_PI);
+   ret = pilot_brake( cur_pilot );
 
-   diff = angle_diff(d,VANGLE(cur_pilot->solid->vel));
-   pilot_turn = 10*diff;
+   pilot_acc = cur_pilot->solid->thrust / cur_pilot->thrust;
+   pilot_turn = cur_pilot->solid->dir_vel / cur_pilot->turn;
 
-   if (ABS(diff) < MAX_DIR_ERR && VMOD(cur_pilot->solid->vel) > MIN_VEL_ERR)
-      pilot_acc = 1.;
-
-   return 0;
+   return ret;
 }
 
 
@@ -2977,14 +2975,27 @@ static int aiL_weapSet( lua_State *L )
 
 
 /**
- * @brief Does the pilot have turrets.?
+ * @brief Does the pilot have cannons?
  *
- *    @luareturn true if the pilot has turrets
+ *    @luareturn True if the pilot has cannons.
+ * @luafunc hascannons()
+ */
+static int aiL_hascannons( lua_State *L )
+{
+   lua_pushboolean( L, cur_pilot->ncannons > 0 );
+   return 1;
+}
+
+
+/**
+ * @brief Does the pilot have turrets?
+ *
+ *    @luareturn True if the pilot has turrets.
  * @luafunc hasturrets()
  */
 static int aiL_hasturrets( lua_State *L )
 {
-   lua_pushboolean( L, pilot_isFlag(cur_pilot, PILOT_HASTURRET) );
+   lua_pushboolean( L, cur_pilot->nturrets > 0 );
    return 1;
 }
 
@@ -2996,6 +3007,11 @@ static int aiL_hasturrets( lua_State *L )
  */
 static int aiL_shoot( lua_State *L )
 {
+   /* Cooldown is similar to a ship being disabled, but the AI continues to
+    * think during cooldown, and thus must not be allowed to fire weapons. */
+   if (pilot_isFlag(cur_pilot, PILOT_COOLDOWN))
+      return 0;
+
    if (lua_toboolean(L,1))
       ai_setFlag(AI_SECONDARY);
    else
@@ -3346,7 +3362,7 @@ static int aiL_broadcast( lua_State *L )
 static int aiL_distress( lua_State *L )
 {
    if (lua_isstring(L,1))
-      snprintf( aiL_distressmsg, PATH_MAX, "%s", lua_tostring(L,1) );
+      nsnprintf( aiL_distressmsg, PATH_MAX, "%s", lua_tostring(L,1) );
    else if (lua_isnil(L,1))
       aiL_distressmsg[0] = '\0';
    else

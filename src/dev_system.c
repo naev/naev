@@ -9,6 +9,7 @@
  */
 
 #include "dev_system.h"
+#include "dev_uniedit.h"
 
 #include "naev.h"
 
@@ -17,6 +18,7 @@
 #include "nxml.h"
 #include "space.h"
 #include "physics.h"
+#include "nstring.h"
 
 
 /*
@@ -72,7 +74,7 @@ static int dsys_compJump( const void *jmp1, const void *jmp2 )
  */
 int dsys_saveSystem( StarSystem *sys )
 {
-   int i, pos;
+   int i;
    xmlDocPtr doc;
    xmlTextWriterPtr writer;
    const Planet **sorted_planets;
@@ -169,20 +171,9 @@ int dsys_saveSystem( StarSystem *sys )
    xmlFreeTextWriter(writer);
 
    /* Write data. */
-   cleanName = malloc((strlen(sys->name)+1)*sizeof(char));
-   memset(cleanName, 0, strlen(sys->name)+1);
-   pos = 0;
-   for (i=0; i<(int)strlen(sys->name); i++) {
-      if (!ispunct(sys->name[i])) {
-         if (sys->name[i] == ' ')
-            cleanName[pos] = '_';
-         else
-            cleanName[pos] = tolower(sys->name[i]);
-         pos++;
-      }
-   }
-   file = malloc((pos+20)*sizeof(char));
-   snprintf(file,(pos+20)*sizeof(char),"dat/ssys/%s.xml",cleanName);
+   cleanName = uniedit_nameFilter( sys->name );
+   file = malloc( (strlen(cleanName)+14) * sizeof(char) );
+   nsnprintf(file,strlen(cleanName)+14,"dat/ssys/%s.xml",cleanName);
    xmlSaveFileEnc( file, doc, "UTF-8" );
 
    /* Clean up. */

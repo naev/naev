@@ -10,7 +10,7 @@
 
 #include <stdlib.h> /* atoi */
 #include <unistd.h> /* getopt */
-#include <string.h> /* strdup */
+#include "nstring.h" /* strdup */
 #include <getopt.h> /* getopt_long */
 
 #include "nlua.h"
@@ -99,6 +99,7 @@ static void print_usage( char **argv )
    LOG("   -s f, --svol f        sets the sound volume to f");
    LOG("   -G, --generate        regenerates the nebula (slow)");
    LOG("   -N, --nondata         do not use ndata and try to use laid out files");
+   LOG("   -d, --datapath        specifies a custom path for all user data (saves, screenshots, etc.)");
 #ifdef DEBUGGING
    LOG("   --devmode             enables dev mode perks like the editors");
    LOG("   --devcsv              generates csv output from the ndata for development purposes");
@@ -142,6 +143,12 @@ void conf_setDefaults (void)
    conf.zoom_near    = 1.;
    conf.zoom_speed   = 0.25;
    conf.zoom_stars   = 1.;
+
+   /* Font sizes. */
+   conf.font_size_console = 10;
+   conf.font_size_intro   = 18;
+   conf.font_size_def     = 12;
+   conf.font_size_small   = 10;
 
    /* Misc. */
    conf.nosave       = 0;
@@ -274,6 +281,24 @@ void conf_cleanup (void)
 
 
 /*
+ * @brief Parses the local conf that dictates where user data goes.
+ */
+void conf_loadConfigPath( void )
+{
+   const char *file = "datapath.lua";
+
+   if (!nfile_fileExists(file))
+      return;
+
+   lua_State *L = nlua_newState();
+   if (luaL_dofile(L, file) == 0)
+      conf_loadString("datapath",conf.datapath);
+
+   lua_close(L);
+}
+
+
+/*
  * parses the config file
  */
 int conf_loadConfig ( const char* file )
@@ -364,6 +389,12 @@ int conf_loadConfig ( const char* file )
       conf_loadFloat("zoom_near",conf.zoom_near);
       conf_loadFloat("zoom_speed",conf.zoom_speed);
       conf_loadFloat("zoom_stars",conf.zoom_stars);
+
+      /* Font size. */
+      conf_loadInt("font_size_console",conf.font_size_console);
+      conf_loadInt("font_size_intro",conf.font_size_intro);
+      conf_loadInt("font_size_def",conf.font_size_def);
+      conf_loadInt("font_size_small",conf.font_size_small);
 
       /* Misc. */
       conf_loadFloat("compression_velocity",conf.compression_velocity);
@@ -494,6 +525,32 @@ int conf_loadConfig ( const char* file )
 }
 
 
+void conf_parseCLIPath( int argc, char** argv )
+{
+   static struct option long_options[] = {
+      { "datapath", required_argument, 0, 'd' },
+      { NULL, 0, 0, 0 }
+   };
+
+   int option_index = 1;
+   int c = 0;
+
+   /* GNU giveth, and GNU taketh away.
+    * If we don't specify "-" as the first char, getopt will happily
+    * mangle the initial argument order, probably causing crashes when
+    * passing arguments that take values, such as -H and -W.
+    */
+   while ((c = getopt_long(argc, argv, "-:d:",
+         long_options, &option_index)) != -1) {
+      switch(c) {
+         case 'd':
+            conf.datapath = strdup(optarg);
+            break;
+      }
+   }
+}
+
+
 /*
  * parses the CLI options
  */
@@ -522,6 +579,12 @@ void conf_parseCLI( int argc, char** argv )
       { NULL, 0, 0, 0 } };
    int option_index = 1;
    int c = 0;
+
+   /* man 3 getopt says optind should be initialized to 1, but that seems to
+    * cause all options to get parsed, i.e. we cannot detect a trailing ndata
+    * option.
+    */
+   optind = 0;
    while ((c = getopt_long(argc, argv,
          "fF:Vd:j:J:W:H:MSm:s:GNhv",
          long_options, &option_index)) != -1) {
@@ -577,7 +640,7 @@ void conf_parseCLI( int argc, char** argv )
 
          case 'C':
             conf.devcsv = 1;
-            LOG("Will generate CVS ouptut.");
+            LOG("Will generate CSV ouptut.");
             break;
 #endif /* DEBUGGING */
 
@@ -597,7 +660,7 @@ void conf_parseCLI( int argc, char** argv )
 
 
 /**
- * @brief snprintf-like function to quote and escape a string for use in Lua source code
+ * @brief nsnprintf-like function to quote and escape a string for use in Lua source code
  *
  *    @param str The destination buffer
  *    @param size The maximum amount of space in str to use
@@ -615,7 +678,7 @@ static size_t quoteLuaString(char *str, size_t size, const char *text)
 
    /* Write a Lua nil if we are given a NULL pointer */
    if (text == NULL)
-      return snprintf(str, size, "nil");
+      return nsnprintf(str, size, "nil");
 
    count = 0;
 
@@ -671,7 +734,7 @@ static size_t quoteLuaString(char *str, size_t size, const char *text)
       if (count == size)
          return count;
 
-      count += snprintf(&str[count], size-count, "%03u", *in);
+      count += nsnprintf(&str[count], size-count, "%03u", *in);
       if (count == size)
          return count;
    }
@@ -683,7 +746,7 @@ static size_t quoteLuaString(char *str, size_t size, const char *text)
 
    /* zero-terminate, if possible */
    if (count != size)
-      str[count] = '\0';   /* don't increase count, like snprintf */
+      str[count] = '\0';   /* don't increase count, like nsnprintf */
 
    /* return the amount of characters written */
    return count;
@@ -691,26 +754,26 @@ static size_t quoteLuaString(char *str, size_t size, const char *text)
 
 
 #define  conf_saveComment(t)     \
-pos += snprintf(&buf[pos], sizeof(buf)-pos, "-- %s\n", t);
+pos += nsnprintf(&buf[pos], sizeof(buf)-pos, "-- %s\n", t);
 
 #define  conf_saveEmptyLine()     \
 if (sizeof(buf) != pos) \
    buf[pos++] = '\n';
 
 #define  conf_saveInt(n,i)    \
-pos += snprintf(&buf[pos], sizeof(buf)-pos, "%s = %d\n", n, i);
+pos += nsnprintf(&buf[pos], sizeof(buf)-pos, "%s = %d\n", n, i);
 
 #define  conf_saveFloat(n,f)    \
-pos += snprintf(&buf[pos], sizeof(buf)-pos, "%s = %f\n", n, f);
+pos += nsnprintf(&buf[pos], sizeof(buf)-pos, "%s = %f\n", n, f);
 
 #define  conf_saveBool(n,b)    \
 if (b) \
-   pos += snprintf(&buf[pos], sizeof(buf)-pos, "%s = true\n", n); \
+   pos += nsnprintf(&buf[pos], sizeof(buf)-pos, "%s = true\n", n); \
 else \
-   pos += snprintf(&buf[pos], sizeof(buf)-pos, "%s = false\n", n);
+   pos += nsnprintf(&buf[pos], sizeof(buf)-pos, "%s = false\n", n);
 
 #define  conf_saveString(n,s) \
-pos += snprintf(&buf[pos], sizeof(buf)-pos, "%s = ", n); \
+pos += nsnprintf(&buf[pos], sizeof(buf)-pos, "%s = ", n); \
 pos += quoteLuaString(&buf[pos], sizeof(buf)-pos, s); \
 if (sizeof(buf) != pos) \
    buf[pos++] = '\n';
@@ -935,6 +998,19 @@ int conf_saveConfig ( const char* file )
    conf_saveFloat("zoom_stars",conf.zoom_stars);
    conf_saveEmptyLine();
 
+   /* Fonts. */
+   conf_saveComment("Font sizes (in pixels) for NAEV");
+   conf_saveComment("Warning, setting to other than the default can cause visual glitches!");
+   conf_saveComment("Console default: 10");
+   conf_saveInt("font_size_console",conf.font_size_console);
+   conf_saveComment("Intro default: 18");
+   conf_saveInt("font_size_intro",conf.font_size_intro);
+   conf_saveComment("Default size: 12");
+   conf_saveInt("font_size_def",conf.font_size_def);
+   conf_saveComment("Small size: 10");
+   conf_saveInt("font_size_small",conf.font_size_small);
+   conf_saveEmptyLine();
+
    /* Misc. */
    conf_saveComment("Sets the velocity (px/s) to compress up to when time compression is enabled.");
    conf_saveFloat("compression_velocity",conf.compression_velocity);
@@ -1020,10 +1096,10 @@ int conf_saveConfig ( const char* file )
          quoteLuaString(keyname, sizeof(keyname)-1, SDL_GetKeyName(key));
       /* If SDL can't describe the key, store it as an integer */
       if (type != KEYBIND_KEYBOARD || strcmp(keyname, "\"unknown key\"") == 0)
-         snprintf(keyname, sizeof(keyname)-1, "%d", key);
+         nsnprintf(keyname, sizeof(keyname)-1, "%d", key);
 
       /* Write out a simple Lua table containing the keybind info */
-      pos += snprintf(&buf[pos], sizeof(buf)-pos, "%s = { type = \"%s\", mod = \"%s\", key = %s }\n",
+      pos += nsnprintf(&buf[pos], sizeof(buf)-pos, "%s = { type = \"%s\", mod = \"%s\", key = %s }\n",
             keybind_info[i][0], typename, modname, keyname);
    }
    conf_saveEmptyLine();

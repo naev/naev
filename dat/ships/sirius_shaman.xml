@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ship name="Sirius Shaman">
- <base_type>shaman</base_type>
+ <base_type>Shaman</base_type>
  <GFX>shaman</GFX>
  <GUI>slim</GUI>
  <sound>engine</sound>

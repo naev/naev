@@ -13,14 +13,16 @@
 
 
 /* availability by location */
-#define  MIS_AVAIL_NONE       0 /**< Mission isn't available. */
-#define  MIS_AVAIL_COMPUTER   1 /**< Mission is available at mission computer. */
-#define  MIS_AVAIL_BAR        2 /**< Mission is available at bar. */
-#define  MIS_AVAIL_OUTFIT     3 /**< Mission is available at outfitter. */
-#define  MIS_AVAIL_SHIPYARD   4 /**< Mission is available at shipyard. */
-#define  MIS_AVAIL_LAND       5 /**< Mission is available on landing. */
-#define  MIS_AVAIL_COMMODITY  6 /**< Mission is available at commodity exchange. */
-#define  MIS_AVAIL_SPACE      7 /**< Mission is available in space. */
+enum {
+   MIS_AVAIL_NONE,       /**< Mission isn't available. */
+   MIS_AVAIL_COMPUTER,   /**< Mission is available at mission computer. */
+   MIS_AVAIL_BAR,        /**< Mission is available at bar. */
+   MIS_AVAIL_OUTFIT,     /**< Mission is available at outfitter. */
+   MIS_AVAIL_SHIPYARD,   /**< Mission is available at shipyard. */
+   MIS_AVAIL_LAND,       /**< Mission is available on landing. */
+   MIS_AVAIL_COMMODITY,  /**< Mission is available at commodity exchange. */
+   MIS_AVAIL_SPACE       /**< Mission is available in space. */
+};
 
 
 /* flag functions */

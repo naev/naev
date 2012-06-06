@@ -1,0 +1,112 @@
+#naev-header {
+   background-color: #ccc;
+   color: #fff;
+   margin: 0;
+   padding: 0;
+   font-size: 10px;
+   text-align: center;
+   line-height: 1;
+   font-family: Verdana, Helvetica, Arial, sans-serif;
+}
+
+#naev-header a:hover {
+   color: #103080;
+   text-decoration: underline;
+}
+
+#naev-header a {
+   color: #103080;
+   text-decoration: none;
+}
+
+#naev-top {
+   background: #202080;
+   background-image: url('http://naev.org/nebula-tile.png');
+   background-repeat: repeat-x;
+   padding: 0;
+   margin: 0;
+   font-family: Verdana, Helvetica, Arial, sans-serif;
+   height: 75px;
+}
+
+#naevimg {
+   vertical-align: baseline;
+   padding: 0;
+   margin: 0;
+   border: 0;
+}
+
+ul.naevlinks {
+   font-size: 10px;
+   font-weight: bold;
+   display: block;
+   border-top: 1px solid #888;
+   border-bottom: 1px solid #888;
+   padding: 0;
+   margin: 0;
+}
+
+ul.naevlinks li {
+   display: block;
+}
+
+
+#naev-header {
+   background-color: #ccc;
+   color: #fff;
+   margin: 0;
+   padding: 0;
+   font-size: 10px;
+   text-align: center;
+   line-height: 1;
+   font-family: Verdana, Helvetica, Arial, sans-serif;
+}
+
+#naev-header a:hover {
+   color: #103080;
+   text-decoration: underline;
+}
+
+#naev-header a {
+   color: #103080;
+   text-decoration: none;
+}
+
+#naev-top {
+   background: #202080;
+   background-image: url('http://naev.org/nebula-tile.png');
+   background-repeat: repeat-x;
+   padding: 0;
+   margin: 0;
+   font-family: Verdana, Helvetica, Arial, sans-serif;
+   height: 75px;
+}
+
+#naevimg {
+   vertical-align: baseline;
+   padding: 0;
+   margin: 0;
+   border: 0;
+}
+
+ul.naevlinks {
+   font-size: 10px;
+   font-weight: bold;
+   display: block;
+   border-top: 1px solid #888;
+   border-bottom: 1px solid #888;
+   padding: 0;
+   margin: 0;
+}
+
+ul.naevlinks li {
+   display: block;
+   list-style-type: none;
+   width: auto;
+   font-size: 1.1em;
+   line-height: 2.0em;
+   font-family: Verdana, Helvetica, Arial, sans-serif;
+   text-decoration: none;
+   padding: 0;
+   margin: 0;
+}

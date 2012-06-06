@@ -67,6 +67,11 @@ void player_autonavStart (void)
       return;
    }
 
+   /* Cooldown and autonav are mutually-exclusive. */
+   if ((pilot_isFlag(player.p, PILOT_COOLDOWN)) ||
+         (pilot_isFlag(player.p, PILOT_COOLDOWN_BRAKE)))
+      pilot_cooldownEnd(player.p, NULL);
+
    player_autonavSetup();
    player.autonav = AUTONAV_JUMP_APPROACH;
 }
@@ -201,6 +206,11 @@ void player_autonavAbort( const char *reason )
    if ((player.p==NULL) || ((player.p != NULL) && pilot_isFlag(player.p, PILOT_HYPERSPACE)))
       return;
 
+   /* Cooldown (handled later) may be script-initiated and we don't
+    * want to make it player-abortable while under manual control. */
+   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
+      return;
+
    if (player_isFlag(PLAYER_AUTONAV)) {
       if (reason != NULL)
          player_message("\erAutonav aborted: %s!", reason);
@@ -220,6 +230,10 @@ void player_autonavAbort( const char *reason )
       /* Reset time compression. */
       player_autonavEnd();
    }
+   else if (pilot_isFlag(player.p, PILOT_COOLDOWN_BRAKE))
+      pilot_cooldownEnd(player.p, NULL);
+   else if (pilot_isFlag(player.p, PILOT_COOLDOWN))
+      pilot_cooldownEnd(player.p, reason);
 }
 
 
@@ -364,22 +378,12 @@ static int player_autonavApproach( Vector2d *pos, double *dist2, int count_targe
  */
 static int player_autonavBrake (void)
 {
-   double d;
+   int ret;
 
-   /* Braking procedure. */
-   d = pilot_face( player.p, VANGLE(player.p->solid->vel) + M_PI );
-   if (FABS(d) < MIN_DIR_ERR) {
-      if (player_acc < 1.)
-         player_accel( 1. );
-   }
-   else if (player_acc > 0.)
-      player_accelOver();
+   ret = pilot_brake(player.p);
+   player_acc = player.p->solid->thrust / player.p->thrust;
 
-   if (VMOD(player.p->solid->vel) < MIN_VEL_ERR) {
-      player_accelOver();
-      return 1;
-   }
-   return 0;
+   return ret;
 }
 
 /**

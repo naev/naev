@@ -11,14 +11,14 @@
  <presence>
   <faction>Empire</faction>
   <value>200.000000</value>
-  <range>1</range>
+  <range>2</range>
  </presence>
  <general>
   <class>0</class>
   <population>14000</population>
   <hide>0.750000</hide>
   <services>
-   <land>emp_mil_restricted</land>
+   <land>emp_mil_omega</land>
    <refuel/>
    <bar/>
    <missions/>

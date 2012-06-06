@@ -82,6 +82,7 @@ double pilot_heatCalcOutfitArea( const Outfit *o )
 void pilot_heatCalcSlot( PilotOutfitSlot *o )
 {
    o->heat_T      = CONST_SPACE_STAR_TEMP; /* Reset temperature. */
+   o->heat_start  = CONST_SPACE_STAR_TEMP; /* For cooldown purposes. */
    if (o->outfit == NULL) {
       o->heat_C      = 1.;
       o->heat_area   = 0.;
@@ -110,8 +111,8 @@ void pilot_heatReset( Pilot *p )
 /**
  * @brief Adds heat to an outfit slot.
  *
- *    @param o Outfit to heat.
- *    @param energy Energy received by outfit (in MJ).
+ *    @param p Pilot whose slot it is.
+ *    @param o The slot in question.
  */
 void pilot_heatAddSlot( Pilot *p, PilotOutfitSlot *o )
 {
@@ -125,6 +126,24 @@ void pilot_heatAddSlot( Pilot *p, PilotOutfitSlot *o )
    else
       hmod = 1.;
    o->heat_T += hmod * outfit_heat(o->outfit) / o->heat_C;
+}
+
+
+/**
+ * @brief Adds heat to an outfit slot over a period of time.
+ *
+ *    @param p Pilot whose slot it is.
+ *    @param o The slot in question.
+ *    @param dt Delta tick.
+ */
+void pilot_heatAddSlotTime( Pilot *p, PilotOutfitSlot *o, double dt )
+{
+   (void) p;
+   double hmod;
+
+   /* @todo Handle beam modifiers for ships here. */
+   hmod = 1.;
+   o->heat_T += (hmod * outfit_heat(o->outfit) / o->heat_C) * dt;
 }
 
 
@@ -197,6 +216,41 @@ void pilot_heatUpdateShip( Pilot *p, double Q_cond, double dt )
    p->heat_T  += Q / p->heat_C;
 }
 
+
+/**
+ * @brief Returns a 0:1 modifier representing efficiency (1. being normal).
+ *
+ *    @param T  Actual temperature (K)
+ *    @param Tb Base temperature for overheating purposes (K)
+ *    @param Tc Max temperature for overheating purposes (K)
+ */
+double pilot_heatEfficiencyMod( double T, double Tb, double Tc )
+{
+   return CLAMP( 0., 1., 1 - (T - Tb) / Tc );
+}
+
+/**
+ * @brief Overrides the usual heat model during active cooldown.
+ *
+ *    @param p  Pilot to update.
+ *    @param dt Delta tick.
+ */
+void pilot_heatUpdateCooldown( Pilot *p )
+{
+   double t;
+   int i;
+   PilotOutfitSlot *o;
+
+   t = pow2( 1. - p->ctimer / p->cdelay );
+   p->heat_T = p->heat_start - CONST_SPACE_STAR_TEMP - (p->heat_start -
+         CONST_SPACE_STAR_TEMP) * t + CONST_SPACE_STAR_TEMP;
+
+   for (i=0; i<p->noutfits; i++) {
+      o = p->outfits[i];
+      o->heat_T = o->heat_start - CONST_SPACE_STAR_TEMP - (o->heat_start -
+            CONST_SPACE_STAR_TEMP) * t + CONST_SPACE_STAR_TEMP;
+   }
+}
 
 /**
  * @brief Returns a 0:1 modifier representing accuracy (0. being normal).

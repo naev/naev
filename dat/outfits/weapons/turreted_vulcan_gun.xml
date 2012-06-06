@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Turreted Vulcan Gun">
+ <general>
+  <slot>weapon</slot>
+  <size>medium</size>
+  <mass>28</mass>
+  <license>Heavy Weapon License</license>
+  <price>37000</price>
+  <description>Turreted Vulcan Guns pack the same caliber ammunition as their fixed mount brethren. Ships not nimble enough to evade its relentless stream of projectiles might find themselves riddled with hull punctures before long.</description>
+  <gfx_store>vulcanturret</gfx_store>
+ </general>
+ <specific type="turret bolt">
+  <cpu>16</cpu>
+  <gfx>gatling</gfx>
+  <sound>autocannon</sound>
+  <sound_hit>medexp0</sound_hit>
+  <spfx_shield>ExpS</spfx_shield>
+  <spfx_armour>ExpS</spfx_armour>
+  <delay>0.275</delay>
+  <speed>500</speed>
+  <range blowup="armour">1000</range>
+  <energy>10.5</energy>
+  <heatup>45</heatup>
+  <track>2.05</track>
+  <damage>
+   <type>impact</type>
+   <penetrate>20</penetrate>
+   <physical>9.5</physical>
+   <disable>1</disable>
+  </damage>
+ </specific>
+</outfit>
+<!-- TODO flak -->

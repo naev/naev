@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Plasma Blaster MK1">
+ <general>
+  <slot>weapon</slot>
+  <size>light</size>
+  <mass>5</mass>
+  <price>9000</price>
+  <description>Highly volatile, the plasma blaster is among the best choices for fast attacks. As a result of its volatility, it is a potent weapon against both shields and armour, though it is known for dissipating quickly after being fired.</description>
+  <gfx_store>plasma</gfx_store>
+ </general>
+ <specific type="bolt">
+  <cpu>3</cpu>
+  <gfx>plasma</gfx>
+  <sound>plasma</sound>
+  <spfx_shield>ShiS</spfx_shield>
+  <spfx_armour>PlaS</spfx_armour>
+  <delay>0.675</delay>
+  <speed>450</speed>
+  <range>450</range>
+  <falloff>210</falloff>
+  <energy>8</energy>
+  <heatup>20</heatup>
+  <track>2</track>
+  <swivel>4</swivel>
+  <damage>
+   <type>normal</type>
+   <penetrate>8</penetrate>
+   <physical>9</physical>
+   <disable>1</disable>
+  </damage>
+ </specific>
+</outfit>

@@ -14,7 +14,7 @@
 #include "naev.h"
 
 #include <stdlib.h>
-#include <string.h>
+#include "nstring.h"
 
 #include "nxml.h"
 
@@ -31,9 +31,6 @@
 
 #define XML_FACTION_ID     "Factions"   /**< XML section identifier */
 #define XML_FACTION_TAG    "faction" /**< XML tag identifier. */
-
-#define FACTION_DATA       "dat/faction.xml" /**< Faction xml file. */
-#define FACTION_LOGO_PATH  "gfx/logo/" /**< Path to logo gfx. */
 
 
 #define PLAYER_ALLY        70. /**< Above this player is considered ally. */
@@ -566,6 +563,9 @@ void faction_modPlayerRaw( int f, double mod )
    hparam[2].type    = HOOK_PARAM_SENTINEL;
    hooks_runParam( "standing", hparam );
 
+   /* Sanitize just in case. */
+   faction_sanitizePlayer( faction );
+
    /* Tell space the faction changed. */
    space_factionChange();
 }
@@ -816,7 +816,7 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
 
    temp->name = xml_nodeProp(parent,"name");
    if (temp->name == NULL)
-      WARN("Faction from "FACTION_DATA" has invalid or no name");
+      WARN("Faction from "FACTION_DATA_PATH" has invalid or no name");
 
    player = 0;
    node = parent->xmlChildrenNode;
@@ -842,7 +842,7 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
       if (xml_isNode(node, "spawn")) {
          if (temp->sched_state != NULL)
             WARN("Faction '%s' has duplicate 'spawn' tag.", temp->name);
-         snprintf( buf, sizeof(buf), "dat/factions/spawn/%s.lua", xml_raw(node) );
+         nsnprintf( buf, sizeof(buf), "dat/factions/spawn/%s.lua", xml_raw(node) );
          temp->sched_state = nlua_newState();
          nlua_loadStandard( temp->sched_state, 0 );
          dat = ndata_read( buf, &ndat );
@@ -861,7 +861,7 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
       if (xml_isNode(node, "standing")) {
          if (temp->state != NULL)
             WARN("Faction '%s' has duplicate 'standing' tag.", temp->name);
-         snprintf( buf, sizeof(buf), "dat/factions/standing/%s.lua", xml_raw(node) );
+         nsnprintf( buf, sizeof(buf), "dat/factions/standing/%s.lua", xml_raw(node) );
          temp->state = nlua_newState();
          nlua_loadStandard( temp->state, 0 );
          dat = ndata_read( buf, &ndat );
@@ -885,7 +885,7 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
       if (xml_isNode(node, "equip")) {
          if (temp->equip_state != NULL)
             WARN("Faction '%s' has duplicate 'equip' tag.", temp->name);
-         snprintf( buf, sizeof(buf), "dat/factions/equip/%s.lua", xml_raw(node) );
+         nsnprintf( buf, sizeof(buf), "dat/factions/equip/%s.lua", xml_raw(node) );
          temp->equip_state = nlua_newState();
          nlua_loadStandard( temp->equip_state, 0 );
          dat = ndata_read( buf, &ndat );
@@ -904,9 +904,9 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
       if (xml_isNode(node,"logo")) {
          if (temp->logo_small != NULL)
             WARN("Faction '%s' has duplicate 'logo' tag.", temp->name);
-         snprintf( buf, PATH_MAX, FACTION_LOGO_PATH"%s_small.png", xml_get(node));
+         nsnprintf( buf, PATH_MAX, FACTION_LOGO_PATH"%s_small.png", xml_get(node));
          temp->logo_small = gl_newImage(buf, 0);
-         snprintf( buf, PATH_MAX, FACTION_LOGO_PATH"%s_tiny.png", xml_get(node));
+         nsnprintf( buf, PATH_MAX, FACTION_LOGO_PATH"%s_tiny.png", xml_get(node));
          temp->logo_tiny = gl_newImage(buf, 0);
          continue;
       }
@@ -1022,20 +1022,20 @@ int factions_load (void)
 {
    int mem;
    uint32_t bufsize;
-   char *buf = ndata_read( FACTION_DATA, &bufsize);
+   char *buf = ndata_read( FACTION_DATA_PATH, &bufsize);
 
    xmlNodePtr factions, node;
    xmlDocPtr doc = xmlParseMemory( buf, bufsize );
 
    node = doc->xmlChildrenNode; /* Factions node */
    if (!xml_isNode(node,XML_FACTION_ID)) {
-      ERR("Malformed "FACTION_DATA" file: missing root element '"XML_FACTION_ID"'");
+      ERR("Malformed "FACTION_DATA_PATH" file: missing root element '"XML_FACTION_ID"'");
       return -1;
    }
 
    factions = node->xmlChildrenNode; /* first faction node */
    if (factions == NULL) {
-      ERR("Malformed "FACTION_DATA" file: does not contain elements");
+      ERR("Malformed "FACTION_DATA_PATH" file: does not contain elements");
       return -1;
    }
 

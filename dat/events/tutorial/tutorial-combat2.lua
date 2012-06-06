@@ -198,7 +198,7 @@ end
 
 -- Taunt function.
 function taunt()
-	armour, shield = captainTP:health()
+    armour, shield = captainTP:health()
     if shield >= 40 then
         captainTP:comm(shield30[rnd.rnd(1, #shield30)])
     elseif armour >= 31 then
@@ -210,6 +210,7 @@ end
 -- Cleanup function. Should be the exit point for the module in all cases.
 function cleanup()
     if not (omsg == nil) then player.omsgRm(omsg) end
+    var.push("var_next", "Tutorial: Heat")
     naev.keyEnableAll()
     naev.eventStart("Tutorial")
     evt.finish(true)

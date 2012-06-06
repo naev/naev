@@ -26,9 +26,10 @@
 #include "dev_sysedit.h"
 #include "pause.h"
 #include "nfile.h"
+#include "nstring.h"
 
 
-#define HIDE_DEFAULT_JUMP        1.25 /**< Default hide value for new planets. */
+#define HIDE_DEFAULT_JUMP        1.25 /**< Default hide value for new jumps. */
 #define RADIUS_DEFAULT           10000 /**< Default radius for new systems. */
 #define STARS_DENSITY_DEFAULT    400 /**< Default stars density for new systems. */
 
@@ -84,7 +85,6 @@ static double uniedit_my      = 0.; /**< Y mouse position. */
 static void uniedit_deselect (void);
 static void uniedit_selectAdd( StarSystem *sys );
 static void uniedit_selectRm( StarSystem *sys );
-static void uniedit_selectText (void);
 /* System editing. */
 static void uniedit_editSys (void);
 static void uniedit_editSysClose( unsigned int wid, char *name );
@@ -110,6 +110,7 @@ static void uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
       double w, double h, void *data );
 /* Button functions. */
 static void uniedit_close( unsigned int wid, char *wgt );
+static void uniedit_save( unsigned int wid_unused, char *unused );
 static void uniedit_btnJump( unsigned int wid_unused, char *unused );
 static void uniedit_btnRename( unsigned int wid_unused, char *unused );
 static void uniedit_btnEdit( unsigned int wid_unused, char *unused );
@@ -155,6 +156,10 @@ void uniedit_open( unsigned int wid_unused, char *unused )
    /* Close button. */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnClose", "Close", uniedit_close );
+
+   /* Save button. */
+   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*1, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnSave", "Save All", uniedit_save );
 
    /* Jump toggle. */
    window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*3, BUTTON_WIDTH, BUTTON_HEIGHT,
@@ -256,6 +261,18 @@ static void uniedit_close( unsigned int wid, char *wgt )
    window_close( wid, wgt );
 }
 
+/*
+ * @brief Saves the systems.
+ */
+static void uniedit_save( unsigned int wid_unused, char *unused )
+{
+   (void) wid_unused;
+   (void) unused;
+
+   dsys_saveAll();
+   dpl_saveAll();
+}
+
 
 /**
  * @brief Enters the editor in new jump mode.
@@ -305,9 +322,6 @@ static void uniedit_btnOpen( unsigned int wid_unused, char *unused )
       return;
 
    sysedit_open( uniedit_sys[0] );
-
-   /* Update sidebar text. */
-   uniedit_selectText();
 }
 
 
@@ -566,12 +580,33 @@ static int uniedit_checkName( char *name )
 }
 
 
+char *uniedit_nameFilter( char *name )
+{
+   int i, pos;
+   char *out;
+
+   out = calloc( 1, (strlen(name)+1) * sizeof(char) );
+   pos = 0;
+   for (i=0; i<(int)strlen(name); i++) {
+      if (!ispunct(name[i])) {
+         if (name[i] == ' ')
+            out[pos] = '_';
+         else
+            out[pos] = tolower(name[i]);
+         pos++;
+      }
+   }
+
+   return out;
+}
+
+
 /**
  * @brief Renames all the currently selected systems.
  */
 static void uniedit_renameSys (void)
 {
-   int i;
+   int i, j;
    char *name, *oldName, *newName;
    StarSystem *sys;
 
@@ -593,16 +628,20 @@ static void uniedit_renameSys (void)
       }
 
       /* Change the name. */
-      oldName = malloc((16+strlen(sys->name))*sizeof(char));
-      snprintf(oldName,(16+strlen(sys->name))*sizeof(char),"dat/ssys/%s.xml",sys->name);
-      newName = malloc((16+strlen(name))*sizeof(char));
-      snprintf(newName,(16+strlen(name))*sizeof(char),"dat/ssys/%s.xml",name);
+      oldName = malloc((14+strlen(sys->name))*sizeof(char));
+      nsnprintf(oldName,14+strlen(sys->name),"dat/ssys/%s.xml", uniedit_nameFilter(sys->name) );
+      newName = malloc((14+strlen(name))*sizeof(char));
+      nsnprintf(newName,14+strlen(name),"dat/ssys/%s.xml", uniedit_nameFilter(name) );
       nfile_rename(oldName,newName);
       free(oldName);
       free(newName);
       free(sys->name);
       sys->name = name;
       dsys_saveSystem(sys);
+
+      /* Re-save adjacent systems. */
+      for (j=0; j<sys->njumps; j++)
+         dsys_saveSystem( sys->jumps[j].target );
    }
 }
 
@@ -816,7 +855,7 @@ static void uniedit_selectRm( StarSystem *sys )
 /**
  * @brief Sets the selected system text.
  */
-static void uniedit_selectText (void)
+void uniedit_selectText (void)
 {
    int i, l;
    char buf[1024];
@@ -825,7 +864,7 @@ static void uniedit_selectText (void)
 
    l = 0;
    for (i=0; i<uniedit_nsys; i++) {
-      l += snprintf( &buf[l], sizeof(buf)-l, "%s%s", uniedit_sys[i]->name,
+      l += nsnprintf( &buf[l], sizeof(buf)-l, "%s%s", uniedit_sys[i]->name,
             (i == uniedit_nsys-1) ? "" : ", " );
    }
    if (l == 0)
@@ -848,12 +887,12 @@ static void uniedit_selectText (void)
 
             hasPresence = 1;
             /* Use map grey instead of default neutral colour */
-            l += snprintf( &buf[l], sizeof(buf)-l, "%s\e0%s: %.0f",
+            l += nsnprintf( &buf[l], sizeof(buf)-l, "%s\e0%s: %.0f",
                   (l==0)?"":"\n", faction_name(sys->presence[i].faction),
                   sys->presence[i].value);
          }
          if (hasPresence == 0)
-            snprintf( buf, sizeof(buf), "None" );
+            nsnprintf( buf, sizeof(buf), "None" );
 
          window_modifyText( uniedit_wid, "txtPresence", buf );
       }
@@ -923,7 +962,7 @@ static void uniedit_editSys (void)
 
    /* Rename button. */
    y = -45;
-   snprintf( buf, sizeof(buf), "Name: \en%s", (uniedit_nsys > 1) ? "\ervarious" : uniedit_sys[0]->name );
+   nsnprintf( buf, sizeof(buf), "Name: \en%s", (uniedit_nsys > 1) ? "\ervarious" : uniedit_sys[0]->name );
    window_addText( wid, x, y, 180, 15, 0, "txtName", &gl_smallFont, &cDConsole, buf );
    window_addButton( wid, 200, y+3, BUTTON_WIDTH, 21, "btnRename", "Rename", uniedit_btnEditRename );
 
@@ -987,15 +1026,15 @@ static void uniedit_editSys (void)
    x += 50 + 12;
 
    /* Load values */
-   snprintf( buf, sizeof(buf), "%g", sys->radius );
+   nsnprintf( buf, sizeof(buf), "%g", sys->radius );
    window_setInput( wid, "inpRadius", buf );
-   snprintf( buf, sizeof(buf), "%d", sys->stars );
+   nsnprintf( buf, sizeof(buf), "%d", sys->stars );
    window_setInput( wid, "inpStars", buf );
-   snprintf( buf, sizeof(buf), "%g", sys->interference );
+   nsnprintf( buf, sizeof(buf), "%g", sys->interference );
    window_setInput( wid, "inpInterference", buf );
-   snprintf( buf, sizeof(buf), "%g", sys->nebu_density );
+   nsnprintf( buf, sizeof(buf), "%g", sys->nebu_density );
    window_setInput( wid, "inpNebula", buf );
-   snprintf( buf, sizeof(buf), "%g", sys->nebu_volatility );
+   nsnprintf( buf, sizeof(buf), "%g", sys->nebu_volatility );
    window_setInput( wid, "inpVolatility", buf );
 
    /* Generate the list. */
@@ -1079,8 +1118,11 @@ static void uniedit_editSysClose( unsigned int wid, char *name )
 
    sys->stars           = atoi(window_getInput( wid, "inpStars" ));
    sys->interference    = atof(window_getInput( wid, "inpInterference" ));
-   sys->nebu_density    = atof(window_getInput( wid, "inpDensity" ));
+   sys->nebu_density    = atof(window_getInput( wid, "inpNebula" ));
    sys->nebu_volatility = atof(window_getInput( wid, "inpVolatility" ));
+
+   /* Reconstruct universe presences. */
+   space_reconstructPresences();
 
    /* Text might need changing. */
    uniedit_selectText();
@@ -1120,7 +1162,7 @@ static void uniedit_btnEditRmAsset( unsigned int wid, char *unused )
 
 
 /**
- * @brief Adds a new asset.
+ * @brief Adds a new virtual asset.
  */
 static void uniedit_btnEditAddAsset( unsigned int parent, char *unused )
 {
@@ -1168,7 +1210,7 @@ static void uniedit_btnEditAddAsset( unsigned int parent, char *unused )
 
 
 /**
- * @brief Actually adds the asset.
+ * @brief Actually adds the virtual asset.
  */
 static void uniedit_btnEditAddAssetAdd( unsigned int wid, char *unused )
 {
@@ -1209,7 +1251,7 @@ static void uniedit_btnEditRename( unsigned int wid, char *unused )
    uniedit_renameSys();
 
    /* Update text. */
-   snprintf( buf, sizeof(buf), "Name: %s", (uniedit_nsys > 1) ? "\ervarious" : uniedit_sys[0]->name );
+   nsnprintf( buf, sizeof(buf), "Name: %s", (uniedit_nsys > 1) ? "\ervarious" : uniedit_sys[0]->name );
    window_modifyText( wid, "txtName", buf );
 }
 

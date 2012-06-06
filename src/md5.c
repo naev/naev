@@ -38,7 +38,7 @@
   that follows (in reverse chronological order):
 
   2002-04-13 lpd Clarified derivation from RFC 1321; now handles byte order
-   either statically or dynamically; added missing #include <string.h>
+   either statically or dynamically; added missing #include "nstring.h"
    in library.
   2002-03-11 lpd Corrected argument list for main(), and added int return
    type, in test program and T value program.
@@ -52,7 +52,7 @@
  */
 
 #include "md5.h"
-#include <string.h>
+#include "nstring.h"
 
 #undef BYTE_ORDER /* 1 = big-endian, -1 = little-endian, 0 = unknown */
 #ifdef ARCH_IS_BIG_ENDIAN

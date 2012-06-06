@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Plasteel Plating">
+ <general>
+  <typename>Armour Modifier</typename>
+  <slot>structure</slot>
+  <mass/>
+  <price>65000</price>
+  <gfx_store>plasteel</gfx_store>
+  <description>Plasteel was one of man's greatest improvements on materials. It's a cheap, strong armour that seems to take the best from both plastic and steel, bending easily yet keeping its incredible strength. The Second Growth was only possible with this material. Although it is no longer cutting-edge, its low price point attracts many buyers.</description>
+ </general>
+ <specific type="modification">
+  <armour_rel>5</armour_rel>
+  <mass_rel>5</mass_rel>
+ </specific>
+</outfit>

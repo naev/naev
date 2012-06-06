@@ -14,9 +14,10 @@
 #include "nfile.h"
 
 #include "naev.h"
+#include "conf.h"
 
 #include <stdio.h>
-#include <string.h>
+#include "nstring.h"
 #include <stdarg.h>
 #include <stdlib.h>
 #include <dirent.h>
@@ -116,6 +117,11 @@ const char* nfile_dataPath (void)
     char *path;
 
     if (naev_dataPath[0] == '\0') {
+        /* Global override is set. */
+        if (conf.datapath) {
+           nsnprintf( naev_dataPath, PATH_MAX, "%s/", conf.datapath );
+           return naev_dataPath;
+        }
 #if HAS_UNIX
         path = xdgGetRelativeHome( "XDG_DATA_HOME", "/.local/share" );
         if (path == NULL) {
@@ -123,7 +129,7 @@ const char* nfile_dataPath (void)
             path = strdup(".");
         }
 
-        snprintf( naev_dataPath, PATH_MAX, "%s/naev/", path );
+        nsnprintf( naev_dataPath, PATH_MAX, "%s/naev/", path );
 
         if (path != NULL) {
             free (path);
@@ -134,7 +140,7 @@ const char* nfile_dataPath (void)
          WARN("%%APPDATA%% isn't set, using current directory.");
          path = ".";
       }
-      snprintf( naev_dataPath, PATH_MAX, "%s/naev/", path );
+      nsnprintf( naev_dataPath, PATH_MAX, "%s/naev/", path );
 #else
 #error "Feature needs implementation on this Operating System for Naev to work."
 #endif
@@ -155,6 +161,11 @@ const char* nfile_configPath (void)
     char *path;
 
     if (naev_configPath[0] == '\0') {
+        /* Global override is set. */
+        if (conf.datapath) {
+           nsnprintf( naev_configPath, PATH_MAX, "%s/", conf.datapath );
+           return naev_configPath;
+        }
 #if HAS_UNIX
         path = xdgGetRelativeHome( "XDG_CONFIG_HOME", "/.config" );
         if (path == NULL) {
@@ -162,7 +173,7 @@ const char* nfile_configPath (void)
             path = strdup(".");
         }
 
-        snprintf( naev_configPath, PATH_MAX, "%s/naev/", path );
+        nsnprintf( naev_configPath, PATH_MAX, "%s/naev/", path );
 
         if (path != NULL) {
             free (path);
@@ -173,7 +184,7 @@ const char* nfile_configPath (void)
          WARN("%%APPDATA%% isn't set, using current directory.");
          path = ".";
       }
-      snprintf( naev_configPath, PATH_MAX, "%s/naev/", path );
+      nsnprintf( naev_configPath, PATH_MAX, "%s/naev/", path );
 #else
 #error "Feature needs implementation on this Operating System for Naev to work."
 #endif
@@ -194,6 +205,11 @@ const char* nfile_cachePath (void)
     char *path;
 
     if (naev_cachePath[0] == '\0') {
+        /* Global override is set. */
+        if (conf.datapath) {
+           nsnprintf( naev_cachePath, PATH_MAX, "%s/", conf.datapath );
+           return naev_cachePath;
+        }
 #if HAS_UNIX
         path = xdgGetRelativeHome( "XDG_CACHE_HOME", "/.cache" );
         if (path == NULL) {
@@ -201,7 +217,7 @@ const char* nfile_cachePath (void)
             path = strdup(".");
         }
 
-        snprintf( naev_cachePath, PATH_MAX, "%s/naev/", path );
+        nsnprintf( naev_cachePath, PATH_MAX, "%s/naev/", path );
 
         if (path != NULL) {
             free (path);
@@ -212,7 +228,7 @@ const char* nfile_cachePath (void)
          WARN("%%APPDATA%% isn't set, using current directory.");
          path = ".";
       }
-      snprintf( naev_cachePath, PATH_MAX, "%s/naev/", path );
+      nsnprintf( naev_cachePath, PATH_MAX, "%s/naev/", path );
 #else
 #error "Feature needs implementation on this Operating System for Naev to work."
 #endif
@@ -243,12 +259,57 @@ char* nfile_dirname( char *path )
       return path;
 
    /* New dirname. */
-   snprintf( dirname_buf, MIN(sizeof(dirname_buf), (size_t)(i+1)),  path );
+   nsnprintf( dirname_buf, MIN(sizeof(dirname_buf), (size_t)(i+1)),  path );
    return dirname_buf;
 #else
 #error "Functionality not implemented for your OS."
 #endif /* HAS_POSIX */
 }
+
+
+#if HAS_POSIX
+#define MKDIR mkdir( opath, mode )
+static int mkpath( const char *path, mode_t mode )
+#elif HAS_WIN32
+#define MKDIR !CreateDirectory( opath, NULL )
+static int mkpath( const char *path )
+#else
+#error "Feature needs implementation on this Operating System for Naev to work."
+#endif
+{
+   char opath[PATH_MAX];
+   char *p;
+   size_t len;
+   int ret;
+
+   if (path == NULL)
+      return 0;
+
+   strncpy( opath, path, sizeof(opath) );
+   opath[ PATH_MAX-1 ] = '\0';
+   len = strlen(opath);
+   if (opath[len - 1] == '/')
+      opath[len - 1] = '\0';
+   for (p=&opath[1]; p[0]!='\0'; p++) {
+      if (p[0] == '/') {
+         p[0] = '\0';
+         if (!nfile_dirExists(opath)) {
+            ret = MKDIR;
+            if (ret)
+               return ret;
+         }
+         p[0] = '/';
+      }
+   }
+   if (!nfile_dirExists(opath)) { /* if path is not terminated with / */
+      ret = MKDIR;
+      if (ret)
+         return ret;
+   }
+
+   return 0;
+}
+#undef MKDIR
 
 
 /**
@@ -275,18 +336,15 @@ int nfile_dirMakeExist( const char* path, ... )
       return 0;
 
 #if HAS_POSIX
-   if (mkdir(file, S_IRWXU | S_IRWXG | S_IRWXO) < 0) {
-      WARN("Dir '%s' does not exist and unable to create: %s", file, strerror(errno));
-      return -1;
-   }
+   if (mkpath(file, S_IRWXU | S_IRWXG | S_IRWXO) < 0) {
 #elif HAS_WIN32
-   if (!CreateDirectory(file, NULL))  {
-      WARN("Dir '%s' does not exist and unable to create: %s", file, strerror(errno));
-      return -1;
-   }
+   if (mkpath(file) < 0) {
 #else
 #error "Feature needs implementation on this Operating System for Naev to work."
 #endif
+      WARN("Dir '%s' does not exist and unable to create: %s", file, strerror(errno));
+      return -1;
+   }
 
    return 0;
 }
@@ -374,7 +432,7 @@ int nfile_backupIfExists( const char* path, ... )
    }
 
    if (nfile_fileExists(file)) {
-      snprintf(backup, PATH_MAX, "%s.backup", file);
+      nsnprintf(backup, PATH_MAX, "%s.backup", file);
 
       /* Open files. */
       f_in  = fopen( file, "r" );
@@ -460,7 +518,7 @@ char** nfile_readDir( int* nfiles, const char* path, ... )
          continue;
 
       /* Stat the file */
-      snprintf( file, PATH_MAX, "%s/%s", base, name );
+      nsnprintf( file, PATH_MAX, "%s/%s", base, name );
       if (stat(file, &sb) == -1)
          continue; /* Unable to stat */
 
@@ -528,6 +586,66 @@ char** nfile_readDir( int* nfiles, const char* path, ... )
    return files;
 }
 
+
+/**
+ * @brief Lists all the visible files in a directory, at any depth.
+ *
+ * Should also sort by last modified but that's up to the OS in question.
+ * Paths are relative to base directory.
+ *
+ *    @param[out] nfiles Returns how many files there are.
+ *    @param path Directory to read.
+ */
+char** nfile_readDirRecursive( int* nfiles, const char* path, ... )
+{
+   char **tfiles, **out, **cfiles, *buf, base[PATH_MAX];
+   int i, j, ls, mfiles, tmp, cn;
+   va_list ap;
+
+   va_start(ap, path);
+   vsnprintf( base, PATH_MAX, path, ap );
+   va_end(ap);
+
+   mfiles = 128;
+   out = malloc(sizeof(char*)*mfiles);
+   tfiles = nfile_readDir( &tmp, base );
+   *nfiles = 0;
+
+   for (i=0; i<tmp; i++) {
+      ls = strlen(base) + strlen(tfiles[i]) + 1;
+      buf = malloc(ls * sizeof(char));
+      nsnprintf( buf, ls, "%s%s", path, tfiles[i] );
+      if (nfile_dirExists(buf)) {
+         /* Append slash if necessary. */
+         if (strcmp(&buf[ls-1],"/")!=0) {
+            buf = realloc( buf, (ls+1) * sizeof(char) );
+            nsnprintf( buf, ls+1, "%s%s/", path, tfiles[i] );
+         }
+
+         /* Iterate over children. */
+         cfiles = nfile_readDirRecursive( &cn, buf );
+         for (j=0; j<cn; j++) {
+            if ((*nfiles+1) > mfiles) {
+               mfiles *= 2;
+               out = realloc( out, sizeof(char*)*mfiles );
+            }
+            out[(*nfiles)++] = strdup( cfiles[j] );
+         }
+         free(cfiles);
+      }
+      else {
+         if ((*nfiles+1) > mfiles) {
+            mfiles *= 2;
+            out = realloc( out, sizeof(char*)*mfiles );
+         }
+         out[(*nfiles)++] = strdup( buf );
+      }
+     free(buf);
+   }
+
+   free(tfiles);
+   return out;
+}
 
 /**
  * @brief Tries to read a file.
@@ -702,7 +820,7 @@ int nfile_writeFile( const char* data, int len, const char* path, ... )
  */
 int nfile_delete( const char* file )
 {
-   if (!unlink(file)) {
+   if (unlink(file)) {
       WARN( "Error deleting file %s",file );
       return -1;
    }
@@ -730,7 +848,7 @@ int nfile_rename( const char* oldname, const char* newname )
       WARN("Error renaming %s to %s. %s already exists",oldname,newname,newname);
       return -1;
    }
-   if (!rename(oldname,newname))
+   if (rename(oldname,newname))
       WARN("Error renaming %s to %s",oldname,newname);
    return 0;
 }

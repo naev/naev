@@ -13,7 +13,7 @@
 #include "naev.h"
 
 #include <stdlib.h>
-#include <string.h>
+#include "nstring.h"
 
 #define lua_c
 #include <lua.h>
@@ -33,9 +33,7 @@
 #include "toolkit.h"
 #include "nfile.h"
 #include "menu.h"
-
-
-#define CONSOLE_FONT_SIZE  10 /**< Size of the console font. */
+#include "conf.h"
 
 
 #define BUTTON_WIDTH    50 /**< Button width. */
@@ -115,7 +113,7 @@ static int cli_printCore( lua_State *L, int cli_only )
          LOG( "%s", s );
 
       /* Add to console. */
-      p += snprintf( &buf[p], LINE_LENGTH-p, "%s%s", (i>1) ? "   " : "", s );
+      p += nsnprintf( &buf[p], LINE_LENGTH-p, "%s%s", (i>1) ? "   " : "", s );
       if (p >= LINE_LENGTH) {
          cli_addMessage(buf);
          p = 0;
@@ -164,10 +162,10 @@ static int cli_script( lua_State *L )
 
    /* Try to find the file if it exists. */
    if (nfile_fileExists(fname))
-      snprintf( buf, sizeof(buf), "%s", fname );
+      nsnprintf( buf, sizeof(buf), "%s", fname );
    else {
       bbuf = strdup( naev_binary() );
-      snprintf( buf, sizeof(buf), "%s/%s", nfile_dirname( bbuf ), fname );
+      nsnprintf( buf, sizeof(buf), "%s/%s", nfile_dirname( bbuf ), fname );
       free(bbuf);
    }
 
@@ -323,7 +321,7 @@ int cli_init (void)
 
    /* Set the font. */
    cli_font    = malloc( sizeof(glFont) );
-   gl_fontInit( cli_font, "dat/mono.ttf", CONSOLE_FONT_SIZE );
+   gl_fontInit( cli_font, "dat/mono.ttf", conf.font_size_console );
 
    /* Clear the buffer. */
    memset( cli_buffer, 0, sizeof(cli_buffer) );
@@ -378,7 +376,7 @@ static void cli_input( unsigned int wid, char *unused )
       return;
 
    /* Put the message in the console. */
-   snprintf( buf, LINE_LENGTH, "%s %s",
+   nsnprintf( buf, LINE_LENGTH, "%s %s",
          cli_firstline ? "> " : ">>", str );
    cli_addMessage( buf );
 

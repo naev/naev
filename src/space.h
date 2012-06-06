@@ -72,6 +72,7 @@ typedef enum PlanetClass_ {
 #define PLANET_SERVICE_COMMODITY    (1<<5) /**< Can trade commodities. */
 #define PLANET_SERVICE_OUTFITS      (1<<6) /**< Can trade outfits. */
 #define PLANET_SERVICE_SHIPYARD     (1<<7) /**< Can trade ships. */
+#define PLANET_SERVICES_MAX         (PLANET_SERVICE_SHIPYARD<<1)
 #define planet_hasService(p,s)      ((p)->services & s) /**< Checks if planet has service. */
 
 
@@ -302,6 +303,7 @@ credits_t planet_commodityPrice( const Planet *p, const Commodity *c );
 char planet_getColourChar( Planet *p );
 const glColour* planet_getColour( Planet *p );
 void planet_updateLand( Planet *p );
+int planet_setRadiusFromGFX(Planet* planet);
 
 /*
  * jump stuff
@@ -333,6 +335,7 @@ void planets_render (void);
 /*
  * Presence stuff.
  */
+void system_presenceCleanupAll( void );
 void system_addPresence( StarSystem *sys, int faction, double amount, int range );
 double system_getPresence( StarSystem *sys, int faction );
 void system_addAllPlanetsPresence( StarSystem *sys );
@@ -349,7 +352,6 @@ void space_update( const double dt );
  */
 void space_gfxLoad( StarSystem *sys );
 void space_gfxUnload( StarSystem *sys );
-
 
 /*
  * Getting stuff.

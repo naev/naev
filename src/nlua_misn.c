@@ -15,7 +15,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
+#include "nstring.h"
 #include <math.h>
 
 #include <lua.h>
@@ -127,7 +127,7 @@ int misn_loadLibs( lua_State *L )
    nlua_loadHook(L);
    nlua_loadMusic(L,0);
    nlua_loadTex(L,0);
-   nlua_loadBackground(L,0);
+   nlua_loadBackground(L,1);
    nlua_loadCamera(L,0);
    if (player_isTut())
       nlua_loadTut(L);
@@ -558,7 +558,7 @@ static int misn_setNPC( lua_State *L )
    cur_mission->npc = strdup(name);
 
    /* Set portrait. */
-   snprintf( buf, PATH_MAX, "gfx/portraits/%s.png", str );
+   nsnprintf( buf, PATH_MAX, "gfx/portraits/%s.png", str );
    cur_mission->portrait = gl_newImage( buf, 0 );
 
    return 0;
@@ -911,7 +911,7 @@ static int misn_npcAdd( lua_State *L )
       priority = 5;
 
    /* Set path. */
-   snprintf( portrait, PATH_MAX, "gfx/portraits/%s.png", gfx );
+   nsnprintf( portrait, PATH_MAX, "gfx/portraits/%s.png", gfx );
 
    cur_mission = misn_getFromLua(L);
 
@@ -957,7 +957,7 @@ static int misn_npcRm( lua_State *L )
  * Claiming systems is a way to avoid mission collisions preemptively.
  *
  * Note it does not actually claim the systems if it fails to claim. It also
- *  does not work more then once.
+ *  does not work more than once.
  *
  * @usage if not misn.claim( { system.get("Gamma Polaris") } ) then misn.finish( false ) end
  * @usage if not misn.claim( system.get("Gamma Polaris") ) then misn.finish( false ) end

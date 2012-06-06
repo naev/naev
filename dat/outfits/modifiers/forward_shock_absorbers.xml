@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Forward Shock Absorbers">
+ <general>
+  <typename>Weapon Modifier (Forward)</typename>
+  <slot>structure</slot>
+  <mass>1</mass>
+  <price>35000</price>
+  <description>These shock absorbers are attached to the forward mounts, isolating them from the hull and providing increased accuracy.</description>
+  <gfx_store>accuracy_forward</gfx_store>
+ </general>
+ <specific type="modification">
+  <fwd_heat>-15</fwd_heat>
+ </specific>
+</outfit>

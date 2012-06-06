@@ -12,7 +12,7 @@
 #include "tk/toolkit_priv.h"
 
 #include <stdlib.h>
-#include <string.h>
+#include "nstring.h"
 
 
 static void txt_render( Widget* txt, double bx, double by );

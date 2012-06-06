@@ -14,7 +14,6 @@
 #include "naev.h"
 
 #include <stdlib.h>
-#include <string.h>
 
 #include "player.h"
 #include "nxml.h"
@@ -57,12 +56,11 @@
 #include "nlua_gui.h"
 #include "nlua_tex.h"
 #include "gui_omsg.h"
+#include "nstring.h"
 
 
 #define XML_GUI_ID   "GUIs" /**< XML section identifier for GUI document. */
 #define XML_GUI_TAG  "gui" /**<  XML Section identifier for GUI tags. */
-
-#define GUI_GFX      "gfx/gui/" /**< Location of the GUI graphics. */
 
 #define INTERFERENCE_LAYERS      16 /**< Number of interference layers. */
 #define INTERFERENCE_CHANGE_DT   0.1 /**< Speed to change at. */
@@ -336,12 +334,12 @@ void player_messageRaw( const char *str )
 
       /* Add the new one */
       if (p == 0) {
-         snprintf( mesg_stack[mesg_pointer].str, i+1, "%s", &str[p] );
+         nsnprintf( mesg_stack[mesg_pointer].str, i+1, "%s", &str[p] );
          gl_printRestoreInit( &mesg_stack[mesg_pointer].restore );
       }
       else {
          mesg_stack[mesg_pointer].str[0] = '\t'; /* Hack to indent. */
-         snprintf( &mesg_stack[mesg_pointer].str[1], i+1, "%s", &str[p] );
+         nsnprintf( &mesg_stack[mesg_pointer].str[1], i+1, "%s", &str[p] );
          gl_printStoreMax( &mesg_stack[mesg_pointer].restore, str, p );
       }
       mesg_stack[mesg_pointer].t = mesg_timeout;
@@ -897,6 +895,12 @@ void gui_render( double dt )
       lua_pushnumber( gui_L, dt );
       lua_pushnumber( gui_L, dt_mod );
       gui_runFunc( "render", 2, 0 );
+      if (pilot_isFlag(player.p, PILOT_COOLDOWN)) {
+         gui_prepFunc( "render_cooldown" );
+         lua_pushnumber( gui_L, player.p->ctimer / player.p->cdelay  );
+         lua_pushnumber( gui_L, player.p->ctimer );
+         gui_runFunc( "render_cooldown", 2, 0 );
+      }
    }
 
    /* Messages. */
@@ -2049,7 +2053,7 @@ int gui_load( const char* name )
    gui_cleanup();
 
    /* Open file. */
-   snprintf( path, sizeof(path), "dat/gui/%s.lua", name );
+   nsnprintf( path, sizeof(path), "dat/gui/%s.lua", name );
    buf = ndata_read( path, &bufsize );
    if (buf == NULL) {
       WARN("Unable to find GUI '%s'.", path );
@@ -2324,6 +2328,14 @@ int gui_handleEvent( SDL_Event *evt )
 {
    int ret;
    int x, y;
+
+   if (player.p == NULL)
+      return 0;
+   if ((evt->type == SDL_MOUSEBUTTONDOWN) &&
+         (pilot_isFlag(player.p,PILOT_HYP_PREP) ||
+         pilot_isFlag(player.p,PILOT_HYP_BEGIN) ||
+         pilot_isFlag(player.p,PILOT_HYPERSPACE)))
+      return 0;
 
    ret = 0;
    switch (evt->type) {

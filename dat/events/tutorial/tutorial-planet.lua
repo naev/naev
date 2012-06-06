@@ -17,7 +17,7 @@ To access the more interesting facilities on Paul 2, you will need to click on t
 Select any tab now to view a short explanation on what you can do there. Once you have seen enough, press the takeoff button to end this tutorial.]]
     message3 = [[This is the outfit seller. Here you may buy and sell things such as weapons, ship upgrades and ammunition. Note that you need to visit the equipment facility to actually install most outfits into your ship.
 
-A particular item of interest that most outfit sellers will carry is the star map. Buying a star map will give you information remote systems and their jump points, so it's a useful item when you're just starting out.]]
+A particular item of interest that most outfit sellers will carry is the star map. Buying a star map will give you information on remote systems and their jump points, so it's a useful item when you're just starting out.]]
     message4 = [[This is the spaceport bar. Here you may find people who are interested in giving you missions. You will also see a news feed on the right of the screen. You can approach patrons by clicking on their portrait and then clicking on the "approach" button.
 
 There are no mission givers here at the moment. Missions are explained in more detail in another tutorial.]]
@@ -113,6 +113,7 @@ end
 -- Cleanup function. Should be the exit point for the module in all cases.
 function cleanup()
     naev.keyEnableAll()
+    var.push("tut_next", "Tutorial: Missions and Events")
     naev.eventStart("Tutorial")
     evt.finish(true)
 end

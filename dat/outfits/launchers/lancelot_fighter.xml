@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Lancelot Fighter">
+ <general>
+  <license>Light Combat Vessel License</license>
+  <mass>90</mass>
+  <price>500000</price>
+  <gfx_store>lancelot_fighter</gfx_store>
+  <description>This is a Lancelot class fighter adapted for usage in the Lancelot Fighter Bay. It contains all the features of the standalone Lancelot with improved encrypted communication.</description>
+ </general>
+ <specific type="fighter">
+  <ship>Lancelot</ship>
+ </specific>
+</outfit>

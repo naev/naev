@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <outfit name="Shield Capacitor II">
+ <general>
+  <typename>Shield Power Modifier</typename>
+  <slot>structure</slot>
+  <mass>18</mass>
+  <price>110000</price>
+  <description>A more powerful shield enhancer, providing better protection during skirmishes.</description>
+  <gfx_store>capacitor2</gfx_store>
+ </general>
+ <specific type="modification">
+  <shield>75</shield>
+ </specific>
+</outfit>

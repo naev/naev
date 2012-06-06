@@ -52,7 +52,7 @@ else -- default english
    text[3] = [[    You accept and she dismisses both of the soldiers, who proceed to wait outside.
     "We've been following Lt. Commander Dimitri's progress since he started at %s. The datapad you brought back has confirmed what we have suspected. We have a undercover Collective agent somewhere in the military who's been feeding ex-Commodore Welsh data. You don't understand, right? Let me explain."]]
    text[4] = [[    "The Collective was actually a project for the Empire. They were supposed to be the ultimate weapon in flexibility and offense. Commodore Welsh was in charge of the secret science facility on %s. Shortly after the Incident, we stopped hearing from them. We sent a recon and were met with hostile Collective drones. It seems like the project had been a success, but the traitor Welsh went rogue. Under normal circumstances we would have easily crushed the Collective, but after the Incident these are hardly normal circumstances."
-    She goes on. "Things have gotten out of hand. We have had chances to crush Welsh, but he always seems to evaded us and strike where we were weakest. We always knew there must have been another traitor in our midst, but with the datapad information we now know who he is."]]
+    She goes on. "Things have gotten out of hand. We have had chances to crush Welsh, but he always seems to evade us and strike where we were weakest. We always knew there must have been another traitor in our midst, but with the datapad information we now know who he is."]]
    text[5] = [[    She now clears her throat. "This operation has been dubbed 'Operation Black Trinity'. We have reason to believe that the ESS Trinity has been operating with the traitor Welsh. The ESS Trinity is commanded by Captain Zakred. You will form part of an assault team with the primary objective of arresting Zakred. If all goes to worse, you are ordered to kill Zakred. He must not escape."
     "We'll be sending you with a small force. You just stick around and if any trouble arises, take the ESS Trinity down. Zakred is currently on manoeuvre exercises in %s. You will have to find him there. The other ships will follow your lead to %s. Good luck."]]
    text[6] = [[    You see Commodore Keer with a dozen soldiers waiting for you outside the landing pad.
@@ -78,7 +78,7 @@ else -- default english
 
    taunts = {}
    taunts[1] = "It is too late! The plan is being put into movement!"
-   taunts[2] = "You have no idea whom you're messing with!"
+   taunts[2] = "You have no idea who you're messing with!"
    taunts[3] = "My drones will make mincemeat of you!"
 end
 

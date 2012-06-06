@@ -49,6 +49,7 @@ static int window_dead = 0; /**< There are dead windows lying around. */
  * simulate keypresses when holding
  */
 static SDLKey input_key             = 0; /**< Current pressed key. */
+static SDLMod input_mod             = 0; /**< Current pressed modifier. */
 static unsigned int input_keyTime   = 0; /**< Tick pressed. */
 static int input_keyCounter         = 0; /**< Number of repetitions. */
 static char input_text              = 0; /**< Current character. */
@@ -142,6 +143,7 @@ void toolkit_setPos( Window *wdw, Widget *wgt, int x, int y )
 Widget* window_newWidget( Window* w, const char *name )
 {
    Widget *wgt, *wlast, *wtmp;
+   char *saved_name = NULL;
 
    /* NULL protection. */
    if (w==NULL)
@@ -171,6 +173,8 @@ Widget* window_newWidget( Window* w, const char *name )
          wlast->next = wgt->next;
 
       /* Prepare and return this widget. */
+      saved_name = wgt->name;
+      wgt->name  = NULL;
       widget_cleanup(wgt);
       break;
    }
@@ -184,7 +188,10 @@ Widget* window_newWidget( Window* w, const char *name )
    wgt->type   = WIDGET_NULL;
    wgt->status = WIDGET_STATUS_NORMAL;
    wgt->wdw    = w->id;
-   wgt->name   = strdup(name);
+   if (saved_name != NULL) /* Hack to avoid frees so _getFocus works in the same frame. */
+      wgt->name   = saved_name;
+   else
+      wgt->name   = strdup(name);
    wgt->id     = ++w->idgen;
 
    /* Set up. */
@@ -670,8 +677,7 @@ void widget_cleanup( Widget *widget )
       widget->cleanup(widget);
 
    /* General freeing. */
-   if (widget->name)
-      free(widget->name);
+   free(widget->name);
 }
 
 
@@ -1810,19 +1816,54 @@ static void toolkit_mouseEventWidget( Window *w, Widget *wgt,
 
 
 /**
+ * @brief Maps modifier keysyms (ctrl, alt, shift) to SDLMods.
+ *
+ *    @param key Key to convert.
+ *    @return The SDLMod corresponding to the key, or 0 if none correspond.
+ */
+static SDLMod toolkit_mapMod( SDLKey key )
+{
+   switch(key) {
+      case SDLK_LCTRL:
+         return KMOD_LCTRL;
+      case SDLK_RCTRL:
+         return KMOD_RCTRL;
+      case SDLK_LALT:
+         return KMOD_LALT;
+      case SDLK_RALT:
+         return KMOD_RALT;
+      case SDLK_LSHIFT:
+         return KMOD_LSHIFT;
+      case SDLK_RSHIFT:
+         return KMOD_RSHIFT;
+      default:
+         return 0;
+   }
+}
+
+/**
  * @brief Registers a key as down (for key repetition).
  *
  *    @param key Key to register as down.
  */
 static void toolkit_regKey( SDLKey key, SDLKey c )
 {
-   if ((input_key==0) && (input_keyTime==0)) {
+   SDLMod mod;
+   
+   /* See if our key is in fact a modifier key, and if it is, convert it to a mod.
+    * If it is indeed a mod, do not register a new key but add the modifier to the mod mask instead.
+    */
+   mod = toolkit_mapMod(key);
+   if (mod)
+      input_mod         |= mod;
+   else {
       input_key         = key;
       input_keyTime     = SDL_GetTicks();
       input_keyCounter  = 0;
       input_text        = nstd_checkascii(c) ? c : 0;
    }
 }
+
 /**
  * @brief Unregisters a key.
  *
@@ -1830,9 +1871,18 @@ static void toolkit_regKey( SDLKey key, SDLKey c )
  */
 static void toolkit_unregKey( SDLKey key )
 {
-   if (input_key == key)
+   SDLMod mod;
+   
+   /* See if our key is in fact a modifier key, and if it is, convert it to a mod.
+    * If it is indeed a mod, do not unregister the key but subtract the modifier from the mod mask instead.
+    */
+   mod = toolkit_mapMod(key);
+   if (mod)
+      input_mod         &= ~mod;
+   else
       toolkit_clearKey();
 }
+
 /**
  * @brief Clears the registered keys.
  */
@@ -1881,7 +1931,7 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
    /* Trigger event function if exists. */
    if (wgt != NULL) {
       if (wgt->keyevent != NULL) {
-         if (wgt->keyevent( wgt, key, mod ))
+         if (wgt->keyevent( wgt, input_key, input_mod ))
             return 1;
       }
       if (wgt->textevent != NULL) {
@@ -1895,8 +1945,8 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
    /* Handle button hotkeys. */
    for (wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next)
       if ((wgt->type == WIDGET_BUTTON) && (wgt->dat.btn.key != 0) &&
-            (wgt->dat.btn.key == key))
-         return (wgt->keyevent( wgt, SDLK_RETURN, mod ));
+            (wgt->dat.btn.key == input_key))
+         return (wgt->keyevent( wgt, SDLK_RETURN, input_mod ));
 
    /* Handle other cases where event might be used by the window. */
    switch (key) {
@@ -1928,7 +1978,7 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
 
    /* Finally the stuff gets passed to the custom key handler if it's defined. */
    if (wdw->keyevent != NULL)
-      (*wdw->keyevent)( wdw->id, key, mod );
+      (*wdw->keyevent)( wdw->id, input_key, input_mod );
 
    return 0;
 }
@@ -2035,7 +2085,7 @@ void toolkit_update (void)
    }
 
    /* Must have a key pressed. */
-   if (input_key == 0)
+   if (input_key == 0 && input_mod == 0)
       return;
 
    t = SDL_GetTicks();
@@ -2062,7 +2112,7 @@ void toolkit_update (void)
                event.type           = SDL_KEYDOWN;
                event.key.state      = SDL_PRESSED;
                event.key.keysym.sym = input_key;
-               event.key.keysym.mod = 0;
+               event.key.keysym.mod = input_mod;
                ret = wgt->rawevent( wgt, &event );
                if (ret != 0)
                   return;
@@ -2073,7 +2123,7 @@ void toolkit_update (void)
       /* Handle the focused widget. */
       wgt = toolkit_getFocus( wdw );
       if ((wgt != NULL) && (wgt->keyevent != NULL))
-         wgt->keyevent( wgt, input_key, 0 );
+         wgt->keyevent( wgt, input_key, input_mod );
 
       if ((input_text != 0) && (wgt != NULL) && (wgt->textevent != NULL)) {
          buf[0] = input_text;
@@ -2181,7 +2231,7 @@ void toolkit_prevFocus( Window *wdw )
             wdw->focus = -1;
          else {
             wdw->focus = prev->id;
-            wgt_setFlag( wgt, WGT_FLAG_FOCUSED );
+            wgt_setFlag( prev, WGT_FLAG_FOCUSED );
          }
          return;
       }

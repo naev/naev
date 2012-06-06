@@ -25,7 +25,7 @@ else -- Default to English
 
 -- Mission details. We store some text for the mission with specific variables.
    misn_title = "" 
-   misn_reward = ""
+   misn_reward = 0
    misn_desc = ""
 
 -- Stage one
@@ -86,7 +86,7 @@ function accept ()
       misn.setDesc( misn_desc)
       -- Markers indicate a target system on the map, it may not be needed
       -- depending on the type of mission you're writing.
-      misn.setMarker( systemX, "" ) --change as appropriate to point to a system object and marker style.
+      misn.markerAdd( systemX, "" ) --change as appropriate to point to a system object and marker style.
    end
 
 end

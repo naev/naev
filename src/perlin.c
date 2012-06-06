@@ -47,7 +47,7 @@
 
 #include <math.h>
 #include <stdlib.h>
-#include <string.h>
+#include "nstring.h"
 
 #include "SDL.h"
 #include "SDL_thread.h"
