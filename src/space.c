@@ -88,8 +88,8 @@ static int systems_mstack = 0; /**< Number of memory allocated for star system s
 /*
  * Planet stack.
  */
-static Planet *planet_stack = NULL; /**< Planet stack. */
-static int planet_nstack = 0; /**< Planet stack size. */
+Planet *planet_stack = NULL; /**< Planet stack. */ //!!! removed 'static' from planet_stack and planet_nstack
+int planet_nstack = 0; /**< Planet stack size. */
 static int planet_mstack = 0; /**< Memory size of planet stack. */
 
 /*
@@ -1990,7 +1990,7 @@ int system_addPlanet( StarSystem *sys, const char *planetname )
    systemname_stack[spacename_nstack-1] = sys->name;
 
    /* Regenerate the economy stuff. */
-   economy_refresh();
+   // economy_refresh();//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
    /* Add the presence. */
    if (!systems_loading) {
@@ -2062,7 +2062,7 @@ int system_rmPlanet( StarSystem *sys, const char *planetname )
    system_setFaction(sys);
 
    /* Regenerate the economy stuff. */
-   economy_refresh();
+   // economy_refresh();//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
    return 0;
 }
@@ -2079,7 +2079,7 @@ int system_addJump( StarSystem *sys, xmlNodePtr node )
    if (system_parseJumpPoint(node, sys) <= -1)
       return 0;
    systems_reconstructJumps();
-   economy_refresh();
+   // economy_refresh(); //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
    return 1;
 }
@@ -2121,7 +2121,7 @@ int system_rmJump( StarSystem *sys, const char *jumpname )
    system_setFaction(sys);
 
    /* Regenerate the economy stuff. */
-   economy_refresh();
+   // economy_refresh();//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
    return 0;
 }

@@ -211,6 +211,9 @@ typedef struct JumpPoint_ {
    double sina; /**< Sinus of the angle. */
    int sx; /**< X sprite to use. */
    int sy; /**< Y sprite to use. */
+
+   double jump_resistance; /**< Resistance of this jump. */
+
 } JumpPoint;
 extern glTexture *jumppoint_gfx; /**< Jump point graphics. */
 
@@ -250,6 +253,12 @@ struct StarSystem_ {
 
    /* Calculated. */
    double *prices; /**< Handles the prices in the system. */
+
+   //New things here @@@
+   double *prod_mods;    /**< Production modifiers, called IO as affects how much is produced/consumed*/
+   double credits;      /**< How many credits the system has */
+   double *stockpiles; /**< How many goods the system has */
+
 
    /* Presence. */
    SystemPresence *presence; /**< Pointer to an array of presences in this system. */

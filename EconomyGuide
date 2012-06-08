@@ -1,0 +1,107 @@
+
+Ecoconomy guide:
+
+long-term and short term plans, not definite
+
+---
+
+
+System:
+
+	Each system has a stockpile of goods, and a stockpile of credits
+
+	Each system produces some goods and consumes others
+
+	Each system is the cumulation of it's assets. So a system containing
+		a farming world and manufacturing station will produce both things
+
+
+	The price of a good in a system is credit_stockpile/good_stockpile, where
+		the stockpiles are amount of goods on hand
+
+	A system that is low on a good will produce more/consume less of it, while
+		highly stocked systems will produce less/consume more of it
+
+
+Trade:
+
+	Every dt, systems will trade with their neighbors
+
+	Trading systems will agree on an average of their prices, and sell/buy
+		goods, with no losses of credits or goods
+
+	Galaxial trade is limited to a certain amount, trade_max. Trade between
+		two systems is limited to 
+		possible_trade_amount *(trademax/total_possible_galaxial_trade)
+			-may change
+
+
+
+
+
+Goods:
+
+	Standard traded goods
+	
+	Present in every system, even if not viewable/seeable as such
+
+	
+
+
+
+
+
+
+---
+
+
+Notes:
+
+Trade:
+	Might change. Current system works like electric current, but traders should generally
+		choose most profitable paths, regardless how "Full" it may be
+
+	"Trader" systems (empty systems) will always gain profits. Some counterbalance to that
+		is needed. 
+
+
+
+
+Goods:
+
+	POSSIBLE:
+
+	--
+
+	Apply gaussian distribution to consumption/production. For the lulz
+
+	Pirate/Trader expenditures
+		-"Trader" systems (empty systems) will always gain profits. 
+			This is to balance that out:
+			-Trader systems consume these, but consumption goes to 0
+			-Bordering or trade hub systems will produce these, production ->0 
+
+
+	
+
+	Taxes
+		Produced by aristocratic/military systems and consumed by production/working
+			class systems
+
+
+
+What to do if a system goes bankrupt?
+
+Currently, "trade current" is price difference / resistance. This is generally fine, but
+	it causes neighbors with massive price differences to over-sell / buy
+
+	Maybe this is fine?
+
+
+
+
+
+
+
+
+

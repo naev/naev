@@ -47,7 +47,7 @@ void commodity_free (void);
  * Economy stuff.
  */
 int economy_init (void);
-int economy_update( unsigned int dt );
+void economy_update( unsigned int dt );
 int economy_refresh (void);
 void economy_destroy (void);
 

@@ -1,0 +1,108 @@
+
+Economy workings:
+
+note: Here, IO will mean production/consumption
+
+
+Only for economy.c, might add/change other things in other places
+
+---
+
+init_economy()
+
+	load load-game galaxy
+
+		(not sure about this)
+
+	else
+
+	Make economic-galaxial-map
+
+		Make map, populate with systems
+
+		for system in map
+
+			get IO-modifiers and system jumps
+
+			get resistances
+
+			get stockpile values
+
+
+
+update_economy(timepassed)
+
+	for every unit dt:
+
+		refresh_prices()
+
+		trade_update()
+
+		IO_update()
+
+
+	refresh_prices()
+	
+
+refresh_prices()
+
+	for system in galaxy_map:
+		system.price = get_price(system values)
+
+
+IO_update()
+
+	for system in galaxy_map:
+		for good in tradegoods:
+
+			system.good+=get_IO_amount(system values)
+
+
+
+trade_update()
+
+
+	total_possible_galaxial_trade=0
+		(This is for limiting amount of trade in galaxy)
+
+
+	for system in galaxy_map:
+
+		for jump in system:
+
+			if jump has been checked:continue
+	
+			total_possible_galaxial_trade+=possible_trade_amount
+
+
+	trade_modifier = trade_max / total_possible_galaxial_trade
+
+
+	for system in galaxy_map:
+
+		for jump in system:
+
+			for good in tradegoods:
+
+				trade (trade_modifier * possible_trade_amount) goods
+
+
+
+
+get_IO_amount(IO_modifier,good_amount)
+
+	returns how much is consumed of that in a dt. Might be expanded
+
+
+
+get_price(credits, good_amount)
+
+	returns a price for the goods. Might be expanded
+
+	
+
+
+
+
+
+

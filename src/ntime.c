@@ -252,8 +252,12 @@ void ntime_setR( int scu, int stp, int stu, double rem )
  */
 void ntime_inc( ntime_t t )
 {
+
+   printf("\nAdding time relatively, adding time %s",ntime_pretty( t, 8));//REMOVE ME
+
    naev_time += t;
    economy_update( t );
+      //Important @@@
 
    /* Run hooks. */
    if (t > 0)
@@ -316,7 +320,7 @@ void ntime_refresh (void)
 
       /* Run hook stuff and actually update time. */
       naev_time += ntu->inc;
-      economy_update( ntu->inc );
+      // economy_update( ntu->inc ); //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
       /* Remove the increment. */
       ntime_inclist = ntu->next;
