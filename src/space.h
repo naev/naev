@@ -241,7 +241,7 @@ struct StarSystem_ {
    int *planetsid; /**< IDs of the planets. */
    int nplanets; /**< total number of planets */
    int faction; /**< overall faction */
-
+ 
    /* Jumps. */
    JumpPoint *jumps; /**< Jump points in the system */
    int njumps; /**< number of adjacent jumps */
@@ -258,6 +258,7 @@ struct StarSystem_ {
    double *prod_mods;    /**< Production modifiers, called IO as affects how much is produced/consumed*/
    double credits;      /**< How many credits the system has */
    double *stockpiles; /**< How many goods the system has */
+   double *bought;      /**< How much of what goods were just bought. REMOVE ME */
 
 
    /* Presence. */

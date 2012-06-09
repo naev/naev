@@ -294,7 +294,7 @@ credits_t planet_commodityPrice( const Planet *p, const Commodity *c )
    return economy_getPrice( c, sys, p );
 }
 
-
+ 
 /**
  * @brief Checks to make sure if pilot is far enough away to hyperspace.
  *

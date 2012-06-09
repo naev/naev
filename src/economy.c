@@ -53,9 +53,9 @@
 #define ECON_PROD_VAR      0.01 /**< Defines the variability of production. */
 
 #define STARTING_CREDITS   100000000. /**< ### How many credits are initially given to each system*/
-#define STARTING_GOODS     10000.
+#define STARTING_GOODS     200000.
 
-#define PRICE(Credits,Goods)  (Credits / (Goods * 20)) /**< Price of a good*/
+#define PRICE(Credits,Goods)  (Credits / (Goods)) /**< Price of a good*/
 
 #define AVG_POPULATION     10000000 /**< Used for prod_mods as divisor populations */
 #define TRADE_MAX          systems_nstack*300
@@ -105,32 +105,32 @@ void refresh_prices(void);
 //Commodities are Food, Ore, Industrial Goods, Medicine, Luxury Items
 double planet_class_mods[][5] = {
    { 0., 0., 0., 0., 0.},  //for planets w/out class
-   { 2.,-1.,-1., 2., 3.},
-   { 0., 1., 0.,-1., 2.},
-   {-2., 2., 1.,-1., 1.},
-   {-2., 7.,-2.,-1., 0.},
-   {-1., 3., 0.,-1.,-1.},
-   {-2., 4., 2.,-1., 0.},
-   { 1., 3.,-1., 2., 3.},
-   {-5., 4.,-2., 3., 6.},
-   {-3., 2.,-2., 3.,-1.},
-   {-1., 3.,-1.,-1., 0.},
-   { 8.,-2.,-2., 1.,-3.},
-   {10.,-3.,-2.,-1.,-3.},
-   {14.,-12.,-5.,8.,-7.},
-   {-5., 4.,-2., 6., 0.},
-   {20., 0.,-13.,-2.,-1.},
-   { 6., 0.,-5.,-1., 1.},
-   { 0., 4.,-2.,-1., 0.},
-   {-3., 2.,-1., 0., 1.},
-   {-1., 1.,-1., 1., 1.},
-   {-1., 1.,-1., 1., 1.},
+   { 2., 200.,-1., 2., 300.},
+   { 0., 1200., 0.,-3., 600.},
+   {-6., 1800., 3.,-3., 300.},
+   {-6., 5000.,-6.,-3., 0.},
+   {-3., 2600., 0.,-3.,-2.},
+   {-6.,3200., 6.,-3., 0.},
+   { 3., 2400.,-3., 6., 900.},
+   {-15.,3200.,-6.,9.,1800.},
+   {-9., 1800.,-6., 9.,-2.},
+   {-3., 1300.,-3.,-3., 280.},
+   { 8.,-.5,-2., 1.,-2.},
+   {10.,-1.5,-2.,-1.,-2.},
+   {14.,-2.,-5.,8.,-5.},
+   {-5., 1200.,-2., 6., 650.},
+   {20., 130.,-13.,-2.,-.5},
+   { 6., 100.,-5.,-1., 150.},
+   { 0., 600.,-2.,-1., 0.},
+   {-3., 600.,-1., 0., 100.},
+   {-1., 300.,-1., 1., 100.},
+   {-1., 300.,-1., 1., 100.},
    { 0., 0., 0., 0., 0.},
    { 0., 0., 0., 0., 0.},
    { 0., 0., 0., 0., 0.},
-   {-3.,-8.,16., 3., 1.}, //stations are no longer buffed to account for population
-   {-4.,-9.,20.,-1., 0.},
-   {-3.,-6.,14., 0., 1.},
+   {-3000.,-4000.,16000., 3000., 1000.}, //stations are buffed to account for population
+   {-4000.,-6000.,20000.,-1000., 0.},
+   {-3000.,-4000.,14000., 00., 1000.},
    { 0., 0., 0., 0., 0.}
 };
 
@@ -478,7 +478,7 @@ static double econ_calcJumpR( StarSystem *A, StarSystem *B )
 
    /* @todo Modify based on trader/faction presence. */
 
-   return R;
+   return (1/R);
 }
 
 
@@ -528,6 +528,8 @@ int economy_init (void)    //IMPORTANT @@@
       systems_stack[i].stockpiles = calloc(econ_nprices, sizeof(double));
       systems_stack[i].credits = STARTING_CREDITS;
       systems_stack[i].prod_mods = calloc(econ_nprices, sizeof(double));
+
+      systems_stack[i].bought = calloc(econ_nprices, sizeof(double)); //REMOVE ME, along with StarSystem.bought
    }     
 
 
@@ -576,7 +578,7 @@ int economy_init (void)    //IMPORTANT @@@
 
 
    /* @@@ set trade_max, max trade in galaxy */
-   trade_max = 10000 * systems_nstack;
+   trade_max = 200 * systems_nstack;
 
    return 0;
 }
@@ -586,9 +588,9 @@ double production(double mod, double goods)
 {
       //### @@@ Should this be defined as a macro?
    if (mod >= 0)
-      return mod * (400 / (goods + 700));
+      return mod * (6000 / (goods + 700));
    else
-      return mod * ((goods + 500) / 120000);
+      return mod * ((goods/3 + 500) / 90000);
 
 }
 
@@ -622,11 +624,13 @@ void produce_consume(void)
    }
 }
 
-/* Refresh prices to be accurate */
+/* Refresh prices to be accurate, also checks for bankruptcy */
 void refresh_prices(void)
 {
    int i;
+   // int i0;
    int goodnum;
+   // int bankrupt;
 
    double credits;
    double goods;
@@ -637,6 +641,13 @@ void refresh_prices(void)
    for (i=0;i<systems_nstack; i++) {
 
       sys1=&systems_stack[i];
+
+         //bankrupt system
+      if ((*sys1).credits<0.){
+         WARN("\nSystem %s Dead in the water",(*sys1).name);
+
+      }
+
 
       for (goodnum=0; goodnum<econ_nprices; goodnum++) {
 
@@ -727,11 +738,14 @@ void trade_update(void)
                trade = current_modifier * ( ( (*sys1).prices[goodnum] - (*sys2).prices[goodnum] )
                   / (*sys1).jumps[jumpnum].jump_resistance );
 
-               (*sys1).credits               += price * trade;
-               (*sys2).credits               -= price * trade;
+               (*sys1).credits               -= price * trade;
+               (*sys2).credits               += price * trade;
 
-               (*sys1).stockpiles[goodnum]   -= trade;
-               (*sys2).stockpiles[goodnum]   += trade;
+               (*sys1).stockpiles[goodnum]   += trade;
+               (*sys2).stockpiles[goodnum]   -= trade;
+
+               (*sys1).bought[goodnum]   += trade;   //REMOVE ME
+               (*sys2).bought[goodnum]   -= trade;
 
             }
          }
@@ -756,7 +770,10 @@ void economy_update( unsigned int dt )
 
    uint i=0;
 
-   for (i=0; i<dt; i+=10000000) {
+   refresh_prices();
+
+   // for (i=0; i<dt; i+=10000000) {
+   for (i=0; i<dt; i+=500000) {   //@@@ changed this to run 20x every STP
 
       trade_update();
       produce_consume();
