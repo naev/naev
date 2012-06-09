@@ -128,9 +128,9 @@ double planet_class_mods[][5] = {
    { 0., 0., 0., 0., 0.},
    { 0., 0., 0., 0., 0.},
    { 0., 0., 0., 0., 0.},
-   {-3000.,-4000.,16000., 3000., 1000.}, //stations are buffed to account for population
-   {-4000.,-6000.,20000.,-1000., 0.},
-   {-3000.,-4000.,14000., 00., 1000.},
+   {-300000.,-400000.,1600000., 300000., 100000.}, //stations are buffed to account for population
+   {-400000.,-600000.,2000000.,-100000., 0.},
+   {-300000.,-400000.,1400000., 00., 100000.},
    { 0., 0., 0., 0., 0.}
 };
 
@@ -578,7 +578,7 @@ int economy_init (void)    //IMPORTANT @@@
 
 
    /* @@@ set trade_max, max trade in galaxy */
-   trade_max = 200 * systems_nstack;
+   trade_max = 600 * systems_nstack;
 
    return 0;
 }
@@ -588,9 +588,9 @@ double production(double mod, double goods)
 {
       //### @@@ Should this be defined as a macro?
    if (mod >= 0)
-      return mod * (6000 / (goods + 700));
+      return mod * (18000 / (goods + 1800));
    else
-      return mod * ((goods/3 + 500) / 90000);
+      return mod * ((goods/3 + 1500) / 75000);
 
 }
 
@@ -699,9 +699,6 @@ void trade_update(void)
 
             for (goodnum=0; goodnum<econ_nprices; goodnum++) {
 
-               // printf("\nTrade current is %f, prices at %f and %f",( fabs((*sys1).prices[goodnum] - (*sys2).prices[goodnum] )
-               //    / (*sys1).jumps[jumpnum].jump_resistance ),(*sys1).prices[goodnum],(*sys2).prices[goodnum]);
-
                total_wanted_trade +=  ( fabs((*sys1).prices[goodnum] - (*sys2).prices[goodnum] )
                   / (*sys1).jumps[jumpnum].jump_resistance );
             }
@@ -714,6 +711,12 @@ void trade_update(void)
 
    printf("\nCurrent modifier set at %f",current_modifier);
 
+      //REMOVE ME set bought to 0
+   for (i=0;i<systems_nstack; i++) {
+      for (goodnum=0; goodnum<econ_nprices; goodnum++) {
+         systems_stack[i].bought[goodnum]=0.;
+      }
+   }
 
       //Trade!
    for (i=0;i<systems_nstack; i++) {
@@ -738,14 +741,16 @@ void trade_update(void)
                trade = current_modifier * ( ( (*sys1).prices[goodnum] - (*sys2).prices[goodnum] )
                   / (*sys1).jumps[jumpnum].jump_resistance );
 
+               printf("\nTrading %f goods",trade);
+
                (*sys1).credits               -= price * trade;
                (*sys2).credits               += price * trade;
 
                (*sys1).stockpiles[goodnum]   += trade;
                (*sys2).stockpiles[goodnum]   -= trade;
 
-               (*sys1).bought[goodnum]   += trade;   //REMOVE ME
-               (*sys2).bought[goodnum]   -= trade;
+               (*sys1).bought[goodnum]       += trade;   //REMOVE ME
+               (*sys2).bought[goodnum]       -= trade;
 
             }
          }
@@ -773,7 +778,7 @@ void economy_update( unsigned int dt )
    refresh_prices();
 
    // for (i=0; i<dt; i+=10000000) {
-   for (i=0; i<dt; i+=500000) {   //@@@ changed this to run 20x every STP
+   for (i=0; i<dt; i+=200000) {   //@@@ changed this to run 50x every STP
 
       trade_update();
       produce_consume();
