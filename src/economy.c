@@ -80,7 +80,7 @@ extern int planet_nstack; /**< Num of planets */
 static int econ_initialized   = 0; /**< Is economy system initialized? */
 static int *econ_comm         = NULL; /**< Commodities to calculate. ### Is this needed for anything? */
 int econ_nprices       = 0; /**< Number of prices to calculate. */
-static double trade_max       = 0.; /**< @@@ Maximum trade in the galaxy at any dt */
+static double trade_max       = 0.; /**< Maximum trade in the galaxy at any dt */
 
 /*
  * Prototypes.
@@ -575,8 +575,8 @@ int economy_init (void)    //IMPORTANT @@@
    refresh_prices();//###
 
 
-   /* set trade_max, max trade in galaxy */
-   trade_max = 300 * systems_nstack;
+   /* @@@ set trade_max, max trade in galaxy */
+   trade_max = 10000 * systems_nstack;
 
    return 0;
 }
@@ -586,9 +586,9 @@ double production(double mod, double goods)
 {
       //### @@@ Should this be defined as a macro?
    if (mod >= 0)
-      return mod * (4000 / (goods + 700));
+      return mod * (400 / (goods + 700));
    else
-      return mod * ((goods + 500) / 6000);
+      return mod * ((goods + 500) / 120000);
 
 }
 
