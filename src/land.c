@@ -366,7 +366,7 @@ static void commodity_buy( unsigned int wid, char* str )
  *    @param str Unused.
  */
 static void commodity_sell( unsigned int wid, char* str )
-{
+{  //@@@ will put in code to affect local system later
    (void)str;
    char *comname;
    Commodity *com;

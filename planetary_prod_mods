@@ -1,5 +1,6 @@
 Food, Ore, Industrial Goods, Medicine, Luxury Items
 
+
    PLANET_CLASS_A,   /**< Geothermal */
 	[ 2.,-1.,-1., 2., 3.]
    PLANET_CLASS_B,   /**< Geomorteus */

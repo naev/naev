@@ -1,10 +1,8 @@
 
 Economy workings:
 
-note: Here, IO will mean production/consumption
-
-
-Only for economy.c, might add/change other things in other places
+For economy.c
+Names might change, not exact
 
 ---
 
@@ -22,7 +20,7 @@ init_economy()
 
 		for system in map
 
-			get IO-modifiers and system jumps
+			get production-modifiers and system jumps
 
 			get resistances
 
@@ -38,7 +36,7 @@ update_economy(timepassed)
 
 		trade_update()
 
-		IO_update()
+		production_update()
 
 
 	refresh_prices()
@@ -50,7 +48,7 @@ refresh_prices()
 		system.price = get_price(system values)
 
 
-IO_update()
+production_update()
 
 	for system in galaxy_map:
 		for good in tradegoods:
@@ -89,7 +87,7 @@ trade_update()
 
 
 
-get_IO_amount(IO_modifier,good_amount)
+get_production_amount(production_modifier,good_amount)
 
 	returns how much is consumed of that in a dt. Might be expanded
 

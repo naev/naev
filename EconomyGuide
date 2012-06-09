@@ -33,7 +33,7 @@ Trade:
 	Galaxial trade is limited to a certain amount, trade_max. Trade between
 		two systems is limited to 
 		possible_trade_amount *(trademax/total_possible_galaxial_trade)
-			-may change
+			-may change, perhaps from V=I*R to V=I^2 *R
 
 
 

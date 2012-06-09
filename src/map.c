@@ -27,6 +27,8 @@
 #include "mapData.h"
 #include "nstring.h"
 
+// #include "economy.h"
+
 
 #define MAP_WDWNAME     "Star Map" /**< Map window name. */
 
@@ -58,7 +60,9 @@ static gl_vbo *map_vbo = NULL; /**< Map VBO. */
 extern StarSystem *systems_stack;
 extern int systems_nstack;
 extern int faction_nstack;
-
+/* economy.c */
+extern Commodity* commodity_stack; /**< Contains all the commodities. */
+extern int econ_nprices;
 
 /*
  * prototypes
@@ -165,6 +169,7 @@ void map_open (void)
    window_setCancel( wid, window_close );
    window_handleKeys( wid, map_keyHandler );
 
+      //@@@ changed to display economy things
    /*
     * SIDE TEXT
     *
@@ -181,6 +186,21 @@ void map_open (void)
     *
     * Services:
     *   $Services
+    *
+    * Credits:
+    *   $Credits
+    *
+    * Stockpiles:
+    *   $Good1:$Stockpile1, ...
+    *
+    * Prices:
+    *  $Good1:$price1, ...
+    *
+    * Modifiers:
+    *   $Good1:$prod_mod1, ...
+    *
+    * Made/Consumed:
+    *   $Good1:$made1, ...
     *
     * ...
     * [Autonav]
@@ -233,6 +253,41 @@ void map_open (void)
    window_addText( wid, x, y, 90, 20, 0, "txtSServices",
          &gl_smallFont, &cDConsole, "Services:" );
    window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtServices",
+         &gl_smallFont, &cBlack, NULL );
+   y -= 2 * gl_smallFont.h + 5 + 15;
+
+   /* Credits */
+   window_addText( wid, x, y, 90, 20, 0, "txtSCredits",
+         &gl_smallFont, &cDConsole, "Credits:" );
+   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtCredits",
+         &gl_smallFont, &cBlack, NULL );
+   y -= 2 * gl_smallFont.h + 5 + 15;
+
+   /* Stockpiles */
+   window_addText( wid, x, y, 90, 20, 0, "txtSStockpiles",
+         &gl_smallFont, &cDConsole, "Stockpiles:" );
+   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtStockpiles",
+         &gl_smallFont, &cBlack, NULL );
+   y -= 2 * gl_smallFont.h + 5 + 15;
+
+   /* Prices */
+   window_addText( wid, x, y, 90, 20, 0, "txtSPrices",
+         &gl_smallFont, &cDConsole, "Prices:" );
+   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtPrices",
+         &gl_smallFont, &cBlack, NULL );
+   y -= 2 * gl_smallFont.h + 5 + 15;
+
+   /* Production Modifiers */
+   window_addText( wid, x, y, 90, 20, 0, "txtSProd_Mods",
+         &gl_smallFont, &cDConsole, "Prod_modifiers:" );
+   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtProd_Mods",
+         &gl_smallFont, &cBlack, NULL );
+   y -= 2 * gl_smallFont.h + 5 + 15;
+
+   /* Made/Consumed */
+   window_addText( wid, x, y, 90, 20, 0, "txtSMadeConsumed",
+         &gl_smallFont, &cDConsole, "Made/Consumed:" );
+   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtMadeConsumed",
          &gl_smallFont, &cBlack, NULL );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
@@ -492,17 +547,119 @@ static void map_update( unsigned int wid )
    window_moveWidget( wid, "txtServices", x + 50, y-gl_smallFont.h-5 );
    services = 0;
    for (i=0; i<sys->nplanets; i++)
-      if (planet_isKnown(sys->planets[i]))
+      if (planet_isKnown(sys->planets[i])) {
          services |= sys->planets[i]->services;
+      }
    buf[0] = '\0';
    p = 0;
    /*nsnprintf(buf, sizeof(buf), "%f\n", sys->prices[0]);*/ /*Hack to control prices. */
    for (i=PLANET_SERVICE_MISSIONS; i<=PLANET_SERVICE_SHIPYARD; i<<=1)
-      if (services & i)
-         p += nsnprintf( &buf[p], PATH_MAX-p, "%s\n", planet_getServiceName(i) );
-   if (buf[0] == '\0')
-      p += nsnprintf( &buf[p], PATH_MAX-p, "None");
+      if (services & i){
+         y -= 15;
+         p += nsnprintf( &buf[p], PATH_MAX-p, "%s\n", planet_getServiceName(i) );}
+   if (buf[0] == '\0'){
+      y -= 15;
+      p += nsnprintf( &buf[p], PATH_MAX-p, "None");}
    window_modifyText( wid, "txtServices", buf );
+
+
+
+   /* System credits */
+   buf[0] = '\0';
+
+   y -= 15;
+
+   nsnprintf(buf,12,"%f",sys->credits);
+   window_modifyText( wid, "txtCredits", buf);
+
+   window_moveWidget( wid, "txtSCredits", x, y );
+   window_moveWidget( wid, "txtCredits", x + 50, y - gl_smallFont.h - 5 );
+   y -= 28;
+
+
+
+   /* System commodity stockpiles */
+   buf[0] = '\0';
+   p = 0;
+
+   window_moveWidget(wid, "txtSStockpiles", x, y );
+   window_moveWidget( wid, "txtStockpiles", x + 50, y - gl_smallFont.h - 5 );
+
+   y-=15;
+
+   for (i=0; i<econ_nprices; i++) {
+
+      y-=15;
+      p += nsnprintf( &buf[p], PATH_MAX-p, "%s:%.0f\n", commodity_stack[i].name, sys->stockpiles[i] );
+   }
+
+   window_modifyText( wid, "txtStockpiles", buf);
+   y -= 15;
+
+
+
+   /* System Prices */
+   buf[0] = '\0';
+   p = 0;
+
+   window_moveWidget(wid, "txtSPrices", x, y );
+   window_moveWidget( wid, "txtPrices", x + 50, y - gl_smallFont.h - 5 );
+
+   y-=15;
+
+   for (i=0; i<econ_nprices; i++) {
+
+      y-=15;
+      p += nsnprintf( &buf[p], PATH_MAX-p, "%s:%.0f\n", commodity_stack[i].name, sys->prices[i] );
+   }
+
+   window_modifyText( wid, "txtPrices", buf);
+   y -= 15;
+
+
+
+   /* System Production modifier */
+   buf[0] = '\0';
+   p = 0;
+
+   window_moveWidget(wid, "txtSProd_Mods", x, y );
+   window_moveWidget( wid, "txtProd_Mods", x + 50, y - gl_smallFont.h - 5 );
+
+   y-=15;
+
+   for (i=0; i<econ_nprices; i++) {
+
+      y-=15;
+      p += nsnprintf( &buf[p], PATH_MAX-p, "%s:%.0f\n", commodity_stack[i].name, sys->prod_mods[i] );
+   }
+
+   window_modifyText( wid, "txtProd_Mods", buf);
+   y -= 15;
+
+
+
+   /* Production/Consumption */
+   buf[0] = '\0';
+   p = 0;
+
+   window_moveWidget(wid, "txtSMadeConsumed", x, y );
+   window_moveWidget( wid, "txtMadeConsumed", x + 50, y - gl_smallFont.h - 5 );
+
+   for (i=0; i<econ_nprices; i++) {
+
+      y-=15;
+      p += nsnprintf( &buf[p], PATH_MAX-p, "%s:%.0f\n", commodity_stack[i].name, 
+         production(sys->prod_mods[i], sys->stockpiles[i]) );
+   }
+
+   window_modifyText( wid, "txtMadeConsumed", buf);
+
+
+
+
+
+
+
 
 
    /*
@@ -544,6 +701,9 @@ static void map_update( unsigned int wid )
    }
    window_modifyText( wid, "txtSystemStatus", buf );
 }
+
+
+
 
 
 /**

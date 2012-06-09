@@ -61,7 +61,7 @@
 #define TRADE_MAX          systems_nstack*300
 
 /* commodity stack */
-static Commodity* commodity_stack = NULL; /**< Contains all the commodities. */
+Commodity* commodity_stack = NULL; /**< Contains all the commodities. */
 static int commodity_nstack       = 0; /**< Number of commodities in the stack. */
 
 
@@ -79,7 +79,7 @@ extern int planet_nstack; /**< Num of planets */
  */
 static int econ_initialized   = 0; /**< Is economy system initialized? */
 static int *econ_comm         = NULL; /**< Commodities to calculate. ### Is this needed for anything? */
-static int econ_nprices       = 0; /**< Number of prices to calculate. */
+int econ_nprices       = 0; /**< Number of prices to calculate. */
 static double trade_max       = 0.; /**< @@@ Maximum trade in the galaxy at any dt */
 
 /*
@@ -441,6 +441,14 @@ credits_t economy_getPrice( const Commodity *com,
    return (credits_t) price;
 }
 
+/**
+ * @brief gets the number of credits in a system
+ *
+ *    @param sys System to get credit stockpile of
+ *
+ *
+ *
+*/
 
 /**
  * @brief Calculates the resistance between two star systems.
@@ -449,7 +457,7 @@ credits_t economy_getPrice( const Commodity *com,
  *    @param B Star system to calculate the resistance between.
  *    @return Resistance between A and B.
  */
-static double econ_calcJumpR( StarSystem *A, StarSystem *B )   //It works. ###Values
+static double econ_calcJumpR( StarSystem *A, StarSystem *B )
 {
    double R;
 
@@ -573,6 +581,17 @@ int economy_init (void)    //IMPORTANT @@@
    return 0;
 }
 
+   /* How to produce/consume in a single update */
+double production(double mod, double goods)
+{
+      //### @@@ Should this be defined as a macro?
+   if (mod >= 0)
+      return mod * (4000 / (goods + 700));
+   else
+      return mod * ((goods + 500) / 600);
+
+}
+
 
 /* Every system produces and consumes their appropriate amount */
 void produce_consume(void)
@@ -596,11 +615,7 @@ void produce_consume(void)
          mod   = (*sys1).prod_mods[goodnum];
          goods = (*sys1).stockpiles[goodnum];
 
-            //### @@@ Should this be defined as a macro?
-         if (mod >= 0)
-            (*sys1).stockpiles[goodnum] += mod * (4000 / (goods + 700));
-         else
-            (*sys1).stockpiles[goodnum] += mod * ((goods + 500) / 600);
+         (*sys1).stockpiles[goodnum]+=production(mod,goods);
 
       }
 
