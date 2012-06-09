@@ -286,7 +286,7 @@ void map_open (void)
 
    /* Made/Consumed */
    window_addText( wid, x, y, 90, 20, 0, "txtSMadeConsumed",
-         &gl_smallFont, &cDConsole, "Made/Consumed:" );
+         &gl_smallFont, &cDConsole, "Making:" );
    window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtMadeConsumed",
          &gl_smallFont, &cBlack, NULL );
    y -= 2 * gl_smallFont.h + 5 + 15;

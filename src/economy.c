@@ -128,9 +128,9 @@ double planet_class_mods[][5] = {
    { 0., 0., 0., 0., 0.},
    { 0., 0., 0., 0., 0.},
    { 0., 0., 0., 0., 0.},
-   {-30.,-80.,160.,30., 10.}, //stations are buffed x10 to account for low population
-   {-40.,-90.,200.,-10.,00.},
-   {-30.,-60.,140.,00., 10.},
+   {-3.,-8.,16., 3., 1.}, //stations are no longer buffed to account for population
+   {-4.,-9.,20.,-1., 0.},
+   {-3.,-6.,14., 0., 1.},
    { 0., 0., 0., 0., 0.}
 };
 
@@ -588,7 +588,7 @@ double production(double mod, double goods)
    if (mod >= 0)
       return mod * (4000 / (goods + 700));
    else
-      return mod * ((goods + 500) / 600);
+      return mod * ((goods + 500) / 6000);
 
 }
 
