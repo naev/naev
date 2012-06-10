@@ -54,12 +54,12 @@
 #define ECON_PROD_VAR      0.01 /**< Defines the variability of production. */
 
 #define STARTING_CREDITS   100000000. /**< ### How many credits are initially given to each system*/
-#define STARTING_GOODS     200000.
+#define STARTING_GOODS     100000.  //originally 200000
 
 #define PRICE(Credits,Goods)  (Credits / (Goods)) /**< Price of a good*/
 
 #define AVG_POPULATION     50000000 /**< Used for prod_mods as divisor populations */
-#define TRADE_MAX          systems_nstack*300
+#define TRADE_MAX          systems_nstack*45.
 
 /* commodity stack */
 Commodity* commodity_stack = NULL; /**< Contains all the commodities. */
@@ -81,7 +81,6 @@ extern int planet_nstack; /**< Num of planets */
 static int econ_initialized   = 0; /**< Is economy system initialized? */
 static int *econ_comm         = NULL; /**< Commodities to calculate. ### Is this needed for anything? */
 int econ_nprices       = 0; /**< Number of prices to calculate. */
-static double trade_max       = 0.; /**< Maximum trade in the galaxy at any dt */
 
 static int bankrupt=0;   //REMOVE ME
 
@@ -580,9 +579,6 @@ int economy_init (void)    //IMPORTANT @@@
    refresh_prices();//###
 
 
-   /* @@@ set trade_max, max trade in galaxy in an update */
-   trade_max = 500 * systems_nstack;
-
    return 0;
 }
 
@@ -591,9 +587,18 @@ double production(double mod, double goods)
 {
       //### @@@ Should this be defined as a macro?
    if (mod >= 0)
-      return mod * (1800 / (goods));  //yes, production goes to inf, but hopefuly fixed by 
+      return mod * (1800 / (goods));  //modified from 2* to 1*
    else
-      return (mod/20000) * sqrt(goods);
+      return -mod * (1/(goods/12000 + .5) - 1/.5) * .01 ;
+
+
+   //2000*(1/((x/12000)+.75) - 1/.75)
+
+      //this one worked nicely
+   // if (mod >= 0)
+   //    return mod * (1800 / (goods));
+   // else
+   //    return (mod/20000) * sqrt(goods);
 
 } 
 
@@ -709,8 +714,8 @@ void trade_update(void)
       }
    }
 
-   printf("\nWanted trade is %f, trade_max is %f",total_wanted_trade,trade_max);
-   current_modifier = fminf( 1.0 ,trade_max / total_wanted_trade );
+   printf("\nWanted trade is %f, trade_max is %f",total_wanted_trade,TRADE_MAX);
+   current_modifier = fminf( 1.0 ,TRADE_MAX / total_wanted_trade );
 
    printf("\nCurrent modifier set at %f",current_modifier);
 
@@ -782,7 +787,7 @@ void economy_update( unsigned int dt )
    refresh_prices();
 
    // for (i=0; i<dt; i+=10000000) {
-   for (i=0; i<dt; i+=2000) {   //@@@ changed this to run 500x every STP
+   for (i=0; i<dt; i+=200) {   //@@@ changed this to run 50000x every STP
 
       if (bankrupt)
          return;
