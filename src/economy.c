@@ -46,7 +46,7 @@
  * Economy Nodal Analysis parameters.
  */
  // ### will have to modifiy
-#define ECON_BASE_RES      10. /**< Base resistance value for any system. */
+#define ECON_BASE_RES      5. /**< Base resistance value for any system. */
 #define ECON_SELF_RES      3. /**< Additional resistance for the self node. */
 #define ECON_FACTION_MOD   0.1 /**< Modifier on Base for faction standings. */
 
@@ -58,7 +58,7 @@
 
 #define PRICE(Credits,Goods)  (Credits / (Goods)) /**< Price of a good*/
 
-#define AVG_POPULATION     10000000 /**< Used for prod_mods as divisor populations */
+#define AVG_POPULATION     50000000 /**< Used for prod_mods as divisor populations */
 #define TRADE_MAX          systems_nstack*300
 
 /* commodity stack */
@@ -580,8 +580,8 @@ int economy_init (void)    //IMPORTANT @@@
    refresh_prices();//###
 
 
-   /* @@@ set trade_max, max trade in galaxy */
-   trade_max = 1200 * systems_nstack;
+   /* @@@ set trade_max, max trade in galaxy in an update */
+   trade_max = 500 * systems_nstack;
 
    return 0;
 }
@@ -591,9 +591,9 @@ double production(double mod, double goods)
 {
       //### @@@ Should this be defined as a macro?
    if (mod >= 0)
-      return mod * (18000 / (goods));  //yes, production goes to inf, but hopefuly fixed by 
+      return mod * (1800 / (goods));  //yes, production goes to inf, but hopefuly fixed by 
    else
-      return (mod/2000) * sqrt(goods);
+      return (mod/20000) * sqrt(goods);
 
 } 
 
@@ -782,7 +782,7 @@ void economy_update( unsigned int dt )
    refresh_prices();
 
    // for (i=0; i<dt; i+=10000000) {
-   for (i=0; i<dt; i+=100000) {   //@@@ changed this to run 100x every STP
+   for (i=0; i<dt; i+=2000) {   //@@@ changed this to run 500x every STP
 
       if (bankrupt)
          return;
@@ -795,8 +795,6 @@ void economy_update( unsigned int dt )
 
 }
  
-
-
 
 
 
