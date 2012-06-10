@@ -59,7 +59,7 @@
 #define PRICE(Credits,Goods)  (Credits / (Goods)) /**< Price of a good*/
 
 #define AVG_POPULATION     50000000 /**< Used for prod_mods as divisor populations */
-#define TRADE_MAX          systems_nstack*45.
+#define TRADE_MAX          systems_nstack*25.
 
 /* commodity stack */
 Commodity* commodity_stack = NULL; /**< Contains all the commodities. */
@@ -83,6 +83,7 @@ static int *econ_comm         = NULL; /**< Commodities to calculate. ### Is this
 int econ_nprices       = 0; /**< Number of prices to calculate. */
 
 static int bankrupt=0;   //REMOVE ME
+static int iters=0;     //REMOVE ME
 
 /*
  * Prototypes.
@@ -589,7 +590,10 @@ double production(double mod, double goods)
    if (mod >= 0)
       return mod * (1800 / (goods));  //modified from 2* to 1*
    else
-      return -mod * (1/(goods/12000 + .5) - 1/.5) * .01 ;
+      return mod * (goods/(1800*1000)) ;
+
+
+   //      return -mod * (1/(goods/12000 + .5) - 1/.5) * .01 ;
 
 
    //2000*(1/((x/12000)+.75) - 1/.75)
@@ -787,13 +791,20 @@ void economy_update( unsigned int dt )
    refresh_prices();
 
    // for (i=0; i<dt; i+=10000000) {
-   for (i=0; i<dt; i+=200) {   //@@@ changed this to run 50000x every STP
+   for (i=0; i<dt; i+=100) {   //@@@ changed this to run 100000x every STP
 
-      if (bankrupt)
+      iters++;
+
+      if (bankrupt){
+         printf("\nUPDATE #%d",iters);
          return;
+
+      }
 
       trade_update();
       produce_consume();
+      refresh_prices();
+      trade_update();
       refresh_prices();
 
    }
