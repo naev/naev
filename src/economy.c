@@ -20,6 +20,7 @@
 #include <stdio.h>
 #include "nstring.h"
 #include <stdint.h>
+#include <math.h> //REMOVE ME this is for sqrt()
 
 #ifdef HAVE_SUITESPARSE_CS_H
 #include <suitesparse/cs.h>
@@ -82,6 +83,8 @@ static int *econ_comm         = NULL; /**< Commodities to calculate. ### Is this
 int econ_nprices       = 0; /**< Number of prices to calculate. */
 static double trade_max       = 0.; /**< Maximum trade in the galaxy at any dt */
 
+static int bankrupt=0;   //REMOVE ME
+
 /*
  * Prototypes.
  */
@@ -104,8 +107,8 @@ void refresh_prices(void);
 //planet classifications are in space.h
 //Commodities are Food, Ore, Industrial Goods, Medicine, Luxury Items
 double planet_class_mods[][5] = {
-   { 0., 0., 0., 0., 0.},  //for planets w/out class
-   { 2., 200.,-1., 2., 300.},
+   { 0., 0., 0., 0., 0.},
+   {130., 100.,-45.,100., 120.},
    { 0., 1200., 0.,-3., 600.},
    {-6., 1800., 3.,-3., 300.},
    {-6., 5000.,-6.,-3., 0.},
@@ -115,9 +118,9 @@ double planet_class_mods[][5] = {
    {-15.,3200.,-6.,9.,1800.},
    {-9., 1800.,-6., 9.,-2.},
    {-3., 1300.,-3.,-3., 280.},
-   { 8.,-.5,-2., 1.,-2.},
-   {10.,-1.5,-2.,-1.,-2.},
-   {14.,-2.,-5.,8.,-5.},
+   { 8.,-1,-2., 1.,-2.},
+   {10.,-2,-2.,-1.,-2.},
+   {14.,-3.,-5.,8.,-5.},
    {-5., 1200.,-2., 6., 650.},
    {20., 130.,-13.,-2.,-.5},
    { 6., 100.,-5.,-1., 150.},
@@ -578,7 +581,7 @@ int economy_init (void)    //IMPORTANT @@@
 
 
    /* @@@ set trade_max, max trade in galaxy */
-   trade_max = 600 * systems_nstack;
+   trade_max = 1200 * systems_nstack;
 
    return 0;
 }
@@ -588,11 +591,11 @@ double production(double mod, double goods)
 {
       //### @@@ Should this be defined as a macro?
    if (mod >= 0)
-      return mod * (18000 / (goods + 1800));
+      return mod * (18000 / (goods));  //yes, production goes to inf, but hopefuly fixed by 
    else
-      return mod * ((goods/3 + 1500) / 75000);
+      return (mod/2000) * sqrt(goods);
 
-}
+} 
 
 
 /* Every system produces and consumes their appropriate amount */
@@ -645,7 +648,7 @@ void refresh_prices(void)
          //bankrupt system
       if ((*sys1).credits<0.){
          WARN("\nSystem %s Dead in the water",(*sys1).name);
-
+         bankrupt=1;//REMOVE ME
       }
 
 
@@ -711,7 +714,7 @@ void trade_update(void)
 
    printf("\nCurrent modifier set at %f",current_modifier);
 
-      //REMOVE ME set bought to 0
+      //REMOVE ME set sys.bought to 0
    for (i=0;i<systems_nstack; i++) {
       for (goodnum=0; goodnum<econ_nprices; goodnum++) {
          systems_stack[i].bought[goodnum]=0.;
@@ -735,13 +738,11 @@ void trade_update(void)
                   //@@@ trade goods for credits!
 
                   //average of the two prices
-               price =  ( fabs((*sys1).prices[goodnum] - (*sys2).prices[goodnum] ) / 2 );
+               price =  ( fabs((*sys1).prices[goodnum] + (*sys2).prices[goodnum] ) / 2 );
 
                      //amount to be traded: current (with direction) time current_modifier
                trade = current_modifier * ( ( (*sys1).prices[goodnum] - (*sys2).prices[goodnum] )
                   / (*sys1).jumps[jumpnum].jump_resistance );
-
-               printf("\nTrading %f goods",trade);
 
                (*sys1).credits               -= price * trade;
                (*sys2).credits               += price * trade;
@@ -751,6 +752,9 @@ void trade_update(void)
 
                (*sys1).bought[goodnum]       += trade;   //REMOVE ME
                (*sys2).bought[goodnum]       -= trade;
+
+               // if (!strcmp((*sys1).name,"Doranthex") || !strcmp((*sys1).name,"Doranthex"))
+               //    printf("\nSys1 is %s, sys2 is %s, sys1 bought %0.f goods for %0.f, price is %2.f",(*sys1).name,(*sys2).name,trade,price*trade,price);
 
             }
          }
@@ -778,7 +782,10 @@ void economy_update( unsigned int dt )
    refresh_prices();
 
    // for (i=0; i<dt; i+=10000000) {
-   for (i=0; i<dt; i+=200000) {   //@@@ changed this to run 50x every STP
+   for (i=0; i<dt; i+=100000) {   //@@@ changed this to run 100x every STP
+
+      if (bankrupt)
+         return;
 
       trade_update();
       produce_consume();
@@ -787,7 +794,7 @@ void economy_update( unsigned int dt )
    }
 
 }
-
+ 
 
 
 
