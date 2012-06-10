@@ -791,7 +791,7 @@ void economy_update( unsigned int dt )
    refresh_prices();
 
    // for (i=0; i<dt; i+=10000000) {
-   for (i=0; i<dt; i+=100) {   //@@@ changed this to run 100000x every STP
+   for (i=0; i<dt; i+=100000) {   //@@@ changed this to run 100x every STP
 
       iters++;
 
