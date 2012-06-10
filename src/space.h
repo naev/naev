@@ -241,7 +241,7 @@ struct StarSystem_ {
    int *planetsid; /**< IDs of the planets. */
    int nplanets; /**< total number of planets */
    int faction; /**< overall faction */
- 
+
    /* Jumps. */
    JumpPoint *jumps; /**< Jump points in the system */
    int njumps; /**< number of adjacent jumps */

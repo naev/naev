@@ -577,7 +577,7 @@ static void map_update( unsigned int wid )
 
    y -= 15;
 
-   nsnprintf(buf,12,"%f",sys->credits);
+   nsnprintf(buf,12,"%.0f",sys->credits);
    window_modifyText( wid, "txtCredits", buf);
 
    window_moveWidget( wid, "txtSCredits", x, y );
