@@ -59,7 +59,7 @@
 #define PRICE(Credits,Goods)  (Credits / (Goods)) /**< Price of a good*/
 
 #define AVG_POPULATION     50000000 /**< Used for prod_mods as divisor populations */
-#define TRADE_MAX          systems_nstack*25.
+#define TRADE_MODIFIER     .5  /**< How much trade that wants to happen actually happens. Adjusts price changes */
 
 /* commodity stack */
 Commodity* commodity_stack = NULL; /**< Contains all the commodities. */
@@ -122,7 +122,7 @@ double planet_class_mods[][5] = {
    {10.,-2,-2.,-1.,-2.},
    {14.,-3.,-5.,8.,-5.},
    {-5., 1200.,-2., 6., 650.},
-   {20., 130.,-13.,-2.,-.5},
+   {20., 130.,-130.,-2.,-.5},
    { 6., 100.,-5.,-1., 150.},
    { 0., 600.,-2.,-1., 0.},
    {-3., 600.,-1., 0., 100.},
@@ -133,7 +133,7 @@ double planet_class_mods[][5] = {
    { 0., 0., 0., 0., 0.},
    {-300000.,-400000.,1600000., 300000., 100000.}, //stations are buffed to account for population
    {-400000.,-600000.,2000000.,-100000., 0.},
-   {-300000.,-400000.,1400000., 00., 100000.},
+   {-300000.,-400000.,1400000., 00., 100000.},  //
    { 0., 0., 0., 0., 0.}
 };
 
@@ -445,15 +445,6 @@ credits_t economy_getPrice( const Commodity *com,
 }
 
 /**
- * @brief gets the number of credits in a system
- *
- *    @param sys System to get credit stockpile of
- *
- *
- *
-*/
-
-/**
  * @brief Calculates the resistance between two star systems.
  *
  *    @param A Star system to calculate the resistance between.
@@ -536,7 +527,6 @@ int economy_init (void)    //IMPORTANT @@@
    }     
 
 
-
    /* Initialize starting values */ 
          //For now this means set stockpiles and credits to starting values
    for (i=0; i<systems_nstack; i++) {
@@ -549,8 +539,7 @@ int economy_init (void)    //IMPORTANT @@@
 
          (*sys1).stockpiles[goodnum] = STARTING_GOODS;
       }
-
-   }     
+   }
 
 
    /* Set up production modifiers, based on asset classifications */
@@ -579,7 +568,6 @@ int economy_init (void)    //IMPORTANT @@@
    /* Refresh economy. */
    refresh_prices();//###
 
-
    return 0;
 }
 
@@ -588,22 +576,9 @@ double production(double mod, double goods)
 {
       //### @@@ Should this be defined as a macro?
    if (mod >= 0)
-      return mod * (1800 / (goods));  //modified from 2* to 1*
+      return mod * (1800 / (goods));  //modified from 2* to 1* CHANGE ME BACK
    else
-      return mod * (goods/(1800*1000)) ;
-
-
-   //      return -mod * (1/(goods/12000 + .5) - 1/.5) * .01 ;
-
-
-   //2000*(1/((x/12000)+.75) - 1/.75)
-
-      //this one worked nicely
-   // if (mod >= 0)
-   //    return mod * (1800 / (goods));
-   // else
-   //    return (mod/20000) * sqrt(goods);
-
+      return mod * (goods/(1800000));   //will work for all cases except when mod>1800000
 } 
 
 
@@ -666,14 +641,10 @@ void refresh_prices(void)
          credits  = (*sys1).credits;
          goods    = (*sys1).stockpiles[goodnum];
 
-         // printf("\nprice is goods at %f, credits at %f, %f",goods,credits,PRICE(credits,goods));
-
          (*sys1).prices[goodnum] = PRICE(credits,goods);
 
       }
-
    }
-
 }
 
 /* trade in the galaxy */
@@ -687,41 +658,10 @@ void trade_update(void)
    double price;
    double trade;
 
-   double total_wanted_trade = 0; //How much trade or "current" wants to flow
-               // Here, "current" is price difference / resistance
-   double current_modifier = 0;  //the fraction of "trade current" that shall
-               //actually be traded.
-
    StarSystem *sys1;
    StarSystem *sys2;
 
    printf("\nTrading!");
-
-      //get total wanted traded
-   for (i=0;i<systems_nstack; i++) {
-
-      sys1=&systems_stack[i];
-
-      for (jumpnum=0; jumpnum<(*sys1).njumps; jumpnum++) {
-
-         sys2=&systems_stack[ (*sys1).jumps[jumpnum].targetid ];
-
-            //if we haven't already visited this jump
-         if ( i < (*sys2).id ) {
-
-            for (goodnum=0; goodnum<econ_nprices; goodnum++) {
-
-               total_wanted_trade +=  ( fabs((*sys1).prices[goodnum] - (*sys2).prices[goodnum] )
-                  / (*sys1).jumps[jumpnum].jump_resistance );
-            }
-         }
-      }
-   }
-
-   printf("\nWanted trade is %f, trade_max is %f",total_wanted_trade,TRADE_MAX);
-   current_modifier = fminf( 1.0 ,TRADE_MAX / total_wanted_trade );
-
-   printf("\nCurrent modifier set at %f",current_modifier);
 
       //REMOVE ME set sys.bought to 0
    for (i=0;i<systems_nstack; i++) {
@@ -749,9 +689,10 @@ void trade_update(void)
                   //average of the two prices
                price =  ( fabs((*sys1).prices[goodnum] + (*sys2).prices[goodnum] ) / 2 );
 
-                     //amount to be traded: current (with direction) time current_modifier
-               trade = current_modifier * ( ( (*sys1).prices[goodnum] - (*sys2).prices[goodnum] )
-                  / (*sys1).jumps[jumpnum].jump_resistance );
+                     //amount to be traded: if trade_modifier is set to 1, after a trade prices will be equal
+                        //no matter what the price
+               trade = TRADE_MODIFIER * ((*sys1).credits * (*sys2).stockpiles[goodnum] - (*sys2).credits*(*sys1).stockpiles[goodnum])
+                  /(price * ((*sys1).stockpiles[goodnum]+(*sys2).stockpiles[goodnum]) + (*sys1).credits+(*sys2).credits);
 
                (*sys1).credits               -= price * trade;
                (*sys2).credits               += price * trade;
@@ -761,10 +702,6 @@ void trade_update(void)
 
                (*sys1).bought[goodnum]       += trade;   //REMOVE ME
                (*sys2).bought[goodnum]       -= trade;
-
-               // if (!strcmp((*sys1).name,"Doranthex") || !strcmp((*sys1).name,"Doranthex"))
-               //    printf("\nSys1 is %s, sys2 is %s, sys1 bought %0.f goods for %0.f, price is %2.f",(*sys1).name,(*sys2).name,trade,price*trade,price);
-
             }
          }
       }
@@ -791,7 +728,7 @@ void economy_update( unsigned int dt )
    refresh_prices();
 
    // for (i=0; i<dt; i+=10000000) {
-   for (i=0; i<dt; i+=100000) {   //@@@ changed this to run 100x every STP
+   for (i=0; i<dt; i+=200000) {   //@@@ changed this to run 50x every STP
 
       iters++;
 
@@ -831,9 +768,11 @@ void economy_destroy (void)
          free(systems_stack[i].prices);
          free(systems_stack[i].stockpiles);
          free(systems_stack[i].prod_mods);
+         free(systems_stack[i].bought);
          systems_stack[i].prices    = NULL;
          systems_stack[i].stockpiles= NULL;  //@@@ Correct, yes?
          systems_stack[i].prod_mods = NULL;
+         systems_stack[i].bought    = NULL;
       }
    }
 
