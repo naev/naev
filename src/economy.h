@@ -13,6 +13,8 @@
 
 #define ECON_CRED_STRLEN      32 /**< Maximum length a credits2str string can reach. */
 
+#define PRICE(Credits,Goods)  (Credits / Goods) /**< Price of a good*/
+
 
 typedef int64_t credits_t;
 #define CREDITS_MAX        INT64_MAX
@@ -24,9 +26,10 @@ typedef int64_t credits_t;
  *
  * @brief Represents a commodity.
  *
- * @todo Use inverse normal?
+ * @todo Use inverse normal? //Huh?
  */
 typedef struct Commodity_ {
+   int index;	/**< Index of the commodity */
    char* name; /**< Name of the commodity. */
    char* description; /**< Description of the commodity. */
    /* Prices. */

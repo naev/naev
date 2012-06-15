@@ -7,7 +7,7 @@
  <class>Luxury Yacht</class>
  <price>500000</price>
  <fabricator>Nexus Shipyards</fabricator>
- <description>The Gawain is a very high-end ship, outpacing nearly all other production vessels. It relies heavily on technology first implemented on the Lancelot, and is widely used as a sporting vessel as it is extremely manoeuvrable, though they rarely see combat due to their meager weapons space and relative fragility.</description>
+ <description>Cargo temporarily buffed. The Gawain is a very high-end ship, outpacing nearly all other production vessels. It relies heavily on technology first implemented on the Lancelot, and is widely used as a sporting vessel as it is extremely manoeuvrable, though they rarely see combat due to their meager weapons space and relative fragility.</description>
  <movement>
   <thrust>320</thrust>
   <turn>170</turn>
@@ -27,7 +27,7 @@
   <crew>2</crew>
   <mass>63</mass>
   <fuel>400</fuel>
-  <cargo>15</cargo>
+  <cargo>15000000</cargo>
  </characteristics>
  <slots>
   <weapon x="12" y="0" h="-2"/>

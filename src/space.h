@@ -254,8 +254,8 @@ struct StarSystem_ {
    /* Calculated. */
    double *prices; /**< Handles the prices in the system. */
 
-   //New things here @@@
-   double *prod_mods;    /**< Production modifiers, called IO as affects how much is produced/consumed*/
+   /* Economy things */
+   double *prod_mods;    /**< Production modifiers, affects how much is produced/consumed*/
    double credits;      /**< How many credits the system has */
    double *stockpiles; /**< How many goods the system has */
    double *bought;      /**< How much of what goods were just bought. REMOVE ME */
@@ -309,6 +309,7 @@ char* planet_getServiceName( int service );
 int planet_getService( char *name );
 PlanetClass planetclass_get( const char a );
 credits_t planet_commodityPrice( const Planet *p, const Commodity *c );
+credits_t planet_commodityCost( const Planet *p, const Commodity *c, int buying );
 /* Land related stuff. */
 char planet_getColourChar( Planet *p );
 const glColour* planet_getColour( Planet *p );

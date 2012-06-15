@@ -36,6 +36,7 @@
 #include "rng.h"
 #include "space.h"
 #include "ntime.h"
+#include "land.h"
 
 
 #define XML_COMMODITY_ID      "Commodities" /**< XML document identifier */
@@ -46,7 +47,7 @@
  * Economy Nodal Analysis parameters.
  */
  // ### will have to modifiy
-#define ECON_BASE_RES      5. /**< Base resistance value for any system. */
+#define ECON_BASE_RES      5 /**< Base resistance value for any system. */
 #define ECON_SELF_RES      3. /**< Additional resistance for the self node. */
 #define ECON_FACTION_MOD   0.1 /**< Modifier on Base for faction standings. */
 
@@ -56,9 +57,8 @@
 #define STARTING_CREDITS   100000000. /**< ### How many credits are initially given to each system*/
 #define STARTING_GOODS     100000.  //originally 200000
 
-#define PRICE(Credits,Goods)  (Credits / (Goods)) /**< Price of a good*/
 
-#define AVG_POPULATION     50000000 /**< Used for prod_mods as divisor populations */
+#define AVG_POPULATION     50000000 /**< Used for prod_mods as a divisor to populations in production modifiers */
 #define TRADE_MODIFIER     .5  /**< How much trade that wants to happen actually happens. Adjusts price changes */
 
 /* commodity stack */
@@ -73,16 +73,16 @@ extern int systems_nstack; /**< Number of star systems. */
 /* planet stack  */
 extern Planet *planet_stack; /**< Planet stack. */
 extern int planet_nstack; /**< Num of planets */
+extern int commodity_mod;  /**< Smallest unit the player can buy, for player prices */
 
 
 /*
  * Global Economy variables. Most of it stored with systems 
  */
 static int econ_initialized   = 0; /**< Is economy system initialized? */
-static int *econ_comm         = NULL; /**< Commodities to calculate. ### Is this needed for anything? */
+static int *econ_comm         = NULL; /**< Commodities to calculate. */
 int econ_nprices       = 0; /**< Number of prices to calculate. */
 
-static int bankrupt=0;   //REMOVE ME
 static int iters=0;     //REMOVE ME
 
 /*
@@ -93,12 +93,15 @@ static void commodity_freeOne( Commodity* com );
 static int commodity_parse( Commodity *temp, xmlNodePtr parent );
 
 /* Economy. */
-static double econ_calcJumpR( StarSystem *A, StarSystem *B );
-credits_t economy_getPrice( const Commodity *com,
-      const StarSystem *sys, const Planet *p ); /* externed in land.c */
+// static double econ_calcJumpR( StarSystem *A, StarSystem *B );
+credits_t economy_getPrice( const Commodity *com, 
+   const StarSystem *sys, const Planet *p ); /* externed in space.c */
+credits_t economy_getCost( const Commodity *com, const StarSystem *sys, int buying);
 void produce_consume(void);
 void trade_update(void);
 void refresh_prices(void);
+
+
 // void economy_update( unsigned int dt );
 
 
@@ -185,7 +188,6 @@ Commodity* commodity_get( const char* name )
    return NULL;
 }
 
-
 /**
  * @brief Gets a commodity by name without warning.
  *
@@ -208,8 +210,8 @@ Commodity* commodity_getW( const char* name )
  *    @param com Commodity to free.
  */
 static void commodity_freeOne( Commodity* com )
-{
-   if (com->name)
+{           //### is this necessary?
+   if (com->name) 
       free(com->name);
    if (com->description)
       free(com->description);
@@ -372,6 +374,7 @@ int commodity_load (void)
 
          /* See if should get added to commodity list. */
          if (commodity_stack[commodity_nstack-1].price > 0.) {
+            commodity_stack[econ_nprices].index=econ_nprices;
             econ_nprices++;
             econ_comm = realloc(econ_comm, econ_nprices * sizeof(int));
             econ_comm[econ_nprices-1] = commodity_nstack-1;
@@ -421,16 +424,14 @@ credits_t economy_getPrice( const Commodity *com,
       const StarSystem *sys, const Planet *p )
 {
    (void) p;
-   int i, k;
+   int i;
    double price;
-
-   /* Get position in stack. */
-   k = com - commodity_stack;
 
    /* Find what commodity that is. */
    for (i=0; i<econ_nprices; i++)
-      if (econ_comm[i] == k)
+      if (econ_comm[i] == com->index)
          break;
+
 
    /* Check if found. */
    if (i >= econ_nprices) {
@@ -439,7 +440,6 @@ credits_t economy_getPrice( const Commodity *com,
    }
 
    /* Calculate price. */
-   //price  = (double) com->price;  //@@@ this voids the price multiplier in commodities.xml
    price = sys->prices[i];
    return (credits_t) price;
 }
@@ -451,29 +451,29 @@ credits_t economy_getPrice( const Commodity *com,
  *    @param B Star system to calculate the resistance between.
  *    @return Resistance between A and B.
  */
-static double econ_calcJumpR( StarSystem *A, StarSystem *B )
-{
-   double R;
+// static double econ_calcJumpR( StarSystem *A, StarSystem *B )   //### unused for now
+// {
+//    double R;   
 
-   /* Set to base to ensure price change. */
-   R = ECON_BASE_RES;
+//    /* Set to base to ensure price change. */
+//    R = ECON_BASE_RES;
 
-   /* Modify based on system conditions. */
-   R += (A->nebu_density + B->nebu_density) / 1000.; /* Density shouldn't affect much. */
-   R += (A->nebu_volatility + B->nebu_volatility) / 100.; /* Volatility should. */
+//    /* Modify based on system conditions. */
+//    R -= (A->nebu_density + B->nebu_density) / 1000.; /* Density shouldn't affect much. */
+//    R -= (A->nebu_volatility + B->nebu_volatility) / 100.; /* Volatility should. */
 
-   /* Modify based on global faction. */
-   if ((A->faction != -1) && (B->faction != -1)) {
-      if (areEnemies(A->faction, B->faction))
-         R += ECON_FACTION_MOD * ECON_BASE_RES;
-      else if (areAllies(A->faction, B->faction))
-         R -= ECON_FACTION_MOD * ECON_BASE_RES;
-   }
+//    /* Modify based on global faction. */
+//    if ((A->faction != -1) && (B->faction != -1)) {
+//       if (areEnemies(A->faction, B->faction))
+//          R -= ECON_FACTION_MOD * ECON_BASE_RES;
+//       else if (areAllies(A->faction, B->faction))
+//          R += ECON_FACTION_MOD * ECON_BASE_RES;
+//    }
 
-   /* @todo Modify based on trader/faction presence. */
+//    /* @todo Modify based on trader/faction presence. */
 
-   return (1/R);
-}
+//    return R;
+// }
 
 
 /**
@@ -481,8 +481,8 @@ static double econ_calcJumpR( StarSystem *A, StarSystem *B )
  *
  *    @return 0 on success.
  */
-int economy_init (void)    //IMPORTANT @@@ 
-{     //Not for loading loading economies
+int economy_init (void) //Not for loading loading economies
+{     
    printf("\nInit ing economy");
 
    int i;
@@ -491,26 +491,13 @@ int economy_init (void)    //IMPORTANT @@@
    int goodnum;
 
    StarSystem *sys1;
-   StarSystem *sys2;
+   // StarSystem *sys2;
 
    Planet *planet;
 
    /* Must not be initialized. */
    if (econ_initialized)
       return 0;
-
-      //### Put in resistances
-   for (i=0;i<systems_nstack; i++) {
-
-      sys1=&systems_stack[i];
-
-      for (i0=0;i0<(*sys1).njumps; i0++) {
-
-         sys2=&systems_stack[ (*sys1).jumps[i0].targetid ];
-
-         (*sys1).jumps[i0].jump_resistance=econ_calcJumpR(sys1,sys2);
-      }
-   }
 
 
    /* Allocate price space, commodity space, and credits stockpile */
@@ -524,11 +511,9 @@ int economy_init (void)    //IMPORTANT @@@
       systems_stack[i].prod_mods = calloc(econ_nprices, sizeof(double));
 
       systems_stack[i].bought = calloc(econ_nprices, sizeof(double)); //REMOVE ME, along with StarSystem.bought
-   }     
-
+   }
 
    /* Initialize starting values */ 
-         //For now this means set stockpiles and credits to starting values
    for (i=0; i<systems_nstack; i++) {
 
       sys1=&systems_stack[i];
@@ -541,10 +526,7 @@ int economy_init (void)    //IMPORTANT @@@
       }
    }
 
-
    /* Set up production modifiers, based on asset classifications */
-      //For every system, for every planet, for every good, add 
-      //    (planet.population * planet_prod_mod) to system.prod_mods
    for (i=0; i<systems_nstack; i++) {
 
       sys1=&systems_stack[i];
@@ -561,7 +543,6 @@ int economy_init (void)    //IMPORTANT @@@
       }
    }
 
-
    /* Mark economy as initialized. */
    econ_initialized = 1;
 
@@ -576,7 +557,7 @@ double production(double mod, double goods)
 {
       //### @@@ Should this be defined as a macro?
    if (mod >= 0)
-      return mod * (1800 / (goods));  //modified from 2* to 1* CHANGE ME BACK
+      return mod * (1800 / (goods));
    else
       return mod * (goods/(1800000));   //will work for all cases except when mod>1800000
 } 
@@ -594,7 +575,7 @@ void produce_consume(void)
 
    StarSystem *sys1;
 
-
+      /* for every system produce and consume */
    for (i=0;i<systems_nstack; i++) {
 
       sys1=&systems_stack[i];
@@ -607,41 +588,36 @@ void produce_consume(void)
          (*sys1).stockpiles[goodnum]+=production(mod,goods);
 
       }
-
    }
 }
 
-/* Refresh prices to be accurate, also checks for bankruptcy */
+/* Refresh prices to be accurate */
 void refresh_prices(void)
 {
    int i;
-   // int i0;
    int goodnum;
-   // int bankrupt;
 
    double credits;
    double goods;
+   double price;
+   Commodity *comm;
 
    StarSystem *sys1;
 
-
+      /* for every system, update prices on every good */
    for (i=0;i<systems_nstack; i++) {
 
       sys1=&systems_stack[i];
-
-         //bankrupt system
-      if ((*sys1).credits<0.){
-         WARN("\nSystem %s Dead in the water",(*sys1).name);
-         bankrupt=1;//REMOVE ME
-      }
-
 
       for (goodnum=0; goodnum<econ_nprices; goodnum++) {
 
          credits  = (*sys1).credits;
          goods    = (*sys1).stockpiles[goodnum];
+         comm     = &commodity_stack[goodnum];
 
-         (*sys1).prices[goodnum] = PRICE(credits,goods);
+         price  = (double) (*comm).price; //price defined in XML
+
+         (*sys1).prices[goodnum] = price * PRICE(credits,goods);
 
       }
    }
@@ -661,7 +637,7 @@ void trade_update(void)
    StarSystem *sys1;
    StarSystem *sys2;
 
-   printf("\nTrading!");
+   // printf("\nTrading!");
 
       //REMOVE ME set sys.bought to 0
    for (i=0;i<systems_nstack; i++) {
@@ -670,7 +646,7 @@ void trade_update(void)
       }
    }
 
-      //Trade!
+      /* Trade! */
    for (i=0;i<systems_nstack; i++) {
 
       sys1=&systems_stack[i];
@@ -706,14 +682,7 @@ void trade_update(void)
          }
       }
    }
-
-
-   printf("\nTrading done");
-
 }
-
-
-
 
 /**
  * @brief Updates the economy.
@@ -727,28 +696,20 @@ void economy_update( unsigned int dt )
 
    refresh_prices();
 
+      /* Trade and produce/consume */
    // for (i=0; i<dt; i+=10000000) {
-   for (i=0; i<dt; i+=200000) {   //@@@ changed this to run 50x every STP
+   for (i=0; i<dt; i+=10000) {   //@@@ changed this to run 1000x every STP
 
       iters++;
 
-      if (bankrupt){
-         printf("\nUPDATE #%d",iters);
-         return;
-
-      }
-
       trade_update();
       produce_consume();
-      refresh_prices();
-      trade_update();
       refresh_prices();
 
    }
 
 }
  
-
 
 
 /**

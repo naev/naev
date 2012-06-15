@@ -70,5 +70,9 @@ int can_sell( char* shipname );
 int land_errDialogue( char* name, char* type );
 void land_errDialogueBuild( const char *fmt, ... );
 
+/*
+ * Economy things
+ */
+int commodity_getMod (void);
 
 #endif /* LAND_H */
