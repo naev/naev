@@ -253,7 +253,7 @@ void ntime_setR( int scu, int stp, int stu, double rem )
 void ntime_inc( ntime_t t )
 {
 
-   printf("\nAdding time relatively, adding time %s",ntime_pretty( t, 8));//REMOVE ME
+   // printf("\nAdding time relatively, adding time %s",ntime_pretty( t, 8));//REMOVE ME
 
    naev_time += t;
    economy_update( t );

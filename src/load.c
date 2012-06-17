@@ -508,6 +508,9 @@ int load_game( const char* file )
    player_message( "\egWelcome to "APPNAME"!" );
    player_message( "\eg v%s", naev_version(0) );
 
+   /* Initialize the economy. */
+   economy_init();
+
    /* Now begin to load. */
    diff_load(node); /* Must load first to work properly. */
    pfaction_load(node); /* Must be loaded before player so the messages show up properly. */
@@ -517,9 +520,6 @@ int load_game( const char* file )
    events_loadActive(node);
    hook_load(node);
    space_sysLoad(node);
-
-   /* Initialize the economy. */
-   economy_init();
 
    /* Check sanity. */
    event_checkSanity();

@@ -38,4 +38,7 @@
   <structure/>
   <structure/>
  </slots>
+ <stats>
+  <cargo_inertia>-99</cargo_inertia>
+ </stats>
 </ship>

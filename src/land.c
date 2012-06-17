@@ -361,7 +361,7 @@ static void commodity_buy( unsigned int wid, char* str )
    cur_system->credits+=price*q; //NOTE! This a naive transaction, player 
    cur_system->stockpiles[com->index]-=q;  //can game the system
    cur_system->prices[com->index]=PRICE(cur_system->credits,cur_system->stockpiles[com->index]); //update price
-   printf("Creds: %.0f Goods %.0f price %.0f\n",cur_system->credits,cur_system->stockpiles[com->index],PRICE(cur_system->credits,cur_system->stockpiles[com->index]));
+   // printf("Creds: %.0f Goods %.0f price %.0f\n",cur_system->credits,cur_system->stockpiles[com->index],PRICE(cur_system->credits,cur_system->stockpiles[com->index]));
    land_checkAddRefuel();
    commodity_update(wid, NULL);
 
@@ -404,8 +404,8 @@ static void commodity_sell( unsigned int wid, char* str )
    cur_system->credits-=price*q; //NOTE! This a naive transaction, player 
    cur_system->stockpiles[com->index]+=q;  //can game the system
    cur_system->prices[com->index]=PRICE(cur_system->credits,cur_system->stockpiles[com->index]); //update price
-   printf("Creds: %.0f Goods %.0f price %.0f\n",cur_system->credits,cur_system->stockpiles[com->index],PRICE(cur_system->credits,cur_system->stockpiles[com->index]));
-   player_modCredits( price );
+   // printf("Creds: %.0f Goods %.0f price %.0f\n",cur_system->credits,cur_system->stockpiles[com->index],PRICE(cur_system->credits,cur_system->stockpiles[com->index]));
+   player_modCredits( price );   //remove that printf comment (there are 2 of them)
    land_checkAddRefuel();
 
    
@@ -460,7 +460,6 @@ static void commodity_renderMod( double bx, double by, double w, double h, void 
    if (q != commodity_mod) {
       commodity_update( land_getWid(LAND_WINDOW_COMMODITY), NULL );
       commodity_mod = q;
-      printf("\nUpdating mod");
    }
    nsnprintf( buf, 8, "%dx", q );
    gl_printMid( &gl_smallFont, w, bx, by, &cBlack, buf );

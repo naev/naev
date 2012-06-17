@@ -390,33 +390,33 @@ static void map_update( unsigned int wid )
 
       /* Faction */
       window_modifyImage( wid, "imgFaction", NULL, 0, 0 );
-      window_moveWidget( wid, "txtSFaction", x, y);
-      window_moveWidget( wid, "txtFaction", x + 50, y - gl_smallFont.h - 5 );
-      window_modifyText( wid, "txtFaction", "Unknown" );
-      y -= 2 * gl_smallFont.h + 5 + 15;
+      // window_moveWidget( wid, "txtSFaction", x, y);
+      // window_moveWidget( wid, "txtFaction", x + 50, y - gl_smallFont.h - 5 );
+      // window_modifyText( wid, "txtFaction", "Unknown" );
+      // y -= 2 * gl_smallFont.h + 5 + 15;
 
-      /* Standing */
-      window_moveWidget( wid, "txtSStanding", x, y );
-      window_moveWidget( wid, "txtStanding", x + 50, y - gl_smallFont.h - 5 );
-      window_modifyText( wid, "txtStanding", "Unknown" );
-      y -= 2 * gl_smallFont.h + 5 + 15;
+      // /* Standing */
+      // window_moveWidget( wid, "txtSStanding", x, y );
+      // window_moveWidget( wid, "txtStanding", x + 50, y - gl_smallFont.h - 5 );
+      // window_modifyText( wid, "txtStanding", "Unknown" );
+      // y -= 2 * gl_smallFont.h + 5 + 15;
 
-      /* Presence. */
-      window_moveWidget( wid, "txtSPresence", x, y );
-      window_moveWidget( wid, "txtPresence",  x + 50, y - gl_smallFont.h - 5 );
-      window_modifyText( wid, "txtPresence", "Unknown" );
-      y -= 2 * gl_smallFont.h + 5 + 15;
+      // /* Presence. */
+      // window_moveWidget( wid, "txtSPresence", x, y );
+      // window_moveWidget( wid, "txtPresence",  x + 50, y - gl_smallFont.h - 5 );
+      // window_modifyText( wid, "txtPresence", "Unknown" );
+      // y -= 2 * gl_smallFont.h + 5 + 15;
 
-      /* Planets */
-      window_moveWidget( wid, "txtSPlanets", x, y );
-      window_moveWidget( wid, "txtPlanets", x + 50, y - gl_smallFont.h - 5 );
-      window_modifyText( wid, "txtPlanets", "Unknown" );
-      y -= 2 * gl_smallFont.h + 5 + 15;
+      // /* Planets */
+      // window_moveWidget( wid, "txtSPlanets", x, y );
+      // window_moveWidget( wid, "txtPlanets", x + 50, y - gl_smallFont.h - 5 );
+      // window_modifyText( wid, "txtPlanets", "Unknown" );
+      // y -= 2 * gl_smallFont.h + 5 + 15;
 
-      /* Services */
-      window_moveWidget( wid, "txtSServices", x, y );
-      window_moveWidget( wid, "txtServices", x + 50, y -gl_smallFont.h - 5 );
-      window_modifyText( wid, "txtServices", "Unknown" );
+      // /* Services */
+      // window_moveWidget( wid, "txtSServices", x, y );
+      // window_moveWidget( wid, "txtServices", x + 50, y -gl_smallFont.h - 5 );
+      // window_modifyText( wid, "txtServices", "Unknown" );
 
       /*
        * Bottom Text

@@ -102,6 +102,7 @@ static glTexture *jumpbuoy_gfx = NULL; /**< Jump buoy graphics. */
 static lua_State *landing_lua = NULL; /**< Landing lua. */
 static int space_fchg = 0; /**< Faction change counter, to avoid unnecessary calls. */
 static int space_simulating = 0; /** Are we simulating space? */
+extern int econ_nprices;
 
 
 /*
@@ -132,6 +133,7 @@ static int systems_load (void);
 static StarSystem* system_parse( StarSystem *system, const xmlNodePtr parent );
 static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys );
 static void system_parseJumps( const xmlNodePtr parent );
+static int space_parseEconVals( xmlNodePtr Econ, StarSystem* sys );
 /* misc */
 static int getPresenceIndex( StarSystem *sys, int faction );
 static void presenceCleanup( StarSystem *sys );
@@ -2682,10 +2684,13 @@ static int systems_load (void)
    /*
     * First pass - loads all the star systems_stack.
     */
+
+   printf("\nLoading economy!");
    for (i=0; i<(int)nfiles; i++) {
 
       file = malloc((strlen(SYSTEM_DATA_PATH)+strlen(system_files[i])+2)*sizeof(char));
       nsnprintf(file,(strlen(SYSTEM_DATA_PATH)+strlen(system_files[i])+2)*sizeof(char),"%s%s",SYSTEM_DATA_PATH,system_files[i]);
+      // printf("\nLoading file %d: %s%s",i,SYSTEM_DATA_PATH,system_files[i]);
       /* Load the file. */
       buf = ndata_read( file, &bufsize );
       doc = xmlParseMemory( buf, bufsize );
@@ -3069,9 +3074,28 @@ int space_sysSave( xmlTextWriterPtr writer )
    int j;
    StarSystem *sys;
 
+   printf("\nSaving economy!");
+
    xmlw_startElem(writer,"space");
 
    for (i=0; i<systems_nstack; i++) {
+
+         /* Economy values */ //@@@working here
+      xmlw_startElem(writer,"economy");
+      // printf("\nWrote index %i",i);
+      xmlw_elem(writer,"index","%i",i);
+      xmlw_elem(writer,"credits","%f",systems_stack[i].credits);
+      for (j=0; j<econ_nprices; j++) {
+         xmlw_elem(writer,"stockpile","%f",systems_stack[i].stockpiles[j]);
+         xmlw_elem(writer,"prod_mod","%f",systems_stack[i].prod_mods[j]);
+
+         // xmlw_elem(writer,"stockpile","%f",systems_stack[i].stockpiles[j]);
+         // if (systems_stack[i].stockpiles[j]==0.)
+            // printf("\nwriting stockpile %f",systems_stack[i].stockpiles[j]);
+         // xmlw_elem(writer,"prod_mod","%f",systems_stack[i].prod_mods[j]);
+         // printf("\nwriting prod_mod %f",systems_stack[i].prod_mods[j]);
+      }
+      xmlw_endElem(writer);
 
       if (!sys_isKnown(&systems_stack[i])) continue; /* not known */
 
@@ -3108,7 +3132,8 @@ int space_sysSave( xmlTextWriterPtr writer )
  */
 int space_sysLoad( xmlNodePtr parent )
 {
-   xmlNodePtr node, cur;
+   xmlNodePtr node, cur, Econ;//, commodity;
+   int ind=0;
    StarSystem *sys;
    char *str;
 
@@ -3119,9 +3144,25 @@ int space_sysLoad( xmlNodePtr parent )
       if (xml_isNode(node,"space")) {
          cur = node->xmlChildrenNode;
 
+         // if (!xml_isNode(cur,"economy"))
+         //    WARN("Incompatible save, please start new game to use this economy build");
+         
          do {
+            if (xml_isNode(cur,"economy")){  //might make a subfunction out of this
+               Econ=cur->xmlChildrenNode;
+               if (!(xml_nextNode(Econ))) { WARN("\nbad save"); break;}
+               ind=xml_getInt(Econ);
+               sys = &systems_stack[ind]; //sys is gotten twice...
+               space_parseEconVals(Econ,sys);
+            }
+
+
+
+
+            else 
             if (xml_isNode(cur,"known")) {
                xmlr_attr(cur,"sys",str);
+               printf("\nKnown:%s",str);
                if (str != NULL) /* check for 5.0 saves */
                   sys = system_get(str);
                else /* load from 5.0 saves */
@@ -3164,6 +3205,44 @@ static int space_parseAssets( xmlNodePtr parent, StarSystem* sys )
             jp_setFlag(jp,JP_KNOWN);
       }
    } while (xml_nextNode(node));
+
+   return 0;
+}
+
+/**
+ * @brief Parses economic values in a system
+ *
+ *    @param parent Node of the system.
+ *    @return 0 on success.
+ */
+static int space_parseEconVals( xmlNodePtr Econ, StarSystem* sys )
+{  //very ugly, but it works
+
+   int ind=0;
+
+   if (!(xml_nextNode(Econ))) { WARN("\nbad save"); return -1;}
+   if (!(xml_nextNode(Econ))) { WARN("\nbad save"); return -1;}
+   sys->credits=1000000.;
+   sys->credits=xml_getFloat(Econ);
+   
+   if (!(xml_nextNode(Econ))) { WARN("\nbad save"); return -1;}
+   if (!(xml_nextNode(Econ))) { WARN("\nbad save"); return -1;}
+
+// //@@@ working here
+   ind=0;   
+   do {
+      if (xml_getFloat(Econ)==0)
+         printf("\nGot a empty here!");
+      else
+         sys->stockpiles[ind]=xml_getFloat(Econ);
+      if (!(xml_nextNode(Econ))) { WARN("\nbad save"); return -1;}
+      if (!(xml_nextNode(Econ))) { WARN("\nbad save"); return -1;}
+      sys->prod_mods[ind]=xml_getFloat(Econ);
+      ind++;
+      if (ind>=econ_nprices)
+         return -1;
+      if (!(xml_nextNode(Econ))) { WARN("\nbad save"); return -1;}
+   } while (xml_nextNode(Econ));
 
    return 0;
 }

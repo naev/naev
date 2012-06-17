@@ -59,7 +59,7 @@
 
 
 #define AVG_POPULATION     50000000 /**< Used for prod_mods as a divisor to populations in production modifiers */
-#define TRADE_MODIFIER     .5  /**< How much trade that wants to happen actually happens. Adjusts price changes */
+#define TRADE_MODIFIER     .99  /**< How much trade that wants to happen actually happens. Adjusts price changes */
 
 /* commodity stack */
 Commodity* commodity_stack = NULL; /**< Contains all the commodities. */
@@ -557,9 +557,9 @@ double production(double mod, double goods)
 {
       //### @@@ Should this be defined as a macro?
    if (mod >= 0)
-      return mod * (1800 / (goods));
+      return mod * (180000 / (goods));
    else
-      return mod * (goods/(1800000));   //will work for all cases except when mod>1800000
+      return mod * (goods/(18000));   //will work for all cases except when mod>1800000
 } 
 
 
@@ -696,9 +696,11 @@ void economy_update( unsigned int dt )
 
    refresh_prices();
 
+   printf("Updating economy");
+
       /* Trade and produce/consume */
    // for (i=0; i<dt; i+=10000000) {
-   for (i=0; i<dt; i+=10000) {   //@@@ changed this to run 1000x every STP
+   for (i=0; i<dt; i+=10000000) {   //@@@ changed this to run 1x every STP
 
       iters++;
 
@@ -718,6 +720,7 @@ void economy_update( unsigned int dt )
 void economy_destroy (void)
 {
    int i;
+   printf("\nDestroying economy");
 
    /* Must be initialized. */
    if (!econ_initialized)
