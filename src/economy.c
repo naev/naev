@@ -692,7 +692,7 @@ void trade_update(void)
 void economy_update( unsigned int dt )
 {
 
-   uint i=0;
+   unsigned int i=0;
 
    refresh_prices();
 
@@ -701,8 +701,6 @@ void economy_update( unsigned int dt )
       /* Trade and produce/consume */
    // for (i=0; i<dt; i+=10000000) {
    for (i=0; i<dt; i+=10000000) {   //@@@ changed this to run 1x every STP
-
-      iters++;
 
       trade_update();
       produce_consume();
