@@ -508,6 +508,8 @@ int load_game( const char* file )
    player_message( "\egWelcome to "APPNAME"!" );
    player_message( "\eg v%s", naev_version(0) );
 
+   /* kill possible old economy */
+   economy_destroy();
    /* Initialize the economy. */
    economy_init();
 

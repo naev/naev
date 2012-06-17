@@ -3156,13 +3156,9 @@ int space_sysLoad( xmlNodePtr parent )
                space_parseEconVals(Econ,sys);
             }
 
-
-
-
             else 
             if (xml_isNode(cur,"known")) {
                xmlr_attr(cur,"sys",str);
-               printf("\nKnown:%s",str);
                if (str != NULL) /* check for 5.0 saves */
                   sys = system_get(str);
                else /* load from 5.0 saves */
