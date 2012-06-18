@@ -17,6 +17,7 @@
 #include "nlua.h"
 #include "nluadef.h"
 #include "nlua_faction.h"
+#include "nlua_commodity.h"
 #include "nlua_vec2.h"
 #include "nlua_planet.h"
 #include "nlua_jump.h"
@@ -43,6 +44,14 @@ static int systemL_presence( lua_State *L );
 static int systemL_radius( lua_State *L );
 static int systemL_isknown( lua_State *L );
 static int systemL_setknown( lua_State *L );
+static int systemL_getCredits( lua_State *L );
+static int systemL_setCredits( lua_State *L );
+static int systemL_getPrice( lua_State *L );
+static int systemL_refreshPrice( lua_State *L );
+static int systemL_getStockpile( lua_State *L );
+static int systemL_setStockpile( lua_State *L );
+static int systemL_getProd_mod( lua_State *L );
+static int systemL_setProd_mod( lua_State *L );
 static int systemL_mrkClear( lua_State *L );
 static int systemL_mrkAdd( lua_State *L );
 static int systemL_mrkRm( lua_State *L );
@@ -63,6 +72,14 @@ static const luaL_reg system_methods[] = {
    { "radius", systemL_radius },
    { "known", systemL_isknown },
    { "setKnown", systemL_setknown },
+   { "getCredits", systemL_getCredits },
+   { "setCredits", systemL_setCredits },
+   { "getPrice", systemL_getPrice },
+   { "refreshPrice", systemL_refreshPrice },
+   { "getStockpile", systemL_getStockpile },
+   { "setStockpile", systemL_setStockpile },
+   { "getProd_mod", systemL_getProd_mod },
+   { "setProd_mod", systemL_setProd_mod },
    { "mrkClear", systemL_mrkClear },
    { "mrkAdd", systemL_mrkAdd },
    { "mrkRm", systemL_mrkRm },
@@ -84,9 +101,14 @@ static const luaL_reg system_cond_methods[] = {
    { "presence", systemL_presence },
    { "radius", systemL_radius },
    { "known", systemL_isknown },
+   { "getCredits", systemL_getCredits },
+   { "getPrice", systemL_getPrice },
+   { "getStockpile", systemL_getStockpile },
+   { "getProd_mod", systemL_getProd_mod },
    {0,0}
 }; /**< Read only system metatable methods. */
 
+extern int econ_nprices;   /* For refreshing system prices */
 
 /**
  * @brief Loads the system library.
@@ -358,7 +380,6 @@ static int systemL_faction( lua_State *L )
    return 1;
 
 }
-
 
 /**
  * @brief Gets the system's nebula parameters.
@@ -718,6 +739,145 @@ static int systemL_setknown( lua_State *L )
    return 0;
 }
 
+
+/**
+ * @brief Gets system credits
+ *
+ *    @luaparam s System name
+ *    @luareturn The credits in the system.
+ * @luafunc getCredits( sys )
+ */
+static int systemL_getCredits( lua_State *L )   //@@@ working here
+{
+   StarSystem *sys;
+   sys=luaL_validsystem(L,1);
+   lua_pushnumber(L, sys->credits);
+   return 1;
+}
+
+/**
+ * @brief Sets system credits
+ *
+ *    @luaparam s System name
+ *    @luaparam amount credits to set system credits to
+ * @luafunc setCredits( sys, amount )
+ */
+static int systemL_setCredits( lua_State *L )
+{
+   StarSystem *sys;
+   double amount;
+   sys = luaL_validsystem(L,1);
+   amount = lua_tonumber(L,2);
+   sys->credits=amount;
+   return 1;
+}
+
+/**
+ * @brief Gets commodity price in a system
+ *
+ *    @luaparam s System name
+ *    @luaparam commodity commodity name
+ * @luafunc getPrice( sys, commodity )
+ */
+static int systemL_getPrice( lua_State *L )
+{
+   StarSystem *sys;
+   Commodity *com;
+   sys = luaL_validsystem(L,1);
+   com = luaL_validcommodity(L,2);
+   lua_pushnumber(L, sys->prices[com->index]);
+   return 1;
+}
+
+/**
+ * @brief refreshes prices in a system
+ *
+ *    @luaparam s System name
+ * @luafunc refreshPrice( sys, commodity )
+ */
+static int systemL_refreshPrice( lua_State *L )
+{
+   StarSystem *sys;
+   sys = luaL_validsystem(L,1);
+   int i=0;
+
+   for (i=0;i<econ_nprices;i++)
+      sys->prices[i]=PRICE(sys->credits,sys->stockpiles[i]);
+   return 1;
+}
+
+/**
+ * @brief gets stockpile size in a system
+ *
+ *    @luaparam s System name
+ *    @luaparam commodity commodity name
+ * @luafunc getPrice( sys, commodity )
+ */
+static int systemL_getStockpile( lua_State *L )
+{
+   StarSystem *sys;
+   Commodity *com;
+   sys = luaL_validsystem(L,1);
+   com = luaL_validcommodity(L,2);
+   lua_pushnumber(L, sys->stockpiles[com->index]);
+   return 1;
+}
+
+/**
+ * @brief sets stockpile size in a system
+ *
+ *    @luaparam s System name
+ *    @luaparam commodity commodity name
+ * @luafunc getPrice( sys, commodity )
+ */
+static int systemL_setStockpile( lua_State *L )
+{
+   StarSystem *sys;
+   Commodity *com;
+   double amount;
+   sys = luaL_validsystem(L,1);
+   com = luaL_validcommodity(L,2);
+   amount = lua_tonumber(L,3);
+   sys->stockpiles[com->index]=amount;
+   return 1;
+}
+
+/**
+ * @brief gets a production modifier in a system
+ *
+ *    @luaparam s System name
+ *    @luaparam commodity commodity name
+ * @luafunc getPrice( sys, commodity )
+ */
+static int systemL_getProd_mod( lua_State *L )
+{
+   StarSystem *sys;
+   Commodity *com;
+   sys = luaL_validsystem(L,1);
+   com = luaL_validcommodity(L,2);
+   lua_pushnumber(L, sys->prod_mods[com->index]);
+   return 1;
+}
+
+/**
+ * @brief sets a production modifier size in a system
+ *
+ *    @luaparam s System name
+ *    @luaparam commodity commodity name
+ *    @luaparam amount final production modifier
+ * @luafunc getPrice( sys, commodity )
+ */
+static int systemL_setProd_mod( lua_State *L )
+{
+   StarSystem *sys;
+   Commodity *com;
+   double amount;
+   sys = luaL_validsystem(L,1);
+   com = luaL_validcommodity(L,2);
+   amount = lua_tonumber(L,3);
+   sys->prod_mods[com->index]=amount;
+   return 1;
+}
 
 /**
  * @brief Clears the system markers.

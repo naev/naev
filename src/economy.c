@@ -83,8 +83,6 @@ static int econ_initialized   = 0; /**< Is economy system initialized? */
 static int *econ_comm         = NULL; /**< Commodities to calculate. */
 int econ_nprices       = 0; /**< Number of prices to calculate. */
 
-static int iters=0;     //REMOVE ME
-
 /*
  * Prototypes.
  */

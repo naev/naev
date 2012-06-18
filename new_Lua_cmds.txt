@@ -1,0 +1,23 @@
+system.getCredits(sysname)
+	returns credits in a system
+
+system.setCredits(sysname,amount)
+	sets credit amount in a system
+
+system.getPrice(sysname,commodityname)
+	gets price in a system
+
+system.refreshPrice(sysname)
+	refreshes the price in a system
+
+system.getStockpile(sysname,commodityname,amount)
+	gets commodity stockpile in a system
+
+system.setStockpile()
+	sets stockpile size in a system
+
+system.getProd_mod(sysname,commodityname)
+	gets production modifiers in a system
+
+system.setProd_mod(sysname,commodityname,amount)
+	sets production modifiers in a system
