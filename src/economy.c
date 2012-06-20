@@ -20,7 +20,6 @@
 #include <stdio.h>
 #include "nstring.h"
 #include <stdint.h>
-#include <math.h> //REMOVE ME this is for sqrt()
 
 #ifdef HAVE_SUITESPARSE_CS_H
 #include <suitesparse/cs.h>
@@ -58,8 +57,10 @@
 #define STARTING_GOODS     100000.  //originally 200000
 
 
-#define AVG_POPULATION     50000000 /**< Used for prod_mods as a divisor to populations in production modifiers */
-#define TRADE_MODIFIER     .99  /**< How much trade that wants to happen actually happens. Adjusts price changes */
+#define AVG_POPULATION     50000000 /**< Divisor for calculation of prod_mods */
+#define INITIAL_TRADE_MODIFIER     0.99  /**< How much trade that wants to happen 
+                                    actually happens. Adjusts price changes */
+#define INITIAL_PRODUCTION_MODIFIER .1 /**< galaxial production modifier */
 
 /* commodity stack */
 Commodity* commodity_stack = NULL; /**< Contains all the commodities. */
@@ -81,7 +82,9 @@ extern int commodity_mod;  /**< Smallest unit the player can buy, for player pri
  */
 static int econ_initialized   = 0; /**< Is economy system initialized? */
 static int *econ_comm         = NULL; /**< Commodities to calculate. */
-int econ_nprices       = 0; /**< Number of prices to calculate. */
+int econ_nprices              = 0; /**< Number of prices to calculate. */
+double trade_modifier         = INITIAL_TRADE_MODIFIER; /** How much trade actually happens */
+double production_modifier    = INITIAL_PRODUCTION_MODIFIER;/**< galaxial production modifier */
 
 /*
  * Prototypes.
@@ -97,7 +100,6 @@ credits_t economy_getPrice( const Commodity *com,
 credits_t economy_getCost( const Commodity *com, const StarSystem *sys, int buying);
 void produce_consume(void);
 void trade_update(void);
-void refresh_prices(void);
 
 
 // void economy_update( unsigned int dt );
@@ -497,6 +499,8 @@ int economy_init (void) //Not for loading loading economies
    if (econ_initialized)
       return 0;
 
+   trade_modifier = INITIAL_TRADE_MODIFIER; /** How much trade actually happens */
+
 
    /* Allocate price space, commodity space, and credits stockpile */
    for (i=0; i<systems_nstack; i++) {
@@ -516,11 +520,11 @@ int economy_init (void) //Not for loading loading economies
 
       sys1=&systems_stack[i];
 
-      (*sys1).credits = STARTING_CREDITS;
+      sys1->credits = STARTING_CREDITS;
 
       for (goodnum=0; goodnum<econ_nprices; goodnum++) {
 
-         (*sys1).stockpiles[goodnum] = STARTING_GOODS;
+         sys1->stockpiles[goodnum] = STARTING_GOODS;
       }
    }
 
@@ -529,13 +533,13 @@ int economy_init (void) //Not for loading loading economies
 
       sys1=&systems_stack[i];
 
-      for (i0=0; i0<(*sys1).nplanets; i0++) {
+      for (i0=0; i0<sys1->nplanets; i0++) {
 
-         planet = &planet_stack[ (*sys1).planetsid[i0] ];
+         planet = &planet_stack[ sys1->planetsid[i0] ];
 
          for (goodnum=0; goodnum<econ_nprices ; goodnum++) {
 
-            (*sys1).prod_mods[goodnum] +=  planet_class_mods[(*planet).class][goodnum] 
+            sys1->prod_mods[goodnum] +=  planet_class_mods[(*planet).class][goodnum] 
                * (*planet).population / AVG_POPULATION;
          } 
       }
@@ -555,9 +559,9 @@ double production(double mod, double goods)
 {
       //### @@@ Should this be defined as a macro?
    if (mod >= 0)
-      return mod * (180000 / (goods));
+      return production_modifier * mod * (180000 / (goods));
    else
-      return mod * (goods/(18000));   //will work for all cases except when mod>1800000
+      return production_modifier * mod * (goods/(18000));   //will work for all cases except when mod>1800000
 } 
 
 
@@ -580,10 +584,10 @@ void produce_consume(void)
 
       for (goodnum=0; goodnum<econ_nprices; goodnum++) {
 
-         mod   = (*sys1).prod_mods[goodnum];
-         goods = (*sys1).stockpiles[goodnum];
+         mod   = sys1->prod_mods[goodnum];
+         goods = sys1->stockpiles[goodnum];
 
-         (*sys1).stockpiles[goodnum]+=production(mod,goods);
+         sys1->stockpiles[goodnum]+=production(mod,goods);
 
       }
    }
@@ -609,13 +613,13 @@ void refresh_prices(void)
 
       for (goodnum=0; goodnum<econ_nprices; goodnum++) {
 
-         credits  = (*sys1).credits;
-         goods    = (*sys1).stockpiles[goodnum];
+         credits  = sys1->credits;
+         goods    = sys1->stockpiles[goodnum];
          comm     = &commodity_stack[goodnum];
 
-         price  = (double) (*comm).price; //price defined in XML
+         price  = (double) comm->price; //price defined in XML
 
-         (*sys1).prices[goodnum] = price * PRICE(credits,goods);
+         sys1->prices[goodnum] = price * PRICE(credits,goods);
 
       }
    }
@@ -635,7 +639,7 @@ void trade_update(void)
    StarSystem *sys1;
    StarSystem *sys2;
 
-   // printf("\nTrading!");
+   printf("\nTrading!");
 
       //REMOVE ME set sys.bought to 0
    for (i=0;i<systems_nstack; i++) {
@@ -649,33 +653,33 @@ void trade_update(void)
 
       sys1=&systems_stack[i];
 
-      for (jumpnum=0; jumpnum<(*sys1).njumps; jumpnum++) {
+      for (jumpnum=0; jumpnum<sys1->njumps; jumpnum++) {
 
-         sys2=&systems_stack[ (*sys1).jumps[jumpnum].targetid ];
+         sys2=&systems_stack[ sys1->jumps[jumpnum].targetid ];
 
             //if we haven't already visited this jump
-         if ( i < (*sys2).id ) {
+         if ( i < sys2->id ) {
 
             for (goodnum=0; goodnum<econ_nprices; goodnum++) {
 
                   //@@@ trade goods for credits!
 
                   //average of the two prices
-               price =  ( fabs((*sys1).prices[goodnum] + (*sys2).prices[goodnum] ) / 2 );
+               price =  ( fabs(sys1->prices[goodnum] + sys2->prices[goodnum] ) / 2 );
 
                      //amount to be traded: if trade_modifier is set to 1, after a trade prices will be equal
                         //no matter what the price
-               trade = TRADE_MODIFIER * ((*sys1).credits * (*sys2).stockpiles[goodnum] - (*sys2).credits*(*sys1).stockpiles[goodnum])
-                  /(price * ((*sys1).stockpiles[goodnum]+(*sys2).stockpiles[goodnum]) + (*sys1).credits+(*sys2).credits);
+               trade = trade_modifier * (sys1->credits * sys2->stockpiles[goodnum] - sys2->credits*sys1->stockpiles[goodnum])
+                  /(price * (sys1->stockpiles[goodnum]+sys2->stockpiles[goodnum]) + sys1->credits+sys2->credits);
+//@@@###put back in trade_modifier
+               sys1->credits               -= price * trade;
+               sys2->credits               += price * trade;
 
-               (*sys1).credits               -= price * trade;
-               (*sys2).credits               += price * trade;
+               sys1->stockpiles[goodnum]   += trade;
+               sys2->stockpiles[goodnum]   -= trade;
 
-               (*sys1).stockpiles[goodnum]   += trade;
-               (*sys2).stockpiles[goodnum]   -= trade;
-
-               (*sys1).bought[goodnum]       += trade;   //REMOVE ME
-               (*sys2).bought[goodnum]       -= trade;
+               sys1->bought[goodnum]       += trade;   //REMOVE ME
+               sys2->bought[goodnum]       -= trade;
             }
          }
       }

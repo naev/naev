@@ -95,6 +95,7 @@ CODE_SOURCE = \
 	nlua_tut.c \
 	nlua_var.c \
 	nlua_vec2.c \
+	nlua_economy.c \
 	nmath.c \
 	nondata.c \
 	npng.c \

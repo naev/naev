@@ -51,7 +51,7 @@ void commodity_free (void);
  */
 int economy_init (void);
 void economy_update( unsigned int dt );
-int economy_refresh (void);
+void refresh_prices(void);
 void economy_destroy (void);
 double production(double mod, double goods);
 

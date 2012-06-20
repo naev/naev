@@ -798,11 +798,11 @@ static int systemL_getPrice( lua_State *L )
 static int systemL_refreshPrice( lua_State *L )
 {
    StarSystem *sys;
+   Commodity *com;
    sys = luaL_validsystem(L,1);
-   int i=0;
+   com = luaL_validcommodity(L,2);
 
-   for (i=0;i<econ_nprices;i++)
-      sys->prices[i]=PRICE(sys->credits,sys->stockpiles[i]);
+   sys->prices[com->index] = com->price * PRICE(sys->credits,sys->stockpiles[com->index]);
    return 1;
 }
 
