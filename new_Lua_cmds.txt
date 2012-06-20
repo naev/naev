@@ -37,6 +37,12 @@ economy.getTrademodifier()
 economy.setTrademodifier(value)
 	sets trade modifier to value, if value<1
 
+economy.getProductionmodifier()
+	returns production modifier value
+
+economy.setProductionmodifier(double)
+	sets production modifier value
+
 economy.updateEconomy(time)
 	updates economy by time time
 
