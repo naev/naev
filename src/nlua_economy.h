@@ -8,9 +8,11 @@
 
 #include <lua.h>
 
+#ifndef NLUA_ECONOMY_H
+#	define NLUA_ECONOMY_H
+
 
 #define ECONOMY_METATABLE   "economy" /**< Commodity metatable identifier. */
-
 
  /*
  * Load the system library.
@@ -18,5 +20,5 @@
 int nlua_loadEconomy( lua_State *L, int readonly );
 
 
-// #endif /* NLUA_ECONOMY_H */
+#endif /* NLUA_ECONOMY_H */
 
