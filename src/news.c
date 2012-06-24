@@ -174,7 +174,8 @@ int news_init (void)
 
 	printf("\nAdding new articles");
 
-	new_article("A1","This is article 1, an article that is way too long for it's own goddam good","Generic",300000000);
+	new_article("A1","This is article 1, an article that is way too long for it's own goddam good, and is going to get in trouble with the local authorities for indecent running, an offense that is punishable by culling in 49 out of 50 states, and carries a fine of one million dollars everywhere, and is sure to be a good little sentence from now on"
+      ,"Generic",300000000);
 
 	return 0;
 }
@@ -389,12 +390,56 @@ static void news_render( double bx, double by, double w, double h, void *data )
    // gl_printRestore( &news_restores[i] );	//???
 
       /* print the new lines, with temporary breakable line breaking */
-   for (i=nlines-1; i>=0; i--){
 
-      gl_printMidRaw( news_font, w-40., bx+10, by+y, &cConsole, news_lines[i] );
-      y+=15;
+   int i0, i1, pline_i;
+   int length;
+
+   int width=w/8;
+
+      //a buffer so run-on lines are played correctly
+   char buf[16][256];   //sixteen lines of 256 chars
+
+
+   for (i=nlines-1;i>=0;i--){
+
+      i0=0;
+      pline_i=0;
+      i1=strlen(news_lines[i]);
+      length=strlen(news_lines[i]);
+
+         /* Break it down and put into buf */
+      while (i0!=i1){
+
+         // printf("\nwidth is %d, i1 is %d, i0 is %d",width,i1,i0);
+
+         while (i1-i0>width || ( i1!=length && *(news_lines[i]+i1)!=' ' ) )
+            i1--;
+
+         strncpy(buf[pline_i], news_lines[i]+i0, i1-i0 );
+         buf[pline_i][i1-i0]=0;
+         pline_i++;
+
+         // printf("\nIwidth is %d, i1 is %d, i0 is %d",width,i1,i0);
+
+         i0=i1;
+         i1=length;
+
+         // printf("\nIIwidth is %d, i1 is %d, i0 is %d",width,i1,i0);
+
+
+      }
+
+         /* print buf */
+      for (pline_i--;pline_i>=0;pline_i--){
+
+         gl_printMidRaw( news_font, w-40., bx+10, by+y, &cConsole, buf[pline_i] );
+         y+=15;
+
+
+      }
 
    }
+
 
 
 
