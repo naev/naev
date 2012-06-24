@@ -784,7 +784,7 @@ static void bar_approach( unsigned int wid, char *str )
  */
 static int news_load (void)
 {
-   news_generate( NULL, 10 );
+   generate_news(NULL);  //### For now, faction is NULL
    return 0;
 }
 

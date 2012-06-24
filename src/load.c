@@ -30,6 +30,7 @@
 #include "nlua_var.h"
 #include "land.h"
 #include "hook.h"
+#include "news.h"
 #include "nstring.h"
 
 
@@ -520,6 +521,9 @@ int load_game( const char* file )
 
    /* Initialize the economy. */
    economy_init();
+
+   /* Start the news */
+   news_init();
 
    /* Check sanity. */
    event_checkSanity();

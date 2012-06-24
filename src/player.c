@@ -58,6 +58,7 @@
 #include "player_gui.h"
 #include "start.h"
 #include "input.h"
+#include "news.h"
 #include "nstring.h"
 
 
@@ -296,6 +297,9 @@ void player_newTutorial (void)
    /* Start the economy. */
    economy_init();
 
+   /* Start the news */
+   news_init();
+
    /* Play music. */
    music_choose( "ambient" );
 
@@ -427,6 +431,9 @@ static int player_newMake (void)
 
    /* Start the economy. */
    economy_init();
+
+   /* Start the news */
+   news_init();
 
    return 0;
 }
