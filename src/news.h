@@ -7,6 +7,7 @@
 #ifndef NEWS_H
 #  define NEWS_H
 
+#include "nlua.h"
 #include "ntime.h"
 
 /**
@@ -44,6 +45,8 @@ void news_widget( unsigned int wid, int x, int y, int w, int h );
  */
 news_t* new_article(char* title, char* content, char* faction, ntime_t date);
 int free_article(int id);
+
+
 
 
 #endif /* NEWS_H */

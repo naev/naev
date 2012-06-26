@@ -29,6 +29,8 @@
 #include "ndata.h"
 #include "toolkit.h"
 #include "nstring.h"
+#include "nxml.h"
+#include "nxml_lua.h"
 
 
 #define news_max_length       8192   
@@ -39,7 +41,7 @@
  */					
 news_t* news_list             = NULL;  /**< Linked list containing all articles */
 
-static int next_id			  = 1; /**< next number to use as ID */
+static int next_id			   = 1; /**< next number to use as ID */
 
 static char news_text[8192]; /**< where the news text is held */
 static char* news_lines[1024]; /**< temporary line storage */
@@ -55,8 +57,10 @@ static double news_pos        = 0.; /**< Position of the news feed. */
 static glFont *news_font      = &gl_defFont; /**< Font to use. */
 // static char **news_lines      = NULL; /**< Text per line. */
 // static glFontRestore *news_restores = NULL; /**< Restorations. */
-static int news_nlines        = 0; /**< Number of lines used. */
+// static int news_nlines        = 0; /**< Number of lines used. */
 // static int news_mlines        = 0; /**< Lines allocated. */
+double textlength = 0.;
+
 
 /*
  *	Prototypes
@@ -64,6 +68,10 @@ static int news_nlines        = 0; /**< Number of lines used. */
 static void news_render( double bx, double by, double w, double h, void *data );
 static void news_mouse( unsigned int wid, SDL_Event *event, double mx, double my,
       double w, double h, void *data );
+static int news_parseArticle( xmlNodePtr parent );
+int news_saveArticles( xmlTextWriterPtr writer );
+int news_loadArticles( xmlNodePtr parent );
+
 
 
 
@@ -98,23 +106,33 @@ news_t* new_article(char* title, char* content, char* faction, ntime_t date)
 		return NULL;
 	}
 
-		/* set the date and put it into the list */
-	if (date){
-		n_article->date = date;
-		n_article->next = news_list;
-		news_list = n_article;
-	}
-		/* if !date, put just after dated articles */
-	else{
-		n_article->date=0;
-		article_ptr = news_list;
+		/* Put it into the list, with oldest first */
 
-		while ( article_ptr->next!=NULL && article_ptr->next->date!=0 )
-			article_ptr=article_ptr->next;
+   n_article->date=date;
 
-		n_article->next = article_ptr->next ? article_ptr->next : NULL;
-		article_ptr->next=n_article;
-	}
+
+      /* If it belongs first*/
+   if (news_list->date <= date){
+      printf("Replacing the first");
+      n_article->next=news_list;
+      news_list=n_article;
+   }
+      /*article_ptr is the one BEFORE the one we want*/
+   else{
+
+      article_ptr=news_list;
+
+      while ( article_ptr->next!=NULL && article_ptr->next->date >= date){
+         article_ptr = article_ptr->next;
+      }
+
+      printf("\ndates: %d>=%d>=%d",article_ptr->date/10000,date/10000,article_ptr->next->date/10000);
+
+      n_article->next=article_ptr->next;
+
+      article_ptr->next=n_article;
+   }
+
 
 	return n_article;
 }
@@ -162,20 +180,22 @@ int free_article(int id)
 	return 0;
 }
 
-
 /**
  *	Initiate news linked list with a stack
  */
 int news_init (void)
 {
+
 	printf("\nInitiating the news");
 		/* init news list with dummy article */
+   if (news_list!=NULL){
+      ERR("\nNews already initialized, must exit news before reinitializing");
+      return -1;
+   }
+
 	news_list = calloc(sizeof(news_t),1);
 
-	printf("\nAdding new articles");
-
-	new_article("A1","This is article 1, an article that is way too long for it's own goddam good, and is going to get in trouble with the local authorities for indecent running, an offense that is punishable by culling in 49 out of 50 states, and carries a fine of one million dollars everywhere, and is sure to be a good little sentence from now on"
-      ,"Generic",300000000);
+   news_list->date=0;
 
 	return 0;
 }
@@ -189,6 +209,9 @@ void news_exit (void)
 
 	printf("\nKilling the news");
 
+   if (news_list==NULL)
+      return;
+
 	news_t* article_ptr = news_list;
 	news_t* temp;
 
@@ -199,6 +222,8 @@ void news_exit (void)
 
 		free(temp);
 	}
+
+   news_list=NULL;
 
 }
 
@@ -212,37 +237,34 @@ void news_exit (void)
  */
 int *generate_news( char* faction )
 {
-	printf("\nGenerating news for faction %s\n",faction);
+	printf("\nGenerating news for faction %s, news_list is %p, title is %s",faction,news_list, news_list->title);
 
 	news_t* article_ptr = news_list;
 	int l, i, p=0;
 
+   article_ptr = news_list;
+
       /* Put all acceptable news into news_text */
 	do{
-
-      printf("\nChecking article title %s, faction %s",article_ptr->title,article_ptr->faction);
-
          /* If we've reached the end of the list */
-      if (article_ptr->faction==NULL)
+      if (article_ptr->faction==NULL){
          break;
+      }
 
          /* if article is okay */
 		if ( !strcmp(article_ptr->faction,"Generic") || !strcmp(article_ptr->faction,faction) )
 		{
-
 			if (article_ptr->date){
-      			p += nsnprintf( news_text, news_max_length-p,
-            		" - %s - \n"
-            		"%s: %s\n\n"
-            		, article_ptr->title, ntime_pretty(article_ptr->date,4), article_ptr->desc );
-      		}
-      		else{
-      			p+=nsnprintf( news_text+p, news_max_length-p,
-                  " - %s - \n"
-                  "%s\n\n"
-            		, article_ptr->title, article_ptr->desc );
-
-      		}
+      		p += nsnprintf( news_text+p, news_max_length-p,
+           		" - %s - \n"
+           		"%s: %s\n\n"
+           		, article_ptr->title, ntime_pretty(article_ptr->date,4), article_ptr->desc );
+      	}else{
+      		p+=nsnprintf( news_text+p, news_max_length-p,
+               " - %s - \n"
+               "%s\n\n"
+           		, article_ptr->title, article_ptr->desc );
+      	}
 		}
 
 	}while( (article_ptr = article_ptr->next) != NULL );
@@ -351,9 +373,12 @@ static void news_mouse( unsigned int wid, SDL_Event *event, double mx, double my
 static void news_render( double bx, double by, double w, double h, void *data )
 {
    (void) data;
-   int i, s, m, p;
+   // int i, s, m, p;
    unsigned int t;
    double y, dt;
+
+   /* background */
+   gl_renderRect( bx, by, w, h, &cBlack );
 
    t = SDL_GetTicks();
 
@@ -364,40 +389,26 @@ static void news_render( double bx, double by, double w, double h, void *data )
    }
    news_tick = t;
 
-   /* Make sure user isn't silly and drags it to negative values. */
-   if (news_pos < 0.)
-      news_pos = 0.;
+   news_pos=MAX(0,news_pos);
 
-   /* background */
-   gl_renderRect( bx, by, w, h, &cBlack );
 
-   /* Render the text. */
-   p = (int)ceil( news_pos / (news_font->h + 5.));
-   m = (int)ceil(        h / (news_font->h + 5.));
-   if (p > news_nlines + m + 1) {
-      news_pos = 0.;
-      return;
-   }
+   y = by - textlength + news_pos;
 
-   /* Get positions to make sure inbound. */
-   s = MAX(0,p-m);
-   p = MIN(p+1,news_nlines-1);
-
-   /* Get start position. */
-   y = news_pos - s * (news_font->h+5.);
 
    /* Draw the text */
    // gl_printRestore( &news_restores[i] );	//???
 
       /* print the new lines, with temporary breakable line breaking */
 
-   int i0, i1, pline_i;
+   int i, i0, i1, pline_i;
    int length;
 
    int width=w/8;
 
       //a buffer so run-on lines are played correctly
-   char buf[16][256];   //sixteen lines of 256 chars
+   char buf[32][64];   //32 lines of 64 chars
+
+   textlength=y;
 
 
    for (i=nlines-1;i>=0;i--){
@@ -433,15 +444,151 @@ static void news_render( double bx, double by, double w, double h, void *data )
       for (pline_i--;pline_i>=0;pline_i--){
 
          gl_printMidRaw( news_font, w-40., bx+10, by+y, &cConsole, buf[pline_i] );
-         y+=15;
+         y+=15.;
 
 
       }
-
    }
 
+   textlength = y-textlength;
 
 
+   if (news_pos > textlength+h-by) //###
+      news_pos = 0.;
+
+
+   // printf("\nWould've been %d, is %d",news_nlines + m + 1, )
+
+   // printf("\nnews_pos is %.0f, textlength is %.0f",news_pos,textlength+h);
 
 }
 
+
+/*
+ * @saves all current articles
+*    @return 0 on success
+ */
+
+int news_saveArticles( xmlTextWriterPtr writer )
+{
+   printf("\nSaving articles\n");
+
+   news_t* article_ptr = news_list;
+
+   xmlw_startElem(writer,"news");
+
+   do {
+
+      if ( article_ptr->title!=NULL && article_ptr->desc!=NULL && article_ptr->faction!=NULL )
+      {
+
+         xmlw_startElem(writer,"article");
+   
+         xmlw_attr(writer,"title","%s",article_ptr->title);
+         xmlw_attr(writer,"desc","%s",article_ptr->desc);
+         xmlw_attr(writer,"faction","%s",article_ptr->faction);
+         xmlw_attr(writer,"date","%u",(unsigned int) article_ptr->date);
+   
+         xmlw_endElem(writer); /* "article" */
+      }
+      else
+         printf("Found a bad article");
+
+   } while ((article_ptr=article_ptr->next)!=NULL);
+
+   xmlw_endElem(writer); /* "news" */
+
+   return 0;
+}
+
+
+/**
+ * @brief Loads the player's active articles from a save, initilizes news
+ *
+ *    @param parent Node containing the player's active events.
+ *    @return 0 on success.
+ */
+int news_loadArticles( xmlNodePtr parent )
+{
+   xmlNodePtr node;
+
+   if (news_list!=NULL){
+      news_exit();
+   }
+   news_init();
+
+      /* Get and parse news/articles */
+   node = parent->xmlChildrenNode;
+   do {
+      if (xml_isNode(node,"news"))
+         if (news_parseArticle( node ) < 0) return -1;
+   } while (xml_nextNode(node));
+
+   return 0;
+}
+
+
+
+/**
+ * @brief Parses an individual article
+ *
+ *    @param parent Parent node to parse.
+ *    @return 0 on success.
+ */
+static int news_parseArticle( xmlNodePtr parent )
+{
+   char* title;
+   char* desc;
+   char* faction;
+   char* buf;
+   unsigned int date;
+   xmlNodePtr node;
+
+   node = parent->xmlChildrenNode;
+   do {
+
+      // printf("\tParsing article");
+
+      if (!xml_isNode(node,"article"))
+         continue;
+
+      xmlr_attr(node,"title",title);
+      if (title==NULL) {
+         WARN("Event has missing 'name' attribute, skipping.");
+         continue;
+      }
+      xmlr_attr(node,"desc",desc);
+      if (desc==NULL) {
+         free(title);
+         WARN("Event is missing content, skipping");
+         continue;
+      }
+      xmlr_attr(node,"faction",faction);
+      if (faction==NULL) {
+         free(title); free(desc);
+         WARN("Event has missing faction attribute, skipping.");
+         continue;
+      }
+      xmlr_attr(node,"date",buf);
+      if (faction==NULL) {
+         free(title); free(desc); free(faction);
+         WARN("Event has missing date attribute, skipping.");
+         continue;
+      }
+
+      date = atoi(buf);
+
+      printf("\t\tMaking new article");
+
+         /* make the article*/
+      new_article(title,desc,faction,date);
+
+      free(title);
+      free(desc);
+      free(faction);
+      free(buf);
+
+   } while (xml_nextNode(node));
+
+   return 0;
+}

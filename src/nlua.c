@@ -23,6 +23,7 @@
 #include "nlua_naev.h"
 #include "nlua_space.h"
 #include "nlua_time.h"
+#include "nlua_news.h"
 #include "nlua_player.h"
 #include "nlua_pilot.h"
 #include "nlua_vec2.h"
@@ -227,6 +228,7 @@ int nlua_loadStandard( lua_State *L, int readonly )
    r |= nlua_loadVector(L);
    r |= nlua_loadOutfit(L,readonly);
    r |= nlua_loadCommodity(L,readonly);
+   r |= nlua_loadNews(L,readonly);
 
    return r;
 }

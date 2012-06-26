@@ -26,6 +26,7 @@
 #include "unidiff.h"
 #include "nlua_var.h"
 #include "event.h"
+#include "news.h"
 #include "conf.h"
 #include "land.h"
 #include "gui.h"
@@ -45,6 +46,8 @@ extern int player_save( xmlTextWriterPtr writer ); /**< Saves player related stu
 extern int missions_saveActive( xmlTextWriterPtr writer ); /**< Saves active missions. */
 /* event.c */
 extern int events_saveActive( xmlTextWriterPtr writer );
+/* news.c */
+extern int news_saveArticles( xmlTextWriterPtr writer );
 /* nlua_var.c */
 extern int var_save( xmlTextWriterPtr writer ); /**< Saves mission variables. */
 /* faction.c */
@@ -72,6 +75,7 @@ static int save_data( xmlTextWriterPtr writer )
    if (player_save(writer) < 0) return -1;
    if (missions_saveActive(writer) < 0) return -1;
    if (events_saveActive(writer) < 0) return -1;
+   if (news_saveArticles( writer ) < 0) return -1;
    if (var_save(writer) < 0) return -1;
    if (pfaction_save(writer) < 0) return -1;
    if (hook_save(writer) < 0) return -1;
