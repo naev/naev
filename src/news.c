@@ -19,7 +19,7 @@
 #include <string.h>
 
 
-#include "log.h"		//not sure which are necessary
+#include "log.h"
 #include "nlua.h"
 #include "nluadef.h"
 #include "nlua_misn.h"
@@ -31,6 +31,7 @@
 #include "nstring.h"
 #include "nxml.h"
 #include "nxml_lua.h"
+#include "space.h"
 
 
 #define news_max_length       8192   
@@ -43,10 +44,10 @@ news_t* news_list             = NULL;  /**< Linked list containing all articles 
 
 static int next_id			   = 1; /**< next number to use as ID */
 
+   //@@@ replace these arrays with dynamic arrays
 static char news_text[8192]; /**< where the news text is held */
 static char* news_lines[1024]; /**< temporary line storage */
 static int nlines=0;	/**< number of lines in */
- 	//hack, remove, replace w/news_max_length
 
 /**
  * News line buffer.
@@ -66,7 +67,6 @@ double textlength = 0.;
  */
 static int largestID=1;
 
-
 /*
  *	Prototypes
  */
@@ -76,8 +76,6 @@ static void news_mouse( unsigned int wid, SDL_Event *event, double mx, double my
 static int news_parseArticle( xmlNodePtr parent );
 int news_saveArticles( xmlTextWriterPtr writer );
 int news_loadArticles( xmlNodePtr parent );
-
-
 
 
 /**
@@ -135,7 +133,6 @@ news_t* new_article(char* title, char* content, char* faction, ntime_t date)
 
       article_ptr->next=n_article;
    }
-
 
 	return n_article;
 }
@@ -209,13 +206,16 @@ int news_init (void)
 	printf("\nInitiating the news");
 		/* init news list with dummy article */
    if (news_list!=NULL){
-      ERR("\nNews already initialized, must exit news before reinitializing");
+      WARN("\nNews already initialized, must exit news before reinitializing");
       return -1;
    }
 
 	news_list = calloc(sizeof(news_t),1);
 
    news_list->date=0;
+
+      //temporary
+   new_article("=== The news of the Empire ===\n\n","News for the citizens loyal to the Emperor and the Empire","Empire",2232714712);
 
    printf("\nFinished initiating");
 
@@ -259,12 +259,10 @@ void news_exit (void)
  */
 int *generate_news( char* faction )
 {
-	printf("\nGenerating news");
+	printf("\nGenerating news, faction is %s",faction);
 
 	news_t* article_ptr = news_list;
 	int l, i, p=0;
-
-   article_ptr = news_list;
 
       /* Put all acceptable news into news_text */
 	do{
@@ -276,11 +274,11 @@ int *generate_news( char* faction )
          /* if article is okay */
 		if ( !strcmp(article_ptr->faction,"Generic") || !strcmp(article_ptr->faction,faction) )
 		{
-			if (article_ptr->date){
+			if (article_ptr->date){// && article_ptr->date<6300000000000){
       		p += nsnprintf( news_text+p, news_max_length-p,
            		" - %s - \n"
            		"%s: %s\n\n"
-           		, article_ptr->title, ntime_pretty(article_ptr->date,4), article_ptr->desc );
+           		, article_ptr->title, ntime_pretty(article_ptr->date,12), article_ptr->desc );
       	}else{
       		p+=nsnprintf( news_text+p, news_max_length-p,
                " - %s - \n"
@@ -293,8 +291,6 @@ int *generate_news( char* faction )
 
 	if (p==0)
 		nsnprintf(news_text, news_max_length, "\n\nSorry, no news today\n\n\n");
-
-	// printf("\nText reads \"\"\"%s\"\"\"",news_text);
 
       /* transcribe to news_lines*/
    nlines=0;
@@ -332,9 +328,6 @@ void news_widget( unsigned int wid, int x, int y, int w, int h )
    /* Sane defaults. */
    news_pos    = h/3;
    news_tick   = SDL_GetTicks();
-
-   /* Get current news text */
-   generate_news("");	//faction is null for now
 
    /* Create the custom widget. */
    window_addCust( wid, x, y, w, h,
@@ -426,10 +419,8 @@ static void news_render( double bx, double by, double w, double h, void *data )
    y = by - textlength + news_pos;
 
 
-   /* Draw the text */
-   // gl_printRestore( &news_restores[i] );	//???
-
-      /* print the new lines, with temporary breakable line breaking */
+   /* <Draw the text> */
+   // gl_printRestore( &news_restores[i] );  //@@@
 
    int i, i0, i1, pline_i;
    int length;
@@ -441,7 +432,7 @@ static void news_render( double bx, double by, double w, double h, void *data )
 
    textlength=y;
 
-
+      /* print the new lines, with temporary breakable line breaking */
    for (i=nlines-1;i>=0;i--){
 
       i0=0;
@@ -452,8 +443,6 @@ static void news_render( double bx, double by, double w, double h, void *data )
          /* Break it down and put into buf */
       while (i0!=i1){
 
-         // printf("\nwidth is %d, i1 is %d, i0 is %d",width,i1,i0);
-
          while (i1-i0>width || ( i1!=length && *(news_lines[i]+i1)!=' ' ) )
             i1--;
 
@@ -461,14 +450,8 @@ static void news_render( double bx, double by, double w, double h, void *data )
          buf[pline_i][i1-i0]=0;
          pline_i++;
 
-         // printf("\nIwidth is %d, i1 is %d, i0 is %d",width,i1,i0);
-
          i0=i1;
          i1=length;
-
-         // printf("\nIIwidth is %d, i1 is %d, i0 is %d",width,i1,i0);
-
-
       }
 
          /* print buf */
@@ -481,16 +464,13 @@ static void news_render( double bx, double by, double w, double h, void *data )
       }
    }
 
+   /* </draw text> */
+
+
    textlength = y-textlength;
 
-
-   if (news_pos > textlength+h-by) //###
+   if (news_pos > textlength+h-by)
       news_pos = 0.;
-
-
-   // printf("\nWould've been %d, is %d",news_nlines + m + 1, )
-
-   // printf("\nnews_pos is %.0f, textlength is %.0f",news_pos,textlength+h);
 
 }
 

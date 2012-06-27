@@ -14,7 +14,6 @@
 
 #include <lauxlib.h>
 
-// #include "news.h"
 #include "nlua.h"
 #include "nluadef.h"
 #include <string.h>
@@ -32,6 +31,7 @@ Lua_article* lua_pusharticle( lua_State *L, Lua_article article );
 
 int newL_DummyPrint( lua_State *L);
 int newsL_getTitleOA(lua_State *L);
+int newsL_eq( lua_State *L );
 
 static const luaL_reg economy_methods[] = {
    {"addArticle",newsL_addArticle},
@@ -269,7 +269,7 @@ int newsL_eq( lua_State *L )
    Lua_article *a2;
    a1 = luaL_validarticle( L,1 );
    a2 = luaL_validarticle( L,2 );
-   if (a1->id == a1->id)
+   if (a1->id == a2->id)
       lua_pushboolean(L,1);
    else
       lua_pushboolean(L,0);
@@ -277,7 +277,11 @@ int newsL_eq( lua_State *L )
 }
 
 
-
+/**
+ * @brief returns the title of a selected article
+ *    @luaparam article an article
+ *    @return string with the title of the article in it
+ */
 int newsL_getTitleOA(lua_State *L)
 {
    printf("\nGetting title");
