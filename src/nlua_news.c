@@ -24,8 +24,8 @@ extern news_t* news_list;   /**< Linked list containing all articles */
 int newsL_addArticle( lua_State *L );
 int newsL_freeArticle( lua_State *L );
 int newsL_getFaction( lua_State *L );
-int newsL_getTime( lua_State *L );
 int newsL_getTitle( lua_State *L );
+int newsL_getDate( lua_State *L );
 Lua_article* luaL_validarticle( lua_State *L, int ind );
 int lua_isarticle( lua_State *L, int ind );
 Lua_article* lua_pusharticle( lua_State *L, Lua_article article );
@@ -38,15 +38,17 @@ static const luaL_reg economy_methods[] = {
    {"freeArticle",newsL_freeArticle},
    {"getFaction",newsL_getFaction},
    {"getTitle",newsL_getTitle},
-   {"getTime",newsL_getTime},
-   {"dummy",newL_DummyPrint},
+   {"getDate",newsL_getDate},
    {"getTitleOA",newsL_getTitleOA},
+   {"__eq",newsL_eq},
    {0,0}
 }; /**< System metatable methods. */
 static const luaL_reg economy_cond_methods[] = {
    {"getFaction",newsL_getFaction},
    {"getTitle",newsL_getTitle},
-   {"getTime",newsL_getTime},
+   {"getDate",newsL_getDate},
+   {"getTitleOA",newsL_getTitleOA},
+   {"__eq",newsL_eq},
    {0,0}
 }; /**< Read only economy metatable methods. */
 
@@ -109,34 +111,22 @@ int newsL_addArticle( lua_State *L ){
    news_t* n_article;
    Lua_article Larticle;
 
-   printf(" I");
+   char* title=strdup(lua_tostring(L,1));
+   char* content=strdup(lua_tostring(L,2));
+   char* faction=strdup(lua_tostring(L,3));
+   ntime_t date=lua_tointeger(L,4);
 
-   // char* title=strdup(lua_tostring(L,1));
-   // char* content=strdup(lua_tostring(L,2));
-   // char* faction=strdup(lua_tostring(L,3));
-   // ntime_t date=lua_tointeger(L,4);
+   if (title && content && faction)
+      n_article = new_article(title, content, faction, date);
 
-   char* title = "Generic Article III";
-   char* content = "Not content to try to claim the abstract throne, the hero set off to see how much havok could be wrought in the neighboring peaceful lands of panacia and relaxation";
-   char* faction = "Generic";
-   ntime_t date = 123456798;
 
-   printf(" I");
-
-   n_article = new_article(title, content, faction, date);
-
-      printf(" I");
-
-   Larticle.article = n_article;
+   Larticle.id = n_article->id;
    lua_pusharticle(L, Larticle);
 
-      printf(" I");
+   free(title);
+   free(content);
+   free(faction);
 
-   // free(title);
-   // free(content);
-   // free(faction);
-
-      printf(" I");
 
    return 1;
 }
@@ -144,6 +134,7 @@ int newsL_addArticle( lua_State *L ){
 
 /**
  * @brief frees an article
+ *    @luaparam Lua_article article to free
  */
 int newsL_freeArticle( lua_State *L ){
 
@@ -151,13 +142,19 @@ int newsL_freeArticle( lua_State *L ){
 
    Larticle = luaL_validarticle(L,1);
 
-   free_article(Larticle->article->id);
+   free_article(Larticle->id);
 
    return 1;
 }
 
-
+/**
+ * @brief gets all matching articles
+ *    @luaparam faction name of faction
+ *    @luareturn a table with matching factions
+ */
 int newsL_getFaction( lua_State *L ){
+
+   printf("\nGetting factions...");
 
    news_t* article_ptr = news_list;
    Lua_article Larticle;
@@ -170,9 +167,12 @@ int newsL_getFaction( lua_State *L ){
    k = 1;
    do {
 
+      if (article_ptr->faction==NULL)
+         continue;
+
       if (!strcmp(article_ptr->faction,getFaction)) {
          lua_pushnumber(L, k++); /* key */
-         Larticle.article = article_ptr;
+         Larticle.id = article_ptr->id;
          lua_pusharticle(L, Larticle); /* value */
          lua_rawset(L,-3); /* table[key] = value */
       }
@@ -185,7 +185,11 @@ int newsL_getFaction( lua_State *L ){
 
 }
 
-
+/**
+ * @brief gets all
+ *    @luaparam faction name of faction
+ *    @luareturn a table with matching factions
+ */
 int newsL_getTitle( lua_State *L ){
 
    news_t* article_ptr=news_list;
@@ -199,9 +203,12 @@ int newsL_getTitle( lua_State *L ){
    k = 1;
    do {
 
-      if (!strcmp(article_ptr->faction,getTitle)) {
+      if (article_ptr->title==NULL)
+         continue;
+
+      if (!strcmp(article_ptr->title,getTitle)) {
          lua_pushnumber(L, k++); /* key */
-         Larticle.article=article_ptr;
+         Larticle.id=article_ptr->id;
          lua_pusharticle(L, Larticle); /* value */
          lua_rawset(L,-3); /* table[key] = value */
       }
@@ -213,7 +220,14 @@ int newsL_getTitle( lua_State *L ){
    return 1;
 }
 
-int newsL_getTime( lua_State *L ){
+/**
+ * @brief gets all matching articles in a range of dates
+ *    @luaparam date1 lower limit date of the article(s)
+ *    @luaparam date2 upper limit date of the article(s)
+ *    @luareturn a table with matching factions
+ */
+int newsL_getDate( lua_State *L )
+{
 
    news_t* article_ptr=news_list;
    Lua_article Larticle;
@@ -229,7 +243,7 @@ int newsL_getTime( lua_State *L ){
 
       if ( time1<=article_ptr->date && time2>=article_ptr->date ) {
          lua_pushnumber(L, k++); /* key */
-         Larticle.article=article_ptr;
+         Larticle.id=article_ptr->id;
          lua_pusharticle(L, Larticle); /* value */
          lua_rawset(L,-3); /* table[key] = value */
       }
@@ -237,8 +251,32 @@ int newsL_getTime( lua_State *L ){
    }while( (article_ptr = article_ptr->next) != NULL );
 
    return 1;
-
 }
+
+/**
+ * @brief Check articles for equality.
+ *
+ * Allows you to use the '=' operator in Lua with articles.
+ *
+ *    @luaparam a1 article 1
+ *    @luaparam a2 article 2
+ *    @luareturn true if both systems are the same.
+ * @luafunc __eq( s, comp )
+ */
+int newsL_eq( lua_State *L )
+{
+   Lua_article *a1;
+   Lua_article *a2;
+   a1 = luaL_validarticle( L,1 );
+   a2 = luaL_validarticle( L,2 );
+   if (a1->id == a1->id)
+      lua_pushboolean(L,1);
+   else
+      lua_pushboolean(L,0);
+   return 1;
+}
+
+
 
 int newsL_getTitleOA(lua_State *L)
 {
@@ -246,17 +284,10 @@ int newsL_getTitleOA(lua_State *L)
 
    news_t* article_ptr;
 
-   printf(" I");
-
-   article_ptr = luaL_validarticle(L,1)->article;
-
-   printf(" I");
-
+   article_ptr = get_article(luaL_validarticle(L,1)->id);
 
    lua_pushstring(L,article_ptr->title);
 
-
-   printf(" I");
    return 1;
 
 }

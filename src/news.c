@@ -61,6 +61,11 @@ static glFont *news_font      = &gl_defFont; /**< Font to use. */
 // static int news_mlines        = 0; /**< Lines allocated. */
 double textlength = 0.;
 
+/**
+ * Save/load
+ */
+static int largestID=1;
+
 
 /*
  *	Prototypes
@@ -122,11 +127,9 @@ news_t* new_article(char* title, char* content, char* faction, ntime_t date)
 
       article_ptr=news_list;
 
-      while ( article_ptr->next!=NULL && article_ptr->next->date >= date){
+      while ( article_ptr->next!=NULL && article_ptr->next->date > date){
          article_ptr = article_ptr->next;
       }
-
-      printf("\ndates: %d>=%d>=%d",article_ptr->date/10000,date/10000,article_ptr->next->date/10000);
 
       n_article->next=article_ptr->next;
 
@@ -181,7 +184,24 @@ int free_article(int id)
 }
 
 /**
- *	Initiate news linked list with a stack
+ * @brief gets the article with ID, else NULL
+ */
+news_t* get_article(int id)
+{
+   news_t* article_ptr = news_list;
+
+   while (article_ptr!=NULL && article_ptr->id!=id)
+      article_ptr=article_ptr->next;
+
+   if (article_ptr==NULL)
+      return NULL;
+
+   return article_ptr;
+}
+
+
+/**
+ *	@brief Initiate news linked list with a stack
  */
 int news_init (void)
 {
@@ -196,6 +216,8 @@ int news_init (void)
 	news_list = calloc(sizeof(news_t),1);
 
    news_list->date=0;
+
+   printf("\nFinished initiating");
 
 	return 0;
 }
@@ -237,7 +259,7 @@ void news_exit (void)
  */
 int *generate_news( char* faction )
 {
-	printf("\nGenerating news for faction %s, news_list is %p, title is %s",faction,news_list, news_list->title);
+	printf("\nGenerating news");
 
 	news_t* article_ptr = news_list;
 	int l, i, p=0;
@@ -317,6 +339,15 @@ void news_widget( unsigned int wid, int x, int y, int w, int h )
    /* Create the custom widget. */
    window_addCust( wid, x, y, w, h,
          "cstNews", 1, news_render, news_mouse, NULL );
+
+   int i=0;
+   news_t* article_ptr=news_list;
+   do{
+      printf("\n%d: - %s - :%u: %s",i,article_ptr->title,(uint) article_ptr->date, article_ptr->desc);
+      i++;
+   } while ((article_ptr=article_ptr->next)!=NULL);
+
+
 }
 
 
@@ -488,11 +519,10 @@ int news_saveArticles( xmlTextWriterPtr writer )
          xmlw_attr(writer,"desc","%s",article_ptr->desc);
          xmlw_attr(writer,"faction","%s",article_ptr->faction);
          xmlw_attr(writer,"date","%u",(unsigned int) article_ptr->date);
+         xmlw_attr(writer,"id","%i",article_ptr->id);
    
          xmlw_endElem(writer); /* "article" */
       }
-      else
-         printf("Found a bad article");
 
    } while ((article_ptr=article_ptr->next)!=NULL);
 
@@ -512,6 +542,8 @@ int news_loadArticles( xmlNodePtr parent )
 {
    xmlNodePtr node;
 
+   largestID=1;
+
    if (news_list!=NULL){
       news_exit();
    }
@@ -523,6 +555,8 @@ int news_loadArticles( xmlNodePtr parent )
       if (xml_isNode(node,"news"))
          if (news_parseArticle( node ) < 0) return -1;
    } while (xml_nextNode(node));
+
+   next_id=largestID;
 
    return 0;
 }
@@ -575,8 +609,17 @@ static int news_parseArticle( xmlNodePtr parent )
          WARN("Event has missing date attribute, skipping.");
          continue;
       }
-
       date = atoi(buf);
+      free(buf);
+      xmlr_attr(node,"id",buf);
+      if (faction==NULL) {
+         free(title); free(desc); free(faction);
+         WARN("Event has missing date attribute, skipping.");
+         continue;
+      }
+      next_id = atoi(buf);
+      largestID=MAX(largestID,next_id+1);
+      free(buf);
 
       printf("\t\tMaking new article");
 
@@ -586,7 +629,6 @@ static int news_parseArticle( xmlNodePtr parent )
       free(title);
       free(desc);
       free(faction);
-      free(buf);
 
    } while (xml_nextNode(node));
 

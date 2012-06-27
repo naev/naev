@@ -45,6 +45,8 @@ void news_widget( unsigned int wid, int x, int y, int w, int h );
  */
 news_t* new_article(char* title, char* content, char* faction, ntime_t date);
 int free_article(int id);
+news_t* get_article(int id);
+
 
 
 

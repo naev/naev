@@ -18,7 +18,7 @@
  */
 typedef struct _article {
 
-   news_t* article; /**< pointer to article */
+   int id; /**< pointer to article */
 
 } Lua_article;
 
