@@ -21,8 +21,8 @@
 
 extern news_t* news_list;   /**< Linked list containing all articles */
 
-int newsL_addArticle( lua_State *L );
-int newsL_freeArticle( lua_State *L );
+int newsL_add( lua_State *L );
+int newsL_rm( lua_State *L );
 int newsL_get( lua_State *L );
 Lua_article* luaL_validarticle( lua_State *L, int ind );
 int lua_isarticle( lua_State *L, int ind );
@@ -34,8 +34,8 @@ int newsL_faction( lua_State *L );
 int newsL_date( lua_State *L );
 
 static const luaL_reg economy_methods[] = {
-   {"add",newsL_addArticle},
-   {"rm",newsL_freeArticle},
+   {"add",newsL_add},
+   {"rm",newsL_rm},
    {"get",newsL_get},
    {"title",newsL_title},
    {"desc",newsL_desc},
@@ -95,7 +95,7 @@ int nlua_loadNews( lua_State *L, int readonly )
  *    @luareturn The article matching name or nil if error.
  * @luafunc get( s )
  */
-int newsL_addArticle( lua_State *L ){
+int newsL_add( lua_State *L ){
 
    printf("\nAdding new Lua article");
 
@@ -136,7 +136,7 @@ int newsL_addArticle( lua_State *L ){
  * @brief frees an article
  *    @luaparam Lua_article article to free
  */
-int newsL_freeArticle( lua_State *L ){
+int newsL_rm( lua_State *L ){
 
    Lua_article* Larticle;
 
@@ -149,8 +149,8 @@ int newsL_freeArticle( lua_State *L ){
 
 /**
  * @brief gets all matching articles in a table
- *    @luaparam characteristic characteristic to match, boolean for all
- *    @luareturn a table with matching factions
+ *    @luaparam characteristic characteristic to match, or no parameter for all articles
+ *    @luareturn a table with matching articles
  */
 int newsL_get( lua_State *L )
 {
@@ -161,15 +161,16 @@ int newsL_get( lua_State *L )
    int k;
    int print_all=0;
 
-   if (lua_isnumber(L,1))
+   if (lua_isnil(L,1) || lua_gettop(L) == 0) /* Case no argument */
+      print_all = 1;
+   else if (lua_isnumber(L,1))
       date=(ntime_t) lua_tonumber(L,1);
    else if (lua_isstring(L,1))
       characteristic = strdup(lua_tostring(L,1));
-   else if (lua_isboolean(L,1)){
-      print_all=1;
-   }
-
-         /* Now put all the matching articles in a table. */
+   else
+      NLUA_INVALID_PARAMETER(L); /* Bad Parameter */ 
+   
+   /* Now put all the matching articles in a table. */
    lua_newtable(L);
    k = 1;
    do {
