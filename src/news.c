@@ -178,22 +178,6 @@ int free_article(int id)
 	return 0;
 }
 
-/**
- * @brief gets the article with ID, else NULL
- */
-news_t* get_article(int id)
-{
-   news_t* article_ptr = news_list;
-
-   while (article_ptr!=NULL && article_ptr->id!=id)
-      article_ptr=article_ptr->next;
-
-   if (article_ptr==NULL)
-      return NULL;
-
-   return article_ptr;
-}
-
 
 /**
  *	@brief Initiate news linked list with a stack
@@ -243,6 +227,22 @@ void news_exit (void)
 
 }
 
+
+/**
+ * @brief gets the article with ID, else NULL
+ */
+news_t* news_get(int id)
+{
+   news_t* article_ptr=news_list;
+
+   while (article_ptr!=NULL && article_ptr->id!=id)
+      article_ptr=article_ptr->next;
+
+   if (article_ptr->id!=id)
+      return NULL;
+
+   return article_ptr;
+}
 
 
 /**

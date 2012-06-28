@@ -1,0 +1,24 @@
+
+news.addArticle("Title","Content","Faction",date)
+   Adds a new article, returns the Lua_article
+
+news.freeArticle(article)
+   frees an article
+
+news.get(characteristic or boolean)
+   gets a table of articles that match, or all if a boolean
+
+news.title(article)
+   gets the title of the article
+
+news.desc(article)
+   gets the description/content of the article
+
+news.faction(article)
+   gets the faction of the article
+
+news.date(article)
+   gets the date of the article
+
+news.__eq(article1, article2)
+   tests for equality

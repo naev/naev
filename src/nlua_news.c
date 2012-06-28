@@ -26,20 +26,29 @@ int newsL_get( lua_State *L );
 Lua_article* luaL_validarticle( lua_State *L, int ind );
 int lua_isarticle( lua_State *L, int ind );
 Lua_article* lua_pusharticle( lua_State *L, Lua_article article );
-
-int newL_DummyPrint( lua_State *L);
-int newsL_getTitleOA(lua_State *L);
 int newsL_eq( lua_State *L );
+int newsL_title( lua_State *L );
+int newsL_desc( lua_State *L );
+int newsL_faction( lua_State *L );
+int newsL_date( lua_State *L );
 
 static const luaL_reg economy_methods[] = {
    {"addArticle",newsL_addArticle},
    {"freeArticle",newsL_freeArticle},
    {"get",newsL_get},
+   {"title",newsL_title},
+   {"desc",newsL_desc},
+   {"faction",newsL_faction},
+   {"date",newsL_date},
    {"__eq",newsL_eq},
    {0,0}
 }; /**< System metatable methods. */
 static const luaL_reg economy_cond_methods[] = {
    {"get",newsL_get},
+   {"title",newsL_title},
+   {"desc",newsL_desc},
+   {"faction",newsL_faction},
+   {"date",newsL_date},
    {"__eq",newsL_eq},
    {0,0}
 }; /**< Read only economy metatable methods. */
@@ -91,11 +100,21 @@ int newsL_addArticle( lua_State *L ){
 
    news_t* n_article;
    Lua_article Larticle;
+   char* title;
+   char* content;
+   char* faction;
+   ntime_t date;
 
-   char* title=strdup(lua_tostring(L,1));
-   char* content=strdup(lua_tostring(L,2));
-   char* faction=strdup(lua_tostring(L,3));
-   ntime_t date=lua_tointeger(L,4);
+   if (lua_isstring(L,1) && lua_isstring(L,2) && lua_isstring(L,3) && lua_isnumber(L,4)){
+      title=strdup(lua_tostring(L,1));
+      content=strdup(lua_tostring(L,2));
+      faction=strdup(lua_tostring(L,3));
+      date = (ntime_t) lua_tonumber(L,4);
+   }
+   else{
+      WARN("\nBad arguments, use addArticle(\"Title\",\"Content\",\"Faction\",date)");
+      return 0;
+   }
 
    if (title && content && faction)
       n_article = new_article(title, content, faction, date);
@@ -111,7 +130,6 @@ int newsL_addArticle( lua_State *L ){
 
    return 1;
 }
-
 
 /**
  * @brief frees an article
@@ -129,29 +147,41 @@ int newsL_freeArticle( lua_State *L ){
 }
 
 /**
- * @brief gets all matching articles
- *    @luaparam faction name of faction
+ * @brief gets all matching articles in a table
+ *    @luaparam characteristic characteristic to match, boolean for all
  *    @luareturn a table with matching factions
  */
-int newsL_get( lua_State *L ){
-
-   news_t* article_ptr = news_list;
+int newsL_get( lua_State *L )
+{
    Lua_article Larticle;
+   ntime_t date=-1;
+   news_t* article_ptr = news_list;
+   char* characteristic=NULL;
    int k;
+   int print_all=0;
 
-   char* getFaction = strdup(lua_tostring(L,1));
+   if (lua_isnumber(L,1))
+      date=(ntime_t) lua_tonumber(L,1);
+   else if (lua_isstring(L,1))
+      characteristic = strdup(lua_tostring(L,1));
+   else if (lua_isboolean(L,1)){
+      print_all=1;
+   }
 
-   printf("\nGetting articles matching %s",getFaction);
+   printf("\nGetting articles matching %s, date %li",characteristic,date);
 
          /* Now put all the matching articles in a table. */
    lua_newtable(L);
    k = 1;
    do {
 
-      if (article_ptr->faction==NULL)
+      if (article_ptr->title==NULL || article_ptr->desc == NULL 
+         || article_ptr->faction == NULL  )
          continue;
 
-      if (!strcmp(article_ptr->faction,getFaction)) {
+      if (print_all || date==article_ptr->date || (characteristic && (!strcmp(article_ptr->title,characteristic) || 
+         !strcmp(article_ptr->desc,characteristic) || !strcmp(article_ptr->faction,characteristic))) )
+      {
          lua_pushnumber(L, k++); /* key */
          Larticle.id = article_ptr->id;
          lua_pusharticle(L, Larticle); /* value */
@@ -160,7 +190,7 @@ int newsL_get( lua_State *L ){
 
    }while( (article_ptr = article_ptr->next) != NULL );
 
-   free(getFaction);
+   free(characteristic);
 
    return 1;
 
@@ -189,28 +219,6 @@ int newsL_eq( lua_State *L )
       lua_pushboolean(L,0);
    return 1;
 }
-
-
-/**
- * @brief returns the title of a selected article
- *    @luaparam article an article
- *    @return string with the title of the article in it
- */
-int newsL_getTitleOA(lua_State *L)
-{
-   printf("\nGetting title");
-
-   news_t* article_ptr;
-
-   article_ptr = get_article(luaL_validarticle(L,1)->id);
-
-   lua_pushstring(L,article_ptr->title);
-
-   return 1;
-
-}
-
-
 
 /**
  * @brief Makes sure the article is valid or raises a Lua error.
@@ -274,4 +282,91 @@ Lua_article* lua_pusharticle( lua_State *L, Lua_article article )
    luaL_getmetatable(L, ARTICLE_METATABLE);
    lua_setmetatable(L, -2);
    return o;
+}
+
+
+
+
+/**
+ * @brief gets the article title
+ *    @luaparam a article to get the title of
+ *    @luareturn title
+ * @luafunc news.title(a)
+ */
+int newsL_title( lua_State *L )
+{
+   Lua_article *a;
+   news_t* article_ptr;
+   if (!(a = luaL_validarticle( L,1 ))){
+      WARN("Bad argument to news.date(), must be article");
+      return 0;}
+   if ((article_ptr=news_get(a->id))==NULL){
+      WARN("\nArticle not valid");
+      return 0;
+   }
+   lua_pushstring(L,article_ptr->title);
+   return 1;
+}
+
+/**
+ * @brief gets the article desc
+ *    @luaparam a article to get the desc of
+ *    @luareturn desc
+ * @luafunc news.desc(a)
+ */
+int newsL_desc( lua_State *L )
+{
+   Lua_article *a;
+   news_t* article_ptr;
+   if (!(a = luaL_validarticle( L,1 ))){
+      WARN("Bad argument to news.date(), must be article");
+      return 0;}
+   if ((article_ptr=news_get(a->id))==NULL){
+      WARN("\nArticle not valid");
+      return 0;
+   }
+   lua_pushstring(L,article_ptr->desc);
+   return 1;
+}
+
+/**
+ * @brief gets the article faction
+ *    @luaparam a article to get the faction of
+ *    @luareturn faction
+ * @luafunc news.faction(a)
+ */
+int newsL_faction( lua_State *L )
+{
+   Lua_article *a;
+   news_t* article_ptr;
+   if (!(a = luaL_validarticle( L,1 ))){
+      WARN("Bad argument to news.date(), must be article");
+      return 0;}
+   if ((article_ptr=news_get(a->id))==NULL){
+      WARN("\nArticle not valid");
+      return 0;
+   }
+   lua_pushstring(L,article_ptr->faction);
+   return 1;
+}
+
+/**
+ * @brief gets the article date
+ *    @luaparam a article to get the date of
+ *    @luareturn date
+ * @luafunc news.date(a)
+ */
+int newsL_date( lua_State *L )
+{
+   Lua_article *a;
+   news_t* article_ptr;
+   if (!(a = luaL_validarticle( L,1 ))){
+      WARN("Bad argument to news.date(), must be article");
+      return 0;}
+   if ((article_ptr=news_get(a->id))==NULL){
+      WARN("\nArticle not valid");
+      return 0;
+   }
+   lua_pushinteger(L,(lua_Integer)article_ptr->date);
+   return 1;
 }
