@@ -78,6 +78,8 @@ int news_saveArticles( xmlTextWriterPtr writer );
 int news_loadArticles( xmlNodePtr parent );
 
 
+extern ntime_t naev_time;
+
 /**
  *	@brief makes a new article and puts it into the list
  *		@param title	the article title
@@ -89,7 +91,7 @@ int news_loadArticles( xmlNodePtr parent );
  */
 news_t* new_article(char* title, char* content, char* faction, ntime_t date)
 {
-	printf("\nAdding new article");
+	printf("\nAdding new article with date %li",date);
 
 	news_t* article_ptr;
 
@@ -109,14 +111,10 @@ news_t* new_article(char* title, char* content, char* faction, ntime_t date)
 		return NULL;
 	}
 
-		/* Put it into the list, with oldest first */
-
    n_article->date=date;
-
 
       /* If it belongs first*/
    if (news_list->date <= date){
-      printf("Replacing the first");
       n_article->next=news_list;
       news_list=n_article;
    }
@@ -206,16 +204,12 @@ int news_init (void)
 	printf("\nInitiating the news");
 		/* init news list with dummy article */
    if (news_list!=NULL){
-      WARN("\nNews already initialized, must exit news before reinitializing");
-      return -1;
+      news_exit();
    }
 
 	news_list = calloc(sizeof(news_t),1);
 
    news_list->date=0;
-
-      //temporary
-   new_article("=== The news of the Empire ===\n\n","News for the citizens loyal to the Emperor and the Empire","Empire",2232714712);
 
    printf("\nFinished initiating");
 
@@ -274,11 +268,11 @@ int *generate_news( char* faction )
          /* if article is okay */
 		if ( !strcmp(article_ptr->faction,"Generic") || !strcmp(article_ptr->faction,faction) )
 		{
-			if (article_ptr->date){// && article_ptr->date<6300000000000){
+			if (article_ptr->date && article_ptr->date<40000000000000){
       		p += nsnprintf( news_text+p, news_max_length-p,
            		" - %s - \n"
            		"%s: %s\n\n"
-           		, article_ptr->title, ntime_pretty(article_ptr->date,12), article_ptr->desc );
+           		, article_ptr->title, ntime_pretty(article_ptr->date,1), article_ptr->desc );
       	}else{
       		p+=nsnprintf( news_text+p, news_max_length-p,
                " - %s - \n"
@@ -336,7 +330,7 @@ void news_widget( unsigned int wid, int x, int y, int w, int h )
    int i=0;
    news_t* article_ptr=news_list;
    do{
-      printf("\n%d: - %s - :%u: %s",i,article_ptr->title,(uint) article_ptr->date, article_ptr->desc);
+      printf("\n%d: - %s - :%li: %s",i,article_ptr->title,article_ptr->date, article_ptr->desc);
       i++;
    } while ((article_ptr=article_ptr->next)!=NULL);
 
@@ -498,7 +492,7 @@ int news_saveArticles( xmlTextWriterPtr writer )
          xmlw_attr(writer,"title","%s",article_ptr->title);
          xmlw_attr(writer,"desc","%s",article_ptr->desc);
          xmlw_attr(writer,"faction","%s",article_ptr->faction);
-         xmlw_attr(writer,"date","%u",(unsigned int) article_ptr->date);
+         xmlw_attr(writer,"date","%li",article_ptr->date);
          xmlw_attr(writer,"id","%i",article_ptr->id);
    
          xmlw_endElem(writer); /* "article" */
@@ -527,6 +521,8 @@ int news_loadArticles( xmlNodePtr parent )
    if (news_list!=NULL){
       news_exit();
    }
+
+   news_exit();
    news_init();
 
       /* Get and parse news/articles */
@@ -555,7 +551,7 @@ static int news_parseArticle( xmlNodePtr parent )
    char* desc;
    char* faction;
    char* buf;
-   unsigned int date;
+   ntime_t date;
    xmlNodePtr node;
 
    node = parent->xmlChildrenNode;
@@ -589,7 +585,7 @@ static int news_parseArticle( xmlNodePtr parent )
          WARN("Event has missing date attribute, skipping.");
          continue;
       }
-      date = atoi(buf);
+      date = atol(buf);
       free(buf);
       xmlr_attr(node,"id",buf);
       if (faction==NULL) {
@@ -613,4 +609,29 @@ static int news_parseArticle( xmlNodePtr parent )
    } while (xml_nextNode(node));
 
    return 0;
+}
+
+
+/*
+ * Temporary header initializer
+ */
+int news_addHeaders(void)
+{
+   if (news_list==NULL)
+      news_init();
+
+   new_article("Dvaered news","Welcome to the Dvaered News Centre. All that happens. In simple words. So you can understand","Dvaered",40000000000000);
+
+   new_article("Welcome to the Empire News Centre","Fresh news from around the Empire","Empire",40000000000000);
+
+   new_article("Goddard news","Welcome to Goddard News Centre. We bring you the news from around the Empire","Goddard",40000000000000);
+
+   new_article("Pirate News. News that matters","Laughing at the Emperor","Pirate",40000000000000);
+
+   new_article("Sirian news","Sirius News Reel. Words of the Sirichana for all","Sirius",40000000000000);
+
+   // new_article(,40000000000000);  //independent?
+
+   return 0;
+
 }

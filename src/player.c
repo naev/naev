@@ -384,6 +384,9 @@ void player_new (void)
 
    /* Load the GUI. */
    gui_load( gui_pick() );
+
+   /* Put in initial headers */
+   news_addHeaders();   //@@@
 }
 
 

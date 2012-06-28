@@ -22,9 +22,7 @@ extern news_t* news_list;   /**< Linked list containing all articles */
 
 int newsL_addArticle( lua_State *L );
 int newsL_freeArticle( lua_State *L );
-int newsL_getFaction( lua_State *L );
-int newsL_getTitle( lua_State *L );
-int newsL_getDate( lua_State *L );
+int newsL_get( lua_State *L );
 Lua_article* luaL_validarticle( lua_State *L, int ind );
 int lua_isarticle( lua_State *L, int ind );
 Lua_article* lua_pusharticle( lua_State *L, Lua_article article );
@@ -36,18 +34,12 @@ int newsL_eq( lua_State *L );
 static const luaL_reg economy_methods[] = {
    {"addArticle",newsL_addArticle},
    {"freeArticle",newsL_freeArticle},
-   {"getFaction",newsL_getFaction},
-   {"getTitle",newsL_getTitle},
-   {"getDate",newsL_getDate},
-   {"getTitleOA",newsL_getTitleOA},
+   {"get",newsL_get},
    {"__eq",newsL_eq},
    {0,0}
 }; /**< System metatable methods. */
 static const luaL_reg economy_cond_methods[] = {
-   {"getFaction",newsL_getFaction},
-   {"getTitle",newsL_getTitle},
-   {"getDate",newsL_getDate},
-   {"getTitleOA",newsL_getTitleOA},
+   {"get",newsL_get},
    {"__eq",newsL_eq},
    {0,0}
 }; /**< Read only economy metatable methods. */
@@ -80,17 +72,6 @@ int nlua_loadNews( lua_State *L, int readonly )
 
    return 0; /* No error */
 }
-
-int newL_DummyPrint( lua_State *L)
-{
-   (void) L;
-
-   new_article("Generic Title II","The reader of this article hereafter forfeits any previous or current right to the throne of generality"
-      ,"Generic",300000000);
-
-   return 1;
-}
-
 
 /**
  * @brief Adds an article
@@ -152,15 +133,15 @@ int newsL_freeArticle( lua_State *L ){
  *    @luaparam faction name of faction
  *    @luareturn a table with matching factions
  */
-int newsL_getFaction( lua_State *L ){
-
-   printf("\nGetting factions...");
+int newsL_get( lua_State *L ){
 
    news_t* article_ptr = news_list;
    Lua_article Larticle;
    int k;
 
    char* getFaction = strdup(lua_tostring(L,1));
+
+   printf("\nGetting articles matching %s",getFaction);
 
          /* Now put all the matching articles in a table. */
    lua_newtable(L);
@@ -185,73 +166,6 @@ int newsL_getFaction( lua_State *L ){
 
 }
 
-/**
- * @brief gets all
- *    @luaparam faction name of faction
- *    @luareturn a table with matching factions
- */
-int newsL_getTitle( lua_State *L ){
-
-   news_t* article_ptr=news_list;
-   Lua_article Larticle;
-   int k;
-
-   char* getTitle = strdup(lua_tostring(L,1));
-
-         /* Now put all the matching articles in a table. */
-   lua_newtable(L);
-   k = 1;
-   do {
-
-      if (article_ptr->title==NULL)
-         continue;
-
-      if (!strcmp(article_ptr->title,getTitle)) {
-         lua_pushnumber(L, k++); /* key */
-         Larticle.id=article_ptr->id;
-         lua_pusharticle(L, Larticle); /* value */
-         lua_rawset(L,-3); /* table[key] = value */
-      }
-
-   }while( (article_ptr = article_ptr->next) != NULL );
-
-   free(getTitle);
-
-   return 1;
-}
-
-/**
- * @brief gets all matching articles in a range of dates
- *    @luaparam date1 lower limit date of the article(s)
- *    @luaparam date2 upper limit date of the article(s)
- *    @luareturn a table with matching factions
- */
-int newsL_getDate( lua_State *L )
-{
-
-   news_t* article_ptr=news_list;
-   Lua_article Larticle;
-   int k;
-
-   ntime_t time1 = lua_tonumber(L,1);
-   ntime_t time2 = lua_tonumber(L,2);
-
-         /* Now put all the matching articles in a table. */
-   lua_newtable(L);
-   k = 1;
-   do {
-
-      if ( time1<=article_ptr->date && time2>=article_ptr->date ) {
-         lua_pushnumber(L, k++); /* key */
-         Larticle.id=article_ptr->id;
-         lua_pusharticle(L, Larticle); /* value */
-         lua_rawset(L,-3); /* table[key] = value */
-      }
-
-   }while( (article_ptr = article_ptr->next) != NULL );
-
-   return 1;
-}
 
 /**
  * @brief Check articles for equality.
