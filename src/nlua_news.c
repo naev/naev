@@ -168,8 +168,6 @@ int newsL_get( lua_State *L )
       print_all=1;
    }
 
-   printf("\nGetting articles matching %s, date %li",characteristic,date);
-
          /* Now put all the matching articles in a table. */
    lua_newtable(L);
    k = 1;

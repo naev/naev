@@ -44,8 +44,6 @@ news_t* news_list             = NULL;  /**< Linked list containing all articles 
 
 static int next_id			   = 1; /**< next number to use as ID */
 
-// static int nlines=0;	/**< number of lines in */
-
 static char buf[8192];
 
 static int len;
@@ -77,7 +75,6 @@ static void news_mouse( unsigned int wid, SDL_Event *event, double mx, double my
 static int news_parseArticle( xmlNodePtr parent );
 int news_saveArticles( xmlTextWriterPtr writer );
 int news_loadArticles( xmlNodePtr parent );
-// void news_clear(void);
 
 
 extern ntime_t naev_time;
@@ -89,11 +86,9 @@ extern ntime_t naev_time;
  *		@param faction	the article faction, NULL for generic
  *		@param currentdate date to put
  *	@return pointer to new article
- *
  */
 news_t* new_article(char* title, char* content, char* faction, ntime_t date)
 {
-	printf("\nAdding new article with date %li",date);
 
 	news_t* article_ptr;
 
@@ -104,7 +99,6 @@ news_t* new_article(char* title, char* content, char* faction, ntime_t date)
 
 
 	n_article->faction = n_article->faction ? NULL : strdup(faction);
-		//@@@ ### will not warn if out of memory
 
 		/* allocate it */
 	if ( !( (n_article->title = strdup(title)) && 
@@ -144,7 +138,6 @@ news_t* new_article(char* title, char* content, char* faction, ntime_t date)
  */
 int free_article(int id)
 {
-	printf("\nRemoving an article");
 	news_t* article_ptr = news_list;
 	news_t* article_to_rm;
 
@@ -152,7 +145,7 @@ int free_article(int id)
 	if (news_list->id == id){
 		article_to_rm = news_list;
 		news_list = news_list->next;
-		if (news_list->next == NULL){	//###shouldn't happen, but just in case
+		if (news_list->next == NULL){
 			WARN("\nLast article, do not remove");
 			return -1;
 		}
@@ -186,8 +179,6 @@ int free_article(int id)
  */
 int news_init (void)
 {
-
-	printf("\nInitiating the news");
 		/* init news list with dummy article */
    if (news_list!=NULL){
       news_exit();
@@ -197,19 +188,15 @@ int news_init (void)
 
    news_list->date=0;
 
-   printf("\nFinished initiating");
-
 	return 0;
 }
 
 
 /**
- *	Kills the old news thread
+ *	@brief Kills the old news thread
  */
 void news_exit (void)
 {
-
-	printf("\nKilling the news");
 
    if (news_list==NULL)
       return;
@@ -244,7 +231,7 @@ void news_exit (void)
 
 
 /**
- * @brief gets the article with ID, else NULL
+ * @brief gets the article with id ID, else NULL
  */
 news_t* news_get(int id)
 {
@@ -261,16 +248,14 @@ news_t* news_get(int id)
 
 
 /**
- * @brief Generates news from newslist from specific faction AND generic news
+ * @brief Generates news from newslist from specific faction AND Generic news
  *
  *    @param the faction of wanted news
  * @return 0 on success
  */
 int *generate_news( char* faction )
 {
-	printf("\nGenerating news, faction is %s",faction);
 
-   // static char buf[news_max_length]; /**< where the news text is held */
 	news_t* article_ptr = news_list;
 	int p=0;
 
@@ -320,39 +305,23 @@ int *generate_news( char* faction )
  */
 void news_widget( unsigned int wid, int x, int y, int w, int h )
 {
-	printf("\nStarting widget");
 
    /* Sane defaults. */
    news_pos    = h/3;
    news_tick   = SDL_GetTicks();
 
-   int i=0;
-   news_t* article_ptr=news_list;
-   do{
-      printf("\n%d: - %s - :%li: %s",i,article_ptr->title,article_ptr->date, article_ptr->desc);
-      i++;
-   } while ((article_ptr=article_ptr->next)!=NULL);
-
-
-
 
       /* Now load up the text. */
-   // int len=p;
-   int p = 0;
+   int i, p = 0;
    news_nlines = 0;
 
-   printf("\n\n\nLoading lines...");
    while (p < len) {
 
-      printf("\nnew line");
       /* Get the length. */
       i = gl_printWidthForText( NULL, &buf[p], w-40 );
 
-      printf("\n\tline length will be %d",i);
-
       /* Copy the line. */
       if (news_nlines+1 > news_mlines) {
-         printf("\n\tReallocating space");
          if (news_mlines == 0)
             news_mlines = 256;
          else
@@ -360,13 +329,9 @@ void news_widget( unsigned int wid, int x, int y, int w, int h )
          news_lines    = realloc( news_lines, sizeof(char*) * news_mlines );
          news_restores = realloc( news_restores, sizeof(glFontRestore) * news_mlines );
       }
-      printf("\n\tMallocing the space...");
       news_lines[ news_nlines ]    = malloc( i + 1 );
-      printf("\n\tPutting in the text");
       strncpy( news_lines[news_nlines], buf+p, i );
-      printf(" ... ");
       news_lines[ news_nlines ][i] = '\0';
-      printf("\n\tdoin... stuff?");
       if (news_nlines==0)
          gl_printRestoreInit( &news_restores[ news_nlines ] );
       else  {
@@ -377,14 +342,7 @@ void news_widget( unsigned int wid, int x, int y, int w, int h )
       p += i + 1; /* Move pointer. */
       news_nlines++; /* New line. */
    }
-   printf("\nDone loading lines...\n\n");
    /* </load text> */
-
-   for (i=0;i<news_nlines;i++)
-   {
-      printf("\n%s",news_lines[i]);
-   }
-
 
       /* Create the custom widget. */
    window_addCust( wid, x, y, w, h,
@@ -496,13 +454,11 @@ static void news_render( double bx, double by, double w, double h, void *data )
 
 
 /*
- * @saves all current articles
-*    @return 0 on success
+ * @brief saves all current articles
+ *    @return 0 on success
  */
-
 int news_saveArticles( xmlTextWriterPtr writer )
 {
-   printf("\nSaving articles\n");
 
    news_t* article_ptr = news_list;
 
@@ -540,7 +496,6 @@ int news_saveArticles( xmlTextWriterPtr writer )
  */
 int news_loadArticles( xmlNodePtr parent )
 {
-   printf("Loading articles");
 
    xmlNodePtr node;
 
@@ -581,8 +536,6 @@ static int news_parseArticle( xmlNodePtr parent )
    node = parent->xmlChildrenNode;
    do {
 
-      // printf("\tParsing article");
-
       if (!xml_isNode(node,"article"))
          continue;
 
@@ -621,8 +574,6 @@ static int news_parseArticle( xmlNodePtr parent )
       largestID=MAX(largestID,next_id+1);
       free(buff);
 
-      printf("\t\tMaking new article");
-
          /* make the article*/
       new_article(title,desc,faction,date);
 
@@ -633,31 +584,4 @@ static int news_parseArticle( xmlNodePtr parent )
    } while (xml_nextNode(node));
 
    return 0;
-}
-
-
-/*
- * Temporary header initializer
- */
-int news_addHeaders(void)
-{
-   printf("\nadding headers");
-
-   if (news_list==NULL)
-      news_init();
-
-   new_article("===Dvaered news===\n","Welcome to the Dvaered News Centre. All that happens. In simple words. So you can understand\n","Dvaered",40000000000000);
-
-   new_article("===Welcome to the Empire News Centre===\n","Fresh news from around the Empire\n","Empire",40000000000000);
-
-   new_article("===Goddard news===\n","Welcome to Goddard News Centre. We bring you the news from around the Empire\n","Goddard",40000000000000);
-
-   new_article("===Pirate News. News that matters===\n","Laughing at the Emperor\n","Pirate",40000000000000);
-
-   new_article("===Sirian news===\n","Sirius News Reel. Words of the Sirichana for all\n","Sirius",40000000000000);
-
-   // new_article(,40000000000000);  //independent?
-
-   return 0;
-
 }
