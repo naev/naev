@@ -272,12 +272,12 @@ int *generate_news( char* faction )
 			if (article_ptr->date && article_ptr->date<40000000000000){
       		p += nsnprintf( buf+p, news_max_length-p,
            		" %s \n"
-           		"%s: %s\0270\n\n"
+           		"%s: %s\e0\n\n"
            		, article_ptr->title, ntime_pretty(article_ptr->date,1), article_ptr->desc );
       	}else{
       		p+=nsnprintf( buf+p, news_max_length-p,
                " %s \n"
-               "%s\0270\n\n"
+               "%s\e0\n\n"
            		, article_ptr->title, article_ptr->desc );
       	}
 		}
