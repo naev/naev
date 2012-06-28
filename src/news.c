@@ -44,13 +44,13 @@ news_t* news_list             = NULL;  /**< Linked list containing all articles 
 
 static int next_id			   = 1; /**< next number to use as ID */
 
+/**
+ * News line buffer.
+ */
 static char buf[8192];
 
 static int len;
 
-/**
- * News line buffer.
- */
 static unsigned int news_tick = 0; /**< Last news tick. */
 static int news_drag          = 0; /**< Is dragging news? */
 static double news_pos        = 0.; /**< Position of the news feed. */
