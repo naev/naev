@@ -11,6 +11,7 @@
 #include "nlua_news.h"
 
 #include "naev.h"
+#include "land.h"
 
 #include <lauxlib.h>
 
@@ -33,8 +34,8 @@ int newsL_faction( lua_State *L );
 int newsL_date( lua_State *L );
 
 static const luaL_reg economy_methods[] = {
-   {"addArticle",newsL_addArticle},
-   {"freeArticle",newsL_freeArticle},
+   {"add",newsL_addArticle},
+   {"rm",newsL_freeArticle},
    {"get",newsL_get},
    {"title",newsL_title},
    {"desc",newsL_desc},
@@ -85,11 +86,11 @@ int nlua_loadNews( lua_State *L, int readonly )
 /**
  * @brief Adds an article
  *
- * @usage s = news.addArticle( "Hyena" ) -- Gets the hyena
+ * @usage s = news.add( "Empire", "Hello world!", "The Empire wishes to say hello!", 0 ) -- Adds a generic news item.
  *
+ *    @luaparam faction faction of the article, "Generic" for non-factional
  *    @luaparam title Title of the article
  *    @luaparam content What's in the article
- *    @luaparam faction faction of the article, "Generic" for non-factional
  *    @luaparam date What time to put, use 0 to not use a date
  *    @luareturn The article matching name or nil if error.
  * @luafunc get( s )
@@ -106,9 +107,9 @@ int newsL_addArticle( lua_State *L ){
    ntime_t date;
 
    if (lua_isstring(L,1) && lua_isstring(L,2) && lua_isstring(L,3) && lua_isnumber(L,4)){
-      title=strdup(lua_tostring(L,1));
-      content=strdup(lua_tostring(L,2));
-      faction=strdup(lua_tostring(L,3));
+      faction=strdup(lua_tostring(L,1));
+      title=strdup(lua_tostring(L,2));
+      content=strdup(lua_tostring(L,3));
       date = (ntime_t) lua_tonumber(L,4);
    }
    else{
