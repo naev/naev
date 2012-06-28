@@ -44,10 +44,11 @@ news_t* news_list             = NULL;  /**< Linked list containing all articles 
 
 static int next_id			   = 1; /**< next number to use as ID */
 
-   //@@@ replace these arrays with dynamic arrays
-static char news_text[8192]; /**< where the news text is held */
-static char* news_lines[1024]; /**< temporary line storage */
-static int nlines=0;	/**< number of lines in */
+// static int nlines=0;	/**< number of lines in */
+
+static char buf[8192];
+
+static int len;
 
 /**
  * News line buffer.
@@ -56,10 +57,10 @@ static unsigned int news_tick = 0; /**< Last news tick. */
 static int news_drag          = 0; /**< Is dragging news? */
 static double news_pos        = 0.; /**< Position of the news feed. */
 static glFont *news_font      = &gl_defFont; /**< Font to use. */
-// static char **news_lines      = NULL; /**< Text per line. */
-// static glFontRestore *news_restores = NULL; /**< Restorations. */
-// static int news_nlines        = 0; /**< Number of lines used. */
-// static int news_mlines        = 0; /**< Lines allocated. */
+static char **news_lines      = NULL; /**< Text per line. */
+static glFontRestore *news_restores = NULL; /**< Restorations. */
+static int news_nlines        = 0; /**< Number of lines used. */
+static int news_mlines        = 0; /**< Lines allocated. */
 double textlength = 0.;
 
 /**
@@ -76,6 +77,7 @@ static void news_mouse( unsigned int wid, SDL_Event *event, double mx, double my
 static int news_parseArticle( xmlNodePtr parent );
 int news_saveArticles( xmlTextWriterPtr writer );
 int news_loadArticles( xmlNodePtr parent );
+// void news_clear(void);
 
 
 extern ntime_t naev_time;
@@ -223,9 +225,22 @@ void news_exit (void)
 		free(temp);
 	}
 
+   int i=0;
+   if (news_nlines != 0) {
+      for (i=0; i<news_nlines; i++)
+         free(news_lines[i]);
+      news_nlines = 0;
+   }
+
+   free(news_lines);
+   free(news_restores);
+   news_lines  = NULL;
+   news_mlines = 0;
+
    news_list=NULL;
 
 }
+
 
 
 /**
@@ -255,10 +270,11 @@ int *generate_news( char* faction )
 {
 	printf("\nGenerating news, faction is %s",faction);
 
+   // static char buf[news_max_length]; /**< where the news text is held */
 	news_t* article_ptr = news_list;
-	int l, i, p=0;
+	int p=0;
 
-      /* Put all acceptable news into news_text */
+      /* Put all acceptable news into buf */
 	do{
          /* If we've reached the end of the list */
       if (article_ptr->faction==NULL){
@@ -269,13 +285,13 @@ int *generate_news( char* faction )
 		if ( !strcmp(article_ptr->faction,"Generic") || !strcmp(article_ptr->faction,faction) )
 		{
 			if (article_ptr->date && article_ptr->date<40000000000000){
-      		p += nsnprintf( news_text+p, news_max_length-p,
-           		" - %s - \n"
+      		p += nsnprintf( buf+p, news_max_length-p,
+           		" %s \n"
            		"%s: %s\n\n"
            		, article_ptr->title, ntime_pretty(article_ptr->date,1), article_ptr->desc );
       	}else{
-      		p+=nsnprintf( news_text+p, news_max_length-p,
-               " - %s - \n"
+      		p+=nsnprintf( buf+p, news_max_length-p,
+               " %s \n"
                "%s\n\n"
            		, article_ptr->title, article_ptr->desc );
       	}
@@ -284,27 +300,14 @@ int *generate_news( char* faction )
 	}while( (article_ptr = article_ptr->next) != NULL );
 
 	if (p==0)
-		nsnprintf(news_text, news_max_length, "\n\nSorry, no news today\n\n\n");
+		nsnprintf(buf, news_max_length, "\n\nSorry, no news today\n\n\n");
 
-      /* transcribe to news_lines*/
-   nlines=0;
-   l=0;  
-   for(i=0; news_text[i]!=0; i++ ){
-
-      if (news_text[i]=='\n'){
-
-         news_lines[nlines] = malloc(i-l+1);   //@@@###important, this must be freed later
-         strncpy(news_lines[nlines], &news_text[l], i-l );
-         *(news_lines[nlines]+i-l) = 0;
-         nlines++;
-         l=i;
-      }
-
-   }
+   len=p;
 
 
 	return 0;
 }
+
 
 /**
  * @brief Creates a news widget.
@@ -323,10 +326,6 @@ void news_widget( unsigned int wid, int x, int y, int w, int h )
    news_pos    = h/3;
    news_tick   = SDL_GetTicks();
 
-   /* Create the custom widget. */
-   window_addCust( wid, x, y, w, h,
-         "cstNews", 1, news_render, news_mouse, NULL );
-
    int i=0;
    news_t* article_ptr=news_list;
    do{
@@ -335,6 +334,61 @@ void news_widget( unsigned int wid, int x, int y, int w, int h )
    } while ((article_ptr=article_ptr->next)!=NULL);
 
 
+
+
+      /* Now load up the text. */
+   // int len=p;
+   int p = 0;
+   news_nlines = 0;
+
+   printf("\n\n\nLoading lines...");
+   while (p < len) {
+
+      printf("\nnew line");
+      /* Get the length. */
+      i = gl_printWidthForText( NULL, &buf[p], w-40 );
+
+      printf("\n\tline length will be %d",i);
+
+      /* Copy the line. */
+      if (news_nlines+1 > news_mlines) {
+         printf("\n\tReallocating space");
+         if (news_mlines == 0)
+            news_mlines = 256;
+         else
+            news_mlines *= 2;
+         news_lines    = realloc( news_lines, sizeof(char*) * news_mlines );
+         news_restores = realloc( news_restores, sizeof(glFontRestore) * news_mlines );
+      }
+      printf("\n\tMallocing the space...");
+      news_lines[ news_nlines ]    = malloc( i + 1 );
+      printf("\n\tPutting in the text");
+      strncpy( news_lines[news_nlines], buf+p, i );
+      printf(" ... ");
+      news_lines[ news_nlines ][i] = '\0';
+      printf("\n\tdoin... stuff?");
+      if (news_nlines==0)
+         gl_printRestoreInit( &news_restores[ news_nlines ] );
+      else  {
+         memcpy( &news_restores[ news_nlines ], &news_restores[ news_nlines-1 ], sizeof(glFontRestore) );
+         gl_printStore( &news_restores[ news_nlines ], news_lines[ news_nlines-1 ] );
+      }
+ 
+      p += i + 1; /* Move pointer. */
+      news_nlines++; /* New line. */
+   }
+   printf("\nDone loading lines...\n\n");
+   /* </load text> */
+
+   for (i=0;i<news_nlines;i++)
+   {
+      printf("\n%s",news_lines[i]);
+   }
+
+
+      /* Create the custom widget. */
+   window_addCust( wid, x, y, w, h,
+         "cstNews", 1, news_render, news_mouse, NULL );
 }
 
 
@@ -391,12 +445,9 @@ static void news_mouse( unsigned int wid, SDL_Event *event, double mx, double my
 static void news_render( double bx, double by, double w, double h, void *data )
 {
    (void) data;
-   // int i, s, m, p;
+   int i, s, m, p;
    unsigned int t;
    double y, dt;
-
-   /* background */
-   gl_renderRect( bx, by, w, h, &cBlack );
 
    t = SDL_GetTicks();
 
@@ -407,66 +458,41 @@ static void news_render( double bx, double by, double w, double h, void *data )
    }
    news_tick = t;
 
-   news_pos=MAX(0,news_pos);
-
-
-   y = by - textlength + news_pos;
-
-
-   /* <Draw the text> */
-   // gl_printRestore( &news_restores[i] );  //@@@
-
-   int i, i0, i1, pline_i;
-   int length;
-
-   int width=w/8;
-
-      //a buffer so run-on lines are played correctly
-   char buf[32][64];   //32 lines of 64 chars
-
-   textlength=y;
-
-      /* print the new lines, with temporary breakable line breaking */
-   for (i=nlines-1;i>=0;i--){
-
-      i0=0;
-      pline_i=0;
-      i1=strlen(news_lines[i]);
-      length=strlen(news_lines[i]);
-
-         /* Break it down and put into buf */
-      while (i0!=i1){
-
-         while (i1-i0>width || ( i1!=length && *(news_lines[i]+i1)!=' ' ) )
-            i1--;
-
-         strncpy(buf[pline_i], news_lines[i]+i0, i1-i0 );
-         buf[pline_i][i1-i0]=0;
-         pline_i++;
-
-         i0=i1;
-         i1=length;
-      }
-
-         /* print buf */
-      for (pline_i--;pline_i>=0;pline_i--){
-
-         gl_printMidRaw( news_font, w-40., bx+10, by+y, &cConsole, buf[pline_i] );
-         y+=15.;
-
-
-      }
-   }
-
-   /* </draw text> */
-
-
-   textlength = y-textlength;
-
-   if (news_pos > textlength+h-by)
+   /* Make sure user isn't silly and drags it to negative values. */
+   if (news_pos < 0.)
       news_pos = 0.;
 
+   /* background */
+   gl_renderRect( bx, by, w, h, &cBlack );
+
+   /* Render the text. */
+   p = (int)ceil( news_pos / (news_font->h + 5.));
+   m = (int)ceil(        h / (news_font->h + 5.));
+   if (p > news_nlines + m + 1) {
+      news_pos = 0.;
+      return;
+   }
+
+   /* Get positions to make sure inbound. */
+   s = MAX(0,p-m);
+   p = MIN(p+1,news_nlines-1);
+
+   /* Get start position. */
+   y = news_pos - s * (news_font->h+5.);
+
+   /* Draw loop. */
+   for (i=s; i<p; i++) {
+
+      gl_printRestore( &news_restores[i] );
+      gl_printMidRaw( news_font, w-40.,
+            bx+10, by+y, &cConsole, news_lines[i] );
+
+      /* Increment line and position. */
+      y -= news_font->h + 5.;
+   }
+
 }
+
 
 
 /*
@@ -514,13 +540,11 @@ int news_saveArticles( xmlTextWriterPtr writer )
  */
 int news_loadArticles( xmlNodePtr parent )
 {
+   printf("Loading articles");
+
    xmlNodePtr node;
 
    largestID=1;
-
-   if (news_list!=NULL){
-      news_exit();
-   }
 
    news_exit();
    news_init();
@@ -550,7 +574,7 @@ static int news_parseArticle( xmlNodePtr parent )
    char* title;
    char* desc;
    char* faction;
-   char* buf;
+   char* buff;
    ntime_t date;
    xmlNodePtr node;
 
@@ -579,23 +603,23 @@ static int news_parseArticle( xmlNodePtr parent )
          WARN("Event has missing faction attribute, skipping.");
          continue;
       }
-      xmlr_attr(node,"date",buf);
+      xmlr_attr(node,"date",buff);
       if (faction==NULL) {
          free(title); free(desc); free(faction);
          WARN("Event has missing date attribute, skipping.");
          continue;
       }
-      date = atol(buf);
-      free(buf);
-      xmlr_attr(node,"id",buf);
+      date = atol(buff);
+      free(buff);
+      xmlr_attr(node,"id",buff);
       if (faction==NULL) {
          free(title); free(desc); free(faction);
          WARN("Event has missing date attribute, skipping.");
          continue;
       }
-      next_id = atoi(buf);
+      next_id = atoi(buff);
       largestID=MAX(largestID,next_id+1);
-      free(buf);
+      free(buff);
 
       printf("\t\tMaking new article");
 
@@ -617,18 +641,20 @@ static int news_parseArticle( xmlNodePtr parent )
  */
 int news_addHeaders(void)
 {
+   printf("\nadding headers");
+
    if (news_list==NULL)
       news_init();
 
-   new_article("Dvaered news","Welcome to the Dvaered News Centre. All that happens. In simple words. So you can understand","Dvaered",40000000000000);
+   new_article("===Dvaered news===\n","Welcome to the Dvaered News Centre. All that happens. In simple words. So you can understand\n","Dvaered",40000000000000);
 
-   new_article("Welcome to the Empire News Centre","Fresh news from around the Empire","Empire",40000000000000);
+   new_article("===Welcome to the Empire News Centre===\n","Fresh news from around the Empire\n","Empire",40000000000000);
 
-   new_article("Goddard news","Welcome to Goddard News Centre. We bring you the news from around the Empire","Goddard",40000000000000);
+   new_article("===Goddard news===\n","Welcome to Goddard News Centre. We bring you the news from around the Empire\n","Goddard",40000000000000);
 
-   new_article("Pirate News. News that matters","Laughing at the Emperor","Pirate",40000000000000);
+   new_article("===Pirate News. News that matters===\n","Laughing at the Emperor\n","Pirate",40000000000000);
 
-   new_article("Sirian news","Sirius News Reel. Words of the Sirichana for all","Sirius",40000000000000);
+   new_article("===Sirian news===\n","Sirius News Reel. Words of the Sirichana for all\n","Sirius",40000000000000);
 
    // new_article(,40000000000000);  //independent?
 

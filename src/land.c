@@ -784,7 +784,7 @@ static void bar_approach( unsigned int wid, char *str )
  */
 static int news_load (void)
 {
-   generate_news(faction_name(land_planet->faction));  //@@@### For now, faction is NULL
+   generate_news(faction_name(land_planet->faction));
    return 0;
 }
 
