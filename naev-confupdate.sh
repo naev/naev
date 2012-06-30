@@ -4,12 +4,12 @@
 # by only migrating explicitly Naev-owned files.
 
 # Set defaults if XDG variables aren't defined.
-test -z $XDG_DATA_HOME && XDG_DATA_HOME=$HOME/.local/share
-test -z $XDG_CONFIG_HOME && XDG_CONFIG_HOME=$HOME/.config
-test -z $XDG_CACHE_HOME && XDG_CACHE_HOME=$HOME/.cache
+test -z "$XDG_DATA_HOME" && XDG_DATA_HOME=$HOME/.local/share
+test -z "$XDG_CONFIG_HOME" && XDG_CONFIG_HOME=$HOME/.config
+test -z "$XDG_CACHE_HOME" && XDG_CACHE_HOME=$HOME/.cache
 
 # ~/.naev must exist.
-test -d $HOME/.naev || exit
+test -d "$HOME/.naev" || exit
 
 # Handle weird cases where ~/.naev isn't readable/executable.
 cd "$HOME/.naev" || exit
@@ -38,7 +38,7 @@ fi
 
 # Clean up if nothing remains.
 for dir in saves screenshots gen; do
-   test -d $dir && rmdir --ignore-fail-on-non-empty "$dir/"
+   test -d "$dir" && rmdir --ignore-fail-on-non-empty "$dir/"
 done
 
 rmdir --ignore-fail-on-non-empty "$HOME/.naev/"
