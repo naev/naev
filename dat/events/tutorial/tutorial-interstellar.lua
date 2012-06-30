@@ -108,7 +108,7 @@ end
 -- Cleanup function. Should be the exit point for the module in all cases.
 function cleanup()
     if not (omsg == nil) then player.omsgRm(omsg) end
-    var.push("tut_next", "Tutorial: Comms") 
+    var.push("tut_next", "Tutorial: Communications") 
     naev.keyEnableAll()
     naev.eventStart("Tutorial")
     evt.finish(true)
