@@ -97,6 +97,7 @@ help:
 	@echo "      clean - removes binaries and object files"
 	@echo "    install - installs naev"
 	@echo "  uninstall - removes previously installed files"
-	@echo " dist-bzip2 - creates a source tarball"
+	@echo "  dist-gzip - creates a source tarball with gzip compression"
+	@echo " dist-bzip2 - creates a source tarball with bzip2 compression"
 	@echo "  distcheck - checks if the created tarball works properly"
 	@echo "  distclean - does clean and removes files created by configure"
