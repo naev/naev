@@ -75,6 +75,8 @@ static void news_mouse( unsigned int wid, SDL_Event *event, double mx, double my
 static int news_parseArticle( xmlNodePtr parent );
 int news_saveArticles( xmlTextWriterPtr writer );
 int news_loadArticles( xmlNodePtr parent );
+char* make_clean( char* unclean);
+char* get_fromclean( char *clean);
 
 
 extern ntime_t naev_time;
@@ -454,6 +456,63 @@ static void news_render( double bx, double by, double w, double h, void *data )
 
 }
 
+/*
+ * @brief replace ascii character 27 with the string "\027"
+ */
+char* make_clean( char* unclean)
+{
+   printf("\nit was %s",unclean);
+
+   int i,j;
+   char* new=malloc(4*strlen(unclean));
+
+   for (i=0,j=0; *(unclean+i)!=0; i++,j++)
+   {
+      if (*(unclean+i)==27){
+         new[j++]='\\';
+         j+=sprintf(new+j,"%.3d",*(unclean+i));
+         j--;
+      }
+      else
+         new[j]=unclean[i];
+   }
+
+   new[j]=0;
+
+   printf("\nIt's now %s",new);
+   
+   return new;
+
+}
+
+
+/*
+ * @brief replace any \027 strings with the ascii character 
+ */
+char* get_fromclean( char *clean)
+{
+   printf("\nUncleaning: it was %s",clean);
+
+   int i, j, st_len;
+   st_len=strlen(clean);
+   char* new=malloc(st_len);
+
+   for (i=0,j=0; clean[i]; i++,j++)
+   {
+
+      if (clean[i]=='\\' && (st_len-i)>=3 && clean[i+1]=='0' && clean[i+2]=='2' && clean[i+3]=='7' ){
+         new[j]=27;
+         i+=3;
+      }
+      else
+         new[j]=clean[i];
+   }
+   new[j]=0;
+
+   printf("\nand is now %s",new);
+
+   return new;
+}
 
 
 /*
@@ -464,6 +523,8 @@ int news_saveArticles( xmlTextWriterPtr writer )
 {
 
    news_t* article_ptr = news_list;
+   char* ntitle;
+   char* ndesc;
 
    xmlw_startElem(writer,"news");
 
@@ -473,13 +534,19 @@ int news_saveArticles( xmlTextWriterPtr writer )
       {
 
          xmlw_startElem(writer,"article");
+
+         ntitle= make_clean( article_ptr->title );
+         ndesc= make_clean( article_ptr->desc );
    
-         xmlw_attr(writer,"title","%s",article_ptr->title);
-         xmlw_attr(writer,"desc","%s",article_ptr->desc);
+         xmlw_attr(writer,"title","%s",ntitle);
+         xmlw_attr(writer,"desc","%s",ndesc);
          xmlw_attr(writer,"faction","%s",article_ptr->faction);
          xmlw_attr(writer,"date","%li",article_ptr->date);
          xmlw_attr(writer,"id","%i",article_ptr->id);
-   
+
+         free(ntitle);
+         free(ndesc);
+
          xmlw_endElem(writer); /* "article" */
       }
 
@@ -533,6 +600,8 @@ static int news_parseArticle( xmlNodePtr parent )
    char* title;
    char* desc;
    char* faction;
+   char* ntitle;
+   char* ndesc;
    char* buff;
    ntime_t date;
    xmlNodePtr node;
@@ -578,9 +647,14 @@ static int news_parseArticle( xmlNodePtr parent )
       largestID=MAX(largestID,next_id+1);
       free(buff);
 
-         /* make the article*/
-      new_article(title,desc,faction,date);
+      ntitle=get_fromclean(title);
+      ndesc=get_fromclean(desc);
 
+         /* make the article*/
+      new_article(ntitle,ndesc,faction,date);
+
+      free(ntitle);
+      free(ndesc);
       free(title);
       free(desc);
       free(faction);
