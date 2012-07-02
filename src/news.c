@@ -198,6 +198,8 @@ int news_init (void)
 void news_exit (void)
 {
 
+   printf("\nExiting news ");
+
    if (news_list==NULL)
       return;
 
@@ -222,7 +224,10 @@ void news_exit (void)
    free(news_lines);
    free(news_restores);
    news_lines  = NULL;
+   news_restores = NULL;
+   news_nlines = 0;
    news_mlines = 0;
+   textlength=0;
 
    news_list=NULL;
 
@@ -496,6 +501,11 @@ int news_saveArticles( xmlTextWriterPtr writer )
  */
 int news_loadArticles( xmlNodePtr parent )
 {
+   news_tick=0;
+
+
+   printf("\nnews_tick, news_drag,news_pos,news_lines,news_restores,news_nlines,news_mlines,textlength, largestID, %d %d %.0f %p %p %d %d %f %d\n",
+      news_tick, news_drag,news_pos,news_lines,news_restores,news_nlines,news_mlines,textlength, largestID);
 
    xmlNodePtr node;
 
