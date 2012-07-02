@@ -461,7 +461,6 @@ static void news_render( double bx, double by, double w, double h, void *data )
  */
 char* make_clean( char* unclean)
 {
-   printf("\nit was %s",unclean);
 
    int i,j;
    char* new=malloc(4*strlen(unclean));
@@ -478,8 +477,6 @@ char* make_clean( char* unclean)
    }
 
    new[j]=0;
-
-   printf("\nIt's now %s",new);
    
    return new;
 
@@ -491,7 +488,6 @@ char* make_clean( char* unclean)
  */
 char* get_fromclean( char *clean)
 {
-   printf("\nUncleaning: it was %s",clean);
 
    int i, j, st_len;
    st_len=strlen(clean);
@@ -508,8 +504,6 @@ char* get_fromclean( char *clean)
          new[j]=clean[i];
    }
    new[j]=0;
-
-   printf("\nand is now %s",new);
 
    return new;
 }
