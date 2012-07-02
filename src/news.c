@@ -198,8 +198,6 @@ int news_init (void)
 void news_exit (void)
 {
 
-   printf("\nExiting news ");
-
    if (news_list==NULL)
       return;
 
@@ -502,10 +500,6 @@ int news_saveArticles( xmlTextWriterPtr writer )
 int news_loadArticles( xmlNodePtr parent )
 {
    news_tick=0;
-
-
-   printf("\nnews_tick, news_drag,news_pos,news_lines,news_restores,news_nlines,news_mlines,textlength, largestID, %d %d %.0f %p %p %d %d %f %d\n",
-      news_tick, news_drag,news_pos,news_lines,news_restores,news_nlines,news_mlines,textlength, largestID);
 
    xmlNodePtr node;
 
