@@ -100,7 +100,7 @@ news_t* new_article(char* title, char* content, char* faction, ntime_t date)
 	n_article->id=next_id++;
 
 
-	n_article->faction = n_article->faction ? NULL : strdup(faction);
+	n_article->faction = faction ? strdup(faction) : NULL ;
 
 		/* allocate it */
 	if ( !( (n_article->title = strdup(title)) && 
@@ -140,39 +140,47 @@ news_t* new_article(char* title, char* content, char* faction, ntime_t date)
  */
 int free_article(int id)
 {
-	news_t* article_ptr = news_list;
-	news_t* article_to_rm;
 
-		/* if the first article is the one we're looking for */
-	if (news_list->id == id){
-		article_to_rm = news_list;
-		news_list = news_list->next;
-		if (news_list->next == NULL){
-			WARN("\nLast article, do not remove");
-			return -1;
-		}
-	}
-	else
-	{
-			/* get the article before the one we're looking for */
-		while ( article_ptr->next!=NULL && article_ptr->next->id!=id )
-			article_ptr=article_ptr->next;
+   news_t* article_ptr = news_list;
+   news_t* article_to_rm;
 
-		if ( article_ptr->next == NULL  ){
-			WARN("\nArticle to remove not found");
-			return -1;
-		}
+      /* if the first article is the one we're looking for */
+   if (news_list->id == id){
+      article_to_rm = news_list;
+      news_list = news_list->next;
 
-		article_to_rm = article_ptr->next;
-		article_ptr->next = article_to_rm->next;
-	}
+      if (article_to_rm->next == NULL){
+         printf("\n\nALL ARTICLES\n\n");
+         while (article_ptr!=NULL){
+            printf("%d:\n%s:%li:%s",article_ptr->id,article_ptr->title,article_ptr->date,article_ptr->desc);
+            article_ptr=article_ptr->next;
+         }
+         printf("\n---\n\n");
+         WARN("\nLast article, do not remove");
+         return -1;
+      }
+   }
+   else
+   {
+         /* get the article before the one we're looking for */
+      while ( article_ptr->next!=NULL && article_ptr->next->id!=id )
+         article_ptr=article_ptr->next;
 
-	free(article_to_rm->title);
-	free(article_to_rm->desc);
-	free(article_to_rm->faction);
-	free(article_to_rm);
+      if ( article_ptr->next == NULL  ){
+         WARN("\nArticle to remove not found");
+         return -1;
+      }
 
-	return 0;
+      article_to_rm = article_ptr->next;
+      article_ptr->next = article_to_rm->next;
+   }
+
+   free(article_to_rm->title);
+   free(article_to_rm->desc);
+   free(article_to_rm->faction);
+   free(article_to_rm);
+
+   return 0;
 }
 
 
@@ -489,23 +497,27 @@ char* make_clean( char* unclean)
 char* get_fromclean( char *clean)
 {
 
-   int i, j, st_len;
-   st_len=strlen(clean);
-   char* new=malloc(st_len);
+   int line_max=256;
+   char new[line_max];
+   int i,j;
 
-   for (i=0,j=0; clean[i]; i++,j++)
+   for (i=0,j=0;clean[i]!=0 && j<line_max-3;i++,j++)
    {
-
-      if (clean[i]=='\\' && (st_len-i)>=3 && clean[i+1]=='0' && clean[i+2]=='2' && clean[i+3]=='7' ){
+      if (clean[i]=='\\' && clean[i+1]=='0' && clean[i+2]=='2' && clean[i+3]=='7')
+      {
          new[j]=27;
          i+=3;
       }
       else
+      {
          new[j]=clean[i];
+      }
    }
    new[j]=0;
 
-   return new;
+   char* unclean=strdup(new);
+
+   return unclean;
 }
 
 
@@ -560,6 +572,7 @@ int news_saveArticles( xmlTextWriterPtr writer )
  */
 int news_loadArticles( xmlNodePtr parent )
 {
+
    news_tick=0;
 
    xmlNodePtr node;
@@ -584,7 +597,7 @@ int news_loadArticles( xmlNodePtr parent )
 
 
 /**
- * @brief Parses an individual article
+ * @brief Parses articles
  *
  *    @param parent Parent node to parse.
  *    @return 0 on success.
@@ -637,12 +650,14 @@ static int news_parseArticle( xmlNodePtr parent )
          WARN("Event has missing date attribute, skipping.");
          continue;
       }
+
       next_id = atoi(buff);
       largestID=MAX(largestID,next_id+1);
       free(buff);
 
       ntitle=get_fromclean(title);
       ndesc=get_fromclean(desc);
+
 
          /* make the article*/
       new_article(ntitle,ndesc,faction,date);
@@ -652,6 +667,7 @@ static int news_parseArticle( xmlNodePtr parent )
       free(title);
       free(desc);
       free(faction);
+
 
    } while (xml_nextNode(node));
 

@@ -54,6 +54,8 @@ static const luaL_reg economy_cond_methods[] = {
    {0,0}
 }; /**< Read only economy metatable methods. */
 
+extern int land_loaded;
+
 /**
  * @brief Loads the economy library.
  *
@@ -97,8 +99,6 @@ int nlua_loadNews( lua_State *L, int readonly )
  */
 int newsL_add( lua_State *L ){
 
-   printf("\nAdding new Lua article");
-
    news_t* n_article;
    Lua_article Larticle;
    char* title;
@@ -113,13 +113,11 @@ int newsL_add( lua_State *L ){
       date = (ntime_t) lua_tonumber(L,4);
    }
    else{
-      WARN("\nBad arguments, use addArticle(\"Title\",\"Content\",\"Faction\",date)");
+      WARN("\nBad arguments, use addArticle(\"Faction\",\"Title\",\"Content\",date)");
       return 0;
    }
-
    if (title && content && faction)
       n_article = new_article(title, content, faction, date);
-
 
    Larticle.id = n_article->id;
    lua_pusharticle(L, Larticle);
@@ -131,7 +129,8 @@ int newsL_add( lua_State *L ){
    /* If we're landed, we should regenerate the news buffer. */
    if (landed) {
       generate_news(faction_name(land_planet->faction));
-      bar_regen();
+      if (land_loaded)
+         bar_regen();
    }
 
    return 1;
@@ -152,7 +151,9 @@ int newsL_rm( lua_State *L ){
    /* If we're landed, we should regenerate the news buffer. */
    if (landed) {
       generate_news(faction_name(land_planet->faction));
-      bar_regen();
+      if (land_loaded){
+         bar_regen();
+      }
    }
 
    return 1;

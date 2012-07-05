@@ -1,12 +1,12 @@
 
-news.addArticle("Title","Content","Faction",date)
+news.add("Faction","Title","Content",date)
    Adds a new article, returns the Lua_article
 
-news.freeArticle(article)
+news.rm(article)
    frees an article
 
-news.get(characteristic or boolean)
-   gets a table of articles that match, or all if a boolean
+news.get(characteristic or no args)
+   gets a table of articles that match, or all if no args
 
 news.title(article)
    gets the title of the article

@@ -71,7 +71,7 @@ static unsigned int land_visited = 0; /**< Contains what the player visited. */
  */
 int landed = 0; /**< Is player landed. */
 static int land_takeoff = 0; /**< Takeoff. */
-static int land_loaded = 0; /**< Finished loading? */
+int land_loaded = 0; /**< Finished loading? */
 static unsigned int land_wid = 0; /**< Land window ID. */
 static int land_regen = 0; /**< Whether or not regenning. */
 static const char *land_windowNames[LAND_NUMWINDOWS] = {
