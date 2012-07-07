@@ -1243,7 +1243,7 @@ void player_weapSetPress( int id, int type, int repeat )
    if (player.p == NULL)
       return;
 
-   if (pilot_isFlag(player.p, PILOT_HYP_PREP) || 
+   if (pilot_isFlag(player.p, PILOT_HYP_PREP) ||
          pilot_isFlag(player.p, PILOT_HYPERSPACE) ||
          pilot_isFlag(player.p, PILOT_LANDING) ||
          pilot_isFlag(player.p, PILOT_TAKEOFF))
@@ -3181,7 +3181,7 @@ static Planet* player_parse( xmlNodePtr parent )
                !planet_hasService(pnt, PLANET_SERVICE_REFUEL) ||
                areEnemies(pnt->faction, FACTION_PLAYER)) {
             WARN("Planet '%s' found, but is not suitable. Trying again.", planet);
-            pnt = planet_get( space_getRndPlanet( (i>100) ? 1 : 0  ) ); /* We try landable only for the first 100 tries. */
+            pnt = planet_get( space_getRndPlanet( (i>100) ? 1 : 0 ) ); /* We try landable only for the first 100 tries. */
          }
          else
             hunting = 0;
@@ -3592,7 +3592,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
          autoweap = atoi(id);
          free(id);
       }
-      
+
       /* Load the last weaponset the player used on this ship. */
       xmlr_attr(node,"active_set",id);
       if (id != NULL) {
@@ -3600,7 +3600,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
          free(id);
       }
       else {
-         /* set active_set to invalid. will be dealt with later */ 
+         /* set active_set to invalid. will be dealt with later */
          active_set = -1;
       }
 
