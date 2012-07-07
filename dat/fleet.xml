@@ -685,7 +685,7 @@
   </pilots>
  </fleet>
  <fleet name="Shadowvigil Escorts">
-  <ai>trader</ai>
+  <ai>baddie_norun</ai>
   <faction>Four Winds</faction>
   <pilots>
    <pilot name="Four Winds Escort" ship="Lancelot"></pilot>

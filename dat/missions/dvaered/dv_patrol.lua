@@ -24,7 +24,7 @@ else -- default english
    msg_title = {}
    msg_msg = {}
    msg_title[1] = "Mission Success"
-   msg_msg[1] = "You are greeted by a Dvaered official and receive your payment of %s credits for your contribution in keeping Dvaered systems clean."
+   msg_msg[1] = "You are greeted by a Dvaered official and receive your payment of %s credits for your contribution to keeping Dvaered systems clean."
    msg_msg[2] = "DV: Arrived at point. Hold point."
    msg_msg[3] = "DV: Point insecure. Engage hostiles!"
    msg_msg[4] = "DV: Hostiles eliminated. Hold point."
