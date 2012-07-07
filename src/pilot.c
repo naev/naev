@@ -44,6 +44,7 @@
 #include "array.h"
 #include "camera.h"
 #include "damagetype.h"
+#include "pause.h"
 
 
 #define PILOT_CHUNK_MIN 128 /**< Minimum chunks to increment pilot_stack by */
@@ -1262,6 +1263,10 @@ void pilot_updateDisable( Pilot* p, const unsigned int shooter )
 
       /* TODO: Make undisabled pilot use up presence again. */
       pilot_runHook( p, PILOT_HOOK_UNDISABLE );
+
+      /* This is sort of a hack to make sure it gets reset... */
+      if (p->id==PLAYER_ID)
+         pause_setSpeed( player_isFlag(PLAYER_DOUBLESPEED) ? 2. : 1. );
    }
 }
 

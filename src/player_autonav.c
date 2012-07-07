@@ -463,9 +463,9 @@ void player_thinkAutonav( Pilot *pplayer, double dt )
 void player_updateAutonav( double dt )
 {
    const double dis_dead = 5.0;
+   const double dis_mod  = 0.5;
+   const double dis_max  = 4.0;
    const double dis_ramp = 6.0;
-   const double dis_mod = 0.5;
-   const double dis_max = 4.0;
 
    if (paused || (player.p==NULL))
       return;
@@ -487,12 +487,12 @@ void player_updateAutonav( double dt )
       if (player.p->dtimer_accum < dis_dead)
          tc_mod = tc_base;
       else {
-         /* Normal. */
-         if (player.p->dtimer > (dis_max-1.)*dis_ramp/2.+dis_ramp+dis_dead)
-            tc_mod = MIN( dis_max, tc_mod + dis_mod*dt );
          /* Ramp down. */
-         else
+         if (player.p->dtimer - player.p->dtimer_accum < dis_dead + (dis_max-tc_base)*dis_ramp/2 + tc_base*dis_ramp)
             tc_mod = MAX( tc_base, tc_mod - dis_mod*dt );
+         /* Normal. */
+         else
+            tc_mod = MIN( dis_max, tc_mod + dis_mod*dt );
       }
       pause_setSpeed( tc_mod );
       return;
