@@ -1,5 +1,7 @@
 --[[
 -- This is a oneoff mission where you help a new Dvaered Warlord takeover a planet
+-- To Do: fix fighters being idle after mission ends
+-- Other editors, feel free to update dialog to make it more dvaered like.
 --]]
 
 -- localization stuff, translators would work here
@@ -226,6 +228,7 @@ function hawk_dead () -- mission accomplished
     for i, j in ipairs(fleetdv) do
         j:control(false)
         j:setVisible(false)
+        j:setHilight(false)
     end
     hook.timer(10000, "complete")
     for i, j in ipairs(jump_fleet) do
@@ -236,6 +239,9 @@ function hawk_dead () -- mission accomplished
 end
 
 function spawn_fleet() -- spawn warlord killing fleet
+    -- Cancel autonav.
+    player.cinematics(true)
+    player.cinematics(false)
     jump_fleet_entered = true
     jump_fleet = pilot.add("Dvaered Med Force", "dvaered_norun", system.get(destjumpname))
     jump_fleet[6]:broadcast(string.format(chatter[8], destplanetname))
@@ -248,7 +254,7 @@ function spawn_fleet() -- spawn warlord killing fleet
         j:attack(hawk)
     end
     hook.pilot( jump_fleet[6], "death", "jump_fleet_cap_dead")
-    camera.set(hawk, true, 5000)
+    camera.set(hawk)
     hawk:broadcast(chatter[9])
     fleetdv[1]:broadcast(chatter[10])
     hawk:control()
@@ -281,7 +287,7 @@ end
 
 function complete()
     tk.msg(passtitle[1], passtext[1])
-    camera.set(player.pilot(), true)
+    camera.set(player.pilot())
     player.pay(80000)
     jump_fleet[6]:broadcast(string.format(chatter[13], destplanetname))
     misn.finish(true)
