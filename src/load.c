@@ -506,7 +506,10 @@ static void load_compatSlots (void)
          if (sslot->data != NULL)
             pilot_addOutfitRaw( ship, sslot->data, ship->outfits[j] );
       }
+
+      pilot_calcStats( ship );
    }
+
    /* Clean up. */
    for (i=0; i<nships; i++)
       free(sships[i]);
