@@ -1331,6 +1331,9 @@ void land( Planet* p, int load )
    /* Resets the player's heat. */
    pilot_heatReset( player.p );
 
+   /* Heal the player so GUI shows player at full everything. */
+   pilot_healLanded( player.p );
+
    /* Stop player sounds. */
    player_soundStop();
 

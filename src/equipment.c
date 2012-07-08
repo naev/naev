@@ -252,6 +252,7 @@ void equipment_open( unsigned int wid )
    equipment_lastick    = SDL_GetTicks();
    equipment_dir        = 0.;
    eq_wgt.selected      = NULL;
+   outfit_windows       = NULL;
 
    /* Add ammo. */
    equipment_addAmmo();
@@ -1123,6 +1124,7 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
 
    /* Recalculate stats. */
    pilot_calcStats( p );
+   pilot_healLanded( p );
 
    /* Redo the outfits thingy. */
    equipment_regenLists( wid, 1, 1 );
@@ -1749,6 +1751,7 @@ static void equipment_changeShip( unsigned int wid )
 
    /* Swap ship. */
    player_swapShip( shipname );
+   pilot_healLanded( player.p );
 
    /* Regenerate ship widget. */
    equipment_regenLists( wid, 0, 1 );
@@ -1862,6 +1865,7 @@ static void equipment_unequipShip( unsigned int wid, char* str )
 
    /* Recalculate stats. */
    pilot_calcStats( ship );
+   pilot_healLanded( ship );
 
    /* Don't "gain" fuel. */
    eq_wgt.selected->fuel = MIN( eq_wgt.selected->fuel_max, f );
