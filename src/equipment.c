@@ -1753,6 +1753,12 @@ static void equipment_changeShip( unsigned int wid )
    player_swapShip( shipname );
    pilot_healLanded( player.p );
 
+   /* What happens here is the gui gets recreated when the player swaps ship.
+    * This causes all the windows to be destroyed and the 'wid' we have here
+    * becomes invalid. However, since we store it in a global variable we can
+    * recover it and use it instead. */
+   wid = equipment_wid;
+
    /* Regenerate ship widget. */
    equipment_regenLists( wid, 0, 1 );
    /* Focus new ship. */
