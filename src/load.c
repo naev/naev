@@ -569,7 +569,6 @@ int load_game( const char* file, int version_diff )
    hook_load(node);
    space_sysLoad(node);
 
-
    /* Initialize the economy. */
    economy_init();
 
