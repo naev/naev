@@ -1015,6 +1015,17 @@ void pilot_calcStats( Pilot* pilot )
 
 
 /**
+ * @brief Cures the pilot as if he was landed.
+ */
+void pilot_healLanded( Pilot *pilot )
+{
+   pilot->armour = pilot->armour_max;
+   pilot->shield = pilot->shield_max;
+   pilot->energy = pilot->energy_max;
+}
+
+
+/**
  * @brief Updates the pilot stats after mass change.
  *
  *    @param pilot Pilot to update his mass.
