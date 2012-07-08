@@ -99,7 +99,6 @@ function flyUpdate()
          pp:setTemp(750)
          omsg = player.omsgAdd(waitomsg:format(flytime), 0)
       end
-      hook.timer(1000, "flyUpdate")
    elseif stage == stages.wait then
       player.omsgChange(omsg, waitomsg:format(flytime), 0)
       if flytime < 0 then
@@ -110,15 +109,14 @@ function flyUpdate()
          omsg = player.omsgAdd(coolomsg:format(tutGetKey("cooldown")), 0)
          inputhook = hook.input("input")
       end
-      hook.timer(1000, "flyUpdate")
    elseif stage == stages.cool then
       if pp:temp() == 250 then
          tk.msg(title1, message8)
          tk.msg(title1, message9)
          cleanup()
       end
-      hook.timer(1000, "flyUpdate")
    end
+   hook.timer(1000, "flyUpdate")
 end
 
 --Input hook
