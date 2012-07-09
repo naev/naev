@@ -69,8 +69,8 @@ static void opt_close( unsigned int wid, char *name );
 static void opt_needRestart (void);
 /* Gameplay. */
 static void opt_gameplay( unsigned int wid );
-static void opt_getAutonavAbortStr( char *buf, int max );
 static void opt_setAutonavAbort( unsigned int wid, char *str );
+static void opt_OK( unsigned int wid, char *str );
 static void opt_gameplaySave( unsigned int wid, char *str );
 static void opt_gameplayDefaults( unsigned int wid, char *str );
 static void opt_gameplayUpdate( unsigned int wid, char *str );
@@ -79,12 +79,11 @@ static void opt_video( unsigned int wid );
 static void opt_videoRes( unsigned int wid, char *str );
 static void opt_videoSave( unsigned int wid, char *str );
 static void opt_videoDefaults( unsigned int wid, char *str );
-static void opt_videoUpdate( unsigned int wid, char *str );
 /* Audio. */
 static void opt_audio( unsigned int wid );
 static void opt_audioSave( unsigned int wid, char *str );
 static void opt_audioDefaults( unsigned int wid, char *str );
-static void opt_audioUpdate( unsigned int wid, char *str );
+static void opt_audioUpdate( unsigned int wid );
 static void opt_audioLevelStr( char *buf, int max, int type, double pos );
 static void opt_setAudioLevel( unsigned int wid, char *str );
 static void opt_beep( unsigned int wid, char *str );
@@ -130,10 +129,32 @@ void opt_menu (void)
    if (opt_restart)
       opt_needRestart();
 }
+
+
+/**
+ * @brief Saves all options and closes the options screen.
+ */
+static void opt_OK( unsigned int wid, char *str )
+{
+   opt_gameplaySave( opt_windows[ OPT_WIN_GAMEPLAY ], str);
+   opt_audioSave(    opt_windows[ OPT_WIN_AUDIO ], str);
+   opt_videoSave(    opt_windows[ OPT_WIN_VIDEO ], str);
+   opt_close(wid, str);
+}
+
+/**
+ * @brief Closes the options screen without saving.
+ */
 static void opt_close( unsigned int wid, char *name )
 {
    (void) wid;
    (void) name;
+
+   /* At this point, set sound levels as defined in the config file.
+    * This ensures that sound volumes are reset on "Cancel". */
+   sound_volume(conf.sound);
+	music_volume(conf.music);
+
    window_destroy( opt_wid );
 }
 
@@ -156,10 +177,10 @@ static void opt_gameplay( unsigned int wid )
    /* Close button */
    window_addButton( wid, -20, 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnClose", "Close", opt_close );
+         "btnClose", "OK", opt_OK );
    window_addButton( wid, -20 - 1*(BUTTON_WIDTH+20), 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnApply", "Apply", opt_gameplaySave );
+         "btnCancel", "Cancel", opt_close );
    window_addButton( wid, -20 - 2*(BUTTON_WIDTH+20), 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnDefaults", "Defaults", opt_gameplayDefaults );
@@ -241,9 +262,8 @@ static void opt_gameplay( unsigned int wid )
    y -= 20;
 
    /* Autonav abort fader. */
-   opt_getAutonavAbortStr( buf, sizeof(buf) );
    window_addText( wid, x, y, cw, 20, 1, "txtAutonav",
-         NULL, NULL, buf );
+         NULL, NULL, NULL );
    y -= 20;
    window_addFader( wid, x, y, cw, 20, "fadAutonav", 0., 1.,
          conf.autonav_abort, opt_setAutonavAbort );
@@ -302,6 +322,9 @@ static void opt_gameplaySave( unsigned int wid, char *str )
    conf.zoom_manual = window_checkboxState( wid, "chkZoomManual" );
    conf.mouse_thrust = window_checkboxState(wid, "chkMouseThrust" );
    conf.save_compress = window_checkboxState( wid, "chkCompress" );
+   
+   /* Faders. */
+   conf.autonav_abort = window_getFaderValue(wid, "fadAutonav");
 
    /* Input boxes. */
    vmsg = window_getInput( wid, "inpMSG" );
@@ -309,7 +332,7 @@ static void opt_gameplaySave( unsigned int wid, char *str )
    conf.mesg_visible = atoi(vmsg);
    conf.compression_mult = atoi(tmax);
    if (conf.mesg_visible == 0)
-      conf.mesg_visible = 5;
+      conf.mesg_visible = INPUT_MESSAGES_DEFAULT;
 }
 
 /**
@@ -318,17 +341,23 @@ static void opt_gameplaySave( unsigned int wid, char *str )
 static void opt_gameplayDefaults( unsigned int wid, char *str )
 {
    (void) str;
-
-   /* Ask user. */
-   if (!dialogue_YesNoRaw( "Restore Defaults", "Are you sure you want to restore default gameplay settings?" ))
-      return;
+   char vmsg[16], tmax[16];
 
    /* Restore. */
-   conf_setGameplayDefaults();
-   opt_gameplayUpdate( wid, NULL );
+   /* Checkboxes. */
+   window_checkboxSet( wid, "chkZoomManual", MANUAL_ZOOM_DEFAULT );
+   window_checkboxSet( wid, "chkAfterburn", AFTERBURNER_SENSITIVITY_DEFAULT );
+   window_checkboxSet( wid, "chkMouseThrust", MOUSE_THRUST_DEFAULT );
+   window_checkboxSet( wid, "chkCompress", SAVE_COMPRESSION_DEFAULT );
 
-   /* Alert user it worked. */
-   dialogue_msgRaw( "Defaults Restored", "Gameplay settings restored to defaults.");
+   /* Faders. */
+   window_faderValue( wid, "fadAutonav", AUTONAV_ABORT_DEFAULT );
+
+   /* Input boxes. */
+   nsnprintf( vmsg, sizeof(vmsg), "%d", INPUT_MESSAGES_DEFAULT );
+   window_setInput( wid, "inpMSG", vmsg );
+   nsnprintf( tmax, sizeof(tmax), "%d", TIME_COMPRESSION_DEFAULT_MULT );
+   window_setInput( wid, "inpTMax", tmax );
 }
 
 /**
@@ -345,29 +374,14 @@ static void opt_gameplayUpdate( unsigned int wid, char *str )
    window_checkboxSet( wid, "chkMouseThrust", conf.mouse_thrust );
    window_checkboxSet( wid, "chkCompress", conf.save_compress );
 
+   /* Faders. */
+   window_faderValue( wid, "fadAutonav", conf.autonav_abort );
+
    /* Input boxes. */
    nsnprintf( vmsg, sizeof(vmsg), "%d", conf.mesg_visible );
    window_setInput( wid, "inpMSG", vmsg );
    nsnprintf( tmax, sizeof(tmax), "%g", conf.compression_mult );
    window_setInput( wid, "inpTMax", tmax );
-}
-
-
-/**
- * @brief Sets the autonav abort string based on the current abort_autonav value.
- *
- *    @param[out] buf Buffer to use.
- *    @param max Maximum length of the buffer.
- */
-static void opt_getAutonavAbortStr( char *buf, int max )
-{
-   /* Generate message. */
-   if (conf.autonav_abort >= 1.)
-      nsnprintf( buf, max, "Missile Lock" );
-   else if (conf.autonav_abort > 0.)
-      nsnprintf( buf, max, "%.0f%% Shield", conf.autonav_abort * 100 );
-   else
-      nsnprintf( buf, max, "Armour Damage" );
 }
 
 
@@ -384,9 +398,15 @@ static void opt_setAutonavAbort( unsigned int wid, char *str )
 
    /* Set fader. */
    autonav_abort = window_getFaderValue(wid, str);
-   conf.autonav_abort = autonav_abort;
 
-   opt_getAutonavAbortStr( buf, sizeof(buf) );
+   /* Generate message. */
+   if (autonav_abort >= 1.)
+      nsnprintf( buf, sizeof(buf), "Missile Lock" );
+   else if (autonav_abort > 0.)
+      nsnprintf( buf, sizeof(buf), "%.0f%% Shield", autonav_abort * 100 );
+   else
+      nsnprintf( buf, sizeof(buf), "Armour Damage" );
+
    window_modifyText( wid, "txtAutonav", buf );
 }
 
@@ -426,7 +446,7 @@ static void opt_keybinds( unsigned int wid )
 
    /* Close button. */
    window_addButton( wid, -20, 20, bw, bh,
-         "btnClose", "Close", opt_close );
+         "btnClose", "OK", opt_OK );
    /* Set button. */
    window_addButton( wid, -20 - bw - 20, 20, bw, bh,
          "btnSet", "Set Key", opt_setKey );
@@ -663,7 +683,7 @@ static void opt_audio( unsigned int wid )
    int i, j;
    int cw;
    int w, h, y, x, l;
-   char buf[32], **s;
+   char **s;
    const char *str;
 
    /* Get size. */
@@ -672,10 +692,10 @@ static void opt_audio( unsigned int wid )
    /* Close button */
    window_addButton( wid, -20, 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnClose", "Close", opt_close );
+         "btnClose", "OK", opt_OK );
    window_addButton( wid, -20 - 1*(BUTTON_WIDTH+20), 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnApply", "Apply", opt_audioSave );
+         "btnCancel", "Cancel", opt_close );
    window_addButton( wid, -20 - 2*(BUTTON_WIDTH+20), 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnDefaults", "Defaults", opt_audioDefaults );
@@ -730,9 +750,8 @@ static void opt_audio( unsigned int wid )
    y -= 30;
 
    /* Sound fader. */
-   opt_audioLevelStr( buf, sizeof(buf), 0, sound_getVolume() );
    window_addText( wid, x, y, cw, 20, 1, "txtSound",
-         NULL, NULL, buf );
+         NULL, NULL, NULL );
    y -= 20;
    window_addFader( wid, x, y, cw, 20, "fadSound", 0., 1.,
          sound_getVolume(), opt_setAudioLevel );
@@ -740,9 +759,8 @@ static void opt_audio( unsigned int wid )
    y -= 40;
 
    /* Music fader. */
-   opt_audioLevelStr( buf, sizeof(buf), 1, music_getVolume() );
    window_addText( wid, x, y, cw, 20, 1, "txtMusic",
-         NULL, NULL, buf );
+         NULL, NULL, NULL );
    y -= 20;
    window_addFader( wid, x, y, cw, 20, "fadMusic", 0., 1.,
          music_getVolume(), opt_setAudioLevel );
@@ -751,6 +769,8 @@ static void opt_audio( unsigned int wid )
    /* Restart text. */
    window_addText( wid, 20, 10, 3*(BUTTON_WIDTH + 20),
          30, 0, "txtRestart", &gl_smallFont, &cBlack, NULL );
+   
+   opt_audioUpdate(wid);
 }
 
 
@@ -798,6 +818,10 @@ static void opt_audioSave( unsigned int wid, char *str )
       conf.al_efx = f;
       opt_needRestart();
    }
+
+   /* Faders. */
+   conf.sound = window_getFaderValue(wid, "fadSound");
+   conf.music = window_getFaderValue(wid, "fadMusic");
 }
 
 
@@ -808,43 +832,36 @@ static void opt_audioDefaults( unsigned int wid, char *str )
 {
    (void) str;
 
-   /* Ask user. */
-   if (!dialogue_YesNoRaw( "Restore Defaults", "Are you sure you want to restore default audio settings?" ))
-      return;
-
    /* Set defaults. */
-   conf_setAudioDefaults();
+   /* Faders. */
+   window_faderValue( wid, "fadSound", SOUND_VOLUME_DEFAULT );
+   window_faderValue( wid, "fadMusic", MUSIC_VOLUME_DEFAULT );
 
-   /* Have sound levels affect. */
-   sound_volume(conf.sound);
-	music_volume(conf.music);
+   /* Checkboxes. */
+   window_checkboxSet( wid, "chkNosound", MUTE_SOUND_DEFAULT );
+   window_checkboxSet( wid, "chkEFX", USE_EFX_DEFAULT );
 
-   /* Update widgets. */
-   opt_audioUpdate( wid, NULL );
-
-   /* Alert user it worked. */
-   dialogue_msgRaw( "Defaults Restored", "Audio settings restored to defaults.");
+   /* List. */
+   toolkit_setList( wid, "lstSound",
+         (conf.sound_backend==NULL) ? "none" : BACKEND_DEFAULT );
 }
 
 
 /**
- * @brief Updates the audio widgets.
+ * @brief Updates the gameplay options.
  */
-static void opt_audioUpdate( unsigned int wid, char *str )
+static void opt_audioUpdate( unsigned int wid )
 {
-   (void) str;
-
-   /* Faders. */
-   window_faderValue( wid, "fadSound", sound_getVolume() );
-   window_faderValue( wid, "fadMusic", music_getVolume() );
-
-   /* Checkboxkes. */
+   /* Checkboxes. */
    window_checkboxSet( wid, "chkNosound", conf.nosound );
    window_checkboxSet( wid, "chkEFX", conf.al_efx );
 
-   /* List. */
-   toolkit_setList( wid, "lstSound",
-         (conf.sound_backend==NULL) ? "none" : conf.sound_backend );
+   /* Faders. */
+   window_faderValue( wid, "fadSound", conf.sound );
+   window_faderValue( wid, "fadMusic", conf.music );
+   
+   /* Backend box */
+   /* TODO */
 }
 
 
@@ -1030,10 +1047,10 @@ static void opt_video( unsigned int wid )
    /* Close button */
    window_addButton( wid, -20, 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnClose", "Close", opt_close );
+         "btnClose", "OK", opt_OK );
    window_addButton( wid, -20 - 1*(BUTTON_WIDTH+20), 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnApply", "Apply", opt_videoSave );
+         "btnCancel", "Cancel", opt_close );
    window_addButton( wid, -20 - 2*(BUTTON_WIDTH+20), 20,
          BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnDefaults", "Defaults", opt_videoDefaults );
@@ -1259,40 +1276,22 @@ static void opt_videoSave( unsigned int wid, char *str )
 static void opt_videoDefaults( unsigned int wid, char *str )
 {
    (void) str;
-
-   /* Ask user. */
-   if (!dialogue_YesNoRaw( "Restore Defaults", "Are you sure you want to restore default video settings?" ))
-      return;
-
-   /* Restore settings. */
-   conf_setVideoDefaults();
-   opt_videoUpdate( wid, NULL );
-
-   /* Alert user it worked. */
-   dialogue_msgRaw( "Defaults Restored", "Video settings restored to defaults.");
-}
-
-static void opt_videoUpdate( unsigned int wid, char *str )
-{
-   (void) str;
    char buf[16];
 
+   /* Restore settings. */
    /* Inputs. */
-   nsnprintf( buf, sizeof(buf), "%dx%d", conf.width, conf.height );
+   nsnprintf( buf, sizeof(buf), "%dx%d", RESOLUTION_W_DEFAULT, RESOLUTION_H_DEFAULT );
    window_setInput( wid, "inpRes", buf );
-   nsnprintf( buf, sizeof(buf), "%d", conf.fps_max );
+   nsnprintf( buf, sizeof(buf), "%d", FPS_MAX_DEFAULT );
    window_setInput( wid, "inpFPS", buf );
 
    /* Checkboxkes. */
-   window_checkboxSet( wid, "chkFullscreen", conf.fullscreen );
-   window_checkboxSet( wid, "chkVSync", conf.vsync );
-   window_checkboxSet( wid, "chkVBO", conf.vbo );
-   window_checkboxSet( wid, "chkMipmaps", conf.mipmaps );
-   window_checkboxSet( wid, "chkInterpolate", conf.interpolate );
-   window_checkboxSet( wid, "chkNPOT", conf.npot );
-   window_checkboxSet( wid, "chkFPS", conf.fps_show );
-   window_checkboxSet( wid, "chkEngineGlow", conf.engineglow );
-
-   /* Just in case - lazy. */
-   opt_needRestart();
+   window_checkboxSet( wid, "chkFullscreen", FULLSCREEN_DEFAULT );
+   window_checkboxSet( wid, "chkVSync", VSYNC_DEFAULT );
+   window_checkboxSet( wid, "chkVBO", VBO_DEFAULT );
+   window_checkboxSet( wid, "chkMipmaps", MIPMAP_DEFAULT );
+   window_checkboxSet( wid, "chkInterpolate", INTERPOLATION_DEFAULT );
+   window_checkboxSet( wid, "chkNPOT", NPOT_TEXTURES_DEFAULT );
+   window_checkboxSet( wid, "chkFPS", SHOW_FPS_DEFAULT );
+   window_checkboxSet( wid, "chkEngineGlow", ENGINE_GLOWS_DEFAULT );
 }
