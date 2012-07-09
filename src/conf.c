@@ -177,12 +177,13 @@ void conf_setDefaults (void)
  */
 void conf_setGameplayDefaults (void)
 {
-   conf.afterburn_sens        = 250;
+   conf.afterburn_sens        = AFTERBURNER_SENSITIVITY_DEFAULT;
    conf.compression_velocity  = TIME_COMPRESSION_DEFAULT_MAX;
-   conf.compression_mult      = 200;
-   conf.save_compress         = 1;
-   conf.mouse_thrust          = 1;
-   conf.autonav_abort         = 1.;
+   conf.compression_mult      = TIME_COMPRESSION_DEFAULT_MULT;
+   conf.save_compress         = SAVE_COMPRESSION_DEFAULT;
+   conf.mouse_thrust          = MOUSE_THRUST_DEFAULT;
+   conf.autonav_abort         = AUTONAV_ABORT_DEFAULT;
+   conf.zoom_manual           = MANUAL_ZOOM_DEFAULT;
 }
 
 
@@ -197,18 +198,14 @@ void conf_setAudioDefaults (void)
    }
 
    /* Sound. */
-#if USE_OPENAL
-   conf.sound_backend = strdup("openal");
-#else /* USE_OPENAL */
-   conf.sound_backend = strdup("sdlmix");
-#endif /* USE_OPENAL */
-   conf.snd_voices   = 128;
-   conf.snd_pilotrel = 1;
-   conf.al_efx       = 1;
-   conf.al_bufsize   = 128;
-   conf.nosound      = 0;
-   conf.sound        = 0.4;
-   conf.music        = 0.8;
+   conf.sound_backend = strdup(BACKEND_DEFAULT);
+   conf.snd_voices   = VOICES_DEFAULT;
+   conf.snd_pilotrel = PILOT_RELATIVE_DEFAULT;
+   conf.al_efx       = USE_EFX_DEFAULT;
+   conf.al_bufsize   = BUFFER_SIZE_DEFAULT;
+   conf.nosound      = MUTE_SOUND_DEFAULT;
+   conf.sound        = SOUND_VOLUME_DEFAULT;
+   conf.music        = MUSIC_VOLUME_DEFAULT;
 }
 
 
@@ -223,14 +220,14 @@ void conf_setVideoDefaults (void)
    f = 0;
    if ((gl_screen.desktop_w > 0) && (gl_screen.desktop_h > 0)) {
       /* Try higher resolution. */
-      w = 1024;
-      h = 768;
+      w = RESOLUTION_W_DEFAULT;
+      h = RESOLUTION_H_DEFAULT;
 
       /* Fullscreen and fit everything onscreen. */
       if ((gl_screen.desktop_w <= w) || (gl_screen.desktop_h <= h)) {
          w = gl_screen.desktop_w;
          h = gl_screen.desktop_h;
-         f = 1;
+         f = FULLSCREEN_DEFAULT;
       }
    }
    else {
@@ -239,27 +236,27 @@ void conf_setVideoDefaults (void)
    }
 
    /* OpenGL. */
-   conf.fsaa         = 1;
-   conf.vsync        = 0;
-   conf.vbo          = 0; /* Seems to cause a lot of issues. */
-   conf.mipmaps      = 0; /* Also cause for issues. */
-   conf.compress     = 0;
-   conf.interpolate  = 1;
-   conf.npot         = 0;
+   conf.fsaa         = FSAA_DEFAULT;
+   conf.vsync        = VSYNC_DEFAULT;
+   conf.vbo          = VBO_DEFAULT; /* Seems to cause a lot of issues. */
+   conf.mipmaps      = MIPMAP_DEFAULT; /* Also cause for issues. */
+   conf.compress     = TEXTURE_COMPRESSION_DEFAULT;
+   conf.interpolate  = INTERPOLATION_DEFAULT;
+   conf.npot         = NPOT_TEXTURES_DEFAULT;
 
    /* Window. */
    conf.fullscreen   = f;
    conf.width        = w;
    conf.height       = h;
-   conf.explicit_dim = 0;
-   conf.scalefactor  = 1.;
+   conf.explicit_dim = 0; /* No need for a define, this is only for first-run. */
+   conf.scalefactor  = SCALE_FACTOR_DEFAULT;
 
    /* FPS. */
-   conf.fps_show     = 0;
-   conf.fps_max      = 200;
+   conf.fps_show     = SHOW_FPS_DEFAULT;
+   conf.fps_max      = FPS_MAX_DEFAULT;
 
    /* Memory. */
-   conf.engineglow   = 1;
+   conf.engineglow   = ENGINE_GLOWS_DEFAULT;
 }
 
 
