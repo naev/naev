@@ -25,7 +25,7 @@
 #include "nstring.h"
 
 
-#define BOARDING_WIDTH  300 /**< Boarding window width. */
+#define BOARDING_WIDTH  380 /**< Boarding window width. */
 #define BOARDING_HEIGHT 200 /**< Boarding window height. */
 
 #define BUTTON_WIDTH     50 /**< Boarding button width. */
@@ -42,6 +42,7 @@ static int board_boarded   = 0;
 static void board_stealCreds( unsigned int wdw, char* str );
 static void board_stealCargo( unsigned int wdw, char* str );
 static void board_stealFuel( unsigned int wdw, char* str );
+static void board_stealAmmo( unsigned int wdw, char* str );
 static int board_trySteal( Pilot *p );
 static int board_fail( unsigned int wdw );
 static void board_update( unsigned int wdw );
@@ -145,6 +146,7 @@ void player_board (void)
          "Credits:\n"
          "Cargo:\n"
          "Fuel:\n"
+         "Ammo:\n"
          );
    window_addText( wdw, 80, -30, 120, 60,
          0, "txtData", &gl_smallFont, &cBlack, NULL );
@@ -155,7 +157,8 @@ void player_board (void)
          "btnStealCargo", "Cargo", board_stealCargo);
    window_addButton( wdw, 20+2*(BUTTON_WIDTH+20), 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnStealFuel", "Fuel", board_stealFuel);
-
+   window_addButton( wdw, 20+3*(BUTTON_WIDTH+20), 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnStealAmmo", "Ammo", board_stealAmmo);
    window_addButton( wdw, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnBoardingClose", "Leave", board_exit );
 
@@ -294,6 +297,96 @@ static void board_stealFuel( unsigned int wdw, char* str )
 
 
 /**
+ * @brief Attempt to steal the boarded ship's ammo.
+ *
+ *    @param wdw Window triggering the function.
+ *    @param str Unused.
+ */
+static void board_stealAmmo( unsigned int wdw, char* str )
+{
+     Pilot* p;
+     int nreloaded, i, nammo, x;
+     PilotOutfitSlot *target_outfit_slot, *player_outfit_slot;
+     Outfit *target_outfit, *ammo, *player_outfit;
+     (void)str;
+     nreloaded = 0;
+     p = pilot_get(player.p->target);
+     /* Target has no ammo */
+     if (pilot_countAmmo(p) <= 0) {
+        player_message("\erThe ship has no ammo.");
+        return; 
+     }
+     /* Player is already at max ammo */
+     if (pilot_countAmmo(player.p) >= pilot_maxAmmo(player.p)) {
+        player_message("\erYou are already at max ammo.");
+        return;
+     }
+     if (board_fail(wdw))
+        return;
+     /* Steal the ammo */
+     for (i=0; i<p->noutfits; i++) {
+        target_outfit_slot = p->outfits[i];
+        if (target_outfit_slot == NULL)
+           continue;
+        target_outfit = target_outfit_slot->outfit;
+        if (target_outfit == NULL)
+           continue;
+        /* outfit isn't a launcher */
+        if (!outfit_isLauncher(target_outfit)) {
+           continue;
+        }
+        nammo = target_outfit_slot->u.ammo.quantity;
+        ammo = target_outfit_slot->u.ammo.outfit;
+        /* launcher has no ammo */
+        if (ammo == NULL)
+           continue;
+        if (nammo <= 0) {
+           continue;
+        }
+        for (x=0; x<player.p->noutfits; x++) {
+           int nadded = 0;
+           player_outfit_slot = player.p->outfits[x];
+           if (player_outfit_slot == NULL)
+              continue;
+           player_outfit = player_outfit_slot->outfit;
+           if (player_outfit == NULL)
+              continue;
+           if (!outfit_isLauncher(player_outfit)) {
+              continue;
+           }
+           if (strcmp(ammo->name, player_outfit_slot->u.ammo.outfit->name) != 0) {
+              continue;
+           }
+           /* outfit's ammo matches; try to add to player and remove from target */
+           nadded = pilot_addAmmo(player.p, player_outfit_slot, ammo, nammo);
+           nammo -= nadded;
+           pilot_rmAmmo(p, target_outfit_slot, nadded);
+           nreloaded += nadded;
+           if (nadded > 0) {
+             player_message("\epYou looted %d %s(s)", nadded, ammo->name);
+             DEBUG("Player reloaded %d units of ammo %s to outfit %s in slot %d from boarded target.",
+                   nadded, ammo->name, player_outfit->name,
+                   player_outfit_slot->id);
+           }
+           if (nammo <= 0) {
+              break;
+           }
+        }
+        if (nammo <= 0) {
+           continue;
+        }
+     }
+     if (nreloaded <= 0)
+        player_message("\erThere is no ammo compatible with your launchers on board.");
+     pilot_updateMass(player.p);
+     pilot_weaponSane(player.p);
+     pilot_updateMass(p);
+     pilot_weaponSane(p);
+     board_update(wdw);
+}
+
+
+/**
  * @brief Checks to see if the pilot can steal from its target.
  *
  *    @param p Pilot stealing from its target.
@@ -379,22 +472,35 @@ static void board_update( unsigned int wdw )
    if ((p->ncommodities==0) && (j < PATH_MAX))
       j += snprintf( &str[j], PATH_MAX-j, "none\n" );
    else {
-      for (i=0; i<p->ncommodities; i++)
+     for (i=0; i<p->ncommodities; i++) {
          if (j > PATH_MAX)
             break;
-         j += snprintf( &str[j], PATH_MAX-j,
-               "%d %s\n",
-               p->commodities[i].quantity, p->commodities[i].commodity->name );
+         if (p->commodities[i].commodity == NULL)
+            continue;
+         j += snprintf( &str[j], PATH_MAX-j, "%d %s\n",
+                        p->commodities[i].quantity, p->commodities[i].commodity->name );
+     }
    }
 
    /* Fuel. */
    if (p->fuel <= 0.) {
       if (j < PATH_MAX)
-         snprintf( &str[j], PATH_MAX-j, "none\n" );
+         j += snprintf( &str[j], PATH_MAX-j, "none\n" );
    }
    else {
       if (j < PATH_MAX)
-         snprintf( &str[j], PATH_MAX-j, "%.0f Units\n", p->fuel );
+         j += snprintf( &str[j], PATH_MAX-j, "%.0f Units\n", p->fuel );
+   }
+   
+   /* Missiles */
+   int nmissiles = pilot_countAmmo(p);
+   if (nmissiles <= 0) {
+      if (j < PATH_MAX)
+        j += snprintf( &str[j], PATH_MAX-j, "none\n" );
+   }
+   else {
+      if (j < PATH_MAX)
+        j += snprintf( &str[j], PATH_MAX-j, "%d missiles\n", nmissiles );
    }
 
    window_modifyText( wdw, "txtData", str );
