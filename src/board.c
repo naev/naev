@@ -362,12 +362,8 @@ static void board_stealAmmo( unsigned int wdw, char* str )
            nammo -= nadded;
            pilot_rmAmmo(p, target_outfit_slot, nadded);
            nreloaded += nadded;
-           if (nadded > 0) {
-             player_message("\epYou looted %d %s(s)", nadded, ammo->name);
-             DEBUG("Player reloaded %d units of ammo %s to outfit %s in slot %d from boarded target.",
-                   nadded, ammo->name, player_outfit->name,
-                   player_outfit_slot->id);
-           }
+           if (nadded > 0)
+			  player_message("\epYou looted %d %s(s)", nadded, ammo->name);
            if (nammo <= 0) {
               break;
            }
