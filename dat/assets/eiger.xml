@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Eiger">
+ <pos>
+  <x>5823.847661</x>
+  <y>4142.301112</y>
+ </pos>
+ <GFX>
+  <space>J04.png</space>
+  <exterior>gas.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Independent</faction>
+  <value>100.000000</value>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>J</class>
+  <population>20000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <commodity/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+   <commodity>Medicine</commodity>
+  </commodities>
+  <description>The Salvador system has little of worth or use to the empire, but it still has valuable minerals that need mining. Hence a group of intrepid miners and traders have made this place their base of operations. Minerals are mind and refined here, and traders buy it cheap and sell it dear in the deeper reaches of the empire.</description>
+  <bar>This bar is home to several mining factors and their trade partners haggling and making deals over beer and coffee. The bar is large, but it is still filled almost to the point of standing room only.</bar>
+ </general>
+</asset>

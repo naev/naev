@@ -7,8 +7,8 @@
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>616.000000</x>
-  <y>-702.000000</y>
+  <x>953.536935</x>
+  <y>-865.162851</y>
  </pos>
  <assets>
   <asset>Humdrum I</asset>
@@ -22,11 +22,11 @@
   </jump>
   <jump target="Anarbalis">
    <autopos/>
-   <hide>0.000000</hide>
+   <hide>1.250000</hide>
   </jump>
   <jump target="Modus Manis">
    <autopos/>
-   <hide>0.000000</hide>
+   <hide>1.250000</hide>
   </jump>
  </jumps>
 </ssys>

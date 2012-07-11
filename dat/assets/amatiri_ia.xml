@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Amatiri Ia">
+ <pos>
+  <x>-5884.762425</x>
+  <y>2158.826933</y>
+ </pos>
+ <GFX>
+  <space>moon-P00.png</space>
+  <exterior>aquatic.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.500000</hide>
+  <services/>
+ </general>
+</asset>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Obelisk Station">
+ <pos>
+  <x>11385.347075</x>
+  <y>-4070.533010</y>
+ </pos>
+ <GFX>
+  <space>001.png</space>
+  <exterior>station01.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <value>200.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>1000</population>
+  <hide>0.750000</hide>
+  <services>
+   <land>srs_mil_restricted</land>
+   <refuel/>
+   <bar/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>Obelisk Station is a military base. It's not so much an active force as a reserve of military strength. Whenever a law enforcement division in this region of space requires backup or heavy firepower for an operation, it is Obelisk Station that provides. Most of the space within the station hull is taken up by ship hangars and service docks.</description>
+  <bar>The spacedock bar on Obelisk Station is primarily used for pilots and crew members to standby as an immediate response team. These people are required to be immediately available in case an emergency pops up. While they are idle, they have access to all sorts of training simulations and recreational venues at this bar.</bar>
+ </general>
+ <tech>
+  <item>Sirius Military Ships</item>
+ </tech>
+</asset>

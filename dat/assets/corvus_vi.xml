@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Corvus VI">
+ <pos>
+  <x>-19328.539962</x>
+  <y>20286.979960</y>
+ </pos>
+ <GFX>
+  <space>I07.png</space>
+  <exterior>aquatic.png</exterior>
+ </GFX>
+ <general>
+  <class>I</class>
+  <population>0</population>
+  <hide>0.150000</hide>
+  <services/>
+ </general>
+</asset>

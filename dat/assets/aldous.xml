@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Aldous">
+ <pos>
+  <x>3801.811993</x>
+  <y>-6006.223988</y>
+ </pos>
+ <GFX>
+  <space>S00.png</space>
+  <exterior>station01.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>S</class>
+  <population>10000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land>land_lowclass</land>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities/>
+  <description>Planet Aldous is a giant sea of a fluid toxic to humans. As far as habitability is concerned, planets like this one come dead last on the chart. Nevertheless, a handful of brave souls have chosen to make this planet their home. The ocean may be toxic, but it also happens to be the perfect environment for producing high quality positronic cirquitry.</description>
+  <bar>The spaceport facility is part of a larger structure that houses the entirety of this planet's human habitation. The complex more or less floats on the surface and is tightly sealed against the outside environment. Furthermore, the complex is highly compartimentalized, in case a leak somehow occurs. Even the tiniest exposure to the toxic material in Aldous' ocean is lethal. For this reason, some spacers insist on wearing breathing masks, even in the spaceport bar, just to be on the safe side.</bar>
+ </general>
+</asset>

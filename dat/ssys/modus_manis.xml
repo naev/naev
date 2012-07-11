@@ -7,8 +7,8 @@
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>699.000000</x>
-  <y>-617.000000</y>
+  <x>982.278487</x>
+  <y>-777.476854</y>
  </pos>
  <assets>
   <asset>Manis</asset>
@@ -19,15 +19,15 @@
   <asset>Virtual Trader Area</asset>
  </assets>
  <jumps>
-  <jump target="Esker">
-   <autopos/>
-   <hide>0.000000</hide>
-  </jump>
   <jump target="Humdrum">
    <autopos/>
-   <hide>0.000000</hide>
+   <hide>1.250000</hide>
   </jump>
   <jump target="Tarmak">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Willow">
    <autopos/>
    <hide>1.250000</hide>
   </jump>

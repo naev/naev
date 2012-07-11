@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Ramen">
+ <pos>
+  <x>-2483.222826</x>
+  <y>1436.483160</y>
+ </pos>
+ <GFX>
+  <space>moon-A00.png</space>
+  <exterior>lava.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>75.000000</value>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>A</class>
+  <population>981320</population>
+  <hide>0.500000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+  </services>
+  <commodities/>
+  <description>Ramen produces raw materials, in the truest sense of the word. Radioactive slag is mined from the volcanic pits that litter the landscape of this moon, and packaged into storage canisters that are shipped offworld directly. No processing of any kind occurs here.</description>
+  <bar>This bar is frequented by local workers whose shif is about to begin, or has just ended. The workers don't live on station, but migrate from the living complexes on the nearby world of Timu.</bar>
+ </general>
+</asset>

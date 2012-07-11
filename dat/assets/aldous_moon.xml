@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Aldous' moon">
+ <pos>
+  <x>3481.905633</x>
+  <y>-5531.743534</y>
+ </pos>
+ <GFX>
+  <space>moon-A00.png</space>
+  <exterior>snow.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.750000</hide>
+  <services/>
+ </general>
+</asset>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Ruin">
+ <pos>
+  <x>-9965.733675</x>
+  <y>-3889.141259</y>
+ </pos>
+ <GFX>
+  <space>G02.png</space>
+  <exterior>oceanic.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>G</class>
+  <population>300000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities/>
+  <description>It is said that when the first colonist ship landed here, its captain took a look outside and muttered to himself: "what a ruin of a planet". His cabin crew overheard, and the word stuck. Today, the planet is officially known as Ruin on all publicly sold star maps.</description>
+  <bar>Ruin's spaceport bar is a deliberate retro affair. Although it does have all of the standard spaceport facilities, they have been encased in oldfashioned terminal housings. The furniture and overall design also have been styled on what was commonplace several dozen cycles ago. Some like it, some don't.</bar>
+ </general>
+</asset>

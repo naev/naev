@@ -24,6 +24,7 @@
    <missions/>
    <commodity/>
    <outfits/>
+   <shipyard/>
   </services>
   <commodities>
    <commodity>Food</commodity>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Gorchenchev Shipyards">
+ <pos>
+  <x>-13646.958770</x>
+  <y>993.710590</y>
+ </pos>
+ <GFX>
+  <space>station-shipyard2.png</space>
+  <exterior>station05.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>4000</population>
+  <hide>0.750000</hide>
+  <services>
+   <land>srs_mil_restricted</land>
+   <refuel/>
+   <bar/>
+   <commodity/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>Though Gorchenchev Shipyards is a commercial enterprise, House Sirius has licensed it to produce their military ships. As such, the station is classified as a military installation, meaning no access to independent traders.</description>
+  <bar>The factional emblem of House Sirius is predominant in this spacedock bar. The owner of the station clearly wants to show that his allegiance to his faction is strong.</bar>
+ </general>
+ <tech>
+  <item>Soromid Military Ships</item>
+  <item>Basic Trade Ships</item>
+  <item>Bulk Trade Ships</item>
+  <item>Heavy Civilian Combat Ships</item>
+ </tech>
+</asset>

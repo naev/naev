@@ -21,7 +21,6 @@
    <faction>Frontier</faction>
    <faction>Goddard</faction>
    <faction>Sirius</faction>
-   <faction>Soromid</faction>
   </avail>
  </mission>
  <mission name="Empire Rehabilitation">
@@ -72,7 +71,6 @@
    <faction>Frontier</faction>
    <faction>Goddard</faction>
    <faction>Sirius</faction>
-   <faction>Soromid</faction>
   </avail>
  </mission>
  <mission name="Empire Recruitment">

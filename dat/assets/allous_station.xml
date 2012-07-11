@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Allous Station">
+ <pos>
+  <x>-5217.423447</x>
+  <y>2985.793974</y>
+ </pos>
+ <GFX>
+  <space>001.png</space>
+  <exterior>station01.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>50.000000</value>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>A</class>
+  <population>12445</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+  </services>
+  <commodities/>
+  <description>Despite the name, Allous Station is not a military post. It is more of a scientific observation center and deep-space observatory, originally mena tto keep an eye on the high-interference nebula of PSO. Even Dvaered has a scientific community, and they paid for this station of of their own pockets. Of course, once it was built, they no longer have to pay for it as numerous warlords with dreams of intellectualism are just happy to offer their patronage.</description>
+  <bar>This bar looks like something one would expect from Za'lek space. Scientists and soldiers are interacting with suprising friendliness and conviality. Of course, the local warlords would tolerate nothing less.</bar>
+ </general>
+</asset>

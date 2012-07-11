@@ -7,8 +7,8 @@
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>-172.000000</x>
-  <y>-296.000000</y>
+  <x>-264.800000</x>
+  <y>-265.400000</y>
  </pos>
  <assets>
   <asset>Emperor's Fist</asset>
@@ -21,6 +21,7 @@
   <asset>Polaris Prime</asset>
   <asset>Virtual Civilian Standard</asset>
   <asset>Virtual Civilian Standard</asset>
+  <asset>Virtual Civilian Standard</asset>
   <asset>Virtual Trader Area</asset>
   <asset>Vuere</asset>
  </assets>
@@ -31,11 +32,11 @@
   </jump>
   <jump target="Koralis">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>0.000000</hide>
   </jump>
   <jump target="Qex">
    <autopos/>
-   <hide>0.000000</hide>
+   <hide>1.250000</hide>
   </jump>
   <jump target="Shakar">
    <autopos/>

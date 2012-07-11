@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Stella">
+ <pos>
+  <x>-9686.331192</x>
+  <y>-7555.386449</y>
+ </pos>
+ <GFX>
+  <space>K00.png</space>
+  <exterior>mining5.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>100.000000</value>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>K</class>
+  <population>980000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+  </services>
+  <commodities/>
+  <description>As a resource for many common building materials, Stella is a busy yet fairly squalid world. Planets like these crop up in most interplanetary economies, a sad but inevitable phenomenon. Life here is rough and unforgiving, and nobody comes here because they like to.</description>
+  <bar>It's not much fun living on a world like Stella. Few people can stay cheerful after living here for any appreciable amount of time. This spaceport bar attempts to lift spirits with a plaque over the bar that reads "A better tomorrow for all". It doesn't help any.</bar>
+ </general>
+</asset>

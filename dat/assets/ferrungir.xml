@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Ferrungir">
+ <pos>
+  <x>-5527.157340</x>
+  <y>6055.653934</y>
+ </pos>
+ <GFX>
+  <space>C01.png</space>
+  <exterior>mining2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>C</class>
+  <population>10000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land>land_lowclass</land>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Ferrungir is a fairly low-profile industrial world. Raw materials are being mined here, and then either shipped offworld immediately or processed into low-level components first. There is not much else of value on this planet. The people who live here tend to be Shaira echelon who haven't been able to find a job anywhere else.</description>
+  <bar>The bar on Ferrungir is grim and simple. It's little more than a storage unit converted to a makeshift canteen. It's to be expected from a world as run down as this one.</bar>
+ </general>
+ <tech>
+  <item>Basic Trade Ships</item>
+ </tech>
+</asset>

@@ -20,6 +20,10 @@
   <asset>Virtual Trader Area</asset>
  </assets>
  <jumps>
+  <jump target="Daan">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
   <jump target="Gremlin">
    <autopos/>
    <hide>1.250000</hide>

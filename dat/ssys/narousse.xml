@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ssys name="Narousse">
+ <general>
+  <radius>14500.000000</radius>
+  <stars>400</stars>
+  <interference>0.000000</interference>
+  <nebula volatility="0.000000">0.000000</nebula>
+ </general>
+ <pos>
+  <x>1273.730737</x>
+  <y>-776.218016</y>
+ </pos>
+ <assets>
+  <asset>Monsoon Station</asset>
+  <asset>Narousse I</asset>
+  <asset>Narousse II</asset>
+  <asset>Narousse III</asset>
+  <asset>Narousse IIIa</asset>
+  <asset>Narousse IV</asset>
+ </assets>
+ <jumps>
+  <jump target="Euler">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Muirat">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Porro">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Toxin">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+ </jumps>
+</ssys>

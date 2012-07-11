@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Monsoon Station">
+ <pos>
+  <x>3975.396126</x>
+  <y>-907.323198</y>
+ </pos>
+ <GFX>
+  <space>station-fleetbase2.png</space>
+  <exterior>station03.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>500</population>
+  <hide>0.750000</hide>
+  <services>
+   <land>srs_mil_restricted</land>
+   <refuel/>
+   <bar/>
+  </services>
+  <commodities/>
+  <description>Monsoon Station is the lone bastion of Sirian law enforcement in this area of space. Though the region is generally quiet, the soldiers here take their responsibility seriously.</description>
+  <bar>The spacedock bar is a utilitarian, no-frills affair that is kept clean and in prime functioning condition. Most of the facilities are automated, as Monsoon Station doesn't have the space to keep on a full serving staff.</bar>
+ </general>
+</asset>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Stint III">
+ <pos>
+  <x>10283.064402</x>
+  <y>-9053.807598</y>
+ </pos>
+ <GFX>
+  <space>J02.png</space>
+  <exterior>methane.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

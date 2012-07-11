@@ -10,7 +10,11 @@
   <x>349.666667</x>
   <y>505.066667</y>
  </pos>
- <assets/>
+ <assets>
+  <asset>Charcoal</asset>
+  <asset>Gewirn IV</asset>
+  <asset>Jasmine</asset>
+ </assets>
  <jumps>
   <jump target="Father's Pride">
    <autopos/>

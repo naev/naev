@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Corvus VI-b">
+ <pos>
+  <x>-17516.230274</x>
+  <y>20769.275657</y>
+ </pos>
+ <GFX>
+  <space>moon-C01.png</space>
+  <exterior>traderoom.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>15.000000</value>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>C</class>
+  <population>7500</population>
+  <hide>0.500000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <commodity/>
+  </services>
+  <commodities/>
+  <description>(null)</description>
+  <bar>(null)</bar>
+ </general>
+</asset>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Rei III">
+ <pos>
+  <x>3004.369207</x>
+  <y>-2683.389591</y>
+ </pos>
+ <GFX>
+  <space>K02.png</space>
+  <exterior>mining.png</exterior>
+ </GFX>
+ <general>
+  <class>J</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

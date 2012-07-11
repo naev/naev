@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Mirror IV">
+ <pos>
+  <x>-7131.713688</x>
+  <y>-12333.972648</y>
+ </pos>
+ <GFX>
+  <space>G01.png</space>
+  <exterior>mining.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Medenus Observatory">
+ <pos>
+  <x>-4753.862391</x>
+  <y>7054.118386</y>
+ </pos>
+ <GFX>
+  <space>station-powerplant.png</space>
+  <exterior>traderoom.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>50.000000</value>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>500</population>
+  <hide>0.750000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+  </services>
+  <commodities/>
+  <description>Medenus Observatory is a semi-public astronomical station. Built at the edge of Soromid space as well as the outer fringe of human inhabited space, its main purpose is to learn more about the universe that lies beyond. Although hyperspace travel has made classical astronomy largely obsolete, there are still merits in being able to see the universe as it was in the distant past.</description>
+  <bar>The spacedock bar is also the central communal area of the station. Researchers and astronomy enthusiasts gather here to discuss readings, comparisons of observations with real-time data, and the latest theories about the Incident.</bar>
+ </general>
+</asset>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Benteen">
+ <pos>
+  <x>10807.395640</x>
+  <y>-5403.919334</y>
+ </pos>
+ <GFX>
+  <space>M03.png</space>
+  <exterior>aquatic3.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>50.000000</value>
+  <range>3</range>
+ </presence>
+ <general>
+  <class>O</class>
+  <population>783121</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities/>
+  <description>Benteen is one of the Empire's primary agriworlds. It grows most of the crops that are bound for the western systems. It is a quiet world, with little in the way of the bustle and fuss of other planets.</description>
+  <bar>The bar is a place to relax after a long trip or hard day's work. The beer is fine and the locals seem friendly enough. Quite a nice place.</bar>
+ </general>
+</asset>

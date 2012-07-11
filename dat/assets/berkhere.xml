@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Berkhere">
+ <pos>
+  <x>-9197.292455</x>
+  <y>14843.960873</y>
+ </pos>
+ <GFX>
+  <space>H00.png</space>
+  <exterior>desertic2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>H</class>
+  <population>100000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land>land_lowclass</land>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Most of Berkhere's surface is rock, dust and sand. But under that surface lie rare and valuable gems and minerals. The colony here relies on this mineral wealth for survival. Crops will not grow on this arid planet, so all food has to be imported.</description>
+  <bar>The spaceport bar is arranged around a central area that serves as a showcase for the single largest uncut gem ever found under the sands of Berkhere. It is a reminder to both visitors and the local populace that Berkhere is still wealthy. So long as the gem on display doesn't have to be sold, the reasoning goes, Berkhere's future isn't in peril. Needless to say, the gem is heavily protected by security systems.</bar>
+ </general>
+</asset>

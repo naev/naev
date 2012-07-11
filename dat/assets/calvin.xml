@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Calvin">
+ <pos>
+  <x>6949.466500</x>
+  <y>-9809.439252</y>
+ </pos>
+ <GFX>
+  <space>D00.png</space>
+  <exterior>forest.png</exterior>
+ </GFX>
+ <general>
+  <class>D</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

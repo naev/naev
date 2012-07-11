@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Faust VI">
+ <pos>
+  <x>-1081.572915</x>
+  <y>7820.604151</y>
+ </pos>
+ <GFX>
+  <space>D02.png</space>
+  <exterior>snow.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

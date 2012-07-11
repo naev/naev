@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Handalier">
+ <pos>
+  <x>-750.438454</x>
+  <y>453.235106</y>
+ </pos>
+ <GFX>
+  <space>J06.png</space>
+  <exterior>gas.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>150.000000</value>
+  <range>5</range>
+ </presence>
+ <general>
+  <class>J</class>
+  <population>17500</population>
+  <hide>0.250000</hide>
+  <services>
+   <land>dv_mil_restricted</land>
+   <refuel/>
+   <bar/>
+   <missions/>
+  </services>
+  <commodities/>
+  <description>Even the Dvaered need to operate testing facilities. Hence the House Dvaered Research Institute on Handalier. It is now known what goes on here, as the Dvaered tightly control the entire planet.</description>
+  <bar>The bar is fairly typical for a Dvaered bar in everything but the security cameras along the walls. Fairly paranoid here, it seems.</bar>
+ </general>
+</asset>
