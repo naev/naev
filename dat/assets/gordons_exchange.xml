@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Gordon's Exchange">
+ <pos>
+  <x>5091.616563</x>
+  <y>3325.289878</y>
+ </pos>
+ <GFX>
+  <space>003.png</space>
+  <exterior>traderoom.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Independent</faction>
+  <value>75.000000</value>
+  <range>3</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>1500</population>
+  <hide>0.200000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+  </services>
+  <commodities/>
+  <description>Gordon's Exchange is one of the few stations owned and operated by the Trader's Guild It is here that most of the deals are made and ore shipped. It is a bustling, modern facility, and there are always things for weary traveller to do.</description>
+  <bar>The bar has some classy music playing in the background over the chatter of buisinessmen going about their jobs. The sounds of a modern economy.</bar>
+ </general>
+</asset>

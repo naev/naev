@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Finn">
+ <pos>
+  <x>-7935.702751</x>
+  <y>9320.810117</y>
+ </pos>
+ <GFX>
+  <space>D02.png</space>
+  <exterior>mining3.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>50.000000</value>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>D</class>
+  <population>235127</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <commodity/>
+  </services>
+  <commodities/>
+  <description>Finn is a prison rock. The surface is completely uninhabitable, but the natural caverns underground make for a perfect prison complex. The Empire dumps its worst criminals here, leaving them to fend for themselves, and many of the convicts from Jade Court end up here too.</description>
+  <bar>The spaceport is separated from the main prison complex by a long, twisting tube that must be traversed on foot. If there is ever a prison break, the tube can be blown apart by security guns mounted on the outer spaceport structure, instantly spacing any inmates inside.</bar>
+ </general>
+</asset>

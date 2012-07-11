@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Wahri IV">
+ <pos>
+  <x>-7488.713024</x>
+  <y>14174.177838</y>
+ </pos>
+ <GFX>
+  <space>J02.png</space>
+  <exterior>traderoom.png</exterior>
+ </GFX>
+ <general>
+  <class>I</class>
+  <population>0</population>
+  <hide>0.150000</hide>
+  <services/>
+ </general>
+</asset>

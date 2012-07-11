@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Slofeldt">
+ <pos>
+  <x>4984.101694</x>
+  <y>5176.465216</y>
+ </pos>
+ <GFX>
+  <space>000.png</space>
+  <exterior>station03.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Independent</faction>
+  <value>25.000000</value>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>9874</population>
+  <hide>0.750000</hide>
+  <services>
+   <land>land_hiclass</land>
+   <refuel/>
+   <bar/>
+  </services>
+  <commodities/>
+  <description>Slofeldt is a floating museum and memorial to the Incident. It contains relics from Old Earth, as well as holos of Sol before the Incident sterilzed it. It is a monument to lass and days gone by. A place for quiet contemplation.</description>
+  <bar>The bar is more of a resturant, with overpriced if tasty food and drinks both alcoholic and otherwise. The beer is browed on site, and has a surprising kick to it.</bar>
+ </general>
+</asset>

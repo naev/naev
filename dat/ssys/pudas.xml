@@ -23,9 +23,5 @@
    <autopos/>
    <hide>1.250000</hide>
   </jump>
-  <jump target="Volus">
-   <autopos/>
-   <hide>1.250000</hide>
-  </jump>
  </jumps>
 </ssys>

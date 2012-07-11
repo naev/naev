@@ -7,8 +7,8 @@
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>391.000000</x>
-  <y>-664.000000</y>
+  <x>769.363938</x>
+  <y>-844.003329</y>
  </pos>
  <assets>
   <asset>Arai</asset>
@@ -20,8 +20,16 @@
   <asset>Virtual Trader Area</asset>
  </assets>
  <jumps>
+  <jump target="Druss">
+   <pos x="1406.230514" y="19670.467799"/>
+   <hide>0.000000</hide>
+  </jump>
   <jump target="Eye of Night">
    <pos x="-26874.876925" y="2041.220875"/>
+   <hide>0.000000</hide>
+  </jump>
+  <jump target="Quai">
+   <pos x="-11932.776703" y="16566.766232"/>
    <hide>1.250000</hide>
   </jump>
   <jump target="Rhu">

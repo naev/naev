@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Sanchez">
+ <pos>
+  <x>-7072.689032</x>
+  <y>12459.780596</y>
+ </pos>
+ <GFX>
+  <space>moon-G01.png</space>
+  <exterior>aquatic.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Pirate</faction>
+  <value>400.000000</value>
+  <range>5</range>
+ </presence>
+ <general>
+  <class>A</class>
+  <population>7500</population>
+  <hide>0.250000</hide>
+  <services>
+   <land>pir_clanworld</land>
+   <refuel/>
+   <bar/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>Old King Cole's moon Sanchez is a rather dirty place. Being the only pirate hold for some distanc ehelps with this, as well as being a little small for the duty. THe clocal clanworld tries to make up for the lack with exploiting the resources from the other planets in system.</description>
+  <bar>The bar is quiet and orderly, with a few deals going down in closed-off booths, nice food, and only the occasional drunken brawl. The lord of Shanchez doesn't appreciate louts, it seems.</bar>
+ </general>
+ <tech>
+  <item>Pirate Ships</item>
+  <item>Kinetic 2</item>
+  <item>Basic Outfits 1</item>
+  <item>Heavy Weapons 1</item>
+  <item>Low Tech Upgrades</item>
+  <item>High Tech Upgrades 1</item>
+  <item>Laser 1</item>
+  <item>Laser 3</item>
+  <item>Ion 1</item>
+  <item>Ion 3</item>
+  <item>Star Maps</item>
+  <item>Missiles 1</item>
+ </tech>
+</asset>

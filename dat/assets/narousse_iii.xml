@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Narousse III">
+ <pos>
+  <x>543.288947</x>
+  <y>-5926.751427</y>
+ </pos>
+ <GFX>
+  <space>I03.png</space>
+  <exterior>mining2.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Colley">
+ <pos>
+  <x>3475.966725</x>
+  <y>-5939.435349</y>
+ </pos>
+ <GFX>
+  <space>M09.png</space>
+  <exterior>oceanic2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>100.000000</value>
+  <range>5</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>255014</population>
+  <hide>0.250000</hide>
+  <services>
+   <land>land_lowclass</land>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities/>
+  <description>Colley is a popular retirement and vacation spot, due ot it's quiet and unassuming nature. The world has mild weather and is ideally cloated away from the cares and worries of the wider galaxy.</description>
+  <bar>The average age of the patrons here seems to be around seventy, but they look as alert as they have always been, and you feel their yes look you over as you sit down to order a drink.</bar>
+ </general>
+</asset>

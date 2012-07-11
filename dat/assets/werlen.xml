@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Werlen">
+ <pos>
+  <x>1553.027775</x>
+  <y>1774.888885</y>
+ </pos>
+ <GFX>
+  <space>moon-D02.png</space>
+  <exterior>mining.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>150.000000</value>
+  <range>5</range>
+ </presence>
+ <general>
+  <class>D</class>
+  <population>453453</population>
+  <hide>0.500000</hide>
+  <services>
+   <land>srm_mil_restricted</land>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities/>
+  <description>Werlen is a world devoted to the cultivation of of the raw materials the Soromid use to make their space ships. Because of this, the world is off-limits to casual traffic, and only those that the Soromid know they can trust are allowed here.</description>
+  <bar>This bar is typical of a Soromid bar. It is dark,as the Soromid have better eyes, it is sterile, because to the natives, ceanliness is next to godliness, and the patrons are talkative and rather condesending to outsiders.</bar>
+ </general>
+</asset>

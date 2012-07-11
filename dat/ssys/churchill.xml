@@ -7,12 +7,12 @@
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>836.000000</x>
-  <y>-664.000000</y>
+  <x>1117.842750</x>
+  <y>-723.145111</y>
  </pos>
  <assets>
-  <asset>Churchill II</asset>
   <asset>Churchill I</asset>
+  <asset>Churchill II</asset>
   <asset>Churchill IIa</asset>
   <asset>Lorelei</asset>
   <asset>Ururis</asset>
@@ -29,6 +29,10 @@
    <hide>1.250000</hide>
   </jump>
   <jump target="Muirat">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Willow">
    <autopos/>
    <hide>1.250000</hide>
   </jump>

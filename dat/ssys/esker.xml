@@ -22,15 +22,15 @@
   <asset>Virtual Trader Area</asset>
  </assets>
  <jumps>
-  <jump target="Eiderdown">
-   <pos x="23295.488541" y="-26098.818616"/>
-   <hide>0.000000</hide>
-  </jump>
-  <jump target="Modus Manis">
+  <jump target="Gutter">
    <autopos/>
-   <hide>0.000000</hide>
+   <hide>1.250000</hide>
   </jump>
   <jump target="Nougat">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Scarlet">
    <autopos/>
    <hide>1.250000</hide>
   </jump>

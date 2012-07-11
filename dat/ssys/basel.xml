@@ -7,12 +7,13 @@
   <nebula volatility="0.000000">400.000000</nebula>
  </general>
  <pos>
-  <x>365.731798</x>
-  <y>138.640880</y>
+  <x>362.356026</x>
+  <y>150.214954</y>
  </pos>
  <assets>
   <asset>Basel I</asset>
   <asset>Sorom</asset>
+  <asset>Vigil Station</asset>
  </assets>
  <jumps>
   <jump target="Iris">

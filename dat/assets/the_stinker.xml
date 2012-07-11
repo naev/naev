@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="The Stinker">
+ <pos>
+  <x>-319.479999</x>
+  <y>-1022.335998</y>
+ </pos>
+ <GFX>
+  <space>X01.png</space>
+  <exterior>forest2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>50.000000</value>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>X</class>
+  <population>1000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land>land_lowclass</land>
+   <refuel/>
+  </services>
+  <commodities/>
+  <description>In an impressive act of combined planetary engineering and irresponsibility, the Soromid have turned this backwater planet into a giant, globe-encompassing landfill. Some people prefer to use the term "worldfill" to describe it. Waste materials of all kinds are brought to this planet, usually delivered by simple means of a re-entry orbit. There's also a rudimentary spaceport on the surface in case something needs to be carried down aboard a ship for some reason. Otherwise, there is no real reason why anyone would want to land here.</description>
+ </general>
+</asset>

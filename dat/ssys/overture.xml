@@ -7,8 +7,8 @@
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>-288.000000</x>
-  <y>-480.000000</y>
+  <x>-267.000000</x>
+  <y>-504.000000</y>
  </pos>
  <assets>
   <asset>Overture I</asset>
@@ -19,7 +19,7 @@
  <jumps>
   <jump target="Dohriabi">
    <autopos/>
-   <hide>0.000000</hide>
+   <hide>1.250000</hide>
   </jump>
   <jump target="Nartur">
    <autopos/>
@@ -31,7 +31,7 @@
   </jump>
   <jump target="Uhriabi">
    <autopos/>
-   <hide>0.000000</hide>
+   <hide>1.250000</hide>
   </jump>
   <jump target="Waterhole">
    <autopos/>

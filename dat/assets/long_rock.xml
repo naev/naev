@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Long Rock">
+ <pos>
+  <x>-2891.491375</x>
+  <y>3309.834808</y>
+ </pos>
+ <GFX>
+  <space>K00.png</space>
+  <exterior>mining5.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>200.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>D</class>
+  <population>100000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities/>
+  <description>Long Rock is a mining world, where the Soromid harvest most of the resources they need. Their thirst for raw materials is considerably small due to the semi-organic nature of their ships, but there is still a demand, and Long Rock is here to deliver.</description>
+  <bar>The bar is virtually as harsh as the planet outside. The miners' Soromid all, don't mind the conditions nearly as bad as outsiders. Given Long Rock's near isolation and the rarity of visits from nonSoromid, that suits the locals just fine.</bar>
+ </general>
+</asset>

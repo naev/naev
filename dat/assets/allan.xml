@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Allan">
+ <pos>
+  <x>1007.596800</x>
+  <y>928.281600</y>
+ </pos>
+ <GFX>
+  <space>000.png</space>
+  <exterior>station00.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>75.000000</value>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>15000</population>
+  <hide>0.750000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+  </services>
+  <commodities/>
+  <description>Allan was once a patrol station set out to patrol the southern reaches of space. But with the Incident and the regression of Imperial power, Allan was left behind. It is now barely maintained by a small contigent of Dvaered soldiers and Engineers for the use of traders.</description>
+  <bar>Allan does not have the resources for much, but the bar looks decent enough, with clean facilities, decent food and strong drink. A small respite from a harsh galaxy.</bar>
+ </general>
+</asset>

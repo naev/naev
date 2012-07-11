@@ -7,8 +7,8 @@
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>918.000000</x>
-  <y>-573.000000</y>
+  <x>1181.787195</x>
+  <y>-632.145111</y>
  </pos>
  <assets>
   <asset>Gilligan's Tomb</asset>
@@ -17,6 +17,10 @@
   <jump target="Adraia">
    <autopos/>
    <hide>0.000000</hide>
+  </jump>
+  <jump target="Brendon">
+   <autopos/>
+   <hide>1.250000</hide>
   </jump>
   <jump target="Eiderdown">
    <autopos/>
