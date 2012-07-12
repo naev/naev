@@ -318,6 +318,16 @@ static void setgui_load( unsigned int wdw, char *str )
    if (strcmp(gui,"None") == 0)
       return;
 
+   if (player.guiOverride == 0) {
+      if (dialogue_YesNo( "GUI Override is not set. Enable GUI Override and change GUI to '%s'?", gui )) {
+         player.guiOverride = 1;
+         window_checkboxSet( wid, "chkOverride", player.guiOverride );
+      }
+      else {
+         return;
+      }
+   }
+
    /* Set the GUI. */
    if (player.gui != NULL)
       free( player.gui );
@@ -340,6 +350,9 @@ static void setgui_load( unsigned int wdw, char *str )
 static void info_toggleGuiOverride( unsigned int wid, char *name )
 {
    player.guiOverride = window_checkboxState( wid, name );
+   /* Go back to the default one. */
+   if (player.guiOverride == 0)
+      toolkit_setList( wid, "lstGUI", gui_pick() );
 }
 
 
