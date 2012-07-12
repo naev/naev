@@ -2,7 +2,7 @@
 <ship name="Byakko">
  <base_type>Kestrel</base_type>
  <GFX sx="10" sy="10">kestrel_pirate</GFX>
- <GUI>minimal</GUI>
+ <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Cruiser</class>
  <price>5700000</price>
