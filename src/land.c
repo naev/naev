@@ -83,6 +83,19 @@ static const char *land_windowNames[LAND_NUMWINDOWS] = {
    "Equipment",
    "Commodity"
 };
+static const char *production_desc[] = {
+   "an unnoticeable amount of\0",
+   "a pathetic amount of\0",
+   "barely any\0",
+   "a noticeable amount of\0",
+   "a small amount of\0"
+   "some\0",
+   "a fair amount of\0",
+   "a decent amount of\0",
+   "a pretty good amount of\0"
+   "a large amount of\0",
+   "a vast amount of\0"
+};
 static int land_windowsMap[LAND_NUMWINDOWS]; /**< Mapping of windows. */
 static unsigned int *land_windows = NULL; /**< Landed window ids. */
 Planet* land_planet = NULL; /**< Planet player landed at. */
@@ -1389,6 +1402,7 @@ static void land_createMainTab( unsigned int wid )
    glTexture *logo;
    int offset;
    int w,h;
+   int i;
 
    /* Get window dimensions. */
    window_dimWindow( wid, &w, &h );
@@ -1429,6 +1443,47 @@ static void land_createMainTab( unsigned int wid )
          175, 20, "chkRefuel", "Automatic Refuel",
          land_toggleRefuel, conf.autorefuel );
    land_toggleRefuel( wid, "chkRefuel" );
+
+   if (!land_planet->ncommodities)
+      return;
+   /*
+    * Production/consumption amount
+    */
+   Commodity* com;
+   int descnum;
+   int p=0;
+   double producing;
+   char* text=malloc(64*land_planet->ncommodities);
+   for (i=0;i<land_planet->ncommodities;i++){
+      com=land_planet->commodities[i];
+      producing=production(cur_system->prod_mods[com->index],cur_system->stockpiles[com->index]);
+      if (abs(producing)<1.)
+         descnum=0;
+      else{
+         descnum=(int) log(abs(producing))/log(2.);
+         descnum= (descnum>10) ? 10 : descnum;
+      }
+      printf("\nAdding: This asset %s %s %s",         (producing > 0.) ? "produces" : "consumes",
+         production_desc[descnum], 
+         com->name
+         );
+      p+=nsnprintf(text+p,64*land_planet->ncommodities-p,"This asset %s %s %s",
+         (producing > 0.) ? "produces" : "consumes",
+         production_desc[descnum], 
+         com->name
+         );
+      p+=nsnprintf(text+p,64*land_planet->ncommodities-p, "\n"
+         );
+   }
+
+   // printf("\nText is: \'\'\'%s\'\'\'",text);
+
+   window_addText( wid, 440, -80-offset,
+      w-460, h-20-offset-60-LAND_BUTTON_HEIGHT*2, 0,
+      "cons_desc", &gl_smallFont, &cBlack, text);
+
+   free(text);
+
 }
 
 

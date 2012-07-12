@@ -539,8 +539,8 @@ int economy_init (void) //Not for loading loading economies
 
          for (goodnum=0; goodnum<econ_nprices ; goodnum++) {
 
-            sys1->prod_mods[goodnum] +=  planet_class_mods[(*planet).class][goodnum] 
-               * (*planet).population / AVG_POPULATION;
+            sys1->prod_mods[goodnum] +=  planet_class_mods[planet->class][goodnum] 
+               * planet->population / AVG_POPULATION;
          } 
       }
    }
@@ -557,11 +557,11 @@ int economy_init (void) //Not for loading loading economies
    /* How to produce/consume in a single update */
 double production(double mod, double goods)
 {
-      //### @@@ Should this be defined as a macro?
+      /* returns to much to produce/consume. Will work unless mod<-18000 */
    if (mod >= 0)
       return production_modifier * mod * (180000 / (goods));
    else
-      return production_modifier * mod * (goods/(18000));   //will work for all cases except when mod>1800000
+      return production_modifier * mod * (goods/(18000));
 } 
 
 
@@ -617,7 +617,8 @@ void refresh_prices(void)
          goods    = sys1->stockpiles[goodnum];
          comm     = &commodity_stack[goodnum];
 
-         price  = (double) comm->price; //price defined in XML
+            /* price defined in XML */
+         price  = (double) comm->price; 
 
          sys1->prices[goodnum] = price * PRICE(credits,goods);
 
@@ -641,7 +642,8 @@ void trade_update(void)
 
    printf("\nTrading!");
 
-      //REMOVE ME set sys.bought to 0
+   //sys->bought is unnecessary, and is only for viewing the modified map
+      /* set sys.bought to 0 */
    for (i=0;i<systems_nstack; i++) {
       for (goodnum=0; goodnum<econ_nprices; goodnum++) {
          systems_stack[i].bought[goodnum]=0.;
@@ -657,28 +659,25 @@ void trade_update(void)
 
          sys2=&systems_stack[ sys1->jumps[jumpnum].targetid ];
 
-            //if we haven't already visited this jump
+            /* if we haven't already visited this jump */
          if ( i < sys2->id ) {
 
             for (goodnum=0; goodnum<econ_nprices; goodnum++) {
 
-                  //@@@ trade goods for credits!
+                  /* trade at the price of both system's total credits and goods */
+               price =  ( (sys1->credits+sys2->credits) / (sys1->stockpiles[goodnum]+sys2->stockpiles[goodnum]) );
 
-                  //average of the two prices
-               price =  ( fabs(sys1->prices[goodnum] + sys2->prices[goodnum] ) / 2 );
-
-                     //amount to be traded: if trade_modifier is set to 1, after a trade prices will be equal
-                        //no matter what the price
+                  /* Trade at a single point till equiblibrium */
                trade = trade_modifier * (sys1->credits * sys2->stockpiles[goodnum] - sys2->credits*sys1->stockpiles[goodnum])
                   /(price * (sys1->stockpiles[goodnum]+sys2->stockpiles[goodnum]) + sys1->credits+sys2->credits);
-//@@@###put back in trade_modifier
+
                sys1->credits               -= price * trade;
                sys2->credits               += price * trade;
 
                sys1->stockpiles[goodnum]   += trade;
                sys2->stockpiles[goodnum]   -= trade;
 
-               sys1->bought[goodnum]       += trade;   //REMOVE ME
+               sys1->bought[goodnum]       += trade;
                sys2->bought[goodnum]       -= trade;
             }
          }
@@ -700,9 +699,8 @@ void economy_update( unsigned int dt )
 
    printf("Updating economy");
 
-      /* Trade and produce/consume */
-   // for (i=0; i<dt; i+=10000000) {
-   for (i=0; i<dt; i+=10000000) {   //@@@ changed this to run 1x every STP
+      /* Trade and produce/consume, is passed 10000000 every standard jump and landing */
+   for (i=0; i<dt; i+=10000000) {
 
       trade_update();
       produce_consume();
@@ -734,7 +732,7 @@ void economy_destroy (void)
          free(systems_stack[i].prod_mods);
          free(systems_stack[i].bought);
          systems_stack[i].prices    = NULL;
-         systems_stack[i].stockpiles= NULL;  //@@@ Correct, yes?
+         systems_stack[i].stockpiles= NULL;
          systems_stack[i].prod_mods = NULL;
          systems_stack[i].bought    = NULL;
       }

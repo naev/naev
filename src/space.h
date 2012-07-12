@@ -122,7 +122,7 @@ typedef struct Planet_ {
    char* description; /**< planet description */
    char* bar_description; /**< spaceport bar description */
    unsigned int services; /**< what services they offer */
-   Commodity **commodities; /**< what commodities they sell */
+   Commodity **commodities; /**< what commodities they trade */
    int ncommodities; /**< the amount they have */
    tech_group_t *tech; /**< Planet tech. */
 
@@ -258,7 +258,8 @@ struct StarSystem_ {
    double *prod_mods;    /**< Production modifiers, affects how much is produced/consumed*/
    double credits;      /**< How many credits the system has */
    double *stockpiles; /**< How many goods the system has */
-   double *bought;      /**< How much of what goods were just bought. REMOVE ME */
+   double *bought;      /**< How much of what goods were just bought. 
+            This is ONLY for the modified map in this economy build */
 
 
    /* Presence. */

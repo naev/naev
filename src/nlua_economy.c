@@ -29,8 +29,6 @@ static int economyL_update( lua_State *L );
 static int economyL_refreshPrices( lua_State *L );
 static const luaL_reg economy_methods[] = {
    { "update", economyL_update },
-   { "getTrademodifier", economyL_getTrademodifier },
-   { "setTrademodifier", economyL_setTrademodifier },
    { "refreshPrices", economyL_refreshPrices },
    { "getProductionmodifier", economyL_getProductionmodifier },
    { "setProductionmodifier", economyL_setProductionmodifier },
@@ -38,7 +36,6 @@ static const luaL_reg economy_methods[] = {
 }; /**< System metatable methods. */
 static const luaL_reg economy_cond_methods[] = {
    { "update", economyL_update },
-   { "getTrademodifier", economyL_getTrademodifier },
    { "refreshPrices", economyL_refreshPrices },
    { "getProductionmodifier", economyL_getProductionmodifier },
    {0,0}
@@ -72,39 +69,6 @@ int nlua_loadEconomy( lua_State *L, int readonly )
 
    return 0; /* No error */
 }
-
-/**
- * @brief gets current trade_modifier
- *
- * @usage economy.getTrademodifier()
- */
-static int economyL_getTrademodifier( lua_State *L )
-{
-   lua_pushnumber(L, (lua_Number) trade_modifier);
-   return 0;
-}
-
-/**
- * @brief sets trade modifier to value, if value<1
- *
- * @usage economy.getTrademodifier()
- *
- *   @luaparam trade_mod value to set trade modifier to
- *
- * @luafunc getTrademodifier()
- */
-static int economyL_setTrademodifier( lua_State *L )
-{
-   double trade_mod;
-   trade_mod = lua_tonumber(L,1);
-   if (trade_mod>=1.){
-      WARN("trade_modifier should not be set to a value>=1");
-      return 0;
-   }
-   trade_modifier = trade_mod;
-   return 0;
-}
-
 
 /**
  * @brief Updates economy by a certain amount of time, in STP
