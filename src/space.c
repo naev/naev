@@ -1465,13 +1465,13 @@ static int planets_load ( void )
    Planet *p;
    lua_State *L;
    uint32_t nfiles;
-   int i;
+   int i, len;
 
    /* Load landing stuff. */
    landing_lua = nlua_newState();
    L           = landing_lua;
    nlua_loadStandard(L, 1);
-   buf = ndata_read( LANDING_DATA_PATH, &bufsize );
+   buf         = ndata_read( LANDING_DATA_PATH, &bufsize );
    if (luaL_dobuffer(landing_lua, buf, bufsize, LANDING_DATA_PATH) != 0) {
       WARN( "Failed to load landing file: %s\n"
             "%s\n"
@@ -1489,20 +1489,25 @@ static int planets_load ( void )
 
    /* Load XML stuff. */
    planet_files = ndata_list( PLANET_DATA_PATH, &nfiles );
-   for ( i = 0; i < (int)nfiles; i++ ) {
+   for (i=0; i<(int)nfiles; i++) {
 
-      file = malloc((strlen(PLANET_DATA_PATH)+strlen(planet_files[i])+2)*sizeof(char));
-      nsnprintf(file,(strlen(PLANET_DATA_PATH)+strlen(planet_files[i])+2)*sizeof(char),"%s%s",PLANET_DATA_PATH,planet_files[i]);
+      len = (strlen(PLANET_DATA_PATH)+strlen(planet_files[i])+2)*sizeof(char);
+
+      file = malloc( len );
+      nsnprintf( file, len,"%s%s",PLANET_DATA_PATH,planet_files[i]);
       buf = ndata_read( file, &bufsize );
       doc = xmlParseMemory( buf, bufsize );
       if (doc == NULL) {
          WARN("%s file is invalid xml!",file);
+         free(buf);
          continue;
       }
 
       node = doc->xmlChildrenNode; /* first planet node */
       if (node == NULL) {
          WARN("Malformed %s file: does not contain elements",file);
+         xmlFreeDoc(doc);
+         free(buf);
          continue;
       }
 
@@ -1511,13 +1516,11 @@ static int planets_load ( void )
          planet_parse( p, node );
       }
 
+      /* Clean up. */
+      xmlFreeDoc(doc);
+      free(buf);
    }
 
-   /*
-    * free stuff
-    */
-   xmlFreeDoc(doc);
-   free(buf);
 
    return 0;
 }
