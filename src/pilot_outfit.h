@@ -22,6 +22,8 @@ int pilot_rmOutfit( Pilot* pilot, PilotOutfitSlot *s );
 /* Ammo. */
 int pilot_addAmmo( Pilot* pilot, PilotOutfitSlot *s, Outfit* ammo, int quantity );
 int pilot_rmAmmo( Pilot* pilot, PilotOutfitSlot *s, int quantity );
+int pilot_countAmmo( Pilot* pilot );
+int pilot_maxAmmo( Pilot* pilot );
 
 /* Checks. */
 const char* pilot_checkSanity( Pilot *p );

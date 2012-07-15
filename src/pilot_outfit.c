@@ -775,6 +775,58 @@ int pilot_rmAmmo( Pilot* pilot, PilotOutfitSlot *s, int quantity )
 
 
 /**
+ * @brief Gets the number of ammo units on the ship
+ *
+ *    @param pilot Pilot to count the ammo on
+ *    @@return The integer count of ammo units on pilot
+ */
+int pilot_countAmmo( Pilot* pilot )
+{
+   int nammo = 0, i;
+   PilotOutfitSlot* po;
+   Outfit* outfit;
+   for (i=0; i<pilot->noutfits; i++) {
+     po = pilot->outfits[i];
+     if (po == NULL)
+        continue;
+     outfit = po->outfit;
+     if (outfit == NULL)
+        continue;
+     if (!outfit_isLauncher(po->outfit))
+        continue;
+     nammo += po->u.ammo.quantity;
+   }
+   return nammo;
+}
+
+
+/**
+ * @brief The maximum amount of ammo the pilot's current ship can hold.
+ *
+ *    @param pilot Pilot to get the count from
+ *    @@return An integer, the max amount of ammo that can be held.
+ */
+int pilot_maxAmmo( Pilot* pilot )
+{
+  int max = 0, i;
+  PilotOutfitSlot* po;
+  Outfit* outfit;
+  for (i=0; i<pilot->noutfits; i++) {
+     po = pilot->outfits[i];
+     if (po == NULL)
+        continue;
+     outfit = po->outfit;
+     if (outfit == NULL)
+        continue;
+     if (!outfit_isLauncher(outfit))
+        continue;
+     max += outfit->u.lau.amount;
+  }
+  return max;
+}
+
+
+/**
  * @brief Gets all the outfits in nice text form.
  *
  *    @param pilot Pilot to get the outfits from.
