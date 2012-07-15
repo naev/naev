@@ -8,9 +8,14 @@
   <space>A00.png</space>
   <exterior>lava.png</exterior>
  </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>0.000000</value>
+  <range>0</range>
+ </presence>
  <general>
   <class>A</class>
-  <population>145236</population>
+  <population>150000</population>
   <hide>0.250000</hide>
   <services>
    <land/>
