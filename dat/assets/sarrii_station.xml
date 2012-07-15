@@ -26,4 +26,8 @@
   <commodities/>
   <description>Sarrii Station serves as the garrison point for the nearby planet of Wayline. The Dvaered garrison don't want to have to be on the planet at all, so they had this station built.</description>
  </general>
+ <tech>
+  <item>Basic Trade Ships</item>
+  <item>Bulk Trade Ships</item>
+ </tech>
 </asset>
