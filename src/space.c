@@ -1886,8 +1886,8 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
       MELEMENT( (planet_hasService(planet,PLANET_SERVICE_OUTFITS) ||
                planet_hasService(planet,PLANET_SERVICE_SHIPYARD)) &&
             (planet->tech==NULL), "tech" );
-      MELEMENT( planet_hasService(planet,PLANET_SERVICE_COMMODITY) &&
-            (planet->ncommodities==0),"commodity" );
+      /*MELEMENT( planet_hasService(planet,PLANET_SERVICE_COMMODITY) &&
+            (planet->ncommodities==0),"commodity" );*/
       MELEMENT( (flags&FLAG_FACTIONSET) && (planet->presenceAmount == 0.),
             "presence" );
    }
