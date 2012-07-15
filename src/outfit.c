@@ -1800,9 +1800,9 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
          WARN("Outfit '%s' has unknown node '%s'",temp->name, node->name);
    } while (xml_nextNode(node));
 
-   array_shrink(&temp->u.map->systems);
-   array_shrink(&temp->u.map->assets);
-   array_shrink(&temp->u.map->jumps);
+   array_shrink( &temp->u.map->systems );
+   array_shrink( &temp->u.map->assets  );
+   array_shrink( &temp->u.map->jumps   );
 
    if (temp->desc_short == NULL) {
       /* Set short description based on type. */
@@ -2176,20 +2176,21 @@ int outfit_load (void)
  */
 int outfit_mapParse (void)
 {
-   int i;
+   int i, len;
    Outfit *o;
    uint32_t bufsize, nfiles;
    char *buf;
    xmlNodePtr node, cur;
    xmlDocPtr doc;
    char **map_files;
-   char *file;
+   char *file, *n;
 
    map_files = ndata_list( MAP_DATA_PATH, &nfiles );
    for (i=0; i<(int)nfiles; i++) {
 
-      file = malloc((strlen(MAP_DATA_PATH)+strlen(map_files[i])+2)*sizeof(char));
-      nsnprintf(file,strlen(MAP_DATA_PATH)+strlen(map_files[i])+2,"%s%s",MAP_DATA_PATH,map_files[i]);
+      len  = strlen(MAP_DATA_PATH)+strlen(map_files[i])+2;
+      file = malloc( len*sizeof(char) );
+      nsnprintf( file, len, "%s%s", MAP_DATA_PATH, map_files[i] );
 
       buf = ndata_read( file, &bufsize );
       doc = xmlParseMemory( buf, bufsize );
@@ -2197,19 +2198,24 @@ int outfit_mapParse (void)
       node = doc->xmlChildrenNode; /* first system node */
       if (node == NULL) {
          WARN("Malformed '"OUTFIT_DATA_PATH"' file: does not contain elements");
+         free(file);
+         xmlFreeDoc(doc);
+         free(buf);
          return -1;
       }
 
-      o = outfit_get(xml_nodeProp(node,"name"));
-
+      n = xml_nodeProp( node,"name" );
+      o = outfit_get( n );
+      free(n);
       if (!outfit_isMap(o)) { /* If its not a map, we don't care. */
+         free(file);
+         xmlFreeDoc(doc);
+         free(buf);
          continue;
       }
 
       cur = node->xmlChildrenNode;
-
       do { /* load all the data */
-
          /* Only handle nodes. */
          xml_onlyNodes(cur);
 
@@ -2218,6 +2224,7 @@ int outfit_mapParse (void)
 
       } while (xml_nextNode(cur));
 
+      /* Clean up. */
       free(file);
       xmlFreeDoc(doc);
       free(buf);
@@ -2256,8 +2263,12 @@ void outfit_free (void)
          free(o->u.gui.gui);
       if (o->type == OUTFIT_TYPE_MODIFCATION)
          ss_free( o->u.mod.stats );
-      if (outfit_isMap(o))
-         free(o->u.map);
+      if (outfit_isMap(o)) {
+         array_free( o->u.map->systems );
+         array_free( o->u.map->assets );
+         array_free( o->u.map->jumps );
+         free( o->u.map );
+      }
 
       /* strings */
       free(o->typename);
