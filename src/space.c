@@ -1499,6 +1499,7 @@ static int planets_load ( void )
       doc = xmlParseMemory( buf, bufsize );
       if (doc == NULL) {
          WARN("%s file is invalid xml!",file);
+         free(file);
          free(buf);
          continue;
       }
@@ -1506,6 +1507,7 @@ static int planets_load ( void )
       node = doc->xmlChildrenNode; /* first planet node */
       if (node == NULL) {
          WARN("Malformed %s file: does not contain elements",file);
+         free(file);
          xmlFreeDoc(doc);
          free(buf);
          continue;
@@ -1517,6 +1519,7 @@ static int planets_load ( void )
       }
 
       /* Clean up. */
+      free(file);
       xmlFreeDoc(doc);
       free(buf);
    }
