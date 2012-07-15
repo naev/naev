@@ -2162,7 +2162,7 @@ int outfit_mapParse (void)
    xmlNodePtr node, cur;
    xmlDocPtr doc;
    char **map_files;
-   char *file;
+   char *file, *n;
 
    map_files = ndata_list( MAP_DATA_PATH, &nfiles );
    for (i=0; i<(int)nfiles; i++) {
@@ -2183,7 +2183,9 @@ int outfit_mapParse (void)
          return -1;
       }
 
-      o = outfit_get(xml_nodeProp(node,"name"));
+      n = xml_nodeProp( node,"name" );
+      o = outfit_get( n );
+      free(n);
       if (!outfit_isMap(o)) { /* If its not a map, we don't care. */
          free(file);
          xmlFreeDoc(doc);
