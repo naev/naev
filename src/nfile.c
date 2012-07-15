@@ -523,12 +523,12 @@ char** nfile_readDir( int* nfiles, const char* path, ... )
       if ((*nfiles)+1 > mfiles) {
          mfiles *= 2;
          tfiles = realloc( tfiles, sizeof(char*) * mfiles );
-         tt = realloc( tt, sizeof(time_t) * mfiles );
+         tt     = realloc( tt, sizeof(time_t) * mfiles );
       }
 
       /* Write the information */
       tfiles[(*nfiles)] = strdup(name);
-      tt[(*nfiles)] = sb.st_mtime;
+      tt[(*nfiles)]     = sb.st_mtime;
       (*nfiles)++;
    }
 
@@ -539,7 +539,7 @@ char** nfile_readDir( int* nfiles, const char* path, ... )
 
       /* Need to allocate some stuff */
       files = malloc( sizeof(char*) * (*nfiles) );
-      ft = malloc( sizeof(time_t) * (*nfiles) );
+      ft    = malloc( sizeof(time_t) * (*nfiles) );
 
       /* Fill the list */
       for (i=0; i<(*nfiles); i++) {
@@ -563,7 +563,7 @@ char** nfile_readDir( int* nfiles, const char* path, ... )
          }
 
          files[i] = tfiles[n];
-         ft[i] = tt[n];
+         ft[i]    = tt[n];
       }
       free(ft);
    }
