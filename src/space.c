@@ -2691,17 +2691,24 @@ static int systems_load (void)
       doc = xmlParseMemory( buf, bufsize );
       if (doc == NULL) {
          WARN("%s file is invalid xml!",file);
+         free(buf);
          continue;
       }
 
       node = doc->xmlChildrenNode; /* first planet node */
       if (node == NULL) {
          WARN("Malformed %s file: does not contain elements",file);
+         xmlFreeDoc(doc);
+         free(buf);
          continue;
       }
 
       sys = system_new();
       system_parse( sys, node );
+
+      /* Clean up. */
+      xmlFreeDoc(doc);
+      free(buf);
    }
 
    /*
@@ -2715,22 +2722,23 @@ static int systems_load (void)
       buf = ndata_read( file, &bufsize );
       doc = xmlParseMemory( buf, bufsize );
       if (doc == NULL) {
+         free(buf);
          continue;
       }
 
       node = doc->xmlChildrenNode; /* first planet node */
       if (node == NULL) {
+         xmlFreeDoc(doc);
+         free(buf);
          continue;
       }
 
       system_parseJumps(node); /* will automatically load the jumps into the system */
-   }
 
-   /*
-    * cleanup
-    */
-   xmlFreeDoc(doc);
-   free(buf);
+      /* Clean up. */
+      xmlFreeDoc(doc);
+      free(buf);
+   }
 
    DEBUG("Loaded %d Star System%s with %d Planet%s",
          systems_nstack, (systems_nstack==1) ? "" : "s",
