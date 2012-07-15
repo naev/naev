@@ -497,12 +497,18 @@ char* make_clean( char* unclean)
 char* get_fromclean( char *clean)
 {
 
-   int line_max=256;
-   char new[line_max];
+   int line_max=1024;
+   char* new = malloc(line_max);
    int i,j;
 
-   for (i=0,j=0;clean[i]!=0 && j<line_max-3;i++,j++)
+   printf("\nget got %s",clean);
+
+   for (i=0,j=0;clean[i]!=0;i++,j++)
    {
+      if  (j>=line_max-3){
+         line_max=line_max*2;
+         new=realloc(new,line_max);
+      }
       if (clean[i]=='\\' && clean[i+1]=='0' && clean[i+2]=='2' && clean[i+3]=='7')
       {
          new[j]=27;
@@ -516,6 +522,9 @@ char* get_fromclean( char *clean)
    new[j]=0;
 
    char* unclean=strdup(new);
+
+   printf("\n and is going to return %s",unclean);
+   free(new);
 
    return unclean;
 }
@@ -543,7 +552,7 @@ int news_saveArticles( xmlTextWriterPtr writer )
 
          ntitle= make_clean( article_ptr->title );
          ndesc= make_clean( article_ptr->desc );
-   
+
          xmlw_attr(writer,"title","%s",ntitle);
          xmlw_attr(writer,"desc","%s",ndesc);
          xmlw_attr(writer,"faction","%s",article_ptr->faction);
