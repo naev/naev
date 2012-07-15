@@ -498,16 +498,13 @@ char** nfile_readDir( int* nfiles, const char* path, ... )
    time_t *tt, *ft;
    char **tfiles;
 
+   d = opendir(base);
+   if (d == NULL)
+      return NULL;
+
    mfiles      = 128;
    tfiles      = malloc(sizeof(char*)*mfiles);
    tt          = malloc(sizeof(time_t)*mfiles);
-
-   d = opendir(base);
-   if (d == NULL) {
-      free(tt);
-      free(tfiles);
-      return NULL;
-   }
 
    /* Get the file list */
    while ((dir = readdir(d)) != NULL) {
