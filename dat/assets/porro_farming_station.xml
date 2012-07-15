@@ -8,6 +8,11 @@
   <space>station-agriculture.png</space>
   <exterior>forest.png</exterior>
  </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <value>100.000000</value>
+  <range>1</range>
+ </presence>
  <general>
   <class>0</class>
   <population>1000</population>

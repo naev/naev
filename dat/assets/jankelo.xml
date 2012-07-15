@@ -8,6 +8,11 @@
   <space>K04.png</space>
   <exterior>methane.png</exterior>
  </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
  <general>
   <class>K</class>
   <population>500000</population>
