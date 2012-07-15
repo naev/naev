@@ -84,7 +84,6 @@ typedef struct Faction_ {
    /* Equipping. */
    lua_State *equip_state; /**< Faction equipper state. */
 
-
    /* Flags. */
    unsigned int flags; /**< Flags affecting the faction. */
 } Faction;
@@ -1174,6 +1173,8 @@ void factions_free (void)
          lua_close( faction_stack[i].sched_state );
       if (faction_stack[i].state != NULL)
          lua_close( faction_stack[i].state );
+      if (faction_stack[i].equip_state != NULL)
+         lua_close( faction_stack[i].equip_state );
    }
    free(faction_stack);
    faction_stack = NULL;
