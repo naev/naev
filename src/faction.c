@@ -836,7 +836,7 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
       xmlr_strd(node,"longname",temp->longname);
       xmlr_strd(node,"display",temp->displayname);
       if (xml_isNode(node, "colour")) {
-         ctmp = xml_getStrd(node);
+         ctmp = xml_get(node);
          if (ctmp != NULL)
             temp->colour = col_fromName(xml_raw(node));
          /* If no named colour is present, RGB attributes are used. */
