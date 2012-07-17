@@ -89,7 +89,8 @@ extern ntime_t naev_time;
  *		@param currentdate date to put
  *	@return pointer to new article
  */
-news_t* new_article(char* title, char* content, char* faction, ntime_t date)
+news_t* new_article(char* title, char* content, char* faction, ntime_t date,
+    ntime_t date_to_add, ntime_t date_to_rm)
 {
 
 	news_t* article_ptr;
@@ -110,6 +111,8 @@ news_t* new_article(char* title, char* content, char* faction, ntime_t date)
 	}
 
    n_article->date=date;
+   n_article->date_to_add=date_to_add;
+   n_article->date_to_rm=date_to_rm;
 
       /* If it belongs first*/
    if (news_list->date <= date){
@@ -269,7 +272,8 @@ news_t* news_get(int id)
 int *generate_news( char* faction )
 {
 
-	news_t* article_ptr = news_list;
+	news_t* temp;
+   news_t* article_ptr = news_list;
 	int p=0;
 
       /* Put all acceptable news into buf */
@@ -277,6 +281,20 @@ int *generate_news( char* faction )
          /* If we've reached the end of the list */
       if (article_ptr->faction==NULL){
          break;
+      }
+
+         /* if we can show the article yet */
+      if (article_ptr->date_to_add>ntime_get()){
+         article_ptr=article_ptr->next;
+         continue;
+      }
+
+         /* if the article is due for removal */
+      if (article_ptr->date_to_rm<=ntime_get()){
+         temp=article_ptr->next;
+         free_article(article_ptr->id);
+         article_ptr=temp;
+         continue;
       }
 
          /* if article is okay */
@@ -295,7 +313,9 @@ int *generate_news( char* faction )
       	}
 		}
 
-	}while( (article_ptr = article_ptr->next) != NULL );
+      article_ptr = article_ptr->next;
+
+	}while( article_ptr != NULL );
 
 	if (p==0)
 		nsnprintf(buf, news_max_length, "\n\nSorry, no news today\n\n\n");
@@ -501,8 +521,6 @@ char* get_fromclean( char *clean)
    char* new = malloc(line_max);
    int i,j;
 
-   printf("\nget got %s",clean);
-
    for (i=0,j=0;clean[i]!=0;i++,j++)
    {
       if  (j>=line_max-3){
@@ -523,7 +541,6 @@ char* get_fromclean( char *clean)
 
    char* unclean=strdup(new);
 
-   printf("\n and is going to return %s",unclean);
    free(new);
 
    return unclean;
@@ -557,6 +574,8 @@ int news_saveArticles( xmlTextWriterPtr writer )
          xmlw_attr(writer,"desc","%s",ndesc);
          xmlw_attr(writer,"faction","%s",article_ptr->faction);
          xmlw_attr(writer,"date","%li",article_ptr->date);
+         xmlw_attr(writer,"date_to_add","%li",article_ptr->date_to_add);
+         xmlw_attr(writer,"date_to_rm","%li",article_ptr->date_to_rm);
          xmlw_attr(writer,"id","%i",article_ptr->id);
 
          free(ntitle);
@@ -619,7 +638,7 @@ static int news_parseArticle( xmlNodePtr parent )
    char* ntitle;
    char* ndesc;
    char* buff;
-   ntime_t date;
+   ntime_t date, date_to_add, date_to_rm;
    xmlNodePtr node;
 
    node = parent->xmlChildrenNode;
@@ -653,6 +672,22 @@ static int news_parseArticle( xmlNodePtr parent )
       }
       date = atol(buff);
       free(buff);
+      xmlr_attr(node,"date_to_add",buff);
+      if (faction==NULL) {
+         free(title); free(desc); free(faction);
+         WARN("Event has missing date attribute, skipping.");
+         continue;
+      }
+      date_to_add = atol(buff);
+      free(buff);
+      xmlr_attr(node,"date_to_rm",buff);
+      if (faction==NULL) {
+         free(title); free(desc); free(faction);
+         WARN("Event has missing date attribute, skipping.");
+         continue;
+      }
+      date_to_rm = atol(buff);
+      free(buff);
       xmlr_attr(node,"id",buff);
       if (faction==NULL) {
          free(title); free(desc); free(faction);
@@ -669,7 +704,7 @@ static int news_parseArticle( xmlNodePtr parent )
 
 
          /* make the article*/
-      new_article(ntitle,ndesc,faction,date);
+      new_article(ntitle,ndesc,faction,date,date_to_add,date_to_rm);
 
       free(ntitle);
       free(ndesc);

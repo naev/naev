@@ -1,6 +1,9 @@
 
-news.add("Faction","Title","Content",date)
-   Adds a new article, returns the Lua_article
+news.add(faction,title,body,[date_to_add,[date_to_rm,[date]]])
+	adds a new article, shown at faction (or "Generic" for all factions) bars, with a date.
+	date_to_add is the date after which the article is shown, by default 0
+	date_to_rm is the date after which the article is removed, default ~400 SCU in the future
+	date is the date shown on the article. Defaultes to date_to_add, articles sorted by date
 
 news.rm(article)
    frees an article

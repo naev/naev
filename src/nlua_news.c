@@ -18,6 +18,8 @@
 #include "nlua.h"
 #include "nluadef.h"
 #include <string.h>
+#include "ntime.h"
+#include "nlua_time.h"
 
 extern news_t* news_list;   /**< Linked list containing all articles */
 
@@ -87,8 +89,9 @@ int nlua_loadNews( lua_State *L, int readonly )
 
 /**
  * @brief Adds an article
+ * @usage news.add(faction,title,body,[date_to_add,[date_to_rm,[date]]])
  *
- * @usage s = news.add( "Empire", "Hello world!", "The Empire wishes to say hello!", 0 ) -- Adds a generic news item.
+ * @usage s = news.add( "Empire", "Hello world!", "The Empire wishes to say hello!", 0 ) -- Adds an Empire specific article, with date 0.
  *
  *    @luaparam faction faction of the article, "Generic" for non-factional
  *    @luaparam title Title of the article
@@ -104,20 +107,59 @@ int newsL_add( lua_State *L ){
    char* title;
    char* content;
    char* faction;
-   ntime_t date;
+   ntime_t date,date_to_add,date_to_rm;
 
-   if (lua_isstring(L,1) && lua_isstring(L,2) && lua_isstring(L,3) && lua_isnumber(L,4)){
-      faction=strdup(lua_tostring(L,1));
-      title=strdup(lua_tostring(L,2));
-      content=strdup(lua_tostring(L,3));
-      date = (ntime_t) lua_tonumber(L,4);
-   }
-   else{
-      WARN("\nBad arguments, use addArticle(\"Faction\",\"Title\",\"Content\",date)");
+   if (!(lua_isstring(L,1) && lua_isstring(L,2) && lua_isstring(L,3))){
+      WARN("\nBad arguments, use addArticle(\"Faction\",\"Title\",\"Content\",[date_to_add,[date_to_rm,[date_to_show]]])");
       return 0;
    }
+
+
+   faction=strdup(lua_tostring(L,1));
+   title=strdup(lua_tostring(L,2));
+   content=strdup(lua_tostring(L,3));
+
+   if (lua_isnumber(L,4) || lua_istime(L,4)){
+
+      if (lua_istime(L,4))
+         date_to_add=luaL_validtime(L,4);
+      else 
+         date_to_add=lua_tonumber(L,4);
+
+      if (lua_isnumber(L,5) || lua_istime(L,5)){
+
+         if (lua_istime(L,5))
+            date_to_rm=luaL_validtime(L,5);
+         else 
+            date_to_rm=lua_tonumber(L,5);
+
+         if (lua_isnumber(L,6) || lua_istime(L,6)){
+   
+            if (lua_istime(L,6))
+               date=luaL_validtime(L,6);
+            else 
+               date=lua_tonumber(L,6);         
+         }
+         else
+            date=date_to_add;
+      }
+      else{
+         date_to_rm=50000000000000;
+         date=date_to_add;
+      }
+   }
+   else{
+      date=0;
+      date_to_add=0;
+      date_to_rm=50000000000000;
+   }
+
+
    if (title && content && faction)
-      n_article = new_article(title, content, faction, date);
+      n_article = new_article(title, content, faction, date, date_to_add, date_to_rm);
+   else
+      WARN("Bad arguments");
+
 
    Larticle.id = n_article->id;
    lua_pusharticle(L, Larticle);
