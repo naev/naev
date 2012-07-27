@@ -5,6 +5,54 @@
 
 ]]--
 
+lang = naev.lang()
+if lang == 'es' then
+else --default english
+
+    articles={}
+
+    articles=
+    {
+
+    {
+        faction="Empire",
+        title="Dvaered forces engaged in combat with small terrorist group",
+        text="In what the Dvaered call a 'Mighty victory', a Dvaered force was attacked and damaged by a small group of underequipped and unorganized FLF, in the Tuoladis system. The Dvaered managed to lose many tens of millions of credits to the small gang worth of ships and equipment, and the relative victory of the FLF will only embolden them, leading to more internal strife and violence.",
+        date_to_add=time.get(),
+        date_to_rm=time.get()+time.create(0,30,0)
+    },
+
+    {
+        faction="Dvaered",
+        title="FLF terrorists blasted by joint Dvaered military forces",
+        text="A Dvaered patrol in Tuoladis was ambushed by a large gang of FLF terrorists. The Dvaered patrol held  under the assault, until the mighty hammer that is the Dvaered forces came down and crushed the FLF terrorists in a mighty victory. This incident shows the willigness of the terrorists to attack us and kill whomever they please. The Dvaered military is always ready to protect its citizens and kill and conqeur those who would harm them.",
+        date_to_add=time.get(),
+        date_to_rm=time.get()+time.create(0,30,0)
+    },
+
+    {
+        faction="Frontier",
+        title="Dvaered forces engage FLF freedom fighters in open combat",
+        text="A small group of FLF freedom fighters was beset by a Dvaered patrol in Tuoladis, who immediately called backup. The situation escalated, and a large scale battle occured, where the Dvaered forces lost tens of millions of credits worth in ships. This marks the first time FLF freedom fighters have had the ships and weapons to stand toe to toe against the Dvaered, and shall server as an example for all who dare to stand for freedom, in life or death.",
+        date_to_add=time.get(),
+        date_to_rm=time.get()+time.create(0,30,0)
+    },
+
+    {
+        faction="Independent",
+        title="Dvaered, FLF clash in Tuoladis",
+        text="In a chance encounter, a Dvaered patrol encountered a group of FLF. The small skirmish quickly escalated to a large scale battle many dozens large, in which the Dvaered proclaimed to have won. The Dvaered High Command used the event as an excuse to call for military action against the frontier worlds.",
+        date_to_add=time.get(),
+        date_to_rm=time.get()+time.create(0,30,0)
+    }
+
+    }
+
+
+
+
+end
+
 function create ()
     pilot.clear()
     pilot.toggleSpawn(false)
@@ -17,6 +65,8 @@ function create ()
     hook.timer(3000, "FLFSpawn")
     
     hook.timer(12000, "DvaeredSpawn")
+
+    makenews()
     
     hook.jumpout("leave")
     hook.land("leave")
@@ -58,6 +108,17 @@ function DvaeredSpawn ()
         hook.timer(3000, "DvaeredSpawn")
     end
 end
+
+function makenews()
+
+    for _,v in ipairs(articles) do
+        print(v["faction"])
+        print("they are:"..v["faction"]..v["title"]..v["text"])
+        news.add(v["faction"],v["title"],v["text"],v["date_to_add"],v["date_to_rm"])
+    end
+
+end
+
 
 function leave () --event ends on player leaving the system or landing
     evt.finish()
