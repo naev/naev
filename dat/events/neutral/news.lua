@@ -352,6 +352,10 @@ else --default english
       }
    }
 
+   articles["Independent"]={}
+   articles["Proteron"]={}
+   articles["Za'lek"]={}
+
 
 
 
@@ -434,6 +438,8 @@ end
 function rm_genericarticles(faction)
 
    local news_table=news.get(faction)
+
+   if articles[faction]==nil then return 0 end
 
    for _,v in ipairs(news_table) do
 
