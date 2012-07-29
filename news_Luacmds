@@ -11,6 +11,10 @@ news.rm(article)
 news.get(characteristic or no args)
    gets a table of articles that match, or all if no args
 
+news.bind(article,tag)
+   binds the article with the tag; news.get() using the tag as an argument will return
+      anything bound with the tag
+
 news.title(article)
    gets the title of the article
 

@@ -34,6 +34,7 @@ int newsL_title( lua_State *L );
 int newsL_desc( lua_State *L );
 int newsL_faction( lua_State *L );
 int newsL_date( lua_State *L );
+int newsL_bind( lua_State *L );
 
 static const luaL_reg economy_methods[] = {
    {"add",newsL_add},
@@ -43,6 +44,7 @@ static const luaL_reg economy_methods[] = {
    {"desc",newsL_desc},
    {"faction",newsL_faction},
    {"date",newsL_date},
+   {"bind",newsL_bind},
    {"__eq",newsL_eq},
    {0,0}
 }; /**< System metatable methods. */
@@ -108,6 +110,15 @@ int newsL_add( lua_State *L ){
    char* content;
    char* faction;
    ntime_t date,date_to_add,date_to_rm;
+
+
+   // // lua_State temp;
+   // if (lua_istable(L,1))
+   // {
+   //    printf("\nis table");
+   //    lua_pushnumber();
+
+   // }
 
    if (!(lua_isstring(L,1) && lua_isstring(L,2) && lua_isstring(L,3))){
       WARN("\nBad arguments, use addArticle(\"Faction\",\"Title\",\"Content\",[date_to_add,[date_to_rm,[date_to_show]]])");
@@ -230,11 +241,12 @@ int newsL_get( lua_State *L )
    do {
 
       if (article_ptr->title==NULL || article_ptr->desc == NULL 
-         || article_ptr->faction == NULL  )
+         || article_ptr->faction == NULL)
          continue;
 
       if (print_all || date==article_ptr->date || (characteristic && (!strcmp(article_ptr->title,characteristic) || 
-         !strcmp(article_ptr->desc,characteristic) || !strcmp(article_ptr->faction,characteristic))) )
+         !strcmp(article_ptr->desc,characteristic) || !strcmp(article_ptr->faction,characteristic)))
+          || (article_ptr->tag!=NULL && !strcmp(article_ptr->tag,characteristic)))
       {
          lua_pushnumber(L, k++); /* key */
          Larticle.id = article_ptr->id;
@@ -422,5 +434,38 @@ int newsL_date( lua_State *L )
       return 0;
    }
    lua_pushinteger(L,(lua_Integer)article_ptr->date);
+   return 1;
+}
+
+/**
+ * @brief sets the article tag
+ *    @luaparam a article to get the faction of
+ *    @luaparam tag
+ * @luafunc news.faction(a)
+ */
+int newsL_bind( lua_State *L )
+{
+   Lua_article *a;
+   char* tag;
+
+   news_t* article_ptr;
+   if (!(a = luaL_validarticle( L,1 ))){
+      WARN("Bad argument to news.date(), must be article");
+      return 0;}
+   article_ptr=news_get(a->id);
+   if (article_ptr==NULL){
+      WARN("\nArticle not valid");
+      return 0;
+   }
+   if (!lua_isstring(L,2))
+   {
+      WARN("\n2nd argument is invalid, use a string");
+      return 1;
+   }
+
+   tag=strdup(lua_tostring(L,2));
+
+   article_ptr->tag=tag;
+
    return 1;
 }

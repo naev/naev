@@ -37,6 +37,18 @@ He takes a deep breath, "We hope to be able to find out more secrets of the Sol 
    launch[1] = "Preparing to launch satellite probe..."
    launch[2] = "Launch in 5..."
    launch[3] = "Satellite launch successful!"
+
+   articles={}
+   articles=
+   {
+   {
+      faction="Generic",
+      title="Scientists launch science probe into the nebula",
+      text="A group of scientists have succesfully launched a science probe in the nebula. The probe was specifically designed to be resistant to the corrosive environment of the nebula, and is supposed to bring new clues about the nature of the gas and where it's from",  
+      date_to_add=time.get(),
+      date_to_rm=time.get()+time.create(0,30,0)
+   }
+   }
 end
 
 
@@ -54,6 +66,8 @@ function create ()
    -- Set stuff up for the spaceport bar
    misn.setNPC( "Scientists", "neutral/scientist" )
    misn.setDesc( bar_desc )
+
+   makenews()
 end
 
 
@@ -112,6 +126,12 @@ function jumpin ()
    end
 end
 
+
+function makenews()
+    for _,v in ipairs(articles) do
+        news.add(v["faction"],v["title"],v["text"],v["date_to_add"],v["date_to_rm"])
+    end
+end
 
 --[[
    Launch process

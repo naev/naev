@@ -20,6 +20,7 @@ typedef struct news_s {
    char *title; /**< Title of the news article. */
    char *desc; /**< Content of the news article. */
    char *faction; /**< Faction of the news article */
+   char *tag; /**< tag to identify article, added after creation */
 
    ntime_t date; /**< Date added ascribed to the article, NULL if none */
    ntime_t date_to_add; /**< Date after which the article is shown */

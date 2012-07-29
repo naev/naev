@@ -181,6 +181,7 @@ int free_article(int id)
    free(article_to_rm->title);
    free(article_to_rm->desc);
    free(article_to_rm->faction);
+   free(article_to_rm->tag);
    free(article_to_rm);
 
    return 0;
@@ -578,6 +579,9 @@ int news_saveArticles( xmlTextWriterPtr writer )
          xmlw_attr(writer,"date_to_rm","%li",article_ptr->date_to_rm);
          xmlw_attr(writer,"id","%i",article_ptr->id);
 
+         if (article_ptr->tag!=NULL)
+            xmlw_attr(writer,"tag","%s",article_ptr->tag);
+
          free(ntitle);
          free(ndesc);
 
@@ -635,11 +639,14 @@ static int news_parseArticle( xmlNodePtr parent )
    char* title;
    char* desc;
    char* faction;
+   char* tag;
    char* ntitle;
    char* ndesc;
    char* buff;
    ntime_t date, date_to_add, date_to_rm;
    xmlNodePtr node;
+
+   news_t* n_article;
 
    node = parent->xmlChildrenNode;
    do {
@@ -664,6 +671,9 @@ static int news_parseArticle( xmlNodePtr parent )
          WARN("Event has missing faction attribute, skipping.");
          continue;
       }
+
+      xmlr_attr(node,"tag",tag);
+
       xmlr_attr(node,"date",buff);
       if (faction==NULL) {
          free(title); free(desc); free(faction);
@@ -704,14 +714,17 @@ static int news_parseArticle( xmlNodePtr parent )
 
 
          /* make the article*/
-      new_article(ntitle,ndesc,faction,date,date_to_add,date_to_rm);
+      n_article=new_article(ntitle,ndesc,faction,date,date_to_add,date_to_rm);
+      if (tag!=NULL){
+         n_article->tag=strdup(tag);
+      }
 
       free(ntitle);
       free(ndesc);
       free(title);
       free(desc);
       free(faction);
-
+      free(tag);
 
    } while (xml_nextNode(node));
 
