@@ -723,7 +723,7 @@ static int playerL_commclose( lua_State *L )
  *
  *    @luaparam name Name of the outfit to give.
  *    @luareturn The quantity the player owns.
- * @luafunc addOutfit( name )
+ * @luafunc numOutfit( name )
  */
 static int playerL_numOutfit( lua_State *L )
 {
