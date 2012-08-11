@@ -810,6 +810,11 @@ Outfit** tech_getOutfit( tech_group_t *tech, int *n )
    int m;
    Outfit **o;
 
+   if (tech==NULL) {
+      *n = 0;
+      return NULL;
+   }
+
    /* Get the outfits. */
    *n = 0;
    m  = 0;
@@ -842,6 +847,11 @@ Outfit** tech_getOutfitArray( tech_group_t **tech, int num, int *n )
    tech_group_t grp;
    Outfit **o;
 
+   if (tech==NULL) {
+      *n = 0;
+      return NULL;
+   }
+
    tech_createMetaGroup( &grp, tech, num );
    o = tech_getOutfit( &grp, n );
    tech_freeGroup( &grp );
@@ -863,6 +873,11 @@ Ship** tech_getShip( tech_group_t *tech, int *n )
 {
    int m;
    Ship **s;
+
+   if (tech==NULL) {
+      *n = 0;
+      return NULL;
+   }
 
    /* Get the outfits. */
    *n = 0;
@@ -896,6 +911,11 @@ Ship** tech_getShipArray( tech_group_t **tech, int num, int *n )
    tech_group_t grp;
    Ship **s;
 
+   if (tech==NULL) {
+      *n = 0;
+      return NULL;
+   }
+
    tech_createMetaGroup( &grp, tech, num );
    s = tech_getShip( &grp, n );
    tech_freeGroup( &grp );
@@ -919,6 +939,11 @@ Commodity** tech_getCommodityArray( tech_group_t **tech, int num, int *n )
    tech_group_t grp;
    Commodity **c;
 
+   if (tech==NULL) {
+      *n = 0;
+      return NULL;
+   }
+
    tech_createMetaGroup( &grp, tech, num );
    c = tech_getCommodity( &grp, n );
    tech_freeGroup( &grp );
@@ -940,6 +965,11 @@ Commodity** tech_getCommodity( tech_group_t *tech, int *n )
 {
    int m;
    Commodity **c;
+
+   if (tech==NULL) {
+      *n = 0;
+      return NULL;
+   }
 
    /* Get the commodities. */
    *n = 0;
