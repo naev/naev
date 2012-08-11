@@ -79,7 +79,8 @@ typedef enum ShipStatsType_ {
    /*
     * A: Absolute double type data. Should be continuous.
     */
-   SS_TYPE_A_ENERGY_FLAT,      /**< Flat energy multiplier (not multiplied). */
+   SS_TYPE_A_ENERGY_FLAT,      /**< Flat energy modifier (not multiplied). */
+   SS_TYPE_A_ENERGY_REGEN_FLAT, /**< Flat energy regeneration modifier (not multiplied). */
    SS_TYPE_A_CPU_FLAT,         /**< Flat CPU modifier (not multiplied). */
    SS_TYPE_A_ENGINE_LIMIT,     /**< Engine's mass limit. */
    SS_TYPE_A_FUEL_CONSUMPTION, /**< Fuel consumption of the engine. */
@@ -160,6 +161,7 @@ typedef struct ShipStats_ {
    double energy_mod;         /**< Energy multiplier. */
    double energy_regen_mod;   /**< Energy regeneration multiplier. */
    double energy_flat;        /**< Energy modifier (flat). */
+   double energy_regen_flat;  /**< Energy regen modifier (flat). */
    double cpu_mod;            /**< CPU multiplier. */
    double cpu_flat;           /**< CPU modifier (flat). */
 

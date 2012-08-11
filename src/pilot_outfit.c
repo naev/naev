@@ -1051,6 +1051,7 @@ void pilot_calcStats( Pilot* pilot )
     * Flat increases.
     */
    pilot->energy_max   += s->energy_flat;
+   pilot->energy_regen += s->energy_regen_flat;
    pilot->cpu_max      += s->cpu_flat;
 
    /* Give the pilot his health proportion back */
