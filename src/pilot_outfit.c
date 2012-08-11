@@ -1042,9 +1042,16 @@ void pilot_calcStats( Pilot* pilot )
    pilot->shield_regen *= s->shield_regen_mod;
    pilot->energy_max   *= s->energy_mod;
    pilot->energy_regen *= s->energy_regen_mod;
+   pilot->cpu_max      *= s->cpu_mod;
    /* Misc. */
    pilot->dmg_absorb    = MAX( 0., pilot->dmg_absorb );
    pilot->crew         *= s->crew_mod;
+
+   /*
+    * Flat increases.
+    */
+   pilot->energy_max   += s->energy_flat;
+   pilot->cpu_max      += s->cpu_flat;
 
    /* Give the pilot his health proportion back */
    pilot->armour = ac * pilot->armour_max;

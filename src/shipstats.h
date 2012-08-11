@@ -79,7 +79,9 @@ typedef enum ShipStatsType_ {
    /*
     * A: Absolute double type data. Should be continuous.
     */
-   SS_TYPE_A_ENGINE_LIMIT,    /**< Engine's mass limit. */
+   SS_TYPE_A_ENERGY_FLAT,      /**< Flat energy multiplier (not multiplied). */
+   SS_TYPE_A_CPU_FLAT,         /**< Flat CPU modifier (not multiplied). */
+   SS_TYPE_A_ENGINE_LIMIT,     /**< Engine's mass limit. */
    SS_TYPE_A_FUEL_CONSUMPTION, /**< Fuel consumption of the engine. */
 
    /*
@@ -157,7 +159,9 @@ typedef struct ShipStats_ {
    double shield_regen_mod;   /**< Shield regeneration multiplier. */
    double energy_mod;         /**< Energy multiplier. */
    double energy_regen_mod;   /**< Energy regeneration multiplier. */
+   double energy_flat;        /**< Energy modifier (flat). */
    double cpu_mod;            /**< CPU multiplier. */
+   double cpu_flat;           /**< CPU modifier (flat). */
 
    /* Freighter-type. */
    double jump_delay;      /**< Modulates the time that passes during a hyperspace jump. */
