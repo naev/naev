@@ -772,16 +772,13 @@ static void equipment_renderOverlaySlots( double bx, double by, double bw, doubl
    if (o->desc_short == NULL)
       return;
    pos = nsnprintf( alt, sizeof(alt),
-         "%s\n"
-         "\n"
          "%s",
-         o->name,
-         o->desc_short );
+         o->name );
    if ((o->slot.spid!=0) && (pos < (int)sizeof(alt)))
-      pos += snprintf( &alt[pos], sizeof(alt)-pos, "\eSSlot %s\e0\n",
+      pos += snprintf( &alt[pos], sizeof(alt)-pos, "\n\eSSlot %s\e0",
             sp_display( o->slot.spid ) );
    if (pos < (int)sizeof(alt))
-      pos += snprintf( &alt[pos], sizeof(alt)-pos, "\n%s", o->desc_short );
+      pos += snprintf( &alt[pos], sizeof(alt)-pos, "\n\n%s", o->desc_short );
    if ((o->mass > 0.) && (pos < (int)sizeof(alt)))
       snprintf( &alt[pos], sizeof(alt)-pos,
             "\n%.0f Tons",
