@@ -129,6 +129,7 @@ void equipment_rightClickOutfits( unsigned int wid, char* str )
    if (strcmp(clicked_outfit,"None")==0)
       return;
 
+   /* Try to get the outfit. */
    o = outfit_get(clicked_outfit);
    if (o == NULL)
       return;
@@ -152,7 +153,7 @@ void equipment_rightClickOutfits( unsigned int wid, char* str )
    }
 
    /* Loop through outfit slots of the right type, try to find an empty one */
-   for (i=0; i < outfit_n; i++) {
+   for (i=0; i<outfit_n; i++) {
 
       /* Slot full. */
       if (slots[i].outfit != NULL)
@@ -1190,6 +1191,8 @@ void equipment_regenLists( unsigned int wid, int outfits, int ships )
          toolkit_setImageArrayPos(    wtmp, EQUIPMENT_OUTFITS, nout[i] );
          toolkit_setImageArrayOffset( wtmp, EQUIPMENT_OUTFITS, offout[i] );
       }
+      i = window_tabWinGetActive(   wid, EQUIPMENT_OUTFIT_TAB );
+      equipment_updateOutfitSingle( outfit_windows[i], NULL );
    }
    if (ships) {
       toolkit_setImageArrayPos(    wid, EQUIPMENT_SHIPS, nship );

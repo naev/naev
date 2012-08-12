@@ -443,6 +443,24 @@ int window_tabWinSetActive( const unsigned int wid, const char *tab, int active 
 
 
 /**
+ * @brief Gets the active tab.
+ *
+ *    @param wid Window to which tabbed window belongs.
+ *    @param tab Name of the tabbed window.
+ *    @return The ID of the active tab.
+ */
+int window_tabWinGetActive( const unsigned int wid, const char *tab )
+{
+   Widget *wgt = tab_getWgt( wid, tab );
+   if (wgt == NULL)
+      return -1;
+
+   /* Get active window. */
+   return wgt->dat.tab.active;
+}
+
+
+/**
  * @brief Sets the onChange function callback.
  *
  *    @param wid Window to which tabbed window belongs.

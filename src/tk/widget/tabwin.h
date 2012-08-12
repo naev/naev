@@ -37,6 +37,7 @@ unsigned int* window_addTabbedWindow( const unsigned int wid,
 
 
 int window_tabWinSetActive( const unsigned int wid, const char *tab, int active );
+int window_tabWinGetActive( const unsigned int wid, const char *tab );
 int window_tabWinOnChange( const unsigned int wid, const char *tab,
       void(*onChange)(unsigned int,char*,int) );
 int window_tabSetFont( const unsigned int wid, const char *tab, const glFont *font );
