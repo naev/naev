@@ -10,7 +10,7 @@
   <limit>afterburner</limit>
  </general>
  <specific type="afterburner">
-  <cpu>6</cpu>
+  <cpu_flat>-6</cpu_flat>
   <rumble>0.9</rumble>
   <sound>afterburner</sound>
   <sound_off>afb_disengage</sound_off>

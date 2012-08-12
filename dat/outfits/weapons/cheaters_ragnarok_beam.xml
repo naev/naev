@@ -9,7 +9,7 @@
   <gfx_store>ragnarok</gfx_store>
  </general>
  <specific type="beam">
-  <cpu>1</cpu>
+  <cpu>-1</cpu>
   <delay>10000</delay>
   <duration>5</duration>
   <range>400</range>

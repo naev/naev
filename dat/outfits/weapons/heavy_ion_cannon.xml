@@ -10,7 +10,7 @@
   <gfx_store>ioncannon</gfx_store>
  </general>
  <specific type="bolt" secondary="1">
-  <cpu>12</cpu>
+  <cpu>-12</cpu>
   <gfx>ionL</gfx>
   <sound>ion</sound>
   <spfx_shield>ShiS</spfx_shield>

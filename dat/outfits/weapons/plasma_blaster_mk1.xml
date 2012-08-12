@@ -9,7 +9,7 @@
   <gfx_store>plasma</gfx_store>
  </general>
  <specific type="bolt">
-  <cpu>3</cpu>
+  <cpu>-3</cpu>
   <gfx>plasma</gfx>
   <sound>plasma</sound>
   <spfx_shield>ShiS</spfx_shield>

@@ -9,7 +9,7 @@
   <gfx_store>gaussgun</gfx_store>
  </general>
  <specific type="bolt">
-  <cpu>4</cpu>
+  <cpu>-4</cpu>
   <gfx>gatling</gfx>
   <sound>autocannon</sound>
   <sound_hit>medexp0</sound_hit>

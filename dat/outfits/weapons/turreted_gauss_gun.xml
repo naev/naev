@@ -9,7 +9,7 @@
   <gfx_store>gaussturret</gfx_store>
  </general>
  <specific type="turret bolt">
-  <cpu>8</cpu>
+  <cpu>-8</cpu>
   <gfx>gatling</gfx>
   <sound>autocannon</sound>
   <sound_hit>medexp0</sound_hit>

@@ -10,7 +10,7 @@
   <description>Improved power regulation allows your turrets to waste less power when firing, though feeding turrets the bare minimum wattage results in a slightly decreased rate of fire.</description>
  </general>
  <specific type="modification">
-  <cpu>-2</cpu>
+  <cpu_flat>-2</cpu_flat>
   <tur_firerate>-5</tur_firerate>
   <tur_energy>-10</tur_energy>
  </specific>

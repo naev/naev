@@ -10,7 +10,7 @@
   <gfx_store>railgun</gfx_store>
  </general>
  <specific type="bolt">
-  <cpu>26</cpu>
+  <cpu>-26</cpu>
   <gfx>massL</gfx>
   <sound>mass</sound>
   <sound_hit>medexp0</sound_hit>

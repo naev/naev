@@ -9,7 +9,7 @@
   <gfx_store>ionturret</gfx_store>
  </general>
  <specific type="turret bolt">
-  <cpu>18</cpu>
+  <cpu>-18</cpu>
   <gfx>razorM</gfx>
   <sound>ion</sound>
   <spfx_shield>ShiS</spfx_shield>

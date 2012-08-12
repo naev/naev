@@ -10,7 +10,7 @@
   <limit>jammer</limit>
  </general>
  <specific type="jammer">
-  <cpu>8</cpu>
+  <cpu_flat>-8</cpu_flat>
   <range>230</range>
   <power>50</power>
   <energy>-30</energy>

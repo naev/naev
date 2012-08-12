@@ -10,7 +10,7 @@
   <gfx_store>headhunterlauncher</gfx_store>
  </general>
  <specific type="launcher" secondary="1">
-  <cpu>10</cpu>
+  <cpu>-10</cpu>
   <ammo>Vengeance Missile</ammo>
   <delay>6</delay>
   <amount>10</amount>

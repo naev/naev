@@ -10,7 +10,7 @@
   <gfx_store>orion</gfx_store>
  </general>
  <specific type="beam" secondary="1">
-  <cpu>15</cpu>
+  <cpu>-15</cpu>
   <delay>6</delay>
   <duration>3</duration>
   <range>300</range>
@@ -29,8 +29,3 @@
   <sound_off>beam_off0</sound_off>
  </specific>
 </outfit>
-<!-- TODO perseus beam -->
-<!-- TODO perseus beam turret -->
-<!-- TODO loki beam turret -->
-<!-- TODO advanced loki beam turret -->
-<!-- TODO valkyrie beam turret -->

@@ -10,7 +10,7 @@
   <gfx_store>laserturret2</gfx_store>
  </general>
  <specific type="turret bolt">
-  <cpu>18</cpu>
+  <cpu>-18</cpu>
   <gfx>laser3M</gfx>
   <sound>laser</sound>
   <spfx_shield>ShiS</spfx_shield>

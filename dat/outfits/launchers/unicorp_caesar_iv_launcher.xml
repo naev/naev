@@ -10,7 +10,7 @@
   <gfx_store>caesarlauncher</gfx_store>
  </general>
  <specific type="launcher" secondary="1">
-  <cpu>13</cpu>
+  <cpu>-13</cpu>
   <ammo>Caesar IV Torpedo</ammo>
   <delay>10</delay>
   <lockon>20</lockon>

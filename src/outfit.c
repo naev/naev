@@ -629,6 +629,14 @@ double outfit_cpu( const Outfit* o )
    return 0.;
 }
 /**
+ * @brief Gets the outfit's cpu increase.
+ *    @param o Outfit to get information from.
+ */
+double outfit_cpu_max( const Outfit* o )
+{
+   return o->u.mod.cpu_max;
+}
+/**
  * @brief Gets the outfit's range.
  *    @param o Outfit to get information from.
  */
@@ -1069,7 +1077,7 @@ static void outfit_parseSBolt( Outfit* temp, const xmlNodePtr parent )
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
    l = nsnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s [%s]\n"
-         "Needs %.0f CPU\n"
+         "%.0f CPU\n"
          "%.0f%% Penetration\n"
          "%.2f DPS [%.0f Damage]\n",
          outfit_getType(temp), dtype_damageTypeToStr(temp->u.blt.dmg.type),
@@ -1200,7 +1208,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
    l = nsnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s\n"
-         "Needs %.0f CPU\n"
+         "%.0f CPU\n"
          "%.0f%% Penetration\n"
          "%.2f DPS [%s]\n",
          outfit_getType(temp),
@@ -1277,7 +1285,7 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
    nsnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s\n"
-         "Needs %.0f CPU\n"
+         "%.0f CPU\n"
          "%.1f Shots Per Second\n"
          "Holds %d %s",
          outfit_getType(temp),
@@ -1482,6 +1490,7 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"absorb", temp->u.mod.absorb );
       /* misc */
       xmlr_float(node,"cpu",temp->u.mod.cpu);
+      xmlr_float(node,"cpu_max",temp->u.mod.cpu_max);
       xmlr_float(node,"cargo",temp->u.mod.cargo);
       xmlr_float(node,"crew_rel", temp->u.mod.crew_rel);
       xmlr_float(node,"mass_rel",temp->u.mod.mass_rel);
@@ -1525,7 +1534,8 @@ if ((x) != 0.) \
    DESC_ADD1( temp->u.mod.shield_regen, "Shield Per Second" );
    DESC_ADD1( temp->u.mod.energy_regen, "Energy Per Second" );
    DESC_ADD0( temp->u.mod.absorb, "Absorption" );
-   DESC_ADD0( temp->u.mod.cpu, "CPU" );
+   DESC_ADD0( temp->u.mod.cpu, "CPU usage" );
+   DESC_ADD0( temp->u.mod.cpu_max, "CPU capacity" );
    DESC_ADD0( temp->u.mod.cargo, "Cargo" );
    DESC_ADD0( temp->u.mod.crew_rel, "%% Crew" );
    DESC_ADD0( temp->u.mod.mass_rel, "%% Mass" );
@@ -1538,7 +1548,6 @@ if ((x) != 0.) \
    /* More processing. */
    temp->u.mod.turn       *= M_PI / 180.;
    temp->u.mod.absorb     /= 100.;
-   temp->u.mod.cpu         = -temp->u.mod.cpu; /* Invert sign so it works with outfit_cpu. */
    temp->u.mod.turn_rel   /= 100.;
    temp->u.mod.speed_rel  /= 100.;
    temp->u.mod.armour_rel /= 100.;
@@ -1602,7 +1611,7 @@ static void outfit_parseSAfterburner( Outfit* temp, const xmlNodePtr parent )
    nsnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s\n"
          "\erActivated Outfit\e0\n"
-         "Needs %.0f CPU\n"
+         "%.0f CPU\n"
          "Only one can be equipped\n"
          "%.0f Maximum Effective Mass\n"
          "%.0f%% Thrust\n"
@@ -1672,7 +1681,7 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
    temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
    nsnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s\n"
-         "Needs %.0f CPU\n"
+         "%.0f CPU\n"
          "%.1f Launches Per Second\n"
          "Holds %d %s",
          outfit_getType(temp),
@@ -1933,7 +1942,7 @@ static void outfit_parseSJammer( Outfit *temp, const xmlNodePtr parent )
    nsnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
          "%s\n"
          "\erActivated Outfit\e0\n"
-         "Needs %.0f CPU\n"
+         "%.0f CPU\n"
          "Only one can be equipped\n"
          "%.0f Range\n"
          "%.0f%% Power\n"

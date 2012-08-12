@@ -10,7 +10,7 @@
   <gfx_store>ragnarok</gfx_store>
  </general>
  <specific type="turret beam" secondary="1">
-  <cpu>80</cpu>
+  <cpu>-80</cpu>
   <delay>10</delay>
   <duration>5</duration>
   <range>400</range>
@@ -30,6 +30,3 @@
   <sound_off>beam_off0</sound_off>
  </specific>
 </outfit>
-
-
-<!-- NEUTRON TREE -->

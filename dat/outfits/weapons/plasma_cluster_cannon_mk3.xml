@@ -10,7 +10,7 @@
   <gfx_store>plasma2</gfx_store>
  </general>
  <specific type="bolt">
-  <cpu>34</cpu>
+  <cpu>-34</cpu>
   <gfx>plasma2</gfx>
   <sound>plasma</sound>
   <spfx_shield>ShiS</spfx_shield>
@@ -32,10 +32,3 @@
   </damage>
  </specific>
 </outfit>
-<!-- TODO plasma lance -->
-<!-- TODO bioplasma lance -->
-
-
-<!-- BEAM TREE -->
-<!-- TODO micro-beam -->
-<!-- TODO heavy micro-beam -->

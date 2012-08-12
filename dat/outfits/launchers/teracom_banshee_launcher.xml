@@ -10,7 +10,7 @@
   <description>TeraCom has equipped its Banshee launcher model with high grade reload and tube cooling systems, giving a significant boost to rate of fire.</description>
  </general>
  <specific type="launcher" secondary="1">
-  <cpu>8</cpu>
+  <cpu>-8</cpu>
   <ammo>Banshee Rocket</ammo>
   <delay>1.2</delay>
   <amount>20</amount>

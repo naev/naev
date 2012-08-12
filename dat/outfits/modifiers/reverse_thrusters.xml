@@ -9,7 +9,7 @@
   <gfx_store>afterburner</gfx_store>
  </general>
  <specific type="modification">
-  <cpu>-2</cpu>
+  <cpu_flat>-2</cpu_flat>
   <misc_reverse_thrust>1</misc_reverse_thrust>
  </specific>
 </outfit>
