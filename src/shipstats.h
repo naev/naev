@@ -81,7 +81,7 @@ typedef enum ShipStatsType_ {
     */
    SS_TYPE_A_ENERGY_FLAT,      /**< Flat energy modifier (not multiplied). */
    SS_TYPE_A_ENERGY_REGEN_FLAT, /**< Flat energy regeneration modifier (not multiplied). */
-   SS_TYPE_A_CPU_FLAT,         /**< Flat CPU modifier (not multiplied). */
+   SS_TYPE_A_CPU_MAX,          /**< Maximum CPU modifier. */
    SS_TYPE_A_ENGINE_LIMIT,     /**< Engine's mass limit. */
    SS_TYPE_A_FUEL_CONSUMPTION, /**< Fuel consumption of the engine. */
 
@@ -163,7 +163,7 @@ typedef struct ShipStats_ {
    double energy_flat;        /**< Energy modifier (flat). */
    double energy_regen_flat;  /**< Energy regen modifier (flat). */
    double cpu_mod;            /**< CPU multiplier. */
-   double cpu_flat;           /**< CPU modifier (flat). */
+   double cpu_max;            /**< CPU modifier. */
 
    /* Freighter-type. */
    double jump_delay;      /**< Modulates the time that passes during a hyperspace jump. */

@@ -147,7 +147,6 @@ typedef struct OutfitBeamData_ {
    double range;     /**< how far it goes */
    double turn;      /**< How fast it can turn. Only for turrets, in rad/s. */
    double energy;    /**< Amount of energy it drains (per second). */
-   double cpu;       /**< CPU usage. */
    Damage dmg;       /**< Damage done. */
    double heatup;    /**< How long it should take for the weapon to heat up (approx). */
    double heat;      /**< Heat per second. */
@@ -168,7 +167,6 @@ typedef struct OutfitBeamData_ {
  */
 typedef struct OutfitLauncherData_ {
    double delay;     /**< Delay between shots. */
-   double cpu;       /**< CPU usage. */
    char *ammo_name;  /**< Name of the ammo to use. */
    struct Outfit_ *ammo; /**< Ammo to use. */
    int amount;       /**< Amount of ammo it can store. */
@@ -231,8 +229,6 @@ typedef struct OutfitModificationData_ {
    double energy_rel;   /**< Relative to energy base modifier. */
    double energy_regen; /**< Energy regeneration modifier. */
    double energy_loss;  /**< Energy regeneration modifier. */
-   double cpu;          /**< CPU usage. */
-   double cpu_max;      /**< CPU increase. */
    double absorb;       /**< Absorption factor. */
 
    /* Misc. */
@@ -251,7 +247,6 @@ typedef struct OutfitModificationData_ {
  */
 typedef struct OutfitAfterburnerData_ {
    /* Internal properties. */
-   double cpu;       /**< CPU usage. */
    double rumble;    /**< Percent of rumble */
    int sound_on;     /**< Sound of the afterburner turning on */
    int sound;        /**< Sound of the afterburner being on */
@@ -273,7 +268,6 @@ typedef struct OutfitFighterBayData_ {
    char *ammo_name;  /**< Name of the ships to use as ammo. */
    struct Outfit_ *ammo; /**< Ships to use as ammo. */
    double delay;     /**< Delay between launches. */
-   double cpu;       /**< CPU usage. */
    int amount;       /**< Amount of ammo it can store. */
 } OutfitFighterBayData;
 
@@ -301,7 +295,6 @@ typedef struct OutfitLocalMapData_ {
  * @brief Represents a jammer.
  */
 typedef struct OutfitJammerData_ {
-   double cpu;       /**< CPU usage. */
    double energy;    /**< Energy it uses to run */
    double range;     /**< Range it starts to do effect */
    double range2;    /**< Range squared. */
@@ -326,6 +319,7 @@ typedef struct Outfit_ {
    OutfitSlot slot;  /**< Slot the outfit fits into. */
    char *license;    /**< Licenses needed to buy it. */
    double mass;      /**< How much weapon capacity is needed. */
+   double cpu;       /**< CPU usage. */
    char *limit;      /**< Name to limit to one per ship (ignored if NULL). */
 
    /* store stuff */
@@ -408,7 +402,6 @@ int outfit_amount( const Outfit* o );
 double outfit_energy( const Outfit* o );
 double outfit_heat( const Outfit* o );
 double outfit_cpu( const Outfit* o );
-double outfit_cpu_max( const Outfit* o );
 double outfit_range( const Outfit* o );
 double outfit_speed( const Outfit* o );
 double outfit_spin( const Outfit* o );

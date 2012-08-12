@@ -806,9 +806,6 @@ void pilot_calcStats( Pilot* pilot )
    pilot->thrust_base   = pilot->ship->thrust;
    pilot->turn_base     = pilot->ship->turn;
    pilot->speed_base    = pilot->ship->speed;
-   /* cpu */
-   pilot->cpu_max       = pilot->ship->cpu;
-   pilot->cpu           = pilot->cpu_max;
    /* crew */
    pilot->crew          = pilot->ship->crew;
    /* health */
@@ -846,8 +843,7 @@ void pilot_calcStats( Pilot* pilot )
          continue;
 
       /* Modify CPU. */
-      pilot->cpu_max       += outfit_cpu_max(o);
-      pilot->cpu           += outfit_cpu(o) + outfit_cpu_max(o);
+      pilot->cpu           += outfit_cpu(o);
 
       /* Add mass. */
       pilot->mass_outfit   += o->mass;
@@ -963,8 +959,8 @@ void pilot_calcStats( Pilot* pilot )
    pilot->shield_regen *= s->shield_regen_mod;
    pilot->energy_max   *= s->energy_mod;
    pilot->energy_regen *= s->energy_regen_mod;
-   pilot->cpu_max      *= s->cpu_mod;
-   pilot->cpu          *= s->cpu_mod;
+   /* cpu */
+   pilot->cpu_max       = (pilot->ship->cpu + s->cpu_max)*s->cpu_mod;
    /* Misc. */
    pilot->dmg_absorb    = MAX( 0., pilot->dmg_absorb );
    pilot->crew         *= s->crew_mod;
@@ -975,7 +971,6 @@ void pilot_calcStats( Pilot* pilot )
    pilot->energy_max   += s->energy_flat;
    pilot->energy       += s->energy_flat;
    pilot->energy_regen += s->energy_regen_flat;
-   pilot->cpu          += s->cpu_flat;
 
    /* Give the pilot his health proportion back */
    pilot->armour = ac * pilot->armour_max;
