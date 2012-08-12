@@ -364,7 +364,7 @@ int pilot_addOutfitTest( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s, int w
                pilot->name, outfit->name );
       return -1;
    }
-   else if ((str = pilot_canEquip( pilot, s, outfit, 1)) != NULL) {
+   else if ((str = pilot_canEquip( pilot, s, outfit)) != NULL) {
       if (warn)
          WARN( "Pilot '%s': Trying to add outfit but %s",
                pilot->name, str );
@@ -449,7 +449,7 @@ int pilot_rmOutfit( Pilot* pilot, PilotOutfitSlot *s )
    const char *str;
    int ret;
 
-   str = pilot_canEquip( pilot, s, s->outfit, 0 );
+   str = pilot_canEquip( pilot, s, NULL );
    if (str != NULL) {
       WARN("Pilot '%s': Trying to remove outfit but %s",
             pilot->name, str );
@@ -543,37 +543,35 @@ static int pilot_hasOutfitLimit( Pilot *p, const char *limit )
  *
  *    @param p Pilot to check if can equip.
  *    @param s Slot being checked to see if it can equip/remove an outfit.
- *    @param o Outfit to check.
- *    @param add Whether or not to consider it's being added or removed.
+ *    @param o Outfit to check (NULL if being removed).
  *    @return NULL if can swap, or error message if can't.
  */
-const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o, int add )
+const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o )
 {
    Outfit *o_old;
    const char *err;
 
    /* Just in case. */
-   if ((p==NULL) || (o==NULL))
+   if ((p==NULL) || (s==NULL))
       return "Nothing selected.";
 
-   /* Check slot type. */
-   if ((s != NULL) && !outfit_fitsSlot( o, &s->sslot->slot ))
-      return "Does not fit slot.";
-
-   /* Check outfit limit. */
-   if (add && (o->limit != NULL) && pilot_hasOutfitLimit( p, o->limit ))
-      return "Already have an outfit of this type installed";
-
-   /* Check fighter bay. */
-   if (!add && (s!=NULL) && (s->u.ammo.deployed > 0))
-      return "Recall the fighters first";
+   if (o!=NULL) {
+      /* Check slot type. */
+      if (!outfit_fitsSlot( o, &s->sslot->slot ))
+         return "Does not fit slot.";
+      /* Check outfit limit. */
+      if ((o->limit != NULL) && pilot_hasOutfitLimit( p, o->limit ))
+         return "Already have an outfit of this type installed";
+   }
+   else {
+      /* Check fighter bay. */
+      if ((o==NULL) && (s!=NULL) && (s->u.ammo.deployed > 0))
+         return "Recall the fighters first";
+   }
 
    /* Swap outfit. */
    o_old       = s->outfit;
-   if (add)
-      s->outfit   = o;
-   else
-      s->outfit   = NULL;
+   s->outfit   = o;
 
    /* Check sanity. */
    pilot_calcStats( p );

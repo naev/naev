@@ -409,7 +409,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       else {
          if ((o != NULL) &&
                (lst[i].sslot->slot.type == o->slot.type)) {
-            if (pilot_canEquip( p, &lst[i], o, 1 ) != NULL)
+            if (pilot_canEquip( p, &lst[i], o ) != NULL)
                c = &cRed;
             else
                c = &cDConsole;
@@ -613,7 +613,7 @@ static void equipment_renderOverlayColumn( double x, double y, double w, double 
          if ((i==mover) && (wgt->canmodify)) {
             if (lst[i].outfit != NULL) {
                top = 1;
-               display = pilot_canEquip( wgt->selected, &lst[i], lst[i].outfit, 0 );
+               display = pilot_canEquip( wgt->selected, &lst[i], NULL );
                if (display != NULL)
                   c = &cRed;
                else {
@@ -624,7 +624,7 @@ static void equipment_renderOverlayColumn( double x, double y, double w, double 
             else if ((wgt->outfit != NULL) &&
                   (lst->sslot->slot.type == wgt->outfit->slot.type)) {
                top = 0;
-               display = pilot_canEquip( wgt->selected, &lst[i], wgt->outfit, 1 );
+               display = pilot_canEquip( wgt->selected, &lst[i], wgt->outfit );
                if (display != NULL)
                   c = &cRed;
                else {
@@ -1066,7 +1066,7 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
       o = slot->outfit;
 
       /* Must be able to remove. */
-      if (pilot_canEquip( eq_wgt.selected, slot, o, 0 ) != NULL)
+      if (pilot_canEquip( eq_wgt.selected, slot, NULL ) != NULL)
          return 0;
 
       /* Remove ammo first. */
@@ -1100,7 +1100,7 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
          return 0;
 
       /* Must be able to add. */
-      if (pilot_canEquip( eq_wgt.selected, slot, o, 1 ) != NULL)
+      if (pilot_canEquip( eq_wgt.selected, slot, o ) != NULL)
          return 0;
 
       /* Add outfit to ship. */

@@ -27,7 +27,7 @@ int pilot_maxAmmo( Pilot* pilot );
 
 /* Checks. */
 const char* pilot_checkSanity( Pilot *p );
-const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o, int add );
+const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o );
 
 /* Lockons. */
 void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, double *a, double dt );
