@@ -32,6 +32,7 @@
  </slots>
  <stats>
   <speed_mod>-20</speed_mod>
+  <cpu_mod>-20</cpu_mod>
   <turn_mod>-20</turn_mod>
   <thrust_mod>-20</thrust_mod>
   <armour_mod>-20</armour_mod>

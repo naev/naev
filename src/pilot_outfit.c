@@ -964,6 +964,7 @@ void pilot_calcStats( Pilot* pilot )
    pilot->energy_max   *= s->energy_mod;
    pilot->energy_regen *= s->energy_regen_mod;
    pilot->cpu_max      *= s->cpu_mod;
+   pilot->cpu          *= s->cpu_mod;
    /* Misc. */
    pilot->dmg_absorb    = MAX( 0., pilot->dmg_absorb );
    pilot->crew         *= s->crew_mod;
