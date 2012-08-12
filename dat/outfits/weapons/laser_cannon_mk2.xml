@@ -10,7 +10,7 @@
   <gfx_store>laser2</gfx_store>
   </general>
  <specific type="bolt">
-  <cpu>5</cpu>
+  <cpu>-5</cpu>
   <gfx>laser2S</gfx>
   <sound>laser</sound>
   <spfx_shield>ShiS</spfx_shield>

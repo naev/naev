@@ -10,7 +10,7 @@
   <gfx_store>ripper</gfx_store>
  </general>
  <specific type="bolt">
-  <cpu>10</cpu>
+  <cpu>-10</cpu>
   <gfx>ripperS</gfx>
   <sound>ripper</sound>
   <spfx_shield>ShiS</spfx_shield>

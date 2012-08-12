@@ -10,7 +10,7 @@
   <gfx_store>railgunturret</gfx_store>
  </general>
  <specific type="turret bolt">
-  <cpu>34</cpu>
+  <cpu>-34</cpu>
   <gfx>massL</gfx>
   <sound>mass</sound>
   <spfx_shield>ShiM</spfx_shield>
@@ -31,6 +31,3 @@
   </damage>
  </specific>
 </outfit>
-
-
-<!-- PLASMA TREE -->

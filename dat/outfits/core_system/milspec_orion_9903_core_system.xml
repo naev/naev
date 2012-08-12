@@ -10,7 +10,7 @@
   <gfx_store>reactor_iii</gfx_store>
  </general>
  <specific type="modification">
-  <cpu>240</cpu>
+  <cpu_max>240</cpu_max>
   <shield>1000</shield>
   <shield_regen>12</shield_regen>
   <energy>4800</energy>

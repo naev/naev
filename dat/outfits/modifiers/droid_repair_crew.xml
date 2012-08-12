@@ -10,10 +10,9 @@
   <description>This low maintenance droid crew will scour your ship to repair any damages caused by space hazards. They are very small and able to work both on the interior or exterior of the ship. Power is drawn from the ship to feed the robots, although the load is generally very low compared to the benefits of having a robotic repair crew.</description>
  </general>
  <specific type="modification">
-  <cpu>-4</cpu>
+  <cpu_flat>-4</cpu_flat>
   <armour_regen>1.7</armour_regen>
-  <energy_regen>-5</energy_regen>
-  <energy_regen>-0.65</energy_regen>
+  <energy_regen_flat>-5</energy_regen_flat>
  </specific>
 </outfit>
 <!-- Movement-Related Outfits -->

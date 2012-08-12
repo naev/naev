@@ -10,7 +10,7 @@
   <gfx_store>reactor_i</gfx_store>
  </general>
  <specific type="modification">
-  <cpu>20</cpu>
+  <cpu_max>20</cpu_max>
   <shield>180</shield>
   <shield_regen>5</shield_regen>
   <energy>400</energy>

@@ -9,7 +9,7 @@
   <gfx_store>vulcangun</gfx_store>
  </general>
  <specific type="bolt">
-  <cpu>6</cpu>
+  <cpu>-6</cpu>
   <gfx>gatling</gfx>
   <sound>autocannon</sound>
   <sound_hit>medexp0</sound_hit>

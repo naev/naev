@@ -560,7 +560,7 @@ const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o, int add )
 
    /* Adding outfit. */
    if (add) {
-      if ((outfit_cpu(o) > 0) && (p->cpu < outfit_cpu(o)))
+      if ((outfit_cpu(o) < 0) && (p->cpu < -outfit_cpu(o)))
          return "Insufficient CPU";
 
       /* Can't add more than one outfit of the same type if the outfit type is limited. */
@@ -603,7 +603,7 @@ const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o, int add )
    }
    /* Removing outfit. */
    else {
-      if ((outfit_cpu(o) < 0) && (p->cpu < fabs(outfit_cpu(o))))
+      if ((outfit_cpu_max(o) > 0) && (p->cpu < outfit_cpu_max(o)))
          return "Lower CPU usage first";
 
       /* Must not drive some things negative. */
@@ -923,10 +923,9 @@ void pilot_calcStats( Pilot* pilot )
       if (o==NULL)
          continue;
 
-      /* Subtract CPU. */
-      pilot->cpu           -= outfit_cpu(o);
-      if (outfit_cpu(o) < 0.)
-         pilot->cpu_max    -= outfit_cpu(o);
+      /* Modify CPU. */
+      pilot->cpu_max       += outfit_cpu_max(o);
+      pilot->cpu           += outfit_cpu(o) + outfit_cpu_max(o);
 
       /* Add mass. */
       pilot->mass_outfit   += o->mass;
@@ -1051,8 +1050,9 @@ void pilot_calcStats( Pilot* pilot )
     * Flat increases.
     */
    pilot->energy_max   += s->energy_flat;
+   pilot->energy       += s->energy_flat;
    pilot->energy_regen += s->energy_regen_flat;
-   pilot->cpu_max      += s->cpu_flat;
+   pilot->cpu          += s->cpu_flat;
 
    /* Give the pilot his health proportion back */
    pilot->armour = ac * pilot->armour_max;

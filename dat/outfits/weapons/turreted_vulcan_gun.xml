@@ -10,7 +10,7 @@
   <gfx_store>vulcanturret</gfx_store>
  </general>
  <specific type="turret bolt">
-  <cpu>16</cpu>
+  <cpu>-16</cpu>
   <gfx>gatling</gfx>
   <sound>autocannon</sound>
   <sound_hit>medexp0</sound_hit>
@@ -30,4 +30,3 @@
   </damage>
  </specific>
 </outfit>
-<!-- TODO flak -->

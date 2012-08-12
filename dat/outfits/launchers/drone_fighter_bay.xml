@@ -10,7 +10,7 @@
   <description>The Drone Fighter bay uses the advanced collective technologies to sustain a trio of Drone Fighters. Drone Fighters require no pilot making them a safer approach in dangerous situations. They do however need some careful maintenance. All the tools needed to take care of them are provided with the bay.</description>
  </general>
  <specific type="fighter bay" secondary="1">
-  <cpu>120</cpu>
+  <cpu>-120</cpu>
   <ammo>Drone Fighter</ammo>
   <delay>1</delay>
   <amount>3</amount>

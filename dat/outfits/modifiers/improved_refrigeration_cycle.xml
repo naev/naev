@@ -10,7 +10,7 @@
   <gfx_store>firerate_turret</gfx_store>
  </general>
  <specific type="modification">
-  <cpu>-2</cpu>
+  <cpu_flat>-2</cpu_flat>
   <tur_heat>-10</tur_heat>
   <tur_damage>-5</tur_damage>
  </specific>

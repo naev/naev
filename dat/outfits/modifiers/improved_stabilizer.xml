@@ -10,10 +10,10 @@
   <gfx_store>stabilizer</gfx_store>
  </general>
  <specific type="modification">
-  <cpu>-2</cpu>
+  <cpu_flat>-2</cpu_flat>
   <speed>3</speed>
   <speed_mod>10</speed_mod>
   <turn_mod>3</turn_mod>
-  <energy_regen>-0.15</energy_regen>
+  <energy_regen_flat>-1.5</energy_regen_flat>
  </specific>
 </outfit>

@@ -10,7 +10,7 @@
   <gfx_store>neutron</gfx_store>
  </general>
  <specific type="bolt">
-  <cpu>8</cpu>
+  <cpu>-8</cpu>
   <gfx>neutron</gfx>
   <sound>neutron</sound>
   <spfx_shield>ShiS</spfx_shield>
@@ -32,6 +32,3 @@
   </damage>
  </specific>
 </outfit>
-
-
-<!-- Missile Weapons -->

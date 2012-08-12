@@ -10,7 +10,7 @@
   <gfx_store>ripper</gfx_store>
  </general>
  <specific type="turret bolt">
-  <cpu>12</cpu>
+  <cpu>-12</cpu>
   <gfx>ripperM</gfx>
   <sound>ripper</sound>
   <spfx_shield>ShiS</spfx_shield>

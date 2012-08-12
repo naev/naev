@@ -231,7 +231,8 @@ typedef struct OutfitModificationData_ {
    double energy_rel;   /**< Relative to energy base modifier. */
    double energy_regen; /**< Energy regeneration modifier. */
    double energy_loss;  /**< Energy regeneration modifier. */
-   double cpu;          /**< CPU modifier. */
+   double cpu;          /**< CPU usage. */
+   double cpu_max;      /**< CPU increase. */
    double absorb;       /**< Absorption factor. */
 
    /* Misc. */
@@ -407,6 +408,7 @@ int outfit_amount( const Outfit* o );
 double outfit_energy( const Outfit* o );
 double outfit_heat( const Outfit* o );
 double outfit_cpu( const Outfit* o );
+double outfit_cpu_max( const Outfit* o );
 double outfit_range( const Outfit* o );
 double outfit_speed( const Outfit* o );
 double outfit_spin( const Outfit* o );

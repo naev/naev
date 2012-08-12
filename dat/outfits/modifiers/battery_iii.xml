@@ -10,7 +10,6 @@
   <gfx_store>capacitor4-g</gfx_store>
  </general>
  <specific type="modification">
-  <cpu>0</cpu>
   <energy>800</energy>
  </specific>
 </outfit>

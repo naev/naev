@@ -10,7 +10,6 @@
   <gfx_store>capacitor2-g</gfx_store>
  </general>
  <specific type="modification">
-  <cpu>0</cpu>
   <energy>400</energy>
  </specific>
 </outfit>
