@@ -8,9 +8,9 @@
   <price>12500</price>
   <description>The mark 2 laser cannon improves on the original in many ways. Featuring increased range and greater firepower while only moderately increasing power demands, it's become a favourite civilian armament.</description>
   <gfx_store>laser2</gfx_store>
+  <cpu>-5</cpu>
   </general>
  <specific type="bolt">
-  <cpu>-5</cpu>
   <gfx>laser2S</gfx>
   <sound>laser</sound>
   <spfx_shield>ShiS</spfx_shield>

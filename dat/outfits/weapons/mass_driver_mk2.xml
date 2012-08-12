@@ -8,9 +8,9 @@
   <price>32000</price>
   <description>The MK2 version of the Mass Driver differs little from its weaker model in its working. Rather, the parts it's made of have a better performance curve, allowing the driver rounds to be fired with increased force.</description>
   <gfx_store>gatling</gfx_store>
+  <cpu>-15</cpu>
  </general>
  <specific type="bolt">
-  <cpu>-15</cpu>
   <gfx>autocannon</gfx>
   <sound>autocannon</sound>
   <sound_hit>medexp0</sound_hit>

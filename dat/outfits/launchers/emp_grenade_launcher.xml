@@ -7,9 +7,9 @@
   <price>31000</price>
   <gfx_store>empgrenadelauncher</gfx_store>
   <description>This launcher can fire EMP grenades in any direction using a unique internal guidance system. These are favoured by traders for escaping from pirates.</description>
+  <cpu>-8</cpu>
  </general>
  <specific type="turret launcher" secondary="1">
-  <cpu>-8</cpu>
   <ammo>EMP Grenade</ammo>
   <delay>2</delay>
   <amount>18</amount>

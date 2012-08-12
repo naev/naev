@@ -7,9 +7,9 @@
   <price>5000</price>
   <description>A home-made laser cannon for personal use by Captain T. Practice.</description>
   <gfx_store>laser</gfx_store>
+  <cpu>-5</cpu>
   </general>
  <specific type="bolt">
-  <cpu>-5</cpu>
   <gfx>laser1S</gfx>
   <sound>laser</sound>
   <spfx_shield>ShiS</spfx_shield>

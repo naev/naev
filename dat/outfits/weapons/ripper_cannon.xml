@@ -8,9 +8,9 @@
   <price>35000</price>
   <description>The Ripper Cannon is a variant on the Laser Cannon that has stronger capacitors and twin, synchronous muzzles. The result is an increase in damage per hit, though the weapon needs longer to recharge than the standard model, so rate of fire suffers. The Ripper Cannon is mostly used by experienced pilots who don't need to rely on rapid fire to hit their marks anymore.</description>
   <gfx_store>ripper</gfx_store>
+  <cpu>-10</cpu>
  </general>
  <specific type="bolt">
-  <cpu>-10</cpu>
   <gfx>ripperS</gfx>
   <sound>ripper</sound>
   <spfx_shield>ShiS</spfx_shield>

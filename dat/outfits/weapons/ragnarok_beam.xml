@@ -8,9 +8,9 @@
   <price>745000</price>
   <description>The Ragnarok Beam is one of the most powerful beam class weapons on the market. It's designed for capital ship combat, although its extremely large payload makes it somewhat useful for clearing enemy fighters.</description>
   <gfx_store>ragnarok</gfx_store>
+  <cpu>-80</cpu>
  </general>
  <specific type="turret beam" secondary="1">
-  <cpu>-80</cpu>
   <delay>10</delay>
   <duration>5</duration>
   <range>400</range>

@@ -8,9 +8,9 @@
   <price>135000</price>
   <description>By improving your ship's stabilization systems drastically, this modification will allow you to reach higher speeds while still keeping the ship stable.</description>
   <gfx_store>stabilizer</gfx_store>
+  <cpu>-2</cpu>
  </general>
  <specific type="modification">
-  <cpu_flat>-2</cpu_flat>
   <speed>3</speed>
   <speed_mod>10</speed_mod>
   <turn_mod>3</turn_mod>

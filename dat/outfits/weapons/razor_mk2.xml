@@ -7,9 +7,9 @@
   <price>11000</price>
   <description>The upgraded civilian Razor model packs increased overall effectiveness compared to its predecessor, and has less difficulty in overloading capital ship grade shielding. As with the basic model, the Razor MK2 is best used to drain a target's shields, paving the way for other weapons to deliver the finishing blow.</description>
   <gfx_store>ioncannon</gfx_store>
+  <cpu>-6</cpu>
  </general>
  <specific type="bolt">
-  <cpu>-6</cpu>
   <gfx>razorS</gfx>
   <sound>ion</sound>
   <spfx_shield>ShiS</spfx_shield>

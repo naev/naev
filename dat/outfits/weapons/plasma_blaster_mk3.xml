@@ -8,9 +8,9 @@
   <price>26000</price>
   <description>The Plasma Blaster MK3 is a Soromid refinement to what was originally an Imperial design. It is one of the few Soromid military weapons that are compatible with standard ship mount points. The Soromid use it mainly for local law enforcement purposes.</description>
   <gfx_store>plasma2</gfx_store>
+  <cpu>-7</cpu>
  </general>
  <specific type="bolt">
-  <cpu>-7</cpu>
   <gfx>plasma2</gfx>
   <sound>plasma</sound>
   <spfx_shield>ShiS</spfx_shield>
