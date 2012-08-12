@@ -1100,7 +1100,7 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
          return 0;
 
       /* Must be able to add. */
-      if (pilot_canEquip( eq_wgt.selected, NULL, o, 1 ) != NULL)
+      if (pilot_canEquip( eq_wgt.selected, slot, o, 1 ) != NULL)
          return 0;
 
       /* Add outfit to ship. */
