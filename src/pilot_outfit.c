@@ -802,6 +802,8 @@ void pilot_calcStats( Pilot* pilot )
     */
    /* mass */
    pilot->solid->mass   = pilot->ship->mass;
+   /* cpu */
+   pilot->cpu           = 0;
    /* movement */
    pilot->thrust_base   = pilot->ship->thrust;
    pilot->turn_base     = pilot->ship->turn;
