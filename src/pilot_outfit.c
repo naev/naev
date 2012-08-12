@@ -550,6 +550,7 @@ const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o )
 {
    Outfit *o_old;
    const char *err;
+   double pa, ps, pe, pf;
 
    /* Just in case. */
    if ((p==NULL) || (s==NULL))
@@ -569,6 +570,12 @@ const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o )
          return "Recall the fighters first";
    }
 
+   /* Store health. */
+   pa = p->armour;
+   ps = p->shield;
+   pe = p->energy;
+   pf = p->fuel;
+
    /* Swap outfit. */
    o_old       = s->outfit;
    s->outfit   = o;
@@ -582,6 +589,12 @@ const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o )
 
    /* Recalc. */
    pilot_calcStats( p );
+
+   /* Recover health. */
+   p->armour = pa;
+   p->shield = ps;
+   p->energy = pe;
+   p->fuel   = pf;
    
    return err;
 }
