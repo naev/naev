@@ -481,37 +481,37 @@ const char* pilot_checkSanity( Pilot *p )
 
    /* CPU. */
    if (p->cpu < 0)
-      return "Negative CPU";
+      return "Insufficient CPU";
 
    /* Movement. */
    if (p->thrust < 0.)
-      return "Negative Thrust";
+      return "Insufficient Thrust";
    if (p->speed < 0.)
-      return "Negative Speed";
+      return "Insufficient Speed";
    if (p->turn < 0.)
-      return "Negative Turn";
+      return "Insufficient Turn";
 
    /* Health. */
    if (p->armour_max < 0.)
-      return "Negative Armour";
+      return "Insufficient Armour";
    if (p->armour_regen < 0.)
-      return "Negative Armour Regeneration";
+      return "Insufficient Armour Regeneration";
    if (p->shield_max < 0.)
-      return "Negative Shield";
+      return "Insufficient Shield";
    if (p->shield_regen < 0.)
-      return "Negative Shield Regeneration";
+      return "Insufficient Shield Regeneration";
    if (p->energy_max < 0.)
-      return "Negative Energy";
+      return "Insufficient Energy";
    if (p->energy_regen < 0.)
-      return "Negative Energy Regeneration";
+      return "Insufficient Energy Regeneration";
 
    /* Misc. */
    if (p->fuel_max < 0.)
-      return "Negative Fuel Maximum";
+      return "Insufficient Fuel Maximum";
    if (p->fuel_consumption < 0.)
-      return "Negative Fuel Consumption";
+      return "Insufficient Fuel Consumption";
    if (p->cargo_free < 0)
-      return "Negative Free Cargo Space";
+      return "Insufficient Free Cargo Space";
 
    /* All OK. */
    return NULL;
