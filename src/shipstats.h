@@ -88,6 +88,7 @@ typedef enum ShipStatsType_ {
    /*
     * I: Integer type data. Should be continuous.
     */
+   SS_TYPE_I_HIDDEN_JUMP_DETECT, /**< Hidden jump detection. */
 
    /*
     * B: Boolean type data. Should be continuous.
@@ -206,7 +207,8 @@ typedef struct ShipStats_ {
    double nebula_dmg_shield; /**< Shield nebula resistance. */
    double nebula_dmg_armour; /**< Armour nebula resistance. */
    int misc_instant_jump;    /**< Do not require brake or chargeup to jump. */
-   int misc_reverse_thrust;  /**< Do not require brake or chargeup to jump. */
+   int misc_reverse_thrust;  /**< Slows down the ship instead of turning it around. */
+   int misc_hidden_jump_detect; /**< Degree of hidden jump detection. */
 } ShipStats;
 
 

@@ -128,6 +128,8 @@ static const ShipStatsLookup ss_lookup[] = {
 
    A__ELEM( SS_TYPE_A_ENGINE_LIMIT,       engine_limit,        "Engine Mass Limit" ),
    AI_ELEM( SS_TYPE_A_FUEL_CONSUMPTION,   fuel_consumption,    "Engine Fuel Consumption" ),
+
+   I__ELEM( SS_TYPE_I_HIDDEN_JUMP_DETECT, misc_hidden_jump_detect, "Hidden Jump Detection" ),
    
    B__ELEM( SS_TYPE_B_INSTANT_JUMP,       misc_instant_jump,   "Instant Jump" ),
    B__ELEM( SS_TYPE_B_REVERSE_THRUST,     misc_reverse_thrust, "Reverse Thrusters" ),

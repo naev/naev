@@ -2816,12 +2816,14 @@ static void space_renderJumpPoint( JumpPoint *jp, int i )
 {
    const glColour *c;
 
-   if (jp_isFlag( jp, JP_HIDDEN ) || jp_isFlag( jp, JP_EXITONLY ))
+   if (jp_isFlag( jp, JP_EXITONLY ) || !jp_isKnown(jp))
       return;
 
    if ((player.p != NULL) && (i==player.p->nav_hyperspace) &&
          (pilot_isFlag(player.p, PILOT_HYPERSPACE) || space_canHyperspace(player.p)))
       c = &cGreen;
+   else if (jp_isFlag(jp, JP_HIDDEN))
+      c = &cRed;
    else
       c = NULL;
 
