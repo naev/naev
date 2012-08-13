@@ -1375,7 +1375,7 @@ void space_init( const char* sysname )
    cur_system->nsystemFleets = 0;
 
    /* Reset any schedules and used presence. */
-   for (i=0; i < cur_system->npresence; i++) {
+   for (i=0; i<cur_system->npresence; i++) {
       cur_system->presence[i].curUsed  = 0;
       cur_system->presence[i].timer    = 0.;
       cur_system->presence[i].disabled = 0;
@@ -1490,13 +1490,11 @@ static int planets_load ( void )
    /* Load XML stuff. */
    planet_files = ndata_list( PLANET_DATA_PATH, &nfiles );
    for (i=0; i<(int)nfiles; i++) {
-
-      len = (strlen(PLANET_DATA_PATH)+strlen(planet_files[i])+2)*sizeof(char);
-
-      file = malloc( len );
+      len  = (strlen(PLANET_DATA_PATH)+strlen(planet_files[i])+2);
+      file = malloc( len * sizeof(char) );
       nsnprintf( file, len,"%s%s",PLANET_DATA_PATH,planet_files[i]);
-      buf = ndata_read( file, &bufsize );
-      doc = xmlParseMemory( buf, bufsize );
+      buf  = ndata_read( file, &bufsize );
+      doc  = xmlParseMemory( buf, bufsize );
       if (doc == NULL) {
          WARN("%s file is invalid xml!",file);
          free(file);
@@ -1524,6 +1522,10 @@ static int planets_load ( void )
       free(buf);
    }
 
+   /* Clean up. */
+   for (i=0; i<(int)nfiles; i++)
+      free( planet_files[i] );
+   free( planet_files );
 
    return 0;
 }
@@ -2673,7 +2675,7 @@ static int systems_load (void)
    xmlNodePtr node;
    xmlDocPtr doc;
    StarSystem *sys;
-   int i;
+   int i, len;
    uint32_t nfiles;
 
    /* Allocate if needed. */
@@ -2690,8 +2692,9 @@ static int systems_load (void)
     */
    for (i=0; i<(int)nfiles; i++) {
 
-      file = malloc((strlen(SYSTEM_DATA_PATH)+strlen(system_files[i])+2)*sizeof(char));
-      nsnprintf(file,(strlen(SYSTEM_DATA_PATH)+strlen(system_files[i])+2)*sizeof(char),"%s%s",SYSTEM_DATA_PATH,system_files[i]);
+      len  = strlen(SYSTEM_DATA_PATH)+strlen(system_files[i])+2;
+      file = malloc( len * sizeof(char) );
+      nsnprintf( file, len, "%s%s", SYSTEM_DATA_PATH, system_files[i] );
       /* Load the file. */
       buf = ndata_read( file, &bufsize );
       doc = xmlParseMemory( buf, bufsize );
@@ -2715,6 +2718,7 @@ static int systems_load (void)
       /* Clean up. */
       xmlFreeDoc(doc);
       free(buf);
+      free( file );
    }
 
    /*

@@ -477,6 +477,7 @@ static void sysedit_btnScale( unsigned int wid_unused, char *unused )
 
    sys   = sysedit_sys; /* Comfort. */
    s     = atof(str);
+   free(str);
 
    /* In case screwed up. */
    if ((s < 0.1) || (s > 10.)) {
