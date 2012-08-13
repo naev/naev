@@ -538,7 +538,7 @@ char** nfile_readDir( int* nfiles, const char* path, ... )
    if ((*nfiles) > 0) {
 
       /* Need to allocate some stuff */
-      files = malloc( sizeof(char*) * (*nfiles) );
+      files = malloc( sizeof(char*)  * (*nfiles) );
       ft    = malloc( sizeof(time_t) * (*nfiles) );
 
       /* Fill the list */

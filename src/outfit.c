@@ -1740,6 +1740,7 @@ static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent )
       if (xml_isNode(node,"sys")) {
          buf = xml_nodeProp(node,"name");
          if ((buf != NULL) && ((sys = system_get(buf)) != NULL)) {
+            free(buf);
             array_grow( &temp->u.map->systems ) = sys;
 
             cur = node->children;
