@@ -1181,6 +1181,7 @@ static void sysedit_editPnt( void )
    window_addInput( wid, x += l + 5, y, 30, 20, "inpPresenceRange", 1, 1, NULL );
    window_setInputFilter( wid, "inpPresenceRange",
          "abcdefghijklmnopqrstuvwyzABCDEFGHIJKLMNOPQRSTUVWXYZ[]{}()-=*/\\'\"~<>!@#$%^&|_`." );
+   x += 30 + 10;
 
    s = "hide";
    l = gl_printWidthRaw( NULL, s );
