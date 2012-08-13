@@ -278,6 +278,7 @@ typedef struct Pilot_ {
    double cpu;       /**< Amount of CPU the pilot has left. */
    double cpu_max;   /**< Maximum amount of CPU the pilot has. */
    double crew;      /**< Crew amount the player has (display it as (int)floor(), but it's analogue. */
+   double cap_cargo; /**< Pilot's cargo capacity. */
 
    /* Movement */
    double thrust;    /**< Pilot's thrust in px/s^2. */

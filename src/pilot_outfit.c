@@ -810,6 +810,8 @@ void pilot_calcStats( Pilot* pilot )
    pilot->speed_base    = pilot->ship->speed;
    /* crew */
    pilot->crew          = pilot->ship->crew;
+   /* cargo */
+   pilot->cap_cargo     = pilot->ship->cap_cargo;
    /* health */
    ac = (pilot->armour_max > 0.) ? pilot->armour / pilot->armour_max : 0.;
    sc = (pilot->shield_max > 0.) ? pilot->shield / pilot->shield_max : 0.;
@@ -875,7 +877,7 @@ void pilot_calcStats( Pilot* pilot )
          /* Fuel. */
          pilot->fuel_max      += o->u.mod.fuel;
          /* Misc. */
-         pilot->cargo_free    += o->u.mod.cargo;
+         pilot->cap_cargo     += o->u.mod.cargo;
          pilot->mass_outfit   += o->u.mod.mass_rel * pilot->ship->mass;
          pilot->crew          += o->u.mod.crew_rel * pilot->ship->crew;
          /*
@@ -967,6 +969,7 @@ void pilot_calcStats( Pilot* pilot )
    /* Misc. */
    pilot->dmg_absorb    = MAX( 0., pilot->dmg_absorb );
    pilot->crew         *= s->crew_mod;
+   pilot->cap_cargo    *= s->cargo_mod;
 
    /*
     * Flat increases.
