@@ -2,7 +2,7 @@
 -- This is the third mission in the "shadow" series, featuring the return of SHITMAN.
 --]]
 
-include ("scripts/proximity.lua")
+include ("proximity.lua")
 
 -- localization stuff, translators would work here
 lang = naev.lang()

@@ -1,5 +1,5 @@
-include "scripts/cargo_common.lua"
-include "scripts/jumpdist.lua"
+include "cargo_common.lua"
+include "jumpdist.lua"
 
 --[[
 

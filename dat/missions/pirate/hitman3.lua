@@ -41,8 +41,8 @@ include("dat/missions/pirate/common.lua")
 
 
 -- Scripts we need
-include("scripts/pilot/empire.lua")
-include("scripts/jumpdist.lua")
+include("pilot/empire.lua")
+include("jumpdist.lua")
 
 
 function create ()

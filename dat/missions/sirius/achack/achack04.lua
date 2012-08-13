@@ -3,9 +3,9 @@
 -- This mission is started from a helper event.
 --]]
 
-include "scripts/fleethelper.lua"
-include "scripts/proximity.lua"
-include "scripts/enum.lua"
+include "fleethelper.lua"
+include "proximity.lua"
+include "enum.lua"
 
 -- localization stuff, translators would work here
 lang = naev.lang()

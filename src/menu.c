@@ -44,6 +44,7 @@
 #include "start.h"
 #include "camera.h"
 #include "board.h"
+#include "ndata.h"
 
 
 #define MAIN_WIDTH      130 /**< Main menu width. */
@@ -164,7 +165,7 @@ void menu_main (void)
    music_choose("load");
 
    /* Load background and friends. */
-   tex = gl_newImage( "gfx/Naev.png", 0 );
+   tex = gl_newImage( GFX_PATH"Naev.png", 0 );
    main_naevLogo = tex;
    menu_main_bkg_system();
 

@@ -1,4 +1,4 @@
-include("scripts/prng.lua")
+include("prng.lua")
 
 nebulae = {
    "nebula02.png",
@@ -65,7 +65,7 @@ end
 
 function background_nebula ()
    -- Set up parameters
-   local path  = "gfx/bkg/"
+   local path  = "dat/gfx/bkg/"
    local nebula = nebulae[ prng.range(1,#nebulae) ]
    local img   = tex.open( path .. nebula )
    local w,h   = img:dim()
@@ -115,7 +115,7 @@ end
 
 function star_add( added, num_added )
    -- Set up parameters
-   local path  = "gfx/bkg/star/"
+   local path  = "dat/gfx/bkg/star/"
    -- Avoid repeating stars
    local num   = prng.range(1,#stars)
    local i     = 0

@@ -37,7 +37,7 @@ end
 
 
 -- Scripts we need
-include("scripts/pilot/pirate.lua")
+include("pilot/pirate.lua")
 include("dat/missions/empire/common.lua")
 
 

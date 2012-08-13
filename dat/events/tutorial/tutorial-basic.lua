@@ -1,6 +1,6 @@
 -- This is the first tutorial: basic operation.
 
-include("scripts/proximity.lua")
+include("proximity.lua")
 include("dat/events/tutorial/tutorial-common.lua")
 
 -- localization stuff, translators would work here

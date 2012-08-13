@@ -7,7 +7,7 @@
 --
 --]]
 
-include("scripts/jumpdist.lua")
+include("jumpdist.lua")
 
 -- Localization, choosing a language if naev is translated for non-english-speaking locales.
 lang = naev.lang()

@@ -2,10 +2,10 @@
 -- This is the second mission in the "shadow" series.
 --]]
 
-include "scripts/proximity.lua"
-include "scripts/nextjump.lua"
-include "scripts/chatter.lua"
-include "scripts/selectiveclear.lua"
+include "proximity.lua"
+include "nextjump.lua"
+include "chatter.lua"
+include "selectiveclear.lua"
 
 -- localization stuff, translators would work here
 lang = naev.lang()

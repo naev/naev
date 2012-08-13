@@ -8,7 +8,7 @@
 
 -- localization stuff, translators would work here
 
-include("scripts/fleethelper.lua")
+include("fleethelper.lua")
 
 lang = naev.lang()
 if lang == "es" then

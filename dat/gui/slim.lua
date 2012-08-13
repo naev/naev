@@ -46,7 +46,7 @@ function create()
    col_slot_bg = colour.new( 12/255, 14/255, 20/255 )
 
    --Load Images
-   local base = "gfx/gui/slim/"
+   local base = "dat/gfx/gui/slim/"
    player_pane_t = tex.open( base .. "frame_player_top.png" )
    player_pane_m = tex.open( base .. "frame_player_middle.png" )
    player_pane_b = tex.open( base .. "frame_player_bottom.png" )

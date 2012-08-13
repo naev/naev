@@ -3,8 +3,8 @@
 -- To Do (anyone): improve dialog, add flf dialog
 --]]
 
-include "scripts/fleethelper.lua" 
-include "scripts/proximity.lua"
+include "fleethelper.lua" 
+include "proximity.lua"
 
 -- localization stuff, translators would work here
 lang = naev.lang()

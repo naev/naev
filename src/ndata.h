@@ -15,13 +15,16 @@
 /*
  * Define various paths
  */
-#define PLANET_GFX_SPACE_PATH    "gfx/planet/space/" /**< Location of planet space graphics. */
-#define PLANET_GFX_EXTERIOR_PATH "gfx/planet/exterior/" /**< Location of planet exterior graphics (when landed). */
-#define GUI_GFX_PATH             "gfx/gui/" /**< Location of the GUI graphics. */
-#define SHIP_GFX_PATH            "gfx/ship/" /**< Location of ship graphics. */
-#define OUTFIT_GFX_PATH          "gfx/outfit/" /**< Path to outfit graphics. */
-#define SPFX_GFX_PATH            "gfx/spfx/" /**< location of the graphic */
-#define FACTION_LOGO_PATH        "gfx/logo/" /**< Path to logo gfx. */
+#define PLANET_GFX_SPACE_PATH    "dat/gfx/planet/space/" /**< Location of planet space graphics. */
+#define PLANET_GFX_EXTERIOR_PATH "dat/gfx/planet/exterior/" /**< Location of planet exterior graphics (when landed). */
+#define GFX_PATH                 "dat/gfx/" /**< Location of the graphics root. */
+#define GUI_GFX_PATH             "dat/gfx/gui/" /**< Location of the GUI graphics. */
+#define PORTRAIT_GFX_PATH        "dat/gfx/portraits/" /**< Location of the portrait graphics. */
+#define SHIP_GFX_PATH            "dat/gfx/ship/" /**< Location of ship graphics. */
+#define OUTFIT_GFX_PATH          "dat/gfx/outfit/" /**< Path to outfit graphics. */
+#define SPFX_GFX_PATH            "dat/gfx/spfx/" /**< location of the graphic */
+#define FACTION_LOGO_PATH        "dat/gfx/logo/" /**< Path to logo gfx. */
+#define SOUND_PATH               "dat/snd/sounds/" /**< Location of the sounds. */
 
 #define FACTION_DATA_PATH        "dat/faction.xml" /**< Faction xml file. */
 #define MISSION_DATA_PATH        "dat/mission.xml" /**< Path to missions XML. */
@@ -45,13 +48,16 @@
 
 #define NEBULA_PATH              "nebula/" /**< Path to nebula files. */
 
-#define MUSIC_PATH               "snd/music/" /**< Prefix of where to find musics. */
-#define MUSIC_LUA_PATH           "snd/music.lua" /**< Lua music control file. */
+#define MUSIC_PATH               "dat/snd/music/" /**< Prefix of where to find musics. */
+#define MUSIC_LUA_PATH           "dat/snd/music.lua" /**< Lua music control file. */
 
 #define START_DATA_PATH          "dat/start.xml" /**< Path to module start file. */
 
 #define FONT_DEFAULT_PATH        "dat/font.ttf" /**< Default font path. */
 #define OMSG_FONT_DEFAULT_PATH   "dat/mono.ttf" /**< Default font path. */
+
+#define LUA_INCLUDE_PATH         "dat/scripts/" /**< Path for Lua includes. */
+#define AI_PATH                  "dat/ai/" /**< Location of the AI files. */
 
 /*
  * ndata open/close

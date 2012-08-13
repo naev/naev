@@ -1862,7 +1862,7 @@ int gui_init (void)
    /*
     * Icons.
     */
-   gui_ico_hail = gl_newSprite( "gfx/gui/hail.png", 5, 2, 0 );
+   gui_ico_hail = gl_newSprite( GUI_GFX_PATH"hail.png", 5, 2, 0 );
 
    return 0;
 }

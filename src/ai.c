@@ -122,10 +122,7 @@
 /*
  * file info
  */
-#define AI_PREFIX       "ai/" /**< AI file prefix. */
 #define AI_SUFFIX       ".lua" /**< AI file suffix. */
-#define AI_INCLUDE      "include/" /**< Where to search for includes. */
-
 #define AI_MEM_DEF      "def" /**< Default pilot memory. */
 
 
@@ -642,7 +639,7 @@ int ai_load (void)
    int n;
 
    /* get the file list */
-   files = ndata_list( AI_PREFIX, &nfiles );
+   files = ndata_list( AI_PATH, &nfiles );
 
    /* load the profiles */
    suflen = strlen(AI_SUFFIX);
@@ -651,7 +648,7 @@ int ai_load (void)
       if ((flen > suflen) &&
             strncmp(&files[i][flen-suflen], AI_SUFFIX, suflen)==0) {
 
-         nsnprintf( path, PATH_MAX, AI_PREFIX"%s", files[i] );
+         nsnprintf( path, PATH_MAX, AI_PATH"%s", files[i] );
          if (ai_loadProfile(path)) /* Load the profile */
             WARN("Error loading AI profile '%s'", path);
       }
@@ -729,9 +726,9 @@ static int ai_loadProfile( const char* filename )
    prof = &array_grow(&profiles);
 
    /* Set name. */
-   len = strlen(filename)-strlen(AI_PREFIX)-strlen(AI_SUFFIX);
+   len = strlen(filename)-strlen(AI_PATH)-strlen(AI_SUFFIX);
    prof->name = malloc(sizeof(char)*(len+1) );
-   strncpy( prof->name, &filename[strlen(AI_PREFIX)], len );
+   strncpy( prof->name, &filename[strlen(AI_PATH)], len );
    prof->name[len] = '\0';
 
    /* Create Lua. */
