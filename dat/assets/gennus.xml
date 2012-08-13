@@ -30,6 +30,7 @@
   <bar>It's hard to find a smiling face in this spaceport bar. Not too surprising, given how unpleasant life on this planet is.</bar>
  </general>
  <tech>
+  <item>Systems Low</item>
   <item>Laser 1</item>
   <item>Laser 2</item>
   <item>Basic Outfits 1</item>

@@ -34,6 +34,7 @@
   <bar>At the center of this spaceport bar stands a pillar, on which are displayed all the names that the planet has been known by, including the name of one unfortunate Warlord named Clerke, who was in control of this world for a little under four hours.</bar>
  </general>
  <tech>
+  <item>Engines Low</item>
   <item>Kinetic 2</item>
   <item>Basic Outfits 2</item>
   <item>Missiles 1</item>

@@ -26,6 +26,7 @@
   <description>This station is a minor Soromid military outpost. The ships here mainly patrol the surrounding systems and perform routine cargo inspections. Otherwise, the station serves mainly as a refuel and resupply base for larger Soromid fleets that move through this area of space.</description>
  </general>
  <tech>
+  <item>Hulls Medium</item>
   <item>High Tech Upgrades 1</item>
   <item>High Tech Upgrades 2</item>
   <item>Heavy Weapons 1</item>

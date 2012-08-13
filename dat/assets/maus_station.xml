@@ -27,6 +27,8 @@
   <description>Maus Station controls the jump route that runs between Verex and Gruz. This route bypasses Dvaer entirely, which makes it popular with smugglers to and from Sirius space. Maus Station intends to make sure that security in this area is as tight as everywhere else.</description>
  </general>
  <tech>
+  <item>Hulls Medium</item>
+  <item>Engines Low</item>
   <item>Kinetic 1</item>
   <item>Kinetic 2</item>
   <item>Kinetic 3</item>

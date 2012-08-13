@@ -29,6 +29,9 @@
   <bar>The bar is alive with fights and carousing of drunk patrons. A few patrons busy themselves with card games in a corner, and the shaider merchants talk business of debatably drinkable alcohol. Truly a pirate bar.</bar>
  </general>
  <tech>
+  <item>Hulls Low</item>
+  <item>Hulls Medium</item>
+  <item>Engines Medium</item>
   <item>Laser 1</item>
   <item>Laser 2</item>
   <item>Ion 1</item>

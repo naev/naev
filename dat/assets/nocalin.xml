@@ -31,6 +31,9 @@
   <bar>This spaceport bar has marning signs mounted over the doors and on the walls. The signs warn travelers of the dry climate on Nocalin. Dehydration is a real risk, and while exposing oneself to the outside air directly isn't harmful in itself, it is a good idea to protect your skin with a moisturizing lotion first.</bar>
  </general>
  <tech>
+  <item>Systems Medium</item>
+  <item>Hulls Medium</item>
+  <item>Engines Low</item>
   <item>Laser 1</item>
   <item>Plasma 1</item>
   <item>Basic Outfits 2</item>

@@ -33,6 +33,9 @@
   <bar>The spaceport bar is not frequented much. The Soromid who come here on vacation typically go straight to the terminals, and they constitute most of the spaceport's traffic. The bar is used only by the captains of the supply and trade ships that land on Zeppei.</bar>
  </general>
  <tech>
+  <item>Hulls Medium</item>
+  <item>Engines Low</item>
+  <item>Engines Medium</item>
   <item>Basic Outfits 1</item>
   <item>Missiles 1</item>
   <item>Systems High</item>

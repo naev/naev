@@ -33,6 +33,8 @@
   <bar>Most of Lora-Mor's surface is given over to spacious vacation residences and nature parks. The majority of the planet's permanent population lives around the spaceport, and the spaceport bar is their chief recreational facility. This generally works out, as not many spacers visit Lora-Mor other than to ferry tourists to and fro.</bar>
  </general>
  <tech>
+  <item>Systems Low</item>
+  <item>Hulls Low</item>
   <item>Star Maps</item>
   <item>Missiles 1</item>
   <item>Basic Outfits 1</item>

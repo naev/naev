@@ -33,6 +33,9 @@
   <bar>The spaceport bar on Aldarus offers a variety of recreational activities such as gambling and competitive gaming. There are also walled-off booths for private conversations, in case the bar's main area is a little too public for comfort. Or its music too grating on the ears.</bar>
  </general>
  <tech>
+  <item>Systems Low</item>
+  <item>Systems Medium</item>
+  <item>Hulls Low</item>
   <item>Missiles 1</item>
   <item>Basic Outfits 1</item>
   <item>Star Maps</item>

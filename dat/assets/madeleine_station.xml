@@ -29,6 +29,8 @@
   <bar>Since traders don't come to this military base, the bar is only frequented by Imperial military personnel. It's more like a canteen than a bar, really.</bar>
  </general>
  <tech>
+  <item>Systems Low</item>
+  <item>Hulls Low</item>
   <item>Laser 1</item>
   <item>Laser 2</item>
   <item>High Tech Upgrades 1</item>

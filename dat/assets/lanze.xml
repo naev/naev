@@ -31,6 +31,8 @@
   <bar>Where other spaceports tend to tuck their spaceport bars away in a corner of the spaceport facility, the architect of this spaceport decided the bar should be right on top of the complex - literally. The spaceport bar is the topmost facility, looking out and down on the rest of the spaceport. All outer walls and the ceiling are transparent, so visitors have a great view of spaceships coming in and going out.</bar>
  </general>
  <tech>
+  <item>Systems Low</item>
+  <item>Hulls Medium</item>
   <item>Low Tech Upgrades</item>
   <item>High Tech Upgrades 1</item>
   <item>Basic Outfits 2</item>

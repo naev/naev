@@ -30,6 +30,10 @@
   <bar>Being such an important location for Soromid society, security on Woncloak is pretty tight. In particular, visitors have their background checked, to make sure they're not here with a Za'lek agenda. The spaceport bar can only be accessed after pilots have passed all the security protocols.</bar>
  </general>
  <tech>
+  <item>Systems Medium</item>
+  <item>Hulls Low</item>
+  <item>Hulls Medium</item>
+  <item>Engines Medium</item>
   <item>Plasma 1</item>
   <item>Basic Outfits 1</item>
   <item>Heavy Weapons 1</item>

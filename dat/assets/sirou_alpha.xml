@@ -31,6 +31,8 @@
   <bar>The bar still sells of disinfectant and industrial equipment. Massive, yet quiet air scrubbers keep the air clean, no matter how much cigar smoke the Imperial officers here cna throw at it. It's a populat stopping point for traders and Imperial soldiers alike.</bar>
  </general>
  <tech>
+  <item>Systems Medium</item>
+  <item>Engines Medium</item>
   <item>Laser 1</item>
   <item>Laser 2</item>
   <item>Ion 1</item>

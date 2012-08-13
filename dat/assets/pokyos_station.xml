@@ -29,6 +29,8 @@
   <bar>There's not much to do here. Military stations are seldom places to sit down and have a chat. At best, you can use the spacedock bar to meet one of the officers on station.</bar>
  </general>
  <tech>
+  <item>Hulls Medium</item>
+  <item>Engines Medium</item>
   <item>Ion 3</item>
   <item>Basic Outfits 2</item>
   <item>Heavy Weapons 1</item>

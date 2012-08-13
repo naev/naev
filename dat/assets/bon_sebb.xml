@@ -34,6 +34,10 @@
   <bar>The bar on Bon Sebb is built out of things scavenged from the Junkle. The walls and furniture are all patchworks of various designs and materials. The only somewhat symmetrical feature of the bar is a holoportrait of the Creator of the Universe, hanging over the lopsided bar.</bar>
  </general>
  <tech>
+  <item>Systems Low</item>
+  <item>Hulls Low</item>
+  <item>Engines Low</item>
+  <item>Engines Medium</item>
   <item>All Outfits</item>
  </tech>
 </asset>

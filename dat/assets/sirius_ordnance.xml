@@ -30,6 +30,8 @@
   <description>As with most of the Sirius fleet, the equipment installed on the ships is produced right here at Aesir. As a general rule, no finished ship leaves the system without being fully equipped first.</description>
  </general>
  <tech>
+  <item>Hulls Low</item>
+  <item>Engines Low</item>
   <item>Ion 1</item>
   <item>Ion 2</item>
   <item>Ion 3</item>

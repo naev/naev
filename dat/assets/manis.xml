@@ -34,6 +34,7 @@
   <bar>Perhaps uniquely in the entire galaxy, Manis' spaceport bar doesn't serve alcohol. It has any amount of sodas and herbal teas available, but they don't seem as effective at attracting customers to the bar as would your ordinary spacer's swill.</bar>
  </general>
  <tech>
+  <item>Engines Low</item>
   <item>Low Tech Upgrades</item>
   <item>Engines High</item>
  </tech>

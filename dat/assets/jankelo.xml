@@ -29,6 +29,7 @@
   <bar>The spaceport bar is the only place where a normal spacer can go, other than the spaceport docks themselves. Jankelo is such a hostile planet that maintaining human friendly conditions is a considerable, and costly, operation. Anyone who is not a trader or otherwise on business has no reason to be here.</bar>
  </general>
  <tech>
+  <item>Engines Low</item>
   <item>Missiles 2</item>
   <item>Basic Outfits 1</item>
  </tech>

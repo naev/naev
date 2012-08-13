@@ -31,6 +31,10 @@
   <bar>Even today, the Empire's military remains a well oiled machine. It isn't content to work with old or substandard equipment, and so replacement parts and ships must constantly be produced. Rockhardt has a steady supply of manufacturing orders coming in at any given time, and the commercial traffic that accompanies it is clearly visible in the spaceport bar.</bar>
  </general>
  <tech>
+  <item>Systems Medium</item>
+  <item>Hulls Medium</item>
+  <item>Engines Low</item>
+  <item>Engines Medium</item>
   <item>Light Civilian Combat Ships</item>
   <item>Heavy Civilian Combat Ships</item>
   <item>Missiles 1</item>

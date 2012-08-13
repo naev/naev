@@ -31,6 +31,9 @@
   <bar>The bar is clean and large, with various games and vids for entertainment of patrons. The food is good and the drinks are great. One could stay a long time here.</bar>
  </general>
  <tech>
+  <item>Systems Medium</item>
+  <item>Hulls Medium</item>
+  <item>Engines Medium</item>
   <item>Laser 1</item>
   <item>Laser 2</item>
   <item>Ion 1</item>

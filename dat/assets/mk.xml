@@ -34,6 +34,8 @@
   <bar>Both Soromid and non-Soromid frequent this spaceport bar. As Wildwood Station is more of a service utility than a real community, M.K. is often the first real Soromid port most new traders visit. It is therefore here they get their first taste of a full-fledged Soromid society. It's not uncommon to find yound pilots looking at the surroundings with a mixture of wonder and nervousness.</bar>
  </general>
  <tech>
+  <item>Engines Low</item>
+  <item>Engines Medium</item>
   <item>Plasma 1</item>
   <item>Basic Outfits 2</item>
   <item>Missiles 1</item>

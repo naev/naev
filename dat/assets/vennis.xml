@@ -35,6 +35,7 @@
   <bar>Though the planet is many cycles away from being suitable for open-air human life, the spaceport authorities have put up various promotional holovids that showcase the terraforming effort and its predicted effects. It's a mandatory watch for any visitor to the spaceport bar who wishes to use the standard facilities.</bar>
  </general>
  <tech>
+  <item>Systems Low</item>
   <item>Missiles 1</item>
   <item>Basic Civilian Ships</item>
   <item>Basic Trade Ships</item>

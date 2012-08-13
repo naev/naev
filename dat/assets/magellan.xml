@@ -30,6 +30,7 @@
   <bar>The spaceport bar is full of bedraggled colonists who are trying to get away from their hard everyday lives. Though a fairly unimpressive facility, it still beats the hab complexes that litter the surrounding desert. Magellan has a long way to go.</bar>
  </general>
  <tech>
+  <item>Systems Medium</item>
   <item>Basic Outfits 1</item>
   <item>Missiles 1</item>
  </tech>

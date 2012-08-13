@@ -31,6 +31,8 @@
   <bar>This bar is shockingly convival and clean, all things considered. The locals are determined to make their lives that much more enjoyable, and to prove to outsiders that they cna conquer their homeworld's harsh enviroment.</bar>
  </general>
  <tech>
+  <item>Hulls Medium</item>
+  <item>Engines Medium</item>
   <item>Kinetic 1</item>
   <item>Kinetic 2</item>
   <item>Basic Outfits 1</item>

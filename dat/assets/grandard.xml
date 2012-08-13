@@ -31,6 +31,9 @@
   <bar>This bar has pictures of some of the more renowned fighter pilots in its history. Several imperial officers look at these pictures in what cna only be described as burning envy. Prospective aces, then.</bar>
  </general>
  <tech>
+  <item>Systems Medium</item>
+  <item>Hulls Medium</item>
+  <item>Engines Low</item>
   <item>Laser 1</item>
   <item>Laser 2</item>
   <item>Kinetic 1</item>

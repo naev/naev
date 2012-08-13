@@ -33,6 +33,8 @@
   <bar>The Soromid are very protective of Turawee. Offworlders are allowed to land, but they have to abide by strict local rules. No smoking is allowed in this bar, nor can any unauthorized goods or substances be brought inside.</bar>
  </general>
  <tech>
+  <item>Hulls Medium</item>
+  <item>Engines Medium</item>
   <item>Plasma 1</item>
   <item>Plasma 2</item>
   <item>Low Tech Upgrades</item>

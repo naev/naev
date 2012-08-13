@@ -29,6 +29,8 @@
   <bar>This bar is always full of people, some crowding around the many holovid pillars to watch the fights in the tournament, others drinking their sorrows away if their contestant was unlucky. The air is buzzing with excitement, and it's hard to make oneself heard over the din. For this reason, orders are placed through terminals projected onto the table surface, and drinks are served from a small dispenser in the middle of the table. Obviously, this establishment is making a lot of money.</bar>
  </general>
  <tech>
+  <item>Hulls Low</item>
+  <item>Engines Medium</item>
   <item>Kinetic 1</item>
   <item>Kinetic 2</item>
   <item>Basic Outfits 1</item>

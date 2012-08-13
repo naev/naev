@@ -34,6 +34,8 @@
   <bar>Dvaer Prime sports a well appointed spaceport bar. It is not so much luxurious as it is grimy, but at least all necessary facilities are present and in working order, and the drinks are decent enough by Dvaered standards. A holopainting on the wall commemorates the inauguration ceremony for House Dvaered, but it is faded and warped in places, a testament to the fact that most Dvaered citizens have long ago forgotten that they are technically still part of the Empire.</bar>
  </general>
  <tech>
+  <item>Systems Medium</item>
+  <item>Hulls Low</item>
   <item>Kinetic 1</item>
   <item>Kinetic 2</item>
   <item>Bulk Trade Ships</item>

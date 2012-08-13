@@ -34,6 +34,7 @@
   <bar>This is the main Paxadon spaceport bar. Paxadon has several secondary spaceports, because traffic to and from the world is rather heavy. The main spaceport remains the port of choice for most spacers, though, because it alone offers the various utilities that many need in everyday space life. The spaceport bar is one such utility.</bar>
  </general>
  <tech>
+  <item>Engines Medium</item>
   <item>Ion 2</item>
   <item>Plasma 1</item>
   <item>Basic Outfits 1</item>

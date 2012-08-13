@@ -34,6 +34,9 @@
   <bar>The spaceport bar is one of the few places on the planet that is environmentally conditioned to suit normal humans. Any non-Soromid wishing to visit the actual population centers will need to wear protective clothing, or suffer the consequences.</bar>
  </general>
  <tech>
+  <item>Systems Low</item>
+  <item>Hulls Low</item>
+  <item>Engines Medium</item>
   <item>Missiles 1</item>
   <item>Missiles 2</item>
   <item>Basic Outfits 2</item>

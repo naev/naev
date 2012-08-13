@@ -34,6 +34,9 @@
   <bar>The bar features a big display that shows the geological map of the planet. While most of the world is covered in ocean, making for a rather uninteresting map, the display also shows all volcanic activity going on at the moment. For this reason, it is actually quite interesting to watch.</bar>
  </general>
  <tech>
+  <item>Systems Medium</item>
+  <item>Hulls Low</item>
+  <item>Hulls Medium</item>
   <item>Heavy Civilian Combat Ships</item>
   <item>Basic Outfits 1</item>
   <item>Heavy Weapons 2</item>

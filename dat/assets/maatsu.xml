@@ -34,6 +34,7 @@
   <bar>Maatsu sees a fair bit of commerce traffic, so its spaceport bar thrives. Prices of food and drink are exorbitant as a result, but that's nothing new to the average interplanetary trader. So long as the basic facilities are present and readily available, bars can get away with quite a lot.</bar>
  </general>
  <tech>
+  <item>Hulls Low</item>
   <item>Ion 1</item>
   <item>Laser 1</item>
   <item>Basic Outfits 1</item>

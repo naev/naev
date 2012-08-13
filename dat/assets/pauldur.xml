@@ -34,6 +34,8 @@
   <bar>This bar is fairly quiet. Not many people stop by Pauldur who aren't from the moon to begin with, and those who are from here don't usually stop by the spaceport bar.</bar>
  </general>
  <tech>
+  <item>Engines Low</item>
+  <item>Engines Medium</item>
   <item>Laser 1</item>
   <item>Basic Outfits 1</item>
   <item>Star Maps</item>

@@ -28,6 +28,9 @@
   <bar>The bar is clean and orderly, and there are several bartenders tending to the needs of the patrons. Several officers come and go to talk to the men in here.</bar>
  </general>
  <tech>
+  <item>Systems Medium</item>
+  <item>Hulls Low</item>
+  <item>Hulls Medium</item>
   <item>Laser 1</item>
   <item>Laser 2</item>
   <item>Basic Outfits 1</item>

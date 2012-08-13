@@ -34,6 +34,8 @@
   <bar>This spaceport bar is unsavory. No other word will describe the place with the same accuracy. A good portion of the bar's clientele are wearing hoods, masks, or other garments to hide their personal features. The lighting is set to quite a dim level, allowing customers to find corners as dark as they please. Despite these obvious signs, the Dvaered officials that sometimes frequent the bar don't seem very keen to investigate.</bar>
  </general>
  <tech>
+  <item>Hulls Medium</item>
+  <item>Engines Low</item>
   <item>Kinetic 2</item>
   <item>Basic Outfits 1</item>
   <item>Heavy Weapons 1</item>

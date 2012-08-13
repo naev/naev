@@ -30,6 +30,9 @@
   <bar>Trader-heavy spacedock bars like this one are often a good place to hear stories from across the galaxy. Word of mouth is still a potent source of information even in this day and age, as the news channels only report on so much that goes on in the galaxy.</bar>
  </general>
  <tech>
+  <item>Systems Medium</item>
+  <item>Hulls Low</item>
+  <item>Hulls Medium</item>
   <item>Basic Outfits 2</item>
   <item>Star Maps</item>
   <item>Missiles 1</item>

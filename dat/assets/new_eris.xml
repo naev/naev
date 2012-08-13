@@ -31,6 +31,8 @@
   <bar>Despite being on the fringe of Dvaered space, the inhabitants of New Eris keep up with all the social trends in the core. The spaceport bar, always a popular recreational stop for local youngsters, is a fine display of Dvaered fasion. If you like that sort of thing.</bar>
  </general>
  <tech>
+  <item>Systems Medium</item>
+  <item>Hulls Medium</item>
   <item>Kinetic 1</item>
   <item>Kinetic 2</item>
   <item>Kinetic 3</item>

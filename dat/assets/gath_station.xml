@@ -27,6 +27,7 @@
   <description>Gath Station is a local law enforcement station. It maintains security in the sector and responds to pirate attacks.</description>
  </general>
  <tech>
+  <item>Hulls Low</item>
   <item>Missiles 2</item>
   <item>Ion 2</item>
   <item>Heavy Civilian Combat Ships</item>

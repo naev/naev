@@ -32,6 +32,8 @@
   <bar>The spaceport bar is not too remarkable, as you might expect from a colonist world. The place is functional and simple. There is, however, a public display that shows the current state of the terraforming operation. It never visibly changes, but the graphs show that over the cycles, progress is being made.</bar>
  </general>
  <tech>
+  <item>Hulls Medium</item>
+  <item>Engines Medium</item>
   <item>Basic Outfits 1</item>
  </tech>
 </asset>

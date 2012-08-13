@@ -34,6 +34,9 @@
   <bar>Like all structures on the planet Atalanta's bar is built under the ice, but it is quite close to the surface. This is because a spectacular lighting effect can be observed overhead when the sun shines directly on the ice. Atalanta's orbit makes this a rare occurrence, but the bar's profits soar during every cycle.</bar>
  </general>
  <tech>
+  <item>Systems Medium</item>
+  <item>Hulls Medium</item>
+  <item>Engines Medium</item>
   <item>Basic Outfits 1</item>
   <item>Missiles 1</item>
   <item>Missiles 2</item>

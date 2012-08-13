@@ -29,6 +29,8 @@
   <bar>Trevis Station is one of those places where young military personnel are stationed to get some field experience under their belt before being sent to the more dangerous systems. Many of them will complain at each other in the bar about how bored they are and how they hope to get a real position sometime soon, but the more experienced soldiers know that few posts are as enviable as the ones on Trevis.</bar>
  </general>
  <tech>
+  <item>Engines Low</item>
+  <item>Engines Medium</item>
   <item>Ion 1</item>
   <item>Basic Outfits 1</item>
   <item>Missiles 2</item>

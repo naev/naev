@@ -29,6 +29,9 @@
   <bar>The bar here is an old-Earth style pub, with a low cieling, warm beer, and good food. The clients are all polite and cheerful. Not suprisingl, given the bouncers along the walls.</bar>
  </general>
  <tech>
+  <item>Systems Low</item>
+  <item>Engines Low</item>
+  <item>Engines Medium</item>
   <item>Light Civilian Combat Ships</item>
   <item>Heavy Civilian Combat Ships</item>
   <item>Laser 1</item>

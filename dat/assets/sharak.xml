@@ -31,6 +31,8 @@
   <bar>There's a small public city built around the spaceport for servicing ships and handling the usual planetary logistics, but most of Sharak's surface is private property. The spaceport bar is the only public recreatonal facility on the face of Sharak.</bar>
  </general>
  <tech>
+  <item>Hulls Low</item>
+  <item>Engines Low</item>
   <item>Ion 2</item>
   <item>Laser 2</item>
   <item>Basic Outfits 1</item>
