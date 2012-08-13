@@ -18,6 +18,11 @@
   <asset>Sola</asset>
  </assets>
  <jumps>
+  <jump target="Farizel">
+   <pos x="16389.466085" y="19308.290733"/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Sultan">
    <autopos/>
    <hide>1.250000</hide>

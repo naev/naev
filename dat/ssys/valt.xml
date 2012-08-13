@@ -17,6 +17,11 @@
   <asset>Vault</asset>
  </assets>
  <jumps>
+  <jump target="C-28">
+   <pos x="-6275.245619" y="-7360.922215"/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Kelvos">
    <autopos/>
    <hide>1.250000</hide>

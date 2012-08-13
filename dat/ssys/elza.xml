@@ -18,6 +18,11 @@
   <asset>Virtual Civilian Standard</asset>
  </assets>
  <jumps>
+  <jump target="Babylon">
+   <pos x="-12320.234029" y="-17908.052951"/>
+   <exitonly/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Moordra">
    <autopos/>
    <hide>1.250000</hide>

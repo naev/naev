@@ -27,6 +27,11 @@
    <autopos/>
    <hide>1.250000</hide>
   </jump>
+  <jump target="Tartan">
+   <pos x="7695.981028" y="20113.548757"/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Willow">
    <autopos/>
    <hide>1.250000</hide>

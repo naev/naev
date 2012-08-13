@@ -22,6 +22,11 @@
    <autopos/>
    <hide>1.250000</hide>
   </jump>
+  <jump target="Ksher">
+   <pos x="-25423.475476" y="-12044.438458"/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Radix">
    <autopos/>
    <hide>0.000000</hide>

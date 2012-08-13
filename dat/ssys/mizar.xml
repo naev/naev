@@ -23,5 +23,10 @@
    <pos x="-7960.892232" y="-26332.526438"/>
    <hide>1.250000</hide>
   </jump>
+  <jump target="Possum">
+   <pos x="36258.855420" y="13921.750314"/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
  </jumps>
 </ssys>
