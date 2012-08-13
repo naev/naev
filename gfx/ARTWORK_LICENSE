@@ -358,6 +358,8 @@
        * store
          * thruster.png
          * accuracy_forward.png
+         * accuracy_forward_2.png
+         * accuracy_forward_3.png
          * accuracy_turret.png
          * damage_forward.png
          * efficiency_turret.png
