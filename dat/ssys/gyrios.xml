@@ -22,6 +22,11 @@
   <asset>Virtual Trader Local</asset>
  </assets>
  <jumps>
+  <jump target="Fulcrum">
+   <pos x="39312.054286" y="-16938.914267"/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Karman">
    <autopos/>
    <hide>1.250000</hide>

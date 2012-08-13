@@ -22,6 +22,11 @@
   <asset>Virtual Civilian Standard</asset>
  </assets>
  <jumps>
+  <jump target="Feye">
+   <pos x="-8480.227727" y="3424.977223"/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Point Zero">
    <autopos/>
    <hide>1.250000</hide>

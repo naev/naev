@@ -1704,6 +1704,8 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
       gui_planetBlink( w, h, rc, cx, cy, vr, shape );
       col = &cGreen;
    }
+   else if (jp_isFlag(jp, JP_HIDDEN))
+      col = &cRed;
    else
       col = &cWhite;
    if (overlay)

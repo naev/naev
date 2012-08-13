@@ -12,6 +12,11 @@
  </pos>
  <assets/>
  <jumps>
+  <jump target="Druid">
+   <pos x="8880.810551" y="-7925.311697"/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Sarrii">
    <autopos/>
    <hide>1.250000</hide>

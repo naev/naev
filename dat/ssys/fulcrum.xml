@@ -19,6 +19,11 @@
    <autopos/>
    <hide>1.250000</hide>
   </jump>
+  <jump target="Gyrios">
+   <autopos/>
+   <exitonly/>
+   <hide>0.000000</hide>
+  </jump>
   <jump target="Jackson">
    <autopos/>
    <hide>1.250000</hide>

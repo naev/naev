@@ -20,5 +20,10 @@
    <autopos/>
    <hide>1.250000</hide>
   </jump>
+  <jump target="Tormulex">
+   <pos x="-1261.740957" y="-1640.900352"/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
  </jumps>
 </ssys>

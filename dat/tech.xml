@@ -95,6 +95,10 @@
   <item>Steering Thrusters</item>
   <item>Generic Afterburner</item>
   <item>Hellburner</item>
+  <item>Light Emergency Shield Booster</item>
+  <item>Medium Emergency Shield Booster</item>
+  <item>Heavy Emergency Shield Booster</item>
+  <item>Hidden Jump Scanner</item>
   <item>Reverse Thrusters</item>
   <item>Fuel Pod</item>
   <item>Cargo Pod</item>
@@ -456,6 +460,7 @@
   <item>Unmodified Medium Hull</item>
   <item>Patchwork Heavy Plating</item>
   <item>Unmodified Large Hull</item>
+  <item>Light Emergency Shield Booster</item>
   </tech>
  <tech name="Heavy Weapons 1">
   <item>Laser Turret MK1</item>
@@ -498,6 +503,7 @@
   <item>Unicorp Jammer</item>
   <item>Jump Scanner</item>
   <item>Light Combat Vessel License</item>
+  <item>Medium Emergency Shield Booster</item>
  </tech>
  <tech name="High Tech Upgrades 1">
   <item>Battery</item>
@@ -526,6 +532,8 @@
   <item>Lancelot Fighter Bay</item>
   <item>Lancelot Fighter</item>
   <item>Medium Weapon License</item>
+  <item>Medium Emergency Shield Booster</item>
+  <item>Heavy Emergency Shield Booster</item>
  </tech>
  <tech name="High Tech Upgrades 2">
   <item>Battery III</item>
@@ -545,6 +553,8 @@
   <item>Lancelot Fighter Bay</item>
   <item>Lancelot Fighter</item>
   <item>Medium Weapon License</item>
+  <item>Medium Emergency Shield Booster</item>
+  <item>Heavy Emergency Shield Booster</item>
  </tech>
  <tech name="Missiles 1">
   <item>Unicorp Banshee Launcher</item>
