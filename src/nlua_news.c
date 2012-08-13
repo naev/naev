@@ -106,19 +106,96 @@ int newsL_add( lua_State *L ){
 
    news_t* n_article;
    Lua_article Larticle;
-   char* title;
-   char* content;
-   char* faction;
-   ntime_t date,date_to_add,date_to_rm;
+   char* title=NULL;
+   char* content=NULL;
+   char* faction=NULL;
+   ntime_t date=0,date_to_add=0,date_to_rm=0;
 
 
-   // // lua_State temp;
-   // if (lua_istable(L,1))
-   // {
-   //    printf("\nis table");
-   //    lua_pushnumber();
+   // If a table is passed in. ugly hack
+   if (lua_istable(L,1))
+   {
+      printf("\nis table");
 
-   // }
+      lua_pushnil(L);   
+   
+         //traverse table
+      while (lua_next(L, -2)) {
+
+            //traverse sub table
+         if (lua_istable(L,-1)){
+
+            printf("\n\n table: ");
+            lua_pushnil(L); 
+            while (lua_next(L, -2)){
+
+               if (lua_isstring(L,-1)){
+                  if (!faction)
+                     faction=strdup(lua_tostring(L,-1));
+                  else if (!title)
+                     title=strdup(lua_tostring(L,-1));
+                  else if (!content)
+                     content=strdup(lua_tostring(L,-1));
+                  printf("\n\t%s",lua_tostring(L,-1));
+               }
+               else if (lua_isnumber(L, -1)){
+                  if (!date_to_add)
+                     date=lua_tonumber(L,-1);
+                  if (!date)
+                     date=lua_tonumber(L,-1);
+                  if (!date_to_rm)
+                     date=lua_tonumber(L,-1);
+                  printf("\n\t%d ",(int)lua_tonumber(L,-1));
+               }
+               else if (lua_istime(L,-1)){
+                  if (!date_to_add)
+                     date=luaL_validtime(L,-1);
+                  if (!date)
+                     date=luaL_validtime(L,-1);
+                  if (!date_to_rm)
+                     date=luaL_validtime(L,-1);
+                  printf("\n\t%lu ",luaL_validtime(L,-1));
+               }
+
+               lua_pop(L, 1);
+            }
+
+            if (title && content && faction){
+
+               date_to_add = ( date_to_add ) ? date_to_add : 0;
+               date = (date) ? date : date_to_add;
+               date_to_rm = (date_to_rm) ? date_to_rm : 50000000000000;
+
+               printf("  %lu,%lu,%lu",date_to_add,date,date_to_rm);
+
+               new_article(title, content, faction, date, date_to_add, date_to_rm);
+            }
+            else printf("Bad arguments");
+
+            free(faction);
+            free(title);
+            free(content);
+            faction=NULL;
+            title=NULL;
+            content=NULL;
+
+         }
+
+         lua_pop(L, 1);
+      }
+
+      lua_pop(L, 1);
+
+            /* If we're landed, we should regenerate the news buffer. */
+      if (landed) {
+         generate_news(faction_name(land_planet->faction));
+         if (land_loaded)
+            bar_regen();
+      }
+
+      return 1;
+   }
+
 
    if (!(lua_isstring(L,1) && lua_isstring(L,2) && lua_isstring(L,3))){
       WARN("\nBad arguments, use addArticle(\"Faction\",\"Title\",\"Content\",[date_to_add,[date_to_rm,[date_to_show]]])");
@@ -188,6 +265,7 @@ int newsL_add( lua_State *L ){
 
    return 1;
 }
+
 
 /**
  * @brief frees an article

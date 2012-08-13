@@ -93,6 +93,8 @@ news_t* new_article(char* title, char* content, char* faction, ntime_t date,
     ntime_t date_to_add, ntime_t date_to_rm)
 {
 
+   printf("\n%s:%s",faction,title);
+
 	news_t* article_ptr;
 
 		/* make new article */

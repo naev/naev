@@ -42,11 +42,11 @@ He takes a deep breath, "We hope to be able to find out more secrets of the Sol 
    articles=
    {
    {
-      faction="Generic",
-      title="Scientists launch science probe into the nebula",
-      text="A group of scientists have succesfully launched a science probe in the nebula. The probe was specifically designed to be resistant to the corrosive environment of the nebula, and is supposed to bring new clues about the nature of the gas and where it's from",  
-      date_to_add=time.get(),
-      date_to_rm=time.get()+time.create(0,30,0)
+      "Generic",
+      "Scientists launch science probe into the nebula",
+      "A group of scientists have succesfully launched a science probe in the nebula. The probe was specifically designed to be resistant to the corrosive environment of the nebula, and is supposed to bring new clues about the nature of the gas and where it's from",  
+      time.get(),
+      time.get()+time.create(0,30,0)
    }
    }
 end
@@ -67,7 +67,7 @@ function create ()
    misn.setNPC( "Scientists", "neutral/scientist" )
    misn.setDesc( bar_desc )
 
-   makenews()
+   news.add(articles);
 end
 
 
@@ -124,13 +124,6 @@ function jumpin ()
    if misn_stage == 0 and sys == satellite_sys then
       hook.timer( 3000, "beginLaunch" )
    end
-end
-
-
-function makenews()
-    for _,v in ipairs(articles) do
-        news.add(v["faction"],v["title"],v["text"],v["date_to_add"],v["date_to_rm"])
-    end
 end
 
 --[[

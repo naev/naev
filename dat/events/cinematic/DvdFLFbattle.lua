@@ -17,7 +17,7 @@ else --default english
     {
         "Empire",
         "Dvaered forces engaged in combat with small terrorist group",
-        "In what the Dvaered call a 'Mighty victory', a Dvaered force was attacked and damaged by a small group of underequipped and unorganized FLF, in the Tuoladis system. The Dvaered managed to lose many tens of millions of credits to the small gang worth of ships and equipment, and the relative victory of the FLF will only embolden them, leading to more internal strife and violence.",
+        "In what the Dvaered call a 'Mighty victory', a Dvaered force was attacked and damaged by a small group of underequipped and unorganized FLF, in the Tuoladis system. The Dvaered managed to lose many tens of millions of credits worth in ships and crew to the small gang worth of ships and equipment, and the relative victory of the FLF will only embolden them, leading to more internal strife and violence.",
         time.get(),
         time.get()+time.create(0,30,0)
     },
@@ -48,10 +48,8 @@ else --default english
 
     }
 
-
-
-
 end
+
 
 function create ()
     pilot.clear()
@@ -108,15 +106,6 @@ function DvaeredSpawn ()
         hook.timer(3000, "DvaeredSpawn")
     end
 end
-
--- function makenews()
---     for _,v in ipairs(articles) do
---         print(v["faction"])
---         print("they are:"..v["faction"]..v["title"]..v["text"])
---         news.add(v["faction"],v["title"],v["text"],v["date_to_add"],v["date_to_rm"])
---     end
--- end
-
 
 function leave () --event ends on player leaving the system or landing
     evt.finish()
