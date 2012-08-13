@@ -1,19 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <Techs>
- <!-- EXAMPLE showing a tech may contain outfits, ships, commodities and other techs. -->
- <!-- For details, see http://groups.google.com/group/naev/browse_thread/thread/76ece93aa9162ceb -->
- <tech name="Test">
-  <item>Laser Cannon MK1</item>
-  <item>Llama</item>
-  <item>Food</item>
-  <item>Test2</item>
- </tech>
- <tech name="Test2">
-  <item>Laser Cannon MK1</item>
-  <item>Mule</item>
-  <item>Ore</item>
- </tech>
-
  <!-- Templates - add all new outfits, commodities and ships here! -->
  <tech name="All Outfits">
   <item>Laser Cannon MK1</item>
