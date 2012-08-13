@@ -803,7 +803,7 @@ void pilot_calcStats( Pilot* pilot )
    /* mass */
    pilot->solid->mass   = pilot->ship->mass;
    /* cpu */
-   pilot->cpu           = pilot->cpu_max;
+   pilot->cpu           = 0.;
    /* movement */
    pilot->thrust_base   = pilot->ship->thrust;
    pilot->turn_base     = pilot->ship->turn;
@@ -963,6 +963,7 @@ void pilot_calcStats( Pilot* pilot )
    pilot->energy_regen *= s->energy_regen_mod;
    /* cpu */
    pilot->cpu_max       = (pilot->ship->cpu + s->cpu_max)*s->cpu_mod;
+   pilot->cpu          += pilot->cpu_max; /* CPU is negative, this just sets it so it's based off of cpu_max. */
    /* Misc. */
    pilot->dmg_absorb    = MAX( 0., pilot->dmg_absorb );
    pilot->crew         *= s->crew_mod;
