@@ -384,7 +384,7 @@ function add_header(faction)
    header=header_table[faction][1]
    desc=greet_table[faction][math.random(#greet_table[faction])]
 
-   news.add(faction,header,desc,0,50000000000005,50000000000005)
+   news.add(faction,header,desc,50000000000005)
 
 end
 

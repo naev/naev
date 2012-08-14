@@ -86,14 +86,13 @@ extern ntime_t naev_time;
  *		@param title	the article title
  *		@param content	the article content
  *		@param faction	the article faction, NULL for generic
- *		@param currentdate date to put
+ *		@param date date to put
+ *    @param date_to_rm date to remove the article
  *	@return pointer to new article
  */
 news_t* new_article(char* title, char* content, char* faction, ntime_t date,
-    ntime_t date_to_add, ntime_t date_to_rm)
+    ntime_t date_to_rm)
 {
-
-   printf("\n%s:%s",faction,title);
 
 	news_t* article_ptr;
 
@@ -113,7 +112,6 @@ news_t* new_article(char* title, char* content, char* faction, ntime_t date,
 	}
 
    n_article->date=date;
-   n_article->date_to_add=date_to_add;
    n_article->date_to_rm=date_to_rm;
 
       /* If it belongs first*/
@@ -155,12 +153,6 @@ int free_article(int id)
       news_list = news_list->next;
 
       if (article_to_rm->next == NULL){
-         printf("\n\nALL ARTICLES\n\n");
-         while (article_ptr!=NULL){
-            printf("%d:\n%s:%li:%s",article_ptr->id,article_ptr->title,article_ptr->date,article_ptr->desc);
-            article_ptr=article_ptr->next;
-         }
-         printf("\n---\n\n");
          WARN("\nLast article, do not remove");
          return -1;
       }
@@ -285,13 +277,6 @@ int *generate_news( char* faction )
       if (article_ptr->faction==NULL){
          break;
       }
-
-         /* if we can show the article yet */
-      if (article_ptr->date_to_add>ntime_get()){
-         article_ptr=article_ptr->next;
-         continue;
-      }
-
          /* if the article is due for removal */
       if (article_ptr->date_to_rm<=ntime_get()){
          temp=article_ptr->next;
@@ -577,7 +562,6 @@ int news_saveArticles( xmlTextWriterPtr writer )
          xmlw_attr(writer,"desc","%s",ndesc);
          xmlw_attr(writer,"faction","%s",article_ptr->faction);
          xmlw_attr(writer,"date","%li",article_ptr->date);
-         xmlw_attr(writer,"date_to_add","%li",article_ptr->date_to_add);
          xmlw_attr(writer,"date_to_rm","%li",article_ptr->date_to_rm);
          xmlw_attr(writer,"id","%i",article_ptr->id);
 
@@ -645,7 +629,7 @@ static int news_parseArticle( xmlNodePtr parent )
    char* ntitle;
    char* ndesc;
    char* buff;
-   ntime_t date, date_to_add, date_to_rm;
+   ntime_t date, date_to_rm;
    xmlNodePtr node;
 
    news_t* n_article;
@@ -684,14 +668,6 @@ static int news_parseArticle( xmlNodePtr parent )
       }
       date = atol(buff);
       free(buff);
-      xmlr_attr(node,"date_to_add",buff);
-      if (faction==NULL) {
-         free(title); free(desc); free(faction);
-         WARN("Event has missing date attribute, skipping.");
-         continue;
-      }
-      date_to_add = atol(buff);
-      free(buff);
       xmlr_attr(node,"date_to_rm",buff);
       if (faction==NULL) {
          free(title); free(desc); free(faction);
@@ -716,7 +692,7 @@ static int news_parseArticle( xmlNodePtr parent )
 
 
          /* make the article*/
-      n_article=new_article(ntitle,ndesc,faction,date,date_to_add,date_to_rm);
+      n_article=new_article(ntitle,ndesc,faction,date,date_to_rm);
       if (tag!=NULL){
          n_article->tag=strdup(tag);
       }

@@ -44,9 +44,7 @@ He takes a deep breath, "We hope to be able to find out more secrets of the Sol 
    {
       "Generic",
       "Scientists launch science probe into the nebula",
-      "A group of scientists have succesfully launched a science probe in the nebula. The probe was specifically designed to be resistant to the corrosive environment of the nebula, and is supposed to bring new clues about the nature of the gas and where it's from",  
-      time.get(),
-      time.get()+time.create(0,30,0)
+      "A group of scientists have succesfully launched a science probe in the nebula. The probe was specifically designed to be resistant to the corrosive environment of the nebula, and is supposed to bring new clues about the nature of the gas and where it's from", 
    }
    }
 end
@@ -67,7 +65,6 @@ function create ()
    misn.setNPC( "Scientists", "neutral/scientist" )
    misn.setDesc( bar_desc )
 
-   news.add(articles);
 end
 
 
@@ -149,6 +146,12 @@ function countLaunch ()
    end
 end
 function launchSatellite ()
+
+   articles[1][4]=time.get()
+   articles[1][5]=time.get()+time.get(0,3,0)
+   news.add(articles)
+
+
    misn_stage = 1
    player.msg( launch[3] )
    misn.cargoJet( cargo )
