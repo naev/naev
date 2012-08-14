@@ -157,18 +157,21 @@ static int nlua_packfileLoader( lua_State* L )
    lua_pop(L,1);
 
    /* Try to locate the data directly */
-   buf = ndata_read( filename, &bufsize );
-   if (buf == NULL) {
+   if (ndata_exists( filename ))
+      buf = ndata_read( filename, &bufsize );
+   else {
       /* Try to locate the data in the data path */
-      len = strlen(LUA_INCLUDE_PATH)+strlen(filename)+2;
+      len           = strlen(LUA_INCLUDE_PATH)+strlen(filename)+2;
       path_filename = malloc( len * sizeof(char) );
       nsnprintf( path_filename, len, "%s%s", LUA_INCLUDE_PATH, filename );
-      
-      buf = ndata_read( path_filename, &bufsize );
-      if (buf == NULL) {
-         lua_pushfstring(L, "%s not found in ndata.", filename);
-         return 1;
-      }
+      if (ndata_exists( path_filename ))
+         buf = ndata_read( path_filename, &bufsize );
+   }
+
+   /* Must have buf by now. */
+   if (buf == NULL) {
+      lua_pushfstring(L, "%s not found in ndata.", filename);
+      return 1;
    }
 
    /* run the buffer */
