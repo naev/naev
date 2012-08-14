@@ -30,6 +30,7 @@
 #include "nlua_outfit.h"
 #include "nlua_commodity.h"
 #include "nlua_cli.h"
+#include "nstring.h"
 
 
 /*
@@ -128,7 +129,8 @@ int nlua_loadBasic( lua_State* L )
  */
 static int nlua_packfileLoader( lua_State* L )
 {
-   const char *filename, *path_filename;
+   const char *filename;
+   char *path_filename;
    char *buf;
    int len;
    uint32_t bufsize;
@@ -158,9 +160,9 @@ static int nlua_packfileLoader( lua_State* L )
    buf = ndata_read( filename, &bufsize );
    if (buf == NULL) {
       /* Try to locate the data in the data path */
-      len = (strlen(LUA_INCLUDE_PATH)+strlen(filename)+2)*sizeof(char);
-      path_filename = malloc( len );
-      nsnprintf( path_filename, len,"%s%s",LUA_INCLUDE_PATH,filename); 
+      len = strlen(LUA_INCLUDE_PATH)+strlen(filename)+2;
+      path_filename = malloc( len * sizeof(char) );
+      nsnprintf( path_filename, len, "%s%s", LUA_INCLUDE_PATH, filename );
       
       buf = ndata_read( path_filename, &bufsize );
       if (buf == NULL) {
