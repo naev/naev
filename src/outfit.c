@@ -1496,7 +1496,7 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
          "%s"
          "%s",
          outfit_getType(temp),
-         (temp->u.mod.active) ? "\erActivated Outfit\e0\n" : "" );
+         (temp->u.mod.active) ? "\n\erActivated Outfit\e0" : "" );
 
 #define DESC_ADD(x, s, n) \
 if ((x) != 0.) \
