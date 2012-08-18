@@ -70,6 +70,7 @@ function equip_dvaeredMilitary( p, shipsize )
          medium         = { "Generic Afterburner", "Milspec Scrambler" }
          use_medium     = 2
          low            = { "Solar Panel" }
+         equip_cores(p, "Tricon Naga Mk9 Engine", "Milspec Orion 5501 Core System", "Schafer & Kane Light Stealth Plating")
 
       -- Fighter
       elseif class == "Fighter" then
@@ -79,6 +80,7 @@ function equip_dvaeredMilitary( p, shipsize )
          addWeapons( equip_secondaryDva(), use_secondary )
          medium         = equip_mediumLow()
          low            = equip_lowLow()
+         equip_cores(p, "Tricon Naga Mk9 Engine", "Milspec Orion 5501 Core System", "Schafer & Kane Light Stealth Plating")
 
       -- Bomber
       elseif class == "Bomber" then
@@ -88,6 +90,7 @@ function equip_dvaeredMilitary( p, shipsize )
          addWeapons( equip_secondaryDva(), use_secondary )
          medium         = equip_mediumLow()
          low            = equip_lowLow()
+         equip_cores(p, "Tricon Naga Mk9 Engine", "Milspec Orion 5501 Core System", "Schafer & Kane Light Combat Plating")
       end
 
    elseif shipsize == "medium" then
@@ -99,8 +102,10 @@ function equip_dvaeredMilitary( p, shipsize )
       addWeapons( equip_forwardDvaMed(), use_forward )
       medium         = equip_mediumMed()
       low            = equip_lowMed()
+      equip_cores(p, "Tricon Centaur Mk7 Engine", "Milspec Orion 8801 Core System", "Schafer & Kane Medium Combat Plating Gamma")
 
    else -- "large"
+      -- TODO: Divide into carrier and cruiser classes.
       use_secondary  = 2
       use_turrets = nhigh - use_secondary - rnd.rnd(2,3)
       if rnd.rnd() > 0.4 then -- Anti-fighter variant.
@@ -114,7 +119,9 @@ function equip_dvaeredMilitary( p, shipsize )
       addWeapons( equip_turretDvaHig(), use_turrets )
       medium         = equip_mediumHig()
       low            = equip_lowHig()
-   end
+      equip_cores(p, "Tricon Harpy Mk11 Engine", "Milspec Orion 9901 Core System", "Schafer & Kane Heavy Combat Plating Gamma")
+
+      end
    equip_ship( p, false, weapons, medium, low, 
                use_medium, use_low )
 end

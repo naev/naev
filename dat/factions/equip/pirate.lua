@@ -76,6 +76,7 @@ function equip_pirateMilitary( p, shipsize )
          medium         = { "Generic Afterburner", "Milspec Scrambler" }
          use_medium     = 2
          low            = { "Solar Panel" }
+         equip_cores(p, "Tricon Naga Mk5 Engine", "Milspec Orion 2302 Core System", "Schafer & Kane Light Combat Plating")
 
       -- Fighter
       elseif class == "Fighter" then
@@ -89,6 +90,7 @@ function equip_pirateMilitary( p, shipsize )
          addWeapons( equip_forwardPirLow(), use_primary )
          medium         = equip_mediumLow()
          low            = equip_lowLow()
+         equip_cores(p, "Tricon Naga Mk5 Engine", "Milspec Orion 2302 Core System", "Schafer & Kane Light Combat Plating")
 
 
       -- Bomber
@@ -99,6 +101,7 @@ function equip_pirateMilitary( p, shipsize )
          addWeapons( equip_secondaryPirLow(), use_secondary )
          medium         = equip_mediumLow()
          low            = equip_lowLow()
+         equip_cores(p, "Tricon Naga Mk5 Engine", "Milspec Orion 2302 Core System", "Schafer & Kane Light Combat Plating")
 
       end
 
@@ -117,6 +120,7 @@ function equip_pirateMilitary( p, shipsize )
       addWeapons( equip_forwardPirMed(), use_primary )
       medium         = equip_mediumMed()
       low            = equip_lowMed()
+      equip_cores(p, "Tricon Centaur Mk3 Engine", "Milspec Orion 3702 Core System", "Schafer & Kane Medium Combat Plating Alpha")
 
 
    else
@@ -127,6 +131,7 @@ function equip_pirateMilitary( p, shipsize )
       addWeapons( equip_secondaryPirMedLow(), use_secondary )
       medium         = equip_mediumHig()
       low            = equip_lowHig()
+      equip_cores(p, "Tricon Harpy Mk6 Engine", "Milspec Orion 4802 Core System", "Schafer & Kane Heavy Combat Plating Beta")
 
    end
    equip_ship( p, true, weapons, medium, low,

@@ -73,6 +73,7 @@ function equip_siriusMilitary( p, shipsize )
          medium         = { "Generic Afterburner", "Milspec Scrambler" }
          use_medium     = 2
          low            = { "Solar Panel" }
+         equip_cores(p, "Tricon Naga Mk9 Engine", "Milspec Orion 5501 Core System", "Schafer & Kane Light Stealth Plating")
 
       -- Fighter
       elseif class == "Fighter" then
@@ -83,6 +84,7 @@ function equip_siriusMilitary( p, shipsize )
          addWeapons( equip_secondarySrs(), use_secondary )
          medium         = equip_mediumLow()
          low            = equip_lowLow()
+         equip_cores(p, "Tricon Naga Mk9 Engine", "Milspec Orion 5501 Core System", "Schafer & Kane Light Stealth Plating")
 
 
       -- Bomber
@@ -93,6 +95,7 @@ function equip_siriusMilitary( p, shipsize )
          addWeapons( equip_secondarySrs(), use_secondary )
          medium         = equip_mediumLow()
          low            = equip_lowLow()
+         equip_cores(p, "Tricon Naga Mk9 Engine", "Milspec Orion 5501 Core System", "Schafer & Kane Light Combat Plating")
 
       end
 
@@ -108,6 +111,7 @@ function equip_siriusMilitary( p, shipsize )
          addWeapons( equip_secondarySrs(), use_secondary )
          medium         = equip_mediumMed()
          low            = equip_lowMed()
+         equip_cores(p, "Tricon Centaur Mk7 Engine", "Milspec Orion 8801 Core System", "Schafer & Kane Medium Solar Plating")
 
       end
 
@@ -121,16 +125,19 @@ function equip_siriusMilitary( p, shipsize )
          addWeapons( equip_secondarySrs(), use_secondary )
          medium         = equip_mediumMed()
          low            = equip_lowMed()
+         equip_cores(p, "Tricon Centaur Mk7 Engine", "Milspec Orion 8801 Core System", "Schafer & Kane Medium Combat Plating Gamma")
 
       end
 
    else
+      -- TODO: Divide into carrier and cruiser classes.
       use_primary    = nhigh-2
       use_secondary  = 2
       addWeapons( equip_turretSrsHig(), use_primary )
       addWeapons( equip_secondarySrs(), use_secondary )
       medium         = equip_mediumHig()
       low            = equip_lowHig()
+      equip_cores(p, "Tricon Harpy Mk11 Engine", "Milspec Orion 9901 Core System", "Schafer & Kane Heavy Combat Plating Gamma")
 
    end
 

@@ -12,19 +12,49 @@ include("dat/factions/equip/helper.lua")
 function equip_generic( p )
    -- Get ship info
    local shiptype, shipsize = equip_getShipBroad( p:ship():class() )
+   
+   -- Equip core outfits. This process is separate from the other outfits, because cores were introduced
+   -- later, and the outfitting routine should be fairly granular and tweakable.
+   equip_cores(p)
 
    -- Split by type
    if shiptype == "civilian" and p:faction() ~= faction.get("Trader") then
       equip_genericCivilian( p, shipsize )
+      if shipsize == "small" then      equip_cores(p, "Unicorp KRD-B12 Engine", "Unicorp PT-200 Core System", "Unicorp C-2 Light Plating")
+      elseif shipsize == "medium" then equip_cores(p, "Unicorp KRD-G15 Engine", "Unicorp PT-500 Core System", "Unicorp D-8 Medium Plating")
+      else                             equip_cores(p, "Unicorp KRD-T20 Engine", "Unicorp PT-1200 Core System", "Unicorp C-16 Heavy Plating")
+      end
    elseif shiptype == "merchant" or p:faction() == faction.get("Trader") then
       equip_genericMerchant( p, shipsize )
+      if shipsize == "small" then      equip_cores(p, "Unicorp AUR-50A Engine", "Unicorp PT-200 Core System", "Unicorp Small Cargo Hull")
+      elseif shipsize == "medium" then equip_cores(p, "Unicorp JNS-54K Engine", "Unicorp PT-500 Core System", "Unicorp Medium Cargo Hull")
+      else                             equip_cores(p, "Unicorp JNS-99K Engine", "Unicorp PT-1200 Core System", "Unicorp Large Cargo Hull")
+      end
    elseif shiptype == "military" then
       equip_genericMilitary( p, shipsize )
+      if shipsize == "small" then      equip_cores(p, "Tricon Naga Mk5 Engine", "Milspec Orion 2302 Core System", "Schafer & Kane Light Combat Plating")
+      elseif shipsize == "medium" then equip_cores(p, "Tricon Centaur Mk3 Engine", "Milspec Orion 3702 Core System", "Schafer & Kane Medium Combat Plating Beta")
+      else                             equip_cores(p, "Tricon Harpy Mk6 Engine", "Milspec Orion 4802 Core System", "Schafer & Kane Heavy Combat Plating Beta")
+      end
    elseif shiptype == "robotic" then
       equip_genericRobotic( p, shipsize )
+      if shipsize == "small" then      equip_cores(p, "Tricon Naga Mk5 Engine", "Milspec Orion 2302 Core System", "Schafer & Kane Light Combat Plating")
+      elseif shipsize == "medium" then equip_cores(p, "Tricon Centaur Mk3 Engine", "Milspec Orion 3702 Core System", "Schafer & Kane Medium Combat Plating Beta")
+      else                             equip_cores(p, "Tricon Harpy Mk6 Engine", "Milspec Orion 4802 Core System", "Schafer & Kane Heavy Combat Plating Beta")
+      end
    end
 end
 
+--[[
+-- @brief Equips a ship with core outfits.
+--
+--    @param p Pilot to equip
+--]]
+function equip_cores( pilot, engine, system, hull )
+   if p:addOutfit(engine, 1) == 0 then print("Warning: Could not equip " .. engine .. " on pilot " .. p:name() .. "!") end
+   if p:addOutfit(system, 1) == 0 then print("Warning: Could not equip " .. system .. " on pilot " .. p:name() .. "!") end
+   if p:addOutfit(hull, 1) == 0 then print("Warning: Could not equip " .. hull .. " on pilot " .. p:name() .. "!") end
+end
 
 --[[
 -- @brief Equips a generic civilian type ship.
