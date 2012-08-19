@@ -2433,8 +2433,10 @@ static int pilotL_addOutfit( lua_State *L )
 
    /* Get the outfit. */
    o = outfit_get( outfit );
-   if (o == NULL)
+   if (o == NULL) {
+      NLUA_ERROR(L, "Outfit '%s' not found!", outfit );
       return 0;
+   }
 
    /* Add outfit. */
    added = 0;
