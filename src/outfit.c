@@ -2138,16 +2138,14 @@ static int outfit_loadDir( char *dir )
    int i;
 
    outfit_files = ndata_listRecursive( dir, &nfiles );
-   for (i=0; i<(int)nfiles; i++)
+   for (i=0; i<(int)nfiles; i++) {
       outfit_parse( &array_grow(&outfit_stack), outfit_files[i] );
+      free( outfit_files[i] );
+   }
+   free( outfit_files );
 
    /* Reduce size. */
    array_shrink( &outfit_stack );
-
-   /* Clean up. */
-   for (i=0; i<(int)nfiles; i++)
-      free( outfit_files[i] );
-   free( outfit_files );
 
    return 0;
 }
