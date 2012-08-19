@@ -2731,6 +2731,7 @@ static int systems_load (void)
       nsnprintf( file, len, "%s%s", SYSTEM_DATA_PATH, system_files[i] );
       /* Load the file. */
       buf = ndata_read( file, &bufsize );
+      free( file );
       doc = xmlParseMemory( buf, bufsize );
       if (doc == NULL) {
          free(buf);
