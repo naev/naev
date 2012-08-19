@@ -557,7 +557,7 @@ int load_game( const char* file, int version_diff )
    pnt = player_load(node);
 
    /* Sanitize for new version. */
-   if (1) { //version_diff <= 0) {
+   if (version_diff < 0) {
       WARN("Old version detected. Sanitizing ships for slots");
       load_compatSlots();
    }
