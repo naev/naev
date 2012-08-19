@@ -2409,7 +2409,7 @@ static int pilotL_setNoLand( lua_State *L )
  *    @luaparam bypass Whether to skip CPU and slot size checks before adding an outfit (defaults to false).
  *              Will not overwrite existing non-default outfits.
  *    @luareturn The number of outfits added.
- * @luafunc addOutfit( p, outfit, q )
+ * @luafunc addOutfit( p, outfit, q, bypass )
  */
 static int pilotL_addOutfit( lua_State *L )
 {
