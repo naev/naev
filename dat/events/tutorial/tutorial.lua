@@ -32,7 +32,13 @@ function create()
     player.msgClear()
     player.swapShip("Llama", "Tutorial Llama", "Paul 2", true, true)
     player.rmOutfit("all")
-    player.pilot():rmOutfit("all") 
+    pp = player.pilot()
+    pp:rmOutfit("all") 
+    pp:addOutfit("Milspec Orion 2301 Core System")
+    pp:addOutfit("Tricon Naga Mk3 Engine")
+    pp:addOutfit("Schafer & Kane Light Combat Plating")
+    pp:setEnergy(100)
+    pp:setHealth(100, 100)
     player.cinematics(true, { no2x = true })
 
     pp:setPos(vec2.new(0, 0))
@@ -47,19 +53,21 @@ function create()
     system.get("Iroquois"):setKnown(false, true)
     system.get("Navajo"):setKnown(false, true)
     system.get("Sioux"):setKnown(false, true)
-    
-    if var.peek("tut_all") then
-        local nm = var.peek("tut_next")
-        var.pop("tut_next")
-        if nm == nil then
-            var.pop("tut_all")
+
+    -- List of all tutorial modules, in order of appearance.
+    local modules = {menubasic, menudiscover, menuinterstellar, menucomms, menubasiccombat, menumisscombat, menuheat, menuaoutfits, menudisable, menuplanet, menumissions}
+
+    if var.peek("tut_next") then
+        if var.peek("tut_next") == #modules then
+            var.pop("tut_next")
         else
-            startModule(nm)
+            var.push("tut_next", var.peek("tut_next") + 1)
+            startModule(modules[var.peek("tut_next")])
         end
     end
 
     -- Create menu.
-    _, selection = tk.choice(menutitle, menutext, menuall, menubasic, menudiscover, menuinterstellar, menucomms, menubasiccombat, menumisscombat, menuheat, menuaoutfits, menudisable, menuplanet, menumissions, menux)
+    _, selection = tk.choice(menutitle, menutext, menuall, unpack(modules))
     
     startModule(selection)
 end
@@ -69,10 +77,10 @@ function startModule(module)
     if selection == menux then -- Quit to main menu
         tut.main_menu()
     elseif selection == menuall then
-        var.push("tut_all", true)
+        var.push("tut_next", 1)
         module = menubasic
     end
     player.cinematics(false)
     naev.eventStart(module)
-    evt.finish(true) -- While the module is running, the event should not.
+    evt.finish(true) -- While the module is running, this event should not.
 end

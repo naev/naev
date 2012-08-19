@@ -62,7 +62,12 @@ function create()
     pp:setPos(vec2.new(0, 2000))
     player.swapShip("Vendetta", "Vendetta", "Paul 2", true, true)
     pp:rmOutfit("all")
+    pp:addOutfit("Milspec Orion 2301 Core System")
+    pp:addOutfit("Tricon Naga Mk3 Engine")
+    pp:addOutfit("Schafer & Kane Light Combat Plating")
     pp:addOutfit("Vulcan Gun", 2)
+    pp:setEnergy(100)
+    pp:setHealth(100, 100)
     pp:setDir(90)
     player.msgClear()
 
@@ -137,7 +142,6 @@ end
 -- Cleanup function. Should be the exit point for the module in all cases.
 function cleanup()
     if not (omsg == nil) then player.omsgRm(omsg) end
-    var.push("tut_next", "Tutorial: Activated Outfits")
     naev.keyEnableAll()
     naev.eventStart("Tutorial")
     evt.finish(true)
