@@ -603,13 +603,13 @@ char** nfile_readDirRecursive( int* nfiles, const char* path, ... )
    vsnprintf( base, PATH_MAX, path, ap );
    va_end(ap);
 
-   mfiles = 128;
-   out = malloc(sizeof(char*)*mfiles);
-   tfiles = nfile_readDir( &tmp, base );
+   mfiles  = 128;
+   out     = malloc(sizeof(char*)*mfiles);
+   tfiles  = nfile_readDir( &tmp, base );
    *nfiles = 0;
 
    for (i=0; i<tmp; i++) {
-      ls = strlen(base) + strlen(tfiles[i]) + 1;
+      ls  = strlen(base) + strlen(tfiles[i]) + 1;
       buf = malloc(ls * sizeof(char));
       nsnprintf( buf, ls, "%s%s", path, tfiles[i] );
       if (nfile_dirExists(buf)) {
