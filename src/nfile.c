@@ -626,7 +626,7 @@ char** nfile_readDirRecursive( int* nfiles, const char* path, ... )
                mfiles *= 2;
                out = realloc( out, sizeof(char*)*mfiles );
             }
-            out[(*nfiles)++] = strdup( cfiles[j] );
+            out[(*nfiles)++] = cfiles[j];
          }
          free(cfiles);
       }
@@ -637,7 +637,10 @@ char** nfile_readDirRecursive( int* nfiles, const char* path, ... )
          }
          out[(*nfiles)++] = strdup( buf );
       }
-     free(buf);
+
+      /* Clean up. */
+      free(tfiles[i]);
+      free(buf);
    }
 
    free(tfiles);
