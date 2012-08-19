@@ -1065,7 +1065,7 @@ static void ai_create( Pilot* pilot, char *param )
       }
 #if DEBUGGING
       lua_pushcfunction(L, nlua_errTrace);
-      errf = -4;
+      errf = -3;
 #endif /* DEBUGGING */
       lua_getglobal(L, func);
       lp.pilot = pilot->id;
