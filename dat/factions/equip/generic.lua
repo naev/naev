@@ -15,7 +15,7 @@ function equip_generic( p )
    
    -- Equip core outfits. This process is separate from the other outfits, because cores were introduced
    -- later, and the outfitting routine should be fairly granular and tweakable.
-   equip_cores(p)
+   --equip_cores(p)
 
    -- Split by type
    if shiptype == "civilian" and p:faction() ~= faction.get("Trader") then
@@ -50,7 +50,7 @@ end
 --
 --    @param p Pilot to equip
 --]]
-function equip_cores( pilot, engine, system, hull )
+function equip_cores( p, engine, system, hull )
    if p:addOutfit(engine, 1) == 0 then print("Warning: Could not equip " .. engine .. " on pilot " .. p:name() .. "!") end
    if p:addOutfit(system, 1) == 0 then print("Warning: Could not equip " .. system .. " on pilot " .. p:name() .. "!") end
    if p:addOutfit(hull, 1) == 0 then print("Warning: Could not equip " .. hull .. " on pilot " .. p:name() .. "!") end
