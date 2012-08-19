@@ -166,6 +166,7 @@ static int nlua_packfileLoader( lua_State* L )
       nsnprintf( path_filename, len, "%s%s", LUA_INCLUDE_PATH, filename );
       if (ndata_exists( path_filename ))
          buf = ndata_read( path_filename, &bufsize );
+      free( path_filename );
    }
 
    /* Must have buf by now. */

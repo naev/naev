@@ -2141,7 +2141,13 @@ static int outfit_loadDir( char *dir )
    for (i=0; i<(int)nfiles; i++)
       outfit_parse( &array_grow(&outfit_stack), outfit_files[i] );
 
+   /* Reduce size. */
    array_shrink( &outfit_stack );
+
+   /* Clean up. */
+   for (i=0; i<(int)nfiles; i++)
+      free( outfit_files[i] );
+   free( outfit_files );
 
    return 0;
 }
@@ -2244,6 +2250,11 @@ int outfit_mapParse (void)
       xmlFreeDoc(doc);
       free(buf);
    }
+
+   /* Clean up. */
+   for (i=0; i<(int)nfiles; i++)
+      free( map_files[i] );
+   free( map_files );
 
    return 0;
 }

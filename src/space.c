@@ -2726,8 +2726,9 @@ static int systems_load (void)
     */
    for (i=0; i<(int)nfiles; i++) {
 
-      file = malloc((strlen(SYSTEM_DATA_PATH)+strlen(system_files[i])+2)*sizeof(char));
-      nsnprintf(file,(strlen(SYSTEM_DATA_PATH)+strlen(system_files[i])+2)*sizeof(char),"%s%s",SYSTEM_DATA_PATH,system_files[i]);
+      len  = strlen(SYSTEM_DATA_PATH)+strlen(system_files[i])+2;
+      file = malloc( len * sizeof(char) );
+      nsnprintf( file, len, "%s%s", SYSTEM_DATA_PATH, system_files[i] );
       /* Load the file. */
       buf = ndata_read( file, &bufsize );
       doc = xmlParseMemory( buf, bufsize );
@@ -2753,6 +2754,11 @@ static int systems_load (void)
    DEBUG("Loaded %d Star System%s with %d Planet%s",
          systems_nstack, (systems_nstack==1) ? "" : "s",
          planet_nstack, (planet_nstack==1) ? "" : "s" );
+
+   /* Clean up. */
+   for (i=0; i<(int)nfiles; i++)
+      free( system_files[i] );
+   free( system_files );
 
    return 0;
 }
@@ -3142,8 +3148,10 @@ int space_sysLoad( xmlNodePtr parent )
          do {
             if (xml_isNode(cur,"known")) {
                xmlr_attr(cur,"sys",str);
-               if (str != NULL) /* check for 5.0 saves */
+               if (str != NULL) { /* check for 5.0 saves */
                   sys = system_get(str);
+                  free(str);
+               }
                else /* load from 5.0 saves */
                   sys = system_get(xml_get(cur));
                if (sys != NULL) { /* Must exist */

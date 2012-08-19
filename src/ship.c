@@ -942,6 +942,11 @@ int ships_load (void)
    array_shrink(&ship_stack);
    DEBUG("Loaded %d Ship%s", array_size(ship_stack), (array_size(ship_stack)==1) ? "" : "s" );
 
+   /* Clean up. */
+   for (i=0; i<(int)nfiles; i++)
+      free( ship_files[i] );
+   free( ship_files );
+
    return 0;
 }
 
