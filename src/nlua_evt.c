@@ -185,7 +185,7 @@ int event_runLuaFunc( Event_t *ev, const char *func, int nargs )
  *
  *    @luaparam func Name of the function to run when approaching, gets passed the npc_id when called.
  *    @luaparam name Name of the NPC
- *    @luaparam portrait Portrait to use for the NPC (from GFX_PATH/gfx/portraits/).
+ *    @luaparam portrait Portrait to use for the NPC (from GFX_PATH/portraits/).
  *    @luaparam desc Description associated to the NPC.
  *    @luaparam priority Optional priority argument (defaults to 5, highest is 0, lowest is 10).
  *    @luareturn The ID of the NPC to pass to npcRm.

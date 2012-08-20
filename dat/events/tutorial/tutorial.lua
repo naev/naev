@@ -39,6 +39,7 @@ function create()
     pp:addOutfit("Schafer & Kane Light Combat Plating", 1, true)
     pp:setEnergy(100)
     pp:setHealth(100, 100)
+    player.refuel()
     player.cinematics(true, { no2x = true })
 
     pp:setPos(vec2.new(0, 0))
