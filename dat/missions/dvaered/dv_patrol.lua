@@ -24,7 +24,7 @@ else -- default english
    msg_title = {}
    msg_msg = {}
    msg_title[1] = "Mission Success"
-   msg_msg[1] = "You are greeted by a Dvaered official and receive your payment of %s credits for your contribution in keeping Dvaered systems clean."
+   msg_msg[1] = "You are greeted by a Dvaered official and receive your payment of %s credits for your contribution to keeping Dvaered systems clean."
    msg_msg[2] = "DV: Arrived at point. Hold point."
    msg_msg[3] = "DV: Point insecure. Engage hostiles!"
    msg_msg[4] = "DV: Hostiles eliminated. Hold point."
@@ -38,11 +38,14 @@ else -- default english
    osd_msg[4] = "Return to %s in the %s system"
    osd_msg[5] = "Next: %s"
    osd_msg[6] = "Jump to the %s system"
+   
+   refusetitle = "Already on patrol"
+   refusetext = "You have already accepted a patrol mission. Finish that mission first, or abort it before accepting this mission."
 end
 
 
-include("scripts/proximity.lua")
-include("scripts/numstring.lua")
+include("proximity.lua")
+include("numstring.lua")
 
 -- Mission parameters
 chk_range      = math.pow( 2000, 2 ) -- Radius within target
@@ -284,6 +287,10 @@ end
 
 -- Mission is accepted
 function accept ()
+   if player.misnActive("Dvaered Patrol") then
+      tk.msg(refusetitle, refusetext)
+      misn.finish()
+   end
    if misn.accept() then
 
       -- Set the OSD

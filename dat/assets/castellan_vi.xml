@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Castellan VI">
+ <pos>
+  <x>25682.128164</x>
+  <y>16763.575618</y>
+ </pos>
+ <GFX>
+  <space>I07.png</space>
+  <exterior>traderoom.png</exterior>
+ </GFX>
+ <general>
+  <class>I</class>
+  <population>0</population>
+  <hide>0.150000</hide>
+  <services/>
+ </general>
+</asset>

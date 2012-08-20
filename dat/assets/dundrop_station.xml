@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Dundrop Station">
+ <pos>
+  <x>6031.569401</x>
+  <y>7541.218892</y>
+ </pos>
+ <GFX>
+  <space>station-commerce2.png</space>
+  <exterior>traderoom.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>3000</population>
+  <hide>0.750000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Dundrop Station is a commerce oriented station. Traders usually come here to buy and sell goods and take them elsewhere, although some traders rent out cargo bays to store non-perishable goods until a planet in the neighborhood develops a high demand for those goods, so they can be the first to capitalize on the opportunity.</description>
+  <bar>All tables in this bar have multiple displays for tracking economic information for the whole galaxy. The patrons are mostly engrossed in absorbing the tables and charts displayed. There is little room for social interaction on Dundrop.</bar>
+ </general>
+ <tech>
+  <item>Hulls Medium</item>
+  <item>Ion 1</item>
+  <item>Basic Outfits 1</item>
+  <item>Kinetic 1</item>
+  <item>Missiles 1</item>
+  <item>Missiles 2</item>
+  <item>Star Maps</item>
+  <item>Low Tech Upgrades</item>
+ </tech>
+</asset>

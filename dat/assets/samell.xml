@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Samell">
+ <pos>
+  <x>3130.903994</x>
+  <y>7507.779985</y>
+ </pos>
+ <GFX>
+  <space>P02.png</space>
+  <exterior>forest.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>P</class>
+  <population>1000000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Samell is a predominantly industrial world. Heavy industry is often not welcome on densely populated M class planets, so it tends to settle on planets with hostile environments. Samell is no exception to that trend.</description>
+  <bar>Whoever designed the spaceport placed the spaceport bar at the outside, adding windows so visitors could look out over the frozen landscape. He didn't realize that the windows would soon become frozen over themselves, making them completely useless.</bar>
+ </general>
+ <tech>
+  <item>Systems Medium</item>
+  <item>Engines Low</item>
+  <item>Basic Outfits 1</item>
+  <item>Missiles 1</item>
+  <item>Basic Civilian Ships</item>
+  <item>Bulk Trade Ships</item>
+ </tech>
+</asset>

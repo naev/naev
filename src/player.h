@@ -9,30 +9,34 @@
 
 #include "pilot.h"
 
-/* flag defines */
-#define PLAYER_TURN_LEFT   0   /**< player is turning left */
-#define PLAYER_TURN_RIGHT  1   /**< player is turning right */
-#define PLAYER_REVERSE     2   /**< player is facing opposite of vel */
-#define PLAYER_DESTROYED   9   /**< player is destroyed */
-#define PLAYER_FACE        10  /**< player is facing target */
-#define PLAYER_PRIMARY     11  /**< player is shooting primary weapon */
-#define PLAYER_PRIMARY_L   12  /**< player shot primary weapon last frame. */
-#define PLAYER_SECONDARY   13  /**< player is shooting secondary weapon */
-#define PLAYER_SECONDARY_L 14  /**< player shot secondary last frame. */
-#define PLAYER_LANDACK     15  /**< player has permission to land */
-#define PLAYER_CREATING    16  /**< player is being created */
-#define PLAYER_AUTONAV     17  /**< player has autonavigation on. */
-#define PLAYER_NOLAND      18  /**< player is not allowed to land (cleared on enter). */
-#define PLAYER_DOUBLESPEED 19  /**< player is running at double speed. */
-#define PLAYER_CINEMATICS_GUI 20 /**< Disable rendering the GUI when in cinematics mode. */
-#define PLAYER_CINEMATICS_2X 21 /**< Disables usage of the 2x button when in cinematics mode. */
-#define PLAYER_HOOK_LAND   25
-#define PLAYER_HOOK_JUMPIN 26
-#define PLAYER_HOOK_HYPER  27
-#define PLAYER_TUTORIAL    30  /**< Player is doing the tutorial. */
-#define PLAYER_MFLY        31  /**< Player has enabled mouse flying. */
-#define PLAYER_NOSAVE      32  /**< Player is not allowed to save. */
-#define PLAYER_FLAGS_MAX   PLAYER_NOSAVE + 1 /* Maximum number of flags. */
+/** Player flag enum. */
+enum {
+   PLAYER_TURN_LEFT,    /**< player is turning left */
+   PLAYER_TURN_RIGHT,   /**< player is turning right */
+   PLAYER_REVERSE,      /**< player is facing opposite of vel */
+   PLAYER_ACCEL,         /**< player is accelerating */
+   PLAYER_DESTROYED,    /**< player is destroyed */
+   PLAYER_FACE,         /**< player is facing target */
+   PLAYER_PRIMARY,      /**< player is shooting primary weapon */
+   PLAYER_PRIMARY_L,    /**< player shot primary weapon last frame. */
+   PLAYER_SECONDARY,    /**< player is shooting secondary weapon */
+   PLAYER_SECONDARY_L,  /**< player shot secondary last frame. */
+   PLAYER_LANDACK,      /**< player has permission to land */
+   PLAYER_CREATING,     /**< player is being created */
+   PLAYER_AUTONAV,      /**< player has autonavigation on. */
+   PLAYER_NOLAND,       /**< player is not allowed to land (cleared on enter). */
+   PLAYER_DOUBLESPEED,  /**< player is running at double speed. */
+   PLAYER_CINEMATICS_GUI, /**< Disable rendering the GUI when in cinematics mode. */
+   PLAYER_CINEMATICS_2X, /**< Disables usage of the 2x button when in cinematics mode. */
+   PLAYER_HOOK_LAND,    /**< Hook hack to avoid running hooks in the middle of the pilot stack. */
+   PLAYER_HOOK_JUMPIN,  /**< Hook hack to avoid running hooks in the middle of the pilot stack. */
+   PLAYER_HOOK_HYPER,   /**< Hook hack to avoid runving hooks in the middle of the pilot stack. */
+   PLAYER_TUTORIAL,     /**< Player is doing the tutorial. */
+   PLAYER_MFLY,         /**< Player has enabled mouse flying. */
+   PLAYER_NOSAVE,       /**< Player is not allowed to save. */
+   PLAYER_FLAGS_MAX     /* Maximum number of flags. */
+};
+
 typedef char PlayerFlags[ PLAYER_FLAGS_MAX ];
 
 /* flag functions */
@@ -130,6 +134,7 @@ const char* player_rating (void);
 int player_hasCredits( credits_t amount );
 credits_t player_modCredits( credits_t amount );
 void player_hailStart (void);
+int player_canTakeoff (void);
 /* Sounds. */
 void player_soundPlay( int sound, int once );
 void player_soundPlayGUI( int sound, int once );
@@ -141,7 +146,7 @@ void player_soundResume (void);
 /*
  * player ships
  */
-void player_ships( char** sships, glTexture** tships );
+int player_ships( char** sships, glTexture** tships );
 int player_nships (void);
 int player_hasShip( char* shipname );
 Pilot* player_getShip( char* shipname );
@@ -156,7 +161,9 @@ void player_rmShip( char* shipname );
  * player outfits.
  */
 int player_outfitOwned( const Outfit *o );
-void player_getOutfits( char** soutfits, glTexture** toutfits );
+int player_getOutfits( char** soutfits, glTexture** toutfits );
+int player_getOutfitsFiltered( char** soutfits, glTexture** toutfits,
+      int(*filter)( const Outfit *o ) );
 int player_numOutfits (void);
 int player_addOutfit( const Outfit *o, int quantity );
 int player_rmOutfit( const Outfit *o, int quantity );

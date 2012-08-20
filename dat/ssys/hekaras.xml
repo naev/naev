@@ -7,14 +7,14 @@
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>-28.000000</x>
-  <y>-373.000000</y>
+  <x>-128.833333</x>
+  <y>-346.333333</y>
  </pos>
  <assets>
   <asset>Hekaras III</asset>
   <asset>Hekaras IV</asset>
   <asset>Hurada</asset>
-  <asset>Three and a half Kings</asset>
+  <asset>Three and a Half Kings</asset>
   <asset>Vino</asset>
   <asset>Virtual Civilian Standard</asset>
   <asset>Virtual Trader Area</asset>
@@ -22,6 +22,11 @@
  <jumps>
   <jump target="Apez">
    <pos x="-26069.057388" y="26604.261598"/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Zied">
+   <autopos/>
+   <exitonly/>
    <hide>1.250000</hide>
   </jump>
  </jumps>

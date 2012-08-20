@@ -122,10 +122,7 @@
 /*
  * file info
  */
-#define AI_PREFIX       "ai/" /**< AI file prefix. */
 #define AI_SUFFIX       ".lua" /**< AI file suffix. */
-#define AI_INCLUDE      "include/" /**< Where to search for includes. */
-
 #define AI_MEM_DEF      "def" /**< Default pilot memory. */
 
 
@@ -238,6 +235,7 @@ static int aiL_combat( lua_State *L ); /* combat( number ) */
 static int aiL_settarget( lua_State *L ); /* settarget( number ) */
 static int aiL_weapSet( lua_State *L ); /* weapset( number ) */
 static int aiL_shoot( lua_State *L ); /* shoot( number ); number = 1,2,3 */
+static int aiL_hascannons( lua_State *L ); /* bool hascannons() */
 static int aiL_hasturrets( lua_State *L ); /* bool hasturrets() */
 static int aiL_getenemy( lua_State *L ); /* number getenemy() */
 static int aiL_getenemy_size( lua_State *L ); /* number getenemy_size() */
@@ -339,6 +337,7 @@ static const luaL_reg aiL_methods[] = {
    { "combat", aiL_combat },
    { "settarget", aiL_settarget },
    { "weapset", aiL_weapSet },
+   { "hascannons", aiL_hascannons },
    { "hasturrets", aiL_hasturrets },
    { "shoot", aiL_shoot },
    { "getenemy", aiL_getenemy },
@@ -550,12 +549,6 @@ int ai_pinit( Pilot *p, const char *ai )
    p->ai = prof;
    L = p->ai->L;
 
-   /* Set fuel.  Hack until we do it through AI itself. */
-   if (!pilot_isPlayer(p)) {
-      p->fuel  = (RNG_2SIGMA()/4. + 0.5) * (p->fuel_max - HYPERSPACE_FUEL);
-      p->fuel += HYPERSPACE_FUEL;
-   }
-
    /* Adds a new pilot memory in the memory table. */
    lua_getglobal(L, AI_MEM);     /* pm */
    lua_newtable(L);              /* pm, nt */
@@ -583,6 +576,12 @@ int ai_pinit( Pilot *p, const char *ai )
    /* Create the pilot. */
    ai_create( p, (n!=0) ? param : NULL );
    pilot_setFlag(p, PILOT_CREATED_AI);
+
+   /* Set fuel.  Hack until we do it through AI itself. */
+   if (!pilot_isPlayer(p)) {
+      p->fuel  = (RNG_2SIGMA()/4. + 0.5) * (p->fuel_max - p->fuel_consumption);
+      p->fuel += p->fuel_consumption;
+   }
 
    return 0;
 }
@@ -640,7 +639,7 @@ int ai_load (void)
    int n;
 
    /* get the file list */
-   files = ndata_list( AI_PREFIX, &nfiles );
+   files = ndata_list( AI_PATH, &nfiles );
 
    /* load the profiles */
    suflen = strlen(AI_SUFFIX);
@@ -649,7 +648,7 @@ int ai_load (void)
       if ((flen > suflen) &&
             strncmp(&files[i][flen-suflen], AI_SUFFIX, suflen)==0) {
 
-         nsnprintf( path, PATH_MAX, AI_PREFIX"%s", files[i] );
+         nsnprintf( path, PATH_MAX, AI_PATH"%s", files[i] );
          if (ai_loadProfile(path)) /* Load the profile */
             WARN("Error loading AI profile '%s'", path);
       }
@@ -727,9 +726,9 @@ static int ai_loadProfile( const char* filename )
    prof = &array_grow(&profiles);
 
    /* Set name. */
-   len = strlen(filename)-strlen(AI_PREFIX)-strlen(AI_SUFFIX);
+   len = strlen(filename)-strlen(AI_PATH)-strlen(AI_SUFFIX);
    prof->name = malloc(sizeof(char)*(len+1) );
-   strncpy( prof->name, &filename[strlen(AI_PREFIX)], len );
+   strncpy( prof->name, &filename[strlen(AI_PATH)], len );
    prof->name[len] = '\0';
 
    /* Create Lua. */
@@ -1066,7 +1065,7 @@ static void ai_create( Pilot* pilot, char *param )
       }
 #if DEBUGGING
       lua_pushcfunction(L, nlua_errTrace);
-      errf = -4;
+      errf = -3;
 #endif /* DEBUGGING */
       lua_getglobal(L, func);
       lp.pilot = pilot->id;
@@ -2363,7 +2362,7 @@ static int aiL_dir( lua_State *L )
    LuaVector *lv;
    Vector2d sv, tv; /* get the position to face */
    Pilot* p;
-   double d, mod, diff;
+   double d, diff;
    unsigned int id;
    int n;
 
@@ -2387,14 +2386,6 @@ static int aiL_dir( lua_State *L )
    else if (lua_isvector(L,1))
       lv = lua_tovector(L,1);
    else NLUA_INVALID_PARAMETER(L);
-
-   mod = 10;
-
-   /* Check if must invert. */
-   if (lua_gettop(L) > 1) {
-      if (lua_isboolean(L,2) && lua_toboolean(L,2))
-         mod *= -1;
-   }
 
    vect_cset( &sv, VX(cur_pilot->solid->pos), VY(cur_pilot->solid->pos) );
 
@@ -2513,18 +2504,14 @@ static int aiL_drift_facing( lua_State *L )
 static int aiL_brake( lua_State *L )
 {
    (void)L; /* hack to avoid -W -Wall warnings */
-   double diff, d;
+   int ret;
 
-   d = cur_pilot->solid->dir+M_PI;
-   if (d >= 2*M_PI) d = fmod(d, 2*M_PI);
+   ret = pilot_brake( cur_pilot );
 
-   diff = angle_diff(d,VANGLE(cur_pilot->solid->vel));
-   pilot_turn = 10*diff;
+   pilot_acc = cur_pilot->solid->thrust / cur_pilot->thrust;
+   pilot_turn = cur_pilot->solid->dir_vel / cur_pilot->turn;
 
-   if (ABS(diff) < MAX_DIR_ERR && VMOD(cur_pilot->solid->vel) > MIN_VEL_ERR)
-      pilot_acc = 1.;
-
-   return 0;
+   return ret;
 }
 
 
@@ -2977,14 +2964,27 @@ static int aiL_weapSet( lua_State *L )
 
 
 /**
- * @brief Does the pilot have turrets.?
+ * @brief Does the pilot have cannons?
  *
- *    @luareturn true if the pilot has turrets
+ *    @luareturn True if the pilot has cannons.
+ * @luafunc hascannons()
+ */
+static int aiL_hascannons( lua_State *L )
+{
+   lua_pushboolean( L, cur_pilot->ncannons > 0 );
+   return 1;
+}
+
+
+/**
+ * @brief Does the pilot have turrets?
+ *
+ *    @luareturn True if the pilot has turrets.
  * @luafunc hasturrets()
  */
 static int aiL_hasturrets( lua_State *L )
 {
-   lua_pushboolean( L, pilot_isFlag(cur_pilot, PILOT_HASTURRET) );
+   lua_pushboolean( L, cur_pilot->nturrets > 0 );
    return 1;
 }
 
@@ -2996,6 +2996,11 @@ static int aiL_hasturrets( lua_State *L )
  */
 static int aiL_shoot( lua_State *L )
 {
+   /* Cooldown is similar to a ship being disabled, but the AI continues to
+    * think during cooldown, and thus must not be allowed to fire weapons. */
+   if (pilot_isFlag(cur_pilot, PILOT_COOLDOWN))
+      return 0;
+
    if (lua_toboolean(L,1))
       ai_setFlag(AI_SECONDARY);
    else

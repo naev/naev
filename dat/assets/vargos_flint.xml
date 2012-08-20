@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Vargo's Flint">
+ <pos>
+  <x>20296.157003</x>
+  <y>-5796.792188</y>
+ </pos>
+ <GFX>
+  <space>moon-D02.png</space>
+  <exterior>aquatic2.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.500000</hide>
+  <services/>
+ </general>
+</asset>

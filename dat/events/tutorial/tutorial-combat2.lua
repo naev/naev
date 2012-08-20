@@ -111,7 +111,12 @@ function create()
     pp:setPos(vec2.new(0, 0))
     player.swapShip("Lancelot", "Lancelot", "Paul 2", true, true)
     pp:rmOutfit("all")
+    pp:addOutfit("Milspec Orion 2301 Core System")
+    pp:addOutfit("Tricon Naga Mk3 Engine")
+    pp:addOutfit("Schafer & Kane Light Combat Plating")
     pp:addOutfit("Unicorp Fury Launcher", 1)
+    pp:setEnergy(100)
+    pp:setHealth(100, 100)
     pp:setDir(90)
     player.msgClear()
 
@@ -198,7 +203,7 @@ end
 
 -- Taunt function.
 function taunt()
-	armour, shield = captainTP:health()
+    armour, shield = captainTP:health()
     if shield >= 40 then
         captainTP:comm(shield30[rnd.rnd(1, #shield30)])
     elseif armour >= 31 then

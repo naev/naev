@@ -27,6 +27,7 @@
 #include "player_gui.h"
 #include "toolkit.h"
 #include "dialogue.h"
+#include "map_find.h"
 
 
 /* Modifier for buying and selling quantity. */
@@ -43,6 +44,7 @@ static void outfits_sell( unsigned int wid, char* str );
 static int outfits_getMod (void);
 static void outfits_renderMod( double bx, double by, double w, double h, void *data );
 static void outfits_rmouse( unsigned int wid, char* widget_name );
+static void outfits_find( unsigned int wid, char* str );
 
 
 /**
@@ -51,6 +53,8 @@ static void outfits_rmouse( unsigned int wid, char* widget_name );
 static void outfits_getSize( unsigned int wid, int *w, int *h,
       int *iw, int *ih, int *bw, int *bh )
 {
+   int padding;
+
    /* Get window dimensions. */
    window_dimWindow( wid, w, h );
 
@@ -60,9 +64,12 @@ static void outfits_getSize( unsigned int wid, int *w, int *h,
    if (ih != NULL)
       *ih = *h - 60;
 
+   /* Left padding + per-button padding * nbuttons */
+   padding = 40 + 20 * 4;
+
    /* Calculate button dimensions. */
    if (bw != NULL)
-      *bw = (*w - (iw!=NULL?*iw:0) - 100) / 3;
+      *bw = (*w - (iw!=NULL?*iw:0) - padding) / 4;
    if (bh != NULL)
       *bh = LAND_BUTTON_HEIGHT;
 }
@@ -81,7 +88,7 @@ void outfits_open( unsigned int wid )
    int noutfits;
    int w, h;
    int iw, ih;
-   int bw, bh;
+   int bw, bh, off;
    glColour *bg, blend;
    const glColour *c;
    char **slottype;
@@ -94,15 +101,18 @@ void outfits_open( unsigned int wid )
    window_setAccept( wid, outfits_buy );
 
    /* buttons */
-   window_addButtonKey( wid, -20, 20,
+   window_addButtonKey( wid, off = -20, 20,
          bw, bh, "btnCloseOutfits",
          "Take Off", land_buttonTakeoff, SDLK_t );
-   window_addButtonKey( wid, -40-bw, 20,
+   window_addButtonKey( wid, off -= 20+bw, 20,
          bw, bh, "btnSellOutfit",
          "Sell", outfits_sell, SDLK_s );
-   window_addButtonKey( wid, -60-bw*2, 20,
+   window_addButtonKey( wid, off -= 20+bw, 20,
          bw, bh, "btnBuyOutfit",
          "Buy", outfits_buy, SDLK_b );
+   window_addButtonKey( wid, off -= 20+bw, 20,
+         bw, bh, "btnFindOutfits",
+         "Find Outfits", outfits_find, SDLK_f );
 
    /* fancy 128x128 image */
    window_addRect( wid, 19 + iw + 20, -50, 128, 129, "rctImage", &cBlack, 0 );
@@ -114,9 +124,9 @@ void outfits_open( unsigned int wid )
 
    /* the descriptive text */
    window_addText( wid, 20 + iw + 20 + 128 + 20, -60,
-         320, 160, 0, "txtOutfitName", &gl_defFont, &cBlack, NULL );
+         280, 160, 0, "txtOutfitName", &gl_defFont, &cBlack, NULL );
    window_addText( wid, 20 + iw + 20 + 128 + 20, -60 - gl_defFont.h - 20,
-         320, 160, 0, "txtDescShort", &gl_smallFont, &cBlack, NULL );
+         280, 160, 0, "txtDescShort", &gl_smallFont, &cBlack, NULL );
    window_addText( wid, 20 + iw + 20, -60-128-10,
          60, 160, 0, "txtSDesc", &gl_smallFont, &cDConsole,
          "Owned:\n"
@@ -183,6 +193,9 @@ void outfits_open( unsigned int wid )
    outfits_updateQuantities( wid );
    toolkit_setImageArraySlotType( wid, "iarOutfits", slottype );
    toolkit_setImageArrayBackground( wid, "iarOutfits", bg );
+
+   /* Set default keyboard focuse to the list */
+   window_setFocus( wid , "iarOutfits" );
 }
 /**
  * @brief Updates the quantity counter for the outfits.
@@ -301,7 +314,7 @@ void outfits_update( unsigned int wid, char* str )
    window_modifyText( wid, "txtDDesc", buf );
    window_modifyText( wid, "txtOutfitName", outfit->name );
    window_modifyText( wid, "txtDescShort", outfit->desc_short );
-   th = MAX( 128, gl_printHeightRaw( &gl_smallFont, 320, outfit->desc_short ) );
+   th = MAX( 128, gl_printHeightRaw( &gl_smallFont, 280, outfit->desc_short ) );
    window_moveWidget( wid, "txtSDesc", 40+iw+20, -60-th-20 );
    window_moveWidget( wid, "txtDDesc", 40+iw+20+60, -60-th-20 );
    th += gl_printHeightRaw( &gl_smallFont, 250, buf );
@@ -332,6 +345,18 @@ void outfits_updateEquipmentOutfits( void )
 
 
 /**
+ * @brief Starts the map find with outfit search selected.
+ *    @param wid Window buying outfit from.
+ *    @param str Unused.
+ */
+static void outfits_find( unsigned int wid, char* str )
+{
+   (void) str;
+   map_inputFindType(wid, "outfit");
+}
+
+
+/**
  * @brief Checks to see if the player can buy the outfit.
  *    @param outfit Outfit to buy.
  */
@@ -356,7 +381,7 @@ int outfit_canBuy( char *name )
    /* Map already mapped */
    if ((outfit_isMap(outfit) && map_isMapped(outfit)) ||
          (outfit_isLocalMap(outfit) && localmap_isMapped(outfit))) {
-      land_errDialogueBuild( "You already own this map." );
+      land_errDialogueBuild( "You already know of everything this map contains." );
       failure = 1;
       return 0;
    }

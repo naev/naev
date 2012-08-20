@@ -7,8 +7,8 @@
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>428.000000</x>
-  <y>-805.000000</y>
+  <x>813.995077</x>
+  <y>-976.282028</y>
  </pos>
  <assets>
   <asset>Lapis I</asset>
@@ -18,11 +18,11 @@
  <jumps>
   <jump target="Anarbalis">
    <autopos/>
-   <hide>0.000000</hide>
+   <hide>1.250000</hide>
   </jump>
   <jump target="Eye of Night">
    <autopos/>
-   <hide>0.000000</hide>
+   <hide>1.250000</hide>
   </jump>
   <jump target="Lazuli">
    <autopos/>

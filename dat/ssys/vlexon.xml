@@ -24,5 +24,10 @@
    <autopos/>
    <hide>1.250000</hide>
   </jump>
+  <jump target="Salvador">
+   <pos x="-13589.424443" y="-16885.942785"/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
  </jumps>
 </ssys>

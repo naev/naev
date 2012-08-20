@@ -33,6 +33,8 @@
   <bar>The bar is very large, and yet has fairly few patrons. You notice the drink list has a "living" menu. When you ask the bartender about them, he says they specialize in drinks containing living creatures. Generally jellyfish, but sometimes small cephalopods, or more exotic beings. As exotic cultures go, Cetrat is among the stranger.</bar>
  </general>
  <tech>
+  <item>Hulls Medium</item>
+  <item>Engines Medium</item>
   <item>Basic Outfits 1</item>
   <item>Missiles 1</item>
  </tech>

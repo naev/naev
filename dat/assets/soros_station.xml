@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Soros Station">
+ <pos>
+  <x>-11638.001887</x>
+  <y>-5124.991657</y>
+ </pos>
+ <GFX>
+  <space>000.png</space>
+  <exterior>station00.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>50.000000</value>
+  <range>5</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>9500</population>
+  <hide>0.750000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>Soros Station is a small but industrious ship making plant that focuses on light, affordable craft.</description>
+  <bar>There are often more pilots in this bar than there are ships docked with the station. Someone needs to transport the finished products to the retail outlets, and what better way to do this than combine the trip with the ship's test run?</bar>
+ </general>
+ <tech>
+  <item>Light Civilian Combat Ships</item>
+  <item>Basic Trade Ships</item>
+ </tech>
+</asset>

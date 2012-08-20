@@ -5,7 +5,7 @@
 
 --]]
 
-include "scripts/numstring.lua"
+include "numstring.lua"
 
 lang = naev.lang()
 if lang == "es" then
@@ -22,7 +22,7 @@ else
    osd_msg = {}
    osd_msg[1] = "Fly to the Unicorn system."
    osd_msg[2] = ""
-   osd_msg2 = "Destroy pirates. You have killed %d and have earned %s credits. If finished, return to %s."
+   osd_msg2 = "Destroy some pirates! You have killed %d and have earned %s credits. If finished, return to %s."
    osd_msg3 = "You have reached your maximum payment. Return to %s."
 
 end

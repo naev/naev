@@ -2,14 +2,15 @@
 <outfit name="Cheater's Ragnarok Beam">
  <general>
   <slot>weapon</slot>
+  <size>small</size>
   <mass>1</mass>
   <price>745000</price>
   <description>This weapon is a cheat. It is not meant to be used by players.</description>
   <gfx_store>ragnarok</gfx_store>
+  <cpu>-1</cpu>
  </general>
  <specific type="beam">
-  <cpu>1</cpu>
-  <delay>10</delay>
+  <delay>10000</delay>
   <duration>5</duration>
   <range>400</range>
   <turn>35</turn>

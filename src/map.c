@@ -72,7 +72,7 @@ static void map_renderMarkers( double x, double y, double r );
 static void map_drawMarker( double x, double y, double r,
       int num, int cur, int type );
 /* Mouse. */
-static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
+static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, void *data );
 /* Misc. */
 static int map_keyHandler( unsigned int wid, SDLKey key, SDLMod mod );
@@ -234,7 +234,6 @@ void map_open (void)
          &gl_smallFont, &cDConsole, "Services:" );
    window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtServices",
          &gl_smallFont, &cBlack, NULL );
-   y -= 2 * gl_smallFont.h + 5 + 15;
 
    /* Close button */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
@@ -268,7 +267,7 @@ void map_open (void)
    /*
     * Disable Autonav button if player lacks fuel or if target is not a valid hyperspace target.
     */
-   if ((player.p->fuel < HYPERSPACE_FUEL) || pilot_isFlag( player.p, PILOT_NOJUMP)
+   if ((player.p->fuel < player.p->fuel_consumption) || pilot_isFlag( player.p, PILOT_NOJUMP)
          || map_selected == cur_system - systems_stack || map_npath == 0)
       window_disableButton( wid, "btnAutonav" );
 }
@@ -438,6 +437,8 @@ static void map_update( unsigned int wid )
       }
       else
          unknownPresence += sys->presence[i].value;
+      if (l > PATH_MAX)
+         break;
    }
    if (unknownPresence != 0)
       l += nsnprintf( &buf[l], PATH_MAX-l, "%s\e0%s: \e%c%.0f",
@@ -476,6 +477,8 @@ static void map_update( unsigned int wid )
          p += nsnprintf( &buf[p], PATH_MAX-p, ",\n\e%c%s\en",
                t, sys->planets[i]->name );
       hasPlanets = 1;
+      if (p > PATH_MAX)
+         break;
    }
    if(hasPlanets == 0)
       strncpy( buf, "None", PATH_MAX );
@@ -497,12 +500,9 @@ static void map_update( unsigned int wid )
    buf[0] = '\0';
    p = 0;
    /*nsnprintf(buf, sizeof(buf), "%f\n", sys->prices[0]);*/ /*Hack to control prices. */
-   if (services & PLANET_SERVICE_COMMODITY)
-      p += nsnprintf( &buf[p], PATH_MAX-p, "Commodity\n");
-   if (services & PLANET_SERVICE_OUTFITS)
-      p += nsnprintf( &buf[p], PATH_MAX-p, "Outfits\n");
-   if (services & PLANET_SERVICE_SHIPYARD)
-      p += nsnprintf( &buf[p], PATH_MAX-p, "Shipyard\n");
+   for (i=PLANET_SERVICE_MISSIONS; i<=PLANET_SERVICE_SHIPYARD; i<<=1)
+      if (services & i)
+         p += nsnprintf( &buf[p], PATH_MAX-p, "%s\n", planet_getServiceName(i) );
    if (buf[0] == '\0')
       p += nsnprintf( &buf[p], PATH_MAX-p, "None");
    window_modifyText( wid, "txtServices", buf );
@@ -1040,7 +1040,7 @@ static void map_renderMarkers( double x, double y, double r )
  *    @param w Width of the widget.
  *    @param h Height of the widget.
  */
-static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
+static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, void *data )
 {
    (void) wid;
@@ -1056,7 +1056,7 @@ static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       case SDL_MOUSEBUTTONDOWN:
          /* Must be in bounds. */
          if ((mx < 0.) || (mx > w) || (my < 0.) || (my > h))
-            return;
+            return 0;
 
          /* Zooming */
          if (event->button.button == SDL_BUTTON_WHEELUP)
@@ -1089,7 +1089,7 @@ static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
             }
             map_drag = 1;
          }
-         break;
+         return 1;
 
       case SDL_MOUSEBUTTONUP:
          if (map_drag)
@@ -1104,6 +1104,8 @@ static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
          }
          break;
    }
+
+   return 0;
 }
 /**
  * @brief Handles the button zoom clicks.

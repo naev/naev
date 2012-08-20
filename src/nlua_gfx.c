@@ -21,6 +21,7 @@
 #include "font.h"
 #include "nlua_col.h"
 #include "nlua_tex.h"
+#include "ndata.h"
 
 
 /* GFX methods. */
@@ -77,7 +78,7 @@ int nlua_loadGFX( lua_State *L, int readonly )
  *
  * An example would be:
  * @code
- * t  = tex.open( "gfx/foo/bar.png" ) -- Loads the texture
+ * t  = tex.open( GFX_PATH"foo/bar.png" ) -- Loads the texture
  * gfx.renderTex( t, 0., 0. ) -- Draws texture at origin
  * @endcode
  *

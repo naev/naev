@@ -31,26 +31,25 @@
   <cargo>5000</cargo>
  </characteristics>
  <slots>
-  <weapon x="0" y="0" h="0"/>
-  <weapon x="0" y="0" h="0"/>
-  <weapon x="50" y="0" h="5"/>
-  <weapon x="-50" y="0" h="5"/>
-  <weapon x="0" y="50" h="5"/>
-  <weapon x="0" y="-40" h="5"/>
-  <weapon x="0" y="0" h="30"/>
-  <weapon x="0" y="0" h="30"/>
-  <utility/>
-  <utility/>
-  <utility/>
-  <utility/>
-  <utility/>
-  <utility/>
-  <structure/>
-  <structure/>
-  <structure/>
-  <structure/>
-  <structure/>
-  <structure/>
+  <weapon size="large" x="0" y="0" h="0"/>
+  <weapon size="large" x="0" y="0" h="0"/>
+  <weapon size="large" x="50" y="0" h="5"/>
+  <weapon size="large" x="-50" y="0" h="5"/>
+  <weapon size="large" x="0" y="50" h="5"/>
+  <weapon size="large" x="0" y="-40" h="5"/>
+  <weapon size="large" x="0" y="0" h="30"/>
+  <weapon size="large" x="0" y="0" h="30"/>
+  <utility size="large"/>
+  <utility size="large"/>
+  <utility size="large"/>
+  <utility size="large"/>
+  <utility size="large"/>
+  <utility size="large"/>
+  <structure size="large"/>
+  <structure size="large"/>
+  <structure size="large"/>
+  <structure size="large"/>
+  <structure size="large"/>
+  <structure size="large"/>
  </slots>
 </ship>
-<!-- Special craft, mainly used for missioning purposes. -->

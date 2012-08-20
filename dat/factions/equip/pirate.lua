@@ -56,13 +56,13 @@ end
 -- @brief Equips a pirate military type ship.
 --]]
 function equip_pirateMilitary( p, shipsize )
-   local primary, secondary, medium, low, apu
+   local primary, secondary, medium, low
    local use_primary, use_secondary, use_medium, use_low
    local nhigh, nmedium, nlow = p:ship():slots()
 
    -- Defaults
    medium      = { "Unicorp Scrambler" }
-   apu         = { }
+
    weapons     = {}
 
    -- Equip by size and type
@@ -76,6 +76,7 @@ function equip_pirateMilitary( p, shipsize )
          medium         = { "Generic Afterburner", "Milspec Scrambler" }
          use_medium     = 2
          low            = { "Solar Panel" }
+         equip_cores(p, "Tricon Naga Mk5 Engine", "Milspec Orion 2302 Core System", "Schafer & Kane Light Combat Plating")
 
       -- Fighter
       elseif class == "Fighter" then
@@ -89,7 +90,8 @@ function equip_pirateMilitary( p, shipsize )
          addWeapons( equip_forwardPirLow(), use_primary )
          medium         = equip_mediumLow()
          low            = equip_lowLow()
-         apu            = equip_apuLow()
+         equip_cores(p, "Tricon Naga Mk5 Engine", "Milspec Orion 2302 Core System", "Schafer & Kane Light Combat Plating")
+
 
       -- Bomber
       elseif class == "Bomber" then
@@ -99,7 +101,8 @@ function equip_pirateMilitary( p, shipsize )
          addWeapons( equip_secondaryPirLow(), use_secondary )
          medium         = equip_mediumLow()
          low            = equip_lowLow()
-         apu            = equip_apuLow()
+         equip_cores(p, "Tricon Naga Mk5 Engine", "Milspec Orion 2302 Core System", "Schafer & Kane Light Combat Plating")
+
       end
 
    elseif shipsize == "medium" then
@@ -117,7 +120,8 @@ function equip_pirateMilitary( p, shipsize )
       addWeapons( equip_forwardPirMed(), use_primary )
       medium         = equip_mediumMed()
       low            = equip_lowMed()
-      apu            = equip_apuMed()
+      equip_cores(p, "Tricon Centaur Mk3 Engine", "Milspec Orion 3702 Core System", "Schafer & Kane Medium Combat Plating Alpha")
+
 
    else
       primary        = icmb( equip_turretPirHig(), equip_turretPirMed() )
@@ -127,9 +131,10 @@ function equip_pirateMilitary( p, shipsize )
       addWeapons( equip_secondaryPirMedLow(), use_secondary )
       medium         = equip_mediumHig()
       low            = equip_lowHig()
-      apu            = equip_apuHig()
+      equip_cores(p, "Tricon Harpy Mk6 Engine", "Milspec Orion 4802 Core System", "Schafer & Kane Heavy Combat Plating Beta")
+
    end
-   equip_ship( p, true, weapons, medium, low, apu,
+   equip_ship( p, true, weapons, medium, low,
                use_medium, use_low )
 end
 

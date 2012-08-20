@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Ulysses III">
+ <pos>
+  <x>2682.507898</x>
+  <y>-7798.093354</y>
+ </pos>
+ <GFX>
+  <space>J07.png</space>
+  <exterior>methane.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

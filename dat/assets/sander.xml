@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Sander">
+ <pos>
+  <x>-3259.936744</x>
+  <y>-2660.712975</y>
+ </pos>
+ <GFX>
+  <space>O01.png</space>
+  <exterior>oceanic.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>50.000000</value>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>100000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land>land_lowclass</land>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities/>
+  <description>Griffin III's sister world is Kramer. Much of the surface is water, so it has a sigfifigantly lower population than it's compatriot. However, those same oceans provide a lot of food and rare compounds for the Empire's consumption. Perhaps not as rich as Griffin III, but quite close.</description>
+  <bar>This underwater bar is quite the spectacle Large marine creatures swim by thye windows, and the main lobby is designed to enhance the aesthetic. A little overdone, but it is noce overall.</bar>
+ </general>
+</asset>

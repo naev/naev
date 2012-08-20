@@ -32,7 +32,6 @@
 #include "camera.h"
 
 
-#define SOUND_PREFIX       "snd/sounds/" /**< Prefix of where to find sounds. */
 #define SOUND_SUFFIX_WAV   ".wav" /**< Suffix of sounds. */
 #define SOUND_SUFFIX_OGG   ".ogg" /**< Suffix of sounds. */
 
@@ -711,7 +710,7 @@ static int sound_makeList (void)
       return 0;
 
    /* get the file list */
-   files = ndata_list( SOUND_PREFIX, &nfiles );
+   files = ndata_list( SOUND_PATH, &nfiles );
 
    /* load the profiles */
    mem = 0;
@@ -746,7 +745,7 @@ static int sound_makeList (void)
 
       /* Load the sound. */
       sound_list[sound_nlist-1].name = strdup(tmp);
-      nsnprintf( path, PATH_MAX, SOUND_PREFIX"%s", files[i] );
+      nsnprintf( path, PATH_MAX, SOUND_PATH"%s", files[i] );
       if (sound_load( &sound_list[sound_nlist-1], path ))
          sound_nlist--; /* Song not actually added. */
 

@@ -5,48 +5,49 @@
  <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Destroyer</class>
- <price>1200000</price>
+ <price>900000</price>
  <fabricator>House Dvaered</fabricator>
  <license>Medium Combat Vessel License</license>
  <description>The Vigilance is the embodiment of Dvaered philosophy. Featuring immense energy reserves and six weapon hardpoints, it's designed to hit as hard as possible. Given its Dvaered origins, it possesses inferior technology relative to its counterparts.</description>
- <movement>
-  <thrust>130</thrust>
-  <turn>75</turn>
-  <speed>150</speed>
- </movement>
  <health>
-  <absorb>39</absorb>
-  <shield>520</shield>
-  <armour>1300</armour>
-  <energy>1800</energy>
-  <shield_regen>10</shield_regen>
+  <absorb>19</absorb>
+  <armour>350</armour>
   <armour_regen>0</armour_regen>
-  <energy_regen>50</energy_regen>
  </health>
  <characteristics>
-  <cpu>75</cpu>
   <crew>15</crew>
-  <mass>830</mass>
-  <fuel>400</fuel>
-  <cargo>110</cargo>
+  <mass>410</mass>
+  <cargo>20</cargo>
  </characteristics>
  <slots>
-  <weapon x="28" y="-3" h="-0">heavy</weapon>
-	<weapon x="28" y="3" h="-0">heavy</weapon>
-  <weapon x="10" y="-3" h="2"/>
-  <weapon x="10" y="3" h="2"/>
-  <weapon x="-22" y="-8" h="-0"/>
-  <weapon x="-22" y="8" h="-0"/>
-  <utility>heavy</utility>
-  <utility>heavy</utility>
-  <utility/>
-  <structure>heavy</structure>
-  <structure/>
-  <structure/>
-  <structure/>
+  <weapon size="large" x="28" y="-3" h="-0"/>
+  <weapon size="large" x="28" y="3" h="-0"/>
+  <weapon size="medium" x="10" y="-3" h="2"/>
+  <weapon size="medium" x="10" y="3" h="2"/>
+  <weapon size="medium" x="-22" y="-8" h="-0"/>
+  <weapon size="medium" x="-22" y="8" h="-0"/>
+  <utility size="medium" prop="systems">Basic Medium Systems</utility>
+  <utility size="large"/>
+  <utility size="large"/>
+  <utility size="medium"/>
+  <structure size="medium" prop="engines">Manufacturer Medium Engine</structure>
+  <structure size="medium" prop="hull">Unmodified Medium Hull</structure>
+  <structure size="large"/>
+  <structure size="medium"/>
+  <structure size="medium"/>
+  <structure size="medium"/>
  </slots>
  <stats>
-  <fwd_heat>-5</fwd_heat>
-  <fwd_damage>5</fwd_damage>
+  <fuel_consumption>200</fuel_consumption>
+  <speed_mod>0</speed_mod>
+  <turn_mod>0</turn_mod>
+  <thrust_mod>0</thrust_mod>
+  <armour_mod>15</armour_mod>
+  <shield_mod>0</shield_mod>
+  <energy_mod>20</energy_mod>
+  <energy_regen_mod>0</energy_regen_mod>
+  <cargo_mod>-50</cargo_mod>
+  <ew_detect>10</ew_detect>
+  <ew_hide>0</ew_hide>
  </stats>
 </ship>

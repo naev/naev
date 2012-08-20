@@ -126,7 +126,7 @@ void menu_info( int window )
 
    /* Create tabbed window. */
    info_windows = window_addTabbedWindow( info_wid, -1, -1, -1, -1, "tabInfo",
-         INFO_WINDOWS, info_names );
+         INFO_WINDOWS, info_names, 0 );
 
    /* Open the subwindows. */
    info_openMain(       info_windows[ INFO_WIN_MAIN ] );
@@ -318,6 +318,16 @@ static void setgui_load( unsigned int wdw, char *str )
    if (strcmp(gui,"None") == 0)
       return;
 
+   if (player.guiOverride == 0) {
+      if (dialogue_YesNo( "GUI Override is not set. Enable GUI Override and change GUI to '%s'?", gui )) {
+         player.guiOverride = 1;
+         window_checkboxSet( wid, "chkOverride", player.guiOverride );
+      }
+      else {
+         return;
+      }
+   }
+
    /* Set the GUI. */
    if (player.gui != NULL)
       free( player.gui );
@@ -340,6 +350,9 @@ static void setgui_load( unsigned int wdw, char *str )
 static void info_toggleGuiOverride( unsigned int wid, char *name )
 {
    player.guiOverride = window_checkboxState( wid, name );
+   /* Go back to the default one. */
+   if (player.guiOverride == 0)
+      toolkit_setList( wid, "lstGUI", gui_pick() );
 }
 
 
@@ -493,7 +506,7 @@ static void info_openWeapons( unsigned int wid )
 static void weapons_genList( unsigned int wid )
 {
    const char *str;
-   char **buf;
+   char **buf, tbuf[256];
    int i, n;
    int w, h;
 
@@ -513,9 +526,10 @@ static void weapons_genList( unsigned int wid )
    for (i=0; i<PILOT_WEAPON_SETS; i++) {
       str = pilot_weapSetName( info_eq_weaps.selected, i );
       if (str == NULL)
-         buf[i] = strdup( "??" );
+         snprintf( tbuf, sizeof(tbuf), "%d - ??", (i+1)%10 );
       else
-         buf[i] = strdup( str );
+         snprintf( tbuf, sizeof(tbuf), "%d - %s", (i+1)%10, str );
+      buf[i] = strdup( tbuf );
    }
    window_addList( wid, 20+180+20, -40,
          w - (20+180+20+20), 160,

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Grandard">
+ <pos>
+  <x>3736.202732</x>
+  <y>-141.231031</y>
+ </pos>
+ <GFX>
+  <space>M05.png</space>
+  <exterior>aquatic2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>75.000000</value>
+  <range>5</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>1236540</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>Grandard is the home of some of the Empire's most legendary fighter pilots. For reasons unknown, this world has become reknown for it's highly skilled light combat ship specialists. Rather than discourage this analomy, the Empire has taken full advantage of it.</description>
+  <bar>This bar has pictures of some of the more renowned fighter pilots in its history. Several imperial officers look at these pictures in what cna only be described as burning envy. Prospective aces, then.</bar>
+ </general>
+ <tech>
+  <item>Systems Medium</item>
+  <item>Hulls Medium</item>
+  <item>Engines Low</item>
+  <item>Laser 1</item>
+  <item>Laser 2</item>
+  <item>Kinetic 1</item>
+  <item>Plasma 1</item>
+  <item>Basic Outfits 1</item>
+  <item>Basic Outfits 2</item>
+  <item>Missiles 1</item>
+  <item>Missiles 2</item>
+  <item>Star Maps</item>
+  <item>Basic Civilian Ships</item>
+  <item>Light Civilian Combat Ships</item>
+  <item>Engines Elite</item>
+ </tech>
+</asset>

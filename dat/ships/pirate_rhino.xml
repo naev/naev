@@ -5,44 +5,46 @@
  <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Armoured Transport</class>
- <price>1100000</price>
+ <price>1500000</price>
  <fabricator>Skull and Bones</fabricator>
  <description>The traditional Skull and Bones refit has left the Rhino substantially more manoeuvrable, though somewhat less armoured. Exploiting its large cargo bay and durability, the Rhino has become an excellent scavenger ship.</description>
- <movement>
-  <thrust>115</thrust>
-  <turn>75</turn>
-  <speed>150</speed>
- </movement>
  <health>
-  <absorb>40</absorb>
-  <shield>270</shield>
-  <armour>1200</armour>
-  <energy>970</energy>
-  <shield_regen>5</shield_regen>
+  <absorb>20</absorb>
+  <armour>350</armour>
   <armour_regen>0</armour_regen>
-  <energy_regen>43.3</energy_regen>
  </health>
  <characteristics>
-  <cpu>58</cpu>
   <crew>10</crew>
-  <mass>920</mass>
-  <fuel>500</fuel>
-  <cargo>210</cargo>
+  <mass>500</mass>
+  <cargo>90</cargo>
  </characteristics>
  <slots>
-  <weapon x="25" y="-3" h="4">heavy</weapon>
-  <weapon x="25" y="3" h="4">heavy</weapon>
-  <weapon x="-15" y="-3" h="4"/>
-  <weapon x="-15" y="3" h="4"/>
-  <utility/>
-  <utility/>
-  <utility/>
-  <structure/>
-  <structure/>
-  <structure/>
-  <structure/>
+  <weapon size="large" x="25" y="-3" h="4"/>
+  <weapon size="large" x="25" y="3" h="4"/>
+  <weapon size="medium" x="-15" y="-3" h="4"/>
+  <weapon size="medium" x="-15" y="3" h="4"/>
+  <utility size="medium" prop="systems">Previous Generation Medium Systems</utility>
+  <utility size="medium"/>
+  <utility size="medium"/>
+  <utility size="medium"/>
+  <structure size="medium" prop="engines">Beat Up Medium Engine</structure>
+  <structure size="medium" prop="hull">Patchwork Medium Plating</structure>
+  <structure size="medium"/>
+  <structure size="medium"/>
+  <structure size="medium"/>
+  <structure size="medium"/>
  </slots>
  <stats>
-  <cargo_inertia>10</cargo_inertia>
+  <fuel_consumption>200</fuel_consumption>
+  <speed_mod>10</speed_mod>
+  <turn_mod>0</turn_mod>
+  <thrust_mod>0</thrust_mod>
+  <armour_mod>0</armour_mod>
+  <shield_mod>10</shield_mod>
+  <energy_mod>0</energy_mod>
+  <energy_regen_mod>10</energy_regen_mod>
+  <cargo_mod>25</cargo_mod>
+  <ew_detect>0</ew_detect>
+  <ew_hide>10</ew_hide>
  </stats>
 </ship>

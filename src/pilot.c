@@ -44,6 +44,7 @@
 #include "array.h"
 #include "camera.h"
 #include "damagetype.h"
+#include "pause.h"
 
 
 #define PILOT_CHUNK_MIN 128 /**< Minimum chunks to increment pilot_stack by */
@@ -620,6 +621,29 @@ double pilot_face( Pilot* p, const double dir )
 
 
 /**
+ * @brief Causes the pilot to turn around and brake.
+ *
+ *    @param Pilot to brake.
+ *    @return 1 when braking has finished.
+ */
+int pilot_brake( Pilot *p )
+{
+   double diff;
+
+   diff = pilot_face(p, VANGLE(p->solid->vel) + M_PI);
+   if (ABS(diff) < MAX_DIR_ERR && VMOD(p->solid->vel) > MIN_VEL_ERR)
+      pilot_setThrust(p, 1.);
+   else {
+      pilot_setThrust(p, 0.);
+      if (VMOD(p->solid->vel) < MIN_VEL_ERR)
+         return 1;
+   }
+
+   return 0;
+}
+
+
+/**
  * @brief Begins active cooldown, reducing hull and outfit temperatures.
  *
  *    @param Pilot that should cool down.
@@ -629,6 +653,21 @@ void pilot_cooldown( Pilot *p )
    int i;
    double heat_capacity, heat_mean;
    PilotOutfitSlot *o;
+
+   /* Brake if necessary. */
+   if (VMOD(p->solid->vel) > MIN_VEL_ERR) {
+      pilot_setFlag(p, PILOT_COOLDOWN_BRAKE);
+      return;
+   }
+   else
+      pilot_rmFlag(p, PILOT_COOLDOWN_BRAKE);
+
+   if (p->id == PLAYER_ID)
+      player_message("\epActive cooldown engaged.");
+
+   /* Disable active outfits. */
+   if (pilot_outfitOffAll( p ) > 0)
+      pilot_calcStats( p );
 
    /* Calculate the ship's overall heat. */
    heat_capacity = p->heat_C;
@@ -642,15 +681,20 @@ void pilot_cooldown( Pilot *p )
 
    heat_mean /= heat_capacity;
 
+   p->cdelay = 5. + pow(p->ship->mass, .5) / 2.;
+
    /*
+    * Base delay of about 11.7s for a Lancelot, 44.4s for a Peacemaker.
+    *
     * Super heat penalty table:
-    *    300K: 13.3%
-    *    350K: 31.6%
-    *    400K: 52.5%
-    *    450K: 75.2%
-    *    500K: 99.4%
+    *    300K:  13.4%
+    *    350K:  31.8%
+    *    400K:  52.8%
+    *    450K:  75.6%
+    *    500K: 100.0%
     */
-   p->cdelay = pow( p->ship->mass, 0.4 ) * (1. + pow( MAX(1, heat_mean - CONST_SPACE_STAR_TEMP), 1.25) / 1000.);
+   p->cdelay = (5. + pow(p->ship->mass, .5) /2.) *
+         (1. + pow(heat_mean / CONST_SPACE_STAR_TEMP - 1., 1.25));
    p->ctimer = p->cdelay;
    p->heat_start = p->heat_T;
    pilot_setFlag(p, PILOT_COOLDOWN);
@@ -661,12 +705,26 @@ void pilot_cooldown( Pilot *p )
  * @brief Terminates active cooldown.
  *
  *    @param Pilot to stop cooling.
+ *    @param Reason for the termination.
  */
-void pilot_cooldownEnd( Pilot *p )
+void pilot_cooldownEnd( Pilot *p, const char *reason )
 {
-   /* Send message to player upon normal completion. */
-   if ((p->id == PLAYER_ID) && (p->ctimer < 0.))
+   if (pilot_isFlag(p, PILOT_COOLDOWN_BRAKE)) {
+      pilot_rmFlag(p, PILOT_COOLDOWN_BRAKE);
+      return;
+   }
+
+   /* Send message to player. */
+   if (p->id == PLAYER_ID) {
+      if (p->ctimer < 0.)
          player_message("\epActive cooldown completed.");
+      else {
+         if (reason != NULL)
+            player_message("\erActive cooldown aborted: %s!", reason);
+         else
+            player_message("\erActive cooldown aborted!");
+      }
+   }
 
    pilot_rmFlag(p, PILOT_COOLDOWN);
 
@@ -922,7 +980,7 @@ void pilot_rmFriendly( Pilot* p )
  */
 int pilot_getJumps( const Pilot* p )
 {
-   return (int)(p->fuel) / HYPERSPACE_FUEL;
+   return (int)floor(p->fuel / p->fuel_consumption);
 }
 
 
@@ -1144,6 +1202,10 @@ void pilot_updateDisable( Pilot* p, const unsigned int shooter )
        (!pilot_isFlag(p, PILOT_NODISABLE) || (p->armour <= 0.)) &&
        (p->armour <= p->stress)) { /* Pilot should be disabled. */
 
+      /* Cooldown is an active process, so cancel it. */
+      if (pilot_isFlag(p, PILOT_COOLDOWN))
+         pilot_cooldownEnd(p, NULL);
+
       /* If hostile, must remove counter. */
       h = (pilot_isHostile(p)) ? 1 : 0;
       pilot_rmHostile(p);
@@ -1175,6 +1237,10 @@ void pilot_updateDisable( Pilot* p, const unsigned int shooter )
       p->dtimer = 20. * pow( p->armour, 0.25 );
       p->dtimer_accum = 0.;
 
+      /* Disable active outfits. */
+      if (pilot_outfitOffAll( p ) > 0)
+         pilot_calcStats( p );
+
       pilot_setFlag( p,PILOT_DISABLED ); /* set as disabled */
       /* Run hook */
       if (shooter > 0) {
@@ -1197,6 +1263,10 @@ void pilot_updateDisable( Pilot* p, const unsigned int shooter )
 
       /* TODO: Make undisabled pilot use up presence again. */
       pilot_runHook( p, PILOT_HOOK_UNDISABLE );
+
+      /* This is sort of a hack to make sure it gets reset... */
+      if (p->id==PLAYER_ID)
+         pause_setSpeed( player_isFlag(PLAYER_DOUBLESPEED) ? 2. : 1. );
    }
 }
 
@@ -1417,6 +1487,7 @@ void pilot_update( Pilot* pilot, const double dt )
    double Q;
    Damage dmg;
    double stress_falloff;
+   double efficiency, thrust;
 
    /* Check target sanity. */
    if (pilot->target != pilot->id) {
@@ -1437,7 +1508,7 @@ void pilot_update( Pilot* pilot, const double dt )
    if (cooling) {
       pilot->ctimer   -= dt;
       if (pilot->ctimer < 0.) {
-         pilot_cooldownEnd( pilot );
+         pilot_cooldownEnd(pilot, NULL);
          cooling = 0;
       }
    }
@@ -1602,6 +1673,11 @@ void pilot_update( Pilot* pilot, const double dt )
          pilot_dead( pilot, 0 ); /* start death stuff - dunno who killed. */
    }
 
+   /* Braking before cooldown. */
+   if (pilot_isFlag(pilot, PILOT_COOLDOWN_BRAKE))
+      if (pilot_brake( pilot ))
+         pilot_cooldown( pilot );
+
    /* purpose fallthrough to get the movement like disabled */
    if (pilot_isDisabled(pilot) || pilot_isFlag(pilot, PILOT_COOLDOWN)) {
       /* Do the slow brake thing */
@@ -1690,6 +1766,41 @@ void pilot_update( Pilot* pilot, const double dt )
       }
    }
 
+   /* Update weapons. */
+   pilot_weapSetUpdate( pilot );
+
+   if (!pilot_isFlag(pilot, PILOT_HYPERSPACE)) { /* limit the speed */
+
+      /* pilot is afterburning */
+      if (pilot_isFlag(pilot, PILOT_AFTERBURNER) && pilot->id == PLAYER_ID) {
+         /* Heat up the afterburner. */
+         pilot_heatAddSlotTime(pilot, pilot->afterburner, dt);
+
+         /* If the afterburner's efficiency is reduced to 0, shut it off. */
+         if (pilot_heatEfficiencyMod(pilot->afterburner->heat_T,
+               pilot->afterburner->outfit->u.afb.heat_base,
+               pilot->afterburner->outfit->u.afb.heat_cap)==0)
+            pilot_afterburnOver(pilot);
+         else {
+            spfx_shake( 0.75*SHAKE_DECAY * dt); /* shake goes down at quarter speed */
+            efficiency = pilot_heatEfficiencyMod( pilot->afterburner->heat_T,
+                  pilot->afterburner->outfit->u.afb.heat_base,
+                  pilot->afterburner->outfit->u.afb.heat_cap );
+            thrust = MIN( 1., pilot->afterburner->outfit->u.afb.mass_limit / pilot->solid->mass) * efficiency;
+
+            /* Adjust speed. Speed bonus falls as heat rises. */
+            pilot->solid->speed_max = pilot->speed * (1. +
+                  pilot->afterburner->outfit->u.afb.speed * thrust);
+
+            /* Adjust thrust. Thrust bonus falls as heat rises. */
+            pilot_setThrust(pilot, 1. + pilot->afterburner->outfit->u.afb.thrust * thrust);
+         }
+      }
+      else
+         pilot->solid->speed_max = pilot->speed;
+   }
+   else
+      pilot->solid->speed_max = -1.; /* Disables max speed. */
 
    /* Set engine glow. */
    if (pilot->solid->thrust > 0.) {
@@ -1703,21 +1814,6 @@ void pilot_update( Pilot* pilot, const double dt )
       if (pilot->engine_glow < 0.)
          pilot->engine_glow = 0.;
    }
-
-   /* Update weapons. */
-   pilot_weapSetUpdate( pilot );
-
-   if (!pilot_isFlag(pilot, PILOT_HYPERSPACE)) { /* limit the speed */
-
-      /* pilot is afterburning */
-      if (pilot_isFlag(pilot, PILOT_AFTERBURNER) && pilot->id == PLAYER_ID) {
-         spfx_shake( 0.75*SHAKE_DECAY * dt); /* shake goes down at quarter speed */
-      }
-      else
-         pilot->solid->speed_max = pilot->speed;
-   }
-   else
-      pilot->solid->speed_max = -1.; /* Disables max speed. */
 
    /* Update the solid, must be run after limit_speed. */
    pilot->solid->update( pilot->solid, dt );
@@ -1784,10 +1880,9 @@ static void pilot_hyperspace( Pilot* p, double dt )
       if (!can_hyp) {
          pilot_hyperspaceAbort( p );
 
-         if (p == player.p) {
+         if (pilot_isPlayer(p))
             if (!player_isFlag(PLAYER_AUTONAV))
                player_message( "\erStrayed too far from jump point: jump aborted." );
-         }
       }
       else {
          if (p->ptimer < 0.) { /* engines ready */
@@ -1805,22 +1900,15 @@ static void pilot_hyperspace( Pilot* p, double dt )
       if (!can_hyp) {
          pilot_hyperspaceAbort( p );
 
-         if (p == player.p) {
+         if (pilot_isPlayer(p))
             if (!player_isFlag(PLAYER_AUTONAV))
                player_message( "\erStrayed too far from jump point: jump aborted." );
-         }
       }
       else {
          /* If the ship needs to charge up its hyperdrive, brake. */
          if (!p->stats.misc_instant_jump &&
-               !pilot_isFlag(p, PILOT_HYP_BRAKE) && (VMOD(p->solid->vel) > MIN_VEL_ERR)) {
-            diff = pilot_face( p, VANGLE(p->solid->vel) + M_PI );
-
-            if (ABS(diff) < MAX_DIR_ERR)
-               pilot_setThrust( p, 1. );
-            else
-               pilot_setThrust( p, 0. );
-         }
+               !pilot_isFlag(p, PILOT_HYP_BRAKE) && (VMOD(p->solid->vel) > MIN_VEL_ERR))
+            pilot_brake(p);
          /* face target */
          else {
             /* Done braking or no braking required. */
@@ -1850,7 +1938,7 @@ static void pilot_hyperspace( Pilot* p, double dt )
       }
    }
 
-   if (p == player.p)
+   if (pilot_isPlayer(p))
       player_updateSpecific( p, dt );
 }
 
@@ -2073,24 +2161,24 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    /* First pass copy data. */
    p = 0;
    for (i=0; i<pilot->outfit_nstructure; i++) {
-      pilot->outfit_structure[i].slot.type = OUTFIT_SLOT_STRUCTURE;
-      pilot->outfit_structure[i].slot.size = ship->outfit_structure[i].slot.size;
       pilot->outfits[p] = &pilot->outfit_structure[i];
-      memcpy( &pilot->outfits[p]->mount, &ship->outfit_structure[i].mount, sizeof(ShipMount) );
+      pilot->outfits[p]->sslot = &ship->outfit_structure[i];
+      if (ship->outfit_structure[i].data != NULL)
+         pilot_addOutfitRaw( pilot, ship->outfit_structure[i].data, pilot->outfits[p] );
       p++;
    }
    for (i=0; i<pilot->outfit_nutility; i++) {
-      pilot->outfit_utility[i].slot.type = OUTFIT_SLOT_UTILITY;
-      pilot->outfit_utility[i].slot.size = ship->outfit_utility[i].slot.size;
       pilot->outfits[p] = &pilot->outfit_utility[i];
-      memcpy( &pilot->outfits[p]->mount, &ship->outfit_utility[i].mount, sizeof(ShipMount) );
+      pilot->outfits[p]->sslot = &ship->outfit_utility[i];
+      if (ship->outfit_utility[i].data != NULL)
+         pilot_addOutfitRaw( pilot, ship->outfit_utility[i].data, pilot->outfits[p] );
       p++;
    }
    for (i=0; i<pilot->outfit_nweapon; i++) {
-      pilot->outfit_weapon[i].slot.type = OUTFIT_SLOT_WEAPON;
-      pilot->outfit_weapon[i].slot.size = ship->outfit_weapon[i].slot.size;
       pilot->outfits[p] = &pilot->outfit_weapon[i];
-      memcpy( &pilot->outfits[p]->mount, &ship->outfit_weapon[i].mount, sizeof(ShipMount) );
+      pilot->outfits[p]->sslot = &ship->outfit_weapon[i];
+      if (ship->outfit_weapon[i].data != NULL)
+         pilot_addOutfitRaw( pilot, ship->outfit_weapon[i].data, pilot->outfits[p] );
       p++;
    }
    /* Second pass set ID. */
@@ -2105,6 +2193,11 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
 
    /* set the pilot stats based on his ship and outfits */
    pilot_calcStats( pilot );
+
+   /* Heal up the ship. */
+   pilot->armour = pilot->armour_max;
+   pilot->shield = pilot->shield_max;
+   pilot->energy = pilot->energy_max;
 
    /* Sanity check. */
 #ifdef DEBUGGING

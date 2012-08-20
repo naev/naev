@@ -111,7 +111,7 @@ static void sysedit_renderBG( double bx, double bw, double w, double h, double x
 static void sysedit_renderSprite( glTexture *gfx, double bx, double by, double x, double y,
       int sx, int sy, const glColour *c, int selected, const char *caption );
 static void sysedit_renderOverlay( double bx, double by, double bw, double bh, void* data );
-static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
+static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, void *data );
 /* Button functions. */
 static void sysedit_close( unsigned int wid, char *wgt );
@@ -477,6 +477,7 @@ static void sysedit_btnScale( unsigned int wid_unused, char *unused )
 
    sys   = sysedit_sys; /* Comfort. */
    s     = atof(str);
+   free(str);
 
    /* In case screwed up. */
    if ((s < 0.1) || (s > 10.)) {
@@ -707,7 +708,7 @@ static void sysedit_renderOverlay( double bx, double by, double bw, double bh, v
 /**
  * @brief System editor custom widget mouse handling.
  */
-static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
+static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, void *data )
 {
    (void) wid;
@@ -731,7 +732,7 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
       case SDL_MOUSEBUTTONDOWN:
          /* Must be in bounds. */
          if ((mx < 0.) || (mx > w) || (my < 0.) || (my > h))
-            return;
+            return 0;
 
          /* Zooming */
          if (event->button.button == SDL_BUTTON_WHEELUP)
@@ -783,13 +784,13 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
                                  && (sysedit_moved < SYSEDIT_MOVE_THRESHOLD)) {
                               sysedit_editPnt();
                               sysedit_dragSel = 0;
-                              return;
+                              return 1;
                            }
                            sysedit_tadd      = -1;
                         }
                         sysedit_dragTime  = SDL_GetTicks();
                         sysedit_moved     = 0;
-                        return;
+                        return 1;
                      }
                   }
 
@@ -806,7 +807,7 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
                   sysedit_dragSel   = 1;
                   sysedit_dragTime  = SDL_GetTicks();
                   sysedit_moved     = 0;
-                  return;
+                  return 1;
                }
             }
 
@@ -844,13 +845,13 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
                                  && (sysedit_moved < SYSEDIT_MOVE_THRESHOLD)) {
                               sysedit_editJump();
                               sysedit_dragSel = 0;
-                              return;
+                              return 1;
                            }
                            sysedit_tadd      = -1;
                         }
                         sysedit_dragTime  = SDL_GetTicks();
                         sysedit_moved     = 0;
-                        return;
+                        return 1;
                      }
                   }
 
@@ -867,7 +868,7 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
                   sysedit_dragSel   = 1;
                   sysedit_dragTime  = SDL_GetTicks();
                   sysedit_moved     = 0;
-                  return;
+                  return 1;
                }
             }
 
@@ -878,9 +879,8 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
                sysedit_moved     = 0;
                sysedit_tsel.type = SELECT_NONE;
             }
-            return;
          }
-         break;
+         return 1;
 
       case SDL_MOUSEBUTTONUP:
          if (sysedit_drag) {
@@ -953,6 +953,8 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
          }
          break;
    }
+
+   return 0;
 }
 
 
@@ -1384,7 +1386,7 @@ static void sysedit_planetDesc( unsigned int wid, char *unused )
    window_addInput( wid, x, y, w, h, "txtDescription", 1024, 0,
          NULL );
    window_setInputFilter( wid, "txtDescription",
-         "[]{}/\\~<>@#$^&|_" );
+         "[]{}~<>@#$^|_" );
    y -= h + 10;
    /* Load current values. */
    window_setInput( wid, "txtDescription", desc );
@@ -1396,7 +1398,7 @@ static void sysedit_planetDesc( unsigned int wid, char *unused )
    window_addInput( wid, x, y, w, h, "txtBarDescription", 1024, 0,
          NULL );
    window_setInputFilter( wid, "txtBarDescription",
-         "[]{}/\\~<>@#$^&|_" );
+         "[]{}~<>@#$^|_" );
    /* Load current values. */
    window_setInput( wid, "txtBarDescription", bardesc );
 }
@@ -1443,7 +1445,7 @@ static void sysedit_planetDescClose( unsigned int wid, char *unused )
  */
 static void sysedit_genServicesList( unsigned int wid )
 {
-   int i, j, n;
+   int i, j, n, nservices;
    Planet *p;
    char **have, **lack;
    int x, y, w, h, hpos, lpos;
@@ -1466,23 +1468,22 @@ static void sysedit_genServicesList( unsigned int wid )
    h = SYSEDIT_EDIT_HEIGHT - y - 130;
 
    /* Get all missing services. */
-   n = 0;
-   for (i=0; i<8; i++)
-      if (!planet_hasService(p, 1<<i) && (1<<i != PLANET_SERVICE_INHABITED))
+   n = nservices = 0;
+   for (i=1; i<PLANET_SERVICES_MAX; i<<=1) {
+      if (!planet_hasService(p, i) && (i != PLANET_SERVICE_INHABITED))
          n++;
+      nservices++; /* Cheaply track all service types. */
+   }
 
    /* Get all the services the planet has. */
    j = 0;
-   if (planet_hasService(p, PLANET_SERVICE_LAND)) {
-      have = malloc( sizeof(char*) * 8 );
-      for (i=0; i<8; i++)
-         if (planet_hasService(p, 1<<i)  && (1<<i != PLANET_SERVICE_INHABITED))
-            have[j++] = strdup( planet_getServiceName( 1<<i ) );
-   }
-   else {
-      have = malloc( sizeof(char*) );
+   have = malloc( sizeof(char*) * MAX(nservices - n, 1) );
+   if (nservices == n)
       have[j++] = strdup("None");
-   }
+   else
+      for (i=1; i<PLANET_SERVICES_MAX; i<<=1)
+         if (planet_hasService(p, i)  && (i != PLANET_SERVICE_INHABITED))
+            have[j++] = strdup( planet_getServiceName( i ) );
 
    /* Add list. */
    window_addList( wid, x, y, w, h, "lstServicesHave", have, j, 0, NULL );
@@ -1490,16 +1491,13 @@ static void sysedit_genServicesList( unsigned int wid )
 
    /* Add list of services the planet lacks. */
    j = 0;
-   if (n) {
-      lack = malloc( sizeof(char*) * n );
-      for (i=0; i<8; i++)
-         if (!planet_hasService(p, 1<<i) && (1<<i != PLANET_SERVICE_INHABITED))
-            lack[j++] = strdup( planet_getServiceName(1<<i) );
-   }
-   else {
-      lack = malloc( sizeof(char*) );
+   lack = malloc( sizeof(char*) * MAX(1, n) );
+   if (!n)
       lack[j++] = strdup( "None" );
-   }
+   else
+      for (i=1; i<PLANET_SERVICES_MAX; i<<=1)
+         if (!planet_hasService(p, i) && (i != PLANET_SERVICE_INHABITED))
+            lack[j++] = strdup( planet_getServiceName(i) );
 
    /* Add list. */
    window_addList( wid, x, y, w, h, "lstServicesLacked", lack, j, 0, NULL );
@@ -1541,7 +1539,6 @@ static void sysedit_btnRmService( unsigned int wid, char *unused )
 {
    (void) unused;
    char *selected;
-   int i;
    Planet *p;
 
    selected = toolkit_getList( wid, "lstServicesHave" );
@@ -1553,11 +1550,8 @@ static void sysedit_btnRmService( unsigned int wid, char *unused )
    p->services ^= planet_getService(selected);
 
    /* If landability was removed, the rest must go, too. */
-   if (strcmp(selected,"Land")==0) {
-      for (i=0; i<8; i++)
-         if (1<<i != PLANET_SERVICE_LAND)
-            p->services &= (1<<i) & planet_hasService(p, PLANET_SERVICE_LAND);
-   }
+   if (strcmp(selected,"Land")==0)
+      p->services = 0;
 
    sysedit_genServicesList( wid );
 }

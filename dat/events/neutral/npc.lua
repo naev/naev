@@ -115,7 +115,7 @@ else --default english
                                "Have you studied your galactic history? The Frontier worlds were the first to be colonized by humans. That makes our worlds the oldest human settlements in the galaxy, now that Earth is gone.",
                                "We have the Dvaered encroaching on our territory on one side, and the Sirius zealots on the other. Sometimes I worry that in a few decacycles, the Frontier will no longer exist.",
                                "Have you visited the Frontier Museum? They've got a scale model of a First Growth colony ship on display in one of the big rooms. Even scaled down like that, it's massive! Imagine how overwhelming the real ones must have been.",
-                               "There are eleven true Frontier worlds, because eleven colony ships successfully completed their journey in the First Growth. But did you know that there were twenty colony ships to begin with? Nine of them never made it. Some are said to have mysteriously disappeared. I wonder what happened to them?",
+                               "There are twelve true Frontier worlds, because twelve colony ships successfully completed their journey in the First Growth. But did you know that there were twenty colony ships to begin with? Eight of them never made it. Some are said to have mysteriously disappeared. I wonder what happened to them?",
                                "We don't have much here in the Frontier, other than our long history leading directly back to Earth. But I don't mind. I'm happy living here, and I wouldn't want to move anywhere else.",
                                "You know the Frontier Liberation Front? They're the guerilla movement that fights for the Frontier. Not to be confused with the Liberation Front of the Frontier, the Frontier Front for Liberation, or the Liberal Frontier's Front!"
                               }
@@ -137,10 +137,11 @@ else --default english
                                "If you're on a mission you just can't beat, you can open the information panel and abort the mission. There's no penalty for doing it, so don't hesitate to try the mission again later.",
                                "Don't forget that you can revisit the tutorial modules at any time from the main menu. I know I do.",
                                "Some weapons have a different effect on shields than they do on armour. Keep that in mind when equipping your ship.",
-                               "Afterburners only work when you activate them. While they're inactive all they do is slow you down!",
+                               "Afterburners can speed you up a lot, but when they get hot they don't work as well anymore. Don't use them carelessly!",
                                "There are passive outfits and active outfits. The passive ones modify your ship continuously, but the active ones only work if you turn them on. You usually can't keep an active outfit on all the time, so you need to be careful only to use it when you need it.",
                                "If you're new to the galaxy, I recommend you buy a map or two. It can make exploration a bit easier.",
-                               "Missile jammers slow down missiles close to your ship. If your enemies are using missiles, it can be very helpful to have one on board."
+                               "Missile jammers slow down missiles close to your ship. If your enemies are using missiles, it can be very helpful to have one on board.",
+                               "If you're having trouble with overheating weapons or outfits, you can use " .. tutGetKey("cooldown") .. " to put your ship into Active Cooldown. Careful though, your energy and shields won't recharge while you do it!",
                               }
 
    -- Jump point messages.
@@ -159,7 +160,7 @@ else --default english
    -- ALL NPCs have a chance to say one of these lines instead of a lore message.
    -- So, make sure the hints are always faction neutral.
    msg_mhint =                {{"Shadowrun", "Apparently there's a woman who regularly turns up on planets in and around the Klantar system. I wonder what she's looking for?"},
-                               {"Collective Espionage 1", "The Empire is trying to really do something about the Collective, I hear. Who knows, maybe you can even help them out if you make it to Omega station."},
+                               {"Collective Espionage 1", "The Empire is trying to really do something about the Collective, I hear. Who knows, maybe you can even help them out if you make it to Omega Station."},
                                {"Hitman", "There are often shady characters hanging out in the Alteris system. I'd stay away from there if I were you, someone might offer you a dirty kind of job!"}
                               }
 

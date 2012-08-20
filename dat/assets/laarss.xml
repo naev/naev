@@ -33,6 +33,10 @@
   <bar>Though technically this place is the spaceport bar, its main function is a place of leisure for the local population. At all times, you can find large groups of Dvaered workers here, spending their off-time and their credits on booze and entertainment.</bar>
  </general>
  <tech>
+  <item>Hulls Low</item>
+  <item>Hulls Medium</item>
+  <item>Engines Low</item>
+  <item>Engines Medium</item>
   <item>Kinetic 1</item>
   <item>Basic Outfits 2</item>
   <item>Missiles 1</item>

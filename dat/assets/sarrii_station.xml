@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Sarrii Station">
+ <pos>
+  <x>-2675.964475</x>
+  <y>-6088.010868</y>
+ </pos>
+ <GFX>
+  <space>station-fleetbase2.png</space>
+  <exterior>snow.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>100.000000</value>
+  <range>5</range>
+ </presence>
+ <general>
+  <class>A</class>
+  <population>10112</population>
+  <hide>0.750000</hide>
+  <services>
+   <land>dv_mil_restricted</land>
+   <refuel/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>Sarrii Station serves as the garrison point for the nearby planet of Wayline. The Dvaered garrison don't want to have to be on the planet at all, so they had this station built.</description>
+ </general>
+ <tech>
+  <item>Engines Low</item>
+  <item>Basic Trade Ships</item>
+  <item>Bulk Trade Ships</item>
+ </tech>
+</asset>

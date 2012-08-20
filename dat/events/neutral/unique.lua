@@ -21,10 +21,10 @@ function create ()
 
    -- Create unique
    if unique_class == "Pirate" then
-      include("scripts/pilot/pirate.lua")
+      include("pilot/pirate.lua")
       pirate_create()
    elseif unique_class == "Empire" then
-      include("scripts/pilot/empire.lua")
+      include("pilot/empire.lua")
       empire_create()
    end
 

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Thosson">
+ <pos>
+  <x>4327.037111</x>
+  <y>-3228.025914</y>
+ </pos>
+ <GFX>
+  <space>O00.png</space>
+  <exterior>aquatic.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>O</class>
+  <population>6000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities/>
+  <description>Thosson is mostly a normal aquatic world, capitalizing on its abundant supply of water. However, a small Soromid community on this world has taken it upon itself to evolve into water-dwelling creatures through genetic manipulation. So far they haven't had much success, and their position on the planet is rather marginal. By and large, the Soromid believe in space more than in oceans.</description>
+  <bar>The architect of this spaceport placed the designated area for the spaceport bar a little too close to the landing platforms. From time to time, the music in the bar is drowned out by the engines of an arriving or departing space vessel.</bar>
+ </general>
+</asset>

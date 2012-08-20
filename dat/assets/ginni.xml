@@ -32,6 +32,9 @@
   <bar>A lot of planetside spaceport bars have windows that give visitors a glance of the immediate environment, but the one on Ginni does not. This is because the sunlight on Ginni can get rather intense, and it was cheaper to build a wall than an automatically adjusting viewport. Besides, there's not too much to see anyway.</bar>
  </general>
  <tech>
+  <item>Hulls Low</item>
+  <item>Engines Low</item>
+  <item>Engines Medium</item>
   <item>Kinetic 1</item>
   <item>Kinetic 2</item>
   <item>Basic Outfits 1</item>

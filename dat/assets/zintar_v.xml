@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Zintar V">
+ <pos>
+  <x>23162.713569</x>
+  <y>-6739.528962</y>
+ </pos>
+ <GFX>
+  <space>I05.png</space>
+  <exterior>station03.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

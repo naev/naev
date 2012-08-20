@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <Events>
  <event name="reputation">
   <lua>reputation</lua>
@@ -30,6 +31,10 @@
  </event>
  <event name="Tutorial: Missile Combat">
   <lua>tutorial/tutorial-combat2</lua>
+  <trigger>none</trigger>
+ </event>
+ <event name="Tutorial: Heat">
+  <lua>tutorial/tutorial-heat</lua>
   <trigger>none</trigger>
  </event>
  <event name="Tutorial: Activated Outfits">
@@ -73,7 +78,7 @@
   <lua>neutral/baron_prowl</lua>
   <trigger>enter</trigger>
   <chance>100</chance>
-  <cond>player.misnActive("Baron") == false and system.cur() == system.get("Ingot")</cond>
+  <cond>player.misnActive("Baron") == false and player.misnActive("Prince") == false and system.cur() == system.get("Ingot")</cond>
   <flags>
   </flags>
  </event>
@@ -136,10 +141,7 @@
   <lua>flf/derelict</lua>
   <trigger>enter</trigger>
   <chance>40</chance>
-  <cond>faction.get("Dvaered"):playerStanding() &gt; 10 and player.getRating() &gt; 100 and system.cur() == system.get("Surano")</cond>
-  <flags>
-   <unique />
-  </flags>
+  <cond>faction.get("Dvaered"):playerStanding() &gt; 10 and player.getRating() &gt; 100 and system.cur() == system.get("Surano") and not (player.misnDone("Take the Dvaered crew home") or player.misnDone("Deal with the FLF agent")) and not (player.misnActive("Deal with the FLF agent") or player.misnActive("Take the Dvaered crew home")) </cond>
  </event>
  <event name="Animal trouble">
   <lua>neutral/animaltrouble</lua>

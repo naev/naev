@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Malebolge IV">
+ <pos>
+  <x>13118.124000</x>
+  <y>2716.521632</y>
+ </pos>
+ <GFX>
+  <space>moon-A00.png</space>
+  <exterior>traderoom.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.500000</hide>
+  <services/>
+ </general>
+</asset>

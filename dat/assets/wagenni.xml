@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Wagenni">
+ <pos>
+  <x>-5791.124494</x>
+  <y>-1722.738390</y>
+ </pos>
+ <GFX>
+  <space>moon-G00.png</space>
+  <exterior>mining.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>G</class>
+  <population>100000</population>
+  <hide>0.500000</hide>
+  <services>
+   <land>land_lowclass</land>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities/>
+  <description>A small, poor colony on the edge of Sirius inhabited space, Wagenni is one of those places that are doomed to forever dangle at the bottom rung of interstellar society. The locals lead a rough, underpaid existence, the kind that sparked the Dvaered Revolts elsewhere in the galaxy. Yet, there is no sign of discontent here. The Sirii have accepted their fate and take strength from their faith.</description>
+  <bar>Amazingly, this spaceport bar is off-premises. It's a free standing facility some ways from the spaceport itself. There's no security, no terminal checkpoints in between it and the landing docks. Wagenni is a poor colony. It has no use for such things.</bar>
+ </general>
+ <tech>
+  <item>Systems Medium</item>
+  <item>Hulls Medium</item>
+  <item>Basic Outfits 1</item>
+  <item>Missiles 1</item>
+ </tech>
+</asset>

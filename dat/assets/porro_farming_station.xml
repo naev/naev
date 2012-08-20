@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Porro Farming Station">
+ <pos>
+  <x>-6364.041587</x>
+  <y>-2491.943995</y>
+ </pos>
+ <GFX>
+  <space>station-agriculture.png</space>
+  <exterior>forest.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <value>100.000000</value>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>1000</population>
+  <hide>0.750000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <commodity/>
+  </services>
+  <commodities/>
+  <description>Stations like this one are a marvel of technology. They span only a few dozen kilometers in diameter, yet have the food production capability to feed several planets. Food is grown so rapidly that it takes a constant stream of merchant ships to take it all away.</description>
+  <bar>It is said among spacers that if you sit down in a spacedock bar, order a drink and read a few articles on the galactic news, a whole generation of vegetables will have grown from seed to crop by the time you get up again. This is not true, of course - unless you take small sips.</bar>
+ </general>
+</asset>

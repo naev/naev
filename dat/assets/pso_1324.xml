@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="PSO 1324">
+ <pos>
+  <x>-18807.787563</x>
+  <y>-1667.685597</y>
+ </pos>
+ <GFX>
+  <space>Y00.png</space>
+  <exterior>forest2.png</exterior>
+ </GFX>
+ <general>
+  <class>Y</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

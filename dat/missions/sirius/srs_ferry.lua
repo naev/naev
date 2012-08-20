@@ -22,9 +22,9 @@
 --
 --]]
 
-include "scripts/jumpdist.lua"
-include "scripts/cargo_common.lua"
-include "scripts/numstring.lua"
+include "jumpdist.lua"
+include "cargo_common.lua"
+include "numstring.lua"
 
 lang = naev.lang()
 if lang == "es" then
@@ -103,7 +103,7 @@ Accept the mission anyway?]]
   change_ship[1] = "On landing, the passenger gives you a brief glare and remarks, \n\"I had paid for transportation in a Sirian ship; this alternate arrangement is quite disappointing.\"\nThey hand you %d credits, but it's definitely less than you were expecting."
   change_ship[2] = "Since you were unexpectedly able to procure a Sirian ship for the journey, you find a few extra credits tucked in with the fare!"
 
-	--=Landing=--
+   --=Landing=--
 
   ferry_land_title = "Successful arrival!"
   ferry_land_late = "Late arrival"

@@ -7,8 +7,8 @@
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>-5.000000</x>
-  <y>-519.000000</y>
+  <x>-23.166667</x>
+  <y>-504.166667</y>
  </pos>
  <assets>
   <asset>Bon Sebb</asset>
@@ -19,11 +19,11 @@
    <autopos/>
    <hide>1.250000</hide>
   </jump>
-  <jump target="Eneguoz">
+  <jump target="Gammacron">
    <autopos/>
    <hide>1.250000</hide>
   </jump>
-  <jump target="Gammacron">
+  <jump target="Hekaras">
    <autopos/>
    <hide>1.250000</hide>
   </jump>

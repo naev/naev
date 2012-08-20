@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Bonanza I">
+ <pos>
+  <x>2792.255194</x>
+  <y>3252.306394</y>
+ </pos>
+ <GFX>
+  <space>K00.png</space>
+  <exterior>desertic.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

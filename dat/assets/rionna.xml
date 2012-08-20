@@ -34,6 +34,7 @@
   <bar>This spaceport bar is wholly unremarkable. It could be any other bar on any other planet. The only thing that reminds you that you're still on Rionna is that the patrons are all wearing warm clothes.</bar>
  </general>
  <tech>
+  <item>Systems Medium</item>
   <item>Ion 1</item>
   <item>Basic Outfits 1</item>
  </tech>

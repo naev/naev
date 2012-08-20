@@ -7,8 +7,8 @@
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>-372.000000</x>
-  <y>-421.000000</y>
+  <x>-326.000000</x>
+  <y>-453.000000</y>
  </pos>
  <assets>
   <asset>INSS-2</asset>
@@ -25,6 +25,10 @@
  </assets>
  <jumps>
   <jump target="Overture">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Shinnok">
    <autopos/>
    <hide>1.250000</hide>
   </jump>

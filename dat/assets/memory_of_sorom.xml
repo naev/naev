@@ -29,6 +29,8 @@
   <bar>The spacedock bar, if you can even call it that, is just a modest section of a larger facility that's used for all sorts of military-to-civilian business, such as recruitment procedures. The place is always busy. Memory of Sorom is not a place for anyone to relax.</bar>
  </general>
  <tech>
+  <item>Systems Low</item>
+  <item>Engines Medium</item>
   <item>Soromid Military Ships</item>
   <item>Heavy Civilian Combat Ships</item>
  </tech>

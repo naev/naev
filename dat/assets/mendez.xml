@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Mendez">
+ <pos>
+  <x>-6889.594173</x>
+  <y>-7813.338644</y>
+ </pos>
+ <GFX>
+  <space>G01.png</space>
+  <exterior>station03.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>G</class>
+  <population>50000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities/>
+  <description>From space, Mendez looks like a dustball. Its surface is mostly brown and the only visible clouds are dust storms. It is therefore rather surprising that the Soromid use this planet as a major food growing world. The Soromid have developed a kind of crop that will grow in the harsh conditions of Mendez. Unfortunately, the leaves are brown and tough and, while nutritious, don't taste very good.</description>
+  <bar>When there's a dust storm raging outside, the spaceport bar is filled with an eerie noise. This happens quite a lot, but despite the local authorities' best efforts, the sound refuses to be blocked out completely.</bar>
+ </general>
+</asset>

@@ -22,19 +22,22 @@ int pilot_rmOutfit( Pilot* pilot, PilotOutfitSlot *s );
 /* Ammo. */
 int pilot_addAmmo( Pilot* pilot, PilotOutfitSlot *s, Outfit* ammo, int quantity );
 int pilot_rmAmmo( Pilot* pilot, PilotOutfitSlot *s, int quantity );
+int pilot_countAmmo( Pilot* pilot );
+int pilot_maxAmmo( Pilot* pilot );
 
 /* Checks. */
 const char* pilot_checkSanity( Pilot *p );
-const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o, int add );
+const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o );
 
 /* Lockons. */
 void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, double *a, double dt );
 void pilot_lockClear( Pilot *p );
 
 /* Other. */
-char* pilot_getOutfits( const Pilot* pilot );
-void pilot_calcStats( Pilot* pilot );
+char* pilot_getOutfits( const Pilot *pilot );
+void pilot_calcStats( Pilot *pilot );
 void pilot_updateMass( Pilot *pilot );
+void pilot_healLanded( Pilot *pilot );
 
 /* Special outfit stuff. */
 int pilot_getMount( const Pilot *p, const PilotOutfitSlot *w, Vector2d *v );

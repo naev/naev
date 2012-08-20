@@ -2,15 +2,15 @@
 <outfit name="Heavy Laser">
  <general>
   <slot>weapon</slot>
-  <size>heavy</size>
+  <size>large</size>
   <license>Heavy Weapon License</license>
   <mass>53</mass>
   <price>65000</price>
   <description>The Heavy Laser is more or less an upscaled version of the Laser Cannon Turret, though some fundamental mechanisms had to be redesigned to adapt to the increased energy throughput found in this weapon.</description>
   <gfx_store>laserturret2</gfx_store>
+  <cpu>-30</cpu>
  </general>
  <specific type="turret bolt">
-  <cpu>30</cpu>
   <gfx>laser3L</gfx>
   <sound>laser</sound>
   <spfx_shield>ShiM</spfx_shield>

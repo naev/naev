@@ -852,7 +852,16 @@ static SDL_Surface* loadNebula( const char* file )
    /* loads the file */
    nsnprintf(file_path, PATH_MAX, "%s"NEBULA_PATH"%s", nfile_cachePath(), file );
    rw    = SDL_RWFromFile( file_path, "rb" );;
+   if (rw == NULL) {
+      WARN("Unable to create rwops from Nebula image: %s", file);
+      return NULL;
+   }
    npng  = npng_open( rw );
+   if (npng == NULL) {
+      WARN("Unable to open Nebula image: %s", file);
+      SDL_RWclose( rw );
+      return NULL;
+   }
    sur   = npng_readSurface( npng, 0, 1 );
    npng_close( npng );
    SDL_RWclose( rw );

@@ -8,38 +8,37 @@
  <price>260000</price>
  <fabricator>Melendez Corp.</fabricator>
  <description>The Koala is your standard cargo vessel. It's a small ship with little weapon space but a decent amount of cargo space. Good for the entrepreneur working his way to a vast space trade empire.</description>
- <movement>
-  <thrust>200</thrust>
-  <turn>140</turn>
-  <speed>220</speed>
- </movement>
  <health>
-  <absorb>13</absorb>
-  <shield>180</shield>
-  <armour>240</armour>
-  <energy>405</energy>
-  <shield_regen>6</shield_regen>
+  <absorb>10</absorb>
+  <armour>100</armour>
   <armour_regen>0</armour_regen>
-  <energy_regen>16.7</energy_regen>
  </health>
  <characteristics>
-  <cpu>30</cpu>
   <crew>3</crew>
-  <mass>180</mass>
-  <fuel>500</fuel>
-  <cargo>65</cargo>
+  <mass>75</mass>
+  <cargo>30</cargo>
  </characteristics>
  <slots>
-  <weapon x="11" y="0" h="-7"/>
-  <weapon x="-5" y="0" h="3"/>
-  <utility/>
-  <utility/>
-  <structure/>
-  <structure/>
-  <structure/>
-  <structure/>
+  <weapon size="small" x="11" y="0" h="-7"/>
+  <weapon size="small" x="-5" y="0" h="3"/>
+  <utility size="small" prop="systems">Basic Small Systems</utility>
+  <utility size="small"/>
+  <utility size="small"/>
+  <structure size="small" prop="engines">Manufacturer Small Engine</structure>
+  <structure size="small" prop="hull">Unmodified Small Hull</structure>
+  <structure size="small"/>
+  <structure size="small"/>
+  <structure size="small"/>
+  <structure size="small"/>
  </slots>
  <stats>
-  <cargo_inertia>-10</cargo_inertia>
+  <speed_mod>0</speed_mod>
+  <turn_mod>-20</turn_mod>
+  <thrust_mod>-20</thrust_mod>
+  <armour_mod>40</armour_mod>
+  <shield_mod>0</shield_mod>
+  <cargo_mod>25</cargo_mod>
+  <ew_detect>0</ew_detect>
+  <ew_hide>-30</ew_hide>
  </stats>
 </ship>

@@ -1,5 +1,5 @@
 /*
- * Copyright 2006-2011 Edgar Simo Serra
+ * Copyright 2006-2012 Edgar Simo Serra
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 3 as

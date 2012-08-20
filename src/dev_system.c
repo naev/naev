@@ -74,7 +74,7 @@ static int dsys_compJump( const void *jmp1, const void *jmp2 )
  */
 int dsys_saveSystem( StarSystem *sys )
 {
-   int i;
+   int i, len;
    xmlDocPtr doc;
    xmlTextWriterPtr writer;
    const Planet **sorted_planets;
@@ -172,9 +172,11 @@ int dsys_saveSystem( StarSystem *sys )
 
    /* Write data. */
    cleanName = uniedit_nameFilter( sys->name );
-   file = malloc( (strlen(cleanName)+14) * sizeof(char) );
-   nsnprintf(file,strlen(cleanName)+14,"dat/ssys/%s.xml",cleanName);
+   len       = (strlen(cleanName)+14);
+   file      = malloc( len * sizeof(char) );
+   nsnprintf( file, len, "dat/ssys/%s.xml", cleanName );
    xmlSaveFileEnc( file, doc, "UTF-8" );
+   free( file );
 
    /* Clean up. */
    xmlFreeDoc(doc);

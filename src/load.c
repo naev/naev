@@ -31,6 +31,7 @@
 #include "land.h"
 #include "hook.h"
 #include "nstring.h"
+#include "outfit.h"
 
 
 #define LOAD_WIDTH      600 /**< Load window width. */
@@ -435,7 +436,7 @@ static void load_menu_load( unsigned int wdw, char *str )
    menu_main_close();
 
    /* Try to load the game. */
-   if (load_game( ns[pos].path )) {
+   if (load_game( ns[pos].path, diff )) {
       /* Failed so reopen both. */
       menu_main();
       load_loadGameMenu();
@@ -475,13 +476,55 @@ static void load_menu_delete( unsigned int wdw, char *str )
 }
 
 
+static void load_compatSlots (void)
+{
+   /* Vars for loading old saves. */
+   int i,j;
+   char **sships;
+   glTexture **tships;
+   int nships;
+   Pilot *ship;
+   ShipOutfitSlot *sslot;
+
+   nships = player_nships();
+   sships = malloc(nships * sizeof(char*));
+   tships = malloc(nships * sizeof(glTexture*));
+   nships = player_ships( sships, tships );
+   ship   = player.p;
+   for (i=-1; i<nships; i++) {
+      if (i >= 0)
+         ship = player_getShip( sships[i] );
+      /* Remove all outfits. */
+      for (j=0; j<ship->noutfits; j++) {
+         if (ship->outfits[j]->outfit != NULL) {
+            player_addOutfit( ship->outfits[j]->outfit, 1 );
+            pilot_rmOutfitRaw( ship, ship->outfits[j] );
+         }
+
+         /* Add default outfit. */
+         sslot = ship->outfits[j]->sslot;
+         if (sslot->data != NULL)
+            pilot_addOutfitRaw( ship, sslot->data, ship->outfits[j] );
+      }
+
+      pilot_calcStats( ship );
+   }
+
+   /* Clean up. */
+   for (i=0; i<nships; i++)
+      free(sships[i]);
+   free(sships);
+   free(tships);
+}
+
+
 /**
  * @brief Actually loads a new game based on file.
  *
  *    @param file File that contains the new game.
  *    @return 0 on success.
  */
-int load_game( const char* file )
+int load_game( const char* file, int version_diff )
 {
    xmlNodePtr node;
    xmlDocPtr doc;
@@ -512,6 +555,14 @@ int load_game( const char* file )
    diff_load(node); /* Must load first to work properly. */
    pfaction_load(node); /* Must be loaded before player so the messages show up properly. */
    pnt = player_load(node);
+
+   /* Sanitize for new version. */
+   if (version_diff < 0) {
+      WARN("Old version detected. Sanitizing ships for slots");
+      load_compatSlots();
+   }
+
+   /* Load more stuff. */
    var_load(node);
    missions_loadActive(node);
    events_loadActive(node);
@@ -538,6 +589,7 @@ int load_game( const char* file )
 
    /* Sanitize the GUI. */
    gui_setCargo();
+   gui_setShip();
 
    xmlFreeDoc(doc);
 

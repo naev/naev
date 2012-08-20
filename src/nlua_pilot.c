@@ -69,12 +69,14 @@ static int pilotL_target( lua_State *L );
 static int pilotL_inrange( lua_State *L );
 static int pilotL_nav( lua_State *L );
 static int pilotL_weapset( lua_State *L );
+static int pilotL_weapsetHeat( lua_State *L );
 static int pilotL_actives( lua_State *L );
 static int pilotL_outfits( lua_State *L );
 static int pilotL_rename( lua_State *L );
 static int pilotL_position( lua_State *L );
 static int pilotL_velocity( lua_State *L );
 static int pilotL_dir( lua_State *L );
+static int pilotL_ew( lua_State *L );
 static int pilotL_temp( lua_State *L );
 static int pilotL_faction( lua_State *L );
 static int pilotL_setPosition( lua_State *L );
@@ -151,12 +153,14 @@ static const luaL_reg pilotL_methods[] = {
    { "inrange", pilotL_inrange },
    { "nav", pilotL_nav },
    { "weapset", pilotL_weapset },
+   { "weapsetHeat", pilotL_weapsetHeat },
    { "actives", pilotL_actives },
    { "outfits", pilotL_outfits },
    { "rename", pilotL_rename },
    { "pos", pilotL_position },
    { "vel", pilotL_velocity },
    { "dir", pilotL_dir },
+   { "ew", pilotL_ew },
    { "temp", pilotL_temp },
    { "cooldown", pilotL_cooldown },
    { "faction", pilotL_faction },
@@ -242,11 +246,13 @@ static const luaL_reg pilotL_cond_methods[] = {
    { "inrange", pilotL_inrange },
    { "nav", pilotL_nav },
    { "weapset", pilotL_weapset },
+   { "weapsetHeat", pilotL_weapsetHeat },
    { "actives", pilotL_actives },
    { "outfits", pilotL_outfits },
    { "pos", pilotL_position },
    { "vel", pilotL_velocity },
    { "dir", pilotL_dir },
+   { "ew", pilotL_ew },
    { "temp", pilotL_temp },
    { "cooldown", pilotL_cooldown },
    { "faction", pilotL_faction },
@@ -1320,12 +1326,114 @@ static int pilotL_weapset( lua_State *L )
 
 
 /**
+ * @brief Gets heat information for a weapon set.
+ *
+ * @usage hmean, hpeak = p:weapsetHeat( true ) -- Gets info for all active weapons
+ * @usage hmean, hpeak = p:weapsetHeat() -- Get info about the current set
+ * @usage hmean, hpeak = p:weapsetHeat( 5 ) -- Get info about the set number 5
+ *
+ *    @luaparam p Pilot to get weapset weapon of.
+ *    @luaparam id ID of the set to get information of. Defaults to currently active set.
+ *    @luareturn The name of the set and a table with each slot's information.
+ * @luafunc weapsetHeat(p, id)
+ */
+static int pilotL_weapsetHeat( lua_State *L )
+{
+   Pilot *p;
+   PilotWeaponSetOutfit *po_list;
+   PilotOutfitSlot *slot;
+   Outfit *o;
+   int i, j, n;
+   int id, all, level, level_match;
+   double heat, heat_mean, heat_peak, nweapons;
+
+   /* Defaults. */
+   po_list = NULL;
+   heat_mean = 0.;
+   heat_peak = 0.;
+   nweapons = 0;
+
+   /* Parse parameters. */
+   all = 0;
+   p   = luaL_validpilot(L,1);
+   if (lua_gettop(L) > 1) {
+      if (lua_isnumber(L,2))
+         id = luaL_checkinteger(L,2) - 1;
+      else if (lua_isboolean(L,2)) {
+         all = lua_toboolean(L,2);
+         id  = p->active_set;
+      }
+      else
+         NLUA_INVALID_PARAMETER(L);
+   }
+   else
+      id = p->active_set;
+   id = CLAMP( 0, PILOT_WEAPON_SETS, id );
+
+   /* Push set. */
+   if (all)
+      n = p->noutfits;
+   else
+      po_list = pilot_weapSetList( p, id, &n );
+
+   for (j=0; j<=PILOT_WEAPSET_MAX_LEVELS; j++) {
+      /* Level to match. */
+      level_match = (j==PILOT_WEAPSET_MAX_LEVELS) ? -1 : j;
+
+       /* Iterate over weapons. */
+      for (i=0; i<n; i++) {
+         /* Get base look ups. */
+         if (all)
+            slot = p->outfits[i];
+         else
+            slot = po_list[i].slot;
+
+         o = slot->outfit;
+         if (o == NULL)
+            continue;
+
+         if (all)
+            level    = slot->level;
+         else
+            level    = po_list[i].level;
+
+         /* Must match level. */
+         if (level != level_match)
+            continue;
+
+         /* Must be weapon. */
+         if (outfit_isJammer(o) ||
+               outfit_isMod(o) ||
+               outfit_isAfterburner(o))
+            continue;
+
+         nweapons++;
+         heat = pilot_heatFirePercent(slot->heat_T);
+         heat_mean += heat;
+         if (heat > heat_peak)
+            heat_peak = heat;
+      }
+   }
+
+   /* Post-process. */
+   if (nweapons > 0)
+      heat_mean /= nweapons;
+
+   lua_pushnumber( L, heat_mean );
+   lua_pushnumber( L, heat_peak );
+
+   return 2;
+}
+
+
+/**
  * @brief Gets the active outfits and their states of the pilot.
  *
  * The active outfits have the following structure: <br />
  * <ul>
  *  <li> name: Name of the set. </li>
  *  <li> type: Type of the outfit. </li>
+ *  <li> temp: The heat of the outfit's slot. A value between 0 and 1, where 1 is fully overheated. </li>
  *  <li> state: State of the outfit, which can be one of { "off", "warmup", "on", "cooldown" }. </li>
  *  <li> duration: Set only if state is "on". Indicates duration value (0 = just finished, 1 = just on). </li>
  *  <li> cooldown: Set only if state is "cooldown". Indicates cooldown value (0 = just ending, 1 = just started cooling down). </li>
@@ -1386,6 +1494,13 @@ static int pilotL_actives( lua_State *L )
       /* Type. */
       lua_pushstring(L, "type");
       lua_pushstring(L, outfit_getType(o->outfit));
+      lua_rawset(L,-3);
+
+      /* Heat. */
+      lua_pushstring(L, "temp");
+      lua_pushnumber(L, 1 - pilot_heatEfficiencyMod(o->heat_T,
+                            o->outfit->u.afb.heat_base,
+                            o->outfit->u.afb.heat_cap));
       lua_rawset(L,-3);
 
       /* State and timer. */
@@ -1534,6 +1649,27 @@ static int pilotL_velocity( lua_State *L )
    /* Push velocity. */
    vectcpy( &v.vec, &p->solid->vel );
    lua_pushvector(L, v);
+   return 1;
+}
+
+/**
+ * @brief Gets the pilot's evasion.
+ *
+ * @usage d = p:ew()
+ *
+ *    @luaparam p Pilot to get the evasion of.
+ *    @luareturn The pilot's current evasion value.
+ * @luafunc ew( p )
+ */
+static int pilotL_ew( lua_State *L )
+{
+   Pilot *p;
+
+   /* Parse parameters */
+   p     = luaL_validpilot(L,1);
+
+   /* Push direction. */
+   lua_pushnumber( L, p->ew_evasion );
    return 1;
 }
 
@@ -2190,7 +2326,7 @@ static int pilotL_setCooldown( lua_State *L )
    if (state)
       pilot_cooldown( p );
    else
-      pilot_cooldownEnd( p );
+      pilot_cooldownEnd(p, NULL);
 
    return 0;
 }
@@ -2263,14 +2399,17 @@ static int pilotL_setNoLand( lua_State *L )
 /**
  * @brief Adds an outfit to a pilot.
  *
+ * This by default tries to add them to the first empty or defaultly equipped slot.
+ *
  * @usage added = p:addOutfit( "Laser Cannon", 5 ) -- Adds 5 laser cannons to p
  *
  *    @luaparam p Pilot to add outfit to.
  *    @luaparam outfit Name of the outfit to add.
  *    @luaparam q Amount of the outfit to add (defaults to 1).
  *    @luaparam bypass Whether to skip CPU and slot size checks before adding an outfit (defaults to false).
+ *              Will not overwrite existing non-default outfits.
  *    @luareturn The number of outfits added.
- * @luafunc addOutfit( p, outfit, q )
+ * @luafunc addOutfit( p, outfit, q, bypass )
  */
 static int pilotL_addOutfit( lua_State *L )
 {
@@ -2294,8 +2433,10 @@ static int pilotL_addOutfit( lua_State *L )
 
    /* Get the outfit. */
    o = outfit_get( outfit );
-   if (o == NULL)
+   if (o == NULL) {
+      NLUA_ERROR(L, "Outfit '%s' not found!", outfit );
       return 0;
+   }
 
    /* Add outfit. */
    added = 0;
@@ -2304,13 +2445,14 @@ static int pilotL_addOutfit( lua_State *L )
       if (q <= 0)
          break;
 
-      /* Must not have outfit already. */
-      if (p->outfits[i]->outfit != NULL)
+      /* Must not have outfit (excluding default) already. */
+      if ((p->outfits[i]->outfit != NULL) &&
+            (p->outfits[i]->outfit != p->outfits[i]->sslot->data))
          continue;
 
       if (!bypass) {
          /* Must fit slot. */
-         if (!outfit_fitsSlot( o, &p->outfits[i]->slot ))
+         if (!outfit_fitsSlot( o, &p->outfits[i]->sslot->slot ))
             continue;
 
          /* Test if can add outfit. */
@@ -2320,7 +2462,7 @@ static int pilotL_addOutfit( lua_State *L )
       }
       /* Only do a basic check. */
       else
-         if (!outfit_fitsSlotType( o, &p->outfits[i]->slot ))
+         if (!outfit_fitsSlotType( o, &p->outfits[i]->sslot->slot ))
             continue;
 
       /* Add outfit - already tested. */
@@ -2489,7 +2631,7 @@ static int pilotL_changeAI( lua_State *L )
  *    @luaparam p Pilot to set health of.
  *    @luaparam temp Value to set temperature to. Values below base temperature will be clamped.
  *    @luaparam slots Whether slots should also be set to this temperature. Defaults to true.
- * @luafunc setTemp( p, armour, shield, stress )
+ * @luafunc setTemp( p, temp, slots )
  */
 static int pilotL_setTemp( lua_State *L )
 {
@@ -2617,7 +2759,7 @@ static int pilotL_setNoboard( lua_State *L )
    else
       disable = lua_toboolean(L, 2);
 
-   /* See if should mark as boarded. */
+   /* See if should prevent boarding. */
    if (disable)
       pilot_setFlag(p, PILOT_NOBOARD);
    else
@@ -2651,7 +2793,7 @@ static int pilotL_setNodisable( lua_State *L )
    else
       disable = lua_toboolean(L, 2);
 
-   /* See if should mark as boarded. */
+   /* See if should prevent disabling. */
    if (disable)
       pilot_setFlag(p, PILOT_NODISABLE);
    else
@@ -3016,15 +3158,18 @@ static int pilotL_getHostile( lua_State *L )
 }
 
 
+/**
+ * @brief Small struct to handle flags.
+ */
 struct pL_flag {
-   char *name;
-   int id;
+   char *name; /**< Name of the flag. */  
+   int id;     /**< Id of the flag. */
 };
 static const struct pL_flag pL_flags[] = {
    { .name = "hailing", .id = PILOT_HAILING },
    { .name = "boardable", .id = PILOT_BOARDABLE },
    {NULL, -1}
-};
+}; /**< Flags to get. */
 /**
  * @brief Gets the pilot's flags.
  *
@@ -3130,7 +3275,6 @@ static int pilotL_control( lua_State *L )
    else
       enable = lua_toboolean(L, 2);
 
-   /* See if should mark as boarded. */
    if (enable) {
       pilot_setFlag(p, PILOT_MANUAL_CONTROL);
       if (pilot_isPlayer(p))

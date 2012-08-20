@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Neexi II">
+ <pos>
+  <x>-7210.730440</x>
+  <y>10632.878322</y>
+ </pos>
+ <GFX>
+  <space>moon-J02.png</space>
+  <exterior>traderoom.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.500000</hide>
+  <services/>
+ </general>
+</asset>

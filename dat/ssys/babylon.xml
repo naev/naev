@@ -21,5 +21,10 @@
    <autopos/>
    <hide>1.250000</hide>
   </jump>
+  <jump target="Elza">
+   <pos x="2819.649874" y="17505.824172"/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
  </jumps>
 </ssys>

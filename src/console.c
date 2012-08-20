@@ -344,13 +344,6 @@ void cli_exit (void)
       lua_close( cli_state );
       cli_state = NULL;
    }
-
-   /* Free the font. */
-   if (cli_font != NULL) {
-      gl_freeFont( cli_font );
-      free( cli_font );
-      cli_font = NULL;
-   }
 }
 
 

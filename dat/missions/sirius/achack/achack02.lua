@@ -2,10 +2,10 @@
 -- This is the second mission in the Academy Hack minor campaign.
 --]]
 
-include "scripts/nextjump.lua"
-include "scripts/fleethelper.lua"
-include "scripts/selectiveclear.lua"
-include "scripts/proximity.lua"
+include "nextjump.lua"
+include "fleethelper.lua"
+include "selectiveclear.lua"
+include "proximity.lua"
 
 -- localization stuff, translators would work here
 lang = naev.lang()

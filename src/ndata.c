@@ -510,12 +510,76 @@ const char* ndata_getDirname(void)
       case NDATA_SRC_DIRNAME:
          return ndata_dirname;
       case NDATA_SRC_NDATADEF:
-         return nfile_dirname( NDATA_DEF );
+         return nfile_dirname( strdup( NDATA_DEF ) );
       case NDATA_SRC_BINARY:
          return nfile_dirname( strdup( naev_binary() ) );
    }
 
    return NULL;
+}
+
+
+/**
+ * @brief Checks to see if a file is in the NDATA.
+ *    @param filename Name of the file to check.
+ *    @return 1 if the file exists, 0 otherwise.
+ */
+int ndata_exists( const char* filename )
+{
+   char *buf, path[PATH_MAX];
+   Packfile_t *file;
+
+   /* See if needs to load packfile. */
+   if (ndata_cache == NULL) {
+
+      /* Try to read the file as locally. */
+      if (nfile_fileExists( filename ) && (ndata_source <= NDATA_SRC_LAIDOUT))
+         return 1;
+
+      /* We can try to use the dirname path. */
+      if ((ndata_filename == NULL) && (ndata_dirname != NULL) &&
+            (ndata_source <= NDATA_SRC_DIRNAME)) {
+         nsnprintf( path, sizeof(path), "%s/%s", ndata_dirname, filename );
+         if (nfile_fileExists( path ))
+            return 1;
+      }
+
+      /* We can also try default location. */
+      if (ndata_source <= NDATA_SRC_NDATADEF) {
+         buf = strdup( NDATA_DEF );
+         nsnprintf( path, sizeof(path), "%s/%s", nfile_dirname(buf), filename );
+         free(buf);
+         if (nfile_fileExists( path ))
+            return 1;
+      }
+
+      /* Try binary location. */
+      if (ndata_source <= NDATA_SRC_BINARY) {
+         buf = strdup( naev_binary() );
+         nsnprintf( path, sizeof(path), "%s/%s", nfile_dirname(buf), filename );
+         free(buf);
+         if (nfile_fileExists( path ))
+            return 1;
+      }
+
+      /* Load the packfile. */
+      ndata_openPackfile();
+   }
+
+   /* Wasn't able to open the file. */
+   if (ndata_cache == NULL)
+      return 0;
+
+   /* Mark that we loaded a file. */
+   ndata_loadedfile = 1;
+
+   /* Try to get it from the cache. */
+   file = pack_openFromCache( ndata_cache, filename );
+   if (file == NULL)
+      return 0;
+   pack_close( file );
+
+   return 1;
 }
 
 
@@ -697,18 +761,28 @@ SDL_RWops *ndata_rwops( const char* filename )
 static char **stripPath( const char **list, int nlist, const char *path )
 {
    int i, len;
-   char **out;
+   char **out, *buf;
 
    out = malloc(sizeof(char*) * nlist);
    len = strlen( path );
 
+   /* Slash-terminate as needed. */
+   if (strcmp(&path[len],"/")!=0) {
+      len++;
+      buf = malloc((len + 1) * sizeof(char));
+      nsnprintf(buf, len+1,  "%s/", path );
+   }
+   else
+      buf = strdup(path);
+
    for (i=0; i<nlist; i++) {
-      if (strncmp(list[i],path,len)==0)
+      if (strncmp(list[i],buf,len)==0)
          out[i] = strdup( &list[i][len] );
       else
          out[i] = strdup( list[i] );
    }
 
+   free(buf);
    return out;
 }
 
@@ -816,7 +890,7 @@ static char** ndata_listBackend( const char* path, uint32_t* nfiles, int recursi
          tmp = strdup( NDATA_DEF );
          nsnprintf( buf, sizeof(buf), "%s/%s", nfile_dirname(tmp), path );
          tfiles = nfile_readFunc( &n, buf );
-         files = stripPath( (const char**)tfiles, n, nfile_dirname(tmp) );
+         files = stripPath( (const char**)tfiles, n, tmp );
          free(tmp);
          free(tfiles);
          if (files != NULL) {

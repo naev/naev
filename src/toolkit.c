@@ -74,8 +74,8 @@ static GLsizei toolkit_vboColourOffset; /**< Colour offset. */
  * static prototypes
  */
 /* input */
-static void toolkit_mouseEvent( Window *w, SDL_Event* event );
-static void toolkit_mouseEventWidget( Window *w, Widget *wgt,
+static int toolkit_mouseEvent( Window *w, SDL_Event* event );
+static int toolkit_mouseEventWidget( Window *w, Widget *wgt,
       Uint32 type, Uint8 button, int x, int y, int rx, int ry );
 static int toolkit_keyEvent( Window *wdw, SDL_Event* event );
 /* focus */
@@ -1560,31 +1560,12 @@ void toolkit_render (void)
  */
 int toolkit_input( SDL_Event* event )
 {
-   int ret;
-   Window *wdw, *wlast;
-   Widget *wgt;
+   Window *wdw;
 
    /* Get window that can be focused. */
-   wlast = NULL;
-   for (wdw = windows; wdw!=NULL; wdw = wdw->next) {
-      if (!window_isFlag( wdw, WINDOW_NOINPUT ) &&
-            !window_isFlag( wdw, WINDOW_KILL ))
-         wlast = wdw;
-   }
-   if (wlast == NULL)
+   wdw = toolkit_getActiveWindow();
+   if (wdw == NULL)
       return 0;
-   wdw = wlast;
-
-   /* See if widget needs event. */
-   for (wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next) {
-      if (wgt_isFlag( wgt, WGT_FLAG_RAWINPUT )) {
-         if (wgt->rawevent != NULL) {
-            ret = wgt->rawevent( wgt, event );
-            if (ret != 0)
-               return ret;
-         }
-      }
-   }
 
    /* Pass event to window. */
    return toolkit_inputWindow( wdw, event, 1 );
@@ -1597,7 +1578,19 @@ int toolkit_input( SDL_Event* event )
 int toolkit_inputWindow( Window *wdw, SDL_Event *event, int purge )
 {
    int ret;
+   Widget *wgt;
    ret = 0;
+
+   /* See if widget needs event. */
+   for (wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next) {
+      if (wgt_isFlag( wgt, WGT_FLAG_RAWINPUT )) {
+         if (wgt->rawevent != NULL) {
+            ret = wgt->rawevent( wgt, event );
+            if (ret != 0)
+               return ret;
+         }
+      }
+   }
 
    /* Event handler. */
    if (wdw->eventevent != NULL)
@@ -1611,13 +1604,12 @@ int toolkit_inputWindow( Window *wdw, SDL_Event *event, int purge )
          case SDL_MOUSEMOTION:
          case SDL_MOUSEBUTTONDOWN:
          case SDL_MOUSEBUTTONUP:
-            toolkit_mouseEvent(wdw, event);
-            ret = 1;
+            ret |= toolkit_mouseEvent(wdw, event);
             break;
 
          case SDL_KEYDOWN:
          case SDL_KEYUP:
-            ret =  toolkit_keyEvent(wdw, event);
+            ret |= toolkit_keyEvent(wdw, event);
             break;
       }
    }
@@ -1685,23 +1677,24 @@ Uint32 toolkit_inputTranslateCoords( Window *w, SDL_Event *event,
  *    @param wdw Window receiving the mouse event.
  *    @param event Mouse event to handle.
  */
-static void toolkit_mouseEvent( Window *w, SDL_Event* event )
+static int toolkit_mouseEvent( Window *w, SDL_Event* event )
 {
    Widget *wgt;
    Uint32 type;
    Uint8 button;
-   int x, y, rx, ry;
+   int x, y, rx, ry, ret;
 
    /* Translate mouse coords. */
    type = toolkit_inputTranslateCoords( w, event, &x, &y, &rx, &ry );
 
    /* Check each widget. */
+   ret = 0;
    for (wgt=w->widgets; wgt!=NULL; wgt=wgt->next) {
 
       /* custom widgets take it from here */
       if (wgt->type==WIDGET_CUST) {
          if (wgt->dat.cst.mouse)
-            wgt->dat.cst.mouse( w->id, event, x-wgt->x, y-wgt->y, wgt->w, wgt->h,
+            ret |= wgt->dat.cst.mouse( w->id, event, x-wgt->x, y-wgt->y, wgt->w, wgt->h,
                   wgt->dat.cst.userdata );
       }
       else {
@@ -1710,9 +1703,11 @@ static void toolkit_mouseEvent( Window *w, SDL_Event* event )
             button = event->motion.state;
          else
             button = event->button.button;
-         toolkit_mouseEventWidget( w, wgt, type, button, x, y, rx, ry );
+         ret |= toolkit_mouseEventWidget( w, wgt, type, button, x, y, rx, ry );
       }
    }
+
+   return ret;
 }
 
 
@@ -1723,10 +1718,10 @@ static void toolkit_mouseEvent( Window *w, SDL_Event* event )
  *    @param wgt Widget receiving event.
  *    @param event Event received by the window.
  */
-static void toolkit_mouseEventWidget( Window *w, Widget *wgt,
+static int toolkit_mouseEventWidget( Window *w, Widget *wgt,
       Uint32 type, Uint8 button, int x, int y, int rx, int ry )
 {
-   int inbounds;
+   int ret, inbounds;
 
    /* Widget translations. */
    x -= wgt->x;
@@ -1736,6 +1731,7 @@ static void toolkit_mouseEventWidget( Window *w, Widget *wgt,
    inbounds = !((x < 0) || (x >= wgt->w) || (y < 0) || (y >= wgt->h));
 
    /* Regular widgets. */
+   ret = 0;
    switch (type) {
       case SDL_MOUSEMOTION:
          /* Change the status of the widget if mouse isn't down. */
@@ -1758,7 +1754,7 @@ static void toolkit_mouseEventWidget( Window *w, Widget *wgt,
 
          /* Try to give the event to the widget. */
          if (inbounds && (wgt->mmoveevent != NULL))
-            (*wgt->mmoveevent)( wgt, x, y, rx, ry );
+            ret |= (*wgt->mmoveevent)( wgt, x, y, rx, ry );
 
          break;
 
@@ -1778,7 +1774,7 @@ static void toolkit_mouseEventWidget( Window *w, Widget *wgt,
 
          /* Try to give the event to the widget. */
          if (wgt->mclickevent != NULL)
-            (*wgt->mclickevent)( wgt, button, x, y );
+            ret |= (*wgt->mclickevent)( wgt, button, x, y );
          break;
 
       case SDL_MOUSEBUTTONUP:
@@ -1795,8 +1791,10 @@ static void toolkit_mouseEventWidget( Window *w, Widget *wgt,
                   DEBUG("Toolkit: Button '%s' of Window '%s' "
                         "doesn't have a function trigger",
                         wgt->name, w->name );
-               else
+               else {
                   (*wgt->dat.btn.fptr)(w->id, wgt->name);
+                  ret = 1;
+               }
             }
          }
 
@@ -1812,6 +1810,8 @@ static void toolkit_mouseEventWidget( Window *w, Widget *wgt,
 
          break;
    }
+
+   return ret;
 }
 
 
@@ -2097,39 +2097,35 @@ void toolkit_update (void)
    /* Increment counter. */
    input_keyCounter++;
 
-   /* Check to see what it affects. */
-   if (windows != NULL) {
-      /* Get the window. */
-      wdw = toolkit_getActiveWindow();
-      if (wdw == NULL)
-         return;
+   /* Get the window. */
+   wdw = toolkit_getActiveWindow();
+   if (wdw == NULL)
+      return;
 
-
-      /* See if widget needs event. */
-      for (wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next) {
-         if (wgt_isFlag( wgt, WGT_FLAG_RAWINPUT )) {
-            if (wgt->rawevent != NULL) {
-               event.type           = SDL_KEYDOWN;
-               event.key.state      = SDL_PRESSED;
-               event.key.keysym.sym = input_key;
-               event.key.keysym.mod = input_mod;
-               ret = wgt->rawevent( wgt, &event );
-               if (ret != 0)
-                  return;
-            }
+   /* See if widget needs event. */
+   for (wgt=wdw->widgets; wgt!=NULL; wgt=wgt->next) {
+      if (wgt_isFlag( wgt, WGT_FLAG_RAWINPUT )) {
+         if (wgt->rawevent != NULL) {
+            event.type           = SDL_KEYDOWN;
+            event.key.state      = SDL_PRESSED;
+            event.key.keysym.sym = input_key;
+            event.key.keysym.mod = input_mod;
+            ret = wgt->rawevent( wgt, &event );
+            if (ret != 0)
+               return;
          }
       }
+   }
 
-      /* Handle the focused widget. */
-      wgt = toolkit_getFocus( wdw );
-      if ((wgt != NULL) && (wgt->keyevent != NULL))
-         wgt->keyevent( wgt, input_key, input_mod );
+   /* Handle the focused widget. */
+   wgt = toolkit_getFocus( wdw );
+   if ((wgt != NULL) && (wgt->keyevent != NULL))
+      wgt->keyevent( wgt, input_key, input_mod );
 
-      if ((input_text != 0) && (wgt != NULL) && (wgt->textevent != NULL)) {
-         buf[0] = input_text;
-         buf[1] = '\0';
-         wgt->textevent( wgt, buf );
-      }
+   if ((input_text != 0) && (wgt != NULL) && (wgt->textevent != NULL)) {
+      buf[0] = input_text;
+      buf[1] = '\0';
+      wgt->textevent( wgt, buf );
    }
 }
 

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Aleph">
+ <pos>
+  <x>-3900.793946</x>
+  <y>-3495.111376</y>
+ </pos>
+ <GFX>
+  <space>G02.png</space>
+  <exterior>mining6.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>H</class>
+  <population>700000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities/>
+  <description>In an impressive feat of un-terraforming, the Dvaered have transformed Aleph from a borderline class M to a barren wasteland. Though the world is primarily residential and sports no superheavy industry, the wastefulness of the Dvaered inhabitants more than makes up for that.</description>
+  <bar>The air in the spaceport bar is stuffy. The air is stuffy everywhere on this planet. No amount of air conditioning and filtering is going to get rid of the staleness completely.</bar>
+ </general>
+</asset>

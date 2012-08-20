@@ -1,6 +1,6 @@
 -- Template for tutorial modules.
 -- Each module should start by setting up the tutorial environment and enforcing rules.
--- Each module should clean up and return to the main tutorial menu when ending or aborting.
+-- Each module should clean up, set mission variable "var_next" to next tutorial in sequence, and return to the main tutorial menu when ending or aborting.
 
 include("dat/events/tutorial/tutorial-common.lua")
 

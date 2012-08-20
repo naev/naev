@@ -35,6 +35,7 @@
   <bar>The Slop and Grill is one of the nastiest taverns in the universe. The food and drink don't help matters. Most of it is brewed on New Haven and wouldn't pass any of the minimal health insurance tests. Some of the booze even doubles as ship fuel if needed. The clients are also deep space thugs, pirates, black marketers, mercenaries and other shady folk that insist on keeping the ground coated with blood and broken teeth. Not a great place to bring the family.</bar>
  </general>
  <tech>
+  <item>Hulls Low</item>
   <item>Plasma 1</item>
   <item>Plasma 2</item>
   <item>Pirate Ships</item>
@@ -43,5 +44,8 @@
   <item>Heavy Weapons 1</item>
   <item>Low Tech Upgrades</item>
   <item>High Tech Upgrades 1</item>
+  <item>Hulls High</item>
+  <item>Engines High</item>
+  <item>Systems High</item>
  </tech>
 </asset>

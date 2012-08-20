@@ -9,8 +9,8 @@
 
 ]]--
 
-include "scripts/proximity.lua"
-include "scripts/fleethelper.lua"
+include "proximity.lua"
+include "fleethelper.lua"
 include "dat/missions/empire/common.lua"
 
 lang = naev.lang()

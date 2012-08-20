@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Peogas III">
+ <pos>
+  <x>5881.345646</x>
+  <y>10049.818444</y>
+ </pos>
+ <GFX>
+  <space>G00.png</space>
+  <exterior>mining2.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

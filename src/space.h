@@ -72,6 +72,7 @@ typedef enum PlanetClass_ {
 #define PLANET_SERVICE_COMMODITY    (1<<5) /**< Can trade commodities. */
 #define PLANET_SERVICE_OUTFITS      (1<<6) /**< Can trade outfits. */
 #define PLANET_SERVICE_SHIPYARD     (1<<7) /**< Can trade ships. */
+#define PLANET_SERVICES_MAX         (PLANET_SERVICE_SHIPYARD<<1)
 #define planet_hasService(p,s)      ((p)->services & s) /**< Checks if planet has service. */
 
 

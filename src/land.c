@@ -42,6 +42,7 @@
 #include "npc.h"
 #include "camera.h"
 #include "menu.h"
+#include "ndata.h"
 
 
 /* global/main window */
@@ -226,6 +227,8 @@ static void commodity_exchange_open( unsigned int wid )
    window_addList( wid, 20, -40,
          w-LAND_BUTTON_WIDTH-60, h-80-LAND_BUTTON_HEIGHT,
          "lstGoods", goods, ngoods, 0, commodity_update );
+   /* Set default keyboard focuse to the list */
+   window_setFocus( wid , "lstGoods" );
 }
 /**
  * @brief Updates the commodity window.
@@ -248,6 +251,9 @@ static void commodity_update( unsigned int wid, char* str )
          "NA Tons\n" );
       window_modifyText( wid, "txtDInfo", buf );
       window_modifyText( wid, "txtDesc", "No outfits available." );
+      window_disableButton( wid, "btnCommodityBuy" );
+      window_disableButton( wid, "btnCommoditySell" );
+      return;
    }
    com = commodity_get( comname );
 
@@ -591,6 +597,8 @@ static void bar_open( unsigned int wid )
 
    /* Generate the mission list. */
    bar_genList( wid );
+   /* Set default keyboard focuse to the list */
+   window_setFocus( wid , "iarMissions" );
 }
 
 /**
@@ -609,7 +617,7 @@ static int bar_genList( unsigned int wid )
    bar_getDim( wid, &w, &h, &iw, &ih, &bw, &bh );
 
    /* Save focus. */
-   focused = window_getFocus(wid);
+   focused = strdup(window_getFocus(wid));
 
    /* Destroy widget if already exists. */
    if (widget_exists( wid, "iarMissions" ))
@@ -620,7 +628,7 @@ static int bar_genList( unsigned int wid )
 
    /* Set up missions. */
    if (mission_portrait == NULL)
-      mission_portrait = gl_newImage( "gfx/portraits/news.png", 0 );
+      mission_portrait = gl_newImage( PORTRAIT_GFX_PATH"news.png", 0 );
    n = npc_getArraySize();
    if (n <= 0) {
       n            = 1;
@@ -647,6 +655,7 @@ static int bar_genList( unsigned int wid )
 
    /* Restore focus. */
    window_setFocus( wid, focused );
+   free(focused);
 
    return 0;
 }
@@ -834,6 +843,8 @@ static void misn_open( unsigned int wid )
          w/2 - 30, h/2 - 35, 0.75 );
 
    misn_genList(wid, 1);
+   /* Set default keyboard focuse to the list */
+   window_setFocus( wid , "lstMission" );
 }
 /**
  * @brief Closes the mission computer window.
@@ -889,6 +900,9 @@ static void misn_accept( unsigned int wid, char* str )
 
          /* Regenerate list. */
          misn_genList(wid, 0);
+         /* Add position persistancey after a mission has been accepted */
+         /* NOTE: toolkit_setListPos protects us from a bad position by clamping */
+         toolkit_setListPos( wid, "lstMission", pos-1 ); /*looks better without the -1, makes more sense with*/
       }
 
       /* Reset markers. */
@@ -903,8 +917,11 @@ static void misn_accept( unsigned int wid, char* str )
 static void misn_genList( unsigned int wid, int first )
 {
    int i,j;
-   char** misn_names;
+   char** misn_names, *focused;
    int w,h;
+
+   /* Save focus. */
+   focused = strdup(window_getFocus(wid));
 
    if (!first)
       window_destroyWidget( wid, "lstMission" );
@@ -932,6 +949,11 @@ static void misn_genList( unsigned int wid, int first )
    window_addList( wid, 20, -40,
          w/2 - 30, h/2 - 35,
          "lstMission", misn_names, j, 0, misn_update );
+
+   /* Restore focus. */
+   window_setFocus( wid, focused );
+   free(focused);
+   /* duplicateed the save focus functionaility from the bar */
 }
 /**
  * @brief Updates the mission list.
@@ -1207,7 +1229,7 @@ void land_genWindows( int load, int changetab )
    }
 
    /* Create tabbed window. */
-   land_windows = window_addTabbedWindow( land_wid, -1, -1, -1, -1, "tabLand", j, names );
+   land_windows = window_addTabbedWindow( land_wid, -1, -1, -1, -1, "tabLand", j, names, 0 );
 
    /*
     * Order here is very important:
@@ -1312,6 +1334,9 @@ void land( Planet* p, int load )
 
    /* Resets the player's heat. */
    pilot_heatReset( player.p );
+
+   /* Heal the player so GUI shows player at full everything. */
+   pilot_healLanded( player.p );
 
    /* Stop player sounds. */
    player_soundStop();
@@ -1507,6 +1532,12 @@ void takeoff( int delay )
 
    if (!landed)
       return;
+
+   /* Player's ship is not able to fly. */
+   if (!player_canTakeoff()) {
+      dialogue_msg( "Ship not fit for flight", "All core outfits must be equiped for takeoff." );
+      return;
+   }
 
    /* Clear queued takeoff. */
    land_takeoff = 0;

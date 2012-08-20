@@ -110,8 +110,8 @@ int main(int argc, char* argv[])
 		if (!final) {
 			final = SDL_CreateRGBSurface( SDL_SWSURFACE | SDL_SRCALPHA, ws*r.w, hs*r.h,
 					load[i]->format->BitsPerPixel, RGBAMASK );
-			if (!final) ERR("Problem creating RGB Surface: %s", SDL_GetError());
-			temp = final;
+			if (!final)
+            ERR("Problem creating RGB Surface: %s", SDL_GetError());
 		}
 
 		/* new position */
@@ -228,35 +228,39 @@ static int write_png( const char *file_name, png_bytep *rows, int w, int h,
 	FILE *fp = NULL;
 	char *doing = "open for writing";
 
-	if (!(fp = fopen(file_name, "wb"))) goto fail;
+	if (!(fp = fopen(file_name, "wb")))
+      goto fail;
 
 	doing = "create png write struct";
 	if (!(png_ptr = png_create_write_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL)))
 		goto fail;
 
 	doing = "create png info struct";
-	if (!(info_ptr = png_create_info_struct(png_ptr))) goto fail;
-	if (setjmp(png_jmpbuf(png_ptr))) goto fail;
+	if (!(info_ptr = png_create_info_struct(png_ptr)))
+      goto fail;
+	if (setjmp(png_jmpbuf(png_ptr)))
+      goto fail;
 
-	doing = "init IO";
+	/*doing = "init IO";*/
 	png_init_io(png_ptr, fp);
 
-	doing = "write header";
+	/*doing = "write header";*/
 	png_set_IHDR(png_ptr, info_ptr, w, h, bitdepth, colortype, 
 			PNG_INTERLACE_NONE, PNG_COMPRESSION_TYPE_BASE, 
 			PNG_FILTER_TYPE_BASE);
 
-	doing = "write info";
+	/*doing = "write info";*/
 	png_write_info(png_ptr, info_ptr);
 
-	doing = "write image";
+	/*doing = "write image";*/
 	png_write_image(png_ptr, rows);
 
-	doing = "write end";
+	/*doing = "write end";*/
 	png_write_end(png_ptr, NULL);
 
 	doing = "closing file";
-	if(0 != fclose(fp)) goto fail;
+	if(0 != fclose(fp))
+      goto fail;
 
 	return 0;
 

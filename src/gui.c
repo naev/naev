@@ -1681,7 +1681,6 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
 
    /* Check if in range. */
    if (shape == RADAR_RECT) {
-      x = y = 0;
       /* Out of range. */
       if ((ABS(cx) - r > w/2.) || (ABS(cy) - r  > h/2.)) {
          if ((player.p->nav_hyperspace == ind) && !overlay)
@@ -1705,6 +1704,8 @@ void gui_renderJumpPoint( int ind, RadarShape shape, double w, double h, double 
       gui_planetBlink( w, h, rc, cx, cy, vr, shape );
       col = &cGreen;
    }
+   else if (jp_isFlag(jp, JP_HIDDEN))
+      col = &cRed;
    else
       col = &cWhite;
    if (overlay)
@@ -1861,7 +1862,7 @@ int gui_init (void)
    /*
     * Icons.
     */
-   gui_ico_hail = gl_newSprite( "gfx/gui/hail.png", 5, 2, 0 );
+   gui_ico_hail = gl_newSprite( GUI_GFX_PATH"hail.png", 5, 2, 0 );
 
    return 0;
 }
@@ -2008,12 +2009,12 @@ void gui_updateFaction (void)
  *
  *    @param The pilot to act based upon.
  */
-void gui_setGeneric (Pilot* pilot)
+void gui_setGeneric( Pilot* pilot )
 {
    if (gui_L == NULL)
       return;
 
-   if (player.p->target != PLAYER_ID && pilot->id == player.p->target)
+   if ((player.p->target != PLAYER_ID) && (pilot->id == player.p->target))
       gui_setTarget();
    else if (pilot_isPlayer(pilot)) {
       gui_setCargo();
@@ -2329,7 +2330,7 @@ int gui_handleEvent( SDL_Event *evt )
    int ret;
    int x, y;
 
-   if (player.p != NULL)
+   if (player.p == NULL)
       return 0;
    if ((evt->type == SDL_MOUSEBUTTONDOWN) &&
          (pilot_isFlag(player.p,PILOT_HYP_PREP) ||

@@ -7,8 +7,8 @@
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>-166.000000</x>
-  <y>-699.000000</y>
+  <x>-195.513889</x>
+  <y>-754.439815</y>
  </pos>
  <assets>
   <asset>Gammacron IV</asset>
@@ -18,12 +18,12 @@
   <asset>Pund</asset>
  </assets>
  <jumps>
-  <jump target="Limbo">
+  <jump target="Daan">
    <autopos/>
    <hide>1.250000</hide>
   </jump>
-  <jump target="Volus">
-   <pos x="30408.276058" y="-15860.552323"/>
+  <jump target="Limbo">
+   <autopos/>
    <hide>1.250000</hide>
   </jump>
   <jump target="Zied">

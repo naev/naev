@@ -2,14 +2,14 @@
 <outfit name="Laser Cannon MK1">
  <general>
   <slot>weapon</slot>
-  <size>light</size>
+  <size>small</size>
   <mass>4</mass>
   <price>5000</price>
   <description>The laser cannon is a standard weapon on many vessels. It fires charged energy beams that do a decent amount of damage to both shield and armour, while remaining efficient enough to mount several even on small ships.</description>
   <gfx_store>laser</gfx_store>
+  <cpu>-4</cpu>
   </general>
  <specific type="bolt">
-  <cpu>4</cpu>
   <gfx>laser1S</gfx>
   <sound>laser</sound>
   <spfx_shield>ShiS</spfx_shield>

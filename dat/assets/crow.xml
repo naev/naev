@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Crow">
+ <pos>
+  <x>7370.643037</x>
+  <y>3893.363862</y>
+ </pos>
+ <GFX>
+  <space>M07.png</space>
+  <exterior>lava.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>4500000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>Despite bordering on a dangerous sector of space, the Corvus system, and Crow in particular, are thriving. The planet is a frontier of culture, commerce and prosperity. Even for the Soromid, one of the youngest societies in the galaxy, being away from the core worlds can give people the breathing room to live on the edge.</description>
+  <bar>This bar was designed with acoustics in mind. The background music is pervasive yet unobtrusive, and conversations held at one table won't disturb those at another.</bar>
+ </general>
+ <tech>
+  <item>Systems Low</item>
+  <item>Hulls Low</item>
+  <item>Engines Medium</item>
+  <item>Basic Outfits 1</item>
+  <item>Basic Outfits 2</item>
+  <item>Heavy Weapons 1</item>
+  <item>Heavy Weapons 2</item>
+  <item>Low Tech Upgrades</item>
+  <item>High Tech Upgrades 1</item>
+  <item>Missiles 1</item>
+  <item>Missiles 2</item>
+  <item>Star Maps</item>
+  <item>Basic Civilian Ships</item>
+  <item>Basic Trade Ships</item>
+  <item>Bulk Trade Ships</item>
+  <item>Light Civilian Combat Ships</item>
+ </tech>
+</asset>

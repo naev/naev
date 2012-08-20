@@ -17,6 +17,7 @@
 #include "nlua.h"
 #include "nluadef.h"
 #include "log.h"
+#include "ndata.h"
 
 
 /* Texture metatable methods. */
@@ -72,7 +73,7 @@ int nlua_loadTex( lua_State *L, int readonly )
  *
  * An example would be:
  * @code
- * t  = tex.open( "gfx/foo/bar.png" ) -- Loads the texture
+ * t  = tex.open( GFX_PATH"foo/bar.png" ) -- Loads the texture
  * w,h, sw,sh = t:dim()
  * sprites, sx,sy = t:sprites()
  * @endcode

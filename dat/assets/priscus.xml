@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Priscus">
+ <pos>
+  <x>2390.165223</x>
+  <y>9970.939191</y>
+ </pos>
+ <GFX>
+  <space>A04.png</space>
+  <exterior>mining.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>125.000000</value>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>A</class>
+  <population>98000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land>srm_mil_restricted</land>
+   <refuel/>
+   <bar/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities/>
+  <description>Priscus was settled because of the rich soil being useful for cultivating a sseries of unusually durable plants that are useful in the growing process of Soromid ships. No one is quite sure how the plants are useful, only that the Soromid insist on tightly controlling this little farming world.</description>
+  <bar>The bar is crowded with exhausted farmers, government-mandated trading factors, or suspicious government officials. The service, while not stellar, is at least competant enough to not cause comment.</bar>
+ </general>
+ <tech>
+  <item>Hulls Medium</item>
+  <item>Engines Low</item>
+  <item>Plasma 1</item>
+  <item>Plasma 2</item>
+  <item>Ion 2</item>
+  <item>Ion 3</item>
+  <item>Kinetic 1</item>
+  <item>Low Tech Upgrades</item>
+  <item>High Tech Upgrades 1</item>
+  <item>Missiles 1</item>
+  <item>Star Maps</item>
+ </tech>
+</asset>

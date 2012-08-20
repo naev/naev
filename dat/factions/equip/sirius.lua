@@ -50,7 +50,7 @@ end
 -- @brief Equips a sirius military type ship.
 --]]
 function equip_siriusMilitary( p, shipsize )
-   local primary, secondary, medium, low, apu
+   local primary, secondary, medium, low
    local use_primary, use_secondary, use_medium, use_low
    local nhigh, nmedium, nlow = p:ship():slots()
    local scramble
@@ -58,7 +58,7 @@ function equip_siriusMilitary( p, shipsize )
    -- Defaults
    medium      = { "Unicorp Scrambler" }
    secondary   = { }
-   apu         = { }
+
    weapons     = {}
    scramble    = false
 
@@ -73,6 +73,7 @@ function equip_siriusMilitary( p, shipsize )
          medium         = { "Generic Afterburner", "Milspec Scrambler" }
          use_medium     = 2
          low            = { "Solar Panel" }
+         equip_cores(p, "Tricon Naga Mk9 Engine", "Milspec Orion 5501 Core System", "Schafer & Kane Light Stealth Plating")
 
       -- Fighter
       elseif class == "Fighter" then
@@ -83,7 +84,8 @@ function equip_siriusMilitary( p, shipsize )
          addWeapons( equip_secondarySrs(), use_secondary )
          medium         = equip_mediumLow()
          low            = equip_lowLow()
-         apu            = equip_apuLow()
+         equip_cores(p, "Tricon Naga Mk9 Engine", "Milspec Orion 5501 Core System", "Schafer & Kane Light Stealth Plating")
+
 
       -- Bomber
       elseif class == "Bomber" then
@@ -93,7 +95,8 @@ function equip_siriusMilitary( p, shipsize )
          addWeapons( equip_secondarySrs(), use_secondary )
          medium         = equip_mediumLow()
          low            = equip_lowLow()
-         apu            = equip_apuLow()
+         equip_cores(p, "Tricon Naga Mk9 Engine", "Milspec Orion 5501 Core System", "Schafer & Kane Light Combat Plating")
+
       end
 
    elseif shipsize == "medium" then
@@ -108,7 +111,8 @@ function equip_siriusMilitary( p, shipsize )
          addWeapons( equip_secondarySrs(), use_secondary )
          medium         = equip_mediumMed()
          low            = equip_lowMed()
-         apu            = equip_apuMed()
+         equip_cores(p, "Tricon Centaur Mk7 Engine", "Milspec Orion 8801 Core System", "Schafer & Kane Medium Solar Plating")
+
       end
 
       -- Destroyer
@@ -121,19 +125,22 @@ function equip_siriusMilitary( p, shipsize )
          addWeapons( equip_secondarySrs(), use_secondary )
          medium         = equip_mediumMed()
          low            = equip_lowMed()
-         apu            = equip_apuMed()
+         equip_cores(p, "Tricon Centaur Mk7 Engine", "Milspec Orion 8801 Core System", "Schafer & Kane Medium Combat Plating Gamma")
+
       end
 
    else
+      -- TODO: Divide into carrier and cruiser classes.
       use_primary    = nhigh-2
       use_secondary  = 2
       addWeapons( equip_turretSrsHig(), use_primary )
       addWeapons( equip_secondarySrs(), use_secondary )
       medium         = equip_mediumHig()
       low            = equip_lowHig()
-      apu            = equip_apuHig()
+      equip_cores(p, "Tricon Harpy Mk11 Engine", "Milspec Orion 9901 Core System", "Schafer & Kane Heavy Combat Plating Gamma")
+
    end
 
-   equip_ship( p, scramble, weapons, medium, low, apu,
+   equip_ship( p, scramble, weapons, medium, low,
                use_medium, use_low )
 end

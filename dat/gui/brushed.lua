@@ -36,7 +36,7 @@ function create()
    col_lgray = colour.new( 160/255, 160/255, 160/255 )
    
    --Images
-   local base = "gfx/gui/brushed/"
+   local base = "dat/gfx/gui/brushed/"
    main = tex.open( base .. "main.png" )
    ext_right = tex.open( base .. "extRight.png" )
    end_right = tex.open( base .. "endRight.png" )

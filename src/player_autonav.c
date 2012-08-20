@@ -57,7 +57,7 @@ void player_autonavStart (void)
       return;
    }
 
-   if (player.p->fuel < HYPERSPACE_FUEL) {
+   if (player.p->fuel < player.p->fuel_consumption) {
       player_message("\erNot enough fuel to jump for autonav.");
       return;
    }
@@ -66,6 +66,11 @@ void player_autonavStart (void)
       player_message("\erHyperspace drive is offline.");
       return;
    }
+
+   /* Cooldown and autonav are mutually-exclusive. */
+   if ((pilot_isFlag(player.p, PILOT_COOLDOWN)) ||
+         (pilot_isFlag(player.p, PILOT_COOLDOWN_BRAKE)))
+      pilot_cooldownEnd(player.p, NULL);
 
    player_autonavSetup();
    player.autonav = AUTONAV_JUMP_APPROACH;
@@ -79,14 +84,20 @@ static void player_autonavSetup (void)
 {
    player_message("\epAutonav initialized.");
    if (!player_isFlag(PLAYER_AUTONAV)) {
+
       tc_base   = player_isFlag(PLAYER_DOUBLESPEED) ? 2. : 1.;
       tc_mod    = tc_base;
       if (conf.compression_mult >= 1.)
          player.tc_max = MIN( conf.compression_velocity / solid_maxspeed(player.p->solid, player.p->speed, player.p->thrust), conf.compression_mult );
       else
-         player.tc_max = conf.compression_velocity / solid_maxspeed(player.p->solid, player.p->speed, player.p->thrust);
+         player.tc_max = conf.compression_velocity /
+               solid_maxspeed(player.p->solid, player.p->speed, player.p->thrust);
+
+      /* Safe cap. */
       player.tc_max = MAX( 1., player.tc_max );
    }
+
+   /* Sane values. */
    tc_rampdown  = 0;
    tc_down      = 0.;
    lasts        = player.p->shield / player.p->shield_max;
@@ -94,7 +105,10 @@ static void player_autonavSetup (void)
    slockons     = player.p->lockons;
    if (player.autonav_timer <= 0.)
       abort_mod = 1.;
+
+   /* Set flag and tc_mod just in case. */
    player_setFlag(PLAYER_AUTONAV);
+   pause_setSpeed( tc_mod );
 }
 
 
@@ -201,6 +215,11 @@ void player_autonavAbort( const char *reason )
    if ((player.p==NULL) || ((player.p != NULL) && pilot_isFlag(player.p, PILOT_HYPERSPACE)))
       return;
 
+   /* Cooldown (handled later) may be script-initiated and we don't
+    * want to make it player-abortable while under manual control. */
+   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
+      return;
+
    if (player_isFlag(PLAYER_AUTONAV)) {
       if (reason != NULL)
          player_message("\erAutonav aborted: %s!", reason);
@@ -220,13 +239,10 @@ void player_autonavAbort( const char *reason )
       /* Reset time compression. */
       player_autonavEnd();
    }
-   else if (pilot_isFlag(player.p, PILOT_COOLDOWN)) {
-      if (reason != NULL)
-         player_message("\erActive cooldown aborted: %s!", reason);
-      else
-         player_message("\erActive cooldown aborted!");
-      pilot_cooldownEnd(player.p);
-   }
+   else if (pilot_isFlag(player.p, PILOT_COOLDOWN_BRAKE))
+      pilot_cooldownEnd(player.p, NULL);
+   else if (pilot_isFlag(player.p, PILOT_COOLDOWN))
+      pilot_cooldownEnd(player.p, reason);
 }
 
 
@@ -371,22 +387,12 @@ static int player_autonavApproach( Vector2d *pos, double *dist2, int count_targe
  */
 static int player_autonavBrake (void)
 {
-   double d;
+   int ret;
 
-   /* Braking procedure. */
-   d = pilot_face( player.p, VANGLE(player.p->solid->vel) + M_PI );
-   if (FABS(d) < MIN_DIR_ERR) {
-      if (player_acc < 1.)
-         player_accel( 1. );
-   }
-   else if (player_acc > 0.)
-      player_accelOver();
+   ret = pilot_brake(player.p);
+   player_acc = player.p->solid->thrust / player.p->thrust;
 
-   if (VMOD(player.p->solid->vel) < MIN_VEL_ERR) {
-      player_accelOver();
-      return 1;
-   }
-   return 0;
+   return ret;
 }
 
 /**
@@ -445,7 +451,7 @@ void player_thinkAutonav( Pilot *pplayer, double dt )
          player_autonavAbort("Target changed to current system");
 
       /* Need fuel. */
-      else if (pplayer->fuel < HYPERSPACE_FUEL)
+      else if (pplayer->fuel < pplayer->fuel_consumption)
          player_autonavAbort("Not enough fuel for autonav to continue");
 
       else
@@ -466,9 +472,9 @@ void player_thinkAutonav( Pilot *pplayer, double dt )
 void player_updateAutonav( double dt )
 {
    const double dis_dead = 5.0;
+   const double dis_mod  = 0.5;
+   const double dis_max  = 4.0;
    const double dis_ramp = 6.0;
-   const double dis_mod = 0.5;
-   const double dis_max = 4.0;
 
    if (paused || (player.p==NULL))
       return;
@@ -490,12 +496,12 @@ void player_updateAutonav( double dt )
       if (player.p->dtimer_accum < dis_dead)
          tc_mod = tc_base;
       else {
-         /* Normal. */
-         if (player.p->dtimer > (dis_max-1.)*dis_ramp/2.+dis_ramp+dis_dead)
-            tc_mod = MIN( dis_max, tc_mod + dis_mod*dt );
          /* Ramp down. */
-         else
+         if (player.p->dtimer - player.p->dtimer_accum < dis_dead + (dis_max-tc_base)*dis_ramp/2 + tc_base*dis_ramp)
             tc_mod = MAX( tc_base, tc_mod - dis_mod*dt );
+         /* Normal. */
+         else
+            tc_mod = MIN( dis_max, tc_mod + dis_mod*dt );
       }
       pause_setSpeed( tc_mod );
       return;
