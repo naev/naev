@@ -2492,7 +2492,7 @@ static int pilotL_addOutfit( lua_State *L )
  *
  * "all" will remove all outfits.
  *
- * @usage p:rmOutfit( "all" ) -- Leaves the pilot naked.
+ * @usage p:rmOutfit( "all" ) -- Leaves the pilot naked (except for cores).
  * @usage p:rmOutfit( "Neutron Disruptor" ) -- Removes a neutron disruptor.
  * @usage p:rmOutfit( "Neutron Disruptor", 2 ) -- Removes two neutron disruptor.
  *
@@ -2521,6 +2521,8 @@ static int pilotL_rmOutfit( lua_State *L )
    /* If outfit is "all", we remove everything. */
    if (strcmp(outfit,"all")==0) {
       for (i=0; i<p->noutfits; i++) {
+         if (p->outfits[i]->sslot->required)
+            continue;
          pilot_rmOutfitRaw( p, p->outfits[i] );
          removed++;
       }

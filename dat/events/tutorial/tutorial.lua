@@ -34,9 +34,9 @@ function create()
     player.rmOutfit("all")
     pp = player.pilot()
     pp:rmOutfit("all") 
-    pp:addOutfit("Milspec Orion 2301 Core System")
-    pp:addOutfit("Tricon Naga Mk3 Engine")
-    pp:addOutfit("Schafer & Kane Light Combat Plating")
+    pp:addOutfit("Milspec Orion 2301 Core System", 1, true)
+    pp:addOutfit("Tricon Naga Mk3 Engine", 1, true)
+    pp:addOutfit("Schafer & Kane Light Combat Plating", 1, true)
     pp:setEnergy(100)
     pp:setHealth(100, 100)
     player.cinematics(true, { no2x = true })
@@ -55,10 +55,11 @@ function create()
     system.get("Sioux"):setKnown(false, true)
 
     -- List of all tutorial modules, in order of appearance.
-    local modules = {menubasic, menudiscover, menuinterstellar, menucomms, menubasiccombat, menumisscombat, menuheat, menuaoutfits, menudisable, menuplanet, menumissions}
+    -- HACK: Add "menux" to the end of this table, because the unpack() function has to be at the end of the tk.choice call.
+    local modules = {menubasic, menudiscover, menuinterstellar, menucomms, menubasiccombat, menumisscombat, menuheat, menuaoutfits, menudisable, menuplanet, menumissions, menux}
 
     if var.peek("tut_next") then
-        if var.peek("tut_next") == #modules then
+        if var.peek("tut_next") == #modules-1 then
             var.pop("tut_next")
         else
             var.push("tut_next", var.peek("tut_next") + 1)
