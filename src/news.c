@@ -212,7 +212,7 @@ void news_exit (void)
 	news_t* article_ptr = news_list;
 	news_t* temp;
 
-	while (article_ptr->next!=NULL){
+	while (article_ptr!=NULL){
 
 		temp=article_ptr;
 		article_ptr=article_ptr->next; 

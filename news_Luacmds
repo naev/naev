@@ -1,10 +1,10 @@
 
-news.add(faction,title,body,date, dote_to_rm)
+news.add(faction,title,body,date_to_rm, date)
 	adds a new article, shown at faction (or "Generic" for all factions) bars, with a date.
-	date is the date to add. Defaults to 0, which shows no date and is at the bottom
 	date_to_rm is the date after which the article is removed, default ~400 SCU in the future
+	date is the date to add. Defaults to current date
 
-   Accepts a table of tables of arguments, like
+   Also accepts a table of tables of arguments, like
    articles={}
    articles=
    {
