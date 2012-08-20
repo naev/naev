@@ -477,20 +477,19 @@ char* make_clean( char* unclean)
 {
 
    int i,j;
-   char* new=malloc(4*strlen(unclean));
+   char* new = malloc( 4*strlen(unclean)+1 );
 
-   for (i=0,j=0; *(unclean+i)!=0; i++,j++)
+   for (i=0,j=0; unclean[i]!=0; i++,j++)
    {
-      if (*(unclean+i)==27){
+      if (unclean[i]==27){
          new[j++]='\\';
-         j+=sprintf(new+j,"%.3d",*(unclean+i));
-         j--;
+         j += sprintf( &new[j], "%.3d", unclean[i] )-1;
       }
       else
-         new[j]=unclean[i];
+         new[j] = unclean[i];
    }
 
-   new[j]=0;
+   new[j] = 0;
    
    return new;
 
@@ -553,8 +552,8 @@ int news_saveArticles( xmlTextWriterPtr writer )
 
          xmlw_startElem(writer,"article");
 
-         ntitle= make_clean( article_ptr->title );
-         ndesc= make_clean( article_ptr->desc );
+         ntitle = make_clean( article_ptr->title );
+         ndesc  = make_clean( article_ptr->desc );
 
          xmlw_attr(writer,"title","%s",ntitle);
          xmlw_attr(writer,"desc","%s",ndesc);
