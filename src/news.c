@@ -34,19 +34,19 @@
 #include "space.h"
 
 
-#define news_max_length       8192
+#define NEWS_MAX_LENGTH       8192
 
 /*
  * News stack.
- */					
+ */
 news_t* news_list             = NULL;  /**< Linked list containing all articles */
 
-static int next_id			   = 1; /**< next number to use as ID */
+static int next_id            = 1; /**< next number to use as ID */
 
 /**
  * News line buffer.
  */
-static char buf[8192];
+static char buf[NEWS_MAX_LENGTH];
 
 static int len;
 
@@ -58,7 +58,7 @@ static char **news_lines      = NULL; /**< Text per line. */
 static glFontRestore *news_restores = NULL; /**< Restorations. */
 static int news_nlines        = 0; /**< Number of lines used. */
 static int news_mlines        = 0; /**< Lines allocated. */
-double textlength = 0.;
+static double textlength      = 0.;
 
 /**
  * Save/load
@@ -66,7 +66,7 @@ double textlength = 0.;
 static int largestID=1;
 
 /*
- *	Prototypes
+ * Prototypes
  */
 static void news_render( double bx, double by, double w, double h, void *data );
 static int news_mouse( unsigned int wid, SDL_Event *event, double mx, double my,
@@ -80,34 +80,34 @@ char* get_fromclean( char *clean);
 extern ntime_t naev_time;
 
 /**
- *	@brief makes a new article and puts it into the list
- *		@param title	the article title
- *		@param content	the article content
- *		@param faction	the article faction, NULL for generic
- *		@param date date to put
+ * @brief makes a new article and puts it into the list
+ *    @param title   the article title
+ *    @param content the article content
+ *    @param faction the article faction, NULL for generic
+ *    @param date date to put
  *    @param date_to_rm date to remove the article
- *	@return pointer to new article
+ * @return pointer to new article
  */
 news_t* new_article(char* title, char* content, char* faction, ntime_t date,
     ntime_t date_to_rm)
 {
 
-	news_t* article_ptr;
+   news_t* article_ptr;
 
-		/* make new article */
-	news_t* n_article = calloc(sizeof(news_t),1);
+      /* make new article */
+   news_t* n_article = calloc(sizeof(news_t),1);
 
-	n_article->id=next_id++;
+   n_article->id=next_id++;
 
 
-	n_article->faction = faction ? strdup(faction) : NULL ;
+   n_article->faction = faction ? strdup(faction) : NULL ;
 
-		/* allocate it */
-	if ( !( (n_article->title = strdup(title)) && 
-			(n_article->desc = strdup(content))) ){
-		ERR("Out of Memory.");
-		return NULL;
-	}
+      /* allocate it */
+   if ( !( (n_article->title = strdup(title)) && 
+         (n_article->desc = strdup(content))) ){
+      ERR("Out of Memory.");
+      return NULL;
+   }
 
    n_article->date=date;
    n_article->date_to_rm=date_to_rm;
@@ -131,13 +131,13 @@ news_t* new_article(char* title, char* content, char* faction, ntime_t date,
       article_ptr->next=n_article;
    }
 
-	return n_article;
+   return n_article;
 }
 
 
 /**
- *	@brief frees an article in the news list
- *		@param id the id of the article to remove
+ * @brief frees an article in the news list
+ *    @param id the id of the article to remove
  */
 int free_article(int id)
 {
@@ -181,25 +181,25 @@ int free_article(int id)
 
 
 /**
- *	@brief Initiate news linked list with a stack
+ * @brief Initiate news linked list with a stack
  */
 int news_init (void)
 {
-		/* init news list with dummy article */
+      /* init news list with dummy article */
    if (news_list!=NULL){
       news_exit();
    }
 
-	news_list = calloc(sizeof(news_t),1);
+   news_list = calloc(sizeof(news_t),1);
 
    news_list->date=0;
 
-	return 0;
+   return 0;
 }
 
 
 /**
- *	@brief Kills the old news thread
+ * @brief Kills the old news thread
  */
 void news_exit (void)
 {
@@ -207,16 +207,16 @@ void news_exit (void)
    if (news_list==NULL)
       return;
 
-	news_t* article_ptr = news_list;
-	news_t* temp;
+   news_t* article_ptr = news_list;
+   news_t* temp;
 
-	while (article_ptr!=NULL){
+   while (article_ptr!=NULL){
 
-		temp=article_ptr;
-		article_ptr=article_ptr->next; 
+      temp=article_ptr;
+      article_ptr=article_ptr->next; 
 
-		free(temp);
-	}
+      free(temp);
+   }
 
    int i=0;
    if (news_nlines != 0) {
@@ -231,7 +231,7 @@ void news_exit (void)
    news_restores = NULL;
    news_nlines = 0;
    news_mlines = 0;
-   textlength=0;
+   textlength  = 0;
 
    news_list=NULL;
 
@@ -264,12 +264,12 @@ news_t* news_get(int id)
  */
 int *generate_news( char* faction )
 {
-	news_t* temp;
+   news_t* temp;
    news_t* article_ptr = news_list;
-	int p=0;
+   int p=0;
 
       /* Put all acceptable news into buf */
-	do{
+   do{
          /* If we've reached the end of the list */
       if (article_ptr->faction==NULL){
          break;
@@ -283,31 +283,31 @@ int *generate_news( char* faction )
       }
 
          /* if article is okay */
-		if ( !strcmp(article_ptr->faction,"Generic") || !strcmp(article_ptr->faction,faction) )
-		{
-			if (article_ptr->date && article_ptr->date<40000000000000){
-      		p += nsnprintf( buf+p, news_max_length-p,
-           		" %s \n"
-           		"%s: %s\e0\n\n"
-           		, article_ptr->title, ntime_pretty(article_ptr->date,1), article_ptr->desc );
-      	}else{
-      		p+=nsnprintf( buf+p, news_max_length-p,
+      if ( !strcmp(article_ptr->faction,"Generic") || !strcmp(article_ptr->faction,faction) )
+      {
+         if (article_ptr->date && article_ptr->date<40000000000000){
+            p += nsnprintf( buf+p, NEWS_MAX_LENGTH-p,
+               " %s \n"
+               "%s: %s\e0\n\n"
+               , article_ptr->title, ntime_pretty(article_ptr->date,1), article_ptr->desc );
+         }else{
+            p+=nsnprintf( buf+p, NEWS_MAX_LENGTH-p,
                " %s \n"
                "%s\e0\n\n"
-           		, article_ptr->title, article_ptr->desc );
-      	}
-		}
+               , article_ptr->title, article_ptr->desc );
+         }
+      }
 
       article_ptr = article_ptr->next;
 
-	}while( article_ptr != NULL );
+   }while( article_ptr != NULL );
 
-	if (p==0)
-		nsnprintf(buf, news_max_length, "\n\nSorry, no news today\n\n\n");
+   if (p==0)
+      nsnprintf(buf, NEWS_MAX_LENGTH, "\n\nSorry, no news today\n\n\n");
 
    len=p;
 
-	return 0;
+   return 0;
 }
 
 
