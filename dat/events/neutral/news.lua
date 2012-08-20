@@ -381,6 +381,11 @@ end
 
 function add_header(faction)
 
+   if header_table[faction] == nil then
+      print( 'Faction \''..faction..'\' does not have entry in faction table!' )
+      faction = 'Independent'
+   end
+
    header=header_table[faction][1]
    desc=greet_table[faction][math.random(#greet_table[faction])]
 
