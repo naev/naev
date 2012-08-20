@@ -3,7 +3,7 @@
 cd "$(dirname $0)"
 
 export LC_ALL=C
-data="../../dat/outfits"
+data="../../outfits"
 
 # XML elements which use the directories.
 store="gfx_store"

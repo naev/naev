@@ -6,7 +6,7 @@
   <mass>8</mass>
   <price>25000</price>
   <description>This missile launcher fires Fury class interceptor missiles. It is built out of standard parts, which make it serviceable and efficient.</description>
-  <gfx_store>seekerlauncher</gfx_store>
+  <gfx_store>unicorp_fury_launcher</gfx_store>
   <cpu>-4</cpu>
  </general>
  <specific type="launcher" secondary="1">

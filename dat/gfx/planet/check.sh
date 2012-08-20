@@ -3,7 +3,7 @@
 cd "$(dirname $0)"
 
 export LC_ALL=C
-data="../../dat/assets"
+data="../../assets"
 
 echo "Checking for unused graphics..."
 for dir in space exterior; do
