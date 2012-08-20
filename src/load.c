@@ -23,6 +23,7 @@
 #include "menu.h"
 #include "dialogue.h"
 #include "event.h"
+#include "news.h"
 #include "mission.h"
 #include "faction.h"
 #include "gui.h"
@@ -57,6 +58,8 @@ extern Planet* player_load( xmlNodePtr parent ); /**< Loads player related stuff
 extern int missions_loadActive( xmlNodePtr parent ); /**< Loads active missions. */
 /* event.c */
 extern int events_loadActive( xmlNodePtr parent );
+/* news.c */
+extern int news_loadArticles( xmlNodePtr parent );
 /* nlua_var.c */
 extern int var_load( xmlNodePtr parent ); /**< Loads mission variables. */
 /* faction.c */
@@ -566,6 +569,7 @@ int load_game( const char* file, int version_diff )
    var_load(node);
    missions_loadActive(node);
    events_loadActive(node);
+   news_loadArticles( node );
    hook_load(node);
    space_sysLoad(node);
 
