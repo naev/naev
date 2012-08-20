@@ -51,6 +51,7 @@ include("numstring.lua")
 chk_range      = math.pow( 2000, 2 ) -- Radius within target
 chk_range_buf  = math.pow( 2500, 2 ) -- Range at which player has left (has buffer zone)
 chk_time       = 10 -- Time in seconds to hold position
+timer_id       = nil -- Store update timer ID to avoid multiple instances
 
 -- Saves function calls
 f_dvaered = faction.get("Dvaered")
@@ -341,6 +342,11 @@ function enter ()
    misn_stage = 1
    set_osd()
 
+   -- Remove stale timer
+   if timer_id then
+      hook.rm( timer_id )
+      timer_id = nil
+   end
    -- We start the update goal timer when we're in the proper system
    if visited+1 <= num_patrol and system.cur() == tgt_list[ visited+1 ].sys then
       updateGoal() -- Will set timer
@@ -445,7 +451,7 @@ function updateGoal ()
    end
 
    -- Set goal again
-   hook.timer( 1000, "updateGoal" )
+   timer_id = hook.timer( 1000, "updateGoal" )
 end
 
 -- Checks for nearby hostiles
