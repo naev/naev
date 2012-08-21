@@ -2417,7 +2417,8 @@ int player_getOutfitsFiltered( char** soutfits, glTexture** toutfits,
 
    if (player_noutfits == 0) {
       soutfits[0] = strdup( "None" );
-      toutfits[0] = NULL;
+      if (toutfits != NULL)
+         toutfits[0] = NULL;
       return 1;
    }
 
@@ -2430,7 +2431,8 @@ int player_getOutfitsFiltered( char** soutfits, glTexture** toutfits,
    for (i=0; i<player_noutfits; i++) {
       if ((filter == NULL) || filter(player_outfits[i].o)) {
          soutfits[j] = strdup( player_outfits[i].o->name );
-         toutfits[j] = player_outfits[i].o->gfx_store;
+         if (toutfits != NULL)
+            toutfits[j] = player_outfits[i].o->gfx_store;
          j++;
       }
    }
@@ -2438,7 +2440,8 @@ int player_getOutfitsFiltered( char** soutfits, glTexture** toutfits,
    /* None found. */
    if (j == 0) {
       soutfits[0] = strdup( "None" );
-      toutfits[0] = NULL;
+      if (toutfits != NULL)
+         toutfits[0] = NULL;
       return 1;
    }
 
