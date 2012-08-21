@@ -35,6 +35,8 @@ There is a third way to lose heat, however.]]
 
 Let's try this now. Enter Active Cooldown mode by pressing %s. If you are moving, you will automatically brake to a stop.]]
    message7 = [[You are now in Active Cooldown mode. You will see a progress bar above your ship. It is slowly draining. When the bar is completely empty, your ship will have cooled down. Don't touch any of the controls, or Active Cooldown will be canceled and you will have to restart it.
+   
+While you are in active cooldown, your energy and shields will not recharge. So try to use it only in a safe spot.
 
 Wait for your ship to cool. Keep a close eye on the temperature of your ship!]]
    message8 = [[Well done! You have completed the Active Cooldown cycle, and your ship is as cool as the space around it.
