@@ -83,7 +83,7 @@ extern ntime_t naev_time;
  * @brief makes a new article and puts it into the list
  *    @param title   the article title
  *    @param content the article content
- *    @param faction the article faction, NULL for generic
+ *    @param faction the article faction
  *    @param date date to put
  *    @param date_to_rm date to remove the article
  * @return pointer to new article
@@ -99,12 +99,10 @@ news_t* new_article(char* title, char* content, char* faction, ntime_t date,
 
    n_article->id=next_id++;
 
-
-   n_article->faction = faction ? strdup(faction) : NULL ;
-
       /* allocate it */
    if ( !( (n_article->title = strdup(title)) && 
-         (n_article->desc = strdup(content))) ){
+         (n_article->desc = strdup(content)) &&
+         (n_article->faction = strdup(faction)))){
       ERR("Out of Memory.");
       return NULL;
    }
@@ -192,8 +190,6 @@ int news_init (void)
 
    news_list = calloc(sizeof(news_t),1);
 
-   news_list->date=0;
-
    return 0;
 }
 
@@ -213,7 +209,12 @@ void news_exit (void)
    while (article_ptr!=NULL){
 
       temp=article_ptr;
-      article_ptr=article_ptr->next; 
+      article_ptr=article_ptr->next;
+
+      free(temp->faction);
+      free(temp->title);
+      free(temp->desc);
+      free(temp->tag);
 
       free(temp);
    }
@@ -700,6 +701,8 @@ static int news_parseArticle( xmlNodePtr parent )
       free(desc);
       free(faction);
       free(tag);
+
+      tag=NULL;
 
    } while (xml_nextNode(node));
 
