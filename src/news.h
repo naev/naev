@@ -34,7 +34,6 @@ typedef struct news_s {
  */
 int news_init (void);
 void news_exit (void);
-int news_addHeaders(void);
 
 /*
  * Display.

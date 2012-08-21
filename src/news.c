@@ -76,6 +76,7 @@ int news_saveArticles( xmlTextWriterPtr writer );
 int news_loadArticles( xmlNodePtr parent );
 char* make_clean( char* unclean);
 char* get_fromclean( char *clean);
+void clear_newslines(void);
 
 extern ntime_t naev_time;
 
@@ -328,6 +329,9 @@ void news_widget( unsigned int wid, int x, int y, int w, int h )
    news_pos    = h/3;
    news_tick   = SDL_GetTicks();
 
+   if (news_nlines>0)
+      clear_newslines();
+
 
       /* Now load up the text. */
    int i, p = 0;
@@ -365,6 +369,19 @@ void news_widget( unsigned int wid, int x, int y, int w, int h )
    /* Create the custom widget. */
    window_addCust( wid, x, y, w, h,
          "cstNews", 1, news_render, news_mouse, NULL );
+}
+
+
+
+/* clears newslines for bar text, for when taking off */
+void clear_newslines(void)
+{
+   printf("\nclearing!\n");
+   int i;
+   for (i=0; i<news_nlines; i++){
+      free(news_lines[i]);
+   }
+   news_nlines=0;
 }
 
 
