@@ -575,8 +575,8 @@ int news_saveArticles( xmlTextWriterPtr writer )
          xmlw_attr(writer,"title","%s",ntitle);
          xmlw_attr(writer,"desc","%s",ndesc);
          xmlw_attr(writer,"faction","%s",article_ptr->faction);
-         xmlw_attr(writer,"date","%li",(int64_t) article_ptr->date);
-         xmlw_attr(writer,"date_to_rm","%li",(int64_t) article_ptr->date_to_rm);
+         xmlw_attr(writer,"date", "%"PRIi64, article_ptr->date);
+         xmlw_attr(writer,"date_to_rm", "%"PRIi64, article_ptr->date_to_rm);
          xmlw_attr(writer,"id","%i",article_ptr->id);
 
          if (article_ptr->tag!=NULL)
@@ -680,7 +680,7 @@ static int news_parseArticle( xmlNodePtr parent )
          WARN("Event has missing date attribute, skipping.");
          continue;
       }
-      date = atol(buff);
+      date = atoll(buff);
       free(buff);
       xmlr_attr(node,"date_to_rm",buff);
       if (faction==NULL) {
@@ -688,7 +688,7 @@ static int news_parseArticle( xmlNodePtr parent )
          WARN("Event has missing date attribute, skipping.");
          continue;
       }
-      date_to_rm = atol(buff);
+      date_to_rm = atoll(buff);
       free(buff);
       xmlr_attr(node,"id",buff);
       if (faction==NULL) {
