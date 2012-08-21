@@ -70,7 +70,6 @@ static int cli_firstline   = 1; /**< Is this the first line? */
  */
 static int cli_script( lua_State *L );
 static int cli_printOnly( lua_State *L );
-static int cli_warn( lua_State *L );
 static const luaL_Reg cli_methods[] = {
    { "print", cli_printOnly },
    { "script", cli_script },
@@ -136,13 +135,12 @@ static int cli_printCore( lua_State *L, int cli_only )
  *
  * @luafunc warn()
  */
-static int cli_warn( lua_State *L )
+int cli_warn( lua_State *L )
 {
    const char *msg;
    
    msg = luaL_checkstring(L,1);
-   fprintf(stderr, "%s\n", msg);
-   LOG("\er%s\e0", msg);
+   logprintf( stderr, "Warning: %s\n", msg );
    
    return 0;
 }

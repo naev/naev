@@ -112,6 +112,7 @@ int nlua_loadBasic( lua_State* L )
 
    /* Override print to print in the console. */
    lua_register(L, "print", cli_print);
+   lua_register(L, "warn",  cli_warn);
 
    /* add our own */
    lua_register(L, "include", nlua_packfileLoader);
