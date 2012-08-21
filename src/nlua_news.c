@@ -3,9 +3,9 @@
  */
 
 /**
- * @file nlua_economy.c
+ * @file nlua_news.c
  *
- * @brief Lua economy module.
+ * @brief Lua news module.
  */
 
 #include "nlua_news.h"
@@ -36,7 +36,7 @@ int newsL_faction( lua_State *L );
 int newsL_date( lua_State *L );
 int newsL_bind( lua_State *L );
 
-static const luaL_reg economy_methods[] = {
+static const luaL_reg news_methods[] = {
    {"add",newsL_add},
    {"rm",newsL_rm},
    {"get",newsL_get},
@@ -47,8 +47,8 @@ static const luaL_reg economy_methods[] = {
    {"bind",newsL_bind},
    {"__eq",newsL_eq},
    {0,0}
-}; /**< System metatable methods. */
-static const luaL_reg economy_cond_methods[] = {
+}; /**< News metatable methods. */
+static const luaL_reg news_cond_methods[] = {
    {"get",newsL_get},
    {"title",newsL_title},
    {"desc",newsL_desc},
@@ -56,14 +56,14 @@ static const luaL_reg economy_cond_methods[] = {
    {"date",newsL_date},
    {"__eq",newsL_eq},
    {0,0}
-}; /**< Read only economy metatable methods. */
+}; /**< Read only news metatable methods. */
 
 extern int land_loaded;
 
 /**
- * @brief Loads the economy library.
+ * @brief Loads the news library.
  *
- *    @param L State to load economy library into.
+ *    @param L State to load news library into.
  *    @param readonly Load read only functions?
  *    @return 0 on success.
  */
@@ -79,9 +79,9 @@ int nlua_loadNews( lua_State *L, int readonly )
 
    /* Register the values */
    if (readonly)
-      luaL_register(L, NULL, economy_cond_methods);
+      luaL_register(L, NULL, news_cond_methods);
    else
-      luaL_register(L, NULL, economy_methods);
+      luaL_register(L, NULL, news_methods);
 
    /* Clean up. */
    lua_setfield(L, LUA_GLOBALSINDEX, ARTICLE_METATABLE);
@@ -89,6 +89,13 @@ int nlua_loadNews( lua_State *L, int readonly )
    return 0; /* No error */
 }
 
+/**
+ * @brief Lua bindings to interact with the news.
+ *
+ * This will allow you to interact and manipulate the in-game news.
+ *
+ * @luamod news
+ */
 /**
  * @brief Adds an article
  * @usage news.add(faction,title,body,[date_to_rm, [date]])
