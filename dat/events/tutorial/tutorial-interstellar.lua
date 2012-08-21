@@ -65,7 +65,9 @@ function input(inputname, inputpress)
    nav, hyp = player.pilot():nav()
    if inputname == "thyperspace" and keystage == "thyperspace" then
       keystage = "deselect"
+      player.omsgRm(omsg)
       tkMsg(title1, message3:format(tutGetKey("jump"), tutGetKey("target_clear"), tutGetKey("target_clear")))
+      omsg = player.omsgAdd(clearomsg:format(tutGetKey("target_clear")), 0)
    elseif hyp == nil and keystage == "deselect" then
       keystage = "map"
       player.omsgRm(omsg)
