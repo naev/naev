@@ -376,7 +376,6 @@ void news_widget( unsigned int wid, int x, int y, int w, int h )
 /* clears newslines for bar text, for when taking off */
 void clear_newslines(void)
 {
-   printf("\nclearing!\n");
    int i;
    for (i=0; i<news_nlines; i++){
       free(news_lines[i]);
@@ -576,8 +575,8 @@ int news_saveArticles( xmlTextWriterPtr writer )
          xmlw_attr(writer,"title","%s",ntitle);
          xmlw_attr(writer,"desc","%s",ndesc);
          xmlw_attr(writer,"faction","%s",article_ptr->faction);
-         xmlw_attr(writer,"date","%li",(long int) article_ptr->date);
-         xmlw_attr(writer,"date_to_rm","%li",(long int) article_ptr->date_to_rm);
+         xmlw_attr(writer,"date","%li",(int64_t) article_ptr->date);
+         xmlw_attr(writer,"date_to_rm","%li",(int64_t) article_ptr->date_to_rm);
          xmlw_attr(writer,"id","%i",article_ptr->id);
 
          if (article_ptr->tag!=NULL)
