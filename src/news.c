@@ -76,6 +76,7 @@ int news_saveArticles( xmlTextWriterPtr writer );
 int news_loadArticles( xmlNodePtr parent );
 char* make_clean( char* unclean);
 char* get_fromclean( char *clean);
+void clear_newslines(void);
 
 extern ntime_t naev_time;
 
@@ -83,7 +84,7 @@ extern ntime_t naev_time;
  * @brief makes a new article and puts it into the list
  *    @param title   the article title
  *    @param content the article content
- *    @param faction the article faction, NULL for generic
+ *    @param faction the article faction
  *    @param date date to put
  *    @param date_to_rm date to remove the article
  * @return pointer to new article
@@ -99,12 +100,10 @@ news_t* new_article(char* title, char* content, char* faction, ntime_t date,
 
    n_article->id=next_id++;
 
-
-   n_article->faction = faction ? strdup(faction) : NULL ;
-
       /* allocate it */
    if ( !( (n_article->title = strdup(title)) && 
-         (n_article->desc = strdup(content))) ){
+         (n_article->desc = strdup(content)) &&
+         (n_article->faction = strdup(faction)))){
       ERR("Out of Memory.");
       return NULL;
    }
@@ -192,8 +191,6 @@ int news_init (void)
 
    news_list = calloc(sizeof(news_t),1);
 
-   news_list->date=0;
-
    return 0;
 }
 
@@ -213,7 +210,12 @@ void news_exit (void)
    while (article_ptr!=NULL){
 
       temp=article_ptr;
-      article_ptr=article_ptr->next; 
+      article_ptr=article_ptr->next;
+
+      free(temp->faction);
+      free(temp->title);
+      free(temp->desc);
+      free(temp->tag);
 
       free(temp);
    }
@@ -327,6 +329,9 @@ void news_widget( unsigned int wid, int x, int y, int w, int h )
    news_pos    = h/3;
    news_tick   = SDL_GetTicks();
 
+   if (news_nlines>0)
+      clear_newslines();
+
 
       /* Now load up the text. */
    int i, p = 0;
@@ -364,6 +369,18 @@ void news_widget( unsigned int wid, int x, int y, int w, int h )
    /* Create the custom widget. */
    window_addCust( wid, x, y, w, h,
          "cstNews", 1, news_render, news_mouse, NULL );
+}
+
+
+
+/* clears newslines for bar text, for when taking off */
+void clear_newslines(void)
+{
+   int i;
+   for (i=0; i<news_nlines; i++){
+      free(news_lines[i]);
+   }
+   news_nlines=0;
 }
 
 
@@ -558,8 +575,8 @@ int news_saveArticles( xmlTextWriterPtr writer )
          xmlw_attr(writer,"title","%s",ntitle);
          xmlw_attr(writer,"desc","%s",ndesc);
          xmlw_attr(writer,"faction","%s",article_ptr->faction);
-         xmlw_attr(writer,"date","%li",article_ptr->date);
-         xmlw_attr(writer,"date_to_rm","%li",article_ptr->date_to_rm);
+         xmlw_attr(writer,"date", "%"PRIi64, article_ptr->date);
+         xmlw_attr(writer,"date_to_rm", "%"PRIi64, article_ptr->date_to_rm);
          xmlw_attr(writer,"id","%i",article_ptr->id);
 
          if (article_ptr->tag!=NULL)
@@ -663,7 +680,7 @@ static int news_parseArticle( xmlNodePtr parent )
          WARN("Event has missing date attribute, skipping.");
          continue;
       }
-      date = atol(buff);
+      date = atoll(buff);
       free(buff);
       xmlr_attr(node,"date_to_rm",buff);
       if (faction==NULL) {
@@ -671,7 +688,7 @@ static int news_parseArticle( xmlNodePtr parent )
          WARN("Event has missing date attribute, skipping.");
          continue;
       }
-      date_to_rm = atol(buff);
+      date_to_rm = atoll(buff);
       free(buff);
       xmlr_attr(node,"id",buff);
       if (faction==NULL) {
@@ -700,6 +717,8 @@ static int news_parseArticle( xmlNodePtr parent )
       free(desc);
       free(faction);
       free(tag);
+
+      tag=NULL;
 
    } while (xml_nextNode(node));
 
