@@ -382,7 +382,7 @@ end
 function add_header(faction)
 
    if header_table[faction] == nil then
-      print( 'News: Faction \''..faction..'\' does not have entry in faction table!' )
+      warn( 'News: Faction \''..faction..'\' does not have entry in faction table!' )
       faction = 'Independent'
    end
 
