@@ -412,7 +412,7 @@ Lua_article* lua_pusharticle( lua_State *L, Lua_article article )
  * @brief gets the article title
  *    @luaparam a article to get the title of
  *    @luareturn title
- * @luafunc news.title(a)
+ * @luafunc title(a)
  */
 int newsL_title( lua_State *L )
 {
@@ -433,7 +433,7 @@ int newsL_title( lua_State *L )
  * @brief gets the article desc
  *    @luaparam a article to get the desc of
  *    @luareturn desc
- * @luafunc news.desc(a)
+ * @luafunc desc(a)
  */
 int newsL_desc( lua_State *L )
 {
@@ -454,7 +454,7 @@ int newsL_desc( lua_State *L )
  * @brief gets the article faction
  *    @luaparam a article to get the faction of
  *    @luareturn faction
- * @luafunc news.faction(a)
+ * @luafunc faction(a)
  */
 int newsL_faction( lua_State *L )
 {
@@ -475,7 +475,7 @@ int newsL_faction( lua_State *L )
  * @brief gets the article date
  *    @luaparam a article to get the date of
  *    @luareturn date
- * @luafunc news.date(a)
+ * @luafunc date(a)
  */
 int newsL_date( lua_State *L )
 {
@@ -496,7 +496,7 @@ int newsL_date( lua_State *L )
  * @brief sets the article tag
  *    @luaparam a article to get the faction of
  *    @luaparam tag
- * @luafunc news.faction(a)
+ * @luafunc faction(a)
  */
 int newsL_bind( lua_State *L )
 {
