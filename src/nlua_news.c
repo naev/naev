@@ -271,6 +271,7 @@ int newsL_rm( lua_State *L ){
  * @brief gets all matching articles in a table
  *    @luaparam characteristic characteristic to match, or no parameter for all articles
  *    @luareturn a table with matching articles
+ * @luafunc get(characteristic)
  */
 int newsL_get( lua_State *L )
 {
