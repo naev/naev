@@ -108,7 +108,7 @@ int nlua_loadNews( lua_State *L, int readonly )
  *    @luaparam date_to_rm date to remove the article
  *    @luaparam date What time to put, defaults to current date, use 0 to not use a date
  *    @luareturn The article matching name or nil if error.
- * @luafunc get( s )
+ * @luafunc add( s )
  */
 int newsL_add( lua_State *L ){
 
@@ -496,7 +496,7 @@ int newsL_date( lua_State *L )
  * @brief sets the article tag
  *    @luaparam a article to get the faction of
  *    @luaparam tag
- * @luafunc faction(a)
+ * @luafunc bind(a)
  */
 int newsL_bind( lua_State *L )
 {
