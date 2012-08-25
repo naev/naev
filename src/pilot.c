@@ -2231,10 +2231,12 @@ void pilot_delete( Pilot* p )
  */
 static void pilot_hyperspace( Pilot* p, double dt )
 {
-   StarSystem *sys;
-   double a, diff;
+   JumpPoint *jp;
+   double diff;
    int can_hyp;
    HookParam hparam;
+
+   jp  = &cur_system->jumps[p->nav_hyperspace];
 
    /* pilot is actually in hyperspace */
    if (pilot_isFlag(p, PILOT_HYPERSPACE)) {
@@ -2256,7 +2258,7 @@ static void pilot_hyperspace( Pilot* p, double dt )
          else {
             hparam.type        = HOOK_PARAM_JUMP;
             hparam.u.lj.srcid  = cur_system->id;
-            hparam.u.lj.destid = cur_system->jumps[ p->nav_hyperspace ].targetid;
+            hparam.u.lj.destid = jp->targetid;
 
             /* Should be run before messing with delete flag. */
             pilot_runHookParam( p, PILOT_HOOK_JUMP, &hparam, 1 );
@@ -2320,14 +2322,12 @@ static void pilot_hyperspace( Pilot* p, double dt )
             pilot_setThrust( p, 0. );
 
             /* Face system headed to. */
-            sys  = cur_system->jumps[p->nav_hyperspace].target;
-            a    = ANGLE( sys->pos.x - cur_system->pos.x, sys->pos.y - cur_system->pos.y );
-            diff = pilot_face( p, a );
+            diff = pilot_face( p, jp->angle );
 
             if (ABS(diff) < MAX_DIR_ERR) { /* we can now prepare the jump */
-               if (jp_isFlag( &cur_system->jumps[p->nav_hyperspace], JP_EXITONLY )) {
+               if (jp_isFlag( jp, JP_EXITONLY )) {
                   WARN( _("Pilot '%s' trying to jump through exit-only jump from '%s' to '%s'"),
-                        p->name, cur_system->name, sys->name );
+                        p->name, cur_system->name, jp->target->name );
                }
                else {
                   pilot_setTurn( p, 0. );

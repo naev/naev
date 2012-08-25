@@ -1914,6 +1914,19 @@ StarSystem* map_getDestination( int *jumps )
 
 
 /**
+ * @brief Gets the next destination system in the map path.
+ *
+ *    @return The next system or NULL if there is no path set.
+ */
+StarSystem* map_getNextDestination (void)
+{
+   if (map_path == NULL)
+      return NULL;
+   return map_path[ 0 ];
+}
+
+
+/**
  * @brief Updates the map after a jump.
  */
 void map_jump (void)
@@ -1967,7 +1980,7 @@ void map_jump (void)
 void map_select( StarSystem *sys, char shifted )
 {
    unsigned int wid;
-   int i;
+   int i, j;
 
    wid = window_get(MAP_WDWNAME);
 
@@ -2004,7 +2017,20 @@ void map_select( StarSystem *sys, char shifted )
          else  {
             /* see if it is a valid hyperspace target */
             for (i=0; i<cur_system->njumps; i++) {
-               if (map_path[0] == cur_system->jumps[i].target) {
+               /* Check for matching hypergate */
+               if (jp_isFlag( &cur_system->jumps[i], JP_HYPERGATE )) {
+                  for (j=0; j<map_path[0]->njumps; j++) {
+                     if (jp_isFlag( &map_path[0]->jumps[j], JP_HYPERGATE )) {
+                        player_hyperspacePreempt(1);
+                        player_targetHyperspaceSet( i );
+                        break;
+                     }
+                  }
+                  if (j<map_path[0]->njumps)
+                     break;
+               }
+               /* Check for matching jump point */
+               else if (map_path[0] == cur_system->jumps[i].target) {
                   player_hyperspacePreempt(1);
                   player_targetHyperspaceSet( i );
                   break;

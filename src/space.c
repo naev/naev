@@ -1140,8 +1140,8 @@ JumpPoint* jump_get( const char* jumpname, const StarSystem* sys )
 JumpPoint* jump_getTarget( StarSystem* target, const StarSystem* sys )
 {
    int i;
-   JumpPoint *jp;
-   JumpPoint *hg;
+   JumpPoint *jp = NULL;
+   JumpPoint *hg = NULL;
 
    for (i=0; i<sys->njumps; i++) {
       jp = &sys->jumps[i];

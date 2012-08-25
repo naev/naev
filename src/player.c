@@ -1803,6 +1803,10 @@ int player_jump (void)
 
       return 1;
    }
+
+   if (player_isFlag(PLAYER_AUTONAV))
+      player_autonavAbort(NULL);
+
    return 0;
 }
 
