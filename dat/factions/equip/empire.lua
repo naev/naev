@@ -67,33 +67,33 @@ function equip_empireMilitary( p, shipsize )
 
       -- Scout
       if class == "Scout" then
+         equip_cores(p, "Tricon Naga Mk9 Engine", "Milspec Orion 5501 Core System", "Schafer & Kane Light Stealth Plating")
          use_primary    = rnd.rnd(1,#nhigh)
          addWeapons( equip_forwardLow(), use_primary )
          medium         = { "Generic Afterburner", "Milspec Scrambler" }
          use_medium     = 2
          low            = { "Solar Panel" }
-         equip_cores(p, "Tricon Naga Mk9 Engine", "Milspec Orion 5501 Core System", "Schafer & Kane Light Stealth Plating")
 
       -- Fighter
       elseif class == "Fighter" then
+         equip_cores(p, "Tricon Naga Mk9 Engine", "Milspec Orion 5501 Core System", "Schafer & Kane Light Stealth Plating")
          use_primary    = nhigh-1
          use_secondary  = 1
          addWeapons( equip_forwardEmpMed(), use_primary )
          addWeapons( equip_secondaryEmp(), use_secondary )
          medium         = equip_mediumLow()
          low            = equip_lowLow()
-         equip_cores(p, "Tricon Naga Mk9 Engine", "Milspec Orion 5501 Core System", "Schafer & Kane Light Stealth Plating")
 
 
       -- Bomber
       elseif class == "Bomber" then
+         equip_cores(p, "Tricon Naga Mk9 Engine", "Milspec Orion 5501 Core System", "Schafer & Kane Light Combat Plating")
          use_primary    = rnd.rnd(1,2)
          use_secondary  = nhigh - use_primary
          addWeapons( equip_forwardEmpLow(), use_primary )
          addWeapons( equip_rangedEmp(), use_secondary )
          medium         = equip_mediumLow()
          low            = equip_lowLow()
-         equip_cores(p, "Tricon Naga Mk9 Engine", "Milspec Orion 5501 Core System", "Schafer & Kane Light Combat Plating")
 
       end
 
@@ -102,18 +102,19 @@ function equip_empireMilitary( p, shipsize )
       
       -- Corvette
       if class == "Corvette" then
+         equip_cores(p, "Tricon Centaur Mk7 Engine", "Milspec Orion 8801 Core System", "Schafer & Kane Medium Solar Plating")
          use_secondary  = rnd.rnd(1,2)
          use_primary    = nhigh - use_secondary
          addWeapons( equip_forwardEmpMed(), use_primary )
          addWeapons( equip_secondaryEmp(), use_secondary )
          medium         = equip_mediumMed()
          low            = equip_lowMed()
-         equip_cores(p, "Tricon Centaur Mk7 Engine", "Milspec Orion 8801 Core System", "Schafer & Kane Medium Solar Plating")
 
       end
 
       -- Destroyer
       if class == "Destroyer" then
+         equip_cores(p, "Tricon Centaur Mk7 Engine", "Milspec Orion 8801 Core System", "Schafer & Kane Medium Combat Plating Gamma")
          use_secondary  = rnd.rnd(1,2)
          use_turrets    = nhigh - use_secondary - rnd.rnd(1,2)
          use_forward    = nhigh - use_secondary - use_turrets
@@ -122,12 +123,12 @@ function equip_empireMilitary( p, shipsize )
          addWeapons( equip_forwardEmpMed(), use_forward )
          medium         = equip_mediumMed()
          low            = equip_lowMed()
-         equip_cores(p, "Tricon Centaur Mk7 Engine", "Milspec Orion 8801 Core System", "Schafer & Kane Medium Combat Plating Gamma")
 
       end
 
    else -- "large"
       -- TODO: Divide into carrier and cruiser classes.
+      equip_cores(p, "Tricon Harpy Mk11 Engine", "Milspec Orion 9901 Core System", "Schafer & Kane Heavy Combat Plating Gamma")
       use_secondary  = 2
       if rnd.rnd() > 0.4 then -- Anti-fighter variant.
          use_turrets    = nhigh - use_secondary - rnd.rnd(2,3)
@@ -140,7 +141,6 @@ function equip_empireMilitary( p, shipsize )
       addWeapons( equip_secondaryEmp(), use_secondary )
       medium         = equip_mediumHig()
       low            = equip_lowHig()
-      equip_cores(p, "Tricon Harpy Mk11 Engine", "Milspec Orion 9901 Core System", "Schafer & Kane Heavy Combat Plating Gamma")
 
    end
 
