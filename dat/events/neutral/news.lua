@@ -398,7 +398,7 @@ function add_header(faction)
    remove_header('Generic')
 
    if header_table[faction] == nil then
-      print( 'News: Faction \''..faction..'\' does not have entry in faction table!' )
+      warn( 'News: Faction \''..faction..'\' does not have entry in faction table!' )
       faction = 'Generic'
    end
 
