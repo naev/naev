@@ -147,7 +147,7 @@ function countLaunch ()
 end
 function launchSatellite ()
 
-   articles[1][4]=time.get()+time.get(0,3,0)
+   articles[1][4]=time.get()+time.create(0,3,0)
    news.add(articles)
 
 
