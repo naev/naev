@@ -11,6 +11,8 @@ else --default english
 
    header_table={}
 
+   header_table["Generic"] =     {"We bring you the latest news in the galaxy"
+                                 }
    header_table["Independent"] = {"Welcome to Universal News Feed. All the headlines all the time."
                                  }
    header_table["Empire"] =      {"Welcome to the Empire News Centre."
@@ -23,6 +25,10 @@ else --default english
                                  }
    header_table["Sirius"] =      {"Sirius News Reel. Words of the Sirichana for all."
                                  }
+   header_table["FLF"] =         {"The word of the Free Resistance"
+                                 }
+   header_table["Frontier"] =    {"News from the Frontier Alliance"
+                                 }
    header_table["Proteron"] =    {"Word from the Proteron state"
                                  }
    header_table["Za'lek"] =      {"Scientific, Socioeconomic, and Sundry Events"
@@ -30,6 +36,8 @@ else --default english
 
    greet_table={}
 
+   greet_table["Generic"] =      {""
+                                 }
    greet_table["Independent"] =  {""
                                  }
    greet_table["Empire"] =       {"Fresh news from around the Empire.",
@@ -45,11 +53,16 @@ else --default english
                                  "On top of the world.",
                                  "Piracy has never been better."
                                  }
-   greet_table["Sirius"] =       {""
+   greet_table["FLF"] =          {""
+                                 }
+   greet_table["Frontier"] =     {"News you can trust"
+                                 }
+   greet_table["Sirius"] =       {"Stay faithful",
+                                 "Sirichana watches and guides you"
                                  }
    greet_table["Proteron"] =     {""
                                  }
-   greet_table["Za'lek"] =        {""
+   greet_table["Za'lek"] =       {""
                                  }
 
    articles={}
@@ -351,8 +364,9 @@ else --default english
          desc = "The Emperor's daughter was recently gifted a cat. Cat could be named \"Snuggles\" and seems to be all white."
       }
    }
-
    articles["Independent"]={}
+   articles["FLF"]={}
+   articles["Frontier"]={}
    articles["Proteron"]={}
    articles["Za'lek"]={}
 
@@ -381,9 +395,11 @@ end
 
 function add_header(faction)
 
+   remove_header('Generic')
+
    if header_table[faction] == nil then
-      warn( 'News: Faction \''..faction..'\' does not have entry in faction table!' )
-      faction = 'Independent'
+      print( 'News: Faction \''..faction..'\' does not have entry in faction table!' )
+      faction = 'Generic'
    end
 
    header=header_table[faction][1]
@@ -402,7 +418,6 @@ function remove_header(faction)
       for _,v0 in ipairs(header_table[faction]) do
          if v:title()==v0 then
             v:rm()
-            return 1
          end
       end
 
