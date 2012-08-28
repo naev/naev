@@ -67,7 +67,7 @@ function equip_empireMilitary( p, shipsize )
 
       -- Scout
       if class == "Scout" then
-         equip_cores(p, "Tricon Naga Mk9 Engine", "Milspec Orion 5501 Core System", "Schafer & Kane Light Stealth Plating")
+         equip_cores(p, "Tricon Naga Mk9 Engine", "Milspec Orion 3701 Core System", "Schafer & Kane Light Stealth Plating")
          use_primary    = rnd.rnd(1,#nhigh)
          addWeapons( equip_forwardLow(), use_primary )
          medium         = { "Generic Afterburner", "Milspec Scrambler" }
@@ -76,7 +76,7 @@ function equip_empireMilitary( p, shipsize )
 
       -- Fighter
       elseif class == "Fighter" then
-         equip_cores(p, "Tricon Naga Mk9 Engine", "Milspec Orion 5501 Core System", "Schafer & Kane Light Stealth Plating")
+         equip_cores(p, "Tricon Naga Mk9 Engine", "Milspec Orion 3701 Core System", "Schafer & Kane Light Stealth Plating")
          use_primary    = nhigh-1
          use_secondary  = 1
          addWeapons( equip_forwardEmpMed(), use_primary )
@@ -87,7 +87,7 @@ function equip_empireMilitary( p, shipsize )
 
       -- Bomber
       elseif class == "Bomber" then
-         equip_cores(p, "Tricon Naga Mk9 Engine", "Milspec Orion 5501 Core System", "Schafer & Kane Light Combat Plating")
+         equip_cores(p, "Tricon Naga Mk9 Engine", "Milspec Orion 3701 Core System", "Schafer & Kane Light Combat Plating")
          use_primary    = rnd.rnd(1,2)
          use_secondary  = nhigh - use_primary
          addWeapons( equip_forwardEmpLow(), use_primary )
@@ -102,7 +102,7 @@ function equip_empireMilitary( p, shipsize )
       
       -- Corvette
       if class == "Corvette" then
-         equip_cores(p, "Tricon Centaur Mk7 Engine", "Milspec Orion 8801 Core System", "Schafer & Kane Medium Solar Plating")
+         equip_cores(p, "Tricon Centaur Mk7 Engine", "Milspec Orion 5501 Core System", "Schafer & Kane Medium Solar Plating")
          use_secondary  = rnd.rnd(1,2)
          use_primary    = nhigh - use_secondary
          addWeapons( equip_forwardEmpMed(), use_primary )
@@ -114,7 +114,7 @@ function equip_empireMilitary( p, shipsize )
 
       -- Destroyer
       if class == "Destroyer" then
-         equip_cores(p, "Tricon Centaur Mk7 Engine", "Milspec Orion 8801 Core System", "Schafer & Kane Medium Combat Plating Gamma")
+         equip_cores(p, "Tricon Centaur Mk7 Engine", "Milspec Orion 5501 Core System", "Schafer & Kane Medium Combat Plating Gamma")
          use_secondary  = rnd.rnd(1,2)
          use_turrets    = nhigh - use_secondary - rnd.rnd(1,2)
          use_forward    = nhigh - use_secondary - use_turrets
