@@ -1076,6 +1076,9 @@ static void ai_create( Pilot* pilot, char *param )
       }
    }
 
+   /* Since the pilot changes outfits and cores, we must heal him up. */
+   pilot_healLanded( pilot );
+
 #if DEBUGGING
    if (errf)
       lua_pop(L,1);
@@ -1085,7 +1088,7 @@ static void ai_create( Pilot* pilot, char *param )
    if (pilot->ai == NULL)
       return;
 
-   /* Prepare AI. */
+   /* Prepare AI (this sets cur_pilot among others). */
    ai_setPilot( pilot );
 
    L = cur_pilot->ai->L;
