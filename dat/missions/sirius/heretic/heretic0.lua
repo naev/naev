@@ -92,9 +92,8 @@ function land ()
       tk.msg(misn_title,emsg[1])
       tk.msg(misn_title,emsg[2])
       player.pay(reward)
-      misn.cargoRm(small_arms)
-      faction.modPlayer("Sirius",-4) --this mission was an act against sirius, and we want sirius to not like us a little bit.
-      faction.modPlayer("Nasin",4) --nasin rep is used in mission rewards, and I am trying to avoid having the pay skyrocket.
+      misn.cargoRm(small_arms) --this mission was an act against sirius, and we want sirius to not like us a little bit.
+      faction.modPlayer("Nasin",3) --nasin rep is used in mission rewards, and I am trying to avoid having the pay skyrocket.
       var.push("heretic_misn_tracker",1) --using "misn_tracker", as later on in-game, i plan on having multiple arcs to the ending.
       misn.osdDestroy()
       misn.finish( true )

@@ -31,7 +31,7 @@ chooser[4] = [[You brace yourself as Draga appears ready to attack. He waives hi
 			You walk away insulted, but strangely curious.]]
 --message at the end
 emsg_1 = [[You land, having destroyed the small recon force. Draga is in the hanger, waiting for you.
-			"Good job on losing the diapers! That wasn't so bad, was it? Heres your payment, meet me in the bar soon."]]
+			"Good job on proving yourself more than a delivery boy! That wasn't so bad, was it? Heres your payment, meet me in the bar soon."]]
 --mission osd
 osd = {}
 osd[1] = "Destroy the Sirius fighter element."
@@ -62,7 +62,7 @@ function create()
    nasin_rep = faction.playerStanding("Nasin")
    misn_tracker = var.peek("heretic_misn_tracker")
    playername = tostring(player.name())
-   reward = (math.floor(10000 + (rnd.rnd(5,8)*200) * (nasin_rep^1.4)) * 0.01 + 0.5)/0.01
+   reward = math.floor((10000+(math.random(5,8)*200)*(rep^1.315))*.01+.5)/.01
    chronic = 0
    finished = 0
    takeoff_counter = 0

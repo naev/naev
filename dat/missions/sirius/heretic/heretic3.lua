@@ -18,11 +18,11 @@ bmsg[3] = [[Draga leans back and smiles ruefully.
 --messages for the choice
 bmsgc = {}
 bmsgc[1] = [[He snorts derisively at your question.
-			"Why, I mean you will no longer be welcome amongst the Nasin. At least, as a pilot. And, as a confirmed anti-Sirichana, you would have a bounty placed on your head."]]
+			"Why, I mean you will no longer be welcome amongst the Nasin. At least, as a pilot."]]
 bmsgc[2] = [[Sorrow fills Draga's eyes at the question.
 			"Unfortunately, House Sirius and those claiming to represent Sirichana feel that we are a band of heretics out to destroy the Sirius way of life. We aren't out to destroy it, but rather to bring it to completion. They have decided that we need to be eliminated."]]
 bmsgc[3] = [[Draga eyes you. You can tell he doesn't like the question.
-			"Again with the money, %s? You know, I'd much prefer it if you were just loyal enough to not worry about the money. We will always pay you good. We take care of our own. We can pay you %s. I hope its good enough"]]
+			"You really like the money, %s? You know, I'd much prefer it if you were just loyal enough to not worry about the money. We will always pay you good. We take care of our own. We can pay you %s. I hope its good enough"]]
 bmsgc[4] = [[Draga is quite excited at the news, and the surrounding officers mumble their approval. "Great! You should hurry up and take off, we are expecting them any second now. We already have one defensive element in space."]]
 bmsgc[5] = [[Obviously annoyed beyod belief, Draga doesn't say a word. He makes a shooing guesture with his hand, and doesn't even look as you go.]]
 draga_chooser = [[Draga looks at you impatiently. "Any more questions or can we get going?"]]
@@ -61,7 +61,7 @@ time_to_come_home = [[Your comm squeaks as the voice of Draga comes onto the cha
 function create()
    nasin_rep = faction.playerStanding("Nasin")
    misn_tracker = var.peek( "heretic_misn_tracker" )
-   reward = (math.floor(10000 + (rnd.rnd(5,8)*200) * (nasin_rep^1.4)) * 0.01 + 0.5)/0.01
+   reward = math.floor((10000+(math.random(5,8)*200)*(rep^1.315))*.01+.5)/.01
    planding = 0
    homesys = system.cur()
    homeasset = planet.cur()
@@ -79,6 +79,7 @@ function create()
    osd[1] = osd[1]:format( tostring( homeasset ) )
    osd[2] = osd[2]:format( tostring( homeasset ) )
    misn_desc = misn_desc:format( tostring(homesys) )
+   time_to_come_home = time_to_come_home:format(tostring(player.name()))
 end
 
 function accept()
@@ -154,9 +155,8 @@ function flee(pilot)
          end
       end
    end
-   if deathcounter > 8 and msg_checker == nil then
+   if deathcounter == 9 then
       tk.msg( misn_title , return_to_base_msg )
-      msg_checker = 1
       returnchecker = 1
       misn.osdActive( 2 )
       tk.msg( misn_title , time_to_come_home )

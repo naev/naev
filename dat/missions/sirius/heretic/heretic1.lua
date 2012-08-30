@@ -45,7 +45,7 @@ function create()
    --create some mission variables
    nasin_rep = faction.playerStanding("Nasin")
    misn_tracker = var.peek("heretic_misn_tracker") --we use this at the end.
-   reward = (math.floor(10000 + (rnd.rnd(5,8)*200) * (nasin_rep^1.4)) * 0.01 + 0.5)/0.01 --using the actual reward algorithm now.
+   reward = math.floor((10000+(math.random(5,8)*200)*(rep^1.315))*.01+.5)/.01 --using the actual reward algorithm now.
    targetasset = planet.get("The Wringer")
    targetsystem = system.get("Suna")
    playername = tostring(player.name())
@@ -94,8 +94,7 @@ function landing()
       player.pay(reward)
       misn.cargoRm(message)
       misn_tracker = misn_tracker + 1
-      faction.modPlayer("Sirius",-5) --once again, sirius doesn't like the fact that we are helping the nasin.
-      faction.modPlayer("Nasin",4) --once again, the nasin like the fact that we are helping the nasin.
+      faction.modPlayer("Nasin",3) --once again, the nasin like the fact that we are helping the nasin.
       var.push("heretic_misn_tracker",misn_tracker)
       misn.osdDestroy()
       misn.finish(true)
