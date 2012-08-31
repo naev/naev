@@ -59,145 +59,155 @@ misn_desc = [[A Sirius assault fleet has just jumped into %s. Destroy this fleet
 time_to_come_home = [[Your comm squeaks as the voice of Draga comes onto the channel. "%s! This is a lot larger of an assault than we thought. There is no way that we can handle this. We need you to get back to the station now! We are evacuating!" The comm goes silent, and you start heading back.]]
 
 function create()
+   --this mission makes one mission claim, in suna.
+   --initialize your variables
    nasin_rep = faction.playerStanding("Nasin")
-   misn_tracker = var.peek( "heretic_misn_tracker" )
+   misn_tracker = var.peek("heretic_misn_tracker")
    reward = math.floor((10000+(math.random(5,8)*200)*(rep^1.315))*.01+.5)/.01
    planding = 0
    homesys = system.cur()
    homeasset = planet.cur()
-   deathcounter = 0
    msg_checker = 0
+   --set the mission stuff
+   if not misn.claim(homesys) then
+      tk.msg("debug","system not claimed! mission aborting.")
+      mission.finish(false)
+   end
    misn.setReward( reward )
    misn.setTitle( misn_title )
-   misn.setNPC( npc_name , "neutral/thief2" )
-   misn.setDesc( bar_desc )
-      
-   bmsg[1] = bmsg[1]:format( tostring( player.name() ) )
-   bmsgc[3] = bmsgc[3]:format( tostring( player.name() ) , tostring( reward ) )
-   emsg[1] = emsg[1]:format( tostring( player.name() ) )
-   return_to_base_msg = return_to_base_msg:format( tostring( player.name() ) , tostring( homeasset ) )
-   osd[1] = osd[1]:format( tostring( homeasset ) )
-   osd[2] = osd[2]:format( tostring( homeasset ) )
-   misn_desc = misn_desc:format( tostring(homesys) )
+   misn.setNPC(npc_name,"neutral/thief2")
+   misn.setDesc(bar_desc)
+   --format your strings, yo!   
+   bmsg[1] = bmsg[1]:format(tostring(player.name()))
+   bmsgc[3] = bmsgc[3]:format(tostring(player.name()),tostring(reward))
+   emsg[1] = emsg[1]:format(tostring(player.name()))
+   return_to_base_msg = return_to_base_msg:format(tostring(player.name()),tostring(homeasset))
+   osd[1] = osd[1]:format(tostring(homeasset))
+   osd[2] = osd[2]:format(tostring(homeasset))
+   misn_desc = misn_desc:format(tostring(homesys))
    time_to_come_home = time_to_come_home:format(tostring(player.name()))
 end
 
 function accept()
-   tk.msg( misn_title , bmsg[1] )
-   tk.msg( misn_title , bmsg[2] )
-   while true do
+   tk.msg(misn_title,bmsg[1])
+   tk.msg(misn_title,bmsg[2])
+   while true do --another complicated convo!
       if checker == nil then
-         chooser = tk.choice( misn_title , bmsg[3] , choice[1] , choice[2] , choice[3] , choice[4] , choice[5] )
+         chooser = tk.choice(misn_title,bmsg[3],choice[1],choice[2],choice[3],choice[4],choice[5])
       else
-         chooser = tk.choice( misn_title , draga_chooser , choice[1] , choice[2] , choice[3] , choice[4] , choice[5] )
+         chooser = tk.choice(misn_title,draga_chooser,choice[1],choice[2],choice[3],choice[4],choice[5])
       end
       if chooser == 1 or chooser == 2 or chooser == 3 or chooser == 4 then
-         tk.msg( misn_title , bmsgc[chooser] )
+         tk.msg(misn_title,bmsgc[chooser])
          if chooser == 3 and rep_check == nil then
-            faction.modPlayer("Nasin",-5)
-            rep_check = 1
+            faction.modPlayer("Nasin",-5) --the nasin prefer loyalty to them over money. rep hurt if player asks about pay.
+            rep_check = 1 --makes sure the rep hit only comes once.
          end
       if chooser == 4 then
          break
          end
       else
-         tk.msg( misn_title , bmsgc[chooser] )
-         misn.finish( false )
+         tk.msg(misn_title,bmsgc[chooser])
+         misn.finish(false)
          break
       end
-      checker = "you been through one time, yo!"
+      checker = "you been through one time, yo!" --makes sure the intro message to the convos only comes in once
    end
-   misn.setDesc(misn_desc)
+
+
+   misn.setDesc(misn_desc) --convo is over! time to set the last of the mission stuff
    misn.accept()
    misn.markerAdd(homesys,"plot")
-   misn.osdCreate( misn_title, osd )
-   misn.osdActive( 1 )
-   hook.takeoff( "takeoff" )
-   hook.jumpin( "out_sys_failure" )
-   hook.land( "return_to_base" )
+   misn.osdCreate(misn_title,osd)
+   misn.osdActive(1)
+
+   --hook time.
+   hook.takeoff("takeoff")
+   hook.jumpin("out_sys_failure")
+   hook.land("return_to_base")
 end
 
-function takeoff ()
-   pilot.clear()
-   pilot.toggleSpawn( "Sirius" , false )
-   sirius_be_serious = pilot.add("Sirius Assault Force" , sirius , system.get("Herakin") )
+function takeoff() --for when the player takes off from the wringer.
+   pilot.clear() --clearing out all the pilots, and
+   pilot.toggleSpawn("Sirius",false) --making the sirius not spawn. I want the assault fleet the only sirius in there.
+   sirius_be_serious = pilot.add("Sirius Assault Force",sirius,system.get("Herakin"))
    for i,pilot in ipairs(sirius_be_serious) do
       pilot:setHilight()
       pilot:setNoJump()
       pilot:setNoLand()
-      pilot:setHostile()
+      pilot:setHostile() --just in case. makes thing easier.
    end
-      de_fence = pilot.add("Nasin Med Defense Fleet" , nil , homeasset)
-      de_fence_2 = pilot.add("Nasin Med Defense Fleet" , nil , vec2.new(rnd.rnd(25,75),rnd.rnd(100,350)))
+      de_fence = pilot.add("Nasin Med Defense Fleet",nil,homeasset)
+      de_fence_2 = pilot.add("Nasin Med Defense Fleet",nil,vec2.new(rnd.rnd(25,75),rnd.rnd(100,350)))
    for i,pilot in ipairs(de_fence) do
       pilot:setNoJump()
       pilot:setNoLand()
-      pilot:setFriendly()
+      pilot:setFriendly() --the green more clearly defines them as allies.
    end
    for i,pilot in ipairs(de_fence_2) do
       pilot:setNoJump()
       pilot:setNoLand()
       pilot:setFriendly( true )
    end
-   hook.pilot( nil , "death" , "flee" )
-   hook.timer( 90000 , "second_coming" )
-   hook.timer( 97000 , "second_coming" )
-   hook.timer( 145000 , "second_coming" )
+   hook.pilot(nil,"death","flee")
+   hook.timer(90000,"second_coming") --i wanted the player to feel some hope that he'd win, but have that hope come crashing down.
+   hook.timer(97000,"second_coming")
+   hook.timer(145000,"second_coming")
 end
 
 function flee(pilot)
-   for i,v in ipairs( sirius_be_serious ) do 
+   for i,v in ipairs(sirius_be_serious) do 
       if v == pilot then
          if deathcounter == nil then
-         deathcounter = 1
+         deathcounter = 1 --create deathcounter
          else
          deathcounter = deathcounter + 1
          end
       end
    end
-   if deathcounter == 9 then
-      tk.msg( misn_title , return_to_base_msg )
-      returnchecker = 1
-      misn.osdActive( 2 )
-      tk.msg( misn_title , time_to_come_home )
+   if deathcounter == 9 then --9 ships is all the ships in the first fleet minus the 2 cruisers and the carrier. might adjust this later.
+      tk.msg(misn_title,return_to_base_msg)
+      returnchecker = 1 --used to show that deathcounter has been reached, and that the player is landing 'just because'
+      misn.osdActive(2)
+      tk.msg(misn_title,time_to_come_home)
    end
 end
 
-function out_sys_failure ()
-   tk.msg( misn_title , oos_failure )
+function out_sys_failure() --feel like jumping out? AWOL! its easier this way. trust me.
+   tk.msg(misn_title,oos_failure) 
    misn.osdDestroy()
-   misn.finish( false )
+   misn.finish(false)
 end
 
-function second_coming ()
-   sirius_be_serious_2 = pilot.add("Sirius Assault Force", sirius , system.get("Herakin") )
+function second_coming()
+   sirius_be_serious_2 = pilot.add("Sirius Assault Force",sirius,system.get("Herakin"))
    for i,pilot in ipairs(sirius_be_serious_2) do
-      table.insert( sirius_be_serious , pilot )
+      table.insert(sirius_be_serious,pilot) --inserting into the original table, for the death function.
       pilot:setHilight()
       pilot:setNoJump()
       pilot:setNoLand()
-      pilot:setHostile( true )
+      pilot:setHostile(true)
    end
 end
 
-function return_to_base ()
-   if returnchecker ~= 1 then
-      tk.msg( misn_title , p_landing )
+function return_to_base()
+   if returnchecker ~= 1 then --feel like landing early? AWOL!
+      tk.msg(misn_title,p_landing)
       misn.osdDestroy()
-      misn.finish( false )
+      misn.finish(false) --mwahahahahaha!
    else
-      player.pay( reward )
-      tk.msg( misn_title , emsg[1] )
+      player.pay(reward)
+      tk.msg(misn_title,emsg[1])
       misn_tracker = misn_tracker + 1
-      faction.modPlayer( "Nasin" , 4 )
-      faction.modPlayer( "Sirius" , -5)
-      var.push( "heretic_misn_tracker" , misn_tracker )
+      faction.modPlayer("Nasin",4)
+      faction.modPlayer("Sirius",-5)
+      var.push("heretic_misn_tracker",misn_tracker)
       misn.osdDestroy()
-      misn.finish( true )
+      misn.finish(true)
    end
 end
 
-function abort ()
+function abort()
    misn.osdDestroy()
-   misn.finish( false )
+   misn.finish(false)
 end

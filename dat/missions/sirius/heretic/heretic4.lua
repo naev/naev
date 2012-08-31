@@ -13,7 +13,7 @@ lang = naev.lang()
 --beginning messages
 bmsg = {}
 bmsg[1] = [[You run up to Draga, who has a look of desperation on his face. He talks to you with more than a hint of urgency.
-			"We need to go, now. The Sirius are overwhelming us, and are about to finish us off. Will you take me and as many Nasin as you can carry to %s in %s?"]]
+			"We need to go, now. The Sirius are overwhelming us, and are about to finish us off. Will you take me and as many Nasin as you can carry to %s in %s? I swear, if you abort this and jettison those people into space, I will hunt you down and destroy you."]]
 bmsg[2] = [[You lead Draga out of the bar and into your landing bay. Refugees are milling about, hoping to get aboard some ship or another. Draga asks you what your tonnage is, and begins directing people on board. Panic erupts when gunfire breaks out on the far end of the bay.]]
 bmsg[3] = [[As the gunfire got nearer, Draga yells at you to get the ship going and take off. As you get in the cabin and begin rising into the air you see Draga running back into the bay to help a woman run with her children to a small inter-planetary skiff. Some Sirius soldiers run and catch up with him, giving him three shots in the chest. The last thing you see as you take off was Draga in a pool of blood, and the woman being dragged off by the soldiers. You rocket out of there, and begin prepping to get those people to safety.]]
 
@@ -35,62 +35,67 @@ npc_name = "Draga"
 bar_desc = "Draga is running around, helping the few Nasin in the bar to get stuff together and get out."
 misn_desc = "Assist the Nasin refugees by flying to %s in %s, and unloading them there."
 
-function create ()
+function create()
+   --this mission make no system claims.
+   --initalize your variables
    nasin_rep = faction.playerStanding("Nasin")
-   misn_tracker = var.peek( "heretic_misn_tracker" )
+   misn_tracker = var.peek("heretic_misn_tracker")
    reward = math.floor((10000+(math.random(5,8)*200)*(rep^1.315))*.01+.5)/.01
    homeasset = planet.cur()
-   targetasset = planet.get( "Ulios" )
-   targetsys = system.get( "Ingot" )
-   free_cargo = pilot.cargoFree( pilot.player() )
-   people_carried =  ( 16 * free_cargo ) + 7 --average weight per person is 62kg. one ton / 62 is 16.
-      
-   misn.setNPC( npc_name , "neutral/thief2" )
-   misn.setDesc( bar_desc )
+   targetasset = planet.get("Ulios")
+   targetsys = system.get("Ingot") --this will be the new HQ for the nasin in the next part.
+   free_cargo = pilot.cargoFree(pilot.player())
+   people_carried =  (16 * free_cargo) + 7 --average weight per person is 62kg. one ton / 62 is 16. added the +7 for ships with 0 cargo.
+   --set some mission stuff
+   misn.setNPC(npc_name,"neutral/thief2")
+   misn.setDesc(bar_desc)
    misn.setTitle = misn_title
    misn.setReward = reward
-
-   bmsg[1] = bmsg[1]:format( tostring( targetasset ) , tostring( targetsys ) )
-   emsg[1] = emsg[1]:format( tostring( targetasset) )
-   osd[1] = osd[1]:format( tostring( targetasset ) , tostring( targetsys ) )
-   abort_msg = abort_msg:format( tonumber( people_carried ) )
-   misn_desc = misn_desc:format( tostring( targetasset ) , tostring( targetsys ))
+   --format your strings, yo!
+   bmsg[1] = bmsg[1]:format(tostring(targetasset),tostring(targetsys))
+   emsg[1] = emsg[1]:format(tostring(targetasset))
+   osd[1] = osd[1]:format(tostring(targetasset),tostring(targetsys))
+   abort_msg = abort_msg:format(tonumber(people_carried))
+   misn_desc = misn_desc:format(tostring(targetasset),tostring(targetsys))
 end
 
-function accept ()
-   if not tk.yesno( misn_title , bmsg[1] ) then
+function accept()
+   --inital convo. Kept it a yes no to help with the urgent feeling of the situation.
+   if not tk.yesno(misn_title,bmsg[1]) then
       misn.finish (false)
    end
    misn.setDesc(misn_desc)
-   tk.msg( misn_title , bmsg[2] )
-   tk.msg( misn_title , bmsg[3])
+   tk.msg(misn_title,bmsg[2])
+   tk.msg(misn_title,bmsg[3])
+   --convo over. time to finish setting the mission stuff.
    misn.accept()
-   misn.osdCreate( misn_title , osd )
-   misn.osdActive( 1 )
+   misn.osdCreate(misn_title,osd)
+   misn.osdActive(1)
    misn.markerAdd(targetsys,"plot")
-   refugees = misn.cargoAdd( "Refugees" , free_cargo )
-   hook.takeoff( "takeoff")
-   hook.jumpin( "attacked" )
-   hook.jumpout( "lastsys" )
-   hook.land( "misn_over" )
+   refugees = misn.cargoAdd("Refugees",free_cargo)
+   --get the hooks.
+   hook.takeoff("takeoff")
+   hook.jumpin("attacked")
+   hook.jumpout("lastsys")
+   hook.land("misn_over")
 end
 
-function takeoff ()
-   pilot.add( "Sirius Assault Force" , sirius , vec2.new(rnd.rnd(-450,450),rnd.rnd(-450,450)) )
-   pilot.add( "Sirius Assault Force" , sirius , vec2.new(rnd.rnd(-450,450),rnd.rnd(-450,450)) )
-   pilot.add( "Sirius Assault Force" , sirius , vec2.new(rnd.rnd(-450,450),rnd.rnd(-450,450)) )
-   pilot.add( "Nasin Sml Civilian" , nil , homeasset )
-   pilot.add( "Nasin Sml Civilian" , nil , homeasset )
-   pilot.add( "Nasin Sml Civilian" , nil , homeasset )
-   pilot.add( "Nasin Sml Attack Fleet" , nil , homeasset )
-   pilot.add( "Nasin Sml Attack Fleet" , nil , homeasset )
+function takeoff()
+   pilot.add("Sirius Assault Force",sirius,vec2.new(rnd.rnd(-450,450),rnd.rnd(-450,450))) --left over fleets from the prior mission.
+   pilot.add("Sirius Assault Force",sirius,vec2.new(rnd.rnd(-450,450),rnd.rnd(-450,450)))
+   pilot.add("Sirius Assault Force",sirius,vec2.new(rnd.rnd(-450,450),rnd.rnd(-450,450)))
+   pilot.add("Nasin Sml Civilian",nil,homeasset) --other escapees.
+   pilot.add("Nasin Sml Civilian",nil,homeasset)
+   pilot.add("Nasin Sml Civilian",nil,homeasset)
+   pilot.add("Nasin Sml Attack Fleet",nil,homeasset) --these are trying to help.
+   pilot.add("Nasin Sml Attack Fleet",nil,homeasset)
 end
 
 function lastsys()
    last_sys_in = system.cur()
 end
 
-function attacked ()
+function attacked() --several systems where the sirius have 'strategically placed' an assault fleet to try and kill some nasin.
    dangersystems = {
    system.get("Neon"),
    system.get("Pike"),
@@ -106,36 +111,36 @@ function attacked ()
    }
    for i,sys in ipairs(dangersystems) do
       if system.cur() == sys then
-         pilot.add( "Sirius Assault Force" , sirius , vec2.new(rnd.rnd(-300,300),rnd.rnd(-300,300)))
+         pilot.add("Sirius Assault Force",sirius,vec2.new(rnd.rnd(-300,300),rnd.rnd(-300,300)))
       end
    end
-   local chance_help , chance_civvie = rnd.rnd(1,3) , rnd.rnd(1,3)
+   local chance_help,chance_civvie = rnd.rnd(1,3),rnd.rnd(1,3) --attack fleet and civvies are meant as a distraction to help the player.
    if chance_help == 1 then
-      pilot.add( "Nasin Sml Attack Fleet" , nil, last_sys_in )
+      pilot.add("Nasin Sml Attack Fleet",nil,last_sys_in)
    end
    for i = 1,chance_civvie do
       pilot.add("Nasin Sml Civilian",nil,last_sys_in)
    end
 end
 
-function misn_over ()
-   if planet.cur() == planet.get( "Ulios" ) then
-   tk.msg( misn_title , emsg[1] )
-   tk.msg( misn_title , emsg[2] )
-   player.pay( reward )
-   misn.cargoRm(refugees)
-   misn_tracker = misn_tracker + 1
-   faction.modPlayer( "Nasin" , 4)
-   faction.modPlayer( "Sirius" , -5)
-   var.push( "heretic_misn_tracker" , misn_tracker )
-   misn.osdDestroy()
-   misn.finish( true )
+function misn_over() --arent you glad thats over?
+   if planet.cur() == planet.get("Ulios") then
+      tk.msg(misn_title,emsg[1]) --introing one of the characters in the next chapter.
+      tk.msg(misn_title,emsg[2])
+      player.pay(reward)
+      misn.cargoRm(refugees)
+      misn_tracker = misn_tracker + 1
+      faction.modPlayer("Nasin",8) --big boost to the nasin, for completing the prologue
+      faction.modPlayer("Sirius",-5) --the sirius shouldn't like you. at all.
+      var.push("heretic_misn_tracker",misn_tracker)
+      misn.osdDestroy()
+      misn.finish(true)
    end
 end
 
-function abort ()
-   tk.msg( misn_title , abort_msg )
-   var.push( "heretic_misn_tracker" , -1 )
+function abort()
+   tk.msg(misn_title,abort_msg)
+   var.push("heretic_misn_tracker",-1) --if the player jettisons the peeps, the nasin will not let the player join there ranks anymore.
    misn.osdDestroy()
-   misn.finish ( true )
+   misn.finish(true)
 end
