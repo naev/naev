@@ -1,15 +1,8 @@
 --[[misn title - the patrol]]
 --[[in this mission, the player will be guarding the "high command" of the
 	nasin, the wringer/suna. house sirius is sending in recon parties.
-	the players job is to take out any and all sirius in the system.
-	next mission idea "assault on suna", where sirius does a full on frontal.
-	this leads to an intentional defeat of nasin, where the next mission is
-	to smuggle as many people as possible out of suna. next mission you
-	give messages back and forth between different factions, and begin
-	a counter assault in a different part of space, while a decoy is attacking
-	the sirius near suna.]]
+	the players job is to take out any and all sirius in the system.]]
 
---this is done
 
 lang = naev.lang()
 

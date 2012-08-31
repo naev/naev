@@ -2,8 +2,6 @@
 --[[after smuggling a small arms shipment to the an'ku system,
 	the player is asked to deliver a message to a "shady character"
 	on the wringer in the suna system.]]
-
---this is done.
 	
 lang = naev.lang()
 --all the messages before the mission starts

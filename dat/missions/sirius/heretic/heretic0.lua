@@ -1,11 +1,9 @@
 --[[misn name - the gauntlet]]--
 --[[cargo smuggle into sirius territory to assist a
-    intel mission being carried out in an'ku by the nasin.
-    recon/tactic brainstorming.
+    sabatoge mission being carried out by the nasin.
     Credits to KAHR-Alpha for the work "lackadaisically",
     and to BTAxis for the word "discombobulate"]]
 
---this is done.
     
 lang = naev.lang()
 
