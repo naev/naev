@@ -333,6 +333,7 @@
  <faction name="Nasin">
   <invisible />
   <logo>sirius</logo>
+  <standing>nasin</standing>
   <allies />
   <player>0</player>
   <enemies>
