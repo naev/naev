@@ -1098,7 +1098,7 @@ void player_think( Pilot* pplayer, const double dt )
    }
 
    /* turning taken over by PLAYER_REVERSE */
-   if (!facing && player_isFlag(PLAYER_REVERSE)) {
+   if (player_isFlag(PLAYER_REVERSE)) {
 
       /* Check to see if already stopped. */
       /*
@@ -1117,7 +1117,7 @@ void player_think( Pilot* pplayer, const double dt )
        */
       if (player.p->stats.misc_reverse_thrust)
          player_accel( -0.4 );
-      else {
+      else if (!facing){
          pilot_face( pplayer, VANGLE(player.p->solid->vel) + M_PI );
          /* Disable turning. */
          facing = 1;
