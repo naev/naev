@@ -43,7 +43,7 @@ function create()
    --create some mission variables
    nasin_rep = faction.playerStanding("Nasin")
    misn_tracker = var.peek("heretic_misn_tracker") --we use this at the end.
-   reward = math.floor((10000+(math.random(5,8)*200)*(rep^1.315))*.01+.5)/.01 --using the actual reward algorithm now.
+   reward = math.floor((10000+(math.random(5,8)*200)*(nasin_rep^1.315))*.01+.5)/.01 --using the actual reward algorithm now.
    targetasset = planet.get("The Wringer")
    targetsystem = system.get("Suna")
    playername = tostring(player.name())

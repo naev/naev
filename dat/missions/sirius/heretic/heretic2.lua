@@ -55,7 +55,7 @@ function create()
    nasin_rep = faction.playerStanding("Nasin")
    misn_tracker = var.peek("heretic_misn_tracker")
    playername = tostring(player.name())
-   reward = math.floor((10000+(math.random(5,8)*200)*(rep^1.315))*.01+.5)/.01
+   reward = math.floor((10000+(math.random(5,8)*200)*(nasin_rep^1.315))*.01+.5)/.01
    chronic = 0
    finished = 0
    takeoff_counter = 0
