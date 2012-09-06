@@ -367,9 +367,14 @@ int newsL_eq( lua_State *L )
  */
 Lua_article* luaL_validarticle( lua_State *L, int ind )
 {
+   Lua_article* Larticle;
 
    if (lua_isarticle(L, ind)) {
-      return (Lua_article*) lua_touserdata(L,ind);
+      Larticle = (Lua_article*) lua_touserdata(L,ind);
+      if (news_get(Larticle->id))
+         return Larticle;
+      else
+         NLUA_ERROR(L, "article is old");
    }
    else {
       luaL_typerror(L, ind, ARTICLE_METATABLE);
