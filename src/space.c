@@ -1491,7 +1491,7 @@ static int planets_load ( void )
    planet_files = ndata_list( PLANET_DATA_PATH, &nfiles );
    for (i=0; i<(int)nfiles; i++) {
       len  = (strlen(PLANET_DATA_PATH)+strlen(planet_files[i])+2);
-      file = malloc( len * sizeof(char) );
+      file = malloc( len );
       nsnprintf( file, len,"%s%s",PLANET_DATA_PATH,planet_files[i]);
       buf  = ndata_read( file, &bufsize );
       doc  = xmlParseMemory( buf, bufsize );
@@ -2693,7 +2693,7 @@ static int systems_load (void)
    for (i=0; i<(int)nfiles; i++) {
 
       len  = strlen(SYSTEM_DATA_PATH)+strlen(system_files[i])+2;
-      file = malloc( len * sizeof(char) );
+      file = malloc( len );
       nsnprintf( file, len, "%s%s", SYSTEM_DATA_PATH, system_files[i] );
       /* Load the file. */
       buf = ndata_read( file, &bufsize );
@@ -2727,7 +2727,7 @@ static int systems_load (void)
    for (i=0; i<(int)nfiles; i++) {
 
       len  = strlen(SYSTEM_DATA_PATH)+strlen(system_files[i])+2;
-      file = malloc( len * sizeof(char) );
+      file = malloc( len );
       nsnprintf( file, len, "%s%s", SYSTEM_DATA_PATH, system_files[i] );
       /* Load the file. */
       buf = ndata_read( file, &bufsize );

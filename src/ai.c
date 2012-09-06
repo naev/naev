@@ -727,7 +727,7 @@ static int ai_loadProfile( const char* filename )
 
    /* Set name. */
    len = strlen(filename)-strlen(AI_PATH)-strlen(AI_SUFFIX);
-   prof->name = malloc(sizeof(char)*(len+1) );
+   prof->name = malloc(len+1);
    strncpy( prof->name, &filename[strlen(AI_PATH)], len );
    prof->name[len] = '\0';
 

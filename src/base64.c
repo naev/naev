@@ -164,7 +164,7 @@ char* base64_encode( size_t *len, char *src, size_t sz )
    /* create r */
    c = sz * 4 / 3 + sz % 3 + 2;
    c += c / 76;
-   r = malloc( c * sizeof(char) );
+   r = malloc( c );
 
    /* setup padding */
    pad = ((sz % 3) == 0) ? 0 : 3 - sz % 3;
@@ -217,11 +217,11 @@ char* base64_decode( size_t *len, char *src, size_t sz )
 
    /* allocate r */
    c = sz * 3 / 4 + 2;
-   r = malloc( c * sizeof(char) );
+   r = malloc( c );
 
    /* create a clean version of the text */
    pad = 0;
-   dat = malloc( sz * sizeof(char) );
+   dat = malloc( sz );
    j = 0;
    for (i=0; i<sz; i++) {
       if (src[i] == '=') /* control padding */

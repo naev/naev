@@ -164,7 +164,7 @@ static int nlua_packfileLoader( lua_State* L )
    else {
       /* Try to locate the data in the data path */
       len           = strlen(LUA_INCLUDE_PATH)+strlen(filename)+2;
-      path_filename = malloc( len * sizeof(char) );
+      path_filename = malloc( len );
       nsnprintf( path_filename, len, "%s%s", LUA_INCLUDE_PATH, filename );
       if (ndata_exists( path_filename ))
          buf = ndata_read( path_filename, &bufsize );

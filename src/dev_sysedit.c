@@ -395,9 +395,9 @@ static void sysedit_btnRename( unsigned int wid_unused, char *unused )
          }
 
          /* Rename. */
-         oldName = malloc((16+strlen(p->name))*sizeof(char));
+         oldName = malloc(16+strlen(p->name));
          nsnprintf(oldName,16+strlen(p->name),"dat/assets/%s.xml", uniedit_nameFilter(p->name) );
-         newName = malloc((16+strlen(name))*sizeof(char));
+         newName = malloc(16+strlen(name));
          nsnprintf(newName,16+strlen(name),"dat/assets/%s.xml", uniedit_nameFilter(name) );
          nfile_rename(oldName,newName);
          free(oldName);
@@ -427,8 +427,8 @@ static void sysedit_btnRemove( unsigned int wid_unused, char *unused )
          sel = &sysedit_select[i];
          if (sel->type == SELECT_PLANET) {
             cleanName = uniedit_nameFilter( sysedit_sys->planets[  sel->u.planet ]->name );
-            file = malloc(16+strlen(cleanName)*sizeof(char));
-            nsnprintf(file,16+strlen(cleanName)*sizeof(char),
+            file = malloc(16+strlen(cleanName));
+            nsnprintf(file,16+strlen(cleanName),
                            "dat/assets/%s.xml",cleanName);
             nfile_delete(file);
             system_rmPlanet( sysedit_sys, sysedit_sys->planets[ sel->u.planet ]->name );

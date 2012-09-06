@@ -591,7 +591,7 @@ char *uniedit_nameFilter( char *name )
    int i, pos;
    char *out;
 
-   out = calloc( 1, (strlen(name)+1) * sizeof(char) );
+   out = calloc( 1, (strlen(name)+1)  );
    pos = 0;
    for (i=0; i<(int)strlen(name); i++) {
       if (!ispunct(name[i])) {
@@ -634,7 +634,7 @@ static void uniedit_renameSys (void)
       }
 
       /* Change the name. */
-      oldName = malloc((14+strlen(sys->name))*sizeof(char));
+      oldName = malloc((14+strlen(sys->name)));
       nsnprintf(oldName,14+strlen(sys->name),"dat/ssys/%s.xml", uniedit_nameFilter(sys->name) );
       newName = malloc((14+strlen(name))*sizeof(char));
       nsnprintf(newName,14+strlen(name),"dat/ssys/%s.xml", uniedit_nameFilter(name) );
