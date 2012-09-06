@@ -71,7 +71,7 @@ function create()
    --set the mission stuff
    if not misn.claim(homesys) then
       tk.msg("debug","system not claimed! mission aborting.")
-      mission.finish(false)
+      misn.finish(false)
    end
    misn.setReward( reward )
    misn.setTitle( misn_title )
