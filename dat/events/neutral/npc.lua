@@ -274,12 +274,13 @@ end
 function getJmpMessage()
    -- Collect a table of jump points in the system the player does NOT know.
    local mytargets = {}
-   for _,j in ipairs(system.cur():jumps(true)) do
-      if not j:known() and not j:hidden() then
+   seltargets = seltargets or {} -- We need to keep track of jump points NPCs will tell the player about so there are no duplicates.
+   for _, j in ipairs(system.cur():jumps(true)) do
+      if not j:known() and not j:hidden() and not seltargets[j] then
          table.insert(mytargets, j)
       end
    end
-
+   
    if #mytargets == 0 then -- The player already knows all jumps in this system.
       return getLoreMessage(), nil
    end
@@ -295,7 +296,8 @@ function getJmpMessage()
                      mytargets[sel]:system():setKnown(true, false)
                   end
 
-   -- Don't need to remove messages from tables here.
+   -- Don't need to remove messages from tables here, but add whatever jump point we selected to the "selected" table.
+   seltargets[j] = true
    return retmsg:format(mytargets[sel]:dest():name()), myfunc
 end
 
