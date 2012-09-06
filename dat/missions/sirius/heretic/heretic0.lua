@@ -4,6 +4,7 @@
     Credits to KAHR-Alpha for the work "lackadaisically",
     and to BTAxis for the word "discombobulate"]]
 
+include "numstring.lua"
     
 lang = naev.lang()
 
@@ -55,12 +56,12 @@ function create()
    misn.setNPC(npc_name,"neutral/thief1") --using a generic picture for now.
    misn.setDesc(bar_desc)
    --format all the messages
-   bmsg[1] = bmsg[1]:format(tostring(targetasset),tostring(targetasset),tostring(targetsystem),tostring(targetasset),tostring(reward))
-   bmsg[2] = bmsg[2]:format(tostring(targetasset))
-   bmsg[3] = bmsg[3]:format(tostring(targetasset))
-   emsg[1] = emsg[1]:format(tostring(targetasset))
-   osd[1] = osd[1]:format(tostring(targetasset),tostring(targetsystem))
-   misn_desc = misn_desc:format(tostring(targetasset),tostring(targetsystem))
+   bmsg[1] = bmsg[1]:format(targetasset:name(),targetasset:name(),targetsystem:name(),targetasset:name(),numstring(reward))
+   bmsg[2] = bmsg[2]:format(targetasset:name())
+   bmsg[3] = bmsg[3]:format(targetasset:name())
+   emsg[1] = emsg[1]:format(targetasset:name())
+   osd[1] = osd[1]:format(targetasset:name(),targetsystem:name())
+   misn_desc = misn_desc:format(targetasset:name(),targetsystem:name())
 end
 
 function accept()
