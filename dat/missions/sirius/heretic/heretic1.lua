@@ -3,6 +3,8 @@
 	the player is asked to deliver a message to a "shady character"
 	on the wringer in the suna system.]]
 	
+include "numstring.lua"
+
 lang = naev.lang()
 --all the messages before the mission starts
 bmsg = {}
@@ -46,21 +48,21 @@ function create()
    reward = math.floor((10000+(math.random(5,8)*200)*(nasin_rep^1.315))*.01+.5)/.01 --using the actual reward algorithm now.
    targetasset = planet.get("The Wringer")
    targetsystem = system.get("Suna")
-   playername = tostring(player.name())
+   playername = player.name()
    --set the mission stuff
    misn.setTitle(misn_title)
    misn.setReward(reward)
    misn.setNPC(npc_name,"neutral/male1")
    misn.setDesc(bar_desc)
    --format your strings, yo!
-   bmsg[1] = bmsg[1]:format(tostring(planet.cur()))
-   bmsg[2] = bmsg[2]:format(tostring(planet.cur()))
-   bmsg[3] = bmsg[3]:format(tostring(targetasset),tostring(targetsystem),tostring(reward))
-   emsg[1] = emsg[1]:format(tostring(targetasset))
+   bmsg[1] = bmsg[1]:format(planet.cur():name())
+   bmsg[2] = bmsg[2]:format(planet.cur():name())
+   bmsg[3] = bmsg[3]:format(targetasset:name(),targetsystem:name(),numstring(reward))
+   emsg[1] = emsg[1]:format(targetasset:name())
    emsg[2] = emsg[2]:format(playername)
-   emsg[3] = emsg[3]:format(playername,tostring(reward))
-   osd[1] = osd[1]:format(tostring(targetasset),tostring(targetsystem))
-   misn_desc = misn_desc:format(tostring(targetasset),tostring(targetsystem))
+   emsg[3] = emsg[3]:format(playername,numstring(reward))
+   osd[1] = osd[1]:format(targetasset:name(),targetsystem:name())
+   misn_desc = misn_desc:format(targetasset:name(),targetsystem:name())
 end
 
 function accept()

@@ -54,7 +54,7 @@ function create()
    end
    nasin_rep = faction.playerStanding("Nasin")
    misn_tracker = var.peek("heretic_misn_tracker")
-   playername = tostring(player.name())
+   playername = player.name()
    reward = math.floor((10000+(math.random(5,8)*200)*(nasin_rep^1.315))*.01+.5)/.01
    chronic = 0
    finished = 0
@@ -68,10 +68,10 @@ function create()
    misn.setDesc(bar_desc)
    --format the messages
    bmsg[1] = bmsg[1]:format(playername)
-   chooser[2] = chooser[2]:format(tostring(homeasset),reward)
-   osd[2] = osd[2]:format(tostring(homeasset))
-   out_sys_failure_msg = out_sys_failure_msg:format(tostring(playername))
-   misn_desc = misn_desc:format(tostring(homesys))
+   chooser[2] = chooser[2]:format(homeasset:name(),reward)
+   osd[2] = osd[2]:format(homeasset:name())
+   out_sys_failure_msg = out_sys_failure_msg:format(playername)
+   misn_desc = misn_desc:format(homesys:name())
 end
 
 function accept()

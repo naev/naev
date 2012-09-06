@@ -42,7 +42,7 @@ function create()
    misn_tracker = var.peek("heretic_misn_tracker")
    reward = math.floor((10000+(math.random(5,8)*200)*(nasin_rep^1.315))*.01+.5)/.01
    homeasset = planet.cur()
-   targetasset = planet.get("Ulios")
+   targetasset targetsys = planet.get("Ulios")
    targetsys = system.get("Ingot") --this will be the new HQ for the nasin in the next part.
    free_cargo = pilot.cargoFree(pilot.player())
    people_carried =  (16 * free_cargo) + 7 --average weight per person is 62kg. one ton / 62 is 16. added the +7 for ships with 0 cargo.
@@ -52,11 +52,11 @@ function create()
    misn.setTitle = misn_title
    misn.setReward = reward
    --format your strings, yo!
-   bmsg[1] = bmsg[1]:format(tostring(targetasset),tostring(targetsys))
-   emsg[1] = emsg[1]:format(tostring(targetasset))
-   osd[1] = osd[1]:format(tostring(targetasset),tostring(targetsys))
-   abort_msg = abort_msg:format(tonumber(people_carried))
-   misn_desc = misn_desc:format(tostring(targetasset),tostring(targetsys))
+   bmsg[1] = bmsg[1]:format(targetasset:name(),targetsys:name())
+   emsg[1] = emsg[1]:format(targetasset:name())
+   osd[1] = osd[1]:format(targetasset:name(),targetsys:name())
+   abort_msg = abort_msg:format(people_carried)
+   misn_desc = misn_desc:format(targetasset:name(),targetsys:name())
 end
 
 function accept()
