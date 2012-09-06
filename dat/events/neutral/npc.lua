@@ -297,7 +297,7 @@ function getJmpMessage()
                   end
 
    -- Don't need to remove messages from tables here, but add whatever jump point we selected to the "selected" table.
-   seltargets[j] = true
+   seltargets[mytargets[sel]] = true
    return retmsg:format(mytargets[sel]:dest():name()), myfunc
 end
 
