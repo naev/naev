@@ -146,7 +146,7 @@ function takeoff() --for when the player takes off from the wringer.
       p:setNoJump()
       p:setNoLand()
       p:setFriendly() --the green more clearly defines them as allies.
-      hook.pilot(p,"death","flee")
+      hook.pilot(p,"death","death")
    end
    
    for _,p in ipairs(de_fence_2) do
