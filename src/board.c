@@ -72,8 +72,15 @@ void player_board (void)
    HookParam hparam[2];
 
    if (player.p->target==PLAYER_ID) {
-      player_message("\erYou need a target to board first!");
-      return;
+      //TODO: find nearest board-able instead of targeting the closest if board-able
+      player_targetNearest();
+      p = pilot_get(player.p->target);
+      if ((!pilot_isDisabled(p) && !pilot_isFlag(p,PILOT_BOARDABLE)) ||
+         pilot_isFlag(p,PILOT_NOBOARD)) {//TODO:fix style to conform to naev
+         player_targetClear();
+         player_message("\erYou need a target to board first!");
+         return;
+      }
    }
 
    p = pilot_get(player.p->target);
