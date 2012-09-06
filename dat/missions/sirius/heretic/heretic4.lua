@@ -13,16 +13,16 @@ lang = naev.lang()
 --beginning messages
 bmsg = {}
 bmsg[1] = [[You run up to Draga, who has a look of desperation on his face. He talks to you with more than a hint of urgency.
-			"We need to go, now. The Sirius are overwhelming us, and are about to finish us off. Will you take me and as many Nasin as you can carry to %s in %s? I swear, if you abort this and jettison those people into space, I will hunt you down and destroy you."]]
+   "We need to go, now. The Sirius are overwhelming us, they're about to finish us off. Will you take me and as many Nasin as you can carry to %s in %s? I swear, if you abort this and jettison those people into space, I will hunt you down and destroy you."]]
 bmsg[2] = [[You lead Draga out of the bar and into your landing bay. Refugees are milling about, hoping to get aboard some ship or another. Draga asks you what your tonnage is, and begins directing people on board. Panic erupts when gunfire breaks out on the far end of the bay.]]
-bmsg[3] = [[As the gunfire got nearer, Draga yells at you to get the ship going and take off. As you get in the cabin and begin rising into the air you see Draga running back into the bay to help a woman run with her children to a small inter-planetary skiff. Some Sirius soldiers run and catch up with him, giving him three shots in the chest. The last thing you see as you take off was Draga in a pool of blood, and the woman being dragged off by the soldiers. You rocket out of there, and begin prepping to get those people to safety.]]
+bmsg[3] = [[As the gunfire gets nearer, Draga yells at you to get the ship going and take off. As you get in the cabin and begin rising into the air you see Draga running back into the bay to help a woman run with her children to a small inter-planetary skiff. Some Sirius soldiers run and catch up with him, giving him three shots in the chest. The last thing you see as you take off was Draga in a pool of blood, and the woman being dragged off by the soldiers. You rocket out of there, and begin prepping to get those people to safety.]]
 
 --ending messages
 emsg = {}
 emsg[1] = [[You land on %s, and open the bay doors. You are amazed at how many people Draga had helped get into the cargo hold. You help out the last few people, who are grateful to you, and walk down into the bay. A man walks up to you.]]
 emsg[2] = [[The man offers his hand, and begins to speak. 
-			"Hello, my name is Jimmy. Thank you for helping all these people." He guestures to the refugees who are being helped by some officials. "I am grateful. I've heard about you, from Draga, and I will be forever grateful. All I can manage right now is this, so consider me in your debt."
-			He presses a credit chip in your hand, and walks away to help some refugees.]]
+   "Hello, my name is Jimmy. Thank you for helping all these people." He gestures to the refugees, who are being helped by some officials. "I am grateful. I've heard about you, from Draga, and I will be forever in your debt. All I can manage right now is this, so consider me in your debt."
+   He presses a credit chip in your hand, and walks away to help some refugees.]]
 
 --mission osd
 osd = {}
@@ -61,17 +61,19 @@ end
 function accept()
    --inital convo. Kept it a yes no to help with the urgent feeling of the situation.
    if not tk.yesno(misn_title,bmsg[1]) then
-      misn.finish (false)
+      misn.finish ()
    end
+   misn.accept()
    misn.setDesc(misn_desc)
+   misn.osdCreate(misn_title,osd)
+   misn.osdActive(1)
+   player.allowSave(false) -- so the player won't get stuck with a mission he can't complete.
    tk.msg(misn_title,bmsg[2])
    tk.msg(misn_title,bmsg[3])
    --convo over. time to finish setting the mission stuff.
-   misn.accept()
-   misn.osdCreate(misn_title,osd)
-   misn.osdActive(1)
    misn.markerAdd(targetsys,"plot")
    refugees = misn.cargoAdd("Refugees",free_cargo)
+   player.takeoff()
    --get the hooks.
    hook.takeoff("takeoff")
    hook.jumpin("attacked")
@@ -133,6 +135,7 @@ function misn_over() --arent you glad thats over?
       faction.modPlayer("Sirius",-5) --the sirius shouldn't like you. at all.
       var.push("heretic_misn_tracker",misn_tracker)
       misn.osdDestroy()
+      player.allowSave(true)
       misn.finish(true)
    end
 end
@@ -141,5 +144,6 @@ function abort()
    tk.msg(misn_title,abort_msg)
    var.push("heretic_misn_tracker",-1) --if the player jettisons the peeps, the nasin will not let the player join there ranks anymore.
    misn.osdDestroy()
+   player.allowSave(true)
    misn.finish(true)
 end
