@@ -36,7 +36,7 @@
   <logo>proteron</logo>
   <longname>Proteron</longname>
   <player>3</player>
-  <colour>purple</colour>
+  <colour>darkpurple</colour>
   <spawn>proteron</spawn>
   <standing>proteron</standing>
   <equip>empire</equip>
@@ -173,12 +173,12 @@
  <faction name="Za'lek">
   <known/>
   <logo>zalek</logo>
-  <colour>grey40</colour>
+  <colour>purple</colour>
   <longname>House Za'lek</longname>
   <player>2</player>
   <spawn>zalek</spawn>
   <standing>zalek</standing>
-  <equip>empire</equip>
+  <equip>zalek</equip>
   <allies>
   </allies>
   <enemies>

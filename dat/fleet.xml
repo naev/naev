@@ -540,7 +540,6 @@
    <pilot name="Empire Admonisher" ship="Empire Admonisher"></pilot>
   </pilots>
  </fleet>
-
  <fleet name="Za'lek Lancelot">
   <ai>zalek</ai>
   <faction>Za'lek</faction>
@@ -562,14 +561,20 @@
    <pilot name="Za'lek Pacifier" ship="Pacifier"></pilot>
   </pilots>
  </fleet>
- <fleet name="Za'lek Diablo">
+ <fleet name="Za'lek Kestrel">
   <ai>zalek</ai>
   <faction>Za'lek</faction>
   <pilots>
-   <pilot name="Za'lek Diablo" ship="Za'lek Diablo"></pilot>
+   <pilot name="Za'lek Kestrel" ship="Kestrel"></pilot>
   </pilots>
  </fleet>
- 
+ <fleet name="Za'lek Hawking">
+  <ai>zalek</ai>
+  <faction>Za'lek</faction>
+  <pilots>
+   <pilot name="Za'lek Hawking" ship="Hawking"></pilot>
+  </pilots>
+ </fleet>
  <fleet name="Trinity">
   <ai>empire</ai>
   <faction>Empire</faction>
