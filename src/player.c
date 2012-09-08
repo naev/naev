@@ -58,6 +58,7 @@
 #include "player_gui.h"
 #include "start.h"
 #include "input.h"
+#include "news.h"
 #include "nstring.h"
 
 
@@ -296,6 +297,9 @@ void player_newTutorial (void)
    /* Start the economy. */
    economy_init();
 
+   /* Start the news */
+   news_init();
+
    /* Play music. */
    music_choose( "ambient" );
 
@@ -427,6 +431,9 @@ static int player_newMake (void)
 
    /* Start the economy. */
    economy_init();
+
+   /* Start the news */
+   news_init();
 
    return 0;
 }
@@ -1091,7 +1098,7 @@ void player_think( Pilot* pplayer, const double dt )
    }
 
    /* turning taken over by PLAYER_REVERSE */
-   if (!facing && player_isFlag(PLAYER_REVERSE)) {
+   if (player_isFlag(PLAYER_REVERSE)) {
 
       /* Check to see if already stopped. */
       /*
@@ -1110,13 +1117,13 @@ void player_think( Pilot* pplayer, const double dt )
        */
       if (player.p->stats.misc_reverse_thrust)
          player_accel( -0.4 );
-      else {
+      else if (!facing){
          pilot_face( pplayer, VANGLE(player.p->solid->vel) + M_PI );
          /* Disable turning. */
          facing = 1;
       }
    }
-   else if(player.p->stats.misc_reverse_thrust && !player_isFlag(PLAYER_REVERSE) && !player_isFlag(PLAYER_ACCEL))
+   else if(player.p->stats.misc_reverse_thrust && !player_isFlag(PLAYER_REVERSE) && !player_isFlag(PLAYER_ACCEL) && !player_isFlag(PLAYER_AUTONAV))
       player_accelOver();
 
    /* normal turning scheme */
@@ -2410,7 +2417,8 @@ int player_getOutfitsFiltered( char** soutfits, glTexture** toutfits,
 
    if (player_noutfits == 0) {
       soutfits[0] = strdup( "None" );
-      toutfits[0] = NULL;
+      if (toutfits != NULL)
+         toutfits[0] = NULL;
       return 1;
    }
 
@@ -2423,7 +2431,8 @@ int player_getOutfitsFiltered( char** soutfits, glTexture** toutfits,
    for (i=0; i<player_noutfits; i++) {
       if ((filter == NULL) || filter(player_outfits[i].o)) {
          soutfits[j] = strdup( player_outfits[i].o->name );
-         toutfits[j] = player_outfits[i].o->gfx_store;
+         if (toutfits != NULL)
+            toutfits[j] = player_outfits[i].o->gfx_store;
          j++;
       }
    }
@@ -2431,7 +2440,8 @@ int player_getOutfitsFiltered( char** soutfits, glTexture** toutfits,
    /* None found. */
    if (j == 0) {
       soutfits[0] = strdup( "None" );
-      toutfits[0] = NULL;
+      if (toutfits != NULL)
+         toutfits[0] = NULL;
       return 1;
    }
 

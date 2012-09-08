@@ -881,7 +881,7 @@ char** pack_listfiles( const char* packfile, uint32_t* nfiles )
    filenames = malloc(((*nfiles)+1)*sizeof(char*));
    for (i=0; i<*nfiles; i++) { /* start to search files */
       j = 0;
-      filenames[i] = malloc(PATH_MAX*sizeof(char));
+      filenames[i] = malloc(PATH_MAX);
       READ( &file, &filenames[i][j], 1 ); /* get the name */
       while ( filenames[i][j++] != '\0' )
          READ( &file, &filenames[i][j], 1 );

@@ -23,6 +23,7 @@
 #include "nlua_naev.h"
 #include "nlua_space.h"
 #include "nlua_time.h"
+#include "nlua_news.h"
 #include "nlua_player.h"
 #include "nlua_pilot.h"
 #include "nlua_vec2.h"
@@ -111,6 +112,7 @@ int nlua_loadBasic( lua_State* L )
 
    /* Override print to print in the console. */
    lua_register(L, "print", cli_print);
+   lua_register(L, "warn",  cli_warn);
 
    /* add our own */
    lua_register(L, "include", nlua_packfileLoader);
@@ -162,7 +164,7 @@ static int nlua_packfileLoader( lua_State* L )
    else {
       /* Try to locate the data in the data path */
       len           = strlen(LUA_INCLUDE_PATH)+strlen(filename)+2;
-      path_filename = malloc( len * sizeof(char) );
+      path_filename = malloc( len );
       nsnprintf( path_filename, len, "%s%s", LUA_INCLUDE_PATH, filename );
       if (ndata_exists( path_filename ))
          buf = ndata_read( path_filename, &bufsize );
@@ -242,6 +244,7 @@ int nlua_loadStandard( lua_State *L, int readonly )
    r |= nlua_loadVector(L);
    r |= nlua_loadOutfit(L,readonly);
    r |= nlua_loadCommodity(L,readonly);
+   r |= nlua_loadNews(L,readonly);
 
    return r;
 }

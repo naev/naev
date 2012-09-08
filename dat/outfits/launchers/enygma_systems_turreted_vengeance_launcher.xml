@@ -10,7 +10,7 @@
   <cpu>-14</cpu>
  </general>
  <specific type="turret launcher" secondary="1">
-  <ammo>Headhunter Missile</ammo>
+  <ammo>Vengeance Missile</ammo>
   <delay>6</delay>
   <amount>15</amount>
   <lockon>14</lockon>

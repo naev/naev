@@ -85,7 +85,9 @@
   <item>Shield Capacitor II</item>
   <item>Shield Capacitor III</item>
   <item>Shield Capacitor IV</item>
-  <item>Shield Booster</item>
+  <item>Small Shield Booster</item>
+  <item>Medium Shield Booster</item>
+  <item>Large Shield Booster</item>
   <item>Plasteel Plating</item>
   <item>Nanobond Plating</item>
   <item>Biometal Armour</item>
@@ -95,9 +97,7 @@
   <item>Steering Thrusters</item>
   <item>Generic Afterburner</item>
   <item>Hellburner</item>
-  <item>Light Emergency Shield Booster</item>
-  <item>Medium Emergency Shield Booster</item>
-  <item>Heavy Emergency Shield Booster</item>
+  <item>Emergency Shield Booster</item>
   <item>Hidden Jump Scanner</item>
   <item>Reverse Thrusters</item>
   <item>Fuel Pod</item>
@@ -461,7 +461,7 @@
   <item>Unmodified Medium Hull</item>
   <item>Patchwork Heavy Plating</item>
   <item>Unmodified Large Hull</item>
-  <item>Light Emergency Shield Booster</item>
+  <item>Emergency Shield Booster</item>
   </tech>
  <tech name="Heavy Weapons 1">
   <item>Laser Turret MK1</item>
@@ -492,7 +492,8 @@
   <item>Solar Panel</item>
   <item>Reactor Class I</item>
   <item>Shield Capacitor</item>
-  <item>Shield Booster</item>
+  <item>Small Shield Booster</item>
+  <item>Medium Shield Booster</item>
   <item>Plasteel Plating</item>
   <item>Engine Reroute</item>
   <item>Fuel Pod</item>
@@ -504,7 +505,6 @@
   <item>Unicorp Jammer</item>
   <item>Jump Scanner</item>
   <item>Light Combat Vessel License</item>
-  <item>Medium Emergency Shield Booster</item>
  </tech>
  <tech name="High Tech Upgrades 1">
   <item>Battery</item>
@@ -514,7 +514,9 @@
   <item>Reactor Class II</item>
   <item>Shield Capacitor</item>
   <item>Shield Capacitor II</item>
-  <item>Shield Booster</item>
+  <item>Small Shield Booster</item>
+  <item>Medium Shield Booster</item>
+  <item>Large Shield Booster</item>
   <item>Plasteel Plating</item>
   <item>Nanobond Plating</item>
   <item>Engine Reroute</item>
@@ -533,8 +535,7 @@
   <item>Lancelot Fighter Bay</item>
   <item>Lancelot Fighter</item>
   <item>Medium Weapon License</item>
-  <item>Medium Emergency Shield Booster</item>
-  <item>Heavy Emergency Shield Booster</item>
+  <item>Emergency Shield Booster</item>
  </tech>
  <tech name="High Tech Upgrades 2">
   <item>Battery III</item>
@@ -554,8 +555,7 @@
   <item>Lancelot Fighter Bay</item>
   <item>Lancelot Fighter</item>
   <item>Medium Weapon License</item>
-  <item>Medium Emergency Shield Booster</item>
-  <item>Heavy Emergency Shield Booster</item>
+  <item>Emergency Shield Booster</item>
  </tech>
  <tech name="Missiles 1">
   <item>Unicorp Banshee Launcher</item>
@@ -691,10 +691,10 @@
  </tech>
  <tech name="Systems Low">
   <item>Previous Generation Small Systems</item>
-  <item>Basic Small Systems</item>
   <item>Previous Generation Medium Systems</item>
-  <item>Basic Medium Systems</item>
   <item>Previous Generation Large Systems</item>
+  <item>Basic Small Systems</item>
+  <item>Basic Medium Systems</item>
   <item>Basic Large Systems</item>
   <item>Unicorp PT-100 Core System</item>
   <item>Unicorp PT-200 Core System</item>
@@ -705,27 +705,27 @@
  </tech>
  <tech name="Systems Medium">
   <item>Unicorp RX-14 Core System</item>
-  <item>Unicorp JX-16 Core System</item>
-  <item>Unicorp EX-19 Core System</item>
   <item>Unicorp RX-26 Core System</item>
-  <item>Unicorp JX-30 Core System</item>
-  <item>Unicorp EX-24 Core System</item>
   <item>Unicorp RX-71 Core System</item>
+  <item>Unicorp JX-16 Core System</item>
+  <item>Unicorp JX-30 Core System</item>
   <item>Unicorp JX-66 Core System</item>
+  <item>Unicorp EX-19 Core System</item>
+  <item>Unicorp EX-24 Core System</item>
   <item>Unicorp EX-80 Core System</item>
  </tech>
  <tech name="Systems High">
   <item>Milspec Orion 2301 Core System</item>
   <item>Milspec Orion 2302 Core System</item>
-  <item>Milspec Gemini 2501 Core System</item>
-  <item>Milspec Taurus 2520 Core System</item>
-  <item>Milspec Vespa 2544 Core System</item>
   <item>Milspec Orion 3701 Core System</item>
   <item>Milspec Orion 3702 Core System</item>
   <item>Milspec Orion 4801 Core System</item>
   <item>Milspec Orion 4802 Core System</item>
+  <item>Milspec Gemini 2501 Core System</item>
   <item>Milspec Gemini 3308 Core System</item>
+  <item>Milspec Taurus 2520 Core System</item>
   <item>Milspec Taurus 3323 Core System</item>
+  <item>Milspec Vespa 2544 Core System</item>
   <item>Milspec Vespa 3380 Core System</item>
  </tech>
  <tech name="Systems Elite">
@@ -733,19 +733,19 @@
   <item>Milspec Orion 5502 Core System</item>
   <item>Milspec Orion 8801 Core System</item>
   <item>Milspec Orion 8802 Core System</item>
-  <item>Milspec Gemini 5050 Core System</item>
-  <item>Milspec Taurus 4909 Core System</item>
-  <item>Milspec Vespa 6114 Core System</item>
   <item>Milspec Orion 9901 Core System</item>
   <item>Milspec Orion 9902 Core System</item>
   <item>Milspec Orion 9903 Core System</item>
+  <item>Milspec Gemini 5050 Core System</item>
+  <item>Milspec Taurus 4909 Core System</item>
+  <item>Milspec Vespa 6114 Core System</item>
  </tech>
  <tech name="Engines Low">
   <item>Beat Up Small Engine</item>
-  <item>Manufacturer Small Engine</item>
   <item>Beat Up Medium Engine</item>
-  <item>Manufacturer Medium Engine</item>
   <item>Beat Up Large Engine</item>
+  <item>Manufacturer Small Engine</item>
+  <item>Manufacturer Medium Engine</item>
   <item>Manufacturer Large Engine</item>
   <item>Unicorp KRD-B10 Engine</item>
   <item>Unicorp KRD-B12 Engine</item>
@@ -756,30 +756,30 @@
  </tech>
  <tech name="Engines Medium">
   <item>Unicorp EXA-49F Engine</item>
-  <item>Unicorp AUR-50A Engine</item>
-  <item>Unicorp JNS-44K Engine</item>
   <item>Unicorp EXA-66F Engine</item>
-  <item>Unicorp AUR-70A Engine</item>
-  <item>Unicorp JNS-54K Engine</item>
   <item>Unicorp EXA-71F Engine</item>
+  <item>Unicorp AUR-50A Engine</item>
+  <item>Unicorp AUR-70A Engine</item>
   <item>Unicorp AUR-79A Engine</item>
+  <item>Unicorp JNS-44K Engine</item>
+  <item>Unicorp JNS-54K Engine</item>
   <item>Unicorp JNS-99K Engine</item>
  </tech>
  <tech name="Engines High">
   <item>Tricon Naga Mk3 Engine</item>
   <item>Tricon Naga Mk5 Engine</item>
-  <item>Tricon Crane Engine</item>
-  <item>Tricon Albatross Engine</item>
-  <item>Tricon Oxen Engine</item>
   <item>Tricon Centaur Mk2 Engine</item>
   <item>Tricon Centaur Mk3 Engine</item>
-  <item>Tricon Kolibri Engine</item>
-  <item>Tricon Antelope Engine</item>
-  <item>Tricon Buffalo Engine</item>
   <item>Tricon Harpy Mk1 Engine</item>
   <item>Tricon Harpy Mk6 Engine</item>
+  <item>Tricon Crane Engine</item>
+  <item>Tricon Kolibri Engine</item>
   <item>Tricon Raven Engine</item>
+  <item>Tricon Albatross Engine</item>
+  <item>Tricon Antelope Engine</item>
   <item>Tricon Kraken Engine</item>
+  <item>Tricon Oxen Engine</item>
+  <item>Tricon Buffalo Engine</item>
   <item>Tricon Mammoth Engine</item>
  </tech>
  <tech name="Engines Elite">
@@ -793,10 +793,10 @@
  </tech>
  <tech name="Hulls Low">
   <item>Patchwork Light Plating</item>
-  <item>Unmodified Small Hull</item>
   <item>Patchwork Medium Plating</item>
-  <item>Unmodified Medium Hull</item>
   <item>Patchwork Heavy Plating</item>
+  <item>Unmodified Small Hull</item>
+  <item>Unmodified Medium Hull</item>
   <item>Unmodified Large Hull</item>
   <item>Unicorp D-2 Light Plating</item>
   <item>Unicorp C-2 Light Plating</item>
@@ -806,21 +806,21 @@
  </tech>
  <tech name="Hulls Medium">
   <item>Unicorp B-2 Light Plating</item>
-  <item>Unicorp Small Cargo Hull</item>
   <item>Unicorp C-8 Medium Plating</item>
-  <item>Unicorp Medium Cargo Hull</item>
   <item>Unicorp B-16 Heavy Plating</item>
+  <item>Unicorp Small Cargo Hull</item>
+  <item>Unicorp Medium Cargo Hull</item>
   <item>Unicorp Large Cargo Hull</item>
  </tech>
  <tech name="Hulls High">
   <item>Schafer &amp; Kane Light Combat Plating</item>
-  <item>Schafer &amp; Kane Small Cargo Hull</item>
   <item>Schafer &amp; Kane Medium Combat Plating Alpha</item>
   <item>Schafer &amp; Kane Medium Combat Plating Beta</item>
-  <item>Schafer &amp; Kane Medium Cargo Hull</item>
   <item>Schafer &amp; Kane Medium Stealth Plating</item>
   <item>Schafer &amp; Kane Heavy Combat Plating Alpha</item>
   <item>Schafer &amp; Kane Heavy Combat Plating Beta</item>
+  <item>Schafer &amp; Kane Small Cargo Hull</item>
+  <item>Schafer &amp; Kane Medium Cargo Hull</item>
   <item>Schafer &amp; Kane Large Cargo Hull</item>
  </tech>
  <tech name="Hulls Elite">

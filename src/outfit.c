@@ -2208,7 +2208,7 @@ int outfit_mapParse (void)
    for (i=0; i<(int)nfiles; i++) {
 
       len  = strlen(MAP_DATA_PATH)+strlen(map_files[i])+2;
-      file = malloc( len*sizeof(char) );
+      file = malloc( len );
       nsnprintf( file, len, "%s%s", MAP_DATA_PATH, map_files[i] );
 
       buf = ndata_read( file, &bufsize );

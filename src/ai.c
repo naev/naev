@@ -727,7 +727,7 @@ static int ai_loadProfile( const char* filename )
 
    /* Set name. */
    len = strlen(filename)-strlen(AI_PATH)-strlen(AI_SUFFIX);
-   prof->name = malloc(sizeof(char)*(len+1) );
+   prof->name = malloc(len+1);
    strncpy( prof->name, &filename[strlen(AI_PATH)], len );
    prof->name[len] = '\0';
 
@@ -1076,6 +1076,9 @@ static void ai_create( Pilot* pilot, char *param )
       }
    }
 
+   /* Since the pilot changes outfits and cores, we must heal him up. */
+   pilot_healLanded( pilot );
+
 #if DEBUGGING
    if (errf)
       lua_pop(L,1);
@@ -1085,7 +1088,7 @@ static void ai_create( Pilot* pilot, char *param )
    if (pilot->ai == NULL)
       return;
 
-   /* Prepare AI. */
+   /* Prepare AI (this sets cur_pilot among others). */
    ai_setPilot( pilot );
 
    L = cur_pilot->ai->L;

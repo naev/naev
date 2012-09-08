@@ -83,6 +83,9 @@
 #ifndef PRIu64
 #   define PRIu64    "%ju" /**< Illegal, evil and probably eats babies too. */
 #endif
+#ifndef PRIi64
+#   define PRIi64    "%jd" /**< Illegal, evil and probably eats babies too. */
+#endif
 
 
 /*

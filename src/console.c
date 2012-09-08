@@ -73,6 +73,7 @@ static int cli_printOnly( lua_State *L );
 static const luaL_Reg cli_methods[] = {
    { "print", cli_printOnly },
    { "script", cli_script },
+   { "warn", cli_warn },
    {NULL, NULL}
 }; /**< Console only functions. */
 
@@ -125,6 +126,22 @@ static int cli_printCore( lua_State *L, int cli_only )
    if (n > 0)
       cli_addMessage(buf);
 
+   return 0;
+}
+
+
+/**
+ * @brief Barebones warn implementation for Lua, allowing scripts to print warnings to stderr.
+ *
+ * @luafunc warn()
+ */
+int cli_warn( lua_State *L )
+{
+   const char *msg;
+   
+   msg = luaL_checkstring(L,1);
+   logprintf( stderr, "Warning: %s\n", msg );
+   
    return 0;
 }
 

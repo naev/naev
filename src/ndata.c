@@ -769,7 +769,7 @@ static char **stripPath( const char **list, int nlist, const char *path )
    /* Slash-terminate as needed. */
    if (strcmp(&path[len],"/")!=0) {
       len++;
-      buf = malloc((len + 1) * sizeof(char));
+      buf = malloc(len + 1);
       nsnprintf(buf, len+1,  "%s/", path );
    }
    else

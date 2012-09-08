@@ -829,7 +829,7 @@ static int ship_parse( Ship *temp, xmlNodePtr parent )
 
          /* Create description. */
          if (temp->stats != NULL) {
-            temp->desc_stats = malloc( sizeof(char)*STATS_DESC_MAX );
+            temp->desc_stats = malloc( STATS_DESC_MAX );
             i = ss_statsListDesc( temp->stats, temp->desc_stats, STATS_DESC_MAX, 0 );
             if (i <= 0) {
                free( temp->desc_stats );
@@ -906,7 +906,7 @@ int ships_load (void)
 
       /* Get the file name .*/
       sl   = strlen(SHIP_DATA_PATH)+strlen(ship_files[i])+1;
-      file = malloc( sl*sizeof(char) );
+      file = malloc( sl );
       nsnprintf( file, sl, "%s%s", SHIP_DATA_PATH, ship_files[i] );
 
       /* Load the XML. */

@@ -173,7 +173,7 @@ int dsys_saveSystem( StarSystem *sys )
    /* Write data. */
    cleanName = uniedit_nameFilter( sys->name );
    len       = (strlen(cleanName)+14);
-   file      = malloc( len * sizeof(char) );
+   file      = malloc( len );
    nsnprintf( file, len, "dat/ssys/%s.xml", cleanName );
    xmlSaveFileEnc( file, doc, "UTF-8" );
    free( file );
