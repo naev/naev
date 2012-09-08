@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Arashu">
+ <pos>
+  <x>-6854.762866</x>
+  <y>-5382.599029</y>
+ </pos>
+ <GFX>
+  <space>M04.png</space>
+  <exterior>aquatic3.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>O</class>
+  <population>15000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Medicine</commodity>
+  </commodities>
+  <description>Arashu is a peculiar planet. It is both oceanic and highly volcanic. The planet's submarine crust is constantly prone to earthquakes, which causes tidal waves to wash over the few parts of land. A Sirian corporation has invested in harnessing the energies released by this process, turning the planet into a profitable weapons production plant. All manufacturing happens on floating platforms, so the workers and equipment are safe from the constant seismic activity.</description>
+  <bar>The bar features a big display that shows the geological map of the planet. While most of the world is covered in ocean, making for a rather uninteresting map, the display also shows all volcanic activity going on at the moment. For this reason, it is actually quite interesting to watch.</bar>
+ </general>
+ <tech>
+  <item>Systems Medium</item>
+  <item>Hulls Low</item>
+  <item>Hulls Medium</item>
+  <item>Heavy Civilian Combat Ships</item>
+  <item>Basic Outfits 1</item>
+  <item>Heavy Weapons 2</item>
+  <item>Systems Elite</item>
+ </tech>
+</asset>

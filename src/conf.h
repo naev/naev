@@ -7,6 +7,47 @@
 #ifndef CONF_H
 #  define CONF_H
 
+/**
+ * CONFIGURATION DEFAULTS
+ */
+/* Gameplay options */
+#define AFTERBURNER_SENSITIVITY_DEFAULT      250   /**< Default afterburner sensitivity. */
+#define TIME_COMPRESSION_DEFAULT_MAX         5000. /**< Maximum default level of time compression (target speed to match). */
+#define TIME_COMPRESSION_DEFAULT_MULT        200   /**< Default level of time compression multiplier. */
+#define SAVE_COMPRESSION_DEFAULT             1     /**< Whether or not saved games should be compressed. */
+#define MOUSE_THRUST_DEFAULT                 1     /**< Whether or not to use mouse thrust controls. */
+#define AUTONAV_ABORT_DEFAULT                1.    /**< Shield level (0-1) to abort autonav at. 1 means at missile lock, 0 means at armour damage. */
+#define MANUAL_ZOOM_DEFAULT                  0     /**< Whether or not to enable manual zoom controls. */
+#define INPUT_MESSAGES_DEFAULT               5     /**< Amount of messages to display. */
+/* Video options */
+#define RESOLUTION_W_DEFAULT                 1024  /**< Default screen width. */
+#define RESOLUTION_H_DEFAULT                 768   /**< Default screen height. */
+#define FULLSCREEN_DEFAULT                   0     /**< Whether to run in fullscreen mode. */
+#define FSAA_DEFAULT                         1     /**< Whether to use Full Screen Anti-Aliasing. */
+#define VSYNC_DEFAULT                        0     /**< Whether to wait for vertical sync. */
+#define VBO_DEFAULT                          0     /**< Whether to use Vertex Buffer Objects. */
+#define MIPMAP_DEFAULT                       0     /**< Whether to use Mip Mapping. */
+#define TEXTURE_COMPRESSION_DEFAULT          0     /**< Whether to use texture compression. */
+#define INTERPOLATION_DEFAULT                1     /**< Whether to use interpolation. */
+#define NPOT_TEXTURES_DEFAULT                0     /**< Whether to allow non-power-of-two textures. */
+#define SCALE_FACTOR_DEFAULT                 1.    /**< Default scale factor. */
+#define SHOW_FPS_DEFAULT                     0     /**< Whether to display FPS on screen. */
+#define FPS_MAX_DEFAULT                      60    /**< Maximum FPS. */
+#define ENGINE_GLOWS_DEFAULT                 1     /**< Whether to display engine glows. */
+/* Audio options */
+#define VOICES_DEFAULT                       128   /**< Amount of voices to use. */
+#define PILOT_RELATIVE_DEFAULT               1     /**< Whether the sound is relative to the pilot (as opposed to the camera). */
+#define USE_EFX_DEFAULT                      1     /**< Whether or not to use EFX (if using OpenAL). */
+#define BUFFER_SIZE_DEFAULT                  128   /**< Default buffer size (if using OpenAL). */
+#define MUTE_SOUND_DEFAULT                   0     /**< Whether sound should be disabled. */
+#define SOUND_VOLUME_DEFAULT                 0.4   /**< Default sound volume. */
+#define MUSIC_VOLUME_DEFAULT                 0.8   /**< Default music volume. */
+#if USE_OPENAL
+#define BACKEND_DEFAULT                      "openal"
+#else /* USE_OPENAL */
+#define BACKEND_DEFAULT                      "sdlmix"
+#endif /* USE_OPENAL */
+
 
 /**
  * @brief Struct containing player options.

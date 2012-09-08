@@ -34,6 +34,7 @@
   <bar>This is a fairly typical spaceport bar. The clientele consists mostly of merchants, though some locals come here also, if not for the drinks then for the chance to talk to people who come from more interesting places than Qoral.</bar>
  </general>
  <tech>
+  <item>Hulls Low</item>
   <item>Laser 2</item>
   <item>Basic Outfits 2</item>
   <item>Low Tech Upgrades</item>

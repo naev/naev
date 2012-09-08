@@ -32,6 +32,8 @@
   <bar>Seanich has a pretty well-appointed spaceport bar. It has all the facilities a spacer could need, and many are quite up to date. Sadly, this hasn't helped to make the unfortunate colony more conspicuous in the galaxy. Most of the tables are empty.</bar>
  </general>
  <tech>
+  <item>Hulls Low</item>
+  <item>Engines Medium</item>
   <item>Laser 1</item>
   <item>Basic Outfits 1</item>
   <item>Missiles 2</item>

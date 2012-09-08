@@ -44,6 +44,7 @@
 #include "array.h"
 #include "camera.h"
 #include "damagetype.h"
+#include "pause.h"
 
 
 #define PILOT_CHUNK_MIN 128 /**< Minimum chunks to increment pilot_stack by */
@@ -979,7 +980,7 @@ void pilot_rmFriendly( Pilot* p )
  */
 int pilot_getJumps( const Pilot* p )
 {
-   return (int)(p->fuel) / HYPERSPACE_FUEL;
+   return (int)floor(p->fuel / p->fuel_consumption);
 }
 
 
@@ -1262,6 +1263,10 @@ void pilot_updateDisable( Pilot* p, const unsigned int shooter )
 
       /* TODO: Make undisabled pilot use up presence again. */
       pilot_runHook( p, PILOT_HOOK_UNDISABLE );
+
+      /* This is sort of a hack to make sure it gets reset... */
+      if (p->id==PLAYER_ID)
+         pause_setSpeed( player_isFlag(PLAYER_DOUBLESPEED) ? 2. : 1. );
    }
 }
 
@@ -2156,24 +2161,24 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    /* First pass copy data. */
    p = 0;
    for (i=0; i<pilot->outfit_nstructure; i++) {
-      pilot->outfit_structure[i].slot.type = OUTFIT_SLOT_STRUCTURE;
-      pilot->outfit_structure[i].slot.size = ship->outfit_structure[i].slot.size;
       pilot->outfits[p] = &pilot->outfit_structure[i];
-      memcpy( &pilot->outfits[p]->mount, &ship->outfit_structure[i].mount, sizeof(ShipMount) );
+      pilot->outfits[p]->sslot = &ship->outfit_structure[i];
+      if (ship->outfit_structure[i].data != NULL)
+         pilot_addOutfitRaw( pilot, ship->outfit_structure[i].data, pilot->outfits[p] );
       p++;
    }
    for (i=0; i<pilot->outfit_nutility; i++) {
-      pilot->outfit_utility[i].slot.type = OUTFIT_SLOT_UTILITY;
-      pilot->outfit_utility[i].slot.size = ship->outfit_utility[i].slot.size;
       pilot->outfits[p] = &pilot->outfit_utility[i];
-      memcpy( &pilot->outfits[p]->mount, &ship->outfit_utility[i].mount, sizeof(ShipMount) );
+      pilot->outfits[p]->sslot = &ship->outfit_utility[i];
+      if (ship->outfit_utility[i].data != NULL)
+         pilot_addOutfitRaw( pilot, ship->outfit_utility[i].data, pilot->outfits[p] );
       p++;
    }
    for (i=0; i<pilot->outfit_nweapon; i++) {
-      pilot->outfit_weapon[i].slot.type = OUTFIT_SLOT_WEAPON;
-      pilot->outfit_weapon[i].slot.size = ship->outfit_weapon[i].slot.size;
       pilot->outfits[p] = &pilot->outfit_weapon[i];
-      memcpy( &pilot->outfits[p]->mount, &ship->outfit_weapon[i].mount, sizeof(ShipMount) );
+      pilot->outfits[p]->sslot = &ship->outfit_weapon[i];
+      if (ship->outfit_weapon[i].data != NULL)
+         pilot_addOutfitRaw( pilot, ship->outfit_weapon[i].data, pilot->outfits[p] );
       p++;
    }
    /* Second pass set ID. */
@@ -2188,6 +2193,11 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
 
    /* set the pilot stats based on his ship and outfits */
    pilot_calcStats( pilot );
+
+   /* Heal up the ship. */
+   pilot->armour = pilot->armour_max;
+   pilot->shield = pilot->shield_max;
+   pilot->energy = pilot->energy_max;
 
    /* Sanity check. */
 #ifdef DEBUGGING

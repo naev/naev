@@ -95,6 +95,7 @@
 #include "threadpool.h"
 #include "load.h"
 #include "dialogue.h"
+#include "slots.h"
 
 
 #define CONF_FILE       "conf.lua" /**< Configuration file by default. */
@@ -285,6 +286,7 @@ int main( int argc, char** argv )
    window_caption();
    gl_fontInit( NULL, NULL, conf.font_size_def ); /* initializes default font to size */
    gl_fontInit( &gl_smallFont, NULL, conf.font_size_small ); /* small font */
+   gl_fontInit( &gl_defFontMono, "dat/mono.ttf", conf.font_size_def );
 
    /* Display the load screen. */
    loadscreen_load();
@@ -452,6 +454,7 @@ int main( int argc, char** argv )
    /* cleanup opengl fonts */
    gl_freeFont(NULL);
    gl_freeFont(&gl_smallFont);
+   gl_freeFont(&gl_defFontMono);
 
    /* Close data. */
    ndata_close();
@@ -504,7 +507,7 @@ void loadscreen_load (void)
    uint32_t nload;
 
    /* Count the loading screens */
-   loadscreens = ndata_list( "gfx/loading/", &nload );
+   loadscreens = ndata_list( GFX_PATH"loading/", &nload );
 
    /* Must have loading screens */
    if (nload==0) {
@@ -517,7 +520,7 @@ void loadscreen_load (void)
    cam_setZoom( conf.zoom_far );
 
    /* Load the texture */
-   nsnprintf( file_path, PATH_MAX, "gfx/loading/%s", loadscreens[ RNG_SANE(0,nload-1) ] );
+   nsnprintf( file_path, PATH_MAX, GFX_PATH"loading/%s", loadscreens[ RNG_SANE(0,nload-1) ] );
    loading = gl_newImage( file_path, 0 );
 
    /* Create the stars. */
@@ -619,6 +622,9 @@ static void loadscreen_unload (void)
 #define LOADING_STAGES     12. /**< Amount of loading stages. */
 void load_all (void)
 {
+   /* We can do fast stuff here. */
+   sp_load();
+
    /* order is very important as they're interdependent */
    loadscreen_render( 1./LOADING_STAGES, "Loading Commodities..." );
    commodity_load(); /* dep for space */
@@ -678,6 +684,7 @@ void unload_all (void)
    factions_free();
    commodity_free();
    var_cleanup(); /* cleans up mission variables */
+   sp_cleanup();
 }
 
 
@@ -979,9 +986,9 @@ static void window_caption (void)
    SDL_WM_SetCaption(buf, APPNAME);
 
    /* Set icon. */
-   rw = ndata_rwops( "gfx/icon.png" );
+   rw = ndata_rwops( GFX_PATH"icon.png" );
    if (rw == NULL) {
-      WARN("Icon (gfx/icon.png) not found!");
+      WARN("Icon (icon.png) not found!");
       return;
    }
    npng        = npng_open( rw );
@@ -989,7 +996,7 @@ static void window_caption (void)
    npng_close( npng );
    SDL_RWclose( rw );
    if (naev_icon == NULL) {
-      WARN("Unable to load gfx/icon.png!");
+      WARN("Unable to load icon.png!");
       return;
    }
    SDL_WM_SetIcon( naev_icon, NULL );

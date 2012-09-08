@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Maatsu">
+ <pos>
+  <x>-2453.783884</x>
+  <y>-7965.701318</y>
+ </pos>
+ <GFX>
+  <space>L00.png</space>
+  <exterior>desertic.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>L</class>
+  <population>2000000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Though Maatsu's surface was never truly tamed, there is a farily substantial population here. The larger population centres are kept climate neutral by localized weather control systems, while some of the more remote regions are left to the elements. This has made Maatsu a bit of an attraction to adventurous types who like to go out into the wild.</description>
+  <bar>Maatsu sees a fair bit of commerce traffic, so its spaceport bar thrives. Prices of food and drink are exorbitant as a result, but that's nothing new to the average interplanetary trader. So long as the basic facilities are present and readily available, bars can get away with quite a lot.</bar>
+ </general>
+ <tech>
+  <item>Hulls Low</item>
+  <item>Ion 1</item>
+  <item>Laser 1</item>
+  <item>Basic Outfits 1</item>
+  <item>Star Maps</item>
+  <item>Missiles 1</item>
+  <item>Missiles 2</item>
+  <item>Low Tech Upgrades</item>
+  <item>Hulls High</item>
+ </tech>
+</asset>

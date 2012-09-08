@@ -2,19 +2,20 @@
 <outfit name="Base Ripper MK2">
  <general>
   <slot>weapon</slot>
+  <size>small</size>
   <license>Medium Weapon License</license>
   <mass>12</mass>
   <price>1</price>
   <description>This weapon is a cheat. It is not meant to be used by players.</description>
   <gfx_store>ripper</gfx_store>
+  <cpu>-12</cpu>
  </general>
  <specific type="turret bolt">
-  <cpu>12</cpu>
   <gfx>ripperM</gfx>
   <sound>ripper</sound>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>
-  <delay>1.26</delay>
+  <delay>1260</delay>
   <speed>700</speed>
   <range>1900</range>
   <falloff>1500</falloff>

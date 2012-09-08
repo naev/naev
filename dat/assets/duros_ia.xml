@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Duros Ia">
+ <pos>
+  <x>4108.333454</x>
+  <y>3767.409191</y>
+ </pos>
+ <GFX>
+  <space>moon-G00.png</space>
+  <exterior>desertic4.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.500000</hide>
+  <services/>
+ </general>
+</asset>

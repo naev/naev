@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Kyo III">
+ <pos>
+  <x>4904.636362</x>
+  <y>9574.858415</y>
+ </pos>
+ <GFX>
+  <space>I05.png</space>
+  <exterior>snow.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

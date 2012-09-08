@@ -65,7 +65,9 @@ function input(inputname, inputpress)
    nav, hyp = player.pilot():nav()
    if inputname == "thyperspace" and keystage == "thyperspace" then
       keystage = "deselect"
+      player.omsgRm(omsg)
       tkMsg(title1, message3:format(tutGetKey("jump"), tutGetKey("target_clear"), tutGetKey("target_clear")))
+      omsg = player.omsgAdd(clearomsg:format(tutGetKey("target_clear")), 0)
    elseif hyp == nil and keystage == "deselect" then
       keystage = "map"
       player.omsgRm(omsg)
@@ -108,7 +110,6 @@ end
 -- Cleanup function. Should be the exit point for the module in all cases.
 function cleanup()
     if not (omsg == nil) then player.omsgRm(omsg) end
-    var.push("tut_next", "Tutorial: Comms") 
     naev.keyEnableAll()
     naev.eventStart("Tutorial")
     evt.finish(true)

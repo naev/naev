@@ -8,33 +8,34 @@
  <price>300000</price>
  <fabricator>Robosys</fabricator>
  <description>This is a modified version of the robotic drone that includes a life support system for humans.</description>
- <movement>
-  <thrust>320</thrust>
-  <turn>200</turn>
-  <speed>360</speed>
- </movement>
  <health>
-  <absorb>15</absorb>
-  <shield>150</shield>
-  <armour>80</armour>
-  <energy>600</energy>
-  <shield_regen>5</shield_regen>
+  <absorb>5</absorb>
+  <armour>40</armour>
   <armour_regen>7</armour_regen>
-  <energy_regen>20</energy_regen>
  </health>
  <characteristics>
-  <cpu>70</cpu>
   <crew>1</crew>
-  <mass>40</mass>
-  <fuel>200</fuel>
-  <cargo>1</cargo>
+  <mass>20</mass>
+  <cargo>0</cargo>
  </characteristics>
  <slots>
-  <weapon x="5" y="0" h="-5"/>
-  <weapon x="5" y="0" h="-5"/>
-  <weapon x="5" y="0" h="-5"/>
-  <utility/>
-  <structure/>
+  <weapon size="small" x="5" y="0" h="-5"/>
+  <weapon size="small" x="5" y="0" h="-5"/>
+  <weapon size="small" x="5" y="0" h="-5"/>
+  <utility size="small" prop="systems">Basic Small Systems</utility>
+  <utility size="small"/>
+  <structure size="small" prop="engines">Manufacturer Small Engine</structure>
+  <structure size="small" prop="hull">Unmodified Small Hull</structure>
+  <structure size="small"/>
  </slots>
+ <stats>
+  <speed_mod>0</speed_mod>
+  <turn_mod>20</turn_mod>
+  <thrust_mod>20</thrust_mod>
+  <armour_mod>0</armour_mod>
+  <shield_mod>0</shield_mod>
+  <cargo_mod>-100</cargo_mod>
+  <ew_detect>0</ew_detect>
+  <ew_hide>0</ew_hide>
+ </stats>
 </ship>
-<!-- Cargo Haulers -->

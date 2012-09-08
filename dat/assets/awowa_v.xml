@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Awowa V">
+ <pos>
+  <x>5232.583509</x>
+  <y>-5915.364670</y>
+ </pos>
+ <GFX>
+  <space>G01.png</space>
+  <exterior>mining5.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

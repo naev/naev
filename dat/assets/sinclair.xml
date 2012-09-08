@@ -36,11 +36,14 @@
   <bar>Sinclair's spaceport bar is run by entrepreneurs, not warriors. But being entrepreneurs, they recognize the value of catering to the locals and to those that pass through, and so it is that this bar has a large holoportrait of Godfried Sinclair hanging over the bar, and his family's weapon can be seen on various decorative fixtures.</bar>
  </general>
  <tech>
+  <item>Engines Low</item>
+  <item>Engines Medium</item>
   <item>Kinetic 1</item>
   <item>Basic Civilian Ships</item>
   <item>Light Civilian Combat Ships</item>
   <item>Basic Trade Ships</item>
   <item>Basic Outfits 2</item>
   <item>Missiles 1</item>
+  <item>Hulls High</item>
  </tech>
 </asset>

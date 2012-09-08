@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Solpere">
+ <pos>
+  <x>8328.027135</x>
+  <y>13338.535618</y>
+ </pos>
+ <GFX>
+  <space>P01.png</space>
+  <exterior>traderoom.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>P</class>
+  <population>5000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Solpere is a cold planet with a relatively small population. It only has three seasons: spring, winter, and deep winter. However, there are perks to such a harsh climate. The sky is quite frequently lit up by auroras, and for those who can endure the cold the icy landscape is a magnificent sight to behold.</description>
+  <bar>This is a fairly average bar. The service quality is decent enough and all facilities are available. It's not a big place though, since Solpere isn't a very frequently visited port.</bar>
+ </general>
+ <tech>
+  <item>Engines Low</item>
+  <item>Basic Outfits 1</item>
+  <item>Missiles 1</item>
+  <item>Basic Civilian Ships</item>
+ </tech>
+</asset>

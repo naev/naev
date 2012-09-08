@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Vinooso">
+ <pos>
+  <x>-9791.415921</x>
+  <y>-2078.153500</y>
+ </pos>
+ <GFX>
+  <space>moon-P00.png</space>
+  <exterior>snow.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>P</class>
+  <population>100000</population>
+  <hide>0.500000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities/>
+  <description>Vinooso is an odd little planet. Cold, small and on the outside of the system, it shouldn't attract much interest from anyone. However, Soromid scientists have discovered that the planet's axial rotation speed isn't constant - it speeds up and slows down in a regular pattern. Nobody knows why this happens. The settlement here was created as part of the quest to find out.</description>
+  <bar>There's a story the barman here likes to tell. He says he can tell how fast the planet is spinning by the subtle shift in its gravitational pull. It's a tall tale, of course. The difference is immeasurably small, and certainly can't be detected with human senses, even if those senses are Soromid.</bar>
+ </general>
+ <tech>
+  <item>Systems Low</item>
+  <item>Hulls Low</item>
+  <item>Hulls Medium</item>
+  <item>Engines Medium</item>
+  <item>Basic Outfits 1</item>
+  <item>Missiles 1</item>
+  <item>Missiles 2</item>
+  <item>Star Maps</item>
+  <item>Plasma 1</item>
+  <item>Low Tech Upgrades</item>
+ </tech>
+</asset>

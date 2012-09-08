@@ -2399,14 +2399,17 @@ static int pilotL_setNoLand( lua_State *L )
 /**
  * @brief Adds an outfit to a pilot.
  *
+ * This by default tries to add them to the first empty or defaultly equipped slot.
+ *
  * @usage added = p:addOutfit( "Laser Cannon", 5 ) -- Adds 5 laser cannons to p
  *
  *    @luaparam p Pilot to add outfit to.
  *    @luaparam outfit Name of the outfit to add.
  *    @luaparam q Amount of the outfit to add (defaults to 1).
  *    @luaparam bypass Whether to skip CPU and slot size checks before adding an outfit (defaults to false).
+ *              Will not overwrite existing non-default outfits.
  *    @luareturn The number of outfits added.
- * @luafunc addOutfit( p, outfit, q )
+ * @luafunc addOutfit( p, outfit, q, bypass )
  */
 static int pilotL_addOutfit( lua_State *L )
 {
@@ -2430,8 +2433,10 @@ static int pilotL_addOutfit( lua_State *L )
 
    /* Get the outfit. */
    o = outfit_get( outfit );
-   if (o == NULL)
+   if (o == NULL) {
+      NLUA_ERROR(L, "Outfit '%s' not found!", outfit );
       return 0;
+   }
 
    /* Add outfit. */
    added = 0;
@@ -2440,13 +2445,14 @@ static int pilotL_addOutfit( lua_State *L )
       if (q <= 0)
          break;
 
-      /* Must not have outfit already. */
-      if (p->outfits[i]->outfit != NULL)
+      /* Must not have outfit (excluding default) already. */
+      if ((p->outfits[i]->outfit != NULL) &&
+            (p->outfits[i]->outfit != p->outfits[i]->sslot->data))
          continue;
 
       if (!bypass) {
          /* Must fit slot. */
-         if (!outfit_fitsSlot( o, &p->outfits[i]->slot ))
+         if (!outfit_fitsSlot( o, &p->outfits[i]->sslot->slot ))
             continue;
 
          /* Test if can add outfit. */
@@ -2456,7 +2462,7 @@ static int pilotL_addOutfit( lua_State *L )
       }
       /* Only do a basic check. */
       else
-         if (!outfit_fitsSlotType( o, &p->outfits[i]->slot ))
+         if (!outfit_fitsSlotType( o, &p->outfits[i]->sslot->slot ))
             continue;
 
       /* Add outfit - already tested. */
@@ -2484,9 +2490,11 @@ static int pilotL_addOutfit( lua_State *L )
 /**
  * @brief Removes an outfit from a pilot.
  *
- * "all" will remove all outfits.
+ * "all" will remove all outfits except cores.
+ * "cores" will remove all cores, but nothing else.
  *
- * @usage p:rmOutfit( "all" ) -- Leaves the pilot naked.
+ * @usage p:rmOutfit( "all" ) -- Leaves the pilot naked (except for cores).
+ * @usage p:rmOutfit( "cores" ) -- Strips the pilot of its cores, leaving it dead in space.
  * @usage p:rmOutfit( "Neutron Disruptor" ) -- Removes a neutron disruptor.
  * @usage p:rmOutfit( "Neutron Disruptor", 2 ) -- Removes two neutron disruptor.
  *
@@ -2512,9 +2520,21 @@ static int pilotL_rmOutfit( lua_State *L )
    if (lua_gettop(L) > 2)
       q = luaL_checkint(L,3);
 
-   /* If outfit is "all", we remove everything. */
+   /* If outfit is "all", we remove everything except cores. */
    if (strcmp(outfit,"all")==0) {
       for (i=0; i<p->noutfits; i++) {
+         if (p->outfits[i]->sslot->required)
+            continue;
+         pilot_rmOutfitRaw( p, p->outfits[i] );
+         removed++;
+      }
+      pilot_calcStats( p ); /* Recalculate stats. */
+   }
+   /* If outfit is "cores", we remove cores only. */
+   else if (strcmp(outfit,"cores")==0) {
+      for (i=0; i<p->noutfits; i++) {
+         if (!p->outfits[i]->sslot->required)
+            continue;
          pilot_rmOutfitRaw( p, p->outfits[i] );
          removed++;
       }
@@ -3152,15 +3172,18 @@ static int pilotL_getHostile( lua_State *L )
 }
 
 
+/**
+ * @brief Small struct to handle flags.
+ */
 struct pL_flag {
-   char *name;
-   int id;
+   char *name; /**< Name of the flag. */  
+   int id;     /**< Id of the flag. */
 };
 static const struct pL_flag pL_flags[] = {
    { .name = "hailing", .id = PILOT_HAILING },
    { .name = "boardable", .id = PILOT_BOARDABLE },
    {NULL, -1}
-};
+}; /**< Flags to get. */
 /**
  * @brief Gets the pilot's flags.
  *

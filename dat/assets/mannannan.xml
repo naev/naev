@@ -34,6 +34,8 @@
   <bar>This bar is one of many. The increase in trade has also brought an increase in tastes, so there are several places that cater to particular tastes, even some very unsavory ones. Fortunately, the most accessible bar seems to be as respectable as bars come.</bar>
  </general>
  <tech>
+  <item>Hulls Medium</item>
+  <item>Engines Medium</item>
   <item>Kinetic 1</item>
   <item>Kinetic 2</item>
   <item>Basic Outfits 1</item>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Astana">
+ <pos>
+  <x>4651.529604</x>
+  <y>5344.310609</y>
+ </pos>
+ <GFX>
+  <space>K03.png</space>
+  <exterior>gas.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>25.000000</value>
+  <range>3</range>
+ </presence>
+ <general>
+  <class>K</class>
+  <population>25000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land>emp_mil_restricted</land>
+   <refuel/>
+   <bar/>
+   <outfits/>
+  </services>
+  <commodities/>
+  <description>Astana is the home of the Imperial Experimental Weapons Testing Facility. It is here where most of the neewer weapons and outfits equipped by the Empire militray are tested and qualified for active service. It is an ideal spot for this, as besides the scientists who work here, no one else wants to land on the planet.</description>
+  <bar>The bar is where many of the workers for the IEWTF sit down to relax. Several of them are speaking about a project that leaves you baffled Other than that, there is little reason to remain on the world for very long,</bar>
+ </general>
+ <tech>
+  <item>Hulls Medium</item>
+  <item>Engines Medium</item>
+  <item>Plasma 1</item>
+  <item>Plasma 2</item>
+  <item>Heavy Weapons 1</item>
+  <item>Heavy Weapons 2</item>
+  <item>High Tech Upgrades 1</item>
+  <item>High Tech Upgrades 2</item>
+  <item>Laser 2</item>
+  <item>Laser 3</item>
+  <item>Ion 2</item>
+  <item>Ion 3</item>
+ </tech>
+</asset>

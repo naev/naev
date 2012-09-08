@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Nolan">
+ <pos>
+  <x>-14082.017719</x>
+  <y>10784.915102</y>
+ </pos>
+ <GFX>
+  <space>J04.png</space>
+  <exterior>station05.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>25.000000</value>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>J</class>
+  <population>9939</population>
+  <hide>0.250000</hide>
+  <services>
+   <land>dv_mil_restricted</land>
+   <refuel/>
+   <commodity/>
+  </services>
+  <commodities/>
+  <description>Another prison world. Nolan is not the harshest world in Dvaered space, but it is claoked in near perpetual darkness. COnvicts are kept here to be shipped of to Veren for their (usually very breif' work stints.</description>
+ </general>
+</asset>

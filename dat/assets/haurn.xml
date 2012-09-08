@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Haurn">
+ <pos>
+  <x>-16267.120738</x>
+  <y>12825.307328</y>
+ </pos>
+ <GFX>
+  <space>moon-M02.png</space>
+  <exterior>oceanic2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>900000</population>
+  <hide>0.500000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities/>
+  <description>Haurn is a small planet with mild planetary conditions. The Soromid have designated it a dedicated farming world. Apart from a few small settlements, most of the planet's land surface is given to agriculture.</description>
+  <bar>This bar is arranged in a collosseum fashion. The facility is circular, with several concentric rings leading down to the center, where the bar is located. The stairways that lead from the center to the upper rings are not gravity conditioned, so moving up them isn't so tiresome.</bar>
+ </general>
+</asset>

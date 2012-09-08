@@ -34,6 +34,7 @@
   <bar>It's quite unusual for a non-Soromid to be granted landing rights on Kataka. And even when this happens, offworlders are usually restricted to the spaceport facility, and if they have business with planetside officials then those officials come to them. The spaceport bar is built for such occurrences, providing private booths where people may converse in private.</bar>
  </general>
  <tech>
+  <item>Engines Low</item>
   <item>Basic Outfits 2</item>
   <item>Heavy Weapons 2</item>
   <item>Plasma 2</item>

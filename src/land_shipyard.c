@@ -223,7 +223,7 @@ void shipyard_update( unsigned int wid, char* str )
    /* update text */
    window_modifyText( wid, "txtStats", ship->desc_stats );
    window_modifyText( wid, "txtDescription", ship->description );
-   credits2str( buf2, ship->price, 2 );
+   credits2str( buf2, ship_buyPrice(ship), 2 );
    credits2str( buf3, player.p->credits, 2 );
    nsnprintf( buf, PATH_MAX,
          "%s\n"
@@ -255,7 +255,7 @@ void shipyard_update( unsigned int wid, char* str )
          ship->cpu,
          ship->mass,
          pow( ship->mass, 1./2.5 ) / 5. * (ship->stats_array.jump_delay/100.+1.), /**< @todo make this more portable. */
-         ship->thrust / ship->mass,
+         ship->thrust,
          ship->speed,
          ship->turn*180/M_PI,
          /* Misc */
@@ -320,7 +320,7 @@ static void shipyard_buy( unsigned int wid, char* str )
    shipname = toolkit_getImageArray( wid, "iarShipyard" );
    ship = ship_get( shipname );
 
-   credits_t targetprice = ship->price;
+   credits_t targetprice = ship_buyPrice(ship);
 
    if (land_errDialogue( shipname, "buyShip" ))
       return;
@@ -351,15 +351,18 @@ int shipyard_canBuy ( char *shipname )
    Ship* ship;
    ship = ship_get( shipname );
    int failure = 0;
+   credits_t price;
+
+   price = ship_buyPrice(ship);
 
    /* Must have enough credits and the necessary license. */
    if (!player_hasLicense(ship->license)) {
       land_errDialogueBuild( "You lack the %s.", ship->license );
       failure = 1;
    }
-   if (!player_hasCredits( ship->price )) {
+   if (!player_hasCredits( price )) {
       char buf[ECON_CRED_STRLEN];
-      credits2str( buf, ship->price - player.p->credits, 2 );
+      credits2str( buf, price - player.p->credits, 2 );
       land_errDialogueBuild( "You need %s more credits.", buf);
       failure = 1;
    }
@@ -413,14 +416,17 @@ int shipyard_canTrade( char* shipname )
    int failure = 0;
    Ship* ship;
    ship = ship_get( shipname );
+   credits_t price;
+
+   price = ship_buyPrice( ship );
 
    /* Must have the necessary license, enough credits, and be able to swap ships. */
    if (!player_hasLicense(ship->license)) {
       land_errDialogueBuild( "You lack the %s.", ship->license );
       failure = 1;
    }
-   if (!player_hasCredits( ship->price - player_shipPrice(player.p->name))) {
-      credits_t creditdifference = ship->price - (player_shipPrice(player.p->name) + player.p->credits);
+   if (!player_hasCredits( price - player_shipPrice(player.p->name))) {
+      credits_t creditdifference = price - (player_shipPrice(player.p->name) + player.p->credits);
       char buf[ECON_CRED_STRLEN];
       credits2str( buf, creditdifference, 2 );
       land_errDialogueBuild( "You need %s more credits.", buf);
@@ -447,7 +453,7 @@ static void shipyard_trade( unsigned int wid, char* str )
    shipname = toolkit_getImageArray( wid, "iarShipyard" );
    ship = ship_get( shipname );
 
-   credits_t targetprice = ship->price;
+   credits_t targetprice = ship_buyPrice(ship);
    credits_t playerprice = player_shipPrice(player.p->name);
 
    if (land_errDialogue( shipname, "tradeShip" ))

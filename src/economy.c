@@ -640,7 +640,7 @@ void trade_update(void)
    StarSystem *sys1;
    StarSystem *sys2;
 
-   printf("\nTrading!");
+   // printf("\nTrading!");
 
    //sys->bought is unnecessary, and is only for viewing the modified map
       /* set sys.bought to 0 */

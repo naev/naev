@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Jermose">
+ <pos>
+  <x>-2785.720764</x>
+  <y>-9153.238293</y>
+ </pos>
+ <GFX>
+  <space>O03.png</space>
+  <exterior>aquatic2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>O</class>
+  <population>1000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>Jermose is an aquatic world with two sizeable moons. The moons orbit the planet in a complex pattern that makes the tides highly erratic, both in terms of the rhythm of ebb and flood and in terms of how high the water can rise. This means that there are few areas of dry land that can safely be built upon, and the surrounding beaches can sometimes grow up to fifteen kilometers wide.</description>
+  <bar>The people of Jermose have created a local calendar based on the movements of the moons through the sky. It's a very confusing affair, with over seventy different months that vary greatly in length, and not all of which necessarily have to appear in any given year. The spaceport bar offers specials based on this calendar, but most spacers haven't a clue how it works.</bar>
+ </general>
+ <tech>
+  <item>Systems Medium</item>
+  <item>Kinetic 1</item>
+  <item>Basic Outfits 1</item>
+  <item>Basic Outfits 2</item>
+  <item>Heavy Weapons 1</item>
+  <item>Low Tech Upgrades</item>
+  <item>High Tech Upgrades 1</item>
+  <item>Missiles 2</item>
+  <item>Basic Trade Ships</item>
+  <item>Basic Civilian Ships</item>
+  <item>Star Maps</item>
+ </tech>
+</asset>

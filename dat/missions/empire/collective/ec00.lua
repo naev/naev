@@ -11,7 +11,7 @@
 
 ]]--
 
-include "scripts/proximity.lua"
+include "proximity.lua"
 
 lang = naev.lang()
 if lang == "es" then

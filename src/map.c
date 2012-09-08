@@ -76,7 +76,7 @@ static void map_renderMarkers( double x, double y, double r );
 static void map_drawMarker( double x, double y, double r,
       int num, int cur, int type );
 /* Mouse. */
-static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
+static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, void *data );
 /* Misc. */
 static int map_keyHandler( unsigned int wid, SDLKey key, SDLMod mod );
@@ -282,7 +282,6 @@ void map_open (void)
          &gl_smallFont, &cDConsole, "Prod_modifiers:" );
    window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtProd_Mods",
          &gl_smallFont, &cBlack, NULL );
-   y -= 2 * gl_smallFont.h + 5 + 15;
 
    /* Made/Consumed */
    window_addText( wid, x, y, 90, 20, 0, "txtSMadeConsumed",
@@ -331,7 +330,7 @@ void map_open (void)
    /*
     * Disable Autonav button if player lacks fuel or if target is not a valid hyperspace target.
     */
-   if ((player.p->fuel < HYPERSPACE_FUEL) || pilot_isFlag( player.p, PILOT_NOJUMP)
+   if ((player.p->fuel < player.p->fuel_consumption) || pilot_isFlag( player.p, PILOT_NOJUMP)
          || map_selected == cur_system - systems_stack || map_npath == 0)
       window_disableButton( wid, "btnAutonav" );
 }
@@ -637,6 +636,23 @@ static void map_update( unsigned int wid )
 
       y-=15;
       p += nsnprintf( &buf[p], PATH_MAX-p, "%s:%.0f\n", commodity_stack[i].name, sys->prod_mods[i] );
+//       /* Colourize output. */
+//       planet_updateLand(sys->planets[i]);
+//       t = planet_getColourChar(sys->planets[i]);
+//       if (t == 'N')
+//          t = 'M';
+//       else if (t == 'R')
+//          t = 'S';
+
+//       if (!hasPlanets)
+//          p += nsnprintf( &buf[p], PATH_MAX-p, "\e%c%s\en",
+//                t, sys->planets[i]->name );
+//       else
+//          p += nsnprintf( &buf[p], PATH_MAX-p, ",\n\e%c%s\en",
+//                t, sys->planets[i]->name );
+//       hasPlanets = 1;
+//       if (p > PATH_MAX)
+//          break;
    }
 
    window_modifyText( wid, "txtProd_Mods", buf);
@@ -1223,7 +1239,7 @@ static void map_renderMarkers( double x, double y, double r )
  *    @param w Width of the widget.
  *    @param h Height of the widget.
  */
-static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
+static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, void *data )
 {
    (void) wid;
@@ -1239,7 +1255,7 @@ static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       case SDL_MOUSEBUTTONDOWN:
          /* Must be in bounds. */
          if ((mx < 0.) || (mx > w) || (my < 0.) || (my > h))
-            return;
+            return 0;
 
          /* Zooming */
          if (event->button.button == SDL_BUTTON_WHEELUP)
@@ -1272,7 +1288,7 @@ static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
             }
             map_drag = 1;
          }
-         break;
+         return 1;
 
       case SDL_MOUSEBUTTONUP:
          if (map_drag)
@@ -1287,6 +1303,8 @@ static void map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
          }
          break;
    }
+
+   return 0;
 }
 /**
  * @brief Handles the button zoom clicks.

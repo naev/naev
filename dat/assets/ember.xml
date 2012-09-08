@@ -35,6 +35,7 @@
   <bar>Ember's spaceport bar is frequented by workers from the industrial complex, most of them from the Shaira echelon. They have many tales to tell of the dangers of their job and the brutal nature of Ember's weather. None of them seem to be discontent with their lives, though.</bar>
  </general>
  <tech>
+  <item>Systems Low</item>
   <item>Ion 1</item>
   <item>Basic Outfits 1</item>
   <item>Low Tech Upgrades</item>

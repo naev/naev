@@ -9,12 +9,12 @@
 
 #include "pilot.h"
 
-
 /** Player flag enum. */
 enum {
    PLAYER_TURN_LEFT,    /**< player is turning left */
    PLAYER_TURN_RIGHT,   /**< player is turning right */
    PLAYER_REVERSE,      /**< player is facing opposite of vel */
+   PLAYER_ACCEL,         /**< player is accelerating */
    PLAYER_DESTROYED,    /**< player is destroyed */
    PLAYER_FACE,         /**< player is facing target */
    PLAYER_PRIMARY,      /**< player is shooting primary weapon */
@@ -36,6 +36,7 @@ enum {
    PLAYER_NOSAVE,       /**< Player is not allowed to save. */
    PLAYER_FLAGS_MAX     /* Maximum number of flags. */
 };
+
 typedef char PlayerFlags[ PLAYER_FLAGS_MAX ];
 
 /* flag functions */
@@ -133,6 +134,7 @@ const char* player_rating (void);
 int player_hasCredits( credits_t amount );
 credits_t player_modCredits( credits_t amount );
 void player_hailStart (void);
+int player_canTakeoff (void);
 /* Sounds. */
 void player_soundPlay( int sound, int once );
 void player_soundPlayGUI( int sound, int once );
@@ -144,7 +146,7 @@ void player_soundResume (void);
 /*
  * player ships
  */
-void player_ships( char** sships, glTexture** tships );
+int player_ships( char** sships, glTexture** tships );
 int player_nships (void);
 int player_hasShip( char* shipname );
 Pilot* player_getShip( char* shipname );
@@ -159,7 +161,9 @@ void player_rmShip( char* shipname );
  * player outfits.
  */
 int player_outfitOwned( const Outfit *o );
-void player_getOutfits( char** soutfits, glTexture** toutfits );
+int player_getOutfits( char** soutfits, glTexture** toutfits );
+int player_getOutfitsFiltered( char** soutfits, glTexture** toutfits,
+      int(*filter)( const Outfit *o ) );
 int player_numOutfits (void);
 int player_addOutfit( const Outfit *o, int quantity );
 int player_rmOutfit( const Outfit *o, int quantity );

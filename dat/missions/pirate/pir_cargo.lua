@@ -4,8 +4,8 @@
 
 ]]--
 
-include "scripts/numstring.lua"
-include "scripts/jumpdist.lua"
+include "numstring.lua"
+include "jumpdist.lua"
 
 lang = naev.lang()
 if lang == "es" then
@@ -54,7 +54,7 @@ function create()
            end 
            return false
        end ) 
-   if #planets == 0 then abort() end -- Sanity in case no suitable planets are in range. 
+   if #planets == 0 then misn.finish() end -- Sanity in case no suitable planets are in range. 
    local index = rnd.rnd(1, #planets)
    dest = planets[index][1]
    sys = planets[index][2] 

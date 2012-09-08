@@ -17,12 +17,11 @@
 #include "nlua.h"
 #include "nluadef.h"
 #include "economy.h"
+#include "nlua_time.h"
 
 extern double trade_modifier;
 extern double production_modifier;
 
-static int economyL_getTrademodifier( lua_State *L );
-static int economyL_setTrademodifier( lua_State *L );
 static int economyL_getProductionmodifier( lua_State *L );
 static int economyL_setProductionmodifier( lua_State *L );
 static int economyL_update( lua_State *L );
@@ -73,18 +72,22 @@ int nlua_loadEconomy( lua_State *L, int readonly )
 /**
  * @brief Updates economy by a certain amount of time, in STP
  *
- * @usage economy.update(10000000)
+ * @usage economy.update(time.create(0,1,0))
  *
  *    @luaparam time length of time to update
  * @luafunc update( time )
  */
 static int economyL_update( lua_State *L )
 {
-   unsigned int dt;
-   dt = (unsigned int) lua_tointeger( L, 1 );
+   ntime_t dt;
+
+   if (lua_isnumber(L,1))
+      dt = (ntime_t) lua_tointeger( L, 1 );
+   else
+      dt = luaL_validtime(L,1);
 
    if ( dt<10000000 ){
-      WARN("\nInvalid argument to economy.update, must be integer>=10000000");
+      WARN("\nEconomy will not update for values less than 1 STP");
       return 1;
    }
    economy_update(dt);

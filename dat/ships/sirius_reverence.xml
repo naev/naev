@@ -32,15 +32,15 @@
   <cargo>40</cargo>
  </characteristics>
  <slots>
-  <weapon x="15" y="1" h="2"/>
-  <weapon x="15" y="-1" h="2"/>
-  <weapon x="-9" y="-3" h="2">light</weapon>
-  <weapon x="-9" y="3" h="2">light</weapon>
-  <utility/>
-  <utility/>
-  <utility>light</utility>
-  <structure/>
-  <structure/>
+  <weapon size="medium" x="15" y="1" h="2"/>
+  <weapon size="medium" x="15" y="-1" h="2"/>
+  <weapon size="small" x="-9" y="-3" h="2"/>
+  <weapon size="small" x="-9" y="3" h="2"/>
+  <utility size="medium"/>
+  <utility size="medium"/>
+  <utility size="small"/>
+  <structure size="medium"/>
+  <structure size="medium"/>
  </slots>
  <stats />
 </ship>

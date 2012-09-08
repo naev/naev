@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Omar">
+ <pos>
+  <x>-1756.471788</x>
+  <y>962.938848</y>
+ </pos>
+ <GFX>
+  <space>Y00.png</space>
+  <exterior>lava.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>100.000000</value>
+  <range>3</range>
+ </presence>
+ <general>
+  <class>K</class>
+  <population>2145540</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities/>
+  <description>Omar's planetary conditions lend it particularly well to the extraction of many common metals. Dvaered High Command has licensed a local enterprise to set up a weapons and ammunitions factory here.</description>
+  <bar>First time visitors are always taken aback when they enter this spaceport bar. The center of the room is occupied by a real, actual Mass Driver cannon, and it's pointing straight at the door. Local rumor has it that the cannon is loaded and powered at all times, and that the bar's proprietor uses it to discourage people from misbehaving in his bar.</bar>
+ </general>
+ <tech>
+  <item>Kinetic 1</item>
+  <item>Kinetic 2</item>
+  <item>Missiles 2</item>
+  <item>Systems High</item>
+ </tech>
+</asset>

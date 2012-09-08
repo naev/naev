@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Unicorp PT-1000 Core System">
+ <general>
+  <typename>Core Systems</typename>
+  <slot prop="systems">utility</slot>
+  <size>large</size>
+  <mass>75</mass>
+  <price>2000000</price>
+  <description>The PT-1000 is an upscaled model of the basic PT design, providing reasonable core system functionality for capital ships.</description>
+  <gfx_store>reactor_iii</gfx_store>
+ </general>
+ <specific type="modification">
+  <cpu_max>130</cpu_max>
+  <shield>730</shield>
+  <shield_regen>9</shield_regen>
+  <energy>2000</energy>
+  <energy_regen>108</energy_regen>
+  <ew_hide>0</ew_hide>
+ </specific>
+</outfit>

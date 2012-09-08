@@ -3,6 +3,7 @@
  <general>
   <typename>Shield Power Modifier</typename>
   <slot>structure</slot>
+  <size>large</size>
   <mass>36</mass>
   <price>220000</price>
   <description>A heavy duty shield enhancer for ships that face combat on a regular basis.</description>

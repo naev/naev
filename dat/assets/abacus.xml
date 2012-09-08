@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Abacus">
+ <pos>
+  <x>15843.686373</x>
+  <y>970.564365</y>
+ </pos>
+ <GFX>
+  <space>A02.png</space>
+  <exterior>methane.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>A</class>
+  <population>25</population>
+  <hide>0.250000</hide>
+  <services>
+   <land>land_lowclass</land>
+   <refuel/>
+   <missions/>
+  </services>
+  <commodities/>
+  <description>Abacus is a very large planet, by rocky planet standards. The Soromid have established a research outpots here to find out more about the structure of the planet. The outpost is pretty small, with only a couple dozen researchers on site at any one time. Tourism is out of the question.</description>
+ </general>
+</asset>

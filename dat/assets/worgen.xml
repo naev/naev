@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Worgen">
+ <pos>
+  <x>-6032.011259</x>
+  <y>-654.104609</y>
+ </pos>
+ <GFX>
+  <space>D00.png</space>
+  <exterior>desertic4.png</exterior>
+ </GFX>
+ <general>
+  <class>D</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

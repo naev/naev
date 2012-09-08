@@ -3,6 +3,7 @@
  <general>
   <typename>Weapon Modifier (Forward)</typename>
   <slot>structure</slot>
+  <size>small</size>
   <mass>0</mass>
   <price>55000</price>
   <description>This outfit allows your forward mounts to dump more power into the weapons, providing greatly enhanced destructive potential. Unfortunately, exceeding design specifications results in increased heat production.</description>

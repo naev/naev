@@ -26,5 +26,14 @@
    <autopos/>
    <hide>0.000000</hide>
   </jump>
+  <jump target="Pisces Prime">
+   <autopos/>
+   <hide>0.000000</hide>
+  </jump>
+  <jump target="Uridhrion">
+   <pos x="19004.130603" y="7934.284741"/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
  </jumps>
 </ssys>

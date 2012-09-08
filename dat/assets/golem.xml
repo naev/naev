@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Golem">
+ <pos>
+  <x>7524.400163</x>
+  <y>6131.938185</y>
+ </pos>
+ <GFX>
+  <space>K02.png</space>
+  <exterior>station04.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>100.000000</value>
+  <range>5</range>
+ </presence>
+ <general>
+  <class>K</class>
+  <population>211243</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>Despite being hellish, Golem has a respectably large population, albeit a population restricted to hab units at the top of mountains. The gasses here are useful, and hence mined, but the world is not harsh en ough to justify making it a prison planet. Many lower-class Dvaered make their homes here, unpeturbed by the conditions. It's a living, after all.</description>
+  <bar>This bar is shockingly convival and clean, all things considered. The locals are determined to make their lives that much more enjoyable, and to prove to outsiders that they cna conquer their homeworld's harsh enviroment.</bar>
+ </general>
+ <tech>
+  <item>Hulls Medium</item>
+  <item>Engines Medium</item>
+  <item>Kinetic 1</item>
+  <item>Kinetic 2</item>
+  <item>Basic Outfits 1</item>
+  <item>Basic Outfits 2</item>
+  <item>Heavy Weapons 1</item>
+  <item>Low Tech Upgrades</item>
+  <item>High Tech Upgrades 1</item>
+  <item>Missiles 1</item>
+  <item>Missiles 2</item>
+  <item>Star Maps</item>
+  <item>Basic Civilian Ships</item>
+  <item>Basic Trade Ships</item>
+  <item>Bulk Trade Ships</item>
+  <item>Hulls Elite</item>
+ </tech>
+</asset>

@@ -7,8 +7,8 @@
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>-150.000000</x>
-  <y>-465.000000</y>
+  <x>-171.000000</x>
+  <y>-442.000000</y>
  </pos>
  <assets>
   <asset>Em 1</asset>
@@ -21,6 +21,11 @@
   <jump target="Eneguoz">
    <autopos/>
    <hide>1.250000</hide>
+  </jump>
+  <jump target="Salvador">
+   <pos x="9216.302743" y="120.608077"/>
+   <hidden/>
+   <hide>1.000000</hide>
   </jump>
  </jumps>
 </ssys>

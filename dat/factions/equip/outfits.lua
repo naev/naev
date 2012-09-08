@@ -129,20 +129,3 @@ end
 function equip_lowHig ()
    return { "Shield Capacitor III", "Shield Capacitor IV", "Battery III" }
 end
-
-
---[[
--- APU
---]]
-function equip_apuLow ()
-   return { "Auxiliary Processing Unit I" }
-end
-function equip_apuMed ()
-   return { "Auxiliary Processing Unit II" }
-end
-function equip_apuHig ()
-   return { "Auxiliary Processing Unit III" }
-end
-
-
-

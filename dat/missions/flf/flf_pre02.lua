@@ -6,8 +6,8 @@
 --      3 - The player has found the FLF base for the Dvaered, or has betrayed the FLF after rescuing the agent. Conditional for dv_antiflf03
 --]]
 
-include("scripts/fleethelper.lua")
-include("scripts/proximity.lua")
+include("fleethelper.lua")
+include("proximity.lua")
 
 -- localization stuff, translators would work here
 lang = naev.lang()

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Raptor Station">
+ <pos>
+  <x>-8029.968852</x>
+  <y>14963.118654</y>
+ </pos>
+ <GFX>
+  <space>station-cylinder.png</space>
+  <exterior>station03.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>150.000000</value>
+  <range>5</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>15000</population>
+  <hide>0.750000</hide>
+  <services>
+   <land>srm_mil_restricted</land>
+   <refuel/>
+   <bar/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>Raptor Station is built to protect Soromid holding from pirate raids. The men here all go about their tasks with grim efficiency, and there is little room for luxuries.</description>
+  <bar>The bar has a few off-duty soldiers and the rare civilan relaxing here before duty calls them onwards. The bar itself is not particularly engaging, being a pre-fab model built into the station.</bar>
+ </general>
+ <tech>
+  <item>Basic Civilian Ships</item>
+  <item>Light Civilian Combat Ships</item>
+ </tech>
+</asset>

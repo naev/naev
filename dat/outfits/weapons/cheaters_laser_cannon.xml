@@ -2,18 +2,19 @@
 <outfit name="Cheater's Laser Cannon">
  <general>
   <slot>weapon</slot>
+  <size>small</size>
   <mass>1</mass>
   <price>15000</price>
   <description>This weapon is a cheat. It is not meant to be used by players.</description>
   <gfx_store>laser2</gfx_store>
+  <cpu>-1</cpu>
   </general>
  <specific type="bolt">
-  <cpu>1</cpu>
   <gfx>laser2S</gfx>
   <sound>laser</sound>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>
-  <delay>0.85</delay>
+  <delay>850</delay>
   <speed>600</speed>
   <range>550</range>
   <falloff>270</falloff>

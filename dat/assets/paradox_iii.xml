@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Paradox III">
+ <pos>
+  <x>-2766.903043</x>
+  <y>1183.841848</y>
+ </pos>
+ <GFX>
+  <space>A02.png</space>
+  <exterior>traderoom.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

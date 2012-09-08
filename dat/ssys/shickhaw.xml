@@ -7,8 +7,8 @@
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>759.000000</x>
-  <y>-312.000000</y>
+  <x>767.558889</x>
+  <y>-326.583333</y>
  </pos>
  <assets>
   <asset>Avoss</asset>
@@ -22,6 +22,10 @@
   <asset>Virtual Trader Area</asset>
  </assets>
  <jumps>
+  <jump target="Atlantis">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
   <jump target="Brimstone">
    <autopos/>
    <hide>1.250000</hide>

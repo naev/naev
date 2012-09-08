@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Sternguard">
+ <pos>
+  <x>3845.007689</x>
+  <y>-2901.684261</y>
+ </pos>
+ <GFX>
+  <space>L00.png</space>
+  <exterior>station01.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>L</class>
+  <population>20000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities/>
+  <description>Though a fairly unobtrusive world filled with lower-middle class Dvaered citizens, the Dvaered authorities nevertheless pay close attention to what goes on on Sternguard. Close to the Sirian border, the world is a prime candidate for conversion. At the moment the population seems to be stable, but the Dvaered know better than to relax their guard.</description>
+  <bar>Grimy. Smelly. Dank. Drinks that taste of waste products. All in all, this bar meets the galactic norm.</bar>
+ </general>
+</asset>

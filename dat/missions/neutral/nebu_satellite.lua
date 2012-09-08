@@ -8,7 +8,7 @@
 
 ]]--
 
-include "scripts/numstring.lua"
+include "numstring.lua"
 
 -- localization stuff, translators would work here
 lang = naev.lang()
@@ -37,6 +37,16 @@ He takes a deep breath, "We hope to be able to find out more secrets of the Sol 
    launch[1] = "Preparing to launch satellite probe..."
    launch[2] = "Launch in 5..."
    launch[3] = "Satellite launch successful!"
+
+   articles={}
+   articles=
+   {
+   {
+      "Generic",
+      "Scientists launch science probe into the nebula",
+      "A group of scientists have succesfully launched a science probe in the nebula. The probe was specifically designed to be resistant to the corrosive environment of the nebula, and is supposed to bring new clues about the nature of the gas and where it's from", 
+   }
+   }
 end
 
 
@@ -54,6 +64,7 @@ function create ()
    -- Set stuff up for the spaceport bar
    misn.setNPC( "Scientists", "neutral/scientist" )
    misn.setDesc( bar_desc )
+
 end
 
 
@@ -112,7 +123,6 @@ function jumpin ()
    end
 end
 
-
 --[[
    Launch process
 --]]
@@ -136,6 +146,11 @@ function countLaunch ()
    end
 end
 function launchSatellite ()
+
+   articles[1][4]=time.get()+time.create(0,3,0)
+   news.add(articles)
+
+
    misn_stage = 1
    player.msg( launch[3] )
    misn.cargoJet( cargo )

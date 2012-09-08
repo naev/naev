@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Emergency Shield Booster">
+ <general>
+  <slot>utility</slot>
+  <size>small</size>
+  <mass>2</mass>
+  <price>100000</price>
+  <description>This piece of hardware provides an auxiliary energy shunt between the ship's reactor and the shield system. When activated, this device dramatically boosts the ship's shield regeneration by dumping raw energy directly into the shield capacitors. The process is very inefficient, so energy use is disproportionally high and the outfit can't be active for more than a certain period of time before needing entering a cooldown cycle.</description>
+  <gfx_store>accuracy_forward</gfx_store>
+  <limit>emergency_shield_booster</limit>
+  </general>
+ <specific type="modification">
+  <active cooldown="25">8</active>
+  <shield_regen>10</shield_regen>
+  <shield_regen_mod>300</shield_regen_mod>
+  <energy_regen_flat>-30</energy_regen_flat>
+ </specific>
+</outfit>

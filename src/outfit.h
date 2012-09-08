@@ -89,11 +89,16 @@ typedef enum OutfitSlotSize_ {
  * @brief Pilot slot that can contain outfits.
  */
 typedef struct OutfitSlot_ {
+   unsigned int spid;   /**< Slot property ID. */
+   int exclusive;       /**< Outfit must go exclusively into the slot. */
    OutfitSlotType type; /**< Type of outfit slot. */
    OutfitSlotSize size; /**< Size of the outfit. */
 } OutfitSlot;
 
 
+/**
+ * @brief Core damage that an outfit does.
+ */
 typedef struct Damage_ {
    int type;            /**< Type of damage. */
    double penetration;  /**< Penetration the damage has [0:1], with 1 being 100%. */
@@ -142,7 +147,6 @@ typedef struct OutfitBeamData_ {
    double range;     /**< how far it goes */
    double turn;      /**< How fast it can turn. Only for turrets, in rad/s. */
    double energy;    /**< Amount of energy it drains (per second). */
-   double cpu;       /**< CPU usage. */
    Damage dmg;       /**< Damage done. */
    double heatup;    /**< How long it should take for the weapon to heat up (approx). */
    double heat;      /**< Heat per second. */
@@ -163,7 +167,6 @@ typedef struct OutfitBeamData_ {
  */
 typedef struct OutfitLauncherData_ {
    double delay;     /**< Delay between shots. */
-   double cpu;       /**< CPU usage. */
    char *ammo_name;  /**< Name of the ammo to use. */
    struct Outfit_ *ammo; /**< Ammo to use. */
    int amount;       /**< Amount of ammo it can store. */
@@ -208,30 +211,32 @@ typedef struct OutfitModificationData_ {
    double cooldown;  /**< Time the active outfit stays off after it's duration (in seconds). */
 
    /* Movement. */
-   double thrust;    /**< Maximum thrust modifier. */
-   double thrust_rel; /**< Relative thrust modifier. */
-   double turn;      /**< Maximum turn modifier. */
-   double turn_rel;  /**< Relative turn modifier. */
-   double speed;     /**< Maximum speed modifier. */
-   double speed_rel; /**< Relative speed modifier. */
+   double thrust;       /**< Maximum thrust modifier. */
+   double thrust_rel;   /**< Relative thrust modifier. */
+   double turn;         /**< Maximum turn modifier. */
+   double turn_rel;     /**< Relative turn modifier. */
+   double speed;        /**< Maximum speed modifier. */
+   double speed_rel;    /**< Relative speed modifier. */
 
    /* Health. */
-   double armour;    /**< Maximum armour modifier. */
-   double armour_rel; /**< Relative to armour base modifier. */
+   double armour;       /**< Maximum armour modifier. */
+   double armour_rel;   /**< Relative to armour base modifier. */
    double armour_regen; /**< Armour regeneration modifier. */
-   double shield;    /**< Maximum shield modifier. */
-   double shield_rel; /**< Relative to shield base modifier. */
+   double shield;       /**< Maximum shield modifier. */
+   double shield_rel;   /**< Relative to shield base modifier. */
    double shield_regen; /**< Shield regeneration modifier. */
-   double energy;    /**< Maximum energy modifier. */
-   double energy_rel; /**< Relative to energy base modifier. */
+   double energy;       /**< Maximum energy modifier. */
+   double energy_rel;   /**< Relative to energy base modifier. */
    double energy_regen; /**< Energy regeneration modifier. */
-   double cpu;       /**< CPU modifier. */
+   double energy_loss;  /**< Energy regeneration modifier. */
+   double absorb;       /**< Absorption factor. */
 
    /* Misc. */
    double cargo;     /**< Cargo space modifier. */
    double crew_rel;  /**< Relative crew modification. */
    double mass_rel;  /**< Relative mass modification. */
    double fuel;      /**< Maximum fuel modifier. */
+   double hide_rel;  /**< Relative hide modifier. */
 
    /* Stats. */
    ShipStatList *stats; /**< Stat list. */
@@ -242,7 +247,6 @@ typedef struct OutfitModificationData_ {
  */
 typedef struct OutfitAfterburnerData_ {
    /* Internal properties. */
-   double cpu;       /**< CPU usage. */
    double rumble;    /**< Percent of rumble */
    int sound_on;     /**< Sound of the afterburner turning on */
    int sound;        /**< Sound of the afterburner being on */
@@ -264,7 +268,6 @@ typedef struct OutfitFighterBayData_ {
    char *ammo_name;  /**< Name of the ships to use as ammo. */
    struct Outfit_ *ammo; /**< Ships to use as ammo. */
    double delay;     /**< Delay between launches. */
-   double cpu;       /**< CPU usage. */
    int amount;       /**< Amount of ammo it can store. */
 } OutfitFighterBayData;
 
@@ -292,7 +295,6 @@ typedef struct OutfitLocalMapData_ {
  * @brief Represents a jammer.
  */
 typedef struct OutfitJammerData_ {
-   double cpu;       /**< CPU usage. */
    double energy;    /**< Energy it uses to run */
    double range;     /**< Range it starts to do effect */
    double range2;    /**< Range squared. */
@@ -317,6 +319,7 @@ typedef struct Outfit_ {
    OutfitSlot slot;  /**< Slot the outfit fits into. */
    char *license;    /**< Licenses needed to buy it. */
    double mass;      /**< How much weapon capacity is needed. */
+   double cpu;       /**< CPU usage. */
    char *limit;      /**< Name to limit to one per ship (ignored if NULL). */
 
    /* store stuff */
@@ -420,6 +423,7 @@ void outfit_free (void);
  */
 int outfit_fitsSlot( const Outfit* o, const OutfitSlot* s );
 int outfit_fitsSlotType( const Outfit* o, const OutfitSlot* s );
+void outfit_freeSlot( OutfitSlot* s );
 
 
 #endif /* OUTFIT_H */

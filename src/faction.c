@@ -84,7 +84,6 @@ typedef struct Faction_ {
    /* Equipping. */
    lua_State *equip_state; /**< Faction equipper state. */
 
-
    /* Flags. */
    unsigned int flags; /**< Flags affecting the faction. */
 } Faction;
@@ -808,7 +807,8 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
 {
    xmlNodePtr node;
    int player;
-   char buf[PATH_MAX], *dat;
+   char buf[PATH_MAX], *dat, *ctmp;
+   glColour *col;
    uint32_t ndat;
 
    /* Clear memory. */
@@ -835,7 +835,35 @@ static int faction_parse( Faction* temp, xmlNodePtr parent )
       xmlr_strd(node,"longname",temp->longname);
       xmlr_strd(node,"display",temp->displayname);
       if (xml_isNode(node, "colour")) {
-         temp->colour = col_fromName(xml_raw(node));
+         ctmp = xml_get(node);
+         if (ctmp != NULL)
+            temp->colour = col_fromName(xml_raw(node));
+         /* If no named colour is present, RGB attributes are used. */
+         else {
+            /* Initialize in case a colour channel is absent. */
+            col = calloc( 1, sizeof(glColour*) );
+
+            xmlr_attr(node,"r",ctmp);
+            if (ctmp != NULL) {
+               col->r = atof(ctmp);
+               free(ctmp);
+            }
+
+            xmlr_attr(node,"g",ctmp);
+            if (ctmp != NULL) {
+               col->g = atof(ctmp);
+               free(ctmp);
+            }
+
+            xmlr_attr(node,"b",ctmp);
+            if (ctmp != NULL) {
+               col->b = atof(ctmp);
+               free(ctmp);
+            }
+
+            col->a = 1.;
+            temp->colour = col;
+         }
          continue;
       }
 
@@ -1145,6 +1173,8 @@ void factions_free (void)
          lua_close( faction_stack[i].sched_state );
       if (faction_stack[i].state != NULL)
          lua_close( faction_stack[i].state );
+      if (faction_stack[i].equip_state != NULL)
+         lua_close( faction_stack[i].equip_state );
    }
    free(faction_stack);
    faction_stack = NULL;

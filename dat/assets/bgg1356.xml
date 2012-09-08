@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="BGG-1356">
+ <pos>
+  <x>-6822.229153</x>
+  <y>-7839.092577</y>
+ </pos>
+ <GFX>
+  <space>O01.png</space>
+  <exterior>aquatic3.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

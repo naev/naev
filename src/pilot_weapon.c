@@ -86,6 +86,7 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
 
    /* If inrange is set we only fire at targets in range. */
    dist2 = INFINITY; /* With no target we just set distance to infinity. */
+
    if (ws->inrange) {
       if (p->target != p->id) {
          pt = pilot_get( p->target );
@@ -129,7 +130,7 @@ static int pilot_weapSetFire( Pilot *p, PilotWeaponSet *ws, int level )
 
       /* Only "inrange" outfits. */
       if (!outfit_isFighterBay(o) &&
-            ws->inrange && (dist2 > ws->slots[i].range2))
+            (ws->inrange && (dist2 > ws->slots[i].range2)))
          continue;
 
       /* Shoot the weapon of the weaponset. */
@@ -192,7 +193,7 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
          break;
 
       case WEAPSET_TYPE_ACTIVE:
-         /* The behaviour here is more complex. WHat we do is consider a group
+         /* The behaviour here is more complex. What we do is consider a group
           * to be entirely off if not all outfits are either on or cooling down.
           * In the case it's deemed to be off, all outfits that are off get turned
           * on, otherwise all outfits that are on are turrned to cooling down. */
@@ -391,7 +392,7 @@ void pilot_weapSetRmSlot( Pilot *p, int id, OutfitSlotType type )
       return;
    l  = array_size(ws->slots);
    for (i=0; i<l; i++) {
-      if (ws->slots->slot->slot.type != type)
+      if (ws->slots->slot->sslot->slot.type != type)
          continue;
 
       /* Move down. */

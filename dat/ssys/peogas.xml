@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ssys name="Peogas">
+ <general>
+  <radius>22000.000000</radius>
+  <stars>400</stars>
+  <interference>0.000000</interference>
+  <nebula volatility="0.000000">0.000000</nebula>
+ </general>
+ <pos>
+  <x>1357.249837</x>
+  <y>-615.671978</y>
+ </pos>
+ <assets>
+  <asset>Boowoy</asset>
+  <asset>Peogas II</asset>
+  <asset>Peogas III</asset>
+  <asset>Peogas IV</asset>
+  <asset>Peogas V</asset>
+  <asset>Yaroslav Farming Station</asset>
+ </assets>
+ <jumps>
+  <jump target="Ulysses">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+ </jumps>
+</ssys>

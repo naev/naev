@@ -28,6 +28,8 @@
   <bar>The spacedock bar is a place to meet officers and make formal inquiries. It's not of much use for anything else.</bar>
  </general>
  <tech>
+  <item>Systems Low</item>
+  <item>Engines Medium</item>
   <item>Plasma 2</item>
   <item>High Tech Upgrades 2</item>
   <item>Missiles 1</item>

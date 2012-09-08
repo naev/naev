@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Ariadus VI">
+ <pos>
+  <x>-2040.540055</x>
+  <y>-15891.920587</y>
+ </pos>
+ <GFX>
+  <space>I04.png</space>
+  <exterior>mining5.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

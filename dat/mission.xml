@@ -21,7 +21,6 @@
    <faction>Frontier</faction>
    <faction>Goddard</faction>
    <faction>Sirius</faction>
-   <faction>Soromid</faction>
   </avail>
  </mission>
  <mission name="Empire Rehabilitation">
@@ -72,7 +71,6 @@
    <faction>Frontier</faction>
    <faction>Goddard</faction>
    <faction>Sirius</faction>
-   <faction>Soromid</faction>
   </avail>
  </mission>
  <mission name="Empire Recruitment">
@@ -448,6 +446,18 @@
    <cond>planet.cur():name() == "Sindbad" and var.peek("flfbase_intro") == 2</cond>
   </avail>
  </mission>
+ <mission name="Defend the FLF base">
+  <lua>flf/flf_basedefense</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>10</chance>
+   <location>Bar</location>
+   <done>Disrupt the Dvaered Patrols</done>
+   <cond>planet.cur():faction() == faction.get("Frontier") and player.getRating() &gt; 100</cond>
+  </avail>
+ </mission>
  <mission name="Take the Dvaered crew home">
   <lua>dvaered/dv_antiflf01</lua>
   <flags>
@@ -727,4 +737,26 @@
    <planet>Doranthex Prime</planet>
   </avail>
  </mission>
+ <mission name="Racing Skills 1">
+  <lua>neutral/race1</lua>
+  <flags>
+    <unique />
+  </flags>
+  <avail>
+    <cond>player.pilot():ship():class() == "Yacht"</cond>
+   <chance>10</chance>
+   <location>Bar</location>
+  </avail>
+ </mission>
+ <mission name="Racing Skills 2">
+  <lua>neutral/race2</lua>
+  <flags>
+  </flags>
+  <avail>
+    <cond>player.pilot():ship():class() == "Yacht" and player.misnDone("Racing Skills 1")</cond>
+   <chance>2</chance>
+   <location>Bar</location>
+  </avail>
+ </mission>
+
 </Missions>

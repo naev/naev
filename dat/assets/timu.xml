@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Timu">
+ <pos>
+  <x>2753.842426</x>
+  <y>-4289.403784</y>
+ </pos>
+ <GFX>
+  <space>moon-P03.png</space>
+  <exterior>aquatic2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>75.000000</value>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>K</class>
+  <population>151490</population>
+  <hide>0.500000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>With no axial tilt, Timu enjoys no seasons, only day and night. This has made the cold, arctic landscape dull and featureless. The Dvaered inhabitants don't really care, of course, as they're here to work, not to enjoy the view.</description>
+  <bar>Run down and depressing, this bar has suffered from crass lack of upkeep over the cycles. The walls are even, graffiti'd, a sight uncommon even in Dvaered bars.</bar>
+ </general>
+ <tech>
+  <item>Engines Low</item>
+  <item>Kinetic 1</item>
+  <item>Kinetic 2</item>
+  <item>Laser 1</item>
+  <item>Ion 1</item>
+  <item>Basic Outfits 1</item>
+  <item>Basic Outfits 2</item>
+  <item>Low Tech Upgrades</item>
+  <item>Basic Civilian Ships</item>
+  <item>Basic Trade Ships</item>
+ </tech>
+</asset>

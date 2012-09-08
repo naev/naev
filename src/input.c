@@ -316,7 +316,7 @@ void input_init (void)
    /* Get the number of keybindings. */
    for (i=0; strcmp(keybind_info[i][0],"end"); i++);
    input_numbinds = i;
-   input_keybinds = malloc(input_numbinds*sizeof(Keybind));
+   input_keybinds = malloc( input_numbinds * sizeof(Keybind) );
 
    /* Create sane null keybinding for each. */
    for (i=0; i<input_numbinds; i++) {
@@ -710,12 +710,14 @@ static void input_key( int keynum, double value, double kabs, int repeat )
       else { /* prevent it from getting stuck */
          if (value==KEY_PRESS) {
             if (!paused) player_autonavAbort(NULL);
+            player_setFlag(PLAYER_ACCEL);
             player_accel(1.);
             input_accelButton = 1;
          }
 
          else if (value==KEY_RELEASE) {
             player_accelOver();
+            player_rmFlag(PLAYER_ACCEL);
             input_accelButton = 0;
          }
 
@@ -1260,17 +1262,23 @@ static void input_clickevent( SDL_Event* event )
  */
 void input_handle( SDL_Event* event )
 {
+   int ismouse = 0;
+
    /* Special case mouse stuff. */
    if ((event->type == SDL_MOUSEMOTION)  ||
          (event->type == SDL_MOUSEBUTTONDOWN) ||
          (event->type == SDL_MOUSEBUTTONUP)) {
       input_mouseTimer = MOUSE_HIDE;
       SDL_ShowCursor( SDL_ENABLE );
+      ismouse = 1;
    }
 
-   if (toolkit_isOpen()) /* toolkit handled completely separately */
+   if (toolkit_isOpen()) { /* toolkit handled completely separately */
       if (toolkit_input(event))
          return; /* we don't process it if toolkit grabs it */
+      if (ismouse)
+         return; /* Toolkit absorbs everything mousy. */
+   }
 
    if (ovr_isOpen())
       if (ovr_input(event))

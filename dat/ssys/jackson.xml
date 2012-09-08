@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ssys name="Jackson">
+ <general>
+  <radius>20000.000000</radius>
+  <stars>400</stars>
+  <interference>0.000000</interference>
+  <nebula volatility="0.000000">0.000000</nebula>
+ </general>
+ <pos>
+  <x>1003.249859</x>
+  <y>-519.627595</y>
+ </pos>
+ <assets>
+  <asset>Jackson II</asset>
+  <asset>Jackson V</asset>
+  <asset>Jomos</asset>
+  <asset>Paxadon</asset>
+  <asset>Zuner</asset>
+ </assets>
+ <jumps>
+  <jump target="Duros">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Fulcrum">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Pellmell">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+ </jumps>
+</ssys>

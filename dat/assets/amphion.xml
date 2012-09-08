@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Amphion">
+ <pos>
+  <x>6123.453755</x>
+  <y>2327.102217</y>
+ </pos>
+ <GFX>
+  <space>P00.png</space>
+  <exterior>aquatic3.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>100.000000</value>
+  <range>5</range>
+ </presence>
+ <general>
+  <class>O</class>
+  <population>100000</population>
+  <hide>0.150000</hide>
+  <services>
+   <land>land_lowclass</land>
+   <refuel/>
+   <bar/>
+   <missions/>
+  </services>
+  <commodities/>
+  <description>Amphion is a popular retiirement spot for Empire officers. It is close enough to the empire core to provoke good emmories of service, but far enough away for peace. The oceans that dominate the planet's surface are calm, and the many uunderwater cities are famous all over the empire for their grandeur and opulence.</description>
+  <bar>The average age of the patrons here appears to be late middle age. The bar itself is done up in an old-world style tavern, low and dark, cozy and cheery. You wind up making easy friends in the amiable atmosphere here.</bar>
+ </general>
+</asset>

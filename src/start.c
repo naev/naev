@@ -101,7 +101,7 @@ int start_load (void)
             xmlr_strd( cur, "event",   start_data.event );
 
             if (xml_isNode(cur,"ship")) {
-               xmlr_attr(cur, "name", start_data.shipname);
+               xmlr_attr( cur, "name",    start_data.shipname);
                xmlr_strd( cur, "ship",    start_data.ship );
             }
             else if (xml_isNode(cur,"system")) {
@@ -189,23 +189,22 @@ int start_load (void)
 }
 
 
-#define MEMFREE(x)   if ((x) != NULL) free(x)
 /**
  * @brief Cleans up after the module start data.
  */
 void start_cleanup (void)
 {
-   MEMFREE( start_data.name );
-   MEMFREE( start_data.ship );
-   MEMFREE( start_data.system );
-   MEMFREE( start_data.mission );
-   MEMFREE( start_data.event );
-   MEMFREE( start_data.tutsys );
-   MEMFREE( start_data.tutmisn );
-   MEMFREE( start_data.tutevt );
+   free( start_data.name );
+   free( start_data.shipname );
+   free( start_data.ship );
+   free( start_data.system );
+   free( start_data.mission );
+   free( start_data.event );
+   free( start_data.tutsys );
+   free( start_data.tutmisn );
+   free( start_data.tutevt );
    memset( &start_data, 0, sizeof(start_data) );
 }
-#undef MEMFREE
 
 
 /**

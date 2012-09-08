@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Janus Station">
+ <pos>
+  <x>-2258.544687</x>
+  <y>5008.117353</y>
+ </pos>
+ <GFX>
+  <space>station-shipyard2.png</space>
+  <exterior>station04.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>100.000000</value>
+  <range>3</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>12000</population>
+  <hide>0.750000</hide>
+  <services>
+   <land>emp_mil_restricted</land>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>Janus Station is a quiet garrison post for the empire. It serves as a potential rallying point for imperial forces trying to defend the core, but at the moment, it is considered an acceptable post for older crewmen wanting a relaxing post before they retire to Amphion not far away.</description>
+  <bar>The bar has a few games on, and the drinks are cold. There is food, but it is mostly pre-packaged stuff. Not bad, but not amazing either.</bar>
+ </general>
+ <tech>
+  <item>Engines Low</item>
+  <item>Engines Medium</item>
+  <item>Laser 1</item>
+  <item>Kinetic 1</item>
+  <item>Basic Civilian Ships</item>
+  <item>Light Civilian Combat Ships</item>
+  <item>Basic Outfits 1</item>
+  <item>Basic Outfits 2</item>
+  <item>Low Tech Upgrades</item>
+ </tech>
+</asset>

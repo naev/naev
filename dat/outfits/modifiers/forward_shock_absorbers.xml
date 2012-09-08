@@ -3,6 +3,7 @@
  <general>
   <typename>Weapon Modifier (Forward)</typename>
   <slot>structure</slot>
+  <size>small</size>
   <mass>1</mass>
   <price>35000</price>
   <description>These shock absorbers are attached to the forward mounts, isolating them from the hull and providing increased accuracy.</description>

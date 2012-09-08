@@ -34,6 +34,9 @@
   <bar>Traal's spaceport bar is heavy on Sirian propaganda. With foreign territories just a jump away, the Sirii feel the need to spread their beliefs, even if only passively. Though House Sirius has stopped expanding in recent years, the Traalians believe that Sirichana is merely taking a pause to stabilize the existing Sirian worlds. Soon, they say, Fidelis will be Sirius space.</bar>
  </general>
  <tech>
+  <item>Hulls Medium</item>
+  <item>Engines Low</item>
+  <item>Engines Medium</item>
   <item>Ion 1</item>
   <item>Basic Outfits 2</item>
   <item>Low Tech Upgrades</item>

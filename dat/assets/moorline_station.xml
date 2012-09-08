@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Moorline Station">
+ <pos>
+  <x>-2730.715876</x>
+  <y>-9072.781321</y>
+ </pos>
+ <GFX>
+  <space>000.png</space>
+  <exterior>station03.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>1000</population>
+  <hide>0.750000</hide>
+  <services>
+   <land>srm_mil_restricted</land>
+   <refuel/>
+   <bar/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>A local starbase that guards the peace in this sector of Soromid space, Moorline Station is a source of confidence to the nearby inhabited worlds. People tend to feel safer when a naval base is close by.</description>
+  <bar>This spacedock bar is full of angles and straight edges, which is unusual in Soromid architecture. The reason for this is that Moorline Station was originally an Empire deep space outpost. It was abandoned toward the end of the Golden Age however, and the Soromid repurposed it when they took control of this area of space.</bar>
+ </general>
+ <tech>
+  <item>Systems Low</item>
+  <item>Engines Low</item>
+  <item>Plasma 2</item>
+  <item>Heavy Weapons 1</item>
+  <item>Heavy Weapons 2</item>
+  <item>Soromid Military Ships</item>
+  <item>Heavy Civilian Combat Ships</item>
+ </tech>
+</asset>
