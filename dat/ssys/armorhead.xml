@@ -20,9 +20,5 @@
    <autopos/>
    <hide>1.250000</hide>
   </jump>
-  <jump target="Zalek">
-   <autopos/>
-   <hide>1.250000</hide>
-  </jump>
  </jumps>
 </ssys>

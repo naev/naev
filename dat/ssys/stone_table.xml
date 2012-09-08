@@ -16,6 +16,14 @@
    <autopos/>
    <hide>1.250000</hide>
   </jump>
+  <jump target="Fried">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Pultatis">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
   <jump target="Seelie">
    <autopos/>
    <hide>1.250000</hide>

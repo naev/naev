@@ -7,12 +7,12 @@ function spawn_patrol ()
     local r = rnd.rnd()
 
     if r < 0.5 then
-       scom.addPilot( pilots, "Za'lek Lancelot", 25 );
+       scom.addPilot( pilots, "Za'lek Sting", 25 );
     elseif r < 0.8 then
-       scom.addPilot( pilots, "Za'lek Lancelot", 25 );
-       scom.addPilot( pilots, "Za'lek Lancelot", 25 );
+       scom.addPilot( pilots, "Za'lek Sting", 25 );
+       scom.addPilot( pilots, "Za'lek Sting", 25 );
     else
-       scom.addPilot( pilots, "Za'lek Pacifier", 75 );
+       scom.addPilot( pilots, "Za'lek Demon", 75 );
     end
 
     return pilots
@@ -25,16 +25,16 @@ function spawn_squad ()
     local r = rnd.rnd()
 
     if r < 0.5 then
-       scom.addPilot( pilots, "Za'lek Lancelot", 25 );
-       scom.addPilot( pilots, "Za'lek Lancelot", 25 );
-       scom.addPilot( pilots, "Za'lek Admonisher", 45 );
+       scom.addPilot( pilots, "Za'lek Sting", 25 );
+       scom.addPilot( pilots, "Za'lek Sting", 25 );
+       scom.addPilot( pilots, "Za'lek Imp", 45 );
     elseif r < 0.8 then
-       scom.addPilot( pilots, "Za'lek Admonisher", 45 );
-       scom.addPilot( pilots, "Za'lek Admonisher", 45 );
+       scom.addPilot( pilots, "Za'lek Imp", 45 );
+       scom.addPilot( pilots, "Za'lek Imp", 45 );
     else
-       scom.addPilot( pilots, "Za'lek Lancelot", 25 );
-       scom.addPilot( pilots, "Za'lek Lancelot", 25 );
-       scom.addPilot( pilots, "Za'lek Pacifier", 75 );
+       scom.addPilot( pilots, "Za'lek Sting", 25 );
+       scom.addPilot( pilots, "Za'lek Sting", 25 );
+       scom.addPilot( pilots, "Za'lek Demon", 75 );
     end
 
     return pilots
@@ -48,23 +48,23 @@ function spawn_capship ()
 
     -- Generate the capship
     if r < 0.7 then
-       scom.addPilot( pilots, "Za'lek Hawking", 140 )
+       scom.addPilot( pilots, "Za'lek Mephisto", 140 )
     else
-       scom.addPilot( pilots, "Za'lek Kestrel", 165 )
+       scom.addPilot( pilots, "Za'lek Diablo", 150 )
     end
 
     -- Generate the escorts
     r = rnd.rnd()
     if r < 0.5 then
-       scom.addPilot( pilots, "Za'lek Lancelot", 25 );
-       scom.addPilot( pilots, "Za'lek Lancelot", 25 );
-       scom.addPilot( pilots, "Za'lek Lancelot", 25 );
+       scom.addPilot( pilots, "Za'lek Sting", 25 );
+       scom.addPilot( pilots, "Za'lek Sting", 25 );
+       scom.addPilot( pilots, "Za'lek Sting", 25 );
     elseif r < 0.8 then
-       scom.addPilot( pilots, "Za'lek Lancelot", 25 );
-       scom.addPilot( pilots, "Za'lek Admonisher", 45 );
+       scom.addPilot( pilots, "Za'lek Sting", 25 );
+       scom.addPilot( pilots, "Za'lek Imp", 45 );
     else
-       scom.addPilot( pilots, "Za'lek Lancelot", 25 );
-       scom.addPilot( pilots, "Za'lek Pacifier", 75 );
+       scom.addPilot( pilots, "Za'lek Demon", 25 );
+       scom.addPilot( pilots, "Za'lek Demon", 75 );
     end
 
     return pilots

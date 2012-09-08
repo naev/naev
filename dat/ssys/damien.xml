@@ -12,15 +12,11 @@
  </pos>
  <assets/>
  <jumps>
-  <jump target="Atryssa">
-   <autopos/>
-   <hide>1.250000</hide>
-  </jump>
   <jump target="Severus">
    <autopos/>
    <hide>1.250000</hide>
   </jump>
-  <jump target="Zalek">
+  <jump target="Za'lek">
    <autopos/>
    <hide>1.250000</hide>
   </jump>

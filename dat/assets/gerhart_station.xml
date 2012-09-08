@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Gerhart Station">
+ <pos>
+  <x>10274.476780</x>
+  <y>-6019.003188</y>
+ </pos>
+ <GFX>
+  <space>station-cylinder.png</space>
+  <exterior>traderoom.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Za'lek</faction>
+  <value>300.000000</value>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>8500</population>
+  <hide>0.750000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>Gerhart Station was built by the Za'lek Central Council in response to the Empire building Outbound Station. The Za'lek felt miffed that the Empire would step in on what they saw as their land and instead of meekly backing down or risking military conflict, merely built a larger and better-equipped station. The fact that it makes an ideal location for defending the Za'lek from Imperial treachery, or launching an attack into the Empire itself, is a bonus that is an open secret.</description>
+  <bar>There are many Za'lek military offcials, scientists, and traders from all over in this large and clean bar. It is mujch nicer than the one on Outbound Station. Quite a pointed snub.</bar>
+ </general>
+ <tech>
+  <item>Laser 1</item>
+  <item>Ion 1</item>
+  <item>Plasma 1</item>
+  <item>Basic Outfits 1</item>
+  <item>Basic Outfits 2</item>
+  <item>Low Tech Upgrades</item>
+  <item>Star Maps</item>
+  <item>Basic Civilian Ships</item>
+  <item>Basic Trade Ships</item>
+ </tech>
+</asset>

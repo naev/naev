@@ -7,20 +7,12 @@
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>-525.266142</x>
-  <y>-1147.067716</y>
+  <x>-749.266142</x>
+  <y>-648.067716</y>
  </pos>
  <assets/>
  <jumps>
-  <jump target="Menja">
-   <autopos/>
-   <hide>1.250000</hide>
-  </jump>
   <jump target="Procyon">
-   <autopos/>
-   <hide>1.250000</hide>
-  </jump>
-  <jump target="Ruadan">
    <autopos/>
    <hide>1.250000</hide>
   </jump>

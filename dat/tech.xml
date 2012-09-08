@@ -314,6 +314,11 @@
   <item>Soromid Arx</item>
   <item>Proteron Watson</item>
   <item>Empire Peacemaker</item>
+  <item>Za'lek Sting</item>
+  <item>Za'lek Imp</item>
+  <item>Za'lek Demon</item>
+  <item>Za'lek Mephisto</item>
+  <item>Za'lek Diablo</item>
  </tech>
  <tech name="All Commodities">
   <item>Food</item>
@@ -673,8 +678,11 @@
   <item>Soromid Arx</item>
  </tech>
  <tech name="Za'lek Military Ships">
+  <item>Za'lek Sting</item>
+  <item>Za'lek Imp</item>
+  <item>Za'lek Demon</item>
+  <item>Za'lek Mephisto</item>
   <item>Za'lek Diablo</item>
-
  </tech>
 
  <tech name="__Heavy Weapon License">

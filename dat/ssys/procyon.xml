@@ -7,11 +7,23 @@
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>-681.352707</x>
-  <y>-642.387175</y>
+  <x>-666.352707</x>
+  <y>-675.387175</y>
  </pos>
  <assets/>
  <jumps>
+  <jump target="Copernicus">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Corinth">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Octavian">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
   <jump target="Vost">
    <autopos/>
    <hide>1.250000</hide>

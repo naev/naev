@@ -7,8 +7,8 @@
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>-341.206019</x>
-  <y>-933.250772</y>
+  <x>-689.206019</x>
+  <y>-732.250772</y>
  </pos>
  <assets>
   <asset>Corinth 1</asset>
@@ -16,17 +16,9 @@
   <asset>Corinth Foods</asset>
  </assets>
  <jumps>
-  <jump target="Kaiser">
+  <jump target="Procyon">
    <autopos/>
    <hide>1.250000</hide>
-  </jump>
-  <jump target="Regas">
-   <autopos/>
-   <hide>0.000000</hide>
-  </jump>
-  <jump target="St. Lo">
-   <autopos/>
-   <hide>0.000000</hide>
   </jump>
  </jumps>
 </ssys>

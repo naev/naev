@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<asset name="Ruadan Prime">
+<asset name="Za'lek II">
  <pos>
-  <x>-3826.077024</x>
-  <y>1566.380526</y>
+  <x>976.188887</x>
+  <y>-6877.694431</y>
  </pos>
  <GFX>
-  <space>M09.png</space>
-  <exterior>traderoom.png</exterior>
+  <space>Y00.png</space>
+  <exterior>lava.png</exterior>
  </GFX>
  <general>
   <class>A</class>
