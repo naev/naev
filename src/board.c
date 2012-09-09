@@ -82,8 +82,9 @@ void player_board (void)
          return;
       }
    }
-
-   p = pilot_get(player.p->target);
+   else {
+      p = pilot_get(player.p->target);
+   }
    c = pilot_getFactionColourChar( p );
 
    if (pilot_isFlag(p,PILOT_NOBOARD)) {
