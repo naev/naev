@@ -311,7 +311,7 @@ int space_canHyperspace( Pilot* p )
       return 0;
 
    /* Must have fuel. */
-   if (p->fuel < HYPERSPACE_FUEL)
+   if (p->fuel < p->fuel_consumption)
       return 0;
 
    /* Must have hyperspace target. */
@@ -340,7 +340,7 @@ int space_hyperspace( Pilot* p )
 {
    if (pilot_isFlag(p, PILOT_NOJUMP))
       return -2;
-   if (p->fuel < HYPERSPACE_FUEL)
+   if (p->fuel < p->fuel_consumption)
       return -3;
    if (!space_canHyperspace(p))
       return -1;
@@ -1375,7 +1375,7 @@ void space_init( const char* sysname )
    cur_system->nsystemFleets = 0;
 
    /* Reset any schedules and used presence. */
-   for (i=0; i < cur_system->npresence; i++) {
+   for (i=0; i<cur_system->npresence; i++) {
       cur_system->presence[i].curUsed  = 0;
       cur_system->presence[i].timer    = 0.;
       cur_system->presence[i].disabled = 0;
@@ -1465,13 +1465,13 @@ static int planets_load ( void )
    Planet *p;
    lua_State *L;
    uint32_t nfiles;
-   int i;
+   int i, len;
 
    /* Load landing stuff. */
    landing_lua = nlua_newState();
    L           = landing_lua;
    nlua_loadStandard(L, 1);
-   buf = ndata_read( LANDING_DATA_PATH, &bufsize );
+   buf         = ndata_read( LANDING_DATA_PATH, &bufsize );
    if (luaL_dobuffer(landing_lua, buf, bufsize, LANDING_DATA_PATH) != 0) {
       WARN( "Failed to load landing file: %s\n"
             "%s\n"
@@ -1489,20 +1489,25 @@ static int planets_load ( void )
 
    /* Load XML stuff. */
    planet_files = ndata_list( PLANET_DATA_PATH, &nfiles );
-   for ( i = 0; i < (int)nfiles; i++ ) {
-
-      file = malloc((strlen(PLANET_DATA_PATH)+strlen(planet_files[i])+2)*sizeof(char));
-      nsnprintf(file,(strlen(PLANET_DATA_PATH)+strlen(planet_files[i])+2)*sizeof(char),"%s%s",PLANET_DATA_PATH,planet_files[i]);
-      buf = ndata_read( file, &bufsize );
-      doc = xmlParseMemory( buf, bufsize );
+   for (i=0; i<(int)nfiles; i++) {
+      len  = (strlen(PLANET_DATA_PATH)+strlen(planet_files[i])+2);
+      file = malloc( len );
+      nsnprintf( file, len,"%s%s",PLANET_DATA_PATH,planet_files[i]);
+      buf  = ndata_read( file, &bufsize );
+      doc  = xmlParseMemory( buf, bufsize );
       if (doc == NULL) {
          WARN("%s file is invalid xml!",file);
+         free(file);
+         free(buf);
          continue;
       }
 
       node = doc->xmlChildrenNode; /* first planet node */
       if (node == NULL) {
          WARN("Malformed %s file: does not contain elements",file);
+         free(file);
+         xmlFreeDoc(doc);
+         free(buf);
          continue;
       }
 
@@ -1511,13 +1516,16 @@ static int planets_load ( void )
          planet_parse( p, node );
       }
 
+      /* Clean up. */
+      free(file);
+      xmlFreeDoc(doc);
+      free(buf);
    }
 
-   /*
-    * free stuff
-    */
-   xmlFreeDoc(doc);
-   free(buf);
+   /* Clean up. */
+   for (i=0; i<(int)nfiles; i++)
+      free( planet_files[i] );
+   free( planet_files );
 
    return 0;
 }
@@ -1886,8 +1894,8 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
       MELEMENT( (planet_hasService(planet,PLANET_SERVICE_OUTFITS) ||
                planet_hasService(planet,PLANET_SERVICE_SHIPYARD)) &&
             (planet->tech==NULL), "tech" );
-      MELEMENT( planet_hasService(planet,PLANET_SERVICE_COMMODITY) &&
-            (planet->ncommodities==0),"commodity" );
+      /*MELEMENT( planet_hasService(planet,PLANET_SERVICE_COMMODITY) &&
+            (planet->ncommodities==0),"commodity" );*/
       MELEMENT( (flags&FLAG_FACTIONSET) && (planet->presenceAmount == 0.),
             "presence" );
    }
@@ -2608,8 +2616,8 @@ int space_load (void)
    systems_loading = 1;
 
    /* Load jump point graphic - must be before systems_load(). */
-   jumppoint_gfx = gl_newSprite( "gfx/planet/space/jumppoint.png", 4, 4, OPENGL_TEX_MIPMAPS );
-   jumpbuoy_gfx = gl_newImage( "gfx/planet/space/jumpbuoy.png", 0 );
+   jumppoint_gfx = gl_newSprite(  PLANET_GFX_SPACE_PATH"jumppoint.png", 4, 4, OPENGL_TEX_MIPMAPS );
+   jumpbuoy_gfx = gl_newImage(  PLANET_GFX_SPACE_PATH"jumpbuoy.png", 0 );
 
    /* Load planets. */
    ret = planets_load();
@@ -2667,7 +2675,7 @@ static int systems_load (void)
    xmlNodePtr node;
    xmlDocPtr doc;
    StarSystem *sys;
-   int i;
+   int i, len;
    uint32_t nfiles;
 
    /* Allocate if needed. */
@@ -2684,24 +2692,33 @@ static int systems_load (void)
     */
    for (i=0; i<(int)nfiles; i++) {
 
-      file = malloc((strlen(SYSTEM_DATA_PATH)+strlen(system_files[i])+2)*sizeof(char));
-      nsnprintf(file,(strlen(SYSTEM_DATA_PATH)+strlen(system_files[i])+2)*sizeof(char),"%s%s",SYSTEM_DATA_PATH,system_files[i]);
+      len  = strlen(SYSTEM_DATA_PATH)+strlen(system_files[i])+2;
+      file = malloc( len );
+      nsnprintf( file, len, "%s%s", SYSTEM_DATA_PATH, system_files[i] );
       /* Load the file. */
       buf = ndata_read( file, &bufsize );
       doc = xmlParseMemory( buf, bufsize );
       if (doc == NULL) {
          WARN("%s file is invalid xml!",file);
+         free(buf);
          continue;
       }
 
       node = doc->xmlChildrenNode; /* first planet node */
       if (node == NULL) {
          WARN("Malformed %s file: does not contain elements",file);
+         xmlFreeDoc(doc);
+         free(buf);
          continue;
       }
 
       sys = system_new();
       system_parse( sys, node );
+
+      /* Clean up. */
+      xmlFreeDoc(doc);
+      free(buf);
+      free( file );
    }
 
    /*
@@ -2709,32 +2726,40 @@ static int systems_load (void)
     */
    for (i=0; i<(int)nfiles; i++) {
 
-      file = malloc((strlen(SYSTEM_DATA_PATH)+strlen(system_files[i])+2)*sizeof(char));
-      nsnprintf(file,(strlen(SYSTEM_DATA_PATH)+strlen(system_files[i])+2)*sizeof(char),"%s%s",SYSTEM_DATA_PATH,system_files[i]);
+      len  = strlen(SYSTEM_DATA_PATH)+strlen(system_files[i])+2;
+      file = malloc( len );
+      nsnprintf( file, len, "%s%s", SYSTEM_DATA_PATH, system_files[i] );
       /* Load the file. */
       buf = ndata_read( file, &bufsize );
+      free( file );
       doc = xmlParseMemory( buf, bufsize );
       if (doc == NULL) {
+         free(buf);
          continue;
       }
 
       node = doc->xmlChildrenNode; /* first planet node */
       if (node == NULL) {
+         xmlFreeDoc(doc);
+         free(buf);
          continue;
       }
 
       system_parseJumps(node); /* will automatically load the jumps into the system */
-   }
 
-   /*
-    * cleanup
-    */
-   xmlFreeDoc(doc);
-   free(buf);
+      /* Clean up. */
+      xmlFreeDoc(doc);
+      free(buf);
+   }
 
    DEBUG("Loaded %d Star System%s with %d Planet%s",
          systems_nstack, (systems_nstack==1) ? "" : "s",
          planet_nstack, (planet_nstack==1) ? "" : "s" );
+
+   /* Clean up. */
+   for (i=0; i<(int)nfiles; i++)
+      free( system_files[i] );
+   free( system_files );
 
    return 0;
 }
@@ -2802,12 +2827,14 @@ static void space_renderJumpPoint( JumpPoint *jp, int i )
 {
    const glColour *c;
 
-   if (jp_isFlag( jp, JP_HIDDEN ) || jp_isFlag( jp, JP_EXITONLY ))
+   if (jp_isFlag( jp, JP_EXITONLY ) || !jp_isKnown(jp))
       return;
 
    if ((player.p != NULL) && (i==player.p->nav_hyperspace) &&
          (pilot_isFlag(player.p, PILOT_HYPERSPACE) || space_canHyperspace(player.p)))
       c = &cGreen;
+   else if (jp_isFlag(jp, JP_HIDDEN))
+      c = &cRed;
    else
       c = NULL;
 
@@ -3122,8 +3149,10 @@ int space_sysLoad( xmlNodePtr parent )
          do {
             if (xml_isNode(cur,"known")) {
                xmlr_attr(cur,"sys",str);
-               if (str != NULL) /* check for 5.0 saves */
+               if (str != NULL) { /* check for 5.0 saves */
                   sys = system_get(str);
+                  free(str);
+               }
                else /* load from 5.0 saves */
                   sys = system_get(xml_get(cur));
                if (sys != NULL) { /* Must exist */

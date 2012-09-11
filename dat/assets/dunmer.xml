@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Dunmer">
+ <pos>
+  <x>-3757.585211</x>
+  <y>-10069.112936</y>
+ </pos>
+ <GFX>
+  <space>moon-M06.png</space>
+  <exterior>oceanic2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>150.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>12500000</population>
+  <hide>0.500000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities/>
+  <description>Even Dvaered realizes that not every world can be nevoted to industry. Food has to be grown everywhere, and crop-growing station are just impractical on the large scale. Hence the colonization of Dunmer. Despite its small size, the planet actually has a siginigantly larger population than Castellan III due to it's generally easy climate.</description>
+  <bar>This bar is poipulated by traders carrying food to Castellan III or beyond, farmers who maintatin the agri-businesses, and Dvared soldiers who function as a garrison. The bar is lively and friendly, except for the dour soldiers.</bar>
+ </general>
+</asset>

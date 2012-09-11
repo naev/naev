@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Burnan">
+ <pos>
+  <x>-6250.670883</x>
+  <y>4135.478736</y>
+ </pos>
+ <GFX>
+  <space>M07.png</space>
+  <exterior>forest.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>A</class>
+  <population>3000000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land>land_hiclass</land>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>Burnan counts as the unofficial local capital. Aesir is far away, and many bureaucratic services are better rendered in a local center of government than over a distance of many hyperspace jumps. Burnan has a large political district in its primary city, which also houses one of the largest Sirian temples in all of Sirius space.</description>
+  <bar>Burnan doesn't have a separate spaceport bar in the way many other worlds do. Instead, the spaceport bar and the main spaceport hall are one and the same thing. There are exits to terminals on all sides and the central area is dominated by an island of service interfaces and counters. There is an elevated area that has tables for visitors to sit down at, where they won't get in the way of the bustle of the main floor.</bar>
+ </general>
+ <tech>
+  <item>Ion 1</item>
+  <item>Ion 2</item>
+  <item>Basic Outfits 1</item>
+  <item>Basic Outfits 2</item>
+  <item>Heavy Weapons 1</item>
+  <item>High Tech Upgrades 2</item>
+  <item>Missiles 2</item>
+  <item>Star Maps</item>
+  <item>Basic Trade Ships</item>
+  <item>Bulk Trade Ships</item>
+  <item>Light Civilian Combat Ships</item>
+  <item>Heavy Civilian Combat Ships</item>
+  <item>Systems High</item>
+ </tech>
+</asset>

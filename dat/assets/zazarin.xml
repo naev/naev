@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Zazarin">
+ <pos>
+  <x>7738.764025</x>
+  <y>-1440.447283</y>
+ </pos>
+ <GFX>
+  <space>G01.png</space>
+  <exterior>mining.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>A</class>
+  <population>100000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land>land_lowclass</land>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities/>
+  <description>Zazarin was a human habitable world to begin with, but it didn't get settled until relatively recently. The reason for this is simple: it's an ugly world. Nothing about it makes it in any way attractive. Its surface is mostly flat, its sky is yellow with dust, its air is stale, and its soil is devoid of any materials of value. The only thing it has to offer is a large amount of buildable real estate. That real estate is now being occupied by heavy industry.</description>
+  <bar>Reflecting the poor state of planet Zazarin, this spaceport bar is a sad affair. The staff clearly don't feel motivated enough to do any but the bare minimum of maintenance, which has left tables rickety and chairs broken. It's a miracle the basic facilities are in working order.</bar>
+ </general>
+ <tech>
+  <item>Hulls Medium</item>
+  <item>Laser 1</item>
+  <item>Basic Outfits 1</item>
+  <item>Missiles 1</item>
+ </tech>
+</asset>

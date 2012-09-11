@@ -5,7 +5,7 @@
 
 --]]
 
-include "scripts/numstring.lua"
+include "numstring.lua"
 
 lang = naev.lang()
 if lang == "es" then

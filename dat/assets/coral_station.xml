@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Coral Station">
+ <pos>
+  <x>-10376.000424</x>
+  <y>3007.726705</y>
+ </pos>
+ <GFX>
+  <space>station-fleetbase.png</space>
+  <exterior>station03.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Sirius</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>A</class>
+  <population>500</population>
+  <hide>0.750000</hide>
+  <services>
+   <land>srs_mil_restricted</land>
+   <refuel/>
+  </services>
+  <commodities/>
+  <description>Coral Station acts as a border guard. The forces stationed here are the first line of defense against threats coming from the north, and inspect all trade traffic entering Sirius space this way.</description>
+ </general>
+</asset>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Gewirn IV">
+ <pos>
+  <x>7749.309756</x>
+  <y>-6662.492197</y>
+ </pos>
+ <GFX>
+  <space>J04.png</space>
+  <exterior>station03.png</exterior>
+ </GFX>
+ <general>
+  <class>J</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

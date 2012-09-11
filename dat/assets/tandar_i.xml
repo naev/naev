@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <asset name="Tandar I">
  <pos>
-  <x>6787.873038</x>
-  <y>-3749.976470</y>
+  <x>10181.809557</x>
+  <y>-5624.964705</y>
  </pos>
  <GFX>
   <space>I02.png</space>
@@ -11,7 +11,7 @@
  <general>
   <class>A</class>
   <population>0</population>
-  <hide>0.250000</hide>
+  <hide>0.150000</hide>
   <services/>
  </general>
 </asset>

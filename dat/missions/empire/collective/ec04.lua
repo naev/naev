@@ -12,8 +12,8 @@
 
 ]]--
 
-include "scripts/nextjump.lua"
-include "scripts/proximity.lua"
+include "nextjump.lua"
+include "proximity.lua"
 
 lang = naev.lang()
 if lang == "es" then

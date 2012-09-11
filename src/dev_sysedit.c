@@ -111,7 +111,7 @@ static void sysedit_renderBG( double bx, double bw, double w, double h, double x
 static void sysedit_renderSprite( glTexture *gfx, double bx, double by, double x, double y,
       int sx, int sy, const glColour *c, int selected, const char *caption );
 static void sysedit_renderOverlay( double bx, double by, double bw, double bh, void* data );
-static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
+static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, void *data );
 /* Button functions. */
 static void sysedit_close( unsigned int wid, char *wgt );
@@ -395,9 +395,9 @@ static void sysedit_btnRename( unsigned int wid_unused, char *unused )
          }
 
          /* Rename. */
-         oldName = malloc((16+strlen(p->name))*sizeof(char));
+         oldName = malloc(16+strlen(p->name));
          nsnprintf(oldName,16+strlen(p->name),"dat/assets/%s.xml", uniedit_nameFilter(p->name) );
-         newName = malloc((16+strlen(name))*sizeof(char));
+         newName = malloc(16+strlen(name));
          nsnprintf(newName,16+strlen(name),"dat/assets/%s.xml", uniedit_nameFilter(name) );
          nfile_rename(oldName,newName);
          free(oldName);
@@ -427,8 +427,8 @@ static void sysedit_btnRemove( unsigned int wid_unused, char *unused )
          sel = &sysedit_select[i];
          if (sel->type == SELECT_PLANET) {
             cleanName = uniedit_nameFilter( sysedit_sys->planets[  sel->u.planet ]->name );
-            file = malloc(16+strlen(cleanName)*sizeof(char));
-            nsnprintf(file,16+strlen(cleanName)*sizeof(char),
+            file = malloc(16+strlen(cleanName));
+            nsnprintf(file,16+strlen(cleanName),
                            "dat/assets/%s.xml",cleanName);
             nfile_delete(file);
             system_rmPlanet( sysedit_sys, sysedit_sys->planets[ sel->u.planet ]->name );
@@ -477,6 +477,7 @@ static void sysedit_btnScale( unsigned int wid_unused, char *unused )
 
    sys   = sysedit_sys; /* Comfort. */
    s     = atof(str);
+   free(str);
 
    /* In case screwed up. */
    if ((s < 0.1) || (s > 10.)) {
@@ -707,7 +708,7 @@ static void sysedit_renderOverlay( double bx, double by, double bw, double bh, v
 /**
  * @brief System editor custom widget mouse handling.
  */
-static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
+static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
       double w, double h, void *data )
 {
    (void) wid;
@@ -731,7 +732,7 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
       case SDL_MOUSEBUTTONDOWN:
          /* Must be in bounds. */
          if ((mx < 0.) || (mx > w) || (my < 0.) || (my > h))
-            return;
+            return 0;
 
          /* Zooming */
          if (event->button.button == SDL_BUTTON_WHEELUP)
@@ -783,13 +784,13 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
                                  && (sysedit_moved < SYSEDIT_MOVE_THRESHOLD)) {
                               sysedit_editPnt();
                               sysedit_dragSel = 0;
-                              return;
+                              return 1;
                            }
                            sysedit_tadd      = -1;
                         }
                         sysedit_dragTime  = SDL_GetTicks();
                         sysedit_moved     = 0;
-                        return;
+                        return 1;
                      }
                   }
 
@@ -806,7 +807,7 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
                   sysedit_dragSel   = 1;
                   sysedit_dragTime  = SDL_GetTicks();
                   sysedit_moved     = 0;
-                  return;
+                  return 1;
                }
             }
 
@@ -844,13 +845,13 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
                                  && (sysedit_moved < SYSEDIT_MOVE_THRESHOLD)) {
                               sysedit_editJump();
                               sysedit_dragSel = 0;
-                              return;
+                              return 1;
                            }
                            sysedit_tadd      = -1;
                         }
                         sysedit_dragTime  = SDL_GetTicks();
                         sysedit_moved     = 0;
-                        return;
+                        return 1;
                      }
                   }
 
@@ -867,7 +868,7 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
                   sysedit_dragSel   = 1;
                   sysedit_dragTime  = SDL_GetTicks();
                   sysedit_moved     = 0;
-                  return;
+                  return 1;
                }
             }
 
@@ -878,9 +879,8 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
                sysedit_moved     = 0;
                sysedit_tsel.type = SELECT_NONE;
             }
-            return;
          }
-         break;
+         return 1;
 
       case SDL_MOUSEBUTTONUP:
          if (sysedit_drag) {
@@ -953,6 +953,8 @@ static void sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double
          }
          break;
    }
+
+   return 0;
 }
 
 

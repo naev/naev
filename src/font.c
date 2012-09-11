@@ -52,6 +52,7 @@ typedef struct font_char_s {
 /* default font */
 glFont gl_defFont; /**< Default font. */
 glFont gl_smallFont; /**< Small font. */
+glFont gl_defFontMono; /**< Default mono font. */
 
 
 /* Last used colour. */
@@ -330,8 +331,6 @@ int gl_printMaxRaw( const glFont *ft_font, const int max,
 {
    int ret, i, s;
 
-   ret = 0; /* default return value */
-
    if (ft_font == NULL)
       ft_font = &gl_defFont;
 
@@ -345,7 +344,7 @@ int gl_printMaxRaw( const glFont *ft_font, const int max,
       s = gl_fontRenderCharacter( ft_font, text[i], c, s );
    gl_fontRenderEnd();
 
-   return 0;
+   return ret;
 }
 /**
  * @brief Behaves like gl_print but stops displaying text after reaching a certain length.
@@ -400,8 +399,6 @@ int gl_printMidRaw( const glFont *ft_font, const int width,
    if (ft_font == NULL)
       ft_font = &gl_defFont;
 
-   ret = 0; /* default return value */
-
    /* limit size */
    ret = font_limitSize( ft_font, &n, text, width );
    x += (double)(width - n)/2.;
@@ -413,7 +410,7 @@ int gl_printMidRaw( const glFont *ft_font, const int width,
       s = gl_fontRenderCharacter( ft_font, text[i], c, s );
    gl_fontRenderEnd();
 
-   return 0;
+   return ret;
 }
 /**
  * @brief Displays text centered in position and width.

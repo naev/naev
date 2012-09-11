@@ -7,16 +7,12 @@
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>-138.000000</x>
-  <y>-784.000000</y>
+  <x>-161.148148</x>
+  <y>-972.078704</y>
  </pos>
  <assets/>
  <jumps>
-  <jump target="Gammacron">
-   <autopos/>
-   <hide>1.250000</hide>
-  </jump>
-  <jump target="Pudas">
+  <jump target="Sheffield">
    <autopos/>
    <hide>1.250000</hide>
   </jump>

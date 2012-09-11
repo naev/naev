@@ -63,7 +63,7 @@ else -- default english
 end
 
 
-include("scripts/jumpdist.lua")
+include("jumpdist.lua")
 
 
 function create ()

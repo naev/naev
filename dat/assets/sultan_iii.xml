@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Sultan III">
+ <pos>
+  <x>4203.975314</x>
+  <y>-3362.793021</y>
+ </pos>
+ <GFX>
+  <space>K04.png</space>
+  <exterior>desertic2.png</exterior>
+ </GFX>
+ <general>
+  <class>D</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

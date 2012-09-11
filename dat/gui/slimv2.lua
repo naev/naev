@@ -35,7 +35,7 @@ function create()
    col_slot_heat = colour.new( 108/255, 25/255, 13/255, 200/255 )
    
    --Load Images
-   local base = "gfx/gui/slimv2/"
+   local base = "dat/gfx/gui/slimv2/"
    player_pane = tex.open( base .. "main.png" )
    bar_sheen = tex.open( base .. "sheen.png" )
    bar_bg = tex.open( base .. "bar_bg.png" )

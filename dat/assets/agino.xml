@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Agino">
+ <pos>
+  <x>-11489.009570</x>
+  <y>8901.879853</y>
+ </pos>
+ <GFX>
+  <space>M01.png</space>
+  <exterior>forest.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>A</class>
+  <population>4000000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>Agino is a bustling planet mostly full of middle class Soromid citizens. The planet doesn't excel in any area when compared to the worlds in the Soromid core, but this being a remote part of Soromid space it is still a local highlight.</description>
+  <bar>The person running this spaceport bar is a portly Soromid man named Alverik Sogheem. Alverik usually mans the bar himself, and he knows all his customers by name and face. It doesn't matter how long you've been away, or where you've been in the galaxy. On your return to Agino, Alverik will remember who you are and cheerfully pour you a drink. Some spacers secretly suspect he has an audiovisual database installed in his head.</bar>
+ </general>
+ <tech>
+  <item>Systems Medium</item>
+  <item>Hulls Medium</item>
+  <item>Engines Low</item>
+  <item>Low Tech Upgrades</item>
+  <item>High Tech Upgrades 2</item>
+  <item>Missiles 1</item>
+  <item>Basic Outfits 1</item>
+  <item>Plasma 1</item>
+  <item>Plasma 2</item>
+  <item>Basic Civilian Ships</item>
+  <item>Light Civilian Combat Ships</item>
+  <item>Bulk Trade Ships</item>
+ </tech>
+</asset>

@@ -33,6 +33,9 @@
   <bar>Like many spaceport bars, this one is loud, crowded and a little smelly. In other words, it's a home away from home for those who make their living in space.</bar>
  </general>
  <tech>
+  <item>Systems Medium</item>
+  <item>Hulls Low</item>
+  <item>Hulls Medium</item>
   <item>Laser 1</item>
   <item>Basic Outfits 1</item>
   <item>Basic Outfits 2</item>

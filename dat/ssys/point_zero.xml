@@ -21,6 +21,10 @@
    <autopos/>
    <hide>1.250000</hide>
   </jump>
+  <jump target="Jommel">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
   <jump target="Sarcophagus">
    <autopos/>
    <hide>1.250000</hide>

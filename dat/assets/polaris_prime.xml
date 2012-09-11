@@ -36,11 +36,14 @@
   <bar>A simple, utilitarian bar patronized largely by off-duty dock workers and terraformers, this bar is nonetheless kept immaculately clean. It clearly means to set the... bar for all bars in Empire space.</bar>
  </general>
  <tech>
+  <item>Hulls Low</item>
+  <item>Engines Low</item>
   <item>Laser 1</item>
   <item>Laser 2</item>
   <item>Laser 3</item>
   <item>Basic Civilian Ships</item>
   <item>High Tech Upgrades 2</item>
   <item>Heavy Weapons 2</item>
+  <item>Hulls Elite</item>
  </tech>
 </asset>

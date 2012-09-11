@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Bolero">
+ <pos>
+  <x>-11735.014766</x>
+  <y>-3466.579854</y>
+ </pos>
+ <GFX>
+  <space>M00.png</space>
+  <exterior>oceanic.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>100.000000</value>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>456745</population>
+  <hide>0.250000</hide>
+  <services>
+   <land>land_lowclass</land>
+   <refuel/>
+   <bar/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>Bolero is one of the empire's most sucessful planets. The population is propserous and sucessful, and the planet's conditions are mild. Although it is still treated as something of a backwater, it is becoming increasingly important in Imperial politics.</description>
+  <bar>The bar here is an old-Earth style pub, with a low cieling, warm beer, and good food. The clients are all polite and cheerful. Not suprisingl, given the bouncers along the walls.</bar>
+ </general>
+ <tech>
+  <item>Systems Low</item>
+  <item>Engines Low</item>
+  <item>Engines Medium</item>
+  <item>Light Civilian Combat Ships</item>
+  <item>Heavy Civilian Combat Ships</item>
+  <item>Laser 1</item>
+  <item>Laser 2</item>
+  <item>Ion 1</item>
+  <item>Kinetic 1</item>
+  <item>Plasma 1</item>
+  <item>Basic Outfits 1</item>
+  <item>Basic Outfits 2</item>
+  <item>Low Tech Upgrades</item>
+  <item>Engines High</item>
+ </tech>
+</asset>

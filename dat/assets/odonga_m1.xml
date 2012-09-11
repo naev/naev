@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Odonga m1">
+ <pos>
+  <x>3117.352516</x>
+  <y>4092.797355</y>
+ </pos>
+ <GFX>
+  <space>moon-M00.png</space>
+  <exterior>station04.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>100.000000</value>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>20000</population>
+  <hide>0.500000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>This small moon's reason for existing is the valuable minerals located in the crust of the volatile Odonga planet itself. It also serves as a stopping point for Dvaered military ships and the occasional trader on their way into Za'lek space or the wilder souther galactic regions.</description>
+  <bar>The bar has a foot in two worlds In one, the quiet, clean efficiency of a trader bar. In the other, the filthy mess of a Dvaered bar. The overall effect is less than the sum of its parts.</bar>
+ </general>
+ <tech>
+  <item>Systems Low</item>
+  <item>Hulls Low</item>
+  <item>Basic Outfits 2</item>
+  <item>Kinetic 1</item>
+  <item>Kinetic 2</item>
+  <item>Laser 1</item>
+  <item>Ion 1</item>
+  <item>Low Tech Upgrades</item>
+  <item>Missiles 1</item>
+  <item>Star Maps</item>
+  <item>Basic Civilian Ships</item>
+  <item>Basic Trade Ships</item>
+ </tech>
+</asset>

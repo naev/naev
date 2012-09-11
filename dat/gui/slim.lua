@@ -46,7 +46,7 @@ function create()
    col_slot_bg = colour.new( 12/255, 14/255, 20/255 )
 
    --Load Images
-   local base = "gfx/gui/slim/"
+   local base = "dat/gfx/gui/slim/"
    player_pane_t = tex.open( base .. "frame_player_top.png" )
    player_pane_m = tex.open( base .. "frame_player_middle.png" )
    player_pane_b = tex.open( base .. "frame_player_bottom.png" )
@@ -922,14 +922,15 @@ function render( dt, dt_mod )
    end
 
    --Bottom bar
-   local length = 5, navstring, fuel, fuelstring
+   local length = 5, navstring, fuel, fuelstring, consume
    gfx.renderTexRaw( bottom_bar, 0, 0, screen_w, 30, 1, 1, 0, 0, 1, 1 )
 
-   fuel = player.fuel()
-   if fuel >= 200 then
-      fuelstring = math.floor(fuel/100.) .. " Jumps"
-   elseif fuel >= 100 then
-      fuelstring = round(fuel/100.) .. " Jump"
+   fuel, consume = player.fuel()
+   local jumps = math.floor(fuel/consume)
+   if jumps == 1 then
+      fuelstring = jumps .. " Jump"
+   elseif jumps > 1 then
+      fuelstring = jumps .. " Jumps"
    else
       fuelstring = "none"
    end

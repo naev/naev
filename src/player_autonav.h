@@ -12,9 +12,6 @@
 #endif /* PLAYER_H */
 
 
-#define TIME_COMPRESSION_DEFAULT_MAX     5000. /**< Maximum default level of time compression (target speed to match). */
-
-
 /* Autonav states. */
 #define AUTONAV_JUMP_APPROACH   0 /**< Player is approaching a jump. */
 #define AUTONAV_JUMP_BRAKE      1 /**< Player is braking at a jump. */

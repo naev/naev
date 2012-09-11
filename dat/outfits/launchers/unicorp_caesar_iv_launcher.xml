@@ -8,9 +8,9 @@
   <price>120000</price>
   <description>The Caesar IV launcher does what it says on the box, which is launch Caesar IV torpedoes.</description>
   <gfx_store>caesarlauncher</gfx_store>
+  <cpu>-13</cpu>
  </general>
  <specific type="launcher" secondary="1">
-  <cpu>13</cpu>
   <ammo>Caesar IV Torpedo</ammo>
   <delay>10</delay>
   <lockon>20</lockon>

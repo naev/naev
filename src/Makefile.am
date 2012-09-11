@@ -81,6 +81,7 @@ CODE_SOURCE = \
 	nlua_misn.c \
 	nlua_music.c \
 	nlua_naev.c \
+	nlua_news.c \
 	nlua_outfit.c \
 	nlua_pilot.c \
 	nlua_planet.c \
@@ -131,6 +132,7 @@ CODE_SOURCE = \
 	save.c \
 	ship.c \
 	shipstats.c \
+	slots.c \
 	sound.c \
 	sound_openal.c \
 	sound_sdlmix.c \
@@ -220,6 +222,7 @@ CODE_SOURCE = \
 	nlua_misn.h \
 	nlua_music.h \
 	nlua_naev.h \
+	nlua_news.h \
 	nlua_outfit.h \
 	nlua_pilot.h \
 	nlua_planet.h \
@@ -272,6 +275,7 @@ CODE_SOURCE = \
 	save.h \
 	ship.h \
 	shipstats.h \
+	slots.h \
 	sound.h \
 	sound_openal.h \
 	sound_priv.h \

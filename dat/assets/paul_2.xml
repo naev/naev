@@ -35,6 +35,8 @@
   <bar>Like many planets in the galaxy nowadays, Paul 2's economy relies heavily on interplanetary trade. The spaceport bar doubles as a trade center, allowing traders to buy and sell wares without ever leaving the spaceport.</bar>
  </general>
  <tech>
+  <item>Systems Low</item>
+  <item>Hulls Medium</item>
   <item>Basic Outfits 1</item>
  </tech>
 </asset>

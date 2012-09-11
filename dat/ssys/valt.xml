@@ -7,14 +7,21 @@
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>-114.600678</x>
-  <y>214.919696</y>
+  <x>-144.600678</x>
+  <y>210.119696</y>
  </pos>
  <assets>
   <asset>Valt I</asset>
   <asset>Valt II</asset>
+  <asset>Valt IV</asset>
+  <asset>Vault</asset>
  </assets>
  <jumps>
+  <jump target="C-28">
+   <pos x="-6275.245619" y="-7360.922215"/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Kelvos">
    <autopos/>
    <hide>1.250000</hide>

@@ -68,7 +68,7 @@ void window_addInput( const unsigned int wid,
    wgt->dat.inp.oneline = oneline;
    wgt->dat.inp.pos     = 0;
    wgt->dat.inp.view    = 0;
-   wgt->dat.inp.input   = calloc( wgt->dat.inp.max, sizeof(char) );
+   wgt->dat.inp.input   = calloc( wgt->dat.inp.max, 1 );
 
    /* position/size */
    wgt->w = (double) w;
@@ -444,7 +444,7 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
       /* Actually delete the chars. */
       memmove( &inp->dat.inp.input[ inp->dat.inp.pos ],
             &inp->dat.inp.input[ curpos ],
-            sizeof(char)*(inp->dat.inp.max - curpos) );
+            (inp->dat.inp.max - curpos) );
       inp->dat.inp.input[ inp->dat.inp.max - curpos + inp->dat.inp.pos ] = '\0';
 
       if (inp->dat.inp.oneline && inp->dat.inp.view > 0) {
@@ -481,7 +481,7 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
       /* Actually delete the chars. */
       memmove( &inp->dat.inp.input[ inp->dat.inp.pos ],
             &inp->dat.inp.input[ curpos ],
-            sizeof(char)*(inp->dat.inp.max - curpos) );
+            (inp->dat.inp.max - curpos) );
       inp->dat.inp.input[ inp->dat.inp.max - curpos + inp->dat.inp.pos ] = '\0';
 
       return 1;
@@ -584,7 +584,7 @@ char* window_setInput( const unsigned int wid, char* name, const char *msg )
 
    /* Set the message. */
    if (msg == NULL) {
-      memset( wgt->dat.inp.input, 0, wgt->dat.inp.max*sizeof(char) );
+      memset( wgt->dat.inp.input, 0, wgt->dat.inp.max );
       wgt->dat.inp.pos     = 0;
       wgt->dat.inp.view    = 0;
    }

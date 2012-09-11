@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Ahmed">
+ <pos>
+  <x>-7128.458366</x>
+  <y>-3384.438830</y>
+ </pos>
+ <GFX>
+  <space>moon-H02.png</space>
+  <exterior>mining.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>100.000000</value>
+  <range>3</range>
+ </presence>
+ <general>
+  <class>H</class>
+  <population>100000</population>
+  <hide>0.500000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities/>
+  <description>(null)</description>
+  <bar>(null)</bar>
+ </general>
+ <tech>
+  <item>Systems Medium</item>
+  <item>Engines Low</item>
+  <item>Plasma 1</item>
+  <item>Plasma 2</item>
+  <item>Laser 1</item>
+  <item>Ion 1</item>
+  <item>Kinetic 1</item>
+  <item>Basic Outfits 1</item>
+  <item>Basic Outfits 2</item>
+ </tech>
+</asset>

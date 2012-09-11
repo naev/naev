@@ -3,6 +3,7 @@
  <general>
   <typename>Shield Power Modifier</typename>
   <slot>structure</slot>
+  <size>small</size>
   <mass>1</mass>
   <price>1</price>
   <description>This outfit removes all shields from the ship. For tutorial purposes.</description>

@@ -122,10 +122,7 @@
 /*
  * file info
  */
-#define AI_PREFIX       "ai/" /**< AI file prefix. */
 #define AI_SUFFIX       ".lua" /**< AI file suffix. */
-#define AI_INCLUDE      "include/" /**< Where to search for includes. */
-
 #define AI_MEM_DEF      "def" /**< Default pilot memory. */
 
 
@@ -552,12 +549,6 @@ int ai_pinit( Pilot *p, const char *ai )
    p->ai = prof;
    L = p->ai->L;
 
-   /* Set fuel.  Hack until we do it through AI itself. */
-   if (!pilot_isPlayer(p)) {
-      p->fuel  = (RNG_2SIGMA()/4. + 0.5) * (p->fuel_max - HYPERSPACE_FUEL);
-      p->fuel += HYPERSPACE_FUEL;
-   }
-
    /* Adds a new pilot memory in the memory table. */
    lua_getglobal(L, AI_MEM);     /* pm */
    lua_newtable(L);              /* pm, nt */
@@ -585,6 +576,12 @@ int ai_pinit( Pilot *p, const char *ai )
    /* Create the pilot. */
    ai_create( p, (n!=0) ? param : NULL );
    pilot_setFlag(p, PILOT_CREATED_AI);
+
+   /* Set fuel.  Hack until we do it through AI itself. */
+   if (!pilot_isPlayer(p)) {
+      p->fuel  = (RNG_2SIGMA()/4. + 0.5) * (p->fuel_max - p->fuel_consumption);
+      p->fuel += p->fuel_consumption;
+   }
 
    return 0;
 }
@@ -642,7 +639,7 @@ int ai_load (void)
    int n;
 
    /* get the file list */
-   files = ndata_list( AI_PREFIX, &nfiles );
+   files = ndata_list( AI_PATH, &nfiles );
 
    /* load the profiles */
    suflen = strlen(AI_SUFFIX);
@@ -651,7 +648,7 @@ int ai_load (void)
       if ((flen > suflen) &&
             strncmp(&files[i][flen-suflen], AI_SUFFIX, suflen)==0) {
 
-         nsnprintf( path, PATH_MAX, AI_PREFIX"%s", files[i] );
+         nsnprintf( path, PATH_MAX, AI_PATH"%s", files[i] );
          if (ai_loadProfile(path)) /* Load the profile */
             WARN("Error loading AI profile '%s'", path);
       }
@@ -729,9 +726,9 @@ static int ai_loadProfile( const char* filename )
    prof = &array_grow(&profiles);
 
    /* Set name. */
-   len = strlen(filename)-strlen(AI_PREFIX)-strlen(AI_SUFFIX);
-   prof->name = malloc(sizeof(char)*(len+1) );
-   strncpy( prof->name, &filename[strlen(AI_PREFIX)], len );
+   len = strlen(filename)-strlen(AI_PATH)-strlen(AI_SUFFIX);
+   prof->name = malloc(len+1);
+   strncpy( prof->name, &filename[strlen(AI_PATH)], len );
    prof->name[len] = '\0';
 
    /* Create Lua. */
@@ -1068,7 +1065,7 @@ static void ai_create( Pilot* pilot, char *param )
       }
 #if DEBUGGING
       lua_pushcfunction(L, nlua_errTrace);
-      errf = -4;
+      errf = -3;
 #endif /* DEBUGGING */
       lua_getglobal(L, func);
       lp.pilot = pilot->id;
@@ -1079,6 +1076,9 @@ static void ai_create( Pilot* pilot, char *param )
       }
    }
 
+   /* Since the pilot changes outfits and cores, we must heal him up. */
+   pilot_healLanded( pilot );
+
 #if DEBUGGING
    if (errf)
       lua_pop(L,1);
@@ -1088,7 +1088,7 @@ static void ai_create( Pilot* pilot, char *param )
    if (pilot->ai == NULL)
       return;
 
-   /* Prepare AI. */
+   /* Prepare AI (this sets cur_pilot among others). */
    ai_setPilot( pilot );
 
    L = cur_pilot->ai->L;
@@ -2365,7 +2365,7 @@ static int aiL_dir( lua_State *L )
    LuaVector *lv;
    Vector2d sv, tv; /* get the position to face */
    Pilot* p;
-   double d, mod, diff;
+   double d, diff;
    unsigned int id;
    int n;
 
@@ -2389,14 +2389,6 @@ static int aiL_dir( lua_State *L )
    else if (lua_isvector(L,1))
       lv = lua_tovector(L,1);
    else NLUA_INVALID_PARAMETER(L);
-
-   mod = 10;
-
-   /* Check if must invert. */
-   if (lua_gettop(L) > 1) {
-      if (lua_isboolean(L,2) && lua_toboolean(L,2))
-         mod *= -1;
-   }
 
    vect_cset( &sv, VX(cur_pilot->solid->pos), VY(cur_pilot->solid->pos) );
 

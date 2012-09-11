@@ -2,15 +2,15 @@
 <outfit name="Laser Cannon MK3">
  <general>
   <slot>weapon</slot>
-  <size>light</size>
+  <size>small</size>
   <license>Medium Weapon License</license>
   <mass>5</mass>
   <price>25000</price>
   <description>A high-powered version of the Laser Cannon, the MK3 is usually found on Imperial law enforcement ships. Its superior firepower helps keep order among the civilian populace, though it has limited applications in full blown military engagements.</description>
   <gfx_store>laser2</gfx_store>
+  <cpu>-7</cpu>
   </general>
  <specific type="bolt">
-  <cpu>7</cpu>
   <gfx>laser3S</gfx>
   <sound>laser</sound>
   <spfx_shield>ShiS</spfx_shield>
@@ -32,5 +32,3 @@
   </damage>
  </specific>
 </outfit>
-<!-- TODO laser pd mk1 -->
-<!-- TODO laser pd mk2 -->

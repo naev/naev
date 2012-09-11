@@ -21,6 +21,7 @@
    <land>emp_mil_restricted</land>
    <refuel/>
    <bar/>
+   <outfits/>
    <shipyard/>
   </services>
   <commodities/>
@@ -28,6 +29,7 @@
   <bar>This bar is self-service most of the time. All Empire personnel on board have their hands full with double shifts, repair duties and briefings. Few have the spare time to even visit the spacedock bar, let alone staff it.</bar>
  </general>
  <tech>
+  <item>Systems Low</item>
   <item>Heavy Civilian Combat Ships</item>
   <item>Basic Outfits 2</item>
   <item>Missiles 1</item>

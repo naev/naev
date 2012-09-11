@@ -11,7 +11,7 @@
  <presence>
   <faction>Empire</faction>
   <value>200.000000</value>
-  <range>2</range>
+  <range>1</range>
  </presence>
  <general>
   <class>0</class>
@@ -33,6 +33,8 @@
   <bar>The Omega Canteen is a dark place that seems calm, although everytime a robotic drone approaches an alarm sounds sending pilots to man their ships to fight off the menace.</bar>
  </general>
  <tech>
+  <item>Hulls Medium</item>
+  <item>Engines Low</item>
   <item>Laser 1</item>
   <item>Laser 2</item>
   <item>Heavy Weapons 1</item>

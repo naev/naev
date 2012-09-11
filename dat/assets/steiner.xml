@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Steiner">
+ <pos>
+  <x>-976.058450</x>
+  <y>821.265039</y>
+ </pos>
+ <GFX>
+  <space>002.png</space>
+  <exterior>traderoom.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Independent</faction>
+  <value>25.000000</value>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>25000</population>
+  <hide>0.750000</hide>
+  <services>
+   <land/>
+   <refuel/>
+  </services>
+  <commodities/>
+  <description>(null)</description>
+ </general>
+</asset>

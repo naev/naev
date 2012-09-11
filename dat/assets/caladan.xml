@@ -36,10 +36,13 @@
   <bar>The bar is just off the starport with a great view of the harbor. You could watch the fishermen run frantically about attending their duties for hours.</bar>
  </general>
  <tech>
+  <item>Hulls Low</item>
+  <item>Engines Medium</item>
   <item>Laser 1</item>
   <item>Basic Outfits 1</item>
   <item>Basic Outfits 2</item>
   <item>Basic Civilian Ships</item>
   <item>Basic Trade Ships</item>
+  <item>Engines High</item>
  </tech>
 </asset>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Jaxheen">
+ <pos>
+  <x>13061.773645</x>
+  <y>-3555.275667</y>
+ </pos>
+ <GFX>
+  <space>M08.png</space>
+  <exterior>forest2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>6000000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land>land_hiclass</land>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>Jaxheen was established in a time when the Soromid had already settled many of the worlds that make up the Soromid core today. The colonization effort was focused more on building a smoothly functioning society than on pioneering, a mentality that paid off in the long run. Jaxheen doesn't suffer from many of the inefficiencies found in societies that evolved by building on themselves. This has made the world quite powerful economically.</description>
+  <bar>There are four main portals leading into and out of this spaceport bar. One leads to the spaceport facility. The second leads to the central public transit hub in this area of the metroplex that spans much of the continent. The third leads directly to the local commercial node, and the final portal is connected to the emergency service network, a separate infrastructure completely dedicated to emergency vehicles.</bar>
+ </general>
+ <tech>
+  <item>Systems Low</item>
+  <item>Hulls Medium</item>
+  <item>Ion 1</item>
+  <item>Ion 2</item>
+  <item>Basic Outfits 2</item>
+  <item>Heavy Weapons 1</item>
+  <item>Heavy Weapons 2</item>
+  <item>Low Tech Upgrades</item>
+  <item>High Tech Upgrades 1</item>
+  <item>High Tech Upgrades 2</item>
+  <item>Missiles 1</item>
+  <item>Missiles 2</item>
+  <item>Star Maps</item>
+  <item>Basic Civilian Ships</item>
+  <item>Basic Trade Ships</item>
+  <item>Bulk Trade Ships</item>
+  <item>Light Civilian Combat Ships</item>
+ </tech>
+</asset>

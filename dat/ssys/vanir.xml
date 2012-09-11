@@ -7,8 +7,8 @@
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>980.000000</x>
-  <y>-418.000000</y>
+  <x>1243.787195</x>
+  <y>-525.112269</y>
  </pos>
  <assets>
   <asset>Fort Sirius</asset>
@@ -28,6 +28,10 @@
   <jump target="Aesir">
    <autopos/>
    <hide>0.000000</hide>
+  </jump>
+  <jump target="Botarn">
+   <autopos/>
+   <hide>1.250000</hide>
   </jump>
  </jumps>
 </ssys>

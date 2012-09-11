@@ -44,6 +44,7 @@
 #include "gui_osd.h"
 #include "npc.h"
 #include "array.h"
+#include "ndata.h"
 
 
 /**
@@ -517,8 +518,8 @@ static int misn_markerRm( lua_State *L )
  * @brief Sets the current mission NPC.
  *
  * This is used in bar missions where you talk to a person. The portraits are
- *  the ones found in gfx/portraits without the png extension. So for
- *  gfx/portraits/none.png you would just use "none".
+ *  the ones found in GFX_PATH/portraits without the png extension. So for
+ *  GFX_PATH/portraits/none.png you would just use "none".
  *
  * @usage misn.setNPC( "Invisible Man", "none" )
  *
@@ -558,7 +559,7 @@ static int misn_setNPC( lua_State *L )
    cur_mission->npc = strdup(name);
 
    /* Set portrait. */
-   nsnprintf( buf, PATH_MAX, "gfx/portraits/%s.png", str );
+   nsnprintf( buf, PATH_MAX, GFX_PATH"portraits/%s.png", str );
    cur_mission->portrait = gl_newImage( buf, 0 );
 
    return 0;
@@ -884,7 +885,7 @@ static int misn_osdActive( lua_State *L )
  *
  *    @luaparam func Name of the function to run when approaching, gets passed the npc_id when called.
  *    @luaparam name Name of the NPC
- *    @luaparam portrait Portrait to use for the NPC (from gfx/portraits*.png).
+ *    @luaparam portrait Portrait to use for the NPC (from GFX_PATH/portraits*.png).
  *    @luaparam desc Description associated to the NPC.
  *    @luaparam priority Optional priority argument (defaults to 5, highest is 0, lowest is 10).
  *    @luareturn The ID of the NPC to pass to npcRm.
@@ -911,7 +912,7 @@ static int misn_npcAdd( lua_State *L )
       priority = 5;
 
    /* Set path. */
-   nsnprintf( portrait, PATH_MAX, "gfx/portraits/%s.png", gfx );
+   nsnprintf( portrait, PATH_MAX, GFX_PATH"portraits/%s.png", gfx );
 
    cur_mission = misn_getFromLua(L);
 

@@ -2,10 +2,10 @@
 -- This is the second mission in the "shadow" series.
 --]]
 
-include "scripts/proximity.lua"
-include "scripts/nextjump.lua"
-include "scripts/chatter.lua"
-include "scripts/selectiveclear.lua"
+include "proximity.lua"
+include "nextjump.lua"
+include "chatter.lua"
+include "selectiveclear.lua"
 
 -- localization stuff, translators would work here
 lang = naev.lang()
@@ -221,6 +221,8 @@ end
 
 -- Function hooked to jumpin. Handles most of the events in the various systems.
 function jumpin()
+    sysclear = false -- We've just jumped in, so the ambushers, if any, are not dead.
+    
     if stage >= 3 and system.cur() ~= nextsys then -- case player is escorting AND jumped to somewhere other than the next escort destination
         tk.msg(wrongsystitle, wrongsystext)
         abort()
@@ -384,7 +386,7 @@ function attackerDeath()
     for i, j in ipairs(escorts) do
         if j:exists() then
             myj = j
-            j:changeAI("trader")
+            j:changeAI("baddie_norun")
             j:control()
             j:follow(diplomat)
             diplomat:hyperspace(getNextSystem(system.cur(), misssys[stage])) -- Hyperspace toward the next destination system.
@@ -393,6 +395,7 @@ function attackerDeath()
     end
     
     myj:comm(commmsg[10])
+    sysclear = true -- safety flag to prevent the escorts from being released twice.
 end
 
 -- Puts the escorts under AI control again, and makes them fight.
@@ -444,7 +447,7 @@ end
 
 -- Handle the diplomat getting attacked.
 function diplomatAttacked()
-    if controlled == true then
+    if controlled and not sysclear then
         chatter({pilot = escorts[1], text = commmsg[9]})
         escortFree()
         diplomat:taskClear()

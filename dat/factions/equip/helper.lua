@@ -118,14 +118,13 @@ end
 --    @param weapons A table of weapon tables, with the last key of each being the number of slots for that set.
 --    @param medium List of medium outfits to use.
 --    @param low List of low outfits to use.
---    @param apu List of APU to use.
 --    @param reactor List of reactors to use.
 --    @param use_medium Amount of slots to use for medium outfits (default nmedium).
 --    @param use_low Amount of slots to use for low outfits (default nlow).
 --    @param olist If not null, adds the outfits to olist instead of actually adding
 --           them.
 --]]
-function equip_ship( p, scramble, weapons, medium, low, apu,
+function equip_ship( p, scramble, weapons, medium, low,
    use_medium, use_low, olist )
 
    -- Get the ship
@@ -157,21 +156,6 @@ function equip_ship( p, scramble, weapons, medium, low, apu,
    --]]
    equip_parseWeapons(scramble)
 
-   -- Check CPU if we can add APU
-   if apu ~= nil and #apu > 0 then
-      local cpu_usage = 0
-      for k,v in ipairs( outfits ) do
-         cpu_usage = cpu_usage + s.outfitCPU( v )
-      end
-      local added = true
-      while added and use_medium > 0 and cpu_usage > shipcpu do -- Need to add APU
-         local o_apu
-         o_apu       = apu[ rnd.rnd(1,#apu) ]
-         added       = _equip_addOutfit( p, o_apu, olist )
-         shipcpu     = shipcpu + s.outfitCPU( o_apu )
-         use_medium  = use_medium - 1 -- Discount from available medium slots
-      end
-   end
    -- Add high slots
    for k,v in ipairs(outfits) do
       _equip_addOutfit( p, v, olist )

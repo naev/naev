@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Gruz III">
+ <pos>
+  <x>-12052.142627</x>
+  <y>2022.171582</y>
+ </pos>
+ <GFX>
+  <space>A00.png</space>
+  <exterior>lava.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

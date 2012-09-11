@@ -42,6 +42,7 @@
 #include "npc.h"
 #include "camera.h"
 #include "menu.h"
+#include "ndata.h"
 
 
 /* global/main window */
@@ -71,7 +72,7 @@ static unsigned int land_visited = 0; /**< Contains what the player visited. */
  */
 int landed = 0; /**< Is player landed. */
 static int land_takeoff = 0; /**< Takeoff. */
-static int land_loaded = 0; /**< Finished loading? */
+int land_loaded = 0; /**< Finished loading? */
 static unsigned int land_wid = 0; /**< Land window ID. */
 static int land_regen = 0; /**< Whether or not regenning. */
 static const char *land_windowNames[LAND_NUMWINDOWS] = {
@@ -250,6 +251,9 @@ static void commodity_update( unsigned int wid, char* str )
          "NA Tons\n" );
       window_modifyText( wid, "txtDInfo", buf );
       window_modifyText( wid, "txtDesc", "No outfits available." );
+      window_disableButton( wid, "btnCommodityBuy" );
+      window_disableButton( wid, "btnCommoditySell" );
+      return;
    }
    com = commodity_get( comname );
 
@@ -624,7 +628,7 @@ static int bar_genList( unsigned int wid )
 
    /* Set up missions. */
    if (mission_portrait == NULL)
-      mission_portrait = gl_newImage( "gfx/portraits/news.png", 0 );
+      mission_portrait = gl_newImage( PORTRAIT_GFX_PATH"news.png", 0 );
    n = npc_getArraySize();
    if (n <= 0) {
       n            = 1;
@@ -684,22 +688,24 @@ static void bar_update( unsigned int wid, char* str )
 
    /* See if is news. */
    if (pos==0) { /* News selected. */
-      if (!widget_exists(wid, "cstNews")) {
-         /* Destroy portrait. */
-         if (widget_exists(wid, "imgPortrait"))
-            window_destroyWidget(wid, "imgPortrait");
+      /* Destroy news widget if needed. */
+      if (widget_exists(wid, "cstNews"))
+         window_destroyWidget( wid, "cstNews" );
 
-         /* Disable button. */
-         window_disableButton( wid, "btnApproach" );
+      /* Destroy portrait. */
+      if (widget_exists(wid, "imgPortrait"))
+         window_destroyWidget(wid, "imgPortrait");
 
-         /* Clear text. */
-         window_modifyText(  wid, "txtPortrait", NULL );
-         window_modifyText(  wid, "txtMission",  NULL );
+      /* Disable button. */
+      window_disableButton( wid, "btnApproach" );
 
-         /* Create news. */
-         news_widget( wid, iw + 60, -40 - (40 + dh),
-               w - iw - 100, h - 40 - (dh+20) - 40 - bh - 20 );
-      }
+      /* Clear text. */
+      window_modifyText(  wid, "txtPortrait", NULL );
+      window_modifyText(  wid, "txtMission",  NULL );
+
+      /* Create news. */
+      news_widget( wid, iw + 60, -40 - (40 + dh),
+            w - iw - 100, h - 40 - (dh+20) - 40 - bh - 20 );
       return;
    }
 
@@ -784,7 +790,7 @@ static void bar_approach( unsigned int wid, char *str )
  */
 static int news_load (void)
 {
-   news_generate( NULL, 10 );
+   generate_news(faction_name(land_planet->faction));
    return 0;
 }
 
@@ -1225,7 +1231,7 @@ void land_genWindows( int load, int changetab )
    }
 
    /* Create tabbed window. */
-   land_windows = window_addTabbedWindow( land_wid, -1, -1, -1, -1, "tabLand", j, names );
+   land_windows = window_addTabbedWindow( land_wid, -1, -1, -1, -1, "tabLand", j, names, 0 );
 
    /*
     * Order here is very important:
@@ -1330,6 +1336,9 @@ void land( Planet* p, int load )
 
    /* Resets the player's heat. */
    pilot_heatReset( player.p );
+
+   /* Heal the player so GUI shows player at full everything. */
+   pilot_healLanded( player.p );
 
    /* Stop player sounds. */
    player_soundStop();
@@ -1525,6 +1534,12 @@ void takeoff( int delay )
 
    if (!landed)
       return;
+
+   /* Player's ship is not able to fly. */
+   if (!player_canTakeoff()) {
+      dialogue_msg( "Ship not fit for flight", "All core outfits must be equiped for takeoff." );
+      return;
+   }
 
    /* Clear queued takeoff. */
    land_takeoff = 0;

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Rogan">
+ <pos>
+  <x>-6362.374227</x>
+  <y>-13921.738082</y>
+ </pos>
+ <GFX>
+  <space>H03.png</space>
+  <exterior>oceanic.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>H</class>
+  <population>250000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land>land_lowclass</land>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities/>
+  <description>Rogan is a relatively prosperous world, despite the fact that much of the planetary surface is desert. However, these deserts conveniently has huge repositories of valuable minerals, and the oceans teem with sea life. The result is a rich planet with a booming population.</description>
+  <bar>You see several rich trading magnates talking business in this bar. It seems to be split between the rich section and the poorer section, for tramp traders and miners.</bar>
+ </general>
+ <tech>
+  <item>Systems Medium</item>
+  <item>Hulls Low</item>
+  <item>Hulls Medium</item>
+  <item>Kinetic 1</item>
+  <item>Basic Outfits 1</item>
+  <item>Basic Outfits 2</item>
+  <item>High Tech Upgrades 1</item>
+  <item>High Tech Upgrades 2</item>
+  <item>Missiles 2</item>
+  <item>Star Maps</item>
+  <item>Laser 1</item>
+  <item>Laser 2</item>
+ </tech>
+</asset>

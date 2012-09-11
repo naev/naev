@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Zalebus">
+ <pos>
+  <x>20717.445102</x>
+  <y>-2844.812770</y>
+ </pos>
+ <GFX>
+  <space>O03.png</space>
+  <exterior>aquatic2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>6000000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land>land_hiclass</land>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>Zalebus is a nice planet that was terraformed by the Soromid shortly before the Incident. It was a borderline class M to begin with, so the process was one of the fastest in human history. Now, there are billions of people living here.</description>
+  <bar>The age demographic of Zalebus tends toward younger citizens. As a result, the spaceport bar is often full of youngsters preparing for a trip into space, or just returning from one.</bar>
+ </general>
+ <tech>
+  <item>Systems Low</item>
+  <item>Engines Medium</item>
+  <item>Plasma 2</item>
+  <item>High Tech Upgrades 1</item>
+  <item>High Tech Upgrades 2</item>
+  <item>Missiles 2</item>
+  <item>Star Maps</item>
+  <item>Basic Civilian Ships</item>
+  <item>Basic Trade Ships</item>
+  <item>Ion 1</item>
+  <item>Hulls High</item>
+ </tech>
+</asset>

@@ -9,41 +9,43 @@
  <fabricator>Melendez Corp.</fabricator>
  <license>Large Civilian Vessel License</license>
  <description>A particularly durable Melendez design, the Rhino is well-suited to transporting high-value, high-risk freight. While it has much lower cargo density than dedicated freighters, it protects itself extremely effectively. Its modular bays allow it to function as a personnel transport, a fact not lost on modern militaries.</description>
- <movement>
-  <thrust>110</thrust>
-  <turn>70</turn>
-  <speed>140</speed>
- </movement>
  <health>
-  <absorb>38</absorb>
-  <shield>250</shield>
-  <armour>1000</armour>
-  <energy>970</energy>
-  <shield_regen>5</shield_regen>
+  <absorb>18</absorb>
+  <armour>300</armour>
   <armour_regen>0</armour_regen>
-  <energy_regen>43.3</energy_regen>
  </health>
  <characteristics>
-  <cpu>58</cpu>
   <crew>11</crew>
-  <mass>950</mass>
-  <fuel>500</fuel>
-  <cargo>220</cargo>
+  <mass>500</mass>
+  <cargo>80</cargo>
  </characteristics>
  <slots>
-  <weapon x="25" y="-3" h="4">heavy</weapon>
-  <weapon x="25" y="3" h="4">heavy</weapon>
-  <weapon x="-15" y="-3" h="4"/>
-  <weapon x="-15" y="3" h="4"/>
-  <utility/>
-  <utility/>
-  <utility/>
-  <structure/>
-  <structure/>
-  <structure/>
-  <structure/>
+  <weapon size="large" x="25" y="-3" h="4"/>
+  <weapon size="large" x="25" y="3" h="4"/>
+  <weapon size="medium" x="-15" y="-3" h="4"/>
+  <weapon size="medium" x="-15" y="3" h="4"/>
+  <utility size="medium" prop="systems">Basic Medium Systems</utility>
+  <utility size="medium"/>
+  <utility size="medium"/>
+  <utility size="medium"/>
+  <structure size="medium" prop="engines">Manufacturer Medium Engine</structure>
+  <structure size="medium" prop="hull">Unmodified Medium Hull</structure>
+  <structure size="medium"/>
+  <structure size="medium"/>
+  <structure size="medium"/>
+  <structure size="medium"/>
  </slots>
  <stats>
-  <cargo_inertia>10</cargo_inertia>
+  <fuel_consumption>200</fuel_consumption>
+  <speed_mod>-10</speed_mod>
+  <turn_mod>-10</turn_mod>
+  <thrust_mod>0</thrust_mod>
+  <armour_mod>15</armour_mod>
+  <shield_mod>0</shield_mod>
+  <energy_mod>0</energy_mod>
+  <energy_regen_mod>10</energy_regen_mod>
+  <cargo_mod>20</cargo_mod>
+  <ew_detect>0</ew_detect>
+  <ew_hide>0</ew_hide>
  </stats>
 </ship>

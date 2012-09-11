@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Janko">
+ <pos>
+  <x>8655.709961</x>
+  <y>-2171.134959</y>
+ </pos>
+ <GFX>
+  <space>M08.png</space>
+  <exterior>forest.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>400000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>Though a fairly pleasant planet, Janko is a little too backwater to really flourish. The local population is largely self-sufficient and doesn't export much. As a result the amount of inhabitants is quite a bit lower than what a world of this size and quality could support in a busier area of space.</description>
+  <bar>Thanks to its somewhat sparse population density, Janko can afford to have its spaceport well away from the bigger residential centers. The spaceport bar has exits leading directly to the hypermag transport system. A ten-STU trip will take you to the capital city.</bar>
+ </general>
+ <tech>
+  <item>Hulls Low</item>
+  <item>Hulls Medium</item>
+  <item>Plasma 1</item>
+  <item>Plasma 2</item>
+  <item>Basic Outfits 1</item>
+  <item>Heavy Weapons 1</item>
+  <item>High Tech Upgrades 1</item>
+  <item>Missiles 2</item>
+  <item>Star Maps</item>
+  <item>Bulk Trade Ships</item>
+  <item>Light Civilian Combat Ships</item>
+  <item>Basic Civilian Ships</item>
+ </tech>
+</asset>

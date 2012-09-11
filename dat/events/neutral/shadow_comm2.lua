@@ -2,7 +2,7 @@
 -- Comm Event for the Shadow missions
 --]]
 
-include ("scripts/proximity.lua") 
+include ("proximity.lua") 
 
 -- localization stuff, translators would work here
 lang = naev.lang()

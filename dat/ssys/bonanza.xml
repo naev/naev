@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ssys name="Bonanza">
+ <general>
+  <radius>16700.000000</radius>
+  <stars>400</stars>
+  <interference>0.000000</interference>
+  <nebula volatility="0.000000">0.000000</nebula>
+ </general>
+ <pos>
+  <x>51.725467</x>
+  <y>833.358667</y>
+ </pos>
+ <assets>
+  <asset>Bonanza I</asset>
+  <asset>Bonanza II</asset>
+  <asset>Virtual Pirate Small</asset>
+ </assets>
+ <jumps>
+  <jump target="Hasselt">
+   <autopos/>
+   <hide>0.000000</hide>
+  </jump>
+  <jump target="Malebolge">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Norn">
+   <autopos/>
+   <hide>0.000000</hide>
+  </jump>
+  <jump target="Sylph">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+ </jumps>
+</ssys>

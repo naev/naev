@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <Events>
  <event name="reputation">
   <lua>reputation</lua>
@@ -153,6 +154,11 @@
  </event>
  <event name="Spaceport Bar NPC">
   <lua>neutral/npc</lua>
+  <trigger>land</trigger>
+  <chance>100</chance>
+ </event>
+ <event name="Generic News">
+  <lua>neutral/news</lua>
   <trigger>land</trigger>
   <chance>100</chance>
  </event>

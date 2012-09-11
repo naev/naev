@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Griffin III">
+ <pos>
+  <x>7197.470245</x>
+  <y>10978.871016</y>
+ </pos>
+ <GFX>
+  <space>M07.png</space>
+  <exterior>forest.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>100.000000</value>
+  <range>5</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>1000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land>land_lowclass</land>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>Griffin III is, despite the generic name, a well-polulated and presperous world. It has a booming industrial base and a respectable government complex. The facilities are well-maintained and extensive here. Truly a model world for the Empire, even if it's a little lacking in personality.</description>
+  <bar>The bar is clean and large, with various games and vids for entertainment of patrons. The food is good and the drinks are great. One could stay a long time here.</bar>
+ </general>
+ <tech>
+  <item>Systems Medium</item>
+  <item>Hulls Medium</item>
+  <item>Engines Medium</item>
+  <item>Laser 1</item>
+  <item>Laser 2</item>
+  <item>Ion 1</item>
+  <item>Kinetic 1</item>
+  <item>Plasma 1</item>
+  <item>Basic Outfits 1</item>
+  <item>Basic Outfits 2</item>
+  <item>Heavy Weapons 1</item>
+  <item>Low Tech Upgrades</item>
+  <item>High Tech Upgrades 1</item>
+  <item>Missiles 1</item>
+  <item>Star Maps</item>
+  <item>Basic Civilian Ships</item>
+  <item>Basic Trade Ships</item>
+  <item>Bulk Trade Ships</item>
+  <item>Light Civilian Combat Ships</item>
+  <item>Heavy Civilian Combat Ships</item>
+ </tech>
+</asset>

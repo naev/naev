@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Zaren">
+ <pos>
+  <x>-5608.155853</x>
+  <y>-5484.899681</y>
+ </pos>
+ <GFX>
+  <space>Y00.png</space>
+  <exterior>methane.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>50.000000</value>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>Y</class>
+  <population>10112</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>Zaren is a world where rare and valuable gasses are mined, to be used as propellant by House Dvaered. It is one of the harshest planets in Dvaered space, so convicts are the ones usually used to get the gasses necessary.</description>
+ </general>
+ <tech>
+  <item>Hulls Medium</item>
+  <item>Engines Medium</item>
+  <item>Kinetic 1</item>
+  <item>Kinetic 2</item>
+  <item>Basic Outfits 1</item>
+  <item>Basic Outfits 2</item>
+  <item>Low Tech Upgrades</item>
+  <item>Missiles 1</item>
+  <item>Basic Civilian Ships</item>
+  <item>Heavy Civilian Combat Ships</item>
+  <item>Star Maps</item>
+ </tech>
+</asset>

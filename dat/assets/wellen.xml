@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Wellen">
+ <pos>
+  <x>326.106374</x>
+  <y>-3415.535179</y>
+ </pos>
+ <GFX>
+  <space>moon-J00.png</space>
+  <exterior>mining5.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>50.000000</value>
+  <range>3</range>
+ </presence>
+ <general>
+  <class>A</class>
+  <population>99654</population>
+  <hide>0.500000</hide>
+  <services>
+   <land>land_lowclass</land>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>Wellen is a good example of how the individual planetary management policy of the Empire can go wrong. Started as a prestigious project, the world was to be a perfect society with good housing and facilities for everyone, lots of greenery and no pollution. However, the goals were too ambitious, the funds too short, the leadership inadequate. Today Wellen is a slum of run-down, oftentimes half-finished buildings.</description>
+  <bar>The spaceport was the first facility to be constructed on the planet when it was colonized, as is often the case. As such it is well-built and polished. The spaceport bar is quite respectable, as spaceport bars go. It's only when you leave the terminal and enter the urban areas that the squalor begins to become apparent.</bar>
+ </general>
+ <tech>
+  <item>Hulls Low</item>
+  <item>Engines Medium</item>
+  <item>Laser 1</item>
+  <item>Basic Outfits 1</item>
+  <item>Basic Outfits 2</item>
+  <item>Plasma 1</item>
+  <item>Low Tech Upgrades</item>
+  <item>Missiles 1</item>
+  <item>Star Maps</item>
+  <item>Basic Civilian Ships</item>
+ </tech>
+</asset>

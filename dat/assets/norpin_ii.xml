@@ -36,6 +36,9 @@
   <bar>The Norpin II bar isn't the safest place around. With a deep-seated loathing of the Dvaered, the local citizens have brawled with Dvaered soldiers on numerous occasions.</bar>
  </general>
  <tech>
+  <item>Systems Low</item>
+  <item>Hulls Low</item>
+  <item>Engines Low</item>
   <item>Basic Trade Ships</item>
   <item>Basic Civilian Ships</item>
   <item>Basic Outfits 1</item>

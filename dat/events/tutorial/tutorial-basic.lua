@@ -1,6 +1,6 @@
 -- This is the first tutorial: basic operation.
 
-include("scripts/proximity.lua")
+include("proximity.lua")
 include("dat/events/tutorial/tutorial-common.lua")
 
 -- localization stuff, translators would work here
@@ -146,7 +146,6 @@ end
 function cleanup()
     if not (omsg == nil) then player.omsgRm(omsg) end
     naev.keyEnableAll()
-    var.push("tut_next", "Tutorial: Exploration and Discovery")
     naev.eventStart("Tutorial")
     evt.finish(true)
 end

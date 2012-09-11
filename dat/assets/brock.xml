@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Brock">
+ <pos>
+  <x>-6988.624986</x>
+  <y>-11971.255763</y>
+ </pos>
+ <GFX>
+  <space>S00.png</space>
+  <exterior>methane.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Dvaered</faction>
+  <value>60.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>A</class>
+  <population>25114</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>One of the Dvaered gas-mining operations are located here. The gas is refined and turned into fuel for Dvaered ships.The facilites here are built solely for this purpose and are not built for comfort.</description>
+  <bar>The bar is filled with miners and garrison troopers, like most Dvaered bars. Unlike most bars, this one is small and rather clean. Rather shocking, actually.</bar>
+ </general>
+ <tech>
+  <item>Systems Low</item>
+  <item>Kinetic 1</item>
+  <item>Kinetic 2</item>
+  <item>Basic Outfits 1</item>
+  <item>Basic Outfits 2</item>
+  <item>Heavy Weapons 1</item>
+  <item>Low Tech Upgrades</item>
+  <item>Missiles 1</item>
+  <item>Star Maps</item>
+  <item>Basic Civilian Ships</item>
+  <item>Basic Trade Ships</item>
+  <item>Systems Elite</item>
+ </tech>
+</asset>

@@ -126,7 +126,7 @@ void menu_info( int window )
 
    /* Create tabbed window. */
    info_windows = window_addTabbedWindow( info_wid, -1, -1, -1, -1, "tabInfo",
-         INFO_WINDOWS, info_names );
+         INFO_WINDOWS, info_names, 0 );
 
    /* Open the subwindows. */
    info_openMain(       info_windows[ INFO_WIN_MAIN ] );
@@ -318,6 +318,16 @@ static void setgui_load( unsigned int wdw, char *str )
    if (strcmp(gui,"None") == 0)
       return;
 
+   if (player.guiOverride == 0) {
+      if (dialogue_YesNo( "GUI Override is not set. Enable GUI Override and change GUI to '%s'?", gui )) {
+         player.guiOverride = 1;
+         window_checkboxSet( wid, "chkOverride", player.guiOverride );
+      }
+      else {
+         return;
+      }
+   }
+
    /* Set the GUI. */
    if (player.gui != NULL)
       free( player.gui );
@@ -340,6 +350,9 @@ static void setgui_load( unsigned int wdw, char *str )
 static void info_toggleGuiOverride( unsigned int wid, char *name )
 {
    player.guiOverride = window_checkboxState( wid, name );
+   /* Go back to the default one. */
+   if (player.guiOverride == 0)
+      toolkit_setList( wid, "lstGUI", gui_pick() );
 }
 
 
@@ -714,7 +727,7 @@ static void cargo_genList( unsigned int wid )
       /* List the player's cargo */
       buf = malloc(sizeof(char*)*player.p->ncommodities);
       for (i=0; i<player.p->ncommodities; i++) {
-         buf[i] = malloc(sizeof(char)*128);
+         buf[i] = malloc(128);
          nsnprintf(buf[i],128, "%s%s %d",
                player.p->commodities[i].commodity->name,
                (player.p->commodities[i].id != 0) ? "*" : "",

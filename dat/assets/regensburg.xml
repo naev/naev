@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Regensburg">
+ <pos>
+  <x>-6155.854071</x>
+  <y>-4532.767146</y>
+ </pos>
+ <GFX>
+  <space>003.png</space>
+  <exterior>station03.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Independent</faction>
+  <value>25.000000</value>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>A</class>
+  <population>2500</population>
+  <hide>0.750000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+  </services>
+  <commodities/>
+  <description>Regensburg is a classical den of iniquity. Basically a floating casino, many people come here to earn their fortunes, inevitably losing them, of course.</description>
+  <bar>None</bar>
+ </general>
+</asset>

@@ -498,16 +498,13 @@ char** nfile_readDir( int* nfiles, const char* path, ... )
    time_t *tt, *ft;
    char **tfiles;
 
+   d = opendir(base);
+   if (d == NULL)
+      return NULL;
+
    mfiles      = 128;
    tfiles      = malloc(sizeof(char*)*mfiles);
    tt          = malloc(sizeof(time_t)*mfiles);
-
-   d = opendir(base);
-   if (d == NULL) {
-      free(tt);
-      free(tfiles);
-      return NULL;
-   }
 
    /* Get the file list */
    while ((dir = readdir(d)) != NULL) {
@@ -526,12 +523,12 @@ char** nfile_readDir( int* nfiles, const char* path, ... )
       if ((*nfiles)+1 > mfiles) {
          mfiles *= 2;
          tfiles = realloc( tfiles, sizeof(char*) * mfiles );
-         tt = realloc( tt, sizeof(time_t) * mfiles );
+         tt     = realloc( tt, sizeof(time_t) * mfiles );
       }
 
       /* Write the information */
       tfiles[(*nfiles)] = strdup(name);
-      tt[(*nfiles)] = sb.st_mtime;
+      tt[(*nfiles)]     = sb.st_mtime;
       (*nfiles)++;
    }
 
@@ -541,8 +538,8 @@ char** nfile_readDir( int* nfiles, const char* path, ... )
    if ((*nfiles) > 0) {
 
       /* Need to allocate some stuff */
-      files = malloc( sizeof(char*) * (*nfiles) );
-      ft = malloc( sizeof(time_t) * (*nfiles) );
+      files = malloc( sizeof(char*)  * (*nfiles) );
+      ft    = malloc( sizeof(time_t) * (*nfiles) );
 
       /* Fill the list */
       for (i=0; i<(*nfiles); i++) {
@@ -566,7 +563,7 @@ char** nfile_readDir( int* nfiles, const char* path, ... )
          }
 
          files[i] = tfiles[n];
-         ft[i] = tt[n];
+         ft[i]    = tt[n];
       }
       free(ft);
    }
@@ -606,19 +603,19 @@ char** nfile_readDirRecursive( int* nfiles, const char* path, ... )
    vsnprintf( base, PATH_MAX, path, ap );
    va_end(ap);
 
-   mfiles = 128;
-   out = malloc(sizeof(char*)*mfiles);
-   tfiles = nfile_readDir( &tmp, base );
+   mfiles  = 128;
+   out     = malloc(sizeof(char*)*mfiles);
+   tfiles  = nfile_readDir( &tmp, base );
    *nfiles = 0;
 
    for (i=0; i<tmp; i++) {
-      ls = strlen(base) + strlen(tfiles[i]) + 1;
-      buf = malloc(ls * sizeof(char));
+      ls  = strlen(base) + strlen(tfiles[i]) + 1;
+      buf = malloc(ls);
       nsnprintf( buf, ls, "%s%s", path, tfiles[i] );
       if (nfile_dirExists(buf)) {
          /* Append slash if necessary. */
          if (strcmp(&buf[ls-1],"/")!=0) {
-            buf = realloc( buf, (ls+1) * sizeof(char) );
+            buf = realloc( buf, (ls+1) );
             nsnprintf( buf, ls+1, "%s%s/", path, tfiles[i] );
          }
 
@@ -629,7 +626,7 @@ char** nfile_readDirRecursive( int* nfiles, const char* path, ... )
                mfiles *= 2;
                out = realloc( out, sizeof(char*)*mfiles );
             }
-            out[(*nfiles)++] = strdup( cfiles[j] );
+            out[(*nfiles)++] = cfiles[j];
          }
          free(cfiles);
       }
@@ -640,7 +637,10 @@ char** nfile_readDirRecursive( int* nfiles, const char* path, ... )
          }
          out[(*nfiles)++] = strdup( buf );
       }
-     free(buf);
+
+      /* Clean up. */
+      free(tfiles[i]);
+      free(buf);
    }
 
    free(tfiles);

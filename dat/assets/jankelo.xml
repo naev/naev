@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Jankelo">
+ <pos>
+  <x>26239.708008</x>
+  <y>11834.928284</y>
+ </pos>
+ <GFX>
+  <space>K04.png</space>
+  <exterior>methane.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Soromid</faction>
+  <value>100.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>K</class>
+  <population>500000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <commodity/>
+   <outfits/>
+  </services>
+  <commodities/>
+  <description>Jankelo is a world filled with all sorts of industry. It is utterly uninhabitable even by the Soromid, but it has mineral deposits that make it economically attractive for certain dirty industries to settle here.</description>
+  <bar>The spaceport bar is the only place where a normal spacer can go, other than the spaceport docks themselves. Jankelo is such a hostile planet that maintaining human friendly conditions is a considerable, and costly, operation. Anyone who is not a trader or otherwise on business has no reason to be here.</bar>
+ </general>
+ <tech>
+  <item>Engines Low</item>
+  <item>Missiles 2</item>
+  <item>Basic Outfits 1</item>
+ </tech>
+</asset>

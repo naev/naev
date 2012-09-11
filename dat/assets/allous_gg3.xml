@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Allous GG-3">
+ <pos>
+  <x>9009.335982</x>
+  <y>-5271.419990</y>
+ </pos>
+ <GFX>
+  <space>I07.png</space>
+  <exterior>forest.png</exterior>
+ </GFX>
+ <general>
+  <class>I</class>
+  <population>0</population>
+  <hide>0.150000</hide>
+  <services/>
+ </general>
+</asset>

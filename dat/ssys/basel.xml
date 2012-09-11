@@ -7,12 +7,18 @@
   <nebula volatility="100.000000">500.000000</nebula>
  </general>
  <pos>
+<<<<<<< HEAD
   <x>676.731798</x>
   <y>78.640880</y>
+=======
+  <x>362.356026</x>
+  <y>150.214954</y>
+>>>>>>> master
  </pos>
  <assets>
   <asset>Basel I</asset>
   <asset>Sorom</asset>
+  <asset>Vigil Station</asset>
  </assets>
  <jumps>
   <jump target="Arandon">

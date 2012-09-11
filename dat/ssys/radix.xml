@@ -23,11 +23,11 @@
  <jumps>
   <jump target="Dvaer">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>0.000000</hide>
   </jump>
-  <jump target="Fidelis">
-   <pos x="-12252.040388" y="-32102.418852"/>
-   <hide>1.250000</hide>
+  <jump target="Farizel">
+   <autopos/>
+   <hide>0.000000</hide>
   </jump>
  </jumps>
 </ssys>

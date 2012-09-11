@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Euler Ia">
+ <pos>
+  <x>-10258.523003</x>
+  <y>-4107.836990</y>
+ </pos>
+ <GFX>
+  <space>moon-G00.png</space>
+  <exterior>mining4.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.500000</hide>
+  <services/>
+ </general>
+</asset>

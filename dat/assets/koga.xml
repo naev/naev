@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Koga">
+ <pos>
+  <x>15545.627381</x>
+  <y>-4711.194876</y>
+ </pos>
+ <GFX>
+  <space>A00.png</space>
+  <exterior>lava.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>100.000000</value>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>A</class>
+  <population>150000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+  </services>
+  <commodities/>
+  <description>Koga has a highly active crust, and may describe the surface as being a resonable facsimile of hell. They may not be too far off the mark, as lava flows and sullen rubles from the earth are quite common.</description>
+  <bar>The bar has holos and pictures of the more spectacular activity of Koga's turbulant geography. The bar is known for the "Lava Storm" drink, which you need to sign a waiver to drink.</bar>
+ </general>
+</asset>

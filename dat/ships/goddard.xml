@@ -5,54 +5,55 @@
  <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Cruiser</class>
- <price>11500000</price>
+ <price>6000000</price>
  <fabricator>House Goddard</fabricator>
  <license>Heavy Combat Vessel License</license>
- <description>The archaic design of the Goddard is deceiving. Although it takes the shape of traditional flying intra-planet vessels, it's very suited for space travel. Production is entirely done on Zhiru in the Goddard system by House Goddard. Over time, specialization and improvements on the original design have kept it very competitive in the market. It's a classic of space.</description>
- <movement>
-  <thrust>60</thrust>
-  <turn>45</turn>
-  <speed>60</speed>
- </movement>
+ <description>Designed by eccentric genius Eduard Manuel Goddard, the Goddard Battlecruiser is what skyrocketed House Goddard to fame and fortune. Production is entirely done on Zhiru in the Goddard system by House Goddard. Over time, specialization and improvements on the original design have kept it very competitive in the market. It's a classic of space.</description>
  <health>
-  <absorb>65</absorb>
-  <shield>850</shield>
-  <armour>4000</armour>
-  <energy>4000</energy>
-  <shield_regen>10</shield_regen>
+  <absorb>35</absorb>
+  <armour>1000</armour>
   <armour_regen>0</armour_regen>
-  <energy_regen>90.7</energy_regen>
  </health>
  <characteristics>
-  <cpu>150</cpu>
   <crew>52</crew>
-  <mass>4750</mass>
-  <fuel>500</fuel>
-  <cargo>540</cargo>
+  <mass>2300</mass>
+  <cargo>20</cargo>
  </characteristics>
  <slots>
-  <weapon x="-10" y="-13" h="2"/>
-  <weapon x="-10" y="13" h="2"/>
-  <weapon x="-15" y="-25" h="3"/>
-  <weapon x="-15" y="25" h="3"/>
-  <weapon x="16" y="0" h="3"/>
-  <weapon x="0" y="0" h="5"/>
-  <weapon x="-20" y="0" h="5"/>
-  <utility/>
-  <utility/>
-  <utility/>
-  <utility/>
-  <utility/>
-  <structure/>
-  <structure/>
-  <structure/>
-  <structure/>
-  <structure/>
-  <structure/>
+  <weapon size="large" x="-10" y="-13" h="2"/>
+  <weapon size="large" x="-10" y="13" h="2"/>
+  <weapon size="large" x="-15" y="-25" h="3"/>
+  <weapon size="large" x="-15" y="25" h="3"/>
+  <weapon size="large" x="16" y="0" h="3"/>
+  <weapon size="large" x="0" y="0" h="5"/>
+  <weapon size="large" x="-20" y="0" h="5"/>
+  <utility size="large" prop="systems">Basic Large Systems</utility>
+  <utility size="large"/>
+  <utility size="large"/>
+  <utility size="large"/>
+  <utility size="large"/>
+  <utility size="large"/>
+  <structure size="large" prop="engines">Manufacturer Large Engine</structure>
+  <structure size="large" prop="hull">Unmodified Large Hull</structure>
+  <structure size="large"/>
+  <structure size="large"/>
+  <structure size="large"/>
+  <structure size="large"/>
+  <structure size="large"/>
+  <structure size="large"/>
  </slots>
  <stats>
-  <launch_rate>10</launch_rate>
-  <launch_range>10</launch_range>
-  <heat_dissipation>-10</heat_dissipation>
+  <fuel_consumption>400</fuel_consumption>
+  <speed_mod>-10</speed_mod>
+  <turn_mod>-10</turn_mod>
+  <thrust_mod>0</thrust_mod>
+  <armour_mod>0</armour_mod>
+  <shield_mod>0</shield_mod>
+  <energy_mod>0</energy_mod>
+  <energy_regen_mod>0</energy_regen_mod>
+  <tur_tracking>20</tur_tracking>
+  <cargo_mod>-30</cargo_mod>
+  <ew_detect>0</ew_detect>
+  <ew_hide>0</ew_hide>
  </stats>
 </ship>
