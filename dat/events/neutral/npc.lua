@@ -367,7 +367,7 @@ function getJmpMessage(fac)
    -- Collect a table of jump points in the system the player does NOT know.
    local mytargets = {}
    seltargets = seltargets or {} -- We need to keep track of jump points NPCs will tell the player about so there are no duplicates.
-   for _, j in ipairs(system.cur():jumps(true)) do
+   for _, j in ipairs(system.cur():jumps(true,true)) do
       if not j:known() and not j:hidden() and not seltargets[j] then
          table.insert(mytargets, j)
       end

@@ -153,8 +153,12 @@ static JumpPoint* luaL_validjumpSystem( lua_State *L, int ind, int *offset, Star
       return NULL;
    }
 
-   if (b != NULL && a != NULL)
+   if (a != NULL) {
+      if (b == NULL)
+         jp = system_getHypergate( a );
+      else
          jp = jump_getTarget( b, a );
+   }
 
    if (jp == NULL)
       NLUA_ERROR(L, _("Jump is invalid"));

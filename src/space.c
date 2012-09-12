@@ -900,6 +900,9 @@ StarSystem* system_get( const char* sysname )
  */
 StarSystem* system_getIndex( int id )
 {
+   if (id < 0)
+      return NULL;
+
    return &systems_stack[ id ];
 }
 
@@ -1156,6 +1159,25 @@ JumpPoint* jump_getTarget( StarSystem* target, const StarSystem* sys )
             return hg;
 
    WARN(_("Jump point to '%s' not found in %s"), target->name, sys->name);
+   return NULL;
+}
+
+/**
+ * @brief Gets a systems hypergate if it has one.
+ *
+ *
+ *    @param sys System to look in.
+ *    @return The hypergate or NULL if no hypergate was found.
+ */
+JumpPoint* system_getHypergate( const StarSystem* sys )
+{
+   int i;
+
+   for (i=0; i<sys->njumps; i++) {
+      if (jp_isFlag( &sys->jumps[i], JP_HYPERGATE ))
+         return &sys->jumps[i];
+   }
+
    return NULL;
 }
 
