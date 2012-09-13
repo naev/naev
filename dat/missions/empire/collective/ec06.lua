@@ -258,6 +258,7 @@ function col_dead(victim)
     end
     misn.osdActive(3)
     addRefuelShip()
+    diff.apply("collective_dead")
     misn_stage = 4
 end
 
@@ -270,7 +271,6 @@ function land ()
       tk.msg( title[3], string.format(text[3], misn_base:name()) )
 
       -- Rewards
-      diff.apply("collective_dead")
       -- This was the last mission in the minor campaign, so bump the reputation cap.
       emp_modReputation( 10 )
       faction.modPlayerSingle("Empire",5)
