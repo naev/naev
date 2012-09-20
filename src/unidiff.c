@@ -481,24 +481,6 @@ static int diff_patch( xmlNodePtr parent )
             case HUNK_TYPE_JUMP_REMOVE:
                WARN("   [%s] jump remove: '%s'", target, fail->u.name);
                break;
-#if 0
-            case HUNK_TYPE_FLEET_ADD:
-               WARN("   [%s] fleet add: '%s' (%d%% chance)", target,
-                     fail->u.fleet.fleet->name, fail->u.fleet.chance );
-               break;
-            case HUNK_TYPE_FLEET_REMOVE:
-               WARN("   [%s] fleet remove: '%s' (%d%% chance)", target,
-                     fail->u.fleet.fleet->name, fail->u.fleet.chance );
-               break;
-            case HUNK_TYPE_FLEETGROUP_ADD:
-               WARN("   [%s] fleetgroup add: '%s'", target,
-                     fail->u.fleetgroup->name );
-               break;
-            case HUNK_TYPE_FLEETGROUP_REMOVE:
-               WARN("   [%s] fleetgroup remove: '%s'", target,
-                     fail->u.fleetgroup->name );
-               break;
-#endif
             case HUNK_TYPE_TECH_ADD:
                WARN("   [%s] tech add: '%s'", target,
                      fail->u.name );
