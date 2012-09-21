@@ -293,7 +293,7 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
          xmlr_attr(cur,"target",hunk.u.name);
 
          /* Get the type. */
-         xmlr_attr(cur,"type",buf);
+         buf = xml_get(cur);
          if (buf==NULL) {
             WARN("Unidiff '%s': Null hunk type.", diff->name);
             continue;

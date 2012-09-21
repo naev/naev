@@ -50,6 +50,7 @@
 #include "map.h"
 #include "damagetype.h"
 #include "hook.h"
+#include "dev_uniedit.h"
 
 
 #define XML_PLANET_TAG        "asset" /**< Individual planet xml tag. */
@@ -2464,10 +2465,8 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
 {
    JumpPoint *j;
    char *buf;
-   xmlNodePtr cur;
    double x, y;
    StarSystem *target;
-   int pos;
 
    /* Get target. */
    xmlr_attr( node, "target", buf );
@@ -2500,56 +2499,41 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
    j = &sys->jumps[ sys->njumps ];
    memset( j, 0, sizeof(JumpPoint) );
 
+   /* Handle jump point position. We want both x and y, or we autoposition the jump point. */
+   xmlr_attr( node, "x", buf );
+   if (buf == NULL)
+      jp_setFlag(j,JP_AUTOPOS);
+   else
+      x = atof(buf);
+   xmlr_attr( node, "y", buf );
+   if (buf == NULL)
+      jp_setFlag(j,JP_AUTOPOS);
+   else
+      y = atof(buf);
+
+   /* Handle jump point type. */
+   xmlr_attr( node, "type", buf );
+   if (buf == NULL);
+   else if (!strcmp(buf, "hidden"))
+      jp_setFlag(j,JP_HIDDEN);
+   else if (!strcmp(buf, "exitonly"))
+      jp_setFlag(j,JP_EXITONLY);
+   
+   /* Handle jump point hide. */
+   xmlr_attr( node, "hide", buf );
+   if (buf == NULL)
+      j->hide = HIDE_DEFAULT_JUMP;
+   else
+      j->hide = atoi(buf);
+
    /* Set some stuff. */
    j->target = target;
    free(buf);
    j->targetid = j->target->id;
    j->radius = 200.;
-   pos = 0;
 
-   /* Parse data. */
-   cur = node->xmlChildrenNode;
-   do {
-      xmlr_float( cur, "radius", j->radius );
-
-      /* Handle position. */
-      if (xml_isNode(cur,"pos")) {
-         pos = 1;
-         xmlr_attr( cur, "x", buf );
-         if (buf==NULL) {
-            WARN("JumpPoint for system '%s' has position node missing 'x' position, using 0.", sys->name);
-            x = 0.;
-         }
-         else {
-            x = atof(buf);
-            free(buf);
-         }
-         xmlr_attr( cur, "y", buf );
-         if (buf==NULL) {
-            WARN("JumpPoint for system '%s' has position node missing 'y' position, using 0.", sys->name);
-            y = 0.;
-         }
-         else {
-            y = atof(buf);
-            free(buf);
-         }
-
-         /* Set position. */
-         vect_cset( &j->pos, x, y );
-      }
-      else if (xml_isNode(cur,"autopos"))
-         jp_setFlag(j,JP_AUTOPOS);
-      else if (xml_isNode(cur,"hidden"))
-         jp_setFlag(j,JP_HIDDEN);
-      else if (xml_isNode(cur,"exitonly"))
-         jp_setFlag(j,JP_EXITONLY);
-      else if (xml_isNode(cur,"hide")) {
-         xmlr_float( cur,"hide", j->hide );
-      }
-   } while (xml_nextNode(cur));
-
-   if (!jp_isFlag(j,JP_AUTOPOS) && !pos)
-      WARN("JumpPoint in system '%s' is missing pos element but does not have autopos flag.", sys->name);
+   if (!jp_isFlag(j,JP_AUTOPOS))
+      vect_cset( &j->pos, x, y );
 
    /* Square to allow for linear multiplication with squared distances. */
    j->hide = pow2(j->hide);
