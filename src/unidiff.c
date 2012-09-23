@@ -527,7 +527,7 @@ static int diff_patchHunk( UniHunk_t *hunk )
 
       /* Adding a Jump. */
       case HUNK_TYPE_JUMP_ADD:
-         return system_addJump( system_get(hunk->target.u.name), hunk->node );
+         return system_addJumpDiff( system_get(hunk->target.u.name), hunk->node );
       /* Removing a jump. */
       case HUNK_TYPE_JUMP_REMOVE:
          return system_rmJump( system_get(hunk->target.u.name), hunk->u.name );
