@@ -141,27 +141,28 @@ static int nlua_packfileLoader( lua_State* L )
    filename = luaL_checkstring(L,1);
 
    /* Check to see if already included. */
-   lua_getglobal( L, "_include" );
+   lua_getglobal( L, "_include" ); /* t */
    if (!lua_isnil(L,-1)) {
-      lua_getfield(L,-1,filename);
+      lua_getfield(L,-1,filename); /* t, f */
       /* Already included. */
       if (!lua_isnil(L,-1)) {
-         lua_pop(L,1);
+         lua_pop(L,2); /* */
          return 0;
       }
-      lua_pop(L,1);
+      lua_pop(L,2); /* */
    }
    /* Must create new _include table. */
    else {
-      lua_newtable(L);
-      lua_setglobal(L, "_include");
+      lua_newtable(L);              /* t */
+      lua_setglobal(L, "_include"); /* */
    }
-   lua_pop(L,1);
 
    /* Try to locate the data directly */
+   buf = NULL;
    if (ndata_exists( filename ))
       buf = ndata_read( filename, &bufsize );
-   else {
+   /* If failed to load or doesn't exist try again with INCLUDE_PATH prefix. */
+   if (buf == NULL) {
       /* Try to locate the data in the data path */
       len           = strlen(LUA_INCLUDE_PATH)+strlen(filename)+2;
       path_filename = malloc( len );
@@ -185,10 +186,10 @@ static int nlua_packfileLoader( lua_State* L )
    }
 
    /* Mark as loaded. */
-   lua_getglobal(L, "_include");
-   lua_pushboolean(L, 1);
-   lua_setfield(L, -2, filename);
-   lua_pop(L, 2);
+   lua_getglobal(L, "_include");    /* t */
+   lua_pushboolean(L, 1);           /* t b */
+   lua_setfield(L, -2, filename);   /* t */
+   lua_pop(L, 1);
 
    /* cleanup, success */
    free(buf);
