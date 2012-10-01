@@ -38,7 +38,7 @@ else -- default english
    text[4] = [[    She continues. "As a symbol of appreciation, you should find a deposit of 500 thousand credits in your account. There will be a celebration later today in the officer's room if you want to join in."
 
     And so ends the Collective threat...]]
-   text[5] = [[    You recieve a message signed by Commodore Keeras soon as you enter Empire space:
+   text[5] = [[    You recieve a message signed by Commodore Keer as soon as you enter Empire space:
     "There is no room for cowards in the Empire's fleet."
     The signature does seem valid.]]
     
