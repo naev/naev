@@ -276,6 +276,27 @@ void pack_closeCache( Packcache_t* cache )
 
 
 /**
+ * @brief Checks to see if a file is in the cache.
+ *
+ *    @param cache Cache to check.
+ *    @param filename Name of the file.
+ *    @return 1 if the file is in the cache, 0 otherwise.
+ */
+int pack_checkCache( const Packcache_t* cache, const char* filename )
+{
+   uint32_t i;
+
+   for (i=0; i<cache->nindex; i++) {
+      if (strcmp(cache->index[i], filename)!=0)
+         continue;
+      return 1;
+   }
+
+   return 0;
+}
+
+
+/**
  * @brief Opens a Packfile from a Packcache.
  *
  *    @param cache Packcache to create Packfile from.
@@ -290,39 +311,39 @@ Packfile_t* pack_openFromCache( Packcache_t* cache, const char* filename )
    file = calloc( 1, sizeof(Packfile_t) );
 
    for (i=0; i<cache->nindex; i++) {
-      if (strcmp(cache->index[i], filename)==0) {
-         /* Copy file. */
+      if (strcmp(cache->index[i], filename)!=0)
+         continue;
+      /* Copy file. */
 #if HAS_FD
-         file->fd = open( cache->name, O_RDONLY );
+      file->fd = open( cache->name, O_RDONLY );
 #else /* not HAS_FD */
-         file->fp = fopen( cache->name, "rb" );
+      file->fp = fopen( cache->name, "rb" );
 #endif /* HAS_FD */
 
-         /* Copy information. */
-         file->flags |= PACKFILE_FROMCACHE;
-         file->start  = cache->start[i];
+      /* Copy information. */
+      file->flags |= PACKFILE_FROMCACHE;
+      file->start  = cache->start[i];
 
-         /* Seek. */
-         if (file->start) { /* go to the beginning of the file */
+      /* Seek. */
+      if (file->start) { /* go to the beginning of the file */
 #if HAS_FD
-            if ((uint32_t)lseek( file->fd, file->start, SEEK_SET ) != file->start) {
+         if ((uint32_t)lseek( file->fd, file->start, SEEK_SET ) != file->start) {
 #else /* not HAS_FD */
-            if (fseek( file->fp, file->start, SEEK_SET )) {
+         if (fseek( file->fp, file->start, SEEK_SET )) {
 #endif /* HAS_FD */
-               WARN("Failure to seek to file start: %s", strerror(errno));
-               return NULL;
-            }
-            READ( file, &file->end, 4 );
-            file->end = htonl( file->end );
-            file->start += 4;
-            file->pos    = file->start;
-            file->end   += file->start;
-            DEBUG("Opened '%s' from cache from %u to %u (%u long)", filename,
-                  file->start, file->end, file->end - file->start);
+            WARN("Failure to seek to file start: %s", strerror(errno));
+            return NULL;
          }
-
-         return file;
+         READ( file, &file->end, 4 );
+         file->end = htonl( file->end );
+         file->start += 4;
+         file->pos    = file->start;
+         file->end   += file->start;
+         DEBUG("Opened '%s' from cache from %u to %u (%u long)", filename,
+               file->start, file->end, file->end - file->start);
       }
+
+      return file;
    }
 
    free(file);

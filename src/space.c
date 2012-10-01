@@ -50,6 +50,7 @@
 #include "map.h"
 #include "damagetype.h"
 #include "hook.h"
+#include "dev_uniedit.h"
 
 
 #define XML_PLANET_TAG        "asset" /**< Individual planet xml tag. */
@@ -131,6 +132,7 @@ static void system_init( StarSystem *sys );
 static int systems_load (void);
 static StarSystem* system_parse( StarSystem *system, const xmlNodePtr parent );
 static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys );
+static int system_parseJumpPointDiff( const xmlNodePtr node, StarSystem *sys );
 static void system_parseJumps( const xmlNodePtr parent );
 /* misc */
 static int getPresenceIndex( StarSystem *sys, int faction );
@@ -2076,6 +2078,24 @@ int system_rmPlanet( StarSystem *sys, const char *planetname )
 }
 
 /**
+ * @brief Adds a jump point to a star system from a diff.
+ *
+ *    @param sys Star System to add jump point to.
+ *    @param jumpname Name of the jump point to add.
+ *    @return 0 on success.
+ */
+int system_addJumpDiff( StarSystem *sys, xmlNodePtr node )
+{
+   if (system_parseJumpPointDiff(node, sys) <= -1)
+      return 0;
+   systems_reconstructJumps();
+   economy_refresh();
+
+   return 1;
+}
+
+
+/**
  * @brief Adds a jump point to a star system.
  *
  *    @param sys Star System to add jump point to.
@@ -2454,6 +2474,97 @@ void system_setFaction( StarSystem *sys )
 
 
 /**
+ * @brief Parses a single jump point for a system, from unidiff.
+ *
+ *    @param node Parent node containing jump point information.
+ *    @param sys System to which the jump point belongs.
+ *    @return 0 on success.
+ */
+static int system_parseJumpPointDiff( const xmlNodePtr node, StarSystem *sys )
+{
+   JumpPoint *j;
+   char *buf;
+   double x, y;
+   StarSystem *target;
+
+   /* Get target. */
+   xmlr_attr( node, "target", buf );
+   if (buf == NULL) {
+      WARN("JumpPoint node for system '%s' has no target attribute.", sys->name);
+      return -1;
+   }
+   target = system_get(buf);
+   if (target == NULL) {
+      WARN("JumpPoint node for system '%s' has invalid target '%s'.", sys->name, buf );
+      free(buf);
+      return -1;
+   }
+
+#ifdef DEBUGGING
+   int i;
+   for (i=0; i<sys->njumps; i++) {
+      j = &sys->jumps[i];
+      if (j->targetid != target->id)
+         continue;
+
+      WARN("Star System '%s' has duplicate jump point to '%s'.",
+            sys->name, target->name );
+      break;
+   }
+#endif /* DEBUGGING */
+
+   /* Allocate more space. */
+   sys->jumps = realloc( sys->jumps, (sys->njumps+1)*sizeof(JumpPoint) );
+   j = &sys->jumps[ sys->njumps ];
+   memset( j, 0, sizeof(JumpPoint) );
+
+   /* Handle jump point position. We want both x and y, or we autoposition the jump point. */
+   xmlr_attr( node, "x", buf );
+   if (buf == NULL)
+      jp_setFlag(j,JP_AUTOPOS);
+   else
+      x = atof(buf);
+   xmlr_attr( node, "y", buf );
+   if (buf == NULL)
+      jp_setFlag(j,JP_AUTOPOS);
+   else
+      y = atof(buf);
+
+   /* Handle jump point type. */
+   xmlr_attr( node, "type", buf );
+   if (buf == NULL);
+   else if (!strcmp(buf, "hidden"))
+      jp_setFlag(j,JP_HIDDEN);
+   else if (!strcmp(buf, "exitonly"))
+      jp_setFlag(j,JP_EXITONLY);
+   
+   /* Handle jump point hide. */
+   xmlr_attr( node, "hide", buf );
+   if (buf == NULL)
+      j->hide = HIDE_DEFAULT_JUMP;
+   else
+      j->hide = atoi(buf);
+
+   /* Set some stuff. */
+   j->target = target;
+   free(buf);
+   j->targetid = j->target->id;
+   j->radius = 200.;
+
+   if (!jp_isFlag(j,JP_AUTOPOS))
+      vect_cset( &j->pos, x, y );
+
+   /* Square to allow for linear multiplication with squared distances. */
+   j->hide = pow2(j->hide);
+
+   /* Added jump. */
+   sys->njumps++;
+
+   return 0;
+}
+
+
+/**
  * @brief Parses a single jump point for a system.
  *
  *    @param node Parent node containing jump point information.
@@ -2505,6 +2616,7 @@ static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys )
    free(buf);
    j->targetid = j->target->id;
    j->radius = 200.;
+
    pos = 0;
 
    /* Parse data. */

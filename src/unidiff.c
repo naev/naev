@@ -293,7 +293,7 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
          xmlr_attr(cur,"target",hunk.u.name);
 
          /* Get the type. */
-         xmlr_attr(cur,"type",buf);
+         buf = xml_get(cur);
          if (buf==NULL) {
             WARN("Unidiff '%s': Null hunk type.", diff->name);
             continue;
@@ -481,24 +481,6 @@ static int diff_patch( xmlNodePtr parent )
             case HUNK_TYPE_JUMP_REMOVE:
                WARN("   [%s] jump remove: '%s'", target, fail->u.name);
                break;
-#if 0
-            case HUNK_TYPE_FLEET_ADD:
-               WARN("   [%s] fleet add: '%s' (%d%% chance)", target,
-                     fail->u.fleet.fleet->name, fail->u.fleet.chance );
-               break;
-            case HUNK_TYPE_FLEET_REMOVE:
-               WARN("   [%s] fleet remove: '%s' (%d%% chance)", target,
-                     fail->u.fleet.fleet->name, fail->u.fleet.chance );
-               break;
-            case HUNK_TYPE_FLEETGROUP_ADD:
-               WARN("   [%s] fleetgroup add: '%s'", target,
-                     fail->u.fleetgroup->name );
-               break;
-            case HUNK_TYPE_FLEETGROUP_REMOVE:
-               WARN("   [%s] fleetgroup remove: '%s'", target,
-                     fail->u.fleetgroup->name );
-               break;
-#endif
             case HUNK_TYPE_TECH_ADD:
                WARN("   [%s] tech add: '%s'", target,
                      fail->u.name );
@@ -545,7 +527,7 @@ static int diff_patchHunk( UniHunk_t *hunk )
 
       /* Adding a Jump. */
       case HUNK_TYPE_JUMP_ADD:
-         return system_addJump( system_get(hunk->target.u.name), hunk->node );
+         return system_addJumpDiff( system_get(hunk->target.u.name), hunk->node );
       /* Removing a jump. */
       case HUNK_TYPE_JUMP_REMOVE:
          return system_rmJump( system_get(hunk->target.u.name), hunk->u.name );

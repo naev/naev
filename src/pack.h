@@ -31,6 +31,7 @@ typedef struct Packcache_s Packcache_t;
  */
 Packcache_t* pack_openCache( const char* packfile );
 void pack_closeCache( Packcache_t* cache );
+int pack_checkCache( const Packcache_t* cache, const char* filename );
 Packfile_t* pack_openFromCache( Packcache_t* cache, const char* filename );
 
 /*

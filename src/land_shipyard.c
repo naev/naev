@@ -233,7 +233,6 @@ void shipyard_update( unsigned int wid, char* str )
          "\n"
          "%.0f teraflops\n"
          "%.0f tons\n"
-         "%.1f STU average\n"
          "%.0f kN/ton\n"
          "%.0f m/s\n"
          "%.0f deg/s\n"
@@ -254,7 +253,6 @@ void shipyard_update( unsigned int wid, char* str )
          /* Weapons & Manoeuvrability */
          ship->cpu,
          ship->mass,
-         pow( ship->mass, 1./2.5 ) / 5. * (ship->stats_array.jump_delay/100.+1.), /**< @todo make this more portable. */
          ship->thrust,
          ship->speed,
          ship->turn*180/M_PI,
