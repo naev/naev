@@ -39,7 +39,8 @@
 typedef enum UniHunkTargetType_ {
    HUNK_TARGET_NONE,
    HUNK_TARGET_SYSTEM,
-   HUNK_TARGET_TECH
+   HUNK_TARGET_ASSET,
+   HUNK_TARGET_TECH,
 } UniHunkTargetType_t;
 
 
@@ -68,8 +69,12 @@ typedef enum UniHunkType_ {
    HUNK_TYPE_ASSET_REMOVE,
    HUNK_TYPE_JUMP_ADD,
    HUNK_TYPE_JUMP_REMOVE,
+   /* Target should be tech. */
    HUNK_TYPE_TECH_ADD,
-   HUNK_TYPE_TECH_REMOVE
+   HUNK_TYPE_TECH_REMOVE,
+   /* Target should be asset. */
+   HUNK_TYPE_ASSET_FACTION,
+   HUNK_TYPE_ASSET_FACTION_REMOVE, /* For internal usage. */
 } UniHunkType_t;
 
 
@@ -85,11 +90,10 @@ typedef struct UniHunk_ {
    xmlNodePtr node; /**< Parent node. */
    union {
       char *name;
-      struct {
-         int old; /**< Old value. */
-         int new; /**< New value. */
-      } i; /**< Contains old and new int values. */
    } u; /**< Actual data to patch. */
+   union {
+      char *name;
+   } o; /** Old data to possibly replace. */
 } UniHunk_t;
 
 
@@ -320,10 +324,10 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
 
 
 /**
- * @brief Patches a ship.
+ * @brief Patches a tech.
  *
  *    @param diff Diff that is doing the patching.
- *    @param node Node containing the ship.
+ *    @param node Node containing the tech.
  *    @return 0 on success.
  */
 static int diff_patchTech( UniDiff_t *diff, xmlNodePtr node )
@@ -390,6 +394,59 @@ static int diff_patchTech( UniDiff_t *diff, xmlNodePtr node )
 
 
 /**
+ * @brief Patches a asset.
+ *
+ *    @param diff Diff that is doing the patching.
+ *    @param node Node containing the asset.
+ *    @return 0 on success.
+ */
+static int diff_patchAsset( UniDiff_t *diff, xmlNodePtr node )
+{
+   UniHunk_t base, hunk;
+   xmlNodePtr cur;
+
+   /* Set the target. */
+   memset(&base, 0, sizeof(UniHunk_t));
+   base.target.type = HUNK_TARGET_ASSET;
+   xmlr_attr(node,"name",base.target.u.name);
+   if (base.target.u.name==NULL) {
+      WARN("Unidiff '%s' has an target node without a 'name' tag", diff->name);
+      return -1;
+   }
+
+   /* Now parse the possible changes. */
+   cur = node->xmlChildrenNode;
+   do {
+      xml_onlyNodes(cur);
+      if (xml_isNode(cur,"faction")) {
+         hunk.target.type = base.target.type;
+         hunk.target.u.name = strdup(base.target.u.name);
+
+         /* Outfit type is constant. */
+         hunk.type = HUNK_TYPE_ASSET_FACTION;
+
+         /* Get the data. */
+         hunk.u.name = xml_getStrd(cur);
+
+         /* Apply diff. */
+         if (diff_patchHunk( &hunk ) < 0)
+            diff_hunkFailed( diff, &hunk );
+         else
+            diff_hunkSuccess( diff, &hunk );
+         continue;
+      }
+      WARN("Unidiff '%s' has unknown node '%s'.", diff->name, node->name);
+   } while (xml_nextNode(cur));
+
+   /* Clean up some stuff. */
+   free(base.target.u.name);
+   base.target.u.name = NULL;
+
+   return 0;
+}
+
+
+/**
  * @brief Actually applies a diff in XML node form.
  *
  *    @param parent Node containing the diff information.
@@ -420,6 +477,8 @@ static int diff_patch( xmlNodePtr parent )
       }
       else if (xml_isNode(node, "tech"))
          diff_patchTech( diff, node );
+      else if (xml_isNode(node, "asset"))
+         diff_patchAsset( diff, node );
       else
          WARN("Unidiff '%s' has unknown node '%s'.", diff->name, node->name);
    } while (xml_nextNode(node));
@@ -427,7 +486,7 @@ static int diff_patch( xmlNodePtr parent )
    if (diff->nfailed > 0) {
       WARN("Unidiff '%s' failed to apply %d hunks.", diff->name, diff->nfailed);
       for (i=0; i<diff->nfailed; i++) {
-         fail = &diff->failed[i];
+         fail   = &diff->failed[i];
          target = fail->target.u.name;
          switch (fail->type) {
             case HUNK_TYPE_ASSET_ADD:
@@ -445,9 +504,19 @@ static int diff_patch( xmlNodePtr parent )
             case HUNK_TYPE_TECH_ADD:
                WARN("   [%s] tech add: '%s'", target,
                      fail->u.name );
+               break;
             case HUNK_TYPE_TECH_REMOVE:
                WARN("   [%s] tech remove: '%s'", target,
                      fail->u.name );
+               break;
+            case HUNK_TYPE_ASSET_FACTION:
+               WARN("   [%s] asset faction: '%s'", target,
+                     fail->u.name );
+               break;
+            case HUNK_TYPE_ASSET_FACTION_REMOVE:
+               WARN("   [%s] asset faction removal: '%s'", target,
+                     fail->u.name );
+               break;
 
             default:
                WARN("   unknown hunk '%d'", fail->type);
@@ -462,7 +531,6 @@ static int diff_patch( xmlNodePtr parent )
 
    /* Update overlay map just in case. */
    ovr_refresh();
-
    return 0;
 }
 
@@ -476,6 +544,8 @@ static int diff_patch( xmlNodePtr parent )
  */
 static int diff_patchHunk( UniHunk_t *hunk )
 {
+   Planet *p;
+
    switch (hunk->type) {
 
       /* Adding an asset. */
@@ -499,6 +569,16 @@ static int diff_patchHunk( UniHunk_t *hunk )
       /* Removing a tech. */
       case HUNK_TYPE_TECH_REMOVE:
          return tech_rmItem( hunk->target.u.name, hunk->u.name );
+
+      /* Changing asset faction. */
+      case HUNK_TYPE_ASSET_FACTION:
+         p = planet_get( hunk->target.u.name );
+         if (p==NULL)
+            return -1;
+         hunk->o.name = faction_name( p->faction );
+         return planet_setFaction( p, faction_get(hunk->u.name) );
+      case HUNK_TYPE_ASSET_FACTION_REMOVE:
+         return planet_setFaction( planet_get(hunk->target.u.name), faction_get(hunk->o.name) );
 
       default:
          WARN("Unknown hunk type '%d'.", hunk->type);
@@ -639,6 +719,10 @@ static int diff_removeDiff( UniDiff_t *diff )
             hunk.type = HUNK_TYPE_TECH_ADD;
             break;
 
+         case HUNK_TYPE_ASSET_FACTION:
+            hunk.type = HUNK_TYPE_ASSET_FACTION_REMOVE;
+            break;
+
          default:
             WARN("Unknown Hunk type '%d'.", hunk.type);
             continue;
@@ -696,6 +780,7 @@ static void diff_cleanupHunk( UniHunk_t *hunk )
       case HUNK_TYPE_JUMP_REMOVE:
       case HUNK_TYPE_TECH_ADD:
       case HUNK_TYPE_TECH_REMOVE:
+      case HUNK_TYPE_ASSET_FACTION:
          if (hunk->u.name != NULL)
             free(hunk->u.name);
          break;
