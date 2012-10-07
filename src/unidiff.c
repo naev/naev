@@ -781,8 +781,10 @@ static void diff_cleanupHunk( UniHunk_t *hunk )
       case HUNK_TYPE_TECH_ADD:
       case HUNK_TYPE_TECH_REMOVE:
       case HUNK_TYPE_ASSET_FACTION:
+      case HUNK_TYPE_ASSET_FACTION_REMOVE:
          if (hunk->u.name != NULL)
             free(hunk->u.name);
+         hunk->u.name = NULL;
          break;
 
       default:
