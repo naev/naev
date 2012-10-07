@@ -68,8 +68,6 @@ typedef enum UniHunkType_ {
    HUNK_TYPE_ASSET_REMOVE,
    HUNK_TYPE_JUMP_ADD,
    HUNK_TYPE_JUMP_REMOVE,
-   HUNK_TYPE_FLEET_ADD,
-   HUNK_TYPE_FLEET_REMOVE,
    HUNK_TYPE_TECH_ADD,
    HUNK_TYPE_TECH_REMOVE
 } UniHunkType_t;
@@ -87,7 +85,6 @@ typedef struct UniHunk_ {
    xmlNodePtr node; /**< Parent node. */
    union {
       char *name;
-      Fleet *fleet;
       struct {
          int old; /**< Old value. */
          int new; /**< New value. */
@@ -311,40 +308,6 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
             diff_hunkSuccess( diff, &hunk );
          continue;
       }
-      else if (xml_isNode(cur, "fleet")) {
-         hunk.target.type = base.target.type;
-         hunk.target.u.name = strdup(base.target.u.name);
-
-         /* Get the fleet properties. */
-         /* TODO Fix this up to new presence system. */
-         xmlr_attr(cur,"name",buf);
-         hunk.u.fleet = fleet_get(buf);
-         free(buf);
-         xmlr_attr(cur,"chance",buf);
-         free(buf);
-
-         /* Get the type. */
-         buf = xml_get(cur);
-         if (buf==NULL) {
-            WARN("Unidiff '%s': Null hunk type.", diff->name);
-            continue;
-         }
-         if (strcmp(buf,"add")==0)
-            hunk.type = HUNK_TYPE_FLEET_ADD;
-         else if (strcmp(buf,"remove")==0)
-            hunk.type = HUNK_TYPE_FLEET_REMOVE;
-         else {
-            WARN("Unknown hunk type.");
-            hunk.type = HUNK_TYPE_NONE;
-         }
-
-         /* Apply diff. */
-         if (diff_patchHunk( &hunk ) < 0)
-            diff_hunkFailed( diff, &hunk );
-         else
-            diff_hunkSuccess( diff, &hunk );
-         continue;
-      }
       WARN("Unidiff '%s' has unknown node '%s'.", diff->name, node->name);
    } while (xml_nextNode(cur));
 
@@ -530,13 +493,6 @@ static int diff_patchHunk( UniHunk_t *hunk )
       case HUNK_TYPE_JUMP_REMOVE:
          return system_rmJump( system_get(hunk->target.u.name), hunk->u.name );
 
-      /* Adding a fleet. */
-      case HUNK_TYPE_FLEET_ADD:
-         return system_addFleet( system_get(hunk->target.u.name), hunk->u.fleet );
-      /* Removing a fleet. */
-      case HUNK_TYPE_FLEET_REMOVE:
-         return system_rmFleet( system_get(hunk->target.u.name), hunk->u.fleet );
-
       /* Adding a tech. */
       case HUNK_TYPE_TECH_ADD:
          return tech_addItem( hunk->target.u.name, hunk->u.name );
@@ -674,13 +630,6 @@ static int diff_removeDiff( UniDiff_t *diff )
             break;
          case HUNK_TYPE_JUMP_REMOVE:
             hunk.type = HUNK_TYPE_JUMP_ADD;
-            break;
-
-         case HUNK_TYPE_FLEET_ADD:
-            hunk.type = HUNK_TYPE_FLEET_REMOVE;
-            break;
-         case HUNK_TYPE_FLEET_REMOVE:
-            hunk.type = HUNK_TYPE_FLEET_ADD;
             break;
 
          case HUNK_TYPE_TECH_ADD:
