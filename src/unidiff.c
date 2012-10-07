@@ -454,7 +454,7 @@ static int diff_patchAsset( UniDiff_t *diff, xmlNodePtr node )
  */
 static int diff_patch( xmlNodePtr parent )
 {
-   int i, sys;
+   int i, univ_update;
    UniDiff_t *diff;
    UniHunk_t *fail;
    xmlNodePtr node;
@@ -465,20 +465,22 @@ static int diff_patch( xmlNodePtr parent )
    memset(diff, 0, sizeof(UniDiff_t));
    xmlr_attr(parent,"name",diff->name);
 
-   /* Whether a system's assets were modified. */
-   sys = 0;
+   /* Whether or not we need to update the universe. */
+   univ_update = 0;
 
    node = parent->xmlChildrenNode;
    do {
       xml_onlyNodes(node);
       if (xml_isNode(node,"system")) {
-         sys = 1;
+         univ_update = 1;
          diff_patchSystem( diff, node );
       }
       else if (xml_isNode(node, "tech"))
          diff_patchTech( diff, node );
-      else if (xml_isNode(node, "asset"))
+      else if (xml_isNode(node, "asset")) {
+         univ_update = 1;
          diff_patchAsset( diff, node );
+      }
       else
          WARN("Unidiff '%s' has unknown node '%s'.", diff->name, node->name);
    } while (xml_nextNode(node));
@@ -526,8 +528,8 @@ static int diff_patch( xmlNodePtr parent )
    }
 
    /* Prune presences if necessary. */
-   if (sys)
-      system_presenceCleanupAll();
+   if (univ_update)
+      space_reconstructPresences();
 
    /* Update overlay map just in case. */
    ovr_refresh();
