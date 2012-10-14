@@ -129,7 +129,7 @@ function enter()
         hawk:setVisible(true)
         pilot.cargoAdd(hawk, "Food", 500)
         hawk:control()
-        hawk:hyperspace(destjumpname)
+        hawk:hyperspace(system.get(destjumpname))
         hawk:broadcast(string.format(chatter[0], destjumpname))
         fleetdv = pilot.add("Dvaered Home Guard", "dvaered_norun", hawk:pos()-vec2.new(1000,1500))
         for i, j in ipairs(fleetdv) do
@@ -177,7 +177,7 @@ function hawk_attacked () -- chased
     else
         hawk:broadcast(chatter[1])
         hawk:control()
-        hawk:hyperspace(destjumpname)
+        hawk:hyperspace(system.get(destjumpname))
         fleetdv[1]:broadcast(chatter[2])
     end
     for i, j in ipairs(fleetdv) do
@@ -194,7 +194,7 @@ function fleetdv_attacked () -- chased
     if jump_fleet_entered then
     else
         hawk:control()
-        hawk:hyperspace(destjumpname)
+        hawk:hyperspace(system.get(destjumpname))
         fleetdv[1]:broadcast(chatter[3])
     end
     for i, j in ipairs(fleetdv) do
