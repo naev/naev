@@ -298,6 +298,20 @@ credits_t planet_commodityPrice( const Planet *p, const Commodity *c )
 
 
 /**
+ * @brief Changes the planets faction.
+ *
+ *    @param p Planet to change faction of.
+ *    @param faction Faction to change to.
+ *    @return 0 on success.
+ */
+int planet_setFaction( Planet *p, int faction )
+{
+   p->faction = faction;
+   return 0;
+}
+
+
+/**
  * @brief Checks to make sure if pilot is far enough away to hyperspace.
  *
  *    @param p Pilot to check if he can hyperspace.

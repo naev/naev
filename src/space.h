@@ -299,11 +299,14 @@ char* planet_getServiceName( int service );
 int planet_getService( char *name );
 PlanetClass planetclass_get( const char a );
 credits_t planet_commodityPrice( const Planet *p, const Commodity *c );
+/* Misc modification. */
+int planet_setFaction( Planet *p, int faction );
 /* Land related stuff. */
 char planet_getColourChar( Planet *p );
 const glColour* planet_getColour( Planet *p );
 void planet_updateLand( Planet *p );
 int planet_setRadiusFromGFX(Planet* planet);
+
 
 /*
  * jump stuff
