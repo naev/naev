@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<asset name="Valt II">
+<asset name="Mason I">
  <pos>
-  <x>34959.845064</x>
-  <y>-76.465126</y>
+  <x>-6268.132613</x>
+  <y>-6415.466081</y>
  </pos>
  <GFX>
-  <space>S00.png</space>
+  <space>J02.png</space>
   <exterior>snow.png</exterior>
  </GFX>
  <general>
