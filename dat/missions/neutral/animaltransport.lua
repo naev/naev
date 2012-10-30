@@ -2,7 +2,7 @@
 --
 -- MISSION: Animal transport
 -- DESCRIPTION: A man asks you to transport a crate of specially bred creatures for
--- his in-law's exotic pet store on another planet. It's a standard fare A-to-B mission,
+-- his in-law's exitic pet store on another planet. It's a standard fare A-to-B mission,
 -- but doing this mission infests the player's current ship with the creatures.
 --
 --]]
@@ -18,7 +18,7 @@ text = {}
 title = {}
 
     title[1] = "Animal transport"
-    text[1] = [[    "Good day to you, good pilot," the man greets you. "I'm looking for someone with a ship who can take this crate here to planet %s in the %s system. The crate contains a colony of rodents I've bred myself, and my in-law has a pet shop on %s where I hope to sell them. Upon delivery, you will be paid 20,000 credits. Are you interested in the job?]]
+    text[1] = [[    "Good day to you, good sir," the man greets you. "I'm looking for someone with a ship who can take this crate here to planet %s in the %s system. The crate contains a colony of rodents I've bred myself, and my in-law has a pet shop on %s where I hope to sell them. Upon delivery, you will be paid 20,000 credits. Are you interested in the job?]]
 
     text[2] = [[    "Excellent! My in-law will send someone to meet you at the spaceport to take the crate off your hands, and you'll be paid immediately on delivery. Thanks again!"]]
 
