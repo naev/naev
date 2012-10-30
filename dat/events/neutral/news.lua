@@ -11,7 +11,7 @@ else --default english
 
    header_table={}
 
-   header_table["Generic"] =     {"We bring you the latest news in the galaxy"
+   header_table["Generic"] =     {"We bring you the latest news in the galaxy."
                                  }
    header_table["Independent"] = {"Welcome to Universal News Feed. All the headlines all the time."
                                  }
@@ -25,11 +25,11 @@ else --default english
                                  }
    header_table["Sirius"] =      {"Sirius News Reel. Words of the Sirichana for all."
                                  }
-   header_table["FLF"] =         {"The word of the Free Resistance"
+   header_table["FLF"] =         {"The word of the Free Resistance."
                                  }
-   header_table["Frontier"] =    {"News from the Frontier Alliance"
+   header_table["Frontier"] =    {"News from the Frontier Alliance."
                                  }
-   header_table["Proteron"] =    {"Word from the Proteron state"
+   header_table["Proteron"] =    {"Word from the Proteron state."
                                  }
    header_table["Za'lek"] =      {"Scientific, Socioeconomic, and Sundry Events"
                                  }
@@ -55,10 +55,10 @@ else --default english
                                  }
    greet_table["FLF"] =          {""
                                  }
-   greet_table["Frontier"] =     {"News you can trust"
+   greet_table["Frontier"] =     {"News you can trust."
                                  }
-   greet_table["Sirius"] =       {"Stay faithful",
-                                 "Sirichana watches and guides you"
+   greet_table["Sirius"] =       {"Stay faithful.",
+                                 "Sirichana watches and guides you."
                                  }
    greet_table["Proteron"] =     {""
                                  }
@@ -73,7 +73,7 @@ else --default english
       --]]
       {
          title = "Techs Probe for Sol",
-         desc = "Technicians at the Omega Station recently returned from a new effort to understand the Sol Incident. They expect first data to arrive in two months' time."
+         desc = "Technicians at the Omega Station recently returned from a new effort to understand the Sol Incident. They expect the first data to arrive in two months' time."
       },
       {
          title = "Sand Monster Caught On Tape",
@@ -89,7 +89,7 @@ else --default english
       },
       {
          title = "Bees Introduced to Emperor's Fist",
-         desc = "As they prepare the gardens of the future imperial compound, entomologists have established the first colony of the Earth insects on the planet formerly known as G Scorpeii 5."
+         desc = "As they prepare the gardens of the future Imperial compound, entomologists have established the first colony of the Earth insects on the planet formerly known as G Scorpeii 5."
       },
       {
          title = "The Case for Sex",
@@ -112,7 +112,7 @@ else --default english
       },
       {
          title = "Genetric Board Meets",
-         desc = "In the wake of the Yavi Bartolo's departure as CSO of Genetric Technologies, the board of directors will meet today. The group is expected to appoint a new science officer."
+         desc = "In the wake of the Yavi Bartolo's departure as CSO of Genetric Technologies, the board of directors will meet today. The group is expected to appoint a new chief science officer."
       },
       {
          title = "Aerosys Earnings Drop",
@@ -124,7 +124,7 @@ else --default english
       },
       {
          title = "Melendez CEO on Strategy",
-         desc = "The Chief Executive Officer of ship maker Melendez Inc. thinks manufacturers should follow his companies lead in keeping costs down and producing for the mass market."
+         desc = "The Chief Executive Officer of ship maker Melendez Inc. thinks manufacturers should follow his company's lead in keeping costs down and producing for the mass market."
       },
       {
          title = "The Goddard Exception",
@@ -143,7 +143,7 @@ else --default english
       --]]
       {
          title = "FLF Responsible for Piracy",
-         desc = "Law enforcement Expert Paet Dohmer's upcoming essay describes the group as \"more criminal gang than independence movement,\" according to his publicist."
+         desc = "Law enforcement expert Paet Dohmer's upcoming essay describes the group as \"more criminal gang than independence movement\", according to his publicist."
       },
       {
          title = "Front Responsible for Shipping Woes",
@@ -186,19 +186,19 @@ else --default english
       --]]
       {
          title = "Emperor's Aid Gets Hitched",
-         desc = "On Saturday, imperial secretary Karil Lorenze married long time fiancee Rachid Baouda in the future palace gardens on the Emperor's Fist. His Eminence the bishop of Bao performed the ceremony."
+         desc = "On Saturday, Imperial secretary Karil Lorenze married long time fiancee Rachid Baouda in the future palace gardens on Emperor's Fist. His Eminence the Bishop of Bao performed the ceremony."
       },
       {
-         title = "Eyeteeth back in Fashion",
+         title = "Eyeteeth Back in Fashion",
          desc = "Despite the advice of dentists, eyetooth caps have come into vogue again. Young people throughout the inhabited worlds use home kits to strip a layer of enamel from their teeth in favour of a binding of quartz, granite, or even flint."
       },
       {
          title = "Everyone Loves a SuperChimp",
-         desc = "For decades used only as menial labourers, now SuperChimps are being widely adopted as domestic companions. Enhanced primates make an affectionate, intelligent pet, or low cost servant."
+         desc = "For decades used only as menial labourers, now SuperChimps are being widely adopted as domestic companions. Enhanced primates make an affectionate, intelligent pet, or low-cost servant."
       },
       {
          title = "Admiral's Ball a Triumph",
-         desc = "The glamorous season drew to a close with an underwater themed ball held in air bubbles deep under the oceans of Anecu. All the seasons debutantes attended."
+         desc = "The glamorous season drew to a close with an underwater themed ball held in air bubbles deep under the oceans of Anecu. All the season's debutantes attended."
       },
       {
          title = "Amazing Survival Story",
@@ -228,7 +228,7 @@ else --default english
       --]]
       {
          title = "New Mace Rockets",
-         desc = "Dvaered Engineers are proud to present the new improved version of the Dvaered Mace rocket. \"We have proven the new rocket to be nearly twice as destructive as the previous versions.\", says Chief Dvaered Engineer."
+         desc = "Dvaered Engineers are proud to present the new improved version of the Dvaered Mace rocket. \"We have proven the new rocket to be nearly twice as destructive as the previous versions,\" says Chief Dvaered Engineer Nordstrom."
       },
       --[[
          Business
@@ -240,8 +240,8 @@ else --default english
          Human interest.
       --]]
       {
-         title = "Sirius Weaker than Ever",
-         desc = "This SCU breaks the negative record of fewest pilgrims to Mutris since the formation of House Sirius. This weakness is yet another sign that House Dvaered must increase patrols on the border and into Sirius space." 
+         title = "Sirius Weaker Than Ever",
+         desc = "This SCU breaks the negative record for fewest pilgrims to Mutris since the formation of House Sirius. This weakness is yet another sign that House Dvaered must increase patrols on the border and into Sirius space." 
       }
    }
 
@@ -251,18 +251,18 @@ else --default english
       --]]
       {
          title = "Goddard: Raising the Bar",
-         desc = "Many new scientists are being contracted by House Goddard to investigate on possible improvements. This new strategy will increase the gap with the competing ship fabricators."
+         desc = "Many new scientists are being contracted by House Goddard to investigate possible improvements. This new strategy will increase the gap with the competing ship fabricators."
       },
       --[[
          Business
       --]]
       {
          title = "Goddard Earnings on the Rise",
-         desc = "House Goddard has once again increased its earnings. \"Our investment in technology and quality has paid off.\", said Kari Baker, responsible of House Goddard marketing."
+         desc = "House Goddard has once again increased its earnings. \"Our investment in technology and quality has paid off,\" said Kari Baker of House Goddard's marketing bureau."
       },
       {
          title = "Goddard Awarded Best Ship",
-         desc = "Once again the Goddard class Cruiser was awarded the Best Overall Ship award by the Dvaered Armada's annual Ship Awards. \"Very few ships have reliability like the Goddard.\", said Lord Warthon upon receiving the award for House Goddard."
+         desc = "Once again the Goddard Battlecruiser was awarded the Best Overall Ship prize by the Dvaered Armada's annual Ship Awards. \"Very few ships have reliability like the Goddard,\" said Lord Warthon upon receiving the award on behalf of House Goddard."
       }
       --[[
          Politics
@@ -281,21 +281,21 @@ else --default english
       --]]
       {
          title = "Trade Meeting at Lorelei",
-         desc = "Lorelei in the Churchill systems is currently being one of the centers of major trade negotiations between the Fyrra and Space Traders Guild. The Fyrra Arch-Canter has indicated that opening up trade routes is a major goal."
+         desc = "Lorelei, in the Churchill system, is the latest world to host major trade negotiations between the Fyrra and the Space Traders Guild. The Fyrra Arch-Canter has indicated that opening up trade routes is a major goal."
       },
       --[[
          Politics
       --]]
       {
          title = "Dvaered extorting pilgrims",
-         desc = "Recent pilgrims headed to Mutris have been telling stories of extortion and violations caused by Dvaered. Dvaered War Lord Kra'tok claims that these are \"delusions of the touched\". Official complaints have been filed to the Emperor."
+         desc = "Recent pilgrims headed to Mutris have been telling stories of extortion and violations by Dvaered operators. Dvaered Warlord Kra'tok claims that these are \"delusions of the touched\". Official complaints have been made to the Emperor."
       },
       --[[
          Human interest.
       --]]
       {
          title = "Words of Tranquility",
-         desc = "We welcome many new Touched who have recently joined the Shaira echelon after their long pilgrimage on Mutris. House Sirius is still a refugee for the orphans lost in this Universe"
+         desc = "We welcome many new Touched who have recently begun ministering to the Shaira echelon after their long pilgrimage on Mutris. House Sirius is still a refugee for the orphans lost in this Universe."
       }
    }
 
@@ -305,14 +305,14 @@ else --default english
       --]]
       {
          title = "Skull and Bones Improving",
-         desc = "The technology behind Skull and Bones is rising. Not only do they steal ships, but they improve on the original design. \"This gives us pirates an edge against the injustice of the Empire.\", says Millicent Felecia Black, lead Skull and Bones engineer."
+         desc = "The technology behind Skull and Bones is advancing. Not only do they steal ships, but they improve on the original design. \"This gives us pirates an edge against the injustice of the Empire,\" says Millicent Felecia Black, lead Skull and Bones engineer."
       },
       --[[
          Business
       --]]
       {
          title = "Draconis Favorite Plundering Space",
-         desc = "Draconis has recently passed Delta Pavonis in the pirate polls as favorite plundering space. The abundance of Traders and interference make it an excellent place to get some fast credits."
+         desc = "Draconis has recently passed Delta Pavonis in the pirate polls as the most favored plundering space. The abundance of traders and high interference make it an excellent place to get some fast credits."
       },
       {
          title = "New Ships for Skull and Bones",
@@ -322,7 +322,7 @@ else --default english
          Politics
       --]]
       {
-         title = "Emperor Weaker than Ever",
+         title = "Emperor Weaker Than Ever",
          desc = "Recent actions demonstrate the inefficiency and weakness of the Emperor. One of the last irrational decisions left Eridani without a defense fleet to protect the traders. It's a great time to be a pirate."
       },
       --[[
@@ -330,7 +330,7 @@ else --default english
       --]]
       {
          title = "Cats in New Haven",
-         desc = "An explosion in the cat population of New Haven has created an adoption campaign with the slogan \"Pirate Cats, for those lonely space trips.\". Is your space vessel full of vermin?  Adopt a cat today!"
+         desc = "An explosion in the cat population of New Haven has created an adoption campaign with the slogan, \"Pirate Cats, for those lonely space trips.\". Is your space vessel full of vermin? Adopt a cat today!"
       }
    }
 
@@ -340,27 +340,27 @@ else --default english
       --]]
       {
          title = "Terraforming Emperor's Fist",
-         desc = "New bleeding edge terraforming techniques to be tried on Emperor's Fist. Studies show that these techniques could speed up the terraforming process by up to 40%."
+         desc = "New bleeding-edge terraforming techniques to be tried on Emperor's Fist. Studies show that these techniques could speed up the terraforming process by as much as 40%."
       },
       --[[
          Business
       --]]
       {
          title = "Empire Keeping Traders Safe",
-         desc = "Recent studies show that piracy reports on Trader vessels have gone down by up to 40% in some sectors. This is part of the Empire's commitment to eradicating piracy."
+         desc = "Recent studies show that reports of piracy on Trader vessels have gone down by up to 40% in some sectors. This is a demonstration of the Empire's commitment to eradicating piracy."
       },
       --[[
          Politics
       --]]
       {
          title = "New Empire Recruits",
-         desc = "The Emperor's recruiting strategy a success. Many new soldiers joining the Empire Armada. \"We haven't had such a successful campaign in ages!\", said Raid Steele, spokesman for the recruiting campaign."
+         desc = "Emperor's recruiting strategy a success. Many new soldiers joining the Empire Armada. \"We haven't had such a successful campaign in ages!\" - Raid Steele, spokesman for recruiting campaign."
       },
       --[[
          Human interest.
       --]]
       {
-         title = "New Cat in the Empire Family",
+         title = "New Cat in the Imperial Family",
          desc = "The Emperor's daughter was recently gifted a cat. Cat could be named \"Snuggles\" and seems to be all white."
       }
    }
