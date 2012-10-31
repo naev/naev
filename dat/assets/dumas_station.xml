@@ -25,7 +25,7 @@
   </services>
   <commodities/>
   <description>Dumas Station is a statging area for a planned expansion into the southern reaches of the galaxy, where there is no unified force and pirates roam unfettered. The station is largely ignored for the time being, but more and more soldiers are being trasferred here.</description>
-  <bar>The bar is typical of a Dvaered-style military canteen, i.e. barely habitable. The station's age does not do it favors, either.</bar>
+  <bar>The bar is typical of a Dvaered-style military canteen, i.e. barely habitable. The station's age does it no favors, either.</bar>
  </general>
  <tech>
   <item>Light Civilian Combat Ships</item>
