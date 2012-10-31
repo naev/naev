@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<asset name="Valt IV">
+<asset name="Mason II">
  <pos>
-  <x>-22631.439409</x>
-  <y>1236.862734</y>
+  <x>34959.845064</x>
+  <y>-76.465126</y>
  </pos>
  <GFX>
-  <space>J04.png</space>
-  <exterior>gas.png</exterior>
+  <space>S00.png</space>
+  <exterior>snow.png</exterior>
  </GFX>
  <general>
-  <class>J</class>
+  <class>A</class>
   <population>0</population>
   <hide>0.250000</hide>
   <services/>

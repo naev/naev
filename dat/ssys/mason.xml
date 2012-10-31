@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ssys name="Valt">
+<ssys name="Mason">
  <general>
   <radius>20000.000000</radius>
   <stars>400</stars>
@@ -11,9 +11,9 @@
   <y>210.119696</y>
  </pos>
  <assets>
-  <asset>Valt I</asset>
-  <asset>Valt II</asset>
-  <asset>Valt IV</asset>
+  <asset>Mason I</asset>
+  <asset>Mason II</asset>
+  <asset>Mason IV</asset>
   <asset>Vault</asset>
  </assets>
  <jumps>
