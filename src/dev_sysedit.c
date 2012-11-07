@@ -30,8 +30,6 @@
 #include "npng.h"
 
 
-#define HIDE_DEFAULT_PLANET      0.25 /**< Default hide value for new planets. */
-
 #define BUTTON_WIDTH    90 /**< Map button width. */
 #define BUTTON_HEIGHT   30 /**< Map button height. */
 

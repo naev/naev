@@ -29,10 +29,6 @@
 #include "nstring.h"
 
 
-#define HIDE_DEFAULT_JUMP        1.25 /**< Default hide value for new jumps. */
-#define RADIUS_DEFAULT           10000 /**< Default radius for new systems. */
-#define STARS_DENSITY_DEFAULT    400 /**< Default stars density for new systems. */
-
 #define BUTTON_WIDTH    80 /**< Map button width. */
 #define BUTTON_HEIGHT   30 /**< Map button height. */
 

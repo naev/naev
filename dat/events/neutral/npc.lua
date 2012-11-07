@@ -87,7 +87,7 @@ else --default english
 
    msg_lore["Sirius"] =       {"Greetings, traveler. May Sirichana's wisdom guide you as it guides me.",
                                "I once met one of the Touched in person. Well, it wasn't really a meeting, our eyes simply met... But that instant alone was awe-inspiring.",
-                               "They say Sirichana lives and dies like any other man, but each new Shirichana is the same as the last. How is that possible?",
+                               "They say Sirichana lives and dies like any other man, but each new Sirichana is the same as the last. How is that possible?",
                                "My cousin was called to Mutris a cycle ago... He must be in Crater City by now. And one day, he will become one of the Touched!",
                                "Some people say Sirius society is unfair because our echelons are determined by birth. But even though we are different, we are all followers of Sirichana. Spiritually, we are equal.",
                                "House Sirius is officially part of the Empire, but everyone knows that's only true on paper. The Emperor has nothing to say in these systems. We follow Sirichana, and no-one else.",
@@ -99,8 +99,8 @@ else --default english
                                "Can you believe it? I was going to visit Sorom to find my roots, and then boom! It got burnt to a crisp! Even now, cycles later, I still can't believe it.",
                                "Yes, it's true, our military ships are alive. Us normal folk don't get to own bioships though, we have to make do with synthetic constructs just like everyone else.",
                                "Everyone knows that we Soromid altered ourselves to survive the deadly conditions on Sorom during the Great Quarantine. What you don't hear so often is that billions of us died from the therapy itself. We paid a high price for survival.",
-                               "Our cosmetic gene treatments are even safer now for non-soromids, with a rate of survival of 99.4%!",
-                               "We have been rebuilding and enhancing our bodies for so long. I say we became a new species, one above human",
+                               "Our cosmetic gene treatments are even safer now for non-Soromids, with a rate of survival of 99.4%!",
+                               "We have been rebuilding and enhancing our bodies for so long, I say we've become a new species, one above human.",
                               }
 
    msg_lore["Za'lek"] =       {"It's not easy, dancing to those scientists' tunes. They give you the most impossible tasks! Like, where am I supposed to get a triple redundant helitron converter? Honestly.",
