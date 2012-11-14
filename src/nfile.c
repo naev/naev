@@ -610,12 +610,12 @@ char** nfile_readDirRecursive( int* nfiles, const char* path, ... )
 
    for (i=0; i<tmp; i++) {
       ls  = strlen(base) + strlen(tfiles[i]) + 1;
-      buf = malloc(ls * sizeof(char));
+      buf = malloc(ls);
       nsnprintf( buf, ls, "%s%s", path, tfiles[i] );
       if (nfile_dirExists(buf)) {
          /* Append slash if necessary. */
          if (strcmp(&buf[ls-1],"/")!=0) {
-            buf = realloc( buf, (ls+1) * sizeof(char) );
+            buf = realloc( buf, (ls+1) );
             nsnprintf( buf, ls+1, "%s%s/", path, tfiles[i] );
          }
 

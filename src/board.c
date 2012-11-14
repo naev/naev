@@ -72,13 +72,23 @@ void player_board (void)
    HookParam hparam[2];
 
    if (player.p->target==PLAYER_ID) {
-      player_message("\erYou need a target to board first!");
-      return;
+      /* We don't try to find far away targets, only nearest and see if it matches.
+       * However, perhaps looking for first boardable target within a certain range
+       * could be more interesting. */
+      player_targetNearest();
+      p = pilot_get(player.p->target);
+      if ((!pilot_isDisabled(p) && !pilot_isFlag(p,PILOT_BOARDABLE)) ||
+            pilot_isFlag(p,PILOT_NOBOARD)) {
+         player_targetClear();
+         player_message("\erYou need a target to board first!");
+         return;
+      }
    }
-
-   p = pilot_get(player.p->target);
+   else
+      p = pilot_get(player.p->target);
    c = pilot_getFactionColourChar( p );
 
+   /* More checks. */
    if (pilot_isFlag(p,PILOT_NOBOARD)) {
       player_message("\erTarget ship can not be boarded.");
       return;

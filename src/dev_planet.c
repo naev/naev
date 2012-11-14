@@ -132,7 +132,7 @@ int dpl_savePlanet( const Planet *p )
    /* Write data. */
    cleanName = uniedit_nameFilter( p->name );
    len       = strlen(cleanName)+16;
-   file      = malloc( len*sizeof(char) );
+   file      = malloc( len );
    nsnprintf( file, len, "dat/assets/%s.xml", cleanName );
    xmlSaveFileEnc( file, doc, "UTF-8" );
    free( file );

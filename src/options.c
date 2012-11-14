@@ -484,7 +484,7 @@ static void menuKeybinds_genList( unsigned int wid )
    str = malloc(sizeof(char*) * i);
    for (j=0; j < i; j++) {
       l = 64;
-      str[j] = malloc(sizeof(char) * l);
+      str[j] = malloc(l);
       key = input_getKeybind( keybind_info[j][0], &type, &mod );
       switch (type) {
          case KEYBIND_KEYBOARD:

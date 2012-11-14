@@ -1373,7 +1373,7 @@ static void equipment_genShipList( unsigned int wid )
       alt   = malloc( sizeof(char*) * nships );
       for (i=0; i<nships; i++) {
          s        = player_getShip( sships[i] );
-         alt[i]   = malloc( sizeof(char) * SHIP_ALT_MAX );
+         alt[i]   = malloc( SHIP_ALT_MAX );
          l        = nsnprintf( &alt[i][0], SHIP_ALT_MAX, "Ship Stats\n" );
          l        = equipment_shipStats( &alt[i][l], SHIP_ALT_MAX-l, s, 1 );
          if (l == 0) {
@@ -1535,7 +1535,7 @@ static void equipment_addOutfitListSingle( unsigned int wid,
       if ((strcmp(outfit_slotName(o),"NA") != 0) &&
             (strcmp(outfit_slotName(o),"NULL") != 0)) {
          typename       = outfit_slotName(o);
-         slottype[i]    = malloc( sizeof(char)*2 );
+         slottype[i]    = malloc( 2 );
          slottype[i][0] = typename[0];
          slottype[i][1] = '\0';
       }

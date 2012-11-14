@@ -29,10 +29,6 @@
 #include "nstring.h"
 
 
-#define HIDE_DEFAULT_JUMP        1.25 /**< Default hide value for new jumps. */
-#define RADIUS_DEFAULT           10000 /**< Default radius for new systems. */
-#define STARS_DENSITY_DEFAULT    400 /**< Default stars density for new systems. */
-
 #define BUTTON_WIDTH    80 /**< Map button width. */
 #define BUTTON_HEIGHT   30 /**< Map button height. */
 
@@ -591,7 +587,7 @@ char *uniedit_nameFilter( char *name )
    int i, pos;
    char *out;
 
-   out = calloc( 1, (strlen(name)+1) * sizeof(char) );
+   out = calloc( 1, (strlen(name)+1)  );
    pos = 0;
    for (i=0; i<(int)strlen(name); i++) {
       if (!ispunct(name[i])) {
@@ -634,9 +630,9 @@ static void uniedit_renameSys (void)
       }
 
       /* Change the name. */
-      oldName = malloc((14+strlen(sys->name))*sizeof(char));
+      oldName = malloc((14+strlen(sys->name)));
       nsnprintf(oldName,14+strlen(sys->name),"dat/ssys/%s.xml", uniedit_nameFilter(sys->name) );
-      newName = malloc((14+strlen(name))*sizeof(char));
+      newName = malloc(14+strlen(name));
       nsnprintf(newName,14+strlen(name),"dat/ssys/%s.xml", uniedit_nameFilter(name) );
       nfile_rename(oldName,newName);
       free(oldName);
