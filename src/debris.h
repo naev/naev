@@ -5,7 +5,7 @@
 
 
 #ifndef DEBRIS_H
-#  define DEBRIS__H
+#  define DEBRIS_H
 
 
 #include "pilot.h"
