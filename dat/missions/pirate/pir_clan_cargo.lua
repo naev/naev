@@ -26,7 +26,7 @@ else -- default english
    title[2] = title[1]
    title[3] = "Mission Accomplished"
    text = {}
-   text[1]  = [[It seems like this planet’s clan is looking for a pilot to transport a package to another pirate world. Obviously, quite a few mercenaries or even pirates would try to stop anyone transporting that package.
+   text[1]  = [[It seems like this planet's clan is looking for a pilot to transport a package to another pirate world. Obviously, quite a few mercenaries or even fellow pirates would try to stop anyone transporting that package, and there is probably no need to say the only ways to the other pirate worlds are through hostile territory.
    
 Will you accept the mission?]]
    text[2] = [[You roll up your sleeve and head off to your ship.]]
@@ -36,16 +36,15 @@ end
 
 function create ()
    -- Note: this mission does not make any system claims.
-   local landed, landed_sys = planet.cur()
+   local landed = planet.cur():name()
 
    -- target destination
-   local planets = {
-      { planet.get("Vorca") },
-	  { planet.get("New Haven") },
-	  { planet.get("Sanchez") },
-   }
-   for i = 1,#planets do
-      planets[i][2] = planets[i][1]:system()
+   local planets = {}
+   for _, p in pairs({"Vorca", "New Haven","Sanchez"}) do
+      if p ~= landed then
+         planets[#planets+1] = { planet.get(p) }
+         planets[#planets][2] = planets[#planets][1]:system()
+      end
    end
 
    local index = rnd.rnd(1, #planets)
