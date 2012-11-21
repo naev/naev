@@ -88,7 +88,7 @@ end
 --]]
 common.calcPlayerCombatTier = function ()
    local crating = player.getRating()
-   local tiear
+   local tier
 
    -- Calculate based off of combat rating
    if crating <= 5 then
