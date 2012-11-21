@@ -25,7 +25,7 @@
    <shipyard/>
   </services>
   <commodities/>
-  <description>Old King Cole's moon Sanchez is a rather dirty place. Being the only pirate hold for some distanc ehelps with this, as well as being a little small for the duty. THe clocal clanworld tries to make up for the lack with exploiting the resources from the other planets in system.</description>
+  <description>Old King Cole's moon Sanchez is a rather dirty place. Being the only pirate hold for some distance helps with this, as well as being a little small for the duty. The local clanworld tries to make up for the lack with exploiting the resources from the other planets in system.</description>
   <bar>The bar is quiet and orderly, with a few deals going down in closed-off booths, nice food, and only the occasional drunken brawl. The lord of Shanchez doesn't appreciate louts, it seems.</bar>
  </general>
  <tech>
@@ -45,5 +45,6 @@
   <item>Hulls High</item>
   <item>Engines High</item>
   <item>Systems High</item>
+  <item>Pirate Maps</item>
  </tech>
 </asset>

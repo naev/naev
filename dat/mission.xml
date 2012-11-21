@@ -610,6 +610,16 @@
    <faction>Pirate</faction>
   </avail>
  </mission>
+ <mission name="Pirate Clan Shipping">
+  <lua>pirate/pir_clan_cargo</lua>
+  <avail>
+   <priority>1</priority>
+   <cond>faction.playerStanding("Pirate") &gt;= 20 and var.peek("ps_misn") >= 2</cond>
+   <chance>30</chance>
+   <location>Bar</location>
+   <faction>Pirate</faction>
+  </avail>
+ </mission>
  <mission name="Drunkard">
   <lua>neutral/drunkard</lua>
   <flags>
