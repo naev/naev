@@ -557,6 +557,15 @@
         end)()</cond>
   </avail>
  </mission>
+ <mission name="Stealing ships">
+  <lua>pirate/pir_ship_stealing</lua>
+  <flags/>
+  <avail>
+   <!-- Frequent -->
+   <chance>60</chance>
+   <location>Bar</location>
+  </avail>
+ </mission>
  <mission name="The macho teenager">
   <lua>neutral/teenager</lua>
   <flags>
