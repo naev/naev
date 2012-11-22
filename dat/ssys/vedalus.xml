@@ -16,5 +16,15 @@
    <autopos/>
    <hide>1.250000</hide>
   </jump>
+  <jump target="Titus">
+   <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Defa">
+   <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
  </jumps>
 </ssys>

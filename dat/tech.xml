@@ -830,4 +830,7 @@
  <tech name="Pirate Maps">
   <item>Map: Pirate worlds</item>
  </tech>
+ <tech name="New Haven Maps">
+  <item>Map: New Haven's hidden jump points</item>
+ </tech>
 </Techs>
