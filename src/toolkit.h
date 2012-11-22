@@ -45,6 +45,7 @@ void window_handleEvents( const unsigned int wid,
  */
 /* generic */
 int window_exists( const char* wdwname );
+int window_existsID( const unsigned int wid );
 int widget_exists( const unsigned int wid, const char* wgtname );
 unsigned int window_get( const char* wdwname );
 void window_dimWindow( const unsigned int wid, int *w, int *h );

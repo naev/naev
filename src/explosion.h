@@ -5,7 +5,7 @@
 
 
 #ifndef EXPLOSION_H
-#  define EXPLOSION__H
+#  define EXPLOSION_H
 
 
 #include "outfit.h"
