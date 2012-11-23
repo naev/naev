@@ -561,8 +561,7 @@
   <lua>pirate/pir_ship_stealing</lua>
   <flags/>
   <avail>
-   <!-- Frequent -->
-   <chance>60</chance>
+   <chance>10</chance>
    <location>Bar</location>
   </avail>
  </mission>
