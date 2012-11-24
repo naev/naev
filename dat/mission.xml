@@ -625,7 +625,7 @@
   <avail>
    <priority>1</priority>
    <cond>faction.playerStanding("Pirate") &gt;= 20 and var.peek("ps_misn") >= 2</cond>
-   <chance>30</chance>
+   <chance>10</chance>
    <location>Bar</location>
    <faction>Pirate</faction>
   </avail>
