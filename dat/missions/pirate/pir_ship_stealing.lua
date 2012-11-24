@@ -425,7 +425,7 @@ function enter()
 
 		for i = 1,#positions do
 			local position = positions[i]
-			local p = pilot.add(guards[ship.faction].ship, guards[ship.faction].AI, position)
+			local p = pilot.addRaw(guards[ship.faction].ship, guards[ship.faction].AI, position, ship.faction)
 			-- We don’t want the player to just land and be given his new ship…
 			p[1]:setHostile()
 		end
