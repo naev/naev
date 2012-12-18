@@ -24,9 +24,9 @@ else --I guess you know this stuff...
 
     I want you to bring this to my associates in the %s system. While the local authorities have proven corruptible, my associates will ensure that this man ends up in prison, where he belongs. I must warn you, however:
 
-    He is a man of not-inconsiderable influence. He has many friends, and no doubt will send some of his mercenaries to stop you. You'll need a fast ship to shake them off. My associates will compensate you generously when you reach %s.
+    He is a man of considerable influence. He has many friends, and no doubt will send some of his mercenaries to stop you. You'll need a fast ship to shake them off. My associates will compensate you generously when you reach %s.
 
-    Regrettably, you are not the first pilot I've contacted regarding this matter. Your predecessor was intercepted when he landed en route to %s. The crime lord has many underlings lurking in nearby spaceports, you must NOT land until you've delivered the data."
+    Regrettably, you are not the first pilot I've contacted regarding this matter. Your predecessor was intercepted when he landed en route to %s. The crime lord has many underlings lurking in nearby spaceports -- you must NOT land until you've delivered the data."
 
     Given the dangers, you're not sure whether the reward will make this worth your while. Do you accept?]] --dialogue 1
     text[1] = [[    After quickly glancing around to make sure nobody's taken a particular interest, the detective presses the data stick into your hand.
