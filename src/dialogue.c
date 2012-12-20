@@ -414,7 +414,7 @@ char* dialogue_inputRaw( const char* title, int min, int max, const char *msg )
 
       if (input) {
          dialogue_alert( "Input must be at least %d character%s long!",
-               min, (min==1) ? "s" : "" );
+               min, (min==1) ? "" : "s" );
          free(input);
          input = NULL;
       }
