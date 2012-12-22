@@ -292,7 +292,7 @@ static int commodityL_priceAt( lua_State *L )
    }
    sys = system_get( sysname );
    if (sys == NULL) {
-      NLUA_ERROR( L, "Planet '%s' can not find it's system '%s'", p->name, sysname );
+      NLUA_ERROR( L, "Planet '%s' can not find its system '%s'", p->name, sysname );
       return 0;
    }
 
