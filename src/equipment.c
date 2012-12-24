@@ -1163,6 +1163,10 @@ void equipment_regenLists( unsigned int wid, int outfits, int ships )
    nship    = 0;
    offship  = 0.;
 
+   /* Must exist. */
+   if (!window_existsID( equipment_wid ))
+      return;
+
    /* Save positions. */
    if (outfits) {
       for (i=0; i<OUTFIT_TABS; i++) {

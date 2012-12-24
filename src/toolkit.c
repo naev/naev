@@ -350,6 +350,24 @@ int window_exists( const char* wdwname )
 
 
 /**
+ * @brief Checks to see if a window with a certain ID exists.
+ *
+ *    @param wdwname Name of the window to check.
+ *    @return 1 if it exists, 0 if it doesn't.
+ */
+int window_existsID( const unsigned int wid )
+{
+   Window *w;
+   if (windows == NULL)
+      return 0;
+   for (w = windows; w != NULL; w = w->next)
+      if ((w->id==wid) && !window_isFlag(w, WINDOW_KILL))
+         return 1;
+   return 0; /* doesn't exist */
+}
+
+
+/**
  * @brief Gets the ID of a window.
  *
  *    @param wdwname Name of the window to get ID of.

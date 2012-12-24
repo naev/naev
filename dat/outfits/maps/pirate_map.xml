@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Map: Pirate worlds">
+ <!-- TODO:
+        * Add the empty systems close enough to Clan Worlds.
+   -->
+ <general>
+  <mass>0</mass>
+  <price>20000</price>
+  <description>This map contains the localion of the Vorca, New Haven and Sanchez pirate clan worlds, and a few stations that are known to offer opportunities for pirates in the viciniti.</description>
+  <gfx_store>map</gfx_store>
+ </general>
+ <specific type="map">
+	 <!-- Three current clanworlds. -->
+	<sys name="New Haven">
+		<asset>New Haven</asset>
+	</sys>
+	<sys name="Kretogg">
+		<asset>Vorca</asset>
+	</sys>
+	<sys name="Teller">
+		<asset>Sanchez</asset>
+	</sys>
+	<!-- Stations where a few “interesting” quests are available -->
+	<sys name="Suna">
+		<asset>The Wringer</asset>
+	</sys>
+	<sys name="Alteris">
+		<asset>Darkshed</asset>
+	</sys>
+	<sys name="Eridani">
+		<asset>The Crucible</asset>
+	</sys>
+ </specific>
+</outfit>

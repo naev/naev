@@ -277,9 +277,26 @@ static int commodityL_getprice( lua_State *L )
  */
 static int commodityL_setprice( lua_State *L )
 {
-   Commodity *c = luaL_validcommodity(L,1);
-   double new_base = lua_tonumber(L,2);
-   c->price = new_base;
+   Commodity *c;
+   Planet *p;
+   StarSystem *sys;
+   char *sysname;
+
+   c = luaL_validcommodity(L,1);
+   p = luaL_validplanet(L,2);
+   sysname = planet_getSystem( p->name );
+   if (sysname == NULL) {
+      NLUA_ERROR( L, "Planet '%s' does not belong to a system", p->name );
+      return 0;
+   }
+   sys = system_get( sysname );
+   if (sys == NULL) {
+      NLUA_ERROR( L, "Planet '%s' can not find its system '%s'", p->name, sysname );
+      return 0;
+   }
+
+   lua_pushnumber( L, planet_commodityPrice( p, c ) );
+
    return 1;
 }
 
