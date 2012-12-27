@@ -26,6 +26,28 @@
   <commodities>
    <commodity>Industrial Goods</commodity>
   </commodities>
+  <production_modifiers>
+   <prod_mod>
+    <commodity>Food</commodity>
+    <modifier>-46.1</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Ore</commodity>
+    <modifier>-157.5</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Industrial Goods</commodity>
+    <modifier>105.0</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Medicine</commodity>
+    <modifier>72.0</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Luxury Goods</commodity>
+    <modifier>26.6</modifier>
+   </prod_mod>
+  </production_modifiers>
   <description>Since well-to-do Dvaereds have laid complete claim to Varia's surface, all industrial and military enterprises have been moved offworld to Stalwart Station. While two-thirds of the station's decks are in use by major Dvaered corporations, there is enough space left for a respectable military wing. In fact, Stalwart Station features as the base of most military operations in the surrounding systems.</description>
  </general>
  <tech>

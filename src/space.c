@@ -51,6 +51,7 @@
 #include "damagetype.h"
 #include "hook.h"
 #include "dev_uniedit.h"
+#include "news.h"
 
 
 #define XML_PLANET_TAG        "asset" /**< Individual planet xml tag. */
@@ -89,7 +90,7 @@ static int systems_mstack = 0; /**< Number of memory allocated for star system s
 /*
  * Planet stack.
  */
-Planet *planet_stack = NULL; /**< Planet stack. */ //!!! removed 'static' from planet_stack and planet_nstack
+Planet *planet_stack = NULL; /**< Planet stack. */
 int planet_nstack = 0; /**< Planet stack size. */
 static int planet_mstack = 0; /**< Memory size of planet stack. */
 
@@ -104,6 +105,7 @@ static lua_State *landing_lua = NULL; /**< Landing lua. */
 static int space_fchg = 0; /**< Faction change counter, to avoid unnecessary calls. */
 static int space_simulating = 0; /** Are we simulating space? */
 extern int econ_nprices;
+extern Commodity *commodity_stack;
 
 
 /*
@@ -1730,9 +1732,11 @@ void space_gfxUnload( StarSystem *sys )
  */
 static int planet_parse( Planet *planet, const xmlNodePtr parent )
 {
+   int i;
    int mem;
    char str[PATH_MAX], *tmp;
-   xmlNodePtr node, cur, ccur;
+   double tmp2;
+   xmlNodePtr node, cur, ccur, cccur;
    unsigned int flags;
 
    /* Clear up memory for sane defaults. */
@@ -1742,6 +1746,9 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
 
    /* Get the name. */
    xmlr_attr( parent, "name", planet->name );
+
+   /* the production modifiers, for economy */
+   planet->prod_mods = (double *) calloc(sizeof(double), econ_nprices);
 
    node = parent->xmlChildrenNode;
    do {
@@ -1771,7 +1778,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
          continue;
       }
       else if (xml_isNode(node,"pos")) {
-         cur          = node->children;
+         cur = node->children;
          do {
             if (xml_isNode(cur,"x")) {
                flags |= FLAG_XSET;
@@ -1877,6 +1884,36 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
                planet->commodities = realloc(planet->commodities,
                      planet->ncommodities * sizeof(Commodity*));
             }
+            else if (xml_isNode(cur,"production_modifiers")) {
+               ccur = cur->children;
+
+               do {
+
+                  cccur = ccur->children;
+                  if (xml_isNode(ccur, "prod_mod"))
+                     tmp=NULL;
+                     do{
+
+                        xmlr_str(cccur, "commodity",tmp);
+                        xmlr_float(cccur, "modifier", tmp2);
+
+                        if (tmp==NULL){
+                           continue;
+                        }
+
+                        for (i=0; i<econ_nprices; i++){
+                           if (strcmp(tmp,commodity_stack[i].name)==0){
+                              planet->prod_mods[i] = tmp2;
+                              break;
+                           }
+                        }
+
+                     }while (xml_nextNode(cccur));
+                  }
+
+               }while (xml_nextNode(ccur));
+            }
+
          } while (xml_nextNode(cur));
          continue;
       }
@@ -2015,9 +2052,6 @@ int system_addPlanet( StarSystem *sys, const char *planetname )
    planetname_stack[spacename_nstack-1] = planet->name;
    systemname_stack[spacename_nstack-1] = sys->name;
 
-   /* Regenerate the economy stuff. */
-   // economy_refresh();//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
    /* Add the presence. */
    if (!systems_loading) {
       system_addPresence( sys, planet->faction, planet->presenceAmount, planet->presenceRange );
@@ -2087,9 +2121,6 @@ int system_rmPlanet( StarSystem *sys, const char *planetname )
 
    system_setFaction(sys);
 
-   /* Regenerate the economy stuff. */
-   // economy_refresh();//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
    return 0;
 }
 
@@ -2105,7 +2136,6 @@ int system_addJumpDiff( StarSystem *sys, xmlNodePtr node )
    if (system_parseJumpPointDiff(node, sys) <= -1)
       return 0;
    systems_reconstructJumps();
-   economy_refresh();
 
    return 1;
 }
@@ -2123,7 +2153,6 @@ int system_addJump( StarSystem *sys, xmlNodePtr node )
    if (system_parseJumpPoint(node, sys) <= -1)
       return 0;
    systems_reconstructJumps();
-   // economy_refresh(); //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
    return 1;
 }
@@ -2163,9 +2192,6 @@ int system_rmJump( StarSystem *sys, const char *jumpname )
 
    /* Refresh presence */
    system_setFaction(sys);
-
-   /* Regenerate the economy stuff. */
-   // economy_refresh();//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
    return 0;
 }
@@ -2782,6 +2808,14 @@ int space_load (void)
       sys->ownerpresence = system_getPresence( sys, sys->faction );
    }
 
+   /* Clear possible old economy */
+   economy_destroy();
+   /* Start the economy. */
+   economy_init();
+
+   /* Start the news */
+   news_init();
+
    return 0;
 }
 
@@ -3232,20 +3266,13 @@ int space_sysSave( xmlTextWriterPtr writer )
 
    for (i=0; i<systems_nstack; i++) {
 
-         /* Economy values */ //@@@working here
+         /* Economy values */ 
       xmlw_startElem(writer,"economy");
-      // printf("\nWrote index %i",i);
       xmlw_elem(writer,"index","%i",i);
       xmlw_elem(writer,"credits","%f",systems_stack[i].credits);
       for (j=0; j<econ_nprices; j++) {
          xmlw_elem(writer,"stockpile","%f",systems_stack[i].stockpiles[j]);
          xmlw_elem(writer,"prod_mod","%f",systems_stack[i].prod_mods[j]);
-
-         // xmlw_elem(writer,"stockpile","%f",systems_stack[i].stockpiles[j]);
-         // if (systems_stack[i].stockpiles[j]==0.)
-            // printf("\nwriting stockpile %f",systems_stack[i].stockpiles[j]);
-         // xmlw_elem(writer,"prod_mod","%f",systems_stack[i].prod_mods[j]);
-         // printf("\nwriting prod_mod %f",systems_stack[i].prod_mods[j]);
       }
       xmlw_endElem(writer);
 
@@ -3284,7 +3311,7 @@ int space_sysSave( xmlTextWriterPtr writer )
  */
 int space_sysLoad( xmlNodePtr parent )
 {
-   xmlNodePtr node, cur, Econ;//, commodity;
+   xmlNodePtr node, cur, Econ;
    int ind=0;
    StarSystem *sys;
    char *str;
@@ -3296,19 +3323,8 @@ int space_sysLoad( xmlNodePtr parent )
       if (xml_isNode(node,"space")) {
          cur = node->xmlChildrenNode;
 
-         // if (!xml_isNode(cur,"economy"))
-         //    WARN("Incompatible save, please start new game to use this economy build");
-         
          do {
-            if (xml_isNode(cur,"economy")){  //might make a subfunction out of this
-               Econ=cur->xmlChildrenNode;
-               if (!(xml_nextNode(Econ))) { WARN("\nbad save"); break;}
-               ind=xml_getInt(Econ);
-               sys = &systems_stack[ind]; //sys is gotten twice...
-               space_parseEconVals(Econ,sys);
-            }
 
-            else 
             if (xml_isNode(cur,"known")) {
                xmlr_attr(cur,"sys",str);
                if (str != NULL) { /* check for 5.0 saves */
@@ -3322,6 +3338,15 @@ int space_sysLoad( xmlNodePtr parent )
                   space_parseAssets(cur, sys);
                }
             }
+
+            else if (xml_isNode(cur,"economy")){
+               Econ=cur->xmlChildrenNode;
+               if (!(xml_nextNode(Econ))) { WARN("\nbad save"); break;}
+               ind=xml_getInt(Econ);
+               sys = &systems_stack[ind];
+               space_parseEconVals(Econ,sys);
+            }
+
          } while (xml_nextNode(cur));
       }
    } while (xml_nextNode(node));
@@ -3360,13 +3385,13 @@ static int space_parseAssets( xmlNodePtr parent, StarSystem* sys )
 }
 
 /**
- * @brief Parses economic values in a system
+ * @brief Parses economic values in a system from a savegame
  *
  *    @param parent Node of the system.
  *    @return 0 on success.
  */
 static int space_parseEconVals( xmlNodePtr Econ, StarSystem* sys )
-{  //very ugly, but it works
+{
 
    int ind=0;
 
@@ -3378,7 +3403,6 @@ static int space_parseEconVals( xmlNodePtr Econ, StarSystem* sys )
    if (!(xml_nextNode(Econ))) { WARN("\nbad save"); return -1;}
    if (!(xml_nextNode(Econ))) { WARN("\nbad save"); return -1;}
 
-// //@@@ working here
    ind=0;   
    do {
       if (xml_getFloat(Econ)==0)

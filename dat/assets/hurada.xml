@@ -27,6 +27,28 @@
   <commodities>
    <commodity>Food</commodity>
   </commodities>
+  <production_modifiers>
+   <prod_mod>
+    <commodity>Food</commodity>
+    <modifier>-38.7</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Ore</commodity>
+    <modifier>40.8</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Industrial Goods</commodity>
+    <modifier>-35.3</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Medicine</commodity>
+    <modifier>16.6</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Luxury Goods</commodity>
+    <modifier>16.6</modifier>
+   </prod_mod>
+  </production_modifiers>
   <description>A formerly-promising world; following intense volcanic activity, Hurada's orbit decayed, increasing surface temperatures severely and all but eradicating natural surface life. Hurada only maintains a population due to its proximity to Arcturus, providing affordable housing for reserve military troops.</description>
   <bar>The Hurada bar is large, yet nearly deserted. The booth seats in the back have long been unused, and have collected a layer of dust in that time. The brews are stale, and the bartender doesn't look like he wants to be here.</bar>
  </general>

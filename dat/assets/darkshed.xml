@@ -33,6 +33,28 @@
    <commodity>Medicine</commodity>
    <commodity>Luxury Goods</commodity>
   </commodities>
+  <production_modifiers>
+   <prod_mod>
+    <commodity>Food</commodity>
+    <modifier>-76.0</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Ore</commodity>
+    <modifier>-109.5</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Industrial Goods</commodity>
+    <modifier>47.0</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Medicine</commodity>
+    <modifier>51.4</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Luxury Goods</commodity>
+    <modifier>87.0</modifier>
+   </prod_mod>
+  </production_modifiers>
   <description>Renowned for its outfit market and shipyards, nearly the entirety of the Darkshed station is dedicated to trading outfits and ships. Mercenaries and bounty hunters from all over the galaxy come here to see try newest enhancements available on the market. This tends to also attract many of the shadier characters in the universe, winding up with frequent fights where they test their newly bought outfits.</description>
   <bar>The Darkshed canteen is decorated with all sorts of odd artifacts that chronicle trends in spaceship outfitting in the years since the station was established. Scale models of many popular ships hang from the ceiling.</bar>
  </general>

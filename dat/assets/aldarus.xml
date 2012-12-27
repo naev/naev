@@ -29,6 +29,28 @@
    <commodity>Food</commodity>
    <commodity>Luxury Goods</commodity>
   </commodities>
+  <production_modifiers>
+   <prod_mod>
+    <commodity>Food</commodity>
+    <modifier>78.3</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Ore</commodity>
+    <modifier>-26.8</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Industrial Goods</commodity>
+    <modifier>-32.0</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Medicine</commodity>
+    <modifier>-41.3</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Luxury Goods</commodity>
+    <modifier>21.9</modifier>
+   </prod_mod>
+  </production_modifiers>
   <description>Aldarus has vast oceans filled with an organic sludge that has little to do with water. The atmosphere is toxic and will kill an unprotected human within minutes. The sludge in the seas is a good source of raw materials for all sorts of industries though, and the lack of pollution control on the planet makes it attractive for corporations.</description>
   <bar>The spaceport bar on Aldarus offers a variety of recreational activities such as gambling and competitive gaming. There are also walled-off booths for private conversations, in case the bar's main area is a little too public for comfort. Or its music too grating on the ears.</bar>
  </general>

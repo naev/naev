@@ -30,6 +30,28 @@
    <commodity>Food</commodity>
    <commodity>Ore</commodity>
   </commodities>
+  <production_modifiers>
+   <prod_mod>
+    <commodity>Food</commodity>
+    <modifier>43.6</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Ore</commodity>
+    <modifier>16.0</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Industrial Goods</commodity>
+    <modifier>-88.0</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Medicine</commodity>
+    <modifier>-22.9</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Luxury Goods</commodity>
+    <modifier>51.1</modifier>
+   </prod_mod>
+  </production_modifiers>
   <description>Beene is rich in all sorts of common minerals, so the Soromid are using this world the same way anyone would: as a source of raw materials. The elements mined here are processed into standard packages used by the Soromid bioships, which means Beene is quite an important strategic location for the Soromid fleet.</description>
   <bar>Pilots are advised to wear air-sealed suits when visiting Beene's bar. The planet's atmosphere can cause serious problems for normal humans, and the Soromid haven't bothered installing decontamination filters for the local population. As such, having a drink in Beene's bar is a bit of an ordeal. It's one of the less popular places among traders.</bar>
  </general>

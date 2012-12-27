@@ -31,6 +31,28 @@
    <commodity>Ore</commodity>
    <commodity>Industrial Goods</commodity>
   </commodities>
+  <production_modifiers>
+   <prod_mod>
+    <commodity>Food</commodity>
+    <modifier>86.1</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Ore</commodity>
+    <modifier>-60.7</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Industrial Goods</commodity>
+    <modifier>-60.1</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Medicine</commodity>
+    <modifier>54.9</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Luxury Goods</commodity>
+    <modifier>-20.1</modifier>
+   </prod_mod>
+  </production_modifiers>
   <description>Huan'xi may be a relatively remote planet, but it has a thriving agriculture. The planet's soil is extremely fertile, allowing for multiple crops per cycle. The planet also exports unique foodstuffs that are difficult to produce elsewhere. Indeed, one can find "genuine Huan'xi products" in food outlets all over the galaxy.</description>
   <bar>The rustic feel of this bar is the product of a careful choice of appointments, music and holographic illusions. The owner clearly feels that customers will be attracted by the atmosphere of his establishments, rather than by the drinks he serves.</bar>
  </general>

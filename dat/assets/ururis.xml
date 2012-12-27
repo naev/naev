@@ -26,6 +26,28 @@
   <commodities>
    <commodity>Industrial Goods</commodity>
   </commodities>
+  <production_modifiers>
+   <prod_mod>
+    <commodity>Food</commodity>
+    <modifier>87.1</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Ore</commodity>
+    <modifier>-98.3</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Industrial Goods</commodity>
+    <modifier>-27.6</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Medicine</commodity>
+    <modifier>96.4</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Luxury Goods</commodity>
+    <modifier>-57.6</modifier>
+   </prod_mod>
+  </production_modifiers>
   <description>Ururis is a relatively wealthy Sirian world. It lies on several major trade routes, which brings in quite a bit of revenue. Cashing in on the amount of visitors it gets, the local government often stages entertainment events designed to make the maximum amount of profit possible.</description>
  </general>
  <tech>

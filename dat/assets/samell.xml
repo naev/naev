@@ -31,6 +31,28 @@
    <commodity>Ore</commodity>
    <commodity>Industrial Goods</commodity>
   </commodities>
+  <production_modifiers>
+   <prod_mod>
+    <commodity>Food</commodity>
+    <modifier>-5.5</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Ore</commodity>
+    <modifier>7.4</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Industrial Goods</commodity>
+    <modifier>-40.2</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Medicine</commodity>
+    <modifier>-61.2</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Luxury Goods</commodity>
+    <modifier>99.6</modifier>
+   </prod_mod>
+  </production_modifiers>
   <description>Samell is a predominantly industrial world. Heavy industry is often not welcome on densely populated M class planets, so it tends to settle on planets with hostile environments. Samell is no exception to that trend.</description>
   <bar>Whoever designed the spaceport placed the spaceport bar at the outside, adding windows so visitors could look out over the frozen landscape. He didn't realize that the windows would soon become frozen over themselves, making them completely useless.</bar>
  </general>

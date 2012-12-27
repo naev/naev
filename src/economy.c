@@ -45,16 +45,12 @@
 /*
  * Economy Nodal Analysis parameters.
  */
- // ### will have to modifiy
 #define ECON_BASE_RES      5 /**< Base resistance value for any system. */
 #define ECON_SELF_RES      3. /**< Additional resistance for the self node. */
 #define ECON_FACTION_MOD   0.1 /**< Modifier on Base for faction standings. */
 
-         //Not something I inteded to use, but can be useful nonetheless
-#define ECON_PROD_VAR      0.01 /**< Defines the variability of production. */
-
 #define STARTING_CREDITS   100000000. /**< ### How many credits are initially given to each system*/
-#define STARTING_GOODS     100000.  //originally 200000
+#define STARTING_GOODS     100000. 
 
 
 #define AVG_POPULATION     50000000 /**< Divisor for calculation of prod_mods */
@@ -100,47 +96,7 @@ credits_t economy_getPrice( const Commodity *com,
 credits_t economy_getCost( const Commodity *com, const StarSystem *sys, int buying);
 void produce_consume(void);
 void trade_update(void);
-
-
-// void economy_update( unsigned int dt );
-
-
-//### These are planet classification production modifiers. These are multiplied
-//     by population to get final planetary modifiers. Not sure how this should be dealt with
-//planet classifications are in space.h
-//Commodities are Food, Ore, Industrial Goods, Medicine, Luxury Items
-double planet_class_mods[][5] = {
-   { 0., 0., 0., 0., 0.},
-   {130., 100.,-45.,100., 120.},
-   { 0., 1200., 0.,-3., 600.},
-   {-6., 1800., 3.,-3., 300.},
-   {-6., 5000.,-6.,-3., 0.},
-   {-3., 2600., 0.,-3.,-2.},
-   {-6.,3200., 6.,-3., 0.},
-   { 3., 2400.,-3., 6., 900.},
-   {-15.,3200.,-6.,9.,1800.},
-   {-9., 1800.,-6., 9.,-2.},
-   {-3., 1300.,-3.,-3., 280.},
-   { 8.,-1,-2., 1.,-2.},
-   {10.,-2,-2.,-1.,-2.},
-   {14.,-3.,-5.,8.,-5.},
-   {-5., 1200.,-2., 6., 650.},
-   {20., 130.,-130.,-2.,-.5},
-   { 6., 100.,-5.,-1., 150.},
-   { 0., 600.,-2.,-1., 0.},
-   {-3., 600.,-1., 0., 100.},
-   {-1., 300.,-1., 1., 100.},
-   {-1., 300.,-1., 1., 100.},
-   { 0., 0., 0., 0., 0.},
-   { 0., 0., 0., 0., 0.},
-   { 0., 0., 0., 0., 0.},
-   {-300000.,-400000.,1600000., 300000., 100000.}, //stations are buffed to account for population
-   {-400000.,-600000.,2000000.,-100000., 0.},
-   {-300000.,-400000.,1400000., 00., 100000.},  //
-   { 0., 0., 0., 0., 0.}
-};
-
-
+void refresh_prices(void);
 
 
 
@@ -210,7 +166,7 @@ Commodity* commodity_getW( const char* name )
  *    @param com Commodity to free.
  */
 static void commodity_freeOne( Commodity* com )
-{           //### is this necessary?
+{
    if (com->name) 
       free(com->name);
    if (com->description)
@@ -451,7 +407,8 @@ credits_t economy_getPrice( const Commodity *com,
  *    @param B Star system to calculate the resistance between.
  *    @return Resistance between A and B.
  */
-// static double econ_calcJumpR( StarSystem *A, StarSystem *B )   //### unused for now
+
+// static double econ_calcJumpR( StarSystem *A, StarSystem *B )
 // {
 //    double R;   
 
@@ -460,7 +417,7 @@ credits_t economy_getPrice( const Commodity *com,
 
 //    /* Modify based on system conditions. */
 //    R -= (A->nebu_density + B->nebu_density) / 1000.; /* Density shouldn't affect much. */
-//    R -= (A->nebu_volatility + B->nebu_volatility) / 100.; /* Volatility should. */
+//    R -= (A->nebu_volatility + B->nebu_volatility) / 100.;  /* Volatility should.  */
 
 //    /* Modify based on global faction. */
 //    if ((A->faction != -1) && (B->faction != -1)) {
@@ -481,19 +438,13 @@ credits_t economy_getPrice( const Commodity *com,
  *
  *    @return 0 on success.
  */
-int economy_init (void) //Not for loading loading economies
+int economy_init (void)
 {     
    printf("\nInit ing economy");
 
    int i;
-   int i0;
 
    int goodnum;
-
-   StarSystem *sys1;
-   // StarSystem *sys2;
-
-   Planet *planet;
 
    /* Must not be initialized. */
    if (econ_initialized)
@@ -512,44 +463,22 @@ int economy_init (void) //Not for loading loading economies
       systems_stack[i].credits = STARTING_CREDITS;
       systems_stack[i].prod_mods = calloc(econ_nprices, sizeof(double));
 
+      /* set the default starting stockpiles */
+      for (goodnum=0; goodnum<econ_nprices; goodnum++){
+         systems_stack[i].stockpiles[goodnum] = STARTING_GOODS;
+      }
+
       systems_stack[i].bought = calloc(econ_nprices, sizeof(double)); //REMOVE ME, along with StarSystem.bought
    }
 
-   /* Initialize starting values */ 
-   for (i=0; i<systems_nstack; i++) {
-
-      sys1=&systems_stack[i];
-
-      sys1->credits = STARTING_CREDITS;
-
-      for (goodnum=0; goodnum<econ_nprices; goodnum++) {
-
-         sys1->stockpiles[goodnum] = STARTING_GOODS;
-      }
-   }
-
-   /* Set up production modifiers, based on asset classifications */
-   for (i=0; i<systems_nstack; i++) {
-
-      sys1=&systems_stack[i];
-
-      for (i0=0; i0<sys1->nplanets; i0++) {
-
-         planet = &planet_stack[ sys1->planetsid[i0] ];
-
-         for (goodnum=0; goodnum<econ_nprices ; goodnum++) {
-
-            sys1->prod_mods[goodnum] +=  planet_class_mods[planet->class][goodnum] 
-               * planet->population / AVG_POPULATION;
-         } 
-      }
-   }
+   /* set the production modifiers */
+   refresh_economy();
 
    /* Mark economy as initialized. */
    econ_initialized = 1;
 
    /* Refresh economy. */
-   refresh_prices();//###
+   refresh_prices();
 
    return 0;
 }
@@ -591,6 +520,37 @@ void produce_consume(void)
 
       }
    }
+}
+
+/** reset the values of every system, based on planetary prod_mods
+ *
+ * should be called everytime planetary prod_mods change
+ */
+void refresh_economy(void)
+{
+   printf("\nrefreshing economy");
+
+   int i, comm, pl;
+   StarSystem *sys;
+
+
+   for (i=0;i<systems_nstack; i++) {
+
+      sys = &systems_stack[i];
+
+      for (comm=0; comm<econ_nprices; comm++){
+         sys->prod_mods[comm] = 0.0;
+
+         for (pl = 0; pl<sys->nplanets; pl++){
+            if (sys->planets[pl]->prod_mods+comm == NULL){
+               printf("planet %s prod_mods hasn't been initialized",sys->planets[pl]->name);
+               break;
+            }
+            sys->prod_mods[comm]+=sys->planets[pl]->prod_mods[comm];
+         }
+      }
+   }
+
 }
 
 /* Refresh prices to be accurate */
@@ -639,8 +599,6 @@ void trade_update(void)
 
    StarSystem *sys1;
    StarSystem *sys2;
-
-   // printf("\nTrading!");
 
    //sys->bought is unnecessary, and is only for viewing the modified map
       /* set sys.bought to 0 */
@@ -718,11 +676,12 @@ void economy_update( unsigned int dt )
 void economy_destroy (void)
 {
    int i;
-   printf("\nDestroying economy");
 
    /* Must be initialized. */
    if (!econ_initialized)
       return;
+
+   printf("\nDestroying economy");
 
    /* Clean up the prices in the systems stack. */
    for (i=0; i<systems_nstack; i++) {

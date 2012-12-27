@@ -31,6 +31,28 @@
    <commodity>Ore</commodity>
    <commodity>Industrial Goods</commodity>
   </commodities>
+  <production_modifiers>
+   <prod_mod>
+    <commodity>Food</commodity>
+    <modifier>73.1</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Ore</commodity>
+    <modifier>-92.8</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Industrial Goods</commodity>
+    <modifier>-19.8</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Medicine</commodity>
+    <modifier>89.3</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Luxury Goods</commodity>
+    <modifier>-49.8</modifier>
+   </prod_mod>
+  </production_modifiers>
   <description>Paul 2 is a planet of merchants and entrepreneurs. Though the planet doesn't have a global government as such, the population has agreed on a number of general rules that count as law of some sort. It works surprisingly well.</description>
   <bar>Like many planets in the galaxy nowadays, Paul 2's economy relies heavily on interplanetary trade. The spaceport bar doubles as a trade center, allowing traders to buy and sell wares without ever leaving the spaceport.</bar>
  </general>

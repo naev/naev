@@ -27,6 +27,28 @@
    <commodity>Ore</commodity>
    <commodity>Industrial Goods</commodity>
   </commodities>
+  <production_modifiers>
+   <prod_mod>
+    <commodity>Food</commodity>
+    <modifier>-17.1</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Ore</commodity>
+    <modifier>-54.3</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Industrial Goods</commodity>
+    <modifier>37.1</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Medicine</commodity>
+    <modifier>-16.7</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Luxury Goods</commodity>
+    <modifier>51.1</modifier>
+   </prod_mod>
+  </production_modifiers>
   <description>This station is a high-yield crop growing facility. While most farm stations are always facing the local star to make optimal use of its light, this station slowly rotates, exposing both of its sides to the star in turns. One side of the station is used for crop fields while the other side is used to breed livestock. The artificial day-night cycle is found to have a positive effect on the animals.</description>
  </general>
 </asset>

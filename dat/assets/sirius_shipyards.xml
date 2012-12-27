@@ -27,6 +27,28 @@
    <commodity>Ore</commodity>
    <commodity>Industrial Goods</commodity>
   </commodities>
+  <production_modifiers>
+   <prod_mod>
+    <commodity>Food</commodity>
+    <modifier>-65.9</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Ore</commodity>
+    <modifier>-137.3</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Industrial Goods</commodity>
+    <modifier>72.5</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Medicine</commodity>
+    <modifier>88.2</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Luxury Goods</commodity>
+    <modifier>42.5</modifier>
+   </prod_mod>
+  </production_modifiers>
   <description>Sirius Shipyards is where most of the Sirius fleet is built, though some of the smaller support ships are actually constructed elsewhere. Though Aesir is not an ideal location for mass producing warships, the Sirii believe that building ships in proximity to Mutris will endow some small portion of Sirichana's power on the ships produced.</description>
  </general>
  <tech>

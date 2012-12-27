@@ -30,6 +30,28 @@
    <commodity>Medicine</commodity>
    <commodity>Luxury Goods</commodity>
   </commodities>
+  <production_modifiers>
+   <prod_mod>
+    <commodity>Food</commodity>
+    <modifier>77.7</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Ore</commodity>
+    <modifier>-57.4</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Industrial Goods</commodity>
+    <modifier>-55.4</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Medicine</commodity>
+    <modifier>50.6</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Luxury Goods</commodity>
+    <modifier>-15.4</modifier>
+   </prod_mod>
+  </production_modifiers>
   <description>Varia is a Dvaered world, so it can't be called lush or relaxing. But it's the next best thing. The climate on Varia is as close to old Earth's as makes no difference, and the inhabitants of this world typically lead healthy, long lives. In fact, the planet is so nice that some feel it is wasted on the Dvaered, who misuse the bounty the planet offers for their crude, destructive forms of entertainment.</description>
   <bar>Varia's bar is more like a bar complex than a bar. With multiple rooms, each decorated in different styles and each serving different beverages, the discerning alcoholic with money to spare could spend all week here without ever getting bored. Most of the merchants and businesspeople prefer to stick to the main room, however.</bar>
  </general>

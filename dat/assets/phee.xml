@@ -29,6 +29,28 @@
   <commodities>
    <commodity>Food</commodity>
   </commodities>
+  <production_modifiers>
+   <prod_mod>
+    <commodity>Food</commodity>
+    <modifier>42.6</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Ore</commodity>
+    <modifier>-36.4</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Industrial Goods</commodity>
+    <modifier>-27.4</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Medicine</commodity>
+    <modifier>8.6</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Luxury Goods</commodity>
+    <modifier>12.5</modifier>
+   </prod_mod>
+  </production_modifiers>
   <description>Phee is a tad hot, but it's still habitable. The people who live here have to be healthy and robust to stand the environment, and that's the reason why Dvaered High Command likes to conscript new soldiers from this world. But rather than feel dissatisfied about this, the population takes pride in its history of military service. These people are true Dvaered.</description>
   <bar>The owner of the bar has served in several Dvaered campaigns in his day, and it shows. The bar is decorated with trophies and other memorabilia from those days, and the man will tell anyone who will listen about what he calls his glory days.</bar>
  </general>

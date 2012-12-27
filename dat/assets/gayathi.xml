@@ -27,6 +27,28 @@
    <commodity>Ore</commodity>
    <commodity>Industrial Goods</commodity>
   </commodities>
+  <production_modifiers>
+   <prod_mod>
+    <commodity>Food</commodity>
+    <modifier>50.3</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Ore</commodity>
+    <modifier>-9.3</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Industrial Goods</commodity>
+    <modifier>-8.4</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Medicine</commodity>
+    <modifier>31.1</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Luxury Goods</commodity>
+    <modifier>-63.6</modifier>
+   </prod_mod>
+  </production_modifiers>
   <description>The colony on Gayathi has been around since before Sirichana settled on Mutris. In those days it was an outpost of one of the Factions that were destroyed in the Faction Wars, forgotten and overlooked by all. With its source of funding and supplies gone, Gayathi never had a chance to fully develop its economic infrastructure. Then, when Sirius rose as a galactic power, Gayathi came to fall under its influence. Now it is home to some of the most devout believers found in Sirius space.</description>
  </general>
 </asset>

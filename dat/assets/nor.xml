@@ -30,6 +30,28 @@
    <commodity>Ore</commodity>
    <commodity>Industrial Goods</commodity>
   </commodities>
+  <production_modifiers>
+   <prod_mod>
+    <commodity>Food</commodity>
+    <modifier>-20.8</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Ore</commodity>
+    <modifier>93.5</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Industrial Goods</commodity>
+    <modifier>-20.0</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Medicine</commodity>
+    <modifier>-73.5</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Luxury Goods</commodity>
+    <modifier>20.9</modifier>
+   </prod_mod>
+  </production_modifiers>
   <description>Nor was one of the first Dvaered worlds to be terraformed. Its abundance of gas and ore make it a strategic location and a prime target for the FLF. Due to repeated attacks and sabotage attempts, the Dvaered military has increased the frequency of patrols.</description>
   <bar>Typical of poorer Dvaered mining worlds, the Nor spaceport bar is cavernous, sparsely decorated and full of drunken Dvaereds trying to forget their hard labour.</bar>
  </general>

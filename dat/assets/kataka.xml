@@ -30,6 +30,28 @@
    <commodity>Ore</commodity>
    <commodity>Industrial Goods</commodity>
   </commodities>
+  <production_modifiers>
+   <prod_mod>
+    <commodity>Food</commodity>
+    <modifier>-27.1</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Ore</commodity>
+    <modifier>-49.8</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Industrial Goods</commodity>
+    <modifier>52.8</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Medicine</commodity>
+    <modifier>-2.1</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Luxury Goods</commodity>
+    <modifier>26.2</modifier>
+   </prod_mod>
+  </production_modifiers>
   <description>With the loss of Sorom, the Soromid had to decide on a new political capital. After some debate, it was decided that Kataka would fill this position. Kataka is by no means a pleasant world, but the Soromid being the Soromid, that made no difference. Present day, Kataka is home to most if not all of the influential Soromid citizens. Authorities on all aspects of Soromid can be found here.</description>
   <bar>It's quite unusual for a non-Soromid to be granted landing rights on Kataka. And even when this happens, offworlders are usually restricted to the spaceport facility, and if they have business with planetside officials then those officials come to them. The spaceport bar is built for such occurrences, providing private booths where people may converse in private.</bar>
  </general>

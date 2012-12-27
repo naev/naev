@@ -30,6 +30,28 @@
    <commodity>Ore</commodity>
    <commodity>Industrial Goods</commodity>
   </commodities>
+  <production_modifiers>
+   <prod_mod>
+    <commodity>Food</commodity>
+    <modifier>52.1</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Ore</commodity>
+    <modifier>-25.5</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Industrial Goods</commodity>
+    <modifier>-156.8</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Medicine</commodity>
+    <modifier>85.4</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Luxury Goods</commodity>
+    <modifier>44.8</modifier>
+   </prod_mod>
+  </production_modifiers>
   <description>Modus is an unstable world, but it is surprisingly well populated. Something about the planet is greatly beneficial to human fertility, which makes it a popular destination for couples trying to conceive a child the natural way. Of course this is not without risk, as the planet's volatile nature claims a considerable number of lives each cycle.</description>
   <bar>This bar has chosen to constantly play a heavy beat music track. This is not because people like heavy beat music, but rather to mask the tremors the planet's unstable crust sometimes creates.</bar>
  </general>

@@ -26,6 +26,28 @@
   <commodities>
    <commodity>Industrial Goods</commodity>
   </commodities>
+  <production_modifiers>
+   <prod_mod>
+    <commodity>Food</commodity>
+    <modifier>71.1</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Ore</commodity>
+    <modifier>-54.8</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Industrial Goods</commodity>
+    <modifier>-51.8</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Medicine</commodity>
+    <modifier>47.3</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Luxury Goods</commodity>
+    <modifier>-11.8</modifier>
+   </prod_mod>
+  </production_modifiers>
   <description>Though Suoer classifies as a moon, it is technically a sister planet to Esker IV. Its superdense core gives it so much gravity that it significantly affects its primary, so both planets orbit each other. Suoer's high gravity also makes it a comfortable world to live on for humans.</description>
  </general>
  <tech>

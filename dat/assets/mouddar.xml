@@ -28,6 +28,28 @@
    <commodity>Food</commodity>
    <commodity>Medicine</commodity>
   </commodities>
+  <production_modifiers>
+   <prod_mod>
+    <commodity>Food</commodity>
+    <modifier>79.4</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Ore</commodity>
+    <modifier>36.8</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Industrial Goods</commodity>
+    <modifier>-41.9</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Medicine</commodity>
+    <modifier>-60.1</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Luxury Goods</commodity>
+    <modifier>-14.0</modifier>
+   </prod_mod>
+  </production_modifiers>
   <description>Mouddar is a bit of a leisure resort, in all but name. While the planet does have a resident population, most of its income is from tourism. The planet is speckled with tiny coral peninsulae, which are prefect for all kinds of water sports. Unfortunately, the enthusiasm of the Imperial adolescents who come here has had a detrimental effect on the environment.</description>
   <bar>Nobody really cares about Mouddar's spaceport bar, apart from the traders who only stop here to load and unload. Most civilian visitors, though, immediately head for the sun, sand and surf that they came here to enjoy.</bar>
  </general>

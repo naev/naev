@@ -126,6 +126,9 @@ typedef struct Planet_ {
    int ncommodities; /**< the amount they have */
    tech_group_t *tech; /**< Planet tech. */
 
+   /* Production modifiers */
+   double *prod_mods;
+
    /* Graphics. */
    glTexture* gfx_space; /**< graphic in space */
    char *gfx_spaceName; /**< Name to load texture quickly with. */

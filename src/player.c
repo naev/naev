@@ -429,14 +429,6 @@ static int player_newMake (void)
    /* clear the map */
    map_clear();
 
-   /* Clear possible old economy */
-   economy_destroy();
-   /* Start the economy. */
-   economy_init();
-
-   /* Start the news */
-   news_init();
-
    return 0;
 }
 

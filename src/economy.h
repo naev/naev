@@ -51,8 +51,8 @@ void commodity_free (void);
  */
 int economy_init (void);
 void economy_update( unsigned int dt );
-void refresh_prices(void);
 void economy_destroy (void);
+void refresh_economy(void);   //run if the production modifiers of a planet change
 double production(double mod, double goods);
 
 

@@ -30,6 +30,28 @@
    <commodity>Luxury Goods</commodity>
    <commodity>Industrial Goods</commodity>
   </commodities>
+  <production_modifiers>
+   <prod_mod>
+    <commodity>Food</commodity>
+    <modifier>-66.0</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Ore</commodity>
+    <modifier>-97.0</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Industrial Goods</commodity>
+    <modifier>39.0</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Medicine</commodity>
+    <modifier>45.0</modifier>
+   </prod_mod>
+   <prod_mod>
+    <commodity>Luxury Goods</commodity>
+    <modifier>79.0</modifier>
+   </prod_mod>
+  </production_modifiers>
   <description>Although not a large installation by any measure, Niflheim is the main commercial station in the southwestern quadrant of Empire space. Though it doesn't see as much traffic as the more centrally located trade hubs, it provides a good opportunity for traders between the Empire, the Za'lek and the Consortium to meet and greet. Of course, the Imperial Navy also uses this station as a base of operations.</description>
   <bar>On Niflheim, space is at a premium. As such there is not much room to spare for leisure, which shows in the spaceport bar. All tables are stand-up arrangements, and there is not much room to maneuver. Any visitor will have to be prepared for some necessary intimacies if he wants to frequent this establishment.</bar>
  </general>
