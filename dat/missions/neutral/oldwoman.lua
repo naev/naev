@@ -21,16 +21,16 @@ else -- Default to English
 
     title2 = "Delivery complete"
     text3 = [[    You help the old lady to the spacedock elevator. She keeps grumbling about how spaceports these days are so inconvenient and how advertisement holograms are getting quite cheeky of late, they wouldn't allow that sort of thing in her day. But once you deliver her to the exit terminal, she smiles at you.
-    "Thank you, young man, I don't know what I would have done without you. It seems there are still decent folk out there even now. Take this, as a token of my appreciation."
+    "Thank you, young captain, I don't know what I would have done without you. It seems there are still decent folk out there even now. Take this, as a token of my appreciation."
     The lady hands you a credit chip. Then she disappears through the terminal. Well, that was quite a passenger!]]
 
     complaintstitle = "Grumblings from the old lady"
     complaints = {}
     complaints[1] = [["You youngsters and your newfangled triple redundancy plasma feedback shunts. In my day, we had to use simple monopole instaconductors to keep our hyperdrives running!"]]
-    complaints[2] = [["Tell me, young man, why is everyone so preoccupied with Soromid enhancements these days? Cybernetic implants were good enough for us, why can't they be for you?"]]
+    complaints[2] = [["Tell me, youngster, why is everyone so preoccupied with Soromid enhancements these days? Cybernetic implants were good enough for us, why can't they be for you?"]]
     complaints[3] = [["My mother was from Earth, you know. She even took me there once, when I was a little girl. I still remember it like it happened yesterday. They don't make planets like that anymore these days, oh no."]]
     complaints[4] = [["What did you say this thing was? A microblink reinforced packet transmitter? No, no, don't try to explain how it works. I'm too old for this. Anything more complex than a subspace pseudo-echo projector is beyond my understanding."]]
-    complaints[5] = [["You don't know how good you have it, young man. When I was young, we needed to reprogram our own electronic countermeasures to deal with custom pirate tracking systems."]]
+    complaints[5] = [["You don't know how good you have it these days. When I was young, we needed to reprogram our own electronic countermeasures to deal with custom pirate tracking systems."]]
     complaints[6] = [["Time passes by so quickly. I remember when this was all space."]]
     complaints[7] = [["All this automation is making people lax, I tell you. My uncle ran a tight ship. If he caught you cutting corners, you'd be defragmenting the sub-ion matrix filters for a week!"]]
 
