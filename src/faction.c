@@ -217,7 +217,7 @@ char* faction_name( int f )
       WARN("Faction id '%d' is invalid.",f);
       return NULL;
    }
-   /* Don't want player to see his escorts as "Player" faction. */
+   /* Don't want player to see their escorts as "Player" faction. */
    if (f == FACTION_PLAYER)
       return "Escort";
 
@@ -237,7 +237,7 @@ char* faction_shortname( int f )
       WARN("Faction id '%d' is invalid.",f);
       return NULL;
    }
-   /* Don't want player to see his escorts as "Player" faction. */
+   /* Don't want player to see their escorts as "Player" faction. */
    if (f == FACTION_PLAYER)
       return "Escort";
 

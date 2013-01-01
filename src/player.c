@@ -579,7 +579,7 @@ static Pilot* player_newShipMake( const char* name )
 
 
 /**
- * @brief Swaps player's current ship with his ship named shipname.
+ * @brief Swaps player's current ship with their ship named shipname.
  *
  *    @param shipname Ship to change to.
  */

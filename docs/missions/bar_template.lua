@@ -20,7 +20,7 @@ else -- Default to English
 
 -- This section stores the strings (text) for the mission.
 
--- Bar information, describes how he appears in the bar
+-- Bar information, describes how the person appears in the bar
    bar_desc = ""
 
 -- Mission details. We store some text for the mission with specific variables.
@@ -51,8 +51,8 @@ end
 --[[ 
 First you need to *create* the mission.  This is *obligatory*.
 
-You have to set the NPC and the description, these will show up at the bar with
-the character that gives the mission and his description.
+You have to set the NPC and the description. These will show up at the bar with
+the character that gives the mission and the character's description.
 --]]
 function create ()
    misn.setNPC( "A Guy", "none" )

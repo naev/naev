@@ -841,8 +841,8 @@ static void update_all (void)
          /* Ok, so we need a bit of hackish logic here in case we are chopping up a
           * very large dt and it turns out time compression changes so we're now
           * updating in "normal time compression" zone. This amounts to many updates
-          * being run when time compression has changed and thus can cause say the
-          * player to exceed his target position or get raped by an enemy ship.
+          * being run when time compression has changed and thus can cause, say, the
+          * player to exceed their target position or get mauled by an enemy ship.
           */
          accumdt += microdt;
          if (accumdt > dt_mod*real_dt)

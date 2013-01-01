@@ -145,7 +145,7 @@ function create()
     playerHeatLoss()
 end
 
--- Make the player fire his weapons.
+-- Make the player fire their weapons.
 function flyUpdate()
     flytime = flytime - 1
     
