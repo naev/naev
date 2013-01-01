@@ -168,7 +168,7 @@ function create ()
    -- Set stuff up for the bar.
    -- Give our NPC a name and a portrait.
    misn.setNPC( npc_name, "scientist" )
-   -- Describe what the user should see when he clicks on the NPC in the bar.
+   -- Describe what the user should see when they click on the NPC in the bar.
    misn.setDesc( bar_desc )
 end
 
@@ -230,10 +230,10 @@ function land ()
    if planet.cur() == targetworld then
       -- If so, remove the mission cargo.
       misn.cargoRm( cargoID )
-      -- Give the player his reward.
+      -- Give the player their reward.
       player.pay( reward )
 
-      -- Pop up a window that tells the player that he finished the mission and got his reward.
+      -- Pop up a window that tells the player they finished the mission and got their reward.
       tk.msg( title, string.format(misn_accomplished, reward) )
 
       -- Mark the mission as successfully finished.

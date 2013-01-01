@@ -258,7 +258,7 @@ function distress ( pilot, attacker )
       return
    end
 
-   -- Make sure pilot is setting his target properly
+   -- Make sure pilot is setting their target properly
    if pilot == attacker then
       return
    end

@@ -1945,7 +1945,7 @@ static int gui_runFunc( const char* func, int nargs, int nret )
 
 
 /**
- * @brief Player just changed his cargo.
+ * @brief Player just changed their cargo.
  */
 void gui_setCargo (void)
 {
@@ -1955,7 +1955,7 @@ void gui_setCargo (void)
 
 
 /**
- * @brief Player just changed his nav computer target.
+ * @brief Player just changed their nav computer target.
  */
 void gui_setNav (void)
 {
@@ -1965,7 +1965,7 @@ void gui_setNav (void)
 
 
 /**
- * @brief Player just changed his pilot target.
+ * @brief Player just changed their pilot target.
  */
 void gui_setTarget (void)
 {
@@ -1975,7 +1975,7 @@ void gui_setTarget (void)
 
 
 /**
- * @brief Player just upgraded his ship or modified it.
+ * @brief Player just upgraded their ship or modified it.
  */
 void gui_setShip (void)
 {
@@ -1985,7 +1985,7 @@ void gui_setShip (void)
 
 
 /**
- * @brief Player just changed his system.
+ * @brief Player just changed their system.
  */
 void gui_setSystem (void)
 {
