@@ -222,7 +222,7 @@ void pilots_rmHook( unsigned int hook )
 /**
  * @brief Clears the pilots hooks.
  *
- *    @param p Pilot to clear his hooks.
+ *    @param p Pilot whose hooks we're clearing
  */
 void pilot_clearHooks( Pilot *p )
 {

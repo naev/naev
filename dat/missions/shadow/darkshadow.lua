@@ -36,7 +36,7 @@ else -- default english
 
     title[3] = "A tip from the barman"
     text[6] = [[    You meet the barman's stare. He hesitates for a moment, then speaks up.
-    "Hey man. Are you %s by any chance?"
+    "Hey... Are you %s by any chance?"
     You tell him that yes, that's you, and ask how he knows your name.
     "Well, your description was given to me by an old friend of mine. His name is Jarek. Do you know him?"
     You tell him that you don't know anyone by the name of Jarek, but you do know a man named Jorek. The barman visibly relaxes when he hears that name.
@@ -46,7 +46,7 @@ else -- default english
     title[4] = "Still an unpleasant man"
     text[7] = [[    "Well hello there %s," Jorek says when you approach his table. "It's about damn time you showed up. I've been wastin' credits on this awful swill for days now."
     Not at all surprised that Jorek is still as disagreeable as the last time you encountered him, you decide to ask him to explain the situation, beginning with how he knew that it was you who would be coming for him. Jorek laughs heartily at that.
-    "Ha! Of course it was going to be you. Who else would that lass Rebina send? She's tough as nails, that girl, but I know how her mind works. She's cornered, potential enemies behind every door in the organization. And you have done us a couple of favors already. In fact, you're the only guy she can trust outside her own little circle of friends, and right now I'm not too sure how far she trusts those. Plus, she really has a keen nose when it comes to sniffin' out reliable people, and she knows it. Yeah, I knew she'd send you to find me."
+    "Ha! Of course it was going to be you. Who else would that lass Rebina send? She's tough as nails, that girl, but I know how her mind works. She's cornered, potential enemies behind every door in the organization. And you have done us a couple of favors already. In fact, you're the only one she can trust outside her own little circle of friends, and right now I'm not too sure how far she trusts those. Plus, she really has a keen nose when it comes to sniffin' out reliable people, and she knows it. Yeah, I knew she'd send you to find me."
     That answers one question. But you still don't know why Jorek hasn't been reporting in like he should have.
     "Yeah, right, about that. You know about the deal with the other branches getting too big for their britches? Good. Well, I've been lookin' into that, pokin' my nose into their business. Since I'm dealin' with my fellow Shadows here, I couldn't afford to give myself away. So that's that. But there's more."]]
 
