@@ -314,7 +314,7 @@ static int commodity_canBuy( char *name )
    failure = 0;
    q = commodity_getMod();
    com = commodity_get( name );
-   price = planet_commodityPrice( land_planet, com ) * q;
+   price = price_of_buying(q, cur_system->credits, cur_system->stockpiles[com->index]);
    system_stockpile = cur_system->stockpiles[com->index];
 
 
@@ -367,7 +367,7 @@ static void commodity_buy( unsigned int wid, char* str )
    q     = commodity_getMod();
    comname = toolkit_getList( wid, "lstGoods" );
    com   = commodity_get( comname );
-   price = planet_commodityPrice( land_planet, com );
+   price = price_of_buying(q, cur_system->credits, cur_system->stockpiles[com->index]);
 
    /* Check stuff. */
    if (land_errDialogue( comname, "buyCommodity" ))
@@ -376,10 +376,9 @@ static void commodity_buy( unsigned int wid, char* str )
    /* Make the buy. */
    q = pilot_cargoAdd( player.p, com, q );
    player_modCredits( -price );
-   cur_system->credits+=price*q; //NOTE! This a naive transaction, player 
-   cur_system->stockpiles[com->index]-=q;  //can game the system
-   cur_system->prices[com->index]=PRICE(cur_system->credits,cur_system->stockpiles[com->index]); //update price
-   // printf("Creds: %.0f Goods %.0f price %.0f\n",cur_system->credits,cur_system->stockpiles[com->index],PRICE(cur_system->credits,cur_system->stockpiles[com->index]));
+   cur_system->credits+=price;
+   cur_system->stockpiles[com->index]-=q;
+   cur_system->prices[com->index]=PRICE(cur_system->credits,cur_system->stockpiles[com->index]);
    land_checkAddRefuel();
    commodity_update(wid, NULL);
 
@@ -411,7 +410,7 @@ static void commodity_sell( unsigned int wid, char* str )
    q     = commodity_getMod();
    comname = toolkit_getList( wid, "lstGoods" );
    com   = commodity_get( comname );
-   price = planet_commodityPrice( land_planet, com );
+   price = price_of_buying(q, cur_system->credits, cur_system->stockpiles[com->index]);
 
    /* Check stuff. */
    if (land_errDialogue( comname, "sellCommodity" ))
@@ -419,8 +418,8 @@ static void commodity_sell( unsigned int wid, char* str )
 
    /* Remove commodity. */
    q = pilot_cargoRm( player.p, com, q );
-   cur_system->credits-=price*q; //NOTE! This a naive transaction, player 
-   cur_system->stockpiles[com->index]+=q;  //can game the system
+   cur_system->credits-=price;
+   cur_system->stockpiles[com->index]+=q;
    cur_system->prices[com->index]=PRICE(cur_system->credits,cur_system->stockpiles[com->index]); //update price
    // printf("Creds: %.0f Goods %.0f price %.0f\n",cur_system->credits,cur_system->stockpiles[com->index],PRICE(cur_system->credits,cur_system->stockpiles[com->index]));
    player_modCredits( price );   //remove that printf comment (there are 2 of them)
@@ -480,13 +479,8 @@ static void commodity_renderMod( double bx, double by, double w, double h, void 
       commodity_mod = q;
    }
 
-   char *sysname;
-   StarSystem *sys;
-   sysname = planet_getSystem( land_planet->name );
-   sys = system_get( sysname );
-
-   credits_t price_tobuy = price_of_buying(q, sys->credits, sys->stockpiles[active_comm->index]);
-   credits_t price_tosell = price_of_buying(-q, sys->credits, sys->stockpiles[active_comm->index]);
+   credits_t price_tobuy = price_of_buying(q, cur_system->credits, cur_system->stockpiles[active_comm->index]);
+   credits_t price_tosell = price_of_buying(-q, cur_system->credits, cur_system->stockpiles[active_comm->index]);
 
    nsnprintf( buf, 64, "%dx",q);
    gl_printMid( &gl_smallFont, w, bx, by+35, &cBlack, buf );
