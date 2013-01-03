@@ -208,8 +208,8 @@ static void commodity_exchange_open( unsigned int wid )
          "Sell", commodity_sell, SDLK_s );
 
       /* cust draws the modifier */ 
-   window_addCust( wid, -40-((LAND_BUTTON_WIDTH-20)/2), 60+ 2*LAND_BUTTON_HEIGHT,
-         (LAND_BUTTON_WIDTH-20)/2, LAND_BUTTON_HEIGHT, "cstMod", 0, commodity_renderMod, NULL, NULL );
+   window_addCust( wid, -40-((LAND_BUTTON_WIDTH-20)/2)+90, 60+ 2*LAND_BUTTON_HEIGHT,
+         (LAND_BUTTON_WIDTH-20)+10, LAND_BUTTON_HEIGHT, "cstMod", 0, commodity_renderMod, NULL, NULL );
 
    /* text */
    window_addText( wid, -20, -40, LAND_BUTTON_WIDTH, 110, 0,
@@ -471,15 +471,24 @@ static void commodity_renderMod( double bx, double by, double w, double h, void 
    (void) data;
    (void) h;
    int q;
-   char buf[8];
+   char buf[128];
 
    q = commodity_getMod();
    if (q != commodity_mod) {
       commodity_update( land_getWid(LAND_WINDOW_COMMODITY), NULL );
       commodity_mod = q;
    }
-   nsnprintf( buf, 8, "%dx", q );
-   gl_printMid( &gl_smallFont, w, bx, by, &cBlack, buf );
+
+   char *sysname;
+   StarSystem *sys;
+   sysname = planet_getSystem( land_planet->name );
+   sys = system_get( sysname );
+
+   credits_t price_tobuy = price_of_buying(q, sys->credits, sys->stockpiles[0]);
+   credits_t price_tosell = price_of_buying(-q, sys->credits, sys->stockpiles[0]);
+
+   nsnprintf( buf, 128, "%dx\nbuying:%li\nselling %li", q, price_tobuy, price_tosell );
+   gl_printMid( &gl_smallFont, w, bx, by+5, &cBlack, buf );
 }
 
 /**

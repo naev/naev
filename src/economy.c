@@ -20,6 +20,7 @@
 #include <stdio.h>
 #include "nstring.h"
 #include <stdint.h>
+#include <limits.h>
 
 #ifdef HAVE_SUITESPARSE_CS_H
 #include <suitesparse/cs.h>
@@ -396,9 +397,45 @@ credits_t economy_getPrice( const Commodity *com,
    }
 
    /* Calculate price. */
-   price = sys->prices[i];
+   price = PRICE(sys->credits, sys->stockpiles[i]);
    return (credits_t) price;
 }
+
+/**
+ * @brief Gets the price for purchasing n tons of goods from an asset with finite funds
+ *
+ */
+credits_t price_of_buying(int n_tons, double p_creds, double p_goods)
+{
+
+   int i;
+   int increment = 1;   /* the granularity of the approximation */
+
+   credits_t t_price;
+
+      /* if trying to buy more than is in store, return almost max value */
+   if (p_goods-(double)n_tons<=1.0){
+      t_price  = 0xFFFFFFFFFFFFFFF0;
+      return t_price;
+   }
+
+   int buying = (n_tons>0) ? 1 : -1;
+
+   double f_price = 0;
+
+   for (i=0; i!=n_tons; i+=buying){
+      double price = PRICE(p_creds, p_goods);
+      p_creds+=price*buying*increment;
+      p_goods-=buying*increment;
+
+      f_price+=price;
+   }
+
+   t_price = (credits_t) f_price;
+
+   return t_price;
+}
+
 
 /**
  * @brief Calculates the resistance between two star systems.

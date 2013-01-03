@@ -1890,7 +1890,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
                do {
 
                   cccur = ccur->children;
-                  if (xml_isNode(ccur, "prod_mod"))
+                  if (xml_isNode(ccur, "prod_mod")){
                      tmp=NULL;
                      do{
 

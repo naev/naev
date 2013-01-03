@@ -54,6 +54,7 @@ void economy_update( unsigned int dt );
 void economy_destroy (void);
 void refresh_economy(void);   //run if the production modifiers of a planet change
 double production(double mod, double goods);
+credits_t price_of_buying(int n_tons, double p_creds, double p_goods);
 
 
 /*
