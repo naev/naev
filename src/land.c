@@ -100,6 +100,7 @@ static const char *production_desc[] = {
 static int land_windowsMap[LAND_NUMWINDOWS]; /**< Mapping of windows. */
 static unsigned int *land_windows = NULL; /**< Landed window ids. */
 Planet* land_planet = NULL; /**< Planet player landed at. */
+Commodity *active_comm = NULL; /**< active commodity */
 static glTexture *gfx_exterior = NULL; /**< Exterior graphic of the landed planet. */
 
 /*
@@ -208,8 +209,8 @@ static void commodity_exchange_open( unsigned int wid )
          "Sell", commodity_sell, SDLK_s );
 
       /* cust draws the modifier */ 
-   window_addCust( wid, -40-((LAND_BUTTON_WIDTH-20)/2)+90, 60+ 2*LAND_BUTTON_HEIGHT,
-         (LAND_BUTTON_WIDTH-20)+10, LAND_BUTTON_HEIGHT, "cstMod", 0, commodity_renderMod, NULL, NULL );
+   window_addCust( wid, -40-((LAND_BUTTON_WIDTH-20)/2)+90, 60 + 2*LAND_BUTTON_HEIGHT,
+         (LAND_BUTTON_WIDTH-20)+10, LAND_BUTTON_HEIGHT*2, "cstMod", 0, commodity_renderMod, NULL, NULL );
 
    /* text */
    window_addText( wid, -20, -40, LAND_BUTTON_WIDTH, 110, 0,
@@ -272,7 +273,7 @@ static void commodity_update( unsigned int wid, char* str )
    }
 
    /* modify text */
-   com = commodity_get( comname );
+   active_comm = com = commodity_get( comname );
    nsnprintf( buf, PATH_MAX,
          "%d Tons\n"
          "%"CREDITS_PRI" Credits/Ton\n"
@@ -317,7 +318,7 @@ static int commodity_canBuy( char *name )
    system_stockpile = cur_system->stockpiles[com->index];
 
 
-   if (!system_stockpile) {
+   if (system_stockpile<=0.0) {
       land_errDialogueBuild("This system has no more %s", com->name );
       failure = 1;
    }
@@ -471,7 +472,7 @@ static void commodity_renderMod( double bx, double by, double w, double h, void 
    (void) data;
    (void) h;
    int q;
-   char buf[128];
+   char buf[64];
 
    q = commodity_getMod();
    if (q != commodity_mod) {
@@ -484,10 +485,14 @@ static void commodity_renderMod( double bx, double by, double w, double h, void 
    sysname = planet_getSystem( land_planet->name );
    sys = system_get( sysname );
 
-   credits_t price_tobuy = price_of_buying(q, sys->credits, sys->stockpiles[0]);
-   credits_t price_tosell = price_of_buying(-q, sys->credits, sys->stockpiles[0]);
+   credits_t price_tobuy = price_of_buying(q, sys->credits, sys->stockpiles[active_comm->index]);
+   credits_t price_tosell = price_of_buying(-q, sys->credits, sys->stockpiles[active_comm->index]);
 
-   nsnprintf( buf, 128, "%dx\nbuying:%li\nselling %li", q, price_tobuy, price_tosell );
+   nsnprintf( buf, 64, "%dx",q);
+   gl_printMid( &gl_smallFont, w, bx, by+35, &cBlack, buf );
+   nsnprintf( buf, 64, "buying:%li", price_tobuy );
+   gl_printMid( &gl_smallFont, w, bx, by+20, &cBlack, buf );
+   nsnprintf( buf, 64, "selling %li", price_tosell );
    gl_printMid( &gl_smallFont, w, bx, by+5, &cBlack, buf );
 }
 

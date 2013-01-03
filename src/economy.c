@@ -51,12 +51,10 @@
 #define ECON_FACTION_MOD   0.1 /**< Modifier on Base for faction standings. */
 
 #define STARTING_CREDITS   100000000. /**< ### How many credits are initially given to each system*/
-#define STARTING_GOODS     100000. 
+#define STARTING_GOODS     10000. 
 
-
-#define AVG_POPULATION     50000000 /**< Divisor for calculation of prod_mods */
-#define INITIAL_TRADE_MODIFIER     0.99  /**< How much trade that wants to happen 
-                                    actually happens. Adjusts price changes */
+#define INITIAL_TRADE_MODIFIER     0.99  /**< How much trade that wants to happen actually happens. 
+                                             High means low price difference, low means large differences */
 #define INITIAL_PRODUCTION_MODIFIER .1 /**< galaxial production modifier */
 
 /* commodity stack */
@@ -415,7 +413,7 @@ credits_t price_of_buying(int n_tons, double p_creds, double p_goods)
 
       /* if trying to buy more than is in store, return almost max value */
    if (p_goods-(double)n_tons<=1.0){
-      t_price  = 0xFFFFFFFFFFFFFFF0;
+      t_price  = CREDITS_MAX;
       return t_price;
    }
 
@@ -695,7 +693,7 @@ void economy_update( unsigned int dt )
    printf("Updating economy");
 
       /* Trade and produce/consume, is passed 10000000 every standard jump and landing */
-   for (i=0; i<dt; i+=10000000) {
+   for (i=0; i<dt; i+=1000000) {
 
       trade_update();
       produce_consume();
