@@ -410,7 +410,7 @@ static void commodity_sell( unsigned int wid, char* str )
    q     = commodity_getMod();
    comname = toolkit_getList( wid, "lstGoods" );
    com   = commodity_get( comname );
-   price = price_of_buying(q, cur_system->credits, cur_system->stockpiles[com->index]);
+   price = price_of_buying(-q, cur_system->credits, cur_system->stockpiles[com->index]);
 
    /* Check stuff. */
    if (land_errDialogue( comname, "sellCommodity" ))
@@ -420,9 +420,8 @@ static void commodity_sell( unsigned int wid, char* str )
    q = pilot_cargoRm( player.p, com, q );
    cur_system->credits-=price;
    cur_system->stockpiles[com->index]+=q;
-   cur_system->prices[com->index]=PRICE(cur_system->credits,cur_system->stockpiles[com->index]); //update price
-   // printf("Creds: %.0f Goods %.0f price %.0f\n",cur_system->credits,cur_system->stockpiles[com->index],PRICE(cur_system->credits,cur_system->stockpiles[com->index]));
-   player_modCredits( price );   //remove that printf comment (there are 2 of them)
+   cur_system->prices[com->index]=PRICE(cur_system->credits,cur_system->stockpiles[com->index]);
+   player_modCredits( price );   
    land_checkAddRefuel();
 
    
@@ -1480,10 +1479,6 @@ static void land_createMainTab( unsigned int wid )
          descnum=(int) log(abs(producing))/log(2.);
          descnum= (descnum>10) ? 10 : descnum;
       }
-      printf("\nAdding: This asset %s %s %s",         (producing > 0.) ? "produces" : "consumes",
-         production_desc[descnum], 
-         com->name
-         );
       p+=nsnprintf(text+p,64*land_planet->ncommodities-p,"This asset %s %s %s",
          (producing > 0.) ? "produces" : "consumes",
          production_desc[descnum], 
