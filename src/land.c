@@ -1436,13 +1436,41 @@ static void land_createMainTab( unsigned int wid )
       }
    }
 
+
+   /*
+    * Production/consumption amount
+    */
+   Commodity* com;
+   int descnum;
+   int p=0;
+   double producing;
+   char* comm_text=malloc(64*land_planet->ncommodities);
+   for (i=0;i<land_planet->ncommodities;i++){
+      com=land_planet->commodities[i];
+      producing=production(land_planet->prod_mods[com->index],cur_system->stockpiles[com->index]);
+      if (abs(producing)<1.)
+         descnum=0;
+      else{
+         descnum=(int) log(abs(producing))/log(2.);
+         descnum= (descnum>10) ? 10 : descnum;
+      }
+      p+=nsnprintf(comm_text+p, 64*land_planet->ncommodities-p, "This asset %s %s %s\n",
+         (producing > 0.) ? "produces" : "consumes",
+         production_desc[descnum], 
+         com->name
+         );
+   }
+   char *desc_text = malloc(strlen(comm_text)+strlen(land_planet->description)+3);
+   sprintf(desc_text, "%s\n\n%s", land_planet->description, comm_text);
+   free(comm_text);
+
    /*
     * Pretty display.
     */
    window_addImage( wid, 20, -40, 0, 0, "imgPlanet", gfx_exterior, 1 );
    window_addText( wid, 440, -20-offset,
          w-460, h-20-offset-60-LAND_BUTTON_HEIGHT*2, 0,
-         "txtPlanetDesc", &gl_smallFont, &cBlack, land_planet->description);
+         "txtPlanetDesc", &gl_smallFont, &cBlack, desc_text);
 
    /*
     * buttons
@@ -1462,40 +1490,14 @@ static void land_createMainTab( unsigned int wid )
 
    if (!land_planet->ncommodities)
       return;
-   /*
-    * Production/consumption amount
-    */
-   Commodity* com;
-   int descnum;
-   int p=0;
-   double producing;
-   char* text=malloc(64*land_planet->ncommodities);
-   for (i=0;i<land_planet->ncommodities;i++){
-      com=land_planet->commodities[i];
-      producing=production(cur_system->prod_mods[com->index],cur_system->stockpiles[com->index]);
-      if (abs(producing)<1.)
-         descnum=0;
-      else{
-         descnum=(int) log(abs(producing))/log(2.);
-         descnum= (descnum>10) ? 10 : descnum;
-      }
-      p+=nsnprintf(text+p,64*land_planet->ncommodities-p,"This asset %s %s %s",
-         (producing > 0.) ? "produces" : "consumes",
-         production_desc[descnum], 
-         com->name
-         );
-      p+=nsnprintf(text+p,64*land_planet->ncommodities-p, "\n"
-         );
-   }
 
-   // printf("\nText is: \'\'\'%s\'\'\'",text);
 
-   window_addText( wid, 440, -80-offset,
-      w-460, h-20-offset-60-LAND_BUTTON_HEIGHT*2, 0,
-      "cons_desc", &gl_smallFont, &cBlack, text);
+   // window_addText( wid, 440, -80-offset,
+   //    w-460, h-20-offset-60-LAND_BUTTON_HEIGHT*2, 0,
+   //    "cons_desc", &gl_smallFont, &cBlack, text);
 
-   free(text);
 
+   free(desc_text);
 }
 
 

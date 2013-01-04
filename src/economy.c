@@ -7,9 +7,6 @@
  *
  * @brief Handles economy stuff.
  *
- * Economy is handled with Nodal Analysis.  Systems are modelled as nodes,
- *  jump routes are resistances and production is modelled as node intensity.
- *  This is then solved with linear algebra after each time increment.
  */
 
 
@@ -693,7 +690,7 @@ void economy_update( unsigned int dt )
    printf("Updating economy");
 
       /* Trade and produce/consume, is passed 10000000 every standard jump and landing */
-   for (i=0; i<dt; i+=1000000) {
+   for (i=0; i<dt; i+=10000000) {
 
       trade_update();
       produce_consume();
