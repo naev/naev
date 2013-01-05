@@ -26,7 +26,6 @@ typedef int64_t credits_t;
  *
  * @brief Represents a commodity.
  *
- * @todo Use inverse normal? //Huh?
  */
 typedef struct Commodity_ {
    int index;	/**< Index of the commodity */
@@ -35,7 +34,6 @@ typedef struct Commodity_ {
    /* Prices. */
    double price; /**< Base price of the commodity. */
 } Commodity;
-
 
 /*
  * Commodity stuff.
@@ -52,7 +50,7 @@ void commodity_free (void);
 int economy_init (void);
 void economy_update( unsigned int dt );
 void economy_destroy (void);
-void refresh_economy(void);   //run if the production modifiers of a planet change
+void refresh_prices(void);    /* if something affecting prices were to change */
 double production(double mod, double goods);
 credits_t price_of_buying(int n_tons, double p_creds, double p_goods);
 

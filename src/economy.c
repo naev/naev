@@ -92,7 +92,8 @@ credits_t economy_getPrice( const Commodity *com,
 credits_t economy_getCost( const Commodity *com, const StarSystem *sys, int buying);
 void produce_consume(void);
 void trade_update(void);
-void refresh_prices(void);
+void refresh_economy(void);
+void refresh_sys_prodmods(StarSystem *sys);  /* run if the production modifiers of a planet change */
 
 
 
@@ -554,6 +555,29 @@ void produce_consume(void)
    }
 }
 
+
+/** reset the values of a system, based on planetary prod_mods
+ *
+ * should be called everytime planetary prod_mods change
+ */
+void refresh_sys_prodmods(StarSystem *sys)
+{
+   int comm, pl;
+
+   for (comm=0; comm<econ_nprices; comm++){
+      sys->prod_mods[comm] = 0.0;
+
+      for (pl = 0; pl<sys->nplanets; pl++){
+         if (sys->planets[pl]->prod_mods+comm == NULL){
+            printf("planet %s prod_mods hasn't been initialized",sys->planets[pl]->name);
+            break;
+         }
+         sys->prod_mods[comm]+=sys->planets[pl]->prod_mods[comm];
+      }
+   }
+
+}
+
 /** reset the values of every system, based on planetary prod_mods
  *
  * should be called everytime planetary prod_mods change
@@ -562,26 +586,13 @@ void refresh_economy(void)
 {
    printf("\nrefreshing economy");
 
-   int i, comm, pl;
-   StarSystem *sys;
-
+   int i;
 
    for (i=0;i<systems_nstack; i++) {
-
-      sys = &systems_stack[i];
-
-      for (comm=0; comm<econ_nprices; comm++){
-         sys->prod_mods[comm] = 0.0;
-
-         for (pl = 0; pl<sys->nplanets; pl++){
-            if (sys->planets[pl]->prod_mods+comm == NULL){
-               printf("planet %s prod_mods hasn't been initialized",sys->planets[pl]->name);
-               break;
-            }
-            sys->prod_mods[comm]+=sys->planets[pl]->prod_mods[comm];
-         }
-      }
+      refresh_sys_prodmods(systems_stack+i);
    }
+
+   refresh_prices();
 
 }
 

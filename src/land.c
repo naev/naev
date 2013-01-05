@@ -86,7 +86,7 @@ static const char *land_windowNames[LAND_NUMWINDOWS] = {
 };
 static const char *production_desc[] = {
    "an unnoticeable amount of\0",
-   "a pathetic amount of\0",
+   "a smidgeon of\0",
    "barely any\0",
    "a noticeable amount of\0",
    "a small amount of\0"
