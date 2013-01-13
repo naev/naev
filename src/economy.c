@@ -480,8 +480,10 @@ int economy_init (void)
    int goodnum;
 
    /* Must not be initialized. */
-   if (econ_initialized)
+   if (econ_initialized){
+      printf("economy already initialized");
       return 0;
+   }
 
    trade_modifier = INITIAL_TRADE_MODIFIER; /** How much trade actually happens */
 

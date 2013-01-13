@@ -554,11 +554,6 @@ int load_game( const char* file, int version_diff )
    player_message( "\egWelcome to "APPNAME"!" );
    player_message( "\eg v%s", naev_version(0) );
 
-   /* kill possible old economy */
-   economy_destroy();
-   /* Initialize the economy. */
-   economy_init();
-
    /* Now begin to load. */
    diff_load(node); /* Must load first to work properly. */
    pfaction_load(node); /* Must be loaded before player so the messages show up properly. */
@@ -571,6 +566,8 @@ int load_game( const char* file, int version_diff )
    }
 
    /* Load more stuff. */
+   economy_destroy();
+   economy_init();
    var_load(node);
    missions_loadActive(node);
    events_loadActive(node);
