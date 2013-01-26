@@ -1750,6 +1750,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
 
    /* the production modifiers, for economy */
    planet->prod_mods = (double *) calloc(sizeof(double), econ_nprices);
+      //this should only be initialized for participating planets (note to self)
 
    node = parent->xmlChildrenNode;
    do {
@@ -1850,8 +1851,10 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
                      planet->services |= PLANET_SERVICE_BAR | PLANET_SERVICE_INHABITED;
                   else if (xml_isNode(ccur, "missions"))
                      planet->services |= PLANET_SERVICE_MISSIONS | PLANET_SERVICE_INHABITED;
-                  else if (xml_isNode(ccur, "commodity"))
+                  else if (xml_isNode(ccur, "commodity")){
                      planet->services |= PLANET_SERVICE_COMMODITY | PLANET_SERVICE_INHABITED;
+                     planet_setFlag(planet, PL_ECONOMICALLY_ACTIVE);
+                  }
                   else if (xml_isNode(ccur, "outfits"))
                      planet->services |= PLANET_SERVICE_OUTFITS | PLANET_SERVICE_INHABITED;
                   else if (xml_isNode(ccur, "shipyard"))
@@ -3372,13 +3375,13 @@ int space_sysLoad( xmlNodePtr parent )
                }
             }
 
-            else if (xml_isNode(cur, "economy")){
-               space_parseEconVals(cur);
-            }
+            // else if (xml_isNode(cur, "economy")){
+            //    space_parseEconVals(cur);
+            // }
 
-            else if (xml_isNode(cur, "prod_mod")){
-               space_parseProdMods(cur);
-            }
+            // else if (xml_isNode(cur, "prod_mod")){
+            //    space_parseProdMods(cur);
+            // }
 
          } while (xml_nextNode(cur));
       }
@@ -3504,6 +3507,8 @@ static int space_parseProdMods( xmlNodePtr node )
       }
 
    } while (xml_nextNode(node));
+
+   planet_setFlag(pl, PL_ECONOMICALLY_ACTIVE);
 
    return 0;
 

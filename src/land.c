@@ -129,6 +129,7 @@ static char errorreason[512];
 static int errorappend;
 static char *errorlist_ptr;
 
+extern void refresh_pl_prices(Planet *pl); /* refresh the prices of a planet */
 
 /*
  * prototypes
@@ -276,16 +277,16 @@ static void commodity_update( unsigned int wid, char* str )
    active_comm = com = commodity_get( comname );
    nsnprintf( buf, PATH_MAX,
          "%d Tons\n"
-         "%"CREDITS_PRI" Credits/Ton\n"
+         "%"CREDITS_PRI"\n   Credits/Ton"
          "\n"
-         "%f\n"
+         "%.0f\n"
          "%.0f Tons"
          "\n\n"
          "%d Tons\n",
          pilot_cargoOwned( player.p, comname ),
          planet_commodityPrice( land_planet, com ),
-         cur_system->credits,
-         cur_system->stockpiles[com->index],
+         land_planet->credits,
+         land_planet->stockpiles[com->index],
          pilot_cargoFree(player.p));
    window_modifyText( wid, "txtDInfo", buf );
    window_modifyText( wid, "txtDesc", com->description );
@@ -302,21 +303,21 @@ static void commodity_update( unsigned int wid, char* str )
       window_disableButtonSoft( wid, "btnCommoditySell" );
 }
 
-
+//NEED TO UPDATE
 static int commodity_canBuy( char *name )
 {
    int failure;
    double system_stockpile;
-   unsigned int q, price;
+   unsigned int q;
+   credits_t price;
    Commodity *com;
    char buf[ECON_CRED_STRLEN];
 
    failure = 0;
    q = commodity_getMod();
    com = commodity_get( name );
-   price = price_of_buying(q, cur_system->credits, cur_system->stockpiles[com->index]);
-   system_stockpile = cur_system->stockpiles[com->index];
-
+   price = price_of_buying(q, land_planet->credits, land_planet->stockpiles[com->index]);
+   system_stockpile = land_planet->stockpiles[com->index];
 
    if (system_stockpile<=0.0) {
       land_errDialogueBuild("This system has no more %s", com->name );
@@ -334,7 +335,6 @@ static int commodity_canBuy( char *name )
 
    return !failure;
 }
-
 
 static int commodity_canSell( char *name )
 {
@@ -367,7 +367,7 @@ static void commodity_buy( unsigned int wid, char* str )
    q     = commodity_getMod();
    comname = toolkit_getList( wid, "lstGoods" );
    com   = commodity_get( comname );
-   price = price_of_buying(q, cur_system->credits, cur_system->stockpiles[com->index]);
+   price = price_of_buying(q, land_planet->credits, land_planet->stockpiles[com->index]);
 
    /* Check stuff. */
    if (land_errDialogue( comname, "buyCommodity" ))
@@ -375,10 +375,10 @@ static void commodity_buy( unsigned int wid, char* str )
 
    /* Make the buy. */
    q = pilot_cargoAdd( player.p, com, q );
+   land_planet->stockpiles[com->index]-=q;
    player_modCredits( -price );
-   cur_system->credits+=price;
-   cur_system->stockpiles[com->index]-=q;
-   cur_system->prices[com->index]=PRICE(cur_system->credits,cur_system->stockpiles[com->index]);
+   land_planet->credits+=price;
+   refresh_pl_prices(land_planet);
    land_checkAddRefuel();
    commodity_update(wid, NULL);
 
@@ -392,6 +392,8 @@ static void commodity_buy( unsigned int wid, char* str )
    if (land_takeoff)
       takeoff(1);
 }
+
+
 /**
  * @brief Attempts to sell a commodity.
  *    @param wid Window selling commodity from.
@@ -410,7 +412,7 @@ static void commodity_sell( unsigned int wid, char* str )
    q     = commodity_getMod();
    comname = toolkit_getList( wid, "lstGoods" );
    com   = commodity_get( comname );
-   price = price_of_buying(-q, cur_system->credits, cur_system->stockpiles[com->index]);
+   price = price_of_buying(-q, land_planet->credits, land_planet->stockpiles[com->index]);
 
    /* Check stuff. */
    if (land_errDialogue( comname, "sellCommodity" ))
@@ -418,16 +420,13 @@ static void commodity_sell( unsigned int wid, char* str )
 
    /* Remove commodity. */
    q = pilot_cargoRm( player.p, com, q );
-   cur_system->credits-=price;
-   cur_system->stockpiles[com->index]+=q;
-   cur_system->prices[com->index]=PRICE(cur_system->credits,cur_system->stockpiles[com->index]);
+   land_planet->stockpiles[com->index]+=q;
    player_modCredits( price );   
+   land_planet->credits-=price;
+   refresh_pl_prices(land_planet);
    land_checkAddRefuel();
 
-   
-   /* */
    commodity_update(wid, NULL);
-
 
    /* Run hooks. */
    hparam[0].type    = HOOK_PARAM_STRING;
@@ -471,6 +470,8 @@ static void commodity_renderMod( double bx, double by, double w, double h, void 
    (void) h;
    int q;
    char buf[64];
+   credits_t price_tobuy;
+   credits_t price_tosell;
 
    q = commodity_getMod();
    if (q != commodity_mod) {
@@ -478,8 +479,8 @@ static void commodity_renderMod( double bx, double by, double w, double h, void 
       commodity_mod = q;
    }
 
-   credits_t price_tobuy = price_of_buying(q, cur_system->credits, cur_system->stockpiles[active_comm->index]);
-   credits_t price_tosell = price_of_buying(-q, cur_system->credits, cur_system->stockpiles[active_comm->index]);
+   price_tobuy = price_of_buying(q, land_planet->credits, land_planet->stockpiles[active_comm->index]);
+   price_tosell = price_of_buying(-q, land_planet->credits, land_planet->stockpiles[active_comm->index]);
 
    nsnprintf( buf, 64, "%dx",q);
    gl_printMid( &gl_smallFont, w, bx, by+35, &cBlack, buf );
@@ -1371,6 +1372,7 @@ int land_setWindow( int window )
  */
 void land( Planet* p, int load )
 {
+
    /* Do not land twice. */
    if (landed)
       return;
@@ -1445,20 +1447,26 @@ static void land_createMainTab( unsigned int wid )
    int p=0;
    double producing;
    char* comm_text=malloc(64*land_planet->ncommodities);
+   if (planet_isFlag(land_planet, PL_ECONOMICALLY_ACTIVE)){
    for (i=0;i<land_planet->ncommodities;i++){
-      com=land_planet->commodities[i];
-      producing=production(land_planet->prod_mods[com->index],cur_system->stockpiles[com->index]);
-      if (abs(producing)<1.)
-         descnum=0;
-      else{
-         descnum=(int) log(abs(producing))/log(2.);
-         descnum= (descnum>10) ? 10 : descnum;
+         com=land_planet->commodities[i];
+         producing=production(land_planet->prod_mods[com->index],land_planet->stockpiles[com->index]);
+         if (abs(producing)<1.)
+            descnum=0;
+         else{
+            descnum=(int) log(abs(producing))/log(2.);
+            descnum= (descnum>10) ? 10 : descnum;
+         }
+         p+=nsnprintf(comm_text+p, 64*land_planet->ncommodities-p, "This asset %s %s %s\n",
+            (producing > 0.) ? "produces" : "consumes",
+            production_desc[descnum], 
+            com->name
+            );
       }
-      p+=nsnprintf(comm_text+p, 64*land_planet->ncommodities-p, "This asset %s %s %s\n",
-         (producing > 0.) ? "produces" : "consumes",
-         production_desc[descnum], 
-         com->name
-         );
+   }
+   else{
+      // WARN("Planet cannot have description, as it does not participate in economy\n");
+      comm_text[0] = 0;
    }
    char *desc_text = malloc(strlen(comm_text)+strlen(land_planet->description)+3);
    sprintf(desc_text, "%s\n\n%s", land_planet->description, comm_text);

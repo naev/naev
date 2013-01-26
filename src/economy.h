@@ -9,11 +9,11 @@
 
 
 #include <stdint.h>
-
+// #include "space.c"
 
 #define ECON_CRED_STRLEN      32 /**< Maximum length a credits2str string can reach. */
 
-#define PRICE(Credits,Goods)  (Credits / Goods) /**< Price of a good*/
+#define PRICE(Credits,Goods)  ((Credits) / (Goods)) /**< Price of a good*/
 
 
 typedef int64_t credits_t;

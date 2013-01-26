@@ -278,10 +278,10 @@ void map_open (void)
    y -= 2 * gl_smallFont.h + 5 + 15;
 
    /* Production Modifiers */
-   window_addText( wid, x, y, 90, 20, 0, "txtSProd_Mods",
-         &gl_smallFont, &cDConsole, "Prod_modifiers:" );
-   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtProd_Mods",
-         &gl_smallFont, &cBlack, NULL );
+   // window_addText( wid, x, y, 90, 20, 0, "txtSProd_Mods",
+   //       &gl_smallFont, &cDConsole, "Prod_modifiers:" );
+   // window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtProd_Mods",
+   //       &gl_smallFont, &cBlack, NULL );
 
    /* Made/Consumed */
    window_addText( wid, x, y, 90, 20, 0, "txtSMadeConsumed",
@@ -626,16 +626,16 @@ static void map_update( unsigned int wid )
 
 
    /* System Production modifier */
-   buf[0] = '\0';
-   p = 0;
+   // buf[0] = '\0';
+   // p = 0;
 
-   window_moveWidget(wid, "txtSProd_Mods", x, y );
-   window_moveWidget( wid, "txtProd_Mods", x + 50, y - 18 );
+   // window_moveWidget(wid, "txtSProd_Mods", x, y );
+   // window_moveWidget( wid, "txtProd_Mods", x + 50, y - 18 );
 
-   for (i=0; i<econ_nprices; i++) {
+   // for (i=0; i<econ_nprices; i++) {
 
-      y-=15;
-      p += nsnprintf( &buf[p], PATH_MAX-p, "%s:%.0f\n", commodity_stack[i].name, sys->prod_mods[i] );
+   //    y-=15;
+   //    p += nsnprintf( &buf[p], PATH_MAX-p, "%s:%.0f\n", commodity_stack[i].name, sys->prod_mods[i] );
 //       /* Colourize output. */
 //       planet_updateLand(sys->planets[i]);
 //       t = planet_getColourChar(sys->planets[i]);
@@ -653,28 +653,28 @@ static void map_update( unsigned int wid )
 //       hasPlanets = 1;
 //       if (p > PATH_MAX)
 //          break;
-   }
+   // }
 
-   window_modifyText( wid, "txtProd_Mods", buf);
-   y -= 30;
+   // window_modifyText( wid, "txtProd_Mods", buf);
+   // y -= 30;
 
 
 
-   /* Production/Consumption */
-   buf[0] = '\0';
-   p = 0;
+   /* Production/Consumption */ //this was commented out, as it depended on system prod mods
+   // buf[0] = '\0';
+   // p = 0;
 
-   window_moveWidget(wid, "txtSMadeConsumed", x, y );
-   window_moveWidget( wid, "txtMadeConsumed", x + 50, y - 18 );
+   // window_moveWidget(wid, "txtSMadeConsumed", x, y );
+   // window_moveWidget( wid, "txtMadeConsumed", x + 50, y - 18 );
 
-   for (i=0; i<econ_nprices; i++) {
+   // for (i=0; i<econ_nprices; i++) {
 
-      y-=15;
-      p += nsnprintf( &buf[p], PATH_MAX-p, "%s:%.0f\n", commodity_stack[i].name, 
-         production(sys->prod_mods[i], sys->stockpiles[i]) );
-   }
+   //    y-=15;
+   //    p += nsnprintf( &buf[p], PATH_MAX-p, "%s:%.0f\n", commodity_stack[i].name, 
+   //       production(sys->prod_mods[i], sys->stockpiles[i]) );
+   // }
 
-   window_modifyText( wid, "txtMadeConsumed", buf);
+   // window_modifyText( wid, "txtMadeConsumed", buf);
 
 
 

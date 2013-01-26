@@ -79,11 +79,12 @@ typedef enum PlanetClass_ {
 /*
  * Planet flags.
  */
-#define PLANET_KNOWN       (1<<0) /**< Planet is known. */
-#define planet_isFlag(p,f)    ((p)->flags & (f)) /**< Checks planet flag. */
-#define planet_setFlag(p,f)   ((p)->flags |= (f)) /**< Sets a planet flag. */
-#define planet_rmFlag(p,f)    ((p)->flags &= ~(f)) /**< Removes a planet flag. */
-#define planet_isKnown(p)     planet_isFlag(p,PLANET_KNOWN) /**< Checks if planet is known. */
+#define PLANET_KNOWN           (1<<0) /**< Planet is known. */
+#define PL_ECONOMICALLY_ACTIVE (1<<1) /**< if the planet is economically active */
+#define planet_isFlag(p,f)     ((p)->flags & (f)) /**< Checks planet flag. */
+#define planet_setFlag(p,f)    ((p)->flags |= (f)) /**< Sets a planet flag. */
+#define planet_rmFlag(p,f)     ((p)->flags &= ~(f)) /**< Removes a planet flag. */
+#define planet_isKnown(p)      planet_isFlag(p,PLANET_KNOWN) /**< Checks if planet is known. */
 
 
 /**
@@ -126,8 +127,11 @@ typedef struct Planet_ {
    int ncommodities; /**< the amount they have */
    tech_group_t *tech; /**< Planet tech. */
 
-   /* Production modifiers */
-   double *prod_mods;
+   /* Economic values */
+   double *prod_mods;    /**< Production modifiers, affects how much is produced/consumed*/
+   double credits;      /**< How many credits the planet has */
+   double *stockpiles; /**< How many goods the planet has */
+   double *prices;
 
    /* Graphics. */
    glTexture* gfx_space; /**< graphic in space */
@@ -254,11 +258,8 @@ struct StarSystem_ {
    int nfleets; /**< total number of fleets */
    double avg_pilot; /**< Target amount of pilots in the system. */
 
-   /* Calculated. */
-   double *prices; /**< Handles the prices in the system. */
-
    /* Economy things */
-   double *prod_mods;    /**< Production modifiers, affects how much is produced/consumed*/
+   double *prices; /**< Handles the prices in the system. */ //REMOVE ME (maybe), prices shuold now be planet based
    double credits;      /**< How many credits the system has */
    double *stockpiles; /**< How many goods the system has */
    double *bought;      /**< How much of what goods were just bought. 
