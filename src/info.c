@@ -677,7 +677,7 @@ static void weapons_renderLegend( double bx, double by, double bw, double bh, vo
 
 
 /**
- * @brief Shows the player his cargo.
+ * @brief Shows the player their cargo.
  *
  *    @param str Unused.
  */
@@ -727,7 +727,7 @@ static void cargo_genList( unsigned int wid )
       /* List the player's cargo */
       buf = malloc(sizeof(char*)*player.p->ncommodities);
       for (i=0; i<player.p->ncommodities; i++) {
-         buf[i] = malloc(sizeof(char)*128);
+         buf[i] = malloc(128);
          nsnprintf(buf[i],128, "%s%s %d",
                player.p->commodities[i].commodity->name,
                (player.p->commodities[i].id != 0) ? "*" : "",

@@ -299,11 +299,14 @@ char* planet_getServiceName( int service );
 int planet_getService( char *name );
 PlanetClass planetclass_get( const char a );
 credits_t planet_commodityPrice( const Planet *p, const Commodity *c );
+/* Misc modification. */
+int planet_setFaction( Planet *p, int faction );
 /* Land related stuff. */
 char planet_getColourChar( Planet *p );
 const glColour* planet_getColour( Planet *p );
 void planet_updateLand( Planet *p );
 int planet_setRadiusFromGFX(Planet* planet);
+
 
 /*
  * jump stuff
@@ -321,6 +324,7 @@ StarSystem *system_new (void);
 int system_addPlanet( StarSystem *sys, const char *planetname );
 int system_rmPlanet( StarSystem *sys, const char *planetname );
 int system_addJump( StarSystem *sys, xmlNodePtr node );
+int system_addJumpDiff( StarSystem *sys, xmlNodePtr node );
 int system_rmJump( StarSystem *sys, const char *jumpname );
 int system_addFleet( StarSystem *sys, Fleet *fleet );
 int system_rmFleet( StarSystem *sys, Fleet *fleet );

@@ -223,10 +223,11 @@ function emp_medium ()
    end
 end
 function emp_hard ()
-   if rnd.rnd() < 0.5 then
+   -- Not reasonable at the moment.
+   --if rnd.rnd() < 0.5 then
       return empire_createHawking(false)
-   else
-      return empire_createPeacemaker(false)
-   end
+   --else
+   --   return empire_createPeacemaker(false)
+   --end
 end
 

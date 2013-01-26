@@ -5,7 +5,7 @@
 
 
 #ifndef WEAPON_H
-#  define WEAPON__H
+#  define WEAPON_H
 
 
 #include "outfit.h"

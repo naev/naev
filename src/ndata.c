@@ -527,7 +527,6 @@ const char* ndata_getDirname(void)
 int ndata_exists( const char* filename )
 {
    char *buf, path[PATH_MAX];
-   Packfile_t *file;
 
    /* See if needs to load packfile. */
    if (ndata_cache == NULL) {
@@ -574,12 +573,7 @@ int ndata_exists( const char* filename )
    ndata_loadedfile = 1;
 
    /* Try to get it from the cache. */
-   file = pack_openFromCache( ndata_cache, filename );
-   if (file == NULL)
-      return 0;
-   pack_close( file );
-
-   return 1;
+   return pack_checkCache( ndata_cache, filename );
 }
 
 
@@ -769,7 +763,7 @@ static char **stripPath( const char **list, int nlist, const char *path )
    /* Slash-terminate as needed. */
    if (strcmp(&path[len],"/")!=0) {
       len++;
-      buf = malloc((len + 1) * sizeof(char));
+      buf = malloc(len + 1);
       nsnprintf(buf, len+1,  "%s/", path );
    }
    else

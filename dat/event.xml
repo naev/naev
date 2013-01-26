@@ -5,6 +5,11 @@
   <trigger>load</trigger>
   <chance>100</chance>
  </event>
+ <event name="Pirate Fame">
+  <lua>pirate_fame</lua>
+  <trigger>enter</trigger>
+  <chance>100</chance>
+ </event>
  <event name="start_event">
   <lua>start</lua>
   <trigger>none</trigger>

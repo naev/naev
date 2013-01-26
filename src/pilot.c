@@ -286,7 +286,7 @@ static int pilot_validEnemy( const Pilot* p, const Pilot* target )
  * @brief Gets the nearest enemy to the pilot.
  *
  *    @param p Pilot to get the nearest enemy of.
- *    @return ID of his nearest enemy.
+ *    @return ID of their nearest enemy.
  */
 unsigned int pilot_getNearestEnemy( const Pilot* p )
 {
@@ -317,7 +317,7 @@ unsigned int pilot_getNearestEnemy( const Pilot* p )
  *    @param p Pilot to get the nearest enemy of.
  *    @param target_mass_LB the lower bound for target mass
  *    @param target_mass_UB the upper bound for target mass
- *    @return ID of his nearest enemy.
+ *    @return ID of their nearest enemy.
  */
 unsigned int pilot_getNearestEnemy_size( const Pilot* p, double target_mass_LB, double target_mass_UB)
 {
@@ -354,7 +354,7 @@ unsigned int pilot_getNearestEnemy_size( const Pilot* p, double target_mass_LB, 
  *    @param health_factor parameter for target shields/armour (0-1, 0.5 = current health)
  *    @param dps_factor parameter for target dps (0-1, 0.5 = current dps)
  *    @param range_factor weighting for range (typically >> 1)
- *    @return ID of his nearest enemy.
+ *    @return ID of their nearest enemy.
  */
 unsigned int pilot_getNearestEnemy_heuristic( const Pilot* p,
       double mass_factor, double health_factor,
@@ -2055,9 +2055,9 @@ ntime_t pilot_hyperspaceDelay( Pilot *p )
 /**
  * @brief Checks to see if the pilot has at least a certain amount of credits.
  *
- *    @param p Pilot to check to see if he has enough credits.
+ *    @param p Pilot to check to see if they have enough credits.
  *    @param amount Amount to check for.
- *    @return 1 if he has enough, 0 otherwise.
+ *    @return 1 if they have enough, 0 otherwise.
  */
 int pilot_hasCredits( Pilot *p, credits_t amount )
 {
@@ -2191,7 +2191,7 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    /* Initialize heat. */
    pilot_heatReset( pilot );
 
-   /* set the pilot stats based on his ship and outfits */
+   /* set the pilot stats based on their ship and outfits */
    pilot_calcStats( pilot );
 
    /* Heal up the ship. */

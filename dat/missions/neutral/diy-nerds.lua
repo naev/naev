@@ -35,7 +35,7 @@ else
    title[2] = "We have a deal!"
    text[2] = [[Upon accepting the task, you see the entire group relax visibly, and you can almost feel Mia's boldness fade away - to some extent, at least. It seems that the group is quite keen on the competition, but until now had no idea how to get there.
    As the others scramble to get up from their cramped table and start to gather their belongings, it is again up to Mia to address you:
-    "Really? You do it? Um, great. Fantastic. I just knew that eventually, someone desperate would turn up. Ok, we're set to go. We better take off immediately and go directly to %s, or we'll be late for the contest!"]]
+    "Really? You'll do it? Um, great. Fantastic. I just knew that eventually, someone desperate would turn up. Ok, we're set to go. We better take off immediately and go directly to %s, or we'll be late for the contest!"]]
   
    -- right planet, in time
    title[3] = "Happy nerds"

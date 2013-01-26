@@ -5,7 +5,7 @@
   <size>medium</size>
   <mass>45</mass>
   <price>140000</price>
-  <description>These launchers are sometimes employed by cruiser captains whose ships aren't maneouevrable enough to effectively combat enemy fighters and bombers. The punch of the Headhunter missile combined with Enygma Systems' swivel mounted launcher can effectively compensate for any blind spots.</description>
+  <description>These launchers are sometimes employed by cruiser captains whose ships aren't manoeuvrable enough to effectively combat enemy fighters and bombers. The punch of the Headhunter missile combined with Enygma Systems' swivel mounted launcher can effectively compensate for any blind spots.</description>
   <gfx_store>headhunterlauncher</gfx_store>
   <cpu>-14</cpu>
  </general>

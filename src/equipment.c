@@ -1163,6 +1163,10 @@ void equipment_regenLists( unsigned int wid, int outfits, int ships )
    nship    = 0;
    offship  = 0.;
 
+   /* Must exist. */
+   if (!window_existsID( equipment_wid ))
+      return;
+
    /* Save positions. */
    if (outfits) {
       for (i=0; i<OUTFIT_TABS; i++) {
@@ -1373,7 +1377,7 @@ static void equipment_genShipList( unsigned int wid )
       alt   = malloc( sizeof(char*) * nships );
       for (i=0; i<nships; i++) {
          s        = player_getShip( sships[i] );
-         alt[i]   = malloc( sizeof(char) * SHIP_ALT_MAX );
+         alt[i]   = malloc( SHIP_ALT_MAX );
          l        = nsnprintf( &alt[i][0], SHIP_ALT_MAX, "Ship Stats\n" );
          l        = equipment_shipStats( &alt[i][l], SHIP_ALT_MAX-l, s, 1 );
          if (l == 0) {
@@ -1535,7 +1539,7 @@ static void equipment_addOutfitListSingle( unsigned int wid,
       if ((strcmp(outfit_slotName(o),"NA") != 0) &&
             (strcmp(outfit_slotName(o),"NULL") != 0)) {
          typename       = outfit_slotName(o);
-         slottype[i]    = malloc( sizeof(char)*2 );
+         slottype[i]    = malloc( 2 );
          slottype[i][0] = typename[0];
          slottype[i][1] = '\0';
       }
@@ -1766,9 +1770,9 @@ static void equipment_changeShip( unsigned int wid )
    toolkit_setImageArrayOffset( wid, EQUIPMENT_SHIPS, 0. );
 }
 /**
- * @brief Player attempts to transport his ship to the planet he is at.
+ * @brief Player attempts to transport their ship to the planet they're at.
  *
- *    @param wid Window player is trying to transport his ship from.
+ *    @param wid Window player is trying to transport their ship from.
  */
 static void equipment_transportShip( unsigned int wid )
 {

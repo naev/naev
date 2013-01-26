@@ -591,7 +591,7 @@ static int playerL_unboard( lua_State *L )
 
 
 /**
- * @brief Forces the player to take off if he is landed.
+ * @brief Forces the player to take off if they are landed.
  *
  * Assume the pilot is still landed until the current running function returns
  *  If you want to create pilots on take off please hook the takeoff/land hooks.
@@ -704,7 +704,7 @@ static int playerL_landWindow( lua_State *L )
 
 
 /**
- * @brief Forces the player to close comm if he is chatting.
+ * @brief Forces the player to close comm if they are chatting.
  *
  * @luafunc commClose()
  */
@@ -717,7 +717,7 @@ static int playerL_commclose( lua_State *L )
 
 
 /**
- * @brief Gets the number of outfits the player owns in his list (excludes equipped on ships).
+ * @brief Gets the number of outfits the player owns in their list (excludes equipped on ships).
  *
  * @usage q = player.numOutfit( "Laser Cannon" ) -- Number of 'Laser Cannons' the player owns (unequipped)
  *
@@ -1100,7 +1100,7 @@ static int playerL_teleport( lua_State *L )
    if (comm_isOpen())
       NLUA_ERROR(L,"Can not teleport the player while the comm is open!");
    if (player_isBoarded())
-      NLUA_ERROR(L,"Can not teleport the player while he is boarded!");
+      NLUA_ERROR(L,"Can not teleport the player while they are boarded!");
 
    pnt = NULL;
 

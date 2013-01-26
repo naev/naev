@@ -767,7 +767,7 @@ char* pilot_getOutfits( const Pilot* pilot )
 
    len = 1024;
 
-   buf = malloc(sizeof(char)*len);
+   buf = malloc(len);
    buf[0] = '\0';
    p = 0;
    for (i=1; i<pilot->noutfits; i++) {

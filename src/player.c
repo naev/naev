@@ -579,7 +579,7 @@ static Pilot* player_newShipMake( const char* name )
 
 
 /**
- * @brief Swaps player's current ship with his ship named shipname.
+ * @brief Swaps player's current ship with their ship named shipname.
  *
  *    @param shipname Ship to change to.
  */
@@ -3423,8 +3423,14 @@ static void player_parseShipSlot( xmlNodePtr node, Pilot *ship, PilotOutfitSlot 
    char *buf;
    int q;
 
+   char *name = xml_get(node);
+   if (name == NULL) {
+      WARN("Empty ship slot node found, skipping.");
+      return;
+   }
+
    /* Add the outfit. */
-   o = outfit_get( xml_get(node) );
+   o = outfit_get( name );
    if (o==NULL)
       return;
    player_addOutfitToPilot( ship, o, slot );
