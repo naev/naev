@@ -36,12 +36,12 @@ static int economyL_refreshValues( lua_State *L );
 
 static int economyL_getCredits( lua_State *L );
 static int economyL_setCredits( lua_State *L );
-// static int economyL_getPrice( lua_State *L );
-// static int economyL_refreshPrice( lua_State *L );
+static int economyL_getPrice( lua_State *L );
+static int economyL_refreshPrice( lua_State *L );
 static int economyL_getStockpile( lua_State *L );
 static int economyL_setStockpile( lua_State *L );
-// static int economyL_getProd_mod( lua_State *L );
-// static int economyL_setProd_mod( lua_State *L );
+static int economyL_getProd_mod( lua_State *L );
+static int economyL_setProd_mod( lua_State *L );
 
 static const luaL_reg economy_methods[] = {
    { "update", economyL_update },
@@ -306,10 +306,12 @@ static int economyL_setCredits( lua_State *L )
    if (luaL_validplanet(L,1)!=NULL){
       pl = luaL_validplanet(L, 1);
       pl->credits = amount;
+      refresh_pl_prices(pl);
    }
    else{
       sys=luaL_validsystem(L,1);
       sys->credits = amount;
+      refresh_sys_prices(sys);
    }
    return 1;
 }
@@ -346,7 +348,7 @@ static int economyL_getStockpile( lua_State *L )
  *    @luaparam commodity commodity name
  * @luafunc getPrice( sys, commodity )
  */
-static int economyL_setStockpile( lua_State *L )   //fix me! there needs to be a "check if either string or object planet" function
+static int economyL_setStockpile( lua_State *L )
 {
    StarSystem *sys;
    Planet *pl;
@@ -357,82 +359,77 @@ static int economyL_setStockpile( lua_State *L )   //fix me! there needs to be a
    if (luaL_validplanet(L,1)!=NULL){
       pl = luaL_validplanet(L, 1);
       pl->stockpiles[com->index]=amount;
+      refresh_pl_prices(pl);
    }
    else{
       sys=luaL_validsystem(L,1);
       sys->stockpiles[com->index]=amount;
+      refresh_sys_prices(sys);
    }
+
    return 1;
 }
 
-// /**
-//  * @brief Gets commodity price in a system or planet
-//  *
-//  *    @luaparam s System name
-//  *    @luaparam commodity commodity name
-//  * @luafunc getPrice( sys, commodity )
-//  */
-// static int economyL_getPrice( lua_State *L )
-// {
-//    StarSystem *sys;
-//    Commodity *com;
-//    sys = luaL_validsystem(L,1);
-//    com = luaL_validcommodity(L,2);
-//    lua_pushnumber(L, sys->prices[com->index]);
-//    return 1;
-// }
-
-// /**
-//  * @brief refreshes prices in a system
-//  *
-//  *    @luaparam s System name
-//  * @luafunc refreshPrice( sys, commodity )
-//  */
-// static int economyL_refreshPrice( lua_State *L )
-// {
-//    StarSystem *sys;
-//    Commodity *com;
-//    sys = luaL_validsystem(L,1);
-//    com = luaL_validcommodity(L,2);
-
-//    sys->prices[com->index] = com->price * PRICE(sys->credits,sys->stockpiles[com->index]);
-//    return 1;
-// }
+/**
+ * @brief Gets commodity price in a system or planet
+ *
+ *    @luaparam s System name
+ *    @luaparam commodity commodity name
+ * @luafunc getPrice( sys, commodity )
+ */
+static int economyL_getPrice( lua_State *L )
+{
+   StarSystem *sys;
+   Planet *pl;
+   Commodity *com;
+   com = luaL_validcommodity(L,2);
+   if (luaL_validplanet(L,1)!=NULL){
+      pl = luaL_validplanet(L, 1);
+      lua_pushnumber(L, sys->prices[com->index]);
+   }
+   else{
+      sys=luaL_validsystem(L,1);
+      lua_pushnumber(L, sys->prices[com->index]);
+   }
+   
+   return 1;
+}
 
 
-// /**
-//  * @brief gets a production modifier in a system
-//  *
-//  *    @luaparam s System name
-//  *    @luaparam commodity commodity name
-//  * @luafunc getPrice( sys, commodity )
-//  */
-// static int economyL_getProd_mod( lua_State *L )
-// {
-//    StarSystem *sys;
-//    Commodity *com;
-//    sys = luaL_validsystem(L,1);
-//    com = luaL_validcommodity(L,2);
-//    lua_pushnumber(L, sys->prod_mods[com->index]);
-//    return 1;
-// }
+/**
+ * @brief gets a production modifier on a planet
+ *
+ *    @luaparam s System name
+ *    @luaparam commodity commodity name
+ * @luafunc getPrice( sys, commodity )
+ */
+static int economyL_getProd_mod( lua_State *L )
+{
+   Planet *pl;
+   Commodity *com;
+   pl = luaL_validplanet(L,1);
+   com = luaL_validcommodity(L,2);
+   lua_pushnumber(L, pl->prod_mods[com->index]);
+   return 1;
+}
 
-// /**
-//  * @brief sets a production modifier size in a system
-//  *
-//  *    @luaparam s System name
-//  *    @luaparam commodity commodity name
-//  *    @luaparam amount final production modifier
-//  * @luafunc getPrice( sys, commodity )
-//  */
-// static int economyL_setProd_mod( lua_State *L )
-// {
-//    StarSystem *sys;
-//    Commodity *com;
-//    double amount;
-//    sys = luaL_validsystem(L,1);
-//    com = luaL_validcommodity(L,2);
-//    amount = lua_tonumber(L,3);
-//    sys->prod_mods[com->index]=amount;
-//    return 1;
-// }
+/**
+ * @brief sets a production modifier on a planet
+ *
+ *    @luaparam s System name
+ *    @luaparam commodity commodity name
+ *    @luaparam amount final production modifier
+ * @luafunc getPrice( sys, commodity )
+ */
+static int economyL_setProd_mod( lua_State *L )
+{
+   Planet *pl;
+   Commodity *com;
+   double amount;
+   pl = luaL_validsystem(L,1);
+   com = luaL_validcommodity(L,2);
+   amount = lua_tonumber(L,3);
+   pl->prod_mods[com->index]=amount;
+   refresh_pl_prices(pl);
+   return 1;
+}
