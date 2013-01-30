@@ -248,10 +248,11 @@ news_t* news_get(int id)
 {
    news_t* article_ptr=news_list;
 
-   while (article_ptr!=NULL && article_ptr->id!=id)
+   while (article_ptr!=NULL && article_ptr->id!=id){
       article_ptr=article_ptr->next;
+   }
 
-   if (article_ptr->id!=id)
+   if (article_ptr==NULL)
       return NULL;
 
    return article_ptr;

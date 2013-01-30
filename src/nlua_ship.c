@@ -9,6 +9,7 @@
  */
 
 #include "nlua_ship.h"
+#include "slots.h"
 
 #include "naev.h"
 
@@ -28,6 +29,7 @@ static int shipL_name( lua_State *L );
 static int shipL_baseType( lua_State *L );
 static int shipL_class( lua_State *L );
 static int shipL_slots( lua_State *L );
+static int shipL_getSlots( lua_State *L );
 static int shipL_CPU( lua_State *L );
 static int shipL_outfitCPU( lua_State *L );
 static int shipL_gfxTarget( lua_State *L );
@@ -40,6 +42,7 @@ static const luaL_reg shipL_methods[] = {
    { "baseType", shipL_baseType },
    { "class", shipL_class },
    { "slots", shipL_slots },
+   { "getSlots", shipL_getSlots },
    { "cpu", shipL_CPU },
    { "outfitCPU", shipL_outfitCPU },
    { "gfxTarget", shipL_gfxTarget },
@@ -321,6 +324,66 @@ static int shipL_slots( lua_State *L )
    lua_pushnumber(L, s->outfit_nutility);
    lua_pushnumber(L, s->outfit_nstructure);
    return 3;
+}
+
+
+/**
+ * @brief Get a table of slots of a ship, where a slot is a table with a string size, type, and property
+ *
+ * @usage for _,v in ipairs( ship.getSlots( ship.get("Llama") ) ) do print(v["type"]) end
+ *
+ *    @luaparam s Ship to get slots of
+ *    @luareturn A table of tables with slot properties string "size", string "type", and string "property" 
+ */
+static int shipL_getSlots( lua_State *L )
+{
+   int i, k;
+   Ship *s;
+   OutfitSlot *slot;
+   int outfit_type = 0;
+   char *outfit_types[] = {"structure", "utility", "weapon"};
+
+   s = luaL_validship(L,1);
+
+   lua_newtable(L);
+   k=1;
+   for (i=0; i < s->outfit_nstructure + s->outfit_nutility + s->outfit_nweapon ; i++){
+
+         /* get the slot */
+      if (i < s->outfit_nstructure){
+         slot = &s->outfit_structure[i].slot;
+         outfit_type = 0;
+      }
+      else if (i < s->outfit_nstructure + s->outfit_nutility){
+         slot = &s->outfit_utility[i].slot;
+         outfit_type = 1;
+      }
+      else{
+         slot = &s->outfit_weapon[i].slot;
+         outfit_type = 2;
+      }
+
+      /* make the slot table and put it in */
+      lua_pushnumber(L, k++); /* slot table key */
+      lua_newtable(L);
+
+      lua_pushstring(L, "type"); /* key */
+      lua_pushstring(L, outfit_types[outfit_type]); /* value */
+      lua_rawset(L, -3); /* table[key = value ]*/
+
+      lua_pushstring(L, "size"); /* key */
+      lua_pushstring(L, slotSize( slot->size) );
+      lua_rawset(L, -3); /* table[key] = value */
+
+      lua_pushstring(L, "property"); /* key */
+      lua_pushstring( L, sp_display(slot->spid)); /* value */  /* some spids seem to be random values... */
+      lua_rawset(L, -3); /* table[key] = value */
+
+      lua_rawset(L, -3);   /* put the slot table in */
+   }
+
+   return 1;
+
 }
 
 
