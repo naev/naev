@@ -390,6 +390,7 @@ char **outfit_searchFuzzyCase( const char* name, int *n );
  */
 const char *outfit_slotName( const Outfit* o );
 const char *outfit_slotSize( const Outfit* o );
+const char *slotSize( const OutfitSlotSize o );
 const glColour *outfit_slotSizeColour( const OutfitSlot* os );
 OutfitSlotSize outfit_toSlotSize( const char *s );
 glTexture* outfit_gfx( const Outfit* o );

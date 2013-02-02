@@ -92,7 +92,7 @@ function create()
     hook.timer(1000, "flyUpdate")
 end
 
--- Make the player fire his weapons.
+-- Make the player fire their weapons.
 function flyUpdate()
    flytime = flytime - 1
    if stage == stages.weapons then

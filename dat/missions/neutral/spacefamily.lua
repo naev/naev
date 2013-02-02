@@ -37,7 +37,7 @@ else -- default english
    title[4] = "Rid of them at last"
    text[3] = [[You land at your final stop in your quest to take the space family home, and not a moment to soon for both you and Harrus. Harrus stomps off your ship without so much as a greeting, his wife and children in tow, and you are just as happy to see them gone.
    Surveying your now deserted quarters, you are appalled at how much damage the temporary inhabitants have managed to do along the way. You console yourself with the thought that at least you'll have something to do during the dull periods in hyperspace and turn to tend to your ships needs, when your eye falls on a small box that you don't remember seeing here before.
-   Inside the box, you find a sum of credits and a note written in neat, feminine handwriting that says "sorry for the trouble".]]
+   Inside the box, you find a sum of credits and a note written in neat, feminine handwriting that says, "Sorry for the trouble."]]
 
    carg_type = "Civilians" 
 

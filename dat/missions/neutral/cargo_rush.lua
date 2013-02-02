@@ -35,7 +35,7 @@ Time limit: %s]]
 
     full = {}
     full[1] = "No room in ship"
-    full[2] = "You don't have enough cargo space to accept this mission. You need %d tonnes of free space (you need %d more)."
+    full[2] = "You don't have enough cargo space to accept this mission. It requires %d tonnes of free space (you need %d more)."
 
    slow = {}
    slow[1] = "Too slow"

@@ -37,7 +37,7 @@ After a brief pause the first pirate starts talking, "So I was seeing the doctor
 From that point you figured the conversation would not be picking up, and having a lead you decide to take it.]]
 
 title[4] = "The Dirt"
-text[4] = [[You don't even bother sitting down too close to these two pirates, considering they are talking as loudly as they are. It doesn't take too much listening before you get exactly what you need as one of the pirates is telling his recent tales to the other
+text[4] = [[You don't even bother sitting down too close to these two pirates, considering they are talking as loudly as they are. It doesn't take too much listening before you get exactly what you need as one of the pirates is telling his recent tales to the other,
 "So this dummy thought he could out-fly me in his stupid Llama! So I took him off-line in like 2 STUs, got on that ship, and took the kids. The guy tried to fight back, but I stopped that quick enough. Then the woman says they was on a vacation, like I care! Ha! Morons think they can even bother to mess with me when I have work to do.
 "So I took the kids to the %s system, where they were loaded into this Trader Koala named the Progeny, clever name if you ask me! No one will ever even wonder what it's carrying, as it seems like the most innocent little guy flying around there. Little does everyone know it's waiting to fill up its load of brats!"
 Having listened to this dirt-bag who hurt this little family going on vacation, you feel like going over there and giving that pirate a good beating. But if you get yourself killed now you will never be able to save those children, and you don't even want to think what will happen to those children if you don't rescue them.]]

@@ -87,7 +87,7 @@ enum {
    PILOT_HOSTILE,      /**< Pilot is hostile to the player. */
    PILOT_FRIENDLY,     /**< Pilot is friendly to the player. */
    PILOT_COMBAT,       /**< Pilot is engaged in combat. */
-   PILOT_AFTERBURNER,  /**< Pilot has his afterburner activated. */
+   PILOT_AFTERBURNER,  /**< Pilot has their afterburner activated. */
    PILOT_HYP_PREP,     /**< Pilot is getting ready for hyperspace. */
    PILOT_HYP_BRAKE,    /**< PIlot has already braked before jumping. */
    PILOT_HYP_BEGIN,    /**< Pilot is starting engines. */

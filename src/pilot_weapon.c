@@ -731,7 +731,7 @@ int pilot_shoot( Pilot* p, int level )
 
 
 /**
- * @brief Have pilot stop shooting his weapon.
+ * @brief Have pilot stop shooting their weapon.
  *
  * Only really deals with beam weapons.
  *
@@ -1027,7 +1027,7 @@ void pilot_getRateMod( double *rate_mod, double* energy_mod,
 /**
  * @brief Clears the pilots weapon settings.
  *
- *    @param p Pilot to clear his weapons.
+ *    @param p Pilot whose weapons we're clearing.
  */
 void pilot_weaponClear( Pilot *p )
 {

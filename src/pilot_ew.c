@@ -121,7 +121,7 @@ double pilot_sensorRange( void )
 /**
  * @brief Check to see if a position is in range of the pilot.
  *
- *    @param p Pilot to check to see if position is in his sensor range.
+ *    @param p Pilot to check to see if position is in their sensor range.
  *    @param x X position to check.
  *    @param y Y position to check.
  *    @return 1 if the position is in range, 0 if it isn't.
