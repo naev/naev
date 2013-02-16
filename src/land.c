@@ -1446,31 +1446,30 @@ static void land_createMainTab( unsigned int wid )
    int descnum;
    int p=0;
    double producing;
+   char *desc_text;
    char* comm_text=malloc(64*land_planet->ncommodities);
    if (planet_isFlag(land_planet, PL_ECONOMICALLY_ACTIVE)){
-   for (i=0;i<land_planet->ncommodities;i++){
-         com=land_planet->commodities[i];
-         producing=production(land_planet->prod_mods[com->index],land_planet->stockpiles[com->index]);
-         if (abs(producing)<1.)
-            descnum=0;
-         else{
-            descnum=(int) log(abs(producing))/log(2.);
-            descnum= (descnum>10) ? 10 : descnum;
-         }
-         p+=nsnprintf(comm_text+p, 64*land_planet->ncommodities-p, "This asset %s %s %s\n",
-            (producing > 0.) ? "produces" : "consumes",
-            production_desc[descnum], 
-            com->name
-            );
+      for (i=0;i<land_planet->ncommodities;i++){
+            com=land_planet->commodities[i];
+            producing=production(land_planet->prod_mods[com->index],land_planet->stockpiles[com->index]);
+            if (abs(producing)<1.)
+               descnum=0;
+            else{
+               descnum=(int) log(abs(producing))/log(2.);
+               descnum= (descnum>10) ? 10 : descnum;
+            }
+            p+=nsnprintf(comm_text+p, 64*land_planet->ncommodities-p, "This asset %s %s %s\n",
+               (producing > 0.) ? "produces" : "consumes",
+               production_desc[descnum], 
+               com->name
+               );
       }
+
+      desc_text = malloc(strlen(comm_text)+strlen(land_planet->description)+3);
+      sprintf(desc_text, "%s\n\n%s", land_planet->description, comm_text);
+      free(comm_text);
    }
-   else{
-      // WARN("Planet cannot have description, as it does not participate in economy\n");
-      comm_text[0] = 0;
-   }
-   char *desc_text = malloc(strlen(comm_text)+strlen(land_planet->description)+3);
-   sprintf(desc_text, "%s\n\n%s", land_planet->description, comm_text);
-   free(comm_text);
+
 
    /*
     * Pretty display.

@@ -63,6 +63,7 @@ extern Planet *planet_stack; /**< Planet stack. */
 extern int planet_nstack; /**< Num of planets */
 extern int commodity_mod;  /**< Smallest unit the player can buy, for player prices */
 
+double **xml_prodmods; /**< the asset production modifiers definied in the xml, size planet_nstack */
 
 /*
  * Global Economy variables. Most of it stored with systems 
@@ -126,6 +127,10 @@ void credits2str( char *str, credits_t credits, int decimals )
 Commodity* commodity_get( const char* name )
 {
    int i;
+   if (name==NULL){
+      WARN("Commodity name is NULL!\n");
+      return NULL;
+   }
    for (i=0; i<commodity_nstack; i++)
       if (strcmp(commodity_stack[i].name,name)==0)
          return &commodity_stack[i];
@@ -385,7 +390,6 @@ credits_t economy_getPrice( const Commodity *com,
 /**
  * @brief Gets the price for purchasing n tons of goods from an asset with finite funds
  *
- *    
  */
 credits_t price_of_buying(int n_tons, double p_creds, double p_goods)
 {
@@ -441,7 +445,11 @@ int economy_init (void)
 
    /* Must not be initialized. */
    if (econ_initialized){
-      printf("economy already initialized");
+      printf("economy already initialized\n");
+      return 0;
+   }
+   if (xml_prodmods==NULL){
+      printf("must load the galaxy first before starting the economy!\n");
       return 0;
    }
 
@@ -449,7 +457,7 @@ int economy_init (void)
    production_modifier    = INITIAL_PRODUCTION_MODIFIER; /**< multiplier of how much production happens */
 
 
-   /* Allocate price space, commodity space, and credits stockpile */
+   /* Allocate price space, commodity space, credits, and stockpiles */
    for (i=0; i<systems_nstack; i++) {
       sys = &systems_stack[i];
       if (sys->prices != NULL)
@@ -480,6 +488,23 @@ int economy_init (void)
       sys->bought = calloc(econ_nprices, sizeof(double)); //bought should be removed later
    }
 
+   /* set the production modifiers to their default values */
+   for (i=0; i<planet_nstack; i++) {
+      pl = planet_stack+i;
+
+      if (pl->prod_mods!=NULL)
+         WARN("planet %d, %s already has prod mods [?]", pl->id, pl->name); //rm me
+      else if (planet_isFlag(pl, PL_ECONOMICALLY_ACTIVE))
+         pl->prod_mods = (double *) malloc(econ_nprices*sizeof(double));
+
+         /* if there are no values to put in */
+      if (xml_prodmods[i]==NULL)
+         continue;
+
+
+      memcpy(pl->prod_mods, xml_prodmods[i], econ_nprices*sizeof(double));
+   }
+
    /* Mark economy as initialized. */
    econ_initialized = 1;
 
@@ -500,34 +525,36 @@ double production(double mod, double goods)
 } 
 
 
-/* Every system produces and consumes their appropriate amount */
+/* Every asset produces and consumes their appropriate amount */
 void produce_consume(void)
 {
 
-   int s, p, goodnum;
+   int p, goodnum;
    double mod, goods;
-   StarSystem *sys;
    Planet *pl;
 
       /* for every planet, produce and consume */
-   for (s=0;s<systems_nstack; s++) {
+   for (p=0; p<planet_nstack; p++){
 
-      sys=&systems_stack[s];
+      pl = planet_stack+p;
 
-      for (p=0; p<sys->nplanets; p++){
+      if (!planet_isFlag(pl, PL_ECONOMICALLY_ACTIVE))
+         continue;
 
-         pl = sys->planets[p];
+      for (goodnum=0; goodnum<econ_nprices; goodnum++) {
 
-         if (!planet_isFlag(pl, PL_ECONOMICALLY_ACTIVE))
+         if (pl->prod_mods==NULL || pl->stockpiles==NULL){  //rm me when this is done
+            WARN("planet %d ethier does not have any prod_mods or stockpiles!\n",pl->id);
+            continue;
+         }
+
+         mod   = pl->prod_mods[goodnum];
+         goods = pl->stockpiles[goodnum];
+
+         if (mod==0.0)
             continue;
 
-         for (goodnum=0; goodnum<econ_nprices; goodnum++) {
-
-            mod   = pl->prod_mods[goodnum];
-            goods = pl->stockpiles[goodnum];
-
-            pl->stockpiles[goodnum]+=production(mod,goods);
-         }
+         pl->stockpiles[goodnum]+=production(mod,goods);
       }
    }
 }
@@ -726,15 +753,16 @@ void economy_destroy (void)
          sys->stockpiles= NULL;
          sys->bought    = NULL;
       }
-      for (p=0; p<sys->nplanets; p++){
-         pl = sys->planets[p];
-         if (!planet_isFlag(pl, PL_ECONOMICALLY_ACTIVE))
-            continue;
-         free(pl->stockpiles);
-         pl->stockpiles = NULL;
-         // free(pl->prod_mods); //still not sure how to handle this...
-         // pl->prod_mods = NULL;
-      }
+   }
+
+   for (p=0; p<planet_nstack; p++){
+      pl = planet_stack+p;
+      if (!planet_isFlag(pl, PL_ECONOMICALLY_ACTIVE))
+         continue;
+      free(pl->stockpiles);
+      pl->stockpiles = NULL;
+      free(pl->prod_mods); 
+      pl->prod_mods = NULL;
 
    }
 
