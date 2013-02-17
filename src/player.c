@@ -242,6 +242,10 @@ static void player_newSetup( int tutorial )
    else
       start_tutPosition( &x, &y );
 
+   /* start the economy */
+   economy_destroy();
+   economy_init();
+
    cam_setTargetPos( x, y, 0 );
    cam_setZoom( conf.zoom_far );
 
@@ -295,6 +299,7 @@ void player_newTutorial (void)
    map_clear();
 
    /* Start the economy. */
+   economy_destroy();
    economy_init();
 
    /* Start the news */

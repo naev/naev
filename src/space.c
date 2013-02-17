@@ -2815,11 +2815,6 @@ int space_load (void)
       sys->ownerpresence = system_getPresence( sys, sys->faction );
    }
 
-   /* Clear possible old economy */
-   economy_destroy();
-   /* Start the economy. */
-   economy_init();
-
    /* Start the news */
    news_init();
 
@@ -3386,8 +3381,6 @@ int space_sysLoad( xmlNodePtr parent )
          } while (xml_nextNode(cur));
       }
    } while (xml_nextNode(node));
-
-   WARN("Couldn't get sys name [?]\n");
 
    return 0;
 }
