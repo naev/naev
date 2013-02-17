@@ -32,35 +32,29 @@ extern void refresh_pl_prices(Planet *pl); /* refresh the prices of a planet */
 static int economyL_getProdMod( lua_State *L );
 static int economyL_setProdMod( lua_State *L );
 static int economyL_update( lua_State *L );
-static int economyL_refreshValues( lua_State *L );
 
 static int economyL_getCredits( lua_State *L );
 static int economyL_setCredits( lua_State *L );
 static int economyL_getPrice( lua_State *L );
-static int economyL_refreshPrice( lua_State *L );
 static int economyL_getStockpile( lua_State *L );
 static int economyL_setStockpile( lua_State *L );
-static int economyL_getProd_mod( lua_State *L );
-static int economyL_setProd_mod( lua_State *L );
 
 static const luaL_reg economy_methods[] = {
    { "update", economyL_update },
-   { "refreshValues", economyL_refreshValues },
    { "getProdMod", economyL_getProdMod },
    { "setProdMod", economyL_setProdMod },
    { "getCredits", economyL_getCredits },
    { "setCredits", economyL_setCredits },
-   // { "getPrice", economyL_getPrice },
-   // { "refreshPrice", economyL_refreshPrice },
+   { "getPrice", economyL_getPrice },
    { "getStockpile", economyL_getStockpile },
    { "setStockpile", economyL_setStockpile },
-   // { "getProdMod", economyL_getProdMod },
-   // { "setProdMod", economyL_setProdMod },
+   { "getProdMod", economyL_getProdMod },
+   { "setProdMod", economyL_setProdMod },
    {0,0}
 }; /**< System metatable methods. */
 static const luaL_reg economy_cond_methods[] = {
    { "getCredits", economyL_getCredits },
-   // { "getPrice", economyL_getPrice },
+   { "getPrice", economyL_getPrice },
    { "getStockpile", economyL_getStockpile },
    { "getProdMod", economyL_getProdMod },
    {0,0}
@@ -121,81 +115,28 @@ static int economyL_update( lua_State *L )   //overflows too soon
 }
 
 /**
- * @brief Refreshes the prices of the entire galaxy
- *
- *    @usage economy.refreshPrices()
- * @luafunc refreshPrices( time )
- */
-static int economyL_refreshValues( lua_State *L )
-{
-   (void) L;
-   refresh_prices();
-   return 0;
-}
-
-
-
-/**
  * @brief gets current production_modifier from either a system or a planet
  *
  * @usage economy.getProdMod("Arcturus Gamma", "Food")
  */
 static int economyL_getProdMod( lua_State *L )
 {
-
-   const char *pl_name;
-   const char *comm_name;
    Planet *pl;
-   // StarSystem *sys;
    Commodity *comm;
-   int comm_ind;
 
-   if (lua_isstring(L, 2)){
-
-      comm_name = lua_tolstring(L, 2, NULL);
-      comm = commodity_get(comm_name);
-
-      if (comm==NULL){
-         WARN("Commodity %s could not be found");
-         return 0;
-      }
-
-      comm_ind = comm->index;
-   }
-   else if (lua_iscommodity(L, 2))
-      comm = luaL_validcommodity(L, 2);
-   else {
-      WARN("Argument 2 is not a commodity");
+   if ((comm=luaL_validcommodity(L,2)) == NULL){
+      WARN("Invalid commodity\n");
       return 0;
    }
-
-
-   if (lua_isstring(L, 1)){
-
-      pl_name = lua_tolstring(L, 1, NULL);
-
-      if (planet_exists(pl_name))
-         pl = planet_get(pl_name);
-      // else if (system_exists(pl_name))
-      //    sys = system_get(pl_name);
-      else{
-         WARN("planet %s does not exist", pl_name);
-         return 0;
-      }
-   }
-   else if (lua_isplanet(L, 1))
-      pl = luaL_validplanet(L, 1);
-   // else if (lua_issystem(L, 1))
-   //    sys = luaL_validsystem(L, 1);
-   else {
-      WARN("Argument 1 is not a planet name");
+   if ((pl=luaL_validplanet(L,1)) == NULL){
+      WARN("Invalid planet\n");
       return 0;
    }
-
-   if (pl){
-      lua_pushnumber(L, (lua_Number) pl->prod_mods[comm_ind]);}
-   // else if (sys)
-   //    lua_pushnumber(L, (lua_Number) sys->prod_mods[comm_ind]);
+   if (!planet_isFlag(pl, PL_ECONOMICALLY_ACTIVE)){
+      WARN("Planet does not participate in the economy!\n");
+      return 0;
+   }
+   lua_pushnumber(L, pl->prod_mods[comm->index]);
 
    return 1;
 }
@@ -207,12 +148,8 @@ static int economyL_getProdMod( lua_State *L )
  */
 static int economyL_setProdMod( lua_State *L )
 {
-
-   const char *pl_name;
-   const char *comm_name;
    Planet *pl;
    Commodity *comm;
-   int comm_ind;
    double amount;
 
    if (lua_isnumber(L, 3))
@@ -222,49 +159,23 @@ static int economyL_setProdMod( lua_State *L )
       return 0;
    }
 
-   if (lua_isstring(L, 2)){
-
-      comm_name = lua_tolstring(L, 2, NULL);
-      comm = commodity_get(comm_name);
-
-      if (comm==NULL){
-         WARN("Commodity %s could not be found");
-         return 0;
-      }
-
-      comm_ind = comm->index;
-   }
-   else if (lua_iscommodity(L, 2))
-      comm = luaL_validcommodity(L, 2);
-   else {
-      WARN("Argument 2 is not a commodity");
+   if ((comm=luaL_validcommodity(L,2)) == NULL){
+      WARN("Invalid commodity\n");
       return 0;
    }
 
-
-   if (lua_isstring(L, 1)){
-
-      pl_name = lua_tolstring(L, 1, NULL);
-
-      if (planet_exists(pl_name))
-         pl = planet_get(pl_name);
-      else{
-         WARN("planet %s does not exist", pl_name);
-         return 0;
-      }
+   if ((pl=luaL_validplanet(L,1)) == NULL){
+      WARN("Invalid planet\n");
+      return 0;
    }
-   else if (lua_isplanet(L, 1))
-      pl = luaL_validplanet(L, 1);
-   else {
-      WARN("Argument 1 is not a planet name");
+   if (!planet_isFlag(pl, PL_ECONOMICALLY_ACTIVE)){
+      WARN("Planet does not participate in the economy\n");
       return 0;
    }
 
-   pl->prod_mods[comm_ind] = amount;
+   pl->prod_mods[comm->index] = amount;
 
-   refresh_pl_prices(pl);
-
-   return 1;
+   return 0;
 }
 
 /**
@@ -276,15 +187,23 @@ static int economyL_setProdMod( lua_State *L )
  */
 static int economyL_getCredits( lua_State *L ) 
 {
-   StarSystem *sys;
-   Planet *pl;
-   if (luaL_validplanet(L,1)!=NULL){
-      pl = luaL_validplanet(L, 1);
+   StarSystem *sys=NULL;
+   Planet *pl=NULL;
+
+
+   if ((pl=luaL_getplanet(L,1)) != NULL){
+      if (!planet_isFlag(pl, PL_ECONOMICALLY_ACTIVE)) {
+         WARN("Planet is not economically active!\n");
+         return 0;
+      }
       lua_pushnumber(L, pl->credits);
    }
-   else{
-      sys=luaL_validsystem(L,1);
+   else if ((sys=luaL_getsystem(L,1)) != NULL){
       lua_pushnumber(L, sys->credits);
+   }
+   else {
+      WARN("No matching planet or system\n");
+      return 0;
    }
 
    return 1;
@@ -301,19 +220,27 @@ static int economyL_setCredits( lua_State *L )
 {
    StarSystem *sys; 
    Planet *pl;
-   double amount;
+   double amount=-1.0;
    amount = lua_tonumber(L,2);
-   if (luaL_validplanet(L,1)!=NULL){
-      pl = luaL_validplanet(L, 1);
+
+   if (amount<=0.0){
+      WARN("Invalid number of credits\n");
+      return 0;
+   }
+
+   if ((pl=luaL_getplanet(L,1)) != NULL){
       pl->credits = amount;
       refresh_pl_prices(pl);
    }
-   else{
-      sys=luaL_validsystem(L,1);
+   else if ((sys=luaL_getsystem(L,1)) != NULL){
       sys->credits = amount;
       refresh_sys_prices(sys);
    }
-   return 1;
+   else {
+      WARN("No matching planet or system\n");
+      return 0;
+   }
+   return 0;
 }
 
 
@@ -330,13 +257,21 @@ static int economyL_getStockpile( lua_State *L )
    Planet *pl;
    Commodity *com;
    com = luaL_validcommodity(L,2);
-   if (luaL_validplanet(L,1)!=NULL){
-      pl = luaL_validplanet(L, 1);
+
+   if (com==NULL){
+      WARN("Invalid commodity\n");
+      return 0;
+   }
+
+   if ((pl=luaL_getplanet(L,1)) != NULL){
       lua_pushnumber(L, pl->stockpiles[com->index]);
    }
-   else{
-      sys=luaL_validsystem(L,1);
+   else if ((sys=luaL_getsystem(L,1)) != NULL){
       lua_pushnumber(L, sys->stockpiles[com->index]);
+   }
+   else {
+      WARN("No matching planet or system\n");
+      return 0;
    }
    return 1;
 }
@@ -346,28 +281,37 @@ static int economyL_getStockpile( lua_State *L )
  *
  *    @luaparam s System name
  *    @luaparam commodity commodity name
- * @luafunc getPrice( sys, commodity )
+ *    @luaparam amount amount to set the stockpile size to
+ * @luafunc setPrice( sys, commodity, amount )
  */
 static int economyL_setStockpile( lua_State *L )
 {
    StarSystem *sys;
    Planet *pl;
    Commodity *com;
-   double amount;
+   double amount=-1.0;
    com = luaL_validcommodity(L,2);
    amount = lua_tonumber(L,3);
-   if (luaL_validplanet(L,1)!=NULL){
-      pl = luaL_validplanet(L, 1);
+
+   if (com==NULL || amount<= 0.0){
+      WARN("Provide a valid commodity and amount");
+      return 0;
+   }
+
+   if ((pl=luaL_getplanet(L,1)) != NULL){
       pl->stockpiles[com->index]=amount;
       refresh_pl_prices(pl);
    }
-   else{
-      sys=luaL_validsystem(L,1);
+   else if ((sys=luaL_getsystem(L,1)) != NULL){
       sys->stockpiles[com->index]=amount;
       refresh_sys_prices(sys);
    }
+   else {
+      WARN("No matching planet or system\n");
+      return 0;
+   }
 
-   return 1;
+   return 0;
 }
 
 /**
@@ -382,54 +326,26 @@ static int economyL_getPrice( lua_State *L )
    StarSystem *sys;
    Planet *pl;
    Commodity *com;
-   com = luaL_validcommodity(L,2);
-   if (luaL_validplanet(L,1)!=NULL){
-      pl = luaL_validplanet(L, 1);
+   
+   if ( (com=luaL_validcommodity(L,2)) == NULL ){
+      WARN("Invalid commodity or commodity name");
+      return 0;
+   }
+
+   if ((pl=luaL_getplanet(L,1)) != NULL ){
+      if (!planet_isFlag(pl, PL_ECONOMICALLY_ACTIVE)){
+         WARN("Planet does not participate in the economy!\n");
+         return 0;
+      }
+      lua_pushnumber(L, pl->prices[com->index]);
+   }
+   else if ((sys=luaL_getsystem(L,1)) != NULL){
       lua_pushnumber(L, sys->prices[com->index]);
    }
-   else{
-      sys=luaL_validsystem(L,1);
-      lua_pushnumber(L, sys->prices[com->index]);
+   else {
+      WARN("No matching planet or system\n");
+      return 0;
    }
    
-   return 1;
-}
-
-
-/**
- * @brief gets a production modifier on a planet
- *
- *    @luaparam s System name
- *    @luaparam commodity commodity name
- * @luafunc getPrice( sys, commodity )
- */
-static int economyL_getProd_mod( lua_State *L )
-{
-   Planet *pl;
-   Commodity *com;
-   pl = luaL_validplanet(L,1);
-   com = luaL_validcommodity(L,2);
-   lua_pushnumber(L, pl->prod_mods[com->index]);
-   return 1;
-}
-
-/**
- * @brief sets a production modifier on a planet
- *
- *    @luaparam s System name
- *    @luaparam commodity commodity name
- *    @luaparam amount final production modifier
- * @luafunc getPrice( sys, commodity )
- */
-static int economyL_setProd_mod( lua_State *L )
-{
-   Planet *pl;
-   Commodity *com;
-   double amount;
-   pl = luaL_validsystem(L,1);
-   com = luaL_validcommodity(L,2);
-   amount = lua_tonumber(L,3);
-   pl->prod_mods[com->index]=amount;
-   refresh_pl_prices(pl);
    return 1;
 }

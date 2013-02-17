@@ -27,6 +27,8 @@
 #include "map.h"
 #include "map_overlay.h"
 
+extern StarSystem *systems_stack;
+extern int systems_nstack;
 
 /* System metatable methods */
 static int systemL_cur( lua_State *L );
@@ -169,24 +171,39 @@ LuaSystem* luaL_checksystem( lua_State *L, int ind )
  */
 StarSystem* luaL_validsystem( lua_State *L, int ind )
 {
+   StarSystem *s = luaL_getsystem(L, ind);
+
+   if (s == NULL)
+      WARN("System is invalid");
+
+   return s;
+}
+
+/**
+ * @brief Gets system (or system name) at index, but does not raise an error if not matched.
+ *
+ *    @param L Lua state to get system from.
+ *    @param ind Index position of system.
+ *    @return The System at ind.
+ */
+StarSystem* luaL_getsystem( lua_State *L, int ind )
+{
    LuaSystem *ls;
-   StarSystem *s;
+   const char *sname;
+   int i;
 
    if (lua_issystem(L, ind)) {
       ls = luaL_checksystem(L, ind);
-      s = system_getIndex( ls->id );
+      return system_getIndex( ls->id );
    }
-   else if (lua_isstring(L, ind))
-      s = system_get( lua_tostring(L, ind) );
-   else {
-      luaL_typerror(L, ind, FACTION_METATABLE);
+   else if (lua_isstring(L, ind)){
+      sname = lua_tostring(L, ind);
+      for (i=0; i<systems_nstack; i++)
+         if (strcmp(sname, systems_stack[i].name)==0)
+            return &systems_stack[i];
       return NULL;
    }
-
-   if (s == NULL)
-      NLUA_ERROR(L, "System is invalid");
-
-   return s;
+   return NULL;
 }
 
 /**

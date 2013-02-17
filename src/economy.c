@@ -501,7 +501,6 @@ int economy_init (void)
       if (xml_prodmods[i]==NULL)
          continue;
 
-
       memcpy(pl->prod_mods, xml_prodmods[i], econ_nprices*sizeof(double));
    }
 
@@ -538,15 +537,10 @@ void produce_consume(void)
 
       pl = planet_stack+p;
 
-      if (!planet_isFlag(pl, PL_ECONOMICALLY_ACTIVE))
+      if (!planet_isFlag(pl, PL_ECONOMICALLY_ACTIVE) || pl->prod_mods==NULL || pl->stockpiles==NULL)
          continue;
 
       for (goodnum=0; goodnum<econ_nprices; goodnum++) {
-
-         if (pl->prod_mods==NULL || pl->stockpiles==NULL){  //rm me when this is done
-            WARN("planet %d ethier does not have any prod_mods or stockpiles!\n",pl->id);
-            continue;
-         }
 
          mod   = pl->prod_mods[goodnum];
          goods = pl->stockpiles[goodnum];
@@ -707,22 +701,21 @@ void trade_update(void)
  *
  *    @param dt Deltatick in NTIME.
  */
-void economy_update( unsigned int dt )
+void economy_update( ntime_t dt )
 {
 
    unsigned int i=0;
 
-   refresh_prices();
-
-   printf("Updating economy %d cycles\n", dt/10000000);
+   printf("Updating economy %lu cycles\n", dt/10000000);
 
       /* Trade and produce/consume, is passed 10000000 every standard jump and landing */
    for (i=0; i<dt; i+=10000000) {
-      trade_update();
       produce_consume();
       refresh_prices();
+      trade_update();
    }
 
+   refresh_prices();
 }
  
 

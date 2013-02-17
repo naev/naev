@@ -95,6 +95,7 @@ static const char *production_desc[] = {
    "a decent amount of\0",
    "a pretty good amount of\0"
    "a large amount of\0",
+   "a huge amount of\0"
    "a vast amount of\0"
 };
 static int land_windowsMap[LAND_NUMWINDOWS]; /**< Mapping of windows. */

@@ -1853,6 +1853,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
                      planet->services |= PLANET_SERVICE_MISSIONS | PLANET_SERVICE_INHABITED;
                   else if (xml_isNode(ccur, "commodity")){
                      planet->services |= PLANET_SERVICE_COMMODITY | PLANET_SERVICE_INHABITED;
+                     planet_setFlag(planet, PL_ECONOMICALLY_ACTIVE);
                   }
                   else if (xml_isNode(ccur, "outfits"))
                      planet->services |= PLANET_SERVICE_OUTFITS | PLANET_SERVICE_INHABITED;

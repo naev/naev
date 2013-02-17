@@ -34,7 +34,8 @@ int nlua_loadPlanet( lua_State *L, int readonly );
 LuaPlanet* lua_toplanet( lua_State *L, int ind );
 LuaPlanet* luaL_checkplanet( lua_State *L, int ind );
 LuaPlanet* lua_pushplanet( lua_State *L, LuaPlanet planet );
-Planet* luaL_validplanet( lua_State *L, int ind );
+Planet* luaL_validplanet( lua_State *L, int ind );    /* gets the planet and warns if it doesn't exist */
+Planet* luaL_getplanet( lua_State *L, int ind );   /* gets the planet but doesn't warn if it doesn't exist */
 int lua_isplanet( lua_State *L, int ind );
 
 

@@ -9,7 +9,8 @@
 
 
 #include <stdint.h>
-// #include "space.c"
+
+#include "ntime.h"
 
 #define ECON_CRED_STRLEN      32 /**< Maximum length a credits2str string can reach. */
 
@@ -48,7 +49,7 @@ void commodity_free (void);
  * Economy stuff.
  */
 int economy_init (void);
-void economy_update( unsigned int dt );
+void economy_update( ntime_t dt );
 void economy_destroy (void);
 void refresh_prices(void);    /* if something affecting prices were to change */
 double production(double mod, double goods);
