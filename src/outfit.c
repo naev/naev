@@ -269,6 +269,23 @@ const char *outfit_slotSize( const Outfit* o )
    }
 }
 
+const char *slotSize( const OutfitSlotSize o )
+{
+   switch( o ) {
+      case OUTFIT_SLOT_SIZE_NA:
+         return "NA";
+      case OUTFIT_SLOT_SIZE_LIGHT:
+         return "Small";
+      case OUTFIT_SLOT_SIZE_MEDIUM:
+         return "Medium";
+      case OUTFIT_SLOT_SIZE_HEAVY:
+         return "Large";
+      default:
+         return "Unknown";
+   }
+}
+
+
 
 /**
  * @brief Gets the slot size colour for an outfit slot.

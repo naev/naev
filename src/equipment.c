@@ -1770,9 +1770,9 @@ static void equipment_changeShip( unsigned int wid )
    toolkit_setImageArrayOffset( wid, EQUIPMENT_SHIPS, 0. );
 }
 /**
- * @brief Player attempts to transport his ship to the planet he is at.
+ * @brief Player attempts to transport their ship to the planet they're at.
  *
- *    @param wid Window player is trying to transport his ship from.
+ *    @param wid Window player is trying to transport their ship from.
  */
 static void equipment_transportShip( unsigned int wid )
 {

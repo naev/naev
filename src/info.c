@@ -677,7 +677,7 @@ static void weapons_renderLegend( double bx, double by, double bw, double bh, vo
 
 
 /**
- * @brief Shows the player his cargo.
+ * @brief Shows the player their cargo.
  *
  *    @param str Unused.
  */

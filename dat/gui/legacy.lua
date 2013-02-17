@@ -112,7 +112,7 @@ end
 
 
 --[[
--- @brief This function is run whenever the player changes his pilot target.
+-- @brief This function is run whenever the player changes their pilot target.
 --]]
 function update_target ()
    -- Set target
@@ -132,7 +132,7 @@ end
 
 
 --[[
--- @brief This function is run whenever the player modifies his ship outfits (when the ship is changed the gui is recreated).
+-- @brief This function is run whenever the player modifies their ship outfits (when the ship is changed the gui is recreated).
 --]]
 function update_ship ()
    stats = pp:stats()
@@ -141,7 +141,7 @@ end
 
 
 --[[
--- @brief This function is run whenever the player changes his cargo.
+-- @brief This function is run whenever the player changes their cargo.
 --]]
 function update_cargo ()
    cargol = pilot.cargoList(pp)

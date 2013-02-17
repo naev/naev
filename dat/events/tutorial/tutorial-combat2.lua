@@ -90,7 +90,7 @@ Congratulations! This concludes the missile combat tutorial.]]
         "Not my ship, anything but my ship!",
         "We can talk this out!",
         "I'm scared! Hold me.",
-        "Make the bad man go away, mommy!",
+        "Make the bad ship go away, mommy!",
         "If you don't stop I'll cry!",
         "Here I go, filling my cabin up with tears.",
         "U- oh it a-pears my te-rs hav- da--age t-e co-mand cons-le.",

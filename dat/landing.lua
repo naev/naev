@@ -108,7 +108,7 @@ end
 -- Dvaered High Command.
 function dv_mil_command( pnt )
    return land_military(pnt, 80,
-         "Permission to land granted, sir.",
+         "Permission to land granted, captain.",
          "Only high ranking personnel allowed. Landing request denied.",
          "Landing request denied.",
          "\"Money won't buy you access to our restricted facilities, citizen.\"")

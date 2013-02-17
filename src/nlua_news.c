@@ -125,10 +125,10 @@ int newsL_add( lua_State *L ){
    {
       lua_pushnil(L); 
    
-         //traverse table
+         /* traverse table */
       while (lua_next(L, -2)) {
 
-            //traverse sub table
+            /* traverse sub table */
          if (lua_istable(L,-1)){
 
             lua_pushnil(L); 
@@ -539,7 +539,7 @@ int newsL_bind( lua_State *L )
 
       lua_pushnil(L);
 
-         //traverse table
+         /* traverse table */
       while (lua_next(L, -2)) {
          if (!(a = luaL_validarticle( L,-1 ))){
             WARN("Bad argument to news.date(), must be article or a table of articles");
