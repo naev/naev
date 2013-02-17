@@ -704,7 +704,7 @@ void trade_update(void)
 void economy_update( ntime_t dt )
 {
 
-   unsigned int i=0;
+   ntime_t i=0;
 
    printf("Updating economy %lu cycles\n", dt/10000000);
 
@@ -714,6 +714,8 @@ void economy_update( ntime_t dt )
       refresh_prices();
       trade_update();
    }
+
+   printf("Done updating economy\n");
 
    refresh_prices();
 }
