@@ -273,20 +273,7 @@ void map_open (void)
    /* Prices */
    window_addText( wid, x, y, 90, 20, 0, "txtSPrices",
          &gl_smallFont, &cDConsole, "Prices:" );
-   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtPrices",
-         &gl_smallFont, &cBlack, NULL );
-   y -= 2 * gl_smallFont.h + 5 + 15;
-
-   /* Production Modifiers */
-   // window_addText( wid, x, y, 90, 20, 0, "txtSProd_Mods",
-   //       &gl_smallFont, &cDConsole, "Prod_modifiers:" );
-   // window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtProd_Mods",
-   //       &gl_smallFont, &cBlack, NULL );
-
-   /* Made/Consumed */
-   window_addText( wid, x, y, 90, 20, 0, "txtSMadeConsumed",
-         &gl_smallFont, &cDConsole, "Making:" );
-   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtMadeConsumed",
+   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 120, 0, "txtPrices",
          &gl_smallFont, &cBlack, NULL );
    y -= 2 * gl_smallFont.h + 5 + 15;
 

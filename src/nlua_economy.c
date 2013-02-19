@@ -29,10 +29,11 @@ extern double production_modifier;
 extern void refresh_sys_prices(StarSystem *sys);   /* refresh the prices of a system */
 extern void refresh_pl_prices(Planet *pl); /* refresh the prices of a planet */
 
-static int economyL_getProdMod( lua_State *L );
-static int economyL_setProdMod( lua_State *L );
 static int economyL_update( lua_State *L );
 
+static int economyL_getProducing( lua_State *L );
+static int economyL_getProdMod( lua_State *L );
+static int economyL_setProdMod( lua_State *L );
 static int economyL_getCredits( lua_State *L );
 static int economyL_setCredits( lua_State *L );
 static int economyL_getPrice( lua_State *L );
@@ -41,6 +42,7 @@ static int economyL_setStockpile( lua_State *L );
 
 static const luaL_reg economy_methods[] = {
    { "update", economyL_update },
+   { "getAmountProducing", economyL_getProducing },
    { "getProdMod", economyL_getProdMod },
    { "setProdMod", economyL_setProdMod },
    { "getCredits", economyL_getCredits },
@@ -112,6 +114,34 @@ static int economyL_update( lua_State *L )   //overflows too soon
    }
    economy_update(dt);
    return 0;
+}
+
+
+/**
+ * @brief gets amount a plant will produce on it's next turn
+ *
+ * @usage economy.getAmountProducing("Em 1", "Food")
+ */
+static int economyL_getProducing( lua_State *L )
+{
+   Planet *pl;
+   Commodity *comm;
+
+   if ((comm=luaL_validcommodity(L,2)) == NULL){
+      WARN("Invalid commodity\n");
+      return 0;
+   }
+   if ((pl=luaL_validplanet(L,1)) == NULL){
+      WARN("Invalid planet\n");
+      return 0;
+   }
+   if (!planet_isFlag(pl, PL_ECONOMICALLY_ACTIVE)){
+      WARN("Planet does not participate in the economy!\n");
+      return 0;
+   }
+   lua_pushnumber(L, production( pl->prod_mods[comm->index], pl->stockpiles[comm->index]) );
+
+   return 1;
 }
 
 /**

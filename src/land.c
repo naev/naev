@@ -317,7 +317,7 @@ static int commodity_canBuy( char *name )
    failure = 0;
    q = commodity_getMod();
    com = commodity_get( name );
-   price = price_of_buying(q, land_planet->credits, land_planet->stockpiles[com->index]);
+   price = price_of_buying(com, q, land_planet->credits, land_planet->stockpiles[com->index]);
    system_stockpile = land_planet->stockpiles[com->index];
 
    if (system_stockpile<=0.0) {
@@ -368,7 +368,7 @@ static void commodity_buy( unsigned int wid, char* str )
    q     = commodity_getMod();
    comname = toolkit_getList( wid, "lstGoods" );
    com   = commodity_get( comname );
-   price = price_of_buying(q, land_planet->credits, land_planet->stockpiles[com->index]);
+   price = price_of_buying(com, q, land_planet->credits, land_planet->stockpiles[com->index]);
 
    /* Check stuff. */
    if (land_errDialogue( comname, "buyCommodity" ))
@@ -413,7 +413,7 @@ static void commodity_sell( unsigned int wid, char* str )
    q     = commodity_getMod();
    comname = toolkit_getList( wid, "lstGoods" );
    com   = commodity_get( comname );
-   price = price_of_buying(-q, land_planet->credits, land_planet->stockpiles[com->index]);
+   price = price_of_buying(com, -q, land_planet->credits, land_planet->stockpiles[com->index]);
 
    /* Check stuff. */
    if (land_errDialogue( comname, "sellCommodity" ))
@@ -480,8 +480,8 @@ static void commodity_renderMod( double bx, double by, double w, double h, void 
       commodity_mod = q;
    }
 
-   price_tobuy = price_of_buying(q, land_planet->credits, land_planet->stockpiles[active_comm->index]);
-   price_tosell = price_of_buying(-q, land_planet->credits, land_planet->stockpiles[active_comm->index]);
+   price_tobuy = price_of_buying(active_comm, q, land_planet->credits, land_planet->stockpiles[active_comm->index]);
+   price_tosell = price_of_buying(active_comm, -q, land_planet->credits, land_planet->stockpiles[active_comm->index]);
 
    nsnprintf( buf, 64, "%dx",q);
    gl_printMid( &gl_smallFont, w, bx, by+35, &cBlack, buf );

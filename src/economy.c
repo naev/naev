@@ -41,11 +41,11 @@
 
 
 #define SYS_STARTING_CREDITS   100000000. /**< ### How many credits are initially given to each system*/
-#define SYS_STARTING_GOODS     10000. 
-#define PL_STARTING_CREDITS    1000000.
-#define PL_STARTING_GOODS      100.
+#define SYS_STARTING_GOODS     1000. 
+#define PL_STARTING_CREDITS    10000000.
+#define PL_STARTING_GOODS      1000.
 
-#define INITIAL_TRADE_MODIFIER     0.99  /**< How much trade that wants to happen actually happens. 
+#define INITIAL_TRADE_MODIFIER     0.3  /**< How much trade that wants to happen actually happens. 
                                              High means low price difference, low means large differences */
 #define INITIAL_PRODUCTION_MODIFIER 1.0 /**< galaxial production modifier */
 
@@ -380,9 +380,9 @@ credits_t economy_getPrice( const Commodity *com,
 
       /* Calculate price. */
    if (planet_isFlag(p, PL_ECONOMICALLY_ACTIVE))
-      price = PRICE(p->credits, p->stockpiles[ind]);
+      price = PRICE(com, p->credits, p->stockpiles[ind]);
    else
-      price = PRICE(sys->credits, sys->stockpiles[ind]);
+      price = PRICE(com, sys->credits, sys->stockpiles[ind]);
 
    return (credits_t) price;
 }
@@ -391,7 +391,7 @@ credits_t economy_getPrice( const Commodity *com,
  * @brief Gets the price for purchasing n tons of goods from an asset with finite funds
  *
  */
-credits_t price_of_buying(int n_tons, double p_creds, double p_goods)
+credits_t price_of_buying(Commodity *com, int n_tons, double p_creds, double p_goods)
 {
 
    int i;
@@ -415,8 +415,8 @@ credits_t price_of_buying(int n_tons, double p_creds, double p_goods)
 
    for (i=0; i!=n_tons; i+=increment){
 
-      price = PRICE(p_creds, p_goods);
-      price_after = PRICE(p_creds+price*increment, p_goods-increment);
+      price = PRICE(com, p_creds, p_goods);
+      price_after = PRICE(com, p_creds+price*increment, p_goods-increment);
       avg_price = (price+price_after) / 2;
 
       p_creds+=avg_price*increment;
@@ -581,7 +581,7 @@ void refresh_pl_prices(Planet *pl)
       return;
 
    int goodnum;
-   double credits, goods, price;
+   double credits, goods;
    Commodity *comm;
 
       /* update prices on every good */
@@ -590,9 +590,7 @@ void refresh_pl_prices(Planet *pl)
       goods    = pl->stockpiles[goodnum];
       comm     = &commodity_stack[goodnum];
 
-         /* price defined in XML */
-      price  = (double) comm->price; 
-      pl->prices[goodnum] = price * PRICE(credits,goods);
+      pl->prices[goodnum] = PRICE(comm, credits,goods);
    }
 }
 
@@ -600,7 +598,7 @@ void refresh_pl_prices(Planet *pl)
 void refresh_sys_prices(StarSystem *sys)
 {
    int goodnum;
-   double credits, goods, price;
+   double credits, goods;
    Commodity *comm;
 
       /* update prices on every good */
@@ -610,8 +608,7 @@ void refresh_sys_prices(StarSystem *sys)
       comm     = &commodity_stack[goodnum];
 
          /* price defined in XML */
-      price  = (double) comm->price; 
-      sys->prices[goodnum] = price * PRICE(credits,goods);
+      sys->prices[goodnum] = PRICE(comm, credits,goods);
    }
 }
 
@@ -714,9 +711,7 @@ void economy_update( ntime_t dt )
       refresh_prices();
       trade_update();
    }
-
-   printf("Done updating economy\n");
-
+   
    refresh_prices();
 }
  
