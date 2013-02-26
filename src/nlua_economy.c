@@ -258,18 +258,12 @@ static int economyL_setCredits( lua_State *L )
       return 0;
    }
 
-   if ((pl=luaL_getplanet(L,1)) != NULL){
+   if ((pl=luaL_getplanet(L,1)) != NULL)
       pl->credits = amount;
-      refresh_pl_prices(pl);
-   }
-   else if ((sys=luaL_getsystem(L,1)) != NULL){
+   else if ((sys=luaL_getsystem(L,1)) != NULL)
       sys->credits = amount;
-      refresh_sys_prices(sys);
-   }
-   else {
+   else
       WARN("No matching planet or system\n");
-      return 0;
-   }
    return 0;
 }
 
@@ -328,19 +322,12 @@ static int economyL_setStockpile( lua_State *L )
       return 0;
    }
 
-   if ((pl=luaL_getplanet(L,1)) != NULL){
+   if ((pl=luaL_getplanet(L,1)) != NULL)
       pl->stockpiles[com->index]=amount;
-      refresh_pl_prices(pl);
-   }
-   else if ((sys=luaL_getsystem(L,1)) != NULL){
+   else if ((sys=luaL_getsystem(L,1)) != NULL)
       sys->stockpiles[com->index]=amount;
-      refresh_sys_prices(sys);
-   }
-   else {
+   else 
       WARN("No matching planet or system\n");
-      return 0;
-   }
-
    return 0;
 }
 
@@ -367,10 +354,10 @@ static int economyL_getPrice( lua_State *L )
          WARN("Planet does not participate in the economy!\n");
          return 0;
       }
-      lua_pushnumber(L, pl->prices[com->index]);
+      lua_pushnumber(L, PRICE_OF(com, pl));
    }
    else if ((sys=luaL_getsystem(L,1)) != NULL){
-      lua_pushnumber(L, sys->prices[com->index]);
+      lua_pushnumber(L, PRICE_OF(com, pl));
    }
    else {
       WARN("No matching planet or system\n");

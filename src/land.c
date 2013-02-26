@@ -119,7 +119,7 @@ static glTexture *mission_portrait = NULL; /**< Mission portrait. */
  * player stuff
  */
 static int last_window = 0; /**< Default window. */
-int commodity_mod = 10;
+int commodity_mod = 1;
 
 
 /*
@@ -304,7 +304,6 @@ static void commodity_update( unsigned int wid, char* str )
       window_disableButtonSoft( wid, "btnCommoditySell" );
 }
 
-//NEED TO UPDATE
 static int commodity_canBuy( char *name )
 {
    int failure;
@@ -320,17 +319,17 @@ static int commodity_canBuy( char *name )
    price = price_of_buying(com, q, land_planet->credits, land_planet->stockpiles[com->index]);
    system_stockpile = land_planet->stockpiles[com->index];
 
-   if (system_stockpile<=0.0) {
-      land_errDialogueBuild("This system has no more %s", com->name );
-      failure = 1;
-   }
    if (!player_hasCredits( price )) {
       credits2str( buf, price - player.p->credits, 2 );
       land_errDialogueBuild("You need %s more credits.", buf );
       failure = 1;
    }
-   if (pilot_cargoFree(player.p) <= 0) {
-      land_errDialogueBuild("No cargo space available!");
+   if (pilot_cargoFree(player.p) <= (signed int) q) {
+      land_errDialogueBuild("You don't have that much space!");
+      failure = 1;
+   }
+   if (system_stockpile <= q) {
+      land_errDialogueBuild("This system has no more %s", com->name );
       failure = 1;
    }
 
@@ -339,10 +338,16 @@ static int commodity_canBuy( char *name )
 
 static int commodity_canSell( char *name )
 {
-   int failure = 0;
+   int failure;
+   unsigned int q;
+   Commodity *com;
 
-   if (pilot_cargoOwned( player.p, name ) == 0) {
-      land_errDialogueBuild("You can't sell something you don't have!");
+   failure = 0;
+   q = commodity_getMod();
+   com = commodity_get( name );
+
+   if (pilot_cargoOwned( player.p, name ) < (signed int) q) {
+      land_errDialogueBuild("You don't have that much %s", com->name );
       failure = 1;
    }
 
@@ -364,22 +369,22 @@ static void commodity_buy( unsigned int wid, char* str )
    credits_t price;
    HookParam hparam[3];
 
-   /* Get selected. */
-   q     = commodity_getMod();
    comname = toolkit_getList( wid, "lstGoods" );
-   com   = commodity_get( comname );
-   price = price_of_buying(com, q, land_planet->credits, land_planet->stockpiles[com->index]);
 
-   /* Check stuff. */
+   /* Check if you can make the transaction */
    if (land_errDialogue( comname, "buyCommodity" ))
       return;
+
+   /* Get selected. */
+   q     = commodity_getMod();
+   com   = commodity_get( comname );
+   price = price_of_buying(com, q, land_planet->credits, land_planet->stockpiles[com->index]);
 
    /* Make the buy. */
    q = pilot_cargoAdd( player.p, com, q );
    land_planet->stockpiles[com->index]-=q;
    player_modCredits( -price );
    land_planet->credits+=price;
-   refresh_pl_prices(land_planet);
    land_checkAddRefuel();
    commodity_update(wid, NULL);
 
@@ -409,22 +414,22 @@ static void commodity_sell( unsigned int wid, char* str )
    credits_t price;
    HookParam hparam[3];
 
-   /* Get parameters. */
-   q     = commodity_getMod();
    comname = toolkit_getList( wid, "lstGoods" );
-   com   = commodity_get( comname );
-   price = price_of_buying(com, -q, land_planet->credits, land_planet->stockpiles[com->index]);
 
-   /* Check stuff. */
+   /* Check if you can make the transaction. */
    if (land_errDialogue( comname, "sellCommodity" ))
       return;
+
+   /* Get parameters. */
+   q     = commodity_getMod();
+   com   = commodity_get( comname );
+   price = price_of_buying(com, -q, land_planet->credits, land_planet->stockpiles[com->index]);
 
    /* Remove commodity. */
    q = pilot_cargoRm( player.p, com, q );
    land_planet->stockpiles[com->index]+=q;
-   player_modCredits( price );   
-   land_planet->credits-=price;
-   refresh_pl_prices(land_planet);
+   player_modCredits( -price );   
+   land_planet->credits+=price;
    land_checkAddRefuel();
 
    commodity_update(wid, NULL);
@@ -450,7 +455,7 @@ int commodity_getMod (void)
    int q;
 
    mods = SDL_GetModState();
-   q = 10;
+   q = 1;
    if (mods & (KMOD_LCTRL | KMOD_RCTRL))
       q *= 5;
    if (mods & (KMOD_LSHIFT | KMOD_RSHIFT))

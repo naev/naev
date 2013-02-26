@@ -604,7 +604,7 @@ static void map_update( unsigned int wid )
    for (i=0; i<econ_nprices; i++) {
 
       y-=15;
-      p += nsnprintf( &buf[p], PATH_MAX-p, "%s:%.0f\n", commodity_stack[i].name, sys->prices[i] );
+      p += nsnprintf( &buf[p], PATH_MAX-p, "%s:%.0f\n", commodity_stack[i].name, PRICE_OF(commodity_stack+i, sys) );
    }
 
    window_modifyText( wid, "txtPrices", buf);

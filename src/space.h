@@ -131,7 +131,6 @@ typedef struct Planet_ {
    double *prod_mods;    /**< Production modifiers, affects how much is produced/consumed*/
    double credits;      /**< How many credits the planet has */
    double *stockpiles; /**< How many goods the planet has */
-   double *prices;      //remove me maybe. Maybe prices aren't needed at all
 
    /* Graphics. */
    glTexture* gfx_space; /**< graphic in space */
@@ -259,7 +258,6 @@ struct StarSystem_ {
    double avg_pilot; /**< Target amount of pilots in the system. */
 
    /* Economy things */
-   double *prices; /**< Handles the prices in the system. */ //REMOVE ME (maybe)
    double credits;      /**< How many credits the system has */
    double *stockpiles; /**< How many goods the system has */
    double *bought;      /**< How much of what goods were just bought. 
