@@ -401,8 +401,6 @@ credits_t price_of_buying(Commodity *com, int n_tons, double p_creds, double p_g
 
    cost = p_creds * ( pow( (p_goods/(p_goods-n_tons)), com->price ) - 1);
 
-   // printf("got %d of %s at %.0f, at store %.0f creds, %.0f, goods, returning %.0f\n", n_tons, com->name, com->price, p_creds, p_goods, cost);
-
    return (credits_t) cost;
 }
 

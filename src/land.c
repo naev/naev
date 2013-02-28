@@ -324,7 +324,7 @@ static int commodity_canBuy( char *name )
       land_errDialogueBuild("You need %s more credits.", buf );
       failure = 1;
    }
-   if (pilot_cargoFree(player.p) <= (signed int) q) {
+   if (pilot_cargoFree(player.p) < (signed int) q) {
       land_errDialogueBuild("You don't have that much space!");
       failure = 1;
    }
