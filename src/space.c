@@ -3457,6 +3457,8 @@ static int space_parseSysSave( xmlNodePtr Econ )
          } while (xml_nextNode(snode));
 
          comm = commodity_get(comm_name);
+         if (comm==NULL)
+            continue;
          sys->stockpiles[comm->index] = stockpile;
 
          comm_name = NULL;
@@ -3503,6 +3505,8 @@ static int space_parsePlSave( xmlNodePtr node )
          } while (xml_nextNode(snode));
          
          comm = commodity_get(comm_name);
+         if (comm==NULL)
+            continue;
          pl->stockpiles[comm->index] = stockpile;
          pl->prod_mods[comm->index] = prod_mod;
 
