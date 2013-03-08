@@ -367,9 +367,10 @@ char **system_searchFuzzyCase( const char* sysname, int *n );
 StarSystem* system_get( const char* sysname );
 StarSystem* system_getIndex( int id );
 int system_index( StarSystem *sys );
-int space_sysReachable( StarSystem *sys );
-int space_sysReallyReachable( char* sysname );
+int space_sysReachable( StarSystem *sys ); /* if a path to system is known */
+int space_sysReallyReachable( char* sysname ); /* if there exists a path to system */
 int space_sysReachableFromSys( StarSystem *target, StarSystem *sys );
+StarSystem **space_getFactionSys( int faction, int num );
 char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions, int landable );
 char* space_getRndPlanet( int landable );
 double system_getClosest( const StarSystem *sys, int *pnt, int *jp, double x, double y );
