@@ -270,9 +270,13 @@ static int systemL_cur( lua_State *L )
  * Behaves differently depending on what you pass as param: <br/>
  *    - string : Gets the system by name. <br/>
  *    - planet : Gets the system by planet. <br/>
+ *    - bool : Gets a random planet. <br/>
+ *    - faction : Gets a random planet from that faction. <br/>
  *
  * @usage sys = system.get( p ) -- Gets system where planet 'p' is located.
  * @usage sys = system.get( "Gamma Polaris" ) -- Gets the system by name.
+ * @usage sys = system.get( faction.get("Dvaered") ) -- Gets a random Dvaered system
+ * @usage sys = system.get( true ) -- Gets a random system
  *
  *    @luaparam param Read description for details.
  *    @luareturn System metatable matching param.
@@ -282,27 +286,37 @@ static int systemL_get( lua_State *L )
 {
    LuaSystem sys;
    StarSystem *ss;
+   StarSystem **sys_list;
+   int f;
    Planet *pnt;
 
-   /* Invalid by default. */
    sys.id = -1;
 
-   /* Passing a string (systemname) */
    if (lua_isstring(L,1)) {
       ss = system_get( lua_tostring(L,1) );
       if (ss != NULL)
-         sys.id = system_index( ss );
+         sys.id = ss->id;
    }
-   /* Passing a planet */
    else if (lua_isplanet(L,1)) {
       pnt = luaL_validplanet(L,1);
       ss = system_get( planet_getSystem( pnt->name ) );
       if (ss != NULL)
          sys.id = system_index( ss );
    }
+   else if (lua_isfaction(L,1)) {
+      f = lua_tofaction(L,1)->f;
+      sys_list  = space_getFactionSys( f, 1 );
+      if (sys_list==NULL) return 0;
+      sys.id = sys_list[0]->id;
+      free(sys_list);
+   }
+   else if (lua_isboolean(L,1)) {
+      while ( !space_sysReallyReachable( (ss = &systems_stack[ rand() % systems_nstack ])->name ) )
+         ;
+      sys.id = ss->id;
+   }
    else NLUA_INVALID_PARAMETER(L);
 
-   /* Error checking. */
    if (sys.id < 0) {
       NLUA_ERROR(L, "No matching systems found.");
       return 0;

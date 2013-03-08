@@ -432,6 +432,53 @@ int space_calcJumpInPos( StarSystem *in, StarSystem *out, Vector2d *pos, Vector2
 }
 
 /**
+ * get num number of random faction systems
+ */
+StarSystem **space_getFactionSys( int faction, int num )
+{
+   int fac_sys = 0;
+   int array_size = 0;
+   int s, i, rnd_sys;
+
+   int *systems = NULL;
+
+   for (s=0; s<systems_nstack; s++){
+      if (systems_stack[s].faction == faction && space_sysReallyReachable(systems_stack[s].name)){
+         fac_sys++;
+         if (array_size<fac_sys){
+            array_size+=CHUNK_SIZE;
+            systems = (int *) realloc(systems, sizeof(int)*array_size);
+         }
+         systems[fac_sys] = s;
+      }
+   }
+
+   if (fac_sys<num){
+      WARN("Cannot get enough faction systems!");
+      return NULL;
+   }
+
+      /* get a random array */
+   int *rnd_systems = malloc(sizeof(int)*num);
+   for (i=0; i<num; i++ ) {
+      rnd_sys = rand() % fac_sys-i;
+      rnd_systems[i] = systems[ rnd_sys ];
+      systems[rnd_sys] = systems[fac_sys-i-1];
+   }
+   free(systems);
+
+   StarSystem **result = malloc(sizeof(StarSystem **)*(num));
+   for (i=0; i<num; i++){
+      result[i] = &systems_stack[ rnd_systems[i] ];
+   }
+   free(rnd_systems);
+
+
+   return result;
+}
+
+
+/**
  * @brief Gets the name of all the planets that belong to factions.
  *
  *    @param[out] nplanets Number of planets found.
@@ -649,7 +696,7 @@ double system_getClosestAng( const StarSystem *sys, int *pnt, int *jp, double x,
 
 
 /**
- * @brief Sees if a system is reachable.
+ * @brief Sees if a system is reachable and is known
  *
  *    @return 1 if target system is reachable, 0 if it isn't.
  */
