@@ -33,6 +33,9 @@ else --default english
                                  }
    header_table["Za'lek"] =      {"Scientific, Socioeconomic, and Sundry Events"
                                  }
+   header_table["Soromid"] =     {"Welcome to Universal News Feed. All the headlines all the time."
+                                 }
+   
 
    greet_table={}
 
@@ -63,6 +66,8 @@ else --default english
    greet_table["Proteron"] =     {""
                                  }
    greet_table["Za'lek"] =       {""
+                                 }
+   greet_table["Soromid"] =      {""
                                  }
 
    articles={}
