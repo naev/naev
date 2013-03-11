@@ -39,10 +39,12 @@ static int economyL_setCredits( lua_State *L );
 static int economyL_getPrice( lua_State *L );
 static int economyL_getStockpile( lua_State *L );
 static int economyL_setStockpile( lua_State *L );
+static int economyL_getIsActive( lua_State *L );
 
 static const luaL_reg economy_methods[] = {
    { "update", economyL_update },
-   { "getAmountProducing", economyL_getProducing },
+   { "getProducing", economyL_getProducing },
+   { "isActive", economyL_getIsActive },
    { "getProdMod", economyL_getProdMod },
    { "setProdMod", economyL_setProdMod },
    { "getCredits", economyL_getCredits },
@@ -364,5 +366,26 @@ static int economyL_getPrice( lua_State *L )
       return 0;
    }
    
+   return 1;
+}
+
+
+/**
+ * @brief check if a planet participates in the economy
+ *
+ *    @luaparam planet or planet name
+ *  
+ * @luareturn bool
+ */
+static int economyL_getIsActive( lua_State *L )
+{
+   Planet *pl;
+   if ((pl=luaL_getplanet(L,1)) != NULL ){
+      if (planet_isFlag(pl, PL_ECONOMICALLY_ACTIVE))
+         lua_pushboolean(L,1);
+      else
+         lua_pushboolean(L, 0);
+   }
+   else WARN("is not a valid a planet");
    return 1;
 }
