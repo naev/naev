@@ -314,7 +314,7 @@ static int commodity_canBuy( char *name )
    char buf[ECON_CRED_STRLEN];
 
    failure = 0;
-   q = commodity_getMod();
+   q = (commodity_getMod() > pilot_cargoFree(player.p)) ? commodity_getMod() : pilot_cargoFree(player.p);
    com = commodity_get( name );
    price = price_of_buying(com, q, land_planet->credits, land_planet->stockpiles[com->index]);
    system_stockpile = land_planet->stockpiles[com->index];
@@ -324,8 +324,8 @@ static int commodity_canBuy( char *name )
       land_errDialogueBuild("You need %s more credits.", buf );
       failure = 1;
    }
-   if (pilot_cargoFree(player.p) < (signed int) q) {
-      land_errDialogueBuild("You don't have that much space!");
+   if (pilot_cargoFree(player.p) == 0) {
+      land_errDialogueBuild("You don't have any space!");
       failure = 1;
    }
    if (system_stockpile <= q) {
@@ -339,15 +339,13 @@ static int commodity_canBuy( char *name )
 static int commodity_canSell( char *name )
 {
    int failure;
-   unsigned int q;
    Commodity *com;
 
    failure = 0;
-   q = commodity_getMod();
    com = commodity_get( name );
 
-   if (pilot_cargoOwned( player.p, name ) < (signed int) q) {
-      land_errDialogueBuild("You don't have that much %s", com->name );
+   if (pilot_cargoOwned( player.p, name ) <= 0) {
+      land_errDialogueBuild("You don't have that any %s", com->name );
       failure = 1;
    }
 
@@ -376,7 +374,7 @@ static void commodity_buy( unsigned int wid, char* str )
       return;
 
    /* Get selected. */
-   q     = commodity_getMod();
+   q = (commodity_getMod() < pilot_cargoFree(player.p)) ? commodity_getMod() : pilot_cargoFree(player.p);
    com   = commodity_get( comname );
    price = price_of_buying(com, q, land_planet->credits, land_planet->stockpiles[com->index]);
 
@@ -421,7 +419,7 @@ static void commodity_sell( unsigned int wid, char* str )
       return;
 
    /* Get parameters. */
-   q     = commodity_getMod();
+   q = (commodity_getMod() < pilot_cargoOwned( player.p, comname )) ? commodity_getMod() : pilot_cargoOwned( player.p, comname );
    com   = commodity_get( comname );
    price = price_of_buying(com, -q, land_planet->credits, land_planet->stockpiles[com->index]);
 
@@ -474,21 +472,24 @@ static void commodity_renderMod( double bx, double by, double w, double h, void 
 {
    (void) data;
    (void) h;
-   int q;
+   int bq, sq; /* buy q, sell q */
    char buf[64];
    credits_t price_tobuy;
    credits_t price_tosell;
+   char *comm_name = toolkit_getList( land_getWid(LAND_WINDOW_COMMODITY), "lstGoods" );
 
-   q = commodity_getMod();
-   if (q != commodity_mod) {
+
+   bq = (commodity_getMod() < pilot_cargoFree(player.p)) ? commodity_getMod() : pilot_cargoFree(player.p);
+   sq =  (commodity_getMod() < pilot_cargoOwned( player.p, comm_name )) ? commodity_getMod() : pilot_cargoOwned( player.p, comm_name );
+   if (bq != commodity_mod) {
       commodity_update( land_getWid(LAND_WINDOW_COMMODITY), NULL );
-      commodity_mod = q;
+      commodity_mod = bq;
    }
 
-   price_tobuy = price_of_buying(active_comm, q, land_planet->credits, land_planet->stockpiles[active_comm->index]);
-   price_tosell = price_of_buying(active_comm, -q, land_planet->credits, land_planet->stockpiles[active_comm->index]);
+   price_tobuy = price_of_buying(active_comm, bq, land_planet->credits, land_planet->stockpiles[active_comm->index]);
+   price_tosell = price_of_buying(active_comm, -sq, land_planet->credits, land_planet->stockpiles[active_comm->index]);
 
-   nsnprintf( buf, 64, "%dx",q);
+   nsnprintf( buf, 64, "%dx, %d",bq,sq);
    gl_printMid( &gl_smallFont, w, bx, by+35, &cBlack, buf );
    nsnprintf( buf, 64, "buying:%li", price_tobuy );
    gl_printMid( &gl_smallFont, w, bx, by+20, &cBlack, buf );
