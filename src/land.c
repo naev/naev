@@ -345,7 +345,7 @@ static int commodity_canSell( char *name )
    com = commodity_get( name );
 
    if (pilot_cargoOwned( player.p, name ) <= 0) {
-      land_errDialogueBuild("You don't have that any %s", com->name );
+      land_errDialogueBuild("You don't have any %s", com->name );
       failure = 1;
    }
 
