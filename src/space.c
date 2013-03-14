@@ -2863,9 +2863,6 @@ int space_load (void)
       sys->ownerpresence = system_getPresence( sys, sys->faction );
    }
 
-   /* Start the news */
-   news_init();
-
    return 0;
 }
 

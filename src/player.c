@@ -245,6 +245,8 @@ static void player_newSetup( int tutorial )
    /* start the economy */
    economy_destroy();
    economy_init();
+   /* Start the news */
+   news_init();
 
    cam_setTargetPos( x, y, 0 );
    cam_setZoom( conf.zoom_far );
