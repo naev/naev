@@ -27,14 +27,14 @@
   <weapon size="large" x="0" y="6" h="2"/>
   <weapon size="large" x="-25" y="-8" h="3"/>
   <weapon size="large" x="-25" y="8" h="3"/>
-  <utility size="large" prop="systems">Basic Large Systems</utility>
+  <utility size="large" prop="systems" exclusive="1" required="1">Basic Large Systems</utility>
   <utility size="large"/>
   <utility size="large"/>
   <utility size="large"/>
   <utility size="large"/>
   <utility size="large"/>
-  <structure size="large" prop="engines">Manufacturer Large Engine</structure>
-  <structure size="large" prop="hull">Unmodified Large Hull</structure>
+  <structure size="large" prop="engines" exclusive="1" required="1">Manufacturer Large Engine</structure>
+  <structure size="large" prop="hull" exclusive="1" required="1">Unmodified Large Hull</structure>
   <structure size="large"/>
   <structure size="large"/>
   <structure size="large"/>

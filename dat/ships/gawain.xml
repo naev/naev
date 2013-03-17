@@ -21,12 +21,12 @@
  <slots>
   <weapon size="small" x="12" y="0" h="-2"/>
   <weapon size="small" x="-5" y="0" h="1"/>
-  <utility size="small" prop="systems">Basic Small Systems</utility>
+  <utility size="small" prop="systems" exclusive="1" required="1">Basic Small Systems</utility>
   <utility size="small"/>
   <utility size="small"/>
   <utility size="small"/>
-  <structure size="small" prop="engines">Manufacturer Small Engine</structure>
-  <structure size="small" prop="hull">Unmodified Small Hull</structure>
+  <structure size="small" prop="engines" exclusive="1" required="1">Manufacturer Small Engine</structure>
+  <structure size="small" prop="hull" exclusive="1" required="1">Unmodified Small Hull</structure>
   <structure size="small"/>
   <structure size="small"/>
  </slots>
