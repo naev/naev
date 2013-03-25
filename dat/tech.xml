@@ -268,6 +268,14 @@
   <item>Quicksilver</item>
   <item>Proteron Derivative</item>
   <item>Sirius Fidelity</item>
+<<<<<<< HEAD
+=======
+  <item>Sirius Shaman</item>
+  <item>Sirius Preacher</item>
+  <item>Sirius Divinity</item>
+  <item>Sirius Dogma</item>
+  <item>Thurion Ingenuity</item>
+>>>>>>> dca7382583afd25421869491ae62765d28ee8f53
   <item>Soromid Brigand</item>
   <item>Shark</item>
   <item>Pirate Shark</item>
@@ -671,7 +679,9 @@
   <item>Soromid Ira</item>
   <item>Soromid Arx</item>
  </tech>
-
+ <tech name="Thurion Military Ships">
+  <item>Thurion Ingenuity</item>
+ </tech>
  <tech name="__Heavy Weapon License">
   <item>Heavy Weapon License</item>
  </tech>
