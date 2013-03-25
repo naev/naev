@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Ruadan Gamma">
+ <pos>
+  <x>12375.946864</x>
+  <y>-5720.113544</y>
+ </pos>
+ <GFX>
+  <space>O01.png</space>
+  <exterior>oceanic.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

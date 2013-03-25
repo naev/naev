@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Za'lek Sting">
+ <base_type>Sting</base_type>
+ <GFX>sting</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Fighter</class>
+ <price>520000</price>
+ <fabricator>Za'lek Fabricators</fabricator>
+ <license>Light Combat Vessel License</license>
+ <description>The Sting Scout/Heavy Fighter is the oldest design still in use by the HZDF. Which in Za'lek terms, translates to twelve years. It still uses propulsion rockets, which lacks the issues with turning that the new ring drives have, at the expense of giving no energy bonuses.</description>
+ <health>
+  <absorb>5</absorb>
+  <armour>30</armour>
+  <armour_regen>0</armour_regen>
+ </health>
+ <characteristics>
+  <crew>2</crew>
+  <mass>65</mass>
+  <cargo>5</cargo>
+ </characteristics>
+ <slots>
+  <weapon size="medium" x="12" y="0" h="0"/>
+  <weapon size="small" x="12" y="0" h="0"/>
+  <weapon size="small" x="-3" y="0" h="2"/>
+  <weapon size="small" x="-3" y="0" h="2"/>
+  <utility size="small" prop="systems">Basic Small Systems</utility>
+  <utility size="small"/>
+  <utility size="small"/>
+  <utility size="small"/>
+  <structure size="small" prop="engines">Manufacturer Small Engine</structure>
+  <structure size="small" prop="hull">Unmodified Small Hull</structure>
+  <structure size="small"/>
+  <structure size="small"/>
+ </slots>
+ <stats>
+  <armour_mod>-10</armour_mod>
+  <shield_mod>10</shield_mod>
+  <cargo_mod>-25</cargo_mod>
+  <ew_detect>10</ew_detect>
+ </stats>
+</ship>

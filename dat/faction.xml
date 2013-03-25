@@ -186,10 +186,12 @@
  <faction name="Za'lek">
   <known/>
   <logo>zalek</logo>
+  <colour>purple</colour>
   <longname>House Za'lek</longname>
   <player>2</player>
   <spawn>zalek</spawn>
   <standing>zalek</standing>
+  <equip>zalek</equip>
   <allies>
   </allies>
   <enemies>

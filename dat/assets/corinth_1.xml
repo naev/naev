@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Corinth 1">
+ <pos>
+  <x>-13745.682176</x>
+  <y>10005.786912</y>
+ </pos>
+ <GFX>
+  <space>A00.png</space>
+  <exterior>forest.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Sidhe">
+ <pos>
+  <x>-2129.957329</x>
+  <y>860.651363</y>
+ </pos>
+ <GFX>
+  <space>G02.png</space>
+  <exterior>station00.png</exterior>
+ </GFX>
+ <general>
+  <class>G</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

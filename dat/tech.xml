@@ -118,6 +118,7 @@
   <item>Map: Dvaered Core</item>
   <item>Map: Empire Core</item>
   <item>Map: Pirate strongholds</item>
+  <item>Ultra Map</item>
   <item>Local System Map</item>
   <item>Unicorp Scrambler</item>
   <item>Milspec Scrambler</item>
@@ -325,6 +326,11 @@
   <item>Soromid Arx</item>
   <item>Proteron Watson</item>
   <item>Empire Peacemaker</item>
+  <item>Za'lek Sting</item>
+  <item>Za'lek Imp</item>
+  <item>Za'lek Demon</item>
+  <item>Za'lek Mephisto</item>
+  <item>Za'lek Diablo</item>
  </tech>
  <tech name="All Commodities">
   <item>Food</item>
@@ -589,6 +595,7 @@
   <item>Spearhead Missile</item>
   <item>TeraCom Medusa Launcher</item>
   <item>Medusa Missile</item>
+  <item>Enygma Systems Turreted Fury Launcher</item>
  </tech>
  <tech name="Star Maps">
   <item>Map: Nebula Edge</item>
@@ -662,6 +669,7 @@
   <item>Pirate Vendetta</item>
  </tech>
  <tech name="Proteron Military Ships">
+  <item>Proteron Watson</item>
   <item>Proteron Archimedes</item>
   <item>Proteron Derivative</item>
   <item>Proteron Kahan</item>
@@ -683,9 +691,20 @@
   <item>Soromid Ira</item>
   <item>Soromid Arx</item>
  </tech>
+<<<<<<< HEAD
  <tech name="Thurion Military Ships">
   <item>Thurion Ingenuity</item>
  </tech>
+=======
+ <tech name="Za'lek Military Ships">
+  <item>Za'lek Sting</item>
+  <item>Za'lek Imp</item>
+  <item>Za'lek Demon</item>
+  <item>Za'lek Mephisto</item>
+  <item>Za'lek Diablo</item>
+ </tech>
+
+>>>>>>> 5f51e3dcbca9d12e6bbf63e585b5eaa62b5e916e
  <tech name="__Heavy Weapon License">
   <item>Heavy Weapon License</item>
  </tech>

@@ -11,7 +11,7 @@
  <presence>
   <faction>Independent</faction>
   <value>100.000000</value>
-  <range>0</range>
+  <range>3</range>
  </presence>
  <general>
   <class>J</class>

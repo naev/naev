@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Ruadan Secundus">
+ <pos>
+  <x>-8601.947580</x>
+  <y>-6032.603632</y>
+ </pos>
+ <GFX>
+  <space>moon-K00.png</space>
+  <exterior>aquatic2.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.500000</hide>
+  <services/>
+ </general>
+</asset>
