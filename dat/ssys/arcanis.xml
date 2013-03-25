@@ -7,8 +7,8 @@
   <nebula volatility="0.000000">200.000000</nebula>
  </general>
  <pos>
-  <x>333.000000</x>
-  <y>-57.000000</y>
+  <x>325.000000</x>
+  <y>-84.000000</y>
  </pos>
  <assets/>
  <jumps>
@@ -16,6 +16,7 @@
    <autopos/>
    <hide>1.250000</hide>
   </jump>
+  <jump target="Sonas">
   <jump target="Sigur">
    <autopos/>
    <exitonly/>
