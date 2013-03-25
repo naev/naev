@@ -28,6 +28,7 @@
  <commodity name="Datapad"/>
  <commodity name="Satellite"/>
  <commodity name="Prisoners"/>
+ <commodity name="Refugees"/>
  <commodity name="Packages"/>
  <commodity name="VIP"/>
  <commodity name="The Baron's holopainting"/>
@@ -47,9 +48,14 @@
  <commodity name="The Rescued Children"/>
  <commodity name="Waste Containers"/>
  <commodity name="Person"/>
+<<<<<<< HEAD
  <commodity name="Unmarked Boxes"/>
  <commodity name="Weapons"/>
  <commodity name="Drugs"/>
  <commodity name="Exotic Animals"/>
  <commodity name="Radioactive Materials"/>
+=======
+ <commodity name="Small Arms"/>
+ <commodity name="Message"/>
+>>>>>>> db2b50ba8910e01e044780e3dd2d1fb7c6bb341c
 </Commodities>

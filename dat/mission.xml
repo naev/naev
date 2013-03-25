@@ -770,5 +770,65 @@
    <location>Bar</location>
   </avail>
  </mission>
+ <mission name="The Gauntlet">
+  <lua>sirius/heretic/heretic0</lua>
+  <flags>
+  <unique />
+  </flags>
+  <avail>
+   <cond>var.peek("heretic_misn_tracker") == nil</cond>
+   <chance>50</chance>
+   <location>Bar</location>
+   <faction>Sirius</faction>
+  </avail>
+ </mission>
+ <mission name="The Return">
+  <lua>sirius/heretic/heretic1</lua>
+  <flags>
+  <unique />
+  </flags>
+  <avail>
+   <cond>var.peek("heretic_misn_tracker") == 1</cond>
+   <chance>100</chance>
+   <location>Bar</location>
+   <planet>Margot</planet>
+  </avail>
+ </mission>
+ <mission name="The Patrol">
+  <lua>sirius/heretic/heretic2</lua>
+  <flags>
+  <unique />
+  </flags>
+  <avail>
+   <cond>var.peek("heretic_misn_tracker") == 2</cond>
+   <chance>100</chance>
+   <location>Bar</location>
+   <planet>The Wringer</planet>
+  </avail>
+ </mission>
+ <mission name="The Assault">
+  <lua>sirius/heretic/heretic3</lua>
+  <flags>
+  <unique />
+  </flags>
+  <avail>
+   <done>The Patrol</done>
+   <chance>100</chance>
+   <location>Bar</location>
+   <planet>The Wringer</planet>
+  </avail>
+ </mission>
+ <mission name="The Egress">
+  <lua>sirius/heretic/heretic4</lua>
+  <flags>
+  <unique />
+  </flags>
+  <avail>
+   <cond>var.peek("heretic_misn_tracker") == 4</cond>
+   <chance>100</chance>
+   <location>Bar</location>
+   <planet>The Wringer</planet>
+  </avail>
+ </mission>
 
 </Missions>
