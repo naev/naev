@@ -52,8 +52,8 @@ end
 --]]
 function equip_cores( p, engine, system, hull )
    p:rmOutfit("cores")
-   if p:addOutfit(hull,   1, false) == 0 then warn("Could not equip " .. hull .. " on pilot " .. p:name() .. "!") end
    if p:addOutfit(system, 1, false) == 0 then warn("Could not equip " .. system .. " on pilot " .. p:name() .. "!") end
+   if p:addOutfit(hull,   1, false) == 0 then warn("Could not equip " .. hull .. " on pilot " .. p:name() .. "!") end
    if p:addOutfit(engine, 1, false) == 0 then warn("Could not equip " .. engine .. " on pilot " .. p:name() .. "!") end
 end
 

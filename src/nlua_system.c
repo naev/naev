@@ -26,6 +26,7 @@
 #include "land.h"
 #include "map.h"
 #include "map_overlay.h"
+#include "space.h"
 
 extern StarSystem *systems_stack;
 extern int systems_nstack;
@@ -481,10 +482,12 @@ static int systemL_adjacent( lua_State *L )
    /* Push all adjacent systems. */
    lua_newtable(L);
    for (i=0; i<s->njumps; i++) {
-      sysp.id = system_index( s->jumps[i].target );
-      lua_pushnumber(L,i+1); /* key. */
-      lua_pushsystem(L,sysp); /* value. */
-      lua_rawset(L,-3);
+      if (!jp_isFlag(&s->jumps[i], JP_HIDDEN) && !jp_isFlag(&s->jumps[i], JP_EXITONLY)) {
+         sysp.id = system_index( s->jumps[i].target );
+         lua_pushnumber(L,i+1); /* key. */
+         lua_pushsystem(L,sysp); /* value. */
+         lua_rawset(L,-3);
+      }
    }
 
    return 1;
