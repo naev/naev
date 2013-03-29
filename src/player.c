@@ -243,8 +243,8 @@ static void player_newSetup( int tutorial )
       start_tutPosition( &x, &y );
 
    /* start the economy */
-   economy_destroy();
-   economy_init();
+   econ_destroy();
+   econ_init();
    /* Start the news */
    news_init();
 
@@ -301,8 +301,8 @@ void player_newTutorial (void)
    map_clear();
 
    /* Start the economy. */
-   economy_destroy();
-   economy_init();
+   econ_destroy();
+   econ_init();
 
    /* Start the news */
    news_init();

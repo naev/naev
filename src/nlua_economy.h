@@ -3,8 +3,8 @@
  */
 
 
-// #ifndef NLUA_ECONOMY_H
-// #  define NLUA_ECONOMY_H
+#ifndef NLUA_ECONOMY_H
+#define NLUA_ECONOMY_H
 
 #include <lua.h>
 

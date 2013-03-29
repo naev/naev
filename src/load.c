@@ -566,8 +566,8 @@ int load_game( const char* file, int version_diff )
    }
 
    /* Load more stuff. */
-   economy_destroy();
-   economy_init();
+   econ_destroy();
+   econ_init();
    var_load(node);
    missions_loadActive(node);
    events_loadActive(node);

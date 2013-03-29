@@ -84,20 +84,6 @@ static const char *land_windowNames[LAND_NUMWINDOWS] = {
    "Equipment",
    "Commodity"
 };
-static const char *production_desc[] = {
-   "an unnoticeable amount of\0",
-   "a smidgeon of\0",
-   "barely any\0",
-   "a noticeable amount of\0",
-   "a small amount of\0"
-   "some\0",
-   "a fair amount of\0",
-   "a decent amount of\0",
-   "a pretty good amount of\0"
-   "a large amount of\0",
-   "a huge amount of\0"
-   "a vast amount of\0"
-};
 static int land_windowsMap[LAND_NUMWINDOWS]; /**< Mapping of windows. */
 static unsigned int *land_windows = NULL; /**< Landed window ids. */
 Planet* land_planet = NULL; /**< Planet player landed at. */
@@ -279,15 +265,10 @@ static void commodity_update( unsigned int wid, char* str )
    nsnprintf( buf, PATH_MAX,
          "%d Tons\n"
          "%"CREDITS_PRI"\n   Credits/Ton"
-         "\n"
-         "%.0f\n"
-         "%.0f Tons"
          "\n\n"
          "%d Tons\n",
          pilot_cargoOwned( player.p, comname ),
          planet_commodityPrice( land_planet, com ),
-         land_planet->credits,
-         land_planet->stockpiles[com->index],
          pilot_cargoFree(player.p));
    window_modifyText( wid, "txtDInfo", buf );
    window_modifyText( wid, "txtDesc", com->description );
@@ -307,7 +288,6 @@ static void commodity_update( unsigned int wid, char* str )
 static int commodity_canBuy( char *name )
 {
    int failure;
-   double system_stockpile;
    unsigned int q;
    credits_t price;
    Commodity *com;
@@ -316,8 +296,7 @@ static int commodity_canBuy( char *name )
    failure = 0;
    q = (commodity_getMod() > pilot_cargoFree(player.p)) ? commodity_getMod() : pilot_cargoFree(player.p);
    com = commodity_get( name );
-   price = price_of_buying(com, q, land_planet->credits, land_planet->stockpiles[com->index]);
-   system_stockpile = land_planet->stockpiles[com->index];
+   price = q*planet_commodityPrice(land_planet, com);
 
    if (!player_hasCredits( price )) {
       credits2str( buf, price - player.p->credits, 2 );
@@ -326,10 +305,6 @@ static int commodity_canBuy( char *name )
    }
    if (pilot_cargoFree(player.p) == 0) {
       land_errDialogueBuild("You don't have any space!");
-      failure = 1;
-   }
-   if (system_stockpile <= q) {
-      land_errDialogueBuild("This system has no more %s", com->name );
       failure = 1;
    }
 
@@ -376,13 +351,11 @@ static void commodity_buy( unsigned int wid, char* str )
    /* Get selected. */
    q = (commodity_getMod() < pilot_cargoFree(player.p)) ? commodity_getMod() : pilot_cargoFree(player.p);
    com   = commodity_get( comname );
-   price = price_of_buying(com, q, land_planet->credits, land_planet->stockpiles[com->index]);
+   price = q*planet_commodityPrice(land_planet, com);
 
    /* Make the buy. */
    q = pilot_cargoAdd( player.p, com, q );
-   land_planet->stockpiles[com->index]-=q;
    player_modCredits( -price );
-   land_planet->credits+=price;
    land_checkAddRefuel();
    commodity_update(wid, NULL);
 
@@ -421,13 +394,11 @@ static void commodity_sell( unsigned int wid, char* str )
    /* Get parameters. */
    q = (commodity_getMod() < pilot_cargoOwned( player.p, comname )) ? commodity_getMod() : pilot_cargoOwned( player.p, comname );
    com   = commodity_get( comname );
-   price = price_of_buying(com, -q, land_planet->credits, land_planet->stockpiles[com->index]);
+   price = q*planet_commodityPrice(land_planet, com);
 
    /* Remove commodity. */
    q = pilot_cargoRm( player.p, com, q );
-   land_planet->stockpiles[com->index]+=q;
-   player_modCredits( -price );   
-   land_planet->credits+=price;
+   player_modCredits( price );
    land_checkAddRefuel();
 
    commodity_update(wid, NULL);
@@ -477,6 +448,7 @@ static void commodity_renderMod( double bx, double by, double w, double h, void 
    credits_t price_tobuy;
    credits_t price_tosell;
    char *comm_name = toolkit_getList( land_getWid(LAND_WINDOW_COMMODITY), "lstGoods" );
+   Commodity *comm = commodity_get( comm_name );
 
 
    bq = (commodity_getMod() < pilot_cargoFree(player.p)) ? commodity_getMod() : pilot_cargoFree(player.p);
@@ -486,14 +458,14 @@ static void commodity_renderMod( double bx, double by, double w, double h, void 
       commodity_mod = bq;
    }
 
-   price_tobuy = price_of_buying(active_comm, bq, land_planet->credits, land_planet->stockpiles[active_comm->index]);
-   price_tosell = price_of_buying(active_comm, -sq, land_planet->credits, land_planet->stockpiles[active_comm->index]);
+   price_tobuy = bq*planet_commodityPrice(land_planet, comm);
+   price_tosell = sq*planet_commodityPrice(land_planet, comm);
 
-   nsnprintf( buf, 64, "%dx, %d",bq,sq);
+   nsnprintf( buf, 64, "buy:%d tons, sell:%d tons",bq,sq);
    gl_printMid( &gl_smallFont, w, bx, by+35, &cBlack, buf );
-   nsnprintf( buf, 64, "buying:%li", price_tobuy );
+   nsnprintf( buf, 64, "buy price:%li", price_tobuy );
    gl_printMid( &gl_smallFont, w, bx, by+20, &cBlack, buf );
-   nsnprintf( buf, 64, "selling %li", price_tosell );
+   nsnprintf( buf, 64, "sell price:%li", price_tosell );
    gl_printMid( &gl_smallFont, w, bx, by+5, &cBlack, buf );
 }
 
@@ -1427,7 +1399,7 @@ static void land_createMainTab( unsigned int wid )
    glTexture *logo;
    int offset;
    int w,h;
-   int i;
+   // int i;
 
    /* Get window dimensions. */
    window_dimWindow( wid, &w, &h );
@@ -1447,44 +1419,12 @@ static void land_createMainTab( unsigned int wid )
 
 
    /*
-    * Production/consumption amount
-    */
-   Commodity* com;
-   int descnum;
-   int p=0;
-   double producing;
-   char *desc_text;
-   char* comm_text=malloc(64*land_planet->ncommodities);
-   if (planet_isFlag(land_planet, PL_ECONOMICALLY_ACTIVE)){
-      for (i=0;i<land_planet->ncommodities;i++){
-            com=land_planet->commodities[i];
-            producing=production(land_planet->prod_mods[com->index],land_planet->stockpiles[com->index]);
-            if (abs(producing)<1.)
-               descnum=0;
-            else{
-               descnum=(int) log(abs(producing))/log(2.);
-               descnum= (descnum>10) ? 10 : descnum;
-            }
-            p+=nsnprintf(comm_text+p, 64*land_planet->ncommodities-p, "This asset %s %s %s\n",
-               (producing > 0.) ? "produces" : "consumes",
-               production_desc[descnum], 
-               com->name
-               );
-      }
-
-      desc_text = malloc(strlen(comm_text)+strlen(land_planet->description)+3);
-      sprintf(desc_text, "%s\n\n%s", land_planet->description, comm_text);
-      free(comm_text);
-   }
-
-
-   /*
     * Pretty display.
     */
    window_addImage( wid, 20, -40, 0, 0, "imgPlanet", gfx_exterior, 1 );
    window_addText( wid, 440, -20-offset,
          w-460, h-20-offset-60-LAND_BUTTON_HEIGHT*2, 0,
-         "txtPlanetDesc", &gl_smallFont, &cBlack, desc_text);
+         "txtPlanetDesc", &gl_smallFont, &cBlack, land_planet->description);
 
    /*
     * buttons
@@ -1504,14 +1444,6 @@ static void land_createMainTab( unsigned int wid )
 
    if (!land_planet->ncommodities)
       return;
-
-
-   // window_addText( wid, 440, -80-offset,
-   //    w-460, h-20-offset-60-LAND_BUTTON_HEIGHT*2, 0,
-   //    "cons_desc", &gl_smallFont, &cBlack, text);
-
-
-   free(desc_text);
 }
 
 

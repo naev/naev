@@ -14,10 +14,7 @@
 
 #define ECON_CRED_STRLEN      32 /**< Maximum length a credits2str string can reach. */
 
-#define PRICE(Commodity, Credits, Goods)  (((Commodity)->price * Credits) / (Goods)) /**< Price of a good*/
-   /* price of a good at a planet or system */
-#define PRICE_OF(Commodity, SysOrPlanet) (PRICE((Commodity), (SysOrPlanet->credits), (SysOrPlanet->stockpiles[(Commodity)->index]))) 
-
+#define PRICE(Commodity, sys)  ((Commodity)->price * (sys)->real_prices[Commodity->id]) /**< Price of a good */
 
 typedef int64_t credits_t;
 #define CREDITS_MAX        INT64_MAX
@@ -35,7 +32,7 @@ typedef struct Commodity_ {
    char* name; /**< Name of the commodity. */
    char* description; /**< Description of the commodity. */
    /* Prices. */
-   double price; /**< Base price of the commodity. */
+   double price; /**< Price multiplier of the commodity. */
 } Commodity;
 
 /*
@@ -50,13 +47,11 @@ void commodity_free (void);
 /*
  * Economy stuff.
  */
-int economy_init (void);
-void economy_update( ntime_t dt );
-void economy_destroy (void);
-double production(double mod, double goods);
-credits_t price_of_buying(Commodity *com, int n_tons, double p_creds, double p_goods);
-
-
+int econ_refreshsolutions(void);   /* to be called when initing economy or when trade routes are updated */
+void econ_updateprices(void); /* to update prices when prices are changed */
+void econ_init(void);
+void econ_destroy (void);  /* frees ALL economy related values. Only to clean up values when exiting program. 
+      * If values are changed, use econ_refreshsolutions() and econ_updateprices() or just econ_updateprices()*/
 /*
  * Misc stuff.
  */
