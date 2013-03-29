@@ -8,9 +8,6 @@
 
 #include <lua.h>
 
-#ifndef NLUA_ECONOMY_H
-#	define NLUA_ECONOMY_H
-
 
 #define ECONOMY_METATABLE   "economy" /**< Commodity metatable identifier. */
 
