@@ -39,7 +39,7 @@
 #define XML_COMMODITY_ID      "Commodities" /**< XML document identifier */
 #define XML_COMMODITY_TAG     "commodity" /**< XML commodity identifier. */
 
-#define DEFAULT_GLOBAL_WEIGHT 0.5 /* how much systems prefer their own given values */
+#define DEFAULT_GLOBAL_WEIGHT 1.0 /* how much systems prefer their own given values */
 
 /* commodity stack */
 Commodity* commodity_stack = NULL; /**< Contains all the commodities. */
