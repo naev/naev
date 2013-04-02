@@ -53,6 +53,8 @@ void econ_updateprices(void); /* to update prices when prices are changed */
 void econ_init(void);
 void econ_destroy (void);  /* frees ALL economy related values. Only to clean up values when exiting program. 
       * If values are changed, use econ_refreshsolutions() and econ_updateprices() or just econ_updateprices()*/
+void econ_revert(void); /* revert values back to original xml values */
+
 /*
  * Misc stuff.
  */

@@ -106,7 +106,7 @@ static int space_fchg = 0; /**< Faction change counter, to avoid unnecessary cal
 static int space_simulating = 0; /** Are we simulating space? */
 extern int econ_nprices;
 extern Commodity *commodity_stack;
-extern double **xml_prodmods;  /**< the asset production modifiers definied in the xml, size planet_nstack */
+extern float **xml_econvals;
 
 
 /*
@@ -1552,7 +1552,6 @@ static int planets_load ( void )
 
    /* Load XML stuff. */
    planet_files = ndata_list( PLANET_DATA_PATH, &nfiles );
-   xml_prodmods = calloc( nfiles, sizeof(double)*econ_nprices );
    for (i=0; i<(int)nfiles; i++) {
       len  = (strlen(PLANET_DATA_PATH)+strlen(planet_files[i])+2);
       file = malloc( len );
@@ -1590,7 +1589,6 @@ static int planets_load ( void )
    for (i=0; i<(int)nfiles; i++)
       free( planet_files[i] );
    free( planet_files );
-   xml_prodmods = realloc(xml_prodmods, sizeof(double)*planet_nstack);
 
    return 0;
 }
@@ -2488,8 +2486,6 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
    MELEMENT((flags&FLAG_INTERFERENCESET)==0,"inteference");
 #undef MELEMENT
 
-   // free(comm_name);
-
    return 0;
 }
 
@@ -3283,10 +3279,10 @@ int space_rmMarker( int sys, SysMarker type )
  */
 int space_sysSave( xmlTextWriterPtr writer )
 {
-   int i, j;
+   int i, j, g, changed;
    StarSystem *sys;
 
-   // printf("Saving economy!\n");
+   printf("Saving economy!\n");
 
    xmlw_startElem(writer,"space");
 
@@ -3310,22 +3306,40 @@ int space_sysSave( xmlTextWriterPtr writer )
          xmlw_elem(writer,"jump","%s",(&sys->jumps[j])->target->name);
       }
 
-      xmlw_endElem(writer); /* 'known" */
+      xmlw_endElem(writer); /* "known" */
    }
 
-      /* get values for all systems */
-   for (i=0; i<systems_nstack; i++){   // add: if all price haven't changed, continue
-      continue; //for now, rm me when adding saving/loading
+      /* get changed economic values for all systems */
+   for (i=0; i<systems_nstack; i++){
       sys = systems_stack+i;
-      xmlw_startElem(writer,"sys_econ");
-      xmlw_elem(writer,"name", "%s", sys->name);   //replace with sys->id?
-      for (j=0; j<econ_nprices; j++) {  
-         xmlw_startElem(writer,"commodity");  
-         xmlw_elem(writer,"comm_name","%s",commodity_stack[j].name);
-         // xmlw_elem(writer,"givenprice","%.1f", sys->stockpiles[j]);   //replace with "given_prices"
-         xmlw_endElem(writer); /* "commodity" */
+
+         /* if prices haven't changed at all, continue */
+      if (xml_econvals[i]==NULL && sys->given_prices==NULL)
+         continue;
+      if (xml_econvals[i]!=NULL){
+         changed=0;
+         for (g=0; g<econ_nprices; g++){
+            if (xml_econvals[i][1+g]!=sys->given_prices[g]){
+               changed=1;
+               break;}
+         }
+         if (!changed) continue;
       }
-      xmlw_endElem(writer); /* "sys_economy" */
+
+      xmlw_startElem(writer,"sys_econ");
+      xmlw_elem(writer,"name", "%s", sys->name);
+      if (xml_econvals[i]==NULL || xml_econvals[i][0]!=sys->weight)
+         xmlw_elem(writer, "weight", "%f", sys->weight);
+
+      for (g=0; g<econ_nprices; g++) {  
+         if (xml_econvals[i]==NULL || xml_econvals[i][1+g]!=sys->given_prices[g] || sys->given_prices[g]==0.0){
+            xmlw_startElem(writer,"commodity");
+            xmlw_elem(writer,"comm_name","%s",commodity_stack[g].name);
+            xmlw_elem(writer,"given_price","%f", sys->given_prices[g]);
+            xmlw_endElem(writer); /* "commodity" */
+         }
+      }
+      xmlw_endElem(writer); /* "sys_econ" */
       
    }
 
@@ -3349,7 +3363,7 @@ int space_sysLoad( xmlNodePtr parent )
 
    space_clearKnown();
 
-   // printf("\nLoading economy\n");
+   printf("\nLoading economy\n");
 
    node = parent->xmlChildrenNode;
    do {
@@ -3378,6 +3392,9 @@ int space_sysLoad( xmlNodePtr parent )
          } while (xml_nextNode(cur));
       }
    } while (xml_nextNode(node));
+
+   econ_refreshsolutions();
+   econ_updateprices();
 
    return 0;
 }
@@ -3426,35 +3443,35 @@ static int space_parseSysSave( xmlNodePtr Econ )
    StarSystem *sys = NULL;
    char *comm_name=NULL;
    char *sname=NULL;
+   float val;
 
    node = Econ->xmlChildrenNode;
 
    do {
 
       xmlr_str(node, "name", sname);
-
       if (sname==NULL)
          continue;
-      
       sys = system_get(sname);
-
       if (sys==NULL)
-         WARN("Could not get system named %s",sys); //rm me maybe?
+         WARN("Could not get system named %s",sys);
+
+      xmlr_float(node, "weight", sys->weight);
 
       if (xml_isNode(node, "commodity")){
-
-         continue;   //tmp, rm me when implementing saving
 
          snode = node->xmlChildrenNode;
          do {
             xmlr_str(snode, "comm_name", comm_name);
-            // xmlr_float(snode, "stockpile", stockpile);   //replace with given_gval
+            xmlr_float(snode, "given_price", val);
          } while (xml_nextNode(snode));
 
          comm = commodity_get(comm_name);
          if (comm==NULL)
             continue;
-         // sys->stockpiles[comm->index] = stockpile;
+         if (sys->given_prices==NULL) 
+            sys->given_prices = (float *) calloc(sizeof(float), econ_nprices);
+         sys->given_prices[comm->index] = val;
 
          comm_name = NULL;
       }

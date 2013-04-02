@@ -54,7 +54,7 @@ extern Planet *planet_stack; /**< Planet stack. */
 extern int planet_nstack; /**< Num of planets */
 extern int commodity_mod;  /**< Smallest unit the player can buy, for player prices */
 
-double **xml_prodmods; /**< the asset production modifiers definied in the xml, size planet_nstack */
+float **xml_econvals; /* an array of array of all systems's original weights and good values */
 
 static int econ_initialized   = 0; /**< Is economy system initialized? */
 static int *econ_comm         = NULL; /**< Commodities to calculate. */
@@ -492,13 +492,38 @@ void econ_updateprices(void)
 
 }
 
+/**
+ * @brief revert all economic values to their original, XML designated values
+ */
+void econ_revert(void)
+{
+   int i, g;
+   StarSystem *sys;\
+
+   printf("reverting to old values!\n");
+      /* revert to the old values */
+   for (i=0;i<systems_nstack; i++){
+      sys = systems_stack+i;
+      if (xml_econvals[i]==NULL){
+         sys->weight = 0;
+         free(sys->given_prices);
+         sys->given_prices = NULL;
+         continue;
+      }
+      sys->weight = xml_econvals[i][0];
+      for (g=0; g<econ_nprices; g++)
+         sys->given_prices[g] = xml_econvals[i][1 + g];
+   }
+   // updateSolutions();
+   // updatePrices();
+}
 
 /**
  * @brief initializes all economic variables. Called immediately after starting galaxy
  */
 void econ_init(void)
 {
-   int s, jmp;
+   int s, g, jmp;
    StarSystem *sys;
 
    printf("init ing econ\n");
@@ -512,6 +537,19 @@ void econ_init(void)
          sys->jumps[jmp].trade_weight=1.0;
    }
    solutions = malloc(sizeof(float)*systems_nstack*systems_nstack);
+
+      /* save original values */
+   int w = 1 + econ_nprices;  /* width of xml_econvals entry; system weight and preferred prices */
+   xml_econvals = (float **) calloc(sizeof(float *), systems_nstack);
+   for (s=0; s<systems_nstack; s++){
+      sys = systems_stack+s;
+      if (sys->given_prices==NULL)
+         continue;
+      xml_econvals[s] = (float *) malloc(sizeof(float)*w);
+      xml_econvals[s][0] = sys->weight;
+      for (g=0; g<econ_nprices; g++)
+         xml_econvals[s][1+g] = sys->given_prices[g];
+   }
 
    econ_initialized = 1;
 }
@@ -528,11 +566,13 @@ void econ_destroy(void)
    for (s=0; s<systems_nstack; s++){
       sys=systems_stack+s;
       free(sys->given_prices); 
-      free(sys->real_prices); 
+      free(sys->real_prices);
+      free(xml_econvals[s]);
       sys->given_prices=NULL;
       sys->real_prices=NULL;
    }
    free(solutions);
+   free(xml_econvals);
    solutions=NULL;
    econ_initialized=0;
 }
