@@ -29,28 +29,6 @@
    <commodity>Ore</commodity>
    <commodity>Industrial Goods</commodity>
   </commodities>
-  <production_modifiers>
-   <prod_mod>
-    <commodity>Food</commodity>
-    <modifier>3.7</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Ore</commodity>
-    <modifier>18.6</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Industrial Goods</commodity>
-    <modifier>-37.3</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Medicine</commodity>
-    <modifier>-22.4</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Luxury Goods</commodity>
-    <modifier>37.3</modifier>
-   </prod_mod>
-  </production_modifiers>
   <description>Selphod is a harsh and barren ice planet. Most of the locals have never ventured outside the established bases. Outdoor travels require heavy thermal protection with a personal generator to keep the wearer from succumbing to hypothermia. Many have met a swift, excruciatingly painful end by venturing out in ill-sealed thermal suits.</description>
   <bar>Most of the drinks served at the bar are served very warm with heavy infusions of all kinds of spices. They are meant to bring warmth and energy in the cold corridors of the base.</bar>
  </general>

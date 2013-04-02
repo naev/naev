@@ -30,28 +30,6 @@
    <commodity>Ore</commodity>
    <commodity>Industrial Goods</commodity>
   </commodities>
-  <production_modifiers>
-   <prod_mod>
-    <commodity>Food</commodity>
-    <modifier>24.2</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Ore</commodity>
-    <modifier>-3.7</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Industrial Goods</commodity>
-    <modifier>-107.8</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Medicine</commodity>
-    <modifier>27.2</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Luxury Goods</commodity>
-    <modifier>60.2</modifier>
-   </prod_mod>
-  </production_modifiers>
   <description>Ammu is a generally calm planet, once one is accustomed to the constant rumbling of the lava flows. Lava eruptions are often felt in the subterranean spaceport, but the way it doesn't seem to faze the locals reassures you.</description>
   <bar>The Ammu Spaceport Bar, known as "The Heatsink" due to its frigid temperatures, in contrast to the rest of the station. While primarily known for their temperature, that's not to say they can't whip up a mean Pan-Galactic Gargle Blaster.</bar>
  </general>

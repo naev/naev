@@ -27,28 +27,6 @@
    <commodity>Ore</commodity>
    <commodity>Food</commodity>
   </commodities>
-  <production_modifiers>
-   <prod_mod>
-    <commodity>Food</commodity>
-    <modifier>-41.5</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Ore</commodity>
-    <modifier>111.7</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Industrial Goods</commodity>
-    <modifier>33.2</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Medicine</commodity>
-    <modifier>-90.6</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Luxury Goods</commodity>
-    <modifier>-12.8</modifier>
-   </prod_mod>
-  </production_modifiers>
   <description>Not exactly unhabitable and not exactly habitable, Hassak is one of those places where the less fortunate in society end up. The people here have it hard, with storms of almost every variety plagueing the landscape on a regular basis. The population feeds itself with the sale of raw minerals to the Nexus corporation, which buys well under the market price, because it can.</description>
   <bar>The bar on Hassak is a lousy affair. The planet is poor, and so can't afford any luxury, least of all for offworlders. The Empire has provided the world with basic facilities and equipment because it is bound to do so by intergalactic treaties, but most of it is old and run-down.</bar>
  </general>

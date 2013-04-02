@@ -206,9 +206,6 @@ static void commodity_exchange_open( unsigned int wid )
          "You have:\n"
          "Market Price:\n"
          "\n"
-         "Market Credits:\n"
-         "Market Stock: \n"
-         "\n"
          "Free Space:\n" );
    window_addText( wid, -20, -40, LAND_BUTTON_WIDTH/2+10, 100, 0,
          "txtDInfo", &gl_smallFont, &cBlack, NULL );
@@ -265,7 +262,7 @@ static void commodity_update( unsigned int wid, char* str )
    nsnprintf( buf, PATH_MAX,
          "%d Tons\n"
          "%"CREDITS_PRI"\n   Credits/Ton"
-         "\n\n"
+         "\n"
          "%d Tons\n",
          pilot_cargoOwned( player.p, comname ),
          planet_commodityPrice( land_planet, com ),

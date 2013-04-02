@@ -29,28 +29,6 @@
    <commodity>Food</commodity>
    <commodity>Industrial Goods</commodity>
   </commodities>
-  <production_modifiers>
-   <prod_mod>
-    <commodity>Food</commodity>
-    <modifier>119.4</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Ore</commodity>
-    <modifier>-94.6</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Industrial Goods</commodity>
-    <modifier>6.5</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Medicine</commodity>
-    <modifier>23.1</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Luxury Goods</commodity>
-    <modifier>-54.4</modifier>
-   </prod_mod>
-  </production_modifiers>
   <description>Godtra is a reasonably balanced world, with a sizeable civilian population, a fair amount of heavy industry and some farming for internal consumption, though the population largely depends on Torg Crops for sustenance. As Godtra is one of the wealthiest Dvaered systems within a few jumps, it is a popular target for Warlords to conquer.</description>
   <bar>A pretty decent place as far as spaceport bars go, Godtra's bar is well equipped to facilitate traders and other offworlders. The data uplinks are decently speedy, which is rare on a Dvaered world. Clearly, the local infrastructure has been well designed.</bar>
  </general>

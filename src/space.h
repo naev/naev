@@ -212,7 +212,7 @@ typedef struct JumpPoint_ {
    int sx; /**< X sprite to use. */
    int sy; /**< Y sprite to use. */
 
-   float trade_resistance; /**< Resistance of this jump. */
+   float trade_weight; /**< how large the price difference is */
 
 } JumpPoint;
 extern glTexture *jumppoint_gfx; /**< Jump point graphics. */
@@ -252,8 +252,9 @@ struct StarSystem_ {
    double avg_pilot; /**< Target amount of pilots in the system. */
 
    /* economic values */
+   float weight;
    float *given_prices;
-   float *real_prices;
+   float *real_prices;  /* does not account for base commodity price */
 
    /* Presence. */
    SystemPresence *presence; /**< Pointer to an array of presences in this system. */

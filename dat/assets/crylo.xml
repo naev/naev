@@ -30,28 +30,6 @@
    <commodity>Ore</commodity>
    <commodity>Industrial Goods</commodity>
   </commodities>
-  <production_modifiers>
-   <prod_mod>
-    <commodity>Food</commodity>
-    <modifier>52.9</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Ore</commodity>
-    <modifier>10.0</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Industrial Goods</commodity>
-    <modifier>-22.7</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Medicine</commodity>
-    <modifier>-32.5</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Luxury Goods</commodity>
-    <modifier>-7.6</modifier>
-   </prod_mod>
-  </production_modifiers>
   <description>Crylo is an oceanic world with very little land surface, but it sports a surprising number of inhabitants. As it happens, the aquatic life found on this world is considered a delicacy in large parts of the galaxy, which has both attracted people to settle on the planet and spawned a flourishing fishing industry.</description>
   <bar>Fishing is the name of the game on Crylo, and the spaceport bar is nothing if not in character. Almost everything in here is fish-themed, including the bar, which has been made out of the spine of some gargantuan aquatic creature.</bar>
  </general>

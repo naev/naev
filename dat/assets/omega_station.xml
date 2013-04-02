@@ -29,28 +29,6 @@
    <commodity>Food</commodity>
    <commodity>Medicine</commodity>
   </commodities>
-  <production_modifiers>
-   <prod_mod>
-    <commodity>Food</commodity>
-    <modifier>-76.0</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Ore</commodity>
-    <modifier>-109.5</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Industrial Goods</commodity>
-    <modifier>47.0</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Medicine</commodity>
-    <modifier>51.4</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Luxury Goods</commodity>
-    <modifier>87.0</modifier>
-   </prod_mod>
-  </production_modifiers>
   <description>Built to defend the Empire from the Collective, the Omega Station has observed countless battles fought in its sector. Its presence has helped stem the flow of Collective drones into Empire space.</description>
   <bar>The Omega Canteen is a dark place that seems calm, although everytime a robotic drone approaches an alarm sounds sending pilots to man their ships to fight off the menace.</bar>
  </general>

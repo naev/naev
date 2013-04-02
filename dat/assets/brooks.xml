@@ -28,28 +28,6 @@
    <commodity>Food</commodity>
    <commodity>Luxury Goods</commodity>
   </commodities>
-  <production_modifiers>
-   <prod_mod>
-    <commodity>Food</commodity>
-    <modifier>90.4</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Ore</commodity>
-    <modifier>-99.6</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Industrial Goods</commodity>
-    <modifier>-29.4</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Medicine</commodity>
-    <modifier>98.1</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Luxury Goods</commodity>
-    <modifier>-59.4</modifier>
-   </prod_mod>
-  </production_modifiers>
   <description>Brooks is a bustling, highly populated Imperial civilian planet. With the decline of the \027rEmpire\0270, it has found itself on the border with dangerous space, a rather uncomfortable position. As Brooks is a rich planet with a lot of economical and political weight within the Empire, the Imperial Navy protects Arcturus for Brooks' sake as much as for the Imperial core systems.</description>
   <bar>On Brooks, everything is expensive, something that comes with most economically booming worlds. However, most traders put up with the inflated prices for refreshments and services at the spaceport bar, because Brooks is a place where profit is made.</bar>
  </general>

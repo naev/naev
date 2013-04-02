@@ -30,28 +30,6 @@
    <commodity>Ore</commodity>
    <commodity>Industrial Goods</commodity>
   </commodities>
-  <production_modifiers>
-   <prod_mod>
-    <commodity>Food</commodity>
-    <modifier>-18.4</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Ore</commodity>
-    <modifier>35.6</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Industrial Goods</commodity>
-    <modifier>-30.4</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Medicine</commodity>
-    <modifier>-97.4</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Luxury Goods</commodity>
-    <modifier>110.6</modifier>
-   </prod_mod>
-  </production_modifiers>
   <description>Qoral is primarily a resource-producing world. The terrain is mostly barren and unfit for human habitation, so most of the population is concentrated on a few stretches of suitable land, scattered around the globe, while the rest of the land mass is littlered with strip mines.</description>
   <bar>This is a fairly typical spaceport bar. The clientele consists mostly of merchants, though some locals come here also, if not for the drinks then for the chance to talk to people who come from more interesting places than Qoral.</bar>
  </general>

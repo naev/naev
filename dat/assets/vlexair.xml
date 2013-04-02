@@ -30,28 +30,6 @@
    <commodity>Ore</commodity>
    <commodity>Industrial Goods</commodity>
   </commodities>
-  <production_modifiers>
-   <prod_mod>
-    <commodity>Food</commodity>
-    <modifier>3.1</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Ore</commodity>
-    <modifier>15.6</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Industrial Goods</commodity>
-    <modifier>-31.3</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Medicine</commodity>
-    <modifier>-18.8</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Luxury Goods</commodity>
-    <modifier>31.3</modifier>
-   </prod_mod>
-  </production_modifiers>
   <description>Vlexair is a harsh, frozen world. Formerly a lush paradise, an internal cataclysm caused its molten core to solidify, resulting in an ice age. Virtually no flora or fauna exist outside of the station. Due to its an extremely dangerous environment, it's proven suitable only to the Dvaered workers.</description>
   <bar>The Vlexair bar is small, as far as Dvaered bars go. There's not much variety of drink other than the standard Dvaered grogs.</bar>
  </general>

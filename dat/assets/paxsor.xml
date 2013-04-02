@@ -29,28 +29,6 @@
    <commodity>Ore</commodity>
    <commodity>Industrial Goods</commodity>
   </commodities>
-  <production_modifiers>
-   <prod_mod>
-    <commodity>Food</commodity>
-    <modifier>3.5</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Ore</commodity>
-    <modifier>81.7</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Industrial Goods</commodity>
-    <modifier>-32.6</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Medicine</commodity>
-    <modifier>-92.3</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Luxury Goods</commodity>
-    <modifier>39.6</modifier>
-   </prod_mod>
-  </production_modifiers>
   <description>Paxsor is a mining planet within Empire space, supplying ore to the shipyards in the system and sending surplus ore to help with the Emperor's Fist project.</description>
   <bar>The Paxsorian bar is a rather simple one, patronized mostly by traders trafficking ore. Given the limited nature of the planet's public facilities, it's impossible to know whether the Nexus employees are hard at work or drinking at a bar of their own.</bar>
  </general>

@@ -29,28 +29,6 @@
    <commodity>Ore</commodity>
    <commodity>Industrial Goods</commodity>
   </commodities>
-  <production_modifiers>
-   <prod_mod>
-    <commodity>Food</commodity>
-    <modifier>32.3</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Ore</commodity>
-    <modifier>23.9</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Industrial Goods</commodity>
-    <modifier>-14.0</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Medicine</commodity>
-    <modifier>-92.1</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Luxury Goods</commodity>
-    <modifier>49.9</modifier>
-   </prod_mod>
-  </production_modifiers>
   <description>Thar is a simple mining world owned by the Dvaered. It has a very variable atmosphere that can rapidly alternate from several kilometres wide to barely existent. The pressure changes are harmful to most lifeforms, making it an almost completely sterile planet. With the advent of terraforming techniques it was finally made habitable for humans so they could exploit some of its many resources.</description>
   <bar>"The bar has a strange old meter on one of the walls that seems to dance erratically. When you ask the bartender about it he mentions it measures the current pressure outside.</bar>
  </general>

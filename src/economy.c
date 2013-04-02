@@ -63,7 +63,6 @@ int econ_nprices              = 0; /**< Number of prices to calculate. */
 
 
 float *solutions; /* the solution matrix: formulas for system prices in terms of given prices */
-float global_weight; /* how much systems prefer their own given values */
 
 /*
  * Prototypes.
@@ -131,6 +130,7 @@ Commodity* commodity_get( const char* name )
 Commodity* commodity_getW( const char* name )
 {
    int i;
+   if (name==NULL) return NULL;
    for (i=0; i<commodity_nstack; i++)
       if (strcmp(commodity_stack[i].name,name)==0)
          return &commodity_stack[i];
@@ -354,7 +354,7 @@ int econ_refreshsolutions(void)
 
    /* make a system of equations where every system's prices (real good value) are equal to
       weighted value of own given value (price) and neighbor's real good values/prices,
-      then solve it, and put the results into solution */
+      then solve it, and put the results into the solution matrix */
 
       /* initialize the system of equations */
    float *eqsystem = calloc(sizeof(float), systems_nstack*sysw);
@@ -362,37 +362,41 @@ int econ_refreshsolutions(void)
       /* setup the system of equations */
    for (eq=0; eq<systems_nstack; eq++){
       sys = systems_stack+eq;
-      val = global_weight;
-      denom=global_weight;
-      for (jmp=0; jmp<sys->njumps; jmp++)
-         denom+=sys->jumps[jmp].trade_resistance;
-      val = -1.0/denom;
-      for (jmp=0; jmp<sys->njumps; jmp++)
-         eqsystem[eq*sysw+sys->jumps[jmp].target->id] = val * sys->jumps[jmp].trade_resistance;
-      eqsystem[eq*sysw + eq] = 1;
-      eqsystem[eq*sysw + systems_nstack + eq] = global_weight/denom;
-   }
-
-      /* manipulate the system of equations into triangle form */
-   for (i=0; i<systems_nstack; i++){
-
-         /* whether eq i can be used to factor out var i, if not, replace */
-      if (eqsystem[i*sysw + i]==0){
-         printf("eq %d cannot be used for var %d\n", i, i);
-         for (eq=i+1; eq<systems_nstack; eq++){
-            if (eqsystem[eq*sysw+i]!=0){
-               memcpy(tmp, eqsystem+i*sysw, sysw*sizeof(float));
-               memcpy(eqsystem+i*sysw, eqsystem+eq*sysw, sysw*sizeof(float) );
-               memcpy( eqsystem+eq*sysw, tmp, sysw*sizeof(float));
-               printf("eq %d works\n",eq);
+      denom=(sys->given_prices!=NULL)? sys->weight : 0.0;
+      for (jmp=0; jmp<sys->njumps; jmp++){   /* get number of trading neighbors */
+         if (jp_isFlag( sys->jumps+jmp, JP_EXITONLY) || jp_isFlag(sys->jumps+jmp, JP_HIDDEN))
+            continue;
+         for (j=0; j<sys->jumps[jmp].target->njumps; j++)
+            if (sys == sys->jumps[jmp].target->jumps[j].target){
+               if (!jp_isFlag( sys->jumps[jmp].target->jumps+j, JP_EXITONLY ) && !jp_isFlag(sys->jumps+jmp, JP_HIDDEN))
+                  denom+=sys->jumps[jmp].trade_weight;
                break;
             }
-         }
-         if (eqsystem[i*sysw + i]==0){
-            printf("could not find appropriate var, system is insoluble\n");
-            return -1;
-         }
       }
+      val = -1.0/denom;
+      for (jmp=0; jmp<sys->njumps; jmp++){   /* get number of trading neighbors */
+         if (jp_isFlag( sys->jumps+jmp, JP_EXITONLY) || jp_isFlag(sys->jumps+jmp, JP_HIDDEN))
+            continue;
+         for (j=0; j<sys->jumps[jmp].target->njumps; j++)
+            if (sys == sys->jumps[jmp].target->jumps[j].target){
+               if (!jp_isFlag( sys->jumps[jmp].target->jumps+j, JP_EXITONLY ) && !jp_isFlag(sys->jumps+jmp, JP_HIDDEN))
+                  eqsystem[eq*sysw+sys->jumps[jmp].target->id] = val * sys->jumps[jmp].trade_weight;
+               break;
+            }
+      }
+      eqsystem[eq*sysw + eq] = 1.0;
+      if (sys->given_prices!=NULL)  /* if the system has a preferred value */
+         eqsystem[eq*sysw + systems_nstack + eq] = sys->weight/denom;
+   }
+   // printf("initial system of equations:\n");
+   // for (eq=0; eq<systems_nstack; eq++){
+   //    for (v=0; v<sysw; v++)
+   //       printf("%.2f\t",eqsystem[eq*sysw+v]);
+   //    printf("\n");
+   // }
+
+      /* convert the system of equations into triangle form */
+   for (i=0; i<systems_nstack; i++){
 
       /* factor out var i from all equations below i */
       for (j=i+1; j<systems_nstack; j++){
@@ -404,24 +408,33 @@ int econ_refreshsolutions(void)
             eqsystem[j*sysw+v]+=eqsystem[i*sysw+v];
          }
             /* manipulate var v of each equation v to 1 */
-         factor = eqsystem[j*sysw + j];
-         // printf("factor is %.3f",factor);
-         for (v=i+1; v<sysw; v++)
-            eqsystem[j*sysw + v]/=factor;
+         if (eqsystem[j*sysw + j]!=0){
+            factor = eqsystem[j*sysw + j];
+            for (v=i+1; v<sysw; v++)
+               eqsystem[j*sysw + v]/=factor;
+         }
+         else eqsystem[j*sysw + j]=1.0;
       }
+
    }
 
-   // printf("\n\n---triangulated system of equations:---\n");
+
+   // printf("triangle form done\n");
+   // printf("system of equations:\n");
    // for (eq=0; eq<systems_nstack; eq++){
    //    for (v=0; v<sysw; v++){
-   //       if (v==systems_nstack) printf("= ");
+   //       if (eqsystem[eq*sysw+v]==INFINITY) printf("\ninf at eq:%d v:%d\n",eq,v);
    //       printf("%.2f\t",eqsystem[eq*sysw+v]);
+   //       if ( !(eqsystem[eq*sysw + v]<=1.0 &&  eqsystem[eq*sysw + v]>=-1.0 ) ){
+   //          printf("\nnan in %s, id %d\n",systems_stack[eq].name, eq);
+   //          break;
+   //       }
    //    }
    //    printf("\n");
    // }
-   // printf("-----------\n\n");
 
-         /* get the solutions (the real values in terms of the given values) */
+
+      /* get the solutions (the real values in terms of the given values) */
    for (i=systems_nstack-1; i>=0; i-- ){
 
       /* factor val i in eq i to 1 */
@@ -437,13 +450,14 @@ int econ_refreshsolutions(void)
       memcpy(solutions+i*systems_nstack, eqsystem+i*sysw+systems_nstack, systems_nstack*sizeof(float));
    }
 
+
    free(tmp);
    free(eqsystem);
 
    // printf("\n\n -- Solutions: -- \n");
    // for (j=0; j<systems_nstack; j++){
    //    for (i=0; i<systems_nstack; i++){
-   //       printf("%.3f, ",solutions[j*systems_nstack+i]);
+   //       printf("%.4f, ",solutions[j*systems_nstack+i]);
    //    }
    //    printf("\n");
    // }
@@ -460,18 +474,33 @@ int econ_refreshsolutions(void)
  */
 void econ_updateprices(void)
 {
-   int s, g, sgp;
+   int i, s, g;
    StarSystem *sys;
 
    printf("updating prices!\n");
 
-   for (s=0; s<systems_nstack; s++){
-      sys = systems_stack+s;
-      for (g=0; g<econ_nprices; g++){
-         sys->real_prices[g] = 0;
-         for (sgp=0; sgp<systems_nstack; sgp++) /* system given price */
-            sys->real_prices[g]+=systems_stack[sgp].given_prices[g]*solutions[s*systems_nstack+sgp];
-         // printf("prices is %f\n",sys->real_prices[g]);
+   /* for now, does nothing, as something else is changing prices */
+
+   // int j;
+   // printf("\n\n -- Solutions: -- \n");
+   // for (j=0; j<systems_nstack; j++){
+   //    for (i=0; i<systems_nstack; i++){
+   //       printf("%.3f, ",solutions[j*systems_nstack+i]);
+   //    }
+   //    printf("\n");
+   // }
+   // printf("\n----------\n");
+
+
+      /* get the real values from the given values and the solution matrix*/
+   for (i=0; i<systems_nstack; i++){
+      if (systems_stack[i].given_prices==NULL)
+         continue;
+      for (s=0; s<systems_nstack; s++){
+         sys = systems_stack+s;
+         for (g=0; g<econ_nprices; g++){
+            sys->real_prices[g]+=systems_stack[i].given_prices[g] * solutions[s*systems_nstack+i];
+         }
       }
    }
 
@@ -481,11 +510,19 @@ void econ_updateprices(void)
    //    sys = systems_stack+s;
    //    for (g=0; g<econ_nprices; g++){
    //       sum = 0.0;
-   //       for (sgp=0; sgp<systems_nstack; sgp++) /* system given price */
-   //          sum+=solutions[s*systems_nstack+sgp];
+   //       for (i=0; i<systems_nstack; i++) /* system given price */
+   //          sum+=solutions[s*systems_nstack+i];
    //       printf("sum is %f\n",sum);
    //    }
    // }
+
+      /* print all prices*/
+   // for (s=0; s<systems_nstack; s++){
+   //    sys = systems_stack+s;
+   //    for (g=0; g<econ_nprices; g++)
+   //       printf("sys %d good %d price %f\n", s, g, sys->real_prices[g]);
+   // }
+
 
 }
 
@@ -504,25 +541,25 @@ void econ_init(void)
 
    for (s=0; s<systems_nstack; s++){
       sys=systems_stack+s;
-      sys->given_prices = (float *) malloc(sizeof(float)*econ_nprices);
-      sys->real_prices = (float *) malloc(sizeof(float)*econ_nprices);
+      sys->real_prices = (float *) calloc(sizeof(float), econ_nprices);
+      // sys->given_prices = NULL;  //maybe this fixes everything?
+      sys->weight = DEFAULT_GLOBAL_WEIGHT;
       for (jmp=0; jmp<sys->njumps; jmp++)
-         sys->jumps[jmp].trade_resistance=1.0;
+         sys->jumps[jmp].trade_weight=1.0;
    }
    solutions = malloc(sizeof(float)*systems_nstack*systems_nstack);
 
-   global_weight = DEFAULT_GLOBAL_WEIGHT;
    econ_initialized = 1;
 
    //TMP! gives economy random values, these values will instead be loaded from xml and save-game
-   printf("putting in psuedo-random given values... (will be removed)\n");
-   int g;
-   for (s=0; s<systems_nstack; s++){
-      sys=systems_stack+s;
-      for (g=0; g<econ_nprices; g++){
-         sys->given_prices[g] = (double) ((g*sys->id*100003+sys->id)%500+200+sys->id);
-         if (sys->given_prices[g]<0.0) printf("system %s has %.3f for good %s\n",sys->name, sys->given_prices[g], commodity_stack[g].name);}
-   }
+   // printf("putting in psuedo-random given values... (will be removed)\n");
+   // int g;
+   // for (s=0; s<systems_nstack; s++){
+   //    sys=systems_stack+s;
+   //    for (g=0; g<econ_nprices; g++){
+   //       sys->given_prices[g] = (double) ((g*sys->id*100003+sys->id)%500+200+sys->id);
+   //       if (sys->given_prices[g]<0.0) printf("system %s has %.3f for good %s\n",sys->name, sys->given_prices[g], commodity_stack[g].name);}
+   // }
 
    //this is only here temporarily, these should be called after loading system
    econ_refreshsolutions();   /* to be called when initing economy or when trade routes are updated */
@@ -530,7 +567,7 @@ void econ_init(void)
 }
 
 /**
- * @brief frees all economy related variables the solutions made by econ_refreshsolutions()
+ * @brief frees all economy related variables. Only use when exiting naev
  */
 void econ_destroy(void)
 {

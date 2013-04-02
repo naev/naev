@@ -27,28 +27,6 @@
    <commodity>Ore</commodity>
    <commodity>Industrial Goods</commodity>
   </commodities>
-  <production_modifiers>
-   <prod_mod>
-    <commodity>Food</commodity>
-    <modifier>-17.1</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Ore</commodity>
-    <modifier>-54.3</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Industrial Goods</commodity>
-    <modifier>37.1</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Medicine</commodity>
-    <modifier>-16.7</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Luxury Goods</commodity>
-    <modifier>51.1</modifier>
-   </prod_mod>
-  </production_modifiers>
   <description>The Oort Farming Station is one of the farming complexes that supply citizens throughout Sirius space with food. Much of the station is automated, but maintaining any space facility requires many workers on site at any given time. Most of the workers on this station are commuters who live on the nearby planet of Wikon.</description>
  </general>
 </asset>

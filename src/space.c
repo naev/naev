@@ -2387,7 +2387,9 @@ void systems_reconstructPlanets (void)
 static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
 {
    char *ptrc;
-   xmlNodePtr cur, node;
+   xmlNodePtr cur, ccur, node;
+   Commodity *comm;
+   char *comm_name;
    uint32_t flags;
 
    /* Clear memory for sane defaults. */
@@ -2450,7 +2452,25 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
          } while (xml_nextNode(cur));
          continue;
       }
-         //around here is where we would look for given values
+      /* get preferred prices, and their respective weight */
+      else if (xml_isNode(node, "prices")){
+         cur = node->children;
+         sys->given_prices = malloc(sizeof(float)*econ_nprices);
+         do {
+            xmlr_int( cur, "weight", sys->weight)
+            if (xml_isNode(cur,"price")){
+               ccur = cur->children;
+               comm_name=NULL;
+               do { 
+                  xmlr_strd( ccur, "name", comm_name );
+                  comm=commodity_getW(comm_name);
+                  if (comm==NULL) continue;
+                  xmlr_float( ccur, "preferred", sys->given_prices[comm->index]);
+               } while (xml_nextNode(ccur));
+            }
+         } while (xml_nextNode(cur));
+         continue;
+      }
       /* Avoid warning. */
       if (xml_isNode(node,"jumps"))
          continue;
@@ -2466,6 +2486,8 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
    MELEMENT(sys->radius==0.,"radius");
    MELEMENT((flags&FLAG_INTERFERENCESET)==0,"inteference");
 #undef MELEMENT
+
+   // free(comm_name);
 
    return 0;
 }

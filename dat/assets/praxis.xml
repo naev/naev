@@ -31,28 +31,6 @@
    <commodity>Ore</commodity>
    <commodity>Industrial Goods</commodity>
   </commodities>
-  <production_modifiers>
-   <prod_mod>
-    <commodity>Food</commodity>
-    <modifier>50.7</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Ore</commodity>
-    <modifier>-84.0</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Industrial Goods</commodity>
-    <modifier>-7.3</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Medicine</commodity>
-    <modifier>77.9</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Luxury Goods</commodity>
-    <modifier>-37.3</modifier>
-   </prod_mod>
-  </production_modifiers>
   <description>Praxis is an anomaly in Dvaered culture, known for its commerce rather than production of materials. Beginning as a small colony, it has become increasingly important since the Incident. Praxis is now considered one of the core Dvaered worlds, the gateway through which Dvaered ore and materials flow into Empire space.</description>
   <bar>While not nearly as pristine as many Empire bars, the Praxis bar is remarkably well-kept for a Dvaered bar.</bar>
  </general>

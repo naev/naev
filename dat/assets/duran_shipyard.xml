@@ -28,28 +28,6 @@
    <commodity>Ore</commodity>
    <commodity>Industrial Goods</commodity>
   </commodities>
-  <production_modifiers>
-   <prod_mod>
-    <commodity>Food</commodity>
-    <modifier>-61.5</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Ore</commodity>
-    <modifier>-91.4</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Industrial Goods</commodity>
-    <modifier>35.4</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Medicine</commodity>
-    <modifier>42.1</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Luxury Goods</commodity>
-    <modifier>75.4</modifier>
-   </prod_mod>
-  </production_modifiers>
   <description>Duran Shipyard produces light support craft used by the Dvaered military machine. It also has a line of civilian and cargo ships which it makes available to retailers and consumers. Since the ships produced here are combat-ready and the facility always has at least one completed squadron standing by, Duran Shipyard is an important contributor to the stability in the region.</description>
   <bar>The spacedock bar provides visitors with a view over part of the assembly line. It is quite impressive to see a spacecraft being built, even if it is only a relatively small one.</bar>
  </general>

@@ -29,28 +29,6 @@
   <commodities>
    <commodity>Industrial Goods</commodity>
   </commodities>
-  <production_modifiers>
-   <prod_mod>
-    <commodity>Food</commodity>
-    <modifier>-4.6</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Ore</commodity>
-    <modifier>-24.6</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Industrial Goods</commodity>
-    <modifier>-8.6</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Medicine</commodity>
-    <modifier>6.6</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Luxury Goods</commodity>
-    <modifier>31.3</modifier>
-   </prod_mod>
-  </production_modifiers>
   <description>Silverstone is one of the Soromid's greatest producers of ships and weapons. Growing bioships is only useful if those ships can be equipped with guns, as the local governor argues.</description>
   <bar>As Silverstone is a semi-military business world, the locals take security seriously. All visitors to the spaceport bar must relinquish any weapons on their persons, and submit to a scan upon entry.</bar>
  </general>

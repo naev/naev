@@ -30,28 +30,6 @@
    <commodity>Ore</commodity>
    <commodity>Industrial Goods</commodity>
   </commodities>
-  <production_modifiers>
-   <prod_mod>
-    <commodity>Food</commodity>
-    <modifier>-77.7</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Ore</commodity>
-    <modifier>49.8</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Industrial Goods</commodity>
-    <modifier>-71.4</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Medicine</commodity>
-    <modifier>37.1</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Luxury Goods</commodity>
-    <modifier>62.1</modifier>
-   </prod_mod>
-  </production_modifiers>
   <description>Rionna is a cold world, but it was not always so. Only a hundred years ago, it was classified as a class M planet, though even then it was on the chilly side. The reason why the face of the planet is covered in ice now is that the local star is going through a dim phase. Astronomers have predicted that in another century and a half, the star will brighten up again, and Rionna will once again be green. The population has dug in, preferring to wait for better years than to move offworld and leave their homes behind.</description>
   <bar>This spaceport bar is wholly unremarkable. It could be any other bar on any other planet. The only thing that reminds you that you're still on Rionna is that the patrons are all wearing warm clothes.</bar>
  </general>

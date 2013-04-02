@@ -29,28 +29,6 @@
    <commodity>Medicine</commodity>
    <commodity>Industrial Goods</commodity>
   </commodities>
-  <production_modifiers>
-   <prod_mod>
-    <commodity>Food</commodity>
-    <modifier>89.4</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Ore</commodity>
-    <modifier>-62.0</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Industrial Goods</commodity>
-    <modifier>-62.0</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Medicine</commodity>
-    <modifier>56.6</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Luxury Goods</commodity>
-    <modifier>-22.0</modifier>
-   </prod_mod>
-  </production_modifiers>
   <description>Jaan is one of the most densely populated planets in this corner of the galaxy. The world benefits greatly from nearby Nexus operations, which makes it a popular place to live despite the environmental issues that inevitably come with a large population, and the problems with security that have arisen in recent years.</description>
   <bar>Jaan has a big spaceport, and to facilitate the many pilots and crews that pass through it has multiple spaceport bars. Each spaceport bar is exactly the same as all the others, though. Not even the people who frequently visit Jaan can tell them apart. This regularly causes problems for unsuspecting people who promised to meet at the spaceport bar.</bar>
  </general>

@@ -30,28 +30,6 @@
    <commodity>Ore</commodity>
    <commodity>Industrial Goods</commodity>
   </commodities>
-  <production_modifiers>
-   <prod_mod>
-    <commodity>Food</commodity>
-    <modifier>-66.0</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Ore</commodity>
-    <modifier>-97.0</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Industrial Goods</commodity>
-    <modifier>39.0</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Medicine</commodity>
-    <modifier>45.0</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Luxury Goods</commodity>
-    <modifier>79.0</modifier>
-   </prod_mod>
-  </production_modifiers>
   <description>Dundrop Station is a commerce oriented station. Traders usually come here to buy and sell goods and take them elsewhere, although some traders rent out cargo bays to store non-perishable goods until a planet in the neighborhood develops a high demand for those goods, so they can be the first to capitalize on the opportunity.</description>
   <bar>All tables in this bar have multiple displays for tracking economic information for the whole galaxy. The patrons are mostly engrossed in absorbing the graphs and charts displayed. There is little room for social interaction on Dundrop.</bar>
  </general>

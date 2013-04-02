@@ -31,28 +31,6 @@
    <commodity>Medicine</commodity>
    <commodity>Industrial Goods</commodity>
   </commodities>
-  <production_modifiers>
-   <prod_mod>
-    <commodity>Food</commodity>
-    <modifier>85.0</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Ore</commodity>
-    <modifier>-60.3</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Industrial Goods</commodity>
-    <modifier>-59.5</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Medicine</commodity>
-    <modifier>54.3</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Luxury Goods</commodity>
-    <modifier>-19.5</modifier>
-   </prod_mod>
-  </production_modifiers>
   <description>Madria is one of the few immigration worlds in Sirius space. Colonists from the Frontier constantly trickle into Esker, and they all end up here. The new arrivals are immediately converted and incorporated into the Shaira echelon, which is why that group is over-represented on this world. Only after several cycles of life on Madria do the immigrants get permission to move to other Sirius worlds or serve in the Sirius military.</description>
   <bar>There are two spaceport bars on Madria, one for regular visitors and one for immigrants. The one for immigrants is more or less a portal into Sirius society - a one way portal. Normal spacers stay away from it.</bar>
  </general>

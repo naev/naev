@@ -33,4 +33,27 @@
    <hide>0.000000</hide>
   </jump>
  </jumps>
+ <prices>
+  <weight>1.0</weight>
+  <price>
+   <name>Food</name>
+   <preferred>137.000000</preferred>
+  </price>
+  <price>
+   <name>Ore</name>
+   <preferred>30.000000</preferred>
+  </price>
+  <price>
+   <name>Industrial Goods</name>
+   <preferred>1200.000000</preferred>
+  </price>
+  <price>
+   <name>Medicine</name>
+   <preferred>4950.000000</preferred>
+  </price>
+  <price>
+   <name>Luxury Goods</name>
+   <preferred>4605.000000</preferred>
+  </price>
+ </prices>
 </ssys>

@@ -26,28 +26,6 @@
   <commodities>
    <commodity>Ore</commodity>
   </commodities>
-  <production_modifiers>
-   <prod_mod>
-    <commodity>Food</commodity>
-    <modifier>-54.4</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Ore</commodity>
-    <modifier>-82.4</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Industrial Goods</commodity>
-    <modifier>29.7</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Medicine</commodity>
-    <modifier>37.5</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Luxury Goods</commodity>
-    <modifier>69.7</modifier>
-   </prod_mod>
-  </production_modifiers>
   <description>The Dvaered war machine relies a lot on flinging chunks of matter at enemy ships, and those chunks of matter have to come from somewhere. Myuirr Station is one of the most productive ammunition production facilities in Dvaered space. It produces ordinance for a variety of ballistic and missile weaponry. The portion of its produce that isn't claimed by Dvaered High Command in tax is sold to Warlords, retailers and civilians for profit.</description>
  </general>
  <tech>

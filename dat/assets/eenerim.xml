@@ -29,28 +29,6 @@
    <commodity>Food</commodity>
    <commodity>Medicine</commodity>
   </commodities>
-  <production_modifiers>
-   <prod_mod>
-    <commodity>Food</commodity>
-    <modifier>98.4</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Ore</commodity>
-    <modifier>28.9</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Industrial Goods</commodity>
-    <modifier>-72.2</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Medicine</commodity>
-    <modifier>-59.0</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Luxury Goods</commodity>
-    <modifier>3.8</modifier>
-   </prod_mod>
-  </production_modifiers>
   <description>With over 80% of its surface covered in water, Eenerim teeters on the brink of classes M and O. The population here is spread out over many small or medium sized islands scattered evenly across the globe. The Sirius governemt has divided up the land between the three echelons, with each island predominantly inhabited by either Shaira, Fyrra or Serra.</description>
   <bar>The spaceport bar here is utterly unremarkable. That's not a bad thing, of course, because bars that distinguish themselves more often than not do so in an unpleasant way.</bar>
  </general>

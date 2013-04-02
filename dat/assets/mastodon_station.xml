@@ -26,28 +26,6 @@
   <commodities>
    <commodity>Industrial Goods</commodity>
   </commodities>
-  <production_modifiers>
-   <prod_mod>
-    <commodity>Food</commodity>
-    <modifier>-40.7</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Ore</commodity>
-    <modifier>-51.2</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Industrial Goods</commodity>
-    <modifier>32.7</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Medicine</commodity>
-    <modifier>26.4</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Luxury Goods</commodity>
-    <modifier>32.7</modifier>
-   </prod_mod>
-  </production_modifiers>
   <description>Mastodon Station is a power generator, supplying the local planets with energy cells. It also produces power cores and low power energy weapons for the ships produced at Orville Shipyard.</description>
   <bar>The spacedock bar is constantly filled with the low hum of heavy machinery. The entire station reverberates with it, which really gives you the impression that the place is active.</bar>
  </general>

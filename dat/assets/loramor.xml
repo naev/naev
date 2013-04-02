@@ -29,28 +29,6 @@
    <commodity>Food</commodity>
    <commodity>Luxury Goods</commodity>
   </commodities>
-  <production_modifiers>
-   <prod_mod>
-    <commodity>Food</commodity>
-    <modifier>52.4</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Ore</commodity>
-    <modifier>-47.5</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Industrial Goods</commodity>
-    <modifier>-41.3</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Medicine</commodity>
-    <modifier>37.8</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Luxury Goods</commodity>
-    <modifier>-1.3</modifier>
-   </prod_mod>
-  </production_modifiers>
   <description>The second moon of Druss' only gas giant, Lora-Mor is a small but pleasant luxury resort. The low gravity has given rise to fantastic plant life, with trees that reach almost 400 meters in height and whose crowns can span over a kilometer from one end to the other. Together with the giant shape of Druss II in the sky, it makes for one of the more exotic places in the galaxy to spend a vacation.</description>
   <bar>Most of Lora-Mor's surface is given over to spacious vacation residences and nature parks. The majority of the planet's permanent population lives around the spaceport, and the spaceport bar is their chief recreational facility. This generally works out, as not many spacers visit Lora-Mor other than to ferry tourists to and fro.</bar>
  </general>

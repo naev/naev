@@ -247,7 +247,7 @@ void map_open (void)
    /* Prices */
    window_addText( wid, x, y, 90, 20, 0, "txtSPrices",
          &gl_smallFont, &cDConsole, "Prices:" );
-   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 120, 0, "txtPrices",
+   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 250, 0, "txtPrices",
          &gl_smallFont, &cBlack, NULL );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
@@ -535,10 +535,15 @@ static void map_update( unsigned int wid )
    y-=15;
 
    for (i=0; i<econ_nprices; i++) {
-
+      y-=15;
+      p += nsnprintf( &buf[p], PATH_MAX-p, "real %s:%.0f\n", commodity_stack[i].name, PRICE(commodity_stack+i, sys) );
+      if (p > PATH_MAX)
+         break;
+   }
+   if (sys->given_prices)
+      for (i=0; i<econ_nprices; i++) {
       y-=15;
       p += nsnprintf( &buf[p], PATH_MAX-p, "given %s:%.0f\n", commodity_stack[i].name, sys->given_prices[i] );
-      p += nsnprintf( &buf[p], PATH_MAX-p, "real %s:%.0f\n", commodity_stack[i].name, sys->real_prices[i] );
       if (p > PATH_MAX)
          break;
    }

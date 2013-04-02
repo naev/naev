@@ -28,28 +28,6 @@
    <commodity>Food</commodity>
    <commodity>Ore</commodity>
   </commodities>
-  <production_modifiers>
-   <prod_mod>
-    <commodity>Food</commodity>
-    <modifier>2.7</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Ore</commodity>
-    <modifier>83.8</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Industrial Goods</commodity>
-    <modifier>-35.3</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Medicine</commodity>
-    <modifier>-92.1</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Luxury Goods</commodity>
-    <modifier>40.8</modifier>
-   </prod_mod>
-  </production_modifiers>
   <description>Jorcan is a very barren, dull planet, like most mining worlds. Having been mined for decades, its resources have been nearly exhausted. However, mining corporations are known to persist until there's no longer a profit to be made, leaving depleted, dead planets.</description>
   <bar>The one word that would describe the Jorcan spaceport bar would be dust. It's everywhere: on the seats, on the counter, in the drinks, on everyone's faces. A coarse soot has coated your palm just holding your drink. You wonder if it will ever wash off.</bar>
  </general>

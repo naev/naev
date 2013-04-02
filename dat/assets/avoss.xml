@@ -27,28 +27,6 @@
    <commodity>Ore</commodity>
    <commodity>Industrial Goods</commodity>
   </commodities>
-  <production_modifiers>
-   <prod_mod>
-    <commodity>Food</commodity>
-    <modifier>38.1</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Ore</commodity>
-    <modifier>23.8</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Industrial Goods</commodity>
-    <modifier>-119.2</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Medicine</commodity>
-    <modifier>23.8</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Luxury Goods</commodity>
-    <modifier>33.3</modifier>
-   </prod_mod>
-  </production_modifiers>
   <description>Avoss was originally a mediocre, but habitable world. So, when the fourteenth colony ship, Petrovsk, arrived, its colonists considered themselved fairly fortunate to have found a place they could call home. However, some fifty years after the expedition had touched down, the world began to change. Seismic activity becan escalating off the charts everywhere, causing earthquakes and volcanic eruptions all over the world. Now, the world is devastated, a mere shadow of its former self. The colonists have managed to survive however, and remain even today.</description>
  </general>
 </asset>

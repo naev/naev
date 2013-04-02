@@ -30,28 +30,6 @@
    <commodity>Ore</commodity>
    <commodity>Industrial Goods</commodity>
   </commodities>
-  <production_modifiers>
-   <prod_mod>
-    <commodity>Food</commodity>
-    <modifier>-458.8</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Ore</commodity>
-    <modifier>-630.4</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Industrial Goods</commodity>
-    <modifier>1407.7</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Medicine</commodity>
-    <modifier>-210.5</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Luxury Goods</commodity>
-    <modifier>-107.7</modifier>
-   </prod_mod>
-  </production_modifiers>
   <description>Khelim was the target world for Majestic, the eleventh colony ship sent from Earth in the First Growth. Majestic was populated chiefly by people from India and the Middle East, and though interstellar traffic has been commonplace for many years now, the characteristic features of that area can still be seen on the faces of the people of Khelim.</description>
   <bar>The Crescent Blade bar is about as respectable as low-profile bars come. It has all the standard facilities the galactic traveler has come to rely on, and the service leaves nothing to be desired. Other than that, the place is unremarkable.</bar>
  </general>

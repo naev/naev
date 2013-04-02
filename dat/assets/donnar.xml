@@ -30,28 +30,6 @@
    <commodity>Ore</commodity>
    <commodity>Industrial Goods</commodity>
   </commodities>
-  <production_modifiers>
-   <prod_mod>
-    <commodity>Food</commodity>
-    <modifier>-25.7</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Ore</commodity>
-    <modifier>25.5</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Industrial Goods</commodity>
-    <modifier>-70.5</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Medicine</commodity>
-    <modifier>11.6</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Luxury Goods</commodity>
-    <modifier>59.0</modifier>
-   </prod_mod>
-  </production_modifiers>
   <description>Despite not officially classifying as habitable, the Dvaered have settled on Donnar in sufficient numbers to give the planet the status of civilian world. Though the soil is barely fertile and the atmosphere is less than pleasant for even the most hardy plant life, Donnar has the major advantage of having almost no seismic activity at all. And as many a colony prospector can tell you, a stable planet is a good planet.</description>
   <bar>Donnar has something unusual to offer to offworlders. The spaceport bar is constructed like an arena, with the spectator area fulfilling the functions that most other spaceport bars do, and the central area serving as the stage for entertainment of all kinds, ranging from fights to displays of art. The concept is rather ingenious, and many a spacer is as astonished at the display as they are at the fact that the Dvaered came up with this idea.</bar>
  </general>

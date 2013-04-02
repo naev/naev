@@ -31,28 +31,6 @@
    <commodity>Medicine</commodity>
    <commodity>Luxury Goods</commodity>
   </commodities>
-  <production_modifiers>
-   <prod_mod>
-    <commodity>Food</commodity>
-    <modifier>102.1</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Ore</commodity>
-    <modifier>-6.6</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Industrial Goods</commodity>
-    <modifier>-60.5</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Medicine</commodity>
-    <modifier>-38.4</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Luxury Goods</commodity>
-    <modifier>3.4</modifier>
-   </prod_mod>
-  </production_modifiers>
   <description>Draconis Omega was one of the old Empire's best colonies. The planet is large compared to Earth, yet its gravity is comparable. This made it ideal as a population base, which it remains today. Draconis Omega remains firmly loyal to the Empire despite its now isolated position. The people here believe that the after effects of the Incident are only temporary, and that the Empire will one day regain its former glory, in which Draconis Omega will feature prominently.</description>
   <bar>Ever the optimists, the people of Draconis Omega have decorated their spaceport bar with displays of past Imperial power, portraits of former Emperors and charts that show the size of the Empire when it was at its peak. It's clear that the inhabitants truly believe that the good times will one day return.</bar>
  </general>

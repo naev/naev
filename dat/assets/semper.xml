@@ -30,28 +30,6 @@
    <commodity>Food</commodity>
    <commodity>Medicine</commodity>
   </commodities>
-  <production_modifiers>
-   <prod_mod>
-    <commodity>Food</commodity>
-    <modifier>90.7</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Ore</commodity>
-    <modifier>-99.7</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Industrial Goods</commodity>
-    <modifier>-29.6</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Medicine</commodity>
-    <modifier>98.2</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Luxury Goods</commodity>
-    <modifier>-59.6</modifier>
-   </prod_mod>
-  </production_modifiers>
   <description>Though Semper is slightly on the poor side by Imperial standards, the people who live here at least have the comfort of tight Imperial security. For that reason, it is quite popular among immigrants into the Empire, who usually don't have the means to settle on the richer civilian worlds.</description>
   <bar>Semper is an immigrant world, which is reflected in its spaceport bar. The design betrays influences from all over the galaxy, such as a holograph of a Dvaered cruiser, a Sirius crest on some of the furniture and even some Soromid-oriented drinks.</bar>
  </general>

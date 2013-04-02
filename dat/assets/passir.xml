@@ -30,28 +30,6 @@
    <commodity>Ore</commodity>
    <commodity>Industrial Goods</commodity>
   </commodities>
-  <production_modifiers>
-   <prod_mod>
-    <commodity>Food</commodity>
-    <modifier>40.5</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Ore</commodity>
-    <modifier>4.8</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Industrial Goods</commodity>
-    <modifier>-48.2</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Medicine</commodity>
-    <modifier>-3.6</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Luxury Goods</commodity>
-    <modifier>6.5</modifier>
-   </prod_mod>
-  </production_modifiers>
   <description>Passir is an aquatic world. A lot of the inhabited areas are under the surface of the ocean. But even there, suitable living space is scarce. Passir's oceans run so deep that large areas of the ocean floor are out of reach even for modern day submarine technology.</description>
   <bar>The spaceport is situated on dry land, and so is the spaceport bar. The bar overlooks the main hall of the spaceport, which is dominated by the massive mega-escalators that take people and goods to and from the nearby submarine settlements.</bar>
  </general>

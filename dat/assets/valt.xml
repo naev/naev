@@ -29,28 +29,6 @@
    <commodity>Ore</commodity>
    <commodity>Industrial Goods</commodity>
   </commodities>
-  <production_modifiers>
-   <prod_mod>
-    <commodity>Food</commodity>
-    <modifier>40.6</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Ore</commodity>
-    <modifier>10.8</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Industrial Goods</commodity>
-    <modifier>23.2</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Medicine</commodity>
-    <modifier>-52.0</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Luxury Goods</commodity>
-    <modifier>-22.7</modifier>
-   </prod_mod>
-  </production_modifiers>
   <description>Valt is recent home to a Dvaered mining colony. An utterly inhospitable world, the extremely thin atmosphere makes the surface highly dangerous due to its perpetual bombardment by asteroids and solar radiation. The colony is situated nearly a kilometre below the planet's surface, in an immense, resource-rich cavern.</description>
   <bar>The Valt spaceport bar is nothing special. It's rather clean for a Dvaered bar, though that may speak more about the small size of the settlement than the pride the proprietor takes in keeping his establishment clean.</bar>
  </general>

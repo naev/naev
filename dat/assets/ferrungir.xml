@@ -30,28 +30,6 @@
    <commodity>Ore</commodity>
    <commodity>Industrial Goods</commodity>
   </commodities>
-  <production_modifiers>
-   <prod_mod>
-    <commodity>Food</commodity>
-    <modifier>-50.9</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Ore</commodity>
-    <modifier>111.9</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Industrial Goods</commodity>
-    <modifier>33.4</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Medicine</commodity>
-    <modifier>-146.8</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Luxury Goods</commodity>
-    <modifier>52.4</modifier>
-   </prod_mod>
-  </production_modifiers>
   <description>Ferrungir is a fairly low-profile industrial world. Raw materials are being mined here, and then either shipped offworld immediately or processed into low-level components first. There is not much else of value on this planet. The people who live here tend to be Shaira echelon who haven't been able to find a job anywhere else.</description>
   <bar>The bar on Ferrungir is grim and simple. It's little more than a storage unit converted to a makeshift canteen. It's to be expected from a world as run down as this one.</bar>
  </general>

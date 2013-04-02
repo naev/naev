@@ -31,28 +31,6 @@
    <commodity>Ore</commodity>
    <commodity>Industrial Goods</commodity>
   </commodities>
-  <production_modifiers>
-   <prod_mod>
-    <commodity>Food</commodity>
-    <modifier>53.0</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Ore</commodity>
-    <modifier>14.2</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Industrial Goods</commodity>
-    <modifier>-197.9</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Medicine</commodity>
-    <modifier>45.2</modifier>
-   </prod_mod>
-   <prod_mod>
-    <commodity>Luxury Goods</commodity>
-    <modifier>85.4</modifier>
-   </prod_mod>
-  </production_modifiers>
   <description>Burnan counts as the unofficial local capital. Aesir is far away, and many bureaucratic services are better rendered in a local center of government than over a distance of many hyperspace jumps. Burnan has a large political district in its primary city, which also houses one of the largest Sirian temples in all of Sirius space.</description>
   <bar>Burnan doesn't have a separate spaceport bar in the way many other worlds do. Instead, the spaceport bar and the main spaceport hall are one and the same thing. There are exits to terminals on all sides and the central area is dominated by an island of service interfaces and counters. There is an elevated area that has tables for visitors to sit down at, where they won't get in the way of the bustle of the main floor.</bar>
  </general>
