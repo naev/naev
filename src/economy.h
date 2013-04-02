@@ -14,7 +14,8 @@
 
 #define ECON_CRED_STRLEN      32 /**< Maximum length a credits2str string can reach. */
 
-#define PRICE(Commodity, sys)  ((Commodity)->price * (sys)->real_prices[Commodity->id]) /**< Price of a good */
+#define PRICE(Commodity, sys)  ((Commodity)->price * (sys)->real_prices[(Commodity)->index]) /**< Price of a good */
+#define DEFAULT_GLOBAL_WEIGHT 1.0 /* how much systems prefer their own given values */
 
 typedef int64_t credits_t;
 #define CREDITS_MAX        INT64_MAX

@@ -512,7 +512,6 @@ static void map_update( unsigned int wid )
       }
    buf[0] = '\0';
    p = 0;
-   /*nsnprintf(buf, sizeof(buf), "%f\n", sys->prices[0]);*/ /*Hack to control prices. */
    for (i=PLANET_SERVICE_MISSIONS; i<=PLANET_SERVICE_SHIPYARD; i<<=1)
       if (services & i){
          y -= 15;

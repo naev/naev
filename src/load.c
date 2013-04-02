@@ -566,14 +566,15 @@ int load_game( const char* file, int version_diff )
    }
 
    /* Load more stuff. */
-   econ_destroy();
-   econ_init();
    var_load(node);
    missions_loadActive(node);
    events_loadActive(node);
    news_loadArticles( node );
    hook_load(node);
    space_sysLoad(node);
+   /* setup the economy */
+   econ_refreshsolutions();   /* to be called when initing economy or when trade routes are updated */
+   econ_updateprices(); /* to update prices when prices are changed */
 
    /* Check sanity. */
    event_checkSanity();

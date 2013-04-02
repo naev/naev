@@ -39,7 +39,6 @@
 #define XML_COMMODITY_ID      "Commodities" /**< XML document identifier */
 #define XML_COMMODITY_TAG     "commodity" /**< XML commodity identifier. */
 
-#define DEFAULT_GLOBAL_WEIGHT 1.0 /* how much systems prefer their own given values */
 
 /* commodity stack */
 Commodity* commodity_stack = NULL; /**< Contains all the commodities. */
@@ -362,7 +361,7 @@ int econ_refreshsolutions(void)
       /* setup the system of equations */
    for (eq=0; eq<systems_nstack; eq++){
       sys = systems_stack+eq;
-      denom=(sys->given_prices!=NULL)? sys->weight : 0.0;
+      denom=sys->weight;
       for (jmp=0; jmp<sys->njumps; jmp++){   /* get number of trading neighbors */
          if (jp_isFlag( sys->jumps+jmp, JP_EXITONLY) || jp_isFlag(sys->jumps+jmp, JP_HIDDEN))
             continue;
@@ -373,7 +372,7 @@ int econ_refreshsolutions(void)
                break;
             }
       }
-      val = -1.0/denom;
+      val = -1.0/((denom!=0.0)?denom:1.0);
       for (jmp=0; jmp<sys->njumps; jmp++){   /* get number of trading neighbors */
          if (jp_isFlag( sys->jumps+jmp, JP_EXITONLY) || jp_isFlag(sys->jumps+jmp, JP_HIDDEN))
             continue;
@@ -388,6 +387,7 @@ int econ_refreshsolutions(void)
       if (sys->given_prices!=NULL)  /* if the system has a preferred value */
          eqsystem[eq*sysw + systems_nstack + eq] = sys->weight/denom;
    }
+
    // printf("initial system of equations:\n");
    // for (eq=0; eq<systems_nstack; eq++){
    //    for (v=0; v<sysw; v++)
@@ -407,7 +407,7 @@ int econ_refreshsolutions(void)
             eqsystem[j*sysw+v]*=factor;
             eqsystem[j*sysw+v]+=eqsystem[i*sysw+v];
          }
-            /* manipulate var v of each equation v to 1 */
+            /* manipulate var j of equation j to 1 */
          if (eqsystem[j*sysw + j]!=0){
             factor = eqsystem[j*sysw + j];
             for (v=i+1; v<sysw; v++)
@@ -418,17 +418,11 @@ int econ_refreshsolutions(void)
 
    }
 
-
    // printf("triangle form done\n");
    // printf("system of equations:\n");
    // for (eq=0; eq<systems_nstack; eq++){
    //    for (v=0; v<sysw; v++){
-   //       if (eqsystem[eq*sysw+v]==INFINITY) printf("\ninf at eq:%d v:%d\n",eq,v);
    //       printf("%.2f\t",eqsystem[eq*sysw+v]);
-   //       if ( !(eqsystem[eq*sysw + v]<=1.0 &&  eqsystem[eq*sysw + v]>=-1.0 ) ){
-   //          printf("\nnan in %s, id %d\n",systems_stack[eq].name, eq);
-   //          break;
-   //       }
    //    }
    //    printf("\n");
    // }
@@ -443,9 +437,11 @@ int econ_refreshsolutions(void)
          eqsystem[i*sysw + v]/=factor;
 
       /* substitute in known values */
-      for (j=i+1; j<systems_nstack; j++)
-         for (v=0; v<systems_nstack; v++)
+      for (j=i+1; j<systems_nstack; j++){
+         for (v=0; v<systems_nstack; v++){
             eqsystem[i*sysw+systems_nstack+v]-=eqsystem[i*sysw+j]*solutions[j*systems_nstack+v];
+         }
+      }
 
       memcpy(solutions+i*systems_nstack, eqsystem+i*sysw+systems_nstack, systems_nstack*sizeof(float));
    }
@@ -457,7 +453,9 @@ int econ_refreshsolutions(void)
    // printf("\n\n -- Solutions: -- \n");
    // for (j=0; j<systems_nstack; j++){
    //    for (i=0; i<systems_nstack; i++){
-   //       printf("%.4f, ",solutions[j*systems_nstack+i]);
+   //       if (solutions[j*systems_nstack+i]!=0)
+   //          printf("%.2f, ",solutions[j*systems_nstack+i]);
+   //       else printf("    , ");
    //    }
    //    printf("\n");
    // }
@@ -478,57 +476,25 @@ void econ_updateprices(void)
    StarSystem *sys;
 
    printf("updating prices!\n");
-
-   /* for now, does nothing, as something else is changing prices */
-
-   // int j;
-   // printf("\n\n -- Solutions: -- \n");
-   // for (j=0; j<systems_nstack; j++){
-   //    for (i=0; i<systems_nstack; i++){
-   //       printf("%.3f, ",solutions[j*systems_nstack+i]);
-   //    }
-   //    printf("\n");
-   // }
-   // printf("\n----------\n");
-
-
       /* get the real values from the given values and the solution matrix*/
    for (i=0; i<systems_nstack; i++){
-      if (systems_stack[i].given_prices==NULL)
-         continue;
-      for (s=0; s<systems_nstack; s++){
-         sys = systems_stack+s;
-         for (g=0; g<econ_nprices; g++){
-            sys->real_prices[g]+=systems_stack[i].given_prices[g] * solutions[s*systems_nstack+i];
+      sys = systems_stack+i;
+      for (g=0; g<econ_nprices; g++){
+         sys->real_prices[g]=0.0;
+         for (s=0; s<systems_nstack; s++){
+            if (systems_stack[s].given_prices==NULL)
+               continue;
+            sys->real_prices[g] 
+               += systems_stack[s].given_prices[g] * solutions[i*systems_nstack+s];
          }
       }
    }
-
-      /* verify that all averages add to 100% */
-   // double sum;
-   // for (s=0; s<systems_nstack; s++){
-   //    sys = systems_stack+s;
-   //    for (g=0; g<econ_nprices; g++){
-   //       sum = 0.0;
-   //       for (i=0; i<systems_nstack; i++) /* system given price */
-   //          sum+=solutions[s*systems_nstack+i];
-   //       printf("sum is %f\n",sum);
-   //    }
-   // }
-
-      /* print all prices*/
-   // for (s=0; s<systems_nstack; s++){
-   //    sys = systems_stack+s;
-   //    for (g=0; g<econ_nprices; g++)
-   //       printf("sys %d good %d price %f\n", s, g, sys->real_prices[g]);
-   // }
-
 
 }
 
 
 /**
- * @brief initializes all economic variables. Values still have to be loaded
+ * @brief initializes all economic variables. Called immediately after starting galaxy
  */
 void econ_init(void)
 {
@@ -542,28 +508,12 @@ void econ_init(void)
    for (s=0; s<systems_nstack; s++){
       sys=systems_stack+s;
       sys->real_prices = (float *) calloc(sizeof(float), econ_nprices);
-      // sys->given_prices = NULL;  //maybe this fixes everything?
-      sys->weight = DEFAULT_GLOBAL_WEIGHT;
       for (jmp=0; jmp<sys->njumps; jmp++)
          sys->jumps[jmp].trade_weight=1.0;
    }
    solutions = malloc(sizeof(float)*systems_nstack*systems_nstack);
 
    econ_initialized = 1;
-
-   //TMP! gives economy random values, these values will instead be loaded from xml and save-game
-   // printf("putting in psuedo-random given values... (will be removed)\n");
-   // int g;
-   // for (s=0; s<systems_nstack; s++){
-   //    sys=systems_stack+s;
-   //    for (g=0; g<econ_nprices; g++){
-   //       sys->given_prices[g] = (double) ((g*sys->id*100003+sys->id)%500+200+sys->id);
-   //       if (sys->given_prices[g]<0.0) printf("system %s has %.3f for good %s\n",sys->name, sys->given_prices[g], commodity_stack[g].name);}
-   // }
-
-   //this is only here temporarily, these should be called after loading system
-   econ_refreshsolutions();   /* to be called when initing economy or when trade routes are updated */
-   econ_updateprices(); /* to update prices when prices are changed */
 }
 
 /**

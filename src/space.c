@@ -2456,6 +2456,7 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
       else if (xml_isNode(node, "prices")){
          cur = node->children;
          sys->given_prices = malloc(sizeof(float)*econ_nprices);
+         sys->weight = DEFAULT_GLOBAL_WEIGHT;
          do {
             xmlr_int( cur, "weight", sys->weight)
             if (xml_isNode(cur,"price")){
@@ -2878,8 +2879,6 @@ static int systems_load (void)
    /*
     * First pass - loads all the star systems_stack.
     */
-
-   printf("\nLoading economy!");
    for (i=0; i<(int)nfiles; i++) {
 
       len  = strlen(SYSTEM_DATA_PATH)+strlen(system_files[i])+2;
@@ -2945,6 +2944,8 @@ static int systems_load (void)
    DEBUG("Loaded %d Star System%s with %d Planet%s",
          systems_nstack, (systems_nstack==1) ? "" : "s",
          planet_nstack, (planet_nstack==1) ? "" : "s" );
+
+   econ_init();
 
    /* Clean up. */
    for (i=0; i<(int)nfiles; i++)
@@ -3285,7 +3286,7 @@ int space_sysSave( xmlTextWriterPtr writer )
    int i, j;
    StarSystem *sys;
 
-   printf("Saving economy!\n");
+   // printf("Saving economy!\n");
 
    xmlw_startElem(writer,"space");
 
@@ -3318,10 +3319,10 @@ int space_sysSave( xmlTextWriterPtr writer )
       sys = systems_stack+i;
       xmlw_startElem(writer,"sys_econ");
       xmlw_elem(writer,"name", "%s", sys->name);   //replace with sys->id?
-      for (j=0; j<econ_nprices; j++) {     // add: if price hasn't changed, continue
+      for (j=0; j<econ_nprices; j++) {  
          xmlw_startElem(writer,"commodity");  
          xmlw_elem(writer,"comm_name","%s",commodity_stack[j].name);
-         // xmlw_elem(writer,"givenprice","%.1f", sys->stockpiles[j]);   //replace with "real_prices"
+         // xmlw_elem(writer,"givenprice","%.1f", sys->stockpiles[j]);   //replace with "given_prices"
          xmlw_endElem(writer); /* "commodity" */
       }
       xmlw_endElem(writer); /* "sys_economy" */
@@ -3348,7 +3349,7 @@ int space_sysLoad( xmlNodePtr parent )
 
    space_clearKnown();
 
-   printf("\nLoading economy\n");
+   // printf("\nLoading economy\n");
 
    node = parent->xmlChildrenNode;
    do {
