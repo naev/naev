@@ -193,7 +193,7 @@ static int economyL_getPrice( lua_State *L )
       return 0;
    }
 
-   lua_pushnumber( L, (lua_Number) sys->real_prices[comm->index] );
+   lua_pushnumber( L, (lua_Number) sys->real_prices[comm->index] * comm->price);
    return 1;
 }
 
