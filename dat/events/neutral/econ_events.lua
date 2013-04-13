@@ -7,7 +7,7 @@ else --default english
 
       {
          "famine",  --event name/type
-         1200000,         --event takes 20 min (time is in ms)
+         1200000,         --event takes 5 min (time is in ms)
          {"Food", 2.0} --commodity and it's new relative (preffered) price
       },
 
@@ -79,9 +79,8 @@ function make_article(sys, event)
          body = body.."."
       end
    end
-
       --make the article
-   article = news.add("Generic", title, body, time.get() + time.create( 0, event[2], 0))
+   article = news.add("Generic", title, body, time.get() + time.create( 0, event[2]/5000, 0)) --it'll dissapear in event length (in ms) / 5000 STP
    article:bind("economic event")
 
 end
@@ -99,7 +98,6 @@ function make_event()
       --get the system, a populated one with at least 500 total presence
    while 1 do
       sys=system.get(true)
-      print("trying system "..sys:name())
       syspresences = system.presences(sys)
       sum=0
       for _,v in ipairs(factions) do
@@ -107,11 +105,9 @@ function make_event()
             sum=sum+syspresences[v]
          end
       end
-      print("sum is "..sum)
       system_nottaken=true
       for i=1,#economic_articles do --check this system wasn't already taken
          if string.match( article:title(), sys:name()) then
-            print("system"..sys:name().."alread taken") --rm me
             system_nottaken=false
             break
          end
@@ -120,6 +116,9 @@ function make_event()
          break
       end
    end
+
+   --rm me
+   print("At "..sys:name().." doing event "..event[1])
 
       --get the original prices
    for i=1,#event-2 do
@@ -132,7 +131,7 @@ function make_event()
    if economy.getSysWeight(sys)==0 then
       economy.setSysWeight(sys,1.0)
       for i=1, #commodities do
-         economy.setPreferredPrice( sys, commodities[i], economy.getPrice(sys, commodities[i]) )
+         economy.setPreferredPrice( sys, commodities[i], economy.getPrice(sys, commodities[i])/commodity.get(commodities[i]):getprice() )
       end
    else
       weighted=1
@@ -143,9 +142,9 @@ function make_event()
       comm = event[i+2]
       price = economy.getPreferredPrice(sys, comm[1])
       if price==0 then
-         price = economy.getPrice(sys, comm[1])
+         price = economy.getPrice(sys, comm[1]) / commodity.get(comm[1]):getprice()
       end
-      price = price*comm[2] / commodity.get(comm[1]):getprice()
+      price = price*comm[2] 
       economy.setPreferredPrice(sys, comm[1], price)
       new_preferred[i] = price
    end
@@ -193,6 +192,9 @@ function end_event(str)
          comms[num_changed_comms] = {tmp, tmp2}
       end
    end
+
+
+   print("ending event at"..sys:name())
 
    if weighted==0 then --if system was unweighted, just unweight it
       economy.setSysWeight(sys, 0.0)
