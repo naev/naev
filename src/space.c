@@ -290,6 +290,11 @@ credits_t planet_commodityPrice( const Planet *p, const Commodity *c )  //move t
    char *sysname;
    StarSystem *sys;
 
+   if (c==NULL || c->index >= econ_nprices || c->index==0){
+      WARN("invalid commodity");
+      return 0;
+   }
+
    sysname = planet_getSystem( p->name );
    sys = system_get( sysname );
 
