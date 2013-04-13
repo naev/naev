@@ -132,7 +132,7 @@ static int economyL_getPreferredPrice( lua_State *L)
    }
 
    if (sys->given_prices==NULL){
-      lua_pushboolean(L, 0);
+      lua_pushnumber(L, 0);
       return 1;
    }
 

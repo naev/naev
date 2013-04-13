@@ -500,7 +500,6 @@ void econ_revert(void)
    int i, g;
    StarSystem *sys;\
 
-   printf("reverting to old values!\n");
       /* revert to the old values */
    for (i=0;i<systems_nstack; i++){
       sys = systems_stack+i;
@@ -514,8 +513,6 @@ void econ_revert(void)
       for (g=0; g<econ_nprices; g++)
          sys->given_prices[g] = xml_econvals[i][1 + g];
    }
-   // updateSolutions();
-   // updatePrices();
 }
 
 /**

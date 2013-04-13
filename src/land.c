@@ -291,7 +291,7 @@ static int commodity_canBuy( char *name )
    char buf[ECON_CRED_STRLEN];
 
    failure = 0;
-   q = (commodity_getMod() > pilot_cargoFree(player.p)) ? commodity_getMod() : pilot_cargoFree(player.p);
+   q = (commodity_getMod() > pilot_cargoFree(player.p)) ? pilot_cargoFree(player.p) : commodity_getMod() ;
    com = commodity_get( name );
    price = q*planet_commodityPrice(land_planet, com);
 
@@ -346,7 +346,7 @@ static void commodity_buy( unsigned int wid, char* str )
       return;
 
    /* Get selected. */
-   q = (commodity_getMod() < pilot_cargoFree(player.p)) ? commodity_getMod() : pilot_cargoFree(player.p);
+   q = (commodity_getMod() > pilot_cargoFree(player.p)) ? pilot_cargoFree(player.p) : commodity_getMod() ;
    com   = commodity_get( comname );
    price = q*planet_commodityPrice(land_planet, com);
 
