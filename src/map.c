@@ -539,7 +539,7 @@ static void map_update( unsigned int wid )
       if (p > PATH_MAX)
          break;
    }
-   if (sys->given_prices)
+   if (sys->given_prices && sys->weight!=0)
       for (i=0; i<econ_nprices; i++) {
       y-=15;
       p += nsnprintf( &buf[p], PATH_MAX-p, "given %s:%.0f (*%.0f)\n", commodity_stack[i].name, sys->given_prices[i], commodity_stack[i].price );
