@@ -296,7 +296,7 @@ credits_t planet_commodityPrice( const Planet *p, const Commodity *c )  //move t
    }
 
    if (c==NULL || c->index >= econ_nprices){
-      WARN("invalid commodity for planet %s, comm is %p, comm name is %s",p->name,c, c->name);
+      WARN("invalid commodity for planet %s", p->name);
       return 0;
    }
 
