@@ -245,6 +245,10 @@ static void player_newSetup( int tutorial )
    /* Start the news */
    news_init();
 
+   /* start the economy */
+   econ_refreshsolutions();
+   econ_updateprices();
+
    cam_setTargetPos( x, y, 0 );
    cam_setZoom( conf.zoom_far );
 
