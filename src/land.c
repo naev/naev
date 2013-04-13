@@ -285,18 +285,14 @@ static void commodity_update( unsigned int wid, char* str )
 static int commodity_canBuy( char *name )
 {
    int failure;
-   unsigned int q;
-   credits_t price;
    Commodity *com;
    char buf[ECON_CRED_STRLEN];
 
    failure = 0;
-   q = (commodity_getMod() > pilot_cargoFree(player.p)) ? pilot_cargoFree(player.p) : commodity_getMod() ;
    com = commodity_get( name );
-   price = q*planet_commodityPrice(land_planet, com);
 
-   if (!player_hasCredits( price )) {
-      credits2str( buf, price - player.p->credits, 2 );
+   if (!player_hasCredits( planet_commodityPrice(land_planet, com) )) {
+      credits2str( buf, planet_commodityPrice(land_planet, com) - player.p->credits, 2 );
       land_errDialogueBuild("You need %s more credits.", buf );
       failure = 1;
    }
@@ -346,8 +342,10 @@ static void commodity_buy( unsigned int wid, char* str )
       return;
 
    /* Get selected. */
-   q = (commodity_getMod() > pilot_cargoFree(player.p)) ? pilot_cargoFree(player.p) : commodity_getMod() ;
    com   = commodity_get( comname );
+   q = commodity_getMod();
+   q = (q*planet_commodityPrice(land_planet, com) < player_modCredits(0) ) ? q : player_modCredits(0)/(credits_t)planet_commodityPrice(land_planet, com);
+   q = (q <= (unsigned int) pilot_cargoFree(player.p)) ? q : (unsigned int) pilot_cargoFree(player.p);
    price = q*planet_commodityPrice(land_planet, com);
 
    /* Make the buy. */
@@ -447,8 +445,10 @@ static void commodity_renderMod( double bx, double by, double w, double h, void 
    char *comm_name = toolkit_getList( land_getWid(LAND_WINDOW_COMMODITY), "lstGoods" );
    Commodity *comm = commodity_get( comm_name );
 
-
-   bq = (commodity_getMod() < pilot_cargoFree(player.p)) ? commodity_getMod() : pilot_cargoFree(player.p);
+      /* amount buying is max( num can afford, available space, modifier  ) */
+   bq = commodity_getMod();
+   bq = (bq*planet_commodityPrice(land_planet, comm) < player_modCredits(0) ) ? bq : (int)(player_modCredits(0)/planet_commodityPrice(land_planet, comm));
+   bq = (bq <= pilot_cargoFree(player.p)) ? bq : pilot_cargoFree(player.p);
    sq =  (commodity_getMod() < pilot_cargoOwned( player.p, comm_name )) ? commodity_getMod() : pilot_cargoOwned( player.p, comm_name );
    if (bq != commodity_mod) {
       commodity_update( land_getWid(LAND_WINDOW_COMMODITY), NULL );
