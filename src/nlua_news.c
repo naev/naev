@@ -516,7 +516,7 @@ int newsL_date( lua_State *L )
 
 /**
  * @brief tags an article or a table of articles with a string
- *    @luaparam a article to get the faction of
+ *    @luaparam a article to tag
  *    @luaparam tag
  * @luafunc bind(a)
  */
