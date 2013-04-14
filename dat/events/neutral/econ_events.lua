@@ -7,34 +7,34 @@ else --default english
 
       {
          "famine",  --event name/type
-         1200000,         --event takes 5 min (time is in ms)
+         720000,         --event takes 12 min (time is in ms)
          {"Food", 2.0} --commodity and it's new relative (preffered) price
       },
 
       {
          "bumper harvest",
-         1200000,
+         720000,
          {"Food", .5} --preferred food price now at half the price it was
 
       },
 
       {
          "worker's strike",
-         1200000,
+         720000,
          {"Industrial Goods", 1.5},
          {"Ore", 1.5}
       },
 
       {
          "cat convention",
-         1200000,
+         720000,
          {"Luxury Goods", 1.5},
          {"Medicine",1.25}
       },
 
       {
          "disease outbreak",
-         1200000,
+         720000,
          {"Medicine",2},
          {"Food",1.3}
       }
@@ -80,7 +80,7 @@ function make_article(sys, event)
       end
    end
       --make the article
-   article = news.add("Generic", title, body, time.get() + time.create( 0, event[2]/5000, 0)) --it'll dissapear in event length (in ms) / 5000 STP
+   article = news.add("Generic", title, body, time.get() + time.create( 0, event[2]/36000, 0)) --it'll dissapear in event length (in ms) / 36000 STP
    article:bind("economic event")
 
 end
