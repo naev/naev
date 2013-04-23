@@ -7,34 +7,34 @@ else --default english
 
       {
          "famine",  --event name/type
-         720000,         --event takes 12 min (time is in ms)
+         25,         --event takes 25 STP
          {"Food", 2.0} --commodity and it's new relative (preffered) price
       },
 
       {
          "bumper harvest",
-         720000,
+         25,
          {"Food", .5} --preferred food price now at half the price it was
 
       },
 
       {
          "worker's strike",
-         720000,
+         25,
          {"Industrial Goods", 1.5},
          {"Ore", 1.5}
       },
 
       {
          "cat convention",
-         720000,
+         25,
          {"Luxury Goods", 1.5},
          {"Medicine",1.25}
       },
 
       {
          "disease outbreak",
-         720000,
+         25,
          {"Medicine",2},
          {"Food",1.3}
       }
@@ -54,10 +54,9 @@ new_preferred={}
 
 function create()
 
-   -- do return end--tmp, to figure out other issues
-
    make_event()
 
+   evt.save(true)
 end
 
 
@@ -79,8 +78,10 @@ function make_article(sys, event)
          body = body.."."
       end
    end
+
+   body = body.." This event is expected to end in "..event[2].." STP, at date "..(time.create(0,event[2],0)+time.get()):str()
       --make the article
-   article = news.add("Generic", title, body, time.get() + time.create( 0, event[2]/36000, 0)) --it'll dissapear in event length (in ms) / 36000 STP
+   article = news.add("Generic", title, body, time.get() + time.create( 0, event[2], 0))
    article:bind("economic event")
 
 end
@@ -160,7 +161,7 @@ function make_event()
       comm_name = event[i+2][1]
       str=str..string.format(" %sorigprefprice:%f %snewprefprice:%f",comm_name, original_preferred[i], comm_name, new_preferred[i] )
    end
-   hook.timer(event[2], "end_event", str )
+   hook.date( time.create(0, event[2], 0), "end_event", str )
 
 end
 
