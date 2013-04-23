@@ -15,7 +15,6 @@ else --default english
          "bumper harvest",
          25,
          {"Food", .5} --preferred food price now at half the price it was
-
       },
 
       {
