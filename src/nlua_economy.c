@@ -87,6 +87,31 @@ int nlua_loadEconomy( lua_State *L, int readonly )
 }
 
 /**
+ * @brief Manipulates prices in the galaxy
+ *
+ * Prices are averages of all systems with defined prices; every system's 
+ *    prices are the price of it's neighbor's and it's own price (if it has one)
+ *
+ * The more weighted a system it is, the more it will prefer it's own prices. 
+ *    a system without any weight is the average of it's neighbor's prices, and
+ *    a system with infinite weight simply has it's own preferred price.
+ *
+ * In addition, a jump can be weighted, so that that the price difference of the 
+ *    two relevant systems is increased.
+ *
+ * After updating the prices of systems, you must call economy.updatePrices()
+ *
+ * After updating weights, you must cal economy.updateSolutions(), and then 
+ *    economy.updatePrice()
+ *
+ * hookid = hook.enter( "penter", 5 )
+ * @endcode
+ *
+ * @luamod hook
+ */
+
+
+/**
  * @brief refreshes the prices based on the solutions matrix. Use this after updating the solutions matrix or changing prices. Inexpensive
  *
  * @usage economy.updatePrices()
