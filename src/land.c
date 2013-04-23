@@ -87,7 +87,6 @@ static const char *land_windowNames[LAND_NUMWINDOWS] = {
 static int land_windowsMap[LAND_NUMWINDOWS]; /**< Mapping of windows. */
 static unsigned int *land_windows = NULL; /**< Landed window ids. */
 Planet* land_planet = NULL; /**< Planet player landed at. */
-Commodity *active_comm = NULL; /**< active commodity */
 static glTexture *gfx_exterior = NULL; /**< Exterior graphic of the landed planet. */
 
 /*
@@ -258,7 +257,7 @@ static void commodity_update( unsigned int wid, char* str )
    }
 
    /* modify text */
-   active_comm = com = commodity_get( comname );
+   com = commodity_get( comname );
    nsnprintf( buf, PATH_MAX,
          "%d Tons\n"
          "%"CREDITS_PRI"\n   Credits/Ton"
@@ -291,6 +290,10 @@ static int commodity_canBuy( char *name )
    failure = 0;
    com = commodity_get( name );
 
+   if (strcmp(name, "None")==0){
+      printf("is none, returning\n");  //rm me
+      return 0;
+   }
    if (!player_hasCredits( planet_commodityPrice(land_planet, com) )) {
       credits2str( buf, planet_commodityPrice(land_planet, com) - player.p->credits, 2 );
       land_errDialogueBuild("You need %s more credits.", buf );
@@ -443,20 +446,23 @@ static void commodity_renderMod( double bx, double by, double w, double h, void 
    credits_t price_tobuy;
    credits_t price_tosell;
    char *comm_name = toolkit_getList( land_getWid(LAND_WINDOW_COMMODITY), "lstGoods" );
-   Commodity *comm = commodity_get( comm_name );
 
       /* amount buying is max( num can afford, available space, modifier  ) */
-   bq = commodity_getMod();
-   bq = (bq*planet_commodityPrice(land_planet, comm) < player_modCredits(0) ) ? bq : (int)(player_modCredits(0)/planet_commodityPrice(land_planet, comm));
-   bq = (bq <= pilot_cargoFree(player.p)) ? bq : pilot_cargoFree(player.p);
-   sq =  (commodity_getMod() < pilot_cargoOwned( player.p, comm_name )) ? commodity_getMod() : pilot_cargoOwned( player.p, comm_name );
-   if (bq != commodity_mod) {
-      commodity_update( land_getWid(LAND_WINDOW_COMMODITY), NULL );
-      commodity_mod = bq;
-   }
-
-   price_tobuy = bq*planet_commodityPrice(land_planet, comm);
-   price_tosell = sq*planet_commodityPrice(land_planet, comm);
+   if (strcmp(comm_name, "None")!=0){
+      Commodity *comm = commodity_get( comm_name );
+      bq = commodity_getMod();
+      bq = (bq*planet_commodityPrice(land_planet, comm) < player_modCredits(0) ) ? bq : (int)(player_modCredits(0)/planet_commodityPrice(land_planet, comm));
+      bq = (bq <= pilot_cargoFree(player.p)) ? bq : pilot_cargoFree(player.p);
+      sq =  (commodity_getMod() < pilot_cargoOwned( player.p, comm_name )) ? commodity_getMod() : pilot_cargoOwned( player.p, comm_name );
+      if (bq != commodity_mod) {
+         commodity_update( land_getWid(LAND_WINDOW_COMMODITY), NULL );
+         commodity_mod = bq;
+      }
+      price_tobuy = bq*planet_commodityPrice(land_planet, comm);
+      price_tosell = sq*planet_commodityPrice(land_planet, comm);
+   } 
+   else
+      bq = sq = price_tobuy = price_tosell = 0;
 
    nsnprintf( buf, 64, "buy:%d tons, sell:%d tons",bq,sq);
    gl_printMid( &gl_smallFont, w, bx, by+35, &cBlack, buf );
