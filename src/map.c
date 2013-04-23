@@ -58,9 +58,7 @@ static gl_vbo *map_vbo = NULL; /**< Map VBO. */
 extern StarSystem *systems_stack;
 extern int systems_nstack;
 extern int faction_nstack;
-/* economy.c */
-extern Commodity* commodity_stack; /**< Contains all the commodities. */
-extern int econ_nprices;
+
 
 /*
  * prototypes
@@ -167,7 +165,6 @@ void map_open (void)
    window_setCancel( wid, window_close );
    window_handleKeys( wid, map_keyHandler );
 
-      // changed to display economy things, will revert
    /*
     * SIDE TEXT
     *
@@ -184,11 +181,6 @@ void map_open (void)
     *
     * Services:
     *   $Services
-    *
-    * Prices:
-    *  given $good1: $given_price1,
-    *  real $good1: $real_price1...
-    *
     *
     * ...
     * [Autonav]
@@ -209,26 +201,26 @@ void map_open (void)
    window_addImage( wid, -90 + 32, y - 32, 0, 0, "imgFaction", NULL, 0 );
    y -= 64 + 10;
 
-   // /* Faction */
-   // window_addText( wid, x, y, 90, 20, 0, "txtSFaction",
-   //       &gl_smallFont, &cDConsole, "Faction:" );
-   // window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtFaction",
-   //       &gl_smallFont, &cBlack, NULL );
-   // y -= 2 * gl_smallFont.h + 5 + 15;
+   /* Faction */
+   window_addText( wid, x, y, 90, 20, 0, "txtSFaction",
+         &gl_smallFont, &cDConsole, "Faction:" );
+   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtFaction",
+         &gl_smallFont, &cBlack, NULL );
+   y -= 2 * gl_smallFont.h + 5 + 15;
 
-   // /* Standing */
-   // window_addText( wid, x, y, 90, 20, 0, "txtSStanding",
-   //       &gl_smallFont, &cDConsole, "Standing:" );
-   // window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtStanding",
-   //       &gl_smallFont, &cBlack, NULL );
-   // y -= 2 * gl_smallFont.h + 5 + 15;
+   /* Standing */
+   window_addText( wid, x, y, 90, 20, 0, "txtSStanding",
+         &gl_smallFont, &cDConsole, "Standing:" );
+   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtStanding",
+         &gl_smallFont, &cBlack, NULL );
+   y -= 2 * gl_smallFont.h + 5 + 15;
 
-   // /* Presence. */
-   // window_addText( wid, x, y, 90, 20, 0, "txtSPresence",
-   //       &gl_smallFont, &cDConsole, "Presence:" );
-   // window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtPresence",
-   //       &gl_smallFont, &cBlack, NULL );
-   // y -= 2 * gl_smallFont.h + 5 + 15;
+   /* Presence. */
+   window_addText( wid, x, y, 90, 20, 0, "txtSPresence",
+         &gl_smallFont, &cDConsole, "Presence:" );
+   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtPresence",
+         &gl_smallFont, &cBlack, NULL );
+   y -= 2 * gl_smallFont.h + 5 + 15;
 
    /* Planets */
    window_addText( wid, x, y, 90, 20, 0, "txtSPlanets",
@@ -237,19 +229,11 @@ void map_open (void)
          &gl_smallFont, &cBlack, NULL );
    y -= 2 * gl_smallFont.h + 5 + 15;
 
-   // /* Services */
+   /* Services */
    window_addText( wid, x, y, 90, 20, 0, "txtSServices",
          &gl_smallFont, &cDConsole, "Services:" );
    window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtServices",
          &gl_smallFont, &cBlack, NULL );
-   y -= 2 * gl_smallFont.h + 5 + 15;
-
-   /* Prices */
-   window_addText( wid, x, y, 90, 20, 0, "txtSPrices",
-         &gl_smallFont, &cDConsole, "Prices:" );
-   window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 250, 0, "txtPrices",
-         &gl_smallFont, &cBlack, NULL );
-   y -= 2 * gl_smallFont.h + 5 + 15;
 
    /* Close button */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
@@ -297,17 +281,17 @@ static void map_update( unsigned int wid )
 {
    int i;
    StarSystem* sys;
-   int f, x, y, h;
+   int f, h, x, y;
    double standing, nstanding;
    unsigned int services;
-   // int l;
-   int hasPlanets;
+   int l;
+   int hasPresence, hasPlanets;
    char t;
    char buf[PATH_MAX];
    int p;
    glTexture *logo;
    double w;
-   // double unknownPresence;
+   double unknownPresence;
 
    /* Needs map to update. */
    if (!map_isOpen())
@@ -342,22 +326,22 @@ static void map_update( unsigned int wid )
 
       /* Faction */
       window_modifyImage( wid, "imgFaction", NULL, 0, 0 );
-      // window_moveWidget( wid, "txtSFaction", x, y);
-      // window_moveWidget( wid, "txtFaction", x + 50, y - gl_smallFont.h - 5 );
-      // window_modifyText( wid, "txtFaction", "Unknown" );
-      // y -= 2 * gl_smallFont.h + 5 + 15;
+      window_moveWidget( wid, "txtSFaction", x, y);
+      window_moveWidget( wid, "txtFaction", x + 50, y - gl_smallFont.h - 5 );
+      window_modifyText( wid, "txtFaction", "Unknown" );
+      y -= 2 * gl_smallFont.h + 5 + 15;
 
-      // /* Standing */
-      // window_moveWidget( wid, "txtSStanding", x, y );
-      // window_moveWidget( wid, "txtStanding", x + 50, y - gl_smallFont.h - 5 );
-      // window_modifyText( wid, "txtStanding", "Unknown" );
-      // y -= 2 * gl_smallFont.h + 5 + 15;
+      /* Standing */
+      window_moveWidget( wid, "txtSStanding", x, y );
+      window_moveWidget( wid, "txtStanding", x + 50, y - gl_smallFont.h - 5 );
+      window_modifyText( wid, "txtStanding", "Unknown" );
+      y -= 2 * gl_smallFont.h + 5 + 15;
 
-      // /* Presence. */
-      // window_moveWidget( wid, "txtSPresence", x, y );
-      // window_moveWidget( wid, "txtPresence",  x + 50, y - gl_smallFont.h - 5 );
-      // window_modifyText( wid, "txtPresence", "Unknown" );
-      // y -= 2 * gl_smallFont.h + 5 + 15;
+      /* Presence. */
+      window_moveWidget( wid, "txtSPresence", x, y );
+      window_moveWidget( wid, "txtPresence",  x + 50, y - gl_smallFont.h - 5 );
+      window_modifyText( wid, "txtPresence", "Unknown" );
+      y -= 2 * gl_smallFont.h + 5 + 15;
 
       /* Planets */
       window_moveWidget( wid, "txtSPlanets", x, y );
@@ -365,10 +349,10 @@ static void map_update( unsigned int wid )
       window_modifyText( wid, "txtPlanets", "Unknown" );
       y -= 2 * gl_smallFont.h + 5 + 15;
 
-      // /* Services */
-      // window_moveWidget( wid, "txtSServices", x, y );
-      // window_moveWidget( wid, "txtServices", x + 50, y -gl_smallFont.h - 5 );
-      // window_modifyText( wid, "txtServices", "Unknown" );
+      /* Services */
+      window_moveWidget( wid, "txtSServices", x, y );
+      window_moveWidget( wid, "txtServices", x + 50, y -gl_smallFont.h - 5 );
+      window_modifyText( wid, "txtServices", "Unknown" );
 
       /*
        * Bottom Text
@@ -402,9 +386,9 @@ static void map_update( unsigned int wid )
    }
    if (f == -1) {
       window_modifyImage( wid, "imgFaction", NULL, 0, 0 );
-      // window_modifyText( wid, "txtFaction", "N/A" );
-      // window_modifyText( wid, "txtStanding", "N/A" );
-      // h = gl_smallFont.h;
+      window_modifyText( wid, "txtFaction", "N/A" );
+      window_modifyText( wid, "txtStanding", "N/A" );
+      h = gl_smallFont.h;
    }
    else {
       if (i==sys->nplanets) /* saw them all and all the same */
@@ -418,53 +402,55 @@ static void map_update( unsigned int wid )
                -90 + logo->w/2, -20 - 32 - 10 - gl_defFont.h + logo->h/2);
 
       /* Modify the text */
-      // window_modifyText( wid, "txtFaction", buf );
-      // window_modifyText( wid, "txtStanding",
-      //       faction_getStanding( standing / nstanding ) );
+      window_modifyText( wid, "txtFaction", buf );
+      window_modifyText( wid, "txtStanding",
+            faction_getStanding( standing / nstanding ) );
 
-      // h = gl_printHeightRaw( &gl_smallFont, w, buf );
+      h = gl_printHeightRaw( &gl_smallFont, w, buf );
    }
 
-   // /* Faction */
-   // window_moveWidget( wid, "txtSFaction", x, y);
-   // window_moveWidget( wid, "txtFaction", x + 50, y - gl_smallFont.h - 5 );
-   // y -= gl_smallFont.h + h + 5 + 15;
+   /* Faction */
+   window_moveWidget( wid, "txtSFaction", x, y);
+   window_moveWidget( wid, "txtFaction", x + 50, y - gl_smallFont.h - 5 );
+   y -= gl_smallFont.h + h + 5 + 15;
 
-   // /* Standing */
-   // window_moveWidget( wid, "txtSStanding", x, y );
-   // window_moveWidget( wid, "txtStanding", x + 50, y - gl_smallFont.h - 5 );
-   // y -= 2 * gl_smallFont.h + 5 + 15;
+   /* Standing */
+   window_moveWidget( wid, "txtSStanding", x, y );
+   window_moveWidget( wid, "txtStanding", x + 50, y - gl_smallFont.h - 5 );
+   y -= 2 * gl_smallFont.h + 5 + 15;
 
-   // /* Get presence. */
-   // hasPresence = 0;
-   // buf[0]      = '\0';
-   // l           = 0;
-   // unknownPresence = 0;
-   // for (i=0; i < sys->npresence; i++) {
-   //    if (sys->presence[i].value <= 0)
-   //       continue;
-   //    hasPresence = 1;
-   //    if (faction_isKnown( sys->presence[i].faction )) {
-   //       t           = faction_getColourChar(sys->presence[i].faction);
-   //       /* Use map grey instead of default neutral colour */
-   //       l += nsnprintf( &buf[l], PATH_MAX-l, "%s\e0%s: \e%c%.0f",
-   //                      (l==0)?"":"\n", faction_shortname(sys->presence[i].faction),
-   //                      (t=='N')?'M':t, sys->presence[i].value);
-   //    }
-   //    else
-   //       unknownPresence += sys->presence[i].value;
-   // }
-   // if (unknownPresence != 0)
-   //    l += nsnprintf( &buf[l], PATH_MAX-l, "%s\e0%s: \e%c%.0f",
-   //                   (l==0)?"":"\n", "Unknown", 'M', unknownPresence);
-   // if (hasPresence == 0)
-   //    nsnprintf(buf, PATH_MAX, "N/A");
-   // window_moveWidget( wid, "txtSPresence", x, y );
-   // window_moveWidget( wid, "txtPresence", x + 50, y-gl_smallFont.h-5 );
-   // window_modifyText( wid, "txtPresence", buf );
-   // /* Scroll down. */
-   // h  = gl_printHeightRaw( &gl_smallFont, w, buf );
-   // y -= 40 + (h - gl_smallFont.h);
+   /* Get presence. */
+   hasPresence = 0;
+   buf[0]      = '\0';
+   l           = 0;
+   unknownPresence = 0;
+   for (i=0; i < sys->npresence; i++) {
+      if (sys->presence[i].value <= 0)
+         continue;
+      hasPresence = 1;
+      if (faction_isKnown( sys->presence[i].faction )) {
+         t           = faction_getColourChar(sys->presence[i].faction);
+         /* Use map grey instead of default neutral colour */
+         l += nsnprintf( &buf[l], PATH_MAX-l, "%s\e0%s: \e%c%.0f",
+                        (l==0)?"":"\n", faction_shortname(sys->presence[i].faction),
+                        (t=='N')?'M':t, sys->presence[i].value);
+      }
+      else
+         unknownPresence += sys->presence[i].value;
+      if (l > PATH_MAX)
+         break;
+   }
+   if (unknownPresence != 0)
+      l += nsnprintf( &buf[l], PATH_MAX-l, "%s\e0%s: \e%c%.0f",
+                     (l==0)?"":"\n", "Unknown", 'M', unknownPresence);
+   if (hasPresence == 0)
+      nsnprintf(buf, PATH_MAX, "N/A");
+   window_moveWidget( wid, "txtSPresence", x, y );
+   window_moveWidget( wid, "txtPresence", x + 50, y-gl_smallFont.h-5 );
+   window_modifyText( wid, "txtPresence", buf );
+   /* Scroll down. */
+   h  = gl_printHeightRaw( &gl_smallFont, w, buf );
+   y -= 40 + (h - gl_smallFont.h);
 
    /* Get planets */
    hasPlanets = 0;
@@ -491,6 +477,8 @@ static void map_update( unsigned int wid )
          p += nsnprintf( &buf[p], PATH_MAX-p, ",\n\e%c%s\en",
                t, sys->planets[i]->name );
       hasPlanets = 1;
+      if (p > PATH_MAX)
+         break;
    }
    if(hasPlanets == 0)
       strncpy( buf, "None", PATH_MAX );
@@ -507,48 +495,18 @@ static void map_update( unsigned int wid )
    window_moveWidget( wid, "txtServices", x + 50, y-gl_smallFont.h-5 );
    services = 0;
    for (i=0; i<sys->nplanets; i++)
-      if (planet_isKnown(sys->planets[i])) {
+      if (planet_isKnown(sys->planets[i]))
          services |= sys->planets[i]->services;
-      }
    buf[0] = '\0';
    p = 0;
+   /*nsnprintf(buf, sizeof(buf), "%f\n", sys->prices[0]);*/ /*Hack to control prices. */
    for (i=PLANET_SERVICE_MISSIONS; i<=PLANET_SERVICE_SHIPYARD; i<<=1)
-      if (services & i){
-         y -= 15;
-         p += nsnprintf( &buf[p], PATH_MAX-p, "%s\n", planet_getServiceName(i) );}
-   if (buf[0] == '\0'){
-      y -= 15;
-      p += nsnprintf( &buf[p], PATH_MAX-p, "None");}
+      if (services & i)
+         p += nsnprintf( &buf[p], PATH_MAX-p, "%s\n", planet_getServiceName(i) );
+   if (buf[0] == '\0')
+      p += nsnprintf( &buf[p], PATH_MAX-p, "None");
    window_modifyText( wid, "txtServices", buf );
-   y-=15;
 
-
-
-   /* System Prices */
-   buf[0] = '\0';
-   p = 0;
-
-   window_moveWidget(wid, "txtSPrices", x, y );
-   window_moveWidget( wid, "txtPrices", x + 50, y - 18 );
-
-   y-=15;
-
-   for (i=0; i<econ_nprices; i++) {
-      y-=15;
-      p += nsnprintf( &buf[p], PATH_MAX-p, "real %s:%.0f\n", commodity_stack[i].name, PRICE(commodity_stack+i, sys) );
-      if (p > PATH_MAX)
-         break;
-   }
-   if (sys->given_prices && sys->weight!=0)
-      for (i=0; i<econ_nprices; i++) {
-      y-=15;
-      p += nsnprintf( &buf[p], PATH_MAX-p, "given %s:%.0f (*%.0f)\n", commodity_stack[i].name, sys->given_prices[i], commodity_stack[i].price );
-      if (p > PATH_MAX)
-         break;
-   }
-
-   window_modifyText( wid, "txtPrices", buf);
-   y -= 30;
 
    /*
     * System Status
@@ -589,9 +547,6 @@ static void map_update( unsigned int wid )
    }
    window_modifyText( wid, "txtSystemStatus", buf );
 }
-
-
-
 
 
 /**
@@ -1831,5 +1786,4 @@ int map_center( const char *sys )
 
    return 0;
 }
-
 

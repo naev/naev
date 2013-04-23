@@ -314,8 +314,6 @@ int commodity_load (void)
    DEBUG("Loaded %d Commodit%s", commodity_nstack, (commodity_nstack==1) ? "y" : "ies" );
 
    return 0;
-
-
 }
 
 
@@ -343,8 +341,6 @@ void commodity_free (void)
  */
 int econ_refreshsolutions(void)
 {
-   printf("refreshing solutions!\n");
-
    int eq, i, j, v, jmp;
    float denom, val, factor;
    StarSystem *sys;
@@ -353,7 +349,7 @@ int econ_refreshsolutions(void)
 
    /* make a system of equations where every system's prices (real good value) are equal to
       weighted value of own given value (price) and neighbor's real good values/prices,
-      then solve it, and put the results into the solution matrix */
+      then solve it (using gaussian elimination), and put the results into the solution matrix */
 
       /* initialize the system of equations */
    float *eqsystem = calloc(sizeof(float), systems_nstack*sysw);
@@ -388,13 +384,6 @@ int econ_refreshsolutions(void)
          eqsystem[eq*sysw + systems_nstack + eq] = sys->weight/denom;
    }
 
-   // printf("initial system of equations:\n");
-   // for (eq=0; eq<systems_nstack; eq++){
-   //    for (v=0; v<sysw; v++)
-   //       printf("%.2f\t",eqsystem[eq*sysw+v]);
-   //    printf("\n");
-   // }
-
       /* convert the system of equations into triangle form */
    for (i=0; i<systems_nstack; i++){
 
@@ -418,16 +407,6 @@ int econ_refreshsolutions(void)
 
    }
 
-   // printf("triangle form done\n");
-   // printf("system of equations:\n");
-   // for (eq=0; eq<systems_nstack; eq++){
-   //    for (v=0; v<sysw; v++){
-   //       printf("%.2f\t",eqsystem[eq*sysw+v]);
-   //    }
-   //    printf("\n");
-   // }
-
-
       /* get the solutions (the real values in terms of the given values) */
    for (i=systems_nstack-1; i>=0; i-- ){
 
@@ -450,19 +429,6 @@ int econ_refreshsolutions(void)
    free(tmp);
    free(eqsystem);
 
-   // printf("\n\n -- Solutions: -- \n");
-   // for (j=0; j<systems_nstack; j++){
-   //    for (i=0; i<systems_nstack; i++){
-   //       if (solutions[j*systems_nstack+i]!=0)
-   //          printf("%.2f, ",solutions[j*systems_nstack+i]);
-   //       else printf("    , ");
-   //    }
-   //    printf("\n");
-   // }
-   // printf("\n----------\n");
-
-   printf("done refreshing solutions!\n");
-
    return 0;
 }
 
@@ -475,7 +441,6 @@ void econ_updateprices(void)
    int i, s, g;
    StarSystem *sys;
 
-   printf("updating prices!\n");
       /* get the real values from the given values and the solution matrix*/
    for (i=0; i<systems_nstack; i++){
       sys = systems_stack+i;
@@ -522,8 +487,6 @@ void econ_init(void)
 {
    int s, g, jmp;
    StarSystem *sys;
-
-   printf("init ing econ\n");
 
    if (econ_initialized){ WARN("economy already initialized!\n"); return;}
 

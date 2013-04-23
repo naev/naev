@@ -117,9 +117,6 @@ function make_event()
       end
    end
 
-   --rm me
-   print("At "..sys:name().." doing event "..event[1])
-
       --get the original prices
    for i=1,#event-2 do
       comm_name = event[i+2][1]

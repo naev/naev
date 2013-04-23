@@ -3292,8 +3292,6 @@ int space_sysSave( xmlTextWriterPtr writer )
    int i, j, g, changed;
    StarSystem *sys;
 
-   printf("Saving economy!\n");
-
    xmlw_startElem(writer,"space");
 
    for (i=0; i<systems_nstack; i++) {

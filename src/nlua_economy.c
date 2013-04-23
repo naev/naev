@@ -146,7 +146,7 @@ static int economyL_getPreferredPrice( lua_State *L)
  *    @luaparam system the system/name of system to set the preferred price of
  *    @luaparam commodity the commodity/name of commodity to set the preferred price of
  *    @luaparam new the new preferred price of the system, not accounting for the commodity base price
- * @usage economy.getPreferredPrice( "Doranthex", "Food" )
+ * @usage economy.setPreferredPrice( "Doranthex", "Food", 120 )
  */
 static int economyL_setPreferredPrice( lua_State *L)
 {
@@ -224,7 +224,7 @@ static int economyL_getSysWeight( lua_State *L )
  *
  *    @luaparam system the system/name of system to set the weight of
  *    @luaparam new the new weight of the system
- * @usage economy.setSysPrice( "Doranthex" )
+ * @usage economy.setSysPrice( "Doranthex", 2.0 )
  */
 static int economyL_setSysWeight( lua_State *L )
 {
@@ -280,9 +280,9 @@ static int economyL_getJmpWeight( lua_State *L )
 /**
  * @brief set the weight for a jump. After, call economy.updateSolutions() and economy.updatePrices()
  *
- *    @luaparam jump the jump to get the weight of
+ *    @luaparam jump the jump to set the weight of
  *    @luaparam new the new weight of the jump
- * @usage economy.getJmpWeight( jump.get( "Ogat", "Goddard" ), 0.1 )
+ * @usage economy.setJmpWeight( jump.get( "Ogat", "Goddard" ), 0.1 )
  */
 static int economyL_setJmpWeight( lua_State *L )
 {

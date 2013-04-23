@@ -211,7 +211,7 @@ static void commodity_exchange_open( unsigned int wid )
          "txtDInfo", &gl_smallFont, &cBlack, NULL );
    window_addText( wid, -40, -140, LAND_BUTTON_WIDTH-20,
          h-140-LAND_BUTTON_HEIGHT, 0,
-         "txtDesc", &gl_smallFont, &cBlack, NULL );//&cBlack
+         "txtDesc", &gl_smallFont, &cBlack, NULL );
 
    /* goods list */
    if (land_planet->ncommodities > 0) {
@@ -1396,7 +1396,6 @@ static void land_createMainTab( unsigned int wid )
    glTexture *logo;
    int offset;
    int w,h;
-   // int i;
 
    /* Get window dimensions. */
    window_dimWindow( wid, &w, &h );
@@ -1413,7 +1412,6 @@ static void land_createMainTab( unsigned int wid )
          offset = 84;
       }
    }
-
 
    /*
     * Pretty display.

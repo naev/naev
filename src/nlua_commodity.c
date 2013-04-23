@@ -47,8 +47,8 @@ static const luaL_reg commodityL_methods[] = {
  */
 int nlua_loadCommodity( lua_State *L, int readonly )
 {
-   (void) readonly; /* Everything is readonly. */ //### Not anymore, with setprice
-
+   (void) readonly; /* Everything is readonly. */
+   
    /* Create the metatable */
    luaL_newmetatable(L, COMMODITY_METATABLE);
 
