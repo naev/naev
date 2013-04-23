@@ -3371,8 +3371,6 @@ int space_sysLoad( xmlNodePtr parent )
 
    space_clearKnown();
 
-   printf("\nLoading economy\n");
-
    node = parent->xmlChildrenNode;
    do {
       if (xml_isNode(node,"space")) {

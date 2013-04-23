@@ -521,7 +521,6 @@ void econ_destroy(void)
 {
    int s;
    StarSystem *sys;
-   printf("destroying econ!\n");
    if (econ_initialized!=1){ WARN("economy not inited!\n"); return; }
    for (s=0; s<systems_nstack; s++){
       sys=systems_stack+s;

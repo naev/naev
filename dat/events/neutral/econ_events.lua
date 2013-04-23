@@ -190,9 +190,6 @@ function end_event(str)
       end
    end
 
-
-   print("ending event at"..sys:name())
-
    if weighted==0 then --if system was unweighted, just unweight it
       economy.setSysWeight(sys, 0.0)
       economy.updateSolutions()
