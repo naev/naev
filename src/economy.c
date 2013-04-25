@@ -60,8 +60,9 @@ static int econ_initialized   = 0; /**< Is economy system initialized? */
 static int *econ_comm         = NULL; /**< Commodities to calculate. */
 int econ_nprices              = 0; /**< Number of prices to calculate. */
 
-
 float *solutions; /* the solution matrix: formulas for system prices in terms of given prices */
+
+char show_prices; /* whether or not to show prices on the map, default 0 */
 
 /*
  * Prototypes.
@@ -333,6 +334,14 @@ void commodity_free (void)
    free( econ_comm );
 }
 
+/**
+ * @brief sets whether to show prices on the map
+ */
+void set_showPrice(char boolean)
+{
+   show_prices = boolean;
+}
+
 
 /**
  * @brief update solution matrix, which is a table of variables that tell the price of every 
@@ -478,6 +487,7 @@ void econ_revert(void)
       for (g=0; g<econ_nprices; g++)
          sys->given_prices[g] = xml_econvals[i][1 + g];
    }
+   set_showPrice(0);
 }
 
 /**
@@ -510,7 +520,6 @@ void econ_init(void)
       for (g=0; g<econ_nprices; g++)
          xml_econvals[s][1+g] = sys->given_prices[g];
    }
-
    econ_initialized = 1;
 }
 

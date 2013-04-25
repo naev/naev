@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Prices Info">
+ <general>
+  <mass>0</mass>
+  <price>1</price>
+  <description>Shows prices throughout all known systems. Mostly for debugging.</description>
+  <gfx_store>map</gfx_store>
+ </general>
+ <specific type="Price Map">
+  <all/>
+ </specific>
+</outfit>

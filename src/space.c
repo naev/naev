@@ -3348,8 +3348,9 @@ int space_sysSave( xmlTextWriterPtr writer )
          }
       }
       xmlw_endElem(writer); /* "sys_econ" */
-      
    }
+
+   xmlw_elemEmpty(writer, "show_prices");
 
    xmlw_endElem(writer); /* "space" */
 
@@ -3394,6 +3395,8 @@ int space_sysLoad( xmlNodePtr parent )
             else if (xml_isNode(cur, "sys_econ")){
                space_parseSysSave(cur);
             }
+            else if (xml_isNode(cur, "show_prices"))
+               set_showPrice(1);
 
          } while (xml_nextNode(cur));
       }

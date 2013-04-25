@@ -2492,6 +2492,11 @@ int player_addOutfit( const Outfit *o, int quantity )
       player_addLicense(o->name);
       return 1; /* Success. */
    }
+   /* special case if it's a price map */
+   else if (outfit_isPriceMap(o)) {
+      set_showPrice(1);
+      return 1;
+   }
 
    /* Try to find it. */
    for (i=0; i<player_noutfits; i++) {
