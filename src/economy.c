@@ -54,19 +54,18 @@ extern Planet *planet_stack; /**< Planet stack. */
 extern int planet_nstack; /**< Num of planets */
 extern int commodity_mod;  /**< Smallest unit the player can buy, for player prices */
 
-float **xml_econvals; /* an array of array of all systems's original weights and good values */
+float **xml_prices = NULL; /* an array of: array of all systems's original prices, NULL if none */
 
 static int econ_initialized   = 0; /**< Is economy system initialized? */
 static int *econ_comm         = NULL; /**< Commodities to calculate. */
 int econ_nprices              = 0; /**< Number of prices to calculate. */
-
-float *solutions; /* the solution matrix: formulas for system prices in terms of given prices */
 
 char show_prices; /* whether or not to show prices on the map, default 0 */
 
 /*
  * Prototypes.
  */
+int econ_refreshcommprice(Commodity*comm);   /* Refresh the prices of a commodity */
 /* Commodity. */
 static void commodity_freeOne( Commodity* com );
 static int commodity_parse( Commodity *temp, xmlNodePtr parent );
@@ -344,98 +343,151 @@ void set_showPrice(char boolean)
 
 
 /**
- * @brief update solution matrix, which is a table of variables that tell the price of every 
- *    system in terms of the other systems. Expensive
+ * @brief update the prices of a commodity, for any system that does 
+ *    not have a set price
  *    @return 0 on success.
  */
-int econ_refreshsolutions(void)
+int econ_refreshcommprice(Commodity *comm)
 {
-   int eq, i, j, v, jmp;
-   float denom, val, factor;
-   StarSystem *sys;
-   int sysw = systems_nstack*2;   /* the width of the system of equations */
-   float *tmp = malloc(sizeof(float)*sysw);
+   int s, e, i, j, v, jmp;
+   float n_nsys, val, factor;
+   float *eq, *eq2;
+   StarSystem *sys, *nsys;
 
-   /* make a system of equations where every system's prices (real good value) are equal to
-      weighted value of own given value (price) and neighbor's real good values/prices,
-      then solve it (using gaussian elimination), and put the results into the solution matrix */
+   /*
+    * Any system that does not have a specific price set will have a price equal to the average
+    *    price of it's neighbors. 
+    * This function creates a system of equations, where the systems without prices are in a 
+    *    square matrix in the left side, and the right side is composed of systems with prices.
+    *    The left side is put into triangle form, and then the prices of those systems with no set/
+    *    explicit prices can easily be figured out in terms of systems that do have explicit prices
+    *    (the right hand side)
+    */
+
+   /* get the number of unset systems, and their positions within the sys of eqs */
+   int n_unset=0; /* the number of unset sysems */
+   int *sys_pos=malloc(sizeof(int)*systems_nstack); /* position of each system in the system of equations*/
+   for (s=0; s<systems_nstack; s++) /* get the number of unset systems */
+      if (systems_stack[s].is_priceset[comm->index]==0)
+         n_unset++;
+   i=0;
+   int sys_i=0; /* the system of equations index that we're filling out */
+   for (s=0; s<systems_nstack; s++){ /* get the positions of the systems in the sys of eqs */
+      if (systems_stack[s].is_priceset[comm->index]==0)
+         sys_pos[s] = sys_i++;
+      else
+         sys_pos[s] = n_unset + i++;
+   }
 
       /* initialize the system of equations */
+   int sysw = systems_nstack;   /* the width of the system of equations */
+   int sysh = n_unset; /* the height of the system of equations */
    float *eqsystem = calloc(sizeof(float), systems_nstack*sysw);
 
       /* setup the system of equations */
-   for (eq=0; eq<systems_nstack; eq++){
-      sys = systems_stack+eq;
-      denom=sys->weight;
+   e = 0;
+   eq=eqsystem+0; /* the equation we're on */
+   for (s=0; s<systems_nstack; s++){
+      sys = systems_stack+s;
+      if (sys->is_priceset[comm->index])
+         continue;
+      n_nsys=0.0;
       for (jmp=0; jmp<sys->njumps; jmp++){   /* get number of trading neighbors */
          if (jp_isFlag( sys->jumps+jmp, JP_EXITONLY) || jp_isFlag(sys->jumps+jmp, JP_HIDDEN))
             continue;
-         for (j=0; j<sys->jumps[jmp].target->njumps; j++)
-            if (sys == sys->jumps[jmp].target->jumps[j].target){
-               if (!jp_isFlag( sys->jumps[jmp].target->jumps+j, JP_EXITONLY ) && !jp_isFlag(sys->jumps+jmp, JP_HIDDEN))
-                  denom+=sys->jumps[jmp].trade_weight;
+         nsys = sys->jumps[jmp].target; /* neighboring system */
+         for (j=0; j<nsys->njumps; j++) /* check that the jump back is valid */
+            if (sys == nsys->jumps[j].target){
+               if (!jp_isFlag( nsys->jumps+j, JP_EXITONLY ) && !jp_isFlag(sys->jumps+jmp, JP_HIDDEN))
+                  n_nsys+=1.0;
                break;
             }
       }
-      val = -1.0/((denom!=0.0)?denom:1.0);
-      for (jmp=0; jmp<sys->njumps; jmp++){   /* get number of trading neighbors */
-         if (jp_isFlag( sys->jumps+jmp, JP_EXITONLY) || jp_isFlag(sys->jumps+jmp, JP_HIDDEN))
-            continue;
-         for (j=0; j<sys->jumps[jmp].target->njumps; j++)
-            if (sys == sys->jumps[jmp].target->jumps[j].target){
-               if (!jp_isFlag( sys->jumps[jmp].target->jumps+j, JP_EXITONLY ) && !jp_isFlag(sys->jumps+jmp, JP_HIDDEN))
-                  eqsystem[eq*sysw+sys->jumps[jmp].target->id] = val * sys->jumps[jmp].trade_weight;
-               break;
-            }
+      if (n_nsys!=0.0){
+         val = -1.0/n_nsys; /* how much each neighboring system affects system sys's price */
+         for (jmp=0; jmp<sys->njumps; jmp++){   /* update equation with neighbor's values */
+            if (jp_isFlag( sys->jumps+jmp, JP_EXITONLY) || jp_isFlag(sys->jumps+jmp, JP_HIDDEN))
+               continue;
+            nsys = sys->jumps[jmp].target; /* neighboring system */
+            for (j=0; j<nsys->njumps; j++) /* check that the jump back is valid */
+               if (sys == nsys->jumps[j].target){
+                  if (!jp_isFlag( nsys->jumps+j, JP_EXITONLY ))
+                     eq[sys_pos[nsys->id] ] = val;
+                  break;
+               }
+         }
       }
-      eqsystem[eq*sysw + eq] = 1.0;
-      if (sys->given_prices!=NULL)  /* if the system has a preferred value */
-         eqsystem[eq*sysw + systems_nstack + eq] = sys->weight/denom;
+      eq[e++] = 1.0;
+      eq+=sysw;
    }
 
       /* convert the system of equations into triangle form */
-   for (i=0; i<systems_nstack; i++){
+   for (i=0; i<sysh; i++){
+      eq = eqsystem+i*sysw;
 
-      /* factor out var i from all equations below i */
+      /* factor out var i from all equations below eq i */
       for (j=i+1; j<systems_nstack; j++){
-         if (eqsystem[j*sysw + i]==0) /* if already at 0 */
+         eq2 = eqsystem+j*sysw;
+         if (eq2[i]==0.0) /* if already at 0 */
             continue;
-         factor = -eqsystem[i*sysw+i]/eqsystem[j*sysw+i];
-         for (v=i; v<sysw; v++){
-            eqsystem[j*sysw+v]*=factor;
-            eqsystem[j*sysw+v]+=eqsystem[i*sysw+v];
+         factor = -eq[i]/eq2[i];
+         eq2[i]=0.0;
+         for (v=i+1; v<sysw; v++){
+            eq2[v]*=factor;
+            eq2[v]+=eq[v];
          }
             /* manipulate var j of equation j to 1 */
-         if (eqsystem[j*sysw + j]!=0){
-            factor = eqsystem[j*sysw + j];
+         if (eq2[j]!=0){
+            factor = eq2[j];
             for (v=i+1; v<sysw; v++)
-               eqsystem[j*sysw + v]/=factor;
+               eq2[v]/=factor;
          }
-         else eqsystem[j*sysw + j]=1.0;
+         else eq2[j]=1.0;
       }
 
    }
 
-      /* get the solutions (the real values in terms of the given values) */
-   for (i=systems_nstack-1; i>=0; i-- ){
+      /* get the solutions (the prices of systems in terms of systems with known prices) */
+   for (i=sysh-1; i>=0; i-- ){
 
-      /* factor val i in eq i to 1 */
-      factor = eqsystem[i*sysw + i];
-      for (v=i; v<sysw; v++)
-         eqsystem[i*sysw + v]/=factor;
+      eq = eqsystem+i*sysw;
 
       /* substitute in known values */
-      for (j=i+1; j<systems_nstack; j++){
-         for (v=0; v<systems_nstack; v++){
-            eqsystem[i*sysw+systems_nstack+v]-=eqsystem[i*sysw+j]*solutions[j*systems_nstack+v];
+      for (j=i+1; j<n_unset; j++){ 
+         /* sub in equation j's values into equation i */
+         if (eq[j]==0.0)
+            continue;
+         eq2 = eqsystem+j*sysw;
+         for (v=n_unset; v<sysw; v++){
+            eq[v]-=eq[j]*eq2[v];
          }
+         /* eq[j]=0; *//* aesthetic, if you want to look at the values */
       }
-
-      memcpy(solutions+i*systems_nstack, eqsystem+i*sysw+systems_nstack, systems_nstack*sizeof(float));
    }
 
+      /* put the solutions in */
+   int u;
+   int nsys_wprices = systems_nstack-n_unset; /* number of systems with prices */
+   float *set_prices = (float *) malloc(sizeof(float)*nsys_wprices); /* known prices, in the order they appear */
+   int *unset_pos = (int *) malloc(sizeof(int)*n_unset); /* array from pos in eq to pos in system of eq */
+   for (s=0, u=0, i=0; s<sysw; s++){
+      if (systems_stack[s].is_priceset[comm->index])
+         set_prices[i++]=systems_stack[s].prices[comm->index];
+      else{
+         unset_pos[u++]=s;
+      }
+   }
+   for (i=0; i<n_unset; i++){
+      sys = systems_stack+unset_pos[i];
+      sys->prices[comm->index]=0.0;
+      eq = eqsystem+sysw*i;
+      for (j=0; j<nsys_wprices; j++){
+         if (eq[n_unset+j]==0.0)
+            continue;
+         sys->prices[comm->index]-=eq[n_unset+j]*set_prices[j];
+      }
+   }
 
-   free(tmp);
    free(eqsystem);
 
    return 0;
@@ -443,27 +495,19 @@ int econ_refreshsolutions(void)
 
 
 /**
- * @brief update prices using the solution matrix. not expensive
+ * @brief For every commodity that has had prices changed, update the prices
+ *    of any system with no set price
  */
 void econ_updateprices(void)
 {
-   int i, s, g;
-   StarSystem *sys;
+   int c;
 
-      /* get the real values from the given values and the solution matrix*/
-   for (i=0; i<systems_nstack; i++){
-      sys = systems_stack+i;
-      for (g=0; g<econ_nprices; g++){
-         sys->real_prices[g]=0.0;
-         for (s=0; s<systems_nstack; s++){
-            if (systems_stack[s].given_prices==NULL)
-               continue;
-            sys->real_prices[g] 
-               += systems_stack[s].given_prices[g] * solutions[i*systems_nstack+s];
-         }
+      /* refresh the price of any commodities that have been changed*/
+   for (c=0; c<econ_nprices; c++)
+      if (commodity_stack[c].changed){
+         econ_refreshcommprice(commodity_stack+c);
+         commodity_stack[c].changed=0;
       }
-   }
-
 }
 
 /**
@@ -471,23 +515,27 @@ void econ_updateprices(void)
  */
 void econ_revert(void)
 {
-   int i, g;
-   StarSystem *sys;\
+   int i, c;
+   StarSystem *sys;
 
       /* revert to the old values */
-   for (i=0;i<systems_nstack; i++){
+   for (i=0; i<systems_nstack; i++){
       sys = systems_stack+i;
-      if (xml_econvals[i]==NULL){
-         sys->weight = 0;
-         free(sys->given_prices);
-         sys->given_prices = NULL;
+      if (xml_prices[i]==NULL){
+         for (c=0; c<econ_nprices; c++)
+            sys->is_priceset[c]=0;
          continue;
       }
-      sys->weight = xml_econvals[i][0];
-      for (g=0; g<econ_nprices; g++)
-         sys->given_prices[g] = xml_econvals[i][1 + g];
+      for (c=0; c<econ_nprices; c++){
+         if (xml_prices[i][c]>0.0 && xml_prices[i][c]!=sys->prices[c])
+            sys->prices[c]=xml_prices[i][c];
+      }
    }
+   for (c=0; c<econ_nprices; c++)
+      commodity_stack[c].changed=1;
    set_showPrice(0);
+
+   return;
 }
 
 /**
@@ -495,31 +543,25 @@ void econ_revert(void)
  */
 void econ_init(void)
 {
-   int s, g, jmp;
+   int s, c;
    StarSystem *sys;
 
    if (econ_initialized){ WARN("economy already initialized!\n"); return;}
 
-   for (s=0; s<systems_nstack; s++){
-      sys=systems_stack+s;
-      sys->real_prices = (float *) calloc(sizeof(float), econ_nprices);
-      for (jmp=0; jmp<sys->njumps; jmp++)
-         sys->jumps[jmp].trade_weight=1.0;
-   }
-   solutions = malloc(sizeof(float)*systems_nstack*systems_nstack);
-
       /* save original values */
-   int w = 1 + econ_nprices;  /* width of xml_econvals entry; system weight and preferred prices */
-   xml_econvals = (float **) calloc(sizeof(float *), systems_nstack);
+   if (xml_prices==NULL)
+      xml_prices = (float **) calloc(sizeof(float *), systems_nstack);
    for (s=0; s<systems_nstack; s++){
       sys = systems_stack+s;
-      if (sys->given_prices==NULL)
-         continue;
-      xml_econvals[s] = (float *) malloc(sizeof(float)*w);
-      xml_econvals[s][0] = sys->weight;
-      for (g=0; g<econ_nprices; g++)
-         xml_econvals[s][1+g] = sys->given_prices[g];
+      for (c=0; c<econ_nprices; c++){
+         if (sys->is_priceset[c]==0)
+            continue;
+         if (xml_prices[s]==NULL)
+            xml_prices[s] = (float *) calloc(sizeof(float), econ_nprices);
+         xml_prices[s][c] = sys->prices[c];
+      }
    }
+
    econ_initialized = 1;
 }
 
@@ -533,15 +575,11 @@ void econ_destroy(void)
    if (econ_initialized!=1){ WARN("economy not inited!\n"); return; }
    for (s=0; s<systems_nstack; s++){
       sys=systems_stack+s;
-      free(sys->given_prices); 
-      free(sys->real_prices);
-      free(xml_econvals[s]);
-      sys->given_prices=NULL;
-      sys->real_prices=NULL;
+      free(sys->prices); 
+      free(xml_prices[s]);
+      sys->prices=NULL;
    }
-   free(solutions);
-   free(xml_econvals);
-   solutions=NULL;
+   free(xml_prices);
    econ_initialized=0;
 }
 

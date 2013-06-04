@@ -48,26 +48,10 @@
   </jump>
  </jumps>
  <prices>
-  <weight>1.0</weight>
-  <price>
-   <name>Food</name>
-   <preferred>93.000000</preferred>
-  </price>
-  <price>
-   <name>Ore</name>
-   <preferred>47.000000</preferred>
-  </price>
-  <price>
-   <name>Industrial Goods</name>
-   <preferred>873.000000</preferred>
-  </price>
-  <price>
-   <name>Medicine</name>
-   <preferred>5362.000000</preferred>
-  </price>
-  <price>
-   <name>Luxury Goods</name>
-   <preferred>4055.000000</preferred>
-  </price>
+  <commodity name="Food">93.000000</commodity>
+  <commodity name="Ore">47.000000</commodity>
+  <commodity name="Industrial Goods">873.000000</commodity>
+  <commodity name="Medicine">5362.000000</commodity>
+  <commodity name="Luxury Goods">4055.000000</commodity>
  </prices>
 </ssys>

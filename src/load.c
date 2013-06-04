@@ -573,7 +573,6 @@ int load_game( const char* file, int version_diff )
    hook_load(node);
    space_sysLoad(node);
    /* setup the economy */
-   econ_refreshsolutions();   /* to be called when initing economy or when trade routes are updated */
    econ_updateprices(); /* to update prices when prices are changed */
 
    /* Check sanity. */

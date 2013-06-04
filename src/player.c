@@ -245,8 +245,7 @@ static void player_newSetup( int tutorial )
    /* Start the news */
    news_init();
 
-   /* start the economy */
-   econ_refreshsolutions();
+   /* Initialize economy prices */
    econ_updateprices();
 
    cam_setTargetPos( x, y, 0 );
@@ -1727,6 +1726,9 @@ void player_brokeHyperspace (void)
    hooks_run( "enter" );
    events_trigger( EVENT_TRIGGER_ENTER );
    missions_run( MIS_AVAIL_SPACE, -1, NULL, NULL );
+
+   /* update economy prices */
+   econ_updateprices();
 
    /* Player sound. */
    player_soundPlay( snd_hypJump, 1 );
