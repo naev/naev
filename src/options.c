@@ -109,7 +109,7 @@ void opt_menu (void)
 
    /* Dimensions. */
    w = 600;
-   h = 500;
+   h = 525;
 
    /* Create window and tabs. */
    opt_wid = window_create( "Options", -1, -1, w, h );
@@ -271,6 +271,11 @@ static void opt_gameplay( unsigned int wid )
    window_addText( wid, x+20, y, cw, 20, 0, "txtSettings",
          NULL, &cDConsole, "Settings" );
    y -= 25;
+
+   window_addCheckbox( wid, x, y, cw, 20,
+         "chkAutonavPause", "Pause instead of aborting Autonav", NULL, conf.autonav_pause );
+   y -= 25;
+
    window_addCheckbox( wid, x, y, cw, 20,
          "chkZoomManual", "Enable manual zoom control", NULL, conf.zoom_manual );
    y -= 25;
@@ -320,6 +325,7 @@ static void opt_gameplaySave( unsigned int wid, char *str )
    conf.zoom_manual = window_checkboxState( wid, "chkZoomManual" );
    conf.mouse_thrust = window_checkboxState(wid, "chkMouseThrust" );
    conf.save_compress = window_checkboxState( wid, "chkCompress" );
+   conf.autonav_pause = window_checkboxState( wid, "chkAutonavPause" );
    
    /* Faders. */
    conf.autonav_abort = window_getFaderValue(wid, "fadAutonav");
