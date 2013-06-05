@@ -118,7 +118,7 @@ void menu_info( int window )
 
    /* Dimensions. */
    w = 600;
-   h = 500;
+   h = 600;
 
    /* Create the window. */
    info_wid = window_create( "Info", -1, -1, w, h );
