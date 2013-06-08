@@ -98,11 +98,9 @@ function land ()
       tk.msg(title, misn_nifiheim)
       misn.osdActive(2)
       misn.markerMove(runawayMarker, system.get("Shakar"))
-      return
-   end
 
    --If we land on Nova Shakar, display message, reset target and carry on.
-   if targetworld == planet.get("Nova Shakar") then
+   else if targetworld == planet.get("Nova Shakar") then
       targetworld = planet.get("Torloth")
       tk.msg(title, misn_nova_shakar)
 
@@ -116,11 +114,9 @@ function land ()
       misn.osdActive(3)
 
       misn.markerMove(runawayMarker, system.get("Cygnus"))
-      return
-   end
 
    --If we land on Torloth, change osd, display message, reset target and carry on.
-   if targetworld == planet.get("Torloth") then
+   else if targetworld == planet.get("Torloth") then
       targetworld = planet.get("Zhiru")
 
       --If you decide to release her, speak appropiately, otherwise carry on
@@ -138,11 +134,9 @@ function land ()
       misn.osdActive(4)
 
       misn.markerMove(runawayMarker, system.get("Goddard"))
-      return
-   end
 
    --If we land on Zhiru to finish the mission, clean up, reward, and leave.
-   if targetworld == planet.get("Zhiru") then
+   else if targetworld == planet.get("Zhiru") then
       misn.markerRm(runawayMarker)
 
       --Talk to the father and get the reward
