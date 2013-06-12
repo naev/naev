@@ -71,7 +71,7 @@ function accept ()
    misn.setReward( string.format( reward_desc, reward ) )
 
    misn.setDesc( string.format( misn_desc, targetworld:name(), targetworld_sys:name() ) )
-   misn.markerAdd( system.get("Goddard"), "high")
+   misn.markerAdd( targetworld_sys, "high")
 
 
    misn.accept()
