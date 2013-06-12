@@ -58,7 +58,7 @@ function create ()
    if homeworld == nil then
       misn.finish(false)
    end
-   satellite_sys = system.get("Arandon") -- Not too unstable
+   satellite_sys = system.get("Ross 154") -- Not too unstable
    credits = 75000
 
    -- Set stuff up for the spaceport bar

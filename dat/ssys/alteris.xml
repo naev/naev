@@ -22,7 +22,11 @@
   <asset>Virtual Trader Local</asset>
  </assets>
  <jumps>
-  <jump target="Coriolis">
+  <jump target="Alsafi">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Beta Hydri">
    <autopos/>
    <hide>1.250000</hide>
   </jump>
@@ -31,10 +35,6 @@
    <hide>1.250000</hide>
   </jump>
   <jump target="Eridani">
-   <autopos/>
-   <hide>1.250000</hide>
-  </jump>
-  <jump target="Sikh">
    <autopos/>
    <hide>1.250000</hide>
   </jump>

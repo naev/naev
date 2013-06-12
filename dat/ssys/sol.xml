@@ -12,11 +12,11 @@
  </pos>
  <assets/>
  <jumps>
-  <jump target="Haered">
+  <jump target="Alpha Centauri">
    <autopos/>
    <hide>1.250000</hide>
   </jump>
-  <jump target="Polaris">
+  <jump target="Wolf 359">
    <autopos/>
    <hide>1.250000</hide>
   </jump>

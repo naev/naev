@@ -19,11 +19,11 @@
   <asset>Virtual Civilian Standard</asset>
  </assets>
  <jumps>
-  <jump target="Defa">
+  <jump target="Ross 614">
    <pos x="-15366.904607" y="-17565.639958"/>
    <hide>1.250000</hide>
   </jump>
-  <jump target="Shikima">
+  <jump target="Tabit">
    <autopos/>
    <hide>0.000000</hide>
   </jump>

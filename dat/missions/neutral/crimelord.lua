@@ -2,7 +2,7 @@
            In this mission, you will be chased by a pirate fleet across several systems.
            
            MISSION: Chase Test
-           DESCRIPTION: Pirates chase you to Ogat.
+           DESCRIPTION: Pirates chase you to Rho Eridani (Ogat).
 ]]--
 
 include "fleethelper.lua"
@@ -39,7 +39,7 @@ else --I guess you know this stuff...
 end
 
 function create ()
-    targetsystem = system.get("Ogat") --find target system
+    targetsystem = system.get("Rho Eridani") --find target system
     
     misn.setNPC( NPC_name, "neutral/thief2") --spawn NPC
     misn.setDesc( bar_desc )

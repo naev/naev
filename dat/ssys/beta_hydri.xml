@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ssys name="Dune">
+<ssys name="Beta Hydri">
  <general>
   <radius>14000.000000</radius>
   <stars>300</stars>
@@ -7,27 +7,23 @@
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>129.000000</x>
-  <y>94.000000</y>
+  <x>46.000000</x>
+  <y>73.000000</y>
  </pos>
  <assets>
-  <asset>Arrakis</asset>
-  <asset>Nixa</asset>
-  <asset>Vert</asset>
-  <asset>Virtual Civilian Standard</asset>
   <asset>Virtual Trader Local</asset>
  </assets>
  <jumps>
+  <jump target="Alteris">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Delta Eridani">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
   <jump target="EV Lacertae">
    <autopos/>
-   <hide>1.250000</hide>
-  </jump>
-  <jump target="Eridani">
-   <autopos/>
-   <hide>1.250000</hide>
-  </jump>
-  <jump target="Halo">
-   <pos x="3965.097264" y="15285.574336"/>
    <hide>1.250000</hide>
   </jump>
  </jumps>

@@ -12,7 +12,7 @@
  </pos>
  <assets/>
  <jumps>
-  <jump target="Capricorn">
+  <jump target="Delta Eridani">
    <autopos/>
    <hide>1.250000</hide>
   </jump>
@@ -20,7 +20,7 @@
    <autopos/>
    <hide>1.250000</hide>
   </jump>
-  <jump target="Rockbed">
+  <jump target="Vega">
    <autopos/>
    <hide>1.250000</hide>
   </jump>

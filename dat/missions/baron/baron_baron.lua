@@ -7,7 +7,7 @@ lang = naev.lang()
 if lang == "es" then
 else -- default english
     sysname1 = "Darkstone"
-    sysname2 = "Ingot"
+    sysname2 = "Kapteyn's Star"
     planetname = "Varia"
     
     title = {}

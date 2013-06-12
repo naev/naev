@@ -7,32 +7,32 @@
   <gfx_store>map</gfx_store>
  </general>
  <specific type="map">
-  <sys name="Zacron">
-   <jump>Raelid</jump>
+  <sys name="AD Leonis">
+   <jump>YZ Ceti</jump>
   </sys>
-  <sys name="Raelid">
-   <jump>Zacron</jump>
-   <jump>Surano</jump>
+  <sys name="YZ Ceti">
+   <jump>AD Leonis</jump>
+   <jump>TZ Arietis</jump>
   </sys>
-  <sys name="Surano">
-   <jump>Raelid</jump>
-   <jump>Thorndyke</jump>
+  <sys name="TZ Arietis">
+   <jump>YZ Ceti</jump>
+   <jump>Wolf 1061</jump>
   </sys>
-  <sys name="Thorndyke">
-   <jump>Surano</jump>
-   <jump>Pilatis</jump>
+  <sys name="Wolf 1061">
+   <jump>TZ Arietis</jump>
+   <jump>Luyten's Star</jump>
   </sys>
-  <sys name="Pilatis">
-   <jump>Thorndyke</jump>
-   <jump>Defa</jump>
+  <sys name="Luyten's Star">
+   <jump>Wolf 1061</jump>
+   <jump>Ross 614</jump>
   </sys>
-  <sys name="Defa">
-   <jump>Pilatis</jump>
+  <sys name="Ross 614">
+   <jump>Luyten's Star</jump>
    <jump>Oberon</jump>
   </sys>
   <sys name="Oberon">
    <asset>Soromid Customs Central</asset>
-   <jump>Defa</jump>
+   <jump>Ross 614</jump>
   </sys>
  </specific>
 </outfit>

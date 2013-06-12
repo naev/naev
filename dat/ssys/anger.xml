@@ -16,14 +16,14 @@
   <asset>Rage</asset>
  </assets>
  <jumps>
-  <jump target="Ryder">
-   <autopos/>
-   <hide>1.250000</hide>
-  </jump>
-  <jump target="Tormulex">
+  <jump target="Epsilon Indi">
    <pos x="-1261.740957" y="-1640.900352"/>
    <hidden/>
    <hide>1.000000</hide>
+  </jump>
+  <jump target="Ryder">
+   <autopos/>
+   <hide>1.250000</hide>
   </jump>
  </jumps>
 </ssys>

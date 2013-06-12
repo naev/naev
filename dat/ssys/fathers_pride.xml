@@ -22,7 +22,7 @@
   <asset>Virtual Pirate Small</asset>
  </assets>
  <jumps>
-  <jump target="Gewirn">
+  <jump target="Chi Draconis">
    <autopos/>
    <hide>1.250000</hide>
   </jump>
@@ -30,7 +30,7 @@
    <autopos/>
    <hide>0.000000</hide>
   </jump>
-  <jump target="Shikima">
+  <jump target="Tabit">
    <pos x="-20143.133265" y="-21795.269630"/>
    <hide>0.000000</hide>
   </jump>
