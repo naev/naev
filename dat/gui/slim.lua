@@ -92,6 +92,8 @@ function create()
    warnlight1 = tex.open( base .. "warnlight1.png" )
    warnlight2 = tex.open( base .. "warnlight2.png" )
    warnlight3 = tex.open( base .. "warnlight3.png" )
+   warnlight4 = tex.open( base .. "warnlight4.png" )
+   warnlight5 = tex.open( base .. "warnlight5.png" )
    tracking_light = tex.open( base .. "track.png" )
    target_light_off = tex.open( base .. "targeted_off.png" )
    target_light_on =  tex.open( base .. "targeted_on.png" )
@@ -670,7 +672,7 @@ function render( dt, dt_mod )
          end
       end
       if gfxWarn then
-         gfx.renderTex( warnlight1, pl_pane_x + 6, pl_pane_y + 148 )
+         gfx.renderTex( warnlight2, pl_pane_x + 29, pl_pane_y + 3 )
       end
       if timers[3] <= -0.5 then
          timers[3] = 0.5
@@ -678,9 +680,19 @@ function render( dt, dt_mod )
       colour.setAlpha( col_missile, math.abs(timers[3]) * 1.2 + .4 )
       gfx.print( false, missile_lock_text, (screen_w - missile_lock_length)/2, screen_h - 100, col_missile )
    end
+
    if armour <= 20 then
-      gfx.renderTex( warnlight2, pl_pane_x + 29, pl_pane_y + 3 )
+      gfx.renderTex( warnlight1, pl_pane_x + 6, pl_pane_y + 148 )
+   elseif armour <= 50 then
+      gfx.renderTex( warnlight4, pl_pane_x + 6, pl_pane_y + 148 )
+   else
+      gfx.renderTex( warnlight5, pl_pane_x + 6, pl_pane_y + 148 )
    end
+   
+   if shield <= 70 then
+      gfx.renderTex( warnlight4, pl_pane_x + 6, pl_pane_y + 148 )
+   end
+
    if autonav then
       gfx.renderTex( warnlight3, pl_pane_x + 162, pl_pane_y + 12 )
    end
