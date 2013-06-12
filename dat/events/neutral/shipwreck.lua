@@ -14,7 +14,17 @@ else -- default english
 
 -- Text
     broadcastmsg = "SOS. This is %s. We are shipwrecked. Requesting immediate assistance."
+    r = rnd.rnd()
+    if r > 0.8 then
     shipname = "August" --The ship will have a unique name
+    elseif r > 0.6 then
+    shipname = "Severus"
+    elseif r > 0.4 then
+    shipname = "Lucius"
+    elseif r > 0.2 then
+    shipname = "Draco"
+    end
+
 end
 
 function create ()
