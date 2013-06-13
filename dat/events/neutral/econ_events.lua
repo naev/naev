@@ -50,7 +50,6 @@ function create()
 
    make_event()
 
-   evt.save(true)
 end
 
 
@@ -90,7 +89,8 @@ function make_event()
 
       --get a system with >=500 presence and with no current events
    economic_articles = news.get("economic events")
-   while 1 do
+   got_sys=false
+   for i=0,20 do
       sys=system.get(true)
       syspresences = system.presences(sys)
       sum=0
@@ -107,8 +107,12 @@ function make_event()
          end
       end
       if system_nottaken and sum > 500 then
+         got_sys=true
          break
       end
+   end
+   if not got_sys then
+      return
    end
 
       --get the original prices
@@ -144,6 +148,7 @@ function make_event()
    end
 
    hook.date( time.create(0, event[2], 0), "end_event", str )
+   evt.save(true)
 
 end
 
