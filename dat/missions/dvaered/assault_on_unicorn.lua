@@ -37,7 +37,7 @@ function create ()
    misn.setDesc(misn_desc)
 
    misn_target_sys = system.get("Unicorn")
-   misn_return_sys = system.get("Pudas")
+   misn_return_sys = system.get("Amaroq")
    marker = misn.markerAdd( misn_target_sys, "computer" )
    marker2 = misn.markerAdd( misn_return_sys, "low" )
 end
