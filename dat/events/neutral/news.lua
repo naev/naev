@@ -33,7 +33,9 @@ else --default english
                                  }
    header_table["Za'lek"] =      {"Scientific, Socioeconomic, and Sundry Events"
                                  }
-
+   header_table["Soromid"] =     {"The voice of the future."
+                                 }
+   
    greet_table={}
 
    greet_table["Generic"] =      {""
@@ -64,7 +66,9 @@ else --default english
                                  }
    greet_table["Za'lek"] =       {""
                                  }
-
+   greet_table["Soromid"] =      {"Genetically tailoured for you."
+                                 }
+   
    articles={}
 
    articles["Generic"] = {
