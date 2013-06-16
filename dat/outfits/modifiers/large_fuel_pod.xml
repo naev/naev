@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Large Fuel Pod">
+ <general>
+  <typename>Fuel Expansion</typename>
+  <slot>structure</slot>
+  <size>medium</size>
+  <mass>10</mass>
+  <price>75000</price>
+  <description>The fuel pod allows a ship to store more fuel for hyperspace jumps.</description>
+  <gfx_store>large_fuel_pod</gfx_store>
+ </general>
+ <specific type="modification">
+  <fuel>400</fuel>
+ </specific>
+</outfit>
