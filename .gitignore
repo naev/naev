@@ -43,3 +43,5 @@ stdout.txt
 extras/macosx/build/
 extras/.dirstamp
 datapath.lua
+core
+
