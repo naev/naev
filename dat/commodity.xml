@@ -51,5 +51,11 @@
  <commodity name="Weapons"/>
  <commodity name="Drugs"/>
  <commodity name="Exotic Animals"/>
- <commodity name="Radioactive Materials"/>
+ <commodity name="Radioactive Materials"/> 
+ <commodity name="Ilama"/>
+ <commodity name="Hyena"/>
+ <commodity name="Schroedinger"/>
+ <commodity name="Shark"/>
+ <commodity name="Ghwain"/>
+ 
 </Commodities>
