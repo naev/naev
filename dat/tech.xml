@@ -101,6 +101,7 @@
   <item>Hidden Jump Scanner</item>
   <item>Reverse Thrusters</item>
   <item>Fuel Pod</item>
+  <item>Large Fuel Pod</item>
   <item>Cargo Pod</item>
   <item>Boarding Androids MKI</item>
   <item>Boarding Androids MKII</item>
@@ -557,6 +558,7 @@
   <item>Medium Weapon License</item>
   <item>Emergency Shield Booster</item>
   <item>Reverse Thrusters</item>
+  <item>Large Fuel Pod</item>
  </tech>
  <tech name="Missiles 1">
   <item>Unicorp Banshee Launcher</item>
