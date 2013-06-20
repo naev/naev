@@ -819,10 +819,8 @@ static int planetL_commoditiesSold( lua_State *L )
 
    /* Get result and tech. */
    p = luaL_validplanet(L,1);
-   if (p==NULL){
-      WARN("Argument 1 was not a valid planet");
-      return 0;
-   }
+   if (p==NULL)
+      NLUA_ERROR(L, "Argument 1 to commoditiesSold was not a valid planet");
    c = p->commodities;
 
    /* Push results in a table. */
