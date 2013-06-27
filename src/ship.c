@@ -605,10 +605,12 @@ static int ship_parseSlot( Ship *temp, ShipOutfitSlot *slot, OutfitSlotType type
 
    /* Parse property. */
    xmlr_attr( node, "prop", buf );
-   slot->slot.spid = sp_get( buf );
-   slot->exclusive = sp_exclusive( slot->slot.spid );
-   slot->required  = sp_required( slot->slot.spid );
-   free( buf );
+   if (buf != NULL) {
+      slot->slot.spid = sp_get( buf );
+      slot->exclusive = sp_exclusive( slot->slot.spid );
+      slot->required  = sp_required( slot->slot.spid );
+      free( buf );
+   }
 
    /* Parse default outfit. */
    buf = xml_get(node);

@@ -210,7 +210,7 @@ function emp_talker ()
       talker = lance2
    else
       -- I don't like the idea of player talking, but we need the conversation
-      talker = player.getPilot()
+      talker = player.pilot()
    end
 
    return talker

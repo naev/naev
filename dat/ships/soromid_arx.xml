@@ -25,13 +25,13 @@
   <weapon size="large" x="20" y="0" h="0"/>
   <weapon size="large" x="-20" y="0" h="0"/>
   <weapon size="large" x="-40" y="0" h="0"/>
-  <utility size="large" prop="systems">Basic Large Systems</utility>
+  <utility size="large" prop="systems" exclusive="1" required="1">Basic Large Systems</utility>
   <utility size="large"/>
   <utility size="large"/>
   <utility size="large"/>
   <utility size="large"/>
-  <structure size="large" prop="engines">Manufacturer Large Engine</structure>
-  <structure size="large" prop="hull">Unmodified Large Hull</structure>
+  <structure size="large" prop="engines" exclusive="1" required="1">Manufacturer Large Engine</structure>
+  <structure size="large" prop="hull" exclusive="1" required="1">Unmodified Large Hull</structure>
   <structure size="large"/>
   <structure size="large"/>
   <structure size="large"/>

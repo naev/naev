@@ -23,11 +23,11 @@
   <weapon size="medium" x="8" y="0" h="0"/>
   <weapon size="small" x="-2" y="9" h="-1"/>
   <weapon size="small" x="-2" y="-9" h="-1"/>
-  <utility size="small" prop="systems">Previous Generation Small Systems</utility>
+  <utility size="small" prop="systems" exclusive="1" required="1">Previous Generation Small Systems</utility>
   <utility size="small"/>
   <utility size="small"/>
-  <structure size="small" prop="engines">Beat Up Small Engine</structure>
-  <structure size="small" prop="hull">Patchwork Light Plating</structure>
+  <structure size="small" prop="engines" exclusive="1" required="1">Beat Up Small Engine</structure>
+  <structure size="small" prop="hull" exclusive="1" required="1">Patchwork Light Plating</structure>
   <structure size="small"/>
  </slots>
  <stats>

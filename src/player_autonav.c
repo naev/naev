@@ -17,6 +17,7 @@
 #include "pause.h"
 #include "space.h"
 #include "conf.h"
+#include <time.h>
 
 
 extern double player_acc; /**< Player acceleration. */
@@ -30,7 +31,7 @@ static double lasts;
 static double lasta;
 static int slockons;
 static double abort_mod = 1.;
-
+static double autopause_timer = 0.; /**< Avoid autopause if the player just unpaused, and don't compress time right away */
 
 /*
  * Prototypes.
@@ -221,6 +222,23 @@ void player_autonavAbort( const char *reason )
       return;
 
    if (player_isFlag(PLAYER_AUTONAV)) {
+      if (conf.autonav_pause && reason) {
+         /* Keep it from re-pausing before you can react */
+		 if (autopause_timer > 0) return;
+         player_message("\erGame paused: %s!", reason);
+
+         if (player_isFlag(PLAYER_DOUBLESPEED)) {
+           tc_mod         = 2.;
+           pause_setSpeed( 2. );
+         } else {
+           tc_mod         = 1.;
+           pause_setSpeed( 1. );
+         }
+
+         autopause_timer = 2.;
+         pause_game();
+		 return;
+      }
       if (reason != NULL)
          player_message("\erAutonav aborted: %s!", reason);
       else
@@ -341,7 +359,7 @@ static void player_autonav (void)
  */
 static int player_autonavApproach( Vector2d *pos, double *dist2, int count_target )
 {
-   double d, time, vel, dist;
+   double d, t, vel, dist;
 
    /* Only accelerate if facing move dir. */
    d = pilot_face( player.p, vect_angle( &player.p->solid->pos, pos ) );
@@ -353,15 +371,15 @@ static int player_autonavApproach( Vector2d *pos, double *dist2, int count_targe
       player_accelOver();
 
    /* Get current time to reach target. */
-   time  = MIN( 1.5*player.p->speed, VMOD(player.p->solid->vel) ) /
+   t  = MIN( 1.5*player.p->speed, VMOD(player.p->solid->vel) ) /
       (player.p->thrust / player.p->solid->mass);
 
    /* Get velocity. */
    vel   = MIN( player.p->speed, VMOD(player.p->solid->vel) );
 
    /* Get distance. */
-   dist  = vel*(time+1.1*M_PI/player.p->turn) -
-      0.5*(player.p->thrust/player.p->solid->mass)*time*time;
+   dist  = vel*(t+1.1*M_PI/player.p->turn) -
+      0.5*(player.p->thrust/player.p->solid->mass)*t*t;
 
    /* Output distance^2 */
    d        = vect_dist( pos, &player.p->solid->pos );
@@ -405,23 +423,25 @@ int player_shouldAbortAutonav( int damaged )
    double failpc = conf.autonav_abort * abort_mod;
    double shield = player.p->shield / player.p->shield_max;
    double armour = player.p->armour / player.p->armour_max;
+   char *reason = NULL;
 
    if (!player_isFlag(PLAYER_AUTONAV))
       return 0;
 
    if (failpc >= 1. && !slockons && player.p->lockons > 0)
-      player_autonavAbort("Missile Lockon Detected");
+      reason = "Missile Lockon Detected";
    else if (failpc >= 1. && (shield < 1. && shield < lasts) && damaged)
-      player_autonavAbort("Sustaining damage");
+      reason = "Sustaining damage";
    else if (failpc > 0. && (shield < failpc && shield < lasts) && damaged)
-      player_autonavAbort("Shield below damage threshold");
+      reason = "Shield below damage threshold";
    else if (armour < lasta && damaged)
-      player_autonavAbort("Sustaining armour damage");
+      reason = "Sustaining armour damage";
 
    lasts = player.p->shield / player.p->shield_max;
    lasta = player.p->armour / player.p->armour_max;
 
-   if (!player_isFlag(PLAYER_AUTONAV)) {
+   if (reason) {
+      player_autonavAbort(reason);
       if (player.autonav_timer > 0.)
          abort_mod = MIN( MAX( 0., abort_mod - .25 ), (int)(shield * 4) * .25 );
       else
@@ -521,6 +541,11 @@ void player_updateAutonav( double dt )
    }
 
    /* We'll update the time compression here. */
+   if (autopause_timer > 0) {
+      /* Don't start time acceleration right away.  Let the player react. */
+      autopause_timer -= dt;
+	  return;
+   }
    if (tc_mod == player.tc_max)
       return;
    else
