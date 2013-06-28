@@ -96,7 +96,11 @@
    <enemy>Independent</enemy>
    <enemy>Goddard</enemy>
    <enemy>Proteron</enemy>
+<<<<<<< HEAD
    <enemy>Thurion</enemy>
+=======
+   <enemy>Nasin</enemy>
+>>>>>>> db2b50ba8910e01e044780e3dd2d1fb7c6bb341c
   </enemies>
  </faction>
  <faction name="Empire">
@@ -211,6 +215,7 @@
   </allies>
   <enemies>
    <enemy>Pirate</enemy>
+   <enemy>Nasin</enemy>
   </enemies>
  </faction>
  <faction name="Goddard">
@@ -342,5 +347,16 @@
   <allies />
   <player>0</player>
   <enemies />
+ </faction>
+ <faction name="Nasin">
+  <invisible />
+  <logo>sirius</logo>
+  <standing>nasin</standing>
+  <allies />
+  <player>0</player>
+  <enemies>
+   <enemy>Sirius</enemy>
+   <enemy>Pirate</enemy>
+  </enemies>
  </faction>
 </Factions>
