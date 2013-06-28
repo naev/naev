@@ -10,14 +10,13 @@
   <x>-29.000000</x>
   <y>-187.000000</y>
  </pos>
- <assets>
- </assets>
+ <assets/>
  <jumps>
-  <jump target="Terminus">
+  <jump target="Flok">
    <autopos/>
    <hide>1.250000</hide>
   </jump>
-  <jump target="Flok">
+  <jump target="Terminus">
    <autopos/>
    <hide>1.250000</hide>
   </jump>

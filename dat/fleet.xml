@@ -805,15 +805,13 @@
    <pilot name="Dvaered Vigilance" ship="Dvaered Vigilance"></pilot>
   </pilots>
  </fleet>
-<<<<<<< HEAD
  <fleet name="Thurion Ingenuity">
-  <ai>thurion</ai>
+  <ai>independent</ai> <!-- FIXME: Thurion AI -->
   <faction>Thurion</faction>
   <pilots>
    <pilot name="Thurion Ingenuity" ship="Thurion Ingenuity"></pilot>
   </pilots>
  </fleet>
-=======
  <fleet name="Sirius Recon Force">
   <ai>sirius</ai>
   <faction>Sirius</faction>
@@ -875,6 +873,4 @@
    <pilot name="Nasin Admonisher" ship="Admonisher"></pilot>
   </pilots>
  </fleet>
- 
->>>>>>> db2b50ba8910e01e044780e3dd2d1fb7c6bb341c
 </Fleets>

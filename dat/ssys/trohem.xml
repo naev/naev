@@ -10,21 +10,20 @@
   <x>-144.800000</x>
   <y>-596.800000</y>
  </pos>
- <assets>
- </assets>
+ <assets/>
  <jumps>
-  <jump target="Pas">
+  <jump target="Effetey">
    <autopos/>
-   <hidden/>
-   <hide>1.000000</hide>
+   <hide>1.250000</hide>
   </jump>
   <jump target="Frolina">
    <autopos/>
    <hide>1.250000</hide>
   </jump>
-  <jump target="Effetey">
+  <jump target="Pas">
    <autopos/>
-   <hide>1.250000</hide>
+   <hidden/>
+   <hide>1.000000</hide>
   </jump>
  </jumps>
 </ssys>

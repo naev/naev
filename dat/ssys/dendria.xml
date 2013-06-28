@@ -24,14 +24,14 @@
    <autopos/>
    <hide>1.250000</hide>
   </jump>
-  <jump target="Titus">
-   <autopos/>
-   <hide>1.250000</hide>
-  </jump>
   <jump target="Muran">
    <autopos/>
    <hidden/>
    <hide>1.000000</hide>
+  </jump>
+  <jump target="Titus">
+   <autopos/>
+   <hide>1.250000</hide>
   </jump>
  </jumps>
 </ssys>

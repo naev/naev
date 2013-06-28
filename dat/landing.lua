@@ -132,6 +132,15 @@ function srm_mil_kataka( pnt )
          "\"We don't need your money, outsider.\"")
 end
 
+-- Za'lek's military center.
+function zlk_ruadan( pnt )
+   return land_military(pnt, 75,
+         "Docking sequence transmitted.",
+         "Authorization level too low to grant authorization.",
+         "Authorization denied.",
+         "Money is irrelevant.")
+end
+
 -- Pirate clanworld.
 function pir_clanworld( pnt )
    local fct = pnt:faction()

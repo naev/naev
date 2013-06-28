@@ -7,26 +7,26 @@
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>0</x>
-  <y>-450</y>
+  <x>0.000000</x>
+  <y>-450.000000</y>
  </pos>
  <assets>
   <asset>Qorellia</asset>
  </assets>
  <jumps>
-  <jump target="Firk">
-   <autopos/>
-   <hide>1.250000</hide>
-  </jump>
   <jump target="Doowa">
    <autopos/>
    <hide>1.250000</hide>
   </jump>
-  <jump target="Trask">
+  <jump target="Ekkodu">
    <autopos/>
    <hide>1.250000</hide>
   </jump>
-  <jump target="Ekkodu">
+  <jump target="Firk">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Trask">
    <autopos/>
    <hide>1.250000</hide>
   </jump>

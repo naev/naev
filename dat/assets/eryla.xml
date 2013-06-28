@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Eryla">
+ <pos>
+  <x>1660.000000</x>
+  <y>1010.000000</y>
+ </pos>
+ <GFX>
+  <space>moon-A00.png</space>
+  <exterior>station01.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.010000</hide>
+  <services/>
+ </general>
+</asset>

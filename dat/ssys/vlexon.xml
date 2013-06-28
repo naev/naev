@@ -20,14 +20,14 @@
   <asset>Vlexon II</asset>
  </assets>
  <jumps>
-  <jump target="Ogat">
-   <autopos/>
-   <hide>1.250000</hide>
-  </jump>
   <jump target="Doowa">
    <autopos/>
    <hidden/>
    <hide>1.000000</hide>
+  </jump>
+  <jump target="Ogat">
+   <autopos/>
+   <hide>1.250000</hide>
   </jump>
  </jumps>
 </ssys>

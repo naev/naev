@@ -10,19 +10,18 @@
   <x>-86.000000</x>
   <y>-446.000000</y>
  </pos>
- <assets>
- </assets>
+ <assets/>
  <jumps>
+  <jump target="Frolina">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
   <jump target="Hakoi">
    <autopos/>
    <hidden/>
    <hide>1.000000</hide>
   </jump>
   <jump target="Qorel">
-   <autopos/>
-   <hide>1.250000</hide>
-  </jump>
-  <jump target="Frolina">
    <autopos/>
    <hide>1.250000</hide>
   </jump>

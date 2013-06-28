@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="SY-256">
+ <pos>
+  <x>2503.616129</x>
+  <y>-606.280554</y>
+ </pos>
+ <GFX>
+  <space>003.png</space>
+  <exterior>station03.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Thurion</faction>
+  <value>400.000000</value>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>1</class>
+  <population>2000</population>
+  <hide>0.010000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>This is a standard Thurion shipyard manufactured to the exact same specifications as every other Thurion shipyard. The station hums with activity as ships are constructed at the station's maximum capacity.</description>
+ </general>
+ <tech>
+  <item>Thurion Military Ships</item>
+ </tech>
+</asset>

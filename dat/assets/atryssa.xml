@@ -27,8 +27,8 @@
    <shipyard/>
   </services>
   <commodities/>
-  <description>(null)</description>
-  <bar>(null)</bar>
+  <description>The closest planet from Ruadan still under Za'lek control where outsiders can land. Atryssa is an economically rich world thanks by Za'lek technology.</description>
+  <bar>The archetype of a Za'lek bar, although a very crowded one.</bar>
  </general>
  <tech>
   <item>Laser 1</item>

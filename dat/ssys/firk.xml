@@ -7,17 +7,11 @@
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>60</x>
-  <y>-400</y>
+  <x>60.000000</x>
+  <y>-400.000000</y>
  </pos>
- <assets>
- </assets>
+ <assets/>
  <jumps>
-  <jump target="Torg">
-   <autopos/>
-   <hidden/>
-   <hide>1.000000</hide>
-  </jump>
   <jump target="Doowa">
    <autopos/>
    <hide>1.250000</hide>
@@ -25,6 +19,11 @@
   <jump target="Qorel">
    <autopos/>
    <hide>1.250000</hide>
+  </jump>
+  <jump target="Torg">
+   <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
   </jump>
  </jumps>
 </ssys>

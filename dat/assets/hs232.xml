@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="HS-232">
+ <pos>
+  <x>5847.915533</x>
+  <y>3407.918509</y>
+ </pos>
+ <GFX>
+  <space>000.png</space>
+  <exterior>station00.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Thurion</faction>
+  <value>50.000000</value>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>1</class>
+  <population>50000</population>
+  <hide>0.010000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <commodity/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+  </commodities>
+  <description>This is a Thurion habitation station, which provide the living space for the biological Thurians who have yet to be uploaded. While not opulent by any extent, they are not at all an unpleasant place to live.</description>
+ </general>
+</asset>

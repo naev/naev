@@ -20,7 +20,7 @@
   <asset>Virtual Trader Area</asset>
  </assets>
  <jumps>
-  <jump target="Arcanis">
+  <jump target="Sonas">
    <autopos/>
    <hide>1.250000</hide>
   </jump>
@@ -37,6 +37,10 @@
    <hide>1.250000</hide>
   </jump>
   <jump target="Zacron">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Arcanis">
    <autopos/>
    <hide>1.250000</hide>
   </jump>

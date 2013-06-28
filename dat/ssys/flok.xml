@@ -10,8 +10,7 @@
   <x>15.000000</x>
   <y>-258.500000</y>
  </pos>
- <assets>
- </assets>
+ <assets/>
  <jumps>
   <jump target="Akodu">
    <autopos/>

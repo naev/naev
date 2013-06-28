@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Serria">
+ <pos>
+  <x>-4590.000000</x>
+  <y>-2510.000000</y>
+ </pos>
+ <GFX>
+  <space>X00.png</space>
+  <exterior>desertic.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.010000</hide>
+  <services/>
+ </general>
+</asset>

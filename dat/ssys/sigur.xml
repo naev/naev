@@ -14,12 +14,11 @@
   <asset>Virtual Empire Unpresence</asset>
  </assets>
  <jumps>
-  <jump target="Arcanis">
-   <pos x="-37240.561607" y="-14602.214447"/>
-   <hidden/>
-   <hide>1.000000</hide>
-  </jump>
   <jump target="Behar">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Arcanis">
    <autopos/>
    <hide>1.250000</hide>
   </jump>

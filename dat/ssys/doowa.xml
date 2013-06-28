@@ -7,33 +7,32 @@
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>25.00000</x>
-  <y>-355.00000</y>
+  <x>25.000000</x>
+  <y>-355.000000</y>
  </pos>
- <assets>
- </assets>
+ <assets/>
  <jumps>
-  <jump target="Vlexon">
-   <autopos/>
-   <hidden/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="Salvador">
-   <autopos/>
-   <hidden/>
-   <hide>1.000000</hide>
-  </jump>
-  <jump target="Flok">
+  <jump target="Firk">
    <autopos/>
    <hide>1.250000</hide>
   </jump>
-  <jump target="Firk">
+  <jump target="Flok">
    <autopos/>
    <hide>1.250000</hide>
   </jump>
   <jump target="Qorel">
    <autopos/>
    <hide>1.250000</hide>
+  </jump>
+  <jump target="Salvador">
+   <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Vlexon">
+   <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
   </jump>
  </jumps>
 </ssys>

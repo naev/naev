@@ -20,9 +20,10 @@
   <services>
    <land/>
    <refuel/>
-   <outfits/>
    <missions/>
+   <outfits/>
   </services>
+  <commodities/>
   <description>Effetey's Efferey station is the southern part of the Expanse in which you'll be able to refuel. Most of the pirate traffic from or to Vorca has to land here.</description>
  </general>
  <tech>

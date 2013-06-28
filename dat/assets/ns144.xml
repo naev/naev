@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="NS-144">
+ <pos>
+  <x>2339.472860</x>
+  <y>1439.472860</y>
+ </pos>
+ <GFX>
+  <space>001.png</space>
+  <exterior>station01.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Thurion</faction>
+  <value>500.000000</value>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>1</class>
+  <population>1000</population>
+  <hide>0.010000</hide>
+  <services>
+   <land/>
+   <refuel/>
+  </services>
+  <commodities/>
+  <description>This hulking Node Station is one of the places of habitation for the uploaded Thurion.</description>
+ </general>
+</asset>
