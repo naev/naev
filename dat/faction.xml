@@ -96,6 +96,7 @@
    <enemy>Independent</enemy>
    <enemy>Goddard</enemy>
    <enemy>Proteron</enemy>
+   <enemy>Thurion</enemy>
   </enemies>
  </faction>
  <faction name="Empire">
@@ -123,6 +124,18 @@
   <spawn>soromid</spawn>
   <standing>soromid</standing>
   <allies/>
+  <enemies>
+   <enemy>Pirate</enemy>
+  </enemies>
+ </faction>
+ <faction name="Thurion">
+  <logo>thurion</logo>
+  <colour>grey50</colour>
+  <spawn>independent</spawn>
+  <standing>independent</standing>
+  <player>1</player>
+  <lua>thurion</lua>
+  <spawn>thurion</spawn>
   <enemies>
    <enemy>Pirate</enemy>
   </enemies>
@@ -173,10 +186,12 @@
  <faction name="Za'lek">
   <known/>
   <logo>zalek</logo>
+  <colour>purple</colour>
   <longname>House Za'lek</longname>
   <player>2</player>
   <spawn>zalek</spawn>
   <standing>zalek</standing>
+  <equip>zalek</equip>
   <allies>
   </allies>
   <enemies>

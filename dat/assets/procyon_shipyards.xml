@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Procyon Shipyards">
+ <pos>
+  <x>3412.046393</x>
+  <y>4638.849591</y>
+ </pos>
+ <GFX>
+  <space>station-shipyard.png</space>
+  <exterior>station04.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Za'lek</faction>
+  <value>300.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>7500</population>
+  <hide>0.100000</hide>
+  <services>
+   <land/>
+   <bar/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>Procyon Shipyard is a mainstay of the Za'lek navy and its merchant marine. The base is constatly alive with engineers and the sound of hulls being assembled. It is noisy filthy and there's little room for comfort. Nevertheless, many spacers call this place home.</description>
+  <bar>The bar is much like the station itself. The beer is only theoretically drinkable from what you can tell, and fights are supringly common. The patrons are mostly wearing thick suits smeared with all manner of chemicals, burns and oils. Many older captains seem to be enjoying themselves despite it all.</bar>
+ </general>
+ <tech>
+  <item>Basic Civilian Ships</item>
+  <item>Basic Trade Ships</item>
+  <item>Bulk Trade Ships</item>
+  <item>Light Civilian Combat Ships</item>
+  <item>Heavy Civilian Combat Ships</item>
+ </tech>
+</asset>

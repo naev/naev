@@ -19,6 +19,10 @@
   <asset>UX VII</asset>
  </assets>
  <jumps>
+  <jump target="Ganth">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
   <jump target="Valerie">
    <autopos/>
    <hide>0.000000</hide>
