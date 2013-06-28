@@ -563,6 +563,7 @@
   <avail>
    <chance>10</chance>
    <location>Bar</location>
+   <cond>faction.playerStanding("Pirate") &gt;= 10</cond>
   </avail>
  </mission>
  <mission name="The macho teenager">
