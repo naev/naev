@@ -154,6 +154,7 @@ function badevent()
         p:setHealth(0,0)
         player.pilot():control(true)
         hook.pilot(p, "exploded", "derelict_exploded")
+        destroyEvent()
     elseif event == 2 then
         tk.msg(btitle, btext[2])
         player.pilot():setFuel(false)
@@ -179,7 +180,6 @@ end
 function derelict_exploded()
    player.pilot():control(false)
    player.pilot():setHealth(42, 0)
-   destroyEvent()
 end
 
 function missionevent()

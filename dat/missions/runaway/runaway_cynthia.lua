@@ -39,6 +39,10 @@ function create ()
    targetworld_sys = system.get("Goddard")
    targetworld = planet.get("Zhiru")
 
+   --if not misn.claim ( {targetworld_sys} ) then
+   --   abort()
+   --end
+
    reward = 75000
 
    misn.setNPC( npc_name, "neutral/miner2" )
