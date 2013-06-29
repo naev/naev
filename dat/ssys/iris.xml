@@ -7,8 +7,8 @@
   <nebula volatility="50.000000">400.000000</nebula>
  </general>
  <pos>
-  <x>504.333333</x>
-  <y>147.733333</y>
+  <x>458.333333</x>
+  <y>116.733333</y>
  </pos>
  <assets>
   <asset>Aluben</asset>
@@ -16,11 +16,7 @@
   <asset>Virtual Trader Local</asset>
  </assets>
  <jumps>
-  <jump target="Midoros">
-   <autopos/>
-   <hide>1.250000</hide>
-  </jump>
-  <jump target="Oriantis">
+  <jump target="Behar">
    <autopos/>
    <hide>1.250000</hide>
   </jump>

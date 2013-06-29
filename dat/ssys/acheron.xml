@@ -16,6 +16,10 @@
    <autopos/>
    <hide>1.250000</hide>
   </jump>
+  <jump target="Merisi">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
   <jump target="Sikh">
    <autopos/>
    <hide>1.250000</hide>
@@ -24,10 +28,6 @@
    <autopos/>
    <hidden/>
    <hide>1.000000</hide>
-  </jump>
-  <jump target="Merisi">
-   <autopos/>
-   <hide>1.250000</hide>
   </jump>
  </jumps>
 </ssys>
