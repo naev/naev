@@ -7,16 +7,12 @@
   <nebula volatility="500.000000">800.000000</nebula>
  </general>
  <pos>
-  <x>754.261333</x>
-  <y>145.832000</y>
+  <x>1018.261333</x>
+  <y>466.832000</y>
  </pos>
  <assets/>
  <jumps>
   <jump target="Protera">
-   <autopos/>
-   <hide>1.250000</hide>
-  </jump>
-  <jump target="Sol">
    <autopos/>
    <hide>1.250000</hide>
   </jump>

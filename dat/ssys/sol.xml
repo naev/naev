@@ -12,10 +12,6 @@
  </pos>
  <assets/>
  <jumps>
-  <jump target="Haered">
-   <autopos/>
-   <hide>1.250000</hide>
-  </jump>
   <jump target="Polaris">
    <autopos/>
    <hide>1.250000</hide>
