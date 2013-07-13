@@ -132,10 +132,10 @@
  <faction name="Thurion">
   <logo>thurion</logo>
   <colour>grey50</colour>
-  <spawn>independent</spawn>
-  <standing>independent</standing>
   <player>1</player>
-  <lua>thurion</lua>
+  <spawn>thurion</spawn>
+  <standing>thurion</standing>
+  <equip>empire</equip>
   <enemies>
    <enemy>Pirate</enemy>
   </enemies>

@@ -806,7 +806,7 @@
   </pilots>
  </fleet>
  <fleet name="Thurion Ingenuity">
-  <ai>independent</ai> <!-- FIXME: Thurion AI -->
+  <ai>thurion</ai>
   <faction>Thurion</faction>
   <pilots>
    <pilot name="Thurion Ingenuity" ship="Thurion Ingenuity"></pilot>
