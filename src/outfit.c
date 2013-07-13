@@ -1521,6 +1521,7 @@ if ((x) != 0.) \
          "\n%+."n"f "s, x )
 #define DESC_ADD0(x, s)    DESC_ADD( x, s, "0" )
 #define DESC_ADD1(x, s)    DESC_ADD( x, s, "1" )
+   DESC_ADD0( temp->cpu, "CPU" );
    DESC_ADD0( temp->u.mod.thrust, "Thrust" );
    DESC_ADD0( temp->u.mod.turn, "Turn Rate" );
    DESC_ADD0( temp->u.mod.speed, "Maximum Speed" );
