@@ -12,6 +12,10 @@
  </pos>
  <assets/>
  <jumps>
+  <jump target="Cleai">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
   <jump target="Machea">
    <autopos/>
    <hide>1.250000</hide>
