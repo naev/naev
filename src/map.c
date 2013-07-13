@@ -1547,10 +1547,8 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
 
       /* Break if infinite loop. */
       j++;
-      if (j > MAP_LOOP_PROT) {
-         DEBUG("MAP_LOOP_PROT_ACTIVATED");
+      if (j > MAP_LOOP_PROT)
          break;
-      }
 
       /* Get best from open and toss to closed */
       open   = A_rm( open, cur->sys );
