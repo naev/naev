@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Thurion Ingenuity">
+ <base_type>Ingenuity</base_type>
+ <GFX>derivative</GFX> <!-- FIXME: Thurion needs its own sprites, right? -->
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Fighter</class>
+ <price>650000</price>
+ <fabricator>Thurion shipyards</fabricator>
+ <description>The Thurion Ingenuity is a fighter built for survival, like all Thurian ships, it puts defensive capabilities first, and offensive capabilities second. However, by no means is the Ingenuity a poor combat craft. It is capable of staying in combat and slugging it out, and when things get too hot, it can quickly retreat to recharge and regenerate. Also, like every Thurian ship, the electronics are well above average.</description>
+ <health>
+  <absorb>11</absorb>
+  <armour>250</armour>
+  <armour_regen>0</armour_regen>
+ </health>
+ <characteristics>
+  <crew>2</crew>
+  <mass>75</mass>
+  <fuel>600</fuel>
+  <cargo>10</cargo>
+ </characteristics>
+ <slots>
+  <weapon size="small" x="8" y="-5" h="-2"/>
+  <weapon size="small" x="8" y="5" h="-2"/>
+  <utility size="small" prop="systems" exclusive="1" required="1">Basic Small Systems</utility>
+  <utility size="small"/>
+  <utility size="small"/>
+  <utility size="small"/>
+  <structure size="small" prop="engines" exclusive="1" required="1">Manufacturer Small Engine</structure>
+  <structure size="small" prop="hull" exclusive="1" required="1">Unmodified Small Hull</structure>
+  <structure size="small"/>
+  <structure size="small"/>
+ </slots>
+ <stats>
+  <ew_hide>30</ew_hide>
+  <nebula_dmg_shield>-80</nebula_dmg_shield>
+  <nebula_dmg_armour>-97</nebula_dmg_armour>
+ </stats>
+</ship>

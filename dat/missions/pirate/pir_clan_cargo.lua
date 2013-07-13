@@ -5,7 +5,7 @@
 
    Author: bobbens                 (Empire Cargo 00)
       minor edits by Infiltrator   (Empire Cargo 00)
-	  major edits by Lukc
+      major edits by Lukc
 
 ]]--
 
@@ -89,8 +89,18 @@ function land()
    if landed == dest then
       if misn.cargoRm(packages) then
          tk.msg( title[3], text[3] )
+
          player.pay(reward)
          faction.modPlayerSingle("Pirate",5);
+
+         n = var.peek("ps_clancargo_misn") or 0
+         var.push("ps_clancargo_misn", n + 1)
+         -- The first time this mission is done, the player’s max standing is
+         -- increased by 5.
+         if n == 0 then
+             var.push("_fcap_pirate", var.peek("_fcap_pirate") + 5)
+         end
+
          misn.finish(true)
       end
    end
@@ -107,11 +117,11 @@ function enter ()
          return
       end
 
-	  -- The player might have to get through hostile territory. No need to add
-	  -- mercenaries everywhere.
-	  if rnd.rnd() < 0.5 then
+      -- The player might have to get through hostile territory. No need to add
+      -- mercenaries everywhere.
+      if rnd.rnd() < 0.5 then
          return
-	  end
+      end
 
       -- Get player position
       enter_vect = player.pos()

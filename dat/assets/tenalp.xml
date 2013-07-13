@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Tenal-P">
+ <pos>
+  <x>530.000000</x>
+  <y>1130.000000</y>
+ </pos>
+ <GFX>
+  <space>station-commerce.png</space>
+  <exterior>traderoom.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>25.000000</value>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>1</class>
+  <population>200</population>
+  <hide>0.010000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <commodity/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+  </commodities>
+  <description>Tenal-P was once a prosperous trade station between the Empire and the Soromid, surviving the intial blast simply because of Iris' distance from Sol. Since then, many residents have left the station, though a couple hundred stubborn individuals have kept the station going.</description>
+ </general>
+</asset>

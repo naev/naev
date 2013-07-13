@@ -20,6 +20,11 @@
   <asset>Virtual Trader Area</asset>
  </assets>
  <jumps>
+  <jump target="Ekkodu">
+   <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Verex">
    <autopos/>
    <hide>1.250000</hide>

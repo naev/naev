@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Map: Qorel Expanse">
+ <general>
+  <mass>0</mass>
+  <price>500000</price>
+  <description>This map contains the location of the jump points in and out of the Qorel expanse, a set of systems not accessible through standard jump points. Getting the location of these very special jump points is usually very costly to reduce the number of people having access to it.</description>
+  <gfx_store>map</gfx_store>
+ </general>
+ <specific type="map">
+  <sys name="Terminus">
+   <jump>Acheron</jump>
+  </sys>
+  <sys name="Trask">
+   <jump>Hakoi</jump>
+  </sys>
+  <sys name="Effetey">
+			<jump>Daan</jump>
+			<jump>Provectus Nova</jump>
+  </sys>
+  <sys name="Trohem">
+   <jump>Pas</jump>
+  </sys>
+  <sys name="Blacin">
+   <jump>Gremlin</jump>
+  </sys>
+  <sys name="Doowa">
+   <jump>Vlexon</jump>
+   <jump>Salvador</jump>
+  </sys>
+  <sys name="Acheron">
+   <jump>Fortitude</jump>
+   <jump>Merisi</jump>
+   <jump>Sikh</jump>
+   <jump>Terminus</jump>
+  </sys>
+  <sys name="Blunderbuss">
+   <jump>Verex</jump>
+   <jump>Zied</jump>
+   <jump>Ekkodu</jump>
+  </sys>
+  <sys name="Daan">
+   <jump>Daravon</jump>
+   <jump>Gammacron</jump>
+   <jump>Effetey</jump>
+  </sys>
+  <sys name="Gremlin">
+   <jump>Daravon</jump>
+   <jump>Dvaer</jump>
+   <jump>Blacin</jump>
+  </sys>
+  <sys name="Hakoi">
+   <jump>Eneguoz</jump>
+   <jump>Salvador</jump>
+   <jump>Trask</jump>
+  </sys>
+  <sys name="Pas">
+   <jump>Overture</jump>
+   <jump>Trohem</jump>
+  </sys>
+  <sys name="Provectus Nova">
+   <jump>Limbo</jump>
+   <jump>Waterhole</jump>
+   <jump>Effetey</jump>
+  </sys>
+  <sys name="Salvador">
+   <jump>Hakoi</jump>
+   <jump>Mural</jump>
+   <jump>Doowa</jump>
+  </sys>
+  <sys name="Torg">
+   <jump>Doranthex</jump>
+   <jump>Firk</jump>
+  </sys>
+  <sys name="Vlexon">
+   <jump>Ogat</jump>
+   <jump>Doowa</jump>
+  </sys>
+ </specific>
+</outfit>

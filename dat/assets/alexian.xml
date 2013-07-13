@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Alexian">
+ <pos>
+  <x>-4508.501751</x>
+  <y>-3358.373753</y>
+ </pos>
+ <GFX>
+  <space>M09.png</space>
+  <exterior>oceanic2.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Qorellia">
+ <pos>
+  <x>1500.000000</x>
+  <y>1500.000000</y>
+ </pos>
+ <GFX>
+  <space>moon-G01.png</space>
+  <exterior>aquatic.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Pirate</faction>
+  <value>300.000000</value>
+  <range>4</range>
+ </presence>
+ <general>
+  <class>A</class>
+  <population>7500</population>
+  <hide>0.250000</hide>
+  <services>
+   <land>pir_clanworld</land>
+   <refuel/>
+   <bar/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>Minor clan world in control of the whole Qorel Expanse, Qorellia could be seen as a civilian hub if its traffic wasn't constituted only of pirate ships.</description>
+  <bar>A standard pirate bar, with the exception of a local militia making sure no troublemaker stays unharmed.</bar>
+ </general>
+ <tech>
+  <item>Systems Low</item>
+  <item>Pirate Ships</item>
+  <item>Kinetic 1</item>
+  <item>Basic Outfits 1</item>
+  <item>Heavy Weapons 1</item>
+  <item>Low Tech Upgrades</item>
+  <item>High Tech Upgrades 1</item>
+  <item>Laser 1</item>
+  <item>Laser 2</item>
+  <item>Ion 1</item>
+  <item>Ion 2</item>
+  <item>Star Maps</item>
+  <item>Missiles 1</item>
+  <item>Hulls Low</item>
+  <item>Engines Low</item>
+  <item>Systems Medium</item>
+  <item>Pirate Maps</item>
+ </tech>
+</asset>

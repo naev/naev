@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Sevlow">
+ <pos>
+  <x>313.213689</x>
+  <y>-331.962182</y>
+ </pos>
+ <GFX>
+  <space>O02.png</space>
+  <exterior>oceanic2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Thurion</faction>
+  <value>100.000000</value>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>N</class>
+  <population>1000000</population>
+  <hide>0.010000</hide>
+  <services>
+   <land/>
+   <refuel/>
+  </services>
+  <commodities/>
+  <description>Sevlow is one of the few truly inhabited Thurian worlds. Sevlow is an uneventful planet, as it serves primarily as an argicultural world producing algae, and as a living place for biological Thurions.</description>
+ </general>
+</asset>

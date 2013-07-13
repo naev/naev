@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Ruadan">
+ <pos>
+  <x>0.000000</x>
+  <y>0.000000</y>
+ </pos>
+ <GFX>
+  <space>X00.png</space>
+  <exterior>lava.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Za'lek</faction>
+  <value>800.000000</value>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>X</class>
+  <population>15000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land>zlk_ruadan</land>
+   <refuel/>
+  </services>
+  <commodities/>
+  <description>Ruadan has recently become the nerve center of the Za'lek. Most of the Za'lek's strentgh is concentrated here, and they don't allow anyone but the highest level captains to land here. Even being allowed to be here is considered a great honor.</description>
+ </general>
+</asset>

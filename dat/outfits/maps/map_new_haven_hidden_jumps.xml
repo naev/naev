@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Map: New Haven's hidden jump points">
+ <general>
+  <mass>0</mass>
+  <price>250000</price>
+  <description>This map contains the position of a set of hidden jump points in and around the New Haven system. Only a minority of pirates have access to this map.</description>
+  <gfx_store>map</gfx_store>
+ </general>
+ <specific type="map">
+  <sys name="Andres">
+   <jump>Gamel</jump>
+   <jump>Haven</jump>
+   <jump>Rockbed</jump>
+  </sys>
+  <sys name="Bastion">
+   <jump>Elixir</jump>
+   <jump>Fury</jump>
+   <jump>Gamel</jump>
+   <jump>Halo</jump>
+  </sys>
+  <sys name="Capricorn">
+   <jump>Pontus</jump>
+   <jump>Rockbed</jump>
+   <jump>Daled</jump>
+  </sys>
+  <sys name="Daled">
+   <jump>Haven</jump>
+   <jump>Wahri</jump>
+   <jump>New Haven</jump>
+   <jump>Mason</jump>
+   <jump>Capricorn</jump>
+  </sys>
+  <sys name="Defa">
+   <jump>Oberon</jump>
+   <jump>Pilatis</jump>
+   <jump>Vedalus</jump>
+  </sys>
+  <sys name="Dendria">
+   <jump>Babylon</jump>
+   <jump>Diadem</jump>
+   <jump>Dust</jump>
+   <jump>Titus</jump>
+   <jump>Muran</jump>
+  </sys>
+  <sys name="Draconis">
+   <jump>Tau Prime</jump>
+   <jump>Eridani</jump>
+  </sys>
+  <sys name="Dust">
+   <jump>Dendria</jump>
+   <jump>Forlat</jump>
+   <jump>Moordra</jump>
+  </sys>
+  <sys name="Eridani">
+   <jump>Alteris</jump>
+   <jump>Dune</jump>
+   <jump>Draconis</jump>
+  </sys>
+  <sys name="Forlat">
+   <jump>Dust</jump>
+   <jump>Muran</jump>
+   <jump>Wahri</jump>
+   <jump>New Haven</jump>
+   <jump>Regulus</jump>
+  </sys>
+  <sys name="Fury">
+   <jump>Bastion</jump>
+   <jump>New Haven</jump>
+  </sys>
+  <sys name="Halo">
+   <jump>Dune</jump>
+   <jump>Pilatis</jump>
+   <jump>Bastion</jump>
+  </sys>
+  <sys name="Haven">
+   <jump>Daled</jump>
+   <jump>Gamel</jump>
+   <jump>New Haven</jump>
+   <jump>Andres</jump>
+  </sys>
+  <sys name="Mason">
+   <jump>C-28</jump>
+   <jump>Kelvos</jump>
+   <jump>Daled</jump>
+  </sys>
+  <sys name="Moordra">
+   <jump>Elza</jump>
+   <jump>Symm</jump>
+   <jump>Dust</jump>
+   <jump>Tandar</jump>
+  </sys>
+  <sys name="Muran">
+   <jump>Forlat</jump>
+   <jump>New Haven</jump>
+   <jump>Dendria</jump>
+  </sys>
+  <sys name="New Haven">
+   <jump>Haven</jump>
+   <jump>Titus</jump>
+   <jump>Muran</jump>
+   <jump>Forlat</jump>
+   <jump>Daled</jump>
+   <jump>Fury</jump>
+  </sys>
+  <sys name="Regulus">
+   <jump>Corvus</jump>
+   <jump>Wahri</jump>
+   <jump>Forlat</jump>
+  </sys>
+  <sys name="Rockbed">
+   <jump>Capricorn</jump>
+   <jump>Coriolis</jump>
+   <jump>Pontus</jump>
+   <jump>Andres</jump>
+   <jump>Sikh</jump>
+  </sys>
+  <sys name="Sikh">
+   <jump>Acheron</jump>
+   <jump>Alteris</jump>
+   <jump>Rockbed</jump>
+  </sys>
+  <sys name="Tandar">
+   <jump>Corvus</jump>
+   <jump>Symm</jump>
+   <jump>Moordra</jump>
+  </sys>
+  <sys name="Titus">
+   <jump>Dendria</jump>
+   <jump>Elixir</jump>
+   <jump>New Haven</jump>
+   <jump>Vedalus</jump>
+  </sys>
+  <sys name="Vedalus">
+   <jump>Solene</jump>
+   <jump>Titus</jump>
+   <jump>Defa</jump>
+  </sys>
+ </specific>
+</outfit>

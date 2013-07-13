@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Cole Station">
+ <pos>
+  <x>4713.068117</x>
+  <y>5484.348194</y>
+ </pos>
+ <GFX>
+  <space>station-commerce3.png</space>
+  <exterior>station03.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Empire</faction>
+  <value>50.000000</value>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>1</class>
+  <population>2000</population>
+  <hide>0.010000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <missions/>
+  </services>
+  <commodities/>
+  <description>Cole station is the last civilian station on the route to Doeston, where many transport ships stop to refuel and regenerate their shields in safety from the radiation of the nebula.</description>
+ </general>
+</asset>

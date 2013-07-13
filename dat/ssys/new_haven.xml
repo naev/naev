@@ -17,8 +17,28 @@
   <asset>Red Eye</asset>
  </assets>
  <jumps>
+  <jump target="Daled">
+   <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Forlat">
+   <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Fury">
+   <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Haven">
    <pos x="-57311.462690" y="-31358.261551"/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Muran">
+   <autopos/>
    <hidden/>
    <hide>1.000000</hide>
   </jump>

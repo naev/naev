@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Foundation Station">
+ <pos>
+  <x>1941.876493</x>
+  <y>767.371325</y>
+ </pos>
+ <GFX>
+  <space>000.png</space>
+  <exterior>station00.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Pirate</faction>
+  <value>300.000000</value>
+  <range>5</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>1500</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <missions/>
+   <outfits/>
+  </services>
+  <commodities/>
+  <description>Foundation Station is the northern refuel point of the Qorel Expanse. As all pirate outposts, it also serves as trading post in which to exchange loots.</description>
+ </general>
+ <tech>
+  <item>Pirate Maps</item>
+  <item>Laser 1</item>
+  <item>Basic Outfits 1</item>
+ </tech>
+</asset>

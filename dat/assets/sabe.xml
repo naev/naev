@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Sabe">
+ <pos>
+  <x>4570.148000</x>
+  <y>-3603.963447</y>
+ </pos>
+ <GFX>
+  <space>M08.png</space>
+  <exterior>forest.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Thurion</faction>
+  <value>1000.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>10000000</population>
+  <hide>0.010000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>Sabe and Anya are a pair of planets tidally locked to eachother, rotating around their shared center of gravity. Sabe is the center of the Thurian goverment, housing the largest population of both uploaded and biological Thurions, acting as the de-facto capital. The majority of the planet's surface is untouched, as virtually all its inhabitants reside in the multitude of arcologies spread across its surface.</description>
+ </general>
+ <tech>
+  <item>Thurion Military Ships</item>
+ </tech>
+</asset>

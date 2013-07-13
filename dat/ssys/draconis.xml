@@ -22,6 +22,11 @@
   <asset>Zabween</asset>
  </assets>
  <jumps>
+  <jump target="Eridani">
+   <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Tau Prime">
    <autopos/>
    <hide>1.250000</hide>

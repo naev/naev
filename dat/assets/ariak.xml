@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Ariak">
+ <pos>
+  <x>4306.643204</x>
+  <y>3690.012035</y>
+ </pos>
+ <GFX>
+  <space>C00.png</space>
+  <exterior>station00.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.010000</hide>
+  <services/>
+ </general>
+</asset>

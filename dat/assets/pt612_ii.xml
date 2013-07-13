@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="PT612 II">
+ <pos>
+  <x>-1471.704318</x>
+  <y>-3911.089014</y>
+ </pos>
+ <GFX>
+  <space>A03.png</space>
+  <exterior>desertic.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.010000</hide>
+  <services/>
+ </general>
+</asset>

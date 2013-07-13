@@ -16,6 +16,11 @@
    <autopos/>
    <hide>1.250000</hide>
   </jump>
+  <jump target="Forlat">
+   <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Wahri">
    <autopos/>
    <hide>1.250000</hide>

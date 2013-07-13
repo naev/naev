@@ -21,6 +21,12 @@
   <asset>Virtual Trader Area</asset>
  </assets>
  <jumps>
+  <jump target="Doowa">
+   <autopos/>
+   <hidden/>
+   <exitonly/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Hakoi">
    <pos x="2653.227115" y="18473.884299"/>
    <hidden/>
@@ -28,11 +34,6 @@
   </jump>
   <jump target="Mural">
    <autopos/>
-   <hide>1.250000</hide>
-  </jump>
-  <jump target="Vlexon">
-   <autopos/>
-   <exitonly/>
    <hide>1.250000</hide>
   </jump>
  </jumps>

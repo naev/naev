@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Atryssa">
+ <pos>
+  <x>-12172.954728</x>
+  <y>-9067.609133</y>
+ </pos>
+ <GFX>
+  <space>M09.png</space>
+  <exterior>oceanic2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Za'lek</faction>
+  <value>300.000000</value>
+  <range>5</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>30000000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>The closest planet from Ruadan still under Za'lek control where outsiders can land. Atryssa is an economically rich world thanks by Za'lek technology.</description>
+  <bar>The archetype of a Za'lek bar, although a very crowded one.</bar>
+ </general>
+ <tech>
+  <item>Laser 1</item>
+  <item>Laser 2</item>
+  <item>Ion 1</item>
+  <item>Plasma 1</item>
+  <item>Basic Outfits 1</item>
+  <item>Basic Outfits 2</item>
+  <item>Heavy Weapons 1</item>
+  <item>Heavy Weapons 2</item>
+  <item>Low Tech Upgrades</item>
+  <item>High Tech Upgrades 1</item>
+  <item>High Tech Upgrades 2</item>
+  <item>Missiles 1</item>
+  <item>Star Maps</item>
+  <item>Basic Civilian Ships</item>
+  <item>Basic Trade Ships</item>
+  <item>Bulk Trade Ships</item>
+ </tech>
+</asset>

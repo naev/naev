@@ -23,6 +23,10 @@
    <autopos/>
    <hide>1.250000</hide>
   </jump>
+  <jump target="Nunavut">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
   <jump target="Volus">
    <autopos/>
    <hide>1.250000</hide>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ssys name="Booster">
+ <general>
+  <radius>10000.000000</radius>
+  <stars>400</stars>
+  <interference>0.000000</interference>
+  <nebula volatility="25.000000">300.000000</nebula>
+ </general>
+ <pos>
+  <x>555.000000</x>
+  <y>401.000000</y>
+ </pos>
+ <assets/>
+ <jumps>
+  <jump target="Katami">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Metsys">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+ </jumps>
+</ssys>
