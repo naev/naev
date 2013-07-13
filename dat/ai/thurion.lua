@@ -1,5 +1,5 @@
-include("ai/tpl/generic.lua")
-include("ai/personality/civilian.lua")
+include("dat/ai/tpl/generic.lua")
+include("dat/ai/personality/civilian.lua")
 
 
 mem.shield_run = 20
