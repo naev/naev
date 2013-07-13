@@ -22,10 +22,6 @@
    <autopos/>
    <hide>1.250000</hide>
   </jump>
-  <jump target="Oriantis">
-   <autopos/>
-   <hide>1.250000</hide>
-  </jump>
   <jump target="Zerantix">
    <autopos/>
    <hide>1.250000</hide>
