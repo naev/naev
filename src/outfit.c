@@ -1515,12 +1515,12 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
          outfit_getType(temp),
          (temp->u.mod.active) ? "\n\erActivated Outfit\e0" : "" );
 
-#define DESC_ADD(x, s, n) \
+#define DESC_ADD(x, s, n, c) \
 if ((x) != 0.) \
    i += nsnprintf( &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, \
-         "\n%+."n"f "s, x )
-#define DESC_ADD0(x, s)    DESC_ADD( x, s, "0" )
-#define DESC_ADD1(x, s)    DESC_ADD( x, s, "1" )
+         "\n\e%c%+."n"f "s"\e0", c, x )
+#define DESC_ADD0(x, s)    DESC_ADD( x, s, "0", ((x)>0)?'D':'r' )
+#define DESC_ADD1(x, s)    DESC_ADD( x, s, "1", ((x)>0)?'D':'r' )
    DESC_ADD0( temp->cpu, "CPU" );
    DESC_ADD0( temp->u.mod.thrust, "Thrust" );
    DESC_ADD0( temp->u.mod.turn, "Turn Rate" );
