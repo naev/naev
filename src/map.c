@@ -46,6 +46,7 @@ static int map_selected       = -1; /**< What system is selected on the map. */
 static StarSystem **map_path  = NULL; /**< The path to current selected system. */
 int map_npath                 = 0; /**< Number of systems in map_path. */
 glTexture *gl_faction_disk    = NULL; /**< Texture of the disk representing factions. */
+extern double space_shortestJump; /**< Shortest jump possible, used as heuristic in A*. */
 
 /* VBO. */
 static gl_vbo *map_vbo = NULL; /**< Map VBO. */
@@ -1337,7 +1338,7 @@ typedef struct SysNode_ {
 } SysNode; /**< System Node for use in A* pathfinding. */
 static SysNode *A_gc;
 /* prototypes */
-static SysNode* A_newNode( StarSystem* sys, SysNode* parent );
+static SysNode* A_newNode( StarSystem* sys );
 static double A_h( StarSystem *n, StarSystem *g );
 static double A_g( SysNode* n );
 static SysNode* A_add( SysNode *first, SysNode *cur );
@@ -1346,31 +1347,35 @@ static SysNode* A_in( SysNode *first, StarSystem *cur );
 static SysNode* A_lowest( SysNode *first );
 static void A_freeList( SysNode *first );
 /** @brief Creates a new node link to star system. */
-static SysNode* A_newNode( StarSystem* sys, SysNode* parent )
+static SysNode* A_newNode( StarSystem* sys )
 {
    SysNode* n;
 
-   n = malloc(sizeof(SysNode));
+   n        = malloc(sizeof(SysNode));
 
-   n->next = NULL;
-   n->parent = parent;
-   n->sys = sys;
-   n->r = DBL_MAX;
-   n->g = 0.;
+   n->next  = NULL;
+   n->sys   = sys;
 
    n->gnext = A_gc;
-   A_gc = n;
+   A_gc     = n;
 
    return n;
 }
-/** @brief Heuristic model to use. */
+/** @brief Heuristic model to use.
+ *
+ * So, to always get a solution we need A_h < A_g. That is, the heuristic must
+ * be a lower bound to the number of jumps to reach he target system. This means
+ * that we must basically figure out the fastest way to get to the target system.
+ * Assuming that all jumps are as short as the smallest jump in the game, all we
+ * have to do assume that the shortest jump in the game is used repeatedly in a
+ * straight line to get to the destination system. So we take the distance between
+ * the target and the goal and divide by the shortest jump and we get the best
+ * admissible bound.
+ */
 static double A_h( StarSystem *n, StarSystem *g )
 {
-   (void)n;
-   (void)g;
    /* Euclidean distance */
-   /*return sqrt(pow2(n->pos.x - g->pos.x) + pow2(n->pos.y - g->pos.y))/100.;*/
-   return 0.;
+   return 0.999 * sqrt(pow2(n->pos.x - g->pos.x) + pow2(n->pos.y - g->pos.y)) / space_shortestJump;
 }
 /** @brief Gets the g from a node. */
 static double A_g( SysNode* n )
@@ -1527,22 +1532,30 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
    }
 
    /* start the linked lists */
-   open  = closed = NULL;
-   cur   = A_newNode( ssys, NULL );
-   open  = A_add( open, cur ); /* initial open node is the start system */
+   open     = closed = NULL;
+   cur      = A_newNode( ssys );
+   cur->parent = NULL;
+   cur->g   = 0;
+   cur->r   = A_h(esys, ssys);
+   open     = A_add( open, cur ); /* Initial open node is the start system */
 
    j = 0;
-   while ((cur = A_lowest(open))->sys != esys) {
+   while ((cur = A_lowest(open))) {
+      /* End condition. */
+      if (cur->sys == esys)
+         break;
 
       /* Break if infinite loop. */
       j++;
-      if (j > MAP_LOOP_PROT)
+      if (j > MAP_LOOP_PROT) {
+         DEBUG("MAP_LOOP_PROT_ACTIVATED");
          break;
+      }
 
-      /* get best from open and toss to closed */
+      /* Get best from open and toss to closed */
       open   = A_rm( open, cur->sys );
       closed = A_add( closed, cur );
-      cost   = A_g(cur) + 1;
+      cost   = A_g(cur) + 1; /* Base unit is jump and always increases by 1. */
 
       for (i=0; i<cur->sys->njumps; i++) {
          jp  = &cur->sys->jumps[i];
@@ -1558,22 +1571,23 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
          if (jp_isFlag( jp, JP_EXITONLY ))
             continue;
 
-         neighbour = A_newNode( sys, NULL );
+         /* Check to see if it's already in the closed set. */
+         ccost = A_in(closed, sys);
+         if (ccost != NULL)
+            continue; /* Since it was added before, it must have had lower g score, so skip. */
+            //closed = A_rm( closed, sys ); /* shouldn't happen */
 
+         /* Remove if it exists and current is better. */
          ocost = A_in(open, sys);
          if ((ocost != NULL) && (cost < ocost->g))
             open = A_rm( open, sys ); /* new path is better */
 
-         ccost = A_in(closed, sys);
-         if (ccost != NULL)
-            closed = A_rm( closed, sys ); /* shouldn't happen */
-
-         if ((ocost == NULL) && (ccost == NULL)) {
-            neighbour->g      = cost;
-            neighbour->r      = A_g(neighbour) + A_h(cur->sys,sys);
-            neighbour->parent = cur;
-            open              = A_add( open, neighbour );
-         }
+         /* Create the node. */
+         neighbour         = A_newNode( sys );
+         neighbour->parent = cur;
+         neighbour->g      = cost;
+         neighbour->r      = A_g(neighbour) + A_h(esys,sys);
+         open              = A_add( open, neighbour );
       }
 
       /* Sanity check in case not linked. */
