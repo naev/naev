@@ -28,9 +28,10 @@
 --    @param max Maximum distance to check for.
 --    @param filter Optional filter function to use for more details.
 --    @param data Data to pass to filter
+--    @param hidden Whether or not to consider hidden jumps (off by default)
 --    @return The table of systems n jumps away from sys
 --]]
-function getsysatdistance( sys, min, max, filter, data )
+function getsysatdistance( sys, min, max, filter, data, hidden )
    -- Get default parameters
    if sys == nil then
       sys = system.cur()
@@ -39,14 +40,14 @@ function getsysatdistance( sys, min, max, filter, data )
       max = min
    end
    -- Begin iteration
-   return _getsysatdistance( sys, min, max, sys, max, {}, filter, data )
+   return _getsysatdistance( sys, min, max, sys, max, {}, filter, data, hidden )
 end
 
 
 -- The first call to this function should always have n >= max
-function _getsysatdistance( target, min, max, sys, n, t, filter, data )
+function _getsysatdistance( target, min, max, sys, n, t, filter, data, hidden )
    if n == 0 then -- This is a leaf call - perform checks and add if appropriate
-      local d = target:jumpDist(sys)
+      local d = target:jumpDist( sys, hidden )
 
       -- Check bounds
       if d < min or d > max then
@@ -72,7 +73,7 @@ function _getsysatdistance( target, min, max, sys, n, t, filter, data )
       return t
    else -- This is a branch call - recursively call over all adjacent systems
       for _,i in pairs( sys:adjacentSystems() ) do
-         t = _getsysatdistance(target, min, max, i, n-1, t, filter, data)
+         t = _getsysatdistance( target, min, max, i, n-1, t, filter, data, hidden )
       end
       return t
    end

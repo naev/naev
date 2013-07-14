@@ -1989,7 +1989,11 @@ static credits_t equipment_transportPrice( char* shipname )
    if (strcmp(loc,land_planet->name)==0) /* already here */
       return 0;
 
-   s = map_getJumpPath( &jumps, cur_system->name, planet_getSystem(loc), 1, NULL );
+   /* Here we also use hidden jump points, which may not be the best idea but ensures
+    * that things can be reached. */
+   s = map_getJumpPath( &jumps, cur_system->name, planet_getSystem(loc), 1, 1, NULL );
+   if (s==NULL)
+      jumps = 50; /* Just consider a large number. */
    free(s);
 
    /* Modest base price scales fairly rapidly with distance. */

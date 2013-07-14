@@ -30,7 +30,8 @@ void map_jump (void);
 
 /* manipulate universe stuff */
 StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
-     const char* sysend, int ignore_known, StarSystem** old_data );
+     const char* sysend, int ignore_known, int show_hidden,
+     StarSystem** old_data );
 int map_map( const Outfit *map );
 int map_isMapped( const Outfit* map );
 

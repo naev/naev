@@ -1287,10 +1287,10 @@ void map_select( StarSystem *sys, char shifted )
       if (space_sysReachable(sys)) {
          if (!shifted)
             map_path = map_getJumpPath( &map_npath,
-                  cur_system->name, sys->name, 0 , NULL );
+                  cur_system->name, sys->name, 0, 1, NULL );
          else
             map_path = map_getJumpPath( &map_npath,
-                  cur_system->name, sys->name, 0 , map_path );
+                  cur_system->name, sys->name, 0, 1, map_path );
 
          if (map_npath==0) {
             player_hyperspacePreempt(0);
@@ -1490,7 +1490,8 @@ void map_setZoom(double zoom)
  *    @return NULL on failure, the list of njumps elements systems in the path.
  */
 StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
-    const char* sysend, int ignore_known, StarSystem** old_data )
+    const char* sysend, int ignore_known, int show_hidden,
+    StarSystem** old_data )
 {
    int i, j, cost, ojumps;
 
@@ -1567,6 +1568,8 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
                continue;
          }
          if (jp_isFlag( jp, JP_EXITONLY ))
+            continue;
+         if (!show_hidden && jp_isFlag( jp, JP_HIDDEN ))
             continue;
 
          /* Check to see if it's already in the closed set. */
