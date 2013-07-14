@@ -1,6 +1,6 @@
 
 
-include "dat/factions/skel.lua"
+include "dat/factions/standing/skel.lua"
 
 
 -- Faction caps.
