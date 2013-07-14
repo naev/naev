@@ -46,7 +46,6 @@ static int map_selected       = -1; /**< What system is selected on the map. */
 static StarSystem **map_path  = NULL; /**< The path to current selected system. */
 int map_npath                 = 0; /**< Number of systems in map_path. */
 glTexture *gl_faction_disk    = NULL; /**< Texture of the disk representing factions. */
-extern double space_shortestJump; /**< Shortest jump possible, used as heuristic in A*. */
 
 /* VBO. */
 static gl_vbo *map_vbo = NULL; /**< Map VBO. */
@@ -1340,7 +1339,7 @@ static SysNode *A_gc;
 /* prototypes */
 static SysNode* A_newNode( StarSystem* sys );
 static double A_h( StarSystem *n, StarSystem *g );
-static double A_g( SysNode* n );
+static int A_g( SysNode* n );
 static SysNode* A_add( SysNode *first, SysNode *cur );
 static SysNode* A_rm( SysNode *first, StarSystem *cur );
 static SysNode* A_in( SysNode *first, StarSystem *cur );
@@ -1363,22 +1362,21 @@ static SysNode* A_newNode( StarSystem* sys )
 }
 /** @brief Heuristic model to use.
  *
- * So, to always get a solution we need A_h < A_g. That is, the heuristic must
- * be a lower bound to the number of jumps to reach he target system. This means
- * that we must basically figure out the fastest way to get to the target system.
- * Assuming that all jumps are as short as the smallest jump in the game, all we
- * have to do assume that the shortest jump in the game is used repeatedly in a
- * straight line to get to the destination system. So we take the distance between
- * the target and the goal and divide by the shortest jump and we get the best
- * admissible bound.
+ * It is impossible given the nature of our problem to actually use a
+ * heuristic. There is no relationship with euclidean distance and the
+ * actual cost function so we just have do use Djikstras.
+ *
+ * This is because paths can cross over and such.
  */
 static double A_h( StarSystem *n, StarSystem *g )
 {
+   (void)n;
+   (void)g;
    /* Euclidean distance */
-   return 0.999 * sqrt(pow2(n->pos.x - g->pos.x) + pow2(n->pos.y - g->pos.y)) / space_shortestJump;
+   return 0;
 }
 /** @brief Gets the g from a node. */
-static double A_g( SysNode* n )
+static int A_g( SysNode* n )
 {
    return n->g;
 }
@@ -1498,8 +1496,8 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
    StarSystem *sys, *ssys, *esys, **res;
    JumpPoint *jp;
 
-   SysNode *cur, *neighbour;
-   SysNode *open, *closed;
+   SysNode *cur,   *neighbour;
+   SysNode *open,  *closed;
    SysNode *ocost, *ccost;
 
    A_gc = NULL;
@@ -1574,20 +1572,24 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
 
          /* Check to see if it's already in the closed set. */
          ccost = A_in(closed, sys);
-         if (ccost != NULL)
-            continue; /* Since it was added before, it must have had lower g score, so skip. */
-            //closed = A_rm( closed, sys ); /* shouldn't happen */
+         if ((ccost != NULL) && (cost >= A_g(ccost)))
+            continue;
+            //closed = A_rm( closed, sys );
 
          /* Remove if it exists and current is better. */
          ocost = A_in(open, sys);
-         if ((ocost != NULL) && (cost < ocost->g))
-            open = A_rm( open, sys ); /* new path is better */
+         if (ocost != NULL) {
+            if (cost < A_g(ocost))
+               open = A_rm( open, sys ); /* New path is better */
+            else
+               continue; /* This node is worse, so ignore it. */
+         }
 
          /* Create the node. */
          neighbour         = A_newNode( sys );
          neighbour->parent = cur;
          neighbour->g      = cost;
-         neighbour->r      = A_g(neighbour) + A_h(esys,sys);
+         neighbour->r      = (double)cost + A_h(sys, esys);
          open              = A_add( open, neighbour );
       }
 

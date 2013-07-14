@@ -104,7 +104,6 @@ static glTexture *jumpbuoy_gfx = NULL; /**< Jump buoy graphics. */
 static lua_State *landing_lua = NULL; /**< Landing lua. */
 static int space_fchg = 0; /**< Faction change counter, to avoid unnecessary calls. */
 static int space_simulating = 0; /**< Are we simulating space? */
-double space_shortestJump = 1e-3; /**< Fundamental for fast A* search. */
 
 
 /*
@@ -2282,7 +2281,7 @@ StarSystem *system_new (void)
  */
 void system_reconstructJumps (StarSystem *sys)
 {
-   double dx, dy, d;
+   double dx, dy;
    int j;
    JumpPoint *jp;
    double a;
@@ -2297,10 +2296,6 @@ void system_reconstructJumps (StarSystem *sys)
       a = atan2( dy, dx );
       if (a < 0.)
          a += 2.*M_PI;
-
-      /* Check to see if the jump is the shortest. */
-      d = sqrt( pow2(dx) + pow2(dy) );
-      space_shortestJump = MIN( space_shortestJump, d );
 
       /* Update position if needed.. */
       if (jp->flags & JP_AUTOPOS) {
@@ -2325,7 +2320,6 @@ void systems_reconstructJumps (void)
    int i;
 
    /* So we need to calculate the shortest jump. */
-   space_shortestJump = DBL_MAX;
    for (i=0; i<systems_nstack; i++) {
       sys = &systems_stack[i];
       system_reconstructJumps(sys);
