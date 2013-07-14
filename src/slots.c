@@ -173,10 +173,8 @@ static int sp_check( unsigned int spid )
  */
 const char *sp_display( unsigned int spid )
 {
-#if DEBUGGING
    if (sp_check(spid))
       return NULL;
-#endif /* DEBUGGING */
    return sp_array[ spid-1 ].display;
 }
 
@@ -186,10 +184,8 @@ const char *sp_display( unsigned int spid )
  */
 const char *sp_description( unsigned int spid )
 {
-#if DEBUGGING
    if (sp_check(spid))
       return NULL;
-#endif /* DEBUGGING */
    return sp_array[ spid-1 ].description;
 }
 
@@ -199,10 +195,8 @@ const char *sp_description( unsigned int spid )
  */
 int sp_required( unsigned int spid )
 {
-#if DEBUGGING
    if (sp_check(spid))
       return 0;
-#endif /* DEBUGGING */
    return sp_array[ spid-1 ].required;
 }
 
@@ -212,10 +206,8 @@ int sp_required( unsigned int spid )
  */
 int sp_exclusive( unsigned int spid )
 {
-#if DEBUGGING
    if (sp_check(spid))
       return 0;
-#endif /* DEBUGGING */
    return sp_array[ spid-1 ].exclusive;
 }
 
