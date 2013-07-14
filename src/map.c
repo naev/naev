@@ -1322,6 +1322,11 @@ void map_select( StarSystem *sys, char shifted )
 
 /*
  * A* algorithm for shortest path finding
+ *
+ * Note since that we can't actually get an admissible heurestic for A* this is
+ * in reality just Djikstras. I've removed the heurestic bit to make sure I
+ * don't try to implement an admissible heuristic when I'm pretty sure there is
+ * none.
  */
 /**
  * @brief Node structure for A* pathfinding.
@@ -1332,13 +1337,11 @@ typedef struct SysNode_ {
 
    struct SysNode_ *parent; /**< Parent node. */
    StarSystem* sys; /**< System in node. */
-   double r; /**< ranking */
    int g; /**< step */
 } SysNode; /**< System Node for use in A* pathfinding. */
 static SysNode *A_gc;
 /* prototypes */
 static SysNode* A_newNode( StarSystem* sys );
-static double A_h( StarSystem *n, StarSystem *g );
 static int A_g( SysNode* n );
 static SysNode* A_add( SysNode *first, SysNode *cur );
 static SysNode* A_rm( SysNode *first, StarSystem *cur );
@@ -1359,21 +1362,6 @@ static SysNode* A_newNode( StarSystem* sys )
    A_gc     = n;
 
    return n;
-}
-/** @brief Heuristic model to use.
- *
- * It is impossible given the nature of our problem to actually use a
- * heuristic. There is no relationship with euclidean distance and the
- * actual cost function so we just have do use Djikstras.
- *
- * This is because paths can cross over and such.
- */
-static double A_h( StarSystem *n, StarSystem *g )
-{
-   (void)n;
-   (void)g;
-   /* Euclidean distance */
-   return 0;
 }
 /** @brief Gets the g from a node. */
 static int A_g( SysNode* n )
@@ -1445,7 +1433,7 @@ static SysNode* A_lowest( SysNode *first )
    n = first;
    lowest = n;
    do {
-      if (n->r < lowest->r)
+      if (n->g < lowest->g)
          lowest = n;
    } while ((n=n->next) != NULL);
    return lowest;
@@ -1535,7 +1523,6 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
    cur      = A_newNode( ssys );
    cur->parent = NULL;
    cur->g   = 0;
-   cur->r   = A_h(esys, ssys);
    open     = A_add( open, cur ); /* Initial open node is the start system */
 
    j = 0;
@@ -1589,7 +1576,6 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
          neighbour         = A_newNode( sys );
          neighbour->parent = cur;
          neighbour->g      = cost;
-         neighbour->r      = (double)cost + A_h(sys, esys);
          open              = A_add( open, neighbour );
       }
 
