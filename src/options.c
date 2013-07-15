@@ -1039,7 +1039,6 @@ static void opt_video( unsigned int wid )
    char buf[16];
    int cw;
    int w, h, y, x, l;
-   SDL_Rect** modes;
    char **res;
    const char *s;
 
@@ -1072,7 +1071,33 @@ static void opt_video( unsigned int wid )
    window_addCheckbox( wid, x+20+100, y, 100, 20,
          "chkFullscreen", "Fullscreen", NULL, conf.fullscreen );
    y -= 30;
-   modes = SDL_ListModes( NULL, SDL_OPENGL | SDL_FULLSCREEN );
+#if SDL_VERSION_ATLEAST(2,0,0)
+   SDL_DisplayMode mode;
+   int n = SDL_GetNumDisplayModes( 0 );
+   j = 1;
+   for (i=0; i<n; i++) {
+      SDL_GetDisplayMode( 0, i, &mode  );
+      if ((mode.w == conf.width) && (mode.h == conf.height))
+         j = 0;
+   }
+   res   = malloc( sizeof(char*) * (i+j) );
+   nres  = 0;
+   res_def = 0;
+   if (j) {
+      res[0]   = malloc(16);
+      nsnprintf( res[0], 16, "%dx%d", conf.width, conf.height );
+      nres     = 1;
+   }
+   for (i=0; i<n; i++) {
+      SDL_GetDisplayMode( 0, i, &mode  );
+      res[ nres ] = malloc(16);
+      nsnprintf( res[ nres ], 16, "%dx%d", mode.w, mode.h );
+      if ((mode.w == conf.width) && (mode.h == conf.height))
+         res_def = i;
+      nres++;
+   }
+#else /* SDL_VERSION_ATLEAST(2,0,0) */
+   SDL_Rect** modes = SDL_ListModes( NULL, SDL_OPENGL | SDL_FULLSCREEN );
    j = 1;
    for (i=0; modes[i]; i++) {
       if ((modes[i]->w == conf.width) && (modes[i]->h == conf.height))
@@ -1093,6 +1118,7 @@ static void opt_video( unsigned int wid )
          res_def = i;
       nres++;
    }
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
    window_addList( wid, x, y, 140, 100, "lstRes", res, nres, -1, opt_videoRes );
    y -= 150;
 

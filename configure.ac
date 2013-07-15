@@ -164,6 +164,21 @@ AS_IF([test "$enable_debug" != "no"], [
   esac
 ])
 
+# --with-sdl2
+AC_MSG_CHECKING([whether to use SDL2 instead of SDL])
+AC_ARG_WITH([sdl2],
+  AC_HELP_STRING([--with-sdl2],
+     [use SDL2 instead of SDL (default: yes)]), [
+    AS_IF([test "$withval" = "yes"], [
+      with_sdl2=yes
+    ], [
+      with_sdl2=no
+    ])
+  ], [
+    with_sdl2=yes
+  ])
+AC_MSG_RESULT([$with_sdl2])
+
 # --with-openal
 AC_MSG_CHECKING([whether to use OpenAL])
 AC_ARG_WITH([openal],
@@ -234,9 +249,15 @@ AC_SUBST([ndata_path])
 #
 
 # SDL
-AM_PATH_SDL
-AS_IF([test -z "$SDL_CFLAGS" && test -z "$SDL_LIBS"], [
-  AC_ERROR([SDL not found])
+AS_IF([test "$with_sdl2" = "yes"], [
+      AM_PATH_SDL2(2.0.0, [have_sdl2=yes], [have_sdl2=no])
+   ], [have_sdl2=no]
+)
+AS_IF([test "$have_sdl2" = "no"], [
+   AM_PATH_SDL
+   AS_IF([test -z "$SDL_CFLAGS" && test -z "$SDL_LIBS"], [
+     AC_ERROR([SDL not found])
+   ])
 ])
 
 # libxml2
@@ -590,6 +611,8 @@ AC_OUTPUT
 echo
 AC_MSG_NOTICE([prefix:      $prefix])
 AC_MSG_NOTICE([ndata:       $ndata_path])
+echo
+AC_MSG_NOTICE([SDL2:        $have_sdl2])
 echo
 AC_MSG_NOTICE([sound backends:])
 AC_MSG_NOTICE([  OpenAL:    $have_openal])

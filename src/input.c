@@ -307,10 +307,6 @@ void input_init (void)
 
    /* Mouse. */
    SDL_EventState( SDL_MOUSEWHEEL,      SDL_DISABLE );
-
-   /* Proximity. */
-   SDL_EventState( SDL_INPUTPROXIMITYIN,     SDL_DISABLE );
-   SDL_EventState( SDL_INPUTPROXIMITYOUT,    SDL_DISABLE );
 #endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
    /* Get the number of keybindings. */

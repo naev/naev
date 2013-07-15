@@ -645,7 +645,11 @@ int music_al_init (void)
     */
    musicLock();
    music_state  = MUSIC_STATE_STARTUP;
-   music_player = SDL_CreateThread( music_thread, NULL );
+   music_player = SDL_CreateThread( music_thread,
+#if SDL_VERSION_ATLEAST(1,3,0)
+         "music_thread",
+#endif /* SDL_VERSION_ATLEAST(1,3,0) */
+         NULL );
    SDL_CondWait( music_state_cond, music_state_lock );
    musicUnlock();
 

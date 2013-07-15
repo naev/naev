@@ -873,7 +873,7 @@ static void widget_kill( Widget *wgt )
  *    @param lc Light colour.
  */
 void toolkit_drawOutlineThick( int x, int y, int w, int h, int b,
-                          int thick, const glColour* c, const glColour* lc )
+      int thick, const glColour* c, const glColour* lc )
 {
    GLshort tri[5][4];
    glColour colours[10];
@@ -934,7 +934,7 @@ void toolkit_drawOutlineThick( int x, int y, int w, int h, int b,
    /* Set up the VBO. */
    gl_vboActivateOffset( toolkit_vbo, GL_VERTEX_ARRAY, 0, 2, GL_SHORT, 0 );
    gl_vboActivateOffset( toolkit_vbo, GL_COLOR_ARRAY,
-                         toolkit_vboColourOffset, 4, GL_FLOAT, 0 );
+         toolkit_vboColourOffset, 4, GL_FLOAT, 0 );
 
    /* Draw the VBO. */
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 10 );
@@ -958,7 +958,7 @@ void toolkit_drawOutlineThick( int x, int y, int w, int h, int b,
  *    @param lc Light colour.
  */
 void toolkit_drawOutline( int x, int y, int w, int h, int b,
-                          const glColour* c, const glColour* lc )
+      const glColour* c, const glColour* lc )
 {
    GLshort lines[4][2];
    glColour colours[4];
@@ -994,7 +994,7 @@ void toolkit_drawOutline( int x, int y, int w, int h, int b,
    /* Set up the VBO. */
    gl_vboActivateOffset( toolkit_vbo, GL_VERTEX_ARRAY, 0, 2, GL_SHORT, 0 );
    gl_vboActivateOffset( toolkit_vbo, GL_COLOR_ARRAY,
-                         toolkit_vboColourOffset, 4, GL_FLOAT, 0 );
+         toolkit_vboColourOffset, 4, GL_FLOAT, 0 );
 
    /* Draw the VBO. */
    glDrawArrays( GL_LINE_LOOP, 0, 4 );
@@ -1015,7 +1015,7 @@ void toolkit_drawOutline( int x, int y, int w, int h, int b,
  *    @param lc Light colour.
  */
 void toolkit_drawRect( int x, int y, int w, int h,
-                       const glColour* c, const glColour* lc )
+      const glColour* c, const glColour* lc )
 {
    GLshort vertex[4][2];
    glColour colours[4];
@@ -1048,9 +1048,9 @@ void toolkit_drawRect( int x, int y, int w, int h,
 
    /* Set up the VBO. */
    gl_vboActivateOffset( toolkit_vbo, GL_VERTEX_ARRAY,
-                         0, 2, GL_SHORT, 0 );
+         0, 2, GL_SHORT, 0 );
    gl_vboActivateOffset( toolkit_vbo, GL_COLOR_ARRAY,
-                         toolkit_vboColourOffset, 4, GL_FLOAT, 0 );
+         toolkit_vboColourOffset, 4, GL_FLOAT, 0 );
 
    /* Draw the VBO. */
    glDrawArrays( GL_TRIANGLE_STRIP, 0, 4 );
@@ -1562,7 +1562,7 @@ void toolkit_render (void)
    /* Render base. */
    for (w = windows; w!=NULL; w = w->next) {
       if (!window_isFlag(w, WINDOW_NORENDER) &&
-               !window_isFlag(w, WINDOW_KILL)) {
+            !window_isFlag(w, WINDOW_KILL)) {
          window_render(w);
          window_renderOverlay(w);
       }
@@ -1804,7 +1804,7 @@ static int toolkit_mouseEventWidget( Window *w, Widget *wgt,
          if (wgt->status==WIDGET_STATUS_MOUSEDOWN) {
             /* Soft-disabled buttons will run anyway. */
             if ((wgt->type==WIDGET_BUTTON) && ((wgt->dat.btn.disabled==0) ||
-                  (wgt->dat.btn.softdisable))) {
+                     (wgt->dat.btn.softdisable))) {
                if (wgt->dat.btn.fptr==NULL)
                   DEBUG("Toolkit: Button '%s' of Window '%s' "
                         "doesn't have a function trigger",
@@ -1931,7 +1931,11 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
 
    /* Hack to simulate key repetition */
    if (event->type == SDL_KEYDOWN)
+#if SDL_VERSION_ATLEAST(2,0,0)
+      toolkit_regKey(key, key);
+#else /* SDL_VERSION_ATLEAST(2,0,0) */
       toolkit_regKey(key, event->key.keysym.unicode);
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
    else if (event->type == SDL_KEYUP)
       toolkit_unregKey(key);
 
@@ -1953,7 +1957,11 @@ static int toolkit_keyEvent( Window *wdw, SDL_Event* event )
             return 1;
       }
       if (wgt->textevent != NULL) {
+#if SDL_VERSION_ATLEAST(2,0,0)
+         buf[0] = key & 0x7f;
+#else /* SDL_VERSION_ATLEAST(2,0,0) */
          buf[0] = event->key.keysym.unicode & 0x7f;
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
          buf[1] = '\0';
          if ((*wgt->textevent)( wgt, buf ))
             return 1;

@@ -642,7 +642,11 @@ static glTexture *gl_genFactionDisk( int radius )
    const int h = 2 * radius + 1;
 
    /* Create the surface. */
-   sur = SDL_CreateRGBSurface( SDL_SRCALPHA | SDL_HWSURFACE, w, h, 32, RGBAMASK );
+#if SDL_VERSION_ATLEAST(1,3,0)
+   sur = SDL_CreateRGBSurface( 0, w, h, 32, RGBAMASK );
+#else /* SDL_VERSION_ATLEAST(1,3,0) */
+   sur = SDL_CreateRGBSurface( SDL_SRCALPHA | SDL_SWSURFACE, w, h, 32, RGBAMASK );
+#endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
    pixels = sur->pixels;
    memset(pixels, 0xff, sizeof(uint8_t) * 4 * h * w);

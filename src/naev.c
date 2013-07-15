@@ -198,7 +198,12 @@ int main( int argc, char** argv )
    }
 
    /* Get desktop dimensions. */
-#if SDL_VERSION_ATLEAST(1,2,10)
+#if SDL_VERSION_ATLEAST(2,0,0)
+   SDL_DisplayMode current;
+   SDL_GetCurrentDisplayMode( 0, &current );
+   gl_screen.desktop_w = current.w;
+   gl_screen.desktop_h = current.h;
+#elif SDL_VERSION_ATLEAST(1,2,10)
    const SDL_VideoInfo *vidinfo = SDL_GetVideoInfo();
    gl_screen.desktop_w = vidinfo->current_w;
    gl_screen.desktop_h = vidinfo->current_h;
