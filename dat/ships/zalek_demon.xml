@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ship name="Za'lek Demon">
  <base_type>Demon</base_type>
- <GFX sx="12" sy="12">ver1</GFX>
+ <GFX sx="12" sy="12">demon</GFX>
  <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Destroyer</class>
