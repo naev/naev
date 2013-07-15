@@ -154,6 +154,7 @@ const char* ndata_getPath (void)
  */
 static void ndata_notfound (void)
 {
+   SDL_Surface *screen;
    SDL_Event event;
    SDL_Surface *sur;
    SDL_RWops *rw;
@@ -173,9 +174,10 @@ static void ndata_notfound (void)
    window = SDL_CreateWindow( title,
          SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
          320, 240, SDL_WINDOW_SHOWN);
-   renderer = SDL_CreateRenderer( window, -1, 0 );
+   renderer = SDL_CreateRenderer( window, -1, SDL_RENDERER_SOFTWARE );
+   screen = SDL_GetWindowSurface( window );
 #else /* SDL_VERSION_ATLEAST(2,0,0) */
-   SDL_Surface *screen = SDL_SetVideoMode( 320, 240, 0, SDL_SWSURFACE);
+   screen = SDL_SetVideoMode( 320, 240, 0, SDL_SWSURFACE);
    if (screen == NULL) {
       WARN("Unable to set video mode");
       return;
@@ -193,9 +195,11 @@ static void ndata_notfound (void)
    SDL_RWclose( rw );
 
    /* Render. */
-#if SDL_VERSION_ATLEAST(2,0,0)
-#else /* SDL_VERSION_ATLEAST(2,0,0) */
    SDL_BlitSurface( sur, NULL, screen, NULL );
+#if SDL_VERSION_ATLEAST(2,0,0)
+   /* TODO substitute. */
+   SDL_RenderPresent( renderer );
+#else /* SDL_VERSION_ATLEAST(2,0,0) */
    SDL_Flip(screen);
 #endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
@@ -218,9 +222,11 @@ static void ndata_notfound (void)
       }
 
       /* Render. */
-#if SDL_VERSION_ATLEAST(2,0,0)
-#else /* SDL_VERSION_ATLEAST(2,0,0) */
       SDL_BlitSurface( sur, NULL, screen, NULL );
+#if SDL_VERSION_ATLEAST(2,0,0)
+      /* TODO substitute. */
+      SDL_RenderPresent( renderer );
+#else /* SDL_VERSION_ATLEAST(2,0,0) */
       SDL_Flip(screen);
 #endif /* SDL_VERSION_ATLEAST(2,0,0) */
    }
