@@ -1,5 +1,7 @@
 noinst_PROGRAMS = pack
 
+AUTOMAKE_OPTIONS = subdir-objects
+
 AM_CFLAGS = $(PACK_CFLAGS)
 
 pack_SOURCES = main.c $(top_srcdir)/src/md5.c $(top_srcdir)/src/pack.c
