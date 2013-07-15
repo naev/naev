@@ -328,7 +328,7 @@ SDL_Surface *npng_readSurface( npng_t *npng, int pad_pot, int vflip )
       Bmask = 0x0000FF00 >> s;
       Amask = 0x000000FF >> s;
    }
-   surface = SDL_AllocSurface( SDL_SWSURFACE, width, height,
+   surface = SDL_CreateRGBSurface( SDL_SWSURFACE, width, height,
          bit_depth*channels, Rmask, Gmask, Bmask, Amask );
    if (surface == NULL) {
       ERR( "Out of Memory" );

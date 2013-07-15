@@ -478,18 +478,19 @@ static int gl_setupFullscreen( unsigned int *flags )
 static int gl_createWindow( unsigned int flags )
 {
 #if SDL_VERSION_ATLEAST(2,0,0)
-   SDL_Window*       window;
-   SDL_Renderer*     renderer;
    SDL_RendererInfo  info;
+   SDL_RendererFlags rflags;
 
-   window = SDL_CreateWindow( APPNAME,
+   gl_screen.window = SDL_CreateWindow( APPNAME,
          SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
          SCREEN_W, SCREEN_H, flags | SDL_WINDOW_SHOWN);
 
-   renderer = SDL_CreateRenderer( window, -1, SDL_RENDERER_ACCELERATED );   
-   
+   rflags = SDL_RENDERER_ACCELERATED;
+   if (conf.vsync)
+      rflags |= SDL_RENDERER_PRESENTVSYNC;
+   gl_screen.renderer = SDL_CreateRenderer( gl_screen.window, -1, rflags );
 
-   SDL_GetRendererInfo( renderer, &info );
+   SDL_GetRendererInfo( gl_screen.renderer, &info );
 
 #else /* SDL_VERSION_ATLEAST(2,0,0) */
    int depth;

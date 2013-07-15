@@ -602,7 +602,11 @@ void loadscreen_render( double done, const char *msg )
    gl_printRaw( &gl_defFont, x, y + h + 3., &cConsole, msg );
 
    /* Flip buffers. */
+#if SDL_VERSION_ATLEAST(2,0,0)
+   SDL_RenderPresent( gl_screen.renderer );
+#else /* SDL_VERSION_ATLEAST(2,0,0) */
    SDL_GL_SwapBuffers();
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
    /* Get rid of events again. */
    while (SDL_PollEvent(&event));
@@ -727,7 +731,11 @@ void main_loop( int update )
       toolkit_render();
    gl_checkErr(); /* check error every loop */
    /* Draw buffer. */
+#if SDL_VERSION_ATLEAST(2,0,0)
+   SDL_RenderPresent( gl_screen.renderer );
+#else /* SDL_VERSION_ATLEAST(2,0,0) */
    SDL_GL_SwapBuffers();
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 }
 
 
@@ -986,11 +994,7 @@ static void window_caption (void)
    SDL_RWops *rw;
    npng_t *npng;
 
-   /* Set caption. */
-   nsnprintf(buf, PATH_MAX ,APPNAME" - %s", ndata_name());
-   SDL_WM_SetCaption(buf, APPNAME);
-
-   /* Set icon. */
+   /* Load icon. */
    rw = ndata_rwops( GFX_PATH"icon.png" );
    if (rw == NULL) {
       WARN("Icon (icon.png) not found!");
@@ -1004,7 +1008,16 @@ static void window_caption (void)
       WARN("Unable to load icon.png!");
       return;
    }
+
+   /* Set caption. */
+   nsnprintf(buf, PATH_MAX ,APPNAME" - %s", ndata_name());
+#if SDL_VERSION_ATLEAST(2,0,0)
+   SDL_SetWindowTitle( gl_screen.window, buf );
+   SDL_SetWindowIcon(  gl_screen.window, naev_icon );
+#else /* SDL_VERSION_ATLEAST(2,0,0) */
+   SDL_WM_SetCaption(buf, APPNAME);
    SDL_WM_SetIcon( naev_icon, NULL );
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 }
 
 
@@ -1134,7 +1147,13 @@ static void print_SDLversion (void)
 
    /* Extract information. */
    SDL_VERSION(&compiled);
+#if SDL_VERSION_ATLEAST(2,0,0)
+   SDL_version ll;
+   SDL_GetVersion( &ll );
+   linked = &ll;
+#else /* SDL_VERSION_ATLEAST(2,0,0) */
    linked = SDL_Linked_Version();
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
    DEBUG("SDL: %d.%d.%d [compiled: %d.%d.%d]",
          linked->major, linked->minor, linked->patch,
          compiled.major, compiled.minor, compiled.patch);

@@ -953,8 +953,12 @@ static void music_kill (void)
 
       /* Timed out, just slaughter the thread. */
       if (ret == SDL_MUTEX_TIMEDOUT) {
+#if SDL_VERSION_ATLEAST(2,0,0)
+         WARN("Music thread did not exit when asked, ignoring...");
+#else /* SDL_VERSION_ATLEAST(2,0,0) */
          WARN("Music thread did not exit when asked, slaughtering...");
          SDL_KillThread( music_player );
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
          break;
       }
 

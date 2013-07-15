@@ -271,11 +271,13 @@ void input_init (void)
    Keybind *temp;
    int i;
 
+#if !SDL_VERSION_ATLEAST(2,0,0)
    /* We need unicode for the input widget. */
    SDL_EnableUNICODE(1);
 
    /* Key repeat fscks up stuff like double tap. */
    SDL_EnableKeyRepeat( 0, 0 );
+#endif /* !SDL_VERSION_ATLEAST(2,0,0) */
 
    /* Window. */
    SDL_EventState( SDL_SYSWMEVENT,      SDL_DISABLE );
@@ -1302,10 +1304,18 @@ void input_handle( SDL_Event* event )
          break;
 
       case SDL_KEYDOWN:
+#if SDL_VERSION_ATLEAST(2,0,0)
+         if (event->key.repeat !=0)
+            return;
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
          input_keyevent(KEY_PRESS, event->key.keysym.sym, event->key.keysym.mod, 0);
          break;
 
       case SDL_KEYUP:
+#if SDL_VERSION_ATLEAST(2,0,0)
+         if (event->key.repeat !=0)
+            return;
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
          input_keyevent(KEY_RELEASE, event->key.keysym.sym, event->key.keysym.mod, 0);
          break;
 
