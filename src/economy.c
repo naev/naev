@@ -527,8 +527,12 @@ void econ_revert(void)
          continue;
       }
       for (c=0; c<econ_nprices; c++){
-         if (xml_prices[i][c]>0.0 && xml_prices[i][c]!=sys->prices[c])
+         if (xml_prices[i][c]>0.0){
             sys->prices[c]=xml_prices[i][c];
+            sys->is_priceset[c]=1;
+         }
+         else
+            sys->is_priceset[c]=0;
       }
    }
    for (c=0; c<econ_nprices; c++)
