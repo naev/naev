@@ -155,9 +155,10 @@ const char* ndata_getPath (void)
 static void ndata_notfound (void)
 {
    SDL_Event event;
-   SDL_Surface *sur, *screen;
+   SDL_Surface *sur;
    SDL_RWops *rw;
    npng_t *npng;
+   const char *title = "NAEV - INSERT NDATA";
 
    /* Make sure it's initialized. */
    if (SDL_InitSubSystem(SDL_INIT_VIDEO) != 0) {
@@ -166,14 +167,23 @@ static void ndata_notfound (void)
    }
 
    /* Create the window. */
-   screen = SDL_SetVideoMode( 320, 240, 0, SDL_SWSURFACE);
+#if SDL_VERSION_ATLEAST(2,0,0)
+   SDL_Window *window;
+   SDL_Renderer *renderer;
+   window = SDL_CreateWindow( title,
+         SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+         320, 240, SDL_WINDOW_SHOWN);
+   renderer = SDL_CreateRenderer( window, -1, 0 );
+#else /* SDL_VERSION_ATLEAST(2,0,0) */
+   SDL_Surface *screen = SDL_SetVideoMode( 320, 240, 0, SDL_SWSURFACE);
    if (screen == NULL) {
       WARN("Unable to set video mode");
       return;
    }
 
    /* Set caption. */
-   SDL_WM_SetCaption( "NAEV - INSERT NDATA", "NAEV" );
+   SDL_WM_SetCaption( title, "NAEV" );
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
    /* Create the surface. */
    rw    = SDL_RWFromConstMem( nondata_png, sizeof(nondata_png) );
@@ -183,8 +193,11 @@ static void ndata_notfound (void)
    SDL_RWclose( rw );
 
    /* Render. */
+#if SDL_VERSION_ATLEAST(2,0,0)
+#else /* SDL_VERSION_ATLEAST(2,0,0) */
    SDL_BlitSurface( sur, NULL, screen, NULL );
    SDL_Flip(screen);
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
    /* Infinite loop. */
    while (1) {
@@ -205,8 +218,11 @@ static void ndata_notfound (void)
       }
 
       /* Render. */
+#if SDL_VERSION_ATLEAST(2,0,0)
+#else /* SDL_VERSION_ATLEAST(2,0,0) */
       SDL_BlitSurface( sur, NULL, screen, NULL );
       SDL_Flip(screen);
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
    }
 }
 
