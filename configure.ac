@@ -250,7 +250,8 @@ AC_SUBST([ndata_path])
 
 # SDL
 AS_IF([test "$with_sdl2" = "yes"], [
-      AM_PATH_SDL2(2.0.0, [have_sdl2=yes], [have_sdl2=no])
+      SDL2_VERSION=2.0.0
+      AM_PATH_SDL2($SDL2_VERSION, [have_sdl2=yes], [have_sdl2=no])
    ], [have_sdl2=no]
 )
 AS_IF([test "$have_sdl2" = "no"], [
