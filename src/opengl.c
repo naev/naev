@@ -496,6 +496,8 @@ static int gl_createWindow( unsigned int flags )
    gl_screen.renderer = SDL_CreateRenderer( gl_screen.window, -1, rflags );
 
    SDL_GetRendererInfo( gl_screen.renderer, &info );
+   if (info.flags & SDL_RENDERER_PRESENTVSYNC)
+      gl_screen.flags |= OPENGL_VSYNC;
    SDL_GL_GetAttribute( SDL_GL_DEPTH_SIZE, &gl_screen.depth );
 #else /* SDL_VERSION_ATLEAST(2,0,0) */
    int depth;
