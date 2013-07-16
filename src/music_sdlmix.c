@@ -115,7 +115,11 @@ int music_mix_load( const char* name, SDL_RWops *rw )
 
    /* Load the data */
    music_rw = rw;
+#if SDL_VERSION_ATLEAST(2,0,0)
+   music_music = Mix_LoadMUS_RW(music_rw, 1);
+#else /* SDL_VERSION_ATLEAST(2,0,0) */
    music_music = Mix_LoadMUS_RW(music_rw);
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
    if (music_music == NULL) {
       WARN("SDL_Mixer: %s", Mix_GetError());
       Mix_HookMusicFinished(music_rechoose);
