@@ -491,7 +491,7 @@ static int gl_createWindow( unsigned int flags )
    gl_screen.renderer = SDL_CreateRenderer( gl_screen.window, -1, rflags );
 
    SDL_GetRendererInfo( gl_screen.renderer, &info );
-
+   SDL_GL_GetAttribute( SDL_GL_DEPTH_SIZE, &gl_screen.depth );
 #else /* SDL_VERSION_ATLEAST(2,0,0) */
    int depth;
 
@@ -519,9 +519,9 @@ static int gl_createWindow( unsigned int flags )
          return -1;
       }
    }
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
    gl_screen.rw = SCREEN_W;
    gl_screen.rh = SCREEN_H;
-#endif /* SDL_VERSION_ATLEAST(2,0,0) */
    gl_activated = 1; /* Opengl is now activated. */
 
    return 0;
