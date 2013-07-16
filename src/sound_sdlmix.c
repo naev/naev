@@ -111,7 +111,7 @@ static void print_MixerVersion (void)
    MIX_VERSION(&compiled);
    linked = Mix_Linked_Version();
 #if SDL_VERSION_ATLEAST(2,0,0)
-   const char *drvname = SDL_GetAudioDriver( 0 );
+   const char *drvname = SDL_GetCurrentAudioDriver();
    strncpy( device, drvname, PATH_MAX );
 #else /* SDL_VERSION_ATLEAST(2,0,0) */
    SDL_AudioDriverName(device, PATH_MAX);
@@ -412,7 +412,7 @@ int sound_mix_load( alSound *s, const char *filename )
    rw = ndata_rwops( filename );
 
    /* bind to buffer */
-   s->u.mix.buf = Mix_LoadWAV_RW(rw,1);
+   s->u.mix.buf = Mix_LoadWAV_RW( rw, 1 );
    if (s->u.mix.buf == NULL) {
       DEBUG("Unable to load sound '%s': %s", filename, Mix_GetError());
       return -1;
