@@ -372,6 +372,10 @@ AS_IF([test "$have_sdl2" = "yes"], [
        SDL_CFLAGS="$SDL_CFLAGS -D_GNU_SOURCE=1"
        ;;
    esac
+# Disable mkspr
+   SDL_IMAGE_CFLAGS=
+   SDL_IMAGE_LIBS=
+   have_mkspr=no
 ])
 
 # global
