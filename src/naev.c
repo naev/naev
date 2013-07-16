@@ -603,7 +603,7 @@ void loadscreen_render( double done, const char *msg )
 
    /* Flip buffers. */
 #if SDL_VERSION_ATLEAST(2,0,0)
-   SDL_RenderPresent( gl_screen.renderer );
+   SDL_GL_SwapWindow( gl_screen.window );
 #else /* SDL_VERSION_ATLEAST(2,0,0) */
    SDL_GL_SwapBuffers();
 #endif /* SDL_VERSION_ATLEAST(2,0,0) */
@@ -732,7 +732,7 @@ void main_loop( int update )
    gl_checkErr(); /* check error every loop */
    /* Draw buffer. */
 #if SDL_VERSION_ATLEAST(2,0,0)
-   SDL_RenderPresent( gl_screen.renderer );
+   SDL_GL_SwapWindow( gl_screen.window );
 #else /* SDL_VERSION_ATLEAST(2,0,0) */
    SDL_GL_SwapBuffers();
 #endif /* SDL_VERSION_ATLEAST(2,0,0) */
