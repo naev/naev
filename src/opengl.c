@@ -262,6 +262,9 @@ GLboolean gl_hasVersion( int major, int minor )
  */
 GLboolean gl_hasExt( char *name )
 {
+#if SDL_VERSION_ATLEAST(2,0,0)
+   return SDL_GL_ExtensionSupported( name );
+#else /* SDL_VERSION_ATLEAST(2,0,0) */
    /*
     * Search for name in the extensions string.  Use of strstr()
     * is not sufficient because extension names can be prefixes of
@@ -283,6 +286,7 @@ GLboolean gl_hasExt( char *name )
       p += (n + 1);
    }
    return GL_FALSE;
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 }
 
 
