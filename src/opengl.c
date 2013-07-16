@@ -380,6 +380,7 @@ static int gl_setupFullscreen( unsigned int *flags )
    }
 
 #if SDL_VERSION_ATLEAST(2,0,0)
+   (void) flags;
    SDL_DisplayMode mode;
    int n = SDL_GetNumDisplayModes( 0 );
 
