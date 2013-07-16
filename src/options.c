@@ -893,10 +893,12 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
                   (key == SDLK_LCTRL) ||
                   (key == SDLK_RALT) ||
                   (key == SDLK_LALT) ||
-                  (key == SDLK_RMETA) ||
-                  (key == SDLK_LMETA) ||
+#if !SDL_VERSION_ATLEAST(2,0,0) /* SUPER don't exist in 2.0.0 */
                   (key == SDLK_LSUPER) ||
-                  (key == SDLK_RSUPER))
+                  (key == SDLK_RSUPER) ||
+#endif /* !SDL_VERSION_ATLEAST(2,0,0) */
+                  (key == SDLK_RMETA) ||
+                  (key == SDLK_LMETA))
                   && (opt_lastKeyPress != key)) {
             opt_lastKeyPress = key;
             return 0;
