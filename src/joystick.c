@@ -44,12 +44,19 @@ static void joystick_initHaptic (void);
  *    @param namjoystick Looks for this string in the joystick name.
  *    @return The index if found, defaults to 0 if it isn't found.
  */
-int joystick_get( char* namjoystick )
+int joystick_get( const char* namjoystick )
 {
+   const char *jname;
    int i;
-   for (i=0; i < SDL_NumJoysticks(); i++)
-      if (strstr(SDL_JoystickName(i),namjoystick))
+   for (i=0; i < SDL_NumJoysticks(); i++) {
+#if SDL_VERSION_ATLEAST(2,0,0)
+      jname = SDL_JoystickNameForIndex(i);
+#else /* SDL_VERSION_ATLEAST(2,0,0) */
+      jname = SDL_JoystickName(i);
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
+      if (strstr( jname, namjoystick ))
          return i;
+   }
 
    WARN("Joystick '%s' not found, using default joystick '%s'",
          namjoystick, SDL_JoystickName(0));
@@ -65,6 +72,8 @@ int joystick_get( char* namjoystick )
  */
 int joystick_use( int indjoystick )
 {
+   const char *jname;
+
    /* Check to see if it exists. */
    if ((indjoystick < 0) || (indjoystick >= SDL_NumJoysticks())) {
       WARN("Joystick of index number %d does not existing, switching to default 0",
@@ -80,11 +89,16 @@ int joystick_use( int indjoystick )
 
    /* Start using joystick. */
    joystick = SDL_JoystickOpen(indjoystick);
+#if SDL_VERSION_ATLEAST(2,0,0)
+   jname = SDL_JoystickNameForIndex(indjoystick);
+#else /* SDL_VERSION_ATLEAST(2,0,0) */
+   jname = SDL_JoystickName(indjoystick);
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
    if (joystick == NULL) {
-      WARN("Error opening joystick %d [%s]", indjoystick, SDL_JoystickName(indjoystick));
+      WARN("Error opening joystick %d [%s]", indjoystick, jname);
       return -1;
    }
-   LOG("Using joystick %d - %s", indjoystick, SDL_JoystickName(indjoystick));
+   LOG("Using joystick %d - %s", indjoystick, jname);
    DEBUG("   with %d axes, %d buttons, %d balls and %d hats",
          SDL_JoystickNumAxes(joystick), SDL_JoystickNumButtons(joystick),
          SDL_JoystickNumBalls(joystick), SDL_JoystickNumHats(joystick));
@@ -157,8 +171,15 @@ int joystick_init (void)
    /* figure out how many joysticks there are */
    numjoysticks = SDL_NumJoysticks();
    DEBUG("%d joystick%s detected", numjoysticks, (numjoysticks==1)?"":"s" );
-   for (i=0; i < numjoysticks; i++)
-      DEBUG("  %d. %s", i, SDL_JoystickName(i));
+   for (i=0; i < numjoysticks; i++) {
+      const char *jname;
+#if SDL_VERSION_ATLEAST(2,0,0)
+      jname = SDL_JoystickNameForIndex(i);
+#else /* SDL_VERSION_ATLEAST(2,0,0) */
+      jname = SDL_JoystickName(i);
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
+      DEBUG("  %d. %s", i, jname);
+   }
 
    /* enables joystick events */
    SDL_JoystickEventState(SDL_ENABLE);

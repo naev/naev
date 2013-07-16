@@ -11,7 +11,7 @@
 /*
  * gets the joystick index number based on its name
  */
-int joystick_get( char* namjoystick );
+int joystick_get( const char* namjoystick );
 
 /*
  * sets the game to use the joystick of index indjoystick
