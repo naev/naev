@@ -255,7 +255,6 @@ AS_IF([test "$with_sdl2" = "yes"], [
    ], [have_sdl2=no]
 )
 AS_IF([test "$have_sdl2" = "no"], [
-   unset ac_cv_path_SDL_CONFIG # Clear the cache used internally
    AM_PATH_SDL
    AS_IF([test -z "$SDL_CFLAGS" && test -z "$SDL_LIBS"], [
      AC_ERROR([SDL not found])
