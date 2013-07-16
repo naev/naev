@@ -348,7 +348,8 @@ AS_IF([test "$with_sdlmixer" = "yes"], [
 
 # SDL_image
 VAR_SAVE([LIBS])
-AC_SEARCH_LIBS([IMG_Load], [SDL_image], [
+AS_IF([test "$have_sdl2" = "yes"], [SDLIMAGE_NAME=SDL2_image], [SDLMIXER_NAME=SDL_image])
+AC_SEARCH_LIBS([IMG_Load], [$SDLIMAGE_NAME], [
   SDLIMAGE_CFLAGS=
   SDLIMAGE_LIBS="$LIBS"
   have_mkspr=yes
