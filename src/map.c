@@ -1231,13 +1231,12 @@ void map_jump (void)
    if (map_path != NULL) {
       map_npath--;
       if (map_npath == 0) { /* path is empty */
-         free (map_path);
+         free( map_path );
          map_path = NULL;
          player_targetHyperspaceSet( -1 );
       }
       else { /* get rid of bottom of the path */
          memmove( &map_path[0], &map_path[1], sizeof(StarSystem*) * map_npath );
-         map_path = realloc( map_path, sizeof(StarSystem*) * map_npath );
 
          /* set the next jump to be to the next in path */
          for (j=0; j<cur_system->njumps; j++) {
@@ -1246,6 +1245,9 @@ void map_jump (void)
                break;
             }
          }
+         /* Overrode jump route manually, must clear target. */
+         if (j>=cur_system->njumps)
+            player_targetHyperspaceSet( -1 );
       }
    }
    else
