@@ -489,11 +489,18 @@ static int gl_createWindow( unsigned int flags )
    gl_screen.window = SDL_CreateWindow( APPNAME,
          SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
          SCREEN_W, SCREEN_H, flags | SDL_WINDOW_SHOWN);
+   if (gl_screen.window == NULL)
+      ERR("Unable to create window!");
+   gl_screen.context = SDL_GL_CreateContext( gl_screen.window );
+   if (!gl_screen.context)
+      ERR("Unable to create OpenGL context!");
 
    rflags = SDL_RENDERER_ACCELERATED;
    if (conf.vsync)
       rflags |= SDL_RENDERER_PRESENTVSYNC;
    gl_screen.renderer = SDL_CreateRenderer( gl_screen.window, -1, rflags );
+   if (gl_screen.renderer == NULL)
+      ERR("Unable to create renderer!");
 
    SDL_GetRendererInfo( gl_screen.renderer, &info );
    if (info.flags & SDL_RENDERER_PRESENTVSYNC)

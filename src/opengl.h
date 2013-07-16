@@ -78,6 +78,7 @@ typedef struct glInfo_ {
    int fsaa; /**< Full Scene Anti Aliasing level. */
 #if SDL_VERSION_ATLEAST(2,0,0)
    SDL_Window *window; /**< Window for SDL2. */
+   SDL_GLContext context; /**< Context for OpenGL. */
    SDL_Renderer *renderer; /**< Renderer for SDL2. */
 #endif /* SDL_VERSION_ATLEAST(2,0,0) */
 } glInfo;
