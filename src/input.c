@@ -571,7 +571,7 @@ const char *input_keyAlreadyBound( KeybindType type, SDLKey key, SDLMod mod )
          continue;
 
       /* Must match key. */
-      if (key != (int)k->key)
+      if (key !=  k->key)
          continue;
 
       /* Handle per case. */
