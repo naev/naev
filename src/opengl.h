@@ -79,7 +79,6 @@ typedef struct glInfo_ {
 #if SDL_VERSION_ATLEAST(2,0,0)
    SDL_Window *window; /**< Window for SDL2. */
    SDL_GLContext context; /**< Context for OpenGL. */
-   SDL_Renderer *renderer; /**< Renderer for SDL2. */
 #endif /* SDL_VERSION_ATLEAST(2,0,0) */
 } glInfo;
 extern glInfo gl_screen; /* local structure set with gl_init and co */

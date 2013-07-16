@@ -483,28 +483,28 @@ static int gl_setupFullscreen( unsigned int *flags )
 static int gl_createWindow( unsigned int flags )
 {
 #if SDL_VERSION_ATLEAST(2,0,0)
-   SDL_RendererInfo  info;
-   SDL_RendererFlags rflags;
+   int ret;
 
+   /* Create the window. */
    gl_screen.window = SDL_CreateWindow( APPNAME,
          SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
          SCREEN_W, SCREEN_H, flags | SDL_WINDOW_SHOWN);
    if (gl_screen.window == NULL)
       ERR("Unable to create window!");
+
+   /* Create the OpenGL context, note we don't need an actual renderer. */
    gl_screen.context = SDL_GL_CreateContext( gl_screen.window );
    if (!gl_screen.context)
       ERR("Unable to create OpenGL context!");
 
-   rflags = SDL_RENDERER_ACCELERATED;
-   if (conf.vsync)
-      rflags |= SDL_RENDERER_PRESENTVSYNC;
-   gl_screen.renderer = SDL_CreateRenderer( gl_screen.window, -1, rflags );
-   if (gl_screen.renderer == NULL)
-      ERR("Unable to create renderer!");
+   /* Set Vsync. */
+   if (conf.vsync) {
+      ret = SDL_GL_SetSwapInterval( 1 );
+      if (ret == 0)
+         gl_screen.flags |= OPENGL_VSYNC;
+   }
 
-   SDL_GetRendererInfo( gl_screen.renderer, &info );
-   if (info.flags & SDL_RENDERER_PRESENTVSYNC)
-      gl_screen.flags |= OPENGL_VSYNC;
+   /* Finish getting attributes. */
    SDL_GL_GetAttribute( SDL_GL_DEPTH_SIZE, &gl_screen.depth );
 #else /* SDL_VERSION_ATLEAST(2,0,0) */
    int depth;
