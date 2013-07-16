@@ -23,6 +23,5 @@ int nsnprintf( char *text, size_t maxlen, const char *fmt, ... );
 #endif /* HAVE_POSIX */
 
 
-
 #endif /* NSTRING_H */
 
