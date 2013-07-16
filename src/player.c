@@ -2686,7 +2686,7 @@ char **player_getLicenses( int *nlicenses )
  */
 void player_runHooks (void)
 {
-   if (player_isFlag( PLAYER_HOOK_HYPER)) {
+   if (player_isFlag( PLAYER_HOOK_HYPER )) {
       player_brokeHyperspace();
       player_rmFlag( PLAYER_HOOK_HYPER );
    }
