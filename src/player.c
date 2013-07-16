@@ -1706,7 +1706,7 @@ void player_brokeHyperspace (void)
    pilot_rmFlag( player.p, PILOT_HYP_BRAKE );
    pilot_rmFlag( player.p, PILOT_HYP_PREP );
 
-   /* update the map */
+   /* Update the map */
    map_jump();
 
    /* Add the escorts. */
@@ -2686,7 +2686,7 @@ char **player_getLicenses( int *nlicenses )
  */
 void player_runHooks (void)
 {
-   if (player_isFlag( PLAYER_HOOK_HYPER)) {
+   if (player_isFlag( PLAYER_HOOK_HYPER )) {
       player_brokeHyperspace();
       player_rmFlag( PLAYER_HOOK_HYPER );
    }
