@@ -330,8 +330,9 @@ AS_IF([test "$with_openal" = "yes"], [
 
 # SDL_mixer
 AS_IF([test "$with_sdlmixer" = "yes"], [
+  AS_IF([test "$have_sdl2" = "yes"], [SDLMIXER_NAME=SDL2_mixer], [SDLMIXER_NAME=SDL_mixer])
   VAR_SAVE([LIBS])
-  AC_SEARCH_LIBS([Mix_OpenAudio], [SDL_mixer],
+  AC_SEARCH_LIBS([Mix_OpenAudio], [$SDLMIXER_NAME],
      [have_sdlmixer=yes], [have_sdlmixer=no])
   AS_IF([test "$have_sdlmixer" = "yes"], [
     SDLMIXER_CFLAGS=
