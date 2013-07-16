@@ -31,9 +31,9 @@
 #include <unistd.h>
 #endif /* HAS_POSIX */
 
-#if defined(HAVE_FENV_H) && defined(DEBUGGING)
+#if defined(HAVE_FENV_H) && defined(DEBUGGING) && defined(_GNU_SOURCE)
 #include <fenv.h>
-#endif /* defined(HAVE_FENV_H) && defined(DEBUGGING) */
+#endif /* defined(HAVE_FENV_H) && defined(DEBUGGING) && defined(_GNU_SOURCE) */
 
 #if HAS_LINUX && HAS_BFD && defined(DEBUGGING)
 #include <signal.h>

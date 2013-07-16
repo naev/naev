@@ -32,18 +32,18 @@
 
 /* Standard specific. */
 /**
+ * @brief Whether or not the system follows unix standards like $HOME.
+ *
+ * @note Mac OS X does not define these macros, but does follow unix somewhat.
+ */
+#define HAS_UNIX     (defined(__unix__) || defined(__unix) || HAS_MACOSX)
+/**
  * @brief Whether or not the system is compliant to POSIX.1.
  *
  * @note Most systems don't actually follow it fully so they don't declare that
  *       they support it.  We consider unix good enough.
  */
 #define HAS_POSIX    HAS_UNIX /* (defined(_POSIX_VERSION) && (_POSIX_VERSION >= 200112L)) */
-/**
- * @brief Whether or not the system follows unix standards like $HOME.
- *
- * @note Mac OS X does not define these macros, but does follow unix somewhat.
- */
-#define HAS_UNIX     (defined(__unix__) || defined(__unix) || HAS_MACOSX)
 
 
 /*
