@@ -617,15 +617,16 @@ static int ship_parseSlot( Ship *temp, ShipOutfitSlot *slot, OutfitSlotType type
    xmlr_attr( node, "exclusive", buf );
    if (buf != NULL) {
       slot->exclusive = atoi( buf );
-      printf("Slot set to exclusive: %d \n",slot->exclusive);
       free( buf );
    }
+   //TODO: decide if exclusive should even belong in ShipOutfitSlot, remove this hack, and fix slot->exclusive to slot->slot.exclusive in it's two previous occurrences, meaning three lines above and 12 lines above
+   /* hack */
+   slot->slot.exclusive=slot->exclusive;
    
    /* Parse required flag. */
    xmlr_attr( node, "required", buf );
    if (buf != NULL) {
       slot->required  = atoi( buf );
-      printf("Slot set to required: %d \n",slot->required);
       free( buf );
    }
 
