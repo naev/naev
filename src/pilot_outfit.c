@@ -569,88 +569,118 @@ const char* pilot_checkSpaceworthy( Pilot *p )
 /*ERRORS_NUM = 14*/
 void pilot_reportSpaceworthy( Pilot *p, char buf[], int bufSize )
 {
-   char *e[ERRORS_NUM];
-   char noError[]="";
-   char formatString[ERRORS_NUM*2+1];
-   int i,i2;
-   
-   for (i=0,i2=0;i<ERRORS_NUM;i++,i2+=2)
+   int pos=0;
+   do
    {
-      e[i]=noError;
-      formatString[i2]='%';
-      formatString[i2+1]='s';
-   }
-   formatString[ERRORS_NUM*2]='\0';
-   
-   i=0;
-   /* Core Slots */
-   if (!pilot_slotsCheckRequired(p))
-      e[i]=("Not All Core Slots are equipped\n");
-   ++i;
-   /* CPU. */
-   if (p->cpu < 0)
-      e[i]=("Insufficient CPU\n");
-   ++i;
+      /* Core Slots */
+      if (!pilot_slotsCheckRequired(p))
+      {
+         pos += snprintf( &buf[pos], bufSize-pos,
+               "Not All Core Slots are equipped\n");
+         if (pos >= bufSize) break;
+      }
+      /* CPU. */
+      if (p->cpu < 0)
+      {
+         pos += snprintf( &buf[pos], bufSize-pos,
+               "Insufficient CPU\n");
+         if (pos >= bufSize) break;
+      }
 
-   /* Movement. */
-   if (p->thrust < 0.)
-      e[i]=("Insufficient Thrust\n");
-   ++i;
-   if (p->speed < 0.)
-      e[i]=("Insufficient Speed\n");
-   ++i;
-   if (p->turn < 0.)
-      e[i]=("Insufficient Turn\n");
-   ++i;
+      /* Movement. */
+      if (p->thrust < 0.)
+      {
+         pos += snprintf( &buf[pos], bufSize-pos,
+               "Insufficient Thrust\n");
+         if (pos >= bufSize) break;
+      }
+      if (p->speed < 0.)
+      {
+         pos += snprintf( &buf[pos], bufSize-pos,
+               "Insufficient Speed\n");
+         if (pos >= bufSize) break;
+      }
+      if (p->turn < 0.)
+      {
+         pos += snprintf( &buf[pos], bufSize-pos,
+               "Insufficient Turn\n");
+         if (pos >= bufSize) break;
+      }
 
-   /* Health. */
-   if (p->armour_max < 0.)
-      e[i]=("Insufficient Armour\n");
-   ++i;
-   if (p->armour_regen < 0.)
-      e[i]=("Insufficient Armour Regeneration\n");
-   ++i;
-   if (p->shield_max < 0.)
-      e[i]=("Insufficient Shield\n");
-   ++i;
-   if (p->shield_regen < 0.)
-      e[i]=("Insufficient Shield Regeneration\n");
-   ++i;
-   if (p->energy_max < 0.)
-      e[i]=("Insufficient Energy\n");
-   ++i;
-   if (p->energy_regen < 0.)
-      e[i]=("Insufficient Energy Regeneration\n");
-   ++i;
+      /* Health. */
+      if (p->armour_max < 0.)
+      {
+         pos += snprintf( &buf[pos], bufSize-pos,
+               "Insufficient Armour\n");
+         if (pos >= bufSize) break;
+      }
+      if (p->armour_regen < 0.)
+      {
+         pos += snprintf( &buf[pos], bufSize-pos,
+               "Insufficient Armour Regeneration\n");
+         if (pos >= bufSize) break;
+      }
+      if (p->shield_max < 0.)
+      {
+         pos += snprintf( &buf[pos], bufSize-pos,
+               "Insufficient Shield\n");
+         if (pos >= bufSize) break;
+      }
+      if (p->shield_regen < 0.)
+      {
+         pos += snprintf( &buf[pos], bufSize-pos,
+               "Insufficient Shield Regeneration\n");
+         if (pos >= bufSize) break;
+      }
+      if (p->energy_max < 0.)
+      {
+         pos += snprintf( &buf[pos], bufSize-pos,
+               "Insufficient Energy\n");
+         if (pos >= bufSize) break;
+      }
+      if (p->energy_regen < 0.)
+      {
+         pos += snprintf( &buf[pos], bufSize-pos,
+               "Insufficient Energy Regeneration\n");
+         if (pos >= bufSize) break;
+      }
 
-   /* Misc. */
-   if (p->fuel_max < 0.)
-      e[i]=("Insufficient Fuel Maximum\n");
-   ++i;
-   if (p->fuel_consumption < 0.)
-      e[i]=("Insufficient Fuel Consumption\n");
-   ++i;
-   if (p->cargo_free < 0)
-      e[i]=("Insufficient Free Cargo Space\n");
-   ++i;
+      /* Misc. */
+      if (p->fuel_max < 0.)
+      {
+         pos += snprintf( &buf[pos], bufSize-pos,
+               "Insufficient Fuel Maximum\n");
+         if (pos >= bufSize) break;
+      }
+      if (p->fuel_consumption < 0.)
+      {
+         pos += snprintf( &buf[pos], bufSize-pos,
+               "Insufficient Fuel Consumption\n");
+         if (pos >= bufSize) break;
+      }
+      if (p->cargo_free < 0)
+      {
+         pos += snprintf( &buf[pos], bufSize-pos,
+               "Insufficient Free Cargo Space\n");
+         if (pos >= bufSize) break;
+      }
+   }while(0);
    
-   
-   int len = nsnprintf( buf, bufSize, formatString,
-                        e[0],e[1],e[2],e[3],e[4],e[5],e[6],e[7],e[8],e[9],e[10],e[11],e[12],e[ERRORS_NUM-1]);
-   if (len > bufSize-1)
+   if (pos > bufSize-1)
    /*buffer is full, lets write that there is more then what's copied */
    {
       buf[bufSize-4]='.';
       buf[bufSize-3]='.';
       buf[bufSize-2]='.';
+      /* buf[bufSize-1]='\0'; already done for us */
    }
    else
-      if (len == 0)
+      if (pos == 0)
          /*string is empty so no errors encountered */
          nsnprintf( buf, bufSize, "Spaceworthy");
       else
          /*string is not empty, so trunc the last newline */
-         buf[len-1]='\0';
+         buf[pos-1]='\0';
 }
 #undef ERRORS_NUM
 
