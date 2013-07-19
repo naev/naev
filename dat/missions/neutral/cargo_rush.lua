@@ -109,15 +109,17 @@ end
 
 -- Mission is accepted
 function accept()
+    if player.pilot():cargoFree() < amount then
+        tk.msg(full[1], full[2]:format(amount, amount - player.pilot():cargoFree()))
+        misn.finish()
+    end
+    pilot.cargoAdd( player.pilot(), cargo, amount ) 
     local playerbest = cargoGetTransit( timelimit, numjumps, traveldist )
+    pilot.cargoRm( player.pilot(), cargo, amount ) 
     if timelimit < playerbest then
         if not tk.yesno( slow[1], slow[2]:format( (timelimit - time.get()):str(), (playerbest - time.get()):str(), destplanet:name()) ) then
             misn.finish()
         end
-    end
-    if player.pilot():cargoFree() < amount then
-        tk.msg(full[1], full[2]:format(amount, amount - player.pilot():cargoFree()))
-        misn.finish()
     end
     misn.accept()
     intime = true
