@@ -1579,8 +1579,8 @@ eq_qCol( cur, base, inv ), cur
 void equipment_updateShips( unsigned int wid, char* str )
 {
    (void)str;
-   char buf[512], sysname[128], buf2[ECON_CRED_STRLEN], buf3[ECON_CRED_STRLEN];
-   char *errorReport;
+   char buf[1024], sysname[128], buf2[ECON_CRED_STRLEN], buf3[ECON_CRED_STRLEN];
+   char errorReport[256];
    char *shipname;
    Pilot *ship;
    char *loc, *nt;
@@ -1618,9 +1618,10 @@ void equipment_updateShips( unsigned int wid, char* str )
    cargo = pilot_cargoFree(ship) + pilot_cargoUsed(ship);
    nt = ntime_pretty( pilot_hyperspaceDelay( ship ), 2 );
    
-   errorReport = malloc(128);
-   pilot_reportSpaceworthy(ship,errorReport,128);
-   
+   /* Get ship error report. */
+   pilot_reportSpaceworthy( ship, errorReport, sizeof(errorReport));
+  
+   /* Fill the buffer. */
    nsnprintf( buf, sizeof(buf),
          "%s\n"
          "%s\n"
@@ -1668,8 +1669,7 @@ void equipment_updateShips( unsigned int wid, char* str )
       /* Transportation. */
       buf2,
       loc, sysname,
-   pilot_checkSpaceworthy(ship)?'r':'0', errorReport );
-   free(errorReport);
+      pilot_checkSpaceworthy(ship) ? 'r' : '0', errorReport );
    window_modifyText( wid, "txtDDesc", buf );
 
    /* Clean up. */
