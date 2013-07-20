@@ -481,7 +481,7 @@ int pilot_slotsCheckSanity( Pilot *p )
 }
 //TODO: fix comment to conform to Naev's style and represent changes
 /**
- * @brief Pilot requiered (core) slot filled check - makes sure they are filled.
+ * @brief Pilot required (core) slot filled check - makes sure they are filled.
  *
  *    @param p Pilot to check.
  *    @return 0 if a slot is missing, !0 otherwise.
@@ -557,132 +557,64 @@ const char* pilot_checkSpaceworthy( Pilot *p )
    /* All OK. */
    return NULL;
 }
-//TODO: fix comment to conform to Naev's style and represent change
 /**
  * @brief Pilot sanity report - makes sure stats are sane.
  *
  *    @param p Pilot to check.
- *    @return mallocates a buffer and writes the reasons why the pilot is not sane (or "spaceworthy" if sane).
- *
+ *    @param buf Buffer to fill.
+ *    @param bufSize Size of the buffer.
+ *    @return Number of issues encountered.
  */
-#define ERRORS_NUM  (1+1+3+6+3)
-/*ERRORS_NUM = 14*/
-void pilot_reportSpaceworthy( Pilot *p, char buf[], int bufSize )
+#define SPACEWORTHY_CHECK(cond,msg) \
+if (cond){ ret++; \
+   if (pos < bufSize) pos += snprintf( &buf[pos], bufSize-pos, (msg) ); }
+int pilot_reportSpaceworthy( Pilot *p, char buf[], int bufSize )
 {
-   int pos=0;
-   do
-   {
-      /* Core Slots */
-      if (!pilot_slotsCheckRequired(p))
-      {
-         pos += snprintf( &buf[pos], bufSize-pos,
-               "Not All Core Slots are equipped\n");
-         if (pos >= bufSize) break;
-      }
-      /* CPU. */
-      if (p->cpu < 0)
-      {
-         pos += snprintf( &buf[pos], bufSize-pos,
-               "Insufficient CPU\n");
-         if (pos >= bufSize) break;
-      }
+   int pos = 0;
+   int ret = 0;
 
-      /* Movement. */
-      if (p->thrust < 0.)
-      {
-         pos += snprintf( &buf[pos], bufSize-pos,
-               "Insufficient Thrust\n");
-         if (pos >= bufSize) break;
-      }
-      if (p->speed < 0.)
-      {
-         pos += snprintf( &buf[pos], bufSize-pos,
-               "Insufficient Speed\n");
-         if (pos >= bufSize) break;
-      }
-      if (p->turn < 0.)
-      {
-         pos += snprintf( &buf[pos], bufSize-pos,
-               "Insufficient Turn\n");
-         if (pos >= bufSize) break;
-      }
+   /* Core Slots */
+   SPACEWORTHY_CHECK( !pilot_slotsCheckRequired(p), "Not All Core Slots are equipped\n" );
+   /* CPU. */
+   SPACEWORTHY_CHECK( p->cpu < 0, "Insufficient CPU\n" );
 
-      /* Health. */
-      if (p->armour_max < 0.)
-      {
-         pos += snprintf( &buf[pos], bufSize-pos,
-               "Insufficient Armour\n");
-         if (pos >= bufSize) break;
-      }
-      if (p->armour_regen < 0.)
-      {
-         pos += snprintf( &buf[pos], bufSize-pos,
-               "Insufficient Armour Regeneration\n");
-         if (pos >= bufSize) break;
-      }
-      if (p->shield_max < 0.)
-      {
-         pos += snprintf( &buf[pos], bufSize-pos,
-               "Insufficient Shield\n");
-         if (pos >= bufSize) break;
-      }
-      if (p->shield_regen < 0.)
-      {
-         pos += snprintf( &buf[pos], bufSize-pos,
-               "Insufficient Shield Regeneration\n");
-         if (pos >= bufSize) break;
-      }
-      if (p->energy_max < 0.)
-      {
-         pos += snprintf( &buf[pos], bufSize-pos,
-               "Insufficient Energy\n");
-         if (pos >= bufSize) break;
-      }
-      if (p->energy_regen < 0.)
-      {
-         pos += snprintf( &buf[pos], bufSize-pos,
-               "Insufficient Energy Regeneration\n");
-         if (pos >= bufSize) break;
-      }
+   /* Movement. */
+   SPACEWORTHY_CHECK( p->thrust < 0, "Insufficient Thrust\n" );
+   SPACEWORTHY_CHECK( p->speed < 0,  "Insufficient Speed\n" );
+   SPACEWORTHY_CHECK( p->turn < 0,   "Insufficient Turn\n" );
 
-      /* Misc. */
-      if (p->fuel_max < 0.)
-      {
-         pos += snprintf( &buf[pos], bufSize-pos,
-               "Insufficient Fuel Maximum\n");
-         if (pos >= bufSize) break;
-      }
-      if (p->fuel_consumption < 0.)
-      {
-         pos += snprintf( &buf[pos], bufSize-pos,
-               "Insufficient Fuel Consumption\n");
-         if (pos >= bufSize) break;
-      }
-      if (p->cargo_free < 0)
-      {
-         pos += snprintf( &buf[pos], bufSize-pos,
-               "Insufficient Free Cargo Space\n");
-         if (pos >= bufSize) break;
-      }
-   }while(0);
+   /* Health. */
+   SPACEWORTHY_CHECK( p->armour < 0.,       "Insufficient Armour\n" );
+   SPACEWORTHY_CHECK( p->armour_regen < 0., "Insufficient Armour Regeneration\n" );
+   SPACEWORTHY_CHECK( p->shield < 0.,       "Insufficient Shield\n" );
+   SPACEWORTHY_CHECK( p->shield_regen < 0., "Insufficient Shield Regeneration\n" );
+   SPACEWORTHY_CHECK( p->energy_max < 0.,   "Insufficient Energy\n" );
+   SPACEWORTHY_CHECK( p->energy_regen < 0., "Insufficient Energy Regeneration\n" );
+
+   /* Misc. */
+   SPACEWORTHY_CHECK( p->fuel_max < 0.,         "Insufficient Fuel Maximum\n" );
+   SPACEWORTHY_CHECK( p->fuel_consumption < 0., "Insufficient Fuel Consumption\n" );
+   SPACEWORTHY_CHECK( p->cargo_free < 0,        "Insufficient Free Cargo Space\n" );
    
-   if (pos > bufSize-1)
    /*buffer is full, lets write that there is more then what's copied */
-   {
+   if (pos > bufSize-1) {
       buf[bufSize-4]='.';
       buf[bufSize-3]='.';
       buf[bufSize-2]='.';
       /* buf[bufSize-1]='\0'; already done for us */
    }
-   else
+   else {
       if (pos == 0)
          /*string is empty so no errors encountered */
          nsnprintf( buf, bufSize, "Spaceworthy");
       else
          /*string is not empty, so trunc the last newline */
          buf[pos-1]='\0';
+   }
+
+   return ret;
 }
-#undef ERRORS_NUM
+#undef SPACEWORTHY_CHECK
 
 /**
  * @brief Checks to see if a pilot has an outfit with a specific outfit type.
