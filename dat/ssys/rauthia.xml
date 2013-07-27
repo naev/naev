@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ssys name="Rauthia">
+ <general>
+  <radius>10000.000000</radius>
+  <stars>400</stars>
+  <interference>0.000000</interference>
+  <nebula volatility="200.000000">600.000000</nebula>
+ </general>
+ <pos>
+  <x>743.000000</x>
+  <y>333.000000</y>
+ </pos>
+ <assets>
+  <asset>Eryla</asset>
+  <asset>NS-144</asset>
+  <asset>SY-237</asset>
+  <asset>SY-413</asset>
+  <asset>Serria</asset>
+ </assets>
+ <jumps>
+  <jump target="Adran">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Rotide">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+ </jumps>
+</ssys>

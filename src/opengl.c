@@ -262,6 +262,9 @@ GLboolean gl_hasVersion( int major, int minor )
  */
 GLboolean gl_hasExt( char *name )
 {
+#if SDL_VERSION_ATLEAST(2,0,0)
+   return SDL_GL_ExtensionSupported( name );
+#else /* SDL_VERSION_ATLEAST(2,0,0) */
    /*
     * Search for name in the extensions string.  Use of strstr()
     * is not sufficient because extension names can be prefixes of
@@ -283,6 +286,7 @@ GLboolean gl_hasExt( char *name )
       p += (n + 1);
    }
    return GL_FALSE;
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 }
 
 
@@ -369,7 +373,6 @@ static int gl_setupAttributes (void)
 static int gl_setupFullscreen( unsigned int *flags )
 {
    int i, j, off, toff, supported;
-   SDL_Rect** modes;
 
    /* Unsupported by default. */
    supported = 0;
@@ -380,8 +383,49 @@ static int gl_setupFullscreen( unsigned int *flags )
       gl_screen.h = gl_screen.desktop_h;
    }
 
+#if SDL_VERSION_ATLEAST(2,0,0)
+   (void) flags;
+   SDL_DisplayMode mode;
+   int n = SDL_GetNumDisplayModes( 0 );
+
+   /* Try to get closest approximation to mode asked for */
+   off = -1;
+   j   = -1;
+   for (i=0; i<n; i++) {
+      SDL_GetDisplayMode( 0, i, &mode  );
+
+      /* Found supported mode. */
+      if ((mode.w == SCREEN_W) && (mode.h == SCREEN_H)) {
+         supported = 1;
+         break;
+      }
+
+      /* Get Manhattan distance. */
+      toff = ABS(SCREEN_W-mode.w) + ABS(SCREEN_H-mode.h);
+      if ((off == -1) || (toff < off)) {
+         j   = i;
+         off = toff;
+      }
+   }
+
+   /* Failed to find. */
+   if (!supported) {
+      if (j<0) {
+         ERR("Fullscreen mode %dx%d is not supported by your setup, however no other modes are supported, bailing!",
+               SCREEN_W, SCREEN_H);
+      }
+
+      SDL_GetDisplayMode( 0, j, &mode );
+      WARN("Fullscreen mode %dx%d is not supported by your setup\n"
+            "   switching to %dx%d",
+            SCREEN_W, SCREEN_H,
+            mode.w, mode.h );
+      gl_screen.w = mode.w;
+      gl_screen.h = mode.h;
+   }
+#else /* SDL_VERSION_ATLEAST(2,0,0) */
    /* Get available modes and see what we can use. */
-   modes = SDL_ListModes( NULL, SDL_OPENGL | SDL_FULLSCREEN );
+   SDL_Rect** modes = SDL_ListModes( NULL, SDL_OPENGL | SDL_FULLSCREEN );
    if (modes == NULL) { /* rare case, but could happen */
       WARN("No fullscreen modes available");
       if ((*flags) & SDL_FULLSCREEN) {
@@ -403,7 +447,7 @@ static int gl_setupFullscreen( unsigned int *flags )
    /* makes sure fullscreen mode is supported */
    if ((modes!=NULL) && ((*flags) & SDL_FULLSCREEN) && !supported) {
 
-      /* try to get closest approximation to mode asked for */
+      /* Try to get closest approximation to mode asked for */
       off = -1;
       j   = -1;
       for (i=0; modes[i] != NULL; i++) {
@@ -425,6 +469,7 @@ static int gl_setupFullscreen( unsigned int *flags )
       gl_screen.w = modes[j]->w;
       gl_screen.h = modes[j]->h;
    }
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
    return 0;
 }
@@ -437,6 +482,31 @@ static int gl_setupFullscreen( unsigned int *flags )
  */
 static int gl_createWindow( unsigned int flags )
 {
+#if SDL_VERSION_ATLEAST(2,0,0)
+   int ret;
+
+   /* Create the window. */
+   gl_screen.window = SDL_CreateWindow( APPNAME,
+         SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+         SCREEN_W, SCREEN_H, flags | SDL_WINDOW_SHOWN);
+   if (gl_screen.window == NULL)
+      ERR("Unable to create window!");
+
+   /* Create the OpenGL context, note we don't need an actual renderer. */
+   gl_screen.context = SDL_GL_CreateContext( gl_screen.window );
+   if (!gl_screen.context)
+      ERR("Unable to create OpenGL context!");
+
+   /* Set Vsync. */
+   if (conf.vsync) {
+      ret = SDL_GL_SetSwapInterval( 1 );
+      if (ret == 0)
+         gl_screen.flags |= OPENGL_VSYNC;
+   }
+
+   /* Finish getting attributes. */
+   SDL_GL_GetAttribute( SDL_GL_DEPTH_SIZE, &gl_screen.depth );
+#else /* SDL_VERSION_ATLEAST(2,0,0) */
    int depth;
 
    /* Test the setup - aim for 32. */
@@ -463,6 +533,7 @@ static int gl_createWindow( unsigned int flags )
          return -1;
       }
    }
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
    gl_screen.rw = SCREEN_W;
    gl_screen.rh = SCREEN_H;
    gl_activated = 1; /* Opengl is now activated. */
@@ -619,19 +690,29 @@ int gl_init (void)
    dw = gl_screen.desktop_w;
    dh = gl_screen.desktop_h;
    memset( &gl_screen, 0, sizeof(gl_screen) );
+#if SDL_VERSION_ATLEAST(2,0,0)
+   flags  = SDL_WINDOW_OPENGL;
+#else /* SDL_VERSION_ATLEAST(2,0,0) */
    flags  = SDL_OPENGL;
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
    gl_screen.desktop_w = dw;
    gl_screen.desktop_h = dh;
 
    /* Load configuration. */
+#if !SDL_VERSION_ATLEAST(2,0,0)
    if (conf.vsync)
       gl_screen.flags |= OPENGL_VSYNC;
+#endif /* !SDL_VERSION_ATLEAST(2,0,0) */
    gl_screen.w = conf.width;
    gl_screen.h = conf.height;
    gl_setScale( conf.scalefactor );
    if (conf.fullscreen) {
       gl_screen.flags |= OPENGL_FULLSCREEN;
+#if SDL_VERSION_ATLEAST(2,0,0)
+      flags |= SDL_WINDOW_FULLSCREEN;
+#else /* SDL_VERSION_ATLEAST(2,0,0) */
       flags |= SDL_FULLSCREEN;
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
    }
 
    /* Initializes Video */

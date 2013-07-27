@@ -2201,7 +2201,7 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
 
    /* Sanity check. */
 #ifdef DEBUGGING
-   const char *str = pilot_checkSanity( pilot );
+   const char *str = pilot_checkSpaceworthy( pilot );
    if (str != NULL)
       DEBUG( "Pilot '%s' failed sanity check: %s", pilot->name, str );
 #endif /* DEBUGGING */

@@ -29,7 +29,6 @@ config.log
 config.status
 configure
 m4/pkg.m4
-m4/sdl.m4
 naev_csv
 /*.dll
 /*.exe
@@ -43,3 +42,5 @@ stdout.txt
 extras/macosx/build/
 extras/.dirstamp
 datapath.lua
+core
+

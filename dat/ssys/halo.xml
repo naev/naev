@@ -12,6 +12,11 @@
  </pos>
  <assets/>
  <jumps>
+  <jump target="Bastion">
+   <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Dune">
    <autopos/>
    <hide>1.250000</hide>

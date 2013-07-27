@@ -4,11 +4,11 @@
   <radius>10000.000000</radius>
   <stars>400</stars>
   <interference>250.000000</interference>
-  <nebula volatility="0.000000">400.000000</nebula>
+  <nebula volatility="100.000000">500.000000</nebula>
  </general>
  <pos>
-  <x>362.356026</x>
-  <y>150.214954</y>
+  <x>491.731798</x>
+  <y>203.640880</y>
  </pos>
  <assets>
   <asset>Basel I</asset>
@@ -16,7 +16,7 @@
   <asset>Vigil Station</asset>
  </assets>
  <jumps>
-  <jump target="Iris">
+  <jump target="Percival">
    <autopos/>
    <hide>1.250000</hide>
   </jump>

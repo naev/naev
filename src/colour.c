@@ -276,6 +276,7 @@ const glColour* col_fromName( const char* name )
    if (name[0] == 'd' || name[0] == 'D') {
       CHECK_COLOUR(DarkRed);
       CHECK_COLOUR(DarkBlue);
+      CHECK_COLOUR(DarkPurple);
    }
 
    if (name[0] == 'g' || name[0] == 'G') {

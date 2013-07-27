@@ -17,6 +17,7 @@
 #define SAVE_COMPRESSION_DEFAULT             1     /**< Whether or not saved games should be compressed. */
 #define MOUSE_THRUST_DEFAULT                 1     /**< Whether or not to use mouse thrust controls. */
 #define AUTONAV_ABORT_DEFAULT                1.    /**< Shield level (0-1) to abort autonav at. 1 means at missile lock, 0 means at armour damage. */
+#define AUTONAV_PAUSE_DEFAULT                0     /**< Whether or not the game should pause when autonav is aborted. */
 #define MANUAL_ZOOM_DEFAULT                  0     /**< Whether or not to enable manual zoom controls. */
 #define INPUT_MESSAGES_DEFAULT               5     /**< Amount of messages to display. */
 /* Video options */
@@ -127,6 +128,7 @@ typedef struct PlayerConf_s {
    unsigned int afterburn_sens; /**< Afterburn sensibility. */
    int mouse_thrust; /**< Whether mouse flying controls thrust. */
    double autonav_abort; /**< Condition for aborting autonav. */
+   int autonav_pause;/**< Pauses game instead of aborting autonav. */
    int nosave; /**< Disables conf saving. */
    int devmode; /**< Developer mode. */
    int devcsv; /**< Output CSV data. */

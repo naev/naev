@@ -316,7 +316,7 @@ static int map_findDistance( StarSystem *sys, Planet *pnt, int *jumps, double *d
    }
 
    /* Calculate jump path. */
-   slist = map_getJumpPath( jumps, cur_system->name, sys->name, 0, NULL );
+   slist = map_getJumpPath( jumps, cur_system->name, sys->name, 0, 1, NULL );
    if (slist==NULL)
       /* Unknown. */
       return -1;

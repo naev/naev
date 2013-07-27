@@ -122,9 +122,13 @@ function takeoff()
         abort()
     end
     if choice ~= 1 then
-        if next(player.pilot():outfits()) ~= nil then
-            tk.msg(ftitle[4], ftext[4])
-            abort()
+        for k,v in ipairs(player.pilot():outfits()) do
+            if (("Manufacturer Small Engine" ~= v:name())
+            and ("Basic Small Systems" ~= v:name())
+            and ("Unmodified Small Hull" ~= v:name())) then
+                tk.msg(ftitle[4], ftext[4])
+                abort()
+            end
         end
     end
     planetvec = planet.pos(curplanet)
@@ -165,6 +169,16 @@ function takeoff()
         racers[1]:addOutfit("Engine Reroute")
         racers[2]:addOutfit("Steering Thrusters")
         racers[3]:addOutfit("Improved Stabilizer")
+    else
+        -- basic loadout
+        for i in pairs(racers) do
+            racers[i]:rmOutfit("all")
+            racers[i]:rmOutfit("cores")
+            
+            racers[i]:addOutfit("Basic Small Systems")
+            racers[i]:addOutfit("Unmodified Small Hull")
+            racers[i]:addOutfit("Manufacturer Small Engine")
+        end
     end
     for i, j in ipairs(racers) do
         j:rename(string.format("Racer %s", i))

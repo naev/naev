@@ -118,7 +118,7 @@ void menu_info( int window )
 
    /* Dimensions. */
    w = 600;
-   h = 500;
+   h = 600;
 
    /* Create the window. */
    info_wid = window_create( "Info", -1, -1, w, h );
@@ -467,7 +467,7 @@ static void ship_update( unsigned int wid )
  */
 static void info_openWeapons( unsigned int wid )
 {
-   int w, h;
+   int w, h, wlen;
 
    /* Get the dimensions. */
    window_dimWindow( wid, &w, &h );
@@ -477,12 +477,13 @@ static void info_openWeapons( unsigned int wid )
          "closeCargo", "Close", info_close );
 
    /* Checkboxes. */
-   window_addCheckbox( wid, 220, 20+2*(BUTTON_HEIGHT+20)-40, 250, BUTTON_HEIGHT,
+   wlen = w - 220 - 20;
+   window_addCheckbox( wid, 220, 20+2*(BUTTON_HEIGHT+20)-40, wlen, BUTTON_HEIGHT,
          "chkAutoweap", "Automatically handle weapons", weapons_autoweap, player.p->autoweap );
-   window_addCheckbox( wid, 220, 20+2*(BUTTON_HEIGHT+20)-10, 300, BUTTON_HEIGHT,
+   window_addCheckbox( wid, 220, 20+2*(BUTTON_HEIGHT+20)-10, wlen, BUTTON_HEIGHT,
          "chkFire", "Enable instant mode (only for weapons)", weapons_fire,
          (pilot_weapSetTypeCheck( player.p, info_eq_weaps.weapons )==WEAPSET_TYPE_WEAPON) );
-   window_addCheckbox( wid, 220, 20+2*(BUTTON_HEIGHT+20)+20, 300, BUTTON_HEIGHT,
+   window_addCheckbox( wid, 220, 20+2*(BUTTON_HEIGHT+20)+20, wlen, BUTTON_HEIGHT,
          "chkInrange", "Only shoot weapons that are in range", weapons_inrange,
          pilot_weapSetInrangeCheck( player.p, info_eq_weaps.weapons ) );
 

@@ -164,6 +164,21 @@ AS_IF([test "$enable_debug" != "no"], [
   esac
 ])
 
+# --with-sdl2
+AC_MSG_CHECKING([whether to use SDL2 instead of SDL])
+AC_ARG_WITH([sdl2],
+  AC_HELP_STRING([--with-sdl2],
+     [use SDL2 instead of SDL (default: yes)]), [
+    AS_IF([test "$withval" = "yes"], [
+      with_sdl2=yes
+    ], [
+      with_sdl2=no
+    ])
+  ], [
+    with_sdl2=yes
+  ])
+AC_MSG_RESULT([$with_sdl2])
+
 # --with-openal
 AC_MSG_CHECKING([whether to use OpenAL])
 AC_ARG_WITH([openal],
@@ -234,9 +249,16 @@ AC_SUBST([ndata_path])
 #
 
 # SDL
-AM_PATH_SDL
-AS_IF([test -z "$SDL_CFLAGS" && test -z "$SDL_LIBS"], [
-  AC_ERROR([SDL not found])
+AS_IF([test "$with_sdl2" = "yes"], [
+      SDL2_VERSION=2.0.0
+      AM_PATH_SDL2($SDL2_VERSION, [have_sdl2=yes], [have_sdl2=no])
+   ], [have_sdl2=no]
+)
+AS_IF([test "$have_sdl2" = "no"], [
+   AM_PATH_SDL
+   AS_IF([test -z "$SDL_CFLAGS" && test -z "$SDL_LIBS"], [
+     AC_ERROR([SDL not found])
+   ])
 ])
 
 # libxml2
@@ -308,8 +330,9 @@ AS_IF([test "$with_openal" = "yes"], [
 
 # SDL_mixer
 AS_IF([test "$with_sdlmixer" = "yes"], [
+  AS_IF([test "$have_sdl2" = "yes"], [SDLMIXER_NAME=SDL2_mixer], [SDLMIXER_NAME=SDL_mixer])
   VAR_SAVE([LIBS])
-  AC_SEARCH_LIBS([Mix_OpenAudio], [SDL_mixer],
+  AC_SEARCH_LIBS([Mix_OpenAudio], [$SDLMIXER_NAME],
      [have_sdlmixer=yes], [have_sdlmixer=no])
   AS_IF([test "$have_sdlmixer" = "yes"], [
     SDLMIXER_CFLAGS=
@@ -325,7 +348,8 @@ AS_IF([test "$with_sdlmixer" = "yes"], [
 
 # SDL_image
 VAR_SAVE([LIBS])
-AC_SEARCH_LIBS([IMG_Load], [SDL_image], [
+AS_IF([test "$have_sdl2" = "yes"], [SDLIMAGE_NAME=SDL2_image], [SDLMIXER_NAME=SDL_image])
+AC_SEARCH_LIBS([IMG_Load], [$SDLIMAGE_NAME], [
   SDLIMAGE_CFLAGS=
   SDLIMAGE_LIBS="$LIBS"
   have_mkspr=yes
@@ -344,6 +368,18 @@ AM_PATH_OPENGL([], [
 #
 # Compiler flags
 #
+AS_IF([test "$have_sdl2" = "yes"], [
+   SDL_CFLAGS="$SDL_CFLAGS -DSDLKey=SDL_Keycode -DSDLMod=SDL_Keymod -DSDL_BUTTON_WHEELUP=SDL_BUTTON_X1 -DSDL_BUTTON_WHEELDOWN=SDL_BUTTON_X2 -DKMOD_LMETA=KMOD_LGUI -DKMOD_RMETA=KMOD_RGUI -DSDLK_NUMLOCK=SDLK_NUMLOCKCLEAR -DSDLK_SCROLLOCK=SDLK_SCROLLLOCK -DSDLK_RMETA=SDLK_RGUI -DSDLK_LMETA=SDLK_LGUI"
+   case "$host" in
+     *-linux*)
+       SDL_CFLAGS="$SDL_CFLAGS -D_GNU_SOURCE=1"
+       ;;
+   esac
+# Disable mkspr
+   SDL_IMAGE_CFLAGS=
+   SDL_IMAGE_LIBS=
+   have_mkspr=no
+])
 
 # global
 GLOBAL_CFLAGS="-include \"\$(top_builddir)/src/config.h\""
@@ -590,6 +626,8 @@ AC_OUTPUT
 echo
 AC_MSG_NOTICE([prefix:      $prefix])
 AC_MSG_NOTICE([ndata:       $ndata_path])
+echo
+AC_MSG_NOTICE([SDL2:        $have_sdl2])
 echo
 AC_MSG_NOTICE([sound backends:])
 AC_MSG_NOTICE([  OpenAL:    $have_openal])

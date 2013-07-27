@@ -428,9 +428,11 @@ static int systemL_nebula( lua_State *L )
  * @usage d = sys:jumpDist( "Draygar" ) -- Distance from system Draygar.
  * @usage d = sys:jumpDist( another_sys ) -- Distance from system another_sys.
  *
+ *    @luaparam s System to get distance from.
  *    @luaparam param See description.
+ *    @luaparam hidden Whether or not to consider hidden jumps.
  *    @luareturn Number of jumps to system.
- * @luafunc jumpDist( param )
+ * @luafunc jumpDist( s, param, hidden )
  */
 static int systemL_jumpdistance( lua_State *L )
 {
@@ -438,9 +440,11 @@ static int systemL_jumpdistance( lua_State *L )
    StarSystem **s;
    int jumps;
    const char *start, *goal;
+   int h;
 
    sys = luaL_validsystem(L,1);
    start = sys->name;
+   h   = lua_toboolean(L,3);
 
    if (lua_gettop(L) > 1) {
       if (lua_isstring(L,2))
@@ -454,7 +458,7 @@ static int systemL_jumpdistance( lua_State *L )
    else
       goal = cur_system->name;
 
-   s = map_getJumpPath( &jumps, start, goal, 1, NULL );
+   s = map_getJumpPath( &jumps, start, goal, 1, h, NULL );
    free(s);
 
    lua_pushnumber(L,jumps);
@@ -468,26 +472,30 @@ static int systemL_jumpdistance( lua_State *L )
  * @usage for _,s in ipairs( sys:adjacentSystems() ) do -- Iterate over adjacent systems.
  *
  *    @luaparam s System to get adjacent systems of.
+ *    @luaparam hidden Whether or not to show hidden jumps also.
  *    @luareturn An ordered table with all the adjacent systems.
- * @luafunc adjacentSystems( s )
+ * @luafunc adjacentSystems( s, hidden )
  */
 static int systemL_adjacent( lua_State *L )
 {
-   int i;
+   int i, h;
    LuaSystem sysp;
    StarSystem *s;
 
    s = luaL_validsystem(L,1);
+   h = lua_toboolean(L,2);
 
    /* Push all adjacent systems. */
    lua_newtable(L);
    for (i=0; i<s->njumps; i++) {
-      if (!jp_isFlag(&s->jumps[i], JP_HIDDEN) && !jp_isFlag(&s->jumps[i], JP_EXITONLY)) {
-         sysp.id = system_index( s->jumps[i].target );
-         lua_pushnumber(L,i+1); /* key. */
-         lua_pushsystem(L,sysp); /* value. */
-         lua_rawset(L,-3);
-      }
+      if (jp_isFlag(&s->jumps[i], JP_EXITONLY ))
+         continue;
+      if (!h && jp_isFlag(&s->jumps[i], JP_HIDDEN))
+         continue;
+      sysp.id = system_index( s->jumps[i].target );
+      lua_pushnumber(L,i+1); /* key. */
+      lua_pushsystem(L,sysp); /* value. */
+      lua_rawset(L,-3);
    }
 
    return 1;

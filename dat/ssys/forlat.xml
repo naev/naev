@@ -20,6 +20,16 @@
    <autopos/>
    <hide>1.250000</hide>
   </jump>
+  <jump target="New Haven">
+   <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Regulus">
+   <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Wahri">
    <autopos/>
    <hide>1.250000</hide>

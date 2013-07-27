@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Za'lek Demon">
+ <base_type>Demon</base_type>
+ <GFX sx="12" sy="12">demon</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Destroyer</class>
+ <price>2400000</price>
+ <fabricator>Proteron</fabricator>
+ <license>Medium Combat Vessel License</license>
+ <description>House Za'lek's ferociously-named destroyer has earned the moniker with disproportionatly powerful shields and energy management, as well as size. Its handling suffers, and has poor armor like all Za'lek ships, but this comes as poor consolation to the Za'lek's enemies.</description>
+ <health>
+  <absorb>14</absorb>
+  <armour>300</armour>
+  <armour_regen>0</armour_regen>
+ </health>
+ <characteristics>
+  <crew>17</crew>
+  <mass>440</mass>
+  <cargo>15</cargo>
+ </characteristics>
+ <slots>
+  <weapon size="medium" x="28" y="0" h="5"/>
+  <weapon size="medium" x="18" y="0" h="5"/>
+  <weapon size="medium" x="-30" y="-8" h="3"/>
+  <weapon size="medium" x="-30" y="8" h="3"/>
+  <utility size="medium" prop="systems">Basic Medium Systems</utility>
+  <utility size="large"/>
+  <utility size="large"/>
+  <utility size="medium"/>
+  <utility size="medium"/>
+  <utility size="medium"/>
+  <structure size="medium" prop="engines">Manufacturer Medium Engine</structure>
+  <structure size="medium" prop="hull">Unmodified Medium Hull</structure>
+  <structure size="large"/>
+  <structure size="medium"/>
+  <structure size="medium"/>
+ </slots>
+ <stats>
+  <fuel_consumption>200</fuel_consumption>
+  <speed_mod>0</speed_mod>
+  <turn_mod>-5</turn_mod>
+  <thrust_mod>0</thrust_mod>
+  <armour_mod>-15</armour_mod>
+  <shield_mod>15</shield_mod>
+  <energy_mod>10</energy_mod>
+  <energy_regen_mod>5</energy_regen_mod>
+  <cargo_mod>-50</cargo_mod>
+  <ew_detect>0</ew_detect>
+  <ew_hide>0</ew_hide>
+ </stats>
+</ship>

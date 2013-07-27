@@ -101,6 +101,7 @@
   <item>Hidden Jump Scanner</item>
   <item>Reverse Thrusters</item>
   <item>Fuel Pod</item>
+  <item>Large Fuel Pod</item>
   <item>Cargo Pod</item>
   <item>Boarding Androids MKI</item>
   <item>Boarding Androids MKII</item>
@@ -118,12 +119,14 @@
   <item>Map: Dvaered Core</item>
   <item>Map: Empire Core</item>
   <item>Map: Pirate strongholds</item>
+  <item>Ultra Map</item>
   <item>Local System Map</item>
   <item>Unicorp Scrambler</item>
   <item>Milspec Scrambler</item>
   <item>Unicorp Jammer</item>
   <item>Milspec Jammer</item>
   <item>GUI - Brushed</item>
+  <item>GUI - Legacy</item>
   <item>Jump Scanner</item>
   <item>Lancelot Fighter Bay</item>
   <item>Lancelot Fighter</item>
@@ -268,6 +271,11 @@
   <item>Quicksilver</item>
   <item>Proteron Derivative</item>
   <item>Sirius Fidelity</item>
+  <item>Sirius Shaman</item>
+  <item>Sirius Preacher</item>
+  <item>Sirius Divinity</item>
+  <item>Sirius Dogma</item>
+  <item>Thurion Ingenuity</item>
   <item>Soromid Brigand</item>
   <item>Shark</item>
   <item>Pirate Shark</item>
@@ -313,6 +321,11 @@
   <item>Soromid Arx</item>
   <item>Proteron Watson</item>
   <item>Empire Peacemaker</item>
+  <item>Za'lek Sting</item>
+  <item>Za'lek Imp</item>
+  <item>Za'lek Demon</item>
+  <item>Za'lek Mephisto</item>
+  <item>Za'lek Diablo</item>
  </tech>
 
  <!-- Weapon Trees -->
@@ -431,6 +444,7 @@
   <item>Unicorp Jammer</item>
   <item>Large Civilian Vessel License</item>
   <item>GUI - Brushed</item>
+  <item>GUI - Legacy</item>
   <item>Unicorp Medusa Launcher</item>
   <item>Jump Scanner</item>
   <item>Medusa Missile</item>
@@ -550,6 +564,7 @@
   <item>Medium Weapon License</item>
   <item>Emergency Shield Booster</item>
   <item>Reverse Thrusters</item>
+  <item>Large Fuel Pod</item>
  </tech>
  <tech name="Missiles 1">
   <item>Unicorp Banshee Launcher</item>
@@ -570,6 +585,7 @@
   <item>Spearhead Missile</item>
   <item>TeraCom Medusa Launcher</item>
   <item>Medusa Missile</item>
+  <item>Enygma Systems Turreted Fury Launcher</item>
  </tech>
  <tech name="Star Maps">
   <item>Map: Nebula Edge</item>
@@ -643,6 +659,7 @@
   <item>Pirate Vendetta</item>
  </tech>
  <tech name="Proteron Military Ships">
+  <item>Proteron Watson</item>
   <item>Proteron Archimedes</item>
   <item>Proteron Derivative</item>
   <item>Proteron Kahan</item>
@@ -664,7 +681,16 @@
   <item>Soromid Ira</item>
   <item>Soromid Arx</item>
  </tech>
-
+ <tech name="Thurion Military Ships">
+  <item>Thurion Ingenuity</item>
+ </tech>
+ <tech name="Za'lek Military Ships">
+  <item>Za'lek Sting</item>
+  <item>Za'lek Imp</item>
+  <item>Za'lek Demon</item>
+  <item>Za'lek Mephisto</item>
+  <item>Za'lek Diablo</item>
+ </tech>
  <tech name="__Heavy Weapon License">
   <item>Heavy Weapon License</item>
  </tech>
@@ -822,5 +848,9 @@
  </tech>
  <tech name="Pirate Maps">
   <item>Map: Pirate worlds</item>
+  <item>Map: Qorel Expanse</item>
+ </tech>
+ <tech name="New Haven Maps">
+  <item>Map: New Haven's hidden jump points</item>
  </tech>
 </Techs>

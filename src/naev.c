@@ -31,9 +31,9 @@
 #include <unistd.h>
 #endif /* HAS_POSIX */
 
-#if defined(HAVE_FENV_H) && defined(DEBUGGING)
+#if defined(HAVE_FENV_H) && defined(DEBUGGING) && defined(_GNU_SOURCE)
 #include <fenv.h>
-#endif /* defined(HAVE_FENV_H) && defined(DEBUGGING) */
+#endif /* defined(HAVE_FENV_H) && defined(DEBUGGING) && defined(_GNU_SOURCE) */
 
 #if HAS_LINUX && HAS_BFD && defined(DEBUGGING)
 #include <signal.h>
@@ -198,7 +198,12 @@ int main( int argc, char** argv )
    }
 
    /* Get desktop dimensions. */
-#if SDL_VERSION_ATLEAST(1,2,10)
+#if SDL_VERSION_ATLEAST(2,0,0)
+   SDL_DisplayMode current;
+   SDL_GetCurrentDisplayMode( 0, &current );
+   gl_screen.desktop_w = current.w;
+   gl_screen.desktop_h = current.h;
+#elif SDL_VERSION_ATLEAST(1,2,10)
    const SDL_VideoInfo *vidinfo = SDL_GetVideoInfo();
    gl_screen.desktop_w = vidinfo->current_w;
    gl_screen.desktop_h = vidinfo->current_h;
@@ -597,7 +602,11 @@ void loadscreen_render( double done, const char *msg )
    gl_printRaw( &gl_defFont, x, y + h + 3., &cConsole, msg );
 
    /* Flip buffers. */
+#if SDL_VERSION_ATLEAST(2,0,0)
+   SDL_GL_SwapWindow( gl_screen.window );
+#else /* SDL_VERSION_ATLEAST(2,0,0) */
    SDL_GL_SwapBuffers();
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 
    /* Get rid of events again. */
    while (SDL_PollEvent(&event));
@@ -722,7 +731,11 @@ void main_loop( int update )
       toolkit_render();
    gl_checkErr(); /* check error every loop */
    /* Draw buffer. */
+#if SDL_VERSION_ATLEAST(2,0,0)
+   SDL_GL_SwapWindow( gl_screen.window );
+#else /* SDL_VERSION_ATLEAST(2,0,0) */
    SDL_GL_SwapBuffers();
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 }
 
 
@@ -981,11 +994,7 @@ static void window_caption (void)
    SDL_RWops *rw;
    npng_t *npng;
 
-   /* Set caption. */
-   nsnprintf(buf, PATH_MAX ,APPNAME" - %s", ndata_name());
-   SDL_WM_SetCaption(buf, APPNAME);
-
-   /* Set icon. */
+   /* Load icon. */
    rw = ndata_rwops( GFX_PATH"icon.png" );
    if (rw == NULL) {
       WARN("Icon (icon.png) not found!");
@@ -999,7 +1008,16 @@ static void window_caption (void)
       WARN("Unable to load icon.png!");
       return;
    }
+
+   /* Set caption. */
+   nsnprintf(buf, PATH_MAX ,APPNAME" - %s", ndata_name());
+#if SDL_VERSION_ATLEAST(2,0,0)
+   SDL_SetWindowTitle( gl_screen.window, buf );
+   SDL_SetWindowIcon(  gl_screen.window, naev_icon );
+#else /* SDL_VERSION_ATLEAST(2,0,0) */
+   SDL_WM_SetCaption(buf, APPNAME);
    SDL_WM_SetIcon( naev_icon, NULL );
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 }
 
 
@@ -1129,7 +1147,13 @@ static void print_SDLversion (void)
 
    /* Extract information. */
    SDL_VERSION(&compiled);
+#if SDL_VERSION_ATLEAST(2,0,0)
+   SDL_version ll;
+   SDL_GetVersion( &ll );
+   linked = &ll;
+#else /* SDL_VERSION_ATLEAST(2,0,0) */
    linked = SDL_Linked_Version();
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
    DEBUG("SDL: %d.%d.%d [compiled: %d.%d.%d]",
          linked->major, linked->minor, linked->patch,
          compiled.major, compiled.minor, compiled.patch);

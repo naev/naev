@@ -17,9 +17,8 @@
    <hide>1.250000</hide>
   </jump>
   <jump target="Merisi">
-   <pos x="1798.778866" y="19742.750073"/>
-   <hidden/>
-   <hide>1.000000</hide>
+   <autopos/>
+   <hide>1.250000</hide>
   </jump>
   <jump target="Mural">
    <autopos/>

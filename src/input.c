@@ -166,19 +166,19 @@ extern double player_right; /**< player.c */
 /*
  * Key conversion table.
  */
-#if SDL_VERSION_ATLEAST(1,3,0)
-#  define INPUT_NUMKEYS     SDL_NUM_SCANCODES /**< Number of keys available. */
-#else /* SDL_VERSION_ATLEAST(1,3,0) */
-#  define INPUT_NUMKEYS     SDLK_LAST /**< Number of keys available. */
-#endif /* SDL_VERSION_ATLEAST(1,3,0) */
+#if !SDL_VERSION_ATLEAST(2,0,0)
+#define INPUT_NUMKEYS     SDLK_LAST /**< Number of keys available. */
 static char *keyconv[INPUT_NUMKEYS]; /**< Key conversion table. */
+#endif /* !SDL_VERSION_ATLEAST(2,0,0) */
 
 
 /*
  * Prototypes.
  */
+#if !SDL_VERSION_ATLEAST(2,0,0)
 static void input_keyConvGen (void);
 static void input_keyConvDestroy (void);
+#endif /* !SDL_VERSION_ATLEAST(2,0,0) */
 static void input_key( int keynum, double value, double kabs, int repeat );
 static void input_clickZoom( double modifier );
 static void input_clickevent( SDL_Event* event );
@@ -271,11 +271,13 @@ void input_init (void)
    Keybind *temp;
    int i;
 
+#if !SDL_VERSION_ATLEAST(2,0,0)
    /* We need unicode for the input widget. */
    SDL_EnableUNICODE(1);
 
    /* Key repeat fscks up stuff like double tap. */
    SDL_EnableKeyRepeat( 0, 0 );
+#endif /* !SDL_VERSION_ATLEAST(2,0,0) */
 
    /* Window. */
    SDL_EventState( SDL_SYSWMEVENT,      SDL_DISABLE );
@@ -307,10 +309,6 @@ void input_init (void)
 
    /* Mouse. */
    SDL_EventState( SDL_MOUSEWHEEL,      SDL_DISABLE );
-
-   /* Proximity. */
-   SDL_EventState( SDL_INPUTPROXIMITYIN,     SDL_DISABLE );
-   SDL_EventState( SDL_INPUTPROXIMITYOUT,    SDL_DISABLE );
 #endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
    /* Get the number of keybindings. */
@@ -328,8 +326,10 @@ void input_init (void)
       temp->mod         = NMOD_NONE;
    }
 
+#if !SDL_VERSION_ATLEAST(2,0,0)
    /* Generate Key translation table. */
    input_keyConvGen();
+#endif /* !SDL_VERSION_ATLEAST(2,0,0) */
 }
 
 
@@ -340,7 +340,9 @@ void input_exit (void)
 {
    free(input_keybinds);
 
+#if !SDL_VERSION_ATLEAST(2,0,0)
    input_keyConvDestroy();
+#endif /* !SDL_VERSION_ATLEAST(2,0,0) */
 }
 
 
@@ -404,6 +406,7 @@ void input_mouseHide (void)
 }
 
 
+#if !SDL_VERSION_ATLEAST(2,0,0)
 /**
  * @brief Creates the key conversion table.
  */
@@ -426,6 +429,7 @@ static void input_keyConvDestroy (void)
    for (i=0; i < INPUT_NUMKEYS; i++)
       free( keyconv[i] );
 }
+#endif /* !SDL_VERSION_ATLEAST(2,0,0) */
 
 
 /**
@@ -436,6 +440,9 @@ static void input_keyConvDestroy (void)
  */
 SDLKey input_keyConv( const char *name )
 {
+#if SDL_VERSION_ATLEAST(2,0,0)
+      return SDL_GetKeyFromName( name );
+#else /* SDL_VERSION_ATLEAST(2,0,0) */
    SDLKey k, m;
    size_t l;
    char buf;
@@ -471,6 +478,7 @@ SDLKey input_keyConv( const char *name )
 
    WARN("Keyname '%s' doesn't match any key.", name);
    return SDLK_UNKNOWN;
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
 }
 
 
@@ -482,7 +490,7 @@ SDLKey input_keyConv( const char *name )
  *    @param key The key to bind to.
  *    @param mod Modifiers to check for.
  */
-void input_setKeybind( const char *keybind, KeybindType type, int key, SDLMod mod )
+void input_setKeybind( const char *keybind, KeybindType type, SDLKey key, SDLMod mod )
 {
    int i;
    for (i=0; i<input_numbinds; i++) {
@@ -551,7 +559,7 @@ const char* input_modToText( SDLMod mod )
  *    @param mod Key modifiers.
  *    @return Name of the key that is already bound to it.
  */
-const char *input_keyAlreadyBound( KeybindType type, int key, SDLMod mod )
+const char *input_keyAlreadyBound( KeybindType type, SDLKey key, SDLMod mod )
 {
    int i;
    Keybind *k;
@@ -563,7 +571,7 @@ const char *input_keyAlreadyBound( KeybindType type, int key, SDLMod mod )
          continue;
 
       /* Must match key. */
-      if (key != (int)k->key)
+      if (key !=  k->key)
          continue;
 
       /* Handle per case. */
@@ -1306,10 +1314,18 @@ void input_handle( SDL_Event* event )
          break;
 
       case SDL_KEYDOWN:
+#if SDL_VERSION_ATLEAST(2,0,0)
+         if (event->key.repeat != 0)
+            return;
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
          input_keyevent(KEY_PRESS, event->key.keysym.sym, event->key.keysym.mod, 0);
          break;
 
       case SDL_KEYUP:
+#if SDL_VERSION_ATLEAST(2,0,0)
+         if (event->key.repeat !=0)
+            return;
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
          input_keyevent(KEY_RELEASE, event->key.keysym.sym, event->key.keysym.mod, 0);
          break;
 

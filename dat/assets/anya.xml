@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Anya">
+ <pos>
+  <x>3017.480541</x>
+  <y>-4906.625129</y>
+ </pos>
+ <GFX>
+  <space>C01.png</space>
+  <exterior>snow.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Thurion</faction>
+  <value>10.000000</value>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>N</class>
+  <population>10000</population>
+  <hide>0.010000</hide>
+  <services>
+   <land/>
+   <refuel/>
+  </services>
+  <commodities/>
+  <description>Anya is the twin planet to Sabe, orbiting around their shared center of gravity in tandem. Anya is shrouded in permanent cloud cover of ash and snow however as a result of geological activity. A small number of Thurions live on the surface of Anya, but no large scale colonization effort has commenced as of yet, despite the planet's proximity to Sabe, the Thurian capital world. This is due at least in part to the geological instabilities of the planet.</description>
+ </general>
+</asset>

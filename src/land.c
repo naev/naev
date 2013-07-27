@@ -1567,7 +1567,9 @@ void takeoff( int delay )
 
    /* Player's ship is not able to fly. */
    if (!player_canTakeoff()) {
-      dialogue_msg( "Ship not fit for flight", "All core outfits must be equiped for takeoff." );
+      char message[512];
+      pilot_reportSpaceworthy( player.p, message, sizeof(message) );
+      dialogue_msg( "Ship not fit for flight", message );
       return;
    }
 

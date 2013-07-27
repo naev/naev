@@ -679,7 +679,11 @@ static glTexture *gl_genFactionDisk( int radius )
    const int h = 2 * radius + 1;
 
    /* Create the surface. */
-   sur = SDL_CreateRGBSurface( SDL_SRCALPHA | SDL_HWSURFACE, w, h, 32, RGBAMASK );
+#if SDL_VERSION_ATLEAST(1,3,0)
+   sur = SDL_CreateRGBSurface( 0, w, h, 32, RGBAMASK );
+#else /* SDL_VERSION_ATLEAST(1,3,0) */
+   sur = SDL_CreateRGBSurface( SDL_SRCALPHA | SDL_SWSURFACE, w, h, 32, RGBAMASK );
+#endif /* SDL_VERSION_ATLEAST(1,3,0) */
 
    pixels = sur->pixels;
    memset(pixels, 0xff, sizeof(uint8_t) * 4 * h * w);
@@ -1268,13 +1272,12 @@ void map_jump (void)
    if (map_path != NULL) {
       map_npath--;
       if (map_npath == 0) { /* path is empty */
-         free (map_path);
+         free( map_path );
          map_path = NULL;
          player_targetHyperspaceSet( -1 );
       }
       else { /* get rid of bottom of the path */
          memmove( &map_path[0], &map_path[1], sizeof(StarSystem*) * map_npath );
-         map_path = realloc( map_path, sizeof(StarSystem*) * map_npath );
 
          /* set the next jump to be to the next in path */
          for (j=0; j<cur_system->njumps; j++) {
@@ -1283,6 +1286,9 @@ void map_jump (void)
                break;
             }
          }
+         /* Overrode jump route manually, must clear target. */
+         if (j>=cur_system->njumps)
+            player_targetHyperspaceSet( -1 );
       }
    }
    else
@@ -1323,10 +1329,10 @@ void map_select( StarSystem *sys, char shifted )
       if (space_sysReachable(sys)) {
          if (!shifted)
             map_path = map_getJumpPath( &map_npath,
-                  cur_system->name, sys->name, 0 , NULL );
+                  cur_system->name, sys->name, 0, 1, NULL );
          else
             map_path = map_getJumpPath( &map_npath,
-                  cur_system->name, sys->name, 0 , map_path );
+                  cur_system->name, sys->name, 0, 1, map_path );
 
          if (map_npath==0) {
             player_hyperspacePreempt(0);
@@ -1359,6 +1365,11 @@ void map_select( StarSystem *sys, char shifted )
 
 /*
  * A* algorithm for shortest path finding
+ *
+ * Note since that we can't actually get an admissible heurestic for A* this is
+ * in reality just Djikstras. I've removed the heurestic bit to make sure I
+ * don't try to implement an admissible heuristic when I'm pretty sure there is
+ * none.
  */
 /**
  * @brief Node structure for A* pathfinding.
@@ -1369,48 +1380,34 @@ typedef struct SysNode_ {
 
    struct SysNode_ *parent; /**< Parent node. */
    StarSystem* sys; /**< System in node. */
-   double r; /**< ranking */
    int g; /**< step */
 } SysNode; /**< System Node for use in A* pathfinding. */
 static SysNode *A_gc;
 /* prototypes */
-static SysNode* A_newNode( StarSystem* sys, SysNode* parent );
-static double A_h( StarSystem *n, StarSystem *g );
-static double A_g( SysNode* n );
+static SysNode* A_newNode( StarSystem* sys );
+static int A_g( SysNode* n );
 static SysNode* A_add( SysNode *first, SysNode *cur );
 static SysNode* A_rm( SysNode *first, StarSystem *cur );
 static SysNode* A_in( SysNode *first, StarSystem *cur );
 static SysNode* A_lowest( SysNode *first );
 static void A_freeList( SysNode *first );
 /** @brief Creates a new node link to star system. */
-static SysNode* A_newNode( StarSystem* sys, SysNode* parent )
+static SysNode* A_newNode( StarSystem* sys )
 {
    SysNode* n;
 
-   n = malloc(sizeof(SysNode));
+   n        = malloc(sizeof(SysNode));
 
-   n->next = NULL;
-   n->parent = parent;
-   n->sys = sys;
-   n->r = DBL_MAX;
-   n->g = 0.;
+   n->next  = NULL;
+   n->sys   = sys;
 
    n->gnext = A_gc;
-   A_gc = n;
+   A_gc     = n;
 
    return n;
 }
-/** @brief Heuristic model to use. */
-static double A_h( StarSystem *n, StarSystem *g )
-{
-   (void)n;
-   (void)g;
-   /* Euclidean distance */
-   /*return sqrt(pow2(n->pos.x - g->pos.x) + pow2(n->pos.y - g->pos.y))/100.;*/
-   return 0.;
-}
 /** @brief Gets the g from a node. */
-static double A_g( SysNode* n )
+static int A_g( SysNode* n )
 {
    return n->g;
 }
@@ -1479,7 +1476,7 @@ static SysNode* A_lowest( SysNode *first )
    n = first;
    lowest = n;
    do {
-      if (n->r < lowest->r)
+      if (n->g < lowest->g)
          lowest = n;
    } while ((n=n->next) != NULL);
    return lowest;
@@ -1522,15 +1519,16 @@ void map_setZoom(double zoom)
  *    @return NULL on failure, the list of njumps elements systems in the path.
  */
 StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
-    const char* sysend, int ignore_known, StarSystem** old_data )
+    const char* sysend, int ignore_known, int show_hidden,
+    StarSystem** old_data )
 {
    int i, j, cost, ojumps;
 
    StarSystem *sys, *ssys, *esys, **res;
    JumpPoint *jp;
 
-   SysNode *cur, *neighbour;
-   SysNode *open, *closed;
+   SysNode *cur,   *neighbour;
+   SysNode *open,  *closed;
    SysNode *ocost, *ccost;
 
    A_gc = NULL;
@@ -1564,22 +1562,27 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
    }
 
    /* start the linked lists */
-   open  = closed = NULL;
-   cur   = A_newNode( ssys, NULL );
-   open  = A_add( open, cur ); /* initial open node is the start system */
+   open     = closed = NULL;
+   cur      = A_newNode( ssys );
+   cur->parent = NULL;
+   cur->g   = 0;
+   open     = A_add( open, cur ); /* Initial open node is the start system */
 
    j = 0;
-   while ((cur = A_lowest(open))->sys != esys) {
+   while ((cur = A_lowest(open))) {
+      /* End condition. */
+      if (cur->sys == esys)
+         break;
 
       /* Break if infinite loop. */
       j++;
       if (j > MAP_LOOP_PROT)
          break;
 
-      /* get best from open and toss to closed */
+      /* Get best from open and toss to closed */
       open   = A_rm( open, cur->sys );
       closed = A_add( closed, cur );
-      cost   = A_g(cur) + 1;
+      cost   = A_g(cur) + 1; /* Base unit is jump and always increases by 1. */
 
       for (i=0; i<cur->sys->njumps; i++) {
          jp  = &cur->sys->jumps[i];
@@ -1594,23 +1597,29 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
          }
          if (jp_isFlag( jp, JP_EXITONLY ))
             continue;
+         if (!show_hidden && jp_isFlag( jp, JP_HIDDEN ))
+            continue;
 
-         neighbour = A_newNode( sys, NULL );
-
-         ocost = A_in(open, sys);
-         if ((ocost != NULL) && (cost < ocost->g))
-            open = A_rm( open, sys ); /* new path is better */
-
+         /* Check to see if it's already in the closed set. */
          ccost = A_in(closed, sys);
-         if (ccost != NULL)
-            closed = A_rm( closed, sys ); /* shouldn't happen */
+         if ((ccost != NULL) && (cost >= A_g(ccost)))
+            continue;
+            //closed = A_rm( closed, sys );
 
-         if ((ocost == NULL) && (ccost == NULL)) {
-            neighbour->g      = cost;
-            neighbour->r      = A_g(neighbour) + A_h(cur->sys,sys);
-            neighbour->parent = cur;
-            open              = A_add( open, neighbour );
+         /* Remove if it exists and current is better. */
+         ocost = A_in(open, sys);
+         if (ocost != NULL) {
+            if (cost < A_g(ocost))
+               open = A_rm( open, sys ); /* New path is better */
+            else
+               continue; /* This node is worse, so ignore it. */
          }
+
+         /* Create the node. */
+         neighbour         = A_newNode( sys );
+         neighbour->parent = cur;
+         neighbour->g      = cost;
+         open              = A_add( open, neighbour );
       }
 
       /* Sanity check in case not linked. */

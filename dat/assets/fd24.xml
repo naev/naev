@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="FD-24">
+ <pos>
+  <x>420.000000</x>
+  <y>400.000000</y>
+ </pos>
+ <GFX>
+  <space>002.png</space>
+  <exterior>station04.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Thurion</faction>
+  <value>10.000000</value>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>1</class>
+  <population>100</population>
+  <hide>0.010000</hide>
+  <services>
+   <land/>
+   <refuel/>
+  </services>
+  <commodities/>
+  <description>The Thurion placed this fuel supply depot to allow ships heading between their shipyards in the nebula and their core systems to fill up their fuel tanks for the long journy ahead.</description>
+ </general>
+</asset>

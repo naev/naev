@@ -662,8 +662,8 @@ static void spfx_hapticRumble( double mod )
       SDL_HapticStopEffect( haptic, haptic_rumble );
 
       /* Get length and magnitude. */
-      len = 1000. * shake_rad / SHAKE_DECAY;
-      mag = 32767. * (shake_rad / SHAKE_MAX);
+      len = 1000. * shake_force_mod / SHAKE_DECAY;
+      mag = 32767. * (shake_force_mod / SHAKE_MAX);
 
       /* Update the effect. */
       efx = &haptic_rumbleEffect;

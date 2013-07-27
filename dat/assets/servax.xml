@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Servax">
+ <pos>
+  <x>-5722.779163</x>
+  <y>-2425.841787</y>
+ </pos>
+ <GFX>
+  <space>X01.png</space>
+  <exterior>station00.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.010000</hide>
+  <services/>
+ </general>
+</asset>

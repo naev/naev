@@ -12,9 +12,24 @@
  </pos>
  <assets/>
  <jumps>
+  <jump target="Capricorn">
+   <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Haven">
    <autopos/>
    <hide>1.250000</hide>
+  </jump>
+  <jump target="Mason">
+   <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="New Haven">
+   <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Wahri">
    <autopos/>

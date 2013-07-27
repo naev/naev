@@ -21,6 +21,7 @@
    <faction>Frontier</faction>
    <faction>Goddard</faction>
    <faction>Sirius</faction>
+   <faction>Soromid</faction>
   </avail>
  </mission>
  <mission name="Empire Rehabilitation">
@@ -71,6 +72,7 @@
    <faction>Frontier</faction>
    <faction>Goddard</faction>
    <faction>Sirius</faction>
+   <faction>Soromid</faction>
   </avail>
  </mission>
  <mission name="Empire Recruitment">
@@ -263,7 +265,7 @@
  <mission name="Assault on Unicorn">
   <lua>dvaered/assault_on_unicorn</lua>
   <avail>
-    <cond>faction.playerStanding("Dvaered") &gt; 5 and player.getRating() &gt; 100 and system.cur() == system.get("Pudas") and not var.peek("assault_on_unicorn_check")</cond>
+    <cond>faction.playerStanding("Dvaered") &gt; 5 and player.getRating() &gt; 100 and system.cur() == system.get("Amaroq") and not var.peek("assault_on_unicorn_check")</cond>
    <chance>75</chance>
    <location>Computer</location>
    <done>Empire Shipping 3</done>
@@ -555,6 +557,15 @@
         end)()</cond>
   </avail>
  </mission>
+ <mission name="Stealing ships">
+  <lua>pirate/pir_ship_stealing</lua>
+  <flags/>
+  <avail>
+   <chance>10</chance>
+   <location>Bar</location>
+   <cond>faction.playerStanding("Pirate") &gt;= 10</cond>
+  </avail>
+ </mission>
  <mission name="The macho teenager">
   <lua>neutral/teenager</lua>
   <flags>
@@ -615,7 +626,7 @@
   <avail>
    <priority>1</priority>
    <cond>faction.playerStanding("Pirate") &gt;= 20 and var.peek("ps_misn") >= 2</cond>
-   <chance>30</chance>
+   <chance>10</chance>
    <location>Bar</location>
    <faction>Pirate</faction>
   </avail>
@@ -766,6 +777,66 @@
     <cond>player.pilot():ship():class() == "Yacht" and player.misnDone("Racing Skills 1")</cond>
    <chance>2</chance>
    <location>Bar</location>
+  </avail>
+ </mission>
+ <mission name="The Gauntlet">
+  <lua>sirius/heretic/heretic0</lua>
+  <flags>
+  <unique />
+  </flags>
+  <avail>
+   <cond>var.peek("heretic_misn_tracker") == nil</cond>
+   <chance>50</chance>
+   <location>Bar</location>
+   <faction>Sirius</faction>
+  </avail>
+ </mission>
+ <mission name="The Return">
+  <lua>sirius/heretic/heretic1</lua>
+  <flags>
+  <unique />
+  </flags>
+  <avail>
+   <cond>var.peek("heretic_misn_tracker") == 1</cond>
+   <chance>100</chance>
+   <location>Bar</location>
+   <planet>Margot</planet>
+  </avail>
+ </mission>
+ <mission name="The Patrol">
+  <lua>sirius/heretic/heretic2</lua>
+  <flags>
+  <unique />
+  </flags>
+  <avail>
+   <cond>var.peek("heretic_misn_tracker") == 2</cond>
+   <chance>100</chance>
+   <location>Bar</location>
+   <planet>The Wringer</planet>
+  </avail>
+ </mission>
+ <mission name="The Assault">
+  <lua>sirius/heretic/heretic3</lua>
+  <flags>
+  <unique />
+  </flags>
+  <avail>
+   <done>The Patrol</done>
+   <chance>100</chance>
+   <location>Bar</location>
+   <planet>The Wringer</planet>
+  </avail>
+ </mission>
+ <mission name="The Egress">
+  <lua>sirius/heretic/heretic4</lua>
+  <flags>
+  <unique />
+  </flags>
+  <avail>
+   <cond>var.peek("heretic_misn_tracker") == 4</cond>
+   <chance>100</chance>
+   <location>Bar</location>
+   <planet>The Wringer</planet>
   </avail>
  </mission>
 

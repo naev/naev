@@ -16,5 +16,10 @@
    <autopos/>
    <hide>1.250000</hide>
   </jump>
+  <jump target="Trohem">
+   <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
  </jumps>
 </ssys>

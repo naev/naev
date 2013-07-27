@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Aluben">
+ <pos>
+  <x>1150.000000</x>
+  <y>750.000000</y>
+ </pos>
+ <GFX>
+  <space>J04.png</space>
+  <exterior>methane.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.010000</hide>
+  <services/>
+ </general>
+</asset>

@@ -15,6 +15,11 @@
   <asset>Provectus Nova Ia</asset>
  </assets>
  <jumps>
+  <jump target="Effetey">
+   <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Limbo">
    <autopos/>
    <hide>1.250000</hide>

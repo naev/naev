@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Za'lek II">
+ <pos>
+  <x>976.188887</x>
+  <y>-6877.694431</y>
+ </pos>
+ <GFX>
+  <space>Y00.png</space>
+  <exterior>lava.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.250000</hide>
+  <services/>
+ </general>
+</asset>

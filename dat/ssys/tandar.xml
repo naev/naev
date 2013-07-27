@@ -22,6 +22,11 @@
    <autopos/>
    <hide>1.250000</hide>
   </jump>
+  <jump target="Moordra">
+   <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Symm">
    <autopos/>
    <hide>1.250000</hide>

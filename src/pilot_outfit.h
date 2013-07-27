@@ -26,7 +26,10 @@ int pilot_countAmmo( Pilot* pilot );
 int pilot_maxAmmo( Pilot* pilot );
 
 /* Checks. */
-const char* pilot_checkSanity( Pilot *p );
+int pilot_slotsCheckSanity( Pilot *p );
+int pilot_slotsCheckRequired( Pilot *p );
+const char* pilot_checkSpaceworthy( Pilot *p );
+int pilot_reportSpaceworthy( Pilot *p, char buf[], int buffSize );
 const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o );
 
 /* Lockons. */

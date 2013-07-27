@@ -4,20 +4,25 @@
   <radius>14000.000000</radius>
   <stars>400</stars>
   <interference>350.000000</interference>
-  <nebula volatility="0.000000">400.000000</nebula>
+  <nebula volatility="50.000000">400.000000</nebula>
  </general>
  <pos>
-  <x>434.333333</x>
-  <y>178.733333</y>
+  <x>458.333333</x>
+  <y>116.733333</y>
  </pos>
- <assets/>
+ <assets>
+  <asset>Aluben</asset>
+  <asset>Tenal-P</asset>
+  <asset>Virtual Trader Local</asset>
+ </assets>
  <jumps>
-  <jump target="Basel">
+  <jump target="Behar">
    <autopos/>
    <hide>1.250000</hide>
   </jump>
   <jump target="Oriantis">
-   <autopos/>
+   <pos x="8027.953539" y="10941.758779"/>
+   <hidden/>
    <hide>1.250000</hide>
   </jump>
   <jump target="Percival">

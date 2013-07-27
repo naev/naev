@@ -119,6 +119,13 @@
    <pilot name="Proteron Archimedes" ship="Proteron Archimedes"></pilot>
   </pilots>
  </fleet>
+ <fleet name="Proteron Watson">
+  <ai>proteron</ai>
+  <faction>Proteron</faction>
+  <pilots>
+   <pilot name="Proteron Watson" ship="Proteron Watson"></pilot>
+  </pilots>
+ </fleet>
  <fleet name="Proteron Derivative">
   <ai>proteron</ai>
   <faction>Proteron</faction>
@@ -533,6 +540,41 @@
    <pilot name="Empire Admonisher" ship="Empire Admonisher"></pilot>
   </pilots>
  </fleet>
+ <fleet name="Za'lek Sting">
+  <ai>zalek</ai>
+  <faction>Za'lek</faction>
+  <pilots>
+   <pilot name="Za'lek Sting" ship="Za'lek Sting"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Za'lek Imp">
+  <ai>zalek</ai>
+  <faction>Za'lek</faction>
+  <pilots>
+   <pilot name="Za'lek Imp" ship="Za'lek Imp"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Za'lek Demon">
+  <ai>zalek</ai>
+  <faction>Za'lek</faction>
+  <pilots>
+   <pilot name="Za'lek Demon" ship="Za'lek Demon"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Za'lek Mephisto">
+  <ai>zalek</ai>
+  <faction>Za'lek</faction>
+  <pilots>
+   <pilot name="Za'lek Mephisto" ship="Za'lek Mephisto"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Za'lek Diablo">
+  <ai>zalek</ai>
+  <faction>Za'lek</faction>
+  <pilots>
+   <pilot name="Za'lek Diablo" ship="Za'lek Diablo"></pilot>
+  </pilots>
+ </fleet>
  <fleet name="Trinity">
   <ai>empire</ai>
   <faction>Empire</faction>
@@ -761,6 +803,74 @@
    <pilot name="Dvaered Ancestor" ship="Dvaered Ancestor"></pilot>
    <pilot name="Dvaered Phalanx" ship="Dvaered Phalanx"></pilot>
    <pilot name="Dvaered Vigilance" ship="Dvaered Vigilance"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Thurion Ingenuity">
+  <ai>thurion</ai>
+  <faction>Thurion</faction>
+  <pilots>
+   <pilot name="Thurion Ingenuity" ship="Thurion Ingenuity"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Sirius Recon Force">
+  <ai>sirius</ai>
+  <faction>Sirius</faction>
+  <pilots>
+   <pilot name="Sirius Preacher" ship="Sirius Preacher"></pilot>
+   <pilot name="Sirius Fidelity" ship="Sirius Fidelity"></pilot>
+   <pilot name="Sirius Fidelity" ship="Sirius Fidelity"></pilot>
+   <pilot name="Sirius Fidelity" ship="Sirius Fidelity"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Sirius Assault Force">
+  <ai>sirius</ai>
+  <faction>Sirius</faction>
+  <pilots>
+   <pilot name="Sirius Divinity" ship="Sirius Divinity"></pilot>
+   <pilot name="Sirius Dogma" ship="Sirius Dogma"></pilot>
+   <pilot name="Sirius Dogma" ship="Sirius Dogma"></pilot>
+   <pilot name="Sirius Preacher" ship="Sirius Preacher"></pilot>
+   <pilot name="Sirius Preacher" ship="Sirius Preacher"></pilot>
+   <pilot name="Sirius Preacher" ship="Sirius Preacher"></pilot>
+   <pilot name="Sirius Fidelity" ship="Sirius Fidelity"></pilot>
+   <pilot name="Sirius Fidelity" ship="Sirius Fidelity"></pilot>
+   <pilot name="Sirius Fidelity" ship="Sirius Fidelity"></pilot>
+   <pilot name="Sirius Fidelity" ship="Sirius Fidelity"></pilot>
+   <pilot name="Sirius Fidelity" ship="Sirius Fidelity"></pilot>
+   <pilot name="Sirius Fidelity" ship="Sirius Fidelity"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Nasin Sml Civilian">
+  <ai>civilian</ai>
+  <faction>Nasin</faction>
+  <pilots>
+   <pilot name="Nasin Llama" ship="Llama"></pilot>
+   <pilot name="Nasin Llama" ship="Llama"></pilot>
+   <pilot name="Nasin Mule" ship="Mule"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Nasin Sml Attack Fleet">
+  <ai>baddie</ai>
+  <faction>Nasin</faction>
+  <pilots>
+   <pilot name="Nasin Lancelot" ship="Lancelot"></pilot>
+   <pilot name="Nasin Lancelot" ship="Lancelot"></pilot>
+   <pilot name="Nasin Lancelot" ship="Lancelot"></pilot>
+   <pilot name="Nasin Admonisher" ship="Admonisher"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Nasin Med Defense Fleet">
+  <ai>baddie</ai>
+  <faction>Nasin</faction>
+  <pilots>
+   <pilot name="Nasin Shark" ship="Shark"></pilot>
+   <pilot name="Nasin Shark" ship="Shark"></pilot>
+   <pilot name="Nasin Lancelot" ship="Lancelot"></pilot>
+   <pilot name="Nasin Lancelot" ship="Lancelot"></pilot>
+   <pilot name="Nasin Lancelot" ship="Lancelot"></pilot>
+   <pilot name="Nasin Lancelot" ship="Lancelot"></pilot>
+   <pilot name="Nasin Admonisher" ship="Admonisher"></pilot>
+   <pilot name="Nasin Admonisher" ship="Admonisher"></pilot>
   </pilots>
  </fleet>
 </Fleets>

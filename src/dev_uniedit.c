@@ -107,6 +107,7 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
 /* Button functions. */
 static void uniedit_close( unsigned int wid, char *wgt );
 static void uniedit_save( unsigned int wid_unused, char *unused );
+static void uniedit_saveMap( unsigned int wid_unused, char *unused );
 static void uniedit_btnJump( unsigned int wid_unused, char *unused );
 static void uniedit_btnRename( unsigned int wid_unused, char *unused );
 static void uniedit_btnEdit( unsigned int wid_unused, char *unused );
@@ -124,6 +125,7 @@ void uniedit_open( unsigned int wid_unused, char *unused )
    (void) wid_unused;
    (void) unused;
    unsigned int wid;
+   int buttonPos = 0;
 
    /* Pause. */
    pause_game();
@@ -150,32 +152,45 @@ void uniedit_open( unsigned int wid_unused, char *unused )
    uniedit_wid = wid;
 
    /* Close button. */
-   window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*buttonPos, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnClose", "Close", uniedit_close );
+   buttonPos++;
 
    /* Save button. */
-   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*1, BUTTON_WIDTH, BUTTON_HEIGHT,
+   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*buttonPos, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnSave", "Save All", uniedit_save );
+   buttonPos++;
+
+   /* Save Map button. */
+   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*buttonPos, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnSaveMap", "Save Map", uniedit_saveMap );
+   buttonPos++;
 
    /* Jump toggle. */
-   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*3, BUTTON_WIDTH, BUTTON_HEIGHT,
+   buttonPos++;
+   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*buttonPos, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnJump", "Jump", uniedit_btnJump );
+   buttonPos++;
 
    /* Rename system. */
-   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*4, BUTTON_WIDTH, BUTTON_HEIGHT,
+   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*buttonPos, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnRename", "Rename", uniedit_btnRename );
+   buttonPos++;
 
    /* Edit system. */
-   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*5, BUTTON_WIDTH, BUTTON_HEIGHT,
+   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*buttonPos, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnEdit", "Edit", uniedit_btnEdit );
+   buttonPos++;
 
    /* New system. */
-   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*6, BUTTON_WIDTH, BUTTON_HEIGHT,
+   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*buttonPos, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnNew", "New Sys", uniedit_btnNew );
+   buttonPos++;
 
    /* Open a system. */
-   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*7, BUTTON_WIDTH, BUTTON_HEIGHT,
+   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*buttonPos, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnOpen", "Open", uniedit_btnOpen );
+   buttonPos++;
 
    /* Zoom buttons */
    window_addButton( wid, 40, 20, 30, 30, "btnZoomIn", "+", uniedit_buttonZoom );
@@ -267,6 +282,18 @@ static void uniedit_save( unsigned int wid_unused, char *unused )
 
    dsys_saveAll();
    dpl_saveAll();
+}
+
+
+/*
+ * @brief Saves a map.
+ */
+static void uniedit_saveMap( unsigned int wid_unused, char *unused )
+{
+   (void) wid_unused;
+   (void) unused;
+
+   dsys_saveMap(uniedit_sys, uniedit_nsys);
 }
 
 

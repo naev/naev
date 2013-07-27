@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Kaso">
+ <pos>
+  <x>-5360.000000</x>
+  <y>-3780.000000</y>
+ </pos>
+ <GFX>
+  <space>moon-C01.png</space>
+  <exterior>station04.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.010000</hide>
+  <services/>
+ </general>
+</asset>

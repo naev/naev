@@ -63,7 +63,7 @@ const char *nstrnstr( const char *haystack, const char *needle, size_t size )
  *    @param needle String to find.
  *    @return Pointer in haystack where needle was found or NULL if not found.
  */
-#if !HAS_POSIX
+#if !(HAS_POSIX && defined(_GNU_SOURCE))
 const char *nstrcasestr( const char *haystack, const char *needle )
 {
    size_t hay_len, needle_len;
@@ -83,13 +83,13 @@ const char *nstrcasestr( const char *haystack, const char *needle )
 
    return NULL;
 }
-#endif /* !HAS_POSIX */
+#endif /* !(HAS_POSIX && defined(_GNU_SOURCE)) */
 
 
 /**
  * @brief nsnprintf wrapper.
  */
-#if !HAS_POSIX
+#if !(HAS_POSIX && defined(_GNU_SOURCE))
 int nsnprintf( char *text, size_t maxlen, const char *fmt, ... )
 {
    va_list ap;
@@ -104,6 +104,6 @@ int nsnprintf( char *text, size_t maxlen, const char *fmt, ... )
 
    return retval;
 }
-#endif /* !HAS_POSIX */
+#endif /* !(HAS_POSIX && defined(_GNU_SOURCE)) */
 
 

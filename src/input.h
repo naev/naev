@@ -34,11 +34,11 @@ typedef enum {
  */
 void input_setDefault (void);
 SDLKey input_keyConv( const char *name );
-void input_setKeybind( const char *keybind, KeybindType type, int key, SDLMod mod );
+void input_setKeybind( const char *keybind, KeybindType type, SDLKey key, SDLMod mod );
 const char* input_modToText( SDLMod mod );
 SDLKey input_getKeybind( const char *keybind, KeybindType *type, SDLMod *mod );
 const char* input_getKeybindDescription( const char *keybind );
-const char *input_keyAlreadyBound( KeybindType type, int key, SDLMod mod );
+const char *input_keyAlreadyBound( KeybindType type, SDLKey key, SDLMod mod );
 
 /*
  * Misc.

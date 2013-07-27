@@ -25,6 +25,11 @@
    <autopos/>
    <hide>1.250000</hide>
   </jump>
+  <jump target="Firk">
+   <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
  </jumps>
  <prices>
   <commodity name="Food">118.000000</commodity>

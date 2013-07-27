@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ssys name="Poller">
+ <general>
+  <radius>10000.000000</radius>
+  <stars>400</stars>
+  <interference>0.000000</interference>
+  <nebula volatility="0.000000">0.000000</nebula>
+ </general>
+ <pos>
+  <x>-707.110498</x>
+  <y>-1113.835725</y>
+ </pos>
+ <assets/>
+ <jumps>
+  <jump target="Newmarch">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Woreck">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Xeric">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+ </jumps>
+</ssys>

@@ -645,7 +645,11 @@ int music_al_init (void)
     */
    musicLock();
    music_state  = MUSIC_STATE_STARTUP;
-   music_player = SDL_CreateThread( music_thread, NULL );
+   music_player = SDL_CreateThread( music_thread,
+#if SDL_VERSION_ATLEAST(1,3,0)
+         "music_thread",
+#endif /* SDL_VERSION_ATLEAST(1,3,0) */
+         NULL );
    SDL_CondWait( music_state_cond, music_state_lock );
    musicUnlock();
 
@@ -949,8 +953,12 @@ static void music_kill (void)
 
       /* Timed out, just slaughter the thread. */
       if (ret == SDL_MUTEX_TIMEDOUT) {
+#if SDL_VERSION_ATLEAST(2,0,0)
+         WARN("Music thread did not exit when asked, ignoring...");
+#else /* SDL_VERSION_ATLEAST(2,0,0) */
          WARN("Music thread did not exit when asked, slaughtering...");
          SDL_KillThread( music_player );
+#endif /* SDL_VERSION_ATLEAST(2,0,0) */
          break;
       }
 

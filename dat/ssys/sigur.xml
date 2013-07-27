@@ -7,17 +7,16 @@
   <nebula volatility="0.000000">300.000000</nebula>
  </general>
  <pos>
-  <x>441.000000</x>
-  <y>91.000000</y>
+  <x>359.000000</x>
+  <y>90.000000</y>
  </pos>
  <assets>
   <asset>Virtual Empire Unpresence</asset>
  </assets>
  <jumps>
   <jump target="Arcanis">
-   <pos x="-37240.561607" y="-14602.214447"/>
-   <hidden/>
-   <hide>1.000000</hide>
+   <autopos/>
+   <hide>1.250000</hide>
   </jump>
   <jump target="Behar">
    <autopos/>

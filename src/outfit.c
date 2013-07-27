@@ -822,13 +822,13 @@ int outfit_fitsSlot( const Outfit* o, const OutfitSlot* s )
       return 0;
 
    /* Must match slot property. */
-   if (o->slot.spid != 0)
-      if (s->spid != o->slot.spid)
+   if (os->spid != 0)
+      if (s->spid != os->spid)
          return 0;
 
    /* Exclusive only match property. */
    if (s->exclusive)
-      if (s->spid != o->slot.spid)
+      if (s->spid != os->spid)
          return 0;
 
    /* Must have valid slot size. */
@@ -1528,12 +1528,13 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
          outfit_getType(temp),
          (temp->u.mod.active) ? "\n\erActivated Outfit\e0" : "" );
 
-#define DESC_ADD(x, s, n) \
+#define DESC_ADD(x, s, n, c) \
 if ((x) != 0.) \
    i += nsnprintf( &temp->desc_short[i], OUTFIT_SHORTDESC_MAX-i, \
-         "\n%+."n"f "s, x )
-#define DESC_ADD0(x, s)    DESC_ADD( x, s, "0" )
-#define DESC_ADD1(x, s)    DESC_ADD( x, s, "1" )
+         "\n\e%c%+."n"f "s"\e0", c, x )
+#define DESC_ADD0(x, s)    DESC_ADD( x, s, "0", ((x)>0)?'D':'r' )
+#define DESC_ADD1(x, s)    DESC_ADD( x, s, "1", ((x)>0)?'D':'r' )
+   DESC_ADD0( temp->cpu, "CPU" );
    DESC_ADD0( temp->u.mod.thrust, "Thrust" );
    DESC_ADD0( temp->u.mod.turn, "Turn Rate" );
    DESC_ADD0( temp->u.mod.speed, "Maximum Speed" );

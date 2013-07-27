@@ -32,6 +32,7 @@
  <commodity name="Datapad"/>
  <commodity name="Satellite"/>
  <commodity name="Prisoners"/>
+ <commodity name="Refugees"/>
  <commodity name="Packages"/>
  <commodity name="VIP"/>
  <commodity name="The Baron's holopainting"/>
@@ -56,4 +57,6 @@
  <commodity name="Drugs"/>
  <commodity name="Exotic Animals"/>
  <commodity name="Radioactive Materials"/>
+ <commodity name="Small Arms"/>
+ <commodity name="Message"/>
 </Commodities>

@@ -147,7 +147,7 @@ void npng_close( npng_t *npng )
 static int npng_info( npng_t *npng )
 {
    png_uint_32 width, height;
-   int bit_depth, color_type, interface_type;
+   int bit_depth, color_type, interlace_type;
    /*double display_exponent, gamma;*/
 
    /* Read information. */
@@ -155,7 +155,11 @@ static int npng_info( npng_t *npng )
 
    /* Read header stuff. */
    png_get_IHDR( npng->png_ptr, npng->info_ptr, &width, &height,
-         &bit_depth, &color_type, &interface_type, NULL, NULL );
+         &bit_depth, &color_type, &interlace_type, NULL, NULL );
+
+   /* Set Interlace handling if necessary. */
+   if (interlace_type != PNG_INTERLACE_NONE)
+      png_set_interlace_handling( npng->png_ptr );
 
    /* Strip down from 16 bit to 8 bit. */
    png_set_strip_16( npng->png_ptr );
@@ -226,11 +230,11 @@ int npng_pitch( npng_t *npng )
 int npng_readInto( npng_t *npng, png_bytep *row_pointers )
 {
    png_uint_32 width, height;
-   int bit_depth, color_type, interface_type;
+   int bit_depth, color_type, interlace_type;
 
    /* Read information. */
    png_get_IHDR( npng->png_ptr, npng->info_ptr, &width, &height,
-         &bit_depth, &color_type, &interface_type, NULL, NULL );
+         &bit_depth, &color_type, &interlace_type, NULL, NULL );
 
    /* Go back to position. */
    /*SDL_RWseek( npng->rw, npng->start, RW_SEEK_SET );*/
@@ -296,12 +300,12 @@ SDL_Surface *npng_readSurface( npng_t *npng, int pad_pot, int vflip )
    SDL_Surface *surface;
    int channels;
    Uint32 Rmask, Gmask, Bmask, Amask;
-   int bit_depth, color_type, interface_type;
+   int bit_depth, color_type, interlace_type;
 
    /* Read information. */
    channels = png_get_channels( npng->png_ptr, npng->info_ptr );
    png_get_IHDR( npng->png_ptr, npng->info_ptr, &width, &height,
-         &bit_depth, &color_type, &interface_type, NULL, NULL );
+         &bit_depth, &color_type, &interlace_type, NULL, NULL );
 
    /* Pad POT if needed. */
    rheight = height;
@@ -324,7 +328,7 @@ SDL_Surface *npng_readSurface( npng_t *npng, int pad_pot, int vflip )
       Bmask = 0x0000FF00 >> s;
       Amask = 0x000000FF >> s;
    }
-   surface = SDL_AllocSurface( SDL_SWSURFACE, width, height,
+   surface = SDL_CreateRGBSurface( SDL_SWSURFACE, width, height,
          bit_depth*channels, Rmask, Gmask, Bmask, Amask );
    if (surface == NULL) {
       ERR( "Out of Memory" );

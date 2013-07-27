@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Katami I">
+ <pos>
+  <x>-4390.000000</x>
+  <y>-3240.000000</y>
+ </pos>
+ <GFX>
+  <space>G00.png</space>
+  <exterior>traderoom.png</exterior>
+ </GFX>
+ <general>
+  <class>A</class>
+  <population>0</population>
+  <hide>0.010000</hide>
+  <services/>
+ </general>
+</asset>

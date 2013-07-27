@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Efferey">
+ <pos>
+  <x>1341.000000</x>
+  <y>967.000000</y>
+ </pos>
+ <GFX>
+  <space>000.png</space>
+  <exterior>station00.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Pirate</faction>
+  <value>300.000000</value>
+  <range>5</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>1500</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <missions/>
+   <outfits/>
+  </services>
+  <commodities/>
+  <description>Effetey's Efferey station is the southern part of the Expanse in which you'll be able to refuel. Most of the pirate traffic from or to Vorca has to land here.</description>
+ </general>
+ <tech>
+  <item>Pirate Maps</item>
+  <item>Laser 1</item>
+  <item>Basic Outfits 1</item>
+ </tech>
+</asset>

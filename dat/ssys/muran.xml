@@ -12,9 +12,19 @@
  </pos>
  <assets/>
  <jumps>
+  <jump target="Dendria">
+   <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
   <jump target="Forlat">
    <autopos/>
    <hide>1.250000</hide>
+  </jump>
+  <jump target="New Haven">
+   <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
   </jump>
  </jumps>
 </ssys>

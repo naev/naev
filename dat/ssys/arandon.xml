@@ -4,11 +4,11 @@
   <radius>14000.000000</radius>
   <stars>500</stars>
   <interference>600.000000</interference>
-  <nebula volatility="100.000000">600.000000</nebula>
+  <nebula volatility="200.000000">600.000000</nebula>
  </general>
  <pos>
-  <x>570.000000</x>
-  <y>100.000000</y>
+  <x>525.000000</x>
+  <y>63.000000</y>
  </pos>
  <assets>
   <asset>Virtual Empire Unpresence</asset>
@@ -18,11 +18,7 @@
    <autopos/>
    <hide>1.250000</hide>
   </jump>
-  <jump target="Oriantis">
-   <autopos/>
-   <hide>1.250000</hide>
-  </jump>
-  <jump target="Polaris">
+  <jump target="Nasona">
    <autopos/>
    <hide>1.250000</hide>
   </jump>

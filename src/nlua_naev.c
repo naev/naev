@@ -27,6 +27,7 @@
 
 /* Naev methods. */
 static int naev_lang( lua_State *L );
+static int naev_ticks( lua_State *L );
 static int naev_keyGet( lua_State *L );
 static int naev_keyEnable( lua_State *L );
 static int naev_keyEnableAll( lua_State *L );
@@ -35,6 +36,7 @@ static int naev_eventStart( lua_State *L );
 static int naev_missionStart( lua_State *L );
 static const luaL_reg naev_methods[] = {
    { "lang", naev_lang },
+   { "ticks", naev_ticks },
    { "keyGet", naev_keyGet },
    { "keyEnable", naev_keyEnable },
    { "keyEnableAll", naev_keyEnableAll },
@@ -81,6 +83,20 @@ static int naev_lang( lua_State *L )
 {
    /** @todo multilanguage stuff */
    lua_pushstring(L,"en");
+   return 1;
+}
+
+/**
+ * @brief Gets the SDL ticks.
+ *
+ * Useful for doing timing on Lua functions.
+ *
+ *    @luareturn The SDL ticks since the application started running.
+ * @luafunc ticks()
+ */
+static int naev_ticks( lua_State *L )
+{
+   lua_pushinteger(L, SDL_GetTicks());
    return 1;
 }
 

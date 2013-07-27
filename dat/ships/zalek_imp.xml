@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Za'lek Imp">
+ <base_type>Imp</base_type>
+ <GFX sx="12" sy="12">imp</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Corvette</class>
+ <price>650000</price>
+ <fabricator>Za'lek Fabricators</fabricator>
+ <license>Medium Combat Vessel License</license>
+ <description>The Za'lek Imp is a rather oversized corvette that nontheless tends to be of a superior quality to that of other ships in its weight class. It suffers the common problem of Za'lek ships of poorer turning and frail armor, but it has an impressive amount of shields and energy to its name, fitting the Za'lek's superior technology.</description>
+ <health>
+  <absorb>11</absorb>
+  <armour>100</armour>
+  <armour_regen>0</armour_regen>
+ </health>
+ <characteristics>
+  <crew>11</crew>
+  <mass>160</mass>
+  <cargo>10</cargo>
+ </characteristics>
+ <slots>
+  <weapon size="medium" x="15" y="1" h="2"/>
+  <weapon size="medium" x="15" y="-1" h="2"/>
+  <weapon size="medium" x="-9" y="-10" h="2"/>
+  <weapon size="medium" x="-9" y="10" h="2"/>
+  <weapon size="medium" x="-9" y="-3" h="2"/>
+  <weapon size="medium" x="-9" y="3" h="2"/>
+  <utility size="medium" prop="systems">Basic Medium Systems</utility>
+  <utility size="medium"/>
+  <utility size="medium"/>
+  <utility size="small"/>
+  <structure size="medium" prop="engines">Manufacturer Medium Engine</structure>
+  <structure size="medium" prop="hull">Unmodified Medium Hull</structure>
+  <structure size="medium"/>
+  <structure size="medium"/>
+ </slots>
+ <stats>
+  <fuel_consumption>200</fuel_consumption>
+  <speed_mod>0</speed_mod>
+  <turn_mod>-5</turn_mod>
+  <thrust_mod>0</thrust_mod>
+  <armour_mod>-10</armour_mod>
+  <shield_mod>10</shield_mod>
+  <energy_mod>5</energy_mod>
+  <energy_regen_mod>5</energy_regen_mod>
+  <cargo_mod>-50</cargo_mod>
+  <ew_detect>0</ew_detect>
+  <ew_hide>0</ew_hide>
+ </stats>
+</ship>

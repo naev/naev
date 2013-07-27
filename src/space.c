@@ -14,6 +14,7 @@
 
 #include <stdlib.h>
 #include <math.h>
+#include <float.h>
 
 #include "nxml.h"
 
@@ -736,7 +737,7 @@ int space_sysReallyReachable( char* sysname )
 
    if (strcmp(sysname,cur_system->name)==0)
       return 1;
-   path = map_getJumpPath( &njumps, cur_system->name, sysname, 1, NULL );
+   path = map_getJumpPath( &njumps, cur_system->name, sysname, 1, 1, NULL );
    if (path != NULL) {
       free(path);
       return 1;
@@ -2332,6 +2333,7 @@ StarSystem *system_new (void)
  */
 void system_reconstructJumps (StarSystem *sys)
 {
+   double dx, dy;
    int j;
    JumpPoint *jp;
    double a;
@@ -2341,7 +2343,9 @@ void system_reconstructJumps (StarSystem *sys)
       jp->target  = system_getIndex( jp->targetid );
 
       /* Get heading. */
-      a = atan2( jp->target->pos.y - sys->pos.y, jp->target->pos.x - sys->pos.x );
+      dx = jp->target->pos.x - sys->pos.x;
+      dy = jp->target->pos.y - sys->pos.y;
+      a = atan2( dy, dx );
       if (a < 0.)
          a += 2.*M_PI;
 
@@ -2367,6 +2371,7 @@ void systems_reconstructJumps (void)
    StarSystem *sys;
    int i;
 
+   /* So we need to calculate the shortest jump. */
    for (i=0; i<systems_nstack; i++) {
       sys = &systems_stack[i];
       system_reconstructJumps(sys);
