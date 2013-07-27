@@ -2321,6 +2321,9 @@ StarSystem *system_new (void)
    if (!systems_loading && realloced)
       systems_reconstructJumps();
 
+   sys->prices=(float *) calloc(sizeof(float), econ_nprices );
+   sys->is_priceset=(char *) calloc(sizeof(char), econ_nprices);
+
    return sys;
 }
 
@@ -2410,8 +2413,6 @@ static StarSystem* system_parse( StarSystem *sys, const xmlNodePtr parent )
    sys->ownerpresence = 0.;
 
    sys->name = xml_nodeProp(parent,"name"); /* already mallocs */
-   sys->prices=(float *) calloc(sizeof(float), econ_nprices );
-   sys->is_priceset=(char *) calloc(sizeof(char), econ_nprices);
 
    node  = parent->xmlChildrenNode;
    do { /* load all the data */
