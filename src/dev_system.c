@@ -27,6 +27,10 @@
 static int dsys_compPlanet( const void *planet1, const void *planet2 );
 static int dsys_compJump( const void *jmp1, const void *jmp2 );
 
+/* externs */
+extern Commodity* commodity_stack;
+extern int econ_nprices;
+
 
 /**
  * @brief Compare function for planet qsort.
@@ -74,12 +78,12 @@ static int dsys_compJump( const void *jmp1, const void *jmp2 )
  */
 int dsys_saveSystem( StarSystem *sys )
 {
-   int i, len;
+   int i, c, len;
    xmlDocPtr doc;
    xmlTextWriterPtr writer;
    const Planet **sorted_planets;
    const JumpPoint **sorted_jumps, *jp;
-   char *file, *cleanName;
+   char *file, *cleanName, buf[32];
 
 
    /* Reconstruct jumps so jump pos are updated. */
@@ -163,6 +167,20 @@ int dsys_saveSystem( StarSystem *sys )
    }
    xmlw_endElem( writer ); /* "jumps" */
    free(sorted_jumps);
+
+      /* preserve prices */
+   xmlw_startElem(writer,"prices");
+   xmlw_attr(writer,"sys","%s",sys->name);
+   for (c=0; c<econ_nprices; c++) {
+      if (sys->is_priceset[c]){
+         xmlw_startElem(writer,"commodity");
+         xmlw_attr(writer, "name", "%s", commodity_stack[c].name);
+         nsnprintf(buf, 32, "%.2f", sys->prices[c]);
+         xmlw_str(writer, "%s", buf);
+         xmlw_endElem(writer); /* "commodity" */
+      }
+   }
+   xmlw_endElem(writer); /* prices */
 
    xmlw_endElem( writer ); /** "ssys" */
    xmlw_done(writer);

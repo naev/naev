@@ -9,7 +9,7 @@
 #include <lua.h>
 
 
-#define ECONOMY_METATABLE   "economy" /**< Commodity metatable identifier. */
+#define ECONOMY_METATABLE   "econ" /**< Commodity metatable identifier. */
 
  /*
  * Load the system library.

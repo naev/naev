@@ -14,7 +14,7 @@
 
 #define ECON_CRED_STRLEN      32 /**< Maximum length a credits2str string can reach. */
 
-#define PRICE(Commodity, sys)  ((Commodity)->price * (sys)->real_prices[(Commodity)->index]) /**< Price of a good */
+#define PRICE(Commodity, sys)  ((Commodity)->price * (sys)->prices[(Commodity)->index]) /**< Price of a good */
 #define DEFAULT_GLOBAL_WEIGHT 1.0 /* how much systems prefer their own given values */
 
 typedef int64_t credits_t;
@@ -33,7 +33,8 @@ typedef struct Commodity_ {
    char* name; /**< Name of the commodity. */
    char* description; /**< Description of the commodity. */
    /* Prices. */
-   double price; /**< Price multiplier of the commodity. */
+   char changed; /**< Whether commodity prices have been changed and need refreshing */
+   float price; /**< Price multiplier of the commodity. */
 } Commodity;
 
 /*
@@ -48,11 +49,9 @@ void commodity_free (void);
 /*
  * Economy stuff.
  */
-int econ_refreshsolutions(void);   /* to be called when initing economy or when trade routes are updated */
 void econ_updateprices(void); /* to update prices when prices are changed */
 void econ_init(void);
-void econ_destroy (void);  /* frees ALL economy related values. Only to clean up values when exiting program. 
-      * If values are changed, use econ_refreshsolutions() and econ_updateprices() or just econ_updateprices()*/
+void econ_destroy (void);  /* frees ALL economy related values. Only to clean up values when exiting program. */
 void econ_revert(void); /* revert values back to original xml values */
 void set_showPrice(char boolean); /* set show_prices to true or false (whether to show system prices on the map) */
 

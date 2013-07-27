@@ -291,7 +291,7 @@ static int commodity_canBuy( char *name )
    com = commodity_get( name );
 
    if (strcmp(name, "None")==0){
-      printf("is none, returning\n");  //rm me
+      printf("commodity is \"None\", returning\n");
       return 0;
    }
    if (!player_hasCredits( planet_commodityPrice(land_planet, com) )) {
@@ -466,9 +466,9 @@ static void commodity_renderMod( double bx, double by, double w, double h, void 
 
    nsnprintf( buf, 64, "buy:%d tons, sell:%d tons",bq,sq);
    gl_printMid( &gl_smallFont, w, bx, by+35, &cBlack, buf );
-   nsnprintf( buf, 64, "buy price:%li", price_tobuy );
+   nsnprintf( buf, 64, "buy price:%lli", price_tobuy );
    gl_printMid( &gl_smallFont, w, bx, by+20, &cBlack, buf );
-   nsnprintf( buf, 64, "sell price:%li", price_tosell );
+   nsnprintf( buf, 64, "sell price:%lli", price_tosell );
    gl_printMid( &gl_smallFont, w, bx, by+5, &cBlack, buf );
 }
 
@@ -1375,6 +1375,8 @@ void land( Planet* p, int load )
    /* Generate the news. */
    if (planet_hasService(land_planet, PLANET_SERVICE_BAR))
       news_load();
+   /* refresh economy prices */
+   econ_updateprices();
 
    /* Clear the NPC. */
    npc_clear();

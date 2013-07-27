@@ -20,6 +20,10 @@
   <description>All sorts of high quality luxury goods.</description>
   <price>10</price>
  </commodity>
+ <commodity name="Misc">
+  <description>AAAAll sorts of high quality luxury goods.</description>
+  <price>10</price>
+ </commodity>
  <commodity name="Parcels"/>
  <commodity name="Colonists"/>
  <commodity name="Civilians"/>

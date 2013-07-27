@@ -245,14 +245,6 @@ void map_open (void)
             &gl_smallFont, &cDConsole, "Prices:" );
       window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtPrices",
             &gl_smallFont, &cBlack, NULL );
-      window_addText( wid, x, y, 90, 20, 0, "txtSWeight",
-            &gl_smallFont, &cDConsole, "Weight:" );
-      window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtWeight",
-            &gl_smallFont, &cBlack, NULL );
-      window_addText( wid, x, y, 90, 20, 0, "txtSPPrices", /* preferred prices */
-            &gl_smallFont, &cDConsole, "Preferred Prices:" );
-      window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtPPrices",
-            &gl_smallFont, &cBlack, NULL );
    }
 
    /* Close button */
@@ -382,13 +374,6 @@ static void map_update( unsigned int wid )
          window_moveWidget( wid, "txtPrices", x + 50, y -gl_smallFont.h - 5 );
          window_modifyText( wid, "txtPrices", "Unknown" );
          y -= 2 * gl_smallFont.h + 5 + 15;
-         window_moveWidget( wid, "txtSWeight", x, y );
-         window_moveWidget( wid, "txtWeight", x + 50, y -gl_smallFont.h - 5 );
-         window_modifyText( wid, "txtWeight", " " );
-         y -= 2 * gl_smallFont.h + 5 + 15;
-         window_moveWidget( wid, "txtSPPrices", x, y );
-         window_moveWidget( wid, "txtPPrices", x + 50, y -gl_smallFont.h - 5 );
-         window_modifyText( wid, "txtPPrices", " " );
       }
 
       /*
@@ -549,48 +534,15 @@ static void map_update( unsigned int wid )
    y -= 20 + (h - gl_smallFont.h);
 
    /* get the prices */
-   if (widget_exists(wid, "txtSPrices")) {
+   if (show_prices) {
       window_moveWidget( wid, "txtSPrices", x, y );
       window_moveWidget( wid, "txtPrices", x + 50, y-gl_smallFont.h-5 );
       p=0;
       for (i=0; i<econ_nprices; i++)
-         p += nsnprintf( &buf[p], PATH_MAX-p, "%s: %.0f\n", commodity_stack[i].name, sys->real_prices[i] * commodity_stack[i].price );
+         p += nsnprintf( &buf[p], PATH_MAX-p, "%s%c %.0f\n", commodity_stack[i].name, (sys->is_priceset[i])?'=':':', sys->prices[i] * commodity_stack[i].price );
       window_modifyText( wid, "txtPrices", buf );
       h  = gl_printHeightRaw( &gl_smallFont, w, buf );
       y -= 20 + (h - gl_smallFont.h);
-
-      if (sys->weight!=0.0 && sys->given_prices){
-         window_moveWidget( wid, "txtSWeight", x, y );
-         window_moveWidget( wid, "txtWeight", x + 50, y-gl_smallFont.h-5 );
-         p=0;
-         p += nsnprintf( &buf[p], PATH_MAX-p, "%.2f\n", sys->weight );
-         window_modifyText( wid, "txtWeight", buf );
-         h  = gl_printHeightRaw( &gl_smallFont, w, buf );
-         y -= 20 + (h - gl_smallFont.h);
-
-         window_moveWidget( wid, "txtSPPrices", x, y );
-         window_moveWidget( wid, "txtPPrices", x + 50, y-gl_smallFont.h-5 );
-         p=0;
-         for (i=0; i<econ_nprices; i++)
-            p += nsnprintf( &buf[p], PATH_MAX-p, "%s: %.0f\n", commodity_stack[i].name, sys->given_prices[i] * commodity_stack[i].price );
-         window_modifyText( wid, "txtPPrices", buf );
-         h  = gl_printHeightRaw( &gl_smallFont, w, buf );
-         y -= 20 + (h - gl_smallFont.h);
-      }
-      else {
-         window_moveWidget( wid, "txtSWeight", x, y );
-         buf[0]=0;
-         window_modifyText( wid, "txtWeight", buf );
-         h  = gl_printHeightRaw( &gl_smallFont, w, buf );
-         y -= 20 + (h - gl_smallFont.h);
-
-         window_moveWidget( wid, "txtSPPrices", x, y );
-         buf[0]=0;
-         window_modifyText( wid, "txtPPrices", buf );
-         h  = gl_printHeightRaw( &gl_smallFont, w, buf );
-         y -= 20 + (h - gl_smallFont.h);
-      }
-
    }
 
    /*

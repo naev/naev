@@ -8,13 +8,13 @@ else --default english
       {
          "famine",  --event name/type
          25,         --event takes 25 STP
-         {"Food", 2.0} --commodity and it's new relative (preffered) price
+         {"Food", 2.0} --commodity and it's new price
       },
 
       {
          "bumper harvest",
          25,
-         {"Food", .5} --preferred food price now at half the price it was
+         {"Food", .5} --food price now at half the price it was
       },
 
       {
@@ -44,18 +44,12 @@ end
 commodities={"Food", "Medicine", "Luxury Goods","Industrial Goods", "Ore"}
 factions = {"Empire","Sirius","Frontier","Soromid","Dvaered","Independent"}
 
-weighted = 0     --if sys was originally weighted
-original_preferred={}   --original preferred and real prices
-original_real={}
-new_preferred={}
-
-
+original={}   --original prices
 
 function create()
 
    make_event()
 
-   evt.save(true)
 end
 
 
@@ -68,7 +62,7 @@ function make_article(sys, event)
       --say how the prices have changed
    for i=1, #event-2 do
       comm_name = event[i+2][1]
-      body = body.."the price of "..comm_name..string.format(" from %.0f credits per ton to %.0f",original_real[i],economy.getPrice(sys, comm_name))
+      body = body.."the price of "..comm_name..string.format(" from %.0f credits per ton to %.0f",math.abs(original[i]),econ.getPrice(comm_name, sys))
       if i<#event-3 then
          body = body..", "
       elseif i==#event-3 then
@@ -93,10 +87,10 @@ function make_event()
    event_num = math.random(#events)
    event = events[event_num]
 
-   economic_articles = news.get("economic events")  --get all events, we don't want to do some place twice
-
-      --get the system, a populated one with at least 500 total presence
-   while 1 do
+      --get a system with >=500 presence and with no current events
+   economic_articles = news.get("economic events")
+   got_sys=false
+   for i=0,20 do
       sys=system.get(true)
       syspresences = system.presences(sys)
       sum=0
@@ -113,61 +107,54 @@ function make_event()
          end
       end
       if system_nottaken and sum > 500 then
+         got_sys=true
          break
       end
+   end
+   if not got_sys then
+      return
    end
 
       --get the original prices
    for i=1,#event-2 do
+      comm = event[i+2]
       comm_name = event[i+2][1]
-      original_preferred[i] = economy.getPreferredPrice(sys, comm_name)
-      original_real[i] = economy.getPrice(sys, comm_name)
-   end
-
-      --if no preferred prices, put the preferred prices to current reals as defaults, and set weight to 1
-   if economy.getSysWeight(sys)==0 then
-      economy.setSysWeight(sys,1.0)
-      for i=1, #commodities do
-         economy.setPreferredPrice( sys, commodities[i], economy.getPrice(sys, commodities[i])/commodity.get(commodities[i]):getprice() )
+      if econ.isPriceSet(comm[1], sys) then
+         original[i] = econ.getPrice(comm_name, sys)
+      else
+         original[i] = -econ.getPrice(comm_name, sys) --negative to indicate unset price
       end
-   else
-      weighted=1
    end
 
       --put in new prices
    for i=1,#event-2 do
       comm = event[i+2]
-      price = economy.getPreferredPrice(sys, comm[1])
-      if price==0 then
-         price = economy.getPrice(sys, comm[1]) / commodity.get(comm[1]):getprice()
-      end
-      price = price*comm[2] 
-      economy.setPreferredPrice(sys, comm[1], price)
-      new_preferred[i] = price
+      price = econ.getPrice(comm[1], sys)
+      price = price*comm[2]
+      econ.setPrice(comm[1], sys, price)
    end
 
       --update the prices, and make the article
-   economy.updateSolutions()
-   economy.updatePrices()
+   econ.updatePrices()
 
    make_article(sys, event)
 
       --set up the event ending
       --put all the information we'll need into a string
-   str = ""
-   str=" system:"..sys:name()..str..", weighted:"..weighted
+   str=" system:"..sys:name()..","
    for i=1,#event-2 do
       comm_name = event[i+2][1]
-      str=str..string.format(" %sorigprefprice:%f %snewprefprice:%f",comm_name, original_preferred[i], comm_name, new_preferred[i] )
+      str=str..string.format("%sorigprice:%f,",comm_name, original[i] )
    end
+
    hook.date( time.create(0, event[2], 0), "end_event", str )
+   evt.save(true)
 
 end
 
 
 --end the event, and return the values to their original values
 function end_event(str)
-
       --first, get all the information we'll need
    sys=nil
    num_changed_comms=0
@@ -175,35 +162,28 @@ function end_event(str)
    comms={}
 
    tmp    = str:match("system:[a-zA-Z' ]*,")
-   sys    = system.get(tmp:match(":[a-zA-Z' ]*"):sub(2))
-   tmp    = str:match("weighted:[0-9]*")
-   weight = tmp:match("[0-9]*")
+   sysname = tmp:match(":[a-zA-Z' ]*"):sub(2)
+   sys    = system.get(sysname)
    for i=1,#commodities do
-      tmp = str:match(commodities[i].."origprefprice:[0-9]*")
-      if (tmp) then
-         num_changed_comms=num_changed_comms+1
-         tmp2 = str:match(commodities[i].."newprefprice:[0-9]*")
-
-         tmp  = tmp:match("[0-9]*")
-         tmp2 = tmp2:match("[0-9]*")
-         comms[num_changed_comms] = {tmp, tmp2}
+      comm_entry = str:match(commodities[i].."origprice:[\-0-9]*")
+      if (comm_entry) then
+         comm_price = string.match(comm_entry, "[\-0-9]+")
+         comm_price = tonumber(comm_price)
+         comms[#comms+1] = {commodities[i], comm_price}
       end
    end
 
-   if weighted==0 then --if system was unweighted, just unweight it
-      economy.setSysWeight(sys, 0.0)
-      economy.updateSolutions()
-      economy.updatePrices()
-      return
+      --reset prices to their original states
+   for i=1, #comms do
+      comm=comms[i]
+      if comm[2]<=0 then
+         econ.unsetPrice(comm[1], sys)
+      else
+         econ.setPrice(comm[1], sys, comm[2])
+      end
    end
 
-      --add the difference in original and event prices, and add it, to get back to original price 
-   for i=1, #orig_pref do
-      diff = orig_pref-new_pref
-      comm_name = event[i+2][2]
-      new_val = economy.getPreferredPrice(sys, comm_name) + diff
-      economy.setPreferredPrice(sys, comm_name, new_val)
-   end
+   evt.finish()
 
 end
 
