@@ -68,8 +68,8 @@ typedef enum ShipStatsType_ {
    SS_TYPE_D_TURRET_ENERGY,   /**< Energy usage of turrets. */
 
    /* Nebula. */
-   SS_TYPE_D_NEBULA_DMG_SHIELD, /**< Shield nebula resistance. */
-   SS_TYPE_D_NEBULA_DMG_ARMOUR, /**< Armour nebula resistance. */
+   SS_TYPE_D_NEBULA_ABSORB_SHIELD, /**< Shield nebula resistance. */
+   SS_TYPE_D_NEBULA_ABSORB_ARMOUR, /**< Armour nebula resistance. */
 
    /* Misc. */
    SS_TYPE_D_HEAT_DISSIPATION, /**< Ship heat dissipation. */
@@ -204,8 +204,8 @@ typedef struct ShipStats_ {
    double fuel_consumption; /**< Fuel consumption by engine. */
 
    /* Misc. */
-   double nebula_dmg_shield; /**< Shield nebula resistance. */
-   double nebula_dmg_armour; /**< Armour nebula resistance. */
+   double nebu_absorb_shield; /**< Shield nebula resistance. */
+   double nebu_absorb_armour; /**< Armour nebula resistance. */
    int misc_instant_jump;    /**< Do not require brake or chargeup to jump. */
    int misc_reverse_thrust;  /**< Slows down the ship instead of turning it around. */
    int misc_hidden_jump_detect; /**< Degree of hidden jump detection. */

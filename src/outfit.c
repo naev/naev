@@ -1488,6 +1488,7 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"energy_regen", temp->u.mod.energy_regen );
       xmlr_float(node,"energy_loss", temp->u.mod.energy_loss );
       xmlr_float(node,"absorb", temp->u.mod.absorb );
+      xmlr_float(node,"nebu_absorb_shield", temp->u.mod.nebu_absorb_shield );
       /* misc */
       xmlr_float(node,"cargo",temp->u.mod.cargo);
       xmlr_float(node,"crew_rel", temp->u.mod.crew_rel);
@@ -1533,6 +1534,7 @@ if ((x) != 0.) \
    DESC_ADD1( temp->u.mod.shield_regen, "Shield Per Second" );
    DESC_ADD1( temp->u.mod.energy_regen, "Energy Per Second" );
    DESC_ADD0( temp->u.mod.absorb, "Absorption" );
+   DESC_ADD0( temp->u.mod.nebu_absorb_shield, "Nebula Shielding" );
    DESC_ADD0( temp->u.mod.cargo, "Cargo" );
    DESC_ADD0( temp->u.mod.crew_rel, "%% Crew" );
    DESC_ADD0( temp->u.mod.mass_rel, "%% Mass" );
@@ -1545,6 +1547,7 @@ if ((x) != 0.) \
    /* More processing. */
    temp->u.mod.turn       *= M_PI / 180.;
    temp->u.mod.absorb     /= 100.;
+   temp->u.mod.nebu_absorb_shield /= 100.;
    temp->u.mod.turn_rel   /= 100.;
    temp->u.mod.speed_rel  /= 100.;
    temp->u.mod.armour_rel /= 100.;
