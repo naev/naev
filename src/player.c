@@ -1467,21 +1467,7 @@ void player_land (void)
  */
 int player_canTakeoff(void)
 {
-   int i;
-
-   for (i=0; i<player.p->outfit_nstructure; i++)
-      if (player.p->outfit_structure[i].sslot->required && player.p->outfit_structure[i].outfit == NULL)
-         return 0;
-
-   for (i=0; i<player.p->outfit_nutility; i++)
-      if (player.p->outfit_utility[i].sslot->required && player.p->outfit_utility[i].outfit == NULL)
-         return 0;
-
-   for (i=0; i<player.p->outfit_nweapon; i++)
-      if (player.p->outfit_weapon[i].sslot->required && player.p->outfit_weapon[i].outfit == NULL)
-         return 0;
-
-   return 1;
+   return !pilot_checkSpaceworthy(player.p);
 }
 
 
@@ -3483,7 +3469,7 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
    int quantity;
    Outfit *o;
    int ret;
-   const char *str;
+   /*const char *str;*/
    Commodity *com;
    PilotFlags flags;
    unsigned int pid;
@@ -3630,10 +3616,11 @@ static int player_parseShip( xmlNodePtr parent, int is_player, char *planet )
       ship->fuel = MIN(ship->fuel_max, fuel);
    if ((is_player == 0) && (planet_get(loc)==NULL))
       loc = planet;
-   str = pilot_checkSanity( ship );
-   if (str != NULL) {
-      DEBUG("Player ship '%s' failed sanity check (%s), removing all outfits and adding to stock.",
-            ship->name, str );
+   /* ships can now be non-spaceworthy on save
+    * str = pilot_checkSpaceworthy( ship ); */
+   if (!pilot_slotsCheckSanity( ship )) {
+      DEBUG("Player ship '%s' failed slot sanity check , removing all outfits and adding to stock.",
+            ship->name );
       /* Remove all outfits. */
       for (i=0; i<ship->noutfits; i++) {
          o = ship->outfits[i]->outfit;

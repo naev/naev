@@ -463,21 +463,58 @@ int pilot_rmOutfit( Pilot* pilot, PilotOutfitSlot *s )
 
    return ret;
 }
+//TODO: fix comment to conform to Naev's style and represent changes
+/**
+ * @brief Pilot slot sanity check - makes sure stats are sane.
+ *
+ *    @param p Pilot to check.
+ *    @return 0 if a slot doesn't fit, !0 otherwise.
+ */
+int pilot_slotsCheckSanity( Pilot *p )
+{
+   int i;
+   for (i=0; i<p->noutfits; i++)
+      if ((p->outfits[i]->outfit != NULL) &&
+            !outfit_fitsSlot( p->outfits[i]->outfit, &p->outfits[i]->sslot->slot ))
+         return 0;
+   return 1;
+}
+//TODO: fix comment to conform to Naev's style and represent changes
+/**
+ * @brief Pilot required (core) slot filled check - makes sure they are filled.
+ *
+ *    @param p Pilot to check.
+ *    @return 0 if a slot is missing, !0 otherwise.
+ */
+int pilot_slotsCheckRequired( Pilot *p )
+{
+   int i;
 
+   for (i=0; i < p->outfit_nstructure; i++)
+      if (p->outfit_structure[i].sslot->required && p->outfit_structure[i].outfit == NULL)
+         return 0;
 
+   for (i=0; i < p->outfit_nutility; i++)
+      if (p->outfit_utility[i].sslot->required && p->outfit_utility[i].outfit == NULL)
+         return 0;
+
+   for (i=0; i < p->outfit_nweapon; i++)
+      if (p->outfit_weapon[i].sslot->required && p->outfit_weapon[i].outfit == NULL)
+         return 0;
+
+   return 1;
+}
+//TODO: fix comment to conform to Naev's style and represent change
 /**
  * @brief Pilot sanity check - makes sure stats are sane.
  *
  *    @param p Pilot to check.
  *    @return The reason why the pilot is not sane (or NULL if sane).
  */
-const char* pilot_checkSanity( Pilot *p )
+const char* pilot_checkSpaceworthy( Pilot *p )
 {
-   int i;
-   for (i=0; i<p->noutfits; i++)
-      if ((p->outfits[i]->outfit != NULL) &&
-            !outfit_fitsSlot( p->outfits[i]->outfit, &p->outfits[i]->sslot->slot ))
-         return "Doesn't fit slot";
+   if (!pilot_slotsCheckSanity(p))
+      return "Doesn't fit slot";
 
    /* CPU. */
    if (p->cpu < 0)
@@ -512,10 +549,72 @@ const char* pilot_checkSanity( Pilot *p )
       return "Insufficient Fuel Consumption";
    if (p->cargo_free < 0)
       return "Insufficient Free Cargo Space";
+   
+   /* Core Slots */
+   if (!pilot_slotsCheckRequired(p))
+      return "Not All Core Slots are equipped";
 
    /* All OK. */
    return NULL;
 }
+/**
+ * @brief Pilot sanity report - makes sure stats are sane.
+ *
+ *    @param p Pilot to check.
+ *    @param buf Buffer to fill.
+ *    @param bufSize Size of the buffer.
+ *    @return Number of issues encountered.
+ */
+#define SPACEWORTHY_CHECK(cond,msg) \
+if (cond){ ret++; \
+   if (pos < bufSize) pos += snprintf( &buf[pos], bufSize-pos, (msg) ); }
+int pilot_reportSpaceworthy( Pilot *p, char buf[], int bufSize )
+{
+   int pos = 0;
+   int ret = 0;
+
+   /* Core Slots */
+   SPACEWORTHY_CHECK( !pilot_slotsCheckRequired(p), "Not All Core Slots are equipped\n" );
+   /* CPU. */
+   SPACEWORTHY_CHECK( p->cpu < 0, "Insufficient CPU\n" );
+
+   /* Movement. */
+   SPACEWORTHY_CHECK( p->thrust < 0, "Insufficient Thrust\n" );
+   SPACEWORTHY_CHECK( p->speed < 0,  "Insufficient Speed\n" );
+   SPACEWORTHY_CHECK( p->turn < 0,   "Insufficient Turn\n" );
+
+   /* Health. */
+   SPACEWORTHY_CHECK( p->armour < 0.,       "Insufficient Armour\n" );
+   SPACEWORTHY_CHECK( p->armour_regen < 0., "Insufficient Armour Regeneration\n" );
+   SPACEWORTHY_CHECK( p->shield < 0.,       "Insufficient Shield\n" );
+   SPACEWORTHY_CHECK( p->shield_regen < 0., "Insufficient Shield Regeneration\n" );
+   SPACEWORTHY_CHECK( p->energy_max < 0.,   "Insufficient Energy\n" );
+   SPACEWORTHY_CHECK( p->energy_regen < 0., "Insufficient Energy Regeneration\n" );
+
+   /* Misc. */
+   SPACEWORTHY_CHECK( p->fuel_max < 0.,         "Insufficient Fuel Maximum\n" );
+   SPACEWORTHY_CHECK( p->fuel_consumption < 0., "Insufficient Fuel Consumption\n" );
+   SPACEWORTHY_CHECK( p->cargo_free < 0,        "Insufficient Free Cargo Space\n" );
+   
+   /*buffer is full, lets write that there is more then what's copied */
+   if (pos > bufSize-1) {
+      buf[bufSize-4]='.';
+      buf[bufSize-3]='.';
+      buf[bufSize-2]='.';
+      /* buf[bufSize-1]='\0'; already done for us */
+   }
+   else {
+      if (pos == 0)
+         /*string is empty so no errors encountered */
+         nsnprintf( buf, bufSize, "Spaceworthy");
+      else
+         /*string is not empty, so trunc the last newline */
+         buf[pos-1]='\0';
+   }
+
+   return ret;
+}
+#undef SPACEWORTHY_CHECK
 
 /**
  * @brief Checks to see if a pilot has an outfit with a specific outfit type.
@@ -582,7 +681,13 @@ const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o )
 
    /* Check sanity. */
    pilot_calcStats( p );
-   err = pilot_checkSanity( p );
+   /* can now equip outfit even if ship won't be spaceworthy
+    * err = pilot_checkSpaceworthy( p );*/
+   /* actually, this is also redundant */
+   if (!pilot_slotsCheckSanity(p))
+      err = "Does not fit in slot";
+   else
+      err = NULL;
 
    /* Swap back. */
    s->outfit   = o_old;

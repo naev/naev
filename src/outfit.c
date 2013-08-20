@@ -810,13 +810,13 @@ int outfit_fitsSlot( const Outfit* o, const OutfitSlot* s )
       return 0;
 
    /* Must match slot property. */
-   if (o->slot.spid != 0)
-      if (s->spid != o->slot.spid)
+   if (os->spid != 0)
+      if (s->spid != os->spid)
          return 0;
 
    /* Exclusive only match property. */
    if (s->exclusive)
-      if (s->spid != o->slot.spid)
+      if (s->spid != os->spid)
          return 0;
 
    /* Must have valid slot size. */
