@@ -80,7 +80,7 @@ end
 
 
 function enter()
-    if system.cur() == targsys1 or system.cur() == targsys2 then
+    if (system.cur() == targsys1 and not sysdone1) or (system.cur() == targsys2 and not sysdone2) then
         scantime = 90 -- seconds
         omsg = player.omsgAdd(timermsg:format(scantime), 0)
         timerhook = hook.timer(1000, "scantimer")
