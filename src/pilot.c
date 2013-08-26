@@ -1796,9 +1796,13 @@ void pilot_update( Pilot* pilot, const double dt )
             pilot_setThrust(pilot, 1. + pilot->afterburner->outfit->u.afb.thrust * thrust);
          }
       }
-      else
-         pilot->solid->speed_max = pilot->speed;
-   }
+      else {
+	 if (!pilot_isFlag(pilot, PILOT_HASSPEEDLIMIT))
+            pilot->solid->speed_max = pilot->speed;
+	 }
+     
+  }
+   
    else
       pilot->solid->speed_max = -1.; /* Disables max speed. */
 
@@ -2822,7 +2826,4 @@ credits_t pilot_worth( const Pilot *p )
 
    return price;
 }
-
-
-
 

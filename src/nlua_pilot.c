@@ -112,6 +112,7 @@ static int pilotL_setHealth( lua_State *L );
 static int pilotL_setEnergy( lua_State *L );
 static int pilotL_setNoboard( lua_State *L );
 static int pilotL_setNodisable( lua_State *L );
+static int pilotL_setSpeedLimit( lua_State *L);
 static int pilotL_getHealth( lua_State *L );
 static int pilotL_getEnergy( lua_State *L );
 static int pilotL_getLockon( lua_State *L );
@@ -181,6 +182,7 @@ static const luaL_reg pilotL_methods[] = {
    { "setEnergy", pilotL_setEnergy },
    { "setNoboard", pilotL_setNoboard },
    { "setNodisable", pilotL_setNodisable },
+   { "setSpeedLimit", pilotL_setSpeedLimit },
    { "setPos", pilotL_setPosition },
    { "setVel", pilotL_setVelocity },
    { "setDir", pilotL_setDir },
@@ -2813,6 +2815,36 @@ static int pilotL_setNodisable( lua_State *L )
    else
       pilot_rmFlag(p, PILOT_NODISABLE);
 
+   return 0;
+}
+
+
+/**
+ * @brief Limits the speed of a pilot. 
+ * 
+ * @usage p:setSpeedLimit( 100 ) -- Sets pilot to full speed.
+ * @usage p:setSpeedLimit(  70 ) -- Sets pilot to 70% speed.
+ *
+ *    @luaparam p Pilot to set speed of.
+ *    @luaparam speed Value to set speed to, should be double from 0-100 (in percent).
+ *
+ * @luafunc setSpeedLimit( p, speed )
+ */
+static int pilotL_setSpeedLimit(lua_State* L)
+{
+
+   Pilot *p;
+   double s;
+  
+   /* Handle parameters. */
+   p  = luaL_validpilot(L,1);
+   s  = luaL_checknumber(L, 2);
+   s  /=100.;  
+
+   /* Limit the speed */
+   p->solid->speed_max = s;
+
+   pilot_setFlag( p, PILOT_HASSPEEDLIMIT );
    return 0;
 }
 
