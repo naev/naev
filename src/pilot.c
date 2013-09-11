@@ -2146,6 +2146,7 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    pilot->fuel   = pilot->fuel_max   = 1.; /* ditto fuel */
    pilot_calcStats(pilot);
    pilot->stress = 0.; /* No stress. */
+   pilot->nebu_absorb_shield = 0.;
 
    /* Allocate outfit memory. */
    /* Slot types. */

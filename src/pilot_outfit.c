@@ -932,6 +932,7 @@ void pilot_calcStats( Pilot* pilot )
    /* Energy. */
    pilot->energy_max    = pilot->ship->energy;
    pilot->energy_regen  = pilot->ship->energy_regen;
+   pilot->nebu_absorb_shield   = 0;
    pilot->energy_loss   = 0.; /* Initially no net loss. */
    /* Stats. */ 
    s = &pilot->stats;
@@ -978,6 +979,7 @@ void pilot_calcStats( Pilot* pilot )
          pilot->shield_regen  += o->u.mod.shield_regen;
          pilot->energy_max    += o->u.mod.energy;
          pilot->energy_regen  += o->u.mod.energy_regen;
+         pilot->nebu_absorb_shield += o->u.mod.nebu_absorb_shield;
          pilot->energy_loss   += o->u.mod.energy_loss;
          /* Fuel. */
          pilot->fuel_max      += o->u.mod.fuel;

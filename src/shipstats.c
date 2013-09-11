@@ -115,8 +115,8 @@ static const ShipStatsLookup ss_lookup[] = {
    D__ELEM( SS_TYPE_D_TURRET_FIRERATE,    tur_firerate,        "Fire Rate (Turret)" ),
    DI_ELEM( SS_TYPE_D_TURRET_ENERGY,      tur_energy,          "Energy Usage (Turret)" ),
 
-   DI_ELEM( SS_TYPE_D_NEBULA_DMG_SHIELD,  nebula_dmg_shield,   "Nebula Damage (Shield)" ),
-   DI_ELEM( SS_TYPE_D_NEBULA_DMG_ARMOUR,  nebula_dmg_armour,   "Nebula Damage (Armour)" ),
+   DI_ELEM( SS_TYPE_D_NEBULA_ABSORB_SHIELD,  nebu_absorb_shield,   "Nebula Resistance (Shield)" ),
+   DI_ELEM( SS_TYPE_D_NEBULA_ABSORB_ARMOUR,  nebu_absorb_armour,   "Nebula Resistance (Armour)" ),
 
    D__ELEM( SS_TYPE_D_HEAT_DISSIPATION,   heat_dissipation,    "Heat Dissipation" ),
    D__ELEM( SS_TYPE_D_CREW,               crew_mod,            "Crew" ),
