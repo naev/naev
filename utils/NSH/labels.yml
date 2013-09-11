@@ -24,8 +24,8 @@ shipstats:
   tur_damage: Damage (Turret)
   tur_firerate: Fire Rate (Turret)
   tur_energy: Energy Usage (Turret)
-  nebula_dmg_shield: Nebula Damage (Shield)
-  nebula_dmg_armour: Nebula Damage (Armour)
+  nebu_absorb_shield: Nebula Damage (Shield)
+  nebu_absorb_armour: Nebula Damage (Armour)
   heat_dissipation: Heat Dissipation
 
 statslabel:
@@ -48,8 +48,6 @@ statslabel:
   damage_turret: Modulates the per-shot damage dealt by turrets.
   firerate_turret: Modulates the fire rate of turrets.
   energy_turret: Modulates the amount of energy required by turrets.
-  nebula_dmg_shield: Modulates the amount of damage that the nebula deals to the shield.
-  nebula_dmg_armour: Modulates the amount of damage that the nebula deals to armour."
   jump_delay: Modulates the time it takes to complete a hyperspace jump.
   jump_range: Modulates the distance a ship can be from a jump point when starting a jump.
   cargo_inertia: Modulates the impact that cargo has on manoeuvrability.
@@ -69,6 +67,6 @@ statslabel:
   damage_turret: Modulates the per-shot damage dealt by turrets.
   firerate_turret: Modulates the fire rate of turrets.
   energy_turret: Modulates the amount of energy required by turrets.
-  nebula_dmg_shield: Modulates the amount of damage that the nebula deals to the shield.
-  nebula_dmg_armour: Modulates the amount of damage that the nebula deals to armour."
+  nebu_absorb_shield: Modulates the amount of damage that the nebula deals to the shield.
+  nebu_absorb_armour: Modulates the amount of damage that the nebula deals to armour."
 

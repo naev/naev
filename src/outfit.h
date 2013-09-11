@@ -230,6 +230,7 @@ typedef struct OutfitModificationData_ {
    double energy_regen; /**< Energy regeneration modifier. */
    double energy_loss;  /**< Energy regeneration modifier. */
    double absorb;       /**< Absorption factor. */
+   double nebu_absorb_shield;  /**< Reduces nebula penetration. */
 
    /* Misc. */
    double cargo;     /**< Cargo space modifier. */

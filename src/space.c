@@ -1214,12 +1214,13 @@ void space_update( const double dt )
    if (cur_system->nebu_volatility > 0.) {
       dmg.type          = dtype_get("nebula");
       dmg.damage        = pow2(cur_system->nebu_volatility) / 500. * dt;
-      dmg.penetration   = 1.; /* Full penetration. */
       dmg.disable       = 0.;
 
       /* Damage pilots in volatile systems. */
       for (i=0; i<pilot_nstack; i++) {
          p = pilot_stack[i];
+         /* Regular absorption does nothing here. */
+         dmg.penetration = (p->shield > 0.) ? (p->dmg_absorb - p->nebu_absorb_shield) : 1.0;
          pilot_hit( p, NULL, 0, &dmg );
       }
    }

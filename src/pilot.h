@@ -300,6 +300,7 @@ typedef struct Pilot_ {
    double armour_regen; /**< Armour regeneration rate (per second). */
    double shield_regen; /**< Shield regeneration rate (per second). */
    double dmg_absorb; /**< Ship damage absorption [0:1] with 1 being 100%. */
+   double nebu_absorb_shield;/**< Reduces penetration of nebula volatility. [0,1]. */
 
    /* Energy is handled a bit differently. */
    double energy;    /**< Current energy. */
