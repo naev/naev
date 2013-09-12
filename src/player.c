@@ -627,10 +627,7 @@ void player_swapShip( char* shipname )
       /* Fill the tank. */
       if (landed)
          land_checkAddRefuel();
-
-      /* Set some gui stuff. */
-      gui_load( gui_pick() );
-
+      
       /* Bind camera. */
       cam_setTargetPilot( player.p->id, 0 );
       return;
