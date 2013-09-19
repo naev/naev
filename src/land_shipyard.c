@@ -503,6 +503,8 @@ static void shipyard_trade( unsigned int wid, char* str )
    player_modCredits( playerprice - targetprice ); /* Modify credits by the difference between ship values. */
 
    land_checkAddRefuel();
+   
+   wid = land_getWid(LAND_WINDOW_SHIPYARD);
 
    /* Update shipyard. */
    shipyard_update(wid, NULL);
