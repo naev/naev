@@ -1798,7 +1798,7 @@ void pilot_update( Pilot* pilot, const double dt )
       }
       else
          pilot->solid->speed_max = pilot->speed;
-   }   
+   }
    else
       pilot->solid->speed_max = -1.; /* Disables max speed. */
 
@@ -2822,6 +2822,7 @@ credits_t pilot_worth( const Pilot *p )
 
    return price;
 }
+
 
 
 
