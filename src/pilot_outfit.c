@@ -1059,7 +1059,7 @@ void pilot_calcStats( Pilot* pilot )
     */
    /* Movement. */
    pilot->thrust_base  *= s->thrust_mod;
-   pilot->turn_base    *= s->turn_mod; 
+   pilot->turn_base    *= s->turn_mod;
    pilot->speed_base   *= s->speed_mod;
    /* Health. */
    pilot->armour_max   *= s->armour_mod;
@@ -1100,7 +1100,7 @@ void pilot_calcStats( Pilot* pilot )
 
    /* Modulate by mass. */
    pilot_updateMass( pilot );
-      
+
    /* Update GUI as necessary. */
    gui_setGeneric( pilot );
 }
@@ -1125,7 +1125,6 @@ void pilot_healLanded( Pilot *pilot )
 void pilot_updateMass( Pilot *pilot )
 {
    double mass, factor;
-   
 
    /* Set limit. */
    mass = pilot->solid->mass;
