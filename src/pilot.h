@@ -286,6 +286,7 @@ typedef struct Pilot_ {
    double thrust_base; /**< Pilot's base thrust in px/s^2 (not modulated by mass). */
    double speed;     /**< Pilot's speed in px/s. */
    double speed_base; /**< Pilot's base speed in px/s (not modulated by mass). */
+   double speed_limit; /**< Pilot's maximum speed in px/s if limited by lua call. */
    double turn;      /**< Pilot's turn in rad/s. */
    double turn_base; /**< Pilot's base turn in rad/s (not modulated by mass). */
 

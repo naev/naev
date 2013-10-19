@@ -2822,11 +2822,10 @@ static int pilotL_setNodisable( lua_State *L )
 /**
  * @brief Limits the speed of a pilot. 
  * 
- * @usage p:setSpeedLimit( 100 ) -- Sets pilot to full speed.
- * @usage p:setSpeedLimit(  70 ) -- Sets pilot to 70% speed.
- *
+ * @usage p:setSpeedLimit( 100 ) -- Sets maximumspeed to 100px/s.
+ * @usage p:setSpeedLimit( 0 ) removes speed limit.
  *    @luaparam p Pilot to set speed of.
- *    @luaparam speed Value to set speed to, should be double from 0-100 (in percent).
+ *    @luaparam speed Value to set speed to.
  *
  * @luafunc setSpeedLimit( p, speed )
  */
@@ -2839,12 +2838,15 @@ static int pilotL_setSpeedLimit(lua_State* L)
    /* Handle parameters. */
    p  = luaL_validpilot(L,1);
    s  = luaL_checknumber(L, 2);
-   s  /=100.;  
-
+   
    /* Limit the speed */
-   p->solid->speed_max = s;
-
-   pilot_setFlag( p, PILOT_HASSPEEDLIMIT );
+   p->speed_limit = s;
+   if (s > 0.)
+     pilot_setFlag( p, PILOT_HASSPEEDLIMIT );
+   else
+     pilot_rmFlag( p, PILOT_HASSPEEDLIMIT );
+      
+   pilot_updateMass(p);
    return 0;
 }
 

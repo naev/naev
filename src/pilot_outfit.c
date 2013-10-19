@@ -1059,7 +1059,7 @@ void pilot_calcStats( Pilot* pilot )
     */
    /* Movement. */
    pilot->thrust_base  *= s->thrust_mod;
-   pilot->turn_base    *= s->turn_mod;
+   pilot->turn_base    *= s->turn_mod; 
    pilot->speed_base   *= s->speed_mod;
    /* Health. */
    pilot->armour_max   *= s->armour_mod;
@@ -1100,7 +1100,7 @@ void pilot_calcStats( Pilot* pilot )
 
    /* Modulate by mass. */
    pilot_updateMass( pilot );
-
+      
    /* Update GUI as necessary. */
    gui_setGeneric( pilot );
 }
@@ -1125,6 +1125,7 @@ void pilot_healLanded( Pilot *pilot )
 void pilot_updateMass( Pilot *pilot )
 {
    double mass, factor;
+   
 
    /* Set limit. */
    mass = pilot->solid->mass;
@@ -1135,8 +1136,13 @@ void pilot_updateMass( Pilot *pilot )
 
    pilot->thrust  = factor * pilot->thrust_base * mass;
    pilot->turn    = factor * pilot->turn_base;
-   pilot->speed   = factor * pilot->speed_base;
-
+   
+   /* limit the maximum speed if limiter is active */
+   if (pilot_isFlag(pilot, PILOT_HASSPEEDLIMIT))
+      pilot->speed = pilot->speed_limit - pilot->thrust / (mass * 3.);
+   else
+      pilot->speed   = factor * pilot->speed_base;
+   
    /* Need to recalculate electronic warfare mass change. */
    pilot_ewUpdateStatic( pilot );
 }
