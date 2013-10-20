@@ -120,6 +120,7 @@ enum {
    PILOT_INVINC_PLAYER, /**< Pilot can not be hurt by the player. */
    PILOT_COOLDOWN,     /**< Pilot is in active cooldown mode. */
    PILOT_COOLDOWN_BRAKE, /**< Pilot is braking to enter active cooldown mode. */
+   PILOT_HASSPEEDLIMIT, /**< Speed limiting is activated for Pilot.*/
    PILOT_FLAGS_MAX     /**< Maximum number of flags. */
 };
 typedef char PilotFlags[ PILOT_FLAGS_MAX ];
@@ -285,6 +286,7 @@ typedef struct Pilot_ {
    double thrust_base; /**< Pilot's base thrust in px/s^2 (not modulated by mass). */
    double speed;     /**< Pilot's speed in px/s. */
    double speed_base; /**< Pilot's base speed in px/s (not modulated by mass). */
+   double speed_limit; /**< Pilot's maximum speed in px/s if limited by lua call. */
    double turn;      /**< Pilot's turn in rad/s. */
    double turn_base; /**< Pilot's base turn in rad/s (not modulated by mass). */
 

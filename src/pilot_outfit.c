@@ -1137,8 +1137,13 @@ void pilot_updateMass( Pilot *pilot )
 
    pilot->thrust  = factor * pilot->thrust_base * mass;
    pilot->turn    = factor * pilot->turn_base;
-   pilot->speed   = factor * pilot->speed_base;
-
+   
+   /* limit the maximum speed if limiter is active */
+   if (pilot_isFlag(pilot, PILOT_HASSPEEDLIMIT))
+      pilot->speed = pilot->speed_limit - pilot->thrust / (mass * 3.);
+   else
+      pilot->speed   = factor * pilot->speed_base;
+   
    /* Need to recalculate electronic warfare mass change. */
    pilot_ewUpdateStatic( pilot );
 }

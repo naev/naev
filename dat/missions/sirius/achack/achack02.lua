@@ -23,7 +23,7 @@ else -- default english
     
     title2 = "Joanne's escort"
     text3 = [[    "That's wonderful! Thank you so much. As I said, my job requires that I travel between Sirian military bases. You're going to need fuel to make the necessary jumps, of course. Now that you have agreed to be my personal escort I can give you clearance to dock with those bases if you don't have it already, but either way I won't be on station long, so you won't have time to disembark and do other things while you're there.
-    "Also, I think this goes without saying, but I need you to stick close to me. Don't jump to any systems before I do, don't jump to the wrong systems, and don't land on any planets I don't land on. If we meet any unpleasantries along the way I will rely on you to help me fight them off. That's about it. I'll finish up a few things here, and then I'll head to my ship. I'll be in the air when you are."
+    "Also, I think this goes without saying, but I need you to stick close to me so your ship must be fast enough. Also don't jump to any systems before I do, don't jump to the wrong systems, and don't land on any planets I don't land on. If we meet any unpleasantries along the way I will rely on you to help me fight them off. That's about it. I'll finish up a few things here, and then I'll head to my ship. I'll be in the air when you are."
     Joanne leaves the bar. You will meet up with her in orbit.]]
     
     title3 = "Mission accomplished"
@@ -55,6 +55,9 @@ else -- default english
     
     deathfailtitle = "Joanne's ship has been destroyed!"
     deathfailtext = "Joanne's assailants have succeeded in destroying her ship. Your mission is a failure!"
+
+    toslowshiptitle = 'Your ship is to slow!'
+    toslowshipmsg = "You need a faster ship to be able to protect Joanne. Your mission is a failure!"
 
     jumpmsg = "Joanne has jumped for the %s system. Follow her!"
     landmsg = "Joanne has docked with %s. Follow her!"
@@ -91,6 +94,16 @@ function create()
       misn.setNPC(joannename2, "sirius/unique/joanne")
       misn.setDesc(joannedesc2)
    end
+end
+
+function player_has_fast_ship()
+  local stats = pilot.player():stats()
+  playershipspeed = stats.speed_max
+  local has_fast_ship = false
+     if playershipspeed > 200 then
+        has_fast_ship = true
+     end
+     return has_fast_ship
 end
 
 function accept()
@@ -162,6 +175,10 @@ function enter()
       tk.msg(destfailtitle, sysfailtext)
       abort()
    end
+   if not player_has_fast_ship() then
+      tk.msg(toslowshiptitle, toslowshipmsg)
+      abort()
+   end
    
    joanne = addRawShips("Sirius Fidelity", "sirius_norun", origin, "Achack_sirius")[1]
    joanne:control()
@@ -173,7 +190,12 @@ function enter()
    joanne:setVisplayer()
    joanne:setHilight()
    joanne:setInvincPlayer()
-   -- TODO? Limit Joanne's max speed to the player's max speed. Needs API.
+   local stats = joanne:stats()
+   local joanneshipspeed = stats.speed_max
+   if playershipspeed < joanneshipspeed then
+     joanne:setSpeedLimit(playershipspeed)
+   end
+ 
    
    pilot.toggleSpawn("Pirate")
    pilot.clearSelect("Pirate") -- Not sure if we need a claim for this.
