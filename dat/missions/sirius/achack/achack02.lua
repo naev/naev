@@ -28,8 +28,8 @@ else -- default english
     
     title3 = "Mission accomplished"
     text4 = [[    You go through the now familiar routine of waiting for Joanne. She soon hails you on the comms.
-    "That's it, %s! This was the final stop. You've been a great help. This isn't a good place to wrap things up though. Tell you what, let's relocate to Traal and meet up in the spaceport bar there. I need to give you your payment of course, but I also want to talk to you for a bit. See you planetside!"
-    The comm switches off. You prepare to take off and set a course for Traal.]]
+    "That's it, %s! This was the final stop. You've been a great help. This isn't a good place to wrap things up though. Tell you what, let's relocate to Sroolu and meet up in the spaceport bar there. I need to give you your payment of course, but I also want to talk to you for a bit. See you planetside!"
+    The comm switches off. You prepare to take off and set a course for Sroolu.]]
     
     title4 = "One damsel, safe and sound"
     text5 = [[    After you both land your ships, you meet Joanne in the spaceport bar.
@@ -72,7 +72,7 @@ else -- default english
     osd_msg[1] = "Follow Joanne's ship"
     osd_msg[2] = "Defeat Joanne's attackers"
     osd_msg["__save"] = true
-    osd_final = {"Land on Traal to get your reward"}
+    osd_final = {"Land on Sroolu to get your reward"}
     osd_final["__save"] = true
 
     misn_desc = "Joanne needs you to escort her ship and fight off mercenaries sent to kill her."
@@ -106,7 +106,7 @@ function accept()
    tk.msg(title2, text3)
    
    -- This is the route Joanne will take.
-   route = {"Violin Station", "Fyruse Station", "Tankard Station", "Inios Station", "Traal"}
+   route = {"Violin Station", "Fyruse Station", "Inios Station", "Tankard Station", "Sroolu"}
    route["__save"] = true
    stage = 1
 
@@ -146,7 +146,7 @@ function land()
    elseif stage < 4 then
       tk.msg(destfailtitle, planetfailtext)
       abort()
-   elseif stage == 5 and planet.cur() == planet.get("Traal") then
+   elseif stage == 5 and planet.cur() == planet.get("Sroolu") then
       tk.msg(title4, text5:format(player.name(), player.name()))
       tk.msg(title5, text6)
       tk.msg(title5, text7:format(player.name()))
@@ -192,10 +192,10 @@ function enter()
    end
    hook.pilot(joanne, "death", "joanneDead")
    
-   if system.cur() == system.get("Humdrum") and stage == 3 then
-      ambushSet({"Hyena", "Hyena"}, vec2.new(12500, 0))
-   elseif system.cur() == system.get("Lapis") then
-      ambushSet({"Vendetta", "Vendetta"}, vec2.new(0, 10500))
+   if system.cur() == system.get("Valur Gem") and stage == 3 then
+      ambushSet({"Hyena", "Hyena"}, vec2.new(880, -140))
+   elseif system.cur() == system.get("Humdrum") then
+      ambushSet({"Vendetta", "Vendetta"}, vec2.new(2230, -15000))
    end
 end
 
