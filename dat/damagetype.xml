@@ -22,13 +22,13 @@
   <knockback>1</knockback>
  </dtype>
  <dtype name="shieldbreaker">
-  <shield>1.0</shield>
+  <shield>1.5</shield>
   <armour>0.05</armour>
   <knockback>0</knockback>
  </dtype>
  <dtype name="armourbreaker">
   <shield>0.5</shield>
-  <armour>1</armour>
+  <armour>1.5</armour>
   <knockback>0.5</knockback>
  </dtype>
  <dtype name="ion">
@@ -37,7 +37,7 @@
   <knockback>0</knockback>
  </dtype>
  <dtype name="emp">
-  <shield>1</shield>
+  <shield>2</shield>
   <armour>0</armour>
   <knockback>0</knockback>
  </dtype>

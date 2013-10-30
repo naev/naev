@@ -10,7 +10,9 @@
   <x>-749.266142</x>
   <y>-648.067716</y>
  </pos>
- <assets/>
+ <assets>
+  <asset>Virtual Empire Unpresence</asset>
+ </assets>
  <jumps>
   <jump target="Procyon">
    <autopos/>

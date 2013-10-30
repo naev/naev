@@ -10,7 +10,11 @@
   <x>-666.352707</x>
   <y>-675.387175</y>
  </pos>
- <assets/>
+ <assets>
+  <asset>Excelcior</asset>
+  <asset>Virtual Empire Unpresence</asset>
+  <asset>Virtual Za'lek Medium</asset>
+ </assets>
  <jumps>
   <jump target="Copernicus">
    <autopos/>

@@ -10,7 +10,9 @@
   <x>-573.390026</x>
   <y>-686.373725</y>
  </pos>
- <assets/>
+ <assets>
+  <asset>Virtual Empire Unpresence</asset>
+ </assets>
  <jumps>
   <jump target="Olypmus">
    <autopos/>

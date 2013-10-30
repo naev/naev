@@ -10,7 +10,7 @@
  </GFX>
  <presence>
   <faction>Za'lek</faction>
-  <value>200.000000</value>
+  <value>300.000000</value>
   <range>0</range>
  </presence>
  <general>
@@ -23,7 +23,7 @@
    <bar/>
   </services>
   <commodities/>
-  <description>Claudius Mehan is the gateway to Za'lek space. The station has had it's crew slahsed several times over the years, but it stalwartly remains, and few pirates manage to get past it to terrorize the greater Za'lek systems.</description>
-  <bar>The bar is full of off-duty soldiers. It is fairly quiet and serene, as whenever pirates come close, a swarm of automated drones attacks without mercy and restraint. It leaves a lot of free tiome for the soldiers.</bar>
+  <description>Claudius Mehan is an out-dated defense station and one of them protecting one of the widely known entrances to Za'lek space. As such, it needs a larger complement than more modern station to operate at acceptable capacity. There has been much talk about upgrading or even replacing the old station, but so far little has come of it.</description>
+  <bar>The bar is full of off-duty soldiers. It is fairly quiet and serene, as whenever pirates come close, a swarm of automated drones attacks without mercy and restraint. It leaves a lot of free time for the soldiers.</bar>
  </general>
 </asset>
