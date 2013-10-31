@@ -78,9 +78,9 @@ else -- default to English
 
    title[4] = "Deliver the Goods... late"
    text[m][4] = [[    Landing at the spaceport you see the Wernet Trading depot surrounded by a fraught hum of activity. Once outside you thread your way through the throngs of running and shouting people and finally find the Cargo Inspector. You hand him the chit and he looks at you with surpise and then anger, "What the hell is this!?! This shipment was supposed to be here ages ago! We've been shifting stuff around to make up for it and then you come waltzing in here... where the heck is the guy that was supposed to bring this stuff?? The one who was supposed to bring us this damn stuff???" A group of workers rushes along with the Inspector and you as you try to explain what happened on the way to unload your ship. "Bugger that! He's damn'd well fired and if I see him again there's gonna be another damn Incident!!!"
-    You wait to one side as the cargo is hauled off your ship at breakneck speed and wonder if you shouldn't have just dumped the stuff in space. Just as the last of the cargo is taken off your ship the Inspector, who has clearly cooled off a bit, comes up to you and says "Look, I know you were trying to do us a favour but next time don't bother if you can't make it on time, but thank you for delivering the stuff at all; we've had one or two wazzocks who just dumped it all in space", then he snears, "Didn't take long for it to catch up to them though..."]]
+    You wait to one side as the cargo is hauled off your ship at breakneck speed and wonder if you shouldn't have just dumped the stuff in space. Just as the last of the cargo is taken off your ship the Inspector, who has clearly cooled off a bit, comes up to you and says "Look, I know you were trying to do us a favour but next time don't bother if you can't make it on time, but thank you for delivering the stuff at all; we've had one or two wazzocks who just dumped it all in space", then he snears, "Didn't take long for it to catch up to them though..." As you leave you are happy to be away, even if you didn't get paid.]]
    text[f][4] = [[    Coming down at the spaceport you see the Wernet Trading depot surrounded by a fraught buzz of activity. Once outside you thread your way through the throngs of running and shouting people and finally find the Cargo Inspector. You hand her the chit and she looks at you with contempt and distaste, "What in damnation is this! This shipment was supposed to have been here ages ago! You wouldn't believe what we've had to do to deal with this and then you come waltzing in here... where the heck is the lassie that was supposed to bring this stuff??" A group of workers rushes along with the Inspector as you try to explain what happened on the way to unload your ship. "If I ever get my hands on her she's gonna be mincemeat and I'll stuff her in pies and send them to her family, that bitch better never show her face here again, I'm telling you!"
-    You timidly stand to one side as the cargo is hauled off your ship and wonder if you shouldn't have just dumped the stuff in space. Just as the last of the cargo is hauled away the Inspector calmly comes up to you and says "See, I know you were trying to do us a favour but next time don't unless you can make it. I should say 'thank you' for delivering the stuff at all", she adds, "but then the ones who ditch it learn one way or another..."]]
+    You timidly stand to one side as the cargo is hauled off your ship and wonder if you shouldn't have just dumped the stuff in space. Just as the last of the cargo is hauled away the Inspector calmly comes up to you and says "See, I know you were trying to do us a favour but next time don't unless you can make it. I should say 'thank you' for delivering the stuff at all", she adds, "but then the ones who ditch it learn one way or another..." As you leave you are happy to be away, even if you didn't get paid.]]
 
    full_title = "No Room"
    full_text = [[You don't have enough cargo space to accept this mission.]]
@@ -139,7 +139,7 @@ function accept()
    -- mission details
    misn.setTitle(misn_title)
    misn.setReward(misn_reward:format(payment))
-   if gender = m then
+   if gender == m then
       misn.setDesc(misn_desc[m]:format(dest_planet:name()))
    else
       misn.setDesc(misn_desc[f]:format(dest_planet:name()))
@@ -151,7 +151,11 @@ function accept()
    osd_msg = osd_desc[1]:format(dest_planet:name(), dest_sys:name(), time_limit:str())
    osd = misn.osdCreate(osd_title, osd_msg)
 
-   tk.msg(title[2], text[2]:format(payment))
+   if gender == m then
+      tk.msg(title[2], text[m][2]:format(payment))
+   else
+      tk.msg(title[2], text[f][2]:format(payment))
+   end
 
    intime = true
    faction = faction.get("Trader")
@@ -163,11 +167,19 @@ function land()
    if planet.cur() == dest_planet then
       if intime then
          faction:modPlayerSingle(1)
-         tk.msg(title[3], text[3])
+         if gender == m then
+            tk.msg(title[3], text[m][3])
+         else
+            tk.msg(title[3], text[f][3])
+         end
          player.pay(payment)
       else
          faction:modPlayerSingle(-1)
-         tk.msg(title[4], text[4])
+         if gender == m then
+            tk.msg(title[4], text[m][4])
+         else
+            tk.msg(title[4], text[f][4])
+         end
       end
       misn.cargoRm(cargo_ID)
       misn.osdDestroy(osd)
