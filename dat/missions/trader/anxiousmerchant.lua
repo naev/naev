@@ -11,21 +11,42 @@
 
 ]]--
 
+include "cargo_common.lua"
+-- include "jumpdist.lua"
 include "numstring.lua"
-include "jumpdist.lua"
-include "numstring.lua"
+
+-- choose a gender for the merchant (useful for translations into language that don't have gender neutrality)
+local face_type = {}
+face_type[m] = {"neutral/male1",
+                "neutral/thief1",
+               }
+face_type[f] = {"neutral/female1",
+                "neutral/thief3",
+               }
+local gender = h
+if rnd() >= 0.5 then
+   gender = m
+   merchant = rnd.rnd(1, #merchant_type[m])
+else
+   gender = f
+   merchant = rnd.rnd(1, #merchant_type[f])
+end
 
 lang = naev.lang()
 if lang == "es" then
 elseif lang == "de" then
 else -- default to English
    -- Bar Description
-   bar_desc = "You see a merchant at the bar in a clear state of anxiety."
+   bar_desc = {}
+   bar_desc[m] = "You see a merchant at the bar in a clear state of anxiety."
+   bar_desc[f] = "You see a merchant at the bar in a clear state of anxiety."
 
    -- Mission Details
    misn_title = "Anxious Merchant"
    misn_reward = "Peace of mind (and %d credits)!"
-   misn_desc = "You decided to help a fraught merchant at a bar by delivering some goods to %s for him."
+   misn_desc = {}
+   misn_desc[m] = "You decided to help a fraught merchant at a bar by delivering some goods to %s for him."
+   misn_desc[f] = "You decided to help a fraught merchant at a bar by delivering some goods to %s for her."
 
    -- OSD
    osd_title = "Help the Merchant"
@@ -40,16 +61,26 @@ else -- default to English
    text = {}   --mission text
 
    title[1] = "Spaceport Bar"
-   text[1] = [[    As you sit next to the merchant"]]
+   text[m][1] = [[    As you sit down the merchant looks up at you with a panicked expression, "Ahh! What do you want? Can you see I've enough on my plate as it is?" "Hey, dude, calm down...", you say, "Here, how about I buy you a drink and you tell me about it?" "Jeeze, that's nice of you... ha, maybe I can cut a break today!"
+    You grab a couple of drinks and hand one to the slightly more relaxed looking merchant as he starts to talk. "So, I work for Wernet Trading and the deal is I transport stuff for them, they pay me, only I kinda strained my engines running from pirates on the way to the pick-up and now I'm realising that my engines just don't have the speed to get me back to beat the deadline and to top it off I'm late on my bills as it is so those engines are gonna have to last 'til this paycheck comes in... see where this is going? I'm in the Sol nebula without a shield generator."
+    "Don't worry so much dude, I'm sure they'll cut you some slack if you're back only a little late", you say reassuringly. "The hell they will! If I don't get this %d tons of %s to %s the next guy's gonna be late and then the customer will be on us and we'll all get it from management, geeze... but that's a thought, if someone else gets it there in time then at least I'll only get a bit of grief... hey, you wouldn't take this stuff for me would you? It's needs to get to the %s system in %s, could you do that for me? I'd sure appreciate it!]]
+   text[f][1] = [[    As you sit down the merchant looks up at you with a panicked expression, "Ahh! What do you want? Can you see I've enough on my plate as it is?" "Hey, lady, calm down...", you say, "Here, how about I buy you a drink and you tell me about it?" "Jeeze, that's nice of you... ha, maybe I can cut a break today!"
+    You grab a couple of drinks and hand one to the slightly more relaxed looking merchant as she starts to talk. "So, I work for Wernet Trading and the deal is I transport stuff for them, they pay me, only I got kinda beat up fighting pirates on the way to the pick-up and now I'm realising that my engines just don't have the speed to get me back to beat the deadline and to top it off I'm late on my bills as it is so those engines are gonna have to last 'til this paycheck comes in... see where this is going? I'm in the Sol nebula without a shield generator."
+    "Don't worry so much lady, I'm sure they'll cut you some slack if you're back only a little late", you say reassuringly. "The hell they will! If I don't get this %d tons of %s to %s the next gal's gonna be late and then the customer will be on us and we'll all get it from management, geeze... but that's a thought, if someone else gets it there in time then at least I'll only get a bit of grief... hey, you wouldn't take this stuff for me would you? It's needs to get to the %s system in %s, could you do that for me? I'd sure appreciate it!]]
 
-   title[2] = "Pick Up the Countess' Goods"
-   text[2] = [[    "]]
+   title[2] = "Happy Day"
+   text[m][2] = [[    The merchant stands up and shakes your hand, "Thank you so much for this, I've a mate at this dock who can sort the cargo transfer and here's the chit you need to give to cargo guy at %s. Of course payment is done by credit chip so that's yours to keep but at least I'll have a little time to work on those engines before I have to get back on the job! I definietly owe you one for this."]]
+   text[f][2] = [[    The merchant stands up and hugs you, "Thank you so much for this, I've a guy at this dock who can sort the cargo transfer and here's the chit you need to give to cargo gal at %s. Of course payment is done by credit chip so that's yours to keep but at least I'll have a little time to work on those engines before I have to get back on the job! I definietly owe you one for this."]]
 
    title[3] = "Deliver the Goods"
-   text[3] = [[    You]]
+   text[m][3] = [[    As you touch down at the spaceport you see the Wernet Trading depot surrounded by a hustle and bustle. Once outside you head over to the cargo office and hand over the chit the merchant gave you. The Cargo Inspector looks up at you in surprise and so you explain to him what happened as the cargo is unloaded from your ship. "Wow, thanks for the help, you definitely saved us a ton of grief, here's your payment and, again, thanks for your help - maybe I can buy you a drink some time!" You laugh and part ways.]]
+   text[f][3] = [[    Landing at the spaceport you see the Wernet Trading depot surrounded by a hustle and bustle. Once outside you head over to the cargo depot and hand over the chit the merchant gave you. The Cargo Inspector looks up at you in surprise and so you explain to her what happened as the cargo is unloaded from your ship. "Wow, thanks for the help, you definitely saved us a ton of trouble, here's your payment and if you're ever looking for a steady job give me a call - it's not great pay but we guarentee you'll get work, assuming you can make it on time, of course!" You laugh and part ways.]]
 
-   title[4] = "Success"
-   text[4] = [[    You]]
+   title[4] = "Deliver the Goods... late"
+   text[m][4] = [[    Landing at the spaceport you see the Wernet Trading depot surrounded by a fraught hum of activity. Once outside you thread your way through the throngs of running and shouting people and finally find the Cargo Inspector. You hand him the chit and he looks at you with surpise and then anger, "What the hell is this!?! This shipment was supposed to be here ages ago! We've been shifting stuff around to make up for it and then you come waltzing in here... where the heck is the guy that was supposed to bring this stuff?? The one who was supposed to bring us this damn stuff???" A group of workers rushes along with the Inspector and you as you try to explain what happened on the way to unload your ship. "Bugger that! He's damn'd well fired and if I see him again there's gonna be another damn Incident!!!"
+    You wait to one side as the cargo is hauled off your ship at breakneck speed and wonder if you shouldn't have just dumped the stuff in space. Just as the last of the cargo is taken off your ship the Inspector, who has clearly cooled off a bit, comes up to you and says "Look, I know you were trying to do us a favour but next time don't bother if you can't make it on time, but thank you for delivering the stuff at all; we've had one or two wazzocks who just dumped it all in space", then he snears, "Didn't take long for it to catch up to them though..."]]
+   text[f][4] = [[    Coming down at the spaceport you see the Wernet Trading depot surrounded by a fraught buzz of activity. Once outside you thread your way through the throngs of running and shouting people and finally find the Cargo Inspector. You hand her the chit and she looks at you with contempt and distaste, "What in damnation is this! This shipment was supposed to have been here ages ago! You wouldn't believe what we've had to do to deal with this and then you come waltzing in here... where the heck is the lassie that was supposed to bring this stuff??" A group of workers rushes along with the Inspector as you try to explain what happened on the way to unload your ship. "If I ever get my hands on her she's gonna be mincemeat and I'll stuff her in pies and send them to her family, that bitch better never show her face here again, I'm telling you!"
+    You timidly stand to one side as the cargo is hauled off your ship and wonder if you shouldn't have just dumped the stuff in space. Just as the last of the cargo is hauled away the Inspector calmly comes up to you and says "See, I know you were trying to do us a favour but next time don't unless you can make it. I should say 'thank you' for delivering the stuff at all", she adds, "but then the ones who ditch it learn one way or another..."]]
 
    full_title = "No Room"
    full_text = [[You don't have enough cargo space to accept this mission.]]
@@ -58,6 +89,8 @@ else -- default to English
    slow_text = [[The goods have to arrive by %s but it will take until at least %s for your ship to reach %s.
 
 Accept the mission anyway?]]
+
+   jet_msg = "You load up the airlock with the last of the %s and hit the big red airlock cycle button - who's to know, right?"
 end
 
 function create()
@@ -65,20 +98,16 @@ function create()
 
    -- Calculate the route, distance, jumps and cargo to take
    dest_planet, dest_sys, num_jumps, travel_dist, cargo, tier = cargo_calculateRoute()
-   if dest_planet == nil then
+   if dest_planet == nil or dest_sys == system.cur() then
       misn.finish(false)
    end
-   orig_planet, orig_sys = planet.cur()
-
-   local merchant_type = {}
-   mechant_type = {"neutral/male1",
-                   "neutral/female1",
-                   "neutral/thief1",
-                   "neutral/thief3"
-                  }
-   merchant = rnd.rnd(1, #merchant_type)
-   misn.setNPC( "Merchant", merchant )  -- creates the merchant at the bar
-   misn.setDesc( bar_desc )           -- merchant's description
+   
+   misn.setNPC("Merchant", merchant) -- creates the merchant at the bar
+   if gender == m then                -- merchant's description
+      misn.setDesc(bar_desc[m])
+   else
+      misn.setDesc(bar_desc[f])
+   end
 
    stu_distance = 0.2 * travel_dist
    stu_jumps = 10300 * num_jumps
@@ -89,7 +118,7 @@ function create()
 end
 
 function accept()
-   if not tk.yesno(title[1], text[1]:format(cargo_size, travel_dist, num_jumps, (time_limit - time.get()):str(), dest_planet:name(), dest_sys:name(), payment) then
+   if not tk.yesno(title[1], text[1]:format(cargo_size, cargo, dest_planet:name(), dest_sys:name(), (time_limit - time.get()):str()) then
       misn.finish()
    end
    if player.pilot():cargoFree() < cargo_size then
@@ -110,7 +139,11 @@ function accept()
    -- mission details
    misn.setTitle(misn_title)
    misn.setReward(misn_reward:format(payment))
-   misn.setDesc(misn_desc:format(dest_planet:name()))
+   if gender = m then
+      misn.setDesc(misn_desc[m]:format(dest_planet:name()))
+   else
+      misn.setDesc(misn_desc[f]:format(dest_planet:name()))
+   end
    marker = misn.markerAdd(dest_sys, "low") -- destination
    cargo_ID = misn.cargoAdd(cargo, cargo_size) -- adds cargo
 
@@ -118,9 +151,10 @@ function accept()
    osd_msg = osd_desc[1]:format(dest_planet:name(), dest_sys:name(), time_limit:str())
    osd = misn.osdCreate(osd_title, osd_msg)
 
-   tk.msg(title[2], text[2]:format(dest_planet:name(), dest_sys:name()))
+   tk.msg(title[2], text[2]:format(payment))
 
    intime = true
+   faction = faction.get("Trader")
    land_hook = hook.land("land")
    tick_hook = hook.tick(time.create(0, 0, 42), "tick") -- 42STU per tick
 end
@@ -128,9 +162,11 @@ end
 function land()
    if planet.cur() == dest_planet then
       if intime then
+         faction:modPlayerSingle(1)
          tk.msg(title[3], text[3])
          player.pay(payment)
       else
+         faction:modPlayerSingle(-1)
          tk.msg(title[4], text[4])
       end
       misn.cargoRm(cargo_ID)
@@ -154,7 +190,9 @@ function tick()
 end
 
 function abort()
-   misn.cargoRm(cargo_ID)
+   misn.cargoJet(cargo_ID)
+   player.msg(jet_msg)
+   faction:modPlayerSingle(-5)
    misn.osdDestroy(osd)
    misn.markerRm(marker)
    hook.rm(land_hook)
