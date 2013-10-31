@@ -72,7 +72,7 @@ else --default english
                                "Have you heard of Captain T. Practice? He's amazing, I'm his biggest fan!",
                                "I wouldn't travel north from Alteris if I were you, unless you're a good fighter! That area of space has really gone down the drain since the Incident.",
                                "Sometimes I look at the stars and wonder... are we the only sentient species in the universe?",
-                               "'Hey, you ever wonder why we're here?' 'It's one of life's great mysteries isn't it?', they reply, 'Why are we here? Are we the product of some cosmic coincidence or is there some great cosmic plan for us? I dunno, but it keeps me up at night' ... 'What?? No, I mean why are we in here, in this bar?'",
+                               "Hey, you ever wonder why we're here?\", you say, \"It's one of life's great mysteries isn't it?\", the citizen replys, \"Why are we here? Are we the product of some cosmic coincidence or is there some great cosmic plan for us? I dunno, but it keeps me up at night\" ... \"What?? No, I mean why are we in here, in this bar?"
                               }
 
    msg_lore["Independent"] =  {"We're not part of any of the galactic superpowers. We can take care of ourselves!",
@@ -174,7 +174,7 @@ else --default english
                                "Quite a lot of people who come in here complain that they don't know how to get to %s. I travel there often, so I know exactly where the jump point is. Here, let me show you.",
                                "So you're still getting to know about this area, huh? Tell you what, I'll give you the coordinates of the jump to %s. Check your map next time you take off!",
                                "True fact, there's a direct jump from here to %s. Want to know where it is? It'll cost you! Ha ha, just kidding. Here you go, I've added it to your map.",
-                               "There's a system just one jump away by the name of %s. I can tell you where the jump point is. There, I've updated your map. Don't mention it."
+                               "There's a system just one jump away by the name of %s. I can tell you where the jump point is. There, I've updated your map. Don't mention it.",
                               }
 
    -- Mission hint messages. Each element should be a table containing the mission name and the corresponding hint.
@@ -182,12 +182,12 @@ else --default english
    -- So, make sure the hints are always faction neutral.
    msg_mhint =                {{"Shadowrun", "Apparently there's a woman who regularly turns up on planets in and around the Klantar system. I wonder what she's looking for?"},
                                {"Collective Espionage 1", "The Empire is trying to really do something about the Collective, I hear. Who knows, maybe you can even help them out if you make it to Omega Station."},
-                               {"Hitman", "There are often shady characters hanging out in the Alteris system. I'd stay away from there if I were you, someone might offer you a dirty kind of job!"}
+                               {"Hitman", "There are often shady characters hanging out in the Alteris system. I'd stay away from there if I were you, someone might offer you a dirty kind of job!"},
                               }
 
    -- Event hint messages. Each element should be a table containing the event name and the corresponding hint.
    -- Make sure the hints are always faction neutral.
-   msg_ehint =                {{"FLF/DV Derelicts", "The FLF and the Dvaered sometimes clash in Surano. If you go there, you might find something of interest... Or not."}
+   msg_ehint =                {{"FLF/DV Derelicts", "The FLF and the Dvaered sometimes clash in Surano. If you go there, you might find something of interest... Or not."},
                               }
 
    -- Mission after-care messages. Each element should be a table containing the mission name and a line of text.
@@ -197,14 +197,14 @@ else --default english
                                {"Shadow Vigil", "Did you hear? There was some big incident during a diplomatic meeting between the Empire and the Dvaered. Nobody knows what exactly happened, but both diplomats died. Now both sides are accusing the other of foul play. Could get ugly."},
                                {"Operation Cold Metal", "Hey, remember the Collective? They got wiped out! I feel so much better now that there aren't a bunch of robot ships out there to get me anymore."},
                                {"Baron", "Some thieves broke into a museum on Varia and stole a holopainting! Most of the thieves were caught, but the one who carried the holopainting offworld is still at large. No leads. Damn criminals..."},
-                               {"Destroy the FLF base!", "The Dvaered scored a major victory against the FLF recently. They went into Sigur and blew the hidden base there to bits! I bet that was a serious setback for the FLF."}
+                               {"Destroy the FLF base!", "The Dvaered scored a major victory against the FLF recently. They went into Sigur and blew the hidden base there to bits! I bet that was a serious setback for the FLF."},
                               }
 
    -- Event after-care messages. Each element should be a table containing the event name and a line of text.
    -- This text will be said by NPCs once the player has completed the event in question.
    -- Make sure the messages are always faction neutral.
    msg_edone =                {{"Animal trouble", "What? You had rodents sabotage your ship? Man, you're lucky to be alive. If it had hit the wrong power line..."},
-                               {"Naev Needs You!", "What do you mean, the world ended and then the creator of the universe came and fixed it? What kind of illegal substance are you on? Get away from me, you lunatic."}
+                               {"Naev Needs You!", "What do you mean, the world ended and then the creator of the universe came and fixed it? What kind of illegal substance are you on? Get away from me, you lunatic."},
                               }
 end
 

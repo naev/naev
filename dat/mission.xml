@@ -843,7 +843,7 @@
   <lua>trader/anxiousmerchant</lua>
   <avail>
    <priority>3</priority>
-   <chance>100</chance>
+   <chance>1</chance>
    <location>Bar</location>
    <faction>Dvaered</faction>
    <faction>Empire</faction>

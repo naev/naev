@@ -1,3 +1,4 @@
+include "jumpdist.lua"
 include "nextjump.lua"
 
 -- Find an inhabited planet 0-3 jumps away.
