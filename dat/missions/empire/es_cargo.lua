@@ -3,7 +3,7 @@
    Handles the randomly generated Empire cargo missions.
 
 ]]--
-include "jumpdist.lua"
+
 include "cargo_common.lua"
 include "numstring.lua"
 

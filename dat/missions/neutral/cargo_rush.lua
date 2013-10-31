@@ -3,7 +3,6 @@
 -- These missions require fast ships, but higher tiers may also require increased cargo space.
 --]]
 
-include "jumpdist.lua"
 include "cargo_common.lua"
 include "numstring.lua"
 
