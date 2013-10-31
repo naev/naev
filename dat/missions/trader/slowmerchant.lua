@@ -129,9 +129,8 @@ function accept()
    cargo_ID = misn.cargoAdd(cargo, cargo_size) -- adds cargo
 
    -- OSD
-   osd_msg[1] = osd_desc[1]:format(dest_planet:name(), dest_sys:name(), time_limit:str())
+   osd_msg = osd_desc[1]:format(dest_planet:name(), dest_sys:name(), time_limit:str())
    osd = misn.osdCreate(osd_title, osd_msg)
-   misn.osdActive(1)
 
    tk.msg(title[2], text[2]:format(dest_planet:name(), dest_sys:name()))
 
@@ -159,14 +158,13 @@ end
 
 function tick()
     if time_limit >= time.get() then -- still in time
-        osd_msg[1] = osd_desc[1]:format(dest_planet:name(), dest_sys:name(), time_limit:str())
-        misn.osdActive(1)
+        osd_msg = osd_desc[1]:format(dest_planet:name(), dest_sys:name(), time_limit:str())
     else -- missed deadline
-        osd_msg[2] = osd_desc[2]:format(dest_planet:name(), dest_sys:name())
-        misn.osdActive(2)
+        osd_msg = osd_desc[2]:format(dest_planet:name(), dest_sys:name())
         intime = false
         hook.rm(tick_hook)
     end
+    misn.osdCreate(osd_title, osd_msg)
 end
 
 function abort()
