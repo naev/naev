@@ -840,7 +840,7 @@
   </avail>
  </mission>
  <mission name="Anxious Merchant">
-  <lua>neutral/slowmerchant</lua>
+  <lua>trader/slowmerchant</lua>
   <avail>
    <priority>3</priority>
    <chance>100</chance>
