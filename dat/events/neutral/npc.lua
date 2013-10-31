@@ -20,16 +20,16 @@ else --default english
                             "neutral/miner2",
                             "neutral/thief1",
                             "neutral/thief2",
-                            "neutral/thief3"
+                            "neutral/thief3",
                            }
    civ_port["Sirius"] =    {"sirius/sirius_fyrra_f1",
                             "sirius/sirius_fyrra_f2",
-                            "sirius/sirius_fyrra_m1"
+                            "sirius/sirius_fyrra_m1",
                            }
    civ_port["Trader"] =    {"neutral/male1",
                             "neutral/female1",
                             "neutral/thief1",
-                            "neutral/thief3"
+                            "neutral/thief3",
                            }
    civ_name = "Civilian"
 
@@ -48,10 +48,10 @@ else --default english
                "A civilian drinking alone.",
                "This person seems friendly enough.",
                "A civilian sitting at the bar.",
-               "This person is idly browsing a news terminal."
-               "A worker sits drinks, but not working."
-               "A worker slouched against the bar, nursing a drink."
-               "This worker seems bored with everything but a glass of beer."
+               "This person is idly browsing a news terminal.",
+               "A worker sits drinks, but not working.",
+               "A worker slouched against the bar, nursing a drink.",
+               "This worker seems bored with everything but their drink.",
                }
 
    -- Lore messages. These come in general and factional varieties.
@@ -72,6 +72,7 @@ else --default english
                                "Have you heard of Captain T. Practice? He's amazing, I'm his biggest fan!",
                                "I wouldn't travel north from Alteris if I were you, unless you're a good fighter! That area of space has really gone down the drain since the Incident.",
                                "Sometimes I look at the stars and wonder... are we the only sentient species in the universe?",
+                               "'Hey, you ever wonder why we're here?' 'It's one of life's great mysteries isn't it?', they reply, 'Why are we here? Are we the product of some cosmic coincidence or is there some great cosmic plan for us? I dunno, but it keeps me up at night' ... 'What?? No, I mean why are we in here, in this bar?'",
                               }
 
    msg_lore["Independent"] =  {"We're not part of any of the galactic superpowers. We can take care of ourselves!",

@@ -101,7 +101,7 @@ function create()
    if dest_planet == nil or dest_sys == system.cur() then
       misn.finish(false)
    end
-   
+
    misn.setNPC("Merchant", merchant) -- creates the merchant at the bar
    if gender == m then                -- merchant's description
       misn.setDesc(bar_desc[m])
@@ -118,22 +118,22 @@ function create()
 end
 
 function accept()
-   if not tk.yesno(title[1], text[1]:format(cargo_size, cargo, dest_planet:name(), dest_sys:name(), (time_limit - time.get()):str()) then
+   if not tk.yesno(title[1], text[1]:format(cargo_size, cargo, dest_planet:name(), dest_sys:name(), (time_limit - time.get()):str())) then
       misn.finish()
    end
    if player.pilot():cargoFree() < cargo_size then
       tk.msg(full_title, full_text)  -- Not enough space
       misn.finish()
    end
-   pilot.cargoAdd(player.pilot(), cargo, cargo_size) 
+   pilot.cargoAdd(player.pilot(), cargo, cargo_size)
    local player_best = cargoGetTransit(time_limit, num_jumps, travel_dist)
-   pilot.cargoRm(player.pilot(), cargo, cargo_size) 
+   pilot.cargoRm(player.pilot(), cargo, cargo_size)
    if time_limit < player_best then
       if not tk.yesno(slow_title, slow_text:format(time_limit:str(), player_best:str(), destplanet:name())) then
          misn.finish()
       end
    end
-      
+
    misn.accept()
 
    -- mission details
