@@ -418,7 +418,7 @@ function continueAmbush()
     spinter = hook.timer(5000, "spawnInterceptors")
 end
 
--- Spawns a wing of Vendettas that intercept the player.
+-- Spawns a wing of Lancelots that intercept the player.
 function spawnInterceptors()
     inters = pilot.add("Four Winds Lancelot Trio", nil, genbu:pos())
     for _, j in ipairs(inters) do
