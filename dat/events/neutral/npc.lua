@@ -15,13 +15,21 @@ else --default english
    -- Make sure you spell the faction name exactly the same as in faction.xml though!
    civ_port = {}
    civ_port["general"] =   {"neutral/male1",
+                            "neutral/female1",
+                            "neutral/miner1",
+                            "neutral/miner2",
                             "neutral/thief1",
                             "neutral/thief2",
-                            "neutral/thief3"
+                            "neutral/thief3",
                            }
    civ_port["Sirius"] =    {"sirius/sirius_fyrra_f1",
                             "sirius/sirius_fyrra_f2",
-                            "sirius/sirius_fyrra_m1"
+                            "sirius/sirius_fyrra_m1",
+                           }
+   civ_port["Trader"] =    {"neutral/male1",
+                            "neutral/female1",
+                            "neutral/thief1",
+                            "neutral/thief3",
                            }
    civ_name = "Civilian"
 
@@ -34,13 +42,16 @@ else --default english
                "There is a civilian sitting there, looking somewhere else.",
                "A worker sits at one of the tables, wearing a nametag saying \"Go away\".",
                "A civilian sits at the bar, seemingly serious about the cocktails on offer.",
-               "You see a civilian wearing a shirt saying: \"Ask me about Jaegnhild\"",
+               "A civilian wearing a shirt saying: \"Ask me about Jaegnhild\"",
                "There is a civilian sitting in the corner.",
                "A civilian feverishly concentrating on a fluorescing drink.",
                "A civilian drinking alone.",
                "This person seems friendly enough.",
                "A civilian sitting at the bar.",
-               "This person is idly browsing a news terminal."
+               "This person is idly browsing a news terminal.",
+               "A worker sits drinks, but not working.",
+               "A worker slouched against the bar, nursing a drink.",
+               "This worker seems bored with everything but their drink.",
                }
 
    -- Lore messages. These come in general and factional varieties.
@@ -61,10 +72,11 @@ else --default english
                                "Have you heard of Captain T. Practice? He's amazing, I'm his biggest fan!",
                                "I wouldn't travel north from Alteris if I were you, unless you're a good fighter! That area of space has really gone down the drain since the Incident.",
                                "Sometimes I look at the stars and wonder... are we the only sentient species in the universe?",
+                               "Hey, you ever wonder why we're here?\", you say, \"It's one of life's great mysteries isn't it?\", the citizen replys, \"Why are we here? Are we the product of some cosmic coincidence or is there some great cosmic plan for us? I dunno, but it keeps me up at night\" ... \"What?? No, I mean why are we in here, in this bar?"
                               }
 
    msg_lore["Independent"] =  {"We're not part of any of the galactic superpowers. We can take care of ourselves!",
-                               "Sometimes I worry that our lack of a standing military leaves us vulnerable to attack. I hope nobody will get any ideas of conquering us!"
+                               "Sometimes I worry that our lack of a standing military leaves us vulnerable to attack. I hope nobody will get any ideas of conquering us!",
                               }
 
    msg_lore["Empire"] =       {"Things are getting worse by the cycle. What happened to the Empire? We used to be the lords and masters over the whole galaxy!",
@@ -72,7 +84,7 @@ else --default english
                                "The Emperor lives on a giant supercruiser in Gamma Polaris. It's said to be the biggest ship in the galaxy! I totally want one.",
                                "I'm still waiting for my pilot license application to get through. Oh well, it's only been half a cycle, I just have to be patient.",
                                "Between you and me, the laws the Council passes can get really ridiculous! Most planets find creative ways of ignoring them...",
-                               "Don't pay attention to the naysayers. The Empire is still strong. Have you ever seen a Peacemaker up close? I doubt any ship fielded by any other power could stand up to one."
+                               "Don't pay attention to the naysayers. The Empire is still strong. Have you ever seen a Peacemaker up close? I doubt any ship fielded by any other power could stand up to one.",
                               }
 
    msg_lore["Dvaered"] =      {"Our Warlord is currently fighting for control over another planet. We all support him unconditionally, of course! Of course...",
@@ -108,7 +120,7 @@ else --default english
                                "I don't understand why we bother sending our research results to the Empire. These simpletons can't understand the simplest formulas!",
                                }
 
-   msg_lore["Proteron"] =     {"Hello, traveler. Welcome to Proteron space. We are an evil, power hungry dystopia on a quest for dominance over the galaxy. Would you like a brochure?"
+   msg_lore["Proteron"] =     {"Hello, traveler. Welcome to Proteron space. We are an evil, power hungry dystopia on a quest for dominance over the galaxy. Would you like a brochure?",
                               }
 
    msg_lore["Frontier"] =     {"We value our autonomy. We don't want to be ruled by those megalomanic Dvaered Warlords! Can't they just shoot at each other instead of threatening us? If it wasn't for the Liberation Front...",
@@ -117,11 +129,19 @@ else --default english
                                "Have you visited the Frontier Museum? They've got a scale model of a First Growth colony ship on display in one of the big rooms. Even scaled down like that, it's massive! Imagine how overwhelming the real ones must have been.",
                                "There are twelve true Frontier worlds, because twelve colony ships successfully completed their journey in the First Growth. But did you know that there were twenty colony ships to begin with? Eight of them never made it. Some are said to have mysteriously disappeared. I wonder what happened to them?",
                                "We don't have much here in the Frontier, other than our long history leading directly back to Earth. But I don't mind. I'm happy living here, and I wouldn't want to move anywhere else.",
-                               "You know the Frontier Liberation Front? They're the guerilla movement that fights for the Frontier. Not to be confused with the Liberation Front of the Frontier, the Frontier Front for Liberation, or the Liberal Frontier's Front!"
+                               "You know the Frontier Liberation Front? They're the guerilla movement that fights for the Frontier. Not to be confused with the Liberation Front of the Frontier, the Frontier Front for Liberation, or the Liberal Frontier's Front!",
                               }
 
    msg_lore["Pirate"] =       {"Hi mate. Money or your life! Heh heh, just messing with you.",
                                "Hey, look at these new scars I got!",
+                               "Have you heard of the Pirates' Code? They're more guidelines than rules...",
+                               "My gran said 'Never trust a pirate', she was right too, I got a pretty credit chip for her with the slavers.",
+                              }
+
+   msg_lore["Trader"] =       {"Just another link in the Great Chain, right?",
+                               "You win some, you lose some but if you don't try you're never going to win",
+                               "If you don't watch the markets then you'll be hopping between planets in a jury-rigged ship in no time.",
+                               "Them blimming pirates, stopping honest folk from making an honest living - it's not like we're exploiting the needy!",
                               }
 
    -- Gameplay tip messages.
@@ -142,6 +162,7 @@ else --default english
                                "If you're new to the galaxy, I recommend you buy a map or two. It can make exploration a bit easier.",
                                "Missile jammers slow down missiles close to your ship. If your enemies are using missiles, it can be very helpful to have one on board.",
                                "If you're having trouble with overheating weapons or outfits, you can use " .. tutGetKey("cooldown") .. " to put your ship into Active Cooldown. Careful though, your energy and shields won't recharge while you do it!",
+                               "If you're having trouble shooting other ships face on, try outfitting with turrets or use an afterburner to avoid them entirely!",
                               }
 
    -- Jump point messages.
@@ -153,7 +174,7 @@ else --default english
                                "Quite a lot of people who come in here complain that they don't know how to get to %s. I travel there often, so I know exactly where the jump point is. Here, let me show you.",
                                "So you're still getting to know about this area, huh? Tell you what, I'll give you the coordinates of the jump to %s. Check your map next time you take off!",
                                "True fact, there's a direct jump from here to %s. Want to know where it is? It'll cost you! Ha ha, just kidding. Here you go, I've added it to your map.",
-                               "There's a system just one jump away by the name of %s. I can tell you where the jump point is. There, I've updated your map. Don't mention it."
+                               "There's a system just one jump away by the name of %s. I can tell you where the jump point is. There, I've updated your map. Don't mention it.",
                               }
 
    -- Mission hint messages. Each element should be a table containing the mission name and the corresponding hint.
@@ -161,12 +182,12 @@ else --default english
    -- So, make sure the hints are always faction neutral.
    msg_mhint =                {{"Shadowrun", "Apparently there's a woman who regularly turns up on planets in and around the Klantar system. I wonder what she's looking for?"},
                                {"Collective Espionage 1", "The Empire is trying to really do something about the Collective, I hear. Who knows, maybe you can even help them out if you make it to Omega Station."},
-                               {"Hitman", "There are often shady characters hanging out in the Alteris system. I'd stay away from there if I were you, someone might offer you a dirty kind of job!"}
+                               {"Hitman", "There are often shady characters hanging out in the Alteris system. I'd stay away from there if I were you, someone might offer you a dirty kind of job!"},
                               }
 
    -- Event hint messages. Each element should be a table containing the event name and the corresponding hint.
    -- Make sure the hints are always faction neutral.
-   msg_ehint =                {{"FLF/DV Derelicts", "The FLF and the Dvaered sometimes clash in Surano. If you go there, you might find something of interest... Or not."}
+   msg_ehint =                {{"FLF/DV Derelicts", "The FLF and the Dvaered sometimes clash in Surano. If you go there, you might find something of interest... Or not."},
                               }
 
    -- Mission after-care messages. Each element should be a table containing the mission name and a line of text.
@@ -176,14 +197,14 @@ else --default english
                                {"Shadow Vigil", "Did you hear? There was some big incident during a diplomatic meeting between the Empire and the Dvaered. Nobody knows what exactly happened, but both diplomats died. Now both sides are accusing the other of foul play. Could get ugly."},
                                {"Operation Cold Metal", "Hey, remember the Collective? They got wiped out! I feel so much better now that there aren't a bunch of robot ships out there to get me anymore."},
                                {"Baron", "Some thieves broke into a museum on Varia and stole a holopainting! Most of the thieves were caught, but the one who carried the holopainting offworld is still at large. No leads. Damn criminals..."},
-                               {"Destroy the FLF base!", "The Dvaered scored a major victory against the FLF recently. They went into Sigur and blew the hidden base there to bits! I bet that was a serious setback for the FLF."}
+                               {"Destroy the FLF base!", "The Dvaered scored a major victory against the FLF recently. They went into Sigur and blew the hidden base there to bits! I bet that was a serious setback for the FLF."},
                               }
 
    -- Event after-care messages. Each element should be a table containing the event name and a line of text.
    -- This text will be said by NPCs once the player has completed the event in question.
    -- Make sure the messages are always faction neutral.
    msg_edone =                {{"Animal trouble", "What? You had rodents sabotage your ship? Man, you're lucky to be alive. If it had hit the wrong power line..."},
-                               {"Naev Needs You!", "What do you mean, the world ended and then the creator of the universe came and fixed it? What kind of illegal substance are you on? Get away from me, you lunatic."}
+                               {"Naev Needs You!", "What do you mean, the world ended and then the creator of the universe came and fixed it? What kind of illegal substance are you on? Get away from me, you lunatic."},
                               }
 end
 
