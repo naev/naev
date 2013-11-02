@@ -1,6 +1,3 @@
-include "cargo_common.lua"
-include "jumpdist.lua"
-
 --[[
 
    MISSION: Waste Dump (dat/empire/waste_dump.lua)
@@ -10,6 +7,8 @@ include "jumpdist.lua"
       To change the system, just change the mission.xml entry.
    NOTES: This mission requires balancing to make sure it works with all ship types, possibly normalisation of the fraction of the top speed required for mission success according to the top speed, turn, and acceleration of the player's ship.
 --]]
+
+include "cargo_common.lua"
 
 lang = naev.lang()
 if lang == "es" then

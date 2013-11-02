@@ -3,7 +3,6 @@
 -- Most of these missions require BULK ships. Not for small ships!
 --]]
 
-include "jumpdist.lua"
 include "cargo_common.lua"
 include "numstring.lua"
 

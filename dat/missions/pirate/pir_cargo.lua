@@ -5,7 +5,7 @@
    Most of the code taken from Empire Shipping.
 
 ]]--
-include "jumpdist.lua"
+
 include "cargo_common.lua"
 include "numstring.lua"
 
