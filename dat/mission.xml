@@ -839,5 +839,20 @@
    <planet>The Wringer</planet>
   </avail>
  </mission>
-
+ <mission name="Anxious Merchant">
+  <lua>trader/anxiousmerchant</lua>
+  <avail>
+   <priority>3</priority>
+   <chance>1</chance>
+   <location>Bar</location>
+   <faction>Dvaered</faction>
+   <faction>Empire</faction>
+   <faction>Frontier</faction>
+   <faction>Goddard</faction>
+   <faction>Independent</faction>
+   <faction>Sirius</faction>
+   <faction>Soromid</faction>
+   <faction>Trader</faction>
+  </avail>
+ </mission>
 </Missions>
