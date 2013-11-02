@@ -144,6 +144,7 @@ function land()
       stage = stage + 1
       destplanet, destsys = planet.get(route[stage])
       origin = planet.cur()
+      player.refuel(200)
       tk.msg(stoptitle, stoptext:format(planet.cur():name()))
       joannejumped = true -- She "jumped" into the current system by taking off.
       player.takeoff()

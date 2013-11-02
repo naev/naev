@@ -50,6 +50,7 @@ end
 function hail(p)
     hailed = true
     tk.msg(title[1], string.format(text[1], player.name(), sysname))
+    shadow = misn.markerAdd(system.get("Pas"), "low")
 
     -- The event should now remain active until Pas
     -- Clear the hooks that would otherwise finish it
@@ -68,6 +69,7 @@ function hail(p)
     -- The player may save between now and then, make sure our hook is saved too
     evt.save(true)
     hook.jumpin("jumpin")
+    shadow = misn.markerAdd(system.get("Pas"), "low")
 end
 
 function jumpin()
@@ -98,6 +100,7 @@ function finish()
     end
     if hailhook then
         hook.rm(hailhook)
+        misn.markerRm(shadow)
     end
     evt.finish()
 end
