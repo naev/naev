@@ -284,6 +284,7 @@
    <faction>Frontier</faction>
    <faction>Goddard</faction>
    <faction>Independent</faction>
+   <faction>Soromid</faction>
   </avail>
  </mission>
  <mission name="Defend the System 2">
@@ -300,6 +301,7 @@
    <faction>Frontier</faction>
    <faction>Goddard</faction>
    <faction>Independent</faction>
+   <faction>Soromid</faction>
   </avail>
  </mission>
  <mission name="Defend the System 3">
@@ -316,6 +318,7 @@
    <faction>Frontier</faction>
    <faction>Goddard</faction>
    <faction>Independent</faction>
+   <faction>Soromid</faction>
   </avail>
  </mission>
  <mission name="Empire HCVL">
