@@ -366,7 +366,7 @@
    <unique />
   </flags>
   <avail>
-   <chance>10</chance>
+   <chance>100</chance>
    <location>None</location>
   </avail>
  </mission>
@@ -376,7 +376,7 @@
    <unique />
   </flags>
   <avail>
-   <chance>10</chance>
+   <chance>100</chance>
    <location>None</location>
   </avail>
  </mission>
@@ -413,7 +413,7 @@
    <unique />
   </flags>
   <avail>
-   <chance>10</chance>
+   <chance>100</chance>
    <location>None</location>
   </avail>
  </mission>
@@ -423,7 +423,7 @@
    <unique />
   </flags>
   <avail>
-   <chance>10</chance>
+   <chance>100</chance>
    <location>None</location>
   </avail>
  </mission>
@@ -433,7 +433,7 @@
    <unique />
   </flags>
   <avail>
-   <chance>36</chance>
+   <chance>100</chance>
    <location>None</location>
   </avail>
  </mission>
@@ -454,7 +454,7 @@
    <unique />
   </flags>
   <avail>
-   <chance>50</chance>
+   <chance>10</chance>
    <location>Bar</location>
    <done>Disrupt the Dvaered Patrols</done>
    <cond>planet.cur():faction() == faction.get("Frontier") and player.getRating() &gt; 100</cond>
@@ -466,7 +466,7 @@
    <unique />
   </flags>
   <avail>
-   <chance>50</chance>
+   <chance>100</chance>
    <location>None</location>
   </avail>
  </mission>
@@ -476,7 +476,7 @@
    <unique />
   </flags>
   <avail>
-   <chance>25</chance>
+   <chance>10</chance>
    <location>Bar</location>
    <cond>planet.cur():faction() == faction.get("Dvaered") and planet.cur():class() ~= "0" and var.peek("flfbase_intro") == 1</cond>
   </avail>
@@ -487,7 +487,7 @@
    <unique />
   </flags>
   <avail>
-   <chance>25</chance>
+   <chance>10</chance>
    <location>Bar</location>
    <cond>planet.cur():faction() == faction.get("Dvaered") and planet.cur():class() ~= "0" and var.peek("flfbase_intro") == 3</cond>
   </avail>
@@ -572,7 +572,7 @@
    <unique />
   </flags>
   <avail>
-   <chance>2</chance>
+   <chance>5</chance>
    <location>Bar</location>
    <faction>Dvaered</faction>
    <cond>planet.cur():class() ~= "0"</cond>
@@ -709,7 +709,7 @@
  <mission name="Kidnapped">
   <lua>neutral/kidnapped/traffic_00</lua>
   <avail>
-   <chance>10</chance>
+   <chance>100</chance>
    <location>None</location>
   </avail>
  </mission>
@@ -719,8 +719,8 @@
    <unique />
   </flags>
   <avail>
-   <priority>15</priority>
-   <chance>5</chance>
+   <priority>3</priority>
+   <chance>25</chance>
    <location>Computer</location>
    <system>Shakar</system>
   </avail>
@@ -755,7 +755,7 @@
   </flags>
   <avail>
    <cond>faction.playerStanding("Dvaered") &gt; 5 and player.getRating() &gt; 100</cond>
-   <chance>20</chance>
+   <chance>10</chance>
    <location>Bar</location>
    <planet>Doranthex Prime</planet>
   </avail>
@@ -788,7 +788,7 @@
   </flags>
   <avail>
    <cond>var.peek("heretic_misn_tracker") == nil</cond>
-   <chance>5</chance>
+   <chance>50</chance>
    <location>Bar</location>
    <faction>Sirius</faction>
   </avail>
@@ -800,7 +800,7 @@
   </flags>
   <avail>
    <cond>var.peek("heretic_misn_tracker") == 1</cond>
-   <chance>10</chance>
+   <chance>100</chance>
    <location>Bar</location>
    <planet>Margot</planet>
   </avail>
@@ -812,7 +812,7 @@
   </flags>
   <avail>
    <cond>var.peek("heretic_misn_tracker") == 2</cond>
-   <chance>10</chance>
+   <chance>100</chance>
    <location>Bar</location>
    <planet>The Wringer</planet>
   </avail>
@@ -824,7 +824,7 @@
   </flags>
   <avail>
    <done>The Patrol</done>
-   <chance>10</chance>
+   <chance>100</chance>
    <location>Bar</location>
    <planet>The Wringer</planet>
   </avail>
@@ -836,7 +836,7 @@
   </flags>
   <avail>
    <cond>var.peek("heretic_misn_tracker") == 4</cond>
-   <chance>10</chance>
+   <chance>100</chance>
    <location>Bar</location>
    <planet>The Wringer</planet>
   </avail>
