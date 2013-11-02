@@ -3,12 +3,12 @@
  <event name="reputation">
   <lua>reputation</lua>
   <trigger>load</trigger>
-  <chance>100</chance>
+  <chance>10</chance>
  </event>
  <event name="Pirate Fame">
   <lua>pirate_fame</lua>
   <trigger>enter</trigger>
-  <chance>100</chance>
+  <chance>10</chance>
  </event>
  <event name="start_event">
   <lua>start</lua>
@@ -76,13 +76,13 @@
  <event name="Flintley">
   <lua>neutral/baron_flintley</lua>
   <trigger>land</trigger>
-  <chance>100</chance>
+  <chance>10</chance>
   <cond>player.misnActive("Baron") == false and planet.cur() == planet.get("Tau Station") and player.misnDone("Prince")</cond>
  </event>
  <event name="Prowling baron">
   <lua>neutral/baron_prowl</lua>
   <trigger>enter</trigger>
-  <chance>100</chance>
+  <chance>10</chance>
   <cond>player.misnActive("Baron") == false and player.misnActive("Prince") == false and system.cur() == system.get("Ingot")</cond>
   <flags>
   </flags>
@@ -105,7 +105,7 @@
  <event name="Preacher">
   <lua>sirius/preach</lua>
   <trigger>enter</trigger>
-  <chance>10</chance>
+  <chance>5</chance>
   <cond>system.cur():presence(faction.get("Sirius"))&gt;50 and (not player.evtActive ("Preacher")) and ( (var.peek("si_convert")==nil) or rnd.rnd(1,var.peek("si_convert")+1)==1)</cond>
   <flags>
   </flags>
@@ -145,13 +145,13 @@
  <event name="FLF/DV Derelicts">
   <lua>flf/derelict</lua>
   <trigger>enter</trigger>
-  <chance>40</chance>
+  <chance>4</chance>
   <cond>faction.get("Dvaered"):playerStanding() &gt; 10 and player.getRating() &gt; 100 and system.cur() == system.get("Surano") and not (player.misnDone("Take the Dvaered crew home") or player.misnDone("Deal with the FLF agent")) and not (player.misnActive("Deal with the FLF agent") or player.misnActive("Take the Dvaered crew home")) </cond>
  </event>
  <event name="Animal trouble">
   <lua>neutral/animaltrouble</lua>
   <trigger>enter</trigger>
-  <chance>40</chance>
+  <chance>4</chance>
   <cond>var.peek("shipinfested") == true</cond>
   <flags>
    <unique />
@@ -187,7 +187,7 @@
  <event name="Kidnapped">
   <lua>neutral/kidnapped</lua>
   <trigger>enter</trigger>
-  <chance>15</chance>
+  <chance>5</chance>
   <cond>player.misnDone("Kidnapped") == false and var.peek("traffic_00_active") == nil and system.cur():name() == "Arcturus"</cond>
  </event>
 </Events>
