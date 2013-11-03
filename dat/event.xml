@@ -30,6 +30,10 @@
   <lua>tutorial/tutorial-interstellar</lua>
   <trigger>none</trigger>
  </event>
+ <event name="Tutorial: Communications">
+  <lua>tutorial/tutorial-comms</lua>
+  <trigger>none</trigger>
+ </event>
  <event name="Tutorial: Basic Combat">
   <lua>tutorial/tutorial-combat1</lua>
   <trigger>none</trigger>
@@ -56,10 +60,6 @@
  </event>
  <event name="Tutorial: Missions and Events">
   <lua>tutorial/tutorial-missions</lua>
-  <trigger>none</trigger>
- </event>
- <event name="Tutorial: Communications">
-  <lua>tutorial/tutorial-comms</lua>
   <trigger>none</trigger>
  </event>
  <event name="Derelict">
@@ -151,7 +151,7 @@
  <event name="Animal trouble">
   <lua>neutral/animaltrouble</lua>
   <trigger>enter</trigger>
-  <chance>40</chance>
+  <chance>20</chance>
   <cond>var.peek("shipinfested") == true</cond>
   <flags>
    <unique />
