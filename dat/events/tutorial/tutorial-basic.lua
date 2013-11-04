@@ -12,7 +12,7 @@ else -- default english
 
 This tutorial will teach you what Naev is about, and show you the elementary controls of your ship.]]
     message2 = [[We will start by flying around. Use %s and %s to turn, and %s to accelerate. Try flying around the planet.]]
-    message3 = [[Flying is easy, but stopping is another thing. To stop, you will need to thrust in the direction you're heading in. To make this task easier, you can use %s to reverse your direction. Once you have turned around completely, thrust to decrease your speed. Try this now.]]
+    message3 = [[Flying is easy, but stopping is another thing. To stop, you will need to thrust in the opposite direction you're heading in. To make this task easier, you can use %s to reverse your direction. Once you have turned around completely, thrust to decrease your speed. Try this now.]]
     message4 = [[Well done. Maneuvering and stopping will be important for playing the game.
     
 During the game, however, you will often need to travel great distances within a star system. To make this easier, you can use the overlay system map. It is accessed with %s. Open the overlay map now.]]
