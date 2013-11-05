@@ -15,7 +15,7 @@
  </presence>
  <general>
   <class>S</class>
-  <population>10000</population>
+  <population>20000</population>
   <hide>0.250000</hide>
   <services>
    <land>land_lowclass</land>
@@ -25,7 +25,7 @@
    <commodity/>
   </services>
   <commodities/>
-  <description>Planet Aldous is a giant sea of a fluid toxic to humans. As far as habitability is concerned, planets like this one come dead last on the chart. Nevertheless, a handful of brave souls have chosen to make this planet their home. The ocean may be toxic, but it also happens to be the perfect environment for producing high quality positronic cirquitry.</description>
-  <bar>The spaceport facility is part of a larger structure that houses the entirety of this planet's human habitation. The complex more or less floats on the surface and is tightly sealed against the outside environment. Furthermore, the complex is highly compartimentalized, in case a leak somehow occurs. Even the tiniest exposure to the toxic material in Aldous' ocean is lethal. For this reason, some spacers insist on wearing breathing masks, even in the spaceport bar, just to be on the safe side.</bar>
+  <description>The planet Aldous is a giant sea of a fluid toxic to humans. Even the tiniest exposure to the toxic material in Aldous' ocean is lethal. As far as habitability is concerned, planets like this one come in dead last on the list. Nevertheless, a handful of brave souls have chosen to make this planet their home. The ocean may be toxic, but it also happens to be the perfect environment for producing high quality positronic circuitry.</description>
+  <bar>The spaceport facility is part of a larger structure that houses the entirety of this planet's human inhabitants. The complex, more or less, floats on the surface and is tightly sealed against the outside environment. Furthermore, the complex is highly compartimentalized, in case a leak somehow occurs. Some spacers even insist on wearing breathing masks, even in the spaceport bar, just to be on the safe side.</bar>
  </general>
 </asset>

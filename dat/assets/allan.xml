@@ -15,7 +15,7 @@
  </presence>
  <general>
   <class>0</class>
-  <population>15000</population>
+  <population>10000</population>
   <hide>0.750000</hide>
   <services>
    <land/>
@@ -24,7 +24,7 @@
    <missions/>
   </services>
   <commodities/>
-  <description>Allan was once a patrol station set out to patrol the southern reaches of space. But with the Incident and the regression of Imperial power, Allan was left behind. It is now barely maintained by a small contigent of Dvaered soldiers and Engineers for the use of traders.</description>
-  <bar>Allan does not have the resources for much, but the bar looks decent enough, with clean facilities, decent food and strong drink. A small respite from a harsh galaxy.</bar>
+  <description>Allan was once a patrol station sent out to patrol the southern reaches of space. With the Incident and the regression of Imperial power, Allan was left behind. It is now barely maintained by a small contigent of Dvaered soldiers and engineers for the use of traders.</description>
+  <bar>Allan does not have the resources for much but the bar looks decent enough, with clean facilities, decent food and strong drink. For its patrons it provides a small respite from the harsh galaxy.</bar>
  </general>
 </asset>

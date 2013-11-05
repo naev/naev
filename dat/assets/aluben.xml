@@ -5,11 +5,11 @@
   <y>750.000000</y>
  </pos>
  <GFX>
-  <space>J04.png</space>
+  <space>J03.png</space>
   <exterior>methane.png</exterior>
  </GFX>
  <general>
-  <class>A</class>
+  <class>J</class>
   <population>0</population>
   <hide>0.010000</hide>
   <services/>

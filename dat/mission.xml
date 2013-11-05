@@ -726,7 +726,7 @@
   </avail>
  </mission>
  <mission name="The Runaway">
-  <lua>runaway/runaway_cynthia</lua>
+  <lua>neutral/runaway/runaway_cynthia</lua>
   <flags>
     <unique />
   </flags>
@@ -737,7 +737,7 @@
   </avail>
  </mission>
  <mission name="The Search for Cynthia">
-  <lua>runaway/runaway_search</lua>
+  <lua>neutral/runaway/runaway_search</lua>
   <flags>
     <unique />
   </flags>

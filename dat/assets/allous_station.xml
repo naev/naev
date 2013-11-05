@@ -14,7 +14,7 @@
   <range>0</range>
  </presence>
  <general>
-  <class>A</class>
+  <class>0</class>
   <population>12445</population>
   <hide>0.250000</hide>
   <services>
@@ -23,7 +23,7 @@
    <bar/>
   </services>
   <commodities/>
-  <description>Despite the name, Allous Station is not a military post. It is more of a scientific observation center and deep-space observatory, originally mena tto keep an eye on the high-interference nebula of PSO. Even Dvaered has a scientific community, and they paid for this station of of their own pockets. Of course, once it was built, they no longer have to pay for it as numerous warlords with dreams of intellectualism are just happy to offer their patronage.</description>
-  <bar>This bar looks like something one would expect from Za'lek space. Scientists and soldiers are interacting with suprising friendliness and conviality. Of course, the local warlords would tolerate nothing less.</bar>
+  <description>Despite the name, Allous Station is not a military outpost, it is more of a scientific observation centre and deep-space observatory. Originally it was meant to keep an eye on the high-interference nebula of PSO. Even the Dvaered have a scientific community, and they paid for this station out of their own pockets. Of course, once it was built, there was no longer any need for them to pay for it as numerous warlords, with dreams of intellectualism, are happy to offer their patronage.</description>
+  <bar>This bar looks like something one would expect from Za'lek space. Scientists and soldiers are interacting with suprising friendliness and conviviality. Of course, the local warlords would, and do, tolerate nothing less.</bar>
  </general>
 </asset>
