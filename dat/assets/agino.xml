@@ -14,7 +14,7 @@
   <range>2</range>
  </presence>
  <general>
-  <class>A</class>
+  <class>M</class>
   <population>4000000000</population>
   <hide>0.250000</hide>
   <services>
@@ -27,8 +27,8 @@
    <shipyard/>
   </services>
   <commodities/>
-  <description>Agino is a bustling planet mostly full of middle class Soromid citizens. The planet doesn't excel in any area when compared to the worlds in the Soromid core, but this being a remote part of Soromid space it is still a local highlight.</description>
-  <bar>The person running this spaceport bar is a portly Soromid man named Alverik Sogheem. Alverik usually mans the bar himself, and he knows all his customers by name and face. It doesn't matter how long you've been away, or where you've been in the galaxy. On your return to Agino, Alverik will remember who you are and cheerfully pour you a drink. Some spacers secretly suspect he has an audiovisual database installed in his head.</bar>
+  <description>Agino is a bustling planet mostly full of middle-class Soromid citizens. The planet doesn't excel in any area when compared to the worlds in the Soromid core but, this being a remote part of Soromid space, it is still a local highlight.</description>
+  <bar>The person running this spaceport bar is a portly Soromid man named Alverik Sogheem. Alverik usually mans the bar himself and he knows all his customers by name and face. It doesn't matter how long you've been away or where you've been in the galaxy, on your return to Agino, Alverik will remember who you are and cheerfully pour you a drink. Some spacers secretly suspect he has an audiovisual database installed in his head.</bar>
  </general>
  <tech>
   <item>Systems Medium</item>

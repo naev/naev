@@ -499,17 +499,6 @@
        * nebula32.png
        * nebula33.png
 
- * Author: NASA, License: PD
-   * gfx
-     * bkg
-       * nebula02.png
-       * nebula04.png
-       * nebula10.png
-       * nebula12.png
-       * nebula16.png
-       * nebula17.png
-       * nebula19.png
-
  * Author: Galileus, License: CC-by-sa 3.0
    * gfx
      * ship
@@ -605,3 +594,88 @@
          * M10.png
          * moon-X00.png
          * O04.png
+
+ * Author: NASA, License: PD
+   * gfx
+     * bkg
+       * nebula02.png
+       * nebula04.png
+       * nebula10.png
+       * nebula12.png
+       * nebula16.png
+       * nebula17.png
+       * nebula19.png
+
+ * Author: NASA, License: PD (with modifications by PhoenixRiver (License: PD))
+   * gfx
+     * planet
+       * space
+         * D03.png
+         * D04.png
+         * D05.png
+         * D06.png
+         * D07.png
+         * asteroid-D00.png
+         * asteroid-D01.png
+         * asteroid-D02.png
+         * asteroid-D03.png
+         * asteroid-D04.png
+         * asteroid-D05.png
+         * asteroid-D06.png
+         * asteroid-D07.png
+         * asteroid-D08.png
+         * asteroid-D09.png
+         * asteroid-D10.png
+         * asteroid-D11.png
+         * asteroid-D12.png
+         * asteroid-D13.png
+         * asteroid-D14.png
+         * asteroid-D15.png
+         * asteroid-D16.png
+         * asteroid-D17.png
+         * asteroid-D18.png
+         * asteroid-D19.png
+         * asteroid-D20.png
+         * asteroid-D21.png
+         * asteroid-D22.png
+         * asteroid-D23.png
+         * asteroid-D24.png
+         * asteroid-D25.png
+         * asteroid-D26.png
+         * asteroid-D27.png
+         * asteroid-D28.png
+         * asteroid-D29.png
+         * asteroid-D30.png
+         * asteroid-D31.png
+         * asteroid-D32.png
+         * asteroid-D33.png
+         * asteroid-D34.png
+         * asteroid-D35.png
+         * asteroid-D36.png
+         * asteroid-D37.png
+         * asteroid-D38.png
+         * asteroid-D39.png
+         * asteroid-D40.png
+         * asteroid-D41.png
+         * asteroid-D42.png
+         * asteroid-D43.png
+         * asteroid-D44.png
+         * asteroid-D45.png
+         * asteroid-D46.png
+         * asteroid-D47.png
+         * asteroid-D48.png
+         * asteroid-D49.png
+         * asteroid-D50.png
+         * asteroid-D51.png
+         * asteroid-D52.png
+         * asteroid-D53.png
+         * asteroid-D54.png
+         * asteroid-D55.png
+         * asteroid-D56.png
+         * asteroid-D57.png
+         * asteroid-D58.png
+         * asteroid-D59.png
+         * asteroid-D60.png
+         * asteroid-D61.png
+         * asteroid-D62.png
+         * asteroid-D63.png

@@ -6,7 +6,7 @@ include("dat/events/tutorial/tutorial-common.lua")
 lang = naev.lang()
 if lang == "es" then
 else -- default english
-    title1 = "Tutorial: Missions and events"
+    title1 = "Tutorial: Communications"
     message1 = [[Welcome to the communications tutorial.
     
 This tutorial will show you how you can contact other ships, as well as planets and stations.]]
@@ -69,6 +69,7 @@ end
 
 -- Timer hook to allow the ship to take off fully.
 function shiptakeoff()
+    commship:hailPlayer()
     tk.msg(title1, message5:format(tutGetKey("hail"), tutGetKey("autohail")))
     omsg = player.omsgAdd(autohailomsg:format(tutGetKey("autohail")), 0)
     shiphook = hook.pilot(commship, "hail", "hailship")
