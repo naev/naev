@@ -14,7 +14,7 @@
   <range>2</range>
  </presence>
  <general>
-  <class>A</class>
+  <class>1</class>
   <population>500</population>
   <hide>0.750000</hide>
   <services>
@@ -22,6 +22,6 @@
    <refuel/>
   </services>
   <commodities/>
-  <description>Coral Station acts as a border guard. The forces stationed here are the first line of defense against threats coming from the north, and inspect all trade traffic entering Sirius space this way.</description>
+  <description>Coral Station acts as a border guard. The forces stationed here are the first line of defense against threats coming from outside Sirian space. The station inspects all trade traffic entering Sirius space this way as well as keeping an eye on outbound traffic too.</description>
  </general>
 </asset>

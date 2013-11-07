@@ -15,7 +15,7 @@
  </presence>
  <general>
   <class>0</class>
-  <population>2000</population>
+  <population>5000</population>
   <hide>0.250000</hide>
   <services>
    <land/>
@@ -25,8 +25,8 @@
    <outfits/>
   </services>
   <commodities/>
-  <description>This is a weapons manufacturing plant run by a local businessman called Frederick Cornwal. Cornwal makes money by mass producing ammunition and civilian-licensed weaponry, importing raw materials from the nearby planets of Wagenni and Sollebor and selling the finished products out of system for a profit. Cornwal is sympathetic towards the people living on the harsh worlds in Undergate, and always makes sure they receive a generous price for their exports.</description>
-  <bar>For such a remote station, Cornwal Ordinance is remarkably well frequented by traders. Frederick Cornwal is a talented businessman to have spread word of his merchandise so widely throughout Sirius space.</bar>
+  <description>This is a weapons manufacturing plant run by a local businessman called Frederick Cornwal. Cornwal makes money by mass producing ammunition and civilian-licensed weaponry. Cornwal imports raw materials from the nearby planets of Wagenni and Sollebor and sells the finished products out-of-system for a tidy profit. Cornwal is sympathetic towards the people living on the harsh worlds in Undergate and always makes sure they receive a generous price for their exports.</description>
+  <bar>For such a remote station, Cornwal Ordinance is remarkably well frequented by traders. Frederick Cornwal is a talented businessman to have spread word of his merchandise so widely throughout Sirius space. The regular shipments required to keep business going helps too, so it is with the bar too.</bar>
  </general>
  <tech>
   <item>Systems Low</item>

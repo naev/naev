@@ -14,8 +14,8 @@
   <range>2</range>
  </presence>
  <general>
-  <class>0</class>
-  <population>700</population>
+  <class>1</class>
+  <population>1400</population>
   <hide>0.750000</hide>
   <services>
    <land/>
@@ -24,7 +24,7 @@
    <missions/>
   </services>
   <commodities/>
-  <description>Named after the guardian dog of hell for its role in monitoring and observing the immense Sol nebula. It was created shortly after the nebula stabilized. Exact details are confidential and there's more than enough military influence to make it suspicious. With all the conspiracy theories around the Incident, one can never be too sure where reality ends and fiction starts.</description>
-  <bar>The bar is maintained by off-duty scientists and soldiers. It's rather small and has a minuscule selection of beverages. There's little ambient noise; it seems as though boredom has gotten the best of most personnel.</bar>
+  <description>Named after the guardian dog of the underworld for its role in monitoring and observing the immense Sol nebula. It was created shortly after the nebula stabilized. Exact details are confidential and there's more than enough military influence to make it suspicious. With all the conspiracy theories around the Incident, one can never be too sure where reality ends and fiction begins.</description>
+  <bar>The bar is maintained by off-duty scientists and soldiers. It's rather small and has a minuscule selection of beverages. There's little ambient noise; it seems as though boredom has gotten the best of most of the souls aboard.</bar>
  </general>
 </asset>
