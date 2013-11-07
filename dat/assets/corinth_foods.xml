@@ -16,7 +16,7 @@
  <general>
   <class>0</class>
   <population>10000</population>
-  <hide>0.100000</hide>
+  <hide>0.750000</hide>
   <services>
    <land/>
    <refuel/>
@@ -24,7 +24,7 @@
    <missions/>
   </services>
   <commodities/>
-  <description>Corinth foods is a primary source of food for the Za'lek worlds. The Za'lek's advanced farming techniques means that this relatively small station is capable of feeding a large number of people. Shuttles frequently stop and go here, and a number of scientists use this station as ground zero for many botany experiments.</description>
+  <description>Corinth foods is a primary source of food for the local Za'lek worlds. The Za'lek's advanced farming techniques means that this relatively small station is capable of feeding a large number of people. Shuttles frequently stop and go here, and a number of scientists use this station as ground zero for many botany experiments.</description>
   <bar>The bar is clean and relatively elaborate, with plants of all kind in the windows. The bartender needs several assistants to keep up with the demand for food and drink.</bar>
  </general>
 </asset>

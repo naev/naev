@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<asset name="UHP-1001">
+<asset name="Warnecke II">
  <pos>
-  <x>1027.828246</x>
-  <y>1009.253037</y>
+  <x>-105.345516</x>
+  <y>-6.449725</y>
  </pos>
  <GFX>
-  <space>J04.png</space>
-  <exterior>station01.png</exterior>
+  <space>moon-J00.png</space>
+  <exterior>station03.png</exterior>
  </GFX>
  <general>
   <class>J</class>
   <population>0</population>
-  <hide>0.250000</hide>
+  <hide>0.500000</hide>
   <services/>
  </general>
 </asset>

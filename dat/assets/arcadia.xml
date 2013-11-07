@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <asset name="Arcadia">
  <pos>
-  <x>5207.573292</x>
-  <y>-3882.569437</y>
+  <x>4505.013108</x>
+  <y>-5546.527767</y>
  </pos>
  <GFX>
-  <space>D00.png</space>
+  <space>C01.png</space>
   <exterior>forest.png</exterior>
  </GFX>
  <presence>

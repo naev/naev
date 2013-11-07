@@ -30,11 +30,12 @@ function create()
 		mem.bribe_paid = "\"Temporarily stopping fire.\""
 	else
 		-- FIXME: Could be made more Za'lek-like.
+		-- Will this work? ~Areze
 		bribe_no = {
-			"\"You won't buy your way out of this one.\"",
-			"\"The Empire likes to make examples out of scum like you.\"",
-			"\"I'm not interested in your blood money!\"",
-			"\"All the money in the world won't save you now!\""
+			"\"Keep you cash, you troglodyte.\"",
+			"\"Don't make me laugh. Eat laser beam!\"",
+			"\"My drones aren't interested in your ill-gotten gains and neither am I!\"",
+			"\"All the money in the galaxy won't save you now!\""
 		}
 		mem.bribe_no = bribe_no[ rnd.rnd(1,#bribe_no) ]
 	end
@@ -54,13 +55,14 @@ function taunt ( target, offense )
 	-- XXX: Put something stupid instead of the Sirian taunts
 	if offense then
 		taunts = {
-			"The universe shall be cleansed of your presence!"
+			"Move in to engage. Cook this clown!"
 		}
 	else
 		taunts = {
-			"Science protects me!",
-			"You have made a grave error!",
-			"You do wrong in your provocations!"
+			"We're being attacked! Prepare defense protocols!",
+			"You just made a big mistake!",
+			"Our technology will fix your attitide!",
+			"You wanna do this? Have it your way."
 		}
 	end
 

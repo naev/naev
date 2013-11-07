@@ -18,13 +18,13 @@ function equip( p )
    end
 end
 
-
+-- Added a few beamers to Zlk. Need more. ~Areze
 -- CANNONS
 function equip_forwardEmpLow ()
    return { "Laser Cannon MK2", "Laser Cannon MK3" }
 end
 function equip_forwardEmpMed ()
-   return { "Laser Cannon MK3", "Ripper Cannon", "Heavy Ripper Cannon" }
+   return { "Laser Cannon MK3", "Orion Beam", "Heavy Ripper Cannon" }
 end
 -- TURRETS
 function equip_turretEmpLow ()
@@ -34,7 +34,7 @@ function equip_turretEmpMed ()
    return { "Laser Turret MK2", "Laser Turret MK3" }
 end
 function equip_turretEmpHig ()
-   return { "Heavy Laser", "Turbolaser" }
+   return { "Heavy Laser", "Ragnarok Beam" }
 end
 -- RANGED
 function equip_rangedEmp ()

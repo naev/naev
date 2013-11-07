@@ -14,15 +14,17 @@
   <asset>Arcadia</asset>
   <asset>Gastan</asset>
   <asset>Seiben IV</asset>
+  <asset>Seiben XI</asset>
+  <asset>Virtual Civilian Standard</asset>
  </assets>
  <jumps>
   <jump target="Poltergeist">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>0.000000</hide>
   </jump>
   <jump target="Za'lek">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>0.000000</hide>
   </jump>
  </jumps>
 </ssys>

@@ -12,7 +12,13 @@
  </pos>
  <assets>
   <asset>Atryssa</asset>
+  <asset>House Za'lek Central Station</asset>
   <asset>Ocata</asset>
+  <asset>Virtual Civilian Standard</asset>
+  <asset>Virtual Civilian Standard</asset>
+  <asset>Virtual Civilian Standard</asset>
+  <asset>Virtual Trader Area</asset>
+  <asset>Virtual Trader Area</asset>
   <asset>Virtual Za'lek Medium</asset>
   <asset>Za'lek II</asset>
   <asset>Za'lek IV</asset>
@@ -32,7 +38,7 @@
   </jump>
   <jump target="Seiben">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>0.000000</hide>
   </jump>
  </jumps>
 </ssys>
