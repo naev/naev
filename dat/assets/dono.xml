@@ -6,7 +6,7 @@
  </pos>
  <GFX>
   <space>moon-M06.png</space>
-  <exterior>oceanic2.png</exterior>
+  <exterior>forest.png</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>
@@ -15,7 +15,7 @@
  </presence>
  <general>
   <class>M</class>
-  <population>100000</population>
+  <population>1000000</population>
   <hide>0.500000</hide>
   <services>
    <land/>
@@ -25,7 +25,7 @@
    <commodity/>
   </services>
   <commodities/>
-  <description>Dono is one of the more laid-back Soromid worlds. It is quite Earth-like, and the Soromid make use of the strange properties of the local flora and fauna for their genetic experiments. It is a quiet world, with little to stand out about it.</description>
-  <bar>The bar is patronised by scientists, laborers and regular civilians, mingling with little conflict. The service is acceptable and the food and drink pass par. A sleepy bar, that's for sure.</bar>
+  <description>Dono is one of the more laid-back Soromid worlds. It is quite Earth-like and the Soromid make use of the strange properties of the local flora and fauna in their genetic experiments. It is a quiet world, with little that stands out about it.</description>
+  <bar>The bar's patrons are scientists, labourers and regular civilians, mingling with little conflict. The service is acceptable and the food and drink average. A sleepy little bar, that's for sure.</bar>
  </general>
 </asset>
