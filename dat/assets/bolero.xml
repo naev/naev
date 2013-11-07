@@ -14,8 +14,8 @@
   <range>0</range>
  </presence>
  <general>
-  <class>M</class>
-  <population>456745</population>
+  <class>O</class>
+  <population>45674500</population>
   <hide>0.250000</hide>
   <services>
    <land>land_lowclass</land>
@@ -26,7 +26,7 @@
   </services>
   <commodities/>
   <description>Bolero is one of the empire's most sucessful planets. The population is propserous and sucessful, and the planet's conditions are mild. Although it is still treated as something of a backwater, it is becoming increasingly important in Imperial politics.</description>
-  <bar>The bar here is an old-Earth style pub, with a low cieling, warm beer, and good food. The clients are all polite and cheerful. Not suprisingl, given the bouncers along the walls.</bar>
+  <bar>The bar here is an old-Earth style pub, with a low cieling, warm beer and good food. The atmosphere is warm and welcoming, the clients are all polite and cheerful and the bouncers barely loom at all.</bar>
  </general>
  <tech>
   <item>Systems Low</item>
