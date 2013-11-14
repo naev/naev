@@ -5,7 +5,7 @@
   <y>-600.254448</y>
  </pos>
  <GFX>
-  <space>I02.png</space>
+  <space>J09.png</space>
   <exterior>station04.png</exterior>
  </GFX>
  <presence>
@@ -14,7 +14,7 @@
   <range>8</range>
  </presence>
  <general>
-  <class>I</class>
+  <class>J</class>
   <population>15000</population>
   <hide>0.000000</hide>
   <services>
