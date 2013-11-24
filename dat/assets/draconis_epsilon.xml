@@ -6,7 +6,7 @@
  </pos>
  <GFX>
   <space>M01.png</space>
-  <exterior>traderoom.png</exterior>
+  <exterior>station04.png</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>
@@ -15,7 +15,7 @@
  </presence>
  <general>
   <class>M</class>
-  <population>7000000000</population>
+  <population>7900000000</population>
   <hide>0.250000</hide>
   <services>
    <land/>
