@@ -14,8 +14,8 @@
   <range>0</range>
  </presence>
  <general>
-  <class>0</class>
-  <population>5000</population>
+  <class>1</class>
+  <population>1000</population>
   <hide>0.250000</hide>
   <services>
    <land/>
@@ -23,7 +23,7 @@
    <bar/>
   </services>
   <commodities/>
-  <description>Claudius Mehan is the gateway to Za'lek space. The station has had it's crew slahsed several times over the years, but it stalwartly remains, and few pirates manage to get past it to terrorize the greater Za'lek systems.</description>
-  <bar>The bar is full of off-duty soldiers. It is fairly quiet and serene, as whenever pirates come close, a swarm of automated drones attacks without mercy and restraint. It leaves a lot of free tiome for the soldiers.</bar>
+  <description>Claudius Mehan is the gateway to Za'lek space. The station has had it's crew slahsed several times over the years but it stalwartly remains, despite this few pirates manage to get past it to terrorise the greater Za'lek systems.</description>
+  <bar>The bar is full of off-duty soldiers. It is fairly quiet and serene as whenever pirates come close a swarm of automated drones attacks without mercy or restraint. These automated systems give the soldiers a lot of free time and the bar is, unsurprisingly, a popular hang-out.</bar>
  </general>
 </asset>

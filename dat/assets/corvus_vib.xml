@@ -15,8 +15,8 @@
  </presence>
  <general>
   <class>C</class>
-  <population>7500</population>
-  <hide>0.500000</hide>
+  <population>75000</population>
+  <hide>0.600000</hide>
   <services>
    <land/>
    <refuel/>
@@ -24,7 +24,7 @@
    <commodity/>
   </services>
   <commodities/>
-  <description>(null)</description>
-  <bar>(null)</bar>
+  <description>Being a small moon in an already growing system fewer colonists have paid attention to Corvus VI-b - the name itself is a bit of a giveaway. However the colonists of this moon appreciate it's larger neighbours which, inadvertantly, provide protection by being more important, juicier and more obvious targets.</description>
+  <bar>A small bar but clearly with space to expand into and, given the current fortunes of this system, something the owner must already be considering given how crowded it is. Then again, given the interesting position this system occupies in space, maybe caution is the better part of valour.</bar>
  </general>
 </asset>

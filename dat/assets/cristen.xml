@@ -14,8 +14,8 @@
   <range>2</range>
  </presence>
  <general>
-  <class>A</class>
-  <population>100000</population>
+  <class>G</class>
+  <population>150000</population>
   <hide>0.250000</hide>
   <services>
    <land/>
@@ -25,7 +25,7 @@
    <commodity/>
   </services>
   <commodities/>
-  <description>All water on Cristen is toxic, and as such the planet is inhospitable to all but the most hardy forms of life. However, the toxicity of the water system also means that certain substances can be obtained most easily here.</description>
-  <bar>The settlement on Cristen is one giant complex, isolated from the outside environment. All outside work must be done in special hazard suits. Direct exposure of any kind will likely be fatal. The spaceport bar is one of the best protected facilities on the planet - the local government considers the lives of potential trading partners of greater importance than the lives of its workers.</bar>
+  <description>All water on Cristen is toxic and, as such, the planet is inhospitable to all but the most hardy forms of life. However, the toxicity of the water system also means that certain substances can be obtained very easily here. Due to this the settlement on Cristen is one giant complex, isolated from the outside environment.</description>
+  <bar>The spaceport bar is one of the best protected facilities on the planet. The local government considers the lives of potential trading partners of greater importance than the lives of its workers. Having said that they do get to wear hazard suits outside of the main domes and they get a rather nice bar too - certainly not something many Dvaereds can claim.</bar>
  </general>
 </asset>
