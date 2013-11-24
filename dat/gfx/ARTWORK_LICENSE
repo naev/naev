@@ -595,6 +595,12 @@
          * moon-X00.png
          * O04.png
 
+ * Author: PhoenixRiver, License: GPLv3
+   * gfx
+     * portraits
+       * neutral
+         * female1.png
+
  * Author: NASA, License: PD
    * gfx
      * bkg
@@ -679,3 +685,9 @@
          * asteroid-D61.png
          * asteroid-D62.png
          * asteroid-D63.png
+
+ * Author: Bobbens, License: PD (with modifications by PhoenixRiver (License: PD))
+   * gfx
+     * planet
+       * exterior
+         * asteroid.png
