@@ -6,10 +6,10 @@
  </pos>
  <GFX>
   <space>O02.png</space>
-  <exterior>station00.png</exterior>
+  <exterior>oceanic.png</exterior>
  </GFX>
  <general>
-  <class>A</class>
+  <class>O</class>
   <population>0</population>
   <hide>0.250000</hide>
   <services/>
