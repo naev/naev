@@ -15,7 +15,7 @@
  </presence>
  <general>
   <class>M</class>
-  <population>255014</population>
+  <population>2550140</population>
   <hide>0.250000</hide>
   <services>
    <land>land_lowclass</land>
@@ -26,6 +26,6 @@
   </services>
   <commodities/>
   <description>Colley is a popular retirement and vacation spot due to its quiet and unassuming nature. The world has mild weather and is ideally closeted away from the cares and worries of the wider galaxy.</description>
-  <bar>The average age of the patrons here seems to be around seventy, but they look as alert as they have always been and you feel their eyes look you over as you sit down to order a drink.</bar>
+  <bar>The average age of the patrons here seems to be around seventy, but they look as alert as they have ever been and you feel their eyes look you over as you sit down to order a drink.</bar>
  </general>
 </asset>

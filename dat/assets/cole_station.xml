@@ -14,8 +14,8 @@
   <range>1</range>
  </presence>
  <general>
-  <class>1</class>
-  <population>2000</population>
+  <class>0</class>
+  <population>2500</population>
   <hide>0.010000</hide>
   <services>
    <land/>
@@ -23,6 +23,6 @@
    <missions/>
   </services>
   <commodities/>
-  <description>Cole station is the last civilian station on the route to Doeston, where many transport ships stop to refuel and regenerate their shields in safety from the radiation of the nebula.</description>
+  <description>Cole station is the last civilian station on the route to Doeston. Many transport ships stop to refuel and regenerate their shields within, safely away from the radiation of the nebula.</description>
  </general>
 </asset>

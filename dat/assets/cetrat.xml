@@ -15,7 +15,7 @@
  </presence>
  <general>
   <class>O</class>
-  <population>930000</population>
+  <population>9300000</population>
   <hide>0.250000</hide>
   <services>
    <land/>
@@ -29,8 +29,8 @@
    <commodity>Medicine</commodity>
    <commodity>Luxury Goods</commodity>
   </commodities>
-  <description>Cetrat is an aquatic planet known for its medical algae. No one has been able to reproduce it exactly as it is in the wild, but with the abundance of it throughout the planet's massive ocean, there has been little effort in that field. Cetrat was colonized by the eighth colony ship launched during the First Growth, Brooklyn.</description>
-  <bar>The bar is very large, and yet has fairly few patrons. You notice the drink list has a "living" menu. When you ask the bartender about them, he says they specialize in drinks containing living creatures. Generally jellyfish, but sometimes small cephalopods, or more exotic beings. As exotic cultures go, Cetrat is among the stranger.</bar>
+  <description>Cetrat is an aquatic planet known for its medical algae. No one has been able to reproduce it exactly as it is in the wild but, with the abundance of it throughout the planet's massive ocean, there has been little effort in that field. Cetrat was colonized by the eighth colony ship launched during the First Growth, Brooklyn.</description>
+  <bar>The bar is very large and yet has fairly few patrons. You notice the drinks list has a "living" menu. When you ask the bartender about them, he says they specialize in drinks containing living creatures. Generally jellyfish, but sometimes small cephalopods or more exotic beings. As exotic cultures go, Cetrat is among the stranger.</bar>
  </general>
  <tech>
   <item>Hulls Medium</item>
