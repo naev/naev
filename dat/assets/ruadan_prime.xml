@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <asset name="Ruadan Prime">
  <pos>
-  <x>-3826.077024</x>
-  <y>1566.380526</y>
+  <x>4399.638416</x>
+  <y>3443.389418</y>
  </pos>
  <GFX>
   <space>M09.png</space>
@@ -10,7 +10,7 @@
  </GFX>
  <presence>
   <faction>Za'lek</faction>
-  <value>800.000000</value>
+  <value>1000.000000</value>
   <range>1</range>
  </presence>
  <general>

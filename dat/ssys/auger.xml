@@ -10,7 +10,9 @@
   <x>-386.298904</x>
   <y>-932.799526</y>
  </pos>
- <assets/>
+ <assets>
+  <asset>Virtual Pirate Unpresence</asset>
+ </assets>
  <jumps>
   <jump target="Astana">
    <autopos/>
