@@ -186,7 +186,7 @@
  <faction name="Za'lek">
   <known/>
   <logo>zalek</logo>
-  <colour>purple</colour>
+  <colour>DarkRed</colour>
   <longname>House Za'lek</longname>
   <player>2</player>
   <spawn>zalek</spawn>

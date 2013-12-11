@@ -76,7 +76,7 @@ function equip_empireMilitary( p, shipsize )
 
       -- Fighter
       elseif class == "Fighter" then
-         equip_cores(p, "Tricon Naga Mk9 Engine", "Milspec Orion 3702 Core System", "Schafer & Kane Light Stealth Plating")
+         equip_cores(p, "Tricon Naga Mk9 Engine", "Milspec Orion 3702 Core System", "Schafer & Kane Light Combat Plating")
          use_primary    = nhigh-1
          use_secondary  = 1
          addWeapons( equip_forwardEmpMed(), use_primary )

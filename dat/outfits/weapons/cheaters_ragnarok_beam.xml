@@ -10,7 +10,7 @@
   <cpu>-1</cpu>
  </general>
  <specific type="beam">
-  <delay>10000</delay>
+  <delay>6</delay>
   <duration>5</duration>
   <range>400</range>
   <turn>35</turn>
