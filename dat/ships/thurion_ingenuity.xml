@@ -33,7 +33,7 @@
  </slots>
  <stats>
   <ew_hide>30</ew_hide>
-  <nebula_dmg_shield>-80</nebula_dmg_shield>
-  <nebula_dmg_armour>-97</nebula_dmg_armour>
+  <nebu_absorb_shield>80</nebu_absorb_shield>
+  <nebu_absorb_armour>97</nebu_absorb_armour>
  </stats>
 </ship>

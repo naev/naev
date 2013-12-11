@@ -6,7 +6,7 @@
  </pos>
  <GFX>
   <space>M07.png</space>
-  <exterior>lava.png</exterior>
+  <exterior>forest.png</exterior>
  </GFX>
  <presence>
   <faction>Soromid</faction>
@@ -15,7 +15,7 @@
  </presence>
  <general>
   <class>M</class>
-  <population>4500000000</population>
+  <population>450000000</population>
   <hide>0.250000</hide>
   <services>
    <land/>
@@ -28,7 +28,7 @@
   </services>
   <commodities/>
   <description>Despite bordering on a dangerous sector of space, the Corvus system, and Crow in particular, are thriving. The planet is a frontier of culture, commerce and prosperity. Even for the Soromid, one of the youngest societies in the galaxy, being away from the core worlds can give people the breathing room to live on the edge.</description>
-  <bar>This bar was designed with acoustics in mind. The background music is pervasive yet unobtrusive, and conversations held at one table won't disturb those at another.</bar>
+  <bar>This bar was designed with acoustics in mind. The background music is pervasive, yet unobtrusive and conversations held at one table won't disturb those at another. Given some of the newer customs cropping up here a lot of out-of-system traders are thankful for this.</bar>
  </general>
  <tech>
   <item>Systems Low</item>

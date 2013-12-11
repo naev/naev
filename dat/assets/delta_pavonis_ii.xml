@@ -6,10 +6,10 @@
  </pos>
  <GFX>
   <space>C01.png</space>
-  <exterior>station02.png</exterior>
+  <exterior>lava.png</exterior>
  </GFX>
  <general>
-  <class>A</class>
+  <class>C</class>
   <population>0</population>
   <hide>0.250000</hide>
   <services/>

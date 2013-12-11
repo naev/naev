@@ -6,7 +6,7 @@
  </pos>
  <GFX>
   <space>M09.png</space>
-  <exterior>oceanic2.png</exterior>
+  <exterior>oceanic.png</exterior>
  </GFX>
  <presence>
   <faction>Empire</faction>
@@ -15,7 +15,7 @@
  </presence>
  <general>
   <class>M</class>
-  <population>9800000</population>
+  <population>98000000</population>
   <hide>0.250000</hide>
   <services>
    <land/>
@@ -27,7 +27,7 @@
    <shipyard/>
   </services>
   <commodities/>
-  <description>Dolmen is a nice planet, but it's only sparsely populated. The local government aims to keep the planet free from crime, and while this is likely to be an unrealistic goal, the strict immigration policy does help to filter out the more unsavory characters.</description>
+  <description>Dolmen is a nice planet but it's only sparsely populated. The local government aims to keep the planet free from crime and, while this is likely to be an unrealistic goal, the strict immigration policy does help to filter out the more unsavory characters.</description>
   <bar>The spaceport bar is officially outside the borders of the Dolmen global political area. This legal construction was necessary for Dolmen to allow both free trade and a tight migration policy. An interesting side effect is that all drinks in this bar are tax free.</bar>
  </general>
  <tech>

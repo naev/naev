@@ -14,7 +14,7 @@
   <range>2</range>
  </presence>
  <general>
-  <class>A</class>
+  <class>S</class>
   <population>25114</population>
   <hide>0.250000</hide>
   <services>
@@ -27,8 +27,8 @@
    <shipyard/>
   </services>
   <commodities/>
-  <description>One of the Dvaered gas-mining operations are located here. The gas is refined and turned into fuel for Dvaered ships.The facilites here are built solely for this purpose and are not built for comfort.</description>
-  <bar>The bar is filled with miners and garrison troopers, like most Dvaered bars. Unlike most bars, this one is small and rather clean. Rather shocking, actually.</bar>
+  <description>One of the Dvaered gas-mining operations is located here. The gas is refined and turned into fuel for Dvaered ships. The facilites here are built solely for this purpose and no other, comfort was the last thing on the designers' minds.</description>
+  <bar>The bar is filled with miners and garrison troops, like most Dvaered bars. Copious drinking is also most certainly on the cards, like most Dvaered bars. Unlike most Dvaered bars, this one is small and rather clean. Rather shocking, especially for outsiders.</bar>
  </general>
  <tech>
   <item>Systems Low</item>
