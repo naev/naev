@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <asset name="House Za'lek Central Station">
  <pos>
-  <x>8720.374211</x>
-  <y>4483.443278</y>
+  <x>10464.449053</x>
+  <y>5380.131934</y>
  </pos>
  <GFX>
   <space>zalek_hq.png</space>
@@ -10,7 +10,7 @@
  </GFX>
  <presence>
   <faction>Za'lek</faction>
-  <value>200.000000</value>
+  <value>150.000000</value>
   <range>9</range>
  </presence>
  <general>
@@ -26,7 +26,10 @@
    <outfits/>
    <shipyard/>
   </services>
-  <commodities/>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Luxury Goods</commodity>
+  </commodities>
   <description>This station was once the nerve center of the entirety of House Za'lek. It still is to an extent, but with the move of much the Za'lek government to Ruadan, this station's become something of a secondary capital. Most day to day business of running the Great House still takes place here.</description>
   <bar>This bar seems to double as a conference hall, with many Za'lek university deans and government officials (more often than not being represented by the same people) meeting with each other as well as foreign trade leaders and dignitaries. The food and drink here is of course top notch, but not extravagant.</bar>
  </general>

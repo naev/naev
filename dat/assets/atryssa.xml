@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <asset name="Atryssa">
  <pos>
-  <x>-12040.459983</x>
-  <y>-9067.609133</y>
+  <x>-14448.551980</x>
+  <y>-10881.130960</y>
  </pos>
  <GFX>
-  <space>M09.png</space>
+  <space>M11.png</space>
   <exterior>oceanic2.png</exterior>
  </GFX>
  <presence>
   <faction>Za'lek</faction>
-  <value>250.000000</value>
+  <value>150.000000</value>
   <range>5</range>
  </presence>
  <general>
@@ -26,12 +26,17 @@
    <outfits/>
    <shipyard/>
   </services>
-  <commodities/>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+   <commodity>Medicine</commodity>
+   <commodity>Luxury Goods</commodity>
+  </commodities>
   <description>Atryssa is an economically rich world thanks to Za'lek technology. It is also the closest noteworthy Za'lek planet, where outsiders can land, to Ruadan. Beyond these two things there is little to recommend it (though one of these may, at least, be plenty enough).</description>
   <bar>The archetype of a Za'lek bar, although a very crowded one. The crowd seems to be divided up into groups of people discussing things in hushed tones. There are also one or two people wandering about with notepads, though everyone goes quiet when they approach.</bar>
  </general>
  <tech>
-  <item>Laser 1</item>
   <item>Laser 2</item>
   <item>Ion 1</item>
   <item>Plasma 1</item>
@@ -47,5 +52,6 @@
   <item>Basic Civilian Ships</item>
   <item>Basic Trade Ships</item>
   <item>Bulk Trade Ships</item>
+  <item>Laser 1</item>
  </tech>
 </asset>

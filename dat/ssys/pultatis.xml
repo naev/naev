@@ -17,6 +17,10 @@
   <asset>Pultatis III</asset>
  </assets>
  <jumps>
+  <jump target="Fried">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
   <jump target="Limbo">
    <autopos/>
    <hide>1.250000</hide>

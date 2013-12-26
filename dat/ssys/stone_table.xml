@@ -16,10 +16,6 @@
    <autopos/>
    <hide>1.250000</hide>
   </jump>
-  <jump target="Fried">
-   <autopos/>
-   <hide>0.000000</hide>
-  </jump>
   <jump target="Pultatis">
    <autopos/>
    <hide>0.000000</hide>

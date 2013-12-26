@@ -5,6 +5,10 @@ include("dat/ai/personality/patrol.lua")
 -- a profitable one by getting money and selling fuel if possible if the player
 -- hasn’t been too hostile in the past.
 
+-- Settings
+mem.armour_run = 75 -- Za'lek armour is pretty crap. They know this, and will dip when their shields go down.
+mem.aggressive = true
+
 function create()
 	-- Not too many credits.
 	ai.setcredits( rnd.rnd(ai.shipprice()/200, ai.shipprice()/50) )
@@ -32,10 +36,11 @@ function create()
 		-- FIXME: Could be made more Za'lek-like.
 		-- Will this work? ~Areze
 		bribe_no = {
-			"\"Keep you cash, you troglodyte.\"",
+			"\"Keep your cash, you troglodyte.\"",
 			"\"Don't make me laugh. Eat laser beam!\"",
 			"\"My drones aren't interested in your ill-gotten gains and neither am I!\"",
-			"\"All the money in the galaxy won't save you now!\""
+			"\"Ahaha! Nice one! Oh, you're actually serious? Ahahahaha!\"",
+			"\"While I admire the spirit of it, testing my patience will is suicide, NOT science.\""
 		}
 		mem.bribe_no = bribe_no[ rnd.rnd(1,#bribe_no) ]
 	end
@@ -55,13 +60,18 @@ function taunt ( target, offense )
 	-- XXX: Put something stupid instead of the Sirian taunts
 	if offense then
 		taunts = {
-			"Move in to engage. Cook this clown!"
+			"Move drones in to engage. Cook this clown!",
+			"Say hello to my little friends!",
+			"Ooh, more victi- ah, volunteers for our experiments!",
+			"We need a test subject to test our attack on; you'll do nicely!",
+			"Ready for a physics lesson, punk?",
+			"After we wax you, we can return to our experiments!"
 		}
 	else
 		taunts = {
-			"We're being attacked! Prepare defense protocols!",
+			"We're being attacked! Prepare defence protocols!",
 			"You just made a big mistake!",
-			"Our technology will fix your attitide!",
+			"Our technology will fix your attitude!",
 			"You wanna do this? Have it your way."
 		}
 	end

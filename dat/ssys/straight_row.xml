@@ -10,17 +10,23 @@
   <x>-378.077526</x>
   <y>-1032.149188</y>
  </pos>
- <assets/>
+ <assets>
+  <asset>HZNSS-2</asset>
+  <asset>Rostra</asset>
+  <asset>Straight Row II</asset>
+  <asset>Virtual Civilian Standard</asset>
+  <asset>Virtual Trader Area</asset>
+ </assets>
  <jumps>
-  <jump target="Garten">
-   <autopos/>
-   <hide>1.250000</hide>
-  </jump>
   <jump target="Nunavut">
    <autopos/>
    <hide>1.250000</hide>
   </jump>
   <jump target="Somard">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Tomas">
    <autopos/>
    <hide>1.250000</hide>
   </jump>

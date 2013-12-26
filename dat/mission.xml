@@ -22,6 +22,7 @@
    <faction>Independent</faction>
    <faction>Sirius</faction>
    <faction>Soromid</faction>
+   <faction>Za'lek</faction>
    <faction>Trader</faction>
   </avail>
  </mission>
@@ -74,6 +75,7 @@
    <faction>Independent</faction>
    <faction>Sirius</faction>
    <faction>Soromid</faction>
+   <faction>Za'lek</faction>
    <faction>Trader</faction>
   </avail>
  </mission>
@@ -854,7 +856,18 @@
    <faction>Independent</faction>
    <faction>Sirius</faction>
    <faction>Soromid</faction>
-   <faction>Trader</faction>
+   <faction>Trader</faction>   <faction>Za'lek</faction>   
+  </avail>
+ </mission>
+ <mission name="Za'lek Shipping Delivery">
+  <lua>zalek/zlk_cargorun</lua>
+  <flags>
+    <unique />
+  </flags>
+  <avail>
+   <chance>25</chance>
+   <location>Bar</location>
+   <planet>Niflheim</planet>
   </avail>
  </mission>
 </Missions>

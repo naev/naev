@@ -42,8 +42,12 @@
   <item>Plasma Cluster Cannon MK1</item>
   <item>Plasma Cluster Cannon MK2</item>
   <item>Plasma Cluster Cannon MK3</item>
-  <item>Orion Beam</item>
   <item>Ragnarok Beam</item>
+  <item>Grave Beam</item>
+  <item>Pulse Beam</item>
+  <item>Grave Lance</item>
+  <item>Orion Lance</item>
+  <item>Shattershield Lance</item>
   <item>Neutron Disruptor</item>
   <item>Unicorp Fury Launcher</item>
   <item>TeraCom Fury Launcher</item>
@@ -130,8 +134,18 @@
   <item>Jump Scanner</item>
   <item>Lancelot Fighter Bay</item>
   <item>Lancelot Fighter</item>
+  <item>Empire Lancelot Fighter Bay</item>
+  <item>Empire Lancelot Fighter</item>
+  <item>Fidelity Fighter Bay</item>
+  <item>Fidelity Fighter</item>
   <item>Drone Fighter Bay</item>
   <item>Drone Fighter</item>
+  <item>Za'lek Light Drone Fighter Bay</item>
+  <item>Za'lek Light Drone Fighter</item>
+  <item>Za'lek Heavy Drone Fighter Bay</item>
+  <item>Za'lek Heavy Drone Fighter</item>
+  <item>Za'lek Bomber Drone Fighter Bay</item>
+  <item>Za'lek Bomber Drone Fighter</item>
   <item>Large Civilian Vessel License</item>
   <item>Medium Weapon License</item>
   <item>Heavy Weapon License</item>
@@ -322,10 +336,10 @@
   <item>Proteron Watson</item>
   <item>Empire Peacemaker</item>
   <item>Za'lek Sting</item>
-  <item>Za'lek Imp</item>
   <item>Za'lek Demon</item>
-  <item>Za'lek Mephisto</item>
   <item>Za'lek Diablo</item>
+  <item>Za'lek Hephaestus</item>
+  <item>Za'lek Prototype Cruiser</item>
  </tech>
  <tech name="All Commodities">
   <item>Food</item>
@@ -334,7 +348,6 @@
   <item>Medicine</item>
   <item>Luxury Goods</item>
  </tech>
-
  <!-- Weapon Trees -->
  <tech name="Laser 1">
   <item>Laser Cannon MK1</item>
@@ -496,7 +509,8 @@
   <item>Ion Cannon</item>
   <item>Heavy Ion Turret</item>
   <item>Railgun Turret</item>
-  <item>Orion Beam</item>
+  <item>Orion Lance</item>
+  <item>Shattershield Lance</item>
   <item>Medium Weapon License</item>
   <item>Medium Combat Vessel License</item>
  </tech>
@@ -695,10 +709,9 @@
  </tech>
  <tech name="Za'lek Military Ships">
   <item>Za'lek Sting</item>
-  <item>Za'lek Imp</item>
   <item>Za'lek Demon</item>
-  <item>Za'lek Mephisto</item>
   <item>Za'lek Diablo</item>
+  <item>Za'lek Hephaestus</item>
  </tech>
  <tech name="__Heavy Weapon License">
   <item>Heavy Weapon License</item>

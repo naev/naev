@@ -22,7 +22,13 @@
    <refuel/>
    <missions/>
   </services>
-  <commodities/>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Industrial Goods</commodity>
+   <commodity>Medicine</commodity>
+   <commodity>Luxury Goods</commodity>
+  </commodities>
   <description>Dronain is an example of the Za'lek intellectual elite's more excessive traits and occasional flamboyant failures.. The planet is an abysmal hell that has only gotten worse thanks to bein the foreground of various terraforming experiments that failed. However, the Za'lek still maintain a presence on the world despite this, mostly through borderline force.</description>
  </general>
+ <tech/>
 </asset>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ship name="Thurion Ingenuity">
  <base_type>Ingenuity</base_type>
- <GFX>derivative</GFX> <!-- FIXME: Thurion needs its own sprites, right? -->
+ <GFX>ingenuity</GFX>
  <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Fighter</class>

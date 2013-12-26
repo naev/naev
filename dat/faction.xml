@@ -130,7 +130,7 @@
   </enemies>
  </faction>
  <faction name="Thurion">
-  <logo>empire</logo>
+  <logo>thurion</logo>
   <colour>grey50</colour>
   <player>1</player>
   <spawn>thurion</spawn>

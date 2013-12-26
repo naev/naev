@@ -15,7 +15,7 @@
  </presence>
  <general>
   <class>O</class>
-  <population>870000</population>
+  <population>1870000</population>
   <hide>0.250000</hide>
   <services>
    <land/>
@@ -26,7 +26,13 @@
    <outfits/>
    <shipyard/>
   </services>
-  <commodities/>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+   <commodity>Medicine</commodity>
+   <commodity>Luxury Goods</commodity>
+  </commodities>
   <description>This Class-O planet is another purely residential planet in Za'lek space, with a rather large population and several university campuses. The standard of living is rather high, and life expentancy is long, making it a popular place to live out a retirement. Other than that, there isn't much to reccommend it to adventurers. Which is just how many of the inhabitants like it.</description>
   <bar>This bar bears a closer resemblance to a family resturaunt, with the avarage patron being about late middle age.</bar>
  </general>

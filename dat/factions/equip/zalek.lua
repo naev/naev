@@ -2,7 +2,7 @@
 include("dat/factions/equip/generic.lua")
 
 --[[
--- @brief Does empire pilot equipping
+-- @brief Does zalek pilot equipping
 --
 --    @param p Pilot to equip
 --]]
@@ -18,36 +18,62 @@ function equip( p )
    end
 end
 
--- Added a few beamers to Zlk. Need more. ~Areze
+
 -- CANNONS
-function equip_forwardEmpLow ()
-   return { "Laser Cannon MK2", "Laser Cannon MK3" }
+function equip_forwardZlkLow ()
+   return { "Orion Lance", "Laser Cannon MK3" }
 end
-function equip_forwardEmpMed ()
-   return { "Laser Cannon MK3", "Orion Beam", "Heavy Ripper Cannon" }
+function equip_forwardZlkMed ()
+   return { "Laser Cannon MK3", "Orion Lance", "Grave Lance", "Heavy Ripper Cannon" }
 end
 -- TURRETS
-function equip_turretEmpLow ()
+function equip_turretZlkLow ()
    return { "Laser Turret MK2" }
 end
-function equip_turretEmpMed ()
-   return { "Laser Turret MK2", "Laser Turret MK3" }
+function equip_turretZlkMed ()
+   return { "Pulse Beam", "Laser Turret MK3" }
 end
-function equip_turretEmpHig ()
-   return { "Heavy Laser", "Ragnarok Beam" }
+function equip_turretZlkHig ()
+   return { "Grave Beam", "Ragnarok Beam" }
 end
 -- RANGED
-function equip_rangedEmp ()
-   return { "Unicorp Headhunter Launcher" }
+function equip_rangedZlk ()
+   return { "Unicorp Mace Launcher" }
 end
-function equip_secondaryEmp ()
-   return { "Unicorp Headhunter Launcher" }
+function equip_secondaryZlk ()
+   return { "Shattershield Lance", "Unicorp Headhunter Launcher" }
+end
+-- NON-COMBAT
+--[[
+-- Utility slots
+--]]
+function equip_mediumZlkLow ()
+   return { "Reactor Class I", "Unicorp Scrambler", "Small Shield Booster" }
+end
+function equip_mediumZlkMed ()
+   return { "Reactor Class II", "Milspec Scrambler", "Medium Shield Booster" }
+end
+function equip_mediumZlkHig ()
+   return { "Reactor Class III", "Milspec Scrambler", "Large Shield Booster" }
+end
+
+--[[
+-- Structure slots
+--]]
+function equip_lowZlkLow ()
+   return { "Battery", "Shield Capacitor", "Engine Reroute" }
+end
+function equip_lowZlkMed ()
+   return { "Shield Capacitor II", "Shield Capacitor III", "Engine Reroute", "Battery II" }
+end
+function equip_lowZlkHig ()
+   return { "Shield Capacitor III", "Shield Capacitor IV", "Battery III" }
 end
 
 
 
 --[[
--- @brief Equips a empire military type ship.
+-- @brief Equips a zalek military type ship.
 --]]
 function equip_empireMilitary( p, shipsize )
    local medium, low
@@ -76,24 +102,24 @@ function equip_empireMilitary( p, shipsize )
 
       -- Fighter
       elseif class == "Fighter" then
-         equip_cores(p, "Tricon Naga Mk9 Engine", "Milspec Orion 3702 Core System", "Schafer & Kane Light Combat Plating")
+         equip_cores(p, "Tricon Naga Mk9 Engine", "Milspec Orion 3701 Core System", "Schafer & Kane Light Stealth Plating")
          use_primary    = nhigh-1
          use_secondary  = 1
-         addWeapons( equip_forwardEmpMed(), use_primary )
-         addWeapons( equip_secondaryEmp(), use_secondary )
-         medium         = equip_mediumLow()
-         low            = equip_lowLow()
+         addWeapons( equip_forwardZlkMed(), use_primary )
+         addWeapons( equip_secondaryZlk(), use_secondary )
+         medium         = equip_mediumZlkLow()
+         low            = equip_lowZlkLow()
 
 
       -- Bomber
       elseif class == "Bomber" then
-         equip_cores(p, "Tricon Naga Mk9 Engine", "Milspec Orion 3702 Core System", "Schafer & Kane Light Combat Plating")
+         equip_cores(p, "Tricon Naga Mk9 Engine", "Milspec Orion 3701 Core System", "Schafer & Kane Light Combat Plating")
          use_primary    = rnd.rnd(1,2)
          use_secondary  = nhigh - use_primary
-         addWeapons( equip_forwardEmpLow(), use_primary )
-         addWeapons( equip_rangedEmp(), use_secondary )
-         medium         = equip_mediumLow()
-         low            = equip_lowLow()
+         addWeapons( equip_forwardZlkLow(), use_primary )
+         addWeapons( equip_rangedZlk(), use_secondary )
+         medium         = equip_mediumZlkLow()
+         low            = equip_lowZlkLow()
 
       end
 
@@ -102,45 +128,45 @@ function equip_empireMilitary( p, shipsize )
       
       -- Corvette
       if class == "Corvette" then
-         equip_cores(p, "Tricon Centaur Mk7 Engine", "Milspec Orion 5502 Core System", "Schafer & Kane Medium Solar Plating")
+         equip_cores(p, "Tricon Centaur Mk7 Engine", "Milspec Orion 5501 Core System", "Schafer & Kane Medium Solar Plating")
          use_secondary  = rnd.rnd(1,2)
          use_primary    = nhigh - use_secondary
-         addWeapons( equip_forwardEmpMed(), use_primary )
-         addWeapons( equip_secondaryEmp(), use_secondary )
-         medium         = equip_mediumMed()
-         low            = equip_lowMed()
+         addWeapons( equip_forwardZlkMed(), use_primary )
+         addWeapons( equip_secondaryZlk(), use_secondary )
+         medium         = equip_mediumZlkMed()
+         low            = equip_lowZlkMed()
 
       end
 
       -- Destroyer
       if class == "Destroyer" then
-         equip_cores(p, "Tricon Centaur Mk7 Engine", "Milspec Orion 5502 Core System", "Schafer & Kane Medium Solar Plating")
+         equip_cores(p, "Tricon Centaur Mk7 Engine", "Milspec Orion 5501 Core System", "Schafer & Kane Medium Combat Plating Gamma")
          use_secondary  = rnd.rnd(1,2)
          use_turrets    = nhigh - use_secondary - rnd.rnd(1,2)
          use_forward    = nhigh - use_secondary - use_turrets
-         addWeapons( equip_secondaryEmp(), use_secondary )
-         addWeapons( equip_turretEmpMed(), use_turrets )
-         addWeapons( equip_forwardEmpMed(), use_forward )
-         medium         = equip_mediumMed()
-         low            = equip_lowMed()
+         addWeapons( equip_secondaryZlk(), use_secondary )
+         addWeapons( equip_turretZlkMed(), use_turrets )
+         addWeapons( equip_forwardZlkMed(), use_forward )
+         medium         = equip_mediumZlkMed()
+         low            = equip_lowZlkMed()
 
       end
 
    else -- "large"
       -- TODO: Divide into carrier and cruiser classes.
-      equip_cores(p, "Tricon Harpy Mk11 Engine", "Milspec Orion 9903 Core System", "Schafer & Kane Heavy Solar Plating")
+      equip_cores(p, "Tricon Harpy Mk11 Engine", "Milspec Orion 9901 Core System", "Schafer & Kane Heavy Combat Plating Gamma")
       use_secondary  = 2
       if rnd.rnd() > 0.4 then -- Anti-fighter variant.
          use_turrets    = nhigh - use_secondary - rnd.rnd(2,3)
          use_medturrets = nhigh - use_secondary - use_turrets
-         addWeapons( equip_turretEmpMed(), use_medturrets )
+         addWeapons( equip_turretZlkMed(), use_medturrets )
       else -- Anti-capital variant.
          use_turrets    = nhigh - use_secondary
       end
-      addWeapons( equip_turretEmpHig(), use_turrets )
-      addWeapons( equip_secondaryEmp(), use_secondary )
-      medium         = equip_mediumHig()
-      low            = equip_lowHig()
+      addWeapons( equip_turretZlkHig(), use_turrets )
+      addWeapons( equip_secondaryZlk(), use_secondary )
+      medium         = equip_mediumZlkHig()
+      low            = equip_lowZlkHig()
 
    end
 

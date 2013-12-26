@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <asset name="Warnecke">
  <pos>
-  <x>718.757403</x>
-  <y>-600.254448</y>
+  <x>625.881357</x>
+  <y>-569.295766</y>
  </pos>
  <GFX>
   <space>J09.png</space>
@@ -25,7 +25,10 @@
    <outfits/>
    <shipyard/>
   </services>
-  <commodities/>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
   <description>This gas giant is the epicenter of a gas mining operation for the Za'lek navy and merchant marine. The gasses here are refined into fuel for the Za'lek's new ring drives. Obviously, scientists here also work obsessively on building new and better forms of engines for the house's vessels.</description>
   <bar>This bar smells faintly of the refining going on throughout the orbital station skimming the upper atmosphere of the gas giant Warnecke. It does very little to impress, and the bartender apologizes for the poor air scrubbers labroing in the corners.</bar>
  </general>

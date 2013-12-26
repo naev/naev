@@ -22,7 +22,10 @@
    <refuel/>
    <outfits/>
   </services>
-  <commodities/>
+  <commodities>
+  <commodity>Ore</commodity>
+  <commodity>Industrial Goods</commodity>
+  </commodities>
   <description>This simple refining plant is where the ore collected on Andors is tunred into a more useful form and shipped out to other worlds to be turned into whatever is needed.</description>
  </general>
  <tech>
@@ -31,5 +34,7 @@
   <item>Laser 1</item>
   <item>Missiles 1</item>
   <item>Star Maps</item>
+  <item>Ore</item>
+  <item>Industrial Goods</item>
  </tech>
 </asset>
