@@ -2054,11 +2054,14 @@ static int aiL_accel( lua_State *L )
    if (lua_gettop(L) > 1 && lua_isnumber(L,1)) {
       n = (double)lua_tonumber(L,1);
 
-      if (n > 1.) n = 1.;
-      else if (n < 0.) n = 0.;
-
       if (VMOD(cur_pilot->solid->vel) > (n * cur_pilot->speed))
          pilot_acc = 0.;
+      else
+      {
+         if (n > 1.) n = 1.;
+         else if (n < 0.) n = 0.;
+         pilot_acc = n;
+      }
    }
    else
       pilot_acc = 1.;
