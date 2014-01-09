@@ -18,7 +18,7 @@ __version__ = "1.0"
 class yamlLabelReader:
     def __init__(self, stream):
         import yaml
-        self.ydata = yaml.load(stream)
+        self.ydata = yaml.safe_load(stream)
         keys = self.ydata['shipstats'].keys()
         for label in self.ydata['shipstats'].iterkeys():
             if label not in self.ydata['statslabel']:
