@@ -446,7 +446,7 @@ static int systemL_jumpdistance( lua_State *L )
  */
 static int systemL_adjacent( lua_State *L )
 {
-   int i, h;
+   int i, id = 1, h;
    LuaSystem sysp;
    StarSystem *s;
 
@@ -461,9 +461,10 @@ static int systemL_adjacent( lua_State *L )
       if (!h && jp_isFlag(&s->jumps[i], JP_HIDDEN))
          continue;
       sysp.id = system_index( s->jumps[i].target );
-      lua_pushnumber(L,i+1); /* key. */
+      lua_pushnumber(L,id); /* key. */
       lua_pushsystem(L,sysp); /* value. */
       lua_rawset(L,-3);
+      id++;
    }
 
    return 1;
