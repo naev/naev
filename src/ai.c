@@ -2045,7 +2045,8 @@ static int aiL_haslockon( lua_State *L )
 
 
 /*
- * starts accelerating the pilot based on a parameter
+ * starts accelerating the pilot. The parameter should be between 0 and 1 and signifies
+ * a fraction of the pilot's maximum acceleration.
  */
 static int aiL_accel( lua_State *L )
 {
@@ -2056,9 +2057,7 @@ static int aiL_accel( lua_State *L )
 
       if (n > 1.) n = 1.;
       else if (n < 0.) n = 0.;
-
-      if (VMOD(cur_pilot->solid->vel) > (n * cur_pilot->speed))
-         pilot_acc = 0.;
+      pilot_acc = n;
    }
    else
       pilot_acc = 1.;

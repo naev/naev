@@ -1137,13 +1137,18 @@ void pilot_updateMass( Pilot *pilot )
 
    pilot->thrust  = factor * pilot->thrust_base * mass;
    pilot->turn    = factor * pilot->turn_base;
-   
-   /* limit the maximum speed if limiter is active */
-   if (pilot_isFlag(pilot, PILOT_HASSPEEDLIMIT))
+   pilot->speed   = factor * pilot->speed_base;
+
+/* limit the maximum speed if limiter is active */
+   if (pilot_isFlag(pilot, PILOT_HASSPEEDLIMIT)) {
       pilot->speed = pilot->speed_limit - pilot->thrust / (mass * 3.);
-   else
-      pilot->speed   = factor * pilot->speed_base;
-   
+      /* Sanity: speed must never go negative. */
+      if (pilot->speed < 0.) {
+         /* If speed DOES go negative, we have to lower thrust. */
+         pilot->thrust = 3 * pilot->speed_limit * mass;
+         pilot->speed = 0.;
+      }
+   }
    /* Need to recalculate electronic warfare mass change. */
    pilot_ewUpdateStatic( pilot );
 }

@@ -268,6 +268,10 @@ static unsigned int hook_generic( lua_State *L, const char* stack, double ms, in
       else
          h = hook_addTimerEvt( running_event->id, func, ms );
    }
+   else {
+      NLUA_ERROR(L,"Attempting to set a hook outside of a mission or event.");
+      return 0;
+   }
 
    if (h == 0) {
       NLUA_ERROR(L,"No hook target was set.");
