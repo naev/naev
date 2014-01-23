@@ -5,27 +5,35 @@
  <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Carrier</class>
- <price>8500000</price>
+ <price>10000000</price>
  <fabricator>Za'lek Fabricators</fabricator>
  <license>Heavy Combat Vessel License</license>
- <description>The crown of the House Za'lek Defense Fleet, these proud buttresses of the Za'lek's ideals frequently serve as the nerve center of a Za'lek battle fleet, thanks to their superior sensor suite. It is not as tough as other Za'lek vessels, so it may need escorts.</description>
+ <description>The crown of the House Za'lek Defense Fleet, these proud buttresses of the Za'lek's ideals frequently serve as the nerve center of a Za'lek battle fleet, thanks to their superior sensor suite. The Hephaestus is rarely-seen, but commands respect.</description>
  <health>
-  <absorb>24</absorb>
-  <armour>400</armour>
+  <absorb>31</absorb>
+  <armour>500</armour>
   <armour_regen>0</armour_regen>
  </health>
  <characteristics>
-  <crew>25</crew>
-  <mass>1800</mass>
-  <cargo>15</cargo>
+  <crew>32</crew>
+  <mass>2500</mass>
+  <cargo>25</cargo>
  </characteristics>
  <slots>
   <weapon size="large" x="40" y="0" h="0"/>
   <weapon size="large" x="20" y="0" h="0"/>
   <weapon size="large" x="20" y="0" h="0"/>
   <weapon size="large" x="-20" y="0" h="0"/>
+  <weapon size="large" x="-20" y="0" h="0"/>
   <weapon size="large" x="-40" y="0" h="0"/>
+  <weapon size="large" x="20" y="20" h="0"/>
+  <weapon size="large" x="-20" y="-20" h="0"/>
+  <weapon size="large" x="40" y="20" h="0"/>
+  <weapon size="large" x="-40" y="-20" h="0"/>
   <utility size="large" prop="systems">Basic Large Systems</utility>
+  <utility size="large"/>
+  <utility size="large"/>
+  <utility size="large"/>
   <utility size="large"/>
   <utility size="large"/>
   <utility size="large"/>
@@ -37,16 +45,18 @@
   <structure size="large"/>
   <structure size="large"/>
   <structure size="large"/>
+  <structure size="large"/>
+  <structure size="large"/>
  </slots>
  <stats>
   <fuel_consumption>400</fuel_consumption>
   <speed_mod>0</speed_mod>
   <turn_mod>-10</turn_mod>
   <thrust_mod>0</thrust_mod>
-  <armour_mod>-55</armour_mod>
-  <shield_mod>40</shield_mod>
-  <shield_regen_mod>15</shield_regen_mod>
-  <cargo_mod>-50</cargo_mod>
+  <armour_mod>-30</armour_mod>
+  <shield_mod>100</shield_mod>
+  <shield_regen_mod>25</shield_regen_mod>
+  <cargo_mod>0</cargo_mod>
   <ew_detect>15</ew_detect>
   <ew_hide>-5</ew_hide>
  </stats>

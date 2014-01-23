@@ -24,10 +24,10 @@
   <cargo>0</cargo>
  </characteristics>
  <slots>
-  <weapon size="medium" x="8" y="0" h="0"/>
-  <weapon size="medium" x="8" y="0" h="0"/>
-  <weapon size="small" x="-2" y="9" h="-1"/>
-  <weapon size="small" x="-2" y="-9" h="-1"/>
+  <weapon size="medium" x="0" y="5" h="0"/>
+  <weapon size="medium" x="0" y="-5" h="0"/>
+  <weapon size="small" x="" y="9" h="-2"/>
+  <weapon size="small" x="0" y="-9" h="-2"/>
   <utility size="small" prop="systems" exclusive="1" required="1">Basic Small Systems</utility>
   <utility size="small"/>
   <structure size="small" prop="engines" exclusive="1" required="1">Manufacturer Small Engine</structure>

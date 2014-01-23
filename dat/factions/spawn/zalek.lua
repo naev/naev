@@ -60,9 +60,9 @@ function spawn_capship ()
 
     -- Generate the capship
     if r < 0.7 then
-       scom.addPilot( pilots, "Za'lek Diablo", 140 )
+       scom.addPilot( pilots, "Za'lek Mephisto", 140 )
     else
-       scom.addPilot( pilots, "Za'lek Hephaestus", 150 )
+       scom.addPilot( pilots, "Za'lek Diablo", 150 )
     end
 
     -- Generate the escorts

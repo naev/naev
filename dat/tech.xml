@@ -281,6 +281,7 @@
   <item>Schroedinger</item>
   <item>Gawain</item>
   <item>Drone</item>
+  <item>Heavy Drone</item>
   <item>Koala</item>
   <item>Quicksilver</item>
   <item>Proteron Derivative</item>
@@ -594,6 +595,10 @@
   <item>Fury Missile</item>
   <item>Unicorp Medusa Launcher</item>
   <item>Medusa Missile</item>
+  <item>Unicorp Headhunter Launcher</item>
+  <item>Headhunter Missile</item>
+  <item>Mace Rocket</item>
+  <item>Unicorp Caesar IV Launcher</item>
  </tech>
  <tech name="Missiles 2">
   <item>Unicorp Headhunter Launcher</item>
@@ -605,6 +610,7 @@
   <item>Enygma Systems Spearhead Launcher</item>
   <item>Spearhead Missile</item>
   <item>TeraCom Medusa Launcher</item>
+  <item>TeraCom Fury Launcher</item>
   <item>Medusa Missile</item>
   <item>Enygma Systems Turreted Fury Launcher</item>
   <item>Unicorp Vengeance Launcher</item>
@@ -710,8 +716,8 @@
  <tech name="Za'lek Military Ships">
   <item>Za'lek Sting</item>
   <item>Za'lek Demon</item>
+  <item>Za'lek Mephisto</item>
   <item>Za'lek Diablo</item>
-  <item>Za'lek Hephaestus</item>
  </tech>
  <tech name="__Heavy Weapon License">
   <item>Heavy Weapon License</item>
@@ -721,9 +727,11 @@
  </tech>
  <tech name="__Collective">
   <item>Neutron Disruptor</item>
+  <item>Heavy Neutron Disruptor</item>
   <item>Drone Fighter Bay</item>
   <item>Drone Fighter</item>
   <item>Drone</item>
+  <item>Heavy Drone</item>
  </tech>
  <tech name="Systems Low">
   <item>Previous Generation Small Systems</item>

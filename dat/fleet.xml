@@ -224,6 +224,13 @@
    <pilot name="Collective Drone" ship="Drone"></pilot>
   </pilots>
  </fleet>
+ <fleet name="Collective Heavy Drone">
+  <ai>collective</ai>
+  <faction>Collective</faction>
+  <pilots>
+   <pilot name="Collective Heavy Drone" ship="Heavy Drone"></pilot>
+  </pilots>
+ </fleet>
  <fleet name="Collective Lge Swarm">
   <ai>collective</ai>
   <faction>Collective</faction>
@@ -240,14 +247,14 @@
    <pilot name="Collective Drone" ship="Drone"></pilot>
    <pilot name="Collective Drone" ship="Drone"></pilot>
    <pilot name="Collective Drone" ship="Drone"></pilot>
-   <pilot name="Collective Drone" ship="Drone"></pilot>
-   <pilot name="Collective Drone" ship="Drone"></pilot>
-   <pilot name="Collective Drone" ship="Drone"></pilot>
-   <pilot name="Collective Drone" ship="Drone"></pilot>
-   <pilot name="Collective Drone" ship="Drone"></pilot>
-   <pilot name="Collective Drone" ship="Drone"></pilot>
-   <pilot name="Collective Drone" ship="Drone"></pilot>
-   <pilot name="Collective Drone" ship="Drone"></pilot>
+   <pilot name="Collective Heavy Drone" ship="Heavy Drone"></pilot>
+   <pilot name="Collective Heavy Drone" ship="Heavy Drone"></pilot>
+   <pilot name="Collective Heavy Drone" ship="Heavy Drone"></pilot>
+   <pilot name="Collective Heavy Drone" ship="Heavy Drone"></pilot>
+   <pilot name="Collective Heavy Drone" ship="Heavy Drone"></pilot>
+   <pilot name="Collective Heavy Drone" ship="Heavy Drone"></pilot>
+   <pilot name="Collective Heavy Drone" ship="Heavy Drone"></pilot>
+   <pilot name="Collective Heavy Drone" ship="Heavy Drone"></pilot>
   </pilots>
  </fleet>
  <fleet name="Collective Sml Swarm">
@@ -258,8 +265,8 @@
    <pilot name="Collective Drone" ship="Drone"></pilot>
    <pilot name="Collective Drone" ship="Drone"></pilot>
    <pilot name="Collective Drone" ship="Drone"></pilot>
-   <pilot name="Collective Drone" ship="Drone"></pilot>
-   <pilot name="Collective Drone" ship="Drone"></pilot>
+   <pilot name="Collective Heavy Drone" ship="Heavy Drone"></pilot>
+   <pilot name="Collective Heavy Drone" ship="Heavy Drone"></pilot>
   </pilots>
  </fleet>
  <fleet name="Sirius Fidelity">
@@ -344,6 +351,13 @@
   <faction>Soromid</faction>
   <pilots>
    <pilot name="Soromid Arx" ship="Soromid Arx"></pilot>
+  </pilots>
+ </fleet>
+  <fleet name="Soromid Vox">
+  <ai>soromid</ai>
+  <faction>Soromid</faction>
+  <pilots>
+   <pilot name="Soromid Vox" ship="Soromid Vox"></pilot>
   </pilots>
  </fleet>
  <fleet name="Dvaered Vendetta">
@@ -587,6 +601,13 @@
   <faction>Za'lek</faction>
   <pilots>
    <pilot name="Za'lek Diablo" ship="Za'lek Diablo"></pilot>
+  </pilots>
+ </fleet>
+ <fleet name="Za'lek Mephisto">
+  <ai>zalek</ai>
+  <faction>Za'lek</faction>
+  <pilots>
+   <pilot name="Za'lek Mephisto" ship="Za'lek Mephisto"></pilot>
   </pilots>
  </fleet>
  <fleet name="Za'lek Hephaestus">
