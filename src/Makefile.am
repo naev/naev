@@ -94,6 +94,7 @@ CODE_SOURCE = \
 	nlua_time.c \
 	nlua_tk.c \
 	nlua_tut.c \
+	nlua_unistate.c \
 	nlua_var.c \
 	nlua_vec2.c \
 	nmath.c \
