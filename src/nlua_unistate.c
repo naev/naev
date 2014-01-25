@@ -6,6 +6,9 @@
  * This controls asset ownership and presense modifications, for example.
  */
 
+//uncomment this line for debug output to lua console
+#define UNISTATE_DEBUG
+
 #include "nlua_unistate.h"
 
 #include "naev.h"
@@ -149,12 +152,14 @@ int unistate_save(xmlTextWriterPtr writer)
    xmlw_startElem(writer, "uni_state");
    do {
       //start code block
-      xmlw_startElem(writer, "asset_state");
+      xmlw_startElem(writer, "asset");
       //for debug purposes
-      snprintf(debugBuffer, sizeof(char) * (PATH_MAX - 1), "Adding entry to gamesave: %s, %s, %i\n", curEntry->name, curEntry->faction, curEntry->presence);
+#ifdef UNISTATE_DEBUG
+      snprintf(debugBuffer, sizeof(char) * (PATH_MAX - 1), "UniState Debug: Adding entry to gamesave: %s, %s, %i\n", curEntry->name, curEntry->faction, curEntry->presence);
       cli_addMessage(debugBuffer);
+#endif
       //print data 
-      xmlw_elem(writer, "name", "%s", curEntry->name);
+      xmlw_attr(writer, "name", "%s", curEntry->name);
       xmlw_elem(writer, "faction", "%s", curEntry->faction);
       xmlw_elem(writer, "presence", "%i", curEntry->presence);
       //close code block
@@ -178,6 +183,7 @@ assetStatePtr unistate_populateList(xmlNodePtr root)
 {
    assetStatePtr listHead = NULL, curElement = NULL, lastElement = NULL;
    xmlNodePtr elementNode = NULL, listNode = NULL;
+   char debugBuffer[PATH_MAX];
    
    //no root node?
    if(!root) return NULL;
@@ -186,21 +192,33 @@ assetStatePtr unistate_populateList(xmlNodePtr root)
    //iterate over assets
    do {
       //if the node is named right
-      if(xml_isNode(listNode, "asset_state"))
+      if(xml_isNode(listNode, "asset"))
       {
-	 elementNode = listNode->xmlChildrenNode;
+	 elementNode = listNode->children;
 	 //set up list element
 	 curElement = malloc(sizeof(assetState));
 	 if(!listHead) listHead = curElement;
 	 curElement->next = NULL;
+	 curElement->name = curElement->faction = NULL;
 	 if(lastElement != NULL) lastElement->next = curElement;
 	 lastElement = curElement;
 	 //get info from file
+	 xmlr_attr(listNode, "name", curElement->name);
+	 //debug stuff
+#ifdef UNISTATE_DEBUG
+	 snprintf(debugBuffer, sizeof(char) * (PATH_MAX - 1), "UniState Debug: Asset name '%s' parsed\n", curElement->name);
+	 cli_addMessage(debugBuffer);
+#endif
 	 do {
-	    xmlr_strd(elementNode, "name", curElement->name);
+	    xml_onlyNodes(elementNode);
 	    xmlr_strd(elementNode, "faction", curElement->faction);
 	    xmlr_int(elementNode, "presence", curElement->presence);
 	 } while(xml_nextNode(elementNode));
+	 //more debug stuff
+#ifdef UNISTATE_DEBUG
+	 snprintf(debugBuffer, sizeof(char) * (PATH_MAX - 1), "UniState Debug: Asset faction '%s' and Asset presence '%i' parsed\n", curElement->faction, curElement->presence);
+	 cli_addMessage(debugBuffer);
+#endif
       }
    } while(xml_nextNode(listNode));
    //return the list
