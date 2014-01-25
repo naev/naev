@@ -144,6 +144,7 @@ CODE_SOURCE = \
 	threadpool.c \
 	toolkit.c \
 	unidiff.c \
+	unistate.c \
 	weapon.c \
 	ai.h \
 	ai_extra.h \
@@ -287,6 +288,7 @@ CODE_SOURCE = \
 	threadpool.h \
 	toolkit.h \
 	unidiff.h \
+	unistate.h \
 	weapon.h
 
 if HAVE_WINDRES
