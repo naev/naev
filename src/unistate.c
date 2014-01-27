@@ -37,6 +37,7 @@
 //functions
 assetStatePtr unistate_populateList(xmlNodePtr root);
 void unistate_freeList(assetStatePtr list);
+int unistate_writeFile(assetStatePtr list, xmlTextWriterPtr writer);
 
 
 /**
@@ -49,9 +50,9 @@ int unistate_save(xmlTextWriterPtr writer)
 {
    xmlDocPtr doc;
    xmlNodePtr rootNode = NULL;
-   assetStatePtr list = NULL, curEntry = NULL;
-   char unistateFile[PATH_MAX], debugBuffer[PATH_MAX];
-  
+   assetStatePtr list = NULL;
+   char unistateFile[PATH_MAX];
+   
    //get the unistate file, if it doesn't exists return
    snprintf(unistateFile, sizeof(char)*(PATH_MAX-1), "%s/unistate.xml", nfile_dataPath());
    if(!(doc = xmlParseFile(unistateFile))) return 0;
@@ -71,25 +72,8 @@ int unistate_save(xmlTextWriterPtr writer)
    xmlFreeDoc(doc);
    //checks for empty list
    if(!list) return 0;
-   else curEntry = list;
-   //iterate over entries, and save them to gamesave
-   xmlw_startElem(writer, "uni_state");
-   do {
-      //start code block
-      xmlw_startElem(writer, "asset");
-      //for debug purposes
-#ifdef UNISTATE_DEBUG
-      snprintf(debugBuffer, sizeof(char) * (PATH_MAX - 1), "UniState Debug: Adding entry to gamesave: %s, %s, %i\n", curEntry->name, curEntry->faction, curEntry->presence);
-      cli_addMessage(debugBuffer);
-#endif
-      //print data 
-      xmlw_attr(writer, "name", "%s", curEntry->name);
-      xmlw_elem(writer, "faction", "%s", curEntry->faction);
-      xmlw_elem(writer, "presence", "%i", curEntry->presence);
-      //close code block
-      xmlw_endElem(writer);  
-   } while((curEntry = curEntry->next) != NULL);
-   xmlw_endElem(writer);
+   //write data to game save
+   unistate_writeFile(list, writer);
    //free the memory allocated by the list
    unistate_freeList(list);
    //...and we're done here
@@ -98,16 +82,18 @@ int unistate_save(xmlTextWriterPtr writer)
 }
 
 /**
- * @brief Allocates space for and populates a list of asset mods from unistate.xml.
+ * @brief Allocates space for and populates a list of asset mods from a unistate xml tree.
  * 
- * @param rootNode A node pointer to the root node of unistate.xml
+ * @param rootNode A node pointer to the root node of unistate tree
  * @return A pointer to the first node of the linked list.
  */
 assetStatePtr unistate_populateList(xmlNodePtr root)
 {
    assetStatePtr listHead = NULL, curElement = NULL, lastElement = NULL;
    xmlNodePtr elementNode = NULL, listNode = NULL;
+#ifdef UNISTATE_DEBUG
    char debugBuffer[PATH_MAX];
+#endif
    
    //no root node?
    if(!root) return NULL;
@@ -157,8 +143,51 @@ assetStatePtr unistate_populateList(xmlNodePtr root)
 void unistate_freeList(assetStatePtr list)
 {
    if(!list) return;
-   if(list->next != NULL) unistate_freeList(list->next);
+   unistate_freeList(list->next);
    free(list);
    return;
 }
 
+/**
+ * @brief Writes unistate data to xml writer passed
+ * 
+ * @param list pointer to first element of list to be written
+ * @param writer xml writer to be used when writing
+ * @return 0 on success
+ */
+int unistate_writeFile(assetStatePtr list, xmlTextWriterPtr writer)
+{
+   if(!list || !writer) return -2;
+   assetStatePtr curEntry = NULL;
+#ifdef UNISTATE_DEBUG
+   char debugBuffer[PATH_MAX];
+#endif
+   curEntry = list;
+   //iterate over entries, and save them to gamesave
+   xmlw_startElem(writer, "uni_state");
+   do {
+      //start code block
+      xmlw_startElem(writer, "asset");
+      //for debug purposes
+#ifdef UNISTATE_DEBUG
+      snprintf(debugBuffer, sizeof(char) * (PATH_MAX - 1), "UniState Debug: Adding entry: %s, %s, %i\n", curEntry->name, curEntry->faction, curEntry->presence);
+      cli_addMessage(debugBuffer);
+#endif
+      //print data 
+      xmlw_attr(writer, "name", "%s", curEntry->name);
+      xmlw_elem(writer, "faction", "%s", curEntry->faction);
+      xmlw_elem(writer, "presence", "%i", curEntry->presence);
+      //close code block
+      xmlw_endElem(writer);  
+   } while((curEntry = curEntry->next) != NULL);
+   xmlw_endElem(writer);
+   return 0;
+}
+
+//int unistate_load(xmlNodePtr rootNode)
+//{
+//   if(!rootNode) return -2;
+//   if(isNode(
+   
+   
+   
