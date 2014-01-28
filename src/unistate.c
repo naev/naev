@@ -15,23 +15,6 @@
 #include <lauxlib.h>
 
 #include "console.h"
-#include "nlua.h"
-#include "nluadef.h"
-#include "nlua_planet.h"
-#include "nlua_faction.h"
-#include "nlua_vec2.h"
-#include "nlua_system.h"
-#include "nlua_tex.h"
-#include "nlua_ship.h"
-#include "nlua_outfit.h"
-#include "nlua_commodity.h"
-#include "nlua_col.h"
-#include "log.h"
-#include "rng.h"
-#include "land.h"
-#include "map.h"
-#include "nmath.h"
-#include "nstring.h"
 #include "nfile.h"
 
 //functions
@@ -54,12 +37,12 @@ int unistate_save(xmlTextWriterPtr writer)
    char unistateFile[PATH_MAX];
    
    //get the unistate file, if it doesn't exists return
-   snprintf(unistateFile, sizeof(char)*(PATH_MAX-1), "%s/unistate.xml", nfile_dataPath());
+   snprintf(unistateFile, sizeof(char)*(PATH_MAX-1), "%s/uni_state.xml", nfile_dataPath());
    if(!(doc = xmlParseFile(unistateFile))) return 0;
   
    //if the root element isn't "unistate", then this is a different file than we want.
    rootNode = xmlDocGetRootElement(doc);
-   if(!xml_isNode(rootNode,"unistate"))
+   if(!xml_isNode(rootNode,"uni_state"))
    {
       WARN("Invalid unistate file at %s", unistateFile);
       xmlFreeDoc(doc);
@@ -157,7 +140,7 @@ void unistate_freeList(assetStatePtr list)
  */
 int unistate_writeFile(assetStatePtr list, xmlTextWriterPtr writer)
 {
-   if(!list || !writer) return -2;
+   if(!list || !writer) return -1;
    assetStatePtr curEntry = NULL;
 #ifdef UNISTATE_DEBUG
    char debugBuffer[PATH_MAX];
@@ -184,10 +167,57 @@ int unistate_writeFile(assetStatePtr list, xmlTextWriterPtr writer)
    return 0;
 }
 
-//int unistate_load(xmlNodePtr rootNode)
-//{
-//   if(!rootNode) return -2;
-//   if(isNode(
+/**
+ * @brief Loads the state of the universe into an xml file 
+ * 
+ * @param rootNode pointer to the root node of the game save file we are loading off of
+ * @return 0 on success
+ */
+int unistate_load(xmlNodePtr rootNode)
+{
+   if(!rootNode) return -1;
+   char unistateFile[PATH_MAX];
+   assetStatePtr list = NULL;
+   xmlNodePtr elementNode = NULL;
+   xmlDocPtr doc = NULL;
+   xmlTextWriterPtr writer = NULL;
+   elementNode = rootNode->children;
+   do {
+      if(xml_isNode(elementNode, "uni_state"))
+      {
+	 //TODO: more error checking in this section
+	 
+	 //populate list
+	 list = unistate_populateList(elementNode);
+	 //create xml writer
+	 writer = xmlNewTextWriterDoc(&doc, 0);
+	 //send list to writer
+	 unistate_writeFile(list, writer);
+	 //free mem allocated by list
+	 unistate_freeList(list);
+	 //Attempt to same file
+	 snprintf(unistateFile, sizeof(char)*(PATH_MAX-1), "%s/uni_state.xml", nfile_dataPath());
+	 xmlFreeTextWriter(writer);
+	 if (xmlSaveFileEnc(unistateFile, doc, "UTF-8") < 0)
+	 {
+	    //failure routine
+	    WARN("Failed to write UniState file.");
+	    xmlFreeDoc(doc);
+	    return -3;
+	 }
+	 else
+	 {
+	    xmlFreeDoc(doc);
+	    return 0;
+	 }
+      }
+   } while(xml_nextNode(elementNode));
+   //if it fell through to here then it didn't find what we were looking for
+   return -2;
+}
+   
+   
+   
    
    
    
