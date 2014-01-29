@@ -329,6 +329,8 @@
   <item>Pirate Kestrel</item>
   <item>Proteron Archimedes</item>
   <item>Soromid Ira</item>
+  <item>Za'lek Mephisto</item>
+  <item>Za'lek Prototype Cruiser</item>
   <item>Hawking</item>
   <item>Empire Hawking</item>
   <item>Sirius Dogma</item>
@@ -336,12 +338,11 @@
   <item>Dvaered Goddard</item>
   <item>Sirius Divinity</item>
   <item>Soromid Arx</item>
+  <item>Za'lek Diablo</item>
   <item>Proteron Watson</item>
   <item>Empire Peacemaker</item>
-  <item>Za'lek Diablo</item>
-  <item>Za'lek Prototype Cruiser</item>
-  <item>Za'lek Hephaestus</item>
   <item>Soromid Vox</item>
+  <item>Za'lek Hephaestus</item>
  </tech>
  <tech name="All Commodities">
   <item>Food</item>
