@@ -314,10 +314,12 @@
   <item>Admonisher</item>
   <item>Pirate Admonisher</item>
   <item>Empire Admonisher</item>
+  <item>Za'lek Sting</item>
   <item>Vigilance</item>
   <item>Dvaered Vigilance</item>
   <item>Proteron Kahan</item>
   <item>Soromid Nyx</item>
+  <item>Za'lek Demon</item>
   <item>Pacifier</item>
   <item>Empire Pacifier</item>
   <item>Rhino</item>
@@ -336,11 +338,10 @@
   <item>Soromid Arx</item>
   <item>Proteron Watson</item>
   <item>Empire Peacemaker</item>
-  <item>Za'lek Sting</item>
-  <item>Za'lek Demon</item>
   <item>Za'lek Diablo</item>
-  <item>Za'lek Hephaestus</item>
   <item>Za'lek Prototype Cruiser</item>
+  <item>Za'lek Hephaestus</item>
+  <item>Soromid Vox</item>
  </tech>
  <tech name="All Commodities">
   <item>Food</item>
