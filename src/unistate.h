@@ -25,5 +25,6 @@ typedef assetState *assetStatePtr;
 //functions
 int unistate_save(xmlTextWriterPtr writer);
 int unistate_load(xmlNodePtr rootNode);
+void unistate_removeFile(void);
 
 #endif

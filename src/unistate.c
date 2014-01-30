@@ -24,7 +24,7 @@ int unistate_writeFile(assetStatePtr list, xmlTextWriterPtr writer);
 
 
 /**
- * @brief Saves the current state of the universe
+ * @brief Saves the current state of the universe (Used in save.c)
  * 
  * @param writer xml writer used when writing to save file
  * @return  1 or 0 on success, -1 on failure
@@ -168,7 +168,7 @@ int unistate_writeFile(assetStatePtr list, xmlTextWriterPtr writer)
 }
 
 /**
- * @brief Loads the state of the universe into an xml file 
+ * @brief Loads the state of the universe into an xml file (Used in load.c)
  * 
  * @param rootNode pointer to the root node of the game save file we are loading off of
  * @return 0 on success
@@ -176,11 +176,13 @@ int unistate_writeFile(assetStatePtr list, xmlTextWriterPtr writer)
 int unistate_load(xmlNodePtr rootNode)
 {
    if(!rootNode) return -1;
+   
    char unistateFile[PATH_MAX];
    assetStatePtr list = NULL;
    xmlNodePtr elementNode = NULL;
    xmlDocPtr doc = NULL;
    xmlTextWriterPtr writer = NULL;
+   
    elementNode = rootNode->children;
    do {
       if(xml_isNode(elementNode, "uni_state"))
@@ -216,8 +218,17 @@ int unistate_load(xmlNodePtr rootNode)
    return -2;
 }
    
-   
-   
+/**
+ * @brief removes uni_state.xml
+ */
+void unistate_removeFile(void)
+{
+   DEBUG("unistate_removeFile()");
+   char unistateFile[PATH_MAX];
+   snprintf(unistateFile, sizeof(char)*(PATH_MAX-1), "%s/uni_state.xml", nfile_dataPath());
+   if(remove(unistateFile))
+      WARN("Could not remove unistate fine!");
+}
    
    
    
