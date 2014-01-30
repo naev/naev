@@ -6,7 +6,7 @@
 
 
 //uncomment this line for debug output to lua console
-#define UNISTATE_DEBUG
+//#define UNISTATE_DEBUG
 
 #include "unistate.h"
 
@@ -100,7 +100,7 @@ assetStatePtr unistate_populateList(xmlNodePtr root)
 	 //debug stuff
 #ifdef UNISTATE_DEBUG
 	 snprintf(debugBuffer, sizeof(char) * (PATH_MAX - 1), "UniState Debug: Asset name '%s' parsed\n", curElement->name);
-	 cli_addMessage(debugBuffer);
+	 DEBUG(debugBuffer);
 #endif
 	 do {
 	    xml_onlyNodes(elementNode);
@@ -110,7 +110,7 @@ assetStatePtr unistate_populateList(xmlNodePtr root)
 	 //more debug stuff
 #ifdef UNISTATE_DEBUG
 	 snprintf(debugBuffer, sizeof(char) * (PATH_MAX - 1), "UniState Debug: Asset faction '%s' and Asset presence '%i' parsed\n", curElement->faction, curElement->presence);
-	 cli_addMessage(debugBuffer);
+	 DEBUG(debugBuffer);
 #endif
       }
    } while(xml_nextNode(listNode));
@@ -154,7 +154,7 @@ int unistate_writeFile(assetStatePtr list, xmlTextWriterPtr writer)
       //for debug purposes
 #ifdef UNISTATE_DEBUG
       snprintf(debugBuffer, sizeof(char) * (PATH_MAX - 1), "UniState Debug: Adding entry: %s, %s, %i\n", curEntry->name, curEntry->faction, curEntry->presence);
-      cli_addMessage(debugBuffer);
+      DEBUG(debugBuffer);
 #endif
       //print data 
       xmlw_attr(writer, "name", "%s", curEntry->name);
@@ -223,11 +223,10 @@ int unistate_load(xmlNodePtr rootNode)
  */
 void unistate_removeFile(void)
 {
-   DEBUG("unistate_removeFile()");
    char unistateFile[PATH_MAX];
    snprintf(unistateFile, sizeof(char)*(PATH_MAX-1), "%s/uni_state.xml", nfile_dataPath());
    if(remove(unistateFile))
-      WARN("Could not remove unistate fine!");
+      WARN("Could not remove unistate file!");
 }
    
    
