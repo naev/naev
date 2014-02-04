@@ -6,7 +6,7 @@
 
 
 //uncomment this line for debug output to lua console
-//#define UNISTATE_DEBUG
+#define UNISTATE_DEBUG
 
 #include "unistate.h"
 
@@ -17,51 +17,24 @@
 #include "console.h"
 #include "nfile.h"
 
+
 //functions
 assetStatePtr unistate_populateList(xmlNodePtr root);
-void unistate_freeList(assetStatePtr list);
 int unistate_writeFile(assetStatePtr list, xmlTextWriterPtr writer);
 
+//global pointer to unistate list
+assetStatePtr unistateList = NULL;
 
 /**
  * @brief Saves the current state of the universe (Used in save.c)
  * 
  * @param writer xml writer used when writing to save file
- * @return  1 or 0 on success, -1 on failure
+ * @return  0 on success
  */
 int unistate_save(xmlTextWriterPtr writer)
 {
-   xmlDocPtr doc;
-   xmlNodePtr rootNode = NULL;
-   assetStatePtr list = NULL;
-   char unistateFile[PATH_MAX];
-   
-   //get the unistate file, if it doesn't exists return
-   snprintf(unistateFile, sizeof(char)*(PATH_MAX-1), "%s/uni_state.xml", nfile_dataPath());
-   if(!(doc = xmlParseFile(unistateFile))) return 0;
-  
-   //if the root element isn't "unistate", then this is a different file than we want.
-   rootNode = xmlDocGetRootElement(doc);
-   if(!xml_isNode(rootNode,"uni_state"))
-   {
-      WARN("Invalid unistate file at %s", unistateFile);
-      xmlFreeDoc(doc);
-      return -2;
-   }
-   
-   //get all the entries in our unistate file
-   list = unistate_populateList(rootNode);
-   //free our document pointer
-   xmlFreeDoc(doc);
-   //checks for empty list
-   if(!list) return 0;
    //write data to game save
-   unistate_writeFile(list, writer);
-   //free the memory allocated by the list
-   unistate_freeList(list);
-   //...and we're done here
-   return 1;
-   
+   return unistate_writeFile(unistateList, writer);
 }
 
 /**
@@ -100,7 +73,7 @@ assetStatePtr unistate_populateList(xmlNodePtr root)
 	 //debug stuff
 #ifdef UNISTATE_DEBUG
 	 snprintf(debugBuffer, sizeof(char) * (PATH_MAX - 1), "UniState Debug: Asset name '%s' parsed\n", curElement->name);
-	 DEBUG(debugBuffer);
+	 cli_addMessage(debugBuffer);
 #endif
 	 do {
 	    xml_onlyNodes(elementNode);
@@ -110,7 +83,7 @@ assetStatePtr unistate_populateList(xmlNodePtr root)
 	 //more debug stuff
 #ifdef UNISTATE_DEBUG
 	 snprintf(debugBuffer, sizeof(char) * (PATH_MAX - 1), "UniState Debug: Asset faction '%s' and Asset presence '%i' parsed\n", curElement->faction, curElement->presence);
-	 DEBUG(debugBuffer);
+	 cli_addMessage(debugBuffer);
 #endif
       }
    } while(xml_nextNode(listNode));
@@ -154,7 +127,7 @@ int unistate_writeFile(assetStatePtr list, xmlTextWriterPtr writer)
       //for debug purposes
 #ifdef UNISTATE_DEBUG
       snprintf(debugBuffer, sizeof(char) * (PATH_MAX - 1), "UniState Debug: Adding entry: %s, %s, %i\n", curEntry->name, curEntry->faction, curEntry->presence);
-      DEBUG(debugBuffer);
+      cli_addMessage(debugBuffer);
 #endif
       //print data 
       xmlw_attr(writer, "name", "%s", curEntry->name);
@@ -177,11 +150,7 @@ int unistate_load(xmlNodePtr rootNode)
 {
    if(!rootNode) return -1;
    
-   char unistateFile[PATH_MAX];
-   assetStatePtr list = NULL;
    xmlNodePtr elementNode = NULL;
-   xmlDocPtr doc = NULL;
-   xmlTextWriterPtr writer = NULL;
    
    elementNode = rootNode->children;
    do {
@@ -190,44 +159,13 @@ int unistate_load(xmlNodePtr rootNode)
 	 //TODO: more error checking in this section
 	 
 	 //populate list
-	 list = unistate_populateList(elementNode);
-	 //create xml writer
-	 writer = xmlNewTextWriterDoc(&doc, 0);
-	 //send list to writer
-	 unistate_writeFile(list, writer);
-	 //free mem allocated by list
-	 unistate_freeList(list);
-	 //Attempt to same file
-	 snprintf(unistateFile, sizeof(char)*(PATH_MAX-1), "%s/uni_state.xml", nfile_dataPath());
-	 xmlFreeTextWriter(writer);
-	 if (xmlSaveFileEnc(unistateFile, doc, "UTF-8") < 0)
-	 {
-	    //failure routine
-	    WARN("Failed to write UniState file.");
-	    xmlFreeDoc(doc);
-	    return -3;
-	 }
-	 else
-	 {
-	    xmlFreeDoc(doc);
-	    return 0;
-	 }
+	 if(!(unistateList = unistate_populateList(elementNode))) 
+	    return -1;
+	 return 0;
       }
    } while(xml_nextNode(elementNode));
    //if it fell through to here then it didn't find what we were looking for
    return -2;
 }
-   
-/**
- * @brief removes uni_state.xml
- */
-void unistate_removeFile(void)
-{
-   char unistateFile[PATH_MAX];
-   snprintf(unistateFile, sizeof(char)*(PATH_MAX-1), "%s/uni_state.xml", nfile_dataPath());
-   if(remove(unistateFile))
-      WARN("Could not remove unistate file!");
-}
-   
    
    

@@ -432,8 +432,8 @@ static void menu_small_exit( unsigned int wid, char* str )
    player_autonavAbort( "Exited game." );
    player_soundStop();
 
-   //remove uni_state.xml
-   unistate_removeFile();
+   //unistate cleanup
+   unistate_freeList(unistateList);
    
    /* Clean up. */
    window_destroy( wid );
