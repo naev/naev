@@ -14,40 +14,22 @@
 #include <lauxlib.h>
 
 #include "console.h"
-#include "nlua.h"
-#include "nluadef.h"
-#include "nlua_planet.h"
-#include "nlua_faction.h"
-#include "nlua_vec2.h"
-#include "nlua_system.h"
-#include "nlua_tex.h"
-#include "nlua_ship.h"
-#include "nlua_outfit.h"
-#include "nlua_commodity.h"
-#include "nlua_col.h"
-#include "log.h"
-#include "rng.h"
-#include "land.h"
-#include "map.h"
-#include "nmath.h"
-#include "nstring.h"
-#include "nfile.h"
-
-
+#include "unistate.h"
+#include  "nluadef.h"
 
 static int unistateL_changeowner(lua_State *L);
 static int unistateL_changepresence(lua_State *L);
-static int unistateL_getpresence(lua_State *L);
+static int unistateL_dump(lua_State *L);
 static const luaL_reg unistate_methods[] = {
-   { "changeAssetOwner", unistateL_changeowner },
-   { "changeSysPresence", unistateL_changepresence },
-   { "getSysPresence", unistateL_getpresence },
+   { "changeFaction", unistateL_changeowner },
+   { "changePresence", unistateL_changepresence },
+   { "dump", unistateL_dump },
    {0,0}
 };
 static const luaL_reg unistate_cond_methods[] = {
-   { "changeAssetOwner", unistateL_changeowner },
-   { "changeSysPresence", unistateL_changepresence },
-   { "getSysPresence", unistateL_getpresence },
+   { "changeFaction", unistateL_changeowner },
+   { "changePresence", unistateL_changepresence },
+   { "dump", unistateL_dump },
    {0,0}
 };
 
@@ -101,12 +83,28 @@ int unistateL_changepresence(lua_State *L)
 }
 
 /**
- * @brief Gets the net faction presence in a system.
+ * @brief Dumps all the changes from the default uni to the LUA console
  * 
  */
-int unistateL_getpresence(lua_State *L)
+int unistateL_dump(lua_State *L)
 {
-   NLUA_ERROR(L, "Not implemented yet :(");
+   char buffer[PATH_MAX];
+   if(unistateList == NULL)
+   {
+      cli_addMessage("No faction or presence changes found");
+   }
+   else
+   {
+      assetStatePtr cur = unistateList;
+      do {
+	 snprintf(buffer, sizeof(char) * (PATH_MAX - 1), "%s:", cur->name);
+	 cli_addMessage(buffer);
+	 snprintf(buffer, sizeof(char) * (PATH_MAX - 1), "   Faction: %s", cur->faction);
+	 cli_addMessage(buffer);
+	 snprintf(buffer, sizeof(char) * (PATH_MAX - 1), "   Presence: %i", cur->presence);
+	 cli_addMessage(buffer);
+      } while((cur = cur->next) != NULL);
+   }
    return 0;
 }
 
