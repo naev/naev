@@ -175,7 +175,7 @@ AC_ARG_WITH([sdl2],
       with_sdl2=no
     ])
   ], [
-    with_sdl2=yes
+    with_sdl2=no # TODO should default to yes, but it's too broken atm
   ])
 AC_MSG_RESULT([$with_sdl2])
 
