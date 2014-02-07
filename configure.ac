@@ -271,6 +271,11 @@ PKG_CHECK_MODULES([FREETYPE], [freetype2], [], [
   AC_ERROR([freetype2 not found])
 ])
 
+# vorbis
+PKG_CHECK_MODULES([VORBIS], [vorbis], [], [
+  AC_ERROR([vorbis not found])
+])
+
 # vorbisfile
 PKG_CHECK_MODULES([VORBISFILE], [vorbisfile], [], [
   AC_ERROR([vorbisfile not found])
@@ -391,6 +396,9 @@ AS_IF([test "$enable_debug" != "no"], [
 ])
 
 case "$host" in
+  *-linux*)
+    GLOBAL_LIBS="$NAEV_LIBS -lm" # feels so wrong
+    ;;
   *-mingw*)
     GLOBAL_LIBS="$NAEV_LIBS -lwsock32"
     ;;
@@ -423,11 +431,11 @@ AS_IF([test "$enable_debug" = "paranoid"], [
 
 NAEV_CFLAGS="$NAEV_CFLAGS $CSPARSE_CFLAGS $SDL_CFLAGS"
 NAEV_CFLAGS="$NAEV_CFLAGS $XML_CFLAGS $FREETYPE_CFLAGS $LUA_CFLAGS"
-NAEV_CFLAGS="$NAEV_CFLAGS $VORBISFILE_CFLAGS $OPENGL_CFLAGS $PNG_CFLAGS"
+NAEV_CFLAGS="$NAEV_CFLAGS $VORBIS_CFLAGS $VORBISFILE_CFLAGS $OPENGL_CFLAGS $PNG_CFLAGS"
 
 NAEV_LIBS="$NAEV_LIBS $CSPARSE_LIBS $SDL_LIBS $XML_LIBS"
 NAEV_LIBS="$NAEV_LIBS $FREETYPE_LIBS $LUA_LIBS"
-NAEV_LIBS="$NAEV_LIBS $VORBISFILE_LIBS $OPENGL_LIBS $PNG_LIBS"
+NAEV_LIBS="$NAEV_LIBS $VORBIS_LIBS $VORBISFILE_LIBS $OPENGL_LIBS $PNG_LIBS"
 
 AS_IF([test "$have_openal" = "yes"], [
   NAEV_CFLAGS="$NAEV_CFLAGS $OPENAL_CFLAGS"
