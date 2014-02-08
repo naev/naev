@@ -347,7 +347,6 @@ VAR_RESTORE([LIBS])
 
 # OpenGL
 PKG_CHECK_MODULES([GL], [gl])
-PKG_CHECK_MODULES([GLU], [glu])
 
 #
 # Compiler flags
