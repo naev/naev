@@ -310,15 +310,24 @@ AC_SEARCH_LIBS([sqrt], [m])
 # csparse
 AC_CHECK_LIB([csparse], [cs_spalloc], [have_csparse_lib=yes], [have_csparse_lib=no])
 AC_CHECK_LIB([cxsparse], [cs_di_spalloc], [have_cxsparse_lib=yes], [have_cxsparse_lib=no])
-AC_CHECK_HEADERS([cs.h], [have_cs_h=yes], [have_cs_h=no])
-AC_CHECK_HEADERS([suitesparse/cs.h], [have_suitesparse_cs_h=yes], [have_suitesparse_cs_h=no])
-AS_IF([test $have_csparse_lib = yes -a $have_cxsparse_lib = yes -a \( $have_cs_h = yes -o $have_suitesparse_cs_h = yes \)], [
-   used_csparse=shared
-   CSPARSE_LIBS="-lcsparse -lcxsparse"
+
+AS_IF([test "$have_csparse_lib" = "yes" -a "$have_cxsparse_lib" = "yes"], [
+    AC_CHECK_HEADERS([cs.h], [have_cs_h=yes], [have_cs_h=no])
+    AC_CHECK_HEADERS([suitesparse/cs.h], [have_suitesparse_cs_h=yes], [have_suitesparse_cs_h=no])
+
+    AS_IF([test $have_cs_h = yes -o $have_suitesparse_cs_h = yes], [
+        used_csparse=shared
+        CSPARSE_LIBS="-lcsparse -lcxsparse"
+    ], [
+        used_csparse=internal
+    ])
 ], [
    used_csparse=internal
-   CSPARSE_CFLAGS="-I\"\$(top_srcdir)/lib/csparse\""
-   CSPARSE_LIBS="\$(top_builddir)/lib/csparse/libcsparse.a"
+])
+
+AS_IF([test "$used_csparse" = "internal"], [
+    CSPARSE_CFLAGS="-I\"\$(top_srcdir)/lib/csparse\""
+    CSPARSE_LIBS="\$(top_builddir)/lib/csparse/libcsparse.a"
 ])
 
 # OpenAL
@@ -346,7 +355,9 @@ AC_SEARCH_LIBS([IMG_Load], [$SDLIMAGE_NAME], [
 VAR_RESTORE([LIBS])
 
 # OpenGL
-PKG_CHECK_MODULES([GL], [gl])
+AM_PATH_OPENGL([], [
+  AC_MSG_ERROR([OpenGL not found])
+])
 
 #
 # Compiler flags
@@ -409,11 +420,11 @@ AS_IF([test "$enable_debug" = "paranoid"], [
 
 NAEV_CFLAGS="$NAEV_CFLAGS $CSPARSE_CFLAGS $SDL_CFLAGS $XML_CFLAGS \
     $FREETYPE_CFLAGS $LUA_CFLAGS $VORBIS_CFLAGS $VORBISFILE_CFLAGS \
-    $PNG_CFLAGS $GL_CFLAGS $GLU_CFLAGS"
+    $PNG_CFLAGS $OPENGL_CFLAGS"
 
 NAEV_LIBS="$NAEV_LIBS $CSPARSE_LIBS $SDL_LIBS $XML_LIBS \
     $FREETYPE_LIBS $LUA_LIBS $VORBIS_LIBS $VORBISFILE_LIBS \
-    $PNG_LIBS $GL_LIBS $GLU_LIBS"
+    $PNG_LIBS $OPENGL_LIBS"
 
 AS_IF([test "$have_openal" = "yes"], [
   NAEV_CFLAGS="$NAEV_CFLAGS $OPENAL_CFLAGS"
