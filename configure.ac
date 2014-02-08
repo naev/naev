@@ -314,7 +314,10 @@ AS_IF([test "$have_lua" = "no"], [
   used_lua=internal
 ])
 
+# sqrt is required for system csparse to work
+AC_SEARCH_LIBS([sqrt], [m])
 
+# csparse
 AC_CHECK_LIB([csparse], [cs_spalloc], [have_csparse_lib=yes], [have_csparse_lib=no])
 AC_CHECK_LIB([cxsparse], [cs_di_spalloc], [have_cxsparse_lib=yes], [have_cxsparse_lib=no])
 AC_CHECK_HEADERS([cs.h], [have_cs_h=yes], [have_cs_h=no])
