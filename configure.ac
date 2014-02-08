@@ -262,29 +262,19 @@ AS_IF([test "$have_sdl2" = "no"], [
 ])
 
 # libxml2
-PKG_CHECK_MODULES([XML], [libxml-2.0], [], [
-  AC_ERROR([libxml-2.0 not found])
-])
+PKG_CHECK_MODULES([XML], [libxml-2.0])
 
 # FreeType
-PKG_CHECK_MODULES([FREETYPE], [freetype2], [], [
-  AC_ERROR([freetype2 not found])
-])
+PKG_CHECK_MODULES([FREETYPE], [freetype2])
 
 # vorbis
-PKG_CHECK_MODULES([VORBIS], [vorbis], [], [
-  AC_ERROR([vorbis not found])
-])
+PKG_CHECK_MODULES([VORBIS], [vorbis])
 
 # vorbisfile
-PKG_CHECK_MODULES([VORBISFILE], [vorbisfile], [], [
-  AC_ERROR([vorbisfile not found])
-])
+PKG_CHECK_MODULES([VORBISFILE], [vorbisfile])
 
 # libpng
-PKG_CHECK_MODULES([PNG], [libpng], [], [
-  AC_ERROR([libpng not found])
-])
+PKG_CHECK_MODULES([PNG], [libpng])
 
 # lua
 case "$used_lua" in
@@ -314,7 +304,10 @@ AS_IF([test "$have_lua" = "no"], [
   used_lua=internal
 ])
 
+# sqrt is required for system csparse to work
+AC_SEARCH_LIBS([sqrt], [m])
 
+# csparse
 AC_CHECK_LIB([csparse], [cs_spalloc], [have_csparse_lib=yes], [have_csparse_lib=no])
 AC_CHECK_LIB([cxsparse], [cs_di_spalloc], [have_cxsparse_lib=yes], [have_cxsparse_lib=no])
 AC_CHECK_HEADERS([cs.h], [have_cs_h=yes], [have_cs_h=no])
@@ -335,20 +328,7 @@ AS_IF([test "$with_openal" = "yes"], [
 
 # SDL_mixer
 AS_IF([test "$with_sdlmixer" = "yes"], [
-  AS_IF([test "$have_sdl2" = "yes"], [SDLMIXER_NAME=SDL2_mixer], [SDLMIXER_NAME=SDL_mixer])
-  VAR_SAVE([LIBS])
-  AC_SEARCH_LIBS([Mix_OpenAudio], [$SDLMIXER_NAME],
-     [have_sdlmixer=yes], [have_sdlmixer=no])
-  AS_IF([test "$have_sdlmixer" = "yes"], [
-    SDLMIXER_CFLAGS=
-    SDLMIXER_LIBS="$LIBS"
-  ], [
-    SDLMIXER_CFLAGS=
-    SDLMIXER_LIBS=
-  ])
-  VAR_RESTORE([LIBS])
-], [
-  have_sdlmixer=no
+  PKG_CHECK_MODULES([SDLMIXER], [SDL_mixer], [have_sdlmixer=yes], [have_sdlmixer=no])
 ])
 
 # SDL_image
@@ -366,9 +346,8 @@ AC_SEARCH_LIBS([IMG_Load], [$SDLIMAGE_NAME], [
 VAR_RESTORE([LIBS])
 
 # OpenGL
-AM_PATH_OPENGL([], [
-  AC_MSG_ERROR([OpenGL not found])
-])
+PKG_CHECK_MODULES([GL], [gl])
+PKG_CHECK_MODULES([GLU], [glu])
 
 #
 # Compiler flags
@@ -429,13 +408,13 @@ AS_IF([test "$enable_debug" = "paranoid"], [
   AC_DEFINE([DEBUG_PARANOID], 1, [Define to 1 to enable paranoid debug code])
 ])
 
-NAEV_CFLAGS="$NAEV_CFLAGS $CSPARSE_CFLAGS $SDL_CFLAGS"
-NAEV_CFLAGS="$NAEV_CFLAGS $XML_CFLAGS $FREETYPE_CFLAGS $LUA_CFLAGS"
-NAEV_CFLAGS="$NAEV_CFLAGS $VORBIS_CFLAGS $VORBISFILE_CFLAGS $OPENGL_CFLAGS $PNG_CFLAGS"
+NAEV_CFLAGS="$NAEV_CFLAGS $CSPARSE_CFLAGS $SDL_CFLAGS $XML_CFLAGS \
+    $FREETYPE_CFLAGS $LUA_CFLAGS $VORBIS_CFLAGS $VORBISFILE_CFLAGS \
+    $PNG_CFLAGS $GL_CFLAGS $GLU_CFLAGS"
 
-NAEV_LIBS="$NAEV_LIBS $CSPARSE_LIBS $SDL_LIBS $XML_LIBS"
-NAEV_LIBS="$NAEV_LIBS $FREETYPE_LIBS $LUA_LIBS"
-NAEV_LIBS="$NAEV_LIBS $VORBIS_LIBS $VORBISFILE_LIBS $OPENGL_LIBS $PNG_LIBS"
+NAEV_LIBS="$NAEV_LIBS $CSPARSE_LIBS $SDL_LIBS $XML_LIBS \
+    $FREETYPE_LIBS $LUA_LIBS $VORBIS_LIBS $VORBISFILE_LIBS \
+    $PNG_LIBS $GL_LIBS $GLU_LIBS"
 
 AS_IF([test "$have_openal" = "yes"], [
   NAEV_CFLAGS="$NAEV_CFLAGS $OPENAL_CFLAGS"
