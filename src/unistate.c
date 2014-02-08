@@ -113,7 +113,8 @@ void unistate_freeList(assetStatePtr list)
  */
 int unistate_writeFile(assetStatePtr list, xmlTextWriterPtr writer)
 {
-   if(!list || !writer) return -1;
+   if(!list) return 0;
+   if(!writer) return -1;
    assetStatePtr curEntry = NULL;
 #ifdef UNISTATE_DEBUG
    char debugBuffer[PATH_MAX];
