@@ -262,29 +262,19 @@ AS_IF([test "$have_sdl2" = "no"], [
 ])
 
 # libxml2
-PKG_CHECK_MODULES([XML], [libxml-2.0], [], [
-  AC_ERROR([libxml-2.0 not found])
-])
+PKG_CHECK_MODULES([XML], [libxml-2.0])
 
 # FreeType
-PKG_CHECK_MODULES([FREETYPE], [freetype2], [], [
-  AC_ERROR([freetype2 not found])
-])
+PKG_CHECK_MODULES([FREETYPE], [freetype2])
 
 # vorbis
-PKG_CHECK_MODULES([VORBIS], [vorbis], [], [
-  AC_ERROR([vorbis not found])
-])
+PKG_CHECK_MODULES([VORBIS], [vorbis])
 
 # vorbisfile
-PKG_CHECK_MODULES([VORBISFILE], [vorbisfile], [], [
-  AC_ERROR([vorbisfile not found])
-])
+PKG_CHECK_MODULES([VORBISFILE], [vorbisfile])
 
 # libpng
-PKG_CHECK_MODULES([PNG], [libpng], [], [
-  AC_ERROR([libpng not found])
-])
+PKG_CHECK_MODULES([PNG], [libpng])
 
 # lua
 case "$used_lua" in
