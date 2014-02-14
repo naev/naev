@@ -81,8 +81,8 @@ int unistateL_changeowner(lua_State *L)
    char buffer[PATH_MAX], *planet = NULL, *faction = NULL;
    planet = (char*)lua_tostring(L, 1);
    faction = (char*)lua_tostring(L, 2);
-   snprintf(buffer, sizeof(char) * (PATH_MAX - 1), "%s, %s", planet, faction);
-   cli_addMessage(buffer);
+   //snprintf(buffer, sizeof(char) * (PATH_MAX - 1), "%s, %s", planet, faction);
+   //cli_addMessage(buffer);
    
    if((ret = unistate_setFaction(planet, faction)) != 0)
    {

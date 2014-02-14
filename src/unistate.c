@@ -94,17 +94,6 @@ assetStatePtr unistate_populateList(xmlNodePtr root)
       }
    } while(xml_nextNode(listNode));
    //return the list
-#ifdef UNISTATE_DEBUG
-   assetStatePtr cur = listHead;
-   do {
-      snprintf(debugBuffer, sizeof(char) * (PATH_MAX - 1), "%s:\n", cur->name);
-      logprintf(stdout, debugBuffer);
-      snprintf(debugBuffer, sizeof(char) * (PATH_MAX - 1), "\tFaction: %s\n", cur->faction);
-      logprintf(stdout, debugBuffer);
-      snprintf(debugBuffer, sizeof(char) * (PATH_MAX - 1), "\tPresence: %i\n", cur->presence);
-      logprintf(stdout, debugBuffer);
-   } while((cur = cur->next) != NULL);
-#endif
    return listHead;
 }
 
