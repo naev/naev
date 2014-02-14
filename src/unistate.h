@@ -31,5 +31,6 @@ extern assetStatePtr unistateList;
 int unistate_save(xmlTextWriterPtr writer);
 int unistate_load(xmlNodePtr rootNode);
 void unistate_freeList(assetStatePtr list);
+int unistate_setFaction(char *planet, char *faction);
 
 #endif

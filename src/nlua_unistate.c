@@ -15,7 +15,11 @@
 
 #include "console.h"
 #include "unistate.h"
-#include  "nluadef.h"
+#include "nlua.h"
+#include "nluadef.h"
+#include "nlua_col.h"
+#include "console.h"
+#include "nstring.h"
 
 static int unistateL_changeowner(lua_State *L);
 static int unistateL_changepresence(lua_State *L);
@@ -67,7 +71,37 @@ int nlua_loadUnistate( lua_State *L, int readonly )
  */
 int unistateL_changeowner(lua_State *L)
 {
-   NLUA_ERROR(L, "Not implemented yet :(");
+   //check for bad parameter
+   if(!(lua_isstring(L,1) && lua_isstring(L,2)))
+   {
+      NLUA_INVALID_PARAMETER(L);
+      return 1;
+   }
+   int ret;
+   char buffer[PATH_MAX], *planet = NULL, *faction = NULL;
+   planet = (char*)lua_tostring(L, 1);
+   faction = (char*)lua_tostring(L, 2);
+   snprintf(buffer, sizeof(char) * (PATH_MAX - 1), "%s, %s", planet, faction);
+   cli_addMessage(buffer);
+   
+   if((ret = unistate_setFaction(planet, faction)) != 0)
+   {
+      switch(ret)
+      {
+         case -1:
+            WARN("Error: could not add node to uni_state list");
+            break;
+         case -2:
+            WARN("Error: invalid planet or faction passed");
+            break;
+         case -3:
+            WARN("Error: NULL param passed");
+            break;
+         default:
+            WARN("Error: An unknown error occurred");
+      }
+   }
+      
    return 0;
 }
 

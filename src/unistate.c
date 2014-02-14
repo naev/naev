@@ -16,11 +16,15 @@
 
 #include "console.h"
 #include "nfile.h"
+#include "space.h"
 
 
-//functions
+//functions that aren't in the theader
 assetStatePtr unistate_populateList(xmlNodePtr root);
 int unistate_writeFile(assetStatePtr list, xmlTextWriterPtr writer);
+assetStatePtr unistate_getNode(char *planet);
+int unistate_addNode(char *planet, char *faction, int presence);
+
 
 //global pointer to unistate list
 assetStatePtr unistateList = NULL;
@@ -100,6 +104,7 @@ void unistate_freeList(assetStatePtr list)
 {
    if(!list) return;
    unistate_freeList(list->next);
+   if(list->faction) free(list->faction);
    free(list);
    return;
 }
@@ -132,8 +137,10 @@ int unistate_writeFile(assetStatePtr list, xmlTextWriterPtr writer)
 #endif
       //print data 
       xmlw_attr(writer, "name", "%s", curEntry->name);
-      xmlw_elem(writer, "faction", "%s", curEntry->faction);
-      xmlw_elem(writer, "presence", "%i", curEntry->presence);
+      if(curEntry->faction != NULL)
+         xmlw_elem(writer, "faction", "%s", curEntry->faction);
+      if(curEntry->presence != -1)
+         xmlw_elem(writer, "presence", "%i", curEntry->presence);
       //close code block
       xmlw_endElem(writer);  
    } while((curEntry = curEntry->next) != NULL);
@@ -157,16 +164,115 @@ int unistate_load(xmlNodePtr rootNode)
    do {
       if(xml_isNode(elementNode, "uni_state"))
       {
-	 //TODO: more error checking in this section
-	 
 	 //populate list
-	 if(!(unistateList = unistate_populateList(elementNode))) 
-	    return -1;
-	 return 0;
+         if(!(unistateList = unistate_populateList(elementNode))) 
+            return -1;
+         return 0;
       }
    } while(xml_nextNode(elementNode));
    //if it fell through to here then it didn't find what we were looking for
    return -2;
 }
+
+/**
+ * @brief Gets a unistate node by planet name
+ * 
+ * @param planet name of planet to search for
+ * @return pointer to matching node on success, NULL on failure
+ */
+assetStatePtr unistate_getNode(char *planet)
+{
+   assetStatePtr cur = unistateList;
+   //Let's hunt
+   while(cur != NULL)
+   {
+      if(!strcmp(cur->name, planet))
+         return cur;
+      cur = cur->next;
+   } 
+   return NULL;
+}
+
+/**
+ * @brief adds new node to unistate list
+ * 
+ * @param planet name of planet
+ * @param faction name of faction planet is changed to, set to NULL if default 
+ * @param presence amount of presence the planet is changed to, set to -1 if default
+ * @return 0 on success
+ */
+int unistate_addNode(char *planet, char *faction, int presence)
+{
+   if(!planet)
+      return -1;
+   //check if already exists in list
+   if(unistate_getNode(planet) != NULL)
+   {
+      WARN("Planet already in list; not adding new entry");
+      return -1;
+   }
+   assetStatePtr node = NULL;
+   //check for malloc errors
+   if((node = malloc(sizeof(assetState))) == NULL)
+   {
+      WARN("Failed to allocate space for new list entry");
+      return -1;
+   }
+   //add entries to new node
+   node->name = strdup(planet);
+   if(faction != NULL) 
+      node->faction = strdup(faction);
+   else
+      node->faction = NULL;
+   node->presence = presence;
+   //add to global list
+   node->next = unistateList;
+   unistateList = node;
+   //We're done!
+   return 0;
+}
+
+/**
+ * @brief Changes the ownership of the planet, and adds uni state change to list
+ * 
+ * @param planet name of planet
+ * @param faction name of faction
+ * @return 0 on success
+ */
+int unistate_setFaction(char *planet, char *faction)
+{
+   if(!planet || !faction) return -3;
+   assetStatePtr node = NULL;
+   Planet *p = NULL;
+   int f_id;
+   //Get planet struct and faction ID. If either return errors, bail.
+   if((p = planet_get(planet)) == NULL || (f_id = faction_get(faction)) == -1) 
+      return -2;
+   //Change the faction of the planet
+   planet_setFaction(p, f_id);
+   //update the universe
+   space_reconstructPresences();
+   //does the planet already have mods?
+   if((node = unistate_getNode(planet)) != NULL)
+   {
+      //if a faction mod hasn't been added yet
+      if(node->faction == NULL)
+         node->faction = strdup(faction);
+      //else wipe old entry and make new one
+      else
+      {
+         free(node->faction);
+         node->faction = strdup(faction);
+      }
+      return 0;
+   }
+   //else we need to make a new node
+   else
+      return unistate_addNode(planet, faction, -1);
+}
+      
+      
+   
+   
    
    
