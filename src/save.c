@@ -24,7 +24,7 @@
 #include "hook.h"
 #include "ndata.h"
 #include "unidiff.h"
-#include "nlua_unistate.h"
+#include "unistate.h"
 #include "nlua_var.h"
 #include "event.h"
 #include "news.h"

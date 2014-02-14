@@ -49,7 +49,7 @@ int unistate_save(xmlTextWriterPtr writer)
  */
 assetStatePtr unistate_populateList(xmlNodePtr root)
 {
-   assetStatePtr listHead = NULL, curElement = NULL, lastElement = NULL;
+   assetStatePtr listHead = NULL, curElement = NULL;
    xmlNodePtr elementNode = NULL, listNode = NULL;
 #ifdef UNISTATE_DEBUG
    char debugBuffer[PATH_MAX];
@@ -64,34 +64,47 @@ assetStatePtr unistate_populateList(xmlNodePtr root)
       //if the node is named right
       if(xml_isNode(listNode, "asset"))
       {
-	 elementNode = listNode->children;
-	 //set up list element
-	 curElement = malloc(sizeof(assetState));
-	 if(!listHead) listHead = curElement;
-	 curElement->next = NULL;
-	 curElement->name = curElement->faction = NULL;
-	 if(lastElement != NULL) lastElement->next = curElement;
-	 lastElement = curElement;
-	 //get info from file
-	 xmlr_attr(listNode, "name", curElement->name);
-	 //debug stuff
-#ifdef UNISTATE_DEBUG
-	 snprintf(debugBuffer, sizeof(char) * (PATH_MAX - 1), "UniState Debug: Asset name '%s' parsed\n", curElement->name);
-	 cli_addMessage(debugBuffer);
-#endif
-	 do {
-	    xml_onlyNodes(elementNode);
-	    xmlr_strd(elementNode, "faction", curElement->faction);
-	    xmlr_int(elementNode, "presence", curElement->presence);
-	 } while(xml_nextNode(elementNode));
-	 //more debug stuff
-#ifdef UNISTATE_DEBUG
-	 snprintf(debugBuffer, sizeof(char) * (PATH_MAX - 1), "UniState Debug: Asset faction '%s' and Asset presence '%i' parsed\n", curElement->faction, curElement->presence);
-	 cli_addMessage(debugBuffer);
-#endif
+         elementNode = listNode->children;
+         //set up list element
+         curElement = malloc(sizeof(assetState));
+         curElement->next = listHead;
+         listHead = curElement;
+         curElement->name = curElement->faction = NULL;
+         curElement->presence = -1;
+         //get info from file
+         xmlr_attr(listNode, "name", curElement->name);
+         //debug stuff
+   #ifdef UNISTATE_DEBUG
+         snprintf(debugBuffer, sizeof(char) * (PATH_MAX - 1),\
+            "UniState Debug: Asset name '%s' parsed\n", curElement->name);
+         logprintf(stdout, debugBuffer);
+   #endif
+         do {
+            xml_onlyNodes(elementNode);
+            xmlr_strd(elementNode, "faction", curElement->faction);
+            xmlr_int(elementNode, "presence", curElement->presence);
+         } while(xml_nextNode(elementNode));
+         //more debug stuff
+   #ifdef UNISTATE_DEBUG
+         snprintf(debugBuffer, sizeof(char) * (PATH_MAX - 1),\
+            "UniState Debug: Asset faction '%s' and Asset presence '%i' parsed\n",\
+            (curElement->faction == NULL ? "<Default>" : curElement->faction), curElement->presence);
+         logprintf(stdout, debugBuffer);
+   #endif
       }
    } while(xml_nextNode(listNode));
    //return the list
+#ifdef UNISTATE_DEBUG
+   assetStatePtr cur = listHead;
+   do {
+      snprintf(debugBuffer, sizeof(char) * (PATH_MAX - 1), "%s:\n", cur->name);
+      logprintf(stdout, debugBuffer);
+      snprintf(debugBuffer, sizeof(char) * (PATH_MAX - 1), "\tFaction: %s\n", cur->faction);
+      logprintf(stdout, debugBuffer);
+      snprintf(debugBuffer, sizeof(char) * (PATH_MAX - 1), "\tPresence: %i\n", cur->presence);
+      logprintf(stdout, debugBuffer);
+   } while((cur = cur->next) != NULL);
+#endif
    return listHead;
 }
 
@@ -132,8 +145,10 @@ int unistate_writeFile(assetStatePtr list, xmlTextWriterPtr writer)
       xmlw_startElem(writer, "asset");
       //for debug purposes
 #ifdef UNISTATE_DEBUG
-      snprintf(debugBuffer, sizeof(char) * (PATH_MAX - 1), "UniState Debug: Adding entry: %s, %s, %i\n", curEntry->name, curEntry->faction, curEntry->presence);
-      cli_addMessage(debugBuffer);
+      snprintf(debugBuffer, sizeof(char) * (PATH_MAX - 1),\
+         "UniState Debug: Adding entry: %s, %s, %i\n",\
+         curEntry->name, curEntry->faction, curEntry->presence);
+      logprintf(stdout, debugBuffer);
 #endif
       //print data 
       xmlw_attr(writer, "name", "%s", curEntry->name);
@@ -157,9 +172,10 @@ int unistate_writeFile(assetStatePtr list, xmlTextWriterPtr writer)
 int unistate_load(xmlNodePtr rootNode)
 {
    if(!rootNode) return -1;
-   
+   assetStatePtr cur = NULL;
    xmlNodePtr elementNode = NULL;
-   
+   Planet *p;
+   int f_id;
    elementNode = rootNode->children;
    do {
       if(xml_isNode(elementNode, "uni_state"))
@@ -167,6 +183,21 @@ int unistate_load(xmlNodePtr rootNode)
 	 //populate list
          if(!(unistateList = unistate_populateList(elementNode))) 
             return -1;
+         cur = unistateList;
+         while(cur != NULL)
+         {
+            //Get planet struct and faction ID. If either return errors, bail.
+            if((p = planet_get(cur->name)) == NULL || (f_id = faction_get(cur->faction)) == -1) 
+            {
+               WARN("Invalid planet or faction passed");
+               continue;
+            }
+            //Change the faction of the planet
+            planet_setFaction(p, f_id);
+            //update the universe
+            space_reconstructPresences();
+            cur = cur->next;
+         }
          return 0;
       }
    } while(xml_nextNode(elementNode));
@@ -241,6 +272,7 @@ int unistate_addNode(char *planet, char *faction, int presence)
  */
 int unistate_setFaction(char *planet, char *faction)
 {
+   
    if(!planet || !faction) return -3;
    assetStatePtr node = NULL;
    Planet *p = NULL;
