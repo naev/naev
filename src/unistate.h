@@ -24,13 +24,11 @@ typedef struct unistate_entry {
 //pointer version of the previous
 typedef assetState *assetStatePtr;
 
-//pointer to first element of global list
-extern assetStatePtr unistateList;
-
 //functions
 int unistate_save(xmlTextWriterPtr writer);
 int unistate_load(xmlNodePtr rootNode);
-void unistate_freeList(assetStatePtr list);
+void unistate_quit(void);
 int unistate_setFaction(char *planet, char *faction);
+assetStatePtr unistate_getList(void);
 
 #endif

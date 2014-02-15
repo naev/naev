@@ -78,7 +78,7 @@ int unistateL_changeowner(lua_State *L)
       return 1;
    }
    int ret;
-   char buffer[PATH_MAX], *planet = NULL, *faction = NULL;
+   char *planet = NULL, *faction = NULL;
    planet = (char*)lua_tostring(L, 1);
    faction = (char*)lua_tostring(L, 2);
    //snprintf(buffer, sizeof(char) * (PATH_MAX - 1), "%s, %s", planet, faction);
@@ -123,13 +123,14 @@ int unistateL_changepresence(lua_State *L)
 int unistateL_dump(lua_State *L)
 {
    char buffer[PATH_MAX];
-   if(unistateList == NULL)
+   assetStatePtr list = unistate_getList();
+   if(list == NULL)
    {
-      cli_addMessage("No faction or presence changes found");
+      NLUA_ERROR(L, "No faction or presence changes found");
    }
    else
    {
-      assetStatePtr cur = unistateList;
+      assetStatePtr cur = list;
       do {
 	 snprintf(buffer, sizeof(char) * (PATH_MAX - 1), "%s:", cur->name);
 	 cli_addMessage(buffer);

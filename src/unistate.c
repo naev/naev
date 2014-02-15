@@ -18,16 +18,23 @@
 #include "nfile.h"
 #include "space.h"
 
-
 //functions that aren't in the theader
 assetStatePtr unistate_populateList(xmlNodePtr root);
 int unistate_writeFile(assetStatePtr list, xmlTextWriterPtr writer);
 assetStatePtr unistate_getNode(char *planet);
 int unistate_addNode(char *planet, char *faction, int presence);
-
+void unistate_freeList(assetStatePtr list);
 
 //global pointer to unistate list
 assetStatePtr unistateList = NULL;
+
+/**
+ * @brief Gets the unistate list (for use outside this file)
+ */
+assetStatePtr unistate_getList()
+{
+   return unistateList;
+}
 
 /**
  * @brief Saves the current state of the universe (Used in save.c)
@@ -98,6 +105,14 @@ assetStatePtr unistate_populateList(xmlNodePtr root)
 }
 
 /**
+ * @brief unistate quit routine. Used when closing the game.
+ */
+void unistate_quit()
+{
+   unistate_freeList(unistateList);
+}
+
+/**
  * @brief Frees a list made by unistate_populateList()
  * 
  * @param list list to be cleaned
@@ -105,6 +120,9 @@ assetStatePtr unistate_populateList(xmlNodePtr root)
 void unistate_freeList(assetStatePtr list)
 {
    if(!list) return;
+#ifdef UNISTATE_DEBUG
+   logprintf(stdout, "Freeing unistate list...\n");
+#endif
    unistate_freeList(list->next);
    if(list->faction) free(list->faction);
    free(list);
@@ -292,7 +310,7 @@ int unistate_setFaction(char *planet, char *faction)
       return unistate_addNode(planet, faction, -1);
 }
       
-      
+
    
    
    

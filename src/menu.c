@@ -433,7 +433,7 @@ static void menu_small_exit( unsigned int wid, char* str )
    player_soundStop();
 
    //unistate cleanup
-   unistate_freeList(unistateList);
+   unistate_quit();
    
    /* Clean up. */
    window_destroy( wid );
@@ -452,7 +452,7 @@ static void exit_game (void)
       save_all();
       land_cleanup();
    }
-  
+   unistate_quit();
    SDL_Event quit;
    quit.type = SDL_QUIT;
    SDL_PushEvent(&quit);
