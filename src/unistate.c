@@ -194,15 +194,21 @@ int unistate_load(xmlNodePtr rootNode)
          while(cur != NULL)
          {
             //Get planet struct and faction ID. If either return errors, bail.
-            if((p = planet_get(cur->name)) == NULL || (f_id = faction_get(cur->faction)) == -1) 
+            if((p = planet_get(cur->name)) == NULL) 
             {
                WARN("Invalid planet or faction passed");
+               cur = cur->next;
                continue;
             }
             //Change the faction of the planet
-            planet_setFaction(p, f_id);
+            if(cur->faction != NULL && (f_id = faction_get(cur->faction)) != -1) 
+               planet_setFaction(p, f_id);
+            //Change presence of planet
+            if(cur->presence != -1)
+               p->presenceAmount = (double)cur->presence;
             //update the universe
             space_reconstructPresences();
+            //move along
             cur = cur->next;
          }
          return 0;
@@ -310,7 +316,37 @@ int unistate_setFaction(char *planet, char *faction)
       return unistate_addNode(planet, faction, -1);
 }
       
-
+/**
+ * @brief Changes the presence of a planet.
+ * 
+ * @param planet name of planet to be modified
+ * @param presence presence value to be changed to 
+ * @return 0 on success
+ */
+int unistate_setPresence(char *planet, int presence)
+{
+   
+   if(!planet) return -3;
+   assetStatePtr node = NULL;
+   Planet *p = NULL;
+   //Get planet struct. If it return errors, bail.
+   if((p = planet_get(planet)) == NULL) 
+      return -2;
+   //Change the presence of the planet
+   p->presenceAmount = (double)presence;
+   //update the universe
+   space_reconstructPresences();
+   //does the planet already have mods?
+   if((node = unistate_getNode(planet)) != NULL)
+   {
+      //if a faction mod hasn't been added yet
+      node->presence = presence;
+      return 0;
+   }
+   //else we need to make a new node
+   else
+      return unistate_addNode(planet, NULL, presence);
+}
    
    
    

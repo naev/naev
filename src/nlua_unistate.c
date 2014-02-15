@@ -21,18 +21,18 @@
 #include "console.h"
 #include "nstring.h"
 
-static int unistateL_changeowner(lua_State *L);
-static int unistateL_changepresence(lua_State *L);
+static int unistateL_changeFaction(lua_State *L);
+static int unistateL_changePresence(lua_State *L);
 static int unistateL_dump(lua_State *L);
 static const luaL_reg unistate_methods[] = {
-   { "changeFaction", unistateL_changeowner },
-   { "changePresence", unistateL_changepresence },
+   { "changeFaction", unistateL_changeFaction },
+   { "changePresence", unistateL_changePresence },
    { "dump", unistateL_dump },
    {0,0}
 };
 static const luaL_reg unistate_cond_methods[] = {
-   { "changeFaction", unistateL_changeowner },
-   { "changePresence", unistateL_changepresence },
+   { "changeFaction", unistateL_changeFaction },
+   { "changePresence", unistateL_changePresence },
    { "dump", unistateL_dump },
    {0,0}
 };
@@ -69,7 +69,7 @@ int nlua_loadUnistate( lua_State *L, int readonly )
  * @brief Changes the faction ownership of a planet.
  * 
  */
-int unistateL_changeowner(lua_State *L)
+int unistateL_changeFaction(lua_State *L)
 {
    //check for bad parameter
    if(!(lua_isstring(L,1) && lua_isstring(L,2)))
@@ -110,9 +110,38 @@ int unistateL_changeowner(lua_State *L)
  * @brief Changes the faction presence in a system.
  * 
  */
-int unistateL_changepresence(lua_State *L)
+int unistateL_changePresence(lua_State *L)
 {
-   NLUA_ERROR(L, "Not implemented yet :(");
+   //check for bad parameter
+   if(!(lua_isstring(L,1) && lua_isnumber(L,2)))
+   {
+      NLUA_INVALID_PARAMETER(L);
+      return 1;
+   }
+   int ret;
+   char *planet = NULL;
+   int presence = -1;
+   planet = (char*)lua_tostring(L, 1);
+   presence = lua_tointeger(L, 2);
+   
+   if((ret = unistate_setPresence(planet, presence)) != 0)
+   {
+      switch(ret)
+      {
+         case -1:
+            WARN("Error: could not add node to uni_state list");
+            break;
+         case -2:
+            WARN("Error: invalid planet or faction passed");
+            break;
+         case -3:
+            WARN("Error: NULL param passed");
+            break;
+         default:
+            WARN("Error: An unknown error occurred");
+      }
+   }
+      
    return 0;
 }
 

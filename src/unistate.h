@@ -29,6 +29,7 @@ int unistate_save(xmlTextWriterPtr writer);
 int unistate_load(xmlNodePtr rootNode);
 void unistate_quit(void);
 int unistate_setFaction(char *planet, char *faction);
+int unistate_setPresence(char *planet, int presence);
 assetStatePtr unistate_getList(void);
 
 #endif
