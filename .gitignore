@@ -44,4 +44,6 @@ extras/macosx/build/
 extras/.dirstamp
 datapath.lua
 core
-naev_data
+naev-data
+*.log
+*.dirstamp
