@@ -177,6 +177,7 @@ static int aiL_getrndpilot( lua_State *L ); /* number getrndpilot() */
 static int aiL_getnearestpilot( lua_State *L ); /* number getnearestpilot() */
 static int aiL_armour( lua_State *L ); /* armour() */
 static int aiL_shield( lua_State *L ); /* shield() */
+static int aiL_speed( lua_State *L ); /* speed() */
 static int aiL_parmour( lua_State *L ); /* parmour() */
 static int aiL_pshield( lua_State *L ); /* pshield() */
 static int aiL_pcurenergy( lua_State *L ); /* pcurenergy() */
@@ -294,6 +295,7 @@ static const luaL_reg aiL_methods[] = {
    { "nearestpilot", aiL_getnearestpilot },
    { "armour", aiL_armour },
    { "shield", aiL_shield },
+   { "speed", aiL_speed },
    { "parmour", aiL_parmour },
    { "pshield", aiL_pshield },
    { "pcurenergy", aiL_pcurenergy },
@@ -1556,6 +1558,29 @@ static int aiL_shield( lua_State *L )
       d = p->shield;
    }
    else d = cur_pilot->shield;
+
+   lua_pushnumber(L, d);
+   return 1;
+}
+
+ /*
+ * gets the pilot's current speed
+ */
+static int aiL_speed( lua_State *L )
+{
+   
+   Pilot *p;
+   double d
+   
+   ;if (lua_isnumber(L,1)) {
+      p = pilot_get((unsigned int)lua_tonumber(L,1));
+      if (p==NULL) {
+         NLUA_ERROR(L, "Pilot ID does not belong to a pilot.");
+         return 0;
+      }
+      d = VMOD(p->solid->vel);
+   }
+   else d = VMOD(cur_pilot->solid->vel);
 
    lua_pushnumber(L, d);
    return 1;
