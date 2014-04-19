@@ -19,6 +19,7 @@ docs/lua/*.luadoc
 *.in
 *Makefile
 *.deps/
+src/.dirstamp
 src/stamp-h1
 src/config.h
 src/config.h.in~

@@ -8,7 +8,7 @@ AC_CONFIG_HEADERS([src/config.h])
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_AUX_DIR([build])
 
-AM_INIT_AUTOMAKE([foreign])
+AM_INIT_AUTOMAKE([foreign subdir-objects])
 
 # M4 defines __unix__ to be the empty string on UNIX-like systems.  This
 # causes AC_DEFINE to fail if it is used to define __unix__.  This seems to
@@ -175,7 +175,7 @@ AC_ARG_WITH([sdl2],
       with_sdl2=no
     ])
   ], [
-    with_sdl2=yes
+    with_sdl2=no # TODO should default to yes, but it's too broken atm
   ])
 AC_MSG_RESULT([$with_sdl2])
 
@@ -262,24 +262,19 @@ AS_IF([test "$have_sdl2" = "no"], [
 ])
 
 # libxml2
-PKG_CHECK_MODULES([XML], [libxml-2.0], [], [
-  AC_ERROR([libxml-2.0 not found])
-])
+PKG_CHECK_MODULES([XML], [libxml-2.0])
 
 # FreeType
-PKG_CHECK_MODULES([FREETYPE], [freetype2], [], [
-  AC_ERROR([freetype2 not found])
-])
+PKG_CHECK_MODULES([FREETYPE], [freetype2])
+
+# vorbis
+PKG_CHECK_MODULES([VORBIS], [vorbis])
 
 # vorbisfile
-PKG_CHECK_MODULES([VORBISFILE], [vorbisfile], [], [
-  AC_ERROR([vorbisfile not found])
-])
+PKG_CHECK_MODULES([VORBISFILE], [vorbisfile])
 
 # libpng
-PKG_CHECK_MODULES([PNG], [libpng], [], [
-  AC_ERROR([libpng not found])
-])
+PKG_CHECK_MODULES([PNG], [libpng])
 
 # lua
 case "$used_lua" in
@@ -309,18 +304,30 @@ AS_IF([test "$have_lua" = "no"], [
   used_lua=internal
 ])
 
+# sqrt is required for system csparse to work
+AC_SEARCH_LIBS([sqrt], [m])
 
+# csparse
 AC_CHECK_LIB([csparse], [cs_spalloc], [have_csparse_lib=yes], [have_csparse_lib=no])
 AC_CHECK_LIB([cxsparse], [cs_di_spalloc], [have_cxsparse_lib=yes], [have_cxsparse_lib=no])
-AC_CHECK_HEADERS([cs.h], [have_cs_h=yes], [have_cs_h=no])
-AC_CHECK_HEADERS([suitesparse/cs.h], [have_suitesparse_cs_h=yes], [have_suitesparse_cs_h=no])
-AS_IF([test $have_csparse_lib = yes -a $have_cxsparse_lib = yes -a \( $have_cs_h = yes -o $have_suitesparse_cs_h = yes \)], [
-   used_csparse=shared
-   CSPARSE_LIBS="-lcsparse -lcxsparse"
+
+AS_IF([test "$have_csparse_lib" = "yes" -a "$have_cxsparse_lib" = "yes"], [
+    AC_CHECK_HEADERS([cs.h], [have_cs_h=yes], [have_cs_h=no])
+    AC_CHECK_HEADERS([suitesparse/cs.h], [have_suitesparse_cs_h=yes], [have_suitesparse_cs_h=no])
+
+    AS_IF([test $have_cs_h = yes -o $have_suitesparse_cs_h = yes], [
+        used_csparse=shared
+        CSPARSE_LIBS="-lcsparse -lcxsparse"
+    ], [
+        used_csparse=internal
+    ])
 ], [
    used_csparse=internal
-   CSPARSE_CFLAGS="-I\"\$(top_srcdir)/lib/csparse\""
-   CSPARSE_LIBS="\$(top_builddir)/lib/csparse/libcsparse.a"
+])
+
+AS_IF([test "$used_csparse" = "internal"], [
+    CSPARSE_CFLAGS="-I\"\$(top_srcdir)/lib/csparse\""
+    CSPARSE_LIBS="\$(top_builddir)/lib/csparse/libcsparse.a"
 ])
 
 # OpenAL
@@ -330,20 +337,7 @@ AS_IF([test "$with_openal" = "yes"], [
 
 # SDL_mixer
 AS_IF([test "$with_sdlmixer" = "yes"], [
-  AS_IF([test "$have_sdl2" = "yes"], [SDLMIXER_NAME=SDL2_mixer], [SDLMIXER_NAME=SDL_mixer])
-  VAR_SAVE([LIBS])
-  AC_SEARCH_LIBS([Mix_OpenAudio], [$SDLMIXER_NAME],
-     [have_sdlmixer=yes], [have_sdlmixer=no])
-  AS_IF([test "$have_sdlmixer" = "yes"], [
-    SDLMIXER_CFLAGS=
-    SDLMIXER_LIBS="$LIBS"
-  ], [
-    SDLMIXER_CFLAGS=
-    SDLMIXER_LIBS=
-  ])
-  VAR_RESTORE([LIBS])
-], [
-  have_sdlmixer=no
+  PKG_CHECK_MODULES([SDLMIXER], [SDL_mixer], [have_sdlmixer=yes], [have_sdlmixer=no])
 ])
 
 # SDL_image
@@ -391,6 +385,9 @@ AS_IF([test "$enable_debug" != "no"], [
 ])
 
 case "$host" in
+  *-linux*)
+    GLOBAL_LIBS="$NAEV_LIBS -lm" # feels so wrong
+    ;;
   *-mingw*)
     GLOBAL_LIBS="$NAEV_LIBS -lwsock32"
     ;;
@@ -421,13 +418,13 @@ AS_IF([test "$enable_debug" = "paranoid"], [
   AC_DEFINE([DEBUG_PARANOID], 1, [Define to 1 to enable paranoid debug code])
 ])
 
-NAEV_CFLAGS="$NAEV_CFLAGS $CSPARSE_CFLAGS $SDL_CFLAGS"
-NAEV_CFLAGS="$NAEV_CFLAGS $XML_CFLAGS $FREETYPE_CFLAGS $LUA_CFLAGS"
-NAEV_CFLAGS="$NAEV_CFLAGS $VORBISFILE_CFLAGS $OPENGL_CFLAGS $PNG_CFLAGS"
+NAEV_CFLAGS="$NAEV_CFLAGS $CSPARSE_CFLAGS $SDL_CFLAGS $XML_CFLAGS \
+    $FREETYPE_CFLAGS $LUA_CFLAGS $VORBIS_CFLAGS $VORBISFILE_CFLAGS \
+    $PNG_CFLAGS $OPENGL_CFLAGS"
 
-NAEV_LIBS="$NAEV_LIBS $CSPARSE_LIBS $SDL_LIBS $XML_LIBS"
-NAEV_LIBS="$NAEV_LIBS $FREETYPE_LIBS $LUA_LIBS"
-NAEV_LIBS="$NAEV_LIBS $VORBISFILE_LIBS $OPENGL_LIBS $PNG_LIBS"
+NAEV_LIBS="$NAEV_LIBS $CSPARSE_LIBS $SDL_LIBS $XML_LIBS \
+    $FREETYPE_LIBS $LUA_LIBS $VORBIS_LIBS $VORBISFILE_LIBS \
+    $PNG_LIBS $OPENGL_LIBS"
 
 AS_IF([test "$have_openal" = "yes"], [
   NAEV_CFLAGS="$NAEV_CFLAGS $OPENAL_CFLAGS"

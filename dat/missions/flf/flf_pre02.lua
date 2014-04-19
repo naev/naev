@@ -447,7 +447,7 @@ function spawnBigDV()
             boss = j
             boss:rmOutfit("all")
             boss:addOutfit("Turreted Gauss Gun", 2)
-            boss:addOutfit("Shield Booster", 1)
+            boss:addOutfit("Medium Shield Booster", 1)
             boss:addOutfit("Steering Thrusters", 1)
             boss:addOutfit("Shield Capacitor III", 1)
             boss:addOutfit("Forward Shock Absorbers", 1)
