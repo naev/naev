@@ -1560,7 +1560,9 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
          }
          if (jp_isFlag( jp, JP_EXITONLY ))
             continue;
-         if (!show_hidden && jp_isFlag( jp, JP_HIDDEN ))
+
+         /* Skip hidden jumps if they're unknown and not specifically requested */
+         if (!show_hidden && jp_isFlag( jp, JP_HIDDEN ) && !jp_isKnown(jp))
             continue;
 
          /* Check to see if it's already in the closed set. */
