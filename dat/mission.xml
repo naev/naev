@@ -620,7 +620,7 @@
   <lua>pirate/pir_clan_cargo</lua>
   <avail>
    <priority>1</priority>
-   <cond>faction.playerStanding("Pirate") &gt;= 20 and var.peek("ps_misn") >= 2</cond>
+   <cond>faction.playerStanding("Pirate") &gt;= 20 and var.peek("ps_misn") ~= nil and var.peek("ps_misn") &gt;= 2</cond>
    <chance>10</chance>
    <location>Bar</location>
    <faction>Pirate</faction>
