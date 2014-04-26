@@ -995,6 +995,9 @@ static void uniedit_editSys (void)
    window_addText( wid, x, y, 180, 15, 0, "txtName", &gl_smallFont, &cDConsole, buf );
    window_addButton( wid, 200, y+3, BUTTON_WIDTH, 21, "btnRename", "Rename", uniedit_btnEditRename );
 
+   /* New row. */
+   y -= gl_defFont.h + 15;
+
    /* Add general stats */
    s = "Radius";
    l = gl_printWidthRaw( NULL, s );
