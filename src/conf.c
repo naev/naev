@@ -639,7 +639,7 @@ void conf_parseCLI( int argc, char** argv )
 
          case 'C':
             conf.devcsv = 1;
-            LOG("Will generate CSV ouptut.");
+            LOG("Will generate CSV output.");
             break;
 #endif /* DEBUGGING */
 
