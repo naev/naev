@@ -559,7 +559,7 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
    h = 70;
    x = bx + (40-w)/2 + 10;
    y = by + bh - 30 - h;
-   percent = (p->cpu_max > 0.) ? p->cpu / p->cpu_max : 0.;
+   percent = (p->cpu_max > 0.) ? CLAMP(0., 1., p->cpu / p->cpu_max) : 0.;
    gl_printMidRaw( &gl_smallFont, w,
          x, y + h + gl_smallFont.h + 10.,
          &cBlack, "CPU" );
