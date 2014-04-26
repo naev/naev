@@ -884,11 +884,11 @@ static void map_renderPath( double x, double y )
          jsys = map_path[j];
          if (fuel == player.p->fuel && fuel > 100.)
             col = &cGreen;
-         else if (fuel < 100.)
+         else if (fuel < player.p->fuel_consumption)
             col = &cRed;
          else
             col = &cYellow;
-         fuel -= 100;
+         fuel -= player.p->fuel_consumption;
 
          /* Draw the lines. */
          vertex[0]  = x + lsys->pos.x * map_zoom;
