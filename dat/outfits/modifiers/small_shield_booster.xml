@@ -13,6 +13,6 @@
  <specific type="modification">
   <shield>15</shield>
   <shield_regen>1</shield_regen>
-  <energy_regen_flat>-5</energy_regen_flat>
+  <energy_usage>5</energy_usage>
  </specific>
 </outfit>

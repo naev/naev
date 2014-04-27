@@ -14,6 +14,6 @@
   <speed>3</speed>
   <speed_mod>10</speed_mod>
   <turn_mod>3</turn_mod>
-  <energy_regen_flat>-1.5</energy_regen_flat>
+  <energy_usage>1.5</energy_usage>
  </specific>
 </outfit>

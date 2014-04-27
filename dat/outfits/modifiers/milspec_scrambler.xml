@@ -10,7 +10,7 @@
   <cpu>-3</cpu>
  </general>
  <specific type="modification">
-  <energy_regen_flat>-15</energy_regen_flat>
+  <energy_usage>15</energy_usage>
   <ew_hide>30</ew_hide>
  </specific>
 </outfit>
