@@ -33,6 +33,7 @@
 #include "shipstats.h"
 #include "slots.h"
 #include "map.h"
+#include "ndata.h"
 #include "tk/toolkit_priv.h" /* Yes, I'm a bad person, abstractions be damned! */
 
 
@@ -62,6 +63,9 @@ static gl_vbo *equipment_vbo     = NULL; /**< The VBO. */
 static unsigned int equipment_wid   = 0; /**< Global wid. */
 static unsigned int *outfit_windows = NULL; /**< Outfit windows. */
 
+/* Slot textures */
+static glTexture *equip_ico_yes = NULL; /* Green circle */
+static glTexture *equip_ico_no  = NULL; /* Red circle with slash */
 
 /*
  * prototypes
@@ -256,6 +260,12 @@ void equipment_open( unsigned int wid )
    eq_wgt.selected      = NULL;
    outfit_windows       = NULL;
 
+   /* Icons */
+   if (equip_ico_yes == NULL)
+      equip_ico_yes = gl_newImage( GUI_GFX_PATH"yes.png", 0);
+   if (equip_ico_no == NULL)
+      equip_ico_no  = gl_newImage( GUI_GFX_PATH"no.png", 0);
+
    /* Add ammo. */
    equipment_addAmmo();
 
@@ -361,7 +371,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       int n, PilotOutfitSlot *lst, const char *txt,
       int selected, Outfit *o, Pilot *p, CstSlotWidget *wgt )
 {
-   int i, level;
+   int i, level, iconx, icony;
    const glColour *c, *dc, *rc;
    glColour bc;
 
@@ -407,22 +417,21 @@ static void equipment_renderColumn( double x, double y, double w, double h,
          /* Draw bugger. */
          gl_blitScale( lst[i].outfit->gfx_store,
                x, y, w, h, NULL );
-         c = &cBlack; /* Ensures nice uniform outlines. */
       }
-      else {
-         if ((o != NULL) &&
-               (lst[i].sslot->slot.type == o->slot.type)) {
-            if (pilot_canEquip( p, &lst[i], o ) != NULL)
-               c = &cRed;
-            else
-               c = &cDConsole;
+      else if ((o != NULL) &&
+            (lst[i].sslot->slot.type == o->slot.type)) {
+         if (pilot_canEquip( p, &lst[i], o ) != NULL) {
+            iconx = x + w/2 - equip_ico_no->w/2;
+            icony = y + h/2 - equip_ico_no->h/2;
+            gl_blitStatic( equip_ico_no,
+               iconx, icony, NULL );
          }
-         else
-            c = &cBlack;
-         gl_printMidRaw( &gl_smallFont, w,
-               x, y + (h-gl_smallFont.h)/2., c,
-               (lst[i].sslot->slot.spid != 0) ?
-                     sp_display(lst[i].sslot->slot.spid) : "None" );
+         else {
+            iconx = x + w/2 - equip_ico_yes->w/2;
+            icony = y + h/2 - equip_ico_yes->h/2;
+            gl_blitStatic( equip_ico_yes,
+               iconx, icony, NULL );
+         }
       }
 
       /* Must rechoose colour based on slot properties. */
@@ -435,7 +444,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
 
       /* Draw outline. */
       toolkit_drawOutlineThick( x, y, w, h, 1, 3, rc, NULL );
-      toolkit_drawOutline( x-1, y-1, w+3, h+3, 0, c, NULL );
+      toolkit_drawOutline( x-1, y-1, w+3, h+3, 0, &cBlack, NULL );
       /* Go to next one. */
       y -= h+20;
    }
@@ -2040,5 +2049,13 @@ void equipment_cleanup (void)
       gl_vboDestroy( equipment_vbo );
 
    equipment_vbo = NULL;
+
+   /* Free icons. */
+   if (equip_ico_yes != NULL)
+      gl_freeTexture(equip_ico_yes);
+   equip_ico_yes = NULL;
+   if (equip_ico_no != NULL)
+      gl_freeTexture(equip_ico_no);
+   equip_ico_no = NULL;
 }
 
