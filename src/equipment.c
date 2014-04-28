@@ -103,6 +103,7 @@ static void equipment_transportShip( unsigned int wid );
 static void equipment_unequipShip( unsigned int wid, char* str );
 static credits_t equipment_transportPrice( char *shipname );
 static void equipment_rightClickOutfits( unsigned int wid, char* str );
+static void equipment_changeTab( unsigned int wid, char *wgt, int tab );
 
 
 /**
@@ -1444,6 +1445,8 @@ static void equipment_genOutfitLists( unsigned int wid )
    else
       outfit_windows = window_tabWinGet( wid, EQUIPMENT_OUTFIT_TAB );
 
+   window_tabWinOnChange( wid, EQUIPMENT_OUTFIT_TAB, equipment_changeTab );
+
    /* Add the tabs. */
    for (i=0; i<numtabs; i++)
       equipment_addOutfitListSingle( outfit_windows[i], tabfilters[i] );
@@ -1726,6 +1729,21 @@ static void equipment_updateOutfitSingle( unsigned int wid, char* str )
    /* Also update ships. */
    if (str != NULL)
       equipment_updateShips(equipment_wid, NULL);
+}
+
+/**
+ * @brief Ensures the tab's selected item is reflected in the ship slot list
+ *
+ *    @param wid Unused.
+ *    @param wgt Unused.
+ *    @param tab Tab changed to.
+ */
+static void equipment_changeTab( unsigned int wid, char *wgt, int tab )
+{
+   (void) wid;
+   (void) wgt;
+
+   equipment_updateOutfitSingle( outfit_windows[tab], NULL );
 }
 
 /**
