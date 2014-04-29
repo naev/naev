@@ -10,7 +10,7 @@
  <license>Light Combat Vessel License</license>
  <description>A Dvaered Ancestor.</description>
  <health>
-  <absorb>9</absorb>
+  <absorb>5</absorb>
   <armour>85</armour>
   <armour_regen>0</armour_regen>
  </health>

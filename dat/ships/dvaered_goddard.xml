@@ -11,7 +11,7 @@
  <description>Once, the Goddard Battlecruiser was commissioned by the Empire for military service. However, during the Dvaered Revolts most Goddard captains sided with the insurgents, and after the establishment of House Dvaered the Empire ceded the license for the aging vessel to them. Today, House Dvaered is House Goddard's biggest client.</description>
  <health>
   <absorb>35</absorb>
-  <armour>1000</armour>
+  <armour>2000</armour>
   <armour_regen>0</armour_regen>
  </health>
  <characteristics>

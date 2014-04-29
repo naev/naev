@@ -10,8 +10,8 @@
  <license>Heavy Combat Vessel License</license>
  <description>A mighty ship, the Mephisto has grand energy and shielding management, and its armor is not quite as bad as that of other Za'lek ships. A core of these ships can reduce even powerful fleets to slag in short order.</description>
  <health>
-  <absorb>24</absorb>
-  <armour>450</armour>
+  <absorb>26</absorb>
+  <armour>1200</armour>
   <armour_regen>0</armour_regen>
  </health>
  <characteristics>

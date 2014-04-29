@@ -11,7 +11,7 @@
  <description>The Brigand is a fast, maneuverable bioship that the Soromid use for system patrols and police duties. The ship is lighly armoured and fairly fragile, but it makes up for this by being fast to grow and therefore relatively expendable.</description>
  <health>
   <absorb>8</absorb>
-  <armour>50</armour>
+  <armour>45</armour>
   <armour_regen>2</armour_regen>
  </health>
  <characteristics>

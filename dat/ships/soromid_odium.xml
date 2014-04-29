@@ -10,8 +10,8 @@
  <license>Medium Combat Vessel License</license>
  <description>The Odium offers a good balance between shields and armour, as well as an impressive amount of system hardpoints for a ship its size. It can often be found dominating smaller military engagements.</description>
  <health>
-  <absorb>12</absorb>
-  <armour>200</armour>
+  <absorb>13</absorb>
+  <armour>220</armour>
   <armour_regen>4</armour_regen>
  </health>
  <characteristics>

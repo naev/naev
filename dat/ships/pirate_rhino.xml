@@ -10,7 +10,7 @@
  <description>The traditional Skull and Bones refit has left the Rhino substantially more manoeuvrable, though somewhat less armoured. Exploiting its large cargo bay and durability, the Rhino has become an excellent scavenger ship.</description>
  <health>
   <absorb>20</absorb>
-  <armour>350</armour>
+  <armour>550</armour>
   <armour_regen>0</armour_regen>
  </health>
  <characteristics>

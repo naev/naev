@@ -10,8 +10,8 @@
  <license>Medium Combat Vessel License</license>
  <description>The Za'lek Imp is a rather oversized corvette that nontheless tends to be of a superior quality to that of other ships in its weight class. It suffers the common problem of Za'lek ships of poorer turning and frail armor, but it has an impressive amount of shields and energy to its name, fitting the Za'lek's superior technology.</description>
  <health>
-  <absorb>11</absorb>
-  <armour>100</armour>
+  <absorb>12</absorb>
+  <armour>180</armour>
   <armour_regen>0</armour_regen>
  </health>
  <characteristics>

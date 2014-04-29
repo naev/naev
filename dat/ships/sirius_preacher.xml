@@ -11,7 +11,7 @@
  <description>The Preacher, as its name implies, is the primary vessel by which House Sirius projects its message and will. Fielding a large array of weaponry, the Preacher is adept at making converts out of unbelievers.</description>
  <health>
   <absorb>15</absorb>
-  <armour>150</armour>
+  <armour>250</armour>
   <armour_regen>0</armour_regen>
  </health>
  <characteristics>

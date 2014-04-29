@@ -10,8 +10,8 @@
  <license>Medium Combat Vessel License</license>
  <description>An Empire Pacifier.</description>
  <health>
-  <absorb>23</absorb>
-  <armour>400</armour>
+  <absorb>22</absorb>
+  <armour>550</armour>
   <armour_regen>0</armour_regen>
  </health>
  <characteristics>

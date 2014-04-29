@@ -10,7 +10,7 @@
  <license>Light Combat Vessel License</license>
  <description>An Empire Lancelot.</description>
  <health>
-  <absorb>14</absorb>
+  <absorb>8</absorb>
   <armour>70</armour>
   <armour_regen>0</armour_regen>
  </health>

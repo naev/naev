@@ -11,7 +11,7 @@
  <description>The Vigilance is the embodiment of Dvaered philosophy. Featuring immense energy reserves and six weapon hardpoints, it's designed to hit as hard as possible. Given its Dvaered origins, it possesses inferior technology relative to its counterparts.</description>
  <health>
   <absorb>18</absorb>
-  <armour>320</armour>
+  <armour>550</armour>
   <armour_regen>0</armour_regen>
  </health>
  <characteristics>

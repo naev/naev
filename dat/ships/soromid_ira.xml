@@ -11,7 +11,7 @@
  <description>The Ira is the heaviest conventional combat vessel in Soromid service. Though lumbering and vulnerable when caught without escorts, it can deliver terrible punishment on enemy spaceships.</description>
  <health>
   <absorb>30</absorb>
-  <armour>1000</armour>
+  <armour>1700</armour>
   <armour_regen>5</armour_regen>
  </health>
  <characteristics>

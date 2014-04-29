@@ -10,8 +10,8 @@
  <license>Light Combat Vessel License</license>
  <description>Reavers are often found at the forefront of Soromid military engagements. Their good speed and maneuverability are compounded by their durability, making the Reaver one of the most effective heavy fighters in the galaxy.</description>
  <health>
-  <absorb>12</absorb>
-  <armour>110</armour>
+  <absorb>7</absorb>
+  <armour>75</armour>
   <armour_regen>3</armour_regen>
  </health>
  <characteristics>

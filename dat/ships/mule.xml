@@ -10,8 +10,8 @@
  <license>Large Civilian Vessel License</license>
  <description>A heavy freighter specialized in transporting cargo throughout the galaxy. Also has sufficient accommodations for passengers depending on the model, allowing for enjoyable cruises. The Mule was a favorite target of pirates until they added defensive capabilities to the new models which have proved highly effective against ill-prepared pirates.</description>
  <health>
-  <absorb>10</absorb>
-  <armour>300</armour>
+  <absorb>16</absorb>
+  <armour>350</armour>
   <armour_regen>0</armour_regen>
  </health>
  <characteristics>

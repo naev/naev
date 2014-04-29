@@ -10,7 +10,7 @@
  <fabricator>Sirius Systems</fabricator>
  <description>The Fidelity is the light fighter of House Sirius. While not particularly competent alone, it's often employed as a forward scout, bringing with it far deadlier allies.</description>
  <health>
-  <absorb>7</absorb>
+  <absorb>6</absorb>
   <armour>45</armour>
   <armour_regen>0</armour_regen>
  </health>

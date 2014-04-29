@@ -10,8 +10,8 @@
  <license>Heavy Combat Vessel License</license>
  <description>The Archimedes is the backbone of the Proteron fleet. Offering heavy firepower and high durability, it can always be found in the heat of battle.</description>
  <health>
-  <absorb>30</absorb>
-  <armour>800</armour>
+  <absorb>31</absorb>
+  <armour>1700</armour>
   <armour_regen>0</armour_regen>
  </health>
  <characteristics>

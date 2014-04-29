@@ -10,7 +10,7 @@
  <license>Medium Combat Vessel License</license>
  <description>A very versatile combat ship. Nexus defines the Admonisher as a compromise between the ruggedness of the Pacifier and the agility of the Lancelot. Overall a very solid fighter.</description>
  <health>
-  <absorb>12</absorb>
+  <absorb>13</absorb>
   <armour>220</armour>
   <armour_regen>0</armour_regen>
  </health>

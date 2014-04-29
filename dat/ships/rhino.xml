@@ -10,8 +10,8 @@
  <license>Large Civilian Vessel License</license>
  <description>A particularly durable Melendez design, the Rhino is well-suited to transporting high-value, high-risk freight. While it has much lower cargo density than dedicated freighters, it protects itself extremely effectively. Its modular bays allow it to function as a personnel transport, a fact not lost on modern militaries.</description>
  <health>
-  <absorb>18</absorb>
-  <armour>300</armour>
+  <absorb>19</absorb>
+  <armour>450</armour>
   <armour_regen>0</armour_regen>
  </health>
  <characteristics>

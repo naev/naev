@@ -9,7 +9,7 @@
  <fabricator>House Dvaered</fabricator>
  <description>A Dvaered Vendetta.</description>
  <health>
-  <absorb>13</absorb>
+  <absorb>7</absorb>
   <armour>110</armour>
   <armour_regen>0</armour_regen>
  </health>

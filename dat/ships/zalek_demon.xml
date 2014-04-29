@@ -11,7 +11,7 @@
  <description>House Za'lek's ferociously-named destroyer has earned the moniker with disproportionatly powerful shields and energy management, as well as size. Its handling suffers, and has poor armor like all Za'lek ships, but this comes as poor consolation to the Za'lek's enemies.</description>
  <health>
   <absorb>14</absorb>
-  <armour>300</armour>
+  <armour>400</armour>
   <armour_regen>0</armour_regen>
  </health>
  <characteristics>

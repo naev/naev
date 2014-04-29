@@ -9,8 +9,8 @@
  <fabricator>Melendez Corp.</fabricator>
  <description>The Koala is your standard cargo vessel. It's a small ship with little weapon space but a decent amount of cargo space. Good for the entrepreneur working his way to a vast space trade empire.</description>
  <health>
-  <absorb>10</absorb>
-  <armour>100</armour>
+  <absorb>8</absorb>
+  <armour>110</armour>
   <armour_regen>0</armour_regen>
  </health>
  <characteristics>

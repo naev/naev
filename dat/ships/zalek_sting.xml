@@ -10,7 +10,7 @@
  <license>Light Combat Vessel License</license>
  <description>The Sting Scout/Heavy Fighter is the oldest design still in use by the HZDF. Which in Za'lek terms, translates to twelve years. It still uses propulsion rockets, which lacks the issues with turning that the new ring drives have, at the expense of giving no energy bonuses.</description>
  <health>
-  <absorb>5</absorb>
+  <absorb>3</absorb>
   <armour>30</armour>
   <armour_regen>0</armour_regen>
  </health>

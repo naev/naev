@@ -10,8 +10,8 @@
  <license>Heavy Combat Vessel License</license>
  <description>An Empire Hawking.</description>
  <health>
-  <absorb>31</absorb>
-  <armour>800</armour>
+  <absorb>32</absorb>
+  <armour>1600</armour>
   <armour_regen>0</armour_regen>
  </health>
  <characteristics>

@@ -11,7 +11,7 @@
  <description>The Kahan is a cutting-edge vessel. Its design was completed shortly before the Incident, and it was on track to become the Proteron military's primary combat vessel. While possessing fewer weapon mounts than the Pacifier, it makes up for it with its ability to mount higher-tech weapons.</description>
  <health>
   <absorb>20</absorb>
-  <armour>370</armour>
+  <armour>500</armour>
   <armour_regen>0</armour_regen>
  </health>
  <characteristics>

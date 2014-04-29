@@ -10,8 +10,8 @@
  <license>Light Combat Vessel License</license>
  <description>One of the prize heavy fighters of Nexus Shipyards. The Lancelot was originally a classified design for the Empire military, but its existence was revealed during an aborted test flight. Now a modified version is available for civilians, though it doesn't quite match the original specifications. It is used by security agencies all over the universe for its reliability and availability.</description>
  <health>
-  <absorb>10</absorb>
-  <armour>50</armour>
+  <absorb>7</absorb>
+  <armour>60</armour>
   <armour_regen>0</armour_regen>
  </health>
  <characteristics>
