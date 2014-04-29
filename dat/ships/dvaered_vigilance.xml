@@ -17,7 +17,7 @@
  <characteristics>
   <crew>15</crew>
   <mass>410</mass>
-  <cargo>20</cargo>
+  <cargo>50</cargo>
  </characteristics>
  <slots>
   <weapon size="large" x="28" y="-3" h="-0"/>
