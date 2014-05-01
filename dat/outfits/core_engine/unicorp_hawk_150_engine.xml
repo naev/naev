@@ -5,16 +5,16 @@
   <slot prop="engines">structure</slot>
   <size>small</size>
   <mass>6</mass>
-  <price>25000</price>
+  <price>15000</price>
   <description>The KRD-B10 engine is a low-budget allround engine many civilians use to propel their ships. It's not particularly effective, but it has a fairly low energy use.</description>
   <gfx_store>afterburner</gfx_store>
  </general>
  <specific type="modification">
-  <thrust>170</thrust>
+  <thrust>215</thrust>
   <turn>120</turn>
-  <speed>220</speed>
+  <speed>255</speed>
   <fuel>300</fuel>
-  <energy_usage>7</energy_usage>
-  <engine_limit>70</engine_limit>
+  <energy_usage>6</energy_usage>
+  <engine_limit>150</engine_limit>
  </specific>
 </outfit>

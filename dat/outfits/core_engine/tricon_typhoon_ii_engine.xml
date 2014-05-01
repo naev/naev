@@ -4,17 +4,17 @@
   <typename>Core Systems</typename>
   <slot prop="engines">structure</slot>
   <size>large</size>
-  <mass>50</mass>
-  <price>12000000</price>
+  <mass>80</mass>
+  <price>3600000</price>
   <description>Development of the Harpy Mk15 engine was something of a prestige project for Tricon. It performs somewhat better than the more commercially oriented Mk11, but its price tags make it a viable choice only for the wealthy enthusiast.</description>
   <gfx_store>afterburner</gfx_store>
  </general>
  <specific type="modification">
-  <thrust>100</thrust>
-  <turn>80</turn>
-  <speed>100</speed>
-  <fuel>2000</fuel>
+  <thrust>75</thrust>
+  <turn>65</turn>
+  <speed>85</speed>
+  <fuel>1600</fuel>
   <energy_usage>54</energy_usage>
-  <engine_limit>9000</engine_limit>
+  <engine_limit>6500</engine_limit>
  </specific>
 </outfit>

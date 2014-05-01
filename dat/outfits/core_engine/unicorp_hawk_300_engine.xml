@@ -4,17 +4,17 @@
   <typename>Core Systems</typename>
   <slot prop="engines">structure</slot>
   <size>small</size>
-  <mass>6</mass>
-  <price>45000</price>
+  <mass>10</mass>
+  <price>25000</price>
   <description>The KRD-B12 is a somewhat newer revision of the KRD-B10. Performance is improved, but energy consumption is a bit higher as well.</description>
   <gfx_store>afterburner</gfx_store>
  </general>
  <specific type="modification">
-  <thrust>190</thrust>
-  <turn>130</turn>
-  <speed>240</speed>
+  <thrust>180</thrust>
+  <turn>100</turn>
+  <speed>215</speed>
   <fuel>300</fuel>
   <energy_usage>8</energy_usage>
-  <engine_limit>75</engine_limit>
+  <engine_limit>300</engine_limit>
  </specific>
 </outfit>

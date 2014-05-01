@@ -4,17 +4,17 @@
   <typename>Core Systems</typename>
   <slot prop="engines">structure</slot>
   <size>medium</size>
-  <mass>10</mass>
-  <price>2000000</price>
+  <mass>30</mass>
+  <price>280000</price>
   <description>Tricon's Buffalo can pull loads few other engines in its size class can pull. Captains packing heavy weaponry or cargo can benefit from this.</description>
   <gfx_store>afterburner</gfx_store>
  </general>
  <specific type="modification">
-  <thrust>145</thrust>
-  <turn>90</turn>
-  <speed>170</speed>
+  <thrust>105</thrust>
+  <turn>65</turn>
+  <speed>135</speed>
   <fuel>1000</fuel>
-  <energy_usage>23</energy_usage>
-  <engine_limit>800</engine_limit>
+  <energy_usage>26</energy_usage>
+  <engine_limit>1600</engine_limit>
  </specific>
 </outfit>

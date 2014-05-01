@@ -4,17 +4,17 @@
   <typename>Core Systems</typename>
   <slot prop="engines">structure</slot>
   <size>large</size>
-  <mass>50</mass>
-  <price>2500000</price>
+  <mass>65</mass>
+  <price>400000</price>
   <description>The KRD-T20 is a modest improvement over the KRD-T10. It's a popular product among independent captains, despite its limited performance.</description>
   <gfx_store>afterburner</gfx_store>
  </general>
  <specific type="modification">
-  <thrust>60</thrust>
+  <thrust>55</thrust>
   <turn>45</turn>
-  <speed>60</speed>
+  <speed>65</speed>
   <fuel>1200</fuel>
-  <energy_usage>42</energy_usage>
-  <engine_limit>5200</engine_limit>
+  <energy_usage>40</energy_usage>
+  <engine_limit>6500</engine_limit>
  </specific>
 </outfit>

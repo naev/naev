@@ -4,17 +4,17 @@
   <typename>Core Systems</typename>
   <slot prop="engines">structure</slot>
   <size>small</size>
-  <mass>8</mass>
-  <price>100000</price>
+  <mass>12</mass>
+  <price>75000</price>
   <description>For pilots who want to fly with speed and efficiency, Tricon's Naga is the engine of choice. With good all round performance and a high mass limit, it is one of the best low end engines on the market.</description>
   <gfx_store>afterburner</gfx_store>
  </general>
  <specific type="modification">
-  <thrust>230</thrust>
-  <turn>150</turn>
-  <speed>290</speed>
-  <fuel>400</fuel>
+  <thrust>210</thrust>
+  <turn>120</turn>
+  <speed>250</speed>
+  <fuel>300</fuel>
   <energy_usage>10</energy_usage>
-  <engine_limit>110</engine_limit>
+  <engine_limit>300</engine_limit>
  </specific>
 </outfit>

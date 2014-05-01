@@ -4,17 +4,17 @@
   <typename>Core Systems</typename>
   <slot prop="engines">structure</slot>
   <size>large</size>
-  <mass>50</mass>
-  <price>6000000</price>
+  <mass>80</mass>
+  <price>1200000</price>
   <description>Tricon's Harpy Mk6 provides superior allround propulsion. The Mk6 is often seen as the standard to which all other engines aspire.</description>
   <gfx_store>afterburner</gfx_store>
  </general>
  <specific type="modification">
-  <thrust>80</thrust>
-  <turn>65</turn>
-  <speed>80</speed>
-  <fuel>1600</fuel>
-  <energy_usage>47</energy_usage>
-  <engine_limit>7500</engine_limit>
+  <thrust>65</thrust>
+  <turn>55</turn>
+  <speed>75</speed>
+  <fuel>1200</fuel>
+  <energy_usage>46</energy_usage>
+  <engine_limit>6500</engine_limit>
  </specific>
 </outfit>

@@ -4,17 +4,17 @@
   <typename>Core Systems</typename>
   <slot prop="engines">structure</slot>
   <size>small</size>
-  <mass>9</mass>
-  <price>200000</price>
+  <mass>15</mass>
+  <price>95000</price>
   <description>Aptly named, Tricon's Oxen engine excels at pulling heavy loads. It won't win any high speed races, but it can shift heavy cargo quite efficiently.</description>
   <gfx_store>afterburner</gfx_store>
  </general>
  <specific type="modification">
-  <thrust>210</thrust>
-  <turn>150</turn>
-  <speed>280</speed>
+  <thrust>170</thrust>
+  <turn>95</turn>
+  <speed>225</speed>
   <fuel>500</fuel>
   <energy_usage>12</energy_usage>
-  <engine_limit>180</engine_limit>
+  <engine_limit>400</engine_limit>
  </specific>
 </outfit>
