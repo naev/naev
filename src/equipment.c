@@ -1726,6 +1726,7 @@ static void equipment_updateOutfitSingle( unsigned int wid, char* str )
 {
    (void) str;
    const char *oname;
+   int active;
 
    /* Must have outfit. */
    oname = toolkit_getImageArray( wid, EQUIPMENT_OUTFITS );
@@ -1733,7 +1734,11 @@ static void equipment_updateOutfitSingle( unsigned int wid, char* str )
       eq_wgt.outfit = NULL;
       return;
    }
-   eq_wgt.outfit = outfit_get( oname );
+
+   /* Don't switch the selected outfit if another tab is selected */
+   active = window_tabWinGetActive( equipment_wid, EQUIPMENT_OUTFIT_TAB );
+   if (wid == outfit_windows[active])
+      eq_wgt.outfit = outfit_get( oname );
 
    /* Also update ships. */
    if (str != NULL)
