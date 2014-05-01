@@ -7,6 +7,10 @@ include("dat/factions/equip/generic.lua")
 --    @param p Pilot to equip
 --]]
 function equip( p )
+   -- Start with an empty ship
+   p:rmOutfit("all")
+   p:rmOutfit("cores")
+
    -- Get ship info
    local shiptype, shipsize = equip_getShipBroad( p:ship():class() )
 

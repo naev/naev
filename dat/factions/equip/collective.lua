@@ -7,8 +7,12 @@ include("dat/factions/equip/generic.lua")
 --    @param p Pilot to equip
 --]]
 function equip( p )
+   -- Start with an empty ship
+   p:rmOutfit("all")
+   p:rmOutfit("cores")
+
    -- Currently collective are only drones and all the same
-   equip_fillSlots( p, { "Neutron Disruptor" }, { }, { } )
    equip_cores(p, "Tricon Zephyr Engine", "Milspec Orion 3701 Core System", "Schafer & Kane Light Stealth Plating")
+   equip_fillSlots( p, { "Neutron Disruptor" }, { }, { } )
 end
 
