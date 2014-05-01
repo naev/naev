@@ -118,7 +118,7 @@ function equip_empireMilitary( p, shipsize )
 
       -- Destroyer
       if class == "Destroyer" then
-         equip_cores(p, "Tricon Cyclone Engine", "Milspec Orion 5501 Core System", "Schafer & Kane Medium Combat Plating Gamma")
+         equip_cores(p, "Tricon Cyclone II Engine", "Milspec Orion 5501 Core System", "Schafer & Kane Medium Combat Plating Gamma")
          use_secondary  = rnd.rnd(1,2)
          use_turrets    = nhigh - use_secondary - rnd.rnd(1,2)
          use_forward    = nhigh - use_secondary - use_turrets
@@ -132,7 +132,7 @@ function equip_empireMilitary( p, shipsize )
 
    else -- "large"
       -- TODO: Divide into carrier and cruiser classes.
-      equip_cores(p, "Tricon Typhoon Engine", "Milspec Orion 9901 Core System", "Schafer & Kane Heavy Combat Plating Gamma")
+      equip_cores(p, "Tricon Typhoon II Engine", "Milspec Orion 9901 Core System", "Schafer & Kane Heavy Combat Plating Gamma")
       use_secondary  = 2
       if rnd.rnd() > 0.4 then -- Anti-fighter variant.
          use_turrets    = nhigh - use_secondary - rnd.rnd(2,3)

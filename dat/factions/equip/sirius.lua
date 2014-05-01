@@ -121,7 +121,7 @@ function equip_siriusMilitary( p, shipsize )
 
       -- Destroyer
       if class == "Destroyer" then
-         equip_cores(p, "Tricon Cyclone Engine", "Milspec Orion 5501 Core System", "Schafer & Kane Medium Combat Plating Gamma")
+         equip_cores(p, "Tricon Cyclone II Engine", "Milspec Orion 5501 Core System", "Schafer & Kane Medium Combat Plating Gamma")
          scramble       = true
          primary        = icmb( equip_forwardSrsMed(), equip_turretSrsMed() )
          use_secondary  = rnd.rnd(1,2)
@@ -135,7 +135,7 @@ function equip_siriusMilitary( p, shipsize )
 
    else
       -- TODO: Divide into carrier and cruiser classes.
-      equip_cores(p, "Tricon Typhoon Engine", "Milspec Orion 9901 Core System", "Schafer & Kane Heavy Combat Plating Gamma")
+      equip_cores(p, "Tricon Typhoon II Engine", "Milspec Orion 9901 Core System", "Schafer & Kane Heavy Combat Plating Gamma")
       use_primary    = nhigh-2
       use_secondary  = 2
       addWeapons( equip_turretSrsHig(), use_primary )

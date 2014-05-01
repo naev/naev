@@ -25,8 +25,8 @@ function equip_generic( p )
       end
       equip_genericCivilian( p, shipsize )
    elseif shiptype == "merchant" or p:faction() == faction.get("Trader") then
-      if shipsize == "small" then      equip_cores(p, "Unicorp AUR-50A Engine", "Unicorp PT-200 Core System", "Unicorp Small Cargo Hull")
-      elseif shipsize == "medium" then equip_cores(p, "Melendez Buffalo Engine", "Unicorp PT-500 Core System", "Unicorp Medium Cargo Hull")
+      if shipsize == "small" then      equip_cores(p, "Melendez Ox Engine", "Unicorp PT-200 Core System", "Unicorp Small Cargo Hull")
+      elseif shipsize == "medium" then equip_cores(p, "Melendez Buffalo XL Engine", "Unicorp PT-500 Core System", "Unicorp Medium Cargo Hull")
       else                             equip_cores(p, "Melendez Mammoth Engine", "Unicorp PT-1200 Core System", "Unicorp Large Cargo Hull")
       end
       equip_genericMerchant( p, shipsize )
