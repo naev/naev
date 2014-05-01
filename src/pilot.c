@@ -2199,6 +2199,7 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    pilot->armour = pilot->armour_max;
    pilot->shield = pilot->shield_max;
    pilot->energy = pilot->energy_max;
+   pilot->fuel   = pilot->fuel_max;
 
    /* Sanity check. */
 #ifdef DEBUGGING
