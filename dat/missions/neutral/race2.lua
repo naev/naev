@@ -123,7 +123,7 @@ function takeoff()
     end
     if choice ~= 1 then
         for k,v in ipairs(player.pilot():outfits()) do
-            if (("Manufacturer Small Engine" ~= v:name())
+            if (("Unicorp Hawk 150 Engine" ~= v:name())
             and ("Basic Small Systems" ~= v:name())
             and ("Unmodified Small Hull" ~= v:name())) then
                 tk.msg(ftitle[4], ftext[4])
@@ -177,7 +177,7 @@ function takeoff()
             
             racers[i]:addOutfit("Basic Small Systems")
             racers[i]:addOutfit("Unmodified Small Hull")
-            racers[i]:addOutfit("Manufacturer Small Engine")
+            racers[i]:addOutfit("Unicorp Hawk 150 Engine")
         end
     end
     for i, j in ipairs(racers) do
