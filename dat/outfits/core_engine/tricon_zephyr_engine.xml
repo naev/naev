@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<outfit name="Tricon Naga Mk9 Engine">
+<outfit name="Tricon Zephyr Engine">
  <general>
   <typename>Core Systems</typename>
   <slot prop="engines">structure</slot>

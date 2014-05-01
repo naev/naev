@@ -185,47 +185,47 @@
   <item>Milspec Orion 9903 Core System</item>
   <item>Beat Up Small Engine</item>
   <item>Manufacturer Small Engine</item>
-  <item>Unicorp KRD-B10 Engine</item>
-  <item>Unicorp KRD-B12 Engine</item>
+  <item>Unicorp Hawk 150 Engine</item>
+  <item>Unicorp Hawk 300 Engine</item>
   <item>Unicorp EXA-49F Engine</item>
   <item>Unicorp AUR-50A Engine</item>
-  <item>Unicorp JNS-44K Engine</item>
-  <item>Tricon Naga Mk3 Engine</item>
-  <item>Tricon Naga Mk5 Engine</item>
+  <item>Melendez Ox Engine</item>
+  <item>Nexus Dart 300 Engine</item>
+  <item>Nexus Dart 150 Engine</item>
   <item>Tricon Crane Engine</item>
   <item>Tricon Albatross Engine</item>
-  <item>Tricon Oxen Engine</item>
-  <item>Tricon Naga Mk9 Engine</item>
-  <item>Tricon Naga Mk12 Engine</item>
+  <item>Melendez Ox XL Engine</item>
+  <item>Tricon Zephyr Engine</item>
+  <item>Tricon Zephyr II Engine</item>
   <item>Beat Up Medium Engine</item>
   <item>Manufacturer Medium Engine</item>
-  <item>Unicorp KRD-G10 Engine</item>
-  <item>Unicorp KRD-G15 Engine</item>
+  <item>Unicorp Falcon 550 Engine</item>
+  <item>Unicorp Falcon 1200 Engine</item>
   <item>Unicorp EXA-66F Engine</item>
   <item>Unicorp AUR-70A Engine</item>
-  <item>Unicorp JNS-54K Engine</item>
-  <item>Tricon Centaur Mk2 Engine</item>
-  <item>Tricon Centaur Mk3 Engine</item>
+  <item>Melendez Buffalo Engine</item>
+  <item>Nexus Arrow 550 Engine</item>
+  <item>Nexus Arrow 1200 Engine</item>
   <item>Tricon Kolibri Engine</item>
   <item>Tricon Antelope Engine</item>
-  <item>Tricon Buffalo Engine</item>
-  <item>Tricon Centaur Mk7 Engine</item>
-  <item>Tricon Centaur Mk8 Engine</item>
+  <item>Melendez Buffalo XL Engine</item>
+  <item>Tricon Cyclone Engine</item>
+  <item>Tricon Cyclone II Engine</item>
   <item>Tricon Centaur Mk7-Ra Engine</item>
   <item>Beat Up Large Engine</item>
   <item>Manufacturer Large Engine</item>
-  <item>Unicorp KRD-T10 Engine</item>
-  <item>Unicorp KRD-T20 Engine</item>
+  <item>Unicorp Eagle 4500 Engine</item>
+  <item>Unicorp Eagle 6500 Engine</item>
   <item>Unicorp EXA-71F Engine</item>
   <item>Unicorp AUR-79A Engine</item>
-  <item>Unicorp JNS-99K Engine</item>
-  <item>Tricon Harpy Mk1 Engine</item>
-  <item>Tricon Harpy Mk6 Engine</item>
+  <item>Melendez Mammoth Engine</item>
+  <item>Nexus Bolt 4500 Engine</item>
+  <item>Nexus Bolt 6500 Engine</item>
   <item>Tricon Raven Engine</item>
   <item>Tricon Kraken Engine</item>
-  <item>Tricon Mammoth Engine</item>
-  <item>Tricon Harpy Mk11 Engine</item>
-  <item>Tricon Harpy Mk15 Engine</item>
+  <item>Melendez Mammoth XL Engine</item>
+  <item>Tricon Typhoon Engine</item>
+  <item>Tricon Typhoon II Engine</item>
   <item>Tricon Model X Large Engine</item>
   <item>Patchwork Light Plating</item>
   <item>Unmodified Small Hull</item>
@@ -768,12 +768,12 @@
   <item>Manufacturer Small Engine</item>
   <item>Manufacturer Medium Engine</item>
   <item>Manufacturer Large Engine</item>
-  <item>Unicorp KRD-B10 Engine</item>
-  <item>Unicorp KRD-B12 Engine</item>
-  <item>Unicorp KRD-G10 Engine</item>
-  <item>Unicorp KRD-G15 Engine</item>
-  <item>Unicorp KRD-T10 Engine</item>
-  <item>Unicorp KRD-T20 Engine</item>
+  <item>Unicorp Hawk 150 Engine</item>
+  <item>Unicorp Hawk 300 Engine</item>
+  <item>Unicorp Falcon 550 Engine</item>
+  <item>Unicorp Falcon 1200 Engine</item>
+  <item>Unicorp Eagle 4500 Engine</item>
+  <item>Unicorp Eagle 6500 Engine</item>
  </tech>
  <tech name="Engines Medium">
   <item>Unicorp EXA-49F Engine</item>
@@ -782,35 +782,35 @@
   <item>Unicorp AUR-50A Engine</item>
   <item>Unicorp AUR-70A Engine</item>
   <item>Unicorp AUR-79A Engine</item>
-  <item>Unicorp JNS-44K Engine</item>
-  <item>Unicorp JNS-54K Engine</item>
-  <item>Unicorp JNS-99K Engine</item>
+  <item>Melendez Ox Engine</item>
+  <item>Melendez Buffalo Engine</item>
+  <item>Melendez Mammoth Engine</item>
  </tech>
  <tech name="Engines High">
-  <item>Tricon Naga Mk3 Engine</item>
-  <item>Tricon Naga Mk5 Engine</item>
-  <item>Tricon Centaur Mk2 Engine</item>
-  <item>Tricon Centaur Mk3 Engine</item>
-  <item>Tricon Harpy Mk1 Engine</item>
-  <item>Tricon Harpy Mk6 Engine</item>
+  <item>Nexus Dart 300 Engine</item>
+  <item>Nexus Dart 150 Engine</item>
+  <item>Nexus Arrow 550 Engine</item>
+  <item>Nexus Arrow 1200 Engine</item>
+  <item>Nexus Bolt 4500 Engine</item>
+  <item>Nexus Bolt 6500 Engine</item>
   <item>Tricon Crane Engine</item>
   <item>Tricon Kolibri Engine</item>
   <item>Tricon Raven Engine</item>
   <item>Tricon Albatross Engine</item>
   <item>Tricon Antelope Engine</item>
   <item>Tricon Kraken Engine</item>
-  <item>Tricon Oxen Engine</item>
-  <item>Tricon Buffalo Engine</item>
-  <item>Tricon Mammoth Engine</item>
+  <item>Melendez Ox XL Engine</item>
+  <item>Melendez Buffalo XL Engine</item>
+  <item>Melendez Mammoth XL Engine</item>
  </tech>
  <tech name="Engines Elite">
-  <item>Tricon Naga Mk9 Engine</item>
-  <item>Tricon Naga Mk12 Engine</item>
-  <item>Tricon Centaur Mk7 Engine</item>
-  <item>Tricon Centaur Mk8 Engine</item>
+  <item>Tricon Zephyr Engine</item>
+  <item>Tricon Zephyr II Engine</item>
+  <item>Tricon Cyclone Engine</item>
+  <item>Tricon Cyclone II Engine</item>
   <item>Tricon Centaur Mk7-Ra Engine</item>
-  <item>Tricon Harpy Mk11 Engine</item>
-  <item>Tricon Harpy Mk15 Engine</item>
+  <item>Tricon Typhoon Engine</item>
+  <item>Tricon Typhoon II Engine</item>
  </tech>
  <tech name="Hulls Low">
   <item>Patchwork Light Plating</item>

@@ -71,7 +71,7 @@ function equip_pirateMilitary( p, shipsize )
 
       -- Scout - shouldn't exist
       if class == "Scout" then
-         equip_cores(p, "Tricon Naga Mk5 Engine", "Milspec Orion 2302 Core System", "Schafer & Kane Light Combat Plating")
+         equip_cores(p, "Nexus Dart 150 Engine", "Milspec Orion 2302 Core System", "Schafer & Kane Light Combat Plating")
          use_primary    = rnd.rnd(1,#nhigh)
          addWeapons( equip_forwardPirLow(), use_primary )
          medium         = { "Generic Afterburner", "Milspec Scrambler" }
@@ -80,7 +80,7 @@ function equip_pirateMilitary( p, shipsize )
 
       -- Fighter
       elseif class == "Fighter" then
-         equip_cores(p, "Tricon Naga Mk5 Engine", "Milspec Orion 2302 Core System", "Schafer & Kane Light Combat Plating")
+         equip_cores(p, "Nexus Dart 150 Engine", "Milspec Orion 2302 Core System", "Schafer & Kane Light Combat Plating")
          if nhigh > 3 then
             use_primary    = nhigh-1
             use_secondary  = 1
@@ -95,7 +95,7 @@ function equip_pirateMilitary( p, shipsize )
 
       -- Bomber
       elseif class == "Bomber" then
-         equip_cores(p, "Tricon Naga Mk5 Engine", "Milspec Orion 2302 Core System", "Schafer & Kane Light Combat Plating")
+         equip_cores(p, "Nexus Dart 150 Engine", "Milspec Orion 2302 Core System", "Schafer & Kane Light Combat Plating")
          use_primary    = rnd.rnd(1,2)
          use_secondary  = nhigh - use_primary
          addWeapons( equip_forwardPirLow(), use_primary )
@@ -106,7 +106,7 @@ function equip_pirateMilitary( p, shipsize )
       end
 
    elseif shipsize == "medium" then
-      equip_cores(p, "Tricon Centaur Mk3 Engine", "Milspec Orion 3702 Core System", "Schafer & Kane Medium Combat Plating Alpha")
+      equip_cores(p, "Nexus Arrow 1200 Engine", "Milspec Orion 3702 Core System", "Schafer & Kane Medium Combat Plating Alpha")
       local class = p:ship():class()
 
       use_secondary  = rnd.rnd(1,2)
@@ -124,7 +124,7 @@ function equip_pirateMilitary( p, shipsize )
 
 
    else
-      equip_cores(p, "Tricon Harpy Mk6 Engine", "Milspec Orion 4802 Core System", "Schafer & Kane Heavy Combat Plating Beta")
+      equip_cores(p, "Nexus Bolt 6500 Engine", "Milspec Orion 4802 Core System", "Schafer & Kane Heavy Combat Plating Beta")
       primary        = icmb( equip_turretPirHig(), equip_turretPirMed() )
       use_primary    = nhigh-2
       use_secondary  = 2
