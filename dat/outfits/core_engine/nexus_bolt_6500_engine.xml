@@ -6,7 +6,7 @@
   <size>large</size>
   <mass>80</mass>
   <price>1200000</price>
-  <description>Tricon's Harpy Mk6 provides superior allround propulsion. The Mk6 is often seen as the standard to which all other engines aspire.</description>
+  <description>Though lacking the glamour of flagship models from the likes of Tricon, the Nexus Bolt 6500 is nonetheless a respectable engine used by many captains. As a general-purpose engine, it lacks the sheer power of a Melendez engine, can't quite keep up with Tricon offerings, yet costs less than either, and manages to maintain a balance between all of its attributes.</description>
   <gfx_store>afterburner</gfx_store>
  </general>
  <specific type="modification">
