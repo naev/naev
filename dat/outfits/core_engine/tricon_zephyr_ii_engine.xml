@@ -6,7 +6,7 @@
   <size>small</size>
   <mass>12</mass>
   <price>225000</price>
-  <description>For pilots who want to fly with speed and efficiency, Tricon's Naga is the engine of choice. With good all round performance and a high mass limit, it is one of the best low end engines on the market.</description>
+  <description>A larger version of Tricon's original Zephyr intended for heavy fighters, the Zephyr II affords heavier fighters and bombers to move like scout ships. Its performance has not gone unnoticed by merchants either, resulting in its use for lightweight, time-critical shipping.</description>
   <gfx_store>afterburner</gfx_store>
  </general>
  <specific type="modification">

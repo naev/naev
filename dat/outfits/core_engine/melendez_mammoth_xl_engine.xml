@@ -6,7 +6,7 @@
   <size>large</size>
   <mass>100</mass>
   <price>1500000</price>
-  <description>Tricon's Mammoth can pull incridible amounts of mass. It requires specialized grav tethers to keep it attached to the ship's hull. This results in severely reduced top speed and maneuverability, but the increased mass limit more than makes up for that.</description>
+  <description>The very largest engine that Melendez produces, the Mammoth XL has precious little competition when it comes to moving massive amounts of mass around the galaxy, whether in the form of bulk freight or as the primary engine of a fully-equipped battlecruiser.</description>
   <gfx_store>afterburner</gfx_store>
  </general>
  <specific type="modification">

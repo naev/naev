@@ -6,7 +6,7 @@
   <size>small</size>
   <mass>10</mass>
   <price>25000</price>
-  <description>The KRD-B12 is a somewhat newer revision of the KRD-B10. Performance is improved, but energy consumption is a bit higher as well.</description>
+  <description>The Hawk 300 is an enlarged version of the Hawk 150 engine, optimized for heavier loads. Like its smaller counterpart, it offers modest performance for a low price.</description>
   <gfx_store>afterburner</gfx_store>
  </general>
  <specific type="modification">

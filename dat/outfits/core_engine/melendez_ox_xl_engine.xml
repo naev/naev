@@ -6,7 +6,7 @@
   <size>small</size>
   <mass>15</mass>
   <price>95000</price>
-  <description>Aptly named, Tricon's Oxen engine excels at pulling heavy loads. It won't win any high speed races, but it can shift heavy cargo quite efficiently.</description>
+  <description>Among the most powerful engines available for small vessels, the Ox XL excels at enabling merchants to haul moderate amounts of cargo from system to system with minimal refuelling stops.</description>
   <gfx_store>afterburner</gfx_store>
  </general>
  <specific type="modification">

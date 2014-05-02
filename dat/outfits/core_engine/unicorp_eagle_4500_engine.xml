@@ -6,7 +6,7 @@
   <size>large</size>
   <mass>50</mass>
   <price>300000</price>
-  <description>The KRD-T10 is a fairly inexpensive engine, by capital ship standards. Many captains find its output lacking, but not all captains can afford better.</description>
+  <description>Inexpensive by capital ship standards, the Eagle 4500 is seldom selected by captains who can afford better. While spaceworthy, the engine's performance renders it a liability in combat and uneconomical for freight hauling.</description>
   <gfx_store>afterburner</gfx_store>
  </general>
  <specific type="modification">

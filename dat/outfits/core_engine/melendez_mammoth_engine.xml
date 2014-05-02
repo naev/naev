@@ -6,7 +6,7 @@
   <size>large</size>
   <mass>75</mass>
   <price>1100000</price>
-  <description>The JNS-99K offers a lot of horse powers for its price. It can shift very heavy cargo loads without losing efficiency.</description>
+  <description>Melendez's Mammoth can pull incredible amounts of mass. Requiring specialized grav tethers to keep it attached to the ship's hull, it significantly impacts manoeuvrability, though a reasonable top speed can still be maintained. Many bulk freight corporations only turn a profit thanks to the Mammoth line of engines.</description>
   <gfx_store>afterburner</gfx_store>
  </general>
  <specific type="modification">

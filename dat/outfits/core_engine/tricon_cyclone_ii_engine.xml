@@ -6,7 +6,7 @@
   <size>medium</size>
   <mass>25</mass>
   <price>675000</price>
-  <description>Tricon's Centaur Mk8 is the state of the art in ship propulsion technology. It bests even the mighty Centaur Mk7.</description>
+  <description>A preferred engine of destroyer and time-focused freighter captains, the Cyclone II retains most of the original Cyclone's performance while more than doubling the engine's mass capacity. Its high power consumption is typically gladly written off given its exemplary performance.</description>
   <gfx_store>afterburner</gfx_store>
  </general>
  <specific type="modification">

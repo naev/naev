@@ -6,7 +6,7 @@
   <size>large</size>
   <mass>80</mass>
   <price>3600000</price>
-  <description>Development of the Harpy Mk15 engine was something of a prestige project for Tricon. It performs somewhat better than the more commercially oriented Mk11, but its price tags make it a viable choice only for the wealthy enthusiast.</description>
+  <description>The largest Tricon engine in production, the Typhoon II boasts surprisingly high performance for a capital ship engine. Its power consumption is markedly higher than anything in its class, but most captains are willing to make the trade for superior manoeuvrability</description>
   <gfx_store>afterburner</gfx_store>
  </general>
  <specific type="modification">

@@ -6,7 +6,7 @@
   <size>small</size>
   <mass>8</mass>
   <price>135000</price>
-  <description>For pilots who want to fly with speed and efficiency, Tricon's Naga is the engine of choice. With good all round performance and a high mass limit, it is one of the best low end engines on the market.</description>
+  <description>For light vessel pilots who demand unparalleled performance, Tricon's Zephyr is the engine of choice. Its best-in-class handling does come with the caveat of markedly increased power consumption, but those flying with Tricon engines can usually afford the requisite reactor upgrades.</description>
   <gfx_store>afterburner</gfx_store>
  </general>
  <specific type="modification">

@@ -6,7 +6,7 @@
   <size>small</size>
   <mass>12</mass>
   <price>75000</price>
-  <description>For pilots who want to fly with speed and efficiency, Tricon's Naga is the engine of choice. With good all round performance and a high mass limit, it is one of the best low end engines on the market.</description>
+  <description>The Dart 300 is a larger variant of Nexus's popular Dart 150, aimed at heavy fighters and light-duty cargo vessels. Its modest energy consumption allows it to be equipped on most vessels without requiring reactor upgrades.</description>
   <gfx_store>afterburner</gfx_store>
  </general>
  <specific type="modification">
