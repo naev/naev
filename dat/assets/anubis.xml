@@ -35,6 +35,7 @@
   <bar>What is beautiful is often dangerous but sometimes it also works the other way around. The spaceport bar on Anubis has a view over a ravine in the planet's surface and the radioactive storms that frequently rage through it are quite a sight to behold. Only offworlders appreciate it though, most of the locals know how unpleasant it is to have to work in such raging, radioactive conditions.</bar>
  </general>
  <tech>
+  <item>Engines Cargo</item>
   <item>Kinetic 1</item>
   <item>Kinetic 2</item>
   <item>Basic Trade Ships</item>

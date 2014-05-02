@@ -31,6 +31,7 @@
   <bar>There are four main portals leading into and out of this spaceport bar. One leads to the spaceport facility. The second leads to the central public transit hub in this area of the metroplex that spans much of the continent. The third leads directly to the local commercial node, and the final portal is connected to the emergency service network, a separate infrastructure completely dedicated to emergency vehicles.</bar>
  </general>
  <tech>
+  <item>Engines Cargo</item>
   <item>Systems Low</item>
   <item>Hulls Medium</item>
   <item>Ion 1</item>

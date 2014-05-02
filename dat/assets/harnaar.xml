@@ -31,6 +31,7 @@
   <bar>As Harnaar isn't an intolerably cold world, conditions lend themselved well to outdoor winter recreation. Tourists from all over Soromid space and beyond visit this planet to indulge in winter sports or outdoor relaxation. The spaceport bar welcomes them with open arms.</bar>
  </general>
  <tech>
+  <item>Engines Cargo</item>
   <item>Systems Medium</item>
   <item>Laser 1</item>
   <item>Ion 1</item>
@@ -38,6 +39,6 @@
   <item>Basic Outfits 1</item>
   <item>Missiles 1</item>
   <item>Bulk Trade Ships</item>
-  <item>Engines Elite</item>
+  <item>Engines High</item>
  </tech>
 </asset>

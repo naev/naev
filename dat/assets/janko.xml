@@ -31,6 +31,7 @@
   <bar>Thanks to its somewhat sparse population density, Janko can afford to have its spaceport well away from the bigger residential centers. The spaceport bar has exits leading directly to the hypermag transport system. A ten-STU trip will take you to the capital city.</bar>
  </general>
  <tech>
+  <item>Engines Cargo</item>
   <item>Hulls Low</item>
   <item>Hulls Medium</item>
   <item>Plasma 1</item>

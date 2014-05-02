@@ -31,6 +31,7 @@
   <bar>This spaceport bar offers excursions to the old, abandoned spaceport that's in the twilight zone of the planet. To some adventurous types it can be quite thrilling to roam around such a large complex that has been completely left to the elements.</bar>
  </general>
  <tech>
+  <item>Engines Cargo</item>
   <item>Systems Medium</item>
   <item>Hulls Medium</item>
   <item>Engines Medium</item>

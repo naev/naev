@@ -34,6 +34,7 @@
   <bar>Pilots are advised to wear air-sealed suits when visiting Beene's bar. The planet's atmosphere can cause serious problems for normal humans and the Soromid haven't bothered installing decontamination filters for the local population. As such, having a drink in Beene's bar is a bit of an ordeal. It's one of the less popular places among traders looking for a drink.</bar>
  </general>
  <tech>
+  <item>Engines Cargo</item>
   <item>Engines Medium</item>
   <item>Basic Outfits 1</item>
   <item>Basic Trade Ships</item>
