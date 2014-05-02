@@ -422,11 +422,14 @@
   <item>Previous Generation Large Systems</item>
   <item>Basic Large Systems</item>
   <item>Beat Up Small Engine</item>
-  <item>Manufacturer Small Engine</item>
   <item>Beat Up Medium Engine</item>
-  <item>Manufacturer Medium Engine</item>
   <item>Beat Up Large Engine</item>
-  <item>Manufacturer Large Engine</item>
+  <item>Unicorp Hawk 150 Engine</item>
+  <item>Unicorp Hawk 300 Engine</item>
+  <item>Unicorp Falcon 550 Engine</item>
+  <item>Unicorp Falcon 1200 Engine</item>
+  <item>Unicorp Eagle 4500 Engine</item>
+  <item>Unicorp Eagle 6500 Engine</item>
   <item>Patchwork Light Plating</item>
   <item>Unmodified Small Hull</item>
   <item>Patchwork Medium Plating</item>
@@ -463,11 +466,14 @@
   <item>Previous Generation Large Systems</item>
   <item>Basic Large Systems</item>
   <item>Beat Up Small Engine</item>
-  <item>Manufacturer Small Engine</item>
   <item>Beat Up Medium Engine</item>
-  <item>Manufacturer Medium Engine</item>
   <item>Beat Up Large Engine</item>
-  <item>Manufacturer Large Engine</item>
+  <item>Unicorp Hawk 150 Engine</item>
+  <item>Unicorp Hawk 300 Engine</item>
+  <item>Unicorp Falcon 550 Engine</item>
+  <item>Unicorp Falcon 1200 Engine</item>
+  <item>Unicorp Eagle 4500 Engine</item>
+  <item>Unicorp Eagle 6500 Engine</item>
   <item>Patchwork Light Plating</item>
   <item>Unmodified Small Hull</item>
   <item>Patchwork Medium Plating</item>
@@ -765,9 +771,6 @@
   <item>Beat Up Small Engine</item>
   <item>Beat Up Medium Engine</item>
   <item>Beat Up Large Engine</item>
-  <item>Manufacturer Small Engine</item>
-  <item>Manufacturer Medium Engine</item>
-  <item>Manufacturer Large Engine</item>
   <item>Unicorp Hawk 150 Engine</item>
   <item>Unicorp Hawk 300 Engine</item>
   <item>Unicorp Falcon 550 Engine</item>
@@ -775,40 +778,27 @@
   <item>Unicorp Eagle 4500 Engine</item>
   <item>Unicorp Eagle 6500 Engine</item>
  </tech>
- <tech name="Engines Medium">
-  <item>Unicorp EXA-49F Engine</item>
-  <item>Unicorp EXA-66F Engine</item>
-  <item>Unicorp EXA-71F Engine</item>
-  <item>Unicorp AUR-50A Engine</item>
-  <item>Unicorp AUR-70A Engine</item>
-  <item>Unicorp AUR-79A Engine</item>
+ <tech name="Engines Cargo">
   <item>Melendez Ox Engine</item>
   <item>Melendez Buffalo Engine</item>
   <item>Melendez Mammoth Engine</item>
- </tech>
- <tech name="Engines High">
-  <item>Nexus Dart 300 Engine</item>
-  <item>Nexus Dart 150 Engine</item>
-  <item>Nexus Arrow 550 Engine</item>
-  <item>Nexus Arrow 1200 Engine</item>
-  <item>Nexus Bolt 4500 Engine</item>
-  <item>Nexus Bolt 6500 Engine</item>
-  <item>Tricon Crane Engine</item>
-  <item>Tricon Kolibri Engine</item>
-  <item>Tricon Raven Engine</item>
-  <item>Tricon Albatross Engine</item>
-  <item>Tricon Antelope Engine</item>
-  <item>Tricon Kraken Engine</item>
   <item>Melendez Ox XL Engine</item>
   <item>Melendez Buffalo XL Engine</item>
   <item>Melendez Mammoth XL Engine</item>
  </tech>
- <tech name="Engines Elite">
+ <tech name="Engines Medium">
+  <item>Nexus Dart 150 Engine</item>
+  <item>Nexus Dart 300 Engine</item>
+  <item>Nexus Arrow 550 Engine</item>
+  <item>Nexus Arrow 1200 Engine</item>
+  <item>Nexus Bolt 4500 Engine</item>
+  <item>Nexus Bolt 6500 Engine</item>
+ </tech>
+ <tech name="Engines High">
   <item>Tricon Zephyr Engine</item>
   <item>Tricon Zephyr II Engine</item>
   <item>Tricon Cyclone Engine</item>
   <item>Tricon Cyclone II Engine</item>
-  <item>Tricon Centaur Mk7-Ra Engine</item>
   <item>Tricon Typhoon Engine</item>
   <item>Tricon Typhoon II Engine</item>
  </tech>
