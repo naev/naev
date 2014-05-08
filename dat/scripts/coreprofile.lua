@@ -16,7 +16,7 @@ function pilot.coreProfile(p, profile)
                         {
                            small = {hull = "Schafer & Kane Light Combat Plating",  engine = "Nexus Dart 300 Engine", system = "Milspec Orion 2301 Core System"},
                            medium = {hull = "Schafer & Kane Medium Combat Plating Alpha",  engine = "Nexus Arrow 550 Engine", system = "Milspec Orion 3701 Core System"},
-                           large = {hull = "Schafer & Kane Heavy Combat Plating Alpha",  engine = "Nexus Bolt 4500 Engine", system = "Milspec Gemini 3308 Core System"}
+                           large = {hull = "Schafer & Kane Heavy Combat Plating Alpha",  engine = "Nexus Bolt 4500 Engine", system = "Milspec Hermes 5402 Core System"}
                         },
                   high = 
                         {

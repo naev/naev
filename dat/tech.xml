@@ -144,28 +144,28 @@
   <item>Basic Small Systems</item>
   <item>Unicorp PT-100 Core System</item>
   <item>Unicorp PT-200 Core System</item>
-  <item>Unicorp RX-14 Core System</item>
-  <item>Unicorp JX-16 Core System</item>
-  <item>Unicorp EX-19 Core System</item>
+  <item>Milspec Hermes 2202 Core System</item>
+  <item>Milspec Aegis 2201 Core System</item>
+  <item>Milspec Prometheus 2203 Core System</item>
   <item>Milspec Orion 2301 Core System</item>
   <item>Milspec Orion 2302 Core System</item>
-  <item>Milspec Gemini 2501 Core System</item>
-  <item>Milspec Taurus 2520 Core System</item>
-  <item>Milspec Vespa 2544 Core System</item>
+  <item>Milspec Hermes 3602 Core System</item>
+  <item>Milspec Aegis 3601 Core System</item>
+  <item>Milspec Prometheus 3603 Core System</item>
   <item>Milspec Orion 3701 Core System</item>
   <item>Milspec Orion 3702 Core System</item>
   <item>Previous Generation Medium Systems</item>
   <item>Basic Medium Systems</item>
   <item>Unicorp PT-500 Core System</item>
   <item>Unicorp PT-600 Core System</item>
-  <item>Unicorp RX-26 Core System</item>
-  <item>Unicorp JX-30 Core System</item>
-  <item>Unicorp EX-24 Core System</item>
+  <item>Milspec Hermes 4702 Core System</item>
+  <item>Milspec Aegis 4701 Core System</item>
+  <item>Milspec Prometheus 4703 Core System</item>
   <item>Milspec Orion 4801 Core System</item>
   <item>Milspec Orion 4802 Core System</item>
-  <item>Milspec Gemini 3308 Core System</item>
-  <item>Milspec Taurus 3323 Core System</item>
-  <item>Milspec Vespa 3380 Core System</item>
+  <item>Milspec Hermes 5402 Core System</item>
+  <item>Milspec Aegis 5401 Core System</item>
+  <item>Milspec Prometheus 5403 Core System</item>
   <item>Milspec Orion 5501 Core System</item>
   <item>Milspec Orion 5502 Core System</item>
   <item>Previous Generation Large Systems</item>
@@ -177,9 +177,9 @@
   <item>Unicorp EX-80 Core System</item>
   <item>Milspec Orion 8801 Core System</item>
   <item>Milspec Orion 8802 Core System</item>
-  <item>Milspec Gemini 5050 Core System</item>
-  <item>Milspec Taurus 4909 Core System</item>
-  <item>Milspec Vespa 6114 Core System</item>
+  <item>Milspec Hermes 9802 Core System</item>
+  <item>Milspec Aegis 9801 Core System</item>
+  <item>Milspec Prometheus 9803 Core System</item>
   <item>Milspec Orion 9901 Core System</item>
   <item>Milspec Orion 9902 Core System</item>
   <item>Milspec Orion 9903 Core System</item>
@@ -731,14 +731,14 @@
   <item>Unicorp PT-1200 Core System</item>
  </tech>
  <tech name="Systems Medium">
-  <item>Unicorp RX-14 Core System</item>
-  <item>Unicorp RX-26 Core System</item>
+  <item>Milspec Hermes 2202 Core System</item>
+  <item>Milspec Hermes 4702 Core System</item>
   <item>Unicorp RX-71 Core System</item>
-  <item>Unicorp JX-16 Core System</item>
-  <item>Unicorp JX-30 Core System</item>
+  <item>Milspec Aegis 2201 Core System</item>
+  <item>Milspec Aegis 4701 Core System</item>
   <item>Unicorp JX-66 Core System</item>
-  <item>Unicorp EX-19 Core System</item>
-  <item>Unicorp EX-24 Core System</item>
+  <item>Milspec Prometheus 2203 Core System</item>
+  <item>Milspec Prometheus 4703 Core System</item>
   <item>Unicorp EX-80 Core System</item>
  </tech>
  <tech name="Systems High">
@@ -748,12 +748,12 @@
   <item>Milspec Orion 3702 Core System</item>
   <item>Milspec Orion 4801 Core System</item>
   <item>Milspec Orion 4802 Core System</item>
-  <item>Milspec Gemini 2501 Core System</item>
-  <item>Milspec Gemini 3308 Core System</item>
-  <item>Milspec Taurus 2520 Core System</item>
-  <item>Milspec Taurus 3323 Core System</item>
-  <item>Milspec Vespa 2544 Core System</item>
-  <item>Milspec Vespa 3380 Core System</item>
+  <item>Milspec Hermes 3602 Core System</item>
+  <item>Milspec Hermes 5402 Core System</item>
+  <item>Milspec Aegis 3601 Core System</item>
+  <item>Milspec Aegis 5401 Core System</item>
+  <item>Milspec Prometheus 3603 Core System</item>
+  <item>Milspec Prometheus 5403 Core System</item>
  </tech>
  <tech name="Systems Elite">
   <item>Milspec Orion 5501 Core System</item>
@@ -763,9 +763,9 @@
   <item>Milspec Orion 9901 Core System</item>
   <item>Milspec Orion 9902 Core System</item>
   <item>Milspec Orion 9903 Core System</item>
-  <item>Milspec Gemini 5050 Core System</item>
-  <item>Milspec Taurus 4909 Core System</item>
-  <item>Milspec Vespa 6114 Core System</item>
+  <item>Milspec Hermes 9802 Core System</item>
+  <item>Milspec Aegis 9801 Core System</item>
+  <item>Milspec Prometheus 9803 Core System</item>
  </tech>
  <tech name="Engines Low">
   <item>Beat Up Small Engine</item>
