@@ -23,7 +23,7 @@
   <weapon size="large" x="25" y="0" h="0"/>
   <weapon size="medium" x="-15" y="0" h="4"/>
   <weapon size="medium" x="15" y="0" h="4"/>
-  <utility size="medium" prop="systems" exclusive="1" required="1">Basic Medium Systems</utility>
+  <utility size="medium" prop="systems" exclusive="1" required="1">Unicorp PT-500 Core System</utility>
   <utility size="medium"/>
   <utility size="medium"/>
   <utility size="medium"/>

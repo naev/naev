@@ -10,7 +10,7 @@ function pilot.coreProfile(p, profile)
                         {
                            small = {hull = "Unicorp C-2 Light Plating", engine = "Unicorp Hawk 300 Engine", system = "Unicorp PT-200 Core System"},
                            medium = {hull = "Unicorp D-8 Medium Plating",  engine = "Unicorp Falcon 1200 Engine", system = "Unicorp PT-600 Core System"},
-                           large = {hull = "Unicorp C-16 Heavy Plating",  engine = "Unicorp Eagle 6500 Engine", system = "Unicorp PT-1200 Core System"}
+                           large = {hull = "Unicorp C-16 Heavy Plating",  engine = "Unicorp Eagle 6500 Engine", system = "Unicorp PT-1000 Core System"}
                         },
                   medium = 
                         {
@@ -28,13 +28,13 @@ function pilot.coreProfile(p, profile)
                         {
                            small = {hull = "Unicorp Small Cargo Hull",  engine = "Melendez Ox Engine", system = "Unicorp PT-200 Core System"},
                            medium = {hull = "Unicorp Medium Cargo Hull",  engine = "Melendez Buffalo Engine", system = "Unicorp PT-600 Core System"},
-                           large = {hull = "Unicorp Large Cargo Hull",  engine = "Melendez Mammoth Engine", system = "Unicorp PT-1200 Core System"}
+                           large = {hull = "Unicorp Large Cargo Hull",  engine = "Melendez Mammoth Engine", system = "Unicorp PT-1000 Core System"}
                         },
                   high_trader = 
                         {
-                           small = {hull = "Schafer &amp; Kane Small Cargo Hull",  engine = "Melendez Ox XL Engine", system = "Milspec Orion 2302 Core System"},
-                           medium = {hull = "Schafer &amp; Kane Medium Cargo Hull",  engine = "Melendez Buffalo XL Engine", system = "Milspec Orion 3702 Core System"},
-                           large = {hull = "Schafer &amp; Kane Large Cargo Hull",  engine = "Melendez Mammoth XL Engine", system = "Milspec Orion 4802 Core System"}
+                           small = {hull = "Schafer &amp; Kane Small Cargo Hull",  engine = "Melendez Ox XL Engine", system = "Milspec Orion 2301 Core System"},
+                           medium = {hull = "Schafer &amp; Kane Medium Cargo Hull",  engine = "Melendez Buffalo XL Engine", system = "Milspec Orion 3701 Core System"},
+                           large = {hull = "Schafer &amp; Kane Large Cargo Hull",  engine = "Melendez Mammoth XL Engine", system = "Milspec Orion 4801 Core System"}
                         },
                }
    

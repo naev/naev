@@ -416,11 +416,13 @@
   <item>GUI - Brushed</item>
   <item>Local System Map</item>
   <item>Previous Generation Small Systems</item>
-  <item>Basic Small Systems</item>
   <item>Previous Generation Medium Systems</item>
-  <item>Basic Medium Systems</item>
   <item>Previous Generation Large Systems</item>
-  <item>Basic Large Systems</item>
+  <item>Unicorp PT-100 Core System</item>
+  <item>Unicorp PT-200 Core System</item>
+  <item>Unicorp PT-500 Core System</item>
+  <item>Unicorp PT-600 Core System</item>
+  <item>Unicorp PT-1000 Core System</item>
   <item>Beat Up Small Engine</item>
   <item>Beat Up Medium Engine</item>
   <item>Beat Up Large Engine</item>
@@ -460,11 +462,13 @@
   <item>Medusa Missile</item>
   <item>Local System Map</item>
   <item>Previous Generation Small Systems</item>
-  <item>Basic Small Systems</item>
   <item>Previous Generation Medium Systems</item>
-  <item>Basic Medium Systems</item>
   <item>Previous Generation Large Systems</item>
-  <item>Basic Large Systems</item>
+  <item>Unicorp PT-100 Core System</item>
+  <item>Unicorp PT-200 Core System</item>
+  <item>Unicorp PT-500 Core System</item>
+  <item>Unicorp PT-600 Core System</item>
+  <item>Unicorp PT-1000 Core System</item>
   <item>Beat Up Small Engine</item>
   <item>Beat Up Medium Engine</item>
   <item>Beat Up Large Engine</item>
@@ -720,34 +724,24 @@
   <item>Previous Generation Small Systems</item>
   <item>Previous Generation Medium Systems</item>
   <item>Previous Generation Large Systems</item>
-  <item>Basic Small Systems</item>
-  <item>Basic Medium Systems</item>
-  <item>Basic Large Systems</item>
   <item>Unicorp PT-100 Core System</item>
   <item>Unicorp PT-200 Core System</item>
   <item>Unicorp PT-500 Core System</item>
   <item>Unicorp PT-600 Core System</item>
   <item>Unicorp PT-1000 Core System</item>
-  <item>Unicorp PT-1200 Core System</item>
  </tech>
  <tech name="Systems Medium">
   <item>Milspec Hermes 2202 Core System</item>
   <item>Milspec Hermes 4702 Core System</item>
-  <item>Unicorp RX-71 Core System</item>
   <item>Milspec Aegis 2201 Core System</item>
   <item>Milspec Aegis 4701 Core System</item>
-  <item>Unicorp JX-66 Core System</item>
   <item>Milspec Prometheus 2203 Core System</item>
   <item>Milspec Prometheus 4703 Core System</item>
-  <item>Unicorp EX-80 Core System</item>
  </tech>
  <tech name="Systems High">
   <item>Milspec Orion 2301 Core System</item>
-  <item>Milspec Orion 2302 Core System</item>
   <item>Milspec Orion 3701 Core System</item>
-  <item>Milspec Orion 3702 Core System</item>
   <item>Milspec Orion 4801 Core System</item>
-  <item>Milspec Orion 4802 Core System</item>
   <item>Milspec Hermes 3602 Core System</item>
   <item>Milspec Hermes 5402 Core System</item>
   <item>Milspec Aegis 3601 Core System</item>
@@ -757,12 +751,7 @@
  </tech>
  <tech name="Systems Elite">
   <item>Milspec Orion 5501 Core System</item>
-  <item>Milspec Orion 5502 Core System</item>
-  <item>Milspec Orion 8801 Core System</item>
-  <item>Milspec Orion 8802 Core System</item>
   <item>Milspec Orion 9901 Core System</item>
-  <item>Milspec Orion 9902 Core System</item>
-  <item>Milspec Orion 9903 Core System</item>
   <item>Milspec Hermes 9802 Core System</item>
   <item>Milspec Aegis 9801 Core System</item>
   <item>Milspec Prometheus 9803 Core System</item>

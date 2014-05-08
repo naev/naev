@@ -20,7 +20,7 @@
  </characteristics>
  <slots>
   <weapon size="small" x="9" y="0" h="-2"/>
-  <utility size="small" prop="systems" exclusive="1" required="1">Basic Small Systems</utility>
+  <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-100 Core System</utility>
   <utility size="medium"/>
   <utility size="small"/>
   <utility size="small"/>
