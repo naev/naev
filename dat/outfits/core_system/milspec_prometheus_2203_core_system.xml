@@ -4,16 +4,16 @@
   <typename>Core Systems</typename>
   <slot prop="systems">utility</slot>
   <size>small</size>
-  <mass>2</mass>
-  <price>50000</price>
+  <mass>9</mass>
+  <price>80000</price>
   <description>The EX-19 is an affordable energy-oriented core module. Shielding and subsystem control suffer somewhat, but it keeps the guns blazing.</description>
   <gfx_store>reactor_i</gfx_store>
  </general>
  <specific type="modification">
-  <cpu_max>21</cpu_max>
-  <shield>140</shield>
-  <shield_regen>4</shield_regen>
-  <energy>500</energy>
+  <cpu_max>36</cpu_max>
+  <shield>180</shield>
+  <shield_regen>6</shield_regen>
+  <energy>700</energy>
   <energy_regen>35</energy_regen>
   <ew_hide>0</ew_hide>
  </specific>

@@ -4,17 +4,17 @@
   <typename>Core Systems</typename>
   <slot prop="systems">utility</slot>
   <size>medium</size>
-  <mass>10</mass>
-  <price>600000</price>
+  <mass>55</mass>
+  <price>220000</price>
   <description>The JX-30 maximizes shielding and has good energy generation, for optimal combat performance. Subsystem control suffers as a result.</description>
   <gfx_store>reactor_ii</gfx_store>
  </general>
  <specific type="modification">
-  <cpu_max>50</cpu_max>
-  <shield>500</shield>
-  <shield_regen>9</shield_regen>
-  <energy>1100</energy>
-  <energy_regen>63</energy_regen>
+  <cpu_max>68</cpu_max>
+  <shield>550</shield>
+  <shield_regen>13</shield_regen>
+  <energy>1200</energy>
+  <energy_regen>50</energy_regen>
   <ew_hide>0</ew_hide>
  </specific>
 </outfit>

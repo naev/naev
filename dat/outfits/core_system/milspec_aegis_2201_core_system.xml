@@ -4,17 +4,17 @@
   <typename>Core Systems</typename>
   <slot prop="systems">utility</slot>
   <size>small</size>
-  <mass>2</mass>
-  <price>50000</price>
+  <mass>9</mass>
+  <price>80000</price>
   <description>The JX-16 provides decent shielding and energy generation for a low price, but has limited subsystem control. Good for light fighters.</description>
   <gfx_store>reactor_i</gfx_store>
  </general>
  <specific type="modification">
-  <cpu_max>20</cpu_max>
-  <shield>180</shield>
-  <shield_regen>5</shield_regen>
-  <energy>400</energy>
-  <energy_regen>27</energy_regen>
+  <cpu_max>36</cpu_max>
+  <shield>250</shield>
+  <shield_regen>9</shield_regen>
+  <energy>500</energy>
+  <energy_regen>25</energy_regen>
   <ew_hide>0</ew_hide>
  </specific>
 </outfit>
