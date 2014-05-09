@@ -6,7 +6,7 @@
   <size>small</size>
   <mass>25</mass>
   <price>35000</price>
-  <description>A slightly more efficient version of the PT-100, critics claim the PT-200 uses exactly the same hardware with some artificial limits removed.</description>
+  <description>The PT-200 is an economical core system providing decent performance to small-to-medium vessels.</description>
   <gfx_store>reactor_i</gfx_store>
  </general>
  <specific type="modification">

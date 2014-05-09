@@ -6,7 +6,7 @@
   <size>small</size>
   <mass>8</mass>
   <price>20000</price>
-  <description>The PT-100 model is a modest but to-spec core system unit with reasonable, all-round performance.</description>
+  <description>The PT-100 is a modest but to-spec core system offering reasonable, all-round performance for small vessels.</description>
   <gfx_store>reactor_i</gfx_store>
  </general>
  <specific type="modification">

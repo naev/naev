@@ -6,7 +6,7 @@
   <size>small</size>
   <mass>9</mass>
   <price>80000</price>
-  <description>The EX-19 is an affordable energy-oriented core module. Shielding and subsystem control suffer somewhat, but it keeps the guns blazing.</description>
+  <description>Milspec offers solutions for pilots who believe the best defense is a good offense. The Prometheus 2203 boasts a heavy duty power generator as well as considerable shielding and subsystem control.</description>
   <gfx_store>reactor_i</gfx_store>
  </general>
  <specific type="modification">

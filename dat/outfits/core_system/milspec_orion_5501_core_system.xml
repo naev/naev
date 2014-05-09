@@ -6,7 +6,7 @@
   <size>medium</size>
   <mass>140</mass>
   <price>600000</price>
-  <description>Milspec develops high performance hardware for your ship, to make sure you are always optimally prepared for the dangers the universe might throw at you on your travels. The Orion 5500 core system series is a high-end solution for medium ships, providing superior performance in every field. Fly safe, fly Milspec.</description>
+  <description>Milspec develops high performance hardware for your ship, to make sure you are always optimally prepared for the dangers the universe might throw at you on your travels. The Orion 5501 core system is a high-end solution for medium ships, providing superior performance in every field. Fly safe, fly Milspec.</description>
   <gfx_store>reactor_ii</gfx_store>
  </general>
  <specific type="modification">

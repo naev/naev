@@ -6,7 +6,7 @@
   <size>medium</size>
   <mass>55</mass>
   <price>220000</price>
-  <description>The JX-30 maximizes shielding and has good energy generation, for optimal combat performance. Subsystem control suffers as a result.</description>
+  <description>Milspec cares about your personal safety. Your protection is our concern. The Aegis 4701 grants your ship excellent shield strength while preserving a high level of subsystem control and energy capacity. Fly safe, fly Milspec.</description>
   <gfx_store>reactor_ii</gfx_store>
  </general>
  <specific type="modification">

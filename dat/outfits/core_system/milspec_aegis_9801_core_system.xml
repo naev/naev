@@ -6,7 +6,7 @@
   <size>large</size>
   <mass>550</mass>
   <price>2000000</price>
-  <description>Milspec cares about your personal safety. Your protection is our concern. The Taurus 4909 grants your ship excellent shield strength while preserving a high level of subsystem control and energy capacity. Fly safe, fly Milspec.</description>
+  <description>Milspec cares about your personal safety. Your protection is our concern. The Aegis 9801 grants your ship excellent shield strength while preserving a high level of subsystem control and energy capacity. Fly safe, fly Milspec.</description>
   <gfx_store>reactor_iii</gfx_store>
  </general>
  <specific type="modification">

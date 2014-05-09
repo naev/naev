@@ -6,7 +6,7 @@
   <size>medium</size>
   <mass>110</mass>
   <price>100000</price>
-  <description>Continuing the PT line in the medium ship category, the PT-600 gives acceptable performance for an acceptable price.</description>
+  <description>A heavy-duty variant of the PT-500, the PT-600 exceeds its predecessor in all respects. Its considerably higher mass restricts its use to larger medium vessels such as destroyers.</description>
   <gfx_store>reactor_ii</gfx_store>
  </general>
  <specific type="modification">
