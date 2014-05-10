@@ -45,6 +45,7 @@ static int outfits_getMod (void);
 static void outfits_renderMod( double bx, double by, double w, double h, void *data );
 static void outfits_rmouse( unsigned int wid, char* widget_name );
 static void outfits_find( unsigned int wid, char* str );
+static credits_t outfit_getPrice( Outfit *outfit );
 
 
 /**
@@ -244,6 +245,8 @@ void outfits_update( unsigned int wid, char* str )
    double th;
    int iw, ih;
    int w, h;
+   credits_t price;
+   char colour;
 
    /* Get dimensions. */
    outfits_getSize( wid, &w, &h, &iw, &ih, NULL, NULL );
@@ -290,9 +293,13 @@ void outfits_update( unsigned int wid, char* str )
    else
       window_disableButtonSoft( wid, "btnSellOutfit" );
 
+   /* Multiply and colourize outfit price as needed */
+   price = outfit_getPrice(outfit);
+   colour = (price > player.p->credits) ? 'r' : '0';
+
    /* new text */
    window_modifyText( wid, "txtDescription", outfit->description );
-   credits2str( buf2, outfit->price, 2 );
+   credits2str( buf2, price, 2 );
    credits2str( buf3, player.p->credits, 2 );
    nsnprintf( buf, PATH_MAX,
          "%d\n"
@@ -301,14 +308,14 @@ void outfits_update( unsigned int wid, char* str )
          "%s\n"
          "%.0f tons\n"
          "\n"
-         "%s credits\n"
+         "\e%c%s\e0 credits\n"
          "%s credits\n"
          "%s\n",
          player_outfitOwned(outfit),
          outfit_slotName(outfit),
          outfit_slotSize(outfit),
          outfit->mass,
-         buf2,
+         colour, buf2,
          buf3,
          (outfit->license != NULL) ? outfit->license : "None" );
    window_modifyText( wid, "txtDDesc", buf );
@@ -357,20 +364,33 @@ static void outfits_find( unsigned int wid, char* str )
 
 
 /**
+ * @brief Returns the price of an outfit (subject to quantity modifier)
+ */
+static credits_t outfit_getPrice( Outfit *outfit )
+{
+   unsigned int q;
+   credits_t price;
+
+   q = outfits_getMod();
+   price = outfit->price * q;
+
+   return price;
+}
+
+/**
  * @brief Checks to see if the player can buy the outfit.
  *    @param outfit Outfit to buy.
  */
 int outfit_canBuy( char *name )
 {
    int failure;
-   unsigned int q, price;
+   credits_t price;
    Outfit *outfit;
    char buf[ECON_CRED_STRLEN];
 
    failure = 0;
-   q       = outfits_getMod();
    outfit  = outfit_get(name);
-   price   = outfit->price * q;
+   price   = outfit_getPrice(outfit);
 
    /* takes away cargo space but you don't have any */
    if (outfit_isMod(outfit) && (outfit->u.mod.cargo < 0)
@@ -396,7 +416,7 @@ int outfit_canBuy( char *name )
       return 0;
    }
    /* not enough $$ */
-   if (!player_hasCredits( q*outfit->price )) {
+   if (!player_hasCredits(price)) {
       credits2str( buf, price - player.p->credits, 2 );
       land_errDialogueBuild( "You need %s more credits.", buf);
       failure = 1;
