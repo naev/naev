@@ -13,6 +13,6 @@
   <active cooldown="25">8</active>
   <shield_regen>10</shield_regen>
   <shield_regen_mod>300</shield_regen_mod>
-  <energy_regen_flat>-30</energy_regen_flat>
+  <energy_usage>30</energy_usage>
  </specific>
 </outfit>

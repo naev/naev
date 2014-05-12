@@ -884,11 +884,11 @@ static void map_renderPath( double x, double y )
          jsys = map_path[j];
          if (fuel == player.p->fuel && fuel > 100.)
             col = &cGreen;
-         else if (fuel < 100.)
+         else if (fuel < player.p->fuel_consumption)
             col = &cRed;
          else
             col = &cYellow;
-         fuel -= 100;
+         fuel -= player.p->fuel_consumption;
 
          /* Draw the lines. */
          vertex[0]  = x + lsys->pos.x * map_zoom;
@@ -1560,7 +1560,9 @@ StarSystem** map_getJumpPath( int* njumps, const char* sysstart,
          }
          if (jp_isFlag( jp, JP_EXITONLY ))
             continue;
-         if (!show_hidden && jp_isFlag( jp, JP_HIDDEN ))
+
+         /* Skip hidden jumps if they're unknown and not specifically requested */
+         if (!show_hidden && jp_isFlag( jp, JP_HIDDEN ) && !jp_isKnown(jp))
             continue;
 
          /* Check to see if it's already in the closed set. */

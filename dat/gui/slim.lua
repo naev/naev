@@ -685,14 +685,12 @@ function render( dt, dt_mod )
       gfx.renderTex( warnlight1, pl_pane_x + 6, pl_pane_y + 148 )
    elseif armour <= 50 then
       gfx.renderTex( warnlight4, pl_pane_x + 6, pl_pane_y + 148 )
+   elseif shield <= 50 then
+      gfx.renderTex( warnlight4, pl_pane_x + 6, pl_pane_y + 148 )
    else
       gfx.renderTex( warnlight5, pl_pane_x + 6, pl_pane_y + 148 )
    end
    
-   if shield <= 70 then
-      gfx.renderTex( warnlight4, pl_pane_x + 6, pl_pane_y + 148 )
-   end
-
    if autonav then
       gfx.renderTex( warnlight3, pl_pane_x + 162, pl_pane_y + 12 )
    end

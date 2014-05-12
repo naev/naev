@@ -2959,7 +2959,7 @@ static void space_renderJumpPoint( JumpPoint *jp, int i )
 {
    const glColour *c;
 
-   if (jp_isFlag( jp, JP_EXITONLY ) || !jp_isKnown(jp))
+   if (!jp_isUsable(jp))
       return;
 
    if ((player.p != NULL) && (i==player.p->nav_hyperspace) &&

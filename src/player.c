@@ -1529,7 +1529,7 @@ void player_targetHyperspace (void)
    if (id >= cur_system->njumps) {
       id = -1;
       for (i=0; i<cur_system->njumps; i++)
-         if (jp_isKnown( &cur_system->jumps[i])) {
+         if (jp_isUsable( &cur_system->jumps[i])) {
             id = i;
             break;
          }
@@ -1603,7 +1603,7 @@ int player_jump (void)
       mindist  = INFINITY;
       for (i=0; i<cur_system->njumps; i++) {
          dist = vect_dist2( &player.p->solid->pos, &cur_system->jumps[i].pos );
-         if (dist < mindist) {
+         if (dist < mindist && jp_isUsable(&cur_system->jumps[i])) {
             mindist  = dist;
             j        = i;
          }

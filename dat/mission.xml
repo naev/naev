@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8"?>
 <Missions>
  <mission name="Tutorial Mission">
@@ -871,3 +872,865 @@
   </avail>
  </mission>
 </Missions>
+=======
+<?xml version="1.0" encoding="UTF-8"?>
+<Missions>
+ <mission name="Tutorial Mission">
+  <lua>tutorial/tutmis</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <location>None</location>
+  </avail>
+ </mission>
+ <mission name="Cargo">
+  <lua>neutral/cargo</lua>
+  <avail>
+   <priority>6</priority>
+   <chance>960</chance>
+   <location>Computer</location>
+   <faction>Dvaered</faction>
+   <faction>Empire</faction>
+   <faction>Frontier</faction>
+   <faction>Goddard</faction>
+   <faction>Independent</faction>
+   <faction>Sirius</faction>
+   <faction>Soromid</faction>
+   <faction>Trader</faction>
+  </avail>
+ </mission>
+ <mission name="Empire Rehabilitation">
+  <lua>empire/emp_rehab</lua>
+  <flags/>
+  <avail>
+   <chance>100</chance>
+   <location>Computer</location>
+   <cond></cond>
+  </avail>
+ </mission>
+ <mission name="Dvaered Rehabilitation">
+  <lua>dvaered/dv_rehab</lua>
+  <flags/>
+  <avail>
+   <chance>100</chance>
+   <location>Computer</location>
+   <cond></cond>
+  </avail>
+ </mission>
+ <mission name="Sirius Rehabilitation">
+  <lua>sirius/srs_rehab</lua>
+  <flags/>
+  <avail>
+   <chance>100</chance>
+   <location>Computer</location>
+   <cond></cond>
+  </avail>
+ </mission>
+ <mission name="Soromid Rehabilitation">
+  <lua>soromid/srm_rehab</lua>
+  <flags/>
+  <avail>
+   <chance>100</chance>
+   <location>Computer</location>
+   <cond></cond>
+  </avail>
+ </mission>
+ <mission name="Cargo Rush">
+  <lua>neutral/cargo_rush</lua>
+  <avail>
+   <priority>5</priority>
+   <chance>960</chance>
+   <location>Computer</location>
+   <faction>Dvaered</faction>
+   <faction>Empire</faction>
+   <faction>Frontier</faction>
+   <faction>Goddard</faction>
+   <faction>Independent</faction>
+   <faction>Sirius</faction>
+   <faction>Soromid</faction>
+   <faction>Trader</faction>
+  </avail>
+ </mission>
+ <mission name="Empire Recruitment">
+  <lua>empire/emp_cargo00</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>4</priority>
+   <chance>40</chance>
+   <location>Bar</location>
+   <faction>Empire</faction>
+  </avail>
+ </mission>
+ <mission name="Empire Shipping">
+  <lua>empire/es_cargo</lua>
+  <avail>
+   <priority>3</priority>
+   <cond>faction.playerStanding("Empire") &gt;= 0 and var.peek("es_cargo") == true</cond>
+   <chance>350</chance>
+   <done>Empire Recruitment</done>
+   <location>Computer</location>
+   <faction>Empire</faction>
+  </avail>
+ </mission>
+ <mission name="Empire Shipping 1">
+  <lua>empire/shipping/es00</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>2</priority>
+   <cond>faction.playerStanding("Empire") &gt;= 0 and var.peek("es_misn") ~= nil and var.peek("es_misn") &gt;= 3</cond>
+   <chance>35</chance>
+   <location>Bar</location>
+   <faction>Empire</faction>
+  </avail>
+ </mission>
+ <mission name="Empire Shipping 2">
+  <lua>empire/shipping/es01</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>2</priority>
+   <cond>faction.playerStanding("Empire") &gt;= 0</cond>
+   <chance>50</chance>
+   <done>Empire Shipping 1</done>
+   <location>Bar</location>
+   <planet>Halir</planet>
+  </avail>
+ </mission>
+ <mission name="Empire Shipping 3">
+  <lua>empire/shipping/es02</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>2</priority>
+   <cond>faction.playerStanding("Empire") &gt;= 0</cond>
+   <chance>50</chance>
+   <done>Empire Shipping 2</done>
+   <location>Bar</location>
+   <planet>Halir</planet>
+  </avail>
+ </mission>
+ <mission name="Collective Scouting">
+  <lua>empire/collective/ec00</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>3</priority>
+   <cond>var.peek("es_cargo") == true and planet.get("Omega Station") == planet.cur() and faction.playerStanding("Empire") &gt; 5 and player.getRating() &gt; 5</cond>
+   <chance>40</chance>
+   <location>Bar</location>
+   <done>Empire Shipping 3</done>
+   <faction>Empire</faction>
+  </avail>
+ </mission>
+ <mission name="Collective Espionage 1">
+  <lua>empire/collective/ec01</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>2</priority>
+   <cond>faction.playerStanding("Empire") &gt; 5 and var.peek("collective_fail") ~= true</cond>
+   <done>Collective Scouting</done>
+   <chance>100</chance>
+   <location>Bar</location>
+   <planet>Omega Station</planet>
+  </avail>
+ </mission>
+ <mission name="Collective Espionage 2">
+  <lua>empire/collective/ec02</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>2</priority>
+   <cond>faction.playerStanding("Empire") &gt; 5 and var.peek("collective_fail") ~= true</cond>
+   <done>Collective Espionage 1</done>
+   <chance>100</chance>
+   <location>Bar</location>
+   <planet>Omega Station</planet>
+  </avail>
+ </mission>
+ <mission name="Collective Distraction">
+  <lua>empire/collective/ec03</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>2</priority>
+   <cond>faction.playerStanding("Empire") &gt; 5 and var.peek("collective_fail") ~= true</cond>
+   <done>Collective Espionage 2</done>
+   <chance>100</chance>
+   <location>Bar</location>
+   <planet>Omega Station</planet>
+  </avail>
+ </mission>
+ <mission name="Collective Extraction">
+  <lua>empire/collective/ec04</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>2</priority>
+   <cond>faction.playerStanding("Empire") &gt; 5 and var.peek("emp_commando") ~= nil and time.get() &gt; time.fromnumber( var.peek("emp_commando") )</cond>
+   <done>Collective Distraction</done>
+   <chance>100</chance>
+   <location>Land</location>
+   <planet>Omega Station</planet>
+  </avail>
+ </mission>
+ <mission name="Operation Black Trinity">
+  <lua>empire/collective/ec05</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>2</priority>
+   <cond>faction.playerStanding("Empire") &gt; 5 and var.peek("collective_fail") ~= true</cond>
+   <done>Collective Extraction</done>
+   <chance>100</chance>
+   <location>Bar</location>
+   <planet>Omega Station</planet>
+  </avail>
+ </mission>
+ <mission name="Operation Cold Metal">
+  <lua>empire/collective/ec06</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>2</priority>
+   <cond>faction.playerStanding("Empire") &gt; 5 and var.peek("collective_fail") ~= true</cond>
+   <done>Operation Black Trinity</done>
+   <chance>100</chance>
+   <location>Bar</location>
+   <planet>Omega Station</planet>
+  </avail>
+ </mission>
+ <mission name="Nebula Satellite">
+  <lua>neutral/nebu_satellite</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>10</chance>
+   <location>Bar</location>
+   <faction>Dvaered</faction>
+   <faction>Empire</faction>
+   <faction>Goddard</faction>
+  </avail>
+ </mission>
+ <mission name="Dvaered Patrol">
+  <lua>dvaered/dv_patrol</lua>
+  <avail>
+   <chance>366</chance>
+   <cond>faction.playerStanding("Dvaered") &gt; 5 and player.getRating() &gt; 100</cond>
+   <location>Computer</location>
+   <done>Empire Shipping 3</done>
+   <faction>Dvaered</faction>
+  </avail>
+ </mission>
+ <mission name="Assault on Unicorn">
+  <lua>dvaered/assault_on_unicorn</lua>
+  <avail>
+    <cond>faction.playerStanding("Dvaered") &gt; 5 and player.getRating() &gt; 100 and system.cur() == system.get("Amaroq") and not var.peek("assault_on_unicorn_check")</cond>
+   <chance>36</chance>
+   <location>Computer</location>
+   <done>Empire Shipping 3</done>
+   </avail>
+ </mission>
+ <mission name="Defend the System 1">
+  <lua>neutral/dts_00</lua>
+  <flags>
+   <unique />
+  </flags> 
+  <avail>
+   <chance>3</chance>
+   <cond>player.getRating() &gt; 50</cond>
+   <location>None</location>
+   <faction>Dvaered</faction>
+   <faction>Frontier</faction>
+   <faction>Goddard</faction>
+   <faction>Independent</faction>
+   <faction>Soromid</faction>
+  </avail>
+ </mission>
+ <mission name="Defend the System 2">
+  <lua>neutral/dts_01</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>3</chance>
+   <cond>player.getRating() &gt; 54</cond>
+   <done>Defend the System 1</done>
+   <location>None</location>
+   <faction>Dvaered</faction>
+   <faction>Frontier</faction>
+   <faction>Goddard</faction>
+   <faction>Independent</faction>
+   <faction>Soromid</faction>
+  </avail>
+ </mission>
+ <mission name="Defend the System 3">
+  <lua>neutral/dts_02</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>3</chance>
+   <cond>player.getRating() &gt; 58</cond>
+   <done>Defend the System 2</done>
+   <location>None</location>
+   <faction>Dvaered</faction>
+   <faction>Frontier</faction>
+   <faction>Goddard</faction>
+   <faction>Independent</faction>
+   <faction>Soromid</faction>
+  </avail>
+ </mission>
+ <mission name="Empire HCVL">
+  <lua>empire/emp_hcvl</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>4</priority>
+   <cond>player.getRating() &gt; 30 and system.cur():presences()["Pirate"] ~= nil</cond>
+   <chance>20</chance>
+   <done>Empire Shipping 3</done>
+   <location>Bar</location>
+   <faction>Empire</faction>
+   <faction>Dvaered</faction>
+   <faction>Goddard</faction>
+  </avail>
+ </mission>
+ <mission name="Pirate Bounty">
+  <lua>empire/emp_pirbounty</lua>
+  <avail>
+   <priority>4</priority>
+   <cond>player.getRating() &gt; 50 and system.cur():presences()["Pirate"] ~= nil</cond>
+   <chance>20</chance>
+   <done>Empire HCVL</done>
+   <location>Bar</location>
+   <faction>Dvaered</faction>
+   <faction>Empire</faction>
+   <faction>Goddard</faction>
+  </avail>
+ </mission>
+ <mission name="DIY Nerds">
+  <lua>neutral/diy-nerds</lua>
+  <flags>
+  	<unique />
+  </flags>
+  <avail>
+    <chance>2</chance>
+    <location>Bar</location>
+  </avail>
+ </mission>
+ <mission name="The Space Family">
+  <lua>neutral/spacefamily</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>100</chance>
+   <location>None</location>
+  </avail>
+ </mission>
+ <mission name="Baron">
+  <lua>baron/baron_baron</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>100</chance>
+   <location>None</location>
+  </avail>
+ </mission>
+ <mission name="Prince">
+  <lua>baron/baron_prince</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>4</priority>
+   <cond>player.getRating() &gt; 15 and player.misnDone("Baron")</cond>
+   <chance>2</chance>
+   <location>Bar</location>
+   <faction>Empire</faction>
+   <faction>Dvaered</faction>
+   <faction>Goddard</faction>
+   <faction>Sirius</faction>
+  </avail>
+ </mission>
+ <mission name="Shadowrun">
+  <lua>shadow/shadowrun</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>20</chance>
+   <location>Bar</location>
+   <cond>system.get("Klantar"):jumpDist() &lt; 3</cond>
+  </avail>
+ </mission>
+ <mission name="Shadow Vigil">
+  <lua>shadow/shadowvigil</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>100</chance>
+   <location>None</location>
+  </avail>
+ </mission>
+ <mission name="Dark Shadow">
+  <lua>shadow/darkshadow</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>100</chance>
+   <location>None</location>
+  </avail>
+ </mission>
+ <mission name="Deal with the FLF agent">
+  <lua>flf/flf_pre01</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>100</chance>
+   <location>None</location>
+  </avail>
+ </mission>
+ <mission name="Disrupt the Dvaered Patrols">
+  <lua>flf/flf_pre02</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>100</chance>
+   <location>Bar</location>
+   <cond>planet.cur():name() == "Sindbad" and var.peek("flfbase_intro") == 2</cond>
+  </avail>
+ </mission>
+ <mission name="Defend the FLF base">
+  <lua>flf/flf_basedefense</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>10</chance>
+   <location>Bar</location>
+   <done>Disrupt the Dvaered Patrols</done>
+   <cond>planet.cur():faction() == faction.get("Frontier") and player.getRating() &gt; 100</cond>
+  </avail>
+ </mission>
+ <mission name="Take the Dvaered crew home">
+  <lua>dvaered/dv_antiflf01</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>100</chance>
+   <location>None</location>
+  </avail>
+ </mission>
+ <mission name="Lure out the FLF">
+  <lua>dvaered/dv_antiflf02</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>10</chance>
+   <location>Bar</location>
+   <cond>planet.cur():faction() == faction.get("Dvaered") and planet.cur():class() ~= "0" and var.peek("flfbase_intro") == 1</cond>
+  </avail>
+ </mission>
+ <mission name="Destroy the FLF base!">
+  <lua>dvaered/dv_antiflf03</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>10</chance>
+   <location>Bar</location>
+   <cond>planet.cur():faction() == faction.get("Dvaered") and planet.cur():class() ~= "0" and var.peek("flfbase_intro") == 3</cond>
+  </avail>
+ </mission>
+ <mission name="Crimelord">
+  <lua>neutral/crimelord</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>10</chance>
+   <location>Bar</location>
+   <cond>system.get("Ogat"):jumpDist() == 4 and player.fuel() &gt;= 400</cond>
+  </avail>
+ </mission>
+ <mission name="Hitman">
+  <lua>pirate/hitman</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>10</chance>
+   <location>Bar</location>
+   <cond>system.cur() == system.get("Alteris") and player.getRating() &gt; 30</cond>
+  </avail>
+ </mission>
+ <mission name="Hitman 2">
+  <lua>pirate/hitman2</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>10</chance>
+   <location>Bar</location>
+   <cond>system.cur() == system.get("Alteris") and player.getRating() &gt; 40</cond>
+   <done>Hitman</done>
+  </avail>
+ </mission>
+ <mission name="Hitman 3">
+  <lua>pirate/hitman3</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>10</chance>
+   <location>Bar</location>
+   <cond>system.cur() == system.get("Alteris") and player.getRating() &gt; 50</cond>
+   <done>Hitman 2</done>
+  </avail>
+ </mission>
+ <mission name="Hot dogs from space">
+  <lua>neutral/reynir</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>2</chance>
+   <location>Bar</location>
+   <cond>(function ()
+            local count = 0
+            for i, p in pairs(system.cur():planets()) do
+                if p:services()["inhabited"] then
+                    count=count+1
+                end
+            end
+            return count &gt; 1
+        end)()</cond>
+  </avail>
+ </mission>
+ <mission name="Stealing ships">
+  <lua>pirate/pir_ship_stealing</lua>
+  <flags/>
+  <avail>
+   <chance>10</chance>
+   <location>Bar</location>
+   <cond>faction.playerStanding("Pirate") &gt;= 10</cond>
+  </avail>
+ </mission>
+ <mission name="The macho teenager">
+  <lua>neutral/teenager</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>5</chance>
+   <location>Bar</location>
+   <faction>Dvaered</faction>
+   <cond>planet.cur():class() ~= "0"</cond>
+  </avail>
+ </mission>
+ <mission name="Animal transport">
+  <lua>neutral/animaltransport</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>10</chance>
+   <location>Bar</location>
+   <faction>Sirius</faction>
+   <cond>planet.cur():class() ~= "0"</cond>
+  </avail>
+ </mission>
+ <mission name="An old woman">
+  <lua>neutral/oldwoman</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>3</chance>
+   <location>Bar</location>
+   <faction>Sirius</faction>  -- Note: additional conditionals present in mission script!
+  </avail>
+ </mission>
+ <mission name="Empire Patrol Bounty">
+  <lua>pirate/pir_empbounty</lua>
+  <avail>
+   <priority>4</priority>
+   <cond>player.getRating() &gt; 50 and system.cur():presences()["Pirate"] ~= nil</cond>
+   <chance>10</chance>
+   <done>Hitman 3</done>
+   <location>Bar</location>
+   <faction>Pirate</faction>
+   <faction>Independent</faction>
+  </avail>
+ </mission>
+ <mission name="Pirate Shipping">
+  <lua>pirate/pir_cargo</lua>
+  <avail>
+   <priority>3</priority>
+   <cond>faction.playerStanding("Pirate") &gt;= 0 and var.peek("pir_cargo") == true</cond>
+   <chance>960</chance>
+   <location>Computer</location>
+   <faction>Pirate</faction>
+  </avail>
+ </mission>
+ <mission name="Pirate Clan Shipping">
+  <lua>pirate/pir_clan_cargo</lua>
+  <avail>
+   <priority>1</priority>
+   <cond>faction.playerStanding("Pirate") &gt;= 20 and var.peek("ps_misn") ~= nil and var.peek("ps_misn") &gt;= 2</cond>
+   <chance>10</chance>
+   <location>Bar</location>
+   <faction>Pirate</faction>
+  </avail>
+ </mission>
+ <mission name="Drunkard">
+  <lua>neutral/drunkard</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>3</chance>
+   <location>Bar</location>
+  </avail>
+ </mission>
+ <mission name="Drinking Aristocrat">
+  <lua>neutral/aristodrink</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <chance>5</chance>
+   <location>Bar</location>
+  </avail>
+ </mission>
+ <mission name="Sirius Pilgrimage Transport">
+  <lua>sirius/srs_ferry</lua>
+  <avail>
+   <chance>266</chance>
+   <cond>faction.playerStanding("Sirius") &gt; 5</cond>
+   <location>Computer</location>
+   <faction>Sirius</faction>
+  </avail>
+ </mission>
+ <mission name="Sirian Bounty">
+  <lua>sirius/achack/achack01</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <cond>planet.cur() == planet.get("The Wringer")</cond>
+   <chance>50</chance>
+   <location>Bar</location>
+  </avail>
+ </mission>
+ <mission name="Harja's Vengeance">
+  <lua>sirius/achack/achack02</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <cond>player.misnDone("Sirian Bounty") and planet.get("Violin Station"):system():jumpDist() &lt; 4</cond>
+   <chance>10</chance>
+   <location>Bar</location>
+   <faction>Sirius</faction>
+  </avail>
+ </mission>
+ <mission name="Joanne's Doubt">
+  <lua>sirius/achack/achack03</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <cond>player.misnDone("Harja's Vengeance")</cond>
+   <chance>10</chance>
+   <location>Bar</location>
+   <faction>Sirius</faction>
+  </avail>
+ </mission>
+ <mission name="Sirian Truce">
+  <lua>sirius/achack/achack04</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <location>None</location>
+  </avail>
+ </mission>
+ <mission name="Kidnapped">
+  <lua>neutral/kidnapped/traffic_00</lua>
+  <avail>
+   <chance>100</chance>
+   <location>None</location>
+  </avail>
+ </mission>
+ <mission name="Waste dump">
+  <lua>empire/waste_dump</lua>
+  <flags>
+   <unique />
+  </flags>
+  <avail>
+   <priority>3</priority>
+   <chance>25</chance>
+   <location>Computer</location>
+   <system>Shakar</system>
+  </avail>
+ </mission>
+ <mission name="The Runaway">
+  <lua>neutral/runaway/runaway_cynthia</lua>
+  <flags>
+    <unique />
+  </flags>
+  <avail>
+   <chance>11</chance>
+   <location>Bar</location>
+   <system>Gamma Polaris</system>
+  </avail>
+ </mission>
+ <mission name="The Search for Cynthia">
+  <lua>neutral/runaway/runaway_search</lua>
+  <flags>
+    <unique />
+  </flags>
+  <avail>
+   <cond>player.misnDone("The Runaway")</cond>
+   <chance>11</chance>
+   <location>Bar</location>
+   <system>Goddard</system>
+  </avail>
+ </mission>
+ <mission name="A Small Diversion">
+  <lua>dvaered/dv_diversion</lua>
+  <flags>
+    <unique />
+  </flags>
+  <avail>
+   <cond>faction.playerStanding("Dvaered") &gt; 5 and player.getRating() &gt; 100</cond>
+   <chance>10</chance>
+   <location>Bar</location>
+   <planet>Doranthex Prime</planet>
+  </avail>
+ </mission>
+ <mission name="Racing Skills 1">
+  <lua>neutral/race1</lua>
+  <flags>
+    <unique />
+  </flags>
+  <avail>
+    <cond>player.pilot():ship():class() == "Yacht"</cond>
+   <chance>5</chance>
+   <location>Bar</location>
+  </avail>
+ </mission>
+ <mission name="Racing Skills 2">
+  <lua>neutral/race2</lua>
+  <flags>
+  </flags>
+  <avail>
+    <cond>player.pilot():ship():class() == "Yacht" and player.misnDone("Racing Skills 1")</cond>
+   <chance>5</chance>
+   <location>Bar</location>
+  </avail>
+ </mission>
+ <mission name="The Gauntlet">
+  <lua>sirius/heretic/heretic0</lua>
+  <flags>
+  <unique />
+  </flags>
+  <avail>
+   <cond>var.peek("heretic_misn_tracker") == nil</cond>
+   <chance>50</chance>
+   <location>Bar</location>
+   <faction>Sirius</faction>
+  </avail>
+ </mission>
+ <mission name="The Return">
+  <lua>sirius/heretic/heretic1</lua>
+  <flags>
+  <unique />
+  </flags>
+  <avail>
+   <cond>var.peek("heretic_misn_tracker") == 1</cond>
+   <chance>100</chance>
+   <location>Bar</location>
+   <planet>Margot</planet>
+  </avail>
+ </mission>
+ <mission name="The Patrol">
+  <lua>sirius/heretic/heretic2</lua>
+  <flags>
+  <unique />
+  </flags>
+  <avail>
+   <cond>var.peek("heretic_misn_tracker") == 2</cond>
+   <chance>100</chance>
+   <location>Bar</location>
+   <planet>The Wringer</planet>
+  </avail>
+ </mission>
+ <mission name="The Assault">
+  <lua>sirius/heretic/heretic3</lua>
+  <flags>
+  <unique />
+  </flags>
+  <avail>
+   <done>The Patrol</done>
+   <chance>100</chance>
+   <location>Bar</location>
+   <planet>The Wringer</planet>
+  </avail>
+ </mission>
+ <mission name="The Egress">
+  <lua>sirius/heretic/heretic4</lua>
+  <flags>
+  <unique />
+  </flags>
+  <avail>
+   <cond>var.peek("heretic_misn_tracker") == 4</cond>
+   <chance>100</chance>
+   <location>Bar</location>
+   <planet>The Wringer</planet>
+  </avail>
+ </mission>
+ <mission name="Anxious Merchant">
+  <lua>trader/anxiousmerchant</lua>
+  <avail>
+   <priority>3</priority>
+   <chance>1</chance>
+   <location>Bar</location>
+   <faction>Dvaered</faction>
+   <faction>Empire</faction>
+   <faction>Frontier</faction>
+   <faction>Goddard</faction>
+   <faction>Independent</faction>
+   <faction>Sirius</faction>
+   <faction>Soromid</faction>
+   <faction>Trader</faction>
+  </avail>
+ </mission>
+</Missions>
+>>>>>>> upstream/master

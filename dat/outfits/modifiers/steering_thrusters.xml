@@ -12,6 +12,6 @@
  <specific type="modification">
   <turn>5</turn>
   <turn_mod>10</turn_mod>
-  <energy_regen_flat>-1.5</energy_regen_flat>
+  <energy_usage>1.5</energy_usage>
  </specific>
 </outfit>

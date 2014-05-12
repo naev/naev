@@ -162,7 +162,7 @@ typedef struct ShipStats_ {
    double energy_mod;         /**< Energy multiplier. */
    double energy_regen_mod;   /**< Energy regeneration multiplier. */
    double energy_flat;        /**< Energy modifier (flat). */
-   double energy_regen_flat;  /**< Energy regen modifier (flat). */
+   double energy_usage;       /**< Energy usage (flat). */
    double cpu_mod;            /**< CPU multiplier. */
    double cpu_max;            /**< CPU modifier. */
 
