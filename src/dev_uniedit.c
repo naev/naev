@@ -305,7 +305,7 @@ void uniedit_autosave( unsigned int wid_unused, char *unused )
 /*
  * @brief Updates autosave check box.
  */
-void uniedit_updateAutosave()
+void uniedit_updateAutosave (void)
 {
    window_checkboxSet( uniedit_wid, "chkEditAutoSave", conf.devautosave );
 }
