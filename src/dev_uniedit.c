@@ -27,6 +27,7 @@
 #include "pause.h"
 #include "nfile.h"
 #include "nstring.h"
+#include "conf.h"
 
 
 #define BUTTON_WIDTH    80 /**< Map button width. */
@@ -156,6 +157,10 @@ void uniedit_open( unsigned int wid_unused, char *unused )
          "btnClose", "Close", uniedit_close );
    buttonPos++;
 
+   /* Autosave toggle. */
+   window_addCheckbox( wid, -150, 25, 250, 20,
+         "chkEditAutoSave", "Automatically save changes", uniedit_autosave, conf.devautosave );
+
    /* Save button. */
    window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*buttonPos, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnSave", "Save All", uniedit_save );
@@ -282,6 +287,27 @@ static void uniedit_save( unsigned int wid_unused, char *unused )
 
    dsys_saveAll();
    dpl_saveAll();
+}
+
+
+/*
+ * @brief Toggles autosave.
+ */
+void uniedit_autosave( unsigned int wid_unused, char *unused )
+{
+   (void) wid_unused;
+   (void) unused;
+
+   conf.devautosave = window_checkboxState( wid_unused, "chkEditAutoSave" );
+}
+
+
+/*
+ * @brief Updates autosave check box.
+ */
+void uniedit_updateAutosave()
+{
+   window_checkboxSet( uniedit_wid, "chkEditAutoSave", conf.devautosave );
 }
 
 
@@ -551,9 +577,10 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
                }
             }
             uniedit_dragSys   = 0;
-            for (i=0; i<uniedit_nsys; i++) {
-               dsys_saveSystem(uniedit_sys[i]);
-            }
+            if (conf.devautosave)
+               for (i=0; i<uniedit_nsys; i++) {
+                  dsys_saveSystem(uniedit_sys[i]);
+               }
          }
          break;
 
@@ -666,11 +693,13 @@ static void uniedit_renameSys (void)
       free(newName);
       free(sys->name);
       sys->name = name;
-      dsys_saveSystem(sys);
+      if (conf.devautosave) {
+         dsys_saveSystem(sys);
 
-      /* Re-save adjacent systems. */
-      for (j=0; j<sys->njumps; j++)
-         dsys_saveSystem( sys->jumps[j].target );
+         /* Re-save adjacent systems. */
+         for (j=0; j<sys->njumps; j++)
+            dsys_saveSystem( sys->jumps[j].target );
+      }
    }
 }
 
@@ -715,7 +744,8 @@ static void uniedit_newSys( double x, double y )
    uniedit_deselect();
    uniedit_selectAdd( sys );
 
-   dsys_saveSystem( sys );
+   if (conf.devautosave)
+      dsys_saveSystem( sys );
 }
 
 
@@ -753,8 +783,10 @@ static void uniedit_toggleJump( StarSystem *sys )
    /* Reconstruct universe presences. */
    space_reconstructPresences();
 
-   dsys_saveSystem( sys );
-   dsys_saveSystem( isys );
+   if (conf.devautosave) {
+      dsys_saveSystem( sys );
+      dsys_saveSystem( isys );
+   }
 
    /* Update sidebar text. */
    uniedit_selectText();
@@ -1157,7 +1189,8 @@ static void uniedit_editSysClose( unsigned int wid, char *name )
    /* Text might need changing. */
    uniedit_selectText();
 
-   dsys_saveSystem( uniedit_sys[0] );
+   if (conf.devautosave)
+      dsys_saveSystem( uniedit_sys[0] );
 
    /* Close the window. */
    window_close( wid, name );
@@ -1262,7 +1295,8 @@ static void uniedit_btnEditAddAssetAdd( unsigned int wid, char *unused )
    /* Regenerate the list. */
    uniedit_editGenList( uniedit_widEdit );
 
-   dsys_saveSystem( uniedit_sys[0] );
+   if (conf.devautosave)
+      dsys_saveSystem( uniedit_sys[0] );
 
    /* Close the window. */
    window_close( wid, unused );

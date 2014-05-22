@@ -28,6 +28,7 @@
 #include "nfile.h"
 #include "nstring.h"
 #include "npng.h"
+#include "conf.h"
 
 
 #define BUTTON_WIDTH    90 /**< Map button width. */
@@ -184,6 +185,10 @@ void sysedit_open( StarSystem *sys )
          "btnClose", "Close", sysedit_close );
    i = 1;
 
+   /* Autosave toggle. */
+   window_addCheckbox( wid, -150, 25, 250, 20,
+         "chkEditAutoSave", "Automatically save changes", uniedit_autosave, conf.devautosave );
+
    /* Scale. */
    window_addButton( wid, -15, 20+(BUTTON_HEIGHT+20)*i, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnScale", "Scale", sysedit_btnScale );
@@ -268,7 +273,8 @@ static void sysedit_close( unsigned int wid, char *wgt )
    system_setFaction( sysedit_sys );
 
    /* Save the system */
-   dsys_saveSystem( sysedit_sys );
+   if (conf.devautosave)
+      dsys_saveSystem( sysedit_sys );
 
    /* Reconstruct universe presences. */
    space_reconstructPresences();
@@ -278,6 +284,9 @@ static void sysedit_close( unsigned int wid, char *wgt )
 
    /* Update the universe editor's sidebar text. */
    uniedit_selectText();
+   
+   /* Propagate autosave checkbox state */
+   uniedit_updateAutosave();
 }
 
 

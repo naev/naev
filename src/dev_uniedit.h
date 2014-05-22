@@ -15,6 +15,8 @@
 void uniedit_open( unsigned int wid_unused, char *unused );
 void uniedit_selectText (void);
 char *uniedit_nameFilter( char *name );
+void uniedit_autosave( unsigned int wid_unused, char *unused );
+void uniedit_updateAutosave();
 
 
 #endif /* DEV_UNIEDIT_H */
