@@ -8,6 +8,7 @@
  * Private function prototypes
  */
 void nzip_printError ( int err );
+int nzip_rwopsClose ( struct SDL_RWops* context );
 
 
 
@@ -216,6 +217,16 @@ void nzip_printError ( int err )
 }
 
 /**
+ * @brief Close a rwop
+ */
+int nzip_rwopsClose ( struct SDL_RWops* context )
+{
+   free(context->hidden.unknown.data1);
+   SDL_FreeRW(context);
+   return 0;
+}
+
+/**
  * @brief Return SDL_RWops for a file in an archive. This version works on a copy of the file in memory.
  *
  *    @param arc Archive to look in
@@ -226,7 +237,10 @@ SDL_RWops* nzip_rwops ( struct zip* arc, const char* filename )
 {
    void* data;
    uint32_t size;
+   SDL_RWops* rwops;
 
    data = nzip_readFile ( arc, filename, &size );
-   return SDL_RWFromMem ( data, size );
+   rwops = SDL_RWFromMem ( data,size);
+   rwops->hidden.unknown.data1 = data;
+   return rwops;
 }
