@@ -12,12 +12,12 @@ int nzip_isZip ( const char* filename )
 {
    struct zip* arc;
 
-   //arc = nzip_open ( filename );
+   arc = nzip_open ( filename );
 
-   //if ( arc == NULL )
-   //   return 0;
+   if ( arc == NULL )
+      return 0;
 
-   //nzip_close ( arc );
+   nzip_close ( arc );
 
    return 1;
 }
