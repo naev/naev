@@ -40,7 +40,7 @@ struct zip* nzip_open ( const char* filename )
 
 void nzip_close ( struct zip* arc )
 {
-   if ( !zip_close ( arc ) ) {
+   if ( zip_close ( arc ) ) {
       WARN ( "Error closing zip file" );
       WARN ( "%s", zip_strerror ( arc ) );
    }
