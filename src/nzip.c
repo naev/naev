@@ -241,6 +241,7 @@ SDL_RWops* nzip_rwops ( struct zip* arc, const char* filename )
 
    data = nzip_readFile ( arc, filename, &size );
    rwops = SDL_RWFromMem ( data,size);
+   rwops->close = nzip_rwopsClose;
    rwops->hidden.unknown.data1 = data;
    return rwops;
 }
