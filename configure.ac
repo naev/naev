@@ -400,7 +400,7 @@ AC_SUBST([GLOBAL_LIBS])
 WIDGET_LIBS="\$(top_builddir)/src/tk/widget/libwidget.a"
 
 NAEV_CFLAGS="$GLOBAL_CFLAGS"
-NAEV_LIBS="$GLOBAL_LIBS $WIDGET_LIBS"
+NAEV_LIBS="$GLOBAL_LIBS $WIDGET_LIBS -lzip"
 
 AS_IF([test "$enable_debug" != "no"], [
   AC_DEFINE([DEBUGGING], 1, [Define to 1 to enable debug code])

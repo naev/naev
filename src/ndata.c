@@ -41,7 +41,7 @@
 #include "log.h"
 #include "md5.h"
 #include "nxml.h"
-#include "pack.h"
+#include "nzip.h"
 #include "nfile.h"
 #include "conf.h"
 #include "npng.h"
@@ -66,7 +66,7 @@
  */
 static char* ndata_filename         = NULL; /**< Packfile name. */
 static char* ndata_dirname          = NULL; /**< Directory name. */
-static Packcache_t *ndata_cache     = NULL; /**< Actual packfile. */
+static struct zip* ndata_cache     = NULL; /**< Actual packfile. */
 static char* ndata_packName         = NULL; /**< Name of the ndata module. */
 static SDL_mutex *ndata_lock        = NULL; /**< Lock for ndata creation. */
 static int ndata_loadedfile         = 0; /**< Already loaded a file? */
@@ -103,7 +103,7 @@ static char** filterList( const char** list, int nlist,
  */
 int ndata_check( const char* path )
 {
-   return pack_check( path );
+   return nzip_isZip( path );
 }
 
 
@@ -254,7 +254,7 @@ static int ndata_isndata( const char *path, ... )
       return 0;
 
    /* Must be ndata. */
-   if (pack_check(file))
+   if (!nzip_isZip(file))
       return 0;
 
    return 1;
@@ -293,7 +293,7 @@ static char *ndata_findInDir( const char *path )
          nsnprintf( ndata_file, l, "%s/%s", path, files[i] );
 
          /* Must be packfile. */
-         if (pack_check(ndata_file)) {
+         if (!nzip_isZip(ndata_file)) {
             free(ndata_file);
             ndata_file = NULL;
             continue;
@@ -397,7 +397,7 @@ static int ndata_openPackfile (void)
       else
          return -1;
    }
-   ndata_cache = pack_openCache( ndata_filename );
+   ndata_cache = nzip_open( ndata_filename );
    if (ndata_cache == NULL)
       WARN("Unable to create Packcache from '%s'.", ndata_filename );
 
@@ -490,7 +490,7 @@ void ndata_close (void)
 
    /* Close the packfile. */
    if (ndata_cache) {
-      pack_closeCache(ndata_cache);
+      nzip_close(ndata_cache);
       ndata_cache = NULL;
    }
 
@@ -595,7 +595,7 @@ int ndata_exists( const char* filename )
    ndata_loadedfile = 1;
 
    /* Try to get it from the cache. */
-   return pack_checkCache( ndata_cache, filename );
+   return nzip_hasFile( ndata_cache, filename );
 }
 
 
@@ -686,7 +686,7 @@ void* ndata_read( const char* filename, uint32_t *filesize )
    ndata_loadedfile = 1;
 
    /* Get data from packfile. */
-   return pack_readfileCached( ndata_cache, filename, filesize );
+   return nzip_readFile( ndata_cache, filename, filesize );
 }
 
 
@@ -763,7 +763,7 @@ SDL_RWops *ndata_rwops( const char* filename )
    /* Mark that we loaded a file. */
    ndata_loadedfile = 1;
 
-   return pack_rwopsCached( ndata_cache, filename );
+   return nzip_rwops( ndata_cache, filename );
 }
 
 
@@ -940,7 +940,7 @@ static char** ndata_listBackend( const char* path, uint32_t* nfiles, int recursi
    }
 
    /* Load list. */
-   ndata_fileList = pack_listfilesCached( ndata_cache, &ndata_fileNList );
+   ndata_fileList = nzip_listFiles( ndata_cache, &ndata_fileNList );
 
    return filterList( ndata_fileList, ndata_fileNList, path, nfiles, recursive );
 }
