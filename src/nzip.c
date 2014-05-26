@@ -88,6 +88,8 @@ void* nzip_readFile ( struct zip* arc, const char* filename, uint32_t* size )
       return NULL;
    }
 
+   zip_fclose ( file );
+
    *size = stats.size;
    return data;
 }
