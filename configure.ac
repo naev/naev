@@ -276,6 +276,9 @@ PKG_CHECK_MODULES([VORBISFILE], [vorbisfile])
 # libpng
 PKG_CHECK_MODULES([PNG], [libpng])
 
+# libzip
+PKG_CHECK_MODULES([ZIP], [libzip])
+
 # lua
 case "$used_lua" in
   luajit)
@@ -400,7 +403,7 @@ AC_SUBST([GLOBAL_LIBS])
 WIDGET_LIBS="\$(top_builddir)/src/tk/widget/libwidget.a"
 
 NAEV_CFLAGS="$GLOBAL_CFLAGS"
-NAEV_LIBS="$GLOBAL_LIBS $WIDGET_LIBS -lzip"
+NAEV_LIBS="$GLOBAL_LIBS $WIDGET_LIBS"
 
 AS_IF([test "$enable_debug" != "no"], [
   AC_DEFINE([DEBUGGING], 1, [Define to 1 to enable debug code])
@@ -420,11 +423,11 @@ AS_IF([test "$enable_debug" = "paranoid"], [
 
 NAEV_CFLAGS="$NAEV_CFLAGS $CSPARSE_CFLAGS $SDL_CFLAGS $XML_CFLAGS \
     $FREETYPE_CFLAGS $LUA_CFLAGS $VORBIS_CFLAGS $VORBISFILE_CFLAGS \
-    $PNG_CFLAGS $OPENGL_CFLAGS"
+    $PNG_CFLAGS $ZIP_CFLAGS $OPENGL_CFLAGS"
 
 NAEV_LIBS="$NAEV_LIBS $CSPARSE_LIBS $SDL_LIBS $XML_LIBS \
     $FREETYPE_LIBS $LUA_LIBS $VORBIS_LIBS $VORBISFILE_LIBS \
-    $PNG_LIBS $OPENGL_LIBS"
+    $PNG_LIBS $ZIP_LIBS $OPENGL_LIBS"
 
 AS_IF([test "$have_openal" = "yes"], [
   NAEV_CFLAGS="$NAEV_CFLAGS $OPENAL_CFLAGS"
