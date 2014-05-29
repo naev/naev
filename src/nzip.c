@@ -188,7 +188,7 @@ char** nzip_listFiles ( struct zip* arc, uint32_t* nfiles )
    // Shrink file list to needed size
    filelistshrunk = realloc ( filelist, sizeof ( char* ) *j );
 
-   if ( filelistshrunk == NULL )
+   if (filelistshrunk == NULL)
       return filelist;
 
    else

@@ -75,7 +75,7 @@ static int ndata_source             = 0;
 /*
  * File list.
  */
-static const char **ndata_fileList  = NULL; /**< List of files in the archive. */
+static char **ndata_fileList  = NULL; /**< List of files in the archive. */
 static uint32_t ndata_fileNList     = 0; /**< Number of files in ndata_fileList. */
 
 
@@ -483,7 +483,7 @@ void ndata_close (void)
 
    /* Destroy the list. */
    if (ndata_fileList != NULL) {
-      /* No need to free memory since archive does that. */
+      free(ndata_fileList);
       ndata_fileList = NULL;
       ndata_fileNList = 0;
    }
@@ -874,7 +874,7 @@ static char** ndata_listBackend( const char* path, uint32_t* nfiles, int recursi
 
    /* Already loaded the list. */
    if (ndata_fileList != NULL)
-      return filterList( ndata_fileList, ndata_fileNList, path, nfiles, recursive );
+      return filterList( (const char**) ndata_fileList, ndata_fileNList, path, nfiles, recursive );
 
    /* See if can load from local directory. */
    if (ndata_archive == NULL) {
@@ -942,7 +942,7 @@ static char** ndata_listBackend( const char* path, uint32_t* nfiles, int recursi
    /* Load list. */
    ndata_fileList = nzip_listFiles( ndata_archive, &ndata_fileNList );
 
-   return filterList( ndata_fileList, ndata_fileNList, path, nfiles, recursive );
+   return filterList( (const char**) ndata_fileList, ndata_fileNList, path, nfiles, recursive );
 }
 
 /**
