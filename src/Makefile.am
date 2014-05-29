@@ -113,7 +113,6 @@ CODE_SOURCE = \
 	opengl_vbo.c \
 	options.c \
 	outfit.c \
-	pack.c \
 	pause.c \
 	perlin.c \
 	physics.c \
@@ -256,7 +255,6 @@ CODE_SOURCE = \
 	opengl_vbo.h \
 	options.h \
 	outfit.h \
-	pack.h \
 	pause.h \
 	perlin.h \
 	physics.h \

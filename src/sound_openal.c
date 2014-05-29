@@ -20,7 +20,6 @@
 #include "sound.h"
 #include "ndata.h"
 #include "log.h"
-#include "pack.h"
 #include "conf.h"
 
 
