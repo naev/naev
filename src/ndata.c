@@ -321,6 +321,7 @@ static char *ndata_findInDir( const char *path )
 static int ndata_openFile (void)
 {
    char path[PATH_MAX], *buf;
+   char pathname[PATH_MAX];
 
    /* Must be thread safe. */
    SDL_mutexP(ndata_lock);
@@ -342,19 +343,20 @@ static int ndata_openFile (void)
 
       /* Check ndata with version appended. */
 #if VREV < 0
-      if (ndata_isndata("%s-%d.%d.0-beta%d", NDATA_FILENAME,
-               VMAJOR, VMINOR, ABS(VREV) )) {
-         ndata_filename = malloc(PATH_MAX);
-         nsnprintf( ndata_filename, PATH_MAX, "%s-%d.%d.0-beta%d",
-               NDATA_FILENAME, VMAJOR, VMINOR, ABS(VREV) );
-      }
+      nsnprintf ( pathname, PATH_MAX, "%s-%d.%d.0-beta%d", NDATA_FILENAME, VMAJOR, VMINOR, ABS ( VREV ) );
 #else /* VREV < 0 */
-      if (ndata_isndata("%s-%d.%d.%d", NDATA_FILENAME, VMAJOR, VMINOR, VREV )) {
-         ndata_filename = malloc(PATH_MAX);
-         nsnprintf( ndata_filename, PATH_MAX, "%s-%d.%d.%d",
-               NDATA_FILENAME, VMAJOR, VMINOR, VREV );
-      }
+      nsnprintf ( pathname, PATH_MAX, "%s-%d.%d.%d", NDATA_FILENAME, VMAJOR, VMINOR, VREV );
 #endif /* VREV < 0 */
+
+      if ( ndata_isndata ( pathname ) ) {
+         ndata_filename = malloc ( PATH_MAX );
+         strcpy ( ndata_filename, pathname );
+      }
+      else if ( ndata_isndata ( strcat(pathname, ".zip" )) ) {
+         ndata_filename = malloc ( PATH_MAX );
+         strcpy ( ndata_filename, pathname );
+      }
+
       /* Check default ndata. */
       else if (ndata_isndata(NDATA_DEF))
          ndata_filename = strdup(NDATA_DEF);

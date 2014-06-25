@@ -16,7 +16,7 @@ dist_pkgdata_DATA = naev-confupdate.sh
 dist_man6_MANS = naev.6
 dist_doc_DATA = AUTHORS README TODO LICENSE
 
-DATA_ARCHIVE = ndata
+DATA_ARCHIVE = ndata.zip
 if HAVE_UTILS
 MKSPR      = utils/mkspr/mkspr$(EXEEXT)
 endif
@@ -45,9 +45,7 @@ $(MKSPR):
 $(DATA_ARCHIVE): VERSION
 	@echo " ZIP   $(DATA_ARCHIVE)"
 	cd "$(top_srcdir)" && \
-	  (find AUTHORS VERSION naev-confupdate.sh -print0; \
-	     find dat     -type f -print0) | xargs -0 \
-	zip -0rq - -@ > "$(abs_top_builddir)/$(DATA_ARCHIVE)";
+    zip -0r "$(abs_top_builddir)/$(DATA_ARCHIVE)" AUTHORS VERSION naev-confupdate.sh dat/
 else
 utils:
 
