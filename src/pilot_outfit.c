@@ -647,10 +647,6 @@ static int pilot_hasOutfitLimit( Pilot *p, const char *limit )
  */
 const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o )
 {
-   Outfit *o_old;
-   const char *err;
-   double pa, ps, pe, pf;
-
    /* Just in case. */
    if ((p==NULL) || (s==NULL))
       return "Nothing selected.";
@@ -669,39 +665,7 @@ const char* pilot_canEquip( Pilot *p, PilotOutfitSlot *s, Outfit *o )
          return "Recall the fighters first";
    }
 
-   /* Store health. */
-   pa = p->armour;
-   ps = p->shield;
-   pe = p->energy;
-   pf = p->fuel;
-
-   /* Swap outfit. */
-   o_old       = s->outfit;
-   s->outfit   = o;
-
-   /* Check sanity. */
-   pilot_calcStats( p );
-   /* can now equip outfit even if ship won't be spaceworthy
-    * err = pilot_checkSpaceworthy( p );*/
-   /* actually, this is also redundant */
-   if (!pilot_slotsCheckSanity(p))
-      err = "Does not fit in slot";
-   else
-      err = NULL;
-
-   /* Swap back. */
-   s->outfit   = o_old;
-
-   /* Recalc. */
-   pilot_calcStats( p );
-
-   /* Recover health. */
-   p->armour = pa;
-   p->shield = ps;
-   p->energy = pe;
-   p->fuel   = pf;
-   
-   return err;
+   return NULL;
 }
 
 
@@ -958,10 +922,8 @@ void pilot_calcStats( Pilot* pilot )
       /* Add mass. */
       pilot->mass_outfit   += o->mass;
 
-      if (outfit_isAfterburner(o)) { /* Afterburner */
+      if (outfit_isAfterburner(o)) /* Afterburner */
          pilot->afterburner = pilot->outfits[i]; /* Set afterburner */
-         continue;
-      }
 
       /* Active outfits must be on to affect stuff. */
       if (slot->active && !(slot->state==PILOT_OUTFIT_ON))

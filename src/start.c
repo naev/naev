@@ -17,7 +17,6 @@
 #include "log.h"
 #include "md5.h"
 #include "nxml.h"
-#include "pack.h"
 #include "ndata.h"
 
 

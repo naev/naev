@@ -276,6 +276,9 @@ PKG_CHECK_MODULES([VORBISFILE], [vorbisfile])
 # libpng
 PKG_CHECK_MODULES([PNG], [libpng])
 
+# libzip
+PKG_CHECK_MODULES([ZIP], [libzip])
+
 # lua
 case "$used_lua" in
   luajit)
@@ -409,7 +412,7 @@ AS_IF([test "$enable_debug" != "no"], [
      case "$host" in
        *-linux-gnu)
          AC_DEFINE([HAS_BFD], 1, [Define to 1 to enable bfd backtrace code])
-         NAEV_LIBS="$NAEV_LIBS -lbfd -liberty -rdynamic -ldl -lz"
+         NAEV_LIBS="$NAEV_LIBS -lbfd -liberty -rdynamic -ldl"
          ;;
      esac
   ])
@@ -420,11 +423,11 @@ AS_IF([test "$enable_debug" = "paranoid"], [
 
 NAEV_CFLAGS="$NAEV_CFLAGS $CSPARSE_CFLAGS $SDL_CFLAGS $XML_CFLAGS \
     $FREETYPE_CFLAGS $LUA_CFLAGS $VORBIS_CFLAGS $VORBISFILE_CFLAGS \
-    $PNG_CFLAGS $OPENGL_CFLAGS"
+    $PNG_CFLAGS $ZIP_CFLAGS $OPENGL_CFLAGS"
 
 NAEV_LIBS="$NAEV_LIBS $CSPARSE_LIBS $SDL_LIBS $XML_LIBS \
     $FREETYPE_LIBS $LUA_LIBS $VORBIS_LIBS $VORBISFILE_LIBS \
-    $PNG_LIBS $OPENGL_LIBS"
+    $PNG_LIBS $ZIP_LIBS $OPENGL_LIBS"
 
 AS_IF([test "$have_openal" = "yes"], [
   NAEV_CFLAGS="$NAEV_CFLAGS $OPENAL_CFLAGS"
@@ -471,11 +474,6 @@ esac
 
 AC_SUBST([LIBLUA_CFLAGS])
 
-
-PACK_CFLAGS="$GLOBAL_CFLAGS $SDL_CFLAGS -DNOLOGPRINTFCONSOLE"
-PACK_LIBS="$GLOBAL_LIBS $SDL_LIBS"
-AC_SUBST([PACK_CFLAGS])
-AC_SUBST([PACK_LIBS])
 
 MKSPR_CFLAGS="$GLOBAL_CFLAGS $SDL_CFLAGS $SDLIMAGE_CFLAGS $PNG_CFLAGS -DNOLOGPRINTFCONSOLE"
 MKSPR_LIBS="$GLOBAL_LIBS $SDL_LIBS $SDLIMAGE_LIBS $PNG_LIBS"
@@ -605,7 +603,6 @@ AC_CONFIG_FILES([Makefile
       build/shave])
 AS_IF([test "x$have_utils" = "xyes"], [
   AC_CONFIG_FILES([utils/Makefile
-     utils/pack/Makefile
      utils/mkspr/Makefile])
 ])
 AS_IF([test "x$have_docs" = "xyes"], [

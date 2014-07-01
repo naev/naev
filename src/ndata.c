@@ -8,7 +8,7 @@
  * @brief Wrapper to handle reading/writing the ndata file.
  *
  * Optimizes to minimize the opens and frees, plus tries to read from the
- *  filesystem instead always looking for a packfile.
+ *  filesystem instead always looking for a ndata archive.
  *
  * Detection in a nutshell:
  *
@@ -41,7 +41,7 @@
 #include "log.h"
 #include "md5.h"
 #include "nxml.h"
-#include "pack.h"
+#include "nzip.h"
 #include "nfile.h"
 #include "conf.h"
 #include "npng.h"
@@ -62,12 +62,12 @@
 
 
 /*
- * Packfile.
+ * ndata archive.
  */
-static char* ndata_filename         = NULL; /**< Packfile name. */
+static char* ndata_filename         = NULL; /**< ndata archive name. */
 static char* ndata_dirname          = NULL; /**< Directory name. */
-static Packcache_t *ndata_cache     = NULL; /**< Actual packfile. */
-static char* ndata_packName         = NULL; /**< Name of the ndata module. */
+static struct zip* ndata_archive    = NULL; /**< ndata file on disk */
+static char* ndata_arcName          = NULL; /**< Name of the ndata module. */
 static SDL_mutex *ndata_lock        = NULL; /**< Lock for ndata creation. */
 static int ndata_loadedfile         = 0; /**< Already loaded a file? */
 static int ndata_source             = 0;
@@ -75,7 +75,7 @@ static int ndata_source             = 0;
 /*
  * File list.
  */
-static const char **ndata_fileList  = NULL; /**< List of files in the packfile. */
+static char **ndata_fileList  = NULL; /**< List of files in the archive. */
 static uint32_t ndata_fileNList     = 0; /**< Number of files in ndata_fileList. */
 
 
@@ -84,7 +84,7 @@ static uint32_t ndata_fileNList     = 0; /**< Number of files in ndata_fileList.
  */
 static void ndata_testVersion (void);
 static char *ndata_findInDir( const char *path );
-static int ndata_openPackfile (void);
+static int ndata_openFile (void);
 static int ndata_isndata( const char *path, ... );
 static void ndata_notfound (void);
 static char** ndata_listBackend( const char* path, uint32_t* nfiles, int dirs );
@@ -103,7 +103,7 @@ static char** filterList( const char** list, int nlist,
  */
 int ndata_check( const char* path )
 {
-   return pack_check( path );
+   return nzip_isZip( path );
 }
 
 
@@ -254,7 +254,7 @@ static int ndata_isndata( const char *path, ... )
       return 0;
 
    /* Must be ndata. */
-   if (pack_check(file))
+   if (!nzip_isZip(file))
       return 0;
 
    return 1;
@@ -262,7 +262,7 @@ static int ndata_isndata( const char *path, ... )
 
 
 /**
- * @brief Tries to find a valid packfile in the directory listed by path.
+ * @brief Tries to find a valid ndata archive in the directory listed by path.
  *
  *    @return Newly allocated ndata name or NULL if not found.
  */
@@ -292,8 +292,8 @@ static char *ndata_findInDir( const char *path )
          ndata_file  = malloc( l );
          nsnprintf( ndata_file, l, "%s/%s", path, files[i] );
 
-         /* Must be packfile. */
-         if (pack_check(ndata_file)) {
+         /* Must be zip file. */
+         if (!nzip_isZip(ndata_file)) {
             free(ndata_file);
             ndata_file = NULL;
             continue;
@@ -314,19 +314,20 @@ static char *ndata_findInDir( const char *path )
 
 
 /**
- * @brief Opens a packfile if needed.
+ * @brief Opens an ndata archive if needed.
  *
  *    @return 0 on success.
  */
-static int ndata_openPackfile (void)
+static int ndata_openFile (void)
 {
    char path[PATH_MAX], *buf;
+   char pathname[PATH_MAX];
 
    /* Must be thread safe. */
    SDL_mutexP(ndata_lock);
 
    /* Was opened while locked. */
-   if (ndata_cache != NULL) {
+   if (ndata_archive != NULL) {
       SDL_mutexV(ndata_lock);
       return 0;
    }
@@ -342,19 +343,20 @@ static int ndata_openPackfile (void)
 
       /* Check ndata with version appended. */
 #if VREV < 0
-      if (ndata_isndata("%s-%d.%d.0-beta%d", NDATA_FILENAME,
-               VMAJOR, VMINOR, ABS(VREV) )) {
-         ndata_filename = malloc(PATH_MAX);
-         nsnprintf( ndata_filename, PATH_MAX, "%s-%d.%d.0-beta%d",
-               NDATA_FILENAME, VMAJOR, VMINOR, ABS(VREV) );
-      }
+      nsnprintf ( pathname, PATH_MAX, "%s-%d.%d.0-beta%d", NDATA_FILENAME, VMAJOR, VMINOR, ABS ( VREV ) );
 #else /* VREV < 0 */
-      if (ndata_isndata("%s-%d.%d.%d", NDATA_FILENAME, VMAJOR, VMINOR, VREV )) {
-         ndata_filename = malloc(PATH_MAX);
-         nsnprintf( ndata_filename, PATH_MAX, "%s-%d.%d.%d",
-               NDATA_FILENAME, VMAJOR, VMINOR, VREV );
-      }
+      nsnprintf ( pathname, PATH_MAX, "%s-%d.%d.%d", NDATA_FILENAME, VMAJOR, VMINOR, VREV );
 #endif /* VREV < 0 */
+
+      if ( ndata_isndata ( pathname ) ) {
+         ndata_filename = malloc ( PATH_MAX );
+         strcpy ( ndata_filename, pathname );
+      }
+      else if ( ndata_isndata ( strcat(pathname, ".zip" )) ) {
+         ndata_filename = malloc ( PATH_MAX );
+         strcpy ( ndata_filename, pathname );
+      }
+
       /* Check default ndata. */
       else if (ndata_isndata(NDATA_DEF))
          ndata_filename = strdup(NDATA_DEF);
@@ -382,7 +384,7 @@ static int ndata_openPackfile (void)
       }
    }
 
-   /* Open the cache. */
+   /* Open the archive. */
    if (ndata_isndata( ndata_filename ) != 1) {
       if (!ndata_loadedfile) {
          WARN("Cannot find ndata file!");
@@ -397,9 +399,9 @@ static int ndata_openPackfile (void)
       else
          return -1;
    }
-   ndata_cache = pack_openCache( ndata_filename );
-   if (ndata_cache == NULL)
-      WARN("Unable to create Packcache from '%s'.", ndata_filename );
+   ndata_archive = nzip_open( ndata_filename );
+   if (ndata_archive == NULL)
+      WARN("Unable to open ndata from '%s'.", ndata_filename );
 
    /* Close lock. */
    SDL_mutexV(ndata_lock);
@@ -461,7 +463,7 @@ int ndata_open (void)
 
    /* If user enforces ndata filename, we'll respect that. */
    if (ndata_isndata(ndata_filename))
-      return ndata_openPackfile();
+      return ndata_openFile();
 
    free(ndata_filename);
    ndata_filename = NULL;
@@ -476,22 +478,22 @@ int ndata_open (void)
 void ndata_close (void)
 {
    /* Destroy the name. */
-   if (ndata_packName != NULL) {
-      free(ndata_packName);
-      ndata_packName = NULL;
+   if (ndata_arcName != NULL) {
+      free(ndata_arcName);
+      ndata_arcName = NULL;
    }
 
    /* Destroy the list. */
    if (ndata_fileList != NULL) {
-      /* No need to free memory since cache does that. */
+      free(ndata_fileList);
       ndata_fileList = NULL;
       ndata_fileNList = 0;
    }
 
-   /* Close the packfile. */
-   if (ndata_cache) {
-      pack_closeCache(ndata_cache);
-      ndata_cache = NULL;
+   /* Close the archive. */
+   if (ndata_archive) {
+      nzip_close(ndata_archive);
+      ndata_archive = NULL;
    }
 
    /* Destroy the lock. */
@@ -550,8 +552,8 @@ int ndata_exists( const char* filename )
 {
    char *buf, path[PATH_MAX];
 
-   /* See if needs to load packfile. */
-   if (ndata_cache == NULL) {
+   /* See if needs to load ndata archive. */
+   if (ndata_archive == NULL) {
 
       /* Try to read the file as locally. */
       if (nfile_fileExists( filename ) && (ndata_source <= NDATA_SRC_LAIDOUT))
@@ -583,19 +585,19 @@ int ndata_exists( const char* filename )
             return 1;
       }
 
-      /* Load the packfile. */
-      ndata_openPackfile();
+      /* Load the ndata archive. */
+      ndata_openFile();
    }
 
    /* Wasn't able to open the file. */
-   if (ndata_cache == NULL)
+   if (ndata_archive == NULL)
       return 0;
 
    /* Mark that we loaded a file. */
    ndata_loadedfile = 1;
 
-   /* Try to get it from the cache. */
-   return pack_checkCache( ndata_cache, filename );
+   /* Try to get it from the archive. */
+   return nzip_hasFile( ndata_archive, filename );
 }
 
 
@@ -611,8 +613,8 @@ void* ndata_read( const char* filename, uint32_t *filesize )
    char *buf, path[PATH_MAX];
    int nbuf;
 
-   /* See if needs to load packfile. */
-   if (ndata_cache == NULL) {
+   /* See if needs to load ndata archive. */
+   if (ndata_archive == NULL) {
 
       /* Try to read the file as locally. */
       if (nfile_fileExists( filename ) && (ndata_source <= NDATA_SRC_LAIDOUT)) {
@@ -671,12 +673,12 @@ void* ndata_read( const char* filename, uint32_t *filesize )
          }
       }
 
-      /* Load the packfile. */
-      ndata_openPackfile();
+      /* Load the ndata archive. */
+      ndata_openFile();
    }
 
    /* Wasn't able to open the file. */
-   if (ndata_cache == NULL) {
+   if (ndata_archive == NULL) {
       WARN("Unable to open file '%s': not found.", filename);
       *filesize = 0;
       return NULL;
@@ -685,8 +687,8 @@ void* ndata_read( const char* filename, uint32_t *filesize )
    /* Mark that we loaded a file. */
    ndata_loadedfile = 1;
 
-   /* Get data from packfile. */
-   return pack_readfileCached( ndata_cache, filename, filesize );
+   /* Get data from ndata archive. */
+   return nzip_readFile( ndata_archive, filename, filesize );
 }
 
 
@@ -701,7 +703,7 @@ SDL_RWops *ndata_rwops( const char* filename )
    char path[PATH_MAX], *tmp;
    SDL_RWops *rw;
 
-   if (ndata_cache == NULL) {
+   if (ndata_archive == NULL) {
 
       /* Try to open from file. */
       if (ndata_source <= NDATA_SRC_LAIDOUT) {
@@ -750,12 +752,12 @@ SDL_RWops *ndata_rwops( const char* filename )
          }
       }
 
-      /* Load the packfile. */
-      ndata_openPackfile();
+      /* Load the ndata archive. */
+      ndata_openFile();
    }
 
    /* Wasn't able to open the file. */
-   if (ndata_cache == NULL) {
+   if (ndata_archive == NULL) {
       WARN("Unable to open file '%s': not found.", filename);
       return NULL;
    }
@@ -763,7 +765,7 @@ SDL_RWops *ndata_rwops( const char* filename )
    /* Mark that we loaded a file. */
    ndata_loadedfile = 1;
 
-   return pack_rwopsCached( ndata_cache, filename );
+   return nzip_rwops( ndata_archive, filename );
 }
 
 
@@ -874,10 +876,10 @@ static char** ndata_listBackend( const char* path, uint32_t* nfiles, int recursi
 
    /* Already loaded the list. */
    if (ndata_fileList != NULL)
-      return filterList( ndata_fileList, ndata_fileNList, path, nfiles, recursive );
+      return filterList( (const char**) ndata_fileList, ndata_fileNList, path, nfiles, recursive );
 
    /* See if can load from local directory. */
-   if (ndata_cache == NULL) {
+   if (ndata_archive == NULL) {
 
       /* Local search. */
       if (ndata_source <= NDATA_SRC_LAIDOUT) {
@@ -929,20 +931,20 @@ static char** ndata_listBackend( const char* path, uint32_t* nfiles, int recursi
          }
       }
 
-      /* Open packfile. */
-      ndata_openPackfile();
+      /* Open ndata archive. */
+      ndata_openFile();
    }
 
    /* Wasn't able to open the file. */
-   if (ndata_cache == NULL) {
+   if (ndata_archive == NULL) {
       *nfiles = 0;
       return NULL;
    }
 
    /* Load list. */
-   ndata_fileList = pack_listfilesCached( ndata_cache, &ndata_fileNList );
+   ndata_fileList = nzip_listFiles( ndata_archive, &ndata_fileNList );
 
-   return filterList( ndata_fileList, ndata_fileNList, path, nfiles, recursive );
+   return filterList( (const char**) ndata_fileList, ndata_fileNList, path, nfiles, recursive );
 }
 
 /**

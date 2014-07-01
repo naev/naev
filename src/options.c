@@ -471,6 +471,9 @@ static void opt_keybinds( unsigned int wid )
 
 /**
  * @brief Generates the keybindings list.
+ *
+ *    @param wid Window to update.
+ *    @param regen Whether to destroy and recreate the widget.
  */
 static void menuKeybinds_genList( unsigned int wid )
 {
@@ -481,6 +484,7 @@ static void menuKeybinds_genList( unsigned int wid )
    SDLMod mod;
    int w, h;
    int lw, lh;
+   int regen, pos, off;
 
    /* Get dimensions. */
    menuKeybinds_getDim( wid, &w, &h, &lw, &lh, NULL, NULL );
@@ -530,8 +534,21 @@ static void menuKeybinds_genList( unsigned int wid )
             break;
       }
    }
+
+   regen = widget_exists( wid, "lstKeybinds" );
+   if (regen) {
+      pos = toolkit_getListPos( wid, "lstKeybinds" );
+      off = toolkit_getListOffset( wid, "lstKeybinds" );
+      window_destroyWidget( wid, "lstKeybinds" );
+   }
+
    window_addList( wid, 20, -40, lw, lh, "lstKeybinds",
          str, i, 0, menuKeybinds_update );
+
+   if (regen) {
+      toolkit_setListPos( wid, "lstKeybinds", pos );
+      toolkit_setListOffset( wid, "lstKeybinds", off );
+   }
 }
 
 
@@ -615,7 +632,6 @@ static void opt_keyDefaults( unsigned int wid, char *str )
    input_setDefault();
 
    /* Regenerate list widget. */
-   window_destroyWidget( wid, "lstKeybinds" );
    menuKeybinds_genList( wid );
 
    /* Alert user it worked. */
@@ -877,7 +893,6 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
    int key;
    SDLMod mod, ev_mod;
    const char *str;
-   int pos, off;
 
    /* See how to handle it. */
    switch (event->type) {
@@ -959,12 +974,7 @@ static int opt_setKeyEvent( unsigned int wid, SDL_Event *event )
 
    /* Update parent window. */
    parent = window_getParent( wid );
-   pos = toolkit_getListPos( parent, "lstKeybinds" );
-   off = toolkit_getListOffset( parent, "lstKeybinds" );
-   window_destroyWidget( parent, "lstKeybinds" );
    menuKeybinds_genList( parent );
-   toolkit_setListPos( parent, "lstKeybinds", pos );
-   toolkit_setListOffset( parent, "lstKeybinds", off );
 
    return 0;
 }
@@ -1026,7 +1036,6 @@ static void opt_unsetKey( unsigned int wid, char *str )
 
    /* Update parent window. */
    parent = window_getParent( wid );
-   window_destroyWidget( parent, "lstKeybinds" );
    menuKeybinds_genList( parent );
 }
 

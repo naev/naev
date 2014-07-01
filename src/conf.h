@@ -131,6 +131,7 @@ typedef struct PlayerConf_s {
    int autonav_pause;/**< Pauses game instead of aborting autonav. */
    int nosave; /**< Disables conf saving. */
    int devmode; /**< Developer mode. */
+   int devautosave; /**< Developer mode autosave. */
    int devcsv; /**< Output CSV data. */
 
    /* Debugging. */

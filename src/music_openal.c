@@ -19,7 +19,6 @@
 #include "sound_openal.h"
 #include "naev.h"
 #include "log.h"
-#include "pack.h"
 #include "conf.h"
 
 

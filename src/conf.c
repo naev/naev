@@ -153,6 +153,7 @@ void conf_setDefaults (void)
    /* Misc. */
    conf.nosave       = 0;
    conf.devmode      = 0;
+   conf.devautosave  = 0;
    conf.devcsv       = 0;
 
    /* Gameplay. */
@@ -403,6 +404,7 @@ int conf_loadConfig ( const char* file )
       conf_loadFloat("autonav_abort",conf.autonav_abort);
       conf_loadBool("autonav_pause",conf.autonav_pause);
       conf_loadBool("devmode",conf.devmode);
+      conf_loadBool("devautosave",conf.devautosave);
       conf_loadBool("conf_nosave",conf.nosave);
 
       /* Debugging. */
@@ -1039,8 +1041,12 @@ int conf_saveConfig ( const char* file )
    conf_saveBool("autonav_pause",conf.autonav_pause);
    conf_saveEmptyLine();
 
-   conf_saveComment("Enables developer mode (universe editor and teh likes)");
-   conf_saveInt("devmode",conf.devmode);
+   conf_saveComment("Enables developer mode (universe editor and the likes)");
+   conf_saveBool("devmode",conf.devmode);
+   conf_saveEmptyLine();
+
+   conf_saveComment("Automatic saving for developer mode");
+   conf_saveBool("devautosave",conf.devautosave);
    conf_saveEmptyLine();
 
    conf_saveComment("Save the config everytime game exits (rewriting this bit)");
