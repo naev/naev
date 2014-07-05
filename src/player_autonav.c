@@ -38,7 +38,7 @@ static double autopause_timer = 0.; /**< Avoid autopause if the player just unpa
  */
 static void player_autonavSetup (void);
 static void player_autonav (void);
-static int player_autonavApproach( Vector2d *pos, double *dist2, int count_target );
+static int player_autonavApproach( const Vector2d *pos, double *dist2, int count_target );
 static int player_autonavBrake (void);
 
 
@@ -354,10 +354,12 @@ static void player_autonav (void)
 /**
  * @brief Handles approaching a position with autonav.
  *
- *    @param pos Position to go to.
+ *    @param[in] pos Position to go to.
+ *    @param[out] dist2 Square distance left to target.
+ *    @param count_target If 1 it subtracts the braking distance from dist2. Otherwise it returns the full distance.
  *    @return 1 on completion.
  */
-static int player_autonavApproach( Vector2d *pos, double *dist2, int count_target )
+static int player_autonavApproach( const Vector2d *pos, double *dist2, int count_target )
 {
    double d, t, vel, dist;
 
