@@ -43,6 +43,21 @@ static int player_autonavBrake (void);
 
 
 /**
+ * @brief Resets the game speed.
+ */
+void player_autonavResetSpeed (void)
+{
+   if (player_isFlag(PLAYER_DOUBLESPEED)) {
+     tc_mod         = 2.;
+     pause_setSpeed( 2. );
+   } else {
+     tc_mod         = 1.;
+     pause_setSpeed( 1. );
+   }
+}
+
+
+/**
  * @brief Starts autonav.
  */
 void player_autonavStart (void)
@@ -119,13 +134,7 @@ static void player_autonavSetup (void)
 void player_autonavEnd (void)
 {
    player_rmFlag(PLAYER_AUTONAV);
-   if (player_isFlag(PLAYER_DOUBLESPEED)) {
-     tc_mod         = 2.;
-     pause_setSpeed( 2. );
-   } else {
-     tc_mod         = 1.;
-     pause_setSpeed( 1. );
-   }
+   player_autonavResetSpeed()
 }
 
 
@@ -226,15 +235,7 @@ void player_autonavAbort( const char *reason )
          /* Keep it from re-pausing before you can react */
          if (autopause_timer > 0) return;
          player_message("\erGame paused: %s!", reason);
-
-         if (player_isFlag(PLAYER_DOUBLESPEED)) {
-           tc_mod         = 2.;
-           pause_setSpeed( 2. );
-         } else {
-           tc_mod         = 1.;
-           pause_setSpeed( 1. );
-         }
-
+         player_autonavResetSpeed()
          autopause_timer = 2.;
          pause_game();
          return;
