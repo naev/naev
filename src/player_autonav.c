@@ -224,7 +224,7 @@ void player_autonavAbort( const char *reason )
    if (player_isFlag(PLAYER_AUTONAV)) {
       if (conf.autonav_pause && reason) {
          /* Keep it from re-pausing before you can react */
-		 if (autopause_timer > 0) return;
+         if (autopause_timer > 0) return;
          player_message("\erGame paused: %s!", reason);
 
          if (player_isFlag(PLAYER_DOUBLESPEED)) {
@@ -237,7 +237,7 @@ void player_autonavAbort( const char *reason )
 
          autopause_timer = 2.;
          pause_game();
-		 return;
+         return;
       }
       if (reason != NULL)
          player_message("\erAutonav aborted: %s!", reason);
@@ -546,7 +546,7 @@ void player_updateAutonav( double dt )
    if (autopause_timer > 0) {
       /* Don't start time acceleration right away.  Let the player react. */
       autopause_timer -= dt;
-	  return;
+      return;
    }
    if (tc_mod == player.tc_max)
       return;
