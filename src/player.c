@@ -1145,7 +1145,7 @@ void player_think( Pilot* pplayer, const double dt )
       ret = pilot_shoot( pplayer, 0 );
       player_setFlag(PLAYER_PRIMARY_L);
       if (ret)
-         player_autonavAbort(NULL);
+         player_autonavResetSpeed();
    }
    else if (player_isFlag(PLAYER_PRIMARY_L)) {
       pilot_shootStop( pplayer, 0 );
@@ -1159,7 +1159,7 @@ void player_think( Pilot* pplayer, const double dt )
       else {
          ret = pilot_shoot( pplayer, 1 );
          if (ret)
-            player_autonavAbort(NULL);
+            player_autonavResetSpeed();
       }
 
       player_setFlag(PLAYER_SECONDARY_L);
@@ -1575,7 +1575,8 @@ void player_hailStart (void)
    player_hailCounter = 5;
 
    /* Abort autonav. */
-   player_autonavAbort("Receiving hail");
+   player_messageRaw("\erReceiving hail!");
+   player_autonavResetSpeed();
 }
 
 
