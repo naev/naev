@@ -26,7 +26,7 @@ void player_autonavStart (void);
 void player_autonavEnd (void);
 void player_autonavAbortJump( const char *reason );
 void player_autonavAbort( const char *reason );
-int player_shouldAbortAutonav( int damaged );
+int player_autonavShouldResetSpeed( int damaged );
 void player_autonavStartWindow( unsigned int wid, char *str);
 void player_autonavPos( double x, double y );
 void player_autonavPnt( char *name );

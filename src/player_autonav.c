@@ -134,7 +134,7 @@ static void player_autonavSetup (void)
 void player_autonavEnd (void)
 {
    player_rmFlag(PLAYER_AUTONAV);
-   player_autonavResetSpeed()
+   player_autonavResetSpeed();
 }
 
 
@@ -235,7 +235,7 @@ void player_autonavAbort( const char *reason )
          /* Keep it from re-pausing before you can react */
          if (autopause_timer > 0) return;
          player_message("\erGame paused: %s!", reason);
-         player_autonavResetSpeed()
+         player_autonavResetSpeed();
          autopause_timer = 2.;
          pause_game();
          return;
@@ -421,7 +421,7 @@ static int player_autonavBrake (void)
  *
  *    @return 1 if autonav should be aborted.
  */
-int player_shouldAbortAutonav( int damaged )
+int player_autonavShouldResetSpeed( int damaged )
 {
    double failpc = conf.autonav_abort * abort_mod;
    double shield = player.p->shield / player.p->shield_max;
@@ -444,7 +444,8 @@ int player_shouldAbortAutonav( int damaged )
    lasta = player.p->armour / player.p->armour_max;
 
    if (reason) {
-      player_autonavAbort(reason);
+      player_message("\er%s!", reason);
+      player_autonavResetSpeed();
       if (player.autonav_timer > 0.)
          abort_mod = MIN( MAX( 0., abort_mod - .25 ), (int)(shield * 4) * .25 );
       else
@@ -465,8 +466,7 @@ void player_thinkAutonav( Pilot *pplayer, double dt )
 {
    if (player.autonav_timer > 0.)
       player.autonav_timer -= dt;
-   if (player_shouldAbortAutonav(0))
-      return;
+   player_autonavShouldResetSpeed(0);
    if ((player.autonav == AUTONAV_JUMP_APPROACH) ||
          (player.autonav == AUTONAV_JUMP_BRAKE)) {
       /* If we're already at the target. */
