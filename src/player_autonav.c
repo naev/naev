@@ -444,9 +444,7 @@ int player_autonavShouldResetSpeed (void)
 
    if (failpc > .99 && hostiles)
       reason = "Hostiles detected";
-   else if (failpc > .99 && (shield < 1. && shield < lasts))
-      reason = "Sustaining damage";
-   else if (failpc > 0. && (shield < failpc))
+   else if ((failpc > 0. && failpc <= .99) && (shield < failpc))
       reason = "Shield below damage threshold";
    else if (armour < lasta)
       reason = "Sustaining armour damage";
