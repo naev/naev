@@ -15,6 +15,9 @@
 
 #include "toolkit.h"
 #include "pause.h"
+#include "player.h"
+#include "pilot.h"
+#include "pilot_ew.h"
 #include "space.h"
 #include "conf.h"
 #include <time.h>
@@ -30,7 +33,6 @@ static int tc_rampdown  = 0; /**< Ramping down time compression? */
 static double lasts;
 static double lasta;
 static int slockons;
-static double abort_mod = 1.;
 static double autopause_timer = 0.; /**< Avoid autopause if the player just unpaused, and don't compress time right away */
 
 /*
@@ -119,8 +121,6 @@ static void player_autonavSetup (void)
    lasts        = player.p->shield / player.p->shield_max;
    lasta        = player.p->armour / player.p->armour_max;
    slockons     = player.p->lockons;
-   if (player.autonav_timer <= 0.)
-      abort_mod = 1.;
 
    /* Set flag and tc_mod just in case. */
    player_setFlag(PLAYER_AUTONAV);
@@ -421,23 +421,34 @@ static int player_autonavBrake (void)
  *
  *    @return 1 if the speed should be reset.
  */
-int player_autonavShouldResetSpeed( int damaged )
+int player_autonavShouldResetSpeed (void)
 {
-   double failpc = conf.autonav_reset_speed * abort_mod;
+   double failpc = conf.autonav_reset_speed;
    double shield = player.p->shield / player.p->shield_max;
    double armour = player.p->armour / player.p->armour_max;
    char *reason = NULL;
+   unsigned int eid;
+   Pilot *enemy;
+   int hostiles = 0;
 
    if (!player_isFlag(PLAYER_AUTONAV))
       return 0;
 
-   if (failpc >= 1. && !slockons && player.p->lockons > 0)
-      reason = "Missile Lockon Detected";
-   else if (failpc >= 1. && (shield < 1. && shield < lasts) && damaged)
+   eid = pilot_getNearestEnemy( player.p );
+   if (eid != 0)
+   {
+      enemy = pilot_get( eid );
+      if (pilot_inRangePilot( player.p, enemy ))
+         hostiles = 1;
+   }
+
+   if (failpc > .99 && hostiles)
+      reason = "Hostiles detected";
+   else if (failpc > .99 && (shield < 1. && shield < lasts))
       reason = "Sustaining damage";
-   else if (failpc > 0. && (shield < failpc) && damaged)
+   else if (failpc > 0. && (shield < failpc))
       reason = "Shield below damage threshold";
-   else if (armour < lasta && damaged)
+   else if (armour < lasta)
       reason = "Sustaining armour damage";
 
    lasts = player.p->shield / player.p->shield_max;
@@ -445,10 +456,6 @@ int player_autonavShouldResetSpeed( int damaged )
 
    if (reason) {
       player_autonavResetSpeed();
-      if (player.autonav_timer > 0.)
-         abort_mod = MIN( MAX( 0., abort_mod - .25 ), (int)(shield * 4) * .25 );
-      else
-         abort_mod = MIN( 0.75, (int)(shield * 4) * .25 );
       player.autonav_timer = 30.;
       return 1;
    }
@@ -465,7 +472,7 @@ void player_thinkAutonav( Pilot *pplayer, double dt )
 {
    if (player.autonav_timer > 0.)
       player.autonav_timer -= dt;
-   player_autonavShouldResetSpeed(0);
+   player_autonavShouldResetSpeed();
    if ((player.autonav == AUTONAV_JUMP_APPROACH) ||
          (player.autonav == AUTONAV_JUMP_BRAKE)) {
       /* If we're already at the target. */
