@@ -444,7 +444,6 @@ int player_autonavShouldResetSpeed( int damaged )
    lasta = player.p->armour / player.p->armour_max;
 
    if (reason) {
-      player_message("\er%s!", reason);
       player_autonavResetSpeed();
       if (player.autonav_timer > 0.)
          abort_mod = MIN( MAX( 0., abort_mod - .25 ), (int)(shield * 4) * .25 );
