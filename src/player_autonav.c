@@ -417,9 +417,9 @@ static int player_autonavBrake (void)
 }
 
 /**
- * @brief Checks whether the player should abort autonav due to damage or missile locks.
+ * @brief Checks whether the speed should be reset due to damage or missile locks.
  *
- *    @return 1 if autonav should be aborted.
+ *    @return 1 if the speed should be reset.
  */
 int player_autonavShouldResetSpeed( int damaged )
 {
