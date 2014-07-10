@@ -435,7 +435,7 @@ int player_autonavShouldResetSpeed( int damaged )
       reason = "Missile Lockon Detected";
    else if (failpc >= 1. && (shield < 1. && shield < lasts) && damaged)
       reason = "Sustaining damage";
-   else if (failpc > 0. && (shield < failpc && shield < lasts) && damaged)
+   else if (failpc > 0. && (shield < failpc) && damaged)
       reason = "Shield below damage threshold";
    else if (armour < lasta && damaged)
       reason = "Sustaining armour damage";
