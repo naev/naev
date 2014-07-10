@@ -257,7 +257,7 @@ static void opt_gameplay( unsigned int wid )
    /* Autonav abort. */
    x = 20 + cw + 20;
    window_addText( wid, x+65, y, 150, 150, 0, "txtAAutonav",
-         NULL, &cDConsole, "Stop Autonav Time Speedup At:" );
+         NULL, &cDConsole, "Stop Speedup At:" );
    y -= 20;
 
    /* Autonav abort fader. */
@@ -405,7 +405,7 @@ static void opt_setAutonavResetSpeed( unsigned int wid, char *str )
 
    /* Generate message. */
    if (autonav_reset_speed >= 1.)
-      nsnprintf( buf, sizeof(buf), "Missile Lock" );
+      nsnprintf( buf, sizeof(buf), "Enemy Presence" );
    else if (autonav_reset_speed > 0.)
       nsnprintf( buf, sizeof(buf), "%.0f%% Shield", autonav_reset_speed * 100 );
    else
