@@ -423,7 +423,7 @@ static int player_autonavBrake (void)
  */
 int player_autonavShouldResetSpeed( int damaged )
 {
-   double failpc = conf.autonav_abort * abort_mod;
+   double failpc = conf.autonav_reset_speed * abort_mod;
    double shield = player.p->shield / player.p->shield_max;
    double armour = player.p->armour / player.p->armour_max;
    char *reason = NULL;

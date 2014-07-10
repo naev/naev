@@ -183,7 +183,7 @@ void conf_setGameplayDefaults (void)
    conf.compression_mult      = TIME_COMPRESSION_DEFAULT_MULT;
    conf.save_compress         = SAVE_COMPRESSION_DEFAULT;
    conf.mouse_thrust          = MOUSE_THRUST_DEFAULT;
-   conf.autonav_abort         = AUTONAV_ABORT_DEFAULT;
+   conf.autonav_reset_speed   = AUTONAV_RESET_SPEED_DEFAULT;
    conf.autonav_pause         = AUTONAV_PAUSE_DEFAULT;
    conf.zoom_manual           = MANUAL_ZOOM_DEFAULT;
 }
@@ -401,7 +401,7 @@ int conf_loadConfig ( const char* file )
       conf_loadBool("save_compress",conf.save_compress);
       conf_loadInt("afterburn_sensitivity",conf.afterburn_sens);
       conf_loadInt("mouse_thrust",conf.mouse_thrust);
-      conf_loadFloat("autonav_abort",conf.autonav_abort);
+      conf_loadFloat("autonav_abort",conf.autonav_reset_speed);
       conf_loadBool("autonav_pause",conf.autonav_pause);
       conf_loadBool("devmode",conf.devmode);
       conf_loadBool("devautosave",conf.devautosave);
@@ -1034,7 +1034,7 @@ int conf_saveConfig ( const char* file )
    conf_saveEmptyLine();
 
    conf_saveComment("Condition under which the autonav aborts.");
-   conf_saveFloat("autonav_abort",conf.autonav_abort);
+   conf_saveFloat("autonav_abort",conf.autonav_reset_speed);
    conf_saveEmptyLine();
 
    conf_saveComment("If set, the game will pause when damage is received, instead of aborting the autonav.");
