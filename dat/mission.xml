@@ -77,6 +77,22 @@
    <faction>Trader</faction>
   </avail>
  </mission>
+ <mission name="Pirate Bounty">
+  <lua>neutral/pirbounty</lua>
+  <avail>
+   <priority>4</priority>
+   <cond>system.cur():presences()["Pirate"] ~= nil</cond>
+   <chance>340</chance>
+   <location>Computer</location>
+   <faction>Dvaered</faction>
+   <faction>Empire</faction>
+   <faction>Frontier</faction>
+   <faction>Goddard</faction>
+   <faction>Independent</faction>
+   <faction>Sirius</faction>
+   <faction>Soromid</faction>
+  </avail>
+ </mission>
  <mission name="Empire Recruitment">
   <lua>empire/emp_cargo00</lua>
   <flags>
@@ -334,19 +350,6 @@
    <location>Bar</location>
    <faction>Empire</faction>
    <faction>Dvaered</faction>
-   <faction>Goddard</faction>
-  </avail>
- </mission>
- <mission name="Pirate Bounty">
-  <lua>empire/emp_pirbounty</lua>
-  <avail>
-   <priority>4</priority>
-   <cond>player.getRating() &gt; 50 and system.cur():presences()["Pirate"] ~= nil</cond>
-   <chance>20</chance>
-   <done>Empire HCVL</done>
-   <location>Bar</location>
-   <faction>Dvaered</faction>
-   <faction>Empire</faction>
    <faction>Goddard</faction>
   </avail>
  </mission>
