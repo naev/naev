@@ -81,7 +81,6 @@
   <lua>neutral/pirbounty</lua>
   <avail>
    <priority>4</priority>
-   <cond>system.cur():presences()["Pirate"] ~= nil</cond>
    <chance>340</chance>
    <location>Computer</location>
    <faction>Dvaered</faction>

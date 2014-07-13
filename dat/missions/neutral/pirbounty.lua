@@ -38,8 +38,12 @@ include("pilot/pirate.lua")
 
 function create ()
    -- Note: this mission does not make any system claims.
+
+   -- Get credits
+   credits  = rnd.rnd(200000,1200000)
+
    -- Create the target pirate
-   pir_name, pir_ship, pir_outfits = pir_generate()
+   pir_name, pir_ship, pir_outfits = pir_generate( credits )
 
    -- Get target system
    near_sys = get_pir_system( system.cur() )
@@ -48,9 +52,6 @@ function create ()
    if not near_sys then
       misn.finish(false)
    end
-
-   -- Get credits
-   credits  = rnd.rnd(5,10) * 10000
 
    -- Set mission details
    misn.setTitle( string.format( misn_title, near_sys:name()) )
@@ -148,7 +149,7 @@ end
 
 -- Pirate is dead
 function pir_dead( pilot, attacker )
-   if attacker == player.pilot() or rnd.rnd() > 0.5 then
+   if attacker == player.pilot() then
       -- it was the player who killed the pirate
       player.msg( msg[1] )
       give_rewards()
@@ -172,15 +173,15 @@ end
 --[[
 Functions to create pirates based on difficulty more easily.
 --]]
-function pir_generate ()
+function pir_generate ( bounty )
    -- Get the pirate name
    pir_name = pirate_name()
 
    -- Get the pirate details
-   rating = player.getRating()
-   if rating < 50 then
+   bounty = bounty + rnd.rnd(-150000,150000)
+   if bounty <= 400000 then
       pir_ship, pir_outfits = pir_easy()
-   elseif rating < 150 then
+   elseif bounty <= 800000 then
       pir_ship, pir_outfits = pir_medium()
    else
       pir_ship, pir_outfits = pir_hard()
@@ -199,17 +200,9 @@ function pir_easy ()
    end
 end
 function pir_medium ()
-   if rnd.rnd() < 0.5 then
-      return pirate_createAdmonisher(false)
-   else
-      return pir_easy()
-   end
+   return pirate_createAdmonisher(false)
 end
 function pir_hard ()
-   if rnd.rnd() < 0.5 then
-      return pirate_createKestrel(false)
-   else
-      return pir_medium()
-   end
+   return pirate_createKestrel(false)
 end
 
