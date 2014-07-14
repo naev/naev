@@ -22,7 +22,7 @@ else -- Default to English
    -- Messages
    msg      = {}
    msg[1]   = "MISSION SUCCESS! Payment received."
-   msg[2]   = "Pursue %s!"
+   msg[2]   = "MISSION FAILURE! %s got away."
    msg[3]   = "MISSION FAILURE! Somebody else eliminated %s."
 
    osd_msg = {}
@@ -164,9 +164,7 @@ end
 -- Pirate jumped away
 function pir_jump ()
    player.msg( string.format(msg[2], pir_name) )
-
-   -- Basically just swap the system
-   near_sys = get_pir_system( near_sys )
+   misn.finish(false)
 end
 
 
