@@ -15,9 +15,9 @@ lang = naev.lang()
 if lang == "es" then
 else -- Default to English
    -- Mission details
-   misn_title  = "Pirate Bounty near %s"
+   misn_title  = "Pirate Bounty in %s"
    misn_reward = "%s credits"
-   misn_desc   = "There is a bounty on the head of the pirate known as %s who was last seen near the %s system."
+   misn_desc   = "The wanted pirate known as %s was recently seen in the %s system. There is a bounty on this pirate's head."
 
    -- Messages
    msg      = {}
