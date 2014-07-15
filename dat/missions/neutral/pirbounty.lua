@@ -17,7 +17,7 @@ else -- Default to English
    -- Mission details
    misn_title  = "Pirate Bounty in %s"
    misn_reward = "%s credits"
-   misn_desc   = "The wanted pirate known as %s was recently seen in the %s system. There is a bounty on this pirate's head."
+   misn_desc   = "The pirate known as %s was recently seen in the %s system. There is a bounty on this pirate's head."
 
    -- Messages
    msg      = {}
