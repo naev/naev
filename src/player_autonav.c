@@ -426,10 +426,10 @@ int player_autonavShouldResetSpeed (void)
    double failpc = conf.autonav_reset_speed;
    double shield = player.p->shield / player.p->shield_max;
    double armour = player.p->armour / player.p->armour_max;
-   char *reason = NULL;
    unsigned int eid;
    Pilot *enemy;
    int hostiles = 0;
+   int will_reset;
 
    if (!player_isFlag(PLAYER_AUTONAV))
       return 0;
@@ -442,17 +442,12 @@ int player_autonavShouldResetSpeed (void)
          hostiles = 1;
    }
 
-   if (failpc > .99 && hostiles)
-      reason = "Hostiles detected";
-   else if ((failpc > 0. && failpc <= .99) && (shield < failpc))
-      reason = "Shield below damage threshold";
-   else if (armour < lasta)
-      reason = "Sustaining armour damage";
+   will_reset = (hostiles && (failpc > .99 || shield < failpc || armour < lasta));
 
    lasts = player.p->shield / player.p->shield_max;
    lasta = player.p->armour / player.p->armour_max;
 
-   if (reason) {
+   if (will_reset) {
       player_autonavResetSpeed();
       player.autonav_timer = 30.;
       return 1;
