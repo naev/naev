@@ -83,13 +83,20 @@
    <priority>4</priority>
    <chance>340</chance>
    <location>Computer</location>
+   <faction>Civilian</faction>
+   <faction>Collective</faction>
    <faction>Dvaered</faction>
    <faction>Empire</faction>
    <faction>Frontier</faction>
    <faction>Goddard</faction>
    <faction>Independent</faction>
+   <faction>Nasin</faction>
+   <faction>Proteron</faction>
    <faction>Sirius</faction>
    <faction>Soromid</faction>
+   <faction>Thurion</faction>
+   <faction>Trader</faction>
+   <faction>Za'lek</faction>
   </avail>
  </mission>
  <mission name="Empire Recruitment">
