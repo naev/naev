@@ -442,7 +442,7 @@ int player_autonavShouldResetSpeed (void)
          hostiles = 1;
    }
 
-   will_reset = (hostiles && (failpc > .99 || shield < failpc || armour < lasta));
+   will_reset = (hostiles && (failpc > .995 || shield < failpc || armour < lasta));
 
    lasts = player.p->shield / player.p->shield_max;
    lasta = player.p->armour / player.p->armour_max;

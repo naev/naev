@@ -139,7 +139,7 @@ else --default english
                               }
 
    msg_lore["Trader"] =       {"Just another link in the Great Chain, right?",
-                               "You win some, you lose some but if you don't try you're never going to win",
+                               "You win some, you lose some, but if you don't try you're never going to win.",
                                "If you don't watch the markets then you'll be hopping between planets in a jury-rigged ship in no time.",
                                "Them blimming pirates, stopping honest folk from making an honest living - it's not like we're exploiting the needy!",
                               }
@@ -163,6 +163,7 @@ else --default english
                                "Missile jammers slow down missiles close to your ship. If your enemies are using missiles, it can be very helpful to have one on board.",
                                "If you're having trouble with overheating weapons or outfits, you can use " .. tutGetKey("cooldown") .. " to put your ship into Active Cooldown. Careful though, your energy and shields won't recharge while you do it!",
                                "If you're having trouble shooting other ships face on, try outfitting with turrets or use an afterburner to avoid them entirely!",
+                               
                               }
 
    -- Jump point messages.
