@@ -426,20 +426,22 @@ int player_autonavShouldResetSpeed (void)
    double failpc = conf.autonav_reset_speed;
    double shield = player.p->shield / player.p->shield_max;
    double armour = player.p->armour / player.p->armour_max;
-   unsigned int eid;
-   Pilot *enemy;
+   int i;
+   Pilot **pstk;
+   int n;
    int hostiles = 0;
    int will_reset;
 
    if (!player_isFlag(PLAYER_AUTONAV))
       return 0;
 
-   eid = pilot_getNearestEnemy( player.p );
-   if (eid != 0)
-   {
-      enemy = pilot_get( eid );
-      if (pilot_inRangePilot( player.p, enemy ))
+   pstk = pilot_getAll( &n );
+   for (i=0; i<n; i++) {
+      if ((pstk[i]->id != PLAYER_ID) && pilot_inRangePilot( player.p, pstk[i] ) &&
+            pilot_isHostile( pstk[i] )) {
          hostiles = 1;
+         break;
+      }
    }
 
    will_reset = (hostiles && (failpc > .995 || shield < failpc || armour < lasta));
