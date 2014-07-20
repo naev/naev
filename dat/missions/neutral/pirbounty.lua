@@ -57,7 +57,7 @@ function create ()
    misn.setTitle( string.format( misn_title, near_sys:name()) )
    misn.setReward( string.format( misn_reward, numstring(credits)) )
    misn.setDesc( string.format( misn_desc, pir_name, near_sys:name() ) )
-   misn.markerAdd( near_sys, "low" )
+   misn.markerAdd( near_sys, "computer" )
 end
 
 
