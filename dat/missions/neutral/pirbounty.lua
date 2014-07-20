@@ -103,9 +103,6 @@ function give_rewards ()
    -- Give monies
    player.pay(credits)
 
-   -- Give some standing with the Empire
-   faction.get("Empire"):modPlayerSingle(1)
-
    -- Finish mission
    misn.finish(true)
 end
@@ -179,7 +176,7 @@ function pir_generate ( bounty )
    pir_name = pirate_name()
 
    -- Get the pirate details
-   bounty = bounty + rnd.rnd(-150000,150000)
+   bounty = bounty + rnd.sigma() * 150000
    if bounty <= 400000 then
       pir_ship, pir_outfits = pir_easy()
    elseif bounty <= 800000 then
