@@ -102,7 +102,10 @@ end
 function give_rewards ()
    -- Give monies
    player.pay(credits)
-   
+
+   -- Give some standing with the Empire
+   faction.get("Empire"):modPlayerSingle(1)
+
    -- Finish mission
    misn.finish(true)
 end
