@@ -107,6 +107,9 @@ function create ()
       desc = desc .. misn_desc[5]:format( flfships )
    end
 
+   late_arrival = rnd.rnd() < 0.05
+   late_arrival_delay = rnd.rnd( 10000, 120000 )
+
    -- Set mission details
    misn.setTitle( misn_title:format( misn_level[level], missys:name() ) )
    misn.setDesc( desc )
@@ -143,12 +146,10 @@ function enter ()
          patrol_spawnDV( ships, boss )
 
          if flfships > 0 then
-            if rnd.rnd() < 0.9 then
-               local systems = system.cur():adjacentSystems()
-               local source = systems[ rnd.rnd( 1, #systems ) ]
-               patrol_spawnFLF( flfships, source, flfcomm[1] )
+            if not late_arrival then
+               patrol_spawnFLF( flfships, last_system, flfcomm[1] )
             else
-               hook.timer( rnd.rnd( 10000, 120000 ), "timer_lateFLF" )
+               hook.timer( late_arrival_delay, "timer_lateFLF" )
             end
          end
       else
@@ -161,6 +162,7 @@ end
 function leave ()
    if spawner ~= nil then hook.rm( spawner ) end
    dv_ships_left = 0
+   last_system = system.cur()
 end
 
 
@@ -188,6 +190,7 @@ function pilot_death_dv ()
       misn.markerRm( marker )
       marker = misn.markerAdd( flfbase, "computer" )
       hook.land( "land_flf" )
+      pilot.toggleSpawn( true )
       if fleetFLF ~= nil then
          for i, j in ipairs( fleetFLF ) do
             if j:exists() then
