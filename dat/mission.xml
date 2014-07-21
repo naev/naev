@@ -448,6 +448,16 @@
    <cond>planet.cur():name() == "Sindbad" and var.peek("flfbase_intro") == 2</cond>
   </avail>
  </mission>
+ <mission name="Eliminate a Dvaered Patrol">
+  <lua>flf/flf_patrol</lua>
+  <avail>
+   <priority>3</priority>
+   <chance>550</chance>
+   <done>Disrupt the Dvaered Patrols</done>
+   <location>Computer</location>
+   <faction>FLF</faction>
+  </avail>
+ </mission>
  <mission name="Defend the FLF base">
   <lua>flf/flf_basedefense</lua>
   <flags>
