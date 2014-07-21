@@ -139,13 +139,12 @@ function enter ()
          patrol_spawnDV( ships, boss )
 
          if flfships > 0 then
-            local r = rnd.rnd()
-            local systems = system.cur():adjacentSystems()
-            local source = systems[ rnd.rnd( 1, #systems ) ]
-            if r < 0.9 then
+            if rnd.rnd() < 0.9 then
+               local systems = system.cur():adjacentSystems()
+               local source = systems[ rnd.rnd( 1, #systems ) ]
                patrol_spawnFLF( flfships, source, flfcomm[1] )
             else
-               hook.timer( rnd.rnd( 10000, 120000 ), "patrol_spawnFLF", flfships, source, flfcomm[2] )
+               hook.timer( rnd.rnd( 10000, 120000 ), "timer_lateFLF" )
             end
          end
       else
@@ -158,6 +157,13 @@ end
 function leave ()
    if spawner ~= nil then hook.rm( spawner ) end
    dv_ships_left = 0
+end
+
+
+function timer_lateFLF ()
+   local systems = system.cur():adjacentSystems()
+   local source = systems[ rnd.rnd( 1, #systems ) ]
+   patrol_spawnFLF( flfships, source, flfcomm[2] )
 end
 
 
