@@ -115,6 +115,7 @@
   <enemies>
    <enemy>Pirate</enemy>
    <enemy>Collective</enemy>
+   <enemy>FLF</enemy>
   </enemies>
  </faction>
  <faction name="Soromid">
@@ -164,6 +165,7 @@
   <equip>pirate</equip>
   <enemies>
    <enemy>Dvaered</enemy>
+   <enemy>Empire</enemy>
   </enemies>
  </faction>
  <faction name="Dvaered">
