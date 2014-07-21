@@ -325,6 +325,7 @@ function pilot_death_dv ()
       misn.markerRm( marker )
       marker = misn.markerAdd( system.get( var.peek( "flfbase_sysname" ) ), "high" )
       hook.land( "land_flf" )
+      pilot.toggleSpawn( false )
       local hailed = false
       if fleetFLF ~= nil then
          for i, j in ipairs( fleetFLF ) do
