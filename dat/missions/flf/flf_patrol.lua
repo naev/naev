@@ -119,8 +119,6 @@ function accept ()
    misn.accept()
 
    osd_desc[1] = osd_desc[1]:format( missys:name() )
-
-   misn.accept()
    misn.osdCreate( osd_title, osd_desc )
 
    dv_ships_left = 0
