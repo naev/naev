@@ -16,7 +16,8 @@
  <jumps>
   <jump target="Arcanis">
    <autopos/>
-   <hide>1.250000</hide>
+   <hidden/>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Behar">
    <autopos/>
