@@ -26,10 +26,11 @@ else -- default english
    flfcomm[2] = "Sorry we're late! Did we miss anything?"
 
    misn_desc = {}
-   misn_desc[1] = "There is a Dvaered patrol with %d ships in the %s system."
-   misn_desc[2] = " There is a Vigilance among them, so you must proceed with caution."
-   misn_desc[3] = " There is a Goddard among them, so you must be very careful."
-   misn_desc[4] = " You will be accompanied by %d other FLF pilots for this mission."
+   misn_desc[1] = "There is a Dvaered patrol with %d ships in the %s system. Eliminate this patrol."
+   misn_desc[2] = "There is a Dvaered ship patrolling the %s system. Eliminate this ship."
+   misn_desc[3] = " There is a Vigilance among them, so you must proceed with caution."
+   misn_desc[4] = " There is a Goddard among them, so you must be very careful."
+   misn_desc[5] = " You will be accompanied by %d other FLF pilots for this mission."
 
    misn_level = {}
    misn_level[1] = "Single"
@@ -45,7 +46,7 @@ else -- default english
    osd_desc[2] = "Eliminate the Dvaered patrol"
    osd_desc[3] = "Return to the FLF base"
 
-   dv_ship_name = "Dvaered Patrol"
+   dv_ship_name = "Dvaered Patroller"
 end
 
 
@@ -88,17 +89,22 @@ function create ()
       reputation = 20
    end
 
-   credits = ships * 10000 - flfships * 1000
-   if has_vigilence then credits = credits + 30000 end
-   if has_goddard then credits = credits + 70000 end
-   credits = credits * system.cur():jumpDist( missys )
-   credits = credits + rnd.sigma() * ships * 1000
+   credits = ships * 30000 - flfships * 1000
+   if has_vigilence then credits = credits + 120000 end
+   if has_goddard then credits = credits + 270000 end
+   credits = credits * system.cur():jumpDist( missys ) / 3
+   credits = credits + rnd.sigma() * 8000
 
-   local desc = misn_desc[1]:format( ships, missys:name() )
-   if has_vigilance then desc = desc .. misn_desc[2] end
-   if has_goddard then desc = desc .. misn_desc[3] end
+   local desc
+   if ships == 1 then
+      desc = misn_desc[2]:format( missys:name() )
+   else
+      desc = misn_desc[1]:format( ships, missys:name() )
+   end
+   if has_vigilance then desc = desc .. misn_desc[3] end
+   if has_goddard then desc = desc .. misn_desc[4] end
    if flfships > 0 then
-      desc = desc .. misn_desc[4]:format( flfships )
+      desc = desc .. misn_desc[5]:format( flfships )
    end
 
    -- Set mission details
