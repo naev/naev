@@ -91,9 +91,10 @@ You leave the Colonel's office. You are then taken to an interrogation room, whe
    flfcomm[2] = "%s is selling us out! Eliminate the traitor!"
    flfcomm[3] = "Let's get out of here, %s! We'll meet you back at the base."
 
-   misn_title = "Dvaered Patrol"
+   misn_title = "FLF: Small Dvaered Patrol in %s"
    misn_desc = "To prove yourself to the FLF, you must lead a wing of fighters into Dvaered space and take out one of their security patrols."
    misn_rwrd = "A chance to make friends out of the FLF."
+   osd_title   = "Dvaered Patrol"
    osd_desc[1] = "Fly to the %s system"
    osd_desc[2] = "Eliminate the Dvaered patrol"
    osd_desc[3] = "Return to the FLF base"
@@ -123,7 +124,7 @@ function accept ()
       osd_desc[1] = osd_desc[1]:format( missys:name() )
 
       misn.accept()
-      misn.osdCreate( misn_title, osd_desc )
+      misn.osdCreate( osd_title, osd_desc )
       misn.setDesc( misn_desc )
       misn.setTitle( misn_title )
       marker = misn.markerAdd( missys, "low" )
@@ -150,7 +151,7 @@ function enter ()
    if not job_done then
       if system.cur() == missys then
          misn.osdActive( 2 )
-         patrol_spawnDV( 3 )
+         patrol_spawnDV( 3, nil )
       else
          misn.osdActive( 1 )
       end
@@ -325,13 +326,15 @@ function pilot_death_dv ()
       marker = misn.markerAdd( system.get( var.peek( "flfbase_sysname" ) ), "high" )
       hook.land( "land_flf" )
       local hailed = false
-      for i, j in ipairs( fleetFLF ) do
-         if j:exists() then
-            j:control()
-            j:hyperspace()
-            if not hailed then
-               hailed = true
-               j:comm( player.pilot(), flfcomm[3]:format( player.name() ) )
+      if fleetFLF ~= nil then
+         for i, j in ipairs( fleetFLF ) do
+            if j:exists() then
+               j:control()
+               j:hyperspace()
+               if not hailed then
+                  hailed = true
+                  j:comm( player.pilot(), flfcomm[3]:format( player.name() ) )
+               end
             end
          end
       end

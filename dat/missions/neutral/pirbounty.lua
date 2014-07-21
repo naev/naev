@@ -25,6 +25,7 @@ else -- Default to English
    msg[2]   = "MISSION FAILURE! %s got away."
    msg[3]   = "MISSION FAILURE! Somebody else eliminated %s."
 
+   osd_title = "Pirate Bounty"
    osd_msg = {}
    osd_msg[1] = "Fly to the %s system"
    osd_msg[2] = "Kill %s"
@@ -70,7 +71,7 @@ function accept ()
    -- Format and set osd message
    osd_msg[1] = osd_msg[1]:format(near_sys:name())
    osd_msg[2] = osd_msg[2]:format(pir_name)
-   misn.osdCreate(misn_title:format( near_sys:name() ), osd_msg)
+   misn.osdCreate(osd_title, osd_msg)
 
    -- Set hooks
    hook.enter("sys_enter")
