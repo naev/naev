@@ -15,6 +15,7 @@
 
 #include <stdlib.h> /* qsort */
 
+#include "conf.h"
 #include "nxml.h"
 #include "space.h"
 #include "physics.h"
@@ -74,13 +75,12 @@ static int dsys_compJump( const void *jmp1, const void *jmp2 )
  */
 int dsys_saveSystem( StarSystem *sys )
 {
-   int i, len;
+   int i;
    xmlDocPtr doc;
    xmlTextWriterPtr writer;
    const Planet **sorted_planets;
    const JumpPoint **sorted_jumps, *jp;
-   char *file, *cleanName;
-
+   char file[PATH_MAX], *cleanName;
 
    /* Reconstruct jumps so jump pos are updated. */
    system_reconstructJumps(sys);
@@ -172,11 +172,8 @@ int dsys_saveSystem( StarSystem *sys )
 
    /* Write data. */
    cleanName = uniedit_nameFilter( sys->name );
-   len       = (strlen(cleanName)+14);
-   file      = malloc( len );
-   nsnprintf( file, len, "dat/ssys/%s.xml", cleanName );
+   nsnprintf( file, sizeof(file), "%s/%s.xml", conf.dev_save_sys, cleanName );
    xmlSaveFileEnc( file, doc, "UTF-8" );
-   free( file );
 
    /* Clean up. */
    xmlFreeDoc(doc);
@@ -212,11 +209,11 @@ int dsys_saveAll (void)
  */
 int dsys_saveMap (StarSystem **uniedit_sys, int uniedit_nsys)
 {
-   int i, j, k, len;
+   int i, j, k;
    xmlDocPtr doc;
    xmlTextWriterPtr writer;
    StarSystem *s;
-   char *file, *cleanName;
+   char file[PATH_MAX], *cleanName;
 
    /* Create the writer. */
    writer = xmlNewTextWriterDoc(&doc, 0);
@@ -286,11 +283,8 @@ int dsys_saveMap (StarSystem **uniedit_sys, int uniedit_nsys)
 
    /* Write data. */
    cleanName = uniedit_nameFilter( "saved map" );
-   len       = (strlen(cleanName)+22);
-   file      = malloc( len );
-   nsnprintf( file, len, "dat/outfits/maps/%s.xml", cleanName );
+   nsnprintf( file, sizeof(file), "%s/%s.xml", conf.dev_save_map, cleanName );
    xmlSaveFileEnc( file, doc, "UTF-8" );
-   free( file );
 
    /* Clean up. */
    xmlFreeDoc(doc);

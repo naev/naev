@@ -48,6 +48,10 @@
 #else /* USE_OPENAL */
 #define BACKEND_DEFAULT                      "sdlmix"
 #endif /* USE_OPENAL */
+/* Editor Options */
+#define DEV_SAVE_SYSTEM_DEFAULT           "dat/ssys/"
+#define DEV_SAVE_ASSET_DEFAULT            "dat/assets/"
+#define DEV_SAVE_MAP_DEFAULT              "dat/outfits/maps/"
 
 
 /**
@@ -136,6 +140,11 @@ typedef struct PlayerConf_s {
 
    /* Debugging. */
    int fpu_except; /**< Enable FPU exceptions? */
+
+   /* Editor. */
+   char *dev_save_sys; /**< Path to save systems to. */
+   char *dev_save_map; /**< Path to save maps to. */
+   char *dev_save_asset; /**< Path to save assets to. */
 
 } PlayerConf_t;
 extern PlayerConf_t conf; /**< Player configuration. */

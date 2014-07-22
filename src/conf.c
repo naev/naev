@@ -170,6 +170,17 @@ void conf_setDefaults (void)
 
    /* Debugging. */
    conf.fpu_except   = 0; /* Causes many issues. */
+
+   /* Editor. */
+   if (conf.dev_save_sys != NULL)
+      free( conf.dev_save_sys );
+   conf.dev_save_sys = strdup( DEV_SAVE_SYSTEM_DEFAULT );
+   if (conf.dev_save_map != NULL)
+      free( conf.dev_save_map );
+   conf.dev_save_map = strdup( DEV_SAVE_MAP_DEFAULT );
+   if (conf.dev_save_asset != NULL)
+      free( conf.dev_save_asset );
+   conf.dev_save_asset = strdup( DEV_SAVE_ASSET_DEFAULT );
 }
 
 
@@ -273,6 +284,13 @@ void conf_cleanup (void)
       free(conf.sound_backend);
    if (conf.joystick_nam != NULL)
       free(conf.joystick_nam);
+   
+   if (conf.dev_save_sys != NULL)
+      free(conf.dev_save_sys);
+   if (conf.dev_save_map != NULL)
+      free(conf.dev_save_map);
+   if (conf.dev_save_asset != NULL)
+      free(conf.dev_save_asset);
 
    /* Clear memory. */
    memset( &conf, 0, sizeof(conf) );
@@ -410,6 +428,10 @@ int conf_loadConfig ( const char* file )
       /* Debugging. */
       conf_loadBool("fpu_except",conf.fpu_except);
 
+      /* Editor. */
+      conf_loadString("dev_save_sys",conf.dev_save_sys);
+      conf_loadString("dev_save_map",conf.dev_save_map);
+      conf_loadString("dev_save_asset",conf.dev_save_asset);
 
       /*
        * Keybindings.
@@ -1056,6 +1078,13 @@ int conf_saveConfig ( const char* file )
    /* Debugging. */
    conf_saveComment("Enables FPU exceptions - only works on DEBUG builds");
    conf_saveBool("fpu_except",conf.fpu_except);
+   conf_saveEmptyLine();
+
+   /* Editor. */
+   conf_saveComment("Paths for saving different files from the editor");
+   conf_saveString("dev_save_sys",conf.dev_save_sys);
+   conf_saveString("dev_save_map",conf.dev_save_map);
+   conf_saveString("dev_save_asset",conf.dev_save_asset);
    conf_saveEmptyLine();
 
    /*
