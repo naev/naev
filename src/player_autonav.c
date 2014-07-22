@@ -34,6 +34,7 @@ static double lasts;
 static double lasta;
 static int slockons;
 static double autopause_timer = 0.; /**< Avoid autopause if the player just unpaused, and don't compress time right away */
+static double speedup_timer = 0.; /**< Keep time from speeding up for a short time after it's reset */
 
 /*
  * Prototypes.
@@ -49,6 +50,7 @@ static int player_autonavBrake (void);
  */
 void player_autonavResetSpeed (void)
 {
+   speedup_timer = 2.;
    if (player_isFlag(PLAYER_DOUBLESPEED)) {
      tc_mod         = 2.;
      pause_setSpeed( 2. );
@@ -444,7 +446,8 @@ int player_autonavShouldResetSpeed (void)
       }
    }
 
-   will_reset = (hostiles && (failpc > .99 || shield < failpc || armour < lasta));
+   will_reset = (hostiles && (failpc > .995 || (shield < lasts && shield < failpc) ||
+                              armour < lasta));
 
    lasts = player.p->shield / player.p->shield_max;
    lasta = player.p->armour / player.p->armour_max;
@@ -545,6 +548,11 @@ void player_updateAutonav( double dt )
    }
 
    /* We'll update the time compression here. */
+   if (speedup_timer > 0) {
+      /* Wait a while before restarting time acceleration. */
+      speedup_timer -= dt;
+      return;
+   }
    if (autopause_timer > 0) {
       /* Don't start time acceleration right away.  Let the player react. */
       autopause_timer -= dt;
