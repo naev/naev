@@ -19,38 +19,30 @@
  </mission>
  <mission name="Empire Rehabilitation">
   <lua>empire/emp_rehab</lua>
-  <flags/>
   <avail>
    <chance>100</chance>
    <location>Computer</location>
-   <cond></cond>
   </avail>
  </mission>
  <mission name="Dvaered Rehabilitation">
   <lua>dvaered/dv_rehab</lua>
-  <flags/>
   <avail>
    <chance>100</chance>
    <location>Computer</location>
-   <cond></cond>
   </avail>
  </mission>
  <mission name="Sirius Rehabilitation">
   <lua>sirius/srs_rehab</lua>
-  <flags/>
   <avail>
    <chance>100</chance>
    <location>Computer</location>
-   <cond></cond>
   </avail>
  </mission>
  <mission name="Soromid Rehabilitation">
   <lua>soromid/srm_rehab</lua>
-  <flags/>
   <avail>
    <chance>100</chance>
    <location>Computer</location>
-   <cond></cond>
   </avail>
  </mission>
  <mission name="Cargo Rush">
@@ -562,7 +554,6 @@
  </mission>
  <mission name="Stealing ships">
   <lua>pirate/pir_ship_stealing</lua>
-  <flags/>
   <avail>
    <chance>10</chance>
    <location>Bar</location>
