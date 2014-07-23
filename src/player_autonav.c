@@ -451,11 +451,19 @@ int player_autonavShouldResetSpeed (void)
    }
 
    if (hostiles && hostiles_last) {
-      if (failpc > .995)
+      if (failpc > .995) {
          will_reset = 1;
+         speedup_timer = 0.;
+      }
       else if ((shield < lasts && shield < failpc) || armour < lasta) {
          will_reset = 1;
          speedup_timer = 2.;
+      }
+      else if (speedup_timer > 0) {
+         /* This check needs to be after the second check so new hits
+          * bring the timer back up. Otherwise, we will have sporadic
+          * bursts of speed. */
+         will_reset = 1;
       }
    }
 
@@ -559,11 +567,7 @@ void player_updateAutonav( double dt )
    }
 
    /* We'll update the time compression here. */
-   if (speedup_timer > 0) {
-      /* Wait a while before restarting time acceleration. */
-      speedup_timer -= dt;
-      return;
-   }
+   speedup_timer -= dt;
    if (autopause_timer > 0) {
       /* Don't start time acceleration right away.  Let the player react. */
       autopause_timer -= dt;
