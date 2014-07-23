@@ -15,50 +15,34 @@
    <priority>6</priority>
    <chance>960</chance>
    <location>Computer</location>
-   <faction>Dvaered</faction>
-   <faction>Empire</faction>
-   <faction>Frontier</faction>
-   <faction>Goddard</faction>
-   <faction>Independent</faction>
-   <faction>Sirius</faction>
-   <faction>Soromid</faction>
-   <faction>Trader</faction>
   </avail>
  </mission>
  <mission name="Empire Rehabilitation">
   <lua>empire/emp_rehab</lua>
-  <flags/>
   <avail>
    <chance>100</chance>
    <location>Computer</location>
-   <cond></cond>
   </avail>
  </mission>
  <mission name="Dvaered Rehabilitation">
   <lua>dvaered/dv_rehab</lua>
-  <flags/>
   <avail>
    <chance>100</chance>
    <location>Computer</location>
-   <cond></cond>
   </avail>
  </mission>
  <mission name="Sirius Rehabilitation">
   <lua>sirius/srs_rehab</lua>
-  <flags/>
   <avail>
    <chance>100</chance>
    <location>Computer</location>
-   <cond></cond>
   </avail>
  </mission>
  <mission name="Soromid Rehabilitation">
   <lua>soromid/srm_rehab</lua>
-  <flags/>
   <avail>
    <chance>100</chance>
    <location>Computer</location>
-   <cond></cond>
   </avail>
  </mission>
  <mission name="Cargo Rush">
@@ -67,14 +51,28 @@
    <priority>5</priority>
    <chance>960</chance>
    <location>Computer</location>
+  </avail>
+ </mission>
+ <mission name="Pirate Bounty">
+  <lua>neutral/pirbounty</lua>
+  <avail>
+   <priority>4</priority>
+   <chance>340</chance>
+   <location>Computer</location>
+   <faction>Civilian</faction>
+   <faction>Collective</faction>
    <faction>Dvaered</faction>
    <faction>Empire</faction>
    <faction>Frontier</faction>
    <faction>Goddard</faction>
    <faction>Independent</faction>
+   <faction>Nasin</faction>
+   <faction>Proteron</faction>
    <faction>Sirius</faction>
    <faction>Soromid</faction>
+   <faction>Thurion</faction>
    <faction>Trader</faction>
+   <faction>Za'lek</faction>
   </avail>
  </mission>
  <mission name="Empire Recruitment">
@@ -337,19 +335,6 @@
    <faction>Goddard</faction>
   </avail>
  </mission>
- <mission name="Pirate Bounty">
-  <lua>empire/emp_pirbounty</lua>
-  <avail>
-   <priority>4</priority>
-   <cond>player.getRating() &gt; 50 and system.cur():presences()["Pirate"] ~= nil</cond>
-   <chance>20</chance>
-   <done>Empire HCVL</done>
-   <location>Bar</location>
-   <faction>Dvaered</faction>
-   <faction>Empire</faction>
-   <faction>Goddard</faction>
-  </avail>
- </mission>
  <mission name="DIY Nerds">
   <lua>neutral/diy-nerds</lua>
   <flags>
@@ -446,6 +431,16 @@
    <chance>100</chance>
    <location>Bar</location>
    <cond>planet.cur():name() == "Sindbad" and var.peek("flfbase_intro") == 2</cond>
+  </avail>
+ </mission>
+ <mission name="Eliminate a Dvaered Patrol">
+  <lua>flf/flf_patrol</lua>
+  <avail>
+   <priority>3</priority>
+   <chance>550</chance>
+   <done>Disrupt the Dvaered Patrols</done>
+   <location>Computer</location>
+   <faction>FLF</faction>
   </avail>
  </mission>
  <mission name="Defend the FLF base">
@@ -559,7 +554,6 @@
  </mission>
  <mission name="Stealing ships">
   <lua>pirate/pir_ship_stealing</lua>
-  <flags/>
   <avail>
    <chance>10</chance>
    <location>Bar</location>

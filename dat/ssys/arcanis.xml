@@ -18,8 +18,8 @@
   </jump>
   <jump target="Sigur">
    <autopos/>
-   <exitonly/>
-   <hide>1.250000</hide>
+   <hidden/>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Sonas">
    <autopos/>

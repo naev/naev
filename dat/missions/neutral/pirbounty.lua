@@ -14,37 +14,23 @@ include "numstring.lua"
 lang = naev.lang()
 if lang == "es" then
 else -- Default to English
-   -- Bar information
-   bar_desc = "You see an Empire Official handing out bounty information. There seems to be an interested crowd gathering around."
-
    -- Mission details
-   misn_title  = "Pirate Bounty near %s"
+   misn_title  = "Pirate Bounty in %s"
    misn_reward = "%s credits"
-   misn_desc   = "There is a bounty on the head of the pirate known as %s who was last seen near the %s system."
-
-   -- Text
-   title    = {}
-   text     = {}
-   title[1] = "Spaceport Bar"
-   text[1]  = [[It seems like the bounty is on the head of a pirate terrorizing the area known as %s for %s credits. It seems like he was last seen in the %s system. Quite a few other mercenaries seem interested and it looks like you'll have to outrace them.
-   
-Will you take up the bounty?]]
-   text[2] = [[You roll up your sleeve and grab one of the pamphlets given out by the Empire official.]]
+   misn_desc   = "The pirate known as %s was recently seen in the %s system. There is a bounty on this pirate's head."
 
    -- Messages
    msg      = {}
    msg[1]   = "MISSION SUCCESS! Payment received."
-   msg[2]   = "Pursue %s!"
+   msg[2]   = "MISSION FAILURE! %s got away."
    msg[3]   = "MISSION FAILURE! Somebody else eliminated %s."
 
+   osd_title = "Pirate Bounty"
    osd_msg = {}
    osd_msg[1] = "Fly to the %s system"
    osd_msg[2] = "Kill %s"
    osd_msg["__save"] = true
 end
-
-
-include("dat/missions/empire/common.lua")
 
 
 -- Scripts we need
@@ -53,8 +39,12 @@ include("pilot/pirate.lua")
 
 function create ()
    -- Note: this mission does not make any system claims.
+
+   -- Get credits
+   credits  = rnd.rnd(200000,1200000)
+
    -- Create the target pirate
-   pir_name, pir_ship, pir_outfits = pir_generate()
+   pir_name, pir_ship, pir_outfits = pir_generate( credits )
 
    -- Get target system
    near_sys = get_pir_system( system.cur() )
@@ -64,12 +54,11 @@ function create ()
       misn.finish(false)
    end
 
-   -- Get credits
-   credits  = rnd.rnd(5,10) * 10000
-
-   -- Spaceport bar stuff
-   misn.setNPC( "Official", emp_getOfficialRandomPortrait() )
-   misn.setDesc( bar_desc )
+   -- Set mission details
+   misn.setTitle( string.format( misn_title, near_sys:name()) )
+   misn.setReward( string.format( misn_reward, numstring(credits)) )
+   misn.setDesc( string.format( misn_desc, pir_name, near_sys:name() ) )
+   misn.markerAdd( near_sys, "computer" )
 end
 
 
@@ -77,26 +66,12 @@ end
 Mission entry point.
 --]]
 function accept ()
-   -- Mission details:
-   if not tk.yesno( title[1], string.format( text[1],
-         pir_name, numstring(credits), near_sys:name() ) ) then
-      misn.finish()
-   end
    misn.accept()
-
-   -- Set mission details
-   misn.setTitle( string.format( misn_title, near_sys:name()) )
-   misn.setReward( string.format( misn_reward, numstring(credits)) )
-   misn.setDesc( string.format( misn_desc, pir_name, near_sys:name() ) )
-   misn.markerAdd( near_sys, "low" )
-
-   -- Some flavour text
-   tk.msg( title[1], text[2] )
 
    -- Format and set osd message
    osd_msg[1] = osd_msg[1]:format(near_sys:name())
    osd_msg[2] = osd_msg[2]:format(pir_name)
-   misn.osdCreate(misn_title:format( near_sys:name() ), osd_msg)
+   misn.osdCreate(osd_title, osd_msg)
 
    -- Set hooks
    hook.enter("sys_enter")
@@ -129,10 +104,6 @@ function give_rewards ()
    -- Give monies
    player.pay(credits)
 
-   -- Give factions
-   faction.modPlayerSingle( "Empire", 5 )
-   faction.modPlayerSingle( "Pirate", -5 )
-   
    -- Finish mission
    misn.finish(true)
 end
@@ -179,7 +150,7 @@ end
 
 -- Pirate is dead
 function pir_dead( pilot, attacker )
-   if attacker == player.pilot() or rnd.rnd() > 0.5 then
+   if attacker == player.pilot() then
       -- it was the player who killed the pirate
       player.msg( msg[1] )
       give_rewards()
@@ -194,24 +165,22 @@ end
 -- Pirate jumped away
 function pir_jump ()
    player.msg( string.format(msg[2], pir_name) )
-
-   -- Basically just swap the system
-   near_sys = get_pir_system( near_sys )
+   misn.finish(false)
 end
 
 
 --[[
 Functions to create pirates based on difficulty more easily.
 --]]
-function pir_generate ()
+function pir_generate ( bounty )
    -- Get the pirate name
    pir_name = pirate_name()
 
    -- Get the pirate details
-   rating = player.getRating()
-   if rating < 50 then
+   bounty = bounty + rnd.sigma() * 150000
+   if bounty <= 400000 then
       pir_ship, pir_outfits = pir_easy()
-   elseif rating < 150 then
+   elseif bounty <= 800000 then
       pir_ship, pir_outfits = pir_medium()
    else
       pir_ship, pir_outfits = pir_hard()
@@ -230,17 +199,9 @@ function pir_easy ()
    end
 end
 function pir_medium ()
-   if rnd.rnd() < 0.5 then
-      return pirate_createAdmonisher(false)
-   else
-      return pir_easy()
-   end
+   return pirate_createAdmonisher(false)
 end
 function pir_hard ()
-   if rnd.rnd() < 0.5 then
-      return pirate_createKestrel(false)
-   else
-      return pir_medium()
-   end
+   return pirate_createKestrel(false)
 end
 

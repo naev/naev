@@ -21,5 +21,15 @@
    <autopos/>
    <hide>1.250000</hide>
   </jump>
+  <jump target="Tuoladis">
+   <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Gilligan's Light">
+   <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
  </jumps>
 </ssys>

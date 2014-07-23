@@ -115,6 +115,7 @@
   <enemies>
    <enemy>Pirate</enemy>
    <enemy>Collective</enemy>
+   <enemy>FLF</enemy>
   </enemies>
  </faction>
  <faction name="Soromid">
@@ -158,12 +159,13 @@
   <logo>flf</logo>
   <longname>Frontier Liberation Front</longname>
   <player>0</player>
-  <colour>orange</colour>
+  <colour>yellow</colour>
   <spawn>flf</spawn>
   <standing>flf</standing>
   <equip>pirate</equip>
   <enemies>
    <enemy>Dvaered</enemy>
+   <enemy>Empire</enemy>
   </enemies>
  </faction>
  <faction name="Dvaered">

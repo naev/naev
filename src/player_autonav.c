@@ -34,6 +34,8 @@ static double lasts;
 static double lasta;
 static int slockons;
 static double autopause_timer = 0.; /**< Avoid autopause if the player just unpaused, and don't compress time right away */
+static double speedup_timer = 0.; /**< Keep time from speeding up for a short time after it's reset */
+static int hostiles_last = 0;
 
 /*
  * Prototypes.
@@ -125,6 +127,10 @@ static void player_autonavSetup (void)
    /* Set flag and tc_mod just in case. */
    player_setFlag(PLAYER_AUTONAV);
    pause_setSpeed( tc_mod );
+
+   /* Make sure time acceleration starts immediately. */
+   speedup_timer = 0.;
+   hostiles_last = 0;
 }
 
 
@@ -426,33 +432,46 @@ int player_autonavShouldResetSpeed (void)
    double failpc = conf.autonav_reset_speed;
    double shield = player.p->shield / player.p->shield_max;
    double armour = player.p->armour / player.p->armour_max;
-   char *reason = NULL;
-   unsigned int eid;
-   Pilot *enemy;
+   int i;
+   Pilot **pstk;
+   int n;
    int hostiles = 0;
+   int will_reset = 0;
 
    if (!player_isFlag(PLAYER_AUTONAV))
       return 0;
 
-   eid = pilot_getNearestEnemy( player.p );
-   if (eid != 0)
-   {
-      enemy = pilot_get( eid );
-      if (pilot_inRangePilot( player.p, enemy ))
+   pstk = pilot_getAll( &n );
+   for (i=0; i<n; i++) {
+      if ((pstk[i]->id != PLAYER_ID) && pilot_inRangePilot( player.p, pstk[i] ) &&
+            pilot_isHostile( pstk[i] )) {
          hostiles = 1;
+         break;
+      }
    }
 
-   if (failpc > .99 && hostiles)
-      reason = "Hostiles detected";
-   else if ((failpc > 0. && failpc <= .99) && (shield < failpc))
-      reason = "Shield below damage threshold";
-   else if (armour < lasta)
-      reason = "Sustaining armour damage";
+   if (hostiles && hostiles_last) {
+      if (failpc > .995) {
+         will_reset = 1;
+         speedup_timer = 0.;
+      }
+      else if ((shield < lasts && shield < failpc) || armour < lasta) {
+         will_reset = 1;
+         speedup_timer = 2.;
+      }
+      else if (speedup_timer > 0) {
+         /* This check needs to be after the second check so new hits
+          * bring the timer back up. Otherwise, we will have sporadic
+          * bursts of speed. */
+         will_reset = 1;
+      }
+   }
 
    lasts = player.p->shield / player.p->shield_max;
    lasta = player.p->armour / player.p->armour_max;
+   hostiles_last = hostiles;
 
-   if (reason) {
+   if (will_reset) {
       player_autonavResetSpeed();
       player.autonav_timer = 30.;
       return 1;
@@ -548,6 +567,7 @@ void player_updateAutonav( double dt )
    }
 
    /* We'll update the time compression here. */
+   speedup_timer -= dt;
    if (autopause_timer > 0) {
       /* Don't start time acceleration right away.  Let the player react. */
       autopause_timer -= dt;
