@@ -432,20 +432,14 @@ int player_autonavShouldResetSpeed (void)
    double failpc = conf.autonav_reset_speed;
    double shield = player.p->shield / player.p->shield_max;
    double armour = player.p->armour / player.p->armour_max;
-<<<<<<< HEAD
    char *reason = NULL;
    unsigned int eid;
    Pilot *enemy;
-=======
    int i;
    Pilot **pstk;
    int n;
->>>>>>> 19f337c... Fixed autonav time resetting to work with *all* hostiles.
    int hostiles = 0;
-<<<<<<< HEAD
-=======
    int will_reset = 0;
->>>>>>> 0a0f6fd... Added a fix for those times when ships are spotted for one frame.
 
    if (!player_isFlag(PLAYER_AUTONAV))
       return 0;
@@ -459,19 +453,14 @@ int player_autonavShouldResetSpeed (void)
       }
    }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
    if (failpc > .99 && hostiles)
       reason = "Hostiles detected";
    else if ((failpc > 0. && failpc <= .99) && (shield < failpc))
       reason = "Shield below damage threshold";
    else if (armour < lasta)
       reason = "Sustaining armour damage";
-=======
    will_reset = (hostiles && (failpc > .995 || (shield < lasts && shield < failpc) ||
                               armour < lasta));
->>>>>>> 9874cb3... Require damage for slowdown when slider is below "enemy presence".
-=======
    if (hostiles && hostiles_last) {
       if (failpc > .995) {
          will_reset = 1;
@@ -488,7 +477,6 @@ int player_autonavShouldResetSpeed (void)
          will_reset = 1;
       }
    }
->>>>>>> 0a0f6fd... Added a fix for those times when ships are spotted for one frame.
 
    lasts = player.p->shield / player.p->shield_max;
    lasta = player.p->armour / player.p->armour_max;
