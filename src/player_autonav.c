@@ -35,6 +35,7 @@ static double lasta;
 static int slockons;
 static double autopause_timer = 0.; /**< Avoid autopause if the player just unpaused, and don't compress time right away */
 static double speedup_timer = 0.; /**< Keep time from speeding up for a short time after it's reset */
+static int hostiles_last = 0;
 
 /*
  * Prototypes.
@@ -50,7 +51,6 @@ static int player_autonavBrake (void);
  */
 void player_autonavResetSpeed (void)
 {
-   speedup_timer = 2.;
    if (player_isFlag(PLAYER_DOUBLESPEED)) {
      tc_mod         = 2.;
      pause_setSpeed( 2. );
@@ -127,6 +127,10 @@ static void player_autonavSetup (void)
    /* Set flag and tc_mod just in case. */
    player_setFlag(PLAYER_AUTONAV);
    pause_setSpeed( tc_mod );
+
+   /* Make sure time acceleration starts immediately. */
+   speedup_timer = 0.;
+   hostiles_last = 0;
 }
 
 
@@ -438,6 +442,10 @@ int player_autonavShouldResetSpeed (void)
    int n;
 >>>>>>> 19f337c... Fixed autonav time resetting to work with *all* hostiles.
    int hostiles = 0;
+<<<<<<< HEAD
+=======
+   int will_reset = 0;
+>>>>>>> 0a0f6fd... Added a fix for those times when ships are spotted for one frame.
 
    if (!player_isFlag(PLAYER_AUTONAV))
       return 0;
@@ -452,6 +460,7 @@ int player_autonavShouldResetSpeed (void)
    }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
    if (failpc > .99 && hostiles)
       reason = "Hostiles detected";
    else if ((failpc > 0. && failpc <= .99) && (shield < failpc))
@@ -462,9 +471,20 @@ int player_autonavShouldResetSpeed (void)
    will_reset = (hostiles && (failpc > .995 || (shield < lasts && shield < failpc) ||
                               armour < lasta));
 >>>>>>> 9874cb3... Require damage for slowdown when slider is below "enemy presence".
+=======
+   if (hostiles && hostiles_last) {
+      if (failpc > .995)
+         will_reset = 1;
+      else if ((shield < lasts && shield < failpc) || armour < lasta) {
+         will_reset = 1;
+         speedup_timer = 2.;
+      }
+   }
+>>>>>>> 0a0f6fd... Added a fix for those times when ships are spotted for one frame.
 
    lasts = player.p->shield / player.p->shield_max;
    lasta = player.p->armour / player.p->armour_max;
+   hostiles_last = hostiles;
 
    if (reason) {
       player_autonavResetSpeed();
