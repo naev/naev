@@ -77,26 +77,33 @@
    <faction>Trader</faction>
   </avail>
  </mission>
- <mission name="Pirate Bounty">
-  <lua>neutral/pirbounty</lua>
+ <mission name="Dead Or Alive Bounty">
+  <lua>neutral/pirbounty_dead</lua>
   <avail>
    <priority>4</priority>
-   <chance>340</chance>
+   <chance>960</chance>
    <location>Computer</location>
-   <faction>Civilian</faction>
-   <faction>Collective</faction>
    <faction>Dvaered</faction>
    <faction>Empire</faction>
    <faction>Frontier</faction>
    <faction>Goddard</faction>
    <faction>Independent</faction>
-   <faction>Nasin</faction>
-   <faction>Proteron</faction>
    <faction>Sirius</faction>
    <faction>Soromid</faction>
-   <faction>Thurion</faction>
-   <faction>Trader</faction>
-   <faction>Za'lek</faction>
+  </avail>
+ </mission>
+ <mission name="Alive Bounty">
+  <lua>neutral/pirbounty_alive</lua>
+  <avail>
+   <priority>4</priority>
+   <chance>960</chance>
+   <location>Computer</location>
+   <faction>Empire</faction>
+   <faction>Frontier</faction>
+   <faction>Goddard</faction>
+   <faction>Independent</faction>
+   <faction>Sirius</faction>
+   <faction>Soromid</faction>
   </avail>
  </mission>
  <mission name="Empire Recruitment">
