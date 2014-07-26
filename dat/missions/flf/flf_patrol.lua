@@ -45,6 +45,7 @@ else -- default english
    osd_desc[1] = "Fly to the %s system"
    osd_desc[2] = "Eliminate the Dvaered patrol"
    osd_desc[3] = "Return to the FLF base"
+   osd_desc["__save"] = true
 
    dv_ship_name = "Dvaered Patroller"
 end

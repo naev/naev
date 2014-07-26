@@ -98,7 +98,9 @@ You leave the Colonel's office. You are then taken to an interrogation room, whe
    osd_desc[1] = "Fly to the %s system"
    osd_desc[2] = "Eliminate the Dvaered patrol"
    osd_desc[3] = "Return to the FLF base"
+   osd_desc["__save"] = true
    DVosd[1] = "Fly to the %s system and land on %s"
+   DVosd["__save"] = true
     
    npc_name = "FLF petty officer"
    npc_desc = "There is a low-ranking officer of the Frontier Liberation Front sitting at one of the tables. She seems somewhat more receptive than most people in the bar."
