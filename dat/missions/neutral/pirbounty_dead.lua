@@ -88,11 +88,11 @@ function create ()
    elseif num_pirates <= 50 then
       level = rnd.rnd( 1, 2 )
    elseif num_pirates <= 75 then
-      level = rnd.rnd( 1, 3 )
+      level = rnd.rnd( 2, 3 )
    elseif num_pirates <= 100 then
-      level = rnd.rnd( 1, 4 )
+      level = rnd.rnd( 3, 4 )
    else
-      level = rnd.rnd( 1, #misn_level )
+      level = rnd.rnd( 4, #misn_level )
    end
 
    name = pirate_name()
