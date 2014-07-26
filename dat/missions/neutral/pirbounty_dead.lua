@@ -143,6 +143,8 @@ function land ()
       else
          tk.msg( pay_title, pay_capture_text[ rnd.rnd( 1, #pay_capture_text ) ] )
       end
+      player.pay( credits )
+      paying_faction:modPlayerSingle( reputation )
       misn.finish( true )
    end
 end
@@ -180,11 +182,11 @@ function bounty_setup ()
    if level == 1 then
       ship = "Pirate Hyena"
       credits = 50000 + rnd.sigma() * 15000
-      reputation = 1
+      reputation = 0
    elseif level == 2 then
       ship = "Pirate Shark"
       credits = 100000 + rnd.sigma() * 30000
-      reputation = 1
+      reputation = 0
    elseif level == 3 then
       if rnd.rnd() < 0.5 then
          ship = "Pirate Vendetta"
@@ -192,7 +194,7 @@ function bounty_setup ()
          ship = "Pirate Ancestor"
       end
       credits = 200000 + rnd.sigma() * 60000
-      reputation = 2
+      reputation = 1
    elseif level == 4 then
       if rnd.rnd() < 0.5 then
          ship = "Pirate Admonisher"
@@ -200,11 +202,11 @@ function bounty_setup ()
          ship = "Pirate Phalanx"
       end
       credits = 500000 + rnd.sigma() * 150000
-      reputation = 3
+      reputation = 2
    elseif level == 5 then
       ship = "Pirate Kestrel"
       credits = 1000000 + rnd.sigma() * 300000
-      reputation = 5
+      reputation = 4
    end
 end
 
