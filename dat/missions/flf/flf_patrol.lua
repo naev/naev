@@ -195,8 +195,7 @@ function pilot_death_dv ()
       if fleetFLF ~= nil then
          for i, j in ipairs( fleetFLF ) do
             if j:exists() then
-               j:control()
-               j:hyperspace()
+               j:changeAI( "flf" )
             end
          end
       end
