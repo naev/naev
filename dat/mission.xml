@@ -81,7 +81,7 @@
   <lua>neutral/pirbounty_dead</lua>
   <avail>
    <priority>4</priority>
-   <chance>960</chance>
+   <chance>360</chance>
    <location>Computer</location>
    <faction>Dvaered</faction>
    <faction>Empire</faction>
@@ -96,7 +96,7 @@
   <lua>neutral/pirbounty_alive</lua>
   <avail>
    <priority>4</priority>
-   <chance>960</chance>
+   <chance>360</chance>
    <location>Computer</location>
    <faction>Empire</faction>
    <faction>Frontier</faction>
