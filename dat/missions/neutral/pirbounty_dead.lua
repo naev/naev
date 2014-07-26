@@ -142,19 +142,7 @@ end
 
 
 function jumpin ()
-   if not job_done and system.cur() == missys then
-      if jumps_permitted >= 0 then
-         misn.osdActive( 2 )
-         target_ship = pilot.add( ship, nil, last_sys )[1]
-         target_ship:rename( name )
-         target_ship:setHilight( true )
-         hook.pilot( target_ship, "board", "pilot_board" )
-         death_hook = hook.pilot( target_ship, "death", "pilot_death" )
-         hook.pilot( target_ship, "jump", "pilot_jump" )
-      else
-         fail( msg[1]:format( name ) )
-      end
-   end
+   spawn_pirate( last_sys )
 end
 
 
@@ -168,19 +156,12 @@ end
 
 
 function takeoff ()
-   if not job_done and system.cur() == missys then
-      misn.osdActive( 2 )
-      target_ship = pilot.add( ship )[1]
-      target_ship:rename( name )
-      target_ship:setHilight( true )
-      hook.pilot( target_ship, "board", "pilot_board" )
-      death_hook = hook.pilot( target_ship, "death", "pilot_death" )
-      hook.pilot( target_ship, "jump", "pilot_jump" )
-   end
+   spawn_pirate()
 end
 
 
 function land ()
+   jumps_permitted = jumps_permitted - 1
    if job_done and planet.cur():faction() == paying_faction then
       if target_killed then
          tk.msg( pay_title, pay_kill_text[ rnd.rnd( 1, #pay_kill_text ) ] )
@@ -214,13 +195,31 @@ function pilot_death( p, attacker )
 end
 
 
-function pilot_jump()
+function pilot_jump ()
    fail( msg[1]:format( name ) )
 end
 
 
+-- Spawn the ship at the location param.
+function spawn_pirate( param )
+   if not job_done and system.cur() == missys then
+      if jumps_permitted >= 0 then
+         misn.osdActive( 2 )
+         target_ship = pilot.add( ship, nil, param )[1]
+         target_ship:rename( name )
+         target_ship:setHilight( true )
+         hook.pilot( target_ship, "board", "pilot_board" )
+         death_hook = hook.pilot( target_ship, "death", "pilot_death" )
+         hook.pilot( target_ship, "jump", "pilot_jump" )
+      else
+         fail( msg[1]:format( name ) )
+      end
+   end
+end
+
+
 -- Succeed the mission, make the player head to a planet for pay
-function succeed()
+function succeed ()
    job_done = true
    misn.osdActive( 3 )
    if marker ~= nil then
