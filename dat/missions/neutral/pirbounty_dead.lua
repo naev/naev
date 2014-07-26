@@ -131,7 +131,6 @@ function accept ()
    misn.osdCreate( osd_title, osd_msg )
 
    last_sys = system.cur()
-   last_planet = planet.cur()
    job_done = false
    target_killed = false
 
@@ -171,7 +170,7 @@ end
 function takeoff ()
    if not job_done and system.cur() == missys then
       misn.osdActive( 2 )
-      target_ship = pilot.add( ship, nil, last_planet:pos() )[1]
+      target_ship = pilot.add( ship )[1]
       target_ship:rename( name )
       target_ship:setHilight( true )
       hook.pilot( target_ship, "board", "pilot_board" )
@@ -182,7 +181,6 @@ end
 
 
 function land ()
-   last_planet = planet.cur()
    if job_done and planet.cur():faction() == paying_faction then
       if target_killed then
          tk.msg( pay_title, pay_kill_text[ rnd.rnd( 1, #pay_kill_text ) ] )
@@ -199,6 +197,7 @@ function pilot_board ()
    local t = subdue_text[ rnd.rnd( 1, #subdue_text ) ]:format( name )
    tk.msg( subdue_title, t )
    succeed()
+   target_killed = false
    target_ship:control()
    target_ship:setHilight( false )
    if death_hook ~= nil then hook.rm( death_hook ) end
@@ -208,6 +207,7 @@ end
 function pilot_death( p, attacker )
    if attacker == player.pilot() then
       succeed()
+      target_killed = true
    else
       fail( msg[2]:format( name ) )
    end
@@ -222,7 +222,6 @@ end
 -- Succeed the mission, make the player head to a planet for pay
 function succeed()
    job_done = true
-   target_killed = false
    misn.osdActive( 3 )
    if marker ~= nil then
       misn.markerRm( marker )
