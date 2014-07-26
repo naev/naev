@@ -256,9 +256,8 @@
   <lua>dvaered/dv_patrol</lua>
   <avail>
    <chance>366</chance>
-   <cond>faction.playerStanding("Dvaered") &gt; 5 and player.getRating() &gt; 100</cond>
+   <cond>player.numOutfit("Mercenary License")</cond>
    <location>Computer</location>
-   <done>Empire Shipping 3</done>
    <faction>Dvaered</faction>
   </avail>
  </mission>
