@@ -77,6 +77,8 @@ function create ()
    missys = systems[ rnd.rnd( 1, #systems ) ]
    if not misn.claim( missys ) then misn.finish( false ) end
 
+   jumps_permitted = missys:jumpDist() + rnd.rnd( -1, 5 )
+
    level = rnd.rnd( 1, #misn_level )
    name = pirate_name()
    ship = "Pirate Hyena"
@@ -129,6 +131,7 @@ function accept ()
    misn.osdCreate( osd_title, osd_msg )
 
    last_sys = system.cur()
+   last_planet = planet.cur()
    job_done = false
    target_killed = false
 
@@ -141,17 +144,23 @@ end
 
 function jumpin ()
    if not job_done and system.cur() == missys then
-      misn.osdActive( 2 )
-      target_ship = pilot.add( ship, nil, last_sys )[1]
-      target_ship:rename( name )
-      target_ship:setHilight( true )
-      hook.pilot( target_ship, "board", "pilot_board" )
-      death_hook = hook.pilot( target_ship, "death", "pilot_death" )
+      if jumps_permitted >= 0 then
+         misn.osdActive( 2 )
+         target_ship = pilot.add( ship, nil, last_sys )[1]
+         target_ship:rename( name )
+         target_ship:setHilight( true )
+         hook.pilot( target_ship, "board", "pilot_board" )
+         death_hook = hook.pilot( target_ship, "death", "pilot_death" )
+         hook.pilot( target_ship, "jump", "pilot_jump" )
+      else
+         fail( msg[1]:format( name ) )
+      end
    end
 end
 
 
 function jumpout ()
+   jumps_permitted = jumps_permitted - 1
    last_sys = system.cur()
    if not job_done and last_sys == missys then
       fail( msg[3]:format( last_sys:name() ) )
@@ -162,16 +171,18 @@ end
 function takeoff ()
    if not job_done and system.cur() == missys then
       misn.osdActive( 2 )
-      target_ship = pilot.add( ship, nil, planet.cur():pos() )[1]
+      target_ship = pilot.add( ship, nil, last_planet:pos() )[1]
       target_ship:rename( name )
       target_ship:setHilight( true )
       hook.pilot( target_ship, "board", "pilot_board" )
       death_hook = hook.pilot( target_ship, "death", "pilot_death" )
+      hook.pilot( target_ship, "jump", "pilot_jump" )
    end
 end
 
 
 function land ()
+   last_planet = planet.cur()
    if job_done and planet.cur():faction() == paying_faction then
       if target_killed then
          tk.msg( pay_title, pay_kill_text[ rnd.rnd( 1, #pay_kill_text ) ] )
@@ -179,8 +190,6 @@ function land ()
          tk.msg( pay_title, pay_capture_text[ rnd.rnd( 1, #pay_capture_text ) ] )
       end
       misn.finish( true )
-   else
-      misn.finish( false )
    end
 end
 
@@ -189,22 +198,34 @@ function pilot_board ()
    player.unboard()
    local t = subdue_text[ rnd.rnd( 1, #subdue_text ) ]:format( name )
    tk.msg( subdue_title, t )
+   succeed()
    target_ship:control()
    target_ship:setHilight( false )
-   job_done = true
-   target_killed = false
-   misn.osdActive( 3 )
    if death_hook ~= nil then hook.rm( death_hook ) end
 end
 
 
 function pilot_death( p, attacker )
    if attacker == player.pilot() then
-      job_done = true
-      target_killed = true
-      misn.osdActive( 3 )
+      succeed()
    else
       fail( msg[2]:format( name ) )
+   end
+end
+
+
+function pilot_jump()
+   fail( msg[1]:format( name ) )
+end
+
+
+-- Succeed the mission, make the player head to a planet for pay
+function succeed()
+   job_done = true
+   target_killed = false
+   misn.osdActive( 3 )
+   if marker ~= nil then
+      misn.markerRm( marker )
    end
 end
 
