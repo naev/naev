@@ -82,7 +82,19 @@ function create ()
       jumps_permitted = jumps_permitted - 1
    end
 
-   level = rnd.rnd( 1, #misn_level )
+   local num_pirates = missys:presences()["Pirate"]
+   if num_pirates <= 25 then
+      level = 1
+   elseif num_pirates <= 50 then
+      level = rnd.rnd( 1, 2 )
+   elseif num_pirates <= 75 then
+      level = rnd.rnd( 1, 3 )
+   elseif num_pirates <= 100 then
+      level = rnd.rnd( 1, 4 )
+   else
+      level = rnd.rnd( 1, #misn_level )
+   end
+
    name = pirate_name()
    ship = "Pirate Hyena"
    credits = 50000
@@ -185,7 +197,7 @@ function bounty_setup ()
       reputation = 0
    elseif level == 2 then
       ship = "Pirate Shark"
-      credits = 100000 + rnd.sigma() * 30000
+      credits = 150000 + rnd.sigma() * 50000
       reputation = 0
    elseif level == 3 then
       if rnd.rnd() < 0.5 then
@@ -193,7 +205,7 @@ function bounty_setup ()
       else
          ship = "Pirate Ancestor"
       end
-      credits = 200000 + rnd.sigma() * 60000
+      credits = 400000 + rnd.sigma() * 80000
       reputation = 1
    elseif level == 4 then
       if rnd.rnd() < 0.5 then
@@ -201,11 +213,11 @@ function bounty_setup ()
       else
          ship = "Pirate Phalanx"
       end
-      credits = 500000 + rnd.sigma() * 150000
+      credits = 700000 + rnd.sigma() * 120000
       reputation = 2
    elseif level == 5 then
       ship = "Pirate Kestrel"
-      credits = 1000000 + rnd.sigma() * 300000
+      credits = 1200000 + rnd.sigma() * 200000
       reputation = 4
    end
 end
