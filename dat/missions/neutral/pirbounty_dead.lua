@@ -26,10 +26,16 @@ else -- Default to English
    pay_title   = "Mission Completed"
 
    pay_kill_text    = {}
-   pay_kill_text[1] = [[After verifying that you finished the job, an officer hands you your pay.]]
+   pay_kill_text[1] = "After verifying that you killed %s, an officer hands you your pay."
+   pay_kill_text[2] = "After verifying that %s is indeed dead, the tired-looking officer smiles and hands you your pay."
+   pay_kill_text[3] = "The officer seems pleased that %s is finally dead. He thanks you and promptly hands you your pay."
+   pay_kill_text[4] = "The paraoid-looking officer takes you into a locked room, where he quietly verifies the death of %s. He then pays you and sends you off."
 
    pay_capture_text    = {}
-   pay_capture_text[1] = [[An officer takes the criminal into custody and hands you your pay.]]
+   pay_capture_text[1] = "An officer takes %s into custody and hands you your pay."
+   pay_capture_text[2] = "The officer seems to think your decision to capture %s alive was insane. He carefully takes the pirate off your hands, taking precautions you think are completely unnecessary, and then hands you your pay"
+   pay_capture_text[3] = "The officer you deal with seems to especially dislike %s. He takes the pirate off your hands and hands you your pay without speaking a word."
+   pay_capture_text[4] = "A fearful-looking officer rushes %s into a secure hold, pays you the appropriate bounty, and then hurries off."
 
    -- Mission details
    misn_title  = "%s Dead or Alive Bounty in %s"
@@ -150,11 +156,13 @@ end
 function land ()
    jumps_permitted = jumps_permitted - 1
    if job_done and planet.cur():faction() == paying_faction then
+      local pay_text
       if target_killed then
-         tk.msg( pay_title, pay_kill_text[ rnd.rnd( 1, #pay_kill_text ) ] )
+         pay_text = pay_kill_text[ rnd.rnd( 1, #pay_kill_text ) ]
       else
-         tk.msg( pay_title, pay_capture_text[ rnd.rnd( 1, #pay_capture_text ) ] )
+         pay_text = pay_capture_text[ rnd.rnd( 1, #pay_capture_text ) ]
       end
+      tk.msg( pay_title, pay_text:format( name ) )
       player.pay( credits )
       paying_faction:modPlayerSingle( reputation )
       misn.finish( true )
