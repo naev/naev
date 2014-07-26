@@ -81,6 +81,7 @@
   <lua>neutral/pirbounty_dead</lua>
   <avail>
    <priority>4</priority>
+   <cond>player.numOutfit("Mercenary License")</cond>
    <chance>360</chance>
    <location>Computer</location>
    <faction>Dvaered</faction>
@@ -96,6 +97,7 @@
   <lua>neutral/pirbounty_alive</lua>
   <avail>
    <priority>4</priority>
+   <cond>player.numOutfit("Mercenary License")</cond>
    <chance>360</chance>
    <location>Computer</location>
    <faction>Empire</faction>

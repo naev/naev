@@ -65,11 +65,6 @@ end
 
 
 function create ()
-   if not player.numOutfit( "Mercenary License" ) then
-      -- Player is not qualified for the mission.
-      misn.finish( false )
-   end
-
    paying_faction = planet.cur():faction()
 
    local systems = getsysatdistance( system.cur(), 0, 3,
