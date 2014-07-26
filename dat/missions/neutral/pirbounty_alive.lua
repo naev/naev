@@ -27,3 +27,37 @@ end
 function pilot_death ()
    fail( fail_kill_text:format( name ) )
 end
+
+
+-- Set up the ship, credits, and reputation based on the level.
+function bounty_setup ()
+   if level == 1 then
+      ship = "Pirate Hyena"
+      credits = 75000 + rnd.sigma() * 22500
+      reputation = 1
+   elseif level == 2 then
+      ship = "Pirate Shark"
+      credits = 150000 + rnd.sigma() * 45000
+      reputation = 1
+   elseif level == 3 then
+      if rnd.rnd() < 0.5 then
+         ship = "Pirate Vendetta"
+      else
+         ship = "Pirate Ancestor"
+      end
+      credits = 300000 + rnd.sigma() * 90000
+      reputation = 2
+   elseif level == 4 then
+      if rnd.rnd() < 0.5 then
+         ship = "Pirate Admonisher"
+      else
+         ship = "Pirate Phalanx"
+      end
+      credits = 750000 + rnd.sigma() * 225000
+      reputation = 3
+   elseif level == 5 then
+      ship = "Pirate Kestrel"
+      credits = 1500000 + rnd.sigma() * 450000
+      reputation = 5
+   end
+end
