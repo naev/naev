@@ -218,7 +218,7 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
          /* Turn them off. */
          n = 0;
          if (on) {
-            pilot_outfitOffAll( p );
+            n += pilot_outfitOffAll( p );
          }
          /* Turn them on. */
          else {
