@@ -121,8 +121,8 @@ function accept ()
       marker = misn.markerAdd( missys, "low" )
       misn.setReward( misn_rwrd )
 
-      DVplanet = "Stalwart Station"
-      DVsys = "Darkstone"
+      DVplanet = "Raelid Outpost"
+      DVsys = "Raelid"
 
       reinforcements_arrived = false
       dv_ships_left = 0
