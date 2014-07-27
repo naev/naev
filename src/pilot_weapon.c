@@ -1223,7 +1223,10 @@ int pilot_outfitOff( Pilot *p, PilotOutfitSlot *o )
       pilot_afterburnOver( p );
    else {
       c = outfit_cooldown( o->outfit );
-      o->stimer = c - (c * o->stimer / outfit_duration( o->outfit ));
+      if (o->stimer != INFINITY)
+         o->stimer = c - (c * o->stimer / outfit_duration( o->outfit ));
+      else
+         o->stimer = c;
       o->state  = PILOT_OUTFIT_COOLDOWN;
    }
 
