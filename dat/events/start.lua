@@ -96,6 +96,6 @@ function create()
       tk.msg( title[4], text[15]:format( player.name() ) )
    else
       tk.msg( title[3], text[3]:format( player.name() ) )
-      evt.finish( true )
    end
+   evt.finish( true )
 end
