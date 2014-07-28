@@ -21,27 +21,21 @@ else -- default english
 
    text[5]  = [["Move your ship with %s, %s, %s, and %s. You can also press %s and your ship will automatically follow the mouse pointer. Personally, I like to use the keyboard, but to each his own."]]
 
-   text[6]  = "\"You can target planets, ships, and jump points by \027bleft-clicking\0270 on them, either on your view or on your minimap. %s targets the nearest hostile ship, which is very useful in the heat of battle.\""
+   text[6]  = "\"You can target planets, ships, and jump points by \027bleft-clicking\0270 on them on your view, minimap, or overlay map. %s targets the nearest hostile ship, which is very useful in the heat of battle.\""
 
-   text[7]  = [["You can fire your primary weapon with %s, and your secondary weapon with %s. Don't forget that for homing missiles, you also have to face your target until you get a lock."]]
+   text[7]  = "\"When a target is selected, you can \027bleft-click\0270 on it again on your view or minimap to do whatever action is most appropriate.\""
 
-   text[8]  = [["Press %s to hail (contact) the target ship. If you are being hailed by another ship, you can press %s to hail them back. You can hail ships to ask them for some fuel, or you can hail pirates that you just can't beat and offer to pay them off."]]
+   text[8]  = [["You can fire your primary weapon with %s, and your secondary weapon with %s. Don't forget that some weapons won't work properly unless you target the ship first, and some homing missile weapons require you to face your target until you get a lock."]]
 
-   text[9]  = [["Press %s to board the target ship. You normally need to disable the ship before you can board it."]]
+   text[9]  = [["Pressing %s will bring up the overlay map. This map shows everything you know about in the current system. You can right-click anywhere on this map to engage Autonav, which will automatically fly you to that location."]]
 
-   text[10] = [["Press %s to request permission to land on the target planet, and then press it again to land. Remember, you can't land on all planets! Planets are where you can meet people, read the news, equip your ship, buy new ships, and accept missions."]]
+   text[10] = [["Pressing %s will bring up the star map, where you can look at the systems you know about. From here, you can also use Autonav to easily and quickly travel between systems."]]
 
-   text[11] = [["To travel from one system to another with a jump gate (marked on your map as a triangle icon), you can press %s while the jump gate is selected. Of course, you have to be on top of the jump gate for this to work."]]
+   text[11] = [["Pressing %s will bring up the small menu, where you can quit the game or access the options menu."]]
 
-   text[12] = [["Pressing %s will bring up the overlay map. This map shows everything you know about in the current system. You can right-click anywhere on this map to engage Autonav, which will automatically fly you to that location."]]
+   text[12] = [["And finally, pressing %s will bring up your information screen, where you can view your stats and missions."]]
 
-   text[13] = [["Pressing %s will bring up the star map, where you can look at the systems you know about. From here, you can also use Autonav to easily and quickly travel between systems."]]
-
-   text[14] = [["Pressing %s will bring up the small menu, where you can quit the game or access the options menu."]]
-
-   text[15] = [["And finally, pressing %s will bring up your information screen, where you can view your stats and missions."]]
-
-   text[16] = [["Well, that's pretty much it! There are more controls, but they aren't really essential. You can review them later on in the Options menu, or go through the tutorials from the main menu. Good luck, %s!" And with that, you set off on your journey.]]
+   text[13] = [["Well, that's pretty much it! There are more controls, but they aren't really essential. You can review them later on in the Options menu if you want to. If you want a more in-depth overview, you can go through the tutorials from the main menu. Good luck, %s!" And with that, you set off on your journey.]]
 end
 
 
@@ -87,16 +81,13 @@ function create()
       tk.msg( title[4], text[4] )
       tk.msg( title[4], text[5]:format( tutGetKey("accel"), tutGetKey("reverse"), tutGetKey("left"), tutGetKey("right"), tutGetKey("mousefly") ) )
       tk.msg( title[4], text[6]:format( tutGetKey("target_hostile") ) )
-      tk.msg( title[4], text[7]:format( tutGetKey("primary"), tutGetKey("secondary") ) )
-      tk.msg( title[4], text[8]:format( tutGetKey("hail"), tutGetKey("autohail") ) )
-      tk.msg( title[4], text[9]:format( tutGetKey("board") ) )
-      tk.msg( title[4], text[10]:format( tutGetKey("land") ) )
-      tk.msg( title[4], text[11]:format( tutGetKey("jump") ) )
-      tk.msg( title[4], text[12]:format( tutGetKey("overlay") ) )
-      tk.msg( title[4], text[13]:format( tutGetKey("starmap") ) )
-      tk.msg( title[4], text[14]:format( tutGetKey("menu") ) )
-      tk.msg( title[4], text[15]:format( tutGetKey("info") ) )
-      tk.msg( title[4], text[16]:format( player.name() ) )
+      tk.msg( title[4], text[7] )
+      tk.msg( title[4], text[8]:format( tutGetKey("primary"), tutGetKey("secondary") ) )
+      tk.msg( title[4], text[9]:format( tutGetKey("overlay") ) )
+      tk.msg( title[4], text[10]:format( tutGetKey("starmap") ) )
+      tk.msg( title[4], text[11]:format( tutGetKey("menu") ) )
+      tk.msg( title[4], text[12]:format( tutGetKey("info") ) )
+      tk.msg( title[4], text[13]:format( player.name() ) )
    else
       tk.msg( title[3], text[3]:format( player.name() ) )
    end
