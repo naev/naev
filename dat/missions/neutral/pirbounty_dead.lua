@@ -171,7 +171,7 @@ function pilot_board ()
    tk.msg( subdue_title, t )
    succeed()
    target_killed = false
-   target_ship:control()
+   target_ship:changeAI( "dummy" )
    target_ship:setHilight( false )
    if death_hook ~= nil then hook.rm( death_hook ) end
 end
