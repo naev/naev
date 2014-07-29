@@ -138,6 +138,7 @@
   <item>Light Combat Vessel License</item>
   <item>Medium Combat Vessel License</item>
   <item>Heavy Combat Vessel License</item>
+  <item>Mercenary License</item>
   <item>Tricon Experimental Engine License</item>
   <item>Pirate Landing Pass</item>
   <item>Previous Generation Small Systems</item>
@@ -518,7 +519,6 @@
   <item>Unicorp Jammer</item>
   <item>Jump Scanner</item>
   <item>Light Combat Vessel License</item>
-  <item>Mercenary License</item>
  </tech>
  <tech name="High Tech Upgrades 1">
   <item>Battery</item>
