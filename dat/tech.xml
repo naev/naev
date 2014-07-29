@@ -119,6 +119,7 @@
   <item>Map: Dvaered Core</item>
   <item>Map: Empire Core</item>
   <item>Map: Pirate strongholds</item>
+  <item>Map: FLF Hidden Jumps</item>
   <item>Ultra Map</item>
   <item>Local System Map</item>
   <item>Unicorp Scrambler</item>
@@ -402,6 +403,17 @@
  </tech>
 
  <!-- Generic Outfits -->
+ <tech name="Crappy Core Systems">
+  <item>Previous Generation Small Systems</item>
+  <item>Previous Generation Medium Systems</item>
+  <item>Previous Generation Large Systems</item>
+  <item>Beat Up Small Engine</item>
+  <item>Beat Up Medium Engine</item>
+  <item>Beat Up Large Engine</item>
+  <item>Patchwork Light Plating</item>
+  <item>Patchwork Medium Plating</item>
+  <item>Patchwork Heavy Plating</item>
+ </tech>
  <tech name="Basic Outfits 1">
   <item>Laser Cannon MK1</item>
   <item>Plasma Blaster MK1</item>
@@ -648,6 +660,10 @@
   <item>Empire Pacifier</item>
   <item>Empire Peacemaker</item>
   <item>Empire Shark</item>
+ </tech>
+ <tech name="FLF Ships">
+  <item>Lancelot</item>
+  <item>Vendetta</item>
  </tech>
  <tech name="Dvaered Military Ships">
   <item>Dvaered Ancestor</item>

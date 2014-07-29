@@ -34,28 +34,9 @@
  </general>
  <tech>
   <item>Mace Rocket</item>
-  <item>Map: Nebula Edge</item>
-  <item>Map: Dvaered-Soromid trade route</item>
-  <item>Map: Sirian border systems</item>
-  <item>Map: The Frontier</item>
-  <item>Map: Sol</item>
-  <item>Map: Dvaered Core</item>
-  <item>Map: Empire Core</item>
+  <item>Star Maps</item>
   <item>Map: FLF Hidden Jumps</item>
-  <item>Local System Map</item>
-  <item>Previous Generation Small Systems</item>
-  <item>Basic Small Systems</item>
-  <item>Previous Generation Medium Systems</item>
-  <item>Previous Generation Large Systems</item>
-  <item>Beat Up Small Engine</item>
-  <item>Manufacturer Small Engine</item>
-  <item>Beat Up Medium Engine</item>
-  <item>Beat Up Large Engine</item>
-  <item>Patchwork Light Plating</item>
-  <item>Unmodified Small Hull</item>
-  <item>Patchwork Medium Plating</item>
-  <item>Patchwork Heavy Plating</item>
-  <item>Lancelot</item>
-  <item>Vendetta</item>
+  <item>Crappy Core Systems</item>
+  <item>FLF Ships</item>
  </tech>
 </asset>
