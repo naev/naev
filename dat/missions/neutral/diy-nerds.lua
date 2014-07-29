@@ -138,7 +138,7 @@ else
    misn_cargoamount2 = "4"
 
    -- the outfit name as in outfit.xml
-   outfit = "Previous Generation Small Systems"
+   outfit = "Basic Small Systems"
 
 end
 
