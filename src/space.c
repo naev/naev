@@ -1877,6 +1877,10 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
                planet->commodities = realloc(planet->commodities,
                      planet->ncommodities * sizeof(Commodity*));
             }
+
+            else if (xml_isNode(cur, "blackmarket")) {
+               planet->blackmarket = 1;
+            }
          } while (xml_nextNode(cur));
          continue;
       }

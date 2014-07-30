@@ -125,6 +125,7 @@ typedef struct Planet_ {
    Commodity **commodities; /**< what commodities they sell */
    int ncommodities; /**< the amount they have */
    tech_group_t *tech; /**< Planet tech. */
+   int blackmarket; /**< If the planet ignores licenses. */
 
    /* Graphics. */
    glTexture* gfx_space; /**< graphic in space */

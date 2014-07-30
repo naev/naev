@@ -21,10 +21,10 @@
 #include "log.h"
 #include "map.h"
 #include "equipment.h"
-#include "land.h"
 #include "outfit.h"
 #include "player.h"
 #include "player_gui.h"
+#include "space.h"
 #include "toolkit.h"
 #include "dialogue.h"
 #include "map_find.h"
@@ -282,7 +282,7 @@ void outfits_update( unsigned int wid, char* str )
    /* new image */
    window_modifyImage( wid, "imgOutfit", outfit->gfx_store, 0, 0 );
 
-   if (outfit_canBuy(outfitname) > 0)
+   if (outfit_canBuy(outfitname, land_planet) > 0)
       window_enableButton( wid, "btnBuyOutfit" );
    else
       window_disableButtonSoft( wid, "btnBuyOutfit" );
@@ -381,7 +381,7 @@ static credits_t outfit_getPrice( Outfit *outfit )
  * @brief Checks to see if the player can buy the outfit.
  *    @param outfit Outfit to buy.
  */
-int outfit_canBuy( char *name )
+int outfit_canBuy( char *name, Planet *planet )
 {
    int failure;
    credits_t price;
@@ -422,7 +422,8 @@ int outfit_canBuy( char *name )
       failure = 1;
    }
    /* Needs license. */
-   if (!player_hasLicense(outfit->license)) {
+   if ((!player_hasLicense(outfit->license)) &&
+         ((planet == NULL) || (!planet->blackmarket))) {
       land_errDialogueBuild( "You need the '%s' license to buy this outfit.",
                outfit->license );
       failure = 1;
