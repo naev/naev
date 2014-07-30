@@ -53,6 +53,7 @@ static int planetL_shipsSold( lua_State *L );
 static int planetL_outfitsSold( lua_State *L );
 static int planetL_commoditiesSold( lua_State *L );
 static int planetL_isBlackMarket( lua_State *L );
+static int planetL_setBlackMarket( lua_State *L );
 static int planetL_isKnown( lua_State *L );
 static int planetL_setKnown( lua_State *L );
 static const luaL_reg planet_methods[] = {
@@ -77,6 +78,7 @@ static const luaL_reg planet_methods[] = {
    { "outfitsSold", planetL_outfitsSold },
    { "commoditiesSold", planetL_commoditiesSold },
    { "blackmarket", planetL_isBlackMarket },
+   { "setBlackmarket", planetL_setBlackMarket },
    { "known", planetL_isKnown },
    { "setKnown", planetL_setKnown },
    {0,0}
@@ -831,6 +833,29 @@ static int planetL_isBlackMarket( lua_State *L )
    Planet *p = luaL_validplanet(L,1);
    lua_pushboolean(L, p->blackmarket);
    return 1;
+}
+
+/**
+ * @brief Sets whether a planet is a black market.
+ *
+ * @usage p:setBlackmarket( true ) -- Makes planet a black market.
+ *    @luaparam p Planet to set known.
+ *    @luaparam b Whether or not to set as known (defaults to true).
+ * @luafunc setKnown( p, b )
+ */
+static int planetL_setBlackMarket( lua_State *L )
+{
+   int b;
+   Planet *p;
+
+   p = luaL_validplanet(L,1);
+   if (lua_gettop(L) > 1)
+      b = lua_toboolean(L, 2);
+   else
+      b = 1;
+
+   p->blackmarket = b;
+   return 0;
 }
 
 /**
