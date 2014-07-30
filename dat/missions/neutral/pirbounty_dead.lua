@@ -130,7 +130,9 @@ end
 
 
 function jumpin ()
-   spawn_pirate( last_sys )
+   local pos = jump.pos( system.cur(), last_sys )
+   pos = pos + vec2.new( rnd.rnd( 1500, 2500 ), rnd.rnd( 1500, 2500 ) )
+   spawn_pirate( pos )
 end
 
 
