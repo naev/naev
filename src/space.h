@@ -80,10 +80,12 @@ typedef enum PlanetClass_ {
  * Planet flags.
  */
 #define PLANET_KNOWN       (1<<0) /**< Planet is known. */
+#define PLANET_BLACKMARKET (1<<1) /**< Planet is a black market. */
 #define planet_isFlag(p,f)    ((p)->flags & (f)) /**< Checks planet flag. */
 #define planet_setFlag(p,f)   ((p)->flags |= (f)) /**< Sets a planet flag. */
 #define planet_rmFlag(p,f)    ((p)->flags &= ~(f)) /**< Removes a planet flag. */
 #define planet_isKnown(p)     planet_isFlag(p,PLANET_KNOWN) /**< Checks if planet is known. */
+#define planet_isBlackMarket(p) planet_isFlag(p,PLANET_BLACKMARKET) /**< Checks if planet is a black market. */
 
 
 /**
@@ -125,7 +127,6 @@ typedef struct Planet_ {
    Commodity **commodities; /**< what commodities they sell */
    int ncommodities; /**< the amount they have */
    tech_group_t *tech; /**< Planet tech. */
-   int blackmarket; /**< If the planet ignores licenses. */
 
    /* Graphics. */
    glTexture* gfx_space; /**< graphic in space */
@@ -292,6 +293,7 @@ Planet* planet_getAll( int *n );
 Planet* planet_get( const char* planetname );
 Planet* planet_getIndex( int ind );
 void planet_setKnown( Planet *p );
+void planet_setBlackMarket( Planet *p );
 int planet_index( const Planet *p );
 int planet_exists( const char* planetname );
 const char *planet_existsCase( const char* planetname );

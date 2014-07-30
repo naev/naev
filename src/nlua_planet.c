@@ -831,7 +831,7 @@ static int planetL_commoditiesSold( lua_State *L )
 static int planetL_isBlackMarket( lua_State *L )
 {
    Planet *p = luaL_validplanet(L,1);
-   lua_pushboolean(L, p->blackmarket);
+   lua_pushboolean(L, planet_isBlackMarket(p));
    return 1;
 }
 
@@ -854,7 +854,10 @@ static int planetL_setBlackMarket( lua_State *L )
    else
       b = 1;
 
-   p->blackmarket = b;
+   if (b)
+      planet_setBlackMarket( p );
+   else
+      planet_rmFlag( p, PLANET_BLACKMARKET );
    return 0;
 }
 
