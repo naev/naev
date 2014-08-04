@@ -732,6 +732,7 @@ static int diff_removeDiff( UniDiff_t *diff )
             break;
          case HUNK_TYPE_ASSET_LEGALMARKET:
             hunk.type = HUNK_TYPE_ASSET_BLACKMARKET;
+            break;
 
          case HUNK_TYPE_JUMP_ADD:
             hunk.type = HUNK_TYPE_JUMP_REMOVE;
