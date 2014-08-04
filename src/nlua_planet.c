@@ -838,6 +838,8 @@ static int planetL_isBlackMarket( lua_State *L )
 /**
  * @brief Sets whether a planet is a black market.
  *
+ * @note This is not permanent and will be reset on reload.
+ *
  * @usage p:setBlackmarket( true ) -- Makes planet a black market.
  *    @luaparam p Planet to set known.
  *    @luaparam b Whether or not to set as known (defaults to true).
