@@ -126,7 +126,7 @@ function enter ()
       enter_vect = player.pos()
       a = rnd.rnd() * 2 * math.pi
       d = rnd.rnd( 1500, 2000 )
-      enter_vect = player.pos() + vec2.new( math.cos(a) * d, math.sin(a) * d )
+      enter_vect:add( math.cos(a)*d, math.sin(a)*d )
 
       -- Create some pilots to go after the player
       p = pilot.add( "FLF Sml Force", nil, enter_vect )
