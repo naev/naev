@@ -282,6 +282,8 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
             hunk.type = HUNK_TYPE_ASSET_BLACKMARKET;
          else if (strcmp(buf,"legalmarket")==0)
             hunk.type = HUNK_TYPE_ASSET_LEGALMARKET;
+         else
+            WARN("Unidiff '%s': Unknown hunk type '%s' for asset '%s'.", diff->name, buf, hunk.u.name);
 
          /* Apply diff. */
          if (diff_patchHunk( &hunk ) < 0)
@@ -308,6 +310,8 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
             hunk.type = HUNK_TYPE_JUMP_ADD;
          else if (strcmp(buf,"remove")==0)
             hunk.type = HUNK_TYPE_JUMP_REMOVE;
+         else
+            WARN("Unidiff '%s': Unknown hunk type '%s' for jump '%s'.", diff->name, buf, hunk.u.name);
 
          hunk.node = cur;
 
