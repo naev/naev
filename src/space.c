@@ -3309,7 +3309,9 @@ int space_rmMarker( int sys, SysMarker type )
  */
 int space_sysSave( xmlTextWriterPtr writer )
 {
-   int i, j, c, changed;
+   int i;
+   int j;
+   int changed;
    char buf[32];
    StarSystem *sys;
 
@@ -3346,25 +3348,25 @@ int space_sysSave( xmlTextWriterPtr writer )
          /* if prices haven't changed from default values at all, continue */
       changed=0;
       if (xml_prices[i]==NULL)
-         for (c=0; c<econ_nprices; c++){
-            if (sys->is_priceset[c]){
+         for (j=0; j<econ_nprices; j++){
+            if (sys->is_priceset[j]){
                changed=1;
                break;}
             }
       else
-         for (c=0; c<econ_nprices; c++)
-            if (xml_prices[i][c]!=sys->prices[c]){
+         for (j=0; j<econ_nprices; j++)
+            if (xml_prices[i][j]!=sys->prices[j]){
                changed=1;
                break;}
       if (!changed) continue;
 
       xmlw_startElem(writer,"prices");
       xmlw_attr(writer,"sys","%s",sys->name);
-      for (c=0; c<econ_nprices; c++) {
-         if ( sys->is_priceset[c] && (xml_prices[i]==NULL || sys->prices[c]!=xml_prices[i][c])){
+      for (j=0; j<econ_nprices; j++) {
+         if ( sys->is_priceset[j] && (xml_prices[i]==NULL || sys->prices[j]!=xml_prices[i][j])){
             xmlw_startElem(writer,"commodity");
-            xmlw_attr(writer, "name", "%s", commodity_stack[c].name);
-            nsnprintf(buf, 32, "%.2f", sys->prices[c]);
+            xmlw_attr(writer, "name", "%s", commodity_stack[j].name);
+            nsnprintf(buf, 32, "%.2f", sys->prices[j]);
             xmlw_str(writer, "%s", buf);
             xmlw_endElem(writer); /* "commodity" */
          }
