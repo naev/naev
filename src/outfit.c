@@ -73,6 +73,7 @@ static void outfit_parseSFighter( Outfit *temp, const xmlNodePtr parent );
 static void outfit_parseSMap( Outfit *temp, const xmlNodePtr parent );
 static void outfit_parseSLocalMap( Outfit *temp, const xmlNodePtr parent );
 static void outfit_parseSGUI( Outfit *temp, const xmlNodePtr parent );
+static void outfit_parseSPriceMap( Outfit *temp, const xmlNodePtr parent );
 static void outfit_parseSLicense( Outfit *temp, const xmlNodePtr parent );
 
 
@@ -510,6 +511,15 @@ int outfit_isLicense( const Outfit* o )
    return (o->type==OUTFIT_TYPE_LICENSE);
 }
 /**
+ * @brief Checks if outfit is a price map.
+ *    @param o Outfit to check.
+ *    @return 1 if o is a license.
+ */
+int outfit_isPriceMap( const Outfit* o )
+{
+   return (o->type==OUTFIT_TYPE_PRICEMAP);
+}
+/**
  * @brief Checks if outfit is a GUI.
  *    @param o Outfit to check.
  *    @return 1 if o is a GUI.
@@ -752,6 +762,7 @@ const char* outfit_getType( const Outfit* o )
          "Star Map",
          "Local Map",
          "GUI",
+         "Price Map",
          "License"
    };
 
@@ -783,6 +794,7 @@ const char* outfit_getTypeBroad( const Outfit* o )
    else if (outfit_isMap(o))        return "Map";
    else if (outfit_isLocalMap(o))   return "Local Map";
    else if (outfit_isGUI(o))        return "GUI";
+   else if (outfit_isPriceMap(o))   return "Price Map";
    else if (outfit_isLicense(o))    return "License";
    else                             return "Unknown";
 }
@@ -894,6 +906,7 @@ static OutfitType outfit_strToOutfitType( char *buf )
    O_CMP("map",            OUTFIT_TYPE_MAP);
    O_CMP("localmap",       OUTFIT_TYPE_LOCALMAP);
    O_CMP("license",        OUTFIT_TYPE_LICENSE);
+   O_CMP("Price Map",      OUTFIT_TYPE_PRICEMAP);
    O_CMP("gui",            OUTFIT_TYPE_GUI);
 
    WARN("Invalid outfit type: '%s'",buf);
@@ -1904,6 +1917,24 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name)
 #undef MELEMENT
 }
 
+/**
+ * @brief parses the price map outfit 
+ */
+static void outfit_parseSPriceMap( Outfit *temp, const xmlNodePtr parent )
+{
+   (void) parent;
+
+   temp->slot.type         = OUTFIT_SLOT_NA;
+   temp->slot.size         = OUTFIT_SLOT_SIZE_NA;
+
+   /* set the description */
+   temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
+   nsnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
+         "Shows prices across known systems. Mostly only for debugging" );
+
+   /**< don't need to check for errors, as there's no way there could be one */
+}
+
 
 /**
  * @brief Parses the license tidbits of the outfit.
@@ -2119,6 +2150,8 @@ static int outfit_parse( Outfit* temp, const char* file )
             outfit_parseSLocalMap( temp, node );
          else if (outfit_isGUI(temp))
             outfit_parseSGUI( temp, node );
+         else if (outfit_isPriceMap(temp))
+            outfit_parseSPriceMap( temp, node );
          else if (outfit_isLicense(temp))
             outfit_parseSLicense( temp, node );
 

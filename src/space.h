@@ -124,7 +124,7 @@ typedef struct Planet_ {
    char* description; /**< planet description */
    char* bar_description; /**< spaceport bar description */
    unsigned int services; /**< what services they offer */
-   Commodity **commodities; /**< what commodities they sell */
+   Commodity **commodities; /**< what commodities they trade */
    int ncommodities; /**< the amount they have */
    tech_group_t *tech; /**< Planet tech. */
 
@@ -214,6 +214,7 @@ typedef struct JumpPoint_ {
    double sina; /**< Sinus of the angle. */
    int sx; /**< X sprite to use. */
    int sy; /**< Y sprite to use. */
+
 } JumpPoint;
 extern glTexture *jumppoint_gfx; /**< Jump point graphics. */
 
@@ -251,8 +252,9 @@ struct StarSystem_ {
    int nfleets; /**< total number of fleets */
    double avg_pilot; /**< Target amount of pilots in the system. */
 
-   /* Calculated. */
-   double *prices; /**< Handles the prices in the system. */
+   /* economic values */
+   float *prices;
+   char *is_priceset; /* an array of booleans whether the price has been manually set or automatically set */
 
    /* Presence. */
    SystemPresence *presence; /**< Pointer to an array of presences in this system. */
@@ -303,6 +305,7 @@ char* planet_getServiceName( int service );
 int planet_getService( char *name );
 PlanetClass planetclass_get( const char a );
 credits_t planet_commodityPrice( const Planet *p, const Commodity *c );
+credits_t planet_commodityCost( const Planet *p, const Commodity *c, int buying );
 /* Misc modification. */
 int planet_setFaction( Planet *p, int faction );
 /* Land related stuff. */
@@ -371,9 +374,10 @@ char **system_searchFuzzyCase( const char* sysname, int *n );
 StarSystem* system_get( const char* sysname );
 StarSystem* system_getIndex( int id );
 int system_index( StarSystem *sys );
-int space_sysReachable( StarSystem *sys );
-int space_sysReallyReachable( char* sysname );
+int space_sysReachable( StarSystem *sys ); /* if a path to system is known */
+int space_sysReallyReachable( char* sysname ); /* if there exists a path to system */
 int space_sysReachableFromSys( StarSystem *target, StarSystem *sys );
+StarSystem **space_getFactionSys( int faction, int num );
 char** space_getFactionPlanet( int *nplanets, int *factions, int nfactions, int landable );
 char* space_getRndPlanet( int landable );
 double system_getClosest( const StarSystem *sys, int *pnt, int *jp, double x, double y );

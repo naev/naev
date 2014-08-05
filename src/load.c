@@ -572,9 +572,8 @@ int load_game( const char* file, int version_diff )
    news_loadArticles( node );
    hook_load(node);
    space_sysLoad(node);
-
-   /* Initialize the economy. */
-   economy_init();
+   /* setup the economy */
+   econ_updateprices(); /* to update prices when prices are changed */
 
    /* Check sanity. */
    event_checkSanity();

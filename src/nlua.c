@@ -30,6 +30,7 @@
 #include "nlua_diff.h"
 #include "nlua_outfit.h"
 #include "nlua_commodity.h"
+#include "nlua_economy.h"
 #include "nlua_cli.h"
 #include "nstring.h"
 
@@ -245,6 +246,7 @@ int nlua_loadStandard( lua_State *L, int readonly )
    r |= nlua_loadVector(L);
    r |= nlua_loadOutfit(L,readonly);
    r |= nlua_loadCommodity(L,readonly);
+   r |= nlua_loadEconomy(L,readonly);
    r |= nlua_loadNews(L,readonly);
 
    return r;

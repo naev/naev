@@ -32,6 +32,9 @@
 #include "nstring.h"
 
 
+extern int planet_nstack;
+extern Planet *planet_stack;
+
 /* Planet metatable methods */
 static int planetL_cur( lua_State *L );
 static int planetL_get( lua_State *L );
@@ -186,25 +189,41 @@ LuaPlanet* luaL_checkplanet( lua_State *L, int ind )
  */
 Planet* luaL_validplanet( lua_State *L, int ind )
 {
-   LuaPlanet *lp;
-   Planet *p;
-
-   if (lua_isplanet(L, ind)) {
-      lp = luaL_checkplanet(L, ind);
-      p  = planet_getIndex(lp->id);
-   }
-   else if (lua_isstring(L, ind))
-      p = planet_get( lua_tostring(L, ind) );
-   else {
-      luaL_typerror(L, ind, PLANET_METATABLE);
-      return NULL;
-   }
+   Planet *p = luaL_getplanet(L, ind);
 
    if (p == NULL)
-      NLUA_ERROR(L, "Planet is invalid");
+      WARN("Planet is invalid");
 
    return p;
 }
+
+/**
+ * @brief Gets a planet directly, does not warn if planet is invalid
+ *
+ *    @param L Lua state to get planet from.
+ *    @param ind Index position to find the planet.
+ *    @return Planet found at the index in the state.
+ */
+Planet* luaL_getplanet( lua_State *L, int ind )
+{
+   LuaPlanet *lp;
+   const char *pname;
+   int i;
+
+   if (lua_isplanet(L, ind)) {
+      lp = luaL_checkplanet(L, ind);
+      return planet_getIndex(lp->id);
+   }
+   else if (lua_isstring(L, ind)){
+      pname = lua_tostring(L, ind);
+      for (i=0; i<planet_nstack; i++)
+         if ( strcmp(planet_stack[i].name, pname) == 0 )
+            return &planet_stack[i];
+      return NULL;
+   }
+   return NULL;
+}
+
 /**
  * @brief Pushes a planet on the stack.
  *
@@ -797,17 +816,19 @@ static int planetL_outfitsSold( lua_State *L )
 static int planetL_commoditiesSold( lua_State *L )
 {
    Planet *p;
-   int i, n;
+   int i;
    LuaCommodity lc;
    Commodity **c;
 
    /* Get result and tech. */
    p = luaL_validplanet(L,1);
-   c = tech_getCommodity( p->tech, &n );
+   if (p==NULL)
+      NLUA_ERROR(L, "Argument 1 to commoditiesSold was not a valid planet");
+   c = p->commodities;
 
    /* Push results in a table. */
    lua_newtable(L);
-   for (i=0; i<n; i++) {
+   for (i=0; i<p->ncommodities; i++) {
       lua_pushnumber(L,i+1); /* index, starts with 1 */
       lc.commodity = c[i];
       lua_pushcommodity(L,lc); /* value = LuaCommodity */

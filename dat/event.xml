@@ -184,6 +184,11 @@
    <unique />
   </flags>
  </event>
+ <event name="Economic Events">
+  <lua>neutral/econ_events</lua>
+  <trigger>land</trigger>
+  <chance>20</chance>
+ </event>
  <event name="Kidnapped">
   <lua>neutral/kidnapped</lua>
   <trigger>enter</trigger>

@@ -57,6 +57,7 @@ typedef enum OutfitType_ {
    OUTFIT_TYPE_MAP, /**< Gives the player more knowledge about systems. */
    OUTFIT_TYPE_LOCALMAP, /**< Gives the player more knowledge about the current system. */
    OUTFIT_TYPE_GUI, /**< GUI for the player. */
+   OUTFIT_TYPE_PRICEMAP, /**< shows prices in the systems */
    OUTFIT_TYPE_LICENSE, /**< License that allows player to buy special stuff. */
    OUTFIT_TYPE_SENTINEL /**< indicates last type */
 } OutfitType;
@@ -375,6 +376,7 @@ int outfit_isFighter( const Outfit* o );
 int outfit_isMap( const Outfit* o );
 int outfit_isLocalMap( const Outfit* o );
 int outfit_isGUI( const Outfit* o );
+int outfit_isPriceMap( const Outfit* o );
 int outfit_isLicense( const Outfit* o );
 int outfit_isSecondary( const Outfit* o );
 const char* outfit_getType( const Outfit* o );

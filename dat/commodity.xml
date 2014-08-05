@@ -2,23 +2,23 @@
 <Commodities>
  <commodity name="Food">
   <description>Evolving from the military rations of centuries past, modern packaged meals are rich in nutrients and able to last decades in their vacuum-sealed packaging.</description>
-  <price>140</price>
+  <price>100</price>
  </commodity>
  <commodity name="Ore">
   <description>Ore is a key material in many industries. Smelted into metals, without ore, the ship-building industry and many others would grind to a halt.</description>
-  <price>210</price>
+  <price>50</price>
  </commodity>
  <commodity name="Industrial Goods">
   <description>An assortment of industrial goods, ranging from cutting lasers to processed metals.</description>
-  <price>340</price>
+  <price>25</price>
  </commodity>
  <commodity name="Medicine">
   <description>An assortment of medicines suitable for curing all sorts of ailments.</description>
-  <price>750</price>
+  <price>10</price>
  </commodity>
  <commodity name="Luxury Goods">
   <description>All sorts of high quality luxury goods.</description>
-  <price>630</price>
+  <price>10</price>
  </commodity>
  <commodity name="Parcels"/>
  <commodity name="Colonists"/>

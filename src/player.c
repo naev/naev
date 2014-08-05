@@ -242,6 +242,12 @@ static void player_newSetup( int tutorial )
    else
       start_tutPosition( &x, &y );
 
+   /* Start the news */
+   news_init();
+
+   /* Initialize economy prices */
+   econ_updateprices();
+
    cam_setTargetPos( x, y, 0 );
    cam_setZoom( conf.zoom_far );
 
@@ -293,9 +299,6 @@ void player_newTutorial (void)
 
    /* clear the map */
    map_clear();
-
-   /* Start the economy. */
-   economy_init();
 
    /* Start the news */
    news_init();
@@ -428,12 +431,6 @@ static int player_newMake (void)
 
    /* clear the map */
    map_clear();
-
-   /* Start the economy. */
-   economy_init();
-
-   /* Start the news */
-   news_init();
 
    return 0;
 }
@@ -1718,6 +1715,9 @@ void player_brokeHyperspace (void)
    events_trigger( EVENT_TRIGGER_ENTER );
    missions_run( MIS_AVAIL_SPACE, -1, NULL, NULL );
 
+   /* update economy prices */
+   econ_updateprices();
+
    /* Player sound. */
    player_soundPlay( snd_hypJump, 1 );
 }
@@ -2481,6 +2481,11 @@ int player_addOutfit( const Outfit *o, int quantity )
    else if (outfit_isLicense(o)) {
       player_addLicense(o->name);
       return 1; /* Success. */
+   }
+   /* special case if it's a price map */
+   else if (outfit_isPriceMap(o)) {
+      set_showPrice(1);
+      return 1;
    }
 
    /* Try to find it. */

@@ -26,6 +26,7 @@
 #include "array.h"
 #include "mapData.h"
 #include "nstring.h"
+#include "economy.h"
 
 
 #define MAP_WDWNAME     "Star Map" /**< Map window name. */
@@ -58,6 +59,10 @@ static gl_vbo *map_vbo = NULL; /**< Map VBO. */
 extern StarSystem *systems_stack;
 extern int systems_nstack;
 extern int faction_nstack;
+/* economy.c */
+extern char show_prices;
+extern int econ_nprices;
+extern Commodity *commodity_stack;
 
 
 /*
@@ -235,6 +240,13 @@ void map_open (void)
    window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtServices",
          &gl_smallFont, &cBlack, NULL );
 
+   if (show_prices){
+      window_addText( wid, x, y, 90, 20, 0, "txtSPrices",
+            &gl_smallFont, &cDConsole, "Prices:" );
+      window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtPrices",
+            &gl_smallFont, &cBlack, NULL );
+   }
+
    /* Close button */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
             "btnClose", "Close", window_close );
@@ -353,6 +365,16 @@ static void map_update( unsigned int wid )
       window_moveWidget( wid, "txtSServices", x, y );
       window_moveWidget( wid, "txtServices", x + 50, y -gl_smallFont.h - 5 );
       window_modifyText( wid, "txtServices", "Unknown" );
+      y -= 2 * gl_smallFont.h + 5 + 15;
+
+
+      /* Prices */
+      if (widget_exists(wid, "txtSPrices")){
+         window_moveWidget( wid, "txtSPrices", x, y );
+         window_moveWidget( wid, "txtPrices", x + 50, y -gl_smallFont.h - 5 );
+         window_modifyText( wid, "txtPrices", "Unknown" );
+         y -= 2 * gl_smallFont.h + 5 + 15;
+      }
 
       /*
        * Bottom Text
@@ -499,14 +521,29 @@ static void map_update( unsigned int wid )
          services |= sys->planets[i]->services;
    buf[0] = '\0';
    p = 0;
-   /*nsnprintf(buf, sizeof(buf), "%f\n", sys->prices[0]);*/ /*Hack to control prices. */
    for (i=PLANET_SERVICE_MISSIONS; i<=PLANET_SERVICE_SHIPYARD; i<<=1)
       if (services & i)
          p += nsnprintf( &buf[p], PATH_MAX-p, "%s\n", planet_getServiceName(i) );
-   if (buf[0] == '\0')
+   if (buf[0] == '\0'){
       p += nsnprintf( &buf[p], PATH_MAX-p, "None");
+      y-=gl_smallFont.h;
+   }
    window_modifyText( wid, "txtServices", buf );
+   /* Scroll down. */
+   h  = gl_printHeightRaw( &gl_smallFont, w, buf );
+   y -= 20 + (h - gl_smallFont.h);
 
+   /* get the prices */
+   if (show_prices) {
+      window_moveWidget( wid, "txtSPrices", x, y );
+      window_moveWidget( wid, "txtPrices", x + 50, y-gl_smallFont.h-5 );
+      p=0;
+      for (i=0; i<econ_nprices; i++)
+         p += nsnprintf( &buf[p], PATH_MAX-p, "%s%c %.0f\n", commodity_stack[i].name, (sys->is_priceset[i])?'=':':', sys->prices[i] * commodity_stack[i].price );
+      window_modifyText( wid, "txtPrices", buf );
+      h  = gl_printHeightRaw( &gl_smallFont, w, buf );
+      y -= 20 + (h - gl_smallFont.h);
+   }
 
    /*
     * System Status
@@ -1797,5 +1834,4 @@ int map_center( const char *sys )
 
    return 0;
 }
-
 

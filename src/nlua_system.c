@@ -17,6 +17,7 @@
 #include "nlua.h"
 #include "nluadef.h"
 #include "nlua_faction.h"
+#include "nlua_commodity.h"
 #include "nlua_vec2.h"
 #include "nlua_planet.h"
 #include "nlua_jump.h"
@@ -27,6 +28,8 @@
 #include "map_overlay.h"
 #include "space.h"
 
+extern StarSystem *systems_stack;
+extern int systems_nstack;
 
 /* System metatable methods */
 static int systemL_cur( lua_State *L );
@@ -88,6 +91,7 @@ static const luaL_reg system_cond_methods[] = {
    {0,0}
 }; /**< Read only system metatable methods. */
 
+extern int econ_nprices;   /* For refreshing system prices */
 
 /**
  * @brief Loads the system library.
@@ -168,24 +172,39 @@ LuaSystem* luaL_checksystem( lua_State *L, int ind )
  */
 StarSystem* luaL_validsystem( lua_State *L, int ind )
 {
+   StarSystem *s = luaL_getsystem(L, ind);
+
+   if (s == NULL)
+      WARN("System is invalid");
+
+   return s;
+}
+
+/**
+ * @brief Gets system (or system name) at index, but does not raise an error if not matched.
+ *
+ *    @param L Lua state to get system from.
+ *    @param ind Index position of system.
+ *    @return The System at ind.
+ */
+StarSystem* luaL_getsystem( lua_State *L, int ind )
+{
    LuaSystem *ls;
-   StarSystem *s;
+   const char *sname;
+   int i;
 
    if (lua_issystem(L, ind)) {
       ls = luaL_checksystem(L, ind);
-      s = system_getIndex( ls->id );
+      return system_getIndex( ls->id );
    }
-   else if (lua_isstring(L, ind))
-      s = system_get( lua_tostring(L, ind) );
-   else {
-      luaL_typerror(L, ind, FACTION_METATABLE);
+   else if (lua_isstring(L, ind)){
+      sname = lua_tostring(L, ind);
+      for (i=0; i<systems_nstack; i++)
+         if (strcmp(sname, systems_stack[i].name)==0)
+            return &systems_stack[i];
       return NULL;
    }
-
-   if (s == NULL)
-      NLUA_ERROR(L, "System is invalid");
-
-   return s;
+   return NULL;
 }
 
 /**
@@ -252,9 +271,13 @@ static int systemL_cur( lua_State *L )
  * Behaves differently depending on what you pass as param: <br/>
  *    - string : Gets the system by name. <br/>
  *    - planet : Gets the system by planet. <br/>
+ *    - bool : Gets a random planet. <br/>
+ *    - faction : Gets a random planet from that faction. <br/>
  *
  * @usage sys = system.get( p ) -- Gets system where planet 'p' is located.
  * @usage sys = system.get( "Gamma Polaris" ) -- Gets the system by name.
+ * @usage sys = system.get( faction.get("Dvaered") ) -- Gets a random Dvaered system
+ * @usage sys = system.get( true ) -- Gets a random system
  *
  *    @luaparam param Read description for details.
  *    @luareturn System metatable matching param.
@@ -264,27 +287,37 @@ static int systemL_get( lua_State *L )
 {
    LuaSystem sys;
    StarSystem *ss;
+   StarSystem **sys_list;
+   int f;
    Planet *pnt;
 
-   /* Invalid by default. */
    sys.id = -1;
 
-   /* Passing a string (systemname) */
    if (lua_isstring(L,1)) {
       ss = system_get( lua_tostring(L,1) );
       if (ss != NULL)
-         sys.id = system_index( ss );
+         sys.id = ss->id;
    }
-   /* Passing a planet */
    else if (lua_isplanet(L,1)) {
       pnt = luaL_validplanet(L,1);
       ss = system_get( planet_getSystem( pnt->name ) );
       if (ss != NULL)
          sys.id = system_index( ss );
    }
+   else if (lua_isfaction(L,1)) {
+      f = lua_tofaction(L,1)->f;
+      sys_list  = space_getFactionSys( f, 1 );
+      if (sys_list==NULL) return 0;
+      sys.id = sys_list[0]->id;
+      free(sys_list);
+   }
+   else if (lua_isboolean(L,1)) {
+      while ( !space_sysReallyReachable( (ss = &systems_stack[ rand() % systems_nstack ])->name ) )
+         ;
+      sys.id = ss->id;
+   }
    else NLUA_INVALID_PARAMETER(L);
 
-   /* Error checking. */
    if (sys.id < 0) {
       NLUA_ERROR(L, "No matching systems found.");
       return 0;
@@ -359,7 +392,6 @@ static int systemL_faction( lua_State *L )
    return 1;
 
 }
-
 
 /**
  * @brief Gets the system's nebula parameters.
