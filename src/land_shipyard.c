@@ -112,11 +112,18 @@ void shipyard_open( unsigned int wid )
          "Fabricator:\n"
          "Crew:\n"
          "\n"
+         "CPU:\n"
          "Mass:\n"
+         "Thrust:\n"
+         "Speed:\n"
+         "Turn:\n"
          "\n"
          "Absorption:\n"
+         "Shield:\n"
          "Armour:\n"
+         "Energy:\n"
          "Cargo Space:\n"
+         "Fuel:\n"
          "Fuel Use:\n"
          "Price:\n"
          "Money:\n"
@@ -185,7 +192,14 @@ void shipyard_update( unsigned int wid, char* str )
             "NA\n"
             "\n"
             "NA\n"
+            "NA\n"
+            "NA\n"
+            "NA\n"
+            "NA\n"
             "\n"
+            "NA\n"
+            "NA\n"
+            "NA\n"
             "NA\n"
             "NA\n"
             "NA\n"
@@ -230,11 +244,18 @@ void shipyard_update( unsigned int wid, char* str )
          "%s\n"
          "%d\n"
          "\n"
+         "%.0f teraflops\n"
          "%.0f tons\n"
+         "%.0f kN/ton\n"
+         "%.0f m/s\n"
+         "%.0f deg/s\n"
          "\n"
          "%.0f%% damage\n"
+         "%.0f MJ (%.1f MW)\n"
          "%.0f (%.1f regeneration)\n"
+         "%.0f MJ (%.1f MW)\n"
          "%.0f tons\n"
+         "%d units\n"
          "%.0f units\n"
          "%s credits\n"
          "%s credits\n"
@@ -244,11 +265,18 @@ void shipyard_update( unsigned int wid, char* str )
          ship->fabricator,
          ship->crew,
          /* Weapons & Manoeuvrability */
+         ship->cpu,
          ship->mass,
+         ship->thrust,
+         ship->speed,
+         ship->turn*180/M_PI,
          /* Misc */
          ship->dmg_absorb*100.,
+         ship->shield, ship->shield_regen,
          ship->armour, ship->armour_regen,
+         ship->energy, ship->energy_regen,
          ship->cap_cargo,
+         ship->fuel,
          ship->fuel_consumption,
          buf2,
          buf3,
