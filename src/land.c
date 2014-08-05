@@ -441,35 +441,16 @@ static void commodity_renderMod( double bx, double by, double w, double h, void 
 {
    (void) data;
    (void) h;
-   int bq, sq; /* buy q, sell q */
-   char buf[64];
-   credits_t price_tobuy;
-   credits_t price_tosell;
-   char *comm_name = toolkit_getList( land_getWid(LAND_WINDOW_COMMODITY), "lstGoods" );
+   int q;
+   char buf[8];
 
-      /* amount buying is max( num can afford, available space, modifier  ) */
-   if (strcmp(comm_name, "None")!=0){
-      Commodity *comm = commodity_get( comm_name );
-      bq = commodity_getMod();
-      bq = (bq*planet_commodityPrice(land_planet, comm) < player_modCredits(0) ) ? bq : (int)(player_modCredits(0)/planet_commodityPrice(land_planet, comm));
-      bq = (bq <= pilot_cargoFree(player.p)) ? bq : pilot_cargoFree(player.p);
-      sq =  (commodity_getMod() < pilot_cargoOwned( player.p, comm_name )) ? commodity_getMod() : pilot_cargoOwned( player.p, comm_name );
-      if (bq != commodity_mod) {
-         commodity_update( land_getWid(LAND_WINDOW_COMMODITY), NULL );
-         commodity_mod = bq;
-      }
-      price_tobuy = bq*planet_commodityPrice(land_planet, comm);
-      price_tosell = sq*planet_commodityPrice(land_planet, comm);
-   } 
-   else
-      bq = sq = price_tobuy = price_tosell = 0;
-
-   nsnprintf( buf, 64, "buy: %d tons, sell: %d tons",bq,sq);
-   gl_printMid( &gl_smallFont, w, bx, by+35, &cBlack, buf );
-   nsnprintf( buf, 64, "buy price: %i", (int) price_tobuy );
-   gl_printMid( &gl_smallFont, w, bx, by+20, &cBlack, buf );
-   nsnprintf( buf, 64, "sell price: %i", (int) price_tosell );
-   gl_printMid( &gl_smallFont, w, bx, by+5, &cBlack, buf );
+   q = commodity_getMod();
+   if (q != commodity_mod) {
+      commodity_update( land_getWid(LAND_WINDOW_COMMODITY), NULL );
+      commodity_mod = q;
+   }
+   nsnprintf( buf, 8, "%dx", q );
+   gl_printMid( &gl_smallFont, w, bx, by, &cBlack, buf );
 }
 
 /**
