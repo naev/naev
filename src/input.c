@@ -1235,8 +1235,6 @@ static void input_clickevent( SDL_Event* event )
          if (planet_hasService(pnt, PLANET_SERVICE_LAND)) {
             if ((pnt->faction >= 0) && (areEnemies( player.p->faction, pnt->faction ) && !pnt->bribed))
                player_hailPlanet();
-            else if (vect_dist2(&player.p->solid->pos,&pnt->pos) > pow2(pnt->radius))
-               player_autonavStart();
             else
                player_land();
          }
