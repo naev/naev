@@ -130,6 +130,7 @@ typedef struct Planet_ {
 
    /* economic values */
    float *prices;
+   float *xml_prices;
    char *is_priceset; /* an array of booleans whether the price has been manually set or automatically set */
 
    /* Graphics. */
@@ -258,6 +259,7 @@ struct StarSystem_ {
 
    /* economic values */
    float *prices;
+   float *xml_prices;
    char *is_priceset; /* an array of booleans whether the price has been manually set or automatically set */
 
    /* Presence. */

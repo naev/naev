@@ -54,8 +54,6 @@ extern Planet *planet_stack; /**< Planet stack. */
 extern int planet_nstack; /**< Num of planets */
 extern int commodity_mod;  /**< Smallest unit the player can buy, for player prices */
 
-float **xml_prices = NULL; /* an array of: array of all systems's original prices, NULL if none */
-
 static int econ_initialized   = 0; /**< Is economy system initialized? */
 static int *econ_comm         = NULL; /**< Commodities to calculate. */
 int econ_nprices              = 0; /**< Number of prices to calculate. */
@@ -515,28 +513,36 @@ void econ_updateprices(void)
  */
 void econ_revert(void)
 {
-   int i, c;
+   int i, j, n;
    StarSystem *sys;
+   Planet *p;
 
-      /* revert to the old values */
-   for (i=0; i<systems_nstack; i++){
+   /* revert to the old values */
+   for (i=0; i<systems_nstack; i++) {
       sys = systems_stack+i;
-      if (xml_prices[i]==NULL){
-         for (c=0; c<econ_nprices; c++)
-            sys->is_priceset[c]=0;
-         continue;
-      }
-      for (c=0; c<econ_nprices; c++){
-         if (xml_prices[i][c]>0.0){
-            sys->prices[c]=xml_prices[i][c];
-            sys->is_priceset[c]=1;
+      for (j=0; j<econ_nprices; j++) {
+         if (sys->xml_prices[j] > 0.) {
+            sys->prices[j] = sys->xml_prices[j];
+            sys->is_priceset[j] = 1;
          }
          else
-            sys->is_priceset[c]=0;
+            sys->is_priceset[j] = 0;
+      }
+
+      for (j=0; j<sys->nplanets; j++) {
+         p = sys->planets[j];
+         for (n=0; n<econ_nprices; n++) {
+            if (p->xml_prices[n] > 0.) {
+               p->prices[n] = p->xml_prices[n];
+               p->is_priceset[n] = 1;
+            }
+            else
+               p->is_priceset[n] = 0;
+         }
       }
    }
-   for (c=0; c<econ_nprices; c++)
-      commodity_stack[c].changed=1;
+   for (i=0; i<econ_nprices; i++)
+      commodity_stack[i].changed = 1;
    set_showPrice(0);
 
    return;
@@ -547,22 +553,26 @@ void econ_revert(void)
  */
 void econ_init(void)
 {
-   int s, c;
+   int i, j, c;
    StarSystem *sys;
+   Planet *p;
 
-   if (econ_initialized){ WARN("economy already initialized!\n"); return;}
+   if (econ_initialized) { WARN("economy already initialized!\n"); return; }
 
-      /* save original values */
-   if (xml_prices==NULL)
-      xml_prices = (float **) calloc(sizeof(float *), systems_nstack);
-   for (s=0; s<systems_nstack; s++){
-      sys = systems_stack+s;
-      for (c=0; c<econ_nprices; c++){
-         if (sys->is_priceset[c]==0)
-            continue;
-         if (xml_prices[s]==NULL)
-            xml_prices[s] = (float *) calloc(sizeof(float), econ_nprices);
-         xml_prices[s][c] = sys->prices[c];
+   /* save original values */
+   for (i=0; i<systems_nstack; i++) {
+      sys = systems_stack+i;
+      for (c=0; c<econ_nprices; c++) {
+         if (sys->is_priceset[c])
+            sys->xml_prices[c] = sys->prices[c];
+      }
+
+      for (j=0; j<sys->nplanets; j++) {
+         p = sys->planets[j];
+         for (c=0; c<econ_nprices; c++) {
+            if (p->is_priceset[c])
+               p->xml_prices[c] = p->prices[c];
+         }
       }
    }
 
@@ -574,17 +584,26 @@ void econ_init(void)
  */
 void econ_destroy(void)
 {
-   int s;
+   int i, j;
    StarSystem *sys;
-   if (econ_initialized!=1){ WARN("economy not inited!\n"); return; }
-   for (s=0; s<systems_nstack; s++){
-      sys=systems_stack+s;
+   Planet *p;
+   if (!econ_initialized) { WARN("economy not inited!\n"); return; }
+   for (i=0; i<systems_nstack; i++) {
+      sys = systems_stack+i;
       free(sys->prices); 
-      free(xml_prices[s]);
-      sys->prices=NULL;
+      free(sys->xml_prices);
+      sys->prices = NULL;
+      sys->xml_prices = NULL;
+
+      for (j=0; j<sys->nplanets; j++) {
+         p = sys->planets[j];
+         free(p->prices);
+         free(p->xml_prices);
+         p->prices = NULL;
+         p->xml_prices = NULL;
+      }
    }
-   free(xml_prices);
-   econ_initialized=0;
+   econ_initialized = 0;
 }
 
 

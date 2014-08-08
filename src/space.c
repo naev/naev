@@ -107,7 +107,6 @@ static int space_fchg = 0; /**< Faction change counter, to avoid unnecessary cal
 static int space_simulating = 0; /** Are we simulating space? */
 extern int econ_nprices;
 extern Commodity *commodity_stack;
-extern float **xml_prices;
 extern char show_prices;
 
 
@@ -140,7 +139,8 @@ static StarSystem* system_parse( StarSystem *system, const xmlNodePtr parent );
 static int system_parseJumpPoint( const xmlNodePtr node, StarSystem *sys );
 static int system_parseJumpPointDiff( const xmlNodePtr node, StarSystem *sys );
 static void system_parseJumps( const xmlNodePtr parent );
-static int space_parsePricesSave( xmlNodePtr node );
+static int space_parseSystemPricesSave( xmlNodePtr node );
+static int space_parsePlanetPricesSave( xmlNodePtr node );
 /* misc */
 static int getPresenceIndex( StarSystem *sys, int faction );
 static void presenceCleanup( StarSystem *sys );
@@ -1537,8 +1537,9 @@ Planet *planet_new (void)
    if (!systems_loading && realloced)
       systems_reconstructPlanets();
 
-   p->prices=(float *) calloc(sizeof(float), econ_nprices );
-   p->is_priceset=(char *) calloc(sizeof(char), econ_nprices);
+   p->prices = (float *) calloc( sizeof(float), econ_nprices );
+   p->xml_prices = (float *) calloc( sizeof(float), econ_nprices );
+   p->is_priceset = (char *) calloc( sizeof(char), econ_nprices );
 
    return p;
 }
@@ -2361,8 +2362,9 @@ StarSystem *system_new (void)
    if (!systems_loading && realloced)
       systems_reconstructJumps();
 
-   sys->prices=(float *) calloc(sizeof(float), econ_nprices );
-   sys->is_priceset=(char *) calloc(sizeof(char), econ_nprices);
+   sys->prices = (float *) calloc( sizeof(float), econ_nprices );
+   sys->xml_prices = (float *) calloc( sizeof(float), econ_nprices );
+   sys->is_priceset = (char *) calloc( sizeof(char), econ_nprices );
 
    return sys;
 }
@@ -3333,11 +3335,11 @@ int space_rmMarker( int sys, SysMarker type )
  */
 int space_sysSave( xmlTextWriterPtr writer )
 {
-   int i;
-   int j;
+   int i, j, c;
    int changed;
    char buf[32];
    StarSystem *sys;
+   Planet *p;
 
    xmlw_startElem(writer,"space");
 
@@ -3364,33 +3366,28 @@ int space_sysSave( xmlTextWriterPtr writer )
       xmlw_endElem(writer);
    }
 
-      /* save any changed prices */
+   /* save any changed prices */
    xmlw_startElem(writer, "sys_econ");
-   for (i=0; i<systems_nstack; i++){
+   for (i=0; i<systems_nstack; i++) {
       sys = systems_stack+i;
 
-         /* if prices haven't changed from default values at all, continue */
-      changed=0;
-      if (xml_prices[i]==NULL)
-         for (j=0; j<econ_nprices; j++){
-            if (sys->is_priceset[j]){
-               changed=1;
-               break;}
-            }
-      else
-         for (j=0; j<econ_nprices; j++)
-            if (xml_prices[i][j]!=sys->prices[j]){
-               changed=1;
-               break;}
+      /* if prices haven't changed from default values at all, continue */
+      changed = 0;
+      for (c=0; c<econ_nprices; c++) {
+         if (sys->xml_prices[c] != sys->prices[c]) {
+            changed = 1;
+            break;
+         }
+      }
       if (!changed) continue;
 
-      xmlw_startElem(writer,"prices");
-      xmlw_attr(writer,"sys","%s",sys->name);
-      for (j=0; j<econ_nprices; j++) {
-         if ( sys->is_priceset[j] && (xml_prices[i]==NULL || sys->prices[j]!=xml_prices[i][j])){
-            xmlw_startElem(writer,"commodity");
-            xmlw_attr(writer, "name", "%s", commodity_stack[j].name);
-            nsnprintf(buf, 32, "%.2f", sys->prices[j]);
+      xmlw_startElem(writer, "prices");
+      xmlw_attr(writer, "sys", "%s", sys->name);
+      for (c=0; c<econ_nprices; c++) {
+         if (sys->is_priceset[c] && sys->prices[c] != sys->xml_prices[c]) {
+            xmlw_startElem(writer, "commodity");
+            xmlw_attr(writer, "name", "%s", commodity_stack[c].name);
+            nsnprintf(buf, 32, "%.2f", sys->prices[c]);
             xmlw_str(writer, "%s", buf);
             xmlw_endElem(writer); /* "commodity" */
          }
@@ -3398,6 +3395,38 @@ int space_sysSave( xmlTextWriterPtr writer )
       xmlw_endElem(writer); /* prices */
    }
    xmlw_endElem(writer); /* "sys_econ" */
+
+   xmlw_startElem(writer, "p_econ");
+   for (i=0; i<systems_nstack; i++){
+      sys = systems_stack+i;
+      for (j=0; j<sys->nplanets; j++) {
+         p = sys->planets[j];
+
+         /* if prices haven't changed from default values at all, continue */
+         changed = 0;
+         for (c=0; c<econ_nprices; c++) {
+            if (p->xml_prices[c] != p->prices[c]) {
+               changed = 1;
+               break;
+            }
+         }
+         if (!changed) continue;
+
+         xmlw_startElem(writer, "prices");
+         xmlw_attr(writer, "p", "%s", p->name);
+         for (c=0; c<econ_nprices; c++) {
+            if (p->is_priceset[c] && p->prices[c] != p->xml_prices[c]) {
+               xmlw_startElem(writer, "commodity");
+               xmlw_attr(writer, "name", "%s", commodity_stack[c].name);
+               nsnprintf(buf, 32, "%.2f", p->prices[c]);
+               xmlw_str(writer, "%s", buf);
+               xmlw_endElem(writer); /* "commodity" */
+            }
+         }
+         xmlw_endElem(writer); /* prices */
+      }
+   }
+   xmlw_endElem(writer); /* "p_econ" */
 
    if (show_prices)
       xmlw_elemEmpty(writer, "show_prices");
@@ -3429,7 +3458,7 @@ int space_sysLoad( xmlNodePtr parent )
 
          do {
             if (xml_isNode(cur,"known")) {
-               xmlr_attr(cur,"sys",str);
+               xmlr_attr(cur, "sys", str);
                if (str != NULL) { /* check for 5.0 saves */
                   sys = system_get(str);
                   free(str);
@@ -3437,12 +3466,15 @@ int space_sysLoad( xmlNodePtr parent )
                else /* load from 5.0 saves */
                   sys = system_get(xml_get(cur));
                if (sys != NULL) { /* Must exist */
-                  sys_setFlag(sys,SYSTEM_KNOWN);
+                  sys_setFlag(sys, SYSTEM_KNOWN);
                   space_parseAssets(cur, sys);
                }
             }
-            else if (xml_isNode(cur, "sys_econ")){
-               space_parsePricesSave(cur);
+            else if (xml_isNode(cur, "sys_econ")) {
+               space_parseSystemPricesSave(cur);
+            }
+            else if (xml_isNode(cur, "p_econ")) {
+               space_parsePlanetPricesSave(cur);
             }
             else if (xml_isNode(cur, "show_prices"))
                set_showPrice(1);
@@ -3490,9 +3522,8 @@ static int space_parseAssets( xmlNodePtr parent, StarSystem* sys )
  *    @param parent Node of the system.
  *    @return 0 on success.
  */
-static int space_parsePricesSave( xmlNodePtr Econ )
+static int space_parseSystemPricesSave( xmlNodePtr Econ )
 {
-
    xmlNodePtr node, cur;
    Commodity *comm;
    StarSystem *sys = NULL;
@@ -3503,24 +3534,24 @@ static int space_parsePricesSave( xmlNodePtr Econ )
       /* get system prices */
       if (xml_isNode(node, "prices")){
 
-         xmlr_attr(node,"sys",tmp);
-         sys=system_get(tmp);
-         if (sys==NULL){
+         xmlr_attr(node, "sys", tmp);
+         sys = system_get(tmp);
+         if (sys == NULL) {
             WARN("Invalid system name %s in save\n",tmp);
             return -1;
          }
          cur = node->children;
          do {
-            if (sys==NULL)
+            if (sys == NULL)
                continue;
 
-            if (xml_isNode(cur,"commodity")){
+            if (xml_isNode(cur, "commodity")) {
                xmlr_attr(cur, "name", tmp);
-               comm=commodity_get(tmp);
-               if (comm==NULL)
+               comm = commodity_get(tmp);
+               if (comm == NULL)
                   continue;
-               sys->is_priceset[comm->index]=1;
-               xmlr_float(cur ,"commodity" ,sys->prices[comm->index]);
+               sys->is_priceset[comm->index] = 1;
+               xmlr_float(cur, "commodity", sys->prices[comm->index]);
             }
          } while (xml_nextNode(cur));
          continue;
@@ -3529,6 +3560,52 @@ static int space_parsePricesSave( xmlNodePtr Econ )
    
    return 0;
 }
+
+
+/**
+ * @brief Parses economic values in a system from a savegame
+ *
+ *    @param parent Node of the system.
+ *    @return 0 on success.
+ */
+static int space_parsePlanetPricesSave( xmlNodePtr Econ )
+{
+   xmlNodePtr node, cur;
+   Commodity *comm;
+   Planet *p = NULL;
+   char *tmp;
+   node = Econ->xmlChildrenNode;
+
+   do {
+      /* get system prices */
+      if (xml_isNode(node, "prices")){
+         xmlr_attr(node, "p", tmp);
+         p = planet_get(tmp);
+         if (p == NULL) {
+            WARN("Invalid system name %s in save\n", tmp);
+            return -1;
+         }
+         cur = node->children;
+         do {
+            if (p==NULL)
+               continue;
+
+            if (xml_isNode(cur, "commodity")) {
+               xmlr_attr(cur, "name", tmp);
+               comm = commodity_get(tmp);
+               if (comm == NULL)
+                  continue;
+               p->is_priceset[comm->index] = 1;
+               xmlr_float(cur, "commodity", p->prices[comm->index]);
+            }
+         } while (xml_nextNode(cur));
+         continue;
+      }
+   } while (xml_nextNode(node));
+   
+   return 0;
+}
+
 
 /**
  * @brief Gets the index of the presence element for a faction.
