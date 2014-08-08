@@ -1,189 +1,175 @@
+--[[
+
+   Economy Events
+   Copyright (c) 2013 BariumBlue
+   Copyright (c) 2014 Julian Marchant
+
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License version 3 as
+   published by the Free Software Foundation.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+--]]
+
+include "jumpdist.lua"
+
+
+events = {}
+
+events[1] = {}
+events[1]["time"] = 150
+events[1][1] = { "Food", 3.0 }
+
+events[2] = {}
+events[2]["time"] = 100
+events[2][1] = { "Food", 0.5 }
+
+events[3] = {}
+events[3]["time"] = 50
+events[3][1] = { "Industrial Goods", 1.5 }
+events[3][2] = { "Ore", 1.5 }
+
+events[4] = {}
+events[4]["time"] = 25
+events[4][1] = { "Luxury Goods", 1.5 }
+
+events[5] = {}
+events[5]["time"] = 100
+events[5][1] = { "Medicine", 2 }
+
 
 lang = naev.lang()
 if lang == 'es' then --not translated atm
 else --default english
+   events[1]["title"] = "Famine on %s"
+   events[1]["text"] = "The planet %s is experiencing a famine due to an unexpected food shortage. Food prices have skyrocketed as a result."
 
-   events = {
+   events[2]["title"] = "Bumper Crop on %s"
+   events[2]["text"] = "More crops than usual are being harvested on the planet %s, resulting in lower food prices."
 
-      {
-         "famine",  --event name/type
-         25,         --event takes 25 STP
-         {"Food", 2.0} --commodity and it's new price
-      },
+   events[3]["title"] = "Worker Strike on %s"
+   events[3]["text"] = "Prices of industrial goods and ore have risen on the planet %s due to a worker's strike."
 
-      {
-         "bumper harvest",
-         25,
-         {"Food", .5} --food price now at half the price it was
-      },
+   events[4]["title"] = "Cat Convention on %s"
+   events[4]["text"] = "Many wealthy people are visiting the planet %s for a cat convention, resulting in a high demand for luxury goods."
 
-      {
-         "worker's strike",
-         25,
-         {"Industrial Goods", 1.5},
-         {"Ore", 1.5}
-      },
-
-      {
-         "cat convention",
-         25,
-         {"Luxury Goods", 1.5},
-         {"Medicine",1.25}
-      },
-
-      {
-         "disease outbreak",
-         25,
-         {"Medicine",2},
-         {"Food",1.3}
-      }
-   }
-
+   events[5]["title"] = "Disease Outbreak on %s"
+   events[5]["text"] = "The demand for medicine on the planet %s has spiked due to an outbreak of an unpleasent disease."
 end
 
-commodities={"Food", "Medicine", "Luxury Goods","Industrial Goods", "Ore"}
-factions = {"Empire","Sirius","Frontier","Soromid","Dvaered","Independent"}
 
-original={}   --original prices
+function create ()
+   --get the event
+   local event_num = rnd.rnd( 1, #events )
+   local event = events[event_num]
 
-function create()
+   --get a planet with no current events
+   local economic_articles = news.get( "economic events" )
+   local systems = getsysatdistance( system.cur(), 0, 5 )
+   while event_planet == nil and #systems > 0 do
+      i = rnd.rnd( 1, #systems )
+      local sys = systems[i]
+      for j = i, #systems - 1 do
+         systems[j] = systems[j + 1]
+      end
+      systems[#systems] = nil
 
-   make_event()
+      local planets = sys:planets()
+      while event_planet == nil and #planets > 0 do
+         local i = rnd.rnd( 1, #planets )
+         local p = planets[i]
+         for j = i, #planets - 1 do
+            planets[j] = planets[j + 1]
+         end
+         planets[#planets] = nil
 
+         local planet_works = false
+         if p:services()["commodity"] and
+               not planet.cur():faction():areEnemies( p:faction() ) then
+            planet_works = true
+
+            for i = 1, #economic_articles do
+               if string.match( economic_articles[i]:title(), p:name() ) then
+                  planet_works = false
+                  break
+               end
+            end
+
+            for i = 1, #event do
+               local c = commodity.get( event[i][1] )
+               if not p:commoditiesSold()[c] then
+                  planet_works = false
+                  break
+               end
+            end
+         end
+
+         if planet_works then
+            event_planet = p
+            break
+         end
+      end
+   end
+
+   if event_planet ~= nil then
+      original_prices = {}
+      for i = 1, #event do
+         local good = commodity.get( event[i][1] )
+         if econ.isPlanetPriceSet( good, event_planet ) then
+            original_prices[good:name()] = econ.getPrice( good, event_planet )
+         end
+
+         local price = econ.getPrice( good, event_planet ) * event[i][2]
+         econ.setPlanetPrice( good, event_planet, price )
+      end
+
+      --update the prices, and make the article
+      econ.updatePrices()
+      make_article( event_planet, event )
+
+      --set up the event ending
+      --put all the information we'll need into a string
+      str=" system:"..sys:name()..","
+      for i=1,#event-2 do
+         comm_name = event[i+2][1]
+         str=str..string.format("%sorigprice:%f,",comm_name, original[i] )
+      end
+
+      hook.date( time.create(0, event["time"], 0), "end_event" )
+      evt.save(true)
+   end
 end
 
 
    --make the news event for the selected event and system
-function make_article(sys, event)
-
-   title = "System "..sys:name().."  experienced "..event[1]
-   body = "System "..sys:name().." recently experienced a "..event[1]..", changing "
-
-      --say how the prices have changed
-   for i=1, #event-2 do
-      comm_name = event[i+2][1]
-      body = body.."the price of "..comm_name..string.format(" from %.0f credits per ton to %.0f",math.abs(original[i]),econ.getPrice(comm_name, sys))
-      if i<#event-3 then
-         body = body..", "
-      elseif i==#event-3 then
-         body = body..", and "
-      elseif i==#event-2 then
-         body = body.."."
-      end
-   end
-
-   body = body.." This event is expected to end in "..event[2].." STP, at date "..(time.create(0,event[2],0)+time.get()):str()
-      --make the article
-   article = news.add("Generic", title, body, time.get() + time.create( 0, event[2], 0))
+function make_article( p, event )
+   local title = event["title"]:format( p.name() )
+   local body = event["text"]:format( p.name() )
+   local article = news.add( "Generic", title, body,
+      time.get() + time.create( 0, event["time"], 0 ) )
    article:bind("economic event")
-
-end
-
-
-   --make a single economic event
-function make_event()
-
-      --get the event
-   event_num = math.random(#events)
-   event = events[event_num]
-
-      --get a system with >=500 presence and with no current events
-   economic_articles = news.get("economic events")
-   got_sys=false
-   for i=0,20 do
-      sys=system.get(true)
-      syspresences = system.presences(sys)
-      sum=0
-      for _,v in ipairs(factions) do
-         if syspresences[v] then
-            sum=sum+syspresences[v]
-         end
-      end
-      system_nottaken=true
-      for i=1,#economic_articles do --check this system wasn't already taken
-         if string.match( article:title(), sys:name()) then
-            system_nottaken=false
-            break
-         end
-      end
-      if system_nottaken and sum > 500 then
-         got_sys=true
-         break
-      end
-   end
-   if not got_sys then
-      return
-   end
-
-      --get the original prices
-   for i=1,#event-2 do
-      comm = event[i+2]
-      comm_name = event[i+2][1]
-      if econ.isSystemPriceSet(comm[1], sys) then
-         original[i] = econ.getPrice(comm_name, sys)
-      else
-         original[i] = -econ.getPrice(comm_name, sys) --negative to indicate unset price
-      end
-   end
-
-      --put in new prices
-   for i=1,#event-2 do
-      comm = event[i+2]
-      price = econ.getPrice(comm[1], sys)
-      price = price*comm[2]
-      econ.setSystemPrice(comm[1], sys, price)
-   end
-
-      --update the prices, and make the article
-   econ.updatePrices()
-
-   make_article(sys, event)
-
-      --set up the event ending
-      --put all the information we'll need into a string
-   str=" system:"..sys:name()..","
-   for i=1,#event-2 do
-      comm_name = event[i+2][1]
-      str=str..string.format("%sorigprice:%f,",comm_name, original[i] )
-   end
-
-   hook.date( time.create(0, event[2], 0), "end_event", str )
-   evt.save(true)
-
 end
 
 
 --end the event, and return the values to their original values
-function end_event(str)
-      --first, get all the information we'll need
-   sys=nil
-   num_changed_comms=0
-   weighted=0
-   comms={}
+function end_event ()
+   local commodities = event_planet:commoditiesSold()
 
-   tmp    = str:match("system:[a-zA-Z' ]*,")
-   sysname = tmp:match(":[a-zA-Z' ]*"):sub(2)
-   sys    = system.get(sysname)
-   for i=1,#commodities do
-      comm_entry = str:match(commodities[i].."origprice:[\-0-9]*")
-      if (comm_entry) then
-         comm_price = string.match(comm_entry, "[\-0-9]+")
-         comm_price = tonumber(comm_price)
-         comms[#comms+1] = {commodities[i], comm_price}
-      end
-   end
-
-      --reset prices to their original states
-   for i=1, #comms do
-      comm=comms[i]
-      if comm[2]<=0 then
-         econ.unsetSystemPrice(comm[1], sys)
+   --reset prices to their original states
+   for i = 1, #commodities do
+      local c = commodities[i]
+      local price = original_prices[c:name()]
+      if price ~= nil then
+         econ.setPlanetPrice( c, event_planet, price )
       else
-         econ.setSystemPrice(comm[1], sys, comm[2])
+         econ.unsetPlanetPrice( c, event_planet )
       end
    end
 
    evt.finish()
-
 end
 
