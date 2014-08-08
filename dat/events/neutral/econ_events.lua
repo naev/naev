@@ -119,7 +119,7 @@ function make_event()
    for i=1,#event-2 do
       comm = event[i+2]
       comm_name = event[i+2][1]
-      if econ.isPriceSet(comm[1], sys) then
+      if econ.isSystemPriceSet(comm[1], sys) then
          original[i] = econ.getPrice(comm_name, sys)
       else
          original[i] = -econ.getPrice(comm_name, sys) --negative to indicate unset price
@@ -131,7 +131,7 @@ function make_event()
       comm = event[i+2]
       price = econ.getPrice(comm[1], sys)
       price = price*comm[2]
-      econ.setPrice(comm[1], sys, price)
+      econ.setSystemPrice(comm[1], sys, price)
    end
 
       --update the prices, and make the article
@@ -177,9 +177,9 @@ function end_event(str)
    for i=1, #comms do
       comm=comms[i]
       if comm[2]<=0 then
-         econ.unsetPrice(comm[1], sys)
+         econ.unsetSystemPrice(comm[1], sys)
       else
-         econ.setPrice(comm[1], sys, comm[2])
+         econ.setSystemPrice(comm[1], sys, comm[2])
       end
    end
 

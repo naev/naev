@@ -26,17 +26,23 @@
 
 static int economyL_updatePrices( lua_State *L );
 static int economyL_getPrice( lua_State *L );
-static int economyL_setPrice( lua_State *L );
-static int economyL_unsetPrice( lua_State *L );
-static int economyL_isPriceSet( lua_State *L );
+static int economyL_setSystemPrice( lua_State *L );
+static int economyL_unsetSystemPrice( lua_State *L );
+static int economyL_isSystemPriceSet( lua_State *L );
+static int economyL_setPlanetPrice( lua_State *L );
+static int economyL_unsetPlanetPrice( lua_State *L );
+static int economyL_isPlanetPriceSet( lua_State *L );
 
 
 static const luaL_reg economy_methods[] = {
    { "updatePrices", economyL_updatePrices },
    { "getPrice", economyL_getPrice },
-   { "setPrice", economyL_setPrice },
-   { "unsetPrice", economyL_unsetPrice },
-   { "isPriceSet", economyL_isPriceSet },
+   { "setSystemPrice", economyL_setSystemPrice },
+   { "unsetSystemPrice", economyL_unsetSystemPrice },
+   { "isSystemPriceSet", economyL_isSystemPriceSet },
+   { "setPlanetPrice", economyL_setPlanetPrice },
+   { "unsetPlanetPrice", economyL_unsetPlanetPrice },
+   { "isPlanetPriceSet", economyL_isPlanetPriceSet },
    {0,0}
 }; /**< System metatable methods. */
 static const luaL_reg economy_cond_methods[] = {
@@ -85,14 +91,13 @@ int nlua_loadEconomy( lua_State *L, int readonly )
  *    any set prices will be updated after landing, jumping, or econ.resfreshPrices()
  *
  * @code
- * econ.setPrice("Arcturus", "Food", 12000) --sets the price of food at Arcturus to 12000credits/ton
- * print(econ.getPrice("Arcturus", "Food")) --print the price of food at arcturus
- * print(econ.isPriceSet("Arcturus", "Food")) --prints whether the price of food was set; in this case yes
- * econ.unsetPrice("Arcturus", "Food") --unsets the price of food at arcturus
+ * econ.setSystemPrice( "Food", system.get("Arcturus"), 12000 ) --sets the price of food at Arcturus to 12000credits/ton
+ * print(econ.getSystemPrice( "Food", system.get("Arcturus") )) --print the price of food at arcturus
+ * print(econ.isSystemPriceSet( "Food", system.get("Arcturus") )) --prints whether the price of food was set; in this case yes
+ * econ.unsetSystemPrice( "Food", system.get("Arcturus") ) --unsets the price of food at arcturus
  * econ.updatePrices() --updates all prices, including the price of food at arcturus
- * print(econ.getPrice("Arcturus", "Food")) --print the price of food at arcturus, should no longer be 12000,
+ * print(econ.getSystemPrice( "Food", system.get("Arcturus") )) --print the price of food at arcturus, should no longer be 12000,
  *       --and instead be the average of it's neighbors' food prices
- * econ.update
  * @endcode
  *
  * @luamod econ
@@ -101,9 +106,9 @@ int nlua_loadEconomy( lua_State *L, int readonly )
 
 /**
  * @brief refreshes the prices of any systems with unset prices, if the prices need refreshing. 
- *    Automatically done when jumping, landing, or taking off
+ *    Automatically done when jumping, landing, or taking off.
  *
- * @usage economy.updatePrices()
+ * @usage econ.updatePrices()
  */
 static int economyL_updatePrices( lua_State *L ){
    (void) L;
@@ -113,128 +118,187 @@ static int economyL_updatePrices( lua_State *L ){
 
 
 /**
- * @brief get the real price for a good in a system
+ * @brief Returns the real price for a good in a system.
  *
- *    @luaparam good the good/commodity
- *    @luaparam system the system
- *    @luareturn the real price of the good in the system
- * @usage economy.getPrice("Doranthex", "Food")
+ *    @luaparam c Commodity to get the price of.
+ *    @luaparam planet Planet to get the price on.
+ *    @luareturn The real price of the commodity on the planet.
+ * @usage econ.getPrice( "Ore", planet.cur() ) -- Gets the price of ore on the current planet
  */
 static int economyL_getPrice( lua_State *L )
 {
+   Planet *p;
    StarSystem *sys;
    Commodity *comm;
-
    comm = luaL_validcommodity(L, 1);
-   sys = luaL_validsystem(L, 2);
-
-   if (comm==NULL){
-      WARN("Invalid commodity for arg 1");
+   p = luaL_validplanet(L, 2);
+   sys = system_get( planet_getSystem( p->name ) );
+   if (comm == NULL)
       return 0;
-   }
-   if (sys==NULL){
-      WARN("Invalid system for arg 2");
+   if (p == NULL)
       return 0;
-   }
-
-   lua_pushnumber( L, (lua_Number) sys->prices[comm->index] * comm->price);
+   if (p->is_priceset[comm->index])
+      lua_pushnumber( L, (lua_Number) p->prices[comm->index] * comm->price);
+   else
+      lua_pushnumber( L, (lua_Number) sys->prices[comm->index] * comm->price);
    return 1;
 }
 
+
 /**
- * @brief set the price of a good at a system
+ * @brief Sets the price of a commodity in a system.
  *
- *    @luaparam good the good/commodity
- *    @luaparam system the systemy
- *    @luaparam price the price in credits/ton
+ *    @luaparam c Commodity to set the price of.
+ *    @luaparam system System to set the price on.
+ *    @luaparam price New price in credits.
  *
- * @usage econ.setPrice("Arcturus", "Food", 12000)
+ * @usage econ.setSystemPrice( "Food", system.cur(), 12000 ) -- Sets the price of food in the current system to 12000
  */
-static int economyL_setPrice( lua_State *L ){
+static int economyL_setSystemPrice( lua_State *L ){
    StarSystem *sys;
    Commodity *comm;
-   float price=-1.0;
-
+   float price = -1.0;
    comm = luaL_validcommodity(L, 1);
    sys = luaL_validsystem(L, 2);
    price = (float) lua_tonumber(L, 3);
-
-   if (comm==NULL){
-      WARN("Invalid commodity for arg 1");
+   if (comm == NULL)
       return 0;
-   }
-   if (sys==NULL){
-      WARN("Invalid system for arg 2");
+   if (sys == NULL)
       return 0;
-   }
-   if (price<=0.0){
-      WARN("Invalid price for arg 3");
+   if (price <= 0.0)
       return 0;
-   }
-
-   sys->prices[comm->index]=price/comm->price;
-   sys->is_priceset[comm->index]=1;
-   comm->changed=1;
-
+   sys->prices[comm->index] = price / comm->price;
+   sys->is_priceset[comm->index] = 1;
+   comm->changed = 1;
    return 0;
 }
+
+
+/**
+ * @brief Unsets a price in a system. The new price in the will be the average price of it's neighbors.
+ *    The price will change after jumping, landing/takeoff, and econ.updatePrices()
+ *
+ *    @luaparam c Commodity to unset the price of.
+ *    @luaparam system System to unset the price in.
+ *
+ * @usage econ.unsetSystemPrice( "Food", system.cur() ) -- Unsets the price of food in the current system
+ */
+static int economyL_unsetSystemPrice( lua_State *L ){
+   StarSystem *sys;
+   Commodity *comm;
+   comm = luaL_validcommodity(L, 1);
+   sys = luaL_validsystem(L, 2);
+   if (comm == NULL)
+      return 0;
+   if (sys == NULL)
+      return 0;
+   sys->is_priceset[comm->index] = 0;
+   comm->changed = 1;
+   return 0;
+}
+
+
+/**
+ * @brief Checks to see if the price of a commodity has been set in a system.
+ *
+ *    @luaparam c Commodity to check for the price being set.
+ *    @luaparam system System to check for the price being set.
+ *    @luareturn true if the price of the commodity has been set on the system.
+ *
+ * @usage econ.isSystemPriceSet( "Food", system.cur() ) -- Checks whether the price of food in the current system has been set
+ */
+static int economyL_isSystemPriceSet( lua_State *L ){
+   StarSystem *sys;
+   Commodity *comm;
+   comm = luaL_validcommodity(L, 1);
+   sys = luaL_validsystem(L, 2);
+   if (comm == NULL)
+      return 0;
+   if (sys == NULL)
+      return 0;
+   if (sys->is_priceset[comm->index])
+      lua_pushboolean(L, 1);
+   else
+      lua_pushboolean(L, 0);
+   return 1;
+}
+
+
+/**
+ * @brief Sets the price of a commodity on a planet.
+ *
+ *    @luaparam c Commodity to set the price of.
+ *    @luaparam p Planet to set the price on.
+ *    @luaparam price New price in credits.
+ *
+ * @usage econ.setPlanetPrice( "Food", planet.cur(), 12000 ) -- Sets the price of food on the current planet to 12000
+ */
+static int economyL_setPlanetPrice( lua_State *L ){
+   Planet *p;
+   Commodity *comm;
+   float price = -1.0;
+   comm = luaL_validcommodity(L, 1);
+   p = luaL_validplanet(L, 2);
+   price = (float) lua_tonumber(L, 3);
+   if (comm == NULL)
+      return 0;
+   if (p == NULL)
+      return 0;
+   if (price <= 0.0)
+      return 0;
+   p->prices[comm->index] = price / comm->price;
+   p->is_priceset[comm->index] = 1;
+   comm->changed = 1;
+   return 0;
+}
+
 
 /**
  * @brief unsets a price in a system. The new price in the will be the average price of it's neighbors.
  *    The price will change after jumping, landing/takeoff, and econ.updatePrices()
  *
- *    @luaparam good the good/commodity
- *    @luaparam system the system
+ *    @luaparam c Commodity to unset the price of.
+ *    @luaparam p Planet to unset the price on.
  *
- * @usage econ.unsetPrice("Arcturus", "Food") --unsets the price of food in arcturus
+ * @usage econ.unsetPlanetPrice( "Food", planet.cur() ) -- Unsets the price of food on the current planet
  */
-static int economyL_unsetPrice( lua_State *L ){
-   StarSystem *sys;
+static int economyL_unsetPlanetPrice( lua_State *L ){
+   Planet *p;
    Commodity *comm;
-
    comm = luaL_validcommodity(L, 1);
-   sys = luaL_validsystem(L, 2);
-
-   if (comm==NULL){
-      WARN("Invalid commodity for arg 1");
+   p = luaL_validplanet(L, 2);
+   if (comm == NULL)
       return 0;
-   }
-   if (sys==NULL){
-      WARN("Invalid system for arg 2");
+   if (p == NULL)
       return 0;
-   }
-
-   sys->is_priceset[comm->index]=0;
-   comm->changed=1;
-
+   p->is_priceset[comm->index] = 0;
+   comm->changed = 1;
    return 0;
 }
 
 
-static int economyL_isPriceSet( lua_State *L ){
-   StarSystem *sys;
+/**
+ * @brief Checks to see if the price of a commodity has been set on a planet.
+ *
+ *    @luaparam c Commodity to check for the price being set.
+ *    @luaparam p Planet to check for the price being set.
+ *    @luareturn true if the price of the commodity has been set on the planet.
+ *
+ * @usage econ.isPlanetPriceSet( "Food", planet.cur() ) -- Checks whether the price of food in the current planet has been set
+ */
+static int economyL_isPlanetPriceSet( lua_State *L ){
+   Planet *p;
    Commodity *comm;
-
    comm = luaL_validcommodity(L, 1);
-   sys = luaL_validsystem(L, 2);
-
-   if (comm==NULL){
-      WARN("Invalid commodity for arg 1");
+   p = luaL_validplanet(L, 2);
+   if (comm == NULL)
       return 0;
-   }
-   if (sys==NULL){
-      WARN("Invalid system for arg 2");
+   if (p == NULL)
       return 0;
-   }
-
-   if (sys->is_priceset[comm->index])
+   if (p->is_priceset[comm->index])
       lua_pushboolean(L, 1);
    else
       lua_pushboolean(L, 0);
-
    return 1;
 }
-
-
-
 

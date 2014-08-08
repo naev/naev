@@ -22,6 +22,11 @@
 #include "nstring.h"
 
 
+/* externs */
+extern Commodity* commodity_stack;
+extern int econ_nprices;
+
+
 /**
  * @brief Saves a planet.
  *
@@ -33,7 +38,7 @@ int dpl_savePlanet( const Planet *p )
 {
    xmlDocPtr doc;
    xmlTextWriterPtr writer;
-   char file[PATH_MAX], *cleanName;
+   char file[PATH_MAX], *cleanName, buf[32];
    int i;
 
    /* Create the writer. */
@@ -113,6 +118,18 @@ int dpl_savePlanet( const Planet *p )
          for (i=0; i<p->ncommodities; i++)
             xmlw_elem( writer, "commodity", "%s", p->commodities[i]->name );
          xmlw_endElem( writer ); /* "commodities" */
+         /* preserve prices */
+         xmlw_startElem( writer, "prices" );
+         for (i=0; i<econ_nprices; i++) {
+            if (p->is_priceset[i]){
+               xmlw_startElem( writer, "commodity" );
+               xmlw_attr( writer, "name", "%s", commodity_stack[i].name );
+               nsnprintf( buf, 32, "%.2f", p->prices[i] );
+               xmlw_str( writer, "%s", buf );
+               xmlw_endElem( writer ); /* "commodity" */
+            }
+         }
+         xmlw_endElem( writer ); /* prices */
          xmlw_elem( writer, "description", "%s", p->description );
          if (planet_hasService( p, PLANET_SERVICE_BAR ))
             xmlw_elem( writer, "bar", "%s", p->bar_description );

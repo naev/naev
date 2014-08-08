@@ -168,19 +168,19 @@ int dsys_saveSystem( StarSystem *sys )
    xmlw_endElem( writer ); /* "jumps" */
    free(sorted_jumps);
 
-      /* preserve prices */
-   xmlw_startElem(writer,"prices");
-   xmlw_attr(writer,"sys","%s",sys->name);
+   /* preserve prices */
+   xmlw_startElem( writer, "prices" );
+   xmlw_attr( writer, "sys", "%s", sys->name );
    for (i=0; i<econ_nprices; i++) {
       if (sys->is_priceset[i]){
-         xmlw_startElem(writer,"commodity");
-         xmlw_attr(writer, "name", "%s", commodity_stack[i].name);
-         nsnprintf(buf, 32, "%.2f", sys->prices[i]);
-         xmlw_str(writer, "%s", buf);
-         xmlw_endElem(writer); /* "commodity" */
+         xmlw_startElem( writer, "commodity" );
+         xmlw_attr( writer, "name", "%s", commodity_stack[i].name );
+         nsnprintf( buf, 32, "%.2f", sys->prices[i] );
+         xmlw_str( writer, "%s", buf );
+         xmlw_endElem( writer ); /* "commodity" */
       }
    }
-   xmlw_endElem(writer); /* prices */
+   xmlw_endElem( writer ); /* prices */
 
    xmlw_endElem( writer ); /** "ssys" */
    xmlw_done(writer);

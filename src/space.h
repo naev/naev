@@ -128,6 +128,10 @@ typedef struct Planet_ {
    int ncommodities; /**< the amount they have */
    tech_group_t *tech; /**< Planet tech. */
 
+   /* economic values */
+   float *prices;
+   char *is_priceset; /* an array of booleans whether the price has been manually set or automatically set */
+
    /* Graphics. */
    glTexture* gfx_space; /**< graphic in space */
    char *gfx_spaceName; /**< Name to load texture quickly with. */

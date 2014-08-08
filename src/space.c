@@ -302,6 +302,9 @@ credits_t planet_commodityPrice( const Planet *p, const Commodity *c )
       return 0;
    }
 
+   if (p->is_priceset[c->index])
+      return p->prices[c->index] * c->price;
+
    sysname = planet_getSystem( p->name );
    sys = system_get( sysname );
 
@@ -1534,6 +1537,9 @@ Planet *planet_new (void)
    if (!systems_loading && realloced)
       systems_reconstructPlanets();
 
+   p->prices=(float *) calloc(sizeof(float), econ_nprices );
+   p->is_priceset=(char *) calloc(sizeof(char), econ_nprices);
+
    return p;
 }
 
@@ -1803,6 +1809,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
    char str[PATH_MAX], *tmp;
    xmlNodePtr node, cur, ccur;
    unsigned int flags;
+   Commodity *comm;
 
    /* Clear up memory for sane defaults. */
    flags          = 0;
@@ -1946,6 +1953,23 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
                /* Shrink to minimum size. */
                planet->commodities = realloc(planet->commodities,
                      planet->ncommodities * sizeof(Commodity*));
+            }
+
+            /* prices */
+            else if (xml_isNode(cur, "prices")) {
+               ccur = cur->children;
+               do {
+                  if (xml_isNode(ccur, "commodity")){
+                     xmlr_attr(ccur, "name", tmp);
+                     comm = commodity_get( xmlr_attr(ccur, "name", tmp) );
+                     if (comm == NULL)
+                        continue;
+                     planet->is_priceset[comm->index]=1;
+                     comm->changed=1;
+                     xmlr_float(ccur, "commodity", planet->prices[comm->index]); /* the price */
+                  }
+
+               } while (xml_nextNode(ccur));
             }
 
             else if (xml_isNode(cur, "blackmarket")) {
