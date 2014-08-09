@@ -99,9 +99,16 @@ function create ()
                end
             end
 
+            local commodities_sold = p:commoditiesSold()
             for i = 1, #event do
-               local c = commodity.get( event[i][1] )
-               if not p:commoditiesSold()[c] then
+               local has_commodity = false
+               for j = 1, #commodities_sold do
+                  if commodities_sold[j]:name() == event[i][1] then
+                     has_commodity = true
+                     break
+                  end
+               end
+               if not has_commodity then
                   planet_works = false
                   break
                end
@@ -129,16 +136,9 @@ function create ()
 
       --update the prices, and make the article
       econ.updatePrices()
-      make_article( event_planet, event )
+      make_article( event )
 
       --set up the event ending
-      --put all the information we'll need into a string
-      str=" system:"..sys:name()..","
-      for i=1,#event-2 do
-         comm_name = event[i+2][1]
-         str=str..string.format("%sorigprice:%f,",comm_name, original[i] )
-      end
-
       hook.date( time.create(0, event["time"], 0), "end_event" )
       evt.save(true)
    end
@@ -146,9 +146,9 @@ end
 
 
    --make the news event for the selected event and system
-function make_article( p, event )
-   local title = event["title"]:format( p.name() )
-   local body = event["text"]:format( p.name() )
+function make_article( event )
+   local title = event["title"]:format( event_planet:name() )
+   local body = event["text"]:format( event_planet:name() )
    local article = news.add( "Generic", title, body,
       time.get() + time.create( 0, event["time"], 0 ) )
    article:bind("economic event")
