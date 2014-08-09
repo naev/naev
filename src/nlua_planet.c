@@ -52,6 +52,7 @@ static int planetL_gfxExterior( lua_State *L );
 static int planetL_shipsSold( lua_State *L );
 static int planetL_outfitsSold( lua_State *L );
 static int planetL_commoditiesSold( lua_State *L );
+static int planetL_isBlackMarket( lua_State *L );
 static int planetL_isKnown( lua_State *L );
 static int planetL_setKnown( lua_State *L );
 static const luaL_reg planet_methods[] = {
@@ -75,6 +76,7 @@ static const luaL_reg planet_methods[] = {
    { "shipsSold", planetL_shipsSold },
    { "outfitsSold", planetL_outfitsSold },
    { "commoditiesSold", planetL_commoditiesSold },
+   { "blackmarket", planetL_isBlackMarket },
    { "known", planetL_isKnown },
    { "setKnown", planetL_setKnown },
    {0,0}
@@ -100,6 +102,7 @@ static const luaL_reg planet_cond_methods[] = {
    { "shipsSold", planetL_shipsSold },
    { "outfitsSold", planetL_outfitsSold },
    { "commoditiesSold", planetL_commoditiesSold },
+   { "blackmarket", planetL_isBlackMarket },
    { "known", planetL_isKnown },
    {0,0}
 }; /**< Read only planet metatable methods. */
@@ -811,6 +814,22 @@ static int planetL_commoditiesSold( lua_State *L )
       lua_rawset(L,-3); /* store the value in the table */
    }
 
+   return 1;
+}
+
+/**
+ * @brief Checks to see if a planet is a black market.
+ *
+ * @usage b = p:blackmarket()
+ *
+ *    @luaparam p Planet to check if it's a black market.
+ *    @luareturn true if the planet is a black market.
+ * @luafunc blackmarket( p )
+ */
+static int planetL_isBlackMarket( lua_State *L )
+{
+   Planet *p = luaL_validplanet(L,1);
+   lua_pushboolean(L, planet_isBlackMarket(p));
    return 1;
 }
 

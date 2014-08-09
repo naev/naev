@@ -1131,12 +1131,6 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter, const Da
    if (p->stress > p->armour)
       p->stress = p->armour;
 
-   /* Player might break autonav. */
-   if ((w != NULL) && (p->id == PLAYER_ID) &&
-         !pilot_isFlag(player.p, PILOT_HYP_BEGIN) &&
-         !pilot_isFlag(player.p, PILOT_HYPERSPACE))
-      player_shouldAbortAutonav(1);
-
    /* Disabled always run before dead to ensure combat rating boost. */
    pilot_updateDisable(p, shooter);
 

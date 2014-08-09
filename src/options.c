@@ -69,7 +69,7 @@ static void opt_close( unsigned int wid, char *name );
 static void opt_needRestart (void);
 /* Gameplay. */
 static void opt_gameplay( unsigned int wid );
-static void opt_setAutonavAbort( unsigned int wid, char *str );
+static void opt_setAutonavResetSpeed( unsigned int wid, char *str );
 static void opt_OK( unsigned int wid, char *str );
 static void opt_gameplaySave( unsigned int wid, char *str );
 static void opt_gameplayDefaults( unsigned int wid, char *str );
@@ -257,7 +257,7 @@ static void opt_gameplay( unsigned int wid )
    /* Autonav abort. */
    x = 20 + cw + 20;
    window_addText( wid, x+65, y, 150, 150, 0, "txtAAutonav",
-         NULL, &cDConsole, "Abort Autonav At:" );
+         NULL, &cDConsole, "Stop Speedup At:" );
    y -= 20;
 
    /* Autonav abort fader. */
@@ -265,7 +265,7 @@ static void opt_gameplay( unsigned int wid )
          NULL, NULL, NULL );
    y -= 20;
    window_addFader( wid, x, y, cw, 20, "fadAutonav", 0., 1.,
-         conf.autonav_abort, opt_setAutonavAbort );
+         conf.autonav_reset_speed, opt_setAutonavResetSpeed );
    y -= 40;
 
    window_addText( wid, x+20, y, cw, 20, 0, "txtSettings",
@@ -328,7 +328,7 @@ static void opt_gameplaySave( unsigned int wid, char *str )
    conf.autonav_pause = window_checkboxState( wid, "chkAutonavPause" );
    
    /* Faders. */
-   conf.autonav_abort = window_getFaderValue(wid, "fadAutonav");
+   conf.autonav_reset_speed = window_getFaderValue(wid, "fadAutonav");
 
    /* Input boxes. */
    vmsg = window_getInput( wid, "inpMSG" );
@@ -355,7 +355,7 @@ static void opt_gameplayDefaults( unsigned int wid, char *str )
    window_checkboxSet( wid, "chkCompress", SAVE_COMPRESSION_DEFAULT );
 
    /* Faders. */
-   window_faderValue( wid, "fadAutonav", AUTONAV_ABORT_DEFAULT );
+   window_faderValue( wid, "fadAutonav", AUTONAV_RESET_SPEED_DEFAULT );
 
    /* Input boxes. */
    nsnprintf( vmsg, sizeof(vmsg), "%d", INPUT_MESSAGES_DEFAULT );
@@ -379,7 +379,7 @@ static void opt_gameplayUpdate( unsigned int wid, char *str )
    window_checkboxSet( wid, "chkCompress", conf.save_compress );
 
    /* Faders. */
-   window_faderValue( wid, "fadAutonav", conf.autonav_abort );
+   window_faderValue( wid, "fadAutonav", conf.autonav_reset_speed );
 
    /* Input boxes. */
    nsnprintf( vmsg, sizeof(vmsg), "%d", conf.mesg_visible );
@@ -395,19 +395,19 @@ static void opt_gameplayUpdate( unsigned int wid, char *str )
  *    @param wid Window calling the callback.
  *    @param str Name of the widget calling the callback.
  */
-static void opt_setAutonavAbort( unsigned int wid, char *str )
+static void opt_setAutonavResetSpeed( unsigned int wid, char *str )
 {
    char buf[PATH_MAX];
-   double autonav_abort;
+   double autonav_reset_speed;
 
    /* Set fader. */
-   autonav_abort = window_getFaderValue(wid, str);
+   autonav_reset_speed = window_getFaderValue(wid, str);
 
    /* Generate message. */
-   if (autonav_abort >= 1.)
-      nsnprintf( buf, sizeof(buf), "Missile Lock" );
-   else if (autonav_abort > 0.)
-      nsnprintf( buf, sizeof(buf), "%.0f%% Shield", autonav_abort * 100 );
+   if (autonav_reset_speed >= 1.)
+      nsnprintf( buf, sizeof(buf), "Enemy Presence" );
+   else if (autonav_reset_speed > 0.)
+      nsnprintf( buf, sizeof(buf), "%.0f%% Shield", autonav_reset_speed * 100 );
    else
       nsnprintf( buf, sizeof(buf), "Armour Damage" );
 

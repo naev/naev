@@ -615,7 +615,9 @@ static int misn_accept( lua_State *L )
    cur_mission = misn_getFromLua(L);
 
    /* no missions left */
-   if (i>=MISSION_MAX)
+   if (cur_mission->accepted)
+      NLUA_ERROR(L, "Mission already accepted!");
+   else if (i>=MISSION_MAX)
       ret = 1;
    else { /* copy it over */
       memcpy( &player_missions[i], cur_mission, sizeof(Mission) );
