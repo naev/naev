@@ -61,10 +61,10 @@ function accept ()
       misn.finish()
    end
 
-   if misn.accept() then
-      misn.osdCreate(title,osd_text)
-      misn.osdActive(1)
-   end
+   misn.accept()
+
+   misn.osdCreate(title,osd_text)
+   misn.osdActive(1)
 
    cargoID = misn.cargoAdd( cargoname, 0 )
 
@@ -75,11 +75,7 @@ function accept ()
    misn.setDesc( string.format( misn_desc, targetworld:name(), targetworld_sys:name() ) )
    misn.markerAdd( targetworld_sys, "high")
 
-
-   misn.accept()
-
    tk.msg( title, post_accept[1] )
-
 
    hook.land("land")
 end

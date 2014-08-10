@@ -110,7 +110,7 @@ else
    text[19] = [[The nerds follow you to your ship and finally stow away their box. Now, you're all set to go.]]
 
    title[20] = "No room, no job"
-   text[20] = [[As you enter the bar, the nerds are immediately upon you. "What is it with you?" Mia asks. "Is it so hard to make some room for our box? I am fed up with you, consider our agreement nullified. I hope to never again have business with you." Some angry stares later, the nerds are gone, trying to find another pilot.]]
+   text[20] = [[As you enter the bar, the nerds are immediately upon you. "What is it with you?" Mia asks. "Is it so hard to make some room for our box? I am fed up with you. Consider our agreement nullified. I hope to never again have business with you." Some angry stares later, the nerds are gone, trying to find another pilot.]]
 
    -- OSD texts
    textosd = {}

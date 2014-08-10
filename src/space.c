@@ -921,6 +921,17 @@ void planet_setKnown( Planet *p )
       planet_setFlag(p, PLANET_KNOWN);
 }
 
+
+/**
+ * @brief Sets a planet as a black market, if it's real.
+ */
+void planet_setBlackMarket( Planet *p )
+{
+   if (p->real == ASSET_REAL)
+      planet_setFlag(p, PLANET_BLACKMARKET);
+}
+
+
 /**
  * @brief Check to see if a planet exists.
  *
@@ -1876,6 +1887,10 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
                /* Shrink to minimum size. */
                planet->commodities = realloc(planet->commodities,
                      planet->ncommodities * sizeof(Commodity*));
+            }
+
+            else if (xml_isNode(cur, "blackmarket")) {
+               planet_setBlackMarket(planet);
             }
          } while (xml_nextNode(cur));
          continue;
