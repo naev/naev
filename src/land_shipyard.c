@@ -252,7 +252,7 @@ void shipyard_update( unsigned int wid, char* str )
          "\n"
          "%.0f%% damage\n"
          "%.0f MJ (%.1f MW)\n"
-         "%.0f (%.1f regeneration)\n"
+         "%.0f MJ (%.1f MW)\n"
          "%.0f MJ (%.1f MW)\n"
          "%.0f tons\n"
          "%d units\n"
