@@ -1,16 +1,5 @@
 --[[
 
-   FLF Prelude, part 2
-   Copyright (c) 2009, 2010 BTAxis
-   Copyright (c) 2009 Tim Mazid
-   Copyright (c) 2010 bobbens
-   Copyright (c) 2010, 2011 Deiz
-   Copyright (c) 2011 s0be
-   Copyright (c) 2011 nikai3d
-   Copyright (c) 2012 perey
-   Copyright (c) 2012 m1foley
-   Copyright (c) 2014 Julian Marchant
-
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License version 3 as
    published by the Free Software Foundation.
