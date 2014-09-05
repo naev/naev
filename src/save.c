@@ -24,6 +24,7 @@
 #include "hook.h"
 #include "ndata.h"
 #include "unidiff.h"
+#include "unistate.h"
 #include "nlua_var.h"
 #include "event.h"
 #include "news.h"
@@ -80,6 +81,7 @@ static int save_data( xmlTextWriterPtr writer )
    if (pfaction_save(writer) < 0) return -1;
    if (hook_save(writer) < 0) return -1;
    if (space_sysSave(writer) < 0) return -1;
+   if (unistate_save(writer) < 0) return -1;
 
    return 0;
 }

@@ -94,6 +94,7 @@ CODE_SOURCE = \
 	nlua_time.c \
 	nlua_tk.c \
 	nlua_tut.c \
+	nlua_unistate.c \
 	nlua_var.c \
 	nlua_vec2.c \
 	nmath.c \
@@ -143,6 +144,7 @@ CODE_SOURCE = \
 	threadpool.c \
 	toolkit.c \
 	unidiff.c \
+	unistate.c \
 	weapon.c \
 	ai.h \
 	ai_extra.h \
@@ -235,6 +237,7 @@ CODE_SOURCE = \
 	nlua_time.h \
 	nlua_tk.h \
 	nlua_tut.h \
+	nlua_unistate.h \
 	nlua_var.h \
 	nlua_vec2.h \
 	nluadef.h \
@@ -286,6 +289,7 @@ CODE_SOURCE = \
 	threadpool.h \
 	toolkit.h \
 	unidiff.h \
+	unistate.h \
 	weapon.h
 
 if HAVE_WINDRES

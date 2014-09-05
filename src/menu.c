@@ -45,7 +45,7 @@
 #include "camera.h"
 #include "board.h"
 #include "ndata.h"
-
+#include "unistate.h"
 
 #define MAIN_WIDTH      130 /**< Main menu width. */
 
@@ -432,6 +432,9 @@ static void menu_small_exit( unsigned int wid, char* str )
    player_autonavAbort( "Exited game." );
    player_soundStop();
 
+   //unistate cleanup
+   unistate_quit();
+   
    /* Clean up. */
    window_destroy( wid );
    menu_Close(MENU_SMALL);
@@ -449,9 +452,11 @@ static void exit_game (void)
       save_all();
       land_cleanup();
    }
+   unistate_quit();
    SDL_Event quit;
    quit.type = SDL_QUIT;
    SDL_PushEvent(&quit);
+
 }
 
 

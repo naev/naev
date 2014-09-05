@@ -33,6 +33,7 @@
 #include "hook.h"
 #include "nstring.h"
 #include "outfit.h"
+#include "unistate.h"
 
 
 #define LOAD_WIDTH      600 /**< Load window width. */
@@ -572,6 +573,7 @@ int load_game( const char* file, int version_diff )
    news_loadArticles( node );
    hook_load(node);
    space_sysLoad(node);
+   unistate_load(node);
 
    /* Initialize the economy. */
    economy_init();
