@@ -1,5 +1,16 @@
 --[[ 
---Event for kidnapped mission.
+
+   Event for kidnapped mission.
+
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License version 3 as
+   published by the Free Software Foundation.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
 --]]
 
 --Create Mom and Dad in their spaceship, and have them come from the planet Brooks in Arcturus system, following the player.
