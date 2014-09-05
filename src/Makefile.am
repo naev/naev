@@ -237,6 +237,7 @@ CODE_SOURCE = \
 	nlua_time.h \
 	nlua_tk.h \
 	nlua_tut.h \
+	nlua_unistate.h \
 	nlua_var.h \
 	nlua_vec2.h \
 	nluadef.h \

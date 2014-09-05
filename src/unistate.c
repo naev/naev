@@ -6,7 +6,7 @@
 
 
 //uncomment this line for debug output to lua console
-#define UNISTATE_DEBUG
+//#define UNISTATE_DEBUG
 
 #include "unistate.h"
 
