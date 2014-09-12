@@ -1,7 +1,20 @@
 --[[
--- This is a oneoff mission where you help a new Dvaered Warlord takeover a planet
--- To Do: fix fighters being idle after mission ends
--- Other editors, feel free to update dialog to make it more dvaered like.
+
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License version 3 as
+   published by the Free Software Foundation.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+--
+
+   This is a oneoff mission where you help a new Dvaered Warlord takeover a planet
+   To Do: fix fighters being idle after mission ends
+   Other editors, feel free to update dialog to make it more dvaered like.
+
 --]]
 
 -- localization stuff, translators would work here
