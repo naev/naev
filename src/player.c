@@ -1447,7 +1447,8 @@ void player_land (void)
       player_accelOver();
 
       /* Stop all on outfits. */
-      pilot_outfitOffAll( player.p );
+      if (pilot_outfitOffAll( player.p ) > 0)
+         pilot_calcStats( player.p );
 
       /* Start landing. */
       if (runcount == 0)

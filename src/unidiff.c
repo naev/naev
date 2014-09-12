@@ -67,6 +67,8 @@ typedef enum UniHunkType_ {
    /* Target should be system. */
    HUNK_TYPE_ASSET_ADD,
    HUNK_TYPE_ASSET_REMOVE,
+   HUNK_TYPE_ASSET_BLACKMARKET,
+   HUNK_TYPE_ASSET_LEGALMARKET,
    HUNK_TYPE_JUMP_ADD,
    HUNK_TYPE_JUMP_REMOVE,
    /* Target should be tech. */
@@ -276,6 +278,12 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
             hunk.type = HUNK_TYPE_ASSET_ADD;
          else if (strcmp(buf,"remove")==0)
             hunk.type = HUNK_TYPE_ASSET_REMOVE;
+         else if (strcmp(buf,"blackmarket")==0)
+            hunk.type = HUNK_TYPE_ASSET_BLACKMARKET;
+         else if (strcmp(buf,"legalmarket")==0)
+            hunk.type = HUNK_TYPE_ASSET_LEGALMARKET;
+         else
+            WARN("Unidiff '%s': Unknown hunk type '%s' for asset '%s'.", diff->name, buf, hunk.u.name);
 
          /* Apply diff. */
          if (diff_patchHunk( &hunk ) < 0)
@@ -302,6 +310,8 @@ static int diff_patchSystem( UniDiff_t *diff, xmlNodePtr node )
             hunk.type = HUNK_TYPE_JUMP_ADD;
          else if (strcmp(buf,"remove")==0)
             hunk.type = HUNK_TYPE_JUMP_REMOVE;
+         else
+            WARN("Unidiff '%s': Unknown hunk type '%s' for jump '%s'.", diff->name, buf, hunk.u.name);
 
          hunk.node = cur;
 
@@ -497,6 +507,12 @@ static int diff_patch( xmlNodePtr parent )
             case HUNK_TYPE_ASSET_REMOVE:
                WARN("   [%s] asset remove: '%s'", target, fail->u.name);
                break;
+            case HUNK_TYPE_ASSET_BLACKMARKET:
+               WARN("   [%s] asset blackmarket: '%s'", target, fail->u.name);
+               break;
+            case HUNK_TYPE_ASSET_LEGALMARKET:
+               WARN("   [%s] asset legalmarket: '%s'", target, fail->u.name);
+               break;
             case HUNK_TYPE_JUMP_ADD:
                WARN("   [%s] jump add: '%s'", target, fail->u.name);
                break;
@@ -557,6 +573,14 @@ static int diff_patchHunk( UniHunk_t *hunk )
       /* Removing an asset. */
       case HUNK_TYPE_ASSET_REMOVE:
          return system_rmPlanet( system_get(hunk->target.u.name), hunk->u.name );
+      /* Making an asset a black market. */
+      case HUNK_TYPE_ASSET_BLACKMARKET:
+         planet_setBlackMarket( planet_get(hunk->u.name) );
+         return 0;
+      /* Making an asset a legal market. */
+      case HUNK_TYPE_ASSET_LEGALMARKET:
+         planet_rmFlag( planet_get(hunk->u.name), PLANET_BLACKMARKET );
+         return 0;
 
       /* Adding a Jump. */
       case HUNK_TYPE_JUMP_ADD:
@@ -707,6 +731,13 @@ static int diff_removeDiff( UniDiff_t *diff )
             hunk.type = HUNK_TYPE_ASSET_ADD;
             break;
 
+         case HUNK_TYPE_ASSET_BLACKMARKET:
+            hunk.type = HUNK_TYPE_ASSET_LEGALMARKET;
+            break;
+         case HUNK_TYPE_ASSET_LEGALMARKET:
+            hunk.type = HUNK_TYPE_ASSET_BLACKMARKET;
+            break;
+
          case HUNK_TYPE_JUMP_ADD:
             hunk.type = HUNK_TYPE_JUMP_REMOVE;
             break;
@@ -778,6 +809,8 @@ static void diff_cleanupHunk( UniHunk_t *hunk )
    switch (hunk->type) {
       case HUNK_TYPE_ASSET_ADD:
       case HUNK_TYPE_ASSET_REMOVE:
+      case HUNK_TYPE_ASSET_BLACKMARKET:
+      case HUNK_TYPE_ASSET_LEGALMARKET:
       case HUNK_TYPE_JUMP_ADD:
       case HUNK_TYPE_JUMP_REMOVE:
       case HUNK_TYPE_TECH_ADD:
