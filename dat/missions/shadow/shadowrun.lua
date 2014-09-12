@@ -1,9 +1,22 @@
 --[[
--- This is the main script for the Shadowrun mission. It's started from the spaceport bar and tries to emulate spaceport bar conversation as part of the mission.
--- "shadowrun" stack variable:
--- 1 = player has met Rebina, but hasn't accepted the mission
--- 2 = player has accepted Rebina's mission, but has not talked to SHITMAN
--- 3 = player has talked to SHITMAN
+
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License version 3 as
+   published by the Free Software Foundation.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+--
+
+   This is the main script for the Shadowrun mission. It's started from the spaceport bar and tries to emulate spaceport bar conversation as part of the mission.
+   "shadowrun" stack variable:
+   1 = player has met Rebina, but hasn't accepted the mission
+   2 = player has accepted Rebina's mission, but has not talked to SHITMAN
+   3 = player has talked to SHITMAN
+
 --]]
 
 -- localization stuff, translators would work here
