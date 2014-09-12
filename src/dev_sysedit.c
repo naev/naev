@@ -318,7 +318,7 @@ static void sysedit_editPntClose( unsigned int wid, char *unused )
    system_addPresence(sysedit_sys, p->faction, -p->presenceAmount, p->presenceRange);
 
    p->population     = (uint64_t)strtoull( window_getInput( sysedit_widEdit, "inpPop" ), 0, 10);
-   p->class          = planetclass_get( window_getInput( sysedit_widEdit, "inpClass" )[0] );
+   p->class          = window_getInput( sysedit_widEdit, "inpClass" );
    inp               = window_getInput( sysedit_widEdit, "inpLand" );
    if ((inp == NULL) || (strlen(inp) == 0)) {
       free( p->land_func );
@@ -1232,7 +1232,7 @@ static void sysedit_editPnt( void )
    /* Load current values. */
    nsnprintf( buf, sizeof(buf), "%"PRIu64, p->population );
    window_setInput( wid, "inpPop", buf );
-   nsnprintf( buf, sizeof(buf), "%c", planet_getClass(p) );
+   nsnprintf( buf, sizeof(buf), "%s", p->class );
    window_setInput( wid, "inpClass", buf );
    window_setInput( wid, "inpLand", p->land_func );
    nsnprintf( buf, sizeof(buf), "%g", p->presenceAmount );

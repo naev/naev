@@ -578,7 +578,7 @@ static int planetL_colour( lua_State *L )
 /**
  * @brief Gets the planet's class.
  *
- * Usually classes are characters for planets (see space.h) and numbers
+ * Usually classes are characters for planets and numbers
  * for stations.
  *
  * @usage c = p:class()
@@ -588,12 +588,9 @@ static int planetL_colour( lua_State *L )
  */
 static int planetL_class(lua_State *L )
 {
-   char buf[2];
    Planet *p;
    p = luaL_validplanet(L,1);
-   buf[0] = planet_getClass(p);
-   buf[1] = '\0';
-   lua_pushstring(L,buf);
+   lua_pushstring(L,p->class);
    return 1;
 }
 

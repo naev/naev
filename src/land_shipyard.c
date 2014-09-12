@@ -136,6 +136,7 @@ void shipyard_open( unsigned int wid )
          "Energy:\n"
          "Cargo Space:\n"
          "Fuel:\n"
+         "Fuel Use:\n"
          "Price:\n"
          "Money:\n"
          "License:\n";
@@ -216,6 +217,7 @@ void shipyard_update( unsigned int wid, char* str )
             "NA\n"
             "NA\n"
             "NA\n"
+            "NA\n"
             "NA\n" );
       window_modifyImage( wid, "imgTarget", NULL, 0, 0 );
       window_modifyText( wid, "txtStats", NULL );
@@ -266,6 +268,7 @@ void shipyard_update( unsigned int wid, char* str )
          "%.0f MJ (%.1f MW)\n"
          "%.0f tons\n"
          "%d units\n"
+         "%.0f units\n"
          "%s credits\n"
          "%s credits\n"
          "%s\n",
@@ -286,6 +289,7 @@ void shipyard_update( unsigned int wid, char* str )
          ship->energy, ship->energy_regen,
          ship->cap_cargo,
          ship->fuel,
+         ship->fuel_consumption,
          buf2,
          buf3,
          (license_text != NULL) ? license_text : "None" );

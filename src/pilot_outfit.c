@@ -892,6 +892,8 @@ void pilot_calcStats( Pilot* pilot )
    pilot->crew          = pilot->ship->crew;
    /* cargo */
    pilot->cap_cargo     = pilot->ship->cap_cargo;
+   /* fuel_consumption. */
+   pilot->fuel_consumption = pilot->ship->fuel_consumption;
    /* health */
    ac = (pilot->armour_max > 0.) ? pilot->armour / pilot->armour_max : 0.;
    sc = (pilot->shield_max > 0.) ? pilot->shield / pilot->shield_max : 0.;
@@ -989,12 +991,7 @@ void pilot_calcStats( Pilot* pilot )
    pilot->energy_tau = pilot->energy_max / pilot->energy_regen;
 
    /* Slot voodoo. */
-   s        = &pilot->stats;
-   /* Fuel. */
-   if (s->fuel_consumption == 0.)
-      pilot->fuel_consumption = 100.;
-   else
-      pilot->fuel_consumption = s->fuel_consumption;
+   s = &pilot->stats;
    /*
     * Electronic warfare setting base parameters.
     */
