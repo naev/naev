@@ -83,7 +83,6 @@ typedef enum ShipStatsType_ {
    SS_TYPE_A_ENERGY_REGEN_FLAT, /**< Flat energy regeneration modifier (not multiplied). */
    SS_TYPE_A_CPU_MAX,          /**< Maximum CPU modifier. */
    SS_TYPE_A_ENGINE_LIMIT,     /**< Engine's mass limit. */
-   SS_TYPE_A_FUEL_CONSUMPTION, /**< Fuel consumption of the engine. */
 
    /*
     * I: Integer type data. Should be continuous.
@@ -201,7 +200,6 @@ typedef struct ShipStats_ {
 
    /* Engine limits. */
    double engine_limit;     /**< Engine limit. */
-   double fuel_consumption; /**< Fuel consumption by engine. */
 
    /* Misc. */
    double nebu_absorb_shield; /**< Shield nebula resistance. */
