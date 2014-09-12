@@ -17,6 +17,7 @@
  <characteristics>
   <crew>2</crew>
   <mass>40</mass>
+  <fuel_consumption>100</fuel_consumption>
   <cargo>5</cargo>
  </characteristics>
  <slots>
