@@ -967,15 +967,15 @@ static void input_key( int keynum, double value, double kabs, int repeat )
       }
    /* toggle speed mode */
    } else if (KEY("speed") && !repeat) {
-      if ((value==KEY_PRESS) && !player_isFlag(PLAYER_AUTONAV)) {
-         if (!player_isFlag( PLAYER_CINEMATICS_2X )) {
-            if (player_isFlag(PLAYER_DOUBLESPEED)) {
+      if ((value==KEY_PRESS) && (!player_isFlag( PLAYER_CINEMATICS_2X ))) {
+         if (player_isFlag(PLAYER_DOUBLESPEED)) {
+            if (!player_isFlag(PLAYER_AUTONAV))
                pause_setSpeed(1.);
-               player_rmFlag(PLAYER_DOUBLESPEED);
-            } else {
+            player_rmFlag(PLAYER_DOUBLESPEED);
+         } else {
+            if (!player_isFlag(PLAYER_AUTONAV))
                pause_setSpeed(2.);
-               player_setFlag(PLAYER_DOUBLESPEED);
-            }
+            player_setFlag(PLAYER_DOUBLESPEED);
          }
       }
    /* opens a small menu */

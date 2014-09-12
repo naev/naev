@@ -218,7 +218,7 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
          /* Turn them off. */
          n = 0;
          if (on) {
-            pilot_outfitOffAll( p );
+            n += pilot_outfitOffAll( p );
          }
          /* Turn them on. */
          else {
@@ -1213,6 +1213,8 @@ void pilot_weaponSane( Pilot *p )
  */
 int pilot_outfitOff( Pilot *p, PilotOutfitSlot *o )
 {
+   double c;
+
    /* Must not be disabled or cooling down. */
    if ((pilot_isDisabled(p)) || (pilot_isFlag(p, PILOT_COOLDOWN)))
       return 0;
@@ -1220,7 +1222,11 @@ int pilot_outfitOff( Pilot *p, PilotOutfitSlot *o )
    if (outfit_isAfterburner( o->outfit )) /* Afterburners */
       pilot_afterburnOver( p );
    else {
-      o->stimer = outfit_cooldown( o->outfit );
+      c = outfit_cooldown( o->outfit );
+      if (o->stimer != INFINITY)
+         o->stimer = c - (c * o->stimer / outfit_duration( o->outfit ));
+      else
+         o->stimer = c;
       o->state  = PILOT_OUTFIT_COOLDOWN;
    }
 
