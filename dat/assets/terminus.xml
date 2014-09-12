@@ -27,6 +27,7 @@
   <commodities>
    <commodity>Food</commodity>
   </commodities>
+  <blackmarket/>
   <description>A small, volcanic world on the edge of the Uridhrion system, Terminus provides Heronus with raw materials needed to grow new ships.</description>
   <bar>Terminus' bar is permanently sooty because of the volcanic activity going on all around outside. The facility does have air filters, but the stuff always manages to get in anyway.</bar>
  </general>
