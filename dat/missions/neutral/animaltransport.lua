@@ -1,10 +1,21 @@
 --[[
+
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License version 3 as
+   published by the Free Software Foundation.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
 --
--- MISSION: Animal transport
--- DESCRIPTION: A man asks you to transport a crate of specially bred creatures for
--- his in-law's exitic pet store on another planet. It's a standard fare A-to-B mission,
--- but doing this mission infests the player's current ship with the creatures.
---
+
+   MISSION: Animal transport
+   DESCRIPTION: A man asks you to transport a crate of specially bred creatures for
+   his in-law's exitic pet store on another planet. It's a standard fare A-to-B mission,
+   but doing this mission infests the player's current ship with the creatures.
+
 --]]
 
 include("jumpdist.lua")

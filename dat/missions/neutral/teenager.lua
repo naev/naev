@@ -1,10 +1,21 @@
 --[[
+
+   This program is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License version 3 as
+   published by the Free Software Foundation.
+
+   This program is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
 --
--- MISSION: The macho teenager
--- DESCRIPTION: A man tells you that his son has taken one of his yachts without permission and
--- is joyriding it with his girlfriend to impress her. Disable the yacht and board it, then take
--- the couple back to the planet (destroying the yacht incurs a penalty)
---
+
+   MISSION: The macho teenager
+   DESCRIPTION: A man tells you that his son has taken one of his yachts without permission and
+   is joyriding it with his girlfriend to impress her. Disable the yacht and board it, then take
+   the couple back to the planet (destroying the yacht incurs a penalty)
+
 --]]
 
 -- Localization, choosing a language if naev is translated for non-english-speaking locales.
