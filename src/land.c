@@ -492,7 +492,7 @@ int land_errDialogue( char* name, char* type )
    if (strcmp(type,"tradeShip")==0)
       shipyard_canTrade( name );
    else if (strcmp(type,"buyShip")==0)
-      shipyard_canBuy( name );
+      shipyard_canBuy( name, land_planet );
    else if (strcmp(type,"swapEquipment")==0)
       can_swapEquipment( name );
    else if (strcmp(type,"swap")==0)
@@ -500,7 +500,7 @@ int land_errDialogue( char* name, char* type )
    else if (strcmp(type,"sellShip")==0)
       can_sell( name );
    else if (strcmp(type,"buyOutfit")==0)
-      outfit_canBuy( name );
+      outfit_canBuy( name, land_planet );
    else if (strcmp(type,"sellOutfit")==0)
       outfit_canSell( name );
    else if (strcmp(type,"buyCommodity")==0)

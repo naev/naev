@@ -154,95 +154,6 @@ extern credits_t economy_getPrice( const Commodity *com,
       const StarSystem *sys, const Planet *p ); /**< from economy.c */
 
 
-/**
- * @brief Basically returns a PlanetClass integer from a char
- *
- *    @param a Char to get class from.
- *    @return Identifier matching the char.
- */
-PlanetClass planetclass_get( const char a )
-{
-   switch (a) {
-      /* planets use letters */
-      case 'A': return PLANET_CLASS_A;
-      case 'B': return PLANET_CLASS_B;
-      case 'C': return PLANET_CLASS_C;
-      case 'D': return PLANET_CLASS_D;
-      case 'E': return PLANET_CLASS_E;
-      case 'F': return PLANET_CLASS_F;
-      case 'G': return PLANET_CLASS_G;
-      case 'H': return PLANET_CLASS_H;
-      case 'I': return PLANET_CLASS_I;
-      case 'J': return PLANET_CLASS_J;
-      case 'K': return PLANET_CLASS_K;
-      case 'L': return PLANET_CLASS_L;
-      case 'M': return PLANET_CLASS_M;
-      case 'N': return PLANET_CLASS_N;
-      case 'O': return PLANET_CLASS_O;
-      case 'P': return PLANET_CLASS_P;
-      case 'Q': return PLANET_CLASS_Q;
-      case 'R': return PLANET_CLASS_R;
-      case 'S': return PLANET_CLASS_S;
-      case 'T': return PLANET_CLASS_T;
-      case 'X': return PLANET_CLASS_X;
-      case 'Y': return PLANET_CLASS_Y;
-      case 'Z': return PLANET_CLASS_Z;
-      /* stations use numbers - not as many types */
-      case '0': return STATION_CLASS_A;
-      case '1': return STATION_CLASS_B;
-      case '2': return STATION_CLASS_C;
-      case '3': return STATION_CLASS_D;
-
-      default:
-         WARN("Invalid planet class.");
-         return PLANET_CLASS_NULL;
-   };
-}
-/**
- * @brief Gets the char representing the planet class from the planet.
- *
- *    @param p Planet to get the class char from.
- *    @return The planet's class char.
- */
-char planet_getClass( const Planet *p )
-{
-   switch (p->class) {
-      case PLANET_CLASS_A: return 'A';
-      case PLANET_CLASS_B: return 'B';
-      case PLANET_CLASS_C: return 'C';
-      case PLANET_CLASS_D: return 'D';
-      case PLANET_CLASS_E: return 'E';
-      case PLANET_CLASS_F: return 'F';
-      case PLANET_CLASS_G: return 'G';
-      case PLANET_CLASS_H: return 'H';
-      case PLANET_CLASS_I: return 'I';
-      case PLANET_CLASS_J: return 'J';
-      case PLANET_CLASS_K: return 'K';
-      case PLANET_CLASS_L: return 'L';
-      case PLANET_CLASS_M: return 'M';
-      case PLANET_CLASS_N: return 'N';
-      case PLANET_CLASS_O: return 'O';
-      case PLANET_CLASS_P: return 'P';
-      case PLANET_CLASS_Q: return 'Q';
-      case PLANET_CLASS_R: return 'R';
-      case PLANET_CLASS_S: return 'S';
-      case PLANET_CLASS_T: return 'T';
-      case PLANET_CLASS_X: return 'X';
-      case PLANET_CLASS_Y: return 'Y';
-      case PLANET_CLASS_Z: return 'Z';
-      /* Stations */
-      case STATION_CLASS_A: return '0';
-      case STATION_CLASS_B: return '1';
-      case STATION_CLASS_C: return '2';
-      case STATION_CLASS_D: return '3';
-
-      default:
-         WARN("Invalid planet class.");
-         return 0;
-   };
-}
-
-
 char* planet_getServiceName( int service )
 {
    switch (service) {
@@ -921,6 +832,17 @@ void planet_setKnown( Planet *p )
       planet_setFlag(p, PLANET_KNOWN);
 }
 
+
+/**
+ * @brief Sets a planet as a black market, if it's real.
+ */
+void planet_setBlackMarket( Planet *p )
+{
+   if (p->real == ASSET_REAL)
+      planet_setFlag(p, PLANET_BLACKMARKET);
+}
+
+
 /**
  * @brief Check to see if a planet exists.
  *
@@ -1459,7 +1381,6 @@ Planet *planet_new (void)
    memset( p, 0, sizeof(Planet) );
    p->id       = planet_nstack-1;
    p->faction  = -1;
-   p->class    = PLANET_CLASS_A;
 
    /* Reconstruct the jumps. */
    if (!systems_loading && realloced)
@@ -1801,19 +1722,13 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
          cur = node->children;
          do {
             /* Direct reads. */
+            xmlr_strd(cur, "class", planet->class);
             xmlr_strd(cur, "bar", planet->bar_description);
             xmlr_strd(cur, "description", planet->description );
             xmlr_ulong(cur, "population", planet->population );
             xmlr_float(cur, "hide", planet->hide );
 
-            if (xml_isNode(cur,"class")) {
-               tmp = xml_get(cur);
-               if (tmp != NULL)
-                  planet->class = planetclass_get( tmp[0] );
-               else
-                  WARN("Planet '%s' has empty class tag.", planet->name);
-            }
-            else if (xml_isNode(cur, "services")) {
+            if (xml_isNode(cur, "services")) {
                flags |= FLAG_SERVICESSET;
                ccur = cur->children;
                planet->services = 0;
@@ -1877,6 +1792,10 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
                planet->commodities = realloc(planet->commodities,
                      planet->ncommodities * sizeof(Commodity*));
             }
+
+            else if (xml_isNode(cur, "blackmarket")) {
+               planet_setBlackMarket(planet);
+            }
          } while (xml_nextNode(cur));
          continue;
       }
@@ -1901,7 +1820,7 @@ static int planet_parse( Planet *planet, const xmlNodePtr parent )
             (planet->population==0), "population"); */
       MELEMENT((flags&FLAG_XSET)==0,"x");
       MELEMENT((flags&FLAG_YSET)==0,"y");
-      MELEMENT(planet->class==PLANET_CLASS_NULL,"class");
+      MELEMENT(planet->class==NULL,"class");
       MELEMENT( planet_hasService(planet,PLANET_SERVICE_LAND) &&
             planet->description==NULL,"description");
       MELEMENT( planet_hasService(planet,PLANET_SERVICE_BAR) &&
