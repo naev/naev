@@ -22,35 +22,44 @@
    <faction>Independent</faction>
    <faction>Sirius</faction>
    <faction>Soromid</faction>
+   <faction>Za'lek</faction>
    <faction>Trader</faction>
   </avail>
  </mission>
  <mission name="Empire Rehabilitation">
   <lua>empire/emp_rehab</lua>
+  <flags/>
   <avail>
    <chance>100</chance>
    <location>Computer</location>
+   <cond></cond>
   </avail>
  </mission>
  <mission name="Dvaered Rehabilitation">
   <lua>dvaered/dv_rehab</lua>
+  <flags/>
   <avail>
    <chance>100</chance>
    <location>Computer</location>
+   <cond></cond>
   </avail>
  </mission>
  <mission name="Sirius Rehabilitation">
   <lua>sirius/srs_rehab</lua>
+  <flags/>
   <avail>
    <chance>100</chance>
    <location>Computer</location>
+   <cond></cond>
   </avail>
  </mission>
  <mission name="Soromid Rehabilitation">
   <lua>soromid/srm_rehab</lua>
+  <flags/>
   <avail>
    <chance>100</chance>
    <location>Computer</location>
+   <cond></cond>
   </avail>
  </mission>
  <mission name="Cargo Rush">
@@ -66,6 +75,7 @@
    <faction>Independent</faction>
    <faction>Sirius</faction>
    <faction>Soromid</faction>
+   <faction>Za'lek</faction>
    <faction>Trader</faction>
   </avail>
  </mission>
@@ -551,6 +561,7 @@
  </mission>
  <mission name="Stealing ships">
   <lua>pirate/pir_ship_stealing</lua>
+  <flags/>
   <avail>
    <chance>10</chance>
    <location>Bar</location>
@@ -618,7 +629,7 @@
   <lua>pirate/pir_clan_cargo</lua>
   <avail>
    <priority>1</priority>
-   <cond>faction.playerStanding("Pirate") &gt;= 20 and var.peek("ps_misn") ~= nil and var.peek("ps_misn") &gt;= 2</cond>
+   <cond>faction.playerStanding("Pirate") &gt;= 20 and var.peek("ps_misn") >= 2</cond>
    <chance>10</chance>
    <location>Bar</location>
    <faction>Pirate</faction>
@@ -845,7 +856,18 @@
    <faction>Independent</faction>
    <faction>Sirius</faction>
    <faction>Soromid</faction>
-   <faction>Trader</faction>
+   <faction>Trader</faction>   <faction>Za'lek</faction>   
+  </avail>
+ </mission>
+ <mission name="Za'lek Shipping Delivery">
+  <lua>zalek/zlk_cargorun</lua>
+  <flags>
+    <unique />
+  </flags>
+  <avail>
+   <chance>25</chance>
+   <location>Bar</location>
+   <planet>Niflheim</planet>
   </avail>
  </mission>
 </Missions>

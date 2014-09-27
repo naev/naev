@@ -18,10 +18,10 @@ function create ()
       standing = ai.getstanding( p ) or -1
       mem.refuel = rnd.rnd( 2000, 4000 )
       if standing < 20 then
-         mem.refuel_no = "\"My fuel is property of the Empire.\""
+         mem.refuel_no = "\"The warriors of Sorom are not your personal refueller.\""
       elseif standing < 70 then
          if rnd.rnd() > 0.2 then
-            mem.refuel_no = "\"My fuel is property of the Empire.\""
+            mem.refuel_no = "\"The warriors of Sorom are not your personal refueller.\""
          end
       else
          mem.refuel = mem.refuel * 0.6
@@ -30,22 +30,18 @@ function create ()
       mem.refuel_msg = string.format( "\"I suppose I could spare some fuel for %d credits.\"", mem.refuel )
    end
 
-   -- See if can be bribed
-   if rnd.rnd() > 0.7 then
-      mem.bribe = math.sqrt( ai.shipmass() ) * (500. * rnd.rnd() + 1750.)
-      mem.bribe_prompt = string.format("\"For some %d credits I could forget about seeing you.\"", mem.bribe )
-      mem.bribe_paid = "\"Now scram before I change my mind.\""
+   -- Handle bribing
+   if rnd.int() > 0.4 then
+      mem.bribe_no = "\"I shall especially enjoy your death.\""
    else
-     bribe_no = {
-            "\"You won't buy your way out of this one.\"",
-            "\"The Empire likes to make examples out of scum like you.\"",
-            "\"You've made a huge mistake.\"",
-            "\"Bribery carries a harsh penalty, scum.\"",
-            "\"I'm not interested in your blood money!\"",
-            "\"All the money in the world won't save you now!\""
+      bribe_no = {
+            "\"Snivelling waste of carbon.\"",
+            "\"Money won't save you from being purged from the gene pool.\"",
+            "\"Culling you will be doing humanity a service.\"",
+            "\"We do not consort with vermin.\"",
+			"\"Who do you take us for, the Empire?\""
      }
      mem.bribe_no = bribe_no[ rnd.rnd(1,#bribe_no) ]
-     
    end
 
    mem.loiter = 3 -- This is the amount of waypoints the pilot will pass through before leaving the system
@@ -66,16 +62,17 @@ function taunt ( target, offense )
    if offense then
       taunts = {
             "There is no room in this universe for scum like you!",
-            "The Empire will enjoy your death!",
-            "Your head will make a fine gift for the Emperor!",
-            "None survive the wrath of the Emperor!",
-            "Enjoy your last moments, criminal!"
+            "Culling you will be doing humanity a service.",
+            "Enjoy your last moments, worm!",
+			"Time for a little natural selection!",
+			"Might makes right!",
+			"Embrace your weakness!"
       }
    else
       taunts = {
-            "You dare attack me!",
-            "You are no match for the Empire!",
-            "The Empire will have your head!",
+            "Cunning, but foolish.",
+            "Ambush! Defend yourselves!",
+            "You should have picked easier prey!",
             "You'll regret that!",
             "That was a fatal mistake!"
       }

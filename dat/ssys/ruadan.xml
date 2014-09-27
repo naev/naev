@@ -11,10 +11,15 @@
   <y>-1065.424651</y>
  </pos>
  <assets>
+  <asset>Ruadan Bastion</asset>
   <asset>Ruadan Gamma</asset>
   <asset>Ruadan II</asset>
   <asset>Ruadan Prime</asset>
   <asset>Ruadan Secundus</asset>
+  <asset>Ruadan Station</asset>
+  <asset>Virtual Za'lek Medium</asset>
+  <asset>Virtual Za'lek Medium</asset>
+  <asset>Virtual Za'lek Medium</asset>
  </assets>
  <jumps>
   <jump target="Vauban">

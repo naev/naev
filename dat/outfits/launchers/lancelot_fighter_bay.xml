@@ -7,12 +7,12 @@
   <mass>900</mass>
   <price>830000</price>
   <gfx_store>lancelot_fighter</gfx_store>
-  <description>This fighter bay allows your ship to carry a pair of Lancelot class fighters. It comes with all the devices required for the maintenance and flight of the fighters.</description>
-  <cpu>-60</cpu>
+  <description>This fighter bay allows your ship to carry a quartet of Lancelot class fighters. It comes with all the devices required for the maintenance and flight of the fighters.</description>
+  <cpu>-40</cpu>
  </general>
  <specific type="fighter bay" secondary="1">
   <ammo>Lancelot Fighter</ammo>
-  <delay>4</delay>
-  <amount>2</amount>
+  <delay>35</delay>
+  <amount>4</amount>
  </specific>
 </outfit>

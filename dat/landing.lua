@@ -132,13 +132,24 @@ function srm_mil_kataka( pnt )
          "\"We don't need your money, outsider.\"")
 end
 
+
+-- Za'lek's military assets.
+function zlk_mil_restricted( pnt )
+   return land_military(pnt, 35,
+         "Docking sequence transmitted.",
+         "Authorization level too low to grant access.",
+         "Authorization denied.",
+         "Money is irrelevant.")
+end
+
+
 -- Za'lek's military center.
 function zlk_ruadan( pnt )
    return land_military(pnt, 75,
          "Docking sequence transmitted.",
-         "Authorization level too low to grant authorization.",
+         "This is a restricted area. Your clearance is far too low. Go away.",
          "Authorization denied.",
-         "Money is irrelevant.")
+         "Bribery is a crime, and will not get you on this planet.")
 end
 
 -- Pirate clanworld.

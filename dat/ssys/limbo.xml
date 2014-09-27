@@ -35,5 +35,9 @@
    <pos x="-25688.151135" y="-8098.916515"/>
    <hide>1.250000</hide>
   </jump>
+  <jump target="Sollav">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
  </jumps>
 </ssys>
