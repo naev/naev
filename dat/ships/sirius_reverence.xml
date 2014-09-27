@@ -17,18 +17,13 @@
  </movement>
  <health>
   <absorb>50</absorb>
-  <shield>750</shield>
-  <armour>700</armour>
-  <energy>960</energy>
-  <shield_regen>11</shield_regen>
+  <armour>150</armour>
   <armour_regen>0</armour_regen>
-  <energy_regen>40.8</energy_regen>
  </health>
  <characteristics>
-  <cpu>55</cpu>
   <crew>11</crew>
   <mass>220</mass>
-  <fuel>600</fuel>
+  <fuel_consumption>200</fuel_consumption>
   <cargo>40</cargo>
  </characteristics>
  <slots>
@@ -36,11 +31,26 @@
   <weapon size="medium" x="15" y="-1" h="2"/>
   <weapon size="small" x="-9" y="-3" h="2"/>
   <weapon size="small" x="-9" y="3" h="2"/>
+  <utility size="medium" prop="systems" exclusive="1" required="1">Basic Medium Systems</utility>
   <utility size="medium"/>
   <utility size="medium"/>
   <utility size="small"/>
+  <structure size="medium" prop="engines" exclusive="1" required="1">Manufacturer Medium Engine</structure>
+  <structure size="medium" prop="hull" exclusive="1" required="1">Unmodified Medium Hull</structure>
   <structure size="medium"/>
   <structure size="medium"/>
  </slots>
- <stats />
+ <stats>
+  <speed_mod>0</speed_mod>
+  <turn_mod>0</turn_mod>
+  <thrust_mod>0</thrust_mod>
+  <armour_mod>400</armour_mod>
+  <shield_mod>400</shield_mod>
+  <shield_regen_mod>100</shield_regen_mod>
+  <energy_mod>0</energy_mod>
+  <energy_regen_mod>0</energy_regen_mod>
+  <cargo_mod>0</cargo_mod>
+  <ew_detect>0</ew_detect>
+  <ew_hide>0</ew_hide>
+ </stats>
 </ship>
