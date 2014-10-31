@@ -276,8 +276,8 @@ typedef struct Pilot_ {
    int tsy;          /**< current sprite y position, calculated on update. */
 
    /* Properties. */
-   double cpu;       /**< Amount of CPU the pilot has left. */
-   double cpu_max;   /**< Maximum amount of CPU the pilot has. */
+   int cpu;       /**< Amount of CPU the pilot has left. */
+   int cpu_max;   /**< Maximum amount of CPU the pilot has. */
    double crew;      /**< Crew amount the player has (display it as (int)floor(), but it's analogue. */
    double cap_cargo; /**< Pilot's cargo capacity. */
 

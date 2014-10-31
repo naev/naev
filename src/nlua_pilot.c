@@ -2926,6 +2926,10 @@ static int pilotL_getLockon( lua_State *L )
 lua_pushstring( L, name ); \
 lua_pushnumber( L, value ); \
 lua_rawset( L, -3 )
+#define PUSH_INT( L, name, value ) \
+lua_pushstring( L, name ); \
+lua_pushinteger( L, value ); \
+lua_rawset( L, -3 )
 /**
  * @brief Gets stats of the pilot.
  *
@@ -2967,7 +2971,7 @@ static int pilotL_getStats( lua_State *L )
    lua_newtable(L);
    /* Core. */
    PUSH_DOUBLE( L, "cpu", p->cpu );
-   PUSH_DOUBLE( L, "cpu_max", p->cpu_max );
+   PUSH_INT( L, "cpu_max", p->cpu_max );
    PUSH_DOUBLE( L, "fuel", p->fuel );
    PUSH_DOUBLE( L, "fuel_max", p->fuel_max );
    PUSH_DOUBLE( L, "fuel_consumption", p->fuel_consumption );
