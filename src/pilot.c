@@ -1878,6 +1878,13 @@ static void pilot_hyperspace( Pilot* p, double dt )
             if (!player_isFlag(PLAYER_AUTONAV))
                player_message( "\erStrayed too far from jump point: jump aborted." );
       }
+      else if (pilot_isFlag(p,PILOT_AFTERBURNER)) {
+         pilot_hyperspaceAbort( p );
+
+         if (pilot_isPlayer(p))
+            if (!player_isFlag(PLAYER_AUTONAV))
+               player_message( "\erAfterburner active: jump aborted." );
+      }
       else {
          if (p->ptimer < 0.) { /* engines ready */
             p->ptimer = HYPERSPACE_FLY_DELAY * p->stats.jump_delay;
