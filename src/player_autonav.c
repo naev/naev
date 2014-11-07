@@ -58,6 +58,7 @@ void player_autonavResetSpeed (void)
      tc_mod         = 1.;
      pause_setSpeed( 1. );
    }
+   tc_rampdown = 0;
 }
 
 
