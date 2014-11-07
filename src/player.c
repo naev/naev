@@ -2170,6 +2170,9 @@ void player_destroyed (void)
    /* Stop sounds. */
    player_soundStop();
 
+   /* Stop autonav */
+   player_autonavEnd();
+
    /* Reset time compression when player dies. */
    pause_setSpeed( 1. );
 }
