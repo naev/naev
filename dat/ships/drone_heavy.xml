@@ -17,6 +17,7 @@
   <crew>1</crew>
   <mass>60</mass>
   <cargo>0</cargo>
+  <fuel_consumption>1</fuel_consumption>
  </characteristics>
  <slots>
   <weapon size="medium" x="8" y="1" h="-5"/>

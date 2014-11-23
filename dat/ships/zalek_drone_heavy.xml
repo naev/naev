@@ -22,6 +22,7 @@
   <mass>25</mass>
   <fuel>100</fuel>
   <cargo>0</cargo>
+  <fuel_consumption>1</fuel_consumption>
  </characteristics>
  <slots>
   <weapon size="medium" x="-12" y="8" h="0"/>

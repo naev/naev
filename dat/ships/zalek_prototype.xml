@@ -19,6 +19,7 @@
   <crew>28</crew>
   <mass>2024</mass>
   <cargo>20</cargo>
+  <fuel_consumption>400</fuel_consumption>
  </characteristics>
  <slots>
   <weapon size="large" x="40" y="0" h="2"/>
@@ -45,7 +46,6 @@
   <structure size="large"/>
  </slots>
  <stats>
-  <fuel_consumption>400</fuel_consumption>
   <speed_mod>0</speed_mod>
   <turn_mod>0</turn_mod>
   <thrust_mod>0</thrust_mod>
