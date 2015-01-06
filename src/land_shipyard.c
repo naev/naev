@@ -20,7 +20,7 @@
 #include <assert.h>
 #include "log.h"
 #include "player.h"
-#include "land.h"
+#include "space.h"
 #include "toolkit.h"
 #include "tk/toolkit_priv.h"
 #include "dialogue.h"
@@ -124,6 +124,7 @@ void shipyard_open( unsigned int wid )
          "Energy:\n"
          "Cargo Space:\n"
          "Fuel:\n"
+         "Fuel Use:\n"
          "Price:\n"
          "Money:\n"
          "License:\n";
@@ -204,6 +205,7 @@ void shipyard_update( unsigned int wid, char* str )
             "NA\n"
             "NA\n"
             "NA\n"
+            "NA\n"
             "NA\n" );
       window_modifyImage( wid, "imgTarget", NULL, 0, 0 );
       window_modifyText( wid, "txtStats", NULL );
@@ -254,6 +256,7 @@ void shipyard_update( unsigned int wid, char* str )
          "%.0f MJ (%.1f MW)\n"
          "%.0f tons\n"
          "%d units\n"
+         "%.0f units\n"
          "%s credits\n"
          "%s credits\n"
          "%s\n",
@@ -274,6 +277,7 @@ void shipyard_update( unsigned int wid, char* str )
          ship->energy, ship->energy_regen,
          ship->cap_cargo,
          ship->fuel,
+         ship->fuel_consumption,
          buf2,
          buf3,
          (license_text != NULL) ? license_text : "None" );
@@ -282,7 +286,7 @@ void shipyard_update( unsigned int wid, char* str )
    if (license_text != ship->license)
       free(license_text);
 
-   if (!shipyard_canBuy( shipname ))
+   if (!shipyard_canBuy( shipname, land_planet ))
       window_disableButtonSoft( wid, "btnBuyShip");
    else
       window_enableButton( wid, "btnBuyShip");
@@ -358,7 +362,7 @@ static void shipyard_buy( unsigned int wid, char* str )
  * @brief Makes sure it's sane to buy a ship.
  *    @param shipname Ship being bought.
  */
-int shipyard_canBuy ( char *shipname )
+int shipyard_canBuy ( char *shipname, Planet *planet )
 {
    Ship* ship;
    ship = ship_get( shipname );
@@ -368,7 +372,8 @@ int shipyard_canBuy ( char *shipname )
    price = ship_buyPrice(ship);
 
    /* Must have enough credits and the necessary license. */
-   if (!player_hasLicense(ship->license)) {
+   if ((!player_hasLicense(ship->license)) &&
+         ((planet == NULL) || (!planet_isBlackMarket(planet)))) {
       land_errDialogueBuild( "You lack the %s.", ship->license );
       failure = 1;
    }

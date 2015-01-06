@@ -23,9 +23,13 @@
 
 /* Vector metatable methods */
 static int vectorL_new( lua_State *L );
+static int vectorL_add__( lua_State *L );
 static int vectorL_add( lua_State *L );
+static int vectorL_sub__( lua_State *L );
 static int vectorL_sub( lua_State *L );
+static int vectorL_mul__( lua_State *L );
 static int vectorL_mul( lua_State *L );
+static int vectorL_div__( lua_State *L );
 static int vectorL_div( lua_State *L );
 static int vectorL_get( lua_State *L );
 static int vectorL_polar( lua_State *L );
@@ -37,13 +41,13 @@ static int vectorL_mod( lua_State *L );
 static const luaL_reg vector_methods[] = {
    { "new", vectorL_new },
    { "__add", vectorL_add },
-   { "add", vectorL_add },
+   { "add", vectorL_add__ },
    { "__sub", vectorL_sub },
-   { "sub", vectorL_sub },
+   { "sub", vectorL_sub__ },
    { "__mul", vectorL_mul },
-   { "mul", vectorL_mul },
+   { "mul", vectorL_mul__ },
    { "__div", vectorL_div },
-   { "div", vectorL_div },
+   { "div", vectorL_div__ },
    { "get", vectorL_get },
    { "polar", vectorL_polar },
    { "set", vectorL_set },
@@ -242,6 +246,36 @@ static int vectorL_add( lua_State *L )
 
    return 1;
 }
+static int vectorL_add__( lua_State *L )
+{
+   LuaVector *v1, *v2;
+   double x, y;
+
+   /* Get self. */
+   v1    = luaL_checkvector(L,1);
+
+   /* Get rest of parameters. */
+   v2 = NULL;
+   if (lua_isvector(L,2)) {
+      v2 = lua_tovector(L,2);
+      x = v2->vec.x;
+      y = v2->vec.y;
+   }
+   else if ((lua_gettop(L) > 2) && lua_isnumber(L,2) && lua_isnumber(L,3)) {
+      x = lua_tonumber(L,2);
+      y = lua_tonumber(L,3);
+   }
+   else {
+      NLUA_INVALID_PARAMETER(L);
+      return 0;
+   }
+
+   /* Actually add it */
+   vect_cset( &v1->vec, v1->vec.x + x, v1->vec.y + y );
+   lua_pushvector( L, *v1 );
+
+   return 1;
+}
 
 /**
  * @brief Subtracts two vectors or a vector and some cartesian coordinates.
@@ -288,6 +322,35 @@ static int vectorL_sub( lua_State *L )
    lua_pushvector( L, vout );
    return 1;
 }
+static int vectorL_sub__( lua_State *L )
+{
+   LuaVector *v1, *v2;
+   double x, y;
+
+   /* Get self. */
+   v1    = luaL_checkvector(L,1);
+
+   /* Get rest of parameters. */
+   v2 = NULL;
+   if (lua_isvector(L,2)) {
+      v2 = lua_tovector(L,2);
+      x = v2->vec.x;
+      y = v2->vec.y;
+   }
+   else if ((lua_gettop(L) > 2) && lua_isnumber(L,2) && lua_isnumber(L,3)) {
+      x = lua_tonumber(L,2);
+      y = lua_tonumber(L,3);
+   }
+   else {
+      NLUA_INVALID_PARAMETER(L);
+      return 0;
+   }
+
+   /* Actually add it */
+   vect_cset( &v1->vec, v1->vec.x - x, v1->vec.y - y );
+   lua_pushvector( L, *v1 );
+   return 1;
+}
 
 /**
  * @brief Multiplies a vector by a number.
@@ -314,6 +377,20 @@ static int vectorL_mul( lua_State *L )
    lua_pushvector( L, vout );
    return 1;
 }
+static int vectorL_mul__( lua_State *L )
+{
+   LuaVector *v1;
+   double mod;
+
+   /* Get parameters. */
+   v1    = luaL_checkvector(L,1);
+   mod   = luaL_checknumber(L,2);
+
+   /* Actually add it */
+   vect_cset( &v1->vec, v1->vec.x * mod, v1->vec.y * mod );
+   lua_pushvector( L, *v1 );
+   return 1;
+}
 
 /**
  * @brief Divides a vector by a number.
@@ -338,6 +415,20 @@ static int vectorL_div( lua_State *L )
    /* Actually add it */
    vect_cset( &vout.vec, v1->vec.x / mod, v1->vec.y / mod );
    lua_pushvector( L, vout );
+   return 1;
+}
+static int vectorL_div__( lua_State *L )
+{
+   LuaVector *v1;
+   double mod;
+
+   /* Get parameters. */
+   v1    = luaL_checkvector(L,1);
+   mod   = luaL_checknumber(L,2);
+
+   /* Actually add it */
+   vect_cset( &v1->vec, v1->vec.x / mod, v1->vec.y / mod );
+   lua_pushvector( L, *v1 );
    return 1;
 }
 

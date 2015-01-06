@@ -223,7 +223,7 @@ function equip_genericMilitary( p, shipsize )
    else
       use_primary    = nhigh-2
       use_secondary  = 2
-      addWeapons( equip_turretMedLow(), use_primary )
+      addWeapons( equip_turretHigMedLow(), use_primary )
       addWeapons( equip_secondaryMedLow(), use_secondary )
       medium         = equip_mediumHig()
       low            = equip_lowHig()

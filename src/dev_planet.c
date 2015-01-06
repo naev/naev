@@ -15,6 +15,7 @@
 
 #include <stdlib.h> /* qsort */
 
+#include "conf.h"
 #include "nxml.h"
 #include "physics.h"
 #include "nfile.h"
@@ -32,8 +33,8 @@ int dpl_savePlanet( const Planet *p )
 {
    xmlDocPtr doc;
    xmlTextWriterPtr writer;
-   char *file, *cleanName;
-   int i, len;
+   char file[PATH_MAX], *cleanName;
+   int i;
 
    /* Create the writer. */
    writer = xmlNewTextWriterDoc(&doc, 0);
@@ -84,7 +85,7 @@ int dpl_savePlanet( const Planet *p )
    /* General. */
    if (p->real == ASSET_REAL) {
       xmlw_startElem( writer, "general" );
-      xmlw_elem( writer, "class", "%c", planet_getClass( p ) );
+      xmlw_elem( writer, "class", "%s", p->class );
       xmlw_elem( writer, "population", "%"PRIu64, p->population );
       xmlw_elem( writer, "hide", "%f", sqrt(p->hide) );
       xmlw_startElem( writer, "services" );
@@ -131,11 +132,8 @@ int dpl_savePlanet( const Planet *p )
 
    /* Write data. */
    cleanName = uniedit_nameFilter( p->name );
-   len       = strlen(cleanName)+16;
-   file      = malloc( len );
-   nsnprintf( file, len, "dat/assets/%s.xml", cleanName );
+   nsnprintf( file, sizeof(file), "%s/%s.xml", conf.dev_save_asset, cleanName );
    xmlSaveFileEnc( file, doc, "UTF-8" );
-   free( file );
 
    /* Clean up. */
    xmlFreeDoc(doc);

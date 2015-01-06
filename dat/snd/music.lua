@@ -16,7 +16,7 @@ factional = {
    Empire     = { "empire1", "empire2" },
    Sirius     = { "sirius1", "sirius2" },
    Dvaered    = { "dvaered1", "dvaered2" },
-   ["Za'lek"] = { "zalek1" } -- TODO: Have Za'lek faction actually exist in-game.
+   ["Za'lek"] = { "zalek1", "zalek2" } 
 }
 
 function choose( str )
@@ -158,7 +158,8 @@ last_sysNebuVol  = nil
 ambient_neutral  = { "ambient2", "mission",
       "peace1", "peace2", "peace4", "peace6",
       "void_sensor", "ambiphonic",
-      "ambient4" }
+      "ambient4", "terminal", "eureka",
+	  "ambient2_5" }
 --[[
 -- @brief Chooses ambient songs.
 --]]

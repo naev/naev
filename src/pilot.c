@@ -1131,12 +1131,6 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter, const Da
    if (p->stress > p->armour)
       p->stress = p->armour;
 
-   /* Player might break autonav. */
-   if ((w != NULL) && (p->id == PLAYER_ID) &&
-         !pilot_isFlag(player.p, PILOT_HYP_BEGIN) &&
-         !pilot_isFlag(player.p, PILOT_HYPERSPACE))
-      player_shouldAbortAutonav(1);
-
    /* Disabled always run before dead to ensure combat rating boost. */
    pilot_updateDisable(p, shooter);
 
@@ -1883,6 +1877,13 @@ static void pilot_hyperspace( Pilot* p, double dt )
          if (pilot_isPlayer(p))
             if (!player_isFlag(PLAYER_AUTONAV))
                player_message( "\erStrayed too far from jump point: jump aborted." );
+      }
+      else if (pilot_isFlag(p,PILOT_AFTERBURNER)) {
+         pilot_hyperspaceAbort( p );
+
+         if (pilot_isPlayer(p))
+            if (!player_isFlag(PLAYER_AUTONAV))
+               player_message( "\erAfterburner active: jump aborted." );
       }
       else {
          if (p->ptimer < 0.) { /* engines ready */

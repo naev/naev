@@ -104,6 +104,7 @@ CODE_SOURCE = \
 	ntime.c \
 	nxml.c \
 	nxml_lua.c \
+	nzip.c \
 	opengl.c \
 	opengl_ext.c \
 	opengl_matrix.c \
@@ -112,7 +113,6 @@ CODE_SOURCE = \
 	opengl_vbo.c \
 	options.c \
 	outfit.c \
-	pack.c \
 	pause.c \
 	perlin.c \
 	physics.c \
@@ -255,7 +255,6 @@ CODE_SOURCE = \
 	opengl_vbo.h \
 	options.h \
 	outfit.h \
-	pack.h \
 	pause.h \
 	perlin.h \
 	physics.h \

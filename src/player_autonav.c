@@ -15,6 +15,9 @@
 
 #include "toolkit.h"
 #include "pause.h"
+#include "player.h"
+#include "pilot.h"
+#include "pilot_ew.h"
 #include "space.h"
 #include "conf.h"
 #include <time.h>
@@ -30,16 +33,33 @@ static int tc_rampdown  = 0; /**< Ramping down time compression? */
 static double lasts;
 static double lasta;
 static int slockons;
-static double abort_mod = 1.;
 static double autopause_timer = 0.; /**< Avoid autopause if the player just unpaused, and don't compress time right away */
+static double speedup_timer = 0.; /**< Keep time from speeding up for a short time after it's reset */
+static int hostiles_last = 0;
 
 /*
  * Prototypes.
  */
 static void player_autonavSetup (void);
 static void player_autonav (void);
-static int player_autonavApproach( Vector2d *pos, double *dist2, int count_target );
+static int player_autonavApproach( const Vector2d *pos, double *dist2, int count_target );
 static int player_autonavBrake (void);
+
+
+/**
+ * @brief Resets the game speed.
+ */
+void player_autonavResetSpeed (void)
+{
+   if (player_isFlag(PLAYER_DOUBLESPEED)) {
+     tc_mod         = 2.;
+     pause_setSpeed( 2. );
+   } else {
+     tc_mod         = 1.;
+     pause_setSpeed( 1. );
+   }
+   tc_rampdown = 0;
+}
 
 
 /**
@@ -104,12 +124,14 @@ static void player_autonavSetup (void)
    lasts        = player.p->shield / player.p->shield_max;
    lasta        = player.p->armour / player.p->armour_max;
    slockons     = player.p->lockons;
-   if (player.autonav_timer <= 0.)
-      abort_mod = 1.;
 
    /* Set flag and tc_mod just in case. */
    player_setFlag(PLAYER_AUTONAV);
    pause_setSpeed( tc_mod );
+
+   /* Make sure time acceleration starts immediately. */
+   speedup_timer = 0.;
+   hostiles_last = 0;
 }
 
 
@@ -119,13 +141,7 @@ static void player_autonavSetup (void)
 void player_autonavEnd (void)
 {
    player_rmFlag(PLAYER_AUTONAV);
-   if (player_isFlag(PLAYER_DOUBLESPEED)) {
-     tc_mod         = 2.;
-     pause_setSpeed( 2. );
-   } else {
-     tc_mod         = 1.;
-     pause_setSpeed( 1. );
-   }
+   player_autonavResetSpeed();
 }
 
 
@@ -224,20 +240,12 @@ void player_autonavAbort( const char *reason )
    if (player_isFlag(PLAYER_AUTONAV)) {
       if (conf.autonav_pause && reason) {
          /* Keep it from re-pausing before you can react */
-		 if (autopause_timer > 0) return;
+         if (autopause_timer > 0) return;
          player_message("\erGame paused: %s!", reason);
-
-         if (player_isFlag(PLAYER_DOUBLESPEED)) {
-           tc_mod         = 2.;
-           pause_setSpeed( 2. );
-         } else {
-           tc_mod         = 1.;
-           pause_setSpeed( 1. );
-         }
-
+         player_autonavResetSpeed();
          autopause_timer = 2.;
          pause_game();
-		 return;
+         return;
       }
       if (reason != NULL)
          player_message("\erAutonav aborted: %s!", reason);
@@ -354,10 +362,12 @@ static void player_autonav (void)
 /**
  * @brief Handles approaching a position with autonav.
  *
- *    @param pos Position to go to.
+ *    @param[in] pos Position to go to.
+ *    @param[out] dist2 Square distance left to target.
+ *    @param count_target If 1 it subtracts the braking distance from dist2. Otherwise it returns the full distance.
  *    @return 1 on completion.
  */
-static int player_autonavApproach( Vector2d *pos, double *dist2, int count_target )
+static int player_autonavApproach( const Vector2d *pos, double *dist2, int count_target )
 {
    double d, t, vel, dist;
 
@@ -414,38 +424,56 @@ static int player_autonavBrake (void)
 }
 
 /**
- * @brief Checks whether the player should abort autonav due to damage or missile locks.
+ * @brief Checks whether the speed should be reset due to damage or missile locks.
  *
- *    @return 1 if autonav should be aborted.
+ *    @return 1 if the speed should be reset.
  */
-int player_shouldAbortAutonav( int damaged )
+int player_autonavShouldResetSpeed (void)
 {
-   double failpc = conf.autonav_abort * abort_mod;
+   double failpc = conf.autonav_reset_speed;
    double shield = player.p->shield / player.p->shield_max;
    double armour = player.p->armour / player.p->armour_max;
-   char *reason = NULL;
+   int i;
+   Pilot **pstk;
+   int n;
+   int hostiles = 0;
+   int will_reset = 0;
 
    if (!player_isFlag(PLAYER_AUTONAV))
       return 0;
 
-   if (failpc >= 1. && !slockons && player.p->lockons > 0)
-      reason = "Missile Lockon Detected";
-   else if (failpc >= 1. && (shield < 1. && shield < lasts) && damaged)
-      reason = "Sustaining damage";
-   else if (failpc > 0. && (shield < failpc && shield < lasts) && damaged)
-      reason = "Shield below damage threshold";
-   else if (armour < lasta && damaged)
-      reason = "Sustaining armour damage";
+   pstk = pilot_getAll( &n );
+   for (i=0; i<n; i++) {
+      if ((pstk[i]->id != PLAYER_ID) && pilot_inRangePilot( player.p, pstk[i] ) >= 1 &&
+            pilot_isHostile( pstk[i] )) {
+         hostiles = 1;
+         break;
+      }
+   }
+
+   if (hostiles && hostiles_last) {
+      if (failpc > .995) {
+         will_reset = 1;
+         speedup_timer = 0.;
+      }
+      else if ((shield < lasts && shield < failpc) || armour < lasta) {
+         will_reset = 1;
+         speedup_timer = 2.;
+      }
+      else if (speedup_timer > 0) {
+         /* This check needs to be after the second check so new hits
+          * bring the timer back up. Otherwise, we will have sporadic
+          * bursts of speed. */
+         will_reset = 1;
+      }
+   }
 
    lasts = player.p->shield / player.p->shield_max;
    lasta = player.p->armour / player.p->armour_max;
+   hostiles_last = hostiles;
 
-   if (reason) {
-      player_autonavAbort(reason);
-      if (player.autonav_timer > 0.)
-         abort_mod = MIN( MAX( 0., abort_mod - .25 ), (int)(shield * 4) * .25 );
-      else
-         abort_mod = MIN( 0.75, (int)(shield * 4) * .25 );
+   if (will_reset) {
+      player_autonavResetSpeed();
       player.autonav_timer = 30.;
       return 1;
    }
@@ -462,8 +490,7 @@ void player_thinkAutonav( Pilot *pplayer, double dt )
 {
    if (player.autonav_timer > 0.)
       player.autonav_timer -= dt;
-   if (player_shouldAbortAutonav(0))
-      return;
+   player_autonavShouldResetSpeed();
    if ((player.autonav == AUTONAV_JUMP_APPROACH) ||
          (player.autonav == AUTONAV_JUMP_BRAKE)) {
       /* If we're already at the target. */
@@ -541,10 +568,11 @@ void player_updateAutonav( double dt )
    }
 
    /* We'll update the time compression here. */
+   speedup_timer -= dt;
    if (autopause_timer > 0) {
       /* Don't start time acceleration right away.  Let the player react. */
       autopause_timer -= dt;
-	  return;
+      return;
    }
    if (tc_mod == player.tc_max)
       return;

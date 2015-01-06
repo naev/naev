@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Za'lek Hephaestus">
+ <base_type>Hephaestus</base_type>
+ <GFX sx="12" sy="12">hephaestus</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Carrier</class>
+ <price>10000000</price>
+ <fabricator>Za'lek Fabricators</fabricator>
+ <license>Heavy Combat Vessel License</license>
+ <description>The crown of the House Za'lek Defense Fleet, these proud buttresses of the Za'lek's ideals frequently serve as the nerve center of a Za'lek battle fleet, thanks to their superior sensor suite. The Hephaestus is rarely-seen, but commands respect.</description>
+ <health>
+  <absorb>31</absorb>
+  <armour>500</armour>
+  <armour_regen>0</armour_regen>
+ </health>
+ <characteristics>
+  <crew>32</crew>
+  <mass>2500</mass>
+  <cargo>25</cargo>
+  <fuel_consumption>400</fuel_consumption>
+ </characteristics>
+ <slots>
+  <weapon size="large" x="80" y="-20" h="0"/>
+  <weapon size="large" x="80" y="20" h="0"/>
+  <weapon size="large" x="40" y="-20" h="0"/>
+  <weapon size="large" x="40" y="20" h="0"/>
+  <weapon size="large" x="0" y="-20" h="0"/>
+  <weapon size="large" x="0" y="20" h="0"/>
+  <weapon size="large" x="-20" y="-20" h="0"/>
+  <weapon size="large" x="-20" y="20" h="0"/>
+  <weapon size="large" x="-40" y="-20" h="0"/>
+  <weapon size="large" x="-40" y="20" h="0"/>
+  <utility size="large" prop="systems">Basic Large Systems</utility>
+  <utility size="large"/>
+  <utility size="large"/>
+  <utility size="large"/>
+  <utility size="large"/>
+  <utility size="large"/>
+  <utility size="large"/>
+  <utility size="large"/>
+  <structure size="large" prop="engines">Manufacturer Large Engine</structure>
+  <structure size="large" prop="hull">Unmodified Large Hull</structure>
+  <structure size="large"/>
+  <structure size="large"/>
+  <structure size="large"/>
+  <structure size="large"/>
+  <structure size="large"/>
+  <structure size="large"/>
+  <structure size="large"/>
+ </slots>
+ <stats>
+  <speed_mod>0</speed_mod>
+  <turn_mod>-10</turn_mod>
+  <thrust_mod>0</thrust_mod>
+  <armour_mod>-10</armour_mod>
+  <shield_mod>100</shield_mod>
+  <shield_regen_mod>25</shield_regen_mod>
+  <cargo_mod>0</cargo_mod>
+  <ew_detect>15</ew_detect>
+  <ew_hide>-5</ew_hide>
+ </stats>
+</ship>

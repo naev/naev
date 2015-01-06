@@ -42,8 +42,12 @@
   <item>Plasma Cluster Cannon MK1</item>
   <item>Plasma Cluster Cannon MK2</item>
   <item>Plasma Cluster Cannon MK3</item>
-  <item>Orion Beam</item>
   <item>Ragnarok Beam</item>
+  <item>Grave Beam</item>
+  <item>Pulse Beam</item>
+  <item>Grave Lance</item>
+  <item>Orion Lance</item>
+  <item>Shattershield Lance</item>
   <item>Neutron Disruptor</item>
   <item>Unicorp Fury Launcher</item>
   <item>TeraCom Fury Launcher</item>
@@ -130,8 +134,18 @@
   <item>Jump Scanner</item>
   <item>Lancelot Fighter Bay</item>
   <item>Lancelot Fighter</item>
+  <item>Empire Lancelot Fighter Bay</item>
+  <item>Empire Lancelot Fighter</item>
+  <item>Fidelity Fighter Bay</item>
+  <item>Fidelity Fighter</item>
   <item>Drone Fighter Bay</item>
   <item>Drone Fighter</item>
+  <item>Za'lek Light Drone Fighter Bay</item>
+  <item>Za'lek Light Drone Fighter</item>
+  <item>Za'lek Heavy Drone Fighter Bay</item>
+  <item>Za'lek Heavy Drone Fighter</item>
+  <item>Za'lek Bomber Drone Fighter Bay</item>
+  <item>Za'lek Bomber Drone Fighter</item>
   <item>Large Civilian Vessel License</item>
   <item>Medium Weapon License</item>
   <item>Heavy Weapon License</item>
@@ -267,6 +281,7 @@
   <item>Schroedinger</item>
   <item>Gawain</item>
   <item>Drone</item>
+  <item>Heavy Drone</item>
   <item>Koala</item>
   <item>Quicksilver</item>
   <item>Proteron Derivative</item>
@@ -299,10 +314,12 @@
   <item>Admonisher</item>
   <item>Pirate Admonisher</item>
   <item>Empire Admonisher</item>
+  <item>Za'lek Sting</item>
   <item>Vigilance</item>
   <item>Dvaered Vigilance</item>
   <item>Proteron Kahan</item>
   <item>Soromid Nyx</item>
+  <item>Za'lek Demon</item>
   <item>Pacifier</item>
   <item>Empire Pacifier</item>
   <item>Rhino</item>
@@ -312,6 +329,8 @@
   <item>Pirate Kestrel</item>
   <item>Proteron Archimedes</item>
   <item>Soromid Ira</item>
+  <item>Za'lek Mephisto</item>
+  <item>Za'lek Prototype Cruiser</item>
   <item>Hawking</item>
   <item>Empire Hawking</item>
   <item>Sirius Dogma</item>
@@ -319,13 +338,11 @@
   <item>Dvaered Goddard</item>
   <item>Sirius Divinity</item>
   <item>Soromid Arx</item>
+  <item>Za'lek Diablo</item>
   <item>Proteron Watson</item>
   <item>Empire Peacemaker</item>
-  <item>Za'lek Sting</item>
-  <item>Za'lek Imp</item>
-  <item>Za'lek Demon</item>
-  <item>Za'lek Mephisto</item>
-  <item>Za'lek Diablo</item>
+  <item>Soromid Vox</item>
+  <item>Za'lek Hephaestus</item>
  </tech>
  <tech name="All Commodities">
   <item>Food</item>
@@ -334,7 +351,6 @@
   <item>Medicine</item>
   <item>Luxury Goods</item>
  </tech>
-
  <!-- Weapon Trees -->
  <tech name="Laser 1">
   <item>Laser Cannon MK1</item>
@@ -506,7 +522,8 @@
   <item>Ion Cannon</item>
   <item>Heavy Ion Turret</item>
   <item>Railgun Turret</item>
-  <item>Orion Beam</item>
+  <item>Orion Lance</item>
+  <item>Shattershield Lance</item>
   <item>Medium Weapon License</item>
   <item>Medium Combat Vessel License</item>
  </tech>
@@ -590,6 +607,10 @@
   <item>Fury Missile</item>
   <item>Unicorp Medusa Launcher</item>
   <item>Medusa Missile</item>
+  <item>Unicorp Headhunter Launcher</item>
+  <item>Headhunter Missile</item>
+  <item>Mace Rocket</item>
+  <item>Unicorp Caesar IV Launcher</item>
  </tech>
  <tech name="Missiles 2">
   <item>Unicorp Headhunter Launcher</item>
@@ -601,8 +622,11 @@
   <item>Enygma Systems Spearhead Launcher</item>
   <item>Spearhead Missile</item>
   <item>TeraCom Medusa Launcher</item>
+  <item>TeraCom Fury Launcher</item>
   <item>Medusa Missile</item>
   <item>Enygma Systems Turreted Fury Launcher</item>
+  <item>Unicorp Vengeance Launcher</item>
+  <item>Vengeance Missile</item>
  </tech>
  <tech name="Star Maps">
   <item>Map: Nebula Edge</item>
@@ -703,7 +727,6 @@
  </tech>
  <tech name="Za'lek Military Ships">
   <item>Za'lek Sting</item>
-  <item>Za'lek Imp</item>
   <item>Za'lek Demon</item>
   <item>Za'lek Mephisto</item>
   <item>Za'lek Diablo</item>
@@ -716,9 +739,11 @@
  </tech>
  <tech name="__Collective">
   <item>Neutron Disruptor</item>
+  <item>Heavy Neutron Disruptor</item>
   <item>Drone Fighter Bay</item>
   <item>Drone Fighter</item>
   <item>Drone</item>
+  <item>Heavy Drone</item>
  </tech>
  <tech name="Systems Low">
   <item>Previous Generation Small Systems</item>

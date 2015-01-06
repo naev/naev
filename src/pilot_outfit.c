@@ -881,6 +881,8 @@ void pilot_calcStats( Pilot* pilot )
    pilot->crew          = pilot->ship->crew;
    /* cargo */
    pilot->cap_cargo     = pilot->ship->cap_cargo;
+   /* fuel_consumption. */
+   pilot->fuel_consumption = pilot->ship->fuel_consumption;
    /* health */
    ac = (pilot->armour_max > 0.) ? pilot->armour / pilot->armour_max : 0.;
    sc = (pilot->shield_max > 0.) ? pilot->shield / pilot->shield_max : 0.;
@@ -978,12 +980,7 @@ void pilot_calcStats( Pilot* pilot )
    pilot->energy_tau = pilot->energy_max / pilot->energy_regen;
 
    /* Slot voodoo. */
-   s        = &pilot->stats;
-   /* Fuel. */
-   if (s->fuel_consumption == 0.)
-      pilot->fuel_consumption = 100.;
-   else
-      pilot->fuel_consumption = s->fuel_consumption;
+   s = &pilot->stats;
    /*
     * Electronic warfare setting base parameters.
     */
@@ -1033,7 +1030,7 @@ void pilot_calcStats( Pilot* pilot )
    pilot->energy_max   *= s->energy_mod;
    pilot->energy_regen *= s->energy_regen_mod;
    /* cpu */
-   pilot->cpu_max       = (pilot->ship->cpu + s->cpu_max)*s->cpu_mod;
+   pilot->cpu_max       = (int)floor((float)(pilot->ship->cpu + s->cpu_max)*s->cpu_mod);
    pilot->cpu          += pilot->cpu_max; /* CPU is negative, this just sets it so it's based off of cpu_max. */
    /* Misc. */
    pilot->dmg_absorb    = MAX( 0., pilot->dmg_absorb );

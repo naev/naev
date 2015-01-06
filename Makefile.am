@@ -11,19 +11,20 @@ appicondir = $(datadir)/pixmaps
 appicon_DATA = extras/logos/naev.png
 Graphicsdir = $(datadir)/applications
 Graphics_DATA = naev.desktop
+appdatadir = $(datadir)/appdata
+appdata_DATA = naev.appdata.xml
 dist_pkgdata_DATA = naev-confupdate.sh
 
 dist_man6_MANS = naev.6
 dist_doc_DATA = AUTHORS README TODO LICENSE
 
-DATA_ARCHIVE = ndata
-PACK	     = utils/pack/pack$(EXEEXT)
+DATA_ARCHIVE = ndata.zip
 if HAVE_UTILS
 MKSPR      = utils/mkspr/mkspr$(EXEEXT)
 endif
 NAEV	     = naev$(EXEEXT)
 
-EXTRA_DIST = LICENSE extras naev.desktop
+EXTRA_DIST = LICENSE extras naev.desktop naev.appdata.xml
 CLEANFILES = $(DATA_ARCHIVE) $(NAEV)
 
 .PHONY: docs utils help install-ndata
@@ -34,24 +35,19 @@ $(NAEV):
 	@echo "  LN    $(NAEV)"
 	$(LN_S) "src/$(NAEV)" "$(NAEV)"
 
-$(PACK):
-	$(MAKE) -C utils/pack
-
 VERSION: src/config.h
 	echo $(VERSION) > $@
 
 if HAVE_UTILS
-utils: $(PACK) $(MKSPR)
+utils: $(MKSPR)
 
 $(MKSPR):
 	$(MAKE) -C utils/mkspr
 
-$(DATA_ARCHIVE): $(PACK) VERSION
-	@echo " PACK   $(DATA_ARCHIVE)"
+$(DATA_ARCHIVE): VERSION
+	@echo " ZIP   $(DATA_ARCHIVE)"
 	cd "$(top_srcdir)" && \
-	  (find AUTHORS VERSION naev-confupdate.sh -print0; \
-	     find dat     -type f -print0) | xargs -0 \
-	$(abs_top_builddir)/$(PACK) "$(abs_top_builddir)/$(DATA_ARCHIVE)";
+    zip -0r "$(abs_top_builddir)/$(DATA_ARCHIVE)" AUTHORS VERSION naev-confupdate.sh dat/
 else
 utils:
 
