@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<outfit name="S&amp;K Light Stealth Plating">
+<outfit name="S&amp;K Ultralight Stealth Plating">
  <general>
   <typename>Core Systems</typename>
   <slot prop="hull">structure</slot>
   <size>small</size>
-  <mass>55</mass>
-  <price>180000</price>
+  <mass>30</mass>
+  <price>95000</price>
   <description>The Light Stealth Plating from Schafer &amp; Kane Industries foregoes hull strength for increased stealth, making it harder for ships to detect and target you.</description>
   <gfx_store>nanobond</gfx_store>
  </general>
  <specific type="modification">
-  <cargo>6</cargo>
-  <absorb>7</absorb>
-  <armour>95</armour>
+  <cargo>3</cargo>
+  <absorb>5</absorb>
+  <armour>55</armour>
   <armour_regen>0</armour_regen>
-  <ew_hide>30</ew_hide>
+  <ew_hide>20</ew_hide>
  </specific>
 </outfit>

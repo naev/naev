@@ -4,15 +4,15 @@
   <typename>Core Systems</typename>
   <slot prop="hull">structure</slot>
   <size>small</size>
-  <mass>40</mass>
-  <price>25000</price>
+  <mass>27</mass>
+  <price>16000</price>
   <description>D-2 plating is commonly found on small ships, because it's an inexpensive set of upgrades to the standard hull.</description>
   <gfx_store>nanobond</gfx_store>
  </general>
  <specific type="modification">
-  <cargo>10</cargo>
-  <absorb>0</absorb>
-  <armour>70</armour>
+  <cargo>4</cargo>
+  <absorb>4</absorb>
+  <armour>45</armour>
   <armour_regen>0</armour_regen>
   <ew_hide>0</ew_hide>
  </specific>

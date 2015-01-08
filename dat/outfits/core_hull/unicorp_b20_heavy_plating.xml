@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<outfit name="Unicorp B-16 Heavy Plating">
+<outfit name="Unicorp B-20 Heavy Plating">
  <general>
   <typename>Core Systems</typename>
   <slot prop="hull">structure</slot>
   <size>large</size>
-  <mass>1050</mass>
-  <price>700000</price>
+  <mass>1800</mass>
+  <price>900000</price>
   <description>B-16 plating is a low-end heavy punishment hull modification. It is designed to absorb lots of damage, but its armour-to-weight ratio is worse than the C or D variants.</description>
   <gfx_store>nanobond</gfx_store>
  </general>
  <specific type="modification">
-  <cargo>80</cargo>
-  <absorb>30</absorb>
-  <armour>1400</armour>
+  <cargo>100</cargo>
+  <absorb>35</absorb>
+  <armour>2000</armour>
   <armour_regen>0</armour_regen>
   <ew_hide>0</ew_hide>
  </specific>

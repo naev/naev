@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<outfit name="Unicorp D-12 Medium Plating">
+<outfit name="Unicorp B-8 Medium Plating">
  <general>
   <typename>Core Systems</typename>
   <slot prop="hull">structure</slot>
   <size>medium</size>
-  <mass>250</mass>
-  <price>80000</price>
+  <mass>120</mass>
+  <price>110000</price>
   <description>C-8 Plating is similar to D-8 Plating, but the armour plates are furnished with an additional protective layer, increasing both mass and armour.</description>
   <gfx_store>nanobond</gfx_store>
  </general>
  <specific type="modification">
-  <cargo>36</cargo>
-  <absorb>18</absorb>
-  <armour>470</armour>
+  <cargo>20</cargo>
+  <absorb>14</absorb>
+  <armour>200</armour>
   <armour_regen>0</armour_regen>
   <ew_hide>0</ew_hide>
  </specific>

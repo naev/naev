@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<outfit name="S&amp;K Medium-Heavy Stealth Plating">
+<outfit name="S&amp;K Medium Stealth Plating">
  <general>
   <typename>Core Systems</typename>
   <slot prop="hull">structure</slot>
   <size>medium</size>
-  <mass>280</mass>
-  <price>480000</price>
+  <mass>120</mass>
+  <price>270000</price>
   <description>Medium sized ships are usually not in the business of remaining undetected, but Schafer &amp; Kane Industries have nevertheless developed a hull modification that helps in this area.</description>
   <gfx_store>nanobond</gfx_store>
  </general>
  <specific type="modification">
-  <cargo>25</cargo>
-  <absorb>21</absorb>
-  <armour>600</armour>
+  <cargo>12</cargo>
+  <absorb>15</absorb>
+  <armour>210</armour>
   <armour_regen>0</armour_regen>
-  <ew_hide>50</ew_hide>
+  <ew_hide>40</ew_hide>
  </specific>
 </outfit>

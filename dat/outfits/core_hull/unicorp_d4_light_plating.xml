@@ -4,15 +4,15 @@
   <typename>Core Systems</typename>
   <slot prop="hull">structure</slot>
   <size>small</size>
-  <mass>40</mass>
-  <price>45000</price>
+  <mass>50</mass>
+  <price>30000</price>
   <description>More expensive than D-2 Plating, the C-2 variant offers better protection from light weapons fire at the same weight, without sacrificing cargo space.</description>
   <gfx_store>nanobond</gfx_store>
  </general>
  <specific type="modification">
-  <cargo>10</cargo>
-  <absorb>5</absorb>
-  <armour>90</armour>
+  <cargo>9</cargo>
+  <absorb>6</absorb>
+  <armour>75</armour>
   <armour_regen>0</armour_regen>
   <ew_hide>0</ew_hide>
  </specific>
