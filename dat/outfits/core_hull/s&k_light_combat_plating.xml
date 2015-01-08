@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<outfit name="Schafer &amp; Kane Light Combat Plating">
+<outfit name="S&amp;K Light Combat Plating">
  <general>
   <typename>Core Systems</typename>
   <slot prop="hull">structure</slot>

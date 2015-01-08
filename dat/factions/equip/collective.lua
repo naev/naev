@@ -41,7 +41,7 @@ function equip_collectiveMilitary( p, shipsize )
 
       -- Drone
       if class == "Drone" then
-         equip_cores(p, "Tricon Zephyr Engine", "Milspec Orion 3701 Core System", "Schafer & Kane Light Stealth Plating")
+         equip_cores(p, "Tricon Zephyr Engine", "Milspec Orion 3701 Core System", "S&K Light Stealth Plating")
          use_primary    = nhigh
          addWeapons( equip_CollectiveDrone(), use_primary )
       end

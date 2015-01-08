@@ -19,9 +19,9 @@ function equip_generic( p )
 
    -- Split by type
    if shiptype == "civilian" and p:faction() ~= faction.get("Trader") then
-      if shipsize == "small" then      equip_cores(p, "Unicorp Hawk 300 Engine", "Unicorp PT-200 Core System", "Unicorp C-2 Light Plating")
+      if shipsize == "small" then      equip_cores(p, "Unicorp Hawk 300 Engine", "Unicorp PT-200 Core System", "Unicorp D-4 Light Plating")
       elseif shipsize == "medium" then equip_cores(p, "Unicorp Falcon 1200 Engine", "Unicorp PT-500 Core System", "Unicorp D-8 Medium Plating")
-      else                             equip_cores(p, "Unicorp Eagle 6500 Engine", "Unicorp PT-1000 Core System", "Unicorp C-16 Heavy Plating")
+      else                             equip_cores(p, "Unicorp Eagle 6500 Engine", "Unicorp PT-1000 Core System", "Unicorp D-20 Heavy Plating")
       end
       equip_genericCivilian( p, shipsize )
    elseif shiptype == "merchant" or p:faction() == faction.get("Trader") then
@@ -31,13 +31,13 @@ function equip_generic( p )
       end
       equip_genericMerchant( p, shipsize )
    elseif shiptype == "military" then
-      if shipsize == "small" then      equip_cores(p, "Nexus Dart 150 Engine", "Milspec Orion 2301 Core System", "Schafer & Kane Light Combat Plating")
+      if shipsize == "small" then      equip_cores(p, "Nexus Dart 150 Engine", "Milspec Orion 2301 Core System", "S&K Light Combat Plating")
       elseif shipsize == "medium" then equip_cores(p, "Nexus Arrow 1200 Engine", "Milspec Orion 3701 Core System", "Schafer & Kane Medium Combat Plating Beta")
       else                             equip_cores(p, "Nexus Bolt 6500 Engine", "Milspec Orion 4801 Core System", "Schafer & Kane Heavy Combat Plating Beta")
       end
       equip_genericMilitary( p, shipsize )
    elseif shiptype == "robotic" then
-      if shipsize == "small" then      equip_cores(p, "Nexus Dart 150 Engine", "Milspec Orion 2301 Core System", "Schafer & Kane Light Combat Plating")
+      if shipsize == "small" then      equip_cores(p, "Nexus Dart 150 Engine", "Milspec Orion 2301 Core System", "S&K Light Combat Plating")
       elseif shipsize == "medium" then equip_cores(p, "Nexus Arrow 1200 Engine", "Milspec Orion 3701 Core System", "Schafer & Kane Medium Combat Plating Beta")
       else                             equip_cores(p, "Nexus Bolt 6500 Engine", "Milspec Orion 4801 Core System", "Schafer & Kane Heavy Combat Plating Beta")
       end

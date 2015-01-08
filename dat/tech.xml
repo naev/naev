@@ -244,33 +244,33 @@
   <item>Patchwork Light Plating</item>
   <item>Unmodified Small Hull</item>
   <item>Unicorp D-2 Light Plating</item>
-  <item>Unicorp C-2 Light Plating</item>
+  <item>Unicorp D-4 Light Plating</item>
   <item>Unicorp B-2 Light Plating</item>
   <item>Unicorp Small Cargo Hull</item>
-  <item>Schafer &amp; Kane Light Combat Plating</item>
-  <item>Schafer &amp; Kane Light Stealth Plating</item>
-  <item>Schafer &amp; Kane Small Cargo Hull</item>
+  <item>S&amp;K Light Combat Plating</item>
+  <item>S&amp;K Light Stealth Plating</item>
+  <item>S&amp;K Small Cargo Hull</item>
   <item>Patchwork Medium Plating</item>
   <item>Unmodified Medium Hull</item>
   <item>Unicorp D-8 Medium Plating</item>
-  <item>Unicorp C-8 Medium Plating</item>
+  <item>Unicorp D-12 Medium Plating</item>
   <item>Unicorp Medium Cargo Hull</item>
-  <item>Schafer &amp; Kane Medium Combat Plating Alpha</item>
+  <item>S&amp;K Medium Combat Plating</item>
   <item>Schafer &amp; Kane Medium Combat Plating Beta</item>
-  <item>Schafer &amp; Kane Medium Cargo Hull</item>
-  <item>Schafer &amp; Kane Medium Stealth Plating</item>
-  <item>Schafer &amp; Kane Medium Combat Plating Gamma</item>
+  <item>S&amp;K Medium Cargo Hull</item>
+  <item>S&amp;K Medium-Heavy Stealth Plating</item>
+  <item>S&amp;K Medium-Heavy Combat Plating</item>
   <item>Schafer &amp; Kane Medium Solar Plating</item>
   <item>Patchwork Heavy Plating</item>
   <item>Unmodified Large Hull</item>
   <item>Unicorp D-16 Heavy Plating</item>
-  <item>Unicorp C-16 Heavy Plating</item>
+  <item>Unicorp D-20 Heavy Plating</item>
   <item>Unicorp B-16 Heavy Plating</item>
   <item>Unicorp Large Cargo Hull</item>
-  <item>Schafer &amp; Kane Heavy Combat Plating Alpha</item>
+  <item>S&amp;K Heavy Combat Plating</item>
   <item>Schafer &amp; Kane Heavy Combat Plating Beta</item>
-  <item>Schafer &amp; Kane Large Cargo Hull</item>
-  <item>Schafer &amp; Kane Heavy Combat Plating Gamma</item>
+  <item>S&amp;K Large Cargo Hull</item>
+  <item>S&amp;K Superheavy Combat Plating</item>
   <item>Schafer &amp; Kane Heavy Solar Plating</item>
   <item>Schafer &amp; Kane Heavy Dissipation Plating</item>
   <item>Schafer &amp; Kane Superheavy Combat Plating</item>
@@ -824,35 +824,35 @@
   <item>Unmodified Medium Hull</item>
   <item>Unmodified Large Hull</item>
   <item>Unicorp D-2 Light Plating</item>
-  <item>Unicorp C-2 Light Plating</item>
+  <item>Unicorp D-4 Light Plating</item>
   <item>Unicorp D-8 Medium Plating</item>
   <item>Unicorp D-16 Heavy Plating</item>
-  <item>Unicorp C-16 Heavy Plating</item>
+  <item>Unicorp D-20 Heavy Plating</item>
  </tech>
  <tech name="Hulls Medium">
   <item>Unicorp B-2 Light Plating</item>
-  <item>Unicorp C-8 Medium Plating</item>
+  <item>Unicorp D-12 Medium Plating</item>
   <item>Unicorp B-16 Heavy Plating</item>
   <item>Unicorp Small Cargo Hull</item>
   <item>Unicorp Medium Cargo Hull</item>
   <item>Unicorp Large Cargo Hull</item>
  </tech>
  <tech name="Hulls High">
-  <item>Schafer &amp; Kane Light Combat Plating</item>
-  <item>Schafer &amp; Kane Medium Combat Plating Alpha</item>
+  <item>S&amp;K Light Combat Plating</item>
+  <item>S&amp;K Medium Combat Plating</item>
   <item>Schafer &amp; Kane Medium Combat Plating Beta</item>
-  <item>Schafer &amp; Kane Medium Stealth Plating</item>
-  <item>Schafer &amp; Kane Heavy Combat Plating Alpha</item>
+  <item>S&amp;K Medium-Heavy Stealth Plating</item>
+  <item>S&amp;K Heavy Combat Plating</item>
   <item>Schafer &amp; Kane Heavy Combat Plating Beta</item>
-  <item>Schafer &amp; Kane Small Cargo Hull</item>
-  <item>Schafer &amp; Kane Medium Cargo Hull</item>
-  <item>Schafer &amp; Kane Large Cargo Hull</item>
+  <item>S&amp;K Small Cargo Hull</item>
+  <item>S&amp;K Medium Cargo Hull</item>
+  <item>S&amp;K Large Cargo Hull</item>
  </tech>
  <tech name="Hulls Elite">
-  <item>Schafer &amp; Kane Light Stealth Plating</item>
-  <item>Schafer &amp; Kane Medium Combat Plating Gamma</item>
+  <item>S&amp;K Light Stealth Plating</item>
+  <item>S&amp;K Medium-Heavy Combat Plating</item>
   <item>Schafer &amp; Kane Medium Solar Plating</item>
-  <item>Schafer &amp; Kane Heavy Combat Plating Gamma</item>
+  <item>S&amp;K Superheavy Combat Plating</item>
   <item>Schafer &amp; Kane Heavy Solar Plating</item>
   <item>Schafer &amp; Kane Heavy Dissipation Plating</item>
   <item>Schafer &amp; Kane Superheavy Combat Plating</item>

@@ -75,7 +75,7 @@ function equip_pirateMilitary( p, shipsize )
 
       -- Scout - shouldn't exist
       if class == "Scout" then
-         equip_cores(p, "Nexus Dart 150 Engine", "Milspec Orion 2301 Core System", "Schafer & Kane Light Combat Plating")
+         equip_cores(p, "Nexus Dart 150 Engine", "Milspec Orion 2301 Core System", "S&K Light Combat Plating")
          use_primary    = rnd.rnd(1,#nhigh)
          addWeapons( equip_forwardPirLow(), use_primary )
          medium         = { "Generic Afterburner", "Milspec Scrambler" }
@@ -84,7 +84,7 @@ function equip_pirateMilitary( p, shipsize )
 
       -- Fighter
       elseif class == "Fighter" then
-         equip_cores(p, "Nexus Dart 150 Engine", "Milspec Orion 2301 Core System", "Schafer & Kane Light Combat Plating")
+         equip_cores(p, "Nexus Dart 150 Engine", "Milspec Orion 2301 Core System", "S&K Light Combat Plating")
          if nhigh > 3 then
             use_primary    = nhigh-1
             use_secondary  = 1
@@ -99,7 +99,7 @@ function equip_pirateMilitary( p, shipsize )
 
       -- Bomber
       elseif class == "Bomber" then
-         equip_cores(p, "Nexus Dart 300 Engine", "Milspec Orion 2301 Core System", "Schafer & Kane Light Combat Plating")
+         equip_cores(p, "Nexus Dart 300 Engine", "Milspec Orion 2301 Core System", "S&K Light Combat Plating")
          use_primary    = rnd.rnd(1,2)
          use_secondary  = nhigh - use_primary
          addWeapons( equip_forwardPirLow(), use_primary )
@@ -116,7 +116,7 @@ function equip_pirateMilitary( p, shipsize )
       if class == "Corvette" then
          engine = "Nexus Arrow 550 Engine"
       end
-      equip_cores(p, engine, "Milspec Orion 3701 Core System", "Schafer & Kane Medium Combat Plating Alpha")
+      equip_cores(p, engine, "Milspec Orion 3701 Core System", "S&K Medium Combat Plating")
 
       use_secondary  = rnd.rnd(1,2)
       use_primary    = nhigh - use_secondary

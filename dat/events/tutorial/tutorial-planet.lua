@@ -65,7 +65,7 @@ function create()
     player.addOutfit("Cargo Pod", 1)
     player.addOutfit("Milspec Orion 2301 Core System")
     player.addOutfit("Nexus Dart 150 Engine")
-    player.addOutfit("Schafer & Kane Light Stealth Plating")
+    player.addOutfit("S&K Light Stealth Plating")
     player.pilot():control()
     player.pilot():land(planet.get("Paul 2"))
     
