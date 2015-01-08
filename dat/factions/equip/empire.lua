@@ -106,7 +106,7 @@ function equip_empireMilitary( p, shipsize )
       
       -- Corvette
       if class == "Corvette" then
-         equip_cores(p, "Tricon Cyclone Engine", "Milspec Orion 5501 Core System", "Schafer & Kane Medium Solar Plating")
+         equip_cores(p, "Tricon Cyclone Engine", "Milspec Orion 5501 Core System", "S&K Medium Combat Plating")
          use_secondary  = rnd.rnd(1,2)
          use_primary    = nhigh - use_secondary
          addWeapons( equip_forwardEmpMed(), use_primary )

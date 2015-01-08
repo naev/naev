@@ -133,7 +133,7 @@ function equip_pirateMilitary( p, shipsize )
 
 
    else
-      equip_cores(p, "Nexus Bolt 4500 Engine", "Milspec Orion 4801 Core System", "Schafer & Kane Heavy Combat Plating Beta")
+      equip_cores(p, "Nexus Bolt 4500 Engine", "Milspec Orion 4801 Core System", "S&K Heavy Combat Plating")
       primary        = icmb( equip_turretPirHig(), equip_turretPirMed() )
       use_primary    = nhigh-2
       use_secondary  = 2

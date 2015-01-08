@@ -51,7 +51,7 @@ function equip_collectiveMilitary( p, shipsize )
       
       -- Heavy Drone
       if class == "Heavy Drone" then
-         equip_cores(p, "Tricon Cyclone II Engine", "Milspec Orion 5501 Core System", "Schafer & Kane Medium Solar Plating")
+         equip_cores(p, "Tricon Cyclone II Engine", "Milspec Orion 5501 Core System", "S&K Medium Combat Plating")
          use_primary    = nhigh
          addWeapons( equip_CollectiveDroneHvy(), use_primary )
       end

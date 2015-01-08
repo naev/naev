@@ -26,9 +26,9 @@ function pilot.coreProfile(p, profile)
                         },
                   low_trader = 
                         {
-                           small = {hull = "Unicorp Small Cargo Hull",  engine = "Melendez Ox Engine", system = "Unicorp PT-200 Core System"},
-                           medium = {hull = "Unicorp Medium Cargo Hull",  engine = "Melendez Buffalo Engine", system = "Unicorp PT-600 Core System"},
-                           large = {hull = "Unicorp Large Cargo Hull",  engine = "Melendez Mammoth Engine", system = "Unicorp PT-1000 Core System"}
+                           small = {hull = "S&K Small Cargo Hull",  engine = "Melendez Ox Engine", system = "Unicorp PT-200 Core System"},
+                           medium = {hull = "S&K Medium Cargo Hull",  engine = "Melendez Buffalo Engine", system = "Unicorp PT-600 Core System"},
+                           large = {hull = "S&K Large Cargo Hull",  engine = "Melendez Mammoth Engine", system = "Unicorp PT-1000 Core System"}
                         },
                   high_trader = 
                         {
