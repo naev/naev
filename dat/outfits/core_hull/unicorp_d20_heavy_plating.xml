@@ -6,7 +6,7 @@
   <size>large</size>
   <mass>1600</mass>
   <price>360000</price>
-  <description>C-16 plating is a reinforced upgrade of the D-16 configuration. Its additional superstructure is added on top of the original design, so it does not infringe on internal cargo space.</description>
+  <description>Though a respectable design, the D-20 plating is outclassed by modern heavy weapons, with most seasoned captains opting for a heavier, more advanced plating.</description>
   <gfx_store>nanobond</gfx_store>
  </general>
  <specific type="modification">

@@ -6,7 +6,7 @@
   <size>medium</size>
   <mass>160</mass>
   <price>360000</price>
-  <description>This coat of armour plating developed by Schafer &amp; Kane Industries can endure a significant pounding from enemy weapons fire.</description>
+  <description>Designed for corvettes and similarly-sized vessels, Schafer &amp; Kane's medium combat plating provides ample protection utilizing the latest in defensive materials.</description>
   <gfx_store>nanobond</gfx_store>
  </general>
  <specific type="modification">

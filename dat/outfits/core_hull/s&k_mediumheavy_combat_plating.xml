@@ -6,7 +6,7 @@
   <size>medium</size>
   <mass>360</mass>
   <price>640000</price>
-  <description>The Gamma plating by Schafer &amp; Kane Industries is among the best in defensive technologies available for medium ships.</description>
+  <description>Designed for destroyers and similarly-sized vessels, Schafer &amp; Kane's medium-heavy combat plating provides excellent protection from everything save capital-class threats.</description>
   <gfx_store>nanobond</gfx_store>
  </general>
  <specific type="modification">

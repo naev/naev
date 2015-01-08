@@ -6,7 +6,7 @@
   <size>medium</size>
   <mass>120</mass>
   <price>270000</price>
-  <description>Medium sized ships are usually not in the business of remaining undetected, but Schafer &amp; Kane Industries have nevertheless developed a hull modification that helps in this area.</description>
+  <description>Medium-sized ships are usually not in the business of remaining undetected, but Schafer &amp; Kane Industries have nevertheless developed a hull modification that helps in this area</description>
   <gfx_store>nanobond</gfx_store>
  </general>
  <specific type="modification">

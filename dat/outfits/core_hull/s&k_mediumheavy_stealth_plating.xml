@@ -6,7 +6,7 @@
   <size>medium</size>
   <mass>280</mass>
   <price>480000</price>
-  <description>Medium sized ships are usually not in the business of remaining undetected, but Schafer &amp; Kane Industries have nevertheless developed a hull modification that helps in this area.</description>
+  <description>Though vessels weighing in at nearly a thousand tonnes can seldom be called stealthy, Schafer &amp; Kane's medium-heavy stealth plating does what it can to reduce sensor signatures, without sacrificing protection.</description>
   <gfx_store>nanobond</gfx_store>
  </general>
  <specific type="modification">

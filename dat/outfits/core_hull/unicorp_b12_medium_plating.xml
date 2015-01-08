@@ -6,7 +6,7 @@
   <size>medium</size>
   <mass>280</mass>
   <price>200000</price>
-  <description>C-8 Plating is similar to D-8 Plating, but the armour plates are furnished with an additional protective layer, increasing both mass and armour.</description>
+  <description>Unicorp's B-12 plating is based on their D-12 design, substituting denser materials to increase armour effectiveness.</description>
   <gfx_store>nanobond</gfx_store>
  </general>
  <specific type="modification">

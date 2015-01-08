@@ -6,7 +6,7 @@
   <size>small</size>
   <mass>55</mass>
   <price>180000</price>
-  <description>The Light Stealth Plating from Schafer &amp; Kane Industries foregoes hull strength for increased stealth, making it harder for ships to detect and target you.</description>
+  <description>Designed for military scouting and patrol vessels, Schafer &amp; Kane's Light Stealth Plating configuration features the latest in sensor-absorbing materials and geometry.</description>
   <gfx_store>nanobond</gfx_store>
  </general>
  <specific type="modification">

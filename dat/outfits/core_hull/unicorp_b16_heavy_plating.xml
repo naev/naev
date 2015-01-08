@@ -6,7 +6,7 @@
   <size>large</size>
   <mass>1050</mass>
   <price>700000</price>
-  <description>B-16 plating is a low-end heavy punishment hull modification. It is designed to absorb lots of damage, but its armour-to-weight ratio is worse than the C or D variants.</description>
+  <description>B-16 plating improves on Unicorp's D-16 plating, offering increased protection and cargo capacity, for only slightly increased mass.</description>
   <gfx_store>nanobond</gfx_store>
  </general>
  <specific type="modification">
