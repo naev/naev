@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <outfit name="Unicorp Hawk 300 Engine">
  <general>
-  <typename>Core Systems</typename>
+  <typename>Core Systems (Engine)</typename>
   <slot prop="engines">structure</slot>
   <size>small</size>
   <priority>7</priority>
