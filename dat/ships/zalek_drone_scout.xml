@@ -26,10 +26,10 @@
  </characteristics>
  <slots>
   <weapon size="small" x="0" y="0" h="-2"/>
-  <utility size="small" prop="systems" exclusive="1" required="1">Basic Small Systems</utility>
+  <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-100 Core System</utility>
   <utility size="small"/>
-  <structure size="small" prop="engines" exclusive="1" required="1">Manufacturer Small Engine</structure>
-  <structure size="small" prop="hull" exclusive="1" required="1">Unmodified Small Hull</structure>
+  <structure size="small" prop="engines" exclusive="1" required="1">Unicorp Hawk 150 Engine</structure>
+  <structure size="small" prop="hull" exclusive="1" required="1">Unicorp D-2 Light Plating</structure>
   <structure size="small"/>
  </slots>
  <stats>
