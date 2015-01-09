@@ -4,6 +4,7 @@
   <typename>Core Systems</typename>
   <slot prop="hull">structure</slot>
   <size>large</size>
+  <priority>3</priority>
   <mass>1350</mass>
   <price>2200000</price>
   <description>This heavy plating developed by Schafer &amp; Kane Industries can endure prolonged battle. Quite a few captains and their crews owe their lives to this armour configuration.</description>

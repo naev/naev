@@ -4,6 +4,7 @@
   <typename>Core Systems</typename>
   <slot prop="hull">structure</slot>
   <size>medium</size>
+  <priority>3</priority>
   <mass>110</mass>
   <price>45000</price>
   <description>D-8 plating provides a serviceable layer of armour to medium ships, and doesn't weigh too much.</description>
