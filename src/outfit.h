@@ -327,6 +327,7 @@ typedef struct Outfit_ {
    credits_t price;  /**< Base sell price. */
    char *description; /**< Store description. */
    char *desc_short; /**< Short outfit description. */
+   int priority;     /**< Sort priority, highest first. */
 
    glTexture* gfx_store; /**< Store graphic. */
 

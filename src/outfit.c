@@ -211,6 +211,12 @@ int outfit_compareTech( const void *outfit1, const void *outfit2 )
    else if (o1->slot.size > o2->slot.size)
       return -1;
 
+   /* Compare sort priority. */
+   if (o1->priority < o2->priority)
+      return +1;
+   else if (o1->priority > o2->priority)
+      return -1;
+
    /* Compare price. */
    if (o1->price < o2->price)
       return +1;
@@ -2039,6 +2045,7 @@ static int outfit_parse( Outfit* temp, const char* file )
             xmlr_strd(cur,"limit",temp->limit);
             xmlr_strd(cur,"description",temp->description);
             xmlr_strd(cur,"typename",temp->typename);
+            xmlr_int(cur,"priority",temp->priority);
             if (xml_isNode(cur,"gfx_store")) {
                temp->gfx_store = xml_parseTexture( cur,
                      OUTFIT_GFX_PATH"store/%s.png", 1, 1, OPENGL_TEX_MIPMAPS );
