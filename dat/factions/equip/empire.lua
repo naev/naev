@@ -71,7 +71,7 @@ function equip_empireMilitary( p, shipsize )
 
       -- Scout
       if class == "Scout" then
-         equip_cores(p, "Tricon Zephyr Engine", "Milspec Orion 3701 Core System", "S&K Light Stealth Plating")
+         equip_cores(p, "Tricon Zephyr Engine", "Milspec Orion 2301 Core System", "S&K Ultraight Stealth Plating")
          use_primary    = rnd.rnd(1,#nhigh)
          addWeapons( equip_forwardLow(), use_primary )
          medium         = { "Generic Afterburner", "Milspec Scrambler" }
@@ -80,7 +80,7 @@ function equip_empireMilitary( p, shipsize )
 
       -- Fighter
       elseif class == "Fighter" then
-         equip_cores(p, "Tricon Zephyr Engine", "Milspec Orion 3701 Core System", "S&K Light Stealth Plating")
+         equip_cores(p, "Tricon Zephyr Engine", "Milspec Orion 3701 Core System", "S&K Light Combat Plating")
          use_primary    = nhigh-1
          use_secondary  = 1
          addWeapons( equip_forwardEmpMed(), use_primary )

@@ -74,7 +74,7 @@ function equip_siriusMilitary( p, shipsize )
 
       -- Scout
       if class == "Scout" then
-         equip_cores(p, "Tricon Zephyr Engine", "Milspec Orion 3701 Core System", "S&K Light Stealth Plating")
+         equip_cores(p, "Tricon Zephyr Engine", "Milspec Orion 2301 Core System", "S&K Light Stealth Plating")
          use_primary    = rnd.rnd(1,#nhigh)
          addWeapons( equip_forwardLow(), use_primary )
          medium         = { "Generic Afterburner", "Milspec Scrambler" }
@@ -83,7 +83,7 @@ function equip_siriusMilitary( p, shipsize )
 
       -- Fighter
       elseif class == "Fighter" then
-         equip_cores(p, "Tricon Zephyr Engine", "Milspec Orion 3701 Core System", "S&K Light Stealth Plating")
+         equip_cores(p, "Tricon Zephyr Engine", "Milspec Orion 3701 Core System", "S&K Light Combat Plating")
          primary        = icmb( equip_forwardSrsLow(), equip_forwardSrsMed() )
          use_primary    = nhigh-1
          use_secondary  = 1

@@ -31,15 +31,15 @@ function equip_generic( p )
       end
       equip_genericMerchant( p, shipsize )
    elseif shiptype == "military" then
-      if shipsize == "small" then      equip_cores(p, "Nexus Dart 150 Engine", "Milspec Orion 2301 Core System", "S&K Light Combat Plating")
-      elseif shipsize == "medium" then equip_cores(p, "Nexus Arrow 1200 Engine", "Milspec Orion 3701 Core System", "S&K Medium Combat Plating")
-      else                             equip_cores(p, "Nexus Bolt 6500 Engine", "Milspec Orion 4801 Core System", "S&K Heavy Combat Plating")
+      if shipsize == "small" then      equip_cores(p, "Nexus Dart 150 Engine", "Milspec Hermes 2202 Core System", "Unicorp B-2 Light Plating")
+      elseif shipsize == "medium" then equip_cores(p, "Nexus Arrow 1200 Engine", "Milspec Hermes 5402 Core System", "Unicorp B-12 Medium Plating")
+      else                             equip_cores(p, "Nexus Bolt 6500 Engine", "Milspec Hermes 9802 Core System", "Unicorp B-20 Heavy Plating")
       end
       equip_genericMilitary( p, shipsize )
    elseif shiptype == "robotic" then
-      if shipsize == "small" then      equip_cores(p, "Nexus Dart 150 Engine", "Milspec Orion 2301 Core System", "S&K Light Combat Plating")
-      elseif shipsize == "medium" then equip_cores(p, "Nexus Arrow 1200 Engine", "Milspec Orion 3701 Core System", "S&K Medium Combat Plating")
-      else                             equip_cores(p, "Nexus Bolt 6500 Engine", "Milspec Orion 4801 Core System", "S&K Heavy Combat Plating")
+      if shipsize == "small" then      equip_cores(p, "Nexus Dart 150 Engine", "Milspec Hermes 2202 Core System", "Unicorp B-2 Light Plating")
+      elseif shipsize == "medium" then equip_cores(p, "Nexus Arrow 1200 Engine", "Milspec Hermes 5402 Core System", "Unicorp B-12 Medium Plating")
+      else                             equip_cores(p, "Nexus Bolt 6500 Engine", "Milspec Hermes 9802 Core System", "Unicorp B-20 Heavy Plating")
       end
       equip_genericRobotic( p, shipsize )
    end
