@@ -50,7 +50,7 @@
 #define BUTTON_WIDTH    200 /**< Default button width. */
 #define BUTTON_HEIGHT   40 /**< Default button height. */
 
-#define SHIP_ALT_MAX    256 /**< Maximum ship alt text. */
+#define SHIP_ALT_MAX    512 /**< Maximum ship alt text. */
 
 
 /*
