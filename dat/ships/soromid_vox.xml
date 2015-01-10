@@ -15,7 +15,6 @@
   <armour_regen>10.5</armour_regen>
  </health>
  <characteristics>
-  <cpu>800</cpu>
   <crew>42</crew>
   <mass>3100</mass>
   <cargo>70</cargo>
