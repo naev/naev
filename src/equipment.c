@@ -371,7 +371,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       int n, PilotOutfitSlot *lst, const char *txt,
       int selected, Outfit *o, Pilot *p, CstSlotWidget *wgt )
 {
-   int i, level, iconx, icony;
+   int i, level;
    const glColour *c, *dc, *rc;
    glColour bc;
 
@@ -420,18 +420,13 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       }
       else if ((o != NULL) &&
             (lst[i].sslot->slot.type == o->slot.type)) {
-         if (pilot_canEquip( p, &lst[i], o ) != NULL) {
-            iconx = x + w/2 - equip_ico_no->w/2;
-            icony = y + h/2 - equip_ico_no->h/2;
-            gl_blitStatic( equip_ico_no,
-               iconx, icony, NULL );
-         }
-         else {
-            iconx = x + w/2 - equip_ico_yes->w/2;
-            icony = y + h/2 - equip_ico_yes->h/2;
-            gl_blitStatic( equip_ico_yes,
-               iconx, icony, NULL );
-         }
+         /* Render the appropriate sprite, centered in each slot. */
+         if (pilot_canEquip( p, &lst[i], o ) != NULL)
+            gl_blitScale( equip_ico_yes,
+               x + w * .1, y + h * .1, w * .8, h * .8, NULL);
+         else
+            gl_blitScale( equip_ico_yes,
+               x + w * .1, y + h * .1, w * .8, h * .8, NULL);
       }
 
       /* Must rechoose colour based on slot properties. */
