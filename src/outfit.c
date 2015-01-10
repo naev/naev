@@ -1674,9 +1674,6 @@ static void outfit_parseSFighterBay( Outfit *temp, const xmlNodePtr parent )
       WARN("Outfit '%s' has unknown node '%s'",temp->name, node->name);
    } while (xml_nextNode(node));
 
-   /* Post processing. */
-   temp->u.bay.delay /= 1000.;
-
    /* Set default outfit size if necessary. */
    if (temp->slot.size == OUTFIT_SLOT_SIZE_NA)
       outfit_setDefaultSize( temp );
