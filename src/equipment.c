@@ -560,21 +560,48 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
    lc = &cWhite;
    c = &cGrey80;
    dc = &cGrey60;
-   w = 30;
-   h = 70;
-   x = bx + (40-w)/2 + 10;
+   w = 120;
+   h = 20;
+   x = bx + 10.;
    y = by + bh - 30 - h;
-   percent = (p->cpu_max > 0) ? CLAMP(0., 1., (float)p->cpu / (float)p->cpu_max) : 0.;
+
    gl_printMidRaw( &gl_smallFont, w,
-         x, y + h + gl_smallFont.h + 10.,
-         &cBlack, "CPU" );
-   toolkit_drawRect( x, y, w, h*percent, &cGreen, NULL );
-   toolkit_drawRect( x, y+h*percent, w, h*(1.-percent), &cRed, NULL );
+      x, y + h + 10., &cBlack, "CPU Free" );
+
+   percent = (p->cpu_max > 0) ? CLAMP(0., 1., (float)p->cpu / (float)p->cpu_max) : 0.;
+   toolkit_drawRect( x, y, w * percent, h, &cFontGreen, NULL );
+   toolkit_drawRect( x + w * percent, y, w * (1.-percent), h, &cFontRed, NULL );
    toolkit_drawOutline( x, y, w, h, 1., lc, c  );
    toolkit_drawOutline( x, y, w, h, 2., dc, NULL  );
-   gl_printMid( &gl_smallFont, 70,
-         x - 20, y - 10 - gl_smallFont.h,
-         &cBlack, "%d / %d", p->cpu, p->cpu_max );
+   gl_printMid( &gl_smallFont, w,
+      x, y + h / 2. - gl_smallFont.h / 2.,
+      &cBlack, "%d / %d", p->cpu, p->cpu_max );
+
+   y -= h;
+
+   gl_printMidRaw( &gl_smallFont, w,
+      x, y, &cBlack, "Mass Limit Left" );
+
+   y -= gl_smallFont.h + h;
+
+   percent = (p->stats.engine_limit > 0) ? CLAMP(0., 1.,
+      (p->stats.engine_limit - p->solid->mass) / p->stats.engine_limit) : 0.;
+   toolkit_drawRect( x, y, w * percent, h, &cFontGreen, NULL );
+   toolkit_drawRect( x + w * percent, y, w * (1.-percent), h, &cRestricted, NULL );
+   toolkit_drawOutline( x, y, w, h, 1., lc, c  );
+   toolkit_drawOutline( x, y, w, h, 2., dc, NULL  );
+   gl_printMid( &gl_smallFont, w,
+      x, y + h / 2. - gl_smallFont.h / 2.,
+      &cBlack, "%.0f / %.0f", p->stats.engine_limit - p->solid->mass, p->stats.engine_limit );
+
+   if (p->stats.engine_limit > 0. && p->solid->mass > p->stats.engine_limit) {
+      y -= h;
+      gl_printMid( &gl_smallFont, w,
+         x, y, &cFontRed, "%.0f%% Slower",
+         (1. - p->speed / p->speed_base) * 100);
+   }
+
+   x += w/2.;
 
    /* Render ship graphic. */
    equipment_renderShip( bx, by, bw, bh, x, y, p );
