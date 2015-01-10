@@ -422,7 +422,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
             (lst[i].sslot->slot.type == o->slot.type)) {
          /* Render the appropriate sprite, centered in each slot. */
          if (pilot_canEquip( p, &lst[i], o ) != NULL)
-            gl_blitScale( equip_ico_yes,
+            gl_blitScale( equip_ico_no,
                x + w * .1, y + h * .1, w * .8, h * .8, NULL);
          else
             gl_blitScale( equip_ico_yes,
