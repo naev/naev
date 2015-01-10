@@ -4,15 +4,15 @@
   <slot>weapon</slot>
   <size>large</size>
   <license>Light Combat Vessel License</license>
-  <mass>900</mass>
+  <mass>260</mass>
   <price>830000</price>
   <gfx_store>fidelity_fighter</gfx_store>
-  <description>This bay launches a sextet of Sirius Fidelity fighters. Weak individually, they are stronger when working together in groups. Quite apropos, given Sirian society.</description>
+  <description>This bay launches three Sirius Fidelity fighters. Weak individually, they are stronger when working together in groups. Quite apropos, given Sirian society.</description>
   <cpu>-40</cpu>
  </general>
  <specific type="fighter bay" secondary="1">
   <ammo>Fidelity Fighter</ammo>
-  <delay>35</delay>
-  <amount>6</amount>
+  <delay>4</delay>
+  <amount>3</amount>
  </specific>
 </outfit>
