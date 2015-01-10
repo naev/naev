@@ -5,24 +5,22 @@
  <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Cruiser</class>
- <price>50000000</price>
+ <price>9000000</price>
  <fabricator>Soromid</fabricator>
  <license>Heavy Combat Vessel License</license>
  <description>The Vox is the biggest vessel the Soromid field hands down. This dreadnought serves as the core of any given Soromid war fleet and only called upon in notable engagements.</description>
  <health>
-  <absorb>45</absorb>
-  <armour>1500</armour>
+  <absorb>32</absorb>
+  <armour>2000</armour>
   <armour_regen>10.5</armour_regen>
  </health>
  <characteristics>
   <crew>42</crew>
-  <mass>3100</mass>
-  <cargo>70</cargo>
+  <mass>2300</mass>
+  <cargo>130</cargo>
   <fuel_consumption>400</fuel_consumption>
  </characteristics>
  <slots>
-  <weapon size="large" x="60" y="0" h="0"/>
-  <weapon size="large" x="60" y="0" h="0"/>
   <weapon size="large" x="40" y="0" h="0"/>
   <weapon size="large" x="40" y="0" h="0"/>
   <weapon size="large" x="20" y="0" h="0"/>
@@ -31,13 +29,7 @@
   <weapon size="large" x="-20" y="0" h="0"/>
   <weapon size="large" x="-40" y="0" h="0"/>
   <weapon size="large" x="-40" y="0" h="0"/>
-  <weapon size="large" x="-60" y="0" h="0"/>
-  <weapon size="large" x="-60" y="0" h="0"/>
   <utility size="large" prop="systems" exclusive="1" required="1">Unicorp PT-1000 Core System</utility>
-  <utility size="large"/>
-  <utility size="large"/>
-  <utility size="large"/>
-  <utility size="large"/>
   <utility size="large"/>
   <utility size="large"/>
   <utility size="large"/>
@@ -46,10 +38,6 @@
   <utility size="large"/>
   <structure size="large" prop="engines" exclusive="1" required="1">Unicorp Eagle 6500 Engine</structure>
   <structure size="large" prop="hull" exclusive="1" required="1">Unicorp D-20 Heavy Plating</structure>
-  <structure size="large"/>
-  <structure size="large"/>
-  <structure size="large"/>
-  <structure size="large"/>
   <structure size="large"/>
   <structure size="large"/>
   <structure size="large"/>

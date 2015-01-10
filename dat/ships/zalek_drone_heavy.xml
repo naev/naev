@@ -5,13 +5,13 @@
  <GUI>slim</GUI>
  <sound>engine</sound>
  <class>Fighter</class>
- <price>400000</price>
+ <price>190000</price>
  <fabricator>Za'lek Robotics</fabricator>
  <description>This is the Za'lek Heavy Drone. Fewer and not as crap. Not to be flown by the player.</description>
  <health>
-  <absorb>10</absorb>
+  <absorb>5</absorb>
   <shield>200</shield>
-  <armour>40</armour>
+  <armour>35</armour>
   <energy>730</energy>
   <shield_regen>9</shield_regen>
   <armour_regen>0</armour_regen>
@@ -30,7 +30,6 @@
   <weapon size="small" x="15" y="-8" h="2"/>
   <weapon size="small" x="15" y="-6" h="2"/>
   <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-100 Core System</utility>
-  <utility size="small"/>
   <utility size="small"/>
   <utility size="small"/>
   <structure size="small" prop="engines" exclusive="1" required="1">Unicorp Hawk 150 Engine</structure>

@@ -7,18 +7,18 @@
  <class>Corvette</class>
  <price>770000</price>
  <fabricator>Za'lek Fabricators</fabricator>
- <license>Light Combat Vessel License</license>
+ <license>Medium Combat Vessel License</license>
  <description>The Sting Corvette is rather large for its size, but its advanced sensor suite, impressive weapons loadout, and tough shields makes it a good backbone to the fleet of House Za'lek.</description>
  <health>
-  <absorb>11</absorb>
-  <armour>100</armour>
+  <absorb>14</absorb>
+  <armour>230</armour>
   <armour_regen>0</armour_regen>
  </health>
  <characteristics>
-  <crew>2</crew>
-  <mass>65</mass>
+  <crew>12</crew>
+  <mass>180</mass>
   <fuel_consumption>100</fuel_consumption>
-  <cargo>5</cargo>
+  <cargo>25</cargo>
  </characteristics>
  <slots>
   <weapon size="medium" x="15" y="0" h="2"/>

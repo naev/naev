@@ -8,21 +8,20 @@
  <price>650000</price>
  <fabricator>Za'lek Fabricators</fabricator>
  <license>Medium Combat Vessel License</license>
- <description>The Za'lek Imp is a rather oversized corvette that nontheless tends to be of a superior quality to that of other ships in its weight class. It suffers the common problem of Za'lek ships of poorer turning and frail armor, but it has an impressive amount of shields and energy to its name, fitting the Za'lek's superior technology.</description>
+ <description>The Za'lek Imp is a lightweight corvette that features a cutting-edge sensor suite, even relative to most other Za'lek vessels. While it lacks the firepower of heavier corvettes, the information advantage it confers to fleets should not be dismissed.</description>
  <health>
   <absorb>12</absorb>
   <armour>180</armour>
   <armour_regen>0</armour_regen>
  </health>
  <characteristics>
-  <crew>11</crew>
-  <mass>160</mass>
+  <crew>10</crew>
+  <mass>150</mass>
   <fuel_consumption>200</fuel_consumption>
-  <cargo>25</cargo>
+  <cargo>15</cargo>
  </characteristics>
  <slots>
   <weapon size="medium" x="15" y="1" h="2"/>
-  <weapon size="medium" x="15" y="-1" h="2"/>
   <weapon size="medium" x="-9" y="-10" h="2"/>
   <weapon size="medium" x="-9" y="10" h="2"/>
   <weapon size="medium" x="-9" y="-3" h="2"/>
