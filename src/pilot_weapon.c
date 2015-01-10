@@ -793,7 +793,7 @@ void pilot_shootStop( Pilot* p, int level )
 static int pilot_shootWeaponSetOutfit( Pilot* p, PilotWeaponSet *ws, Outfit *o, int level )
 {
    int i, ret;
-   int is_launcher;
+   int is_launcher, is_bay;
    double rate_mod, energy_mod;
    PilotOutfitSlot *w;
    int maxp, minh;
@@ -812,6 +812,8 @@ static int pilot_shootWeaponSetOutfit( Pilot* p, PilotWeaponSet *ws, Outfit *o, 
 
    /* Stores if it is a launcher. */
    is_launcher = outfit_isLauncher(o);
+
+   is_bay = outfit_isFighterBay(o);
 
    /* Calculate rate modifier. */
    pilot_getRateMod( &rate_mod, &energy_mod, p, o );
@@ -834,7 +836,7 @@ static int pilot_shootWeaponSetOutfit( Pilot* p, PilotWeaponSet *ws, Outfit *o, 
       w = ws->slots[i].slot;
 
       /* Launcher only counts with ammo. */
-      if (is_launcher && ((w->u.ammo.outfit == NULL) || (w->u.ammo.quantity <= 0)))
+      if ((is_launcher || is_bay) && ((w->u.ammo.outfit == NULL) || (w->u.ammo.quantity <= 0)))
          continue;
 
       /* Get coolest that can fire. */
