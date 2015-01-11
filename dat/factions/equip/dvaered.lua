@@ -78,7 +78,7 @@ function equip_dvaeredMilitary( p, shipsize )
 
       -- Fighter
       elseif class == "Fighter" then
-         equip_cores(p, "Tricon Zephyr Engine", "Milspec Orion 3701 Core System", "S&K Light Combat Plating")
+         equip_cores(p, "Tricon Zephyr II Engine", "Milspec Orion 3701 Core System", "S&K Light Combat Plating")
          use_secondary  = 1
          use_forward    = nhigh - use_secondary
          addWeapons( equip_forwardDvaLow(), use_forward )
@@ -88,7 +88,7 @@ function equip_dvaeredMilitary( p, shipsize )
 
       -- Bomber
       elseif class == "Bomber" then
-         equip_cores(p, "Tricon Zephyr Engine", "Milspec Orion 3701 Core System", "S&K Light Combat Plating")
+         equip_cores(p, "Tricon Zephyr II Engine", "Milspec Orion 3701 Core System", "S&K Light Combat Plating")
          use_forward    = rnd.rnd(1,2)
          use_secondary  = nhigh - use_forward
          addWeapons( equip_forwardDvaLow(), use_forward )
