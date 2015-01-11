@@ -94,10 +94,15 @@ function equip_empireMilitary( p, shipsize )
    -- Equip by size and type
    if shipsize == "small" then
       local class = p:ship():class()
+      cores = {
+         {"Tricon Zephyr Engine", "Milspec Orion 2301 Core System", "S&K Ultralight Combat Plating"},
+         {"Tricon Zephyr II Engine", "Milspec Orion 3701 Core System", "S&K Light Combat Plating"}
+      }
+      equip_cores(p, equip_getCores(p, shipsize, cores))
 
       -- Scout
       if class == "Scout" then
-         equip_cores(p, "Tricon Zephyr Engine", "Milspec Orion 2301 Core System", "S&K Light Stealth Plating")
+         equip_cores(p, "Tricon Zephyr Engine", "Milspec Orion 2301 Core System", "S&K Ultralight Stealth Plating")
          use_primary    = rnd.rnd(1,#nhigh)
          addWeapons( equip_forwardLow(), use_primary )
          medium         = { "Generic Afterburner", "Milspec Scrambler" }
@@ -106,7 +111,6 @@ function equip_empireMilitary( p, shipsize )
 
       -- Fighter
       elseif class == "Fighter" then
-         equip_cores(p, "Tricon Zephyr Engine", "Milspec Orion 3701 Core System", "S&K Light Combat Plating")
          use_primary    = nhigh-1
          use_secondary  = 1
          addWeapons( equip_forwardZlkMed(), use_primary )
@@ -117,7 +121,6 @@ function equip_empireMilitary( p, shipsize )
 
       -- Bomber
       elseif class == "Bomber" then
-         equip_cores(p, "Tricon Zephyr Engine", "Milspec Orion 3701 Core System", "S&K Light Combat Plating")
          use_primary    = rnd.rnd(1,2)
          use_secondary  = nhigh - use_primary
          addWeapons( equip_forwardZlkLow(), use_primary )
@@ -129,10 +132,14 @@ function equip_empireMilitary( p, shipsize )
 
    elseif shipsize == "medium" then
       local class = p:ship():class()
-      
+      cores = {
+         {"Tricon Cyclone Engine", "Milspec Orion 4801 Core System", "S&K Medium Combat Plating"},
+         {"Tricon Cyclone II Engine", "Milspec Orion 5501 Core System", "S&K Medium-Heavy Combat Plating"}
+      }
+      equip_cores(p, equip_getCores(p, shipsize, cores))
+
       -- Corvette
       if class == "Corvette" then
-         equip_cores(p, "Tricon Cyclone Engine", "Milspec Orion 5501 Core System", "S&K Medium Combat Plating")
          use_secondary  = rnd.rnd(1,2)
          use_primary    = nhigh - use_secondary
          addWeapons( equip_forwardZlkMed(), use_primary )
@@ -144,7 +151,6 @@ function equip_empireMilitary( p, shipsize )
 
       -- Destroyer
       if class == "Destroyer" then
-         equip_cores(p, "Tricon Cyclone II Engine", "Milspec Orion 5501 Core System", "S&K Medium-Heavy Combat Plating")
          use_secondary  = rnd.rnd(1,2)
          use_turrets    = nhigh - use_secondary - rnd.rnd(1,2)
          use_forward    = nhigh - use_secondary - use_turrets
@@ -158,7 +164,12 @@ function equip_empireMilitary( p, shipsize )
 
    else -- "large"
       -- TODO: Divide into carrier and cruiser classes.
-      equip_cores(p, "Tricon Typhoon II Engine", "Milspec Orion 9901 Core System", "S&K Superheavy Combat Plating")
+      cores = {
+         {"Tricon Typhoon Engine", "Milspec Orion 9901 Core System", "S&K Heavy Combat Plating"},
+         {"Tricon Typhoon II Engine", "Milspec Orion 9901 Core System", "S&K Superheavy Combat Plating"}
+      }
+      equip_cores(p, equip_getCores(p, shipsize, cores))
+
       use_secondary  = 2
       if rnd.rnd() > 0.4 then -- Anti-fighter variant.
          use_turrets    = nhigh - use_secondary - rnd.rnd(2,3)
