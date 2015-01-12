@@ -39,6 +39,9 @@ void dev_csv (void)
    DEBUG("   bolt.csv...");
    dout_csvBolt( CSV_DIR"/bolt.csv" );
 
+   DEBUG("   mod.csv...");
+   dout_csvMod( CSV_DIR"/mod.csv" );
+
    DEBUG("   ship.csv...");
    dship_csv( CSV_DIR"/ship.csv" );
 
