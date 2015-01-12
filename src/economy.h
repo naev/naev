@@ -56,6 +56,7 @@ void economy_destroy (void);
  * Misc stuff.
  */
 void credits2str( char *str, credits_t credits, int decimals );
+void price2str( char *str, credits_t price, credits_t credits, int decimals );
 void commodity_Jettison( int pilot, Commodity* com, int quantity );
 int commodity_compareTech( const void *commodity1, const void *commodity2 );
 

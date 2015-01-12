@@ -1647,7 +1647,7 @@ void equipment_updateShips( unsigned int wid, char* str )
    eq_wgt.selected = ship;
 
    /* update text */
-   credits2str( buf2, price , 2 ); /* transport */
+   price2str( buf2, price, player.p->credits, 2 ); /* transport */
    credits2str( buf3, player_shipPrice(shipname), 2 ); /* sell price */
    cargo = pilot_cargoFree(ship) + pilot_cargoUsed(ship);
    nt = ntime_pretty( pilot_hyperspaceDelay( ship ), 2 );

@@ -223,7 +223,7 @@ void shipyard_update( unsigned int wid, char* str )
    /* update text */
    window_modifyText( wid, "txtStats", ship->desc_stats );
    window_modifyText( wid, "txtDescription", ship->description );
-   credits2str( buf2, ship_buyPrice(ship), 2 );
+   price2str( buf2, ship_buyPrice(ship), player.p->credits, 2 );
    credits2str( buf3, player.p->credits, 2 );
 
    /* Remove the word " License".  It's redundant and makes the text overflow

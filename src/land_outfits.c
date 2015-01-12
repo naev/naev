@@ -245,8 +245,6 @@ void outfits_update( unsigned int wid, char* str )
    double th;
    int iw, ih;
    int w, h;
-   credits_t price;
-   char colour;
 
    /* Get dimensions. */
    outfits_getSize( wid, &w, &h, &iw, &ih, NULL, NULL );
@@ -293,13 +291,9 @@ void outfits_update( unsigned int wid, char* str )
    else
       window_disableButtonSoft( wid, "btnSellOutfit" );
 
-   /* Multiply and colourize outfit price as needed */
-   price = outfit_getPrice(outfit);
-   colour = (price > player.p->credits) ? 'r' : '0';
-
    /* new text */
    window_modifyText( wid, "txtDescription", outfit->description );
-   credits2str( buf2, price, 2 );
+   price2str( buf2, outfit_getPrice(outfit), player.p->credits, 2 );
    credits2str( buf3, player.p->credits, 2 );
    nsnprintf( buf, PATH_MAX,
          "%d\n"
@@ -308,14 +302,14 @@ void outfits_update( unsigned int wid, char* str )
          "%s\n"
          "%.0f tons\n"
          "\n"
-         "\e%c%s\e0 credits\n"
+         "%s credits\n"
          "%s credits\n"
          "%s\n",
          player_outfitOwned(outfit),
          outfit_slotName(outfit),
          outfit_slotSize(outfit),
          outfit->mass,
-         colour, buf2,
+         buf2,
          buf3,
          (outfit->license != NULL) ? outfit->license : "None" );
    window_modifyText( wid, "txtDDesc", buf );
