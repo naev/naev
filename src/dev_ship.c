@@ -45,7 +45,7 @@ void dship_csv( const char *path )
          "armour,armour_regen,"
          "shield,shield_regen,"
          "energy,energy_regen,"
-         "slot weapon,slot systems,slot structure\n"
+         "slot weapon,slot utility,slot structure\n"
          );
    SDL_RWwrite( rw, buf, l, 1 );
 
