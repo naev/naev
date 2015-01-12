@@ -125,7 +125,7 @@ function takeoff()
         for k,v in ipairs(player.pilot():outfits()) do
             if (("Unicorp Hawk 150 Engine" ~= v:name())
             and ("Unicorp PT-100 Core System" ~= v:name())
-            and ("Unicorp D-2 Plating" ~= v:name())) then
+            and ("Unicorp D-2 Light Plating" ~= v:name())) then
                 tk.msg(ftitle[4], ftext[4])
                 abort()
             end
@@ -176,7 +176,7 @@ function takeoff()
             racers[i]:rmOutfit("cores")
             
             racers[i]:addOutfit("Unicorp PT-100 Core System")
-            racers[i]:addOutfit("Unicorp D-2 Plating")
+            racers[i]:addOutfit("Unicorp D-2 Light Plating")
             racers[i]:addOutfit("Unicorp Hawk 150 Engine")
         end
     end
