@@ -651,9 +651,22 @@ double outfit_cpu( const Outfit* o )
 double outfit_range( const Outfit* o )
 {
    Outfit *amm;
+   double at;
+
    if (outfit_isBolt(o)) return o->u.blt.falloff + (o->u.blt.range - o->u.blt.falloff)/2.;
    else if (outfit_isBeam(o)) return o->u.bem.range;
-   else if (outfit_isAmmo(o)) return 0.8*o->u.amm.speed*o->u.amm.duration;
+   else if (outfit_isAmmo(o)) {
+      if (o->u.amm.thrust) {
+         at = o->u.amm.speed / o->u.amm.thrust;
+         if (at < o->u.amm.duration)
+            return o->u.amm.speed * (o->u.amm.duration - at / 2.);
+
+         /* Maximum speed will never be reached. */
+         return pow2(o->u.amm.duration) * o->u.amm.thrust / 2.;
+      }
+
+      return o->u.amm.speed * o->u.amm.duration;
+   }
    else if (outfit_isLauncher(o)) {
       amm = outfit_ammo(o);
       if (amm != NULL)
