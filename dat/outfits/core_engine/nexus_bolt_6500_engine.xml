@@ -11,7 +11,7 @@
   <gfx_store>afterburner</gfx_store>
  </general>
  <specific type="modification">
-  <thrust>65</thrust>
+  <thrust>45</thrust>
   <turn>55</turn>
   <speed>75</speed>
   <fuel>1200</fuel>
