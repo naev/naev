@@ -31,6 +31,7 @@ static void iar_focus( Widget* iar, double bx, double by );
 static void iar_scroll( Widget* iar, int direction );
 static void iar_centerSelected( Widget *iar );
 /* Misc. */
+static void iar_setAltTextPos( Widget *iar, double bx, double by );
 static Widget *iar_getWidget( const unsigned int wid, const char *name );
 static char* toolkit_getNameById( Widget *wgt, int elem );
 /* Clean up. */
@@ -388,6 +389,8 @@ static void iar_centerSelected( Widget *iar )
    if (ypos > iar->dat.iar.pos + iar->h - h)
       iar->dat.iar.pos = ypos - h*floor(iar->h/h) + 10.;
    iar->dat.iar.pos = CLAMP( 0., hmax, iar->dat.iar.pos );
+
+   iar_setAltTextPos( iar, iar->dat.iar.altx, iar->dat.iar.alty );
 }
 
 
@@ -415,6 +418,9 @@ static int iar_mclick( Widget* iar, int button, int x, int y )
          iar_focus( iar, x, y );
          if (iar->dat.iar.rmptr != NULL)
             iar->dat.iar.rmptr( iar->wdw, iar->name );
+
+         iar_setAltTextPos( iar, x, y );
+
          return 1;
 
       default:
@@ -461,11 +467,8 @@ static int iar_mmove( Widget* iar, int x, int y, int rx, int ry )
    else {
       if ((x < 0) || (x >= iar->w) || (y < 0) || (y >= iar->h))
          iar->dat.iar.alt  = -1;
-      else {
-         iar->dat.iar.alt  = iar_focusImage( iar, x, y );
-         iar->dat.iar.altx = x;
-         iar->dat.iar.alty = y;
-      }
+      else
+         iar_setAltTextPos( iar, x, y );
    }
 
    return 0;
@@ -550,6 +553,8 @@ static void iar_scroll( Widget* iar, int direction )
    iar->dat.iar.pos = CLAMP( 0., hmax, iar->dat.iar.pos );
    if (iar->dat.iar.fptr)
       iar->dat.iar.fptr( iar->wdw, iar->name );
+
+   iar_setAltTextPos( iar, iar->dat.iar.altx, iar->dat.iar.alty );
 }
 
 
@@ -634,6 +639,18 @@ static void iar_focus( Widget* iar, double bx, double by )
       else
          iar->status = WIDGET_STATUS_SCROLLING;
    }
+}
+
+
+/**
+ * @brief Chooses correct alt text for the given coordinates
+ *
+ */
+static void iar_setAltTextPos( Widget *iar, double bx, double by )
+{
+   iar->dat.iar.alt  = iar_focusImage( iar, bx, by );
+   iar->dat.iar.altx = bx;
+   iar->dat.iar.alty = by;
 }
 
 
@@ -781,6 +798,8 @@ int toolkit_setImageArrayOffset( const unsigned int wid, const char* name, doubl
    /* Move if needed. */
    hmax = h * (wgt->dat.iar.yelem - (int)(wgt->h / h));
    wgt->dat.iar.pos = CLAMP( 0., hmax, off );
+
+   iar_setAltTextPos( wgt, wgt->dat.iar.altx, wgt->dat.iar.alty );
 
    return 0;
 }
