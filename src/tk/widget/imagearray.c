@@ -558,9 +558,9 @@ static void iar_scroll( Widget* iar, int direction )
  */
 static int iar_focusImage( Widget* iar, double bx, double by )
 {
-   int i,j;
-   double w,h, ycurs,xcurs;
-   int xelem, yelem;
+   int x, y;
+   double w, h;
+   int xelem;
    double xspace;
 
    /* element dimensions */
@@ -568,31 +568,21 @@ static int iar_focusImage( Widget* iar, double bx, double by )
 
    /* number of elements */
    xelem = iar->dat.iar.xelem;
-   yelem = iar->dat.iar.yelem;
    xspace = (double)(((int)iar->w - 10) % (int)w) / (double)(xelem + 1);
-   if (bx < iar->w - 10.) {
 
-      /* Loop through elements until finding collision. */
-      ycurs = iar->h - h + iar->dat.iar.pos;
-      for (j=0; j<yelem; j++) {
-         xcurs = xspace;
-         for (i=0; i<xelem; i++) {
-            /* Out of elements. */
-            if ((j*xelem + i) >= iar->dat.iar.nelements)
-               break;
+   x = bx / (xspace + w);
+   y = (iar->h - by + iar->dat.iar.pos) / h;
 
-            /* Check for collision. */
-            if ((bx > xcurs) && (bx < xcurs+w-4.) &&
-                  (by > ycurs) && (by < ycurs+h-4.))
-               return j*xelem + i;
+   /* Reject anything too close to the scroll bar or exceeding nelements. */
+   if (y * xelem + x >= iar->dat.iar.nelements || bx >= iar->w - 10.)
+      return -1;
 
-            xcurs += xspace + w;
-         }
-         ycurs -= h;
-      }
-   }
+   /* Verify that the mouse is on an icon. */
+   if ((bx < (x+1) * xspace + x * w) || (bx > (x+1) * (xspace + w) - 4.) ||
+         (by > iar->h + iar->dat.iar.pos - y * h - 4.))
+      return -1;
 
-   return -1;
+   return y * xelem + x;
 }
 
 
