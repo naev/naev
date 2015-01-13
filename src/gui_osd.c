@@ -294,6 +294,10 @@ int osd_destroy( unsigned int osd )
       /* Recalculate dimensions. */
       osd_calcDimensions();
 
+      /* Remove the OSD, if empty. */
+      if (array_size(osd_list) == 0)
+         osd_exit();
+
       /* Done here. */
       return 0;
    }
