@@ -23,18 +23,6 @@
 #define BUTTON_HEIGHT   30 /**< Map button height. */
 
 
-/**
- * @brief Represents a found target.
- */
-typedef struct map_find_s {
-   Planet *pnt;         /**< Planet available at. */
-   StarSystem *sys;     /**< System available at. */
-   char display[128];   /**< Name to display. */
-   int jumps;           /**< Jumps to system. */
-   double distance;     /**< Distance to system. */
-} map_find_t;
-
-
 /* Stored checkbox values. */
 static int map_find_systems = 1; /**< Systems checkbox value. */
 static int map_find_planets = 0; /**< Planets checkbox value. */
