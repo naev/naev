@@ -18,6 +18,7 @@
 #include "toolkit.h"
 #include "opengl.h"
 #include "map.h"
+#include "map_find.h"
 #include "dev_system.h"
 #include "dev_planet.h"
 #include "unidiff.h"
@@ -36,6 +37,10 @@
 
 #define UNIEDIT_EDIT_WIDTH       400 /**< System editor width. */
 #define UNIEDIT_EDIT_HEIGHT      450 /**< System editor height. */
+
+
+#define UNIEDIT_FIND_WIDTH       400 /**< System editor width. */
+#define UNIEDIT_FIND_HEIGHT      500 /**< System editor height. */
 
 
 #define UNIEDIT_DRAG_THRESHOLD   300   /**< Drag threshold. */
@@ -59,6 +64,7 @@ extern int systems_nstack;
 static int uniedit_mode       = UNIEDIT_DEFAULT; /**< Editor mode. */
 static unsigned int uniedit_wid = 0; /**< Sysedit wid. */
 static unsigned int uniedit_widEdit = 0; /**< Sysedit editor wid. */
+static unsigned int uniedit_widFind = 0; /**< Sysedit find wid. */
 static double uniedit_xpos    = 0.; /**< Viewport X position. */
 static double uniedit_ypos    = 0.; /**< Viewport Y position. */
 static double uniedit_zoom    = 1.; /**< Viewport zoom level. */
@@ -75,6 +81,10 @@ static double uniedit_mx      = 0.; /**< X mouse position. */
 static double uniedit_my      = 0.; /**< Y mouse position. */
 
 
+static map_find_t *found_cur  = NULL;  /**< Pointer to found stuff. */
+static int found_ncur         = 0;     /**< Number of found stuff. */
+
+
 /*
  * Universe editor Prototypes.
  */
@@ -82,6 +92,14 @@ static double uniedit_my      = 0.; /**< Y mouse position. */
 static void uniedit_deselect (void);
 static void uniedit_selectAdd( StarSystem *sys );
 static void uniedit_selectRm( StarSystem *sys );
+/* System and asset search. */
+static void uniedit_findSys (void);
+static void uniedit_findSysClose( unsigned int wid, char *name );
+static void uniedit_findSearchSystems( unsigned int wid, char *str );
+static void uniedit_findSearchAssets( unsigned int wid, char *str );
+static void uniedit_findShowResults( unsigned int wid, map_find_t *found, int n );
+static void uniedit_btnCenterSystem( unsigned int wid, char *unused );
+static int uniedit_sortCompare( const void *p1, const void *p2 );
 /* System editing. */
 static void uniedit_editSys (void);
 static void uniedit_editSysClose( unsigned int wid, char *name );
@@ -114,6 +132,7 @@ static void uniedit_btnRename( unsigned int wid_unused, char *unused );
 static void uniedit_btnEdit( unsigned int wid_unused, char *unused );
 static void uniedit_btnNew( unsigned int wid_unused, char *unused );
 static void uniedit_btnOpen( unsigned int wid_unused, char *unused );
+static void uniedit_btnFind( unsigned int wid_unused, char *unused );
 /* Keybindings handling. */
 static int uniedit_keys( unsigned int wid, SDLKey key, SDLMod mod );
 
@@ -195,6 +214,11 @@ void uniedit_open( unsigned int wid_unused, char *unused )
    /* Open a system. */
    window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*buttonPos, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnOpen", "Open", uniedit_btnOpen );
+   buttonPos++;
+
+   /* Find a system or asset. */
+   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*buttonPos, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnFind", "Find", uniedit_btnFind );
    buttonPos++;
 
    /* Zoom buttons */
@@ -371,6 +395,18 @@ static void uniedit_btnOpen( unsigned int wid_unused, char *unused )
       return;
 
    sysedit_open( uniedit_sys[0] );
+}
+
+
+/**
+ * @brief Opens the system property editor.
+ */
+static void uniedit_btnFind( unsigned int wid_unused, char *unused )
+{
+   (void) wid_unused;
+   (void) unused;
+
+   uniedit_findSys();
 }
 
 
@@ -993,6 +1029,236 @@ static void uniedit_buttonZoom( unsigned int wid, char* str )
    /* Transform coords back. */
    uniedit_xpos *= uniedit_zoom;
    uniedit_ypos *= uniedit_zoom;
+}
+
+
+/**
+ * @brief Finds systems and assets.
+ */
+static void uniedit_findSys (void)
+{
+   unsigned int wid;
+   int x, y;
+
+   /* Create the window. */
+   wid = window_create( "Find Systems and Assets", -1, -1, UNIEDIT_FIND_WIDTH, UNIEDIT_FIND_HEIGHT );
+   uniedit_widFind = wid;
+
+   x = 20;
+
+   /* Close button. */
+   window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnClose", "Close", uniedit_findSysClose );
+
+   /* Center button. */
+   window_addButton( wid, -40-BUTTON_WIDTH, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnCenterSystem", "Center", uniedit_btnCenterSystem );
+
+   /* Find button. */
+   y = -45;
+   window_addInput( wid, x, y, UNIEDIT_FIND_WIDTH - BUTTON_WIDTH * 2 - x - 60, 20,
+         "inpFind", 32, 1, NULL );
+   window_addButton( wid, -20, y + gl_smallFont.h / 2., BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnFindAssets", "Assets", uniedit_findSearchAssets );
+   window_addButton( wid, -40 - BUTTON_WIDTH, y + gl_smallFont.h / 2., BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnFindSystems", "Systems", uniedit_findSearchSystems );
+
+   /* Generate an empty list. */
+   uniedit_findShowResults( wid, NULL, 0 );
+}
+
+
+/**
+ * @brief Searches for systems.
+ */
+static void uniedit_findSearchSystems( unsigned int wid, char *str )
+{
+   (void) str;
+   int i, len;
+   char **names, *name;
+   map_find_t *found;
+   StarSystem *sys;
+
+   name = window_getInput( wid, "inpFind" );
+   if (strlen(name) == 0)
+      return;
+
+   /* Search for names. */
+   names   = system_searchFuzzyCase( name, &len );
+
+   if (found_cur != NULL)
+      free(found_cur);
+
+   /* Construct found table. */
+   found = malloc( sizeof(map_find_t) * len );
+   for (i=0; i<len; i++) {
+      sys = system_get( names[i] );
+
+      /* Set some values. */
+      found[i].pnt      = NULL;
+      found[i].sys      = sys;
+
+      strncpy(found[i].display, sys->name, sizeof(found[i].display));
+   }
+   free(names);
+
+   /* Globals. */
+   found_cur  = found;
+   found_ncur = len;
+
+   /* Display results. */
+   uniedit_findShowResults( wid, found, i );
+}
+
+/**
+ * @brief Searches for assets.
+ */
+static void uniedit_findSearchAssets( unsigned int wid, char *str )
+{
+   (void) str;
+   int i, n, len;
+   char **names, *name;
+   const char *sysname;
+   map_find_t *found;
+   StarSystem *sys;
+   Planet *pnt;
+
+   name = window_getInput( wid, "inpFind" );
+   if (strlen(name) == 0)
+      return;
+
+   /* Search for names. */
+   names   = planet_searchFuzzyCase( name, &len );
+
+   if (found_cur != NULL)
+      free(found_cur);
+
+   /* Construct found table. */
+   found = malloc( sizeof(map_find_t) * len );
+   n = 0;
+   for (i=0; i<len; i++) {
+      /* Planet must be real. */
+      pnt = planet_get( names[i] );
+      if (pnt == NULL)
+         continue;
+      if (pnt->real != ASSET_REAL)
+         continue;
+
+      sysname = planet_getSystem( names[i] );
+      if (sysname == NULL)
+         continue;
+
+      sys = system_get( sysname );
+      if (sys == NULL)
+         continue;
+
+      /* Set some values. */
+      found[n].pnt      = pnt;
+      found[n].sys      = sys;
+
+      /* Set fancy name. */
+      nsnprintf( found[n].display, sizeof(found[n].display),
+            "%s (%s system)", names[i], sys->name );
+      n++;
+   }
+   free(names);
+
+   /* Globals. */
+   found_cur  = found;
+   found_ncur = n;
+
+   /* Display results. */
+   uniedit_findShowResults( wid, found, n );
+}
+
+
+/**
+ * @brief Generates the virtual asset list.
+ */
+static void uniedit_findShowResults( unsigned int wid, map_find_t *found, int n )
+{
+   int i, y, h;
+   char **str;
+
+   /* Destroy if exists. */
+   if (widget_exists( wid, "lstResults" ))
+      window_destroyWidget( wid, "lstResults" );
+
+   y = -45 - BUTTON_HEIGHT - 20;
+
+   if (n == 0) {
+      str    = malloc( sizeof(char*) );
+      str[0] = strdup("None");
+      n      = 1;
+   }
+   else {
+      qsort( found, n, sizeof(map_find_t), uniedit_sortCompare );
+
+      str = malloc( sizeof(char*) * n );
+      for (i=0; i<n; i++)
+         str[i] = strdup( found[i].display );
+   }
+
+   /* Add list. */
+   h = UNIEDIT_FIND_HEIGHT + y - BUTTON_HEIGHT - 30;
+   window_addList( wid, 20, y, UNIEDIT_FIND_WIDTH-40, h,
+         "lstResults", str, n, 0, NULL );
+}
+
+
+/**
+ * @brief Closes the search dialogue.
+ */
+static void uniedit_findSysClose( unsigned int wid, char *name )
+{
+   /* Clean up if necessary. */
+   if (found_cur != NULL)
+      free( found_cur );
+   found_cur = NULL;
+
+   /* Close the window. */
+   window_close( wid, name );
+}
+
+
+/**
+ * @brief Centers the selected system.
+ */
+static void uniedit_btnCenterSystem( unsigned int wid, char *unused )
+{
+   (void) unused;
+   StarSystem *sys;
+   int pos;
+
+   /* Make sure it's valid. */
+   if (found_ncur == 0 || found_cur == NULL)
+      return;
+
+   pos = toolkit_getListPos( wid, "lstResults" );
+   sys = found_cur[ pos ].sys;
+
+   if (sys == NULL)
+      return;
+
+   /* Center. */
+   uniedit_xpos = sys->pos.x * uniedit_zoom;
+   uniedit_ypos = sys->pos.y * uniedit_zoom;
+}
+
+
+/**
+ * @brief qsort compare function for map finds.
+ */
+static int uniedit_sortCompare( const void *p1, const void *p2 )
+{
+   map_find_t *f1, *f2;
+
+   /* Convert pointer. */
+   f1 = (map_find_t*) p1;
+   f2 = (map_find_t*) p2;
+
+   /* Sort by name, nothing more. */
+   return strcasecmp( f1->sys->name, f2->sys->name );
 }
 
 
