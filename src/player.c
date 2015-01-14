@@ -1500,6 +1500,12 @@ void player_targetHyperspaceSet( int id )
       return;
    }
 
+   if (pilot_isFlag(player.p, PILOT_HYP_PREP) ||
+         pilot_isFlag(player.p, PILOT_HYP_BEGIN) ||
+         pilot_isFlag(player.p, PILOT_HYPERSPACE))
+      return;
+
+
    old = player.p->nav_hyperspace;
    player.p->nav_hyperspace = id;
    player_hyperspacePreempt((id < 0) ? 0 : 1);
