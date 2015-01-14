@@ -93,6 +93,8 @@ void window_addImageArray( const unsigned int wid,
    wgt->dat.iar.selected   = 0;
    wgt->dat.iar.pos        = 0;
    wgt->dat.iar.alt        = -1;
+   wgt->dat.iar.altx       = -1;
+   wgt->dat.iar.alty       = -1;
    wgt->dat.iar.iw         = iw;
    wgt->dat.iar.ih         = ih;
    wgt->dat.iar.fptr       = call;
@@ -303,8 +305,8 @@ static void iar_renderOverlay( Widget* iar, double bx, double by )
    /*
     * Draw Alt text if applicable.
     */
-   if ((iar->dat.iar.alts != NULL) &&
-         (iar->dat.iar.alt >= 0) &&
+   if ((iar->dat.iar.alts != NULL) && (iar->dat.iar.alt >= 0) &&
+         (iar->dat.iar.altx != -1) && (iar->dat.iar.alty != -1) &&
          (iar->dat.iar.alts[iar->dat.iar.alt] != NULL)) {
 
       /* Calculate position. */
