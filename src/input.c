@@ -1164,6 +1164,10 @@ static void input_clickevent( SDL_Event* event )
    if (player_isFlag(PLAYER_DESTROYED) || (player.p == NULL))
       return;
 
+   /* Player must not be dead. */
+   if (pilot_isFlag(player.p, PILOT_DEAD))
+      return;
+
    px = player.p->solid->pos.x;
    py = player.p->solid->pos.y;
    gl_windowToScreenPos( &mx, &my, event->button.x, event->button.y );
@@ -1218,7 +1222,7 @@ static void input_clickevent( SDL_Event* event )
 
    if (pid != PLAYER_ID) {
       /* Apply an action if already selected. */
-      if (!pilot_isFlag(player.p, PILOT_DEAD) && (pid == player.p->target)) {
+      if (pid == player.p->target) {
          p = pilot_get(pid);
          if (pilot_isDisabled(p) || pilot_isFlag(p, PILOT_BOARDABLE))
             player_board();
