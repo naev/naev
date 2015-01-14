@@ -2150,6 +2150,9 @@ static int player_thinkMouseFly(void)
 void player_dead (void)
 {
    gui_cleanup();
+
+   /* Close the overlay. */
+   ovr_setOpen(0);
 }
 
 
