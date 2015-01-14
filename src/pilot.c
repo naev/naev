@@ -628,14 +628,35 @@ double pilot_face( Pilot* p, const double dir )
  */
 int pilot_brake( Pilot *p )
 {
-   double diff;
+   double dir, thrust, diff, ftime, btime;
 
-   diff = pilot_face(p, VANGLE(p->solid->vel) + M_PI);
+   /* Face backwards by default. */
+   dir    = VANGLE(p->solid->vel) + M_PI;
+   thrust = 1.;
+
+   if (p->stats.misc_reverse_thrust) {
+      /* Calculate the time to face backward and apply forward thrust. */
+      diff = angle_diff(p->solid->dir, VANGLE(p->solid->vel) + M_PI);
+      btime = ABS(diff) / p->turn + MIN( VMOD(p->solid->vel), p->speed ) /
+            (p->thrust / p->solid->mass);
+
+      /* Calculate the time to face forward and apply reverse thrust. */
+      diff = angle_diff(p->solid->dir, VANGLE(p->solid->vel));
+      ftime = ABS(diff) / p->turn + MIN( VMOD(p->solid->vel), p->speed ) /
+            (p->thrust / p->solid->mass * PILOT_REVERSE_THRUST);
+
+      if (btime > ftime) {
+         dir    = VANGLE(p->solid->vel);
+         thrust = -PILOT_REVERSE_THRUST;
+      }
+   }
+
+   diff = pilot_face(p, dir);
    if (ABS(diff) < MAX_DIR_ERR && VMOD(p->solid->vel) > MIN_VEL_ERR)
-      pilot_setThrust(p, 1.);
+      pilot_setThrust(p, thrust);
    else {
       pilot_setThrust(p, 0.);
-      if (VMOD(p->solid->vel) < MIN_VEL_ERR)
+      if (VMOD(p->solid->vel) <= MIN_VEL_ERR)
          return 1;
    }
 
