@@ -788,8 +788,12 @@ static void input_key( int keynum, double value, double kabs, int repeat )
          if (!paused) player_autonavAbort(NULL);
          player_setFlag(PLAYER_REVERSE);
       }
-      else if ((value==KEY_RELEASE) && player_isFlag(PLAYER_REVERSE))
+      else if ((value==KEY_RELEASE) && player_isFlag(PLAYER_REVERSE)) {
          player_rmFlag(PLAYER_REVERSE);
+
+         if (!player_isFlag(PLAYER_ACCEL))
+            player_accelOver();
+      }
 
 
    /*

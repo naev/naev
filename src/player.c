@@ -1123,8 +1123,6 @@ void player_think( Pilot* pplayer, const double dt )
          facing = 1;
       }
    }
-   else if(player.p->stats.misc_reverse_thrust && !player_isFlag(PLAYER_REVERSE) && !player_isFlag(PLAYER_ACCEL) && !player_isFlag(PLAYER_AUTONAV))
-      player_accelOver();
 
    /* normal turning scheme */
    if (!facing) {
