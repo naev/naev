@@ -1424,13 +1424,13 @@ static void equipment_genShipList( unsigned int wid )
 
 
 static int equipment_outfitFilterWeapon( const Outfit *o )
-{ return (o->slot.type == OUTFIT_SLOT_WEAPON); }
+{ return ((o->slot.type == OUTFIT_SLOT_WEAPON) && !sp_required( o->slot.spid )); }
 
 static int equipment_outfitFilterUtility( const Outfit *o )
-{ return (o->slot.type == OUTFIT_SLOT_UTILITY); }
+{ return ((o->slot.type == OUTFIT_SLOT_UTILITY) && !sp_required( o->slot.spid )); }
 
 static int equipment_outfitFilterStructure( const Outfit *o )
-{ return (o->slot.type == OUTFIT_SLOT_STRUCTURE); }
+{ return ((o->slot.type == OUTFIT_SLOT_STRUCTURE) && !sp_required( o->slot.spid )); }
 
 static int equipment_outfitFilterCore( const Outfit *o )
 { return sp_required( o->slot.spid ); }
