@@ -43,6 +43,7 @@
 #define  EQUIPMENT_SHIPS      "iarAvailShips"
 #define  EQUIPMENT_OUTFIT_TAB "tabOutfits"
 #define  EQUIPMENT_OUTFITS    "iarAvailOutfits"
+#define  EQUIPMENT_FILTER     "inpFilterOutfits"
 #define  OUTFIT_TABS          5
 
 
@@ -78,7 +79,7 @@ static void equipment_getDim( unsigned int wid, int *w, int *h,
 static void equipment_genShipList( unsigned int wid );
 static void equipment_genOutfitLists( unsigned int wid );
 static void equipment_addOutfitListSingle( unsigned int wid,
-      int(*filter)( const Outfit *o ) );
+      int(*filter)( const Outfit *o ), char *filtertext );
 static void equipment_updateOutfitSingle( unsigned int wid, char* str );
 /* Widget. */
 static void equipment_genLists( unsigned int wid );
@@ -106,6 +107,7 @@ static void equipment_changeShip( unsigned int wid );
 static void equipment_transportShip( unsigned int wid );
 static void equipment_unequipShip( unsigned int wid, char* str );
 static credits_t equipment_transportPrice( char *shipname );
+static void equipment_filterOutfits( unsigned int wid, char *str );
 static void equipment_rightClickOutfits( unsigned int wid, char* str );
 static void equipment_changeTab( unsigned int wid, char *wgt, int tab );
 
@@ -1443,7 +1445,9 @@ static int equipment_outfitFilterCore( const Outfit *o )
 static void equipment_genOutfitLists( unsigned int wid )
 {
    int i, x, y, w, h;
-   int ow, oh;
+   int ix, iy, iw, ih; /* Input filter. */
+   int ow, oh, barw, active;
+   char *filtertext;
    int (*tabfilters[])( const Outfit *o ) = {
       equipment_outfitFilterWeapon,
       equipment_outfitFilterUtility,
@@ -1472,15 +1476,40 @@ static void equipment_genOutfitLists( unsigned int wid )
       outfit_windows = window_addTabbedWindow( wid, x, y, ow, oh,
             EQUIPMENT_OUTFIT_TAB, numtabs, tabnames, 1 );
       window_tabSetFont( wid, EQUIPMENT_OUTFIT_TAB, &gl_defFontMono );
+
+      barw = window_tabWinGetBarWidth( wid, EQUIPMENT_OUTFIT_TAB );
+
+      iw = CLAMP(0, 150, ow - barw - 30);
+      ih = 20;
+
+      ix = ow - iw;
+      iy = oh - (30 - ih) / 2; /* Centered relative to 30 px tab bar */
+
+      /* Only create the filter widget if it will be a reasonable size. */
+      if (iw >= 30) {
+         window_addInput( wid, ix, iy, iw, ih, EQUIPMENT_FILTER, 32, 1, &gl_smallFont );
+         window_setInputCallback( wid, EQUIPMENT_FILTER, equipment_filterOutfits );
+      }
    }
    else
       outfit_windows = window_tabWinGet( wid, EQUIPMENT_OUTFIT_TAB );
 
    window_tabWinOnChange( wid, EQUIPMENT_OUTFIT_TAB, equipment_changeTab );
+   active = window_tabWinGetActive( equipment_wid, EQUIPMENT_OUTFIT_TAB );
+
+   filtertext = NULL;
+   if (widget_exists(equipment_wid, EQUIPMENT_FILTER)) {
+      filtertext = window_getInput( equipment_wid, EQUIPMENT_FILTER );
+      if (strlen(filtertext) == 0)
+         filtertext = NULL;
+   }
+   else
+      filtertext = NULL;
 
    /* Add the tabs. */
    for (i=0; i<numtabs; i++)
-      equipment_addOutfitListSingle( outfit_windows[i], tabfilters[i] );
+      equipment_addOutfitListSingle( outfit_windows[i], tabfilters[i],
+         (i == active) ? filtertext : NULL );
 }
 
 
@@ -1488,7 +1517,7 @@ static void equipment_genOutfitLists( unsigned int wid )
  * @brief Adds a list of player outfits widget.
  */
 static void equipment_addOutfitListSingle( unsigned int wid,
-      int(*filter)( const Outfit *o ) )
+      int(*filter)( const Outfit *o ), char *filtertext )
 {
    int i, l, p;
    int w, h;
@@ -1517,6 +1546,26 @@ static void equipment_addOutfitListSingle( unsigned int wid,
 
    /* Get the outfits. */
    noutfits = player_getOutfitsFiltered( soutfits, toutfits, filter );
+
+   if (filtertext != NULL && (strcmp(soutfits[0], "None") != 0)) {
+      l = 0;
+      for (i=0; i<noutfits; i++) {
+         /* Shift matches downward to avoid duplicate arrays. */
+         if (nstrcasestr( soutfits[i], filtertext ) != NULL) {
+            soutfits[l] = soutfits[i];
+            toutfits[l] = toutfits[i];
+            l++;
+         }
+      }
+
+      if (l == 0) {
+         noutfits = 1;
+         soutfits[0] = strdup( "None" );
+         toutfits[0] = NULL;
+      }
+      else
+         noutfits = l;
+   }
 
    /* Create the actual image array. */
    window_addImageArray( wid, 3, 3, w-6, h-6,
@@ -1768,6 +1817,17 @@ static void equipment_updateOutfitSingle( unsigned int wid, char* str )
 }
 
 /**
+ * @brief Handles text input in the filter input widget.
+ *    @param wid Window containing the widget.
+ *    @param str Unused.
+ */
+static void equipment_filterOutfits( unsigned int wid, char *str )
+{
+   (void) str;
+   equipment_regenLists(wid, 1, 0);
+}
+
+/**
  * @brief Ensures the tab's selected item is reflected in the ship slot list
  *
  *    @param wid Unused.
@@ -1778,6 +1838,9 @@ static void equipment_changeTab( unsigned int wid, char *wgt, int tab )
 {
    (void) wid;
    (void) wgt;
+
+   if (widget_exists(wid, EQUIPMENT_FILTER))
+      window_setInput(wid, EQUIPMENT_FILTER, NULL);
 
    equipment_updateOutfitSingle( outfit_windows[tab], NULL );
 }
