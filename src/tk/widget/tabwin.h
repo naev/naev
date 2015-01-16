@@ -42,6 +42,7 @@ int window_tabWinOnChange( const unsigned int wid, const char *tab,
       void(*onChange)(unsigned int,char*,int) );
 int window_tabSetFont( const unsigned int wid, const char *tab, const glFont *font );
 unsigned int* window_tabWinGet( const unsigned int wid, const char *tab );
+int window_tabWinGetBarWidth( const unsigned int wid, const char *tab );
 
 
 #endif /* WGT_TABWIN_H */

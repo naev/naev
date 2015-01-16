@@ -520,3 +520,24 @@ unsigned int* window_tabWinGet( const unsigned int wid, const char *tab )
    return wgt->dat.tab.windows;
 }
 
+/**
+ * @brief Gets the total width of all tabs in a tabbed window.
+ *
+ *    @param wid Window to which tabbed window belongs.
+ *    @param tab Name of the tabbed window.
+ *    @return Bar width in pixels
+ */
+int window_tabWinGetBarWidth( const unsigned int wid, const char* tab )
+{
+   int i, w;
+
+   Widget *wgt = tab_getWgt( wid, tab );
+   if (wgt == NULL)
+      return 0;
+
+   w = 20;
+   for (i=0; i<wgt->dat.tab.ntabs; i++)
+      w += 10 + wgt->dat.tab.namelen[i];
+
+   return w;
+}
