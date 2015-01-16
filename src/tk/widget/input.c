@@ -23,6 +23,7 @@ static int inp_isBreaker(char c);
 static int inp_key( Widget* inp, SDLKey key, SDLMod mod );
 static int inp_text( Widget* inp, const char *buf );
 static int inp_addKey( Widget* inp, SDLKey key );
+static void inp_clampView( Widget *inp );
 static void inp_cleanup( Widget* inp );
 
 
@@ -297,6 +298,8 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
             }
             else
                inp->dat.inp.pos -= 1;
+
+            inp_clampView( inp );
          }
       }
       else if (key == SDLK_RIGHT) {
@@ -317,6 +320,8 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
             }
             else
                inp->dat.inp.pos += 1;
+
+            inp_clampView( inp );
          }
       }
       else if (key == SDLK_UP) {
@@ -462,6 +467,7 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
       if (inp->dat.inp.fptr != NULL)
          inp->dat.inp.fptr( inp->wdw, inp->name );
 
+      inp_clampView( inp );
       return 1;
    }
    /* delete -> delete text */
@@ -501,11 +507,15 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
    /* home -> move to start */
    else if (key == SDLK_HOME) {
       inp->dat.inp.pos = 0;
+      inp_clampView( inp );
+
       return 1;
    }
    /* end -> move to end */
    else if (key == SDLK_END) {
       inp->dat.inp.pos = strlen(inp->dat.inp.input);
+      inp_clampView( inp );
+
       return 1;
    }
 
@@ -533,6 +543,34 @@ static int inp_key( Widget* inp, SDLKey key, SDLMod mod )
    return 0;
 }
 
+
+/*
+ * @brief Keeps the input widget's view in sync with its cursor
+ *
+ *    @param inp Input widget to operate on.
+ */
+static void inp_clampView( Widget *inp )
+{
+   int visible;
+
+   /* @todo Handle multiline input widgets. */
+   if (!inp->dat.inp.oneline)
+      return;
+
+   /* If the cursor is behind the view, shift the view backwards. */
+   if (inp->dat.inp.view > inp->dat.inp.pos) {
+      inp->dat.inp.view = inp->dat.inp.pos;
+      return;
+   }
+
+   visible = gl_printWidthForText( inp->dat.inp.font,
+         &inp->dat.inp.input[ inp->dat.inp.view ], inp->w - 10 );
+
+   /* Shift the view right until the cursor is visible. */
+   while (inp->dat.inp.view + visible < inp->dat.inp.pos)
+      visible = gl_printWidthForText( inp->dat.inp.font,
+            &inp->dat.inp.input[ inp->dat.inp.view++ ], inp->w - 10 );
+}
 
 
 /**
