@@ -1874,7 +1874,8 @@ static void toolkit_regKey( SDLKey key, SDLKey c )
    mod = toolkit_mapMod(key);
    if (mod)
       input_mod         |= mod;
-   else {
+   /* Don't reset values on repeat keydowns. */
+   else if (input_key != key) {
       input_key         = key;
       input_keyTime     = SDL_GetTicks();
       input_keyCounter  = 0;
