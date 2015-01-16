@@ -1975,6 +1975,10 @@ static void equipment_unequipShip( unsigned int wid, char* str )
       return;
    }
 
+   if (dialogue_YesNo("Unequip Ship", /* confirm */
+         "Are you sure you want to remove all equipment from your ship?")==0)
+      return;
+
    /* Handle possible fuel changes. */
    f = eq_wgt.selected->fuel;
 
