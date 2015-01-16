@@ -1445,14 +1445,14 @@ static void equipment_genOutfitLists( unsigned int wid )
    int ow, oh, barw, active;
    char *filtertext;
    int (*tabfilters[])( const Outfit *o ) = {
+      NULL,
       equipment_outfitFilterWeapon,
       equipment_outfitFilterUtility,
       equipment_outfitFilterStructure,
-      equipment_outfitFilterCore,
-      NULL
+      equipment_outfitFilterCore
    };
    const char *tabnames[] = {
-      "\eb W ", "\eg U ", "\ep S ", "\eyCore", "\enAll"
+      "All", "\eb W ", "\eg U ", "\ep S ", "\eyCore"
    };
    const int numtabs = OUTFIT_TABS;
 
