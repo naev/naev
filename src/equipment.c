@@ -1452,7 +1452,7 @@ static void equipment_genOutfitLists( unsigned int wid )
       NULL
    };
    const char *tabnames[] = {
-      "\eb W ", "\eg U ", "\ep S ", "\ey C ", "\en X "
+      "\eb W ", "\eg U ", "\ep S ", "\eyCore", "\enAll"
    };
    const int numtabs = OUTFIT_TABS;
 
@@ -1471,7 +1471,6 @@ static void equipment_genOutfitLists( unsigned int wid )
    if (!widget_exists( wid, EQUIPMENT_OUTFIT_TAB )) {
       outfit_windows = window_addTabbedWindow( wid, x, y, ow, oh,
             EQUIPMENT_OUTFIT_TAB, numtabs, tabnames, 1 );
-      window_tabSetFont( wid, EQUIPMENT_OUTFIT_TAB, &gl_defFontMono );
 
       barw = window_tabWinGetBarWidth( wid, EQUIPMENT_OUTFIT_TAB );
 
