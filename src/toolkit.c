@@ -2136,6 +2136,7 @@ void toolkit_update (void)
             event.key.state      = SDL_PRESSED;
             event.key.keysym.sym = input_key;
             event.key.keysym.mod = input_mod;
+            event.key.keysym.unicode = (uint8_t)input_text;
             ret = wgt->rawevent( wgt, &event );
             if (ret != 0)
                return;
