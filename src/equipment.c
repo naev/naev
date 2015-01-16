@@ -334,10 +334,6 @@ void equipment_open( unsigned int wid )
    /* Custom widget (ship information). */
    window_addCust( wid, 20 + sw + 40 + ew + 20, -40, cw, ch, "cstMisc", 0,
          equipment_renderMisc, NULL, NULL );
-   /* Set default keyboard focuse to the list */
-   /* setting the focuse to EQUIPMENT_SHIPS instead of EQUIPMENT_OUTFITS because
-	* there is nothing to do with the keyboard in the outfits ia (yet?)*/
-   window_setFocus( wid , EQUIPMENT_SHIPS );
 }
 
 
