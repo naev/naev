@@ -175,6 +175,13 @@ static void iar_render( Widget* iar, double bx, double by )
    ycurs = y + iar->h - h + iar->dat.iar.pos;
    for (j=0; j<yelem; j++) {
       xcurs = x + xspace;
+
+      /*  Skip rows that are wholly outside of the viewport. */
+      if ((ycurs > y + iar->h) || (ycurs + h < y)) {
+         ycurs -= h;
+         continue;
+      }
+
       for (i=0; i<xelem; i++) {
 
          /* Get position. */
