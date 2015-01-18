@@ -2032,11 +2032,14 @@ static credits_t equipment_transportPrice( char* shipname )
 
    /* Here we also use hidden jump points, which may not be the best idea but ensures
     * that things can be reached. */
-   s = map_getJumpPath( &jumps, cur_system->name, planet_getSystem(loc), 1, 1, NULL );
-   if (s==NULL)
-      jumps = 50; /* Just consider a large number. */
-   free(s);
-
+   if (strcmp(planet_getSystem(loc),cur_system->name) != 0) {
+      s = map_getJumpPath( &jumps, cur_system->name, planet_getSystem(loc), 1, 1, NULL );
+      if (s==NULL)
+         jumps = 50; /* Just consider a large number. */
+      free(s);
+   }
+   else /* Ship is in the same system and no jump path can be generated */
+      jumps = 0;
    /* Modest base price scales fairly rapidly with distance. */
    price = (credits_t)(ceil(sqrt(ship->ship->mass) * pow(jumps + 1, .6) * 10.) * 100.);
 
