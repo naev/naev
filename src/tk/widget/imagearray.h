@@ -38,6 +38,15 @@ typedef struct WidgetImageArrayData_ {
 } WidgetImageArrayData;
 
 
+/**
+ * @brief Stores position and offset data for an image array.
+ */
+typedef struct iar_data_s {
+   int pos;        /**< Position (index) of the selected item. */
+   double offset;  /**< Scroll position of the image array. */
+} iar_data_t;
+
+
 /* Required functions. */
 void window_addImageArray( const unsigned int wid,
       const int x, const int y, /* position */
@@ -61,6 +70,8 @@ int toolkit_setImageArraySlotType( const unsigned int wid, const char* name,
       char **slottype );
 int toolkit_setImageArrayBackground( const unsigned int wid, const char* name,
       glColour *bg );
+int toolkit_saveImageArrayData( const unsigned int wid, const char *name,
+      iar_data_t *iar_data );
 
 
 #endif /* WGT_IMAGEARRAY_H */

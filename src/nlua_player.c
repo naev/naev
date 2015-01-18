@@ -800,8 +800,7 @@ static int playerL_addOutfit( lua_State *L  )
 static int playerL_rmOutfit( lua_State *L )
 {
    const char *str;
-   char **outfits;
-   Outfit *o;
+   Outfit *o, **outfits;
    int i, q, noutfits;
 
    /* Defaults. */
@@ -818,14 +817,12 @@ static int playerL_rmOutfit( lua_State *L )
       if (noutfits == 0)
          return 0;
 
-      outfits = malloc( sizeof(char*) * noutfits );
+      outfits = malloc( sizeof(Outfit*) * noutfits );
       player_getOutfits(outfits, NULL);
       for (i=0; i<noutfits; i++) {
-         o = outfit_get(outfits[i]);
+         o = outfits[i];
          q = player_outfitOwned(o);
          player_rmOutfit(o, q);
-         /* Free memory. */
-         free( outfits[i] );
       }
       /* Clean up. */
       free(outfits);

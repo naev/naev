@@ -24,6 +24,7 @@
 #include "space.h"
 #include "rng.h"
 #include "land.h"
+#include "land_outfits.h"
 #include "sound.h"
 #include "economy.h"
 #include "pause.h"
@@ -2392,58 +2393,41 @@ static int player_outfitCompare( const void *arg1, const void *arg2 )
 /**
  * @brief Prepares two arrays for displaying in an image array.
  *
- *    @param[out] soutfits Names of outfits the player owns.
- *    @param[out] toutfits Textures of outfits for image array.
+ *    @param[out] outfits Outfits the player owns.
+ *    @param[out] toutfits Optional store textures for the image array.
+ *    @return Number of outfits.
  */
-int player_getOutfits( char** soutfits, glTexture** toutfits )
+int player_getOutfits( Outfit **outfits, glTexture** toutfits )
 {
-   return player_getOutfitsFiltered( soutfits, toutfits, NULL );
+   return player_getOutfitsFiltered( outfits, toutfits, NULL, NULL );
 }
 
 
 /**
  * @brief Prepares two arrays for displaying in an image array.
  *
- *    @param[out] soutfits Names of outfits to .
- *    @param[out] toutfits Textures of outfits for image array.
+ *    @param[out] outfits Outfits the player owns.
+ *    @param[out] toutfits Optional store textures for the image array.
  *    @param[in] filter Function to filter which outfits to get.
+ *    @param[in] name Name fragment that each outfit must contain.
+ *    @return Number of outfits.
  */
-int player_getOutfitsFiltered( char** soutfits, glTexture** toutfits,
-      int(*filter)( const Outfit *o ) )
+int player_getOutfitsFiltered( Outfit **outfits, glTexture** toutfits,
+      int(*filter)( const Outfit *o ), char *name )
 {
-   int i, j;
+   int i;
 
-   if (player_noutfits == 0) {
-      soutfits[0] = strdup( "None" );
-      if (toutfits != NULL)
-         toutfits[0] = NULL;
-      return 1;
-   }
+   if (player_noutfits == 0)
+      return 0;
 
    /* We'll sort. */
    qsort( player_outfits, player_noutfits,
          sizeof(PlayerOutfit_t), player_outfitCompare );
 
-   /* Now built name and texture structure. */
-   j = 0;
-   for (i=0; i<player_noutfits; i++) {
-      if ((filter == NULL) || filter(player_outfits[i].o)) {
-         soutfits[j] = strdup( player_outfits[i].o->name );
-         if (toutfits != NULL)
-            toutfits[j] = player_outfits[i].o->gfx_store;
-         j++;
-      }
-   }
+   for (i=0; i<player_noutfits; i++)
+      outfits[i] = (Outfit*)player_outfits[i].o;
 
-   /* None found. */
-   if (j == 0) {
-      soutfits[0] = strdup( "None" );
-      if (toutfits != NULL)
-         toutfits[0] = NULL;
-      return 1;
-   }
-
-   return j;
+   return outfits_filter( outfits, toutfits, player_noutfits, filter, name );
 }
 
 

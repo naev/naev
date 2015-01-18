@@ -13,10 +13,13 @@
 
 
 void outfits_open( unsigned int wid );
-void outfits_updateQuantities( unsigned int wid );
+void outfits_regenList( unsigned int wid, char *str );
 void outfits_update( unsigned int wid, char* str );
 void outfits_updateEquipmentOutfits( void );
+int outfits_filter( Outfit **outfits, glTexture **toutfits, int n,
+      int(*filter)( const Outfit *o ), char *name );
 int outfit_canBuy( char *outfit, Planet *planet );
 int outfit_canSell( char *outfit );
+void outfits_cleanup( void );
 
 #endif /* LAND_OUTFITS_H */

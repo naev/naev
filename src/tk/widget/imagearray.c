@@ -955,3 +955,23 @@ int toolkit_setImageArrayBackground( const unsigned int wid, const char* name,
 }
 
 
+/**
+ * @brief Stores several image array attributes.
+ *
+ *    @param wid Window containing the image array.
+ *    @param name Name of the image array widget.
+ *    @param iar_data Pointer to an iar_data_t struct.
+ *    @return 0 on success.
+ */
+int toolkit_saveImageArrayData( const unsigned int wid, const char *name,
+      iar_data_t *iar_data )
+{
+   Widget *wgt = iar_getWidget( wid, name );
+   if (wgt == NULL)
+      return -1;
+
+   iar_data->pos    = wgt->dat.iar.selected;
+   iar_data->offset = wgt->dat.iar.pos;
+
+   return 0;
+}

@@ -166,7 +166,7 @@ static int tab_raw( Widget* tab, SDL_Event *event )
  */
 static int tab_mouse( Widget* tab, SDL_Event *event )
 {
-   int i, p, change;
+   int i, p, old, change;
    Window *parent;
    int x, y, rx, ry;
 
@@ -199,6 +199,8 @@ static int tab_mouse( Widget* tab, SDL_Event *event )
       if (x >= p)
          continue;
 
+      old = tab->dat.tab.active;
+
       /* Mark as active. */
       change = -1;
       if (event->button.button == SDL_BUTTON_WHEELUP)
@@ -213,7 +215,7 @@ static int tab_mouse( Widget* tab, SDL_Event *event )
 
       /* Create event. */
       if (tab->dat.tab.onChange != NULL)
-         tab->dat.tab.onChange( tab->wdw, tab->name, tab->dat.tab.active );
+         tab->dat.tab.onChange( tab->wdw, tab->name, old, tab->dat.tab.active );
       break;
    }
 
@@ -230,7 +232,7 @@ if ((key == bind_key) && (mod == bind_mod)) \
    change = v
 static int tab_key( Widget* tab, SDL_Event *event )
 {
-   int change;
+   int old, change;
    SDLKey key, bind_key;
    SDLMod mod, bind_mod;
    Window *wdw;
@@ -282,10 +284,11 @@ static int tab_key( Widget* tab, SDL_Event *event )
 
    /* Switch to the selected tab if it exists. */
    if ((change != -1) && (change < tab->dat.tab.ntabs)) {
+      old = tab->dat.tab.active;
       tab->dat.tab.active = change;
       /* Create event. */
       if (tab->dat.tab.onChange != NULL)
-          tab->dat.tab.onChange( tab->wdw, tab->name, tab->dat.tab.active );
+          tab->dat.tab.onChange( tab->wdw, tab->name, old, tab->dat.tab.active );
       ret = 1;
    }
 
@@ -427,16 +430,20 @@ static Widget *tab_getWgt( unsigned int wid, const char *tab )
  */
 int window_tabWinSetActive( const unsigned int wid, const char *tab, int active )
 {
+   int old;
+
    Widget *wgt = tab_getWgt( wid, tab );
    if (wgt == NULL)
       return -1;
+
+   old = wgt->dat.tab.active;
 
    /* Set active window. */
    wgt->dat.tab.active = active;
 
    /* Create event. */
    if (wgt->dat.tab.onChange != NULL)
-      wgt->dat.tab.onChange( wid, wgt->name, wgt->dat.tab.active );
+      wgt->dat.tab.onChange( wid, wgt->name, old, wgt->dat.tab.active );
 
    return 0;
 }
@@ -468,7 +475,7 @@ int window_tabWinGetActive( const unsigned int wid, const char *tab )
  *    @param onChange Callback to use (NULL disables).
  */
 int window_tabWinOnChange( const unsigned int wid, const char *tab,
-      void(*onChange)(unsigned int,char*,int) )
+      void(*onChange)(unsigned int,char*,int,int) )
 {
    Widget *wgt = tab_getWgt( wid, tab );
    if (wgt == NULL)

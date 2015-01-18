@@ -161,9 +161,9 @@ void player_rmShip( char* shipname );
  * player outfits.
  */
 int player_outfitOwned( const Outfit *o );
-int player_getOutfits( char** soutfits, glTexture** toutfits );
-int player_getOutfitsFiltered( char** soutfits, glTexture** toutfits,
-      int(*filter)( const Outfit *o ) );
+int player_getOutfits( Outfit **outfits, glTexture **toutfits );
+int player_getOutfitsFiltered( Outfit **outfits, glTexture **toutfits,
+      int(*filter)( const Outfit *o ), char *name );
 int player_numOutfits (void);
 int player_addOutfit( const Outfit *o, int quantity );
 int player_rmOutfit( const Outfit *o, int quantity );

@@ -121,7 +121,7 @@ static char *errorlist_ptr;
  */
 static void land_createMainTab( unsigned int wid );
 static void land_cleanupWindow( unsigned int wid, char *name );
-static void land_changeTab( unsigned int wid, char *wgt, int tab );
+static void land_changeTab( unsigned int wid, char *wgt, int old, int tab );
 /* commodity exchange */
 static void commodity_exchange_open( unsigned int wid );
 static void commodity_update( unsigned int wid, char* str );
@@ -1434,13 +1434,16 @@ static void land_toggleRefuel( unsigned int wid, char *name )
  *
  *    @param wid Unused.
  *    @param wgt Unused.
+ *    @param old Previously-active tab. (Unused)
  *    @param tab Tab changed to.
  */
-static void land_changeTab( unsigned int wid, char *wgt, int tab )
+static void land_changeTab( unsigned int wid, char *wgt, int old, int tab )
 {
    int i;
    (void) wid;
    (void) wgt;
+   (void) old;
+
    unsigned int w;
    const char *torun_hook;
    unsigned int to_visit;
@@ -1462,7 +1465,6 @@ static void land_changeTab( unsigned int wid, char *wgt, int tab )
                break;
             case LAND_WINDOW_OUTFITS:
                outfits_update( w, NULL );
-               outfits_updateQuantities( w );
                to_visit   = VISITED_OUTFITS;
                torun_hook = "outfits";
                break;
@@ -1655,6 +1657,7 @@ void land_exit (void)
 {
    land_cleanup();
    equipment_cleanup();
+   outfits_cleanup();
 }
 
 
