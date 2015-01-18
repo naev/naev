@@ -672,7 +672,7 @@ function render( dt, dt_mod )
          end
       end
       if gfxWarn then
-         gfx.renderTex( warnlight2, pl_pane_x + 29, pl_pane_y + 3 )
+         gfx.renderTex( warnlight2, pl_pane_x + 29, pl_pane_y + 7 )
       end
       if timers[3] <= -0.5 then
          timers[3] = 0.5
