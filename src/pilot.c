@@ -882,7 +882,7 @@ void pilot_broadcast( Pilot *p, const char *msg, int ignore_int )
 void pilot_distress( Pilot *p, const char *msg, int ignore_int )
 {
    int i, r;
-   double d, range;
+   double d;
    Pilot *t;
 
    /* Broadcast the message. */
@@ -918,12 +918,12 @@ void pilot_distress( Pilot *p, const char *msg, int ignore_int )
 
       if (!ignore_int) {
          if (!pilot_inRangePilot(p, pilot_stack[i])) {
-            /* Range is 7500 at 0 interference.
-             * Fall-off based on pilot_updateSensorRange()
+            /*
+             * If the pilots are within sensor range of each other, send the
+             * distress signal, regardless of electronic warfare hide values.
              */
-            d     = vect_dist( &p->solid->pos, &pilot_stack[i]->solid->pos );
-            range = 7500. / ((cur_system->interference + 200) / 200.);
-            if (d > range)
+            d = vect_dist2( &p->solid->pos, &pilot_stack[i]->solid->pos );
+            if (d > pilot_sensorRange())
                continue;
          }
 
