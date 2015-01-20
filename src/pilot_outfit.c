@@ -981,15 +981,7 @@ void pilot_calcStats( Pilot* pilot )
 
    /* Slot voodoo. */
    s = &pilot->stats;
-   /*
-    * Electronic warfare setting base parameters.
-    */
-   s->ew_hide            = 1. + (s->ew_hide-1.) * exp( -0.2 * (double)(MAX(amount.ew_hide-1,0)) );
-   s->ew_detect          = 1. + (s->ew_detect-1.) * exp( -0.2 * (double)(MAX(amount.ew_detect-1,0)) );
-   s->ew_jump_detect     = 1. + (s->ew_jump_detect-1.) * exp( -0.2 * (double)(MAX(amount.ew_jump_detect-1,0)) );
-   pilot->ew_base_hide   = s->ew_hide;
-   pilot->ew_detect      = s->ew_detect;
-   pilot->ew_jump_detect = s->ew_jump_detect;
+
    /* Fire rate:
     *  amount = p * exp( -0.15 * (n-1) )
     *  1x 15% -> 15%
