@@ -45,6 +45,9 @@ void dev_csv (void)
    DEBUG("   ship.csv...");
    dship_csv( CSV_DIR"/ship.csv" );
 
+   DEBUG("   ship_stat.csv...");
+   dship_csvStat( CSV_DIR"/ship_stat.csv" );
+
    DEBUG("Generation complete!");
 }
 
