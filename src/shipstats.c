@@ -119,6 +119,7 @@ static const ShipStatsLookup ss_lookup[] = {
    DI_ELEM( SS_TYPE_D_NEBULA_ABSORB_ARMOUR,  nebu_absorb_armour,   "Nebula Resistance (Armour)" ),
 
    D__ELEM( SS_TYPE_D_HEAT_DISSIPATION,   heat_dissipation,    "Heat Dissipation" ),
+   D__ELEM( SS_TYPE_D_STRESS_DISSIPATION, stress_dissipation,  "Stress Dissipation" ),
    D__ELEM( SS_TYPE_D_CREW,               crew_mod,            "Crew" ),
    D__ELEM( SS_TYPE_D_MASS,               mass_mod,            "Mass" ),
 

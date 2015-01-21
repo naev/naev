@@ -1585,7 +1585,7 @@ void pilot_update( Pilot* pilot, const double dt )
    /* Update stress. */
    if (!pilot_isFlag(pilot, PILOT_DISABLED)) { /* Case pilot is not disabled. */
       stress_falloff = 4.; /* TODO: make a function of the pilot's ship and/or its outfits. */
-      pilot->stress -= stress_falloff * dt;
+      pilot->stress -= stress_falloff * pilot->stats.stress_dissipation * dt;
       pilot->stress = MAX(pilot->stress, 0);
    }
    else if (!pilot_isFlag(pilot, PILOT_DISABLED_PERM)) { /* Case pilot is disabled (but not permanently so). */
