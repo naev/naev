@@ -40,18 +40,8 @@
   <structure size="large"/>
  </slots>
  <stats>
-  <speed_mod>0</speed_mod>
   <turn_mod>-10</turn_mod>
-  <thrust_mod>-10</thrust_mod>
-  <armour_mod>10</armour_mod>
-  <shield_mod>-20</shield_mod>
-  <energy_mod>0</energy_mod>
-  <energy_regen_mod>0</energy_regen_mod>
-  <tur_tracking>-40</tur_tracking>
-  <tur_firerate>-30</tur_firerate>
-  <fwd_firerate>-30</fwd_firerate>
-  <cargo_mod>0</cargo_mod>
-  <ew_detect>0</ew_detect>
-  <ew_hide>0</ew_hide>
+  <armour_mod>-10</armour_mod>
+  <ew_hide>10</ew_hide>
  </stats>
 </ship>

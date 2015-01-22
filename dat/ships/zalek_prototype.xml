@@ -44,16 +44,13 @@
   <structure size="large"/>
  </slots>
  <stats>
-  <speed_mod>0</speed_mod>
-  <turn_mod>0</turn_mod>
-  <thrust_mod>0</thrust_mod>
-  <armour_mod>-25</armour_mod>
-  <shield_mod>75</shield_mod>
-  <shield_regen_mod>35</shield_regen_mod>
-  <energy_mod>25</energy_mod>
-  <energy_regen_mod>10</energy_regen_mod>
-  <cargo_mod>0</cargo_mod>
-  <ew_detect>10</ew_detect>
-  <ew_hide>-15</ew_hide>
+  <armour_mod>-20</armour_mod>
+  <shield_mod>80</shield_mod>
+  <shield_regen_mod>60</shield_regen_mod>
+  <energy_mod>30</energy_mod>
+  <energy_regen_mod>20</energy_regen_mod>
+  <ew_hide>-20</ew_hide>
+  <stress_dissipation>10</stress_dissipation>
+  <misc_instant_jump>1</misc_instant_jump>
  </stats>
 </ship>

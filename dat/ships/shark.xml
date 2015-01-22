@@ -33,13 +33,8 @@
   <structure size="small"/>
  </slots>
  <stats>
-  <speed_mod>0</speed_mod>
-  <turn_mod>0</turn_mod>
-  <thrust_mod>10</thrust_mod>
-  <armour_mod>-5</armour_mod>
   <shield_mod>10</shield_mod>
-  <cargo_mod>0</cargo_mod>
-  <ew_detect>10</ew_detect>
-  <ew_hide>0</ew_hide>
+  <shield_regen_mod>15</shield_regen_mod>
+  <heat_dissipation>10</heat_dissipation>
  </stats>
 </ship>

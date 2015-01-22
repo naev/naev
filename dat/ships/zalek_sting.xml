@@ -37,10 +37,9 @@
   <structure size="medium"/>
  </slots>
  <stats>
-  <armour_mod>-50</armour_mod>
-  <shield_mod>50</shield_mod>
-  <shield_regen_mod>10</shield_regen_mod>
-  <cargo_mod>-25</cargo_mod>
-  <ew_detect>10</ew_detect>
+  <armour_mod>-30</armour_mod>
+  <shield_mod>40</shield_mod>
+  <shield_regen_mod>30</shield_regen_mod>
+  <stress_dissipation>10</stress_dissipation>
  </stats>
 </ship>

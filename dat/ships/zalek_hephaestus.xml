@@ -47,14 +47,7 @@
   <structure size="large"/>
  </slots>
  <stats>
-  <speed_mod>0</speed_mod>
-  <turn_mod>-10</turn_mod>
-  <thrust_mod>0</thrust_mod>
-  <armour_mod>-10</armour_mod>
-  <shield_mod>100</shield_mod>
-  <shield_regen_mod>25</shield_regen_mod>
-  <cargo_mod>0</cargo_mod>
-  <ew_detect>15</ew_detect>
-  <ew_hide>-5</ew_hide>
+  <shield_mod>50</shield_mod>
+  <shield_regen_mod>35</shield_regen_mod>
  </stats>
 </ship>
