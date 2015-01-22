@@ -355,7 +355,7 @@
  <mission name="DIY Nerds">
   <lua>neutral/diy-nerds</lua>
   <flags>
-  	<unique />
+   <unique />
   </flags>
   <avail>
     <chance>2</chance>
@@ -856,7 +856,8 @@
    <faction>Independent</faction>
    <faction>Sirius</faction>
    <faction>Soromid</faction>
-   <faction>Trader</faction>   <faction>Za'lek</faction>   
+   <faction>Trader</faction>
+   <faction>Za'lek</faction>
   </avail>
  </mission>
  <mission name="Za'lek Shipping Delivery">
