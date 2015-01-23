@@ -193,9 +193,13 @@ static int tab_mouse( Widget* tab, SDL_Event *event )
    /* Handle event. */
    p = 20;
    for (i=0; i<tab->dat.tab.ntabs; i++) {
+      /* Too far left, won't match any tabs. */
+      if (x < p)
+         break;
+
       p += 10 + tab->dat.tab.namelen[i];
 
-      /* Doesn't match. */
+      /* Too far right, try next tab. */
       if (x >= p)
          continue;
 
