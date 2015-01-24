@@ -872,7 +872,7 @@ function render( dt, dt_mod )
             else
                col = ptarget:colour()
             end
-            gfx.print( true, ptarget:name(), ta_pane_x + 14, ta_pane_y + 176, col )
+            gfx.print( true, ptarget:name(), ta_pane_x + 14, ta_pane_y + 176, col, ta_pane_w - 28 )
          else
             -- Unset stats.
             shi, ene, arm = nil
