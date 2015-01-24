@@ -40,7 +40,7 @@ static int hostiles_last = 0;
 /*
  * Prototypes.
  */
-static void player_autonavSetup (void);
+static int player_autonavSetup (void);
 static void player_autonav (void);
 static int player_autonavApproach( const Vector2d *pos, double *dist2, int count_target );
 static int player_autonavBrake (void);
@@ -67,8 +67,9 @@ void player_autonavResetSpeed (void)
  */
 void player_autonavStart (void)
 {
-   /* Not under manual control. */
-   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
+   /* Not under manual control or disabled. */
+   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ) ||
+         pilot_isDisabled(player.p))
       return;
 
    if ((player.p->nav_hyperspace == -1) && (player.p->nav_planet== -1))
@@ -93,16 +94,25 @@ void player_autonavStart (void)
          (pilot_isFlag(player.p, PILOT_COOLDOWN_BRAKE)))
       pilot_cooldownEnd(player.p, NULL);
 
-   player_autonavSetup();
+   if (!player_autonavSetup())
+      return;
+
    player.autonav = AUTONAV_JUMP_APPROACH;
 }
 
 
 /**
  * @brief Prepares the player to enter autonav.
+ *
+ *    @return 1 on success, 0 on failure (disabled, etc.)
  */
-static void player_autonavSetup (void)
+static int player_autonavSetup (void)
 {
+   /* Not under manual control or disabled. */
+   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ) ||
+         pilot_isDisabled(player.p))
+      return 0;
+
    player_message("\epAutonav initialized.");
    if (!player_isFlag(PLAYER_AUTONAV)) {
 
@@ -132,6 +142,8 @@ static void player_autonavSetup (void)
    /* Make sure time acceleration starts immediately. */
    speedup_timer = 0.;
    hostiles_last = 0;
+
+   return 1;
 }
 
 
@@ -161,7 +173,9 @@ void player_autonavStartWindow( unsigned int wid, char *str)
  */
 void player_autonavPos( double x, double y )
 {
-   player_autonavSetup();
+   if (!player_autonavSetup())
+      return;
+
    player.autonav    = AUTONAV_POS_APPROACH;
    player.autonavmsg = "position";
    vect_cset( &player.autonav_pos, x, y );
@@ -176,7 +190,9 @@ void player_autonavPnt( char *name )
    Planet *p;
 
    p = planet_get( name );
-   player_autonavSetup();
+   if (!player_autonavSetup())
+      return;
+
    player.autonav    = AUTONAV_PNT_APPROACH;
    player.autonavmsg = p->name;
    vect_cset( &player.autonav_pos, p->pos.x, p->pos.y );

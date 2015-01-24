@@ -1344,8 +1344,9 @@ void player_land (void)
       return;
    }
 
-   /* Not under manual control. */
-   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
+   /* Not under manual control or disabled. */
+   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ) ||
+         pilot_isDisabled(player.p))
       return;
 
    /* Already landing. */
@@ -1434,6 +1435,9 @@ void player_land (void)
       player_message("\erYou are going too fast to land on %s.", planet->name);
       return;
    }
+
+   /* Abort autonav. */
+   player_autonavAbort(NULL);
 
    /* Stop afterburning. */
    pilot_afterburnOver( player.p );
@@ -1591,8 +1595,9 @@ int player_jump (void)
    if (pilot_isFlag(player.p, PILOT_HYPERSPACE))
       return 0;
 
-   /* Not under manual control. */
-   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
+   /* Not under manual control or disabled. */
+   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ) ||
+         pilot_isDisabled(player.p))
       return 0;
 
    /* Select nearest jump if not target. */
@@ -1993,8 +1998,9 @@ static void player_planetOutOfRangeMsg (void)
  */
 void player_hail (void)
 {
-   /* Not under manual control. */
-   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
+   /* Not under manual control or disabled. */
+   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ) ||
+         pilot_isDisabled(player.p))
       return;
 
    if (player.p->target != player.p->id)
@@ -2041,8 +2047,9 @@ void player_autohail (void)
    int i;
    Pilot *p;
 
-   /* Not under manual control. */
-   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
+   /* Not under manual control or disabled. */
+   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ) ||
+         pilot_isDisabled(player.p))
       return;
 
    /* Find pilot to autohail. */
@@ -2097,13 +2104,16 @@ void player_toggleCooldown(void)
    if (pilot_isFlag(player.p, PILOT_TAKEOFF))
       return;
 
-   /* Not under manual control. */
-   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
+   /* Not under manual control or disabled. */
+   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ) ||
+         pilot_isDisabled(player.p))
       return;
 
    if ((!pilot_isFlag(player.p, PILOT_COOLDOWN)) &&
-            (!pilot_isFlag(player.p, PILOT_COOLDOWN_BRAKE)))
+            (!pilot_isFlag(player.p, PILOT_COOLDOWN_BRAKE))) {
+      player_autonavAbort(NULL);
       pilot_cooldown( player.p );
+   }
    else
       pilot_cooldownEnd(player.p, NULL);
 }

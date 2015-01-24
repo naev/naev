@@ -71,6 +71,10 @@ void player_board (void)
    char c;
    HookParam hparam[2];
 
+   /* Not disabled. */
+   if (pilot_isDisabled(player.p))
+      return;
+
    if (player.p->target==PLAYER_ID) {
       /* We don't try to find far away targets, only nearest and see if it matches.
        * However, perhaps looking for first boardable target within a certain range
