@@ -15,7 +15,7 @@
   <shield>500</shield>
   <shield_regen>10</shield_regen>
   <energy>2300</energy>
-  <energy_regen>90</energy_regen>
+  <energy_regen>120</energy_regen>
   <ew_hide>0</ew_hide>
  </specific>
 </outfit>
