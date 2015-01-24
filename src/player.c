@@ -206,7 +206,6 @@ static int preemption = 0; /* Hyperspace target/untarget preemption. */
  */
 int player_save( xmlTextWriterPtr writer ); /* save.c */
 Planet* player_load( xmlNodePtr parent ); /* save.c */
-int landtarget; /**< Used in pilot.c, allows planet targeting while landing. */
 
 
 /**
@@ -1334,10 +1333,11 @@ void player_targetPlanet (void)
 void player_land (void)
 {
    int i;
-   int tp;
+   int tp, silent;
    double td, d;
    Planet *planet;
-   int runcount = 0;
+
+   silent = 0; /* Whether to suppress the land ack noise. */
 
    if (landed) { /* player is already landed */
       takeoff(1);
@@ -1360,12 +1360,6 @@ void player_land (void)
    }
 
    if (player.p->nav_planet == -1) { /* get nearest planet target */
-
-      if (cur_system->nplanets == 0) {
-         player_messageRaw("\erThere are no planets to land on.");
-         return;
-      }
-
       td = -1; /* temporary distance */
       tp = -1; /* temporary planet */
       for (i=0; i<cur_system->nplanets; i++) {
@@ -1385,14 +1379,15 @@ void player_land (void)
       if (player.p->nav_planet < 0)
          return;
 
-      player_land(); /* rerun land protocol */
+      silent = 1; /* Suppress further targeting noises. */
    }
    /*check if planet is in range*/
    else if (!pilot_inRangePlanet( player.p, player.p->nav_planet)) {
       player_planetOutOfRangeMsg();
       return;
    }
-   else if (player_isFlag(PLAYER_NOLAND)) {
+
+   if (player_isFlag(PLAYER_NOLAND)) {
       player_message( "\er%s", player_message_noland );
       return;
    }
@@ -1400,65 +1395,61 @@ void player_land (void)
       player_message( "\erDocking stabilizers malfunctioning, cannot land." );
       return;
    }
-   else { /* attempt to land at selected planet */
-      planet = cur_system->planets[player.p->nav_planet];
-      if (!planet_hasService(planet, PLANET_SERVICE_LAND)) {
-         player_messageRaw( "\erYou can't land here." );
-         return;
-      }
-      else if (!player_isFlag(PLAYER_LANDACK)) { /* no landing authorization */
-         if (planet_hasService(planet,PLANET_SERVICE_INHABITED)) { /* Basic services */
-            if (planet->can_land || (planet->land_override > 0)) {
-               player_message( "\e%c%s>\e0 %s", planet_getColourChar(planet),
-                     planet->name, planet->land_msg );
-               player_setFlag(PLAYER_LANDACK);
-               player_soundPlayGUI(snd_nav,1);
-            }
-            else if (planet->bribed && (planet->land_override >= 0)) {
-               player_message( "\e%c%s>\e0 %s", planet_getColourChar(planet),
-                     planet->name, planet->bribe_ack_msg );
-               player_setFlag(PLAYER_LANDACK);
-               player_soundPlayGUI(snd_nav,1);
-            }
-            else /* Hostile */
-               player_message( "\e%c%s>\e0 %s", planet_getColourChar(planet),
-                     planet->name, planet->land_msg );
-         }
-         else { /* No shoes, no shirt, no lifeforms, no service. */
-            player_message( "\epReady to land on %s.", planet->name );
-            player_setFlag(PLAYER_LANDACK);
-            player_soundPlayGUI(snd_nav,1);
-         }
-         return;
-      }
-      else if (vect_dist2(&player.p->solid->pos,&planet->pos) > pow2(planet->radius)) {
-         player_message("\erYou are too far away to land on %s.", planet->name);
-         return;
-      } else if ((pow2(VX(player.p->solid->vel)) + pow2(VY(player.p->solid->vel))) >
-            (double)pow2(MAX_HYPERSPACE_VEL)) {
-         player_message("\erYou are going too fast to land on %s.", planet->name);
-         return;
-      }
 
-      /* Stop afterburning. */
-      pilot_afterburnOver( player.p );
-      /* Stop accelerating. */
-      player_accelOver();
-
-      /* Stop all on outfits. */
-      if (pilot_outfitOffAll( player.p ) > 0)
-         pilot_calcStats( player.p );
-
-      /* Start landing. */
-      if (runcount == 0)
-         landtarget = player.p->nav_planet;
-      player_soundPause();
-      player.p->ptimer = PILOT_LANDING_DELAY;
-      pilot_setFlag( player.p, PILOT_LANDING );
-      pilot_setThrust( player.p, 0. );
-      pilot_setTurn( player.p, 0. );
-      runcount++;
+   /* attempt to land at selected planet */
+   planet = cur_system->planets[player.p->nav_planet];
+   if (!planet_hasService(planet, PLANET_SERVICE_LAND)) {
+      player_messageRaw( "\erYou can't land here." );
+      return;
    }
+   else if (!player_isFlag(PLAYER_LANDACK)) { /* no landing authorization */
+      if (planet_hasService(planet,PLANET_SERVICE_INHABITED)) { /* Basic services */
+         if (planet->can_land || (planet->land_override > 0))
+            player_message( "\e%c%s>\e0 %s", planet_getColourChar(planet),
+                  planet->name, planet->land_msg );
+         else if (planet->bribed && (planet->land_override >= 0))
+            player_message( "\e%c%s>\e0 %s", planet_getColourChar(planet),
+                  planet->name, planet->bribe_ack_msg );
+         else { /* Hostile */
+            player_message( "\e%c%s>\e0 %s", planet_getColourChar(planet),
+                  planet->name, planet->land_msg );
+            return;
+         }
+      }
+      else /* No shoes, no shirt, no lifeforms, no service. */
+         player_message( "\epReady to land on %s.", planet->name );
+
+      player_setFlag(PLAYER_LANDACK);
+      if (!silent)
+         player_soundPlayGUI(snd_nav, 1);
+
+      return;
+   }
+   else if (vect_dist2(&player.p->solid->pos,&planet->pos) > pow2(planet->radius)) {
+      player_message("\erYou are too far away to land on %s.", planet->name);
+      return;
+   }
+   else if ((pow2(VX(player.p->solid->vel)) + pow2(VY(player.p->solid->vel))) >
+         (double)pow2(MAX_HYPERSPACE_VEL)) {
+      player_message("\erYou are going too fast to land on %s.", planet->name);
+      return;
+   }
+
+   /* Stop afterburning. */
+   pilot_afterburnOver( player.p );
+   /* Stop accelerating. */
+   player_accelOver();
+
+   /* Stop all on outfits. */
+   if (pilot_outfitOffAll( player.p ) > 0)
+      pilot_calcStats( player.p );
+
+   /* Start landing. */
+   player_soundPause();
+   player.p->ptimer = PILOT_LANDING_DELAY;
+   pilot_setFlag( player.p, PILOT_LANDING );
+   pilot_setThrust( player.p, 0. );
+   pilot_setTurn( player.p, 0. );
 }
 
 
