@@ -21,7 +21,7 @@ void map_close (void);
 int map_isOpen (void);
 
 /* misc */
-StarSystem* map_getDestination (void);
+StarSystem* map_getDestination( int *jumps );
 void map_setZoom( double zoom );
 void map_select( StarSystem *sys, char shifted );
 void map_cleanup (void);

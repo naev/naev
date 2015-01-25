@@ -1208,12 +1208,17 @@ static void map_selectCur (void)
 /**
  * @brief Gets the destination system.
  *
+ *    @param[out] jumps Number of jumps until the destination.
  *    @return The destination system or NULL if there is no path set.
  */
-StarSystem* map_getDestination (void)
+StarSystem* map_getDestination( int *jumps )
 {
    if (map_path == NULL)
       return NULL;
+
+   if (jumps != NULL)
+      *jumps = map_npath;
+
    return map_path[ map_npath-1 ];
 }
 
