@@ -699,7 +699,7 @@ char *uniedit_nameFilter( char *name )
 static void uniedit_renameSys (void)
 {
    int i, j;
-   char *name, *oldName, *newName;
+   char *name, *oldName, *newName, *filtered;
    StarSystem *sys;
 
    for (i=0; i<uniedit_nsys; i++) {
@@ -720,14 +720,22 @@ static void uniedit_renameSys (void)
       }
 
       /* Change the name. */
-      oldName = malloc((14+strlen(sys->name)));
-      nsnprintf(oldName,14+strlen(sys->name),"dat/ssys/%s.xml", uniedit_nameFilter(sys->name) );
-      newName = malloc(14+strlen(name));
-      nsnprintf(newName,14+strlen(name),"dat/ssys/%s.xml", uniedit_nameFilter(name) );
+      filtered = uniedit_nameFilter(sys->name);
+      oldName = malloc(14 + strlen(filtered));
+      nsnprintf(oldName, 14 + strlen(filtered), "dat/ssys/%s.xml", filtered);
+      free(filtered);
+
+      filtered = uniedit_nameFilter(name);
+      newName = malloc(14 + strlen(filtered));
+      nsnprintf(newName, 14 + strlen(filtered), "dat/ssys/%s.xml", filtered);
+      free(filtered);
+
       nfile_rename(oldName,newName);
+
       free(oldName);
       free(newName);
       free(sys->name);
+
       sys->name = name;
       if (conf.devautosave) {
          dsys_saveSystem(sys);

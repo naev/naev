@@ -304,15 +304,26 @@ static void sysedit_editPntClose( unsigned int wid, char *unused )
    /* Remove the old presence. */
    system_addPresence(sysedit_sys, p->faction, -p->presenceAmount, p->presenceRange);
 
-   p->population     = (uint64_t)strtoull( window_getInput( sysedit_widEdit, "inpPop" ), 0, 10);
-   p->class          = window_getInput( sysedit_widEdit, "inpClass" );
-   inp               = window_getInput( sysedit_widEdit, "inpLand" );
-   if ((inp == NULL) || (strlen(inp) == 0)) {
+   p->population = (uint64_t)strtoull( window_getInput( sysedit_widEdit, "inpPop" ), 0, 10);
+
+   inp = window_getInput( sysedit_widEdit, "inpClass" );
+   if (p->class != NULL)
+      free( p->class );
+
+   if ((inp == NULL) || (strlen(inp) == 0))
+      p->class = NULL;
+   else
+      p->class = strdup( inp );
+
+   inp = window_getInput( sysedit_widEdit, "inpLand" );
+   if (p->land_func != NULL)
       free( p->land_func );
+
+   if ((inp == NULL) || (strlen(inp) == 0))
       p->land_func = NULL;
-   }
    else
       p->land_func = strdup( inp );
+
    p->presenceAmount = atof(window_getInput( sysedit_widEdit, "inpPresence" ));
    p->presenceRange  = atoi(window_getInput( sysedit_widEdit, "inpPresenceRange" ));
    p->hide           = pow2( atof(window_getInput( sysedit_widEdit, "inpHide" )) );
@@ -356,6 +367,7 @@ static void sysedit_btnNew( unsigned int wid_unused, char *unused )
 
    /* Base planet data off another. */
    b                    = planet_get( space_getRndPlanet(0) );
+   p->class             = strdup( b->class );
    p->gfx_spacePath     = strdup( b->gfx_spacePath );
    p->gfx_spaceName     = strdup( b->gfx_spaceName );
    p->gfx_exterior      = strdup( b->gfx_exterior );
@@ -379,7 +391,7 @@ static void sysedit_btnRename( unsigned int wid_unused, char *unused )
    (void) wid_unused;
    (void) unused;
    int i;
-   char *name, *oldName, *newName;
+   char *name, *oldName, *newName, *filtered;
    Select_t *sel;
    Planet *p;
    for (i=0; i<sysedit_nselect; i++) {
@@ -402,14 +414,22 @@ static void sysedit_btnRename( unsigned int wid_unused, char *unused )
          }
 
          /* Rename. */
-         oldName = malloc(16+strlen(p->name));
-         nsnprintf(oldName,16+strlen(p->name),"dat/assets/%s.xml", uniedit_nameFilter(p->name) );
-         newName = malloc(16+strlen(name));
-         nsnprintf(newName,16+strlen(name),"dat/assets/%s.xml", uniedit_nameFilter(name) );
-         nfile_rename(oldName,newName);
+         filtered = uniedit_nameFilter(p->name);
+         oldName = malloc(16 + strlen(filtered));
+         nsnprintf(oldName, 16 + strlen(filtered), "dat/assets/%s.xml", filtered);
+         free(filtered);
+
+         filtered = uniedit_nameFilter(name);
+         newName = malloc(16 + strlen(filtered));
+         nsnprintf(newName, 16 + strlen(filtered), "dat/assets/%s.xml", filtered);
+         free(filtered);
+
+         nfile_rename(oldName, newName);
+
          free(oldName);
          free(newName);
          free(p->name);
+
          p->name = name;
          window_modifyText( sysedit_widEdit, "txtName", p->name );
          dpl_savePlanet( p );
