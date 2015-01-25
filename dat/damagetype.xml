@@ -7,8 +7,8 @@
   <knockback>0</knockback>
  </dtype>
  <dtype name="nebula">
-  <shield>0.15</shield>
-  <armour>1</armour>
+  <shield stat="nebu_absorb_shield">0.15</shield>
+  <armour stat="nebu_absorb_armour">1</armour>
   <knockback>0</knockback>
  </dtype>
  <dtype name="explosion_splash">
