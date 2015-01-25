@@ -327,7 +327,7 @@ end
 function update_nav()
    planet = {}
    nav_pnt, nav_hyp = pp:nav()
-   autonav_hyp = player.autonavDest()
+   autonav_hyp, jumps = player.autonavDest()
    if nav_pnt then
       pntflags = nav_pnt:services()
       gui.osdInit( ta_pnt_pane_x + ta_pnt_pane_w + 8, screen_h - 63, 150, 500 )
@@ -377,7 +377,7 @@ function update_nav()
          navstring = "Unknown"
       end
       if autonav_hyp then
-         navstring = (navstring .. " (%s)"):format( autonav_hyp:jumpDist() )
+         navstring = (navstring .. " (%s)"):format( jumps )
       end
    else
       navstring = "none"
