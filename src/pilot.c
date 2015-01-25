@@ -1073,7 +1073,7 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
    /* Calculate the damage. */
    absorb         = 1. - CLAMP( 0., 1., p->dmg_absorb - dmg->penetration );
    disable        = dmg->disable;
-   dtype_calcDamage( &damage_shield, &damage_armour, absorb, &knockback, dmg );
+   dtype_calcDamage( &damage_shield, &damage_armour, absorb, &knockback, dmg, &p->stats );
 
    /*
     * Delay undisable if necessary. Amount varies with damage, as e.g. a

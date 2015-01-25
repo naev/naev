@@ -349,6 +349,18 @@ const char* ss_nameFromType( ShipStatsType type )
 
 
 /**
+ * @brief Gets the offset from type.
+ *
+ *    @param type Type to get offset of.
+ *    @return Offset of the type.
+ */
+size_t ss_offsetFromType( ShipStatsType type )
+{
+   return ss_lookup[ type ].offset;
+}
+
+
+/**
  * @brief Gets the type from the name.
  *
  *    @param name Name to get type of.
@@ -360,6 +372,8 @@ ShipStatsType ss_typeFromName( const char *name )
    for (i=0; i<SS_TYPE_SENTINEL; i++)
       if ((ss_lookup[i].name != NULL) && (strcmp(name,ss_lookup[i].name)==0))
          return ss_lookup[i].type;
+
+   WARN("ss_typeFromName: No ship stat matching '%s'", name);
    return SS_TYPE_NIL;
 }
 
