@@ -1050,9 +1050,11 @@ void pilot_setTarget( Pilot* p, unsigned int id )
  *    @param w Solid that is hitting pilot.
  *    @param shooter Attacker that shot the pilot.
  *    @param dmg Damage being done.
+ *    @param reset Whether the shield timer should be reset.
  *    @return The real damage done.
  */
-double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter, const Damage *dmg )
+double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
+      const Damage *dmg, int reset )
 {
    int mod;
    double damage_shield, damage_armour, disable, knockback, dam_mod, ddmg, absorb, dmod, start;
@@ -1130,8 +1132,10 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter, const Da
                    ((p->shield_max + p->armour_max) / 2.);
 
       /* Increment shield timer or time before shield regeneration kicks in. */
-      p->stimer   = 3.;
-      p->sbonus   = 3.;
+      if (reset) {
+         p->stimer   = 3.;
+         p->sbonus   = 3.;
+      }
    }
    /*
     * Armour takes the entire blow.
@@ -1144,8 +1148,10 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter, const Da
       p->stress  += disable;
 
       /* Increment shield timer or time before shield regeneration kicks in. */
-      p->stimer  = 3.;
-      p->sbonus  = 3.;
+      if (reset) {
+         p->stimer  = 3.;
+         p->sbonus  = 3.;
+      }
    }
 
    /* Ensure stress never exceeds remaining armour. */
@@ -1371,7 +1377,7 @@ void pilot_explode( double x, double y, double radius, const Damage *dmg, const 
          s.vel.y = ry;
 
          /* Actual damage calculations. */
-         pilot_hit( p, &s, (parent!=NULL) ? parent->id : 0, &ddmg );
+         pilot_hit( p, &s, (parent!=NULL) ? parent->id : 0, &ddmg, 1 );
 
          /* Shock wave from the explosion. */
          if (p->id == PILOT_PLAYER)

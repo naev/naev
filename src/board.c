@@ -426,7 +426,7 @@ static int board_trySteal( Pilot *p )
       dmg.damage      = 100.;
       dmg.penetration = 1.;
       dmg.disable     = 0.;
-      pilot_hit( target, NULL, p->id, &dmg );
+      pilot_hit( target, NULL, p->id, &dmg, 1 );
       /* Return ship dead. */
       return -1;
    }

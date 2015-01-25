@@ -1042,7 +1042,7 @@ static void weapon_hit( Weapon* w, Pilot* p, WeaponLayer layer, Vector2d* pos )
             w->solid->vel.y);
 
    /* Have pilot take damage and get real damage done. */
-   damage = pilot_hit( p, w->solid, w->parent, &dmg );
+   damage = pilot_hit( p, w->solid, w->parent, &dmg, 1 );
 
    /* Get the layer. */
    spfx_layer = (p==player.p) ? SPFX_LAYER_FRONT : SPFX_LAYER_BACK;
@@ -1092,7 +1092,7 @@ static void weapon_hitBeam( Weapon* w, Pilot* p, WeaponLayer layer,
    dmg.disable       = odmg->disable * dt;
 
    /* Have pilot take damage and get real damage done. */
-   damage = pilot_hit( p, w->solid, w->parent, &dmg );
+   damage = pilot_hit( p, w->solid, w->parent, &dmg, 1 );
 
    /* Add sprite, layer depends on whether player shot or not. */
    if (w->exp_timer == -1.) {
