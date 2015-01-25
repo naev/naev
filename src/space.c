@@ -2936,7 +2936,7 @@ void space_exit (void)
       pnt = &planet_stack[i];
 
       free(pnt->name);
-
+      free(pnt->class);
       free(pnt->description);
       free(pnt->bar_description);
 
