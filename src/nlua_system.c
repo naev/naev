@@ -446,12 +446,13 @@ static int systemL_jumpdistance( lua_State *L )
  */
 static int systemL_adjacent( lua_State *L )
 {
-   int i, id = 1, h;
+   int i, id, h;
    LuaSystem sysp;
    StarSystem *s;
 
-   s = luaL_validsystem(L,1);
-   h = lua_toboolean(L,2);
+   id = 1;
+   s  = luaL_validsystem(L,1);
+   h  = lua_toboolean(L,2);
 
    /* Push all adjacent systems. */
    lua_newtable(L);
@@ -461,9 +462,10 @@ static int systemL_adjacent( lua_State *L )
       if (!h && jp_isFlag(&s->jumps[i], JP_HIDDEN))
          continue;
       sysp.id = system_index( s->jumps[i].target );
-      lua_pushnumber(L,id); /* key. */
-      lua_pushsystem(L,sysp); /* value. */
+      lua_pushnumber(L, id);   /* key. */
+      lua_pushsystem(L, sysp); /* value. */
       lua_rawset(L,-3);
+
       id++;
    }
 
