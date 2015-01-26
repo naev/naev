@@ -438,6 +438,12 @@ static void uniedit_render( double bx, double by, double w, double h, void *data
    /* background */
    gl_renderRect( bx, by, w, h, &cBlack );
 
+   /* Render faction disks. */
+   map_renderFactionDisks( x, y, 1 );
+
+   /* Render jump paths. */
+   map_renderJumps( x, y, 1 );
+
    /* Render systems. */
    map_renderSystems( bx, by, x, y, w, h, r, 1 );
 
