@@ -90,11 +90,6 @@ static int gui_getMessage     = 1; /**< Whether or not the player should receive
 extern Pilot** pilot_stack; /**< @todo remove */
 extern int pilot_nstack; /**< @todo remove */
 
-/*
- * map stuff for autonav
- */
-extern int map_npath; /**< @todo remove. */
-
 
 /**
  * GUI Lua stuff.
