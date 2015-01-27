@@ -116,7 +116,7 @@ end
 
 -- Soromid military assets.
 function srm_mil_restricted( pnt )
-   return land_military(pnt, 35,
+   return land_military(pnt, 30,
          "Permission to land granted.",
          "Permission denied. You're not truly one of us.",
          "Landing request denied.",
@@ -135,7 +135,7 @@ end
 
 -- Za'lek's military assets.
 function zlk_mil_restricted( pnt )
-   return land_military(pnt, 35,
+   return land_military(pnt, 30,
          "Docking sequence transmitted.",
          "Authorization level too low to grant access.",
          "Authorization denied.",
