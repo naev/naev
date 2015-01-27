@@ -68,8 +68,8 @@ static void map_update( unsigned int wid );
 /* Render. */
 static void map_render( double bx, double by, double w, double h, void *data );
 static void map_renderPath( double x, double y, double a );
-static void map_renderMarkers( double x, double y, double r );
-static void map_drawMarker( double x, double y, double r,
+static void map_renderMarkers( double x, double y, double r, double a );
+static void map_drawMarker( double x, double y, double r, double a,
       int num, int cur, int type );
 /* Mouse. */
 static int map_mouse( unsigned int wid, SDL_Event* event, double mx, double my,
@@ -566,11 +566,12 @@ int map_isOpen (void)
  * @param x X position to draw at.
  * @param y Y position to draw at.
  * @param r Radius of system.
+ * @param a Colour alpha to use.
  * @param num Total number of markers.
  * @param cur Current marker to draw.
  * @param type Type to draw.
  */
-static void map_drawMarker( double x, double y, double r,
+static void map_drawMarker( double x, double y, double r, double a,
       int num, int cur, int type )
 {
    const double beta = M_PI / 9;
@@ -610,7 +611,7 @@ static void map_drawMarker( double x, double y, double r,
       vertex[6 + 4*i + 0] = colours[type]->r;
       vertex[6 + 4*i + 1] = colours[type]->g;
       vertex[6 + 4*i + 2] = colours[type]->b;
-      vertex[6 + 4*i + 3] = colours[type]->a;
+      vertex[6 + 4*i + 3] = colours[type]->a * a;
    }
 
    glEnable(GL_POLYGON_SMOOTH);
@@ -721,7 +722,7 @@ static void map_render( double bx, double by, double w, double h, void *data )
    map_renderNames( x, y, 0 );
 
    /* Render system markers. */
-   map_renderMarkers( x, y, r );
+   map_renderMarkers( x, y, r, col.a );
 
    /* Initialize with values from cRed */
    col.r = cRed.r;
@@ -1057,7 +1058,7 @@ void map_renderNames( double x, double y, int editor )
 /**
  * @brief Renders the map markers.
  */
-static void map_renderMarkers( double x, double y, double r )
+static void map_renderMarkers( double x, double y, double r, double a )
 {
    double tx, ty;
    int i, j, n, m;
@@ -1084,23 +1085,23 @@ static void map_renderMarkers( double x, double y, double r )
       /* Draw the markers. */
       j = 0;
       if (sys_isFlag(sys, SYSTEM_CMARKED)) {
-         map_drawMarker( tx, ty, r, n, j, 0 );
+         map_drawMarker( tx, ty, r, a, n, j, 0 );
          j++;
       }
       for (m=0; m<sys->markers_plot; m++) {
-         map_drawMarker( tx, ty, r, n, j, 1 );
+         map_drawMarker( tx, ty, r, a, n, j, 1 );
          j++;
       }
       for (m=0; m<sys->markers_high; m++) {
-         map_drawMarker( tx, ty, r, n, j, 2 );
+         map_drawMarker( tx, ty, r, a, n, j, 2 );
          j++;
       }
       for (m=0; m<sys->markers_low; m++) {
-         map_drawMarker( tx, ty, r, n, j, 3 );
+         map_drawMarker( tx, ty, r, a, n, j, 3 );
          j++;
       }
       for (m=0; m<sys->markers_computer; m++) {
-         map_drawMarker( tx, ty, r, n, j, 4 );
+         map_drawMarker( tx, ty, r, a, n, j, 4 );
          j++;
       }
    }
