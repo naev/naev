@@ -47,7 +47,7 @@ end
 
 -- Empire military assets.
 function emp_mil_restricted( pnt )
-   return land_military(pnt, 30,
+   return land_military(pnt, 35,
          "Permission to land granted.",
          "You are not authorized to land here.",
          "Landing request denied.",
@@ -56,7 +56,7 @@ end
 
 -- Empire Omega Station.
 function emp_mil_omega( pnt )
-   local required = 30
+   local required = 35
 
    if player.misnDone("Empire Shipping 3") or player.misnActive("Empire Shipping 3") then
       required = 0
