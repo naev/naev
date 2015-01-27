@@ -626,7 +626,7 @@ void player_swapShip( char* shipname )
 
       /* Fill the tank. */
       if (landed)
-         land_checkAddRefuel();
+         land_refuel();
 
       /* Set some gui stuff. */
       gui_load( gui_pick() );

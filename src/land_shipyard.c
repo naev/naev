@@ -352,7 +352,6 @@ static void shipyard_buy( unsigned int wid, char* str )
       return;
    }
    player_modCredits( -targetprice ); /* ouch, paying is hard */
-   land_checkAddRefuel();
 
    /* Update shipyard. */
    shipyard_update(wid, NULL);
@@ -507,7 +506,7 @@ static void shipyard_trade( unsigned int wid, char* str )
 
    player_modCredits( playerprice - targetprice ); /* Modify credits by the difference between ship values. */
 
-   land_checkAddRefuel();
+   land_refuel();
 
    /* The newShip call will trigger a loadGUI that will recreate the land windows. Therefore the land ID will
     * be void. We must reload in in order to properly update it again.*/

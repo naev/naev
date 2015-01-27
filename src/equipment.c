@@ -1093,7 +1093,6 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
    int ret;
    Outfit *o, *ammo;
    int q;
-   double f;
 
    /* Remove outfit. */
    if (slot->outfit != NULL) {
@@ -1111,16 +1110,10 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
          player_addOutfit( ammo, q );
       }
 
-      /* Handle possible fuel changes. */
-      f = eq_wgt.selected->fuel;
-
       /* Remove outfit. */
       ret = pilot_rmOutfit( eq_wgt.selected, slot );
       if (ret == 0)
          player_addOutfit( o, 1 );
-
-      /* Don't "gain" fuel. */
-      eq_wgt.selected->fuel = MIN( eq_wgt.selected->fuel_max, f );
    }
    /* Add outfit. */
    else {
@@ -1139,19 +1132,14 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
 
       /* Add outfit to ship. */
       ret = player_rmOutfit( o, 1 );
-      if (ret == 1) {
-         /* Handle possible fuel changes. */
-         f = eq_wgt.selected->fuel;
-
-         /* Add the outfit. */
+      if (ret == 1)
          pilot_addOutfit( eq_wgt.selected, o, slot );
-
-         /* Don't "gain" fuel. */
-         eq_wgt.selected->fuel = MIN( eq_wgt.selected->fuel_max, f );
-      }
 
       equipment_addAmmo();
    }
+
+   /* Refuel if necessary. */
+   land_refuel();
 
    /* Recalculate stats. */
    pilot_calcStats( p );
@@ -1893,7 +1881,6 @@ static void equipment_transportShip( unsigned int wid )
 
    /* success */
    player_modCredits( -price );
-   land_checkAddRefuel();
    player_setLoc( shipname, land_planet->name );
 }
 
@@ -1912,7 +1899,6 @@ static void equipment_unequipShip( unsigned int wid, char* str )
    int i;
    Pilot *ship;
    Outfit *o, *ammo;
-   double f;
 
    ship = eq_wgt.selected;
 
@@ -1944,9 +1930,6 @@ static void equipment_unequipShip( unsigned int wid, char* str )
          "Are you sure you want to remove all equipment from your ship?")==0)
       return;
 
-   /* Handle possible fuel changes. */
-   f = eq_wgt.selected->fuel;
-
    /* Remove all outfits. */
    for (i=0; i<ship->noutfits; i++) {
       o = ship->outfits[i]->outfit;
@@ -1971,9 +1954,6 @@ static void equipment_unequipShip( unsigned int wid, char* str )
    /* Recalculate stats. */
    pilot_calcStats( ship );
    pilot_healLanded( ship );
-
-   /* Don't "gain" fuel. */
-   eq_wgt.selected->fuel = MIN( eq_wgt.selected->fuel_max, f );
 
    /* Regenerate list. */
    equipment_regenLists( wid, 1, 1 );
@@ -2017,7 +1997,6 @@ static void equipment_sellShip( unsigned int wid, char* str )
    /* Sold. */
    name = strdup(shipname);
    player_modCredits( price );
-   land_checkAddRefuel();
    player_rmShip( shipname );
 
    /* Destroy widget - must be before widget. */

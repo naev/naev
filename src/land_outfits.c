@@ -655,7 +655,6 @@ static void outfits_buy( unsigned int wid, char* str )
 
    /* Actually buy the outfit. */
    player_modCredits( -outfit->price * player_addOutfit( outfit, q ) );
-   land_checkAddRefuel();
    outfits_updateEquipmentOutfits();
 }
 /**
@@ -718,7 +717,6 @@ static void outfits_sell( unsigned int wid, char* str )
       return;
 
    player_modCredits( outfit->price * player_rmOutfit( outfit, q ) );
-   land_checkAddRefuel();
    outfits_updateEquipmentOutfits();
 }
 /**
