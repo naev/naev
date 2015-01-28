@@ -1674,6 +1674,11 @@ static void sysedit_genTechList( unsigned int wid )
             if (!tech_hasItem( p->tech, tmp[i] ))
                lack[n++] = strdup( tmp[i] );
       }
+
+      /* Clean up. */
+      for (i=0; i<j; i++)
+         free(tmp[i]);
+
       free(tmp);
    }
    else
@@ -1731,7 +1736,7 @@ static void sysedit_btnRmTech( unsigned int wid, char *unused )
    if (tech_hasItem( p->tech, selected ))
       tech_rmItemTech( p->tech, selected );
 
-   tech_getItemNames( p->tech, &n );
+   n = tech_getItemCount( p->tech );
    if (!n)
       p->tech = NULL;
 

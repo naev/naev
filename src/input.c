@@ -1148,6 +1148,14 @@ static void input_clickevent( SDL_Event* event )
       return;
    }
 
+   /* Player must not be NULL. */
+   if ((player.p == NULL) || player_isFlag(PLAYER_DESTROYED))
+      return;
+
+   /* Player must not be dead. */
+   if (pilot_isFlag(player.p, PILOT_DEAD))
+      return;
+
    /* Middle mouse enables mouse flying. */
    if (event->button.button == SDL_BUTTON_MIDDLE) {
       player_toggleMouseFly();
@@ -1156,14 +1164,6 @@ static void input_clickevent( SDL_Event* event )
 
    /* Mouse targeting is left only. */
    if (event->button.button != SDL_BUTTON_LEFT)
-      return;
-
-   /* Player must not be NULL. */
-   if (player_isFlag(PLAYER_DESTROYED) || (player.p == NULL))
-      return;
-
-   /* Player must not be dead. */
-   if (pilot_isFlag(player.p, PILOT_DEAD))
       return;
 
    px = player.p->solid->pos.x;

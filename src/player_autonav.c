@@ -225,7 +225,7 @@ static void player_autonavRampdown( double d )
 void player_autonavAbortJump( const char *reason )
 {
    /* No point if player is beyond aborting. */
-   if ((player.p==NULL) || ((player.p != NULL) && pilot_isFlag(player.p, PILOT_HYPERSPACE)))
+   if ((player.p==NULL) || pilot_isFlag(player.p, PILOT_HYPERSPACE))
       return;
 
    if (!player_isFlag(PLAYER_AUTONAV) || ((player.autonav != AUTONAV_JUMP_APPROACH) &&
@@ -245,7 +245,7 @@ void player_autonavAbortJump( const char *reason )
 void player_autonavAbort( const char *reason )
 {
    /* No point if player is beyond aborting. */
-   if ((player.p==NULL) || ((player.p != NULL) && pilot_isFlag(player.p, PILOT_HYPERSPACE)))
+   if ((player.p==NULL) || pilot_isFlag(player.p, PILOT_HYPERSPACE))
       return;
 
    /* Cooldown (handled later) may be script-initiated and we don't

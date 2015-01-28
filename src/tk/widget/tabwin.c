@@ -207,14 +207,19 @@ static int tab_mouse( Widget* tab, SDL_Event *event )
 
       /* Mark as active. */
       change = -1;
-      if (event->button.button == SDL_BUTTON_WHEELUP)
-         change = (tab->dat.tab.active - 1) % tab->dat.tab.ntabs;
+      if (event->button.button == SDL_BUTTON_WHEELUP) {
+         /* Wrap manually to avoid undefined behaviour. */
+         if (tab->dat.tab.active == 0)
+            change = tab->dat.tab.ntabs - 1;
+         else
+            change = (tab->dat.tab.active - 1) % tab->dat.tab.ntabs;
+      }
       else if (event->button.button == SDL_BUTTON_WHEELDOWN)
          change = (tab->dat.tab.active + 1) % tab->dat.tab.ntabs;
       else
-         tab->dat.tab.active =i;
+         tab->dat.tab.active = i;
 
-      if ((change != -1) && (change < tab->dat.tab.ntabs))
+      if (change != -1)
          tab->dat.tab.active = change;
 
       /* Create event. */
@@ -267,8 +272,13 @@ static int tab_key( Widget* tab, SDL_Event *event )
    switch (key) {
       case SDLK_TAB:
          if (mod & NMOD_CTRL) {
-            if (mod & NMOD_SHIFT)
-               change = (tab->dat.tab.active - 1) % tab->dat.tab.ntabs;
+            if (mod & NMOD_SHIFT) {
+               /* Wrap manually to avoid undefined behaviour. */
+               if (tab->dat.tab.active == 0)
+                  change = tab->dat.tab.ntabs - 1;
+               else
+                  change = (tab->dat.tab.active - 1) % tab->dat.tab.ntabs;
+            }
             else
                change = (tab->dat.tab.active + 1) % tab->dat.tab.ntabs;
          }
@@ -287,7 +297,7 @@ static int tab_key( Widget* tab, SDL_Event *event )
    }
 
    /* Switch to the selected tab if it exists. */
-   if ((change != -1) && (change < tab->dat.tab.ntabs)) {
+   if (change != -1) {
       old = tab->dat.tab.active;
       tab->dat.tab.active = change;
       /* Create event. */

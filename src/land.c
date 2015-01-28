@@ -1477,11 +1477,10 @@ void takeoff( int delay )
    cam_setTargetPilot( player.p->id, 0 );
 
    /* heal the player */
-   player.p->armour = player.p->armour_max;
-   player.p->shield = player.p->shield_max;
-   player.p->energy = player.p->energy_max;
-   player.p->stress = 0.;
-   player.p->stimer = 0.;
+   pilot_healLanded( player.p );
+
+   /* Clear planet target. Allows for easier autonav out of the system. */
+   player_targetPlanetSet( -1 );
 
    /* initialize the new space */
    h = player.p->nav_hyperspace;

@@ -274,16 +274,23 @@ void dtype_calcDamage( double *dshield, double *darmour, double absorb, double *
 
    /* Set if non-nil. */
    if (dshield != NULL) {
-      if (dtype->soffset <= 0)
+      if ((dtype->soffset <= 0) || (s == NULL))
          *dshield    = dtype->sdam * dmg->damage * absorb;
       else {
+         /*
+          * If an offset has been specified, look for a double at that offset
+          * in the ShipStats struct, and used it as a multiplier.
+          *
+          * The 2. - n logic serves to undo the initialization done by
+          * ss_statsInit and turn the value into a multiplier.
+          */
          ptr = (char*) s;
          *dshield = dtype->sdam * dmg->damage * absorb *
                (2. - *(double*) &ptr[ dtype->soffset ]);
       }
    }
    if (darmour != NULL) {
-      if (dtype->aoffset <= 0)
+      if ((dtype->aoffset) <= 0 || (s == NULL))
          *darmour    = dtype->adam * dmg->damage * absorb;
       else {
          ptr = (char*) s;
