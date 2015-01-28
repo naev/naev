@@ -1068,6 +1068,10 @@ void pilot_healLanded( Pilot *pilot )
    pilot->armour = pilot->armour_max;
    pilot->shield = pilot->shield_max;
    pilot->energy = pilot->energy_max;
+
+   pilot->stress = 0.;
+   pilot->stimer = 0.;
+   pilot->sbonus = 0.;
 }
 
 
