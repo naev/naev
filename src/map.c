@@ -909,19 +909,14 @@ void map_renderSystems( double bx, double by, double x, double y,
       /* Smoother circles. */
       glEnable(GL_POINT_SMOOTH);
 
-      /* Draw the system. */
-      if ((!editor && !sys_isKnown(sys)) || (sys->nfleets==0))
-         col = &cInert;
-      else
-         col = faction_colour(sys->faction);
-
-      gl_drawCircleInRect( tx, ty, r, bx, by, w, h, col, 0 );
+      /* Draw an outer ring. */
+      gl_drawCircleInRect( tx, ty, r, bx, by, w, h, &cInert, 0 );
 
       /* If system is known fill it. */
       if ((editor || sys_isKnown(sys)) && (system_hasPlanet(sys))) {
          /* Planet colours */
          if (!editor && !sys_isKnown(sys)) col = &cInert;
-         else if (sys->nplanets==0) col = &cInert;
+         else if (sys->faction < 0) col = &cInert;
          else if (editor) col = &cNeutral;
          else col = faction_getColour( sys->faction );
 
