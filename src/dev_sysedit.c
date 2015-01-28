@@ -1736,7 +1736,7 @@ static void sysedit_btnRmTech( unsigned int wid, char *unused )
    if (tech_hasItem( p->tech, selected ))
       tech_rmItemTech( p->tech, selected );
 
-   tech_getItemNames( p->tech, &n );
+   n = tech_getItemCount( p->tech );
    if (!n)
       p->tech = NULL;
 
