@@ -31,11 +31,11 @@
    <autopos/>
    <hide>1.250000</hide>
   </jump>
-  <jump target="Pultatis">
-   <pos x="-25688.151135" y="-8098.916515"/>
+  <jump target="Sollav">
+   <autopos/>
    <hide>1.250000</hide>
   </jump>
-  <jump target="Sollav">
+  <jump target="Pultatis">
    <autopos/>
    <hide>1.250000</hide>
   </jump>

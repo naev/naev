@@ -7,25 +7,29 @@
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>-356.315926</x>
-  <y>-655.064929</y>
+  <x>-347.000000</x>
+  <y>-740.000000</y>
  </pos>
  <assets>
   <asset>Sollav II</asset>
   <asset>Sollav VI</asset>
  </assets>
  <jumps>
+  <jump target="Fried">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
   <jump target="Limbo">
-   <pos x="17187.315922" y="-1178.017669"/>
+   <autopos/>
    <hide>1.250000</hide>
   </jump>
   <jump target="Pultatis">
    <autopos/>
    <hide>1.250000</hide>
   </jump>
-  <jump target="Vega">
+  <jump target="Stone Table">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>1.150000</hide>
   </jump>
  </jumps>
 </ssys>
