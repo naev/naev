@@ -95,10 +95,9 @@ static void uniedit_selectRm( StarSystem *sys );
 /* System and asset search. */
 static void uniedit_findSys (void);
 static void uniedit_findSysClose( unsigned int wid, char *name );
-static void uniedit_findSearchSystems( unsigned int wid, char *str );
-static void uniedit_findSearchAssets( unsigned int wid, char *str );
+static void uniedit_findSearch( unsigned int wid, char *str );
 static void uniedit_findShowResults( unsigned int wid, map_find_t *found, int n );
-static void uniedit_btnCenterSystem( unsigned int wid, char *unused );
+static void uniedit_centerSystem( unsigned int wid, char *unused );
 static int uniedit_sortCompare( const void *p1, const void *p2 );
 /* System editing. */
 static void uniedit_editSys (void);
@@ -1054,8 +1053,10 @@ static void uniedit_findSys (void)
    unsigned int wid;
    int x, y;
 
+   x = 40;
+
    /* Create the window. */
-   wid = window_create( "Find Systems and Assets", -1, -1, UNIEDIT_FIND_WIDTH, UNIEDIT_FIND_HEIGHT );
+   wid = window_create( "Find Systems and Assets", x, -1, UNIEDIT_FIND_WIDTH, UNIEDIT_FIND_HEIGHT );
    uniedit_widFind = wid;
 
    x = 20;
@@ -1064,101 +1065,62 @@ static void uniedit_findSys (void)
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnClose", "Close", uniedit_findSysClose );
 
-   /* Center button. */
-   window_addButton( wid, -40-BUTTON_WIDTH, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnCenterSystem", "Center", uniedit_btnCenterSystem );
-
-   /* Find button. */
+   /* Find input widget. */
    y = -45;
-   window_addInput( wid, x, y, UNIEDIT_FIND_WIDTH - BUTTON_WIDTH * 2 - x - 60, 20,
+   window_addInput( wid, x, y, UNIEDIT_FIND_WIDTH - 40, 20,
          "inpFind", 32, 1, NULL );
-   window_addButton( wid, -20, y + gl_smallFont.h / 2., BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnFindAssets", "Assets", uniedit_findSearchAssets );
-   window_addButton( wid, -40 - BUTTON_WIDTH, y + gl_smallFont.h / 2., BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnFindSystems", "Systems", uniedit_findSearchSystems );
+   window_setInputCallback( wid, "inpFind", uniedit_findSearch );
 
-   /* Generate an empty list. */
-   uniedit_findShowResults( wid, NULL, 0 );
+   /* Close when escape is pressed. */
+   window_setCancel( wid, uniedit_findSysClose );
+
+   /* Generate the list. */
+   uniedit_findSearch( wid, NULL );
+
+   /* Focus the input widget. */
+   window_setFocus( wid, "inpFind" );
 }
 
 
 /**
- * @brief Searches for systems.
+ * @brief Searches for planets and systems.
  */
-static void uniedit_findSearchSystems( unsigned int wid, char *str )
+static void uniedit_findSearch( unsigned int wid, char *str )
 {
    (void) str;
-   int i, len;
-   char **names, *name;
-   map_find_t *found;
-   StarSystem *sys;
-
-   name = window_getInput( wid, "inpFind" );
-   if (strlen(name) == 0)
-      return;
-
-   /* Search for names. */
-   names   = system_searchFuzzyCase( name, &len );
-
-   if (found_cur != NULL)
-      free(found_cur);
-
-   /* Construct found table. */
-   found = malloc( sizeof(map_find_t) * len );
-   for (i=0; i<len; i++) {
-      sys = system_get( names[i] );
-
-      /* Set some values. */
-      found[i].pnt      = NULL;
-      found[i].sys      = sys;
-
-      strncpy(found[i].display, sys->name, sizeof(found[i].display));
-   }
-   free(names);
-
-   /* Globals. */
-   found_cur  = found;
-   found_ncur = len;
-
-   /* Display results. */
-   uniedit_findShowResults( wid, found, i );
-}
-
-/**
- * @brief Searches for assets.
- */
-static void uniedit_findSearchAssets( unsigned int wid, char *str )
-{
-   (void) str;
-   int i, n, len;
-   char **names, *name;
+   int i, n, nplanets, nsystems;
+   char *name;
+   char **planets, **systems;
    const char *sysname;
    map_find_t *found;
    StarSystem *sys;
    Planet *pnt;
 
    name = window_getInput( wid, "inpFind" );
-   if (strlen(name) == 0)
+   if (name == NULL)
       return;
 
    /* Search for names. */
-   names   = planet_searchFuzzyCase( name, &len );
+   planets = planet_searchFuzzyCase( name, &nplanets );
+   systems = system_searchFuzzyCase( name, &nsystems );
 
    if (found_cur != NULL)
       free(found_cur);
 
    /* Construct found table. */
-   found = malloc( sizeof(map_find_t) * len );
+   found = malloc( sizeof(map_find_t) * (nplanets + nsystems) );
    n = 0;
-   for (i=0; i<len; i++) {
+
+   /* Add planets to the found table. */
+   for (i=0; i<nplanets; i++) {
       /* Planet must be real. */
-      pnt = planet_get( names[i] );
+      pnt = planet_get( planets[i] );
       if (pnt == NULL)
          continue;
       if (pnt->real != ASSET_REAL)
          continue;
 
-      sysname = planet_getSystem( names[i] );
+      sysname = planet_getSystem( planets[i] );
       if (sysname == NULL)
          continue;
 
@@ -1172,10 +1134,23 @@ static void uniedit_findSearchAssets( unsigned int wid, char *str )
 
       /* Set fancy name. */
       nsnprintf( found[n].display, sizeof(found[n].display),
-            "%s (%s system)", names[i], sys->name );
+            "%s (%s system)", planets[i], sys->name );
       n++;
    }
-   free(names);
+   free(planets);
+
+   /* Add systems to the found table. */
+   for (i=0; i<nsystems; i++) {
+      sys = system_get( systems[i] );
+
+      /* Set some values. */
+      found[n].pnt      = NULL;
+      found[n].sys      = sys;
+
+      strncpy(found[n].display, sys->name, sizeof(found[n].display));
+      n++;
+   }
+   free(systems);
 
    /* Globals. */
    found_cur  = found;
@@ -1216,7 +1191,7 @@ static void uniedit_findShowResults( unsigned int wid, map_find_t *found, int n 
    /* Add list. */
    h = UNIEDIT_FIND_HEIGHT + y - BUTTON_HEIGHT - 30;
    window_addList( wid, 20, y, UNIEDIT_FIND_WIDTH-40, h,
-         "lstResults", str, n, 0, NULL );
+         "lstResults", str, n, 0, uniedit_centerSystem );
 }
 
 
@@ -1238,7 +1213,7 @@ static void uniedit_findSysClose( unsigned int wid, char *name )
 /**
  * @brief Centers the selected system.
  */
-static void uniedit_btnCenterSystem( unsigned int wid, char *unused )
+static void uniedit_centerSystem( unsigned int wid, char *unused )
 {
    (void) unused;
    StarSystem *sys;
