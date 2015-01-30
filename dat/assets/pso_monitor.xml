@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<asset name="PSO Moniter">
+<asset name="PSO Monitor">
  <pos>
   <x>12918.237671</x>
   <y>5896.016168</y>
@@ -22,6 +22,6 @@
    <refuel/>
   </services>
   <commodities/>
-  <description>PSO Moniter is a small scientific station run by an independent university, monitoring the high-interference nebula PSO. As no government actually funds the station, it only has what it absolutely needs to run. It also has a refueling depot for travelling ships in an effort to raise funding.</description>
+  <description>PSO Monitor is a small scientific station run by an independent university, monitoring the high-interference nebula PSO. As no government actually funds the station, it only has what it absolutely needs to run. It also has a refueling depot for travelling ships in an effort to raise funding.</description>
  </general>
 </asset>
