@@ -22,15 +22,19 @@
   <asset>Virtual Dvaered Unpresence</asset>
  </assets>
  <jumps>
+  <jump target="Eye of Night">
+   <autopos/>
+   <hide>0.000000</hide>
+  </jump>
   <jump target="Kyo">
    <autopos/>
    <hide>0.000000</hide>
   </jump>
-  <jump target="Quai">
-   <autopos/>
-   <hide>0.000000</hide>
-  </jump>
   <jump target="Ruttwi">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Scarlet">
    <autopos/>
    <hide>1.250000</hide>
   </jump>

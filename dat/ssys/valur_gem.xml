@@ -7,20 +7,24 @@
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>562.890794</x>
-  <y>-692.520202</y>
+  <x>547.560041</x>
+  <y>-789.406902</y>
  </pos>
  <assets>
   <asset>Valur Gem I</asset>
  </assets>
  <jumps>
+  <jump target="Druid">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
   <jump target="Fidelis">
    <autopos/>
-   <hide>0.000000</hide>
+   <hide>1.250000</hide>
   </jump>
-  <jump target="Quai">
+  <jump target="Gruz">
    <autopos/>
-   <hide>0.000000</hide>
+   <hide>1.250000</hide>
   </jump>
  </jumps>
 </ssys>

@@ -24,11 +24,11 @@
    <autopos/>
    <hide>1.250000</hide>
   </jump>
-  <jump target="Millstone">
+  <jump target="Palin">
    <autopos/>
    <hide>1.250000</hide>
   </jump>
-  <jump target="Palin">
+  <jump target="Valur Gem">
    <autopos/>
    <hide>1.250000</hide>
   </jump>

@@ -7,8 +7,8 @@
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>484.995077</x>
-  <y>-627.282028</y>
+  <x>562.890794</x>
+  <y>-692.520202</y>
  </pos>
  <assets>
   <asset>Fidelis III</asset>
@@ -20,17 +20,17 @@
   <asset>Virtual Trader Area</asset>
  </assets>
  <jumps>
-  <jump target="Infinity">
+  <jump target="Eye of Night">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>0.000000</hide>
   </jump>
-  <jump target="Maus">
+  <jump target="Millstone">
    <autopos/>
    <hide>0.000000</hide>
   </jump>
   <jump target="Valur Gem">
    <autopos/>
-   <hide>0.000000</hide>
+   <hide>1.250000</hide>
   </jump>
  </jumps>
 </ssys>
