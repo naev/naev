@@ -7,33 +7,22 @@
   <gfx_store>map</gfx_store>
  </general>
  <specific type="map">
-  <sys name="Druss">
-   <jump>Quai</jump>
-   <asset>Druss II</asset>
-   <asset>Druss III</asset>
-   <asset>Druss IIa</asset>
-   <asset>Gath Station</asset>
-   <asset>Lora-Mor</asset>
-   <asset>Samell</asset>
-  </sys>
-  <sys name="Scarlet">
-   <jump>Esker</jump>
-   <jump>Quai</jump>
-   <asset>Burnan</asset>
-   <asset>Burnan's moon</asset>
-   <asset>Obelisk Station</asset>
-   <asset>Scarlet II</asset>
-   <asset>Scarlett III</asset>
-  </sys>
   <sys name="Esker">
    <jump>Nougat</jump>
-   <jump>Scarlet</jump>
    <asset>Esker I</asset>
    <asset>Esker II</asset>
    <asset>Esker IV</asset>
    <asset>Fyruse Station</asset>
    <asset>Madria</asset>
    <asset>Suoer</asset>
+  </sys>
+  <sys name="Eye of Night">
+   <jump>Fidelis</jump>
+   <asset>Eye of Night I</asset>
+   <asset>Eye of Night II</asset>
+   <asset>Eye of Night III</asset>
+   <asset>Inios Station</asset>
+   <asset>Traal</asset>
   </sys>
   <sys name="Pike">
    <jump>Atlantis</jump>
