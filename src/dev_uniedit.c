@@ -225,9 +225,9 @@ void uniedit_open( unsigned int wid_unused, char *unused )
    window_addButton( wid, 80, 20, 30, 30, "btnZoomOut", "-", uniedit_buttonZoom );
 
    /* Presence. */
-   window_addText( wid, -20, -140, 90, 20, 0, "txtSPresence",
+   window_addText( wid, -20, -140, 100, 20, 0, "txtSPresence",
          &gl_smallFont, &cDConsole, "Presence:" );
-   window_addText( wid, -20, -140-gl_smallFont.h-5, 80, 100, 0, "txtPresence",
+   window_addText( wid, -10, -140-gl_smallFont.h-5, 110, 100, 0, "txtPresence",
          &gl_smallFont, &cBlack, "N/A" );
 
    /* Selected text. */
