@@ -12,10 +12,6 @@
  </pos>
  <assets/>
  <jumps>
-  <jump target="Fidelis">
-   <autopos/>
-   <hide>1.250000</hide>
-  </jump>
   <jump target="Millstone">
    <autopos/>
    <hide>1.250000</hide>

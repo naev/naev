@@ -14,11 +14,11 @@
  <jumps>
   <jump target="Regas">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>0.000000</hide>
   </jump>
   <jump target="Seelie">
    <autopos/>
-   <hide>0.000000</hide>
+   <hide>1.250000</hide>
   </jump>
   <jump target="Seiben">
    <autopos/>

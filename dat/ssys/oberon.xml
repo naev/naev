@@ -21,7 +21,7 @@
  <jumps>
   <jump target="Defa">
    <pos x="-15366.904607" y="-17565.639958"/>
-   <hide>1.250000</hide>
+   <hide>0.000000</hide>
   </jump>
   <jump target="Shikima">
    <autopos/>

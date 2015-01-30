@@ -17,9 +17,17 @@
   <asset>Pultatis III</asset>
  </assets>
  <jumps>
+  <jump target="Hargen">
+   <autopos/>
+   <hide>0.000000</hide>
+  </jump>
   <jump target="Limbo">
    <autopos/>
    <hide>1.250000</hide>
+  </jump>
+  <jump target="Provectus Nova">
+   <autopos/>
+   <hide>0.000000</hide>
   </jump>
   <jump target="Sollav">
    <autopos/>

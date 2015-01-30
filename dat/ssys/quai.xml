@@ -7,8 +7,8 @@
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>705.362468</x>
-  <y>-797.134085</y>
+  <x>662.362468</x>
+  <y>-732.134085</y>
  </pos>
  <assets>
   <asset>Quai I</asset>
@@ -16,9 +16,21 @@
   <asset>Quai IIa</asset>
  </assets>
  <jumps>
-  <jump target="Ruttwi">
+  <jump target="Druss">
+   <autopos/>
+   <hide>0.000000</hide>
+  </jump>
+  <jump target="Millstone">
    <autopos/>
    <hide>1.250000</hide>
+  </jump>
+  <jump target="Scarlet">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Valur Gem">
+   <autopos/>
+   <hide>0.000000</hide>
   </jump>
  </jumps>
 </ssys>

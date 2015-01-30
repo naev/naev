@@ -7,8 +7,8 @@
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>711.820779</x>
-  <y>-612.089989</y>
+  <x>652.820779</x>
+  <y>-633.089989</y>
  </pos>
  <assets>
   <asset>Burnan</asset>
@@ -16,13 +16,14 @@
   <asset>Obelisk Station</asset>
   <asset>Scarlet II</asset>
   <asset>Scarlett III</asset>
+  <asset>Virtual Dvaered Unpresence</asset>
  </assets>
  <jumps>
   <jump target="Esker">
    <autopos/>
    <hide>1.250000</hide>
   </jump>
-  <jump target="Valur Gem">
+  <jump target="Quai">
    <autopos/>
    <hide>1.250000</hide>
   </jump>
