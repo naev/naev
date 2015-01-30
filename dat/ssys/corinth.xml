@@ -23,6 +23,10 @@
    <hidden/>
    <hide>1.000000</hide>
   </jump>
+  <jump target="Orion">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
   <jump target="Procyon">
    <autopos/>
    <hide>1.250000</hide>

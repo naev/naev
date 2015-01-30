@@ -10,8 +10,8 @@
  </GFX>
  <presence>
   <faction>Empire</faction>
-  <value>75.000000</value>
-  <range>5</range>
+  <value>100.000000</value>
+  <range>2</range>
  </presence>
  <general>
   <class>M</class>

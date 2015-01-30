@@ -10,13 +10,13 @@
  </GFX>
  <presence>
   <faction>Empire</faction>
-  <value>100.000000</value>
+  <value>200.000000</value>
   <range>0</range>
  </presence>
  <general>
   <class>0</class>
   <population>5000</population>
-  <hide>0.375000</hide>
+  <hide>0.370000</hide>
   <services>
    <land>emp_mil_wrath</land>
    <refuel/>

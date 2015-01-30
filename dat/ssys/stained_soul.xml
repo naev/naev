@@ -7,14 +7,18 @@
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>-903.101035</x>
-  <y>-913.472566</y>
+  <x>-884.101035</x>
+  <y>-937.472566</y>
  </pos>
  <assets>
   <asset>Virtual Civilian Standard</asset>
   <asset>Wa'kan</asset>
  </assets>
  <jumps>
+  <jump target="Gorman">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
   <jump target="Urdads">
    <autopos/>
    <hide>1.250000</hide>

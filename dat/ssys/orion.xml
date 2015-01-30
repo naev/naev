@@ -17,9 +17,14 @@
   <asset>Orion's Fist</asset>
   <asset>Orion's Might</asset>
   <asset>Virtual Civilian Standard</asset>
+  <asset>Virtual Trader Area</asset>
  </assets>
  <jumps>
   <jump target="Bedimann">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Corinth">
    <autopos/>
    <hide>1.250000</hide>
   </jump>

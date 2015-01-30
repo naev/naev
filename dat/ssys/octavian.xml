@@ -21,6 +21,10 @@
   <asset>Warnecke II</asset>
  </assets>
  <jumps>
+  <jump target="Copernicus">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
   <jump target="Procyon">
    <autopos/>
    <hide>0.000000</hide>

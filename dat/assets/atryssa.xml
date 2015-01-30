@@ -11,7 +11,7 @@
  <presence>
   <faction>Za'lek</faction>
   <value>150.000000</value>
-  <range>5</range>
+  <range>3</range>
  </presence>
  <general>
   <class>O</class>

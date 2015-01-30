@@ -10,7 +10,9 @@
   <x>-532.550030</x>
   <y>-756.063426</y>
  </pos>
- <assets/>
+ <assets>
+  <asset>Virtual Trader Area</asset>
+ </assets>
  <jumps>
   <jump target="Regas">
    <autopos/>

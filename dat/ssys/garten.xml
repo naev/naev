@@ -18,6 +18,10 @@
   <asset>Virtual Civilian Standard</asset>
  </assets>
  <jumps>
+  <jump target="Damien">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
   <jump target="Tomas">
    <autopos/>
    <hide>1.250000</hide>
