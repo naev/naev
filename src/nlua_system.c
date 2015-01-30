@@ -31,6 +31,7 @@
 /* System metatable methods */
 static int systemL_cur( lua_State *L );
 static int systemL_get( lua_State *L );
+static int systemL_getAll( lua_State *L );
 static int systemL_eq( lua_State *L );
 static int systemL_name( lua_State *L );
 static int systemL_faction( lua_State *L );
@@ -50,6 +51,7 @@ static int systemL_mrkRm( lua_State *L );
 static const luaL_reg system_methods[] = {
    { "cur", systemL_cur },
    { "get", systemL_get },
+   { "getAll", systemL_getAll },
    { "__eq", systemL_eq },
    { "__tostring", systemL_name },
    { "name", systemL_name },
@@ -72,6 +74,7 @@ static const luaL_reg system_methods[] = {
 static const luaL_reg system_cond_methods[] = {
    { "cur", systemL_cur },
    { "get", systemL_get },
+   { "getAll", systemL_getAll },
    { "__eq", systemL_eq },
    { "__tostring", systemL_name },
    { "name", systemL_name },
@@ -292,6 +295,30 @@ static int systemL_get( lua_State *L )
 
    /* return the system */
    lua_pushsystem(L,sys);
+   return 1;
+}
+
+/**
+ * @brief Gets all the systems.
+ *    @luareturn A list of all the systems.
+ * @luafunc getAll()
+ */
+static int systemL_getAll( lua_State *L )
+{
+   LuaSystem ls;
+   StarSystem *sys;
+   int i, ind, n;
+
+   lua_newtable(L);
+   sys = system_getAll( &n );
+
+   ind = 1;
+   for (i=0; i<n; i++) {
+      ls.id = system_index( &sys[i] );
+      lua_pushnumber( L, ind++ );
+      lua_pushsystem( L, ls );
+      lua_settable(   L, -3 );
+   }
    return 1;
 }
 
