@@ -17,10 +17,13 @@
   <asset>Delta Polaris II</asset>
   <asset>Delta Polaris VI</asset>
   <asset>Falas</asset>
-  <asset>Virtual Pirate Medium</asset>
  </assets>
  <jumps>
   <jump target="Jade">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Knave">
    <autopos/>
    <hide>1.250000</hide>
   </jump>
