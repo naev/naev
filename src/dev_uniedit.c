@@ -191,33 +191,33 @@ void uniedit_open( unsigned int wid_unused, char *unused )
 
    /* Jump toggle. */
    buttonPos++;
-   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*buttonPos, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnJump", "Jump", uniedit_btnJump );
+   window_addButtonKey( wid, -20, 20+(BUTTON_HEIGHT+20)*buttonPos, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnJump", "Jump", uniedit_btnJump, SDLK_j );
    buttonPos++;
 
    /* Rename system. */
-   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*buttonPos, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnRename", "Rename", uniedit_btnRename );
+   window_addButtonKey( wid, -20, 20+(BUTTON_HEIGHT+20)*buttonPos, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnRename", "Rename", uniedit_btnRename, SDLK_r );
    buttonPos++;
 
    /* Edit system. */
-   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*buttonPos, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnEdit", "Edit", uniedit_btnEdit );
+   window_addButtonKey( wid, -20, 20+(BUTTON_HEIGHT+20)*buttonPos, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnEdit", "Edit", uniedit_btnEdit, SDLK_e );
    buttonPos++;
 
    /* New system. */
-   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*buttonPos, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnNew", "New Sys", uniedit_btnNew );
+   window_addButtonKey( wid, -20, 20+(BUTTON_HEIGHT+20)*buttonPos, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnNew", "New Sys", uniedit_btnNew, SDLK_n );
    buttonPos++;
 
    /* Open a system. */
-   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*buttonPos, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnOpen", "Open", uniedit_btnOpen );
+   window_addButtonKey( wid, -20, 20+(BUTTON_HEIGHT+20)*buttonPos, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnOpen", "Open", uniedit_btnOpen, SDLK_o );
    buttonPos++;
 
    /* Find a system or asset. */
-   window_addButton( wid, -20, 20+(BUTTON_HEIGHT+20)*buttonPos, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnFind", "Find", uniedit_btnFind );
+   window_addButtonKey( wid, -20, 20+(BUTTON_HEIGHT+20)*buttonPos, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnFind", "Find", uniedit_btnFind, SDLK_f );
    buttonPos++;
 
    /* Zoom buttons */
@@ -254,24 +254,6 @@ static int uniedit_keys( unsigned int wid, SDLKey key, SDLMod mod )
 
    switch (key) {
       /* Mode changes. */
-      case SDLK_n:
-         uniedit_mode = UNIEDIT_NEWSYS;
-         return 1;
-      case SDLK_j:
-         if (uniedit_nsys == 0)
-            return 0;
-         uniedit_mode = UNIEDIT_JUMP;
-         return 1;
-      case SDLK_r:
-         if (uniedit_nsys == 0)
-            return 0;
-         uniedit_renameSys();
-         return 1;
-      case SDLK_e:
-         if (uniedit_nsys == 0)
-            return 0;
-         uniedit_editSys();
-         return 1;
       case SDLK_ESCAPE:
          uniedit_mode = UNIEDIT_DEFAULT;
          return 1;

@@ -180,6 +180,8 @@ void sysedit_open( StarSystem *sys )
    window_handleKeys( wid, sysedit_keys );
    sysedit_wid = wid;
 
+   window_setAccept( wid, sysedit_close );
+
    /* Close button. */
    window_addButton( wid, -15, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnClose", "Close", sysedit_close );
@@ -195,13 +197,13 @@ void sysedit_open( StarSystem *sys )
    i += 1;
 
    /* Reset. */
-   window_addButton( wid, -15, 20+(BUTTON_HEIGHT+20)*i, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnReset", "Reset Jumps", sysedit_btnReset );
+   window_addButtonKey( wid, -15, 20+(BUTTON_HEIGHT+20)*i, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnReset", "Reset Jumps", sysedit_btnReset, SDLK_r );
    i += 1;
 
    /* Editing. */
-   window_addButton( wid, -15, 20+(BUTTON_HEIGHT+20)*i, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnEdit", "Edit", sysedit_btnEdit );
+   window_addButtonKey( wid, -15, 20+(BUTTON_HEIGHT+20)*i, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnEdit", "Edit", sysedit_btnEdit, SDLK_e );
    i += 1;
 
    /* Remove. */
@@ -215,13 +217,13 @@ void sysedit_open( StarSystem *sys )
    i += 1;
 
    /* New system. */
-   window_addButton( wid, -15, 20+(BUTTON_HEIGHT+20)*i, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnNew", "New Planet", sysedit_btnNew );
+   window_addButtonKey( wid, -15, 20+(BUTTON_HEIGHT+20)*i, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnNew", "New Planet", sysedit_btnNew, SDLK_n );
    i += 2;
 
    /* Toggle Grid. */
-   window_addButton( wid, -15, 20+(BUTTON_HEIGHT+20)*i, BUTTON_WIDTH, BUTTON_HEIGHT,
-         "btnGrid", "Grid", sysedit_btnGrid );
+   window_addButtonKey( wid, -15, 20+(BUTTON_HEIGHT+20)*i, BUTTON_WIDTH, BUTTON_HEIGHT,
+         "btnGrid", "Grid", sysedit_btnGrid, SDLK_g );
 
    /* Zoom buttons */
    window_addButton( wid, 40, 20, 30, 30, "btnZoomIn", "+", sysedit_buttonZoom );
@@ -1144,6 +1146,8 @@ static void sysedit_editPnt( void )
    sprintf(title, "Planet Property Editor - %s", p->name);
    wid = window_create( title, -1, -1, SYSEDIT_EDIT_WIDTH, SYSEDIT_EDIT_HEIGHT );
    sysedit_widEdit = wid;
+
+   window_setCancel( wid, sysedit_editPntClose );
 
    bw = (SYSEDIT_EDIT_WIDTH - 40 - 15 * 3) / 4.;
 
