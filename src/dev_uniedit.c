@@ -601,9 +601,8 @@ static int uniedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
             }
             uniedit_dragSys   = 0;
             if (conf.devautosave)
-               for (i=0; i<uniedit_nsys; i++) {
+               for (i=0; i<uniedit_nsys; i++)
                   dsys_saveSystem(uniedit_sys[i]);
-               }
          }
          break;
 
@@ -724,13 +723,11 @@ static void uniedit_renameSys (void)
       free(sys->name);
 
       sys->name = name;
-      if (conf.devautosave) {
-         dsys_saveSystem(sys);
+      dsys_saveSystem(sys);
 
-         /* Re-save adjacent systems. */
-         for (j=0; j<sys->njumps; j++)
-            dsys_saveSystem( sys->jumps[j].target );
-      }
+      /* Re-save adjacent systems. */
+      for (j=0; j<sys->njumps; j++)
+         dsys_saveSystem( sys->jumps[j].target );
    }
 }
 

@@ -333,7 +333,8 @@ static void sysedit_editPntClose( unsigned int wid, char *unused )
    /* Add the new presence. */
    system_addPresence(sysedit_sys, p->faction, p->presenceAmount, p->presenceRange);
 
-   dpl_savePlanet( p );
+   if (conf.devautosave)
+      dpl_savePlanet( p );
 
    window_close( wid, unused );
 }
@@ -381,7 +382,8 @@ static void sysedit_btnNew( unsigned int wid_unused, char *unused )
 
    /* Add new planet. */
    system_addPlanet( sysedit_sys, name );
-   dpl_savePlanet( p );
+   if (conf.devautosave)
+      dpl_savePlanet( p );
 
    /* Reload graphics. */
    space_gfxLoad( sysedit_sys );
@@ -920,9 +922,10 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
                   sysedit_selectAdd( &sysedit_tsel );
             }
             sysedit_drag      = 0;
-            for (i=0; i<sysedit_nselect; i++) {
-               dpl_savePlanet(sysedit_sys->planets[ sysedit_select[i].u.planet ]);
-            }
+
+            if (conf.devautosave)
+               for (i=0; i<sysedit_nselect; i++)
+                  dpl_savePlanet(sysedit_sys->planets[ sysedit_select[i].u.planet ]);
          }
          if (sysedit_dragSel) {
             if ((SDL_GetTicks() - sysedit_dragTime < SYSEDIT_DRAG_THRESHOLD) &&
@@ -935,10 +938,13 @@ static int sysedit_mouse( unsigned int wid, SDL_Event* event, double mx, double 
                }
             }
             sysedit_dragSel   = 0;
+
+
             /* Save all planets in our selection - their positions might have changed. */
-            for (i=0; i<sysedit_nselect; i++)
-               if (sysedit_select[i].type == SELECT_PLANET)
-                  dpl_savePlanet( sys->planets[ sysedit_select[i].u.planet ] );
+            if (conf.devautosave)
+               for (i=0; i<sysedit_nselect; i++)
+                  if (sysedit_select[i].type == SELECT_PLANET)
+                     dpl_savePlanet( sys->planets[ sysedit_select[i].u.planet ] );
          }
          break;
 
