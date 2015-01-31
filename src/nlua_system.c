@@ -559,6 +559,10 @@ static int systemL_presences( lua_State *L )
    /* Return result in table */
    lua_newtable(L);
    for (i=0; i<s->npresence; i++) {
+      /* Only return positive presences. */
+      if (s->presence[i].value <= 0)
+         continue;
+
       lua_pushstring( L, faction_name(s->presence[i].faction) ); /* t, k */
       lua_pushnumber(L,s->presence[i].value); /* t, k, v */
       lua_settable(L,-3);  /* t */
@@ -625,7 +629,7 @@ static int systemL_presence( lua_State *L )
    StarSystem *sys;
    int *fct;
    int nfct;
-   double presence;
+   double presence, v;
    int i, f, used;
    const char *cmd;
 
@@ -665,8 +669,12 @@ static int systemL_presence( lua_State *L )
 
    /* Add up the presence values. */
    presence = 0;
-   for(i=0; i<nfct; i++)
-      presence += system_getPresence( sys, fct[i] );
+   for(i=0; i<nfct; i++) {
+      /* Only count positive presences. */
+      v = system_getPresence( sys, fct[i] );
+      if (v > 0)
+         presence += v;
+   }
 
    /* Clean up after ourselves. */
    free(fct);
