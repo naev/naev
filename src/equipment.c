@@ -1509,6 +1509,9 @@ static void equipment_genOutfitList( unsigned int wid )
       noutfits = 1;
       soutfits[0] = strdup( "None" );
       toutfits[0] = NULL;
+
+      /* Clean up. */
+      free(outfits);
    }
    else
       for (i=0; i<noutfits; i++)
