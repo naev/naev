@@ -1852,6 +1852,9 @@ static void sysedit_planetGFX( unsigned int wid_unused, char *wgt )
    wid = window_create( buf, -1, -1, -1, -1 );
    window_dimWindow( wid, &w, &h );
 
+   window_setCancel( wid, sysedit_btnGFXClose );
+   window_setAccept( wid, sysedit_btnGFXApply );
+
    /* Close button. */
    window_addButton( wid, -20, 20, BUTTON_WIDTH, BUTTON_HEIGHT,
          "btnClose", "Close", sysedit_btnGFXClose );

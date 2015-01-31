@@ -1269,6 +1269,7 @@ static void uniedit_editSys (void)
    /* Create the window. */
    wid = window_create( "Star System Property Editor", -1, -1, UNIEDIT_EDIT_WIDTH, UNIEDIT_EDIT_HEIGHT );
    uniedit_widEdit = wid;
+   window_setCancel( wid, uniedit_editSysClose );
 
    x = 20;
 
