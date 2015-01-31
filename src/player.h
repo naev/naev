@@ -127,6 +127,7 @@ void player_messageRaw ( const char *str );
 /*
  * misc
  */
+void player_checkLandAck (void);
 void player_nolandMsg( const char *str );
 void player_clear (void);
 void player_warp( const double x, const double y );

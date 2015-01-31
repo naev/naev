@@ -1458,6 +1458,35 @@ void player_land (void)
 
 
 /**
+ * @brief Revokes landing authorization if the player's reputation is too low.
+ */
+void player_checkLandAck( void )
+{
+   Planet *p;
+
+   /* No authorization to revoke. */
+   if (!player_isFlag(PLAYER_LANDACK))
+      return;
+
+   /* Avoid a potential crash if PLAYER_LANDACK is set inappropriately. */
+   if (player.p->nav_planet < 0) {
+      WARN("Player has landing permission, but no valid planet targeted.");
+      return;
+   }
+
+   p = cur_system->planets[ player.p->nav_planet ];
+
+   /* Player can still land. */
+   if (p->can_land || (p->land_override > 0) || p->bribed)
+      return;
+
+   player_rmFlag(PLAYER_LANDACK);
+   player_message( "\e%c%s>\e0 Landing permission revoked.",
+         planet_getColourChar(p), p->name );
+}
+
+
+/**
  * @brief Checks whether the player's ship is able to takeoff.
  */
 int player_canTakeoff(void)

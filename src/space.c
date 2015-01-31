@@ -1193,6 +1193,11 @@ void space_update( const double dt )
    if (space_fchg) {
       for (i=0; i<cur_system->nplanets; i++)
          planet_updateLand( cur_system->planets[i] );
+
+      /* Verify land authorization is still valid. */
+      if (player_isFlag(PLAYER_LANDACK))
+         player_checkLandAck();
+
       gui_updateFaction();
       space_fchg = 0;
    }
@@ -1598,6 +1603,10 @@ void planet_updateLand( Planet *p )
 #else /* DEBUGGING */
    lua_pop(L,5);
 #endif /* DEBUGGING */
+
+   /* Unset bribe status if bribing is no longer possible. */
+   if (p->bribed && p->bribe_ack_msg == NULL)
+      p->bribed = 0;
 }
 
 
