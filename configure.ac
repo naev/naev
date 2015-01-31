@@ -168,7 +168,7 @@ AS_IF([test "$enable_debug" != "no"], [
 AC_MSG_CHECKING([whether to use SDL2 instead of SDL])
 AC_ARG_WITH([sdl2],
   AC_HELP_STRING([--with-sdl2],
-     [use SDL2 instead of SDL (default: yes)]), [
+     [use SDL2 instead of SDL (default: no)]), [
     AS_IF([test "$withval" = "yes"], [
       with_sdl2=yes
     ], [
