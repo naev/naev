@@ -37,6 +37,7 @@ struct npng_s {
  * Prototypes.
  */
 static void npng_read( png_structp png_ptr, png_bytep data, png_size_t len );
+static void npng_warn( png_structp png_ptr, png_const_charp warning_message );
 static int npng_info( npng_t *npng );
 
 
@@ -54,6 +55,26 @@ static void npng_read( png_structp png_ptr, png_bytep data, png_size_t len )
    SDL_RWread( rw, data, len, 1 );
 }
 
+
+/**
+ * @brief Suppresses select libpng warnings and prints the rest.
+ */
+static void npng_warn( png_structp png_ptr, png_const_charp warning_message )
+{
+   (void) png_ptr;
+   int i;
+
+   const int n = 1;
+   const char ignore[] = {
+      "iCCP: known incorrect sRGB profile",
+   };
+
+   for (i=0; i<n; i++)
+      if (strcmp(&ignore[i], warning_message) == 0)
+         return;
+
+   logprintf(stderr, "%s\n", warning_message);
+}
 
 /**
  * @brief Opens an npng struct from an SDL_RWops. It does not close the RWops.
@@ -96,6 +117,9 @@ npng_t *npng_open( SDL_RWops *rw )
 
    /* Set up for reading. */
    png_set_read_fn( npng->png_ptr, (png_voidp) rw, npng_read );
+
+   /* Handle warnings ourselves. */
+   png_set_error_fn( npng->png_ptr, NULL, NULL, npng_warn );
 
    /* Set up long jump for IO. */
    if (setjmp( png_jmpbuf( npng->png_ptr )) ) {
