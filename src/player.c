@@ -2120,7 +2120,9 @@ void player_toggleMouseFly(void)
       input_mouseHide();
       player_rmFlag(PLAYER_MFLY);
       player_message("\erMouse flying disabled.");
-      player_accelOver();
+
+      if (conf.mouse_thrust)
+         player_accelOver();
    }
 }
 
