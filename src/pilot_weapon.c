@@ -218,7 +218,12 @@ void pilot_weapSetPress( Pilot* p, int id, int type )
          /* Turn them off. */
          n = 0;
          if (on) {
-            n += pilot_outfitOffAll( p );
+            for (i=0; i<l; i++) {
+               if (ws->slots[i].slot->state != PILOT_OUTFIT_ON)
+                  continue;
+
+               n += pilot_outfitOff( p, ws->slots[i].slot );
+            }
          }
          /* Turn them on. */
          else {
