@@ -1800,6 +1800,9 @@ void player_targetSet( unsigned int id )
 
 /**
  * @brief Targets the nearest hostile enemy to the player.
+ *
+ * @note This function largely duplicates pilot_getNearestEnemy, because the
+ *       player's hostility with AIs is more nuanced than AI vs AI.
  */
 void player_targetHostile (void)
 {
@@ -1807,22 +1810,26 @@ void player_targetHostile (void)
    int i;
    double d, td;
 
-   tp=PLAYER_ID;
-   d=0;
+   tp = PLAYER_ID;
+   d  = 0;
    for (i=0; i<pilot_nstack; i++) {
       /* Don't get if is bribed. */
       if (pilot_isFlag(pilot_stack[i],PILOT_BRIBED))
          continue;
 
-      /* Must be in range. */
-      if (pilot_inRangePilot( player.p, pilot_stack[i] ) <= 0)
+      /* Shouldn't be disabled. */
+      if (pilot_isDisabled(pilot_stack[i]))
+         continue;
+
+      /* Must be a valid target. */
+      if (!pilot_validTarget( player.p, pilot_stack[i] ))
          continue;
 
       /* Normal unbribed check. */
       if (pilot_isHostile(pilot_stack[i])) {
-         td = vect_dist(&pilot_stack[i]->solid->pos, &player.p->solid->pos);
-         if (!pilot_isDisabled(pilot_stack[i]) && ((tp==PLAYER_ID) || (td < d))) {
-            d = td;
+         td = vect_dist2(&pilot_stack[i]->solid->pos, &player.p->solid->pos);
+         if ((tp==PLAYER_ID) || (td < d)) {
+            d  = td;
             tp = pilot_stack[i]->id;
          }
       }
