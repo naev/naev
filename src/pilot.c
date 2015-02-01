@@ -76,7 +76,6 @@ static void pilot_refuel( Pilot *p, double dt );
 /* Clean up. */
 static void pilot_dead( Pilot* p, unsigned int killer );
 /* Targetting. */
-static int pilot_validTarget( const Pilot* p, const Pilot* target );
 static int pilot_validEnemy( const Pilot* p, const Pilot* target );
 /* Misc. */
 static void pilot_setCommMsg( Pilot *p, const char *s );
@@ -230,7 +229,7 @@ unsigned int pilot_getPrevID( const unsigned int id, int mode )
  *    @param target Pilot to see if is a valid target of the reference.
  *    @return 1 if it is valid, 0 otherwise.
  */
-static int pilot_validTarget( const Pilot* p, const Pilot* target )
+int pilot_validTarget( const Pilot* p, const Pilot* target )
 {
    /* Must not be dead. */
    if (pilot_isFlag( target, PILOT_DELETE ) ||

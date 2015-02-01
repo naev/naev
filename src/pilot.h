@@ -441,6 +441,7 @@ double pilot_getNearestPos( const Pilot *p, unsigned int *tp, double x, double y
 double pilot_getNearestAng( const Pilot *p, unsigned int *tp, double ang, int disabled );
 int pilot_getJumps( const Pilot* p );
 const glColour* pilot_getColour( const Pilot* p );
+int pilot_validTarget( const Pilot* p, const Pilot* target );
 
 /* non-lua wrappers */
 double pilot_relsize( const Pilot* cur_pilot, const Pilot* p );
