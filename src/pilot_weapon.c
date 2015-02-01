@@ -423,7 +423,7 @@ void pilot_weapSetAdd( Pilot* p, int id, PilotOutfitSlot *o, int level )
    PilotWeaponSet *ws;
    PilotWeaponSetOutfit *slot;
    Outfit *oo;
-   int i;
+   int i, j;
    double r;
 
    ws = pilot_weapSet(p,id);
@@ -461,6 +461,15 @@ void pilot_weapSetAdd( Pilot* p, int id, PilotOutfitSlot *o, int level )
    if (r > 0)
       slot->range2 = pow2(r);
 
+   /* Updated cached weapset. */
+   o->weapset = -1;
+   for (j=0; j<PILOT_WEAPON_SETS; j++) {
+      if (pilot_weapSetCheck(p, j, o) != -1) {
+         o->weapset = j;
+         break;
+      }
+   }
+
    /* Update range. */
    pilot_weapSetUpdateRange( ws );
 
@@ -480,7 +489,7 @@ void pilot_weapSetAdd( Pilot* p, int id, PilotOutfitSlot *o, int level )
 void pilot_weapSetRm( Pilot* p, int id, PilotOutfitSlot *o )
 {
    PilotWeaponSet *ws;
-   int i;
+   int i, j;
 
    /* Make sure it has slots. */
    ws = pilot_weapSet(p,id);
@@ -500,6 +509,16 @@ void pilot_weapSetRm( Pilot* p, int id, PilotOutfitSlot *o )
       /* Update if needed. */
       if (id == p->active_set)
          pilot_weapSetUpdateOutfits( p, ws );
+
+      /* Updated cached weapset. */
+      o->weapset = -1;
+      for (j=0; j<PILOT_WEAPON_SETS; j++) {
+         if (pilot_weapSetCheck(p, j, o) != -1) {
+            o->weapset = j;
+            break;
+         }
+      }
+
       return;
    }
 }
@@ -1088,21 +1107,23 @@ void pilot_weaponAuto( Pilot *p )
          pilot_weapSetInrange( p, i, 1 );
 
    /* Iterate through all the outfits. */
-   for (i=0; i<p->outfit_nweapon; i++) {
-      slot = &p->outfit_weapon[i];
+   for (i=0; i<p->noutfits; i++) {
+      slot = p->outfits[i];
       o    = slot->outfit;
 
-      /* Must have outfit. */
-      if (o == NULL) {
-         slot->level = -1; /* Clear level. */
+      /* Must be non-empty, and a weapon or active outfit. */
+      if ((o == NULL) || !outfit_isActive(o)) {
+         slot->level   = -1; /* Clear level. */
+         slot->weapset = -1;
          continue;
       }
 
-      /* Set level based on secondary flag. */
-      level = outfit_isSecondary(o);
-
+      /* Manually defined group preempts others. */
+      if (o->group) {
+         id    = o->group;
+      }
       /* Bolts and beams. */
-      if (outfit_isBolt(o) || outfit_isBeam(o) ||
+      else if (outfit_isBolt(o) || outfit_isBeam(o) ||
             (outfit_isLauncher(o) && !outfit_isSeeker(o->u.lau.ammo))) {
          id    = outfit_isTurret(o) ? 2 : 1;
       }
@@ -1119,6 +1140,9 @@ void pilot_weaponAuto( Pilot *p )
          slot->level = -1;
          continue;
       }
+
+      /* Set level based on secondary flag. */
+      level = outfit_isSecondary(o);
 
       /* Add to its base group. */
       pilot_weapSetAdd( p, id, slot, level );
