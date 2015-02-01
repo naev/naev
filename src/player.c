@@ -1930,7 +1930,7 @@ void player_targetEscort( int prev )
  */
 void player_targetNearest (void)
 {
-   unsigned int t, dt, old;
+   unsigned int t, dt;
    double d;
 
    d = pilot_getNearestPos( player.p, &dt, player.p->solid->pos.x,
@@ -1945,14 +1945,7 @@ void player_targetNearest (void)
          t = dt;
    }
 
-   old = player.p->target;
-   pilot_setTarget( player.p, t );
-
-   if ((player.p->target != PLAYER_ID) && (old != player.p->target)) {
-      gui_forceBlink();
-      player_soundPlayGUI( snd_target, 1 );
-   }
-   gui_setTarget();
+   player_targetSet( t );
 }
 
 
