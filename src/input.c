@@ -154,6 +154,8 @@ static unsigned int repeat_keyCounter  = 0;  /**< Counter for key repeats. */
  */
 static double input_mouseTimer         = -1.; /**< Timer for hiding again. */
 static int input_mouseCounter          = 1; /**< Counter for mouse display/hiding. */
+static double input_mouseClickTimer    = 0; /**< Time to consider double-clicks for. */
+static void *input_lastClicked         = NULL; /**< Pointer to the last-clicked item. */
 
 
 /*
@@ -649,6 +651,9 @@ void input_update( double dt )
       if ((input_mouseTimer < 0.) && (input_mouseCounter <= 0))
          SDL_ShowCursor( SDL_DISABLE );
    }
+
+   if (input_mouseClickTimer > 0.)
+      input_mouseClickTimer -= dt;
 
    /* Key repeat if applicable. */
    if (conf.repeat_delay != 0) {
@@ -1219,9 +1224,10 @@ static void input_clickevent( SDL_Event* event )
    }
 
    if (pid != PLAYER_ID) {
+      p = pilot_get(pid);
+
       /* Apply an action if already selected. */
-      if (pid == player.p->target) {
-         p = pilot_get(pid);
+      if (pid == player.p->target && input_isDoubleClick( (void*)p )) {
          if (pilot_isDisabled(p) || pilot_isFlag(p, PILOT_BOARDABLE))
             player_board();
          else
@@ -1229,10 +1235,13 @@ static void input_clickevent( SDL_Event* event )
       }
       else
          player_targetSet( pid );
+
+      input_clicked( (void*)p );
    }
    else if (pntid >= 0) { /* Planet is closest. */
-      if (pntid == player.p->nav_planet) {
-         pnt = cur_system->planets[ pntid ];
+      pnt = cur_system->planets[ pntid ];
+
+      if (pntid == player.p->nav_planet && input_isDoubleClick((void*)pnt)) {
          player_hyperspacePreempt(0);
          if (planet_hasService(pnt, PLANET_SERVICE_LAND)) {
             if ((pnt->faction >= 0) && (areEnemies( player.p->faction, pnt->faction ) && !pnt->bribed))
@@ -1247,12 +1256,16 @@ static void input_clickevent( SDL_Event* event )
       }
       else
          player_targetPlanetSet( pntid );
+
+      input_clicked( (void*)pnt );
    }
    else if (jpid >= 0) { /* Jump point is closest. */
-      if (!jp_isUsable(&cur_system->jumps[ jpid ]))
+      jp = &cur_system->jumps[ jpid ];
+
+      if (!jp_isUsable(jp))
          return;
 
-      if (jpid == player.p->nav_hyperspace) {
+      if (jpid == player.p->nav_hyperspace && input_isDoubleClick( (void*)jp )) {
          if (space_canHyperspace(player.p))
             player_jump();
          else {
@@ -1262,7 +1275,39 @@ static void input_clickevent( SDL_Event* event )
       }
       else
          player_targetHyperspaceSet( jpid );
+
+      input_clicked( (void*)jp );
    }
+}
+
+
+/**
+ * @brief Sets the last-clicked item, for double-click detection.
+ *    @param clicked Pointer to the clicked item.
+ */
+void input_clicked( void *clicked )
+{
+   if (conf.mouse_doubleclick <= 0.)
+      return;
+
+   input_lastClicked = clicked;
+   input_mouseClickTimer = conf.mouse_doubleclick;
+}
+
+
+/**
+ * @brief Checks whether a clicked item is the same as the last-clicked.
+ *    @param clicked Pointer to the clicked item.
+ */
+int input_isDoubleClick( void *clicked )
+{
+   if (conf.mouse_doubleclick <= 0.)
+      return 1;
+
+   if (input_mouseClickTimer > 0. && (clicked == input_lastClicked))
+      return 1;
+
+   return 0;
 }
 
 

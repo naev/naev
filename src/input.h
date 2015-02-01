@@ -47,6 +47,8 @@ SDLMod input_translateMod( SDLMod mod );
 void input_enableAll (void);
 void input_disableAll (void);
 void input_toggleEnable( const char *key, int enable );
+void input_clicked( void *clicked );
+int input_isDoubleClick( void *clicked );
 
 /*
  * handle input

@@ -16,6 +16,7 @@
 #define TIME_COMPRESSION_DEFAULT_MULT        200   /**< Default level of time compression multiplier. */
 #define SAVE_COMPRESSION_DEFAULT             1     /**< Whether or not saved games should be compressed. */
 #define MOUSE_THRUST_DEFAULT                 1     /**< Whether or not to use mouse thrust controls. */
+#define MOUSE_DOUBLECLICK_TIME               0.5   /**< How long to consider double-clicks for. */
 #define AUTONAV_RESET_SPEED_DEFAULT          1.    /**< Shield level (0-1) to reset autonav speed at. 1 means at missile lock, 0 means at armour damage. */
 #define AUTONAV_PAUSE_DEFAULT                0     /**< Whether or not the game should pause when autonav is aborted. */
 #define MANUAL_ZOOM_DEFAULT                  0     /**< Whether or not to enable manual zoom controls. */
@@ -128,6 +129,7 @@ typedef struct PlayerConf_s {
    int save_compress; /**< Compress savegame. */
    unsigned int afterburn_sens; /**< Afterburn sensibility. */
    int mouse_thrust; /**< Whether mouse flying controls thrust. */
+   double mouse_doubleclick; /**< How long to consider double-clicks for. */
    double autonav_reset_speed; /**< Condition for resetting autonav speed. */
    int autonav_pause;/**< Pauses game instead of aborting autonav. */
    int nosave; /**< Disables conf saving. */
