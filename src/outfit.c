@@ -2018,6 +2018,7 @@ static int outfit_parse( Outfit* temp, const char* file )
    xmlNodePtr cur, node, parent;
    char *prop;
    const char *cprop;
+   int group;
    uint32_t bufsize;
    char *buf = ndata_read( file, &bufsize );
 
@@ -2103,6 +2104,19 @@ static int outfit_parse( Outfit* temp, const char* file )
          if (prop != NULL) {
             if ((int)atoi(prop))
                outfit_setProp(temp, OUTFIT_PROP_WEAP_SECONDARY);
+            free(prop);
+         }
+
+         /* Check for manually-defined group. */
+         prop = xml_nodeProp(node, "group");
+         if (prop != NULL) {
+            group = atoi(prop);
+            if (group > PILOT_WEAPON_SETS || group < 1) {
+               WARN("Outfit '%s' has group '%d', should be in the 1-%d range",
+                     temp->name, group, PILOT_WEAPON_SETS);
+            }
+
+            temp->group = CLAMP(0, 9, group - 1);
             free(prop);
          }
 

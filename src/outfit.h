@@ -332,6 +332,8 @@ typedef struct Outfit_ {
 
    unsigned int properties; /**< Properties stored bitwise. */
 
+   unsigned int group; /**< Weapon group to use when autoweap is enabled. */
+
    /* Type dependent */
    OutfitType type; /**< Type of the outfit. */
    union {
