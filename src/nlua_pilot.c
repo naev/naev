@@ -51,6 +51,7 @@ extern int pilot_nstack;
  */
 static Task *pilotL_newtask( lua_State *L, Pilot* p, const char *task );
 static int pilotL_addFleetFrom( lua_State *L, int from_ship );
+static int outfit_compareActive( const void *slot1, const void *slot2 );
 
 
 /* Pilot metatable methods. */
@@ -1460,21 +1461,35 @@ static int pilotL_weapsetHeat( lua_State *L )
 static int pilotL_actives( lua_State *L )
 {
    Pilot *p;
-   int i, k;
+   int i, k, sort;
    PilotOutfitSlot *o;
+   PilotOutfitSlot **outfits;
    const char *str;
    double d;
 
    /* Parse parameters. */
    p   = luaL_validpilot(L,1);
 
+   if (lua_gettop(L) > 1)
+      sort = lua_toboolean(L, 1);
+   else
+      sort = 0;
+
    k = 0;
    lua_newtable(L);
+
+   if (sort) {
+      outfits = malloc( sizeof(PilotOutfitSlot*) * p->noutfits );
+      memcpy( outfits, p->outfits, sizeof(PilotOutfitSlot*) * p->noutfits );
+      qsort( outfits, p->noutfits, sizeof(PilotOutfitSlot*), outfit_compareActive );
+   }
+   else
+      outfits  = p->outfits;
 
    for (i=0; i<p->noutfits; i++) {
 
       /* Get active outfits. */
-      o = p->outfits[i];
+      o = outfits[i];
       if (o->outfit == NULL)
          continue;
       if (!o->active)
@@ -1504,6 +1519,13 @@ static int pilotL_actives( lua_State *L )
                             o->outfit->u.afb.heat_base,
                             o->outfit->u.afb.heat_cap));
       lua_rawset(L,-3);
+
+      /* Find the first weapon set containing the outfit, if any. */
+      if (outfits[i]->weapset != -1) {
+         lua_pushstring(L, "weapset");
+         lua_pushnumber(L, outfits[i]->weapset + 1);
+         lua_rawset(L, -3);
+      }
 
       /* State and timer. */
       switch (o->state) {
@@ -1543,7 +1565,38 @@ static int pilotL_actives( lua_State *L )
       /* Set table in table. */
       lua_rawset(L,-3);
    }
+
+   /* Clean up. */
+   if (sort)
+      free(outfits);
+
    return 1;
+}
+
+
+/**
+ * @brief qsort compare function for active outfits.
+ */
+static int outfit_compareActive( const void *slot1, const void *slot2 )
+{
+   const PilotOutfitSlot *s1, *s2;
+
+   s1 = *(const PilotOutfitSlot**) slot1;
+   s2 = *(const PilotOutfitSlot**) slot2;
+
+   /* Compare weapon set indexes. */
+   if (s1->weapset < s2->weapset)
+      return +1;
+   else if (s1->weapset > s2->weapset)
+      return -1;
+
+   /* Compare positions within the outfit array. */
+   if (s1->id < s2->id)
+      return +1;
+   else if (s1->id > s2->id)
+      return -1;
+
+   return 0;
 }
 
 
