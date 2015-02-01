@@ -57,6 +57,7 @@ static Outfit* outfit_stack = NULL; /**< Stack of outfits. */
 /* misc */
 static OutfitType outfit_strToOutfitType( char *buf );
 static int outfit_setDefaultSize( Outfit *o );
+static void outfit_launcherDesc( Outfit* o );
 /* parsing */
 static int outfit_loadDir( char *dir );
 static int outfit_parseDamage( Damage *dmg, xmlNodePtr node );
@@ -1299,18 +1300,6 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
    if (temp->slot.size == OUTFIT_SLOT_SIZE_NA)
       outfit_setDefaultSize( temp );
 
-   /* Set short description. */
-   temp->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
-   nsnprintf( temp->desc_short, OUTFIT_SHORTDESC_MAX,
-         "%s\n"
-         "%.0f CPU\n"
-         "%.1f Shots Per Second\n"
-         "Holds %d %s",
-         outfit_getType(temp),
-         temp->cpu,
-         1./temp->u.lau.delay,
-         temp->u.lau.amount, temp->u.lau.ammo_name );
-
 #define MELEMENT(o,s) \
 if (o) WARN("Outfit '%s' missing '"s"' element", temp->name) /**< Define to help check for data errors. */
    MELEMENT(temp->u.lau.ammo_name==NULL,"ammo");
@@ -2230,6 +2219,8 @@ int outfit_load (void)
             if (!outfit_isTurret(o) && (o->u.lau.arc == 0.))
                WARN("Outfit '%s' missing/invalid 'arc' element", o->name);
          }
+
+         outfit_launcherDesc(o);
       }
       else if (outfit_isFighterBay(&outfit_stack[i]))
          o->u.bay.ammo = outfit_get( o->u.bay.ammo_name );
@@ -2307,6 +2298,48 @@ int outfit_mapParse (void)
 
    return 0;
 }
+
+
+/**
+ * @brief Generates short descs for launchers, including ammo info.
+ *
+ *    @param o Launcher.
+ */
+static void outfit_launcherDesc( Outfit* o )
+{
+   int l;
+   Outfit *a; /* Launcher's ammo. */
+
+   if (o->desc_short != NULL) {
+      WARN("Outfit '%s' already has a short description", o->name);
+      return;
+   }
+
+   a = o->u.lau.ammo;
+
+   o->desc_short = malloc( OUTFIT_SHORTDESC_MAX );
+   l = nsnprintf( o->desc_short, OUTFIT_SHORTDESC_MAX,
+         "%s [%s]\n"
+         "%.0f CPU\n"
+         "%.0f%% Penetration\n"
+         "%.2f DPS [%.0f Damage]\n",
+         outfit_getType(o), dtype_damageTypeToStr(a->u.amm.dmg.type),
+         o->cpu,
+         a->u.amm.dmg.penetration * 100.,
+         1. / o->u.lau.delay * a->u.amm.dmg.damage, a->u.amm.dmg.damage );
+
+   if (a->u.amm.dmg.disable > 0.)
+      l += nsnprintf( &o->desc_short[l], OUTFIT_SHORTDESC_MAX - l,
+            "%.2f Disable/s [%.0f Disable]\n",
+            1. / o->u.lau.delay * a->u.amm.dmg.disable, a->u.amm.dmg.disable );
+
+   l += nsnprintf( &o->desc_short[l], OUTFIT_SHORTDESC_MAX - l,
+         "%.1f Shots Per Second\n"
+         "Holds %d %s",
+         1. / o->u.lau.delay,
+         o->u.lau.amount, o->u.lau.ammo_name );
+}
+
 
 /**
  * @brief Frees the outfit stack.

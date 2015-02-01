@@ -1316,13 +1316,24 @@ int equipment_shipStats( char *buf, int max_len,  const Pilot *s, int dpseps )
                mod_damage = s->stats.tur_damage;
                mod_shots  = 2. - s->stats.tur_firerate;
                break;
+            case OUTFIT_TYPE_LAUNCHER:
+            case OUTFIT_TYPE_TURRET_LAUNCHER:
+               mod_energy = 1.;
+               mod_damage = 1.;
+               mod_shots  = 1.; /* @todo Should be: 2. - s>stats.launch_rate */
+               break;
             default:
                continue;
          }
          shots = 1. / (mod_shots * outfit_delay(o));
-         dmg   = outfit_damage(o);
+
+         /* Special case: Ammo-based weapons. */
+         if (outfit_isLauncher(o))
+            dmg = outfit_damage(o->u.lau.ammo);
+         else
+            dmg = outfit_damage(o);
          dps  += shots * mod_damage * dmg->damage;
-         eps  += shots * mod_energy * outfit_energy(o);
+         eps  += shots * mod_energy * MAX( outfit_energy(o), 0. );
       }
    }
 
