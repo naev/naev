@@ -419,13 +419,17 @@ end
 
 function update_wset()
    wset_name, wset  = pp:weapset()
+
+-- Currently unused.
+--[[
    weap_icons = {}
 
    for k, v in ipairs( wset ) do
       weap_icons[k] = outfit.get( v.name ):icon()
    end
+--]]
 
-   aset = pp:actives()
+   aset = pp:actives(true)
    active_icons = {}
 
    for k, v in ipairs( aset ) do
@@ -763,6 +767,11 @@ function render( dt, dt_mod )
          elseif aset[i].state == "cooldown" then
             local texnum = round(aset[i].cooldown*35) --Turn the 0..1 cooldown number into a 0..35 tex id where 0 is ready.
             gfx.renderTex( cooldown, slot_x + slot_img_offs_x, slot_y + slot_img_offs_y, (texnum % 6) + 1, math.floor( texnum / 6 ) + 1 )
+         end
+
+         if aset[i].weapset then
+            gfx.print( true, aset[i].weapset, slot_x + slot_img_offs_x + 5,
+                  slot_y + slot_img_offs_y + 5, col_txt_bar, slot_w, false )
          end
 
          gfx.renderTex( slot, slot_x, slot_y ) -- Frame
