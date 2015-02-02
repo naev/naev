@@ -47,6 +47,7 @@ static int planetL_position( lua_State *L );
 static int planetL_services( lua_State *L );
 static int planetL_canland( lua_State *L );
 static int planetL_landOverride( lua_State *L );
+static int planetL_getLandOverride( lua_State *L );
 static int planetL_gfxSpace( lua_State *L );
 static int planetL_gfxExterior( lua_State *L );
 static int planetL_shipsSold( lua_State *L );
@@ -71,6 +72,7 @@ static const luaL_reg planet_methods[] = {
    { "services", planetL_services },
    { "canLand", planetL_canland },
    { "landOverride", planetL_landOverride },
+   { "getLandOverride", planetL_getLandOverride },
    { "gfxSpace", planetL_gfxSpace },
    { "gfxExterior", planetL_gfxExterior },
    { "shipsSold", planetL_shipsSold },
@@ -96,7 +98,7 @@ static const luaL_reg planet_cond_methods[] = {
    { "pos", planetL_position },
    { "services", planetL_services },
    { "canLand", planetL_canland },
-   { "landOverride", planetL_landOverride },
+   { "getLandOverride", planetL_getLandOverride },
    { "gfxSpace", planetL_gfxSpace },
    { "gfxExterior", planetL_gfxExterior },
    { "shipsSold", planetL_shipsSold },
@@ -669,6 +671,22 @@ static int planetL_landOverride( lua_State *L )
       space_factionChange();
 
    return 0;
+}
+
+
+/**
+ * @brief Gets the land override status for a planet.
+ *
+ * @usage if p:getLandOverride() then -- Player can definitely land.
+ *    @luaparam p Planet to check.
+ *    @luaparam b Whether or not the player is always allowed to land.
+ * @luafunc getLandOverride( p, b )
+ */
+static int planetL_getLandOverride( lua_State *L )
+{
+   Planet *p = luaL_validplanet(L,1);
+   lua_pushboolean(L, p->land_override);
+   return 1;
 }
 
 
