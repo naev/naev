@@ -163,7 +163,7 @@ void conf_setDefaults (void)
    conf_setVideoDefaults();
 
    /* Input */
-   input_setDefault();
+   input_setDefault(1);
 
    /* Debugging. */
    conf.fpu_except   = 0; /* Causes many issues. */

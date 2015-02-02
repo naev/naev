@@ -189,25 +189,53 @@ static void input_mouseMove( SDL_Event* event );
 
 /**
  * @brief Sets the default input keys.
+ *
+ *    @param wasd Whether to use the WASD layout.
  */
-void input_setDefault (void)
+void input_setDefault ( int wasd )
 {
    /* Movement */
-   input_setKeybind( "accel", KEYBIND_KEYBOARD, SDLK_UP, NMOD_ALL );
-   input_setKeybind( "left", KEYBIND_KEYBOARD, SDLK_LEFT, NMOD_ALL );
-   input_setKeybind( "right", KEYBIND_KEYBOARD, SDLK_RIGHT, NMOD_ALL );
-   input_setKeybind( "reverse", KEYBIND_KEYBOARD, SDLK_DOWN, NMOD_ALL );
+   if (wasd) {
+      input_setKeybind( "accel", KEYBIND_KEYBOARD, SDLK_w, NMOD_ALL );
+      input_setKeybind( "left", KEYBIND_KEYBOARD, SDLK_a, NMOD_ALL );
+      input_setKeybind( "right", KEYBIND_KEYBOARD, SDLK_d, NMOD_ALL );
+      input_setKeybind( "reverse", KEYBIND_KEYBOARD, SDLK_s, NMOD_NONE );
+   }
+   else {
+      input_setKeybind( "accel", KEYBIND_KEYBOARD, SDLK_UP, NMOD_ALL );
+      input_setKeybind( "left", KEYBIND_KEYBOARD, SDLK_LEFT, NMOD_ALL );
+      input_setKeybind( "right", KEYBIND_KEYBOARD, SDLK_RIGHT, NMOD_ALL );
+      input_setKeybind( "reverse", KEYBIND_KEYBOARD, SDLK_DOWN, NMOD_ALL );
+   }
+
    /* Targeting */
-   input_setKeybind( "target_next", KEYBIND_KEYBOARD, SDLK_t, NMOD_NONE );
-   input_setKeybind( "target_prev", KEYBIND_KEYBOARD, SDLK_t, NMOD_CTRL );
-   input_setKeybind( "target_nearest", KEYBIND_KEYBOARD, SDLK_n, NMOD_NONE );
-   input_setKeybind( "target_nextHostile", KEYBIND_KEYBOARD, SDLK_r, NMOD_CTRL );
-   input_setKeybind( "target_prevHostile", KEYBIND_NULL, SDLK_UNKNOWN, NMOD_NONE );
-   input_setKeybind( "target_hostile", KEYBIND_KEYBOARD, SDLK_r, NMOD_NONE );
-   input_setKeybind( "target_clear", KEYBIND_KEYBOARD, SDLK_BACKSPACE, NMOD_ALL );
+   if (wasd) {
+      input_setKeybind( "target_next", KEYBIND_KEYBOARD, SDLK_e, NMOD_CTRL );
+      input_setKeybind( "target_prev", KEYBIND_KEYBOARD, SDLK_q, NMOD_CTRL );
+      input_setKeybind( "target_nearest", KEYBIND_KEYBOARD, SDLK_t, NMOD_ALL );
+      input_setKeybind( "target_nextHostile", KEYBIND_NULL, SDLK_UNKNOWN, NMOD_NONE );
+      input_setKeybind( "target_prevHostile", KEYBIND_NULL, SDLK_UNKNOWN, NMOD_NONE );
+      input_setKeybind( "target_hostile", KEYBIND_KEYBOARD, SDLK_r, NMOD_ALL );
+      input_setKeybind( "target_clear", KEYBIND_KEYBOARD, SDLK_c, NMOD_ALL );
+   }
+   else {
+      input_setKeybind( "target_next", KEYBIND_KEYBOARD, SDLK_t, NMOD_NONE );
+      input_setKeybind( "target_prev", KEYBIND_KEYBOARD, SDLK_t, NMOD_CTRL );
+      input_setKeybind( "target_nearest", KEYBIND_KEYBOARD, SDLK_n, NMOD_NONE );
+      input_setKeybind( "target_nextHostile", KEYBIND_KEYBOARD, SDLK_r, NMOD_CTRL );
+      input_setKeybind( "target_prevHostile", KEYBIND_NULL, SDLK_UNKNOWN, NMOD_NONE );
+      input_setKeybind( "target_hostile", KEYBIND_KEYBOARD, SDLK_r, NMOD_NONE );
+      input_setKeybind( "target_clear", KEYBIND_KEYBOARD, SDLK_BACKSPACE, NMOD_ALL );
+   }
+
    /* Combat */
    input_setKeybind( "primary", KEYBIND_KEYBOARD, SDLK_SPACE, NMOD_ALL );
-   input_setKeybind( "face", KEYBIND_KEYBOARD, SDLK_a, NMOD_ALL );
+
+   if (wasd)
+      input_setKeybind( "face", KEYBIND_KEYBOARD, SDLK_q, NMOD_NONE );
+   else
+      input_setKeybind( "face", KEYBIND_KEYBOARD, SDLK_a, NMOD_ALL );
+
    input_setKeybind( "board", KEYBIND_KEYBOARD, SDLK_b, NMOD_NONE );
    /* Secondary Weapons */
    input_setKeybind( "secondary", KEYBIND_KEYBOARD, SDLK_LSHIFT, NMOD_ALL );
@@ -222,12 +250,12 @@ void input_setDefault (void)
    input_setKeybind( "weapset9", KEYBIND_KEYBOARD, SDLK_9, NMOD_ALL );
    input_setKeybind( "weapset0", KEYBIND_KEYBOARD, SDLK_0, NMOD_ALL );
    /* Escorts */
-   input_setKeybind( "e_targetNext", KEYBIND_KEYBOARD, SDLK_e, NMOD_NONE );
-   input_setKeybind( "e_targetPrev", KEYBIND_KEYBOARD, SDLK_e, NMOD_CTRL );
-   input_setKeybind( "e_attack", KEYBIND_KEYBOARD, SDLK_f, NMOD_ALL );
-   input_setKeybind( "e_hold", KEYBIND_KEYBOARD, SDLK_g, NMOD_ALL );
-   input_setKeybind( "e_return", KEYBIND_KEYBOARD, SDLK_c, NMOD_CTRL );
-   input_setKeybind( "e_clear", KEYBIND_KEYBOARD, SDLK_c, NMOD_NONE );
+   input_setKeybind( "e_targetNext", KEYBIND_NULL, SDLK_UNKNOWN, NMOD_NONE );
+   input_setKeybind( "e_targetPrev", KEYBIND_NULL, SDLK_UNKNOWN, NMOD_NONE );
+   input_setKeybind( "e_attack", KEYBIND_NULL, SDLK_UNKNOWN, NMOD_NONE );
+   input_setKeybind( "e_hold", KEYBIND_NULL, SDLK_UNKNOWN, NMOD_NONE );
+   input_setKeybind( "e_return", KEYBIND_NULL, SDLK_UNKNOWN, NMOD_NONE );
+   input_setKeybind( "e_clear", KEYBIND_NULL, SDLK_UNKNOWN, NMOD_NONE );
    /* Space Navigation */
    input_setKeybind( "autonav", KEYBIND_KEYBOARD, SDLK_j, NMOD_CTRL );
    input_setKeybind( "target_planet", KEYBIND_KEYBOARD, SDLK_p, NMOD_NONE );
@@ -247,7 +275,12 @@ void input_setDefault (void)
    input_setKeybind( "mapzoomin", KEYBIND_KEYBOARD, SDLK_KP_PLUS, NMOD_ALL );
    input_setKeybind( "mapzoomout", KEYBIND_KEYBOARD, SDLK_KP_MINUS, NMOD_ALL );
    input_setKeybind( "screenshot", KEYBIND_KEYBOARD, SDLK_KP_MULTIPLY, NMOD_ALL );
-   input_setKeybind( "pause", KEYBIND_KEYBOARD, SDLK_PAUSE, NMOD_ALL );
+
+   if (wasd)
+      input_setKeybind( "pause", KEYBIND_KEYBOARD, SDLK_z, NMOD_ALL );
+   else
+      input_setKeybind( "pause", KEYBIND_KEYBOARD, SDLK_PAUSE, NMOD_ALL );
+
    input_setKeybind( "speed", KEYBIND_KEYBOARD, SDLK_BACKQUOTE, NMOD_ALL );
    input_setKeybind( "menu", KEYBIND_KEYBOARD, SDLK_ESCAPE, NMOD_ALL );
    input_setKeybind( "info", KEYBIND_KEYBOARD, SDLK_i, NMOD_NONE );

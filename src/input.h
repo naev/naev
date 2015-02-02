@@ -32,7 +32,7 @@ typedef enum {
 /*
  * set input
  */
-void input_setDefault (void);
+void input_setDefault( int wasd );
 SDLKey input_keyConv( const char *name );
 void input_setKeybind( const char *keybind, KeybindType type, SDLKey key, SDLMod mod );
 const char* input_modToText( SDLMod mod );
