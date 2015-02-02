@@ -163,7 +163,7 @@ static glFont* dialogue_getSize( const char* title,
 {
    glFont* font;
    double w, h, d;
-   int titlelen;
+   int titlelen, msglen;
 #if 0
    int len;
    len = strlen(msg);
@@ -171,7 +171,15 @@ static glFont* dialogue_getSize( const char* title,
 
    /* Get title length. */
    titlelen = gl_printWidthRaw( &gl_defFont, title );
-   w = MAX(450, titlelen+40); /* Default width to try. */
+   msglen = gl_printWidthRaw( &gl_smallFont, msg );
+
+   /*
+    * Scale the width between 300 and 800 px depending on the message length.
+    * The width increases in steps of 50 px for every 200 px of text.
+    */
+   w = CLAMP( 300, 800, 300 + ceil((msglen - 300) / 200.) * 50 );
+
+   w = MAX(w, titlelen+40); /* Expand width if the title is long. */
 
    /* First we split by text length. */
 #if 0
