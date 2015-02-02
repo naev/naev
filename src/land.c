@@ -608,7 +608,7 @@ static int bar_genList( unsigned int wid )
    glTexture **portraits;
    char **names, *focused;
    int w, h, iw, ih, bw, bh;
-   int n;
+   int n, pos;
 
    /* Get dimensions. */
    bar_getDim( wid, &w, &h, &iw, &ih, &bw, &bh );
@@ -617,8 +617,14 @@ static int bar_genList( unsigned int wid )
    focused = strdup(window_getFocus(wid));
 
    /* Destroy widget if already exists. */
-   if (widget_exists( wid, "iarMissions" ))
+   if (widget_exists( wid, "iarMissions" )) {
+      /* Store position. */
+      pos = toolkit_getImageArrayPos( wid, "iarMissions" );
+
       window_destroyWidget( wid, "iarMissions" );
+   }
+   else
+      pos = -1;
 
    /* We sort just in case. */
    npc_sort();
@@ -646,6 +652,9 @@ static int bar_genList( unsigned int wid )
    window_addImageArray( wid, 20, -40,
          iw, ih, "iarMissions", 100, 75,
          portraits, names, n, bar_update, bar_approach );
+
+   /* Restore position. */
+   toolkit_setImageArrayPos( wid, "iarMissions", pos );
 
    /* write the outfits stuff */
    bar_update( wid, NULL );
@@ -770,8 +779,10 @@ static void bar_approach( unsigned int wid, char *str )
    n = npc_getArraySize();
    npc_approach( pos );
    bar_genList( wid ); /* Always just in case. */
-   if (n == npc_getArraySize())
-      toolkit_setImageArrayPos( wid, "iarMissions", pos+1 );
+
+   /* Focus the news if the number of NPCs has changed. */
+   if (n != npc_getArraySize())
+      toolkit_setImageArrayPos( wid, "iarMissions", 0 );
 
    /* Reset markers. */
    mission_sysMark();
