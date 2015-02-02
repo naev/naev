@@ -340,7 +340,6 @@ end
 
 -- Handles generating distress messages
 function gen_distress ( target )
-
    -- Must have a valid distress rate
    if mem.distressrate <= 0 then
       return
@@ -351,12 +350,13 @@ function gen_distress ( target )
       return
    end
 
-   -- Update distres counter
+   -- Initialize if unset.
    if mem.distressed == nil then
       mem.distressed = 1
-   else
-      mem.distressed = mem.distressed + 1
    end
+
+   -- Update distress counter
+   mem.distressed = mem.distressed + 1
 
    -- See if it's time to trigger distress
    if mem.distressed > mem.distressrate then
