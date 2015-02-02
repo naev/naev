@@ -336,6 +336,9 @@ void equipment_open( unsigned int wid )
    /* Custom widget (ship information). */
    window_addCust( wid, 20 + sw + 40 + ew + 20, -40, cw, ch, "cstMisc", 0,
          equipment_renderMisc, NULL, NULL );
+
+   /* Focus the ships image array. */
+   window_setFocus( wid , EQUIPMENT_SHIPS );
 }
 
 
