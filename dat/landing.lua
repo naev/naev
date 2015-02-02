@@ -156,7 +156,7 @@ end
 function pir_clanworld( pnt )
    local fct = pnt:faction()
    local standing = fct:playerStanding()
-   local can_land = standing > 20
+   local can_land = standing > 20 or pnt:getLandOverride()
 
    local land_msg
    if can_land then
@@ -217,7 +217,7 @@ end
 -- Expects the planet, the lowest standing at which landing is allowed, and the lowest standing at which bribing is allowed.
 function land_civilian( pnt, land_floor, bribe_floor )
    local fct = pnt:faction()
-   local can_land = fct:playerStanding() >= land_floor
+   local can_land = fct:playerStanding() >= land_floor or pnt:getLandOverride()
 
    -- Get land message
    local land_msg
@@ -244,7 +244,7 @@ end
 function land_military( pnt, land_floor, ok_msg, notyet_msg, no_msg, nobribe )
    local fct = pnt:faction()
    local standing = fct:playerStanding()
-   local can_land = standing >= land_floor
+   local can_land = standing >= land_floor or pnt:getLandOverride()
 
    local land_msg
    if can_land then
