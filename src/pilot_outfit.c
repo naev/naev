@@ -937,6 +937,7 @@ void pilot_calcStats( Pilot* pilot )
          pilot->turn_base     += o->u.mod.turn;
          pilot->speed_base    += o->u.mod.speed;
          /* Health. */
+         pilot->dmg_absorb    += o->u.mod.absorb;
          pilot->armour_max    += o->u.mod.armour;
          pilot->armour_regen  += o->u.mod.armour_regen;
          pilot->shield_max    += o->u.mod.shield;
