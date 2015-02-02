@@ -656,8 +656,18 @@ static int planetL_canland( lua_State *L )
  */
 static int planetL_landOverride( lua_State *L )
 {
-   Planet *p = luaL_validplanet(L,1);
+   Planet *p;
+   int old;
+
+   p   = luaL_validplanet(L,1);
+   old = p->land_override;
+
    p->land_override = !!lua_toboolean(L,2);
+
+   /* If the value has changed, re-run the landing Lua next frame. */
+   if (p->land_override != old)
+      space_factionChange();
+
    return 0;
 }
 
