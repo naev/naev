@@ -388,6 +388,7 @@ static void info_openShip( unsigned int wid )
          "Speed:\n"
          "Turn:\n"
          "\n"
+         "Absorption:\n"
          "Shield:\n"
          "Armour:\n"
          "Energy:\n"
@@ -432,6 +433,7 @@ static void ship_update( unsigned int wid )
          "%.0f m/s (max %.0f m/s)\n"
          "%.0f deg/s\n"
          "\n"
+         "%.0f%%\n" /* Absorbption */
          "%.0f / %.0f MJ (%.1f MW)\n" /* Shield */
          "%.0f / %.0f MJ (%.1f MW)\n" /* Armour */
          "%.0f / %.0f MJ (%.1f MW)\n" /* Energy */
@@ -451,6 +453,7 @@ static void ship_update( unsigned int wid )
          player.p->speed, solid_maxspeed( player.p->solid, player.p->speed, player.p->thrust ),
          player.p->turn*180./M_PI,
          /* Health. */
+         player.p->dmg_absorb,
          player.p->shield, player.p->shield_max, player.p->shield_regen,
          player.p->armour, player.p->armour_max, player.p->armour_regen,
          player.p->energy, player.p->energy_max, player.p->energy_regen,
