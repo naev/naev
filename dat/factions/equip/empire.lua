@@ -25,10 +25,10 @@ end
 
 -- CANNONS
 function equip_forwardEmpLow ()
-   return { "Laser Cannon MK2", "Laser Cannon MK3" }
+   return { "Laser Cannon MK3", "Ripper Cannon" }
 end
 function equip_forwardEmpMed ()
-   return { "Laser Cannon MK3", "Ripper Cannon", "Heavy Ripper Cannon" }
+   return { "Ripper Cannon", "Heavy Ripper Cannon" }
 end
 -- TURRETS
 function equip_turretEmpLow ()
@@ -87,7 +87,7 @@ function equip_empireMilitary( p, shipsize )
       elseif class == "Fighter" then
          use_primary    = nhigh-1
          use_secondary  = 1
-         addWeapons( equip_forwardEmpMed(), use_primary )
+         addWeapons( equip_forwardEmpLow(), use_primary )
          addWeapons( equip_secondaryEmp(), use_secondary )
          medium         = equip_mediumLow()
          low            = equip_lowLow()
