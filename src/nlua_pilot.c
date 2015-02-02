@@ -2999,6 +2999,7 @@ lua_rawset( L, -3 )
  *  <li> speed </li>
  *  <li> speed_max </li>
  *  <li> turn </li>
+ *  <li> absorb </li>
  *  <li> armour </li>
  *  <li> shield </li>
  *  <li> energy </li>
@@ -3036,6 +3037,7 @@ static int pilotL_getStats( lua_State *L )
    PUSH_DOUBLE( L, "turn", p->turn * 180. / M_PI ); /* Convert back to grad. */
    PUSH_DOUBLE( L, "speed_max", solid_maxspeed(p->solid, p->speed, p->thrust) );
    /* Health. */
+   PUSH_DOUBLE( L, "absorb", p->dmg_absorb );
    PUSH_DOUBLE( L, "armour", p->armour_max );
    PUSH_DOUBLE( L, "shield", p->shield_max );
    PUSH_DOUBLE( L, "energy", p->energy_max );
