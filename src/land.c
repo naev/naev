@@ -563,6 +563,9 @@ static void bar_open( unsigned int wid )
    bar_getDim( wid, &w, &h, &iw, &ih, &bw, &bh );
    dh = gl_printHeightRaw( &gl_smallFont, w - iw - 60, land_planet->bar_description );
 
+   /* Approach when pressing enter */
+   window_setAccept( wid, bar_approach );
+
    /* Buttons */
    window_addButtonKey( wid, -20, 20,
          bw, bh, "btnCloseBar",
@@ -642,7 +645,7 @@ static int bar_genList( unsigned int wid )
    }
    window_addImageArray( wid, 20, -40,
          iw, ih, "iarMissions", 100, 75,
-         portraits, names, n, bar_update, NULL );
+         portraits, names, n, bar_update, bar_approach );
 
    /* write the outfits stuff */
    bar_update( wid, NULL );
