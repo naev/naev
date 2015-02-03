@@ -989,6 +989,8 @@ static int pilot_shootWeapon( Pilot* p, PilotOutfitSlot* w )
 
       w->u.ammo.quantity -= 1; /* we just shot it */
       p->mass_outfit     -= w->u.ammo.outfit->mass;
+      p->solid->mass     -= w->u.ammo.outfit->mass;
+
       pilot_updateMass( p );
    }
 
