@@ -29,7 +29,7 @@
 void pilot_heatCalc( Pilot *p )
 {
    double mass_kg;
-   mass_kg        = 1000. * p->ship->mass;
+   mass_kg        = 1000. * p->base_mass;
    p->heat_emis   = 0.8; /**< @TODO make it influencable. */
    p->heat_cond   = STEEL_HEAT_CONDUCTIVITY;
    p->heat_C      = STEEL_HEAT_CAPACITY * mass_kg;

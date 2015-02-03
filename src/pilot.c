@@ -701,10 +701,8 @@ void pilot_cooldown( Pilot *p )
 
    heat_mean /= heat_capacity;
 
-   p->cdelay = 5. + pow(p->ship->mass, .5) / 2.;
-
    /*
-    * Base delay of about 11.7s for a Lancelot, 44.4s for a Peacemaker.
+    * Base delay of about 9.5s for a Lancelot, 32.8s for a Peacemaker.
     *
     * Super heat penalty table:
     *    300K:  13.4%
@@ -713,7 +711,7 @@ void pilot_cooldown( Pilot *p )
     *    450K:  75.6%
     *    500K: 100.0%
     */
-   p->cdelay = (5. + pow(p->ship->mass, .5) /2.) *
+   p->cdelay = (5. + sqrt(p->base_mass) / 2.) *
          (1. + pow(heat_mean / CONST_SPACE_STAR_TEMP - 1., 1.25));
    p->ctimer = p->cdelay;
    p->heat_start = p->heat_T;
@@ -940,7 +938,7 @@ void pilot_distress( Pilot *p, const char *msg, int ignore_int )
 
       /* Modify faction, about 1 for a llama, 4.2 for a hawking */
       if ((t != NULL) && (t->faction == FACTION_PLAYER) && r)
-         faction_modPlayer( p->faction, -(pow(p->ship->mass, 0.2) - 1.), "distress" );
+         faction_modPlayer( p->faction, -(pow(p->base_mass, 0.2) - 1.), "distress" );
 
       /* Set flag to avoid a second faction hit. */
       pilot_setFlag(p, PILOT_DISTRESSED);
@@ -1178,7 +1176,7 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
          if ((pshooter != NULL) && (pshooter->faction == FACTION_PLAYER)) {
 
             /* About 6 for a llama, 52 for hawking. */
-            mod = 2*(pow(p->ship->mass,0.4) - 1.);
+            mod = 2 * (pow(p->base_mass, 0.4) - 1.);
 
             /* Modify faction for him and friends. */
             faction_modPlayer( p->faction, -mod, "kill" );
@@ -1238,7 +1236,7 @@ void pilot_updateDisable( Pilot* p, const unsigned int shooter )
       pshooter = pilot_get(shooter);
       if ((pshooter != NULL) && (pshooter->faction == FACTION_PLAYER)) {
          /* About 3 for a llama, 26 for hawking. */
-         mod = pow(p->ship->mass,0.4) - 1.;
+         mod = pow(p->base_mass, 0.4) - 1.;
 
          /* Modify combat rating. */
          player.crating += 2*mod;

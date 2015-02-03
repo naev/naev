@@ -20,6 +20,7 @@
 #include "player.h"
 #include "space.h"
 #include "gui.h"
+#include "slots.h"
 #include "nstring.h"
 
 
@@ -871,6 +872,7 @@ void pilot_calcStats( Pilot* pilot )
     */
    /* mass */
    pilot->solid->mass   = pilot->ship->mass;
+   pilot->base_mass     = pilot->solid->mass;
    /* cpu */
    pilot->cpu           = 0.;
    /* movement */
@@ -922,6 +924,10 @@ void pilot_calcStats( Pilot* pilot )
 
       /* Add mass. */
       pilot->mass_outfit   += o->mass;
+
+      /* Keep a separate counter for required (core) outfits. */
+      if (sp_required( o->slot.spid ))
+         pilot->base_mass += o->mass;
 
       /* Add ammo mass. */
       if (outfit_ammo(o) != NULL)
