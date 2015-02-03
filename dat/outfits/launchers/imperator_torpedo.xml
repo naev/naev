@@ -15,8 +15,8 @@
   <spfx_armour>ExpL2</spfx_armour>
   <duration blowup="armour">60</duration>
   <thrust>0</thrust>
-  <turn>22</turn>
-  <speed>100</speed>
+  <turn>20</turn>
+  <speed>125</speed>
   <resist>100</resist>
   <damage>
    <type>impact</type>
