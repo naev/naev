@@ -154,7 +154,7 @@ static unsigned int repeat_keyCounter  = 0;  /**< Counter for key repeats. */
  */
 static double input_mouseTimer         = -1.; /**< Timer for hiding again. */
 static int input_mouseCounter          = 1; /**< Counter for mouse display/hiding. */
-static double input_mouseClickTimer    = 0; /**< Time to consider double-clicks for. */
+static unsigned int input_mouseClickLast = 0; /**< Time of last click (in ms) */
 static void *input_lastClicked         = NULL; /**< Pointer to the last-clicked item. */
 
 
@@ -684,9 +684,6 @@ void input_update( double dt )
       if ((input_mouseTimer < 0.) && (input_mouseCounter <= 0))
          SDL_ShowCursor( SDL_DISABLE );
    }
-
-   if (input_mouseClickTimer > 0.)
-      input_mouseClickTimer -= dt;
 
    /* Key repeat if applicable. */
    if (conf.repeat_delay != 0) {
@@ -1324,7 +1321,7 @@ void input_clicked( void *clicked )
       return;
 
    input_lastClicked = clicked;
-   input_mouseClickTimer = conf.mouse_doubleclick;
+   input_mouseClickLast = SDL_GetTicks();
 }
 
 
@@ -1334,10 +1331,15 @@ void input_clicked( void *clicked )
  */
 int input_isDoubleClick( void *clicked )
 {
+   unsigned int threshold;
+
    if (conf.mouse_doubleclick <= 0.)
       return 1;
 
-   if (input_mouseClickTimer > 0. && (clicked == input_lastClicked))
+   /* Most recent time that constitutes a valid double-click. */
+   threshold = input_mouseClickLast + (int)(conf.mouse_doubleclick * 1000);
+
+   if ((SDL_GetTicks() <= threshold) && (clicked == input_lastClicked))
       return 1;
 
    return 0;
