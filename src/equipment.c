@@ -1845,12 +1845,19 @@ static void equipment_transChangeShip( unsigned int wid, char* str )
  */
 static void equipment_changeShip( unsigned int wid )
 {
-   char *shipname;
+   char *shipname, *filtertext;
+   int i;
 
    shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
 
    if (land_errDialogue( shipname, "swapEquipment" ))
       return;
+
+   /* Store active tab, filter text, and positions for the outfits. */
+   i = window_tabWinGetActive( wid, EQUIPMENT_OUTFIT_TAB );
+   toolkit_saveImageArrayData( wid, EQUIPMENT_OUTFITS, &iar_data[i] );
+   if (widget_exists(wid, EQUIPMENT_FILTER))
+      filtertext = window_getInput( equipment_wid, EQUIPMENT_FILTER );
 
    /* Swap ship. */
    player_swapShip( shipname );
@@ -1862,8 +1869,16 @@ static void equipment_changeShip( unsigned int wid )
     * recover it and use it instead. */
    wid = equipment_wid;
 
+   /* Restore outfits image array properties. */
+   window_tabWinSetActive( wid, EQUIPMENT_OUTFIT_TAB, i );
+   toolkit_setImageArrayPos(    wid, EQUIPMENT_OUTFITS, iar_data[i].pos );
+   toolkit_setImageArrayOffset( wid, EQUIPMENT_OUTFITS, iar_data[i].offset );
+   if (widget_exists(wid, EQUIPMENT_FILTER))
+      window_setInput(wid, EQUIPMENT_FILTER, filtertext);
+
    /* Regenerate ship widget. */
    equipment_regenLists( wid, 0, 1 );
+
    /* Focus new ship. */
    toolkit_setImageArrayPos(    wid, EQUIPMENT_SHIPS, 0 );
    toolkit_setImageArrayOffset( wid, EQUIPMENT_SHIPS, 0. );
