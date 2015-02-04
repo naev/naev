@@ -710,7 +710,7 @@ void input_update( double dt )
 
 
 #define KEY(s)    (strcmp(input_keybinds[keynum].name,s)==0) /**< Shortcut for ease. */
-#define INGAME()  (!toolkit_isOpen() && !paused) /**< Makes sure player is in game. */
+#define INGAME()  (!toolkit_isOpen()) /**< Makes sure player is in game. */
 #define NOHYP()   \
 ((player.p != NULL) && !pilot_isFlag(player.p,PILOT_HYP_PREP) &&\
 !pilot_isFlag(player.p,PILOT_HYP_BEGIN) &&\
