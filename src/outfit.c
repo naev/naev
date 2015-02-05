@@ -58,6 +58,7 @@ static Outfit* outfit_stack = NULL; /**< Stack of outfits. */
 static OutfitType outfit_strToOutfitType( char *buf );
 static int outfit_setDefaultSize( Outfit *o );
 static void outfit_launcherDesc( Outfit* o );
+static int outfit_compareNames( const void *name1, const void *name2 );
 /* parsing */
 static int outfit_loadDir( char *dir );
 static int outfit_parseDamage( Damage *dmg, xmlNodePtr node );
@@ -2195,16 +2196,17 @@ static int outfit_loadDir( char *dir )
  */
 int outfit_load (void)
 {
-   int i;
+   int i, noutfits;
    Outfit *o;
 
    /* First pass, loads up ammunition. */
    outfit_stack = array_create(Outfit);
    outfit_loadDir( OUTFIT_DATA_PATH );
    array_shrink(&outfit_stack);
+   noutfits = array_size(outfit_stack);
 
    /* Second pass, sets up ammunition relationships. */
-   for (i=0; i<array_size(outfit_stack); i++) {
+   for (i=0; i<noutfits; i++) {
       o = &outfit_stack[i];
       if (outfit_isLauncher(&outfit_stack[i])) {
          o->u.lau.ammo = outfit_get( o->u.lau.ammo_name );
@@ -2224,10 +2226,47 @@ int outfit_load (void)
          o->u.bay.ammo = outfit_get( o->u.bay.ammo_name );
    }
 
-   DEBUG("Loaded %d Outfit%s", array_size(outfit_stack), (array_size(outfit_stack)==1) ? "" : "s" );
+#ifdef DEBUGGING
+   char **outfit_names = malloc( noutfits * sizeof(char*) );
+   int start;
+
+   for (i=0; i<noutfits; i++)
+      outfit_names[i] = outfit_stack[i].name;
+
+   qsort( outfit_names, noutfits, sizeof(char*) , outfit_compareNames );
+   for (i=0; i<(noutfits - 1); i++) {
+      start = i;
+      while (strcmp(outfit_names[i], outfit_names[i+1]) == 0)
+         i++;
+
+      if (i == start)
+         continue;
+
+      WARN("Name collision! %d outfits are named '%s'", i+1 - start,
+            outfit_names[start]);
+   }
+   free(outfit_names);
+#endif
+
+   DEBUG("Loaded %d Outfit%s", noutfits, (noutfits == 1) ? "" : "s" );
 
    return 0;
 }
+
+
+/**
+ * @brief qsort compare function for names.
+ */
+static int outfit_compareNames( const void *name1, const void *name2 )
+{
+   const char *n1, *n2;
+
+   n1 = *(const char**) name1;
+   n2 = *(const char**) name2;
+
+   return strcmp(n1, n2);
+}
+
 
 /**
  * @brief Parses all the maps.
