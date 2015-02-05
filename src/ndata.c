@@ -348,22 +348,20 @@ static int ndata_openFile (void)
       nsnprintf ( pathname, PATH_MAX, "%s-%d.%d.%d", NDATA_FILENAME, VMAJOR, VMINOR, VREV );
 #endif /* VREV < 0 */
 
-      if ( ndata_isndata ( pathname ) ) {
-         ndata_filename = malloc ( PATH_MAX );
-         strcpy ( ndata_filename, pathname );
+      if (ndata_isndata(pathname)) {
+         ndata_filename = malloc(PATH_MAX);
+         strncpy(ndata_filename, pathname, PATH_MAX);
       }
-      else if ( ndata_isndata ( strcat(pathname, ".zip" )) ) {
-         ndata_filename = malloc ( PATH_MAX );
-         strcpy ( ndata_filename, pathname );
+      else if (ndata_isndata(strncat(pathname, ".zip", PATH_MAX))) {
+         ndata_filename = malloc(PATH_MAX);
+         strncpy(ndata_filename, pathname, PATH_MAX);
       }
-
       /* Check default ndata. */
       else if (ndata_isndata(NDATA_DEF))
          ndata_filename = strdup(NDATA_DEF);
 
       /* Try to open any ndata in path. */
       else {
-
          /* Check in NDATA_DEF path. */
          buf = strdup(NDATA_DEF);
          nsnprintf( path, PATH_MAX, "%s", nfile_dirname( buf ) );
