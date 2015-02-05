@@ -122,6 +122,8 @@
   <item>Map: Sol</item>
   <item>Map: Dvaered Core</item>
   <item>Map: Empire Core</item>
+  <item>Map: Sirius Core</item>
+  <item>Map: Za'lek Core</item>
   <item>Map: Pirate strongholds</item>
   <item>Ultra Map</item>
   <item>Local System Map</item>
@@ -649,6 +651,8 @@
   <item>Map: Sol</item>
   <item>Map: Dvaered Core</item>
   <item>Map: Empire Core</item>
+  <item>Map: Sirius Core</item>
+  <item>Map: Za'lek Core</item>
   <item>Local System Map</item>
  </tech>
 
@@ -866,7 +870,7 @@
   <item>S&amp;K Superheavy Combat Plating</item>
  </tech>
  <tech name="Pirate Maps">
-  <item>Map: Pirate worlds</item>
+  <item>Map: Pirate strongholds</item>
   <item>Map: Qorel Expanse</item>
  </tech>
  <tech name="New Haven Maps">

@@ -8,56 +8,84 @@
  </general>
  <specific type="map">
   <sys name="Gamma Polaris">
-   <jump>Qex</jump>
-   <jump>Koralis</jump>
-   <jump>Sirou</jump>
-   <jump>Shakar</jump>
    <jump>Apez</jump>
-   <asset>Polaris Prime</asset>
+   <jump>Koralis</jump>
+   <jump>Qex</jump>
+   <jump>Shakar</jump>
+   <jump>Sirou</jump>
    <asset>Emperor's Fist</asset>
-   <asset>Vuere</asset>
-   <asset>New Pluto</asset>
-   <asset>New Deimos</asset>
-   <asset>New Phobos</asset>
-   <asset>New Mars</asset>
+   <asset>Emperor's Wrath</asset>
    <asset>Halir</asset>
+   <asset>New Deimos</asset>
+   <asset>New Mars</asset>
+   <asset>New Phobos</asset>
+   <asset>New Pluto</asset>
+   <asset>Polaris Prime</asset>
+   <asset>Vuere</asset>
   </sys>
   <sys name="Qex">
    <jump>Gamma Polaris</jump>
-   <asset>Semper</asset>
-   <asset>Reidd</asset>
+   <jump>Koralis</jump>
    <asset>Ammu</asset>
    <asset>Qex II</asset>
    <asset>Qex IV</asset>
    <asset>Qex V</asset>
+   <asset>Reidd</asset>
+   <asset>Semper</asset>
   </sys>
   <sys name="Koralis">
    <jump>Gamma Polaris</jump>
-   <asset>Luxsor</asset>
-   <asset>Paxsor</asset>
+   <jump>Pastor</jump>
+   <jump>Qex</jump>
+   <asset>Aillis</asset>
    <asset>Fuzka</asset>
    <asset>Koralis IV</asset>
    <asset>Koralis VI</asset>
-   <asset>Aillis</asset>
+   <asset>Luxsor</asset>
+   <asset>Paxsor</asset>
   </sys>
   <sys name="Sirou">
    <jump>Gamma Polaris</jump>
+   <asset>Doormat</asset>
+   <asset>Rogan</asset>
+   <asset>Sirou Alpha</asset>
+   <asset>Sirou I</asset>
+   <asset>Sirou II</asset>
+   <asset>Sirou VI</asset>
   </sys>
   <sys name="Shakar">
    <jump>Gamma Polaris</jump>
    <asset>Nova Shakar</asset>
-   <asset>Zembla Shakar</asset>
    <asset>Shakar I</asset>
    <asset>Shakar III</asset>
+   <asset>Zembla Shakar</asset>
   </sys>
   <sys name="Apez">
    <jump>Gamma Polaris</jump>
+   <jump>Mural</jump>
+   <asset>Apez II</asset>
    <asset>Apez V</asset>
-   <asset>Zeo</asset>
+   <asset>Crylo</asset>
    <asset>Dowue</asset>
    <asset>Gem</asset>
-   <asset>Crylo</asset>
-   <asset>Apez II</asset>
+   <asset>Zeo</asset>
+  </sys>
+  <sys name="Pastor">
+   <jump>Koralis</jump>
+   <asset>Dolmen</asset>
+   <asset>Finn</asset>
+   <asset>Gennus</asset>
+   <asset>Pastor II</asset>
+   <asset>Pastor IIX</asset>
+   <asset>Pastor VI</asset>
+  </sys>
+  <sys name="Mural">
+   <jump>Apez</jump>
+   <asset>Amphion</asset>
+   <asset>Hrimfaxi</asset>
+   <asset>Janus Station</asset>
+   <asset>Scinfaxi</asset>
+   <asset>Zethus</asset>
   </sys>
  </specific>
 </outfit>
