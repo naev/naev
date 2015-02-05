@@ -975,6 +975,9 @@ static void weapon_update( Weapon* w, const double dt, WeaponLayer layer )
  */
 static void weapon_hitAI( Pilot *p, Pilot *shooter, double dmg )
 {
+   int i;
+   double d;
+
    /* Must be a valid shooter. */
    if (shooter == NULL)
       return;
@@ -994,6 +997,26 @@ static void weapon_hitAI( Pilot *p, Pilot *shooter, double dmg )
             (shooter->target==p->id)) {
          /* Inform attacked. */
          ai_attacked( p, shooter->id );
+
+         /* Trigger a pseudo-distress that incurs no faction loss. */
+         for (i=0; i<pilot_nstack; i++) {
+            /* Skip if unsuitable. */
+            if ((pilot_stack[i]->ai == NULL) || (pilot_stack[i]->id == p->id) ||
+                  (pilot_isFlag(pilot_stack[i], PILOT_DEAD)) ||
+                  (pilot_isFlag(pilot_stack[i], PILOT_DELETE)))
+               continue;
+
+            /*
+             * Pilots within a radius of 1500 (in a zero-interference system)
+             * will immediately notice hostile actions.
+             */
+            d = vect_dist2( &p->solid->pos, &pilot_stack[i]->solid->pos );
+            if (d > (pilot_sensorRange() * 0.04 )) /* 0.2^2 */
+               continue;
+
+            /* Send AI the distress signal. */
+            ai_getDistress( pilot_stack[i], p, shooter );
+         }
 
          /* Set as hostile. */
          pilot_setHostile(p);

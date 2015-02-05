@@ -872,22 +872,23 @@ void pilot_broadcast( Pilot *p, const char *msg, int ignore_int )
  *
  * Can do a faction hit on the player.
  *
- *    @param p Pilot to send distress signal.
+ *    @param p Pilot sending the distress signal.
+ *    @param attacker Attacking pilot.
  *    @param msg Message in distress signal.
  *    @param ignore_int Whether or not should ignore interference.
  */
-void pilot_distress( Pilot *p, const char *msg, int ignore_int )
+void pilot_distress( Pilot *p, Pilot *attacker, const char *msg, int ignore_int )
 {
    int i, r;
    double d;
-   Pilot *t;
 
    /* Broadcast the message. */
    if (msg[0] != '\0')
       pilot_broadcast( p, msg, ignore_int );
 
-   /* Get the target to see if it's the player. */
-   t = pilot_get(p->target);
+   /* Use the victim's target if the attacker is unknown. */
+   if (attacker == NULL)
+      attacker = pilot_get( p->target );
 
    /* Now proceed to see if player.p should incur faction loss because
     * of the broadcast signal. */
@@ -895,13 +896,15 @@ void pilot_distress( Pilot *p, const char *msg, int ignore_int )
    /* Consider not in range at first. */
    r = 0;
 
-   /* Check if planet is in range. */
-   for (i=0; i<cur_system->nplanets; i++) {
-      if (planet_hasService(cur_system->planets[i], PLANET_SERVICE_INHABITED) &&
-            (!ignore_int && pilot_inRangePlanet(p, i)) &&
-            !areEnemies(p->faction, cur_system->planets[i]->faction)) {
-         r = 1;
-         break;
+   if ((attacker == player.p) && !pilot_isFlag(p, PILOT_DISTRESSED)) {
+      /* Check if planet is in range. */
+      for (i=0; i<cur_system->nplanets; i++) {
+         if (planet_hasService(cur_system->planets[i], PLANET_SERVICE_INHABITED) &&
+               (!ignore_int && pilot_inRangePlanet(p, i)) &&
+               !areEnemies(p->faction, cur_system->planets[i]->faction)) {
+            r = 1;
+            break;
+         }
       }
    }
 
@@ -925,10 +928,11 @@ void pilot_distress( Pilot *p, const char *msg, int ignore_int )
          }
 
          /* Send AI the distress signal. */
-         ai_getDistress( pilot_stack[i], p );
+         ai_getDistress( pilot_stack[i], p, attacker );
 
          /* Check if should take faction hit. */
-         if (!areEnemies(p->faction, pilot_stack[i]->faction))
+         if ((attacker == player.p) && !pilot_isFlag(p, PILOT_DISTRESSED) &&
+               !areEnemies(p->faction, pilot_stack[i]->faction))
             r = 1;
       }
    }
@@ -937,7 +941,7 @@ void pilot_distress( Pilot *p, const char *msg, int ignore_int )
    if (!pilot_isFlag(p, PILOT_DISTRESSED)) {
 
       /* Modify faction, about 1 for a llama, 4.2 for a hawking */
-      if ((t != NULL) && (t->faction == FACTION_PLAYER) && r)
+      if ((attacker != NULL) && (attacker->faction == FACTION_PLAYER) && r)
          faction_modPlayer( p->faction, -(pow(p->base_mass, 0.2) - 1.), "distress" );
 
       /* Set flag to avoid a second faction hit. */
