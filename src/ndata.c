@@ -477,6 +477,8 @@ int ndata_open (void)
  */
 void ndata_close (void)
 {
+   unsigned int i;
+
    /* Destroy the name. */
    if (ndata_arcName != NULL) {
       free(ndata_arcName);
@@ -485,8 +487,11 @@ void ndata_close (void)
 
    /* Destroy the list. */
    if (ndata_fileList != NULL) {
+      for (i=0; i<ndata_fileNList; i++)
+         free(ndata_fileList[i]);
+
       free(ndata_fileList);
-      ndata_fileList = NULL;
+      ndata_fileList  = NULL;
       ndata_fileNList = 0;
    }
 
