@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Tumut">
+ <pos>
+  <x>3666.871135</x>
+  <y>1895.063654</y>
+ </pos>
+ <GFX>
+  <space>A04.png</space>
+  <exterior>mining.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Za'lek</faction>
+  <value>75.000000</value>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>A</class>
+  <population>50000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities/>
+  <description>Tumut is a young volcanic world that the Za'lek have taken some interest in as a massive geological study. Moreover, it is the primary location of several rare mineral mines that are hard to find in other parts of the inhabited galaxy. However, these mines are strictly small-scale, and the geological study takes large precedent.</description>
+ </general>
+</asset>

@@ -10,8 +10,8 @@
  </GFX>
  <presence>
   <faction>Empire</faction>
-  <value>75.000000</value>
-  <range>5</range>
+  <value>100.000000</value>
+  <range>2</range>
  </presence>
  <general>
   <class>M</class>
@@ -27,7 +27,7 @@
    <shipyard/>
   </services>
   <commodities/>
-  <description>Grandard is the home of some of the Empire's most legendary fighter pilots. For reasons unknown, this world has become reknown for it's highly skilled light combat ship specialists. Rather than discourage this analomy, the Empire has taken full advantage of it.</description>
+  <description>Grandard is the home of some of the Empire's most legendary fighter pilots. For reasons unknown, this world has become reknowned for its highly-skilled light combat ship specialists. Rather than discourage this anomaly, the Empire has taken full advantage of it.</description>
   <bar>This bar has pictures of some of the more renowned fighter pilots in its history. Several imperial officers look at these pictures in what can only be described as burning envy. Prospective aces, then.</bar>
  </general>
  <tech>
@@ -45,6 +45,6 @@
   <item>Star Maps</item>
   <item>Basic Civilian Ships</item>
   <item>Light Civilian Combat Ships</item>
-  <item>Engines Elite</item>
+  <item>Engines High</item>
  </tech>
 </asset>

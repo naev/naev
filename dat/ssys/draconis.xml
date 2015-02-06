@@ -7,8 +7,8 @@
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>190.000000</x>
-  <y>-56.000000</y>
+  <x>202.250000</x>
+  <y>59.222222</y>
  </pos>
  <assets>
   <asset>Draconis Alpha</asset>
@@ -27,9 +27,17 @@
    <hidden/>
    <hide>1.000000</hide>
   </jump>
-  <jump target="Tau Prime">
+  <jump target="Pilatis">
+   <autopos/>
+   <hide>0.000000</hide>
+  </jump>
+  <jump target="Surano">
    <autopos/>
    <hide>1.250000</hide>
+  </jump>
+  <jump target="Tau Prime">
+   <autopos/>
+   <hide>0.000000</hide>
   </jump>
  </jumps>
 </ssys>

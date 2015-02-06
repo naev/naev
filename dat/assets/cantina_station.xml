@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Cantina Station">
+ <pos>
+  <x>11117.903978</x>
+  <y>2747.527995</y>
+ </pos>
+ <GFX>
+  <space>002.png</space>
+  <exterior>traderoom.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Za'lek</faction>
+  <value>100.000000</value>
+  <range>3</range>
+ </presence>
+ <general>
+  <class>3</class>
+  <population>6000</population>
+  <hide>0.500000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Luxury Goods</commodity>
+  </commodities>
+  <description>This station is primarily a trade center for western Za'lek space. Many deals are made here, and given the frequent and transitory foot traffic, it makes for a good place to meet someone.</description>
+  <bar>This bar lives up to the name of the station itself. Indeed, it seems to be the main attraction, being a massive ring-shaped casino-esque room with many bartenders treating the patrons, music in the background, and good food. The only sign of being Za'lke in origin is the casual use of bafflingly advanced technology and the fact that at least half of the populace look like scientists, researchers, or engineers.</bar>
+ </general>
+</asset>

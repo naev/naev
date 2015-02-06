@@ -15,8 +15,6 @@
   <asset>Limbo I</asset>
   <asset>Limbo II</asset>
   <asset>Malebolge</asset>
-  <asset>Virtual Pirate Small</asset>
-  <asset>Virtual Trader Area</asset>
  </assets>
  <jumps>
   <jump target="Fried">
@@ -32,7 +30,11 @@
    <hide>1.250000</hide>
   </jump>
   <jump target="Pultatis">
-   <pos x="-25688.151135" y="-8098.916515"/>
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Sollav">
+   <autopos/>
    <hide>1.250000</hide>
   </jump>
  </jumps>

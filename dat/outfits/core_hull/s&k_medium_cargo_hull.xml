@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="S&amp;K Medium Cargo Hull">
+ <general>
+  <typename>Core Systems (Hull)</typename>
+  <slot prop="hull">structure</slot>
+  <size>medium</size>
+  <priority>7</priority>
+  <mass>250</mass>
+  <price>320000</price>
+  <description>Schafer &amp; Kane Industries have developed a hull modification that provides both ample cargo space and protection.</description>
+  <gfx_store>nanobond</gfx_store>
+ </general>
+ <specific type="modification">
+  <cargo>120</cargo>
+  <absorb>19</absorb>
+  <armour>500</armour>
+  <armour_regen>0</armour_regen>
+  <ew_hide>0</ew_hide>
+ </specific>
+</outfit>

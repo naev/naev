@@ -35,6 +35,7 @@
   <bar>Whoever designed the spaceport placed the spaceport bar at the outside, adding windows so visitors could look out over the frozen landscape. He didn't realize that the windows would soon become frozen over themselves, making them completely useless.</bar>
  </general>
  <tech>
+  <item>Engines Cargo</item>
   <item>Systems Medium</item>
   <item>Engines Low</item>
   <item>Basic Outfits 1</item>

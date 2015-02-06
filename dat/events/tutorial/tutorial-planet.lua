@@ -26,15 +26,15 @@ There are no mission givers here at the moment. Missions are explained in more d
 There is no work available right now. Missions are explained in more detail in another tutorial.]]
     message6a = [[This is the equipment screen, where you can customize your ship, as well as switch to another ship if you own more than one.
 
-You have been given a modest selection of equipment. Try installing it in your ship by right-clicking the item boxes in the inventory panel. You can uninstall them again by right-clicking on the ship slots they are installed in. Be careful, however, of the following:
+You have been given a modest selection of equipment. Try installing it in your ship by right-clicking the item boxes in the inventory panel. You can uninstall them again by right-clicking on the ship slots they are installed in. There are a few things to keep in mind:
 
 - Each outfit is either a Structure, Utility or Weapon outfit, and can ONLY be installed in an appropriate slot.
 
-- Each outfit has a size. Possible sizes are small, medium and large. Outfits can ONLY be installed in a slot that's big enough. Sizes are indicated with colors, and with pips once bobbens implements it.
+- Each outfit has a size. Possible sizes are small, medium and large. Sizes are currently indicated by yellow, green and blue, respectively. Outfits can ONLY be installed in a slot that's big enough.
 
-- Each outfit uses up a certain amount of CPU. Your CPU capacity is shown as a green vertical bar that turns red as CPU is used up. You can ONLY install an outfit if you have enough CPU available.
+- Each outfit uses up a certain amount of CPU. Your CPU capacity is shown as a green bar that turns red as CPU is used up. You can only take off if you haven't exceeded your CPU capacity.
 
-- Each outfit has a certain mass that will be added to your ship's mass when installed. The more massive your ship is, the slower it will become.]]
+- Each outfit has a mass that will be added to your ship when installed. If your ship's mass exceeds the engine's mass limit, your speed and thrust will be reduced.]]
     message6b = [[If you look at your ship's slots on the right hand side of the menu, you will see that three of them are different than the others. This is because these three slots are your ship's "core" slots.
 
 Core slots are special slots that can only contain their corresponding core outfits. Engine slots can only hold engines, system slots can only hold systems and hull slots can only hold hull mods. The important thing to know is that if even one of these slots is empty, your ship can't take off!
@@ -63,9 +63,9 @@ function create()
     player.addOutfit("Engine Reroute", 1)
     player.addOutfit("Unicorp Scrambler", 1)
     player.addOutfit("Cargo Pod", 1)
-    player.addOutfit("Milspec Orion 2302 Core System")
-    player.addOutfit("Tricon Naga Mk5 Engine")
-    player.addOutfit("Schafer & Kane Light Stealth Plating")
+    player.addOutfit("Milspec Prometheus 2203 Core System")
+    player.addOutfit("Nexus Dart 150 Engine")
+    player.addOutfit("S&K Light Stealth Plating")
     player.pilot():control()
     player.pilot():land(planet.get("Paul 2"))
     

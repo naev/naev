@@ -10,17 +10,23 @@
   <x>-437.803533</x>
   <y>-691.480081</y>
  </pos>
- <assets/>
+ <assets>
+  <asset>Virtual Trader Area</asset>
+ </assets>
  <jumps>
+  <jump target="Ganth">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Pultatis">
+   <autopos/>
+   <hide>0.000000</hide>
+  </jump>
   <jump target="Regas">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>0.000000</hide>
   </jump>
   <jump target="Seelie">
-   <autopos/>
-   <hide>1.250000</hide>
-  </jump>
-  <jump target="Sollav">
    <autopos/>
    <hide>1.250000</hide>
   </jump>

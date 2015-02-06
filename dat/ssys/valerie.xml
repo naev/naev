@@ -15,16 +15,18 @@
   <asset>Valerie II</asset>
   <asset>Valerie IIX</asset>
   <asset>Valerie IV</asset>
+  <asset>Virtual Civilian Standard</asset>
+  <asset>Virtual Civilian Standard</asset>
   <asset>Wellen</asset>
  </assets>
  <jumps>
   <jump target="Shinnok">
    <autopos/>
-   <hide>0.000000</hide>
+   <hide>1.250000</hide>
   </jump>
   <jump target="Ux">
    <autopos/>
-   <hide>0.000000</hide>
+   <hide>1.250000</hide>
   </jump>
  </jumps>
 </ssys>

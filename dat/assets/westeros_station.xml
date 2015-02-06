@@ -11,7 +11,7 @@
  <presence>
   <faction>Soromid</faction>
   <value>50.000000</value>
-  <range>5</range>
+  <range>2</range>
  </presence>
  <general>
   <class>0</class>

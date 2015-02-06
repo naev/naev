@@ -7,8 +7,8 @@
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>785.607812</x>
-  <y>-741.196225</y>
+  <x>770.607812</x>
+  <y>-754.196225</y>
  </pos>
  <assets>
   <asset>Druss II</asset>
@@ -17,17 +17,24 @@
   <asset>Gath Station</asset>
   <asset>Lora-Mor</asset>
   <asset>Samell</asset>
+  <asset>Virtual Civilian Standard</asset>
+  <asset>Virtual Civilian Standard</asset>
+  <asset>Virtual Dvaered Unpresence</asset>
  </assets>
  <jumps>
+  <jump target="Eye of Night">
+   <autopos/>
+   <hide>0.000000</hide>
+  </jump>
   <jump target="Kyo">
    <autopos/>
    <hide>0.000000</hide>
   </jump>
   <jump target="Ruttwi">
    <autopos/>
-   <hide>0.000000</hide>
+   <hide>1.250000</hide>
   </jump>
-  <jump target="Valur Gem">
+  <jump target="Scarlet">
    <autopos/>
    <hide>1.250000</hide>
   </jump>

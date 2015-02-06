@@ -41,6 +41,7 @@
 #define PILOT_SIZE_APROX         0.8   /**< approximation for pilot size */
 #define PILOT_WEAPON_SETS        10    /**< Number of weapon sets the pilot has. */
 #define PILOT_WEAPSET_MAX_LEVELS 2     /**< Maximum amount of weapon levels. */
+#define PILOT_REVERSE_THRUST     0.4   /**< Ratio of normal thrust to apply when reversing. */
 
 
 /* hooks */
@@ -177,6 +178,7 @@ typedef struct PilotOutfitSlot_ {
    double stimer;    /**< State timer, tracking current state. */
    double timer;     /**< Used to store when it was last used. */
    int level;        /**< Level in current weapon set (-1 is none). */
+   int weapset;      /**< First weapon set that uses the outfit (-1 is none). */
 
    /* Type-specific data. */
    union {
@@ -276,8 +278,8 @@ typedef struct Pilot_ {
    int tsy;          /**< current sprite y position, calculated on update. */
 
    /* Properties. */
-   double cpu;       /**< Amount of CPU the pilot has left. */
-   double cpu_max;   /**< Maximum amount of CPU the pilot has. */
+   int cpu;       /**< Amount of CPU the pilot has left. */
+   int cpu_max;   /**< Maximum amount of CPU the pilot has. */
    double crew;      /**< Crew amount the player has (display it as (int)floor(), but it's analogue. */
    double cap_cargo; /**< Pilot's cargo capacity. */
 
@@ -439,6 +441,7 @@ double pilot_getNearestPos( const Pilot *p, unsigned int *tp, double x, double y
 double pilot_getNearestAng( const Pilot *p, unsigned int *tp, double ang, int disabled );
 int pilot_getJumps( const Pilot* p );
 const glColour* pilot_getColour( const Pilot* p );
+int pilot_validTarget( const Pilot* p, const Pilot* target );
 
 /* non-lua wrappers */
 double pilot_relsize( const Pilot* cur_pilot, const Pilot* p );
@@ -449,7 +452,8 @@ double pilot_relhp( const Pilot* cur_pilot, const Pilot* p );
  * Combat.
  */
 void pilot_setTarget( Pilot* p, unsigned int id );
-double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter, const Damage *dmg );
+double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
+      const Damage *dmg, int reset );
 void pilot_updateDisable( Pilot* p, const unsigned int shooter );
 void pilot_explode( double x, double y, double radius, const Damage *dmg, const Pilot *parent );
 double pilot_face( Pilot* p, const double dir );

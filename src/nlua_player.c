@@ -475,24 +475,26 @@ static int playerL_autonav( lua_State *L )
 /**
  * @brief Gets the player's long term autonav destination.
  *
- * @usage sys = player.autonavDest()
+ * @usage sys, jumps = player.autonavDest()
  *
- *    @luareturn The system the player wants to get to or nil if none selected.
+ *    @luareturn The destination system (or nil if none selected) and the number of jumps left.
  * @luafunc autonavDest()
  */
 static int playerL_autonavDest( lua_State *L )
 {
    LuaSystem ls;
    StarSystem *dest;
+   int jumps;
 
    /* Get destination. */
-   dest = map_getDestination();
+   dest = map_getDestination( &jumps );
    if (dest == NULL)
       return 0;
 
    ls.id = system_index( dest );
    lua_pushsystem( L, ls );
-   return 1;
+   lua_pushnumber( L, jumps );
+   return 2;
 }
 
 
@@ -800,8 +802,7 @@ static int playerL_addOutfit( lua_State *L  )
 static int playerL_rmOutfit( lua_State *L )
 {
    const char *str;
-   char **outfits;
-   Outfit *o;
+   Outfit *o, **outfits;
    int i, q, noutfits;
 
    /* Defaults. */
@@ -818,14 +819,12 @@ static int playerL_rmOutfit( lua_State *L )
       if (noutfits == 0)
          return 0;
 
-      outfits = malloc( sizeof(char*) * noutfits );
+      outfits = malloc( sizeof(Outfit*) * noutfits );
       player_getOutfits(outfits, NULL);
       for (i=0; i<noutfits; i++) {
-         o = outfit_get(outfits[i]);
+         o = outfits[i];
          q = player_outfitOwned(o);
          player_rmOutfit(o, q);
-         /* Free memory. */
-         free( outfits[i] );
       }
       /* Clean up. */
       free(outfits);

@@ -9,6 +9,7 @@
 
 
 void dship_csv( const char *path );
+void dship_csvStat( const char *path );
 
 
 #endif /* DEV_SHIP_H */

@@ -22,6 +22,7 @@
 #include "rng.h"
 #include "ndata.h"
 #include "nxml.h"
+#include "shipstats.h"
 
 
 #define DTYPE_XML_ID     "dtypes"   /**< XML Document tag. */
@@ -39,6 +40,8 @@ typedef struct DTYPE_ {
    double sdam;   /**< Shield damage multiplier */
    double adam;   /**< Armour damage multiplier */
    double knock;  /**< Knockback */
+   size_t soffset; /**< Offset for shield modifier ship statistic. */
+   size_t aoffset; /**< Offset for armour modifier ship statistic. */
 } DTYPE;
 
 static DTYPE* dtype_types  = NULL;  /**< Total damage types. */
@@ -63,6 +66,7 @@ static DTYPE* dtype_validType( int type );
 static int DTYPE_parse( DTYPE *temp, const xmlNodePtr parent )
 {
    xmlNodePtr node;
+   char *stat;
 
    /* Clear data. */
    memset( temp, 0, sizeof(DTYPE) );
@@ -75,7 +79,28 @@ static int DTYPE_parse( DTYPE *temp, const xmlNodePtr parent )
    do {
       xml_onlyNodes(node);
 
-      xmlr_float(node, "shield", temp->sdam);
+      if (xml_isNode(node, "shield")) {
+         temp->sdam = xml_getFloat(node);
+
+         xmlr_attr(node, "stat", stat);
+         if (stat != NULL) {
+            temp->soffset = ss_offsetFromType( ss_typeFromName(stat) );
+            free(stat);
+         }
+
+         continue;
+      }
+      else if (xml_isNode(node, "armour")) {
+         temp->adam = xml_getFloat(node);
+
+         xmlr_attr(node, "stat", stat);
+         if (stat != NULL) {
+            temp->aoffset = ss_offsetFromType( ss_typeFromName(stat) );
+            free(stat);
+         }
+
+         continue;
+      }
       xmlr_float(node, "armour", temp->adam);
       xmlr_float(node, "knockback", temp->knock);
 
@@ -237,9 +262,10 @@ void dtype_free (void)
  *    @param[in] absorb Absorption value.
  *    @param[in] dmg Damage information.
  */
-void dtype_calcDamage( double *dshield, double *darmour, double absorb, double *knockback, const Damage *dmg )
+void dtype_calcDamage( double *dshield, double *darmour, double absorb, double *knockback, const Damage *dmg, ShipStats *s )
 {
    DTYPE *dtype;
+   char *ptr;
 
    /* Must be valid. */
    dtype = dtype_validType( dmg->type );
@@ -247,10 +273,32 @@ void dtype_calcDamage( double *dshield, double *darmour, double absorb, double *
       return;
 
    /* Set if non-nil. */
-   if (dshield != NULL)
-      *dshield    = dtype->sdam * dmg->damage * absorb;
-   if (darmour != NULL)
-      *darmour    = dtype->adam * dmg->damage * absorb;
+   if (dshield != NULL) {
+      if ((dtype->soffset <= 0) || (s == NULL))
+         *dshield    = dtype->sdam * dmg->damage * absorb;
+      else {
+         /*
+          * If an offset has been specified, look for a double at that offset
+          * in the ShipStats struct, and used it as a multiplier.
+          *
+          * The 2. - n logic serves to undo the initialization done by
+          * ss_statsInit and turn the value into a multiplier.
+          */
+         ptr = (char*) s;
+         *dshield = dtype->sdam * dmg->damage * absorb *
+               (2. - *(double*) &ptr[ dtype->soffset ]);
+      }
+   }
+   if (darmour != NULL) {
+      if ((dtype->aoffset) <= 0 || (s == NULL))
+         *darmour    = dtype->adam * dmg->damage * absorb;
+      else {
+         ptr = (char*) s;
+         *darmour = dtype->adam * dmg->damage * absorb *
+               (2. - *(double*) &ptr[ dtype->aoffset ]);
+      }
+   }
+
    if (knockback != NULL)
       *knockback  = dtype->knock;
 }

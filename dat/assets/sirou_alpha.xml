@@ -11,12 +11,12 @@
  <presence>
   <faction>Empire</faction>
   <value>175.000000</value>
-  <range>5</range>
+  <range>3</range>
  </presence>
  <general>
   <class>0</class>
   <population>15000</population>
-  <hide>0.750000</hide>
+  <hide>0.500000</hide>
   <services>
    <land>emp_mil_restricted</land>
    <refuel/>
@@ -28,11 +28,12 @@
   </services>
   <commodities/>
   <description>Sirou Alpha is a bastion of Imperial control in this sector. Given Sirou's proximity to the Imperial capital, it makes sense to have such a heavily reinforced station so close. The station is relatively new, with modern facilities all around.</description>
-  <bar>The bar still sells of disinfectant and industrial equipment. Massive, yet quiet air scrubbers keep the air clean, no matter how much cigar smoke the Imperial officers here cna throw at it. It's a populat stopping point for traders and Imperial soldiers alike.</bar>
+  <bar>The bar still sells of disinfectant and industrial equipment. Massive, yet quiet air scrubbers keep the air clean, no matter how much cigar smoke the Imperial officers here can throw at it. It's a popular stopping point for traders and Imperial soldiers alike.</bar>
  </general>
  <tech>
   <item>Systems Medium</item>
   <item>Engines Medium</item>
+  <item>Engines Cargo</item>
   <item>Laser 1</item>
   <item>Laser 2</item>
   <item>Ion 1</item>

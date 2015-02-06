@@ -76,7 +76,6 @@ static void pilot_refuel( Pilot *p, double dt );
 /* Clean up. */
 static void pilot_dead( Pilot* p, unsigned int killer );
 /* Targetting. */
-static int pilot_validTarget( const Pilot* p, const Pilot* target );
 static int pilot_validEnemy( const Pilot* p, const Pilot* target );
 /* Misc. */
 static void pilot_setCommMsg( Pilot *p, const char *s );
@@ -230,7 +229,7 @@ unsigned int pilot_getPrevID( const unsigned int id, int mode )
  *    @param target Pilot to see if is a valid target of the reference.
  *    @return 1 if it is valid, 0 otherwise.
  */
-static int pilot_validTarget( const Pilot* p, const Pilot* target )
+int pilot_validTarget( const Pilot* p, const Pilot* target )
 {
    /* Must not be dead. */
    if (pilot_isFlag( target, PILOT_DELETE ) ||
@@ -628,14 +627,35 @@ double pilot_face( Pilot* p, const double dir )
  */
 int pilot_brake( Pilot *p )
 {
-   double diff;
+   double dir, thrust, diff, ftime, btime;
 
-   diff = pilot_face(p, VANGLE(p->solid->vel) + M_PI);
+   /* Face backwards by default. */
+   dir    = VANGLE(p->solid->vel) + M_PI;
+   thrust = 1.;
+
+   if (p->stats.misc_reverse_thrust) {
+      /* Calculate the time to face backward and apply forward thrust. */
+      diff = angle_diff(p->solid->dir, VANGLE(p->solid->vel) + M_PI);
+      btime = ABS(diff) / p->turn + MIN( VMOD(p->solid->vel), p->speed ) /
+            (p->thrust / p->solid->mass);
+
+      /* Calculate the time to face forward and apply reverse thrust. */
+      diff = angle_diff(p->solid->dir, VANGLE(p->solid->vel));
+      ftime = ABS(diff) / p->turn + MIN( VMOD(p->solid->vel), p->speed ) /
+            (p->thrust / p->solid->mass * PILOT_REVERSE_THRUST);
+
+      if (btime > ftime) {
+         dir    = VANGLE(p->solid->vel);
+         thrust = -PILOT_REVERSE_THRUST;
+      }
+   }
+
+   diff = pilot_face(p, dir);
    if (ABS(diff) < MAX_DIR_ERR && VMOD(p->solid->vel) > MIN_VEL_ERR)
-      pilot_setThrust(p, 1.);
+      pilot_setThrust(p, thrust);
    else {
       pilot_setThrust(p, 0.);
-      if (VMOD(p->solid->vel) < MIN_VEL_ERR)
+      if (VMOD(p->solid->vel) <= MIN_VEL_ERR)
          return 1;
    }
 
@@ -861,7 +881,7 @@ void pilot_broadcast( Pilot *p, const char *msg, int ignore_int )
 void pilot_distress( Pilot *p, const char *msg, int ignore_int )
 {
    int i, r;
-   double d, range;
+   double d;
    Pilot *t;
 
    /* Broadcast the message. */
@@ -897,12 +917,12 @@ void pilot_distress( Pilot *p, const char *msg, int ignore_int )
 
       if (!ignore_int) {
          if (!pilot_inRangePilot(p, pilot_stack[i])) {
-            /* Range is 7500 at 0 interference.
-             * Fall-off based on pilot_updateSensorRange()
+            /*
+             * If the pilots are within sensor range of each other, send the
+             * distress signal, regardless of electronic warfare hide values.
              */
-            d     = vect_dist( &p->solid->pos, &pilot_stack[i]->solid->pos );
-            range = 7500. / ((cur_system->interference + 200) / 200.);
-            if (d > range)
+            d = vect_dist2( &p->solid->pos, &pilot_stack[i]->solid->pos );
+            if (d > pilot_sensorRange())
                continue;
          }
 
@@ -1029,9 +1049,11 @@ void pilot_setTarget( Pilot* p, unsigned int id )
  *    @param w Solid that is hitting pilot.
  *    @param shooter Attacker that shot the pilot.
  *    @param dmg Damage being done.
+ *    @param reset Whether the shield timer should be reset.
  *    @return The real damage done.
  */
-double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter, const Damage *dmg )
+double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
+      const Damage *dmg, int reset )
 {
    int mod;
    double damage_shield, damage_armour, disable, knockback, dam_mod, ddmg, absorb, dmod, start;
@@ -1050,7 +1072,7 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter, const Da
    /* Calculate the damage. */
    absorb         = 1. - CLAMP( 0., 1., p->dmg_absorb - dmg->penetration );
    disable        = dmg->disable;
-   dtype_calcDamage( &damage_shield, &damage_armour, absorb, &knockback, dmg );
+   dtype_calcDamage( &damage_shield, &damage_armour, absorb, &knockback, dmg, &p->stats );
 
    /*
     * Delay undisable if necessary. Amount varies with damage, as e.g. a
@@ -1109,8 +1131,10 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter, const Da
                    ((p->shield_max + p->armour_max) / 2.);
 
       /* Increment shield timer or time before shield regeneration kicks in. */
-      p->stimer   = 3.;
-      p->sbonus   = 3.;
+      if (reset) {
+         p->stimer   = 3.;
+         p->sbonus   = 3.;
+      }
    }
    /*
     * Armour takes the entire blow.
@@ -1123,8 +1147,10 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter, const Da
       p->stress  += disable;
 
       /* Increment shield timer or time before shield regeneration kicks in. */
-      p->stimer  = 3.;
-      p->sbonus  = 3.;
+      if (reset) {
+         p->stimer  = 3.;
+         p->sbonus  = 3.;
+      }
    }
 
    /* Ensure stress never exceeds remaining armour. */
@@ -1350,7 +1376,7 @@ void pilot_explode( double x, double y, double radius, const Damage *dmg, const 
          s.vel.y = ry;
 
          /* Actual damage calculations. */
-         pilot_hit( p, &s, (parent!=NULL) ? parent->id : 0, &ddmg );
+         pilot_hit( p, &s, (parent!=NULL) ? parent->id : 0, &ddmg, 1 );
 
          /* Shock wave from the explosion. */
          if (p->id == PILOT_PLAYER)
@@ -1564,7 +1590,7 @@ void pilot_update( Pilot* pilot, const double dt )
    /* Update stress. */
    if (!pilot_isFlag(pilot, PILOT_DISABLED)) { /* Case pilot is not disabled. */
       stress_falloff = 4.; /* TODO: make a function of the pilot's ship and/or its outfits. */
-      pilot->stress -= stress_falloff * dt;
+      pilot->stress -= stress_falloff * pilot->stats.stress_dissipation * dt;
       pilot->stress = MAX(pilot->stress, 0);
    }
    else if (!pilot_isFlag(pilot, PILOT_DISABLED_PERM)) { /* Case pilot is disabled (but not permanently so). */
@@ -1877,6 +1903,13 @@ static void pilot_hyperspace( Pilot* p, double dt )
          if (pilot_isPlayer(p))
             if (!player_isFlag(PLAYER_AUTONAV))
                player_message( "\erStrayed too far from jump point: jump aborted." );
+      }
+      else if (pilot_isFlag(p,PILOT_AFTERBURNER)) {
+         pilot_hyperspaceAbort( p );
+
+         if (pilot_isPlayer(p))
+            if (!player_isFlag(PLAYER_AUTONAV))
+               player_message( "\erAfterburner active: jump aborted." );
       }
       else {
          if (p->ptimer < 0.) { /* engines ready */

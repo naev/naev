@@ -90,11 +90,6 @@ static int gui_getMessage     = 1; /**< Whether or not the player should receive
 extern Pilot** pilot_stack; /**< @todo remove */
 extern int pilot_nstack; /**< @todo remove */
 
-/*
- * map stuff for autonav
- */
-extern int map_npath; /**< @todo remove. */
-
 
 /**
  * GUI Lua stuff.
@@ -426,10 +421,10 @@ static void gui_renderPlanetTarget( double dt )
       planet = cur_system->planets[player.p->nav_planet];
       c = planet_getColour( planet );
 
-      x = planet->pos.x - planet->radius * 1.2;
-      y = planet->pos.y + planet->radius * 1.2;
-      w = planet->radius * 2. * 1.2;
-      h = planet->radius * 2. * 1.2;
+      x = planet->pos.x - planet->gfx_space->w / 2.;
+      y = planet->pos.y + planet->gfx_space->h / 2.;
+      w = planet->gfx_space->w;
+      h = planet->gfx_space->h;
       gui_renderTargetReticles( x, y, w, h, c );
    }
 }
