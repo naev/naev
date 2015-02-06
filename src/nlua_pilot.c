@@ -3007,6 +3007,7 @@ lua_rawset( L, -3 )
  *  <li> shield_regen </li>
  *  <li> energy_regen </li>
  *  <li> jump_delay </li>
+ *  <li> jumps </li>
  * </ul>
  *
  * @usage stats = p:stats() print(stats.armour)
@@ -3046,6 +3047,7 @@ static int pilotL_getStats( lua_State *L )
    PUSH_DOUBLE( L, "energy_regen", p->energy_regen );
    /* Stats. */
    PUSH_DOUBLE( L, "jump_delay", ntime_convertSTU( pilot_hyperspaceDelay(p) ) );
+   PUSH_INT( L, "jumps", pilot_getJumps(p) );
 
    return 1;
 }
