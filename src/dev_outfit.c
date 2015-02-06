@@ -79,6 +79,124 @@ void dout_csvBolt( const char *path )
    SDL_RWclose( rw );
 }
 
+
+/**
+ * @brief Dumps launcher data to CSV.
+ */
+void dout_csvLauncher( const char *path )
+{
+   Outfit *o, *o_all;
+   int i, n, l;
+   SDL_RWops *rw;
+   char buf[ 1024 ];
+
+   /* File to output to. */
+   rw = SDL_RWFromFile( path, "w" );
+   if (rw == NULL) {
+      WARN("Unable to open '%s' for writing: %s", path, SDL_GetError());
+      return;
+   }
+
+   /* Write "header" */
+   l = nsnprintf( buf, sizeof(buf),
+         "name,type,slot,size,"
+         "license,mass,price,"
+         "delay,ammo_name,amount,"
+         "lockon,ew_target,arc\n"
+         );
+   SDL_RWwrite( rw, buf, l, 1 );
+
+   o_all = outfit_getAll( &n );
+   for (i=0; i<n; i++) {
+      o = &o_all[i];
+
+      /* Only handle launchers. */
+      if (!outfit_isLauncher(o))
+         continue;
+
+      l = nsnprintf( buf, sizeof(buf),
+            "%s,%s,%s,%s,"
+            "%s,%f,%"CREDITS_PRI","
+            "%f,%s,%d,"
+            "%f,%f,%f\n",
+            o->name, outfit_getType(o), outfit_slotName(o), outfit_slotSize(o),
+            o->license, o->mass, o->price,
+            o->u.lau.delay, o->u.lau.ammo_name, o->u.lau.amount,
+            o->u.lau.lockon, o->u.lau.ew_target, o->u.lau.arc * 180 / M_PI
+            );
+      SDL_RWwrite( rw, buf, l, 1 );
+   }
+
+   /* Close file. */
+   SDL_RWclose( rw );
+}
+
+
+/**
+ * @brief Dumps ammo data to CSV.
+ */
+void dout_csvAmmo( const char *path )
+{
+   Outfit *o, *o_all;
+   int i, j, n, l;
+   SDL_RWops *rw;
+   char buf[ 1024 ];
+   char *ai;
+   Damage *dmg;
+
+   /* File to output to. */
+   rw = SDL_RWFromFile( path, "w" );
+   if (rw == NULL) {
+      WARN("Unable to open '%s' for writing: %s", path, SDL_GetError());
+      return;
+   }
+
+   /* Write "header" */
+   l = nsnprintf( buf, sizeof(buf),
+         "name,type,license,"
+         "mass,price,"
+         "duration,resist,ai,"
+         "speed,turn,thrust,energy,"
+         "penetration,dtype,dmg,disable\n"
+         );
+   SDL_RWwrite( rw, buf, l, 1 );
+
+   o_all = outfit_getAll( &n );
+   for (i=0; i<n; i++) {
+      o = &o_all[i];
+
+      /* Only handle ammo. */
+      if (!outfit_isAmmo(o))
+         continue;
+
+      dmg = &o->u.blt.dmg;
+
+      /* Get AI name, in lower case. */
+      ai = strdup( outfit_getAmmoAI(o) );
+      for (j=0; j<(int)strlen(ai); j++)
+         ai[j] = tolower(ai[j]);
+
+      l = nsnprintf( buf, sizeof(buf),
+            "%s,%s,%s,"
+            "%f,%"CREDITS_PRI","
+            "%f,%f,%s,"
+            "%f,%f,%f,%f,"
+            "%f,%s,%f,%f\n",
+            o->name, outfit_getType(o), o->license,
+            o->mass, o->price,
+            o->u.amm.duration, o->u.amm.resist * 100, ai,
+            o->u.amm.speed, o->u.amm.turn * 180 / M_PI, o->u.amm.thrust, o->u.amm.energy,
+            dmg->penetration * 100, dtype_damageTypeToStr(dmg->type), dmg->damage, dmg->disable
+            );
+      free(ai);
+      SDL_RWwrite( rw, buf, l, 1 );
+   }
+
+   /* Close file. */
+   SDL_RWclose( rw );
+}
+
+
 /**
  * @brief Dumps the modification data to csv.
  *
