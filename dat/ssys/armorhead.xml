@@ -16,6 +16,15 @@
    <autopos/>
    <hide>1.250000</hide>
   </jump>
+  <jump target="Gorman">
+   <autopos/>
+   <hidden/>
+   <hide>1.000000</hide>
+  </jump>
+  <jump target="Hideyoshi's Star">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
   <jump target="Reptile">
    <autopos/>
    <hide>1.250000</hide>

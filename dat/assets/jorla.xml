@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Jorla">
+ <pos>
+  <x>5191.549990</x>
+  <y>-6056.808321</y>
+ </pos>
+ <GFX>
+  <space>O02.png</space>
+  <exterior>aquatic3.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Za'lek</faction>
+  <value>100.000000</value>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>O</class>
+  <population>1870000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+   <commodity>Medicine</commodity>
+   <commodity>Luxury Goods</commodity>
+  </commodities>
+  <description>This Class-O planet is another purely residential planet in Za'lek space, with a rather large population and several university campuses. The standard of living is rather high, and life expectancy is long, making it a popular place to live out a retirement. Other than that, there isn't much to recommend it to adventurers. Which is just how many of the inhabitants like it.</description>
+  <bar>This bar bears a closer resemblance to a family restaurant, with the average patron being about late middle age.</bar>
+ </general>
+ <tech>
+  <item>Laser 1</item>
+  <item>Ion 1</item>
+  <item>Basic Outfits 1</item>
+  <item>Basic Outfits 2</item>
+  <item>Low Tech Upgrades</item>
+  <item>High Tech Upgrades 1</item>
+  <item>Star Maps</item>
+  <item>Basic Civilian Ships</item>
+  <item>Basic Trade Ships</item>
+ </tech>
+</asset>

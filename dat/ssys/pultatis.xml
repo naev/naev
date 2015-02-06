@@ -7,20 +7,34 @@
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>-347.000000</x>
-  <y>-740.000000</y>
+  <x>-356.315926</x>
+  <y>-655.064929</y>
  </pos>
  <assets>
+  <asset>Bastion Station</asset>
   <asset>Pultatis I</asset>
   <asset>Pultatis II</asset>
   <asset>Pultatis III</asset>
+  <asset>Virtual Civilian Standard</asset>
  </assets>
  <jumps>
+  <jump target="Hargen">
+   <autopos/>
+   <hide>0.000000</hide>
+  </jump>
   <jump target="Limbo">
    <autopos/>
    <hide>1.250000</hide>
   </jump>
-  <jump target="Stone Table">
+  <jump target="Provectus Nova">
+   <autopos/>
+   <hide>0.000000</hide>
+  </jump>
+  <jump target="Sollav">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Vega">
    <autopos/>
    <hide>1.250000</hide>
   </jump>

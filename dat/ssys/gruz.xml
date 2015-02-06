@@ -16,19 +16,21 @@
   <asset>Gruz II</asset>
   <asset>Gruz III</asset>
   <asset>Tora</asset>
+  <asset>Virtual Civilian Standard</asset>
+  <asset>Virtual Civilian Standard</asset>
  </assets>
  <jumps>
   <jump target="Infinity">
    <autopos/>
    <hide>1.250000</hide>
   </jump>
-  <jump target="Millstone">
-   <autopos/>
-   <hide>0.000000</hide>
-  </jump>
   <jump target="Palin">
    <autopos/>
-   <hide>0.000000</hide>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Valur Gem">
+   <autopos/>
+   <hide>1.250000</hide>
   </jump>
  </jumps>
 </ssys>

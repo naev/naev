@@ -15,7 +15,7 @@
   <sound>ripper</sound>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>
-  <delay>1260</delay>
+  <delay>1</delay>
   <speed>700</speed>
   <range>1900</range>
   <falloff>1500</falloff>

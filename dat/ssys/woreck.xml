@@ -16,6 +16,10 @@
    <autopos/>
    <hide>1.250000</hide>
   </jump>
+  <jump target="Ruadan">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
   <jump target="Stelman">
    <autopos/>
    <hide>1.250000</hide>

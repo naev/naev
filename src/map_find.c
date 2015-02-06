@@ -23,18 +23,6 @@
 #define BUTTON_HEIGHT   30 /**< Map button height. */
 
 
-/**
- * @brief Represents a found target.
- */
-typedef struct map_find_s {
-   Planet *pnt;         /**< Planet available at. */
-   StarSystem *sys;     /**< System available at. */
-   char display[128];   /**< Name to display. */
-   int jumps;           /**< Jumps to system. */
-   double distance;     /**< Distance to system. */
-} map_find_t;
-
-
 /* Stored checkbox values. */
 static int map_find_systems = 1; /**< Systems checkbox value. */
 static int map_find_planets = 0; /**< Planets checkbox value. */
@@ -68,6 +56,7 @@ static void map_findSearch( unsigned int wid, char* str );
 /* Misc. */
 static int map_sortCompare( const void *p1, const void *p2 );
 static void map_sortFound( map_find_t *found, int n );
+static char map_getPlanetColourChar( Planet *p );
 /* Fuzzy outfit/ship stuff. */
 static char **map_fuzzyOutfits( Outfit **o, int n, const char *name, int *len );
 static char **map_outfitsMatch( const char *name, int *len );
@@ -486,7 +475,6 @@ static int map_findSearchPlanets( unsigned int parent, const char *name )
    int len, n, ret;
    map_find_t *found;
    const char *sysname, *pntname;
-   char colcode;
    StarSystem *sys;
    Planet *pnt;
 
@@ -550,24 +538,16 @@ static int map_findSearchPlanets( unsigned int parent, const char *name )
       /* Set some values. */
       found[n].pnt      = pnt;
       found[n].sys      = sys;
-      planet_updateLand(pnt);
-      colcode           = planet_getColourChar(pnt);
-
-      /* Remap colour codes bit for simplicity and contrast. */
-      if (colcode == 'N' || colcode == 'F')
-         colcode = 'M';
-      else if (colcode == 'R')
-         colcode = 'S';
 
       /* Set fancy name. */
       if (ret)
          nsnprintf( found[n].display, sizeof(found[n].display),
-               "\e%c%s (%s, unknown route)",
-               colcode, names[i], sys->name );
+               "\e%c%s (%s, unknown route)", map_getPlanetColourChar(pnt),
+               names[i], sys->name );
       else
          nsnprintf( found[n].display, sizeof(found[n].display),
-               "\e%c%s (%s, %d jumps, %.0fk distance)",
-               colcode, names[i], sys->name, found[n].jumps, found[n].distance/1000. );
+               "\e%c%s (%s, %d jumps, %.0fk distance)", map_getPlanetColourChar(pnt),
+               names[i], sys->name, found[n].jumps, found[n].distance/1000. );
       n++;
    }
    free(names);
@@ -582,6 +562,26 @@ static int map_findSearchPlanets( unsigned int parent, const char *name )
    /* Display results. */
    map_findDisplayResult( parent, found, n );
    return 0;
+}
+
+
+/**
+ * @brief Gets a colour char for a planet, simplified for map use.
+ */
+static char map_getPlanetColourChar( Planet *p )
+{
+   char colcode;
+   
+   planet_updateLand(p);
+   colcode = planet_getColourChar(p);
+
+   /* Remap colour codes bit for simplicity and contrast. */
+   if (colcode == 'N' || colcode == 'F')
+      colcode = 'M';
+   else if (colcode == 'R')
+      colcode = 'S';
+
+   return colcode;
 }
 
 
@@ -815,11 +815,11 @@ static int map_findSearchOutfits( unsigned int parent, const char *name )
       /* Set fancy name. */
       if (ret)
          nsnprintf( found[n].display, sizeof(found[n].display),
-               "%s (%s, unknown route)",
+               "\e%c%s (%s, unknown route)", map_getPlanetColourChar(pnt),
                pnt->name, sys->name );
       else
          nsnprintf( found[n].display, sizeof(found[n].display),
-               "%s (%s, %d jumps, %.0fk distance)",
+               "\e%c%s (%s, %d jumps, %.0fk distance)", map_getPlanetColourChar(pnt),
                pnt->name, sys->name, found[n].jumps, found[n].distance/1000. );
       n++;
    }
@@ -966,11 +966,11 @@ static int map_findSearchShips( unsigned int parent, const char *name )
       /* Set fancy name. */
       if (ret)
          nsnprintf( found[n].display, sizeof(found[n].display),
-               "%s (%s, unknown route)",
+               "\e%c%s (%s, unknown route)", map_getPlanetColourChar(pnt),
                pnt->name, sys->name );
       else
          nsnprintf( found[n].display, sizeof(found[n].display),
-               "%s (%s, %d jumps, %.0fk distance)",
+               "\e%c%s (%s, %d jumps, %.0fk distance)", map_getPlanetColourChar(pnt),
                pnt->name, sys->name, found[n].jumps, found[n].distance/1000. );
       n++;
    }

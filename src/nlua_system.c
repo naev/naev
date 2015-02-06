@@ -31,6 +31,7 @@
 /* System metatable methods */
 static int systemL_cur( lua_State *L );
 static int systemL_get( lua_State *L );
+static int systemL_getAll( lua_State *L );
 static int systemL_eq( lua_State *L );
 static int systemL_name( lua_State *L );
 static int systemL_faction( lua_State *L );
@@ -50,6 +51,7 @@ static int systemL_mrkRm( lua_State *L );
 static const luaL_reg system_methods[] = {
    { "cur", systemL_cur },
    { "get", systemL_get },
+   { "getAll", systemL_getAll },
    { "__eq", systemL_eq },
    { "__tostring", systemL_name },
    { "name", systemL_name },
@@ -72,6 +74,7 @@ static const luaL_reg system_methods[] = {
 static const luaL_reg system_cond_methods[] = {
    { "cur", systemL_cur },
    { "get", systemL_get },
+   { "getAll", systemL_getAll },
    { "__eq", systemL_eq },
    { "__tostring", systemL_name },
    { "name", systemL_name },
@@ -296,6 +299,30 @@ static int systemL_get( lua_State *L )
 }
 
 /**
+ * @brief Gets all the systems.
+ *    @luareturn A list of all the systems.
+ * @luafunc getAll()
+ */
+static int systemL_getAll( lua_State *L )
+{
+   LuaSystem ls;
+   StarSystem *sys;
+   int i, ind, n;
+
+   lua_newtable(L);
+   sys = system_getAll( &n );
+
+   ind = 1;
+   for (i=0; i<n; i++) {
+      ls.id = system_index( &sys[i] );
+      lua_pushnumber( L, ind++ );
+      lua_pushsystem( L, ls );
+      lua_settable(   L, -3 );
+   }
+   return 1;
+}
+
+/**
  * @brief Check systems for equality.
  *
  * Allows you to use the '=' operator in Lua with systems.
@@ -446,12 +473,13 @@ static int systemL_jumpdistance( lua_State *L )
  */
 static int systemL_adjacent( lua_State *L )
 {
-   int i, id = 1, h;
+   int i, id, h;
    LuaSystem sysp;
    StarSystem *s;
 
-   s = luaL_validsystem(L,1);
-   h = lua_toboolean(L,2);
+   id = 1;
+   s  = luaL_validsystem(L,1);
+   h  = lua_toboolean(L,2);
 
    /* Push all adjacent systems. */
    lua_newtable(L);
@@ -461,9 +489,10 @@ static int systemL_adjacent( lua_State *L )
       if (!h && jp_isFlag(&s->jumps[i], JP_HIDDEN))
          continue;
       sysp.id = system_index( s->jumps[i].target );
-      lua_pushnumber(L,id); /* key. */
-      lua_pushsystem(L,sysp); /* value. */
+      lua_pushnumber(L, id);   /* key. */
+      lua_pushsystem(L, sysp); /* value. */
       lua_rawset(L,-3);
+
       id++;
    }
 
@@ -530,6 +559,10 @@ static int systemL_presences( lua_State *L )
    /* Return result in table */
    lua_newtable(L);
    for (i=0; i<s->npresence; i++) {
+      /* Only return positive presences. */
+      if (s->presence[i].value <= 0)
+         continue;
+
       lua_pushstring( L, faction_name(s->presence[i].faction) ); /* t, k */
       lua_pushnumber(L,s->presence[i].value); /* t, k, v */
       lua_settable(L,-3);  /* t */
@@ -596,7 +629,7 @@ static int systemL_presence( lua_State *L )
    StarSystem *sys;
    int *fct;
    int nfct;
-   double presence;
+   double presence, v;
    int i, f, used;
    const char *cmd;
 
@@ -636,8 +669,12 @@ static int systemL_presence( lua_State *L )
 
    /* Add up the presence values. */
    presence = 0;
-   for(i=0; i<nfct; i++)
-      presence += system_getPresence( sys, fct[i] );
+   for(i=0; i<nfct; i++) {
+      /* Only count positive presences. */
+      v = system_getPresence( sys, fct[i] );
+      if (v > 0)
+         presence += v;
+   }
 
    /* Clean up after ourselves. */
    free(fct);

@@ -16,7 +16,7 @@
  <general>
   <class>N</class>
   <population>10000</population>
-  <hide>0.010000</hide>
+  <hide>0.250000</hide>
   <services>
    <land/>
    <refuel/>

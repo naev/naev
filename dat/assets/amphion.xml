@@ -11,7 +11,7 @@
  <presence>
   <faction>Empire</faction>
   <value>100.000000</value>
-  <range>5</range>
+  <range>2</range>
  </presence>
  <general>
   <class>O</class>
@@ -24,7 +24,7 @@
    <missions/>
   </services>
   <commodities/>
-  <description>Amphion is a popular retirement spot for Empire officers. It is close enough to the Empire's core to provoke appreciative memories of service but far enough away for peace. The oceans that dominate the planet's surface are calm and the many uunderwater cities are famous all over the Empire for their grandeur and opulence.</description>
+  <description>Amphion is a popular retirement spot for Empire officers. It is close enough to the Empire's core to provoke appreciative memories of service but far enough away for peace. The oceans that dominate the planet's surface are calm and the many underwater cities are famous all over the Empire for their grandeur and opulence.</description>
   <bar>The average age of the patrons here appears to be late middle-age. The bar itself is done up in an old-world style tavern, low and dark, cozy and cheery. You wind up making easy friends in the amiable and relaxing atmosphere.</bar>
  </general>
 </asset>

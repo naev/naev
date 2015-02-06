@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <outfit name="Basic Large Systems">
  <general>
-  <typename>Core Systems</typename>
+  <typename>Core Systems (System)</typename>
   <slot prop="systems">utility</slot>
   <size>large</size>
   <mass>75</mass>

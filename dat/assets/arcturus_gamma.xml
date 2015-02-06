@@ -16,7 +16,7 @@
  <general>
   <class>1</class>
   <population>52000</population>
-  <hide>0.750000</hide>
+  <hide>0.500000</hide>
   <services>
    <land>emp_mil_restricted</land>
    <refuel/>
@@ -37,6 +37,10 @@
   <bar>A truly utilitarian place, the Arcturus Gamma bar is metallic grey, meticulously maintained and full of off-duty Empire soldiers - not a place to get into a fight.</bar>
  </general>
  <tech>
+  <item>Engines High</item>
+  <item>Systems High</item>
+  <item>Systems Elite</item>
+  <item>Hulls High</item>
   <item>Laser 1</item>
   <item>Laser 2</item>
   <item>Laser 3</item>

@@ -425,7 +425,7 @@ static void ship_update( unsigned int wid )
          "%s\n"
          "%d\n"
          "\n"
-         "%.0f teraflops\n"
+         "%d teraflops\n"
          "%.0f tonnes\n"
          "%s average\n"
          "%.0f kN/tonne\n"

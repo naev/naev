@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Tricon Typhoon Engine">
+ <general>
+  <typename>Core Systems (Engine)</typename>
+  <slot prop="engines">structure</slot>
+  <size>large</size>
+  <priority>3</priority>
+  <mass>60</mass>
+  <price>2700000</price>
+  <description>Development of the Typhoon engine was something of a prestige project for Tricon. Providing light cruisers with superb handling and speed, it's a favourite of many captains, though its high power consumption limits it to ships with powerful reactors.</description>
+  <gfx_store>afterburner</gfx_store>
+ </general>
+ <specific type="modification">
+  <thrust>65</thrust>
+  <turn>75</turn>
+  <speed>115</speed>
+  <fuel>1600</fuel>
+  <energy_usage>50</energy_usage>
+  <engine_limit>4500</engine_limit>
+ </specific>
+</outfit>

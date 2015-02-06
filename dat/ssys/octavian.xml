@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ssys name="Octavian">
  <general>
-  <radius>10000.000000</radius>
+  <radius>12500.000000</radius>
   <stars>400</stars>
   <interference>0.000000</interference>
   <nebula volatility="0.000000">0.000000</nebula>
@@ -10,11 +10,24 @@
   <x>-662.216770</x>
   <y>-605.792752</y>
  </pos>
- <assets/>
+ <assets>
+  <asset>August</asset>
+  <asset>Olario</asset>
+  <asset>Virtual Civilian Standard</asset>
+  <asset>Virtual Empire Unpresence</asset>
+  <asset>Virtual Empire Unpresence</asset>
+  <asset>Warnecke</asset>
+  <asset>Warnecke I</asset>
+  <asset>Warnecke II</asset>
+ </assets>
  <jumps>
-  <jump target="Procyon">
+  <jump target="Copernicus">
    <autopos/>
    <hide>1.250000</hide>
+  </jump>
+  <jump target="Procyon">
+   <autopos/>
+   <hide>0.000000</hide>
   </jump>
  </jumps>
 </ssys>

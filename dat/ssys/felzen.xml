@@ -10,7 +10,9 @@
   <x>404.121234</x>
   <y>-954.416665</y>
  </pos>
- <assets/>
+ <assets>
+  <asset>Virtual Pirate Small</asset>
+ </assets>
  <jumps>
   <jump target="Sagittarius Prime">
    <autopos/>

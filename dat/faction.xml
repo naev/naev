@@ -130,7 +130,7 @@
   </enemies>
  </faction>
  <faction name="Thurion">
-  <logo>empire</logo>
+  <logo>thurion</logo>
   <colour>grey50</colour>
   <player>1</player>
   <spawn>thurion</spawn>
@@ -186,7 +186,7 @@
  <faction name="Za'lek">
   <known/>
   <logo>zalek</logo>
-  <colour>purple</colour>
+  <colour>DarkRed</colour>
   <longname>House Za'lek</longname>
   <player>2</player>
   <spawn>zalek</spawn>

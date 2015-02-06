@@ -163,13 +163,13 @@ end
 function hawk_jump () -- Got away
     tk.msg(failtitle[2], failtext[2])
     faction.get("Dvaered"):modPlayerSingle(-5)
-    hook.timer(10000, abort)
+    hook.timer(10000, "abort")
 end
 
 function hawk_land () -- Got away
     tk.msg(failtitle[3], failtext[3])
     faction.get("Dvaered"):modPlayerSingle(-5)
-    hook.timer(10000, abort)
+    hook.timer(10000, "abort")
 end
 
 function hawk_attacked () -- chased
@@ -282,7 +282,7 @@ function jump_fleet_cap_dead () -- mission failed
         j:follow(hawk)
         j:setHilight(false)
     end
-    hook.timer(10000, abort)
+    hook.timer(10000, "abort")
 end      
 
 function complete()

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Za'lek Scout Drone">
+ <base_type>Za'lek Drone</base_type>
+ <GFX>zalek_drone_scout</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Scout</class>
+ <price>180000</price>
+ <fabricator>Za'lek Robotics</fabricator>
+ <description>This is the Za'lek Scout Drone. Built for scouting, not for battle. Not to be flown by the player.</description>
+ <health>
+  <absorb>5</absorb>
+  <armour>20</armour>
+ </health>
+ <characteristics>
+  <crew>1</crew>
+  <mass>10</mass>
+  <fuel>300</fuel>
+  <cargo>0</cargo>
+  <fuel_consumption>1</fuel_consumption>
+ </characteristics>
+ <slots>
+  <weapon size="small" x="0" y="0" h="-2"/>
+  <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-100 Core System</utility>
+  <utility size="small"/>
+  <structure size="small" prop="engines" exclusive="1" required="1">Unicorp Hawk 150 Engine</structure>
+  <structure size="small" prop="hull" exclusive="1" required="1">Unicorp D-2 Light Plating</structure>
+  <structure size="small"/>
+ </slots>
+ <stats>
+  <speed_mod>15</speed_mod>
+  <turn_mod>15</turn_mod>
+  <thrust_mod>15</thrust_mod>
+  <cargo_mod>-50</cargo_mod>
+  <armour_mod>-80</armour_mod>
+  <ew_hide>20</ew_hide>
+  <ew_detect>25</ew_detect>
+  <ew_jump_detect>25</ew_jump_detect>
+  <misc_instant_jump>1</misc_instant_jump>
+ </stats>
+</ship>

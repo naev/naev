@@ -7,8 +7,8 @@
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>201.000000</x>
-  <y>-166.000000</y>
+  <x>147.694444</x>
+  <y>-139.777778</y>
  </pos>
  <assets>
   <asset>Anecu</asset>
@@ -21,9 +21,13 @@
   <asset>Virtual Trader Area</asset>
  </assets>
  <jumps>
+  <jump target="Ogat">
+   <autopos/>
+   <hide>0.000000</hide>
+  </jump>
   <jump target="Tau Prime">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>0.000000</hide>
   </jump>
  </jumps>
 </ssys>

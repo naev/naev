@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <outfit name="Beat Up Medium Engine">
  <general>
-  <typename>Core Systems</typename>
+  <typename>Core Systems (Engine)</typename>
   <slot prop="engines">structure</slot>
   <size>medium</size>
-  <mass>20</mass>
+  <mass>30</mass>
   <price>0</price>
   <description>Clogged, corroded and cracked in every way possible while still remaining in functional condition, this engine really belongs on the scrap heap.</description>
   <gfx_store>afterburner</gfx_store>
  </general>
  <specific type="modification">
   <thrust>60</thrust>
-  <turn>30</turn>
-  <speed>50</speed>
+  <turn>55</turn>
+  <speed>105</speed>
   <fuel>400</fuel>
-  <energy_usage>10</energy_usage>
-  <engine_limit>250</engine_limit>
+  <energy_usage>16</energy_usage>
+  <engine_limit>1200</engine_limit>
  </specific>
 </outfit>

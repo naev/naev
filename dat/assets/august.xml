@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="August">
+ <pos>
+  <x>12020.844486</x>
+  <y>3728.889205</y>
+ </pos>
+ <GFX>
+  <space>P01.png</space>
+  <exterior>snow.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Za'lek</faction>
+  <value>50.000000</value>
+  <range>2</range>
+ </presence>
+ <general>
+  <class>P</class>
+  <population>750000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Industrial Goods</commodity>
+   <commodity>Medicine</commodity>
+   <commodity>Luxury Goods</commodity>
+  </commodities>
+  <description>August is a fairly standard, if cold, world. Rarely for a Za'lek planet, it doesn't have that many research stations on it. IT is almost purely a residential world, primarily for the scientists working on Warnecke who, after a hard week's work, don't want to see another lab for a while.</description>
+  <bar>This bar has the feel of an old-world pub, with plenty of wood furnishing on display, good food and better beer. A great place to relax and unwind.</bar>
+ </general>
+</asset>

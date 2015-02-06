@@ -109,6 +109,27 @@ void credits2str( char *str, credits_t credits, int decimals )
       nsnprintf (str, ECON_CRED_STRLEN, "%"CREDITS_PRI, credits );
 }
 
+/**
+ * @brief Given a price and on-hand credits, outputs a colourized string.
+ *
+ *    @param[out] str Output is stored here, must have at least a length of 32
+ *                     char.
+ *    @param price Price to display.
+ *    @param credits Credits available.
+ *    @param decimals Decimals to use.
+ */
+void price2str(char *str, credits_t price, credits_t credits, int decimals )
+{
+   char *buf;
+
+   credits2str(str, price, decimals);
+   if (price <= credits)
+      return;
+
+   buf = strdup(str);
+   nsnprintf(str, ECON_CRED_STRLEN, "\er%s\e0", buf);
+   free(buf);
+}
 
 /**
  * @brief Gets a commodity by name.

@@ -35,6 +35,7 @@
   <bar>There are two spaceport bars on Madria, one for regular visitors and one for immigrants. The one for immigrants is more or less a portal into Sirius society - a one way portal. Normal spacers stay away from it.</bar>
  </general>
  <tech>
+  <item>Engines Cargo</item>
   <item>Systems Low</item>
   <item>Systems Medium</item>
   <item>Hulls Medium</item>

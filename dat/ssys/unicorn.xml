@@ -25,7 +25,8 @@
   </jump>
   <jump target="Nunavut">
    <autopos/>
-   <hide>1.250000</hide>
+   <hidden/>
+   <hide>1.000000</hide>
   </jump>
   <jump target="Volus">
    <autopos/>

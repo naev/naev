@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Curie">
+ <pos>
+  <x>8372.931824</x>
+  <y>-644.071679</y>
+ </pos>
+ <GFX>
+  <space>A02.png</space>
+  <exterior>desertic.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Za'lek</faction>
+  <value>50.000000</value>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>A</class>
+  <population>125000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>This planet is still in its infancy, and is a primary source of geological research for Za'lek scientists. This, and the high density of rare and valuable heavy metals makes it a potentially valuable Za'lek world despite the unpleasantness of its environment.</description>
+  <bar>The bar has pictures of the famous scientists that the planet was named after, as well as various pictures and holopaintings of some of the phenomena on the planet that those whose interests in geology might find interesting.</bar>
+ </general>
+ <tech>
+  <item>Laser 1</item>
+  <item>Ion 1</item>
+  <item>Kinetic 1</item>
+  <item>Kinetic 2</item>
+  <item>Plasma 1</item>
+  <item>Plasma 2</item>
+  <item>Basic Outfits 1</item>
+  <item>Basic Outfits 2</item>
+  <item>Low Tech Upgrades</item>
+  <item>Star Maps</item>
+  <item>Basic Civilian Ships</item>
+  <item>Basic Trade Ships</item>
+  <item>Bulk Trade Ships</item>
+ </tech>
+</asset>

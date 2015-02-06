@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Unicorp D-20 Heavy Plating">
+ <general>
+  <typename>Core Systems (Hull)</typename>
+  <slot prop="hull">structure</slot>
+  <size>large</size>
+  <priority>7</priority>
+  <mass>1600</mass>
+  <price>360000</price>
+  <description>Though a respectable design, the D-20 plating is outclassed by modern heavy weapons, with most seasoned captains opting for a heavier, more advanced plating.</description>
+  <gfx_store>nanobond</gfx_store>
+ </general>
+ <specific type="modification">
+  <cargo>90</cargo>
+  <absorb>31</absorb>
+  <armour>1700</armour>
+  <armour_regen>0</armour_regen>
+  <ew_hide>0</ew_hide>
+ </specific>
+</outfit>

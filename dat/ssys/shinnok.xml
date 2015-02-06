@@ -14,12 +14,14 @@
   <asset>Behemoth</asset>
   <asset>Leviathan</asset>
   <asset>Tartarus</asset>
+  <asset>Virtual Civilian Standard</asset>
+  <asset>Virtual Civilian Standard</asset>
   <asset>Ziz</asset>
  </assets>
  <jumps>
   <jump target="Nartur">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>0.000000</hide>
   </jump>
   <jump target="Pastor">
    <autopos/>
@@ -27,7 +29,7 @@
   </jump>
   <jump target="Valerie">
    <pos x="-18009.886457" y="-12647.368180"/>
-   <hide>0.000000</hide>
+   <hide>1.250000</hide>
   </jump>
  </jumps>
 </ssys>

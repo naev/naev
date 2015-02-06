@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <outfit name="Patchwork Light Plating">
  <general>
-  <typename>Core Systems</typename>
+  <typename>Core Systems (Hull)</typename>
   <slot prop="hull">structure</slot>
   <size>small</size>
-  <mass>50</mass>
+  <priority>3</priority>
+  <mass>24</mass>
   <price>0</price>
   <description>On the plus side, it keeps air from venting into space. But that's about it. This kind of hull maintenance is simply unacceptable.</description>
   <gfx_store>nanobond</gfx_store>
  </general>
  <specific type="modification">
-  <cargo>0</cargo>
-  <absorb>0</absorb>
-  <armour>10</armour>
+  <cargo>3</cargo>
+  <absorb>4</absorb>
+  <armour>35</armour>
   <armour_regen>0</armour_regen>
   <ew_hide>0</ew_hide>
  </specific>
