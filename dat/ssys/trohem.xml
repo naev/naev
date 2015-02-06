@@ -7,23 +7,18 @@
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>-144.800000</x>
-  <y>-596.800000</y>
+  <x>-50.788194</x>
+  <y>-614.416024</y>
  </pos>
  <assets/>
  <jumps>
+  <jump target="Blacin">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
   <jump target="Effetey">
    <autopos/>
    <hide>1.250000</hide>
-  </jump>
-  <jump target="Frolina">
-   <autopos/>
-   <hide>1.250000</hide>
-  </jump>
-  <jump target="Pas">
-   <autopos/>
-   <hidden/>
-   <hide>1.000000</hide>
   </jump>
  </jumps>
 </ssys>

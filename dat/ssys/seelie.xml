@@ -12,8 +12,10 @@
  </pos>
  <assets>
   <asset>Fae</asset>
+  <asset>Oberon</asset>
   <asset>Sidhe</asset>
   <asset>Unseelie</asset>
+  <asset>Virtual Civilian Standard</asset>
  </assets>
  <jumps>
   <jump target="Astana">

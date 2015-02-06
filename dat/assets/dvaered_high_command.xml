@@ -16,7 +16,7 @@
  <general>
   <class>1</class>
   <population>500</population>
-  <hide>0.750000</hide>
+  <hide>0.500000</hide>
   <services>
    <land>dv_mil_command</land>
    <refuel/>
@@ -28,7 +28,8 @@
  </general>
  <tech>
   <item>Systems Low</item>
-  <item>Hulls Medium</item>
+  <item>Hulls High</item>
+  <item>Hulls Elite</item>
   <item>Engines Medium</item>
   <item>Kinetic 1</item>
   <item>Kinetic 2</item>

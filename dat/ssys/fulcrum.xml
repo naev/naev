@@ -13,6 +13,7 @@
  <assets>
   <asset>Ferrungir</asset>
   <asset>Fulcrum I</asset>
+  <asset>Virtual Civilian Standard</asset>
  </assets>
  <jumps>
   <jump target="Duros">
@@ -22,7 +23,7 @@
   <jump target="Gyrios">
    <autopos/>
    <exitonly/>
-   <hide>0.000000</hide>
+   <hide>1.250000</hide>
   </jump>
   <jump target="Jackson">
    <autopos/>

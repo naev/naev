@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Olario">
+ <pos>
+  <x>-6735.161520</x>
+  <y>5019.953737</y>
+ </pos>
+ <GFX>
+  <space>X01.png</space>
+  <exterior>lava.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Za'lek</faction>
+  <value>50.000000</value>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>X</class>
+  <population>24500</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <commodity/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Medicine</commodity>
+   <commodity>Luxury Goods</commodity>
+  </commodities>
+  <description>This world is the location of several harsh environment testing facilities, used by the military and civilian interests alike. Aside from that, there is little else of interest here.</description>
+ </general>
+</asset>

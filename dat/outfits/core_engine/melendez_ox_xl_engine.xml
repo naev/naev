@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Melendez Ox XL Engine">
+ <general>
+  <typename>Core Systems (Engine)</typename>
+  <slot prop="engines">structure</slot>
+  <size>small</size>
+  <priority>7</priority>
+  <mass>15</mass>
+  <price>95000</price>
+  <description>Among the most powerful engines available for small vessels, the Ox XL excels at enabling merchants to haul moderate amounts of cargo from system to system with minimal refuelling stops.</description>
+  <gfx_store>afterburner</gfx_store>
+ </general>
+ <specific type="modification">
+  <thrust>115</thrust>
+  <turn>95</turn>
+  <speed>225</speed>
+  <fuel>500</fuel>
+  <energy_usage>12</energy_usage>
+  <engine_limit>400</engine_limit>
+ </specific>
+</outfit>

@@ -7,17 +7,32 @@
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>-610.523514</x>
-  <y>-1065.424651</y>
+  <x>-579.523514</x>
+  <y>-1044.424651</y>
  </pos>
  <assets>
+  <asset>Ruadan Bastion</asset>
   <asset>Ruadan Gamma</asset>
   <asset>Ruadan II</asset>
   <asset>Ruadan Prime</asset>
   <asset>Ruadan Secundus</asset>
+  <asset>Ruadan Station</asset>
+  <asset>Virtual Civilian Standard</asset>
+  <asset>Virtual Civilian Standard</asset>
+  <asset>Virtual Civilian Standard</asset>
+  <asset>Virtual Trader Area</asset>
+  <asset>Virtual Trader Area</asset>
  </assets>
  <jumps>
+  <jump target="Damien">
+   <autopos/>
+   <hide>0.000000</hide>
+  </jump>
   <jump target="Vauban">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Woreck">
    <autopos/>
    <hide>1.250000</hide>
   </jump>

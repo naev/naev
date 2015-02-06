@@ -237,7 +237,6 @@ typedef struct OutfitModificationData_ {
    double crew_rel;  /**< Relative crew modification. */
    double mass_rel;  /**< Relative mass modification. */
    double fuel;      /**< Maximum fuel modifier. */
-   double hide_rel;  /**< Relative hide modifier. */
 
    /* Stats. */
    ShipStatList *stats; /**< Stat list. */
@@ -327,10 +326,13 @@ typedef struct Outfit_ {
    credits_t price;  /**< Base sell price. */
    char *description; /**< Store description. */
    char *desc_short; /**< Short outfit description. */
+   int priority;     /**< Sort priority, highest first. */
 
    glTexture* gfx_store; /**< Store graphic. */
 
    unsigned int properties; /**< Properties stored bitwise. */
+
+   unsigned int group; /**< Weapon group to use when autoweap is enabled. */
 
    /* Type dependent */
    OutfitType type; /**< Type of the outfit. */

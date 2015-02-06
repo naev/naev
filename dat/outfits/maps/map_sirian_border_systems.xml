@@ -7,21 +7,28 @@
   <gfx_store>map</gfx_store>
  </general>
  <specific type="map">
-  <sys name="Nougat">
-   <jump>Esker</jump>
-  </sys>
   <sys name="Esker">
    <jump>Nougat</jump>
-   <asset>Fyruse Station</asset>
    <asset>Esker I</asset>
-  </sys>
-  <sys name="Fidelis">
-   <jump>Eye of Night</jump>
+   <asset>Esker II</asset>
+   <asset>Esker IV</asset>
+   <asset>Fyruse Station</asset>
+   <asset>Madria</asset>
+   <asset>Suoer</asset>
   </sys>
   <sys name="Eye of Night">
    <jump>Fidelis</jump>
-   <asset>Inios Station</asset>
+   <asset>Eye of Night I</asset>
+   <asset>Eye of Night II</asset>
    <asset>Eye of Night III</asset>
+   <asset>Inios Station</asset>
+   <asset>Traal</asset>
+  </sys>
+  <sys name="Pike">
+   <jump>Atlantis</jump>
+   <asset>Coral Station</asset>
+   <asset>Ohon</asset>
+   <asset>Pike I</asset>
   </sys>
  </specific>
 </outfit>

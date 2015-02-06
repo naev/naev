@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Andors">
+ <pos>
+  <x>2491.943995</x>
+  <y>1418.491197</y>
+ </pos>
+ <GFX>
+  <space>P05.png</space>
+  <exterior>snow.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Za'lek</faction>
+  <value>100.000000</value>
+  <range>1</range>
+ </presence>
+ <general>
+  <class>P</class>
+  <population>1230450</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>This barren world has a wealth of minerals buried beneath kilometres of ice, and the Za'lek have deployed considerable resources in order to tap its resources. Unlike more developed Za'lek settlements, there is little in the way of scholarly presence here.</description>
+  <bar>This bar serves as a welcome respite from the biting winds and frigid temperatures that pervade the planet. The menu largely consists of hot beverages and hearty food, and the patrons are almost exclusively off-duty Za'lek workers.</bar>
+ </general>
+ <tech>
+  <item>Laser 1</item>
+  <item>Ion 1</item>
+  <item>Basic Outfits 1</item>
+  <item>Low Tech Upgrades</item>
+  <item>Star Maps</item>
+  <item>Basic Civilian Ships</item>
+  <item>Basic Trade Ships</item>
+ </tech>
+</asset>

@@ -10,9 +10,7 @@
   <x>1165.610552</x>
   <y>-776.618714</y>
  </pos>
- <assets>
-  <asset>Virtual Pirate Small</asset>
- </assets>
+ <assets/>
  <jumps>
   <jump target="Churchill">
    <autopos/>

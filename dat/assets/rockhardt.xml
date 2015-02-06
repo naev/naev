@@ -27,12 +27,13 @@
    <shipyard/>
   </services>
   <commodities/>
-  <description>Rockhardt was originally commissioned as an auxiliary manufacturing plant for the Imperial military. But when the Incident happened the Empire lost a lot of its core manufatoring plants, and Rockhardt was upgraded to a main line facility. An observant visitor can clearly make out the boundary between the first and second generation industrial centers.</description>
+  <description>Rockhardt was originally commissioned as an auxiliary manufacturing plant for the Imperial military. But when the Incident happened the Empire lost a lot of its core manufacturing plants, and Rockhardt was upgraded to a main line facility. An observant visitor can clearly make out the boundary between the first and second generation industrial centers.</description>
   <bar>Even today, the Empire's military remains a well oiled machine. It isn't content to work with old or substandard equipment, and so replacement parts and ships must constantly be produced. Rockhardt has a steady supply of manufacturing orders coming in at any given time, and the commercial traffic that accompanies it is clearly visible in the spaceport bar.</bar>
  </general>
  <tech>
   <item>Systems Medium</item>
   <item>Hulls Medium</item>
+  <item>Hulls High</item>
   <item>Engines Low</item>
   <item>Engines Medium</item>
   <item>Light Civilian Combat Ships</item>

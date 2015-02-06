@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <outfit name="Unicorp B-2 Light Plating">
  <general>
-  <typename>Core Systems</typename>
+  <typename>Core Systems (Hull)</typename>
   <slot prop="hull">structure</slot>
   <size>small</size>
-  <mass>50</mass>
-  <price>70000</price>
-  <description>B-2 Plating offers good protection and cargo capacity, but weighs more than the C-2 or D-2 variants.</description>
+  <priority>3</priority>
+  <mass>30</mass>
+  <price>40000</price>
+  <description>Built with more sophisticated materials but fundamentally similar to the D-2 plating, the B-2 is a notable improvement over its predecessor in many respects, though it comes at a significantly increased price.</description>
   <gfx_store>nanobond</gfx_store>
  </general>
  <specific type="modification">
-  <cargo>10</cargo>
+  <cargo>5</cargo>
   <absorb>5</absorb>
-  <armour>110</armour>
+  <armour>50</armour>
   <armour_regen>0</armour_regen>
   <ew_hide>0</ew_hide>
  </specific>

@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 2014 Edgar Simo-Serra <bobbens@gmail.com> -->
 <application>
- <id type="desktop">naev</id>
+ <id type="desktop">naev.desktop</id>
  <metadata_license>CC0-1.0</metadata_license>
  <project_license>GPL-3.0 (some media is also under other DFSG-compatible licenses)</project_license>
  <name>Naev</name>
  <summary>2D action/rpg space trading combat game</summary>
  <description>
-  <p>Naev is a 2D space trading and combat game, taking inspiration from the Escape Velocity series, among others.</p>
-  <p>You pilot a space ship from a top-down perspective, and are more or less free to do what you want. As the genre name implies, you’re able to trade and engage in combat at will. Beyond that, there’s an ever-growing number of storyline missions, equipment, and ships; Even the galaxy itself grows larger with each release. For the literarily-inclined, there are large amounts of lore accompanying everything from planets to equipment.</p>
+  <p>
+   Naev is a 2D space trading and combat game, taking inspiration from the Escape Velocity series, among others.
+  </p>
+  <p>
+   You pilot a space ship from a top-down perspective, and are more or less free to do what you want. As the genre name implies, you’re able to trade and engage in combat at will. Beyond that, there’s an ever-growing number of storyline missions, equipment, and ships; Even the galaxy itself grows larger with each release. For the literarily-inclined, there are large amounts of lore accompanying everything from planets to equipment.
+  </p>
  </description>
- <screenshots> <!-- Must be 16:9 and 624x351 or larger -->
-  <!-- <screenshot type="default" width="640" height="480">http://blog.naev.org/wp-content/gallery/media/nebulaskirmish.png</screenshot> -->
- </screenshots>
  <url type="homepage">http://naev.org</url>
  <updatecontact>bobbens@gmail.com</updatecontact>
  <!-- <project_group>NAEV</project_group> -->
+ <screenshots>
+  <screenshot type="default">http://naev.googlecode.com/svn/trunk/site/screenshots/0.4.0-beta1/naev0.png</screenshot>
+  <screenshot>http://naev.googlecode.com/svn/trunk/site/screenshots/0.4.0-beta1/naev1.png</screenshot>
+ </screenshots>
 </application>

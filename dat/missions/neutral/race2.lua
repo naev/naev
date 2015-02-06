@@ -123,9 +123,9 @@ function takeoff()
     end
     if choice ~= 1 then
         for k,v in ipairs(player.pilot():outfits()) do
-            if (("Manufacturer Small Engine" ~= v:name())
-            and ("Basic Small Systems" ~= v:name())
-            and ("Unmodified Small Hull" ~= v:name())) then
+            if (("Unicorp Hawk 150 Engine" ~= v:name())
+            and ("Unicorp PT-100 Core System" ~= v:name())
+            and ("Unicorp D-2 Light Plating" ~= v:name())) then
                 tk.msg(ftitle[4], ftext[4])
                 abort()
             end
@@ -175,9 +175,9 @@ function takeoff()
             racers[i]:rmOutfit("all")
             racers[i]:rmOutfit("cores")
             
-            racers[i]:addOutfit("Basic Small Systems")
-            racers[i]:addOutfit("Unmodified Small Hull")
-            racers[i]:addOutfit("Manufacturer Small Engine")
+            racers[i]:addOutfit("Unicorp PT-100 Core System")
+            racers[i]:addOutfit("Unicorp D-2 Light Plating")
+            racers[i]:addOutfit("Unicorp Hawk 150 Engine")
         end
     end
     for i, j in ipairs(racers) do

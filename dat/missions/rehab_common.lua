@@ -102,10 +102,8 @@ function standing(hookfac, delta)
             misn.osdCreate(misn_title:format(fac:name()), osd_msg)
         else
             excess = excess + delta
-            if excess < 0 then
-                tk.msg(failuretitle:format(fac:name()), failuretext)
-                hook.rm(standhook)
-                misn.finish()
+            if excess < 0 or fac:playerStanding() < 0 then
+                abort()
             end
         end
     end
@@ -113,6 +111,12 @@ end
 
 -- On abort, reset reputation.
 function abort()
-    -- This will trigger the standing hook and cause mission failure.
+    -- Remove the standing hook prior to modifying reputation.
+    hook.rm(standhook)
+
+    -- Reapply the original negative reputation.
     fac:modPlayerRaw(rep)
+
+    tk.msg(failuretitle:format(fac:name()), failuretext)
+    misn.finish(false)
 end

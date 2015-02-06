@@ -49,10 +49,10 @@ function equip_turretLow ()
    return { "Razor Turret MK1", "Turreted Gauss Gun" }
 end
 function equip_turretMed ()
-   return { "Laser Turret MK1" }
+   return { "Laser Turret MK1", "Laser Turret MK2" }
 end
 function equip_turretHig ()
-   return { }
+   return { "Heavy Laser" }
 end
 function equip_turretMedLow ()
    return table_merge( equip_turretLow(), equip_turretMed() )

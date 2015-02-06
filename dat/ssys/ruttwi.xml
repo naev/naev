@@ -22,14 +22,10 @@
  <jumps>
   <jump target="Druss">
    <pos x="1406.230514" y="19670.467799"/>
-   <hide>0.000000</hide>
-  </jump>
-  <jump target="Eye of Night">
-   <pos x="-26874.876925" y="2041.220875"/>
-   <hide>0.000000</hide>
+   <hide>1.250000</hide>
   </jump>
   <jump target="Quai">
-   <pos x="-11932.776703" y="16566.766232"/>
+   <autopos/>
    <hide>1.250000</hide>
   </jump>
   <jump target="Rhu">

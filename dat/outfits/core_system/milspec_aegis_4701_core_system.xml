@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Milspec Aegis 4701 Core System">
+ <general>
+  <typename>Core Systems (System)</typename>
+  <slot prop="systems">utility</slot>
+  <size>medium</size>
+  <priority>3</priority>
+  <mass>55</mass>
+  <price>220000</price>
+  <description>Milspec cares about your personal safety. Your protection is our concern. The Aegis 4701 grants your ship excellent shield strength while preserving a high level of subsystem control and energy capacity. Fly safe, fly Milspec.</description>
+  <gfx_store>reactor_ii</gfx_store>
+ </general>
+ <specific type="modification">
+  <cpu_max>68</cpu_max>
+  <shield>550</shield>
+  <shield_regen>13</shield_regen>
+  <energy>1200</energy>
+  <energy_regen>65</energy_regen>
+  <ew_hide>0</ew_hide>
+ </specific>
+</outfit>

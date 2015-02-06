@@ -21,6 +21,10 @@
   <asset>Virtual Trader Area</asset>
  </assets>
  <jumps>
+  <jump target="Awowa">
+   <autopos/>
+   <hide>0.000000</hide>
+  </jump>
   <jump target="Baf">
    <autopos/>
    <hide>1.250000</hide>

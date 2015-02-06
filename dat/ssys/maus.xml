@@ -7,8 +7,8 @@
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>366.639865</x>
-  <y>-614.825383</y>
+  <x>380.639865</x>
+  <y>-612.825383</y>
  </pos>
  <assets>
   <asset>Maus I</asset>
@@ -16,11 +16,13 @@
   <asset>Maus III</asset>
   <asset>Maus Station</asset>
   <asset>Megas</asset>
+  <asset>Virtual Civilian Standard</asset>
+  <asset>Virtual Civilian Standard</asset>
  </assets>
  <jumps>
   <jump target="Awowa">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>0.000000</hide>
   </jump>
   <jump target="Castellan">
    <autopos/>
@@ -30,6 +32,10 @@
   <jump target="Infinity">
    <autopos/>
    <hide>1.250000</hide>
+  </jump>
+  <jump target="Millstone">
+   <autopos/>
+   <hide>0.000000</hide>
   </jump>
  </jumps>
 </ssys>

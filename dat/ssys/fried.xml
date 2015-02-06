@@ -17,6 +17,7 @@
   <asset>Fried III</asset>
   <asset>Fried IIIa</asset>
   <asset>Fried Ia</asset>
+  <asset>Virtual Pirate Small</asset>
  </assets>
  <jumps>
   <jump target="Gold">
@@ -27,7 +28,7 @@
    <autopos/>
    <hide>1.250000</hide>
   </jump>
-  <jump target="Stone Table">
+  <jump target="Sollav">
    <autopos/>
    <hide>1.250000</hide>
   </jump>

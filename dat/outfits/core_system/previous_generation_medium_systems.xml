@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <outfit name="Previous Generation Medium Systems">
  <general>
-  <typename>Core Systems</typename>
+  <typename>Core Systems (System)</typename>
   <slot prop="systems">utility</slot>
   <size>medium</size>
-  <mass>20</mass>
+  <mass>90</mass>
   <price>0</price>
   <description>A jury-rigged mess of processors and generators that most captains wouldn't be seen dead having installed on their ship.</description>
   <gfx_store>reactor_ii</gfx_store>
  </general>
  <specific type="modification">
-  <cpu_max>25</cpu_max>
-  <shield>150</shield>
-  <shield_regen>4</shield_regen>
-  <energy>400</energy>
-  <energy_regen>25</energy_regen>
+  <cpu_max>40</cpu_max>
+  <shield>250</shield>
+  <shield_regen>6</shield_regen>
+  <energy>700</energy>
+  <energy_regen>40</energy_regen>
   <ew_hide>0</ew_hide>
  </specific>
 </outfit>

@@ -10,7 +10,9 @@
   <x>-288.486323</x>
   <y>-1012.833806</y>
  </pos>
- <assets/>
+ <assets>
+  <asset>Virtual Pirate Small</asset>
+ </assets>
  <jumps>
   <jump target="Straight Row">
    <autopos/>
@@ -18,7 +20,8 @@
   </jump>
   <jump target="Unicorn">
    <autopos/>
-   <hide>1.250000</hide>
+   <hidden/>
+   <hide>1.000000</hide>
   </jump>
  </jumps>
 </ssys>

@@ -6,9 +6,16 @@
   <armour>1</armour>
   <knockback>0</knockback>
  </dtype>
+ <!--
+    Any shield or armour element can specify a stat property, which will be
+    used as a multiplier for received damage. The stats must be doubles.
+
+   For example, a ship with a nebu_absorb_shield stat of 40 will take 40%
+   less shield damage when in volatile nebulae.
+ -->
  <dtype name="nebula">
-  <shield>0.15</shield>
-  <armour>1</armour>
+  <shield stat="nebu_absorb_shield">0.15</shield>
+  <armour stat="nebu_absorb_armour">1</armour>
   <knockback>0</knockback>
  </dtype>
  <dtype name="explosion_splash">
@@ -22,13 +29,13 @@
   <knockback>1</knockback>
  </dtype>
  <dtype name="shieldbreaker">
-  <shield>1.0</shield>
+  <shield>1.5</shield>
   <armour>0.05</armour>
   <knockback>0</knockback>
  </dtype>
  <dtype name="armourbreaker">
   <shield>0.5</shield>
-  <armour>1</armour>
+  <armour>1.5</armour>
   <knockback>0.5</knockback>
  </dtype>
  <dtype name="ion">
@@ -37,7 +44,7 @@
   <knockback>0</knockback>
  </dtype>
  <dtype name="emp">
-  <shield>1</shield>
+  <shield>2</shield>
   <armour>0</armour>
   <knockback>0</knockback>
  </dtype>

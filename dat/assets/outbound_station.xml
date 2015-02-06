@@ -11,12 +11,12 @@
  <presence>
   <faction>Empire</faction>
   <value>100.000000</value>
-  <range>3</range>
+  <range>1</range>
  </presence>
  <general>
   <class>1</class>
   <population>5000</population>
-  <hide>0.750000</hide>
+  <hide>0.500000</hide>
   <services>
    <land/>
    <refuel/>
@@ -24,8 +24,11 @@
    <missions/>
    <outfits/>
   </services>
-  <commodities/>
-  <description>The last bastion of Imperial control befre entering Za'lek space, this station is meant to patrol and tax traffic between the Empire and its supposedly subservient great house. In theory, the system is owned by the Empire. However, the Za'lek have a strong presence here thanks to the Gerhart Station, and the debate over who truly owns the Ganth system and its tolls is a tense one.</description>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Medicine</commodity>
+  </commodities>
+  <description>The last bastion of Imperial control before entering Za'lek space, this station is meant to patrol and tax traffic between the Empire and its supposedly subservient great house. In theory, the system is owned by the Empire. However, the Za'lek have a strong presence here thanks to the Gerhart Station, and the debate over who truly owns the Ganth system and its tolls is a tense one.</description>
   <bar>The bar is staffed with traders and Imperial Military officials. It is noteworthy that there is no Za'lek in sight here.</bar>
  </general>
  <tech>
@@ -36,5 +39,7 @@
   <item>Heavy Weapons 1</item>
   <item>Low Tech Upgrades</item>
   <item>Star Maps</item>
+  <item>Food</item>
+  <item>Medicine</item>
  </tech>
 </asset>

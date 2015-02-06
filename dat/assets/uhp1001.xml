@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <asset name="UHP-1001">
  <pos>
-  <x>1027.828246</x>
-  <y>1009.253037</y>
+  <x>-6165.963988</x>
+  <y>5878.431988</y>
  </pos>
  <GFX>
   <space>J04.png</space>
-  <exterior>station01.png</exterior>
+  <exterior>oceanic.png</exterior>
  </GFX>
  <general>
   <class>J</class>

@@ -558,9 +558,8 @@ int gl_printWidthRaw( const glFont *ft_font, const char *text )
       /* Ignore escape sequence. */
       if (text[i] == '\e') {
          if (text[i+1] != '\0')
-            i += 2;
-         else
-            i += 1;
+            i++;
+
          continue;
       }
 

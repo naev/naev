@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ship name="Za'lek Heavy Drone">
+ <base_type>Za'lek Drone</base_type>
+ <GFX>zalek_drone_heavy</GFX>
+ <GUI>slim</GUI>
+ <sound>engine</sound>
+ <class>Fighter</class>
+ <price>190000</price>
+ <fabricator>Za'lek Robotics</fabricator>
+ <description>This is the Za'lek Heavy Drone. Fewer and not as crap. Not to be flown by the player.</description>
+ <health>
+  <absorb>5</absorb>
+  <armour>35</armour>
+ </health>
+ <characteristics>
+  <crew>1</crew>
+  <mass>25</mass>
+  <fuel>100</fuel>
+  <cargo>0</cargo>
+  <fuel_consumption>1</fuel_consumption>
+ </characteristics>
+ <slots>
+  <weapon size="medium" x="-12" y="8" h="0"/>
+  <weapon size="small" x="-12" y="6" h="0"/>
+  <weapon size="small" x="15" y="-8" h="2"/>
+  <weapon size="small" x="15" y="-6" h="2"/>
+  <utility size="small" prop="systems" exclusive="1" required="1">Unicorp PT-100 Core System</utility>
+  <utility size="small"/>
+  <utility size="small"/>
+  <structure size="small" prop="engines" exclusive="1" required="1">Unicorp Hawk 150 Engine</structure>
+  <structure size="small" prop="hull" exclusive="1" required="1">Unicorp D-2 Light Plating</structure>
+  <structure size="small"/>
+  <structure size="small"/>
+ </slots>
+ <stats>
+  <speed_mod>10</speed_mod>
+  <turn_mod>10</turn_mod>
+  <thrust_mod>10</thrust_mod>
+  <armour_mod>-50</armour_mod>
+  <shield_mod>40</shield_mod>
+  <shield_regen_mod>30</shield_regen_mod>
+  <stress_dissipation>10</stress_dissipation>
+ </stats>
+</ship>

@@ -50,6 +50,7 @@ int tech_rmItem( const char *name, const char *value );
  * Get.
  */
 int tech_hasItem( tech_group_t *tech, char *item );
+int tech_getItemCount( tech_group_t *tech );
 char** tech_getItemNames( tech_group_t *tech, int *n );
 char** tech_getAllItemNames( int *n );
 Outfit** tech_getOutfit( tech_group_t *tech, int *n );
