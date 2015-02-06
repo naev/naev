@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Bastion Station">
+ <pos>
+  <x>-596.226354</x>
+  <y>-3709.852869</y>
+ </pos>
+ <GFX>
+  <space>station-battlestation.png</space>
+  <exterior>station03.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Za'lek</faction>
+  <value>500.000000</value>
+  <range>3</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>2500</population>
+  <hide>0.500000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <missions/>
+   <outfits/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Medicine</commodity>
+  </commodities>
+  <description>Bastion Station is one of the two primary defense, border guard, and patrol base stations leading into Za'lek space. As such, it is one of the few military expenditures that goes (largely) unchallenged even by the notorious Za'lek political scene. The House Za'lek Defense Force conducts most of their foreign contact here, where they can keep an eye on affairs.</description>
+ </general>
+ <tech>
+  <item>Laser 1</item>
+  <item>Laser 2</item>
+  <item>Ion 1</item>
+  <item>Ion 2</item>
+  <item>Plasma 1</item>
+  <item>Plasma 2</item>
+  <item>Kinetic 1</item>
+  <item>Basic Outfits 1</item>
+  <item>Basic Outfits 2</item>
+  <item>Low Tech Upgrades</item>
+  <item>High Tech Upgrades 1</item>
+  <item>High Tech Upgrades 2</item>
+  <item>Missiles 2</item>
+  <item>Star Maps</item>
+ </tech>
+</asset>

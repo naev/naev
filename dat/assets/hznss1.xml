@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="HZNSS-1">
+ <pos>
+  <x>-4189.198255</x>
+  <y>8197.765081</y>
+ </pos>
+ <GFX>
+  <space>station-agriculture.png</space>
+  <exterior>forest2.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Za'lek</faction>
+  <value>150.000000</value>
+  <range>3</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>1000</population>
+  <hide>0.500000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+  </commodities>
+  <description>This agri-station is the first in a series of stations built by House Za'lek to mimic the successful INSS system in the Empire. Because there are so many Za'lek worlds that are incapable of supporting themselves without outside assistance, the stations become mandatory to feed the people there.</description>
+  <bar>This bar has a series of botanists and scientists arguing over some degree of minutia while several of the laymen around the edges of the bar ignore them, occasionally rolling their eyes at the louder declarations. Even so, none of it seems to make sense to you.</bar>
+ </general>
+</asset>

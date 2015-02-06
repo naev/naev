@@ -14,12 +14,17 @@
   <asset>Pilatis I</asset>
   <asset>Pilatis II</asset>
   <asset>Pilatis III</asset>
+  <asset>Virtual Civilian Standard</asset>
   <asset>Wildwood Station</asset>
  </assets>
  <jumps>
   <jump target="Defa">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>0.000000</hide>
+  </jump>
+  <jump target="Draconis">
+   <autopos/>
+   <hide>0.000000</hide>
   </jump>
   <jump target="Halo">
    <autopos/>

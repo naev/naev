@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Trinel">
+ <pos>
+  <x>6823.479385</x>
+  <y>5299.789814</y>
+ </pos>
+ <GFX>
+  <space>D01.png</space>
+  <exterior>mining4.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Za'lek</faction>
+  <value>10.000000</value>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>D</class>
+  <population>12500</population>
+  <hide>0.350000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <commodity/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Medicine</commodity>
+  </commodities>
+  <description>Trinel is a cold, empty mining world with a single colony upon it. Only the bare minimum of Za'lek forces are here to maintain order. Most of the people working the mines are criminals who are kept here for life. The main spaceport is separated from the prison complex.</description>
+ </general>
+</asset>

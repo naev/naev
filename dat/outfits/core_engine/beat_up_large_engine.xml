@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <outfit name="Beat Up Large Engine">
  <general>
-  <typename>Core Systems</typename>
+  <typename>Core Systems (Engine)</typename>
   <slot prop="engines">structure</slot>
   <size>large</size>
   <mass>100</mass>
@@ -10,11 +10,11 @@
   <gfx_store>afterburner</gfx_store>
  </general>
  <specific type="modification">
-  <thrust>20</thrust>
-  <turn>17</turn>
-  <speed>23</speed>
+  <thrust>30</thrust>
+  <turn>40</turn>
+  <speed>55</speed>
   <fuel>800</fuel>
-  <energy_usage>20</energy_usage>
-  <engine_limit>3750</engine_limit>
+  <energy_usage>26</energy_usage>
+  <engine_limit>6500</engine_limit>
  </specific>
 </outfit>

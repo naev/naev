@@ -11,7 +11,7 @@
  <presence>
   <faction>Empire</faction>
   <value>250.000000</value>
-  <range>5</range>
+  <range>3</range>
  </presence>
  <general>
   <class>M</class>

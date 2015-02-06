@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <outfit name="Schafer &amp; Kane Heavy Dissipation Plating">
  <general>
-  <typename>Core Systems</typename>
+  <typename>Core Systems (Hull)</typename>
   <slot prop="hull">structure</slot>
   <size>large</size>
   <mass>2300</mass>

@@ -25,7 +25,7 @@
   </jump>
   <jump target="Gruz">
    <autopos/>
-   <hide>0.000000</hide>
+   <hide>1.250000</hide>
   </jump>
   <jump target="Sarrii">
    <autopos/>
@@ -33,7 +33,7 @@
   </jump>
   <jump target="Vandal">
    <autopos/>
-   <hide>0.000000</hide>
+   <hide>1.250000</hide>
   </jump>
  </jumps>
 </ssys>

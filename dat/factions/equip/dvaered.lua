@@ -7,6 +7,10 @@ include("dat/factions/equip/generic.lua")
 --    @param p Pilot to equip
 --]]
 function equip( p )
+   -- Start with an empty ship
+   p:rmOutfit("all")
+   p:rmOutfit("cores")
+
    -- Get ship info
    local shiptype, shipsize = equip_getShipBroad( p:ship():class() )
 
@@ -62,10 +66,15 @@ function equip_dvaeredMilitary( p, shipsize )
    -- Equip by size and type
    if shipsize == "small" then
       local class = p:ship():class()
+      cores = {
+         {"Tricon Zephyr Engine", "Milspec Orion 2301 Core System", "S&K Ultralight Combat Plating"},
+         {"Tricon Zephyr II Engine", "Milspec Orion 3701 Core System", "S&K Light Combat Plating"}
+      }
+      equip_cores(p, equip_getCores(p, shipsize, cores))
 
       -- Scout
       if class == "Scout" then
-         equip_cores(p, "Tricon Naga Mk9 Engine", "Milspec Orion 3701 Core System", "Schafer & Kane Light Stealth Plating")
+         equip_cores(p, "Tricon Zephyr Engine", "Milspec Orion 2301 Core System", "S&K Ultralight Combat Plating")
          use_forward    = rnd.rnd(1,#nhigh)
          addWeapons( equip_forwardLow(), use_forward )
          medium         = { "Generic Afterburner", "Milspec Scrambler" }
@@ -74,7 +83,6 @@ function equip_dvaeredMilitary( p, shipsize )
 
       -- Fighter
       elseif class == "Fighter" then
-         equip_cores(p, "Tricon Naga Mk9 Engine", "Milspec Orion 3701 Core System", "Schafer & Kane Light Stealth Plating")
          use_secondary  = 1
          use_forward    = nhigh - use_secondary
          addWeapons( equip_forwardDvaLow(), use_forward )
@@ -84,7 +92,6 @@ function equip_dvaeredMilitary( p, shipsize )
 
       -- Bomber
       elseif class == "Bomber" then
-         equip_cores(p, "Tricon Naga Mk9 Engine", "Milspec Orion 3701 Core System", "Schafer & Kane Light Combat Plating")
          use_forward    = rnd.rnd(1,2)
          use_secondary  = nhigh - use_forward
          addWeapons( equip_forwardDvaLow(), use_forward )
@@ -94,7 +101,13 @@ function equip_dvaeredMilitary( p, shipsize )
       end
 
    elseif shipsize == "medium" then
-      equip_cores(p, "Tricon Centaur Mk7 Engine", "Milspec Orion 5501 Core System", "Schafer & Kane Medium Combat Plating Gamma")
+      local class = p:ship():class()
+      cores = {
+         {"Tricon Cyclone Engine", "Milspec Orion 4801 Core System", "S&K Medium Combat Plating"},
+         {"Tricon Cyclone II Engine", "Milspec Orion 5501 Core System", "S&K Medium-Heavy Combat Plating"}
+      }
+      equip_cores(p, equip_getCores(p, shipsize, cores))
+
       use_secondary  = rnd.rnd(1,2)
       use_turrets    = nhigh - use_secondary - rnd.rnd(1,2)
       use_forward    = nhigh - use_secondary - use_turrets
@@ -106,7 +119,12 @@ function equip_dvaeredMilitary( p, shipsize )
 
    else -- "large"
       -- TODO: Divide into carrier and cruiser classes.
-      equip_cores(p, "Tricon Harpy Mk11 Engine", "Milspec Orion 9901 Core System", "Schafer & Kane Heavy Combat Plating Gamma")
+      cores = {
+         {"Tricon Typhoon Engine", "Milspec Orion 9901 Core System", "S&K Heavy Combat Plating"},
+         {"Tricon Typhoon II Engine", "Milspec Orion 9901 Core System", "S&K Superheavy Combat Plating"}
+      }
+      equip_cores(p, equip_getCores(p, shipsize, cores))
+
       use_secondary  = 2
       use_turrets = nhigh - use_secondary - rnd.rnd(2,3)
       if rnd.rnd() > 0.4 then -- Anti-fighter variant.

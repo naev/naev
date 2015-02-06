@@ -7,8 +7,8 @@
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>705.362468</x>
-  <y>-797.134085</y>
+  <x>720.995077</x>
+  <y>-903.282028</y>
  </pos>
  <assets>
   <asset>Quai I</asset>
@@ -16,6 +16,10 @@
   <asset>Quai IIa</asset>
  </assets>
  <jumps>
+  <jump target="Lapis">
+   <autopos/>
+   <hide>1.250000</hide>
+  </jump>
   <jump target="Ruttwi">
    <autopos/>
    <hide>1.250000</hide>

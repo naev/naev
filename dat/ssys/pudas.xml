@@ -23,5 +23,10 @@
    <autopos/>
    <hide>1.250000</hide>
   </jump>
+  <jump target="Zied">
+   <autopos/>
+   <exitonly/>
+   <hide>1.250000</hide>
+  </jump>
  </jumps>
 </ssys>

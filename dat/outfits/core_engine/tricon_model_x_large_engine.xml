@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <outfit name="Tricon Model X Large Engine">
  <general>
-  <typename>Core Systems</typename>
+  <typename>Core Systems (Engine)</typename>
   <slot prop="engines">structure</slot>
   <license>Tricon Experimental Engine License</license>
   <size>large</size>

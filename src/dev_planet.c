@@ -113,6 +113,10 @@ int dpl_savePlanet( const Planet *p )
          for (i=0; i<p->ncommodities; i++)
             xmlw_elem( writer, "commodity", "%s", p->commodities[i]->name );
          xmlw_endElem( writer ); /* "commodities" */
+
+         if (planet_isBlackMarket(p))
+            xmlw_elemEmpty( writer, "blackmarket" );
+
          xmlw_elem( writer, "description", "%s", p->description );
          if (planet_hasService( p, PLANET_SERVICE_BAR ))
             xmlw_elem( writer, "bar", "%s", p->bar_description );

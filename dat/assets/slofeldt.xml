@@ -16,14 +16,14 @@
  <general>
   <class>0</class>
   <population>9874</population>
-  <hide>0.750000</hide>
+  <hide>0.500000</hide>
   <services>
    <land>land_hiclass</land>
    <refuel/>
    <bar/>
   </services>
   <commodities/>
-  <description>Slofeldt is a floating museum and memorial to the Incident. It contains relics from Old Earth, as well as holos of Sol before the Incident sterilzed it. It is a monument to lass and days gone by. A place for quiet contemplation.</description>
-  <bar>The bar is more of a resturant, with overpriced if tasty food and drinks both alcoholic and otherwise. The beer is browed on site, and has a surprising kick to it.</bar>
+  <description>Slofeldt is a floating museum and memorial to the Incident. It contains relics from Old Earth, as well as holos of Sol before the Incident sterilized it. It is a monument to lass and days gone by. A place for quiet contemplation.</description>
+  <bar>The bar is more of a restaurant, with overpriced if tasty food and drinks both alcoholic and otherwise. The beer is brewed on site, and has a surprising kick to it.</bar>
  </general>
 </asset>

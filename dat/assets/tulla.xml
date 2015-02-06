@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Tulla">
+ <pos>
+  <x>-3316.789367</x>
+  <y>-2888.816545</y>
+ </pos>
+ <GFX>
+  <space>M01.png</space>
+  <exterior>forest.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Za'lek</faction>
+  <value>100.000000</value>
+  <range>3</range>
+ </presence>
+ <general>
+  <class>M</class>
+  <population>7805000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities/>
+  <description>Tulla is an utterly insignificant world. It is primarily the space equivalent of a suburb, with  a large residential population and basic facilities to service them and allow them contact with the wider galaxy, but as a whole the world is very boring.</description>
+  <bar>This bar is standard in almost all respects, though the food is respectable.</bar>
+ </general>
+ <tech>
+  <item>Laser 1</item>
+  <item>Ion 1</item>
+  <item>Basic Outfits 1</item>
+  <item>Low Tech Upgrades</item>
+  <item>Star Maps</item>
+  <item>Basic Civilian Ships</item>
+ </tech>
+</asset>

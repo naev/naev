@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <asset name="New Haven">
  <pos>
-  <x>-57520.000000</x>
-  <y>4400.000000</y>
+  <x>-34532.161684</x>
+  <y>3671.278901</y>
  </pos>
  <GFX>
   <space>X01.png</space>
@@ -46,6 +46,7 @@
   <item>Low Tech Upgrades</item>
   <item>High Tech Upgrades 1</item>
   <item>Hulls High</item>
+  <item>Hulls Elite</item>
   <item>Engines High</item>
   <item>Systems High</item>
   <item>Pirate Maps</item>

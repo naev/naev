@@ -24,6 +24,7 @@
 #include "space.h"
 #include "rng.h"
 #include "land.h"
+#include "land_outfits.h"
 #include "sound.h"
 #include "economy.h"
 #include "pause.h"
@@ -205,7 +206,6 @@ static int preemption = 0; /* Hyperspace target/untarget preemption. */
  */
 int player_save( xmlTextWriterPtr writer ); /* save.c */
 Planet* player_load( xmlNodePtr parent ); /* save.c */
-int landtarget; /**< Used in pilot.c, allows planet targeting while landing. */
 
 
 /**
@@ -626,7 +626,7 @@ void player_swapShip( char* shipname )
 
       /* Fill the tank. */
       if (landed)
-         land_checkAddRefuel();
+         land_refuel();
 
       /* Set some gui stuff. */
       gui_load( gui_pick() );
@@ -1116,15 +1116,13 @@ void player_think( Pilot* pplayer, const double dt )
        * If the player has reverse thrusters, fire those.
        */
       if (player.p->stats.misc_reverse_thrust)
-         player_accel( -0.4 );
+         player_accel( -PILOT_REVERSE_THRUST );
       else if (!facing){
          pilot_face( pplayer, VANGLE(player.p->solid->vel) + M_PI );
          /* Disable turning. */
          facing = 1;
       }
    }
-   else if(player.p->stats.misc_reverse_thrust && !player_isFlag(PLAYER_REVERSE) && !player_isFlag(PLAYER_ACCEL) && !player_isFlag(PLAYER_AUTONAV))
-      player_accelOver();
 
    /* normal turning scheme */
    if (!facing) {
@@ -1335,18 +1333,20 @@ void player_targetPlanet (void)
 void player_land (void)
 {
    int i;
-   int tp;
+   int tp, silent;
    double td, d;
    Planet *planet;
-   int runcount = 0;
+
+   silent = 0; /* Whether to suppress the land ack noise. */
 
    if (landed) { /* player is already landed */
       takeoff(1);
       return;
    }
 
-   /* Not under manual control. */
-   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
+   /* Not under manual control or disabled. */
+   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ) ||
+         pilot_isDisabled(player.p))
       return;
 
    /* Already landing. */
@@ -1361,12 +1361,6 @@ void player_land (void)
    }
 
    if (player.p->nav_planet == -1) { /* get nearest planet target */
-
-      if (cur_system->nplanets == 0) {
-         player_messageRaw("\erThere are no planets to land on.");
-         return;
-      }
-
       td = -1; /* temporary distance */
       tp = -1; /* temporary planet */
       for (i=0; i<cur_system->nplanets; i++) {
@@ -1386,14 +1380,15 @@ void player_land (void)
       if (player.p->nav_planet < 0)
          return;
 
-      player_land(); /* rerun land protocol */
+      silent = 1; /* Suppress further targeting noises. */
    }
    /*check if planet is in range*/
    else if (!pilot_inRangePlanet( player.p, player.p->nav_planet)) {
       player_planetOutOfRangeMsg();
       return;
    }
-   else if (player_isFlag(PLAYER_NOLAND)) {
+
+   if (player_isFlag(PLAYER_NOLAND)) {
       player_message( "\er%s", player_message_noland );
       return;
    }
@@ -1401,65 +1396,93 @@ void player_land (void)
       player_message( "\erDocking stabilizers malfunctioning, cannot land." );
       return;
    }
-   else { /* attempt to land at selected planet */
-      planet = cur_system->planets[player.p->nav_planet];
-      if (!planet_hasService(planet, PLANET_SERVICE_LAND)) {
-         player_messageRaw( "\erYou can't land here." );
-         return;
-      }
-      else if (!player_isFlag(PLAYER_LANDACK)) { /* no landing authorization */
-         if (planet_hasService(planet,PLANET_SERVICE_INHABITED)) { /* Basic services */
-            if (planet->can_land || (planet->land_override > 0)) {
-               player_message( "\e%c%s>\e0 %s", planet_getColourChar(planet),
-                     planet->name, planet->land_msg );
-               player_setFlag(PLAYER_LANDACK);
-               player_soundPlayGUI(snd_nav,1);
-            }
-            else if (planet->bribed && (planet->land_override >= 0)) {
-               player_message( "\e%c%s>\e0 %s", planet_getColourChar(planet),
-                     planet->name, planet->bribe_ack_msg );
-               player_setFlag(PLAYER_LANDACK);
-               player_soundPlayGUI(snd_nav,1);
-            }
-            else /* Hostile */
-               player_message( "\e%c%s>\e0 %s", planet_getColourChar(planet),
-                     planet->name, planet->land_msg );
-         }
-         else { /* No shoes, no shirt, no lifeforms, no service. */
-            player_message( "\epReady to land on %s.", planet->name );
-            player_setFlag(PLAYER_LANDACK);
-            player_soundPlayGUI(snd_nav,1);
-         }
-         return;
-      }
-      else if (vect_dist2(&player.p->solid->pos,&planet->pos) > pow2(planet->radius)) {
-         player_message("\erYou are too far away to land on %s.", planet->name);
-         return;
-      } else if ((pow2(VX(player.p->solid->vel)) + pow2(VY(player.p->solid->vel))) >
-            (double)pow2(MAX_HYPERSPACE_VEL)) {
-         player_message("\erYou are going too fast to land on %s.", planet->name);
-         return;
-      }
 
-      /* Stop afterburning. */
-      pilot_afterburnOver( player.p );
-      /* Stop accelerating. */
-      player_accelOver();
-
-      /* Stop all on outfits. */
-      if (pilot_outfitOffAll( player.p ) > 0)
-         pilot_calcStats( player.p );
-
-      /* Start landing. */
-      if (runcount == 0)
-         landtarget = player.p->nav_planet;
-      player_soundPause();
-      player.p->ptimer = PILOT_LANDING_DELAY;
-      pilot_setFlag( player.p, PILOT_LANDING );
-      pilot_setThrust( player.p, 0. );
-      pilot_setTurn( player.p, 0. );
-      runcount++;
+   /* attempt to land at selected planet */
+   planet = cur_system->planets[player.p->nav_planet];
+   if (!planet_hasService(planet, PLANET_SERVICE_LAND)) {
+      player_messageRaw( "\erYou can't land here." );
+      return;
    }
+   else if (!player_isFlag(PLAYER_LANDACK)) { /* no landing authorization */
+      if (planet_hasService(planet,PLANET_SERVICE_INHABITED)) { /* Basic services */
+         if (planet->can_land || (planet->land_override > 0))
+            player_message( "\e%c%s>\e0 %s", planet_getColourChar(planet),
+                  planet->name, planet->land_msg );
+         else if (planet->bribed && (planet->land_override >= 0))
+            player_message( "\e%c%s>\e0 %s", planet_getColourChar(planet),
+                  planet->name, planet->bribe_ack_msg );
+         else { /* Hostile */
+            player_message( "\e%c%s>\e0 %s", planet_getColourChar(planet),
+                  planet->name, planet->land_msg );
+            return;
+         }
+      }
+      else /* No shoes, no shirt, no lifeforms, no service. */
+         player_message( "\epReady to land on %s.", planet->name );
+
+      player_setFlag(PLAYER_LANDACK);
+      if (!silent)
+         player_soundPlayGUI(snd_nav, 1);
+
+      return;
+   }
+   else if (vect_dist2(&player.p->solid->pos,&planet->pos) > pow2(planet->radius)) {
+      player_message("\erYou are too far away to land on %s.", planet->name);
+      return;
+   }
+   else if ((pow2(VX(player.p->solid->vel)) + pow2(VY(player.p->solid->vel))) >
+         (double)pow2(MAX_HYPERSPACE_VEL)) {
+      player_message("\erYou are going too fast to land on %s.", planet->name);
+      return;
+   }
+
+   /* Abort autonav. */
+   player_autonavAbort(NULL);
+
+   /* Stop afterburning. */
+   pilot_afterburnOver( player.p );
+   /* Stop accelerating. */
+   player_accelOver();
+
+   /* Stop all on outfits. */
+   if (pilot_outfitOffAll( player.p ) > 0)
+      pilot_calcStats( player.p );
+
+   /* Start landing. */
+   player_soundPause();
+   player.p->ptimer = PILOT_LANDING_DELAY;
+   pilot_setFlag( player.p, PILOT_LANDING );
+   pilot_setThrust( player.p, 0. );
+   pilot_setTurn( player.p, 0. );
+}
+
+
+/**
+ * @brief Revokes landing authorization if the player's reputation is too low.
+ */
+void player_checkLandAck( void )
+{
+   Planet *p;
+
+   /* No authorization to revoke. */
+   if (!player_isFlag(PLAYER_LANDACK))
+      return;
+
+   /* Avoid a potential crash if PLAYER_LANDACK is set inappropriately. */
+   if (player.p->nav_planet < 0) {
+      WARN("Player has landing permission, but no valid planet targeted.");
+      return;
+   }
+
+   p = cur_system->planets[ player.p->nav_planet ];
+
+   /* Player can still land. */
+   if (p->can_land || (p->land_override > 0) || p->bribed)
+      return;
+
+   player_rmFlag(PLAYER_LANDACK);
+   player_message( "\e%c%s>\e0 Landing permission revoked.",
+         planet_getColourChar(p), p->name );
 }
 
 
@@ -1499,6 +1522,12 @@ void player_targetHyperspaceSet( int id )
       WARN("Trying to set player's hyperspace target to invalid ID '%d'", id);
       return;
    }
+
+   if (pilot_isFlag(player.p, PILOT_HYP_PREP) ||
+         pilot_isFlag(player.p, PILOT_HYP_BEGIN) ||
+         pilot_isFlag(player.p, PILOT_HYPERSPACE))
+      return;
+
 
    old = player.p->nav_hyperspace;
    player.p->nav_hyperspace = id;
@@ -1577,7 +1606,7 @@ void player_hailStart (void)
 
    /* Abort autonav. */
    player_messageRaw("\erReceiving hail!");
-   player_autonavResetSpeed();
+   player_autonavEnd();
 }
 
 
@@ -1595,8 +1624,9 @@ int player_jump (void)
    if (pilot_isFlag(player.p, PILOT_HYPERSPACE))
       return 0;
 
-   /* Not under manual control. */
-   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
+   /* Not under manual control or disabled. */
+   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ) ||
+         pilot_isDisabled(player.p))
       return 0;
 
    /* Select nearest jump if not target. */
@@ -1770,6 +1800,9 @@ void player_targetSet( unsigned int id )
 
 /**
  * @brief Targets the nearest hostile enemy to the player.
+ *
+ * @note This function largely duplicates pilot_getNearestEnemy, because the
+ *       player's hostility with AIs is more nuanced than AI vs AI.
  */
 void player_targetHostile (void)
 {
@@ -1777,22 +1810,26 @@ void player_targetHostile (void)
    int i;
    double d, td;
 
-   tp=PLAYER_ID;
-   d=0;
+   tp = PLAYER_ID;
+   d  = 0;
    for (i=0; i<pilot_nstack; i++) {
       /* Don't get if is bribed. */
       if (pilot_isFlag(pilot_stack[i],PILOT_BRIBED))
          continue;
 
-      /* Must be in range. */
-      if (pilot_inRangePilot( player.p, pilot_stack[i] ) <= 0)
+      /* Shouldn't be disabled. */
+      if (pilot_isDisabled(pilot_stack[i]))
+         continue;
+
+      /* Must be a valid target. */
+      if (!pilot_validTarget( player.p, pilot_stack[i] ))
          continue;
 
       /* Normal unbribed check. */
       if (pilot_isHostile(pilot_stack[i])) {
-         td = vect_dist(&pilot_stack[i]->solid->pos, &player.p->solid->pos);
-         if (!pilot_isDisabled(pilot_stack[i]) && ((tp==PLAYER_ID) || (td < d))) {
-            d = td;
+         td = vect_dist2(&pilot_stack[i]->solid->pos, &player.p->solid->pos);
+         if ((tp==PLAYER_ID) || (td < d)) {
+            d  = td;
             tp = pilot_stack[i]->id;
          }
       }
@@ -1900,7 +1937,7 @@ void player_targetEscort( int prev )
  */
 void player_targetNearest (void)
 {
-   unsigned int t, dt, old;
+   unsigned int t, dt;
    double d;
 
    d = pilot_getNearestPos( player.p, &dt, player.p->solid->pos.x,
@@ -1915,14 +1952,7 @@ void player_targetNearest (void)
          t = dt;
    }
 
-   old = player.p->target;
-   pilot_setTarget( player.p, t );
-
-   if ((player.p->target != PLAYER_ID) && (old != player.p->target)) {
-      gui_forceBlink();
-      player_soundPlayGUI( snd_target, 1 );
-   }
-   gui_setTarget();
+   player_targetSet( t );
 }
 
 
@@ -1997,8 +2027,9 @@ static void player_planetOutOfRangeMsg (void)
  */
 void player_hail (void)
 {
-   /* Not under manual control. */
-   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
+   /* Not under manual control or disabled. */
+   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ) ||
+         pilot_isDisabled(player.p))
       return;
 
    if (player.p->target != player.p->id)
@@ -2045,8 +2076,9 @@ void player_autohail (void)
    int i;
    Pilot *p;
 
-   /* Not under manual control. */
-   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
+   /* Not under manual control or disabled. */
+   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ) ||
+         pilot_isDisabled(player.p))
       return;
 
    /* Find pilot to autohail. */
@@ -2088,7 +2120,9 @@ void player_toggleMouseFly(void)
       input_mouseHide();
       player_rmFlag(PLAYER_MFLY);
       player_message("\erMouse flying disabled.");
-      player_accelOver();
+
+      if (conf.mouse_thrust)
+         player_accelOver();
    }
 }
 
@@ -2101,13 +2135,16 @@ void player_toggleCooldown(void)
    if (pilot_isFlag(player.p, PILOT_TAKEOFF))
       return;
 
-   /* Not under manual control. */
-   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ))
+   /* Not under manual control or disabled. */
+   if (pilot_isFlag( player.p, PILOT_MANUAL_CONTROL ) ||
+         pilot_isDisabled(player.p))
       return;
 
    if ((!pilot_isFlag(player.p, PILOT_COOLDOWN)) &&
-            (!pilot_isFlag(player.p, PILOT_COOLDOWN_BRAKE)))
+            (!pilot_isFlag(player.p, PILOT_COOLDOWN_BRAKE))) {
+      player_autonavAbort(NULL);
       pilot_cooldown( player.p );
+   }
    else
       pilot_cooldownEnd(player.p, NULL);
 }
@@ -2150,6 +2187,9 @@ static int player_thinkMouseFly(void)
 void player_dead (void)
 {
    gui_cleanup();
+
+   /* Close the overlay. */
+   ovr_setOpen(0);
 }
 
 
@@ -2169,6 +2209,9 @@ void player_destroyed (void)
 
    /* Stop sounds. */
    player_soundStop();
+
+   /* Stop autonav */
+   player_autonavEnd();
 
    /* Reset time compression when player dies. */
    pause_setSpeed( 1. );
@@ -2382,58 +2425,41 @@ static int player_outfitCompare( const void *arg1, const void *arg2 )
 /**
  * @brief Prepares two arrays for displaying in an image array.
  *
- *    @param[out] soutfits Names of outfits the player owns.
- *    @param[out] toutfits Textures of outfits for image array.
+ *    @param[out] outfits Outfits the player owns.
+ *    @param[out] toutfits Optional store textures for the image array.
+ *    @return Number of outfits.
  */
-int player_getOutfits( char** soutfits, glTexture** toutfits )
+int player_getOutfits( Outfit **outfits, glTexture** toutfits )
 {
-   return player_getOutfitsFiltered( soutfits, toutfits, NULL );
+   return player_getOutfitsFiltered( outfits, toutfits, NULL, NULL );
 }
 
 
 /**
  * @brief Prepares two arrays for displaying in an image array.
  *
- *    @param[out] soutfits Names of outfits to .
- *    @param[out] toutfits Textures of outfits for image array.
+ *    @param[out] outfits Outfits the player owns.
+ *    @param[out] toutfits Optional store textures for the image array.
  *    @param[in] filter Function to filter which outfits to get.
+ *    @param[in] name Name fragment that each outfit must contain.
+ *    @return Number of outfits.
  */
-int player_getOutfitsFiltered( char** soutfits, glTexture** toutfits,
-      int(*filter)( const Outfit *o ) )
+int player_getOutfitsFiltered( Outfit **outfits, glTexture** toutfits,
+      int(*filter)( const Outfit *o ), char *name )
 {
-   int i, j;
+   int i;
 
-   if (player_noutfits == 0) {
-      soutfits[0] = strdup( "None" );
-      if (toutfits != NULL)
-         toutfits[0] = NULL;
-      return 1;
-   }
+   if (player_noutfits == 0)
+      return 0;
 
    /* We'll sort. */
    qsort( player_outfits, player_noutfits,
          sizeof(PlayerOutfit_t), player_outfitCompare );
 
-   /* Now built name and texture structure. */
-   j = 0;
-   for (i=0; i<player_noutfits; i++) {
-      if ((filter == NULL) || filter(player_outfits[i].o)) {
-         soutfits[j] = strdup( player_outfits[i].o->name );
-         if (toutfits != NULL)
-            toutfits[j] = player_outfits[i].o->gfx_store;
-         j++;
-      }
-   }
+   for (i=0; i<player_noutfits; i++)
+      outfits[i] = (Outfit*)player_outfits[i].o;
 
-   /* None found. */
-   if (j == 0) {
-      soutfits[0] = strdup( "None" );
-      if (toutfits != NULL)
-         toutfits[0] = NULL;
-      return 1;
-   }
-
-   return j;
+   return outfits_filter( outfits, toutfits, player_noutfits, filter, name );
 }
 
 

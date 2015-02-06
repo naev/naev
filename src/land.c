@@ -121,7 +121,7 @@ static char *errorlist_ptr;
  */
 static void land_createMainTab( unsigned int wid );
 static void land_cleanupWindow( unsigned int wid, char *name );
-static void land_changeTab( unsigned int wid, char *wgt, int tab );
+static void land_changeTab( unsigned int wid, char *wgt, int old, int tab );
 /* commodity exchange */
 static void commodity_exchange_open( unsigned int wid );
 static void commodity_update( unsigned int wid, char* str );
@@ -146,10 +146,6 @@ static void misn_close( unsigned int wid, char *name );
 static void misn_accept( unsigned int wid, char* str );
 static void misn_genList( unsigned int wid, int first );
 static void misn_update( unsigned int wid, char* str );
-/* refuel */
-static credits_t refuel_price (void);
-static void spaceport_refuel( unsigned int wid, char *str );
-static void land_toggleRefuel( unsigned int wid, char *name );
 
 
 /**
@@ -351,7 +347,6 @@ static void commodity_buy( unsigned int wid, char* str )
    q = pilot_cargoAdd( player.p, com, q );
    price *= q;
    player_modCredits( -price );
-   land_checkAddRefuel();
    commodity_update(wid, NULL);
 
    /* Run hooks. */
@@ -392,7 +387,6 @@ static void commodity_sell( unsigned int wid, char* str )
    q = pilot_cargoRm( player.p, com, q );
    price = price * (credits_t)q;
    player_modCredits( price );
-   land_checkAddRefuel();
    commodity_update(wid, NULL);
 
    /* Run hooks. */
@@ -998,103 +992,25 @@ static void misn_update( unsigned int wid, char* str )
 
 
 /**
- * @brief Gets how much it will cost to refuel the player.
- *    @return Refuel price.
+ * @brief Refuels the player's current ship, if possible.
  */
-static credits_t refuel_price (void)
+void land_refuel (void)
 {
-   return (credits_t)((player.p->fuel_max - player.p->fuel)*3);
-}
-
-
-/**
- * @brief Refuels the player.
- *    @param wid Land window.
- *    @param str Unused.
- */
-static void spaceport_refuel( unsigned int wid, char *str )
-{
-   (void)str;
-   credits_t price;
-
-   price = refuel_price();
-
-   if (!player_hasCredits( price )) { /* player is out of money after landing */
-      dialogue_alert("You seem to not have enough credits to refuel your ship." );
-      return;
-   }
-
-   player_modCredits( -price );
-   player.p->fuel      = player.p->fuel_max;
-   if (widget_exists( land_windows[0], "btnRefuel" )) {
-      window_destroyWidget( wid, "btnRefuel" );
-      window_destroyWidget( wid, "txtRefuel" );
-   }
-}
-
-
-/**
- * @brief Checks if should add the refuel button and does if needed.
- */
-void land_checkAddRefuel (void)
-{
-   char buf[ECON_CRED_STRLEN], cred[ECON_CRED_STRLEN];
    unsigned int w;
 
-   /* Check to see if fuel conditions are met. */
-   if (!planet_hasService(land_planet, PLANET_SERVICE_REFUEL)) {
-      if (!widget_exists( land_windows[0], "txtRefuel" ))
-         window_addText( land_windows[0], -20, 20 + (LAND_BUTTON_HEIGHT + 20) + 20,
-                  200, gl_defFont.h, 1, "txtRefuel",
-                  &gl_defFont, &cBlack, "No refueling services." );
-      return;
-   }
-
    /* Full fuel. */
-   if (player.p->fuel >= player.p->fuel_max) {
-      if (widget_exists( land_windows[0], "btnRefuel" ))
-         window_destroyWidget( land_windows[0], "btnRefuel" );
-      if (widget_exists( land_windows[0], "txtRefuel" ))
-         window_destroyWidget( land_windows[0], "txtRefuel" );
+   if (player.p->fuel >= player.p->fuel_max)
       return;
-   }
 
-   /* Autorefuel. */
-   if (conf.autorefuel) {
-      spaceport_refuel( land_windows[0], "btnRefuel" );
-      w = land_getWid( LAND_WINDOW_EQUIPMENT );
-      if (w > 0)
-         equipment_updateShips( w, NULL ); /* Must update counter. */
-      if (player.p->fuel >= player.p->fuel_max)
-         return;
-   }
+   /* No refuel service. */
+   if (!planet_hasService(land_planet, PLANET_SERVICE_REFUEL))
+      return;
 
-   /* Just enable button if it exists. */
-   if (widget_exists( land_windows[0], "btnRefuel" )) {
-      window_enableButton( land_windows[0], "btnRefuel");
-      credits2str( cred, player.p->credits, 2 );
-      nsnprintf( buf, sizeof(buf), "Credits: %s", cred );
-      window_modifyText( land_windows[0], "txtRefuel", buf );
-   }
-   /* Else create it. */
-   else {
-      /* Refuel button. */
-      credits2str( cred, refuel_price(), 2 );
-      nsnprintf( buf, sizeof(buf), "Refuel %s", cred );
-      window_addButton( land_windows[0], -20, 20 + (LAND_BUTTON_HEIGHT + 20),
-            LAND_BUTTON_WIDTH,LAND_BUTTON_HEIGHT, "btnRefuel",
-            buf, spaceport_refuel );
-      /* Player credits. */
-      credits2str( cred, player.p->credits, 2 );
-      nsnprintf( buf, sizeof(buf), "Credits: %s", cred );
-      window_addText( land_windows[0], -20, 20 + 2*(LAND_BUTTON_HEIGHT + 20),
-            LAND_BUTTON_WIDTH, gl_smallFont.h, 1, "txtRefuel",
-            &gl_smallFont, &cBlack, buf );
-   }
+   player.p->fuel = player.p->fuel_max;
 
-   /* Make sure player can click it. */
-   if (!player_hasCredits( refuel_price() ))
-      window_disableButton( land_windows[0], "btnRefuel" );
+   w = land_getWid( LAND_WINDOW_EQUIPMENT );
+   if (w > 0)
+      equipment_updateShips( w, NULL ); /* Must update counter. */
 }
 
 
@@ -1300,8 +1216,8 @@ void land_genWindows( int load, int changetab )
    if (changetab && land_windowsMap[ last_window ] != -1)
       window_tabWinSetActive( land_wid, "tabLand", land_windowsMap[ last_window ] );
 
-   /* Add fuel button if needed - AFTER missions pay :). */
-   land_checkAddRefuel();
+   /* Refuel if necessary. */
+   land_refuel();
 
    /* Finished loading. */
    land_loaded = 1;
@@ -1410,22 +1326,12 @@ static void land_createMainTab( unsigned int wid )
          LAND_BUTTON_WIDTH, LAND_BUTTON_HEIGHT, "btnTakeoff",
          "Take Off", land_buttonTakeoff, SDLK_t );
 
-   /*
-    * Checkboxes.
-    */
-   window_addCheckbox( wid, -20, 20 + 2*(LAND_BUTTON_HEIGHT + 20) + 40,
-         175, 20, "chkRefuel", "Automatic Refuel",
-         land_toggleRefuel, conf.autorefuel );
-   land_toggleRefuel( wid, "chkRefuel" );
-}
-
-
-/**
- * @brief Refuel was toggled.
- */
-static void land_toggleRefuel( unsigned int wid, char *name )
-{
-   conf.autorefuel = window_checkboxState( wid, name );
+   /* Add "no refueling" notice if needed. */
+   if (!planet_hasService(land_planet, PLANET_SERVICE_REFUEL)) {
+      window_addText( land_windows[0], -20, 20 + (LAND_BUTTON_HEIGHT + 20) + 20,
+               200, gl_defFont.h, 1, "txtRefuel",
+               &gl_defFont, &cBlack, "No refueling services." );
+   }
 }
 
 
@@ -1434,13 +1340,16 @@ static void land_toggleRefuel( unsigned int wid, char *name )
  *
  *    @param wid Unused.
  *    @param wgt Unused.
+ *    @param old Previously-active tab. (Unused)
  *    @param tab Tab changed to.
  */
-static void land_changeTab( unsigned int wid, char *wgt, int tab )
+static void land_changeTab( unsigned int wid, char *wgt, int old, int tab )
 {
    int i;
    (void) wid;
    (void) wgt;
+   (void) old;
+
    unsigned int w;
    const char *torun_hook;
    unsigned int to_visit;
@@ -1458,11 +1367,9 @@ static void land_changeTab( unsigned int wid, char *wgt, int tab )
          /* Must regenerate outfits. */
          switch (i) {
             case LAND_WINDOW_MAIN:
-               land_checkAddRefuel();
                break;
             case LAND_WINDOW_OUTFITS:
                outfits_update( w, NULL );
-               outfits_updateQuantities( w );
                to_visit   = VISITED_OUTFITS;
                torun_hook = "outfits";
                break;
@@ -1547,7 +1454,7 @@ void takeoff( int delay )
    land_takeoff = 0;
 
    /* Refuel if needed. */
-   land_checkAddRefuel();
+   land_refuel();
 
    /* In case we had paused messy sounds. */
    sound_stopAll();
@@ -1570,10 +1477,10 @@ void takeoff( int delay )
    cam_setTargetPilot( player.p->id, 0 );
 
    /* heal the player */
-   player.p->armour = player.p->armour_max;
-   player.p->shield = player.p->shield_max;
-   player.p->energy = player.p->energy_max;
-   player.p->stimer = 0.;
+   pilot_healLanded( player.p );
+
+   /* Clear planet target. Allows for easier autonav out of the system. */
+   player_targetPlanetSet( -1 );
 
    /* initialize the new space */
    h = player.p->nav_hyperspace;
@@ -1655,6 +1562,7 @@ void land_exit (void)
 {
    land_cleanup();
    equipment_cleanup();
+   outfits_cleanup();
 }
 
 

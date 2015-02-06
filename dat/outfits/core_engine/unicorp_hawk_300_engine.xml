@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Unicorp Hawk 300 Engine">
+ <general>
+  <typename>Core Systems (Engine)</typename>
+  <slot prop="engines">structure</slot>
+  <size>small</size>
+  <priority>7</priority>
+  <mass>10</mass>
+  <price>25000</price>
+  <description>The Hawk 300 is an enlarged version of the Hawk 150 engine, optimized for heavier loads. Like its smaller counterpart, it offers modest performance for a low price.</description>
+  <gfx_store>afterburner</gfx_store>
+ </general>
+ <specific type="modification">
+  <thrust>120</thrust>
+  <turn>100</turn>
+  <speed>215</speed>
+  <fuel>300</fuel>
+  <energy_usage>8</energy_usage>
+  <engine_limit>300</engine_limit>
+ </specific>
+</outfit>

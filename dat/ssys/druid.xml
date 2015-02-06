@@ -12,18 +12,14 @@
  </pos>
  <assets/>
  <jumps>
-  <jump target="Fidelis">
-   <autopos/>
-   <hide>1.250000</hide>
-  </jump>
-  <jump target="Millstone">
-   <autopos/>
-   <hide>1.250000</hide>
-  </jump>
   <jump target="Peter">
    <pos x="13245.811921" y="9515.248641"/>
    <hidden/>
    <hide>1.000000</hide>
+  </jump>
+  <jump target="Valur Gem">
+   <autopos/>
+   <hide>1.250000</hide>
   </jump>
  </jumps>
 </ssys>

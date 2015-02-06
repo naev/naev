@@ -31,6 +31,7 @@
   <bar>This bar is a commuter's bar. Every day, a large stream of people flows to and from the spaceport, where vast transport ships ferry them to the nearby planet of Zazarin to work. The flow is fairly continuous in both directions, as day-night cycles tend to lose their meaning when more than one planet is involved.</bar>
  </general>
  <tech>
+  <item>Engines Cargo</item>
   <item>Systems Low</item>
   <item>Hulls Low</item>
   <item>Bulk Trade Ships</item>

@@ -11,7 +11,7 @@
  <presence>
   <faction>Empire</faction>
   <value>100.000000</value>
-  <range>5</range>
+  <range>3</range>
  </presence>
  <general>
   <class>M</class>
@@ -27,13 +27,14 @@
    <shipyard/>
   </services>
   <commodities/>
-  <description>Griffin III is, despite the generic name, a well-polulated and presperous world. It has a booming industrial base and a respectable government complex. The facilities are well-maintained and extensive here. Truly a model world for the Empire, even if it's a little lacking in personality.</description>
+  <description>Griffin III is, despite the generic name, a well-populated and prosperous world. It has a booming industrial base and a respectable government complex. The facilities are well-maintained and extensive here. Truly a model world for the Empire, even if it's a little lacking in personality.</description>
   <bar>The bar is clean and large, with various games and vids for entertainment of patrons. The food is good and the drinks are great. One could stay a long time here.</bar>
  </general>
  <tech>
   <item>Systems Medium</item>
   <item>Hulls Medium</item>
   <item>Engines Medium</item>
+  <item>Engines Cargo</item>
   <item>Laser 1</item>
   <item>Laser 2</item>
   <item>Ion 1</item>

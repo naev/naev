@@ -55,4 +55,5 @@
  <commodity name="Radioactive Materials"/>
  <commodity name="Small Arms"/>
  <commodity name="Message"/>
+ <commodity name="Equipment"/>
 </Commodities>
