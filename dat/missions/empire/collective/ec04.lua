@@ -220,8 +220,9 @@ function land ()
       tk.msg( title[2], text[3] )
 
       -- Add fuel if needed
-      if player.fuel() < 200 then
-         player.refuel(200)
+      if player.jumps() < 2 then
+         local fuel, consumption = player.fuel()
+         player.refuel(2 * consumption)
          tk.msg( title[2], text[4] )
       end
 

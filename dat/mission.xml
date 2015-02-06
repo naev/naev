@@ -508,7 +508,7 @@
   <avail>
    <chance>10</chance>
    <location>Bar</location>
-   <cond>system.get("Ogat"):jumpDist() == 4 and player.fuel() &gt;= 400</cond>
+   <cond>system.get("Ogat"):jumpDist() == 4 and player.jumps() &gt;= 4</cond>
   </avail>
  </mission>
  <mission name="Hitman">
