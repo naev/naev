@@ -163,6 +163,11 @@ function control ()
 
    -- Enemy sighted, handled after running away
    elseif enemy ~= nil and mem.aggressive then
+      -- Don't start new attacks while refueling.
+      if task == "refuel" then
+         return
+      end
+
       local attack = false
 
       -- See if enemy is close enough to attack
@@ -320,19 +325,19 @@ function distress ( pilot, attacker )
    end
 
    local task = ai.taskname()
-   -- If not attacking nor fleeing, begin attacking
-   if task ~= "attack" and task ~= "runaway" then
-      if mem.aggressive then
-         ai.pushtask( "attack", t )
-      else
-         ai.pushtask( "runaway", t )
-      end
    -- We're sort of busy
-   elseif task == "attack" then
+   if task == "attack" then
       local target = ai.target()
 
       if not ai.exists(target) or ai.dist(target) > ai.dist(t) then
          ai.pushtask( "attack", t )
+      end
+   -- If not fleeing or refueling, begin attacking
+   elseif task ~= "runaway" and task ~= "refuel" then
+      if mem.aggressive then
+         ai.pushtask( "attack", t )
+      else
+         ai.pushtask( "runaway", t )
       end
    end
 end
