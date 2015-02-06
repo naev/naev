@@ -1,5 +1,5 @@
-include "jumpdist.lua"
-include "nextjump.lua"
+include "dat/scripts/jumpdist.lua"
+include "dat/scripts/nextjump.lua"
 
 -- Find an inhabited planet 0-3 jumps away.
 function cargo_selectMissionDistance ()

@@ -3,7 +3,7 @@
 	nasin, the wringer/suna. house sirius is sending in recon parties.
 	the players job is to take out any and all sirius in the system.]]
 
-include "numstring.lua"
+include "dat/scripts/numstring.lua"
 
 lang = naev.lang()
 

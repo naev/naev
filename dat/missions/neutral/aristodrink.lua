@@ -10,8 +10,8 @@ Thank you to Bobbens, Deiz, BTAxis, and others that have helped me with learning
 
 ]]--
 
-include "jumpdist.lua"
-include "numstring.lua"
+include "dat/scripts/jumpdist.lua"
+include "dat/scripts/numstring.lua"
 
 bar_desc = "You see an aristocrat sitting at a table in the middle of the bar, drinking a swirling concoction in a martini glass with a disappointed look on his face every time he takes a sip."
 

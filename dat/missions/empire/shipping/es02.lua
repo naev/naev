@@ -17,7 +17,7 @@
       3) VIP died or jump out of system without VIP  --> mission failure.
 ]]--
 
-include "numstring.lua"
+include "dat/scripts/numstring.lua"
 
 lang = naev.lang()
 if lang == "es" then

@@ -2,7 +2,7 @@
 -- This is the second mission in the Academy Hack minor campaign.
 --]]
 
-include "nextjump.lua"
+include "dat/scripts/nextjump.lua"
 include "fleethelper.lua"
 include "selectiveclear.lua"
 include "proximity.lua"

@@ -19,7 +19,7 @@ Make comm chatter appear during the battle
 Add some consequences if the player aborts the mission
 ]]--
 
-include "numstring.lua"
+include "dat/scripts/numstring.lua"
 
 -- localization stuff, translators would work here
 lang = naev.lang()

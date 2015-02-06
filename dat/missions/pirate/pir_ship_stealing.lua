@@ -13,7 +13,7 @@
 	happen (at least, I hope…) he’ll be pursued by a few fighters.
 --]]
 
-include "jumpdist.lua"
+include "dat/scripts/jumpdist.lua"
 
 local informer
 local refusal

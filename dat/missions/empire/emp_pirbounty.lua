@@ -8,7 +8,7 @@
 
 --]]
 
-include "numstring.lua"
+include "dat/scripts/numstring.lua"
 
 -- Localization, choosing a language if naev is translated for non-english-speaking locales.
 lang = naev.lang()

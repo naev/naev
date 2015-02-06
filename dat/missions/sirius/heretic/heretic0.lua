@@ -4,7 +4,7 @@
     Credits to KAHR-Alpha for the work "lackadaisically",
     and to BTAxis for the word "discombobulate"]]
 
-include "numstring.lua"
+include "dat/scripts/numstring.lua"
     
 lang = naev.lang()
 

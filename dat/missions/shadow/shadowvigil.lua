@@ -3,7 +3,7 @@
 --]]
 
 include "proximity.lua"
-include "nextjump.lua"
+include "dat/scripts/nextjump.lua"
 include "chatter.lua"
 include "selectiveclear.lua"
 

@@ -7,8 +7,8 @@
 
 ]]--
 
-include "numstring.lua"
-include "jumpdist.lua"
+include "dat/scripts/numstring.lua"
+include "dat/scripts/jumpdist.lua"
 
 lang = naev.lang()
 if lang == "es" then

@@ -9,8 +9,8 @@
 
 ]]--
 
-include "numstring.lua"
-include "jumpdist.lua"
+include "dat/scripts/numstring.lua"
+include "dat/scripts/jumpdist.lua"
 include "dat/missions/pirate/common.lua"
 
 lang = naev.lang()

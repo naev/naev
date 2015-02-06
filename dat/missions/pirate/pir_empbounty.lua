@@ -8,7 +8,7 @@
 
 --]]
 
-include "numstring.lua"
+include "dat/scripts/numstring.lua"
 
 -- Localization, choosing a language if naev is translated for non-english-speaking locales.
 lang = naev.lang()
@@ -43,7 +43,7 @@ include("dat/missions/pirate/common.lua")
 
 -- Scripts we need
 include("pilot/empire.lua")
-include("jumpdist.lua")
+include("dat/scripts/jumpdist.lua")
 
 
 function create ()

@@ -22,7 +22,7 @@ Because of bad planning, this mission is badly organized.
 Anyone looking for a model of good mission-making should look elsewhere! -- the author
 ]]--
 
-include "numstring.lua"
+include "dat/scripts/numstring.lua"
 
 -- localization stuff, translators would work here
 lang = naev.lang()

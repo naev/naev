@@ -12,7 +12,7 @@
 
 ]]--
 
-include "nextjump.lua"
+include "dat/scripts/nextjump.lua"
 include "proximity.lua"
 
 lang = naev.lang()

@@ -5,7 +5,7 @@
 	space. thanks to nloewen and viashimo for help!]]
 	
 
-include "numstring.lua"
+include "dat/scripts/numstring.lua"
 	
 lang = naev.lang()
 --beginning messages and choices
