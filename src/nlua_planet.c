@@ -40,6 +40,7 @@ static int planetL_getAll( lua_State *L );
 static int planetL_system( lua_State *L );
 static int planetL_eq( lua_State *L );
 static int planetL_name( lua_State *L );
+static int planetL_radius( lua_State *L );
 static int planetL_faction( lua_State *L );
 static int planetL_colour( lua_State *L );
 static int planetL_class( lua_State *L );
@@ -65,6 +66,7 @@ static const luaL_reg planet_methods[] = {
    { "__eq", planetL_eq },
    { "__tostring", planetL_name },
    { "name", planetL_name },
+   { "radius", planetL_radius },
    { "faction", planetL_faction },
    { "colour", planetL_colour },
    { "class", planetL_class },
@@ -92,6 +94,7 @@ static const luaL_reg planet_cond_methods[] = {
    { "__eq", planetL_eq },
    { "__tostring", planetL_name },
    { "name", planetL_name },
+   { "radius", planetL_radius },
    { "faction", planetL_faction },
    { "colour", planetL_colour },
    { "class", planetL_class },
@@ -515,6 +518,22 @@ static int planetL_name( lua_State *L )
    Planet *p;
    p = luaL_validplanet(L,1);
    lua_pushstring(L,p->name);
+   return 1;
+}
+
+/**
+ * @brief Gets the planet's radius.
+ *
+ * @usage radius = p:radius()
+ *    @luaparam p Planet to get the radius of.
+ *    @luareturn The planet's graphics radius.
+ * @luafunc name( p )
+ */
+static int planetL_radius( lua_State *L )
+{
+   Planet *p;
+   p = luaL_validplanet(L,1);
+   lua_pushnumber(L,p->radius);
    return 1;
 }
 
