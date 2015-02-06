@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Melendez Mammoth Engine">
+ <general>
+  <typename>Core Systems (Engine)</typename>
+  <slot prop="engines">structure</slot>
+  <size>large</size>
+  <priority>3</priority>
+  <mass>75</mass>
+  <price>1100000</price>
+  <description>Melendez's Mammoth can pull incredible amounts of mass. Requiring specialized grav tethers to keep it attached to the ship's hull, it significantly impacts manoeuvrability, though a reasonable top speed can still be maintained. Many bulk freight corporations only turn a profit thanks to the Mammoth line of engines.</description>
+  <gfx_store>afterburner</gfx_store>
+ </general>
+ <specific type="modification">
+  <thrust>47</thrust>
+  <turn>50</turn>
+  <speed>90</speed>
+  <fuel>2000</fuel>
+  <energy_usage>40</energy_usage>
+  <engine_limit>5500</engine_limit>
+ </specific>
+</outfit>

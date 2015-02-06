@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Warnecke II">
+ <pos>
+  <x>-105.345516</x>
+  <y>-6.449725</y>
+ </pos>
+ <GFX>
+  <space>moon-J00.png</space>
+  <exterior>station03.png</exterior>
+ </GFX>
+ <general>
+  <class>J</class>
+  <population>0</population>
+  <hide>0.500000</hide>
+  <services/>
+ </general>
+</asset>

@@ -235,7 +235,7 @@ void shipyard_update( unsigned int wid, char* str )
    /* update text */
    window_modifyText( wid, "txtStats", ship->desc_stats );
    window_modifyText( wid, "txtDescription", ship->description );
-   credits2str( buf2, ship_buyPrice(ship), 2 );
+   price2str( buf2, ship_buyPrice(ship), player.p->credits, 2 );
    credits2str( buf3, player.p->credits, 2 );
 
    /* Remove the word " License".  It's redundant and makes the text overflow
@@ -364,7 +364,6 @@ static void shipyard_buy( unsigned int wid, char* str )
       return;
    }
    player_modCredits( -targetprice ); /* ouch, paying is hard */
-   land_checkAddRefuel();
 
    /* Update shipyard. */
    shipyard_update(wid, NULL);
@@ -519,7 +518,7 @@ static void shipyard_trade( unsigned int wid, char* str )
 
    player_modCredits( playerprice - targetprice ); /* Modify credits by the difference between ship values. */
 
-   land_checkAddRefuel();
+   land_refuel();
 
    /* The newShip call will trigger a loadGUI that will recreate the land windows. Therefore the land ID will
     * be void. We must reload in in order to properly update it again.*/

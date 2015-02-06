@@ -86,7 +86,7 @@ function create()
    bg_armour = tex.open( base .. "bg_armour.png" )
    bg_energy = tex.open( base .. "bg_energy.png" )
    bg_speed = tex.open( base .. "bg_speed.png" )
-   bg_temperature = tex.open( base .. "bg_speed.png" )
+   bg_temperature = bg_speed
    bg_ammo = tex.open( base .. "bg_ammo.png" )
    bg_heat = tex.open( base .. "bg_heat.png" )
    bg_ready = tex.open( base .. "bg_ready.png" )
@@ -167,14 +167,26 @@ function create()
    x_shield = pl_pane_x + 46
    y_shield = pl_pane_y + 137
 
-   bars = { "armour", "energy", "speed", "temperature" }
-   for k,v in ipairs(bars) do
-      _G["x_" .. v] = x_shield
-      _G["y_" .. v] = y_shield - k * 28
-   end
-   bars[#bars] = "shield" -- Used later.
+   bardata = {}
 
-   --Ammo, heat and ready bars bars
+   -- Initialize bar data
+   local types = { "shield", "armour", "energy", "speed", "temperature" }
+   for k,v in ipairs(types) do
+      local bgw, bgh = _G["bg_" .. v]:dim()
+      bardata[v] = {
+         icon = _G["icon_" .. v],
+         col  = _G["col_"  .. v],
+         bg   = _G["bg_" .. v],
+         x = x_shield,
+         y = y_shield - (k-1) * 28,
+         w = bgw,
+         h = bgh
+      }
+   end
+
+   bars = { "armour", "energy", "speed", "shield" }
+
+   --Ammo, heat and ready bars
    bar_weapon_w, bar_weapon_h = bg_ammo:dim()
    bar_ready_w, bar_ready_h = bg_ready:dim()
    track_w, track_h = tracking_light:dim()
@@ -217,11 +229,42 @@ function create()
    x_shield_sm = ta_pane_x + 13
    y_shield_sm = ta_pane_y + 71
 
-   bars_sm = { "armour_sm", "energy_sm", "speed_sm" }
-   for k,v in ipairs(bars_sm) do
-      _G["x_" .. v] = x_shield_sm
-      _G["y_" .. v] = y_shield_sm - k * 20
+   -- Initialize small bar data
+   local types = { "shield", "armour", "energy", "speed" }
+   for k,v in ipairs(types) do
+      local bgw, bgh = _G["bg_" .. v .. "_sm"]:dim()
+      bardata[v .. "_sm"] = {
+         icon = _G["icon_" .. v .. "_sm"],
+         col  = _G["col_"  .. v],
+         bg   = _G["bg_" .. v .. "_sm"],
+         x = x_shield_sm,
+         y = y_shield_sm - (k-1) * 20,
+         w = bgw,
+         h = bgh
+      }
    end
+
+   bars_sm = { "armour_sm", "energy_sm", "speed_sm" }
+
+   bar_offsets = {
+      normal = {
+         30, -- Bar X, relative to frame
+          7, -- Icon X
+         15, -- Sheen Y
+          6  -- Text Y
+      },
+      small = { 22, 5, 9, 3 }, -- See above.
+      ammo = {
+          2, -- Bar
+         20, -- Refire indicator Y
+          3, -- Sheen
+         13, -- Sheen Y
+         22, -- Refire sheen Y
+          6, -- Text Y
+          2, -- Tracking icon X
+          5  -- Tracking icon Y
+      }
+   }
 
    --Targeted warning light
    ta_warning_x = ta_pane_x + 82
@@ -295,7 +338,7 @@ end
 function update_nav()
    planet = {}
    nav_pnt, nav_hyp = pp:nav()
-   autonav_hyp = player.autonavDest()
+   autonav_hyp, jumps = player.autonavDest()
    if nav_pnt then
       pntflags = nav_pnt:services()
       gui.osdInit( ta_pnt_pane_x + ta_pnt_pane_w + 8, screen_h - 63, 150, 500 )
@@ -345,7 +388,7 @@ function update_nav()
          navstring = "Unknown"
       end
       if autonav_hyp then
-         navstring = (navstring .. " (%s)"):format( autonav_hyp:jumpDist() )
+         navstring = (navstring .. " (%s)"):format( jumps )
       end
    else
       navstring = "none"
@@ -387,13 +430,17 @@ end
 
 function update_wset()
    wset_name, wset  = pp:weapset()
+
+-- Currently unused.
+--[[
    weap_icons = {}
 
    for k, v in ipairs( wset ) do
       weap_icons[k] = outfit.get( v.name ):icon()
    end
+--]]
 
-   aset = pp:actives()
+   aset = pp:actives(true)
    active_icons = {}
 
    for k, v in ipairs( aset ) do
@@ -414,126 +461,130 @@ function render_cooldown( percent, seconds )
 end
 
 
-function render_bar( name, value, txt, txtcol, size, col, bgc )
+function render_bar( data, value, txt, txtcol, size, col, bgc )
+   local offsets
    if size then
-      offsets = { 22, 5, 9, 3 }
+      offsets = bar_offsets['small']
       l_bg_bar = bg_bar_sm
       l_sheen = sheen_sm
-      postfix = "_sm"
    else
-      offsets = { 30, 7, 15, 6 }
+      offsets = bar_offsets['normal']
       l_bg_bar = bg_bar
       l_sheen = sheen
-      postfix = nil
    end
-   local vars = { "icon", "bg", "x", "y", "col" }
-   for k,var in ipairs(vars) do
-      if postfix and var ~= "col" then
-         _G["l_" .. var] = _G[var .. "_" .. name .. postfix]
-      else
-         _G["l_" .. var] = _G[var .. "_" .. name]
-      end
+
+   if not col then
+      col = data.col
    end
-   if col then
-      l_col = col
+
+   if data.bg then
+      gfx.renderTex( data.bg, data.x + offsets[1], data.y + 2)
    end
-   if l_bg then
-      l_bar_w, l_bar_h = l_bg:dim()
-      gfx.renderTex( l_bg, l_x + offsets[1], l_y + 2)
-   end
+
    if not value then value = 100 end
-   if bgc then gfx.renderRect( l_x + offsets[1], l_y + 2, l_bar_w, l_bar_h, bgc ) end
-   gfx.renderRect( l_x + offsets[1], l_y + 2, value/100. * l_bar_w, l_bar_h, l_col )
-   gfx.renderTex( l_bg_bar, l_x, l_y )
-   gfx.renderTex( l_icon, l_x + offsets[2], l_y + offsets[2] - 3)
-   gfx.renderTex( l_sheen, l_x + offsets[1] + 1, l_y + offsets[3])
+   if bgc then gfx.renderRect( data.x + offsets[1], data.y + 2, data.w, data.h, bgc ) end
+
+   if value > 0 then
+      gfx.renderRect( data.x + offsets[1], data.y + 2, value/100. * data.w, data.h, col )
+   end
+
+   gfx.renderTex( l_bg_bar, data.x, data.y )
+   gfx.renderTex( data.icon, data.x + offsets[2], data.y + offsets[2] - 3)
+   gfx.renderTex( l_sheen, data.x + offsets[1] + 1, data.y + offsets[3])
 
    if txt then
       small = false
-      if gfx.printDim( false, txt ) > l_bar_w then
+      if gfx.printDim( false, txt ) > data.w then
          small = true
       end
-      gfx.print( small, txt, l_x + offsets[1], l_y + offsets[4], txtcol, l_bar_w, true)
+      gfx.print( small, txt, data.x + offsets[1], data.y + offsets[4], txtcol, data.w, true)
    else
-      gfx.print( true, "UNAVAILABLE", l_x + offsets[1], l_y + offsets[4], col_txt_una, l_bar_w, true )
+      gfx.print( true, "UNAVAILABLE", data.x + offsets[1], data.y + offsets[4], col_txt_una, data.w, true )
    end
 end
 
-function render_armourBar( name, value, stress_value, txt, txtcol, size, col, bgc )
+function render_armourBar( data, value, stress_value, txt, txtcol, size, col, bgc )
+   local offsets
    if size then
-      offsets = { 22, 5, 9, 3 }
+      offsets = bar_offsets['small']
       l_bg_bar = bg_bar_sm
       l_sheen = sheen_sm
-      postfix = "_sm"
    else
-      offsets = { 30, 7, 15, 6 }
+      offsets = bar_offsets['normal']
       l_bg_bar = bg_bar
       l_sheen = sheen
-      postfix = nil
    end
-   local vars = { "icon", "bg", "x", "y", "col" }
-   for k,var in ipairs(vars) do
-      if postfix and var ~= "col" then
-         _G["l_" .. var] = _G[var .. "_" .. name .. postfix]
-      else
-         _G["l_" .. var] = _G[var .. "_" .. name]
-      end
+
+   if not col then
+      col = data.col
    end
-   if col then
-      l_col = col
+
+   if data.bg then
+      gfx.renderTex( data.bg, data.x + offsets[1], data.y + 2)
    end
-   if l_bg then
-      l_bar_w, l_bar_h = l_bg:dim()
-      gfx.renderTex( l_bg, l_x + offsets[1], l_y + 2)
-   end
+
    if not value then value = 100 end
    if not stress_value then stress_value = 0 end
-   if bgc then gfx.renderRect( l_x + offsets[1], l_y + 2, l_bar_w, l_bar_h, bgc ) end
-   gfx.renderRect( l_x + offsets[1], l_y + 2, value/100. * l_bar_w, l_bar_h, l_col )
-   gfx.renderRect( l_x + offsets[1], l_y + 2, (stress_value/100) * (value/100) * l_bar_w, l_bar_h, col_stress )
-   gfx.renderTex( l_bg_bar, l_x, l_y )
-   gfx.renderTex( l_icon, l_x + offsets[2], l_y + offsets[2] - 3)
-   gfx.renderTex( l_sheen, l_x + offsets[1] + 1, l_y + offsets[3])
+
+   if bgc then gfx.renderRect( data.x + offsets[1], data.y + 2, data.w, data.h, bgc ) end
+   gfx.renderRect( data.x + offsets[1], data.y + 2, value/100. * data.w, data.h, col )
+
+   if stress_value > 0 then
+      gfx.renderRect( data.x + offsets[1], data.y + 2, (stress_value/100) * (value/100) * data.w, data.h, col_stress )
+   end
+
+   gfx.renderTex( l_bg_bar, data.x, data.y )
+   gfx.renderTex( data.icon, data.x + offsets[2], data.y + offsets[2] - 3)
+   gfx.renderTex( l_sheen, data.x + offsets[1] + 1, data.y + offsets[3])
 
    if txt then
       small = false
-      if gfx.printDim( false, txt ) > l_bar_w then
+      if gfx.printDim( false, txt ) > data.w then
          small = true
       end
-      gfx.print( small, txt, l_x + offsets[1], l_y + offsets[4], txtcol, l_bar_w, true)
+      gfx.print( small, txt, data.x + offsets[1], data.y + offsets[4], txtcol, data.w, true)
    else
-      gfx.print( true, "UNAVAILABLE", l_x + offsets[1], l_y + offsets[4], col_txt_una, l_bar_w, true )
+      gfx.print( true, "UNAVAILABLE", data.x + offsets[1], data.y + offsets[4], col_txt_una, data.w, true )
    end
 end
 
 function render_ammoBar( name, x, y, value, txt, txtcol )
-   offsets = { 2, 20, 3, 13, 22, 6, 2, 5 } --Bar, y of refire, sheen, y of sheen, y of refire sheen, y of text, x and y of tracking icon
+   local offsets = bar_offsets['ammo']
    l_bg = _G["bg_" .. name]
-   if name == "heat" then
-      value[1] = value[1] / 2.
-      if value[1] > .5 then
-         l_col = col_heat2
+   gfx.renderTex( l_bg, x + offsets[1], y + offsets[1])
+   gfx.renderTex( bg_ready, x + offsets[1], y + offsets[2])
+
+   -- Overheat or ammo capacity
+   if value[1] > 0 then
+      if name == "heat" then
+         value[1] = value[1] / 2.
+         if value[1] > .5 then
+            l_col = col_heat2
+         else
+            l_col = col_heat
+         end
       else
          l_col = _G["col_" .. name]
       end
-   else
-      l_col = _G["col_" .. name]
+
+      gfx.renderRect( x + offsets[1], y + offsets[1], value[1] * bar_weapon_w, bar_weapon_h, l_col)
    end
-   gfx.renderTex( l_bg, x + offsets[1], y + offsets[1])
-   gfx.renderTex( bg_ready, x + offsets[1], y + offsets[2])
-   gfx.renderRect( x + offsets[1], y + offsets[1], value[1] * bar_weapon_w, bar_weapon_h, l_col)
+
+   -- Refire indicator
    gfx.renderRect( x + offsets[1], y + offsets[2], value[2] * bar_ready_w, bar_ready_h, col_ready)
-   if value[3] == 2 then
-      gfx.renderTex( bg_bar_weapon_sec, x, y )
-   elseif value[3] == 1 then
+
+   if value[3] == 1 then
       gfx.renderTex( bg_bar_weapon_prim, x, y )
+   elseif value[3] == 2 then
+      gfx.renderTex( bg_bar_weapon_sec, x, y )
    else
       gfx.renderTex( bg_bar_weapon, x, y )
    end
+
    local textoffset = 0
    local trackcol
    if value[4] then
-      if value[4] == -1 or pilot.player():target() == nil then
+      if value[4] == -1 or ptarget == nil then
          trackcol = col_txt_una
       elseif value[5] then -- Handling missile lock-on.
          if value[4] < 1. then
@@ -556,7 +607,6 @@ end
 
 
 function render( dt, dt_mod )
-
    --Values
    armour, shield, stress = pp:health()
    energy = pp:energy()
@@ -564,7 +614,6 @@ function render( dt, dt_mod )
    temperature = pp:temp()
    lockons = pp:lockon()
    autonav = player.autonav()
-   wset_name, wset  = pp:weapset(true)
    credits = player.credits()
    update_wset() -- Ugly.
 
@@ -582,7 +631,7 @@ function render( dt, dt_mod )
 
    local txt = {}
    for k,v in ipairs(bars) do
-      txt[v] = string.format( "%s%% (%s)", round(_G[v]), round( stats[v] * _G[v] / 100 ) )
+      txt[v] = round(_G[v]) .. "% (" .. round( stats[v] * _G[v] / 100 ) .. ")"
    end
 
    --Shield
@@ -593,7 +642,7 @@ function render( dt, dt_mod )
    else
       col = col_txt_bar
    end
-   render_bar( "shield", shield, txt["shield"], col )
+   render_bar( bardata['shield'], shield, txt["shield"], col )
 
    --Armour
    if armour <= 20. then
@@ -601,7 +650,7 @@ function render( dt, dt_mod )
    else
       col = col_txt_bar
    end
-   render_armourBar( "armour", armour, stress, txt["armour"], col )
+   render_armourBar( bardata['armour'], armour, stress, txt["armour"], col )
 
    --Energy
    if energy == 0. then
@@ -611,15 +660,15 @@ function render( dt, dt_mod )
    else
       col = col_txt_bar
    end
-   render_bar( "energy", energy, txt["energy"], col )
+   render_bar( bardata['energy'], energy, txt["energy"], col )
 
    --Speed
-   local hspeed = round(speed / stats.speed_max * 100,0)
-   txt = string.format( "%d%% (%d)", hspeed, round(speed) )
+   local hspeed = round(speed / stats.speed_max * 100)
+   txt = hspeed .. "% (" .. round(speed) .. ")"
    if hspeed <= 100. then
-      render_bar( "speed", hspeed, txt, col_txt_bar )
+      render_bar( bardata['speed'], hspeed, txt, col_txt_bar )
    elseif hspeed <= 200. then
-      render_bar( "speed", hspeed - 100, txt, col_txt_wrn, nil, col_speed2, col_speed )
+      render_bar( bardata['speed'], hspeed - 100, txt, col_txt_wrn, nil, col_speed2, col_speed )
    else
       timers[1] = timers[1] - dt / dt_mod
       if timers[1] <=0. then
@@ -631,13 +680,13 @@ function render( dt, dt_mod )
          end
       end
       col = blinkcol
-      render_bar( "speed", 100, txt, col, nil, col_speed2)
+      render_bar( bardata['speed'], 100, txt, col, nil, col_speed2)
    end
 
    -- Temperature
    txt = round(temperature) .. "K"
    temperature = math.max( math.min( (temperature - 250)/1.75, 100 ), 0 )
-   render_bar( "temperature", temperature, txt, col_txt_bar )
+   render_bar( bardata['temperature'], temperature, txt, col_txt_bar )
 
    --Weapon bars
    for num, weapon in ipairs(wset) do
@@ -651,21 +700,21 @@ function render( dt, dt_mod )
             txt = string.gsub(txt,"Launcher", "L.")
          end
 
-         txt = txt .. " (" .. tostring( weapon.left) .. ")"
+         txt = txt .. " (" .. weapon.left .. ")"
          if weapon.left == 0 then
             col = col_txt_wrn
          else
             col = col_txt_bar
          end
-         if not weapon.in_arc and pilot.player():target() ~= nil then
+         if not weapon.in_arc and ptarget ~= nil then
             col = col_txt_una
          end
          values = {weapon.left_p, weapon.cooldown, weapon.level, weapon.track or weapon.lockon, weapon.lockon }
-         render_ammoBar( "ammo", x_ammo, y_ammo - (num-1)*28, values, txt, col, 2, col_ammo )
+         render_ammoBar( "ammo", x_ammo, y_ammo - (num-1)*28, values, txt, col)
       else
          col = col_txt_bar
          values = {weapon.temp, weapon.cooldown, weapon.level, weapon.track}
-         render_ammoBar( "heat", x_ammo, y_ammo - (num-1)*28, values, txt, col, 2, col_heat )
+         render_ammoBar( "heat", x_ammo, y_ammo - (num-1)*28, values, txt, col)
       end
    end
 
@@ -683,7 +732,7 @@ function render( dt, dt_mod )
          end
       end
       if gfxWarn then
-         gfx.renderTex( warnlight2, pl_pane_x + 29, pl_pane_y + 3 )
+         gfx.renderTex( warnlight2, pl_pane_x + 29, pl_pane_y + 7 )
       end
       if timers[3] <= -0.5 then
          timers[3] = 0.5
@@ -694,9 +743,7 @@ function render( dt, dt_mod )
 
    if armour <= 20 then
       gfx.renderTex( warnlight1, pl_pane_x + 6, pl_pane_y + 148 )
-   elseif armour <= 50 then
-      gfx.renderTex( warnlight4, pl_pane_x + 6, pl_pane_y + 148 )
-   elseif shield <= 50 then
+   elseif shield <= 50 or armour <= 50 then
       gfx.renderTex( warnlight4, pl_pane_x + 6, pl_pane_y + 148 )
    else
       gfx.renderTex( warnlight5, pl_pane_x + 6, pl_pane_y + 148 )
@@ -731,6 +778,11 @@ function render( dt, dt_mod )
          elseif aset[i].state == "cooldown" then
             local texnum = round(aset[i].cooldown*35) --Turn the 0..1 cooldown number into a 0..35 tex id where 0 is ready.
             gfx.renderTex( cooldown, slot_x + slot_img_offs_x, slot_y + slot_img_offs_y, (texnum % 6) + 1, math.floor( texnum / 6 ) + 1 )
+         end
+
+         if aset[i].weapset then
+            gfx.print( true, aset[i].weapset, slot_x + slot_img_offs_x + 5,
+                  slot_y + slot_img_offs_y + 5, col_txt_bar, slot_w, false )
          end
 
          gfx.renderTex( slot, slot_x, slot_y ) -- Frame
@@ -779,15 +831,15 @@ function render( dt, dt_mod )
          local htspeed = round(ta_speed / ta_stats.speed_max * 100,0)
          if ta_scanned then
             --Bar Texts
-            shi = tostring( round(ta_shield) ) .. "% (" .. tostring(round(ta_stats.shield  * ta_shield / 100)) .. ")"
-            arm = tostring( round(ta_armour) ) .. "% (" .. tostring(round(ta_stats.armour  * ta_armour / 100)) .. ")"
-            ene = tostring( round(ta_energy) ) .. "%"
+            shi = round(ta_shield) .. "% (" .. round(ta_stats.shield  * ta_shield / 100) .. ")"
+            arm = round(ta_armour) .. "% (" .. round(ta_stats.armour  * ta_armour / 100) .. ")"
+            ene = round(ta_energy) .. "%"
             if ta_stats.speed_max < 1 then
                spe = round(ta_speed)
                colspe, colspe2 = nil
                spetxtcol = col_txt_bar
             else
-               spe = tostring( htspeed ) .. "% (" .. tostring(round(ta_speed)) .. ")"
+               spe = htspeed .. "% (" .. round(ta_speed) .. ")"
                   if htspeed <= 100. then
                   spetxtcol = col_txt_bar
                   colspe = col_speed
@@ -840,7 +892,7 @@ function render( dt, dt_mod )
             else
                col = ptarget:colour()
             end
-            gfx.print( true, ptarget:name(), ta_pane_x + 14, ta_pane_y + 176, col )
+            gfx.print( true, ptarget:name(), ta_pane_x + 14, ta_pane_y + 176, col, ta_pane_w - 28 )
          else
             -- Unset stats.
             shi, ene, arm = nil
@@ -863,10 +915,10 @@ function render( dt, dt_mod )
          end
 
          -- Render bars.
-         render_bar( "shield", ta_shield, shi, col_txt_bar, "sm")
-         render_armourBar( "armour", ta_armour, ta_stress, arm, col_txt_bar, "sm")
-         render_bar( "energy", ta_energy, ene, col_txt_bar, "sm")
-         render_bar( "speed", htspeed, spe, spetxtcol, "sm", colspe, colspe2 )
+         render_bar( bardata['shield_sm'], ta_shield, shi, col_txt_bar, "sm")
+         render_armourBar( bardata['armour_sm'], ta_armour, ta_stress, arm, col_txt_bar, "sm")
+         render_bar( bardata['energy_sm'], ta_energy, ene, col_txt_bar, "sm")
+         render_bar( bardata['speed_sm'], htspeed, spe, spetxtcol, "sm", colspe, colspe2 )
 
          --Dist
          gfx.print( true, "DIST", ta_pane_x + 130, ta_pane_y + 160, col_txt_top )

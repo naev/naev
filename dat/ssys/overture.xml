@@ -23,7 +23,7 @@
   </jump>
   <jump target="Nartur">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>0.000000</hide>
   </jump>
   <jump target="Pas">
    <autopos/>
@@ -35,7 +35,7 @@
   </jump>
   <jump target="Waterhole">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>0.000000</hide>
   </jump>
  </jumps>
 </ssys>

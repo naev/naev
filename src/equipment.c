@@ -55,6 +55,7 @@
 #define  EQUIPMENT_SHIPS      "iarAvailShips"
 #define  EQUIPMENT_OUTFIT_TAB "tabOutfits"
 #define  EQUIPMENT_OUTFITS    "iarAvailOutfits"
+#define  EQUIPMENT_FILTER     "inpFilterOutfits"
 #define  OUTFIT_TABS          5
 
 
@@ -62,7 +63,7 @@
 #define BUTTON_WIDTH    200 /**< Default button width. */
 #define BUTTON_HEIGHT   40 /**< Default button height. */
 
-#define SHIP_ALT_MAX    256 /**< Maximum ship alt text. */
+#define SHIP_ALT_MAX    512 /**< Maximum ship alt text. */
 
 
 /*
@@ -73,7 +74,7 @@ static double equipment_dir      = 0.; /**< Equipment dir. */
 static unsigned int equipment_lastick = 0; /**< Last tick. */
 static gl_vbo *equipment_vbo     = NULL; /**< The VBO. */
 static unsigned int equipment_wid   = 0; /**< Global wid. */
-static unsigned int *outfit_windows = NULL; /**< Outfit windows. */
+static iar_data_t *iar_data = NULL; /**< Stored image array positions. */
 
 /* Slot textures */
 static glTexture *equip_ico_yes = NULL; /* Green circle */
@@ -88,10 +89,7 @@ static void equipment_getDim( unsigned int wid, int *w, int *h,
       int *ew, int *eh,
       int *cw, int *ch, int *bw, int *bh );
 static void equipment_genShipList( unsigned int wid );
-static void equipment_genOutfitLists( unsigned int wid );
-static void equipment_addOutfitListSingle( unsigned int wid,
-      int(*filter)( const Outfit *o ) );
-static void equipment_updateOutfitSingle( unsigned int wid, char* str );
+static void equipment_genOutfitList( unsigned int wid );
 /* Widget. */
 static void equipment_genLists( unsigned int wid );
 static void equipment_renderColumn( double x, double y, double w, double h,
@@ -118,8 +116,9 @@ static void equipment_changeShip( unsigned int wid );
 static void equipment_transportShip( unsigned int wid );
 static void equipment_unequipShip( unsigned int wid, char* str );
 static credits_t equipment_transportPrice( char *shipname );
+static void equipment_filterOutfits( unsigned int wid, char *str );
 static void equipment_rightClickOutfits( unsigned int wid, char* str );
-static void equipment_changeTab( unsigned int wid, char *wgt, int tab );
+static void equipment_changeTab( unsigned int wid, char *wgt, int old, int tab );
 
 
 /**
@@ -266,11 +265,16 @@ void equipment_open( unsigned int wid )
    equipment_getDim( wid, &w, &h, &sw, &sh, &ow, &oh,
          &ew, &eh, &cw, &ch, &bw, &bh );
 
+   /* Initialize stored positions. */
+   if (iar_data == NULL)
+      iar_data = calloc( OUTFIT_TABS, sizeof(iar_data_t) );
+   else
+      memset( iar_data, 0, sizeof(iar_data_t) * OUTFIT_TABS );
+
    /* Sane defaults. */
    equipment_lastick    = SDL_GetTicks();
    equipment_dir        = 0.;
    eq_wgt.selected      = NULL;
-   outfit_windows       = NULL;
 
    /* Icons */
    if (equip_ico_yes == NULL)
@@ -344,10 +348,6 @@ void equipment_open( unsigned int wid )
    /* Custom widget (ship information). */
    window_addCust( wid, 20 + sw + 40 + ew + 20, -40, cw, ch, "cstMisc", 0,
          equipment_renderMisc, NULL, NULL );
-   /* Set default keyboard focuse to the list */
-   /* setting the focuse to EQUIPMENT_SHIPS instead of EQUIPMENT_OUTFITS because
-	* there is nothing to do with the keyboard in the outfits ia (yet?)*/
-   window_setFocus( wid , EQUIPMENT_SHIPS );
 }
 
 
@@ -383,7 +383,7 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       int n, PilotOutfitSlot *lst, const char *txt,
       int selected, Outfit *o, Pilot *p, CstSlotWidget *wgt )
 {
-   int i, level, iconx, icony;
+   int i, level;
    const glColour *c, *dc, *rc;
    glColour bc;
 
@@ -432,18 +432,13 @@ static void equipment_renderColumn( double x, double y, double w, double h,
       }
       else if ((o != NULL) &&
             (lst[i].sslot->slot.type == o->slot.type)) {
-         if (pilot_canEquip( p, &lst[i], o ) != NULL) {
-            iconx = x + w/2 - equip_ico_no->w/2;
-            icony = y + h/2 - equip_ico_no->h/2;
-            gl_blitStatic( equip_ico_no,
-               iconx, icony, NULL );
-         }
-         else {
-            iconx = x + w/2 - equip_ico_yes->w/2;
-            icony = y + h/2 - equip_ico_yes->h/2;
-            gl_blitStatic( equip_ico_yes,
-               iconx, icony, NULL );
-         }
+         /* Render the appropriate sprite, centered in each slot. */
+         if (pilot_canEquip( p, &lst[i], o ) != NULL)
+            gl_blitScale( equip_ico_no,
+               x + w * .1, y + h * .1, w * .8, h * .8, NULL);
+         else
+            gl_blitScale( equip_ico_yes,
+               x + w * .1, y + h * .1, w * .8, h * .8, NULL);
       }
 
       /* Must rechoose colour based on slot properties. */
@@ -577,21 +572,48 @@ static void equipment_renderMisc( double bx, double by, double bw, double bh, vo
    lc = &cWhite;
    c = &cGrey80;
    dc = &cGrey60;
-   w = 30;
-   h = 70;
-   x = bx + (40-w)/2 + 10;
+   w = 120;
+   h = 20;
+   x = bx + 10.;
    y = by + bh - 30 - h;
-   percent = (p->cpu_max > 0.) ? CLAMP(0., 1., p->cpu / p->cpu_max) : 0.;
+
    gl_printMidRaw( &gl_smallFont, w,
-         x, y + h + gl_smallFont.h + 10.,
-         &cBlack, "CPU" );
-   toolkit_drawRect( x, y, w, h*percent, &cGreen, NULL );
-   toolkit_drawRect( x, y+h*percent, w, h*(1.-percent), &cRed, NULL );
+      x, y + h + 10., &cBlack, "CPU Free" );
+
+   percent = (p->cpu_max > 0) ? CLAMP(0., 1., (float)p->cpu / (float)p->cpu_max) : 0.;
+   toolkit_drawRect( x, y, w * percent, h, &cFontGreen, NULL );
+   toolkit_drawRect( x + w * percent, y, w * (1.-percent), h, &cFontRed, NULL );
    toolkit_drawOutline( x, y, w, h, 1., lc, c  );
    toolkit_drawOutline( x, y, w, h, 2., dc, NULL  );
-   gl_printMid( &gl_smallFont, 70,
-         x - 20, y - 10 - gl_smallFont.h,
-         &cBlack, "%.0f / %.0f", p->cpu, p->cpu_max );
+   gl_printMid( &gl_smallFont, w,
+      x, y + h / 2. - gl_smallFont.h / 2.,
+      &cBlack, "%d / %d", p->cpu, p->cpu_max );
+
+   y -= h;
+
+   gl_printMidRaw( &gl_smallFont, w,
+      x, y, &cBlack, "Mass Limit Left" );
+
+   y -= gl_smallFont.h + h;
+
+   percent = (p->stats.engine_limit > 0) ? CLAMP(0., 1.,
+      (p->stats.engine_limit - p->solid->mass) / p->stats.engine_limit) : 0.;
+   toolkit_drawRect( x, y, w * percent, h, &cFontGreen, NULL );
+   toolkit_drawRect( x + w * percent, y, w * (1.-percent), h, &cRestricted, NULL );
+   toolkit_drawOutline( x, y, w, h, 1., lc, c  );
+   toolkit_drawOutline( x, y, w, h, 2., dc, NULL  );
+   gl_printMid( &gl_smallFont, w,
+      x, y + h / 2. - gl_smallFont.h / 2.,
+      &cBlack, "%.0f / %.0f", p->stats.engine_limit - p->solid->mass, p->stats.engine_limit );
+
+   if (p->stats.engine_limit > 0. && p->solid->mass > p->stats.engine_limit) {
+      y -= h;
+      gl_printMid( &gl_smallFont, w,
+         x, y, &cFontRed, "%.0f%% Slower",
+         (1. - p->speed / p->speed_base) * 100);
+   }
+
+   x += w/2.;
 
    /* Render ship graphic. */
    equipment_renderShip( bx, by, bw, bh, x, y, p );
@@ -1083,7 +1105,6 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
    int ret;
    Outfit *o, *ammo;
    int q;
-   double f;
 
    /* Remove outfit. */
    if (slot->outfit != NULL) {
@@ -1101,16 +1122,10 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
          player_addOutfit( ammo, q );
       }
 
-      /* Handle possible fuel changes. */
-      f = eq_wgt.selected->fuel;
-
       /* Remove outfit. */
       ret = pilot_rmOutfit( eq_wgt.selected, slot );
       if (ret == 0)
          player_addOutfit( o, 1 );
-
-      /* Don't "gain" fuel. */
-      eq_wgt.selected->fuel = MIN( eq_wgt.selected->fuel_max, f );
    }
    /* Add outfit. */
    else {
@@ -1129,19 +1144,14 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
 
       /* Add outfit to ship. */
       ret = player_rmOutfit( o, 1 );
-      if (ret == 1) {
-         /* Handle possible fuel changes. */
-         f = eq_wgt.selected->fuel;
-
-         /* Add the outfit. */
+      if (ret == 1)
          pilot_addOutfit( eq_wgt.selected, o, slot );
-
-         /* Don't "gain" fuel. */
-         eq_wgt.selected->fuel = MIN( eq_wgt.selected->fuel_max, f );
-      }
 
       equipment_addAmmo();
    }
+
+   /* Refuel if necessary. */
+   land_refuel();
 
    /* Recalculate stats. */
    pilot_calcStats( p );
@@ -1175,14 +1185,12 @@ static int equipment_swapSlot( unsigned int wid, Pilot *p, PilotOutfitSlot *slot
 void equipment_regenLists( unsigned int wid, int outfits, int ships )
 {
    int i, ret;
-   int nout[OUTFIT_TABS], nship;
-   double offout[OUTFIT_TABS], offship;
+   int nship;
+   double offship;
    char *s, selship[PATH_MAX];
-   unsigned int wtmp;
+   char *focused;
 
    /* Default.s */
-   memset( nout,   0, sizeof(nout) );
-   memset( offout, 0, sizeof(offout) );
    nship    = 0;
    offship  = 0.;
 
@@ -1190,14 +1198,14 @@ void equipment_regenLists( unsigned int wid, int outfits, int ships )
    if (!window_existsID( equipment_wid ))
       return;
 
+   /* Save focus. */
+   focused = strdup(window_getFocus(wid));
+
    /* Save positions. */
    if (outfits) {
-      for (i=0; i<OUTFIT_TABS; i++) {
-         wtmp      = outfit_windows[i];
-         nout[i]   = toolkit_getImageArrayPos(    wtmp, EQUIPMENT_OUTFITS );
-         offout[i] = toolkit_getImageArrayOffset( wtmp, EQUIPMENT_OUTFITS );
-         window_destroyWidget( wtmp, EQUIPMENT_OUTFITS );
-      }
+      i = window_tabWinGetActive( wid, EQUIPMENT_OUTFIT_TAB );
+      toolkit_saveImageArrayData( wid, EQUIPMENT_OUTFITS, &iar_data[i] );
+      window_destroyWidget( wid, EQUIPMENT_OUTFITS );
    }
    if (ships) {
       nship   = toolkit_getImageArrayPos(    wid, EQUIPMENT_SHIPS );
@@ -1213,13 +1221,9 @@ void equipment_regenLists( unsigned int wid, int outfits, int ships )
 
    /* Restore positions. */
    if (outfits) {
-      for (i=0; i<OUTFIT_TABS; i++) {
-         wtmp      = outfit_windows[i];
-         toolkit_setImageArrayPos(    wtmp, EQUIPMENT_OUTFITS, nout[i] );
-         toolkit_setImageArrayOffset( wtmp, EQUIPMENT_OUTFITS, offout[i] );
-      }
-      i = window_tabWinGetActive(   wid, EQUIPMENT_OUTFIT_TAB );
-      equipment_updateOutfitSingle( outfit_windows[i], NULL );
+      toolkit_setImageArrayPos(    wid, EQUIPMENT_OUTFITS, iar_data[i].pos );
+      toolkit_setImageArrayOffset( wid, EQUIPMENT_OUTFITS, iar_data[i].offset );
+      equipment_updateOutfits( wid, NULL );
    }
    if (ships) {
       toolkit_setImageArrayPos(    wid, EQUIPMENT_SHIPS, nship );
@@ -1235,6 +1239,10 @@ void equipment_regenLists( unsigned int wid, int outfits, int ships )
          equipment_updateShips( wid, NULL );
       }
    }
+
+   /* Restore focus. */
+   window_setFocus( wid, focused );
+   free(focused);
 }
 
 
@@ -1320,13 +1328,24 @@ int equipment_shipStats( char *buf, int max_len,  const Pilot *s, int dpseps )
                mod_damage = s->stats.tur_damage;
                mod_shots  = 2. - s->stats.tur_firerate;
                break;
+            case OUTFIT_TYPE_LAUNCHER:
+            case OUTFIT_TYPE_TURRET_LAUNCHER:
+               mod_energy = 1.;
+               mod_damage = 1.;
+               mod_shots  = 1.; /* @todo Should be: 2. - s>stats.launch_rate */
+               break;
             default:
                continue;
          }
          shots = 1. / (mod_shots * outfit_delay(o));
-         dmg   = outfit_damage(o);
+
+         /* Special case: Ammo-based weapons. */
+         if (outfit_isLauncher(o))
+            dmg = outfit_damage(o->u.lau.ammo);
+         else
+            dmg = outfit_damage(o);
          dps  += shots * mod_damage * dmg->damage;
-         eps  += shots * mod_energy * outfit_energy(o);
+         eps  += shots * mod_energy * MAX( outfit_energy(o), 0. );
       }
    }
 
@@ -1351,7 +1370,7 @@ static void equipment_genLists( unsigned int wid )
    equipment_genShipList( wid );
 
    /* Outfit list. */
-   equipment_genOutfitLists( wid );
+   equipment_genOutfitList( wid );
 
    /* Update window. */
    equipment_updateOutfits(wid, NULL);
@@ -1414,37 +1433,45 @@ static void equipment_genShipList( unsigned int wid )
 
 
 static int equipment_outfitFilterWeapon( const Outfit *o )
-{ return (o->slot.type == OUTFIT_SLOT_WEAPON); }
+{ return ((o->slot.type == OUTFIT_SLOT_WEAPON) && !sp_required( o->slot.spid )); }
 
 static int equipment_outfitFilterUtility( const Outfit *o )
-{ return (o->slot.type == OUTFIT_SLOT_UTILITY); }
+{ return ((o->slot.type == OUTFIT_SLOT_UTILITY) && !sp_required( o->slot.spid )); }
 
 static int equipment_outfitFilterStructure( const Outfit *o )
-{ return (o->slot.type == OUTFIT_SLOT_STRUCTURE); }
+{ return ((o->slot.type == OUTFIT_SLOT_STRUCTURE) && !sp_required( o->slot.spid )); }
 
 static int equipment_outfitFilterCore( const Outfit *o )
 { return sp_required( o->slot.spid ); }
 
 
 /**
- * @brief Generates the outfit lists.
- *    @param wid Window to generate lists on.
+ * @brief Generates the outfit list.
+ *    @param wid Window to generate list on.
  */
-static void equipment_genOutfitLists( unsigned int wid )
+static void equipment_genOutfitList( unsigned int wid )
 {
-   int i, x, y, w, h;
-   int ow, oh;
+   int x, y, w, h, ow, oh;
+   int ix, iy, iw, ih, barw; /* Input filter. */
+   char *filtertext;
    int (*tabfilters[])( const Outfit *o ) = {
+      NULL,
       equipment_outfitFilterWeapon,
       equipment_outfitFilterUtility,
       equipment_outfitFilterStructure,
-      equipment_outfitFilterCore,
-      NULL
+      equipment_outfitFilterCore
    };
    const char *tabnames[] = {
-      "\eb W ", "\eg U ", "\ep S ", "\ey C ", "\en X "
+      "All", "\eb W ", "\eg U ", "\ep S ", "\eRCore"
    };
-   const int numtabs = OUTFIT_TABS;
+
+   int active, i, l, p, noutfits;
+   char **soutfits, **alt, **quantity, **slottype;
+   glTexture **toutfits;
+   Outfit *o, **outfits;
+   const glColour *c;
+   glColour *bg, blend;
+   const char *typename;
 
    /* Get dimensions. */
    equipment_getDim( wid, &w, &h, NULL, NULL, &ow, &oh,
@@ -1457,62 +1484,67 @@ static void equipment_genOutfitLists( unsigned int wid )
    x = 20;
    y = 20;
 
-   /* Create tabbed windows. */
+   /* Create tabbed window. */
    if (!widget_exists( wid, EQUIPMENT_OUTFIT_TAB )) {
-      outfit_windows = window_addTabbedWindow( wid, x, y, ow, oh,
-            EQUIPMENT_OUTFIT_TAB, numtabs, tabnames, 1 );
-      window_tabSetFont( wid, EQUIPMENT_OUTFIT_TAB, &gl_defFontMono );
+      window_addTabbedWindow( wid, x, y + oh - 30, ow, 30,
+            EQUIPMENT_OUTFIT_TAB, OUTFIT_TABS, tabnames, 1 );
+
+      barw = window_tabWinGetBarWidth( wid, EQUIPMENT_OUTFIT_TAB );
+
+      iw = CLAMP(0, 150, ow - barw - 30);
+      ih = 20;
+
+      ix = ow - iw;
+      iy = oh - (30 - ih) / 2; /* Centered relative to 30 px tab bar */
+
+      /* Only create the filter widget if it will be a reasonable size. */
+      if (iw >= 30) {
+         window_addInput( wid, ix, iy, iw, ih, EQUIPMENT_FILTER, 32, 1, &gl_smallFont );
+         window_setInputCallback( wid, EQUIPMENT_FILTER, equipment_filterOutfits );
+      }
    }
-   else
-      outfit_windows = window_tabWinGet( wid, EQUIPMENT_OUTFIT_TAB );
 
    window_tabWinOnChange( wid, EQUIPMENT_OUTFIT_TAB, equipment_changeTab );
-
-   /* Add the tabs. */
-   for (i=0; i<numtabs; i++)
-      equipment_addOutfitListSingle( outfit_windows[i], tabfilters[i] );
-}
-
-
-/**
- * @brief Adds a list of player outfits widget.
- */
-static void equipment_addOutfitListSingle( unsigned int wid,
-      int(*filter)( const Outfit *o ) )
-{
-   int i, l, p;
-   int w, h;
-   char **soutfits;
-   glTexture **toutfits;
-   int noutfits;
-   char **alt;
-   char **quantity;
-   Outfit *o;
-   const glColour *c;
-   glColour *bg, blend;
-   char **slottype;
-   const char *typename;
+   active = window_tabWinGetActive( equipment_wid, EQUIPMENT_OUTFIT_TAB );
 
    /* Widget must not already exist. */
-   if (widget_exists( wid ,EQUIPMENT_OUTFITS ))
+   if (widget_exists( wid, EQUIPMENT_OUTFITS ))
       return;
-
-   /* Get size. */
-   window_dimWindow( wid, &w, &h );
 
    /* Allocate space. */
    noutfits = MAX( 1, player_numOutfits() ); /* This is the most we'll need, probably less due to filtering. */
+   outfits  = calloc( noutfits, sizeof(Outfit*) );
    soutfits = calloc( noutfits, sizeof(char*) );
    toutfits = calloc( noutfits, sizeof(glTexture*) );
 
+   filtertext = NULL;
+   if (widget_exists(equipment_wid, EQUIPMENT_FILTER)) {
+      filtertext = window_getInput( equipment_wid, EQUIPMENT_FILTER );
+      if (strlen(filtertext) == 0)
+         filtertext = NULL;
+   }
+
    /* Get the outfits. */
-   noutfits = player_getOutfitsFiltered( soutfits, toutfits, filter );
+   noutfits = player_getOutfitsFiltered( outfits, toutfits,
+         tabfilters[active], filtertext );
+
+   if (noutfits == 0) {
+      noutfits = 1;
+      soutfits[0] = strdup( "None" );
+      toutfits[0] = NULL;
+
+      /* Clean up. */
+      free(outfits);
+   }
+   else
+      for (i=0; i<noutfits; i++)
+         soutfits[i] = strdup( outfits[i]->name );
 
    /* Create the actual image array. */
-   window_addImageArray( wid, 3, 3, w-6, h-6,
+   window_addImageArray( wid, x, y, ow, oh - 31,
          EQUIPMENT_OUTFITS, 50., 50.,
          toutfits, soutfits, noutfits,
-         equipment_updateOutfitSingle,
+         equipment_updateOutfits,
          equipment_rightClickOutfits );
 
    /* Case there are none we don't need to do more. */
@@ -1527,7 +1559,7 @@ static void equipment_addOutfitListSingle( unsigned int wid,
 
    /* Process all the outfits. */
    for (i=0; i<noutfits; i++) {
-      o      = outfit_get( soutfits[i] );
+      o = outfits[i];
 
       /* Background colour. */
       c = outfit_slotSizeColour( &o->slot );
@@ -1571,6 +1603,9 @@ static void equipment_addOutfitListSingle( unsigned int wid,
       else
          slottype[i] = NULL;
    }
+
+   /* Clean up. */
+   free(outfits);
 
    /* Set misc stuff. */
    toolkit_setImageArrayAlt( wid,         EQUIPMENT_OUTFITS, alt );
@@ -1637,7 +1672,7 @@ void equipment_updateShips( unsigned int wid, char* str )
    eq_wgt.selected = ship;
 
    /* update text */
-   credits2str( buf2, price , 2 ); /* transport */
+   price2str( buf2, price, player.p->credits, 2 ); /* transport */
    credits2str( buf3, player_shipPrice(shipname), 2 ); /* sell price */
    cargo = pilot_cargoFree(ship) + pilot_cargoUsed(ship);
    nt = ntime_pretty( pilot_hyperspaceDelay( ship ), 2 );
@@ -1721,24 +1756,16 @@ void equipment_updateShips( unsigned int wid, char* str )
    }
 }
 #undef EQ_COMP
+/**
+ * @brief Updates the player's outfit list.
+ *    @param wid Window to update.
+ *    @param str Unused.
+ */
 void equipment_updateOutfits( unsigned int wid, char* str )
 {
    (void) wid;
    (void) str;
-   int i;
-   for (i=0; i<OUTFIT_TABS; i++)
-      equipment_updateOutfitSingle( outfit_windows[i], NULL );
-}
-/**
- * @brief Updates the player's ship window.
- *    @param wid Window to update.
- *    @param str Unused.
- */
-static void equipment_updateOutfitSingle( unsigned int wid, char* str )
-{
-   (void) str;
    const char *oname;
-   int active;
 
    /* Must have outfit. */
    oname = toolkit_getImageArray( wid, EQUIPMENT_OUTFITS );
@@ -1747,14 +1774,18 @@ static void equipment_updateOutfitSingle( unsigned int wid, char* str )
       return;
    }
 
-   /* Don't switch the selected outfit if another tab is selected */
-   active = window_tabWinGetActive( equipment_wid, EQUIPMENT_OUTFIT_TAB );
-   if (wid == outfit_windows[active])
-      eq_wgt.outfit = outfit_get( oname );
+   eq_wgt.outfit = outfit_get( oname );
+}
 
-   /* Also update ships. */
-   if (str != NULL)
-      equipment_updateShips(equipment_wid, NULL);
+/**
+ * @brief Handles text input in the filter input widget.
+ *    @param wid Window containing the widget.
+ *    @param str Unused.
+ */
+static void equipment_filterOutfits( unsigned int wid, char *str )
+{
+   (void) str;
+   equipment_regenLists(wid, 1, 0);
 }
 
 /**
@@ -1764,12 +1795,33 @@ static void equipment_updateOutfitSingle( unsigned int wid, char* str )
  *    @param wgt Unused.
  *    @param tab Tab changed to.
  */
-static void equipment_changeTab( unsigned int wid, char *wgt, int tab )
+static void equipment_changeTab( unsigned int wid, char *wgt, int old, int tab )
 {
    (void) wid;
    (void) wgt;
+   int pos;
+   double offset;
 
-   equipment_updateOutfitSingle( outfit_windows[tab], NULL );
+   toolkit_saveImageArrayData( wid, EQUIPMENT_OUTFITS, &iar_data[old] );
+
+   /* Store the currently-saved positions for the new tab. */
+   pos    = iar_data[tab].pos;
+   offset = iar_data[tab].offset;
+
+   /* Resetting the input will cause the outfit list to be regenerated. */
+   if (widget_exists(wid, EQUIPMENT_FILTER))
+      window_setInput(wid, EQUIPMENT_FILTER, NULL);
+   else
+      equipment_regenLists(wid, 1, 0);
+
+   /* Set positions for the new tab. This is necessary because the stored
+    * position for the new tab may have exceeded the size of the old tab,
+    * resulting in it being clipped. */
+   toolkit_setImageArrayPos(    wid, EQUIPMENT_OUTFITS, pos );
+   toolkit_setImageArrayOffset( wid, EQUIPMENT_OUTFITS, offset );
+
+   /* Focus the outfit image array. */
+   window_setFocus( wid, EQUIPMENT_OUTFITS );
 }
 
 /**
@@ -1855,7 +1907,6 @@ static void equipment_transportShip( unsigned int wid )
 
    /* success */
    player_modCredits( -price );
-   land_checkAddRefuel();
    player_setLoc( shipname, land_planet->name );
 }
 
@@ -1874,7 +1925,6 @@ static void equipment_unequipShip( unsigned int wid, char* str )
    int i;
    Pilot *ship;
    Outfit *o, *ammo;
-   double f;
 
    ship = eq_wgt.selected;
 
@@ -1902,8 +1952,9 @@ static void equipment_unequipShip( unsigned int wid, char* str )
       return;
    }
 
-   /* Handle possible fuel changes. */
-   f = eq_wgt.selected->fuel;
+   if (dialogue_YesNo("Unequip Ship", /* confirm */
+         "Are you sure you want to remove all equipment from your ship?")==0)
+      return;
 
    /* Remove all outfits. */
    for (i=0; i<ship->noutfits; i++) {
@@ -1929,9 +1980,6 @@ static void equipment_unequipShip( unsigned int wid, char* str )
    /* Recalculate stats. */
    pilot_calcStats( ship );
    pilot_healLanded( ship );
-
-   /* Don't "gain" fuel. */
-   eq_wgt.selected->fuel = MIN( eq_wgt.selected->fuel_max, f );
 
    /* Regenerate list. */
    equipment_regenLists( wid, 1, 1 );
@@ -1975,7 +2023,6 @@ static void equipment_sellShip( unsigned int wid, char* str )
    /* Sold. */
    name = strdup(shipname);
    player_modCredits( price );
-   land_checkAddRefuel();
    player_rmShip( shipname );
 
    /* Destroy widget - must be before widget. */
@@ -2044,11 +2091,14 @@ static credits_t equipment_transportPrice( char* shipname )
 
    /* Here we also use hidden jump points, which may not be the best idea but ensures
     * that things can be reached. */
-   s = map_getJumpPath( &jumps, cur_system->name, planet_getSystem(loc), 1, 1, NULL );
-   if (s==NULL)
-      jumps = 50; /* Just consider a large number. */
-   free(s);
-
+   if (strcmp(planet_getSystem(loc),cur_system->name) != 0) {
+      s = map_getJumpPath( &jumps, cur_system->name, planet_getSystem(loc), 1, 1, NULL );
+      if (s==NULL)
+         jumps = 50; /* Just consider a large number. */
+      free(s);
+   }
+   else /* Ship is in the same system and no jump path can be generated */
+      jumps = 0;
    /* Modest base price scales fairly rapidly with distance. */
    price = (credits_t)(ceil(sqrt(ship->ship->mass) * pow(jumps + 1, .6) * 10.) * 100.);
 
@@ -2066,6 +2116,12 @@ void equipment_cleanup (void)
       gl_vboDestroy( equipment_vbo );
 
    equipment_vbo = NULL;
+
+   /* Free stored positions. */
+   if (iar_data != NULL) {
+      free(iar_data);
+      iar_data = NULL;
+   }
 
    /* Free icons. */
    if (equip_ico_yes != NULL)

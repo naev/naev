@@ -20,6 +20,7 @@
 
 
 void dout_csvBolt( const char *path );
+void dout_csvMod( const char *path );
 
 
 #endif /* DEV_OUTFIT_H */

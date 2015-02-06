@@ -13,7 +13,7 @@
  <assets>
   <asset>Amaroq I</asset>
   <asset>Amaroq III</asset>
-  <asset>PSO Moniter</asset>
+  <asset>PSO Monitor</asset>
   <asset>Rhaana</asset>
  </assets>
  <jumps>
@@ -23,6 +23,11 @@
   </jump>
   <jump target="PSO">
    <autopos/>
+   <hide>1.250000</hide>
+  </jump>
+  <jump target="Zied">
+   <autopos/>
+   <exitonly/>
    <hide>1.250000</hide>
   </jump>
  </jumps>

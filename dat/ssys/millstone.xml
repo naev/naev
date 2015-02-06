@@ -7,22 +7,28 @@
   <nebula volatility="0.000000">0.000000</nebula>
  </general>
  <pos>
-  <x>547.560041</x>
-  <y>-789.406902</y>
+  <x>484.995077</x>
+  <y>-627.282028</y>
  </pos>
  <assets>
   <asset>Marauder Station</asset>
   <asset>Omar</asset>
   <asset>Sternguard</asset>
+  <asset>Virtual Civilian Standard</asset>
+  <asset>Virtual Civilian Standard</asset>
  </assets>
  <jumps>
-  <jump target="Druid">
+  <jump target="Fidelis">
+   <autopos/>
+   <hide>0.000000</hide>
+  </jump>
+  <jump target="Infinity">
    <autopos/>
    <hide>1.250000</hide>
   </jump>
-  <jump target="Gruz">
+  <jump target="Maus">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>0.000000</hide>
   </jump>
  </jumps>
 </ssys>

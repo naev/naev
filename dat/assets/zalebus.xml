@@ -31,6 +31,7 @@
   <bar>The age demographic of Zalebus tends toward younger citizens. As a result, the spaceport bar is often full of youngsters preparing for a trip into space, or just returning from one.</bar>
  </general>
  <tech>
+  <item>Engines Cargo</item>
   <item>Systems Low</item>
   <item>Engines Medium</item>
   <item>Plasma 2</item>

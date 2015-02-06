@@ -24,10 +24,5 @@
    <pos x="-26069.057388" y="26604.261598"/>
    <hide>1.250000</hide>
   </jump>
-  <jump target="Zied">
-   <autopos/>
-   <exitonly/>
-   <hide>1.250000</hide>
-  </jump>
  </jumps>
 </ssys>

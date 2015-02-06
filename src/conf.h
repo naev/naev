@@ -113,9 +113,6 @@ typedef struct PlayerConf_s {
    int joystick_ind; /**< Index of joystick to use. */
    char *joystick_nam; /**< Name of joystick to use. */
 
-   /* Land. */
-   int autorefuel; /**< Whether or not to autorefuel when landing. */
-
    /* GUI. */
    int mesg_visible; /**< Amount of visible messages. */
 

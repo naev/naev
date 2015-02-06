@@ -138,9 +138,6 @@ void conf_setDefaults (void)
       free(conf.joystick_nam);
    conf.joystick_nam = NULL;
 
-   /* Land. */
-   conf.autorefuel   = 0;
-
    /* GUI. */
    conf.mesg_visible = 5;
 
@@ -398,9 +395,6 @@ int conf_loadConfig ( const char* file )
       else if (lua_isstring(L, -1))
          conf.joystick_nam = strdup(lua_tostring(L, -1));
       lua_pop(L,1);
-
-      /* Land. */
-      conf_loadBool("autorefuel",conf.autorefuel);
 
       /* GUI. */
       conf_loadInt("mesg_visible",conf.mesg_visible);
@@ -996,11 +990,6 @@ int conf_saveConfig ( const char* file )
    else {
       conf_saveString("joystick",NULL);
    }
-   conf_saveEmptyLine();
-
-   /* Land. */
-   conf_saveComment("Whether or not to autorefuel");
-   conf_saveBool("autorefuel",conf.autorefuel);
    conf_saveEmptyLine();
 
    /* GUI. */

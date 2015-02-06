@@ -24,7 +24,7 @@
  <jumps>
   <jump target="Arcturus">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>0.000000</hide>
   </jump>
   <jump target="Delta Pavonis">
    <pos x="-17204.057496" y="16139.359158"/>
@@ -32,7 +32,7 @@
   </jump>
   <jump target="Ogat">
    <autopos/>
-   <hide>1.250000</hide>
+   <hide>0.000000</hide>
   </jump>
  </jumps>
 </ssys>

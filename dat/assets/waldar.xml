@@ -31,6 +31,7 @@
   <bar>The spaceport bar is kept within the spaceport terminal. Visitors are not allowed out of the facility unless they have a permit to do so. Waldar is a controlled paradise - no tourists.</bar>
  </general>
  <tech>
+  <item>Engines Cargo</item>
   <item>Hulls Medium</item>
   <item>Engines Medium</item>
   <item>Missiles 2</item>

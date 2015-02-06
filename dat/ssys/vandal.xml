@@ -14,15 +14,17 @@
   <asset>Aleph</asset>
   <asset>Beth</asset>
   <asset>Vercingetorix</asset>
+  <asset>Virtual Civilian Standard</asset>
+  <asset>Virtual Civilian Standard</asset>
  </assets>
  <jumps>
   <jump target="Farizel">
    <autopos/>
-   <hide>0.000000</hide>
+   <hide>1.250000</hide>
   </jump>
   <jump target="Palin">
    <autopos/>
-   <hide>0.000000</hide>
+   <hide>1.250000</hide>
   </jump>
  </jumps>
 </ssys>

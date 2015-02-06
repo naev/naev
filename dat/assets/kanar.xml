@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Kan'ar">
+ <pos>
+  <x>12237.361896</x>
+  <y>-8924.993262</y>
+ </pos>
+ <GFX>
+  <space>O05.png</space>
+  <exterior>aquatic3.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Za'lek</faction>
+  <value>100.000000</value>
+  <range>3</range>
+ </presence>
+ <general>
+  <class>O</class>
+  <population>3345000</population>
+  <hide>0.250000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <bar/>
+   <missions/>
+   <commodity/>
+   <outfits/>
+   <shipyard/>
+  </services>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Medicine</commodity>
+   <commodity>Luxury Goods</commodity>
+  </commodities>
+  <description>Kan'ar is a class-O world with a large population and an extensive marine biology research community. A lot of underwater research and study goes on here, and like many class-O worlds, it is a large producer of medicine.</description>
+  <bar>This bar is a fairly typical underwater bar with built-in overhead aquarium. Plenty of scientists inside of it arguing and talking about what they see, however.</bar>
+ </general>
+ <tech>
+  <item>Basic Outfits 1</item>
+  <item>Basic Outfits 2</item>
+  <item>Basic Civilian Ships</item>
+  <item>Basic Trade Ships</item>
+ </tech>
+</asset>

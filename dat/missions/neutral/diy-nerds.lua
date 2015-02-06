@@ -151,7 +151,7 @@ else
    misn_cargoamount2 = "4"
 
    -- the outfit name as in outfit.xml
-   outfit = "Basic Small Systems"
+   outfit = "Unicorp PT-100 Core System"
 
 end
 

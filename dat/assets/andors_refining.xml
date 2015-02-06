@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Andors Refining">
+ <pos>
+  <x>3338.188008</x>
+  <y>1360.953572</y>
+ </pos>
+ <GFX>
+  <space>station-powerplant.png</space>
+  <exterior>station00.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Za'lek</faction>
+  <value>25.000000</value>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>5000</population>
+  <hide>0.500000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <outfits/>
+  </services>
+  <commodities>
+   <commodity>Ore</commodity>
+   <commodity>Industrial Goods</commodity>
+  </commodities>
+  <description>This simple refining plant is where the ore collected on Andors is turned into a more useful form and shipped out to other worlds to be turned into whatever is needed.</description>
+ </general>
+ <tech>
+  <item>Basic Outfits 2</item>
+  <item>Low Tech Upgrades</item>
+  <item>Laser 1</item>
+  <item>Missiles 1</item>
+  <item>Star Maps</item>
+  <item>Ore</item>
+  <item>Industrial Goods</item>
+ </tech>
+</asset>

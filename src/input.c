@@ -800,8 +800,12 @@ static void input_key( int keynum, double value, double kabs, int repeat )
          if (!paused) player_autonavAbort(NULL);
          player_setFlag(PLAYER_REVERSE);
       }
-      else if ((value==KEY_RELEASE) && player_isFlag(PLAYER_REVERSE))
+      else if ((value==KEY_RELEASE) && player_isFlag(PLAYER_REVERSE)) {
          player_rmFlag(PLAYER_REVERSE);
+
+         if (!player_isFlag(PLAYER_ACCEL))
+            player_accelOver();
+      }
 
 
    /*
@@ -841,7 +845,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    /* board them ships */
    } else if (KEY("board") && INGAME() && NOHYP() && NODEAD() && !repeat) {
       if (value==KEY_PRESS) {
-         if (!paused) player_autonavAbort(NULL);
+         player_autonavAbort(NULL);
          player_board();
       }
 
@@ -906,10 +910,8 @@ static void input_key( int keynum, double value, double kabs, int repeat )
       if (value==KEY_PRESS) player_targetPlanet();
    /* target nearest planet or attempt to land */
    } else if (KEY("land") && INGAME() && NOHYP() && NOLAND() && NODEAD()) {
-      if (value==KEY_PRESS) {
-         if (!paused) player_autonavAbort(NULL);
+      if (value==KEY_PRESS)
          player_land();
-      }
    } else if (KEY("thyperspace") && NOHYP() && NOLAND() && NODEAD()) {
       if (value==KEY_PRESS)
          player_targetHyperspace();
@@ -917,7 +919,7 @@ static void input_key( int keynum, double value, double kabs, int repeat )
       if (value==KEY_PRESS) map_open();
    } else if (KEY("jump") && INGAME() && !repeat) {
       if (value==KEY_PRESS) {
-         if (!paused) player_autonavAbort(NULL);
+         player_autonavAbort(NULL);
          player_jump();
       }
    } else if (KEY("overlay") && NODEAD() && INGAME() && !repeat) {
@@ -925,13 +927,9 @@ static void input_key( int keynum, double value, double kabs, int repeat )
    } else if (KEY("mousefly") && NODEAD() && !repeat) {
       if (value==KEY_PRESS)
          player_toggleMouseFly();
-   } else if (KEY("cooldown") && NOLAND() && NODEAD() && !repeat) {
-      if (value==KEY_PRESS) {
-         if ((!paused) && (player_isFlag(PLAYER_AUTONAV)))
-            player_autonavAbort(NULL);
-         if (!pilot_isDisabled(player.p))
-            player_toggleCooldown();
-      }
+   } else if (KEY("cooldown") && NOHYP() && NOLAND() && NODEAD() && !repeat) {
+      if (value==KEY_PRESS)
+         player_toggleCooldown();
 
 
    /*
@@ -1162,6 +1160,14 @@ static void input_clickevent( SDL_Event* event )
       return;
    }
 
+   /* Player must not be NULL. */
+   if ((player.p == NULL) || player_isFlag(PLAYER_DESTROYED))
+      return;
+
+   /* Player must not be dead. */
+   if (pilot_isFlag(player.p, PILOT_DEAD))
+      return;
+
    /* Middle mouse enables mouse flying. */
    if (event->button.button == SDL_BUTTON_MIDDLE) {
       player_toggleMouseFly();
@@ -1170,10 +1176,6 @@ static void input_clickevent( SDL_Event* event )
 
    /* Mouse targeting is left only. */
    if (event->button.button != SDL_BUTTON_LEFT)
-      return;
-
-   /* Player must not be NULL. */
-   if (player_isFlag(PLAYER_DESTROYED) || (player.p == NULL))
       return;
 
    px = player.p->solid->pos.x;
@@ -1230,7 +1232,7 @@ static void input_clickevent( SDL_Event* event )
 
    if (pid != PLAYER_ID) {
       /* Apply an action if already selected. */
-      if (!pilot_isFlag(player.p, PILOT_DEAD) && (pid == player.p->target)) {
+      if (pid == player.p->target) {
          p = pilot_get(pid);
          if (pilot_isDisabled(p) || pilot_isFlag(p, PILOT_BOARDABLE))
             player_board();
@@ -1259,7 +1261,7 @@ static void input_clickevent( SDL_Event* event )
          player_targetPlanetSet( pntid );
    }
    else if (jpid >= 0) { /* Jump point is closest. */
-      if (!jp_isUsable(jp))
+      if (!jp_isUsable(&cur_system->jumps[ jpid ]))
          return;
 
       if (jpid == player.p->nav_hyperspace) {

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Milspec Prometheus 9803 Core System">
+ <general>
+  <typename>Core Systems (System)</typename>
+  <slot prop="systems">utility</slot>
+  <size>large</size>
+  <mass>550</mass>
+  <price>2000000</price>
+  <description>Milspec offers solutions for pilots who believe the best defense is a good offense. The 9803 boasts a heavy duty power generator as well as considerable shielding and subsystem control. Fly safe, fly Milspec.</description>
+  <gfx_store>reactor_iii</gfx_store>
+ </general>
+ <specific type="modification">
+  <cpu_max>180</cpu_max>
+  <shield>800</shield>
+  <shield_regen>14</shield_regen>
+  <energy>4400</energy>
+  <energy_regen>200</energy_regen>
+  <ew_hide>0</ew_hide>
+ </specific>
+</outfit>

@@ -20,6 +20,10 @@ include("dat/factions/equip/generic.lua")
 --    @param p Pilot to equip
 --]]
 function equip( p )
+   -- Start with an empty ship
+   p:rmOutfit("all")
+   p:rmOutfit("cores")
+
    -- Get ship info
    local shiptype, shipsize = equip_getShipBroad( p:ship():class() )
    local class = p:ship():class()
@@ -81,10 +85,16 @@ function equip_pirateMilitary( p, shipsize )
    -- Equip by size and type
    if shipsize == "small" then
       local class = p:ship():class()
+      cores = {
+         {"Nexus Dart 150 Engine", "Milspec Prometheus 2203 Core System", "S&K Ultralight Combat Plating"},
+         {"Nexus Dart 300 Engine", "Milspec Prometheus 3603 Core System", "S&K Light Combat Plating"}
+      }
+      equip_cores(p, equip_getCores(p, shipsize, cores))
+
 
       -- Scout - shouldn't exist
       if class == "Scout" then
-         equip_cores(p, "Tricon Naga Mk5 Engine", "Milspec Orion 2302 Core System", "Schafer & Kane Light Combat Plating")
+         equip_cores(p, "Nexus Dart 150 Engine", "Milspec Prometheus 2203 Core System", "S&K Ultralight Stealth Plating")
          use_primary    = rnd.rnd(1,#nhigh)
          addWeapons( equip_forwardPirLow(), use_primary )
          medium         = { "Generic Afterburner", "Milspec Scrambler" }
@@ -93,7 +103,6 @@ function equip_pirateMilitary( p, shipsize )
 
       -- Fighter
       elseif class == "Fighter" then
-         equip_cores(p, "Tricon Naga Mk5 Engine", "Milspec Orion 2302 Core System", "Schafer & Kane Light Combat Plating")
          if nhigh > 3 then
             use_primary    = nhigh-1
             use_secondary  = 1
@@ -108,7 +117,7 @@ function equip_pirateMilitary( p, shipsize )
 
       -- Bomber
       elseif class == "Bomber" then
-         equip_cores(p, "Tricon Naga Mk5 Engine", "Milspec Orion 2302 Core System", "Schafer & Kane Light Combat Plating")
+         equip_cores(p, "Nexus Dart 300 Engine", "Milspec Aegis 3601 Core System", "Unicorp B-4 Light Plating")
          use_primary    = rnd.rnd(1,2)
          use_secondary  = nhigh - use_primary
          addWeapons( equip_forwardPirLow(), use_primary )
@@ -119,8 +128,12 @@ function equip_pirateMilitary( p, shipsize )
       end
 
    elseif shipsize == "medium" then
-      equip_cores(p, "Tricon Centaur Mk3 Engine", "Milspec Orion 3702 Core System", "Schafer & Kane Medium Combat Plating Alpha")
       local class = p:ship():class()
+      cores = {
+         {"Nexus Arrow 550 Engine", "Milspec Prometheus 4703 Core System", "S&K Medium Combat Plating"},
+         {"Nexus Arrow 1200 Engine", "Milspec Prometheus 5403 Core System", "Unicorp B-12 Medium Plating"}
+      }
+      equip_cores(p, equip_getCores(p, shipsize, cores))
 
       use_secondary  = rnd.rnd(1,2)
       use_primary    = nhigh - use_secondary
@@ -137,7 +150,7 @@ function equip_pirateMilitary( p, shipsize )
 
 
    else
-      equip_cores(p, "Tricon Harpy Mk6 Engine", "Milspec Orion 4802 Core System", "Schafer & Kane Heavy Combat Plating Beta")
+      equip_cores(p, "Nexus Bolt 4500 Engine", "Milspec Prometheus 9803 Core System", "S&K Heavy Combat Plating")
       primary        = icmb( equip_turretPirHig(), equip_turretPirMed() )
       use_primary    = nhigh-2
       use_secondary  = 2
@@ -150,6 +163,3 @@ function equip_pirateMilitary( p, shipsize )
    equip_ship( p, true, weapons, medium, low,
                use_medium, use_low )
 end
-
-
-

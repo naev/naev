@@ -1083,12 +1083,27 @@ void toolkit_drawAltText( int bx, int by, const char *alt )
    double x, y, o;
    glColour c;
    glColour c2;
+   int i, l;
+   char *buf;
 
-   /* Get dimensions. */
-   w = 160.;
+   /* Find the first newline. */
+   i = 0;
+   while (alt[i] != '\0' && alt[i] != '\n')
+      i++;
+
+   buf = malloc(i + 1);
+   strncpy(buf, alt, i);
+   buf[i] = '\0'; /* Null-terminate. */
+
+   l = gl_printWidthRaw( &gl_smallFont, buf );
+   free(buf);
+
+   /* Get dimensions, rounding width up to nearest 20 px increment. */
+   w = CLAMP(160., 240., ceil( l / 20. ) * 20.);
    h = gl_printHeightRaw( &gl_smallFont, w, alt );
+
    /* One check to make bigger. */
-   if (h > 160.) {
+   if (h > 160. && w < 200.) {
       w = 200;
       h = gl_printHeightRaw( &gl_smallFont, w, alt );
    }
@@ -1886,7 +1901,8 @@ static void toolkit_regKey( SDLKey key, SDLKey c )
    mod = toolkit_mapMod(key);
    if (mod)
       input_mod         |= mod;
-   else {
+   /* Don't reset values on repeat keydowns. */
+   else if (input_key != key) {
       input_key         = key;
       input_keyTime     = SDL_GetTicks();
       input_keyCounter  = 0;
@@ -2148,6 +2164,9 @@ void toolkit_update (void)
             event.key.state      = SDL_PRESSED;
             event.key.keysym.sym = input_key;
             event.key.keysym.mod = input_mod;
+#if !SDL_VERSION_ATLEAST(2,0,0)
+            event.key.keysym.unicode = (uint8_t)input_text;
+#endif
             ret = wgt->rawevent( wgt, &event );
             if (ret != 0)
                return;

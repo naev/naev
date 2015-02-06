@@ -16,12 +16,12 @@
   <duration blowup="armour">33</duration>
   <thrust>0</thrust>
   <turn>20</turn>
-  <speed>170</speed>
+  <speed>200</speed>
   <resist>100</resist>
   <damage>
    <type>impact</type>
    <penetrate>50</penetrate>
-   <physical>400</physical>
+   <physical>800</physical>
    <disable>5</disable>
   </damage>
   <ai>smart</ai>

@@ -57,8 +57,6 @@ else -- default English text
 end
 
 function create ()
-   startworld, startworld_sys = planet.cur()
-
    targetworld_sys = system.get("Dohriabi")
    targetworld = planet.get("Niflheim")
 
@@ -86,8 +84,6 @@ function accept ()
 
    misn.setDesc( string.format( misn_desc, targetworld:name(), targetworld_sys:name() ) )
    runawayMarker = misn.markerAdd(system.get("Dohriabi"), "low")
-
-   misn.accept()
 
    tk.msg( title, post_accept[1] )
 
@@ -166,7 +162,9 @@ end
 
 function abort ()
   --Clean up
-   misn.cargoRm(cargoID)
+   if cargoID then
+      misn.cargoRm(cargoID)
+   end
    misn.markerRm(runawayMarker)
    misn.osdDestroy()
    misn.finish(false)

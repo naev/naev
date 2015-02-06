@@ -27,10 +27,11 @@
    <shipyard/>
   </services>
   <commodities/>
-  <description>One of the Dvaered gas-mining operations is located here. The gas is refined and turned into fuel for Dvaered ships. The facilites here are built solely for this purpose and no other, comfort was the last thing on the designers' minds.</description>
+  <description>One of the Dvaered gas-mining operations is located here. The gas is refined and turned into fuel for Dvaered ships. The facilities here are built solely for this purpose and no other, comfort was the last thing on the designers' minds.</description>
   <bar>The bar is filled with miners and garrison troops, like most Dvaered bars. Copious drinking is also most certainly on the cards, like most Dvaered bars. Unlike most Dvaered bars, this one is small and rather clean. Rather shocking, especially for outsiders.</bar>
  </general>
  <tech>
+  <item>Engines Cargo</item>
   <item>Systems Low</item>
   <item>Kinetic 1</item>
   <item>Kinetic 2</item>

@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <outfit name="Milspec Orion 3701 Core System">
  <general>
-  <typename>Core Systems</typename>
+  <typename>Core Systems (System)</typename>
   <slot prop="systems">utility</slot>
   <size>small</size>
-  <mass>2</mass>
-  <price>350000</price>
-  <description>Milspec develops high performance hardware for your ship, to make sure you are always optimally prepared for the dangers the universe might throw at you on your travels. The Orion 3700 core system series is a high-end solution for small ships, providing superior performance in every field. Fly safe, fly Milspec.</description>
+  <priority>7</priority>
+  <mass>32</mass>
+  <price>210000</price>
+  <description>Milspec develops high performance hardware for your ship, to make sure you are always optimally prepared for the dangers the universe might throw at you on your travels. The Orion 3701 core system is a high-end solution for small ships, providing superior performance in every field. Fly safe, fly Milspec.</description>
   <gfx_store>reactor_i</gfx_store>
  </general>
  <specific type="modification">
-  <cpu_max>45</cpu_max>
-  <shield>270</shield>
-  <shield_regen>7</shield_regen>
-  <energy>650</energy>
-  <energy_regen>42</energy_regen>
+  <cpu_max>55</cpu_max>
+  <shield>250</shield>
+  <shield_regen>8</shield_regen>
+  <energy>750</energy>
+  <energy_regen>46</energy_regen>
   <ew_hide>0</ew_hide>
  </specific>
 </outfit>

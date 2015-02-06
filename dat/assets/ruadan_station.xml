@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Ruadan Station">
+ <pos>
+  <x>-6927.872315</x>
+  <y>-5320.968971</y>
+ </pos>
+ <GFX>
+  <space>000.png</space>
+  <exterior>station00.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Za'lek</faction>
+  <value>10.000000</value>
+  <range>0</range>
+ </presence>
+ <general>
+  <class>0</class>
+  <population>100</population>
+  <hide>0.500000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <commodity/>
+  </services>
+  <commodities/>
+  <description>This simple station serves as a refuel depot for those ships that do not have security clearance to land on Ruadan Prime or Ruadan Bastion. There is precious little else of interest here.</description>
+ </general>
+</asset>

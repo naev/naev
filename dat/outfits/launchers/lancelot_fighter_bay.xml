@@ -4,15 +4,15 @@
   <slot>weapon</slot>
   <size>large</size>
   <license>Light Combat Vessel License</license>
-  <mass>900</mass>
+  <mass>280</mass>
   <price>830000</price>
   <gfx_store>lancelot_fighter</gfx_store>
   <description>This fighter bay allows your ship to carry a pair of Lancelot class fighters. It comes with all the devices required for the maintenance and flight of the fighters.</description>
-  <cpu>-60</cpu>
+  <cpu>-35</cpu>
  </general>
  <specific type="fighter bay" secondary="1">
   <ammo>Lancelot Fighter</ammo>
-  <delay>4</delay>
+  <delay>6</delay>
   <amount>2</amount>
  </specific>
 </outfit>

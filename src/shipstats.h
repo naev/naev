@@ -84,6 +84,7 @@ typedef enum ShipStatsType_ {
 
    /* Misc. */
    SS_TYPE_D_HEAT_DISSIPATION, /**< Ship heat dissipation. */
+   SS_TYPE_D_STRESS_DISSIPATION, /**< Ship stress dissipation. */
    SS_TYPE_D_CREW,            /**< Ship crew. */
    SS_TYPE_D_MASS,            /**< Ship mass. */
 
@@ -187,6 +188,7 @@ typedef struct ShipStats_ {
 
    /* Military type. */
    double heat_dissipation; /**< Global ship dissipation. */
+   double stress_dissipation; /**< Global stress dissipation. */
    double crew_mod;        /**< Relative crew modification. */
    double mass_mod;        /**< Relative mass modification. */
 
@@ -243,9 +245,11 @@ int ss_statsModFromList( ShipStats *stats, const ShipStatList* list, const ShipS
  * Lookup.
  */
 const char* ss_nameFromType( ShipStatsType type );
+size_t ss_offsetFromType( ShipStatsType type );
 ShipStatsType ss_typeFromName( const char *name );
 int ss_statsListDesc( const ShipStatList *ll, char *buf, int len, int newline );
 int ss_statsDesc( const ShipStats *s, char *buf, int len, int newline );
+int ss_csv( const ShipStats *s, char *buf, int len );
 
 
 #endif /* SHIPSTATS_H */

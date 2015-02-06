@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<asset name="Oberon">
+ <pos>
+  <x>-1597.399997</x>
+  <y>1131.491664</y>
+ </pos>
+ <GFX>
+  <space>moon-J02.png</space>
+  <exterior>traderoom.png</exterior>
+ </GFX>
+ <presence>
+  <faction>Za'lek</faction>
+  <value>20.000000</value>
+  <range>3</range>
+ </presence>
+ <general>
+  <class>J</class>
+  <population>75800</population>
+  <hide>0.500000</hide>
+  <services>
+   <land/>
+   <refuel/>
+   <missions/>
+  </services>
+  <commodities/>
+  <description>Oberon is primarily a remote research post for various purposes deemed too minor to justify placing in more prestigious stations. Most interns and new researchers get their start here before moving on to better things.</description>
+ </general>
+</asset>

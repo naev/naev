@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<outfit name="Empire Lancelot Fighter Bay">
+ <general>
+  <slot>weapon</slot>
+  <size>large</size>
+  <license>Light Combat Vessel License</license>
+  <mass>280</mass>
+  <price>930000</price>
+  <gfx_store>lancelot_empire_fighter</gfx_store>
+  <description>This fighter bay allows your ship to carry a pair of Empire Lancelot class fighters. It comes with all the devices required for the maintenance and flight of the fighters.</description>
+  <cpu>-40</cpu>
+ </general>
+ <specific type="fighter bay" secondary="1">
+  <ammo>Empire Lancelot Fighter</ammo>
+  <delay>6</delay>
+  <amount>2</amount>
+ </specific>
+</outfit>

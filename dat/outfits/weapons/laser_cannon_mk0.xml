@@ -14,7 +14,7 @@
   <sound>laser</sound>
   <spfx_shield>ShiS</spfx_shield>
   <spfx_armour>ExpS</spfx_armour>
-  <delay>550</delay>
+  <delay>0.55</delay>
   <speed>550</speed>
   <range>420</range>
   <falloff>250</falloff>

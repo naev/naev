@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <outfit name="Unicorp PT-600 Core System">
  <general>
-  <typename>Core Systems</typename>
+  <typename>Core Systems (System)</typename>
   <slot prop="systems">utility</slot>
   <size>medium</size>
-  <mass>10</mass>
-  <price>500000</price>
-  <description>Continuing the PT line in the medium ship category, the PT-600 gives acceptable performance for an acceptable price.</description>
+  <priority>7</priority>
+  <mass>110</mass>
+  <price>100000</price>
+  <description>A heavy-duty variant of the PT-500, the PT-600 exceeds its predecessor in all respects. Its considerably higher mass restricts its use to larger medium vessels such as destroyers.</description>
   <gfx_store>reactor_ii</gfx_store>
  </general>
  <specific type="modification">
-  <cpu_max>60</cpu_max>
-  <shield>420</shield>
+  <cpu_max>77</cpu_max>
+  <shield>400</shield>
   <shield_regen>8</shield_regen>
-  <energy>1000</energy>
-  <energy_regen>60</energy_regen>
+  <energy>1250</energy>
+  <energy_regen>65</energy_regen>
   <ew_hide>0</ew_hide>
  </specific>
 </outfit>
