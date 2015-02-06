@@ -4,15 +4,10 @@ function getNextSystem( nowsys, finalsys, hidden )
        return nowsys
    end
 
-   local neighs    = nowsys:adjacentSystems( hidden )
-   local nearest   = 1e9 -- Large value
-   local mynextsys = finalsys
-   for _, j in pairs(neighs) do
-      local jdist = j:jumpDist( finalsys, hidden )
-      if jdist < nearest then
-         nearest     = jdist
-         mynextsys   = j
-      end
+   path = nowsys:jumpPath( finalsys )
+   if not path then
+      return nowsys
    end
-   return mynextsys
+
+   return path[1]:dest()
 end
