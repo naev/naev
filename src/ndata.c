@@ -588,16 +588,8 @@ int ndata_exists( const char* filename )
             return 1;
       }
 
-      /* Load the ndata archive. */
-      ndata_openFile();
-   }
-
-   /* Wasn't able to open the file. */
-   if (ndata_archive == NULL)
       return 0;
-
-   /* Mark that we loaded a file. */
-   ndata_loadedfile = 1;
+   }
 
    /* Try to get it from the archive. */
    return nzip_hasFile( ndata_archive, filename );
