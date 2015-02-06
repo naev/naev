@@ -810,6 +810,28 @@ const char* outfit_getTypeBroad( const Outfit* o )
 
 
 /**
+ * @brief Gets a human-readable string describing an ammo outfit's AI.
+ *    @param o Ammo outfit.
+ *    @return Name of the outfit's AI.
+ */
+const char* outfit_getAmmoAI( const Outfit *o )
+{
+   const char *ai_type[] = {
+      "Dumb",
+      "Seek",
+      "Smart"
+   };
+
+   if (!outfit_isAmmo(o)) {
+      WARN("Outfit '%s' is not an ammo outfit", o->name);
+      return NULL;
+   }
+
+   return ai_type[o->u.amm.ai];
+}
+
+
+/**
  * @brief Checks to see if an outfit fits a slot.
  *
  *    @param o Outfit to see if fits in a slot.
@@ -1394,12 +1416,13 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
       if (xml_isNode(node,"ai")) {
          buf = xml_get(node);
          if (buf != NULL) {
+
             if (strcmp(buf,"dumb")==0)
-               temp->u.amm.ai = 0;
+               temp->u.amm.ai = AMMO_AI_DUMB;
             else if (strcmp(buf,"seek")==0)
-               temp->u.amm.ai = 1;
+               temp->u.amm.ai = AMMO_AI_SEEK;
             else if (strcmp(buf,"smart")==0)
-               temp->u.amm.ai = 2;
+               temp->u.amm.ai = AMMO_AI_SMART;
             else
                WARN("Ammo '%s' has unknown ai type '%s'.", temp->name, buf);
          }

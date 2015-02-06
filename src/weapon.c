@@ -333,7 +333,7 @@ static void think_seeker( Weapon* w, const double dt )
       case WEAPON_STATUS_UNJAMMED: /* Work as expected */
 
          /* Smart seekers take into account ship velocity. */
-         if (w->outfit->u.amm.ai == 2) {
+         if (w->outfit->u.amm.ai == AMMO_AI_SMART) {
 
             /* Calculate time to reach target. */
             vect_cset( &v, p->solid->pos.x - w->solid->pos.x,
@@ -1350,7 +1350,7 @@ static void weapon_createAmmo( Weapon *w, const Outfit* launcher, double T,
    }
 
    /* Handle seekers. */
-   if (w->outfit->u.amm.ai > 0) {
+   if (w->outfit->u.amm.ai != AMMO_AI_DUMB) {
       w->think = think_seeker; /* AI is the same atm. */
 
       /* If they are seeking a pilot, increment lockon counter. */

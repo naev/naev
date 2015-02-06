@@ -86,6 +86,15 @@ typedef enum OutfitSlotSize_ {
 
 
 /**
+ * @brief Ammo AI types.
+ */
+typedef enum OutfitAmmoAI_ {
+   AMMO_AI_DUMB, /**< No AI. */
+   AMMO_AI_SEEK, /**< Aims at the target. */
+   AMMO_AI_SMART /**< Aims at the target, correcting for relative velocity. */
+} OutfitAmmoAI;
+
+/**
  * @brief Pilot slot that can contain outfits.
  */
 typedef struct OutfitSlot_ {
@@ -184,7 +193,7 @@ typedef struct OutfitLauncherData_ {
 typedef struct OutfitAmmoData_ {
    double duration;  /**< How long the ammo lives. */
    double resist;    /**< Lowers chance of jamming by this amount */
-   int ai;           /**< Smartness of ammo. */
+   OutfitAmmoAI ai;  /**< Smartness of ammo. */
 
    double speed;     /**< Maximum speed */
    double turn;      /**< Turn velocity in rad/s. */
@@ -381,6 +390,7 @@ int outfit_isLicense( const Outfit* o );
 int outfit_isSecondary( const Outfit* o );
 const char* outfit_getType( const Outfit* o );
 const char* outfit_getTypeBroad( const Outfit* o );
+const char* outfit_getAmmoAI( const Outfit *o );
 
 /*
  * Search.
