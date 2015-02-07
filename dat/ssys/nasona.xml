@@ -3,14 +3,16 @@
  <general>
   <radius>10000.000000</radius>
   <stars>400</stars>
-  <interference>0.000000</interference>
+  <interference>600.000000</interference>
   <nebula volatility="400.000000">700.000000</nebula>
  </general>
  <pos>
   <x>606.000000</x>
   <y>87.000000</y>
  </pos>
- <assets/>
+ <assets>
+  <asset>Virtual Empire Unpresence</asset>
+ </assets>
  <jumps>
   <jump target="Arandon">
    <autopos/>
