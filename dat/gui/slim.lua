@@ -987,8 +987,7 @@ function render( dt, dt_mod )
    local length = 5, navstring, fuel, fuelstring, consume
    gfx.renderTexRaw( bottom_bar, 0, 0, screen_w, 30, 1, 1, 0, 0, 1, 1 )
 
-   fuel, consume = player.fuel()
-   local jumps = math.floor(fuel/consume)
+   local jumps = player.jumps()
    if jumps == 1 then
       fuelstring = jumps .. " Jump"
    elseif jumps > 1 then
