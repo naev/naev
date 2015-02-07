@@ -499,7 +499,7 @@ static int ship_loadGFX( Ship *temp, char *buf, int sx, int sy, int engine )
    surface = npng_readSurface( npng, gl_needPOT(), 1 );
 
    /* Load the texture. */
-   temp->gfx_space = gl_loadImagePad( str, surface,
+   temp->gfx_space = gl_loadImagePadTrans( str, surface, rw,
          OPENGL_TEX_MAPTRANS | OPENGL_TEX_MIPMAPS,
          w, h, sx, sy, 0 );
 
