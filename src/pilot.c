@@ -699,6 +699,9 @@ void pilot_cooldown( Pilot *p )
       heat_mean += o->heat_T * o->heat_C;
    }
 
+   /* Paranoia - a negative mean heat will result in NaN cdelay. */
+   heat_mean = MAX( heat_mean, CONST_SPACE_STAR_TEMP );
+
    heat_mean /= heat_capacity;
 
    /*

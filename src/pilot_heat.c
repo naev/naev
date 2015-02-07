@@ -126,6 +126,9 @@ void pilot_heatAddSlot( Pilot *p, PilotOutfitSlot *o )
    else
       hmod = 1.;
    o->heat_T += hmod * outfit_heat(o->outfit) / o->heat_C;
+
+   /* Enforce a minimum value as a safety measure. */
+   o->heat_T = MAX( o->heat_T, CONST_SPACE_STAR_TEMP );
 }
 
 
@@ -144,6 +147,9 @@ void pilot_heatAddSlotTime( Pilot *p, PilotOutfitSlot *o, double dt )
    /* @todo Handle beam modifiers for ships here. */
    hmod = 1.;
    o->heat_T += (hmod * outfit_heat(o->outfit) / o->heat_C) * dt;
+
+   /* Enforce a minimum value as a safety measure. */
+   o->heat_T = MAX( o->heat_T, CONST_SPACE_STAR_TEMP );
 }
 
 
