@@ -105,7 +105,7 @@ const char *keybind_info[][3] = {
    { "overlay", "Overlay Map", "Opens the in-system overlay map." },
    { "mousefly", "Mouse Flight", "Toggles mouse flying." },
    { "cooldown", "Active Cooldown", "Engages active cooldown mode." },
-   /* CommunicationBLARGH */
+   /* Communication */
    { "log_up", "Log Scroll Up", "Scrolls the log upwards." },
    { "log_down", "Log Scroll Down", "Scrolls the log downwards." },
    { "hail", "Hail Target", "Attempts to initialize communication with the targeted ship." },
@@ -1158,13 +1158,11 @@ static void input_mouseMove( SDL_Event* event )
 static void input_clickevent( SDL_Event* event )
 {
    unsigned int pid;
-   Pilot *p;
    int mx, my, mxr, myr, pntid, jpid;
    int rx, ry, rh, rw, res;
-   double x, y, m, r, rp, d, dp, px, py;
+   int autonav;
+   double x, y, zoom, px, py;
    double ang, angp, mouseang;
-   Planet *pnt;
-   JumpPoint *jp;
    HookParam hparam[2];
 
    /* Generate hook. */
@@ -1197,15 +1195,20 @@ static void input_clickevent( SDL_Event* event )
       return;
    }
 
-   /* Mouse targeting is left only. */
-   if (event->button.button != SDL_BUTTON_LEFT)
+   /* Mouse targeting only uses left and right buttons. */
+   if (event->button.button != SDL_BUTTON_LEFT &&
+            event->button.button != SDL_BUTTON_RIGHT)
       return;
+
+   autonav = (event->button.button == SDL_BUTTON_RIGHT) ? 1 : 0;
 
    px = player.p->solid->pos.x;
    py = player.p->solid->pos.y;
    gl_windowToScreenPos( &mx, &my, event->button.x, event->button.y );
-   gl_screenToGameCoords( &x, &y, (double)mx, (double)my );
-   if ((mx <= 15 || my <= 15 ) || (my >= gl_screen.h - 15 || mx >= gl_screen.w - 15)) { /* Border */
+   if ((mx <= 15 || my <= 15 ) || (my >= gl_screen.h - 15 || mx >= gl_screen.w - 15)) { 
+      /* Border targeting is handled as a special case, as it uses angles,
+       * not coordinates.
+       */
       x = (mx - (gl_screen.w / 2.)) + px;
       y = (my - (gl_screen.h / 2.)) + py;
       mouseang = atan2(py - y, px -  x);
@@ -1217,97 +1220,217 @@ static void input_clickevent( SDL_Event* event )
          pid = PLAYER_ID; /* Pilot angle is too great, or planet/jump is closer. */
       if  (ABS(angle_diff(mouseang, ang)) > M_PI / 64 )
          jpid = pntid = -1; /* Asset angle difference is too great. */
-   }
-   else { /* Radar targeting requires raw coordinates. */
-      mxr = event->button.x;
-      myr  = gl_screen.rh - event->button.y;
-      gui_radarGetPos( &rx, &ry );
-      gui_radarGetDim( &rw, &rh );
-      if ((mxr > rx && mxr <= rx + rw ) && (myr > ry && myr <= ry + rh )) { /* Radar */
-         m = 1;
-         gui_radarGetRes( &res );
-         x = (mxr - (rx + rw / 2.)) * res + px;
-         y = (myr - (ry + rh / 2.)) * res + py;
-      }
-      else /* Visual (on-screen) */
-         m = res = 1. / cam_getZoom();
-      dp = pilot_getNearestPos( player.p, &pid, x, y, 1 );
-      d  = system_getClosest( cur_system, &pntid, &jpid, x, y );
-      rp = MAX( 1.5 * PILOT_SIZE_APROX * pilot_get(pid)->ship->gfx_space->sw / 2 * m,  10. * res);
 
-      if (pntid >=0) { /* Planet is closer. */
-         pnt = cur_system->planets[ pntid ];
-         r  = MAX( 1.5 * pnt->radius, 100. );
+      if (!autonav && pid != PLAYER_ID) {
+         if (input_clickedPilot(pid))
+            return;
       }
-      else if (jpid >= 0) {
-         jp = &cur_system->jumps[ jpid ];
-         r  = MAX( 1.5 * jp->radius, 100. );
+      else if (pntid >= 0) { /* Planet is closest. */
+         if (input_clickedPlanet(pntid, autonav))
+            return;
       }
-      else {
-         r  = 0.;
+      else if (jpid >= 0) { /* Jump point is closest. */
+         if (input_clickedJump(jpid, autonav))
+            return;
       }
-      /* Reject pilot if it's too far or a valid asset is closer. */
-      if (dp > pow2(rp) || (d < pow2(r) && dp < pow2(rp) && dp >  d))
-         pid = PLAYER_ID;
-      if (d > pow2(r)) /* Planet or jump point is too far. */
-         jpid = pntid = -1;
+
+      /* Fall-through and handle as a normal click. */
    }
 
-   if (pid != PLAYER_ID) {
-      p = pilot_get(pid);
+   /* Radar targeting requires raw coordinates. */
+   mxr = event->button.x;
+   myr  = gl_screen.rh - event->button.y;
+   gui_radarGetPos( &rx, &ry );
+   gui_radarGetDim( &rw, &rh );
+   if ((mxr > rx && mxr <= rx + rw ) && (myr > ry && myr <= ry + rh )) { /* Radar */
+      zoom = 1.;
+      gui_radarGetRes( &res );
+      x = (mxr - (rx + rw / 2.)) * res + px;
+      y = (myr - (ry + rh / 2.)) * res + py;
 
-      /* Apply an action if already selected. */
-      if (pid == player.p->target && input_isDoubleClick( (void*)p )) {
-         if (pilot_isDisabled(p) || pilot_isFlag(p, PILOT_BOARDABLE))
-            player_board();
-         else
-            player_hail();
-      }
-      else
-         player_targetSet( pid );
-
-      input_clicked( (void*)p );
-   }
-   else if (pntid >= 0) { /* Planet is closest. */
-      pnt = cur_system->planets[ pntid ];
-
-      if (pntid == player.p->nav_planet && input_isDoubleClick((void*)pnt)) {
-         player_hyperspacePreempt(0);
-         if (planet_hasService(pnt, PLANET_SERVICE_LAND)) {
-            if ((pnt->faction >= 0) && (areEnemies( player.p->faction, pnt->faction ) && !pnt->bribed))
-               player_hailPlanet();
-            else if (vect_dist2(&player.p->solid->pos,&pnt->pos) > pow2(pnt->radius))
-               player_autonavStart();
-            else
-               player_land();
-         }
-         else
-            player_autonavStart();
-      }
-      else
-         player_targetPlanetSet( pntid );
-
-      input_clicked( (void*)pnt );
-   }
-   else if (jpid >= 0) { /* Jump point is closest. */
-      jp = &cur_system->jumps[ jpid ];
-
-      if (!jp_isUsable(jp))
+      if (input_clickPos( event, x, y, zoom, 10. * res, 15. * res ))
          return;
-
-      if (jpid == player.p->nav_hyperspace && input_isDoubleClick( (void*)jp )) {
-         if (space_canHyperspace(player.p))
-            player_jump();
-         else {
-            player_hyperspacePreempt(1);
-            player_autonavStart();
-         }
-      }
-      else
-         player_targetHyperspaceSet( jpid );
-
-      input_clicked( (void*)jp );
    }
+
+   /* Visual (on-screen) */
+   gl_screenToGameCoords( &x, &y, (double)mx, (double)my );
+   zoom = res = 1. / cam_getZoom();
+
+   input_clickPos( event, x, y, zoom, 10. * res, 15. * res );
+   return;
+}
+
+
+/**
+ * @brief Handles a click at a position in the current system
+ *
+ *    @brief event The click event itself, used for button information.
+ *    @brief x X coordinate within the system.
+ *    @brief y Y coordinate within the system.
+ *    @brief zoom Camera zoom (mostly for on-screen targeting).
+ *    @brief minpr Minimum radius to assign to pilots.
+ *    @brief minr Minimum radius to assign to planets and jumps.
+ *    @return Whether the click was used to trigger an action.
+ */
+int input_clickPos( SDL_Event *event, double x, double y, double zoom, double minpr, double minr )
+{
+   unsigned int pid;
+   Pilot *p;
+   double r, rp;
+   double d, dp;
+   Planet *pnt;
+   JumpPoint *jp;
+   int pntid, jpid;
+
+   dp = pilot_getNearestPos( player.p, &pid, x, y, 1 );
+   p  = pilot_get(pid);
+
+   d  = system_getClosest( cur_system, &pntid, &jpid, x, y );
+   rp = MAX( 1.5 * PILOT_SIZE_APROX * p->ship->gfx_space->sw / 2 * zoom,  minpr);
+
+   if (pntid >=0) { /* Planet is closer. */
+      pnt = cur_system->planets[ pntid ];
+      r  = MAX( 1.5 * pnt->radius * zoom, minr );
+   }
+   else if (jpid >= 0) {
+      jp = &cur_system->jumps[ jpid ];
+      r  = MAX( 1.5 * jp->radius * zoom, minr );
+   }
+   else
+      r  = 0.;
+
+   /* Reject pilot if it's too far or a valid asset is closer. */
+   if (dp > pow2(rp) || ((d < pow2(r)) && (dp >  d)))
+      pid = PLAYER_ID;
+
+   if (d > pow2(r)) /* Planet or jump point is too far. */
+      jpid = pntid = -1;
+
+   /* Target a pilot, planet or jump, and/or perform an appropriate action. */
+   if (event->button.button == SDL_BUTTON_LEFT) {
+      if (pid != PLAYER_ID) {
+         return input_clickedPilot(pid);
+      }
+      else if (pntid >= 0) { /* Planet is closest. */
+         return input_clickedPlanet(pntid, 0);
+      }
+      else if (jpid >= 0) { /* Jump point is closest. */
+         return input_clickedJump(jpid, 0);
+      }
+   }
+   /* Right click only controls autonav. */
+   else if (event->button.button == SDL_BUTTON_RIGHT) {
+      if (pntid >= 0)
+         return input_clickedPlanet(pntid, 1);
+      else if (jpid >= 0)
+         return input_clickedJump(jpid, 1);
+
+      /* Go to position, if the position is >= 1500 px away. */
+      if ((pow2(x - player.p->solid->pos.x) + pow2(y - player.p->solid->pos.y))
+            >= pow2(1500))
+
+      player_autonavPos( x, y );
+      return 1;
+   }
+
+   return 0;
+}
+
+
+/**
+ * @brief Performs an appropriate action when a jump point is clicked.
+ *
+ *    @param jp Index of the jump point.
+ *    @param autonav Whether to autonav to the target.
+ *    @return Whether the click was used.
+ */
+int input_clickedJump( int jump, int autonav )
+{
+   JumpPoint *jp;
+   jp = &cur_system->jumps[ jump ];
+
+   if (!jp_isUsable(jp))
+      return 0;
+
+   if (autonav) {
+      player_targetHyperspaceSet( jump );
+      player_autonavStart();
+      return 1;
+   }
+
+   if (jump == player.p->nav_hyperspace && input_isDoubleClick( (void*)jp )) {
+      if (space_canHyperspace(player.p))
+         player_jump();
+   }
+   else
+      player_targetHyperspaceSet( jump );
+
+   input_clicked( (void*)jp );
+   return 1;
+}
+
+/**
+ * @brief Performs an appropriate action when a planet is clicked.
+ *
+ *    @param planet Index of the planet.
+ *    @param autonav Whether to autonav to the target.
+ *    @return Whether the click was used.
+ */
+int input_clickedPlanet( int planet, int autonav )
+{
+   Planet *pnt;
+   pnt = cur_system->planets[ planet ];
+
+   if (!planet_isKnown(pnt))
+      return 0;
+
+   if (autonav) {
+      player_targetPlanetSet( planet );
+      player_autonavPnt( pnt->name );
+      return 1;
+   }
+
+   if (planet == player.p->nav_planet && input_isDoubleClick((void*)pnt)) {
+      player_hyperspacePreempt(0);
+      if (planet_hasService(pnt, PLANET_SERVICE_LAND)) {
+         if ((pnt->faction >= 0) && (areEnemies( player.p->faction, pnt->faction ) && !pnt->bribed))
+            player_hailPlanet();
+         else
+            player_land();
+      }
+   }
+   else
+      player_targetPlanetSet( planet );
+
+   input_clicked( (void*)pnt );
+   return 1;
+}
+
+/**
+ * @brief Performs an appropriate action when a pilot is clicked.
+ *
+ *    @param pilot Index of the pilot.
+ *    @return Whether the click was used.
+ */
+int input_clickedPilot( unsigned int pilot )
+{
+   Pilot *p;
+
+   if (pilot == PLAYER_ID)
+      return 0;
+
+   p = pilot_get(pilot);
+   if (pilot == player.p->target && input_isDoubleClick( (void*)p )) {
+      if (pilot_isDisabled(p) || pilot_isFlag(p, PILOT_BOARDABLE))
+         player_board();
+      else
+         player_hail();
+   }
+   else
+      player_targetSet( pilot );
+
+   input_clicked( (void*)p );
+   return 1;
 }
 
 
