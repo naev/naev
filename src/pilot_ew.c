@@ -92,7 +92,7 @@ double pilot_ewHeat( double T )
  */
 double pilot_ewMass( double mass )
 {
-   return 1. / (.2 + pow( mass, 0.5 ) / 30. );
+   return 1. / (.3 + sqrt(mass) / 30. );
 }
 
 
