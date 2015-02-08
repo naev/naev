@@ -12,10 +12,12 @@
  </pos>
  <assets>
   <asset>Virtual Empire Unpresence</asset>
+  <asset>Virtual Soromid Unpresence</asset>
  </assets>
  <jumps>
   <jump target="Arcanis">
    <autopos/>
+   <hidden/>
    <hide>1.250000</hide>
   </jump>
   <jump target="Behar">

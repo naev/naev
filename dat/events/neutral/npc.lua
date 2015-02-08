@@ -139,7 +139,7 @@ else --default english
                               }
 
    msg_lore["Trader"] =       {"Just another link in the Great Chain, right?",
-                               "You win some, you lose some but if you don't try you're never going to win",
+                               "You win some, you lose some, but if you don't try you're never going to win.",
                                "If you don't watch the markets then you'll be hopping between planets in a jury-rigged ship in no time.",
                                "Them blimming pirates, stopping honest folk from making an honest living - it's not like we're exploiting the needy!",
                               }
