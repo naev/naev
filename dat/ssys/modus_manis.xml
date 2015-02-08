@@ -37,4 +37,11 @@
    <hide>1.250000</hide>
   </jump>
  </jumps>
+ <prices>
+  <commodity name="Food">69.000000</commodity>
+  <commodity name="Ore">64.000000</commodity>
+  <commodity name="Industrial Goods">895.000000</commodity>
+  <commodity name="Medicine">5147.000000</commodity>
+  <commodity name="Luxury Goods">5467.000000</commodity>
+ </prices>
 </ssys>

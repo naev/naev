@@ -26,7 +26,13 @@
    <outfits/>
    <shipyard/>
   </services>
-  <commodities/>
+  <commodities>
+   <commodity>Food</commodity>
+   <commodity>Ore</commodity>
+   <commodity>Medicine</commodity>
+   <commodity>Industrial Goods</commodity>
+   <commodity>Luxury Goods</commodity>
+  </commodities>
   <description>Turnpike Station is a semi-privatised commerce facility. It is located on one of the major junctions in Empire space, making it a welcome opportunity for traders to barter with one another. The station also offers private storage and ship moorings for pilots who travel through this region of space a lot.</description>
   <bar>The bar is abustle with traders making money and, in some cases, losing it. The gears of the free market grind heaviest on stations like these and sometimes someone gets crushed between them.</bar>
  </general>

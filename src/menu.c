@@ -45,6 +45,7 @@
 #include "camera.h"
 #include "board.h"
 #include "ndata.h"
+#include "economy.h"
 
 
 #define MAIN_WIDTH      130 /**< Main menu width. */
@@ -431,6 +432,9 @@ static void menu_small_exit( unsigned int wid, char* str )
    /* Stop player sounds because sometimes they hang. */
    player_autonavAbort( "Exited game." );
    player_soundStop();
+
+   /* revert economic values */
+   econ_revert();
 
    /* Clean up. */
    window_destroy( wid );
