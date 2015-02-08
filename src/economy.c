@@ -41,8 +41,8 @@
 
 
 /* commodity stack */
-Commodity* commodity_stack = NULL; /**< Contains all the commodities. */
-static int commodity_nstack       = 0; /**< Number of commodities in the stack. */
+Commodity* commodity_stack    = NULL; /**< Contains all the commodities. */
+static int commodity_nstack   = 0; /**< Number of commodities in the stack. */
 
 
 /* systems stack. */
@@ -398,7 +398,7 @@ int econ_refreshcommprice(Commodity *comm)
          sys_pos[s] = n_unset + i++;
    }
 
-      /* initialize the system of equations */
+   /* initialize the system of equations */
    int sysw = systems_nstack;   /* the width of the system of equations */
    int sysh = n_unset; /* the height of the system of equations */
    float *eqsystem = calloc(sizeof(float), systems_nstack*sysw);
@@ -407,7 +407,7 @@ int econ_refreshcommprice(Commodity *comm)
    e = 0;
    eq = eqsystem+0; /* the equation we're on */
    for (s=0; s<systems_nstack; s++){
-      sys = systems_stack+s;
+      sys = &systems_stack[s];
       /* Skip systems with set prices. */
       if (sys->is_priceset[comm->index])
          continue;
@@ -440,7 +440,7 @@ int econ_refreshcommprice(Commodity *comm)
             for (j=0; j<nsys->njumps; j++) /* check that the jump back is valid */
                if (sys == nsys->jumps[j].target){
                   if (!jp_isFlag( nsys->jumps+j, JP_EXITONLY ) && !jp_isFlag(sys->jumps+jmp, JP_HIDDEN))
-                     eq[sys_pos[nsys->id] ] = val;
+                     eq[ sys_pos[nsys->id] ] = val;
                   break;
                }
          }
@@ -496,7 +496,7 @@ int econ_refreshcommprice(Commodity *comm)
       }
    }
 
-      /* put the solutions in */
+   /* put the solutions in */
    int u;
    int nsys_wprices = systems_nstack-n_unset; /* number of systems with prices */
    float *set_prices = (float *) malloc(sizeof(float)*nsys_wprices); /* known prices, in the order they appear */
@@ -509,7 +509,8 @@ int econ_refreshcommprice(Commodity *comm)
       }
    }
    for (i=0; i<n_unset; i++){
-      sys = systems_stack+unset_pos[i];
+      sys = &systems_stack[ unset_pos[i] ];
+
       sys->prices[comm->index] = 0.0;
       eq = eqsystem+sysw*i;
       for (j=0; j<nsys_wprices; j++){
@@ -551,7 +552,7 @@ void econ_revert(void)
 
    /* revert to the old values */
    for (i=0; i<systems_nstack; i++) {
-      sys = systems_stack+i;
+      sys = &systems_stack[i];
       for (j=0; j<econ_nprices; j++) {
          if (sys->xml_prices[j] > 0.) {
             sys->prices[j] = sys->xml_prices[j];
@@ -593,7 +594,7 @@ void econ_init(void)
 
    /* save original values */
    for (i=0; i<systems_nstack; i++) {
-      sys = systems_stack+i;
+      sys = &systems_stack[i];
       for (c=0; c<econ_nprices; c++) {
          if (sys->is_priceset[c])
             sys->xml_prices[c] = sys->prices[c];
@@ -621,7 +622,7 @@ void econ_destroy(void)
    Planet *p;
    if (!econ_initialized) { WARN("economy not inited!\n"); return; }
    for (i=0; i<systems_nstack; i++) {
-      sys = systems_stack+i;
+      sys = &systems_stack[i];
       free(sys->prices); 
       free(sys->xml_prices);
       sys->prices = NULL;

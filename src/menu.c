@@ -433,7 +433,7 @@ static void menu_small_exit( unsigned int wid, char* str )
    player_autonavAbort( "Exited game." );
    player_soundStop();
 
-   /* revert economic values */
+   /* Revert economic values */
    econ_revert();
 
    /* Clean up. */
