@@ -239,8 +239,9 @@ void map_open (void)
          &gl_smallFont, &cDConsole, "Services:" );
    window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtServices",
          &gl_smallFont, &cBlack, NULL );
+   y -= 2 * gl_smallFont.h + 5 + 15;
 
-   if (show_prices){
+   if (show_prices) {
       window_addText( wid, x, y, 90, 20, 0, "txtSPrices",
             &gl_smallFont, &cDConsole, "Prices:" );
       window_addText( wid, x + 50, y-gl_smallFont.h-5, rw, 100, 0, "txtPrices",
@@ -366,7 +367,6 @@ static void map_update( unsigned int wid )
       window_moveWidget( wid, "txtServices", x + 50, y -gl_smallFont.h - 5 );
       window_modifyText( wid, "txtServices", "Unknown" );
       y -= 2 * gl_smallFont.h + 5 + 15;
-
 
       /* Prices */
       if (widget_exists(wid, "txtSPrices")){
