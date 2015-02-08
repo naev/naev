@@ -318,7 +318,7 @@ int pilot_addOutfitRaw( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s )
       pilot->ncannons++;
 
    if (outfit_isBeam(outfit)) { /* Used to speed up some calculations. */
-      s->u.beamid = -1;
+      s->u.beamid = 0;
       pilot->nbeams++;
    }
    if (outfit_isLauncher(outfit)) {
