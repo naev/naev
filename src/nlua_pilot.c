@@ -1105,6 +1105,7 @@ static int pilotL_nav( lua_State *L )
  * <ul>
  *  <li> name: name of the set. </li>
  *  <li> cooldown: [0:1] value indicating if ready to shoot (1 is ready). </li>
+ *  <li> charge: [0:1] charge level of beam weapon (1 is full). </li>
  *  <li> ammo: Name of the ammo or nil if not applicable. </li>
  *  <li> left: Absolute ammo left or nil if not applicable. </li>
  *  <li> left_p: Relative ammo left [0:1] or nil if not applicable </li>
