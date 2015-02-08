@@ -520,7 +520,10 @@ int econ_refreshcommprice(Commodity *comm)
       }
    }
 
+   free(sys_pos);
    free(eqsystem);
+   free(set_prices);
+   free(unset_pos);
    return 0;
 }
 
