@@ -158,7 +158,8 @@ int pilot_inRangePilot( const Pilot *p, const Pilot *target )
 
    /* Special case player or omni-visible. */
    if ((pilot_isPlayer(p) && pilot_isFlag(target, PILOT_VISPLAYER)) ||
-         pilot_isFlag(target, PILOT_VISIBLE))
+         pilot_isFlag(target, PILOT_VISIBLE) ||
+         target->parent == p->id)
       return 1;
 
    /* Get distance. */
