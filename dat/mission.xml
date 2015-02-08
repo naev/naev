@@ -85,6 +85,37 @@
    <faction>Trader</faction>
   </avail>
  </mission>
+ <mission name="Dead Or Alive Bounty">
+  <lua>neutral/pirbounty_dead</lua>
+  <avail>
+   <priority>4</priority>
+   <cond>player.numOutfit("Mercenary License") &gt; 0</cond>
+   <chance>360</chance>
+   <location>Computer</location>
+   <faction>Dvaered</faction>
+   <faction>Empire</faction>
+   <faction>Frontier</faction>
+   <faction>Goddard</faction>
+   <faction>Independent</faction>
+   <faction>Sirius</faction>
+   <faction>Soromid</faction>
+  </avail>
+ </mission>
+ <mission name="Alive Bounty">
+  <lua>neutral/pirbounty_alive</lua>
+  <avail>
+   <priority>4</priority>
+   <cond>player.numOutfit("Mercenary License") &gt; 0</cond>
+   <chance>360</chance>
+   <location>Computer</location>
+   <faction>Empire</faction>
+   <faction>Frontier</faction>
+   <faction>Goddard</faction>
+   <faction>Independent</faction>
+   <faction>Sirius</faction>
+   <faction>Soromid</faction>
+  </avail>
+ </mission>
  <mission name="Empire Recruitment">
   <lua>empire/emp_cargo00</lua>
   <flags>
@@ -341,19 +372,6 @@
    <location>Bar</location>
    <faction>Empire</faction>
    <faction>Dvaered</faction>
-   <faction>Goddard</faction>
-  </avail>
- </mission>
- <mission name="Pirate Bounty">
-  <lua>empire/emp_pirbounty</lua>
-  <avail>
-   <priority>4</priority>
-   <cond>player.getRating() &gt; 50 and system.cur():presences()["Pirate"] ~= nil</cond>
-   <chance>20</chance>
-   <done>Empire HCVL</done>
-   <location>Bar</location>
-   <faction>Dvaered</faction>
-   <faction>Empire</faction>
    <faction>Goddard</faction>
   </avail>
  </mission>

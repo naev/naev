@@ -12,7 +12,7 @@
  </general>
  <specific type="beam" secondary="1">
   <delay>5</delay>
-  <duration>4</duration>
+  <duration min="2">4</duration>
   <range>300</range>
   <energy>65</energy>
   <heatup>60</heatup>

@@ -1105,6 +1105,7 @@ static int pilotL_nav( lua_State *L )
  * <ul>
  *  <li> name: name of the set. </li>
  *  <li> cooldown: [0:1] value indicating if ready to shoot (1 is ready). </li>
+ *  <li> charge: [0:1] charge level of beam weapon (1 is full). </li>
  *  <li> ammo: Name of the ammo or nil if not applicable. </li>
  *  <li> left: Absolute ammo left or nil if not applicable. </li>
  *  <li> left_p: Relative ammo left [0:1] or nil if not applicable </li>
@@ -1237,15 +1238,42 @@ static int pilotL_weapset( lua_State *L )
          lua_pushstring(L,slot->outfit->name);
          lua_rawset(L,-3);
 
-         /* Set cooldown. */
-         lua_pushstring(L,"cooldown");
-         pilot_getRateMod( &firemod, &enermod, p, slot->outfit );
-         delay = outfit_delay(slot->outfit) * firemod;
-         if (delay > 0.)
-            lua_pushnumber( L, CLAMP( 0., 1., 1. - slot->timer / delay ) );
-         else
-            lua_pushnumber( L, 1. );
-         lua_rawset(L,-3);
+
+         /* Beams require special handling. */
+         if (outfit_isBeam(o)) {
+            pilot_getRateMod( &firemod, &enermod, p, slot->outfit );
+
+            /* When firing, cooldown is always zero. When recharging,
+             * it's the usual 0-1 readiness value.
+             */
+            lua_pushstring(L,"cooldown");
+            if (slot->u.beamid > 0)
+               lua_pushnumber(L, 0.);
+            else {
+               delay = (slot->timer / outfit_delay(o)) * firemod;
+               lua_pushnumber( L, CLAMP( 0., 1., 1. - delay ) );
+            }
+            lua_rawset(L,-3);
+
+            /* When firing, slot->timer represents the remaining duration. */
+            lua_pushstring(L,"charge");
+            if (slot->u.beamid > 0)
+               lua_pushnumber(L, CLAMP( 0., 1., slot->timer / o->u.bem.duration ) );
+            else
+               lua_pushnumber( L, CLAMP( 0., 1., 1. - delay ) );
+            lua_rawset(L,-3);
+         }
+         else {
+            /* Set cooldown. */
+            lua_pushstring(L,"cooldown");
+            pilot_getRateMod( &firemod, &enermod, p, slot->outfit );
+            delay = outfit_delay(slot->outfit) * firemod;
+            if (delay > 0.)
+               lua_pushnumber( L, CLAMP( 0., 1., 1. - slot->timer / delay ) );
+            else
+               lua_pushnumber( L, 1. );
+            lua_rawset(L,-3);
+         }
 
          /* Ammo name. */
          ammo = outfit_ammo(slot->outfit);

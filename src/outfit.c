@@ -1180,6 +1180,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
    int l;
    xmlNodePtr node;
    double C, area;
+   char *prop;
 
    /* Defaults. */
    temp->u.bem.spfx_armour = -1;
@@ -1196,8 +1197,17 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"energy",temp->u.bem.energy);
       xmlr_float(node,"delay",temp->u.bem.delay);
       xmlr_float(node,"warmup",temp->u.bem.warmup);
-      xmlr_float(node,"duration",temp->u.bem.duration);
       xmlr_float(node,"heatup",temp->u.bem.heatup);
+
+      if (xml_isNode(node, "duration")) {
+         prop = xml_nodeProp(node, "min");
+         if (prop != NULL) {
+            temp->u.bem.min_duration = atof(prop);
+            free(prop);
+         }
+         temp->u.bem.duration = xml_getFloat(node);
+         continue;
+      }
 
       if (xml_isNode(node,"damage")) {
          outfit_parseDamage( &temp->u.bem.dmg, node );
@@ -1283,6 +1293,7 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define
    MELEMENT((sound_disabled!=0) && (temp->u.bem.sound_off<0),"sound_off");
    MELEMENT(temp->u.bem.delay==0,"delay");
    MELEMENT(temp->u.bem.duration==0,"duration");
+   MELEMENT(temp->u.bem.min_duration < 0,"duration");
    MELEMENT(temp->u.bem.range==0,"range");
    MELEMENT((temp->type!=OUTFIT_TYPE_BEAM) && (temp->u.bem.turn==0),"turn");
    MELEMENT(temp->u.bem.energy==0.,"energy");
