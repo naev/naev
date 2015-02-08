@@ -32,7 +32,7 @@ typedef enum {
 /*
  * set input
  */
-void input_setDefault (void);
+void input_setDefault( int wasd );
 SDLKey input_keyConv( const char *name );
 void input_setKeybind( const char *keybind, KeybindType type, SDLKey key, SDLMod mod );
 const char* input_modToText( SDLMod mod );
@@ -47,6 +47,12 @@ SDLMod input_translateMod( SDLMod mod );
 void input_enableAll (void);
 void input_disableAll (void);
 void input_toggleEnable( const char *key, int enable );
+int input_clickPos( SDL_Event *event, double x, double y, double zoom, double minpr, double minr );
+int input_clickedJump( int jump, int autonav );
+int input_clickedPlanet( int planet, int autonav );
+int input_clickedPilot( unsigned int pilot );
+void input_clicked( void *clicked );
+int input_isDoubleClick( void *clicked );
 
 /*
  * handle input

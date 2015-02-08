@@ -163,38 +163,38 @@ static glFont* dialogue_getSize( const char* title,
 {
    glFont* font;
    double w, h, d;
-   int titlelen;
-#if 0
-   int len;
-   len = strlen(msg);
-#endif
+   int i, titlelen, msglen;
 
    /* Get title length. */
    titlelen = gl_printWidthRaw( &gl_defFont, title );
-   w = MAX(450, titlelen+40); /* Default width to try. */
+   msglen = gl_printWidthRaw( &gl_smallFont, msg );
 
-   /* First we split by text length. */
-#if 0
-   if (len < 50) {
-      font = &gl_defFont;
+   /* Try widths from 300 to 800 in 50 px increments.
+    * Each subsequent width gets an additional line, following this table:
+    *
+    *    300 px:  2 lines,  540 px total
+    *    350 px:  3 lines,  930 px total
+    *    ...
+    *    800 px: 12 lines, 9600 px total
+    */
+   for (i=0; i<11; i++)
+      if (msglen < (260 + i * 50) * (2 + i))
+         break;
+
+   w = 300 + i * 50;
+   w = MAX(w, titlelen+40); /* Expand width if the title is long. */
+
+   /* Now we look at proportion. */
+   font = &gl_smallFont;
+   h = gl_printHeightRaw( font, w-40, msg );
+
+
+   d = ((double)w/(double)h)*(3./4.); /* deformation factor. */
+   if (fabs(d) > 0.3) {
+      if (h > w)
+         w = h;
       h = gl_printHeightRaw( font, w-40, msg );
    }
-   else {
-#endif
-      /* Now we look at proportion. */
-      font = &gl_smallFont;
-      /* font = &gl_defFont; */
-      h = gl_printHeightRaw( font, w-40, msg );
-
-      d = ((double)w/(double)h)*(3./4.); /* deformation factor. */
-      if (fabs(d) > 0.3) {
-         if (h > w)
-            w = h;
-         h = gl_printHeightRaw( font, w-40, msg );
-      }
-#if 0
-   }
-#endif
 
    /* Set values. */
    (*width) = w;

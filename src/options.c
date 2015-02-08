@@ -273,10 +273,6 @@ static void opt_gameplay( unsigned int wid )
    y -= 25;
 
    window_addCheckbox( wid, x, y, cw, 20,
-         "chkAutonavPause", "Pause instead of aborting Autonav", NULL, conf.autonav_pause );
-   y -= 25;
-
-   window_addCheckbox( wid, x, y, cw, 20,
          "chkZoomManual", "Enable manual zoom control", NULL, conf.zoom_manual );
    y -= 25;
    window_addCheckbox( wid, x, y, cw, 20,
@@ -325,7 +321,6 @@ static void opt_gameplaySave( unsigned int wid, char *str )
    conf.zoom_manual = window_checkboxState( wid, "chkZoomManual" );
    conf.mouse_thrust = window_checkboxState(wid, "chkMouseThrust" );
    conf.save_compress = window_checkboxState( wid, "chkCompress" );
-   conf.autonav_pause = window_checkboxState( wid, "chkAutonavPause" );
    
    /* Faders. */
    conf.autonav_reset_speed = window_getFaderValue(wid, "fadAutonav");
@@ -623,13 +618,41 @@ static void menuKeybinds_update( unsigned int wid, char *name )
 static void opt_keyDefaults( unsigned int wid, char *str )
 {
    (void) str;
+   char *title, *caption, *ret;
+   int i, ind;
 
-   /* Ask user if he wants to. */
-   if (!dialogue_YesNoRaw( "Restore Defaults", "Are you sure you want to restore default keybindings?" ))
+   const int n = 3;
+   const char *opts[] = {
+      "WASD",
+      "Arrow Keys",
+      "Cancel"
+   };
+
+   title   = "Restore Defaults";
+   caption = "Which layout do you want to use?";
+
+   dialogue_makeChoice( title, caption, 3 );
+
+   for (i=0; i<n; i++)
+      dialogue_addChoice( title, caption, opts[i] );
+
+   ret = dialogue_runChoice();
+   if (ret == NULL)
+      return;
+
+   /* Find the index of the matched option. */
+   ind = 0;
+   for (i=0; i<n; i++)
+      if (strcmp(ret, opts[i]) == 0) {
+         ind = i;
+         break;
+      }
+
+   if (ind == 2)
       return;
 
    /* Restore defaults. */
-   input_setDefault();
+   input_setDefault( (ind == 0) ? 1 : 0 );
 
    /* Regenerate list widget. */
    menuKeybinds_genList( wid );

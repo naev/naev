@@ -4,7 +4,7 @@
   <slot>weapon</slot>
   <size>medium</size>
   <license>Heavy Weapon License</license>
-  <mass>30</mass>
+  <mass>55</mass>
   <price>120000</price>
   <description>The Caesar IV launcher does what it says on the box, which is launch Caesar IV torpedoes.</description>
   <gfx_store>caesarlauncher</gfx_store>
@@ -13,7 +13,7 @@
  <specific type="launcher" secondary="1">
   <ammo>Caesar IV Torpedo</ammo>
   <delay>10</delay>
-  <lockon>20</lockon>
+  <lockon>16</lockon>
   <arc>6</arc>
   <ew_target>0.5</ew_target>
   <amount>6</amount>

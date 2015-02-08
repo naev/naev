@@ -6,8 +6,8 @@
 
 ]]--
 
-include "cargo_common.lua"
-include "numstring.lua"
+include "dat/scripts/cargo_common.lua"
+include "dat/scripts/numstring.lua"
 
 -- This is in cargo_common, but we need to increase the range…
 function cargo_selectMissionDistance ()

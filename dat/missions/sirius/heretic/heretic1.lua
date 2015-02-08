@@ -3,7 +3,7 @@
 	the player is asked to deliver a message to a "shady character"
 	on the wringer in the suna system.]]
 	
-include "numstring.lua"
+include "dat/scripts/numstring.lua"
 
 lang = naev.lang()
 --all the messages before the mission starts
@@ -14,7 +14,7 @@ bmsg[3] = [["The mission is simple. The Nasin have their main base operating on.
 bmsg[4] = [[Shaman takes a deep breath. "The Nasin were at one point all part of House Sirius, and believed solely in the teachings of Sirichana. We loved him, and our hearts were his. As all religions do at some point, however, the teachings of Sirichana became weighed down by the ideologies and agendas of man. Most people still accepted these teachings as straight from the mouth of Sirichana himself, but we, the Nasin, knew better."]]
 bmsg[5] = [["We started a splinter religion, still trying to cooperate with the Sirii, but when the Serra felt threatened (as they well should have, I might add), they branded us as heretics and forced us out of Sirius space. At first, we didn't know what to do, but then, Jan Jusi pi Lawa came to lead us. He was the one who named us, the Nasin, which means "The Way" in an old earth language."]]
 bmsg[6] = [[At this point, Shaman seems very excited, caught up in the moment. "It was he! He who led us to join our hands! He who led us to work together! He who led us to fight back against the oppressors! It was he! The very, the only, the True Voice of Sirichana!" 
-   Shaman seems to realize just exactly where he is and what he is doing. All the patrons in the bar turn their heads to your table. A group of young fellows start clapping and then degrade into laughter.]]
+    Shaman seems to realize just exactly where he is and what he is doing. All the patrons in the bar turn their heads to your table. A group of young fellows start clapping and then degrade into laughter.]]
 bmsg[7] = [[Shaman coughs out an "excuse me" and looks at you, embarrassed. "It is wrong for me to get so caught up in such things. I suppose you'll want to know about the mission now."]]
 
 --all the messages after the player lands on the target asset
@@ -22,10 +22,10 @@ emsg = {}
 emsg[1] = [[You receive your clearance to land on %s, and begin your computer-assisted entry into the specified bay. Your not sure exactly what to expect, but you think that they've been expecting you. You successfully dock, and proceed into the hangar, ready for someone to come greet you. No one does. The hangar is oddly... empty. And that is when you notice it.]]
 emsg[2] = [[There is an envelope, folded neatly, and laying squarely in the middle of the hangar. You go up to inspect it, and on the front, it simply says "%s". You snatch it up, and open it quickly.]]
 emsg[3] = [["Hello %s,
-			My sincerest apologies for being absent. I was... otherwise engaged. By the time you are reading this letter, our message will have already been moved from your ship. I appreciate the hard work, and have heard good things of you from both Ragnarok and Shaman. I do wish to speak with you in person, so please feel free to drop by the bar and have a drink. I'm sure you know the way. Your payment of %s was credited  to your account.
-			Sincerly,
-			Draga
-			Secretary of Jan Jusi pi Lawa]]
+    My sincerest apologies for being absent. I was... otherwise engaged. By the time you are reading this letter, our message will have already been moved from your ship. I appreciate the hard work, and have heard good things of you from both Ragnarok and Shaman. I do wish to speak with you in person, so please feel free to drop by the bar and have a drink. I'm sure you know the way. Your payment of %s was credited  to your account.
+    Sincerly,
+    Draga
+    Secretary of Jan Jusi pi Lawa]]
 
 --conversational options
 option = {}

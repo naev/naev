@@ -59,6 +59,7 @@ static int playerL_getRating( lua_State *L );
 static int playerL_getPosition( lua_State *L );
 static int playerL_getPilot( lua_State *L );
 /* Fuel stuff. */
+static int playerL_jumps( lua_State *L );
 static int playerL_fuel( lua_State *L );
 static int playerL_refuel( lua_State *L );
 static int playerL_autonav( lua_State *L );
@@ -98,6 +99,7 @@ static const luaL_reg playerL_methods[] = {
    { "getRating", playerL_getRating },
    { "pos", playerL_getPosition },
    { "pilot", playerL_getPilot },
+   { "jumps", playerL_jumps },
    { "fuel", playerL_fuel },
    { "refuel", playerL_refuel },
    { "autonav", playerL_autonav },
@@ -127,6 +129,7 @@ static const luaL_reg playerL_cond_methods[] = {
    { "getRating", playerL_getRating },
    { "pos", playerL_getPosition },
    { "pilot", playerL_getPilot },
+   { "jumps", playerL_jumps },
    { "fuel", playerL_fuel },
    { "autonav", playerL_autonav },
    { "autonavDest", playerL_autonavDest },
@@ -411,6 +414,21 @@ static int playerL_getPilot( lua_State *L )
    LuaPilot lp;
    lp.pilot = PLAYER_ID;
    lua_pushpilot(L, lp);
+   return 1;
+}
+
+
+/**
+ * @brief Gets a player's jump range based on their remaining fuel.
+ *
+ * @usage jumps = player.jumps()
+ *
+ *    @luareturn The player's maximum number of jumps.
+ * @luafunc fuel()
+ */
+static int playerL_jumps( lua_State *L )
+{
+   lua_pushnumber(L, pilot_getJumps(player.p));
    return 1;
 }
 

@@ -21,11 +21,11 @@ else -- default english
     osd_desc = {}
     
     title[1] = "One swift stroke"
-    introfirst = [[    The Dvaered liaison spots you, and stands up to shake your hand.
+    introfirst = [[The Dvaered liaison spots you, and stands up to shake your hand.
     "Well met, citizen %s. I have heard about your recent achievements in the fight against the FLF threat. Like many Dvaered, I am pleased that things are going so well, and in no small way thanks to your efforts! High Command apparently feels the same way, because they have given you the military clearance for the upcoming operation, and that doesn't happen to just anybody."
     ]]
     
-    introrepeat = [[    The Dvaered liaison greets you.
+    introrepeat = [[The Dvaered liaison greets you.
     "I knew you'd be back, citizen %s. The operation hasn't started yet and we can still use your help, so maybe I should explain to you again what this is all about."
     ]]
     
@@ -34,10 +34,9 @@ else -- default english
     The liaison blinks awake. "These are the parameters and conditions of the mission. Will you be accepting this assignment?"]]
     
     title[2] = "The battlefield awaits"
-    text[2] = [[    "Excellent. Please report to the local military command center at 0400 today. You will be briefed there."
+    text[2] = [["Excellent. Please report to the local military command center at 0400 today. You will be briefed there."
     The liaison hands you a small access card. It bears the emblem of the Dvaered military. It seems you've been granted a level of clearance that goes beyond that of a civilian volunteer.
     The liaison stands up, offers a curt greeting and walks out of the bar. You remain for a while, since you're not due for your briefing for some time yet. You reflect on your recent achievements. Your actions have drastically dipped the balance of power between the Dvaered and the FLF insurgents, and soon you will be able to see the results of your decisions with your own two eyes. You feel a sense of accomplishment to know you're making a difference in this galaxy.
-    
     Several hours later, you find yourself in a functional, sterile briefing room at the Dvaered military base. You are joined by several Dvaered pilots, who are clearly going to be participating in the upcoming battle as well.]]
     
     text[3] = [["Gentlemen," a stern-looking but otherwise nondescript Dvaered officer addresses the room, "If I may have your attention please. I am here to brief you on the upcoming operation, which as you all know revolves around the destruction of the terrorist base known as Sindbad."
@@ -52,22 +51,20 @@ else -- default english
     "As soon as the FLF have exhausted their forces trying to counterattack, the HDSF Obstinate will begin launching bombers. It is our belief that the bombers alone will be able to take out the enemy base, but in the event that resistance is heavier than expected, the Obstinate herself will move in to provide fire support."
     The glowing disc on the wall fades out, leaving the Dvaered fleet alone and victorious.
     "That will be all. You have your orders. Report to your stations as per your timetables. I will see you all in %s. Good luck."
-    
     Some time later, you are back in the Dvaered spaceport bar. You've seen action before in your career, but you still feel tense about what is to come. You decide to have another drink, just for luck.]]
     
     title[3] = "FLF base? What FLF base?"
-    text[5] = [[    When you step out of your ship, a Dvaered military delegation is waiting for you. Normally this wouldn't be a good thing, as the Dvaered military typically see civilians as mobile patches of air, unless they've done something wrong. But this case is an exception. The soldiers politely escort you to the office of Colonel Urnus, the man who got you involved in this operation in the first place.
+    text[5] = [[When you step out of your ship, a Dvaered military delegation is waiting for you. Normally this wouldn't be a good thing, as the Dvaered military typically see civilians as mobile patches of air, unless they've done something wrong. But this case is an exception. The soldiers politely escort you to the office of Colonel Urnus, the man who got you involved in this operation in the first place.
     "Well met, citizen %s," Urnus tells you. "Cigar? Oh. Well, suit yourself. Anyway, I wanted to personally thank you for your role in the recent victory against the FLF. If it hadn't been for the information you provided we might have never smoked out their nest! In addition, your efforts on the battlefield have helped to secure our victory. House Dvaered recognizes accomplishments like that, citizen."
     The Colonel walks to a cabinet in his office and takes out a small box. From the box, he produces a couple of credit chips as well as a small metal pin in the shape of a star.
     "This is a reward for your services. The money speaks for itself, of course. As for the pin, it's a civilian commendation, the Star of Valor. Think of it as a badge of honor. It isn't a medal, but it's considered a mark of prestige among the Dvaered citizenry nonetheless. You will certainly enjoy greater respect when you wear this on your lapel, at least as long as you're in Dvaered space."]]
     
-    text[6] = [[    Colonel Urnus returns to his seat.
+    text[6] = [[Colonel Urnus returns to his seat.
     "Let me tell you one thing, though. I doubt we've quite seen the last of the FLF. We may have dealt them a mortal blow by taking out their hidden base, but as long as rebel sentiment runs high among the Frontier worlds, they will rear their ugly heads again. That means my job isn't over, and maybe it means yours isn't either. Perhaps in the future we'll work together again - but this time it won't be just about removing a threat on our doorstep." Urnus smiles grimly. "It will be about rooting out the source of the problem once and for all."
-    
     As you walk the corridor that leads out of the military complex, the Star of Valor glinting on your lapel, you find yourself thinking about what your decisions might ultimately lead to. Colonel Urnus hinted at war on the Frontier, and he also indicated that you would be involved. While the Dvaered have been treating you as well as can be expected from a military regime, perhaps you might want to reconsider your allegiance when the time comes...]]
     
     refusetitle = "Refusal"
-    refusetext = [[    "Understood, citizen. Keep in mind, though, that as long as the operation isn't yet underway, you may still choose to participate. Simply come back to me if you change your mind."]]
+    refusetext = [["Understood, citizen. Keep in mind, though, that as long as the operation isn't yet underway, you may still choose to participate. Simply come back to me if you change your mind."]]
     
     failtitle[1] = "You ran away!"
     failtext[1] = "You have left the system without first completing your mission. This treachery will not soon be forgotten by the Dvaered authorities!"

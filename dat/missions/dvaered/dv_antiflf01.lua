@@ -15,11 +15,11 @@ else -- default english
     text = {}
     
     title[1] = "A Dvaered crew in need is a Dvaered crew indeed"
-    text[1] = [[    "Your arrival is timely, citizen," the Dvaered commanding officer tells you. "Listen up. We were in a firefight with a rogue terrorist, but the bastard knocked out our engines and most of our primary systems before we could nail him. Fortunately, I think we inflicted serious damage on him as well, so he should still be around here somewhere. My sensors are down, though, so I can't tell for certain."
+    text[1] = [["Your arrival is timely, citizen," the Dvaered commanding officer tells you. "Listen up. We were in a firefight with a rogue terrorist, but the bastard knocked out our engines and most of our primary systems before we could nail him. Fortunately, I think we inflicted serious damage on him as well, so he should still be around here somewhere. My sensors are down, though, so I can't tell for certain."
     The officer draws himself up and assumes the talking-to-subordinates tone that is so typical for Dvaered commanders. "Citizen! You are hereby charged to scout the area, dispose of the enemy ship, then deliver me and my crew to the nearest Dvaered controlled system!"]]
     
     title[2] = "The crew is home"
-    text[2] = [[    The Dvaered crew file out of your ship. You didn't really get to know them on this trip, they kept to themselves. The commanding officer brings up the rear of the departing crew, but he stops when he passes by you.
+    text[2] = [[The Dvaered crew file out of your ship. You didn't really get to know them on this trip, they kept to themselves. The commanding officer brings up the rear of the departing crew, but he stops when he passes by you.
     "Well done citizen," he says. "You have done your duty as an upstanding member of society by rendering assistance to an official Dvaered patrol. ]]
     
     text[3] = [[In addition, you complied with your instructions and destroyed a terrorist that threatened the peace and stability of the region. You will be rewarded appropriately."

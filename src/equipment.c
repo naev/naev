@@ -302,6 +302,7 @@ void equipment_open( unsigned int wid )
       "Speed:\n"
       "Turn:\n"
       "\n"
+      "Absorption:\n"
       "Shield:\n"
       "Armour:\n"
       "Energy:\n"
@@ -336,6 +337,9 @@ void equipment_open( unsigned int wid )
    /* Custom widget (ship information). */
    window_addCust( wid, 20 + sw + 40 + ew + 20, -40, cw, ch, "cstMisc", 0,
          equipment_renderMisc, NULL, NULL );
+
+   /* Focus the ships image array. */
+   window_setFocus( wid , EQUIPMENT_SHIPS );
 }
 
 
@@ -1681,6 +1685,7 @@ void equipment_updateShips( unsigned int wid, char* str )
          "\e%c%.0f\e0 m/s (max \e%c%.0f\e0 m/s)\n"
          "\e%c%.0f\e0 deg/s\n"
          "\n"
+         "\e%c%.0f%%\n"
          "\e%c%.0f\e0 MJ (\e%c%.1f\e0 MW)\n"
          "\e%c%.0f\e0 MJ (\e%c%.1f\e0 MW)\n"
          "\e%c%.0f\e0 MJ (\e%c%.1f\e0 MW)\n"
@@ -1704,6 +1709,7 @@ void equipment_updateShips( unsigned int wid, char* str )
             solid_maxspeed( ship->solid, ship->ship->speed, ship->ship->thrust), 0 ),
       EQ_COMP( ship->turn*180./M_PI, ship->ship->turn*180./M_PI, 0 ),
       /* Health. */
+      EQ_COMP( ship->dmg_absorb * 100, ship->ship->dmg_absorb * 100, 0 ),
       EQ_COMP( ship->shield_max, ship->ship->shield, 0 ),
       EQ_COMP( ship->shield_regen, ship->ship->shield_regen, 0 ),
       EQ_COMP( ship->armour_max, ship->ship->armour, 0 ),
@@ -1839,12 +1845,19 @@ static void equipment_transChangeShip( unsigned int wid, char* str )
  */
 static void equipment_changeShip( unsigned int wid )
 {
-   char *shipname;
+   char *shipname, *filtertext;
+   int i;
 
    shipname = toolkit_getImageArray( wid, EQUIPMENT_SHIPS );
 
    if (land_errDialogue( shipname, "swapEquipment" ))
       return;
+
+   /* Store active tab, filter text, and positions for the outfits. */
+   i = window_tabWinGetActive( wid, EQUIPMENT_OUTFIT_TAB );
+   toolkit_saveImageArrayData( wid, EQUIPMENT_OUTFITS, &iar_data[i] );
+   if (widget_exists(wid, EQUIPMENT_FILTER))
+      filtertext = window_getInput( equipment_wid, EQUIPMENT_FILTER );
 
    /* Swap ship. */
    player_swapShip( shipname );
@@ -1856,8 +1869,16 @@ static void equipment_changeShip( unsigned int wid )
     * recover it and use it instead. */
    wid = equipment_wid;
 
+   /* Restore outfits image array properties. */
+   window_tabWinSetActive( wid, EQUIPMENT_OUTFIT_TAB, i );
+   toolkit_setImageArrayPos(    wid, EQUIPMENT_OUTFITS, iar_data[i].pos );
+   toolkit_setImageArrayOffset( wid, EQUIPMENT_OUTFITS, iar_data[i].offset );
+   if (widget_exists(wid, EQUIPMENT_FILTER))
+      window_setInput(wid, EQUIPMENT_FILTER, filtertext);
+
    /* Regenerate ship widget. */
    equipment_regenLists( wid, 0, 1 );
+
    /* Focus new ship. */
    toolkit_setImageArrayPos(    wid, EQUIPMENT_SHIPS, 0 );
    toolkit_setImageArrayOffset( wid, EQUIPMENT_SHIPS, 0. );

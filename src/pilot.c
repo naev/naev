@@ -699,12 +699,13 @@ void pilot_cooldown( Pilot *p )
       heat_mean += o->heat_T * o->heat_C;
    }
 
+   /* Paranoia - a negative mean heat will result in NaN cdelay. */
+   heat_mean = MAX( heat_mean, CONST_SPACE_STAR_TEMP );
+
    heat_mean /= heat_capacity;
 
-   p->cdelay = 5. + pow(p->ship->mass, .5) / 2.;
-
    /*
-    * Base delay of about 11.7s for a Lancelot, 44.4s for a Peacemaker.
+    * Base delay of about 9.5s for a Lancelot, 32.8s for a Peacemaker.
     *
     * Super heat penalty table:
     *    300K:  13.4%
@@ -713,7 +714,7 @@ void pilot_cooldown( Pilot *p )
     *    450K:  75.6%
     *    500K: 100.0%
     */
-   p->cdelay = (5. + pow(p->ship->mass, .5) /2.) *
+   p->cdelay = (5. + sqrt(p->base_mass) / 2.) *
          (1. + pow(heat_mean / CONST_SPACE_STAR_TEMP - 1., 1.25));
    p->ctimer = p->cdelay;
    p->heat_start = p->heat_T;
@@ -874,22 +875,23 @@ void pilot_broadcast( Pilot *p, const char *msg, int ignore_int )
  *
  * Can do a faction hit on the player.
  *
- *    @param p Pilot to send distress signal.
+ *    @param p Pilot sending the distress signal.
+ *    @param attacker Attacking pilot.
  *    @param msg Message in distress signal.
  *    @param ignore_int Whether or not should ignore interference.
  */
-void pilot_distress( Pilot *p, const char *msg, int ignore_int )
+void pilot_distress( Pilot *p, Pilot *attacker, const char *msg, int ignore_int )
 {
    int i, r;
    double d;
-   Pilot *t;
 
    /* Broadcast the message. */
    if (msg[0] != '\0')
       pilot_broadcast( p, msg, ignore_int );
 
-   /* Get the target to see if it's the player. */
-   t = pilot_get(p->target);
+   /* Use the victim's target if the attacker is unknown. */
+   if (attacker == NULL)
+      attacker = pilot_get( p->target );
 
    /* Now proceed to see if player.p should incur faction loss because
     * of the broadcast signal. */
@@ -897,13 +899,15 @@ void pilot_distress( Pilot *p, const char *msg, int ignore_int )
    /* Consider not in range at first. */
    r = 0;
 
-   /* Check if planet is in range. */
-   for (i=0; i<cur_system->nplanets; i++) {
-      if (planet_hasService(cur_system->planets[i], PLANET_SERVICE_INHABITED) &&
-            (!ignore_int && pilot_inRangePlanet(p, i)) &&
-            !areEnemies(p->faction, cur_system->planets[i]->faction)) {
-         r = 1;
-         break;
+   if ((attacker == player.p) && !pilot_isFlag(p, PILOT_DISTRESSED)) {
+      /* Check if planet is in range. */
+      for (i=0; i<cur_system->nplanets; i++) {
+         if (planet_hasService(cur_system->planets[i], PLANET_SERVICE_INHABITED) &&
+               (!ignore_int && pilot_inRangePlanet(p, i)) &&
+               !areEnemies(p->faction, cur_system->planets[i]->faction)) {
+            r = 1;
+            break;
+         }
       }
    }
 
@@ -927,10 +931,11 @@ void pilot_distress( Pilot *p, const char *msg, int ignore_int )
          }
 
          /* Send AI the distress signal. */
-         ai_getDistress( pilot_stack[i], p );
+         ai_getDistress( pilot_stack[i], p, attacker );
 
          /* Check if should take faction hit. */
-         if (!areEnemies(p->faction, pilot_stack[i]->faction))
+         if ((attacker == player.p) && !pilot_isFlag(p, PILOT_DISTRESSED) &&
+               !areEnemies(p->faction, pilot_stack[i]->faction))
             r = 1;
       }
    }
@@ -939,8 +944,8 @@ void pilot_distress( Pilot *p, const char *msg, int ignore_int )
    if (!pilot_isFlag(p, PILOT_DISTRESSED)) {
 
       /* Modify faction, about 1 for a llama, 4.2 for a hawking */
-      if ((t != NULL) && (t->faction == FACTION_PLAYER) && r)
-         faction_modPlayer( p->faction, -(pow(p->ship->mass, 0.2) - 1.), "distress" );
+      if ((attacker != NULL) && (attacker->faction == FACTION_PLAYER) && r)
+         faction_modPlayer( p->faction, -(pow(p->base_mass, 0.2) - 1.), "distress" );
 
       /* Set flag to avoid a second faction hit. */
       pilot_setFlag(p, PILOT_DISTRESSED);
@@ -1178,7 +1183,7 @@ double pilot_hit( Pilot* p, const Solid* w, const unsigned int shooter,
          if ((pshooter != NULL) && (pshooter->faction == FACTION_PLAYER)) {
 
             /* About 6 for a llama, 52 for hawking. */
-            mod = 2*(pow(p->ship->mass,0.4) - 1.);
+            mod = 2 * (pow(p->base_mass, 0.4) - 1.);
 
             /* Modify faction for him and friends. */
             faction_modPlayer( p->faction, -mod, "kill" );
@@ -1238,7 +1243,7 @@ void pilot_updateDisable( Pilot* p, const unsigned int shooter )
       pshooter = pilot_get(shooter);
       if ((pshooter != NULL) && (pshooter->faction == FACTION_PLAYER)) {
          /* About 3 for a llama, 26 for hawking. */
-         mod = pow(p->ship->mass,0.4) - 1.;
+         mod = pow(p->base_mass, 0.4) - 1.;
 
          /* Modify combat rating. */
          player.crating += 2*mod;
@@ -2009,6 +2014,7 @@ int pilot_refuelStart( Pilot *p )
    /* Now start the boarding to refuel. */
    pilot_setFlag(p, PILOT_REFUELBOARDING);
    p->ptimer  = PILOT_REFUEL_TIME; /* Use timer to handle refueling. */
+   p->pdata   = PILOT_REFUEL_QUANTITY;
    return 1;
 }
 
@@ -2022,6 +2028,8 @@ int pilot_refuelStart( Pilot *p )
 static void pilot_refuel( Pilot *p, double dt )
 {
    Pilot *target;
+   double amount;
+   int jumps;
 
    /* Check to see if target exists, remove flag if not. */
    target = pilot_get(p->target);
@@ -2034,9 +2042,12 @@ static void pilot_refuel( Pilot *p, double dt )
    /* Match speeds. */
    vectcpy( &p->solid->vel, &target->solid->vel );
 
+   amount = CLAMP( 0., p->pdata, PILOT_REFUEL_RATE * dt);
+   p->pdata -= amount;
+
    /* Move fuel. */
-   p->fuel        -= PILOT_REFUEL_RATE*dt;
-   target->fuel   += PILOT_REFUEL_RATE*dt;
+   p->fuel        -= amount;
+   target->fuel   += amount;
    /* Stop refueling at max. */
    if (target->fuel > target->fuel_max) {
       p->ptimer      = -1.;
@@ -2045,6 +2056,18 @@ static void pilot_refuel( Pilot *p, double dt )
 
    /* Check to see if done. */
    if (p->ptimer < 0.) {
+      /* Counteract accumulated floating point error by rounding up
+       * if pilots have > 99.99% of a jump worth of fuel.
+       */
+
+      jumps = pilot_getJumps(p);
+      if ((p->fuel / p->fuel_consumption - jumps) > 0.9999)
+         p->fuel = p->fuel_consumption * (jumps + 1);
+
+      jumps = pilot_getJumps(target);
+      if ((target->fuel / target->fuel_consumption - jumps) > 0.9999)
+         target->fuel = target->fuel_consumption * (jumps + 1);
+
       pilot_rmFlag(p, PILOT_REFUELBOARDING);
       pilot_rmFlag(p, PILOT_REFUELING);
    }
@@ -2159,7 +2182,6 @@ void pilot_init( Pilot* pilot, Ship* ship, const char* name, int faction, const 
    pilot->fuel   = pilot->fuel_max   = 1.; /* ditto fuel */
    pilot_calcStats(pilot);
    pilot->stress = 0.; /* No stress. */
-   pilot->nebu_absorb_shield = 0.;
 
    /* Allocate outfit memory. */
    /* Slot types. */

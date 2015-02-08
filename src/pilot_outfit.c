@@ -20,6 +20,7 @@
 #include "player.h"
 #include "space.h"
 #include "gui.h"
+#include "slots.h"
 #include "nstring.h"
 
 
@@ -95,7 +96,7 @@ void pilot_lockUpdateSlot( Pilot *p, PilotOutfitSlot *o, Pilot *t, double *a, do
    max = -o->outfit->u.lau.lockon/3.;
    if (o->u.ammo.lockon_timer > max) {
       /* Compensate for enemy hide factor. */
-      o->u.ammo.lockon_timer -= dt * (o->outfit->u.lau.ew_target/t->ew_hide);
+      o->u.ammo.lockon_timer -= dt * (o->outfit->u.lau.ew_target2 / t->ew_hide);
 
       /* Cap at -max/3. */
       if (o->u.ammo.lockon_timer < max)
@@ -317,7 +318,7 @@ int pilot_addOutfitRaw( Pilot* pilot, Outfit* outfit, PilotOutfitSlot *s )
       pilot->ncannons++;
 
    if (outfit_isBeam(outfit)) { /* Used to speed up some calculations. */
-      s->u.beamid = -1;
+      s->u.beamid = 0;
       pilot->nbeams++;
    }
    if (outfit_isLauncher(outfit)) {
@@ -871,6 +872,7 @@ void pilot_calcStats( Pilot* pilot )
     */
    /* mass */
    pilot->solid->mass   = pilot->ship->mass;
+   pilot->base_mass     = pilot->solid->mass;
    /* cpu */
    pilot->cpu           = 0.;
    /* movement */
@@ -898,7 +900,6 @@ void pilot_calcStats( Pilot* pilot )
    /* Energy. */
    pilot->energy_max    = pilot->ship->energy;
    pilot->energy_regen  = pilot->ship->energy_regen;
-   pilot->nebu_absorb_shield   = 0;
    pilot->energy_loss   = 0.; /* Initially no net loss. */
    /* Stats. */ 
    s = &pilot->stats;
@@ -924,6 +925,15 @@ void pilot_calcStats( Pilot* pilot )
       /* Add mass. */
       pilot->mass_outfit   += o->mass;
 
+      /* Keep a separate counter for required (core) outfits. */
+      if (sp_required( o->slot.spid ))
+         pilot->base_mass += o->mass;
+
+      /* Add ammo mass. */
+      if (outfit_ammo(o) != NULL)
+         if (slot->u.ammo.outfit != NULL)
+            pilot->mass_outfit += slot->u.ammo.quantity * slot->u.ammo.outfit->mass;
+
       if (outfit_isAfterburner(o)) /* Afterburner */
          pilot->afterburner = pilot->outfits[i]; /* Set afterburner */
 
@@ -937,13 +947,13 @@ void pilot_calcStats( Pilot* pilot )
          pilot->turn_base     += o->u.mod.turn;
          pilot->speed_base    += o->u.mod.speed;
          /* Health. */
+         pilot->dmg_absorb    += o->u.mod.absorb;
          pilot->armour_max    += o->u.mod.armour;
          pilot->armour_regen  += o->u.mod.armour_regen;
          pilot->shield_max    += o->u.mod.shield;
          pilot->shield_regen  += o->u.mod.shield_regen;
          pilot->energy_max    += o->u.mod.energy;
          pilot->energy_regen  += o->u.mod.energy_regen;
-         pilot->nebu_absorb_shield += o->u.mod.nebu_absorb_shield;
          pilot->energy_loss   += o->u.mod.energy_loss;
          /* Fuel. */
          pilot->fuel_max      += o->u.mod.fuel;
@@ -964,12 +974,6 @@ void pilot_calcStats( Pilot* pilot )
       else if (outfit_isJammer(o)) { /* Jammer */
          pilot->jamming        = 1;
          pilot->energy_loss   += o->u.jam.energy;
-      }
-
-      /* Add ammo mass. */
-      if (outfit_ammo(o) != NULL) {
-         if (slot->u.ammo.outfit != NULL)
-            pilot->mass_outfit += slot->u.ammo.quantity * slot->u.ammo.outfit->mass;
       }
    }
 

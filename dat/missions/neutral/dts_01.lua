@@ -19,7 +19,7 @@ Make comm chatter appear during the battle
 Add some consequences if the player aborts the mission
 ]]--
 
-include "numstring.lua"
+include "dat/scripts/numstring.lua"
 
 -- localization stuff, translators would work here
 lang = naev.lang()
@@ -38,12 +38,9 @@ else -- default english
    text = {}
    title[1] = "In the bar"
    text[1] = [[The barman has just asked you for your order when the portmaster bursts though the door, out of breath. "Pirates, all over the system!  The navy's on maneuvers. Quickly, we need to organize a defense."
-
-All the pilots in the room scramble to their feet. "How many are there?" someone asks. "How long have they been in system?" another calls out.
-
-Into the confusion steps a steely-haired, upright, uniformed figure. Her stripes mark her as a navy Commodore.
-
-"I'm with the navy and I will organize the defense," her voice cuts through the commotion. "Who here is a pilot?  We must strike back quickly. I will arrange a reward for everyone who volunteers. We'll need as many pilots as possible. Follow me."]]
+    All the pilots in the room scramble to their feet. "How many are there?" someone asks. "How long have they been in system?" another calls out.
+    Into the confusion steps a steely-haired, upright, uniformed figure. Her stripes mark her as a navy Commodore.
+    "I'm with the navy and I will organize the defense," her voice cuts through the commotion. "Who here is a pilot?  We must strike back quickly. I will arrange a reward for everyone who volunteers. We'll need as many pilots as possible. Follow me."]]
    title[11] = "Volunteers"
    text[11] = [["Take as many out of the fight early as you can," advises the Commodore before you board your ships. "If you can't chase them off, you might at least improve the odds. Good luck."]]
 
@@ -73,13 +70,11 @@ Into the confusion steps a steely-haired, upright, uniformed figure. Her stripes
    comm[10] = "Comm Trader>You're running away now, %s? The fight's finished, you know..."
    title[4] = "Good job!"
    text[4] = [[The debris from the battle disappears behind you in a blur of light. A moment after you emerge from hyperspace, a Imperial ship jumps in behind you and hails you.
-
-"Please hold course and confirm your identity, %s."  You send your license code and wait for a moment. "Ok, that's fine. We're just making sure no pirates escaped. You were part of the battle, weren't you?  Surprised you didn't return for the bounty, pilot. Listen, I appreciate what you did back there. I have family on %s. When I'm not flying overhead, it's good to know there are good samaritans like you who will step up. Thanks."
+    "Please hold course and confirm your identity, %s."  You send your license code and wait for a moment. "Ok, that's fine. We're just making sure no pirates escaped. You were part of the battle, weren't you?  Surprised you didn't return for the bounty, pilot. Listen, I appreciate what you did back there. I have family on %s. When I'm not flying overhead, it's good to know there are good samaritans like you who will step up. Thanks."
 ]]
    title[5] = "Left behind"
    text[5] = [[The Commodore turns and walks off. Eight men and women follow her, but you stay put.
-   
-A man in a jumpsuit at the next table nods at you. "What, they expect me to do their dirty work for them?" he shakes his head. "It's going to be a hot ride out of the system though, with all that going on upstairs."]]
+    A man in a jumpsuit at the next table nods at you. "What, they expect me to do their dirty work for them?" he shakes his head. "It's going to be a hot ride out of the system though, with all that going on upstairs."]]
    bounce_title = "Not done yet."
    bounce_text = "The system isn't safe yet. Get back out there!"
    noReward = "No reward for you."

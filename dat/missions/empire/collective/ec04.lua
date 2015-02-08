@@ -12,7 +12,7 @@
 
 ]]--
 
-include "nextjump.lua"
+include "dat/scripts/nextjump.lua"
 include "proximity.lua"
 
 lang = naev.lang()
@@ -29,14 +29,14 @@ else -- default english
    title[2] = "Planet %s"
    title[3] = "Mission Accomplished"
    text = {}
-   text[1] = [[    As soon as you exit the landing pad you see Lt. Commander Dimitri waiting for you. He seems a bit more nervous then usual.
+   text[1] = [[As soon as you exit the landing pad you see Lt. Commander Dimitri waiting for you. He seems a bit more nervous then usual.
     "The commando team has sent us an SOS. They were discovered by the Collective, and now they're under heavy fire. We need you to go and get them out of there. Would you be willing to embark on another dangerous mission?"]]
-   text[2] = [[    "We'll send extra forces to %s to try to give you a chance to break through the blockade. You'll have to land on %s and extract our team. Be very careful. This is going to be no walk in the park."]]
-   text[3] = [[    The atmosphere once again starts giving your shields a workout as you land. You spend a while flying low until your sensors pick up a reading of possible life forms. The silhouette of the transport ship is barely visible. As you fly closer, it becomes apparent that you arrived too late. Everyone is already dead. You see if you can salvage the readings from their equipment, but it seems like it's completely toasted.]]
-   text[4] = [[    You notice you won't have enough fuel to get back so you salvage some from the wrecked transport ship. Stealing from the dead isn't pleasant business, but if it gets you out alive, you figure it's good enough.]]
-   text[5] = [[    You spend a while searching until you find a datapad on one of the corpses. Ignoring the stench of burnt flesh you grab it, just as you hear the sirens go off in your ship. Enemy reinforcements! Time to hit the afterburner.
+   text[2] = [["We'll send extra forces to %s to try to give you a chance to break through the blockade. You'll have to land on %s and extract our team. Be very careful. This is going to be no walk in the park."]]
+   text[3] = [[The atmosphere once again starts giving your shields a workout as you land. You spend a while flying low until your sensors pick up a reading of possible life forms. The silhouette of the transport ship is barely visible. As you fly closer, it becomes apparent that you arrived too late. Everyone is already dead. You see if you can salvage the readings from their equipment, but it seems like it's completely toasted.]]
+   text[4] = [[You notice you won't have enough fuel to get back so you salvage some from the wrecked transport ship. Stealing from the dead isn't pleasant business, but if it gets you out alive, you figure it's good enough.]]
+   text[5] = [[You spend a while searching until you find a datapad on one of the corpses. Ignoring the stench of burnt flesh you grab it, just as you hear the sirens go off in your ship. Enemy reinforcements! Time to hit the afterburner.
    You've got one, right?]]
-   text[6] = [[    Lt. Commander Dimitri's face cannot hide his sadness as he sees you approach with no commando members.
+   text[6] = [[Lt. Commander Dimitri's face cannot hide his sadness as he sees you approach with no commando members.
     "No survivors, eh? I had that gut feeling. At least you were able to salvage something? Good, at least it'll mean they didn't die in vain. Meet me in the bar in a while. We're going to try to process this datapad. It'll hopefully have the final results."]]
 
     escort_msg1 = "Okay, %s, we'll flank the Collective force around the planet and try to draw their fire. You punch right through and land on that planet!"
@@ -220,8 +220,9 @@ function land ()
       tk.msg( title[2], text[3] )
 
       -- Add fuel if needed
-      if player.fuel() < 200 then
-         player.refuel(200)
+      if player.jumps() < 2 then
+         local fuel, consumption = player.fuel()
+         player.refuel(2 * consumption)
          tk.msg( title[2], text[4] )
       end
 

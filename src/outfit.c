@@ -58,6 +58,7 @@ static Outfit* outfit_stack = NULL; /**< Stack of outfits. */
 static OutfitType outfit_strToOutfitType( char *buf );
 static int outfit_setDefaultSize( Outfit *o );
 static void outfit_launcherDesc( Outfit* o );
+static int outfit_compareNames( const void *name1, const void *name2 );
 /* parsing */
 static int outfit_loadDir( char *dir );
 static int outfit_parseDamage( Damage *dmg, xmlNodePtr node );
@@ -809,6 +810,28 @@ const char* outfit_getTypeBroad( const Outfit* o )
 
 
 /**
+ * @brief Gets a human-readable string describing an ammo outfit's AI.
+ *    @param o Ammo outfit.
+ *    @return Name of the outfit's AI.
+ */
+const char* outfit_getAmmoAI( const Outfit *o )
+{
+   const char *ai_type[] = {
+      "Dumb",
+      "Seek",
+      "Smart"
+   };
+
+   if (!outfit_isAmmo(o)) {
+      WARN("Outfit '%s' is not an ammo outfit", o->name);
+      return NULL;
+   }
+
+   return ai_type[o->u.amm.ai];
+}
+
+
+/**
  * @brief Checks to see if an outfit fits a slot.
  *
  *    @param o Outfit to see if fits in a slot.
@@ -1157,6 +1180,7 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
    int l;
    xmlNodePtr node;
    double C, area;
+   char *prop;
 
    /* Defaults. */
    temp->u.bem.spfx_armour = -1;
@@ -1173,8 +1197,17 @@ static void outfit_parseSBeam( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"energy",temp->u.bem.energy);
       xmlr_float(node,"delay",temp->u.bem.delay);
       xmlr_float(node,"warmup",temp->u.bem.warmup);
-      xmlr_float(node,"duration",temp->u.bem.duration);
       xmlr_float(node,"heatup",temp->u.bem.heatup);
+
+      if (xml_isNode(node, "duration")) {
+         prop = xml_nodeProp(node, "min");
+         if (prop != NULL) {
+            temp->u.bem.min_duration = atof(prop);
+            free(prop);
+         }
+         temp->u.bem.duration = xml_getFloat(node);
+         continue;
+      }
 
       if (xml_isNode(node,"damage")) {
          outfit_parseDamage( &temp->u.bem.dmg, node );
@@ -1260,6 +1293,7 @@ if (o) WARN("Outfit '%s' missing/invalid '"s"' element", temp->name) /**< Define
    MELEMENT((sound_disabled!=0) && (temp->u.bem.sound_off<0),"sound_off");
    MELEMENT(temp->u.bem.delay==0,"delay");
    MELEMENT(temp->u.bem.duration==0,"duration");
+   MELEMENT(temp->u.bem.min_duration < 0,"duration");
    MELEMENT(temp->u.bem.range==0,"range");
    MELEMENT((temp->type!=OUTFIT_TYPE_BEAM) && (temp->u.bem.turn==0),"turn");
    MELEMENT(temp->u.bem.energy==0.,"energy");
@@ -1295,6 +1329,7 @@ static void outfit_parseSLauncher( Outfit* temp, const xmlNodePtr parent )
 
    /* Post processing. */
    temp->u.lau.arc *= M_PI/180.;
+   temp->u.lau.ew_target2 = pow2( temp->u.lau.ew_target );
 
    /* Set default outfit size if necessary. */
    if (temp->slot.size == OUTFIT_SLOT_SIZE_NA)
@@ -1392,12 +1427,13 @@ static void outfit_parseSAmmo( Outfit* temp, const xmlNodePtr parent )
       if (xml_isNode(node,"ai")) {
          buf = xml_get(node);
          if (buf != NULL) {
+
             if (strcmp(buf,"dumb")==0)
-               temp->u.amm.ai = 0;
+               temp->u.amm.ai = AMMO_AI_DUMB;
             else if (strcmp(buf,"seek")==0)
-               temp->u.amm.ai = 1;
+               temp->u.amm.ai = AMMO_AI_SEEK;
             else if (strcmp(buf,"smart")==0)
-               temp->u.amm.ai = 2;
+               temp->u.amm.ai = AMMO_AI_SMART;
             else
                WARN("Ammo '%s' has unknown ai type '%s'.", temp->name, buf);
          }
@@ -1496,7 +1532,6 @@ static void outfit_parseSMod( Outfit* temp, const xmlNodePtr parent )
       xmlr_float(node,"energy_regen", temp->u.mod.energy_regen );
       xmlr_float(node,"energy_loss", temp->u.mod.energy_loss );
       xmlr_float(node,"absorb", temp->u.mod.absorb );
-      xmlr_float(node,"nebu_absorb_shield", temp->u.mod.nebu_absorb_shield );
       /* misc */
       xmlr_float(node,"cargo",temp->u.mod.cargo);
       xmlr_float(node,"crew_rel", temp->u.mod.crew_rel);
@@ -1542,7 +1577,6 @@ if ((x) != 0.) \
    DESC_ADD1( temp->u.mod.shield_regen, "Shield Per Second" );
    DESC_ADD1( temp->u.mod.energy_regen, "Energy Per Second" );
    DESC_ADD0( temp->u.mod.absorb, "Absorption" );
-   DESC_ADD0( temp->u.mod.nebu_absorb_shield, "Nebula Shielding" );
    DESC_ADD0( temp->u.mod.cargo, "Cargo" );
    DESC_ADD0( temp->u.mod.crew_rel, "%% Crew" );
    DESC_ADD0( temp->u.mod.mass_rel, "%% Mass" );
@@ -1555,7 +1589,6 @@ if ((x) != 0.) \
    /* More processing. */
    temp->u.mod.turn       *= M_PI / 180.;
    temp->u.mod.absorb     /= 100.;
-   temp->u.mod.nebu_absorb_shield /= 100.;
    temp->u.mod.turn_rel   /= 100.;
    temp->u.mod.speed_rel  /= 100.;
    temp->u.mod.armour_rel /= 100.;
@@ -2197,16 +2230,17 @@ static int outfit_loadDir( char *dir )
  */
 int outfit_load (void)
 {
-   int i;
+   int i, noutfits;
    Outfit *o;
 
    /* First pass, loads up ammunition. */
    outfit_stack = array_create(Outfit);
    outfit_loadDir( OUTFIT_DATA_PATH );
    array_shrink(&outfit_stack);
+   noutfits = array_size(outfit_stack);
 
    /* Second pass, sets up ammunition relationships. */
-   for (i=0; i<array_size(outfit_stack); i++) {
+   for (i=0; i<noutfits; i++) {
       o = &outfit_stack[i];
       if (outfit_isLauncher(&outfit_stack[i])) {
          o->u.lau.ammo = outfit_get( o->u.lau.ammo_name );
@@ -2226,10 +2260,47 @@ int outfit_load (void)
          o->u.bay.ammo = outfit_get( o->u.bay.ammo_name );
    }
 
-   DEBUG("Loaded %d Outfit%s", array_size(outfit_stack), (array_size(outfit_stack)==1) ? "" : "s" );
+#ifdef DEBUGGING
+   char **outfit_names = malloc( noutfits * sizeof(char*) );
+   int start;
+
+   for (i=0; i<noutfits; i++)
+      outfit_names[i] = outfit_stack[i].name;
+
+   qsort( outfit_names, noutfits, sizeof(char*) , outfit_compareNames );
+   for (i=0; i<(noutfits - 1); i++) {
+      start = i;
+      while (strcmp(outfit_names[i], outfit_names[i+1]) == 0)
+         i++;
+
+      if (i == start)
+         continue;
+
+      WARN("Name collision! %d outfits are named '%s'", i+1 - start,
+            outfit_names[start]);
+   }
+   free(outfit_names);
+#endif
+
+   DEBUG("Loaded %d Outfit%s", noutfits, (noutfits == 1) ? "" : "s" );
 
    return 0;
 }
+
+
+/**
+ * @brief qsort compare function for names.
+ */
+static int outfit_compareNames( const void *name1, const void *name2 )
+{
+   const char *n1, *n2;
+
+   n1 = *(const char**) name1;
+   n2 = *(const char**) name2;
+
+   return strcmp(n1, n2);
+}
+
 
 /**
  * @brief Parses all the maps.

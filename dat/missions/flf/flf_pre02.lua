@@ -546,7 +546,7 @@ function winDV()
 end
 
 function refuelPlayer()
-    if player.fuel() < 100 then
+    if player.jumps() == 0 then
         for i, j in ipairs (fleetFLF) do
             if j:exists() then
                 j:setFuel(true)

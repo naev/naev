@@ -150,8 +150,7 @@ void* nzip_readFile ( struct zip* arc, const char* filename, uint32_t* size )
 char** nzip_listFiles ( struct zip* arc, uint32_t* nfiles )
 {
    struct zip_stat stats;
-   char** filelist;
-   char** filelistshrunk;
+   char **filelist, **shrunk;
    uint32_t i, j;
    int err;
    int flags = 0;
@@ -174,25 +173,19 @@ char** nzip_listFiles ( struct zip* arc, uint32_t* nfiles )
       }
 
       // If the name ends with a forward slash, it's a directory
-      if ( stats.name[strlen ( stats.name ) - 1] != '/' ) {
-         // Copy file name to list
-         filelist[j] = malloc ( sizeof ( char ) * strlen ( stats.name ) + 1 );
-         strcpy ( filelist[j], stats.name );
-         j++;
-      }
+      if (stats.name[strlen(stats.name) - 1] != '/')
+         filelist[j++] = strdup(stats.name);
    }
 
    // Number of files excluding directories
    *nfiles = j;
 
    // Shrink file list to needed size
-   filelistshrunk = realloc ( filelist, sizeof ( char* ) *j );
+   shrunk = realloc( filelist, sizeof(char*) * j );
+   if (shrunk != NULL)
+      return shrunk;
 
-   if (filelistshrunk == NULL)
-      return filelist;
-
-   else
-      return filelistshrunk;
+   return filelist;
 }
 
 /**

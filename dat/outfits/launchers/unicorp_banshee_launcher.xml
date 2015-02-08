@@ -4,7 +4,7 @@
   <slot>weapon</slot>
   <size>medium</size>
   <license>Medium Weapon License</license>
-  <mass>17</mass>
+  <mass>15</mass>
   <price>25000</price>
   <gfx_store>bansheelauncher</gfx_store>
   <description>This launcher fires Banshee class heavy rockets. It is small enough to be mounted on medium hardpoints, and light enough on system load to be an interesting choice for bombers.</description>
@@ -12,7 +12,7 @@
  </general>
  <specific type="launcher" secondary="1">
   <ammo>Banshee Rocket</ammo>
-  <delay>1</delay>
+  <delay>4</delay>
   <amount>20</amount>
  </specific>
 </outfit>

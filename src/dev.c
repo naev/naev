@@ -39,6 +39,12 @@ void dev_csv (void)
    DEBUG("   bolt.csv...");
    dout_csvBolt( CSV_DIR"/bolt.csv" );
 
+   DEBUG("   launcher.csv...");
+   dout_csvLauncher( CSV_DIR"/launcher.csv" );
+
+   DEBUG("   ammo.csv...");
+   dout_csvAmmo( CSV_DIR"/ammo.csv" );
+
    DEBUG("   mod.csv...");
    dout_csvMod( CSV_DIR"/mod.csv" );
 

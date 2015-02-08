@@ -524,6 +524,9 @@ function __refuelstop ()
    if ai.donerefuel(target) then
       ai.comm(target, "Finished fuel transfer.")
       ai.poptask()
+
+      -- Untarget
+      ai.settarget( ai.getPilot():id() )
       return
    end
 

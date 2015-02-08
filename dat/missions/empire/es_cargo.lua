@@ -4,8 +4,8 @@
 
 ]]--
 
-include "cargo_common.lua"
-include "numstring.lua"
+include "dat/scripts/cargo_common.lua"
+include "dat/scripts/numstring.lua"
 
 lang = naev.lang()
 if lang == "es" then
@@ -14,8 +14,7 @@ else -- default english
    misn_desc = "The Empire needs to ship %d tonnes of %s to %s in the %s system by %s (%s left)."
    misn_reward = "%s credits"
 
-   title_p1 = "ES: Cargo transport to %s in the %s system"
-   title_p2 = [[ 
+   title = [[ES: Cargo transport to %s in the %s system
 Cargo: %s (%d tonnes)
 Jumps: %d
 Travel distance: %d
@@ -28,9 +27,7 @@ Time limit: %s]]
 
    slow = {}
    slow[1] = "Too slow"
-   slow[2] = [[This shipment must arrive within %s, but it will take at least %s for your ship to reach %s, and the Empire is not fond of delays.
-
-Accept the mission anyway?]]
+   slow[2] = [[This shipment must arrive within %s, but it will take at least %s for your ship to reach %s, and the Empire is not fond of delays. Accept the mission anyway?]]
 
    msg_title = {}
    msg_title[1] = "Mission Accepted"
@@ -91,7 +88,7 @@ function create()
     
     misn.setTitle("ES: Cargo transport (" .. amount .. " tonnes of " .. cargo .. ")")
     misn.markerAdd(destsys, "computer")
-    misn.setDesc(title_p1:format(destplanet:name(), destsys:name()) .. title_p2:format(cargo, amount, numjumps, traveldist, (timelimit - time.get()):str()))
+    misn.setDesc(title:format(destplanet:name(), destsys:name(), cargo, amount, numjumps, traveldist, (timelimit - time.get()):str()))
     misn.setReward(misn_reward:format(numstring(reward)))
 
 end

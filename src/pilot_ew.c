@@ -92,7 +92,7 @@ double pilot_ewHeat( double T )
  */
 double pilot_ewMass( double mass )
 {
-   return 1. / (.2 + pow( mass, 0.5 ) / 30. );
+   return 1. / (.3 + sqrt(mass) / 30. );
 }
 
 
@@ -158,7 +158,8 @@ int pilot_inRangePilot( const Pilot *p, const Pilot *target )
 
    /* Special case player or omni-visible. */
    if ((pilot_isPlayer(p) && pilot_isFlag(target, PILOT_VISPLAYER)) ||
-         pilot_isFlag(target, PILOT_VISIBLE))
+         pilot_isFlag(target, PILOT_VISIBLE) ||
+         target->parent == p->id)
       return 1;
 
    /* Get distance. */
