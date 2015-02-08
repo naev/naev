@@ -12,7 +12,7 @@
  </general>
  <specific type="turret beam" >
   <delay>0.35</delay>
-  <duration>0.25</duration>
+  <duration min="0.25">0.25</duration>
   <range>500</range>
   <turn>100</turn>
   <energy>25</energy>

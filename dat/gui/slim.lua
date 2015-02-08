@@ -560,7 +560,7 @@ function render_ammoBar( name, x, y, value, txt, txtcol )
    end
 
    -- Refire indicator
-   gfx.renderRect( x + offsets[1], y + offsets[2], value[2] * bar_ready_w, bar_ready_h, col_ready)
+   gfx.renderRect( x + offsets[1], y + offsets[2], value[2] * bar_ready_w, bar_ready_h, value[6])
 
    if value[3] == 1 then
       gfx.renderTex( bg_bar_weapon_prim, x, y )
@@ -698,12 +698,23 @@ function render( dt, dt_mod )
          if not weapon.in_arc and ptarget ~= nil then
             col = col_txt_una
          end
-         values = {weapon.left_p, weapon.cooldown, weapon.level, weapon.track or weapon.lockon, weapon.lockon }
+         values = {weapon.left_p, weapon.cooldown, weapon.level,
+               weapon.track or weapon.lockon, weapon.lockon, col_ready }
          render_ammoBar( "ammo", x_ammo, y_ammo - (num-1)*28, values, txt, col)
       else
          col = col_txt_bar
-         values = {weapon.temp, weapon.cooldown, weapon.level, weapon.track}
-         render_ammoBar( "heat", x_ammo, y_ammo - (num-1)*28, values, txt, col)
+         values = {weapon.temp, weapon.cooldown, weapon.level, weapon.track, nil, col_ready}
+
+         if weapon.charge then
+            values[2] = weapon.charge
+            if weapon.charge == 1 or weapon.cooldown == 0 then
+               values[6] = col_energy
+            else
+               values[6] = col_txt_wrn
+            end
+         end
+
+         render_ammoBar( "heat", x_ammo, y_ammo - (num-1)*28, values, txt, col )
       end
    end
 

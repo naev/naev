@@ -601,7 +601,9 @@ static void weapons_updateLayer( const double dt, const WeaponLayer layer )
          case OUTFIT_TYPE_BEAM:
          case OUTFIT_TYPE_TURRET_BEAM:
             w->timer -= dt;
-            if (w->timer < 0.) {
+            if (w->timer < 0. || (w->outfit->u.bem.min_duration > 0. &&
+                  w->mount->stimer < 0.)) {
+               pilot_stopBeam(p, (PilotOutfitSlot*) w->mount);
                weapon_destroy(w,layer);
                break;
             }
