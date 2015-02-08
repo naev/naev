@@ -392,7 +392,7 @@ int econ_refreshcommprice(Commodity *comm)
    i = 0;
    int sys_i=0; /* the system of equations index that we're filling out */
    for (s=0; s<systems_nstack; s++){ /* get the positions of the systems in the sys of eqs */
-      if (systems_stack[s].is_priceset[comm->index]==0)
+      if (systems_stack[s].is_priceset[comm->index] == 0)
          sys_pos[s] = sys_i++;
       else
          sys_pos[s] = n_unset + i++;
@@ -408,29 +408,38 @@ int econ_refreshcommprice(Commodity *comm)
    eq = eqsystem+0; /* the equation we're on */
    for (s=0; s<systems_nstack; s++){
       sys = systems_stack+s;
+      /* Skip systems with set prices. */
       if (sys->is_priceset[comm->index])
          continue;
+
+      /* Get the number of trading neighbours, stored in n_nsys
+       * Trading systems are only those that have travel back and forth for symmetry. */
       n_nsys = 0.0;
-      for (jmp=0; jmp<sys->njumps; jmp++){   /* get number of trading neighbors */
+      for (jmp=0; jmp<sys->njumps; jmp++){
          if (jp_isFlag( sys->jumps+jmp, JP_EXITONLY) || jp_isFlag(sys->jumps+jmp, JP_HIDDEN))
             continue;
          nsys = sys->jumps[jmp].target; /* neighboring system */
          for (j=0; j<nsys->njumps; j++) /* check that the jump back is valid */
             if (sys == nsys->jumps[j].target){
                if (!jp_isFlag( nsys->jumps+j, JP_EXITONLY ) && !jp_isFlag(sys->jumps+jmp, JP_HIDDEN))
-                  n_nsys+=1.0;
+                  n_nsys += 1.0;
                break;
             }
       }
-      if (n_nsys!=0.0){
-         val = -1.0/n_nsys; /* how much each neighboring system affects system sys's price */
-         for (jmp=0; jmp<sys->njumps; jmp++){   /* update equation with neighbor's values */
+
+      /* Get how much each of the neighbouring system affects the current system's price. */
+      if (n_nsys != 0.0){
+         val = -1.0/n_nsys; /* affection weighted by neighbours */
+
+         /* Update equation with neighbour's values. */
+         for (jmp=0; jmp<sys->njumps; jmp++){
             if (jp_isFlag( sys->jumps+jmp, JP_EXITONLY) || jp_isFlag(sys->jumps+jmp, JP_HIDDEN))
                continue;
+
             nsys = sys->jumps[jmp].target; /* neighboring system */
             for (j=0; j<nsys->njumps; j++) /* check that the jump back is valid */
                if (sys == nsys->jumps[j].target){
-                  if (!jp_isFlag( nsys->jumps+j, JP_EXITONLY ))
+                  if (!jp_isFlag( nsys->jumps+j, JP_EXITONLY ) && !jp_isFlag(sys->jumps+jmp, JP_HIDDEN))
                      eq[sys_pos[nsys->id] ] = val;
                   break;
                }
@@ -442,13 +451,14 @@ int econ_refreshcommprice(Commodity *comm)
 
    /* convert the system of equations into triangle form */
    for (i=0; i<sysh; i++){
-      eq = eqsystem+i*sysw;
+      eq = eqsystem + i*sysw;
 
       /* factor out var i from all equations below eq i */
       for (j=i+1; j<systems_nstack; j++){
-         eq2 = eqsystem+j*sysw;
-         if (fabs(eq2[i]) <1e-6) /* if already at 0 */
+         eq2 = eqsystem + j*sysw;
+         if (fabs(eq2[i]) < 1e-6) /* if already at 0 */
             continue;
+
          factor = -eq[i] / eq2[i];
          eq2[i] = 0.0;
          for (v=i+1; v<sysw; v++){
@@ -457,12 +467,13 @@ int econ_refreshcommprice(Commodity *comm)
          }
 
          /* manipulate var j of equation j to 1 */
-         if (eq2[j]!=0){
+         if (eq2[j] != 0){
             factor = eq2[j];
             for (v=i+1; v<sysw; v++)
-               eq2[v]/=factor;
+               eq2[v] /= factor;
          }
-         else eq2[j]=1.0;
+         else
+            eq2[j] = 1.0;
       }
 
    }
@@ -492,9 +503,9 @@ int econ_refreshcommprice(Commodity *comm)
    int *unset_pos = (int *) malloc(sizeof(int)*n_unset); /* array from pos in eq to pos in system of eq */
    for (s=0, u=0, i=0; s<sysw; s++){
       if (systems_stack[s].is_priceset[comm->index])
-         set_prices[i++]=systems_stack[s].prices[comm->index];
+         set_prices[i++] = systems_stack[s].prices[comm->index];
       else{
-         unset_pos[u++]=s;
+         unset_pos[u++] = s;
       }
    }
    for (i=0; i<n_unset; i++){
