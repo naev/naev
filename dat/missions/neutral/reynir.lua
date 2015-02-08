@@ -37,17 +37,15 @@ else -- Default to English
    text[1] = [["Do you like money?"]]     --Use double brackets [[]] for block quotes over several lines.
 
    text[2] = [["Ever since I was a kid I've wanted to go to space. However, my doctor says I can't go to space because I have an elevated pressure in my cochlea, a common disease around here.
-"I am getting old now, as you can see. Before I die I want to travel to space, and I want you to fly me there! I own a hot dog factory, so I can reward you richly! Will you do it?"]]
+    "I am getting old now, as you can see. Before I die I want to travel to space, and I want you to fly me there! I own a hot dog factory, so I can reward you richly! Will you do it?"]]
    text[3] = [["Thank you so much! Just fly me around in the system, preferably near %s."]]
 
    title[4] = "Reynir"
    text[4] = [[Reynir walks out of the ship. You notice that he's bleeding out of both ears. "Where have you taken me?! Get me back to %s right now!!"]]
    text[5] = [["Thank you so much! Here's %s tons of hot dogs. They're worth more than their weight in gold, aren't they?"]]
-   text[7] = [[Reynir doesn't look happy when you meet him outside the ship.
-   "I lost my hearing out there! Damn you!! I made a promise, though, so I'd better keep it. Here's your reward, %d tons of hot dogs..."]]
-   
-
    text[6] = [[Reynir walks out of the ship, amazed by the view. "So this is how %s looks like! I've always wondered... I want to go back to %s now, please."]]
+   text[7] = [[Reynir doesn't look happy when you meet him outside the ship.
+    "I lost my hearing out there! Damn you!! I made a promise, though, so I'd better keep it. Here's your reward, %d tons of hot dogs..."]]
 
 -- Comm chatter -- ??
    talk = {}

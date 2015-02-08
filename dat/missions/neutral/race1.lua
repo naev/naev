@@ -16,31 +16,31 @@ else -- Default to English
     ftext = {}
 
     title[1] = "Looking for a 4th"
-    text[1] = [[    "Hey man, are you busy?  We are planning on having a race around this system, but we need a 4th yacht class ship to participate."]]
+    text[1] = [["Hey man, are you busy?  We are planning on having a race around this system, but we need a 4th yacht class ship to participate."]]
 
     title[2] = "Awesome "
-    text[2] = [[    "Thats great man.  Here is how it works.  We will all be in a yacht class ship.  Once we take off from %s, there will be a countdown.  At the end of the countdown, we will proceed to the various checkpoints in order, boarding them before proceeding to the next checkpoint.  After the last checkpoint has been boarded, head back to %s and land.  Let have some fun."]]
+    text[2] = [["Thats great man.  Here is how it works.  We will all be in a yacht class ship.  Once we take off from %s, there will be a countdown.  At the end of the countdown, we will proceed to the various checkpoints in order, boarding them before proceeding to the next checkpoint.  After the last checkpoint has been boarded, head back to %s and land.  Let have some fun."]]
 
     title[3] = "Checkpoint %s reached"
     text[3] = "Proceed to Checkpoint %s"
 
     text[4] = "Proceed to land at %s"
     refusetitle = "Refusal"
-    refusetext = [[    "I guess we'll need to find another pilot."]]
+    refusetext = [["I guess we'll need to find another pilot."]]
     
     wintitle = "You Won!"
-    wintext = [[     The laid back man comes up to you.  
+    wintext = [[The laid back man comes up to you.  
 "Congratulations man.  And guess what!  We got a sponsor!  Melendez Corporation has agreed to put up prize money.  He hands you a chip with 10000 credits.  Lets race again sometime soon."]]
 
     ftitle[1] = "Illegal ship!"
-    ftext[1] = [[     "You have switched to a ship that's not allowed in this race.  Mission failed."]]
+    ftext[1] = [["You have switched to a ship that's not allowed in this race.  Mission failed."]]
 
     ftitle[2] = "You left the race!"
-    ftext[2] = [[     "You left the race.  The race continued without you."]]
+    ftext[2] = [["You left the race.  The race continued without you."]]
 
     ftitle[3] = "You failed to win the race."
-    ftext[3] = [[     As you congratulate the winner on a great race, the laid back man comes up to you.
-"That was a lot of fun, if you ever have time, lets race again."]]
+    ftext[3] = [[As you congratulate the winner on a great race, the laid back man comes up to you.
+    "That was a lot of fun, if you ever have time, lets race again."]]
 
     NPCname = "A laid back man"
     NPCdesc = "You see a laid back man, who appears to be one of the locals, looking around the bar, apparently in search of a suitable pilot."

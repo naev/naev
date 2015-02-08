@@ -27,8 +27,7 @@ else -- Default to English
    text     = {}
    title[1] = "Spaceport Bar"
    text[1]  = [[It seems like the bounty is on the head of an Empire Patrol working in the area known as %s for %d credits. It seems like he was last seen in the %s system. Quite a few other pirates seem interested and it looks like you'll have to outrace them.
-   
-Will you take up the bounty?]]
+    Will you take up the bounty?]]
    text[2] = [[You roll up your sleeve and head off to your ship.]]
 
    -- Messages
