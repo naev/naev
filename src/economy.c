@@ -384,12 +384,12 @@ int econ_refreshcommprice(Commodity *comm)
     */
 
    /* get the number of unset systems, and their positions within the sys of eqs */
-   int n_unset=0; /* the number of unset sysems */
-   int *sys_pos=malloc(sizeof(int)*systems_nstack); /* position of each system in the system of equations*/
+   int n_unset = 0; /* the number of unset sysems */
+   int *sys_pos = malloc(sizeof(int)*systems_nstack); /* position of each system in the system of equations*/
    for (s=0; s<systems_nstack; s++) /* get the number of unset systems */
-      if (systems_stack[s].is_priceset[comm->index]==0)
+      if (systems_stack[s].is_priceset[comm->index] == 0)
          n_unset++;
-   i=0;
+   i = 0;
    int sys_i=0; /* the system of equations index that we're filling out */
    for (s=0; s<systems_nstack; s++){ /* get the positions of the systems in the sys of eqs */
       if (systems_stack[s].is_priceset[comm->index]==0)
@@ -403,14 +403,14 @@ int econ_refreshcommprice(Commodity *comm)
    int sysh = n_unset; /* the height of the system of equations */
    float *eqsystem = calloc(sizeof(float), systems_nstack*sysw);
 
-      /* setup the system of equations */
+   /* setup the system of equations */
    e = 0;
-   eq=eqsystem+0; /* the equation we're on */
+   eq = eqsystem+0; /* the equation we're on */
    for (s=0; s<systems_nstack; s++){
       sys = systems_stack+s;
       if (sys->is_priceset[comm->index])
          continue;
-      n_nsys=0.0;
+      n_nsys = 0.0;
       for (jmp=0; jmp<sys->njumps; jmp++){   /* get number of trading neighbors */
          if (jp_isFlag( sys->jumps+jmp, JP_EXITONLY) || jp_isFlag(sys->jumps+jmp, JP_HIDDEN))
             continue;
@@ -437,25 +437,26 @@ int econ_refreshcommprice(Commodity *comm)
          }
       }
       eq[e++] = 1.0;
-      eq+=sysw;
+      eq += sysw;
    }
 
-      /* convert the system of equations into triangle form */
+   /* convert the system of equations into triangle form */
    for (i=0; i<sysh; i++){
       eq = eqsystem+i*sysw;
 
       /* factor out var i from all equations below eq i */
       for (j=i+1; j<systems_nstack; j++){
          eq2 = eqsystem+j*sysw;
-         if (eq2[i]==0.0) /* if already at 0 */
+         if (fabs(eq2[i]) <1e-6) /* if already at 0 */
             continue;
-         factor = -eq[i]/eq2[i];
-         eq2[i]=0.0;
+         factor = -eq[i] / eq2[i];
+         eq2[i] = 0.0;
          for (v=i+1; v<sysw; v++){
-            eq2[v]*=factor;
-            eq2[v]+=eq[v];
+            eq2[v] *= factor;
+            eq2[v] += eq[v];
          }
-            /* manipulate var j of equation j to 1 */
+
+         /* manipulate var j of equation j to 1 */
          if (eq2[j]!=0){
             factor = eq2[j];
             for (v=i+1; v<sysw; v++)
@@ -466,10 +467,10 @@ int econ_refreshcommprice(Commodity *comm)
 
    }
 
-      /* get the solutions (the prices of systems in terms of systems with known prices) */
-   for (i=sysh-1; i>=0; i-- ){
+   /* get the solutions (the prices of systems in terms of systems with known prices) */
+   for (i=sysh-1; i>=0; i--){
 
-      eq = eqsystem+i*sysw;
+      eq = eqsystem + i*sysw;
 
       /* substitute in known values */
       for (j=i+1; j<n_unset; j++){ 
@@ -478,7 +479,7 @@ int econ_refreshcommprice(Commodity *comm)
             continue;
          eq2 = eqsystem+j*sysw;
          for (v=n_unset; v<sysw; v++){
-            eq[v]-=eq[j]*eq2[v];
+            eq[v] -= eq[j]*eq2[v];
          }
          /* eq[j]=0; *//* aesthetic, if you want to look at the values */
       }
@@ -498,17 +499,16 @@ int econ_refreshcommprice(Commodity *comm)
    }
    for (i=0; i<n_unset; i++){
       sys = systems_stack+unset_pos[i];
-      sys->prices[comm->index]=0.0;
+      sys->prices[comm->index] = 0.0;
       eq = eqsystem+sysw*i;
       for (j=0; j<nsys_wprices; j++){
-         if (eq[n_unset+j]==0.0)
+         if (eq[n_unset+j] == 0.0)
             continue;
-         sys->prices[comm->index]-=eq[n_unset+j]*set_prices[j];
+         sys->prices[comm->index] -= eq[n_unset+j]*set_prices[j];
       }
    }
 
    free(eqsystem);
-
    return 0;
 }
 
