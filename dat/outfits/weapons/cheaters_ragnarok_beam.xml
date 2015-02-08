@@ -11,7 +11,7 @@
  </general>
  <specific type="beam">
   <delay>6</delay>
-  <duration>5</duration>
+  <duration min="2.5">5</duration>
   <range>400</range>
   <turn>35</turn>
   <energy>20</energy>
